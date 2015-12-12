@@ -229,8 +229,12 @@ public class TrainCommon {
                         continue;
                     }
                     // note that a car in train doesn't have a track assignment
-                    if (car.getRouteLocation() == rl && car.getTrack() != null && (car.getRouteDestination() == rld
-                            || (car.isPassenger() && isOnlyPassenger))) {
+                    // caboose or FRED is placed at end of the train
+                    // passenger trains are already blocked in the car list
+                    if (car.getRouteLocation() == rl && car.getTrack() != null &&
+                            ((car.getRouteDestination() == rld && !car.isCaboose() && !car.hasFred())
+                                    || (rld == routeList.get(routeList.size() - 1) && (car.isCaboose() || car.hasFred()))
+                                    || (car.isPassenger() && isOnlyPassenger))) {
                         // determine if header is to be printed
                         if (printPickupHeader && !isLocalMove(car)) {
                             printPickupCarHeader(file, isManifest, !IS_TWO_COLUMN_TRACK);

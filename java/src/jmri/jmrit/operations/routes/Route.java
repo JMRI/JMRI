@@ -367,7 +367,7 @@ public class Route implements java.beans.PropertyChangeListener {
         return ORPHAN;
     }
     
-    public int getRouteMaximumLength() {
+    public int getRouteMaximumTrainLength() {
         int max = 0;
         for (RouteLocation rl : getLocationsByIdList()) {
             if (rl.getMaxTrainLength() > max)

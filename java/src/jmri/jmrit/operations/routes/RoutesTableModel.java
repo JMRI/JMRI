@@ -168,7 +168,7 @@ public class RoutesTableModel extends javax.swing.table.AbstractTableModel imple
             case COMMENT_COLUMN:
                 return route.getComment();
             case MAX_LENGTH_COLUMN:
-                return route.getRouteMaximumLength();
+                return route.getRouteMaximumTrainLength();
             case STATUS_COLUMN:
                 return route.getStatus();
             case EDIT_COLUMN:
