@@ -354,8 +354,9 @@ public class TrainCommon {
                 found = true;
                 for (int k = 0; k < carList.size(); k++) {
                     Car car = carList.get(k);
-                    if (car.getRouteLocation() == rl && !car.getTrackName().equals(Car.NONE)
-                            && car.getRouteDestination() == rld) {
+                    if (car.getTrack() != null && car.getRouteLocation() == rl
+                            && ((car.getRouteDestination() == rld && !car.isCaboose() && !car.hasFred())
+                                    || (rld == routeList.get(routeList.size() - 1) && (car.isCaboose() || car.hasFred())))) {
                         if (Setup.isSortByTrackEnabled()
                                 && !splitString(track.getName()).equals(splitString(car.getTrackName()))) {
                             continue;
@@ -440,8 +441,9 @@ public class TrainCommon {
                 }
                 found = true;
                 for (Car car : carList) {
-                    if (car.getRouteLocation() == rl && !car.getTrackName().equals(Car.NONE)
-                            && car.getRouteDestination() == rld && trackName.equals(splitString(car.getTrackName()))) {
+                    if (car.getTrack() != null && car.getRouteLocation() == rl && trackName.equals(splitString(car.getTrackName()))
+                            && ((car.getRouteDestination() == rld && !car.isCaboose() && !car.hasFred())
+                                    || (rld == routeList.get(routeList.size() - 1) && (car.isCaboose() || car.hasFred())))) {
                         if (!trackNames.contains(trackName)) {
                             printTrackNameHeader(file, trackName, isManifest);
                         }
