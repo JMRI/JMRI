@@ -206,7 +206,6 @@ public class PositionableLabelXml extends AbstractXmlAdapter {
             }
             // allow null icons for now
             l = new PositionableLabel(icon, editor);
-            l.setPopupUtility(null);        // no text
             try {
                 Attribute a = element.getAttribute("rotate");
                 if (a != null && icon != null) {
@@ -232,13 +231,15 @@ public class PositionableLabelXml extends AbstractXmlAdapter {
                     l.updateIcon(icon);
                 }
             }
-
-            //l.setSize(l.getPreferredSize().width, l.getPreferredSize().height);
-        } else if (element.getAttribute("text") != null) {
-            l = new PositionableLabel(element.getAttribute("text").getValue(), editor);
+        }
+        
+        if (element.getAttribute("text") != null) {
+            if (l==null) {
+                l = new PositionableLabel(element.getAttribute("text").getValue(), editor);                
+            }
             loadTextInfo(l, element);
 
-        } else {
+        } else if (l==null){
             log.error("PositionableLabel is null!");
             if (log.isDebugEnabled()) {
                 java.util.List<Attribute> attrs = element.getAttributes();
@@ -390,10 +391,8 @@ public class PositionableLabelXml extends AbstractXmlAdapter {
         } catch (DataConversionException ex) {
             log.warn("invalid 'degrees' value (non integer)");
         }
-        if (element.getAttribute("hasBackground")==null) {   // pre 4.1.4
-            if (deg == 0 && util.hasBackground()) {
-                l.setOpaque(true);                    
-            }
+        if (deg == 0 && util.hasBackground()) {
+            l.setOpaque(true);                    
         }
     }
 

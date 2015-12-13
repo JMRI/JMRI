@@ -1,8 +1,8 @@
 package jmri.jmrit.display;
 
+import java.awt.Color;
 import java.awt.Graphics2D;
 import java.awt.Point;
-import java.awt.Color;
 import java.awt.image.BufferedImage;
 import javax.swing.JComponent;
 import javax.swing.JFrame;
@@ -90,6 +90,7 @@ public class MemoryIconTest extends jmri.util.SwingTestCase {
         jmri.InstanceManager.store(new jmri.NamedBeanHandleManager(), jmri.NamedBeanHandleManager.class);
         Assert.assertNotNull("Instance exists", i);
         jmri.InstanceManager.memoryManagerInstance().provideMemory("IM2").setValue("");
+        to.setMemory("IM2");
         to.setMemory("IM2");
                 
         jf.pack();
