@@ -371,7 +371,7 @@ public class FileUtilTest extends TestCase {
 
     // Main entry point
     static public void main(String[] args) {
-        String[] testCaseName = {FileUtilTest.class.getName()};
+        String[] testCaseName = {"-noloading", FileUtilTest.class.getName()};
         junit.swingui.TestRunner.main(testCaseName);
     }
 
