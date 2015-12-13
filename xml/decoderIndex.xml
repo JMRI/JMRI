@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <?xml-stylesheet href="/xml/XSLT/DecoderID.xsl" type="text/xsl"?>
 <decoderIndex-config xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="http://jmri.org/xml/schema/decoder.xsd">
-  <!--Written by JMRI version 4.1.3ish-Rc808b1c on Sat Nov 21 12:47:40 PST 2015 $Id$-->
-  <decoderIndex version="676">
+  <!--Written by JMRI version 4.1.5ish-201512091617-jake-R25e54ec on Wed Dec 09 08:17:09 PST 2015 $Id$-->
+  <decoderIndex version="678">
     <mfgList nmraListDate="2015-03-06" updated="2015-03-25" lastadd="107,124,126,128,134">
       <manufacturer mfg="NMRA" mfgID="999" />
       <manufacturer mfg="A-Train Electronics" mfgID="137" />
@@ -225,75 +225,6 @@
       <family name="Atlas N-Scale" mfg="Atlas" lowVersionID="46" highVersionID="46" file="Atlas_VO1000.xml">
         <model model="VO1000 (Part #500099)" numOuts="2" numFns="0" lowVersionID="46" highVersionID="46" />
       </family>
-      <family name="Paragon 2" mfg="Broadway Limited Imports, LLC" file="BLI_Blueline_Paragon2_Diesel.xml">
-        <model model="Diesel" numOuts="3" numFns="28" connector="9pin">
-          <versionCV lowVersionID="0" highVersionID="31" />
-          <output name="1" label="headlight" />
-          <output name="2" label="rearlight" />
-        </model>
-        <functionlabels>
-          <functionlabel num="1" lockable="true">Bell</functionlabel>
-          <functionlabel num="2" lockable="false">Horn 1</functionlabel>
-          <functionlabel num="3" lockable="true">Coupler</functionlabel>
-          <functionlabel num="4" lockable="true">Blower</functionlabel>
-          <functionlabel num="5" lockable="true">Rev Up</functionlabel>
-          <functionlabel num="6" lockable="true">Rev Dn</functionlabel>
-          <functionlabel num="7" lockable="true">L1 Effect</functionlabel>
-          <functionlabel num="8" lockable="true">Master Volume</functionlabel>
-          <functionlabel num="9" lockable="true">Shutdown and Startup</functionlabel>
-          <functionlabel num="10" lockable="true">Radiator Cooling Fan</functionlabel>
-          <functionlabel num="11" lockable="true">Air Release and Fill</functionlabel>
-          <functionlabel num="12" lockable="true">Brake Set/Release/Squeal</functionlabel>
-          <functionlabel num="13" lockable="true">Horn Grade Crossing</functionlabel>
-          <functionlabel num="14" lockable="true">Passenger Sounds</functionlabel>
-          <functionlabel num="15" lockable="true">Freight Sounds</functionlabel>
-          <functionlabel num="16" lockable="true">Maintenance Sounds</functionlabel>
-          <functionlabel num="17" lockable="true">Radio Chatter</functionlabel>
-          <functionlabel num="18" lockable="true">City Sounds</functionlabel>
-          <functionlabel num="19" lockable="true">Farm Sounds</functionlabel>
-          <functionlabel num="20" lockable="true">Industrial Sounds</functionlabel>
-          <functionlabel num="21" lockable="true">Lumber Sounds</functionlabel>
-          <functionlabel num="22" lockable="true">Horn2</functionlabel>
-          <functionlabel num="26" lockable="true">Play Macro</functionlabel>
-          <functionlabel num="27" lockable="true">Record Macro</functionlabel>
-          <functionlabel num="28" lockable="true">Brake Squeal</functionlabel>
-        </functionlabels>
-      </family>
-      <family name="Paragon 2" mfg="Broadway Limited Imports, LLC" file="BLI_Blueline_Paragon2_Steam.xml">
-        <model model="Steam" numOuts="3" numFns="30" connector="9pin">
-          <versionCV lowVersionID="32" highVersionID="63" />
-          <output name="1" label="headlight" />
-          <output name="2" label="rearlight" />
-        </model>
-        <functionlabels>
-          <functionlabel num="0" lockable="true">Headlight</functionlabel>
-          <functionlabel num="1" lockable="true">Bell</functionlabel>
-          <functionlabel num="2" lockable="false">Whistle</functionlabel>
-          <functionlabel num="3" lockable="true">Coupler</functionlabel>
-          <functionlabel num="4" lockable="true">Air Pump</functionlabel>
-          <functionlabel num="5" lockable="true">Blow Down/Chuff Up</functionlabel>
-          <functionlabel num="6" lockable="true">Water Fill/Chuff Dn</functionlabel>
-          <functionlabel num="7" lockable="true">Smoke Control</functionlabel>
-          <functionlabel num="8" lockable="true">Mute/Master Volume</functionlabel>
-          <functionlabel num="9" lockable="true">Shutdown and Startup</functionlabel>
-          <functionlabel num="10" lockable="true">Shovel Coal</functionlabel>
-          <functionlabel num="11" lockable="true">Water Injector</functionlabel>
-          <functionlabel num="12" lockable="true">Brake Set/Release/Squeal</functionlabel>
-          <functionlabel num="13" lockable="true">Horn Grade Crossing</functionlabel>
-          <functionlabel num="14" lockable="true">Passenger Sounds</functionlabel>
-          <functionlabel num="15" lockable="true">Freight Sounds</functionlabel>
-          <functionlabel num="16" lockable="true">Maintenance Sounds</functionlabel>
-          <functionlabel num="17" lockable="true">Radio Chatter</functionlabel>
-          <functionlabel num="18" lockable="true">City Sounds</functionlabel>
-          <functionlabel num="19" lockable="true">Farm Sounds</functionlabel>
-          <functionlabel num="20" lockable="true">Industrial Sounds</functionlabel>
-          <functionlabel num="21" lockable="true">Lumber Sounds</functionlabel>
-          <functionlabel num="22" lockable="true">Horn2</functionlabel>
-          <functionlabel num="26" lockable="true">Play Macro</functionlabel>
-          <functionlabel num="27" lockable="true">Record Macro</functionlabel>
-          <functionlabel num="28" lockable="true">Brake Squeal</functionlabel>
-        </functionlabels>
-      </family>
       <family name="Blueline" mfg="Broadway Limited Imports, LLC" file="BLI_Blueline_diesel.xml">
         <model model="Diesel" numOuts="3" numFns="14" connector="9pin">
           <versionCV lowVersionID="4" />
@@ -355,43 +286,10 @@
           <functionlabel num="7" lockable="true">L5</functionlabel>
         </functionlabels>
       </family>
-      <family name="Paragon 3" mfg="Broadway Limited Imports, LLC" file="BLI_Paragon3_Steam.xml">
-        <model model="Steam" numOuts="3" numFns="30" connector="9pin">
-          <versionCV lowVersionID="32" highVersionID="63" />
-          <output name="1" label="headlight" />
-          <output name="2" label="rearlight" />
+      <family name="Paragon 3" mfg="Broadway Limited Imports, LLC" file="BLI_Rolling_Thunder.xml">
+        <model model="Rolling Thunder">
+          <versionCV lowVersionID="0" highVersionID="31" />
         </model>
-        <functionlabels>
-          <functionlabel num="0" lockable="true">Headlight</functionlabel>
-          <functionlabel num="1" lockable="true">Bell</functionlabel>
-          <functionlabel num="2" lockable="false">Whistle</functionlabel>
-          <functionlabel num="3" lockable="true">Coupler</functionlabel>
-          <functionlabel num="4" lockable="true">Air Pump</functionlabel>
-          <functionlabel num="5" lockable="true">Blow Down/Chuff Up</functionlabel>
-          <functionlabel num="6" lockable="true">Water Fill/Chuff Dn</functionlabel>
-          <functionlabel num="7" lockable="true">Smoke Control</functionlabel>
-          <functionlabel num="8" lockable="true">Mute/Master Volume</functionlabel>
-          <functionlabel num="9" lockable="true">Shutdown and Startup</functionlabel>
-          <functionlabel num="10" lockable="true">Shovel Coal</functionlabel>
-          <functionlabel num="11" lockable="true">Water Injector</functionlabel>
-          <functionlabel num="12" lockable="true">Brake Set/Release/Squeal</functionlabel>
-          <functionlabel num="13" lockable="true">Horn Grade Crossing</functionlabel>
-          <functionlabel num="14" lockable="true">Passenger Sounds</functionlabel>
-          <functionlabel num="15" lockable="true">Freight Sounds</functionlabel>
-          <functionlabel num="16" lockable="true">Maintenance Sounds</functionlabel>
-          <functionlabel num="17" lockable="true">Radio Chatter</functionlabel>
-          <functionlabel num="18" lockable="true">City Sounds</functionlabel>
-          <functionlabel num="19" lockable="true">Farm Sounds</functionlabel>
-          <functionlabel num="20" lockable="true">Industrial Sounds</functionlabel>
-          <functionlabel num="21" lockable="true">Lumber Sounds</functionlabel>
-          <functionlabel num="22" lockable="true">Horn2</functionlabel>
-          <functionlabel num="23" lockable="true">Track Sounds</functionlabel>
-          <functionlabel num="24" lockable="true">Aux Light Control</functionlabel>
-          <functionlabel num="25" lockable="true">Long Whistle</functionlabel>
-          <functionlabel num="26" lockable="true">Play Macro</functionlabel>
-          <functionlabel num="27" lockable="true">Record Macro</functionlabel>
-          <functionlabel num="28" lockable="true">Brake Squeal</functionlabel>
-        </functionlabels>
       </family>
       <family name="E-Z Command decoders" mfg="Bachmann Trains" file="Bachmann_EZDCC.xml">
         <model model="2 function decoder (36-552)" numOuts="2" numFns="0" maxMotorCurrent="1A" formFactor="HO" connector="NMRAmedium" lowVersionID="46" nmraWarrant="yes" nmraWarrantStart="2006-04">
