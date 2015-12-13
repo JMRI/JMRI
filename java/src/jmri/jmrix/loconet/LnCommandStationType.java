@@ -45,6 +45,7 @@ public enum LnCommandStationType {
     COMMAND_STATION_IBX_TYPE_2("Intellibox-II", true, true, "Ib2ThrottleManager", "UhlenbrockSlotManager"), // NOI18N
 
     COMMAND_STATION_PR3_ALONE("PR3 standalone programmer", true, false, "LnThrottleManager", "SlotManager"), // NOI18N
+    COMMAND_STATION_PR2_ALONE("PR2 standalone programmer", true, false, "LnThrottleManager", "SlotManager"), // NOI18N
     COMMAND_STATION_STANDALONE("Stand-alone LocoNet", false, false, "LnThrottleManager", "SlotManager");  // NOI18N  
 
     // Note that the convention is that the first word (space-separated token) of the name is the
