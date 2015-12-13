@@ -38,7 +38,7 @@ public class PR2Adapter extends LocoBufferAdapter {
         activeSerialPort.setRTS(true);		// not connected in some serial ports and adapters
         activeSerialPort.setDTR(true);		// pin 1 in Mac DIN8; on main connector, this is DTR
 
-        // configure flow control to always on
+        // configure flow control from option
         int flow = SerialPort.FLOWCONTROL_RTSCTS_OUT;
         if (getOptionState(option1Name).equals(validOption1[1])) {
             flow = SerialPort.FLOWCONTROL_NONE;
