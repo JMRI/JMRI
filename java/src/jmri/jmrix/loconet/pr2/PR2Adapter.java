@@ -17,6 +17,8 @@ public class PR2Adapter extends LocoBufferAdapter {
 
     public PR2Adapter() {
         super(new PR2SystemConnectionMemo());
+
+        options.remove(option2Name);
         options.put(option2Name, new Option("Command station type:", commandStationOptions(), false));
     }
 
