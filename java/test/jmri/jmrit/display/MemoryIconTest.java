@@ -13,6 +13,8 @@ import junit.extensions.jfcunit.finder.ComponentFinder;
 import junit.framework.Assert;
 import junit.framework.Test;
 import junit.framework.TestSuite;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 /**
  * MemoryIconTest.java
@@ -26,8 +28,7 @@ public class MemoryIconTest extends jmri.util.SwingTestCase {
 
     MemoryIcon to = null;
 
-    jmri.jmrit.display.panelEditor.PanelEditor panel
-            = new jmri.jmrit.display.panelEditor.PanelEditor("Test MemoryIcon Panel");
+    jmri.jmrit.display.panelEditor.PanelEditor panel;
 
     public void testShowContent() {
         JFrame jf = new JmriJFrame();
@@ -41,15 +42,9 @@ public class MemoryIconTest extends jmri.util.SwingTestCase {
 
         jf.getContentPane().add(new javax.swing.JLabel("| Expect \"Data Data\" text"));
 
-        jmri.InstanceManager i = new jmri.InstanceManager() {
-            protected void init() {
-                super.init();
-                root = this;
-            }
-        };
-        jmri.InstanceManager.store(new jmri.NamedBeanHandleManager(), jmri.NamedBeanHandleManager.class);
-        Assert.assertNotNull("Instance exists", i);
         jmri.InstanceManager.memoryManagerInstance().provideMemory("IM1").setValue("Data Data");
+        flushAWT();
+
         to.setMemory("IM1");
 
         jf.pack();
@@ -70,6 +65,7 @@ public class MemoryIconTest extends jmri.util.SwingTestCase {
     }
 
     public void testShowBlank() {
+        log.debug("testShowBlank");
         JFrame jf = new JmriJFrame();
         jf.setTitle("Expect blank");
         jf.getContentPane().setLayout(new java.awt.FlowLayout());
@@ -81,17 +77,13 @@ public class MemoryIconTest extends jmri.util.SwingTestCase {
 
         jf.getContentPane().add(new javax.swing.JLabel("| Expect blank: "));
 
-        jmri.InstanceManager i = new jmri.InstanceManager() {
-            protected void init() {
-                super.init();
-                root = this;
-            }
-        };
-        jmri.InstanceManager.store(new jmri.NamedBeanHandleManager(), jmri.NamedBeanHandleManager.class);
-        Assert.assertNotNull("Instance exists", i);
         jmri.InstanceManager.memoryManagerInstance().provideMemory("IM2").setValue("");
+
+        log.debug("setMemory1");
         to.setMemory("IM2");
-        to.setMemory("IM2");
+        log.debug("setMemory2");
+        //to.setMemory("IM2");
+        log.debug("setMemoryDone");
                 
         jf.pack();
         jf.setVisible(true);
@@ -120,15 +112,9 @@ public class MemoryIconTest extends jmri.util.SwingTestCase {
 
         jf.getContentPane().add(new javax.swing.JLabel("| Expect red X default icon: "));
 
-        jmri.InstanceManager i = new jmri.InstanceManager() {
-            protected void init() {
-                super.init();
-                root = this;
-            }
-        };
-        jmri.InstanceManager.store(new jmri.NamedBeanHandleManager(), jmri.NamedBeanHandleManager.class);
-        Assert.assertNotNull("Instance exists", i);
         jmri.InstanceManager.memoryManagerInstance().provideMemory("IM3");
+        flushAWT();
+
         to.setMemory("IM3");
 
         jf.pack();
@@ -199,6 +185,8 @@ public class MemoryIconTest extends jmri.util.SwingTestCase {
         super.setUp();
         apps.tests.Log4JFixture.setUp();
         JUnitUtil.resetInstanceManager();
+        jmri.InstanceManager.store(new jmri.NamedBeanHandleManager(), jmri.NamedBeanHandleManager.class);
+        panel = new jmri.jmrit.display.panelEditor.PanelEditor("Test MemoryIcon Panel");
     }
 
     protected void tearDown() throws Exception {
@@ -213,5 +201,5 @@ public class MemoryIconTest extends jmri.util.SwingTestCase {
         JUnitUtil.resetInstanceManager();
     }
 
-	// static private Logger log = LoggerFactory.getLogger(TurnoutIconTest.class.getName());
+	static private Logger log = LoggerFactory.getLogger(TurnoutIconTest.class.getName());
 }
