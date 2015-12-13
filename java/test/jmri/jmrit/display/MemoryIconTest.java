@@ -79,17 +79,14 @@ public class MemoryIconTest extends jmri.util.SwingTestCase {
 
         jmri.InstanceManager.memoryManagerInstance().provideMemory("IM2").setValue("");
 
-        log.debug("setMemory1");
         to.setMemory("IM2");
-        log.debug("setMemory2");
-        //to.setMemory("IM2");
-        log.debug("setMemoryDone");
                 
         jf.pack();
         jf.setVisible(true);
         flushAWT();
 
         int[] colors = getColor("Expect blank","| Expect blank",0,6,10);
+        //for (int i=0; i< 10; i++) System.out.println("   "+String.format("0x%8s", Integer.toHexString(colors[i])).replace(' ', '0'));
         boolean white = (colors[3]==0xffffffff)&&(colors[4]==0xffffffff);
         Assert.assertTrue("Expect white pixels", white);
         
