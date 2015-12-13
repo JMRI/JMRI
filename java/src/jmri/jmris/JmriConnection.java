@@ -4,6 +4,7 @@ import java.io.DataOutputStream;
 import java.io.IOException;
 import java.util.Locale;
 import org.eclipse.jetty.websocket.api.Session;
+import org.eclipse.jetty.websocket.api.WebSocketException;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -99,8 +100,15 @@ public class JmriConnection {
         log.debug("Sending {}", message);
         if (this.dataOutputStream != null) {
             this.dataOutputStream.writeBytes(message);
-        } else if (this.session != null) {
-            this.session.getRemote().sendStringByFuture(message);
+        } else if (this.session != null && this.session.isOpen()) {
+            try {
+                this.session.getRemote().sendStringByFuture(message);
+            } catch (WebSocketException ex) {
+                log.debug("Exception sending message", ex);
+                // A WebSocketException is most likely a broken socket,
+                // so rethrow it as an IOException
+                throw new IOException(ex);
+            }
         }
     }
 

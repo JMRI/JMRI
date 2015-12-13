@@ -29,13 +29,13 @@
     <choice>Couple/Uncouple Sound</choice>
   </enumChoice>
   <enumChoice >
-    <choice>Air Pump sound</choice>
+    <choice>Compressor/Grid Blower Sound</choice>
   </enumChoice>
   <enumChoice >
-    <choice>Blow Down/Chuff Increase</choice>
+    <choice>Diesel Ramp Up</choice>
   </enumChoice>
   <enumChoice >
-    <choice>Water Fill/Chuff Increase/Startup</choice>
+    <choice>Diesel Ramp Down/Start Diesel Sound</choice>
   </enumChoice>
   <enumChoice >
     <choice>L1 Function</choice>
@@ -47,19 +47,19 @@
     <choice>Startup/Shutdown Sounds</choice>
   </enumChoice>
   <enumChoice >
-    <choice>Shoveling Coal Sound</choice>
+    <choice>Cooling Fan Sound</choice>
   </enumChoice>
   <enumChoice >
-    <choice>Water Injector Sound</choice>
+    <choice>Air Fill/Air Release Sound</choice>
   </enumChoice>
   <enumChoice >
     <choice>Brake Set/Release/Squeal Sound</choice>
   </enumChoice>
   <enumChoice >
-    <choice>Steam Cock</choice>
+    <choice>Fuel Fill Sound</choice>
   </enumChoice>
   <enumChoice>
-    <choice>Pop-Off Sound</choice>
+    <choice>Spit Valve Sound</choice>
   </enumChoice>
   <enumChoice>
     <choice>Wheel Flange Sound</choice>
@@ -79,26 +79,17 @@
   <enumChoice>
     <choice>Smoke Control</choice>
   </enumChoice>
-  <enumChoice>
-    <choice>Blower</choice>
-  </enumChoice>
   <enumChoice value="24">
     <choice>L4 Function</choice>
   </enumChoice>
   <enumChoice value="25">
     <choice>L5 Function</choice>
   </enumChoice>
-  <enumChoice value="28">
-    <choice>Dynamo</choice>
-  </enumChoice>
   <enumChoice value="30">
     <choice>Horn Grade Crossing Sound</choice>
   </enumChoice>
   <enumChoice>
     <choice>Track Sounds</choice>
-  </enumChoice>
-  <enumChoice>
-    <choice>Johnson Bar</choice>
   </enumChoice>
   <enumChoice value="40">
     <choice>Play Macro</choice>

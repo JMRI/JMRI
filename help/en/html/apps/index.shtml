@@ -25,7 +25,7 @@
 	JMRI provides several applications that are optimized for 
 	specific purposes. You can of course also <a href="../doc/Technical/index.shtml#writecode">write your own</a>.
   <dl>
-		<dt><h3><a href="./DecoderPro/index.shtml">DecoderPro</a></h3></dt>
+		<dt><h3><a href="./DecoderPro/index.shtml">DecoderPro&reg;</a></h3></dt>
 		<dd>
 		    A better tool for programming decoders.
 		    DecoderPro simplifies the job of configuring complicated DCC decoders
@@ -34,7 +34,7 @@
 		    Open DecoderPro by double clicking its icon in the JMRI installation folder.
 		</dd>
 
-		<dt><h3><a href="./PanelPro/PanelPro.shtml">PanelPro</a></h3></dt>
+		<dt><h3><a href="./PanelPro/PanelPro.shtml">PanelPro&trade;</a></h3></dt>
 		<dd>
 		    Operating CRT based CTC control panels that reflect the real-time
 		    state of your railroad <em>and</em> let you control it - almost like
@@ -42,7 +42,7 @@
 		    Open PanelPro by double clicking its icon in the JMRI installation folder.
 		</dd>
 
-		<dt><h3><a href="./DispatcherPro/index.shtml">DispatcherPro</a></h3></dt>
+		<dt><h3><a href="./DispatcherPro/index.shtml">DispatcherPro&trade;</a></h3></dt>
 		<dd>
 		    A system for Dispatching, grouping your Roster and Throttles.
 		</dd>
@@ -64,7 +64,7 @@
  
   <h2>More Tools</h2>
   <ul>
-  <li>General JMRI tools and features are <a href="../tools/index.shtml">here</a>.</li>
+  <li>Common <a href="../tools/index.shtml">Tools and features</a> to set up and operate your layout shared by most JMRI applications.</li>
 	<li><a href="../tools/index.shtml#systemSpecificTools">System-specific Tools</a> are available in most of the JMRI applications from their own menu when you have JMRI configured for that System Connection.</li>
 	</ul>
 <!--#include virtual="/Footer" -->

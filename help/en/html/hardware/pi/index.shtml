@@ -1,12 +1,11 @@
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
-<!-- $Id$ -->
 <html lang="en">
 <head>
-<TITLE>
+<title>
 JMRI: Raspberry Pi GPIO Connectivity
-</TITLE>
-<META http-equiv=Content-Type content="text/html; charset=iso-8859-1">
-<META content="Paul Bender" name=Author>
+</title>
+<META http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
+<META content="Paul Bender" name="Author">
 <META name="keywords" content="Raspberry Pi GPIO Configuration Information for JMRI">
 
 <!-- Style -->
@@ -18,40 +17,39 @@ JMRI: Raspberry Pi GPIO Connectivity
 <LINK REL="icon" HREF="/images/jmri.ico" TYPE="image/png">
 <LINK REL="home" TITLE="Home" HREF="/">
 <!-- /Style -->
-</HEAD>
+</head>
 
-<BODY>
+<body>
 <!--#include virtual="/Header" -->
 
   <div class="nomenu" id="mBody">
     <div id="mainContent">
 
+<h1>
+JMRI Hardware Guide: Raspberry Pi
+</h1>
 
-<H1>
-        JMRI Hardware Guide: Raspberry Pi
-</H1>
+<h2>Overview</h2>
 
-<H2>Overview</H2>
+<p>The <a href="http://www.raspberrypi.org">Raspberry Pi</a> is a family of inexpensive credit card size single board computers that have many applications in embedded electronics.  This page describe's the use of the Raspberry Pi's GPIO pins under JMRI.  Since the Raspberry Pi runs Linux natively, other connections are also possible using either a <a href="../USBtoSerial.shtml">USB connection</a> or via the Raspberry Pi's built in serial ports.</p>
 
-<p>The <a href="http://www.raspberrypi.org">Raspberry Pi</a> is a family of inexpensive credit card size single board computers that have many applications in embeded electronics.  This page describe's the use of the Raspberry Pi's GPIO pins under JMRI.  Since the raspberry pi runs Linux natively, other connections are possible using either a USB connection or via the Raspberry Pi's built in serial ports.</p>
-
-<p>Underlying support for the Raspberry Pi's GPIO connections is provided using the <a href="http://pi4j.com/">Pi4J library for Java</a>.  <b><i>This library requires that applications using GPIO pins be run as root (or using sudo</i></b></p>
+<p>Underlying support for the Raspberry Pi's GPIO connections is provided using the <a href="http://pi4j.com/">Pi4J library for Java</a>. <b><i>This library requires that applications using GPIO pins be run as root (or using <code>sudo</code></i></b>).</p>
 
 <p>JMRI currently supports input (Sensors) and output (Turnouts) via the Raspberry PI's GPIO pins.</p> 
 
-<H2>Input/Output pin addressing</H2>
+<h2>Input/Output pin addressing</h2>
 <p>
-JMRI currently uses the default Pi4J pin numbering.  The Pin numbers may differ on each model Pi.  Generally speaking, Broadcom GPIO pins 0 to 7 may be referenced by those pin numbers in JMRI.  This is not garanteed to be the case.  Higher pin numbers are available, but may not correspond to the Broadcom pin numberings.  Please refer to the <a href="http://pi4j.com/">Pi4J website</a> for model specific pin numbering information.
+JMRI currently uses the default Pi4J pin numbering.  The Pin numbers may differ on each model Pi.  Generally speaking, Broadcom GPIO pins 0 to 7 may be referenced by those pin numbers in JMRI.  This is not guaranteed to be the case.  Higher pin numbers are available, but may not correspond to the Broadcom pin numberings.  Please refer to the <a href="http://pi4j.com/">Pi4J website</a> for model specific pin numbering information.
 </p>
 
-<H2>Supported Hardware</H2>
-<p>Theoretically, any Raspberry Pi supported by <a href="http://pi4j.com/">Pi4J</a> is supported by JMRI.  JMRI support has been tested with the Models B, B+, and 2B.</p>
+<h2>Supported Hardware</h2>
+<p>Theoretically, any Raspberry Pi supported by <a href="http://pi4j.com/">Pi4J</a> is supported by JMRI.  JMRI support has been tested with the Models B, B+ and 2B.</p>
 
 </p>
 <h3>Setup</h3>
           <ol>
           <li> Make sure you have the latest version of JMRI installed, then 
-          go to the preferences panel of a JMRI-based program.  This opens 
+          go to the Preferences panel of a JMRI-based program.  This opens 
           automatically the first time a program is run, or you can select it
           from the "Edit" menu
           <li>Select "Raspberry Pi Foundation" from the System Manufacturer 
@@ -78,8 +76,9 @@ JMRI currently uses the default Pi4J pin numbering.  The Pin numbers may differ 
           <li> Restart the program. You should be up and running.
           </ol>
 
-
 <!--#include virtual="/Footer" -->
+ </div><!-- closes #mainContent-->
+</div> <!-- closes #mBody-->
 </body>
 </html>
 

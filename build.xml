@@ -153,17 +153,17 @@
         <pathelement location="${libdir}/jackson-core-2.0.6.jar"/>
         <pathelement location="${libdir}/jackson-annotations-2.0.6.jar"/>
         <pathelement location="${libdir}/jackson-databind-2.0.6.jar"/>
-        <pathelement location="${libdir}/jetty-http-9.2.7.v20150116.jar"/>
-        <pathelement location="${libdir}/jetty-security-9.2.7.v20150116.jar"/>
-        <pathelement location="${libdir}/jetty-server-9.2.7.v20150116.jar"/>
-        <pathelement location="${libdir}/jetty-servlet-9.2.7.v20150116.jar"/>
-        <pathelement location="${libdir}/jetty-util-9.2.7.v20150116.jar"/>
-        <pathelement location="${libdir}/jetty-io-9.2.7.v20150116.jar"/>
-        <pathelement location="${libdir}/websocket-api-9.2.7.v20150116.jar"/>
-        <pathelement location="${libdir}/websocket-client-9.2.7.v20150116.jar"/>
-        <pathelement location="${libdir}/websocket-common-9.2.7.v20150116.jar"/>
-        <pathelement location="${libdir}/websocket-server-9.2.7.v20150116.jar"/>
-        <pathelement location="${libdir}/websocket-servlet-9.2.7.v20150116.jar"/>
+        <pathelement location="${libdir}/jetty-http-9.3.6.v20151106.jar"/>
+        <pathelement location="${libdir}/jetty-security-9.3.6.v20151106.jar"/>
+        <pathelement location="${libdir}/jetty-server-9.3.6.v20151106.jar"/>
+        <pathelement location="${libdir}/jetty-servlet-9.3.6.v20151106.jar"/>
+        <pathelement location="${libdir}/jetty-util-9.3.6.v20151106.jar"/>
+        <pathelement location="${libdir}/jetty-io-9.3.6.v20151106.jar"/>
+        <pathelement location="${libdir}/websocket-api-9.3.6.v20151106.jar"/>
+        <pathelement location="${libdir}/websocket-client-9.3.6.v20151106.jar"/>
+        <pathelement location="${libdir}/websocket-common-9.3.6.v20151106.jar"/>
+        <pathelement location="${libdir}/websocket-server-9.3.6.v20151106.jar"/>
+        <pathelement location="${libdir}/websocket-servlet-9.3.6.v20151106.jar"/>
         <pathelement location="${libdir}/slf4j-api-1.7.13.jar"/>
         <pathelement location="${libdir}/slf4j-log4j12-1.7.13.jar"/>
         <pathelement location="${libdir}/jul-to-slf4j-1.7.13.jar"/>
@@ -1032,6 +1032,7 @@
             <sysproperty key="log4j.ignoreTCL" path="true/"/>
             <sysproperty key="java.library.path" path=".:${libdir}:${arch.lib.path}"/>
             <sysproperty key="jinput.plugins" path="net.bobis.jinput.hidraw.HidRawEnvironmentPlugin"/>
+            <sysproperty key="jmri.skipschematests" value="true"/>  <!-- skip schema checks to improve speed -->
 
             <classpath refid="test.class.path"/>
 
