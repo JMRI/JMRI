@@ -28,6 +28,7 @@ session.log
 
 # private / per-user configuration files
 /nbproject/private
+/.idea
 local.properties
 
 # CATS source, sometimes present for test
