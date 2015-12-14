@@ -99,7 +99,7 @@ public class ExportEngines extends XmlFile {
                 + Bundle.getMessage("Model") + del + Bundle.getMessage("Length") + del + Bundle.getMessage("Owner")
                 + del + Bundle.getMessage("Built") + del + Bundle.getMessage("Location") + del + "-" + del
                 + Bundle.getMessage("Track") + del + Bundle.getMessage("Moves") + del + Setup.getValueLabel()
-                 + del + Bundle.getMessage("Comment");
+                 + del + Bundle.getMessage("Comment") + del  + Bundle.getMessage("Miscellaneous");
         fileOut.println(header);
 
         // store engine number, road, model, length, owner, built date, location and track
@@ -134,7 +134,7 @@ public class ExportEngines extends XmlFile {
             }
             line = engine.getNumber() + del + engine.getRoadName() + del + engineModel + del + engine.getLength() + del
                     + engine.getOwner() + del + engine.getBuilt() + del + engineLocationName + ",-," + engineTrackName // NOI18N
-                    + del + engine.getMoves() + del + value + del + comment;
+                    + del + engine.getMoves() + del + value + del + comment + del + (engine.isOutOfService()?Bundle.getMessage("OutOfService"):"");
             fileOut.println(line);
         }
         fileOut.flush();

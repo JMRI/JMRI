@@ -1,18 +1,15 @@
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
-<!-- $Id$ -->
-
 <!-- This page is created from the content (not formatting) -->
 <!-- of http://jmri.sf.net/community/index.html -->
 
 <html lang="en">
 <head>
  <TITLE>JMRI: Acknowledgements</TITLE>
-    <META http-equiv=Content-Type content="text/html; charset=iso-8859-1">
-    <META content="Bob Jacobsen" name=Author>
-    <META name="keywords" content="java model railroad JMRI CMRI decoderpro panelpro loconet lenz nce easydcc dcc nmra">
+    <meta content="Bob Jacobsen" name="Author">
+    <meta name="keywords" content="java model railroad JMRI CMRI decoderpro panelpro loconet lenz nce easydcc dcc nmra">
 
 <!-- Style -->
-  <META http-equiv=Content-Type content="text/html; charset=iso-8859-1">
+  <meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
   <link rel="stylesheet" type="text/css" href="/css/default.css" media="screen">
   <link rel="stylesheet" type="text/css" href="/css/print.css" media="print">
   <link rel="icon" href="/images/jmri.ico" type="image/png">
@@ -20,25 +17,25 @@
 <!-- /Style -->
 </head>
 
-<BODY>
+<body>
 <!--#include virtual="/Header" -->
   <div class="nomenu" id="mBody">
     <div id="mainContent">
 
-<H2>Acknowledgements: People who've contributed to JMRI</H2>
+<h2>Acknowledgements: People who've contributed to JMRI</h2>
     A number have people have contributed their effort to JMRI.
     They are listed below in alphabetical order. They deserve our thanks.
-    <P>
+    <p>
     In addition, a large number of people have donated to the
     project.  For more information, or to donate, please see
-    <A href="http://jmri.org/donations.shtml">our donations page</a>.
+    <a href="http://jmri.org/donations.shtml">our donations page</a>.
 
-<P>
+<p>
 <a href="#A">A</a>|<a href="#B">B</a>|<a href="#C">C</a>|<a href="#D">D</a>|<a href="#E">E</a>|<a href="#F">F</a>|<a href="#G">G</a>|<a href="#H">H</a>|<a href="#I">I</a>|<a href="#J">J</a>|<a href="#K">K</a>|<a href="#L">L</a>|<a href="#M">M</a>|<a href="#N">N</a>|<a href="#O">O</a>|<a href="#P">P</a>|<a href="#Q">Q</a>|<a href="#R">R</a>|<a href="#S">S</a>|<a href="#T">T</a>|<a href="#U">U</a>|<a href="#V">V</a>|<a href="#W">W</a>|<a href="#X">X</a>|<a href="#Y">Y</a>|<a href="#Z">Z</a>
 
-<UL>
+<ul>
 
-<a name="A"></A>
+<a name="A"></a>
     <LI>Sakae Akanuma provided a Japanese translation.
     <LI>Kerry Albrecht, who helped debug a problem loading panel files
     <LI>Nelson Allison, who provided scripts for Roco cranes
@@ -50,7 +47,7 @@
     which lets a lot of people easily contribute to building better documentation
 	<LI>Ron W. Auld, who's llnmon program formed the basis for the LocoNet
 	monitoring
-<a name="B"></A>
+<a name="B"></a>
     <LI>Harald Barth, who improved the SRCP implementation
 	<LI>Michal Basta, who contributed the Czech internationalization
 	<LI>Patrick Beard, who allows us to distribute his javax.comm.MRJ
@@ -533,16 +530,18 @@
     <LI>Christopher Zurek, who improved the LokSound V3.5 decoder definition
     and provided several MRC definitions.
 
-</UL>
+</ul>
 
 <h2>Developer Code Swarm</h2>
 <p>We have created a <a href="http://jmri.org/community/codeswarm.shtml">Code Swarm of JMRI
 development</a> from its inception to January 2009.  A Code Swarm is a fascinating
 and dynamic visual representation of change as developers come and go and make
 changes to the files that make up a project.  More information is available on
-the <a href="http://jmri.org/community/codeswarm.shtml">Code Swarm</a> page.
+the <a href="http://jmri.org/community/codeswarm.shtml">Code Swarm</a> page.</p>
 
 <!--#include virtual="/Footer" -->
+</div>
+</div>
 </body>
 </html>
 

@@ -366,6 +366,15 @@ public class Route implements java.beans.PropertyChangeListener {
         }
         return ORPHAN;
     }
+    
+    public int getRouteMaximumTrainLength() {
+        int max = 0;
+        for (RouteLocation rl : getLocationsByIdList()) {
+            if (rl.getMaxTrainLength() > max)
+                max = rl.getMaxTrainLength();
+        }
+        return max;
+    }
 
     public JComboBox<RouteLocation> getComboBox() {
         JComboBox<RouteLocation> box = new JComboBox<>();
@@ -437,11 +446,12 @@ public class Route implements java.beans.PropertyChangeListener {
             log.debug("Property change: ({}) old: ({}) new: ({})", e.getPropertyName(), e.getOldValue(), e
                     .getNewValue());
         }
-        // forward drops, pick ups, train direction, and max moves as a list change
+        // forward drops, pick ups, train direction, max moves, and max length as a list change
         if (e.getPropertyName().equals(RouteLocation.DROP_CHANGED_PROPERTY)
                 || e.getPropertyName().equals(RouteLocation.PICKUP_CHANGED_PROPERTY)
                 || e.getPropertyName().equals(RouteLocation.TRAIN_DIRECTION_CHANGED_PROPERTY)
-                || e.getPropertyName().equals(RouteLocation.MAXMOVES_CHANGED_PROPERTY)) {
+                || e.getPropertyName().equals(RouteLocation.MAX_MOVES_CHANGED_PROPERTY)
+                || e.getPropertyName().equals(RouteLocation.MAX_LENGTH_CHANGED_PROPERTY)) {
             setDirtyAndFirePropertyChange(LISTCHANGE_CHANGED_PROPERTY, null, "RouteLocation"); // NOI18N
         }
     }

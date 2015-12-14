@@ -666,7 +666,10 @@ public class CoordinateEdit extends JmriJFrame {
                 boolean hasText = (t != null && t.length() > 0);
                 if (pp.isIcon() || hasText) {
                     pp._text = hasText;
-                    pp.setText(t);
+                    if (pp instanceof SensorIcon) {
+                       ((SensorIcon)pp).setOriginalText(t); 
+                    }
+                    pp.setText(t);                        
                     pp.updateSize();
                     dispose();
                 } else {

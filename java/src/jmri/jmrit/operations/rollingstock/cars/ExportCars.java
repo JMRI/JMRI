@@ -99,7 +99,8 @@ public class ExportCars extends XmlFile {
                 + Bundle.getMessage("Color") + del + Bundle.getMessage("Owner") + del + Bundle.getMessage("Built")
                 + del + Bundle.getMessage("Location") + del + "-" + del + Bundle.getMessage("Track") + del
                 + Bundle.getMessage("Load") + del + Bundle.getMessage("Kernel") 
-                + del + Bundle.getMessage("Moves") + del + Setup.getValueLabel() + del + Bundle.getMessage("Comment");
+                + del + Bundle.getMessage("Moves") + del + Setup.getValueLabel() + del + Bundle.getMessage("Comment")
+                + del + Bundle.getMessage("Miscellaneous");
         fileOut.println(header);
 
         // store car number, road, type, length, weight, color, owner, built date, location and track
@@ -135,7 +136,8 @@ public class ExportCars extends XmlFile {
             line = car.getNumber() + del + car.getRoadName() + del + carType + del + car.getLength() + del
                     + car.getWeight() + del + car.getColor() + del + car.getOwner() + del + car.getBuilt() + del
                     + carLocationName + ",-," + carTrackName + del + car.getLoadName() + del + car.getKernelName()
-                    + del + car.getMoves() + del + value + del + comment; // NOI18N
+                    + del + car.getMoves() + del + value + del + comment + del 
+                    + (car.isOutOfService()?Bundle.getMessage("OutOfService"):""); // NOI18N
             fileOut.println(line);
         }
         fileOut.flush();

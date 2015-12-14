@@ -13,7 +13,7 @@
 
 <dl><!-- main table of contents -->
 <dt>Installing JMRI</dt>
-	<dd>
+	  <dd>
     <ul>
     <li><a href="Installing_JMRI.shtml">Preparing to Install</a></li>
     <li><a href="Installing_JMRI.shtml#InstallJMRI">Installing JMRI</a></li>

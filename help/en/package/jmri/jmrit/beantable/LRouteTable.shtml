@@ -1,42 +1,41 @@
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
-<!-- $Id$ -->
 <HTML LANG="en">
-<HEAD>
-<TITLE>JMRI: LRoute Table Help</TITLE>
+<head>
+<title>JMRI: LRoutes Table Help</title>
 <META HTTP-EQUIV="Content-Type" CONTENT="text/html; charset=iso-8859-1">
 <META CONTENT="Bob Jacobsen" NAME="Author">
-<META NAME="keywords" CONTENT="JMRI help LRoute Table">
+<META NAME="keywords" CONTENT="JMRI help LRoutes Table">
 
 <!--#include virtual="/Style" -->
-</HEAD>
+</head>
 
-<BODY>
+<body>
 <!--#include virtual="/Header" -->
   <div class="nomenu" id="mBody">
     <div id="mainContent">
 
-<H1>The LRoute Table</H1>
+<h1>The LRoutes Table</h1>
 
-<P>An LRoute is a more generalized version of a Route implemented as a Logix.
+<p>An LRoute is a more generalized version of a Route implemented as a Logix.
 It is intended for use in situations where additional triggers or actions are
-desired beyond the capabilities of Routes.  It can be used as a starting point for
-creating new Logix.  The LRoute table provides pick lists of Sensors, Turnouts, 
-Lights and Signalheads from which output actions and trigger conditions can be 
-choosen.</p>
+desired beyond the capabilities of Routes. It can be used as a starting point for
+creating new Logix. The LRoutes table provides pick lists of Sensors, Turnouts, 
+Lights, Signal Masts and Signal Heads from which output actions and trigger conditions can be 
+chosen.</p>
 
-<P>Once you have some turnouts, sensors, signalheads and/or lights to manage, use 
-the <b>Add</b> button in the lower left hand corner of the LRoute Table to
-create a new logix route.  After you have created a logix route, you may add additional 
+<p>Once you have some Turnouts, Sensors, Signal Heads and/or Lights to manage, use 
+the <b>Add...</b> button in the lower left hand corner of the LRoutes Table pane to
+create a new Logix Route.  After you have created a Logix Route, you may add additional 
 capabilities by editing it from the Logix Table.</p>
 
-<p>The Logix that implements the l-route has its system name prefixed with "RTX".
-All Logix with this prefix are displayed in the LRoute Table.  Please note that an
+<p>The Logix that implements the LRoute has its system name prefixed with "RTX".
+All Logix with this prefix are displayed in the LRoutes Table.  Please note that an
 "RTX" Logix that has had capabilities added with 
 Logix editing may not be able to display
 these addtional capabilities for LRoute editing.  Once Logix editing is done to an
-l-route, it is recommended that further editing be done from the Logix Table.</p>
+LRoute, it is recommended that further editing be done from the Logix Table.</p>
 
-<H2>LRoute Table Columns</H2>
+<h2>LRoute Table Columns</h2>
 
 <DL>
 	<DT>System Name</DT>
@@ -54,13 +53,13 @@ l-route, it is recommended that further editing be done from the Logix Table.</p
         be enabled or disabled from either the LRoute Table or the Logix Table.</DD>
         
 	<DT>Edit</DT>
-	<DD>Push this button to edit the l-route. For more information see <A
-		HREF="LRouteAddEdit.shtml">Adding/Editing LRoutes</A>.</DD>
+	<DD>Push this button to edit the l-route. For more information see <a
+		href="LRouteAddEdit.shtml">Adding/Editing LRoutes</a>.</DD>
 </DL>
 
-<H3>LRoute Table Controls</H3>
+<h3>LRoute Table Controls</h3>
 
-There is a button at the bottom of the LRoute Table
+There is a button at the bottom of the LRoutes Table:
 
 <DL>	
 	<DT>Add</DT>
@@ -70,6 +69,8 @@ There is a button at the bottom of the LRoute Table
 
 
 <!--#include virtual="/Footer" -->
-</BODY>
-</HTML>
+    </div>
+  </div>
+</body>
+</html>
 
