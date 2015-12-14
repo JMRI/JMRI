@@ -44,7 +44,7 @@ public class Log4JUtilTest extends TestCase {
 
     // Main entry point
     static public void main(String[] args) {
-        String[] testCaseName = {Log4JUtilTest.class.getName()};
+        String[] testCaseName = {"-noloading", Log4JUtilTest.class.getName()};
         junit.swingui.TestRunner.main(testCaseName);
     }
 
