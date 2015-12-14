@@ -365,6 +365,12 @@ public class ConfigSensorsAndTurnoutsFrame extends JmriJFrame implements DCCppLi
         if (sensorTable.getCellEditor() != null) {
             sensorTable.getCellEditor().stopCellEditing();
         }
+        if (turnoutTable.getCellEditor() != null) {
+            turnoutTable.getCellEditor().stopCellEditing();
+        }
+        if (outputTable.getCellEditor() != null) {
+            outputTable.getCellEditor().stopCellEditing();
+        }
         if (value == JOptionPane.YES_OPTION) {
             saveTableValues();
             //OperationsXml.save();
@@ -490,10 +496,13 @@ public class ConfigSensorsAndTurnoutsFrame extends JmriJFrame implements DCCppLi
         if (turnoutTable.getCellEditor() != null) {
             turnoutTable.getCellEditor().stopCellEditing();
         }
+        if (outputTable.getCellEditor() != null) {
+            outputTable.getCellEditor().stopCellEditing();
+        }
         
         // If clicked while changes not saved to BaseStation, offer
         // the option of saving.
-        if (sensorModel.isDirty() || turnoutModel.isDirty()) {
+        if (sensorModel.isDirty() || turnoutModel.isDirty() || outputModel.isDirty()) {
             int value = JOptionPane.showConfirmDialog(null, Bundle.getMessage("FieldMCFSaveDialogConfirmMessage"),
                     Bundle.getMessage("FieldMCFSaveDialogTitle"),
                     JOptionPane.YES_NO_OPTION);

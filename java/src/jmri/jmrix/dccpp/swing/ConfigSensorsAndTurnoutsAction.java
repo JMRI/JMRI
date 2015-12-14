@@ -58,6 +58,8 @@ public class ConfigSensorsAndTurnoutsAction extends AbstractAction {
             f = new ConfigSensorsAndTurnoutsFrame(smgr, tmgr, tc);
             tc.addDCCppListener(DCCppInterface.CS_INFO, f);
             tc.sendDCCppMessage(DCCppMessage.makeSensorListMsg(), f); // TODO: Put this in Constants?
+            tc.sendDCCppMessage(DCCppMessage.makeTurnoutListMsg(), f); // TODO: Put this in Constants?
+            tc.sendDCCppMessage(DCCppMessage.makeOutputListMsg(), f); // TODO: Put this in Constants?
         }
         f.setExtendedState(Frame.NORMAL);
     }

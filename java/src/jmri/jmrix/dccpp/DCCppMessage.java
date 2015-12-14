@@ -268,7 +268,7 @@ public class DCCppMessage extends jmri.jmrix.AbstractMRMessage {
                     int id = Integer.parseInt(m.group(1));
                     return(DCCppMessage.makeOutputDeleteMsg(id));
                 } else if ((m = match(s, DCCppConstants.OUTPUT_LIST_REGEX, "ctor")) != null) {
-                    return(DCCppMessage.getOutputListMsg());
+                    return(DCCppMessage.makeOutputListMsg());
                 } else {
                     return(null);
                 }
@@ -449,7 +449,7 @@ public class DCCppMessage extends jmri.jmrix.AbstractMRMessage {
 	    Pattern p = Pattern.compile(pat);
 	    Matcher m = p.matcher(s);
 	    if (!m.matches()) {
-		log.warn("No Match {} Command: {} Pattern: {}",name, s, pat);
+		//log.warn("No Match {} Command: {} Pattern: {}",name, s, pat);
 		return(null);
 	    }
 	    return(m);
@@ -1263,7 +1263,7 @@ public class DCCppMessage extends jmri.jmrix.AbstractMRMessage {
         return(m);
     }
 
-    public static DCCppMessage getOutputListMsg() {
+    public static DCCppMessage makeOutputListMsg() {
         return(new DCCppMessage(DCCppConstants.OUTPUT_CMD, DCCppConstants.OUTPUT_LIST_REGEX));
     }
 

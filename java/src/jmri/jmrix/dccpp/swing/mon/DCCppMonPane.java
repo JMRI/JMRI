@@ -243,6 +243,7 @@ public class DCCppMonPane extends jmri.jmrix.AbstractMonPane implements DCCppLis
             } else {
                 text = "Invalid Output Command: " + l.toString();
             }
+            break;
 	case DCCppConstants.SENSOR_CMD:
 	    if (l.isSensorAddMessage()) {
 		text = "Add Sensor: ";
