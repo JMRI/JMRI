@@ -4,11 +4,8 @@
   <title>
  	JMRI: Lights Documentation
   </title>
-  <meta http-equiv=Content-Type content="text/html; charset=iso-8859-1">
 
-  <meta content="Bob Jacobsen" name=Author>
-
-  <meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1">
+  <meta name="Author" content="Bob Jacobsen">
   <meta name="keywords"
         content="hardware layout java model railroad JMRI CMRI decoderpro panelpro tools loconet lenz nce easydcc dcc nmra">
 
@@ -27,7 +24,7 @@
 <!--#include virtual="Sidebar" -->
 <div id="mainContent">
 
-<H2>JMRI: Lights Documentation</h2>
+<h2>JMRI: Lights Documentation</h2>
 
 <h3>What are Lights?</h3>
 
@@ -285,7 +282,7 @@ The operation of a Light can be controlled in the following ways:
 </p>
 
 <!--#include virtual="/Footer" -->
-</div>
-</div>
+ </div><!-- closes #mainContent-->
+</div> <!-- closes #mBody-->
 </body>
 </html>
