@@ -44,9 +44,7 @@ public class AutomatTest extends TestCase {
         a.start();
 
         // wait so thread can exec
-        synchronized (this) {
-            wait(100);
-        }
+        jmri.util.JUnitUtil.releaseThread(this);
 
         // and check
         Assert.assertTrue("initDone after run", initDone);
@@ -107,7 +105,7 @@ public class AutomatTest extends TestCase {
 
     // Main entry point
     static public void main(String[] args) {
-        String[] testCaseName = {AutomatTest.class.getName()};
+        String[] testCaseName = {"-noloading", AutomatTest.class.getName()};
         junit.swingui.TestRunner.main(testCaseName);
     }
 

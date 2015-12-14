@@ -46,6 +46,8 @@ public class DCCppSensorTest extends TestCase {
         t.message(m);
 
         Assert.assertEquals("Known state after inactivate ", jmri.Sensor.INACTIVE, t.getKnownState());
+        jmri.util.JUnitAppender.assertErrorMessage("Malformed Validator Command: Q 4 pattern \\s*Q\\s*(\\d+)\\s+(\\d+)\\s+([0|1])\\s*");
+        jmri.util.JUnitAppender.assertErrorMessage("Malformed Validator Command: q 4 pattern \\s*Q\\s*(\\d+)\\s+(\\d+)\\s+([0|1])\\s*");
 
     }
 
@@ -103,11 +105,13 @@ public class DCCppSensorTest extends TestCase {
     }
 
     // The minimal setup for log4J
-    protected void setUp() {
+    protected void setUp() throws Exception {
         apps.tests.Log4JFixture.setUp();
+        super.setUp();
     }
 
-    protected void tearDown() {
+    protected void tearDown() throws Exception {
+        super.tearDown();
         apps.tests.Log4JFixture.tearDown();
     }
 

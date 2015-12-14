@@ -1,29 +1,21 @@
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
-<!-- $Id$ -->
 <html lang="en">
 <head>
-    <TITLE>
+    <title>
  	JMRI: Patterns and Structure
-    </TITLE>
-    <META content="Bob Jacobsen" name=Author>
+    </title>
+    <meta name="author" content="Bob Jacobsen">
     <meta name="keywords" content="JMRI technical code patterns structure">
 
-    <!-- The combination of "Define" and {Header,Style, Logo and Footer} comments -->
-    <!-- are an arbitrary design pattern used by the update.pl script to -->
-    <!-- easily replace the common header/footer code for all the web pages -->
-
-    <!-- delete the following 2 Defines if you want to use the default JMRI logo -->
-    <!-- or change them to reflect your alternative logo -->
-
 <!-- Style -->
-  <META http-equiv=Content-Type content="text/html; charset=iso-8859-1">
+  <meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
   <link rel="stylesheet" type="text/css" href="/css/default.css" media="screen">
   <link rel="stylesheet" type="text/css" href="/css/print.css" media="print">
   <link rel="icon" href="/images/jmri.ico" type="image/png">
   <link rel="home" title="Home" href="/">
 <!-- /Style -->
 </head>
-
+<body>
 <!--#include virtual="/Header" -->
 <!--#include virtual="Sidebar" -->
 
@@ -32,11 +24,11 @@
 	    <!--  Teaser  --> <!-- Optional -->
 	    <!-- -------- -->
 
-<H1>JMRI: Patterns and Organization</H1>
-
+<h1>JMRI: Patterns and Organization</h1>
+<p>
 JMRI has grown and evolved with time, and
 you can't always see the currently-preferred
-structure and patterns by looking at the older code.
+structure and patterns by looking at older code pieces.
 <p>
 This page attempts to describe the recommended structure and patterns,
 and point to examples of current best practices.
@@ -44,19 +36,26 @@ and point to examples of current best practices.
 <h2>Code Organization</h2>
 <p>
 At the highest level, we separate test code from 
-distributed code by putting them in separate directories
-within the development directory:  "test" and "src".
+distributed code by putting both in separate directories
+within the development directory: "test" and "src".
 This makes it easy to compile a version without test code,
 to apply different tools to the two types of code, etc.
 
 <p>
-Within the source code itself, we separate out several types.
+Within the source code itself, we separate out several types:
 
 <dl>
 <dt>The jmri package
-<dd>contains the basic interfaces for the system.
+<dd>contains the basic interfaces and certain core implementations for the JMRI layout management concepts.
     It should contain minimal implementation code, 
     and no non-JMRI references, esp. Swing code.
+
+<dt>The jmri.jmris package
+<dd>contains all the code for the server implementation for the JMRI interfaces.
+
+<dt>The jmri.jmrit package
+<dd>contains all the code for various non-system-specific JMRI tools and extensions.
+Most of the tools are in subpackages, but some appear directly in the package.
 
 <dt>The jmri.jmrix package
 <dd>contains all the code for connecting to 
@@ -91,11 +90,11 @@ Within the source code itself, we separate out several types.
     See the <a href="Swing.shtml">Swing page</a>
     for more information.
 
-<dt>help files
-<dd>The file structure for help
+<dt>Help files
+<dd>The file structure for Help
     files echos the structure of the code.
     For more information, see the 
-    <a href="Help.shtml">help page on JavaHelp pages</a>.
+    <a href="Help.shtml">Help page on JavaHelp pages</a>.
 
 <dt>ResourceBundles
 <dd>We use resource bundles for

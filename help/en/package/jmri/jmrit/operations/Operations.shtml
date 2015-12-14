@@ -765,39 +765,63 @@
    the train's requirements. 
    
    <A NAME="CarRouting"></A>
-   <H3>Car Routing</H3>
+   <H3>Car Routing Options</H3>
+   
+   <H4>Enable Car Routing</H4>
 
    When car routing is enabled, the program will use multiple trains to deliver a car to its final
    destination. It is recommended that you leave this option enabled. With car routing enabled, you
    can use a
-   <A HREF="#Schedules">Schedule</A> to deliver a car to a specific location. The car routing
-   algorithm will search for the most efficient route for the car to travel. The algorithm will
-   attempt to use classification/interchange tracks and then yards to move cars. If you don't want
-   the router to use yards, you can deselect the "Enable Car Routing via Yards" checkbox. Routing
-   through staging is disabled by default. The algorithm will try and find a route using a maximum
-   of five trains to complete the car move. Note that the program never gives up trying to route a
-   car. If a car has been assigned a
+   <A HREF="#Schedules">Schedule</A> to deliver a car to a specific location using the car's final
+   destination fields. The car routing algorithm will search for the most efficient route for the
+   car to travel. The router will attempt to use classification/interchange tracks and then yards to
+   move cars. If you don't want the router to use yards, you can deselect the "Enable Car Routing
+   via Yards" checkbox. The program will try and find a route using a maximum of five trains to
+   complete the car move. Note that the program never gives up trying to route a car. If a car has
+   been assigned a
    <A HREF="#CarsSet">Final Destination</A> or <A HREF="#EditCarLoads">Custom Load</A> the program
-   will try and route the car after every move.
+   will try and route the car during every train build that has access to the car.
 
-   <P>The option "Use all Trains when Routing" when selected instructs the program
-    to use all of your trains to route a car. If you only want the router to use the trains that
-    you've selected in the "Build" column of the "Trains" window, then deselect this option.</P>
+   <H4>Enable Car Routing via Yards</H4>
+   
+   The program when routing a car will first try to find classification/interchange tracks to move the
+   car to its final destination.  If you want the program to also consider using yard tracks when routing,
+   select this option.
+   
+   <H4>Enable Car Routing through Staging</H4>
+   
+   Routing through staging is disabled by default. This is considered to be an advanced feature and shouldn't
+   be used until you've become very familiar with the program. When enabled the program will try to route
+   cars through staging if it couldn't find a route using C/I and yard tracks. Enabling this feature can increase
+   train build times.
+   
+   <H4>Use all Trains when Routing</H4>
+
+   <P>The option "Use all Trains when Routing" when selected instructs the program to use all of
+    your trains to route a car. If you only want the router to use the trains that you've selected
+    in the "Build" column of the "Trains" window, then deselect this option.</P>
+
+   <H4>Enable Track Destination Restrictions when Routing</H4>
 
    <P>
-    The last routing option "Enable Track Destination Restrictions when Routing" when selected tells the router
-    to use the <A HREF="#Interchange">classification/interchange</A> track destinations control when
-    routing a car. It is recommended that you leave this feature disabled, even if you've placed
-    destination restrictions on your C/I tracks. When this feature is enabled, you must enter the
-    destination and any interim destination needed to route a car to that destination. For example,
-    say the route for a car looks something like this: New York to Springfield to Worcester
-    to Boston. With the "Enable Track Destination Restrictions when Routing" disabled, you only
-    have to enter "Boston" as the destination for the departure C/I track in New York. The program when
-    routing a car to Boston from New York, will determine that sending the car first to Springfield
-    is okay because that's the route to get the car to Boston. However, if you enable this option,
-    you must add Springfield in addition to Boston as valid destinations. But now cars
-    going to Springfield and not just Boston could be added to the train since there are now two
-    destinations for the C/I track out of New York.
+    The last routing option "Enable Track Destination Restrictions when Routing" is disabled by
+    default, and is recommended that you leave it disabled. This option makes the track destination
+    feature of a classification/interchange track more restrictive. When selected it tells the
+    router to only use <A HREF="#Interchange">classification/interchange</A> tracks that match a
+    car's final destination AND the car's very next destination. Again, it is recommended that you
+    leave this feature disabled, even if you've placed destination restrictions on your C/I tracks.
+    When this feature is enabled, you must enter the destination AND the next destination needed
+    to route a car to its final destination. For example, say the route for a car looks something like
+    this: New York to Springfield to Worcester to Boston with each city hop requiring a separate
+    train. In this case three trains are need to move the car from NY to Boston. With the "Enable
+    Track Destination Restrictions when Routing" disabled, which is the default, you only have to enter
+    "Boston" as the destination for the departure C/I track in New York. The program when routing a
+    car to Boston from New York, will determine that sending the car first to Springfield and then
+    Worcester is okay because that's the route to get the car to Boston. However, if you enable this
+    option, you must add Springfield in addition to Boston as valid destinations out of NY for the
+    C/I track. The C/I track out of Springfield would need to allow destinations of Worcester and
+    Boston. You would only use this feature if you needed to hard sort your cars by the car's next
+    destination and final destination to specific C/I tracks.
    </P>
 
    <A NAME="LoggingOptions"></A>
@@ -1176,8 +1200,15 @@
    You can use the same format as your manifest for your switch lists, or you can customize your
    switch lists to your liking. Deselect the "Same as Manifest" if you want a different format for
    your switch lists.
+   
+   <A NAME="ManifestComments"></A>
+   <H3>Manifests and Switch List Options</H3>
 
-   <H3>Switch List Options</H3>
+   OperationsPro&trade; allows you to customize your train manifest to your liking. You can change
+   the manifest or switch list text by using the "Edit Manifest Text" or "Edit Switch List Text"
+   windows found under the <A HREF="#ManifestPrintOptionsTools">Tools</A> menu. 
+   
+   <H4>Switch List Options</H4>
 
    The first option "By Track Summary" lists all car pick ups, set outs, and holds at a location by
    track and train at the end of the switch list. Deselect this option if you don't want this
@@ -1186,29 +1217,21 @@
    <P>You can include in your switch lists the train's
    <A HREF="#EditRoute">route</A> location comments by selecting the "Route Location" checkbox.</P>
    
-   <A NAME="ManifestComments"></A>
-   <H3>Manifests and Switch List Options</H3>
+   <H4>Manifests Options</H4>
 
-   OperationsPro&trade; allows you to customize your train manifest to your liking. You can change
-   the manifest or switch list text by using the "Edit Manifest Text" or "Edit Switch List Text"
-   windows found under the <A HREF="#ManifestPrintOptionsTools">Tools</A> menu. The "Manifest Print Option" window contains
-   ten optional checkboxes and their functions are described next.
-   <P>The "Print Valid" checkbox causes the program to print date and time the train was built,
-    which isn't the same as when the manifest was printed. The print time is always shown at the top
-    right of the manifest.</P>
+   There are four checkboxes that allow you to modify the content of your manifests.
+
+   <P>Each location and the train's route can have an optional comment. The program will print
+    these comments on your manifest if the "Location" and "Route" checkboxes are selected
+    respectively.</P>
+
    <P>
-    Each location and train route can have an optional comment. You can print these comments on your
-    manifest if the "Location" and "Route" checkboxes are selected respectively. If you want the
-    manifest to show how many car loads and empties are in the train, select the "Loads and Empties"
-    checkbox. You can also use a 12 hour rather than a 24 hour clock format on your manifests and
-    switch lists. The manifest normally shows the estimated arrival time for the train at each
-    location worked by the train, selecting the "Departure Time" checkbox changes the format to
-    showing the departure time. You can if you wish, print your manifest without departure and
-    arrival times. See <A HREF="#TrainManifestOptions">Train Manifest Options</A> for details.
-   <P>
-    Selecting the "Show Timetable" prints which train <A HREF="#Timetable">timetable</A> you are
-    using when building your trains.
+    The manifest normally shows the estimated arrival time for the train at each location worked by
+    the train, selecting the "Departure Time" checkbox changes the format to showing the departure
+    time. You can if you wish, print your manifest without departure and arrival times. See <A
+     HREF="#TrainManifestOptions">Train Manifest Options</A> for details.
    </P>
+
    <P>The next option is "Truncate" and when selected will cause the program to reduce the
     amount of information printed when setting out or picking up a car at a location that also has a
     switch list. The idea here is that you have a location that is staffed by a crew member with a
@@ -1217,14 +1240,34 @@
     eventually where they need to be, the train manifest only shows which cars are being removed and
     added to the train.</P>
 
+   <H4>Manifests and Switch List Options</H4>
+
+   There are six checkboxes that modify both manifests and switch lists and are as follows:
+
+   <P>The "Print Valid" checkbox causes the program to print date and time the train was built,
+    which isn't the same as when the manifest was printed. The print time is always shown at the top
+    right of the manifest or switch list.</P>
+    
+   <P>If you want the manifest and switch list to show how many car loads and empties are in the train, select
+    the "Loads and Empties" checkbox.</P>
+
+   <P>You can use a 12 hour rather than a 24 hour clock format on your manifests and switch
+    lists.
+   
+   <P>
+    Selecting the "Show Timetable" prints which train <A HREF="#Timetable">timetable</A> you are
+    using when building your trains.
+   </P>
+
+
    <P>
     The next option is "Sort by Track". The program when creating a train manifest normally lists
     the cars in the order they need to be placed into the train for proper blocking. The normal
     format is to list the cars in the order they will be set out as determined by the train's route,
     and then alphabetically by the track names for each location. You can modify the blocking order
-    for a location by using the tool
-    <A HREF="#TrackBlockingOrder">Track Blocking Order</A>. If you would rather have the cars listed
-    by the track name rather than blocking order, select the option "Sort by Track".
+    for a location by using the tool <A HREF="#TrackBlockingOrder">Track Blocking Order</A>. If you
+    would rather have the cars listed by the track name rather than blocking order, select the
+    option "Sort by Track".
    </P>
 
    <P>
@@ -1453,9 +1496,9 @@
    blocking order number greater than zero when using this feature.
 
    <P>The "Reset" button returns the blocking order to the original defaults which is an
-    alphabetical listing of tracks at a location. The "Save" button in addition to making your
-    changes permanent, updates the track blocking order table to reflect the order that tracks will
-    be printed in your manifests and switch lists.</P>
+    alphabetical listing of tracks at a location. The "Set Order" button gives each track a unique
+    order number, and will also reorder existing order numbers if there are any that aren't unique. The "Up"
+    and "Down" buttons in the table require unique track blocking numbers for them to work.</P>
 
    <A NAME="ShowTrainsServicingThisLocation"></A>
    <H4>Show Trains Servicing this Location</H4>
@@ -2244,11 +2287,17 @@
     program, otherwise you will most likely overload your tracks when using this feature.</P>
     
    <A NAME="TrackDestinations"></A>
-   <H3>Track Destinations</H3>
+   <H4>Track Destinations</H4>
 
-   You can control which destinations a classification/interchange (C/I) or staging track will service. Under
-   "Tools" in the edit track window for a C/I or staging track, the menu item
-   "Track Destinations" allows you to select which destinations are valid for the track.
+   You can control which destinations a classification/interchange (C/I) or staging track will
+   service. Under "Tools" in the edit track window for a C/I or staging track, the menu item "Track
+   Destinations" allows you to select which destinations are valid for the track.
+
+   <P>For C/I tracks there's an option to only accept cars with a final destination. This
+    prevents cars without a final destination from using the track. This is useful where the C/I
+    allowed track destinations are two or more trains away requiring the cars to be routed. Cars
+    without a final destination could be stranded on the C/I track if there isn't a train that
+    directly services at least one of the C/I destinations.</P>
 
    <P>After you've selected the destinations that you want the track to service, you can use
     the "Check Destinations" button to verify that all of the destinations you've selected can also

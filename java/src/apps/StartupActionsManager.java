@@ -82,7 +82,7 @@ public class StartupActionsManager extends AbstractPreferencesProvider {
                 }
             } else {
                 // get an error with a stack trace if this occurs
-                log.error("model cannot have a name.", new Exception());
+                log.error("model does not have a name.", new Exception());
             }
         }
         try {

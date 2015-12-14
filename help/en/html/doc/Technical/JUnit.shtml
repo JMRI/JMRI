@@ -36,21 +36,25 @@
     <li><a href="#run">Running the Tests</a></li>
     <li><a href="#Continuous">Continuous Integration Test Execution</a></li>
     <li><a href="#write">Writing Tests</a></li>
-    <ul>
+        <ul>
         <li><a href="#writeAddl4ExistClass">Writing Additional Tests for an Existing Class</a></li>
         <li><a href="#write4NewClass">Writing Tests for a New Class</a></li>
         <li><a href="#Write4NewPackage">Writing Tests for a New Package</a></li>
-        <li><a href="#keyMetaphors">Key Metaphors</a></li>
-        <ul>
-            <li><a href="#HandlingLogOutput">Handling Log4J Output From Tests</a></li>
-            <li><a href="#ResetInstMgr">Resetting the InstanceManager</a></li>
-            <li><a href="#RunningListeners">Running Listeners</a></li>
-            <li><a href="#testSwingCode">Testing Swing Code</a></li>
-            <li><a href="#complicatedGuiTesting">Testing Complicated GUI code</a></li>
-            <li><a href="#tempFileCreation">Temporary File Creation in Tests</a></li>
         </ul>
-        <li><a href="#issues">Issues</a></li>
+    <li><a href="#keyMetaphors">Key Metaphors</a></li>
+        <ul>
+        <li><a href="#HandlingLogOutput">Handling Log4J Output From Tests</a></li>
+        <li><a href="#ResetInstMgr">Resetting the InstanceManager</a></li>
+        <li><a href="#RunningListeners">Running Listeners</a></li>
+        <li><a href="#io">Testing I/O</a></li>
+        <li><a href="#tempFileCreation">Temporary File Creation in Tests</a></li>
+        </ul>
+    <li><a href="#testSwingCode">Testing Swing Code</a></li>
+        <ul>
+        <li><a href="#complicatedGuiTesting">Testing Complicated GUI code</a></li>
+        </ul>
     </ul>
+    <li><a href="#issues">Issues</a></li>
 </ul>
 
 <a name="Introduction"></a>
@@ -91,7 +95,7 @@ of your test class, or the test class for your package, you
 can run that directly with the "runtest" script:
 <PRE>
 <CODE>
-   ant tests
+   ant tests<br/>
    ./runtest.csh jmri.jmrit.powerpanel.PowerPanelTest
 </CODE>
 </PRE>
@@ -164,9 +168,9 @@ don't forget to put an entry in the enclosing package's test suite)
 (Needs info here: basically, copy some other package, and
 don't forget to put an entry in the enclosing package's test suite)
 
-<h3><a name="keyMetaphors">Key Metaphors</a></h3>
+<h2><a name="keyMetaphors">Key Test Metaphors</a></h2>
 
-<h4><a name="HandlingLogOutput">Handling Log4J Output From Tests</a></h4>
+<h3><a name="HandlingLogOutput">Handling Log4J Output From Tests</a></h3>
 
 JMRI uses 
 <A HREF="http://logging.apache.org/log4j/docs/index.html">Log4j</a>
@@ -226,7 +230,7 @@ It will be a JUnit error if a log.warn(...) or log.error(...) message is
 produced that isn't matched to a JUnitAppender.assertWarnMessage(...) call.
 </OL>
 
-<h4><a name="ResetInstMgr">Resetting the InstanceManager</a></h4>
+<h3><a name="ResetInstMgr">Resetting the InstanceManager</a></h3>
 
 If you are testing code that is going to reference the InstanceManager, 
 you should
@@ -250,7 +254,7 @@ Your <code>tearDown()</code> should end with:
     super.tearDown();
 </PRE></code>
 
-<h4><a name="RunningListeners">Running Listeners</a></h4>
+<h3><a name="RunningListeners">Running Listeners</a></h3>
 
 JMRI is a multi-threaded application. Listeners for
 JMRI objects are notified on various threads.
@@ -272,73 +276,17 @@ Don't make this longer than really needed, though, because
 you colleagues will have to wait that long every time they run the tests.
 <p>
 Note that this should <b>not</b> be used to synchronize with
-Swing threads.  See the next section for that.
+Swing threads.  
+See the <a href="#testSwingCode">Testing Swing Code</a> section for that.
 
-<h4><a name="testSwingCode">Testing Swing Code</a></h4>
+<h3><a id="io" name="io"></a>Testing I/O</h3>
 
-AWT and Swing code runs on a separate thread from JUnit tests.
-Once a Swing or AWT object has been displayed (via
-<code>show()</code> or <code>setVisible(true)</code>),
-it cannot be reliably accessed from the JUnit thread.  Even using
-the listener delay technique described above isn't reliable.
+Some test environments don't automatically flush I/O operations such as 
+streams during testing.  If you're testing something that does I/O, for example
+a TrafficController, you'll need to add "flush()" statements on all your output streams.
+(Having to wait a long time to make a test reliable is a clue that this is happening somewhere in your code)
 
-<p>
-For the simplest possible test, displaying a window 
-for manual interaction, it's OK to create and invoke a Swing
-object from a JUnit test.  Just don't try to interact with it once
-it's been displayed!
-
-<p>
-Because we run tests in "headless" mode during the
-<a href="ContinuousIntegration.shtml">continuous integration builds</a>,
-it's important that Swing (and AWT) access in tests
-be enclosed within a mode check:
-<p><CODE><PRE>
-        if (!System.getProperty("jmri.headlesstest","false").equals("true")) {<br/>
-            suite.addTest(myTest.suite());<br/>
-        }<br/>
-</PRE></code>
-<p>This will run the myTest suite of tests only when a display is available.
-
-<p>GUI tests should close windows when they're done, and in general clean up after themselves.
-If you want to keep windows around so you can manipulate them, e.g. for manual testing or debugging, 
-you can use the jmri.demo system parameter to control that:
-<p><CODE><PRE>
-        if (!System.getProperty("jmri.demo", "false").equals("false")) {<br/>
-            myFrame.setVisible(false);<br/>
-            myFrame.dispose();
-        }
-</PRE></code>
-
-<p>
-For many tests, you'll both make testing reliable and improve the structure 
-of your code by separating the GUI (Swing) code from the JMRI logic and
-communications.  This lets you check the logic code separately, but invoking
-those methods and checking the state them update.
-
-<h4><a name="complicatedGuiTesting">Testing Complicated GUI code</a></h4>
-<p>
-For more complicated GUI testing, we're starting to use
-<a href="http://jfcunit.sourceforge.net/">JFCUnit</a>.
-
-<p>
-For a very simple example of the use of JFCUnit, see the
-<a href="https://github.com/JMRI/JMRI/blob/master/java/test/jmri/util/SwingTestCaseTest.java">test/jmri/util/SwingTestCaseTest.java</a> file.
-
-<p>
-To use JFCUnit, you first inherit your class From
-<code>SwingTestCase</code> instead of <code>TestCase</code>.
-This is enough to get basic operation of Swing tests; the base class 
-pauses the test thread until Swing (actually, the AWT event mechanism)
-has completed all processing after every Swing call in the test.
-(For this reason, the tests will run much slower if you're e.g. moving the
-mouse cursor around while they're running)
-
-<p>
-For more complex GUI testing, you can invoke various aspects of the interface
-and check internal state using test code.
-
-<h4><a name="tempFileCreation">Temporary File Creation in Tests</a></h4>
+<h3><a name="tempFileCreation">Temporary File Creation in Tests</a></h3>
 
 Testcases which create temporary files must be carefully created so
 that there will not be any problems with file path, filesystem security, 
@@ -424,7 +372,73 @@ Here are some ideas which can help avoid these types of problems.
     here, the test became stable over multiple continuous integration executions 
     of "headlesstest".
 
-<h3><a name="issues">Issues</a></h3>
+<h2><a id="testSwingCode" name="testSwingCode"></a>Testing Swing Code</h2>
+
+AWT and Swing code runs on a separate thread from JUnit tests.
+Once a Swing or AWT object has been displayed (via
+<code>show()</code> or <code>setVisible(true)</code>),
+it cannot be reliably accessed from the JUnit thread.  Even using
+the listener delay technique described above isn't reliable.
+
+<p>
+For the simplest possible test, displaying a window 
+for manual interaction, it's OK to create and invoke a Swing
+object from a JUnit test.  Just don't try to interact with it once
+it's been displayed!
+
+<p>
+Because we run tests in "headless" mode during the
+<a href="ContinuousIntegration.shtml">continuous integration builds</a>,
+it's important that Swing (and AWT) access in tests
+be enclosed within a mode check:
+<p><CODE><PRE>
+        if (!System.getProperty("jmri.headlesstest","false").equals("true")) {<br/>
+            suite.addTest(myTest.suite());<br/>
+        }<br/>
+</PRE></code>
+<p>This will run the myTest suite of tests only when a display is available.
+
+<p>GUI tests should close windows when they're done, and in general clean up after themselves.
+If you want to keep windows around so you can manipulate them, e.g. for manual testing or debugging, 
+you can use the jmri.demo system parameter to control that:
+<p><CODE><PRE>
+        if (!System.getProperty("jmri.demo", "false").equals("false")) {<br/>
+            myFrame.setVisible(false);<br/>
+            myFrame.dispose();<br/>
+        }
+</PRE></code>
+
+<p>
+For many tests, you'll both make testing reliable and improve the structure 
+of your code by separating the GUI (Swing) code from the JMRI logic and
+communications.  This lets you check the logic code separately, but invoking
+those methods and checking the state them update.
+
+<h3><a name="complicatedGuiTesting">Testing Complicated GUI code</a></h3>
+<p>
+For more complicated GUI testing, we use
+<a href="http://jfcunit.sourceforge.net/">JFCUnit</a>
+to control interactions with Swing objects.
+
+<p>
+For a very simple example of the use of JFCUnit, see the
+<a href="https://github.com/JMRI/JMRI/blob/master/java/test/jmri/util/SwingTestCaseTest.java">test/jmri/util/SwingTestCaseTest.java</a> file.
+
+<p>
+To use JFCUnit, you first inherit your class From
+<code>SwingTestCase</code> instead of <code>TestCase</code>.
+This is enough to get basic operation of Swing tests; the base class 
+pauses the test thread until Swing (actually, the AWT event mechanism)
+has completed all processing after every Swing call in the test.
+(For this reason, the tests will run much slower if you're e.g. moving the
+mouse cursor around while they're running)
+
+<p>
+For more complex GUI testing, you can invoke various aspects of the interface
+and check internal state using test code.
+
+
+<h2><a name="issues">Issues</a></h2>
 
 JUnit uses a custom classloader, which can cause problems finding
 singletons and starting Swing.  If you get the error

@@ -43,6 +43,9 @@ public class DCCppMessageTest extends TestCase {
         //Assert.assertEquals("3rd byte", '2', m.getElement(3) & 0xFF);
         //Assert.assertEquals("4th byte", ' ', m.getElement(4) & 0xFF);
         //Assert.assertEquals("5th byte", '1', m.getElement(5) & 0xFF);
+        jmri.util.JUnitAppender.assertWarnMessage("Malformed ctor Command: T 42 1 Pattern: T\\s(\\d+)\\s(\\d+)\\s(\\d+)");
+        jmri.util.JUnitAppender.assertWarnMessage("Malformed ctor Command: T 42 1 Pattern: T\\s*(\\d+)");
+        jmri.util.JUnitAppender.assertWarnMessage("Malformed ctor Command: T 42 1 Pattern: T");
     }
 
     // Test the "Get" methods.
@@ -260,11 +263,13 @@ public class DCCppMessageTest extends TestCase {
     }
 
     // The minimal setup for log4J
-    protected void setUp() {
+    protected void setUp() throws Exception {
         apps.tests.Log4JFixture.setUp();
+        super.setUp();
     }
 
-    protected void tearDown() {
+    protected void tearDown() throws Exception {
+        super.tearDown();
         apps.tests.Log4JFixture.tearDown();
     }
 
