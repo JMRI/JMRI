@@ -47,7 +47,7 @@ public class DCCppMessageTest extends TestCase {
 
     // Test the "Get" methods.
     public void testGetAccessoryDecoderMsg() {
-	DCCppMessage m = DCCppMessage.getAccessoryDecoderMsg(23, 2, true);
+	DCCppMessage m = DCCppMessage.makeAccessoryDecoderMsg(23, 2, true);
 	log.debug("accessory decoder message = {}", m.toString());
         Assert.assertEquals("length", 8, m.getNumDataElements());
         Assert.assertEquals("0th byte", 'a', m.getElement(0) & 0xFF);
@@ -61,7 +61,7 @@ public class DCCppMessageTest extends TestCase {
     }
 
     public void testGetTurnoutCommandMsg() {
-	DCCppMessage m = DCCppMessage.getTurnoutCommandMsg(23, true);
+	DCCppMessage m = DCCppMessage.makeTurnoutCommandMsg(23, true);
 	log.debug("turnout message = {}", m.toString());
         Assert.assertEquals("length", 6, m.getNumDataElements());
         Assert.assertEquals("0th byte", 'T', m.getElement(0) & 0xFF);
@@ -73,7 +73,7 @@ public class DCCppMessageTest extends TestCase {
     }
 
     public void testGetWriteDirectCVMsg() {
-	DCCppMessage m = DCCppMessage.getWriteDirectCVMsg(29, 12, 1, 2);
+	DCCppMessage m = DCCppMessage.makeWriteDirectCVMsg(29, 12, 1, 2);
 	log.debug("write cv message = {}", m.toString());
         Assert.assertEquals("length", 11, m.getNumDataElements());
         Assert.assertEquals("0th byte", 'W', m.getElement(0) & 0xFF);
@@ -108,7 +108,7 @@ public class DCCppMessageTest extends TestCase {
     }
 
     public void testGetReadDirectCVMsg() {
-	DCCppMessage m = DCCppMessage.getReadDirectCVMsg(17, 4, 3);
+	DCCppMessage m = DCCppMessage.makeReadDirectCVMsg(17, 4, 3);
 	log.debug("read cv message = {}", m.toString());
         Assert.assertEquals("length", 8, m.getNumDataElements());
         Assert.assertEquals("0th byte", 'R', m.getElement(0) & 0xFF);
@@ -122,7 +122,7 @@ public class DCCppMessageTest extends TestCase {
     }
 
     public void testGetWriteOpsModeCVMsg() {
-	DCCppMessage m = DCCppMessage.getWriteOpsModeCVMsg(17, 4, 3);
+	DCCppMessage m = DCCppMessage.makeWriteOpsModeCVMsg(17, 4, 3);
 	log.debug("write ops cv message = {}", m.toString());
         Assert.assertEquals("length", 8, m.getNumDataElements());
         Assert.assertEquals("0th byte", 'w', m.getElement(0) & 0xFF);
@@ -152,33 +152,33 @@ public class DCCppMessageTest extends TestCase {
     }
 
     public void testSetTrackPowerMsg() {
-	DCCppMessage m = DCCppMessage.getSetTrackPowerMsg(true);
+	DCCppMessage m = DCCppMessage.makeSetTrackPowerMsg(true);
 	log.debug("track power on message = {}", m.toString());
         Assert.assertEquals("length", 1, m.getNumDataElements());
         Assert.assertEquals("0th byte", '1', m.getElement(0) & 0xFF);
 
-	DCCppMessage m2 = DCCppMessage.getSetTrackPowerMsg(false);
+	DCCppMessage m2 = DCCppMessage.makeSetTrackPowerMsg(false);
 	log.debug("track power off message = {}", m2.toString());
         Assert.assertEquals("length", 1, m2.getNumDataElements());
         Assert.assertEquals("0th byte", '0', m2.getElement(0) & 0xFF);
     }
 
     public void testReadTrackCurrentMsg() {
-	DCCppMessage m = DCCppMessage.getReadTrackCurrentMsg();
+	DCCppMessage m = DCCppMessage.makeReadTrackCurrentMsg();
 	log.debug("read track current message = {}", m.toString());
         Assert.assertEquals("length", 1, m.getNumDataElements());
         Assert.assertEquals("0th byte", 'c', m.getElement(0) & 0xFF);
     }
 
     public void testGetCSStatusMsg() {
-	DCCppMessage m = DCCppMessage.getCSStatusMsg();
+	DCCppMessage m = DCCppMessage.makeCSStatusMsg();
 	log.debug("get status message = {}", m.toString());
         Assert.assertEquals("length", 1, m.getNumDataElements());
         Assert.assertEquals("0th byte", 's', m.getElement(0) & 0xFF);
     }
 
     public void testGetAddressedEmergencyStopMsg() {
-	DCCppMessage m = DCCppMessage.getAddressedEmergencyStop(5, 24);
+	DCCppMessage m = DCCppMessage.makeAddressedEmergencyStop(5, 24);
 	log.debug("emergency stop message = {}", m.toString());
         Assert.assertEquals("length", 11, m.getNumDataElements());
         Assert.assertEquals("0th byte", 't', m.getElement(0) & 0xFF);
@@ -195,7 +195,7 @@ public class DCCppMessageTest extends TestCase {
     }
 
     public void testGetSpeedAndDirectionMsg() {
-	DCCppMessage m = DCCppMessage.getSpeedAndDirectionMsg(5, 24, 0.5f, false);
+	DCCppMessage m = DCCppMessage.makeSpeedAndDirectionMsg(5, 24, 0.5f, false);
 	log.debug("Speed message 1 = {}", m.toString());
         Assert.assertEquals("length", 11, m.getNumDataElements());
         Assert.assertEquals("0th byte", 't', m.getElement(0) & 0xFF);
@@ -210,7 +210,7 @@ public class DCCppMessageTest extends TestCase {
         Assert.assertEquals("9th byte", ' ', m.getElement(9) & 0xFF);
         Assert.assertEquals("10th byte", '0', m.getElement(10) & 0xFF);
 
-	DCCppMessage m2 = DCCppMessage.getSpeedAndDirectionMsg(5, 24, 1.0f, true);
+	DCCppMessage m2 = DCCppMessage.makeSpeedAndDirectionMsg(5, 24, 1.0f, true);
 	log.debug("Speed message 2 = {}", m2.toString());
         Assert.assertEquals("length", 12, m2.getNumDataElements());
         Assert.assertEquals("0th byte", 't', m2.getElement(0) & 0xFF);
@@ -226,7 +226,7 @@ public class DCCppMessageTest extends TestCase {
         Assert.assertEquals("10th byte", ' ', m2.getElement(10) & 0xFF);
         Assert.assertEquals("11th byte", '1', m2.getElement(11) & 0xFF);
 
-	DCCppMessage m3 = DCCppMessage.getSpeedAndDirectionMsg(5, 24, -1, true);
+	DCCppMessage m3 = DCCppMessage.makeSpeedAndDirectionMsg(5, 24, -1, true);
 	log.debug("Speed message 3 = {}", m3.toString());
         Assert.assertEquals("length", 11, m3.getNumDataElements());
         Assert.assertEquals("0th byte", 't', m3.getElement(0) & 0xFF);

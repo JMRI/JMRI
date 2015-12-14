@@ -45,7 +45,7 @@ public class DCCppTurnoutManager extends jmri.managers.AbstractTurnoutManager im
     // listen for turnouts, creating them as needed
     public void message(DCCppReply l) {
         if (log.isDebugEnabled()) {
-            log.debug("recieved message: " + l);
+            log.debug("recieved message: " + l.toString());
         }
         if (l.isTurnoutReply()) {
 	    // parse message type

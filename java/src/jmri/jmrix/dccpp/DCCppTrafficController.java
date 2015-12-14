@@ -8,6 +8,16 @@ import jmri.jmrix.AbstractMRReply;
 import jmri.jmrix.AbstractMRTrafficController;
 import java.io.BufferedReader;
 import java.io.IOException;
+import java.io.DataInputStream;
+import javax.swing.SwingUtilities;
+import static jmri.jmrix.AbstractMRTrafficController.AUTORETRYSTATE;
+import static jmri.jmrix.AbstractMRTrafficController.NORMALMODE;
+import static jmri.jmrix.AbstractMRTrafficController.NOTIFIEDSTATE;
+import static jmri.jmrix.AbstractMRTrafficController.OKSENDMSGSTATE;
+import static jmri.jmrix.AbstractMRTrafficController.PROGRAMINGMODE;
+import static jmri.jmrix.AbstractMRTrafficController.WAITMSGREPLYSTATE;
+import static jmri.jmrix.AbstractMRTrafficController.WAITREPLYINNORMMODESTATE;
+import static jmri.jmrix.AbstractMRTrafficController.WAITREPLYINPROGMODESTATE;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -91,6 +101,147 @@ public abstract class DCCppTrafficController extends AbstractMRTrafficController
         ((DCCppListener) reply).message((DCCppMessage) m);
     }
 
+    protected DCCppReply loadChars(DataInputStream istream) throws IOException {
+        int i;
+        String m;
+        if (log.isDebugEnabled()) {
+            log.debug("loading characters from port");
+        }
+        
+        byte char1 = readByteProtected(istream);
+        m = "";
+        while (char1 != '<') {
+            // Spin waiting for '<'
+            char1 = readByteProtected(istream);
+        }
+        log.debug("Serial: Message started...");
+        // Pick up the rest of the command
+        char1 = readByteProtected(istream);
+        i = 0; // NOTE: Just for debug printout 
+        while (char1 != '>') {
+            log.debug("msg char[{}]: {} ({})", i, char1, Character.toString((char)char1));
+            m += Character.toString((char)char1);
+            char1 = readByteProtected(istream);
+            i++;
+        }
+        log.debug("Received: {}", m);
+        // NOTE: Cast is OK because we checked runtime type of msg above.
+        return(DCCppReplyParser.parseReply(m));
+    }
+    
+    /**
+     * Handle each reply when complete.
+     * <P>
+     * (This is public for testing purposes) Runs in the "Receive" thread.
+     *
+     * @throws IOException
+     */
+    /*
+    @Override
+    public void handleOneIncomingReply() throws IOException {
+            // we sit in this until the message is complete, relying on
+        // threading to let other stuff happen
+
+        // Create message off the right concrete class
+        //AbstractMRReply msg = newReply();
+
+        // wait for start if needed
+        waitForStartOfReply(istream);
+
+        // message exists, now fill it
+        // NOTE: We do this a little differently from AbstractMRReply
+        // This line right here is the whole reason we are overriding handleOneIncomingReply()
+        AbstractMRReply msg = loadChars(istream);
+
+        // WARNING: The code below is copied more-or-less wholesale from AbstractMRTrafficController
+        // and should be maintained as such, until there's good reason not to.  Some if() statements
+        // have been removed when they are always true or always false for DCC++.
+ 
+        // message is complete, dispatch it !!
+        replyInDispatch = true;
+        if (log.isDebugEnabled()) {
+            log.debug("dispatch reply of length {} contains {} state {}", msg.getNumDataElements(), msg.toString(), mCurrentState);
+        }
+
+        // forward the message to the registered recipients,
+        // which includes the communications monitor
+        // return a notification via the Swing event queue to ensure proper thread
+        Runnable r = new RcvNotifier(msg, mLastSender, this);
+        try {
+            SwingUtilities.invokeAndWait(r);
+        } catch (Exception e) {
+            log.error("Unexpected exception in invokeAndWait: {}" + e.toString(), e);
+        }
+        log.debug("dispatch thread invoked");
+
+        // NOTE: At present, DCC++ messages are /never/ unsolicited.  Or at least 
+        // never treated as such.
+        //
+        if (!msg.isUnsolicited()) {
+            // effect on transmit:
+            switch (mCurrentState) {
+                case WAITMSGREPLYSTATE: {
+                    // update state, and notify to continue
+                    synchronized (xmtRunnable) {
+                        mCurrentState = NOTIFIEDSTATE;
+                        replyInDispatch = false;
+                        xmtRunnable.notify();
+                        retransmitCount = 0;
+                    }
+                    break;
+                }
+                case WAITREPLYINPROGMODESTATE: {
+                    // entering programming mode
+                    mCurrentMode = PROGRAMINGMODE;
+                    replyInDispatch = false;
+
+                    // update state, and notify to continue
+                    synchronized (xmtRunnable) {
+                        mCurrentState = OKSENDMSGSTATE;
+                        xmtRunnable.notify();
+                    }
+                    break;
+                }
+                case WAITREPLYINNORMMODESTATE: {
+                    // entering normal mode
+                    mCurrentMode = NORMALMODE;
+                    replyInDispatch = false;
+                    // update state, and notify to continue
+                    synchronized (xmtRunnable) {
+                        mCurrentState = OKSENDMSGSTATE;
+                        xmtRunnable.notify();
+                    }
+                    break;
+                }
+                default: {
+                    replyInDispatch = false;
+                    if (allowUnexpectedReply == true) {
+                        if (log.isDebugEnabled()) {
+                            log.debug("Allowed unexpected reply received in state: {} was {}", mCurrentState, msg.toString());
+                        }
+                        synchronized (xmtRunnable) {
+                            // The transmit thread sometimes gets stuck
+                            // when unexpected replies are received.  Notify
+                            // it to clear the block without a timeout.
+                            // (do not change the current state)
+                            //if(mCurrentState!=IDLESTATE)
+                            xmtRunnable.notify();
+                        }
+                    } else {
+                        log.error("reply complete in unexpected state: {} was {}", mCurrentState, msg.toString());
+                    }
+                }
+            }
+            // Unsolicited message
+        } else {
+            if (log.isDebugEnabled()) {
+                log.debug("Unsolicited Message Received {}", msg.toString());
+            }
+
+            replyInDispatch = false;
+        }
+    }
+*/
     /**
      * Forward a preformatted DCCppMessage to the registered DCCppListeners. NOTE:
      * this drops the packet if the checksum is bad.
@@ -264,6 +415,7 @@ public abstract class DCCppTrafficController extends AbstractMRTrafficController
      * @param istream character source.
      * @throws java.io.IOException when presented by the input source.
      */
+    /*
         protected void loadChars(AbstractMRReply msg, java.io.DataInputStream istream) throws java.io.IOException {
 	// Spin waiting for start-of-frame '<' character (and toss it)
 	String s = new String();
@@ -280,7 +432,7 @@ public abstract class DCCppTrafficController extends AbstractMRTrafficController
 		log.debug("Found starting < ");
 		break; // A bit redundant with setting the loop condition true (false)
 	    } else {
-		char1 = readByteProtected(istream);
+		//char1 = readByteProtected(istream);
 	    }
 	}
 	
@@ -301,7 +453,7 @@ public abstract class DCCppTrafficController extends AbstractMRTrafficController
 	log.debug("Complete message = {}", s);
         ((DCCppReply)msg).parseReply(s);
     }
-
+*/
     protected void handleTimeout(AbstractMRMessage msg, AbstractMRListener l) {
         super.handleTimeout(msg, l);
         if (l != null) {

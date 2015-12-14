@@ -74,6 +74,7 @@ public class ConfigSensorsAndTurnoutsFrame extends JmriJFrame implements DCCppLi
     static {
         Mnemonics.put("SensorTab", KeyEvent.VK_E); // NOI18N
         Mnemonics.put("TurnoutTab", KeyEvent.VK_T); // NOI18N
+        Mnemonics.put("OutputTab", KeyEvent.VK_O); // NOI18N
         Mnemonics.put("AddButton", KeyEvent.VK_A); // NOI18N
         Mnemonics.put("CloseButton", KeyEvent.VK_O); // NOI18N
         Mnemonics.put("SaveButton", KeyEvent.VK_S); // NOI18N
@@ -90,11 +91,13 @@ public class ConfigSensorsAndTurnoutsFrame extends JmriJFrame implements DCCppLi
 
     private SensorTableModel sensorModel;
     private TurnoutTableModel turnoutModel;
+    private OutputTableModel outputModel;
     private JTable sensorTable;
     private JTable turnoutTable;
+    private JTable outputTable;
 
     private List<JMenu> menuList;
-    private enum CurrentTab { SENSOR, TURNOUT }
+    private enum CurrentTab { SENSOR, TURNOUT, OUTPUT }
     private CurrentTab cTab;
 
     @edu.umd.cs.findbugs.annotations.SuppressWarnings(value = "EI_EXPOSE_REP2",
@@ -177,6 +180,19 @@ public class ConfigSensorsAndTurnoutsFrame extends JmriJFrame implements DCCppLi
         turnoutTable.removeColumn(turnoutTable.getColumn("isDirty"));
         turnoutTable.removeColumn(turnoutTable.getColumn("isDelete"));
         
+        JScrollPane outputScrollPanel = new JScrollPane();
+        outputModel = new OutputTableModel();
+        outputTable = new JTable(outputModel);
+        outputTable.setFillsViewportHeight(true);
+        outputScrollPanel.getViewport().add(outputTable);
+        outputTable.setPreferredScrollableViewportSize(new Dimension(520, 200));
+        outputTable.getColumn(Bundle.getMessage("FieldTableDeleteColumn")).setCellRenderer(new ButtonRenderer());
+        outputTable.getColumn(Bundle.getMessage("FieldTableDeleteColumn")).setCellEditor(
+            new ButtonEditor(new JCheckBox(), outputTable));
+        outputTable.removeColumn(outputTable.getColumn("isNew"));
+        outputTable.removeColumn(outputTable.getColumn("isDirty"));
+        outputTable.removeColumn(outputTable.getColumn("isDelete"));
+        
         tabbedPane = new JTabbedPane();
         tabbedPane.addTab(Bundle.getMessage("FieldSensorsTabTitle"), sensorScrollPanel);
         tabbedPane.setToolTipTextAt(0, Bundle.getMessage("ToolTipSensorTab"));
@@ -184,11 +200,21 @@ public class ConfigSensorsAndTurnoutsFrame extends JmriJFrame implements DCCppLi
         tabbedPane.addTab(Bundle.getMessage("FieldTurnoutsTabTitle"), turnoutScrollPanel);
         tabbedPane.setToolTipTextAt(0, Bundle.getMessage("ToolTipTurnoutTab"));
         tabbedPane.setMnemonicAt(0, Mnemonics.get("TurnoutTab")); // NOI18N
+        tabbedPane.addTab(Bundle.getMessage("FieldOutputsTabTitle"), outputScrollPanel);
+        tabbedPane.setToolTipTextAt(0, Bundle.getMessage("ToolTipOutputTab"));
+        tabbedPane.setMnemonicAt(0, Mnemonics.get("OutputTab")); // NOI18N
         cTab = CurrentTab.SENSOR;
         tabbedPane.setSelectedIndex(0);
         tabbedPane.addChangeListener(new ChangeListener() {
             public void stateChanged(ChangeEvent e) {
                 switch(tabbedPane.getSelectedIndex()) {
+                    case 2:
+                        // Set Add to "Add Output"
+                        cTab = CurrentTab.OUTPUT;
+                        addButton.setText(Bundle.getMessage("ButtonAddOutput"));
+                        saveButton.setText(Bundle.getMessage("ButtonSaveOutputs"));
+                        log.debug("Current Tab is: {}", tabbedPane.getSelectedIndex());
+                        break;
                     case 1:
                         // Set Add to "Add Turnout"
                         cTab = CurrentTab.TURNOUT;
@@ -266,6 +292,15 @@ public class ConfigSensorsAndTurnoutsFrame extends JmriJFrame implements DCCppLi
             v.add(r.getTurnoutDefAddrInt());
             v.add(r.getTurnoutDefSubAddrInt());
              turnoutModel.insertData(v, false);
+        } else if (r.isOutputListReply()) {
+            Vector v = new Vector();
+            v.add(r.getOutputNumInt());
+            v.add(r.getOutputListPinInt());
+            v.add((r.getOutputListIFlagInt() & 0x01) == 1); // (bool) Invert
+            v.add((r.getOutputListIFlagInt() & 0x02) == 2); // (bool) Restore State
+            v.add((r.getOutputListIFlagInt() & 0x04) == 4); // (bool) Force High
+            v.add(r.getOutputListStateInt());
+            outputModel.insertData(v, false);
         }
     }
     
@@ -312,6 +347,14 @@ public class ConfigSensorsAndTurnoutsFrame extends JmriJFrame implements DCCppLi
             v.add(0); // Address
             v.add(0); // Subaddress
             turnoutModel.insertData(v, true);
+        } else if (cTab == CurrentTab.OUTPUT) {
+            Vector v = new Vector();
+            v.add(0); // Index
+            v.add(0); // Pin
+            v.add(false); // Invert
+            v.add(false); // Restore state
+            v.add(false); // Force high/low
+            outputModel.insertData(v, true);
         }
     }
     
@@ -327,7 +370,7 @@ public class ConfigSensorsAndTurnoutsFrame extends JmriJFrame implements DCCppLi
             //OperationsXml.save();
         }
         //if (Setup.isCloseWindowOnSaveEnabled()) {
-        if (true) {
+        if (false) {
             dispose();
         }
     }
@@ -344,31 +387,25 @@ public class ConfigSensorsAndTurnoutsFrame extends JmriJFrame implements DCCppLi
                 int row = sensorModel.getRowData().indexOf(r);
                 //if (sensorModel.isNewRow(row)) {
                 if (isnew) {
-                    // WARNING: Conversions here are brittle. Be careful.
-                    String m = "S " + Integer.toString((int)r.elementAt(0)); // Index
-                    m += " " + (Integer.toString((int)r.elementAt(1)));      // Pin
-                    m += " " + ((boolean)r.elementAt(2) ? "1" : "0");        // Pullup
-                    tc.sendDCCppMessage(DCCppMessage.parseDCCppMessage(m), this);
-                    log.debug("Sending: " + m);
+                    tc.sendDCCppMessage(DCCppMessage.makeSensorAddMsg((int)r.elementAt(0),
+                                                                      (int)r.elementAt(1),
+                                                                      ((boolean)r.elementAt(2) ? 1 : 0)), this);
                     sensorModel.setNewRow(row, false);
                 //} else if (sensorModel.isMarkedForDelete(row)) {
                 } else if (isdelete) {
-                    String m = "S " + Integer.toString((int)r.elementAt(0));
-                    tc.sendDCCppMessage(DCCppMessage.parseDCCppMessage(m), this);
-                    log.debug("Sending: " + m);
+                    tc.sendDCCppMessage(DCCppMessage.makeSensorDeleteMsg((int)r.elementAt(0)), this);
+                    //log.debug("Sending: " + m);
                     sensorModel.getRowData().remove(r);
                 //} else if (sensorModel.isDirtyRow(row)) {
                 } else if (isdirty) {
                     // Send a Delete, then an Add (for now).
-                    String m = "S " + Integer.toString((int)r.elementAt(0));
-                    tc.sendDCCppMessage(DCCppMessage.parseDCCppMessage(m), this);
-                    log.debug("Sending: " + m);
+                    tc.sendDCCppMessage(DCCppMessage.makeSensorDeleteMsg((int)r.elementAt(0)), this);
+                    //log.debug("Sending: " + m);
                     // WARNING: Conversions here are brittle. Be careful.
-                    m = "S " + Integer.toString((int)r.elementAt(0)); // Index
-                    m += " " + (Integer.toString((int)r.elementAt(1)));      // Pin
-                    m += " " + ((boolean)r.elementAt(2) ? "1" : "0");        // Pullup
-                    tc.sendDCCppMessage(DCCppMessage.parseDCCppMessage(m), this);
-                    log.debug("Sending: " + m);
+                    tc.sendDCCppMessage(DCCppMessage.makeSensorAddMsg((int)r.elementAt(0),
+                                                                      (int)r.elementAt(1),
+                                                                      ((boolean)r.elementAt(2) ? 1 : 0)), this);
+                    //log.debug("Sending: " + m);
                     sensorModel.setNewRow(row, false);
                     sensorModel.setDirtyRow(row, false);
                 }
@@ -384,11 +421,8 @@ public class ConfigSensorsAndTurnoutsFrame extends JmriJFrame implements DCCppLi
                 //if (sensorModel.isNewRow(row)) {
                 if (isnew) {
                     // WARNING: Conversions here are brittle. Be careful.
-                    String m = "T " + Integer.toString((int)r.elementAt(0)); // Index
-                    m += " " + (Integer.toString((int)r.elementAt(1)));      // Address
-                    m += " " + (Integer.toString((int)r.elementAt(2)));      // Subaddress
-                    tc.sendDCCppMessage(DCCppMessage.parseDCCppMessage(m), this);
-                    log.debug("Sending: " + m);
+                    tc.sendDCCppMessage(DCCppMessage.makeTurnoutAddMsg((int)r.elementAt(0), 
+                            (int)r.elementAt(1), (int)r.elementAt(2)), this);
                     turnoutModel.setNewRow(row, false);
                 //} else if (sensorModel.isMarkedForDelete(row)) {
                 } else if (isdelete) {
@@ -398,18 +432,47 @@ public class ConfigSensorsAndTurnoutsFrame extends JmriJFrame implements DCCppLi
                     turnoutModel.getRowData().remove(r);
                 //} else if (sensorModel.isDirtyRow(row)) {
                 } else if (isdirty) {
+                    tc.sendDCCppMessage(DCCppMessage.makeTurnoutDeleteMsg((int)r.elementAt(0)), this);
                     // Send a Delete, then an Add (for now).
-                    String m = "T " + Integer.toString((int)r.elementAt(0));
-                    tc.sendDCCppMessage(DCCppMessage.parseDCCppMessage(m), this);
-                    log.debug("Sending: " + m);
                     // WARNING: Conversions here are brittle. Be careful.
-                    m = "S " + Integer.toString((int)r.elementAt(0));   // Index
-                    m += " " + (Integer.toString((int)r.elementAt(1))); // Address
-                    m += " " + (Integer.toString((int)r.elementAt(2))); // Subaddress
-                    tc.sendDCCppMessage(DCCppMessage.parseDCCppMessage(m), this);
-                    log.debug("Sending: " + m);
+                    tc.sendDCCppMessage(DCCppMessage.makeTurnoutAddMsg((int)r.elementAt(0),
+                            (int)r.elementAt(1), (int)r.elementAt(2)), this);
                     turnoutModel.setNewRow(row, false);
                     turnoutModel.setDirtyRow(row, false);
+                }
+            }
+        } else if (cTab == CurrentTab.OUTPUT) {
+            for (int i = 0; i < outputModel.getRowData().size(); i++) {
+
+                Vector r = (Vector)outputModel.getRowData().elementAt(i);
+                boolean isnew = (boolean)r.elementAt(6);
+                boolean isdirty = (boolean)r.elementAt(7);
+                boolean isdelete = (boolean)r.elementAt(8);
+                int row = outputModel.getRowData().indexOf(r);
+                //if (sensorModel.isNewRow(row)) {
+                if (isnew) {
+                    // WARNING: Conversions here are brittle. Be careful.
+                    int f = ((boolean)r.elementAt(2) ? 1 : 0); // Invert
+                    f += ((boolean)r.elementAt(3) ? 2 : 0); // Restore
+                    f += ((boolean)r.elementAt(4) ? 4 : 0); // Force
+                    tc.sendDCCppMessage(DCCppMessage.makeOutputAddMsg((int)r.elementAt(0),
+                            (int)r.elementAt(1), f), this);
+                    outputModel.setNewRow(row, false);
+                //} else if (sensorModel.isMarkedForDelete(row)) {
+                } else if (isdelete) {
+                    tc.sendDCCppMessage(DCCppMessage.makeOutputDeleteMsg((int)r.elementAt(0)), this);
+                    outputModel.getRowData().remove(r);
+                //} else if (sensorModel.isDirtyRow(row)) {
+                } else if (isdirty) {
+                    // Send a Delete, then an Add (for now).
+                    tc.sendDCCppMessage(DCCppMessage.makeOutputDeleteMsg((int)r.elementAt(0)), this);
+                    int f = ((boolean)r.elementAt(2) ? 1 : 0); // Invert
+                    f += ((boolean)r.elementAt(3) ? 2 : 0); // Restore
+                    f += ((boolean)r.elementAt(4) ? 4 : 0); // Force
+                    tc.sendDCCppMessage(DCCppMessage.makeOutputAddMsg((int)r.elementAt(0),
+                            (int)r.elementAt(1), f), this);
+                    outputModel.setNewRow(row, false);
+                    outputModel.setDirtyRow(row, false);
                 }
             }
         }
@@ -759,6 +822,158 @@ public class ConfigSensorsAndTurnoutsFrame extends JmriJFrame implements DCCppLi
             }
         }
     }
+
+        /**
+     * Private class to serve as TableModel for Reporters and Ops Locations
+     */
+    private static class OutputTableModel extends AbstractTableModel {
+
+        // These get internationalized at runtime in the constructor below.
+        private String[] columnNames = new String[9];
+        private Vector rowData = new Vector();
+
+        public OutputTableModel() {
+            super();
+            // Use i18n-ized column titles.
+            //columnNames[0] = Bundle.getMessage("FieldTableNameColumn");
+            columnNames[0] = Bundle.getMessage("FieldTableIndexColumn");
+            columnNames[1] = Bundle.getMessage("FieldTablePinColumn");
+            columnNames[2] = Bundle.getMessage("FieldTableInvertColumn");
+            columnNames[3] = Bundle.getMessage("FieldTableOutputRestoreStateColumn");
+            columnNames[4] = Bundle.getMessage("FieldTableOutputForceToColumn");
+            columnNames[5] = Bundle.getMessage("FieldTableDeleteColumn");
+            columnNames[6] = "isNew"; // NOI18N -- hidden column;
+            columnNames[7] = "isDirty"; // NOI18N -- hidden column;
+            columnNames[8] = "isDelete"; // NOI18N -- hidden column;
+            rowData = new Vector();
+        }
+
+        // Note: May be obsoleted by insertData(Vector v)
+        public void insertData(Object[] values, boolean isnew) {
+            Vector v = new Vector();
+            for (int i = 0; i < values.length; i++) {
+                v.add(values[i]);
+            }
+            insertData(v, isnew);
+        }
+        
+        public boolean isNewRow(int row) {
+            //return((boolean) isNew.elementAt(row));
+            return((boolean)((Vector)rowData.elementAt(row)).elementAt(6));
+        }
+        
+        public void setNewRow(int row, boolean n) {
+            //isNew.setElementAt(n, row);
+            ((Vector)rowData.elementAt(row)).setElementAt(n, 6);
+        }
+        
+        public boolean isDirtyRow(int row) {
+            //return((boolean)isDirty.elementAt(row));
+            return((boolean)((Vector)rowData.elementAt(row)).elementAt(7));
+        }
+        
+        public void setDirtyRow(int row, boolean d) {
+            //isDirty.setElementAt(d, row);
+            ((Vector)rowData.elementAt(row)).setElementAt(d, 7);
+        }
+        
+        public boolean isMarkedForDelete(int row) {
+            //return((boolean)markDelete.elementAt(row));            
+            return((boolean)((Vector)rowData.elementAt(row)).elementAt(8));
+        }
+        
+        public void markForDelete(int row, boolean mark) {
+            //markDelete.setElementAt(mark, row);
+            ((Vector)rowData.elementAt(row)).setElementAt(mark, 8);
+        }
+
+        public boolean isDirty() {
+            for (int i = 0; i < rowData.size(); i++) {
+                if (isDirtyRow(i)) {
+                    return(true);
+                }
+            }
+            return(false);
+        }
+
+        public boolean contains(Vector v) {
+            Iterator it = rowData.iterator();
+            while(it.hasNext()) {
+                Vector r = (Vector)it.next();
+                if (r.firstElement() == v.firstElement()) {
+                    return(true);
+                }
+            }
+            return(false);
+        }
+        
+        public void insertData(Vector v, boolean isnew) {
+            if (!rowData.contains(v)) {
+                v.add("Delete");
+                v.add(isnew); // is new
+                v.add(false); // is dirty (no)
+                v.add(false); // is marked for delete (of course not)
+                rowData.add(v);
+            }
+            fireTableDataChanged();
+        }
+
+        public Vector getRowData() {
+            return(rowData);
+        }
+        
+        public String getColumnName(int col) {
+            return columnNames[col].toString();
+        }
+
+        public int getRowCount() {
+            return rowData.size();
+        }
+
+        public int getColumnCount() {
+            return columnNames.length;
+        }
+
+        public Object getValueAt(int row, int col) {
+            return(((Vector)rowData.elementAt(row)).elementAt(col));
+        }
+
+        public boolean isCellEditable(int row, int col) {
+            return true;
+        }
+
+        public void setValueAt(Object value, int row, int col) {
+            ((Vector)((Vector)rowData.elementAt(row))).setElementAt(value, col);
+            if (col < 5) {
+                // Only set dirty if data changed, not state
+                // Data is in columns 0-2
+                setDirtyRow(row, true);
+            }
+            fireTableCellUpdated(row, col);
+        }
+
+        public Class<?> getColumnClass(int columnIndex) {
+            switch (columnIndex) {
+                case 0:
+                case 1:
+                    return Integer.class;
+                case 2:
+                case 3:
+                case 4:
+                    return Boolean.class;
+                case 5:
+                    return ConfigSensorsAndTurnoutsFrame.ButtonEditor.class;
+                case 6:
+                case 7:
+                case 8:
+                    return Boolean.class;
+                default:
+                    return super.getColumnClass(columnIndex);
+            }
+        }
+    }
+
+    
     class ButtonRenderer extends JButton implements TableCellRenderer {
         public ButtonRenderer() {
             setOpaque(true);
