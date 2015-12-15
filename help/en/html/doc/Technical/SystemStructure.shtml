@@ -1,36 +1,28 @@
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
-<!-- $Id$ -->
 <html lang="en">
 <head>
-    <TITLE>
+    <title>
  	JMRI: System Structure
-    </TITLE>
-    <META content="Bob Jacoben" name=Author>
+    </title>
+    <meta name="author" content="Bob Jacoben">
     <meta name="keywords" content="JMRI technical system add">
 
-    <!-- The combination of "Define" and {Header,Style, Logo and Footer} comments -->
-    <!-- are an arbitrary design pattern used by the update.pl script to -->
-    <!-- easily replace the common header/footer code for all the web pages -->
-
 <!-- Style -->
-  <META http-equiv=Content-Type content="text/html; charset=iso-8859-1">
+  <meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
   <link rel="stylesheet" type="text/css" href="/css/default.css" media="screen">
   <link rel="stylesheet" type="text/css" href="/css/print.css" media="print">
   <link rel="icon" href="/images/jmri.ico" type="image/png">
   <link rel="home" title="Home" href="/">
 <!-- /Style -->
 </head>
-
+<body>
 <!--#include virtual="/Header" -->
 <!--#include virtual="Sidebar" -->
 
 	<div id="mainContent">
-	    <!-- ------------- -->
-	    <!-- Page Contents --> <!-- Required -->
-	    <!-- ------------- -->
 
-<H1>JMRI: System Structure</H1>
-
+<h1>JMRI: System Structure</h1>
+<p>
 Historically, systems weren't arranged this way, so
 existing code may not be a good example.
 <p>
@@ -85,12 +77,10 @@ similar connection-specific class.
     <li>does any other initialization of it's own, e.g. startThreads()
     <p>
     At this point, the system is basically up and ready for operation.
-
     <li>Finally, a jmri.jmrix.loconet.LocoNetSystemConnectionMemo object is
         created and registered with the InstanceManager.
-
     </ol>
-    
+    </li>
 <li>Later, jmri.jmrix.ActiveSystemsMenu and/or jmri.jmrix.SystemsMenu
     wants to create user menus, and finds the LocoNetSystemConnectionMemo
     object in the InstanceManager
@@ -112,10 +102,10 @@ To adapt a type, e.g. Turnout:
 <ol>
 <li>Basic manager needs to have getSystemPrefix in addition to letter
 <li>ProxyManager has to check for system prefix, not letter
-
 </ol>
-<h2>Application Startup</h2>
 
+<h2>Application Startup</h2>
+<p>
 The apps.SampleMinimalProgram class provides a minimal example of starting a program
 that uses JMRI.  It's got a hard-coded layout configuration. See the internal
 comments for more info.
@@ -133,4 +123,3 @@ that's inherited from the apps.Apps and apps.AppsBase classes.
 	</div> <!-- closes #mBody-->
 </body>
 </html>
-
