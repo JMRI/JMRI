@@ -28,10 +28,9 @@ public class DCCppReplyParser {
         log.debug("Parse charAt(0): {} ({})", s.charAt(0), Character.toString(s.charAt(0)));
         DCCppReply r = new DCCppReply(s.charAt(0), null);
         switch(s.charAt(0)) {
-            case DCCppConstants.VERSION_REPLY:
-                return(DCCppStatusReply.parseDCCppReply(s));
             case DCCppConstants.COMM_TYPE_REPLY:
                 return(DCCppCommTypeReply.parseDCCppReply(s));
+            case DCCppConstants.VERSION_REPLY:
             case DCCppConstants.THROTTLE_REPLY:
             case DCCppConstants.TURNOUT_REPLY:
             case DCCppConstants.OUTPUT_REPLY:

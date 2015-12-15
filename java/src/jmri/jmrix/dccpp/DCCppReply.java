@@ -30,6 +30,9 @@ public class DCCppReply extends jmri.jmrix.AbstractMRReply {
     public DCCppReply() {
         super();
         setBinary(false);
+        myRegex = "";
+        myReply = new StringBuilder("");
+        opcode = 0x00;
     }
 
     // Create a new reply from an existing reply
@@ -38,6 +41,7 @@ public class DCCppReply extends jmri.jmrix.AbstractMRReply {
         setBinary(false);
         valueList = new ArrayList(reply.valueList);
         myRegex = reply.myRegex;
+        myReply = reply.myReply;
     }
 
     /**
@@ -115,6 +119,17 @@ public class DCCppReply extends jmri.jmrix.AbstractMRReply {
         log.debug("Parse charAt(0): {} ({})", s.charAt(0), Character.toString(s.charAt(0)));
         DCCppReply r = new DCCppReply(s.charAt(0), null);
         switch(s.charAt(0)) {
+            case DCCppConstants.VERSION_REPLY:
+                if (s.matches(DCCppConstants.STATUS_REPLY_REGEX)) {
+                    r.myReply = new StringBuilder(s);
+                    log.debug("Status Reply: {}", r.toString());
+                    r._nDataChars = r.toString().length();
+                    r.myRegex = DCCppConstants.STATUS_REPLY_REGEX;
+                    return(r);
+                } else {
+                    return(null);
+                }
+                
             case DCCppConstants.THROTTLE_REPLY:
                 if (s.matches(DCCppConstants.THROTTLE_REPLY_REGEX)) {
                     r.myReply = new StringBuilder(s);
@@ -256,7 +271,7 @@ public class DCCppReply extends jmri.jmrix.AbstractMRReply {
 
     @Override
     public int getElement(int n) {
-        if (n < myReply.length()) {
+        if ((n >= 0) && (n < myReply.length())) {
             return(myReply.charAt(n));
         } else {
             return(' ');
@@ -266,7 +281,9 @@ public class DCCppReply extends jmri.jmrix.AbstractMRReply {
     public void setElement(int n, int v) {
         // We want the ASCII value, not the string interpretation of the int
         char c = (char)(v & 0xFF);
-        if (n >= myReply.length()) {
+        if (myReply == null) {
+            myReply = new StringBuilder(Character.toString(c));
+        } else if (n >= myReply.length()) {
             myReply.append(c);
         } else if (n > 0) {
             myReply.setCharAt(n,c);
@@ -396,11 +413,19 @@ public class DCCppReply extends jmri.jmrix.AbstractMRReply {
 
 
     public String getStatusVersionString() {
-        return("Unknown");
+        if (this.isStatusReply()) {
+            return(this.getValueString(1));
+        } else {
+            return("Unknown");
+        }
     }
 
     public String getStatusBuildDateString() {
-        return("Unknown");
+        if (this.isStatusReply()) {
+            return(this.getValueString(2));
+        } else {
+            return("Unknown");
+        }
     }
 
      //------------------------------------------------------

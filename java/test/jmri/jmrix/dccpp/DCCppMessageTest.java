@@ -36,16 +36,16 @@ public class DCCppMessageTest extends TestCase {
     // Test the string constructor.
     public void testStringCtor() {
         DCCppMessage m = DCCppMessage.parseDCCppMessage("T 42 1");
-        //Assert.assertEquals("length", 6, m.getNumDataElements());
-        //Assert.assertEquals("0th byte", 'T', m.getElement(0) & 0xFF);
-        //Assert.assertEquals("1st byte", ' ', m.getElement(1) & 0xFF);
-        //Assert.assertEquals("2nd byte", '4', m.getElement(2) & 0xFF);
-        //Assert.assertEquals("3rd byte", '2', m.getElement(3) & 0xFF);
-        //Assert.assertEquals("4th byte", ' ', m.getElement(4) & 0xFF);
-        //Assert.assertEquals("5th byte", '1', m.getElement(5) & 0xFF);
-        jmri.util.JUnitAppender.assertWarnMessage("Malformed ctor Command: T 42 1 Pattern: T\\s(\\d+)\\s(\\d+)\\s(\\d+)");
-        jmri.util.JUnitAppender.assertWarnMessage("Malformed ctor Command: T 42 1 Pattern: T\\s*(\\d+)");
-        jmri.util.JUnitAppender.assertWarnMessage("Malformed ctor Command: T 42 1 Pattern: T");
+        Assert.assertEquals("length", 6, m.getNumDataElements());
+        Assert.assertEquals("0th byte", 'T', m.getElement(0) & 0xFF);
+        Assert.assertEquals("1st byte", ' ', m.getElement(1) & 0xFF);
+        Assert.assertEquals("2nd byte", '4', m.getElement(2) & 0xFF);
+        Assert.assertEquals("3rd byte", '2', m.getElement(3) & 0xFF);
+        Assert.assertEquals("4th byte", ' ', m.getElement(4) & 0xFF);
+        Assert.assertEquals("5th byte", '1', m.getElement(5) & 0xFF);
+        //jmri.util.JUnitAppender.assertWarnMessage("Malformed ctor Command: T 42 1 Pattern: T\\s(\\d+)\\s(\\d+)\\s(\\d+)");
+        //jmri.util.JUnitAppender.assertWarnMessage("Malformed ctor Command: T 42 1 Pattern: T\\s*(\\d+)");
+        //jmri.util.JUnitAppender.assertWarnMessage("Malformed ctor Command: T 42 1 Pattern: T");
     }
 
     // Test the "Get" methods.
@@ -93,7 +93,7 @@ public class DCCppMessageTest extends TestCase {
     }
 
     public void testGetBitWriteDirectCVMsg() {
-	DCCppMessage m = DCCppMessage.getBitWriteDirectCVMsg(17, 4, true, 3, 4);
+	DCCppMessage m = DCCppMessage.makeBitWriteDirectCVMsg(17, 4, 1, 3, 4);
 	log.debug("write cv bit message = {}", m.toString());
         Assert.assertEquals("length", 12, m.getNumDataElements());
         Assert.assertEquals("0th byte", 'B', m.getElement(0) & 0xFF);
@@ -139,7 +139,7 @@ public class DCCppMessageTest extends TestCase {
     }
 
     public void testGetBitWriteOpsModeCVMsg() {
-	DCCppMessage m = DCCppMessage.getBitWriteOpsModeCVMsg(17, 4, 3, true);
+	DCCppMessage m = DCCppMessage.makeBitWriteOpsModeCVMsg(17, 4, 3, 1);
 	log.debug("write ops bit cv message = {}", m.toString());
         Assert.assertEquals("length", 10, m.getNumDataElements());
         Assert.assertEquals("0th byte", 'b', m.getElement(0) & 0xFF);

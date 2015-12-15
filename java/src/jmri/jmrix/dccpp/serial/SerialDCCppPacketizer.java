@@ -55,6 +55,7 @@ public class SerialDCCppPacketizer extends DCCppPacketizer {
      * @param istream character source.
      * @throws java.io.IOException when presented by the input source.
      */
+    /*
     @Override
     protected void loadChars(jmri.jmrix.AbstractMRReply msg, java.io.DataInputStream istream) throws java.io.IOException {
         int i;
@@ -94,7 +95,7 @@ public class SerialDCCppPacketizer extends DCCppPacketizer {
 	    }
         }
     }
-
+*/
     static Logger log = LoggerFactory.getLogger(SerialDCCppPacketizer.class.getName());
 }
 
