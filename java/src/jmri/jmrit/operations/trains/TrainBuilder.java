@@ -767,7 +767,10 @@ public class TrainBuilder extends TrainCommon {
             }
             return selected;
         } else if (validTracks.size() == 1) {
-            return validTracks.get(0);
+            Track track = validTracks.get(0);
+            addLine(_buildReport, FIVE, MessageFormat.format(Bundle.getMessage("buildOnlyOneDepartureTrack"),
+                    new Object[]{track.getName(), track.getLocation().getName()}));
+            return track;
         }
         return null; // no tracks available
     }
@@ -845,7 +848,7 @@ public class TrainBuilder extends TrainCommon {
         // if leaving staging, use any number of engines if required number is 0
         if (departStageTrack != null && numberOfEngines != 0 && departStageTrack.getNumberEngines() != numberOfEngines) {
             addLine(_buildReport, THREE, MessageFormat.format(Bundle.getMessage("buildStagingNotEngines"),
-                    new Object[]{departStageTrack.getName()}));
+                    new Object[]{departStageTrack.getName(), departStageTrack.getNumberEngines(), numberOfEngines}));
             return false; // done, wrong number of engines on staging track
         }
 
@@ -2610,7 +2613,7 @@ public class TrainBuilder extends TrainCommon {
         // does the staging track have the right number of locomotives?
         if (_reqNumEngines > 0 && _reqNumEngines != departStageTrack.getNumberEngines()) {
             addLine(_buildReport, THREE, MessageFormat.format(Bundle.getMessage("buildStagingNotEngines"),
-                    new Object[]{departStageTrack.getName()}));
+                    new Object[]{departStageTrack.getName(), departStageTrack.getNumberEngines(), _reqNumEngines}));
             return false;
         }
         // is the staging track direction correct for this train?
