@@ -26,7 +26,7 @@ import org.slf4j.LoggerFactory;
 /**
  * Frame to display spurs with schedules and their loads
  *
- * @author Dan Boudreau Copyright (C) 2012
+ * @author Dan Boudreau Copyright (C) 2012, 2015
  * @version $Revision: 17977 $
  */
 public class SchedulesByLoadFrame extends OperationsFrame implements java.beans.PropertyChangeListener {
@@ -44,6 +44,7 @@ public class SchedulesByLoadFrame extends OperationsFrame implements java.beans.
 
     // checkbox
     JCheckBox allLoadsCheckBox = new JCheckBox(Bundle.getMessage("allLoads"));
+    JCheckBox allTypesCheckBox = new JCheckBox(Bundle.getMessage("allTypes"));
 
     // managers'
     LocationManager locationManager = LocationManager.instance();
@@ -63,6 +64,7 @@ public class SchedulesByLoadFrame extends OperationsFrame implements java.beans.
         type.setLayout(new GridBagLayout());
         type.setBorder(BorderFactory.createTitledBorder(Bundle.getMessage("Type")));
         addItem(type, typesComboBox, 0, 0);
+        addItem(type, allTypesCheckBox, 1, 0);
 
         JPanel load = new JPanel();
         load.setLayout(new GridBagLayout());
@@ -85,6 +87,7 @@ public class SchedulesByLoadFrame extends OperationsFrame implements java.beans.
         addComboBoxAction(typesComboBox);
         addComboBoxAction(loadsComboBox);
 
+        addCheckBoxAction(allTypesCheckBox);
         addCheckBoxAction(allLoadsCheckBox);
 
         // property changes
@@ -118,12 +121,17 @@ public class SchedulesByLoadFrame extends OperationsFrame implements java.beans.
     }
 
     public void checkBoxActionPerformed(java.awt.event.ActionEvent ae) {
+        typesComboBox.setEnabled(!allTypesCheckBox.isSelected());
         loadsComboBox.setEnabled(!allLoadsCheckBox.isSelected());
+        updateLoadComboBox();
         updateLocations();
     }
 
     private void updateLoadComboBox() {
-        if (typesComboBox.getSelectedItem() != null) {
+        if (allTypesCheckBox.isSelected()) {
+            CarLoads.instance().updateComboBox(loadsComboBox);
+        }
+        else if (typesComboBox.getSelectedItem() != null) {
             String type = (String) typesComboBox.getSelectedItem();
             CarLoads.instance().updateComboBox(type, loadsComboBox);
         }
@@ -158,11 +166,12 @@ public class SchedulesByLoadFrame extends OperationsFrame implements java.beans.
                 sch.addPropertyChangeListener(this);
                 // determine if schedule is requesting car type and load
                 for (ScheduleItem si : sch.getItemsBySequenceList()) {
-                    if (si.getTypeName().equals(type) && si.getReceiveLoadName().equals(load)
-                            || si.getTypeName().equals(type) && si.getReceiveLoadName().equals(ScheduleItem.NONE)
-                            || si.getTypeName().equals(type) && si.getShipLoadName().equals(load)
-                            || si.getTypeName().equals(type) && si.getShipLoadName().equals(ScheduleItem.NONE)
-                            || si.getTypeName().equals(type) && allLoadsCheckBox.isSelected()) {
+                    if ((allTypesCheckBox.isSelected() || si.getTypeName().equals(type))
+                            && (allLoadsCheckBox.isSelected()
+                                    || si.getReceiveLoadName().equals(load)
+                                    || si.getReceiveLoadName().equals(ScheduleItem.NONE)
+                                    || si.getShipLoadName().equals(load)
+                                    || si.getShipLoadName().equals(ScheduleItem.NONE))) {
                         // is the schedule item valid?
                         String status = spur.checkScheduleValid();
                         if (!status.equals(Track.SCHEDULE_OKAY)) {
