@@ -904,8 +904,6 @@
 
 <mapID target="package.jmri.jmrit.operations.Operations_LocationReporter" url="package/jmri/jmrit/operations/Operations.shtml#LocationReporter"/>
 
-<mapID target="html.doc.Technical.JUnit_testSwingCode" url="html/doc/Technical/JUnit.shtml#testSwingCode"/>
-
 <mapID target="manual.DecoderPro.Multi_Decoder_Control" url="manual/DecoderPro/Multi_Decoder_Control.shtml"/>
 
 <mapID target="manual.DecoderPro.Comp_LightFX" url="manual/DecoderPro/Comp_LightFX.shtml"/>
@@ -1577,6 +1575,8 @@
 <mapID target="DecoderProManual.index" url="DecoderProManual/index.shtml"/>
 
 <mapID target="manual.DecoderPro3.Main_RPS" url="manual/DecoderPro3/Main_RPS.shtml"/>
+
+<mapID target="html.tools.index_systemSpecificTools" url="html/tools/index.shtml#systemSpecificTools"/>
 
 <mapID target="manual.DecoderPro3.Comp_Analog_Top" url="manual/DecoderPro3/Comp_Analog.shtml#Top"/>
 
