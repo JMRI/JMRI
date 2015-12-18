@@ -767,7 +767,10 @@ public class TrainBuilder extends TrainCommon {
             }
             return selected;
         } else if (validTracks.size() == 1) {
-            return validTracks.get(0);
+            Track track = validTracks.get(0);
+            addLine(_buildReport, FIVE, MessageFormat.format(Bundle.getMessage("buildOnlyOneDepartureTrack"),
+                    new Object[]{track.getName(), track.getLocation().getName()}));
+            return track;
         }
         return null; // no tracks available
     }
@@ -845,7 +848,7 @@ public class TrainBuilder extends TrainCommon {
         // if leaving staging, use any number of engines if required number is 0
         if (departStageTrack != null && numberOfEngines != 0 && departStageTrack.getNumberEngines() != numberOfEngines) {
             addLine(_buildReport, THREE, MessageFormat.format(Bundle.getMessage("buildStagingNotEngines"),
-                    new Object[]{departStageTrack.getName()}));
+                    new Object[]{departStageTrack.getName(), departStageTrack.getNumberEngines(), numberOfEngines}));
             return false; // done, wrong number of engines on staging track
         }
 
@@ -1609,11 +1612,11 @@ public class TrainBuilder extends TrainCommon {
                             new Object[]{c.toString(), c.getTypeName(), c.getLoadName()}));
                 }
             }
-            // error if all of the cars and engines from staging aren't available
-            if (numCarsFromStaging + _departStageTrack.getNumberEngines() != _departStageTrack.getNumberRS()) {
-                throw new BuildFailedException(MessageFormat.format(Bundle.getMessage("buildErrorNotAll"),
-                        new Object[]{Integer.toString(_departStageTrack.getNumberRS()
-                                - (numCarsFromStaging + _departStageTrack.getNumberEngines()))}));
+            // error if all of the cars from staging aren't available
+            if (numCarsFromStaging != _departStageTrack.getNumberCars()) {
+                throw new BuildFailedException(MessageFormat.format(Bundle.getMessage("buildErrorNotAllCars"),
+                        new Object[]{_departStageTrack.getName(), Integer.toString(_departStageTrack.getNumberCars()
+                                - numCarsFromStaging )}));
             }
             log.debug("Staging departure track ({}) has {} cars and {} blocks", _departStageTrack.getName(),
                     numCarsFromStaging, _numOfBlocks.size()); // NOI18N
@@ -2610,7 +2613,7 @@ public class TrainBuilder extends TrainCommon {
         // does the staging track have the right number of locomotives?
         if (_reqNumEngines > 0 && _reqNumEngines != departStageTrack.getNumberEngines()) {
             addLine(_buildReport, THREE, MessageFormat.format(Bundle.getMessage("buildStagingNotEngines"),
-                    new Object[]{departStageTrack.getName()}));
+                    new Object[]{departStageTrack.getName(), departStageTrack.getNumberEngines(), _reqNumEngines}));
             return false;
         }
         // is the staging track direction correct for this train?
@@ -2628,6 +2631,11 @@ public class TrainBuilder extends TrainCommon {
                     if (eng.getRouteLocation() != null) {
                         addLine(_buildReport, THREE, MessageFormat.format(Bundle.getMessage("buildStagingDepart"),
                                 new Object[]{departStageTrack.getName(), eng.getTrainName()}));
+                        return false;
+                    }
+                    if (eng.getTrain() != null && eng.getTrain() != _train) {
+                        addLine(_buildReport, THREE, MessageFormat.format(Bundle.getMessage("buildStagingDepartEngineTrain"),
+                                new Object[]{departStageTrack.getName(), eng.toString(), eng.getTrainName()}));
                         return false;
                     }
                     // does the train accept the engine type from the staging track?
@@ -2693,6 +2701,11 @@ public class TrainBuilder extends TrainCommon {
                     log.debug("Car ({}) has route location ({})", car.toString(), car.getRouteLocation().getName());
                     addLine(_buildReport, THREE, MessageFormat.format(Bundle.getMessage("buildStagingDepart"),
                             new Object[]{departStageTrack.getName(), car.getTrainName()}));
+                    return false;
+                }
+                if (car.getTrain() != null && car.getTrain() != _train) {
+                    addLine(_buildReport, THREE, MessageFormat.format(Bundle.getMessage("buildStagingDepartCarTrain"),
+                            new Object[]{departStageTrack.getName(), car.toString(), car.getTrainName()}));
                     return false;
                 }
                 // does the train accept the car type from the staging track?
