@@ -110,6 +110,8 @@ public class CarLoads extends RollingStockAttribute {
         return box;
 
     }
+    
+
 
     /**
      * Gets a combobox with the available priorities
@@ -217,6 +219,25 @@ public class CarLoads extends RollingStockAttribute {
         List<String> loads = getNames(type);
         for (String name : loads) {
             box.addItem(name);
+        }
+    }
+    
+    /**
+     * Returns JComboBox with all load names for every type of car
+     */
+    public void updateComboBox(JComboBox<String> box) {
+        box.removeAllItems();
+        List<String> names = new ArrayList<String>();
+        for (String type : CarTypes.instance().getNames()) {
+            for (String load : getNames(type)) {
+                if (!names.contains(load)) {
+                    names.add(load);
+                }
+            }
+        }
+        java.util.Collections.sort(names);
+        for (String load : names) {
+            box.addItem(load);
         }
     }
 
