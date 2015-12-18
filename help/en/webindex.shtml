@@ -45,7 +45,7 @@
 
  
 <li>
-<a href="html/tools/tracker/index.shtml">Blocks </a>
+<a href="html/tools/tracker/index.shtml">Block Tracking </a>
 <ul></ul>
 </li>
 
@@ -893,6 +893,12 @@
 <ul>
   
 <li>
+<a href="html/apps/PanelPro/ShowPanel.shtml">Display Panel Files </a>
+<ul></ul>
+</li>
+
+  
+<li>
 <a href="html/apps/PanelPro/Panels.shtml">Intro </a>
 <ul></ul>
 </li>
@@ -912,12 +918,6 @@
   
 <li>
 <a href="package/jmri/jmrit/display/PanelEditor.shtml">Panel Editor </a>
-<ul></ul>
-</li>
-
-  
-<li>
-<a href="html/apps/PanelPro/ShowPanel.shtml">Viewing Panel Files </a>
 <ul></ul>
 </li>
 
@@ -1005,12 +1005,6 @@
 </li>
  
 <li>Routes <ul>
-  
-<li>
-<a href="package/jmri/jmrit/beantable/RouteAddEdit.shtml">Add a Route </a>
-<ul></ul>
-</li>
-
   
 <li>
 <a href="package/jmri/jmrit/beantable/RouteAddEdit.shtml">Edit a Route </a>
