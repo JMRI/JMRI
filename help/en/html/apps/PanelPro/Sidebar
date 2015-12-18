@@ -19,7 +19,7 @@
 </ul>
 </dd>
 
-<dt><h3>Other Useful Info</h3></dt>
+<dt><h3>Other Tools</h3></dt>
 <dd>
 <ul>
 <li><a href="../../tools/Sensors.shtml">Sensors</a>
@@ -31,8 +31,9 @@
 </dd>
 
 </dl>
+
 <a href="/donations.shtml">
- <img src="http://sourceforge.net/images/project-support.jpg" width="88" height="32" border="0" ALIGN="RIGHT" alt="Donate to JMRI" />
+ <img src="http://sourceforge.net/images/project-support.jpg" width="88" height="32" border="0" align="right" alt="Donate to JMRI" />
 </a> 
 
 </div> <!-- End of block of text on left side of page -->

@@ -69,6 +69,7 @@ public class SensorIcon extends PositionableIcon implements java.beans.PropertyC
     public SensorIcon(String s, Editor editor) {
         super(s, editor);
         _control = true;
+        originalText = s;
         debug = log.isDebugEnabled();
         setPopupUtility(new SensorPopupUtil(this, this));
         displayState(sensorState());
@@ -593,6 +594,7 @@ public class SensorIcon extends PositionableIcon implements java.beans.PropertyC
 
     public void setOriginalText(String s) {
         originalText = s;
+        displayState(sensorState());
     }
 
     public String getOriginalText() {
@@ -855,13 +857,13 @@ public class SensorIcon extends PositionableIcon implements java.beans.PropertyC
             _icon = false;
             _text = true;
             setIcon(null);
-            setOriginalText(getUnRotatedText());
+//            setOriginalText(getUnRotatedText());
             setSuperText(null);
             setOpaque(true);
         } else if (isText()) {
             _icon = true;
             _text = (originalText != null && originalText.length() > 0);
-            setSuperText(getOriginalText());
+            setUnRotatedText(getOriginalText());
             setOpaque(false);
         }
         _namedIcon = null;

@@ -2287,11 +2287,17 @@
     program, otherwise you will most likely overload your tracks when using this feature.</P>
     
    <A NAME="TrackDestinations"></A>
-   <H3>Track Destinations</H3>
+   <H4>Track Destinations</H4>
 
-   You can control which destinations a classification/interchange (C/I) or staging track will service. Under
-   "Tools" in the edit track window for a C/I or staging track, the menu item
-   "Track Destinations" allows you to select which destinations are valid for the track.
+   You can control which destinations a classification/interchange (C/I) or staging track will
+   service. Under "Tools" in the edit track window for a C/I or staging track, the menu item "Track
+   Destinations" allows you to select which destinations are valid for the track.
+
+   <P>For C/I tracks there's an option to only accept cars with a final destination. This
+    prevents cars without a final destination from using the track. This is useful where the C/I
+    allowed track destinations are two or more trains away requiring the cars to be routed. Cars
+    without a final destination could be stranded on the C/I track if there isn't a train that
+    directly services at least one of the C/I destinations.</P>
 
    <P>After you've selected the destinations that you want the track to service, you can use
     the "Check Destinations" button to verify that all of the destinations you've selected can also

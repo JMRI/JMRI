@@ -55,7 +55,7 @@ public class SwingTestCaseTest extends SwingTestCase {
 
     // Main entry point
     static public void main(String[] args) {
-        String[] testCaseName = {SwingTestCaseTest.class.getName()};
+        String[] testCaseName = {"-noloading", SwingTestCaseTest.class.getName()};
         junit.swingui.TestRunner.main(testCaseName);
     }
 
