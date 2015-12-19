@@ -15,6 +15,9 @@ import org.slf4j.LoggerFactory;
  * @version $Revision$
  */
 public class Engine extends RollingStock {
+    
+    public static final int NCE_REAR_BLOCK_NUMBER = 8;
+    public static final int B_UNIT_BLOCKING = 10;  // block B Units after NCE Consists
 
     private Consist _consist = null;
     private String _model = NONE;
@@ -92,7 +95,7 @@ public class Engine extends RollingStock {
         }
         return hp;
     }
-    
+
     public int getHpInteger() {
         try {
             return Integer.parseInt(getHp());
@@ -110,13 +113,13 @@ public class Engine extends RollingStock {
     public void setLength(String length) {
         super.setLength(length);
         try {
-           if (getModel().equals(NONE)) {
-               return;
-           }
-           engineModels.setModelLength(getModel(), length);
-        } catch(java.lang.NullPointerException npe){
-          // failed, but the model may not have been set.
-          log.debug("NPE setting length for Engine ({})", toString());
+            if (getModel().equals(NONE)) {
+                return;
+            }
+            engineModels.setModelLength(getModel(), length);
+        } catch (java.lang.NullPointerException npe) {
+            // failed, but the model may not have been set.
+            log.debug("NPE setting length for Engine ({})", toString());
         }
         return;
     }
@@ -152,33 +155,55 @@ public class Engine extends RollingStock {
      */
     public void setWeightTons(String weight) {
         try {
-           if (getModel().equals(NONE)) {
-               return;
-           }
-           String old = getWeightTons();
-           super.setWeightTons(weight);
-           engineModels.setModelWeight(getModel(), weight);
-           if (!old.equals(weight)) {
-              setDirtyAndFirePropertyChange("Engine Weight Tons", old, weight); // NOI18N
-           }
-        } catch(java.lang.NullPointerException npe) {
-           // this failed, was the model set?
-           log.debug("NPE setting Weight Tons for Engine ({})", toString());
+            if (getModel().equals(NONE)) {
+                return;
+            }
+            String old = getWeightTons();
+            super.setWeightTons(weight);
+            engineModels.setModelWeight(getModel(), weight);
+            if (!old.equals(weight)) {
+                setDirtyAndFirePropertyChange("Engine Weight Tons", old, weight); // NOI18N
+            }
+        } catch (java.lang.NullPointerException npe) {
+            // this failed, was the model set?
+            log.debug("NPE setting Weight Tons for Engine ({})", toString());
         }
     }
 
     public String getWeightTons() {
         String weight = null;
-        try{
-           weight = engineModels.getModelWeight(getModel());
-           if (weight == null) {
-               weight = NONE;
-           }
-       } catch(java.lang.NullPointerException npe){
-          log.debug("NPE getting Weight Tons for Engine ({})", toString());
-          weight = NONE;
-       }
-       return weight;
+        try {
+            weight = engineModels.getModelWeight(getModel());
+            if (weight == null) {
+                weight = NONE;
+            }
+        } catch (java.lang.NullPointerException npe) {
+            log.debug("NPE getting Weight Tons for Engine ({})", toString());
+            weight = NONE;
+        }
+        return weight;
+    }
+
+    public void setBunit(boolean bUnit) {
+        if (getModel().equals(NONE)) {
+            return;
+        }
+        boolean old = isBunit();
+        engineModels.setModelBunit(getModel(), bUnit);
+        if (old != bUnit) {
+            setDirtyAndFirePropertyChange(TYPE_CHANGED_PROPERTY, old, bUnit);
+        }
+    }
+
+    public boolean isBunit() {
+        try {
+            Boolean bUnit = engineModels.isModelBunit(getModel());
+            if (bUnit != null)
+                return bUnit;
+        } catch (java.lang.NullPointerException npe) {
+            log.debug("NPE getting is B unit for Engine ({})", toString());
+        }
+        return false;
     }
 
     /**
@@ -278,6 +303,9 @@ public class Engine extends RollingStock {
         if ((a = e.getAttribute(Xml.WEIGHT_TONS)) != null) {
             setWeightTons(a.getValue());
         }
+        if ((a = e.getAttribute(Xml.B_UNIT)) != null) {
+            setBunit(a.getValue().equals(Xml.TRUE));
+        }
         if ((a = e.getAttribute(Xml.CONSIST)) != null) {
             Consist c = EngineManager.instance().getConsistByName(a.getValue());
             if (c != null) {
@@ -308,6 +336,7 @@ public class Engine extends RollingStock {
         super.store(e);
         e.setAttribute(Xml.MODEL, getModel());
         e.setAttribute(Xml.HP, getHp());
+        e.setAttribute(Xml.B_UNIT, (isBunit() ? Xml.TRUE : Xml.FALSE));
         if (getConsist() != null) {
             e.setAttribute(Xml.CONSIST, getConsistName());
             if (getConsist().isLead(this)) {
