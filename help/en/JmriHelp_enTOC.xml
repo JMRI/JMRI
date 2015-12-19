@@ -11,6 +11,8 @@
  <tocitem text="Manuals " target="manual.index_Top"/>
 
  <tocitem text="Setup ">
+  <tocitem text="Preference Pane " target="package.apps.TabbedPreferences"/>
+
   <tocitem text="Configuration Profiles " target="html.profiles"/>
 
   <tocitem text="Error Codes " target="html.Errors"/>
@@ -19,7 +21,7 @@
 
   <tocitem text="Names &amp; Naming " target="html.doc.Technical.Names"/>
 
-  <tocitem text="USB " target="package.jmri.jmrix.jinput.treemodel.TreeFrame"/>
+  <tocitem text="USB input " target="package.jmri.jmrix.jinput.treemodel.TreeFrame"/>
 
  </tocitem>
  <tocitem text="Hardware Support " target="html.hardware.index">
@@ -173,13 +175,13 @@
    <tocitem text="Settings " target="package.jmri.jmrit.operations.Operations_Settings"/>
 
    <tocitem text="Locations " target="package.jmri.jmrit.operations.Operations_Locations">
-    <tocitem text="Yards " target="package.jmri.jmrit.operations.Operations_Yards"/>
+    <tocitem text="Yard Tracks " target="package.jmri.jmrit.operations.Operations_Yards"/>
 
-    <tocitem text="Spurs " target="package.jmri.jmrit.operations.Operations_Sidings"/>
+    <tocitem text="Spur Tracks " target="package.jmri.jmrit.operations.Operations_Sidings"/>
 
-    <tocitem text="Interchange " target="package.jmri.jmrit.operations.Operations_Interchange"/>
+    <tocitem text="Interchange Tracks " target="package.jmri.jmrit.operations.Operations_Interchange"/>
 
-    <tocitem text="Staging " target="package.jmri.jmrit.operations.Operations_Staging"/>
+    <tocitem text="Staging Tracks " target="package.jmri.jmrit.operations.Operations_Staging"/>
 
     <tocitem text="Schedules " target="package.jmri.jmrit.operations.Operations_Schedules"/>
 
@@ -217,6 +219,8 @@
 
   <tocitem text="Layout Editor " target="package.jmri.jmrit.display.LayoutEditor"/>
 
+  <tocitem text="Display Panel Files " target="html.apps.PanelPro.ShowPanel"/>
+
  </tocitem>
  <tocitem text="Tables ">
   <tocitem text="Turnouts Table " target="package.jmri.jmrit.beantable.TurnoutTable"/>
@@ -229,6 +233,10 @@
 
   <tocitem text="Signal Masts Table " target="package.jmri.jmrit.beantable.SignalMastTable"/>
 
+  <tocitem text="Blocks Table " target="package.jmri.jmrit.beantable.BlockTable"/>
+
+  <tocitem text="O(ccupancy)Block Table " target="package.jmri.jmrit.logix.OBlockTable"/>
+
   <tocitem text="Routes Table " target="package.jmri.jmrit.beantable.RouteTable"/>
 
   <tocitem text="LRoutes Table " target="package.jmri.jmrit.beantable.LRouteTable"/>
@@ -238,8 +246,6 @@
   <tocitem text="Memory Variables Table " target="package.jmri.jmrit.beantable.MemoryTable"/>
 
   <tocitem text="Reporters Table " target="package.jmri.jmrit.beantable.ReporterTable"/>
-
-  <tocitem text="Blocks Table " target="package.jmri.jmrit.beantable.BlockTable"/>
 
  </tocitem>
  <tocitem text="Tools " target="html.tools.index">

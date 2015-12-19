@@ -4,11 +4,8 @@
   <title>
  	JMRI: Lights Documentation
   </title>
-  <meta http-equiv=Content-Type content="text/html; charset=iso-8859-1">
 
-  <meta content="Bob Jacobsen" name=Author>
-
-  <meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1">
+  <meta name="Author" content="Bob Jacobsen">
   <meta name="keywords"
         content="hardware layout java model railroad JMRI CMRI decoderpro panelpro tools loconet lenz nce easydcc dcc nmra">
 
@@ -27,7 +24,7 @@
 <!--#include virtual="Sidebar" -->
 <div id="mainContent">
 
-<H2>JMRI: Light Documentation</h2>
+<h2>JMRI: Lights Documentation</h2>
 
 <h3>What are Lights?</h3>
 
@@ -140,11 +137,11 @@ correct the error and click <b>Create</b> again.</p></li>
 <ol>
 	<li>Edit of an existing Light may be started in either of two ways:
 	<ul>
-		<li>Click on a Light's <b>Edit</b> button in the Light Table.</li>
+		<li>Click on a Light's <b>Edit</b> button in the Lights Table.</li>
 		<li>Enter the system name of the Light to be edited in the 
 	Add/Edit Light window and click the <b>Edit</b> button at 
 	the bottom of the Add/Edit Light window.  This must be the same 
-	as the system name shown in the Light Table.</li>
+	as the system name shown in the Lights Table.</li>
 	</ul>
 	The <b>Create</b> and <b>Edit</b> buttons at the bottom of the Add/Edit 
 	Light window will change to <b>Update</b> and <b>Cancel</b>.</li>
@@ -285,7 +282,7 @@ The operation of a Light can be controlled in the following ways:
 </p>
 
 <!--#include virtual="/Footer" -->
-</div>
-</div>
+ </div><!-- closes #mainContent-->
+</div> <!-- closes #mBody-->
 </body>
 </html>

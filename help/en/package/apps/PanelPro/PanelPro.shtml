@@ -4,7 +4,7 @@
  <title>
       JMRI: PanelPro Main Window
  </title>
-    <meta name="Author" content="Bob Jacobsen">
+    <meta name="author" content="Bob Jacobsen">
     <meta name="keywords" content="JMRI help preferences">
 
 <!-- Style -->
@@ -55,8 +55,8 @@ Help on specific menus:
 This is the apps.PanelPro.PanelPro.shtml help page
 
 <!--#include virtual="/Footer" -->
-</div>
-</div>
+ </div><!-- closes #mainContent-->
+</div> <!-- closes #mBody-->
 </body>
 </html>
 
