@@ -21,6 +21,7 @@ public class Xml {
     static final String ENGINE = "engine"; // NOI18N
     static final String HP = "hp"; // NOI18N
     static final String TYPE = "type"; // NOI18N
+    static final String B_UNIT = "bUnit"; // NOI18N
 
     static final String WEIGHT_TONS = "weightTons"; // NOI18N
     static final String CONSIST = "consist"; // NOI18N

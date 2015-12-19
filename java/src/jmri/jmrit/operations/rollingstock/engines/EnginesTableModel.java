@@ -360,8 +360,12 @@ public class EnginesTableModel extends javax.swing.table.AbstractTableModel impl
                 return eng.getModel();
             case HP_COLUMN:
                 return eng.getHpInteger();
-            case TYPE_COLUMN:
+            case TYPE_COLUMN: {
+                if (eng.isBunit()) {
+                    return eng.getTypeName() + " " + Bundle.getMessage("(B)");
+                }
                 return eng.getTypeName();
+            }
             case CONSIST_COLUMN: {
                 if (eng.getConsist() != null && eng.getConsist().isLead(eng)) {
                     return eng.getConsistName() + "*";
