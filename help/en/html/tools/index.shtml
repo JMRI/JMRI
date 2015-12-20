@@ -162,7 +162,7 @@
 <li><a href="../hardware/cmri/Signals.shtml">Signals</a></li>
 </ul>
   
-<h3><a href="html/hardware/can/index.shtml">MERG CBUS Tools</a></h3>
+<h3><a href="../hardware/can/index.shtml">MERG CBUS Tools</a></h3>
 <p>When JMRI is connected to a layout via CBUS, the <b>MERG</b> menu is shown:</p>
 <ul>   
 <li><a href="../../package/jmri/jmrix/can/cbus/swing/configtool/ConfigToolFrame.shtml">Event Capture Tool</a></li>
