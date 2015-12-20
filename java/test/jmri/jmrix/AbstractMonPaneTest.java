@@ -42,13 +42,13 @@ public class AbstractMonPaneTest extends TestCase {
         a.entryField.setText("foo");
         a.enterButtonActionPerformed(null);
         
-        jmri.util.JUnitUtil.releaseThread(this, 20);
+        jmri.util.JUnitUtil.releaseThread(this);
         Assert.assertEquals("foo\n", a.getFrameText());
 
         a.entryField.setText("bar");
         a.enterButtonActionPerformed(null);
 
-        jmri.util.JUnitUtil.releaseThread(this, 20);
+        jmri.util.JUnitUtil.releaseThread(this);
         Assert.assertEquals("foo\nbar\n", a.getFrameText());
     }
 
@@ -65,7 +65,7 @@ public class AbstractMonPaneTest extends TestCase {
         
         a.clearButtonActionPerformed(null);
         
-        jmri.util.JUnitUtil.releaseThread(this, 20);
+        jmri.util.JUnitUtil.releaseThread(this);
         Assert.assertEquals("", a.getFrameText());
     }
 
@@ -83,12 +83,12 @@ public class AbstractMonPaneTest extends TestCase {
         a.enterButtonActionPerformed(null);
         
         a.freezeButton.setSelected(true);
-        jmri.util.JUnitUtil.releaseThread(this, 20);
+        jmri.util.JUnitUtil.releaseThread(this);
         
         a.entryField.setText("bar");
         a.enterButtonActionPerformed(null);
 
-        jmri.util.JUnitUtil.releaseThread(this, 20);
+        jmri.util.JUnitUtil.releaseThread(this);
         Assert.assertEquals("foo\n", a.getFrameText());
     }
 
