@@ -462,7 +462,7 @@
 </li>
   
 <li>
-<a href="package/jmri/jmrit/dispatcher/Dispatcher.shtml">Dispatcher </a>
+<a href="package/jmri/jmrit/dispatcher/Dispatcher.shtml">DispatcherPro </a>
 <ul>
    
 <li>
@@ -679,7 +679,7 @@
 
   
 <li>
-<a href="html/apps/PanelPro/ShowPanel.shtml">Display Panel Files </a>
+<a href="html/apps/PanelPro/ShowPanel.shtml">Displaying Panel Files </a>
 <ul></ul>
 </li>
 
@@ -946,7 +946,7 @@
 <ul>
    
 <li>
-<a href="package/jmri/jmrit/beantable/RouteAddEdit.shtml">Adding/Editing Routes </a>
+<a href="package/jmri/jmrit/beantable/RouteAddEdit.shtml">Add/Edit Routes </a>
 <ul></ul>
 </li>
 
@@ -1000,13 +1000,13 @@
 <li>Sections <ul>
    
 <li>
-<a href="package/jmri/jmrit/beantable/SectionAddEdit.shtml">Section Add/Edit </a>
+<a href="package/jmri/jmrit/beantable/SectionTable.shtml">Sections Table </a>
 <ul></ul>
 </li>
 
    
 <li>
-<a href="package/jmri/jmrit/beantable/SectionTable.shtml">Sections Table </a>
+<a href="package/jmri/jmrit/beantable/SectionAddEdit.shtml">Add/Edit Sections </a>
 <ul></ul>
 </li>
 
@@ -1025,13 +1025,13 @@
 <ul>
    
 <li>
-<a href="package/jmri/jmrit/beantable/SensorAddEdit.shtml">Sensor Add/Edit </a>
+<a href="package/jmri/jmrit/beantable/SensorTable.shtml">Sensors Table </a>
 <ul></ul>
 </li>
 
    
 <li>
-<a href="package/jmri/jmrit/beantable/SensorTable.shtml">Sensors Table </a>
+<a href="package/jmri/jmrit/beantable/SensorAddEdit.shtml">Add/Edit Sensors </a>
 <ul></ul>
 </li>
 
@@ -1060,7 +1060,7 @@
 
     
 <li>
-<a href="package/jmri/jmrit/beantable/SignalAddEdit.shtml">Adding Signal Heads </a>
+<a href="package/jmri/jmrit/beantable/SignalAddEdit.shtml">Add/Edit Signal Heads </a>
 <ul></ul>
 </li>
 
@@ -1091,7 +1091,7 @@
 
     
 <li>
-<a href="package/jmri/jmrit/beantable/SignalMastAddEdit.shtml">Adding Signal Masts </a>
+<a href="package/jmri/jmrit/beantable/SignalMastAddEdit.shtml">Add/Edit Signal Masts </a>
 <ul></ul>
 </li>
 
@@ -1166,7 +1166,7 @@
 
    
 <li>
-<a href="package/jmri/jmrit/beantable/TransitAddEdit.shtml">Transit Add/Edit </a>
+<a href="package/jmri/jmrit/beantable/TransitAddEdit.shtml">Add/Edit Transits </a>
 <ul></ul>
 </li>
 
@@ -1185,7 +1185,7 @@
 
    
 <li>
-<a href="package/jmri/jmrit/beantable/TurnoutAddEdit.shtml">Turnout Add/Edit </a>
+<a href="package/jmri/jmrit/beantable/TurnoutAddEdit.shtml">Add/Edit Turnouts </a>
 <ul></ul>
 </li>
 
