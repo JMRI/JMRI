@@ -7,15 +7,11 @@
 <div id="side"> <!-- Block of text on left side of page -->
     <div style="text-align: center"><strong>DecoderPro&reg; Manual</strong></div>
 
-    <div style="text-align: center">
-       <a href="http://jmri.org/manual/pdf/DP3_Man_3-2.pdf">Download</a>
-    </div>
-
 <dl class="toc"><!-- main table of contents -->
-<dt><h3>Installing JMRI</strong></h3></dt>
-    <dd> 
+<dt><h3>Installing JMRI</h3></dt>
+	  <dd>
     <ul>
-	  <li><a href="Installing_JMRI.shtml">Preparing to Install JMRI</a></li>
+	  <li><a href="Installing_JMRI.shtml">Preparing to Install</a></li>
     <li><a href="Installing_JMRI.shtml#InstalJMRI">Installing JMRI</a></li>
     </ul>
     </dd>

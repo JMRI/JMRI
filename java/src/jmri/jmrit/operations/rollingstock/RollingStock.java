@@ -31,6 +31,7 @@ import org.slf4j.LoggerFactory;
 public class RollingStock implements java.beans.PropertyChangeListener {
 
     public static final String NONE = "";
+    public static final int DEFAULT_BLOCKING_ORDER = 0;
     protected static final String DEFAULT_WEIGHT = "0";
 
     protected String _id = NONE;
@@ -62,7 +63,7 @@ public class RollingStock implements java.beans.PropertyChangeListener {
     protected RouteLocation _routeDestination = null;
     protected int _moves = 0;
     protected String _lastLocationId = LOCATION_UNKNOWN; // the rollingstock's last location id
-    protected int _blocking = 0;
+    protected int _blocking = DEFAULT_BLOCKING_ORDER;
 
     public static final String LOCATION_UNKNOWN = "0";
 
@@ -70,8 +71,7 @@ public class RollingStock implements java.beans.PropertyChangeListener {
 
     public static final String ERROR_TRACK = "ERROR wrong track for location"; // NOI18N checks for coding error
 
-    public static final String LOCATION_CHANGED_PROPERTY = "rolling stock location"; // NOI18N property change
-    // descriptions
+    public static final String LOCATION_CHANGED_PROPERTY = "rolling stock location"; // NOI18N 
     public static final String TRACK_CHANGED_PROPERTY = "rolling stock track location"; // NOI18N
     public static final String DESTINATION_CHANGED_PROPERTY = "rolling stock destination"; // NOI18N
     public static final String DESTINATION_TRACK_CHANGED_PROPERTY = "rolling stock track destination"; // NOI18N
