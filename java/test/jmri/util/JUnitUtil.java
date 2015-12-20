@@ -60,7 +60,7 @@ import org.slf4j.LoggerFactory;
  */
 public class JUnitUtil {
 
-    static final int DEFAULTDELAY = 50;
+    static final int DEFAULT_RELEASETHREAD_DELAY = 50;
 
     static int count = 0;
     /**
@@ -70,7 +70,7 @@ public class JUnitUtil {
      * For those, please use JFCUnit's flushAWT()
      */
     public static void releaseThread(Object self) {
-        releaseThread(self, DEFAULTDELAY);
+        releaseThread(self, DEFAULT_RELEASETHREAD_DELAY);
     }
 
     static void releaseThread(Object self, int delay) {
@@ -88,6 +88,47 @@ public class JUnitUtil {
         }
     }
 
+    static final int WAITFOR_DELAY_STEP = 5;
+    static final int WAITFOR_MAX_DELAY = 200;
+    
+    /** 
+     * Wait for a specific condition to be true, without having to wait longer
+     * <p>
+     * To be used in tests, will do an assert if the total delay is longer than WAITFOR_MAX_DELAY
+     * <p>
+     * Typical use:
+     * waitFor(()->{return replyVariable != null;},"reply not received")
+     *
+     * @param name label for Assert.fail if condition not true fast enough
+     */
+    static public void waitFor(ReleaseUntil condition, String name) {
+        if (javax.swing.SwingUtilities.isEventDispatchThread()) {
+            log.error("Cannot use waitFor on Swing thread", new Exception());
+            return;
+        }
+        int delay = 0;
+        try {
+            while (delay < WAITFOR_MAX_DELAY) {
+                if (condition.ready()) return;
+                try {
+                    int priority = Thread.currentThread().getPriority();
+                    Thread.currentThread().setPriority(Thread.MIN_PRIORITY);
+                    Thread.sleep(WAITFOR_DELAY_STEP);
+                    Thread.currentThread().setPriority(priority);
+                    delay += WAITFOR_DELAY_STEP;
+                } catch (InterruptedException e) {
+                    Assert.fail("failed due to InterruptedException");
+                }
+            }
+            Assert.fail(name);
+        } catch (Exception ex) {
+            Assert.fail("Exception while  looking for "+name+" "+ex);
+        }
+    }
+
+    public interface ReleaseUntil {
+        public boolean ready() throws Exception;
+    }
 
     public static void resetInstanceManager() {
         // create a new instance manager
