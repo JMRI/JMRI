@@ -4,6 +4,8 @@
 package jmri.jmrix.dccpp.serial;
 
 import jmri.jmrix.dccpp.DCCppPacketizer;
+import jmri.jmrix.dccpp.DCCppReply;
+import jmri.jmrix.dccpp.DCCppReplyParser;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -53,32 +55,47 @@ public class SerialDCCppPacketizer extends DCCppPacketizer {
      * @param istream character source.
      * @throws java.io.IOException when presented by the input source.
      */
-    //@Override
+    /*
+    @Override
     protected void loadChars(jmri.jmrix.AbstractMRReply msg, java.io.DataInputStream istream) throws java.io.IOException {
         int i;
+        String m;
+        DCCppReply dm;
         if (log.isDebugEnabled()) {
             log.debug("loading characters from port");
         }
+        
+        if (!(msg instanceof DCCppReply)) {
+            log.error("SerialDCCppPacketizer.loadChars called on non-DCCppReply msg!");
+            return;
+        }
+        
+        dm = (DCCppReply)msg;
+        
+        byte char1 = readByteProtected(istream);
+        m = "";
+        while (char1 != '<') {
+            // Spin waiting for '<'
+            char1 = readByteProtected(istream);
+        }
+        log.debug("Serial: Message started...");
+        // Pick up the rest of the command
         for (i = 0; i < msg.maxSize(); i++) {
-            byte char1 = readByteProtected(istream);
-	    // Spin waiting for the start-of-frame '<' character
-            while ((i == 0)) {
-                if ((char1 & 0xFF) != '<') {
-                    // save this so we can check for unsolicited
-                    // messages. ( TODO: Not needed for DCC++)
-                    //  toss this byte and read the next one
-                    char1 = readByteProtected(istream);
-                }
-
-            }
+            char1 = readByteProtected(istream);
 	    if (char1 == '>') {
+                log.debug("Received: {}", m);
+                // NOTE: Cast is OK because we checked runtime type of msg above.
+                ((DCCppReply)msg).parseReply(m);
 		break;
 	    } else {
-		msg.setElement(i, char1 & 0xFF);
+                m += Character.toString((char)char1);
+                //char1 = readByteProtected(istream);
+                log.debug("msg char[{}]: {} ({})", i, char1, Character.toString((char)char1));
+		//msg.setElement(i, char1 & 0xFF);
 	    }
         }
     }
-
+*/
     static Logger log = LoggerFactory.getLogger(SerialDCCppPacketizer.class.getName());
 }
 

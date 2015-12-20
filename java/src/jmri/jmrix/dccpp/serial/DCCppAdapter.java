@@ -222,7 +222,7 @@ public class DCCppAdapter extends DCCppSerialPortController implements jmri.jmri
      */
     public void configure() {
         // connect to a packetizing traffic controller
-	DCCppTrafficController packets = new DCCppPacketizer(new DCCppCommandStation());
+	DCCppTrafficController packets = new SerialDCCppPacketizer(new DCCppCommandStation());
         packets.connectPort(this);
 
         // start operation
@@ -294,10 +294,10 @@ public class DCCppAdapter extends DCCppSerialPortController implements jmri.jmri
         activeSerialPort.setDTR(true);		// pin 1 in DIN8; on main connector, this is DTR
 
         // find and configure flow control
-        //int flow = SerialPort.FLOWCONTROL_RTSCTS_OUT; // default, but also deftaul for getOptionState(option1Name)
-        int flow = SerialPort.FLOWCONTROL_NONE; // default, but also deftaul for getOptionState(option1Name)
+        int flow = SerialPort.FLOWCONTROL_RTSCTS_OUT; // default, but also deftaul for getOptionState(option1Name)
+        //int flow = SerialPort.FLOWCONTROL_NONE; // default, but also deftaul for getOptionState(option1Name)
         if (!getOptionState(option1Name).equals(validOption1[0])) {
-            flow = 0;
+            flow = SerialPort.FLOWCONTROL_NONE;
         }
         activeSerialPort.setFlowControlMode(flow);
         //if (getOptionState(option2Name).equals(validOption2[0]))
