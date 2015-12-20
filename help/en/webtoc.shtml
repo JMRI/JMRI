@@ -872,7 +872,7 @@
 
    
 <li>
-<a href="package/jmri/jmrit/beantable/LRouteAddEdit.shtml">Adding/Editing LRoutes </a>
+<a href="package/jmri/jmrit/beantable/LRouteAddEdit.shtml">Add/Edit LRoutes </a>
 <ul></ul>
 </li>
 
@@ -885,13 +885,13 @@
 <ul>
    
 <li>
-<a href="package/jmri/jmrit/beantable/MemoryAddEdit.shtml">Add/Edit Memories </a>
+<a href="package/jmri/jmrit/beantable/MemoryTable.shtml">Memory Variables Table </a>
 <ul></ul>
 </li>
 
    
 <li>
-<a href="package/jmri/jmrit/beantable/MemoryTable.shtml">Memory Variables Table </a>
+<a href="package/jmri/jmrit/beantable/MemoryAddEdit.shtml">Add/Edit Memory Variables </a>
 <ul></ul>
 </li>
 
@@ -927,13 +927,13 @@
 <ul>
    
 <li>
-<a href="package/jmri/jmrit/beantable/ReporterAddEdit.shtml">Add/Edit Reporter </a>
+<a href="package/jmri/jmrit/beantable/ReporterTable.shtml">Reporters Table </a>
 <ul></ul>
 </li>
 
    
 <li>
-<a href="package/jmri/jmrit/beantable/ReporterTable.shtml">Reporters Table </a>
+<a href="package/jmri/jmrit/beantable/ReporterAddEdit.shtml">Add/Edit Reporters </a>
 <ul></ul>
 </li>
 
@@ -946,13 +946,13 @@
 <ul>
    
 <li>
-<a href="package/jmri/jmrit/beantable/RouteAddEdit.shtml">Add/Edit Routes </a>
+<a href="package/jmri/jmrit/beantable/RouteTable.shtml">Routes Table </a>
 <ul></ul>
 </li>
 
    
 <li>
-<a href="package/jmri/jmrit/beantable/RouteTable.shtml">Routes Table </a>
+<a href="package/jmri/jmrit/beantable/RouteAddEdit.shtml">Add/Edit Routes </a>
 <ul></ul>
 </li>
 
