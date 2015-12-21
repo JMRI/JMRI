@@ -89,7 +89,7 @@ public class JUnitUtil {
     }
 
     static final int WAITFOR_DELAY_STEP = 5;
-    static final int WAITFOR_MAX_DELAY = 200;
+    static final int WAITFOR_MAX_DELAY = 400;
     
     /** 
      * Wait for a specific condition to be true, without having to wait longer
