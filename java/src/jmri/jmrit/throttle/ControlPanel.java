@@ -1093,7 +1093,33 @@ public class ControlPanel extends JInternalFrame implements java.beans.PropertyC
             }
         }
     }
-
+    
+    /** 
+     * Intended for throttle scripting
+     */
+    public void setForwardDirection(boolean fwd) {
+        if (fwd) {
+            if (forwardButton.isEnabled()) {
+                forwardButton.doClick();
+            } else {
+                log.error("setForwardDirection(true) with forwardButton disabled, failed");
+            }
+        } else {
+            if (reverseButton.isEnabled()) {
+                reverseButton.doClick();
+            } else {
+                log.error("setForwardDirection(false) with reverseButton disabled, failed");
+            }
+        }
+    }
+    
+    /** 
+     * Intended for throttle scripting
+     */
+    public JSlider getSpeedSlider() {
+        return speedSlider;
+    }
+    
     // update the state of this panel if any of the properties change
     public void propertyChange(java.beans.PropertyChangeEvent e) {
         if (e.getPropertyName().equals("SpeedSetting")) {
