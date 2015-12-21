@@ -10,8 +10,16 @@
 
  <indexitem text="Audio " target="html.tools.Audio"/>
 
- <indexitem text="Block Tracking " target="html.tools.tracker.index"/>
+ <indexitem text="Blocks " target="html.tools.Blocks">
+  <indexitem text="Blocks Table " target="package.jmri.jmrit.beantable.BlockTable"/>
 
+  <indexitem text="Add Blocks " target="package.jmri.jmrit.beantable.BlockAddEdit"/>
+
+  <indexitem text="Edit Blocks " target="package.jmri.jmrit.beantable.BlockEdit"/>
+
+  <indexitem text="Block Tracking " target="html.tools.tracker.index"/>
+
+ </indexitem>
  <indexitem text="C/MRI " target="html.hardware.cmri.CMRI">
   <indexitem text="Check Pin Assignments " target="package.jmri.jmrix.cmri.serial.assignment.ListFrame"/>
 
@@ -106,16 +114,16 @@
   <indexitem text="UR92 " target="package.jmri.jmrix.loconet.duplexgroup.DuplexGroupTabbedPanel"/>
 
  </indexitem>
- <indexitem text="Dispatcher " target="package.jmri.jmrit.dispatcher.Dispatcher">
-  <indexitem text="Active Trains " target="package.jmri.jmrit.dispatcher.Dispatcher_atrains"/>
+ <indexitem text="DispatcherPro " target="html.apps.DispatcherPro.index">
+  <indexitem text="Dispatcher " target="package.jmri.jmrit.dispatcher.Dispatcher"/>
 
-  <indexitem text="Glossary " target="package.jmri.jmrit.dispatcher.Dispatcher"/>
+  <indexitem text="Active Trains " target="package.jmri.jmrit.dispatcher.Dispatcher_atrains"/>
 
   <indexitem text="Options " target="package.jmri.jmrit.dispatcher.Options"/>
 
- </indexitem>
- <indexitem text="DispatcherPro " target="html.apps.DispatcherPro.index"/>
+  <indexitem text="Glossary " target="package.jmri.jmrit.dispatcher.Dispatcher"/>
 
+ </indexitem>
  <indexitem text="Error Codes " target="html.Errors"/>
 
  <indexitem text="FindBugs " target="html.doc.Technical.FindBugs"/>
