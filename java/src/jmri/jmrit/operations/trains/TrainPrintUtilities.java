@@ -116,6 +116,13 @@ public class TrainPrintUtilities {
                 break;
             }
             if (line == null) {
+                if (isPreview) {
+                    try {
+                        writer.write(" "); // need to do this in case the input file was empty to create preview
+                    } catch (IOException e) {
+                        log.debug("Print write failed for null line");
+                    }
+                }
                 break;
             }
             //			log.debug("Line: {}", line.toString());
