@@ -52,7 +52,7 @@ public class DCCppPacketizerTest extends TestCase {
         DCCppPortControllerScaffold p = new DCCppPortControllerScaffold();
         c.connectPort(p);
         //c.startThreads();
-        DCCppMessage m = DCCppMessage.getTurnoutCommandMsg(22, true);
+        DCCppMessage m = DCCppMessage.makeTurnoutCommandMsg(22, true);
         m.setTimeout(1);  // don't want to wait a long time
         c.sendDCCppMessage(m, null);
 	log.debug("Message = {} length = {}", m.toString(), m.getNumDataElements());
@@ -152,10 +152,10 @@ public class DCCppPacketizerTest extends TestCase {
 
             // now we need to send a message with both the second and third listeners 
             // as reply receiver.
-            DCCppMessage m = DCCppMessage.getTurnoutCommandMsg(22, true);
+            DCCppMessage m = DCCppMessage.makeTurnoutCommandMsg(22, true);
             c.sendDCCppMessage(m, l1);
 
-            DCCppMessage m1 = DCCppMessage.getTurnoutCommandMsg(23, true);
+            DCCppMessage m1 = DCCppMessage.makeTurnoutCommandMsg(23, true);
             c.sendDCCppMessage(m1, l2);
 
             jmri.util.JUnitUtil.releaseThread(this); // Allow time for messages to process into the system

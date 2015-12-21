@@ -56,7 +56,6 @@
 		<dt><h3 style="padding-left: 1em;"><a href="../hardware/index.shtml">Supported Hardware</a></h3></dt>
 		<dd> 
 		    <ul>
-				<li> <a href="../hardware/XPressNet/index.shtml">Atlas Commander</a>
 				<!-- copy this list from /root sidebar, compare with /help/en/html/index.shtml, checked 12/2015 -->
 				<li><a href="../hardware/XPressNet/index.shtml">Atlas Commander</a>
 				<li><a href="../hardware/bachrus/index.shtml">Bachrus</a>

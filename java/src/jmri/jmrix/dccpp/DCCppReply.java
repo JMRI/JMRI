@@ -21,13 +21,18 @@ import org.slf4j.LoggerFactory;
  */
 public class DCCppReply extends jmri.jmrix.AbstractMRReply {
     
-    private ArrayList valueList = new ArrayList();
-    private String myRegex;
+    private ArrayList<Integer> valueList = new ArrayList<>();
+    protected String myRegex;
+    protected StringBuilder myReply;
+    protected char opcode;
 
     // Create a new reply.
     public DCCppReply() {
         super();
         setBinary(false);
+        myRegex = "";
+        myReply = new StringBuilder("");
+        opcode = 0x00;
     }
 
     // Create a new reply from an existing reply
@@ -36,6 +41,7 @@ public class DCCppReply extends jmri.jmrix.AbstractMRReply {
         setBinary(false);
         valueList = new ArrayList(reply.valueList);
         myRegex = reply.myRegex;
+        myReply = reply.myReply;
     }
 
     /**
@@ -59,53 +65,47 @@ public class DCCppReply extends jmri.jmrix.AbstractMRReply {
     public DCCppReply(String message) {
         super();
         setBinary(false);
+        myReply = new StringBuilder(message);
         // gather bytes in result
-        byte b[] = message.getBytes();
-        if (b.length == 0) {
-            // no such thing as a zero-length message
-            _nDataChars = 0;
-            _dataChars = null;
-            return;
-        }
-        _nDataChars = b.length;
+        _nDataChars = myReply.length();
         _dataChars = new int[_nDataChars];
-        for (int i = 0; i < b.length; i++) {
-            setElement(i, b[i]);
-        }
     }
         
     protected DCCppReply(char c, String regex) {
         super();
         setBinary(false);
         myRegex = regex;
-        valueList.add(c);
-        _nDataChars = this.toString().length();
+        opcode = c;
+        myReply = new StringBuilder(Character.toString(opcode));
+        _nDataChars = myReply.length();
+        log.debug("DCCppReply() opcode = {} ({})", opcode, Character.toString(opcode));
     }
 
 
+    @Override
     public String toString() {
-        String s = "";
-        for (int i = 0; i < valueList.size(); i++) {
-            if (valueList.get(i).getClass().equals(Boolean.class)) {
-                s += ((boolean)valueList.get(i) ? "1" : "0");
-            } else {
-                s += valueList.get(i).toString();
-            }
-            if (i < valueList.size() -1) {
-                s += " ";
-            }
-        }
-        return(s);
+        log.debug("DCCppReply.toString(): char {} {} msg {}", opcode, Character.toString(opcode), myReply.toString());
+        return(myReply.toString());
     }
     
     public void parseReply(String s) {
-        DCCppReply r = DCCppReply.parseDCCppReply(s);
+        DCCppReply r = DCCppReplyParser.parseReply(s);
+        log.debug("in parseReply() string: {}", s);
         if (r != null) {
+            this.opcode = r.opcode;
             this.valueList = r.valueList;
             this.myRegex = r.myRegex;
+            this.myReply = r.myReply;
             this._nDataChars = r._nDataChars;
+            log.debug("copied: this: {} opcode {}", this.toString(), opcode);
         }
     }
+    
+    ///
+    ///
+    /// TODO: Stopped Refactoring to StringBuilder here 12/12/15
+    ///
+    ///
     
     /**
      * Parses a string and generates a DCCppReply from the string contents
@@ -114,32 +114,42 @@ public class DCCppReply extends jmri.jmrix.AbstractMRReply {
      * @return DCCppReply or null if not a valid formatted string
      */
     public static DCCppReply parseDCCppReply(String s) {
+        
         Matcher m;
+        log.debug("Parse charAt(0): {} ({})", s.charAt(0), Character.toString(s.charAt(0)));
         DCCppReply r = new DCCppReply(s.charAt(0), null);
         switch(s.charAt(0)) {
-            case DCCppConstants.THROTTLE_REPLY:
-                if ((m = match(s, DCCppConstants.THROTTLE_REPLY_REGEX, "ctor")) != null) {
-                    r.valueList.add(Integer.parseInt(m.group(1))); // register
-                    r.valueList.add(Float.parseFloat(m.group(2))); // speed
-                    r.valueList.add(!m.group(3).equals("0")); // direction -- TODO: Make this BOOL?
+            case DCCppConstants.VERSION_REPLY:
+                if (s.matches(DCCppConstants.STATUS_REPLY_REGEX)) {
+                    r.myReply = new StringBuilder(s);
+                    log.debug("Status Reply: {}", r.toString());
+                    r._nDataChars = r.toString().length();
+                    r.myRegex = DCCppConstants.STATUS_REPLY_REGEX;
+                    return(r);
                 } else {
                     return(null);
                 }
+                
+            case DCCppConstants.THROTTLE_REPLY:
+                if (s.matches(DCCppConstants.THROTTLE_REPLY_REGEX)) {
+                    r.myReply = new StringBuilder(s);
+                } else {
+                    return(null);
+                }
+                log.debug("Throttle Reply: {}", r.toString());
                 r._nDataChars = r.toString().length();
                 r.myRegex = DCCppConstants.THROTTLE_REPLY_REGEX;
                 return(r);  
             case DCCppConstants.TURNOUT_REPLY:
-                if ((m = match(s, DCCppConstants.TURNOUT_REPLY_REGEX, "ctor")) != null) {
-                    r.valueList.add(Integer.parseInt(m.group(1))); // id
-                    r.valueList.add(!m.group(2).equals("0")); // direction -- TODO: Make this BOOL?
+                if (s.matches(DCCppConstants.TURNOUT_REPLY_REGEX)) {
+                    r.myReply = new StringBuilder(s);
                     r.myRegex = DCCppConstants.TURNOUT_REPLY_REGEX;
-                } else if ((m = match(s, DCCppConstants.TURNOUT_DEF_REPLY_REGEX, "ctor"))!= null) {
-                    r.valueList.add(Integer.parseInt(m.group(1))); // id
-                    r.valueList.add(Integer.parseInt(m.group(2))); // address                    
-                    r.valueList.add(Integer.parseInt(m.group(3))); // subaddress                    
+                } else if (s.matches(DCCppConstants.TURNOUT_DEF_REPLY_REGEX)) {
+                    r.myReply = new StringBuilder(s);
                     r.myRegex = DCCppConstants.TURNOUT_DEF_REPLY_REGEX;
 
-                } else if ((m = match(s, DCCppConstants.MADC_FAIL_REPLY_REGEX, "ctor")) != null) {
+                } else if (s.matches(DCCppConstants.MADC_FAIL_REPLY_REGEX)) {
+                    r.myReply = new StringBuilder(s);
                     r.myRegex = DCCppConstants.MADC_FAIL_REPLY_REGEX;
                     // Do nothing.  Constructor has already done the work
                 } else {
@@ -149,10 +159,12 @@ public class DCCppReply extends jmri.jmrix.AbstractMRReply {
                 log.debug("Parsed Reply: {} length {}", r.toString(), r._nDataChars);
                 return(r);  
             case DCCppConstants.OUTPUT_REPLY:
-                if ((m = match(s, DCCppConstants.OUTPUT_REPLY_REGEX, "ctor")) != null) {
-                    r.valueList.add(Integer.parseInt(m.group(1))); // id
-                    r.valueList.add(!m.group(2).equals("0")); // state
+                if (s.matches(DCCppConstants.OUTPUT_REPLY_REGEX)) {
+                    r.myReply = new StringBuilder(s);
                     r.myRegex = DCCppConstants.OUTPUT_REPLY_REGEX;
+                } else if (s.matches(DCCppConstants.OUTPUT_LIST_REPLY_REGEX)) {
+                    r.myReply = new StringBuilder(s);
+                    r.myRegex = DCCppConstants.OUTPUT_LIST_REPLY_REGEX;
                 } else {
                     return(null);
                 }
@@ -160,31 +172,17 @@ public class DCCppReply extends jmri.jmrix.AbstractMRReply {
                 log.debug("Parsed Reply: {} length {}", r.toString(), r._nDataChars);
                 return(r);
             case DCCppConstants.PROGRAM_REPLY:
-                if ((m = match(s, DCCppConstants.PROGRAM_REPLY_REGEX, "ctor")) != null) {
-                    r.valueList.add(Integer.parseInt(m.group(1))); // callback
-                    r.valueList.add(Integer.parseInt(m.group(2))); // callbacksub
-                    r.valueList.add(Integer.parseInt(m.group(3))); // cv
-                    r.valueList.add(Integer.parseInt(m.group(4))); // value
+                if (s.matches(DCCppConstants.PROGRAM_REPLY_REGEX)) {
+                    r.myReply = new StringBuilder(s);
                     r.myRegex = DCCppConstants.PROGRAM_REPLY_REGEX;
                 } else {
                     return(null);
                 }
                 r._nDataChars = r.toString().length();
                 return(r);  
-            case DCCppConstants.VERSION_REPLY:
-                if ((m = match(s, DCCppConstants.STATUS_REPLY_REGEX, "ctor")) != null) {
-                    r.valueList.add(m.group(1)); // Base Station Type
-                    r.valueList.add(": BUILD ");
-                    r.valueList.add(m.group(2)); // Build
-                    r.myRegex = DCCppConstants.STATUS_REPLY_REGEX;
-                } else {
-                    return(null);
-                }
-                r._nDataChars = r.toString().length();
-                return(r);  
             case DCCppConstants.POWER_REPLY:
-                if ((m = match(s, DCCppConstants.TRACK_POWER_REPLY_REGEX, "ctor")) != null) {
-                    r.valueList.add(Integer.parseInt(m.group(1))); // on/off
+                if (s.matches(DCCppConstants.TRACK_POWER_REPLY_REGEX)) {
+                    r.myReply = new StringBuilder(s);
                     r.myRegex = DCCppConstants.TRACK_POWER_REPLY_REGEX;
                 } else {
                     return(null);
@@ -192,8 +190,8 @@ public class DCCppReply extends jmri.jmrix.AbstractMRReply {
                 r._nDataChars = r.toString().length();
                 return(r);  
             case DCCppConstants.CURRENT_REPLY:
-                if ((m = match(s, DCCppConstants.CURRENT_REPLY_REGEX, "ctor")) != null) {
-                    r.valueList.add(Integer.parseInt(m.group(1))); // current
+                if (s.matches(DCCppConstants.CURRENT_REPLY_REGEX)) {
+                    r.myReply = new StringBuilder(s);
                     r.myRegex = DCCppConstants.CURRENT_REPLY_REGEX;
                 } else {
                     return(null);
@@ -201,9 +199,8 @@ public class DCCppReply extends jmri.jmrix.AbstractMRReply {
                 r._nDataChars = r.toString().length();
                 return(r);  
             case DCCppConstants.WRITE_EEPROM_REPLY:
-                if ((m = match(s, DCCppConstants.WRITE_EEPROM_REPLY_REGEX, "ctor")) != null) {
-                    r.valueList.add(Integer.parseInt(m.group(1))); // num Turnouts
-                    r.valueList.add(Integer.parseInt(m.group(2))); // num Sensors
+                if (s.matches(DCCppConstants.WRITE_EEPROM_REPLY_REGEX)) {
+                    r.myReply = new StringBuilder(s);
                     r.myRegex = DCCppConstants.WRITE_EEPROM_REPLY_REGEX;
                 } else {
                     return(null);
@@ -211,8 +208,8 @@ public class DCCppReply extends jmri.jmrix.AbstractMRReply {
                 r._nDataChars = r.toString().length();
                 return(r);  
             case DCCppConstants.MEMORY_REPLY:
-                if ((m = match(s, DCCppConstants.FREE_MEMORY_REPLY_REGEX, "ctor")) != null) {
-                    r.valueList.add(Integer.parseInt(m.group(1))); // memory
+                if (s.matches(DCCppConstants.FREE_MEMORY_REPLY_REGEX)) {
+                    r.myReply = new StringBuilder(s);
                     r.myRegex = DCCppConstants.FREE_MEMORY_REPLY_REGEX;
                 } else {
                     return(null);
@@ -221,8 +218,8 @@ public class DCCppReply extends jmri.jmrix.AbstractMRReply {
                 return(r);  
 //            case DCCppConstants.LISTPACKET_REPLY:
             case DCCppConstants.SENSOR_REPLY_H:
-                if ((m = match(s, DCCppConstants.SENSOR_INACTIVE_REPLY_REGEX, "ctor")) != null) {
-                    r.valueList.add(Integer.parseInt(m.group(1))); // id
+                if (s.matches(DCCppConstants.SENSOR_INACTIVE_REPLY_REGEX)) {
+                    r.myReply = new StringBuilder(s);
                     r.myRegex = DCCppConstants.SENSOR_INACTIVE_REPLY_REGEX;
                 } else {
                     return(null);
@@ -230,33 +227,24 @@ public class DCCppReply extends jmri.jmrix.AbstractMRReply {
                 r._nDataChars = r.toString().length();
                 return(r);  
             case DCCppConstants.SENSOR_REPLY_L:
-                if ((m = match(s, DCCppConstants.SENSOR_ACTIVE_REPLY_REGEX, "ctor")) != null) {
-                    r.valueList.add(Integer.parseInt(m.group(1))); // id
+                if (s.matches(DCCppConstants.SENSOR_ACTIVE_REPLY_REGEX)) {
+                    r.myReply = new StringBuilder(s);
                     r.myRegex = DCCppConstants.SENSOR_ACTIVE_REPLY_REGEX;
-                } else if ((m = match(s, DCCppConstants.SENSOR_DEF_REPLY_REGEX, "ctor")) != null) {
-                    r.valueList.add(Integer.parseInt(m.group(1))); // id
-                    r.valueList.add(Integer.parseInt(m.group(2))); // pin
-                    r.valueList.add(!(m.group(3) == "0")); // pullup
+                } else if (s.matches(DCCppConstants.SENSOR_DEF_REPLY_REGEX)) {
+                    r.myReply = new StringBuilder(s);
+                    r.myRegex = DCCppConstants.SENSOR_DEF_REPLY_REGEX;
                 } else {
                     return(null);
                 }
                 r._nDataChars = r.toString().length();
                 return(r);  
             case DCCppConstants.MADC_FAIL_REPLY:
+                r.myReply = new StringBuilder(s);
                 r.myRegex = DCCppConstants.MADC_FAIL_REPLY_REGEX;
                 return(r);
             case DCCppConstants.MADC_SUCCESS_REPLY:
+                r.myReply = new StringBuilder(s);
                 r.myRegex = DCCppConstants.MADC_SUCCESS_REPLY_REGEX;
-                return(r);
-            case DCCppConstants.COMM_TYPE_REPLY:
-                if ((m = match(s, DCCppConstants.COMM_TYPE_REPLY_REGEX, "ctor")) != null) {
-                    r.valueList.add(Integer.parseInt(m.group(1))); // comm type
-                    r.valueList.add(m.group(2)); // SERIAL or IP address as string
-                    r.myRegex = DCCppConstants.COMM_TYPE_REPLY_REGEX;
-                } else {
-                    return(null);
-                }
-                r._nDataChars = r.toString().length();
                 return(r);
             default:
                 return(null);
@@ -264,13 +252,13 @@ public class DCCppReply extends jmri.jmrix.AbstractMRReply {
     }
     
     public int getOpCode() {
-        return((int)(valueList.get(0)) & 0x00FF);
+        return((int)(opcode) & 0x00FF);
 //	return((getElement(0) & 0x00FF));
     }
 
     /* Get the opcode as a one character string */
     public char getOpCodeChar() {
-        return((char)valueList.get(0));
+        return(opcode);
 //	return ((char)(getElement(0) & 0x00FF));
     }
 
@@ -283,12 +271,23 @@ public class DCCppReply extends jmri.jmrix.AbstractMRReply {
 
     @Override
     public int getElement(int n) {
-        String s = this.toString();
-        if(n < 0 || n >= s.length()) {
-            return(' ');
+        if ((n >= 0) && (n < myReply.length())) {
+            return(myReply.charAt(n));
         } else {
-            return(this.toString().charAt(n));
-        }    
+            return(' ');
+        }
+    }
+ 
+    public void setElement(int n, int v) {
+        // We want the ASCII value, not the string interpretation of the int
+        char c = (char)(v & 0xFF);
+        if (myReply == null) {
+            myReply = new StringBuilder(Character.toString(c));
+        } else if (n >= myReply.length()) {
+            myReply.append(c);
+        } else if (n > 0) {
+            myReply.setCharAt(n,c);
+        }
     }
     /**
      * Get an integer representation of a BCD value
@@ -303,32 +302,32 @@ public class DCCppReply extends jmri.jmrix.AbstractMRReply {
     }
 
     public boolean getValueBool(int idx) {
-        if (idx < valueList.size()) {
-            return((boolean)valueList.get(idx));
+        Matcher m = this.match(myReply.toString(), myRegex, "gvi");
+        if ((m != null) && (idx <= m.groupCount())) {
+            return(!m.group(idx).equals("0"));
         } else {
-            log.error("DCCppMessage value index too big. idx = {} msg = {}", idx, this.toString());
+            log.error("DCCppReply value index too big. idx = {} msg = {}", idx, this.toString());
             return(false);
         }
     }
 
     public String getValueString(int idx) {
-        if (idx < valueList.size()) {
-            return(valueList.get(idx).toString());
+        Matcher m = this.match(myReply.toString(), myRegex, "gvs");
+        if ((m != null) && (idx <= m.groupCount())) {
+            return(m.group(idx));
         } else {
-            log.error("DCCppMessage value index too big. idx = {} msg = {}", idx, this.toString());
+            log.error("DCCppReply value index too big. idx = {} msg = {}", idx, this.toString());
             return("");
         }
     }
     
     public int getValueInt(int idx) {
-        // TODO: Error-safe this.
-        if (valueList.get(idx).getClass() == Boolean.class) {
-            return((boolean)valueList.get(idx) ? 1 : 0);
-        } else if (valueList.get(idx).getClass() == Integer.class) {
-            return(Integer.parseInt(this.getValueString(idx)));
+        Matcher m = this.match(myReply.toString(), myRegex, "gvi");
+        if ((m != null) && (idx <= m.groupCount())) {
+            return(Integer.parseInt(m.group(idx)));
         } else {
-            // Hail Mary. Hope the string version can be parsed as an Int.
-            return(Integer.parseInt(this.getValueString(idx)));
+            log.error("DCCppReply value index too big. idx = {} msg = {}", idx, this.toString());
+            return(0);
         }
     }
 
@@ -347,7 +346,8 @@ public class DCCppReply extends jmri.jmrix.AbstractMRReply {
     }
 
     public int getLength() {
-	return(_nDataChars);
+        return(myReply.length());
+	//return(_nDataChars);
     }
 
     /* Some notes on DCC++ messages and responses...
@@ -384,16 +384,16 @@ public class DCCppReply extends jmri.jmrix.AbstractMRReply {
     // Message helper functions
     // Core methods
 
-    private boolean matches(String pat) {
+    protected boolean matches(String pat) {
 	return(match(this.toString(), pat, "Validator") != null);
     }
 
-    private static Matcher match(String s, String pat, String name) {
+    protected static Matcher match(String s, String pat, String name) {
 	try {
 	    Pattern p = Pattern.compile(pat);
 	    Matcher m = p.matcher(s);
 	    if (!m.matches()) {
-		log.error("Malformed {} Command: {} pattern {}",name, s, pat);
+		log.warn("No Match {} Command: {} pattern {}",name, s, pat);
 		return(null);
 	    }
 	    return(m);
@@ -416,18 +416,15 @@ public class DCCppReply extends jmri.jmrix.AbstractMRReply {
         if (this.isStatusReply()) {
             return(this.getValueString(1));
         } else {
-	    log.error("Status Parser called on non-Status message type {}", this.getOpCodeChar());
-	    return("Version Unknown");
+            return("Unknown");
         }
     }
 
     public String getStatusBuildDateString() {
         if (this.isStatusReply()) {
-            return(this.getValueString(3));
+            return(this.getValueString(2));
         } else {
-	    log.error("Status Parser called on non-Status message type {}", this.getOpCodeChar());
-	    return("Build Date Unknown");
-            
+            return("Unknown");
         }
     }
 
@@ -543,7 +540,7 @@ public class DCCppReply extends jmri.jmrix.AbstractMRReply {
     }
 
     public boolean getTOIsThrown() {
-	return(this.getValueBool(2));
+	return(this.getValueBool(1));
     }
 
     public boolean getTOIsClosed() {
@@ -610,7 +607,7 @@ public class DCCppReply extends jmri.jmrix.AbstractMRReply {
 
     public String getReadValueString() {
 	if (this.isProgramReply()) {
-            if (this.getValueString(2).equals(Character.toString(DCCppConstants.PROG_WRITE_CV_BIT))) {
+            if (this.opcode == DCCppConstants.PROG_WRITE_CV_BIT) {
                 return(this.getValueString(6));
             } else {
                 return(this.getValueString(4));
@@ -688,7 +685,7 @@ public class DCCppReply extends jmri.jmrix.AbstractMRReply {
 
 
     public String getOutputNumString() {
-	if (this.isOutputAddReply() || this.isOutputCmdReply()) {
+	if (this.isOutputListReply() || this.isOutputCmdReply()) {
             return(this.getValueString(1));
 	} else {
 	    log.error("OutputAddReply Parser called on non-OutputAddReply message type {}", this.getOpCodeChar());
@@ -700,8 +697,8 @@ public class DCCppReply extends jmri.jmrix.AbstractMRReply {
 	return(Integer.parseInt(this.getOutputNumString()));
     }
 
-    public String getOutputAddPinString() {
-	if (this.isOutputAddReply()) {
+    public String getOutputListPinString() {
+	if (this.isOutputListReply()) {
             return(this.getValueString(2));
 	} else {
 	    log.error("OutputAddReply Parser called on non-OutputAddReply message type {}", this.getOpCodeChar());
@@ -709,8 +706,34 @@ public class DCCppReply extends jmri.jmrix.AbstractMRReply {
         }
     }
 
-    public int getOutputAddPinInt() {
-	return(Integer.parseInt(this.getOutputAddPinString()));
+    public int getOutputListPinInt() {
+	return(Integer.parseInt(this.getOutputListPinString()));
+    }
+
+    public String getOutputListIFlagString() {
+	if (this.isOutputListReply()) {
+            return(this.getValueString(3));
+	} else {
+	    log.error("OutputListReply Parser called on non-OutputListReply message type {}", this.getOpCodeChar());
+	    return("0");
+        }
+    }
+
+    public int getOutputListIFlagInt() {
+	return(Integer.parseInt(this.getOutputListIFlagString()));
+    }
+
+    public String getOutputListStateString() {
+	if (this.isOutputListReply()) {
+            return(this.getValueString(4));
+	} else {
+	    log.error("OutputListReply Parser called on non-OutputListReply message type {}", this.getOpCodeChar());
+	    return("0");
+        }
+    }
+
+    public int getOutputListStateInt() {
+	return(Integer.parseInt(this.getOutputListStateString()));
     }
 
     public boolean getOutputCmdStateBool() {
@@ -868,7 +891,7 @@ public class DCCppReply extends jmri.jmrix.AbstractMRReply {
     public boolean isMADCSuccessReply() { return(this.getOpCodeChar() == DCCppConstants.MADC_SUCCESS_REPLY); }
     public boolean isStatusReply() { return(this.getOpCodeChar() == DCCppConstants.VERSION_REPLY); }
     public boolean isFreeMemoryReply() { return(this.matches(DCCppConstants.FREE_MEMORY_REPLY_REGEX)); }
-    public boolean isOutputAddReply() { return(this.matches(DCCppConstants.OUTPUT_REPLY_REGEX)); }
+    public boolean isOutputListReply() { return(this.matches(DCCppConstants.OUTPUT_LIST_REPLY_REGEX)); }
     public boolean isOutputCmdReply() { return(this.matches(DCCppConstants.OUTPUT_REPLY_REGEX)); }
 
     public boolean isValidReplyFormat() {
@@ -956,7 +979,7 @@ public class DCCppReply extends jmri.jmrix.AbstractMRReply {
      * byte of an address byte/data byte pair.
      * </p>
      *
-     * @param startByte The address byte for this addres byte data byte pair.
+     * @param startByte The address byte for this address byte data byte pair.
      * @return message type, values are:
      * <ul>
      * <li>0 for a turnout with no feedback</li>
