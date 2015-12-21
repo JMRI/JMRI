@@ -10,7 +10,7 @@
 
  <indexitem text="Audio " target="html.tools.Audio"/>
 
- <indexitem text="Blocks " target="html.tools.tracker.index"/>
+ <indexitem text="Block Tracking " target="html.tools.tracker.index"/>
 
  <indexitem text="C/MRI " target="html.hardware.cmri.CMRI">
   <indexitem text="Check Pin Assignments " target="package.jmri.jmrix.cmri.serial.assignment.ListFrame"/>
@@ -291,6 +291,8 @@
 
  </indexitem>
  <indexitem text="PanelPro " target="html.apps.PanelPro.Panels">
+  <indexitem text="Display Panel Files " target="html.apps.PanelPro.ShowPanel"/>
+
   <indexitem text="Intro " target="html.apps.PanelPro.Panels"/>
 
   <indexitem text="Layout Editor " target="package.jmri.jmrit.display.LayoutEditor"/>
@@ -298,8 +300,6 @@
   <indexitem text="Panel Controls " target="package.jmri.jmrit.display.PanelTarget"/>
 
   <indexitem text="Panel Editor " target="package.jmri.jmrit.display.PanelEditor"/>
-
-  <indexitem text="Viewing Panel Files " target="html.apps.PanelPro.ShowPanel"/>
 
  </indexitem>
  <indexitem text="Panels Menu " target="package.jmri.jmrit.display.PanelMenuHelp"/>
@@ -329,8 +329,6 @@
 
  </indexitem>
  <indexitem text="Routes ">
-  <indexitem text="Add a Route " target="package.jmri.jmrit.beantable.RouteAddEdit"/>
-
   <indexitem text="Edit a Route " target="package.jmri.jmrit.beantable.RouteAddEdit"/>
 
   <indexitem text="Routes Table " target="package.jmri.jmrit.beantable.RouteTable"/>

@@ -35,10 +35,6 @@ import org.slf4j.LoggerFactory;
  */
 public class EngineEditFrame extends OperationsFrame implements java.beans.PropertyChangeListener {
 
-    /**
-     *
-     */
-    private static final long serialVersionUID = 7527604846983933144L;
     EngineManager manager = EngineManager.instance();
     EngineManagerXml managerXml = EngineManagerXml.instance();
     EngineModels engineModels = EngineModels.instance();
@@ -64,6 +60,8 @@ public class EngineEditFrame extends OperationsFrame implements java.beans.Prope
     JButton addButton = new JButton(Bundle.getMessage("Add"));
 
     // check boxes
+    JCheckBox bUnitCheckBox = new JCheckBox(Bundle.getMessage("BUnit"));
+    
     // text field
     JTextField roadNumberTextField = new JTextField(Control.max_len_string_road_number);
     JTextField builtTextField = new JTextField(Control.max_len_string_built_name + 3);
@@ -111,7 +109,8 @@ public class EngineEditFrame extends OperationsFrame implements java.beans.Prope
                 new Object[]{Bundle.getMessage("Owner").toLowerCase()}));
         editConsistButton.setToolTipText(MessageFormat.format(Bundle.getMessage("TipAddDeleteReplace"),
                 new Object[]{Bundle.getMessage("Consist").toLowerCase()}));
-
+        bUnitCheckBox.setToolTipText(Bundle.getMessage("TipBoosterUnit"));
+        
         // create panel
         JPanel pPanel = new JPanel();
         pPanel.setLayout(new BoxLayout(pPanel, BoxLayout.Y_AXIS));
@@ -147,6 +146,7 @@ public class EngineEditFrame extends OperationsFrame implements java.beans.Prope
         pType.setBorder(BorderFactory.createTitledBorder(Bundle.getMessage("Type")));
         addItem(pType, typeComboBox, 1, 0);
         addItem(pType, editTypeButton, 2, 0);
+        addItem(pType, bUnitCheckBox, 1, 1);
         pPanel.add(pType);
 
         // row 5
@@ -319,6 +319,7 @@ public class EngineEditFrame extends OperationsFrame implements java.beans.Prope
             }
         }
         typeComboBox.setSelectedItem(engine.getTypeName());
+        bUnitCheckBox.setSelected(engine.isBunit());
 
         if (!engineLengths.containsName(engine.getLength())) {
             String msg = MessageFormat.format(Bundle.getMessage("lengthNameNotExist"), new Object[]{engine
@@ -490,6 +491,7 @@ public class EngineEditFrame extends OperationsFrame implements java.beans.Prope
             if (typeComboBox.getSelectedItem() != null) {
                 _engine.setTypeName((String) typeComboBox.getSelectedItem());
             }
+            _engine.setBunit(bUnitCheckBox.isSelected());
             if (lengthComboBox.getSelectedItem() != null) {
                 _engine.setLength((String) lengthComboBox.getSelectedItem());
             }
@@ -500,7 +502,10 @@ public class EngineEditFrame extends OperationsFrame implements java.beans.Prope
             if (consistComboBox.getSelectedItem() != null) {
                 if (consistComboBox.getSelectedItem().equals(EngineManager.NONE)) {
                     _engine.setConsist(null);
-                    _engine.setBlocking(0);
+                    if (_engine.isBunit())
+                        _engine.setBlocking(Engine.B_UNIT_BLOCKING);
+                    else
+                        _engine.setBlocking(Engine.DEFAULT_BLOCKING_ORDER);
                 } else {
                     _engine.setConsist(manager.getConsistByName((String) consistComboBox.getSelectedItem()));
                     if (_engine.getConsist() != null) {

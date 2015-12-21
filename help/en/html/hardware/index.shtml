@@ -399,13 +399,13 @@
 	<dl>
 	<dt class="left">Macintosh</dt>
 	<dd>
-		<p><a href="MacintoshSerialPorts.shtml">Mac Mini-DIN8 connector</a></p>
 		<p><a href="USBtoSerial.shtml">Via a USB to Serial adapter</a></p>
+		<p><a href="MacintoshSerialPorts.shtml">Mac Mini-DIN8 connector</a></p>
 	</dd>
 
 	<dt class="left">PC</dt>
 	<dd>
-		<p><a href="USBtoSerial.shtml">Via a USB to Serial adapter</a></p>
+		<p><a href="USBtoSerial.shtml#usb2serial">Using a USB to Serial adapter</a></p>
 	</dd>
 
 	<dt class="left">Terminal Server</dt>
@@ -413,11 +413,15 @@
 		<p><a href="TerminalServer.shtml">EasyDCC via a Lantronix Terminal Server</a></p>
 	</dd>
 
+	<dt class="left">Raspberry Pi</dt>
+	<dd>
+		<p><a href="pi/index.shtml">Connecting to the Pi's GPIO connection pins</a></p>
+	</dd>
 	</dl>
 
-        <h2>
+    <h2>
 		JMRI: General hardware info
-        </h2>
+    </h2>
 	<dl>
 	<dt class="left"><a href="../doc/Technical/TurnoutFeedback.shtml">Turnout feedback</a></dt>
 	<dd>
@@ -429,7 +433,9 @@
         use it is described on the
         <a href="../doc/Technical/TurnoutFeedback.shtml">Turnout Feedback page</a>.
 	</dd>
-  <dt class="left"><a href="PDA.shtml">PDA</a></dt><dd>A way to use a PDA to access JMRI.</dd>
+	
+	<dt class="left"><a href="PDA.shtml">PDA</a></dt>
+  <dd>A way to use a PDA to access JMRI.</dd>
 	</dl>
 
 <!--#include virtual="/Footer" -->

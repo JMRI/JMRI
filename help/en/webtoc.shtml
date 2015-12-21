@@ -47,6 +47,12 @@
 <li>Setup <ul>
   
 <li>
+<a href="package/apps/TabbedPreferences.shtml">Preference Pane </a>
+<ul></ul>
+</li>
+
+  
+<li>
 <a href="html/profiles.shtml">Configuration Profiles </a>
 <ul></ul>
 </li>
@@ -71,7 +77,7 @@
 
   
 <li>
-<a href="package/jmri/jmrix/jinput/treemodel/TreeFrame.shtml">USB </a>
+<a href="package/jmri/jmrix/jinput/treemodel/TreeFrame.shtml">USB input </a>
 <ul></ul>
 </li>
 
@@ -538,25 +544,25 @@
 <ul>
     
 <li>
-<a href="package/jmri/jmrit/operations/Operations.shtml#Yards">Yards </a>
+<a href="package/jmri/jmrit/operations/Operations.shtml#Yards">Yard Tracks </a>
 <ul></ul>
 </li>
 
     
 <li>
-<a href="package/jmri/jmrit/operations/Operations.shtml#Sidings">Spurs </a>
+<a href="package/jmri/jmrit/operations/Operations.shtml#Sidings">Spur Tracks </a>
 <ul></ul>
 </li>
 
     
 <li>
-<a href="package/jmri/jmrit/operations/Operations.shtml#Interchange">Interchange </a>
+<a href="package/jmri/jmrit/operations/Operations.shtml#Interchange">Interchange Tracks </a>
 <ul></ul>
 </li>
 
     
 <li>
-<a href="package/jmri/jmrit/operations/Operations.shtml#Staging">Staging </a>
+<a href="package/jmri/jmrit/operations/Operations.shtml#Staging">Staging Tracks </a>
 <ul></ul>
 </li>
 
@@ -671,6 +677,12 @@
 <ul></ul>
 </li>
 
+  
+<li>
+<a href="html/apps/PanelPro/ShowPanel.shtml">Display Panel Files </a>
+<ul></ul>
+</li>
+
  
 </ul>
 </li>
@@ -708,6 +720,18 @@
 
   
 <li>
+<a href="package/jmri/jmrit/beantable/BlockTable.shtml">Blocks Table </a>
+<ul></ul>
+</li>
+
+  
+<li>
+<a href="package/jmri/jmrit/logix/OBlockTable.shtml">O(ccupancy)Block Table </a>
+<ul></ul>
+</li>
+
+  
+<li>
 <a href="package/jmri/jmrit/beantable/RouteTable.shtml">Routes Table </a>
 <ul></ul>
 </li>
@@ -733,12 +757,6 @@
   
 <li>
 <a href="package/jmri/jmrit/beantable/ReporterTable.shtml">Reporters Table </a>
-<ul></ul>
-</li>
-
-  
-<li>
-<a href="package/jmri/jmrit/beantable/BlockTable.shtml">Blocks Table </a>
 <ul></ul>
 </li>
 

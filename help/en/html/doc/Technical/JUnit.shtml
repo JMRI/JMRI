@@ -452,7 +452,7 @@ about not being able to find or load a class, suspect that
 adding the missing class to 
 the test/junit/runner/excluded.properties file would fix it.
 <p>
-As a test you can try setting the "-noloading" option in the
+<u>As a test only</u>, you can try setting the "-noloading" option in the
 <code>main</code> of whichever test class you're having trouble with:
 <CODE><PRE>
     static public void main(String[] args) {<br/>
@@ -462,7 +462,8 @@ As a test you can try setting the "-noloading" option in the
 </PRE></code>
 
 <p>
-The right long-term fix is to have all classes with loader
+Please don't leave "-noloading" in place, as it prevents people from rerunning the test
+dynamically. Instead, the right long-term fix is to have all classes with JUnit loader
 issues included in the 
 <code>test/junit/runner/excluded.properties</code>
 file. JUnit uses those properties to decide how to handle loading
