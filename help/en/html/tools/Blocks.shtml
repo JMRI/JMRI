@@ -29,7 +29,7 @@
 <p>Blocks are sections of track whose occupancy may be individually monitored. Dividing 
 track into Blocks is optional. Blocks set up in a track diagram normally correspond 
 to physical blocks on a layout. Block occupancy is indicated by the state of an 
-occupancy Sensor. When a layout's track is divided into Blocks, all of the track need 
+occupancy <a href="Sensors.shtml">Sensor</a>. When a layout's track is divided into Blocks, all of the track need
 not belong to a Block. For example, yard track may not be in a Block, whereas mainline 
 track almost always would be divided into Blocks. The main use of Blocks is to facilitate 
 Signaling, but Blocks may be used for other layout control and animation functions.</p>
@@ -54,7 +54,7 @@ may optionally be assigned to a Block. These optional attributes are entered man
 in this table. If Trains will not be run automatically through 
 a Block, there is no need to add these attributes.</p>
    
-<a name="addBlock"><h3>Adding a new Block</h3></a>
+<a name="addBlock"></a><h3>Adding a new Block</h3>
 <p>To add a new Block, follow this <a href="../../package/jmri/jmrit/beantable/BlockAddEdit.shtml">procedure</a></p>
 
 <h3>Editing an existing Block</h3>

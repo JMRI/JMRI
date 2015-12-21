@@ -251,6 +251,12 @@
  <tocitem text="Tools " target="html.tools.index">
   <tocitem text="Audio " target="html.tools.Audio"/>
 
+  <tocitem text="Blocks " target="html.tools.Blocks">
+   <tocitem text="Blocks Table " target="package.jmri.jmrit.beantable.BlockTable"/>
+
+   <tocitem text="Add/Edit Blocks " target="html.tools.Blocks_addBlock"/>
+
+  </tocitem>
   <tocitem text="Consisting Tool " target="html.tools.consisttool.ConsistTool"/>
 
   <tocitem text="Fast Clocks " target="html.tools.fastclock.index">
@@ -285,7 +291,7 @@
    <tocitem text="Add/Edit LRoutes " target="package.jmri.jmrit.beantable.LRouteAddEdit"/>
 
   </tocitem>
-  <tocitem text="Memories " target="html.tools.Memories">
+  <tocitem text="Memory Variables " target="html.tools.Memories">
    <tocitem text="Memory Variables Table " target="package.jmri.jmrit.beantable.MemoryTable"/>
 
    <tocitem text="Add/Edit Memory Variables " target="package.jmri.jmrit.beantable.MemoryAddEdit"/>

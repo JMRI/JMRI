@@ -45,10 +45,35 @@
 
  
 <li>
+<a href="html/tools/Blocks.shtml">Blocks </a>
+<ul>
+  
+<li>
+<a href="package/jmri/jmrit/beantable/BlockTable.shtml">Blocks Table </a>
+<ul></ul>
+</li>
+
+  
+<li>
+<a href="package/jmri/jmrit/beantable/BlockAddEdit.shtml">Add Blocks </a>
+<ul></ul>
+</li>
+
+  
+<li>
+<a href="package/jmri/jmrit/beantable/BlockEdit.shtml">Edit Blocks </a>
+<ul></ul>
+</li>
+
+  
+<li>
 <a href="html/tools/tracker/index.shtml">Block Tracking </a>
 <ul></ul>
 </li>
 
+ 
+</ul>
+</li>
  
 <li>
 <a href="html/hardware/cmri/CMRI.shtml">C/MRI </a>
@@ -332,17 +357,17 @@
 </li>
  
 <li>
-<a href="package/jmri/jmrit/dispatcher/Dispatcher.shtml">Dispatcher </a>
+<a href="html/apps/DispatcherPro/index.shtml">DispatcherPro </a>
 <ul>
   
 <li>
-<a href="package/jmri/jmrit/dispatcher/Dispatcher.shtml#atrains">Active Trains </a>
+<a href="package/jmri/jmrit/dispatcher/Dispatcher.shtml">Dispatcher </a>
 <ul></ul>
 </li>
 
   
 <li>
-<a href="package/jmri/jmrit/dispatcher/Dispatcher.shtml">Glossary </a>
+<a href="package/jmri/jmrit/dispatcher/Dispatcher.shtml#atrains">Active Trains </a>
 <ul></ul>
 </li>
 
@@ -352,15 +377,15 @@
 <ul></ul>
 </li>
 
- 
-</ul>
-</li>
- 
+  
 <li>
-<a href="html/apps/DispatcherPro/index.shtml">DispatcherPro </a>
+<a href="package/jmri/jmrit/dispatcher/Dispatcher.shtml">Glossary </a>
 <ul></ul>
 </li>
 
+ 
+</ul>
+</li>
  
 <li>
 <a href="html/Errors.shtml">Error Codes </a>

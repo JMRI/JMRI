@@ -70,6 +70,8 @@
 
 <mapID target="package.jmri.jmrix.lenz.systeminfo.SystemInfoFrame" url="package/jmri/jmrix/lenz/systeminfo/SystemInfoFrame.shtml"/>
 
+<mapID target="html.tools.Blocks_addBlock" url="html/tools/Blocks.shtml#addBlock"/>
+
 <mapID target="manual.DecoderPro.Main_XpressNet_Database" url="manual/DecoderPro/Main_XpressNet.shtml#Database"/>
 
 <mapID target="manual.DecoderPro.index_Top" url="manual/DecoderPro/index.shtml#Top"/>
@@ -195,6 +197,8 @@
 <mapID target="manual.JMRI_OPS_UsersGuide.Ops_TripThruOperations" url="manual/JMRI_OPS_UsersGuide/Ops_TripThruOperations.shtml"/>
 
 <mapID target="package.jmri.jmrit.signalling.SignallingSourceFrame" url="package/jmri/jmrit/signalling/SignallingSourceFrame.shtml"/>
+
+<mapID target="manual.DecoderPro.Main_Roster_speedProfiling" url="manual/DecoderPro/Main_Roster.shtml#speedProfiling"/>
 
 <mapID target="package.jmri.jmrit.operations.Operations_Schedules" url="package/jmri/jmrit/operations/Operations.shtml#Schedules"/>
 
@@ -1119,6 +1123,8 @@
 <mapID target="html.tools.throttle.ThrottleChapter2_ControlPanel" url="html/tools/throttle/ThrottleChapter2.shtml#ControlPanel"/>
 
 <mapID target="manual.DecoderPro.Installing_JMRI_Top" url="manual/DecoderPro/Installing_JMRI.shtml#Top"/>
+
+<mapID target="html.tools.Blocks" url="html/tools/Blocks.shtml"/>
 
 <mapID target="manual.DecoderPro3.Main_RPS_PollingControl" url="manual/DecoderPro3/Main_RPS.shtml#PollingControl"/>
 

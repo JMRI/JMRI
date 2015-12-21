@@ -775,6 +775,25 @@
 
   
 <li>
+<a href="html/tools/Blocks.shtml">Blocks </a>
+<ul>
+   
+<li>
+<a href="package/jmri/jmrit/beantable/BlockTable.shtml">Blocks Table </a>
+<ul></ul>
+</li>
+
+   
+<li>
+<a href="html/tools/Blocks.shtml#addBlock">Add/Edit Blocks </a>
+<ul></ul>
+</li>
+
+  
+</ul>
+</li>
+  
+<li>
 <a href="html/tools/consisttool/ConsistTool.shtml">Consisting Tool </a>
 <ul></ul>
 </li>
@@ -881,7 +900,7 @@
 </li>
   
 <li>
-<a href="html/tools/Memories.shtml">Memories </a>
+<a href="html/tools/Memories.shtml">Memory Variables </a>
 <ul>
    
 <li>
