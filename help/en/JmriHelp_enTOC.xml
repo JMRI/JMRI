@@ -282,13 +282,13 @@
   <tocitem text="LRoutes " target="html.tools.LRoutes">
    <tocitem text="LRoutes Table " target="package.jmri.jmrit.beantable.LRouteTable"/>
 
-   <tocitem text="Adding/Editing LRoutes " target="package.jmri.jmrit.beantable.LRouteAddEdit"/>
+   <tocitem text="Add/Edit LRoutes " target="package.jmri.jmrit.beantable.LRouteAddEdit"/>
 
   </tocitem>
   <tocitem text="Memories " target="html.tools.Memories">
-   <tocitem text="Add/Edit Memories " target="package.jmri.jmrit.beantable.MemoryAddEdit"/>
-
    <tocitem text="Memory Variables Table " target="package.jmri.jmrit.beantable.MemoryTable"/>
+
+   <tocitem text="Add/Edit Memory Variables " target="package.jmri.jmrit.beantable.MemoryAddEdit"/>
 
    <tocitem text="Memory Monitor " target="package.jmri.jmrit.MemoryFrameAction"/>
 
@@ -300,15 +300,15 @@
 
   </tocitem>
   <tocitem text="Reporters " target="html.tools.Reporters">
-   <tocitem text="Add/Edit Reporter " target="package.jmri.jmrit.beantable.ReporterAddEdit"/>
-
    <tocitem text="Reporters Table " target="package.jmri.jmrit.beantable.ReporterTable"/>
+
+   <tocitem text="Add/Edit Reporters " target="package.jmri.jmrit.beantable.ReporterAddEdit"/>
 
   </tocitem>
   <tocitem text="Routes " target="html.tools.Routes">
-   <tocitem text="Add/Edit Routes " target="package.jmri.jmrit.beantable.RouteAddEdit"/>
-
    <tocitem text="Routes Table " target="package.jmri.jmrit.beantable.RouteTable"/>
+
+   <tocitem text="Add/Edit Routes " target="package.jmri.jmrit.beantable.RouteAddEdit"/>
 
   </tocitem>
   <tocitem text="Scripting " target="html.tools.scripting.index">
