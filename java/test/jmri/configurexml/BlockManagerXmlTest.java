@@ -411,29 +411,27 @@ public class BlockManagerXmlTest extends TestCase {
 
         // allow listeners to process, but keep it quick by looking for desired result
         for (int i = 0; i < 25; i++) {
-            JUnitUtil.releaseThread(this, 20);
+            JUnitUtil.releaseThread(this);
             if (m1.getAspect().equals("Advance Approach")
                     && m2.getAspect().equals("Clear")
                     && m3.getAspect().equals("Clear")
                     && m4.getAspect().equals("Clear")
                     && m5.getAspect().equals("Approach")
                     && m6.getAspect().equals("Stop")
-                    && m7.getAspect().equals("Stops")) {
+                    && m7.getAspect().equals("Stop")) {
                 break;
             }
         }
-        JUnitUtil.releaseThread(this, 20);
-        JUnitUtil.releaseThread(this, 20);
-        JUnitUtil.releaseThread(this, 20);
+        JUnitUtil.releaseThread(this);
 
         // check for expected mast state 
         Assert.assertEquals("Signal 1", "Advance Approach", InstanceManager.signalMastManagerInstance().getSignalMast("IF$vsm:AAR-1946:SL-2-high-abs($0001)").getAspect());
-        Assert.assertEquals("Signal 2", "Clear", InstanceManager.signalMastManagerInstance().getSignalMast("IF$vsm:AAR-1946:SL-2-high-abs($0002)").getAspect());
-        Assert.assertEquals("Signal 3", "Clear", InstanceManager.signalMastManagerInstance().getSignalMast("IF$vsm:AAR-1946:SL-2-high-abs($0003)").getAspect());
-        Assert.assertEquals("Signal 4", "Clear", InstanceManager.signalMastManagerInstance().getSignalMast("IF$vsm:AAR-1946:SL-2-high-abs($0004)").getAspect());
-        Assert.assertEquals("Signal 5", "Approach", InstanceManager.signalMastManagerInstance().getSignalMast("IF$vsm:AAR-1946:SL-2-high-abs($0005)").getAspect());
-        Assert.assertEquals("Signal 6", "Stop", InstanceManager.signalMastManagerInstance().getSignalMast("IF$vsm:AAR-1946:SL-2-high-abs($0006)").getAspect());
-        Assert.assertEquals("Signal 7", "Stop", InstanceManager.signalMastManagerInstance().getSignalMast("IF$vsm:AAR-1946:SL-2-high-abs($0007)").getAspect());
+        Assert.assertEquals("Signal 2", "Clear",            InstanceManager.signalMastManagerInstance().getSignalMast("IF$vsm:AAR-1946:SL-2-high-abs($0002)").getAspect());
+        Assert.assertEquals("Signal 3", "Clear",            InstanceManager.signalMastManagerInstance().getSignalMast("IF$vsm:AAR-1946:SL-2-high-abs($0003)").getAspect());
+        Assert.assertEquals("Signal 4", "Clear",            InstanceManager.signalMastManagerInstance().getSignalMast("IF$vsm:AAR-1946:SL-2-high-abs($0004)").getAspect());
+        Assert.assertEquals("Signal 5", "Approach",         InstanceManager.signalMastManagerInstance().getSignalMast("IF$vsm:AAR-1946:SL-2-high-abs($0005)").getAspect());
+        Assert.assertEquals("Signal 6", "Stop",             InstanceManager.signalMastManagerInstance().getSignalMast("IF$vsm:AAR-1946:SL-2-high-abs($0006)").getAspect());
+        Assert.assertEquals("Signal 7", "Stop",             InstanceManager.signalMastManagerInstance().getSignalMast("IF$vsm:AAR-1946:SL-2-high-abs($0007)").getAspect());
 
     }
 

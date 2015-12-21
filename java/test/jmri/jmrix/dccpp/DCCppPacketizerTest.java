@@ -20,8 +20,6 @@ import jmri.util.JUnitAppender;
  */
 public class DCCppPacketizerTest extends TestCase {
 
-    static final int RELEASE_TIME = 100;
-
     /**
      * Local test class to make DCCppPacketizer more felicitous to test
      */
@@ -58,7 +56,7 @@ public class DCCppPacketizerTest extends TestCase {
         m.setTimeout(1);  // don't want to wait a long time
         c.sendDCCppMessage(m, null);
 	log.debug("Message = {} length = {}", m.toString(), m.getNumDataElements());
-        jmri.util.JUnitUtil.releaseThread(this, RELEASE_TIME); // Allow time for other threads to send 4 characters
+        jmri.util.JUnitUtil.releaseThread(this); // Allow time for other threads to send 4 characters
         Assert.assertEquals("total length ", 8, p.tostream.available());
         Assert.assertEquals("Char 0",'<', p.tostream.readByte() & 0xff);
         Assert.assertEquals("Char 1",'T', p.tostream.readByte() & 0xff);
@@ -160,7 +158,7 @@ public class DCCppPacketizerTest extends TestCase {
             DCCppMessage m1 = DCCppMessage.makeTurnoutCommandMsg(23, true);
             c.sendDCCppMessage(m1, l2);
 
-            jmri.util.JUnitUtil.releaseThread(this, RELEASE_TIME); // Allow time for messages to process into the system
+            jmri.util.JUnitUtil.releaseThread(this); // Allow time for messages to process into the system
 
             // and now we verify l1 is the last sender.
             //Assert.assertEquals("itteration " + i + " Last Sender l1, before l1 reply", l1, c.getLastSender());
@@ -187,7 +185,7 @@ public class DCCppPacketizerTest extends TestCase {
             Assert.assertNotNull("itteration " + i + " l1 reply after l1 message",l1.rcvdRply);
             Assert.assertNull("itteration " + i + " l2 reply after l1 message",l2.rcvdRply);
 
-            jmri.util.JUnitUtil.releaseThread(this, RELEASE_TIME); // Allow time for messages to process into the system
+            jmri.util.JUnitUtil.releaseThread(this); // Allow time for messages to process into the system
 
             // and now we verify l2 is the last sender.
             Assert.assertEquals("Last Sender l2", l2, c.getLastSender());
@@ -225,7 +223,7 @@ public class DCCppPacketizerTest extends TestCase {
         // wait for reply (normally, done by callback; will check that later)
         int i = 0;
         while (l.rcvdRply == null && i++ < 100) {
-            jmri.util.JUnitUtil.releaseThread(this, 10);
+            jmri.util.JUnitUtil.releaseThread(this);
         }
         if (log.isDebugEnabled()) {
             log.debug("past loop, i=" + i

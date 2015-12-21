@@ -97,16 +97,15 @@ public class NXWarrantTest extends jmri.util.SwingTestCase {
         Assert.assertEquals("Halted/Resume message", warrant.getRunningMessage(), 
                 Bundle.getMessage("Halted", block.getDisplayName(), "0"));
         warrant.controlRunTrain(Warrant.RESUME);
-//      sleep(200);
         String[] route = {"IS1", "IS2", "IS3", "IS7", "IS5", "IS10"};
         sensor = _sensorMgr.getBySystemName("IS10");
         Assert.assertEquals("Train in last block", sensor, runtimes(sensor, route));
         
-        Thread.sleep(500);            
+        jmri.util.JUnitUtil.releaseThread(this);             
         warrant.controlRunTrain(Warrant.ABORT);
-        Thread.sleep(500);            
+        jmri.util.JUnitUtil.releaseThread(this);            
 /*        while (warrant.getEngineer()!=null) {
-          Thread.sleep(500);            
+          jmri.util.JUnitUtil.releaseThread(this);             
         }
         Assert.assertEquals("Script done.", Bundle.getMessage("Idle"), warrant.getRunningMessage());
 */
@@ -171,12 +170,12 @@ public class NXWarrantTest extends jmri.util.SwingTestCase {
      * @throws Exception
      */
     private Sensor runtimes(Sensor sensor, String[] sensors) throws Exception {
-        Thread.sleep(200);
+        jmri.util.JUnitUtil.releaseThread(this); 
         for (int i=0; i<sensors.length; i++) {
-            Thread.sleep(300);
+            jmri.util.JUnitUtil.releaseThread(this); 
             Sensor sensorNext = _sensorMgr.getSensor(sensors[i]);
             sensorNext.setState(Sensor.ACTIVE);
-            Thread.sleep(500);            
+            jmri.util.JUnitUtil.releaseThread(this);            
             sensor.setState(Sensor.INACTIVE);
             sensor = sensorNext;
         }
