@@ -27,31 +27,15 @@
       <!-- Page Body -->
 <h1>JMRI: Tools</h1>
 
-<p>JMRI provides several tools that are optimized for specific purposes.
+<p>JMRI provides a range of tools that are optimized for specific purposes.
 				
-<h2>General tools</h2>
+<h2>Common tools</h2>
 		  <p>The following tools in the Tools menu work with most DCC hardware connections:		  
 	    <dl>
 
 		<dt><h3><a href="Turnouts.shtml">Turnouts</a></h3></dt>
 		<dd>
 			JMRI calls just about any output to the layout a "Turnout". The Turnout object has 2 states: Closed (On) and Thrown (Off). <br/>For outputs such as <a href="#lights">Lights</a> and <a href="#signals">Signals</a> JMRI provides special objects (see below).
-		</dd>
-
-		<dt><h3><a href="Sensors.shtml">Sensors</a></h3></dt>
-		<dd>
-		    A Sensor is JMRI's way of representing an input from the layout.
-		</dd>
-
-			<dt><h3><a href="throttle/ThrottleMain.shtml">Throttles</a></h3></dt>
-		<dd>
-		    You can open multiple software throttles to run
-		    your DCC locomotives.
-		</dd>
-
-		<dt><h3><a href="consisttool/ConsistTool.shtml">Consisting</a></h3></dt>
-		<dd>
-		    JMRI provides tools for managing locomotive consists.
 		</dd>
 
 		<dt><h3><a name="lights" href="Lights.shtml">Lights</a></h3></dt>
@@ -65,12 +49,33 @@
 		    response to a fascia panel button.
 		</dd>
 
+		<dt><h3><a href="Sensors.shtml">Sensors</a></h3></dt>
+		<dd>
+		    A Sensor is JMRI's way of representing an input from the layout.
+		</dd>
+
+			<dt><h3><a href="throttle/ThrottleMain.shtml">Throttles</a></h3></dt>
+		<dd>
+		    You can open multiple software Throttles to run
+		    your DCC locomotives.
+		</dd>
+
+		<dt><h3><a href="consisttool/ConsistTool.shtml">Consisting</a></h3></dt>
+		<dd>
+		    JMRI provides tools for managing locomotive consists.
+		</dd>
+
 			<dt><h3><a name="signals" href="signaling/index.shtml">Signals</a></h3></dt>
 		<dd>
 		    Signal Heads and Signal Masts are how JMRI represents
 		    and controls signals on a layout. 
 		    They are a specific kind of output device that can be set to various 
 		    Appearances (Red, Yellow, Green, Flashing Yellow, etc.) or Aspects (Stop, Clear, Approach limited etc.) following prototype rules.
+		</dd>
+
+			<dt><h3><a name="blocks" href="Blocks.shtml">Blocks</a></h3></dt>
+		<dd>
+		    Blocks are sections of track whose occupancy may be individually monitored in JMRI. Dividing your track into Blocks is optional. Block occupancy is indicated by the state of an occupancy Sensor.
 		</dd>
 
 		<dt><h3><a href="Reporters.shtml">Reporters</a></h3></dt>
@@ -154,7 +159,7 @@
 
 <!-- It would be better to let each system-specific toolset land on its own index page, some tools are not so lucky, yet -->
 <h3>C/MRI Tools</h3>
-<p>When JMRI is connected to a layout via this system, a <b>C/MRI</b> menu is shown:</p>
+<p>When JMRI is connected to a layout via this system, a <b>CMRI</b> menu is shown:</p>
 <ul>   
 <li><a href="../../package/jmri/jmrix/cmri/serial/assignment/ListFrame.shtml">Check Pin Assignments</a></li>
 <li><a href="../../package/jmri/jmrix/cmri/serial/nodeconfig/NodeConfigFrame.shtml">Configure Nodes</a></li>
