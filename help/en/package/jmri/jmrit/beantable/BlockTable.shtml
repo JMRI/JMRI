@@ -140,8 +140,8 @@ have been predefined in the <code>signalSpeed.xml</code> file, in addition to a 
 <p>To check or change the properties of a Block, see <a href="BlockEdit.shtml">Edit Block</a></p>
 
 <p><a href="../../../../html/tools/tracker/index.shtml">More on Block Tracking</a></p>
-<p><a href="../display/LayoutEditor.shtml">Using Blocks with Layout Editor</a>
-<p>Back to the <a href="../../../../html/tools/Blocks.shtml">Blocks Help page</a>
+<p><a href="../display/LayoutEditor.shtml">Using Blocks with Layout Editor</a></p>
+<p>Back to the <a href="../../../../html/tools/Blocks.shtml">Blocks Help page</a></p>
 
 Located at package/jmri/jmrt/beantable/BlockTable
 <!--#include virtual="/Footer" -->

@@ -1,18 +1,14 @@
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
 <html lang="en">
 <head>
-<!-- Copyright ($Author$) 2008 -->
-<!-- $Id$ -->
 <title>JMRI: Sharing Files with DropBox</title>
 
 <!-- Style -->
-<META HTTP-EQUIV="Content-Type" CONTENT="text/html; charset=iso-8859-1">
-<LINK REL="stylesheet" TYPE="text/css" HREF="/css/default.css"
-	MEDIA="screen">
-<LINK REL="stylesheet" TYPE="text/css" HREF="/css/print.css"
-	MEDIA="print">
-<LINK REL="icon" HREF="/images/jmri.ico" TYPE="image/png">
-<LINK REL="home" TITLE="Home" HREF="/">
+<meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
+<link rel="stylesheet" type="text/css" href="/css/default.css" media="screen">
+<link rel="stylesheet" type="text/css" href="/css/print.css" media="print">
+<link rel="icon" href="/images/jmri.ico" type="image/png">
+<link rel="home" title="Home" href="/">
 <!-- /Style -->
 </head>
 
@@ -25,10 +21,10 @@
 
 <p>
   <a href="https://www.dropbox.com" target="_blank">Dropbox</a>
-  <a href="https://www.dropbox.com" target="_blank"><img src="dropbox-logos_dropbox-vertical-blue.png" width="85" height="85"align = "right"></a>
+  <a href="https://www.dropbox.com" target="_blank"><img src="dropbox-logos_dropbox-vertical-blue.png" width="85" height="85" align="right"></a>
   is a free service that lets you share files between multiple computers across a network.
   Once you've signed up with Dropbox, you can configure JMRI to use it to share
-  rosters, layout configuration files and other information between multiple computers.
+  Rosters, layout configuration files and other information between multiple computers.
 </p>
 <p>
   Using <a href="https://www.dropbox.com" target="_blank">Dropbox</a>
@@ -48,8 +44,9 @@
 <p>
 The following approach should also work with other cloud-based file-synchronisation services such as <a href="https://www.google.com.au/drive/" target="_blank">Google Drive</a> and <a href="https://onedrive.live.com" target="_blank">OneDrive</a>. However the <a href="https://www.dropbox.com" target="_blank">Dropbox</a> solution is well tested, having been used by a number of JMRI developers and users for quite some time.
 </p>
-<p>
-To set this up:
+
+<h3>Step 1</h3>
+<p>To set up a shared User File Location on the web:
 <ul>
 <li>Create a JMRI folder in Dropbox on the first computer.</li>
 <li>
@@ -63,25 +60,28 @@ Remember where that is, because you'll move items from there later.
 If so, click Open Roster Location to open a window on that location.  You'll copy files
 from there later.<br>
 <a href="Help_Locations_Roster.png"><img src="Help_Locations_Roster.png" width="682" height="139"></a></li>
-<li>Preferences&#8209;>Roster&#8209;>Roster&#8209;>Roster Location&#8209;>Reset. Do not enter a Roster Location. That way it will follow User Files Location.<br>
+<li>Preferences&#8209;>Roster&#8209;>Roster&#8209;>Roster Location&#8209;>Reset. Do not enter a Roster Location. That way it will follow the setting for the User Files Location.<br>
 <a href="Roster_Reset.png"><img src="Roster_Reset.png" width="416" height="159"></a></li>
 <li>Preferences&#8209;>File Locations&#8209;>User Files Location and set it to the JMRI folder you created in Dropbox.<br>
 <a href="Locations_Files.png"><img src="Locations_Files.png" width="418" height="157"></a></li>
-<li>Restart JMRI and use Help&#8209;>Locations to make sure everything is changed correctly.</li>
+<li>Restart JMRI and use Help &#8209;> Locations to make sure everything is changed correctly.</li>
 <li>If you have already created any files of the types listed at this link
 (see <a href="../package/apps/TabbedPreferences.shtml#FileLocations" target="_blank">this page</a> for help), 
 move them from the old location to your new location. For example, your files
 in the User Files window we opened at the first step should be moved to the
-new User Files location you just created.</li>
+new User Files Location you just created.</li>
 </ul>
 </p>
-<p>
-The only steps you need to do on subsequent machines are:
+<h3>Step 2-...</h3>
+<p>The only steps you need to do on subsequent computers are:
 <ul>
-<li>Preferences&#8209;>Roster&#8209;>Roster&#8209;>Roster Location&#8209;>Reset. Do not enter a Roster Location. That way it will follow User Files Location.
-<li>Preferences&#8209;>Locations&#8209;>User Files Location and set it to the JMRI folder you created in Dropbox.
+<li>Preferences &#8209;> Roster &#8209;> Roster &#8209;> Roster Location &#8209;> Reset. Do not enter a Roster Location. That way it will follow the User Files Location.
+<li>Preferences &#8209;> Locations &#8209;> User Files Location and set it to the JMRI folder you created in Dropbox.
 </ul>
 </p>
+
 <!--#include virtual="/Footer" -->
+  </div><!-- closes #mainContent-->
+ </div> <!-- closes #mBody-->
 </body>
 </html>
