@@ -23,7 +23,7 @@
 <p>In the pane that opens, enter a valid Hardware Address for the Block and if desired enter a User Name. For example, a valid System Name for a LocoNet layout could be LB456. Another
 example, a valid Internal Block system name could be IB123. The
 optional User Name can be anything you wish to describe the Block as long as it is unique in your JMRI setup. See the "<a href="../../../../html/doc/Technical/Names.shtml">Names</a>" Help page for more information.</p>
-<p>Complete the definition of the new Block by filling out all fields, often by selecting a value from a drop-drown list. See the <a href="BlockEdit.shtml">Block Attributes</a> Help page.</p>
+<p>Complete the definition of the new Block by closing the Add/Edit Block pane and clicking the <strong>Edit</strong> button at the right of the newly created Block entry in the <a href="BlockTable.shtml">Blocks Table</a>. Fill out all fields as described on the <a href="BlockEdit.shtml">Block Attributes</a> Help page.</p>
 
 <h2>Creating A Number of Blocks</h2>
 <p>It is also possible to create a number of Blocks in one go.<br/>

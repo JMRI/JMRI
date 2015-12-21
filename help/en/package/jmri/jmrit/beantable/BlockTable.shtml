@@ -137,7 +137,7 @@ have been predefined in the <code>signalSpeed.xml</code> file, in addition to a 
 <p>To add a new Block, see <a href="BlockAddEdit.shtml">Add/Edit Block Entries</a></p>
 
 <h3>Editing an existing Block</h3>
-<p>To check or change the properties of a Block, see <a href="BlockEdit.shtml">Edit Block</a></p>
+<p>To check or change the properties of a Block, click the <strong><a href="BlockEdit.shtml">Edit</a></strong> button to the right of a Block entry in the Blocks Table, see <a href="BlockEdit.shtml">Edit Block</a>.</p>
 
 <p><a href="../../../../html/tools/tracker/index.shtml">More on Block Tracking</a></p>
 <p><a href="../display/LayoutEditor.shtml">Using Blocks with Layout Editor</a></p>
