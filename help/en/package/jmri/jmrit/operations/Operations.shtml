@@ -2173,6 +2173,7 @@
    select the load name or combo you want, and then press the "Add Load" button. To remove a load
    name from the list, select the load name you want to remove, and press "Delete Load". "Delete
    All" will remove all load names from the load list.
+   
    <A NAME="SpurOption"></A>
    <H5>Spur Option</H5>
 
@@ -2587,25 +2588,26 @@
    <H4>Kernel</H4>
 
    A "Kernel" is a group of cars that move as a single unit. If wish this car to be part of a kernel
-   press "Edit" across from "Kernel" and create a kernel name. Then select the kernel from the
-   menu box. The first car you assign to the kernel becomes the lead car. The program when searching
-   for a track to set out the kernel will only use the lead car's attributes when determining if the
-   track can accept the kernel. However, the program does use the entire length of the kernel to
-   determine if the group of cars will fit on the destination track.
-   
+   press "Edit" across from "Kernel" and create a kernel name. Then select the kernel name from the
+   menu box in the "Edit Car" window. The first car you assign to the kernel becomes the lead car.
+   The program when searching for a track to set out the kernel will only use the lead car's
+   attributes when determining if the track can accept the kernel. However, the program does use the
+   entire length of the kernel to determine if the group of cars will fit on the destination track.
+
    Manifest and switch lists will show the cars in the order that you assigned them to the kernel.
 
    <H4>Optional Fields</H4>
 
    Finally you can optionally enter the color, built date, owner and comment for this car. The built
    date can be entered as a four digit year, or in the format of month-year.
+   
    <A NAME="CARIDTAG"></A>
-   <H3>Id Tag</H3>
+   <H4>Id Tag</H4>
    The Id Tag dropdown allows you to associate a <a
     href="../../../../html/tools/IdTags.shtml">IdTag</a> with this piece of rolling stock. If any of
    the locations have an associated
    <a href=#LocationReporter>Id Tag Reader at Location</a> and the Id Tag associated with this car
-   is read by that Reporter, then the location will be updated.
+   is read by that Reporter, then the location will be updated. See <A HREF="#Options">Options</A> to enable this feature.
 
    <H3>Add</H3>
 
@@ -2925,18 +2927,45 @@
    feature when building trains.
 
    <p>Now set the locomotive's location on the layout. If the locomotive is off the layout, set
-    the location to none (blank space). If wish this locomotive to be part of a consist, press
-    "Edit" across from "Consist" and enter a consist name. Then select the consist name from the
-    menu box. Finally you can optionally enter the built date, owner and comment for this
-    locomotive.</P>
-
+    the location to none (blank space). You can also enter the built date, owner and a comment for
+    this locomotive.</P>
+   
    <A NAME="LocomotiveModels"></A>
-   <H3>Locomotive Models</H3>
+   <H4>Locomotive Models</H4>
 
    OperationsPro&trade; allows you organize your locomotives by model. Each model can only have one
    locomotive type, length, weight and horsepower rating associated with it. For example, if you
    assign the model name "RS11" to a set of locomotives, when you change the length of one of the
-   "RS11"s, the length will also change for the others.
+   "RS11"s, the length will also change for the others. Also associated with a locomotive model is
+   whether the engine is to be used as a "B" or booster unit. "B" units are never assigned to a
+   train that requires only one locomotive, and they are never assigned by the program as the lead
+   engine in a consist. One useful trick is to assign the "B" unit designation to non-sound units
+   to prevent them from becoming the lead engine when building a consist.
+
+   <H4>Locomotive Consists</H4>
+
+   If wish this locomotive to be part of a consist assigned by you, press the "Edit" button across
+   from "Consist" in the "Edit Locomotive" window. Now enter a consist name and press "Add" in the
+   "Edit Locomotive Consist" window. Finally select the consist name from the menu box in the "Edit
+   Locomotive" window and press save.
+   
+   <A NAME="SynchronizeWithNCEConsists"></A>
+   <H4>Synchronize with NCE Consists</H4>
+
+   If you are using NCE as your DCC command station, you can have the program synchronize your
+   consist numbers with your locomotives. The program will read all of the consists out of the NCE
+   system and then will search for matching locomotives in your operations roster. The program will
+   assign the consist name nce_xxx where xxx is the consist number. To synchronize your consists,
+   select "Synchronize with NCE Consists" under the "Tools" from the "Locomotives" menu.
+   
+   <A NAME="LocomotiveIDTAG"></A>
+   <H4>Id Tag</H4>
+   The Id Tag dropdown allows you to associate a <a
+    href="../../../../html/tools/IdTags.shtml">IdTag</a> with this piece of rolling stock. If any of
+   the locations have an associated
+   <a href=#LocationReporter>Id Tag Reader at Location</a> and the Id Tag associated with this
+   locomotive is read by that Reporter, then the location will be updated. See
+   <A HREF="#Options">Options</A> to enable this feature.
 
    <H3>Save</H3>
 
@@ -2952,22 +2981,6 @@
    locomotive's destination and train. Normally the locomotive's destination and assigned train are
    generated by the program, but you can use these fields to force a locomotive to a specific
    location using a specified train.
-   <A NAME="LocomotiveIDTAG"></A>
-   <H3>Id Tag</H3>
-   The Id Tag dropdown allows you to associate a <a
-    href="../../../../html/tools/IdTags.shtml">IdTag</a> with this piece of rolling stock. If any of
-   the locations have an associated
-   <a href=#LocationReporter>Id Tag Reader at Location</a> and the Id Tag associated with this
-   locomotive is read by that Reporter, then the location will be updated. 
-   
-   <A NAME="SynchronizeWithNCEConsists"></A>
-   <H3>Synchronize with NCE Consists</H3>
-
-   If you are using NCE as your DCC command station, you can have the program synchronize your
-   consist numbers with your locomotives. The program will read all of the consists out of the NCE
-   system and then will search for matching locomotives in your operations roster. The program will
-   assign the consist name nce_xxx where xxx is the consist number. To synchronize your consists,
-   select "Synchronize with NCE Consists" under the "Tools" menu. 
    
    <A NAME="Routes"></A>
    <H2>Routes</H2>
@@ -4188,6 +4201,9 @@
     next change occurs to that location. If there are no changes to a location, then the switch list
     is a copy of the last one printed. This allows you to print more than one copy of the switch
     list if needed.</P>
+    
+    <P>The <A HREF="#Timetable">Timetable</A> window has buttons along the bottom of the window that simplify the building
+    of train manifests and consolidating train switch lists.</P>
 
    <P>If you select or deselect any of the switch list options, you will need to press the
     "Save" button to activate them.</P>
