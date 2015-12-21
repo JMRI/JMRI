@@ -76,7 +76,7 @@ public class LocoNetThrottledTransmitterTest extends TestCase {
 
     public void testThreadStartStop() {
         LocoNetThrottledTransmitter q = new LocoNetThrottledTransmitter(null, false);
-        JUnitUtil.releaseThread(this, 100);
+        JUnitUtil.waitFor(()->{return q.running;}, "started");
 
         Assert.assertTrue("started", q.running);
 
@@ -111,16 +111,17 @@ public class LocoNetThrottledTransmitterTest extends TestCase {
         LocoNetMessage m2 = new LocoNetMessage(1);
         m2.setElement(0, 0x02);  // dummy value
 
-        q.minInterval = 100;
+        q.minInterval = 1;
         q.sendLocoNetMessage(m1);
+        q.minInterval = 100;
         q.sendLocoNetMessage(m2);
 
-        JUnitUtil.waitFor(()->{return s.outbound.size() == 1;}, "only one sent");
+        JUnitUtil.waitFor(()->{return s.outbound.size() == 1;}, "only one sent failed with s.outbound.size() "+s.outbound.size());
 
         Assert.assertEquals("only one sent", 1, s.outbound.size());
         Assert.assertEquals("right one", m1, s.outbound.elementAt(0));
 
-        JUnitUtil.waitFor(()->{return s.outbound.size() == 2;}, "two sent");
+        JUnitUtil.waitFor(()->{return s.outbound.size() == 2;}, "only two sent failed with s.outbound.size() "+s.outbound.size());
 
         Assert.assertEquals("two sent", 2, s.outbound.size());
         Assert.assertEquals("right 2nd", m2, s.outbound.elementAt(1));
@@ -142,8 +143,6 @@ public class LocoNetThrottledTransmitterTest extends TestCase {
 
         Assert.assertEquals("only one sent", 1, s.outbound.size());
         Assert.assertEquals("right one", m1, s.outbound.elementAt(0));
-
-        JUnitUtil.releaseThread(this, 200);
 
         q.sendLocoNetMessage(m2);
         JUnitUtil.waitFor(()->{return s.outbound.size() == 2;}, "two sent");
