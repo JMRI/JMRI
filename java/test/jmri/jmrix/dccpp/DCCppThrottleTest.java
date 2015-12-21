@@ -18,8 +18,6 @@ import org.slf4j.LoggerFactory;
  */
 public class DCCppThrottleTest extends TestCase {
 
-    static final int RELEASE_TIME = 100;
-
     public void testCtor() {
         // infrastructure objects
         DCCppInterfaceScaffold tc = new DCCppInterfaceScaffold(new DCCppCommandStation());
@@ -81,7 +79,7 @@ public class DCCppThrottleTest extends TestCase {
         // now we're going to wait and verify the throttle eventually has 
         // its status set to idle.
         //jmri.util.JUnitAppender.assertErrorMessage("Unsupported Command Sent to command station");
-        //jmri.util.JUnitUtil.releaseThread(this, RELEASE_TIME);  // give the messages
+        //jmri.util.JUnitUtil.releaseThread(this);  // give the messages
         // some time to process;
 
         Assert.assertEquals("Throttle in THROTTLEIDLE state", DCCppThrottle.THROTTLEIDLE, t.requestState);

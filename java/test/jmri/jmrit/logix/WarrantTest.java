@@ -199,17 +199,17 @@ public class WarrantTest extends TestCase {
         msg = warrant.setRunMode(Warrant.MODE_RUN, null, null, null, false);
         Assert.assertNull("setRunMode - "+msg, msg);
         try {
-            Thread.sleep(300);            
+            jmri.util.JUnitUtil.releaseThread(this);            
             sWest.setState(Sensor.ACTIVE);
-            Thread.sleep(300);            
+            jmri.util.JUnitUtil.releaseThread(this);             
             sSouth.setState(Sensor.ACTIVE);
-            Thread.sleep(300);            
+            jmri.util.JUnitUtil.releaseThread(this);             
         } catch (Exception e) {
             System.out.println(e);            
         }
         while (warrant.getThrottle() != null) {
             // Sometimes the engineer is blocked
-            Thread.sleep(500);            
+            jmri.util.JUnitUtil.releaseThread(this);           
         }        
         msg = warrant.getRunningMessage();
         Assert.assertEquals("getRunningMessage", "Idle", msg);

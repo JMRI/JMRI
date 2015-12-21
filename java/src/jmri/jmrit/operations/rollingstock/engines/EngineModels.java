@@ -127,7 +127,9 @@ public class EngineModels extends RollingStockAttribute {
     }
     
     public boolean isModelBunit(String model) {
-        return _engineBunitHashTable.get(model);
+        if (_engineBunitHashTable.containsKey(model))
+            return _engineBunitHashTable.get(model);
+        return false;
     }
 
     public void setModelWeight(String model, String type) {
