@@ -73,7 +73,7 @@ public class JUnitUtil {
         releaseThread(self, DEFAULT_RELEASETHREAD_DELAY);
     }
 
-    static void releaseThread(Object self, int delay) {
+    public static void releaseThread(Object self, int delay) {
         if (javax.swing.SwingUtilities.isEventDispatchThread()) {
             log.error("Cannot use releaseThread on Swing thread", new Exception());
             return;
@@ -110,14 +110,15 @@ public class JUnitUtil {
         try {
             while (delay < WAITFOR_MAX_DELAY) {
                 if (condition.ready()) return;
+                int priority = Thread.currentThread().getPriority();
                 try {
-                    int priority = Thread.currentThread().getPriority();
                     Thread.currentThread().setPriority(Thread.MIN_PRIORITY);
                     Thread.sleep(WAITFOR_DELAY_STEP);
-                    Thread.currentThread().setPriority(priority);
                     delay += WAITFOR_DELAY_STEP;
                 } catch (InterruptedException e) {
                     Assert.fail("failed due to InterruptedException");
+                } finally {
+                    Thread.currentThread().setPriority(priority);
                 }
             }
             Assert.fail(name);
