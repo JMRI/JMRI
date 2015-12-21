@@ -1212,21 +1212,34 @@ public class TrainCommon {
      * parenthesis "(".
      *
      * @param name
-     * @return First half the string.
+     * @return First half of the string.
      */
     public static String splitString(String name) {
-        String[] fullname = name.split("-");
-        String parsedName = fullname[0].trim();
+        String[] splitname = name.split("-");
         // is the hyphen followed by a number or left parenthesis?
-        if (fullname.length > 1 && !fullname[1].startsWith("(")) {
+        if (splitname.length > 1 && !splitname[1].startsWith("(")) {
             try {
-                Integer.parseInt(fullname[1]);
+                Integer.parseInt(splitname[1]);
             } catch (NumberFormatException e) {
                 // no return full name
-                parsedName = name.trim();
+                return name.trim();
             }
         }
-        return parsedName;
+        return splitname[0].trim();
+    }
+    
+    /**
+     * Splits a string if there's a hyphen followed by a left parenthesis "-(".
+     * 
+     * @param name
+     * @return First half of the string.
+     */
+    private static String splitStringLeftParenthesis(String name) {
+        String[] splitname = name.split("-");
+        if (splitname.length > 1 && splitname[1].startsWith("(")) {
+            return splitname[0].trim();
+        }
+        return name.trim();
     }
 
     // returns true if there's work at location
@@ -1302,7 +1315,7 @@ public class TrainCommon {
     // @param isPickup true when rolling stock is being picked up
     private String getEngineAttribute(Engine engine, String attribute, boolean isPickup) {
         if (attribute.equals(Setup.MODEL)) {
-            return " " + padAndTruncateString(engine.getModel(), EngineModels.instance().getMaxNameLength());
+            return " " + padAndTruncateString(splitStringLeftParenthesis(engine.getModel()), EngineModels.instance().getMaxNameLength());
         }
         if (attribute.equals(Setup.CONSIST)) {
             return " " + padAndTruncateString(engine.getConsistName(), engineManager.getConsistMaxNameLength());
