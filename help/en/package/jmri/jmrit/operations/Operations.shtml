@@ -1210,10 +1210,10 @@
    
    <H4>Switch List Options</H4>
 
-   The first option "By Track Summary" lists all car pick ups, set outs, and holds at a location by
-   track and train at the end of the switch list. Deselect this option if you don't want this
-   summary. 
-   
+   The first option "By Track Summary" when selected, lists all car pick ups, set outs, and holds at
+   a location by track and train. This summary is appended to the end of the switch list. This
+   option is only available when you operate the switch list in <A HREF="#SwitchListOptions">Real Time</A>.
+
    <P>You can include in your switch lists the train's
    <A HREF="#EditRoute">route</A> location comments by selecting the "Route Location" checkbox.</P>
    
@@ -4134,6 +4134,7 @@
     window for a <A HREF="#Locations">location.</A>
    </P>
 
+   <A NAME="SwitchListOptions"></A>
    <H3>Switch List Options</H3>
 
    There are three options for adjusting the switch lists to your liking. The first checkbox option
