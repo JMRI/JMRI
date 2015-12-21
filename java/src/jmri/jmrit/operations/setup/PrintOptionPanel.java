@@ -152,6 +152,7 @@ public class PrintOptionPanel extends OperationsPreferencesPanel {
         departureTimeCheckBox.setToolTipText(Bundle.getMessage("DepartureTimeTip"));
         routeLocationCheckBox.setToolTipText(Bundle.getMessage("RouteLocationTip"));
         editManifestCheckBox.setToolTipText(Bundle.getMessage("UseTextEditorTip"));
+        trackSummaryCheckBox.setToolTipText(Bundle.getMessage("TrackSummaryTip"));
 
         addEngPickupComboboxButton.setToolTipText(Bundle.getMessage("AddMessageComboboxTip"));
         deleteEngPickupComboboxButton.setToolTipText(Bundle.getMessage("DeleteMessageComboboxTip"));
@@ -360,6 +361,7 @@ public class PrintOptionPanel extends OperationsPreferencesPanel {
         truncateCheckBox.setSelected(Setup.isTruncateManifestEnabled());
         departureTimeCheckBox.setSelected(Setup.isUseDepartureTimeEnabled());
         trackSummaryCheckBox.setSelected(Setup.isTrackSummaryEnabled());
+        trackSummaryCheckBox.setEnabled(Setup.isSwitchListRealTime());
         routeLocationCheckBox.setSelected(Setup.isSwitchListRouteLocationCommentEnabled());
         editManifestCheckBox.setSelected(Setup.isManifestEditorEnabled());
 
