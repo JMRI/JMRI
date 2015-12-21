@@ -207,10 +207,10 @@ public class WarrantTest extends TestCase {
         } catch (Exception e) {
             System.out.println(e);            
         }
-        while (warrant.getThrottle() != null) {
-            // Sometimes the engineer is blocked
-            jmri.util.JUnitUtil.releaseThread(this);           
-        }        
+
+        // wait for done
+        jmri.util.JUnitUtil.waitFor(()->{return warrant.getThrottle()==null;}, "engineer blocked");
+
         msg = warrant.getRunningMessage();
         Assert.assertEquals("getRunningMessage", "Idle", msg);
     }
