@@ -1,9 +1,7 @@
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
 <html lang="en">
 <head>
- <title>
-      JMRI Hardware Guide: Connecting a LocoBuffer-II to LocoNet&reg;
- </title>
+ <title>JMRI Hardware Support - LocoBuffer-II to LocoNet&reg;</title>
     <meta content="Bob Jacobsen" name="Author">
     <meta name="keywords" content="Digitrax Chief DCS Command Station MS-100 LocoBuffer java model railroad JMRI install windows">
 
@@ -54,17 +52,17 @@ which uses a USB connection.
 </p>
 
 <ul>
-<li>Set all switches off (toward the front label side).
-<li>Connect the LocoBuffer-II to a suitable power supply, for example
-a wall-wart of the correct voltage.
-<li>
-Start DecoderPro or other program and configure it for:
-<ul>
-<li>LocoNet LocoBuffer-II
-<li>Select your port
-<li>19,200 baud or 57,600 baud, to match the LocoBuffer-II internal option switch settings
-<li>Hardware flow control
-</ul>
+	<li>Set all switches off (toward the front label side).
+	<li>Connect the LocoBuffer-II to a suitable power supply, for example
+	a wall-wart of the correct voltage.
+	<li>
+	Start DecoderPro or other program and configure it for:
+	<ul>
+		<li>LocoNet LocoBuffer-II
+		<li>Select your port
+		<li>19,200 baud or 57,600 baud, to match the LocoBuffer-II internal option switch settings
+		<li>Hardware flow control
+	</ul>
 </ul>
 
 <h2>Loop-back testing</h2>

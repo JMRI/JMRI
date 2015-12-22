@@ -1,9 +1,7 @@
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
 <html lang="en">
 <head>
- <title>
-      JMRI Hardware Guide: Signals with C/MRI
- </title>
+ <title>JMRI Hardware Support - Signals with C/MRI</title>
     <meta content="Bob Jacobsen" name="Author">
     <meta name="keywords" content="Bruce Chubb C/MRI Computer interface java model railroad JMRI signals">
 

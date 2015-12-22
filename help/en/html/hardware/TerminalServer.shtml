@@ -1,9 +1,7 @@
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
 <html lang="en">
 <head>
- <title>
- JMRI: Terminal Server Connection
- </title>
+ <title>JMRI Hardware Support - Terminal Server Connection</title>
 
     <meta content="David D Zuhn" name="Author">
     <meta content="John Plocher" name="Author">
@@ -28,16 +26,16 @@
   JMRI Install Guide: Terminal Server Connection
   </h2>
 <p>
-A terminal server is a box that connects one or more serial
+A Terminal Server is a box that connects one or more serial
 ports to a network so they can be accessed from a remote computer.
 JMRI running on a computer with a network connection can 
 connect to a EasyDCC or NCE command station or C/MRI nodes via one of these. This allows
 you to put the computer and layout as far apart as you'd like.
-<P>
+<p>
 To make this work,
 you have to configure both JMRI and the terminal server, and make 
 the appropriate connections.
-<P>
+<p>
 This capability was originally created for david zuhn, who 
 has a 
 <a href="http://stpaulterminal.org/software/jmri/lantronix.html">web page</a>

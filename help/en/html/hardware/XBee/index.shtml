@@ -1,9 +1,7 @@
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
 <html lang="en">
 <head>
-<title>
-JMRI: Digi XBee Network
-</title>
+<title>JMRI Hardware Support - Digi XBee Network</title>
 
 <meta content="Paul Bender" name="Author">
 <meta name="keywords" content="XBee Configuration Information for JMRI">

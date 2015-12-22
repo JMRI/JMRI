@@ -1,7 +1,7 @@
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
 <html lang="en">
 <head>
-<title>JMRI: Powerline Controllers</title>
+<title>JMRI Hardware Support - Powerline Controller Compatibility</title>
 
 <!-- Style -->
 <meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
@@ -19,7 +19,7 @@
     <div id="mainContent">
 
 <h2> 
-JMRI:  Supported Powerline Controllers
+JMRI: Supported Powerline Controllers
 </h2>
 
 This page helps you identify the type of

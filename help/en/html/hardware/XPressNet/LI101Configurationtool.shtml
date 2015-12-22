@@ -1,6 +1,7 @@
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
 <html lang="en">
 <head>
+<title>JMRI Hardware Support - XPressNet LI101F Configuration Utility</title>
 
 <!-- Style -->
 <meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
@@ -17,7 +18,7 @@
   <div class="nomenu" id="mBody">
     <div id="mainContent">
 
-<h2>The JMRI LI101F Configuration Utility</h2>
+<h2>The LI101F Configuration Utility</h2>
 <img src="images/LI101ConfigurationUtility.jpg" alt="LI101 Configuration Tool Image">
 <p>
 The LI101 Configuration tool is used to configure the LI101F.

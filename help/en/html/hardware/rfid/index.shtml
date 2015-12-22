@@ -1,9 +1,7 @@
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
 <html lang="en">
 <head>
-<!-- Copyright ($Author$) 2008 -->
-<!-- $Id$ -->
-<title>JMRI: RFID Reader Support</title>
+<title>JMRI Hardware Support - RFID Reader</title>
 
 <!-- Style -->
 <meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
@@ -58,7 +56,7 @@ readers using the CORE-ID protocol.
 Select "MERG Concentrator" for the "Adapter" in the preferences.
 
 <h2>Naming</h2>
-
+<p>
 The <a href="../../doc/Technical/Names.shtml">system letter</a> 
 for RFID connections is "F". Details of RFID 
 event and object names are described below.
@@ -74,7 +72,7 @@ defines a Sensor that follows the "A" reader, whereas a system name like
 defines a Reporter that follows the "B" reader.
 
 <h2>Sensors</h2>
-
+<p>
 RFID readings coming into JMRI applications can be accessed via
 JMRI Sensor objects.  The Sensor's 
 <!-- <a href="Names.shtml">system name</a> -->system name
@@ -90,7 +88,7 @@ button on the
 <a href="../../../../package/jmri/jmrit/beantable/SensorTable.shtml">Sensor Table</a>.
 
 <h2>Reporters</h2>
-
+<p>
 RFID readings coming into JMRI applications can also be accessed via
 JMRI Reporter objects.  The Reporter's 
 <!-- <a href="Names.shtml">system name</a> -->system name
@@ -108,7 +106,7 @@ Reporter will contain details of the specific
 seen.  This then enables other JMRI tools to react to this information.
 
 <h2>Reporter Table</h2>
-The 
+<p>The 
 <a href="../../../package/jmri/jmrit/beantable/ReporterTable.shtml">Reporter Table</a>
 provides easy access to the contents of all Reporters that JMRI knows about.
 There's also an 
@@ -117,18 +115,18 @@ for creating your own internal Reporters; JMRI automatically creates
 Reporter objects for devices on the layout.
 
 <h2>Displaying Reporter Values on Panels</h2>
-A Reporter's value can be displayed on a panel via an icon.
+<p>A Reporter's value can be displayed on a panel via an icon.
 To do this:
 <ul>
-<li>On the Panel Editor window for your panel, find the "Add Reporter" 
-button.
-<li>In the text box next to that button, type the user name or system name of the
-desired Reporter.
-<li>Click the button.  The Reporter icon will be placed on the panel.
-If it's not visible, that might be because the value is currently blank;
-use the Reporter Table to change the value to something that will be visible.
-<li>You can drag the icon to where you want it in the usual way.
-<li>The pop-up menu on the icon will let you change the formatting.
+	<li>On the Panel Editor window for your panel, find the "Add Reporter" 
+	button.
+	<li>In the text box next to that button, type the user name or system name of the
+	desired Reporter.
+	<li>Click the button.  The Reporter icon will be placed on the panel.
+	If it's not visible, that might be because the value is currently blank;
+	use the Reporter Table to change the value to something that will be visible.
+	<li>You can drag the icon to where you want it in the usual way.
+	<li>The pop-up menu on the icon will let you change the formatting.
 </ul>
 
 <!--#include virtual="/Footer" -->

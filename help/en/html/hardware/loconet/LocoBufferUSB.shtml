@@ -1,9 +1,7 @@
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
 <html lang="en">
 <head>
- <title>
-      JMRI Hardware Guide: Connecting a LocoBuffer-USB to LocoNet&reg;
- </title>
+ <title>JMRI Hardware Support - LocoBuffer-USB to LocoNet&reg;</title>
     <meta content="Bob Jacobsen" name=Author>
     <meta name="keywords" content="Digitrax Chief DCS Command Station LocoBuffer USB java model railroad JMRI install windows">
 

@@ -1,9 +1,7 @@
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
 <html lang="en">
 <head>
-    <title>
- 	JMRI: LocoNet&reg; Implementation
-    </Ttitle>
+    <title>JMRI Hardware Support - LocoNet&reg; Implementation</title>
     <meta content="Bob Jacobsen" name="Author">
     <meta name="keywords" content="JMRI LocoNet technical implementation">
     <!-- The combination of "Define" and {Header,Style, Logo and Footer} comments -->

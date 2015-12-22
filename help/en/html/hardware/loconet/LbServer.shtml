@@ -1,9 +1,7 @@
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
 <html lang="en">
 <head>
- <title>
-      JMRI Hardware Guide: Connecting Multiple Computers to LocoNet&reg; via LbServer
- </title>
+ <title>JMRI Hardware Support - Multiple Computers to LocoNet&reg; via LbServer</title>
     <meta content="Bob Jacobsen" name="Author">
     <meta name="keywords" content="Digitrax Chief DCS Command Station LocoNet Server LocoBuffer java model railroad JMRI install windows">
 

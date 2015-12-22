@@ -1,7 +1,7 @@
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
 <html lang="en">
 <head>
-<title>JMRI: Grapevine System Names</title>
+<title>JMRI Hardware Support - Grapevine System Names</title>
 
 <!-- Style -->
 <meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
@@ -42,7 +42,7 @@ sections on inputs and outputs below for the specific meanings
 of these various formats.
 
 <p>
-The node number preceeds the pin number. If it's helpful, you can think of the node number as being the "thousands"
+The node number precedes the pin number. If it's helpful, you can think of the node number as being the "thousands"
 part of the combined number, and the pin number as the lower three digits.
 
 <p>

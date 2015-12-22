@@ -1,7 +1,7 @@
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
 <html lang="en">
 <head>
-<title>JMRI: Sharing Files with DropBox</title>
+<title>JMRI Setup - Sharing Files with DropBox</title>
   <meta name="keywords" content="java model railroad JMRI install Dropbox">
 
 <!-- Style -->
@@ -18,7 +18,7 @@
   <div class="nomenu" id="mBody">
     <div id="mainContent">
 
-<h1>JMRI: Sharing Files with Dropbox</h1>
+<h1>JMRI Setup: Sharing Files with Dropbox</h1>
 
 <p>
   <a href="https://www.dropbox.com" target="_blank">Dropbox</a>
