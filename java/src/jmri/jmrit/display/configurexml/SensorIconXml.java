@@ -229,9 +229,6 @@ public class SensorIconXml extends PositionableLabelXml {
         ed.putItem(l);
         // load individual item's option settings after editor has set its global settings
         loadCommonAttributes(l, Editor.SENSORS, element);
-        if (l.isIcon() && l.getText()!=null) {
-            l.setOpaque(false);            
-        }
     }
 
     private NamedIcon loadSensorIcon(String state, int rotation, SensorIcon l,

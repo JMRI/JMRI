@@ -386,11 +386,12 @@ public class PositionableLabelXml extends AbstractXmlAdapter {
             a = element.getAttribute("degrees");
             if (a != null) {
                 deg = a.getIntValue();
-                l.rotate(deg);
+//                l.rotate(deg);
             }
         } catch (DataConversionException ex) {
             log.warn("invalid 'degrees' value (non integer)");
         }
+        l.rotate(deg);
         if (deg == 0 && util.hasBackground()) {
             l.setOpaque(true);
         }

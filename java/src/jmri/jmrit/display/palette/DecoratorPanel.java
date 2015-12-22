@@ -200,7 +200,7 @@ public class DecoratorPanel extends JPanel implements ChangeListener, ItemListen
         String text = Bundle.getMessage("sample");
         _util = item.getPopupUtility();
 
-        if (pos instanceof SensorIcon && !((SensorIcon)pos).isIcon()) {
+        if (pos instanceof SensorIcon) {
             SensorIcon si = (SensorIcon) pos;
             if (!si.isIcon() && si.isText()) {
                 PositionableLabel sample = new PositionableLabel(si.getActiveText(), _editor);
@@ -238,6 +238,17 @@ public class DecoratorPanel extends JPanel implements ChangeListener, ItemListen
                     sample.setOpaque(true);
                 }
                 doPopupUtility("Inconsistent", INCONSISTENT_FONT, sample, _util, true);
+            } else {
+                PositionableLabel sample = new PositionableLabel(text, _editor);
+                sample.setForeground(pos.getForeground());
+                sample.setBackground(pos.getBackground());
+                sample.setOpaque(_util.hasBackground());
+                if (si.isText()) {
+                    sample.setText(((PositionableLabel)pos).getUnRotatedText());                    
+                } else {
+                    sample.setText("   ");                    
+                }
+                doPopupUtility("Text", TEXT_FONT, sample, _util, si.isText());               
             }
         } else { // not a SensorIcon
             PositionableLabel sample = new PositionableLabel(text, _editor);
@@ -529,46 +540,61 @@ public class DecoratorPanel extends JPanel implements ChangeListener, ItemListen
     }
 
     public void getText(Positionable pos) {
-        if (pos instanceof SensorIcon  && !((SensorIcon)pos).isIcon()) {
+        if (pos instanceof SensorIcon) {
             SensorIcon icon = (SensorIcon) pos;
-            PositionableLabel sample = _sample.get("Active");
-            if (sample.isOpaque()) {
-                icon.setBackgroundActive(sample.getBackground());                
-            } else {
-                icon.setBackgroundActive(null);                
-            }
-            icon.setTextActive(sample.getForeground());
-            icon.setActiveText(sample.getText());
+            if (!icon.isIcon()) {
+                PositionableLabel sample = _sample.get("Active");
+                if (sample.isOpaque()) {
+                    icon.setBackgroundActive(sample.getBackground());                
+                } else {
+                    icon.setBackgroundActive(null);                
+                }
+                icon.setTextActive(sample.getForeground());
+                icon.setActiveText(sample.getText());
 
-            sample = _sample.get("InActive");
-            icon.setInactiveText(sample.getText());
-            if (sample.isOpaque()) {
-                icon.setBackgroundInActive(sample.getBackground());                
-            } else {
-                icon.setBackgroundInActive(null);                
-            }
-            icon.setTextInActive(sample.getForeground());
+                sample = _sample.get("InActive");
+                icon.setInactiveText(sample.getText());
+                if (sample.isOpaque()) {
+                    icon.setBackgroundInActive(sample.getBackground());                
+                } else {
+                    icon.setBackgroundInActive(null);                
+                }
+                icon.setTextInActive(sample.getForeground());
 
-            sample = _sample.get("Unknown");
-            icon.setUnknownText(sample.getText());
-            if (sample.isOpaque()) {
-                icon.setBackgroundUnknown(sample.getBackground());                
-            } else {
-                icon.setBackgroundUnknown(null);                
-            }
-            icon.setTextUnknown(sample.getForeground());
+                sample = _sample.get("Unknown");
+                icon.setUnknownText(sample.getText());
+                if (sample.isOpaque()) {
+                    icon.setBackgroundUnknown(sample.getBackground());                
+                } else {
+                    icon.setBackgroundUnknown(null);                
+                }
+                icon.setTextUnknown(sample.getForeground());
 
-            sample = _sample.get("Inconsistent");
-            icon.setInconsistentText(sample.getText());
-            if (sample.isOpaque()) {
-                icon.setBackgroundInconsistent(sample.getBackground());                
+                sample = _sample.get("Inconsistent");
+                icon.setInconsistentText(sample.getText());
+                if (sample.isOpaque()) {
+                    icon.setBackgroundInconsistent(sample.getBackground());                
+                } else {
+                    icon.setBackgroundInconsistent(null);                
+                }
+                icon.setTextInconsistent(sample.getForeground());
             } else {
-                icon.setBackgroundInconsistent(null);                
+                PositionableLabel sample = _sample.get("Text");
+                if (icon.isText()) {
+                    icon.setText(sample.getText());                    
+                } else {
+                    icon.setText(null);
+                }
+                pos.setForeground(sample.getForeground());
+                if (sample.isOpaque()) {
+                    pos.setBackground(sample.getBackground());                
+                } else {
+                    pos.setBackground(null);                
+                }
+                _util.setHasBackground(sample.isOpaque());
             }
-            icon.setTextInconsistent(sample.getForeground());
         } else {
             PositionableLabel sample = _sample.get("Text");
-            pos.setForeground(sample.getForeground());
             if ( pos instanceof PositionableLabel &&
                 !(pos instanceof jmri.jmrit.display.MemoryIcon)) {
                 ((PositionableLabel) pos).setText(sample.getText());

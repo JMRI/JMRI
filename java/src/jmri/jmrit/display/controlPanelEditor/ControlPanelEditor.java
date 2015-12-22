@@ -1705,7 +1705,7 @@ public class ControlPanelEditor extends Editor implements DropTargetListener, Cl
                 PositionableLabel pl = (PositionableLabel) p;
 /*                if (pl.isIcon() && "javax.swing.JLabel".equals(pl.getClass().getSuperclass().getName()) ) {
                     popupSet |= setTextAttributes(pl, popup);       // only for plain icons
-                }   Add backgrounds & text over icons later */
+                }   // Add backgrounds & text over icons later */
                 if (!pl.isIcon()) {
                     popupSet |= setTextAttributes(pl, popup);
                     if (p instanceof MemoryIcon){                        
@@ -1713,9 +1713,7 @@ public class ControlPanelEditor extends Editor implements DropTargetListener, Cl
                     }
                 } else if (p instanceof SensorIcon) {
                     popup.add(CoordinateEdit.getTextEditAction(p, "OverlayText"));
-                    if (pl.isText()) {
-                        popupSet |= setTextAttributes(p, popup);                                        
-                    }
+                    popupSet |= setTextAttributes(p, popup);                                        
                 } else {
                     popupSet = p.setTextEditMenu(popup);                
                 }

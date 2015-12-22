@@ -64,6 +64,7 @@ public class SensorIcon extends PositionableIcon implements java.beans.PropertyC
         _control = true;
         debug = log.isDebugEnabled();
         setPopupUtility(new SensorPopupUtil(this, this));
+        displayState(sensorState());
     }
 
     public SensorIcon(String s, Editor editor) {
@@ -418,9 +419,18 @@ public class SensorIcon extends PositionableIcon implements java.beans.PropertyC
         if (getNamedSensor() == null) {
             log.debug("Display state " + state + ", disconnected");
         } else if (isIcon()) {
+            int deg = getDegrees();
+            rotate(deg);
             NamedIcon icon = getIcon(state);
             if (icon != null) {
                 super.setIcon(icon);
+            }
+            if (isText()) {
+                if (deg==0) {
+                    setOpaque(getPopupUtility().hasBackground());
+                } else {
+                    rotate(deg);                    
+                }
             }
         } else if (isText()) {
             switch (state) {
@@ -445,11 +455,11 @@ public class SensorIcon extends PositionableIcon implements java.beans.PropertyC
                     getPopupUtility().setForeground(textColorInconsistent);
                     break;
             }
-        }
-        int deg = getDegrees();
-        rotate(deg);
-        if (deg==0) {
-            setOpaque(getPopupUtility().hasBackground());
+            int deg = getDegrees();
+            rotate(deg);
+            if (deg==0) {
+                setOpaque(getPopupUtility().hasBackground());
+            }
         }
 
         updateSize();
@@ -604,10 +614,9 @@ public class SensorIcon extends PositionableIcon implements java.beans.PropertyC
     @Override
     public void setText(String s) {
         setOpaque(false);
-        if (super._rotateText && !_icon) {
+        if (!isIcon()) {
             return;
         }
-        _text = (s != null && s.length() > 0);
         super.setText(s);
         updateSize();
     }
