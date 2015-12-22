@@ -21,12 +21,12 @@
 
 <em>The support on this page is rapidly evolving; the
 actual code might be ahead or behind the documentation
-on any given day.</em><p>
-
+on any given day.</em>
+<p>
 This page describes technical details of JMRI's
 <a href="index.shtml">CBUS</a>
 support.  See also the pages on JMRI's 
-<A href="../index.shtml">general CAN support</a>.
+<a href="../index.shtml">general CAN support</a>.
 <p>
 
 <h2>CAN Adapters</h2>
@@ -37,17 +37,17 @@ people and their hardware desires as possible, we
 can create a growing community of developers, hence more
 code.
 
-<P>
+<p>
 As part of this, the JMRI CAN support is designed to
 use as many CAN adapter types as possible.
 
-<P>
+<p>
 The MERG CAN-RS can do "enumeration" for CBUS, but 
 many other adapters can't 
 because of their intrinsic latency.
 Their slow replies effectively make them invisible.  
 
-<P>
+<p>
 Therefore, Mike Bolton , one of the the CBUS developers
 suggested that
 JMRI use a CBUS ID of 126.  Currently, that's a fixed value.

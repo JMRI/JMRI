@@ -22,8 +22,8 @@
 
 <h1>Hardware Support: Bachrus</h1>
 
-	<h3>Supported Hardware</h3>
-
+	<h2>Supported Hardware</h2>
+	<h3>Speedometer</h3>
     JMRI supports the Bachrus MTS-DCC Model train Speedometer, which is an input 
 		only device, to capture speed information from a reader module on a Bachrus
 		"Saddle" running stand. For more information on the Bachrus Speedometer products see the 
