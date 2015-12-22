@@ -17,15 +17,12 @@
   <div class="nomenu" id="mBody">
     <div id="mainContent">
 
-<h2> 
-JMRI: RailDriver Throttle
-</h2>
-
+<h1>Hardware Support: RailDriver Throttle</h1>
+<p>
 RailDriver support was first available in 
 <a href="http://jmri.sf.net/releasenotes/jmri2.1.7.shtml">JMRI 2.1.7</a>.
 It is evolving rapidly, so check back here or on the
 <a href="https://groups.yahoo.com/neo/groups/jmriusers/info">JMRI users Yahoo group<a/> for changes.
-
 <br>
 <a href="RailDriver.gif">
 <img src="RailDriver.gif" align="right" width="389" height="236" alternate="RailDriver line drawing">
@@ -41,8 +38,8 @@ as a throttle to run locomotives with your DCC system.
 First, connect your computer to your DCC system and make sure that
 the regular 
 <a href="../../tools/throttle/ThrottleMain.shtml">JMRI throttles</a>
-are working fine.  (Unless you do this first,
-debugging possible problems connecting the RailDriver is very difficult)
+are working fine (Unless you do this first,
+debugging possible problems connecting the RailDriver is very difficult.)
 
 <p>
 Next, plug the RailDriver into a USB port on your computer while

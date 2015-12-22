@@ -18,9 +18,7 @@
     <div id="mainContent">
 
 <img src="http://www.modbus.org/images/logo_new.jpg" alt="Modbus logo" height="40" width="145" align="right">
-<h1> 
-JMRI: Modbus Support
-</h1>
+<h1>Hardware Support: Modbus</h1>
 
 <p><em>The support on this page is rapidly evolving; the
 actual code might be ahead or behind the documentation

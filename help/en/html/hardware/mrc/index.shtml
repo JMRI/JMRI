@@ -17,10 +17,8 @@
   <div class="nomenu" id="mBody">
     <div id="mainContent">
 
-<h1> 
-JMRI: MRC/GaugeMaster Prodigy Advanced<sup>2</sup>
-</h1>
-
+<h1>Hardware Support: MRC/GaugeMaster Prodigy Advanced<sup>2</sup></h1>
+<p>
 Please download the 
 <a href="http://jmri.sf.net/download/index.shtml">latest JMRI release</a>
 to get the most recent version of JMRI's MRC/GaugeMaster support.

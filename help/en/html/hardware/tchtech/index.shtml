@@ -17,9 +17,8 @@
   <div class="nomenu" id="mBody">
     <div id="mainContent">
 
-<h1> 
-JMRI: TCH Technology System is no longer supported
-</h1>
+<h1>Hardware Support: TCH Technology System (no longer supported)</h1>
+
 <p>As of November 10, 2008, JMRI no longer supports the TCH Technology hardware.
 
 <!--#include virtual="/Footer" -->

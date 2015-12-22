@@ -1,7 +1,7 @@
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
 <html lang="en">
 <head>
-<title>JMRI Hardware Support - RFID Reader</title>
+<title>JMRI Hardware Support - RFID Readers</title>
 
 <!-- Style -->
 <meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
@@ -17,9 +17,7 @@
   <div class="nomenu" id="mBody">
     <div id="mainContent">
 
-<h1> 
-JMRI: RFID Reader Support
-</h1>
+<h1>Hardware Support: RFID Readers</h1>
 
 <em>The support on this page is rapidly evolving; the
 actual code might be ahead or behind the documentation

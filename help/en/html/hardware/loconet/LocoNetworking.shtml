@@ -19,9 +19,8 @@
   <div class="nomenu" id="mBody">
     <div id="mainContent">
 
-  <h1> 
-  JMRI Hardware Guide: Methods to Connect Multiple Computers to a LocoNet&reg; Layout
-  </h1>
+  <h1>Hardware Support: Methods to Connect Multiple Computers to a LocoNet&reg; Layout</h1>
+  
 <p>
 JMRI currently supports two different ways that allow you to connect multiple
 computers to your LocoNet&reg;-equipped layout

@@ -18,7 +18,7 @@
   <div class="nomenu" id="mBody">
   <div id="mainContent">
 
-<h1>XBee Node Configuration Tool</h1>
+<h1>Hardware Support: XBee Node Configuration Tool</h1>
 
 <p>
 The XBee Node Configuration tool can be used to add XBee nodes to the JMRI configuration. You can access the tool from the Xbee menu when an <a href="index.shtml">XBee connection</a> is active.</p>

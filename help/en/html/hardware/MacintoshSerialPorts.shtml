@@ -23,9 +23,7 @@
   <div class="nomenu" id="mBody">
     <div id="mainContent">
 
-  <h2> 
-  JMRI Install Guide: MacOS Serial Port connections
-  </h2>
+  <h1>Hardware Support: MacOS Serial Port connections</h1>
 
 	<p>Macintosh serial ports use a "mini DIN-8" connector, which does not
 	contain all of the signals of a typical RS232 connector.  This page

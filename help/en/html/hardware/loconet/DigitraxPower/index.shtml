@@ -17,7 +17,7 @@
   <div class="nomenu" id="mBody">
     <div id="mainContent">
 
-<h1>Measurements on power leads of Digitrax components</h1>
+<h1>Hardware Support: Measurements on power leads of Digitrax components</h1>
 <p>
 I wanted to understand the reasons behind Digitrax's recommendations about separate
 power sources for PM4 and DS54 boards.  This page describes some

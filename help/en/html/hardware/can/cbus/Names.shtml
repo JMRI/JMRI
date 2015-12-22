@@ -17,9 +17,7 @@
   <div class="nomenu" id="mBody">
     <div id="mainContent">
 
-<h1> 
-JMRI: CBUS Naming
-</h1>
+<h1>Hardware Support: CBUS Naming</h1>
 
 This page describes how JMRI uses System Names to access CBUS-attached resources.
 

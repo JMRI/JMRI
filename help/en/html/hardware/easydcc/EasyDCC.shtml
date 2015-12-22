@@ -20,9 +20,7 @@
   <div class="nomenu" id="mBody">
     <div id="mainContent">
 
-  <h2> 
-  JMRI Hardware Guide: EasyDCC
-  </h2>
+<h1>Hardware Support: EasyDCC</h1>
 
 	<h3>Supported Hardware</h3>
 

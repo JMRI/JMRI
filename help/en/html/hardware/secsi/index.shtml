@@ -18,9 +18,7 @@
 <!--#include virtual="Sidebar" -->
 <div id="mainContent">
 
-<h2> 
-Connecting JMRI to a TracTronics SECSI System
-</h2>
+<h1>Hardware Support: TracTronics SECSI System</h1>
 
 JMRI can connect to 
 <a href="http://home.roadrunner.com/~jimngage/TRACTRONICS/PRODUCTS/price_1.htm">TracTronics SECSI</a>

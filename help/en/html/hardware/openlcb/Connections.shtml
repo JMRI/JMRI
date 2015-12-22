@@ -17,12 +17,9 @@
   <div class="nomenu" id="mBody">
     <div id="mainContent">
 
-<h1> 
-JMRI: OpenLCB Connections
-</h1>
-
+<h1>Hardware Support: OpenLCB Connections</h1>
+<p>
 This page discusses how JMRI can connect to OpenLCB.
-
 <p>
 For more on JMRI's OpenLCB support, see the
 <a href="index.shtml">main OpenLCB page</a>.
@@ -30,7 +27,7 @@ For more on JMRI's OpenLCB support, see the
 <h2>Via a USB Adapter</h2>
 
 <h2>Via a Network Connection</h2>
-
+<p>
 You can simulate a remote OpenLCB connection, e.g.
 to debug things, on many computers using the "nc" command:
 <pre>

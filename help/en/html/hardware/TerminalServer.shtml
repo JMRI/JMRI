@@ -22,9 +22,7 @@
   <div class="nomenu" id="mBody">
     <div id="mainContent">
 
-  <h2> 
-  JMRI Install Guide: Terminal Server Connection
-  </h2>
+  <h1>Hardware Support: Terminal Server Connection</h1>
 <p>
 A Terminal Server is a box that connects one or more serial
 ports to a network so they can be accessed from a remote computer.

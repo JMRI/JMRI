@@ -17,9 +17,7 @@
   <div class="nomenu" id="mBody">
     <div id="mainContent">
 
-<h1> 
-JMRI: OpenLCB Support
-</h1>
+<h1>Hardware Support: OpenLCB</h1>
 
 <em>The support on this page is rapidly evolving; the
 actual code might be ahead or behind the documentation
@@ -51,9 +49,7 @@ See also the
 including links to various general tools, and the
 page on the 
 <a href="Details.shtml">technical details</a>
-of JMRI's OpenLCB support. There's
-also a page on 
-how to 
+of JMRI's OpenLCB support. There's also a page on how to 
 <a href="Connections.shtml">connect JMRI to an OpenLCB installation</a>.
 
 <h2>Naming</h2>
@@ -77,14 +73,14 @@ Another format for event ID's is a
 continuous hexadecimal string, such as
 "<code>x0102030405060709</code>".
 <p>
-These system names can get very long, in which
-case the "user names" become much more useful. 
+These System Names can get very long, in which
+case the "User Names" become much more useful. 
 
 <h2>Sensors</h2>
 
 <p>OpenLCB messages coming into JMRI applications can be accessed 
 via JMRI Sensor objects.  The Sensor's 
-<a href="Names.shtml">system name</a>
+<a href="Names.shtml">System Name</a>
 determines which OpenLCB events it corresponds to.
 
 <p>

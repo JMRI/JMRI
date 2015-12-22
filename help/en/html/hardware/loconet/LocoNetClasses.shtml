@@ -1,7 +1,7 @@
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
 <html lang="en">
 <head>
-    <title>JMRI Hardware Support - LocoNet&reg; Implementation</title>
+    <title>JMRI Support - LocoNet&reg; Implementation</title>
     <meta content="Bob Jacobsen" name="Author">
     <meta name="keywords" content="JMRI LocoNet technical implementation">
     <!-- The combination of "Define" and {Header,Style, Logo and Footer} comments -->
@@ -26,10 +26,10 @@
   <div class="nomenu" id="mBody">
     <div id="mainContent">
 
-<h1>Information on the JMRI LocoNet&reg; implementation</h1>
+<h1>Support: The JMRI LocoNet&reg; implementation</h1>
 <p>
 This page describes various high-level structures of the JMRI LocoNet&reg; implementation.
-Please see also the 
+Please also read the 
 <a href="http://jmri.sourceforge.net/JavaDoc/doc/jmri/jmrix/loconet/package-summary.html">JavaDocs for the jmrix.loconet package</a>.
 
 <h2>LocoNet-specific values</h2>

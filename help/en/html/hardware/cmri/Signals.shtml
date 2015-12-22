@@ -20,9 +20,7 @@
   <div class="nomenu" id="mBody">
     <div id="mainContent">
 
-  <h2> 
-  JMRI Hardware Guide: Signals with C/MRI
-  </h2>
+<h2>Hardware Support: Signals with C/MRI</h2>
 <p>
 For signals with separate Red/Yellow/Green diodes, the situation is 
 simple:  Connect each one to a separate output with the proper 

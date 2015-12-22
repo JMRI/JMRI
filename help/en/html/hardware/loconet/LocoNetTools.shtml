@@ -22,9 +22,7 @@
   <div class="nomenu" id="mBody">
     <div id="mainContent">
 
-  <h1> 
-  JMRI Tools which support LocoNet&reg; Devices
-  </h1>
+  <h1>Hardware Support: JMRI Tools that support LocoNet&reg; Devices</h1>
 
 <p>JMRI software can provide a variety of tools to support hardware connected
     to the LocoNet&reg; bus.  These tools provide a variety of features, such as

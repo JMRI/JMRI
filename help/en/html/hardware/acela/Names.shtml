@@ -17,9 +17,7 @@
   <div class="nomenu" id="mBody">
     <div id="mainContent">
 
-<h1> 
-JMRI Hardware: CTI Acela System Names
-</h1>
+<h1>Hardware Support: CTI Acela System Names</h1>
 
 Individual inputs (Sensors) and outputs (Turnouts and Lights)
 in JMRI are accessed via names.  

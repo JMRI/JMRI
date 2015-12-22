@@ -19,9 +19,7 @@
   <div class="nomenu" id="mBody">
     <div id="mainContent">
 
-<h1> 
-JMRI Hardware Guide: Connecting to a Digitrax PR2
-</h1>
+  <h1>Hardware Support: Connecting to a Digitrax PR2</h1>
 
 <a href="http://digitrax.com/prd_compint_pr2.php">
 <img src="images/PR2.jpg" alt="PR2 picture"/>

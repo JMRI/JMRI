@@ -18,7 +18,7 @@
   <div class="nomenu" id="mBody">
     <div id="mainContent">
 
-<h1>Lenz Feedback Bus Addressing</h1>
+<h1>Hardware Support: Lenz Feedback Bus Addressing</h1>
 <p>
 On Lenz systems, feedback from input devices is handled by the Feedback Bus. 
 The input available from the feedback bus is provided by the Lenz LR100 

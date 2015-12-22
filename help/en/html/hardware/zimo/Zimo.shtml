@@ -21,9 +21,7 @@
   <div class="nomenu" id="mBody">
     <div id="mainContent">
 
-      <h2> 
-      JMRI Hardware Guide: ZIMO MX-1
-      </h2>
+  <h1>Hardware Support: ZIMO MX-1</h1>
 
 	<h3>Supported Hardware</h3>
 

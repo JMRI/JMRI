@@ -23,11 +23,11 @@
   <div class="nomenu" id="mBody">
     <div id="mainContent">
 
-      <h1> 
-      JMRI Install Guide: Using a PDA to Access JMRI Applications
-      </h1>
+  <h1>Hardware Support: Using a PDA to access JMRI (deprecated)</h1>
+  
 <p>
-This page describes an early attempt to connect an Axim PDA to JMRI, which has some flaws and is deprecated. For a supported approach, involving running a specific program
+This page describes an early attempt to connect an Axim PDA to JMRI, which has some flaws and is deprecated.
+<p>For a supported approach, involving running a specific program
 on your Smartphone, see the 
 <a href="../../package/jmri/jmrit/withrottle/UserInterface.shtml">WiThrottle</a> page.
 

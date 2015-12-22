@@ -21,7 +21,7 @@
 <div class="nomenu" ID="mBody"></div>
 <div id="mainContent"></div>
 
-<h1>JMRI Hardware Guide: NCE</h1>
+<h1>Hardware Support: NCE</h1>
 
 <p>JMRI supports three NCE layout connections:
 Power Pro (PowerHouse) via serial cable, 

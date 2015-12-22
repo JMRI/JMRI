@@ -17,13 +17,11 @@
   <div class="nomenu" id="mBody">
     <div id="mainContent">
 
-<h1> 
-JMRI: JMRIClient Connection
-</h1>
+<h1>Hardware Support: JMRIClient Connection</h1>
 
-<p>The JMRIClient connection provides a method of remotely connecting one JMRI program to another. It can be used to build a Panel on one computer, which is connected to the layout directly, but actually operate the Panel on a computer without a physical connection to the layout.</p>
+<p>The JMRIClient Connection provides a method of remotely connecting one JMRI program to another. It can be used to build a Panel on one computer, which is connected to the layout directly, but actually operate the Panel on a computer without a physical connection to the layout.</p>
 
-<p>The JMRIClient connection can also be used to share information between two adjacent operators without completely replicating the information on each computer.  This configuration is particularly useful on modular layouts where multiple module builders are involved.</p>
+<p>The JMRIClient Connection can also be used to share information between two adjacent operators without completely replicating the information on each computer.  This configuration is particularly useful on modular layouts where multiple module builders are involved.</p>
 
 <h2>
 The JMRI Simple Server

@@ -1,7 +1,7 @@
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
 <html lang="en">
 <head>
-<title>JMRI Hardware Support - SRCP</title>
+<title>JMRI Hardware Support - SRCP Protocol</title>
 
 <!-- Style -->
 <meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
@@ -17,9 +17,7 @@
   <div class="nomenu" id="mBody">
     <div id="mainContent">
 
-<h1> 
-JMRI: Configuring an SRCP Connection
-</h1>
+<h1>Hardware Support: SRCP Protocol</h1>
 
 <a href="http://www.der-moba.de/index.php/Digitalprojekt">
 <img src="http://www.der-moba.de/images/7/7b/Srcp-clients.png" align="right" height="130" width="159"/></a>
@@ -33,7 +31,7 @@ model railroad group as a standard way of connecting
 model railroad.  There are a number of model railroad
 SRCP servers available, which in turn can currently connect to the layout via
 Intellibox and M&auml;rklin 605x control units and the Lenz interfaces.
-There is also a server available that can directly create DCC signals
+Also available is a server that can directly create DCC signals
 via an RS232 interface, which DCC booster(s) can then use to power the layout.
 Other SRCP demons with other connections are being developed all the time.
 

@@ -16,9 +16,7 @@
   <div class="nomenu" id="mBody">
     <div id="mainContent">
 
-<h1> 
-JMRI: CAN Network Support
-</h1>
+<h1>Hardware Support: CAN Network</h1>
 
 There's an emerging trend to develop model-railroad control systems
 that are based on standard CAN network technology.  

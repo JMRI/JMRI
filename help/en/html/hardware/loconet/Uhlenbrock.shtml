@@ -1,7 +1,7 @@
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
 <html lang="en">
 <head>
- <title>JMRI Hardware Support - Uhlenbrock Intellibox connections</title>
+ <title>JMRI Hardware Support - Uhlenbrock Intellibox</title>
     <meta content="Michael Beck" name="Author">
     <meta content="John Plocher" name="Author">
     <meta name="keywords" content="Uhlenbrock Intellibox java model railroad JMRI install">
@@ -20,18 +20,18 @@
   <div class="nomenu" id="mBody">
     <div id="mainContent">
 
-  <h1> 
-  JMRI Install Guide: Uhlenbrock Intellibox connections
-  </h1>
+  <h1>Hardware Support: Uhlenbrock Intellibox</h1>
 
 <p>JMRI can communicate with an Uhlenbrock Intellibox via the Intellibox built-in serial 
     port, the Intellibox-II USB port and the LocoNet&reg; protocol. 
-    This page provide more detail on the possibilities.</p>
+    This page provides more details on the possibilities.</p>
 
-<p><i>Notes:<br> 
-      - Full support of Intellibox-II has been added to JMRI in development version 3.11.1.
-      It is not available in previous versions 3.10 and below.<br>
-      - Direct Serial protocol for Intellibox-I was named "LocoNet Intellibox Serial Port" up to JMRI version 3.10.</i></p>
+<p><strong>Notes:</strong>
+	<ul>
+	  <li>Full support of Intellibox-II has been added to JMRI in version 3.11.1 and up.
+	  It is not available in previous versions 3.10 and below.
+	  <li>The direct Serial protocol for Intellibox-I was named "LocoNet Intellibox Serial Port" up to JMRI version 3.10.
+	</ul>
 
 <h2 id="serial">Direct serial connection</h2>
 <a href="images/UhlenbrockConfig-I.png"><img src="images/UhlenbrockConfig-I.png" align="right" width="180" height="115"></a>

@@ -17,22 +17,19 @@
   <div class="nomenu" id="mBody">
     <div id="mainContent">
 
-<h1> 
-JMRI: OpenLCB Support Technical Details
-</h1>
+<h1>Hardware Support: OpenLCB Technical Details</h1>
 
-<em>The support on this page is rapidly evolving; the
+<em>JMRI support for OpenLCB is rapidly evolving; the
 actual code might be ahead or behind the documentation
 on any given day.</em><p>
 
 This page describes technical details of JMRI's
 <a href="index.shtml">OpenLCB</a>
-support.  See also the pages on JMRI's 
+support. Also refer to the pages on JMRI's 
 <a href="../index.shtml">general CAN support</a>.
-<p>
 
 <h2>CAN Adapters</h2>
-
+<p>
 JMRI's general approach is to support as many 
 hardware combinations as possible. By supporting as many 
 people and their hardware desires as possible, we 
@@ -45,18 +42,17 @@ use as many CAN adapter types as possible.
 
 <h2>Node ID</h2>
 <p>
-JMRI on an OpenLCB network acts, in part, like an OpenLCB node.
-As such, it needs a unique 6-byte OpenLCB node ID.  
-It builds this automatically every time it starts up.
-It's built from the JMRI OpenLCB unique prefix,
-along with one byte from the computer's IP address,
-and two bytes of the process ID of the program.
+JMRI on an OpenLCB network acts - in part - like an OpenLCB Node.
+As such, it needs a unique 6-byte OpenLCB Node ID.  
+It builds this automatically every time it starts up by combining the JMRI OpenLCB unique prefix
+with one byte from the computer's IP address
+and two bytes of the process ID of the JMRI application.
 This allows you to e.g. run JMRI on multiple computers
-or multiple copies on ome computer without problems.
+or multiple copies on one computer without problems.
 <p>
 A future enhancement will make these persistent from run
-to run, so that they can be used to create unique and persistent
-eventIDs easily.
+to run, so that they can be used to easily create unique and persistent
+eventIDs.
 
 <!--#include virtual="/Footer" -->
   </div><!-- closes #mainContent-->

@@ -18,17 +18,15 @@
   <div class="nomenu" id="mBody">
     <div id="mainContent">
 
-<h2> 
-JMRI: Supported Powerline Controllers
-</h2>
-
+<h1>Hardware Support: Compatible Powerline Controllers</h1>
+<p>
 This page helps you identify the type of
-controller you have, and gives you information 
-needed to configure JMRI.
+controller you have, and - if it is supported - gives you information 
+how to configure JMRI to connect it.
 
 <p>
 See also the main page on 
-<a href="index.shtml">configuring JMRI for powerline controllers</a>.
+<a href="index.shtml">configuring JMRI for Powerline controllers</a>.
 
 <h3>X10 Adapters</h3>
 

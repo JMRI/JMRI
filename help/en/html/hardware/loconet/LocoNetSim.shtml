@@ -20,9 +20,8 @@
   <div class="nomenu" id="mBody">
     <div id="mainContent">
 
-      <h1> 
-      JMRI Hardware Guide: LocoNet&reg; Simulator
-      </h1>
+    <h1>Hardware Support: LocoNet&reg; Simulator</h1>
+      
 <p>
 If JMRI is configured to use a Digitrax LocoNet&reg; connection, but
 the connection isn't available, several aspects of the program will
@@ -79,4 +78,3 @@ space immediately before the carriage return!</p>
 </div> <!-- closes #mBody-->
 </body>
 </html>
-

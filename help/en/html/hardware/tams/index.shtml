@@ -17,9 +17,8 @@
   <div class="nomenu" id="mBody">
     <div id="mainContent">
 
-<h1> 
-JMRI: TAMs Support
-</h1>
+<h1>Hardware Support: TAMs MasterControl</h1>
+
 <p>JMRI can connect to a TAMS MasterControl (MC) command station using the built in USB and/or serial interface.<br>
 The USB interface comes with drivers to emulate a serial port.<br>
 The USB port works under Linux and Windows - both have been tested.<br>

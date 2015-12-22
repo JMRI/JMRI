@@ -19,12 +19,11 @@
   <div class="nomenu" id="mBody">
     <div id="mainContent">
 
-<h1>JMRI: DS54 Examples</h1>
-<p class=subtitle> Examples of using a Digitrax DS54 with JMRI. </p>
+<h1>Hardware Support: DS54 Examples</h1>
+<p class=subtitle> Examples of using a Digitrax DS54 with JMRI.</p>
 <p>
-The DS54 accessory decoder can be configured in a large number of
-ways 
-(<a href="../../../manual/index.shtml">DecoderPro</a> can help with that).
+The Digitrax DS54 accessory decoder can be configured in a large number of
+ways (<a href="../../../manual/index.shtml">DecoderPro</a> can help with that).
 
 <p>
 Walter Thompson walked through the details of this:

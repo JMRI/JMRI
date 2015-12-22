@@ -20,9 +20,7 @@
 
   <div class="nomenu" id="mBody">
     <div id="mainContent">
-      <h2> 
-      JMRI Install Guide: Keyspan USB connections
-      </h2>
+      <h1>Hardware Support: Keyspan USB connections</h1>
 
       <p>This page describes tests of two USB serial adapters with the Digitrax
       MS100 LocoNet&reg; interface.

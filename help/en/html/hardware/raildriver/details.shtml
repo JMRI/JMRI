@@ -17,9 +17,7 @@
   <div class="nomenu" id="mBody">
     <div id="mainContent">
 
-<h2> 
-JMRI: RailDriver Throttle Details
-</h2>
+<h1>Hardware Support: RailDriver Throttle Details</h1>
 
 <p>RailDriver support was first available in 
 <a href="http://jmri.sf.net/releasenotes/jmri2.1.7.shtml">JMRI 2.1.7</a>.

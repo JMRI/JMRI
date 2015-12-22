@@ -20,18 +20,14 @@
   <div class="nomenu" id="mBody">
     <div id="mainContent">
 
-      <h2> 
-      JMRI Hardware Guide: Wangrow System One
-      </h2>
+ <h1>Hardware Support: Wangrow System One</h1>
 
 	<h3>Supported Hardware</h3>
-
 	<ul>
 		<li>Wangrow System One
 	</ul>
 
 	<h3>Limitations</h3>
-
 	<p>Some Wangrow command stations have an "optional analog control
 	circuit". In these, pins 5, 6, and 9 are used with an analog
 	voltage as a separate throttle. If you have one of these command
@@ -40,7 +36,6 @@
 	data" and "ground" pins. See your Wangrow manual for details.</p>
 
 	<h3>Setup</h3>
-
   <ol>
 	  <li>To connect your computer to a Wangrow system, you can usually
 	  just connect the command station to the computer's serial port

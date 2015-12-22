@@ -17,26 +17,24 @@
   <div class="nomenu" id="mBody">
     <div id="mainContent">
 
-<h1> 
-JMRI: OpenLCB Naming
-</h1>
+<h1>Hardware Support: OpenLCB Naming</h1>
 
-This page discusses how JMRI uses system names
+This page discusses how JMRI uses System Names
 to access OpenLCB-attached resources.
 
 <p>
 For more on JMRI's OpenLCB support, see the
-<a href="index.shtml">main OpenLCB page</a>.
+<a href="index.shtml">main OpenLCB support page</a>.
 
 <h2>JMRI's Use of Names</h2>
 JMRI provides an interface to the real layout via 
-internal objects such as Turnouts, Sensors, etc that
+internal objects such as Turnouts, Sensors, etc. that
 are closely mapped to corresponding physical devices.
 This mapping is done via "System Names", which both 
-identify the how to access a particular device, and
+identify how to access a particular device, and
 are the key to looking up the corresponding object in JMRI.
 
-<h2>OpenLCB Events</h2>
+<a name="openlcbevents"></a><h2>OpenLCB Events</h2>
 
 <a href="http://openlcb.org">OpenLCB</a>
 communicates events via messages with a fixed format: eight bytes of
@@ -53,7 +51,7 @@ typed as "0.1.2.3.4.5.6.7".
 <h2>OpenLCB Configuration Memory</h2>
 
 DecoderPro accesses decoder memory via "CVs".  For that purpose, the JMRI
-OpenLCB provides a CV syntax that can be used to access OPenLCB node configuration
+OpenLCB provides a CV syntax that can be used to access OpenLCB node configuration
 memory:
 <ul>
 	<li>CV12345 - A single byte at address 12345 in the default configuration address space
