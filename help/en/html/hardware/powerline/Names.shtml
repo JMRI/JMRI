@@ -1,17 +1,14 @@
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
 <html lang="en">
 <head>
-<!-- $Id$ -->
 <title>JMRI: Power Line System Names</title>
 
 <!-- Style -->
-<meta HTTP-EQUIV="Content-Type" CONTENT="text/html; charset=iso-8859-1">
-<LINK REL="stylesheet" TYPE="text/css" HREF="/css/default.css"
-	MEDIA="screen">
-<link REL="stylesheet" TYPE="text/css" HREF="/css/print.css"
-	MEDIA="print">
-<link REL="icon" HREF="/images/jmri.ico" TYPE="image/png">
-<link REL="home" TITLE="Home" HREF="/">
+<meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
+<link rel="stylesheet" type="text/css" href="/css/default.css" media="screen">
+<link rel="stylesheet" type="text/css" href="/css/print.css" media="print">
+<link rel="icon" href="/images/jmri.ico" type="image/png">
+<link rel="home" title="Home" href="/">
 <!-- /Style -->
 </head>
 
@@ -42,9 +39,9 @@ Outputs (Lights or Turnouts) in each House Code
 are numbered with their 
 Device Code, e.g. 
 <ul>
-<li>PTA1 is a JMRI Turnout that talks to device 1 on housecode A
-<li>PTB3 is a Turnout for device 3 on housecode B
-<li>PLP16 is a JMRI Light for device 16 on housecode P
+	<li>PTA1 is a JMRI Turnout that talks to device 1 on housecode A
+	<li>PTB3 is a Turnout for device 3 on housecode B
+	<li>PLP16 is a JMRI Light for device 16 on housecode P
 </ul>
 
 <p>
@@ -101,6 +98,4 @@ the corresponding Light system name is "PL01.2A.B4".
 
 <!--#include virtual="/Footer" -->
 </body>
-</html>
-
- 	  	 
+</html>	 

@@ -1,21 +1,18 @@
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
-<!-- $Id$ -->
 <html lang="en">
 <head>
  <title>
       JMRI Hardware Guide: EasyDCC
  </title>
-    <META content="Bob Jacobsen" name="Author">
-    <META name="keywords" content="EasyDCC CVP Products java model railroad JMRI install windows">
+    <meta content="Bob Jacobsen" name="Author">
+    <meta name="keywords" content="EasyDCC CVP Products java model railroad JMRI install windows">
 
 <!-- Style -->
-<META HTTP-EQUIV="Content-Type" CONTENT="text/html; charset=iso-8859-1">
-<LINK REL="stylesheet" TYPE="text/css" HREF="/css/default.css"
-	MEDIA="screen">
-<LINK REL="stylesheet" TYPE="text/css" HREF="/css/print.css"
-	MEDIA="print">
-<LINK REL="icon" HREF="/images/jmri.ico" TYPE="image/png">
-<LINK REL="home" TITLE="Home" HREF="/">
+<meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
+<link rel="stylesheet" type="text/css" href="/css/default.css" media="screen">
+<link rel="stylesheet" type="text/css" href="/css/print.css" media="print">
+<link rel="icon" href="/images/jmri.ico" type="image/png">
+<link rel="home" title="Home" href="/">
 <!-- /Style -->
 </head>
 
@@ -25,9 +22,9 @@
   <div class="nomenu" id="mBody">
     <div id="mainContent">
 
-      <h2> 
-      JMRI Hardware Guide: EasyDCC
-      </h2>
+  <h2> 
+  JMRI Hardware Guide: EasyDCC
+  </h2>
 
 	<h3>Supported Hardware</h3>
 
@@ -97,5 +94,7 @@
 	<p>Please check the <a href="http://www.cvpusa.com/easydcc_system.php">CVP EasyDCC Manuals</a>.</p>
 
 <!--#include virtual="/Footer" -->
+ </div><!-- closes #mainContent-->
+</div> <!-- closes #mBody-->
 </body>
 </html>

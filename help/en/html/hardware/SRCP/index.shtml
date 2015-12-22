@@ -4,11 +4,11 @@
 <title>JMRI: Configuring SRCP Connection</title>
 
 <!-- Style -->
-<META HTTP-EQUIV="Content-Type" CONTENT="text/html; charset=iso-8859-1">
-<LINK REL="stylesheet" TYPE="text/css" HREF="/css/default.css" MEDIA="screen">
-<LINK REL="stylesheet" TYPE="text/css" HREF="/css/print.css" MEDIA="print">
-<LINK REL="icon" HREF="/images/jmri.ico" TYPE="image/png">
-<LINK REL="home" TITLE="Home" HREF="/">
+<meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
+<link rel="stylesheet" type="text/css" href="/css/default.css" media="screen">
+<link rel="stylesheet" type="text/css" href="/css/print.css" media="print">
+<link rel="icon" href="/images/jmri.ico" type="image/png">
+<link rel="home" title="Home" href="/">
 <!-- /Style -->
 </head>
 
@@ -39,12 +39,12 @@ Other SRCP demons with other connections are being developed all the time.
 
 <p>
 The initial JMRI support allows JMRI to connection to a layout through a
-SRCP server.  JMRI can then operate Turnouts, Lights and SignalHeads that
+SRCP server.  JMRI can then operate Turnouts, Lights and Signal Heads that
 can be reached via SRCP.  There is also initial support for 
 JMRI Throttles via SRCP.
 
 <h2>Configuring JMRI</h2>
-
+<p>
 To use an SRCP connection, select "SRCP Server" as a protocol under the preferences.
 <p>
 Next fill in the Internet address for the SRCP server.  This can be numbers like <code>127.0.0.1</code> or 

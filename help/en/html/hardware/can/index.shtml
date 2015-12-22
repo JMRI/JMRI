@@ -10,7 +10,6 @@
 <link rel="icon" href="/images/jmri.ico" type="image/png">
 <link rel="home" title="Home" href="/">
 <!-- /Style -->
-</head>
 
 <body>
 <!--#include virtual="/Header" -->
@@ -47,7 +46,7 @@ and more is being developed along with OpenLCB itself.
 The <a href="http://www.nmra.org">NMRA</a> has 
 <a href="http://www.nmra.org/news/proposed-standard-layout-command-control-lcc-published-comments#">decided</a> 
 to adopt OpenLCB and standardize it as 
-<http://www.nmra.org/index-nmra-standards-and-recommended-practices#node-171">Layout Command Control  (LCC, formerly NMRAnet)</a>.
+<a href="http://www.nmra.org/index-nmra-standards-and-recommended-practices#node-171">Layout Command Control (LCC, formerly NMRAnet)</a>.
 
 <dt>
 <img src="http://www.merg.org.uk/merg_images/merg_logo.png" align="right" alt="MERG logo" height="45" width="100">
@@ -64,11 +63,10 @@ JMRI includes
 <a href="cbus/index.shtml">basic support for CBUS</a>, 
 and more is being developed along with CBUS itself.
 
-
 </dl>
 
 <h2>Capabilities</h2>
-
+<p>
 JMRI provides a basic 
 <a href="../../../package/jmri/jmrix/AbstractMonFrame.shtml">Monitor tool</a> 
 for watching traffic on a CAN bus.

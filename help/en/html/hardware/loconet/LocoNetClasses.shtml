@@ -1,5 +1,4 @@
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
-<!-- $Id$ -->
 <html lang="en">
 <head>
     <title>
@@ -7,7 +6,6 @@
     </Ttitle>
     <meta content="Bob Jacobsen" name="Author">
     <meta name="keywords" content="JMRI LocoNet technical implementation">
-
     <!-- The combination of "Define" and {Header,Style, Logo and Footer} comments -->
     <!-- are an arbitrary design pattern used by the update.pl script to -->
     <!-- easily replace the common header/footer code for all the web pages -->
@@ -16,13 +14,11 @@
     <!-- or change them to reflect your alternative logo -->
 
 <!-- Style -->
-<META HTTP-EQUIV="Content-Type" CONTENT="text/html; charset=iso-8859-1">
-<LINK REL="stylesheet" TYPE="text/css" HREF="/css/default.css"
-	MEDIA="screen">
-<LINK REL="stylesheet" TYPE="text/css" HREF="/css/print.css"
-	MEDIA="print">
-<LINK REL="icon" HREF="/images/jmri.ico" TYPE="image/png">
-<LINK REL="home" TITLE="Home" HREF="/">
+<meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
+<link rel="stylesheet" type="text/css" href="/css/default.css" media="screen">
+<link rel="stylesheet" type="text/css" href="/css/print.css" media="print">
+<link rel="icon" href="/images/jmri.ico" type="image/png">
+<link rel="home" title="Home" href="/">
 <!-- /Style -->
 </head>
 
@@ -32,9 +28,7 @@
   <div class="nomenu" id="mBody">
     <div id="mainContent">
 
-
 <h1>Information on the JMRI LocoNet&reg; implementation</h1>
-
 <p>
 This page describes various high-level structures of the JMRI LocoNet&reg; implementation.
 Please see also the 
@@ -49,38 +43,35 @@ should be built into to the specific classes (i.e. LocoNetMessage) so the coding
 decoding algorithms don't have to appear in so many places.
 
 <h2>Sending and receiving LocoNet messages</h2>
-
-The
-<a href="http://jmri.sourceforge.net/JavaDoc/doc/jmri/jmrix/loconet/LocoNetInterface.html">LocoNetInterface</a> class
+<p>
+The <a href="http://jmri.sourceforge.net/JavaDoc/doc/jmri/jmrix/loconet/LocoNetInterface.html">LocoNetInterface</a> class
 provides the basic connection to a LocoNet for
 user classes. Messages are sent by passing them to a LocoNetInterface
 implementation, and you can register with a LocoNetInterface
 to be notified of all LocoNet traffic.
 <p>
 <img src="images/LocoNetInterfaceUML.png" alt="UML of JMRI's LocoNet Interface">
-<p>
-The 
-<a href="http://jmri.sourceforge.net/JavaDoc/doc/jmri/jmrix/loconet/LocoNetMessage.html">LocoNetMessage</a> class
+<p>The <a href="http://jmri.sourceforge.net/JavaDoc/doc/jmri/jmrix/loconet/LocoNetMessage.html">LocoNetMessage</a> class
 represents the basic message.  Currently (July 2001), this 
 class doesn't really help other code construct and decode LocoNet packets, but
 rather just contains them.  This should be improved.
 <p>
 The steps to send a message to the LocoNet are:
 <ol>
-<li>Create a <a href="http://jmri.sourceforge.net/JavaDoc/doc/jmri/jmrix/loconet/LocoNetMessage.html">LocoNetMessage</a> object,
-and fill it with the message you want to send.  It's not necessary to fill in the
-error-check byte; that will be done as part of sending.
-<li>Locate an object providing a 
-<a href="http://jmri.sourceforge.net/JavaDoc/doc/jmri/jmrix/loconet/LocoNetInterface.html">LocoNetInterface</a>
-interface.  In many cases, the 
-<a href="http://jmri.sourceforge.net/JavaDoc/doc/jmri/jmrix/loconet/LnTrafficController.html">LnTrafficController</a> is providing this, and the
-object can be located with
+	<li>Create a <a href="http://jmri.sourceforge.net/JavaDoc/doc/jmri/jmrix/loconet/LocoNetMessage.html">LocoNetMessage</a> object,
+	and fill it with the message you want to send.  It's not necessary to fill in the
+	error-check byte; that will be done as part of sending.
+	<li>Locate an object providing a 
+	<a href="http://jmri.sourceforge.net/JavaDoc/doc/jmri/jmrix/loconet/LocoNetInterface.html">LocoNetInterface</a>
+	interface.  In many cases, the 
+	<a href="http://jmri.sourceforge.net/JavaDoc/doc/jmri/jmrix/loconet/LnTrafficController.html">LnTrafficController</a> is providing this, and the
+	object can be located with
 	<pre>
-		LocoNetInterface l = LnTrafficController.instance();
+	LocoNetInterface l = LnTrafficController.instance();
 	</pre>
-<li>Send the message:
+	<li>Send the message:
 	<pre>
-		l.sendLocoNetMessage(msg);
+	l.sendLocoNetMessage(msg);
 	</pre>
 </ol>
 
@@ -106,8 +97,7 @@ and its subclasses
 <a href="http://jmri.sourceforge.net/JavaDoc/doc/jmri/jmrix/loconet/LnTrafficRouter.html">LnTrafficRouter</a>.
 
 <h3>LnTrafficController</h3>
-<p>The 
-<a href="http://jmri.sourceforge.net/JavaDoc/doc/jmri/jmrix/loconet/LnTrafficController.html">LnTrafficController</a>
+<p>The <a href="http://jmri.sourceforge.net/JavaDoc/doc/jmri/jmrix/loconet/LnTrafficController.html">LnTrafficController</a>
 abstract class provides some common implementation for it's subclasses, and
 adds a mechanism to find a usable LocoNetInterface implementation.
 <p>
@@ -182,13 +172,13 @@ can load contents from a file of hexadecimal strings)
 In addition to configuring the adapter for the input source, 
 something has to configure the complete set of Manager objects and the
 LocoNet-handling objects.  These include:
-<UL>
-<LI>Typically a LnPacketizer, which becomes the "instance" for 
+<ul>
+<li>Typically a LnPacketizer, which becomes the "instance" for 
 objects that use LnTrafficController.instance() to locate an interface.
-<LI>A ProgrammerInstance
-<LI>A PowerManagerInstance
-<LI>A TurnoutManagerInstance
-</UL>
+<li>A ProgrammerInstance
+<li>A PowerManagerInstance
+<li>A TurnoutManagerInstance
+</ul>
 These last three provide LocoNet-based services for the higher-level
 JMRI interfaces.
 <p>
@@ -285,8 +275,8 @@ This greatly complicates the class, but is acceptable for now.
 
 <p>LocoNet&reg; is a registered trademark of <a href="http://www.digitrax.com">Digitrax, Inc.</a></p>
 
-    </div>
-
 <!--#include virtual="/Footer" -->
+  </div><!-- closes #mainContent-->
+</div> <!-- closes #mBody-->
 </body>
 </html>

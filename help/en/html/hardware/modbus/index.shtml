@@ -1,22 +1,18 @@
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
 <html lang="en">
 <head>
-<!-- Copyright ($Author$) 2008 -->
-<!-- $Id$ -->
 <title>JMRI: Modbus Support</title>
 
 <!-- Style -->
-<META HTTP-EQUIV="Content-Type" CONTENT="text/html; charset=iso-8859-1">
-<LINK REL="stylesheet" TYPE="text/css" HREF="/css/default.css"
-	MEDIA="screen">
-<LINK REL="stylesheet" TYPE="text/css" HREF="/css/print.css"
-	MEDIA="print">
-<LINK REL="icon" HREF="/images/jmri.ico" TYPE="image/png">
-<LINK REL="home" TITLE="Home" HREF="/">
+<meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
+<link rel="stylesheet" type="text/css" href="/css/default.css" media="screen">
+<link rel="stylesheet" type="text/css" href="/css/print.css" media="print">
+<link rel="icon" href="/images/jmri.ico" type="image/png">
+<link rel="home" title="Home" href="/">
 <!-- /Style -->
-</HEAD>
+</head>
 
-<BODY>
+<body>
 <!--#include virtual="/Header" -->
   <div class="nomenu" id="mBody">
     <div id="mainContent">
@@ -54,11 +50,11 @@ The Modbus nodes are often "programmable logic controllers" (PLCs)
 which can do their own calculations of how to control devices.
 
 <h2>JMRI Modbus connections</h2>
-
+<p>
 JMRI will eventually support operation as either the master node, or as one of the slave nodes.
 
 <h2>JMRI as Master Node</h2>
-
+<p>
 <em>(There is no code support for this yet)</em>
 <p>
 When JMRI is the master node driving a selection of remote Modbus nodes, the
@@ -145,16 +141,13 @@ which will in the process define the coils and discrete inputs
 that Modbus will read and write. Save this configuration to a panel file
 so that it can be reloaded when you start JMRI again in the future.
 
-
-
 <h2>Naming</h2>
-
+<p>
 The default <a href="../../../html/doc/Technical/Names.shtml">system letter</a> 
 for Modbus connections is "M". It can be configured to another letter if desired.
 
-
-
-
 <!--#include virtual="/Footer" -->
+  </div><!-- closes #mainContent-->
+</div> <!-- closes #mBody-->
 </body>
 </html>

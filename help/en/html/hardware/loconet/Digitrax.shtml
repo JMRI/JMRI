@@ -1,5 +1,4 @@
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
-<!-- $Id$ -->
 <html lang="en">
 <head>
   <title>JMRI Hardware Guide: Digitrax LocoNet</title>
@@ -33,18 +32,18 @@
   <li><a href="#Network">Networked Computers and LocoNet&reg;</a></li>
   <li><a href="#Debugging">Debugging</a>
   <ul>
-      <li><a href="#ErraticReadback">Erratic or Non-Functioning CV Readback</a></li>
-      <li><a href="#TurnoutCmdHandling">Command Station Turnout Command Rejection 
-              and JMRI Turnout Command Handling</a>
-          <ul>
-            <li><a href="#turncmdhandsettings">Turnout Command Handling Settings</a></li>
-            <li><a href="#alternatives">Avoidance strategies</a></li>
-            <li><a href="#cmdStationTrkPwrOff">Turnout command rejection when 
-                track power is off</a></li>
-            <li><a href="#multConnTurnoutReject">Turnout command rejection and multiple 
-                active LocoNet connections</a></li>
-
-          </ul></li>
+	  <li><a href="#ErraticReadback">Erratic or Non-Functioning CV Readback</a></li>
+	  <li><a href="#TurnoutCmdHandling">Command Station Turnout Command Rejection 
+	          and JMRI Turnout Command Handling</a>
+	  <ul>
+	    <li><a href="#turncmdhandsettings">Turnout Command Handling Settings</a></li>
+	    <li><a href="#alternatives">Avoidance strategies</a></li>
+	    <li><a href="#cmdStationTrkPwrOff">Turnout command rejection when 
+	        track power is off</a></li>
+	    <li><a href="#multConnTurnoutReject">Turnout command rejection and multiple 
+	        active LocoNet connections</a></li>
+	
+	  </ul></li>
               
   </ul></li>
   <li><a href="#Support">Support</a></li>
@@ -130,7 +129,7 @@ title="RR-CirKits Serial interface"
 href="LocoBufferII.shtml">LocoBuffer-II</a>, <a title="Original Kit Version"
 href="LocoBuffer.shtml">LocoBuffer</a> or <a title="Digitrax Serial interface"
 href="MS100.shtml">MS100</a> to act as an adapter. See below for more
-information on these. The LocoBuffer-USB is highly recommended. </p>
+information on these. The LocoBuffer-USB is highly recommended.</p>
 
 <p>Note that except for the PR3, these are only LocoNet interfaces, not stand
 alone programmers like the Digitrax PR2 and PR3. Readback of decoder CVs is possible when 
@@ -332,45 +331,45 @@ PR3 instead.
         cable.</li>
         </ul>
 <h4><a name="ErraticReadback">Erratic or Non-Functioning CV Readback</a></h4>
-        <ul>
-            <li>Some mobile decoders will only allow proper readback of CV values when
-                there is a sufficient electrical load connected to the F0F (front 
-                headlamp) output connections or the motor connections.  This means that 
-                an incandescent lamp or LED is properly connected to the front headlamp
-                connection and functional.  Other mobile decoders will only provide 
-                proper CV readback when a motor is connected to the mobile
-                decoder motor connections.  Consult the documentation for your mobile 
-                decoder to determine what connections are required to allow proper 
-                CV readback.</li>
-            <li>Some Digitrax hardware is capable of successful CV read and write 
-                operations on some mobile decoders but is unable to reliably read and/or 
-                write CVs for other mobile decoders.  This problem is most obvious with 
-                sound decoders from some manufacturers.  Some suggestions are listed here.
-                <ul>
-                    <li>When using a Zephyr (DCS50) or Zephyr Xtra (DCS51), enable its 
-                        "Blast Mode" programming feature.  This will often allow correct
-                        writing of mobile decoder CV values.</li>
-                    <li>"Programming on the main" can allow a Chief (DCS100 or DCS200) to
-                        properly write to difficult mobile decoder's CV values.</li>
-                    <li>A programming booster, such as the <i>SoundTraxx</i> 
-                        <b>PTB-100</b> or the <i>DCC Specialties</i> <b>Power Pax</b> 
-                        can often be used between the command station programming track 
-                        connections and the programming track to allow successful 
-                        read and write access of CVs on mobile decoders which do not
-                        allow readback on a programming track connected directly to the
-                        programming hardware.</li>
-                    <li>Some PR3 users report that the PR3 programming track can 
-                        successfully read and program sound decoders when the PR3 is 
-                        powered using an 18 Volts DC power supply instead of a 
-                        lower-voltage power supply such as the PS12 or PS14. 
-                        <strong>Do this at your own risk!</strong> <em>Current 
-                        Digitrax documentation for the PR3 defines a maximum 
-                        input voltage of 15 Volts DC, where previously the 
-                        maximum voltage was listed as 20 Volts DC. Use of input 
-                        voltages higher than 15 Volts DC could damage the PR3 
-                        hardware.</em></li>
-                </ul>
-            </li>
+    <ul>
+        <li>Some mobile decoders will only allow proper Readback of CV values when
+            there is a sufficient electrical load connected to the F0F (front 
+            headlamp) output connections or the motor connections.  This means that 
+            an incandescent lamp or LED is properly connected to the front headlamp
+            connection and functional.  Other mobile decoders will only provide 
+            proper CV Readback when a motor is connected to the mobile
+            decoder motor connections.  Consult the documentation for your mobile 
+            decoder to determine what connections are required to allow proper 
+            CV readback.</li>
+        <li>Some Digitrax hardware is capable of successful CV read and write 
+            operations on some mobile decoders but is unable to reliably read and/or 
+            write CVs for other mobile decoders.  This problem is most obvious with 
+            sound decoders from some manufacturers.  Some suggestions are listed here.
+            <ul>
+                <li>When using a Zephyr (DCS50) or Zephyr Xtra (DCS51), enable its 
+                    "Blast Mode" programming feature.  This will often allow correct
+                    writing of mobile decoder CV values.</li>
+                <li>"Programming on the main" can allow a Chief (DCS100 or DCS200) to
+                    properly write to difficult mobile decoder's CV values.</li>
+                <li>A programming booster, such as the <i>SoundTraxx</i> 
+                    <b>PTB-100</b> or the <i>DCC Specialties</i> <b>Power Pax</b> 
+                    can often be used between the command station programming track 
+                    connections and the programming track to allow successful 
+                    read and write access of CVs on mobile decoders which do not
+                    allow Readback on a programming track connected directly to the
+                    programming hardware.</li>
+                <li>Some PR3 users report that the PR3 programming track can 
+                    successfully read and program sound decoders when the PR3 is 
+                    powered using an 18 Volts DC power supply instead of a 
+                    lower-voltage power supply such as the PS12 or PS14. 
+                    <strong>Do this at your own risk!</strong> <em>Current 
+                    Digitrax documentation for the PR3 defines a maximum 
+                    input voltage of 15 Volts DC, where previously the 
+                    maximum voltage was listed as 20 Volts DC. Use of input 
+                    voltages higher than 15 Volts DC could damage the PR3 
+                    hardware.</em></li>
+            </ul>
+        </li>
 </ul>  
 <h4><a name="TurnoutCmdHandling">Command Station Turnout Command Rejection 
                 and JMRI Turnout Command Handling</a></h4> 

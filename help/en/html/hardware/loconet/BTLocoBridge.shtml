@@ -1,5 +1,4 @@
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
-<!-- $Id: -->
 <html lang="en">
 <head>
  <title>
@@ -9,11 +8,11 @@
     <meta name="keywords" content="Digitrax LocoNet Bluetooth LocoBridge java model railroad JMRI install windows">
 
 <!-- Style -->
-<meta http-equiv="Content-Type" CONTENT="text/html; charset=iso-8859-1">
-<link rel="stylesheet" TYPE="text/css" HREF="/css/default.css" media="screen">
-<link rel="stylesheet" TYPE="text/css" HREF="/css/print.css" media="print">
-<link rel="icon" HREF="/images/jmri.ico" TYPE="image/png">
-<link rel="home" TITLE="Home" HREF="/">
+<meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
+<link rel="stylesheet" type="text/css" href="/css/default.css" media="screen">
+<link rel="stylesheet" type="text/css" href="/css/print.css" media="print">
+<link rel="icon" href="/images/jmri.ico" type="image/png">
+<link rel="home" title="Home" href="/">
 <!-- /Style -->
 </head>
 
@@ -67,9 +66,9 @@ Open the Preferences window from the Edit menu and configure the Connection as:
 </ul>
 <li>Click "Save" at the bottom of the Preferences window, quit JMRI and restart.
 </ol>
-	  
-    </div>
 
 <!--#include virtual="/Footer" -->
+ </div><!-- closes #mainContent-->
+</div> <!-- closes #mBody-->
 </body>
 </html>

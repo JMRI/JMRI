@@ -6,13 +6,11 @@
 <title>JMRI: RFID Reader Support</title>
 
 <!-- Style -->
-<meta HTTP-EQUIV="Content-Type" CONTENT="text/html; charset=iso-8859-1">
-<link REL="stylesheet" TYPE="text/css" HREF="/css/default.css"
-	MEDIA="screen">
-<link REL="stylesheet" TYPE="text/css" HREF="/css/print.css"
-	MEDIA="print">
-<link REL="icon" HREF="/images/jmri.ico" TYPE="image/png">
-<link REL="home" TITLE="Home" HREF="/">
+<meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
+<link rel="stylesheet" type="text/css" href="/css/default.css" media="screen">
+<link rel="stylesheet" type="text/css" href="/css/print.css" media="print">
+<link rel="icon" href="/images/jmri.ico" type="image/png">
+<link rel="home" title="Home" href="/">
 <!-- /Style -->
 </head>
 
@@ -134,5 +132,7 @@ use the Reporter Table to change the value to something that will be visible.
 </ul>
 
 <!--#include virtual="/Footer" -->
+ </div><!-- closes #mainContent-->
+</div> <!-- closes #mBody-->
 </body>
 </html>

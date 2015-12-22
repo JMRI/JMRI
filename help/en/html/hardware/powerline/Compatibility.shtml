@@ -1,17 +1,14 @@
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
 <html lang="en">
 <head>
-<!-- $Id$ -->
 <title>JMRI: Powerline Controllers</title>
 
 <!-- Style -->
-<meta HTTP-EQUIV="Content-Type" CONTENT="text/html; charset=iso-8859-1">
-<link REL="stylesheet" TYPE="text/css" HREF="/css/default.css"
-	MEDIA="screen">
-<link REL="stylesheet" TYPE="text/css" HREF="/css/print.css"
-	MEDIA="print">
-<link REL="icon" HREF="/images/jmri.ico" TYPE="image/png">
-<link REL="home" TITLE="Home" HREF="/">
+<meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
+<link rel="stylesheet" type="text/css" href="/css/default.css" media="screen">
+<link rel="stylesheet" type="text/css" href="/css/print.css" media="print">
+<link rel="icon" href="/images/jmri.ico" type="image/png">
+<link rel="home" title="Home" href="/">
 <!-- /Style -->
 </head>
 
@@ -20,9 +17,6 @@
 
   <div class="nomenu" id="mBody">
     <div id="mainContent">
-
-
-
 
 <h2> 
 JMRI:  Supported Powerline Controllers
@@ -184,11 +178,10 @@ See also the main page on
     Last Edited: 11 Nov 2015
     </td> <!-- Type -->
 </tr>
-
-
 </table>
-    </div>
-  </div>
+
 <!--#include virtual="/Footer" -->
+ </div><!-- closes #mainContent-->
+</div> <!-- closes #mBody-->
 </body>
 </html>

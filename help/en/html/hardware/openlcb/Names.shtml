@@ -1,22 +1,18 @@
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
 <html lang="en">
 <head>
-<!-- Copyright ($Author$) 2008 -->
-<!-- $Id$ -->
 <title>JMRI: OpenLCB Naming</title>
 
 <!-- Style -->
-<META HTTP-EQUIV="Content-Type" CONTENT="text/html; charset=iso-8859-1">
-<LINK REL="stylesheet" TYPE="text/css" HREF="/css/default.css"
-	MEDIA="screen">
-<LINK REL="stylesheet" TYPE="text/css" HREF="/css/print.css"
-	MEDIA="print">
-<LINK REL="icon" HREF="/images/jmri.ico" TYPE="image/png">
-<LINK REL="home" TITLE="Home" HREF="/">
+<meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
+<link rel="stylesheet" type="text/css" href="/css/default.css" media="screen">
+<link rel="stylesheet" type="text/css" href="/css/print.css" media="print">
+<link rel="icon" href="/images/jmri.ico" type="image/png">
+<link rel="home" title="Home" href="/">
 <!-- /Style -->
-</HEAD>
+</head>
 
-<BODY>
+<body>
 <!--#include virtual="/Header" -->
   <div class="nomenu" id="mBody">
     <div id="mainContent">
@@ -60,12 +56,14 @@ DecoderPro accesses decoder memory via "CVs".  For that purpose, the JMRI
 OpenLCB provides a CV syntax that can be used to access OPenLCB node configuration
 memory:
 <ul>
-<li>CV12345 - A single byte at address 12345 in the default configuration address space
-<li>CV(252)12345 - A single byte at address 12345 in the 252 address space
-<li>CV12345:4 - Four bytes starting at address 12345 in the default configuration address space.
-<li>CV(252)12345:4 - Four bytes starting at address 12345 in the 252 address space.
+	<li>CV12345 - A single byte at address 12345 in the default configuration address space
+	<li>CV(252)12345 - A single byte at address 12345 in the 252 address space
+	<li>CV12345:4 - Four bytes starting at address 12345 in the default configuration address space.
+	<li>CV(252)12345:4 - Four bytes starting at address 12345 in the 252 address space.
 </ul>
     
 <!--#include virtual="/Footer" -->
+  </div><!-- closes #mainContent-->
+</div> <!-- closes #mBody-->
 </body>
 </html>

@@ -87,5 +87,7 @@ on your Smartphone, see the
 <a href="../../package/jmri/jmrit/withrottle/UserInterface.shtml">WiThrottle</a> page.
 
 <!--#include virtual="/Footer" -->
+  </div><!-- closes #mainContent-->
+</div> <!-- closes #mBody-->
 </body>
 </html>

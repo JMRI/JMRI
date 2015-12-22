@@ -1,22 +1,20 @@
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
-<!-- $Id$ -->
 <html lang="en">
 <head>
- <TITLE>
+ <title>
       JMRI Hardware Guide: Lionel TMCC
- </TITLE>
-<!-- Style -->
-<META HTTP-EQUIV="Content-Type" CONTENT="text/html; charset=iso-8859-1">
-<LINK REL="stylesheet" TYPE="text/css" HREF="/css/default.css"
-	MEDIA="screen">
-<LINK REL="stylesheet" TYPE="text/css" HREF="/css/print.css"
-	MEDIA="print">
-<LINK REL="icon" HREF="/images/jmri.ico" TYPE="image/png">
-<LINK REL="home" TITLE="Home" HREF="/">
-<!-- /Style -->
-</HEAD>
+ </title>
 
-<BODY>
+<!-- Style -->
+<meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
+<link rel="stylesheet" type="text/css" href="/css/default.css" media="screen">
+<link rel="stylesheet" type="text/css" href="/css/print.css" media="print">
+<link rel="icon" href="/images/jmri.ico" type="image/png">
+<link rel="home" title="Home" href="/">
+<!-- /Style -->
+</head>
+
+<body>
 <!--#include virtual="/Header" -->
 
   <div class="nomenu" id="mBody">
@@ -28,19 +26,18 @@
 
 	<h2>Supported Systems</h2>
 
-    (Lionel TMCC or Lionel Legacy thru the serial port on the command base.)
+ (Lionel TMCC or Lionel Legacy thru the serial port on the command base)
     	  
 	<h2>Setup</h2>
 
-	  <p>First, connect your computer's serial port to the TMCC
-	  command station using a serial cable.  This should be a "straight-through"
-	  or "modem" cable, <I>not</I>a "crossover" or "null-modem" cable.
-	  if your computer doesn't have a built-in serial port, you can
-	  use a USB-serial adapter, but make sure you install the correct
-	  drivers.
-
-      <P>
-      Next, configure the program.
+	<p>First, connect your computer's serial port to the TMCC
+	command station using a serial cable.  This should be a "straight-through"
+	or "modem" cable, <I>not</I>a "crossover" or "null-modem" cable.
+	if your computer doesn't have a built-in serial port, you can
+	use a USB-serial adapter, but make sure you install the correct
+	drivers.
+	<p>
+	Next, configure the program.
 
 <ul>
   <li>Start your JMRI-based program (DecoderPro, PanelPro, etc).</li>
@@ -53,37 +50,41 @@
   <li>Click "Save". You'll be asked if it's OK for the program to quit, click "Yes".</li>
   <li>Restart the program. You should be up and running.</li>
 </ul>
+
 <h2>Features and Limitations</h2>
 <p>(Not yet complete)</p>
 <p>With JMRI 2.11.8, Lionel TMCC operation for engines and accessory decoders is available. The train commands are not yet available.</p>
-<p>You will still need your CAB on to use the set features like setting an engine ID. Once set up, however, you can do most all functions from the withrotttles.<span class="Apple-converted-space"> </span></p>
-<p>There is no Lionel TMCC under the Roster Entry tabs but you can set up the TMCC engines using the NMRA standard decoder near the to of the list.<span class="Apple-converted-space"> </span></p>
-<p>Listed are the common actions for Railsounds 4, ERR conversion boards, and TAS boards.<span class="Apple-converted-space"> </span></p>
+<p>You will still need your CAB on to use the set features like setting an engine ID. Once set up, however, you can do most all functions from the withrottles.</p>
+<p>There is no Lionel TMCC under the Roster Entry tabs but you can set up the TMCC engines using the NMRA standard decoder near the to of the list.</p>
+<p>Listed are the common actions for Railsounds 4, ERR conversion boards, and TAS boards.</p>
 <p>When using a JMRI throttle to run an engine, the function buttons are allocated:</p>
 <dl>
-<dt>F0<dd>AUX 2 (Headlights On / Off )
-<dt>F1<dd>Bell
-<dt>F2<dd>Horn/Whistle 1
-<dt>F3<dd>Front Coupler
-<dt>F4<dd>Back Coupler
-<dt>F5 +0<dd>Aux 1
-<dt>F6 +1<dd>Volume Up
-<dt>F7 +2<dd>Crew Talk
-<dt>F8 +3<dd>Start up Sounds
-<dt>F9 +4<dd>Volume Down
-<dt>F10 +5<dd>Shut Down Sounds
-<dt>F11 +6<dd>Steam Release / RPM Decrease
-<dt>F12 +7<dd>Tower Comm
-<dt>F13 +8<dd>Aux Off ( Smoke OFF on Steam Usually )
-<dt>F14 +9<dd>Aux On ( Smoke ON on steam Usually )
-<dt>F15<dd>Aux 1
-<dt>F16<dd>Let Off Sound
-<dt>F17<dd>Forward
-<dt>F18<dd>Reverse
-<dt>F19<dd>Toggle Direction
-<dt>F20<dd>Boost
-<dt>F21<dd>Brake
+	<dt>F0<dd>AUX 2 (Headlights On / Off )
+	<dt>F1<dd>Bell
+	<dt>F2<dd>Horn/Whistle 1
+	<dt>F3<dd>Front Coupler
+	<dt>F4<dd>Back Coupler
+	<dt>F5 +0<dd>Aux 1
+	<dt>F6 +1<dd>Volume Up
+	<dt>F7 +2<dd>Crew Talk
+	<dt>F8 +3<dd>Start up Sounds
+	<dt>F9 +4<dd>Volume Down
+	<dt>F10 +5<dd>Shut Down Sounds
+	<dt>F11 +6<dd>Steam Release / RPM Decrease
+	<dt>F12 +7<dd>Tower Comm
+	<dt>F13 +8<dd>Aux Off ( Smoke OFF on Steam Usually )
+	<dt>F14 +9<dd>Aux On ( Smoke ON on steam Usually )
+	<dt>F15<dd>Aux 1
+	<dt>F16<dd>Let Off Sound
+	<dt>F17<dd>Forward
+	<dt>F18<dd>Reverse
+	<dt>F19<dd>Toggle Direction
+	<dt>F20<dd>Boost
+	<dt>F21<dd>Brake
 </dl>
+
 <!--#include virtual="/Footer" -->
+ </div><!-- closes #mainContent-->
+</div> <!-- closes #mBody-->
 </body>
 </html>

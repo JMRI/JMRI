@@ -1,21 +1,18 @@
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
 <html lang="en">
 <head>
-<!-- $Id$ -->
 <title>JMRI: Grapevine System Names</title>
 
 <!-- Style -->
-<META HTTP-EQUIV="Content-Type" CONTENT="text/html; charset=iso-8859-1">
-<LINK REL="stylesheet" TYPE="text/css" HREF="/css/default.css"
-	MEDIA="screen">
-<LINK REL="stylesheet" TYPE="text/css" HREF="/css/print.css"
-	MEDIA="print">
-<LINK REL="icon" HREF="/images/jmri.ico" TYPE="image/png">
-<LINK REL="home" TITLE="Home" HREF="/">
+<meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
+<link rel="stylesheet" type="text/css" href="/css/default.css" media="screen">
+<link rel="stylesheet" type="text/css" href="/css/print.css" media="print">
+<link rel="icon" href="/images/jmri.ico" type="image/png">
+<link rel="home" title="Home" href="/">
 <!-- /Style -->
-</HEAD>
+</head>
 
-<BODY>
+<body>
 <!--#include virtual="/Header" -->
   <div class="nomenu" id="mBody">
     <div id="mainContent">
@@ -63,7 +60,6 @@ the program.  You can do this either from the
 or using the 
 <a href="../../../package/jmri/jmrix/grapevine/nodeconfig/NodeConfigFrame.shtml">Configure Nodes</a>
 tool in the Grapevine menu.
-
 
 <h2>Inputs</h2>
 
@@ -126,7 +122,7 @@ Grapevine nodes have a number of possible inputs:
 </dl>
 
 <h2>Outputs</h2>
-
+<p>
 Each Grapevine node can have up to four output cards attached to it.
 (Some of the Grapevine and ProTrak documentation refers to these as
 four "banks".)
@@ -145,7 +141,7 @@ or
 <a href="../../tools/Signals.shtml">Signalhead</a>.
 
 <h3>Turnouts</h3>
-
+<p>
 Grapevine outputs can be use to control turnout switch motors.
 In that case, they should be referenced as JMRI 
 <a href="../../tools/Turnouts.shtml">Turnouts</a>, with
@@ -153,7 +149,7 @@ names like GT98201 for the 1st output from the 2nd driver card on
 node 98.
 
 <h3>Lights</h3>
-
+<p>
 Grapevine outputs can be used to control lights on the layout, in
 which case they should be references as JMRI 
 <a href="../../tools/Lights.shtml">Lights</a>.
@@ -161,6 +157,7 @@ System names for lights start with GL, for example GL54102 for the
 2nd output on the 1st driver card on node 54.
 
 <h3>Signals</h3>
+<p>
 To use a Grapevine output as a JMRI 
 <a href="../../tools/Signals.shtml">signal</a>, 
 capable of displaying
@@ -181,5 +178,7 @@ More information on the Grapevine hardware can be found on the
 <a href="http://www.protrak.cc">ProTrak web site</a>.
 
 <!--#include virtual="/Footer" -->
+ </div><!-- closes #mainContent-->
+</div> <!-- closes #mBody-->
 </body>
 </html>

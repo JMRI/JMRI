@@ -1,18 +1,16 @@
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
-<!-- $Id$ -->
 <html lang="en">
 <head>
  <title>
       JMRI Hardware Guide: NAC Services RPS
  </title>
+ 
 <!-- Style -->
-<META HTTP-EQUIV="Content-Type" CONTENT="text/html; charset=iso-8859-1">
-<LINK REL="stylesheet" TYPE="text/css" HREF="/css/default.css"
-	MEDIA="screen">
-<LINK REL="stylesheet" TYPE="text/css" HREF="/css/print.css"
-	MEDIA="print">
-<LINK REL="icon" HREF="/images/jmri.ico" TYPE="image/png">
-<LINK REL="home" TITLE="Home" HREF="/">
+<meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
+<link rel="stylesheet" type="text/css" href="/css/default.css" media="screen">
+<link rel="stylesheet" type="text/css" href="/css/print.css" media="print">
+<link rel="icon" href="/images/jmri.ico" type="image/png">
+<link rel="home" title="Home" href="/">
 <!-- /Style -->
 </head>
 
@@ -31,8 +29,7 @@ This page refers to most recent JMRI test version. If you're using
 an RPS system, you should update to new test versions as they 
 <a href="http://jmri.sf.net/download/index.shtml">are announced</a>.</em>
 
-<p>
-The 
+<p>The 
 <a href="http://www.proto87.com/model-trains-DCC-decoders.html">RPS System</a>
 allows you to locate the 
 exact position of locomotives and other rolling stock
@@ -42,7 +39,7 @@ reading is accurate to much better than an inch, which
 makes many imaginative uses possible.
 
 <h2>Supported DCC Systems</h2>
-
+<p>
 The RPS system works in conjunction which your DCC system
 to control when the RPS transmitters are activated.
 You therefore need a working connection between your DCC
@@ -58,7 +55,7 @@ Others may work, and we're interested in making them work, but they
 haven't been tested in combination with RPS yet.
       
 <h2>System Setup</h2>
-First, get your DCC system working and connected to JMRI.
+<p>First, get your DCC system working and connected to JMRI.
 As a good test of the connection, you should be able to turn 
 your layout power on and off from the JMRI Power Control in the Tools menu.
 
@@ -161,24 +158,24 @@ from the RPS menu.
 JMRI provides a number of tools in the RPS menu for 
 working with the RPS system:
 <dl>
-<dt><a href="../../../package/jmri/jmrix/rps/aligntable/AlignTableFrame.shtml">Receiver Control</a>
-<dd>This is where you enter position information about your receiver
-positions, etc.
-
-<dt><a href="../../../package/jmri/jmrix/rps/swing/polling/PollTableFrame.shtml">Polling Control</a>
-<dd>This is where you tell JMRI which locomotives have RPS 
-transmitters, and how often you want JMRI to poll them
-
-<dt><a href="../../../package/jmri/jmrix/rps/swing/debugger/DebuggerFrame.shtml">Debug Display</a>
-<dd>This shows you the readings and measurements as the system makes them
-
-<dt><a href="../../../package/jmri/jmrix/rps/trackingpanel/RpsTrackingFrame.shtml">Tracking Display</a>
-<dd>This shows the points as they are measured on a graphical display.
-
-<dt><a href="../../../package/jmri/jmrix/rps/swing/soundset/SoundSetFrame.shtml">Sound Speed Control</a>
-<dd>This lets you see and set the speed of sound used by the RPS system, and can set it automatically
-in certain cases.
-
+	<dt><a href="../../../package/jmri/jmrix/rps/aligntable/AlignTableFrame.shtml">Receiver Control</a>
+	<dd>This is where you enter position information about your receiver
+	positions, etc.
+	
+	<dt><a href="../../../package/jmri/jmrix/rps/swing/polling/PollTableFrame.shtml">Polling Control</a>
+	<dd>This is where you tell JMRI which locomotives have RPS 
+	transmitters, and how often you want JMRI to poll them
+	
+	<dt><a href="../../../package/jmri/jmrix/rps/swing/debugger/DebuggerFrame.shtml">Debug Display</a>
+	<dd>This shows you the readings and measurements as the system makes them
+	
+	<dt><a href="../../../package/jmri/jmrix/rps/trackingpanel/RpsTrackingFrame.shtml">Tracking Display</a>
+	<dd>This shows the points as they are measured on a graphical display.
+	
+	<dt><a href="../../../package/jmri/jmrix/rps/swing/soundset/SoundSetFrame.shtml">Sound Speed Control</a>
+	<dd>This lets you see and set the speed of sound used by the RPS system, and can set it automatically
+	in certain cases.
+	
 </dl>
 
 You can also display RPS information on PanelPro Control Panels using an
@@ -188,10 +185,12 @@ RPS information may be used to detect occupancy using
 <a href="sensors.shtml">JMRI RPS Sensors</a>.
 
 <h2>More Information</h2>
-
+<p>
 More information is available on the 
 <a href="http://www.proto87.com/model-trains-DCC-decoders.html">RPS Web Site</a>.
 
 <!--#include virtual="/Footer" -->
+ </div><!-- closes #mainContent-->
+</div> <!-- closes #mBody-->
 </body>
 </html>

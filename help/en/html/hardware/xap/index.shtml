@@ -1,22 +1,18 @@
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
 <html lang="en">
 <head>
-<!-- Copyright ($Author$) 2009 -->
-<!-- $Id$ -->
 <title>JMRI: xAP Support</title>
 
 <!-- Style -->
-<META HTTP-EQUIV="Content-Type" CONTENT="text/html; charset=iso-8859-1">
-<LINK REL="stylesheet" TYPE="text/css" HREF="/css/default.css"
-	MEDIA="screen">
-<LINK REL="stylesheet" TYPE="text/css" HREF="/css/print.css"
-	MEDIA="print">
-<LINK REL="icon" HREF="/images/jmri.ico" TYPE="image/png">
-<LINK REL="home" TITLE="Home" HREF="/">
+<meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
+<link rel="stylesheet" type="text/css" href="/css/default.css" media="screen">
+<link rel="stylesheet" type="text/css" href="/css/print.css" media="print">
+<link rel="icon" href="/images/jmri.ico" type="image/png">
+<link rel="home" title="Home" href="/">
 <!-- /Style -->
-</HEAD>
+</head>
 
-<BODY>
+<body>
 <!--#include virtual="/Header" -->
   <div class="nomenu" id="mBody">
     <div id="mainContent">
@@ -24,7 +20,7 @@
 <h1> 
 JMRI: xAP Support
 </h1>
-
+<p>
 xAP is a home-automation protocol 
 popular used by do-it-yourself hobbyists
 through large professional installations.
@@ -57,19 +53,21 @@ form of the
 <p>
 When JMRI sees a new BSC device, it creates the necessary Sensor or Turnout.
 The full source name is used to create the system name, for example:
-<code><pre>
+<code>
  IS:xPA:xAPBSC:mi4.homeseer.scafell.91:VIOMBoard.Input14GJDRFXEnable
-</pre></code>
+</code>
 The xPA-defined 
 user defined name
 fills in the JMRI user name, for example:
-<code><pre>
+<pre>
  Input 14 GJD RFX Enable
-</pre></code>
+</pre>
 You can later change the JMRI user name 
 to anything you'd like via the 
 usual tables if desired.
     
 <!--#include virtual="/Footer" -->
+ </div><!-- closes #mainContent-->
+</div> <!-- closes #mBody-->
 </body>
 </html>

@@ -1,19 +1,17 @@
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
-<!-- $Id$ -->
 <html lang="en">
 <head>
 <title>JMRI: XPressNet</title>
-<meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
+
 <meta content="Paul Bender, Egbert Broerse" name="Author">
 <meta name="keywords" content="XPressNet java model railroad JMRI install">
 
 <!-- Style -->
-<LINK REL="stylesheet" TYPE="text/css" HREF="/css/default.css"
-	MEDIA="screen">
-<LINK REL="stylesheet" TYPE="text/css" HREF="/css/print.css"
-	MEDIA="print">
-<LINK REL="icon" HREF="/images/jmri.ico" TYPE="image/png">
-<LINK REL="home" TITLE="Home" HREF="/">
+<meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
+<link rel="stylesheet" type="text/css" href="/css/default.css" media="screen">
+<link rel="stylesheet" type="text/css" href="/css/print.css" media="print">
+<link rel="icon" href="/images/jmri.ico" type="image/png">
+<link rel="home" title="Home" href="/">
 <!-- /Style -->
 </head>
 
@@ -30,14 +28,14 @@
 <h2>Overview</h2>
 
     XPressNet is a Command Bus used by
-	<a href="http://www.atlasrr.com">Atlas</a>,
-	<a href="http://www.lenz.com">Lenz</a>,
-    <a href="http://www.hornby.com/uk-en/">Hornby</a>,
-        <a href="http://www.opendcc.de/index_e.html">OpenDCC (DIY)</a>,
-        <a href="http://usuaris.tinet.cat/fmco/home_en.htm">Paco Canada (DIY)</a>,
-	<a href="http://www.ztccontrols.com">ZTC Controls</a>,
-        <a href="http://www.viessmann-modell.com/">Viessmann</a>, and
-	<a href="http://www.roco.co.at">Roco</a>.
+		<a href="http://www.atlasrr.com">Atlas</a>,
+		<a href="http://www.hornby.com/uk-en/">Hornby</a>,
+		<a href="http://www.lenz.com">Lenz</a>,        
+		<a href="http://www.opendcc.de/index_e.html">OpenDCC (DIY)</a>,
+		<a href="http://usuaris.tinet.cat/fmco/home_en.htm">Paco Canada (DIY)</a>,
+		<a href="http://www.roco.co.at">Roco</a>		
+		<a href="http://www.viessmann-modell.com/">Viessmann</a> and		
+		<a href="http://www.ztccontrols.com">ZTC Controls</a>.
     It was developed by Lenz.  
     The XPressNet specification (available from
     the <a href="http://www.lenzusa.com/techinfo/index.htm">Lenz website</a>) 
@@ -164,18 +162,18 @@ this page
 	or on <a href="http://www.lenzusa.com/manuals/xpressnet/liusbupdatev36.pdf">the Lenz website</a>.
 	The device is configured via a software tool provided by Lenz which 
 	runs on Windows only. JMRI provides a tool that will allow users 
-        of other operating systems to configure their LIUSB as well. On 
-        Windows, starting with version 2.7.2, JMRI supports interfacing with 
-        the LIUSB through the Lenz LIUSB Server.
-
-        <li>The Lenz LI-USB-Ethernet (Lenz part number 23151) is a revised version of the LIUSB which includes a built-in Ethernet adapter. The USB connection on the device is provided by a
-        Microchip chipset and registers itself as a USB CDC-ACM (Abstract Control Model) device.  
-        For Windows users, connection via the USB port will be identical to the previous 
-        version of the LIUSB.  
-        For Linux users, the device will appear as a /dev/ttyACMx device (where x is replaced with a number).  
-        For Mac OS X users, the device name will be /dev/tty.usbmodemXXX (where XXX is replaced with a 3 digit number)<br />
-The protocol used to connect to the device via USB is identical to the prior LIUSB device, so the USB connection is supported by any JMRI version with support for the LIUSB. When configuring to communicate with the device via USB, be sure that <b>Flow Control is turned off.</b><br />
-Connection via an Ethernet connection is available through the LIUSB Ethernet connection type, which was first made available in JMRI version 2.13.7.
+	of other operating systems to configure their LIUSB as well. On 
+	Windows, starting with version 2.7.2, JMRI supports interfacing with 
+	the LIUSB through the Lenz LIUSB Server.
+	
+	<li>The Lenz LI-USB-Ethernet (Lenz part number 23151) is a revised version of the LIUSB which includes a built-in Ethernet adapter. The USB connection on the device is provided by a
+	Microchip chipset and registers itself as a USB CDC-ACM (Abstract Control Model) device.  
+	For Windows users, connection via the USB port will be identical to the previous 
+	version of the LIUSB.  
+	For Linux users, the device will appear as a /dev/ttyACMx device (where x is replaced with a number).  
+	For Mac OS X users, the device name will be /dev/tty.usbmodemXXX (where XXX is replaced with a 3 digit number)<br />
+	The protocol used to connect to the device via USB is identical to the prior LIUSB device, so the USB connection is supported by any JMRI version with support for the LIUSB. When configuring to communicate with the device via USB, be sure that <b>Flow Control is turned off.</b><br />
+	Connection via an Ethernet connection is available through the LIUSB Ethernet connection type, which was first made available in JMRI version 2.13.7.
 	
 	<li>In addition to the Lenz purpose built computer interfaces, we have
 	also included support for using an XPressNet Phone Adapter (XPA) as an
@@ -200,8 +198,7 @@ Connection via an Ethernet connection is available through the LIUSB Ethernet co
     believed to be stable. <b>Note: The first JMRI release supporting the 
     Hornby Elite USB connection is version 2.1.2</b>
 	
-	<li>The 
-	<a href="http://www.terdina.net/rails/">XnTcp</a>
+	<li>The <a href="http://www.terdina.net/rails/">XnTcp</a>
 	interface allows you to connect to your XPressNet layout 
 	via Ethernet-based networking from the JMRI programs.
 	<b>Note: The first JMRI release supporting the 
@@ -238,9 +235,9 @@ Connection via an Ethernet connection is available through the LIUSB Ethernet co
     the <a href="http://www.opendcc.de/elektronik/gateway/gateway.html">OpenDCC Gateway</a>.  These devices should be configured as LI100F devices with the port speed set to 19,200bps. The OpenDCC Command Station provides feedback via an S88 connection.
     </ul>
 
-<a name=Limitations><h2>Limitations</h2></a>
+<a name="Limitations"><h2>Limitations</h2></a>
 
-<div class=list>
+<div class="list">
     <dl>
     	<dt class=left>JMRI</dt>
 	<dd class=first>
@@ -249,7 +246,7 @@ Connection via an Ethernet connection is available through the LIUSB Ethernet co
 	all XBus based systems to work with JMRI.
 	</dd>
 
-	<dt class=left>Atlas</dt>
+	<dt class="left">Atlas</dt>
 	<dd>
 	<p>The Atlas Commander provides support only for operation of 
 	equipment on a layout (running trains and throwing switches)
@@ -263,7 +260,7 @@ Connection via an Ethernet connection is available through the LIUSB Ethernet co
 
 	</dd>
 
-        <dt class = left>Hornby</dt>
+        <dt class="left">Hornby</dt>
         <dd>
         <p> We provide support for the Hornby Elite using it's built in USB 
         connection. The Elite can be used for operating equipment on a layout 
@@ -276,7 +273,7 @@ Connection via an Ethernet connection is available through the LIUSB Ethernet co
 
         </dd>
 
-	<dt class=left>Lenz</dt>
+	<dt class="left">Lenz</dt>
 	<dd>
 	<p>We have a pretty good handle on what instructions each Lenz Command
 	station should support. If you find that you cannot perform a function you
@@ -310,7 +307,7 @@ Connection via an Ethernet connection is available through the LIUSB Ethernet co
 	locomotives or accessory decoders (turnouts) on the layout.
 	
 	</dd>
-	<dt class=left>Roco</dt>
+	<dt class="left">Roco</dt>
 	<dd>
     <p>Note: Roco calls their XPressNet implementation "RocoNet".  
 
@@ -342,7 +339,7 @@ Connection via an Ethernet connection is available through the LIUSB Ethernet co
         this connection.
 	</dd>
      
-        <dt class=left>OpenDCC</dt>
+        <dt class="left">OpenDCC</dt>
         <dd>
 
         <p>The <a href="http://www.opendcc.de/elektronik/opendcc/opendcc_e.html">OpenDCC Command Station</a> should be supported by JMRI through 
@@ -353,7 +350,7 @@ Connection via an Ethernet connection is available through the LIUSB Ethernet co
 
         </dd>
  
-        <dt class=left>Paco Canada</dt>
+        <dt class="left">Paco Canada</dt>
         <dd>
         <p> Paco Canada has two versions of his do-it-yourself Nanox DCC system
         available, both are compatible with JMRI.
@@ -378,11 +375,11 @@ Connection via an Ethernet connection is available through the LIUSB Ethernet co
         This device does not require an XPressNet connection. 
 
         </dd>
-        <dt class=left>Viessmann</dt>
+        <dt class="left">Viessmann</dt>
         <dd>
         <p> The Viessmann Commander's Low Speed Bus port supports the 
         XPressNet protocol.  We should be able to use this to connect 
-        using one of the supported XPressnet computer interfaces, but the
+        using one of the supported XPressNet computer interfaces, but the
         limitations of this port have not been determined.
 
         <p> Viessmann has indicated the Commander's built in USB port can 
@@ -390,7 +387,7 @@ Connection via an Ethernet connection is available through the LIUSB Ethernet co
         commander, not for operating the device.
         </dd>
 
-	<dt class=left>ZTC</dt>
+	<dt class="left">ZTC</dt>
 	<dd>
 	<p>The ZTC Controls ZTC511 (with Command Station software 
 	version 4.0) has been shown to support operating equipment on a 
@@ -410,22 +407,18 @@ Connection via an Ethernet connection is available through the LIUSB Ethernet co
 	<p>If you have either ZTC system and wish to add computer 
     control to your layout, an XPA and Hayes Compatible Modem may 
     be a more cost effective solution than one of the purpose built
-    interfaces.
-       
+    interfaces.       
 	</dd>
-    	<dt class=left>XPA and Hayes Compatible Modem</dt>
+    	<dt class="left">XPA and Hayes Compatible Modem</dt>
 	<dd>
 	<p>If you choose to use an XPA and a Hayes Compatible Modem to 
 	control your XPressNet based system, you will be limited to 
 	control of locomotives and accessory decoders.
 	You cannot program decoders from a computer using the XPA,
-	regardless of which system you have.
-	
+	regardless of which system you have.	
 	</dd>
-
     </dl>
 </div>
-
 
 <h2>Connecting to an XPressNet based DCC System using a Lenz LI100, LI101F, or LI101F</h2>
 <ol>
@@ -481,39 +474,36 @@ Connection via an Ethernet connection is available through the LIUSB Ethernet co
     to your DCC command station via their XPressNet connections.  Then
     connect the LIUSB to your computer's USB port using the supplied
     cable.
-
     <li>Install the appropriate drivers.
-    <ul>
-    <li> For the LIUSB (Lenz part Number 23150) with JMRI, you must first install a
-    software driver on your computer.  Internally, the device contains a
-    FTDI FT232BM USB to Serial converter.  There are two drivers available
-    for this device, make sure you obtain the Virtual Comm Port (VCP)
-    driver.<br />
-    The device drivers for Windows are included on the CD that
-    comes with the device.<br />
-    The device drivers for Linux are included with recent versions of
-    the Linux kernel.<br />
-    Device drivers for Linux, and MacOS (8,9 and X ) and Windows are
-    available from the <a href="http://www.ftdichip.com/">FTDI  website</a>
-    (direct link to the drivers current as of this writing: <a 
-    href="http://www.ftdichip.com/Drivers/VCP.htm">http://www.ftdichip.com/Drivers/VCP.htm</a>).
-    </li>
-    <li>Fort the LIUSB-Ethernet (Lenz part Number 23151) in USB mode with JMRI, you must first install a
-    software driver on your computer.  Internally, the device contains a
-    The USB connection on the device is provided by a Microchip chipset that 
-    registers itself as a USB CDC-ACM (Abstract Control Model) device.  
-    Functionally, the device acts like a serial port. The Lenz documentation
-    indicates the drivers for Windows 7 and MacOS are installed automatically
-    if the computer is connected to the internet. For Linux, the drivers are
-    part of the standard kernel distribution.
-    </li>
-    </ul>
-    
+	    <ul>
+	    <li> For the LIUSB (Lenz part Number 23150) with JMRI, you must first install a
+	    software driver on your computer.  Internally, the device contains a
+	    FTDI FT232BM USB to Serial converter.  There are two drivers available
+	    for this device, make sure you obtain the Virtual Comm Port (VCP)
+	    driver.<br />
+	    The device drivers for Windows are included on the CD that
+	    comes with the device.<br />
+	    The device drivers for Linux are included with recent versions of
+	    the Linux kernel.<br />
+	    Device drivers for Linux, and MacOS (8,9 and X ) and Windows are
+	    available from the <a href="http://www.ftdichip.com/">FTDI  website</a>
+	    (direct link to the drivers current as of this writing: <a 
+	    href="http://www.ftdichip.com/Drivers/VCP.htm">http://www.ftdichip.com/Drivers/VCP.htm</a>).
+	    </li>
+	    <li>Fort the LIUSB-Ethernet (Lenz part Number 23151) in USB mode with JMRI, you must first install a
+	    software driver on your computer.  Internally, the device contains a
+	    The USB connection on the device is provided by a Microchip chipset that 
+	    registers itself as a USB CDC-ACM (Abstract Control Model) device.  
+	    Functionally, the device acts like a serial port. The Lenz documentation
+	    indicates the drivers for Windows 7 and MacOS are installed automatically
+	    if the computer is connected to the internet. For Linux, the drivers are
+	    part of the standard kernel distribution.
+	    </li>
+	    </ul>
     <p> When the device drivers are installed, and the LIUSB is connected
     to both your PC and your DCC system, the LIUSB should have a Red
     LED turned on, indicating the XPressNet connection is OK, and a green 
     LED turned on, indicating the USB connection is OK.
-
     <p><b>NOTE: If you have installed the Lenz software, make sure none
     of it is running.  This includes the LI-Server, which may be running
     in the background.</b>
@@ -526,16 +516,16 @@ Connection via an Ethernet connection is available through the LIUSB Ethernet co
     <li>Select "Lenz LIUSB" from the top selection box. You can
     then select the proper serial port in the second selection box.
     
-    
     <li>The baud rate selection box should be set to 57,600 baud.
     
     <li>The fourth box should be 
-    <ol><li>(<b>for the Lenz LIUSB, Lenz Part 23150</b>) left on "hardware flow control"
-    unless you later consistently get a message about the LIUSB control
-    leads being improperly set up, in which case you might want to try to
-    bypass that by selecting "no flow control".</li>
-        <li>(<b>for  the Lenz LIUSB-Ethernet, Lenz Part 23151</b>) set to "no flow control" (the LIUSB-Ethernet does not support flow control).</li>
-    </ol>
+    <ol>
+	    <li>(<b>for the Lenz LIUSB, Lenz Part 23150</b>) left on "hardware flow control"
+	    unless you later consistently get a message about the LIUSB control
+	    leads being improperly set up, in which case you might want to try to
+	    bypass that by selecting "no flow control".</li>
+	    <li>(<b>for  the Lenz LIUSB-Ethernet, Lenz Part 23151</b>) set to "no flow control" (the LIUSB-Ethernet does not support flow control).</li>
+		</ol>
 
     <li><b>This option has been removed starting in JMRI version 2.9.5</b>
     Check Buffer Status When Sending?  Defaults to "Yes" on 
@@ -627,7 +617,7 @@ Connection via an Ethernet connection is available through the LIUSB Ethernet co
     auto-configuration via the MDNS protocol (also known as Bonjour) you can open a web browser to <a href="http://XPressNet.local./">http://XPressNet.local./</a>.  
     In the LIUSB-Ethernet Configuration interface, The IP address appears in 
     the circled field in the image below:
-<img src="images/LIUSBEthernetIPAddressField.PNG" alt="LIUSB-Ethernet Configuration web interface with IP Address circled.">
+		<img src="images/LIUSBEthernetIPAddressField.PNG" alt="LIUSB-Ethernet Configuration web interface with IP Address circled.">
 
     <li>Start one of the JMRI-based programs, Then go to the preferences 
     panel. This opens automatically the first time a program is run, or you 
@@ -635,12 +625,11 @@ Connection via an Ethernet connection is available through the LIUSB Ethernet co
 
     <li>Select "Lenz LIUSB Ethernet" from the top selection box.  There are two configuration options available for the LIUSB-Ethernet.  You may choose to use manual configuration (the default) or automatic configuration.  
     <ol>
-        <li> To use manual configuration, enter the IP address you saved 
-        earlier into the box labeled "IP Address", as shown in the image below:
-    <img src="images/ConfigurationIPFields.PNG" alt="JMRI Configuration screen and LIUSB-Ethernet Configuration screen demonstrating the IP address to be copied.">
-
-        <li> Automatic configuration is optional if you set the IP Address of your LIUSB-Ethernet device to a fixed value.  If you use DHCP to configure the LIUSB-Ethernet's IP address, it is highly recommended that you use automatic configuration.  To use Automatic Configuration, check the Automatic Configuration checkbox. as shown in the image below:
-    <img src="images/LIUSBEthernetAutoConfigureCheckboxes.PNG" alt="JMRI Configuration screen and LIUSB-Ethernet Configuration screen demonstrating automatic configuration.">
+			<li> To use manual configuration, enter the IP address you saved 
+			earlier into the box labeled "IP Address", as shown in the image below:<br>
+			<img src="images/ConfigurationIPFields.PNG" alt="JMRI Configuration screen and LIUSB-Ethernet Configuration screen demonstrating the IP address to be copied.">
+			<li> Automatic configuration is optional if you set the IP Address of your LIUSB-Ethernet device to a fixed value.  If you use DHCP to configure the LIUSB-Ethernet's IP address, it is highly recommended that you use automatic configuration.  To use Automatic Configuration, check the Automatic Configuration checkbox. as shown in the image below:<br>
+			<img src="images/LIUSBEthernetAutoConfigureCheckboxes.PNG" alt="JMRI Configuration screen and LIUSB-Ethernet Configuration screen demonstrating automatic configuration.">
     </ol>
 
     <li>The series of radio buttons labeled "GUI style" allows you to
@@ -827,7 +816,7 @@ rather than the storing the IP address digits,
 since the IP address can change due to DHCP addressing.
 
 <h2>Connecting to an XPressNet based DCC System using the XPA and a modem</h2>
-
+<p>
    We have developed an alternative method for connecting to an XPressNet based
    system which should prove to be more cost effective on XPressNet based
    systems that do not support programming or feedback via the LI100, LI100F, or
@@ -843,8 +832,8 @@ since the IP address can change due to DHCP addressing.
     modem card or an external serial modem.
 
     <li>Next, Connect the "Phone In" jack on your XPA to the "Wall In" jack 
-	on your modem using the cable supplied with the XPA for connecting a 
-	telephone to the XPA.
+		on your modem using the cable supplied with the XPA for connecting a 
+		telephone to the XPA.
 
     <li>Then go to the preferences panel of a JMRI-based program. This opens
     automatically the first time a program is run, or you can select it from
@@ -885,6 +874,7 @@ since the IP address can change due to DHCP addressing.
 
     		<li><a href="http://www.lenzusa.com/techinfo/index.htm">Lenz XPressNet Documentation</a></li>
 	</ul>
+
 <h3>JMRI Documentation</h3>
 	<ul>
     		<li><a href=XNetAddressing.shtml>Lenz Feedback bus Addresses</a> 
@@ -906,10 +896,10 @@ since the IP address can change due to DHCP addressing.
 	Information</a> - This tool obtains the software version and type of
 	the command station and the Software version of the LI100/LI100F/LI101F
 	connected to the computer.
-	
-    </ul>
-
+</ul>
 
 <!--#include virtual="/Footer" -->
+ </div><!-- closes #mainContent-->
+</div> <!-- closes #mBody-->
 </body>
 </html>

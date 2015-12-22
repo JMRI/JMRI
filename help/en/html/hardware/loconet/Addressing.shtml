@@ -1,34 +1,29 @@
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
-<!-- $Id$ -->
 <html lang="en">
 <head>
-    <TITLE>
+    <title>
  	JMRI: LocoNet&reg; Addressing
-    </TITLE>
-    <META content="Bob Jacobsen" name=Author>
+    </title>
+    <meta content="Bob Jacobsen" name="Author">
     <meta name="keywords" content="JMRI LocoNet Address Addressing Sensors Turnout">
-
     <!-- The combination of "Define" and {Header,Style, Logo and Footer} comments -->
     <!-- are an arbitrary design pattern used by the update.pl script to -->
     <!-- easily replace the common header/footer code for all the web pages -->
 
 <!-- Style -->
-<META HTTP-EQUIV="Content-Type" CONTENT="text/html; charset=iso-8859-1">
-<LINK REL="stylesheet" TYPE="text/css" HREF="/css/default.css"
-	MEDIA="screen">
-<LINK REL="stylesheet" TYPE="text/css" HREF="/css/print.css"
-	MEDIA="print">
-<LINK REL="icon" HREF="/images/jmri.ico" TYPE="image/png">
-<LINK REL="home" TITLE="Home" HREF="/">
+<meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
+<link rel="stylesheet" type="text/css" href="/css/default.css" media="screen">
+<link rel="stylesheet" type="text/css" href="/css/print.css" media="print">
+<link rel="icon" href="/images/jmri.ico" type="image/png">
+<link rel="home" title="Home" href="/">
 <!-- /Style -->
-</HEAD>
+</head>
 
-<BODY>
+<body>
 <!--#include virtual="/Header" -->
 
   <div class="nomenu" id="mBody">
     <div id="mainContent">
-
 
 <h1>LocoNet&reg; addressing</h1>
 
@@ -38,11 +33,11 @@ to the numbers in other systems.
 
 <a name="turnout" id="turnout"></a>
 <h2>Addressing LocoNet turnouts in JMRI</h2>
-
+<p>
 Inside packets on the LocoNet, output turnouts are addressed with numbers from 0 to 4095.
 Throttles, however, address these with numbers from 1 to 4096. To avoid user
 confusion, JMRI uses the same numbering as the throttles:  LT1 to LT4096.
-<P>
+<p>
 Note that when the LocoNet monitor panel shows the contents of the LocoNet packets
 in text, it uses the same addressing, hence 1 to 4096.  This is then different 
 from the raw bytes that are displayed, but at least it's consistent with what 
@@ -62,51 +57,51 @@ confusion somewhere, given the way this was set up.
 <a name="sensor" id="sensor"></a>
 <h2>Addressing LocoNet sensors in JMRI</h2>
 
-Inside packets on the LocoNet, sensors are addressed with numbers from 0 to 4095.
+Inside packets on the LocoNet, Sensors are addressed with numbers from 0 to 4095.
 Digitrax documentation refers to these as 1 to 4096, however.  Just like
-turnouts, we use the documentation numbering to define the sensor names: LS1 to LS4096.
-<P>
+Turnouts, we use the documentation numbering to define the Sensor names: LS1 to LS4096.
+<p>
 The simplest way to find the 
-right number for a given block is to open a "LocoNet monitor" window, and drop a 
-locomotive onto the block you're interested in.  You'll see the 
+right number for a given Block is to open a "LocoNet monitor" window, and drop a 
+locomotive onto the Block you're interested in.  You'll see the 
 LocoNet message, complete with number, in the window that looks 
 something like this:
-<PRE>
+<pre>
    General sensor input report: contact 161 (DS54 switch 81 Aux input) (BDL16 11,1) is Hi 
-</PRE>
-The contact number, 161 in this case, is the address of the sensor.
+</pre>
+The contact number, 161 in this case, is the address of the Sensor.
 Prefix that with LS that to get the sensor name, e.g. LS161 in this case.
-<P>
+<p>
 If you wish to manually enter in the hardware address to the system you can do it
-by enter in the board number, followed by the channel number seperated by a ":"<br>
-So for a sensor on board 11, channel 1 you would enter into the Hardware Address field : 
+by enter in the board number, followed by the channel number separated by a ":"<br>
+So for a Sensor on board 11, channel 1 you would enter into the Hardware Address field : 
 <b>11:1</b>
-<P>
+<p>
 If you want to calculate the address of a BDL168 input, you can use
-<CODE>
+<code>
 &nbsp;&nbsp;&nbsp;&nbsp;number = 16 * (board number) + (channel number) - 16
-</CODE>
+</code>
 where "channel number" runs from 1 to 16.  For example, the first circuit
 (number 1) on board 11 has number:
-<CODE>
+<code>
 &nbsp;&nbsp;&nbsp;&nbsp;number = 16 * (11) + (1) - 16 = 161
-</CODE>
+</code>
 as we saw in the example above.
-<P>
+<p>
 If you want to calculate the address of a DS54 aux input, use:
-<CODE>
+<code>
 &nbsp;&nbsp;&nbsp;&nbsp;number = 2 * (turnout number - 1) + 1
-</CODE>
+</code>
 For example, the aux input associated with turnout 81 has number:
-<CODE>
+<code>
 &nbsp;&nbsp;&nbsp;&nbsp;number = 2 * (81 - 1) + 1 = 161
 </code>
 If it's the switch input, you add one more to that:
-<CODE>
+<code>
 &nbsp;&nbsp;&nbsp;&nbsp;number = 2 * (turnout number - 1) + 2
-</CODE>
+</code>
 <p>For example, the switch input associated with turnout 12 has number:</p>
-<CODE>
+<code>
 &nbsp;&nbsp;&nbsp;&nbsp;number = 2 * ( 12 - 1 ) + 2 = 24
 </code>
 
@@ -232,7 +227,7 @@ JMRI maps A/B to (B-1)*256+A.  Most boards seem to use N/1 addresses, so this
 makes that correspond to just N in JMRI.  To summarize:
 <p>
 <table border="2">
-<tr><th>Old<br/>Style</th><th>JMRI<br/>Number</th><tr>
+<tr><th width="80px">Old<br/>Style</th><th width="80px">JMRI<br/>Number</th>
 <tr><td>10/1</td><td>10</td></tr>
 <tr><td>83/1</td><td>83</td></tr>
 <tr><td>83/2</td><td>339</td></tr>
@@ -260,13 +255,12 @@ decoder definition file, except that to specify the LocoNet SV Version 2 protoco
  Note that the version 1 protocol is no longer recommended.  If you're writing
  a decoder definition for a board that can use both, you should skip version 1 by
  providing just the LOCONETSV2MODE option.
- 
-
 
 <p>LocoNet&reg; is a registered trademark of <a href="http://www.digitrax.com">Digitrax, Inc.</a></p>
     </div>
 
 <!--#include virtual="/Footer" -->
+ </div><!-- closes #mainContent-->
+</div> <!-- closes #mBody-->
 </body>
 </html>
-

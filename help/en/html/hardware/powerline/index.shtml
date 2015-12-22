@@ -57,8 +57,9 @@ set it to "BRIGHT".  This is an immediate, full-power on.  When the Turnout
 is set to "CLOSED", the remote device is sent a command to go "OFF".  Depending
 on the X10 hardware, this may be either an immediate off, or be slowly dimmed. 
 </p>
-</div>
-</div>
+
 <!--#include virtual="/Footer" -->
+ </div><!-- closes #mainContent-->
+</div> <!-- closes #mBody-->
 </body>
 </html>

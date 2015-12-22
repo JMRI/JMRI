@@ -1,22 +1,18 @@
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
 <html lang="en">
 <head>
-<!-- Copyright ($Author$) 2008 -->
-<!-- $Id$ -->
 <title>JMRI: MRC Prodigy Advanced 2</title>
 
 <!-- Style -->
-<META HTTP-EQUIV="Content-Type" CONTENT="text/html; charset=iso-8859-1">
-<LINK REL="stylesheet" TYPE="text/css" HREF="/css/default.css"
-	MEDIA="screen">
-<LINK REL="stylesheet" TYPE="text/css" HREF="/css/print.css"
-	MEDIA="print">
-<LINK REL="icon" HREF="/images/jmri.ico" TYPE="image/png">
-<LINK REL="home" TITLE="Home" HREF="/">
+<meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
+<link rel="stylesheet" type="text/css" href="/css/default.css" media="screen">
+<link rel="stylesheet" type="text/css" href="/css/print.css" media="print">
+<link rel="icon" href="/images/jmri.ico" type="image/png">
+<link rel="home" title="Home" href="/">
 <!-- /Style -->
-</HEAD>
+</head>
 
-<BODY>
+<body>
 <!--#include virtual="/Header" -->
   <div class="nomenu" id="mBody">
     <div id="mainContent">
@@ -44,25 +40,24 @@ however it has only been tested and developed with the Advanced<sup>2</sup>
 <p>
 To configure the connection:
 <ul>
-<li>Open the JMRI "Preferences" under the "Edit" menu,
-<li>Select "MRC" as the Manufacturer.
-<li>Select "Serial" as the System Connection.
-<li>Select the Serial Port associated with the system.
-<li>Select the Cab Address that will be allocated to the interface. <br>Please note that this must be unique and not used by any other handset, if you are to use a number above 8, then you must refer to Prodigy instructions to ensure that the system is configured to address the cab correctly
-<li>Click "Save".
+	<li>Open the JMRI "Preferences" under the "Edit" menu,
+	<li>Select "MRC" as the Manufacturer.
+	<li>Select "Serial" as the System Connection.
+	<li>Select the Serial Port associated with the system.
+	<li>Select the Cab Address that will be allocated to the interface. <br>Please note that this must be unique and not used by any other handset, if you are to use a number above 8, then you must refer to Prodigy instructions to ensure that the system is configured to address the cab correctly
+	<li>Click "Save".
 </ul>
 
-<p>
-Programming, Turnout, Throttle and Power support is available for 
+<p>Programming, Turnout, Throttle and Power support is available for 
 a JMRI-connected Prodigy unit.
-<p>
+
 <h2>Programming</h2>
 There is full support for the reading/writing of decoders on the Programming along with the ability
 to write changes to a decoder on the Main.
 <p>
 Please note that the Prodigy Command Station will automatically determine the programming mode (ie Direct Byte/Direct Bit/Paged).
 <H2>Throttles</H2>
-The JMRI interface supports both 28 & 128 speed steps and all 28 functions. <br>
+The JMRI interface supports both 28 &amp; 128 speed steps and all 28 functions.<br>
 If another handset has control of the same loco that a JMRI throttle has, the changes made by the second throttle 
 will be reflected on the JMRI throttle.
 Support for 14 speed steps has not been included.
@@ -70,7 +65,7 @@ Support for 14 speed steps has not been included.
 
 <H2>Turnouts</H2>
 MRC-connected turnouts have names like "MRT123", where "MR"
-is the system name for MRc System, "T" means turnout, and
+is the system name for MRC System, "T" means turnout, and
 "123" is the address.<p>
 
 <h2>MRC Routes</h2>
@@ -84,5 +79,7 @@ Support for MRC Prodigy is available starting with<br>
 <a href="http://jmri.sf.net/releasenotes/jmri3.9.1.shtml">JMRI 3.9.1</a>.<br>
 
 <!--#include virtual="/Footer" -->
+  </div><!-- closes #mainContent-->
+</div> <!-- closes #mBody-->
 </body>
 </html>

@@ -1,5 +1,4 @@
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
-<!-- $Id$ -->
 <html lang="en">
 <head>
  <title>
@@ -9,13 +8,11 @@
     <meta name="keywords" content="SPROG java model railroad JMRI install windows">
 
 <!-- Style -->
-<meta http-equiv=Content-Type content="text/html; charset=iso-8859-1">
-<LINK REL="stylesheet" TYPE="text/css" HREF="/css/default.css"
-	MEDIA="screen">
-<LINK REL="stylesheet" TYPE="text/css" HREF="/css/print.css"
-	MEDIA="print">
-<LINK REL="icon" HREF="/images/jmri.ico" TYPE="image/png">
-<LINK REL="home" TITLE="Home" HREF="/">
+<meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
+<link rel="stylesheet" type="text/css" href="/css/default.css" media="screen">
+<link rel="stylesheet" type="text/css" href="/css/print.css" media="print">
+<link rel="icon" href="/images/jmri.ico" type="image/png">
+<link rel="home" title="Home" href="/">
 <!-- /Style -->
 </head>
 
@@ -114,7 +111,7 @@
           memory so that it is effective each time you power up the SPROG.
           Otherwise, the new value will be lost when you power off the SPROG.
           Please do not be tempted to experiment with other Mode Word values as
-          this could result in erratic behaviour of your SPROG.</p>
+          this could result in erratic behavior of your SPROG.</p>
 
 	<h3>Identifying SPROG Firmware Version</h3>
           <p>Open the Command Monitor and Send Command windows from the SPROG menu
@@ -151,9 +148,11 @@
 	   page</a>.</p>
 	<p>There is also a <a
 	   href="https://uk.groups.yahoo.com/neo/groups/sprog-dcc/info">
-           Yahoo discussion group</a> for SPROG.</p>
+           Yahoo group</a> for SPROG.</p>
    
 <!--#include virtual="/Footer" -->
+ </div><!-- closes #mainContent-->
+</div> <!-- closes #mBody-->
 </body>
 </html>
 

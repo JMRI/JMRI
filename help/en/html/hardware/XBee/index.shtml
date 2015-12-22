@@ -5,17 +5,15 @@
 JMRI: Digi XBee Network
 </title>
 
-<META content="Paul Bender" name="Author">
-<META name="keywords" content="XBee Configuration Information for JMRI">
+<meta content="Paul Bender" name="Author">
+<meta name="keywords" content="XBee Configuration Information for JMRI">
 
 <!-- Style -->
-<META http-equiv=Content-Type content="text/html; charset=iso-8859-1">
-<LINK REL="stylesheet" TYPE="text/css" HREF="/css/default.css"
-        MEDIA="screen">
-<LINK REL="stylesheet" TYPE="text/css" HREF="/css/print.css"
-        MEDIA="print">
-<LINK REL="icon" HREF="/images/jmri.ico" TYPE="image/png">
-<LINK REL="home" TITLE="Home" HREF="/">
+<meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
+<link rel="stylesheet" type="text/css" href="/css/default.css" media="screen">
+<link rel="stylesheet" type="text/css" href="/css/print.css" media="print">
+<link rel="icon" href="/images/jmri.ico" type="image/png">
+<link rel="home" title="Home" href="/">
 <!-- /Style -->
 </head>
 
@@ -41,11 +39,11 @@ JMRI Hardware Guide: Digi XBee Network
 
 <p>Each XBee module has 5 addresses we need to be aware of:
 <ul>
-<li>a Channel Number</li>
-<li>a 16 bit PAN address</li>
-<li>a 16 bit User address</li>
-<li>a 64 bit Globally Unique ID</li>
-<li>a free-form Node Identifier string</li>
+	<li>a Channel Number</li>
+	<li>a 16 bit PAN address</li>
+	<li>a 16 bit User address</li>
+	<li>a 64 bit Globally Unique ID</li>
+	<li>a free-form Node Identifier string</li>
 </ul></p>
 
 <p>The IEEE 802.15.4 Channel Number is set by configuring the XBee's CH parameter.  The value of the CH parameter can be any (hex) value from 0x0B to 0x1A.  This corresponds to decimal values 11 to 26.  All XBee modules in the network must be set to the same channel number.</p>
@@ -136,6 +134,7 @@ When an XBee input status message is received indicating one ( or more ) of the 
 </ol>
 
 <!--#include virtual="/Footer" -->
+ </div><!-- closes #mainContent-->
+</div> <!-- closes #mBody-->
 </body>
 </html>
-
