@@ -1,9 +1,8 @@
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
-<!-- $Id$ -->
 <html lang="en">
 <head>
 <title>
-JMRI: XBee Network
+JMRI: Digi XBee Network
 </title>
 
 <META content="Paul Bender" name="Author">
@@ -27,7 +26,7 @@ JMRI: XBee Network
     <div id="mainContent">
 
 <h1>
-JMRI Hardware Guide: XBee Network
+JMRI Hardware Guide: Digi XBee Network
 </h1>
 
 <h2>Overview</h2>
