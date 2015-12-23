@@ -1,18 +1,14 @@
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
 <html lang="en">
 <head>
-<!-- Copyright Bob Jacobsen 2008 -->
-<!-- $Id$ -->
-<title>JMRI: QSI Programmer</title>
+<title>JMRI: QSI Quantum Programmer</title>
 
 <!-- Style -->
-<META HTTP-EQUIV="Content-Type" CONTENT="text/html; charset=iso-8859-1">
-<LINK REL="stylesheet" TYPE="text/css" HREF="/css/default.css"
-	MEDIA="screen">
-<LINK REL="stylesheet" TYPE="text/css" HREF="/css/print.css"
-	MEDIA="print">
-<LINK REL="icon" HREF="/images/jmri.ico" TYPE="image/png">
-<LINK REL="home" TITLE="Home" HREF="/">
+<meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
+<link rel="stylesheet" type="text/css" href="/css/default.css" media="screen">
+<link rel="stylesheet" type="text/css" href="/css/print.css" media="print">
+<link rel="icon" href="/images/jmri.ico" type="image/png">
+<link rel="home" title="Home" href="/">
 <!-- /Style -->
 </head>
 
@@ -22,22 +18,22 @@
     <div id="mainContent">
 
 <h1> 
-JMRI: Quantum Programmer
+JMRI: QSI Quantum Programmer
 </h1>
 
-<p>JMRI can now use a Quantum Programmer module
+<p>JMRI can now use a <a href="http://www.qsisolutions.com/#!quantum-programmer/c18gu">QSI Solutions Quantum Programmer</a> module
 to read and write CV's in DCC decoders.
 <br />
 JMRI cannot (yet) download sounds to QSI decoders.
 
 <p>
 Note that when using JMRI with the Quantum Programmer,
-the Quantum CV Manager program must <em>not</em>
+the Quantum CV Manager (Windows only) program must <em>not</em>
 be running. If it is, you'll get obscure errors and JMRI won't be
 able to access the decoder.
 
 <p>
-JMRI and the Quantum program generally works well with QSI
+JMRI and the Quantum Programmer generally work well with QSI
 decoders.  Some people have had trouble using JMRI and the
 Quantum Programmer with non-QSI decoders, particularly other
 kinds of sound decoders.  In those cases, the solution has
@@ -57,10 +53,10 @@ computer types.
 <h3>Windows</h3>
 
 <p>For JMRI to talk to the Quantum Programmer, a driver has to be installed
-so that the Quantum Programmer appears to be a serial port (a Virtual Comm Port, or
-VCP).  These drivers are compatible with the most recent version of the
+so that the Quantum Programmer appears to be a serial port (a Virtual Com Port, or
+VCP). These drivers are compatible with the most recent version of the
 QSI Quantum Programmer software, so you can alternate between
-using JMRI and the Quantum Programmer (though not at the same time, of course).
+using JMRI and the Quantum Programmer application (though not at the same time, of course).
 
 <p>
 Max Ettinger has provided 
@@ -83,7 +79,7 @@ Restart your computer.
 </ol>
 <p>You should now be able to start a JMRI application
 and access the Quantum Programmer.  It will appear as
-"Quantum Programmer" in the preferences windows.
+"Quantum Programmer" in the Preferences windows.
 
 <a id="driverLinux">
 <h3>Linux</h3>
@@ -115,7 +111,7 @@ way all other connection types are configured.
 
 <ol>
 <li>
-Start the program
+Start DecoderPro
 <li>
 Select the "Preferences..." item from the "Edit" menu on the main window.
 <li>
@@ -125,10 +121,10 @@ Select "QSIProgrammer" as the port to use.
 <li>
 The rest of the options are fixed, and can't be changed.
 <li>
-Click the "Save" button. When prompted, allow quit the program.
+Click the "Save" button. When prompted, allow to quit the program.
 </ol>
 
-<p>The program is now configured. Restart it, and it should be ready to use.
+<p>DecoderPro is now configured. Restart it, and you should be ready to use the Quantum Programmer.
 
 <h2>Features and Limitations</h2>
 
@@ -142,5 +138,7 @@ We currently don't have enough information to download sounds to the decoder thr
 the Quantum Programmer. If we get the information, we'll certainly write this code.
 
 <!--#include virtual="/Footer" -->
+ </div><!-- closes #mainContent-->
+</div> <!-- closes #mBody-->
 </body>
 </html>

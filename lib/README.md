@@ -10,6 +10,16 @@ A similar mechanism is used for Linux under the linux/ directory.
 
 MacOS X fat binaries are treated slightly differently, see the README file there.
 
+#### Updates
+
+If you make a change in this directory (add/change/remove a file), please make corresponding changes in the control files that are used for various JMRI development and release operations:
+- build.xml - used by Ant, and in turn by various IDEs
+- .classpath - used by Eclipse
+- nbproject/ide-file-targets.xml, nbproject/project.xml - used by NetBeans
+
+Note that Windows installers don't necessarily remove existing library versions. (See [JMRI Issue #359](https://github.com/JMRI/JMRI/issues/359) for discussion on this)  Until that's changed, if you remove a library from here that really needs to _not_ be in user installs, you need to add an explicit delete to the scripts/WinInstallFiles/InstallJMRI.nsi file, in addition to modifying those above. 
+
+
 ### Specific components:
 
 ##### vecmath.jar

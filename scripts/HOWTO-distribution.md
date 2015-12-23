@@ -62,10 +62,15 @@ If you're attempting to perform this on MS Windows, refer to the MS Windows note
 - Go to the master branch on your local repository. Pull back from the main JMRI/JMRI repository to make sure you're up to date.
 
 - If it's a new year, update copyright dates (done for 2015):
-
+    JMRI:
     * build.xml (3) in the jmri.copyright.years property value
-    * site/Copyright.html (3 places)
     * xml/XSLT/build.xml in the property value, index.html, CSVindex.html
+    website:
+    * Copyright.html (3 places)
+    * index.html
+    * Footer
+    * contact/index.html
+    
     * (grep -r for the previous year in the web site, xml; don't change copyright notices!)
 
 - Bring in all possible GitHub JMRI/JMRI [pull requests](https://github.com/JMRI/JMRI/pulls)

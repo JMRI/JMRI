@@ -6,7 +6,7 @@
 	    <div style="text-align: center">JMRI is...</div>
 	    <dl class="toc">
 
-		<dt><h3><a href="index.shtml">General Tools</a></h3></dt>
+		<dt><h3><a href="index.shtml">Common Tools</a></h3></dt>
 		<dd>JMRI provides powerful tools for working with your
 		layout.
 		    <ul>
@@ -31,7 +31,7 @@
 		<dd>
 		    <ul>
 		    <li><dfn>C/MRI</dfn>
-		    <li><dfn><a href="html/hardware/can/index.shtml">MERG CBUS</a></dfn>
+		    <li><dfn><a href="../hardware/can/index.shtml">MERG CBUS</a></dfn>
 		    <li><dfn><a href="../apps/LocoTools/index.shtml">Digitrax/LocoNet</a></dfn>
 		    <li><dfn><a href="../hardware/grapevine/index.shtml">Grapevine</a></dfn>
 		    <li><dfn>NCE</dfn>

@@ -54,38 +54,81 @@ import org.slf4j.LoggerFactory;
  * Note that memory managers and some others are completely internal, and will
  * be reset when you reset the instance manager.
  *
- * @author Bob Jacobsen Copyright 2009
+ * @author Bob Jacobsen Copyright 2009, 2015
  * @version $Revision$
  * @since 2.5.3
  */
 public class JUnitUtil {
 
-    static int DEFAULTDELAY = 200;
+    static final int DEFAULT_RELEASETHREAD_DELAY = 50;
 
+    static int count = 0;
     /**
-     * Release the current thread, allowing other threads to process
+     * Release the current thread, allowing other threads to process.
+     * 
+     * This cannot be used on the Swing or AWT event threads.
+     * For those, please use JFCUnit's flushAWT()
      */
+    public static void releaseThread(Object self) {
+        releaseThread(self, DEFAULT_RELEASETHREAD_DELAY);
+    }
+
     public static void releaseThread(Object self, int delay) {
         if (javax.swing.SwingUtilities.isEventDispatchThread()) {
             log.error("Cannot use releaseThread on Swing thread", new Exception());
             return;
         }
-        synchronized (self) {
-            try {
-                int priority = Thread.currentThread().getPriority();
-                Thread.currentThread().setPriority(Thread.MIN_PRIORITY);
-                Thread.yield();
-                Thread.sleep(delay);
-                Thread.currentThread().setPriority(priority);
-                self.wait(delay);
-            } catch (InterruptedException e) {
-                Assert.fail("failed due to InterruptedException");
-            }
+        try {
+            int priority = Thread.currentThread().getPriority();
+            Thread.currentThread().setPriority(Thread.MIN_PRIORITY);
+            Thread.sleep(delay);
+            Thread.currentThread().setPriority(priority);
+        } catch (InterruptedException e) {
+            Assert.fail("failed due to InterruptedException");
         }
     }
 
-    public static void releaseThread(Object self) {
-        releaseThread(self, DEFAULTDELAY);
+    static final int WAITFOR_DELAY_STEP = 5;
+    static final int WAITFOR_MAX_DELAY = 5000; // really long, but only matters when failing
+    
+    /** 
+     * Wait for a specific condition to be true, without having to wait longer
+     * <p>
+     * To be used in tests, will do an assert if the total delay is longer than WAITFOR_MAX_DELAY
+     * <p>
+     * Typical use:
+     * waitFor(()->{return replyVariable != null;},"reply not received")
+     *
+     * @param name label for Assert.fail if condition not true fast enough
+     */
+    static public void waitFor(ReleaseUntil condition, String name) {
+        if (javax.swing.SwingUtilities.isEventDispatchThread()) {
+            log.error("Cannot use waitFor on Swing thread", new Exception());
+            return;
+        }
+        int delay = 0;
+        try {
+            while (delay < WAITFOR_MAX_DELAY) {
+                if (condition.ready()) return;
+                int priority = Thread.currentThread().getPriority();
+                try {
+                    Thread.currentThread().setPriority(Thread.MIN_PRIORITY);
+                    Thread.sleep(WAITFOR_DELAY_STEP);
+                    delay += WAITFOR_DELAY_STEP;
+                } catch (InterruptedException e) {
+                    Assert.fail("failed due to InterruptedException");
+                } finally {
+                    Thread.currentThread().setPriority(priority);
+                }
+            }
+            Assert.fail(name);
+        } catch (Exception ex) {
+            Assert.fail("Exception while  looking for "+name+" "+ex);
+        }
+    }
+
+    public interface ReleaseUntil {
+        public boolean ready() throws Exception;
     }
 
     public static void resetInstanceManager() {

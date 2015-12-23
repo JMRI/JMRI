@@ -1,21 +1,25 @@
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
-<!-- $Id$ -->
 <html lang="en">
 <head>
- <TITLE>
-      JMRI: Block Add/Edit Help
- </TITLE>
-    <META http-equiv=Content-Type content="text/html; charset=iso-8859-1">
-    <META content="Bob Jacobsen" name=Author>
-    <META name="keywords" content="JMRI help OBlock Table">
+ <title>
+      JMRI: OBlock Add/Edit Help
+ </title>
+    <meta name="Author" content="Bob Jacobsen">
+    <meta name="keywords" content="JMRI help OBlock Table">
 
 <!-- Style -->
-  <META http-equiv=Content-Type content="text/html; charset=iso-8859-1">
+  <meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
   <link rel="stylesheet" type="text/css" href="/css/default.css" media="screen">
   <link rel="stylesheet" type="text/css" href="/css/print.css" media="print">
   <link rel="icon" href="/images/jmri.ico" type="image/png">
   <link rel="home" title="Home" href="/">
 <!-- /Style -->
+<style type="text/css">
+<!- page specific styling of numbered steps & subheading -->
+p.flushleft {
+	text-indent: -37px;
+	}
+</style>
 </head>
 
 <body>
@@ -23,114 +27,96 @@
   <div class="nomenu" id="mBody">
     <div id="mainContent">
 
-<H1>Creating and Editing OBlocks, Portals and OPaths</H1>
-Start by entering each occupancy block of your layout into the <b>Occupancy Block Table</b>.
-<ul>
-<p><b>1.</b> Enter a system name for the OBlock.  
-If you do not preface the entry with "OB", it will be prepended to
-your entry automatically.</p>
-<p><b>2.</b> (Optionally) Enter a user name for the OBlock.</p>
-<p><b>3.</b> Enter the system or user name of the detection sensor for the block.  <i>You can skip
-entering this now and come back and enter it later.</i>
-<UL>
-Note: <i>(You can also read this note later.)</i>  If there is more than one sensor that detects
-occupancy of the the block 'OR' them together and trigger a single internal sensor to use
-for this entry.  For example, suppose, LS10, LS11 and LS12 are detection sensors and IS100
-is an internal sensor.  Presuming "Active" means ocupied, write a
-Logix Conditional with state Variables:
-<ul>
-Sensor "LS10" state is Sensor Active
-<br>Sensor "LS11" state is Sensor Active</br>
-<br>Sensor "LS12" state is Sensor Active</br>
-</ul>
-Select <b>OR</b> as the Logic Operator.
-<br>and add the Actions:</br>
-<ul>
-On Change to true, set Sensor, "IS100" to Active.
-<br>On Change to false, set Sensor, "IS100" to Inactive.</br>
-</ul>
-Note: The row of a new entry will jump to its sorting position as ordered by system name.
-To continue editing the row, look for it at the top of the window.  It will stay in place as
-long as it has the same system name.
-</UL>
-</ul>
-Next, enter the portals between the blocks into the <b>Portal Table</b>.
-<ul>
-<b>4.</b> For each point between the the blocks you have defined in the Occupancy Block table,
-enter a portal row for each portal (gap) between the two blocks.  
-<p>A pair of adjacent blocks 
-may have several portals between them.  This is expected, so just give each portal a unique
-name.  The block names can be dragged from the Occupancy Block table to save typing.</p>
-<ul>
-Note: The computer will notify you from time to time until you have entered a block on each side
-of the portal name.  It doesn't matter on which side of the portal name you enter a block name, 
+<h1>Creating and Editing OBlocks, Portals and OPaths</h1>
+<p>Start by entering each Occupancy Block of your layout into the <b>Occupancy Block Table</b>:
+<ol>
+<li>Enter a System Name for the OBlock. If you do not preface the entry with "OB", it will be prepended to
+your entry automatically.</li>
+<li>(Optionally) Enter a User Name for the OBlock.</li>
+<li>Enter the System Name or User Name of the detection Sensor for the Block.<br>
+<i>You may skip entering this for now and come back and enter it later.</i><br>
+Note: If there is more than one Sensor that detects
+occupancy of the Block, 'OR' them together and trigger a single Internal Sensor to use
+for this entry. For example, suppose LS10, LS11 and LS12 are detection Sensors and IS100
+is an Internal Sensor. Presuming "Active" means Occupied, write a
+Logix Conditional with these three state Variables:
+	<ul>
+	<li>Sensor "LS10" state is Sensor Active</li>
+	<li>Sensor "LS11" state is Sensor Active</li>
+	<li>Sensor "LS12" state is Sensor Active</li>
+	</ul>
+Select <b>OR</b> as the Logic Operator<br>
+and add as Actions:
+	<ul>
+	<li>On Change to True, set Sensor, "IS100" to Active.
+	<li>On Change to False, set Sensor, "IS100" to Inactive.
+	</ul>
+<p>Note: Upon entering a System Name, the row of a new entry will jump to its sorting position as ordered by System Name. To continue editing the row, look for it at the top of the window. It will stay in place as
+long as it has the same System Name.</p>
+</li>
+<p class="flushleft">Next, enter the Portals between the Blocks into the <b>Portal Table</b>:</p></li>
+<li>For each point between the the Blocks you have defined in the Occupancy Block Table,
+enter a Portal row for each Portal (gap) between the two Blocks.  
+<p>A pair of adjacent Blocks 
+may have several Portals between them. This is expected, so just give each Portal a unique
+name. The Block names can be dragged from the Occupancy Block table to save typing.</p>
+<p>Note: The computer will notify you from time to time until you have entered a Block on each side
+of the Portal Name.  It doesn't matter on which side of the Portal Name you enter a Block Name, 
 just be sure to enter both sides
-<p>
-Note: It may be helpful to open the <b>Block-Portal Cross Reference Table</b> to review whether all the
+<p>Note: It may be helpful to open the <b>Block-Portal Cross Reference Table</b> to review whether all the
 portals have been entered.
-</ul>
-</ul>
-Next, If there are signals at a portal, enter them into the <b>Signal Table</b>.
-<ul>
-<b>5.</b> Enter the system or user name of the signal.  This may be either a SignalMast or SignalHead.
-<p><b>6.</b> Enter the name of the block <b><i>facing</i></b> the signal into the <b>From (Approach) Block</b>
-column.  It is important that the approaching block of the signal is correctly named.  This is the block
+<p class="flushleft">Next, If there are Signals at a Portal, enter them into the <b>Signal Table</b>:
+</li>
+<li>Enter the System Name or User Name of the Signal. This may be either a SignalMast or SignalHead.
+<li>Enter the name of the Block <b><i>facing</i></b> the Signal into the <b>From (Approach) Block</b>
+column. It is important that the approaching Block of the Signal is correctly named. This is the Block
 that will detect when a speed change might be needed.
-<p><b>7.</b> Enter the portal name or the name of the block whose entrance is protected.   
-<p><b>8.</b> Enter any delay of milliseconds to wait after entering the approach block before changing 
-the train speed.  (This time delay is used only when the signal indicates a speed change.)   
-</UL>
-Next, identify the Paths in each block.
-<ul>
-<UL>
-Reminder: You may use 'Drag and Drop' to enter text.  When selecting an item to drag, it may reqire
-two clicks; one to select the row and a second to select the column entry.  Holding the second click down,
-you can drag the text from that row, column field.
+<li>Enter the Portal Name or the name of the Block whose entrance is protected.   
+<li>Enter any delay of milliseconds to wait after entering the approach Block before changing 
+the train speed (This time delay is used only when the signal indicates a speed change).   
 </ul>
-<b>9.</b> Moving through the Occupancy Block table row by row, do:
-<ul>
-<b>9a.</b> Press the <b>Paths</b> button and open the <b>Block-Path</b> table for the row
-<p><b>9b.</b> Enter a path name for a path within the block of the row in the <b>Path Name</b> column.</p>
-<ul>
-Note: The name of the block is in quotes in the title bar of the table.
-</ul>
-<b<9c.</b> Enter the names of the portals where the path enters and exits the block.
-<ul>
-Note: It doesn't matter on which side of the path name you enter a portal name.  Dead end
-spurs will only have one portal.
-</ul>
-</UL>
-</ul>
-Finally, complete the definition of each Path in each block.
-<UL>
-<b>10.</b> For each path in each <b>Block-Path table</b>, do:
-<ul>
-<p><b>10a.</b> Press the <b>Turnouts</b> button and open the <b>Block-Path-Turnout</b> table for the each
-row in the <b>Block-Path</b> table</P></p>
-<p><b>10b.</b> Enter the system or user name of a turnout in the path.      
-<ul>
-Note: The name of the path and its block are in quotes in the title bar of the table.
-</ul>
-<p><b>10c.</b> Enter the position of the turnout in the <b>Turnout Setting</b> column - either 'Closed'
-or 'Thrown'.
-</ul>
-</UL>
-Most likely you will have encountered several dialogs urging you to fix this or that, so try to 
-resolve all of them.
-<p>Now, you are ready to define some routes for warrants.  Of course, there will probably still 
-be a few errors or missing items, but the 'Create Warrant' frame provides a tool to find and fix them.<\p>
-<UL>
-<b>11.</b> Select <b>Create New Warrant</b> from the <b>Warrants</b> menu in a Panel Editor Panel.
-</UL>
+
+<p class="flushleft">Next, identify the Paths in each Block:</p></li>
+<li>Moving through the Occupancy Block Table row by row, complete these steps:
+	<ul>
+	<li>Press the <b>Paths</b> button and open the <b>Block-Path</b> Table for the row;
+	<li>Enter a path name for a Path within the Block of the row in the <b>Path Name</b> column.<br>
+	Note: The name of the Block is in quotes in the title bar of the table.
+	<li>Enter the names of the Portals where the Path enters and exits the Block.<br>
+	<p>Note: It doesn't matter on which side of the Path name you enter a Portal name. Dead end
+	spurs will only have one Portal.</p>
+	<p>Reminder: You may use 'Drag and Drop' to enter text.  When selecting an item to drag, it may require
+	two clicks; one to select the row and a second to select the column entry.  Holding the second click down,
+	you can drag the text from that row, column field.</p>
+	</ul>
+	
+<p class="flushleft">Finally, complete the definition of each Path in each Block:</p></li>
+<li>For each Path in each <b>Block-Path table</b>, complete these steps:
+	<ul>
+	<li>Press the <b>Turnouts</b> button and open the <b>Block-Path-Turnout</b> table for the each
+	row in the <b>Block-Path</b> table
+	<li>Enter the System Name or User Name of a Turnout in the Path.<br>    
+	<p>Note: The name of the Path and its Block are displayed in quotes in the title bar of the table.</p>
+	<li>Enter the position of the Turnout in the <b>Turnout Setting</b> column - either 'Closed'
+	or 'Thrown'.
+	</ul>
+<p class="flushleft">Most likely you will have encountered several dialogs urging you to fix this or that; try to 
+resolve all of them.</p>
+<p class="flushleft">Now, you are ready to define some Routes for Warrants. Of course, there will probably still 
+be a few errors or missing items; the 'Create Warrant' frame provides a tool to find and fix them:</p>
+</li>
+<li>Select <b>Create New Warrant</b> from the <b>Warrants</b> menu in a Panel Editor Panel.</li>
+</ol>
  
-To read about how OBlocks, Portals and OPaths can be used to generate train routes and make
-automated train scripts, see <a href="../logix/Warrant.shtml"> Warrants. </a>
+<p>To read about how OBlocks, Portals and OPaths can be used to generate train routes and make
+automated train scripts, see <a href="../logix/Warrant.shtml">Warrants</a>.
 <p>
-Also See <a href="../logix/WarrantTable.shtml"> Warrant Table help</a>
-for more details on creating and editing warrants.
-<br>
+Also see the <a href="../logix/WarrantTable.shtml">Warrant Table help</a>
+for details on creating and editing Warrants.
 
 <!--#include virtual="/Footer" -->
+ </div><!-- closes #mainContent-->
+</div> <!-- closes #mBody-->
 </body>
 </html>
 

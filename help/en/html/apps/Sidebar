@@ -5,22 +5,18 @@
 	  <div id="mBody">
 	  <div id="side"> <!-- Block of text on left side of page -->
 	    <div style="text-align: center">JMRI&reg; is...</div>
-	    <dl>
-		<dt><h3 style="padding-left: 1em;"><a href="DecoderPro/index.shtml">DecoderPro&reg;</a></h3></dt>
+	    <dl class="toc">
+		<dt><h3>Applications</h3></dt>
 		<dd>
-		    A better tool for programming decoders, simplifying the job of configuring DCC decoders from your computer
-		</dd>
-
-		<dt><h3><a href="PanelPro/PanelPro.shtml">PanelPro&trade;</a></h3></dt>
-		<dd>
-			Design and Operate CRT based CTC control panels that reflect the real-time
-			state of your railroad <em>and</em> let you control it
-		</dd>
-
- 	  <dt><h3 style="padding-left: 1em;"><a href="../../package/jmri/jmrit/operations/Operations.shtml">OperationsPro&trade;</a></h3></dt>
-		<dd>
-		  Build Trains from your Roster and print Train Manifests that detail the work your train crews will perform
-		</dd>
+			<ul>
+			<li><a href="DecoderPro/index.shtml">DecoderPro&reg;</a></li>
+			<li><a href="PanelPro/PanelPro.shtml">PanelPro&trade;</a></li>
+			<li><a href="../package/jmri/jmrit/dispatcher/Dispatcher.shtml">DispatcherPro&trade;</a></li>
+	    <li><a href="../package/jmri/jmrit/operations/Operations.shtml">OperationsPro&trade;</a></li>
+			<li><a href="SoundPro/SoundPro.shtml">SoundPro</a></li>
+			<li><a href="SignalPro/index.shtml">SignalPro</a></li>
+			</ul>
+    </dd>
 
 		<dt><h3><a href="../tools/index.shtml">Tools</a></h3></dt>
 		<dd>JMRI provides powerful tools for working with your
@@ -30,17 +26,15 @@
 	    <li><dfn><a href="../tools/Turnouts.shtml">Turnouts</a></dfn>
 	    <li><dfn><a href="../tools/throttle/ThrottleMain.shtml">Throttles</a></dfn>
 	    <li><dfn><a href="../tools/consisttool/ConsistTool.shtml">Consisting</a></dfn>
-	    <li><dfn><a href="../tools/signaling/index.shtml">Signals</a></dfn>
 	    <li><dfn><a href="../tools/Lights.shtml">Lights</a></dfn>
 	    <li><dfn><a href="../tools/Routes.shtml">Routes</a></dfn>
 	    <li><dfn><a href="../tools/LRoutes.shtml">LRoutes</a></dfn>
 	    <li><dfn><a href="../tools/Logix.shtml">Logix</a></dfn>
 	    <li><dfn><a href="../tools/fastclock/index.shtml">Fast Clocks</a></dfn>
 	    <li><dfn><a href="../tools/speedometer/index.shtml">Speedometer</a></dfn>
-	    <li><dfn><a href="../tools/scripting/index.shtml">Scripting</a></dfn>
 	    <li><dfn><a href="../tools/Audio.shtml">Audio</a></dfn>
 	    <li><dfn><a href="../tools/IdTags.shtml">Id Tags</a></dfn>
-      <li><dfn><a href="../tools/index.shtml#systemSpecificTools">System-specific:</a></dfn>
+      <li><dfn><a href="../tools/index.shtml#systemSpecificTools">System-specific...</a></dfn>
       </ul>
 		</dd>
 
@@ -62,7 +56,6 @@
 		<dt><h3 style="padding-left: 1em;"><a href="../hardware/index.shtml">Supported Hardware</a></h3></dt>
 		<dd> 
 		    <ul>
-				<li> <a href="../hardware/XPressNet/index.shtml">Atlas Commander</a>
 				<!-- copy this list from /root sidebar, compare with /help/en/html/index.shtml, checked 12/2015 -->
 				<li><a href="../hardware/XPressNet/index.shtml">Atlas Commander</a>
 				<li><a href="../hardware/bachrus/index.shtml">Bachrus</a>
