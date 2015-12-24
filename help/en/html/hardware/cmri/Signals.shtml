@@ -68,8 +68,8 @@ any C/MRI system type, and you don't have to tell PanelPro anything
 to make it work.
 
 <p>
-<a href="NodeConfig.jpg">
-<img src="NodeConfig.jpg" alt="Config Pane" align="right" height="212" width="205"></a>
+<a href="images/CMRIConfigNodesSMINI.png">
+<img src="images/CMRIConfigNodesSMINI.png" alt="Config Pane" align="right" height="202" width="218"></a>
 2.B) Use support built into the SMINI card.  An SMINI card can be 
 configured to do a similar thing.  When the SMINI detects the two 
 outputs are on, it alternates the voltage.  To configure this, you 

@@ -24,48 +24,52 @@
 
   <h1>Hardware Support: Terminal Server Connection</h1>
 <p>
-A Terminal Server is a box that connects one or more serial
+A <strong>Terminal Server</strong> is a box that connects one or more serial
 ports to a network so they can be accessed from a remote computer.
 JMRI running on a computer with a network connection can 
-connect to a EasyDCC or NCE command station or C/MRI nodes via one of these. This allows
+connect to an EasyDCC or NCE Command Station or C/MRI nodes via one of these. This allows
 you to put the computer and layout as far apart as you'd like.
-<p>
-To make this work,
-you have to configure both JMRI and the terminal server, and make 
-the appropriate connections.
-<p>
-This capability was originally created for david zuhn, who 
-has a 
-<a href="http://stpaulterminal.org/software/jmri/lantronix.html">web page</a>
-describing in detail how he set it up for EasyDCC. The NCE and C/MRI processes are similar.
-The following is just an overview
-of this:
 
+<a name="hardware"></a><h2>Supported Hardware</h2>
+<p>This capability was originally created for david zuhn, who 
+has a <a href="http://stpaulterminal.org/software/jmri/lantronix.html">web page</a>
+describing in detail how he set it up for EasyDCC.</p>
+<p>The NCE and C/MRI set up processes are similar.</p>
+
+<a name="connecting"></a><h2>Connecting</h2>
+To make this work,
+you have to configure both JMRI and the Terminal Server, and make 
+the appropriate connections.
+
+<h3>Settings</h3>
 <ul>
 	<li>
 	To configure JMRI:
 	<ul>
 		<li>Select "Preferences" from the "Edit" menu
-		<li>Select the "EasyDCC over terminal server" protocol
+		<li>Select the "EasyDCC over terminal server" Protocol
 		<li>Enter the IP address and connection port number
 		corresponding to the serial port on the terminal server
-		<li>Click save, then quit the program
+		<li>Click "Save" &amp; quit the program
 	</ul>
 	<li>
-	Configure the terminal server to connect to the command 
+	Configure the Terminal Server to connect to the command 
 	station: 9600 baud, no parity, 8 bits.
-	<li>
-	Connect a serial cable from the terminal server to the command station.
-	Depending on the type of the terminal server, this might require that you
+</ul>
+
+<h3>Wiring</h3>
+<ul>
+<li>Connect a serial cable from the Terminal Server to the Command Station.
+	Depending on the type of the Terminal Server, this might require that you
 	wire a custom cable to get the right connectors.  Note that you want the 
 	"Transmit data" wire on one end to connect to the "Receive data" on the other.
 	Do this for both directions, and also include a ground wire.
 	<li>
 	Make the network connections needed.
-	<li>
-	Start the program up.  If everything is OK, JMRI will start and show you
-	that it's properly connected.
 </ul>
+
+<p>	Start JMRI. If everything is OK, the application will start and tell you
+	on the splash screen it's properly connected.
 
 <!--#include virtual="/Footer" -->
  </div><!-- closes #mainContent-->

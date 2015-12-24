@@ -45,22 +45,18 @@ uses to access Bluetooth.
 
 <h2>Configuration</h2>
 
-<p>
-To set up a JMRI application to use the LocoBridge:
-</p>
+<p>To set up a JMRI application to use the LocoBridge:</p>
 
 <ol>
-<li>
-Start JMRI
-<li>
-Open the Preferences window from the Edit menu and configure the Connection as:
-<ul>
-<li>Select System manufacturer as: Digitrax
-<li>Select the System connection as: BT LocoBridge
-<li>Select your LocoBridge as: the Bluetooth adapter
-<li>Select your Command Station type
-</ul>
-<li>Click "Save" at the bottom of the Preferences window, quit JMRI and restart.
+	<li>Start JMRI
+	<li>Open the Preferences window from the Edit menu and configure the Connection as:
+	<ul>
+		<li>Select System manufacturer as: Digitrax
+		<li>Select the System connection as: BT LocoBridge
+		<li>Select your LocoBridge as: the Bluetooth adapter
+		<li>Select your Command Station type
+	</ul>
+	<li>Click "Save" at the bottom of the Preferences window, quit JMRI and restart.
 </ol>
 
 <!--#include virtual="/Footer" -->

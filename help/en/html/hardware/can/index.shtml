@@ -30,7 +30,7 @@ JMRI provides support for the development and use of these. Two initial efforts 
 
 <h2>CAN Implementations</h2>
 <img src="http://www.openlcb.org/trunk/web/logo-ajs-dph.png" align="right" alt="OpenLCB logo" height="43" width="104">
-<h3><a href="http://www.openlcb.org">OpenLCB</a></h3>
+<h3><a href="../openlcb/index.shtml">OpenLCB</a></h3>
 <p>OpenLCB is a group of hobbyists and manufacturers who have 
 come together to produce a future-oriented layout control bus, also called
 <a href="http://openlcb.org">OpenLCB</a>.<br>
@@ -45,7 +45,7 @@ to adopt OpenLCB and standardize it as
 
 <img src="http://www.merg.org.uk/merg_images/merg_logo.png" align="right" alt="MERG logo" height="45" width="100">
 <h3><a href="http://www.merg.org.uk/">MERG</a>
-<a href="http://www.merg.org.uk/merg_resources/cbus.php">CBUS</a></h3>
+<a href="cbus/index.shtml">CBUS</a></h3>
 <p>A group of hobbyists, under the umbrella of the Model Electronic Railway Group 
 (<a href="http://www.merg.org.uk/">MERG</a>), 
 are developing a layout control bus called CBUS.
@@ -118,7 +118,7 @@ These can be very useful in testing hardware, etc.
 <p><a href="../openlcb/index.shtml">OpenLCB</a> Help
 <p><a href="cbus/index.shtml">CBUS</a> Help
 
-<h3>Other info</h3>
+<h3>Third Party info</h3>
 <p><a href="http://www.openlcb.org">OpenLCB.org</a>
 
 <!--#include virtual="/Footer" -->

@@ -22,14 +22,14 @@
   <div class="nomenu" id="mBody">
     <div id="mainContent">
 
-  <h1>Hardware Support: JMRI Tools that support LocoNet&reg; Devices</h1>
+  <h1>Hardware Support: JMRI Tools for LocoNet&reg; Devices</h1>
 
-<p>JMRI software can provide a variety of tools to support hardware connected
+<p>JMRI software provides a variety of tools to support hardware connected
     to the LocoNet&reg; bus.  These tools provide a variety of features, such as
     monitoring status, reading and writing configuration.  Each of the tools
     provides a set of features which is appropriate to the type of device it
-    supports, as summarized in the table below.</p>
-<p>In the table, each tool name is a link to a tool-specific help page.</p>
+    supports, as summarized in the table below. Access to the LocoNet Tools is from the <strong>LocoNet</strong> menu that appears when JMRI is <a href="Digitrax.shtml#Setup">connected to a LocoNet&reg;</a>.</p>
+<p>In the table below, each tool name is a link to a tool-specific help page.</p>
 <table border="2">
     <tr align="center"><td><b>Tool</b></td>
         <td><b>Monitor Status</b></td>

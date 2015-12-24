@@ -166,7 +166,6 @@ except the type letter is "L" instead of "T", e.g. <code>ML-18;+21</code>)
 <li><a href="Details.shtml">Technical details of CBUS Support</a>
 <li><a href="../index.shtml">Main help page for CAN Support</a>
 including links to more tools
-
 </ul>
 
 <!--#include virtual="/Footer" -->

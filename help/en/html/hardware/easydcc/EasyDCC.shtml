@@ -22,15 +22,15 @@
 
 <h1>Hardware Support: EasyDCC</h1>
 
-	<h3>Supported Hardware</h3>
-
+<a name="hardware"></a><h2>Supported Hardware</h2>
+<h3>Command Station</h3>
 	<ul>
 	  <li>EDCSK -  EasyDCC Kit Command Station
 	  <li>EDCSA -  EasyDCC Assembled Command Station
 	  <li>EDCSB -  EasyDCC "board alone" Command Station
 	</ul>
 
-	<h3>Limitations</h3>
+<a name="limitations"></a><h2>Limitations</h2>
 
 	<p> Some older EasyDCC systems may need an update to their program.
 	This is done by replacing the "PROM" chips in the command station
@@ -38,8 +38,8 @@
 	version 022 is known to have some problems communicating with a
 	computer. Most recent EasyDCC command stations will be OK.</p>
 
-	<h3>Setup</h3>
-
+<a name="connecting"></a><h2>Connecting</h2>
+<h3>Wiring</h3>
 	<ol>
 	  <li> To connect your computer to an EasyDCC system, you need to
 	  connect the command station to the computer's serial port using a
@@ -55,28 +55,25 @@
 	  is available on the web).
 	  <p>
 	  One easy way to connect the system to your computer is to buy a 9-pin serial cable and a phone
-	  cable, then cut them and splice them together.
+	  cable, then cut them and splice them together.<br>
+	  A more modern alternative is to use a USB-to-Serial adapter.
 	  </li>
-
-	  <li>Next, go to the preferences panel of a JMRI-based program.
+  </ol>
+	  
+<h3>Settings</h3>
+  <ol>
+	  <li>Next, go to the Preferences panel of a JMRI-based program.
 	  This opens automatically the first time a program is run, or you
 	  can select it from the "Edit" menu.</li>
 
-	  <li>Select "EasyDCC" from the top selection box. You can then
-	  select the proper serial port in the second selection box.</li>
+	  <li>In the <strong>Connections</strong> tab, select "EasyDCC" from the Manufacturer selection box. You can then
+	  select the proper serial port in the Connection selection box.</li>
 
-	  <li>The baud rate selection box will be fixed at 9,600 baud.</li>
+	  <li>Under Advanced Options, the baud rate selection box will be fixed at 9,600 baud.</li>
 
-	  <li>The series of radio buttons labelled "GUI style" allows you
-	  to select how the program will look.  "Metal" is the native Java
-	  look available on all types.  Other choices will vary with your
-	  computer type. "Motif", "Windows", "MacOS" and "MacOS Adaptive"
-	  look native on Linux, Windows, MacOS "Classic" and Mac OS X
-	  respectively.</li>
-
-	  <li>In the bottom selection box, you can pick the default
+	  <li>On the <strong>Defaults</strong> tab, you can pick the default
 	  programmer format. You can override this each time you open the
-	  programmer, so this is here just for convenience.  </li>
+	  programmer, so this is here just for convenience.</li>
 
 	  <li>Click "Save". You'll be asked if it's OK for the program to
 	  quit, click "Yes".</li>
@@ -85,10 +82,16 @@
 
 	</ol>
 
-	<h3>Debugging</h3>
-
+<h3>Debugging</h3>
 	<p>Please check the <a href="http://www.cvpusa.com/easydcc_system.php">CVP EasyDCC Manuals</a>.</p>
 
+<a name="tools"></a><h2>JMRI EasyDCC Tools</h2>
+
+<a name="documentation"></a><h2>Documentation</h2>
+<h3>JMRI Help</h3>
+
+<h3>Third Party info</h3>
+<p>The <a href="http://www.cvpusa.com/easydcc_system.php">CVP EasyDCC Manuals</a>
 <!--#include virtual="/Footer" -->
  </div><!-- closes #mainContent-->
 </div> <!-- closes #mBody-->

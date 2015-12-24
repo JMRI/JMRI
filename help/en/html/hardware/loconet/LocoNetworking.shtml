@@ -22,14 +22,15 @@
   <h1>Hardware Support: Methods to Connect Multiple Computers to a LocoNet&reg; Layout</h1>
   
 <p>
-JMRI currently supports two different ways that allow you to connect multiple
+JMRI currently supports two different ways to connect multiple
 computers to your LocoNet&reg;-equipped layout
 using a single LocoBuffer. In both methods, the computers communicate using standard
 TCP/IP protocols, but there are differences in the details.
 <p>
 One method uses the inbuilt 
 <a href="LocoNetServer.shtml">LocoNet Client/Server capability</a>
-of JMRI and the other 
+of JMRI.<br>
+The other method 
 allows multiple JMRI nodes to connect as Clients to a single 
 <a href="http://loconetovertcp.sourceforge.net/Interface/index.html">LocoNetOverTCP LbServer</a>, 
 which is external to JMRI.

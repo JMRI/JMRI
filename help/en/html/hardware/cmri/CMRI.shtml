@@ -697,7 +697,21 @@ When the C/MRI hardware is again available, go the JMRI Preferences,
 select "C/MRI Serial", save Preferences, quit and restart.
 
 <a name="tools"></a><h2>JMRI C/MRI Tools</h2>
-<a name="diagnostics"><h3>C/MRI Diagnostics</h3></a>
+<img src="images/CMRImenu416.png" alt="Config Pane" align="right" height="162" width="213"></a>
+<p>The CMRI menu contains 5 tools:
+
+<a name="monitor"><h3>CMRI Monitor</h3></a>
+<p>Lists all Serial Commands seen on the connection.
+
+<a name="sendcommand"><h3>Send Command</h3></a>
+<a href="images/CMRIMonitor.png">
+<img src="images/CMRIMonitor.png" alt="Monitor Pane" height="112" width="350"></a>&nbsp;
+<a href="images/CMRISendSerialCommand.png">
+<img src="images/CMRISendSerialCommand.png" alt="Monitor Pane" height="73" width="123"></a>
+
+<a href="images/CMRIDiagnostic.png">
+<img src="images/CMRIDiagnostic.png" alt="Diagnostic Pane" height="164" width="235" align="right"></a>
+<a name="diagnostics"><h3>Run Diagnostic</h3></a>
 <p>
 JMRI supports the two automated diagnostic procedures mentioned in 
 Chapter 6 of Bruce Chubb's <b>C/MRI User's Manual, Version 3.0</b>. Diagnostics
@@ -705,19 +719,26 @@ are useful for checking the functioning of your C/MRI hardware. These automated
 procedures are controlled via a dialog available by selecting 
 <b><a href="../../../package/jmri/jmrix/cmri/serial/diagnostic/DiagnosticFrame.shtml">Run Diagnostic</a></b>
 in the CMRI menu.<br>
-The Wraparound Test requires a special 
-wraparound test cable, and the Output Test requires a special output test card.  
+The <strong>Wraparound Test</strong> requires a special 
+wraparound test cable, and the <strong>Output Test</strong> requires a special output test card.  
 Both devices are described in the above reference. Any other connections to input
 or output bits on the card(s) being tested should be unplugged when these tests 
 are run. The diagnostics are easy to use.  Simply follow the instructions presented 
 in the Run C/MRI Diagnostic dialog.  Any errors found are reported in the status 
-box of the dialog.
+box of the dialog.</p>
 
-<a name="confignodes"></a><h3><a href="NodeConfig.jpg">
-<img src="NodeConfig.jpg" alt="Config Pane" align="right" height="212" width="205"></a>
-<a href="">Configure Nodes Tool</a></h3>
-<p>Select "Configure C/MRI nodes" from the <strong>CMRI</strong> menu, select an SMINI to configure, and click on one of the little 
-check-boxes to configure a specific output. Click "Edit Node" to update, then close that pane.
+<a href="images/CMRIConfigNodesSMINI.png">
+<img src="images/CMRIConfigNodesSMINI.png" alt="Config Pane" align="right" height="202" width="218"></a> 
+<a href="images/CMRIConfigNodesUSIC.png">
+<img src="images/CMRIConfigNodesUSIC.png" alt="Config Pane" align="right" height="202" width="218"></a>
+<a name="confignodes"></a><h3><a href="../../../package/jmri/jmrix/cmri/serial/nodeconfig/NodeConfigFrame.shtml">Configure C/MRI Nodes</a></h3>
+<p>Select "Configure C/MRI Nodes" from the <strong>CMRI</strong> menu, and from to top right hand dropdown list choose either an SMINI or USIC Node Type to configure. Next enter a Node Number in the left hand field and click on one of the little 
+check-boxes to configure a specific output.<br>
+Click "Edit Node" to update, then close the pane.
+
+<a name="monitor"><h3>List Assignments</h3></a>
+<a href="images/CMRIList.png">
+<img src="images/CMRIList.png" alt="List Pane" height="140" width="212"></a>
 
 <a name="documentation"></a><h2>Documentation</h2>
 <h3>JMRI Help</h3>
@@ -725,7 +746,7 @@ check-boxes to configure a specific output. Click "Edit Node" to update, then cl
 <li><a href="Signals.shtml">C/MRI signals</a></li>
 </ul>
 
-<h3>Other info</h3>
+<h3>Third Party info</h3>
 <p>For more information on C/MRI (including the C/MRI User Manual), 
 please see:</p>
 <ul>

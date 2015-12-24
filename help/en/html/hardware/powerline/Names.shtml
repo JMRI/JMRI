@@ -1,7 +1,7 @@
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
 <html lang="en">
 <head>
-<title>JMRI Hardware Support - Power Line System Names</title>
+<title>JMRI Hardware Support - Power Line - System Names</title>
 
 <!-- Style -->
 <meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
@@ -17,7 +17,7 @@
   <div class="nomenu" id="mBody">
     <div id="mainContent">
 
-<h1>Hardware Support: Powerline System Names</h1>
+<h1>Hardware Support: Powerline - System Names</h1>
 
 Individual inputs (Sensors) and outputs (Turnouts and Lights)
 in JMRI are accessed via names.  
@@ -27,15 +27,16 @@ the
 in the
 <a href="../../doc/Technical/index.shtml">technical documentation</a>.
 
-<h2>X10</h2>
+<a name="hardware"></a><h2>Supported Hardware</h2>
+
+<h3>X10</h3>
 
 X10 devices are addressed via a "House Code" of A through P, 
 and a "Device Code" of 1 through 16.
 
 <p>
 Outputs (Lights or Turnouts) in each House Code 
-are numbered with their 
-Device Code, e.g. 
+are numbered with their Device Code, e.g. 
 <ul>
 	<li>PTA1 is a JMRI Turnout that talks to device 1 on housecode A
 	<li>PTB3 is a Turnout for device 3 on housecode B
@@ -70,7 +71,7 @@ will work.
 like PT12, with no House Code letters; this is no longer available,
 because it caused way too much confusion)
 
-<h2>Insteon</h2>
+<h3>Insteon</h3>
 
 Insteon adapters are labelled with a three-part number that looks
 like "01.2A.B4". These are just random
@@ -83,7 +84,8 @@ want to address. Do not delete or add leading zeros, etc.
 For example, if the device is labelled "01.2A.B4",
 the corresponding Light system name is "PL01.2A.B4".
 
-<h3>More Information</h3>
+<a name="documentation"></a><h2>Documentation</h2>
+<h3>Third Party info</h3>
 
 <p>More information on the X10 hardware can be found on the
 (admittedly obnoxious)

@@ -1,7 +1,7 @@
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
 <html lang="en">
 <head>
-<title>JMRI Hardware Support - OpenLCB Naming</title>
+<title>JMRI Hardware Support - OpenLCB - Naming</title>
 
 <!-- Style -->
 <meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
@@ -17,14 +17,10 @@
   <div class="nomenu" id="mBody">
     <div id="mainContent">
 
-<h1>Hardware Support: OpenLCB Naming</h1>
+<h1>Hardware Support: OpenLCB - Naming</h1>
 
 This page discusses how JMRI uses System Names
 to access OpenLCB-attached resources.
-
-<p>
-For more on JMRI's OpenLCB support, see the
-<a href="index.shtml">main OpenLCB support page</a>.
 
 <h2>JMRI's Use of Names</h2>
 JMRI provides an interface to the real layout via 
@@ -59,7 +55,9 @@ memory:
 	<li>CV12345:4 - Four bytes starting at address 12345 in the default configuration address space.
 	<li>CV(252)12345:4 - Four bytes starting at address 12345 in the 252 address space.
 </ul>
-    
+
+<p>Back to the <a href="index.shtml">main OpenLCB Help page</a></p>
+     
 <!--#include virtual="/Footer" -->
   </div><!-- closes #mainContent-->
 </div> <!-- closes #mBody-->

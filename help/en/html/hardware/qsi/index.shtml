@@ -19,10 +19,16 @@
 
 <h1>Hardware Support: QSI Quantum Programmer</h1>
 
-<p>JMRI can now use a <a href="http://www.qsisolutions.com/#!quantum-programmer/c18gu">QSI Solutions Quantum Programmer</a> module
-to read and write CV's in DCC decoders.
-<br />
-JMRI cannot (yet) download sounds to QSI decoders.
+<p>JMRI can use a <a href="http://www.qsisolutions.com/#!quantum-programmer/c18gu">QSI Solutions Quantum Programmer</a> module to read and write CV's in DCC decoders.
+<p>The Quantum Programmer hardware is capable of driving one (low-current) locomotive
+in "Ops Mode".  This lets the user run the engine, test the lights, etc.
+JMRI does not yet have code to do this, but if there's enough interest we can certainly
+add it.
+
+<a name="limitations"></a><h2>Limitations</h2>
+<p>
+We currently don't have enough information to download sounds to the decoder through 
+the Quantum Programmer. If we get the information, we'll certainly write this code.
 
 <p>
 Note that when using JMRI with the Quantum Programmer,
@@ -30,6 +36,8 @@ the Quantum CV Manager (Windows only) program must <em>not</em>
 be running. If it is, you'll get obscure errors and JMRI won't be
 able to access the decoder.
 
+<a name="hardware"></a><h2>Supported Hardware</h2>
+<h3>Decoders</h3>
 <p>
 JMRI and the Quantum Programmer generally work well with QSI
 decoders.  Some people have had trouble using JMRI and the
@@ -41,14 +49,15 @@ such as the
 or
 <a href="http://www.soundtraxx.com/access/ptb100.php">PTB-100<a>.
 
-<h2>Driver Installation</h2>
+<a name="connecting"></a><h2>Connecting</h2>
+<h3>Driver Installation</h3>
 
-<p>To access the Quantum Programmer, you need to install a driver on your
+<p>To access the Quantum Programmer from JMRI, you need to install a driver on your
 computer.  This section describes how to do that for several popular
 computer types.
 
 <a id="driverWin">
-<h3>Windows</h3>
+<h4>Windows</h4>
 
 <p>For JMRI to talk to the Quantum Programmer, a driver has to be installed
 so that the Quantum Programmer appears to be a serial port (a Virtual Com Port, or
@@ -62,7 +71,7 @@ Max Ettinger has provided
 for how to install these.  
 
 <a id="driverMac">
-<h3>Mac OS X</h3>
+<h4>Mac OS X</h4>
 
 <ol>
 	<li>Download the 
@@ -78,8 +87,8 @@ and access the Quantum Programmer.  It will appear as
 "Quantum Programmer" in the Preferences windows.
 
 <a id="driverLinux">
-<h3>Linux</h3>
-
+<h4>Linux</h4>
+<p>
 <em>This is still being worked on.</em>
 
 <ol>
@@ -100,32 +109,24 @@ and access the Quantum Programmer.  It will appear as
 	</pre>
 </ol>
 
-<h2>Configure the Quantum Programmer Support</h2>
+<h3>Configure the Quantum Programmer Support</h3>
 
 <p>You configure JMRI to use a Quantum Programmer similarly to the
-way all other connection types are configured.
+way all other Connection types are configured.
 
 <ol>
 	<li>Start DecoderPro
 	<li>Select the "Preferences..." item from the "Edit" menu on the main window.
-	<li>Select "Quantum Programmer" as the connection type.
-	<li>Select "QSIProgrammer" as the port to use.
+	<li>On the Connections tab, select "Quantum Programmer" as the System Manufacturer.
+	<li>Select "QSIProgrammer" as the System Connection to use.
 	<li>The rest of the options are fixed, and can't be changed.
-	<li>Click the "Save" button. When prompted, allow to quit the program.
+	<li>Click the "Save" button. When prompted, allow to quit &amp; restart the program.
 </ol>
 
 <p>DecoderPro is now configured. Restart it, and you should be ready to use the Quantum Programmer.
 
-<h2>Features and Limitations</h2>
 
-<p>The Quantum Programmer hardware is capable of driving one (low-current) locomotive
-in "Ops Mode".  This lets the user run the engine, test the lights, etc.
-JMRI does not yet have code to do this, but if there's enough interest we can certainly
-add it.
 
-<p>
-We currently don't have enough information to download sounds to the decoder through 
-the Quantum Programmer. If we get the information, we'll certainly write this code.
 
 <!--#include virtual="/Footer" -->
  </div><!-- closes #mainContent-->

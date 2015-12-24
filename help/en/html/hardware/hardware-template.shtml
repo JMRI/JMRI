@@ -41,10 +41,11 @@
 <p>Text, version</p>
 
 <a name="connecting"></a><h2>Connecting</h2>
-<h3>Setting hardware ID's</h3>
-<p>Text</p>
 <h3>Wiring</h3>
 <p>Physical setup, colors, connectors, etc.</p>
+
+<h3>Software settings</h3>
+<p>Text</p>
 
 <a name="tools"></a><h2>JMRI Tools</h2>
 <img src="[System]Menu.png" width="100" height="100" align="right" alt="Menu">
@@ -57,7 +58,7 @@
 <h3>JMRI Help</h3>
 <p>link to page 2, 3</p>
 
-<h3>Other info</h3>
+<h3>Third Party info</h3>
 <p>Link to external web sites, downloads</p>
 
 <!--#include virtual="/Footer" -->
