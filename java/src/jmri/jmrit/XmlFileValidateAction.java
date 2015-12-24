@@ -48,6 +48,7 @@ public class XmlFileValidateAction extends AbstractAction {
 
     JPanel _who;
 
+    @Override
     public void actionPerformed(ActionEvent e) {
         if (fci == null) {
             fci = jmri.jmrit.XmlFile.userFileChooser("XML files", "xml");
