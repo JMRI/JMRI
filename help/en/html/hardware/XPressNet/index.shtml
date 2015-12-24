@@ -53,7 +53,7 @@
 		<li><a href="#connectXtncp">XnTcp adapter</a>
 		<li><a href="#connectXpa">XPA and a modem</a>
 	</ul>
-	<li><a href="#tools">JMRI Tools</a></li>
+	<li><a href="#tools">JMRI XPressNet Tools</a></li>
 	<li><a href="#documentation">Documentation</a></li>
 </ul>
 
@@ -805,15 +805,15 @@ since the IP address can change due to DHCP addressing.
 <a name="tools"></a><h2>JMRI XPressNet Tools</h2>
 	<p>The following tools are available from the XPressNet menu when this connection is active (click on the name to read more on each tool): 
 		<ul>
-		<li><a href=CreateXNetLogFile.shtml>XPressNet Monitor</a>
-		<li><a href=LZV100Configurationtool.shtml>LZV100 Configuration Tool</a>
+		<li><a href="CreateXNetLogFile.shtml">XPressNet Monitor</a>
+		<li><a href="LZV100Configurationtool.shtml">LZV100 Configuration Tool</a>
 		- This is a tool to configure the LZV100 command and power station via
 		software
 		</li>
-		<li><a href=LI101Configurationtool.shtml>LI101 Configuration Tool</a> -
+		<li><a href="LI101Configurationtool.shtml">LI101 Configuration Tool</a> -
 		This tool configures the LI101 computer interface via software
 		</li>
-		<li><a href=XNetSystemInformationtool.shtml>XPressNet System
+		<li><a href="XNetSystemInformationtool.shtml">XPressNet System
 		Information</a> - This tool displays the software version and type of
 		the Command Station and the Software version of the LI100/LI100F/LI101F
 		connected to the computer.

@@ -129,8 +129,9 @@
   <h4><a href="../../../package/jmri/jmrix/sprog/console/SprogConsoleFrame.shtml">SPROG Console</a></h4>
 	<h4>Firmware Update</h4>
 	  <p>SPROG includes an "Firmware Update" tool that allows the firmware (the
-	  internal software that operates the SPROG) to be updated by the user.</p>
-	  <p>The tool is only functional in <a href="../../../package/jmri/jmrix/sprog/update/SprogIIUpdateFrame.shtml">USB SPROG II version 2.2 to 3</a> and the <a href="../../../package/jmri/jmrix/sprog/update/Sprogv4UpdateFrame.shtml">newer version 4 SPROG</a>. <strong>Warning: see <a href="#limitations">Limitations</a> above.</strong></p>
+	  internal software that operates the SPROG) to be updated by the user. 
+	  The tool is only functional in <a href="../../../package/jmri/jmrix/sprog/update/SprogIIUpdateFrame.shtml">USB SPROG II version 2.2 to 3</a> and the <a href="../../../package/jmri/jmrix/sprog/update/Sprogv4UpdateFrame.shtml">newer version 4 SPROG</a>.<br>
+	  <strong>Warning: see <a href="#limitations">Limitations</a> above.</strong></p>
 	
 	<a name="documentation"></a><h2>Documentation</h2>
 	<h3>Third Party info</h3>

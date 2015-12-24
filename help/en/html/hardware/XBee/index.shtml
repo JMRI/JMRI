@@ -132,7 +132,7 @@ When an XBee input status message is received indicating one ( or more ) of the 
 	  <li> Restart the program. You should be up and running.</li>
 </ol>
 
-<a name="tools"></a><h2>JMRI Tools</h2>
+<a name="tools"></a><h2>JMRI XBee Tools</h2>
 <h4><a href="XBeeNodeConfigurationTool.shtml">XBee Node Configuration</a></h4>
 <p>
 The XBee Node Configuration tool can be used to add XBee Nodes to a JMRI configuration. You can access the tool from the <strong>Xbee</strong> menu when an <a href="index.shtml">XBee connection</a> is active.

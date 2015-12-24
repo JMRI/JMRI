@@ -27,9 +27,14 @@
       <!-- Page Body -->
 <h1>JMRI: Tools</h1>
 
-<p>JMRI provides a range of tools that are optimized for specific purposes.
+<p>JMRI provides a range of tools that are optimized for specific purposes:
+<ul><!-- TOC -->
+	<li><a href="#commontools">Common Tools</a></li>
+	<li><a href="#systemSpecificTools">System-specific Tools</a></li>
+	<li><a href="#scripting">Create your own by Scripting JMRI</a></li>
+</ul>
 				
-<h2>Common tools</h2>
+<a name="commontools"></a><h2>Common tools</h2>
 		  <p>The following tools in the Tools menu work with most DCC hardware connections:		  
 	    <dl>
 
@@ -167,7 +172,7 @@
 <li><a href="../hardware/cmri/Signals.shtml">Signals</a></li>
 </ul>
   
-<h3><a href="../hardware/can/index.shtml">MERG CBUS Tools</a></h3>
+<h3><a href="../hardware/can/index.shtml#tools">MERG CBUS Tools</a></h3>
 <p>When JMRI is connected to a layout via CBUS, the <b>MERG</b> menu is shown:</p>
 <ul>   
 <li><a href="../../package/jmri/jmrix/can/cbus/swing/configtool/ConfigToolFrame.shtml">Event Capture Tool</a></li>
@@ -216,23 +221,54 @@ You may also access them by double clicking the <strong>Loco Tools</strong> icon
 <li><a href="../../package/jmri/jmrix/nce/clockmon/ClockMonFrame.shtml">Monitor Clock </a></li>
 </ul>
   
-<h3><a href="../hardware/openlcb/index.shtml">OpenLCB Tools</a></h3>
-<ul>
-<li><a href="../../package/jmri/jmrix/openlcb/swing/networktree/NetworkTreePane.shtml">Configure Nodes </a></li>
+<h3><a href="../hardware/openlcb/index.shtml#tools">OpenLCB Tools</a></h3>
+<p>When JMRI is connected to a layout via this system, an <b>OpenLCB</b> menu is shown:</p>
+<ul>   
+	<li>Traffic Monitor</li>
+	<li><a href="../../package/jmri/jmrix/openlcb/swing/send/OpenLcbCanSendFrame.shtml">Send Frame</a></li>
+	<li><a href="../../package/jmri/jmrix/openlcb/swing/networktree/NetworkTreePane.shtml">Configure Nodes</a></li>
+	<li>Start Hub</li>
+	<li><a href="../../package/jmri/jmrix/openlcb/swing/downloader/LoaderFrame.shtml">Firmware Update</a></li>
 </ul>
 
-<h3><a href="../hardware/rps/index.shtml">RPS Tools</a></h3>
+<h3><a href="../hardware/rps/index.shtml#tools">RPS Tools</a></h3>
 <p>When JMRI is connected to a layout with <a href="../hardware/rps/sensors.shtml">RPS Sensors </a>, an <b>RPS</b> menu is shown:</p>
 <ul>
+<li>RPS Monitor</li>
 <li><a href="../../package/jmri/jmrix/rps/aligntable/AlignTableFrame.shtml">Receiver Control </a></li>
 <li><a href="../../package/jmri/jmrix/rps/swing/polling/PollTableFrame.shtml">Polling Control </a></li>
 <li><a href="../../package/jmri/jmrix/rps/swing/debugger/DebuggerFrame.shtml">Debugger Window </a></li>
 <li><a href="../../package/jmri/jmrix/rps/trackingpanel/RpsTrackingFrame.shtml">Tracking Display </a></li>
 <li><a href="../../package/jmri/jmrix/rps/swing/soundset/SoundSetFrame.shtml">Sound Speed Control </a></li>
+<li><a href="../../package/jmri/jmrix/rps/reversealign/AlignmentPanel.shtml">RPS Alignment</a></li>
+</ul>
+
+<h3><a href="../hardware/sprog/index.shtml#tools">SPROG Tools</a></h3>
+<p>When JMRI is connected to a layout with <a href="../hardware/sprog/index.shtml">SPROG</a>, an <b>SPROG</b> menu is shown:</p>
+<ul>
+	<li><a href="../../package/jmri/jmrix/sprog/sprogslotmon/SprogSlotMonFrame.shtml">SPROG Slots Monitor</a></li>
+	<li><a href="../../package/jmri/jmrix/sprog/packetgen/SprogPacketGenFrame.shtml">SPROG Packet Generator</a></li>
+  <li><a href="../../package/jmri/jmrix/sprog/console/SprogConsoleFrame.shtml">SPROG Console</a></li>
+	<li>Firmware Update</li>
+</ul>
+
+<h3><a href="../hardware/XBee/index.shtml#tools">XBee Tools</a></h3>
+<p>When JMRI is connected to a layout with <a href="../hardware/XBee/index.shtml">XBee</a>, an <b>XBee</b> menu is shown:</p>
+<ul>
+<li><a href="../hardware/XBee/XBeeNodeConfigurationTool.shtml">XBee Node Configuration</a></li>
+</ul>
+
+<h3><a href="../hardware/XPressNet/index.shtml#tools">XPressNet/Lenz Tools</a></h3>
+<p>When JMRI is connected to a layout with <a href="../hardware/lenz/index.shtml">XPressNet</a>, an <b>XPressNet</b> menu is shown:</p>
+<ul>
+<li>XPressNet Monitor</li>
+<li><a href="../hardware/XPressNet/LZV100Configurationtool.shtml">LZV100 Configuration Tool</a></li>
+<li><a href="../hardware/XPressNet/LI101Configurationtool.shtml">LI101 Configuration Tool</a></li>
+<li><a href="../hardware/XPressNet/XNetSystemInformationtool.shtml">XPressNet System Information</a></li>
 </ul>
 <!-- More system tools go here -->
 
-<h2><a href="scripting/index.shtml">Scripting JMRI</a></h2>
+<a name="scripting"></a><h2><a href="scripting/index.shtml">Scripting JMRI</a></h2>
     If JMRI lacks a preprogrammed tool to do what you want,
     you can write a Script that does exactly what's needed, including user interaction. Instead of defining our own language, 
     <a href="scripting/index.shtml">JMRI Scripting</a> uses the

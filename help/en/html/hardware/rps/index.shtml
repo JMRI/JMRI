@@ -192,7 +192,7 @@ JMRI provides a number of tools in the RPS menu for working with an RPS system:
 	<a href="images/SoundControl.gif">
 	<img src="images/SoundControl.gif" alt="Sound Control Pane" width="277" height="100"></a>
 	</dd>
-	<dt><a href="../../../package/jmri/jmrix/rps/swing/soundset/SoundSetFrame.shtml">RPS Alignment</a>
+	<dt><a href="../../../package/jmri/jmrix/rps/reversealign/AlignmentPanel.shtml">RPS Alignment</a>
 	<dd>This tool lets you read and calculate spatial coordinates.<br>
 	<a href="images/RPSAlignment.png">
 	<img src="images/RPSAlignment.png" alt="RPS Alignment Pane" width="452" height="282"></a>
