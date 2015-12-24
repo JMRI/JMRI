@@ -36,6 +36,7 @@ public class TrainManagerXml extends OperationsXml {
     static final String SWITCH_LISTS = "switchLists"; // NOI18N
     static final String CSV_MANIFESTS = "csvManifests"; // NOI18N
     static final String CSV_SWITCH_LISTS = "csvSwitchLists"; // NOI18N
+    static final String JSON_MANIFESTS = "jsonManifests"; // NOI18N
 
     public TrainManagerXml() {
     }
@@ -197,7 +198,7 @@ public class TrainManagerXml extends OperationsXml {
     }
 
     private String getDefaultManifestFilename(String name, String ext) {
-        return OperationsManager.getInstance().getPath(MANIFESTS) + File.separator + "train-" + name + "." + ext; // NOI18N
+        return OperationsManager.getInstance().getPath(JSON_MANIFESTS) + File.separator + "train-" + name + "." + ext; // NOI18N
     }
 
     /**
