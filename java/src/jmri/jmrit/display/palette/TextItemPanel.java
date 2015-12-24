@@ -136,7 +136,6 @@ public class TextItemPanel extends ItemPanel /*implements ActionListener */ {
             String link = _linkName.getText().trim();
             PositionableLabel l;
             if (link.length() == 0) {
-                //return this.deepClone();
                 l = new PositionableLabel(getText(), _editor);
             } else {
                 l = new LinkingLabel(getText(), _editor, link);
@@ -144,13 +143,12 @@ public class TextItemPanel extends ItemPanel /*implements ActionListener */ {
             _decorator.getText(l);
             PositionablePopupUtil util = _decorator.getPositionablePopupUtil();
             l.setPopupUtility(util);
-//            l.setPopupUtility(_decorator.getPositionablePopupUtil().clone(l, l.getTextComponent()));
+            l.setFont(util.getFont().deriveFont(util.getFontStyle()));
             if (util.hasBackground()) {     //unrotated
                 l.setOpaque(true);
             }
             l.setLevel(this.getDisplayLevel());
             return l;
-//           return this.deepClone();
         }
     }
 

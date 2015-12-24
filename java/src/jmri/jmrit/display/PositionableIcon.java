@@ -28,19 +28,16 @@ public class PositionableIcon extends PositionableLabel {
     public PositionableIcon(Editor editor) {
         // super ctor call to make sure this is an icon label
         super(new NamedIcon("resources/icons/misc/X-red.gif", "resources/icons/misc/X-red.gif"), editor);
-        setPopupUtility(null);
     }
 
     public PositionableIcon(NamedIcon s, Editor editor) {
         // super ctor call to make sure this is an icon label
         super(s, editor);
-        setPopupUtility(null);
     }
 
     public PositionableIcon(String s, Editor editor) {
         // super ctor call to make sure this is an icon label
         super(s, editor);
-        setPopupUtility(null);
     }
 
     public Positionable finishClone(Positionable p) {
@@ -123,7 +120,7 @@ public class PositionableIcon extends PositionableLabel {
     }
 
     public int getDegrees() {
-        if (_text) {
+        if (isText()) {
             return super.getDegrees();
         }
         if (_iconMap != null) {
@@ -138,16 +135,20 @@ public class PositionableIcon extends PositionableLabel {
     public void rotate(int deg) {
         _rotate = deg % 360;
         setDegrees(deg);
-        if (_text && !_icon) {
+        if (isText() /*&& !isIcon()*/) {
             super.rotate(deg);
         }
-        if (_iconMap == null) {
-            return;
-        }
-        Iterator<Entry<String, NamedIcon>> it = _iconMap.entrySet().iterator();
-        while (it.hasNext()) {
-            Entry<String, NamedIcon> entry = it.next();
-            entry.getValue().rotate(deg, this);
+         if (_iconMap != null) {
+            Iterator<Entry<String, NamedIcon>> it = _iconMap.entrySet().iterator();
+            while (it.hasNext()) {
+                Entry<String, NamedIcon> entry = it.next();
+                if (deg==0) {
+                    String name = entry.getValue().getURL();
+                    entry.setValue(new NamedIcon(name, name));
+                } else {
+                    entry.getValue().rotate(deg, this);                    
+                }
+            }
         }
         updateSize();
     }
