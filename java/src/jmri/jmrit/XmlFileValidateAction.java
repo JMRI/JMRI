@@ -8,6 +8,7 @@ import java.io.FileInputStream;
 import java.io.InputStream;
 import java.io.StringReader;
 import java.io.StringWriter;
+import java.util.ResourceBundle;
 import javax.swing.AbstractAction;
 import javax.swing.JFileChooser;
 import javax.swing.JOptionPane;
@@ -37,6 +38,10 @@ public class XmlFileValidateAction extends AbstractAction {
     public XmlFileValidateAction(String s, JPanel who) {
         super(s);
         _who = who;
+    }
+
+    public XmlFileValidateAction() {
+        super(ResourceBundle.getBundle("apps.ActionListBundle").getString("jmri.jmrit.XmlFileValidateAction"));
     }
 
     JFileChooser fci;
