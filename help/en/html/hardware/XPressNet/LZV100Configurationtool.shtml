@@ -18,7 +18,7 @@
   <div class="nomenu" id="mBody">
     <div id="mainContent">
 
-<h1>The LZV100 Configuration Tool</h1>
+<h1>XPressNet LZV100 Configuration Tool</h1>
 <img src="images/LZV100ConfigurationUtility.jpg" alt="LZV100 Configuration 
 Tool Image">
 <p>
@@ -26,14 +26,15 @@ The LZV100 Configuration tool is used to configure the LZV100 through an
 LI100 or LI101 Computer interface.
 <p>
 Starting at the top, we have configuration information for the Power 
-Station portion of the LZV100.
-<p>
+Station portion of the LZV100.<br>
 The drop down box selects the track voltage.
 <p>
-The Second drop down box indicates if the "E-Line" should be active or 
-inactive.  When active, Power stations use this interface to shut the 
+The second drop down box indicates if the "E-Line" should be Active or 
+Inactive.  When active, Power Stations use this interface to shut the 
 layout down when there is a short circuit, or as an emergency stop 
 mechanism.
+
+	<h4>Buttons</h4>
 <p>
 Starting on the left side of the screen in the first row of buttons, the 
 button labeled "Write to LZV100", will write the settings above this line 
@@ -44,10 +45,10 @@ to factory defaults.  This does not send a reset instruction to the LZV100
 at this point in time.
 <p>
 The last button, labeled "Close" will close the screen, without sending 
-any information to the LI101F.
+any (more) information to the LI101F.
 <p>
-The second row of buttons is options for the command station.  These 
-options will work with the LV100 as well.  
+The second row of buttons is options for the Command Station.<br>
+<strong>These options will work with the LV100 as well.</strong>  
 <p>
 The button labeled "Reset Command Station" sends the locomotive address 
 0 function instructions indicated in the LZV100 Manual for a command  
@@ -62,8 +63,10 @@ mode, the LZV100 will turn on all Locomotive functions that were on the
 last time the LZV100 was powered on.  In Automatic Mode, the Locomotives 
 will also resume the previous speed and direction settings.
 
+<p>Back to the <a href="index.shtml">XPressNet Help</a> page
+
 <hr>
-Paul Bender<BR>
+Paul Bender<br>
 paul.bender@acm.org
 
 <!--#include virtual="/Footer" -->

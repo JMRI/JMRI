@@ -84,6 +84,9 @@ the JMRI Preferences pane. On the pane that opens, enter the Node number
 the Maple Support was created from the JMRI C/MRI support, and as of 
 JMRI version 2.3.7 the migration is not complete.
 
+<a name="tools"></a><h2>JMRI Maple Systems Tools</h2>
+N/A
+
 <hr class="hide">
 <!--#include virtual="/Footer" -->
   </div><!-- closes #mainContent-->

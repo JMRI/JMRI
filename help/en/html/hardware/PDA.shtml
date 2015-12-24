@@ -27,6 +27,8 @@
   
 <p>
 This page describes an early attempt to connect an Axim PDA to JMRI, which has some flaws and is deprecated.
+
+<a name="limitations"></a><h2>Limitations</h2>
 <p>For a supported approach, involving running a specific program
 on your Smartphone, see the 
 <a href="../../package/jmri/jmrit/withrottle/UserInterface.shtml">WiThrottle</a> page.

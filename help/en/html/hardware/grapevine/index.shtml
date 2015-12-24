@@ -57,7 +57,7 @@ then a node number and a pin number.<br>
 Naming and input/output connectors are described on a 
 <a href="Names.shtml">separate page</a>.
 
-<h2>Tools</h2>
+<a name="tools"></a><h2>JMRI Grapevine Tools</h2>
 <p>The <strong>Grapevine</strong> menu gives access to:
 <ul>
 <li>The

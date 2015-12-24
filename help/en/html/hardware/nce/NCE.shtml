@@ -430,33 +430,33 @@ list of potential issues that might help you resolve your problem:</p>
 <ul>   
 <li>Command Monitor<br>
 <a href="images/NCEMonitor.png">
-<img src="images/NCEMonitor.png" alt="Diagnostic Pane" width="398" height="94"></a></li>
+<img src="images/NCEMonitor.png" alt="Command Monitor Pane" width="398" height="94"></a></li>
 <li><a href="../../../package/jmri/jmrix/nce/packetgen/NcePacketGenFrame.shtml">Send Command </a><br>
 <a href="images/NCESendCommand.png">
-<img src="images/NCESendCommand.png" alt="Diagnostic Pane" width="126" height="71"></a></li>
+<img src="images/NCESendCommand.png" alt="Send NCE Command Pane" width="126" height="71"></a></li>
 <li>Send Macro<br>
 <a href="images/NCEGenerateMacro.png">
-<img src="images/NCEGenerateMacro.png" alt="Diagnostic Pane" width="124" height="57"></a></li>
+<img src="images/NCEGenerateMacro.png" alt="Send NCE Macro Pane" width="124" height="57"></a></li>
 <li><a href="../../../package/jmri/jmrix/nce/macro/NceMacroEditFrame.shtml">Edit Macro </a><br>
 <a href="images/NCEEditMacro.png">
-<img src="images/NCEEditMacro.png" alt="Diagnostic Pane" width="228" height="224"></a></li>
+<img src="images/NCEEditMacro.png" alt="Edit NCE Macro Pane" width="232" height="224"></a></li>
 <li><a href="../../../package/jmri/jmrix/nce/consist/NceConsistEditFrame.shtml">Edit Consist </a><br>
-<img src="images/NCEConsistMsg1.png" alt="Diagnostic Pane" width="281" height="84">&nbsp;
-<img src="images/NCEConsistMsg2.png" alt="Diagnostic Pane" width="327" height="128">&nbsp;
-<img src="images/NCEConsistThrottleMsg.png" alt="Diagnostic Pane" width="192" height="84">
+<img src="images/NCEConsistMsg1.png" alt="Save Consist message" width="281" height="84">&nbsp;
+<img src="images/NCEConsistMsg2.png" alt="Loading NCE Consists message" width="327" height="128">&nbsp;
+<img src="images/NCEConsistThrottleMsg.png" alt="Consist Throttle message" width="192" height="84">
 </li>
 <li><a href="../../../package/jmri/jmrix/nce/analyzer/NcePacketMonitorFrame.shtml">DCC Packet Analyzer </a><br>
 <a href="images/NCEDCCPackAnalyzer.png">
-<img src="images/NCEDCCPackAnalyzer.png" alt="Diagnostic Pane" width="642" height="307"></a></li>
+<img src="images/NCEDCCPackAnalyzer.png" alt="NCE Packet Analyzer Pane" width="642" height="307"></a></li>
 <li><a href="../../../package/jmri/jmrix/nce/clockmon/ClockMonFrame.shtml">Monitor Clock </a><br>
 <a href="images/NCEMonitorClock.png">
-<img src="images/NCEMonitorClock.png" alt="Diagnostic Pane" width="366" height="271"></a></li>
+<img src="images/NCEMonitorClock.png" alt="Clock Monitor Pane" width="366" height="271"></a></li>
 <li>Show Cabs<br>
 <a href="images/NCEShowNCECabs.png">
-<img src="images/NCEShowNCECabs.png" alt="Diagnostic Pane" width="350" height="85"></a></li>
+<img src="images/NCEShowNCECabs.png" alt="Show NCE Cabs Pane" width="350" height="85"></a></li>
 <li>Program Booster<br>
 <a href="images/NCEBooster.png">
-<img src="images/NCEBooster.png" alt="Diagnostic Pane" width="212" height="65"></a></li>
+<img src="images/NCEBooster.png" alt="Booster Programming Pane" width="212" height="65"></a></li>
 <li>Configure USB Interface<br>
 <a href="images/NCEConfigureUSB.png">
 <img src="images/NCEConfigureUSB.png" alt="Diagnostic Pane" width="145" height="62"></a></li>

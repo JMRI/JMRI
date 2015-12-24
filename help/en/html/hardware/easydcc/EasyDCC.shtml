@@ -42,7 +42,7 @@
 <h3>Wiring</h3>
 	<ol>
 	  <li> To connect your computer to an EasyDCC system, you need to
-	  connect the command station to the computer's serial port using a
+	  connect the Command Station to the computer's serial port using a
 	  special cable.  Unfortunately, this is not an item that computer
 	  stores generally stock, due to the special RJ11 connector needed at the 
 	  command station end of the cable. You'll probably have to make this
@@ -61,31 +61,41 @@
   </ol>
 	  
 <h3>Settings</h3>
-  <ol>
+  <ul>
 	  <li>Next, go to the Preferences panel of a JMRI-based program.
 	  This opens automatically the first time a program is run, or you
 	  can select it from the "Edit" menu.</li>
 
-	  <li>In the <strong>Connections</strong> tab, select "EasyDCC" from the Manufacturer selection box. You can then
-	  select the proper serial port in the Connection selection box.</li>
-
-	  <li>Under Advanced Options, the baud rate selection box will be fixed at 9,600 baud.</li>
-
-	  <li>On the <strong>Defaults</strong> tab, you can pick the default
-	  programmer format. You can override this each time you open the
-	  programmer, so this is here just for convenience.</li>
-
-	  <li>Click "Save". You'll be asked if it's OK for the program to
-	  quit, click "Yes".</li>
-
-	  <li>Restart the program. You should be up and running.</li>
-
-	</ol>
+	  <li>In the <strong>Connections</strong> tab, select "Easy DCC" from the System Manufacturer selection box. 
+	</ul>
+	  
+	<h4>Serial</h4>
+	  <ul>
+	  <li>Select "EasyDCC via Serial" as the System Connection. You can then
+	  select the proper serial port from the drop-down list under Settings.</li>
+	  <li>Under Additional Connection Settings, the baud rate box will be fixed at 9,600 baud.</li>
+		</ul>
+	<h4>Network</h4>
+		<ul>
+		<li>Select "EasyDCC via Network" as the System Connection.</li>
+		<li>Under Settings, enter the IP Address (optional for zeroConfig/mDNS) and Port number.</li>
+		</ul>
+		
+	  <ul>
+	  <li>Click "Save". You'll be asked if it's OK for the program to quit; click "Yes".</li>
+	  <li>Restart JMRI. You should now be up and running.</li>
+		</ul>
 
 <h3>Debugging</h3>
-	<p>Please check the <a href="http://www.cvpusa.com/easydcc_system.php">CVP EasyDCC Manuals</a>.</p>
+	<p>Please refer to the <a href="http://www.cvpusa.com/easydcc_system.php">CVP EasyDCC Manuals</a>.</p>
 
 <a name="tools"></a><h2>JMRI EasyDCC Tools</h2>
+<img src="images/EasyDCCMenu.png" width="187" height="72" align="right" alt="Menu">
+<h4><a href="../../../package/jmri/jmrix/nce/packetgen/NcePacketGenFrame.shtml">Command Monitor</a></h4>
+<img src="images/EasyDCCMonitor.png" width="364" height="99" alt="Monitor pane">
+
+<h4><a href="../../../package/jmri/jmrix/nce/packetgen/NcePacketGenFrame.shtml">Send Command</a></h4>
+<img src="images/EasyDCCSendCmd.png" width="230" height="95" alt="Send Command pane">
 
 <a name="documentation"></a><h2>Documentation</h2>
 <h3>JMRI Help</h3>

@@ -1,7 +1,7 @@
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
 <html lang="en">
 <head>
-<title>JMRI Hardware Support - Raspberry Pi GPIO Connectivity</title>
+<title>JMRI Hardware Setup Support - Raspberry Pi GPIO</title>
 
 <meta content="Paul Bender" name="Author">
 <meta name="keywords" content="Raspberry Pi GPIO Configuration Information for JMRI">
@@ -21,7 +21,7 @@
   <div class="nomenu" id="mBody">
     <div id="mainContent">
 
-<h1>Hardware Support: Raspberry Pi</h1>
+<h1>Hardware Setup Support: Raspberry Pi via GPIO</h1>
 
 <p>The <a href="http://www.raspberrypi.org">Raspberry Pi</a> is a family of inexpensive credit card size single board computers that have many applications in embedded electronics.  This page describe's the use of the Raspberry Pi's GPIO pins under JMRI.  Since the Raspberry Pi runs Linux natively, other connections are also possible using either a <a href="../USBtoSerial.shtml">USB connection</a> or via the Raspberry Pi's built in serial ports.</p>
 
@@ -32,7 +32,7 @@ JMRI support has been tested with the Models B, B+ and 2B.</p>
 <a name="connecting"></a><h2>Connecting</h2>
 <h3>Wiring</h3>
 <p>Underlying support for the Raspberry Pi's GPIO connections is provided using the <a href="http://pi4j.com/">Pi4J library for Java</a>. <b><i>This library requires that applications using GPIO pins be run as root (or using <code>sudo</code></i></b>).</p>
-<p>JMRI currently supports input (Sensors) and output (Turnouts) via the Raspberry PI's GPIO pins.</p> 
+<p>JMRI currently supports inputs (Sensors) and outputs (Turnouts) via the Raspberry Pi's GPIO pins.</p> 
 
 <h4>Input/Output pin addressing</h4>
 <p>

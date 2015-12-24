@@ -20,12 +20,11 @@
 <h1>Hardware Support: Powerline - System Names</h1>
 
 Individual inputs (Sensors) and outputs (Turnouts and Lights)
-in JMRI are accessed via names.  
-For information on the general scheme, please see
-the 
-<a href="../../doc/Technical/Names.shtml">naming page</a>
+in JMRI are accessed via System Names.<br>
+For information on the general scheme, please see  
+<a href="../../doc/Technical/Names.shtml">JMRI Naming</a>
 in the
-<a href="../../doc/Technical/index.shtml">technical documentation</a>.
+<a href="../../doc/Technical/index.shtml">Technical documentation</a>.
 
 <a name="hardware"></a><h2>Supported Hardware</h2>
 
@@ -39,7 +38,7 @@ Outputs (Lights or Turnouts) in each House Code
 are numbered with their Device Code, e.g. 
 <ul>
 	<li>PTA1 is a JMRI Turnout that talks to device 1 on housecode A
-	<li>PTB3 is a Turnout for device 3 on housecode B
+	<li>PTB3 is a JMRA Turnout for device 3 on housecode B
 	<li>PLP16 is a JMRI Light for device 16 on housecode P
 </ul>
 
@@ -56,9 +55,9 @@ However, some physical X10 devices may not support dimming.
 Inputs (Sensors) are identified by the house code and device number
 that was reported by some other X10 device like a motion sensor or
 light control pad.<br />
-NOTE: due to a large number of false codes due to other X10 users,
-sensors are not automatically generated.
-They must be manually entered in the Sensor Table by the user.
+NOTE: Due to a large number of false codes experienced by X10 users,
+Sensors are not automatically generated.
+They must be manually entered in the Sensors Table by the user.
 
 <p>
 JMRI configures the adapter to use House Code "A" now.
@@ -73,7 +72,7 @@ because it caused way too much confusion)
 
 <h3>Insteon</h3>
 
-Insteon adapters are labelled with a three-part number that looks
+Insteon Adapters are labelled with a three-part number that looks
 like "01.2A.B4". These are just random
 strings as far as the user and the program is concerned, and
 we don't make any effort to subdivide them.  You should
@@ -82,7 +81,7 @@ want to address. Do not delete or add leading zeros, etc.
 
 <p>
 For example, if the device is labelled "01.2A.B4",
-the corresponding Light system name is "PL01.2A.B4".
+the corresponding JMRI Light System Name is "PL01.2A.B4".
 
 <a name="documentation"></a><h2>Documentation</h2>
 <h3>Third Party info</h3>
@@ -94,6 +93,7 @@ the corresponding Light system name is "PL01.2A.B4".
 <p>More information on Insteon hardware can be found on the
 <a href="http://www.insteon.com">insteon.com web site</a>.
 
+<h3>JMRI Help</h3>
 <p>Back to the <a href="index.shtml">Powerline Help page</a>
 
 <!--#include virtual="/Footer" -->

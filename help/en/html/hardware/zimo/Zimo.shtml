@@ -3,8 +3,8 @@
 <head>
  <title>JMRI Hardware Support - ZIMO MX-1</title>
 
-    <meta content="Bob Jacobsen" name="Author">
-    <meta name="keywords" content="ZIMO MX-1 java model railroad JMRI install windows">
+<meta content="Bob Jacobsen" name="Author">
+<meta name="keywords" content="ZIMO MX-1 java model railroad JMRI install windows">
 
 <!-- Style -->
 <meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
@@ -23,15 +23,16 @@
 
   <h1>Hardware Support: ZIMO MX-1</h1>
 
-	<h3>Supported Hardware</h3>
-
-	<ul>
-	<li>MX-1 - ASCII Protocol
+	<a name="hardware"></a><h2>Supported Hardware</h2>
+	<h3>Command Station</h3>
+	<h3>Computer Interfaces</h3>
+		<ul>
+		<li>MX-1 - ASCII Protocol
     <li>MXULF - Binary Protocol <b>Up to Software 0.61.05</b>
     <li>MX-10 - Binary Protocol (Tentative)
-	</ul>
+		</ul>
 
-	<h3>Limitations</h3>
+<a name="limitations"></a><h2>Limitations</h2>
 
 	<p>ASCII protocol currently only supports programming</p>
     <p>Binary protocol supports the following
@@ -43,6 +44,8 @@
     <b>Note</b> Testing of the binary protocol has only been possible using the MXULF, with the turnout control
     having not been fully tested.  Issues may occur when used with the MX-10 but we do not currently have any hardware
     to test against.
+
+<a name="connecting"></a><h2>Connecting</h2>
 
 	<h3>MX-1 Setup</h3>
 	  <ol>
@@ -98,8 +101,12 @@
 	    <li> Restart the program. You should be up and running.</li>
 	  </ol>
   
-	<h3>Debugging</h3>
-	<p><a href="http://www.zimo.at/">ZIMO main web site</a></p>
+  <a name="tools"></a><h2>JMRI Zimo Tools</h2>
+  N/A
+  
+  <a name="documentation"></a><h2>Documentation</h2>
+  <h3>Third Party info</h3>
+  <p><a href="http://www.zimo.at/">ZIMO main web site</a></p>
 	<p><a href="http://www.mrsonline.net/html/zimo.html">ZIMO Agency of North America</a></p>
 
 <!--#include virtual="/Footer" -->

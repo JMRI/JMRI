@@ -19,6 +19,7 @@
     <div id="mainContent">
 
 <h1>Hardware Support: XPressNet System Information Tool</h1>
+
 <img src="images/XPressNetSystemInfo.jpg" alt="XPressNet System 
 Information Tool Image">
 <p>
@@ -26,19 +27,23 @@ The XPressNet System Information tool is used to determine what hardware
 is connected to the system.
 <p>
 The top two lines indicate the Command Station type and software 
-version that is connected to through your computer.  
+version that is connected to your computer.  
 This information is read as part of the auto configuration process when 
 JMRI first starts, but can be re-read using the "Get System Info" button.
 <p>
-After the line reading Interface, the hardware and software version of the 
-Computer interface is displayed.  These are obtained by the "Get System 
-Info" 
+Below the Interface field, the hardware and software version of the 
+computer interface are displayed.<br>
+These values are only shown after clicking on "Get System Info" 
+
+<h4>Buttons</h4>
 <p>
-The image on this page shows the results obtained by pressing the "Get 
+The image shows the results obtained by pressing the "Get 
 System Info" button with a Software version 2 LI101F connected to an atlas 
 Commander with software 3.2.
 <p>
-The button labeled "Close" will close the screen.
+Clicking on  "Close" will close the pane.
+
+<p>Back to the <a href="index.shtml">XPressNet Help</a> page
 
 <hr>
 Paul Bender<br>

@@ -44,6 +44,9 @@ When the Turnout is set to "CLOSED", the remote device is sent a command to go "
 on the X10 hardware, this may be either an immediate off, or be slowly dimmed. 
 </p>
 
+<a name="tools"></a><h2>JMRI Tools</h2>
+N/A
+
 <a name="documentation"></a><h2>Documentation</h2>
 <h3>JMRI Help</h3>
 <p>For information on how to address your equipment via JMRI see the 

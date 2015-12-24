@@ -117,10 +117,10 @@ the type letter is "T" instead of "S", e.g. "<code>MT1.2.3.4.5.6.7.8;1.2.3.4.5.6
 <a name="documentation"></a><h2>Documentation</h2>
 <h3>JMRI Help</h3>
 <ul>
+<li>How to <a href="Connections.shtml">Connect JMRI to an OpenLCB installation</a></li>
 <li>The Help page on <a href="Details.shtml">OpenLCB Technical Details</a></li>
 <li>The <a href="../can/index.shtml">main Help page</a> for JMRI CAN support,
 including links to various general tools</li>
-<li>How to <a href="Connections.shtml">Connect JMRI to an OpenLCB installation</a></li>
 </ul>
 
 <!--#include virtual="/Footer" -->

@@ -65,6 +65,7 @@ If you use an RS232 cable, note that it should be a "straight-through"
 or "modem" cable, <I>not</I> a "crossover" or "null-modem" cable.
 
 <h3>Settings</h3>
+<img src="images/NAC_RPSConnection.png" width="431" height="200" align="right" alt="RPS Connection pane">
 <p>To configure RPS in JMRI:
 <ul>
   <li>Start your JMRI-based program: DecoderPro, PanelPro, etc.
@@ -78,13 +79,15 @@ or "modem" cable, <I>not</I> a "crossover" or "null-modem" cable.
   <li>Click on the "+" sign to the right of your current Connection to open a new 
   Connections pane.
   
-  <li>Select "RPS Base Station" from the list as the "System Manufacturer".
+  <li>Select "NAC Services" from the list as the "System Manufacturer".
+ 
+  <li>Select "RPS Base Station" as the "System Connection".
   
-  <li>In the associated port selection box, pick the name of the 
+  <li>In the associated port selection box under Settings, pick the name of the 
   serial port that you have connected to the RPS system.
 
   <li>The baud rate will show a fixed value of
-  115200 baud.
+  115,200 baud.
 
   <li>As a temporary measure during development of the system,
   there's a "Protocol" option to select.<br>
@@ -157,7 +160,7 @@ JMRI provides a number of tools in the RPS menu for working with an RPS system:
 	<dt>RPS Monitor</dt>
 	<dd>The pane displays all traffic seen on the connection<br>
 	<a href="images/RPSMonitor.png">
-	<img src="images/RPSMonitor.png" alt="Receiver Control Pane" width="352" height="84"></a>
+	<img src="images/RPSMonitor.png" alt="RPS Monitor Pane" width="352" height="84"></a>
 	</dd>
 	<dt><a href="../../../package/jmri/jmrix/rps/aligntable/AlignTableFrame.shtml">Receiver Control</a>
 	<dd>This is where you enter position information about your receiver
@@ -169,30 +172,30 @@ JMRI provides a number of tools in the RPS menu for working with an RPS system:
 	<dd>This is where you tell JMRI which locomotives have RPS 
 	transmitters, and how often you want JMRI to poll them.<br>
 	<a href="images/PollControl.gif">
-	<img src="images/PollControl.gif" alt="Receiver Control Pane" width="300" height="80"></a> Older Polling Control pane<br>
+	<img src="images/PollControl.gif" alt="Polling Control Pane" width="300" height="80"></a> Older Polling Control pane<br>
 	<a href="images/RPSPollingControl.png">
-	<img src="images/RPSPollingControl.png" alt="Receiver Control Pane" width="292" height="101"></a> Version 4.1.6 Polling Control pane with new options
+	<img src="images/RPSPollingControl.png" alt="Polling Control Pane v4.1.6" width="292" height="101"></a> Version 4.1.6 Polling Control pane with new options
 	</dd>
 	<dt><a href="../../../package/jmri/jmrix/rps/swing/debugger/DebuggerFrame.shtml">Debugger Window</a>
 	<dd>This tool shows you the readings and measurements as the system makes them.<br>
 	<a href="images/RPSDebugger.png">
-	<img src="images/RPSDebugger.png" alt="Receiver Control Pane" width="165" height="207"></a>
+	<img src="images/RPSDebugger.png" alt="RPS Debugger Pane" width="165" height="207"></a>
 	</dd>
 	<dt><a href="../../../package/jmri/jmrix/rps/trackingpanel/RpsTrackingFrame.shtml">Tracking Display</a>
 	<dd>This tool shows the points as they are measured on a graphical display.<br>
 	<a href="images/RpsTracker.jpg">
-	<img src="images/RpsTracker.jpg" alt="Receiver Control Pane" width="209" height="248"></a>
+	<img src="images/RpsTracker.jpg" alt="RPS Tracker Pane" width="209" height="248"></a>
 	</dd>
 	<dt><a href="../../../package/jmri/jmrix/rps/swing/soundset/SoundSetFrame.shtml">Sound Speed Monitor</a>
 	<dd>This tool lets you see and set the speed of sound used by the RPS system, and can set it automatically
 	in certain cases.<br>
 	<a href="images/SoundControl.gif">
-	<img src="images/SoundControl.gif" alt="Receiver Control Pane" width="277" height="100"></a>
+	<img src="images/SoundControl.gif" alt="Sound Control Pane" width="277" height="100"></a>
 	</dd>
 	<dt><a href="../../../package/jmri/jmrix/rps/swing/soundset/SoundSetFrame.shtml">RPS Alignment</a>
 	<dd>This tool lets you read and calculate spatial coordinates.<br>
 	<a href="images/RPSAlignment.png">
-	<img src="images/RPSAlignment.png" alt="Receiver Control Pane" width="452" height="282"></a>
+	<img src="images/RPSAlignment.png" alt="RPS Alignment Pane" width="452" height="282"></a>
 	</dd>
 </dl>
 

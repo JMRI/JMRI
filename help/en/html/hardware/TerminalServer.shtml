@@ -1,7 +1,7 @@
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
 <html lang="en">
 <head>
- <title>JMRI Hardware Support - Terminal Server Connection</title>
+ <title>JMRI Hardware Setup Support - Terminal Server Connection</title>
 
     <meta content="David D Zuhn" name="Author">
     <meta content="John Plocher" name="Author">
@@ -22,7 +22,7 @@
   <div class="nomenu" id="mBody">
     <div id="mainContent">
 
-  <h1>Hardware Support: Terminal Server Connection</h1>
+  <h1>Hardware Setup Support: Terminal Server Connection</h1>
 <p>
 A <strong>Terminal Server</strong> is a box that connects one or more serial
 ports to a network so they can be accessed from a remote computer.
@@ -46,9 +46,10 @@ the appropriate connections.
 	<li>
 	To configure JMRI:
 	<ul>
-		<li>Select "Preferences" from the "Edit" menu
-		<li>Select the "EasyDCC over terminal server" Protocol
-		<li>Enter the IP address and connection port number
+		<li>Select the "Connections" tab in the "Preferences" from the "Edit" menu
+		<li>Select "Easy DCC" as the System Manufacturer
+		<li>Select "EasyDCC over terminal server" as the System Connection
+		<li>Enter the IP address and TCP/UDP Port number
 		corresponding to the serial port on the terminal server
 		<li>Click "Save" &amp; quit the program
 	</ul>

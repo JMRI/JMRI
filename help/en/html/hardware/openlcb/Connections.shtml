@@ -24,7 +24,7 @@ This page discusses how JMRI can connect to OpenLCB.
 
 <a name="connecting"></a><h2>Connecting</h2>
 <a href="images/OpenLCBConnection.png">
-<img src="images/OpenLCBConnection.png" alt="OpenLCB Connections Preference Pane" width="166" height="138"></a>
+<img src="images/OpenLCBConnection.png" alt="OpenLCB Connections Preference Pane" width="305" height="147"></a>
 
 <h3>Via a TCH Tech CAN=USB Connector</h3>
 
@@ -42,6 +42,8 @@ to debug things, on many computers using the "nc" command:
 nc -l 12022
 </pre>
 
+<a name="documentation"></a><h2>Documentation</h2>
+<h3>JMRI Help</h3>
 <p>Back to the <a href="index.shtml">main OpenLCB Help page</a></p>
  
 <!--#include virtual="/Footer" -->

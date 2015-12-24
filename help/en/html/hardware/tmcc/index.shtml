@@ -24,6 +24,10 @@
 <h3>Command Station</h3>
 <p>Lionel TMCC or Lionel Legacy thru the serial port on the Command Base.
     	  
+<a name="limitations"></a><h2>Limitations</h2>
+<p>As of JMRI v 2.11.8, Lionel TMCC Train commands are not yet available.</p>
+<p>There is no Lionel TMCC model under the DecoderPro Roster Entry tabs, but you can set up TMCC decoder equipped Locomotives using the NMRA standard decoder near the top of the list.</p>
+
 <a name="connecting"></a><h2>Connecting</h2>
 <h3>Wiring</h3>
 	<p>First, connect your computer's serial port to the TMCC
@@ -46,13 +50,12 @@
   <li>Restart the program. You should be up and running.</li>
 </ul>
 
-<h2>Features and Limitations</h2>
+<h3>Features</h3>
 <p>(Not yet complete)</p>
-<p>With JMRI 2.11.8, Lionel TMCC operation for engines and accessory decoders is available. The train commands are not yet available.</p>
+<p>With JMRI 2.11.8, Lionel TMCC operation for engines and accessory decoders is available. Train commands are not yet available.</p>
 <p>You will still need to turn your CAB on to use the Set features like setting an Locomotive ID. Once set up, however, you can perform most functions from the WiThrottles.</p>
-<p>There is no Lionel TMCC under the Roster Entry tabs, but you can set up the TMCC Locomotives using the NMRA standard decoder near the top of the list.</p>
 <p>Listed are the common actions for Railsounds 4, ERR conversion boards, and TAS boards.</p>
-<p>When using a JMRI throttle to run a Locomotive, the function buttons are allocated as follows:</p>
+<p>When using a JMRI Throttle to run a Locomotive, the function buttons are allocated as follows:</p>
 <dl>
 	<dt>F0<dd>AUX 2 (Headlights On / Off )
 	<dt>F1<dd>Bell
@@ -77,6 +80,10 @@
 	<dt>F20<dd>Boost
 	<dt>F21<dd>Brake
 </dl>
+
+<a name="documentation"></a><h2>Documentation</h2>
+<h3>Third Party info</h3>
+<p>The <a href="http://legacy.lionel.com/GettingStarted/LionelTechnology/legacy/legacyHome.cfm">Lionel Legacy</a> website.</p>
 
 <!--#include virtual="/Footer" -->
  </div><!-- closes #mainContent-->
