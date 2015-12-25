@@ -27,14 +27,15 @@ import junit.framework.TestSuite;
 public class PositionableLabelTest extends jmri.util.SwingTestCase {
 
     PositionableLabel to = null;
-    jmri.jmrit.display.panelEditor.PanelEditor panel
-            = new jmri.jmrit.display.panelEditor.PanelEditor("PositionableLabel Test Panel");
+    jmri.jmrit.display.panelEditor.PanelEditor panel;
 
     public void testSmallPanel() {
         if (!System.getProperty("jmri.headlesstest","false").equals("false")) {
             return;
         }
-                
+        
+        panel = new jmri.jmrit.display.panelEditor.PanelEditor("PositionableLabel Test Panel");
+        
         JFrame jf = new JFrame();
         JPanel p = new JPanel();
         jf.getContentPane().add(p);
