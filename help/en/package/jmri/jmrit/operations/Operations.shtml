@@ -1111,6 +1111,12 @@
 
    <A NAME="Options"></A>
    <H3>Options</H3>
+   <h4>Save Train Manifests</h4>
+
+   When the option "Save Train Manifests" is selected the program will save the current train
+   manifest before creating a new one. The program will store the old manifests in a directory
+   called "manifestBackups" located in the "operations" directory.
+
    <H4>Enable Value Fields and Identification Tag Fields</H4>
 
    <P>There are two other options, "Enable Value Fields" and "Identification Fields". You can
