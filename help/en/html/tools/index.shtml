@@ -163,28 +163,41 @@
 <h2><a name="systemSpecificTools">System-specific Tools</a></h2>
 
 <!-- It would be better to let each system-specific toolset land on its own index page, some tools are not so lucky, yet -->
+<h3><a href="../hardware/acela/index.shtml#tools">Acela Tools</a></h3>
+<p>When JMRI is connected to a layout via this system, a <b>Acela</b> menu is shown:</p>
+<ul>   
+<li><a href="../../package/jmri/jmrix/acela/serialmon/SerialMonFrame.shtml">Acela Monitor</a></li>
+<li><a href="../../package/jmri/jmrix/acela/packetgen/SerialPacketGenFrame.shtml">Send Acela Packets</a></li>
+<li><a href="../../package/jmri/jmrix/acela/nodeconfig/NodeConfigFrame.shtml">Configure Nodes</a></li>
+</ul>
+
+<h3><a href="../hardware/bachrus/index.shtml#tools">Bachrus Tools</a></h3>
+<p>When JMRI is connected to Bachrus MTS-DCC, you can use the:</p>
+<ul>
+<li><a href="../hardware/bachrus/index.shtml#tools">Speedo Console</a>
+</ul>
+
 <h3><a href="../hardware/cmri/CMRI.shtml#tools">C/MRI Tools</a></h3>
 <p>When JMRI is connected to a layout via this system, a <b>CMRI</b> menu is shown:</p>
 <ul>   
-<li><a href="../../package/jmri/jmrix/cmri/serial/assignment/ListFrame.shtml">Check Pin Assignments</a></li>
-<li><a href="../../package/jmri/jmrix/cmri/serial/nodeconfig/NodeConfigFrame.shtml">Configure Nodes</a></li>
-<li><a href="../../package/jmri/jmrix/cmri/serial/diagnostic/DiagnosticFrame.shtml">Diagnostics</a></li>
-<li><a href="../hardware/cmri/Signals.shtml">Signals</a></li>
+<li>CMRI Monitor
+<li>Send Command
+<li><a href="../../package/jmri/jmrix/cmri/serial/nodeconfig/NodeConfigFrame.shtml">Configure C/MRI Nodes</a></li>
+<li><a href="../../package/jmri/jmrix/cmri/serial/diagnostic/DiagnosticFrame.shtml">Run Diagnostic</a></li>
+<li><a href="../../package/jmri/jmrix/cmri/serial/assignment/ListFrame.shtml">List Assignments</a></li>
 </ul>
   
-<h3><a href="../hardware/can/index.shtml#tools">MERG CBUS Tools</a></h3>
+<h3><a href="../hardware/can/cbus/index.shtml#tools">MERG CBUS Tools</a></h3>
 <p>When JMRI is connected to a layout via CBUS, the <b>MERG</b> menu is shown:</p>
 <ul>   
 <li><a href="../../package/jmri/jmrix/can/cbus/swing/configtool/ConfigToolFrame.shtml">Event Capture Tool</a></li>
 <li>Event Table</li>
-<li><a href="../../package/jmri/jmrix/can/cbus/swing/console/CbusConsoleFrame.shtml">Console</a></li>
 <li><a href="../../package/jmri/jmrix/can/cbus/swing/console/CbusConsoleFrame.shtml">Node Config Tool</a></li>
-<li>Snd Frame</li>
+<li>Send Frame</li>
 </ul>
 
 <h3><a href="../hardware/dccpp/index.shtml#tools">DCC++ Tools</a></h3>
 <p>When JMRI is connected to a layout via DCC++, the <b>DCC++</b> menu is shown:</p>
-<p>The DCC++ menu contains 5 tools:
 <ul>
 <li>DCC++ Traffic Monitor
 <li>Send DCC++ Command
@@ -203,18 +216,41 @@ You may also access them by double clicking the <strong>Loco Tools</strong> icon
 <li><a href="../../package/jmri/jmrix/loconet/soundloader/LoaderFrame.shtml">Sound Loader </a></li>
 <li><a href="../../package/jmri/jmrix/loconet/se8/SE8Frame.shtml">SE8C Configuration Tool </a></li>
 <li><a href="../../package/jmri/jmrix/loconet/slotmon/SlotMonFrame.shtml">Slot Monitor </a></li>
+</ul>
 
+<h3><a href="../hardware/easydcc/EasyDCC.shtml#tools">EasyDCC Tools</a></h3>
+<p>When JMRI is connected to a layout via EasyDCC, the <b>EasyDCC</b> menu is shown:</p>
+<ul>
+<li>Command Monitor
+<li>Send Command
+</ul>
+
+<h3><a href="../hardware/ecos/index.shtml#tools">ESU ECoS Tools</a></h3>
+<ul>
+<li>Ecos Preferences
+<li>Command Generator
+<li>Ecos Status
 </ul>
 
 <h3><a href="../hardware/grapevine/index.shtml#tools">Grapevine Tools</a></h3>
+<p>When JMRI is connected to a layout via this system, the <strong>Grapevine</strong> menu gives access to:
 <ul>
 <li><a href="../../package/jmri/jmrix/grapevine/nodetable/NodeTableFrame.shtml">Node Table</a></li>
+<li>
+<a href="../../package/jmri/jmrix/grapevine/nodeconfig/NodeConfigFrame.shtml">Configure Nodes</a>
+</ul>
+
+<h3><a href="../hardware/marklin/index.shtml#tools">M&auml;rklin Tools</a></h3>
+<ul>
+<li>Monitor Marklin Commands</li>
+<li>Send Marklin Commands</li>
 </ul>
   
-<h3>NCE Tools</h3>
+<h3><a href="../hardware/nce/NCE.shtml#tools">NCE Tools</a></h3>
 <p>When JMRI is connected to a layout via this system, an <b>NCE</b> menu is shown:</p>
 <ul>   
 <li><a href="../../package/jmri/jmrix/nce/packetgen/NcePacketGenFrame.shtml">Send Command </a></li>
+<li>Send Macro</li>
 <li><a href="../../package/jmri/jmrix/nce/macro/NceMacroEditFrame.shtml">Edit Macro </a></li>
 <li><a href="../../package/jmri/jmrix/nce/consist/NceConsistEditFrame.shtml">Edit Consist </a></li>
 <li><a href="../../package/jmri/jmrix/nce/analyzer/NcePacketMonitorFrame.shtml">DCC Packet Analyzer </a></li>

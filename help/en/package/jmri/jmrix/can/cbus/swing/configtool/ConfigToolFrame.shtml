@@ -10,9 +10,9 @@
 <LINK REL="icon" HREF="/images/jmri.ico" TYPE="image/png">
 <LINK REL="home" TITLE="Home" HREF="/">
 <!-- /Style -->
-</HEAD>
+</head>
 
-<BODY>
+<body>
 <!--#include virtual="/Header" -->
   <div class="nomenu" id="mBody">
     <div id="mainContent">
@@ -28,12 +28,12 @@ JMRI: CBUS Event Capture Tool
 <p>
 The CBUS event capture tool can simplify
 configuring JMRI to work well with your 
-<A href="../../../../../../../html/hardware/can/cbus/index.html">CBUS</a>
+<a href="../../../../../../../html/hardware/can/cbus/index.shtml">CBUS</a>
 installation.
 
 <p>
 To 
-<a href="../../../../../../../html/hardware/can/cbus/index.html">configure JMRI Sensors and Turnouts</a>,
+<a href="../../../../../../../html/hardware/can/cbus/index.shtml">configure JMRI Sensors and Turnouts</a>,
 you need to identify the associated CBUS events. There are several ways to do this. 
 The rest of this page goes through the alternatives, using configuring a Sensor
 as an example.  Similar methods work for Turnouts.
@@ -41,7 +41,7 @@ as an example.  Similar methods work for Turnouts.
 <h3>Provide the Event ID</h3>
     
 You can just type an 
-<A href="../../../../../../../html/hardware/can/cbus/index.html">Event ID</a>
+<a href="../../../../../../../html/hardware/can/cbus/index.shtml">Event ID</a>
 in the field next to
 "Active On", and then press "Create".  A Sensor will be created that
 goes Active when the Event is seen, and Inactive when the opposite Event (ON vs OFF)
@@ -90,7 +90,7 @@ copy and paste it into the boxes in the lower part of the
 window.  If your computer allows it, you can 
 also just drag and drop the value into the lower field.
 
-<h3>Other Tools</h3>
+<h3>JMRI CBUS Tools</h3>
 
 Once you've created a sensor or turnout, you can
 use the 

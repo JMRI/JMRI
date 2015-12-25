@@ -84,9 +84,15 @@ The Acela module itself is different in that it always flashes a
 green LED to indicate that it is happy (whether the ring is happy or 
 not).
 
-<a name="tools"></a><h2>JMRI Tools</h2>
-<p>Inputs and Outputs can be configured with the 
-<a href="../../../package/jmri/jmrix/acela/nodeconfig/NodeConfigFrame.shtml">Configure Nodes</a> tool.
+<a name="tools"></a><h2>JMRI Acela Tools</h2>
+<ul>
+<li>Inputs and Outputs can be configured with 
+<a href="../../../package/jmri/jmrix/acela/serialmon/SerialMonFrame.shtml">Acela Monitor</a></li>
+<li>Inputs and Outputs can be configured with 
+<a href="../../../package/jmri/jmrix/acela/packetgen/SerialPacketGenFrame.shtml">Send Acela Packets</a></li>
+<li>Inputs and Outputs can be configured with the 
+<a href="../../../package/jmri/jmrix/acela/nodeconfig/NodeConfigFrame.shtml">Configure Nodes</a> tool</li>
+</ul>
 
 <a name="documentation"></a><h2>Documentation</h2>
 <h3>JMRI Help</h3>

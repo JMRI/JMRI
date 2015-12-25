@@ -49,8 +49,15 @@ JMRI can defines Turnout objects which can set them, in which case the
 panel configuration can change what's being displayed.
 
 <p>
-The system letter for Maple connections in JMRI is "K".
+You have to configure a Maple Systems Node into JMRI with the "Configure Nodes" button on
+the JMRI Preferences pane. On the pane that opens, enter the Node number 
+(e.g. 1 or 2, etc) into the "UA" field, and click "Add". Leave all the rest alone;
+the Maple Support was created from the JMRI C/MRI support, and as of 
+JMRI version 2.3.7 the migration is not complete.
 
+<h4>Naming</h4>
+<p>
+The system letter for Maple connections in JMRI is "K".
 <p>
 You configure the Maple Systems device to use one of the supported speeds
 (set on the JMRI Preferences pane for Maple connections),
@@ -77,17 +84,13 @@ LB 101 in that unit.
 <p>
 <strong>It is very likely that we will rework and improve the addressing soon.</strong>
 
-<p>
-You have to configure a Maple Systems Node into JMRI with the "Configure Nodes" button on
-the JMRI Preferences pane. On the pane that opens, enter the Node number 
-(e.g. 1 or 2, etc) into the "UA" field, and click "Add". Leave all the rest alone;
-the Maple Support was created from the JMRI C/MRI support, and as of 
-JMRI version 2.3.7 the migration is not complete.
-
 <a name="tools"></a><h2>JMRI Maple Systems Tools</h2>
 N/A
 
-<hr class="hide">
+<a name="documentation"></a><h2>Documentation</h2>
+<h3>Third Party info</h3>
+<p><a href="http://www.maplesystems.com">Maple Systems website</a>
+
 <!--#include virtual="/Footer" -->
   </div><!-- closes #mainContent-->
 </div> <!-- closes #mBody-->

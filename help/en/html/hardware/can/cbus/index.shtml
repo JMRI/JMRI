@@ -24,7 +24,7 @@ actual code might be ahead or behind the documentation
 on any given day.</em>
 <ul><!-- TOC -->
 <li><a href="#connecting">Connecting</a>
-<li><a href="#tools">Tools</a>
+<li><a href="#tools">JMRI CBUS Tools</a>
 <li><a href="#documentation">Documentation</a>
 </ul>
 
@@ -156,7 +156,10 @@ the type letter is "T" instead of "S", e.g. <code>MT-18;+21</code>)
 except the type letter is "L" instead of "T", e.g. <code>ML-18;+21</code>)
 
 <a name="tools"></a><h2>JMRI CBUS Tools</h2> 
-<a href="../../../../package/jmri/jmrix/can/cbus/swing/configtool/ConfigToolFrame.shtml">CBUS Event Capture Tool</a>
+<ul>
+<li><a href="../../../../package/jmri/jmrix/can/cbus/swing/console/CbusConsoleFrame.shtml">CBUS Monitor</a>
+<li><a href="../../../../package/jmri/jmrix/can/cbus/swing/configtool/ConfigToolFrame.shtml">CBUS Event Capture Tool</a>
+</ul>
 
 <a name="documentation"></a><h2>Documentation</h2>
 <h3>JMRI Help</h3>
