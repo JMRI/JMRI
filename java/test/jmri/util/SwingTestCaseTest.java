@@ -67,7 +67,7 @@ public class SwingTestCaseTest extends SwingTestCase {
  
         int[] val = getDisplayedContent(wIcon, wIcon.getSize(), new Point(0,0));
         
-        Assert.assertEquals("icon arraylength", val.length, 13*13);
+        Assert.assertEquals("icon arraylength", 13*13, val.length);
         Assert.assertEquals("icon first", "0xff00ff00", 
                 String.format("0x%8s", Integer.toHexString(val[0])).replace(' ', '0'));
         Assert.assertEquals("icon middle", "0xff00ff00", 
@@ -95,7 +95,7 @@ public class SwingTestCaseTest extends SwingTestCase {
          
         int[] val = getDisplayedContent(wIcon, wIcon.getSize(), new Point(0,0));
         
-        Assert.assertEquals("icon arraylength", val.length, 13*13);
+        Assert.assertEquals("icon arraylength", 13*13, val.length);
         Assert.assertEquals("icon first", "0xffff0000", 
                 String.format("0x%8s", Integer.toHexString(val[0])).replace(' ', '0'));
         Assert.assertEquals("icon middle", "0xff0000ff", 
@@ -122,7 +122,7 @@ public class SwingTestCaseTest extends SwingTestCase {
          
         int[] val = getDisplayedContent(wIcon, wIcon.getSize(), new Point(0,0));
         
-        Assert.assertEquals("icon arraylength", val.length, 13*13);
+        Assert.assertEquals("icon arraylength", 13*13, val.length);
         Assert.assertEquals("icon first", "0xffff0000", 
                 String.format("0x%8s", Integer.toHexString(val[0])).replace(' ', '0'));
         Assert.assertEquals("icon middle", "0x00000000", 
@@ -135,7 +135,7 @@ public class SwingTestCaseTest extends SwingTestCase {
         Point p = SwingUtilities.convertPoint(wIcon,0,0,f.getContentPane());
         
         val = getDisplayedContent(f.getContentPane(), wIcon.getSize(), p);
-        Assert.assertEquals("frame arraylength", val.length, 13*13);
+        Assert.assertEquals("frame arraylength", 13*13, val.length);
         Assert.assertEquals("frame first", "0xffff0000", 
                 String.format("0x%8s", Integer.toHexString(val[0])).replace(' ', '0'));
         Assert.assertEquals("frame middle", "0xff0000ff", 
