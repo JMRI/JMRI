@@ -28,7 +28,10 @@
     to the LocoNet&reg; bus.  These tools provide a variety of features, such as
     monitoring status, reading and writing configuration.  Each of the tools
     provides a set of features which is appropriate to the type of device it
-    supports, as summarized in the table below. Access to the LocoNet Tools is from the <strong>LocoNet</strong> menu that appears when JMRI is <a href="Digitrax.shtml#Setup">connected to a LocoNet&reg;</a>.</p>
+    supports, as summarized in the table below. 
+    
+    <a name="tools"></a><h2>JMRI LocoNet Tools</h2>
+    Access to the LocoNet Tools is from the <strong>LocoNet</strong> menu that appears when JMRI is <a href="Digitrax.shtml#Setup">connected to a LocoNet&reg;</a>.</p>
 <p>In the table below, each tool name is a link to a tool-specific help page.</p>
 <table border="2">
     <tr align="center"><td><b>Tool</b></td>
@@ -209,4 +212,3 @@
 </div> <!-- closes #mBody-->
 </body>
 </html>
-    

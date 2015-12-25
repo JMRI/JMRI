@@ -39,17 +39,10 @@ in terms of CBUS "events".
 
 <p>
 The <a href="../../../doc/Technical/Names.shtml">system letter</a> 
-for CBUS connections is "M". Details of CBUS 
-event and object names are 
+for CBUS connections is "M".
+<p>Details of CBUS Event and object names are 
 described below, with technical details on a
 <a href="Names.shtml">separate page</a>.
-
-<p>
-Note that there's a 
-<a href="../../../../package/jmri/jmrix/can/cbus/swing/configtool/ConfigToolFrame.shtml">CBUS Event Capture Tool</a>
-that can help you create Turnouts and Sensor
-names without having to directly work out
-the System Names.
 
 <p>
 JMRI associates CBUS events with individual
@@ -141,10 +134,8 @@ button on the
 
 <p>
 Note that there's a 
-<a href="../../../../package/jmri/jmrix/can/cbus/swing/configtool/ConfigToolFrame.shtml">CBUS Event Capture Tool</a>
-that can help you create Turnouts and Sensor
-names without having to directly work out
-the System Names.
+<a href="../../../../package/jmri/jmrix/can/cbus/swing/configtool/ConfigToolFrame.shtml">CBUS Event Capture Tool</a> that can help you create Turnouts and Sensor
+names without having to directly work out the System Names.
 
 <h3>Turnouts</h3>
 <p>(To be written, but the scheme is similar to Sensors above, 
@@ -156,20 +147,19 @@ the type letter is "T" instead of "S", e.g. <code>MT-18;+21</code>)
 except the type letter is "L" instead of "T", e.g. <code>ML-18;+21</code>)
 
 <a name="tools"></a><h2>JMRI CBUS Tools</h2> 
-<ul>
-<li><a href="../../../../package/jmri/jmrix/can/cbus/swing/console/CbusConsoleFrame.shtml">CBUS Monitor</a>
-<li><a href="../../../../package/jmri/jmrix/can/cbus/swing/configtool/ConfigToolFrame.shtml">CBUS Event Capture Tool</a>
-</ul>
+	<ul>
+	<li><a href="../../../../package/jmri/jmrix/can/cbus/swing/console/CbusConsoleFrame.shtml">CBUS Monitor</a>
+	<li><a href="../../../../package/jmri/jmrix/can/cbus/swing/configtool/ConfigToolFrame.shtml">CBUS Event Capture Tool</a>
+	<li><a href="../../../../package/jmri/jmrix/can/cbus/swing/console/CbusConsoleFrame.shtml#cbusSend">Send Frame</a></li>
+	</ul>
 
 <a name="documentation"></a><h2>Documentation</h2>
 <h3>JMRI Help</h3>
-<ul>
-<li>Naming of CBUS inputs and outputs are described on a 
-<a href="Names.shtml">separate page</a>.
-<li><a href="Details.shtml">Technical details of CBUS Support</a>
-<li><a href="../index.shtml">Main help page for CAN Support</a>
-including links to more tools
-</ul>
+	<ul>
+	<li>Naming of CBUS inputs and outputs is described <a href="Names.shtml">here</a>.
+	<li><a href="Details.shtml">Technical details of CBUS Support</a>
+	<li><a href="../index.shtml">Main CAN Support Help page</a> including links to more tools.
+	</ul>
 
 <!--#include virtual="/Footer" -->
  </div><!-- closes #mainContent-->

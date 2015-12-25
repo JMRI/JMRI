@@ -5,7 +5,7 @@
       JMRI: CBUS Console Tool
  </title>
     <meta content="Bob Jacobsen" name="Author">
-    <meta name="keywords" content="JMRI help monitor">
+    <meta name="keywords" content="JMRI CBUS help monitor">
 
 <!-- Style -->
   <meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
@@ -32,11 +32,11 @@ JMRI provides a communications monitor window so you can see what's happening
 on the communications link between the program and the layout CBUS.
 
 <p>
-Once you open a monitor window, it will automatically
+Once you open a CBUS Monitor window, it will automatically
 display all traffic on the link in the two sections
-at the top of the window.  The left part contains the
-raw CAN frames.  The right part interprets their 
-CBUS meaning.
+at the top of the window.<br>
+The left part contains the raw CAN frames. 
+The right part interprets their CBUS meaning.
 
 <h2>Logging To A File</h2>
 
@@ -61,7 +61,7 @@ if you pick a file that already exists, it will be overwritten.
 and close the file.
 </ol>
 
-<h3>Controls</h3>
+<h3>Buttons</h3>
 
 <dl>
 <dt>Clear Screen</dt>
@@ -72,11 +72,11 @@ and close the file.
   </dd>
 <dt>Show timestamps</dt>
   <dd>Normally, the program just displays the data from the communication link.
-  If you'd like each message to be preceeded by the time it was sent or
+  If you'd like each message to be preceded by the time it was sent or
   received, check this box.
   </dd>
 <dt>Show priorities</dt>
-  <dd>If you'd like each message to be preceeded by the CBUS priorities used in
+  <dd>If you'd like each message to be preceded by the CBUS priorities used in
 	sending the message, check this box.
   </dd>
 <dt>Add Message</dt>
@@ -90,7 +90,7 @@ and close the file.
 This part of the window shows the number of CBUS packets received and transmitted
 and controls the format of the display.
 
-<h3>Controls</h3>
+<h3>Buttons</h3>
 
 <dl>
 <dt>Clear</dt>
@@ -108,7 +108,7 @@ This displays the most recent packet received from the layout. The individual
 elements displayed are dynamic and minor priority, the first data byte which is 
 the CBUS opcode and the remaining, up to seven, data bytes.
 
-<h3>Controls</h3>
+<h3>Buttons</h3>
 
 <dl>
 <dt>Copy</dt>
@@ -116,10 +116,10 @@ the CBUS opcode and the remaining, up to seven, data bytes.
 	</dd>
 </dl>
 
-<h2>Send Packet</h2>
+<a name="cbusSend"></a><h1>Send Packet</h1>
 
-Here you can construct a packet to be sent to the layout. For normal operation,
-do not edit the preloaded values in the dynamic and normal priority fields.
+It the bottom part of the Console, you can construct a packet to be sent to the layout. For normal operation,
+do not edit the preloaded values in the dynamic and normal priority fields.<br>
 Enter the opcode and the correct number of data bytes (depending upon the
 opcode).
 <p>
@@ -136,7 +136,7 @@ Additionally, when the decimal data entry/display checkbox is not selected
 treated as binary. When the decimal data entry/display checkbox is selected 
 (decimal mode), any value with four or more digits will be treated as binary.
 
-<h3>Controls</h3>
+<h3>Buttons</h3>
 
 <dl>
 <dt>Send</dt>
@@ -148,8 +148,8 @@ treated as binary. When the decimal data entry/display checkbox is selected
 	</dd>
 </dl>
 
-
 <!--#include virtual="/Footer" -->
+ </div><!-- closes #mainContent-->
+</div> <!-- closes #mBody-->
 </body>
 </html>
-

@@ -25,11 +25,11 @@
 
  </tocitem>
  <tocitem text="Hardware Support " target="html.hardware.index">
-  <tocitem text="Acela " target="html.hardware.acela.index"/>
+  <tocitem text="Acela (CTI) " target="html.hardware.acela.index"/>
 
   <tocitem text="CAN Bus " target="html.hardware.can.index"/>
 
-  <tocitem text="CBUS " target="html.hardware.can.cbus.index"/>
+  <tocitem text="CBUS (MERG) " target="html.hardware.can.cbus.index"/>
 
   <tocitem text="CMRI " target="html.hardware.cmri.CMRI"/>
 
@@ -47,6 +47,12 @@
 
   <tocitem text="Maple Systems " target="html.hardware.maple.index"/>
 
+  <tocitem text="M&amp;auml;rklin " target="html.hardware.marklin.index"/>
+
+  <tocitem text="Modbus " target="html.hardware.modbus.index"/>
+
+  <tocitem text="MRC " target="html.hardware.mrc.index"/>
+
   <tocitem text="NCE " target="html.hardware.nce.NCE"/>
 
   <tocitem text="OakTree Systems " target="html.hardware.oaktree.OakTree"/>
@@ -59,6 +65,8 @@
 
   <tocitem text="RailDriver Throttle " target="html.hardware.raildriver.index"/>
 
+  <tocitem text="RFID Readers " target="html.hardware.rfid.index"/>
+
   <tocitem text="RPS " target="html.hardware.rps.index"/>
 
   <tocitem text="SECSI (TrakTronix) " target="html.hardware.secsi.index"/>
@@ -67,7 +75,13 @@
 
   <tocitem text="SRCP " target="html.hardware.qsi.index"/>
 
+  <tocitem text="TAMs " target="html.hardware.tams.index"/>
+
   <tocitem text="TMCC (Lionel) " target="html.hardware.tmcc.index"/>
+
+  <tocitem text="xAP " target="html.hardware.xap.index"/>
+
+  <tocitem text="XBee " target="html.hardware.XBee.index"/>
 
   <tocitem text="XPressNet (Lenz) " target="html.hardware.XPressNet.index"/>
 

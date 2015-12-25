@@ -1,7 +1,7 @@
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
 <html lang="en">
 <head>
-<title>JMRI Hardware Support - CAN Scripting</title>
+<title>JMRI Hardware Support - CAN Network - Scripting</title>
 
 <!-- Style -->
 <meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
@@ -17,7 +17,7 @@
   <div class="nomenu" id="mBody">
     <div id="mainContent">
 
-<h1>Hardware Support: CAN Scripting</h1>
+<h1>Hardware Support: CAN - Scripting</h1>
 
 <p>
 JMRI scripting can be used to 
@@ -28,15 +28,16 @@ boards under development, etc.
 <p>
 This page describes the CAN extensions for JMRI scripting.
 For more information on JMRI scripting itself,
-see the
-<a href="../../tools/scripting/index.shtml">help pages</a>.
+see the <a href="../../tools/scripting/index.shtml">Scripting Help pages</a>.
 
 <p>
 There's a basic
 <a href="../../../../../jython/CanExample.py">CanExample.py</a>
 sample script in the jython directory.
 
-<h2>Sending CAN Frames</h2>
+<h2>Scripting Code Examples</h2>
+
+<h3>Sending CAN Frames</h3>
 <p>
 CAN frames are created as objects, then queued for 
 transmission.  The header (ID) and data are handled 
@@ -50,7 +51,7 @@ frame.setElement(1, 0x67)
 jmri.jmrix.can.TrafficController.instance().sendCanMessage(frame, None)
 </pre></code>
 
-<h2>Receiving CAN Frames</h2>
+<h3>Receiving CAN Frames</h3>
 <p>
 A script can listen for CAN frames as they're received
 from the bus, and separately for CAN frames that are being
@@ -72,6 +73,12 @@ class MyCanListener (jmri.jmrix.can.CanListener) :
     
 jmri.jmrix.can.TrafficController.instance().addCanListener(MyCanListener())
 </pre></code>
+
+<a name="documentation"></a><h2>Documentation</h2>
+<h3>JMRI Help</h3>
+	<ul>
+	<li>Back to the <a href="index.shtml">Main CAN Network upport Help page</a>.
+	</ul>
 
 <!--#include virtual="/Footer" -->
  </div><!-- closes #mainContent-->

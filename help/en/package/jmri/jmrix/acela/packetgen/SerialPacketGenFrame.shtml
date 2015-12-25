@@ -26,6 +26,7 @@
 This is the help/jmri/jmrix/acela/packetgen/SerialPacketGenFrame help page
 
 <!--#include virtual="/Footer" -->
+ </div><!-- closes #mainContent-->
+</div> <!-- closes #mBody-->
 </body>
 </html>
-

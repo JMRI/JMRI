@@ -193,7 +193,7 @@
 <li><a href="../../package/jmri/jmrix/can/cbus/swing/configtool/ConfigToolFrame.shtml">Event Capture Tool</a></li>
 <li>Event Table</li>
 <li><a href="../../package/jmri/jmrix/can/cbus/swing/console/CbusConsoleFrame.shtml">Node Config Tool</a></li>
-<li>Send Frame</li>
+<li><a href="../../package/jmri/jmrix/can/cbus/swing/console/CbusConsoleFrame.shtml#cbusSend">Send Frame</a></li>
 </ul>
 
 <h3><a href="../hardware/dccpp/index.shtml#tools">DCC++ Tools</a></h3>
@@ -204,18 +204,6 @@
 <li>Track Current Meter
 <li>Configure Sensors and Turnouts
 <li>Load DCC++ over TCP Server
-</ul>
-
-<h3><a href="../apps/LocoTools/index.shtml">Digitrax/LocoNet Tools</a></h3>
-<p>A full range of tools are available from the <b>LocoNet</b> menu when JMRI is connected to a (Digitrax) LocoNet DCC layout.<br>
-You may also access them by double clicking the <strong>Loco Tools</strong> icon in the JMRI installation folder. To name just a few:</p>
-<!-- No (doubling/outdated) list here, just a link to the page -->
-<ul>   
-<li><a href="../../package/jmri/jmrix/loconet/ds64/DS64Frame.shtml">DS64 Configuration Tool </a></li>
-<li><a href="../../package/jmri/jmrix/loconet/locomon/LocoMonFrame.shtml">LocoNet Monitor </a></li>
-<li><a href="../../package/jmri/jmrix/loconet/soundloader/LoaderFrame.shtml">Sound Loader </a></li>
-<li><a href="../../package/jmri/jmrix/loconet/se8/SE8Frame.shtml">SE8C Configuration Tool </a></li>
-<li><a href="../../package/jmri/jmrix/loconet/slotmon/SlotMonFrame.shtml">Slot Monitor </a></li>
 </ul>
 
 <h3><a href="../hardware/easydcc/EasyDCC.shtml#tools">EasyDCC Tools</a></h3>
@@ -238,6 +226,18 @@ You may also access them by double clicking the <strong>Loco Tools</strong> icon
 <li><a href="../../package/jmri/jmrix/grapevine/nodetable/NodeTableFrame.shtml">Node Table</a></li>
 <li>
 <a href="../../package/jmri/jmrix/grapevine/nodeconfig/NodeConfigFrame.shtml">Configure Nodes</a>
+</ul>
+
+<h3><a href="../apps/LocoTools/index.shtml">LocoNet (Digitrax) Tools</a></h3>
+<p>A full range of tools are available from the <b>LocoNet</b> menu when JMRI is connected to a (Digitrax) LocoNet DCC layout.<br>
+You may also access them by double clicking the <strong>Loco Tools</strong> icon in the JMRI installation folder. To name just a few:</p>
+<!-- No (doubling/outdated) list here, just a link to the page -->
+<ul>   
+<li><a href="../../package/jmri/jmrix/loconet/ds64/DS64Frame.shtml">DS64 Configuration Tool </a></li>
+<li><a href="../../package/jmri/jmrix/loconet/locomon/LocoMonFrame.shtml">LocoNet Monitor </a></li>
+<li><a href="../../package/jmri/jmrix/loconet/soundloader/LoaderFrame.shtml">Sound Loader </a></li>
+<li><a href="../../package/jmri/jmrix/loconet/se8/SE8Frame.shtml">SE8C Configuration Tool </a></li>
+<li><a href="../../package/jmri/jmrix/loconet/slotmon/SlotMonFrame.shtml">Slot Monitor </a></li>
 </ul>
 
 <h3><a href="../hardware/marklin/index.shtml#tools">M&auml;rklin Tools</a></h3>
@@ -294,7 +294,7 @@ You may also access them by double clicking the <strong>Loco Tools</strong> icon
 <li><a href="../hardware/XBee/XBeeNodeConfigurationTool.shtml">XBee Node Configuration</a></li>
 </ul>
 
-<h3><a href="../hardware/XPressNet/index.shtml#tools">XPressNet/Lenz Tools</a></h3>
+<h3><a href="../hardware/XPressNet/index.shtml#tools">XPressNet (Lenz) Tools</a></h3>
 <p>When JMRI is connected to a layout with <a href="../hardware/lenz/index.shtml">XPressNet</a>, an <b>XPressNet</b> menu is shown:</p>
 <ul>
 <li>XPressNet Monitor</li>

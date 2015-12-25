@@ -125,9 +125,6 @@ way all other Connection types are configured.
 
 <p>DecoderPro is now configured. Restart it, and you should be ready to use the Quantum Programmer.
 
-
-
-
 <!--#include virtual="/Footer" -->
  </div><!-- closes #mainContent-->
 </div> <!-- closes #mBody-->

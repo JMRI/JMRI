@@ -38,15 +38,16 @@ This has been tested with the wired and wireless versions of the interface.
 JMRI should be able to support all of the MRC Prodigy range of systems,
 however it has only been tested and developed with the Advanced<sup>2</sup>.
 
-		<h3>Settings</h3>
-		<p>
+  <h3>Settings</h3>
+  <p>
 		To configure the connection:
 		<ul>
 			<li>Open the JMRI "Preferences" under the "Edit" menu,
-			<li>Select "MRC" as the Manufacturer.
+			<li>Select "MRC" as the System Manufacturer.
 			<li>Select "Serial" as the System Connection.
 			<li>Select the Serial Port associated with the system.
-			<li>Select the Cab Address that will be allocated to the interface. <br>Please note that this must be unique and not used by any other handset, if you are to use a number above 8, then you must refer to Prodigy instructions to ensure that the system is configured to address the cab correctly
+			<li>Select the Cab Address that will be allocated to the interface.<br>
+			Please note that this must be unique and not used by any other handset, if you are to use a number above 8, then you must refer to Prodigy instructions to ensure that the system is configured to address the cab correctly
 			<li>Click "Save".
 		</ul>
 		
@@ -77,6 +78,15 @@ however it has only been tested and developed with the Advanced<sup>2</sup>.
 		for MRC Route 15, you would add a JMRI Turnout with an address of MRT1015.
 		<p>
 		JMRI does not support editing/adding/removal of system Routes stored in the MRC.
+
+<a name="tools"></a><h2>JMRI Tools</h2>
+N/A
+
+<a name="documentation"></a><h2>Documentation</h2>
+<h3>Third Party info</h3>
+<ul>
+<li><a href="http://www.modelrectifier.com/train-controls/dcc-prodigy.asp">Model Rectifier Corp. Prodigy website</a></li>
+</ul>
 
 <!--#include virtual="/Footer" -->
   </div><!-- closes #mainContent-->

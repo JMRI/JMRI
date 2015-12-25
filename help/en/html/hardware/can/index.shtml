@@ -73,8 +73,9 @@ and more is being developed along with CBUS itself.</p>
 <a name="connect"></a><h2>Connecting</h2>
 <p>JMRI can provide the usual Sensor and Turnout features, once configured for
 <a href="../openlcb/index.shtml">OpenLCB</a> or
-<a href="cbus/index.shtml">CBUS</a> "events".
-<p>JMRI can connect to CAN networks using  in several ways: 
+<a href="cbus/index.shtml">CBUS</a> "Events".
+<p>JMRI can connect to CAN networks in several ways:
+
 <h3>Via USB</h3>
 <p>To use any of the above Adapters, select the appropriate device/connection type in the 
 JMRI Preferences.  If using a GridConnect or Lawicel device, be sure to
@@ -86,19 +87,19 @@ The TCH Technology adapter does this automatically, so no setting is required.</
 This can either go to another JMRI instance running e.g. an OpenLCB hub, 
 or directly to an IP-CAN adapter. To configure one of these, open the Connections tab in the JMRI
 Preferences and:
-<ul>
-<li>Select your system manufacturer, e.g. "OpenLCB"
-<li>For System Connection, select "CAN via GridConnect Network Interface"
-<li>Under settings, enter the IP address and TCP/UDP port for the destination.
-<p>OpenLCB CAN Adapters advertise under mDNS/Bonjour, so you can use that
-to specify the IP address if JMRI is on the same network segment
-as your adapter.  In that case, put "openlcbcan.local." (note trailing period!)
-in the IP address field.
-<p>The port number for OpenLCB adapters is 23 by default.
-<li>Set the connection protocol as desired, e.g. "OpenLCB", the
-Connection Prefix (usually "M") and Connection Name as needed.
-<li>Click Save, and restart.
-</ul>
+	<ul>
+	<li>Select as System Manufacturer "OpenLCB"
+	<li>For System Connection, select "CAN via GridConnect Network Interface"
+	<li>Under settings, enter the IP address and TCP/UDP port for the destination.
+	<p>OpenLCB CAN Adapters advertise under mDNS/Bonjour, so you can use that
+	to specify the IP address if JMRI is on the same network segment
+	as your adapter.  In that case, put "openlcbcan.local." (note trailing period!)
+	in the IP address field.
+	<p>The port number for OpenLCB adapters is 23 by default.
+	<li>Set the connection protocol as desired, e.g. "OpenLCB", the
+	Connection Prefix (usually "M") and Connection Name as needed.
+	<li>Click Save, and restart.
+	</ul>
 
 <a name="tools"></a><h2>JMRI CAN Tools</h2>
 <p>JMRI provides a basic 
