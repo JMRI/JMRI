@@ -552,6 +552,10 @@ public class TrainsTableFrame extends OperationsFrame implements java.beans.Prop
     }
 
     protected void handleModified() {
+        if (Setup.isAutoSaveEnabled()) {
+            storeValues();
+            return;
+        }
         if (OperationsXml.areFilesDirty()) {
             int result = javax.swing.JOptionPane.showOptionDialog(this,
                     Bundle.getMessage("PromptQuitWindowNotWritten"), Bundle.getMessage("PromptSaveQuit"),
