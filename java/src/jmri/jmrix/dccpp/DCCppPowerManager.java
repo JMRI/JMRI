@@ -89,10 +89,10 @@ public class DCCppPowerManager implements PowerManager, DCCppListener {
             log.debug("Message recieved: " + m.toString());
         }
 	if (m.getElement(0) == DCCppConstants.POWER_REPLY) {
-	    if (m.getElement(1) == '1') {
+	    if (m.getElement(2) == '1') {
 		power = ON;
 		firePropertyChange("Power", null, null);
-	    } else if (m.getElement(1) == '0') {
+	    } else if (m.getElement(2) == '0') {
 		power = OFF;
 		firePropertyChange("Power", null, null);
 	    } else {

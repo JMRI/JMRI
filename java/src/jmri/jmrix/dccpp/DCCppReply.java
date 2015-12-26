@@ -862,7 +862,7 @@ public class DCCppReply extends jmri.jmrix.AbstractMRReply {
     public boolean isSensorReply() { return((this.getOpCodeChar() == DCCppConstants.SENSOR_REPLY) ||
 					    (this.getOpCodeChar() == DCCppConstants.SENSOR_REPLY_H) ||
 					    (this.getOpCodeChar() == DCCppConstants.SENSOR_REPLY_L)); }
-    public boolean isSensorDefReply() { return(this.matches(DCCppConstants.SENSOR_DEF_REPLY_REGEX)); }
+    public boolean isSensorDefReply() { return((this.getOpCodeChar() == DCCppConstants.SENSOR_REPLY) && (this.matches(DCCppConstants.SENSOR_DEF_REPLY_REGEX))); }
     public boolean isTurnoutDefReply() { return(this.matches(DCCppConstants.TURNOUT_DEF_REPLY_REGEX)); }
     public boolean isMADCFailReply() { return(this.getOpCodeChar() == DCCppConstants.MADC_FAIL_REPLY); }
     public boolean isMADCSuccessReply() { return(this.getOpCodeChar() == DCCppConstants.MADC_SUCCESS_REPLY); }
