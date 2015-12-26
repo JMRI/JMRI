@@ -226,6 +226,94 @@ public class PositionableLabelTest extends jmri.util.SwingTestCase {
         f.dispose();
     }
     
+
+    // test with an RGB animated 13x13 GIF, 0.1 sec per frame
+    public void testDisplayAnimatedRGB() {
+         if (!System.getProperty("jmri.headlesstest","false").equals("false")) { // needs to show the frame to start animation
+            return;
+        }
+   
+        JFrame f = new JFrame();
+        f.getContentPane().setBackground(java.awt.Color.blue);
+        f.setUndecorated(true); // skip frame decoration, which can force a min size.
+        
+        jmri.jmrit.catalog.NamedIcon icon = new jmri.jmrit.catalog.NamedIcon("resources/icons/RGB-animated-once-Square.gif","box"); // 13x13
+        
+        PositionableLabel label = new PositionableLabel(icon, null);
+        
+        f.add(label);
+        f.pack();
+        flushAWT();
+        Assert.assertEquals("icon size", new Dimension(13,13).toString(),label.getSize().toString());
+         
+        // wait for a bit
+        f.setVisible(true);  // needed to get initial animation contents
+        flushAWT();
+
+        // check for initial red
+        int[] val = getDisplayedContent(label, label.getSize(), new Point(0,0));
+        
+        Assert.assertEquals("icon arraylength", 13*13, val.length);
+        Assert.assertEquals("icon first", "0xffff0000", 
+                String.format("0x%8s", Integer.toHexString(val[0])).replace(' ', '0'));
+        Assert.assertEquals("icon upper right", "0xffff0000", 
+                String.format("0x%8s", Integer.toHexString(val[12])).replace(' ', '0'));
+        Assert.assertEquals("icon lower left", "0xffff0000", 
+                String.format("0x%8s", Integer.toHexString(val[13*13-1-12])).replace(' ', '0'));
+        Assert.assertEquals("icon middle", "0xffff0000", 
+                String.format("0x%8s", Integer.toHexString(val[(int)Math.floor(label.getSize().height/2)*label.getSize().width+(int)Math.floor(label.getSize().width/2)-1])).replace(' ', '0'));
+        Assert.assertEquals("icon last", "0xffff0000", 
+                String.format("0x%8s", Integer.toHexString(val[13*13-1])).replace(' ', '0'));
+        
+        // Need to find the icon location in frame first
+        Point p = SwingUtilities.convertPoint(label,0,0,f.getContentPane());
+        
+        val = getDisplayedContent(f.getContentPane(), label.getSize(), p);
+
+        Assert.assertEquals("frame arraylength", 13*13, val.length);
+        Assert.assertEquals("frame first", "0xffff0000", 
+                String.format("0x%8s", Integer.toHexString(val[0])).replace(' ', '0'));
+        Assert.assertEquals("frame middle", "0xffff0000", 
+                String.format("0x%8s", Integer.toHexString(val[(int)Math.floor(label.getSize().height/2)*label.getSize().width+(int)Math.floor(label.getSize().width/2)-1])).replace(' ', '0'));
+        Assert.assertEquals("frame last", "0xffff0000", 
+                String.format("0x%8s", Integer.toHexString(val[13*13-1])).replace(' ', '0'));
+
+        // wait for long enough to reach final red, skipping intermediate green as timing too fussy
+        waitAtLeast(250);        
+
+        val = getDisplayedContent(label, label.getSize(), new Point(0,0));
+        
+        Assert.assertEquals("icon arraylength", 13*13, val.length);
+        Assert.assertEquals("icon first", "0xff0000ff", 
+                String.format("0x%8s", Integer.toHexString(val[0])).replace(' ', '0'));
+        Assert.assertEquals("icon upper right", "0xff0000ff", 
+                String.format("0x%8s", Integer.toHexString(val[12])).replace(' ', '0'));
+        Assert.assertEquals("icon lower left", "0xff0000ff", 
+                String.format("0x%8s", Integer.toHexString(val[13*13-1-12])).replace(' ', '0'));
+        Assert.assertEquals("icon middle", "0xff0000ff", 
+                String.format("0x%8s", Integer.toHexString(val[(int)Math.floor(label.getSize().height/2)*label.getSize().width+(int)Math.floor(label.getSize().width/2)-1])).replace(' ', '0'));
+        Assert.assertEquals("icon last", "0xff0000ff", 
+                String.format("0x%8s", Integer.toHexString(val[13*13-1])).replace(' ', '0'));
+        
+        // now check that background shows through
+        // Need to find the icon location first
+        p = SwingUtilities.convertPoint(label,0,0,f.getContentPane());
+        
+        val = getDisplayedContent(f.getContentPane(), label.getSize(), p);
+
+        Assert.assertEquals("frame arraylength", 13*13, val.length);
+        Assert.assertEquals("frame first", "0xff0000ff", 
+                String.format("0x%8s", Integer.toHexString(val[0])).replace(' ', '0'));
+        Assert.assertEquals("frame middle", "0xff0000ff", 
+                String.format("0x%8s", Integer.toHexString(val[(int)Math.floor(label.getSize().height/2)*label.getSize().width+(int)Math.floor(label.getSize().width/2)-1])).replace(' ', '0'));
+        Assert.assertEquals("frame last", "0xff0000ff", 
+                String.format("0x%8s", Integer.toHexString(val[13*13-1])).replace(' ', '0'));
+        
+        
+        // finally done
+        f.dispose();
+    }
+    
     // from here down is testing infrastructure
 
     public PositionableLabelTest(String s) {
@@ -251,11 +339,14 @@ public class PositionableLabelTest extends jmri.util.SwingTestCase {
 
     protected void tearDown() {
         // now close panel window
-        java.awt.event.WindowListener[] listeners = panel.getTargetFrame().getWindowListeners();
-        for (int i = 0; i < listeners.length; i++) {
-            panel.getTargetFrame().removeWindowListener(listeners[i]);
+        if (panel != null) {
+            java.awt.event.WindowListener[] listeners = panel.getTargetFrame().getWindowListeners();
+            for (int i = 0; i < listeners.length; i++) {
+                panel.getTargetFrame().removeWindowListener(listeners[i]);
+            }
+            junit.extensions.jfcunit.TestHelper.disposeWindow(panel.getTargetFrame(), this);
         }
-        junit.extensions.jfcunit.TestHelper.disposeWindow(panel.getTargetFrame(), this);
+        
         apps.tests.Log4JFixture.tearDown();
     }
 
