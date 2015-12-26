@@ -1,84 +1,71 @@
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
-<!-- $Id$ -->
 <html lang="en">
 <head>
- <TITLE>
-      JMRI Hardware Guide: Wangrow System One
- </TITLE>
-    <META http-equiv=Content-Type content="text/html; charset=iso-8859-1">
-    <META content="Bob Jacobsen" name=Author>
-    <META name="keywords" content="Wangrow System One java model railroad JMRI install">
+ <title>JMRI Hardware Support - Wangrow System One</title>
+    <meta content="Bob Jacobsen" name="Author">
+    <meta name="keywords" content="Wangrow System One java model railroad JMRI install">
 
 <!-- Style -->
-<META HTTP-EQUIV="Content-Type" CONTENT="text/html; charset=iso-8859-1">
-<LINK REL="stylesheet" TYPE="text/css" HREF="/css/default.css"
-	MEDIA="screen">
-<LINK REL="stylesheet" TYPE="text/css" HREF="/css/print.css"
-	MEDIA="print">
-<LINK REL="icon" HREF="/images/jmri.ico" TYPE="image/png">
-<LINK REL="home" TITLE="Home" HREF="/">
+<meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
+<link rel="stylesheet" type="text/css" href="/css/default.css" media="screen">
+<link rel="stylesheet" type="text/css" href="/css/print.css" media="print">
+<link rel="icon" href="/images/jmri.ico" type="image/png">
+<link rel="home" title="Home" href="/">
 <!-- /Style -->
-</HEAD>
+</head>
 
-<BODY>
+<body>
 <!--#include virtual="/Header" -->
 
   <div class="nomenu" id="mBody">
     <div id="mainContent">
 
-      <H2> 
-      JMRI Hardware Guide: Wangrow System One
-      </H2>
+ <h1>Hardware Support: Wangrow System One</h1>
 
-	<H3>Supported Hardware</H3>
+<a name="hardware"></a><h2>Supported Hardware</h2>
+<h3>Command Station</h3>
+	<ul>
+		<li>Wangrow System One (produced until 2003)
+	</ul>
 
-	<UL>
-	<li>Wangrow System One
-	</UL>
-
-	<H3>Limitations</H3>
-
-	<p>Some Wangrow command stations have an "optional analog control
-	circuit". In these, pins 5, 6, and 9 are used with an analog
-	voltage as a separate throttle. If you have one of these command
-	stations, a normal 9-pin serial cable will not work! You'll need to
-	make a custom cable that just connects the "send data", "receive
-	data" and "ground" pins. See your Wangrow manual for details.</p>
-
-	<H3>Setup</H3>
-
-	  <ol>
-	  <li>To connect your computer to a Wangrow system, you can usually
+<a name="connecting"></a><h2>Connecting</h2>
+<h3>Wiring</h3>
+	  <p>To connect your computer to a Wangrow system, you can usually
 	  just connect the command station to the computer's serial port
 	  using a 9-pin serial cable.</p>
-
-	  <li>Then go to the preferences panel of a JMRI-based program.
+	<p>Some Wangrow command stations have an "optional analog control
+	circuit". In these, pins 5, 6, and 9 are used with an analog
+	voltage as a separate throttle. If you have one of these Command
+	Stations, <strong>a normal 9-pin serial cable will not work!</strong> You'll need to
+	make a custom cable that just connects the "send data", "receive
+	data" and "ground" pins. See your Wangrow manual for details.</p>
+	  
+<h3>Settings</h3>
+  <ol>
+	  <li>Open the Connections tab in the Preferences of a JMRI-based program.
 	  This opens automatically the first time a program is run, or you
 	  can select it from the "Edit" menu.</p>
 
-	  <li>Select "Wangrow" from the top selection box. You can then select
-	  the proper serial port in the second selection box.</p>
+	  <li>Select "Wangrow" from the System Manufacturer drop-down menu.
+	  <li>Select a serial port in the System Connection drop-down.
 
 	  <li>The baud rate selection box will be fixed at 9600 baud.</p>
 
-	  <li>The series of radio buttons labelled "GUI style" allows you
-	  to select how the program will look. "Metal" is the native Java
-	  look available on all types. Other choices will vary with your
-	  computer type. "Motif", "Windows", "MacOS" and "MacOS Adaptive"
-	  look native on Linux, Windows, MacOS "Classic" and Mac OS X
-	  respectively.</p>
-
-	  <li>In the bottom selection box, you can pick the default
-	  programmer format. You can override this each time you open the
-	  programmer, so this is here just for convenience.</p>
-
 	  <li>Click "Save". You'll be asked if it's OK for the program to
-	  quit, click "Yes".</p>
+	  quit; click "Yes".</p>
 
 	  <li>Restart the program. You should be up and running.</p>
-	  </ol>
+  </ol>
+
+<a name="tools"></a><h2>JMRI Tools</h2>
+N/A
+
+<a name="documentation"></a><h2>Documentation</h2>
+<h3>Third Party info</h3>
+<p><a href="http://www.dccwiki.com/Wangrow">Wangrow SystemOne on DCC Wiki</a>
 
 <!--#include virtual="/Footer" -->
+  </div><!-- closes #mainContent-->
+</div> <!-- closes #mBody-->
 </body>
 </html>
-
