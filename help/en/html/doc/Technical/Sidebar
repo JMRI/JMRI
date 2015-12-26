@@ -8,7 +8,7 @@
 	    <div style="text-align: center">Software documentation</div>
 	    <dl>
 
-		<dt><h3 style="padding-left: 1em;">Development tools</h3></dt>
+		<dt><h3>Development tools</h3></dt>
 		<dd>
 			<ul>
 			<li><a href="getgitcode.shtml">Getting the code via Git</a>
@@ -25,7 +25,7 @@
 			</ul>
 		</dd>
 
-		<dt><h3 style="padding-left: 1em;">Structure</h3></dt>
+		<dt><h3>Structure</h3></dt>
 		<dd>
 			<ul>
 			<li><a href="IntroStructure.shtml">Introduction</a>
@@ -46,7 +46,7 @@
 			</ul>
 		</dd>
 
-		<dt><h3 style="padding-left: 1em;">Techniques and Standards</h3></dt>
+		<dt><h3>Techniques and Standards</h3></dt>
 		<dd>
 			<ul>
 			<li><a href="RP.shtml">Recommended Practices</a>
@@ -62,7 +62,7 @@
 			</ul>
 		</dd>
 
-		<dt><h3 style="padding-left: 1em;">How To</h3></dt>
+		<dt><h3>How To</h3></dt>
 		<dd>
 			<ul>
 			<li><a href="plugins.shtml">Extend with Plugins</a>
@@ -71,7 +71,7 @@
 			</ul>
 		</dd>
 
-		<dt><h3 style="padding-left: 1em;">Functional Info</h3></dt>
+		<dt><h3>Functional Info</h3></dt>
 		<dd>
 			<ul>
 			<li><a href="TurnoutFeedback.shtml">Turnout Feedback</a>
@@ -80,7 +80,7 @@
 			</ul>
 		</dd>
 
-		<dt><h3 style="padding-left: 1em;">Background Info</h3></dt>
+		<dt><h3>Background Info</h3></dt>
 		<dd>
 			<ul>
 			<li><a href="TechRoadMap.shtml">Technology Roadmap</a>
