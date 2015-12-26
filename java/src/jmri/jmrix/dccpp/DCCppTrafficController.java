@@ -285,7 +285,8 @@ public abstract class DCCppTrafficController extends AbstractMRTrafficController
 	}
 	
 	// Now, suck in the rest of the message...
-        for (int i = 0; i < DCCppConstants.MAX_MESSAGE_SIZE; i++) {
+        // DwayneG - Max message size is not big enoguh to hold the full status messsage I presume this should be MAX_REPLY_SIZE as we are dealing with a reply here.
+        for (int i = 0; i < DCCppConstants.MAX_REPLY_SIZE; i++) {
             char1 = readByteProtected(istream);
 	    if (char1 == '>') {
 		log.debug("msg found > ");
