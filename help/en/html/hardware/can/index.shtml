@@ -102,17 +102,18 @@ Preferences and:
 	</ul>
 
 <a name="tools"></a><h2>JMRI CAN Tools</h2>
-<p>JMRI provides a basic 
+<ul>
+<li>JMRI provides a basic 
 <a href="../../../package/jmri/jmrix/AbstractMonFrame.shtml">Monitor tool</a> 
-for watching traffic on a CAN bus.
-<p>There's also a 
+for watching traffic on a CAN bus.</li>
+<li>There's also a 
 <a href="../../../package/jmri/jmrix/can/swing/send/CanSendFrame.shtml">Send Frame tool</a> for sending CAN frames manually and in 
-sequences.
-
-<p>For development, there are 
-<a href="scripting.shtml">Scripting tools</a>
+sequences.</li>
+<li>For development, there are 
+<a href="scripting.shtml">CAN Scripting tools</a>
 for sending and receiving CAN frames.  
-These can be very useful in testing hardware, etc.
+These can be very useful in testing hardware, etc.</li>
+</ul>
 
 <a name="documentation"></a><h2>Documentation</h2>
 <h3>JMRI Help</h3>

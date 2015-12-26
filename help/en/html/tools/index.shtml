@@ -187,6 +187,13 @@
 <li><a href="../../package/jmri/jmrix/cmri/serial/assignment/ListFrame.shtml">List Assignments</a></li>
 </ul>
   
+<h3><a href="../hardware/can/index.shtml#tools">CAN Tools</a></h3>
+<p>When JMRI is connected to a layout via CAN, the <b>CAN</b> menu contains:</p>
+<ul>   
+<li><a href="../../package/jmri/jmrix/AbstractMonFrame.shtml">Monitor tool</a></li>
+<li><a href="../../package/jmri/jmrix/can/swing/send/CanSendFrame.shtml">Send Frame tool</a></li>
+</ul>
+
 <h3><a href="../hardware/can/cbus/index.shtml#tools">MERG CBUS Tools</a></h3>
 <p>When JMRI is connected to a layout via CBUS, the <b>MERG</b> menu is shown:</p>
 <ul>   
