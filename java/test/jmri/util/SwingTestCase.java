@@ -52,6 +52,16 @@ public class SwingTestCase extends JFCTestCase {
         return retval;
     }
     
+    /**
+     * Provides a (slightly) better calibrated waiting interval
+     * than a native awtSleep()
+     */
+    public void waitAtLeast(int delay) {
+        long start = System.currentTimeMillis();
+        while (System.currentTimeMillis() < start+delay) {
+            awtSleep(20); // this is completely uncalibrated
+        }
+    }
     
     protected void setUp() throws Exception {
         super.setUp();
