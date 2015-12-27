@@ -2,7 +2,6 @@
 <html lang="en">
 <head>
 <!-- Copyright Bob Jacobsen 2008 -->
-<!-- $Id$ -->
 <title>JMRI: DecoderPro User Guide - How DecoderPro Identifies Decoders</title>
 
 <!-- Style -->
@@ -20,136 +19,139 @@
 <!--#include virtual="Sidebar" -->
 <div id="mainContent">
 
+<h1>JMRI: DecoderPro User Guide</h1>
+<h2>How DecoderPro Identifies Decoders</h2>
 
-<H2>JMRI: DecoderPro User Guide - How DecoderPro Identifies Decoders</h2>
-
-
-<P>
+<p>
 To properly program a decoder, DecoderPro needs to be able to 
 find a "definition" for the decoder.  That definition specifies which CVs are
 understood by the decoder, what they mean, what values are valid, etc.
 
-<P>
+<p>
 DecoderPro allows a user to pick which decoder model they have installed,
 in which case it can automatically find the right definition.  But it 
 also provide an "Ident" function which attempts to locate the right definition
 based on information it reads from the decoder.
 
-<P>
+<p>
 Ident starts by reading the manufacturer code from CV8.  The NMRA has
 defined a set of unique values for this CV.  Since (almost) all decoders
 properly provide this information, DecoderPro can use it to narrow-down the
 list of possible definitions to just those from a particular manufacter.
 
-<P>
+<p>
 Next, DecoderPro reads the value from CV7.  The NMRA has defined this as
 the "version" number.   Unfortunately, not all manufacturers use this number
 in a way that provides necessary information.  There are two ways that
 this can go wrong:
-<OL>
-<LI>Too many decoders with the same version number.  
-<P>
-If many different types of decoders have the same version number, and if
-those versions differ enough, then the version number doesn't provide enough
-information to pick a specific definition.
-<P>
-For example, if version number 3 can be found in both a low-cost decoder with
-few CVs, and in a high-function decoder with lots of CVs, finding a 3 in CV7 doesn't
-provide enough information.
-<P>
-This problem happens most often when a particular model can have a range of version
-numbers in CV7, and those ranges overlap from one model to another.
+	<ol>
+	<li>Too many decoders with the same version number:  
+	<p>
+	If many different types of decoders have the same version number, and if
+	those versions differ enough, then the version number doesn't provide enough
+	information to pick a specific definition.
+	<p>
+	For example, if version number 3 can be found in both a low-cost decoder with
+	few CVs, and in a high-function decoder with lots of CVs, finding a 3 in CV7 doesn't
+	provide enough information.
+	<p>
+	This problem happens most often when a particular model can have a range of version
+	numbers in CV7, and those ranges overlap from one model to another.
+  </li>
+	<li>Not enough information available about what a version number means:
+	<p>
+	This is particularly a problem when the version number changes because new
+	features have been added, but the model number of the decoder stays the same.
+	For example, consider the confusion that's caused when a manufacturer
+	adds BEMF to their XYZ123 without calling it a new model.  Now we find
+	that some XYZ123 decoders have BEMF, and some don't.  Further, we find that
+	there are two version numbers:  23 and 51, and have no official information
+	on what the differences are.  It's very hard to sort that out, and customers
+	get very frustrated.</p>
+	</li>
+	</ol>
 
-<LI>Not enough information available about what a version number means.
-<P>
-This is particularly a problem when the version number changes because new
-features have been added, but the model number of the decoder stays the same.
-For example, consider the confusion that's caused when a manufacturer
-adds BEMF to their XYZ123 without calling it a new model.  Now we find
-that some XYZ123 decoders have BEMF, and some don't.  Further, we find that
-there are two version numbers:  23 and 51, and have no official information
-on what the differences are.  It's very hard to sort that out, and customers
-get very frustrated.
-</OL>
-
-<P>
+<p>
 In addition to using the version number in CV7, DecoderPro can look at values in 
 other, manufacturer-specific CVs to identify the decoder.  This can be very powerful, as
 manufacturers can use their own CVs to make as much information available as desired.
-<P>
+<p>
 Unfortunately, even those manufacturers who use additional CVs for identification information
 rarely make the meaning of values in those CVs publicly available.
 We then have to deduce what a 103 in a particular CV means, and we often get it wrong.
 
-<P>
+<p>
 It's important to note that there are good business reasons for some of the things
 that manufacturers have done with identification information so far.  For example:
-<UL>
-<LI>Manufacturers often use the same processor chip and software in multiple decoder 
-models; it would
-be cost-prohibitive to change the chip to have a unique identification code for 
-each specific model.  
-<P>
-But we don't need a unique tag for each model.  We only need to identify what CVs
-are present and what they mean; two decoders that are running the same software will
-have the same CVs present.  (We handle as a special case the number of outputs that
-are physically available, etc)
+	<ul>
+	<li>Manufacturers often use the same processor chip and software in multiple decoder 
+	models; it would
+	be cost-prohibitive to change the chip to have a unique identification code for 
+	each specific model.  
+	<p>
+	But we don't need a unique tag for each model.  We only need to identify what CVs
+	are present and what they mean; two decoders that are running the same software will
+	have the same CVs present.  (We handle as a special case the number of outputs that
+	are physically available, etc)
+	
+	<li>Manufacturers are concerned that users and dealers will use the version identification
+	information to identify "stale stock", and insist on free updates to the most recent
+	version.  This would be a huge economic burden to the manufacturer, particularly given 
+	that most requests might be motivated by a desire to for a "latest and greatest" rather
+	than the need for specific bug to be fixed.
+	<p>
+	It's important to note, however, that we don't need to be able to identify the specific version
+	of firmware per se; we only want to identify the CV programming needed.  Internal changes
+	need not effect the identification information.
+	</ul>
 
-<LI>Manufacturers are concerned that users and dealers will use the version identification
-information to identify "stale stock", and insist on free updates to the most recent
-version.  This would be a huge economic burden to the manufacturer, particularly given 
-that most requests might be motivated by a desire to for a "latest and greatest" rather
-than the need for specific bug to be fixed.
-<P>
-It's important to note, however, that we don't need to be able to identify the specific version
-of firmware per se; we only want to identify the CV programming needed.  Internal changes
-need not effect the identification information.
-</UL>
 <h3>Recommendations</h3>
 What should a responsible manufacturer do?
 
-<P>
+<p>
 Generally:
-<UL>
-<LI>Have a plan for how to identify the feature set and CVs of a decoder,
+<ul>
+<li>Have a plan for how to identify the feature set and CVs of a decoder,
 and disclose that plan to users.  It might be something like "you can look in CV7 
 and CV150 to identify the features of a decoder".  To deal with the history
 of past decoders, etc, it might have to be more complicated:  "Match the values in
 CV7, CV150 and CV 188 to the possible values on this web page".  We'll find a way
 to deal with anything that can be described in terms of CV values.
 
-<LI>As new types of decoders are produced, make sure to publish the specific information
+<li>As new types of decoders are produced, make sure to publish the specific information
 needed to identify the decoder.  This might be as simple as putting the identification
 values on a web page for the decoder. (Since the values might change, putting them in an 
 manual is of limited use)
-</UL>
+</ul>
 
 Beyond that:
 
-<UL>
-<LI>The most value for the customer would come if a <em>specific</em> model
-can be identified. An additional CV for this would be ideal, but any method of
-narrowing down to a model 2XYZ123AB decoder would be ideal.
-
-<LI>
-If concerned about separating "firmware update version" from "feature set", consider
-using separate CVs for that, and perhaps not even making the "firmware update" information
-available to users.
-
-<LI>
-An easy way to handle older decoders when moving to a new method is to identify a 
-specific CV7 value that hasn't been used, and define that as a flag that other CVs
-should be consulted for more information.
-
-<LI>
-When new features are added to a decoder, consider calling it a new model.  Having 
-many different versions of the XYZ123 decoder, some with BEMF, some without, some with
-special lighting options, some without, etc, confuses both the customer and the people
-trying to support customers with software like DecoderPro.  And why not get credit for
-the new features from people who'll ask for the new model?
-
-</UL>
+	<ul>
+	<li>The most value for the customer would come if a <em>specific</em> model
+	can be identified. An additional CV for this would be ideal, but any method of
+	narrowing down to a model 2XYZ123AB decoder would be ideal.
+	
+	<li>
+	If concerned about separating "firmware update version" from "feature set", consider
+	using separate CVs for that, and perhaps not even making the "firmware update" information
+	available to users.
+	
+	<li>
+	An easy way to handle older decoders when moving to a new method is to identify a 
+	specific CV7 value that hasn't been used, and define that as a flag that other CVs
+	should be consulted for more information.
+	
+	<li>
+	When new features are added to a decoder, consider calling it a new model.  Having 
+	many different versions of the XYZ123 decoder, some with BEMF, some without, some with
+	special lighting options, some without, etc, confuses both the customer and the people
+	trying to support customers with software like DecoderPro.  And why not get credit for
+	the new features from people who'll ask for the new model?
+	</li>
+	</ul>
     
 <!--#include virtual="/Footer" -->
+ </div><!-- closes #mainContent-->
+</div> <!-- closes #mBody-->
 </body>
 </html>

@@ -19,7 +19,10 @@
 <div id="mainContent">
 
 <!-- Page Body -->
-<h1>DecoderPro Symbolic Programmer</h1>
+<h1>JMRI: DecoderPro User Guide</h1>
+<h2>Introduction to the JMRI Symbolic Programmer</h2>
+
+<p>Current version: 4.2</p>
 
 <p>Modern DCC decoders are complicated beasts to program.  The simple idea
 of "put the address in CV01" doesn't cope well when you program complicated
@@ -40,17 +43,16 @@ can.</p>
 <h2>Quick Introduction to Using DecoderPro</h2>
 
 The 
-<a href="./Tour.shtml">Quick Tour</a>
-page will given you more information on how DecoderPro looks
-and the basics of how to use it. 
+<a href="./Tour.shtml">Quick Tour</a> introduces how DecoderPro looks
+and how you may use it. 
 <p>
 DecoderPro is also covered in Joe Fugate's 
 <a href="http://trainmasters.tv/videos/3-4-siskiyou-line-dcc-programming-decoderpro" target="_new">TrainMasters.TV video library, part 3.4<a/>, as he shows how he used DP on his Siskiyou Line layout.</a>
 
 <h2>What You Need to Use DecoderPro</h2>
 
-<p>The DecoderPro software will work on Windows, Linux, Macintosh (MacOS 8.6
-through 9.2 and OS X), and OS/2. It will probably also work on most
+<p>DecoderPro will work on Windows, Linux, Macintosh (MacOS 8.6
+through 9.2 and OS X). It will probably also work on most
 other modern operating systems that have Java available; contact us for
 help if you'd like to try it on some other system. You need to have a
 serial port available, either on the computer itself, or via a 
@@ -74,23 +76,23 @@ computer programmer;
 <a name="guide">
 <h2>DecoderPro User Guide</h2></a>
 
-These User Guide sections follow the
+The following User Guide sections follow the
 <a href="./Tour.shtml">Quick Tour</a>
-with more information on how DecoderPro works and how to
+to provide more information on how DecoderPro works and how to
 install and adapt it:
 <dl class="toc">
-<dt><a href="./MoreInfo.shtml">Details</a></dt>
+<dt><a href="./MoreInfo.shtml">DecoderPro Details</a></dt>
 <dt><a href="./Files.shtml">Configuration files</a></dt>
-<dt><a href="./Roster.shtml">Working with the roster</a></dt>
-<dt><a href="./FAQ.shtml">Frequently asked questions</a></dt>
+<dt><a href="./Roster.shtml">Working with the Roster</a></dt>
+<dt><a href="./FAQ.shtml">Frequently Asked Questions</a></dt>
 <dt><a href="./Install.shtml">Downloading and installing DecoderPro</a></dt>
 </dl>
 <p>
-See also the 
+Also refer to the 
 <a href="../../../manual/index.shtml">DecoderPro Manual</a>
 for more information on how to use DecoderPro.
 
-<h2>More advanced</h2>
+<h3>Advanced Guide</h3>
 <dl class="toc">
 <dt><a href="./IntroXML.shtml">Intro to XML files</a></dt>
 <dt><a href="./CreateDecoder.shtml">Create your own decoder definition</a></dt>
