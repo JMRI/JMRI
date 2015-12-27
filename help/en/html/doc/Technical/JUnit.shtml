@@ -260,24 +260,30 @@ JMRI is a multi-threaded application. Listeners for
 JMRI objects are notified on various threads.
 Sometimes you have to wait for that to take place.
 To do that, after you invoke a something that will notifylisteners, 
-but before you check the results, 
-do
+but before you check the results, do
 <pre><code>
     JUnitUtil.releaseThread(this);
 </code></pre>
-This uses a nominal delay, suitable for almost all uses.
-If you're doing a lot of notifications, or some complex
-calculation in the listeners, you can instead do
+This uses a nominal delay.
+<p>
+If you want to wait for some specific condition to be true, e.g. 
+receiving a reply object, you can use 
+a waitFor method call
+which looks like:
 <pre><code>
-    JUnitUtil.releaseThread(this, 200);
+    JUnitUtil.waitFor(()->{reply!=null}, "reply didn't arrive");
 </code></pre>
-where the argument is the number of extra milliseconds to let other threads work.
-Don't make this longer than really needed, though, because
-you colleagues will have to wait that long every time they run the tests.
+The first argument is a lambda closure, a small piece of code that'll
+be evaluated repeatedly until true.  The String second argument is the 
+text of the assertion (error message) you'll get if the condition
+doesn't come true in a reasonable length of time.
 <p>
 Note that this should <b>not</b> be used to synchronize with
 Swing threads.  
 See the <a href="#testSwingCode">Testing Swing Code</a> section for that.
+<p>
+In general, you should not have calls to sleep(), wait() or yield() in your code.
+Use the JUnitUtil and JFCUtil support for those instead.
 
 <h3><a id="io" name="io"></a>Testing I/O</h3>
 
@@ -446,7 +452,7 @@ about not being able to find or load a class, suspect that
 adding the missing class to 
 the test/junit/runner/excluded.properties file would fix it.
 <p>
-As a test you can try setting the "-noloading" option in the
+<u>As a test only</u>, you can try setting the "-noloading" option in the
 <code>main</code> of whichever test class you're having trouble with:
 <CODE><PRE>
     static public void main(String[] args) {<br/>
@@ -456,15 +462,17 @@ As a test you can try setting the "-noloading" option in the
 </PRE></code>
 
 <p>
-The right long-term fix is to have all classes with loader
+Please don't leave "-noloading" in place, as it prevents people from rerunning the test
+dynamically. Instead, the right long-term fix is to have all classes with JUnit loader
 issues included in the 
 <code>test/junit/runner/excluded.properties</code>
 file. JUnit uses those properties to decide how to handle loading
 and reloading of classes.
 
-<!--#include virtual="/Footer" -->
+  <!--#include virtual="/Footer" -->
 
-	  </div><!-- closes #mainContent-->
+  </div><!-- closes #mainContent-->
+</div> <!-- closes #mBody-->
 </body>
 </html>
 

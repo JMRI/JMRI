@@ -298,7 +298,7 @@ public class Warrant extends jmri.implementation.AbstractNamedBean
         return OBlock.UNKNOWN;
     }
 
-    public List<ThrottleSetting> getThrottleCommands() {
+    synchronized public List<ThrottleSetting> getThrottleCommands() {
         ArrayList<ThrottleSetting> list = new ArrayList<ThrottleSetting>();
         for (int i = 0; i < _throttleCommands.size(); i++) {
             list.add(new ThrottleSetting(_throttleCommands.get(i)));
@@ -404,7 +404,7 @@ public class Warrant extends jmri.implementation.AbstractNamedBean
         _runBlind = runBlind;
     }
 
-    protected DccThrottle getThrottle() {
+    synchronized protected DccThrottle getThrottle() {
         if (_engineer!=null) {
             return _engineer.getThrottle();
         }
@@ -496,7 +496,7 @@ public class Warrant extends jmri.implementation.AbstractNamedBean
 
     }
 
-    protected String getRunningMessage() {
+    synchronized protected String getRunningMessage() {
         if (_delayStart) {
             return Bundle.getMessage("waitForDelayStart",
                     _trainName, getBlockOrderAt(0).getBlock().getDisplayName());
@@ -595,7 +595,7 @@ public class Warrant extends jmri.implementation.AbstractNamedBean
         TrackerTableAction.markNewTracker(getCurrentBlockOrder().getBlock(), _trainName);
     }
 
-    public void stopWarrant(boolean abort) {
+    synchronized public void stopWarrant(boolean abort) {
         _delayStart = false;
         if (_stoppingSignal != null) {
             log.error("signal " + _stoppingSignal.getSystemName());

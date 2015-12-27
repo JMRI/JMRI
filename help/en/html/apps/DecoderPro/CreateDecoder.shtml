@@ -2,7 +2,6 @@
 <html lang="en">
 <head>
 <!-- Copyright Bob Jacobsen 2008 -->
-<!-- $Id$ -->
 <title>JMRI: DecoderPro User Guide - Creating A Custom Decoder File</title>
 
 <!-- Style -->
@@ -21,7 +20,8 @@
 <div id="mainContent">
 
 
-<h1>DecoderPro User Guide - Creating A Custom Decoder File</h1>
+<h1>JMRI: DecoderPro User Guide</h1>
+<h2>Creating A Custom Decoder File</h2>
 
 <p>This page provides information on how the decoder definition
 files for the DecoderPro Symbolic Programmer work and how to create a new one.</p>
@@ -31,27 +31,27 @@ file to describe a new decoder.  You might benefit from reading the
 other sections of the DecoderPro user guide to get background
 information, especially the 
 <a href="IntroXML.shtml">XML introduction</a> and the section on 
-<a href="Files.shtml">what the configuration files contain</a>.</p>
+<a href="Files.shtml">Configuration Files contents</a>.</p>
 
 <p>The easiest way to create a configuration file is to modify an
 existing one.  In this section, we walk you through doing this.</p>
 
 <dl>
-<dt class=left>Make a copy of a similar file.</dt>
+<dt class="left">Make a copy of a similar file.</dt>
 <dd class=first>
 <p>Although you can call this new file anything you like, it will
 work best if you use the same convention as the provided files.
-That's <TT>"manufacturer name"_"decoder family".xml</TT>, for example:
-<TT>Digitrax_1x2.xml</TT> and <TT>Atlas_DualMode.xml</TT></p>
+That's <tt>"manufacturer name"_"decoder family".xml</tt>, for example:
+<tt>Digitrax_1x2.xml</tt> and <tt>Atlas_DualMode.xml</tt></p>
 
 <p>For the provided files, we use the same capitalization, etc,
 that the decoder manufacturer uses in their documentation. </p>
 
-<p>This new file should go in the <TT>decoders</TT> subdirectory in the
-<TT>JMRI</TT> preferences directory so that the program can find it.  The
-<TT>DecoderProConfig2.xml</TT> file lives in the preferences directory, so
+<p>This new file should go in the <tt>decoders</tt> subdirectory in the
+<tt>JMRI</tt> preferences directory so that the program can find it.  The
+<tt>DecoderProConfig2.xml</tt> file lives in the preferences directory, so
 you can search for that file to locate it.
-(See the <a HREF="Files.shtml#location"><em>configuration files page</em></a>
+(See the <a href="Files.shtml#location"><em>configuration files page</em></a>
 for further details
 about how to find that directory and it's contents) </p>
 
@@ -66,33 +66,33 @@ the tech stuff in the top 5 or 10 lines, or
 reformat the contents, it gets very hard to tell what's changed and
 what has not.
 
-<dt class=left>Edit the new file </dt>
+<dt class="left">Edit the new file </dt>
 <dd>
 <p>Open the new file with your favorite text editor.</p>
 
 </dd>
 
-<dt class=left>File contents: XML Header </dt>
+<dt class="left">File contents: XML Header </dt>
 <dd>
 <p>You'll see something like this at the top of the file (the examples are from the <a
 HREF="../../../../../xml/decoders/0NMRA.xml">0NMRA.xml</a> file):
 
-<p class=example>
-&lt;?xml version="1.0" encoding="utf-8"?&gt;<BR>
-&lt;?xml-stylesheet type="text/xsl" href="../XSLT/decoder.xsl"?&gt;<BR>
-&lt;!-- Copyright (C) JMRI 2001, 2005, 2007, 2-009, 2010 All rights reserved --&gt;<BR>
-&lt;!-- $Id$ --&gt;<BR>
-...<BR>
-&lt;decoder-config xmlns:xi="http://www.w3.org/2001/XInclude" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="http://jmri.org/xml/schema/decoder.xsd"&gt;<BR>
+<p class="example">
+&lt;?xml version="1.0" encoding="utf-8"?&gt;<br>
+&lt;?xml-stylesheet type="text/xsl" href="../XSLT/decoder.xsl"?&gt;<br>
+&lt;!-- Copyright (C) JMRI 2001, 2005, 2007, 2-009, 2010 All rights reserved --&gt;<br>
+&lt;!-- $Id$ --&gt;<br>
+...<br>
+&lt;decoder-config xmlns:xi="http://www.w3.org/2001/XInclude" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="http://jmri.org/xml/schema/decoder.xsd"&gt;<br>
 </p>
 
 <p>Don't mess with these lines; they describe the format of the file.
 </dd>
 
-<dt class=left> File contents: Author </dt>
+<dt class="left"> File contents: Author </dt>
 <dd>
 <p>The next element describes the author and version of this decoder file:
-<p class=example>
+<p class="example">
 &lt;version author="jake@physics.berkeley.edu" <br>
 &nbsp;&nbsp;&nbsp;&nbsp;version="1" lastUpdated="20011201"/&gt;
 </p>
@@ -107,18 +107,18 @@ modifying an existing file, increment the version attribute to the
 next number.   </p>
 </dd>
 
-<dt class=left> File contents: Decoder Family and Model</dt>
+<dt class="left"> File contents: Decoder Family and Model</dt>
 <dd>
 The next lines identify the "family" of decoders that this file
 describes:
-<p class=example>
-&lt;decoder&gt;<BR>
-&nbsp;&nbsp;&nbsp;&nbsp;&lt;family name="Digitrax 1x2" mfg="Digitrax"<BR>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;lowVersionID="240" highVersionID="242"<BR>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;comment="Digitrax DH142, etc" &gt;<BR>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&lt;model model="DH142" numOuts="4" numFns="2"/&gt;<BR>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&lt;model model="DN142" numOuts="4" numFns="2"/&gt;<BR>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&lt;model model="DH083" numOuts="5" numFns="2"/&gt;<BR>
+<p class="example">
+&lt;decoder&gt;<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&lt;family name="Digitrax 1x2" mfg="Digitrax"<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;lowVersionID="240" highVersionID="242"<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;comment="Digitrax DH142, etc" &gt;<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&lt;model model="DH142" numOuts="4" numFns="2"/&gt;<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&lt;model model="DN142" numOuts="4" numFns="2"/&gt;<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&lt;model model="DH083" numOuts="5" numFns="2"/&gt;<br>
 &nbsp;&nbsp;&nbsp;&nbsp;&lt;/family&gt;
 </p>
 
@@ -128,9 +128,9 @@ like this to make it more readable.  XML uses "elements" and
 elements; attributes like numOuts are set to specific values within elements.
 In the 2nd through 4th lines above
 
-<p class=example>
-&lt;family name="Digitrax 1x2" mfg="Digitrax"<BR>
-&nbsp;&nbsp;&nbsp;&nbsp;lowVersionID="240" highVersionID="242"<BR>
+<p class="example">
+&lt;family name="Digitrax 1x2" mfg="Digitrax"<br>
+&nbsp;&nbsp;&nbsp;&nbsp;lowVersionID="240" highVersionID="242"<br>
 &nbsp;&nbsp;&nbsp;&nbsp;comment="Digitrax DH142, etc" &gt;
 </p>
 
@@ -155,14 +155,14 @@ programmer can check if this file is being used with the expected
 decoder type.  If only one specific value is valid, define the both 
 lowVersionID and highVersionID with the same value, e.g.
 
-<p class=example>
+<p class="example">
 &nbsp;&nbsp;&nbsp;&nbsp;lowVersionID="123"&nbsp;highVersionID="123"
 </p>
 If the decoder type can have any one of a range of numbers,
 for example because the manufacturer has made some updates,
 define both attributes to cover the range:
 
-<p class=example>
+<p class="example">
 &nbsp;&nbsp;&nbsp;&nbsp;lowVersionID="21"&nbsp;highVersionID="42"
 </p>
 If you don't know the version number, don't define
@@ -176,9 +176,9 @@ info about the changes in the file.
 
 <p> The following lines:</p>
 
-<p class=example>
-&nbsp;&nbsp;&nbsp;&nbsp;&lt;model model="DH142" numOuts="4" numFns="2"/&gt;<BR>
-&nbsp;&nbsp;&nbsp;&nbsp;&lt;model model="DN142" numOuts="4" numFns="2"/&gt;<BR>
+<p class="example">
+&nbsp;&nbsp;&nbsp;&nbsp;&lt;model model="DH142" numOuts="4" numFns="2"/&gt;<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&lt;model model="DN142" numOuts="4" numFns="2"/&gt;<br>
 &nbsp;&nbsp;&nbsp;&nbsp;&lt;model model="DH083" numOuts="5" numFns="2"/&gt;
 </p>
 allow you to list a number of different decoder models that can use
@@ -187,7 +187,7 @@ elements, and give it the model name of the decoder.  The numOuts
 and numFns are described later, but for now you can just delete
 them, leaving something like:</p>
 
-<p class=example>
+<p class="example">
 &nbsp;&nbsp;&nbsp;&nbsp;&lt;model model="DH142" /&gt;
 </p>
 
@@ -197,13 +197,13 @@ appear, the value from the family element (or its default) will be used.
 
 </dd>
 
-<dt class=left> File contents: Programming Modes </dt>
+<dt class="left"> File contents: Programming Modes </dt>
 <dd>
 
 <p>The next element defines what programming modes the decoder can understand:</p>
 
-<p class=example>
-&lt;programming direct="byteOnly" paged="yes" <BR>
+<p class="example">
+&lt;programming direct="byteOnly" paged="yes" <br>
 &nbsp;&nbsp;&nbsp;&nbsp;register="yes" ops="yes"&gt;&lt;/programming&gt;
 </p>
 
@@ -214,24 +214,24 @@ use when working with a decoder.</p>
 </dd>
 
 <A name="variable">
-<dt class=left> File contents: Variable names</dt></a>
+<dt class="left"> File contents: Variable names</dt></a>
 <dd>
 <p>The next part of the file consists of a set of 'variable' elements
 defining specific variables, nested inside a 'variables' (note the
 extra "s") element. An example:</p>
 
-<p class=example>
-&lt;variables&gt;<BR>
-  &nbsp;&nbsp;&lt;variable CV="1" item="Primary Address" default="03"&gt;<BR>
-    &nbsp;&nbsp;&nbsp;&nbsp;&lt;decVal min="1" max="127"/&gt;<BR>
-    &nbsp;&nbsp;&nbsp;&nbsp;&lt;label&gt;Short Address&lt;/label&gt;<BR>
-    &nbsp;&nbsp;&nbsp;&nbsp;&lt;comment&gt;NMRA standard form&lt;/comment&gt;<BR>
-    &nbsp;&nbsp;&nbsp;&nbsp;&lt;tooltip&gt;Digitrax systems only address 1-99&lt;/tooltip&gt;<BR>
-  &nbsp;&nbsp;&lt;/variable&gt;<BR>
-  <BR>
-  &nbsp;&nbsp;(followed by more &lt;variable&gt; entries)<BR>
-  <BR>
-  &nbsp;&nbsp;(Insert new ones at the end)<BR>
+<p class="example">
+&lt;variables&gt;<br>
+  &nbsp;&nbsp;&lt;variable CV="1" item="Primary Address" default="03"&gt;<br>
+    &nbsp;&nbsp;&nbsp;&nbsp;&lt;decVal min="1" max="127"/&gt;<br>
+    &nbsp;&nbsp;&nbsp;&nbsp;&lt;label&gt;Short Address&lt;/label&gt;<br>
+    &nbsp;&nbsp;&nbsp;&nbsp;&lt;comment&gt;NMRA standard form&lt;/comment&gt;<br>
+    &nbsp;&nbsp;&nbsp;&nbsp;&lt;tooltip&gt;Digitrax systems only address 1-99&lt;/tooltip&gt;<br>
+  &nbsp;&nbsp;&lt;/variable&gt;<br>
+  <br>
+  &nbsp;&nbsp;(followed by more &lt;variable&gt; entries)<br>
+  <br>
+  &nbsp;&nbsp;(Insert new ones at the end)<br>
 &lt;/variables&gt;  
 </p>
 
@@ -246,7 +246,7 @@ different order.</p>
 <p> The attributes include:
 <ul>
 <li><dfn>item</dfn> - The 'standard' name for this variable. See the
-<A HREF="Programmer.shtml#id">discussion on the programmer definition page</a> 
+<a href="Programmer.shtml#id">discussion on the programmer definition page</a> 
 for more information on this.  Generally, look at the Comprehensive programmer
 to find something similar, and use the "name" attribute of that.
 <li><dfn>CV</dfn> - Which CV contains the configuration information
@@ -275,13 +275,13 @@ to the user when the user hovers their
 cursor over the variable on the screen. 
 </dd>
 
-<dt class=left> File contents: Creating new Variable definitions</dt>
+<dt class="left"> File contents: Creating new Variable definitions</dt>
 <dd>
 <p>You can also define new variables. A good starting point is to
 copy a similar definition, change its item name to a new value, and then
 edit its contents.</p>
 
-<p> To define how the new variable is displayed and editted, you
+<p> To define how the new variable is displayed and edited, you
 add elements within the 'variable' element.  There are several
 possible forms:
 <ul>
@@ -296,9 +296,9 @@ omit them, values from 0 to 255 are allowed.
 'longAddress' element. Its perhaps easiest to copy
 this from another file, or from this example:</p>
 
-<p class=example>
-&lt;variable item=&quot;Long Address&quot; CV=&quot;17&quot;&gt;<BR>
-&nbsp;&nbsp;&nbsp;&nbsp;&lt;longAddressVal/&gt;<BR>
+<p class="example">
+&lt;variable item=&quot;Long Address&quot; CV=&quot;17&quot;&gt;<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&lt;longAddressVal/&gt;<br>
 &lt;/variable&gt;
 </p>
 
@@ -306,21 +306,21 @@ this from another file, or from this example:</p>
 element for the speed table.  Optional attributes are:  "entries", "min", "max" and
 "mfx" (when true enables the M&auml;rklin mfx&reg; style speed table).  Example:</p>
 
-<p class=example>
-&lt;variable item=&quot;Speed Table&quot; CV=&quot;67&quot;&gt;<BR>
-&nbsp;&nbsp;&nbsp;&nbsp;&lt;speedTableVal/&gt;<BR>
+<p class="example">
+&lt;variable item=&quot;Speed Table&quot; CV=&quot;67&quot;&gt;<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&lt;speedTableVal/&gt;<br>
 &lt;/variable&gt;
 </p>
 
 <li>Some decoder options are best represented by "choose one
 choice". These are represented by a enumVariable element. Example:
 
-<p class=example>
-&lt;variable item=&quot;F6 during DC operation&quot; CV=&quot;13&quot; mask=&quot;XXVXXXXX&quot;&gt;<BR>
-&nbsp;&nbsp;&nbsp;&nbsp;&lt;enumVal&gt;<BR>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&lt;enumChoice choice=&quot;Off&quot;/&gt;<BR>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&lt;enumChoice choice=&quot;On&quot;/&gt;<BR>
-&nbsp;&nbsp;&nbsp;&nbsp;&lt;/enumVal&gt;<BR>
+<p class="example">
+&lt;variable item=&quot;F6 during DC operation&quot; CV=&quot;13&quot; mask=&quot;XXVXXXXX&quot;&gt;<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&lt;enumVal&gt;<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&lt;enumChoice choice=&quot;Off&quot;/&gt;<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&lt;enumChoice choice=&quot;On&quot;/&gt;<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&lt;/enumVal&gt;<br>
 &lt;/variable&gt;
 </p>
 
@@ -334,12 +334,12 @@ entered in the CV bits; choosing the second stores 1; etc.</p>
 
 <p> If you need to specific a specific number for an enum option,
 add a "value" attribute:
-<p class=example>
+<p class="example">
 &nbsp;&nbsp;&nbsp;&nbsp;&lt;enumChoice choice=&quot;Blue&quot; value=&quot;32&quot;/&gt;
 </p>
 </ul>
 
-<dt class=left> Checking for syntax errors</dt>
+<dt class="left"> Checking for syntax errors</dt>
 <dd>
 <p>At this point, you've created a new configuration file!</p>
 
@@ -352,7 +352,7 @@ message is the line number; open an editor to that line and try to
 see what's wrong with the syntax.
 </dd>
 
-<dt class=left> Add the file to the index</dt>
+<dt class="left"> Add the file to the index</dt>
 <dd>
 <p>All that's left is to enter your new file in the index.  This
 index is used to speed the startup of the program, when the list of
@@ -369,7 +369,9 @@ application and try it.</p>
 please see the 
 <a href="CreateDecoderAdvanced.shtml">Advanced Decoder Definitions</a>
 page.
+
 <!--#include virtual="/Footer" -->
-</div>
+ </div><!-- closes #mainContent-->
+</div> <!-- closes #mBody-->
 </body>
 </html>

@@ -83,7 +83,7 @@ import static jmri.jmris.json.JSON.XML;
 import jmri.jmris.json.JsonClientHandler;
 import jmri.jmris.json.JsonConnection;
 import jmri.jmris.json.JsonException;
-import jmri.jmris.json.JsonServerManager;
+import jmri.jmris.json.JsonServerPreferences;
 import jmri.jmris.json.JsonUtil;
 import jmri.jmrit.operations.trains.Train;
 import static jmri.jmrit.operations.trains.Train.DEPARTURETIME_CHANGED_PROPERTY;
@@ -290,7 +290,7 @@ public class JsonServlet extends WebSocketServlet {
                             reply = JsonUtil.getTurnouts(request.getLocale());
                             break;
                         case HELLO:
-                            reply = JsonUtil.getHello(request.getLocale(), JsonServerManager.getJsonServerPreferences().getHeartbeatInterval());
+                            reply = JsonUtil.getHello(request.getLocale(), JsonServerPreferences.getDefault().getHeartbeatInterval());
                             break;
                         case NETWORK_SERVICES:
                             reply = JsonUtil.getNetworkServices(request.getLocale());
@@ -701,7 +701,7 @@ public class JsonServlet extends WebSocketServlet {
         public void onOpen(Session sn) {
             log.debug("Opening connection");
             this.connection = new JsonConnection(sn);
-            sn.setIdleTimeout((long) (JsonServerManager.getJsonServerPreferences().getHeartbeatInterval() * 1.1));
+            sn.setIdleTimeout((long) (JsonServerPreferences.getDefault().getHeartbeatInterval() * 1.1));
             this.mapper = new ObjectMapper();
             this.handler = new JsonClientHandler(this.connection, this.mapper);
             this.shutDownTask = new QuietShutDownTask("Close open web socket") { // NOI18N
@@ -720,7 +720,7 @@ public class JsonServlet extends WebSocketServlet {
             };
             try {
                 log.debug("Sending hello");
-                this.handler.sendHello(JsonServerManager.getJsonServerPreferences().getHeartbeatInterval());
+                this.handler.sendHello(JsonServerPreferences.getDefault().getHeartbeatInterval());
             } catch (IOException e) {
                 log.warn("Error opening WebSocket:\n{}", e.getMessage());
                 sn.close();

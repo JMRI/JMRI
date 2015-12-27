@@ -1,115 +1,116 @@
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
-<!-- $Id$ -->
 <html lang="en">
 <head>
- <TITLE>
-      JMRI Hardware Guide: ZIMO MX-1
- </TITLE>
-    <META http-equiv=Content-Type content="text/html; charset=iso-8859-1">
-    <META content="Bob Jacobsen" name=Author>
-    <META name="keywords" content="ZIMO MX-1 java model railroad JMRI install windows">
+ <title>JMRI Hardware Support - ZIMO MX-1</title>
+
+<meta content="Bob Jacobsen" name="Author">
+<meta name="keywords" content="ZIMO MX-1 java model railroad JMRI install windows">
 
 <!-- Style -->
-<META HTTP-EQUIV="Content-Type" CONTENT="text/html; charset=iso-8859-1">
-<LINK REL="stylesheet" TYPE="text/css" HREF="/css/default.css"
-	MEDIA="screen">
-<LINK REL="stylesheet" TYPE="text/css" HREF="/css/print.css"
-	MEDIA="print">
-<LINK REL="icon" HREF="/images/jmri.ico" TYPE="image/png">
-<LINK REL="home" TITLE="Home" HREF="/">
+<meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
+<link rel="stylesheet" type="text/css" href="/css/default.css" media="screen">
+<link rel="stylesheet" type="text/css" href="/css/print.css" media="print">
+<link rel="icon" href="/images/jmri.ico" type="image/png">
+<link rel="home" title="Home" href="/">
 <!-- /Style -->
-</HEAD>
+</head>
 
-<BODY>
+<body>
 <!--#include virtual="/Header" -->
 
   <div class="nomenu" id="mBody">
     <div id="mainContent">
 
-      <H2> 
-      JMRI Hardware Guide: ZIMO MX-1
-      </H2>
+  <h1>Hardware Support: ZIMO MX-1</h1>
 
-	<H3>Supported Hardware</H3>
-
-	<UL>
-	<li>MX-1 - ASCII Protocol
+	<a name="hardware"></a><h2>Supported Hardware</h2>
+	<h3>Command Station</h3>
+	<h3>Computer Interfaces</h3>
+		<ul>
+		<li>MX-1 - ASCII Protocol
     <li>MXULF - Binary Protocol <b>Up to Software 0.61.05</b>
     <li>MX-10 - Binary Protocol (Tentative)
-	</UL>
+		</ul>
 
-	<H3>Limitations</H3>
+<a name="limitations"></a><h2>Limitations</h2>
 
 	<p>ASCII protocol currently only supports programming</p>
     <p>Binary protocol supports the following
     <ul>
-    <li>Programming, Both on the Main & Service Mode
-    <li>Throttle
-    <li>Turnout Control - Tentative
+	    <li>Programming, Both on the Main &amp; Service Mode
+	    <li>Throttle
+	    <li>Turnout Control - Tentative
     </ul>
     <b>Note</b> Testing of the binary protocol has only been possible using the MXULF, with the turnout control
     having not been fully tested.  Issues may occur when used with the MX-10 but we do not currently have any hardware
     to test against.
 
-	<H3>MX-1 Setup</H3>
+<a name="connecting"></a><h2>Connecting</h2>
 
+	<h3>MX-1 Setup</h3>
 	  <ol>
-	  <li> To connect your computer to a ZIMO MX-1 system, you can
-	  usually just connect the command station to the computer's serial
-	  port using a serial cable.</li>
-
-	  <li> Then go to the preferences panel of a JMRI-based program.
-	  This opens automatically the first time a program is run, or you
-	  can select it from the "Edit" menu.</li>
-
-	  <li> Select "ZIMO MX-1" from the top selection box. You can then
-	  select the proper serial port in the second selection box.</li>
-
-	  <li> The baud rate selection box will give you choices from 1,200
-	  to 38,400 baud. Select the speed that is configured into your
-	  MX-1.</li>
-
-	  <li> The series of radio buttons labelled "GUI style" allows you
-	  to select how the program will look. "Metal" is the native Java
-	  look available on all types. Other choices will vary with your
-	  computer type. "Motif", "Windows", "MacOS" and "MacOS Adaptive"
-	  look native on Linux, Windows, MacOS "Classic" and Mac OS X
-	  respectively.</li>
-
-	  <li> In the bottom selection box, you can pick the default
-	  programmer format. You can override this each time you open the
-	  programmer, so this is here just for convenience.</li>
-
-	  <li> Click "Save". You'll be asked if it's OK for the program to
-	  quit, click "Yes".</li>
-
-	  <li> Restart the program. You should be up and running.</li>
+		  <li> To connect your computer to a ZIMO MX-1 system, you can
+		  usually just connect the command station to the computer's serial
+		  port using a serial cable.</li>
+	
+		  <li> Then go to the preferences panel of a JMRI-based program.
+		  This opens automatically the first time a program is run, or you
+		  can select it from the "Edit" menu.</li>
+	
+		  <li> Select "ZIMO MX-1" from the top selection box. You can then
+		  select the proper serial port in the second selection box.</li>
+	
+		  <li> The baud rate selection box will give you choices from 1,200
+		  to 38,400 baud. Select the speed that is configured into your
+		  MX-1.</li>
+	
+		  <li> The series of radio buttons labelled "GUI style" allows you
+		  to select how the program will look. "Metal" is the native Java
+		  look available on all types. Other choices will vary with your
+		  computer type. "Motif", "Windows", "MacOS" and "MacOS Adaptive"
+		  look native on Linux, Windows, MacOS "Classic" and Mac OS X
+		  respectively.</li>
+	
+		  <li> In the bottom selection box, you can pick the default
+		  programmer format. You can override this each time you open the
+		  programmer, so this is here just for convenience.</li>
+	
+		  <li> Click "Save". You'll be asked if it's OK for the program to
+		  quit, click "Yes".</li>
+	
+		  <li> Restart the program. You should be up and running.</li>
 	  </ol>
       
     <h3>MXULF / MX-10 Set-up</h3>
     <ol>
-    <li>Connect the MXULF to a Suitable power supply</li>
-    <li>Connect the MXULF to the computer via the USB interface, ensure that 
-    the display screen reads something along the lines of 
-    <code> PC <-> MXULF<br>
-    Rx:  0    Tx:  0</code><br>
-    If the bottom line is not displayed, then remove/re-insert the usb cable.</li>
-    
-    <li> Then go to the preferences panel of a JMRI-based program.
-	  This opens automatically the first time a program is run, or you
-	  can select it from the "Edit" menu.</li>
-    <li>From the Manufacturers List, select "ZIMO" and from the system select "MXULF"</li>
-    <li>Select the appropriate comm port from the list</li>
-    <li>The Baud rate by default is set to 9600, you can change it if needs be from the advanced options</li>
-    <li> Click "Save". You'll be asked if it's OK for the program to
-	  quit and restart, click "Yes".</li>
-
-  <li> Restart the program. You should be up and running.</li>
-	<H3>Debugging</H3>
-
-	<p><a href="http://www.zimo.at/">ZIMO main web site</a></p>
+	    <li>Connect the MXULF to a Suitable power supply</li>
+	    <li>Connect the MXULF to the computer via the USB interface, ensure that 
+	    the display screen reads something along the lines of 
+	    <code> PC <-> MXULF<br>
+	    Rx:  0    Tx:  0</code><br>
+	    If the bottom line is not displayed, then remove/re-insert the usb cable.</li>
+	    
+	    <li> Then go to the preferences panel of a JMRI-based program.
+		  This opens automatically the first time a program is run, or you
+		  can select it from the "Edit" menu.</li>
+	    <li>From the Manufacturers List, select "ZIMO" and from the system select "MXULF"</li>
+	    <li>Select the appropriate comm port from the list</li>
+	    <li>The Baud rate by default is set to 9600, you can change it if needs be from the advanced options</li>
+	    <li> Click "Save". You'll be asked if it's OK for the program to
+		  quit and restart, click "Yes".</li>
+	    <li> Restart the program. You should be up and running.</li>
+	  </ol>
+  
+  <a name="tools"></a><h2>JMRI Zimo Tools</h2>
+  N/A
+  
+  <a name="documentation"></a><h2>Documentation</h2>
+  <h3>Third Party info</h3>
+  <p><a href="http://www.zimo.at/">ZIMO main web site</a></p>
 	<p><a href="http://www.mrsonline.net/html/zimo.html">ZIMO Agency of North America</a></p>
 
 <!--#include virtual="/Footer" -->
+ </div><!-- closes #mainContent-->
+</div> <!-- closes #mBody-->
 </body>
 </html>
