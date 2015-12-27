@@ -547,7 +547,7 @@ public class PrintOptionPanel extends OperationsPreferencesPanel {
     }
 
     private void updateLogoButtons() {
-        boolean flag = Setup.getManifestLogoURL().equals("");
+        boolean flag = Setup.getManifestLogoURL().equals(Setup.NONE);
         addLogoButton.setVisible(flag);
         removeLogoButton.setVisible(!flag);
         logoURL.setText(Setup.getManifestLogoURL());
