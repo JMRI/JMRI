@@ -2980,7 +2980,7 @@ public class Train implements java.beans.PropertyChangeListener {
             TrainPrintUtilities.openDesktopEditor(file);
             return true;
         }
-        String logoURL = NONE;
+        String logoURL = Setup.NONE;
         if (!getManifestLogoURL().equals(NONE)) {
             logoURL = FileUtil.getExternalFilename(getManifestLogoURL());
         } else if (!Setup.getManifestLogoURL().equals(Setup.NONE)) {
