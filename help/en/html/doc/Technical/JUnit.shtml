@@ -469,9 +469,10 @@ issues included in the
 file. JUnit uses those properties to decide how to handle loading
 and reloading of classes.
 
-<!--#include virtual="/Footer" -->
+  <!--#include virtual="/Footer" -->
 
-	  </div><!-- closes #mainContent-->
+  </div><!-- closes #mainContent-->
+</div> <!-- closes #mBody-->
 </body>
 </html>
 

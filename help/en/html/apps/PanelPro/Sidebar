@@ -22,22 +22,25 @@
 <dt><h3><a href="tools/index.shtml">Tools</a></h3></dt>
 <dd>JMRI provides powerful tools for working with your
 layout.
-    <ul>
-    <li><dfn><a href="../../tools/Sensors.shtml">Sensors</a></dfn>
-    <li><dfn><a href="../../tools/Turnouts.shtml">Turnouts</a></dfn>
-    <li><dfn><a href="../../tools/throttle/ThrottleMain.shtml">Throttles</a></dfn>
-    <li><dfn><a href="../../tools/consisttool/ConsistTool.shtml">Consisting</a></dfn>
-    <li><dfn><a href="../../tools/Lights.shtml">Lights</a></dfn>
-    <li><dfn><a href="../../tools/Routes.shtml">Routes</a></dfn>
-    <li><dfn><a href="../../tools/LRoutes.shtml">LRoutes</a></dfn>
-    <li><dfn><a href="../../tools/Logix.shtml">Logix</a></dfn>
-    <li><dfn><a href="../../tools/fastclock/index.shtml">Fast Clocks</a></dfn>
-    <li><dfn><a href="../../tools/speedometer/index.shtml">Speedometer</a></dfn>
-    <li><dfn><a href="../../tools/scripting/index.shtml">Scripting</a></dfn>
-    <li><dfn><a href="../../tools/Audio.shtml">Audio</a></dfn>
-    <li><dfn><a href="../../tools/IdTags.shtml">Id Tags</a></dfn>
-    <li><dfn><a href="../../tools/index.shtml#systemSpecificTools">System-specific...</a></dfn>
-    </ul>
+	<ul>
+		<li><dfn><a href="../../tools/Turnouts.shtml">Turnouts</a></dfn>
+		<li><dfn><a href="../../tools/Lights.shtml">Lights</a></dfn>
+		<li><dfn><a href="../../tools/Sensors.shtml">Sensors</a></dfn>
+		<li><dfn><a href="../../tools/throttle/ThrottleMain.shtml">Throttles</a></dfn>
+		<li><dfn><a href="../../tools/consisttool/ConsistTool.shtml">Consisting</a></dfn>
+		<li><dfn><a href="../../tools/Blocks.shtml">Blocks</a></dfn>
+		<li><dfn><a href="../../tools/Reporters.shtml">Reporters</a></dfn>
+		<li><dfn><a href="../../tools/Memories.shtml">Memory Variables</a></dfn>
+		<li><dfn><a href="../../tools/Routes.shtml">Routes</a></dfn>
+		<li><dfn><a href="../../tools/LRoutes.shtml">LRoutes</a></dfn>
+		<li><dfn><a href="../../tools/Logix.shtml">Logix</a></dfn>
+		<li><dfn><a href="../../tools/fastclock/index.shtml">Fast Clocks</a></dfn>
+		<li><dfn><a href="../../tools/speedometer/index.shtml">Speedometer</a></dfn>
+		<li><dfn><a href="../../tools/Audio.shtml">Audio</a></dfn>
+		<li><dfn><a href="../../tools/IdTags.shtml">Id Tags</a></dfn>
+		
+		<li><dfn><a href="../../tools/index.shtml#systemSpecificTools">System-specific...</a></dfn>
+	</ul>
 </dd>
 
 <dt><h3>Layout Automation</h3></dt>

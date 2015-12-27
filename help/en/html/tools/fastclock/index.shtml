@@ -1,72 +1,71 @@
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
-<!-- $Id$ -->
 <html lang="en">
 <head>
- <TITLE>
-      JMRI: Setup Fast Clock
- </TITLE>
-    <META http-equiv=Content-Type content="text/html; charset=iso-8859-1">
-    <META content="Bob Jacobsen" name=Author>
-    <META name="keywords" content="JMRI help Setup Fast Clock">
+ <title>
+      JMRI: Fast Clock - Setup
+ </title>
+    <meta content="Bob Jacobsen" name="Author">
+    <meta name="keywords" content="JMRI help Setup Fast Clock">
 
 <!-- Style -->
-<META HTTP-EQUIV="Content-Type" CONTENT="text/html; charset=iso-8859-1">
-<LINK REL="stylesheet" TYPE="text/css" HREF="/css/default.css"
-	MEDIA="screen">
-<LINK REL="stylesheet" TYPE="text/css" HREF="/css/print.css"
-	MEDIA="print">
-<LINK REL="icon" HREF="/images/jmri.ico" TYPE="image/png">
-<LINK REL="home" TITLE="Home" HREF="/">
+<meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
+<link rel="stylesheet" type="text/css" href="/css/default.css" media="screen">
+<link rel="stylesheet" type="text/css" href="/css/print.css" media="print">
+<link rel="icon" href="/images/jmri.ico" TYPE="image/png">
+<link rel="home" title="Home" href="/">
 <!-- /Style -->
-</HEAD>
+</head>
 
-<BODY>
+<body>
 <!--#include virtual="/Header" -->
-  <div class="nomenu" id="mBody">
-    <div id="mainContent">
 
-<H2>Setup Fast Clock
-</H2>
+<!--#include virtual="Sidebar" -->
+<div id="mainContent">
+
+<h1>JMRI&reg;: Fast Clock</h1>
     
-JMRI provides two kinds of fast clock capability:
+JMRI provides two kinds of Fast Clock capability:
 
-<UL>
-<LI>Internal - the computers clock provides the time information
-<LI>External - the DCC system provides the time information
-</UL>
+	<ul>
+	<li>Internal - the computers clock provides the time information
+	<li>External - the DCC system provides the time information
+	</ul>
 
 This help page describes the overall structure.  There
 are separate pages for 
 <a href="LocoNetClock.shtml">LocoNet clocks</a> and <a href="../../../package/jmri/jmrix/nce/clockmon/ClockMonFrame.shtml">NCE clocks</a>.
 As yet, we don't have interfaces for clocks in other DCC systems.
 
-<P>
+<p>
 There are two different parts to consider:  A "Timebase" provides the basic
 time information, while one or more displays show you what's going on.
-<P>
-To create a timebase, use the 
+
+<h2>Fast Clock Timebase</h2>
+To create a Timebase, use the 
 "<a href="../../../package/jmri/jmrit/simpleclock/SimpleClockFrame.shtml">Setup Fast Clock</a>"
  item in the 
-"Clocks" submenu under the "Tools" menu.  This gives you a window
+"Clocks" submenu under the JMRI "Tools" menu.  This gives you a window
 where you can:
-<UL>
-<LI>Select the timebase source to control (typically, this is the internal computer
-clock)
-<LI>Set the rate at which the clock runs
-<LI>Set the time
-<LI>Start and stop the clock
-</UL>
+	<ul>
+	<li>Select the timebase source to control (typically, this is the internal computer
+	clock)
+	<li>Set the rate at which the clock runs
+	<li>Set the time
+	<li>Start and stop the clock
+	</ul>
 
+<h2>Fast Clock Display</h2>
+<p>
 Once you have created a timebase by configuring it in that window, you 
 can open clocks that will display on your screen. Currently, JMRI has three
 types available:
-<UL>
-<LI>Analog clock - the traditional circular clock with hands.  You can resize
-it by dragging the window edges.  There's also a pause/run button.
-<LI>Nixie clock - a digital clock that looks like the old-style Nixie tubes
-<LI>Panel clock - you can also embed a clock in a panel (instead of a separate window)
-from the panel editor.
-</UL>
+	<ul>
+	<li>Analog clock - the traditional circular clock with hands.  You can resize
+	it by dragging the window edges.  There's also a pause/run button.
+	<li>Nixie clock - a digital clock that looks like the old-style Nixie tubes
+	<li>Panel clock - you can also embed a clock in a panel (instead of a separate window)
+	from the panel editor.
+	</ul>
 
 <p>
 When a clock is running, JMRI creates an internal sensor and a memory variable
@@ -77,9 +76,10 @@ from Logix and scripts.
 
 <p>
 Happy timekeeping!
-
-    
+ 
 <!--#include virtual="/Footer" -->
+  </div><!-- closes #mainContent-->
+ </div> <!-- closes #mBody-->
 </body>
 </html>
 

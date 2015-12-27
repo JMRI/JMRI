@@ -2,9 +2,7 @@
 <html lang="en">
 
 <head>
-<title>
-JMRI Hardware Guide: Use of USB to Serial adapters
-</title>
+<title>JMRI Hardware Setup Support - USB to Serial adapters</title>
 
 <meta name="Author" content="Bob Jacobsen">
 <meta name="keywords" content="USB serial adapter JMRI install">
@@ -24,28 +22,32 @@ JMRI Hardware Guide: Use of USB to Serial adapters
 <div class="nomenu" ID="mBody">
 <div id="mainContent">
 
-<a name="usb2serial"><h1>JMRI Hardware Guide: Using a USB to Serial adapter</h1></a>
+<a name="usb2serial"><h1>Hardware Setup Support: Using a USB to Serial adapter</h1></a>
 
 <p>If your model railroad hardware is supposed to connect to a
 computer via a traditional RS232 serial connection, but your computer
 doesn't have any RS232 ports, what do you do? This is becoming more
 common as new computers are sold with USB ports instead of RS232 serial
 ports.</p>
-<p>One solution is to use a "USB to Serial" adapter to solve this. A
+
+<a name="hardware"></a><h2>Supported Hardware</h2>
+<ul>
+<li>One solution is to use a "USB to Serial" adapter to solve this. A
 typical unit is the 
 <a href="http://www.tripplite.com/high-speed-usb-to-serial-adapter-keyspan~USA19HS/">Keyspan USA-19HS series of adapters</a> by Tripplite. 
 We recommend these Keyspan adapters; we use a
 Keyspan 19-series adapter during the release testing, and have found
-them to work reliably in all cases so far.</p>
-<p>Other companies, such as <a href="http://www.belkin.com">Belkin</a>,
+them to work reliably in all cases so far.</li>
+<li>Other companies, such as <a href="http://www.belkin.com">Belkin</a>,
 market adapters under their own name, and you can often find off-brand
-adapters at your local computer store.</p>
+adapters at your local computer store.</li>
+</ul>
 <p>Before you buy any adapter, make sure that it will work with your
 particular computer and operating system version. The important issue
 here is the "drivers" the computer needs to talk to the hardware
 adapter; some adapter manufacturers only provide Windows drivers, which
 makes their products useless to a Macintosh or Linux user. Also note
-that MacOS 8/9 and Mac OS X drivers are different, and can't be
+that MacOS 8/9 and OS X drivers are different, and can't be
 interchanged.</p>
 <p>Many DCC systems don't require very much of their serial ports,
 and in that case any adapter will probably work. But some DCC systems
@@ -53,29 +55,32 @@ require either special baud rates and/or RS232 control leads that not
 all adapters can provide. The rest of this page addresses those special
 cases.</p>
 
-<a name="MS100">
-<h2>LocoNet via MS100 adapter</H2></a>
+<a name="connecting"></a><h2>Connecting</h2>
 
+<a name="MS100">
+<h3>LocoNet via MS100 adapter</h3></a>
+
+<p>Note that using a LocoBuffer is highly recommended instead of
+trying to get a MS100 to work!</p>
 The MS100 requires a special baud rate that most USB to serial adapters
 can't provide. It also requires power to be supplied via the RS232
 control leads.
 <p>The Keyspan 19HS adapters are known to work with the MS100. We've
 gotten reports of success from Windows 98, Windows XP, and MacOS 9
-users. 
-(Note that the MS100 doesn't work with Mac OS X or many Windows Vista machines; 
-this is not a USB adapter issue) You'll have to get a special cable to connect the 9-pin
+users.<br>
+(Note that the MS100 does NOT work with Mac OS X and many Windows Vista machines; 
+this is not a USB Adapter issue)
+<p>You'll have to get a special cable to connect the 9-pin
 connector on the Keyspan adapter to the 25-pin connector on the MS100.</p>
-<p>Note that using a LocoBuffer is highly recommended instead of
-trying to get a MS100 to work!</p>
-<p>There are other Keyspan USB adapters who are known to not work
+<p>There are other Keyspan USB Adapter models that are known to NOT work
 with the MS100. In particular, the Macintosh Dual Serial adapter which
 provides two Macintosh DIN-8 serial ports does not provide the power
-needed by the MS100. <a href="loconet/KeyspanUSB.shtml">(More details)</a></p>
+needed by the MS100. (<a href="loconet/KeyspanUSB.shtml">More details</a>)</p>
 <p>Users have reported that a Belkin adapter wouldn't work with a
 MS100 because it could not provide the special baud rate needed.</p>
 
 <a name="LocoBuffer">
-<h2>LocoNet via LocoBuffer, LocoBuffer-II</H2></a>
+<h3>LocoNet via LocoBuffer, LocoBuffer-II</h3></a>
 
 <p>If you haven't yet purchased a LocoBuffer, you're best bet is ordering a 
 <a href="http://www.rr-cirkits.com">LocoBuffer-USB</a>
@@ -87,7 +92,7 @@ USB-to-Serial adapter is needed.</p>
 For reliable operation, the serial LocoBuffer interfaces require that
 the RS232 control leads provide flow control.
 
-<p>The Keyspan adapters are also known to work with the LocoBuffer.
+<p>Keyspan USB-to-Serial Adapters are also known to work with the LocoBuffer.
 We've gotten reports of success from Windows 98, Windows ME, Windows XP
 and Mac OS X users. You'll have to get a special cable to connect
 the 9-pin connector on the Keyspan adapter to the 25-pin connector on
@@ -103,17 +108,18 @@ or Linux computer, be sure to download the most recent drivers from the
 early versions had bugs.</p>
 
 <a name="LI100">
-<h2>XpressNet via LI100</H2></a>
-
+<h3>XpressNet via LI100</h3></a>
+<p>
 For reliable operation, the LI100 XpressNet interface requires that the
 RS232 control leads provide flow control.
 
 <p>The Keyspan adapters are known to work with the LI100. We've
-gotten reports of success from Windows 98, Windows XP, MacOS 9 and MacOS
+gotten reports of success from Windows 98, Windows XP, MacOS 9 and OS
 X users.</p>
-<a name="LI101">
-<h2>XpressNet via LI101</H2></a>
 
+<a name="LI101">
+<h3>XpressNet via LI101</h3></a>
+<p>
 For reliable operation, the LI101 XpressNet interface requires that the
 RS232 control leads provide flow control.
 
@@ -126,4 +132,3 @@ would be greatly appreciated.
 </div> <!-- closes #mBody-->
 </body>
 </html>
-

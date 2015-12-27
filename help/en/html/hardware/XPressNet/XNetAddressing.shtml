@@ -1,30 +1,26 @@
-<!doctype html public "-//w3c//dtd html 4.0 transitional//en">
-<html>
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
+<html lang="en">
 <head>
-<!-- $Id$ -->
-   <title>Lenz Feedback Bus Addressing</title>
+<title>JMRI Hardware Support - XPressNet - Lenz Feedback Bus Addressing</title>
 
 <!-- Style -->
-<META HTTP-EQUIV="Content-Type" CONTENT="text/html; charset=iso-8859-1">
-<LINK REL="stylesheet" TYPE="text/css" HREF="/css/default.css"
-	MEDIA="screen">
-<LINK REL="stylesheet" TYPE="text/css" HREF="/css/print.css"
-	MEDIA="print">
-<LINK REL="icon" HREF="/images/jmri.ico" TYPE="image/png">
-<LINK REL="home" TITLE="Home" HREF="/">
+<meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
+<link rel="stylesheet" type="text/css" href="/css/default.css" media="screen">
+<link rel="stylesheet" type="text/css" href="/css/print.css" media="print">
+<link rel="icon" href="/images/jmri.ico" type="image/png">
+<link rel="home" title="Home" href="/">
 <!-- /Style -->
-</HEAD>
+</head>
 
-<BODY>
+<body>
 <!--#include virtual="/Header" -->
 
   <div class="nomenu" id="mBody">
     <div id="mainContent">
 
-<h1>Lenz Feedback Bus Addressing</h1>
-
-On Lenz systems, feedback from input devices is handled by the Feedback Bus.
-
+<h1>Hardware Support: XPressNet - Lenz Feedback Bus Addressing</h1>
+<p>
+On Lenz systems, feedback from input devices is handled by the Feedback Bus. 
 The input available from the feedback bus is provided by the Lenz LR100 
 and LR101 Feedback Encoders, or Lenz accessory decoders which provide feedback 
 capabilities (the LS100 for example).
@@ -33,85 +29,77 @@ capabilities (the LS100 for example).
 <p>
 Each accessory decoder is addressed by giving it an address in the address 
 space allocated by the NMRA for accessory decoders.  This allows accessory 
-decoder addresses from 1 to 1024.  
-</p>
+decoder addresses from 1 to 1024.</p>
 <p>
 In JMRI's tools, you can prefix the address with XT to tell system the 
 decoder is accessed via an XPressNet based system.  If you only have an 
 XPressNet based system configured, you can just use the address, and the 
-programs will automatically assign an XT prefix for you.
-</p>
+programs will automatically assign an XT prefix for you.</p>
 <p>
 On the Feedback bus, accessory decoders are allowed to occupy addresses 
 from 1 to 64.  Since the feedback equiped decoders Lenz provides actually 
 include 4 accessory decoders, this limited address space actually 
-corresponds to accessory decoder address 1 to 256.
-</p>
+corresponds to accessory decoder address 1 to 256.</p>
 <p>
 To calculate what feedback device Addresses one of your accessory 
 decoders resides at, round up to the next multiple of 4, and divide that 
-number by 4.
-</p>
+number by 4.</p>
 <p>
 For example, if you have an accessory decoder with address 121, the next 
 multiple of 4 is 124.  124 divided by 4 is 31, so this decoder is included 
-with feedback address 31.
-</p>
+with feedback address 31.</p>
 <p>
 Feedback from accessory decoders is handled automatically by the turnout 
 tools included with JMRI.  If the turnout is equiped with feedback, the 
 Turnout Tool, Turnout Table, or a control panel will not update the 
 turnout's status until a response from the feedback bus indicates the 
-turnout has been thrown.
-</p>
+turnout has been thrown.</p>
 <p>
 Status for decoders that do not report feedback is handled by waiting for 
-a response message before changing the decoder's status.
-</p>
+a response message before changing the decoder's status.</p>
+
 <h2>Addressing Lenz Feedback Bus Sensors in JMRI</h2>
 <p>
 the Lenz LR100 and LR101 Feedback Encoders are allowed to have feedback 
 addresses from 1 to 128.  Lenz Recommends starting at address 65 and going 
-up to avoid conflicts with turnouts providing feedback.
-</p>
+up to avoid conflicts with turnouts providing feedback.</p>
 <p>
-NOTE: the LR100 actually has 16 inputs, and does take up two addresses.
-</p>
+NOTE: the LR100 actually has 16 inputs, and does take up two addresses.</p>
 <p>
 Each feedback encoder includes 8 inputs.  These inputs are either either on 
-or off.  Each input is numbered from 1 to 8 on the Feedback Encoder.  
-</p>
+or off.  Each input is numbered from 1 to 8 on the Feedback Encoder.</p>
 <p>
 To determine what feedback address is being reported by the device, you need 
 to know the address of the feedback encoder, and which input you are 
 using.  See Lenz's documentation for determining how to program the 
 Feedback Encoder's Address.  This can be done with the encoder in place on 
-the layout.
-</p>
+the layout.</p>
 <p>
 To calculate the address of a sensor, subtract 1 from the Feedback 
 Encoder's address, multiply that result by 8, and then add the input 
-number you are using.
-</p>
+number you are using.</p>
 <p>
 For Example, if you are using contact 3 on a Feedback Encoder with address 
 99, 99 - 1 = 98.  98*8=784.  784+3=787.  The feedback address you will use 
-is 787.
-</p>
+is 787.</p>
 
-<p>In the hardware address field of the Add Sensor window you can enter in the 
-encoder address, followed by the contact seperated by a ":"<br>
+<p>In the hardware address field of the "Add Sensor" pane you can enter in the 
+encoder address, followed by the contact separated by a ":"<br>
 So for a sensor on feedback encoder address 99, contact 3 you would enter <b>99:3</b></p>
 <p>
-In JMRI's tools, you can prefix the address with XS to tell system the 
+In JMRI's tools, you can prefix the address with "XS" to tell system the 
 Sensor is accessed via an XPressNet based system.  If you only have an 
-XPressNet based system configured, you can just use the address, and the 
-programs will automatically assign an XS prefix for you.
-</p>
+XPressNet system connection configured, you can just enter the address, and the 
+programs will automatically assign an "XS" prefix for you.</p>
+
+<p>Back to the <a href="index.shtml">XPressNet Help</a> page
+
 <hr>
-Paul Bender<BR>
+Paul Bender<br>
 paul.bender@acm.org
 
 <!--#include virtual="/Footer" -->
+ </div><!-- closes #mainContent-->
+</div> <!-- closes #mBody-->
 </body>
 </html>

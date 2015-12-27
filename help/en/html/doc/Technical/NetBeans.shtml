@@ -1,11 +1,10 @@
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
-<!-- $Id$ -->
 <html lang="en">
 <head>
-    <TITLE>
+    <title>
  	JMRI: Building with NetBeans
-    </TITLE>
-    <META content="Bob Jacobsen" name=Author>
+    </title>
+    <meta content="Bob Jacobsen" name="Author">
     <meta name="keywords" content="JMRI technical code NetBeans">
 
     <!-- The combination of "Define" and {Header,Style, Logo and Footer} comments -->
@@ -16,7 +15,7 @@
     <!-- or change them to reflect your alternative logo -->
 
 <!-- Style -->
-  <META http-equiv=Content-Type content="text/html; charset=iso-8859-1">
+  <meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
   <link rel="stylesheet" type="text/css" href="/css/default.css" media="screen">
   <link rel="stylesheet" type="text/css" href="/css/print.css" media="print">
   <link rel="icon" href="/images/jmri.ico" type="image/png">
@@ -24,6 +23,7 @@
 <!-- /Style -->
 </head>
 
+<body>
 <!--#include virtual="/Header" -->
 <!--#include virtual="Sidebar" -->
 
@@ -277,7 +277,6 @@
         the path to a report file in HTML format.  Open that file with a browser 
         to review the FindBugs results.</p>        
 
-
         <h2><a id="compileIndividualFile">NetBeans and compiling individual files</a></h2>
         <p>The NetBeans IDE shows icons to the side of each object in the Projects window,
             and to the side of each file in the Files window.  These icons can reflect the
@@ -299,9 +298,10 @@
         <p><a href="http://subversion.apache.org/">The Apache Subversion project web site</a></p>
         <p><a href="http://sourceforge.net/projects/nsis">The NSIS project web site</a></p>
         <p><a href="http://findbugs.sourceforge.net">The FindBugs web site</a></p>
-    <!--#include virtual="/Footer" -->
-      </div>
-      <!-- closes #mainContent-->
-</body>
 
- </html>
+  <!--#include virtual="/Footer" -->
+
+  </div><!-- closes #mainContent-->
+</div> <!-- closes #mBody-->
+</body>
+</html>
