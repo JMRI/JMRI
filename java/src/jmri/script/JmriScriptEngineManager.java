@@ -354,13 +354,14 @@ public final class JmriScriptEngineManager {
                 Properties properties;
                 try {
                     properties = new Properties(System.getProperties());
+                    properties.setProperty("python.console.encoding", "UTF-8"); // NOI18N
+                    properties.setProperty("python.cachedir", FileUtil.getAbsoluteFilename(properties.getProperty("python.cachedir", "settings:jython/cache"))); // NOI18N
                     properties.load(is);
                     String path = properties.getProperty("python.path", "");
                     if (path.length() != 0) {
                         path = path.concat(File.pathSeparator);
                     }
                     properties.setProperty("python.path", path.concat(FileUtil.getScriptsPath().concat(File.pathSeparator).concat(FileUtil.getAbsoluteFilename("program:jython"))));
-                    properties.setProperty("python.cachedir", FileUtil.getAbsoluteFilename(properties.getProperty("python.cachedir", "settings:jython/cache"))); // NOI18N
                     execJython = Boolean.valueOf(properties.getProperty("jython.exec", Boolean.toString(false)));
                 } catch (IOException ex) {
                     log.error("Found, but unable to read python.properties: {}", ex.getMessage());
