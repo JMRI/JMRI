@@ -54,10 +54,26 @@ public class SwingTestCase extends JFCTestCase {
         return retval;
     }
 
+    protected enum Pixel { // protected to limit leakage outside Swing tests
+    
+        TRANSPARENT (0x00000000),
+        RED         (0xFFFF0000),
+        GREEN       (0xFF00FF00),
+        BLUE        (0xFF0000FF),
+        WHITE       (0xFF000000),
+        BLACK       (0xFFFFFFFF),
+        YELLOW      (0xFFFFFF00);
+    
+        public String toString() { return formatPixel(value); }
+        public boolean equals(int v) { return value == v; }
+        private final int value;
+        private Pixel(int value) { this.value = value; }
+    }
+    
     /**
      * Standard parsing of ARCG pixel (int) value to String
      */
-    public String formatPixel(int pixel) {
+    public static String formatPixel(int pixel) {
         return String.format("0x%8s", Integer.toHexString(pixel)).replace(' ', '0');
     }
     
@@ -67,8 +83,36 @@ public class SwingTestCase extends JFCTestCase {
      * @param value Correct ARGB value for test
      * @param pixel ARGB piel value being tested
      */
-    public void assertPixel(String name, int value, int pixel) {
-        Assert.assertEquals(name, formatPixel(value), formatPixel(pixel));
+    protected static void assertPixel(String name, Pixel value, int pixel) {
+        Assert.assertEquals(name, value.toString(), formatPixel(pixel));
+    }
+    
+    /**
+     * Check four corners and center of an image
+     * @param name Condition being asserted
+     * @param pixels Image ARCG array
+     */
+    protected static void assertImageNinePoints(String name, int[] pixels, Dimension size, 
+                        Pixel upperLeft, Pixel upperCenter, Pixel upperRight,
+                        Pixel midLeft, Pixel center, Pixel midRight,
+                        Pixel lowerLeft, Pixel lowerCenter, Pixel lowerRight
+                        ) {
+        int rows = size.height;
+        int cols = size.width;
+        
+        Assert.assertEquals("size consistency", pixels.length, rows*cols);
+        
+        assertPixel(name+" upper left", upperLeft,     pixels[0]);
+        assertPixel(name+" upper middle", upperCenter, pixels[0+cols/2]);
+        assertPixel(name+" upper right", upperRight,   pixels[0+(cols-1)]);
+        
+        assertPixel(name+" middle left", midLeft,      pixels[(rows/2)*cols]);
+        assertPixel(name+" center", center,            pixels[(rows/2)*cols+cols/2]);
+        assertPixel(name+" middle right", midRight,    pixels[(rows/2)*cols+(cols-1)]);
+        
+        assertPixel(name+" lower left", lowerLeft,     pixels[(rows*cols-1)-(cols-1)]);
+        assertPixel(name+" lower middle", lowerCenter, pixels[(rows*cols-1)-(cols-1)+cols/2]);
+        assertPixel(name+" lower right", lowerRight,   pixels[rows*cols-1]);
     }
     
     /**

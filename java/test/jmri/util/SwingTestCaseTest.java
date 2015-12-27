@@ -53,6 +53,45 @@ public class SwingTestCaseTest extends SwingTestCase {
         f.dispose();
     }
 
+    /** 
+     * Test formatting
+     */
+    public void testFormatPixel() {
+        Assert.assertEquals("0x00000000", formatPixel(0));
+        Assert.assertEquals("0x00000001", formatPixel(1));
+        Assert.assertEquals("0xffffffff", formatPixel(0xffffffff));
+        Assert.assertEquals("0xffffff0f", formatPixel(0xffffff0f));
+    }
+ 
+    public void testAssertPixel() {
+        assertPixel("test RED", Pixel.RED, 0xffff0000);
+    }
+    
+    public void testAssertImageNinePoints() {
+
+        // special target to make sure we're doing the right points
+        JFrame f = new JFrame();
+        f.getContentPane().setBackground(java.awt.Color.blue);
+        f.setUndecorated(true); // skip frame decoration, which can force a min size.
+        
+        JLabel wIcon = new JLabel(new ImageIcon("resources/icons/CornerBits.gif")); // 13 high 39 wide
+        wIcon.setOpaque(false);
+        
+        f.add(wIcon);
+        f.pack();
+        flushAWT();
+        Assert.assertEquals("icon size", new Dimension(39, 13).toString(),wIcon.getSize().toString());
+         
+        int[] val = getDisplayedContent(wIcon, wIcon.getSize(), new Point(0,0));
+        
+        Assert.assertEquals("icon arraylength", 39*13, val.length);
+
+        assertImageNinePoints("test image", val, wIcon.getSize(),
+                Pixel.RED, Pixel.GREEN, Pixel.BLUE,
+                Pixel.GREEN, Pixel.BLUE, Pixel.RED,
+                Pixel.RED, Pixel.GREEN, Pixel.BLUE);
+    }
+
     /**
      * Confirm methodology to test the content of a JLabel
      */
@@ -71,12 +110,17 @@ public class SwingTestCaseTest extends SwingTestCase {
         int[] val = getDisplayedContent(wIcon, wIcon.getSize(), new Point(0,0));
         
         Assert.assertEquals("icon arraylength", 13*13, val.length);
-        Assert.assertEquals("icon first", "0xff00ff00", 
-                String.format("0x%8s", Integer.toHexString(val[0])).replace(' ', '0'));
-        Assert.assertEquals("icon middle", "0xff00ff00", 
-                String.format("0x%8s", Integer.toHexString(val[(int)Math.floor(wIcon.getSize().height/2)*wIcon.getSize().width+(int)Math.floor(wIcon.getSize().width/2)-1]).replace(' ', '0')));
-        Assert.assertEquals("icon last", "0xff00ff00", 
-                String.format("0x%8s", Integer.toHexString(val[wIcon.getSize().height*wIcon.getSize().width-1]).replace(' ', '0')));
+
+        assertPixel("icon first",   Pixel.GREEN, val[0]);
+        assertPixel("icon middle",  Pixel.GREEN, val[(int)Math.floor(wIcon.getSize().height/2)*wIcon.getSize().width+(int)Math.floor(wIcon.getSize().width/2)-1]);
+        assertPixel("icon last",    Pixel.GREEN, val[wIcon.getSize().height*wIcon.getSize().width-1]);
+        
+        Assert.assertEquals("icon first", "0xff00ff00", formatPixel(val[0])); // compare strings to make error readable
+
+        assertImageNinePoints("icon", val, wIcon.getSize(),
+                Pixel.GREEN, Pixel.GREEN, Pixel.GREEN,
+                Pixel.GREEN, Pixel.GREEN, Pixel.GREEN,
+                Pixel.GREEN, Pixel.GREEN, Pixel.GREEN);
 
         f.dispose();
         
@@ -102,12 +146,17 @@ public class SwingTestCaseTest extends SwingTestCase {
         int[] val = getDisplayedContent(wIcon, wIcon.getSize(), new Point(0,0));
         
         Assert.assertEquals("icon arraylength", 13*13, val.length);
-        Assert.assertEquals("icon first", "0xffff0000", 
-                String.format("0x%8s", Integer.toHexString(val[0])).replace(' ', '0'));
-        Assert.assertEquals("icon middle", "0xff0000ff", 
-                String.format("0x%8s", Integer.toHexString(val[(int)Math.floor(wIcon.getSize().height/2)*wIcon.getSize().width+(int)Math.floor(wIcon.getSize().width/2)-1])).replace(' ', '0'));
-        Assert.assertEquals("icon last", "0xffff0000", 
-                String.format("0x%8s", Integer.toHexString(val[13*13-1])).replace(' ', '0'));
+        
+        assertPixel("icon first",   Pixel.RED, val[0]);
+        assertPixel("icon middle",  Pixel.BLUE, val[(int)Math.floor(wIcon.getSize().height/2)*wIcon.getSize().width+(int)Math.floor(wIcon.getSize().width/2)-1]);
+        assertPixel("icon last",    Pixel.RED, val[wIcon.getSize().height*wIcon.getSize().width-1]);
+        
+        Assert.assertEquals("icon first", "0xffff0000", formatPixel(val[0])); // compare strings to make error readable
+
+        assertImageNinePoints("icon", val, wIcon.getSize(),
+                Pixel.RED, Pixel.RED, Pixel.RED,
+                Pixel.RED, Pixel.BLUE, Pixel.RED,
+                Pixel.RED, Pixel.RED, Pixel.RED);
         
         f.dispose();
     }
@@ -124,17 +173,14 @@ public class SwingTestCaseTest extends SwingTestCase {
         f.add(wIcon);
         f.pack();
         flushAWT();
-        Assert.assertEquals("icon size", new Dimension(13,13).toString(),wIcon.getSize().toString());
+        Assert.assertEquals("icon", new Dimension(13,13).toString(),wIcon.getSize().toString());
          
         int[] val = getDisplayedContent(wIcon, wIcon.getSize(), new Point(0,0));
         
-        Assert.assertEquals("icon arraylength", 13*13, val.length);
-        Assert.assertEquals("icon first", "0xffff0000", 
-                String.format("0x%8s", Integer.toHexString(val[0])).replace(' ', '0'));
-        Assert.assertEquals("icon middle", "0x00000000", 
-                String.format("0x%8s", Integer.toHexString(val[(int)Math.floor(wIcon.getSize().height/2)*wIcon.getSize().width+(int)Math.floor(wIcon.getSize().width/2)-1])).replace(' ', '0'));
-        Assert.assertEquals("icon last", "0xffff0000", 
-                String.format("0x%8s", Integer.toHexString(val[13*13-1])).replace(' ', '0'));
+        assertImageNinePoints("test image", val, wIcon.getSize(),
+                Pixel.RED, Pixel.RED, Pixel.RED,
+                Pixel.RED, Pixel.TRANSPARENT, Pixel.RED,
+                Pixel.RED, Pixel.RED, Pixel.RED);
         
         // now check that background shows through
         // Need to find the icon location first
@@ -142,25 +188,15 @@ public class SwingTestCaseTest extends SwingTestCase {
         
         val = getDisplayedContent(f.getContentPane(), wIcon.getSize(), p);
         Assert.assertEquals("frame arraylength", 13*13, val.length);
-        Assert.assertEquals("frame first", "0xffff0000", 
-                String.format("0x%8s", Integer.toHexString(val[0])).replace(' ', '0'));
-        Assert.assertEquals("frame middle", "0xff0000ff", 
-                String.format("0x%8s", Integer.toHexString(val[(int)Math.floor(wIcon.getSize().height/2)*wIcon.getSize().width+(int)Math.floor(wIcon.getSize().width/2)-1])).replace(' ', '0'));
-        Assert.assertEquals("frame last", "0xffff0000", 
-                String.format("0x%8s", Integer.toHexString(val[13*13-1])).replace(' ', '0'));
+
+        assertImageNinePoints("frame", val, wIcon.getSize(),
+                Pixel.RED, Pixel.RED, Pixel.RED,
+                Pixel.RED, Pixel.BLUE, Pixel.RED,
+                Pixel.RED, Pixel.RED, Pixel.RED);
 
         f.dispose();
     }
 
-    /** 
-     * Test formatting
-     */
-    public void testFormatPixel() {
-        Assert.assertEquals("0x00000000", formatPixel(0));
-        Assert.assertEquals("0x00000001", formatPixel(1));
-        Assert.assertEquals("0xffffffff", formatPixel(0xffffffff));
-        Assert.assertEquals("0xffffff0f", formatPixel(0xffffff0f));
-    }
     
     // from here down is testing infrastructure
     public SwingTestCaseTest(String s) {
