@@ -12,6 +12,8 @@ import junit.extensions.jfcunit.JFCTestCase;
 import junit.extensions.jfcunit.JFCTestHelper;
 import junit.extensions.jfcunit.TestHelper;
 
+import junit.framework.Assert;
+
 /**
  * Provide Swing context for JUnit test classes.
  * <p>
@@ -50,6 +52,23 @@ public class SwingTestCase extends JFCTestCase {
 
         g2.dispose();
         return retval;
+    }
+
+    /**
+     * Standard parsing of ARCG pixel (int) value to String
+     */
+    public String formatPixel(int pixel) {
+        return String.format("0x%8s", Integer.toHexString(pixel)).replace(' ', '0');
+    }
+    
+    /**
+     * Clean way to assert against a pixel value.
+     * @param name Condition being asserted
+     * @param value Correct ARGB value for test
+     * @param pixel ARGB piel value being tested
+     */
+    public void assertPixel(String name, int value, int pixel) {
+        Assert.assertEquals(name, formatPixel(value), formatPixel(pixel));
     }
     
     /**

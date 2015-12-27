@@ -53,6 +53,9 @@ public class SwingTestCaseTest extends SwingTestCase {
         f.dispose();
     }
 
+    /**
+     * Confirm methodology to test the content of a JLabel
+     */
     public void testGetDisplayedContentGreen() {
     
         JFrame f = new JFrame();
@@ -79,6 +82,9 @@ public class SwingTestCaseTest extends SwingTestCase {
         
     }
     
+    /**
+     * Confirm methodology to test transparent pixels in a JLabel
+     */
     public void testGetDisplayedContentRedTransparentBkg() {
     
         JFrame f = new JFrame();
@@ -146,6 +152,16 @@ public class SwingTestCaseTest extends SwingTestCase {
         f.dispose();
     }
 
+    /** 
+     * Test formatting
+     */
+    public void testFormatPixel() {
+        Assert.assertEquals("0x00000000", formatPixel(0));
+        Assert.assertEquals("0x00000001", formatPixel(1));
+        Assert.assertEquals("0xffffffff", formatPixel(0xffffffff));
+        Assert.assertEquals("0xffffff0f", formatPixel(0xffffff0f));
+    }
+    
     // from here down is testing infrastructure
     public SwingTestCaseTest(String s) {
         super(s);
