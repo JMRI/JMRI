@@ -33,7 +33,7 @@ public class JsonServerPreferencesPanel extends JPanel implements PreferencesPan
 
     public JsonServerPreferencesPanel() {
         this.preferences = new JsonServerPreferences();
-        this.preferences.apply(JsonServerManager.getJsonServerPreferences());
+        this.preferences.apply(JsonServerPreferences.getDefault());
         initGUI();
         setGUI();
     }
@@ -160,8 +160,8 @@ public class JsonServerPreferencesPanel extends JPanel implements PreferencesPan
     @Override
     public void savePreferences() {
         if (this.setValues()) {
-            JsonServerManager.getJsonServerPreferences().apply(this.preferences);
-            JsonServerManager.getJsonServerPreferences().save();
+            JsonServerPreferences.getDefault().apply(this.preferences);
+            JsonServerPreferences.getDefault().save();
             if (this.parentFrame != null) {
                 this.parentFrame.dispose();
             }
@@ -170,13 +170,13 @@ public class JsonServerPreferencesPanel extends JPanel implements PreferencesPan
 
     @Override
     public boolean isDirty() {
-        return this.preferences.compareValuesDifferent(JsonServerManager.getJsonServerPreferences())
-                || JsonServerManager.getJsonServerPreferences().isDirty();
+        return this.preferences.compareValuesDifferent(JsonServerPreferences.getDefault())
+                || JsonServerPreferences.getDefault().isDirty();
     }
 
     @Override
     public boolean isRestartRequired() {
-        return JsonServerManager.getJsonServerPreferences().isRestartRequired();
+        return JsonServerPreferences.getDefault().isRestartRequired();
     }
 
     @Override
