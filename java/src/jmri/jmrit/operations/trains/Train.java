@@ -154,6 +154,7 @@ public class Train implements java.beans.PropertyChangeListener {
     public static final String TRAIN_REQUIREMENTS_CHANGED_PROPERTY = "TrainRequirements"; // NOI18N
     public static final String TRAIN_MOVE_COMPLETE_CHANGED_PROPERTY = "TrainMoveComplete"; // NOI18N
     public static final String TRAIN_ROW_COLOR_CHANGED_PROPERTY = "TrianRowColor"; // NOI18N
+    public static final String TRAIN_MODIFIED_CHANGED_PROPERTY = "TrainModified"; // NOI18N
 
     // Train status
     public static final String TRAIN_RESET = Bundle.getMessage("TrainReset");
@@ -2754,7 +2755,7 @@ public class Train implements java.beans.PropertyChangeListener {
             setPrinted(false);
         }
         if (old != modified) {
-            setDirtyAndFirePropertyChange("TrainModified", old ? "true" : "false", modified ? "true" // NOI18N
+            setDirtyAndFirePropertyChange(TRAIN_MODIFIED_CHANGED_PROPERTY, old ? "true" : "false", modified ? "true" // NOI18N
             : "false"); // NOI18N
         }
     }
@@ -2980,7 +2981,7 @@ public class Train implements java.beans.PropertyChangeListener {
             TrainPrintUtilities.openDesktopEditor(file);
             return true;
         }
-        String logoURL = NONE;
+        String logoURL = Setup.NONE;
         if (!getManifestLogoURL().equals(NONE)) {
             logoURL = FileUtil.getExternalFilename(getManifestLogoURL());
         } else if (!Setup.getManifestLogoURL().equals(Setup.NONE)) {

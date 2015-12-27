@@ -1,20 +1,18 @@
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
 <html lang="en">
 <head>
-<!-- Copyright ($Author$) 2013 -->
-<!-- $Id$ -->
 <title>JMRI: webThrottle - Web control for locos, panels, turnouts and routes</title>
 
 <!-- Style -->
-<META HTTP-EQUIV="Content-Type" CONTENT="text/html; charset=iso-8859-1">
-<LINK REL="stylesheet" TYPE="text/css" HREF="/css/default.css" MEDIA="screen">
-<LINK REL="stylesheet" TYPE="text/css" HREF="/css/print.css" MEDIA="print">
-<LINK REL="icon" HREF="/images/jmri.ico" TYPE="image/png">
-<LINK REL="home" TITLE="Home" HREF="/">
+<meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
+<link rel="stylesheet" type="text/css" href="/css/default.css" media="screen">
+<link rel="stylesheet" type="text/css" href="/css/print.css" media="print">
+<link rel="icon" href="/images/jmri.ico" type="image/png">
+<link rel="home" title="Home" href="/">
 <!-- /Style -->
-</HEAD>
+</head>
 
-<BODY>
+<body>
 <!--#include virtual="/Header" -->
   <div class="nomenu" id="mBody">
     <div id="mainContent">
@@ -22,12 +20,12 @@
 <h1>JMRI: webThrottle - Web control for locos, panels, turnouts and routes</h1>
 <p>Usage: &lt;your JMRI server IP&gt;:&lt;port&gt;/web/webThrottle.html</p>
 <p>This application shows feedback and controls not only locomotives, but also turnouts, routes, lights and other devices through JMRI panels.</p>
-<p><b>webThrottle</b> is completely resizable and it ajusts automatically to the size and orientation of the device screen.</p>
+<p><b>webThrottle</b> is completely resizable and it adjusts automatically to the size and orientation of the device screen.</p>
 <p>
 It runs on the most recent browsers on computers, smartphones and tablets.
-<br />Your device and browser must support HTML5 and websockets.
-<br />Tested on Safari, Firefox and Google Chrome running on Windows, MAC, iPad/iPhone and Android - it should run on Internet Explorer 10.
-<br /><b>There is nothing to install on your device !</b>
+<br>Your device and browser must support HTML5 and websockets.
+<br>Tested on Safari, Firefox and Google Chrome running on Windows, MAC, iPad/iPhone and Android - it should run on Internet Explorer 10.
+<br><b>There is nothing to install on your device !</b>
 </p>
 <p>
 To start using JMRI through a web browser, you just need to activate the included <b>Web Server</b>.
@@ -35,22 +33,24 @@ You may found additional information <a href="/help/en/html/web/index.shtml">her
 </p>
 <p>
 To get help, please click '?' at each page top right.
-<br />You will find important and useful information there.
-<br />There is different help for each page type (roster, loco, panel, ...).
+<br>You will find important and useful information there.
+<br>There is specific Help for each page type (Roster, Loco, Panel, ...).
 </p>
-<h3>Screen samples ...</h3>
+
+<h3>Screen samples...</h3>
 <p>
 <img src="images/JMRI_webThrottle.png" height="300" title="The default screen">
-&nbsp;&nbsp;
+<p>
 <img src="images/JMRI_webThrottle-(loco).png" height="300" title="A loco throttle">
-&nbsp;&nbsp;
+<p>
 <img src="images/JMRI_webThrottle-(panel).png" height="300" title="An interactive panel">
-&nbsp;&nbsp;
+<p>
 <img src="images/JMRI_webThrottle-(iframes).png" height="300" title="Multi throttle screens in iframes">
 </p>
-<p>&nbsp;</p>
 <p>This is the package/jmri/jmrit/webThrottle/webThrottle help page</p>
 
 <!--#include virtual="/Footer" -->
+ </div><!-- closes #mainContent-->
+</div> <!-- closes #mBody-->
 </body>
 </html>

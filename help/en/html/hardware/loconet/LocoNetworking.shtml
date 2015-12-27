@@ -1,75 +1,69 @@
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
-<!-- $Id$ -->
 <html lang="en">
 <head>
- <TITLE>
-      JMRI Hardware Guide: Methods to Connect Multiple Computers to a LocoNet&reg; Layout
- </TITLE>
-    <META http-equiv=Content-Type content="text/html; charset=iso-8859-1">
-    <META content="Bob Jacobsen" name=Author>
-    <META name="keywords" content="Digitrax Chief DCS Command Station LocoNet Server LocoBuffer java model railroad JMRI install windows">
+ <title>JMRI Hardware Support - Connecting Multiple Computers to a LocoNet&reg; Layout</title>
+    <meta content="Bob Jacobsen" name="Author">
+    <meta name="keywords" content="Digitrax Chief DCS Command Station LocoNet Server LocoBuffer java model railroad JMRI install windows">
 
 <!-- Style -->
-<META HTTP-EQUIV="Content-Type" CONTENT="text/html; charset=iso-8859-1">
-<LINK REL="stylesheet" TYPE="text/css" HREF="/css/default.css"
-	MEDIA="screen">
-<LINK REL="stylesheet" TYPE="text/css" HREF="/css/print.css"
-	MEDIA="print">
-<LINK REL="icon" HREF="/images/jmri.ico" TYPE="image/png">
-<LINK REL="home" TITLE="Home" HREF="/">
+<meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
+<link rel="stylesheet" type="text/css" href="/css/default.css" media="screen">
+<link rel="stylesheet" type="text/css" href="/css/print.css" media="print">
+<link rel="icon" href="/images/jmri.ico" type="image/png">
+<link rel="home" title="Home" href="/">
 <!-- /Style -->
-</HEAD>
+</head>
 
-<BODY>
+<body>
 <!--#include virtual="/Header" -->
   <div class="nomenu" id="mBody">
     <div id="mainContent">
 
-      <h1> 
-      JMRI Hardware Guide: Methods to Connect Multiple Computers to a LocoNet&reg; Layout
-      </h1>
-
-JMRI currently supports two different ways that allow you to connect multiple
+  <h1>Hardware Support: Methods to Connect Multiple Computers to a LocoNet&reg; Layout</h1>
+  
+<p>
+JMRI currently supports two different ways to connect multiple
 computers to your LocoNet&reg;-equipped layout
 using a single LocoBuffer. In both methods, the computers communicate using standard
 TCP/IP protocols, but there are differences in the details.
-<P>
+<p>
 One method uses the inbuilt 
-<A HREF="LocoNetServer.shtml">LocoNet Client/Server capability</a>
-of JMRI and the other 
+<a href="LocoNetServer.shtml">LocoNet Client/Server capability</a>
+of JMRI.<br>
+The other method 
 allows multiple JMRI nodes to connect as Clients to a single 
 <a href="http://loconetovertcp.sourceforge.net/Interface/index.html">LocoNetOverTCP LbServer</a>, 
 which is external to JMRI.
-<P>
+<p>
 The difference between these two methods is that JMRI LocoNet Client/Server uses 
 the native Java
 Remote Method Invocation (RMI) protocol, whereas the LocoNetOverTCP uses a separate non-Java 
 server process, LbServer, that communicates using plain ASCII String messages over TCP/IP sockets,
-allowing non-Java nodes to also share the one LocoBufer.
-<P>
+allowing non-Java nodes to also share the one LocoBuffer.
+<p>
 For most people who simply want to have several computers share a
 single LocoBuffer connection,
 the 
-<A HREF="LocoNetServer.shtml">JMRI LocoNet Client/Server option</a>
+<a href="LocoNetServer.shtml">JMRI LocoNet Client/Server option</a>
 is probably the best choice as 
 it is easy to configure.
 For others wanting to provide remote access the layout over Internet, the 
-<A HREF="LbServer.shtml">LocoNetOverTCP LbServer option</a>
+<a href="LbServer.shtml">LocoNetOverTCP LbServer option</a>
 may be more suitable as firewall rule 
 changes to allow external access will be simpler. 
-<P>
-<UL>
-<LI><A HREF="LocoNetServer.shtml">How to set up LocoNet Client/Server</a>
-<LI><A HREF="LbServer.shtml">How to set up LocoNetOverTCP LbServer</a>
-</UL>
+<p>
+<ul>
+<li><a href="LocoNetServer.shtml">How to set up LocoNet Client/Server</a>
+<li><a href="LbServer.shtml">How to set up LocoNetOverTCP LbServer</a>
+</ul>
 
 <h2>Notes:</h2>
-<UL>
-<LI>It's strongly recommended that you connect the master computer
+<ul>
+<li>It's strongly recommended that you connect the master computer
 to the LocoNet with a LocoBuffer or LocoBuffer-II.  Although a MS-100
 will basically work for this application, correction of the resulting occasional LocoNet
-errors may cause noticable delays in updating the remote computers.
-<LI>
+errors may cause noticeable delays in updating the remote computers.
+<li>
 If the computers are all close to the LocoNet, e.g. acting as local control
 panels, you don't really need any networking to do this.  You can instead
 connect each of the computers to the LocoNet via their own LocoBuffer or LocoBuffer-II
@@ -77,12 +71,13 @@ connect each of the computers to the LocoNet via their own LocoBuffer or LocoBuf
 in the LocoNet communications.  This doesn't cause any additional communications load.
 It does cost a little more for the extra adapters, and doesn't permit you to
 put a computer remote from the layout.
-</UL>
-
+</ul>
 <p>LocoNet&reg; is a registered trademark of <a href="http://www.digitrax.com">Digitrax, Inc.</a></p>
-      <hr class="hide">
-    </div>
+
+<hr class="hide">
 
 <!--#include virtual="/Footer" -->
+  </div><!-- closes #mainContent-->
+</div> <!-- closes #mBody-->
 </body>
 </html>

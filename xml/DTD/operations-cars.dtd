@@ -82,6 +82,8 @@
 <!ATTLIST car lastLocationId		CDATA #IMPLIED>
 <!ATTLIST car date					CDATA #IMPLIED>
 <!ATTLIST car selected				(true | false ) "false">
+<!ATTLIST car rweLoad				CDATA #IMPLIED>
+<!ATTLIST car blocking				CDATA #IMPLIED>
 
 <!ELEMENT loads (defaults | load*)*>
 <!ELEMENT defaults EMPTY>

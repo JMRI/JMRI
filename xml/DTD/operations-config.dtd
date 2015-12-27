@@ -20,7 +20,7 @@
  | pickupEngFormat | dropEngFormat | pickupCarFormat | dropCarFormat | localFormat
  | missingCarFormat | tab | manifest | columnFormat | manifestFormat | vsd | reporters | switchList
  | switchListPickupCarFormat | switchListDropCarFormat | switchListLocalFormat 
- | pageOrientation | CATS | router | logger | comments)*>
+ | pageOrientation | CATS | router | logger | manifestFileOptions | comments)*>
  
 <!ELEMENT railRoad EMPTY>
 <!ELEMENT setup EMPTY>
@@ -46,6 +46,7 @@
 <!ELEMENT manifest EMPTY>
 <!ELEMENT columnFormat EMPTY>
 <!ELEMENT manifestFormat EMPTY>
+<!ELEMENT manifestFileOptions EMPTY>
 <!ELEMENT vsd EMPTY>
 <!ELEMENT switchList EMPTY>
 <!ELEMENT switchListPickupCarFormat EMPTY>
@@ -214,6 +215,8 @@
 <!ATTLIST router forwardToYard 			(true | false ) "true">
 <!ATTLIST router onlyActiveTrains		(true | false ) "false">
 <!ATTLIST router checkCarDestination	(true | false ) "false">
+
+<!ATTLIST manifestFileOptions manifestSave	(true | false ) "false">
 
 <!ATTLIST CATS exactLocationName		CDATA #IMPLIED> 
 

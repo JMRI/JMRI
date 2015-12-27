@@ -2373,7 +2373,7 @@ abstract public class Editor extends JmriJFrame implements MouseListener, MouseM
             log.debug("putIcon: {} url= {}", (icon == null ? "null" : "icon"), url);
         }
         PositionableLabel l = new PositionableLabel(icon, this);
-        l.setPopupUtility(null);        // no text 
+//        l.setPopupUtility(null);        // no text 
         l.setDisplayLevel(ICONS);
         setNextLocation(l);
         putItem(l);
@@ -2982,7 +2982,7 @@ abstract public class Editor extends JmriJFrame implements MouseListener, MouseM
         }
         if (p instanceof PositionableLabel) {
             PositionableLabel pos = (PositionableLabel) p;
-            if (pos.isText() && !pos.isIcon()) {
+            if (pos.isText()) {
                 int deg = pos.getDegrees();
                 pos.rotate(0);
                 pos.setBorder(new javax.swing.border.CompoundBorder(outlineBorder, borderMargin));

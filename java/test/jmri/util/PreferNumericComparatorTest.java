@@ -52,7 +52,7 @@ public class PreferNumericComparatorTest extends TestCase {
 
     // Main entry point
     static public void main(String[] args) {
-        String[] testCaseName = {PreferNumericComparatorTest.class.getName()};
+        String[] testCaseName = {"-noloading", PreferNumericComparatorTest.class.getName()};
         junit.swingui.TestRunner.main(testCaseName);
     }
 

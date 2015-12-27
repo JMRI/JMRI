@@ -22,12 +22,7 @@
 		    <li><dfn><a href="tools/speedometer/index.shtml">Speedometer</a></dfn>
 		    <li><dfn><a href="tools/Audio.shtml">Audio</a></dfn>
 		    <li><dfn><a href="tools/IdTags.shtml">Id Tags</a></dfn>
-        <li><dfn><a href="tools/index.shtml#systemSpecificTools">System-specific Tools</a>
-          <ul>
-          <li>LocoNet
-          <li>MERG
-          </ul>
-        </dfn></li>
+        <li><dfn><a href="tools/index.shtml#systemSpecificTools">System-specific...</a></dfn>
   	    </ul>
 		</dd>
 

@@ -117,7 +117,7 @@ public class DCCppLight extends AbstractLight implements DCCppListener {
 	    int addr = (mAddress - 1) / (DCCppConstants.MAX_ACC_DECODER_SUBADDR + 1);
 	    int subaddr = (mAddress - 1) % (DCCppConstants.MAX_ACC_DECODER_SUBADDR + 1);
 	    boolean state = (newState == jmri.Light.ON);
-	    DCCppMessage msg = DCCppMessage.getAccessoryDecoderMsg(addr,
+	    DCCppMessage msg = DCCppMessage.makeAccessoryDecoderMsg(addr,
 								    subaddr,
 								    state);
 	    //InternalState = COMMANDSENT;

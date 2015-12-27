@@ -1,18 +1,14 @@
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
 <html lang="en">
 <head>
-<!-- Copyright ($Author$) 2008 -->
-<!-- $Id$ -->
-<title>JMRI: Configuration Profiles</title>
+<title>JMRI Setup - Configuration Profiles</title>
 
 <!-- Style -->
-<META HTTP-EQUIV="Content-Type" CONTENT="text/html; charset=iso-8859-1">
-<LINK REL="stylesheet" TYPE="text/css" HREF="/css/default.css"
-	MEDIA="screen">
-<LINK REL="stylesheet" TYPE="text/css" HREF="/css/print.css"
-	MEDIA="print">
-<LINK REL="icon" HREF="/images/jmri.ico" TYPE="image/png">
-<LINK REL="home" TITLE="Home" HREF="/">
+<meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
+<link rel="stylesheet" type="text/css" href="/css/default.css" media="screen">
+<link rel="stylesheet" type="text/css" href="/css/print.css" media="print">
+<link rel="icon" href="/images/jmri.ico" TYPE="image/png">
+<link rel="home" title="Home" href="/">
 <!-- /Style -->
 </head>
 
@@ -21,7 +17,7 @@
   <div class="nomenu" id="mBody">
     <div id="mainContent">
 
-<h1>JMRI: Configuration Profiles</h1>
+<h1>JMRI Setup: Configuration Profiles</h1>
 
 <p><em>Configuration Profiles</em> allow a single JMRI application to be launched
     with one of multiple user-specified configurations. A configuration profile
@@ -74,12 +70,13 @@ configuration files between multiple computers, see the
     and forth between two computers is neither supported or recommended.</p>
 
 <h2>Upgrading from Earlier Versions of JMRI</h2>
-
 <p>When you first run a JMRI application after upgrading from an earlier version
     of JMRI, the application will copy its existing configuration to a new profile,
     and use that profile. If you are using a JMRI application you had not used
     prior to upgrading, the application will behave as described above.</p>
 
 <!--#include virtual="/Footer" -->
+ </div><!-- closes #mainContent-->
+</div> <!-- closes #mBody-->
 </body>
 </html>

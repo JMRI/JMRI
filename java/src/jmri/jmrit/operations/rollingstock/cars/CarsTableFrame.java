@@ -184,7 +184,8 @@ public class CarsTableFrame extends OperationsFrame implements TableModelListene
         // some tool tips
         sortByFinalDestination.setToolTipText(Bundle.getMessage("FinalDestination"));
         sortByRwe.setToolTipText(Bundle.getMessage("ReturnWhenEmpty"));
-        sortByLast.setToolTipText(Bundle.getMessage("LastMoved"));
+        sortByPickup.setToolTipText(Bundle.getMessage("TipPickup"));
+        sortByLast.setToolTipText(Bundle.getMessage("TipLastMoved"));
 
         JScrollPane controlPane = new JScrollPane(controlPanel);
 
