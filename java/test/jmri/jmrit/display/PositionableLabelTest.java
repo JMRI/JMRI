@@ -4,6 +4,8 @@ import java.awt.Dimension;
 import java.awt.Graphics2D;
 import java.awt.Point;
 import java.awt.image.BufferedImage;
+import java.io.IOException;
+import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import javax.swing.JComponent;
 import javax.swing.JFrame;
@@ -146,13 +148,13 @@ public class PositionableLabelTest extends jmri.util.SwingTestCase {
         Assert.assertEquals("icon first", "0xffff0000", 
                 String.format("0x%8s", Integer.toHexString(val[0])).replace(' ', '0'));
         Assert.assertEquals("icon upper right", "0xffff0000", 
-                String.format("0x%8s", Integer.toHexString(val[12])).replace(' ', '0'));
+                String.format("0x%8s", Integer.toHexString(val[label.getSize().width-1])).replace(' ', '0'));
         Assert.assertEquals("icon lower left", "0xffff0000", 
-                String.format("0x%8s", Integer.toHexString(val[13*13-1-12])).replace(' ', '0'));
+                String.format("0x%8s", Integer.toHexString(val[13*13-1-(label.getSize().width-1)])).replace(' ', '0'));
         Assert.assertEquals("icon middle", "0x00000000", 
                 String.format("0x%8s", Integer.toHexString(val[(int)Math.floor(label.getSize().height/2)*label.getSize().width+(int)Math.floor(label.getSize().width/2)-1])).replace(' ', '0'));
         Assert.assertEquals("icon last", "0xffff0000", 
-                String.format("0x%8s", Integer.toHexString(val[13*13-1])).replace(' ', '0'));
+                String.format("0x%8s", Integer.toHexString(val[label.getSize().width*label.getSize().height-1])).replace(' ', '0'));
         
         // now check that background shows through
         // Need to find the icon location first
@@ -166,7 +168,7 @@ public class PositionableLabelTest extends jmri.util.SwingTestCase {
         Assert.assertEquals("frame middle", "0xff0000ff", 
                 String.format("0x%8s", Integer.toHexString(val[(int)Math.floor(label.getSize().height/2)*label.getSize().width+(int)Math.floor(label.getSize().width/2)-1])).replace(' ', '0'));
         Assert.assertEquals("frame last", "0xffff0000", 
-                String.format("0x%8s", Integer.toHexString(val[13*13-1])).replace(' ', '0'));
+                String.format("0x%8s", Integer.toHexString(val[label.getSize().width*label.getSize().height-1])).replace(' ', '0'));
 
         f.dispose();
     }
@@ -205,7 +207,7 @@ public class PositionableLabelTest extends jmri.util.SwingTestCase {
         Assert.assertEquals("icon middle", "0x00000000", 
                 String.format("0x%8s", Integer.toHexString(val[(int)Math.floor(label.getSize().height/2)*label.getSize().width+(int)Math.floor(label.getSize().width/2)-1])).replace(' ', '0'));
         Assert.assertEquals("icon last", "0x00000000", // should be transparent corner
-                String.format("0x%8s", Integer.toHexString(val[19*19-1])).replace(' ', '0'));
+                String.format("0x%8s", Integer.toHexString(val[label.getSize().width*label.getSize().height-1])).replace(' ', '0'));
         
         // now check that background shows through
         // Need to find the icon location first
@@ -221,14 +223,14 @@ public class PositionableLabelTest extends jmri.util.SwingTestCase {
         Assert.assertEquals("frame middle", "0xff0000ff", 
                 String.format("0x%8s", Integer.toHexString(val[(int)Math.floor(label.getSize().height/2)*label.getSize().width+(int)Math.floor(label.getSize().width/2)-1])).replace(' ', '0'));
         Assert.assertEquals("frame last", "0xff0000ff", // blue bkg
-                String.format("0x%8s", Integer.toHexString(val[19*19-2])).replace(' ', '0'));
+                String.format("0x%8s", Integer.toHexString(val[label.getSize().width*label.getSize().height-1])).replace(' ', '0'));
 
         f.dispose();
     }
     
 
     // test with an RGB animated 13x13 GIF, 0.1 sec per frame
-    public void testDisplayAnimatedRGB() {
+    public void testDisplayAnimatedRGB() throws IOException {
          if (!System.getProperty("jmri.headlesstest","false").equals("false")) { // needs to show the frame to start animation
             return;
         }
@@ -257,13 +259,13 @@ public class PositionableLabelTest extends jmri.util.SwingTestCase {
         Assert.assertEquals("icon first", "0xffff0000", 
                 String.format("0x%8s", Integer.toHexString(val[0])).replace(' ', '0'));
         Assert.assertEquals("icon upper right", "0xffff0000", 
-                String.format("0x%8s", Integer.toHexString(val[12])).replace(' ', '0'));
+                String.format("0x%8s", Integer.toHexString(val[label.getSize().width-1])).replace(' ', '0'));
         Assert.assertEquals("icon lower left", "0xffff0000", 
-                String.format("0x%8s", Integer.toHexString(val[13*13-1-12])).replace(' ', '0'));
+                String.format("0x%8s", Integer.toHexString(val[13*13-1-(label.getSize().width-1)])).replace(' ', '0'));
         Assert.assertEquals("icon middle", "0xffff0000", 
                 String.format("0x%8s", Integer.toHexString(val[(int)Math.floor(label.getSize().height/2)*label.getSize().width+(int)Math.floor(label.getSize().width/2)-1])).replace(' ', '0'));
         Assert.assertEquals("icon last", "0xffff0000", 
-                String.format("0x%8s", Integer.toHexString(val[13*13-1])).replace(' ', '0'));
+                String.format("0x%8s", Integer.toHexString(val[label.getSize().width*label.getSize().height-1])).replace(' ', '0'));
         
         // Need to find the icon location in frame first
         Point p = SwingUtilities.convertPoint(label,0,0,f.getContentPane());
@@ -276,7 +278,7 @@ public class PositionableLabelTest extends jmri.util.SwingTestCase {
         Assert.assertEquals("frame middle", "0xffff0000", 
                 String.format("0x%8s", Integer.toHexString(val[(int)Math.floor(label.getSize().height/2)*label.getSize().width+(int)Math.floor(label.getSize().width/2)-1])).replace(' ', '0'));
         Assert.assertEquals("frame last", "0xffff0000", 
-                String.format("0x%8s", Integer.toHexString(val[13*13-1])).replace(' ', '0'));
+                String.format("0x%8s", Integer.toHexString(val[label.getSize().width*label.getSize().height-1])).replace(' ', '0'));
 
         // wait for long enough to reach final red, skipping intermediate green as timing too fussy
         waitAtLeast(250);        
@@ -287,13 +289,13 @@ public class PositionableLabelTest extends jmri.util.SwingTestCase {
         Assert.assertEquals("icon first", "0xff0000ff", 
                 String.format("0x%8s", Integer.toHexString(val[0])).replace(' ', '0'));
         Assert.assertEquals("icon upper right", "0xff0000ff", 
-                String.format("0x%8s", Integer.toHexString(val[12])).replace(' ', '0'));
+                String.format("0x%8s", Integer.toHexString(val[label.getSize().width-1])).replace(' ', '0'));
         Assert.assertEquals("icon lower left", "0xff0000ff", 
-                String.format("0x%8s", Integer.toHexString(val[13*13-1-12])).replace(' ', '0'));
+                String.format("0x%8s", Integer.toHexString(val[13*13-1-(label.getSize().width-1)])).replace(' ', '0'));
         Assert.assertEquals("icon middle", "0xff0000ff", 
                 String.format("0x%8s", Integer.toHexString(val[(int)Math.floor(label.getSize().height/2)*label.getSize().width+(int)Math.floor(label.getSize().width/2)-1])).replace(' ', '0'));
         Assert.assertEquals("icon last", "0xff0000ff", 
-                String.format("0x%8s", Integer.toHexString(val[13*13-1])).replace(' ', '0'));
+                String.format("0x%8s", Integer.toHexString(val[label.getSize().width*label.getSize().height-1])).replace(' ', '0'));
         
         // now check that background shows through
         // Need to find the icon location first
@@ -307,13 +309,261 @@ public class PositionableLabelTest extends jmri.util.SwingTestCase {
         Assert.assertEquals("frame middle", "0xff0000ff", 
                 String.format("0x%8s", Integer.toHexString(val[(int)Math.floor(label.getSize().height/2)*label.getSize().width+(int)Math.floor(label.getSize().width/2)-1])).replace(' ', '0'));
         Assert.assertEquals("frame last", "0xff0000ff", 
-                String.format("0x%8s", Integer.toHexString(val[13*13-1])).replace(' ', '0'));
-        
-        
+                String.format("0x%8s", Integer.toHexString(val[label.getSize().width*label.getSize().height-1])).replace(' ', '0'));
+                
         // finally done
         f.dispose();
     }
     
+    // test with an RGB animated 13x13 GIF, 0.1 sec per frame, rotate
+    public void testDisplayAnimatedRGBrotated45degrees() throws IOException {
+         if (!System.getProperty("jmri.headlesstest","false").equals("false")) { // needs to show the frame to start animation
+            return;
+        }
+    
+        JFrame f = new JFrame();
+        f.getContentPane().setBackground(java.awt.Color.green);
+        f.setUndecorated(true); // skip frame decoration, which can force a min size.
+        
+        jmri.jmrit.catalog.NamedIcon icon = new jmri.jmrit.catalog.NamedIcon("resources/icons/RGB-animated-once-Square2.gif","box"); // 13x13
+        
+        PositionableLabel label = new PositionableLabel(icon, null);
+        
+        f.add(label);
+        f.pack();
+        flushAWT();
+        Assert.assertEquals("icon size", new Dimension(13,13).toString(),label.getSize().toString());
+        
+        // do the rotation, which transforms 13x13 to sqrt(2) bigger, 19x19
+        label.rotate(45);
+        Assert.assertEquals("icon size", new Dimension(19,19).toString(),label.getSize().toString());
+
+        f.pack();
+        flushAWT();
+        Assert.assertEquals("icon size", new Dimension(19,19).toString(),label.getSize().toString());
+        
+        // wait for a bit
+        f.setVisible(true);  // needed to get initial animation contents
+        flushAWT();
+        
+        // and check
+        int[] val = getDisplayedContent(label, label.getSize(), new Point(0,0));
+        
+        Assert.assertEquals("icon arraylength", 19*19, val.length);
+        Assert.assertEquals("icon first", "0x00000000", // should be transparent corner
+                String.format("0x%8s", Integer.toHexString(val[0])).replace(' ', '0'));
+        Assert.assertEquals("icon top center", "0xffff0000", 
+                String.format("0x%8s", Integer.toHexString(val[9])).replace(' ', '0'));
+        Assert.assertEquals("icon middle", "0xffff0000", 
+                String.format("0x%8s", Integer.toHexString(val[(int)Math.floor(label.getSize().height/2)*label.getSize().width+(int)Math.floor(label.getSize().width/2)-1])).replace(' ', '0'));
+        Assert.assertEquals("icon last", "0x00000000", // should be transparent corner
+                String.format("0x%8s", Integer.toHexString(val[label.getSize().width*label.getSize().height-1])).replace(' ', '0'));
+        
+        // now check that background shows through
+        // Need to find the icon location first
+        Point p = SwingUtilities.convertPoint(label,0,0,f.getContentPane());
+        
+        val = getDisplayedContent(f.getContentPane(), label.getSize(), p);
+
+        Assert.assertEquals("frame arraylength", 19*19, val.length);
+        Assert.assertEquals("frame first", "0xff00ff00", // green bkg
+                String.format("0x%8s", Integer.toHexString(val[0])).replace(' ', '0'));
+        Assert.assertEquals("icon top center", "0xffff0000", 
+                String.format("0x%8s", Integer.toHexString(val[9])).replace(' ', '0'));
+        Assert.assertEquals("frame middle", "0xffff0000", 
+                String.format("0x%8s", Integer.toHexString(val[(int)Math.floor(label.getSize().height/2)*label.getSize().width+(int)Math.floor(label.getSize().width/2)-1])).replace(' ', '0'));
+        Assert.assertEquals("frame last", "0xff00ff00", // green bkg
+                String.format("0x%8s", Integer.toHexString(val[label.getSize().width*label.getSize().height-1])).replace(' ', '0'));
+
+        // wait for long enough to reach final red, skipping intermediate green as timing too fussy
+        waitAtLeast(250);        
+
+        // and check
+        val = getDisplayedContent(label, label.getSize(), new Point(0,0));
+        
+        Assert.assertEquals("icon arraylength", 19*19, val.length);
+        Assert.assertEquals("icon first", "0x00000000", // should be transparent corner
+                String.format("0x%8s", Integer.toHexString(val[0])).replace(' ', '0'));
+        Assert.assertEquals("icon top center", "0xff0000ff", 
+                String.format("0x%8s", Integer.toHexString(val[9])).replace(' ', '0'));
+        Assert.assertEquals("icon middle", "0x00000000", 
+                String.format("0x%8s", Integer.toHexString(val[(int)Math.floor(label.getSize().height/2)*label.getSize().width+(int)Math.floor(label.getSize().width/2)-1])).replace(' ', '0'));
+        Assert.assertEquals("icon last", "0x00000000", // should be transparent corner
+                String.format("0x%8s", Integer.toHexString(val[label.getSize().width*label.getSize().height-1])).replace(' ', '0'));
+        
+        // now check that background shows through
+        // Need to find the icon location first
+        p = SwingUtilities.convertPoint(label,0,0,f.getContentPane());
+        
+        val = getDisplayedContent(f.getContentPane(), label.getSize(), p);
+
+        Assert.assertEquals("frame arraylength", 19*19, val.length);
+        Assert.assertEquals("frame first", "0xff00ff00", // green bkg
+                String.format("0x%8s", Integer.toHexString(val[0])).replace(' ', '0'));
+        Assert.assertEquals("icon top center", "0xff0000ff", 
+                String.format("0x%8s", Integer.toHexString(val[9])).replace(' ', '0'));
+        Assert.assertEquals("frame middle", "0xff0000ff", 
+                String.format("0x%8s", Integer.toHexString(val[(int)Math.floor(label.getSize().height/2)*label.getSize().width+(int)Math.floor(label.getSize().width/2)-1])).replace(' ', '0'));
+        Assert.assertEquals("frame last", "0xff00ff00", // green bkg
+                String.format("0x%8s", Integer.toHexString(val[label.getSize().width*label.getSize().height-1])).replace(' ', '0'));
+
+        f.dispose();
+    }
+    
+    public void testDisplayText() {
+    
+        JFrame f = new JFrame();
+        f.getContentPane().setBackground(java.awt.Color.blue);
+        f.setUndecorated(true); // skip frame decoration, which can force a min size.
+                
+        String text = "\u2588\u2588\u2588\u2588"; // full blocks
+        
+        PositionableLabel label = new PositionableLabel(text, null);
+        
+        f.add(label);
+        f.pack();
+        flushAWT();
+        Assert.assertEquals("icon size", new Dimension(52,16).toString(),label.getSize().toString());
+         
+        int[] val = getDisplayedContent(label, label.getSize(), new Point(0,0));
+        
+        //for (int i=0; i<val.length; i++) System.out.println(" "+i+" "+String.format("0x%8s", Integer.toHexString(val[i])).replace(' ', '0'));
+ 
+        Assert.assertEquals("icon arraylength", 52*16, val.length);
+        Assert.assertEquals("frame first", "0x00000000", 
+                String.format("0x%8s", Integer.toHexString(val[0])).replace(' ', '0'));
+        Assert.assertEquals("frame middle", "0xff000000", 
+                String.format("0x%8s", Integer.toHexString(val[(int)Math.floor(label.getSize().height/2)*label.getSize().width+(int)Math.floor(label.getSize().width/2)-1])).replace(' ', '0'));
+        Assert.assertEquals("frame last", "0x00000000", 
+                String.format("0x%8s", Integer.toHexString(val[label.getSize().width*label.getSize().height-1])).replace(' ', '0'));
+        
+        // now check that background shows through
+        // Need to find the icon location first
+        Point p = SwingUtilities.convertPoint(label,0,0,f.getContentPane());
+        
+        val = getDisplayedContent(f.getContentPane(), label.getSize(), p);
+
+        Assert.assertEquals("frame arraylength", 52*16, val.length);
+        Assert.assertEquals("frame first", "0xff0000ff", 
+                String.format("0x%8s", Integer.toHexString(val[0])).replace(' ', '0'));
+        Assert.assertEquals("frame middle", "0xff000000", 
+                String.format("0x%8s", Integer.toHexString(val[(int)Math.floor(label.getSize().height/2)*label.getSize().width+(int)Math.floor(label.getSize().width/2)-1])).replace(' ', '0'));
+        Assert.assertEquals("frame last", "0xff0000ff", 
+                String.format("0x%8s", Integer.toHexString(val[label.getSize().width*label.getSize().height-1])).replace(' ', '0'));
+
+        f.dispose();
+    }
+    
+
+    public void testDisplayTextRotated90() {
+    
+        JFrame f = new JFrame();
+        f.getContentPane().setBackground(java.awt.Color.blue);
+        f.setUndecorated(true); // skip frame decoration, which can force a min size.
+                
+        String text = "\u2588\u2588\u2588\u2588"; // full blocks
+        
+        PositionableLabel label = new PositionableLabel(text, null);
+        
+        f.add(label);
+        f.pack();
+        flushAWT();
+        Assert.assertEquals("icon size", new Dimension(52,16).toString(),label.getSize().toString());
+
+        // do the rotation, which transforms 52, 16 to 16, 52 but on Mac gives 19x54 for some reason
+        label.rotate(90);
+        Assert.assertEquals("icon size", new Dimension(19,54).toString(),label.getSize().toString());
+        
+        f.pack();
+        flushAWT();
+        Assert.assertEquals("icon size", new Dimension(19,54).toString(),label.getSize().toString());
+
+        int[] val = getDisplayedContent(label, label.getSize(), new Point(0,0));
+        
+        //for (int i=0; i<val.length; i++) System.out.println(" "+i+" "+String.format("0x%8s", Integer.toHexString(val[i])).replace(' ', '0'));
+ 
+        Assert.assertEquals("icon arraylength", 19*54, val.length);
+        Assert.assertEquals("frame first", "0x00000000", 
+                String.format("0x%8s", Integer.toHexString(val[0])).replace(' ', '0'));
+        Assert.assertEquals("frame middle", "0xff000000", 
+                String.format("0x%8s", Integer.toHexString(val[(int)Math.floor(label.getSize().height/2)*label.getSize().width+(int)Math.floor(label.getSize().width/2)-1])).replace(' ', '0'));
+        Assert.assertEquals("frame last", "0x00000000", 
+                String.format("0x%8s", Integer.toHexString(val[label.getSize().width*label.getSize().height-1])).replace(' ', '0'));
+        
+        // now check that background shows through
+        // Need to find the icon location first
+        Point p = SwingUtilities.convertPoint(label,0,0,f.getContentPane());
+
+        Assert.assertEquals("frame size", new Dimension(19,54).toString(),f.getContentPane().getSize().toString());
+        
+        val = getDisplayedContent(f.getContentPane(), label.getSize(), p);
+
+        Assert.assertEquals("frame arraylength", 19*54, val.length);
+        Assert.assertEquals("frame first", "0xff0000ff", 
+                String.format("0x%8s", Integer.toHexString(val[0])).replace(' ', '0'));
+        Assert.assertEquals("frame middle", "0xff000000", 
+                String.format("0x%8s", Integer.toHexString(val[(int)Math.floor(label.getSize().height/2)*label.getSize().width+(int)Math.floor(label.getSize().width/2)-1])).replace(' ', '0'));
+        Assert.assertEquals("frame last", "0xff0000ff", 
+                String.format("0x%8s", Integer.toHexString(val[label.getSize().width*label.getSize().height-1])).replace(' ', '0'));
+
+        f.dispose();
+    }
+    
+    public void testDisplayTextRotated45() {
+    
+        JFrame f = new JFrame();
+        f.getContentPane().setBackground(java.awt.Color.blue);
+        f.setUndecorated(true); // skip frame decoration, which can force a min size.
+                
+        String text = "\u2588\u2588\u2588\u2588"; // full blocks
+        
+        PositionableLabel label = new PositionableLabel(text, null);
+        
+        f.add(label);
+        f.pack();
+        flushAWT();
+        Assert.assertEquals("icon size", new Dimension(52,16).toString(),label.getSize().toString());
+
+        // do the rotation, which transforms 52, 16 to 51, 51 (on Mac)
+        label.rotate(45);
+        Assert.assertEquals("icon size", new Dimension(51, 51).toString(),label.getSize().toString());
+        
+        f.pack();
+        flushAWT();
+        Assert.assertEquals("icon size", new Dimension(51, 51).toString(),label.getSize().toString());
+
+        int[] val = getDisplayedContent(label, label.getSize(), new Point(0,0));
+        
+        //for (int i=0; i<val.length; i++) System.out.println(" "+i+" "+String.format("0x%8s", Integer.toHexString(val[i])).replace(' ', '0'));
+ 
+        Assert.assertEquals("icon arraylength", 51*51, val.length);
+        Assert.assertEquals("frame first", "0x00000000", 
+                String.format("0x%8s", Integer.toHexString(val[0])).replace(' ', '0'));
+        Assert.assertEquals("frame middle", "0xff000000", 
+                String.format("0x%8s", Integer.toHexString(val[(int)Math.floor(label.getSize().height/2)*label.getSize().width+(int)Math.floor(label.getSize().width/2)-1])).replace(' ', '0'));
+        Assert.assertEquals("frame last", "0x00000000", 
+                String.format("0x%8s", Integer.toHexString(val[label.getSize().width*label.getSize().height-1])).replace(' ', '0'));
+        
+        // now check that background shows through
+        // Need to find the icon location first
+        Point p = SwingUtilities.convertPoint(label,0,0,f.getContentPane());
+
+        Assert.assertEquals("frame size", new Dimension(51, 51).toString(),f.getContentPane().getSize().toString());
+        
+        val = getDisplayedContent(f.getContentPane(), label.getSize(), p);
+
+        Assert.assertEquals("frame arraylength", 51*51, val.length);
+        Assert.assertEquals("frame first", "0xff0000ff", 
+                String.format("0x%8s", Integer.toHexString(val[0])).replace(' ', '0'));
+        Assert.assertEquals("frame middle", "0xff000000", 
+                String.format("0x%8s", Integer.toHexString(val[(int)Math.floor(label.getSize().height/2)*label.getSize().width+(int)Math.floor(label.getSize().width/2)-1])).replace(' ', '0'));
+        Assert.assertEquals("frame last", "0xff0000ff", 
+                String.format("0x%8s", Integer.toHexString(val[label.getSize().width*label.getSize().height-1])).replace(' ', '0'));
+
+        f.dispose();
+    }
+
+
     // from here down is testing infrastructure
 
     public PositionableLabelTest(String s) {
