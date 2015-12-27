@@ -20,12 +20,16 @@
 
 <h1>Hardware Support: TracTronics SECSI System</h1>
 
-JMRI can connect to 
-<a href="http://home.roadrunner.com/~jimngage/TRACTRONICS/PRODUCTS/price_1.htm">TracTronics SECSI</a>
-system nodes.
-    
+JMRI can connect to TracTronics SECSI system Nodes.
+
+<a name="limitations"></a><h2>Limitations</h2>
 <p>
-The system letter is "V", so for example the first sensor on node 5 would be VS5001.
+<strong>As of 2016 TracTronics SECSI is no longer online nor found in Google</strong>
+    
+<a name="connecting"></a><h2>Connecting</h2>
+<h3>Naming</h3>
+<p>
+The system letter is "V", so for example the first Sensor on node 5 would be "VS5001".
 
 <!--#include virtual="/Footer" -->
  </div><!-- closes #mainContent-->

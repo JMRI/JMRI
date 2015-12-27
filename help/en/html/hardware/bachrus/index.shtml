@@ -21,22 +21,23 @@
     <div id="mainContent">
 
 <h1>Hardware Support: Bachrus</h1>
-
-	<h3>Supported Hardware</h3>
-
+<p>
     JMRI supports the Bachrus MTS-DCC Model train Speedometer, which is an input 
 		only device, to capture speed information from a reader module on a Bachrus
-		"Saddle" running stand. For more information on the Bachrus Speedometer products see the 
-    <a href="http://www.bachrus.com/speedometer.php">Bachrus website</a>.<br>
+		"Saddle" running stand.
 		<p>		
-		When the Bachrus MTS-DCC is set as a Layout Connection Preference, the
-		speedo utility can be used to display scale running speed for any scale from
+
+<a name="hardware"></a><h2>Supported Hardware</h2>
+<h3>Bachrus MTS-DCC Model train Speedometer</h3>
+	  <p>When the Bachrus MTS-DCC is set as a JMRI Layout Connection Preference, the
+		Speedo Console tool can be used to display scale running speed for any scale from
 		Z to O and beyond.
 		</p>
 		<a href="images/dial.jpg">
     <img src="images/dial.jpg"
          width="336" height="373"
-         alt="Speedometer dial display" ></a>
+         alt="Speedometer dial display" ></a><br>
+         Left hand side of Speedo panel
 		<p>
 		When the Bachrus MTS-DCC is set as a layout connection alongside a DCC
 		hardware system the speedo utility allows automated measurement of a DCC
@@ -45,8 +46,14 @@
 		<a href="images/profile.jpg">
     <img src="images/profile.jpg"
          width="543" height="373"
-         alt="Speedometer speed profile graph" ></a>
-   
+         alt="Speedometer speed profile graph" ></a><br>
+         Right hand side of Speedo panel
+
+<a name="documentation"></a><h2>Documentation</h2>
+<h3>Third Party info</h3>
+<p>More information on the Bachrus Speedometer products on the 
+<a href="http://www.bachrus.com/speedometer.php">Bachrus website</a>.   
+      
 <!--#include virtual="/Footer" -->
   </div><!-- closes #mainContent-->
  </div> <!-- closes #mBody-->

@@ -1,9 +1,8 @@
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
 <html lang="en">
 <head>
-  <!-- Copyright Bob Jacobsen 2008 -->
-  <!-- $Id$ -->
   <title>JMRI: Jynstruments</title>
+
   <!-- Style -->
   <meta http-equiv="content-type" content="text/html; charset=iso-8859-1">
   <link rel="stylesheet" type="text/css" href="/css/default.css" media="screen">
@@ -18,6 +17,7 @@
 <!--#include virtual="Sidebar" -->
 
 <div id="mainContent">
+
 <h1>JMRI: Jynstruments </h1>
 JMRI provides a nice way to integrate Jython scripts in the JMRI Java
 application, particularly aimed at extending and customising the GUI. 
@@ -63,7 +63,7 @@ alt="mainWindowJynstrumentContextMenu.png"> </p>
 specific informations about them.<br>
 </p>
 
-<p>Several parts of JMRI are Jynstrumentable today:<br>
+<p>Several parts of JMRI are Jynstrumentable today:
 </p>
 <ul>
   <li>The JMRI main Window were you can add <a
@@ -88,10 +88,8 @@ specific informations about them.<br>
   </li>
 </ul>
 
-<p></p>
-
-<p></p>
-</div>
 <!--#include virtual="/Footer" -->
+    </div><!-- closes #mainContent-->
+  </div> <!-- closes #mBody-->
 </body>
 </html>

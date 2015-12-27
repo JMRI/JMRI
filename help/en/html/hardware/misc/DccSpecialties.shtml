@@ -40,6 +40,8 @@ power controllers.
 These can do a lot of things, but it can require some work to 
 configure them.
 
+<a name="documentation"></a><h2>Documentation</h2>
+<h3>Third Party info</h3>
 <p>
 Brett Scott and Denny Whitaker
 have written JMRI scripts to assist with programming these, and 

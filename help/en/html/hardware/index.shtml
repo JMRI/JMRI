@@ -41,6 +41,9 @@
 	
 	<div class="list">
 	<dl>
+    <dt>Manufacturer <!-- header, link--></dt>
+    <dd>JMRI Support <!-- header, link--></dd>
+    
     <dt class="im">
 			<a href="http://www.atlasrr.com/dccsupport.htm">
 			<img src="images/atlas_logo.gif" width="44" height="34" alt="Atlas"></a>
@@ -93,7 +96,7 @@
 
     <dt class="im">
 			<a href="https://www.youtube.com/channel/UCJmvQx-fe0OMAIH-_g-_rZw">
-			<img src="dccpp/dccpp_logo.jpg" width="60" height="26" alt="DCC++"></a>
+			<img src="dccpp/images/dccpp_logo.jpg" width="60" height="26" alt="DCC++"></a>
     </dt>
     <dt><a href="dccpp/index.shtml">DCC++</a></dt>
     <dd><p class="dl">Configure:  
@@ -400,7 +403,7 @@
 
 	<dt class="left">Raspberry Pi</dt>
 	<dd>
-		<p><a href="pi/index.shtml">Connecting to the Pi's GPIO connection pins</a></p>
+		<p><a href="pi/index.shtml#connecting">Connecting to the Pi's GPIO connection pins</a></p>
 	</dd>
 	</dl>
 

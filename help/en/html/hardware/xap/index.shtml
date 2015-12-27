@@ -19,27 +19,17 @@
 
 <h1>Hardware Support: xAP</h1>
 <p>
-xAP is a home-automation protocol 
-popular used by do-it-yourself hobbyists
+xAP is a popular home-automation protocol 
+ used by do-it-yourself hobbyists
 through large professional installations.
-
-<p>
-For more information on the protocol
-and available equipment, please
-see the 
-<a href="http://www.xapautomation.org">xAP home page</a>.
 
 <p>
 xAP should not be confused with the Lenz XPA, which is 
 a device for using a portable phone as a throttle for a
 Lenz DCC system.
 
-<p>
-JMRI's support for xAP started with a simple
-<a href="http://jmri.org/jython/jython/xAPadapter.py ">script</a>
-available in JMRI 2.9.5 and later releases.
-Eventually, a full set of JMRI xAP tools will be
-available directly within the JMRI tool set.
+<a name="connecting"></a><h2>Connecting</h2>
+<h3>Software settings</h3>
 
 <p>
 xAP devices that provide either the "input" or "output"
@@ -54,15 +44,27 @@ The full source name is used to create the system name, for example:
 <code>
  IS:xPA:xAPBSC:mi4.homeseer.scafell.91:VIOMBoard.Input14GJDRFXEnable
 </code>
-The xPA-defined 
-user defined name
-fills in the JMRI user name, for example:
+The xPA-defined user defined name fills in the JMRI User Name, for example:
 <pre>
  Input 14 GJD RFX Enable
 </pre>
-You can later change the JMRI user name 
-to anything you'd like via the 
+You can later change the JMRI User Name to anything you'd like via the 
 usual tables if desired.
+
+<a name="tools"></a><h2>JMRI Tools</h2>
+<p>
+JMRI's support for xAP started with a simple
+<a href="http://jmri.org/jython/jython/xAPadapter.py ">xAPadapter.py script</a>
+available in JMRI 2.9.5 and later releases.
+Eventually, a full set of JMRI xAP tools will be
+available directly within the JMRI tool set.
+
+<a name="documentation"></a><h2>Documentation</h2>
+<h3>Third Party info</h3>
+<p>For more information on the protocol
+and available equipment, please
+see the 
+<a href="http://www.xapautomation.org">xAP home page</a>.
     
 <!--#include virtual="/Footer" -->
  </div><!-- closes #mainContent-->

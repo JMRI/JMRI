@@ -1,7 +1,7 @@
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
 <html lang="en">
 <head>
-<title>JMRI Hardware Support - Lenz Feedback Bus Addressing</title>
+<title>JMRI Hardware Support - XPressNet - Lenz Feedback Bus Addressing</title>
 
 <!-- Style -->
 <meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
@@ -18,7 +18,7 @@
   <div class="nomenu" id="mBody">
     <div id="mainContent">
 
-<h1>Hardware Support: Lenz Feedback Bus Addressing</h1>
+<h1>Hardware Support: XPressNet - Lenz Feedback Bus Addressing</h1>
 <p>
 On Lenz systems, feedback from input devices is handled by the Feedback Bus. 
 The input available from the feedback bus is provided by the Lenz LR100 
@@ -83,16 +83,19 @@ For Example, if you are using contact 3 on a Feedback Encoder with address
 99, 99 - 1 = 98.  98*8=784.  784+3=787.  The feedback address you will use 
 is 787.</p>
 
-<p>In the hardware address field of the Add Sensor window you can enter in the 
+<p>In the hardware address field of the "Add Sensor" pane you can enter in the 
 encoder address, followed by the contact separated by a ":"<br>
 So for a sensor on feedback encoder address 99, contact 3 you would enter <b>99:3</b></p>
 <p>
-In JMRI's tools, you can prefix the address with XS to tell system the 
+In JMRI's tools, you can prefix the address with "XS" to tell system the 
 Sensor is accessed via an XPressNet based system.  If you only have an 
-XPressNet based system configured, you can just use the address, and the 
-programs will automatically assign an XS prefix for you.</p>
+XPressNet system connection configured, you can just enter the address, and the 
+programs will automatically assign an "XS" prefix for you.</p>
+
+<p>Back to the <a href="index.shtml">XPressNet Help</a> page
+
 <hr>
-Paul Bender<BR>
+Paul Bender<br>
 paul.bender@acm.org
 
 <!--#include virtual="/Footer" -->

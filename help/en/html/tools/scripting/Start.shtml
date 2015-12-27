@@ -19,11 +19,11 @@
 <div id="mainContent">
 
 <!-- Page Body -->
-<h2>
+<h1>
 JMRI: Getting Started with Scripting
-</h2>
+</h1>
 
-<h3>Running "Hello World"</h3>
+<h2>Running "Hello World"</h2>
 There are several ways to use Python scripts with JMRI.
 The easiest is to use the built-in support in the standard JMRI
 applications: PanelPro, DecoderPro, etc.  To do that:
@@ -62,7 +62,7 @@ The output window should then show something like:
 </pre>
 </ul>
 
-<h3>Sample layout commands</h3>
+<h2>Sample layout commands</h2>
 
 <pre>
 
@@ -88,7 +88,7 @@ all of the windows and menus are presented the same way, configuration is
 done by the preferences panel, etc. What the Jython connection adds is a 
 command line from which you can directly manipulate things.
 
-<BR/>This also shows some of the simplifications that
+<p>This also shows some of the simplifications that
 Jython and the Python language brings to using JMRI code.  The
 Java member function:
 <pre>
@@ -98,16 +98,16 @@ can also be expressed in Jython as:
 <pre>
 	turnout.commandedState = CLOSED
 </pre>
-<BR/>
+<p>
 This results in much easier-to-read code.
 <p>
 There are a lot of useful Python books and 
 online tutorials.
 For more information on the Jython language and it's 
 relations with Java, the best reference is the
-<A HREF="http://www.oreilly.com/catalog/jythoness/">Jython Essentials</a>
+<a href="http://www.oreilly.com/catalog/jythoness/">Jython Essentials</a>
 book published by O'Reilly.  The 
-<A HREF="http://www.jython.org/">jython.org web site</a> is also very useful.
+<a href="http://www.jython.org/">jython.org web site</a> is also very useful.
 
 
 <h3>Access to JMRI</h3>
@@ -124,22 +124,22 @@ and by shortening certain method calls.
 To get access to the SignalHead, Sensor and Turnout managers and
 the CommandStation object,
 several shortcut variables are defined:
-<ul>
-<li>sensors
-<li>turnouts
-<li>lights
-<li>signals (SignalHeads)
-<li>masts (SignalMasts)
-<li>routes
-<li>blocks
-<li>reporters
-<li>memories
-<li>powermanager
-<li>programmers
-<li>dcc   (current command station)
-<li>shutdown (current shutdown manager)
-<li>audio
-</ul>
+	<ul>
+	<li>sensors
+	<li>turnouts
+	<li>lights
+	<li>signals (SignalHeads)
+	<li>masts (SignalMasts)
+	<li>routes
+	<li>blocks
+	<li>reporters
+	<li>memories
+	<li>powermanager
+	<li>programmers
+	<li>dcc (current command station)
+	<li>shutdown (current shutdown manager)
+	<li>audio
+	</ul>
 These can then be referenced directly in Jython as
 <pre>
    t2 = turnouts.provideTurnout("12");
@@ -217,5 +217,7 @@ code to run inside the program.  But don't worry about this until you've
 got some more experience with scripting.
 
 <!--#include virtual="/Footer" -->
+    </div><!-- closes #mainContent-->
+  </div> <!-- closes #mBody-->
 </body>
 </html>

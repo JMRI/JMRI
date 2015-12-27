@@ -17,7 +17,7 @@
   <div class="nomenu" id="mBody">
     <div id="mainContent">
 
-<h1>Hardware Support: OpenLCB Technical Details</h1>
+<h1>Hardware Support: OpenLCB - Technical Details</h1>
 
 <em>JMRI support for OpenLCB is rapidly evolving; the
 actual code might be ahead or behind the documentation
@@ -25,8 +25,7 @@ on any given day.</em><p>
 
 This page describes technical details of JMRI's
 <a href="index.shtml">OpenLCB</a>
-support. Also refer to the pages on JMRI's 
-<a href="../index.shtml">general CAN support</a>.
+support.
 
 <h2>CAN Adapters</h2>
 <p>
@@ -53,6 +52,12 @@ or multiple copies on one computer without problems.
 A future enhancement will make these persistent from run
 to run, so that they can be used to easily create unique and persistent
 eventIDs.
+
+<a name="documentation"></a><h2>Documentation</h2>
+<h3>JMRI Help</h3>
+<p><a href="../can/index.shtml">CAN support Help</a>
+
+<p>Back to the <a href="index.shtml">main OpenLCB Help page</a></p>
 
 <!--#include virtual="/Footer" -->
   </div><!-- closes #mainContent-->

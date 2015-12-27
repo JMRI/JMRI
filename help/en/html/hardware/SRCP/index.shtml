@@ -41,18 +41,7 @@ SRCP server.  JMRI can then operate Turnouts, Lights and Signal Heads that
 can be reached via SRCP.  There is also initial support for 
 JMRI Throttles via SRCP.
 
-<h2>Configuring JMRI</h2>
-<p>
-To use an SRCP connection, select "SRCP Server" as a protocol under the preferences.
-<p>
-Next fill in the Internet address for the SRCP server.  This can be numbers like <code>127.0.0.1</code> or 
-a name like "srcp.sf.net". A server running on the same computer can usually be referred to as "localhost".
-<p>
-Then fill in the port number. This can be obtained from the configuration for your SRCP server.
-<p>
-Finally, save the preferences and restart the program.
-
-<h3>Limitations</h3>
+<a name="limitations"></a><h2>Limitations</h2>
 <p>
 SRCP support was introduced in <a href="http://jmri.sf.net/releasenotes/jmri2.1.6.shtml">JMRI v2.1.6</a> during the Spring of 2008.  
 That first version had several limitations:
@@ -61,11 +50,22 @@ That first version had several limitations:
 <li>It needed more testing, especially with M&auml;rklin and other non-DCC systems.
 </ul>
 
-<h2>More Information</h2>
+<a name="connecting"></a><h2>Connecting</h2>
+<p>
+To use an SRCP connection, select "SRCP Server" as a protocol under the Preferences.
+<p>
+Next fill in the Internet address for the SRCP server.  This can be numbers like <code>127.0.0.1</code> or 
+a name like "srcp.sf.net". A server running on the same computer can usually be referred to as "localhost".
+<p>
+Then fill in the port number. This can be obtained from the configuration for your SRCP server.
+<p>
+Finally, save the Preferences and restart JMRI.
 
-There's a lot of good information on SRCP and how it fits into an
-overall model-railroad system 
-<a href="http://www.der-moba.de/index.php/Digitalprojekt">in German</a>.
+<a name="documentation"></a><h2>Documentation</h2>
+<h3>Third Party info</h3>
+<p>There's a lot of good information on SRCP and how it fits into an
+overall model-railroad system on 
+<a href="http://www.der-moba.de/index.php/Digitalprojekt">der-moba.de (in German)</a>.
     
 <!--#include virtual="/Footer" -->
  </div><!-- closes #mainContent-->

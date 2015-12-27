@@ -27,33 +27,31 @@
   
 <p>
 This page describes an early attempt to connect an Axim PDA to JMRI, which has some flaws and is deprecated.
+
+<a name="limitations"></a><h2>Limitations</h2>
 <p>For a supported approach, involving running a specific program
 on your Smartphone, see the 
 <a href="../../package/jmri/jmrit/withrottle/UserInterface.shtml">WiThrottle</a> page.
 
+<a name="connecting"></a><h2>Connecting</h2>
 <p>Daryl Kruse has been experimenting 
 with a Dell Axim PDA for use as a true 2-way Digitrax throttle. 
 He's provided the following information
 on how he set it up:
 
-<p>
-1. Our home has a wireless LAN set up for household members to access 
+<p>1. Our home has a wireless LAN set up for household members to access 
 our cable internet service.
 
-<p>
-2. My train computer is connected to our LAN and, of course, is 
+<p>2. My train computer is connected to our LAN and, of course, is 
 connected to JMRI and the LocoNet via an interface.
 
-<p>
-3. My Dell Axim has wireless and terminal services client.
+<p>3. My Dell Axim has wireless and terminal services client.
 
-<p>
-4. After staring up JMRI Throttles and turnout control, I use the 
+<p>4. After staring up JMRI Throttles and turnout control, I use the 
 the terminal services client of the Axim to access the computer 
 screen.
 
-<p>
-5. I can then control the layout with the Axim.
+<p>5. I can then control the layout with the Axim.
 
 <p>
 I am using the Terminal Services Client that came installed on my 
@@ -79,6 +77,8 @@ Route control, a lot of unneeded accessory switch numbers show up
 that I don't need.  Is there any way to set up a table that is set 
 with just the accessory switches you want?
 
+<a name="documentation"></a><h2>Documentation</h2>
+<h3>JMRI Help</h3>
 <p>
 For the currently supported approach, involving running a specific program
 on your Smartphone, see the 

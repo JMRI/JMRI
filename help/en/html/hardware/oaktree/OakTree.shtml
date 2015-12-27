@@ -22,34 +22,40 @@
     <div id="mainContent">
 
   <h1>Hardware Support: Oak Tree Systems Railroad Control Interface (RCI)</h1>
+<ul><!-- TOC -->
+	<li><a href="#hardware">Hardware</a></li>
+	<li><a href="#limitations">Limitations</a></li>
+	<li><a href="#connecting">Connecting</a></li>
+	<li><a href="#documentation">Documentation</a></li>
+</ul>
       
-	<h3>Supported Hardware</h3>
-
+<a name="hardware"></a><h2>Supported Hardware</h2>
+<h3>Computer Interfaces</h3>
 <ul>
 	<li>IO-24
 	<li>IO-48
 	<li>O-48
 </ul>
 
-	<h3>Limitations</h3>
-
+<a name="limitations"></a><h2>Limitations</h2>
 	<p>The JMRI libraries have built-in support for Oak Tree Systems serial hardware
 	using the "RSC" bus protocol.
 	inputs can be used as sensors, and outputs can be driven as
 	turnouts.</p>
-
 	<p>At this time, the RSI serial bus protocol for the HH-2 throttle is not
 	yet supported.</p>
 
+<a name="connecting"></a><h2>Connecting</h2>
+<h3>Settings</h3>
 	<dl>
 	<dt class=left>Configuration</dt>
 	<dd class=top>
 	    <ol>
 		<li>Start the program (usually PanelPro)
-		<li>From the edit menu, select Preferences and configure:
+		<li>From the Edit menu, select Preferences and configure the Connections tab:
 	      <ul>
-		    <li>Manufacturer: "Oak Tree Systems"
-		    <li>Connection: For serial port, select the one your hardware is attached to.
+		    <li>System Manufacturer: "Oak Tree Systems"
+		    <li>System Connection: For serial port, select the one your hardware is attached to.
 		    <li>Select the baud rate configured into your boards
 		    <li>Click the "Configure nodes" button. On the new panel that opens:
 		        <ul>
@@ -101,16 +107,14 @@
 	    <li>CS2012 is the last input pin.
 	    </ul>
 	</ul>
-
-    <p>To summarize, input and output pins are labelled sequentially
-    within each node.  The numbers go up by 1000 from node to 
-    node.  Node numbers can go as high as the hardware allows.
-    	
+	<p>To summarize, input and output pins are labelled sequentially
+	within each node.  The numbers go up by 1000 from node to 
+	node.  Node numbers can go as high as the hardware allows.   	
    </dd>
-
 	</dl>
 
-	<h3> More info </h3>
+<a name="documentation"></a><h2>Documentation</h2>
+<h3>Third Party info</h3>
     	<p>For more information on Oak Tree Systems hardware, please see their
     	<a href="http://www.oaktreesystems.com">web site</a>.</p>
 

@@ -507,6 +507,13 @@ public class RollingStockSetFrame extends OperationsFrame implements java.beans.
                             .getString("rsCanNotDest"), JOptionPane.ERROR_MESSAGE);
                     return false;
                 }
+                // determine is user changed the destination track and is part of train
+                if (destTrack != null && rs.getDestinationTrack() != destTrack && rs.getTrain() != null
+                        && rs.getTrain().isBuilt() && rs.getRouteLocation() != null) {
+                    log.debug("Rolling stock ({}) has new track destination in built train ({})", 
+                            rs.toString(), rs.getTrainName());
+                    rs.getTrain().setModified(true);
+                }
                 String status = rs.setDestination((Location) destinationBox.getSelectedItem(), destTrack);
                 if (!status.equals(Track.OKAY)) {
                     log.debug("Can't set rs's destination because of {}", status);

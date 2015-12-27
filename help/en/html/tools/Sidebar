@@ -29,17 +29,26 @@
 		    </ul>
 		</dd>
 
-		<dt><h3><a href="index.shtml">System-specific Tools</a></h3></dt>
+		<dt><h3><a href="index.shtml#systemSpecificTools">System-specific Tools</a></h3></dt>
 		<dd>
 		    <ul>
-		    <li><dfn>C/MRI</dfn>
-		    <li><dfn><a href="../hardware/can/index.shtml">MERG CBUS</a></dfn>
-		    <li><dfn><a href="../apps/LocoTools/index.shtml">Digitrax/LocoNet</a></dfn>
-		    <li><dfn><a href="../hardware/grapevine/index.shtml">Grapevine</a></dfn>
-		    <li><dfn>NCE</dfn>
-		    <li><dfn><a href="../hardware/openlcb/index.shtml">OpenLCB</a></dfn>
-		    <li><dfn><a href="../hardware/rps/index.shtml">RPS</a></dfn>
-		    </ul>
+		    <li><dfn><a href="../hardware/acela/index.shtml#tools">Acela (CTI)</a></dfn>
+		    <li><dfn><a href="../hardware/cmri/CMRI.shtml#tools">C/MRI</a></dfn>
+		    <li><dfn><a href="../hardware/can/index.shtml#tools">CAN</a></dfn>
+		    <li><dfn><a href="../hardware/can/cbus/index.shtml#tools">MERG CBUS</a></dfn>
+		    <li><dfn><a href="../hardware/dccpp/index.shtml#tools">DCC++</a></dfn>
+		    <li><dfn><a href="../hardware/easydcc/EasyDCC.shtml#tools">EasyDCC</a></dfn>
+		    <li><dfn><a href="../hardware/ecos/index.shtml#tools">ESU ECoS</a></dfn>
+		    <li><dfn><a href="../hardware/grapevine/index.shtml#tools">Grapevine</a></dfn>
+		    <li><dfn><a href="../apps/LocoTools/index.shtml">LocoNet (Digitrax)</a></dfn>
+		    <li><dfn><a href="../hardware/marklin/index.shtml#tools">M&auml;rklin</a></dfn>
+		    <li><dfn><a href="../hardware/nce/index.shtml#tools">NCE</a></dfn>
+		    <li><dfn><a href="../hardware/openlcb/index.shtml#tools">OpenLCB</a></dfn>
+		    <li><dfn><a href="../hardware/rps/index.shtml#tools">RPS</a></dfn>
+		    <li><dfn><a href="../hardware/sprog/SPROG.shtml#tools">SPROG</a></dfn>
+				<li><dfn><a href="../hardware/XBee/index.shtml#tools">XBee</a></dfn>
+				<li><dfn><a href="../hardware/XPressNet/index.shtml#tools">XPressNet (Lenz)</a></dfn>
+				</ul>
     </dd>
 
 		<dt><h3><a href="automation/">Layout Automation</a></h3></dt>

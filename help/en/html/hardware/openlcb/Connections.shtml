@@ -17,23 +17,35 @@
   <div class="nomenu" id="mBody">
     <div id="mainContent">
 
-<h1>Hardware Support: OpenLCB Connections</h1>
+<h1>Hardware Support: OpenLCB - Connections</h1>
 <p>
 This page discusses how JMRI can connect to OpenLCB.
 <p>
-For more on JMRI's OpenLCB support, see the
-<a href="index.shtml">main OpenLCB page</a>.
 
-<h2>Via a USB Adapter</h2>
+<a name="connecting"></a><h2>Connecting</h2>
+<a href="images/OpenLCBConnection.png">
+<img src="images/OpenLCBConnection.png" alt="OpenLCB Connections Preference Pane" width="305" height="147"></a>
 
-<h2>Via a Network Connection</h2>
+<h3>Via a TCH Tech CAN=USB Connector</h3>
+
+<h3>Via a GridConnect Adapter</h3>
+
+<h3>Via a GridConnect Network Interface</h3>
+
+<h3>Via a Lawcell CAN USB</h3>
+
+<h3>Via a <a href="../can/index.shtml">MERG CAN-RS/-USB</a></h3>
 <p>
 You can simulate a remote OpenLCB connection, e.g.
 to debug things, on many computers using the "nc" command:
 <pre>
 nc -l 12022
 </pre>
-    
+
+<a name="documentation"></a><h2>Documentation</h2>
+<h3>JMRI Help</h3>
+<p>Back to the <a href="index.shtml">main OpenLCB Help page</a></p>
+ 
 <!--#include virtual="/Footer" -->
   </div><!-- closes #mainContent-->
 </div> <!-- closes #mBody-->

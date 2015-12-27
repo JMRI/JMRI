@@ -173,6 +173,10 @@ It contains modular applications for:</p>
 <li>Controlling lighting and sound in the room, and so forth (<a href="../html/tools/Audio.shtml">SoundPro&trade;</a>)</li>
 </ul>
 <p>All this capability is contained in one install.</p>
+<p>If this is your first visit to our manual, we suggest that you
+take the Decoder Pro&reg; tour at <a href="http://jmri.sourceforge.net/help/en/html/apps/DecoderPro/Tour.shtml">http://jmri.sourceforge.net/help/en/html/apps/DecoderPro/Tour.shtml</a><br>
+to get an overview of what we're about to cover.
+</p>
 
 <h2>System Requirements</h2>
 
@@ -183,18 +187,8 @@ version 2.14 and later requires Java 1.6.0 or later. You can get Java
 as a free (but large) download at: <a href="http://java.com/download/" target="_blank">java.com/download</a>.
 </p>
 
-<p>If this is your first visit to our manual, we suggest that you
-take the Decoder Pro&reg; tour at <a href="http://jmri.sourceforge.net/help/en/html/apps/DecoderPro/Tour.shtml">http://jmri.sourceforge.net/help/en/html/apps/DecoderPro/Tour.shtml</a><br>
-to get an overview of what we're about to cover.
-</p>
-
-<hr>
-
-<div align="right">Go to the <a href="https://groups.yahoo.com/neo/groups/jmriusers/info">JMRI Users Yahoo Group</a></div>
-
 <!--#include virtual="/Footer" -->
-
-</div><!-- closes #mainContent -->
-</div>
+  </div><!-- closes #mainContent-->
+ </div> <!-- closes #mBody-->
 </body>
 </html>
