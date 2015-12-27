@@ -12,6 +12,7 @@
 		<dd>
 			<ul>
 			<li><a href="getgitcode.shtml">Getting the code via Git</a>
+			<li><a href="gitdeveloper.shtml">Developing with JMRI Code</a>
 			<li><a href="GitFAQ.shtml">Git FAQs</a>
 			<li>Building with:
 				<ul>
