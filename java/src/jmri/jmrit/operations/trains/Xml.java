@@ -84,6 +84,7 @@ public class Xml {
     static final String LEAD_ENGINE = "leadEngine"; // NOI18N
     static final String STATUS = "status"; // NOI18N
     static final String STATUS_CODE = "statusCode"; // NOI18N
+    static final String OLD_STATUS_CODE = "oldStatusCode"; // NOI18N
     static final String TERMINATION_DATE = "TerminationDate"; // NOI18N
     static final String REQUESTED_CARS = "RequestedCars"; // NOI18N
 

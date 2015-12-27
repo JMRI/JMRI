@@ -99,8 +99,7 @@ public class TrainLogger extends XmlFile implements java.beans.PropertyChangeLis
         // Note that train status can contain a comma
         String line = ESC + train.getName() + ESC + DEL + ESC + train.getDescription() + ESC + DEL + ESC
                 + train.getCurrentLocationName() + ESC + DEL + ESC + train.getNextLocationName() + ESC + DEL + ESC
-                + (train.isModified()?Bundle.getMessage("Modified"):train.getStatus()) + ESC + DEL + ESC 
-                + train.getBuildFailedMessage() + ESC + DEL + getTime();
+                + train.getStatus() + ESC + DEL + ESC + train.getBuildFailedMessage() + ESC + DEL + getTime();
         fileOut(line);
     }
 
@@ -170,8 +169,7 @@ public class TrainLogger extends XmlFile implements java.beans.PropertyChangeLis
 
     public void propertyChange(PropertyChangeEvent e) {
         if (e.getPropertyName().equals(Train.STATUS_CHANGED_PROPERTY)
-                || e.getPropertyName().equals(Train.TRAIN_LOCATION_CHANGED_PROPERTY)
-                || e.getPropertyName().equals(Train.TRAIN_MODIFIED_CHANGED_PROPERTY)) {
+                || e.getPropertyName().equals(Train.TRAIN_LOCATION_CHANGED_PROPERTY)) {
             if (Control.showProperty) {
                 log.debug("Train logger sees property change for train " + e.getSource());
             }
