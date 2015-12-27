@@ -19,7 +19,8 @@
 <div id="mainContent">
 
 <!-- Page Body -->
-<h1>DecoderPro Symbolic Programmer</h1>
+<h1>JMRI: DecoderPro User Guide</h1>
+<h2>Introduction to the JMRI Symbolic Programmer</h2>
 
 <p>Modern DCC decoders are complicated beasts to program.  The simple idea
 of "put the address in CV01" doesn't cope well when you program complicated
@@ -49,7 +50,7 @@ DecoderPro is also covered in Joe Fugate's
 
 <h2>What You Need to Use DecoderPro</h2>
 
-<p>The DecoderPro software will work on Windows, Linux, Macintosh (MacOS 8.6
+<p>DecoderPro will work on Windows, Linux, Macintosh (MacOS 8.6
 through 9.2 and OS X), and OS/2. It will probably also work on most
 other modern operating systems that have Java available; contact us for
 help if you'd like to try it on some other system. You need to have a
