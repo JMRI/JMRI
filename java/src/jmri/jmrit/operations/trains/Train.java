@@ -2761,7 +2761,15 @@ public class Train implements java.beans.PropertyChangeListener {
         return _built;
     }
 
+    /**
+     * Set true whenever the train's manifest has been modified. For example
+     * adding or removing a car from a train, or changing the manifest format.
+     * 
+     * @param modified
+     */
     public void setModified(boolean modified) {
+        if (!isBuilt())
+            return; // there isn't a manifest to modify
         boolean old = _modified;
         _modified = modified;
         if (modified) {
@@ -2769,10 +2777,13 @@ public class Train implements java.beans.PropertyChangeListener {
         }
         if (old != modified) {
             if (modified) {
-                setOldStatusCode(getStatusCode());
+                // scripts can call setModified() for a train
+                if (getStatusCode() != CODE_RUN_SCRIPTS) {
+                    setOldStatusCode(getStatusCode());
+                }
                 setStatus(CODE_MANIFEST_MODIFIED);
             } else {
-                setStatus(getOldStatusCode());
+                setStatus(getOldStatusCode()); // restore previous train status
             }
             setDirtyAndFirePropertyChange(TRAIN_MODIFIED_CHANGED_PROPERTY, old ? "true" : "false", modified ? "true" // NOI18N
             : "false"); // NOI18N
@@ -3784,6 +3795,8 @@ public class Train implements java.beans.PropertyChangeListener {
             } catch (NumberFormatException ee) {
                 log.error("Old status code ({}) isn't a valid number for train ({})", a.getValue(), getName());
             }
+        } else {
+            _oldStatusCode = getStatusCode(); // use current status code if one wasn't saved
         }
         if ((a = e.getAttribute(Xml.COMMENT)) != null) {
             _comment = OperationsXml.convertFromXmlComment(a.getValue());
