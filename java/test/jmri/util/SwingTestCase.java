@@ -60,8 +60,8 @@ public class SwingTestCase extends JFCTestCase {
         RED         (0xFFFF0000),
         GREEN       (0xFF00FF00),
         BLUE        (0xFF0000FF),
-        WHITE       (0xFF000000),
-        BLACK       (0xFFFFFFFF),
+        WHITE       (0xFFFFFFFF),
+        BLACK       (0xFF000000),
         YELLOW      (0xFFFFFF00);
     
         public String toString() { return formatPixel(value); }
