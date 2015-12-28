@@ -24,9 +24,9 @@
 <!--#include virtual="Sidebar" -->
 <div id="mainContent">
 
-<h2>JMRI: Lights Documentation</h2>
+<h1>JMRI: Lights Documentation</h1>
 
-<h3>What are Lights?</h3>
+<h2>What are Lights?</h2>
 
 <p>Lights are digital output bits that function as on/off switches. Lights
 were created to provide easy control for fascia panel lights and scenery
@@ -60,6 +60,8 @@ it must be "enabled", that is, its check box in the 'Enabled' column
 must be checked.  You can uncheck this box to temporarily disable a 
 Light from being triggered, i.e. prevent it switching when its control
 mechanism fires.</p>
+
+<h2>How to setup Lights</h2>
 
 <h3>Switching a Light On or Off</h3>
 
