@@ -4,6 +4,7 @@ package jmri.jmrit.display;
 
 import java.awt.Color;
 import java.awt.Dimension;
+import java.awt.Font;
 import java.awt.Graphics2D;
 import java.awt.Point;
 import java.awt.image.BufferedImage;
@@ -378,13 +379,14 @@ public class PositionableLabelTest extends jmri.util.SwingTestCase {
     }
     
     // c.f. http://www.ssec.wisc.edu/~tomw/java/unicode.html#x2580
-    final String sampleText = " \u2716\u2588\u2588\u2588\u2716 "; // X|*|X
+    final String sampleText = "  \u25CF  "; // X|*|X
     
-    //final String sampleText = " \u2588\u2588\u2588\u2588 "; // FULL BLOCK 0x2588
-    //final String sampleText = " \u25CF\u25CF\u25CF\u25CF "; // BLACK CIRCLE 0x25CF
-    //final String sampleText = " \u25AA\u25AA\u25AA\u25AA "; // BLACK SMALL SQUARE 0x25AA
-    //final String sampleText = " \u25C6\u25C6\u25C6\u25C6 "; // BLACK DIAMOND 0x25C6
-    //final String sampleText = " \u2716\u2716\u2716\u2716 "; // HEAVY MULTIPLICATION X 0x2716
+    // FULL BLOCK 2588
+    // BLACK SQUARE u25A0
+    // BLACK CIRCLE 0x25CF
+    // BLACK SMALL SQUARE u25AA
+    // BLACK DIAMOND \u25C6
+    // HEAVY MULTIPLICATION X \u2716
 
     public void testDisplayText() {
     
@@ -394,7 +396,8 @@ public class PositionableLabelTest extends jmri.util.SwingTestCase {
                         
         PositionableLabel label = new PositionableLabel(sampleText, null);
         label.setForeground(Color.black); // this is a direct set, not through the UI
-               
+        label.setFont(new Font(Font.MONOSPACED, Font.PLAIN, 12));
+        
         f.add(label);
         f.pack();
         flushAWT();
@@ -433,6 +436,7 @@ public class PositionableLabelTest extends jmri.util.SwingTestCase {
                         
         PositionableLabel label = new PositionableLabel(sampleText, null);
         label.setForeground(Color.black); // this is a direct set, not through the UI
+        label.setFont(new Font(Font.MONOSPACED, Font.PLAIN, 12));
         
         f.add(label);
         f.pack();
@@ -476,6 +480,7 @@ public class PositionableLabelTest extends jmri.util.SwingTestCase {
                         
         PositionableLabel label = new PositionableLabel(sampleText, null);
         label.setForeground(Color.black); // this is a direct set, not through the UI
+        label.setFont(new Font(Font.MONOSPACED, Font.PLAIN, 12));
         
         f.add(label);
         f.pack();
