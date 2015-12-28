@@ -1,5 +1,8 @@
+// PositionableLabelTest.java
+
 package jmri.jmrit.display;
 
+import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.Graphics2D;
 import java.awt.Point;
@@ -19,12 +22,16 @@ import junit.framework.Test;
 import junit.framework.TestSuite;
 
 /**
- * PositionableLabelTest.java
+ * Test of PositionableLabel
+ * 
+ * Includes tests <ul>
+ * <li>Image transparency and backgrounds
+ * <li>Rotating icons and text
+ * <li>Animated GIFs
+ * </ul>
+ * along with some combinations
  *
- * Description:
- *
- * @author	Bob Jacobsen
- * @version	$Revision$
+ * @author	Bob Jacobsen   Copyright 2015
  */
 public class PositionableLabelTest extends jmri.util.SwingTestCase {
 
@@ -126,7 +133,7 @@ public class PositionableLabelTest extends jmri.util.SwingTestCase {
     public void testDisplayTransparent() {
     
         JFrame f = new JFrame();
-        f.getContentPane().setBackground(java.awt.Color.blue);
+        f.getContentPane().setBackground(Color.blue);
         f.setUndecorated(true); // skip frame decoration, which can force a min size.
         
         jmri.jmrit.catalog.NamedIcon icon = new jmri.jmrit.catalog.NamedIcon("resources/icons/redTransparentBox.gif","box"); // 13x13
@@ -166,7 +173,7 @@ public class PositionableLabelTest extends jmri.util.SwingTestCase {
     public void testDisplayTransparent45degrees() {
     
         JFrame f = new JFrame();
-        f.getContentPane().setBackground(java.awt.Color.blue);
+        f.getContentPane().setBackground(Color.blue);
         f.setUndecorated(true); // skip frame decoration, which can force a min size.
         
         jmri.jmrit.catalog.NamedIcon icon = new jmri.jmrit.catalog.NamedIcon("resources/icons/redTransparentBox.gif","box"); // 13x13
@@ -218,7 +225,7 @@ public class PositionableLabelTest extends jmri.util.SwingTestCase {
         }
    
         JFrame f = new JFrame();
-        f.getContentPane().setBackground(java.awt.Color.blue);
+        f.getContentPane().setBackground(Color.blue);
         f.setUndecorated(true); // skip frame decoration, which can force a min size.
         
         jmri.jmrit.catalog.NamedIcon icon = new jmri.jmrit.catalog.NamedIcon("resources/icons/RGB-animated-once-Square.gif","box"); // 13x13
@@ -289,9 +296,15 @@ public class PositionableLabelTest extends jmri.util.SwingTestCase {
          if (!System.getProperty("jmri.headlesstest","false").equals("false")) { // needs to show the frame to start animation
             return;
         }
+ 
     
+         if (System.getProperty("jmri.migrationtests","false").equals("false")) { // skip test for migration, but warn about it
+            log.warn("skipping testDisplayAnimatedRGBrotated45degrees because jmri.migrationtests not set true");
+            return;
+        }
+
         JFrame f = new JFrame();
-        f.getContentPane().setBackground(java.awt.Color.green);
+        f.getContentPane().setBackground(Color.green);
         f.setUndecorated(true); // skip frame decoration, which can force a min size.
         
         jmri.jmrit.catalog.NamedIcon icon = new jmri.jmrit.catalog.NamedIcon("resources/icons/RGB-animated-once-Square2.gif","box"); // 13x13
@@ -367,17 +380,19 @@ public class PositionableLabelTest extends jmri.util.SwingTestCase {
     public void testDisplayText() {
     
         JFrame f = new JFrame();
-        f.getContentPane().setBackground(java.awt.Color.blue);
+        f.getContentPane().setBackground(Color.blue);
         f.setUndecorated(true); // skip frame decoration, which can force a min size.
                 
         String text = " \u2588\u2588\u2588\u2588 "; // full blocks
         
         PositionableLabel label = new PositionableLabel(text, null);
-        
+        label.setForeground(Color.black); // this is a direct set, not through the UI
+               
         f.add(label);
         f.pack();
         flushAWT();
-        // icon seems to be different sizes on different systems
+
+        Assert.assertTrue("Expect size "+label.getSize()+" wider than height", label.getSize().width > label.getSize().height);
                  
         int[] val = getDisplayedContent(label, label.getSize(), new Point(0,0));
         
@@ -406,12 +421,13 @@ public class PositionableLabelTest extends jmri.util.SwingTestCase {
     public void testDisplayTextRotated90() {
     
         JFrame f = new JFrame();
-        f.getContentPane().setBackground(java.awt.Color.blue);
+        f.getContentPane().setBackground(Color.blue);
         f.setUndecorated(true); // skip frame decoration, which can force a min size.
                 
         String text = " \u2588\u2588\u2588\u2588 "; // full blocks
         
         PositionableLabel label = new PositionableLabel(text, null);
+        label.setForeground(Color.black); // this is a direct set, not through the UI
         
         f.add(label);
         f.pack();
@@ -422,9 +438,11 @@ public class PositionableLabelTest extends jmri.util.SwingTestCase {
         f.pack();
         flushAWT();
 
+        Assert.assertTrue("Expect size "+label.getSize()+" higher than width", label.getSize().width < label.getSize().height);
+        
         int[] val = getDisplayedContent(label, label.getSize(), new Point(0,0));
         
-        //for (int i=0; i<val.length; i++) System.out.println(" "+i+" "+String.format("0x%8s", Integer.toHexString(val[i])).replace(' ', '0'));
+        //for (int i=0; i<val.length; i++) System.out.println(" "+i+" "+formatPixel(val[i]));
  
         assertImageNinePoints("icon", val, label.getSize(),
                 Pixel.TRANSPARENT, Pixel.TRANSPARENT, Pixel.TRANSPARENT,
@@ -448,12 +466,13 @@ public class PositionableLabelTest extends jmri.util.SwingTestCase {
     public void testDisplayTextRotated45() {
     
         JFrame f = new JFrame();
-        f.getContentPane().setBackground(java.awt.Color.blue);
+        f.getContentPane().setBackground(Color.blue);
         f.setUndecorated(true); // skip frame decoration, which can force a min size.
                 
         String text = " \u2588\u2588\u2588\u2588 "; // full blocks
         
         PositionableLabel label = new PositionableLabel(text, null);
+        label.setForeground(Color.black); // this is a direct set, not through the UI
         
         f.add(label);
         f.pack();
@@ -524,5 +543,5 @@ public class PositionableLabelTest extends jmri.util.SwingTestCase {
         apps.tests.Log4JFixture.tearDown();
     }
 
-	// static private Logger log = LoggerFactory.getLogger(TurnoutIconTest.class.getName());
+	static private org.slf4j.Logger log = org.slf4j.LoggerFactory.getLogger(PositionableLabelTest.class.getName());
 }
