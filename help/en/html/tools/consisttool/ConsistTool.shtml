@@ -24,17 +24,17 @@
 
 <h1>JMRI: Consisting Tool</h1>
 
-<h2>Background Information</h2>
+<h2>What is a Consist?</h2>
 	<p>
 	There are three types of consists used on DCC systems:
 	</p>
 		<ol>
-		<li> <p>A <i>basic</i> or <i>primary address consist</i>.  In this 
-		type of consist, each locomotive is assigned the same address on 
+		<li>A <i>basic</i> or <i>primary address consist</i>.  In this 
+		type of consist, each Locomotive is assigned the same address on 
 		the programming track, or on the main with OpsMode Programming 
 		(if supported by the command station and decoder). You can 
 		use either a long (CV17 and CV18) or short (CV1) address for 
-		a primary address consist.</p>
+		a primary address consist.
 		</li>
 		<li> 
 		<p>A <i>Command Station Assisted Consist</i> (CSAC).  A command 
@@ -59,19 +59,19 @@
 		<tr>
 		   <td>Lenz</td>
 		   <td>Double Header</td>
-		   <td>Limited to 2 locomotives.  Allows any address but 
+		   <td>Limited to 2 Locomotives.  Allows any address but 
 		       00 to be used.</td>
 		</tr>
 		<tr>
 		   <td>NCE</td>
 		   <td>Old Style Consist</td>
-		   <td>Limited to 8 locomotives.  Allows any address but 
+		   <td>Limited to 8 Locomotives.  Allows any address but 
 		       00 to be used.</td>
 		</tr>
 		<tr>
 		   <td>EasyDCC</td>
 		   <td>Standard Consist</td>
-		   <td>Limited to 8 locomotives.  Allows any address but 
+		   <td>Limited to 8 Locomotives.  Allows any address but 
 		       00 to be used.</td>
 		<tr>
 		</table>
@@ -79,13 +79,12 @@
 		<p>
 		The common trait shared by all versions of CSAC is 
 		that a separate speed and direction command is sent 
-		to the track for each locomotive that is in the consist.
+		to the track for each Locomotive that is in the consist.
 		</p>
 		</li>
 		
 		<li> 
-		<p>
-		a <i>Decoder Assisted Consist</i> (DAC), Which is also 
+		<p>A <i>Decoder Assisted Consist</i> (DAC), Which is also 
 		referred to frequently as an <i>Advanced Consist</i>.
 		</p>  
 		<p>
@@ -93,7 +92,7 @@
 		consist addresses.
 		</p>
 		<p>
-		If CV19 contains a value other than 0, the locomotive will
+		If CV19 contains a value other than 0, the Locomotive will
 		respond to speed and direction instructions on the 
 		address in CV19.  Otherwise, it will respond to speed and 
 		direction commands sent only on the usual short
@@ -102,7 +101,7 @@
 		<p>
 		Since the consist address is a single CV, it is limited 
 		to the range of 1 to 127.  If you add 128 to the consist 
-		address, the locomotive will run backwards (relative to
+		address, the Locomotive will run backwards (relative to
 		it's normal direction of travel) in the consist.
 		</p>
 		<p>
@@ -124,7 +123,7 @@
 		consist.
 		</p>
 		<p>
-		By default, locomotives in a DAC ignore function commands 
+		By default, Locomotives in a DAC ignore function commands 
 		sent to the consist address.  You can configure some decoders 
 		so they will respond to function commands issued to the 
 		consist address as well (through CVs 21 and 22).  If 
@@ -141,7 +140,7 @@
 		</li>
 		</ol>
 
-	<h2>Consisting Support in JMRI</h2>
+	<h3>Consisting Support in JMRI</h3>
 	<p>
 	   JMRI provides support for consists using the consist tool, 
 	   which is accessible through the tools menu of any JMRI 
@@ -162,7 +161,7 @@
 	   information between the consist tool and the command station.
 	</p>
 	
-	<b>Available Consist Managers</b>
+	<b>Available JMRI Consist Managers</b>
 	</p>
 		<ul>
 		<li>
@@ -176,7 +175,7 @@
 		      <i>The Generic Consist Manager bypasses any routines the 
 		      command station has to set the consist address.</i>  The 
 		      importance of this is that IF your command station provides a 
-		      method for you to run a consist by selecting a locomotive by 
+		      method for you to run a consist by selecting a Locomotive by 
 		      it's address, this won't function.  You'll need to use the 
 		      short address identifier you selected for the consist ID to 
 		      control the consist speed and direction.
@@ -195,7 +194,7 @@
 		      <i>Smart Consisting</i> feature works with consists created 
 		      by the tool.  On Lenz systems, <i>Smart Consisting</i> 
 		      refers to the ability to be able to run a consist from <i>any</i> 
-		      of the consisted locomotive addresses or from the consist 
+		      of the consisted Locomotive addresses or from the consist 
 		      address.
 		   </p>
 		   <p>
@@ -217,7 +216,7 @@
 		      command station.  Unlike the Generic Consist Manager, the 
 		      EasyDCC Consist Manager creates these by issuing a Consist 
 		      Control packet to the track.  This allows inclusion of 
-		      locomotives that do not permit writing CV19 using 
+		      Locomotives that do not permit writing CV19 using 
 		      operations mode programming.  As with the Generic Consist 
 		      Manager, you must use the short address selected as the consist 
 		      address to control the consist.
@@ -255,7 +254,7 @@
 	   consist ID.  For Decoder Assisted Consists, this should be the 
 	   short address used to identify the consist.  For Command 
 	   Station Assisted Consists, this value may automatically be 
-	   filled in with the lead locomotive address when you try to add 
+	   filled in with the lead Locomotive address when you try to add 
 	   it to the consist.
 	</p>
 	<p>
@@ -264,50 +263,50 @@
 	</p>
 	<image src=images/ConsistTool-IDAdded.jpg alt="Consist Tool - ID Added">
 	<p>
-	The second line of the consisting tool is used to add locomotives.
-	   A locomotive may be added either by entering it's number in the 
+	The second line of the consisting tool is used to add Locomotives.
+	   A Locomotive may be added either by entering it's number in the 
 	   box next to <b>New Locomotive</b> or by selecting it's number 
 	   from the roster drop down box.
 	</p>
 	   <image src=images/ConsistTool-LeadLoco.jpg alt="Lead Locomotive Selected">
 	<p>
-	  Clicking the <b>add</b> button will add a locomotive to the 
+	  Clicking the <b>add</b> button will add a Locomotive to the 
 	  consist, and it will appear in the list below the second line.
 	</p>
 	  <image src=images/ConsistTool-LeadLocoAdded.jpg alt="Lead Locomotive Added to Consist">
 	<p>
 	  Clicking the <b>reset</b> button will clear the information for 
-	  this locomotive.
+	  this Locomotive.
 	</p>
 	<p>
 	   The <b>Direction Normal</b> checkbox is used to determine if 
-	   the locomotive is traveling in forward or reverse when the 
+	   the Locomotive is traveling in forward or reverse when the 
 	   consist is traveling forward.
 	</p>
 	<p>
 	   You may notice from the previous screen shots that this box is 
-	   grayed out until a lead locomotive is selected.  With 
-	   subsequent locomotives, you can check this box to indicate the
-	   direction of the locomotive relative to the lead locomotive.
+	   grayed out until a lead Locomotive is selected.  With 
+	   subsequent Locomotives, you can check this box to indicate the
+	   direction of the Locomotive relative to the lead Locomotive.
 	</p>
-	   <image src=images/ConsistTool-SecondLoco.jpg alt="Second LocoMotive Selected - Direction Reversed">
+	   <image src=images/ConsistTool-SecondLoco.jpg alt="Second Locomotive Selected - Direction Reversed">
 	<p>
-	   After adding the second locomotive to the consist, with the
+	   After adding the second Locomotive to the consist, with the
 	   direction reversed, you should see something like the following:
 	</p>
 	   <image src=images/ConsistTool-SecondLocoAdded.jpg alt="Second Locomotive Added">
 	<p>
-	   If you made a mistake, and add a second locomotive to the 
+	   If you made a mistake, and add a second Locomotive to the 
 	   consist with the wrong direction, you can change it's direction 
 	   simply by clicking on the checkbox in the Direction Normal column.
 	</p>
 	   <image src=images/ConsistTool-SecondLocoDirChange.jpg alt="Second Locomotive - Direction Change">
 	<p>
-	   The direction of the lead locomotive cannot be changed once 
+	   The direction of the lead Locomotive cannot be changed once 
 	   added.
 	</p>
 	<p>
-	   To delete an individual locomotive from the consist, you can
+	   To delete an individual Locomotive from the consist, you can
 	   select the <b>Del</b> button in the right most column of the 
 	   appropriate row of the table of addresses.
 	</p>
