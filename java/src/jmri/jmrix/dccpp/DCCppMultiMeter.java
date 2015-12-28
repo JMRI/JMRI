@@ -103,7 +103,7 @@ public class DCCppMultiMeter implements MultiMeter, DCCppListener {
 	    try {
 		if (is_enabled) {
 		    //log.debug("Timer Pop");
-		    tc.sendDCCppMessage(DCCppMessage.getReadTrackCurrentMsg(), parent);
+		    tc.sendDCCppMessage(DCCppMessage.makeReadTrackCurrentMsg(), parent);
 		}
 		Thread.sleep(sleep_interval);
 	    } catch (Exception e) {

@@ -114,7 +114,7 @@ public class DCCppEthernetAdapter extends DCCppNetworkPortController {
                     // If the timer times out, send a request for status
                     DCCppEthernetAdapter.this.getSystemConnectionMemo().getDCCppTrafficController()
                             .sendDCCppMessage(
-                                    jmri.jmrix.dccpp.DCCppMessage.getCSStatusMsg(),
+                                    jmri.jmrix.dccpp.DCCppMessage.makeCSStatusMsg(),
                                     null);
                 }
             };

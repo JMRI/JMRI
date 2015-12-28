@@ -272,6 +272,8 @@ public class TrainsTableFrame extends OperationsFrame implements java.beans.Prop
         toolMenu.add(new TrainsScheduleAction(Bundle.getMessage("TitleTimeTableTrains")));
         toolMenu.add(new TrainCopyAction(Bundle.getMessage("TitleTrainCopy")));
         toolMenu.add(new TrainsScriptAction(Bundle.getMessage("MenuItemScripts"), this));
+        toolMenu.add(new PrintSavedTrainManifestAction(Bundle.getMessage("MenuItemPrintSavedManifest"), false));
+        toolMenu.add(new PrintSavedTrainManifestAction(Bundle.getMessage("MenuItemPreviewSavedManifest"), true));
         toolMenu.add(new SetupExcelProgramFrameAction(Bundle.getMessage("MenuItemSetupExcelProgram")));
         toolMenu.add(new ExportTrainRosterAction());
         toolMenu.add(new PrintTrainsAction(Bundle.getMessage("MenuItemPrint"), new Frame(), false, this));
@@ -440,6 +442,8 @@ public class TrainsTableFrame extends OperationsFrame implements java.beans.Prop
             sysList = trainManager.getTrainsByRouteList();
         } else if (sortBy.equals(TrainsTableModel.STATUSCOLUMNNAME)) {
             sysList = trainManager.getTrainsByStatusList();
+        } else if (sortBy.equals(TrainsTableModel.DESCRIPTIONCOLUMNNAME)) {
+            sysList = trainManager.getTrainsByDescriptionList();
         } else {
             sysList = trainManager.getTrainsByNameList();
         }
@@ -550,6 +554,10 @@ public class TrainsTableFrame extends OperationsFrame implements java.beans.Prop
     }
 
     protected void handleModified() {
+        if (Setup.isAutoSaveEnabled()) {
+            storeValues();
+            return;
+        }
         if (OperationsXml.areFilesDirty()) {
             int result = javax.swing.JOptionPane.showOptionDialog(this,
                     Bundle.getMessage("PromptQuitWindowNotWritten"), Bundle.getMessage("PromptSaveQuit"),

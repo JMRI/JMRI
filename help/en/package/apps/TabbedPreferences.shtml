@@ -1,16 +1,14 @@
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
-<!-- $Id$ -->
 <html lang="en">
 <head>
- <TITLE>
+ <title>
       JMRI: Preferences Window
- </TITLE>
-    <META http-equiv=Content-Type content="text/html; charset=iso-8859-1">
-    <META content="Bob Jacobsen" name=Author>
-    <META name="keywords" content="JMRI help preferences">
+ </title>
+    <meta content="Bob Jacobsen" name="Author">
+    <meta name="keywords" content="JMRI help preferences">
 
 <!-- Style -->
-  <META http-equiv=Content-Type content="text/html; charset=iso-8859-1">
+  <meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
   <link rel="stylesheet" type="text/css" href="/css/default.css" media="screen">
   <link rel="stylesheet" type="text/css" href="/css/print.css" media="print">
   <link rel="icon" href="/images/jmri.ico" type="image/png">
@@ -23,13 +21,13 @@
   <div class="nomenu" id="mBody">
     <div id="mainContent">
 
-<H1>JMRI: Preferences Window</H1>
+<h1>JMRI: Preferences Window</h1>
 
 The preferences window is where you 
 configure the basic operation of your JMRI application.
 <p>
-The screen is split into two sections, on the left hand side is a list of the preference groups that can be set. 
-Clicking on each preference will then populate the right hand side, with the various options that can be configured.
+The screen is split into two sections: on the left hand side is a list of the Preference groups that can be set. 
+Clicking on each item will then populate the right hand side with the various options that can be configured for that Tab.
 <a href="../../manual/DecoderPro/images/Preferences.png">
 <img src="../../manual/DecoderPro/images/Preferences.png" height="156" width="256" align="right"></a>
 <p>
@@ -48,10 +46,11 @@ Clicking on each preference will then populate the right hand side, with the var
 <a href="#Warrants">Warrants</a><br>
 <p>Perhaps the most important control is at the bottom of this section:
 The "Save" button!  
-<p>
-Be sure to click "Save" when leaving this window.  Your changes to the preferences
+<p><img src="images/PrefsRestart.png" height="127" width="440" align="right">
+Be sure to click "Save" when leaving this window. Your changes to the Preferences
 don't take effect until the program is stopped and restarted, so the
-program will prompt you to do that after saving the preferences.
+program will prompt you to do that after saving the Preferences.
+</p>
 
 <a name="Connection">
 <h2>Connections</h2></a>
@@ -70,7 +69,7 @@ and this will remove the configuration for that connection.
 For more information on how to configure this for your particular hardware,
 see the <a href="../../html/hardware/index.shtml">hardware pages</a>.
 <p>
-Remember to press save!
+Remember to press <strong>Save</strong>!
 <a name="Defaults">
 <h2>Defaults</h2></a>
 
@@ -89,7 +88,6 @@ Operations<br>
 Throttle<br>
 Resources<br>
 Dispatcher options<br>
-Operations<br>
 Rps<br></dl>
 
 <p>There's a 
@@ -154,7 +152,6 @@ desired file.  If you later want to stop executing a particular script at startu
 click the "Remove" button next to the filename.
 </dl>
 
-
 <a name="Display">
 <h2>Display</h2></a>
 
@@ -218,9 +215,9 @@ We provide this preference so you can choose.
 <a id="roster">
 <dt>Roster
 <dd>
-Normally, the roster is stored in a standard location
+Normally, the Roster is stored in a standard location
 as part of the
-<a href="../../html/apps/DecoderPro/Files.shtml">preferences directory</a>.
+<a href="../../html/apps/DecoderPro/Files.shtml">Preferences directory</a>.
 This option lets you move that somewhere else.
 <p>
 To configure it, click the "Set..." button and follow the directions.
@@ -272,7 +269,7 @@ This will let you to limit what users have the ability to control.
         this WiFi interface can control track power.
     <li>Turnouts - Select whether mobile devices can control turnouts.
     <li>Routes - Select whether mobile devices can control routes.
-    <li>Consists - If selected, mobile devices can build & break "Advanced Consists".
+    <li>Consists - If selected, mobile devices can build &amp; break "Advanced Consists".
         <ul>
             <li>NMRA Format - These consists may perform better for building and controlling with WiFi devices.
             <li>DCC Brand-Specific - These consists should perform better when built with a WiFi device, 
@@ -359,6 +356,7 @@ For more information on warrant preferences, see
 <a href="../jmri/jmrit/logix/Warrant.shtml#SpeedMap">About Warrants</a> and follow its links.
 
 <!--#include virtual="/Footer" -->
+ </div><!-- closes #mainContent-->
+</div> <!-- closes #mBody-->
 </body>
 </html>
-

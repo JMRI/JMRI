@@ -52,7 +52,7 @@ public class LocoNetSystemConnectionMemo extends jmri.jmrix.SystemConnectionMemo
      */
     public SlotManager getSlotManager() {
         if (sm == null) {
-            log.error("slot manager is null, but there should always be a valid SlotManager", new Exception("Traceback"));
+            log.debug("slot manager is null, but there should always be a valid SlotManager", new Exception("Traceback"));
         }
         return sm;
     }

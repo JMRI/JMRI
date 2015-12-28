@@ -1,12 +1,11 @@
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
-<!-- $Id$ -->
 <html lang="en">
 <head>
  <TITLE>
       JMRI: Code Button Help
  </TITLE>
-    <META http-equiv=Content-Type content="text/html; charset=iso-8859-1">
-    <META content="Bob Jacobsen" name=Author>
+    <META http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
+    <META content="Bob Jacobsen" name="Author">
     <META name="keywords" content="JMRI help OS Indicator">
 
 <!-- Style -->
@@ -23,7 +22,7 @@
   <div class="nomenu" id="mBody">
     <div id="mainContent">
 
-<H1>Code Button</H1>
+<h1>Code Button</h1>
 
 <b>This is not fully implemented yet</b><p>
 

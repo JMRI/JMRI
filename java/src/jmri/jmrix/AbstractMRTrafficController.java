@@ -554,7 +554,7 @@ abstract public class AbstractMRTrafficController {
                     if (portReadyToSend(controller)) {
                         ostream.write(msg);
                         ostream.flush();
-                        log.debug("written, msg timeout: " + m.getTimeout() + " mSec");
+                        log.debug("written, msg timeout: {} mSec", m.getTimeout());
                         break;
                     } else if (m.getRetries() >= 0) {
                         if (log.isDebugEnabled()) {

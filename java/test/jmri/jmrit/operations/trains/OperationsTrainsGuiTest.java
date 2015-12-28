@@ -1043,7 +1043,7 @@ public class OperationsTrainsGuiTest extends OperationsSwingTestCase {
 
     private void enterClickAndLeave(Component comp) {
         getHelper().enterClickAndLeave(new MouseEventData(this, comp));
-        jmri.util.JUnitUtil.releaseThread(comp.getTreeLock(), 1); // compensate for race between GUI and test thread
+        jmri.util.JUnitUtil.releaseThread(comp.getTreeLock()); // compensate for race between GUI and test thread
     }
 
     // Ensure minimal setup for log4J

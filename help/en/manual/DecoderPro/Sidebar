@@ -5,43 +5,39 @@
 <div id="mBody">
 
 <div id="side"> <!-- Block of text on left side of page -->
-    <div style="text-align: center"><strong>The JMRI Manual</strong></strong></div>
-
-    <div style="text-align: center">
-      <a href="http://jmri.org/manual/pdf/DP_man_3-2.pdf">Download</a>
-    </div>
+    <div style="text-align: center"><strong>DecoderPro&reg; Manual</strong></div>
 
 <dl><!-- main table of contents -->
-
-	<dd>
+<dt><h3>Installing JMRI</h3></dt>
+	  <dd>
     <ul>
-    <li><a href="Installing_JMRI.shtml">Preparing to Install JMRI</a></li>
-    <li><a href="Installing_JMRI.shtml#InstallJMRI">Installing JMRI Software</a></li>
+    <li><a href="Installing_JMRI.shtml">Preparing to Install</a></li>
+    <li><a href="Installing_JMRI.shtml#InstallJMRI">Installing JMRI</a></li>
     </ul>
     </dd>
 
-<dt>Getting Started</dt>
+<dt><h3>Getting Started</h3></dt>
     <dd>
     <ul>
     <li><a href="Start_DCC.shtml">What is DCC?</a></li>
-    <li><a href="Start_DCC_Systems.shtml">What DCC systems will DecoderPro&reg; work with?</a></li>
+    <li><a href="Start_DCC_Systems.shtml">What DCC systems will DecoderPro work with?</a></li>
     <li><a href="Start_DCC_Hardware.shtml">What hardware do I need?</a></li>
     <li><a href="Start_DecoderPro.shtml">How do I start the program?</a></li>
-    <li><a href="Start_Preferences.shtml">How do I set up my preferences?</a></li>
+    <li><a href="Start_Preferences.shtml">How do I set up my Preferences?</a></li>
     </ul>
     </dd>
     
-<dt>Using DecoderPro&reg;</dt>
+<dt><h3>Using DecoderPro</h3></dt>
     <dd>
     <ul>
     <li><a href="Programmer_Setup.shtml">How do I set up to program a decoder?</a></li>
-    <li><a href="Programmer_Start.shtml">What are the Programming Modes?</a></li>
     </ul>
     </dd>
     
-<dt>DecoderPro&reg; Programming Modes</dt>
+<dt><h3>DecoderPro&reg; Programming Modes</h3></dt>
     <dd>
     <ul>
+    <li><a href="Programmer_Start.shtml">What are the Programming Modes?</a></li>
     <li><a href="Programmer_SingleCV.shtml">Single CV Programmer</a></li>
     <li><a href="Programmer_ServiceMode.shtml">Service Mode Programmer</a></li>
     <li><a href="Programmer_OpsMode.shtml">Ops Mode Programming</a></li>
@@ -49,10 +45,10 @@
     </ul>
     </dd>
 
-<dt>The Basic Programmer</dt>
+<dt><h3>The Basic Programmer</h3></dt>
     <dd>
     <ul>
-    <li><a href="Basic_Start.shtml">Entering locomotives in the "Roster"</a></li>
+    <li><a href="Basic_Start.shtml">Entering Locomotives in the "Roster"</a></li>
     <li><a href="Basic_BasicPane.shtml">The basic programmer</a></li>
     <li><a href="Basic_BasicPane.shtml">Reading the data from the decoder</a></li>
     <li><a href="Basic_BasicPane.shtml">Entering and editing new data</a></li>
@@ -62,7 +58,7 @@
     </ul>
     </dd>
     
-<dt>The Comprehensive Programmer</dt>
+<dt><h3>The Comprehensive Programmer</h3></dt>
     <dd>
     <ul>
     <li><a href="Comp_Setup_Roster.shtml">Set-up and Roster Panes</a></li>
@@ -71,7 +67,6 @@
     <li><a href="Comp_Speed.shtml">Speed Control Pane</a></li>
     <li><a href="Comp_Speed_Talble.shtml">Speed Table Pane</a></li>
     <li><a href="Comp_FMap.shtml">Function Mapping Pane</a></li>
-    
     <li><a href="Comp_LightFX.shtml">Lights Pane</a></li>
     <li><a href="Comp_Consist.shtml">Consisting Pane</a></li>
     <li><a href="Comp_Advanced.shtml">Advanced Features Pane</a></li>
@@ -84,7 +79,7 @@
     </ul>
     </dd>
 
-<dt>The Advanced Programmer</dt>
+<dt><h3>The Advanced Programmer</h3></dt>
     <dd>
     <ul>
     <li><a href="Adv_start.shtml">Starting Advanced Programmer</a></li>
@@ -108,7 +103,7 @@
     </ul>
     </dd>
 
-<dt><a name="Main"></a>DecoderPro&reg; Main Window</dt>
+<dt><h3><a name="Main"></a>DecoderPro&reg; Main Window</h3></dt>
     <dd>
     <ul>
       <li><a href="Main_Main.shtml">Main Window</a></li>
@@ -125,7 +120,7 @@
     </ul>
     </dd>
 
-<dt><a name="DecoderDefinition"></a>Creating a Decoder Definition </dt>
+<dt><h3><a name="DecoderDefinition"></a>Creating a Decoder Definition</h3></dt>
     <dd>
     <ul>
     <li><a href="Dcode_Start.shtml">Getting Started</a></li>
@@ -135,7 +130,7 @@
     </ul>
     </dd>
 
-<dt><a name="Error"></a>Error Messages</dt>
+<dt><h3><a name="Error"></a>Error Messages</h3></dt>
     <dd>
     <ul>
       <li><a href="Error.shtml">Decoder Programmer Error Messages</a></li>

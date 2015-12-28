@@ -83,10 +83,10 @@
     <choice>Blower</choice>
   </enumChoice>
   <enumChoice value="24">
-    <choice>L5 Function</choice>
+    <choice>L4 Function</choice>
   </enumChoice>
   <enumChoice value="25">
-    <choice>L6 Function</choice>
+    <choice>L5 Function</choice>
   </enumChoice>
   <enumChoice value="28">
     <choice>Dynamo</choice>

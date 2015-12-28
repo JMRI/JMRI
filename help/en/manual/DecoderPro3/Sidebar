@@ -7,47 +7,47 @@
 <div id="side"> <!-- Block of text on left side of page -->
     <div style="text-align: center"><strong>DecoderPro&reg; Manual</strong></div>
 
-    <div style="text-align: center">
-       <a href="http://jmri.org/manual/pdf/DP3_Man_3-2.pdf">Download</a>
-    </div>
-
-<dl><!-- main table of contents -->
- <div style="text-align: center"><strong>Installing JMRI</strong></div>
- 
- <ul>
-	  <li><a href="Installing_JMRI.shtml">Preparing to Install JMRI</a></li>
+<dl class="toc"><!-- main table of contents -->
+<dt><h3>Installing JMRI</h3></dt>
+	  <dd>
+    <ul>
+	  <li><a href="Installing_JMRI.shtml">Preparing to Install</a></li>
     <li><a href="Installing_JMRI.shtml#InstalJMRI">Installing JMRI</a></li>
     </ul>
+    </dd>
      
-<div style="text-align: center"><strong>Getting Started</strong></div>
-    
+<dt><h3>Getting Started</h3></dt>
+    <dd>    
     <ul>
     <li><a href="Start_DCC.shtml">What is DCC?</a>
-    <li><a href="Start_DCC_Systems.shtml">What DCC systems will DecoderPro&reg; work with?</a>
+    <li><a href="Start_DCC_Systems.shtml">What DCC systems will DecoderPro work with?</a>
     <li><a href="Start_DCC_Hardware.shtml">What hardware do I need?</a>
     <li><a href="Start_DecoderPro.shtml">How do I start the program?</a>
     <li><a href="Start_DecoderPro_New.shtml">How do I start DecoderPro&reg; program for the First Time User?</a>
     <li><a href="Start_Preferences.shtml">How do I set up my Preferences?</a>
     </ul>
+    </dd>
    
- <div style="text-align: center"><strong>Using DecoderPro&reg;</strong></div>   
-
+<dt><h3>Using DecoderPro</h3></dt>   
+    <dd>
     <ul>
     <li><a href="Programmer_Setup.shtml">How do I set up to program a decoder?</a>
     </ul>
+    </dd>
  
-<div style="text-align: center"><strong>DecoderPro&reg; Programming Modes</strong></div>    
-
+<dt><h3>DecoderPro Programming Modes</h3></dt>   
+    <dd>
     <ul>
     <li><a href="Programmer_SingleCV.shtml">Single CV Programmer</a></li>
     <li><a href="Programmer_ServiceMode.shtml">Service Mode Programmer</a></li>
     <li><a href="Programmer_OpsMode.shtml">Ops Mode Programming</a></li>
     </ul>
+    </dd>
    
-<div style="text-align: center"><strong>The Basic Programmer</strong></div>    
-
+<dt><h3>The Basic Programmer</h3></dt>    
+    <dd>
     <ul>
-    <li><a href="Basic_Start.shtml">Entering locomotives in the "Roster"</a></li>
+    <li><a href="Basic_Start.shtml">Entering Locomotives in the "Roster"</a></li>
     <li><a href="Basic_BasicPane.shtml">The basic programmer</a></li>
     <li><a href="Basic_BasicPane.shtml">Reading the data from the decoder</a></li>
     <li><a href="Basic_BasicPane.shtml">Entering and editing new data</a></li>
@@ -55,9 +55,10 @@
     <li><a href="Basic_BasicPane.shtml">Saving the new data to a file</a></li>
     <li><a href="Basic_BasicPane.shtml#DoMore">What if I need to do more?</a></li>
     </ul>
+    </dd>
 
-<div style="text-align: center"><strong>The Comprehensive Programmer</strong></div>    
-
+<dt><h3>The Comprehensive Programmer</h3></dt>   
+    <dd>
     <ul>
     <li><a href="Comp_Setup_Roster.shtml">Set-up and Roster Panes</a></li>
     <li><a href="Comp_Basic.shtml">Expanded Basic Pane</a></li>
@@ -77,16 +78,16 @@
     </ul>
     </dd>
     
- <div style="text-align: center"><strong>Advanced Features</strong></div> 
+<dt><h3>Advanced Features</h3></dt> 
 	   <dd>
-       <ul>
-        <li><a href="Adv_FunctionLabel.shtml">Function Labels Pane</a></li>
-        <li><a href="RosterMedia.shtml">Roster Media</a></li>
-        </ul>
-      </dd>
+     <ul>
+       <li><a href="Adv_FunctionLabel.shtml">Function Labels Pane</a></li>
+       <li><a href="RosterMedia.shtml">Roster Media</a></li>
+     </ul>
+     </dd>
 
-<div style="text-align: center"><strong>DecoderPro&reg; Main Window</strong></div>    
-
+<dt><h3>DecoderPro&reg; Main Window</h3></dt>    
+    <dd>
     <ul>
       <li><a href="dp3_menubar.shtml">Menu Bar</a></li>
       <li><a href="dp3_toobar.shtml">Toolbar</a></li>
@@ -94,13 +95,15 @@
       <li><a href="dp3_decoderInfo.shtml">Decoder Information</a></li>
       <li><a href="dp3_Main_Main.shtml#status">Status Bar</a></li>
     </ul>
-  
-<div style="text-align: center"><strong>Error Messages</strong></div>  
-
+    </dd>  
+    
+<dt><a name="Error"></a><h3>Error Messages</h3></dt>  
+    <dd>
     <ul>
       <li><a href="Error.shtml">Decoder Programmer Error Messages</a></li>
     </ul>
-
+    </dd>
+    
 </dl>
 </div>
 <!-- /Sidebar -->

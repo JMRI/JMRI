@@ -73,6 +73,9 @@ public class Xml {
     static final String CAR_LOGGER = "carLogger"; // NOI18N
     static final String ENGINE_LOGGER = "engineLogger"; // NOI18N
     static final String TRAIN_LOGGER = "trainLogger"; // NOI18N
+    
+    static final String MANIFEST_FILE_OPTIONS = "manifestFileOptions"; // NOI18N
+    static final String MANIFEST_SAVE = "manifestSave"; // NOI18N
 
     static final String PRINT_LOC_COMMENTS = "printLocComments"; // NOI18N
     static final String PRINT_ROUTE_COMMENTS = "printRouteComments"; // NOI18N

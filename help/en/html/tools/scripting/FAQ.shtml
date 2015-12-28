@@ -1,8 +1,6 @@
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
 <html lang="en">
 <head>
-<!-- Copyright Bob Jacobsen 2008 -->
-<!-- $Id$ -->
 <title>JMRI: Scripting FAQ</title>
 
 <!-- Style -->
@@ -21,9 +19,9 @@
 <div id="mainContent">
 
       <!-- Page Body -->
-        <H1>
+        <h1>
 		JMRI: Scripting FAQ
-        </H1>
+        </h1>
 
 		<p class=subtitle>
 		    Frequently asked questions about scripting JMRI
@@ -483,5 +481,7 @@ python.startup =
 </pre></code>
 
 <!--#include virtual="/Footer" -->
+    </div><!-- closes #mainContent-->
+  </div> <!-- closes #mBody-->
 </body>
 </html>

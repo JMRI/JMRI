@@ -70,13 +70,13 @@ public interface SerialPortAdapter extends PortAdapter {
     public void configureOption2(String value);
 
     /**
-     * Set the second port option. Only to be used after construction, but
+     * Set the third port option. Only to be used after construction, but
      * before the openPort call
      */
     public void configureOption3(String value);
 
     /**
-     * Set the second port option. Only to be used after construction, but
+     * Set the fourth port option. Only to be used after construction, but
      * before the openPort call
      */
     public void configureOption4(String value);

@@ -1,22 +1,16 @@
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
-<!-- $Id$ -->
 <html lang="en">
 <head>
- <title>
-      JMRI Hardware Guide: Connecting to a Digitrax PR2
- </title>
-    <META http-equiv=Content-Type content="text/html; charset=iso-8859-1">
-    <META content="Bob Jacobsen" name="Author">
-    <META name="keywords" content="Digitrax Chief DCS Command Station MS-100 LocoBuffer java model railroad JMRI install windows">
+ <title>JMRI Hardware Support - Connecting to a Digitrax PR2</title>
+    <meta content="Bob Jacobsen" name="Author">
+    <meta name="keywords" content="Digitrax Chief DCS Command Station MS-100 LocoBuffer java model railroad JMRI install windows">
 
 <!-- Style -->
-<META HTTP-EQUIV="Content-Type" CONTENT="text/html; charset=iso-8859-1">
-<LINK REL="stylesheet" TYPE="text/css" HREF="/css/default.css"
-	MEDIA="screen">
-<LINK REL="stylesheet" TYPE="text/css" HREF="/css/print.css"
-	MEDIA="print">
-<LINK REL="icon" HREF="/images/jmri.ico" TYPE="image/png">
-<LINK REL="home" TITLE="Home" HREF="/">
+<meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
+<link rel="stylesheet" type="text/css" href="/css/default.css" media="screen">
+<link rel="stylesheet" type="text/css" href="/css/print.css" media="print">
+<link rel="icon" href="/images/jmri.ico" type="image/png">
+<link rel="home" title="Home" href="/">
 <!-- /Style -->
 </head>
 
@@ -25,10 +19,7 @@
   <div class="nomenu" id="mBody">
     <div id="mainContent">
 
-<h1> 
-JMRI Hardware Guide: Connecting to a Digitrax PR2
-</h1>
-
+  <h1>Hardware Support: Connecting to a Digitrax PR2</h1>
 
 <a href="http://digitrax.com/prd_compint_pr2.php">
 <img src="images/PR2.jpg" alt="PR2 picture"/>
@@ -44,7 +35,7 @@ To use it, you connect it to its power supply and to a
 dedicated piece of track which you'll use for a programming track.
 Also, connect the 25 pin RS232 connector to a serial port on your 
 computer. You may have to use a USB to serial adapter, and/or a DB25 to DB9 connector
-adapter. (The PR2 has a standard RS232 25 pin connector; most computers
+adapter (The PR2 has a standard RS232 25 pin connector; most computers
 now have a 9 pin RS232 connector, and there are simple adapters
 available to convert the wiring.)
 
@@ -59,10 +50,8 @@ cable, and you should not plug a LocoNet cable into the PR2.
 <p>
 For more information on the PR2 itself, please see the
 <a href="http://www.digitrax.com/products/computer-control/pr2/">Digitrax PR2 page</a>
-and the 
-<a href="http://www.digitrax.com/tsd/product/PR2/">PR2 support page</a>
-in the 
-<a href="http://www.digitrax.com/tsd/">Digitrax Tech Support Depot</a>.
+and the <a href="http://www.digitrax.com/tsd/product/PR2/">PR2 support page</a>
+in the <a href="http://www.digitrax.com/tsd/">Digitrax Tech Support Depot</a>.
 
 <h2>Recommended setup</h2>
 <p>
@@ -70,28 +59,28 @@ To set up DecoderPro to use the PR2:
 </p>
 
 <ul>
-<LI>
-Start DecoderPro.
-<li>
-Open the Preferences window from the Edit menu and configure the connection by:
-<ul>
-  <li>Select LocoNet PR2
-  <li>Select the serial port that's connected to the PR2
-  <li>The speed will be fixed at 57,600 baud; don't try to change this 
-in your computer's settings
-  <li>The "Flow Control" option defaults to "Use Hardware Flow Control", which
-uses the status leads in the serial connection to determine when the PR2
-is ready to send and receive.  You should try that first, as it is the most
-reliable mode.  
-Only if you can't program decoders using that choice, 
-and only after checking that you're using the right port, should you select "None" for 
-this preference and try again.
-</ul>
-<li>Click Save at the bottom of the preferences window, quit the program and restart.
+	<li>
+	Start DecoderPro.
+	<li>
+	Open the Preferences window from the Edit menu and configure the connection by selecting the Connections item at left and:
+	<ul>
+		<li>Select Digitrax as the Manufacturer
+		<li>Select the PR2 as the Connection
+		<li>Select the serial port that's connected to the PR2
+		<li>The speed will be fixed at 57,600 baud; don't try to change this 
+		in your computer's settings
+		<li>The "Flow Control" option defaults to "Use Hardware Flow Control", which
+		uses the status leads in the serial connection to determine when the PR2
+		is ready to send and receive.  You should try that first, as it is the most
+		reliable mode.  
+		Only if you can't program decoders using that choice, 
+		and only after checking that you're using the right port, should you select "None" for 
+		this Preference field and try again.
+	</ul>
+	<li>Click Save at the bottom of the Preferences pane, quit the program and restart.
 </ul>
 
 <h2>Usage suggestions</h2>
-
 <p> 
 You can use a JMRI throttle to control the locomotive connected
 to the PR2. Use the JMRI Power Control or the "Power" menu item 
@@ -111,9 +100,9 @@ draw enough motor current to trip the PR2 internal circuit breakers.
 This will cause JMRI to mark track power as "off". Just wait a couple
 seconds and turn the track power back on to recover.
 <p>LocoNet&reg; is a registered trademark of <a href="http://www.digitrax.com">Digitrax, Inc.</a></p>
-	  
-    </div>
     
 <!--#include virtual="/Footer" -->
+  </div><!-- closes #mainContent-->
+</div> <!-- closes #mBody-->
 </body>
 </html>

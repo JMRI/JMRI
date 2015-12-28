@@ -5,23 +5,27 @@
     <div id="mBody">
 
 	<div id="side"> <!-- Block of text on left side of page -->
-	    <div style="text-align: center">Info on JMRI:</div>
+	    <div style="text-align: center">Software documentation</div>
 	    <dl>
 
-		<dt>Development tools</dt>
+		<dt><h3>Development tools</h3></dt>
 		<dd>
 			<ul>
 			<li><a href="getgitcode.shtml">Getting the code via Git</a>
 			<li><a href="GitFAQ.shtml">Git FAQs</a>
-			<li><a href="Ant.shtml">Building with Ant</a>
-			<li><a href="NetBeans.shtml">Building with NetBeans</a>
-			<li><a href="XCode.shtml">Building with XCode</a>
-			<li><a href="Eclipse.shtml">Building with Eclipse</a>
-			<li><a href="JBuilder.shtml">Building with JBuilder</a>
+			<li>Building with:
+				<ul>
+				<li><a href="Ant.shtml">Ant</a>
+				<li><a href="NetBeans.shtml">NetBeans</a>
+				<li><a href="XCode.shtml">XCode</a>
+				<li><a href="Eclipse.shtml">Eclipse</a>
+				<li><a href="JBuilder.shtml">JBuilder</a>
+				</ul>
+			</li>
 			</ul>
 		</dd>
 
-		<dt>Structure</dt>
+		<dt><h3>Structure</h3></dt>
 		<dd>
 			<ul>
 			<li><a href="IntroStructure.shtml">Introduction</a>
@@ -42,7 +46,7 @@
 			</ul>
 		</dd>
 
-		<dt>Techniques and Standards</dt>
+		<dt><h3>Techniques and Standards</h3></dt>
 		<dd>
 			<ul>
 			<li><a href="RP.shtml">Recommended Practices</a>
@@ -58,7 +62,7 @@
 			</ul>
 		</dd>
 
-		<dt>How To</dt>
+		<dt><h3>How To</h3></dt>
 		<dd>
 			<ul>
 			<li><a href="plugins.shtml">Extend with Plugins</a>
@@ -67,7 +71,7 @@
 			</ul>
 		</dd>
 
-		<dt>Functional Info</dt>
+		<dt><h3>Functional Info</h3></dt>
 		<dd>
 			<ul>
 			<li><a href="TurnoutFeedback.shtml">Turnout Feedback</a>
@@ -76,7 +80,7 @@
 			</ul>
 		</dd>
 
-		<dt>Background Info</dt>
+		<dt><h3>Background Info</h3></dt>
 		<dd>
 			<ul>
 			<li><a href="TechRoadMap.shtml">Technology Roadmap</a>
@@ -86,5 +90,5 @@
 		</dd>
 </dl>
 	    
-</div>  <!-- closes #side -->
+</div> <!-- closes #side -->
 <!-- /Sidebar -->

@@ -1,5 +1,5 @@
 <!-- an ANT build.xml file for JMRI XSLT -->
-<!-- Bob Jacobsen, Copyright 2002, 2003, 2004, 2005, 2008, 2010 -->
+<!-- Bob Jacobsen, Copyright 2002, 2003, 2004, 2005, 2008, 2010, 2015 -->
 <!-- Revision $Revision$ -->
 
 <!-- This file is part of JMRI.                                             -->
@@ -15,18 +15,18 @@
 <!-- for more details.                                                      -->
 
 <project name="JMRI" default="all" basedir=".">
-<!-- basedir="." means all paths are relative to the "java" subdir -->
+<!-- basedir="." means all paths are relative to the "java/help/en" subdir -->
 <!-- in the project.  We expect that lib et al will be present in -->
 <!-- .. from there -->
 
   <description>
-  Provides build services for JMRI web pages from help metadata
+  Provides build services for JMRI web pages from help/en metadata
   </description>
 
   <!-- set global properties for this build -->
   <property name="target" value="."/>
 
-  <target name="init" description="create needed directories">
+  <target name="init" description="create needed directories for en/help">
     <!-- Create the time stamp -->
     <tstamp/>
     <!-- Create the build directory structure used by compile -->
@@ -35,7 +35,7 @@
 
   
   <target name="index" depends="init" 
-  			description="create an index page">
+  			description="create an en/index page">
     <xslt  basedir="${basedir}"
     		destdir="${target}"
     		extension=".html"
@@ -58,7 +58,7 @@
   </target>
 
   <target name="TOC" depends="init" 
-  			description="create a TOC page">
+  			description="create a en/TOC page">
     <xslt  basedir="${basedir}"
     		destdir="${target}"
     		extension=".html"
@@ -81,7 +81,7 @@
   </target>
 
   <target name="all" depends="init, index, TOC" 
-  			description="create all" />
+  			description="create all en/help pages" />
  
 </project>
 

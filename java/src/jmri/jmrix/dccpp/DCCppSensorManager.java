@@ -46,7 +46,7 @@ public class DCCppSensorManager extends jmri.managers.AbstractSensorManager impl
         tc = controller;
         tc.addDCCppListener(DCCppInterface.FEEDBACK, this);
         this.prefix = prefix;
-        DCCppMessage msg = DCCppMessage.getSensorListMsg();
+        DCCppMessage msg = DCCppMessage.makeSensorListMsg();
         //Then Send the version request to the controller
         tc.sendDCCppMessage(msg, this);
 

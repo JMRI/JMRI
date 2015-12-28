@@ -108,6 +108,7 @@ public class DCCppSensorManagerTest extends TestCase {
 
         // see if sensor exists
         Assert.assertTrue(null != l.getBySystemName("DCCPPS22"));
+        
     }
 
     public void testAsAbstractFactory() {
@@ -166,11 +167,13 @@ public class DCCppSensorManagerTest extends TestCase {
     static Logger log = LoggerFactory.getLogger(DCCppSensorManagerTest.class.getName());
 
     // The minimal setup for log4J
-    protected void setUp() {
+    protected void setUp() throws Exception {
         apps.tests.Log4JFixture.setUp();
+        super.setUp();
     }
 
-    protected void tearDown() {
+    protected void tearDown() throws Exception {
+        super.tearDown();
         apps.tests.Log4JFixture.tearDown();
     }
 

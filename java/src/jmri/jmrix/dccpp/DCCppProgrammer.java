@@ -99,7 +99,7 @@ public class DCCppProgrammer extends AbstractProgrammer implements DCCppListener
         if (log.isDebugEnabled()) {
             log.debug("check CV " + addr);
         }
-        log.error("cs Type: " + controller().getCommandStation().getBaseStationType() + " CS Version: " + controller().getCommandStation().getCodeBuildDate());
+        log.debug("cs Type: " + controller().getCommandStation().getBaseStationType() + " CS Version: " + controller().getCommandStation().getCodeBuildDate());
         if (!getCanWrite()) {
             return false; // check basic implementation first
         }
@@ -141,7 +141,7 @@ public class DCCppProgrammer extends AbstractProgrammer implements DCCppListener
                 //DCCppMessage msg = DCCppMessage.getWritePagedCVMsg(CV, val);
                 //controller().sendDCCppMessage(msg, this);
             } else if (getMode().equals(DefaultProgrammerManager.DIRECTBITMODE) || getMode().equals(DefaultProgrammerManager.DIRECTBYTEMODE)) {
-                DCCppMessage msg = DCCppMessage.getWriteDirectCVMsg(CV, val);
+                DCCppMessage msg = DCCppMessage.makeWriteDirectCVMsg(CV, val);
                 controller().sendDCCppMessage(msg, this);
             } else { // register mode by elimination 
                 //DCCppMessage msg = DCCppMessage.getWriteRegisterMsg(registerFromCV(CV), val);
@@ -181,7 +181,7 @@ public class DCCppProgrammer extends AbstractProgrammer implements DCCppListener
                 //DCCppMessage msg = DCCppMessage.getReadPagedCVMsg(CV);
                 //controller().sendDCCppMessage(msg, this);
             } else if (getMode().equals(DefaultProgrammerManager.DIRECTBITMODE) || getMode().equals(DefaultProgrammerManager.DIRECTBYTEMODE)) {
-                DCCppMessage msg = DCCppMessage.getReadDirectCVMsg(CV);
+                DCCppMessage msg = DCCppMessage.makeReadDirectCVMsg(CV);
                 controller().sendDCCppMessage(msg, this);
             } else { // register mode by elimination    
                 //DCCppMessage msg = DCCppMessage.getReadRegisterMsg(registerFromCV(CV));

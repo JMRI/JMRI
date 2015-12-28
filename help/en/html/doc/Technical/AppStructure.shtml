@@ -1,11 +1,10 @@
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
-<!-- $Id$ -->
 <html lang="en">
 <head>
-    <TITLE>
+    <title>
  	JMRI: Application Structure
-    </TITLE>
-    <META content="Bob Jacobsen" name=Author>
+    </title>
+    <meta name="Author" content="Bob Jacobsen">
     <meta name="keywords" content="JMRI technical code ">
 
     <!-- The combination of "Define" and {Header,Style, Logo and Footer} comments -->
@@ -16,7 +15,7 @@
     <!-- or change them to reflect your alternative logo -->
 
 <!-- Style -->
-  <META http-equiv=Content-Type content="text/html; charset=iso-8859-1">
+  <meta http-equiv=Content-Type content="text/html; charset=iso-8859-1">
   <link rel="stylesheet" type="text/css" href="/css/default.css" media="screen">
   <link rel="stylesheet" type="text/css" href="/css/print.css" media="print">
   <link rel="icon" href="/images/jmri.ico" type="image/png">
@@ -29,29 +28,27 @@
 
 <div id="mainContent">
 
-<H1>JMRI: Application Structure</H1>
+<h1>JMRI: Application Structure</h1>
 
 The JmriDemo program is just an example, but it's meant to be a good one.
-<P>
-The source for the main class currently lives in apps/JmriDemo/JMRIdemo.java,
-which defines the main class as apps.JmriDemo.JMRIdemo.  
-<P>
-The demo main just creates the menubar, and populates if with the desired menus
-and items. Each item as a "Action" class object associated with it, which does the
+<p>
+The source for the main class currently lives in <code>apps/JmriDemo/JMRIdemo.java</code>,
+which defines the main class as <code>apps.JmriDemo.JMRIdemo</code>.  
+<p>
+The demo main method just creates the menubar, and populates if with the desired menus
+and items. Each item has a "Action" class object associated with it, which does the
 necessary initialization when needed.
-<P>
-Because we expect to have different interfaces in the jmrix package, the JMRI tools
+<p>
+Because we expect to have different interfaces in the <code>jmrix</code> package, the JMRI tools
 don't directly create the interface objects they need.  Rather, they ask for instances
-of interfaces. For interfaces in the jmri package, which might be implemented by
-lots of different layout types, jmri.InstanceManager satisfies these requests.
-
-<P>
-More information on how things (e.g. objects representing items on the layout)
-are named 
-<A HREF="Names.shtml">is available on a separate page</a>.
+of interfaces. For interfaces in the <code>jmri</code> package, which might be implemented by
+lots of different layout types, <code>jmri.InstanceManager</code> satisfies these requests.
 
 <p>
-See also the page on the 
+More information on how things (e.g. objects representing items on the layout)
+are named is available on <a href="Names.shtml">a separate page</a>.
+
+<p>See also the page on the 
 <a href="IntroStructure.shtml">JMRI library structure</a>.
 
 <!--#include virtual="/Footer" -->
@@ -60,4 +57,3 @@ See also the page on the
 	</div> <!-- closes #mBody-->
 </body>
 </html>
-

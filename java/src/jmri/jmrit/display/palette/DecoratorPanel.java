@@ -200,7 +200,7 @@ public class DecoratorPanel extends JPanel implements ChangeListener, ItemListen
         String text = Bundle.getMessage("sample");
         _util = item.getPopupUtility();
 
-        if (pos instanceof SensorIcon) {
+        if (pos instanceof SensorIcon && !((SensorIcon)pos).isIcon()) {
             SensorIcon si = (SensorIcon) pos;
             if (!si.isIcon() && si.isText()) {
                 PositionableLabel sample = new PositionableLabel(si.getActiveText(), _editor);
@@ -257,7 +257,7 @@ public class DecoratorPanel extends JPanel implements ChangeListener, ItemListen
                 sample.setText(field.getText());
                 addtextField = false;
             } else if (pos instanceof jmri.jmrit.display.MemoryComboIcon) {
-                JComboBox<String> box = (JComboBox<String>)((jmri.jmrit.display.MemoryComboIcon)pos).getTextComponent();
+                JComboBox<String> box = ((jmri.jmrit.display.MemoryComboIcon)pos).getTextComponent();
                 sample.setText(box.getSelectedItem().toString());
                 addtextField = false;
             } else if (pos instanceof jmri.jmrit.display.MemorySpinnerIcon) {
@@ -529,7 +529,7 @@ public class DecoratorPanel extends JPanel implements ChangeListener, ItemListen
     }
 
     public void getText(Positionable pos) {
-        if (pos instanceof SensorIcon && ((SensorIcon) pos).isText()) {
+        if (pos instanceof SensorIcon  && !((SensorIcon)pos).isIcon()) {
             SensorIcon icon = (SensorIcon) pos;
             PositionableLabel sample = _sample.get("Active");
             if (sample.isOpaque()) {

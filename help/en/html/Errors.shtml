@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
 <!-- Copyright Bob Jacobsen 2008 -->
-<title>JMRI: Decoder Programmer Error Messages and Codes</title>
+<title>JMRI Setup - Error Messages and Codes</title>
 
 <!-- Style -->
 <meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
@@ -20,7 +20,7 @@
 <div id="mainContent">
 
 <h2> 
-JMRI: DecoderPro Error Messages and Codes
+JMRI: Error Messages and Codes
 </h2>
 <!-- Copy any new content below from page http://jmri.sourceforge.net/help/en/manual/DecoderPro3/Error.shtml, another copy is in tools/programmer/ -->
 <hr>

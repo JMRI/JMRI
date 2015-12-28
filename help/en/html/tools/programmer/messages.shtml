@@ -1,8 +1,7 @@
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
 <html lang="en">
 <head>
-<!-- Copyright Bob Jacobsen 2008 -->
-<title>JMRI: Decoder Programmer Error Messages</title>
+<title>JMRI:  Error Messages</title>
 
 <!-- Style -->
 <meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
@@ -20,7 +19,7 @@
 <div id="mainContent">
 
 <h2> 
-JMRI: DecoderPro Error Messages
+JMRI: Error Messages
 </h2>
 <!-- Copy any new content below from page http://jmri.sourceforge.net/help/en/manual/DecoderPro3/Error.shtml -->
 <hr>
