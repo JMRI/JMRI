@@ -51,7 +51,7 @@ like "1234 enter" and "1234 exits".  There is also a LocoNet Reporter
 implementation for displaying messages from 
 <a href="http://www.rjftrains.com/intellibox/uhlenbrock.htm">Lissy detectors</a>.
 
-<h2>How to setup Lights</h2>
+<h2>How to setup Reporters</h2>
 
 <h3>The Reporters Table</h3>
 The 
