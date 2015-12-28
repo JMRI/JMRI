@@ -379,12 +379,12 @@ public class PositionableLabelTest extends jmri.util.SwingTestCase {
     }
     
     // c.f. http://www.ssec.wisc.edu/~tomw/java/unicode.html#x2580
-    final String sampleText = "  \u25CF  "; // X|*|X
+    final String sampleText = "  \u25CF  "; // note spaces
     
-    // FULL BLOCK 2588
-    // BLACK SQUARE u25A0
-    // BLACK CIRCLE 0x25CF
-    // BLACK SMALL SQUARE u25AA
+    // FULL BLOCK \u2588
+    // BLACK SQUARE \u25A0
+    // BLACK CIRCLE \u25CF
+    // BLACK SMALL SQUARE \u25AA
     // BLACK DIAMOND \u25C6
     // HEAVY MULTIPLICATION X \u2716
 
