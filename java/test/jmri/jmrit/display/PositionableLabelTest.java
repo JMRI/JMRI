@@ -377,19 +377,22 @@ public class PositionableLabelTest extends jmri.util.SwingTestCase {
         f.dispose();
     }
     
+    // c.f. http://www.ssec.wisc.edu/~tomw/java/unicode.html#x2580
+    final String sampleText = " \u2716\u2588\u2588\u2588\u2716 "; // X|*|X
+    
+    //final String sampleText = " \u2588\u2588\u2588\u2588 "; // FULL BLOCK 0x2588
+    //final String sampleText = " \u25CF\u25CF\u25CF\u25CF "; // BLACK CIRCLE 0x25CF
+    //final String sampleText = " \u25AA\u25AA\u25AA\u25AA "; // BLACK SMALL SQUARE 0x25AA
+    //final String sampleText = " \u25C6\u25C6\u25C6\u25C6 "; // BLACK DIAMOND 0x25C6
+    //final String sampleText = " \u2716\u2716\u2716\u2716 "; // HEAVY MULTIPLICATION X 0x2716
+
     public void testDisplayText() {
     
         JFrame f = new JFrame();
         f.getContentPane().setBackground(Color.blue);
         f.setUndecorated(true); // skip frame decoration, which can force a min size.
-                
-        //String text = " \u2588\u2588\u2588\u2588 "; // FULL BLOCK 0x2588
-        //String text = " \u25CF\u25CF\u25CF\u25CF "; // BLACK CIRCLE 0x25CF
-        //String text = " \u25AA\u25AA\u25AA\u25AA "; // BLACK SMALL SQUARE 0x25AA
-        //String text = " \u25C6\u25C6\u25C6\u25C6 "; // BLACK DIAMOND 0x25C6
-        String text = " \u2716\u2716\u2716\u2716 "; // HEAVY MULTIPLICATION X 0x2716
-        
-        PositionableLabel label = new PositionableLabel(text, null);
+                        
+        PositionableLabel label = new PositionableLabel(sampleText, null);
         label.setForeground(Color.black); // this is a direct set, not through the UI
                
         f.add(label);
@@ -427,14 +430,8 @@ public class PositionableLabelTest extends jmri.util.SwingTestCase {
         JFrame f = new JFrame();
         f.getContentPane().setBackground(Color.blue);
         f.setUndecorated(true); // skip frame decoration, which can force a min size.
-                
-        //String text = " \u2588\u2588\u2588\u2588 "; // FULL BLOCK 0x2588
-        //String text = " \u25CF\u25CF\u25CF\u25CF "; // BLACK CIRCLE 0x25CF
-        //String text = " \u25AA\u25AA\u25AA\u25AA "; // BLACK SMALL SQUARE 0x25AA
-        //String text = " \u25C6\u25C6\u25C6\u25C6 "; // BLACK DIAMOND 0x25C6
-        String text = " \u2716\u2716\u2716\u2716 "; // HEAVY MULTIPLICATION X 0x2716
-        
-        PositionableLabel label = new PositionableLabel(text, null);
+                        
+        PositionableLabel label = new PositionableLabel(sampleText, null);
         label.setForeground(Color.black); // this is a direct set, not through the UI
         
         f.add(label);
@@ -476,14 +473,8 @@ public class PositionableLabelTest extends jmri.util.SwingTestCase {
         JFrame f = new JFrame();
         f.getContentPane().setBackground(Color.blue);
         f.setUndecorated(true); // skip frame decoration, which can force a min size.
-                
-        //String text = " \u2588\u2588\u2588\u2588 "; // FULL BLOCK 0x2588
-        //String text = " \u25CF\u25CF\u25CF\u25CF "; // BLACK CIRCLE 0x25CF
-        //String text = " \u25AA\u25AA\u25AA\u25AA "; // BLACK SMALL SQUARE 0x25AA
-        //String text = " \u25C6\u25C6\u25C6\u25C6 "; // BLACK DIAMOND 0x25C6
-        String text = " \u2716\u2716\u2716\u2716 "; // HEAVY MULTIPLICATION X 0x2716
-        
-        PositionableLabel label = new PositionableLabel(text, null);
+                        
+        PositionableLabel label = new PositionableLabel(sampleText, null);
         label.setForeground(Color.black); // this is a direct set, not through the UI
         
         f.add(label);
