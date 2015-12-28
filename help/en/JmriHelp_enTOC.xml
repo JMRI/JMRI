@@ -530,6 +530,8 @@
 
    <tocitem text="Git FAQs " target="html.doc.Technical.GitFAQ"/>
 
+   <tocitem text="Git for Developers " target="html.doc.Technical.gitdeveloper"/>
+
   </tocitem>
   <tocitem text="Building Your Own Copy of JMRI ">
    <tocitem text="Building with Ant " target="html.doc.Technical.Ant"/>
@@ -537,6 +539,10 @@
    <tocitem text="Building with NetBeans " target="html.doc.Technical.NetBeans"/>
 
    <tocitem text="Building with Eclipse " target="html.doc.Technical.Eclipse"/>
+
+   <tocitem text="Building with JBuilder " target="html.doc.Technical.JBuilder"/>
+
+   <tocitem text="Building with XCode " target="html.doc.Technical.XCode"/>
 
   </tocitem>
   <tocitem text="How We Do Stuff ">
