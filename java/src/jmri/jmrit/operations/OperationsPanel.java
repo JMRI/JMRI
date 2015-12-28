@@ -25,6 +25,7 @@ import jmri.UserPreferencesManager;
 import jmri.implementation.swing.SwingShutDownTask;
 import jmri.jmrit.operations.rollingstock.cars.CarTypes;
 import jmri.jmrit.operations.setup.Control;
+import jmri.jmrit.operations.setup.Setup;
 import jmri.util.JmriJFrame;
 import jmri.util.com.sun.TableSorter;
 import jmri.util.swing.XTableColumnModel;
@@ -385,6 +386,10 @@ public class OperationsPanel extends JPanel implements AncestorListener {
                 Bundle.getMessage("PromptQuitWindowNotWritten"), Bundle.getMessage("PromptSaveQuit"), this) {
                     @Override
                     public boolean checkPromptNeeded() {
+                        if (Setup.isAutoSaveEnabled()) {
+                            storeValues();
+                            return true;
+                        }
                         return !OperationsXml.areFilesDirty();
                     }
 

@@ -1,29 +1,26 @@
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
 <html lang="en">
 <head>
-<!-- Copyright Bob Jacobsen 2008 -->
-<!-- $Id$ -->
 <title>JMRI: Using The JMRI Speedometer with NCE</title>
 
 <!-- Style -->
-<META HTTP-EQUIV="Content-Type" CONTENT="text/html; charset=iso-8859-1">
-<LINK REL="stylesheet" TYPE="text/css" HREF="/css/default.css"
-	MEDIA="screen">
-<LINK REL="stylesheet" TYPE="text/css" HREF="/css/print.css"
-	MEDIA="print">
-<LINK REL="icon" HREF="/images/jmri.ico" TYPE="image/png">
-<LINK REL="home" TITLE="Home" HREF="/">
+<meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
+<link rel="stylesheet" type="text/css" href="/css/default.css" media="screen">
+<link rel="stylesheet" type="text/css" href="/css/print.css" media="print">
+<link rel="icon" href="/images/jmri.ico" type="image/png">
+<link rel="home" title="Home" href="/">
 <!-- /Style -->
-</HEAD>
+</head>
 
-<BODY>
+<body>
 <!--#include virtual="/Header" -->
-  <div class="nomenu" id="mBody">
+<!--#include virtual="Sidebar" -->
     <div id="mainContent">
 
-<h1>Using The JMRI Speedometer with NCE</h1>
+<h1>Speedometer</h1>
+<h2>Using JMRI Speedometer with NCE</h2>
 
-<h2>Installation</h2>
+<h3>Installation</h3>
 
 The Speedometer function within
 Decoder Pro is used to measure a train's scale speed.  Once everything is
@@ -62,7 +59,7 @@ from the dispatcher.</p>
 <p>Figure 1 shows the ideal setup for connecting the block
 detectors into the NCE system with the BD20s and AIU.</p>
 
-<h2>Wiring</h2>
+<h3>Wiring</h3>
 
 <p>Figure 1 shows how to integrate the sections of track, block
 detectors and AIU into the Command Station.</p>
@@ -106,7 +103,7 @@ good idea to change the default cab address from 4.</p>
 of the wires from each pin 1 of the BD20 must go to GND pin on the AIU.  The
 wires from each pin 2 on the BD20 goes to a unique pin on the AIU. </p>
 
-<h2>Setting Up DecoderPro</h2>
+<h3>Setting Up DecoderPro</h3>
 
 <table cellpadding=0 cellspacing=0>
  <tr>
@@ -212,7 +209,7 @@ experience.</p>
 </ol>
 
 
-<h2>Uses For Speedometer</h2>
+<h2>Uses for Speedometer</h2>
 
 <p>Obviously the primary use for the
 Speedometer is to create custom speed tables.  Creating speed tables can be
@@ -263,7 +260,10 @@ single sensor can be used.</p>
 Speedometer window for Sensor #1 and Sensor #2 would be the same number.  Sensor
 #1 would be set to 'Enter' and Sensor #2 would be set to 'Exit'.</p>
 
+<p>Back to the <a href="index.shtml">Speedometer main Help page</a>
+
 <!--#include virtual="/Footer" -->
+  </div><!-- closes #mainContent-->
+</div> <!-- closes #mBody-->
 </body>
 </html>
-

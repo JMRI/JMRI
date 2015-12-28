@@ -20,54 +20,54 @@
 <!--#include virtual="Sidebar" -->
 <div id="mainContent">
 
-<h1>JMRI: Downloading and installing DecoderPro</h1>
+<h1>JMRI: DecoderPro User Guide</h1>
+<h2>Downloading and installing</h1>
 
 <p>DecoderPro is distributed as part of the free JMRI
 downloads.  The steps to getting it working are:
 
 <dl>
-
-<dt class=left>Make sure DecoderPro can run on your computer
-</dt><dd class=first>The DecoderPro software will work on Windows, Linux, and Mac OS X. 
-It will probably also work on most
-other modern operating systems that have Java available; contact us for
-help if you'd like to try it on some other system. You need to have a
-serial port available, either on the computer itself, or via a 
-<a HREF="../../hardware/USBtoSerial.shtml">USB adapter</a>. 
-</dd>
-
-
-<dt class=left>Make sure JMRI works with your DCC system
-</dt><dd class="first">The
-<a HREF="../../hardware/index.shtml">hardware page</a>
-lists the DCC systems compatible with
-DecoderPro, along with the known limitations.
-</dd>
-
-<dt class=left>Download and install JMRI
-</dt><dd class="first">The 
-<a HREF="http://jmri.sourceforge.net/download/index.shtml">download page</a>
-on the main JMRI web site
-provides links to download various JMRI versions, along
-with links to release notes, etc.  We strongly recommend
-that you first download and install the most recent production release
-and make sure that it's working, before you try some of the 
-more recent development releases.
-<p>
-Note that there are different downloads for the different types
-of computer (Macintosh, Windows, etc), and the procedures for
-installing the program differ. You'll find all that on the
-download page.</p>
-</dd>
-
-<dt class="left">Start up and configure the program
-</dt><dd class="first">The install instructions
-reached through the 
-<a HREF="http://jmri.sourceforge.net/download/index.shtml">download page</a>
-will have told you how to start up the program and configure 
-it.  When that's done, you should have a working DecoderPro
-installation.
-</dd>
+	
+	<dt class=left>Make sure DecoderPro can run on your computer
+	</dt><dd class=first>The DecoderPro software will work on Windows, Linux, and Mac OS X. 
+	It will probably also work on most
+	other modern operating systems that have Java available; contact us for
+	help if you'd like to try it on some other system. You need to have a
+	serial port available, either on the computer itself, or via a 
+	<a href="../../hardware/USBtoSerial.shtml">USB adapter</a>. 
+	</dd>
+	
+	<dt class=left>Make sure JMRI works with your DCC system
+	</dt><dd class="first">The
+	<a href="../../hardware/index.shtml">hardware page</a>
+	lists the DCC systems compatible with
+	DecoderPro, along with the known limitations.
+	</dd>
+	
+	<dt class=left>Download and install JMRI
+	</dt><dd class="first">The 
+	<a href="http://jmri.sourceforge.net/download/index.shtml">download page</a>
+	on the main JMRI web site
+	provides links to download various JMRI versions, along
+	with links to release notes, etc.  We strongly recommend
+	that you first download and install the most recent production release
+	and make sure that it's working, before you try some of the 
+	more recent development releases.
+	<p>
+	Note that there are different downloads for the different types
+	of computer (Macintosh, Windows, etc), and the procedures for
+	installing the program differ. You'll find all that on the
+	download page.</p>
+	</dd>
+	
+	<dt class="left">Start up and configure the program
+	</dt><dd class="first">The install instructions
+	reached through the 
+	<a href="http://jmri.sourceforge.net/download/index.shtml">download page</a>
+	will have told you how to start up the program and configure 
+	it.  When that's done, you should have a working DecoderPro
+	installation.
+	</dd>
 
 </dl>
 

@@ -111,11 +111,8 @@ setStartup().start()          # create one of these, and start it running		    <
 			<p>My unending praise goes to the many developers who provide JMRI to the model railroad community. However, in the case of meeting my need in setting the default state of turnouts, I wish to extend my gratitude to  "breezlys" of the JMRI Forum community; he provided the sample script, which I believe he interpreted and modified from JMRI's sample scripts.
 			<p>-- Page authored by Jerry Britton, March 2006.
 
-
-		</div>
-
-</div>
-
 <!--#include virtual="/Footer" -->
-</body>
+    </div><!-- closes #mainContent-->
+  </div> <!-- closes #mBody-->
+ </body>
 </html>
