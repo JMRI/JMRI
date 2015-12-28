@@ -27,6 +27,8 @@
   <!-- Add Var's now listed in V1.10 of steam tech ref and rearrange items on panes -->
   <version author="Michael Mosher" version="6" lastUpdated="20151016"/>
   <!-- General cleanup, more use of external files to go along with P3 file -->
+  <version author="Michael Mosher" version="7" lastUpdated="20151203"/>
+  <!-- More use of external files to go along with P3 file -->
   <decoder>
     <family name="Paragon 2" mfg="Broadway Limited Imports, LLC">
       <model model="Steam" numOuts="3" numFns="30" connector="9pin">
@@ -65,6 +67,8 @@
     </family>
     <programming direct="yes" paged="no" register="yes" ops="yes"/>
     <variables>
+      <xi:include href="http://jmri.org/xml/decoders/bli/PxCV.xml"/>
+      <xi:include href="http://jmri.org/xml/decoders/bli/P2CV.xml"/>
       <xi:include href="http://jmri.org/xml/decoders/bli/PxCV_Steam.xml"/>
       <!-- This decoder doesn't do the bit-wise NMRA method of -->
       <!-- assigning functions to outputs. Instead, it has -->
@@ -160,82 +164,64 @@
         <decVal/>
         <label>KlSlow</label>
       </variable>
-      <variable CV="156" default="128" item="Sound Setting 25">
-        <decVal/>
-        <label>Passenger/Freight Volume</label>
-      </variable>
-      <variable CV="181" default="50" item="Sound Group 3 Option 4">
-        <decVal/>
-        <label>Horn Fade In</label>
-      </variable>
-      <variable CV="182" default="40" item="Sound Group 3 Option 5">
-        <decVal/>
-        <label>Horn Fade Out</label>
-      </variable>
-      <variable CV="183" default="69" item="Sound Group 3 Option 6">
-        <decVal/>
-        <label>Horn Fade In Level</label>
-      </variable>
+	  <variable CV="200" default="0" item="Sound Setting 40">
+		<decVal max="255"/>
+		<label>DCC Throttle Magnitude Increase</label>
+	  </variable>
       <variable item="Aux Select for DCMaster" CV="222" default="0">
         <enumVal>
           <enumChoice value="0">
             <choice>Nothing</choice>
           </enumChoice>
-          <enumChoice>
+          <enumChoice value="1">
             <choice>Front/Rear Lights</choice>
           </enumChoice>
-          <enumChoice>
+          <enumChoice value="2">
             <choice>Bell Sound</choice>
           </enumChoice>
-          <enumChoice>
-            <choice>Horn Sound</choice>
+          <enumChoice value="3">
+            <choice>Whistle Sound</choice>
           </enumChoice>
-          <enumChoice>
+          <enumChoice value="4">
             <choice>Couple/Uncouple Sound</choice>
           </enumChoice>
-          <enumChoice>
+          <enumChoice value="5">
             <choice>Air Pump Sound</choice>
           </enumChoice>
-          <enumChoice>
+          <enumChoice value="6">
             <choice>Blow Down/Chuff Intensity Up</choice>
           </enumChoice>
-          <enumChoice>
+          <enumChoice value="7">
             <choice>Water Fill/Chuff Intensity Down/Startup</choice>
           </enumChoice>
-          <enumChoice>
+          <enumChoice value="8">
             <choice>L1 Function</choice>
           </enumChoice>
-          <enumChoice>
+          <enumChoice value="9">
             <choice>Mute/Volume Control</choice>
           </enumChoice>
-          <enumChoice>
+          <enumChoice value="10">
             <choice>Startup/Shutdown Sounds</choice>
           </enumChoice>
-          <enumChoice>
+          <enumChoice value="11">
             <choice>Shovel Coal Sound</choice>
           </enumChoice>
-          <enumChoice>
+          <enumChoice value="12">
             <choice>Water Injector Sound</choice>
           </enumChoice>
-          <enumChoice>
+          <enumChoice value="13">
             <choice>Brake Set/Release/Squeal Sound</choice>
           </enumChoice>
-          <enumChoice>
-            <choice>SteamCock</choice>
-          </enumChoice>
-          <enumChoice>
-            <choice>PopOffValve</choice>
-          </enumChoice>
-          <enumChoice>
+          <enumChoice value="16">
             <choice>Wheel Flange Sound</choice>
           </enumChoice>
-          <enumChoice>
+          <enumChoice value="17">
             <choice>Coupler Slack/Couple Sound </choice>
           </enumChoice>
-          <enumChoice>
+          <enumChoice value="18">
             <choice>Brake Squeal Sound</choice>
           </enumChoice>
-          <enumChoice>
+          <enumChoice value="19">
             <choice>Horn2 Toggle</choice>
           </enumChoice>
           <enumChoice value="30">
@@ -244,55 +230,41 @@
           <enumChoice value="40">
             <choice>Play Macro</choice>
           </enumChoice>
-          <enumChoice>
+          <enumChoice value="41">
             <choice>Record Macro</choice>
           </enumChoice>
           <enumChoice value="50">
             <choice>Passenger Sounds</choice>
           </enumChoice>
-          <enumChoice>
+          <enumChoice value="51">
             <choice>Freight Sounds</choice>
           </enumChoice>
-          <enumChoice>
+          <enumChoice value="52">
             <choice>Maintenance Sounds</choice>
           </enumChoice>
-          <enumChoice>
+          <enumChoice value="53">
             <choice>Radio Chatter Sounds</choice>
           </enumChoice>
-          <enumChoice>
+          <enumChoice value="54">
             <choice>City Sounds</choice>
           </enumChoice>
-          <enumChoice>
+          <enumChoice value="55">
             <choice>Farm Sounds</choice>
           </enumChoice>
-          <enumChoice>
+          <enumChoice value="56">
             <choice>Industrial Sounds</choice>
           </enumChoice>
-          <enumChoice>
+          <enumChoice value="57">
             <choice>Lumber Yard Sounds</choice>
           </enumChoice>
           <enumChoice value="60">
             <choice>Cab Light Toggle</choice>
           </enumChoice>
-          <enumChoice>
+          <enumChoice value="61">
             <choice>Rule 17 Dimming Toggle</choice>
           </enumChoice>
         </enumVal>
         <label>Aux Select for DCMaster</label>
-      </variable>
-      <variable CV="224" default="0" item="Sound Group 2 Option 1">
-        <enumVal>
-          <enumChoice>
-            <choice>Default</choice>
-          </enumChoice>
-          <enumChoice>
-            <choice>Horn3</choice>
-          </enumChoice>
-          <enumChoice>
-            <choice>Horn4</choice>
-          </enumChoice>
-        </enumVal>
-        <label>Horn Select</label>
       </variable>
       <variable item="Chuff Adjust" CV="233" default="150" tooltip="For this to have any effect, Chuff Sensor must be off">
         <decVal/>

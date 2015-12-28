@@ -1,21 +1,18 @@
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
-<!-- $Id$ -->
-<!-- Copyright Bob Jacobsen 2008 -->
 <html lang="en">
 <head>
- <TITLE>
+ <title>
       JMRI: Send CAN Frame
- </TITLE>
-    <META http-equiv=Content-Type content="text/html; charset=iso-8859-1">
-    <META content="Bob Jacobsen" name=Author>
-    <META name="keywords" content="JMRI help send loconet packets">
+ </title>
+    <meta content="Bob Jacobsen" name="Author">
+    <meta name="keywords" content="JMRI help send loconet packets">
 
 <!-- Style -->
-  <META http-equiv=Content-Type content="text/html; charset=iso-8859-1">
-  <link rel="stylesheet" type="text/css" href="/css/default.css" media="screen">
-  <link rel="stylesheet" type="text/css" href="/css/print.css" media="print">
-  <link rel="icon" href="/images/jmri.ico" type="image/png">
-  <link rel="home" title="Home" href="/">
+<meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
+<link rel="stylesheet" type="text/css" href="/css/default.css" media="screen">
+<link rel="stylesheet" type="text/css" href="/css/print.css" media="print">
+<link rel="icon" href="/images/jmri.ico" type="image/png">
+<link rel="home" title="Home" href="/">
 <!-- /Style -->
 </head>
 
@@ -24,16 +21,14 @@
   <div class="nomenu" id="mBody">
     <div id="mainContent">
 
-<H1>Send CAN Frame</H1>
+<h1>Send CAN Frame</h1>
     
 <a href="../../../../../../html/hardware/can/images/SendFrame.jpg">
     <img src="../../../../../../html/hardware/can/images/SendFrame.jpg"
          width="268" height="168"
          alt="Send Frame Tool" align="right"></a>
-<br>
-
-The "Send CAN Frame" tool lets you
-directly send 
+<p>
+The "Send CAN Frame" tool lets you directly send 
 <a href="../../../../../../html/hardware/can/index.shtml">CAN frames</a>.
 
 <p>It works best in combination with the 
@@ -45,9 +40,9 @@ because packets are entered here in raw hexadecimal format.
 The top section of the window lets you send a single frame.
 Just type the packet's data contents as 
 hexadecimal numbers, for example "83 7C". If you want to specify
-header contents, preceed the packet data with the header in 
-"()" characters or "[]" characters for a standard or extended header, 
-respectively.
+header contents, precede the packet data with the header in 
+"(&nbsp;)" characters or "[&nbsp;]" characters for a standard or extended header, 
+respectively.<br>
 You can also enter packets in 
 <a href="../../../../../../html/hardware/can/cbus/index.shtml">CBUS address format</a>, e.g. "+n4e1".
 Once you've entered the packet, just click "send".
@@ -58,6 +53,7 @@ Press the "Go" button to start the transmission sequence, and press it again
 to stop the sequence.
 
 <!--#include virtual="/Footer" -->
+ </div><!-- closes #mainContent-->
+</div> <!-- closes #mBody-->
 </body>
 </html>
-

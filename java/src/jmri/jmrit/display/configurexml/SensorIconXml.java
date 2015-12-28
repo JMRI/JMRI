@@ -274,6 +274,7 @@ public class SensorIconXml extends PositionableLabelXml {
         loadSensorTextState("Unknown", l, element);
         loadSensorTextState("Inconsistent", l, element);
         if (element.getAttribute("text") != null) {
+            l.setOriginalText(element.getAttribute("text").getValue());
             l.setText(element.getAttribute("text").getValue());
         }
     }

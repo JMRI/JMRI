@@ -5,7 +5,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 /**
- * This class performs Command Station dependant initilization for DCC++. It
+ * This class performs Command Station dependant initialization for DCC++. It
  * adds the appropriate Managers via the Initialization Manager based on the
  * Command Station Type.
  *
@@ -44,7 +44,7 @@ public class DCCppInitializationManager extends AbstractDCCppInitializationManag
 	if (jmri.InstanceManager.powerManagerInstance() == null) {
 	    log.error("Power Manager not accessible!");
 	} else {
-	    log.error("Power Manager: {}", jmri.InstanceManager.powerManagerInstance());
+	    log.debug("Power Manager: {}", jmri.InstanceManager.powerManagerInstance());
 	}
 	jmri.InstanceManager.setThrottleManager(systemMemo.getThrottleManager());
 	/* Next we check the command station type, and add the 

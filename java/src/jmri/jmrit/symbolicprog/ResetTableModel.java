@@ -41,11 +41,11 @@ public class ResetTableModel extends AbstractTableModel implements ActionListene
         "CV", "Value",
         "Write", "State"};
 
-    private Vector<CvValue> rowVector = new Vector<CvValue>(); // vector of Reset items
-    private Vector<String> labelVector = new Vector<String>(); // vector of related labels
-    private Vector<List> modeVector = new Vector<List>(); // vector of related modes
+    private Vector<CvValue> rowVector = new Vector<>(); // vector of Reset items
+    private Vector<String> labelVector = new Vector<>(); // vector of related labels
+    private Vector<List<String>> modeVector = new Vector<>(); // vector of related modes
 
-    private Vector<JButton> _writeButtons = new Vector<JButton>();
+    private Vector<JButton> _writeButtons = new Vector<>();
 
     private CvValue _iCv = null;
     private JLabel _status = null;

@@ -11,10 +11,8 @@
 
 <!-- Style -->
 <meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
-<link rel="stylesheet" type="text/css" href="/css/default.css"
-	media="screen">
-<link rel="stylesheet" type="text/css" href="/css/print.css"
-	media="print">
+<link rel="stylesheet" type="text/css" href="/css/default.css" media="screen">
+<link rel="stylesheet" type="text/css" href="/css/print.css" media="print">
 <link rel="icon" href="/images/jmri.ico" type="image/png">
 <link rel="home" title="Home" href="/">
 <!-- /Style -->
@@ -25,9 +23,9 @@
 <!--#include virtual="Sidebar" -->
 <div id="mainContent">
 
-<h2>JMRI: Entry/Exit (NX) Routing Documentation</h2>
+<h1>JMRI: Entry/Exit (NX) Routing Documentation</h1>
 
-<h3>What is NX Routing?</h3>
+<h2>What is NX Routing?</h2>
 
 <p>NX Routing builds a dynamic valid path between two locations on a Layout Editor 
 such as Sensors or Signal Masts.  The path can traverse a number of Turnouts 
@@ -39,8 +37,8 @@ in the route will automatically be set accordingly.
 If there are multiple paths between two locations, then the system will use the 
 path with the smallest cost or number of different Blocks.  If one on the Blocks on the 
 path is already occupied and there is a valid alternative path, then this will be taken.
-<p>
-<h3>How to setup for Entry Exit Routing:</h3>
+
+<h2>How to setup for Entry Exit Routing</h2>
 
 First you will need to have built a representation of your layout in the 
 Layout Editor. Blocks will also need be defined so that the Sensors can be 
@@ -95,7 +93,7 @@ If the <b>Both Way</b> option is ticked, then it is possible to activate the rou
 i.e. you can select the <b>To</b> Sensor prior to the <b>From</b> Sensor and the same route will be set.
 <p>
 
-<h3>Limitation</h3>
+<h2>Limitation</h2>
 The Entry Exit currently only deals with the throwing of Turnouts between two routes, it does not 
 yet provide a method to set-up Signal Mast logic or full interlocking.
     

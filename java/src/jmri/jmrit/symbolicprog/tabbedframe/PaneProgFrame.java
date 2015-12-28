@@ -479,7 +479,7 @@ abstract public class PaneProgFrame extends JmriJFrame
 
                     // handle include/exclude
                     if (isIncludedFE(decoderPaneList.get(i), modelElem, _rosterEntry, "", "")) {
-                        newPane(pname, decoderPaneList.get(i), modelElem, true);  // show even if empty??
+                        newPane(pname, decoderPaneList.get(i), modelElem, true, false);  // show even if empty not a programmer pane
                     }
                 }
             }
@@ -938,6 +938,7 @@ abstract public class PaneProgFrame extends JmriJFrame
             // load each programmer pane
             Element temp = progPaneList.get(i);
             List<Element> pnames = temp.getChildren("name");
+            boolean isProgPane = true;
             if ((pnames.size() > 0) && (decoderPaneList != null) && (decoderPaneList.size() > 0)) {
                 String namePrimary = (pnames.get(0)).getValue(); // get non-localised name
 
@@ -950,6 +951,7 @@ abstract public class PaneProgFrame extends JmriJFrame
                             // replace programmer pane with same-name decoder pane
                             temp = decoderPaneList.get(j);
                             decoderPaneList.remove(j);
+                            isProgPane = false;
                         }
                     }
                 }
@@ -958,7 +960,7 @@ abstract public class PaneProgFrame extends JmriJFrame
 
             // handle include/exclude
             if (isIncludedFE(temp, modelElem, _rosterEntry, "", "")) {
-                newPane(name, temp, modelElem, false);  // dont force showing if empty
+                newPane(name, temp, modelElem, false, isProgPane);  // dont force showing if empty
             }
         }
     }
@@ -1218,16 +1220,16 @@ abstract public class PaneProgFrame extends JmriJFrame
         }
     }
 
-    public void newPane(String name, Element pane, Element modelElem, boolean enableEmpty) {
+    public void newPane(String name, Element pane, Element modelElem, boolean enableEmpty, boolean programmerPane) {
         if (log.isDebugEnabled()) {
             log.debug("newPane with enableEmpty " + enableEmpty + " getShowEmptyPanes() " + getShowEmptyPanes());
         }
         // create a panel to hold columns
-        PaneProgPane p = new PaneProgPane(this, name, pane, cvModel, iCvModel, variableModel, modelElem, _rosterEntry);
+        PaneProgPane p = new PaneProgPane(this, name, pane, cvModel, iCvModel, variableModel, modelElem, _rosterEntry, programmerPane);
         p.setOpaque(true);
         // how to handle the tab depends on whether it has contents and option setting
         int index;
-        if (enableEmpty || (p.cvList.size() != 0) || (p.varList.size() != 0 || (p.indexedCvList.size() != 0))) {
+        if (enableEmpty || !p.cvList.isEmpty() || !p.varList.isEmpty() || !p.indexedCvList.isEmpty()) {
             tabPane.addTab(name, p);  // always add if not empty
             index = tabPane.indexOfTab(name);
             tabPane.setToolTipTextAt(index, p.getToolTipText());
@@ -1235,9 +1237,9 @@ abstract public class PaneProgFrame extends JmriJFrame
             // here empty, but showing anyway as disabled
             tabPane.addTab(name, p);
             index = tabPane.indexOfTab(name);
-            tabPane.setEnabledAt(index, false);
+            tabPane.setEnabledAt(index, true); // need to enable the pane so user can see message
             tabPane.setToolTipTextAt(index,
-                    SymbolicProgBundle.getMessage("TipTabDisabledNoCategory"));
+                    SymbolicProgBundle.getMessage("TipTabEmptyNoCategory"));
         } else {
             // here not showing tab at all
             index = -1;

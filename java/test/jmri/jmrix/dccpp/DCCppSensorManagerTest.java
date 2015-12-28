@@ -103,14 +103,12 @@ public class DCCppSensorManagerTest extends TestCase {
 
         // send messages for feedbak encoder 22
         // notify the DCC++ that somebody else changed it...
-        DCCppReply m1 = new DCCppReply();
-        m1.setElement(0, 'Q');     // Opcode for feedback response
-        m1.setElement(1, 22);     // The feedback encoder address
-        m1.setElement(2, 1);     // A bit pattern telling which 
+        DCCppReply m1 = DCCppReply.parseDCCppReply("Q 22");
         xnis.sendTestMessage(m1);
 
         // see if sensor exists
         Assert.assertTrue(null != l.getBySystemName("DCCPPS22"));
+        
     }
 
     public void testAsAbstractFactory() {
@@ -169,11 +167,13 @@ public class DCCppSensorManagerTest extends TestCase {
     static Logger log = LoggerFactory.getLogger(DCCppSensorManagerTest.class.getName());
 
     // The minimal setup for log4J
-    protected void setUp() {
+    protected void setUp() throws Exception {
         apps.tests.Log4JFixture.setUp();
+        super.setUp();
     }
 
-    protected void tearDown() {
+    protected void tearDown() throws Exception {
+        super.tearDown();
         apps.tests.Log4JFixture.tearDown();
     }
 

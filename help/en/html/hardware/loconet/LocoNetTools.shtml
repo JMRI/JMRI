@@ -1,10 +1,7 @@
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
-<!-- $Id$ -->
 <html lang="en">
 <head>
- <title>
-      JMRI Support Tools for LocoNet&reg; Devices
- </title>
+ <title>JMRI Hardware Support - Tools for LocoNet&reg; Devices</title>
 <meta name="Author" content="B. Milhaupt">
 <meta name="keywords" content="Digitrax LocoNet BDL16 BDL162 BDL168 PM4 PM42 
       SE8C DS64 DS54 DT400 DT402 DCS100 DB150 JMRI UR90 UR91 UR92 Duplex 
@@ -12,11 +9,11 @@
       Simplex Infrared Monitor Slot FastClock Firmware 'Sound Project'">
 
 <!-- Style -->
-<meta HTTP-EQUIV="Content-Type" CONTENT="text/html; charset=iso-8859-1">
-<link REL="stylesheet" TYPE="text/css" HREF="/css/default.css" MEDIA="screen">
-<link REL="stylesheet" TYPE="text/css" HREF="/css/print.css" MEDIA="print">
-<link REL="icon" HREF="/images/jmri.ico" TYPE="image/png">
-<link REL="home" TITLE="Home" HREF="/">
+<meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
+<link rel="stylesheet" type="text/css" href="/css/default.css" media="screen">
+<link rel="stylesheet" type="text/css" href="/css/print.css" media="print">
+<link rel="icon" href="/images/jmri.ico" type="image/png">
+<link rel="home" title="Home" href="/">
 <!-- /Style -->
 </head>
 
@@ -25,17 +22,17 @@
   <div class="nomenu" id="mBody">
     <div id="mainContent">
 
-      <h1> 
-      JMRI Tools which support LocoNet&reg; Devices
-      </h1>
+  <h1>Hardware Support: JMRI Tools for LocoNet&reg; Devices</h1>
 
-
-<p>JMRI software can provide a variety of tools to support hardware connected
+<p>JMRI software provides a variety of tools to support hardware connected
     to the LocoNet&reg; bus.  These tools provide a variety of features, such as
     monitoring status, reading and writing configuration.  Each of the tools
     provides a set of features which is appropriate to the type of device it
-    supports, as summarized in the table below.</p>
-<p>In the table, each tool name is a link to a tool-specific help page.</p>
+    supports, as summarized in the table below. 
+    
+    <a name="tools"></a><h2>JMRI LocoNet Tools</h2>
+    Access to the LocoNet Tools is from the <strong>LocoNet</strong> menu that appears when JMRI is <a href="Digitrax.shtml#Setup">connected to a LocoNet&reg;</a>.</p>
+<p>In the table below, each tool name is a link to a tool-specific help page.</p>
 <table border="2">
     <tr align="center"><td><b>Tool</b></td>
         <td><b>Monitor Status</b></td>
@@ -215,4 +212,3 @@
 </div> <!-- closes #mBody-->
 </body>
 </html>
-    

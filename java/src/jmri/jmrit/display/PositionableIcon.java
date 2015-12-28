@@ -28,19 +28,16 @@ public class PositionableIcon extends PositionableLabel {
     public PositionableIcon(Editor editor) {
         // super ctor call to make sure this is an icon label
         super(new NamedIcon("resources/icons/misc/X-red.gif", "resources/icons/misc/X-red.gif"), editor);
-        setPopupUtility(null);
     }
 
     public PositionableIcon(NamedIcon s, Editor editor) {
         // super ctor call to make sure this is an icon label
         super(s, editor);
-        setPopupUtility(null);
     }
 
     public PositionableIcon(String s, Editor editor) {
         // super ctor call to make sure this is an icon label
         super(s, editor);
-        setPopupUtility(null);
     }
 
     public Positionable finishClone(Positionable p) {
@@ -138,7 +135,7 @@ public class PositionableIcon extends PositionableLabel {
     public void rotate(int deg) {
         _rotate = deg % 360;
         setDegrees(deg);
-        if (_text && !_icon) {
+        if (_text /*&& !_icon*/) {
             super.rotate(deg);
         }
         if (_iconMap == null) {

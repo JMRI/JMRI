@@ -19,7 +19,7 @@ import java.util.regex.PatternSyntaxException;
  *
  * Based on LenzCommandStation by Bob Jacobsen and Paul Bender
  */
-public class DCCppCommandStation implements jmri.jmrix.DccCommandStation, jmri.CommandStation {
+public class DCCppCommandStation implements jmri.CommandStation {
 
     /* The First group of routines is for obtaining the Software and
      hardware version of the Command station */
@@ -68,32 +68,10 @@ public class DCCppCommandStation implements jmri.jmrix.DccCommandStation, jmri.C
 	//String syntax = "iDCC\\+\\+BASE STATION FOR ARDUINO \\b(\\w+)\\b \\/ (ARDUINO|POLOLU\\sMC33926) MOTOR SHIELD: BUILD ((\\d+\\s\\w+\\s\\d+)\\s+(\\d+:\\d+:\\d+))";
 	// V1.0/V1.1 Simplified
 	//String syntax = "iDCC\\+\\+(.*): BUILD (.*)";
-        String syntax = DCCppConstants.STATUS_REPLY_REGEX;
-	String s = l.toString();
-	try {
-	    Pattern p = Pattern.compile(syntax);
-	    Matcher m = p.matcher(s);
-	    if (!m.matches()) {
-		log.error("DCC++ Status string does not match pattern. syntax= {} string= {}", syntax, s);
-		return;
-	    }
-	    //log.debug("DCC++ Status board = {} motor = {} build date = {} time = {}",
-	    //	      m.group(1), m.group(2), m.group(4), m.group(5));
-	    log.debug("DCC++ Status type = {} Build = {}", m.group(1), m.group(2));
-	    baseStationType = m.group(1);
-	    codeBuildDate = m.group(2);
-	    //baseStationType = m.group(1) + " / " + m.group(2) + " MOTOR SHIELD";
-	    //codeBuildDate = m.group(3);
-	} catch (PatternSyntaxException e) {
-            log.error("Malformed DCC++ version syntax! " + syntax);
-            return;
-        } catch (IllegalStateException e) {
-            log.error("Group called before match operation executed syntax=" + syntax + " string= " + s);
-            return;
-        } catch (IndexOutOfBoundsException e) {
-            log.error("Index out of bounds " + syntax + " string= " + s);
-            return;
-        }
+        
+        baseStationType = l.getStatusVersionString();
+        codeBuildDate = l.getStatusBuildDateString();
+        
     }
 
     /**
@@ -102,7 +80,7 @@ public class DCCppCommandStation implements jmri.jmrix.DccCommandStation, jmri.C
      *
      */
     public String getVersionString() {
-        return "<unknown>";
+        return(baseStationType + ": BUILD " + codeBuildDate);
     }
 
     /* 
@@ -195,7 +173,7 @@ public class DCCppCommandStation implements jmri.jmrix.DccCommandStation, jmri.C
         }
 
 	int reg = 1; // TODO: Fix this when I understand registers...
-	DCCppMessage msg = DCCppMessage.getWriteDCCPacketMainMsg(reg, packet.length, packet);
+	DCCppMessage msg = DCCppMessage.makeWriteDCCPacketMainMsg(reg, packet.length, packet);
 
         for (int i = 0; i < repeats; i++) {
             _tc.sendDCCppMessage(msg, null);

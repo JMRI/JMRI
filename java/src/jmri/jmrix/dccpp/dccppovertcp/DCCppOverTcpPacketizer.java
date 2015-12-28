@@ -10,6 +10,7 @@ import jmri.jmrix.dccpp.DCCppNetworkPortController;
 import jmri.jmrix.dccpp.DCCppPacketizer;
 import jmri.jmrix.dccpp.DCCppMessage;
 import jmri.jmrix.dccpp.DCCppReply;
+import jmri.jmrix.dccpp.DCCppReplyParser;
 import jmri.jmrix.dccpp.DCCppListener;
 import jmri.jmrix.dccpp.DCCppMessageException; // TODO: we don't have this one!
 import org.slf4j.Logger;
@@ -232,7 +233,7 @@ public class DCCppOverTcpPacketizer extends DCCppPacketizer {
 		    int lastidx = rxLine.lastIndexOf(">");
 		    log.debug("String {} Index1 {} Index 2{}", rxLine, firstidx, lastidx);
 		    //  Note: the substring call below also strips off the "< >"
-		    DCCppReply msg = new DCCppReply(rxLine.substring(rxLine.indexOf("<")+1,
+		    DCCppReply msg = DCCppReplyParser.parseReply(rxLine.substring(rxLine.indexOf("<")+1,
 							    rxLine.lastIndexOf(">")));
 		    
 		    if (!msg.isValidReplyFormat()) {

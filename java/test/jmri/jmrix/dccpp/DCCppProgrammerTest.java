@@ -20,7 +20,6 @@ import org.slf4j.LoggerFactory;
 
 public class DCCppProgrammerTest extends TestCase {
 
-    static final int RELEASE_TIME = 100;
     static final int RESTART_TIME = 20;
 
     public void testWriteCvSequence() throws JmriException {
@@ -40,19 +39,7 @@ public class DCCppProgrammerTest extends TestCase {
         Assert.assertEquals("mode message sent", 1, t.outbound.size());
         Assert.assertEquals("write message contents", "W 29 34 0 87", t.outbound.elementAt(0).toString());
         // send reply
-        DCCppReply mr1 = new DCCppReply();
-        mr1.setElement(0, 'r');
-        mr1.setElement(1, ' ');
-        mr1.setElement(2, '0');
-        mr1.setElement(3, '|');
-        mr1.setElement(4, '8');
-        mr1.setElement(5, '7');
-        mr1.setElement(6, '|');
-        mr1.setElement(7, '2');
-        mr1.setElement(8, '9');
-        mr1.setElement(9, ' ');
-        mr1.setElement(10, '3');
-        mr1.setElement(11, '4');
+        DCCppReply mr1 = DCCppReply.parseDCCppReply("r 0|87|29 34");
         t.sendTestMessage(mr1);
 
         // At this point, the standard DCC++ programmer 
@@ -61,7 +48,7 @@ public class DCCppProgrammerTest extends TestCase {
         // traffic controller to exit from service mode.  We just
         // need to wait a few seconds and see that the listener we
         // registered earlier received the values we expected.
-        jmri.util.JUnitUtil.releaseThread(this, RELEASE_TIME);
+        jmri.util.JUnitUtil.releaseThread(this);
 
         //failure in this test occurs with the next line.
         Assert.assertFalse("Receive Called by Programmer", l.getRcvdInvoked() == 0);
@@ -114,7 +101,7 @@ public class DCCppProgrammerTest extends TestCase {
         // traffic controller to exit from service mode.  We just
         // need to wait a few seconds and see that the listener we
         // registered earlier received the values we expected.
-        jmri.util.JUnitUtil.releaseThread(this, RELEASE_TIME);
+        jmri.util.JUnitUtil.releaseThread(this);
 
         //failure in this test occurs with the next line.
         Assert.assertFalse("Receive Called by Programmer", l.getRcvdInvoked() == 0);
@@ -141,19 +128,7 @@ public class DCCppProgrammerTest extends TestCase {
         Assert.assertEquals("read message contents", "R 29 0 82", t.outbound.elementAt(0).toString());
 
         // send reply
-        DCCppReply mr1 = new DCCppReply();
-        mr1.setElement(0, 'r');
-        mr1.setElement(1, ' ');
-        mr1.setElement(2, '0');
-        mr1.setElement(3, '|');
-        mr1.setElement(4, '8');
-        mr1.setElement(5, '2');
-        mr1.setElement(6, '|');
-        mr1.setElement(7, '2');
-        mr1.setElement(8, '9');
-        mr1.setElement(9, ' ');
-        mr1.setElement(10, '1');
-        mr1.setElement(11, '2');
+        DCCppReply mr1 = DCCppReply.parseDCCppReply("r 0|82|29 12");
         t.sendTestMessage(mr1);
 
         // At this point, the standard DCC++ programmer 
@@ -162,7 +137,7 @@ public class DCCppProgrammerTest extends TestCase {
         // traffic controller to exit from service mode.  We just
         // need to wait a few seconds and see that the listener we
         // registered earlier received the values we expected.
-        jmri.util.JUnitUtil.releaseThread(this, RELEASE_TIME);
+        jmri.util.JUnitUtil.releaseThread(this);
 
         //failure in this test occurs with the next line.
         Assert.assertFalse("Receive Called by Programmer", l.getRcvdInvoked() == 0);
@@ -215,7 +190,7 @@ public class DCCppProgrammerTest extends TestCase {
         // traffic controller to exit from service mode.  We just
         // need to wait a few seconds and see that the listener we
         // registered earlier received the values we expected.
-        jmri.util.JUnitUtil.releaseThread(this, RELEASE_TIME);
+        jmri.util.JUnitUtil.releaseThread(this);
 
         //failure in this test occurs with the next line.
         Assert.assertFalse("Receive Called by Programmer", l.getRcvdInvoked() == 0);
@@ -243,20 +218,7 @@ public class DCCppProgrammerTest extends TestCase {
         Assert.assertEquals("mode message sent", 1, t.outbound.size());
         Assert.assertEquals("write message contents", "W 300 34 0 87", t.outbound.elementAt(0).toString());
         // send reply
-        DCCppReply mr1 = new DCCppReply();
-        mr1.setElement(0, 'r');
-        mr1.setElement(1, ' ');
-        mr1.setElement(2, '0');
-        mr1.setElement(3, '|');
-        mr1.setElement(4, '8');
-        mr1.setElement(5, '7');
-        mr1.setElement(6, '|');
-        mr1.setElement(7, '3');
-        mr1.setElement(8, '0');
-        mr1.setElement(9, '0');
-        mr1.setElement(10, ' ');
-        mr1.setElement(11, '3');
-        mr1.setElement(12, '4');
+        DCCppReply mr1 = DCCppReply.parseDCCppReply("r 0|87|300 34");
         t.sendTestMessage(mr1);
 
         // At this point, the standard DCC++ programmer 
@@ -265,7 +227,7 @@ public class DCCppProgrammerTest extends TestCase {
         // traffic controller to exit from service mode.  We just
         // need to wait a few seconds and see that the listener we
         // registered earlier received the values we expected.
-        jmri.util.JUnitUtil.releaseThread(this, RELEASE_TIME);
+        jmri.util.JUnitUtil.releaseThread(this);
 
         //failure in this test occurs with the next line.
         Assert.assertFalse("Receive Called by Programmer", l.getRcvdInvoked() == 0);
@@ -293,20 +255,7 @@ public class DCCppProgrammerTest extends TestCase {
         Assert.assertEquals("read message contents", "R 300 0 82", t.outbound.elementAt(0).toString());
 
         // send reply
-        DCCppReply mr1 = new DCCppReply();
-        mr1.setElement(0, 'r');
-        mr1.setElement(1, ' ');
-        mr1.setElement(2, '0');
-        mr1.setElement(3, '|');
-        mr1.setElement(4, '8');
-        mr1.setElement(5, '2');
-        mr1.setElement(6, '|');
-        mr1.setElement(7, '3');
-        mr1.setElement(8, '0');
-        mr1.setElement(9, '0');
-        mr1.setElement(10, ' ');
-        mr1.setElement(11, '3');
-        mr1.setElement(12, '4');
+        DCCppReply mr1 = DCCppReply.parseDCCppReply("r 0|82|300 34");
         t.sendTestMessage(mr1);
 
         // At this point, the standard DCC++ programmer 
@@ -315,7 +264,7 @@ public class DCCppProgrammerTest extends TestCase {
         // traffic controller to exit from service mode.  We just
         // need to wait a few seconds and see that the listener we
         // registered earlier received the values we expected.
-        jmri.util.JUnitUtil.releaseThread(this, RELEASE_TIME);
+        jmri.util.JUnitUtil.releaseThread(this);
 
         //failure in this test occurs with the next line.
         Assert.assertFalse("Receive Called by Programmer", l.getRcvdInvoked() == 0);

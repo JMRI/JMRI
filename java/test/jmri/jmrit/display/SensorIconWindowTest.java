@@ -181,7 +181,7 @@ public class SensorIconWindowTest extends jmri.util.SwingTestCase {
 
     // Main entry point
     static public void main(String[] args) {
-        String[] testCaseName = {SensorIconWindowTest.class.getName()};
+        String[] testCaseName = {"-noloading", SensorIconWindowTest.class.getName()};
         junit.swingui.TestRunner.main(testCaseName);
     }
 

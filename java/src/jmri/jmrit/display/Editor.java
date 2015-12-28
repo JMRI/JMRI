@@ -2373,7 +2373,7 @@ abstract public class Editor extends JmriJFrame implements MouseListener, MouseM
             log.debug("putIcon: {} url= {}", (icon == null ? "null" : "icon"), url);
         }
         PositionableLabel l = new PositionableLabel(icon, this);
-        l.setPopupUtility(null);        // no text 
+//        l.setPopupUtility(null);        // no text 
         l.setDisplayLevel(ICONS);
         setNextLocation(l);
         putItem(l);
@@ -2906,7 +2906,7 @@ abstract public class Editor extends JmriJFrame implements MouseListener, MouseM
         return true;
     }
 
-    class TextAttrDialog extends JDialog {
+    public class TextAttrDialog extends JDialog {
 
         private static final long serialVersionUID = 6801138901620891961L;
         Positionable _pos;
@@ -2917,7 +2917,7 @@ abstract public class Editor extends JmriJFrame implements MouseListener, MouseM
             _pos = p;
             JPanel panel = new JPanel();
             panel.setLayout(new BoxLayout(panel, BoxLayout.Y_AXIS));
-            _decorator = new jmri.jmrit.display.palette.DecoratorPanel(_pos.getEditor());
+            _decorator = new jmri.jmrit.display.palette.DecoratorPanel(_pos.getEditor(), this);
             _decorator.initDecoratorPanel(_pos);
             panel.add(_decorator);
             panel.add(makeDoneButtonPanel());
@@ -2982,7 +2982,7 @@ abstract public class Editor extends JmriJFrame implements MouseListener, MouseM
         }
         if (p instanceof PositionableLabel) {
             PositionableLabel pos = (PositionableLabel) p;
-            if (pos.isText() && !pos.isIcon()) {
+            if (pos.isText()) {
                 int deg = pos.getDegrees();
                 pos.rotate(0);
                 pos.setBorder(new javax.swing.border.CompoundBorder(outlineBorder, borderMargin));

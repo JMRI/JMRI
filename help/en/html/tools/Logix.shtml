@@ -1,33 +1,29 @@
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
-<!-- $Id$ -->
 <html lang="en">
 <head>
- <TITLE>
+ <title>
       JMRI: Logix Documentation
- </TITLE>
-    <META http-equiv=Content-Type content="text/html; charset=iso-8859-1">
-    <META content="David Duchamp" name=Author>
-    <META name="keywords" content="java model railroad JMRI Logix">
+ </title>
+    <meta content="David Duchamp" name="Author">
+    <meta name="keywords" content="java model railroad JMRI Logix">
 
 <!-- Style -->
-<META HTTP-EQUIV="Content-Type" CONTENT="text/html; charset=iso-8859-1">
-<LINK REL="stylesheet" TYPE="text/css" HREF="/css/default.css"
-	MEDIA="screen">
-<LINK REL="stylesheet" TYPE="text/css" HREF="/css/print.css"
-	MEDIA="print">
-<LINK REL="icon" HREF="/images/jmri.ico" TYPE="image/png">
-<LINK REL="home" TITLE="Home" HREF="/">
+<meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
+<link rel="stylesheet" type="text/css" href="/css/default.css" media="screen">
+<link rel="stylesheet" type="text/css" href="/css/print.css" media="print">
+<link rel="icon" href="/images/jmri.ico" type="image/png">
+<link rel="home" title="Home" href="/">
 <!-- /Style -->
-</HEAD>
+</head>
 
-<BODY>
+<body>
 <!--#include virtual="/Header" -->
-  <div class="nomenu" id="mBody">
-    <div id="mainContent">
+<!--#include virtual="Sidebar" -->
+<div id="mainContent">
 
-      <H2> 
+      <h1> 
       JMRI: Logix Documentation
-      </H2>
+      </h1>
     
     <dd>
 	<P>Logix&trade; provide a powerful capability for JMRI to monitor one  
@@ -42,7 +38,7 @@
 	</dd>
 
 	<dl>
-	<dt class=left><a name=contents><H3>Contents</H3></a></dt>
+	<dt class=left><a name=contents><h2>Contents</h2></a></dt>
 	<dd class=top>
 	<p>The documentation below describes Logix, and discusses how to set 
 	them up. The documentation is divided into sections; click below for 
@@ -65,7 +61,7 @@
 	</ul>
 	</dd>
 
-	<dt class=left><a name=intro><H3>Introduction to Logix and Conditionals</H3></a></dt>
+	<dt class=left><a name=intro><h2>Introduction to Logix and Conditionals</h2></a></dt>
 	<dd class=top>
 	<p>A Logix is a small group of Conditionals focused on a single task 
 	on the layout. Each Conditional may be viewed as a statement of the form:
@@ -92,7 +88,7 @@
 	logical expressions might work together and how they might affect each other. 	
 	</p></dd>
 
-    <dt class=left><a name=logix><H3>Logix</H3></a></dt>                                                                                          
+    <dt class=left><a name=logix><h2>Logix</h2></a></dt>                                                                                          
 	<dd class=top>
 	<p>Except when it is being created or edited, 
 	a Logix is "active", which means
@@ -207,7 +203,7 @@
         or existing Logix.</p> 
 	</dd>
 	
-	<dt class=left><a name=conditional><H3>Conditionals</H3></a>
+	<dt class=left><a name=conditional><h2>Conditionals</h2></a>
 	</dt>
 	<dd class=top>
 	<p>A Conditional's system name has the form IXnnnnCmm, and  
@@ -273,7 +269,7 @@
 	<p>if (antecedent state changes) then (do "on change" actions).</ul></p>
 	</dd>
 	
-	<dt class=left><a name=editconditional><H3>The Edit Conditional Window</H3></a>
+	<dt class=left><a name=editconditional><h3>The Edit Conditional Window</h3></a>
 	</dt>
 	<dd class=top>
 	<p>The Edit Conditional window is where logical expressions are set up and 
@@ -287,7 +283,7 @@
 	for the setup of a logical expression and one for set up of the actions.</p>
 	</dd>
 	
-	<dt class=left><a name=logicalexpression><H3>The Logical Expression</H3></a>
+	<dt class=left><a name=logicalexpression><h3>The Logical Expression</h3></a>
 	</dt>
 	<dd class=top>
 	<p>The logical expression section contains a table of state variables, with 
@@ -359,7 +355,7 @@
 	may be reported unnecessarily.</i></p>
 	</dd>
 	
-	<dt class=left><a name=thepolicy><H3>Triggering the Actions</H3></a>
+	<dt class=left><a name=thepolicy><h3>Triggering the Actions</h3></a>
 	</dt>
 	<dd class=top>	
         <p>
@@ -382,7 +378,7 @@
         the conditional but do not change the state of the conditional, then this policy
         will execute the action on any trigger.
         </p>    
-	<dt class=left><a name=theactions><H3>The Actions</H3></a>
+	<dt class=left><a name=theactions><h3>The Actions</h3></a>
 	</dt>
 	<dd class=top>
 	<p>The Actions section of the Edit Conditional window contains a table 
@@ -427,7 +423,7 @@
         action.</p>
 	</dd>
 	
-	<dt class=left><a name=updateconditional><H3>Saving the Conditional</H3></a>
+	<dt class=left><a name=updateconditional><h3>Saving the Conditional</h3></a>
 	</dt>
 	<dd class=top>
 	<p>When the logical expression and actions have been specified, click 
@@ -449,7 +445,7 @@
 	return to the Edit Logix window.</p>
 	</dd>
 	
-	<dt class=left><a name=start><H3>Getting Started</H3></a>
+	<dt class=left><a name=start><h2>Getting Started</h2></a>
 	</dt>
 	<dd class=top>
 	    <p>Follow the following steps to create a Logix and become familiar
@@ -504,7 +500,7 @@
     	you more time to read this tutorial than to create the Logix.</p>	    
 	</dd>
 
-	<dt class=left><a name=variable><H3>Available State Variables</H3></a></dt>
+	<dt class=left><a name=variable><h2>Available State Variables</h2></a></dt>
 	<dd>
 	<p>State variables that are currently available for use in Conditionals
 	are listed below, along with information on each. State variables
@@ -590,7 +586,7 @@
     	</ul>
 	</dd>    
     
-	<dt class=left><a name=action><H3>Available Actions</H3></a></dt>
+	<dt class=left><a name=action><h2>Available Actions</h2></a></dt>
 	<dd>
 	<P>Actions that are currently available for use in Conditionals are listed 
 	below along with information on each:
@@ -746,172 +742,181 @@
 		Specify the OBlock by entering its system name or user name.</LI>
 		</ul>
 	</dd>    
-	<dt class=left><a name=notes><H3>Additional Notes</H3></a></dt>
+	
+	<dt class=left><a name=notes><h2>Additional Notes</h2></a></dt>
 	<dd>
 	<p> This section contains questions and answers that normally are not 
 	needed by Logix users, but in some cases were important or of 
 	interest for previous versions of Logix. 
-	<ul>
-	<p><li><b>Why have a "group" of Conditionals instead of just single 
-	Conditionals?</b>
-	<p> A group of Conditionals was chosen for several reasons, including:
-	<ol>
-	<p><li>Grouping Conditionals into a Logix, and focusing the Logix on one 
-	task should end up being much more user friendly. Think about one Logix 
-	with several Conditionals controlling one three-turnout signal head.  The 
-	first Conditional could check conditions for a RED appearance, and take 
-	appropriate action. The second Conditional could check on another allowed 
-	appearance which, depending upon the rules of the railroad being modeled
-	could depend upon the calculated state of the first Conditional.  Other 
-	Conditionals would check for other appearances according to the rules of 
-	the railroad. So with only one Logix, a user should be able to set up the 
-	required logic for setting appearances for one signal head. Thus once the 
-	sensors, turnouts, and signal heads are set up, only one new system name, 
-	the system name of the Logix, need be defined and kept track of. 
-	<p><li>Another reason for grouping multiple Conditionals is simpler 
-	operation.  Fewer
-	behind the scene listeners are needed to accomplish the same task.  Even 
-	though, following the example above, the logic for each appearance of the 
-	signal head (each Conditional) may depend upon a particular sensor (a 
-	block occupancy for example), if the Conditionals are combined into a 
-	single Logix, only _one_ listener for that sensor is required.  This is 
-	simpler in implementation than having multiple listeners.
-	</ol>
-	<p><li><b>How is a Logix started?</b>
-	<p>Start of a Logix is similar to the way a light, a route, or 
-	other continuously running JMRI entity starts.  Internally a Logix has an 
-	"activate" method, that is called when the Logix is created, after it  
-	is edited, or when it is loaded from a configuration file.  This  
-	method starts listeners for items in the state variables
-	of the Logix's Conditionals.  When any of these listeners fires (indicating
-	that the watched property of a state variable has changed), the Logix  
-	is calculated, resulting in appropriate actions being taken, provided the 
-	Logix is enabled.
-	<p><li><b>What is the initial state of a Logix and its Conditionals?</b>	
-	<p>When a Logix is created or edited, the initial state of each Conditional 
-	is true or false as shown in the Edit Logix window.  When a Logix is loaded 
-	from a configuration file, the initial state of each Conditional is UNKNOWN.
-	<p>A Logix is enabled automatically when it is created.  
-	A Logix may be disabled/enabled by 
-	unchecking/checking the button in the Enable column in the Logix table.  
-	For example, you might want to disable a Logix while you're creating
-	and debugging it, until you're certain that you have it set up properly.
-	A Logix may be enabled or disabled dynamically by another Logix (see allowed 
-	actions <a href="#action">above</a>).
-	<P>
-	When JMRI stores the layout configuration in a file, e.g. a panel file, all
-	Logix information, including the enabled/disabled state of the Logix, is 
-	stored. When a Logix is loaded from a configuration file, it's enabled or disabled status
-	is set according to what was saved in the configuration file.
-	This is done so that people can disable their Logix while debugging them,
-	yet still save and restore the configuration as needed. 
-	<p><li><b>What happens when a JMRI program starts up or when a configuration 
-	file is loaded by a JMRI program?</b>
-	<p>This is a complex question that depends upon many things,
-	such as, how the user has set up for turnout feedback, block detection, etc. 
-	When a configuration 
-	file is read, the various entities (sensors, turnouts, signal heads, etc.) 
-	are loaded in an almost random order.  So it's not reasonable, for example,  
-	to calculate each Logix as it is loaded, since the needed state variable 
-	entities might not be present when the Logix is loaded.  And,  
-	since most entities will load in UNKNOWN state, calculating a Logix 
-	immediately after the entire  configuration file is loaded doesn't produce
-	a clean start up either.  So when a Logix is loaded, the state of each 
-	Conditional starts as UNKNOWN. Immediately after the entire configuration 
-	file is loaded, all Logix are activated, and then all the Logix are 
-	calculated. The state of Conditionals changes from UNKNOWN to true or false. 
-	But will the calculated state of the Conditional be "correct" if one or more 
-	of the state variables is evaluated from an entity in an UNKNOWN state?  For 
-	example, think of a turnout in an UNKNOWN state--Turnout Thrown and 
-	Turnout Closed will both evaluate to false.  As listeners continue to fire 
-	for state variables, eventually every entity has its correct current state 
-	and the Logix will work fine.  You can monitor this action by watching 
-	states in the Sensor Table, the Turnout Table, etc. Conditions at start up 
-	certainly are something to keep in mind when setting up a Logix.</p>
-	<p><li><b>When should Triggers Calculation be unchecked in a state variable?</b>	
-	<p>Normally Triggers Calculation should be checked in all state variables, 
-	so a change in any of its state variable will trigger calculation of a Logix. 
-	This results in the Logix quickly reacting to changes on the layout, and 
-	maintaining the status of signals, turnouts, etc. as desired. There are 
-	situations, however, where it is desirable to test the state of an entity,
-	but not use it as a calculation trigger.  The following paragraphs 
-	describe a couple of those situations, but there are others.</p>
-	<p>Occasionally a "logic loop" can result if triggering is not 
-	suppressed. For example, if the state of a turnout is tested in a state 
-	variable, and the same turnout is set in an action of the same or another 
-	Conditional of the same Logix, continuous triggering (a logic loop) could 
-	result. The easiest way out of this dilemma is to test the turnout, without
-	using it as a triggering entity. This is done by unchecking Triggers 
-	Calculation	in <b>all</b> state variables where the turnout is specified.
-	If the turnout is used in state variables of more than one Conditional of 
-	the Logix, it must be unchecked everywhere it is used to suppress using it
-	as a trigger.</p>
-	<p>Another situation arises when Delayed Set Sensor action is used with
-	an internal sensor to trigger a second Logix after the delay time has 
-	elapsed. If the second Logix is not to be triggered before the delay time 
-	elapses, all of its state variables, except for the delayed internal sensor, 
-	should be unchecked. This scenario might occur, for example, if a Conditional
-	turns on something as its first action, and sets a Delayed Set Sensor as 
-	its second action to turn off that something after a specified time provided
-	certain conditions are met.</p>
-<p><li><b>What is a "logic loop" and how can it be avoided?</b>
 
-<p>A "logic loop" results when the program appears to slow down significantly or 
-lock up as multiple Logixs are continuously triggered by changing references to 
-each other.  The best way to avoid a "logic loop" is to be aware of situations 
-that can lead to a loop, and plan your logic to avoid such situations. </p>
-<p>A "logic loop" can result within a single Logix when a state variable (sensor, 
-turnout, etc.) that triggers the Logix is also changed by that same Logix.  The 
-Logix editor will detect some situations that could result in a loop, and will 
-issue a warning when you close the Logix. <b>Heed these warnings!</b> A warning 
-doesn't mean that a loop definitely will result if you continue. The warning 
-message is a "wake up call" that you should study carefully what you're doing 
-to make sure a loop won't result. </p> 
-<p>A more complicated situation involving two or more Logixs can also result in 
-a "logic loop".  For example, if Logix 1 is triggered by sensor A, and has an 
-action that changes turnout B, and Logix 2 is triggered by turnout B and changes 
-sensor A, the potential for a loop exists as these Logixs trigger each other.  
-You can easily extend this idea to triggering chains (loops) involving three or 
-more Logixs, and even to interactions between Logixs and Routes. There is no 
-test in the program to warn about loops involving multiple Logixs. (To develop 
-such a test would be very difficult.)</p>
+		<ul>
+		<li><b>Why have a "group" of Conditionals instead of just single 
+		Conditionals?</b>
+		<p> A group of Conditionals was chosen for several reasons, including:
+			<ol>
+			<li>Grouping Conditionals into a Logix, and focusing the Logix on one 
+			task should end up being much more user friendly. Think about one Logix 
+			with several Conditionals controlling one three-turnout signal head.  The 
+			first Conditional could check conditions for a RED appearance, and take 
+			appropriate action. The second Conditional could check on another allowed 
+			appearance which, depending upon the rules of the railroad being modeled
+			could depend upon the calculated state of the first Conditional.  Other 
+			Conditionals would check for other appearances according to the rules of 
+			the railroad. So with only one Logix, a user should be able to set up the 
+			required logic for setting appearances for one signal head. Thus once the 
+			sensors, turnouts, and signal heads are set up, only one new system name, 
+			the system name of the Logix, need be defined and kept track of. 
+			<p><li>Another reason for grouping multiple Conditionals is simpler 
+			operation.  Fewer
+			behind the scene listeners are needed to accomplish the same task.  Even 
+			though, following the example above, the logic for each appearance of the 
+			signal head (each Conditional) may depend upon a particular sensor (a 
+			block occupancy for example), if the Conditionals are combined into a 
+			single Logix, only _one_ listener for that sensor is required.  This is 
+			simpler in implementation than having multiple listeners.
+			</li>
+			</ol>
+		
+		<li><b>How is a Logix started?</b>
+		<p>Start of a Logix is similar to the way a light, a route, or 
+		other continuously running JMRI entity starts.  Internally a Logix has an 
+		"activate" method, that is called when the Logix is created, after it  
+		is edited, or when it is loaded from a configuration file.  This  
+		method starts listeners for items in the state variables
+		of the Logix's Conditionals.  When any of these listeners fires (indicating
+		that the watched property of a state variable has changed), the Logix  
+		is calculated, resulting in appropriate actions being taken, provided the 
+		Logix is enabled.
+		
+		<li><b>What is the initial state of a Logix and its Conditionals?</b>	
+		<p>When a Logix is created or edited, the initial state of each Conditional 
+		is true or false as shown in the Edit Logix window.  When a Logix is loaded 
+		from a configuration file, the initial state of each Conditional is UNKNOWN.
+		<p>A Logix is enabled automatically when it is created.  
+		A Logix may be disabled/enabled by 
+		unchecking/checking the button in the Enable column in the Logix table.  
+		For example, you might want to disable a Logix while you're creating
+		and debugging it, until you're certain that you have it set up properly.
+		A Logix may be enabled or disabled dynamically by another Logix (see allowed 
+		actions <a href="#action">above</a>).
+		<p>
+		When JMRI stores the layout configuration in a file, e.g. a panel file, all
+		Logix information, including the enabled/disabled state of the Logix, is 
+		stored. When a Logix is loaded from a configuration file, it's enabled or disabled status
+		is set according to what was saved in the configuration file.
+		This is done so that people can disable their Logix while debugging them,
+		yet still save and restore the configuration as needed. 
+		
+		<li><b>What happens when a JMRI program starts up or when a configuration 
+		file is loaded by a JMRI program?</b>
+		<p>This is a complex question that depends upon many things,
+		such as, how the user has set up for turnout feedback, block detection, etc. 
+		When a configuration 
+		file is read, the various entities (sensors, turnouts, signal heads, etc.) 
+		are loaded in an almost random order.  So it's not reasonable, for example,  
+		to calculate each Logix as it is loaded, since the needed state variable 
+		entities might not be present when the Logix is loaded.  And,  
+		since most entities will load in UNKNOWN state, calculating a Logix 
+		immediately after the entire  configuration file is loaded doesn't produce
+		a clean start up either.  So when a Logix is loaded, the state of each 
+		Conditional starts as UNKNOWN. Immediately after the entire configuration 
+		file is loaded, all Logix are activated, and then all the Logix are 
+		calculated. The state of Conditionals changes from UNKNOWN to true or false. 
+		But will the calculated state of the Conditional be "correct" if one or more 
+		of the state variables is evaluated from an entity in an UNKNOWN state?  For 
+		example, think of a turnout in an UNKNOWN state--Turnout Thrown and 
+		Turnout Closed will both evaluate to false.  As listeners continue to fire 
+		for state variables, eventually every entity has its correct current state 
+		and the Logix will work fine.  You can monitor this action by watching 
+		states in the Sensor Table, the Turnout Table, etc. Conditions at start up 
+		certainly are something to keep in mind when setting up a Logix.</p>
+		<p><li><b>When should Triggers Calculation be unchecked in a state variable?</b>	
+		<p>Normally Triggers Calculation should be checked in all state variables, 
+		so a change in any of its state variable will trigger calculation of a Logix. 
+		This results in the Logix quickly reacting to changes on the layout, and 
+		maintaining the status of signals, turnouts, etc. as desired. There are 
+		situations, however, where it is desirable to test the state of an entity,
+		but not use it as a calculation trigger.  The following paragraphs 
+		describe a couple of those situations, but there are others.</p>
+		<p>Occasionally a "logic loop" can result if triggering is not 
+		suppressed. For example, if the state of a turnout is tested in a state 
+		variable, and the same turnout is set in an action of the same or another 
+		Conditional of the same Logix, continuous triggering (a logic loop) could 
+		result. The easiest way out of this dilemma is to test the turnout, without
+		using it as a triggering entity. This is done by unchecking Triggers 
+		Calculation	in <b>all</b> state variables where the turnout is specified.
+		If the turnout is used in state variables of more than one Conditional of 
+		the Logix, it must be unchecked everywhere it is used to suppress using it
+		as a trigger.</p>
+		<p>Another situation arises when Delayed Set Sensor action is used with
+		an internal sensor to trigger a second Logix after the delay time has 
+		elapsed. If the second Logix is not to be triggered before the delay time 
+		elapses, all of its state variables, except for the delayed internal sensor, 
+		should be unchecked. This scenario might occur, for example, if a Conditional
+		turns on something as its first action, and sets a Delayed Set Sensor as 
+		its second action to turn off that something after a specified time provided
+		certain conditions are met.</p>
+		
+		<li><b>What is a "logic loop" and how can it be avoided?</b>
+		<p>A "logic loop" results when the program appears to slow down significantly or 
+		lock up as multiple Logixs are continuously triggered by changing references to 
+		each other.  The best way to avoid a "logic loop" is to be aware of situations 
+		that can lead to a loop, and plan your logic to avoid such situations. </p>
+		<p>A "logic loop" can result within a single Logix when a state variable (sensor, 
+		turnout, etc.) that triggers the Logix is also changed by that same Logix.  The 
+		Logix editor will detect some situations that could result in a loop, and will 
+		issue a warning when you close the Logix. <b>Heed these warnings!</b> A warning 
+		doesn't mean that a loop definitely will result if you continue. The warning 
+		message is a "wake up call" that you should study carefully what you're doing 
+		to make sure a loop won't result. </p> 
+		<p>A more complicated situation involving two or more Logixs can also result in 
+		a "logic loop".  For example, if Logix 1 is triggered by sensor A, and has an 
+		action that changes turnout B, and Logix 2 is triggered by turnout B and changes 
+		sensor A, the potential for a loop exists as these Logixs trigger each other.  
+		You can easily extend this idea to triggering chains (loops) involving three or 
+		more Logixs, and even to interactions between Logixs and Routes. There is no 
+		test in the program to warn about loops involving multiple Logixs. (To develop 
+		such a test would be very difficult.)</p>
+		
+		<li><b>What should I do if I think I have a "logic loop"?</b>
+		<p>When they do occur, "logic loops" can be a bit scary to trouble shoot. Your 
+		computer may appear to be locked up, or slowed to a crawl as the loop uses up 
+		most of the available computer time. Fortunately JMRI provides tools to help in 
+		design and debugging. Unchecking "Triggers Calculation" for a state variable 
+		(discussed above), can help you design around loops when you have identified the 
+		Logix causing the looping problem. To get around the lock up or slow down 
+		problem, start with all your Logixs disabled, (see below) then enable them one 
+		by one until you discover the loop.</p>
+		<p>If the panel file containing Logixs loads automatically when
+		the program starts up, press and release the shift key a few times rapidly as
+		soon as you see the small JMRI splash screen (the first thing you see during 
+		start up). Your panel file will be loaded with all Logixs disabled.</p>
+		<p>If you load your panel file manually using the Panels menu, before loading
+		your file, go to the <b>Debug</b> menu and select <b>Load Logixs Disabled</b>. 
+		After responding OK to the message, load your panel file as you normally  would. 
+		Your panel file will be loaded with all Logixs disabled.</p>
+		<p>After loading your panel file, open the Logix Table and verify that all
+		Logixs are disabled. If you know which Logix is causing the trouble, you
+		can then fix it or delete it, re-enable the other Logixs, and save your panel
+		file. If you don't know which Logix is causing the problem, you can enable 
+		your Logixs, one by one, until the loop occurs. When the loop starts, 
+		you know that the last Logix you enabled is at least partly responsible for
+		the problem. At this point you should restart the program with all Logixs 
+		disabled, and fix or delete the Logix you identified.</p>
+		<p><b>CAUTION:</b> <b>It's wise to save your panel file frequently when entering 
+		Logixs.</b> If a logic loop occurs, it may be difficult, if not 
+		impossible, to save your panel file before shutting down the program. 
+		Remember that a Logix is activated as soon as you click <b>Done</b> in
+		the Edit Logix window. Also, remember that hitting an <b>Edit</b> button
+		in the Logix Table deactivates the selected Logix before opening it for editing,
+		offering a possible way to break into a logic loop without restarting the
+		program.</p>
+		</ul>
 
-<p><li><b>What should I do if I think I have a "logic loop"?</b>
-
-<p>When they do occur, "logic loops" can be a bit scary to trouble shoot. Your 
-computer may appear to be locked up, or slowed to a crawl as the loop uses up 
-most of the available computer time. Fortunately JMRI provides tools to help in 
-design and debugging. Unchecking "Triggers Calculation" for a state variable 
-(discussed above), can help you design around loops when you have identified the 
-Logix causing the looping problem. To get around the lock up or slow down 
-problem, start with all your Logixs disabled, (see below) then enable them one 
-by one until you discover the loop.</p>
-<p>If the panel file containing Logixs loads automatically when
-the program starts up, press and release the shift key a few times rapidly as
-soon as you see the small JMRI splash screen (the first thing you see during 
-start up). Your panel file will be loaded with all Logixs disabled.</p>
-<p>If you load your panel file manually using the Panels menu, before loading
-your file, go to the <b>Debug</b> menu and select <b>Load Logixs Disabled</b>. 
-After responding OK to the message, load your panel file as you normally  would. 
-Your panel file will be loaded with all Logixs disabled.</p>
-<p>After loading your panel file, open the Logix Table and verify that all
-Logixs are disabled. If you know which Logix is causing the trouble, you
-can then fix it or delete it, re-enable the other Logixs, and save your panel
-file. If you don't know which Logix is causing the problem, you can enable 
-your Logixs, one by one, until the loop occurs. When the loop starts, 
-you know that the last Logix you enabled is at least partly responsible for
-the problem. At this point you should restart the program with all Logixs 
-disabled, and fix or delete the Logix you identified.</p>
-<p><b>CAUTION:</b> <b>It's wise to save your panel file frequently when entering 
-Logixs.</b> If a logic loop occurs, it may be difficult, if not 
-impossible, to save your panel file before shutting down the program. 
-Remember that a Logix is activated as soon as you click <b>Done</b> in
-the Edit Logix window. Also, remember that hitting an <b>Edit</b> button
-in the Logix Table deactivates the selected Logix before opening it for editing,
-offering a possible way to break into a logic loop without restarting the
-program.</p>
     </dd>
 
 <!--#include virtual="/Footer" -->
+ </div><!-- closes #mainContent-->
+</div> <!-- closes #mBody-->
 </body>
 </html>

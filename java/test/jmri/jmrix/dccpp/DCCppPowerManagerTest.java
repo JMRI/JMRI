@@ -23,7 +23,7 @@ public class DCCppPowerManagerTest extends TestCase {
     public void testCtor() {
         // infrastructure objects
         DCCppInterfaceScaffold tc = new DCCppInterfaceScaffold(new DCCppCommandStation());
-	tc.getCommandStation().setCommandStationInfo(new DCCppReply("iDCC++BASE STATION FOR ARDUINO MEGA / ARDUINO MOTOR SHIELD: BUILD 24 Nov 2015 23:59:59"));
+	tc.getCommandStation().setCommandStationInfo(DCCppReply.parseDCCppReply("iDCC++BASE STATION FOR ARDUINO MEGA / ARDUINO MOTOR SHIELD: BUILD 24 Nov 2015 23:59:59"));
 
         DCCppPowerManager c = new DCCppPowerManager(new DCCppSystemConnectionMemo(tc));
 

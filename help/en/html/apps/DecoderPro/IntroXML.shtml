@@ -2,7 +2,6 @@
 <html lang="en">
 <head>
 <!-- Copyright Bob Jacobsen 2008 -->
-<!-- $Id$ -->
 <title>JMRI: Intro to XML</title>
 
 <!-- Style -->
@@ -23,7 +22,9 @@
 <!-- Page Body -->
 
 <div class="list">
-<H1>DecoderPro User Guide - Intro to XML</H1>
+<h1>JMRI: DecoderPro User Guide</h1>
+<h2>Intro to XML</h2>
+
 <p>All of the JMRI configuration files use the XML format.  This
 section is a  brief explanation of that format to make it a little
 easier to understand.</p>
@@ -35,23 +36,23 @@ easier to understand.</p>
 is enclosed in angle brackets, for example &lt;decoder&gt;.  An element
 can either begin and end with a tag:
 
-<p class=example>
-&lt;decoder&gt;<BR>
-&nbsp;&nbsp;&nbsp;&nbsp;other stuff here<BR>
-&lt;/decoder&gt;<BR>
+<p class="example">
+&lt;decoder&gt;<br>
+&nbsp;&nbsp;&nbsp;&nbsp;other stuff here<br>
+&lt;/decoder&gt;<br>
 </p>
 or have both the start and end tags combined:
-<p class=example>
+<p class="example">
 &lt;decoder/&gt;
 </p>
 
 <p>Note the back-slash characters. They mark the end of the element.
 The starting tag of an element can also carry attributes:</p>
 
-<p class=example>
-&lt;decoder name="foo"&gt;<BR>
-&nbsp;&nbsp;&nbsp;&nbsp;other stuff here<BR>
-&lt;/decoder&gt;<BR>
+<p class="example">
+&lt;decoder name="foo"&gt;<br>
+&nbsp;&nbsp;&nbsp;&nbsp;other stuff here<br>
+&lt;/decoder&gt;<br>
 </p>
 
 <p>This example shows the attribute "name" being set to a value of
@@ -67,28 +68,29 @@ to read the original file, we often use the indenting to show what
 elements are inside each other.  Each time we start a new element,
 we indent its contents by another four spaces.  An example would
 be:
-<p class=example>
-&lt;decoder&gt;<BR>
-&nbsp;&nbsp;&nbsp;&nbsp;&lt;variable&gt;<BR>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;stuff in the 1st variable element<BR>
-&nbsp;&nbsp;&nbsp;&nbsp;&lt;/variable&gt;<BR>
-&nbsp;&nbsp;&nbsp;&nbsp;&lt;variable&gt;<BR>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;stuff in the 2nd variable element<BR>
-&nbsp;&nbsp;&nbsp;&nbsp;&lt;/variable&gt;<BR>
+<p class="example">
+&lt;decoder&gt;<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&lt;variable&gt;<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;stuff in the 1st variable element<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&lt;/variable&gt;<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&lt;variable&gt;<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;stuff in the 2nd variable element<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&lt;/variable&gt;<br>
 &lt;/decoder&gt;
 </p>
-
 
 <p>You can break the contents of an element across a line, if that
 makes it easier to read:</p>
 <p class=example>
-&lt;tagWithLotsOfAttributes<BR>
-&nbsp;&nbsp;&nbsp;&nbsp;firstAttribute="foo"<BR>
-&nbsp;&nbsp;&nbsp;&nbsp;secondAttribute="bar"<BR>
-&nbsp;&nbsp;&nbsp;&nbsp;thirdAttribute="biff"<BR>
+&lt;tagWithLotsOfAttributes<br>
+&nbsp;&nbsp;&nbsp;&nbsp;firstAttribute="foo"<br>
+&nbsp;&nbsp;&nbsp;&nbsp;secondAttribute="bar"<br>
+&nbsp;&nbsp;&nbsp;&nbsp;thirdAttribute="biff"<br>
 &nbsp;&nbsp;&nbsp;&nbsp;fourthAttribute="bing" /&gt;
 </p>
     
 <!--#include virtual="/Footer" -->
+</div> <!-- close #mainContent -->
+</div> <!-- close #mBody -->    
 </body>
 </html>

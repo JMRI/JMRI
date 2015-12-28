@@ -50,7 +50,7 @@ public class BundleTest extends TestCase {
 
     // Main entry point
     static public void main(String[] args) {
-        String[] testCaseName = {BundleTest.class.getName()};
+        String[] testCaseName = {"-noloading", BundleTest.class.getName()};
         junit.swingui.TestRunner.main(testCaseName);
     }
 
