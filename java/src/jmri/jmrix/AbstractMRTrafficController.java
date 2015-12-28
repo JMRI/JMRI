@@ -862,7 +862,7 @@ abstract public class AbstractMRTrafficController {
         // return a notification via the Swing event queue to ensure proper thread
         Runnable r = new RcvNotifier(msg, mLastSender, this);
         try {
-            SwingUtilities.invokeAndWait(r);
+            SwingUtilities.invokeLater(r);
         } catch (Exception e) {
             log.error("Unexpected exception in invokeAndWait: {}" + e.toString(), e);
         }
