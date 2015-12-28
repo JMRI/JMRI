@@ -83,7 +83,9 @@
 <!ATTLIST track ignoreUsedPercentage	CDATA #IMPLIED>
 <!ATTLIST track trackDestinationOption	CDATA #IMPLIED>
 <!ATTLIST track blockingOrder	CDATA #IMPLIED>
-<!ATTLIST track holdCustomLoads	CDATA #IMPLIED>
+<!ATTLIST track holdCustomLoads	(true | false) "false">
+<!ATTLIST track onlyCarWithFD	(true | false) "false">
+
 
 <!ATTLIST destination id			CDATA #REQUIRED>          
 <!ATTLIST destination name			CDATA #IMPLIED>

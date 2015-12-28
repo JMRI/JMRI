@@ -1,8 +1,6 @@
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
 <html lang="en">
 <head>
-<!-- Copyright Bob Jacobsen 2008 -->
-<!-- $Id$ -->
 <title>JMRI: The Python/Jython language</title>
 
 <!-- Style -->
@@ -21,50 +19,50 @@
 <div id="mainContent">
 
 <!-- Page Body -->
-<H2>
+<h1>
 JMRI: The Python/Jython language
-</H2>
+</h1>
 
-<A HREF="http://www.python.org">Python<a/> is a widely used scripting language that's
-available on many types of computers.  A Java-based varient, called
-<A HREF="http://www.jython.org">Jython</a>,
+<a href="http://www.python.org">Python<a/> is a widely used scripting language that's
+available on many types of computers.  A Java-based variant, called
+<a href="http://www.jython.org">Jython</a>,
 has been integrated with JMRI to make it easy to control a model railroad
 from the command line of a computer.  For our purposes, the two 
 languages are completely the same.
 
-<P>
+<p>
 If like me you prefer to read off paper, 
 there are lots of books available on Python.
 Perhaps one of the best for beginners is
-<A HREF="http://www.oreilly.com/catalog/lpython2/">"Learning Python"</a>
+<a href="http://www.oreilly.com/catalog/lpython2/">"Learning Python"</a>
 published by O'Reilly.  It contains more than you really need to know, though.
 
 
 <p>The 
-<A HREF="http://www.jython.org">jython.org site</a>
+<a href="http://www.jython.org">jython.org site</a>
 has some introductory information, though their
-<A HREF="http://www.python.org/doc/tut/tut.html">tutorial</A>
+<a href="http://www.python.org/doc/tut/tut.html">tutorial</A>
 spends too much time on the engineering details
 at the beginning.  You might want to skip to the 
 <a href="http://www.python.org/doc/tut/node5.html">part about the language itself</a>.
 
-<P>
+<p>
 Non-programmers might want to start with some of the  
-<A HREF="http://www.python.org/moin/BeginnersGuide">resources for them</a>
+<a href="http://www.python.org/moin/BeginnersGuide">resources for them</a>
 listed on the python website.
 
 <p>If you are interested in the underlying 
-technicalities of the langugage, 
+technicalities of the language, 
 IBM Developerworks has two good articles
-<A HREF="http://www-106.ibm.com/developerworks/java/library/j-jython.html">here</a>
+<a href="http://www-106.ibm.com/developerworks/java/library/j-jython.html">here</a>
 and
-<A HREF="http://www-106.ibm.com/developerworks/java/library/j-alj07064/">here</a>.
+<a href="http://www-106.ibm.com/developerworks/java/library/j-alj07064/">here</a>.
 They also have a nice tutorial
-<A HREF="http://www-106.ibm.com/developerworks/java/edu/j-dw-java-jython1-i.html?S_TACT=104AHW02">here</a>, although they require you
+<a href="http://www-106.ibm.com/developerworks/java/edu/j-dw-java-jython1-i.html?S_TACT=104AHW02">here</a>, although they require you
 to register with your email address to access it.
 </p>
 
-<P>
+<p>
 Looking at the examples in the "jython" directory in the JMRI distribution
 might also help.
 
@@ -78,9 +76,9 @@ end of a block or function, that's done with indentation in Python.
 Of course, in a C-like language people usually indent blocks anyway, 
 but it takes a little getting used to that you <em>have</em> to do it
 in Python.
-<P>
-For example, this is a sytax error:
-<PRE>
+<p>
+For example, this is a syntax error:
+<pre>
    a = 15
       print a
    b = 21
@@ -99,10 +97,12 @@ pretty easy to read, without having to worry about where the { and
         else :
                 done = 0
         print done
- </PRE>
+ </pre>
 If you do get a message about "Syntax error", look at the indicated line
 number to see if your indentation isn't lined up.
 
 <!--#include virtual="/Footer" -->
+    </div><!-- closes #mainContent-->
+  </div> <!-- closes #mBody-->
 </body>
 </html>

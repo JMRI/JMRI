@@ -2,6 +2,7 @@
 package jmri.jmrit.symbolicprog.tabbedframe;
 
 import java.awt.Color;
+import java.awt.Component;
 import java.awt.Dimension;
 import java.awt.Font;
 import java.awt.GridBagConstraints;
@@ -136,9 +137,14 @@ public class PaneProgPane extends javax.swing.JPanel
     public PaneProgPane() {
     }
 
+    public PaneProgPane(PaneContainer parent, String name, Element pane, CvTableModel cvModel, IndexedCvTableModel icvModel, VariableTableModel varModel, Element modelElem, RosterEntry pRosterEntry) {
+        this(parent, name, pane, cvModel, icvModel, varModel, modelElem, pRosterEntry, false);
+    }
+
     /**
      * Construct the Pane from the XML definition element.
      *
+     * @param parent       The parent pane
      * @param name         Name to appear on tab of pane
      * @param pane         The JDOM Element for the pane definition
      * @param cvModel      Already existing TableModel containing the CV
@@ -150,8 +156,9 @@ public class PaneProgPane extends javax.swing.JPanel
      * @param modelElem    "model" element from the Decoder Index, used to check
      *                     what decoder options are present.
      * @param pRosterEntry The current roster entry, used to get sound labels.
+     * @param isProgPane   True if the pane is a default programmer pane
      */
-    public PaneProgPane(PaneContainer parent, String name, Element pane, CvTableModel cvModel, IndexedCvTableModel icvModel, VariableTableModel varModel, Element modelElem, RosterEntry pRosterEntry) {
+    public PaneProgPane(PaneContainer parent, String name, Element pane, CvTableModel cvModel, IndexedCvTableModel icvModel, VariableTableModel varModel, Element modelElem, RosterEntry pRosterEntry, boolean isProgPane) {
 
         container = parent;
         mName = name;
@@ -208,12 +215,36 @@ public class PaneProgPane extends javax.swing.JPanel
             p.add(newGroup(((groupList.get(i))), showItem, modelElem));
         }
 
+        // explain why pane is empty
+        if (cvList.isEmpty() && varList.isEmpty() && indexedCvList.isEmpty() && isProgPane) { 
+            JPanel pe = new JPanel();
+            pe.setLayout(new BoxLayout(pe, BoxLayout.Y_AXIS));
+            int line = 1;
+            while (line >= 0) {
+                try {
+                    String msg = SymbolicProgBundle.getMessage("TextTabEmptyExplain" + line);
+                    if (msg.isEmpty()) {
+                        msg = " ";
+                    }
+                    JLabel l = new JLabel(msg);
+                    l.setAlignmentX(Component.CENTER_ALIGNMENT);
+                    pe.add(l);
+                    line++;
+                } catch (Exception e) {
+                    line = -1;
+                }
+            }
+            add(pe);
+            panelList.add(pe);
+            return;
+        }
+
         // add glue to the right to allow resize - but this isn't working as expected? Alignment?
         add(Box.createHorizontalGlue());
 
-        add(new JScrollPane(p));
+            add(new JScrollPane(p));
 
-        // add buttons in a new panel
+            // add buttons in a new panel
         bottom = new JPanel();
         panelList.add(p);
         bottom.setLayout(new BoxLayout(bottom, BoxLayout.X_AXIS));

@@ -1,8 +1,6 @@
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
 <html lang="en">
 <head>
-<!-- Copyright Bob Jacobsen 2008 -->
-<!-- $Id$ -->
 <title>JMRI: DecoderPro User Guide - Debugging</title>
 
 <!-- Style -->
@@ -20,68 +18,69 @@
 <!--#include virtual="Sidebar" -->
 <div id="mainContent">
 
-<H1>DecoderPro User Guide - Debugging</H1>
+<h1>JMRI: DecoderPro User Guide</h1>
+<h2>Debugging</h2>
 
-<DL>
-<dt class=left>While the program is running</dt>
-<dd class=first>
-<p>While the program is running,
-debugging information is printed to "standard output", which is in different
-places depending on what operating system you're using and how you started the
-program.  On a Macintosh classic, it appears in a window that's created with the
-first error message.  With Mac OS X, it may appear in a new window, or you may
-have to launch the "Console" application to see it.  On Windows, you may have
-to run one the "Debug" batch files to see the error messages; look for them in the
-application's directory.</p>
+<dl>
+	<dt class="left">While the program is running</dt>
+	<dd class="first">
+	<p>While the program is running,
+	debugging information is printed to "standard output", which is in different
+	places depending on what operating system you're using and how you started the
+	program.  On a Macintosh classic, it appears in a window that's created with the
+	first error message.  With Mac OS X, it may appear in a new window, or you may
+	have to launch the "Console" application to see it.  On Windows, you may have
+	to run one the "Debug" batch files to see the error messages; look for them in the
+	application's directory.</p>
+	
+	<p> Error logging is controlled by the "default.lcf" file.  It has lots of comments
+	on what the various terms mean.  If you'd like messages to be logged to a file,
+	change the line</p>
+	
+	<p class="example">
+	log4j.rootCategory= WARN, A1
+	</p>
+	<p>to include the additional logging destination "R":
+	<p class="example">
+	log4j.rootCategory= WARN, A1,R
+	</p>
+	<p>R is defined later in default.lcf as logging to the "example.log" file.
+	You can also get a lot of additional information on what the program is
+	doing by setting the log level to either INFO or DEBUG, e.g.</p>
+	
+	<p class="example">
+	log4j.rootCategory= INFO, A1
+	</p>
+	
+	<p>Note that the DEBUG level will output a lot of information, and will slow
+	down operation significantly.  Its also possible to request more information
+	on just parts of the program, but in order for that to be useful you
+	have to have spent some time learning about the internals.</p>
+	</dd>
+	
+	<dt class="left">Debugging problems with XML files</dt>
+	<dd>
+	<p>When an XML file can't be parsed, you'll get some hard-to-understand
+	error messages.  The most important part of this is the line number.
+	Use that to start looking for the problem.
+	
+	<p> You might be able to get better debugging information by trying to
+	open the file with Internet Explorer.  The debugging information it
+	provides is generally more detailed than that provided by the XML
+	routines in the JDOM libraries used by JMRI and Decoder Pro.</p>
+	
+	<p>Note that Explorer needs to see both the .xml file, plus the
+	definition information in the .dtd file.  If you get a message like
+	"error in system resource", you need to put a copy of the associated
+	.dtd file (e.g. decoder-config.dtd) in the directory with your new
+	file.  DTD's can be found in the dtd subdirectory of the xml directory.
+	</p>
+	
+	</dd>
+</dl>
 
-<p> Error logging is controlled by the "default.lcf" file.  It has lots of comments
-on what the various terms mean.  If you'd like messages to be logged to a file,
-change the line</p>
-
-<p class=example>
-log4j.rootCategory= WARN, A1
-</p>
-<p>to include the additional logging destination "R":
-<p class=example>
-log4j.rootCategory= WARN, A1,R
-</p>
-<p>R is defined later in default.lcf as logging to the "example.log" file.
-You can also get a lot of additional information on what the program is
-doing by setting the log level to either INFO or DEBUG, e.g.</p>
-
-<p class=example>
-log4j.rootCategory= INFO, A1
-</p>
-
-<p>Note that the DEBUG level will output a lot of information, and will slow
-down operation significantly.  Its also possible to request more information
-on just parts of the program, but in order for that to be useful you
-have to have spent some time learning about the internals.</p>
-</dd>
-
-<dt class=left>Debugging problems with XML files</dt>
-<dd>
-<p>When an XML file can't be parsed, you'll get some hard-to-understand
-error messages.  The most important part of this is the line number.
-Use that to start looking for the problem.
-
-<p> You might be able to get better debugging information by trying to
-open the file with Internet Explorer.  The debugging information it
-provides is generally more detailed than that provided by the XML
-routines in the JDOM libraries used by JMRI and Decoder Pro.</p>
-
-<p>Note that Explorer needs to see both the .xml file, plus the
-definition information in the .dtd file.  If you get a message like
-"error in system resource", you need to put a copy of the associated
-.dtd file (e.g. decoder-config.dtd) in the directory with your new
-file.  DTD's can be found in the dtd subdirectory of the xml directory.
-</p>
-
-</dd>
-</DL>
-
-    
 <!--#include virtual="/Footer" -->
-</div>
+ </div><!-- closes #mainContent-->
+</div> <!-- closes #mBody-->
 </body>
 </html>
