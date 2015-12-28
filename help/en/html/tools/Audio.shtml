@@ -5,10 +5,8 @@
 
 <!-- Style -->
 <meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
-<link rel="stylesheet" type="text/css" href="/css/default.css"
-	media="screen">
-<link rel="stylesheet" type="text/css" href="/css/print.css"
-	media="print">
+<link rel="stylesheet" type="text/css" href="/css/default.css" media="screen">
+<link rel="stylesheet" type="text/css" href="/css/print.css" media="print">
 <link rel="icon" href="/images/jmri.ico" type="image/png">
 <link rel="home" title="Home" href="/">
 <!-- /Style -->
@@ -19,22 +17,23 @@
 <!--#include virtual="Sidebar" -->
 <div id="mainContent">
 
-<h2>JMRI: Audio</h2>
+<h1>JMRI: Audio Documentation</h1>
 
-JMRI audio objects hold information about sounds that can be played-back by the
+JMRI Audio objects hold information about sounds that can be played-back by the
 computer.
 
-<h3>The Audio Table</h3>
+<h2>The Audio Table</h2>
 The 
 <a href="../../package/jmri/jmrit/beantable/AudioTable.shtml">Audio Table</a>
-lets you see what audio objects have been defined, and what information
-they currently contain. From the table, you can 
-<a href="../../package/jmri/jmrit/beantable/AudioAddEdit.shtml">create a new audio object</a>.
+lets you see what Audio objects have been defined, and what information
+they currently contain. 
 <a href="../../package/jmri/jmrit/beantable/AudioTable.jpg">
 <img src="../../package/jmri/jmrit/beantable/AudioTable.jpg" height="178" width="420">
 </a>
+<p>From the Audio Table, you can 
+<a href="../../package/jmri/jmrit/beantable/AudioAddEdit.shtml">create a new Audio object</a>.
 
-<h3>Audio Objects</h3>
+<h2>Audio Objects</h2>
 The JMRI audio framework consists of three distinct types of object:
 <ul>
 <li>Audio Listeners

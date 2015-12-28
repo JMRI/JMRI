@@ -25,9 +25,9 @@
 <!--#include virtual="Sidebar" -->
 
     <div id="mainContent">
-<h2>JMRI: Sensors Documentation</h2>
+<h1>JMRI: Sensors Documentation</h1>
 
-<h3>What are Sensors?</h3>
+<h2>What are Sensors?</h2>
 
 <p>
 A Sensor is JMRI's way of representing an input from the layout.
@@ -35,6 +35,8 @@ A Sensor is JMRI's way of representing an input from the layout.
 JMRI uses a Sensor to represent the status of a block occupancy detector,
 or a pushbutton on the fascia, or just about anything else you can attach
 to an input on your DCC or C/MRI system.
+
+<h2>How to setup Sensors</h2>
 
 <h3>Controlling a Sensor</h3>
 
@@ -130,5 +132,4 @@ correct the error and click <b>OK</b> again.</p>
   </div> <!-- closes #container -->
 </body>
 </html>
-
 

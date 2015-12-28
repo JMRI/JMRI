@@ -1,103 +1,86 @@
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
-<html xmlns="http://www.w3.org/1999/xhtml"><head>
-<meta content="text/html; charset=ISO-8859-1" http-equiv="content-type" >
-<title>ToolsMenuThrottleEntry</title>
-<meta name="keywords" content="JMRI decoderpro dcc nmra throttle throttlepro" >
-<meta name="Description" content="Throttle documentation for JMRI project" >
-<meta name="Keywords" content="JMRI" >
-<meta name="Author" content="Lionel Jeanson" >
-<meta name="Language" content="EN" >
-<meta name="Robots" content="Index, Follow" >
-<meta name="Revisit-After" content="7 Days" >
-<!-- The combination of "Define" and {Header,Style, Logo and Footer} comments -->
-<!-- are an arbitrary design pattern used by the update.pl script to -->
-<!-- easily replace the common header/footer code for all the web pages -->
-<!-- delete the following 2 Defines if you want to use the default JMRI logo -->
-<!-- or change them to reflect your alternative logo --><!-- Style -->
+<html lang="en">
+<head>
+	<title>Tools Throttle Menu</title>
+	<meta name="keywords" content="JMRI decoderpro dcc nmra throttle throttlepro" >
+	<meta name="Description" content="Throttle documentation for JMRI project" >
+	<meta name="Author" content="Lionel Jeanson" >
+	<meta name="Language" content="EN" >
+	
+	<!-- Style -->
+	<meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1" >
+	<link rel="stylesheet" type="text/css" href="/css/default.css" media="screen" >
+	<link rel="stylesheet" type="text/css" href="/css/print.css" media="print" >
+	<link rel="icon" href="/images/jmri.ico" type="image/png" >
+	<link rel="home" title="Home" href="/" >
+	<!-- /Style -->
+	</head>
 
-<meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1" >
-<link rel="stylesheet" type="text/css" href="/css/default.css" media="screen" >
-<link rel="stylesheet" type="text/css" href="/css/print.css" media="print" >
-<link rel="icon" href="/images/jmri.ico" type="image/png" >
-<link rel="home" title="Home" href="/" >
-<!-- /Style -->
-</head>
 <body>
 <!--#include virtual="/Header" -->
 
 <!--#include virtual="Sidebar" -->
 <div id="mainContent">
-<h1>Tools menu throttle entry</h1>
-<img src="images/Toolsmenuentry.png" alt="" ><br >
-<br >
-<h2>New throttle:</h2>
-Create a <a href="BasicThrottleWindow.shtml">new throttle window</a> with one empty and available throttle inside.
-<h2>Save throttle layout:</h2>
-Save curent throttles windows layout, inner throttles as well, and throttle list window properties.<br >
-<h2>Load throttle layout:</h2>
+
+<h1>Tools &gt; Throttles menu</h1>
+<img src="images/Toolsmenuentry.png" alt="" >
+
+<h2>New Throttle...</h2>
+Create a <a href="BasicThrottleWindow.shtml">new Throttle window</a> with one empty and available Throttle inside.
+
+<h2>Save Throttle Layout...</h2>
+Save current Throttles windows layout, inner Throttles as well, and Throttle List window properties.<br >
+
+<h2>Load Throttle Layout...</h2>
 Load a throttles windows layout, as defined above.<br >
-Will also load throttles layout from previous versions of JMRI. (&lt;2.7.9)
-<h2>Save as default throttle layout:</h2>
-Save curent throttle layout as &lt;JMRI Preferences folder&gt;/throttleJMRI_ThrottlePreference.xml
-<h2>Load default throttle layout:</h2>
+Will also load Throttle Layouts from older versions of JMRI (&lt;2.7.9).
+
+<hr>
+<h2>Save As Default Throttle Layout</h2>
+Save current throttle layout as &lt;JMRI Preferences folder&gt;/throttleJMRI_ThrottlePreference.xml
+
+<h2>Load Default Throttle Layout</h2>
 Load &lt;JMRI Preferences folder&gt;/throttleJMRI_ThrottlePreference.xml if it exists.<br >
 
-		
 <h3>Merging Throttle Windows</h3>
-
-		
-			
-<p>Throttle layout files can consist of a single throttle window (to
-control a single locomotive or consist address), or it can contain
-multiple throttle windows. In either case, when opening a throttle
-layout file, the program will check to see if any existing active
-throttle windows are already open. If none are found, then the file is
+	
+<p>Throttle layout files can consist of a single Throttle pane (to
+control a single Locomotive or consist address), or may contain
+multiple Throttle panes. In either case, when opening a Throttle
+Layout file, JMRI will check to see if any existing active
+Throttle panes are already open. If none are found, then the file is
 opened just like a simple layout opening (explained above).</p>
-
-
-			
+<p>However, when one or more Throttle panes are already open on
+			the screen, the program will open up the following dialog box:</p>
 <p style="text-align: center; font-size: xx-small;">
-			<img src="images/jmri035.jpg" title="Merge Dialog Box" border="0" height="125" width="354" ><br >
+			<img src="images/jmri035.jpg" title="Merge Dialog Box" border="0" height="125" width="354" ><br>
 			Figure 4-5: Merge Dialog Box
-			</p>
-
-
+			</p>	
+with 3 buttons:
+		<ul>
+		<li><strong>Merge</strong> &#8212; leaves the currently active open Throttle
+		panes in place and in addition opens the Throttle(s) contained in the chosen layout file.</li>
+		<li><strong>Replace</strong> &#8212; closes the currently active open
+		Throttle pane(s) and opens up the Throttle pane(s) defined in the
+		chosen layout file.</li>
+		<li><strong>Cancel</strong> &#8212; cancels the "Open" request and closes
+		this dialog.</li>
+		</ul>
 			
-<p>However, when one or more throttle windows are discovered already open on
-			the screen, the program will open up a dialog box as shown in figure 4-5
-			on the right.</p>
-
-								
-			
-<ul>
-<li><strong>Merge</strong> &#8212; leaves the currently active open throttle
-				windows in place and opens the throttle(s) contained in the layout file
-				being opened.<br >
-
-				</li><li><strong>Replace</strong> &#8212; closes down the currently active open
-				throttle window(s) and opens up the throttle window(s) established in the
-				saved layout file.<br >
-</li><li><strong>Cancel</strong> &#8212; cancels the "open" request and closes
-				down this dialog window.
-			</li>
-</ul>
-
-
-			
-
-			
-<p style="font-style: italic;" class="important">
+<p class="important">
 			Note: Do not confuse the action that is occurring here with any attempts to overwrite your saved
 			throttle layout files.  The above actions have no effect on the actual saved throttle layout
 			files themselves.  The only "merging" and "replacing" that occurs is simply
 			on your screen.
 			</p>
 
-
-			<br >
-
-<h2>Throttles preferences:</h2>
-Open the <a href="ThrottlesPreferencesPane.shtml">throttles preferences pane.</a><br >
+<hr>
+<h2>Throttles Preferences...</h2>
+Open the <a href="ThrottlesPreferencesPane.shtml">Throttles Preferences pane.</a>
 
 <!--#include virtual="/Footer" -->
-</div></body></html>
+
+      </div><!-- closes #mainContent-->
+    </div> <!-- closes #mBody-->
+</body>
+</html>

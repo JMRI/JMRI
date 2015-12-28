@@ -90,7 +90,7 @@
 <ul>
   
 <li>
-<a href="html/hardware/acela/index.shtml">Acela </a>
+<a href="html/hardware/acela/index.shtml">Acela (CTI) </a>
 <ul></ul>
 </li>
 
@@ -102,7 +102,7 @@
 
   
 <li>
-<a href="html/hardware/can/cbus/index.shtml">CBUS </a>
+<a href="html/hardware/can/cbus/index.shtml">CBUS (MERG) </a>
 <ul></ul>
 </li>
 
@@ -156,6 +156,24 @@
 
   
 <li>
+<a href="html/hardware/marklin/index.shtml">Marklin </a>
+<ul></ul>
+</li>
+
+  
+<li>
+<a href="html/hardware/modbus/index.shtml">Modbus </a>
+<ul></ul>
+</li>
+
+  
+<li>
+<a href="html/hardware/mrc/index.shtml">MRC </a>
+<ul></ul>
+</li>
+
+  
+<li>
 <a href="html/hardware/nce/NCE.shtml">NCE </a>
 <ul></ul>
 </li>
@@ -192,6 +210,12 @@
 
   
 <li>
+<a href="html/hardware/rfid/index.shtml">RFID Readers </a>
+<ul></ul>
+</li>
+
+  
+<li>
 <a href="html/hardware/rps/index.shtml">RPS </a>
 <ul></ul>
 </li>
@@ -216,7 +240,25 @@
 
   
 <li>
+<a href="html/hardware/tams/index.shtml">TAMs </a>
+<ul></ul>
+</li>
+
+  
+<li>
 <a href="html/hardware/tmcc/index.shtml">TMCC (Lionel) </a>
+<ul></ul>
+</li>
+
+  
+<li>
+<a href="html/hardware/xap/index.shtml">xAP </a>
+<ul></ul>
+</li>
+
+  
+<li>
+<a href="html/hardware/XBee/index.shtml">XBee </a>
 <ul></ul>
 </li>
 
@@ -775,6 +817,25 @@
 
   
 <li>
+<a href="html/tools/Blocks.shtml">Blocks </a>
+<ul>
+   
+<li>
+<a href="package/jmri/jmrit/beantable/BlockTable.shtml">Blocks Table </a>
+<ul></ul>
+</li>
+
+   
+<li>
+<a href="html/tools/Blocks.shtml#addBlock">Add/Edit Blocks </a>
+<ul></ul>
+</li>
+
+  
+</ul>
+</li>
+  
+<li>
 <a href="html/tools/consisttool/ConsistTool.shtml">Consisting Tool </a>
 <ul></ul>
 </li>
@@ -881,7 +942,7 @@
 </li>
   
 <li>
-<a href="html/tools/Memories.shtml">Memories </a>
+<a href="html/tools/Memories.shtml">Memory Variables </a>
 <ul>
    
 <li>
@@ -1561,6 +1622,12 @@
 <ul></ul>
 </li>
 
+   
+<li>
+<a href="html/doc/Technical/gitdeveloper.shtml">Git for Developers </a>
+<ul></ul>
+</li>
+
   
 </ul>
 </li>
@@ -1581,6 +1648,18 @@
    
 <li>
 <a href="html/doc/Technical/Eclipse.shtml">Building with Eclipse </a>
+<ul></ul>
+</li>
+
+   
+<li>
+<a href="html/doc/Technical/JBuilder.shtml">Building with JBuilder </a>
+<ul></ul>
+</li>
+
+   
+<li>
+<a href="html/doc/Technical/XCode.shtml">Building with XCode </a>
 <ul></ul>
 </li>
 

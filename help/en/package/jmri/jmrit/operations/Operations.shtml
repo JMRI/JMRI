@@ -1111,6 +1111,15 @@
 
    <A NAME="Options"></A>
    <H3>Options</H3>
+   <h4>Save Train Manifests</h4>
+
+   When the option "Save Train Manifests" is selected the program will save the current train
+   manifest before creating a new one. The program will store the old manifests in a directory
+   called "manifestBackups" located in the "operations" directory. You can review your old manifest
+   using the
+   <A HREF="#PrintSavedTrainManifests">Print Saved Train Manifests</A> under tools in the 
+   <A HREF="#Trains">Trains</A> window.
+
    <H4>Enable Value Fields and Identification Tag Fields</H4>
 
    <P>There are two other options, "Enable Value Fields" and "Identification Fields". You can
@@ -3758,7 +3767,13 @@
     "Update Switch Lists" when you deselect the "Real Time" checkbox in the <A HREF="#SwitchList">Switch
      Lists by Location</A> window.
    </P>
+    
+   <A NAME="PrintSavedTrainManifests"></A>
+   <H4>Print or Preview Saved Train Manifests</H4>
 
+   If you've selected the <a HREF="#Options">Save Train Manifests</a> option, you can print or preview
+   a train manifest that was previously created by the program and saved. 
+   
    <A NAME="SetupExcelProgram"></A>
    <H4>Setup Excel Program (Manifest Creator)</H4>
 

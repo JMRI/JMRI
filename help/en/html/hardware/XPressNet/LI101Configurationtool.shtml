@@ -1,59 +1,64 @@
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
 <html lang="en">
 <head>
-<!-- $Id$ -->
-
+<title>JMRI Hardware Support - XPressNet LI101F Configuration Tool</title>
 
 <!-- Style -->
-<META HTTP-EQUIV="Content-Type" CONTENT="text/html; charset=iso-8859-1">
-<LINK REL="stylesheet" TYPE="text/css" HREF="/css/default.css"
-	MEDIA="screen">
-<LINK REL="stylesheet" TYPE="text/css" HREF="/css/print.css"
-	MEDIA="print">
-<LINK REL="icon" HREF="/images/jmri.ico" TYPE="image/png">
-<LINK REL="home" TITLE="Home" HREF="/">
+<meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
+<link rel="stylesheet" type="text/css" href="/css/default.css" media="screen">
+<link rel="stylesheet" type="text/css" href="/css/print.css" media="print">
+<link rel="icon" href="/images/jmri.ico" type="image/png">
+<link rel="home" title="Home" href="/">
 <!-- /Style -->
-</HEAD>
+</head>
 
-<BODY>
+<body>
 <!--#include virtual="/Header" -->
 
   <div class="nomenu" id="mBody">
     <div id="mainContent">
 
-<H2>The JMRI LI101F Configuration Utility</H2>
+<h1>XPressNet LI101F Configuration Tool</h1>
+
 <img src="images/LI101ConfigurationUtility.jpg" alt="LI101 Configuration Tool Image">
-<P>
+<p>
 The LI101 Configuration tool is used to configure the LI101F.
-<P>
+<p>
 Starting at the top:
-<P>
+<p>
 The First drop down box selects the address the device will 
 use on the XPressNet.  This address needs to be different than all other 
 devices on your XPressNet.  
-<P>
+<p>
 The Second drop down box sets the LI101F port speed.  This speed should 
-match what you have used for the "Port Speed" setting in the preferences 
-pane.
-<P>
-Starting on the Left side of the screen, the button labeled "Read from 
-LI101", will read the current settings of the LI101F.
-<P>
-The button labeled "Write to LI101", will write the settings on the screen 
+match what you have used for the "Port Speed" setting in the JMRI Preferences 
+Connections tab.
+
+	<h4>Buttons</h4>
+
+<p>
+Starting on the left side of the pane, the button labeled "Read from 
+LI101" will read the current settings of the LI101F.
+<p>
+The button labeled "Write to LI101" will write the settings on the screen 
 to the LI101F.  If you changed the LI101 Speed Setting, you will also need 
-to change the speed setting in your preferences.
-<P>
+to change the connection speed setting in your Preferences.
+<p>
 The button labeled "Reset to Factory Defaults" will reset the <b>screen</b> 
 to factory defaults.  This does not send a reset instruction to the LI101F at 
 this point in time.
-<P>
-The last button, labeled "Close" will close the screen, without sending 
-any information to the LI101F.
+<p>
+The last button, labeled "Close", will close the pane without sending 
+any (more) information to the LI101F.
+
+<p>Back to the <a href="index.shtml">XPressNet Help</a> page
 
 <hr>
-Paul Bender<BR>
+Paul Bender<br>
 paul.bender@acm.org
 
 <!--#include virtual="/Footer" -->
+ </div><!-- closes #mainContent-->
+</div> <!-- closes #mBody-->
 </body>
 </html>

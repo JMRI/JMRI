@@ -1,15 +1,12 @@
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
 <html lang="en">
 <head>
-<!-- Copyright Bob Jacobsen 2008 -->
 <title>JMRI: Speedometer</title>
 
 <!-- Style -->
 <meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
-<link rel="stylesheet" type="text/css" href="/css/default.css"
-	media="screen">
-<link rel="stylesheet" type="text/css" href="/css/print.css"
-	media="print">
+<link rel="stylesheet" type="text/css" href="/css/default.css" media="screen">
+<link rel="stylesheet" type="text/css" href="/css/print.css" media="print">
 <link rel="icon" href="/images/jmri.ico" type="image/png">
 <link rel="home" title="Home" href="/">
 <!-- /Style -->
@@ -17,19 +14,10 @@
 
 <body>
 <!--#include virtual="/Header" -->
-  <div class="nomenu" id="mBody">
+<!--#include virtual="Sidebar" -->
     <div id="mainContent">
 
-<h2>Speedometer</h2>
-
-<p>Also check out the pages on:
-<ul>
-<li><a href="SpeedMatch.shtml">Speed Matching</a></li>
-<li>The <a href="NCE-Speedometer.shtml">NCE speedometer</a></li>
-<li>The 
-<a href="../../hardware/bachrus/index.shtml">Bachrus speedometer</a></li>
-</ul>
-</p>
+<h1>Speedometer</h1>
 
 <p>The JMRI libraries
 contain a Speedometer tool that you can use directly from the screen,
@@ -67,16 +55,27 @@ end of the block.
 Finally, click the "Start" button.  The three little red dots along 
 the right side of the Speedometer window will start changing color to indicate the status of 
 the selected Sensors:
-<ul>
-<li>Red for "Unknown", no message seen yet
-<li>White for "Unoccupied"
-<li>Green or Yellow for "Occupied"
-</ul>
+	<ul>
+	<li>Red for "Unknown", no message seen yet
+	<li>White for "Unoccupied"
+	<li>Green or Yellow for "Occupied"
+	</ul>
 <p>
 Once you click the Start button, you can't change the configuration. 
 Just close that window and open another one.  You can have multiple 
 Speedometer tool windows open if you'd like.
 
+<p>Also check out the JMRI Help pages on:
+	<ul>
+	<li><a href="SpeedMatch.shtml">Speed Matching</a></li>
+	<li>The <a href="NCE-Speedometer.shtml">NCE speedometer</a></li>
+	<li>The 
+	<a href="../../hardware/bachrus/index.shtml">Bachrus speedometer</a></li>
+	</ul>
+</p>
+
 <!--#include virtual="/Footer" -->
+  </div><!-- closes #mainContent-->
+</div> <!-- closes #mBody-->
 </body>
 </html>

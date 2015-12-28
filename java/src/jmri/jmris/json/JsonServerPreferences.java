@@ -5,6 +5,7 @@ import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.util.prefs.BackingStoreException;
 import java.util.prefs.Preferences;
+import jmri.InstanceManager;
 import jmri.beans.Bean;
 import jmri.jmrit.XmlFile;
 import jmri.profile.ProfileManager;
@@ -31,6 +32,18 @@ public class JsonServerPreferences extends Bean {
     private int asLoadedPort = DEFAULT_PORT;
     private static Logger log = LoggerFactory.getLogger(JsonServerPreferences.class);
 
+    public static JsonServerPreferences getDefault() {
+        if (InstanceManager.getDefault(JsonServerPreferences.class) == null) {
+            String fileName = FileUtil.getUserFilesPath() + "networkServices" + File.separator + "JsonServerPreferences.xml"; // NOI18N
+            if ((new File(fileName)).exists()) {
+                InstanceManager.store(new JsonServerPreferences(fileName), JsonServerPreferences.class);
+            } else {
+                InstanceManager.store(new JsonServerPreferences(), JsonServerPreferences.class);
+            }
+        }
+        return InstanceManager.getDefault(JsonServerPreferences.class);
+    }
+    
     public JsonServerPreferences(String fileName) {
         boolean migrate = false;
         Preferences sharedPreferences = ProfileUtils.getPreferences(ProfileManager.getDefault().getActiveProfile(), this.getClass(), true);

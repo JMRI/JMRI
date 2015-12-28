@@ -1,84 +1,77 @@
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
-<!-- $Id$ -->
 <html lang="en">
 <head>
-    <TITLE>
- 	JMRI: DS54 Examples
-    </TITLE>
-    <META content="Bob Jacobsen" name=Author>
+    <title>JMRI Hardware Support - Digitrax DS54 Examples</title>
+    <meta content="Bob Jacobsen" name="Author">
     <meta name="keywords" content="JMRI LocoNet DS54">
 
 <!-- Style -->
-<META HTTP-EQUIV="Content-Type" CONTENT="text/html; charset=iso-8859-1">
-<LINK REL="stylesheet" TYPE="text/css" HREF="/css/default.css"
-	MEDIA="screen">
-<LINK REL="stylesheet" TYPE="text/css" HREF="/css/print.css"
-	MEDIA="print">
-<LINK REL="icon" HREF="/images/jmri.ico" TYPE="image/png">
-<LINK REL="home" TITLE="Home" HREF="/">
+<meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
+<link rel="stylesheet" type="text/css" href="/css/default.css" media="screen">
+<link rel="stylesheet" type="text/css" href="/css/print.css" media="print">
+<link rel="icon" href="/images/jmri.ico" type="image/png">
+<link rel="home" title="Home" href="/">
 <!-- /Style -->
-</HEAD>
+</head>
 
-<BODY>
+<body>
 <!--#include virtual="/Header" -->
   <div class="nomenu" id="mBody">
     <div id="mainContent">
 
-<H1>JMRI: DS54 Examples</H1>
-<p class=subtitle> Examples of using a Digitrax DS54 with JMRI. </p>
+<h1>Hardware Support: DS54 Examples</h1>
+<p class=subtitle> Examples of using a Digitrax DS54 with JMRI.</p>
 <p>
-The DS54 accessory decoder can be configured in a large number of
-ways.  
-(<a href="../../../manual/index.shtml">DecoderPro</a> can help with that)
+The Digitrax DS54 accessory decoder can be configured in a large number of
+ways (<a href="../../../manual/index.shtml">DecoderPro</a> can help with that).
 
-<P>
+<p>
 Walter Thompson walked through the details of this:
 
-<P>
+<p>
 With the DS54 at defaults these are the LocoNet&reg; msgs when either Switch A
 or Aux A goes positive causing the Turnout to "toggle" state:
-<BR>
+<br>
 When Switch A (blue lead) goes high loconet msg [b2 8 70 35].
-<BR>
+<br>
 When Aux A (orange lead) goes high loconet msg [b2 8 50 15]
 
-<P>
+<p>
 I then set "When Switch A input changes, send" ="Turnout feedback msg"
-<BR>
+<br>
 When Switch A (blue lead) goes high loconet msg [b2 8 70 36]
-<BR>
+<br>
 When Aux A (orange lead) goes high loconet msg [b2 8 50 15]
 
-<P>
+<p>
 I then set "When Aux A input changes, send"= "Turnout feedback message"
-<BR>
+<br>
 When Switch A (blue lead) goes high loconet msg [b2 8 70 36]
-<BR>
+<br>
 When Aux A (orange lead) goes high loconet msg [b2 8 50 16]
 
-<P>
+<p>
 Therefore, when the Switch and Aux inputs are set to send a turnout 
 feedback message, the feedback mechanisms built into recent versions
 of JMRI can be used to track the turnout state when the local
 inputs are used to change the turnout.
 
 <h2>Exact Feedback</h2>
-
 <p>To use exact feedback, you need to connect two microswitches to the 
 turnout and to the Switch and Aux inputs on the DS54.
 (You can use the built in Tortoise contacts for this)</p>
-<P>
+<p>
 Configure the DS54 channel with:
-<PRE>
+<pre>
  Aux A input"='Active ON, trigger on change, Positive Level"
  Aux A task"="No Output change"
  When Aux A input changes, send"= "Exact turnout feedback message"
  Switch A input"='Active ON, trigger on change, Positive Level"
  Switch A task"="No Output change"
  Switch A input changes, send"= "Exact turnout feedback message"
-</PRE>
+</pre>
 <p>Configure Turnout LT9 (via the Turnout Table) to use "EXACT" feedback.</p>
-<P>
+<p>
 <table border="1">
     <tr><th> Commentary</th><th>LocoNet messages</th></tr>
     <tr><td>
@@ -120,7 +113,8 @@ Configure the DS54 channel with:
             <code>[b1 8 70 36]</code> Turnout 9 Switch input is Closed (input off)
         </td></tr>
 </table>
-<H1>Programming the DS54</H1>
+
+<h1>Programming the DS54</h1>
 <p>The DS54 CV values can be programmed via JMRI using the JMRI programming tools
     using the "Service Mode" programming track.  This requires a JMRI connection
     to a command station, and the DS54's track inputs must be connected to the
@@ -137,7 +131,7 @@ Configure the DS54 channel with:
     track connections and programming resistor, and be sure to remove the 
     programming jumper.</p>
 
-<H1>DS54 Wiring</H1>
+<h1>DS54 Wiring</h1>
 <p>It is strongly recommended that when multiple DS54s are used, that they be
     connected to the track wires with consistent phasing.  In other words, all
     DS54 devices should connect the RailA connection to the same terminal position
@@ -152,9 +146,8 @@ Configure the DS54 channel with:
 
 <p>LocoNet&reg; is a registered trademark of <a href="http://www.digitrax.com">Digitrax, Inc.</a></p>
 
-    </div>
-
 <!--#include virtual="/Footer" -->
+  </div><!-- closes #mainContent-->
+</div> <!-- closes #mBody-->
 </body>
 </html>
-

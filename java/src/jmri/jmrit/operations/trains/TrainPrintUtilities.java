@@ -99,7 +99,7 @@ public class TrainPrintUtilities {
         }
         String line;
 
-        if (!isBuildReport && logoURL != null && !logoURL.equals("")) {
+        if (!isBuildReport && logoURL != null && !logoURL.equals(Setup.NONE)) {
             ImageIcon icon = new ImageIcon(logoURL);
             if (icon.getIconWidth() == -1) {
                 log.error("Logo not found: " + logoURL);

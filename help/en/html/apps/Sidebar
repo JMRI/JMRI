@@ -11,8 +11,8 @@
 			<ul>
 			<li><a href="DecoderPro/index.shtml">DecoderPro&reg;</a></li>
 			<li><a href="PanelPro/PanelPro.shtml">PanelPro&trade;</a></li>
-			<li><a href="../package/jmri/jmrit/dispatcher/Dispatcher.shtml">DispatcherPro&trade;</a></li>
-	    <li><a href="../package/jmri/jmrit/operations/Operations.shtml">OperationsPro&trade;</a></li>
+			<li><a href="DispatcherPro/index.shtml">DispatcherPro&trade;</a></li>
+	    <li><a href="../../package/jmri/jmrit/operations/Operations.shtml">OperationsPro&trade;</a></li>
 			<li><a href="SoundPro/SoundPro.shtml">SoundPro</a></li>
 			<li><a href="SignalPro/index.shtml">SignalPro</a></li>
 			</ul>
@@ -22,11 +22,14 @@
 		<dd>JMRI provides powerful tools for working with your
 		layout:
 		  <ul>
-	    <li><dfn><a href="../tools/Sensors.shtml">Sensors</a></dfn>
 	    <li><dfn><a href="../tools/Turnouts.shtml">Turnouts</a></dfn>
-	    <li><dfn><a href="../tools/throttle/ThrottleMain.shtml">Throttles</a></dfn>
-	    <li><dfn><a href="../tools/consisttool/ConsistTool.shtml">Consisting</a></dfn>
 	    <li><dfn><a href="../tools/Lights.shtml">Lights</a></dfn>
+	    <li><dfn><a href="../tools/Sensors.shtml">Sensors</a></dfn>
+			<li><dfn><a href="../tools/throttle/ThrottleMain.shtml">Throttles</a></dfn>
+	    <li><dfn><a href="../tools/consisttool/ConsistTool.shtml">Consisting</a></dfn>
+			<li><dfn><a href="../tools/Blocks.shtml">Blocks</a></dfn>
+			<li><dfn><a href="../tools/Reporters.shtml">Reporters</a></dfn>
+			<li><dfn><a href="../tools/Memories.shtml">Memory Variables</a></dfn>
 	    <li><dfn><a href="../tools/Routes.shtml">Routes</a></dfn>
 	    <li><dfn><a href="../tools/LRoutes.shtml">LRoutes</a></dfn>
 	    <li><dfn><a href="../tools/Logix.shtml">Logix</a></dfn>
@@ -73,7 +76,7 @@
 				<li><a href="../hardware/tmcc/index.shtml">Lionel TMCC</a>
 				<li><a href="../hardware/loconet/Digitrax.shtml">LocoNet</a>
 				<li><a href="../hardware/maple/index.shtml">Maple Systems</a>
-				<li><a href="../hardware/marklin/index.shtml">M&auml;eklin CS2</a>
+				<li><a href="../hardware/marklin/index.shtml">M&auml;rklin CS2</a>
 				<li><a href="../hardware/modbus/index.shtml">Modbus</a>
 				<li><a href="../hardware/can/cbus/index.shtml">MERG CBUS</a>
 				<li><a href="../hardware/mrc/index.shtml">MRC</a>
