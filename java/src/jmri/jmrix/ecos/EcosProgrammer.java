@@ -187,9 +187,7 @@ public class EcosProgrammer extends AbstractProgrammer implements EcosListener {
             notifyProgListenerEnd(_val, jmri.ProgListener.OK);
             
         } else {
-            if (log.isDebugEnabled()) {
-                log.debug("reply in un-decoded state");
-            }
+            log.debug("reply in un-decoded state");
         }
     }
 
@@ -204,7 +202,9 @@ public class EcosProgrammer extends AbstractProgrammer implements EcosListener {
             }
             // perhaps no loco present? Fail back to end of programming
             progState = NOTPROGRAMMING;
-            tc.sendEcosMessage(EcosMessage.getExitProgMode(), this);
+            EcosMessage m;
+            m = new EcosMessage("release(5,view)");
+            tc.sendEcosMessage(m, this);
             notifyProgListenerEnd(_val, jmri.ProgListener.FailedTimeout);
         }
     }
