@@ -10,6 +10,7 @@ import java.io.IOException;
 import java.util.HashMap;
 import java.util.NoSuchElementException;
 import java.util.concurrent.TimeUnit;
+import jmri.InstanceManager;
 import jmri.implementation.QuietShutDownTask;
 import jmri.jmris.JmriServer;
 import static jmri.jmris.json.JSON.GOODBYE;
@@ -33,9 +34,16 @@ public class JsonServer extends JmriServer {
     private static final Logger log = LoggerFactory.getLogger(JsonServer.class);
     private ObjectMapper mapper;
 
+    public static JsonServer getDefault() {
+        if (InstanceManager.getDefault(JsonServer.class) == null) {
+            InstanceManager.store(new JsonServer(), JsonServer.class);
+        }
+        return InstanceManager.getDefault(JsonServer.class);
+    }
+
     // Create a new server using the default port
     public JsonServer() {
-        this(JsonServerManager.getJsonServerPreferences().getPort(), JsonServerManager.getJsonServerPreferences().getHeartbeatInterval());
+        this(JsonServerPreferences.getDefault().getPort(), JsonServerPreferences.getDefault().getHeartbeatInterval());
     }
 
     public JsonServer(int port, int timeout) {
@@ -45,7 +53,7 @@ public class JsonServer extends JmriServer {
             @Override
             public boolean execute() {
                 try {
-                    JsonServerManager.getJsonServer().stop();
+                    JsonServer.this.stop();
                 } catch (Exception ex) {
                     log.warn("ERROR shutting down JSON Server: {}" + ex.getMessage());
                     log.debug("Details follow: ", ex);
