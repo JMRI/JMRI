@@ -43,6 +43,12 @@ abstract public class AbstractMRTrafficController {
         jmri.util.RuntimeUtil.addShutdownHook(new Thread(new CleanupHook(this)));
     }
 
+    private boolean synchronizeRx = true;
+    
+    protected void setSynchronizeRx(boolean val) {
+        synchronizeRx = val;
+    }
+    
     // set the instance variable
     abstract protected void setInstance();
 
@@ -862,7 +868,11 @@ abstract public class AbstractMRTrafficController {
         // return a notification via the Swing event queue to ensure proper thread
         Runnable r = new RcvNotifier(msg, mLastSender, this);
         try {
-            SwingUtilities.invokeLater(r);
+            if (synchronizeRx) {
+                SwingUtilities.invokeAndWait(r);
+            } else {
+                SwingUtilities.invokeLater(r);
+            }
         } catch (Exception e) {
             log.error("Unexpected exception in invokeAndWait: {}" + e.toString(), e);
         }
