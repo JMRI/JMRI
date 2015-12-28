@@ -107,12 +107,15 @@ public class SwingTestCase extends JFCTestCase {
         assertPixel(name+" upper right", upperRight,   pixels[0+(cols-1)]);
         
         assertPixel(name+" middle left", midLeft,      pixels[(rows/2)*cols]);
-        assertPixel(name+" center", center,            pixels[(rows/2)*cols+cols/2]);
         assertPixel(name+" middle right", midRight,    pixels[(rows/2)*cols+(cols-1)]);
         
         assertPixel(name+" lower left", lowerLeft,     pixels[(rows*cols-1)-(cols-1)]);
         assertPixel(name+" lower middle", lowerCenter, pixels[(rows*cols-1)-(cols-1)+cols/2]);
         assertPixel(name+" lower right", lowerRight,   pixels[rows*cols-1]);
+
+        // we've checked the corners first on purpose, to see they're all right
+        assertPixel(name+" center", center,            pixels[(rows/2)*cols+cols/2]);
+
     }
     
     /**
