@@ -53,7 +53,7 @@ must be checked.  You can uncheck this box to temporarily disable a
 Route from being triggered, i.e. prevent it from setting its turnouts, 
 sensors, etc. when a control sensor or control turnout changes.</p>
 
-<h2>How to setup for adding or editing Routes</h2>
+<h2>How to setup Routes</h2>
 
 <p>First make sure the Turnouts Table contains all turnouts 
 involved in the Routes to be defined, and that the Sensors Table 
@@ -68,7 +68,7 @@ bring up the Add/Edit Route window.</p>
 short name can be used provided it is different from the System 
 Name of other Routes.</p>
 	<p>By convention, System Names usually start with "IR" for Internal 
-Route. </p>
+Route.</p>
 	</li>
 	<li><p>Enter a User Name. Any string of characters that is different 
 from the User Name of other Routes will be accepted, but it's 
