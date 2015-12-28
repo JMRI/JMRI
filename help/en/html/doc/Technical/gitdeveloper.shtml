@@ -103,7 +103,9 @@ repository where they're safe, and can eventually be moved onward.
 
 When you do this, Git will open an editor window for your commit note. The top line becomes the summary, 
 which should be clear by itself as this will appear in lists of changes.  
-Please add more detail in additional lines, because that helps your friends and colleagues understand what you've done.
+You should keep that summary to 50 characters or less, so it can be displayed compactly.
+Please add more detail in additional lines after the summary, 
+because that helps your friends and colleagues understand what you've done.
 
 <a name="repo" id="repo"></a><h3>Get Your Own GitHub Repository</h3>
 
