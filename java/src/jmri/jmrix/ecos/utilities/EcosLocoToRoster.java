@@ -301,7 +301,7 @@ public class EcosLocoToRoster implements EcosListener {
                     endval = (lines[1].substring(startval)).indexOf(",") + startval;
                     boolean moment = true;
                     functNo = Integer.parseInt(lines[1].substring(startval, endval));
-                    startval = endval + 2;
+                    startval = endval + 1;
                     endval = (lines[1].substring(startval)).indexOf(",");//+startval;
                     if (endval == -1) {
                         endval = (lines[1].substring(startval)).indexOf("]");//+startval;
