@@ -275,7 +275,7 @@ public class Engine extends RollingStock {
                             && (getTrain().getThirdLegOptions() & Train.CHANGE_ENGINES) == Train.CHANGE_ENGINES))) {
                         log.debug("New lead locomotive ({}) for train ({})", toString(), getTrain().getName());
                         getTrain().setLeadEngine(this);
-                        getTrain().createTrainIcon();
+                        getTrain().createTrainIcon(current);
                     }
                 }
             }
