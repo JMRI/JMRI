@@ -36,6 +36,8 @@ import javax.swing.*;
 import javax.swing.event.EventListenerList;
 import javax.swing.table.AbstractTableModel;
 import javax.swing.table.TableCellRenderer;
+import javax.swing.table.TableRowSorter;
+import javax.swing.table.TableModel;
 import javax.swing.event.ChangeEvent;
 import javax.swing.event.ChangeListener;
 import jmri.jmrix.dccpp.DCCppTurnoutManager;
@@ -95,6 +97,9 @@ public class ConfigSensorsAndTurnoutsFrame extends JmriJFrame implements DCCppLi
     private JTable sensorTable;
     private JTable turnoutTable;
     private JTable outputTable;
+    private TableRowSorter<TableModel> sensorSorter;
+    private TableRowSorter<TableModel> turnoutSorter;
+    private TableRowSorter<TableModel> outputSorter;
 
     private List<JMenu> menuList;
     private enum CurrentTab { SENSOR, TURNOUT, OUTPUT }
@@ -166,7 +171,17 @@ public class ConfigSensorsAndTurnoutsFrame extends JmriJFrame implements DCCppLi
         sensorTable.removeColumn(sensorTable.getColumn("isNew"));
         sensorTable.removeColumn(sensorTable.getColumn("isDirty"));
         sensorTable.removeColumn(sensorTable.getColumn("isDelete"));
-
+        sensorTable.setAutoCreateRowSorter(true);
+        sensorSorter = new TableRowSorter<>(sensorTable.getModel());
+        sensorTable.setRowSorter(sensorSorter);
+        List<RowSorter.SortKey> sensorSortKeys = new ArrayList<>();
+        //int columnIndexToSort = 1;
+        sensorSortKeys.add(new RowSorter.SortKey(sensorTable.getColumn(Bundle.getMessage("FieldTableIndexColumn")).getModelIndex(), SortOrder.ASCENDING));
+        sensorSorter.setSortKeys(sensorSortKeys);
+        sensorSorter.sort();
+        sensorSorter.setSortable(sensorTable.getColumn(Bundle.getMessage("FieldTableDeleteColumn")).getModelIndex(), false);
+        
+        
         JScrollPane turnoutScrollPanel = new JScrollPane();
         turnoutModel = new TurnoutTableModel();
         turnoutTable = new JTable(turnoutModel);
@@ -179,6 +194,15 @@ public class ConfigSensorsAndTurnoutsFrame extends JmriJFrame implements DCCppLi
         turnoutTable.removeColumn(turnoutTable.getColumn("isNew"));
         turnoutTable.removeColumn(turnoutTable.getColumn("isDirty"));
         turnoutTable.removeColumn(turnoutTable.getColumn("isDelete"));
+        turnoutTable.setAutoCreateRowSorter(true);
+        turnoutSorter = new TableRowSorter<>(turnoutTable.getModel());
+        turnoutTable.setRowSorter(turnoutSorter);
+        List<RowSorter.SortKey> turnoutSortKeys = new ArrayList<>();
+        //int columnIndexToSort = 1;
+        turnoutSortKeys.add(new RowSorter.SortKey(sensorTable.getColumn(Bundle.getMessage("FieldTableIndexColumn")).getModelIndex(), SortOrder.ASCENDING));
+        turnoutSorter.setSortKeys(turnoutSortKeys);
+        turnoutSorter.setSortable(sensorTable.getColumn(Bundle.getMessage("FieldTableDeleteColumn")).getModelIndex(), false);
+        turnoutSorter.sort();
         
         JScrollPane outputScrollPanel = new JScrollPane();
         outputModel = new OutputTableModel();
@@ -192,6 +216,15 @@ public class ConfigSensorsAndTurnoutsFrame extends JmriJFrame implements DCCppLi
         outputTable.removeColumn(outputTable.getColumn("isNew"));
         outputTable.removeColumn(outputTable.getColumn("isDirty"));
         outputTable.removeColumn(outputTable.getColumn("isDelete"));
+        outputTable.setAutoCreateRowSorter(true);
+        outputSorter = new TableRowSorter<>(outputTable.getModel());
+        outputTable.setRowSorter(outputSorter);
+        List<RowSorter.SortKey> outputSortKeys = new ArrayList<>();
+        //int columnIndexToSort = 1;
+        outputSortKeys.add(new RowSorter.SortKey(sensorTable.getColumn(Bundle.getMessage("FieldTableIndexColumn")).getModelIndex(), SortOrder.ASCENDING));
+        outputSorter.setSortKeys(outputSortKeys);
+        outputSorter.setSortable(sensorTable.getColumn(Bundle.getMessage("FieldTableDeleteColumn")).getModelIndex(), false);
+        outputSorter.sort();
         
         tabbedPane = new JTabbedPane();
         tabbedPane.addTab(Bundle.getMessage("FieldSensorsTabTitle"), sensorScrollPanel);
@@ -286,12 +319,14 @@ public class ConfigSensorsAndTurnoutsFrame extends JmriJFrame implements DCCppLi
             v.add(r.getSensorDefPullupBool());
             //v.add("Delete");
             sensorModel.insertData(v, false);
+            sensorSorter.sort();
         } else if (r.isTurnoutDefReply()) {
             Vector v = new Vector();
             v.add(r.getTurnoutDefNumInt());
             v.add(r.getTurnoutDefAddrInt());
             v.add(r.getTurnoutDefSubAddrInt());
-             turnoutModel.insertData(v, false);
+            turnoutModel.insertData(v, false);
+            turnoutSorter.sort();
         } else if (r.isOutputListReply()) {
             Vector v = new Vector();
             v.add(r.getOutputNumInt());
@@ -301,6 +336,7 @@ public class ConfigSensorsAndTurnoutsFrame extends JmriJFrame implements DCCppLi
             v.add((r.getOutputListIFlagInt() & 0x04) == 4); // (bool) Force High
             v.add(r.getOutputListStateInt());
             outputModel.insertData(v, false);
+            outputSorter.sort();
         }
     }
     
@@ -340,7 +376,7 @@ public class ConfigSensorsAndTurnoutsFrame extends JmriJFrame implements DCCppLi
             v.add(0);     // Index
             v.add(0);     // Pin
             v.add(false); // Pullup
-        sensorModel.insertData(v, true);
+            sensorModel.insertData(v, true);
         } else if (cTab == CurrentTab.TURNOUT) {
             Vector v = new Vector();
             v.add(0); // Index
