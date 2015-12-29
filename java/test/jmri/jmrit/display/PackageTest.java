@@ -3,8 +3,7 @@
  *
  * Description:	tests for the jmrit.display package
  *
- * @author	Bob Jacobsen Copyright 2008, 2009, 2010
- * @version $Revision$
+ * @author	Bob Jacobsen Copyright 2008, 2009, 2010, 2015
  */
 package jmri.jmrit.display;
 
@@ -21,6 +20,7 @@ public class PackageTest extends TestCase {
 
     // Main entry point
     static public void main(String[] args) {
+        apps.tests.AllTest.initLogging();
         String[] testCaseName = {"-noloading", PackageTest.class.getName()};
         junit.swingui.TestRunner.main(testCaseName);
     }
@@ -53,4 +53,12 @@ public class PackageTest extends TestCase {
         return suite;
     }
 
+    // The minimal setup for log4J
+    protected void setUp() {
+        apps.tests.Log4JFixture.setUp();
+    }
+
+    protected void tearDown() {
+        apps.tests.Log4JFixture.tearDown();
+    }
 }

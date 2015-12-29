@@ -536,6 +536,9 @@ public class PositionableLabelTest extends jmri.util.SwingTestCase {
     // The minimal setup for log4J
     protected void setUp() {
         apps.tests.Log4JFixture.setUp();
+        jmri.util.JUnitUtil.resetInstanceManager();
+        jmri.util.JUnitUtil.initConfigureManager();
+        jmri.util.JUnitUtil.initDefaultUserMessagePreferences();
     }
 
     protected void tearDown() {
@@ -546,6 +549,7 @@ public class PositionableLabelTest extends jmri.util.SwingTestCase {
                 panel.getTargetFrame().removeWindowListener(listeners[i]);
             }
             junit.extensions.jfcunit.TestHelper.disposeWindow(panel.getTargetFrame(), this);
+            panel = null;
         }
         
         apps.tests.Log4JFixture.tearDown();
