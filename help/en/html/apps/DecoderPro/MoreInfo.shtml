@@ -22,20 +22,21 @@
 <h1>JMRI: DecoderPro User Guide</h1>
 <h2>The Details</h2>
 
-<p>This page provides information on how the DecoderPro (Symbolic
+<p>This page provides additional information on how DecoderPro (Symbolic
 Programmer) works.<br>
 For details on the JMRI internals, please see the <a href="../../doc/Technical/IntroStructure.shtml">Technical
 Doc pages</a>.</p>
 
 <dl>
-	<dt class="left">Configuration files</dt>
+	<dt class="left">Configuration Files</dt>
 	<dd class="first">
 	<p>
-	There are two types of configuration files:
-	<ul>
-	<li> Decoder configuration files - These carry the description of a specific type of decoder, and control how the programmer displays the variable information.
-	<li> Locomotive configuration files - These carry the specific information on a single locomotive.
-	</ul>
+	There are three types of <a href="Files.shtml">Configuration Files</a>:
+		<ul>
+		<li>Decoder configuration files - These carry the description of a specific type of decoder, and control how the programmer displays the variable information.
+		<li>Locomotive configuration files - These carry the specific information on a single locomotive.
+		<li>Programmer definitions - These define the formats for the various programming sheets.
+		</ul>
 	</p>
 	
 	<p>The programmer can read either type of file. If you select a decoder
@@ -98,8 +99,8 @@ Doc pages</a>.</p>
 	<dd>
 	<p>Communication with the Command Station/programmer, hence reading and
 	writing of the decoder, are only done when the "Read" or "Write" buttons
-	are pressed. The program keeps track of whether a value has been sent to
-	the decoder using four states for variables or CVs:</p>
+	are pressed. DecoderPro keeps track of whether a value has been sent to
+	the decoder using four States for variables or CVs:</p>
 		<ul>
 		<li> Read - The value shown was read from the decoder.
 		<li> Stored - The value shown has been written to the decoder.

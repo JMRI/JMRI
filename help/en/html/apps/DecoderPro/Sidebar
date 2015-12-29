@@ -17,7 +17,7 @@
 	<li><a href="./Install.shtml">Downloading and installing DecoderPro</a>
 	</ul>
 
-<dt><h3>More advanced</h3></dt>
+<dt><h3>Advanced</h3></dt>
 <dd>
 	<ul>
 	<li><a href="./IntroXML.shtml">Intro to XML files</a>
@@ -29,6 +29,18 @@
 	<li><a href="./NetworkFiles.shtml">Sharing Rosters Among Computers</a>
 	<li><a href="./FileUpdate.shtml">Updating Decoder Definitions</a>
 	</ul>
+</dd>
+
+<dt><h3>Other Apps</h3></dt>
+<dd>
+		<ul>
+		<!-- <li><a href="../DecoderPro/index.shtml">DecoderPro&reg;</a></li> -->
+		<li><a href="../PanelPro/PanelPro.shtml">PanelPro&trade;</a></li>
+		<li><a href="../DispatcherPro/index.shtml">DispatcherPro&trade;</a></li>
+    <li><a href="../../../package/jmri/jmrit/operations/Operations.shtml">OperationsPro&trade;</a></li>
+		<li><a href="../SoundPro/SoundPro.shtml">SoundPro</a></li>
+		<li><a href="../SignalPro/index.shtml">SignalPro</a></li>
+		</ul>
 </dd>
 
 <dt><h3><a href="tools/index.shtml">Tools</a></h3></dt>

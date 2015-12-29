@@ -19,7 +19,6 @@
         <li><a href="http://jmri.org/manual/pdf/DP_man_3-0.pdf">DP Guide v3.0</a></li>
         <li><a href="http://jmri.org/manual/pdf/DP3_Man_2_14.pdf">DP3 Guide v2.14</a></li>
         <li><a href="http://jmri.org/manual/pdf/jmri_Man_2_14.pdf">JMRI Guide v2.14.1</a></li>
-        <li><a href="http://jmri.org/manual/pdf/jmri_Man_2_12.pdf">JMRI Guide v2.12</a></li>
       </ul>
       </dd>
 
@@ -77,12 +76,12 @@
     </ul>
     </dd>
 
-<dt>JMRI&reg; v2.12</dt>
+<!-- <dt>JMRI&reg; v2.12</dt>
     <dd style="font-weight: bold;">
     <ul>
     <li><a href="http://jmri.org/manual/JMRI_2-12_Manual/index.shtml">JMRI&reg; Guide</a></li>
     </ul>
-    </dd>
+    </dd> -->
 
 <dt><h3>Supported Computers</h3></dt>
     <dd> 
