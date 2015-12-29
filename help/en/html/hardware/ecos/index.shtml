@@ -29,7 +29,7 @@ Support for the ECoS s88 Feedback Sensors was first available in <a href="http:/
 Support for the ECoS RailCom Feedback was first available in <a href="http://jmri.sf.net/releasenotes/jmri2.99.7.shtml">JMRI 2.99.7</a>.    
 
 <a name="limitations"></a><h2>Limitations</h2>
-<p>Programming is currently not supported by the Ecos. Additional information on the ECoS can be found
+<p>Programming is supported by the Ecos from firmware version 4.1. However this goes only for the programming track. Programming on main is only available directly on the ECOS. Additional information on the ECoS can be found
 on the <a href="http://www.esu.eu/us/index.php?showId=205">ESU web site</a>.
 <p>Consisting is not yet supported.</p>
 

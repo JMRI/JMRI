@@ -34,6 +34,7 @@ public class EcosTrafficController extends AbstractMRTrafficController implement
         // set as command station too
         jmri.InstanceManager.setCommandStation(this);
         this.setAllowUnexpectedReply(true);
+        this.setSynchronizeRx(false);
     }
 
     public void setAdapterMemo(EcosSystemConnectionMemo memo) {

@@ -1,20 +1,12 @@
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
-<!-- $Id$ -->
 <html lang="en">
 <head>
   <title>Throttle: Advanced Configuration </title>
   <meta name="keywords" content="JMRI decoderpro dcc nmra throttlepro">
   <meta name="Description" content="Throttle documentation for JMRI project">
-  <meta name="Keywords" content="JMRI">
   <meta name="Author" content="Paul Fraker (paul@frakers.com)">
   <meta name="Language" content="EN">
-  <meta name="Robots" content="Index, Follow">
-  <meta name="Revisit-After" content="7 Days">
-  <!-- The combination of "Define" and {Header,Style, Logo and Footer} comments -->
-  <!-- are an arbitrary design pattern used by the update.pl script to -->
-  <!-- easily replace the common header/footer code for all the web pages -->
-  <!-- delete the following 2 Defines if you want to use the default JMRI logo -->
-  <!-- or change them to reflect your alternative logo -->
+  
   <!-- Style -->
   <meta http-equiv="content-type" content="text/html; charset=iso-8859-1">
   <link rel="stylesheet" type="text/css" href="/css/default.css" media="screen">
@@ -29,9 +21,9 @@
 <!--#include virtual="Sidebar" -->
 
 <div id="mainContent">
-<h1 style="color:#ff0000">Updated version of the Throttle documentation</h1>
+<h1><span style="color:#ff0000">New Throttle documentation</span></h1>
 
-<p>Please note that this documentation was updated, refer to links bellow:</p>
+<p>Please note that this documentation was updated. New contents:</p>
 <ul>
   <li>The <a href="ToolsMenuThrottleEntry.shtml">Throttle menu in JMRI</a></li>
   <li>The <a href="BasicThrottleWindow.shtml">Throttle Window itself</a></li>
@@ -44,6 +36,7 @@
     pane</a></li>
 </ul>
 
+<hr>
 <h1>Advanced Configuration of the Function Panel</h1>
 
 <table border="0" width="100%" cellpadding="0" cellspacing="0">
@@ -63,8 +56,7 @@
         the only option on this menu at this time being "<b>Properties</b>".</p>
       </td>
       <td><img width="20" height="20" src="images/spacer.gif"> </td>
-      <td align="center" valign="top"><br>
-
+      <td align="center" valign="top">
 
         <p style="text-align: center; font-size: xx-small"><img width="206"
         height="250" src="images/jmri022.jpg"
@@ -81,8 +73,6 @@
   <tbody>
     <tr>
       <td align="left" valign="top"><br>
-
-
         <p style="text-align: center; font-size: xx-small"><img width="180"
         height="181" src="images/jmri023.jpg" title="Edit Function Button"><br>
         Figure 3-2: Edit Function Button </p>
@@ -106,8 +96,6 @@
     </tr>
   </tbody>
 </table>
-<br>
-
 
 <p>By default, the <strong>Function Number</strong> is associated with the
 button number that you initially right-clicked on. For example, in the figures
@@ -159,9 +147,6 @@ check box), it is indeed invisible to the user and therefore can't be
 right-clicked on with the mouse in order to get the "Edit Function Button"
 window back. To make all buttons visible select "View-&gt;Show All Function
 Buttons."</b> </p>
-<br>
-<br>
-
 
 <table border="0" width="100%" cellpadding="0" cellspacing="0">
   <tbody>
@@ -186,20 +171,15 @@ Buttons."</b> </p>
     </tr>
   </tbody>
 </table>
-<br>
-<br>
-<br>
-<a name="WinMenuOptions"></a> 
 
+<a name="WinMenuOptions"></a> 
 <h1>Throttle Window Menu Options</h1>
 
 <p>There are a few optional options that affect the general preferences of the
 overall JMRI Throttle window. These are found in a couple of menu options
 located just under the main title bar of the window.</p>
-<br>
-<br>
-<a name="ViewPanels"></a> 
 
+<a name="ViewPanels"></a> 
 <h2>View (Panels)</h2>
 <dir>
 
@@ -240,11 +220,8 @@ located just under the main title bar of the window.</p>
     </tbody>
   </table>
 </dir>
-<br>
-<br>
-<br>
-<a name="EditFrameProperties"></a> 
 
+<a name="EditFrameProperties"></a> 
 <h2>Edit (Frame Properties)</h2>
 <dir>
 
@@ -289,11 +266,6 @@ located just under the main title bar of the window.</p>
     </tbody>
   </table>
 </dir>
-<br>
-<br>
-<br>
-<br>
-
 
 <p>This chapter concludes the advanced throttle options that are currently
 available. The next chapter demonstrates how to save all these customized
@@ -319,10 +291,10 @@ You can use the right arrow below to go to this chapter now.</p>
     </tr>
   </tbody>
 </table>
-<br>
-<br>
-<br>
-<br>
-<!--#include virtual="/Footer" --> </div>
+
+<!--#include virtual="/Footer" -->
+
+      </div><!-- closes #mainContent-->
+    </div> <!-- closes #mBody-->
 </body>
 </html>
