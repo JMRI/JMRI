@@ -630,6 +630,7 @@ public class TrainBuilder extends TrainCommon {
         }
 
         _train.setCurrentLocation(_train.getTrainDepartsRouteLocation());
+        
         if (_numberCars < requested) {
             _train.setStatus(Train.CODE_PARTIAL_BUILT);
             addLine(_buildReport, ONE, Train.PARTIAL_BUILT + " " + _train.getNumberCarsWorked() + "/"
