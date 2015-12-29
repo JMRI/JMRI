@@ -393,7 +393,7 @@ public class DCCppReply extends jmri.jmrix.AbstractMRReply {
 	    Pattern p = Pattern.compile(pat);
 	    Matcher m = p.matcher(s);
 	    if (!m.matches()) {
-		log.warn("No Match {} Command: {} pattern {}",name, s, pat);
+		//log.debug("No Match {} Command: {} pattern {}",name, s, pat);
 		return(null);
 	    }
 	    return(m);

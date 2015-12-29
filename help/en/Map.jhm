@@ -600,6 +600,8 @@
 
 <mapID target="html.tools.programmer.messages" url="html/tools/programmer/messages.shtml"/>
 
+<mapID target="package.jmri.jmrit.operations.Operations_PrintSavedTrainManifests" url="package/jmri/jmrit/operations/Operations.shtml#PrintSavedTrainManifests"/>
+
 <mapID target="package.jmri.jmrix.sprog.packetgen.SprogPacketGenFrame" url="package/jmri/jmrix/sprog/packetgen/SprogPacketGenFrame.shtml"/>
 
 <mapID target="html.hardware.tams.index_limitations" url="html/hardware/tams/index.shtml#limitations"/>
