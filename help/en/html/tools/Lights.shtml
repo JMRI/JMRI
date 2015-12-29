@@ -24,9 +24,9 @@
 <!--#include virtual="Sidebar" -->
 <div id="mainContent">
 
-<h2>JMRI: Lights Documentation</h2>
+<h1>JMRI: Lights Documentation</h1>
 
-<h3>What are Lights?</h3>
+<h2>What are Lights?</h2>
 
 <p>Lights are digital output bits that function as on/off switches. Lights
 were created to provide easy control for fascia panel lights and scenery
@@ -60,6 +60,8 @@ it must be "enabled", that is, its check box in the 'Enabled' column
 must be checked.  You can uncheck this box to temporarily disable a 
 Light from being triggered, i.e. prevent it switching when its control
 mechanism fires.</p>
+
+<h2>How to setup Lights</h2>
 
 <h3>Switching a Light On or Off</h3>
 
@@ -95,54 +97,55 @@ configuration file, they are all enabled.
 <a name="addLight"><h3>Adding a new Light</h3></a>
 <p>To add a new Light, follow this procedure:</p>
 <ol>
-	<li><p>Click the <b>Tools</b> -&gt; <b>Tables</b> -&gt; <b>Lights</b> menu to bring up
+	<li>Click the <b>Tools</b> -&gt; <b>Tables</b> -&gt; <b>Lights</b> menu to bring up
 the Lights Table, and click the <b>Add...</b> button at the bottom of the 
-pane to bring up the Add/Edit Light window.</p>
-	<li><p>Enter a System Name, according to the JMRI convention. The first
+pane to bring up the Add/Edit Light window.</li>
+	<li>Enter a System Name, according to the JMRI convention. The first
 letter designates your hardware system ('L' for LocoNet, 'C" for C/MRI,
 etc.), and the second letter must be 'L' for Light. These are followed by
 a number that gives the hardware address of the digital output bit being
 referenced.  Examples of valid system addresses are: <code>CL1004</code> and <code>LL401</code>, 
-assuming you have the hardware for the addressed digital output bits.</p>
+assuming you have the hardware for the addressed digital output bits.
 	</li>
-	<li><p>Enter a User Name. Any string of characters that is different 
+	<li>Enter a User Name. Any string of characters that is different 
 from the User Name of other Lights will be accepted, but it's 
-wise to use a string that describes the intended use or layout location of the Light.</p>
+wise to use a string that describes the intended use or layout location of the Light.
 	</li>
-	<li><p>Select the control type from the options in the popup menu.  
+	<li>Select the control type from the options in the popup menu.  
 When you change the control type, different options appear on the two lines
 below. Control options are discussed in more detail 
-<a href="#lightcontrol">below</a>.</p>
+<a href="#lightcontrol">below</a>.
 	</li>
-	<li><p>Enter the required information to complete the control definition 
+	<li>Enter the required information to complete the control definition 
 in the fields that appear. If you need to enter a Sensor name or a Turnout 
 name, you must enter the name (System Name or User Name) of an existing 
 Sensor or Turnout. <b>Caution</b>: if you choose to enter a User Name, be careful about 
 changing the User Name of your Sensor or Turnout afterwards. A simple change
-of User Name could break your Light control definition.</p>
+of User Name could break your Light control definition.
 	</li>
-	<li><p>Next is the notes area of the Add/Edit Light window. This is 
+	<li>Next is the notes area of the Add/Edit Light window. This is 
 where instructions and error messages will appear as you create or edit 
-a Light. Always check this area to see if things went as expected.</p>
+a Light. Always check this area to see if things went as expected.
 	</li>
-	<li><p>Click the <b>Create</b> button at the bottom of the pane.  
+	<li>Click the <b>Create</b> button at the bottom of the pane.  
 If everything is fine, a message stating "New Light added... " will be 
 displayed in the notes area. If there is trouble with anything, an error or 
 warning message will be displayed in the notes area; you should then
-correct the error and click <b>Create</b> again.</p></li>
+correct the error and click <b>Create</b> again.
+</li>
 </ol>
 
 <h3>Editing an existing Light</h3>
 <p>To edit an existing Light, follow this procedure:</p>
 <ol>
 	<li>Edit of an existing Light may be started in either of two ways:
-	<ul>
-		<li>Click on a Light's <b>Edit</b> button in the Lights Table.</li>
-		<li>Enter the system name of the Light to be edited in the 
-	Add/Edit Light window and click the <b>Edit</b> button at 
-	the bottom of the Add/Edit Light window.  This must be the same 
-	as the system name shown in the Lights Table.</li>
-	</ul>
+		<ul>
+			<li>Click on a Light's <b>Edit</b> button in the Lights Table.</li>
+			<li>Enter the system name of the Light to be edited in the 
+		Add/Edit Light window and click the <b>Edit</b> button at 
+		the bottom of the Add/Edit Light window.  This must be the same 
+		as the system name shown in the Lights Table.</li>
+		</ul>
 	The <b>Create</b> and <b>Edit</b> buttons at the bottom of the Add/Edit 
 	Light window will change to <b>Update</b> and <b>Cancel</b>.</li>
 	<li> Make whatever changes or additions you need to the information in
@@ -161,7 +164,7 @@ correct the error and click <b>Create</b> again.</p></li>
 	changes are made to the selected Light.</li>
 </ol>
 
-<a name="lightcontrol"><H3>Automated Control Options for Lights</H3></a>
+<a name="lightcontrol"><h3>Automated Control Options for Lights</h3></a>
 
 The operation of a Light can be controlled in the following ways:
 	<ul>
@@ -203,7 +206,7 @@ The operation of a Light can be controlled in the following ways:
 	</li>
 	</ul>
 
-<a name="variablelight"><H3>Variable Lights</H3></a>
+<a name="variablelight"><h3>Variable Lights</h3></a>
 
 <p>
 	A variable Light allows for a variable number of intensities between on and off.
@@ -228,25 +231,25 @@ The operation of a Light can be controlled in the following ways:
 	Mixing on/off commands may require the initialization to occur again.
 </p>
 <p>
-	A variable Light has three types of operators:
+	A Variable Light has three types of operators:
 	<dl>
 		<dt><b>On</b></dt>
 		<dd>
-			This operation will turn a variable Light on.
+			This operation will turn a Variable Light on.
             It will over-ride any current intensity and set the intensity to 1.
             If there are any transition effects enabled, they will be ignored
             and intensity will go to the maximum amount.
 		</dd>
 		<dt><b>Off</b></dt>
 		<dd>
-			This operation will turn a variable Light off.
+			This operation will turn a Variable Light off.
             It will over-ride any current intensity and set the intensity to 0.
             If there are any transition effects enabled, they will be ignored
             and intensity will go to the maximum amount.
 		</dd>
         <dt><b>Set Intensity</b></dt>
 		<dd>
-			This operation will set a target intensity for the
+			This operation will set a target intensity for the Variable
 			Light. If the interface supports transition effects and they are
 			configured, the Light will make a controlled transition from the current
 			setting to the new setting.
@@ -254,7 +257,7 @@ The operation of a Light can be controlled in the following ways:
     </dl>
 </p>
 
-<a name="VariableLightSettings"><h3>Variable Light Settings</h3></a>
+<a name="VariableLightSettings"><h4>Variable Light Settings</h4></a>
 <p>
 	These settings adjust how the 'set intensity' command is used.
 	<dl>

@@ -610,7 +610,7 @@ public class EcosLocoAddressManager extends jmri.managers.AbstractManager implem
                                 if ((1000 <= object) && (object < 2000)) {
                                     tmploco = provideByEcosObject(strde);
                                 }
-                                decodeLocoDetails(tmploco, line);
+                                decodeLocoDetails(tmploco, line, true);
                             }
                             locoToRoster.processQueue();
                             processLocoToRosterQueue = true;
@@ -619,14 +619,14 @@ public class EcosLocoAddressManager extends jmri.managers.AbstractManager implem
                 } else if (replyType.equals("get")) {
                     EcosLocoAddress tmploco = provideByEcosObject(Integer.toString(ecosObjectId));
                     for (String line : msgDetails) {
-                        decodeLocoDetails(tmploco, line);
+                        decodeLocoDetails(tmploco, line, false);
                     }
                 }
             }
         }
     }
 
-    void decodeLocoDetails(EcosLocoAddress tmploco, String line) {
+    void decodeLocoDetails(EcosLocoAddress tmploco, String line, boolean addToRoster) {
         if (tmploco == null) {
             return;
         }
@@ -666,7 +666,7 @@ public class EcosLocoAddressManager extends jmri.managers.AbstractManager implem
             tmploco.setDirection(newDirection);
         }
         register(tmploco);
-        if (p.getAddLocoToJMRI() != EcosPreferences.NO) {
+        if (p.getAddLocoToJMRI() != EcosPreferences.NO && addToRoster) {
             locoToRoster.addToQueue(tmploco);
         }
     }
