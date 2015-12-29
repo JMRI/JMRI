@@ -110,6 +110,10 @@ public abstract class DCCppTrafficController extends AbstractMRTrafficController
      * @param m Message to send # @param client is the client getting the
      *          message
      */
+    
+    // TODO: This should be fleshed out to allow listeners to register for only
+    // certain types of DCCppReply-s.  The analogous code from the Lenz interface
+    // has been left here and commented out for future reference.
     @Override
     public void forwardReply(AbstractMRListener client, AbstractMRReply m) {
         // check parity
