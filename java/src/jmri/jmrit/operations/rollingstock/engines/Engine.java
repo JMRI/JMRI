@@ -5,6 +5,7 @@ import jmri.jmrit.operations.locations.Location;
 import jmri.jmrit.operations.locations.Track;
 import jmri.jmrit.operations.rollingstock.RollingStock;
 import jmri.jmrit.operations.routes.RouteLocation;
+import jmri.jmrit.operations.trains.Train;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -257,18 +258,29 @@ public class Engine extends RollingStock {
         return super.testDestination(destination, track);
     }
 
-    protected void moveRollingStock(RouteLocation old, RouteLocation next) {
-        if (old == getRouteLocation()) {
-            if (getConsist() == null || (getConsist() != null && getConsist().isLead(this))) {
-                if (getTrain() != null && getRouteLocation() != getRouteDestination()
-                        && getTrain().getLeadEngine() != this) {
-                    log.debug("New lead locomotive ({}) for train ({})", toString(), getTrain().getName());
-                    getTrain().setLeadEngine(this);
-                    getTrain().createTrainIcon();
+    /**
+     * Determine if there's a change in the lead locomotive. There are two possible
+     * locations in a train's route. TODO this code places the last loco added to the
+     * train as the lead. It would be better if the first one became the lead loco.
+     */
+    protected void moveRollingStock(RouteLocation current, RouteLocation next) {
+        if (current == getRouteLocation()) {
+            if (getConsist() == null || getConsist().isLead(this)) {
+                if (getRouteLocation() != getRouteDestination() && getTrain() != null
+                        && !isBunit() && getTrain().getLeadEngine() != this) {
+                    if (((getTrain().getSecondLegStartLocation() == current
+                            && (getTrain().getSecondLegOptions() & Train.CHANGE_ENGINES) == Train.CHANGE_ENGINES))
+                            ||
+                            ((getTrain().getThirdLegStartLocation() == current
+                            && (getTrain().getThirdLegOptions() & Train.CHANGE_ENGINES) == Train.CHANGE_ENGINES))) {
+                        log.debug("New lead locomotive ({}) for train ({})", toString(), getTrain().getName());
+                        getTrain().setLeadEngine(this);
+                        getTrain().createTrainIcon(current);
+                    }
                 }
             }
         }
-        super.moveRollingStock(old, next);
+        super.moveRollingStock(current, next);
     }
 
     public void dispose() {
