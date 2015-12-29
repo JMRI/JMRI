@@ -55,6 +55,18 @@
 	    </ul>
 		</dd>
  </dl>		
+
+<dt><h3>Applications</h3></dt>
+<dd>
+		<ul>
+		<li><a href="../DecoderPro/index.shtml">DecoderPro&reg;</a></li>
+		<li><a href="../PanelPro/PanelPro.shtml">PanelPro&trade;</a></li>
+		<li><a href="../DispatcherPro/index.shtml">DispatcherPro&trade;</a></li>
+    <li><a href="../../../package/jmri/jmrit/operations/Operations.shtml">OperationsPro&trade;</a></li>
+		<li><a href="../SoundPro/SoundPro.shtml">SoundPro</a></li>
+		<li><a href="../SignalPro/index.shtml">SignalPro</a></li>
+		</ul>
+</dd>
 		
  </div> <!-- closes #side -->
  

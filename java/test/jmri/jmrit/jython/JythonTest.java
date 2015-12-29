@@ -19,7 +19,6 @@ public class JythonTest extends TestCase {
 
     // Really a check of Jython init, including the defaults file
     public void testExec() {
-        jmri.InstanceManager.store(jmri.managers.DefaultUserMessagePreferences.getInstance(), jmri.UserPreferencesManager.class);
         jmri.util.JUnitAppender.clearBacklog();
         // open output window
         JythonWindow outputWindow;  // actually an Action class
@@ -76,11 +75,17 @@ public class JythonTest extends TestCase {
     }
 
     // The minimal setup for log4J
-    protected void setUp() {
+    protected void setUp() throws Exception {
         apps.tests.Log4JFixture.setUp();
+
+        super.setUp();
+        jmri.util.JUnitUtil.resetInstanceManager();
+        jmri.util.JUnitUtil.initDefaultUserMessagePreferences();
     }
 
-    protected void tearDown() {
+    protected void tearDown() throws Exception {
+        jmri.util.JUnitUtil.resetInstanceManager();
+        super.tearDown();
         apps.tests.Log4JFixture.tearDown();
     }
 }

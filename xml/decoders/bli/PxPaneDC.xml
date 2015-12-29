@@ -62,6 +62,18 @@
         <text> </text>
       </label>
       <row>
+        <display item="HO Gauge Rev Level Motor Power Scalar" layout="above" label="">
+          <label/>
+        </display>
+        <label>
+          <text> </text>
+        </label>
+        <display item="HO Gauge Rev Level Motor Power Scalar" layout="above" format="hslider"/>
+      </row>
+      <label>
+        <text> </text>
+      </label>
+      <row>
         <display item="N Gauge Rev Level Motor Power Scalar" layout="above" label="">
           <label/>
         </display>
@@ -165,6 +177,101 @@
           <text> </text>
         </label>
         <display item="DC Track Change Magnitude Decrease" layout="above" format="hslider"/>
+      </row>
+    </column>
+    <column>
+      <row>
+        <display item="Analog Rev Level 1 Voltage" layout="above" label="">
+          <label/>
+        </display>
+        <label>
+          <text> </text>
+        </label>
+        <display item="Analog Rev Level 1 Voltage" layout="above" format="hslider"/>
+      </row>
+      <label>
+        <text> </text>
+      </label>
+      <row>
+        <display item="Analog Rev Level 2 Voltage" layout="above" label="">
+          <label/>
+        </display>
+        <label>
+          <text> </text>
+        </label>
+        <display item="Analog Rev Level 2 Voltage" layout="above" format="hslider"/>
+      </row>
+      <label>
+        <text> </text>
+      </label>
+      <row>
+        <display item="Analog Rev Level 3 Voltage" layout="above" label="">
+          <label/>
+        </display>
+        <label>
+          <text> </text>
+        </label>
+        <display item="Analog Rev Level 3 Voltage" layout="above" format="hslider"/>
+      </row>
+      <label>
+        <text> </text>
+      </label>
+      <row>
+        <display item="Analog Rev Level 4 Voltage" layout="above" label="">
+          <label/>
+        </display>
+        <label>
+          <text> </text>
+        </label>
+        <display item="Analog Rev Level 4 Voltage" layout="above" format="hslider"/>
+      </row>
+      <label>
+        <text> </text>
+      </label>
+      <row>
+        <display item="Analog Rev Level 5 Voltage" layout="above" label="">
+          <label/>
+        </display>
+        <label>
+          <text> </text>
+        </label>
+        <display item="Analog Rev Level 5 Voltage" layout="above" format="hslider"/>
+      </row>
+      <label>
+        <text> </text>
+      </label>
+      <row>
+        <display item="Analog Rev Level 6 Voltage" layout="above" label="">
+          <label/>
+        </display>
+        <label>
+          <text> </text>
+        </label>
+        <display item="Analog Rev Level 6 Voltage" layout="above" format="hslider"/>
+      </row>
+      <label>
+        <text> </text>
+      </label>
+      <row>
+        <display item="Analog Rev Level 7 Voltage" layout="above" label="">
+          <label/>
+        </display>
+        <label>
+          <text> </text>
+        </label>
+        <display item="Analog Rev Level 7 Voltage" layout="above" format="hslider"/>
+      </row>
+      <label>
+        <text> </text>
+      </label>
+      <row>
+        <display item="DC Rev Level Motor Power Scalar" layout="above" label="">
+          <label/>
+        </display>
+        <label>
+          <text> </text>
+        </label>
+        <display item="DC Rev Level Motor Power Scalar" layout="above" format="hslider"/>
       </row>
     </column>
     <column>

@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
 <!-- Copyright Bob Jacobsen 2008 -->
-<title>JMRI: DecoderPro - Sharing DecoderPro Rosters Across A Network</title>
+<title>JMRI: DecoderPro - Sharing DecoderPro Rosters across a Network</title>
 
 <!-- Style -->
 <meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
@@ -21,13 +21,13 @@
 
 <!-- Page Body -->
 <h1>JMRI: DecoderPro User Guide</h1>
-<h2>Sharing DecoderPro Rosters Across A Network</h2>
+<h2>Sharing DecoderPro Rosters across a Network</h2>
 
 <strong>
 Note:
 <p>
   The information on this page is somewhat dated in terms of file locations, Preferences settings and a recommended solution.
-  For more up-to-date information see <a href="/help/en/html/Dropbox.shtml">this DropBox link</a>.
+  For more up-to-date information see <a href="/help/en/html/Dropbox.shtml">Using DropBox</a>.
 </p>
 </strong>
 
