@@ -48,6 +48,14 @@ public class DefaultUserMessagePreferences extends jmri.jmrit.XmlFile implements
 
     // needs to be package or protected level for tests to be able to instantiate
     DefaultUserMessagePreferences() {
+        init();
+    }
+
+    DefaultUserMessagePreferences(boolean doInit) {
+        if (doInit) init();
+    }
+    
+    void init() {
         // register this object to be stored as part of preferences
         if (jmri.InstanceManager.configureManagerInstance() != null) {
             jmri.InstanceManager.configureManagerInstance().registerUserPrefs(this);
@@ -78,6 +86,7 @@ public class DefaultUserMessagePreferences extends jmri.jmrit.XmlFile implements
                 jmri.InstanceManager.shutDownManagerInstance().register(userPreferencesShutDownTask);
             } else {
                 log.warn("Won't protect preferences at shutdown without registered ShutDownManager");
+                new Exception("forced traceback").printStackTrace();
             }
         }
 
@@ -87,7 +96,6 @@ public class DefaultUserMessagePreferences extends jmri.jmrit.XmlFile implements
     }
 
     static class DefaultUserMessagePreferencesHolder {
-
         static DefaultUserMessagePreferences instance = null;
     }
 
