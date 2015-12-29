@@ -49,7 +49,7 @@ public class QualifiedVarTest extends TestCase {
                 try {
                     jmri.jmrit.XmlFile file = new jmri.jmrit.XmlFile() {
                     };
-                    org.jdom2.Element el = file.rootFromFile(new java.io.File("java/test/jmri/jmrit/decoderdefn/DecoderWithQualifier.xml"));
+                    org.jdom2.Element el = file.rootFromFile(new java.io.File("java/test/jmri/jmrit/symbolicprog/tabbedframe/pass/DecoderWithQualifier.xml"));
 
                     DecoderFile df = new DecoderFile();  // used as a temporary
                     df.loadVariableModel(el.getChild("decoder"), p.variableModel);

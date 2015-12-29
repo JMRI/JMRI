@@ -66,7 +66,7 @@ public class MemoryComboIcon extends PositionableJPanel
         setPopupUtility(new PositionablePopupUtil(this, _comboBox));
     }
     
-    public javax.swing.JComponent getTextComponent() {
+    public JComboBox<String> getTextComponent() {
         return _comboBox;
     }
 

@@ -1,39 +1,31 @@
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
 <html lang="en">
 <head>
-<!-- Copyright ($Author$) 2008 -->
-<!-- $Id$ -->
-<title>JMRI: CBUS Support Details</title>
+<title>JMRI Hardware Support - CBUS - Tech Details</title>
 
 <!-- Style -->
-<META HTTP-EQUIV="Content-Type" CONTENT="text/html; charset=iso-8859-1">
-<LINK REL="stylesheet" TYPE="text/css" HREF="/css/default.css"
-	MEDIA="screen">
-<LINK REL="stylesheet" TYPE="text/css" HREF="/css/print.css"
-	MEDIA="print">
-<LINK REL="icon" HREF="/images/jmri.ico" TYPE="image/png">
-<LINK REL="home" TITLE="Home" HREF="/">
+<meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
+<link rel="stylesheet" type="text/css" href="/css/default.css" media="screen">
+<link rel="stylesheet" type="text/css" href="/css/print.css" media="print">
+<link rel="icon" href="/images/jmri.ico" type="image/png">
+<link rel="home" title="Home" href="/">
 <!-- /Style -->
-</HEAD>
+</head>
 
-<BODY>
+<body>
 <!--#include virtual="/Header" -->
   <div class="nomenu" id="mBody">
     <div id="mainContent">
 
-<h1> 
-JMRI: CBUS Support Technical Details
-</h1>
+<h1>Hardware Support: CBUS - Technical Details</h1>
 
 <em>The support on this page is rapidly evolving; the
 actual code might be ahead or behind the documentation
-on any given day.</em><p>
-
+on any given day.</em>
+<p>
 This page describes technical details of JMRI's
 <a href="index.shtml">CBUS</a>
-support.  See also the pages on JMRI's 
-<A href="../index.shtml">general CAN support</a>.
-<p>
+support.
 
 <h2>CAN Adapters</h2>
 
@@ -43,23 +35,28 @@ people and their hardware desires as possible, we
 can create a growing community of developers, hence more
 code.
 
-<P>
+<p>
 As part of this, the JMRI CAN support is designed to
 use as many CAN adapter types as possible.
 
-<P>
+<p>
 The MERG CAN-RS can do "enumeration" for CBUS, but 
 many other adapters can't 
 because of their intrinsic latency.
 Their slow replies effectively make them invisible.  
 
-<P>
+<p>
 Therefore, Mike Bolton , one of the the CBUS developers
 suggested that
 JMRI use a CBUS ID of 126.  Currently, that's a fixed value.
 
-
+<a name="documentation"></a><h2>Documentation</h2>
+<h3>JMRI Help</h3>
+<p>Back to the <a href="index.shtml">Main CBUS Help page</a>
+<p>Also read JMRI's <a href="../index.shtml">general CAN support</a>
 
 <!--#include virtual="/Footer" -->
+ </div><!-- closes #mainContent-->
+</div> <!-- closes #mBody-->
 </body>
 </html>

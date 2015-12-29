@@ -1,0 +1,333 @@
+<?xml version="1.0" encoding="utf-8"?>
+<?xml-stylesheet type="text/xsl" href="../XSLT/decoder.xsl"?>
+<!-- Copyright (C) JMRI 2001, 2005, 2007, 2-009, 2010 All rights reserved -->
+<!-- $Id: BLI_Blueline_Paragon2_Steam.xml 29062 2015-04-11 03:53:07Z jacobsen $ -->
+<!--                                                                        -->
+<!-- JMRI is free software; you can redistribute it and/or modify it under  -->
+<!-- the terms of version 2 of the GNU General Public License as published  -->
+<!-- by the Free Software Foundation. See the "COPYING" file for a copy     -->
+<!-- of this license.                                                       -->
+<!--                                                                        -->
+<!-- JMRI is distributed in the hope that it will be useful, but WITHOUT    -->
+<!-- ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or  -->
+<!-- FITNESS FOR A PARTICULAR PURPOSE.  See the GNU General Public License  -->
+<!-- for more details.                                                      -->
+<decoder-config xmlns:xi="http://www.w3.org/2001/XInclude" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="http://jmri.org/xml/schema/decoder.xsd">
+  <version author="Michael Mosher" version="1" lastUpdated="20151016"/>
+  <!-- Version 1 New file from 0.13 manual and BLI_Paragon2_steam v5 -->
+  <version author="Michael Mosher" version="2" lastUpdated="20151203"/>
+  <!-- General cleanup, more use of external files to go along with P3 file -->
+  <decoder>
+    <family name="Paragon 3" mfg="Broadway Limited Imports, LLC">
+      <model model="Steam" numOuts="3" numFns="30" connector="9pin">
+        <versionCV lowVersionID="32" highVersionID="63"/>
+        <output name="1" label="headlight"/>
+        <output name="2" label="rearlight"/>
+      </model>
+      <functionlabels>
+        <functionlabel num="0" lockable="true">Headlight</functionlabel>
+        <functionlabel num="1" lockable="true">Bell</functionlabel>
+        <functionlabel num="2" lockable="false">Whistle</functionlabel>
+        <functionlabel num="3" lockable="true">Coupler</functionlabel>
+        <functionlabel num="4" lockable="true">Air Pump</functionlabel>
+        <functionlabel num="5" lockable="true">Blow Down/Chuff Up</functionlabel>
+        <functionlabel num="6" lockable="true">Water Fill/Chuff Dn</functionlabel>
+        <functionlabel num="7" lockable="true">Smoke Control</functionlabel>
+        <functionlabel num="8" lockable="true">Mute/Master Volume</functionlabel>
+        <functionlabel num="9" lockable="true">Shutdown and Startup</functionlabel>
+        <functionlabel num="10" lockable="true">Shovel Coal</functionlabel>
+        <functionlabel num="11" lockable="true">Water Injector</functionlabel>
+        <functionlabel num="12" lockable="true">Brake Set/Release/Squeal</functionlabel>
+        <functionlabel num="13" lockable="true">Horn Grade Crossing</functionlabel>
+        <functionlabel num="14" lockable="true">Passenger Sounds</functionlabel>
+        <functionlabel num="15" lockable="true">Freight Sounds</functionlabel>
+        <functionlabel num="16" lockable="true">Maintenance Sounds</functionlabel>
+        <functionlabel num="17" lockable="true">Radio Chatter</functionlabel>
+        <functionlabel num="18" lockable="true">City Sounds</functionlabel>
+        <functionlabel num="19" lockable="true">Farm Sounds</functionlabel>
+        <functionlabel num="20" lockable="true">Industrial Sounds</functionlabel>
+        <functionlabel num="21" lockable="true">Lumber Sounds</functionlabel>
+        <functionlabel num="22" lockable="true">Horn2</functionlabel>
+        <functionlabel num="23" lockable="true">Track Sounds</functionlabel>
+        <functionlabel num="24" lockable="true">Aux Light Control</functionlabel>
+        <functionlabel num="25" lockable="true">Long Whistle</functionlabel>
+        <functionlabel num="26" lockable="true">Play Macro</functionlabel>
+        <functionlabel num="27" lockable="true">Record Macro</functionlabel>
+        <functionlabel num="28" lockable="true">Brake Squeal</functionlabel>
+      </functionlabels>
+    </family>
+    <programming direct="yes" paged="no" register="yes" ops="yes"/>
+    <variables>
+      <xi:include href="http://jmri.org/xml/decoders/bli/PxCV.xml"/>
+      <xi:include href="http://jmri.org/xml/decoders/bli/P3CV.xml"/>
+      <xi:include href="http://jmri.org/xml/decoders/bli/PxCV_Steam.xml"/>
+      <!-- This decoder doesn't do the bit-wise NMRA method of -->
+      <!-- assigning functions to outputs. Instead, it has -->
+      <!-- a much more civilized system of one CV per function -->
+      <variable CV="33" default="1" minFn="1" item="F0 Output Function">
+        <xi:include href="http://jmri.org/xml/decoders/bli/P3FunctionChoiceSteam.xml"/>
+      </variable>
+      <variable CV="34" default="2" minFn="1" item="F1 Output Function">
+        <xi:include href="http://jmri.org/xml/decoders/bli/P3FunctionChoiceSteam.xml"/>
+      </variable>
+      <variable CV="35" default="3" minFn="2" item="F2 Output Function">
+        <xi:include href="http://jmri.org/xml/decoders/bli/P3FunctionChoiceSteam.xml"/>
+      </variable>
+      <variable CV="36" default="17" minFn="3" item="F3 Output Function">
+        <xi:include href="http://jmri.org/xml/decoders/bli/P3FunctionChoiceSteam.xml"/>
+      </variable>
+      <variable CV="37" default="5" minFn="4" item="F4 Output Function">
+        <xi:include href="http://jmri.org/xml/decoders/bli/P3FunctionChoiceSteam.xml"/>
+      </variable>
+      <variable CV="38" default="6" minFn="5" item="F5 Output Function">
+        <xi:include href="http://jmri.org/xml/decoders/bli/P3FunctionChoiceSteam.xml"/>
+      </variable>
+      <variable CV="39" default="7" minFn="6" item="F6 Output Function">
+        <xi:include href="http://jmri.org/xml/decoders/bli/P3FunctionChoiceSteam.xml"/>
+      </variable>
+      <variable CV="40" default="21" minFn="7" item="F7 Output Function">
+        <xi:include href="http://jmri.org/xml/decoders/bli/P3FunctionChoiceSteam.xml"/>
+      </variable>
+      <variable CV="41" default="9" minFn="8" item="F8 Output Function">
+        <xi:include href="http://jmri.org/xml/decoders/bli/P3FunctionChoiceSteam.xml"/>
+      </variable>
+      <variable CV="42" default="10" minFn="9" item="F9 Output Function">
+        <xi:include href="http://jmri.org/xml/decoders/bli/P3FunctionChoiceSteam.xml"/>
+      </variable>
+      <variable CV="43" default="11" minFn="10" item="F10 Output Function">
+        <xi:include href="http://jmri.org/xml/decoders/bli/P3FunctionChoiceSteam.xml"/>
+      </variable>
+      <variable CV="44" default="12" minFn="11" item="F11 Output Function">
+        <xi:include href="http://jmri.org/xml/decoders/bli/P3FunctionChoiceSteam.xml"/>
+      </variable>
+      <variable CV="45" default="13" minFn="12" item="F12 Output Function">
+        <xi:include href="http://jmri.org/xml/decoders/bli/P3FunctionChoiceSteam.xml"/>
+      </variable>
+      <variable CV="46" default="30" minFn="13" item="F13 Output Function">
+        <xi:include href="http://jmri.org/xml/decoders/bli/P3FunctionChoiceSteam.xml"/>
+      </variable>
+      <variable CV="47" default="50" minFn="14" item="F14 Output Function">
+        <xi:include href="http://jmri.org/xml/decoders/bli/P3FunctionChoiceSteam.xml"/>
+      </variable>
+      <variable CV="48" default="51" minFn="15" item="F15 Output Function">
+        <xi:include href="http://jmri.org/xml/decoders/bli/P3FunctionChoiceSteam.xml"/>
+      </variable>
+      <variable CV="49" default="52" minFn="16" item="F16 Output Function">
+        <xi:include href="http://jmri.org/xml/decoders/bli/P3FunctionChoiceSteam.xml"/>
+      </variable>
+      <variable CV="50" default="53" minFn="17" item="F17 Output Function">
+        <xi:include href="http://jmri.org/xml/decoders/bli/P3FunctionChoiceSteam.xml"/>
+      </variable>
+      <variable CV="51" default="54" minFn="18" item="F18 Output Function">
+        <xi:include href="http://jmri.org/xml/decoders/bli/P3FunctionChoiceSteam.xml"/>
+      </variable>
+      <variable CV="52" default="55" minFn="19" item="F19 Output Function">
+        <xi:include href="http://jmri.org/xml/decoders/bli/P3FunctionChoiceSteam.xml"/>
+      </variable>
+      <variable CV="53" default="56" minFn="20" item="F20 Output Function">
+        <xi:include href="http://jmri.org/xml/decoders/bli/P3FunctionChoiceSteam.xml"/>
+      </variable>
+      <variable CV="54" default="57" minFn="21" item="F21 Output Function">
+        <xi:include href="http://jmri.org/xml/decoders/bli/P3FunctionChoiceSteam.xml"/>
+      </variable>
+      <variable CV="55" default="19" minFn="22" item="F22 Output Function">
+        <xi:include href="http://jmri.org/xml/decoders/bli/P3FunctionChoiceSteam.xml"/>
+      </variable>
+      <variable CV="56" default="8" minFn="23" item="F23 Output Function">
+        <xi:include href="http://jmri.org/xml/decoders/bli/P3FunctionChoiceSteam.xml"/>
+      </variable>
+      <variable CV="57" default="8" minFn="24" item="F24 Output Function">
+        <xi:include href="http://jmri.org/xml/decoders/bli/P3FunctionChoiceSteam.xml"/>
+      </variable>
+      <variable CV="58" default="0" minFn="25" item="F25 Output Function">
+        <xi:include href="http://jmri.org/xml/decoders/bli/P3FunctionChoiceSteam.xml"/>
+      </variable>
+      <variable CV="59" default="40" minFn="26" item="F26 Output Function">
+        <xi:include href="http://jmri.org/xml/decoders/bli/P3FunctionChoiceSteam.xml"/>
+      </variable>
+      <variable CV="60" default="41" minFn="27" item="F27 Output Function">
+        <xi:include href="http://jmri.org/xml/decoders/bli/P3FunctionChoiceSteam.xml"/>
+      </variable>
+      <variable CV="61" default="18" minFn="28" item="F28 Output Function">
+        <xi:include href="http://jmri.org/xml/decoders/bli/P3FunctionChoiceSteam.xml"/>
+      </variable>
+      <variable CV="218" default="70" item="Smoke Unit Idle Heater Power">
+        <decVal/>
+        <label>Smoke Unit Idle Set Point</label>
+      </variable>
+      <variable CV="219" default="80" item="Smoke Unit Chuff Heater Power">
+        <decVal/>
+        <label>Smoke Unit Chuff Set Point</label>
+      </variable>
+      <variable CV="220" default="150" item="Chuff Adjust" tooltip="If CV246 D6=1 the locomotive uses this value as a timer to generate chuffs">
+        <decVal/>
+        <label>Chuff Timer</label>
+      </variable>
+      <variable item="Aux Select for DCMaster" CV="222" default="0">
+        <enumVal>
+          <enumChoice value="0">
+            <choice>Nothing</choice>
+          </enumChoice>
+          <enumChoice value="1">
+            <choice>Front/Rear Lights</choice>
+          </enumChoice>
+          <enumChoice value="2">
+            <choice>Bell Sound</choice>
+          </enumChoice>
+          <enumChoice value="3">
+            <choice>Horn Sound</choice>
+          </enumChoice>
+          <enumChoice value="4">
+            <choice>Couple/Uncouple Sound</choice>
+          </enumChoice>
+          <enumChoice value="5">
+            <choice>Air Pump Sound</choice>
+          </enumChoice>
+          <enumChoice value="6">
+            <choice>Blow Down/Chuff Intensity Up</choice>
+          </enumChoice>
+          <enumChoice value="7">
+            <choice>Water Fill/Chuff Intensity Down/Startup</choice>
+          </enumChoice>
+          <enumChoice value="8">
+            <choice>L1 Function</choice>
+          </enumChoice>
+          <enumChoice value="9">
+            <choice>Mute/Volume Control</choice>
+          </enumChoice>
+          <enumChoice value="10">
+            <choice>Startup/Shutdown Sounds</choice>
+          </enumChoice>
+          <enumChoice value="11">
+            <choice>Shovel Coal Sound</choice>
+          </enumChoice>
+          <enumChoice value="12">
+            <choice>Water Injector Sound</choice>
+          </enumChoice>
+          <enumChoice value="13">
+            <choice>Brake Set/Release/Squeal Sound</choice>
+          </enumChoice>
+          <enumChoice value="14">
+            <choice>SteamCock</choice>
+          </enumChoice>
+          <enumChoice value="15">
+            <choice>PopOffValve</choice>
+          </enumChoice>
+          <enumChoice value="15">
+            <choice>Wheel Flange Sound</choice>
+          </enumChoice>
+          <enumChoice value="17">
+            <choice>Coupler Slack/Couple Sound </choice>
+          </enumChoice>
+          <enumChoice value="18">
+            <choice>Brake Squeal Sound</choice>
+          </enumChoice>
+          <enumChoice value="19">
+            <choice>Horn2 Toggle</choice>
+          </enumChoice>
+          <enumChoice value="20">
+            <choice>Complete Horn</choice>
+          </enumChoice>
+          <enumChoice value="21">
+            <choice>Smoke Control</choice>
+          </enumChoice>
+          <enumChoice value="22">
+            <choice>Blower</choice>
+          </enumChoice>
+          <enumChoice value="24">
+            <choice>L4</choice>
+          </enumChoice>
+          <enumChoice value="25">
+            <choice>L5</choice>
+          </enumChoice>
+          <enumChoice value="28">
+            <choice>Dynamo</choice>
+          </enumChoice>
+          <enumChoice value="30">
+            <choice>Horn Grade Crossing Sound</choice>
+          </enumChoice>
+          <enumChoice value="31">
+            <choice>Track Sounds</choice>
+          </enumChoice>
+          <enumChoice value="32">
+            <choice>Johnson Bar</choice>
+          </enumChoice>
+          <enumChoice value="40">
+            <choice>Play Macro</choice>
+          </enumChoice>
+          <enumChoice value="41">
+            <choice>Record Macro</choice>
+          </enumChoice>
+          <enumChoice value="50">
+            <choice>Station Sounds</choice>
+          </enumChoice>
+          <enumChoice value="51">
+            <choice>Yard Sounds</choice>
+          </enumChoice>
+          <enumChoice value="52">
+            <choice>Maintenance Sounds</choice>
+          </enumChoice>
+          <enumChoice value="53">
+            <choice>Radio Chatter Sounds</choice>
+          </enumChoice>
+          <enumChoice value="54">
+            <choice>City Sounds</choice>
+          </enumChoice>
+          <enumChoice value="55">
+            <choice>Farm Sounds</choice>
+          </enumChoice>
+          <enumChoice value="56">
+            <choice>Industrial Sounds</choice>
+          </enumChoice>
+          <enumChoice value="57">
+            <choice>Lumber Yard Sounds</choice>
+          </enumChoice>
+          <enumChoice value="60">
+            <choice>Cab Light Toggle</choice>
+          </enumChoice>
+          <enumChoice value="61">
+            <choice>Rule 17 Dimming Toggle</choice>
+          </enumChoice>
+        </enumVal>
+        <label>Aux Select for DCMaster</label>
+      </variable>
+      <variable item="Smoke Unit Fan Idle Power" CV="232" default="8">
+        <decVal/>
+        <label>Fan Idle Power</label>
+      </variable>
+      <variable item="Fan Normal Chuff Power" CV="233" default="60">
+        <decVal/>
+        <label>Fan Normal Chuff Power</label>
+      </variable>
+      <variable item="Fan Loaded Chuff Power" CV="234" default="80">
+        <decVal/>
+        <label>Fan Loaded Chuff Power</label>
+      </variable>
+      <variable item="Fan Steam Cock Chuff Power" CV="235" default="70">
+        <decVal/>
+        <label>Fan Steam Cock Chuff Power</label>
+      </variable>
+      <variable item="Fan Rod Knock Chuff Power" CV="236" default="40">
+        <decVal/>
+        <label>Fan Rod Knock Chuff Power</label>
+      </variable>
+      <variable item="Smoke Unit Fan Chuff Time" CV="237" default="75">
+        <decVal/>
+        <label>Fan Chuff Time</label>
+      </variable>
+    </variables>
+    <resets>
+      <factReset label="Reset All CVs Unless Locked" CV="8" default="8"/>
+      <factReset label="Load and Save Factory Macro" CV="8" default="10"/>
+      <factReset label="Save Recorded Macro" CV="8" default="16"/>
+      <factReset label="Set F0-F12 To Match Blue Line" CV="8" default="38"/>
+      <factReset label="Set F0-F12 To Match QSI" CV="8" default="113"/>
+      <factReset label="Set F0-F12 To Match SoundTraxx" CV="8" default="141"/>
+      <factReset label="Reset All CVs Even If Decoder Locked" CV="8" default="254"/>
+    </resets>
+  </decoder>
+  <xi:include href="http://jmri.org/xml/decoders/bli/PxPaneFunction.xml"/>
+  <xi:include href="http://jmri.org/xml/decoders/bli/PxPaneDCC.xml"/>
+  <xi:include href="http://jmri.org/xml/decoders/bli/PxPaneDC.xml"/>
+  <xi:include href="http://jmri.org/xml/decoders/bli/PxPaneSettings.xml"/>
+</decoder-config>

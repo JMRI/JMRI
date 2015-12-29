@@ -287,6 +287,7 @@ public class Setup {
     private static boolean carLogger = false; // when true car logger is enabled
     private static boolean engineLogger = false; // when true engine logger is enabled
     private static boolean trainLogger = false; // when true train logger is enabled
+    private static boolean saveTrainManifests = false; // when true save previous train manifest
 
     private static boolean aggressiveBuild = false; // when true subtract car length from track reserve length
     private static int numberPasses = 2; // the number of passes in train builder
@@ -572,7 +573,8 @@ public class Setup {
     public static void setRailroadName(String name) {
         String old = railroadName;
         railroadName = name;
-        setDirtyAndFirePropertyChange("Railroad Name Change", old, name); // NOI18N
+        if (old == null || !old.equals(name))
+            setDirtyAndFirePropertyChange("Railroad Name Change", old, name); // NOI18N
     }
 
     public static String getHazardousMsg() {
@@ -1056,6 +1058,14 @@ public class Setup {
     public static void setTrainLoggerEnabled(boolean enable) {
         trainLogger = enable;
         TrainLogger.instance().enableTrainLogging(enable);
+    }
+    
+    public static boolean isSaveTrainManifestsEnabled() {
+        return saveTrainManifests;
+    }
+    
+    public static void setSaveTrainManifestsEnabled(boolean enable) {
+        saveTrainManifests = enable;
     }
 
     public static String getPickupEnginePrefix() {
@@ -1756,7 +1766,10 @@ public class Setup {
         Element values;
         Element e = new Element(Xml.OPERATIONS);
         e.addContent(values = new Element(Xml.RAIL_ROAD));
-        values.setAttribute(Xml.NAME, getRailroadName());
+        if (Setup.getRailroadName().equals(WebServerManager.getWebServerPreferences().getRailRoadName()))
+            values.setAttribute(Xml.NAME, Xml.USE_JMRI_RAILROAD_NAME);
+        else
+            values.setAttribute(Xml.NAME, getRailroadName());
 
         e.addContent(values = new Element(Xml.SETUP));
         values.setAttribute(Xml.COMMENT, getComment());
@@ -1902,6 +1915,10 @@ public class Setup {
             values.setAttribute(Xml.NAME, getManifestLogoURL());
             e.addContent(values);
         }
+        
+        // manifest save file options
+        e.addContent(values = new Element(Xml.MANIFEST_FILE_OPTIONS));
+        values.setAttribute(Xml.MANIFEST_SAVE, isSaveTrainManifestsEnabled() ? Xml.TRUE : Xml.FALSE);
 
         e.addContent(values = new Element(Xml.BUILD_OPTIONS));
         values.setAttribute(Xml.AGGRESSIVE, isBuildAggressive() ? Xml.TRUE : Xml.FALSE);
@@ -1993,7 +2010,10 @@ public class Setup {
             if (log.isDebugEnabled()) {
                 log.debug("railroadName: {}", name);
             }
-            railroadName = name; // don't set the dirty bit
+            if (name.equals(Xml.USE_JMRI_RAILROAD_NAME))
+                railroadName = null;
+            else
+                railroadName = name; // don't set the dirty bit
         }
 
         if ((operations.getChild(Xml.SETUP) != null)
@@ -2649,6 +2669,16 @@ public class Setup {
         if ((operations.getChild(Xml.MANIFEST_LOGO) != null)) {
             if ((a = operations.getChild(Xml.MANIFEST_LOGO).getAttribute(Xml.NAME)) != null) {
                 setManifestLogoURL(a.getValue());
+            }
+        }
+        // manifest file options
+        if ((operations.getChild(Xml.MANIFEST_FILE_OPTIONS) != null)) {
+            if ((a = operations.getChild(Xml.MANIFEST_FILE_OPTIONS).getAttribute(Xml.MANIFEST_SAVE)) != null) {
+                String enable = a.getValue();
+                if (log.isDebugEnabled()) {
+                    log.debug("manifest file save option: " + enable);
+                }
+                setSaveTrainManifestsEnabled(enable.equals(Xml.TRUE));
             }
         }
         if ((operations.getChild(Xml.BUILD_OPTIONS) != null)) {

@@ -1,22 +1,14 @@
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
-<!-- $Id$ -->
 <html lang="en">
 <head>
-    <TITLE>
+    <title>
  	JMRI: Use of JavaHelp
-    </TITLE>
-    <META content="Bob Jacobsen" name=Author>
+    </title>
+    <meta name="Author" content="Bob Jacobsen">
     <meta name="keywords" content="JMRI technical code Java Help JavaHelp ">
 
-    <!-- The combination of "Define" and {Header,Style, Logo and Footer} comments -->
-    <!-- are an arbitrary design pattern used by the update.pl script to -->
-    <!-- easily replace the common header/footer code for all the web pages -->
-
-    <!-- delete the following 2 Defines if you want to use the default JMRI logo -->
-    <!-- or change them to reflect your alternative logo -->
-
 <!-- Style -->
-  <META http-equiv=Content-Type content="text/html; charset=iso-8859-1">
+  <meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
   <link rel="stylesheet" type="text/css" href="/css/default.css" media="screen">
   <link rel="stylesheet" type="text/css" href="/css/print.css" media="print">
   <link rel="icon" href="/images/jmri.ico" type="image/png">
@@ -24,17 +16,18 @@
 <!-- /Style -->
 </head>
 
+<body>
 <!--#include virtual="/Header" -->
 <!--#include virtual="Sidebar" -->
 
-	<div id="mainContent">
+    <div id="mainContent">
 
-		    <H1>JMRI: Use of JavaHelp</H1>
+<h1>JMRI: Use of JavaHelp</h1>
 
 This page talks about technical aspects of how JMRI provides help
 information using 
-<A HREF="https://javahelp.java.net">JavaHelp</a> and 
-<A HREF="http://jhelpdev.sourceforge.net/">JHelpDev</a>.
+<a href="https://javahelp.java.net">JavaHelp</a> and 
+<a href="http://jhelpdev.sourceforge.net/">JHelpDev</a>.
 
 
 <h2>Organization of the help files</h2>
@@ -48,26 +41,26 @@ directory in the JMRI code repository.
 This means to get your own local copy, just follow the steps on the  
 "<a href="getgitcode.shtml">getting the code</a>" page.
 
-<P>
+<p>
 Within that, all the English-language files are located
 within the "en" subdirectory.  Eventually, this will
 let us internationalize the help pages.
-<P>
+<p>
 Within that, there are several file trees:
-<UL>
-<LI>package - organized like the source package tree,
+<ul>
+<li>package - organized like the source package tree,
 this contains code-specific help files for e.g. a particular
 window or component.  For example, a window that's created
 by the <code>jmri.jmrit.speedometer.SpeedometerFrame</code> class
 (from the <code>src/jmri/jmrit/speedometer/SpeedometerFrame.java</code> file)
 should have its window-specific help in a file at
 <code>package/jmri/jmrit/speedometer/SpeedometerFrame.shtml</code>.
-<LI>html - general descriptions, tutorials, etc.  
+<li>html - general descriptions, tutorials, etc.  
 This in turn in organized into directories that represent general areas.
-<LI>manual - the most recent version of the DecoderPro et al manuals reformatted for 
+<li>manual - the most recent version of the DecoderPro et al manuals reformatted for 
 use in the help system. (Older ones are stored in the
 <a href="WebSite.shtml">main web site</a>)
-</UL>
+</ul>
 
 In the long run, we want only two branches to this structure:  the "package"
 part of the tree for help information that is specific to 
@@ -120,10 +113,10 @@ an outside web browser.
 It's inconvenient to have to maintain two separate web pages for the
 main web site and the help system.  To reduce the need for that, we
 use a particular form for the web pages in the help system.
-<UL>
-<LI>Use ".shtml" file extensions so that
+<ul>
+<li>Use ".shtml" file extensions so that
 the main web servers will search the files for
-<A HREF="http://httpd.apache.org/docs/1.3/howto/ssi.html">server-side includes</a>.
+<a href="http://httpd.apache.org/docs/1.3/howto/ssi.html">server-side includes</a>.
 <li>When you create a new page, start with a copy 
 of either the 
 help/en/TemplateBar.shtml or help/en/TemplatePlain.shtml
@@ -131,7 +124,7 @@ template
 file, depending on whether or not you want to include a "Sidebar"
 via a file of the same name.  This will put the proper top and bottom
 matter in place to get the page properly displayed.
-</UL>
+</ul>
 
 <a name="code" id="code"></a><h2>Access in the code</h2>
 
@@ -139,13 +132,13 @@ Within the JMRI code, access the help system comes
 via the jmri.util.HelpUtil class.
 (For historical reasons, there's a little bit of code
 in apps.Apps, but you should ignore that).
-<P>
+<p>
 The easiest way to add a help menu to a 
 frame is to have it be a JmriJFrame (which you 
 should do anyway), and call addHelpMenu(...)
 after you've built any other menus.
 
-<P>
+<p>
 By convention, we use a similar file tree for 
 the source code and help files.  For example,
 the <code>jmri.jmrit.simpleclock.SimpleClockFrame</code>
@@ -157,55 +150,78 @@ class inherits from JmriJFrame, and adds a help menu with the line
 </PRE>
 The help file is then located at 
 <code>help/en/package/jmri/jmrit/simpleclock/SimpleClockFrame.shtml</code>.
-<P>
+<p>
 A number of help files have been put in place without any contents;
 hopefully some users will edit them and contribute them back.
-
 
 <a name="jhelpdev" id="jhelpdev"></a><h2>Creating the control files with JHelpDev</h2>
 
 JavaHelp uses various XML files to 
 control how the table of contents and index are displayed.
 We create those with
-<A HREF="http://jhelpdev.sourceforge.net/">JHelpDev</a>.
+<a href="http://jhelpdev.sourceforge.net/">JHelpDev</a>.
 Please don't edit them manually.  
 
-<P>
+<p>
 JHelpDev is now included in the JMRI dist.  To use the tool:
-<OL>
+<ol>
 <li>Make sure you've updated to the most recent version in the code repository before getting started.</li>
-<LI>Start the tool by clicking on the jhelpdev.jar file. (If that doesn't work, try
+<li>Start the tool by clicking on the jhelpdev.jar file. (If that doesn't work, try
 running either JHelpDev.csh or JHelpDev.bat, depending on what kind of
-computer you have)</LI>
+computer you have)</li>
 
-<LI>Once the window appears, select "Open Project" under the "File" menu.</LI>
+<li>Once the window appears, select "Open Project" under the "File" menu.</li>
 
-<LI>Navigate to the "help" directory in your checked out copy of the code, 
+<li>Navigate to the "help" directory in your checked out copy of the code, 
 then the "en" directory within that, then select the "JHelpDev.xml" file 
-and click "Open".</LI>
+and click "Open".</li>
 <p> You may get a message about "[Fatal Error] index.html:1:3: The markup declarations contained or pointed to by the document type declaration must be well-formed."
-Although it says it's fatal, it's really not a problem.  Just ignore it.
+Although it says it's fatal, it's really not a problem. Just ignore it. On startup the Map (a file containing the JHelpDev index of all anchors in the JMRI help system) is regenerated.
 
-<LI>Click the "Create All" button to recreate the maps, index, etc.</LI>
+<li>By clicking the "Index Editor" tab or the "TOC Editor" tab, review and update the Help entries. A red line marks a hyperlink that JHelpDev can't locate on disk. Right-click on such a line to open the Edit context menu.</li>
+
+<li>Click the "Create All" button to recreate the TOC, Index, etc.</li>
 
 <li>Then, back on the command line and in the help/en directory, invoke
 "ant" to create the web index and table of contents pages.  (Or if using 
 Eclipse, right-click on the help/en/build.xml file and select Run As Ant Build.)</li>
-</OL>
+</ol>
 
 <p>
 The various control files that JavaHelp uses are stored in our code repository, 
 so once you've done this they will show as modified.  
-Please check them in when you check in new help files so other 
+Please check them in when you check in new Help files so other 
 people don't have to recreate those control files for themselves.
-<P>
-You can also use the tool to add them to the table of contents, etc, if you'd like. 
+
+<a name="tocAndIndex" id="tocAndIndex"></a><h3>Table of Contents and Index</h3>
+
+Java Help includes a 
+<a href="http://jmri.org/help/en/webtoc.shtml">table of contents</a> and an 
+<a href="http://jmri.org/help/en/webindex.shtml">index</a>. These are both available
+as hyperlinks on the web, and provided via a nicer user interface when using
+JavaHelp in the program.
+<p>
+The underlying information must be manually maintained in the 
+help/en/JmriHelp_enTOC.xml and help/en/JmriHelp_enIndex.xml 
+files, respectively.  JHelpDev then makes the files that Java Help needs, 
+and an "ant" step in the directory makes the webtoc.shtml and webindex.shtml
+files that are displayed on the web.
+<p>
+Note: This means you should not manually change the webToc.shtml and webindex.shtml files,
+because those changes will be overwritten by later steps.
+<p>
+The JmriHelp_enTOC.xml and JmriHelp_enIndex.xml files are straight-forward
+XML, and you can manually edit them.  Make sure to run the JHelpDev "create all" 
+step and "ant" after doing so.
+<p>
+You can also use the JHelpDev tool to add items to the table of contents
+and index if you'd like. 
 There's more info on how to do that on the
-<a href="http://jhelpdev.sourceforge.net/">JHelpDev web site</a>.
+<a href="http://jhelpdev.sourceforge.net/">JHelpDev web site</a>. Remember to run 
+"ant" after that to include your updates on the web versions.
 
-
-<a name="site" id="site"></a><h2>Updating the JMRI.ORG site</h2>
-Changes to Help pages which are checked-in should show up automatically on the JMRI.ORG
+<a name="site" id="site"></a><h2>Updating the JMRI.org site</h2>
+Changes to Help pages which are checked-in should show up automatically on the JMRI.org
 site after a short while. 
 There's a 
 <a href="http://builds.jmri.org/jenkins/job/Web%20Site/job/Update%20Static%20Components/">Jenkins job</a>
@@ -213,7 +229,7 @@ that handles periodic updates for the static (from repository, unlike e.g. JavaD
 
 <!--#include virtual="/Footer" -->
 
-	  </div><!-- closes #mainContent-->
-	</div> <!-- closes #mBody-->
+    </div><!-- closes #mainContent-->
+  </div> <!-- closes #mBody-->
 </body>
 </html>

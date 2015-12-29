@@ -9,6 +9,10 @@
 # If you need to add any additional Java options or defines,
 # include them in the JMRI_OPTIONS environment variable
 #
+#  jmri.demo             Keep some test windows open after tests run
+#  jmri.headlesstest     Tests won't attempt to use screen
+#  jmri.skipschematests  Skip tests of XML schema if true
+#
 # If your serial ports are not shown in the initial list, you 
 # can include them in the environment variable JMRI_SERIAL_PORTS
 # separated by commas:

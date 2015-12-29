@@ -14,7 +14,7 @@
 <!-- for more details.                                                      -->
 <decoder-config xmlns:xi="http://www.w3.org/2001/XInclude" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="http://jmri.org/xml/schema/decoder.xsd">
   <!-- showEmptyPanes="no" -->
-  <version author="robin@n3ix.com" version="1.11.1" lastUpdated="201401117"/>
+  <version author="robin@n3ix.com" version="1.11.2" lastUpdated="20151215"/>
   <decoder>
     <family name="Quad-LN gen2" mfg="Tam Valley Depot" type="stationary" comment="The Quad-LN is programmed in OPs mode except for the address.">
       <model model="Quad-LNv1" comment="4 Servo Driver" lowVersionID="5"/>
@@ -272,6 +272,11 @@
         <label>Servo1 Directional Speed</label>
       </variable>
       <variable CV="51" mask="VVXXXXXX" item="Servo1 Thrown RapidStart" default="0">
+        <qualifier>
+          <variableref>Servo1 Directional Speed</variableref>
+          <relation>eq</relation>
+          <value>1</value>
+        </qualifier>
         <enumVal>
           <enumChoice choice="None">
             <choice>None</choice>
@@ -285,24 +290,14 @@
           <enumChoice choice="Three-eighths travel">
             <choice>Three-eighth travel</choice>
           </enumChoice>
-        </enumVal>
-        <label>Servo1 Thrown RapidStart</label>
-        <qualifier>
-          <variableref>Servo1 Directional Speed</variableref>
-          <relation>eq</relation>
-          <value>1</value>
-        </qualifier>
-      </variable>
+        </enumVal><label>Servo1 Thrown RapidStart</label></variable>
       <variable CV="51" mask="XXVVVVVV" item="Servo1 Thrown Speed" default="4">
-        <decVal/>
-        <label>Servo1 Thrown Speed</label>
-        <comment>Speed Range: 0-63</comment>
         <qualifier>
           <variableref>Servo1 Directional Speed</variableref>
           <relation>eq</relation>
           <value>1</value>
         </qualifier>
-      </variable>
+        <decVal/><label>Servo1 Thrown Speed</label><comment>Speed Range: 0-63</comment></variable>
       <variable CV="38" mask="XVVXXXXX" item="Servo1 Lock" default="0">
         <enumVal>
           <enumChoice choice="None">
@@ -969,6 +964,11 @@
         <label>Servo2 Directional Speed</label>
       </variable>
       <variable CV="73" mask="VVXXXXXX" item="Servo2 Thrown RapidStart" default="0">
+        <qualifier>
+          <variableref>Servo2 Directional Speed</variableref>
+          <relation>eq</relation>
+          <value>1</value>
+        </qualifier>
         <enumVal>
           <enumChoice choice="None">
             <choice>None</choice>
@@ -982,24 +982,14 @@
           <enumChoice choice="Three-eighths travel">
             <choice>Three-eighth travel</choice>
           </enumChoice>
-        </enumVal>
-        <label>Servo2 Thrown RapidStart</label>
-        <qualifier>
-          <variableref>Servo2 Directional Speed</variableref>
-          <relation>eq</relation>
-          <value>1</value>
-        </qualifier>
-      </variable>
+        </enumVal><label>Servo2 Thrown RapidStart</label></variable>
       <variable CV="73" mask="XXVVVVVV" item="Servo2 Thrown Speed" default="4">
-        <decVal/>
-        <label>Servo2 Thrown Speed</label>
-        <comment>Speed Range: 0-63</comment>
         <qualifier>
           <variableref>Servo2 Directional Speed</variableref>
           <relation>eq</relation>
           <value>1</value>
         </qualifier>
-      </variable>
+        <decVal/><label>Servo2 Thrown Speed</label><comment>Speed Range: 0-63</comment></variable>
       <variable CV="60" mask="XVVXXXXX" item="Servo2 Lock" default="0">
         <enumVal>
           <enumChoice choice="None">
@@ -1663,6 +1653,11 @@
         <label>Servo3  Directional Speed</label>
       </variable>
       <variable CV="95" mask="VVXXXXXX" item="Servo3 Thrown RapidStart" default="0">
+        <qualifier>
+          <variableref>Servo3 Directional Speed</variableref>
+          <relation>eq</relation>
+          <value>1</value>
+        </qualifier>
         <enumVal>
           <enumChoice choice="None">
             <choice>None</choice>
@@ -1676,24 +1671,14 @@
           <enumChoice choice="Three-eighths travel">
             <choice>Three-eighth travel</choice>
           </enumChoice>
-        </enumVal>
-        <label>Servo3 Thrown RapidStart</label>
-        <qualifier>
-          <variableref>Servo3 Directional Speed</variableref>
-          <relation>eq</relation>
-          <value>1</value>
-        </qualifier>
-      </variable>
+        </enumVal><label>Servo3 Thrown RapidStart</label></variable>
       <variable CV="95" mask="XXVVVVVV" item="Servo3 Thrown Speed" default="4">
-        <decVal/>
-        <label>Servo3 Thrown Speed</label>
-        <comment>Speed Range: 0-63</comment>
         <qualifier>
           <variableref>Servo3 Directional Speed</variableref>
           <relation>eq</relation>
           <value>1</value>
         </qualifier>
-      </variable>
+        <decVal/><label>Servo3 Thrown Speed</label><comment>Speed Range: 0-63</comment></variable>
       <variable CV="82" mask="XVVXXXXX" item="Servo3 Lock" default="0">
         <enumVal>
           <enumChoice choice="None">
@@ -2357,6 +2342,11 @@
         <label>Servo4  Directional Speed</label>
       </variable>
       <variable CV="117" mask="VVXXXXXX" item="Servo4 Thrown RapidStart" default="0">
+        <qualifier>
+          <variableref>Servo4 Directional Speed</variableref>
+          <relation>eq</relation>
+          <value>1</value>
+        </qualifier>
         <enumVal>
           <enumChoice choice="None">
             <choice>None</choice>
@@ -2370,24 +2360,14 @@
           <enumChoice choice="Three-eighths travel">
             <choice>Three-eighth travel</choice>
           </enumChoice>
-        </enumVal>
-        <label>Servo4 Thrown RapidStart</label>
-        <qualifier>
-          <variableref>Servo4 Directional Speed</variableref>
-          <relation>eq</relation>
-          <value>1</value>
-        </qualifier>
-      </variable>
+        </enumVal><label>Servo4 Thrown RapidStart</label></variable>
       <variable CV="117" mask="XXVVVVVV" item="Servo4 Thrown Speed" default="4">
-        <decVal/>
-        <label>Servo4 Thrown Speed</label>
-        <comment>Speed Range: 0-63</comment>
         <qualifier>
           <variableref>Servo4 Directional Speed</variableref>
           <relation>eq</relation>
           <value>1</value>
         </qualifier>
-      </variable>
+        <decVal/><label>Servo4 Thrown Speed</label><comment>Speed Range: 0-63</comment></variable>
       <variable CV="104" mask="XVVXXXXX" item="Servo4 Lock" default="0">
         <enumVal>
           <enumChoice choice="None">
@@ -4054,10 +4034,10 @@
             <text> </text>
           </label>
           <display item="Servo1 Addr" label="Address  LT" tooltip="To change, adjust Servo Base Addr on Quad-LN pane">
-            <label>Address</label>
+            <label>Address  LT</label>
           </display>
           <display item="Lock1 Addr" label="Lock  LT" tooltip="To change, adjust Lock Base Addr on Quad-LN pane">
-            <label>Address</label>
+            <label>Lock  LT</label>
           </display>
           <label>
             <text> </text>
@@ -4136,7 +4116,7 @@
             <text> </text>
           </label>
           <display item="Sensor2 Addr" label="Address   LS" tooltip="To change, adjust Sensor Base Addr on Quad-LN pane">
-            <label>Address</label>
+            <label>Address   LS</label>
           </display>
           <label>
             <text> </text>
@@ -4227,7 +4207,7 @@
             <text> </text>
           </label>
           <display item="Sensor1 Addr" label="Address   LS" tooltip="To change, adjust Sensor Base Addr on Quad-LN pane">
-            <label>Address</label>
+            <label>Address   LS</label>
           </display>
           <label>
             <text> </text>
@@ -4320,10 +4300,10 @@
             <text> </text>
           </label>
           <display item="Servo2 Addr" label="Address  LT" tooltip="To change, adjust Servo Base Addr on Quad-LN pane">
-            <label>Address</label>
+            <label>Address  LT</label>
           </display>
           <display item="Lock2 Addr" label="Lock  LT" tooltip="To change, adjust Lock Base Addr on Quad-LN pane">
-            <label>Address</label>
+            <label>Lock  LT</label>
           </display>
           <label>
             <text> </text>
@@ -4402,7 +4382,7 @@
             <text> </text>
           </label>
           <display item="Sensor4 Addr" label="Address   LS" tooltip="To change, adjust Sensor Base Addr on Quad-LN pane">
-            <label>Address</label>
+            <label>Address   LS</label>
           </display>
           <label>
             <text> </text>
@@ -4493,7 +4473,7 @@
             <text> </text>
           </label>
           <display item="Sensor3 Addr" label="Address   LS" tooltip="To change, adjust Sensor Base Addr on Quad-LN pane">
-            <label>Address</label>
+            <label>Address   LS</label>
           </display>
           <label>
             <text> </text>
@@ -4586,10 +4566,10 @@
             <text> </text>
           </label>
           <display item="Servo3 Addr" label="Address  LT" tooltip="To change, adjust Servo Base Addr on Quad-LN pane">
-            <label>Address</label>
+            <label>Address  LT</label>
           </display>
           <display item="Lock3 Addr" label="Lock  LT" tooltip="To change, adjust Lock Base Addr on Quad-LN pane">
-            <label>Address</label>
+            <label>Lock  LT</label>
           </display>
           <label>
             <text> </text>
@@ -4668,7 +4648,7 @@
             <text> </text>
           </label>
           <display item="Sensor6 Addr" label="Address   LS" tooltip="To change, adjust Sensor Base Addr on Quad-LN pane">
-            <label>Address</label>
+            <label>Address   LS</label>
           </display>
           <label>
             <text> </text>
@@ -4759,7 +4739,7 @@
             <text> </text>
           </label>
           <display item="Sensor5 Addr" label="Address   LS" tooltip="To change, adjust Sensor Base Addr on Quad-LN pane">
-            <label>Address</label>
+            <label>Address   LS</label>
           </display>
           <label>
             <text> </text>
@@ -4852,10 +4832,10 @@
             <text> </text>
           </label>
           <display item="Servo4 Addr" label="Address  LT" tooltip="To change, adjust Servo Base Addr on Quad-LN pane">
-            <label>Address</label>
+            <label>Address  LT</label>
           </display>
           <display item="Lock4 Addr" label="Lock  LT" tooltip="To change, adjust Lock Base Addr on Quad-LN pane">
-            <label>Address</label>
+            <label>Lock  LT</label>
           </display>
           <label>
             <text> </text>
@@ -4934,7 +4914,7 @@
             <text> </text>
           </label>
           <display item="Sensor8 Addr" label="Address   LS" tooltip="To change, adjust Sensor Base Addr on Quad-LN pane">
-            <label>Address</label>
+            <label>Address   LS</label>
           </display>
           <label>
             <text> </text>
@@ -5025,7 +5005,7 @@
             <text> </text>
           </label>
           <display item="Sensor7 Addr" label="Address   LS" tooltip="To change, adjust Sensor Base Addr on Quad-LN pane">
-            <label>Address</label>
+            <label>Address   LS</label>
           </display>
           <label>
             <text> </text>
@@ -5124,12 +5104,12 @@
       <row>
         <column>
           <display item="Route1 Turnout1" label="" tooltip="Turnout or Sensor number">
-            <label></label>
+            <label/>
           </display>
         </column>
         <column>
           <display item="Route1 Turnout1 Action" label="" tooltip="action">
-            <label></label>
+            <label/>
           </display>
         </column>
       </row>
@@ -5139,36 +5119,36 @@
       <row>
         <column>
           <display item="Route1 Turnout2" label="" tooltip="Turnout or Sensor number">
-            <label></label>
+            <label/>
           </display>
         </column>
         <column>
           <display item="Route1 Turnout2 Action" label="" tooltip="action">
-            <label></label>
+            <label/>
           </display>
         </column>
       </row>
       <row>
         <column>
           <display item="Route1 Turnout3" label="" tooltip="Turnout or Sensor number">
-            <label></label>
+            <label/>
           </display>
         </column>
         <column>
           <display item="Route1 Turnout3 Action" label="" tooltip="action">
-            <label></label>
+            <label/>
           </display>
         </column>
       </row>
       <row>
         <column>
           <display item="Route1 Turnout4" label="" tooltip="Turnout or Sensor number">
-            <label></label>
+            <label/>
           </display>
         </column>
         <column>
           <display item="Route1 Turnout4 Action" label="" tooltip="action">
-            <label></label>
+            <label/>
           </display>
         </column>
       </row>
@@ -5190,12 +5170,12 @@
       <row>
         <column>
           <display item="Route1 Turnout5" label="" tooltip="Turnout or Sensor number">
-            <label></label>
+            <label/>
           </display>
         </column>
         <column>
           <display item="Route1 Turnout5 Action" label="" tooltip="action">
-            <label></label>
+            <label/>
           </display>
         </column>
       </row>
@@ -5205,36 +5185,36 @@
       <row>
         <column>
           <display item="Route1 Turnout6" label="" tooltip="Turnout or Sensor number">
-            <label></label>
+            <label/>
           </display>
         </column>
         <column>
           <display item="Route1 Turnout6 Action" label="" tooltip="action">
-            <label></label>
+            <label/>
           </display>
         </column>
       </row>
       <row>
         <column>
           <display item="Route1 Turnout7" label="" tooltip="Turnout or Sensor number">
-            <label></label>
+            <label/>
           </display>
         </column>
         <column>
           <display item="Route1 Turnout7 Action" label="" tooltip="action">
-            <label></label>
+            <label/>
           </display>
         </column>
       </row>
       <row>
         <column>
           <display item="Route1 Turnout8" label="" tooltip="Turnout or Sensor number">
-            <label></label>
+            <label/>
           </display>
         </column>
         <column>
           <display item="Route1 Turnout8 Action" label="" tooltip="action">
-            <label></label>
+            <label/>
           </display>
         </column>
       </row>
@@ -5255,12 +5235,12 @@
       <row>
         <column>
           <display item="Route2 Turnout1" label="" tooltip="Turnout or Sensor number">
-            <label></label>
+            <label/>
           </display>
         </column>
         <column>
           <display item="Route2 Turnout1 Action" label="" tooltip="action">
-            <label></label>
+            <label/>
           </display>
         </column>
       </row>
@@ -5270,36 +5250,36 @@
       <row>
         <column>
           <display item="Route2 Turnout2" label="" tooltip="Turnout or Sensor number">
-            <label></label>
+            <label/>
           </display>
         </column>
         <column>
           <display item="Route2 Turnout2 Action" label="" tooltip="action">
-            <label></label>
+            <label/>
           </display>
         </column>
       </row>
       <row>
         <column>
           <display item="Route2 Turnout3" label="" tooltip="Turnout or Sensor number">
-            <label></label>
+            <label/>
           </display>
         </column>
         <column>
           <display item="Route2 Turnout3 Action" label="" tooltip="action">
-            <label></label>
+            <label/>
           </display>
         </column>
       </row>
       <row>
         <column>
           <display item="Route2 Turnout4" label="" tooltip="Turnout or Sensor number">
-            <label></label>
+            <label/>
           </display>
         </column>
         <column>
           <display item="Route2 Turnout4 Action" label="" tooltip="action">
-            <label></label>
+            <label/>
           </display>
         </column>
       </row>
@@ -5321,12 +5301,12 @@
       <row>
         <column>
           <display item="Route2 Turnout5" label="" tooltip="Turnout or Sensor number">
-            <label></label>
+            <label/>
           </display>
         </column>
         <column>
           <display item="Route2 Turnout5 Action" label="" tooltip="action">
-            <label></label>
+            <label/>
           </display>
         </column>
       </row>
@@ -5336,36 +5316,36 @@
       <row>
         <column>
           <display item="Route2 Turnout6" label="" tooltip="Turnout or Sensor number">
-            <label></label>
+            <label/>
           </display>
         </column>
         <column>
           <display item="Route2 Turnout6 Action" label="" tooltip="action">
-            <label></label>
+            <label/>
           </display>
         </column>
       </row>
       <row>
         <column>
           <display item="Route2 Turnout7" label="" tooltip="Turnout or Sensor number">
-            <label></label>
+            <label/>
           </display>
         </column>
         <column>
           <display item="Route2 Turnout7 Action" label="" tooltip="action">
-            <label></label>
+            <label/>
           </display>
         </column>
       </row>
       <row>
         <column>
           <display item="Route2 Turnout8" label="" tooltip="Turnout or Sensor number">
-            <label></label>
+            <label/>
           </display>
         </column>
         <column>
           <display item="Route2 Turnout8 Action" label="" tooltip="action">
-            <label></label>
+            <label/>
           </display>
         </column>
       </row>
@@ -5386,12 +5366,12 @@
       <row>
         <column>
           <display item="Route3 Turnout1" label="" tooltip="Turnout or Sensor number">
-            <label></label>
+            <label/>
           </display>
         </column>
         <column>
           <display item="Route3 Turnout1 Action" label="" tooltip="action">
-            <label></label>
+            <label/>
           </display>
         </column>
       </row>
@@ -5401,36 +5381,36 @@
       <row>
         <column>
           <display item="Route3 Turnout2" label="" tooltip="Turnout or Sensor number">
-            <label></label>
+            <label/>
           </display>
         </column>
         <column>
           <display item="Route3 Turnout2 Action" label="" tooltip="action">
-            <label></label>
+            <label/>
           </display>
         </column>
       </row>
       <row>
         <column>
           <display item="Route3 Turnout3" label="" tooltip="Turnout or Sensor number">
-            <label></label>
+            <label/>
           </display>
         </column>
         <column>
           <display item="Route3 Turnout3 Action" label="" tooltip="action">
-            <label></label>
+            <label/>
           </display>
         </column>
       </row>
       <row>
         <column>
           <display item="Route3 Turnout4" label="" tooltip="Turnout or Sensor number">
-            <label></label>
+            <label/>
           </display>
         </column>
         <column>
           <display item="Route3 Turnout4 Action" label="" tooltip="action">
-            <label></label>
+            <label/>
           </display>
         </column>
       </row>
@@ -5452,12 +5432,12 @@
       <row>
         <column>
           <display item="Route3 Turnout5" label="" tooltip="Turnout or Sensor number">
-            <label></label>
+            <label/>
           </display>
         </column>
         <column>
           <display item="Route3 Turnout5 Action" label="" tooltip="action">
-            <label></label>
+            <label/>
           </display>
         </column>
       </row>
@@ -5467,36 +5447,36 @@
       <row>
         <column>
           <display item="Route3 Turnout6" label="" tooltip="Turnout or Sensor number">
-            <label></label>
+            <label/>
           </display>
         </column>
         <column>
           <display item="Route3 Turnout6 Action" label="" tooltip="action">
-            <label></label>
+            <label/>
           </display>
         </column>
       </row>
       <row>
         <column>
           <display item="Route3 Turnout7" label="" tooltip="Turnout or Sensor number">
-            <label></label>
+            <label/>
           </display>
         </column>
         <column>
           <display item="Route3 Turnout7 Action" label="" tooltip="action">
-            <label></label>
+            <label/>
           </display>
         </column>
       </row>
       <row>
         <column>
           <display item="Route3 Turnout8" label="" tooltip="Turnout or Sensor number">
-            <label></label>
+            <label/>
           </display>
         </column>
         <column>
           <display item="Route3 Turnout8 Action" label="" tooltip="action">
-            <label></label>
+            <label/>
           </display>
         </column>
       </row>
@@ -5517,12 +5497,12 @@
       <row>
         <column>
           <display item="Route4 Turnout1" label="" tooltip="Turnout or Sensor number">
-            <label></label>
+            <label/>
           </display>
         </column>
         <column>
           <display item="Route4 Turnout1 Action" label="" tooltip="action">
-            <label></label>
+            <label/>
           </display>
         </column>
       </row>
@@ -5532,36 +5512,36 @@
       <row>
         <column>
           <display item="Route4 Turnout2" label="" tooltip="Turnout or Sensor number">
-            <label></label>
+            <label/>
           </display>
         </column>
         <column>
           <display item="Route4 Turnout2 Action" label="" tooltip="action">
-            <label></label>
+            <label/>
           </display>
         </column>
       </row>
       <row>
         <column>
           <display item="Route4 Turnout3" label="" tooltip="Turnout or Sensor number">
-            <label></label>
+            <label/>
           </display>
         </column>
         <column>
           <display item="Route4 Turnout3 Action" label="" tooltip="action">
-            <label></label>
+            <label/>
           </display>
         </column>
       </row>
       <row>
         <column>
           <display item="Route4 Turnout4" label="" tooltip="Turnout or Sensor number">
-            <label></label>
+            <label/>
           </display>
         </column>
         <column>
           <display item="Route4 Turnout4 Action" label="" tooltip="action">
-            <label></label>
+            <label/>
           </display>
         </column>
       </row>
@@ -5583,12 +5563,12 @@
       <row>
         <column>
           <display item="Route4 Turnout5" label="" tooltip="Turnout or Sensor number">
-            <label></label>
+            <label/>
           </display>
         </column>
         <column>
           <display item="Route4 Turnout5 Action" label="" tooltip="action">
-            <label></label>
+            <label/>
           </display>
         </column>
       </row>
@@ -5598,36 +5578,36 @@
       <row>
         <column>
           <display item="Route4 Turnout6" label="" tooltip="Turnout or Sensor number">
-            <label></label>
+            <label/>
           </display>
         </column>
         <column>
           <display item="Route4 Turnout6 Action" label="" tooltip="action">
-            <label></label>
+            <label/>
           </display>
         </column>
       </row>
       <row>
         <column>
           <display item="Route4 Turnout7" label="" tooltip="Turnout or Sensor number">
-            <label></label>
+            <label/>
           </display>
         </column>
         <column>
           <display item="Route4 Turnout7 Action" label="" tooltip="action">
-            <label></label>
+            <label/>
           </display>
         </column>
       </row>
       <row>
         <column>
           <display item="Route4 Turnout8" label="" tooltip="Turnout or Sensor number">
-            <label></label>
+            <label/>
           </display>
         </column>
         <column>
           <display item="Route4 Turnout8 Action" label="" tooltip="action">
-            <label></label>
+            <label/>
           </display>
         </column>
       </row>

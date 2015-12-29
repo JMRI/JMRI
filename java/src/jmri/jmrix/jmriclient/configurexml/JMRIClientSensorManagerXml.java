@@ -1,5 +1,6 @@
 package jmri.jmrix.jmriclient.configurexml;
 
+import jmri.configurexml.JmriConfigureXmlException;
 import org.jdom2.Element;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -28,9 +29,10 @@ public class JMRIClientSensorManagerXml extends jmri.managers.configurexml.Abstr
         log.error("Invalid method called");
     }
 
-    public boolean load(Element sensors) throws jmri.configurexml.JmriConfigureXmlException {
+    @Override
+    public boolean load(Element shared, Element perNode) throws JmriConfigureXmlException {
         // load individual sensors 
-        return loadSensors(sensors);
+        return loadSensors(shared);
     }
 
     // initialize logging

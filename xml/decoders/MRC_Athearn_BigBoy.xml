@@ -68,7 +68,6 @@
       </variable>
       <variable CV="7" readOnly="yes" tooltip="=32 for all Athearn N Big Boy and Challenger models, Read Only" item="Decoder Version" default="32">
         <decVal/>
-        <label>Manufacturer version number</label>
         <label xml:lang="it">Versione Decoder: </label>
         <label xml:lang="fr">Version décodeur: </label>
         <label xml:lang="de">Decoder Version: </label>

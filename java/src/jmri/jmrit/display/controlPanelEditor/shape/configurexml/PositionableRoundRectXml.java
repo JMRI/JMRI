@@ -42,11 +42,6 @@ public class PositionableRoundRectXml extends PositionableShapeXml {
         return element;
     }
 
-    public boolean load(Element element) {
-        log.error("Invalid method called");
-        return false;
-    }
-
     /**
      * Create a PositionableShape, then add to a target JLayeredPane
      *

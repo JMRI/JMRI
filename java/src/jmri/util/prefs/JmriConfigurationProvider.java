@@ -72,9 +72,6 @@ public final class JmriConfigurationProvider {
      *                the {@link jmri.profile.ProfileManager#getActiveProfile()}
      *                method of the ProfileManager returned by
      *                {@link jmri.profile.ProfileManager#getDefault()}
-     * @param shared  True if the preferences apply to this profile irregardless
-     *                of host. If false, the preferences only apply to this
-     *                computer.
      * @return The shared or private JmriPreferencesProvider for the project.
      */
     static synchronized JmriConfigurationProvider findProvider(Profile project) {
@@ -150,7 +147,7 @@ public final class JmriConfigurationProvider {
                         try (InputStream is = new FileInputStream(file)) {
                             InputSource input = new InputSource(is);
                             input.setSystemId(file.toURI().toURL().toString());
-                            Element root = XMLUtil.parse(input, false, true, /*XXX*/ null, null).getDocumentElement();
+                            Element root = XMLUtil.parse(input, false, true, null, null).getDocumentElement();
                             return XMLUtil.findElement(root, elementName, namespace);
                         }
                     } catch (IOException | SAXException | IllegalArgumentException ex) {
@@ -176,7 +173,7 @@ public final class JmriConfigurationProvider {
                         try (InputStream is = new FileInputStream(file)) {
                             InputSource input = new InputSource(is);
                             input.setSystemId(file.toURI().toURL().toString());
-                            doc = XMLUtil.parse(input, false, true, /*XXX*/ null, null);
+                            doc = XMLUtil.parse(input, false, true, null, null);
                         }
                     } catch (IOException | SAXException ex) {
                         log.warn("Cannot parse {}", file, ex);
@@ -228,7 +225,7 @@ public final class JmriConfigurationProvider {
                         try (InputStream is = new FileInputStream(file)) {
                             InputSource input = new InputSource(is);
                             input.setSystemId(file.toURI().toURL().toString());
-                            doc = XMLUtil.parse(input, false, true, /*XXX*/ null, null);
+                            doc = XMLUtil.parse(input, false, true, null, null);
                         }
                         Element root = doc.getDocumentElement();
                         Element toRemove = XMLUtil.findElement(root, elementName, namespace);

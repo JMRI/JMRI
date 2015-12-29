@@ -1,96 +1,91 @@
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
-<!-- $Id$ -->
 <html lang="en">
 <head>
- <TITLE>
- JMRI Install Guide: Using a PDA to Access JMRI Applications
- </TITLE>
-    <META http-equiv=Content-Type content="text/html; charset=iso-8859-1">
-    <META content="Michael Beck" name=Author>
-    <META content="John Plocher" name=Author>
-    <META name="keywords" content="model railroad JMRI PDA">
+ <title>JMRI Hardware Support - Using a PDA</title>
+    <meta content="Michael Beck" name="Author">
+    <meta content="John Plocher" name="Author">
+    <meta name="keywords" content="model railroad JMRI PDA">
 
 <!-- Style -->
-<META HTTP-EQUIV="Content-Type" CONTENT="text/html; charset=iso-8859-1">
-<LINK REL="stylesheet" TYPE="text/css" HREF="/css/default.css"
-	MEDIA="screen">
-<LINK REL="stylesheet" TYPE="text/css" HREF="/css/print.css"
-	MEDIA="print">
-<LINK REL="icon" HREF="/images/jmri.ico" TYPE="image/png">
-<LINK REL="home" TITLE="Home" HREF="/">
+<meta http-equiv="Content-Type" CONTENT="text/html; charset=iso-8859-1">
+<link rel="stylesheet" type="text/css" href="/css/default.css"
+	media="screen">
+<link rel="stylesheet" type="text/css" href="/css/print.css"
+	media="print">
+<link rel="icon" href="/images/jmri.ico" type="image/png">
+<link rel="home" title="Home" href="/">
 <!-- /Style -->
-</HEAD>
+</head>
 
-<BODY>
+<body>
 <!--#include virtual="/Header" -->
 
   <div class="nomenu" id="mBody">
     <div id="mainContent">
 
-      <H1> 
-      JMRI Install Guide: Using a PDA to Access JMRI Applications
-      </H1>
+  <h1>Hardware Support: Using a PDA to access JMRI (deprecated)</h1>
+  
+<p>
+This page describes an early attempt to connect an Axim PDA to JMRI, which has some flaws and is deprecated.
 
-Daryl Kruse has been experimenting 
+<a name="limitations"></a><h2>Limitations</h2>
+<p>For a supported approach, involving running a specific program
+on your Smartphone, see the 
+<a href="../../package/jmri/jmrit/withrottle/UserInterface.shtml">WiThrottle</a> page.
+
+<a name="connecting"></a><h2>Connecting</h2>
+<p>Daryl Kruse has been experimenting 
 with a Dell Axim PDA for use as a true 2-way Digitrax throttle. 
 He's provided the following information
 on how he set it up:
 
-<P>
-
-1. Our home has a wireless LAN set up for household members to access 
+<p>1. Our home has a wireless LAN set up for household members to access 
 our cable internet service.
 
-<P>
-2. My train computer is connected to our LAN and, of course, is 
+<p>2. My train computer is connected to our LAN and, of course, is 
 connected to JMRI and the LocoNet via an interface.
 
-<P>
-3. My Dell Axim has wireless and terminal services client.
+<p>3. My Dell Axim has wireless and terminal services client.
 
-<P>
-4. After staring up JMRI Throttles and turnout control, I use the 
+<p>4. After staring up JMRI Throttles and turnout control, I use the 
 the terminal services client of the Axim to access the computer 
 screen.
 
-<P>
-5. I can then control the layout with the Axim.
+<p>5. I can then control the layout with the Axim.
 
-<P>
+<p>
 I am using the Terminal Services Client that came installed on my 
-Axim x50v which came with windows mobile 2003 SE insalled as the 
+Axim x50v which came with windows mobile 2003 SE installed as the 
 operating system.  On the computer I check the box "allow users to 
 connect remotely to this computer" in the control 
 panel/systems/remote tab.
 
-<P>
-The main, four way button of the axim can be used to increase (left) 
+<p>
+The main, four way button of the Axim can be used to increase (left) 
 and decrease (right) speed and set the direction of the train (up-
 forward, down-reverse). I use the blunt end of my home made 
 uncoupling pic to address the screen in order to select and dispatch 
 locos, operate functions and set turnouts. All this can be done 
-without ever plugging into the loconet.  
-
-<P>
-One thing that is a little bit combersome is entering the turnout 
-numbers into the turnout control.  For this I have to use the axim 
-keyboard.  I would like to use the turnout table, but every accessory 
-switch that is used shows up automatically on the table.  As I use 
-route control, a lot of unneeded accessory switch numbers show up 
-that I don't need.  Is their anyway to set up a table that is set 
-with just the accessory switches you want?
-
-<P>
-Here's are pictures of the 
-<A HREF="http://home.comcast.net/~dpkruse/pdathrottle.jpg">axim screen</a>
-and the 
-<A HREF="http://home.comcast.net/~dpkruse/axim50.jpg">axim itself</a>.
+without ever plugging into the LocoNet.  
 
 <p>
-For another approach, involving running a specific program
-on the PDA, see the 
-<a href="../../package/jmri/jmrit/withrottle/UserInterface.shtml">WiFi Throttle</a> page.
+One thing that is a little bit cumbersome is entering the turnout 
+numbers into the turnout control.  For this I have to use the Axim 
+keyboard.  I would like to use the turnout table, but every accessory 
+switch that is used shows up automatically on the table.  As I use 
+Route control, a lot of unneeded accessory switch numbers show up 
+that I don't need.  Is there any way to set up a table that is set 
+with just the accessory switches you want?
+
+<a name="documentation"></a><h2>Documentation</h2>
+<h3>JMRI Help</h3>
+<p>
+For the currently supported approach, involving running a specific program
+on your Smartphone, see the 
+<a href="../../package/jmri/jmrit/withrottle/UserInterface.shtml">WiThrottle</a> page.
 
 <!--#include virtual="/Footer" -->
+  </div><!-- closes #mainContent-->
+</div> <!-- closes #mBody-->
 </body>
 </html>

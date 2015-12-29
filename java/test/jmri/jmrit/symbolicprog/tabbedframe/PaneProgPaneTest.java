@@ -11,6 +11,7 @@ import jmri.jmrit.symbolicprog.CvTableModel;
 import jmri.jmrit.symbolicprog.IndexedCvTableModel;
 import jmri.jmrit.symbolicprog.VariableTableModel;
 import jmri.progdebugger.ProgDebugger;
+import jmri.util.JUnitUtil;
 import junit.framework.Assert;
 import junit.framework.Test;
 import junit.framework.TestCase;
@@ -225,20 +226,7 @@ public class PaneProgPaneTest extends TestCase {
         progPane.readAllButton.setSelected(true);
 
         // wait for reply (normally, done by callback; will check that later)
-        if (log.isDebugEnabled()) {
-            log.debug("Start to wait for reply");
-        }
-        int i = 0;
-        while (progPane.isBusy() && i++ < 100) {
-            try {
-                Thread.sleep(50);
-            } catch (Exception e) {
-            }
-        }
-        if (log.isDebugEnabled()) {
-            log.debug("past loop, i=" + i);
-        }
-        assertTrue("busy period ends before timeout ", i <= 100);
+        JUnitUtil.waitFor(()->{return !progPane.isBusy();}, "progPane.isBusy");
 
         Assert.assertEquals("CV 2 value ", "20", varModel.getValString(0));
         Assert.assertEquals("CV 3 value ", "30", varModel.getValString(1));
@@ -306,20 +294,7 @@ public class PaneProgPaneTest extends TestCase {
         progPane.writeAllButton.setSelected(true);
 
         // wait for reply (normally, done by callback; will check that later)
-        if (log.isDebugEnabled()) {
-            log.debug("Start to wait for reply");
-        }
-        int i = 0;
-        while (progPane.isBusy() && i++ < 100) {
-            try {
-                Thread.sleep(50);
-            } catch (Exception e) {
-            }
-        }
-        if (log.isDebugEnabled()) {
-            log.debug("past loop, i=" + i);
-        }
-        assertTrue("busy period ends before timeout ", i <= 100);
+        JUnitUtil.waitFor(()->{return !progPane.isBusy();}, "progPane.isBusy");
 
         Assert.assertEquals("CV 2 value ", 20, p.getCvVal(2));
         Assert.assertEquals("CV 3 value ", 30, p.getCvVal(3));

@@ -170,7 +170,7 @@ public class XmlFileTest extends TestCase {
 
     // Main entry point
     static public void main(String[] args) {
-        String[] testCaseName = {XmlFileTest.class.getName()};
+        String[] testCaseName = {"-noloading", XmlFileTest.class.getName()};
         junit.swingui.TestRunner.main(testCaseName);
     }
 

@@ -2,6 +2,7 @@
 package jmri.jmrit.symbolicprog.tabbedframe;
 
 import java.awt.Color;
+import java.awt.Component;
 import java.awt.Dimension;
 import java.awt.Font;
 import java.awt.GridBagConstraints;
@@ -136,9 +137,14 @@ public class PaneProgPane extends javax.swing.JPanel
     public PaneProgPane() {
     }
 
+    public PaneProgPane(PaneContainer parent, String name, Element pane, CvTableModel cvModel, IndexedCvTableModel icvModel, VariableTableModel varModel, Element modelElem, RosterEntry pRosterEntry) {
+        this(parent, name, pane, cvModel, icvModel, varModel, modelElem, pRosterEntry, false);
+    }
+
     /**
      * Construct the Pane from the XML definition element.
      *
+     * @param parent       The parent pane
      * @param name         Name to appear on tab of pane
      * @param pane         The JDOM Element for the pane definition
      * @param cvModel      Already existing TableModel containing the CV
@@ -150,8 +156,9 @@ public class PaneProgPane extends javax.swing.JPanel
      * @param modelElem    "model" element from the Decoder Index, used to check
      *                     what decoder options are present.
      * @param pRosterEntry The current roster entry, used to get sound labels.
+     * @param isProgPane   True if the pane is a default programmer pane
      */
-    public PaneProgPane(PaneContainer parent, String name, Element pane, CvTableModel cvModel, IndexedCvTableModel icvModel, VariableTableModel varModel, Element modelElem, RosterEntry pRosterEntry) {
+    public PaneProgPane(PaneContainer parent, String name, Element pane, CvTableModel cvModel, IndexedCvTableModel icvModel, VariableTableModel varModel, Element modelElem, RosterEntry pRosterEntry, boolean isProgPane) {
 
         container = parent;
         mName = name;
@@ -208,12 +215,36 @@ public class PaneProgPane extends javax.swing.JPanel
             p.add(newGroup(((groupList.get(i))), showItem, modelElem));
         }
 
+        // explain why pane is empty
+        if (cvList.isEmpty() && varList.isEmpty() && indexedCvList.isEmpty() && isProgPane) { 
+            JPanel pe = new JPanel();
+            pe.setLayout(new BoxLayout(pe, BoxLayout.Y_AXIS));
+            int line = 1;
+            while (line >= 0) {
+                try {
+                    String msg = SymbolicProgBundle.getMessage("TextTabEmptyExplain" + line);
+                    if (msg.isEmpty()) {
+                        msg = " ";
+                    }
+                    JLabel l = new JLabel(msg);
+                    l.setAlignmentX(Component.CENTER_ALIGNMENT);
+                    pe.add(l);
+                    line++;
+                } catch (Exception e) {
+                    line = -1;
+                }
+            }
+            add(pe);
+            panelList.add(pe);
+            return;
+        }
+
         // add glue to the right to allow resize - but this isn't working as expected? Alignment?
         add(Box.createHorizontalGlue());
 
-        add(new JScrollPane(p));
+            add(new JScrollPane(p));
 
-        // add buttons in a new panel
+            // add buttons in a new panel
         bottom = new JPanel();
         panelList.add(p);
         bottom.setLayout(new BoxLayout(bottom, BoxLayout.X_AXIS));
@@ -2548,39 +2579,10 @@ public class PaneProgPane extends javax.swing.JPanel
         // start with CV description
         String descString = cvDescription;
 
-        // generate bit numbers from bitmask if applicable
-        if ((mask != null) && (mask.contains("X"))) {
-            int lastBit = mask.length() - 1;
-            int lastV = -2;
-            if (mask.contains("V")) {
-                if (mask.indexOf('V') == mask.lastIndexOf('V')) {
-                    descString = descString + " bit " + (lastBit - mask.indexOf('V'));
-                } else {
-                    descString = descString + " bits ";
-                    for (int i = 0; i <= lastBit; i++) {
-                        char descStringLastChar = descString.charAt(descString.length() - 1);
-                        if (mask.charAt(lastBit - i) == 'V') {
-                            if (descStringLastChar == ' ') {
-                                descString = descString + i;
-                            } else if (lastV == (i - 1)) {
-                                if (descStringLastChar != '-') {
-                                    descString = descString + "-";
-                                }
-                            } else {
-                                descString = descString + "," + i;
-                            }
-                            lastV = i;
-                        }
-                        descStringLastChar = descString.charAt(descString.length() - 1);
-                        if ((descStringLastChar == '-') && ((mask.charAt(lastBit - i) != 'V') || (i == lastBit))) {
-                            descString = descString + lastV;
-                        }
-                    }
-                }
-            } else {
-                descString = descString + " no bits";
-            }
-            log.trace("{} Mask:{}", descString, mask);
+        // add bit numbers from bitmask if applicable
+        String temp = getMaskDescription(mask);
+        if (temp.length() > 0) {
+                        descString = descString + " " + temp;
         }
 
         // add to tool tip if Show CV Numbers enabled
@@ -2598,6 +2600,54 @@ public class PaneProgPane extends javax.swing.JPanel
         }
 
         return toolTip;
+    }
+
+    /**
+     * Generate bit numbers from bitmask if applicable.
+     * Returns empty String if not applicable.
+     *
+     * Needs to be independent of VariableValue methods to allow use by
+     * non-standard elements such as SpeedTableVarValue, DccAddressPanel,
+     * FnMapPanel.
+     */
+    public static String getMaskDescription(String mask) {
+        String maskDescString = "";
+
+        // generate bit numbers from bitmask if applicable
+        if ((mask != null) && (mask.contains("X"))) {
+            int lastBit = mask.length() - 1;
+            int lastV = -2;
+            if (mask.contains("V")) {
+                if (mask.indexOf('V') == mask.lastIndexOf('V')) {
+                    maskDescString = maskDescString + "bit " + (lastBit - mask.indexOf('V'));
+                } else {
+                    maskDescString = maskDescString + "bits ";
+                    for (int i = 0; i <= lastBit; i++) {
+                        char descStringLastChar = maskDescString.charAt(maskDescString.length() - 1);
+                        if (mask.charAt(lastBit - i) == 'V') {
+                            if (descStringLastChar == ' ') {
+                                maskDescString = maskDescString + i;
+                            } else if (lastV == (i - 1)) {
+                                if (descStringLastChar != '-') {
+                                    maskDescString = maskDescString + "-";
+                                }
+                            } else {
+                                maskDescString = maskDescString + "," + i;
+                            }
+                            lastV = i;
+                        }
+                        descStringLastChar = maskDescString.charAt(maskDescString.length() - 1);
+                        if ((descStringLastChar == '-') && ((mask.charAt(lastBit - i) != 'V') || (i == lastBit))) {
+                            maskDescString = maskDescString + lastV;
+                        }
+                    }
+                }
+            } else {
+                maskDescString = maskDescString + "no bits";
+            }
+            log.trace("{} Mask:{}", maskDescString, mask);
+        }
+        return maskDescString;
     }
 
     JComponent getRep(int i, String format) {

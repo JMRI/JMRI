@@ -337,8 +337,8 @@
 		<xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
         <label>C Pulsing Light</label>
         <label xml:lang="it">Luce Pulsante uscita C</label>
-        <label>Effects Output C Green</label>
-        <label xml:lang="it">Effetti uscita C (verde)</label>
+        <comment>Effects Output C Green</comment>
+        <comment xml:lang="it">Effetti uscita C (verde)</comment>
       </variable>
       <variable CV="51" mask="XXXXXXVX" default="0" minOut="4" item="C Flashlight">
 		<xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
@@ -420,7 +420,7 @@
       <variable CV="52" mask="XXXXXXXV" default="0" minOut="4" item="D Pulsing Light">
 		<xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
         <label>D Pulsing Light</label>		
-        <label>Effects Output D Violett</label>
+        <label xml:lang="de">Effects Output D Violett</label>
         <label xml:lang="it">Effetti uscita D (viola)</label>
       </variable>
       <variable CV="52" mask="XXXXXXVX" default="0" minOut="4" item="D Flashlight">

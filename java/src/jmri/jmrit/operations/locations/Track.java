@@ -131,6 +131,7 @@ public class Track {
     public static final String ALL_DESTINATIONS = Bundle.getMessage("All"); // track services all loads
     public static final String INCLUDE_DESTINATIONS = Bundle.getMessage("Include");
     public static final String EXCLUDE_DESTINATIONS = Bundle.getMessage("Exclude");
+    protected boolean _onlyCarsWithFD = false; // when true only cars with a final destinations are serviced
 
     // schedule modes
     public static final int SEQUENTIAL = 0;
@@ -153,6 +154,7 @@ public class Track {
     public static final String SCHEDULE = Bundle.getMessage("schedule");
     public static final String CUSTOM = Bundle.getMessage("custom");
     public static final String DESTINATION = Bundle.getMessage("carDestination");
+    public static final String NO_FINAL_DESTINATION = Bundle.getMessage("noFinalDestination");
 
     // For property change
     public static final String TYPES_CHANGED_PROPERTY = "trackRollingStockTypes"; // NOI18N
@@ -1345,6 +1347,10 @@ public class Track {
                 return DESTINATION + " (" + car.getFinalDestinationName() + ") "
                         + MessageFormat.format(Bundle.getMessage("carIsNotAllowed"), new Object[]{getName()}); // no
             }
+            // does this track (interchange) accept cars without a final destination?
+            if (getTrackType().equals(INTERCHANGE) && isOnlyCarsWithFinalDestinationEnabled() && car.getFinalDestination() == null) {
+                return NO_FINAL_DESTINATION;
+            }
             // check for car in kernel
             if (car.getKernel() != null && car.getKernel().isLead(car)) {
                 length = 0;
@@ -2199,6 +2205,22 @@ public class Track {
         }
         return ALL_DESTINATIONS;
     }
+    
+    
+    public void setOnlyCarsWithFinalDestinationEnabled(boolean enable) {
+        boolean old = _onlyCarsWithFD;
+        _onlyCarsWithFD = enable;
+        setDirtyAndFirePropertyChange("onlyCarsWithFinalDestinations", old, enable);
+    }
+    
+    /**
+     * When true the C/I track will only accept cars that have a final destination
+     * that can be serviced by the track. See acceptsDestination(Location).
+     * @return false if any car spotted, true if only cars with a FD.
+     */
+    public boolean isOnlyCarsWithFinalDestinationEnabled() {
+        return _onlyCarsWithFD;
+    }
 
     /**
      * Used to determine if track has been assigned as an alternate
@@ -2454,6 +2476,10 @@ public class Track {
         if ((a = e.getAttribute(Xml.HOLD_CARS_CUSTOM)) != null) {
             setHoldCarsWithCustomLoadsEnabled(a.getValue().equals(Xml.TRUE));
         }
+        if ((a = e.getAttribute(Xml.ONLY_CARS_WITH_FD)) != null) {
+            setOnlyCarsWithFinalDestinationEnabled(a.getValue().equals(Xml.TRUE));
+        }
+        
         if ((a = e.getAttribute(Xml.ALTERNATIVE)) != null) {
             _alternateTrackId = a.getValue();
         }
@@ -2678,6 +2704,9 @@ public class Track {
             e.setAttribute(Xml.FACTOR, Integer.toString(getReservationFactor()));
             e.setAttribute(Xml.SCHEDULE_MODE, Integer.toString(getScheduleMode()));
             e.setAttribute(Xml.HOLD_CARS_CUSTOM, isHoldCarsWithCustomLoadsEnabled() ? Xml.TRUE : Xml.FALSE);
+        }
+        if (getTrackType().equals(INTERCHANGE)) {
+            e.setAttribute(Xml.ONLY_CARS_WITH_FD, isOnlyCarsWithFinalDestinationEnabled() ? Xml.TRUE : Xml.FALSE);
         }
         if (getAlternateTrack() != null) {
             e.setAttribute(Xml.ALTERNATIVE, getAlternateTrack().getId());

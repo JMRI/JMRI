@@ -1,16 +1,18 @@
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
-<html lang="en"><head>
-<!-- Copyright ($Author$) 2009 --><!-- $Id$ --><title>Operations-Add Staging</title><!-- Style -->
+<html lang="en">
+<head>
+<title>JMRI OperationsPro - Add Staging Only</title>
 
-
-
-
-
+<!-- Style -->
 <meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
 <link rel="stylesheet" type="text/css" href="/css/default.css" media="screen">
 <link rel="stylesheet" type="text/css" href="/css/print.css" media="print">
 <link rel="icon" href="/images/jmri.ico" type="image/png">
-<link rel="home" title="Home" href="/"><!-- /Style --></head><body>
+<link rel="home" title="Home" href="/">
+<!-- /Style -->
+</head>
+
+<body>
 <!--#include virtual="/Header" -->
 
 <!--#include virtual="Sidebar" -->
@@ -18,53 +20,51 @@
 
 <a name="Top"></a>
 <h1>Using JMRI&reg; to Operate Trains</h1>
-<h1>Operations Add Staging Only</h1>
+<h2>OperationsPro: Add Staging Only</h2>
 
 <div align="right">
 <p><a href="Ops_AddLocations.shtml">Back</a><a href="Ops_Cars.shtml"></a></p>
 <p><a href="index.shtml#Operations">Back to Index</a></p>
 </div>
-
 <hr>
-<p align="left">Add<a href="Ops_Locations.shtml"> Location as Staging Only</a> and the <strong>Add Location </strong>window will be displayed with Staging only selected.</p>
+
+<p>To add a Location with Tracks as Staging Only, open the <strong><a href="Ops_AddLocations.shtml">Add Location</a></strong> window;<br>
+note most of the window is greyed out until the Location has been added.</p>
 <p><img src="images/Ops_Staging01.png" alt="staging" height="640" width="772"></p>
-<p><br>
-  To add a location as a Staging Only: in the <strong>Add Location</strong> window, type the<strong> Name</strong>
-  <input name="textfield" id="textfield" value="Staging Area" type="text">
-of the Staging Only location, note most of the window is greyed out
-until the location is added. The location name must be unique; the
-program will not allow two locations with identical names. However, if
-you want more than one location to have the same name for your
-manifests and switch lists, add a hyphen and a number to the locations
+
+<h3>Define the Staging Location</h3>
+<p>Type a new <strong>Name</strong> <input name="textfield" id="textfield" value="Staging Area" type="text">
+for the Staging only Location (Area).</p>
+<p>The Location Name must be unique; the
+program will not allow two Locations with identical names. However, if
+you want more than one Location to have the same name for your
+Manifests and Switch Lists, add a hyphen and a number to the locations
 name. For example, "Boston-1" and "Boston-2" will print as "Boston".
 The program will remove the hyphen and number when printing manifests
 and switch lists.</p>
-<p>Select <strong>Operations at this location</strong>
+<p>Select <strong>Operations (Tracks) at this location</strong>
   <input name="radio" id="radio" value="radio" checked="checked" type="radio">
   <strong>Staging Only</strong>, then press the
   <input name="button" id="button" value="Add Location" type="submit">
   at the bottom of the window.</p>
-<p>A Staging Only area may contain several tracks that must be defined. </p>
 <p>This opens the <strong>Add Location</strong> window with all the options enabled.</p>
 <p><img src="images/Ops_Staging02.png" height="640" width="772"></p>
-<p>You may select <strong>This location is serviced by trains traveling</strong>, select at least one or any number of the directions depending on access to your staging. We have selected
-  
-  All directions, for this staging.</p>
-<p>You can decide which train direction the location can service. For
-example, if only south bound trains can access the location select
+<p>You may select <strong>This location is serviced by trains traveling</strong>, select at least one or any number of the directions depending on access to your staging. We have selected <strong>All directions</strong> for this staging Location.</p>
+<p>You can decide which train direction the Location can service. For
+example, if only south bound trains can access the Location, select
 "South" and deselect the other directions. This can be useful if you
-want to support only trailing point switching for a given location. If
-a location can support multiple directions then select the ones that
+want to support only trailing point switching for a given Location. If
+a Location can support multiple directions then select the ones that
 are appropriate. </p>
-<p>Next <strong>Select the rolling stock serviced by this location, </strong>you can control the rolling stock that a location can service. Push
+<p>Using <strong>Select the rolling stock serviced by this location</strong> you can control the rolling stock that a location can service. Push
   <input name="button7" id="button7" value="Clear All" type="submit">
   to deselect all types, or
 <input name="button8" id="button8" value="Select All" type="submit">
-to select all types,  then select or deselect the rolling stock you wish the location to  accept.</p>
-<p>Since the <strong>Operations at this location </strong>is a
+to select all types, then select or deselect the rolling stock you wish the location to  accept.</p>
+
+<p>Since we selected <strong>Operations (Tracks) at this location</strong> as
   <input name="radio2" id="radio2" value="radio2" checked="checked" type="radio">
-  <strong>Staging Only</strong>
-  the
+  <strong>Staging Only</strong>, the
   <input name="button4" id="button4" value="Add Staging Track" type="submit">
 is now enabled near the bottom of the window. </p>
 <p>We also have the option to
@@ -72,24 +72,26 @@ is now enabled near the bottom of the window. </p>
   or
   <input name="button6" id="button6" value="Save Location" type="submit">
 </p>
-<p>Press
+
+<h3>Adding the Staging Tracks</h3>
+<p>A Staging Only area may contain one or more Tracks that must be defined next.</p>
+<p>After you click on 
   <input name="button9" id="button9" value="Add Staging Track" type="submit">
-then the <strong>Add Staging Track</strong> window is displayed, so that you can detail the siding. </p>
-<p>&nbsp;</p>
+the <strong>Add Staging Track</strong> window is displayed, so that you can detail the staging one Track at a time.</p>
 <table border="0" cellpadding="2" cellspacing="1" width="90%">
   <tbody><tr>
     <td align="left" valign="top" width="48%"><img src="images/Ops_Staging03.png" height="719" width="771"></td>
     <td align="left" valign="top" width="52%"><p>In <strong>Name</strong>
       <input name="textfield2" id="textfield2" type="text">
-      type the specific  track to be serviced at this location.</p>
+      type the name for the Staging Track to be serviced at this Location.</p>
       <p><strong>Length</strong>
         <input name="textfield3" id="textfield3" value="1000" size="10" type="text">
-        of the Staging track in scale feet. You may enter the measurement in actual inches as
+        of the Staging Track in scale feet. You may enter the measurement in actual inches as
         <input name="textfield4" id="textfield4" value="6&quot;" size="5" type="text">
       and the program will convert to the scale feet that you select during setup. </p>
       <p>Press
         <input name="button10" id="button10" value="Add Staging Track" type="submit">
-    the staging track is added and the greyed out features are activated.</p></td>
+    the Staging Track is added and the greyed out features are activated.</p></td>
   </tr>
 </tbody></table>
 <table border="0" cellpadding="2" cellspacing="1" width="90%">
@@ -110,7 +112,7 @@ then the <strong>Add Staging Track</strong> window is displayed, so that you can
         Exclude<br>
       <img src="images/Ops_AddInterchangeTrack04-02.png" alt="staging" height="104" width="414">      </p>
       <p>Accept all rolling stock except from those railroads that are excluded.</p>
-      <p>We will use the default. If you want to edit the roads accepted go to <a href="Ops_AddCars.shtml">Add Cars </a> then Edit Roads, to add another selection to the drop-down list.</p>
+      <p>We will use the default. If you want to edit the Roads accepted go to <a href="Ops_AddCars.shtml">Add Cars</a> then Edit Roads, to add another selection to the Roads drop-down list.</p>
       <p><strong>Select the loads serviced by this track</strong></p>
       <p>
         <input name="radio3" id="radio6" value="radio3" checked="checked" type="radio">
@@ -156,84 +158,77 @@ then the <strong>Add Staging Track</strong> window is displayed, so that you can
       <p><strong>Optional car load controls</strong></p>
       <p>
         <input name="checkbox" id="checkbox" checked="checked" type="checkbox">
-      <strong>Swap default loads and empties</strong></p>
+      Swap default loads and empties</p>
       <p>
-        <strong>
-      <input name="checkbox2" id="checkbox2" checked="checked" type="checkbox">
-      Empty cars with default loads</strong></p>
+        <input name="checkbox2" id="checkbox2" checked="checked" type="checkbox">
+      Empty cars with default loads</p>
+      
       <p><strong>Optional custom car load controls</strong></p>
       <p>
-        <strong>
       <input name="checkbox3" id="checkbox3" type="checkbox">
-      Empty cars with custom loads</strong></p>
+      Empty cars with custom loads</p>
       <p>
-        <strong>
       <input name="checkbox4" id="checkbox4" type="checkbox">
-      Generated custom loads for spurs serviced by this train</strong></p>
+      Generated custom loads for spurs serviced by this train</p>
       <p>
-        <strong>
       <input name="checkbox5" id="checkbox5" type="checkbox">
-      Generate custom loads for any spur (muliple trains)</strong><strong></strong></p>
+      Generate custom loads for any spur (multiple trains)</p>
       <p><strong>Optional Car Blocking</strong></p>
       <p>
         <input name="checkbox6" id="checkbox6" type="checkbox">
-      <strong>Block cars by pickup location</strong></p>
+      Block cars by pickup location</p>
+      
       <p>You may enter a <strong>Comment</strong>
         <input name="textfield5" id="textfield5" type="text">
         for the track.</p>
-      <p>You may now press
-        <input name="button11" id="button11" value="Add Staging Track" type="submit">
-        to add to the location or press
-        <input name="button12" id="button12" value="Delete Staging Track" type="submit">
-      if you do not want to store the track.</p>
-      <p>If you want to add another track to this staging location, then enter new data and Press
-        <input name="button13" id="button13" value="Save Staging Track" type="submit">
-        to add the track.</p>
-      <p>Note
-if you are running a train to and from the same staging location, you
-must define two staging tracks for the program, one to depart and one
-to return on. Physically, the tracks can be the same track.</p>
-    <p>Close the window when done with this location.</p></td>
+      </td>
   </tr>
 </tbody></table>
-<p>The <strong>Add Location</strong> window shows one Staging track.</p>
+
+<p>Now press
+        <input name="button11" id="button11" value="Add Staging Track" type="submit">
+        to add the new Track to this Location or press
+        <input name="button12" id="button12" value="Delete Staging Track" type="submit">
+      if you do not want to store the Track.</p>
+<p>If you want to add another Track to this Staging Only Location, enter new data and press
+        <input name="button13" id="button13" value="Save Staging Track" type="submit">
+        to add another Track.</p>
+<p>Note: if you are running a Train to and from the same Staging Location, you
+must define two Staging Tracks in OperationsPro, one to depart and one
+to return on. Physically, the Tracks can be the same physical staging track.</p>
+<p>Close the <strong>Add Staging Track</strong> window when done with this Staging Location.</p>
+    
+<p>After completing the above actions our <strong>Add Location</strong> example window now shows one Staging Track ("Track1") in this Staging Area Location:</p>
 <p>
   <input name="staging" id="staging" src="images/Ops_Staging05.png" type="image">
 </p>
-<p>You may add as many tracks as required for the Staging area.</p>
-<p>If you want to change information for any track entry, press 
+
+<h3>Changing a Staging Only Track</h3>
+<p>If you want to change information for any Track entry, press 
   <input name="button14" id="button14" value="Edit" type="submit">
-and the <strong>Edit Staging Track</strong> window will open.</p>
-<p>&nbsp;</p>
+and the <strong>Edit Staging Track</strong> panel will open.</p>
+
 <table border="0" cellpadding="2" cellspacing="1" width="90%">
   <tbody><tr>
     <td align="left" valign="top" width="48%"><img src="images/Ops_Staging06.png" height="844" width="750"></td>
-    <td align="left" valign="top" width="52%"><p>Note that it is identical to the Add Interchange and Yard Track except for the title.</p>
-      <p>Change any of the entries that you want to edit and then press the
+    <td align="left" valign="top" width="52%"><p>Note that it is identical to the Add Interchange and Yard Track panes except for the title.</p>
+      <p>Change any of the entries that you want to edit and then click
         <input name="button15" id="button15" value="Save Staging Track" type="submit">
         to save the changes.</p>
-      <p>You may also
-        <input name="button16" id="button16" value="Delete Staging Track" type="submit">
-        from your data base.</p>
-      <p>When done with editing close the window. </p></td>
+      <p>You may also <input name="button16" id="button16" value="Delete Staging Track" type="submit">
+        from your database.</p>
+      </td>
   </tr>
 </tbody></table>
-<p>
-  <t>T</t>he Locations window shows all the locations in your database.</p>
-<p>You may Edit any one of them, which opens the<strong> Edit Location</strong> window, which is the same as the <a href="Ops_Locations.shtml"><strong>Add Location</strong></a> window except it contains the info for the location you are editing.</p>
-<p>
-  <img style="width: 808px; height: 283px;" alt="locations" src="images/Ops_Location02.png"><br>
-
-</p>
-<p>You may add as many locations and track as you need to complete the description of your layout.</p>
-<p>&nbsp;</p>
+<p>When done with editing close the <strong>Add Staging Track</strong> pane.<br>
+If you did not yet save your new Staging Location, select <input name="button6" id="button6" value="Save Location" type="submit"> in the <strong><a href="Ops_AddLocations.shtml">Add Location</a></strong> pane before you close that too.</p>
+<p>You may add as many Locations and Tracks as needed to complete the description of your layout.</p>
 
 <hr>
-
 <div align="right">
 <p><a href="Ops_AddLocations.shtml">Back</a><a href="Ops_Cars.shtml"></a></p>
 <p><a href="index.shtml#Operations">Back to Index</a></p>
 </div>
-
+</div>
 <!--#include virtual="/Footer" -->
 </div></body></html>

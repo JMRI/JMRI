@@ -152,6 +152,7 @@ public class PrintOptionPanel extends OperationsPreferencesPanel {
         departureTimeCheckBox.setToolTipText(Bundle.getMessage("DepartureTimeTip"));
         routeLocationCheckBox.setToolTipText(Bundle.getMessage("RouteLocationTip"));
         editManifestCheckBox.setToolTipText(Bundle.getMessage("UseTextEditorTip"));
+        trackSummaryCheckBox.setToolTipText(Bundle.getMessage("TrackSummaryTip"));
 
         addEngPickupComboboxButton.setToolTipText(Bundle.getMessage("AddMessageComboboxTip"));
         deleteEngPickupComboboxButton.setToolTipText(Bundle.getMessage("DeleteMessageComboboxTip"));
@@ -255,21 +256,32 @@ public class PrintOptionPanel extends OperationsPreferencesPanel {
         pSl.add(pSwitchFormat);
         pSl.add(pSwitchListOrientation);
         pSl.add(pSwitchOptions);
+        
+        JPanel pM = new JPanel();
+        pM.setLayout(new BoxLayout(pM, BoxLayout.X_AXIS));
 
         // Manifest comments
         JPanel pManifestOptions = new JPanel();
         pManifestOptions.setBorder(BorderFactory.createTitledBorder(Bundle
                 .getMessage("BorderLayoutManifestOptions")));
-        pManifestOptions.add(printValidCheckBox);
         pManifestOptions.add(printLocCommentsCheckBox);
         pManifestOptions.add(printRouteCommentsCheckBox);
-        pManifestOptions.add(printLoadsEmptiesCheckBox);
-        pManifestOptions.add(use12hrFormatCheckBox);
         pManifestOptions.add(departureTimeCheckBox);
-        pManifestOptions.add(printTimetableNameCheckBox);
         pManifestOptions.add(truncateCheckBox);
-        pManifestOptions.add(sortByTrackCheckBox);
-        pManifestOptions.add(printHeadersCheckBox);
+        
+        // Manifest and Switch List comments
+        JPanel pManifestSwtichListOptions = new JPanel();
+        pManifestSwtichListOptions.setBorder(BorderFactory.createTitledBorder(Bundle
+                .getMessage("BorderLayoutManifestSwitchListOptions")));
+        pManifestSwtichListOptions.add(printValidCheckBox);
+        pManifestSwtichListOptions.add(printLoadsEmptiesCheckBox);
+        pManifestSwtichListOptions.add(use12hrFormatCheckBox);
+        pManifestSwtichListOptions.add(printTimetableNameCheckBox);
+        pManifestSwtichListOptions.add(sortByTrackCheckBox);
+        pManifestSwtichListOptions.add(printHeadersCheckBox);
+        
+        pM.add(pManifestOptions);
+        pM.add(pManifestSwtichListOptions);
 
         JPanel p2 = new JPanel();
         p2.setLayout(new BoxLayout(p2, BoxLayout.X_AXIS));
@@ -320,7 +332,7 @@ public class PrintOptionPanel extends OperationsPreferencesPanel {
         pManifest.add(pSwPickup);
         pManifest.add(pSwDrop);
         pManifest.add(pSwLocal);
-        pManifest.add(pManifestOptions);
+        pManifest.add(pM);
         pManifest.add(p2);
         pManifest.add(pComments);
 
@@ -349,6 +361,7 @@ public class PrintOptionPanel extends OperationsPreferencesPanel {
         truncateCheckBox.setSelected(Setup.isTruncateManifestEnabled());
         departureTimeCheckBox.setSelected(Setup.isUseDepartureTimeEnabled());
         trackSummaryCheckBox.setSelected(Setup.isTrackSummaryEnabled());
+        trackSummaryCheckBox.setEnabled(Setup.isSwitchListRealTime());
         routeLocationCheckBox.setSelected(Setup.isSwitchListRouteLocationCommentEnabled());
         editManifestCheckBox.setSelected(Setup.isManifestEditorEnabled());
 
@@ -534,7 +547,7 @@ public class PrintOptionPanel extends OperationsPreferencesPanel {
     }
 
     private void updateLogoButtons() {
-        boolean flag = Setup.getManifestLogoURL().equals("");
+        boolean flag = Setup.getManifestLogoURL().equals(Setup.NONE);
         addLogoButton.setVisible(flag);
         removeLogoButton.setVisible(!flag);
         logoURL.setText(Setup.getManifestLogoURL());

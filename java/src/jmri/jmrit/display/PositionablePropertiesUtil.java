@@ -553,6 +553,10 @@ public class PositionablePropertiesUtil {
             pop.setBackgroundColor(txtList.get(0).getBackground());
         }
 
+        int deg = _parent.getDegrees();
+        if (deg!=0) {     
+            _parent.rotate(0);
+        }
         desiredColor = colorFromComboBox(borderColorCombo, null);
         pop.setBorderColor(desiredColor);
 
@@ -573,6 +577,7 @@ public class PositionablePropertiesUtil {
                 pop.setJustification(0x04);
                 break;
         }
+        _parent.rotate(deg);
     }
 
     void cancelButton() {
@@ -698,6 +703,10 @@ public class PositionablePropertiesUtil {
             pop.setForeground(txtList.get(0).getOrigForeground());
             pop.setBackgroundColor(txtList.get(0).getOrigBackground());
         }
+        int deg = _parent.getDegrees();
+        if (deg!=0) {     
+            _parent.rotate(0);
+        }
         pop.setJustification(justification);
         pop.setFixedWidth(fixedWidth);
         pop.setFixedHeight(fixedHeight);
@@ -707,6 +716,7 @@ public class PositionablePropertiesUtil {
         pop.setFontSize(fontSize);
         pop.setBorderColor(defaultBorderColor);
         _parent.setLocation(xPos, yPos);
+        _parent.rotate(deg);
     }
 
     private void getCurrentValues() {

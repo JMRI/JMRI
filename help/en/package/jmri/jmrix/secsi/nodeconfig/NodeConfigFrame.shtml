@@ -1,16 +1,14 @@
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
-<!-- $Id$ -->
 <html lang="en">
 <head>
- <TITLE>
+ <title>
       JMRI: Configure SECSI Nodes
- </TITLE>
-    <META http-equiv=Content-Type content="text/html; charset=iso-8859-1">
-    <META content="Bob Jacobsen" name=Author>
-    <META name="keywords" content="JMRI help configure grapevine node">
+ </title>
+    <meta content="Bob Jacobsen" name=Author>
+    <meta name="keywords" content="JMRI help configure grapevine node">
 
 <!-- Style -->
-  <META http-equiv=Content-Type content="text/html; charset=iso-8859-1">
+  <meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
   <link rel="stylesheet" type="text/css" href="/css/default.css" media="screen">
   <link rel="stylesheet" type="text/css" href="/css/print.css" media="print">
   <link rel="icon" href="/images/jmri.ico" type="image/png">
@@ -23,11 +21,8 @@
   <div class="nomenu" id="mBody">
     <div id="mainContent">
 
-<H1>Configure SECSI Nodes
-</H1>
+<h1>Configure SECSI Nodes</h1>
     
-This is the help/jmri/jmrix/secsi/nodeconfig/NodeConfigFrame help page
-
 <p>
 SECSI nodes need to be configured before input works.
 
@@ -48,8 +43,11 @@ The node software comes in three separate varieties:
 If you encounter problems, please let us now so we improve the support 
 for these cards.</dd>
 
+This is the help/jmri/jmrix/secsi/nodeconfig/NodeConfigFrame help page
+
 </dl>
 <!--#include virtual="/Footer" -->
+ </div><!-- closes #mainContent-->
+</div> <!-- closes #mBody-->
 </body>
 </html>
-

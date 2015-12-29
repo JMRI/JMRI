@@ -1,15 +1,13 @@
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
 <html lang="en">
 <head>
-<!-- Copyright Bob Jacobsen 2008 -->
-<!-- $Id$ -->
-<title>JMRI: Connecting to a TracTronics SECSI System</title>
+<title>JMRI Hardware Support - TracTronics SECSI System</title>
 
 <!-- Style -->
 <meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
 <link rel="stylesheet" type="text/css" href="/css/default.css" media="screen">
 <link rel="stylesheet" type="text/css" href="/css/print.css" media="print">
-<link rel="icon" href="/images/jmri.ico" TYPE="image/png">
+<link rel="icon" href="/images/jmri.ico" type="image/png">
 <link rel="home" title="Home" href="/">
 <!-- /Style -->
 </head>
@@ -20,17 +18,21 @@
 <!--#include virtual="Sidebar" -->
 <div id="mainContent">
 
-<h2> 
-Connecting to a TracTronics SECSI System
-</h2>
+<h1>Hardware Support: TracTronics SECSI System</h1>
 
-JMRI can connect to 
-<a href="http://home.roadrunner.com/~jimngage/TRACTRONICS/PRODUCTS/price_1.htm">TracTronics SECSI</a>
-system nodes.
-    
+JMRI can connect to TracTronics SECSI system Nodes.
+
+<a name="limitations"></a><h2>Limitations</h2>
 <p>
-The system letter is "V", so for example the first sensor on node 5 would be VS5001.
+<strong>As of 2016 TracTronics SECSI is no longer online nor found in Google</strong>
+    
+<a name="connecting"></a><h2>Connecting</h2>
+<h3>Naming</h3>
+<p>
+The system letter is "V", so for example the first Sensor on node 5 would be "VS5001".
 
 <!--#include virtual="/Footer" -->
+ </div><!-- closes #mainContent-->
+</div> <!-- closes #mBody-->
 </body>
 </html>

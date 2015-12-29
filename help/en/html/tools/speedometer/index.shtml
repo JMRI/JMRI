@@ -1,74 +1,81 @@
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
 <html lang="en">
 <head>
-<!-- Copyright Bob Jacobsen 2008 -->
-<!-- $Id$ -->
 <title>JMRI: Speedometer</title>
 
 <!-- Style -->
-<META HTTP-EQUIV="Content-Type" CONTENT="text/html; charset=iso-8859-1">
-<LINK REL="stylesheet" TYPE="text/css" HREF="/css/default.css"
-	MEDIA="screen">
-<LINK REL="stylesheet" TYPE="text/css" HREF="/css/print.css"
-	MEDIA="print">
-<LINK REL="icon" HREF="/images/jmri.ico" TYPE="image/png">
-<LINK REL="home" TITLE="Home" HREF="/">
+<meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
+<link rel="stylesheet" type="text/css" href="/css/default.css" media="screen">
+<link rel="stylesheet" type="text/css" href="/css/print.css" media="print">
+<link rel="icon" href="/images/jmri.ico" type="image/png">
+<link rel="home" title="Home" href="/">
 <!-- /Style -->
-</HEAD>
+</head>
 
-<BODY>
+<body>
 <!--#include virtual="/Header" -->
-  <div class="nomenu" id="mBody">
+<!--#include virtual="Sidebar" -->
     <div id="mainContent">
 
-<h2>Speedometer</h2>
+<h1>Speedometer</h1>
 
-<p>(See also the pages
-on the <a href="NCE-Speedometer.shtml">NCE speedometer</A> and the 
-<a href="../../hardware/bachrus/index.shtml">Bachrus speedometer</a>)</p>
-
-The JMRI libraries
-contain a speedometer tool that you can use directly from the screen,
+<p>The JMRI libraries
+contain a Speedometer tool that you can use directly from the screen,
 or build into your own applications
-<P>
-Before it will report the speed, you need to configure it.
-<P>
-To do this, enter sensor numbers in the three fields.  This is a 
-number (like 23) for the address of the BDL16, DS54, etc channel that 
+<p>
+Before the tool will report the speed, you need to configure it.
+<p>
+To do this, enter Sensor numbers in the three fields.  This is a 
+number (like "23") for the DCC address of the BDL16, DS54, etc. channel that 
 will report when the occupancy changes.  The simplest way to get the 
-right number is to open a "monitor" window, and drop a 
+right number is to open a "LocoNet Monitor" window, and drop a 
 locomotive onto the block you're interested in.  You'll see the 
 sensor message, complete with number, in the window that looks 
 something like this:
-<PRE>
+<pre>
    General sensor input report: contact 161 (DS54 20 ch1 Sw  input)
         (BDL16 10 A2) is Lo
-</PRE>
+</pre>
 The contact number, 161 in this case, is what you want.
-<P>
-There are three sensors so you can have a shorter interval for slow 
+<p>
+There are three Sensors so you can have a shorter interval for slow 
 speeds and a longer interval for fast speeds.  
-The timing is from sensor 1 to sensor 2, and from sensor 1 to 
-sensor 3.
-<P>
+The timing is from Sensor 1 to Sensor 2, and from Sensor 1 to 
+Sensor 3.
+<p>
 You also need to select "on entrance" or "on exit" for each of the 
-sensors.  This says whether the clock will start/stop when the sensor 
-shows the block is first occupied, or when it shows the block is 
-first unoccupied.
-<P>
-You also enter the distance in _scale_ feet between the various 
+Sensors.  This says whether the clock will start/stop when the Sensor 
+shows the Block is first "Occupied", or when it shows the Block is 
+first "Unoccupied".
+<p>
+You also enter the distance in <em>scale</em> feet between the various 
 points.  If you're using "on entrance", measure using the entrance 
 end of the block.
-<P>
+<p>
 Finally, click the "Start" button.  The three little red dots along 
-the right side will start changing color to indicate the status of 
-the selected sensors: Red for "unknown", no message seen yet; White 
-for "unoccupied"; Green or yellow for "occupied".
-<P>
+the right side of the Speedometer window will start changing color to indicate the status of 
+the selected Sensors:
+	<ul>
+	<li>Red for "Unknown", no message seen yet
+	<li>White for "Unoccupied"
+	<li>Green or Yellow for "Occupied"
+	</ul>
+<p>
 Once you click the Start button, you can't change the configuration. 
 Just close that window and open another one.  You can have multiple 
-speedometer tool windows open if you'd like.
+Speedometer tool windows open if you'd like.
+
+<p>Also check out the JMRI Help pages on:
+	<ul>
+	<li><a href="SpeedMatch.shtml">Speed Matching</a></li>
+	<li>The <a href="NCE-Speedometer.shtml">NCE speedometer</a></li>
+	<li>The 
+	<a href="../../hardware/bachrus/index.shtml">Bachrus speedometer</a></li>
+	</ul>
+</p>
 
 <!--#include virtual="/Footer" -->
+  </div><!-- closes #mainContent-->
+</div> <!-- closes #mBody-->
 </body>
 </html>

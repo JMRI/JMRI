@@ -15,58 +15,60 @@
 <decoder-config xmlns:xi="http://www.w3.org/2001/XInclude" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="http://jmri.org/xml/schema/decoder.xsd">
   <version author="Michael Mosher" version="1" lastUpdated="20110216"/>
   <version author="Michael Mosher" version="2" lastUpdated="20121205"/>
+  <version author="Michael Mosher" version="3" lastUpdated="20151029"/>
   <!-- version 1	Based on the "Soundtraxx_MC by Michael Mosher 									-->
   <!-- version 2	Add SD40-2W																		-->
-  <!-- Decoder Model information follows -->
+  <!-- version 3	Fixed function mapping and use of more external includes						-->
+<!-- Decoder Model information follows -->
   <decoder>
     <family name="MC Intermountain OEM" mfg="SoundTraxx (Throttle-Up)">
       <model model="ES44AC" numOuts="4" numFns="14" connector="other" productID="ES">
         <versionCV lowVersionID="96"/>
-        <output name="3" label="  FX5  "/>
-        <output name="4" label="  FX6  "/>
-        <output name="Brakes"/>
+        <output name="3" label="  FX5  | "/>
+        <output name="4" label="  FX6  | "/>
+        <output name="5" label="Brakes| "/>
       </model>
       <model model="ES44DC" numOuts="4" numFns="14" connector="other" productID="ES">
         <versionCV lowVersionID="96"/>
-        <output name="3" label="  FX5  "/>
-        <output name="4" label="  FX6  "/>
-        <output name="Brakes"/>
+        <output name="3" label="  FX5  | "/>
+        <output name="4" label="  FX6  | "/>
+        <output name="5" label="Brakes| "/>
       </model>
       <model model="FT" numOuts="4" numFns="14" connector="other" productID="F">
         <versionCV lowVersionID="96"/>
-        <output name="3" label="  FX5  "/>
-        <output name="4" label="  FX6  "/>
-        <output name="Brakes"/>
+        <output name="3" label="  FX5  | "/>
+        <output name="4" label="  FX6  | "/>
+        <output name="5" label="Brakes| "/>
       </model>
       <model model="F3" numOuts="4" numFns="14" connector="other" productID="F">
         <versionCV lowVersionID="96"/>
-        <output name="3" label="  FX5  "/>
-        <output name="4" label="  FX6  "/>
-        <output name="Brakes"/>
+        <output name="3" label="  FX5  | "/>
+        <output name="4" label="  FX6  | "/>
+        <output name="5" label="Brakes| "/>
       </model>
       <model model="F7" numOuts="4" numFns="14" connector="other" productID="F">
         <versionCV lowVersionID="96"/>
-        <output name="3" label="  FX5  "/>
-        <output name="4" label="  FX6  "/>
-        <output name="Brakes"/>
+        <output name="3" label="  FX5  | "/>
+        <output name="4" label="  FX6  | "/>
+        <output name="5" label="Brakes| "/>
       </model>
       <model model="F9" numOuts="4" numFns="14" connector="other" productID="F">
         <versionCV lowVersionID="96"/>
-        <output name="3" label="  FX5  "/>
-        <output name="4" label="  FX6  "/>
-        <output name="Brakes"/>
+        <output name="3" label="  FX5  | "/>
+        <output name="4" label="  FX6  | "/>
+        <output name="5" label="Brakes| "/>
       </model>
       <model model="FP7" numOuts="4" numFns="14" connector="other" productID="F">
         <versionCV lowVersionID="96"/>
-        <output name="3" label="  FX5  "/>
-        <output name="4" label="  FX6  "/>
-        <output name="Brakes"/>
+        <output name="3" label="  FX5  | "/>
+        <output name="4" label="  FX6  | "/>
+        <output name="5" label="Brakes| "/>
       </model>
       <model model="SD40-2W" numOuts="4" numFns="14" connector="other" productID="SD40">
         <versionCV lowVersionID="96"/>
-        <output name="3" label="  FX5  "/>
-        <output name="4" label="  FX6  "/>
-        <output name="Brakes"/>
+        <output name="3" label="  FX5  | "/>
+        <output name="4" label="  FX6  | "/>
+        <output name="5" label="Brakes| "/>
       </model>
     </family>
     <programming direct="yes" paged="yes" register="yes" ops="yes"/>
@@ -81,20 +83,7 @@
         <label xml:lang="de">Startspannung</label>
         <comment>A value of 255 corresponds to full voltage available</comment>
       </variable>
-      <variable CV="3" item="Accel" default="0" tooltip="Sets the acceleration rate (delay).  Higher number = slower rate">
-        <decVal/>
-        <label>Acceleration Rate (0-255)</label>
-        <label xml:lang="it">Accellerazione (0-255)</label>
-        <label xml:lang="fr">Accelération (0-255)</label>
-        <label xml:lang="de">Anfahrverzögerung (0-255)</label>
-      </variable>
-      <variable CV="4" item="Decel" default="0" tooltip="Sets the deceleration rate (delay).  Higher number = slower rate">
-        <decVal/>
-        <label>Braking Rate (0-255)</label>
-        <label xml:lang="it">Decellerazione (0-255)</label>
-        <label xml:lang="fr">Décélération (0-255)</label>
-        <label xml:lang="de">Bremszeit (0-255)</label>
-      </variable>
+      <xi:include href="http://jmri.org/xml/decoders/nmra/accelDecel_255.xml"/>
       <xi:include href="http://jmri.org/xml/decoders/nmra/mfgVersionId.xml"/>
       <variable CV="10" item="EMF Feedback Cutout" default="0" tooltip="&lt;html&gt;Up to 127, this sets the speed step above which the intensity of BEMF control will be reduced&lt;br&gt;      to zero.  Values over 127 cause the BEMF to decrease as a percentage (up to 50%).&lt;/html&gt;">
         <decVal/>
@@ -105,72 +94,10 @@
         <label>Packet Time Out Value (0-255)</label>
       </variable>
       <variable CV="12" mask="XXXXXXXV" item="Analog Power Conversion" default="1" include="852002,852003,852004" tooltip="&lt;html&gt;Defines the type of power source the decoder should&lt;br&gt;      switch to whenever a DCC signal is not present.&lt;br&gt;      (Tip: Alternate Power Source must be enabled)&lt;/html&gt;">
-        <enumVal>
-          <enumChoice choice="No alternate power source available">
-            <choice>No alternate power source available</choice>
-          </enumChoice>
-          <enumChoice choice="Analog power supply">
-            <choice>Analog power supply</choice>
-          </enumChoice>
-        </enumVal>
+        <xi:include href="http://jmri.org/xml/decoders/soundtraxx/TSUenumPower.xml"/>
         <label>Power Source Conversion Type</label>
       </variable>
-      <variable item="Analog Mode Function Status - F1" CV="13" mask="XXXXXXXV" default="0" include="852002,852003,852004" tooltip="Check to enable function F1 when the unit is operating in analog power mode">
-        <xi:include href="http://jmri.org/xml/decoders/parts/enum-disabledEnabled.xml"/>
-        <label>Analog Mode Function Status - F1</label>
-      </variable>
-      <variable item="Analog Mode Function Status - F2" CV="13" mask="XXXXXXVX" default="0" include="852002,852003,852004" tooltip="Check to enable function F2 when the unit is operating in analog power mode">
-        <xi:include href="http://jmri.org/xml/decoders/parts/enum-disabledEnabled.xml"/>
-        <label>Analog Mode Function Status - F2</label>
-      </variable>
-      <variable item="Analog Mode Function Status - F3" CV="13" mask="XXXXXVXX" default="0" include="852002,852003,852004" tooltip="Check to enable function F3 when the unit is operating in analog power mode">
-        <xi:include href="http://jmri.org/xml/decoders/parts/enum-disabledEnabled.xml"/>
-        <label>Analog Mode Function Status - F3</label>
-      </variable>
-      <variable item="Analog Mode Function Status - F4" CV="13" mask="XXXXVXXX" default="0" include="852002,852003,852004" tooltip="Check to enable function F4 when the unit is operating in analog power mode">
-        <xi:include href="http://jmri.org/xml/decoders/parts/enum-disabledEnabled.xml"/>
-        <label>Analog Mode Function Status - F4</label>
-      </variable>
-      <variable item="Analog Mode Function Status - F5" CV="13" mask="XXXVXXXX" default="1" include="852002,852003,852004" tooltip="Check to enable function F5 when the unit is operating in analog power mode">
-        <xi:include href="http://jmri.org/xml/decoders/parts/enum-disabledEnabled.xml"/>
-        <label>Analog Mode Function Status - F5</label>
-      </variable>
-      <variable item="Analog Mode Function Status - F6" CV="13" mask="XXVXXXXX" default="1" include="852002,852003,852004" tooltip="Check to enable function F6 when the unit is operating in analog power mode">
-        <xi:include href="http://jmri.org/xml/decoders/parts/enum-disabledEnabled.xml"/>
-        <label>Analog Mode Function Status - F6</label>
-      </variable>
-      <variable item="Analog Mode Function Status - F7" CV="13" mask="XVXXXXXX" default="0" include="852002,852003,852004" tooltip="Check to enable function F7 when the unit is operating in analog power mode">
-        <xi:include href="http://jmri.org/xml/decoders/parts/enum-disabledEnabled.xml"/>
-        <label>Analog Mode Function Status - F7</label>
-      </variable>
-      <variable item="Analog Mode Function Status - F8" CV="13" mask="VXXXXXXX" default="0" include="852002,852003,852004" tooltip="Check to enable function F8 when the unit is operating in analog power mode">
-        <xi:include href="http://jmri.org/xml/decoders/parts/enum-disabledEnabled.xml"/>
-        <label>Analog Mode Function Status - F8</label>
-      </variable>
-      <variable item="Analog Mode Function Status - F0(f)" CV="14" mask="XXXXXXXV" default="1" include="852002,852003,852004" tooltip="Check to enable function F0(f) when the unit is operating in analog power mode">
-        <xi:include href="http://jmri.org/xml/decoders/parts/enum-disabledEnabled.xml"/>
-        <label>Analog Mode Function Status - F0(f)</label>
-      </variable>
-      <variable item="Analog Mode Function Status - F0(r)" CV="14" mask="XXXXXXVX" default="1" include="852002,852003,852004" tooltip="Check to enable function F0(r) when the unit is operating in analog power mode">
-        <xi:include href="http://jmri.org/xml/decoders/parts/enum-disabledEnabled.xml"/>
-        <label>Analog Mode Function Status - F0(r)</label>
-      </variable>
-      <variable item="Analog Mode Function Status - F9" CV="14" mask="XXXXXVXX" default="0" include="852002,852003,852004" tooltip="Check to enable function F9 when the unit is operating in analog power mode">
-        <xi:include href="http://jmri.org/xml/decoders/parts/enum-disabledEnabled.xml"/>
-        <label>Analog Mode Function Status - F9</label>
-      </variable>
-      <variable item="Analog Mode Function Status - F10" CV="14" mask="XXXXVXXX" default="0" include="852002,852003,852004" tooltip="Check to enable function F10 when the unit is operating in analog power mode">
-        <xi:include href="http://jmri.org/xml/decoders/parts/enum-disabledEnabled.xml"/>
-        <label>Analog Mode Function Status - F10</label>
-      </variable>
-      <variable item="Analog Mode Function Status - F11" CV="14" mask="XXXVXXXX" default="0" include="852002,852003,852004" tooltip="Check to enable function F11 when the unit is operating in analog power mode">
-        <xi:include href="http://jmri.org/xml/decoders/parts/enum-disabledEnabled.xml"/>
-        <label>Analog Mode Function Status - F11</label>
-      </variable>
-      <variable item="Analog Mode Function Status - F12" CV="14" mask="XXVXXXXX" default="0" include="852002,852003,852004" tooltip="Check to enable function F12 when the unit is operating in analog power mode">
-        <xi:include href="http://jmri.org/xml/decoders/parts/enum-disabledEnabled.xml"/>
-        <label>Analog Mode Function Status - F12</label>
-      </variable>
+      <xi:include href="http://jmri.org/xml/decoders/nmra/analogModeFunction_F12.xml"/>
       <variable CV="15" mask="XXXXXVVV" item="Advanced Group 1 Option 1" default="0" tooltip="&lt;html&gt;Enter the Lock ID Code to unlock access to the decoder CVs.&lt;br&gt;      (Tip: Establish the unlock code with CV Lock ID Code)&lt;/html&gt;">
         <decVal/>
         <label>CV Unlock Register (0-7)</label>
@@ -181,148 +108,10 @@
       </variable>
       <!-- Consisting Information follows -->
       <xi:include href="http://jmri.org/xml/decoders/nmra/consistAddrDirection.xml"/>
-      <variable CV="21" mask="XXXXXXXV" item="Consist Address Active For F1" default="0" minFn="1">
-        <xi:include href="http://jmri.org/xml/decoders/parts/enum-LocoAddrConsistAddr.xml"/>
-        <label>Consist Address Activation for F1</label>
-      </variable>
-      <variable CV="21" mask="XXXXXXVX" item="Consist Address Active For F2" default="0" minFn="2">
-        <xi:include href="http://jmri.org/xml/decoders/parts/enum-LocoAddrConsistAddr.xml"/>
-        <label>Consist Address Activation for F2</label>
-      </variable>
-      <variable CV="21" mask="XXXXXVXX" item="Consist Address Active For F3" default="0" minFn="3">
-        <xi:include href="http://jmri.org/xml/decoders/parts/enum-LocoAddrConsistAddr.xml"/>
-        <label>Consist Address Activation for F3</label>
-      </variable>
-      <variable CV="21" mask="XXXXVXXX" item="Consist Address Active For F4" default="0" minFn="4">
-        <xi:include href="http://jmri.org/xml/decoders/parts/enum-LocoAddrConsistAddr.xml"/>
-        <label>Consist Address Activation for F4</label>
-      </variable>
-      <variable CV="21" mask="XXXVXXXX" item="Consist Address Active For F5" default="0" minFn="5">
-        <xi:include href="http://jmri.org/xml/decoders/parts/enum-LocoAddrConsistAddr.xml"/>
-        <label>Consist Address Activation for F5</label>
-      </variable>
-      <variable CV="21" mask="XXVXXXXX" item="Consist Address Active For F6" default="0" minFn="6">
-        <xi:include href="http://jmri.org/xml/decoders/parts/enum-LocoAddrConsistAddr.xml"/>
-        <label>Consist Address Activation for F6</label>
-      </variable>
-      <variable CV="21" mask="XVXXXXXX" item="Consist Address Active For F7" default="0" minFn="7">
-        <xi:include href="http://jmri.org/xml/decoders/parts/enum-LocoAddrConsistAddr.xml"/>
-        <label>Consist Address Activation for F7</label>
-      </variable>
-      <variable CV="21" mask="VXXXXXXX" item="Consist Address Active For F8" default="0" minFn="8">
-        <xi:include href="http://jmri.org/xml/decoders/parts/enum-LocoAddrConsistAddr.xml"/>
-        <label>Consist Address Activation for F8</label>
-      </variable>
-      <variable CV="22" mask="XXXXXXXV" item="Consist Address Active For FL in Forward" default="0">
-        <xi:include href="http://jmri.org/xml/decoders/parts/enum-LocoAddrConsistAddr.xml"/>
-        <label>Consist Address Activation for F0(f) in Forward</label>
-      </variable>
-      <variable CV="22" mask="XXXXXXVX" item="Consist Address Active For FL in Reverse" default="0">
-        <xi:include href="http://jmri.org/xml/decoders/parts/enum-LocoAddrConsistAddr.xml"/>
-        <label>Consist Address Activation for F0(r) in Reverse</label>
-      </variable>
-      <variable CV="22" mask="XXXXXVXX" item="Consist Address Active For F9" default="0" minFn="9">
-        <xi:include href="http://jmri.org/xml/decoders/parts/enum-LocoAddrConsistAddr.xml"/>
-        <label>Consist Address Activation for F9</label>
-      </variable>
-      <variable CV="22" mask="XXXXVXXX" item="Consist Address Active For F10" default="0" minFn="10">
-        <xi:include href="http://jmri.org/xml/decoders/parts/enum-LocoAddrConsistAddr.xml"/>
-        <label>Consist Address Activation for F10</label>
-      </variable>
-      <variable CV="22" mask="XXXVXXXX" item="Consist Address Active For F11" default="0" minFn="11">
-        <xi:include href="http://jmri.org/xml/decoders/parts/enum-LocoAddrConsistAddr.xml"/>
-        <label>Consist Address Activation for F11</label>
-      </variable>
-      <variable CV="22" mask="XXVXXXXX" item="Consist Address Active For F12" default="0" minFn="12">
-        <xi:include href="http://jmri.org/xml/decoders/parts/enum-LocoAddrConsistAddr.xml"/>
-        <label>Consist Address Activation for F12</label>
-      </variable>
-      <variable CV="23" mask="XVVVVVVV" item="Consist Acceleration Adjustment" default="0" comment="Additional consist acceleration (combined with CV3)" tooltip="When loco is in a consist, it's base acceleration rate is modified by this amount">
-        <decVal max="127"/>
-        <label>Consist Acceleration Rate (0-127)</label>
-        <comment>Additional consist acceleration (combined with CV3)</comment>
-      </variable>
-      <variable CV="23" mask="VXXXXXXX" item="Consist Acceleration Adjustment Sign" default="0">
-        <enumVal>
-          <enumChoice choice="Add value to base acceleration rate (increases acceleration delay)">
-            <choice>Add value to base acceleration rate (increases acceleration delay)</choice>
-          </enumChoice>
-          <enumChoice choice="Subtract value from base acceleration rate (decreases acceleration delay)">
-            <choice>Subtract value from base acceleration rate (decreases acceleration delay)</choice>
-          </enumChoice>
-        </enumVal>
-        <label>Consist Acceleration Sign</label>
-      </variable>
-      <variable CV="24" mask="XVVVVVVV" item="Consist Deceleration Adjustment" default="0" comment="Additional consist braking (combined with CV4)" tooltip="When loco is in a consist, it's baseline braking rate is modified by this amount">
-        <decVal max="127"/>
-        <label>Consist Braking Rate (0-127)</label>
-        <comment>Additional consist braking (combined with CV4)</comment>
-      </variable>
-      <variable CV="24" mask="VXXXXXXX" item="Consist Deceleration Adjustment Sign" default="0" tooltip="Determines whether value is added to or subtracted from loco baseline braking rate">
-        <enumVal>
-          <enumChoice choice="Add value to baseline braking rate (increases braking delay)">
-            <choice>Add value to baseline braking rate (increases braking delay)</choice>
-          </enumChoice>
-          <enumChoice choice="Subtract value from baseline braking rate (decreases braking delay)">
-            <choice>Subtract value from baseline braking rate (decreases braking delay)</choice>
-          </enumChoice>
-        </enumVal>
-        <label>Consist Braking Sign</label>
-      </variable>
+      <xi:include href="http://jmri.org/xml/decoders/nmra/cv21.22_F12.xml"/>
+      <xi:include href="http://jmri.org/xml/decoders/nmra/consistAccelDecelSigned.xml"/>
       <variable item="Speed Table Selection" CV="25" mask="XXXVVVVV" default="0" tooltip="Select a manufacturers speed curve, or use a curve you define yourself">
-        <enumVal>
-          <enumChoice choice="Disabled, Speed Curves not used">
-            <choice>Disabled, Speed Curves not used</choice>
-          </enumChoice>
-          <enumChoice choice="Disabled, Speed Curves not used">
-            <choice>Disabled, Speed Curves not used</choice>
-          </enumChoice>
-          <enumChoice choice="Linear Speed Curve (Straight Line)">
-            <choice>Linear Speed Curve (Straight Line)</choice>
-          </enumChoice>
-          <enumChoice choice="Logarithmic Curve 1">
-            <choice>Logarithmic Curve 1</choice>
-          </enumChoice>
-          <enumChoice choice="Logarithmic Curve 2">
-            <choice>Logarithmic Curve 2</choice>
-          </enumChoice>
-          <enumChoice choice="Logarithmic Curve 3">
-            <choice>Logarithmic Curve 3</choice>
-          </enumChoice>
-          <enumChoice choice="Logarithmic Curve 4">
-            <choice>Logarithmic Curve 4</choice>
-          </enumChoice>
-          <enumChoice choice="Logarithmic Curve 5">
-            <choice>Logarithmic Curve 5</choice>
-          </enumChoice>
-          <enumChoice choice="Logarithmic Curve 6">
-            <choice>Logarithmic Curve 6</choice>
-          </enumChoice>
-          <enumChoice choice="Logarithmic Curve 7">
-            <choice>Logarithmic Curve 7</choice>
-          </enumChoice>
-          <enumChoice choice="Exponential Curve 1">
-            <choice>Exponential Curve 1</choice>
-          </enumChoice>
-          <enumChoice choice="Exponential Curve 2">
-            <choice>Exponential Curve 2</choice>
-          </enumChoice>
-          <enumChoice choice="Exponential Curve 3">
-            <choice>Exponential Curve 3</choice>
-          </enumChoice>
-          <enumChoice choice="Exponential Curve 4">
-            <choice>Exponential Curve 4</choice>
-          </enumChoice>
-          <enumChoice choice="Exponential Curve 5">
-            <choice>Exponential Curve 5</choice>
-          </enumChoice>
-          <enumChoice choice="Exponential Curve 6">
-            <choice>Exponential Curve 6</choice>
-          </enumChoice>
-          <enumChoice choice="User Defined Speed Table">
-            <choice>User Defined Speed Table</choice>
-          </enumChoice>
-        </enumVal>
+        <xi:include href="http://jmri.org/xml/decoders/soundtraxx/TSUenumCurve.xml"/>
         <label>Speed Table Selection</label>
       </variable>
       <!-- CV=29 -->
@@ -331,36 +120,15 @@
      <xi:include href="http://jmri.org/xml/decoders/nmra/cv29analog.xml"/>
       <xi:include href="http://jmri.org/xml/decoders/nmra/cv29table1-28.xml"/>
       <variable CV="30" mask="XXXXXXXV" item="Advanced Group 1 Option 3" default="0" tooltip="Enable locking of CVs when decoder is used in a multi-decoder installation">
-        <enumVal>
-          <enumChoice choice="Normal operation (no locking)">
-            <choice>Normal operation (no locking)</choice>
-          </enumChoice>
-          <enumChoice choice="Enable CV Lock as set in CVs 15 and 16">
-            <choice>Enable CV Lock as set in CVs 15 and 16</choice>
-          </enumChoice>
-        </enumVal>
+        <xi:include href="http://jmri.org/xml/decoders/soundtraxx/TSUenumLock.xml"/>
         <label>CV Lock Enable</label>
       </variable>
       <variable CV="30" mask="XXXXXXVX" item="Advanced Group 1 Option 4" default="0" tooltip="Tip: To do a one-time decoder reset, use the menu [Reset] selection">
-        <enumVal>
-          <enumChoice choice="Normal operation">
-            <choice>Normal operation</choice>
-          </enumChoice>
-          <enumChoice choice="Reset all CVs to default values at next power cycle">
-            <choice>Reset all CVs to default values at next power cycle</choice>
-          </enumChoice>
-        </enumVal>
+        <xi:include href="http://jmri.org/xml/decoders/soundtraxx/TSUenumReset.xml"/>
         <label>CV Clear (CVCLR)</label>
       </variable>
-      <variable CV="30" mask="XXXXXVXX" item="Advanced Group 1 Option 5" default="0" tooltip="Function Group 2 (F5-F8) assignments are swapped with Function Group 3 (F9-F12)">
-        <enumVal>
-          <enumChoice choice="Normal">
-            <choice>Normal</choice>
-          </enumChoice>
-          <enumChoice choice="Exchange Group 2 (F5-F8) and Group 3 (F9-F12)">
-            <choice>Exchange Group 2 (F5-F8) and Group 3 (F9-F12)</choice>
-          </enumChoice>
-        </enumVal>
+      <variable CV="30" mask="XXXXXVXX" item="Function Map Option 1" default="0" tooltip="Function Group 2 (F5-F8) assignments are swapped with Function Group 3 (F9-F12)">
+        <xi:include href="http://jmri.org/xml/decoders/soundtraxx/TSUenumSwap.xml"/>
         <label>Function Group 2 and 3 Exchange</label>
       </variable>
       <!-- Function Mapping follows -->
@@ -448,76 +216,145 @@
         <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
         <label>F4 controls output FX6</label>
       </variable>
-      <variable CV="39" mask="XXXXXXVX" item="F5 controls output 3" minOut="1" default="0" include="F">
-        <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
-        <label>F5 controls output FX5</label>
-      </variable>
-      <variable CV="39" mask="XXXXXXVX" item="F5 controls output 3" minOut="1" default="1" include="ES,SD40">
-        <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
-        <label>F5 controls output FX5</label>
-      </variable>
-      <variable CV="39" mask="XXXXXVXX" item="F5 controls output 4" minOut="2" default="0" include="ES,SD40">
-        <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
-        <label>F5 controls output FX6</label>
-      </variable>
-      <variable CV="39" mask="XXXXXVXX" item="F5 controls output 4" minOut="2" default="1" include="F">
-        <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
-        <label>F5 controls output FX6</label>
-      </variable>
-      <variable CV="40" mask="XXXXXXVX" item="F6 controls output 3" minOut="1" default="0" include="ES,SD40">
-        <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
-        <label>F6 controls output FX5</label>
-      </variable>
-      <variable CV="40" mask="XXXXXXVX" item="F6 controls output 3" minOut="1" default="1" include="F">
-        <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
-        <label>F6 controls output FX5</label>
-      </variable>
-      <variable CV="40" mask="XXXXXVXX" item="F6 controls output 4" minOut="2" default="0" include="F">
-        <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
-        <label>F6 controls output FX6</label>
-      </variable>
-      <variable CV="40" mask="XXXXXVXX" item="F6 controls output 4" minOut="2" default="1" include="ES,SD40">
-        <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
-        <label>F6 controls output FX6</label>
-      </variable>
-      <variable item="F7 controls output Brakes" CV="41" mask="VXXXXXXX" default="0">
-        <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
-        <label>F7 controls output Brakes</label>
-      </variable>
-      <variable item="F8 controls output Brakes" CV="42" mask="VXXXXXXX" default="0">
-        <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
-        <label>F8 controls output Brakes</label>
-      </variable>
-      <variable item="F9 controls output Brakes" CV="43" mask="VXXXXXXX" default="0" minFn="9">
-        <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
-        <label>F9 controls output Brakes</label>
-      </variable>
-      <variable item="F10 controls output Brakes" CV="44" mask="XVXXXXXX" default="0" minFn="10">
-        <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
-        <label>F10 controls output Brakes</label>
-      </variable>
-      <variable item="F11 controls output Brakes" CV="45" mask="XVXXXXXX" default="0" minFn="11">
-        <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
-        <label>F11 controls output Brakes</label>
-      </variable>
-      <variable item="F12 controls output Brakes" CV="46" mask="XVXXXXXX" default="0" minFn="12">
-        <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
-        <label>F12 controls output Brakes</label>
-      </variable>
+      <!-- begin exchangeable function groups -->
+      <variables>
+        <qualifier>
+          <variableref>Function Group 2 and 3 Exchange</variableref>
+          <relation>eq</relation>
+          <value>0</value>
+        </qualifier>
+          <!-- begin normal function group 2-3 -->
+		  <variable CV="39" mask="XXXXXXVX" item="F5 controls output 3" minOut="1" default="0" include="F">
+			<xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
+			<label>F5 controls output FX5</label>
+		  </variable>
+		  <variable CV="39" mask="XXXXXXVX" item="F5 controls output 3" minOut="1" default="1" include="ES,SD40">
+			<xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
+			<label>F5 controls output FX5</label>
+		  </variable>
+		  <variable CV="39" mask="XXXXXVXX" item="F5 controls output 4" minOut="2" default="0" include="ES,SD40">
+			<xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
+			<label>F5 controls output FX6</label>
+		  </variable>
+		  <variable CV="39" mask="XXXXXVXX" item="F5 controls output 4" minOut="2" default="1" include="F">
+			<xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
+			<label>F5 controls output FX6</label>
+		  </variable>
+		  <variable CV="40" mask="XXXXXXVX" item="F6 controls output 3" minOut="1" default="0" include="ES,SD40">
+			<xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
+			<label>F6 controls output FX5</label>
+		  </variable>
+		  <variable CV="40" mask="XXXXXXVX" item="F6 controls output 3" minOut="1" default="1" include="F">
+			<xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
+			<label>F6 controls output FX5</label>
+		  </variable>
+		  <variable CV="40" mask="XXXXXVXX" item="F6 controls output 4" minOut="2" default="0" include="F">
+			<xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
+			<label>F6 controls output FX6</label>
+		  </variable>
+		  <variable CV="40" mask="XXXXXVXX" item="F6 controls output 4" minOut="2" default="1" include="ES,SD40">
+			<xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
+			<label>F6 controls output FX6</label>
+		  </variable>
+		  <variable item="F7 controls output 5" CV="41" mask="VXXXXXXX" default="0">
+			<xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
+			<label>F7 controls output Brakes</label>
+		  </variable>
+		  <variable item="F8 controls output 5" CV="42" mask="VXXXXXXX" default="0">
+			<xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
+			<label>F8 controls output Brakes</label>
+		  </variable>
+		  <variable item="F9 controls output 5" CV="43" mask="VXXXXXXX" default="0" minFn="9">
+			<xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
+			<label>F9 controls output Brakes</label>
+		  </variable>
+		  <variable item="F10 controls output 5" CV="44" mask="XVXXXXXX" default="0" minFn="10">
+			<xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
+			<label>F10 controls output Brakes</label>
+		  </variable>
+		  <variable item="F11 controls output 5" CV="45" mask="XVXXXXXX" default="0" minFn="11">
+			<xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
+			<label>F11 controls output Brakes</label>
+		  </variable>
+		  <variable item="F12 controls output 5" CV="46" mask="XVXXXXXX" default="0" minFn="12">
+			<xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
+			<label>F12 controls output Brakes</label>
+		  </variable>
+        <!-- end normal function group 2-3 -->
+      </variables>
+      <variables>
+        <qualifier>
+          <variableref>Function Group 2 and 3 Exchange</variableref>
+          <relation>ge</relation>
+          <value>1</value>
+        </qualifier>
+        <!-- begin exchanged function group 2-3 -->
+		  <variable CV="39" mask="XXXXXXVX" item="F9 controls output 3(alt)" minOut="1" default="0" include="F">
+			<xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
+			<label>F9 controls output FX5</label>
+		  </variable>
+		  <variable CV="39" mask="XXXXXXVX" item="F9 controls output 3(alt)" minOut="1" default="1" include="ES,SD40">
+			<xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
+			<label>F9 controls output FX5</label>
+		  </variable>
+		  <variable CV="39" mask="XXXXXVXX" item="F9 controls output 4(alt)" minOut="2" default="0" include="ES,SD40">
+			<xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
+			<label>F9 controls output FX6</label>
+		  </variable>
+		  <variable CV="39" mask="XXXXXVXX" item="F9 controls output 4(alt)" minOut="2" default="1" include="F">
+			<xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
+			<label>F9 controls output FX6</label>
+		  </variable>
+		  <variable CV="40" mask="XXXXXXVX" item="F10 controls output 3(alt)" minOut="1" default="0" include="ES,SD40">
+			<xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
+			<label>F10 controls output FX5</label>
+		  </variable>
+		  <variable CV="40" mask="XXXXXXVX" item="F10 controls output 3(alt)" minOut="1" default="1" include="F">
+			<xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
+			<label>F10 controls output FX5</label>
+		  </variable>
+		  <variable CV="40" mask="XXXXXVXX" item="F10 controls output 4(alt)" minOut="2" default="0" include="F">
+			<xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
+			<label>F10 controls output FX6</label>
+		  </variable>
+		  <variable CV="40" mask="XXXXXVXX" item="F10 controls output 4(alt)" minOut="2" default="1" include="ES,SD40">
+			<xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
+			<label>F10 controls output FX6</label>
+		  </variable>
+		  <variable item="F11 controls output 5(alt)" CV="41" mask="VXXXXXXX" default="0">
+			<xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
+			<label>F11 controls output Brakes</label>
+		  </variable>
+		  <variable item="F12 controls output 5(alt)" CV="42" mask="VXXXXXXX" default="0">
+			<xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
+			<label>F12 controls output Brakes</label>
+		  </variable>
+		  <variable item="F5 controls output 5(alt)" CV="43" mask="VXXXXXXX" default="0" minFn="9">
+			<xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
+			<label>F5 controls output Brakes</label>
+		  </variable>
+		  <variable item="F6 controls output 5(alt)" CV="44" mask="XVXXXXXX" default="0" minFn="10">
+			<xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
+			<label>F6 controls output Brakes</label>
+		  </variable>
+		  <variable item="F7 controls output 5(alt)" CV="45" mask="XVXXXXXX" default="0" minFn="11">
+			<xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
+			<label>F7 controls output Brakes</label>
+		  </variable>
+		  <variable item="F8 controls output 5(alt)" CV="46" mask="XVXXXXXX" default="0" minFn="12">
+			<xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
+			<label>F8 controls output Brakes</label>
+		  </variable>
+          <!-- end exchanged function group 2-3 -->
+      </variables>
+      <!-- end exchangeable function groups -->
       <variable CV="61" mask="XVVVVVVV" item="Advanced Group 1 Option 6" default="0" comment="Additional braking when Fll activated (combined with CV4)" tooltip="When F11 is pressed, locos baseline braking rate is modified by this amount">
         <decVal max="127"/>
         <label>F11 Braking Rate (0-127)</label>
         <comment>Additional braking when Fll activated (combined with CV4)</comment>
       </variable>
       <variable CV="61" mask="VXXXXXXX" item="Advanced Group 1 Option 7" default="0" tooltip="Determines whether value is added to or subtracted from loco baseline braking rate">
-        <enumVal>
-          <enumChoice choice="Add value to baseline (increases braking delay)">
-            <choice>Add value to baseline (increases braking delay)</choice>
-          </enumChoice>
-          <enumChoice choice="Subtract value from baseline (decreases braking delay)">
-            <choice>Subtract value from baseline (decreases braking delay)</choice>
-          </enumChoice>
-        </enumVal>
+        <xi:include href="http://jmri.org/xml/decoders/soundtraxx/TSUenumBraking.xml"/>
         <label>F11 Braking Sign</label>
       </variable>
       <variable CV="63" item="Radio Power Conversion" default="20" include="852002,852003,852004" tooltip="Sets the voltage difference between when the decoder first powers up and when the locomotive starts to move">
@@ -542,29 +379,28 @@
       </variable>
       <xi:include href="http://jmri.org/xml/decoders/nmra/userId.xml"/>
       <!-- Advanced Motor Control Features follow -->
-      <variable CV="209" mask="VVVVVVVV" item="Advanced Group 2 Option 1" default="25" tooltip="Specifies a gain factor for the proportional part of the PID motor control equation">
+      <variable CV="209" mask="VVVVVVVV" item="EMF Static Config" default="25" tooltip="Specifies a gain factor for the proportional part of the PID motor control equation">
         <decVal/>
         <label>Motor Kp Coefficient (0-255)</label>
       </variable>
-      <variable CV="210" mask="VVVVVVVV" item="Advanced Group 2 Option 2" default="20" tooltip="Specifies a gain factor for the integral part of the PID motor control equation">
+      <variable CV="210" mask="VVVVVVVV" item="EMF Dynamic Config" default="20" tooltip="Specifies a gain factor for the integral part of the PID motor control equation">
         <decVal/>
         <label>Motor Ki Coefficient (0-255)</label>
       </variable>
-      <variable CV="212" mask="VVVVVVVV" item="Advanced Group 2 Option 3" default="255" tooltip="The CV value is interpreted as n/32 that is fed back from the control loop">
+      <variable CV="212" mask="VVVVVVVV" item="EMF Option 1" default="255" tooltip="The CV value is interpreted as n/32 that is fed back from the control loop">
         <decVal/>
         <label>Motor Control Intensity (0-255)</label>
       </variable>
-      <variable CV="213" mask="VVVVVVVV" item="Advanced Group 2 Option 4" default="24" tooltip="Specifies the time period in mS (milliseconds) between measurements">
+      <variable CV="213" mask="VVVVVVVV" item="EMF Option 2" default="24" tooltip="Specifies the time period in mS (milliseconds) between measurements">
         <decVal max="31"/>
         <label>Motor Control Sample Period (0-31)</label>
       </variable>
-      <variable CV="214" mask="VVVVVVVV" item="Advanced Group 2 Option 5" default="7" tooltip="Specifies a gain factor for the derivative part of the PID motor control equation">
+      <variable CV="214" mask="VVVVVVVV" item="EMF Option 3" default="7" tooltip="Specifies a gain factor for the derivative part of the PID motor control equation">
         <decVal/>
         <label>Motor Control Sample Aperture Time (0-255)</label>
       </variable>
       <!-- highest used so far: -->
       <!-- "Advanced Group 1 Option 8" -->
-      <!-- "Advanced Group 2 Option 7" -->
     </variables>
     <resets>
       <factReset label="Reset all CVs to factory defaults" CV="8" default="8"/>

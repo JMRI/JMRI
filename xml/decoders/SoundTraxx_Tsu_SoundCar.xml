@@ -77,7 +77,6 @@
         <label xml:lang="it">Accellerazione (0-255)</label>
         <label xml:lang="fr">Accelération (0-255)</label>
         <label xml:lang="de">Anfahrverzögerung (0-255)</label>
-        <label xml:lang="it">Accellerazione (0-255)</label>
       </variable>
       <variable CV="4" item="Decel" default="0" tooltip="Sets the deceleration rate (delay).  Higher number = slower rate">
         <decVal/>

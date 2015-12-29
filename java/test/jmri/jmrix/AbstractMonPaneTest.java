@@ -5,6 +5,8 @@ import junit.framework.Test;
 import junit.framework.TestCase;
 import junit.framework.TestSuite;
 
+import jmri.util.JUnitUtil;
+
 /**
  * JUnit tests for the AbstractMonPane class
  * <p>
@@ -42,13 +44,13 @@ public class AbstractMonPaneTest extends TestCase {
         a.entryField.setText("foo");
         a.enterButtonActionPerformed(null);
         
-        jmri.util.JUnitUtil.releaseThread(this, 20);
+        JUnitUtil.waitFor(()->{return a.getFrameText().equals("foo\n");}, "frame text");
         Assert.assertEquals("foo\n", a.getFrameText());
 
         a.entryField.setText("bar");
         a.enterButtonActionPerformed(null);
 
-        jmri.util.JUnitUtil.releaseThread(this, 20);
+        JUnitUtil.waitFor(()->{return a.getFrameText().equals("foo\nbar\n");}, "frame text");
         Assert.assertEquals("foo\nbar\n", a.getFrameText());
     }
 
@@ -65,7 +67,7 @@ public class AbstractMonPaneTest extends TestCase {
         
         a.clearButtonActionPerformed(null);
         
-        jmri.util.JUnitUtil.releaseThread(this, 20);
+        JUnitUtil.waitFor(()->{return a.getFrameText().equals("");}, "frame text");
         Assert.assertEquals("", a.getFrameText());
     }
 
@@ -83,12 +85,12 @@ public class AbstractMonPaneTest extends TestCase {
         a.enterButtonActionPerformed(null);
         
         a.freezeButton.setSelected(true);
-        jmri.util.JUnitUtil.releaseThread(this, 20);
+        jmri.util.JUnitUtil.releaseThread(this);
         
         a.entryField.setText("bar");
         a.enterButtonActionPerformed(null);
 
-        jmri.util.JUnitUtil.releaseThread(this, 20);
+        JUnitUtil.waitFor(()->{return a.getFrameText().equals("foo\n");}, "frame text");
         Assert.assertEquals("foo\n", a.getFrameText());
     }
 

@@ -23,8 +23,6 @@ import org.slf4j.LoggerFactory;
  */
 public class z21XNetThrottleTest extends XNetThrottleTest {
 
-    static final int RELEASE_TIME = 100;
-
     public void testCtor() {
         // infrastructure objects
         XNetInterfaceScaffold tc = new XNetInterfaceScaffold(new LenzCommandStation());

@@ -24,8 +24,8 @@ import junit.framework.TestSuite;
 public class SensorTableWindowTest extends jmri.util.SwingTestCase {
 
     public void testShowAndClose() throws Exception {
+
         jmri.InstanceManager.store(jmri.managers.DefaultUserMessagePreferences.getInstance(), jmri.UserPreferencesManager.class);
-        //jmri.util.JUnitAppender.assertWarnMessage("Won't protect preferences at shutdown without registered ShutDownManager");
 
         SensorTableAction a = new SensorTableAction();
         a.actionPerformed(new java.awt.event.ActionEvent(a, 1, ""));
@@ -58,6 +58,7 @@ public class SensorTableWindowTest extends jmri.util.SwingTestCase {
         Assert.assertNotNull(prefixBox);
         // set to "Internal"
         prefixBox.setSelectedItem("Internal");
+        Assert.assertEquals("Selected system item", "Internal", prefixBox.getSelectedItem());
 
         // Find the OK button
         abfinder = new AbstractButtonFinder("OK");
@@ -67,15 +68,17 @@ public class SensorTableWindowTest extends jmri.util.SwingTestCase {
         // Click button to add sensor
         getHelper().enterClickAndLeave(new MouseEventData(this, button));
 
-        // check for existing sensor
-        Assert.assertNotNull(jmri.InstanceManager.sensorManagerInstance().getSensor("IS1"));
-
         // Ask to close add window
         TestHelper.disposeWindow(fa, this);
 
         // Ask to close table window
         TestHelper.disposeWindow(ft, this);
 
+        flushAWT();
+        flushAWT();
+        
+        // check for existing sensor
+        Assert.assertNotNull(jmri.InstanceManager.sensorManagerInstance().getSensor("IS1"));
     }
 
     // from here down is testing infrastructure

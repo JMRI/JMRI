@@ -28,9 +28,10 @@ public class InternalReporterManagerXml extends jmri.managers.configurexml.Abstr
         log.error("Invalid method called");
     }
 
-    public boolean load(Element reporters) {
+    @Override
+    public boolean load(Element shared, Element perNode) {
         // load individual reporters
-        return loadReporters(reporters);
+        return loadReporters(shared);
     }
 
     static Logger log = LoggerFactory.getLogger(InternalReporterManagerXml.class.getName());

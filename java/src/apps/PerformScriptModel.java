@@ -11,13 +11,18 @@ import java.util.List;
  * @version $Revision$
  * @see PerformScriptPanel
  */
-public class PerformScriptModel {
+public class PerformScriptModel implements StartupModel {
 
     public PerformScriptModel() {
         fileName = null;
     }
 
     String fileName;
+
+    @Override
+    public String getName() {
+        return this.getFileName();
+    }
 
     public String getFileName() {
         return fileName;

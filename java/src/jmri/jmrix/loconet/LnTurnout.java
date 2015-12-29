@@ -173,9 +173,11 @@ public class LnTurnout extends AbstractTurnout implements LocoNetListener {
         
         if (_useOffSwReqAsConfirmation) {
              // Start a timer to resend the command in a couple of seconds in case consistency is not obtained before then
+             noConsistencyTimersRunning++;
              consistencyTimer.schedule(new java.util.TimerTask(){
                 public void run() {
-                    if (!isConsistentState()) {
+                    noConsistencyTimersRunning--;
+                    if (!isConsistentState() && noConsistencyTimersRunning==0) {
                         log.debug("LnTurnout resending command for turnout "+_number);
                         forwardCommandChangeToLayout(getCommandedState());
     }
@@ -370,6 +372,7 @@ public class LnTurnout extends AbstractTurnout implements LocoNetListener {
 
     static final int CONSISTENCYTIMER = 3000; // msec wait for command to take effect
     static java.util.Timer consistencyTimer = new java.util.Timer();
+    int noConsistencyTimersRunning = 0;
     
     static Logger log = LoggerFactory.getLogger(LnTurnout.class.getName());
 

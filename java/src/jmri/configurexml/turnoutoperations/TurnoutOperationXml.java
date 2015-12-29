@@ -17,13 +17,9 @@ import org.slf4j.LoggerFactory;
  */
 public abstract class TurnoutOperationXml extends jmri.configurexml.AbstractXmlAdapter {
 
-    /**
-     * inherited methods
-     *
-     * @see jmri.configurexml.XmlAdapter#load(org.jdom2.Element)
-     */
-    public boolean load(Element e) throws Exception {
-        loadOne(e);
+    @Override
+    public boolean load(Element shared, Element perNode) throws Exception {
+        loadOne(shared);
         return true;
     }
 
@@ -63,10 +59,7 @@ public abstract class TurnoutOperationXml extends jmri.configurexml.AbstractXmlA
         return result;
     }
 
-    /**
-     * @see jmri.configurexml.XmlAdapter#load(org.jdom2.Element,
-     * java.lang.Object)
-     */
+    @Override
     public void load(Element element, Object o) {
         log.error("Invalid method called");
     }

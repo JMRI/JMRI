@@ -15,6 +15,7 @@ import java.util.prefs.AbstractPreferences;
 import java.util.prefs.BackingStoreException;
 import java.util.prefs.Preferences;
 import javax.annotation.Nonnull;
+import jmri.Version;
 import jmri.profile.Profile;
 import jmri.util.FileUtil;
 import jmri.util.OrderedProperties;
@@ -150,7 +151,7 @@ public final class JmriPreferencesProvider {
                 result.append(c);
             } else {
                 result.append("_");
-                result.append(Integer.toHexString((int) c));
+                result.append(Integer.toHexString(c));
                 result.append("_");
             }
         }
@@ -363,7 +364,7 @@ public final class JmriPreferencesProvider {
                         FileUtil.backup(file);
                         JmriPreferencesProvider.this.backedUp = true;
                     }
-                    p.store(new FileOutputStream(file), "JMRI Preferences");
+                    p.store(new FileOutputStream(file), "JMRI Preferences version " + Version.name());
                 } catch (IOException e) {
                     throw new BackingStoreException(e);
                 }
