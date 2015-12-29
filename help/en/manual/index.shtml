@@ -141,7 +141,7 @@
 <td><strong><a href="http://jmri.org/manual/pdf/DP3_Man_2_14.pdf" target="_blank">Printable Guide (pdf 6.7MB)</a></strong></td>
 </tr>
 
-<tr>
+<!-- <tr>
 <td width="200"><strong>JMRI&reg; v2.12</strong></td>
 <td width="300"></td>
 <td width="400"></td>
@@ -151,12 +151,12 @@
 <td></td>
 <td><strong><a href="http://jmri.org/manual/JMRI_2-12_Manual/index.shtml">JMRI&reg; v2.12 Archive</a></strong></td>
 <td><strong><a href="http://jmri.org/manual/pdf/jmri_Man_2_12.pdf" target="_blank">Printable Guide (pdf 9.4MB)</a></strong></td>
-</tr>
+</tr> -->
 
 </tbody>
 </table>
 
-<p>Updated 11/25/2015</p>
+<p>Updated 12/29/2015</p>
 
 <h2>JMRI&reg; Applications</h2>
 
@@ -164,14 +164,14 @@
 for model railroaders.</strong><br>
 It contains modular applications for:</p>
 
-<ul>
-<li>Programming of Digital Command Control (DCC) decoders (<a href="../html/apps/DecoderPro/index.shtml">DecoderPro&reg;</a>)</li>
-<li>Drawing computer based panels for depicting a model railroad layout (<a href="../html/apps/PanelPro/PanelPro.shtml">PanelPro&trade;</a> and <a href="../html/apps/PanelPro/PanelPro.shtml#layouteditor">Layout Editor</a>)</li>
-<li>Controlling the layout (All modules)</li>
-<li>Creating train manifests for duplicating railroad operations (<a href="../html/package/jmri/jmrit/operations/Operations.shtml">OperationsPro&trade;</a>)</li>
-<li>Controlling the signals on the layout (All modules)</li>
-<li>Controlling lighting and sound in the room, and so forth (<a href="../html/tools/Audio.shtml">SoundPro&trade;</a>)</li>
-</ul>
+	<ul>
+	<li>Programming of Digital Command Control (DCC) decoders (<a href="../html/apps/DecoderPro/index.shtml">DecoderPro&reg;</a>)</li>
+	<li>Drawing computer based panels for depicting a model railroad layout (<a href="../html/apps/PanelPro/PanelPro.shtml">PanelPro&trade;</a> and <a href="../html/apps/PanelPro/PanelPro.shtml#layouteditor">Layout Editor</a>)</li>
+	<li>Controlling the layout (All modules)</li>
+	<li>Creating train manifests for duplicating railroad operations (<a href="../html/package/jmri/jmrit/operations/Operations.shtml">OperationsPro&trade;</a>)</li>
+	<li>Controlling the signals on the layout (All modules)</li>
+	<li>Controlling lighting and sound in the room, and so forth (<a href="../html/tools/Audio.shtml">SoundPro&trade;</a>)</li>
+	</ul>
 <p>All this capability is contained in one install.</p>
 <p>If this is your first visit to our manual, we suggest that you
 take the Decoder Pro&reg; tour at <a href="http://jmri.sourceforge.net/help/en/html/apps/DecoderPro/Tour.shtml">http://jmri.sourceforge.net/help/en/html/apps/DecoderPro/Tour.shtml</a><br>

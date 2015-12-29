@@ -21,9 +21,9 @@
 <!--#include virtual="Sidebar" -->
 
 <div id="mainContent">
-<h1><span style="color:#ff0000">New Throttle documentation</span></h1>
+<h1>Current Throttle documentation</h1>
 
-<p>Please note that this documentation was updated. New contents:</p>
+<p>Please note that the Throttles Help was updated. Current version:</p>
 <ul>
   <li>The <a href="ToolsMenuThrottleEntry.shtml">Throttle menu in JMRI</a></li>
   <li>The <a href="BasicThrottleWindow.shtml">Throttle Window itself</a></li>
@@ -37,7 +37,8 @@
 </ul>
 
 <hr>
-<h1>Advanced Configuration of the Function Panel</h1>
+<h1>Throttles in JMRI v2.x</h2>
+<h2>Advanced Configuration of the Function Panel</h2>
 
 <table border="0" width="100%" cellpadding="0" cellspacing="0">
   <tbody>

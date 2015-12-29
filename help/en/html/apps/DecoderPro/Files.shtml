@@ -65,17 +65,14 @@ what the configuration files contain and where they are located?
 			</li>
 			</ul>
 		
-		If you have to search for it, as opposed to having the program
-		tell you where it is,
-		make sure you find the Preferences directory, <em>and not</em> the original
-		application package. They are kept separate to simplify updating the
-		JMRI version.
+		The user's Preferences directory is kept separate from the original
+		JMRI application package to simplify updating JMRI without overwriting your settings.
 		<br>
 		You'll know you've found the right place if you see the
-		preferences files that store your applications settings:
+		Preferences files that store your applications settings:
 		<tt>DecoderProConfig2.xml</tt>, <tt>PanelProConfig2.xml</tt> and/or
 		<tt>LocoToolsConfig2.xml</tt>.  You can also search for one of those
-		files to find this directory
+		files to find this directory.
 		</li>
 
 		<li>The originally-distributed versions of files are contained in an
@@ -83,8 +80,6 @@ what the configuration files contain and where they are located?
 		Anything you modify here will be lost when you update the program to a
 		new version.
 		</ol>
-	<p>Find your Preferences directory location by choosing "Locations" from the main JMRI Help menu.<br>
-	Click the "Open Roster Location" button to open the directory in Finder/Explorer.</p>
 
 	</dd>
 	
@@ -95,12 +90,13 @@ what the configuration files contain and where they are located?
 		<ul>
 		<li>Decoder definitions - Stored in the 'decoders' subdirectory, these
 		define how a specific family of decoders is configured.
-		<li>Programmer definitions - Stored in the 'programmers' subdirectory,
-		these define the formats for the various programming sheets that are
-		available in Decoder Pro.
 		<li>Locomotive configurations - Stored in the 'roster' subdirectory,
 		these record the specific configuration of each locomotive in your
 		roster.
+		<li>Programmer definitions - Stored in the 'programmers' subdirectory,
+		these define the formats for the various programming sheets that are
+		available in Decoder Pro.
+
 		</ul>
 	</dd>
 	

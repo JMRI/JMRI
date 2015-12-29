@@ -21,9 +21,9 @@
 <!--#include virtual="Sidebar" -->
 
 <div id="mainContent">
-<h1><span style="color:#ff0000">New Throttle documentation</span></h1>
+<h1>Current Throttle documentation</h1>
 
-<p>Please note that this documentation was updated. New contents:</p>
+<p>Please note that the Throttles Help was updated. Current version:</p>
 <ul>
   <li>The <a href="ToolsMenuThrottleEntry.shtml">Throttle menu in JMRI</a></li>
   <li>The <a href="BasicThrottleWindow.shtml">Throttle Window itself</a></li>
@@ -39,7 +39,8 @@
 </ul>
 
 <hr>
-<h1>Where Do I Find the Throttles?</h1>
+<h1>Throttles in JMRI v2.x</h2>
+<h2>Where Do I Find the Throttles?</h2>
 
 <p>Chances are, if you are reading this text, then you probably saw reference
 to the "throttles" in the JMRI user group postings. And the first question that
@@ -126,7 +127,7 @@ Figure 1-2: JMRI Throttles sub-menu structure</p>
 
 <p>Use the links below to advance to the next chapter to walk through the
 process of opening up a new throttle window and setting up some of the
-available options, and lets not forget...run a locomotive.</p>
+available options, and lets not forget... run a locomotive.</p>
 
 <table border="0" width="100%" cellpadding="0" cellspacing="0">
   <tbody>
