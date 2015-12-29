@@ -86,7 +86,6 @@ public class DefaultUserMessagePreferences extends jmri.jmrit.XmlFile implements
                 jmri.InstanceManager.shutDownManagerInstance().register(userPreferencesShutDownTask);
             } else {
                 log.warn("Won't protect preferences at shutdown without registered ShutDownManager");
-                new Exception("forced traceback").printStackTrace();
             }
         }
 
