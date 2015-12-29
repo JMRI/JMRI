@@ -67,7 +67,7 @@ public class JUnitUtil {
      * Release the current thread, allowing other threads to process.
      * 
      * This cannot be used on the Swing or AWT event threads.
-     * For those, please use JFCUnit's flushAWT()
+     * For those, please use JFCUnit's flushAWT() and waitAtLeast(..)
      */
     public static void releaseThread(Object self) {
         releaseThread(self, DEFAULT_RELEASETHREAD_DELAY);
@@ -146,6 +146,12 @@ public class JUnitUtil {
 
     public static void initConfigureManager() {
         InstanceManager.setDefault(ConfigureManager.class, new JmriConfigurationManager());
+    }
+
+    public static void initDefaultUserMessagePreferences() {
+        InstanceManager.store(
+                new jmri.managers.TestUserPreferencesManager(),
+                jmri.UserPreferencesManager.class);
     }
 
     public static void initInternalTurnoutManager() {

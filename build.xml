@@ -59,7 +59,7 @@
     <!--    nsis.home=/opt/nsis/nsis-2.46/          -->
     <!-- in their "invoke ant" step                 -->
     <!-- The Packages build (dev downloads) forces: -->
-    <!--    release.official=true                   -->
+    <!--    release.official=false                  -->
     <!--    nsis.home=/opt/nsis/nsis-2.46/          -->
     <!-- in its "invoke ant" step                   -->
     

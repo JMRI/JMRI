@@ -19,14 +19,12 @@ import org.slf4j.LoggerFactory;
 public class BlockTableActionTest extends jmri.util.SwingTestCase {
 
     public void testCreate() {
-        jmri.InstanceManager.store(jmri.managers.DefaultUserMessagePreferences.getInstance(), jmri.UserPreferencesManager.class);
         BlockTableAction ba = new BlockTableAction();
         assertNotNull("BlockTableAction is null!", ba);
         TestHelper.disposeWindow(ba.f, this);
     }
 
     public void testInvoke() {
-        jmri.InstanceManager.store(jmri.managers.DefaultUserMessagePreferences.getInstance(), jmri.UserPreferencesManager.class);
         BlockTableAction ba = new BlockTableAction();
         ba.actionPerformed(null);
 
@@ -56,12 +54,12 @@ public class BlockTableActionTest extends jmri.util.SwingTestCase {
     }
 
     // The minimal setup for log4J
-    // The minimal setup for log4J
     protected void setUp() throws Exception {
         apps.tests.Log4JFixture.setUp();
 
         super.setUp();
         JUnitUtil.resetInstanceManager();
+        jmri.util.JUnitUtil.initDefaultUserMessagePreferences();
         JUnitUtil.initInternalTurnoutManager();
         JUnitUtil.initInternalLightManager();
         JUnitUtil.initInternalSensorManager();

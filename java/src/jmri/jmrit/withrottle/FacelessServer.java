@@ -51,10 +51,7 @@ public class FacelessServer implements DeviceListener, DeviceManager, ZeroConfSe
     }
 
     public void listen() {
-        int socketPort = 0;
-        if (WiThrottleManager.withrottlePreferencesInstance().isUseFixedPort()) {
-            socketPort = Integer.parseInt(WiThrottleManager.withrottlePreferencesInstance().getPort());
-        }
+        int socketPort = WiThrottleManager.withrottlePreferencesInstance().getPort();
 
         try {	//Create socket on available port
             socket = new ServerSocket(socketPort);
