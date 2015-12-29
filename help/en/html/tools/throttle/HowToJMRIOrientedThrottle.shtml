@@ -84,7 +84,9 @@ some fast launchers for specific JMRI applications, particularly <a href="http:/
 
 <span style="font-style: italic;">Note: It is not possible to save customizations of steps 5) and 6) at the moment. </span>
 
-</div>
 <!--#include virtual="/Footer" -->
-</body>
+
+      </div><!-- closes #mainContent-->
+    </div> <!-- closes #mBody-->
+    </body>
 </html>

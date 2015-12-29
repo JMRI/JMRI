@@ -1052,8 +1052,8 @@ public class RollingStock implements java.beans.PropertyChangeListener {
         return _comment;
     }
 
-    protected void moveRollingStock(RouteLocation old, RouteLocation next) {
-        if (old == getRouteLocation()) {
+    protected void moveRollingStock(RouteLocation current, RouteLocation next) {
+        if (current == getRouteLocation()) {
             // Arriving at destination?
             if (getRouteLocation() == getRouteDestination() || next == null) {
                 if (getRouteLocation() == getRouteDestination()) {
@@ -1066,9 +1066,8 @@ public class RollingStock implements java.beans.PropertyChangeListener {
                 setTrain(null); // this must come after setDestination (route id is set)
             } else {
                 log.debug("Rolling stock ({}) is in train ({}) leaves location ({}) destination ({})", toString(),
-                        getTrainName(), old.getName(), next.getName());
-                Location nextLocation = locationManager.getLocationByName(next.getName());
-                setLocation(nextLocation, null, true); // force RS to location
+                        getTrainName(), current.getName(), next.getName());
+                setLocation(next.getLocation(), null, true); // force RS to location
                 setRouteLocation(next);
             }
         }

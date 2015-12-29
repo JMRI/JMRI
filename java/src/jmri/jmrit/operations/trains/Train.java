@@ -3150,9 +3150,10 @@ public class Train implements java.beans.PropertyChangeListener {
         RouteLocation rlNext = getNextLocation(rl);
 
         setCurrentLocation(rlNext);
-        moveTrainIcon(rlNext);
+        
         // cars and engines will move via property change
         setDirtyAndFirePropertyChange(TRAIN_LOCATION_CHANGED_PROPERTY, rl, rlNext);
+        moveTrainIcon(rlNext);
         updateStatus(rl, rlNext);
         // tell GUI that train has complete its move
         setDirtyAndFirePropertyChange(TRAIN_MOVE_COMPLETE_CHANGED_PROPERTY, rl, rlNext);
@@ -3221,13 +3222,13 @@ public class Train implements java.beans.PropertyChangeListener {
     TrainIconAnimation _ta;
 
     /*
-     * rl = to the next route location for this train
+     * The train icon is moved to route location (rl) for this train
      */
     protected void moveTrainIcon(RouteLocation rl) {
         _trainIconRl = rl;
         // create train icon if at departure or if program has been restarted
         if (rl == getTrainDepartsRouteLocation() || _trainIcon == null) {
-            createTrainIcon();
+            createTrainIcon(rl);
         }
         // is the lead engine still in train
         if (getLeadEngine() != null && getLeadEngine().getRouteDestination() == rl && rl != null) {
@@ -3313,7 +3314,7 @@ public class Train implements java.beans.PropertyChangeListener {
         return _trainIcon;
     }
 
-    public void createTrainIcon() {
+    public void createTrainIcon(RouteLocation rl) {
         if (_trainIcon != null && _trainIcon.isActive()) {
             _trainIcon.remove();
             _trainIcon.dispose();
@@ -3327,8 +3328,8 @@ public class Train implements java.beans.PropertyChangeListener {
                 if (getIconName().length() > 9) {
                     _trainIcon.setFont(jmri.util.FontUtil.deriveFont(_trainIcon.getFont(), 8.f));
                 }
-                if (getCurrentLocation() != null) {
-                    _trainIcon.setLocation(getCurrentLocation().getTrainIconX(), getCurrentLocation().getTrainIconY());
+                if (rl != null) {
+                    _trainIcon.setLocation(rl.getTrainIconX(), rl.getTrainIconY());
                 }
                 // add throttle if there's a throttle manager
                 if (jmri.InstanceManager.throttleManagerInstance() != null) {
