@@ -108,10 +108,14 @@ public abstract class AbstractSensor extends AbstractNamedBean implements Sensor
                     Thread.sleep(sensorDebounceTimer);
                     restartcount = 0;
                     _knownState = _rawState;
-                    firePropertyChange("KnownState", Integer.valueOf(lastKnownState), Integer.valueOf(_knownState));
-
+                    
+                    javax.swing.SwingUtilities.invokeAndWait(
+                        ()->{firePropertyChange("KnownState", Integer.valueOf(lastKnownState), Integer.valueOf(_knownState));}
+                    );
                 } catch (InterruptedException ex) {
                     restartcount++;
+                } catch (java.lang.reflect.InvocationTargetException ex) {
+                    log.error("failed to start debounced Sensor update for "+getDisplayName() );
                 }
             }
         };

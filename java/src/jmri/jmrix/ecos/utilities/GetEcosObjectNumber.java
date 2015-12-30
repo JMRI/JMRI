@@ -37,7 +37,9 @@ public class GetEcosObjectNumber {
         if (finish == null) {
             intEnd = s.length();
         } else {
-            intEnd = s.indexOf(finish);
+            /* Make sure that the finish substring is searched for only after the start substring appears in s */
+            String s2 = s.substring(intStart, s.length());
+            intEnd = s2.indexOf(finish) + intStart;
         }
         int object = Integer.parseInt(s.substring(intStart, intEnd));
         return object;

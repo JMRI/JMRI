@@ -257,9 +257,8 @@ earlier or later.
 
 <dt>Network
 
-<dd>Select the check box to assign a specific port number to use.
-Automatic will allow the computer to select an available port number.
-<p>
+<dd>Change the port number to use. Ensure your firewall software allows this port to be used.
+
 <dt>Allowed Controls
 
 <dd>Check boxes to allow specific features to be controlled by mobile devices.

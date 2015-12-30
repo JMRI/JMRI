@@ -525,12 +525,15 @@
 
    When selected, the program will automatically save the operation files after they have been
    changed. When a change occurs the program will after 1 to 2 minutes automatically save the
-   operations files.
+   operations files. The program will also automatically save the operation files if you close
+   the <A HREF="#Trains">Trains</A> window or shutdown JMRI.
 
    <H4>Auto Backup</H4>
 
    When selected, the program will create a set of operation backup files each time the program is
-   started. See <A HREF="#BackupRestore">Backup and Restore</A> for more information.
+   started. This is very useful when experimenting with the program, if you don't like what you've
+   done, just restore one of the previous backups. See
+   <A HREF="#Backup">Backup and Restore</A> for more information. 
    
    <A NAME="PanelOptionsTrainIcons"></A>
    <H3>Panel Options (Train Icons)</H3>
