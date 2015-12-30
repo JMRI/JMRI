@@ -472,10 +472,9 @@ public class LRouteTableAction extends AbstractTableAction {
         // deactivate this Logix
         _systemName.setText(sName);
         // create the Edit Logix Window
-        // Use separate Thread so window is created on top
+        // Use separate Runnable so window is created on top
         Runnable t = new Runnable() {
             public void run() {
-                //Thread.yield();
                 setupEdit(null);
                 _addFrame.setVisible(true);
             }
