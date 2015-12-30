@@ -14,7 +14,7 @@
 	<li><a href="./Files.shtml">Configuration files</a>
 	<li><a href="./Roster.shtml">Working with the roster</a>
 	<li><a href="./FAQ.shtml">Frequently asked questions</a>
-	<li><a href="./Install.shtml">Downloading and installing DecoderPro</a>
+	<li><a href="./Install.shtml">Downloading and installing</a>
 	</ul>
 
 <dt><h3>Advanced</h3></dt>
@@ -26,8 +26,8 @@
 	<li><a href="./RosterFile.shtml">Store/update a Roster</a>
 	<li><a href="./LocoFile.shtml">Locomotive (roster) files</a>
 	<li><a href="./Debug.shtml">Debugging</a>
-	<li><a href="./NetworkFiles.shtml">Sharing Rosters Among Computers</a>
-	<li><a href="./FileUpdate.shtml">Updating Decoder Definitions</a>
+	<li><a href="./NetworkFiles.shtml">Sharing Rosters among computers</a>
+	<li><a href="./FileUpdate.shtml">Updating decoder definitions</a>
 	</ul>
 </dd>
 

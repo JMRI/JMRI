@@ -1,13 +1,10 @@
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
 <html lang="en">
 <head>
-<!-- Copyright ($Author$) 2009 -->
-<!-- $Id$ -->
 <title>JMRI: Signal Groups Table Help</title>
 
-<meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
 <meta name="Author" content="Bob Jacobsen, Egbert Broerse">
-<meta name="Date.Modified" content="20150125"/>
+<meta name="Date.Modified" content="20151230"/>
 <meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1">
 <meta name="keywords" content="model railroad JMRI decoderpro panelpro signal">
 <!--#include virtual="/Style" -->
@@ -110,5 +107,8 @@ a copy of your JMRI Configuration file as a backup first!
 	<p>Back to the <a href="../../../../html/tools/signaling/SignalGroups.shtml">Signal Groups help page</a>.
 
 <!--#include virtual="/Footer" -->
+
+      </div><!-- closes #mainContent-->
+    </div> <!-- closes #mBody-->
 </body>
 </html>
