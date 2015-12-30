@@ -65,8 +65,8 @@ public class ListedTableAction extends AbstractAction {
 
     public void actionPerformed() {
         // create the JTable model, with changes for specific NamedBean
-        /* create the frame in a seperate thread outside of swing so that we do not 
-         hog the swing thread which is also used for connection traffic */
+        /* create the frame outside of swing so that we do not 
+         hog Swing/AWT execution, then finally display on Swing */
         Runnable r = new Runnable() {
             public void run() {
                 f = new ListedTableFrame(title) {
@@ -79,11 +79,19 @@ public class ListedTableAction extends AbstractAction {
                 f.initComponents();
                 addToFrame(f);
 
-                f.gotoListItem(gotoListItem);
-                f.pack();
-
-                f.setDividerLocation(dividerLocation);
-                f.setVisible(true);
+                try {
+                    javax.swing.SwingUtilities.invokeAndWait(()->{
+                        f.gotoListItem(gotoListItem);
+                        f.pack();
+                        f.setDividerLocation(dividerLocation);
+                        f.setVisible(true);
+                    });
+                } catch (java.lang.reflect.InvocationTargetException ex) {
+                    log.error("failed to set ListedTable visible", ex );
+                } catch (InterruptedException ex) {
+                    log.error("interrupted while setting ListedTable visible", ex );
+                }
+                
             }
         };
         Thread thr = new Thread(r, "Listed Table Generation");

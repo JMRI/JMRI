@@ -8,6 +8,7 @@ import java.util.Locale;
 import java.util.Set;
 import java.util.prefs.BackingStoreException;
 import java.util.prefs.Preferences;
+import javax.swing.ToolTipManager;
 import javax.swing.UIManager;
 import javax.swing.UIManager.LookAndFeelInfo;
 import javax.swing.UnsupportedLookAndFeelException;
@@ -31,12 +32,14 @@ public class GuiLafPreferencesManager extends Bean implements PreferencesProvide
     public static final String LOCALE = "locale";
     public static final String LOOK_AND_FEEL = "lookAndFeel";
     public static final String NONSTANDARD_MOUSE_EVENT = "nonstandardMouseEvent";
+    public final static String SHOW_TOOL_TIP_TIME = "showToolTipTime";
 
     // preferences with default values
     private Locale locale = Locale.getDefault();
     private int fontSize = 0;
     private boolean nonStandardMouseEvent = false;
     private String lookAndFeel = UIManager.getLookAndFeel().getClass().getName();
+    private int toolTipDismissDelay = ToolTipManager.sharedInstance().getDismissDelay();
 
     /*
      * Unlike most PreferencesProviders, the GUI Look & Feel preferences should
@@ -53,6 +56,7 @@ public class GuiLafPreferencesManager extends Bean implements PreferencesProvide
             this.setLocale(Locale.forLanguageTag(preferences.get(LOCALE, this.getLocale().toLanguageTag())));
             this.setLookAndFeel(preferences.get(LOOK_AND_FEEL, this.getLookAndFeel()));
             this.setNonStandardMouseEvent(preferences.getBoolean(NONSTANDARD_MOUSE_EVENT, this.isNonStandardMouseEvent()));
+            this.setToolTipDismissDelay(preferences.getInt(SHOW_TOOL_TIP_TIME, this.getToolTipDismissDelay()));
             Locale.setDefault(this.getLocale());
             GuiLafConfigPane.setFontSize(this.getFontSize()); // This is backwards - GuiLafConfigPane should be getting our fontSize when it needs it
             this.applyLookAndFeel();
@@ -86,6 +90,7 @@ public class GuiLafPreferencesManager extends Bean implements PreferencesProvide
         preferences.put(LOOK_AND_FEEL, this.getLookAndFeel());
         preferences.putInt(FONT_SIZE, this.getFontSize());
         preferences.putBoolean(NONSTANDARD_MOUSE_EVENT, this.isNonStandardMouseEvent());
+        preferences.putInt(SHOW_TOOL_TIP_TIME, this.getToolTipDismissDelay());
         try {
             preferences.sync();
         } catch (BackingStoreException ex) {
@@ -125,6 +130,26 @@ public class GuiLafPreferencesManager extends Bean implements PreferencesProvide
         if (this.fontSize != oldFontSize) {
             propertyChangeSupport.firePropertyChange(FONT_SIZE, oldFontSize, this.fontSize);
         }
+    }
+
+    /**
+     * Sets the time a tooltip is displayed before it goes away.
+     * 
+     * Note that this preference takes effect immediately.
+     * 
+     * @param time the delay in seconds.
+     */
+    public void setToolTipDismissDelay(int time) {
+        this.toolTipDismissDelay = time;
+        ToolTipManager.sharedInstance().setDismissDelay(time);
+    }
+
+    /**
+     *
+     * @return the int
+     */
+    public int getToolTipDismissDelay() {
+        return this.toolTipDismissDelay;
     }
 
     /**
