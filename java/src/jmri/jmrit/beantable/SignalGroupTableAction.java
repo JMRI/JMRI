@@ -49,7 +49,6 @@ import org.slf4j.LoggerFactory;
  *
  * @author	Kevin Dickerson Copyright (C) 2010
  *
- * @version $Revision$
  */
 public class SignalGroupTableAction extends AbstractTableAction implements PropertyChangeListener {
 
@@ -205,7 +204,7 @@ public class SignalGroupTableAction extends AbstractTableAction implements Prope
 
             public void setValueAt(Object value, int row, int col) {
                 if (col == SETCOL) {
-                    // set up to edit. Use separate Thread so window is created on top
+                    // set up to edit. Use separate Runnable so window is created on top
                     class WindowMaker implements Runnable {
 
                         int row;
@@ -215,7 +214,6 @@ public class SignalGroupTableAction extends AbstractTableAction implements Prope
                         }
 
                         public void run() {
-                            //Thread.yield();
                             addPressed(null);
                             _systemName.setText((String) getValueAt(row, SYSNAMECOL));
                             editPressed(null); // don't really want to stop SignalGroup w/o user action
@@ -1205,7 +1203,6 @@ public class SignalGroupTableAction extends AbstractTableAction implements Prope
                         }
 
                         public void run() {
-                            //Thread.yield();
                             signalEditPressed(row);
                             //_systemName.setText((String)getValueAt(row, SYSNAMECOL));
                             //editPressed(null); 
