@@ -231,12 +231,11 @@ public class GuiLafConfigPane extends JPanel implements PreferencesPanel {
     private JSpinner toolTipTimeSpinner;
 
     public void doToolTipTime(JPanel panel) {
-
+        GuiLafPreferencesManager manager = InstanceManager.getDefault(GuiLafPreferencesManager.class);
         JLabel toolTipTimeLabel = new JLabel(rb.getString("GUIToolTipTime"));
-        toolTipTimeSpinner = new JSpinner(new SpinnerNumberModel(GuiLafPreferencesManager.getShowToolTipTime()/1000, MIN_TOOLTIP_TIME, MAX_TOOLTIP_TIME, 1));
-        ((JSpinner.DefaultEditor) toolTipTimeSpinner.getEditor()).getTextField().setEditable(true);
+        toolTipTimeSpinner = new JSpinner(new SpinnerNumberModel(manager.getToolTipDismissDelay() / 1000, MIN_TOOLTIP_TIME, MAX_TOOLTIP_TIME, 1));
         this.toolTipTimeSpinner.addChangeListener((ChangeEvent e) -> {
-            GuiLafPreferencesManager.setShowToolTipTime((int) toolTipTimeSpinner.getValue() * 1000); // convert to milliseconds from seconds
+            manager.setToolTipDismissDelay((int) toolTipTimeSpinner.getValue() * 1000); // convert to milliseconds from seconds
             this.dirty = true;
         });
         this.toolTipTimeSpinner.setToolTipText(MessageFormat.format(rb.getString("GUIToolTipTimeToolTip"), MIN_TOOLTIP_TIME, MAX_TOOLTIP_TIME));
@@ -246,9 +245,6 @@ public class GuiLafConfigPane extends JPanel implements PreferencesPanel {
         panel.add(toolTipTimeLabel);
         panel.add(toolTipTimeSpinner);
         panel.add(toolTipTimeUoM);
-
-            // setFontSize((int) ToolTipTimeText.getSelectedItem());
-            // InstanceManager.getDefault(GuiLafPreferencesManager.class).setFontSize((int) toolTipTimeText.getSelectedItem());
     }
 
     public String getClassName() {
