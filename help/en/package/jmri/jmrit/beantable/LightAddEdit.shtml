@@ -1,12 +1,12 @@
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
 <html lang="en">
 <head>
- <TITLE>
+ <title>
       JMRI: Adding/Editing Lights
- </TITLE>
-    <META http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
-    <META content="Bob Jacobsen" name=Author>
-    <META name="keywords" content="JMRI help Light Add Edit">
+ </title>
+    <meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
+    <meta content="Bob Jacobsen" name="Author">
+    <meta name="keywords" content="JMRI help Light Add Edit">
 
 <!--#include virtual="/Style" -->
 </head>
@@ -16,9 +16,9 @@
   <div class="nomenu" id="mBody">
     <div id="mainContent">
 
-<H1>Adding/Editing Lights</H1>
+<h1>Adding/Editing Lights</h1>
 
-<a name="addLight"><H2>Adding a new Light</H2></a>
+<a name="addLight"><h2>Adding a new Light</h2></a>
 To add a new Light, follow this procedure:
 <ol>
 	<li><p>Click <b>Lights</b> in the <b>Tables</b> submenu of the 
@@ -45,7 +45,7 @@ of a User Name is optional.</p>
 <b>Add Control</b> button, and enter your choices into the 
 <b>Add/Edit Light Control</b> pane which appears. You may enter as many 
 Light Controls as desired. More information on Light Controls is 
-<A HREF="#lightcontrol">below</a>.</p>
+<a href="#lightcontrol">below</a>.</p>
 	</li>
 	<li><p>Each Light Control is displayed in the Light Control table.
 The <b>Control Type</b> is shown on the left, followed by a <b>Description</b> 
@@ -69,7 +69,7 @@ more Lights.</p>
 	</li>
 </ol>
 
-<a name="addLight"><H2>Adding several new Lights at Once</H2></a>
+<a name="addLight"><h2>Adding several new Lights at Once</h2></a>
 If the selected <b>System:</b> supports adding multiple Lights at once, 
 the <b>Add/Edit Light</b> window will display two additional items, as shown 
 below: </p>
@@ -128,7 +128,7 @@ the "Edit" version of the <b>Add/Edit Light</b> pane.</p>
 	</li>
 </ol>
 
-<a name="lightcontrol"><H2>Automated Control Options for Lights</H2></a>
+<a name="lightcontrol"><h2>Automated Control Options for Lights</h2></a>
 
 <p> The <b>Add/Edit Light Control</b> window is used to specify a Light control. 
 The operation of a Light can be controlled in the following ways:
@@ -186,7 +186,7 @@ The operation of a Light can be controlled in the following ways:
 	<img src="LightAddTwoSensor.jpg" height="179" width="333">
 	</li>
 	</ul>
-<a name="cautions"><H2>Light Control Cautions</H2></a>
+<a name="cautions"><h2>Light Control Cautions</h2></a>
 <ul>
 	<li><p>If you need to enter a Sensor name or a Turnout name, you must enter the name 
 	(System Name or User Name) of an existing Sensor or Turnout. The Sensor or 
@@ -203,7 +203,7 @@ The operation of a Light can be controlled in the following ways:
 	</li>
 </ul>
 
-<a name="varLight"><H2>Working with Variable Intensity Lights</H2></a>
+<a name="varLight"><h2>Working with Variable Intensity Lights</h2></a>
 If the selected <b>System:</b> supports Lights with variable intensity, 
 the <b>Add/Edit Light</b> window will display the <b>Variable Intensity</b> 
 area shown below when adding a Light: </p>
@@ -225,7 +225,8 @@ Intensity</b> being set to the relevant limit.</p>
 <p>
 
 <!--#include virtual="/Footer" -->
-</div>
-</div></body>
+ </div><!-- closes #mainContent-->
+</div> <!-- closes #mBody-->
+</body>
 </html>
 
