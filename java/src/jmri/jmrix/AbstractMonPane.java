@@ -212,17 +212,22 @@ public abstract class AbstractMonPane extends JmriPanel {
         }
         //automatically uppercase input in filterField, and only accept spaces and valid hex characters
         ((AbstractDocument) filterField.getDocument()).setDocumentFilter(new DocumentFilter() {
+            final String pattern = "[0-9a-fA-F ]*+"; // typing inserts individual characters
             public void insertString(DocumentFilter.FilterBypass fb, int offset, String text,
-                    AttributeSet attr) throws BadLocationException {
-                if (text.matches("[[0-9a-fA-F]{0,7}| ]")) { // NOI18N
-                    fb.insertString(offset, text.toUpperCase(), attr);
+                    AttributeSet attrs) throws BadLocationException {
+                if (text.matches(pattern)) { // NOI18N
+                    fb.insertString(offset, text.toUpperCase(), attrs);
+                } else {
+                    fb.insertString(offset, "", attrs);
                 }
             }
 
             public void replace(DocumentFilter.FilterBypass fb, int offset, int length, String text,
                     AttributeSet attrs) throws BadLocationException {
-                if (text.matches("[[0-9a-fA-F]{0,7}| ]")) { // NOI18N
+                if (text.matches(pattern)) { // NOI18N
                     fb.replace(offset, length, text.toUpperCase(), attrs);
+                } else {
+                    fb.replace(offset, length, "", attrs);
                 }
             }
         });
@@ -537,6 +542,14 @@ public abstract class AbstractMonPane extends JmriPanel {
 
     public synchronized String getFrameText() {
         return monTextPane.getText();
+    }
+
+    public String getFilterText() {
+        return filterField.getText();
+    }
+
+    public synchronized void setFilterText(String text) {
+        filterField.setText(text);
     }
 
     /**
