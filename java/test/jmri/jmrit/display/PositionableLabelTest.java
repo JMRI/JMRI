@@ -40,9 +40,7 @@ public class PositionableLabelTest extends jmri.util.SwingTestCase {
     jmri.jmrit.display.panelEditor.PanelEditor panel;
 
     public void testSmallPanel() {
-        if (!System.getProperty("jmri.headlesstest","false").equals("false")) {
-            return;
-        }
+        if (!System.getProperty("jmri.headlesstest","false").equals("false")) { return; }
         
         panel = new jmri.jmrit.display.panelEditor.PanelEditor("PositionableLabel Test Panel");
         
@@ -80,9 +78,8 @@ public class PositionableLabelTest extends jmri.util.SwingTestCase {
     // Load file showing four labels with backgrounds and make sure they have right color
     // The file used was written with 4.0.1, and behaves as expected from panel names
     public void testBackgroundColorFile() throws Exception {
-        if (!System.getProperty("jmri.headlesstest","false").equals("false")) {
-            return;
-        }
+        if (!System.getProperty("jmri.headlesstest","false").equals("false")) { return; }
+        
         // make four windows
         InstanceManager.configureManagerInstance()
                 .load(new java.io.File("java/test/jmri/jmrit/display/configurexml/verify/backgrounds.xml"));
@@ -132,6 +129,7 @@ public class PositionableLabelTest extends jmri.util.SwingTestCase {
     // Explicit tests of PositionableLabel features
     
     public void testDisplayTransparent() {
+        if (!System.getProperty("jmri.headlesstest","false").equals("false")) { return; }
     
         JFrame f = new JFrame();
         f.getContentPane().setBackground(Color.blue);
@@ -172,6 +170,7 @@ public class PositionableLabelTest extends jmri.util.SwingTestCase {
     }
     
     public void testDisplayTransparent45degrees() {
+        if (!System.getProperty("jmri.headlesstest","false").equals("false")) { return; }
     
         JFrame f = new JFrame();
         f.getContentPane().setBackground(Color.blue);
@@ -221,9 +220,7 @@ public class PositionableLabelTest extends jmri.util.SwingTestCase {
 
     // test with an RGB animated 13x13 GIF, 0.1 sec per frame
     public void testDisplayAnimatedRGB() throws IOException {
-         if (!System.getProperty("jmri.headlesstest","false").equals("false")) { // needs to show the frame to start animation
-            return;
-        }
+        if (!System.getProperty("jmri.headlesstest","false").equals("false")) { return; }
    
         JFrame f = new JFrame();
         f.getContentPane().setBackground(Color.blue);
@@ -294,10 +291,7 @@ public class PositionableLabelTest extends jmri.util.SwingTestCase {
     
     // test with an RGB animated 13x13 GIF, 0.1 sec per frame, rotate
     public void testDisplayAnimatedRGBrotated45degrees() throws IOException {
-         if (!System.getProperty("jmri.headlesstest","false").equals("false")) { // needs to show the frame to start animation
-            return;
-        }
- 
+        if (!System.getProperty("jmri.headlesstest","false").equals("false")) { return; } 
     
          if (System.getProperty("jmri.migrationtests","false").equals("false")) { // skip test for migration, but warn about it
             log.warn("skipping testDisplayAnimatedRGBrotated45degrees because jmri.migrationtests not set true");
@@ -389,6 +383,7 @@ public class PositionableLabelTest extends jmri.util.SwingTestCase {
     // HEAVY MULTIPLICATION X \u2716
 
     public void testDisplayText() {
+        if (!System.getProperty("jmri.headlesstest","false").equals("false")) { return; }
     
         JFrame f = new JFrame();
         f.getContentPane().setBackground(Color.blue);
@@ -429,6 +424,7 @@ public class PositionableLabelTest extends jmri.util.SwingTestCase {
     
 
     public void testDisplayTextRotated90() {
+        if (!System.getProperty("jmri.headlesstest","false").equals("false")) { return; }
     
         JFrame f = new JFrame();
         f.getContentPane().setBackground(Color.blue);
@@ -473,6 +469,7 @@ public class PositionableLabelTest extends jmri.util.SwingTestCase {
     }
     
     public void testDisplayTextRotated45() {
+        if (!System.getProperty("jmri.headlesstest","false").equals("false")) { return; }
     
         JFrame f = new JFrame();
         f.getContentPane().setBackground(Color.blue);
