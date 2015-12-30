@@ -7,6 +7,7 @@ import java.awt.Font;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.ItemEvent;
+import java.text.MessageFormat;
 import java.util.Arrays;
 import java.util.HashMap;
 import java.util.Locale;
@@ -20,8 +21,11 @@ import javax.swing.JComponent;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.JRadioButton;
+import javax.swing.JSpinner;
+import javax.swing.SpinnerNumberModel;
 import javax.swing.SwingUtilities;
 import javax.swing.UIManager;
+import javax.swing.event.ChangeEvent;
 import jmri.InstanceManager;
 import jmri.swing.PreferencesPanel;
 import jmri.util.swing.SwingSettings;
@@ -44,6 +48,8 @@ import org.slf4j.LoggerFactory;
  */
 public class GuiLafConfigPane extends JPanel implements PreferencesPanel {
 
+    public static final int MAX_TOOLTIP_TIME = 3600;
+    public static final int MIN_TOOLTIP_TIME = 1;
     private static final long serialVersionUID = -3846942336860819413L;
     static final ResourceBundle rb = ResourceBundle.getBundle("apps.AppsConfigBundle");
 
@@ -54,6 +60,7 @@ public class GuiLafConfigPane extends JPanel implements PreferencesPanel {
     private final ButtonGroup LAFGroup = new ButtonGroup();
     public JCheckBox mouseEvent;
     private boolean dirty = false;
+    private boolean restartRequired = false;
 
     public GuiLafConfigPane() {
         setLayout(new BoxLayout(this, BoxLayout.Y_AXIS));
@@ -64,6 +71,8 @@ public class GuiLafConfigPane extends JPanel implements PreferencesPanel {
         add(p);
         doClickSelection(p = new JPanel());
         add(p);
+        doToolTipTime(p = new JPanel());
+        add(p);
     }
 
     void doClickSelection(JPanel panel) {
@@ -72,6 +81,8 @@ public class GuiLafConfigPane extends JPanel implements PreferencesPanel {
         mouseEvent.setSelected(SwingSettings.getNonStandardMouseEvent());
         mouseEvent.addItemListener((ItemEvent e) -> {
             InstanceManager.getDefault(GuiLafPreferencesManager.class).setNonStandardMouseEvent(mouseEvent.isSelected());
+            this.dirty = true;
+            this.restartRequired = true;
         });
         panel.add(mouseEvent);
     }
@@ -93,6 +104,7 @@ public class GuiLafConfigPane extends JPanel implements PreferencesPanel {
             jmi.addActionListener((ActionEvent e) -> {
                 InstanceManager.getDefault(GuiLafPreferencesManager.class).setLookAndFeel(name);
                 this.dirty = true;
+                this.restartRequired = true;
             });
             if (installedLAFs.get(name).equals(UIManager.getLookAndFeel().getClass().getName())) {
                 jmi.setSelected(true);
@@ -212,7 +224,31 @@ public class GuiLafConfigPane extends JPanel implements PreferencesPanel {
             setFontSize((int) fontSizeComboBox.getSelectedItem());
             InstanceManager.getDefault(GuiLafPreferencesManager.class).setFontSize((int) fontSizeComboBox.getSelectedItem());
             this.dirty = true;
+            this.restartRequired = true;
         });
+    }
+
+    private JSpinner toolTipTimeSpinner;
+
+    public void doToolTipTime(JPanel panel) {
+
+        JLabel toolTipTimeLabel = new JLabel(rb.getString("GUIToolTipTime"));
+        toolTipTimeSpinner = new JSpinner(new SpinnerNumberModel(GuiLafPreferencesManager.getShowToolTipTime()/1000, MIN_TOOLTIP_TIME, MAX_TOOLTIP_TIME, 1));
+        ((JSpinner.DefaultEditor) toolTipTimeSpinner.getEditor()).getTextField().setEditable(true);
+        this.toolTipTimeSpinner.addChangeListener((ChangeEvent e) -> {
+            GuiLafPreferencesManager.setShowToolTipTime((int) toolTipTimeSpinner.getValue() * 1000); // convert to milliseconds from seconds
+            this.dirty = true;
+        });
+        this.toolTipTimeSpinner.setToolTipText(MessageFormat.format(rb.getString("GUIToolTipTimeToolTip"), MIN_TOOLTIP_TIME, MAX_TOOLTIP_TIME));
+        toolTipTimeLabel.setToolTipText(this.toolTipTimeSpinner.getToolTipText());
+        JLabel toolTipTimeUoM = new JLabel(rb.getString("GUIToolTipTimeUoM"));
+        toolTipTimeUoM.setToolTipText(this.toolTipTimeSpinner.getToolTipText());
+        panel.add(toolTipTimeLabel);
+        panel.add(toolTipTimeSpinner);
+        panel.add(toolTipTimeUoM);
+
+            // setFontSize((int) ToolTipTimeText.getSelectedItem());
+            // InstanceManager.getDefault(GuiLafPreferencesManager.class).setFontSize((int) toolTipTimeText.getSelectedItem());
     }
 
     public String getClassName() {
@@ -271,7 +307,7 @@ public class GuiLafConfigPane extends JPanel implements PreferencesPanel {
 
     @Override
     public boolean isRestartRequired() {
-        return this.isDirty(); // all changes require a restart
+        return (this.restartRequired);
     }
 
     @Override
