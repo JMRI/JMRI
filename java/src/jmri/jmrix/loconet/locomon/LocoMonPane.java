@@ -44,7 +44,7 @@ public class LocoMonPane extends jmri.jmrix.AbstractMonPane implements LocoNetLi
     }
 
     public void dispose() {
-        if (memo.getLnTrafficController() != null) {
+        if (memo!= null && memo.getLnTrafficController() != null) {
             // disconnect from the LnTrafficController
             memo.getLnTrafficController().removeLocoNetListener(~0, this);
         }
@@ -99,7 +99,6 @@ public class LocoMonPane extends jmri.jmrix.AbstractMonPane implements LocoNetLi
             // if first bytes are in the skip list,  exit without adding to the Swing thread
             String[] filters = filterField.getText().toUpperCase().split(" ");
             String checkRaw = raw.substring(0, 2);
-
             for (String s : filters) {
                 if (s.equals(checkRaw)) {
                     linesBuffer.setLength(0);
