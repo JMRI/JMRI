@@ -32,7 +32,7 @@ public class GuiLafPreferencesManager extends Bean implements PreferencesProvide
     public static final String LOCALE = "locale";
     public static final String LOOK_AND_FEEL = "lookAndFeel";
     public static final String NONSTANDARD_MOUSE_EVENT = "nonstandardMouseEvent";
-    public final static String SHOW_TOOL_TIP_TIME = "showToolTipTime";
+    public final static String SHOW_TOOL_TIP_TIME = "showToolTipDismissDelay";
 
     // preferences with default values
     private Locale locale = Locale.getDefault();
