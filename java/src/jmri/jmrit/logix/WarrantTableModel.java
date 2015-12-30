@@ -607,10 +607,6 @@ class WarrantTableModel extends jmri.jmrit.beantable.BeanTableDataModel // Abstr
                                     .equals("controlChange") && e.getNewValue() == Integer
                                     .valueOf(Warrant.ABORT)))) {
                         fireTableRowsDeleted(i, i);
-/*                        try { // TableSorter needs time to get its row count updated
-                            Thread.sleep(50);
-                        } catch (InterruptedException ie) {
-                        }*/
                         removeNXWarrant(bean);
                     } else {
                         fireTableRowsUpdated(i, i);
