@@ -38,7 +38,7 @@
       <show>green</show>
       <show>dark</show>
       <reference>Page 60</reference>
-	  <imagelink>../../../resources/icons/smallschematics/aspects/NW-1981/NW-CPL-2arm permissive/rule-281.gif</imagelink>
+	  <imagelink>../../../resources/icons/smallschematics/aspects/NW-1981/NW-CPL-2arm-permissive/rule-281.gif</imagelink>
     </appearance>
 	
 	<appearance>
@@ -46,7 +46,7 @@
       <show>yellow</show>
       <show>green</show>
       <reference>Page 61</reference>
-	  <imagelink>../../../resources/icons/smallschematics/aspects/NW-1981/NW-CPL-2arm permissive/rule-282.gif</imagelink>
+	  <imagelink>../../../resources/icons/smallschematics/aspects/NW-1981/NW-CPL-2arm-permissive/rule-282.gif</imagelink>
     </appearance>
 	
 	<appearance>
@@ -54,7 +54,7 @@
       <show>yellow</show>
       <show>yellow</show>
       <reference>Page 61</reference>
-	  <imagelink>../../../resources/icons/smallschematics/aspects/NW-1981/NW-CPL-2arm permissive/rule-282-A.gif</imagelink>
+	  <imagelink>../../../resources/icons/smallschematics/aspects/NW-1981/NW-CPL-2arm-permissive/rule-282-A.gif</imagelink>
     </appearance>
 	
     <appearance>
@@ -62,7 +62,7 @@
       <show>yellow</show>
       <show>dark</show>
       <reference>Page 63</reference>
-	  <imagelink>../../../resources/icons/smallschematics/aspects/NW-1981/NW-CPL-2arm permissive/rule-285.gif</imagelink>
+	  <imagelink>../../../resources/icons/smallschematics/aspects/NW-1981/NW-CPL-2arm-permissive/rule-285.gif</imagelink>
     </appearance>
 	
     <appearance>
@@ -70,7 +70,7 @@
       <show>red</show>
       <show>dark</show>
       <reference>Page 66</reference>
-	  <imagelink>../../../resources/icons/smallschematics/aspects/NW-1981/NW-CPL-2arm permissive/rule-291.gif</imagelink>
+	  <imagelink>../../../resources/icons/smallschematics/aspects/NW-1981/NW-CPL-2arm-permissive/rule-291.gif</imagelink>
     </appearance>
 	
   </appearances>
