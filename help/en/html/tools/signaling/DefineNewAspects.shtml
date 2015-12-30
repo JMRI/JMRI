@@ -48,14 +48,17 @@ Think ahead a little bit:  Will there be variants of this
 definition for different eras or different divisions?  If
 so, include a year or location in the name, to make it easier
 to create modified versions. 
-
+Note: do not use any special characters like ampersands (&amp;) or spaces in names for files and 
+directories. JMRI runs on lots of computers, and filenames with spaces or special characters can 
+cause problems for other people if you ever contribute your files back to JMRI for distribution.
 <p>
 Then, provide these files:
 <ul>
 <li>index.shtml - Free-form description of the signal system
 <li>aspects.xml - Define the complete set of available aspects
 <li>appearance-*.xml - One file for each type of SignalMast, defining
-        how to display each aspect.
+        how to display each aspect. Take a look at some existing signal systems to 
+        see typical naming conventions.
 </ul>
 
 <h3>Create a new index.shtml file</h3>
@@ -158,6 +161,13 @@ to the program can locate all of them and display them to the user.
 For each kind of signal on the layout (one searchlight,
 two searchlight, dwarf, semaphore, etc), you need to
 create an appearance file.
+
+<p>
+Take a look at some existing signal systems to 
+see typical naming conventions.
+Note: do not use any special characters like ampersands (&amp;) or spaces in names for files and 
+directories. JMRI runs on lots of computers, and filenames with spaces or special characters can 
+cause problems for other people if you ever contribute your files back to JMRI for distribution.
 
 <p>
 The top of the file is some boiler-plate that you can 
