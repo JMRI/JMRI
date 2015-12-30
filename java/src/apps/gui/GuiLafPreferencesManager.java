@@ -39,7 +39,7 @@ public class GuiLafPreferencesManager extends Bean implements PreferencesProvide
     private int fontSize = 0;
     private boolean nonStandardMouseEvent = false;
     private String lookAndFeel = UIManager.getLookAndFeel().getClass().getName();
-    private static int showToolTipTime = ToolTipManager.sharedInstance().getDismissDelay();
+    private int toolTipDismissDelay = ToolTipManager.sharedInstance().getDismissDelay();
 
     /*
      * Unlike most PreferencesProviders, the GUI Look & Feel preferences should
@@ -56,7 +56,7 @@ public class GuiLafPreferencesManager extends Bean implements PreferencesProvide
             this.setLocale(Locale.forLanguageTag(preferences.get(LOCALE, this.getLocale().toLanguageTag())));
             this.setLookAndFeel(preferences.get(LOOK_AND_FEEL, this.getLookAndFeel()));
             this.setNonStandardMouseEvent(preferences.getBoolean(NONSTANDARD_MOUSE_EVENT, this.isNonStandardMouseEvent()));
-            GuiLafPreferencesManager.setShowToolTipTime(preferences.getInt(SHOW_TOOL_TIP_TIME, this.getShowToolTipTime()));
+            this.setToolTipDismissDelay(preferences.getInt(SHOW_TOOL_TIP_TIME, this.getToolTipDismissDelay()));
             Locale.setDefault(this.getLocale());
             GuiLafConfigPane.setFontSize(this.getFontSize()); // This is backwards - GuiLafConfigPane should be getting our fontSize when it needs it
             this.applyLookAndFeel();
@@ -90,7 +90,7 @@ public class GuiLafPreferencesManager extends Bean implements PreferencesProvide
         preferences.put(LOOK_AND_FEEL, this.getLookAndFeel());
         preferences.putInt(FONT_SIZE, this.getFontSize());
         preferences.putBoolean(NONSTANDARD_MOUSE_EVENT, this.isNonStandardMouseEvent());
-        preferences.putInt(SHOW_TOOL_TIP_TIME, GuiLafPreferencesManager.getShowToolTipTime());
+        preferences.putInt(SHOW_TOOL_TIP_TIME, this.getToolTipDismissDelay());
         try {
             preferences.sync();
         } catch (BackingStoreException ex) {
@@ -133,20 +133,23 @@ public class GuiLafPreferencesManager extends Bean implements PreferencesProvide
     }
 
     /**
-     *
-     * @param size the value of size
+     * Sets the time a tooltip is displayed before it goes away.
+     * 
+     * Note that this preference takes effect immediately.
+     * 
+     * @param time the delay in seconds.
      */
-    public static void setShowToolTipTime(int size) {
-        GuiLafPreferencesManager.showToolTipTime = size;
-            javax.swing.ToolTipManager.sharedInstance().setDismissDelay(size);
+    public void setToolTipDismissDelay(int time) {
+        this.toolTipDismissDelay = time;
+        ToolTipManager.sharedInstance().setDismissDelay(time);
     }
 
     /**
      *
      * @return the int
      */
-    public static int getShowToolTipTime() {
-        return GuiLafPreferencesManager.showToolTipTime;
+    public int getToolTipDismissDelay() {
+        return this.toolTipDismissDelay;
     }
 
     /**
