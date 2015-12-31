@@ -172,7 +172,7 @@ If you fix anything, commit it back.
 
         ant make-test-release-branch
 
-This will do (more or less) the following actions:
+  - This will do (more or less) the following actions:
 
         git checkout master
         git pull
@@ -187,11 +187,13 @@ This will do (more or less) the following actions:
  - Put a comment in the release GitHub item saying the branch exists, and all future changes should be documented in the new release note
  
 ```
-The release-4.1.4 branch has been created. 
+The release-4.3.1 branch has been created. 
 
-From now on, please document your changes in the [jmri4.1.5.shtml](https://github.com/JMRI/website/blob/master/releasenotes/jmri4.1.5.shtml) release note file.
+From now on, please document your changes in the [jmri4.3.2.shtml](https://github.com/JMRI/website/blob/master/releasenotes/jmri4.3.2.shtml) release note file.
 
-Maintainers, please set the 4.1.5 milestone on pulls from now on.
+Maintainers, please set the 4.3.2 milestone on pulls from now on.
+
+Jenkins will be creating files shortly at [the usual place](http://builds.jmri.org/jenkins/job/Test%20Releases/job/4.3.1/).
 ```
 
 ================================================================================
@@ -320,9 +322,9 @@ Note: the very first time doing this on a new machine, it will be required to ru
 
 This puts the right tag on the branch, then removes the branch.  If we decide not to use GitHub releases, those two steps need to be included in separate instructions.
 
-Note: Unlike releasing files to SourceForge, once a GitHub Release is created it is *not* possible to change it to refer to different contents. Once it's done, you need to move on to the next release number.
+Note: Unlike releasing files to SourceForge, once a GitHub Release is created it is *not* possible to change it to refer to different contents. *Once this step is done, you need to move on to the next release number.*
 
-- Turn off the Jenkins job; this is so it doesn't fail after later steps
+- Disable the Jenkins release-build job; this is so it doesn't fail after later steps
 
 - Close the [current milestone](https://github.com/JMRI/JMRI/milestones) with the current release number
 
@@ -335,14 +337,26 @@ Note: Unlike releasing files to SourceForge, once a GitHub Release is created it
     "tag version field" gets vN.N.N (e.g. leading lower-case "v")
     @ branch: select the release-n.n.n release branch
     "Release title" field gets "Test/Prod Release N.N.N"
-    Drop a link to the release note in the discussion field (for now)
+    Description content (really need to automate this!):
+    
+        [Release notes](http://jmri.org/releasenotes/jmri4.1.6.shtml)
+
+        Checksums:
+
+        File | SHA256 checksum
+        ---|---
+        [JMRI.4.3.1-R47390b0.dmg](https://github.com/JMRI/JMRI/releases/download/v4.3.1/JMRI.4.3.1-R47390b0.dmg) | ee2e47d840ffd8ae1efea9ba11c289b8ac1d76dc8dc5cbd330a581d364421fe6
+        [JMRI.4.3.1-R47390b0.exe](https://github.com/JMRI/JMRI/releases/download/v4.3.1/JMRI.4.3.1-R47390b0.exe) | 64828358712a9fb7c67556f2ead48961c531f878ca2ebb6e367483f5521ad75f
+        [JMRI.4.3.1-R47390b0.tgz](https://github.com/JMRI/JMRI/releases/download/v4.3.1/JMRI.4.3.1-R47390b0.tgz) | fb28ed2d3dc8dfa2c6cf57ad740c7185e7c75990b2426d2864543d63add7c00a
+    
+    
     Attach files by dragging them in (you might have to have downloaded them above via e.g. a separate 
 
     curl -o release.zip "http://builds.jmri.org/jenkins/job/Test%20Releases/job/4.1.4/ws/dist/release/*zip*/release.zip" 
 
     and expansion; it's slow to upload from a typical home machine, though, so wish we had a way to cross-load from somewhere fast - if release.zip is still on SF.net, you can do
-    ssh jacobsen,jmri@shell.sf.net create
-    scp jacobsen,jmri@shell.sf.net:release.zip .
+    ssh user,jmri@shell.sf.net create
+    scp user,jmri@shell.sf.net:release.zip .
 
     then expand the release.zip file and drag-and-drop the three files onto the web page one at a time.
 
@@ -354,14 +368,15 @@ Note: Unlike releasing files to SourceForge, once a GitHub Release is created it
 
 (It might be possible to automate this in Ant, see http://stackoverflow.com/questions/24585609/upload-build-artifact-to-github-as-release-in-jenkins and https://github.com/JMRI/JMRI/issues/103 )
     
-- Once the tag is in place (confirm that!), manually delete the release-4.1.4 branch via the [GitHub UI](https://github.com/JMRI/JMRI/branches).
 
 ### Final Branch Management
 
 It's important that any changes that were made on the branch also get onto master. Normally this happens automatically with the procedure in "Further Changes" above. But we need to check. Start with your Git repository up to date on master and the release branch, and then:
 
 ```
+git fetch
 git checkout master
+git pull
 git checkout -b temp-master
 git merge (release-n.n.n)
 ```
@@ -376,9 +391,9 @@ help/en/JavaHelpSearch/*
 ```
 If there are any changes in other files, do both of:
 
-- Make sure they get moved back to the master branch
+   - Make sure they get moved back to the master branch
 
-- Figure out what went wrong and fix it in these instructions
+   - Figure out what went wrong and fix it in these instructions
 
 Lastly, if this release is one of the special series at the end of a development cycle that leads to a test release, create the next release branch now.  Those test releases are made cumulatively from each other, rather than each from master. We start the process now so that people can open pull requests for it, and discuss whether changes should be included.
 
@@ -393,7 +408,9 @@ git checkout -b (release-n.n.n+1)
 git push github
 ```
 
-- Create the next [GitHub Issue](https://github.com/JMRI/JMRI/issues) to hold discussion with conventional title "Create release-n.n.n+1". 
+- Create the next [GitHub Issue](https://github.com/JMRI/JMRI/issues) to hold discussion with conventional title "Create release-n.n.n+1". Add the next release milestone (created above) to it.
+
+- Confirm that the v4.1.4 tag is in place, manually delete the release-4.1.4 branch via the [GitHub UI](https://github.com/JMRI/JMRI/branches).
 
 ====================================================================================
 ## Associated Documentation
@@ -431,7 +448,7 @@ git push github
 
     https://eco.copyright.gov/eService_enu/   (Firefox only!)
 
-- Decide if worth announcing elsewhere (production version or big system-specific fix/feature):
+- Decide if worth announcing elsewhere (production release only, generally we don't do this):
 
         RailRoadSoftware&yahoogroups.com
         MAC_DCC@yahoogroups.com
@@ -444,7 +461,6 @@ git push github
         DigitalPlusbyLenz@yahoogroups.com
         linux-dcc@yahoogroups.com
         rrsoftware@yahoogroups.com
-        Apple MacOS Software
 
 - Commit back any changes made to this doc
 
