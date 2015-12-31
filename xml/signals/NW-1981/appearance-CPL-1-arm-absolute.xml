@@ -38,7 +38,7 @@
       <show>green</show>
       <show>dark</show>
       <reference>Page 60</reference>
-	  <imagelink>../../../resources/icons/smallschematics/aspects/NW-1981/NW-CPL-1arm absolute/rule-281.gif</imagelink>
+	  <imagelink>../../../resources/icons/smallschematics/aspects/NW-1981/NW-CPL-1arm-absolute/rule-281.gif</imagelink>
     </appearance>
 	
 	<appearance>
@@ -47,7 +47,7 @@
 	  <show>dark</show>
 	  <reference>Page 60</reference>
 	  <comment>Because the N&amp;W used a route signaling system, certain locations only had a single head for the signal out of the siding.  To make this work in JMRI a single head clear signal had to be renamed as diverging clear.</comment>
-	  <imagelink>../../../resources/icons/smallschematics/aspects/NW-1981/NW-CPL-1arm absolute/rule-281.gif</imagelink>
+	  <imagelink>../../../resources/icons/smallschematics/aspects/NW-1981/NW-CPL-1arm-absolute/rule-281.gif</imagelink>
 	</appearance>
 	  
 	<appearance>
@@ -55,7 +55,7 @@
       <show>yellow</show>
       <show>dark</show>
       <reference>Page 63</reference>
-	  <imagelink>../../../resources/icons/smallschematics/aspects/NW-1981/NW-CPL-1arm absolute/rule-285.gif</imagelink>
+	  <imagelink>../../../resources/icons/smallschematics/aspects/NW-1981/NW-CPL-1arm-absolute/rule-285.gif</imagelink>
     </appearance>
 	
     <appearance>
@@ -63,7 +63,7 @@
       <show>red</show>
       <show>red</show>
       <reference>Page 66</reference>
-	  <imagelink>../../../resources/icons/smallschematics/aspects/NW-1981/NW-CPL-1arm absolute/rule-292.gif</imagelink>
+	  <imagelink>../../../resources/icons/smallschematics/aspects/NW-1981/NW-CPL-1arm-absolute/rule-292.gif</imagelink>
     </appearance>
 	
   </appearances>

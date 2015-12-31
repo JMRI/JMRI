@@ -1898,7 +1898,10 @@
    <P>You can access this useful tool from the Schedules window. The Schedules window can be
     found under "Tools" in the Locations window. It allows you to select a car type, and then any
     load that you've created for the that type of car. The window then shows which schedules by
-    location are receiving or shipping that specific car load.</P>
+    location are receiving or shipping that specific car load. Selecting the "All Loads" checkbox
+    will show you every schedule for the car type selected. Selecting the "All Types" checkbox
+    allows you to see which loads are being serviced by your schedules. And selecting both
+    checkboxes will list all of the schedules by car types, along with the loads received and shipped.</P>
 
    <P>If you want a list of custom car loads for each of your car types, you can use the "Print
     Car Loads" or "Preview Car Loads" found under the "Tools" menu in the "Show schedules by car type and load"
