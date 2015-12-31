@@ -470,12 +470,11 @@ public abstract class AbstractMonPane extends JmriPanel {
      * useful.
      */
     protected boolean isFiltered(String raw) {
-        //note: raw is now formatted like "Tx - BB 01 00 45", so extract the correct bytes from it (BB) for comparison
+        String checkRaw = getOpCodeForFilter(raw);
         //don't bother to check filter if no raw value passed
-        if (raw != null && raw.length() >= 7) {
+        if (raw != null) {
             // if first bytes are in the skip list,  exit without adding to the Swing thread
             String[] filters = filterField.getText().toUpperCase().split(" ");
-            String checkRaw = raw.substring(5, 7);
 
             for (String s : filters) {
                 if (s.equals(checkRaw)) {
@@ -485,6 +484,16 @@ public abstract class AbstractMonPane extends JmriPanel {
             }
         }
         return false;
+    }
+    
+    /** 
+     * Get hex opcode for filtering
+     */
+    protected String getOpCodeForFilter(String raw) {
+        //note: Generic raw is formatted like "Tx - BB 01 00 45", so extract the correct bytes from it (BB) for comparison
+        if (raw != null && raw.length() >= 7) {
+            return raw.substring(5, 7);
+        } else return null;
     }
     
     String newline = System.getProperty("line.separator"); // NOI18N
