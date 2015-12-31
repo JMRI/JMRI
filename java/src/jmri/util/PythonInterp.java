@@ -4,13 +4,11 @@ package jmri.util;
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.FileReader;
-import java.io.IOException;
-import java.io.PipedReader;
-import java.io.PipedWriter;
 import javax.script.ScriptEngine;
 import javax.script.ScriptException;
 import javax.swing.JTextArea;
 import jmri.script.JmriScriptEngineManager;
+import jmri.script.ScriptOutput;
 import org.python.util.PythonInterpreter;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -151,39 +149,12 @@ public class PythonInterp {
      * that doesn't use this feature can run on GUI-less machines.
      *
      * @return component containing python output
+     * @deprecated use {@link jmri.script.ScriptOutput#getOutputArea()} instead
      */
+    @Deprecated
     static public JTextArea getOutputArea() {
-        if (outputlog == null) {
-            // convert to stored output
-
-            try {
-                // create the output area
-                outputlog = new JTextArea();
-
-                // Add the I/O pipes
-                PipedWriter pw = new PipedWriter();
-
-                ScriptEngine python = JmriScriptEngineManager.getDefault().getEngineByName("python");
-                python.getContext().setErrorWriter(pw);
-                python.getContext().setWriter(pw);
-
-                // ensure the output pipe is read and stored into a
-                // Swing TextArea data model
-                PipedReader pr = new PipedReader(pw);
-                PipeListener pl = new PipeListener(pr, outputlog);
-                pl.start();
-            } catch (IOException e) {
-                log.error("Exception creating jython output area", e);
-                return null;
-            }
-        }
-        return outputlog;
+        return ScriptOutput.getDefault().getOutputArea();
     }
-
-    /**
-     * JTextArea containing the output
-     */
-    static private JTextArea outputlog = null;
 
     /**
      * Name of the file containing the Python code defining JMRI defaults
