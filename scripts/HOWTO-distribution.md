@@ -150,7 +150,7 @@ If you fix anything, commit it back.
 
 - Commit any remaining changes, push to your local repository, bring back to the main JMRI/JMRI repository with a pull request, wait for the CI test to complete, and merge the pull request.
 
-- Create a [new milestone](https://github.com/JMRI/JMRI/milestones) with the next release number
+- Create a [new milestone](https://github.com/JMRI/JMRI/milestones) with the _next_ release number
 
 - Create the _next_ release note, so that people will document new (overlapping) changes there. (We need to work through automation of version number values below)
     
