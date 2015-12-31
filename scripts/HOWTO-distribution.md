@@ -172,7 +172,7 @@ If you fix anything, commit it back.
 
         ant make-test-release-branch
 
-This will do (more or less) the following actions:
+  - This will do (more or less) the following actions:
 
         git checkout master
         git pull
@@ -187,11 +187,13 @@ This will do (more or less) the following actions:
  - Put a comment in the release GitHub item saying the branch exists, and all future changes should be documented in the new release note
  
 ```
-The release-4.1.4 branch has been created. 
+The release-4.3.1 branch has been created. 
 
-From now on, please document your changes in the [jmri4.1.5.shtml](https://github.com/JMRI/website/blob/master/releasenotes/jmri4.1.5.shtml) release note file.
+From now on, please document your changes in the [jmri4.3.2.shtml](https://github.com/JMRI/website/blob/master/releasenotes/jmri4.3.2.shtml) release note file.
 
-Maintainers, please set the 4.1.5 milestone on pulls from now on.
+Maintainers, please set the 4.3.2 milestone on pulls from now on.
+
+Jenkins will be creating files shortly at [the usual place](http://builds.jmri.org/jenkins/job/Test%20Releases/job/4.3.1/).
 ```
 
 ================================================================================
