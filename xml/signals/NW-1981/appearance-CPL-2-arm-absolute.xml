@@ -38,7 +38,7 @@
       <show>green</show>
       <show>dark</show>
       <reference>Page 60</reference>
-	  <imagelink>../../../resources/icons/smallschematics/aspects/NW-1981/NW-CPL-2arm/rule-281.gif</imagelink>
+	  <imagelink>../../../resources/icons/smallschematics/aspects/NW-1981/NW-CPL-2arm-absolute/rule-281.gif</imagelink>
     </appearance>
 	
 	<appearance>
@@ -46,7 +46,7 @@
       <show>yellow</show>
       <show>green</show>
       <reference>Page 61</reference>
-	  <imagelink>../../../resources/icons/smallschematics/aspects/NW-1981/NW-CPL-2arm/rule-282.gif</imagelink>
+	  <imagelink>../../../resources/icons/smallschematics/aspects/NW-1981/NW-CPL-2arm-absolute/rule-282.gif</imagelink>
     </appearance>
 	
 	<appearance>
@@ -54,7 +54,7 @@
       <show>yellow</show>
       <show>yellow</show>
       <reference>Page 61</reference>
-	  <imagelink>../../../resources/icons/smallschematics/aspects/NW-1981/NW-CPL-2arm/rule-282-A.gif</imagelink>
+	  <imagelink>../../../resources/icons/smallschematics/aspects/NW-1981/NW-CPL-2arm-absolute/rule-282-A.gif</imagelink>
     </appearance>
 	
 	<appearance>
@@ -62,7 +62,7 @@
       <show>red</show>
       <show>green</show>
       <reference>Page 62</reference>
-	  <imagelink>../../../resources/icons/smallschematics/aspects/NW-1981/NW-CPL-2arm/rule-283.gif</imagelink>
+	  <imagelink>../../../resources/icons/smallschematics/aspects/NW-1981/NW-CPL-2arm-absolute/rule-283.gif</imagelink>
     </appearance>
 
     <appearance>
@@ -70,7 +70,7 @@
       <show>red</show>
       <show>flashyellow</show>
       <reference>Page 62</reference>
-	  <imagelink>../../../resources/icons/smallschematics/aspects/NW-1981/NW-CPL-2arm/rule-283-B.gif</imagelink>
+	  <imagelink>../../../resources/icons/smallschematics/aspects/NW-1981/NW-CPL-2arm-absolute/rule-283-B.gif</imagelink>
     </appearance>
 	
     <appearance>
@@ -78,7 +78,7 @@
       <show>yellow</show>
       <show>dark</show>
       <reference>Page 63</reference>
-	  <imagelink>../../../resources/icons/smallschematics/aspects/NW-1981/NW-CPL-2arm/rule-285.gif</imagelink>
+	  <imagelink>../../../resources/icons/smallschematics/aspects/NW-1981/NW-CPL-2arm-absolute/rule-285.gif</imagelink>
     </appearance>
 	
     <appearance>
@@ -86,7 +86,7 @@
       <show>red</show>
       <show>yellow</show>
       <reference>Page 64</reference>
-	  <imagelink>../../../resources/icons/smallschematics/aspects/NW-1981/NW-CPL-2arm/rule-286.gif</imagelink>
+	  <imagelink>../../../resources/icons/smallschematics/aspects/NW-1981/NW-CPL-2arm-absolute/rule-286.gif</imagelink>
     </appearance>
 	
     <appearance>
@@ -94,7 +94,7 @@
       <show>red</show>
       <show>lunar</show>
       <reference>Page 65</reference>
-	  <imagelink>../../../resources/icons/smallschematics/aspects/NW-1981/NW-CPL-2arm/rule-290.gif</imagelink>
+	  <imagelink>../../../resources/icons/smallschematics/aspects/NW-1981/NW-CPL-2arm-absolute/rule-290.gif</imagelink>
     </appearance>
 	
     <appearance>
@@ -102,7 +102,7 @@
       <show>red</show>
       <show>red</show>
       <reference>Page 66</reference>
-	  <imagelink>../../../resources/icons/smallschematics/aspects/NW-1981/NW-CPL-2arm/rule-292.gif</imagelink>
+	  <imagelink>../../../resources/icons/smallschematics/aspects/NW-1981/NW-CPL-2arm-absolute/rule-292.gif</imagelink>
     </appearance>
 	
   </appearances>
@@ -115,7 +115,7 @@
 	
 	<permissive>
 	  <aspect>Restricting</aspect>
-	  <imagelink>../../../resources/icons/smallschematics/aspects/NW-1981/NW-CPL-2arm/rule-290.gif</imagelink>
+	  <imagelink>../../../resources/icons/smallschematics/aspects/NW-1981/NW-CPL-2arm-absolute/rule-290.gif</imagelink>
 	</permissive>
 	
     <held>

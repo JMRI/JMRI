@@ -13,9 +13,8 @@ import jmri.util.JUnitUtil;
  * Copyright: Copyright (c) 2015</p>
  *
  * @author Bob Jacobsen
- * @version $Revision$
  */
-public class AbstractMonPaneTest extends TestCase {
+public class AbstractMonPaneTest extends jmri.util.SwingTestCase {
 
 
     protected void setUp() {
@@ -94,6 +93,33 @@ public class AbstractMonPaneTest extends TestCase {
         Assert.assertEquals("foo\n", a.getFrameText());
     }
 
+    public void testFilterFormatting() throws Exception {
+        AbstractMonPane a = new AbstractMonPane() {
+            public String getTitle() { return "title"; }
+            protected void init() {}
+        };
+        
+        a.initComponents();
+
+        a.setFilterText("00");
+        flushAWT();
+        Assert.assertEquals("filter field unedited", "00", a.getFilterText());
+
+        a.setFilterText("A0");
+        flushAWT();
+        Assert.assertEquals("filter field unedited", "A0", a.getFilterText());
+
+        a.setFilterText("#");
+        flushAWT();
+        Assert.assertEquals("filter field rejected", "", a.getFilterText());
+
+        a.setFilterText("ab");
+        flushAWT();
+        Assert.assertEquals("filter field edited", "AB", a.getFilterText());
+
+    }
+
+
     // from here down is testing infrastructure
 
     public AbstractMonPaneTest(String s) {
@@ -102,6 +128,7 @@ public class AbstractMonPaneTest extends TestCase {
 
     // Main entry point
     static public void main(String[] args) {
+        apps.tests.Log4JFixture.initLogging();
         String[] testCaseName = {AbstractMonPaneTest.class.getName()};
         junit.swingui.TestRunner.main(testCaseName);
     }
