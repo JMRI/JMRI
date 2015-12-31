@@ -94,22 +94,22 @@ If you're attempting to perform this on MS Windows, refer to the MS Windows note
 
 - Remake the help index (need a command line approach, so can put in ant!)
 
-    cd help/en/
-    rm ~/.jhelpdev    (to make sure the right preferences are chosen)
-    ./JHelpDev.csh   (See the doc page for setup) <-- for Windows, use JHelpDev.bat
-    (navigate to JHelpDev.xml in release html/en/ & open it; might take a while)
-    (click "Create All", takes a bit of time, wait for button to release)
-    (quit)
+        cd help/en/
+        rm ~/.jhelpdev    (to make sure the right preferences are chosen)
+        ./JHelpDev.csh   (See the doc page for setup) <-- for Windows, use JHelpDev.bat
+        (navigate to JHelpDev.xml in release html/en/ & open it; might take a while)
+        (click "Create All", takes a bit of time, wait for button to release)
+        (quit)
 
 In that same directory, also remake the index and toc web pages by doing invoking ant (no argument needed).
 
-    ant
+        ant
 
 (Need to consider whether to do this in help/fr, and eventually others)
 
 Run the program and make sure help works.
 
-    git commit -m"JavaHelp indexing update" .
+        git commit -m"JavaHelp indexing update" .
 
 ================================================================================
 ## General Maintenance Items
@@ -118,9 +118,15 @@ We roll some general code maintenance items into the release process.  They can 
 
 - Check for any files with multiple UTF-8 Byte-Order-Marks.  This shouldn't usually happen but when it does can be a bit tricky to find. Scan from the root of the repository and fix any files found:
 
-        grep -rlI --exclude-dir=.git $'\xEF\xBB\xBF\xEF\xBB\xBF'
+        grep -rlI --exclude-dir=.git '^\xEF\xBB\xBF\xEF\xBB\xBF' .
 
 It might be necessary to use a Hex editor to remove the erroneous extra Byte-Order-Marks - a valid UTF-8 file should only have either one 3-byte BOM (EF BB BF) or no BOM at all.
+
+- Check for wrong line ends. On MacOS X or Linux, do:
+
+        find xml jython java/test java/src web -type f -exec ./scripts/checkCR.sh {} \; -print
+    
+Then see #426
 
 - Run "ant alltest"; make sure they all pass; fix problems and commit back
 
@@ -144,19 +150,19 @@ If you fix anything, commit it back.
 
 - Commit any remaining changes, push to your local repository, bring back to the main JMRI/JMRI repository with a pull request, wait for the CI test to complete, and merge the pull request.
 
-- Create a [new milestone](https://github.com/JMRI/JMRI/milestones) with the new release number
+- Create a [new milestone](https://github.com/JMRI/JMRI/milestones) with the _next_ release number
 
 - Create the _next_ release note, so that people will document new (overlapping) changes there. (We need to work through automation of version number values below)
     
         cd (local web copy)/releasenotes
         git pull 
-        cp jmri4.1.4.shtml jmri4.1.5.shtml
+        cp jmri4.3.1.shtml jmri4.3.2.shtml
         (edit the new release note accordingly)
             change numbers throughout
             move new warnings to old
             remove old-version change notes
-        git add jmri4.1.5.shtml
-        git commit -m"start new 4.1.5 release note" jmri4.1.5.shtml
+        git add jmri4.3.2.shtml
+        git commit -m"start new 4.3.2 release note" jmri4.3.2.shtml
         PR and pull back.
         cd (local JMRI copy)
 
@@ -164,18 +170,18 @@ If you fix anything, commit it back.
 
 - Start the release by creating a new "release branch" using Ant.  (If you need to make a "branch from a branch", such as nearing the end of the development cycle, this will need to be done manually rather than via ant.)
 
-    ant make-test-release-branch
+        ant make-test-release-branch
 
 This will do (more or less) the following actions:
 
-    git checkout master
-    git pull
-    (commit a version number increment to master)
-    git push JMRI/JMRI master
-    git checkout -b {branch}
-    git push JMRI/JMRI {branch}
-    git checkout master    
-    git pull
+        git checkout master
+        git pull
+        (commit a version number increment to master)
+        git push JMRI/JMRI master
+        git checkout -b {branch}
+        git push JMRI/JMRI {branch}
+        git checkout master    
+        git pull
 
 
  - Put a comment in the release GitHub item saying the branch exists, and all future changes should be documented in the new release note
