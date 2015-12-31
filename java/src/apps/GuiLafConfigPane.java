@@ -71,7 +71,7 @@ public class GuiLafConfigPane extends JPanel implements PreferencesPanel {
         add(p);
         doClickSelection(p = new JPanel());
         add(p);
-        doToolTipTime(p = new JPanel());
+        doToolTipDismissDelay(p = new JPanel());
         add(p);
     }
 
@@ -228,23 +228,23 @@ public class GuiLafConfigPane extends JPanel implements PreferencesPanel {
         });
     }
 
-    private JSpinner toolTipTimeSpinner;
+    private JSpinner toolTipDismissDelaySpinner;
 
-    public void doToolTipTime(JPanel panel) {
+    public void doToolTipDismissDelay(JPanel panel) {
         GuiLafPreferencesManager manager = InstanceManager.getDefault(GuiLafPreferencesManager.class);
-        JLabel toolTipTimeLabel = new JLabel(rb.getString("GUIToolTipTime"));
-        toolTipTimeSpinner = new JSpinner(new SpinnerNumberModel(manager.getToolTipDismissDelay() / 1000, MIN_TOOLTIP_TIME, MAX_TOOLTIP_TIME, 1));
-        this.toolTipTimeSpinner.addChangeListener((ChangeEvent e) -> {
-            manager.setToolTipDismissDelay((int) toolTipTimeSpinner.getValue() * 1000); // convert to milliseconds from seconds
+        JLabel toolTipDismissDelayLabel = new JLabel(rb.getString("GUIToolTipDismissDelay"));
+        toolTipDismissDelaySpinner = new JSpinner(new SpinnerNumberModel(manager.getToolTipDismissDelay() / 1000, MIN_TOOLTIP_TIME, MAX_TOOLTIP_TIME, 1));
+        this.toolTipDismissDelaySpinner.addChangeListener((ChangeEvent e) -> {
+            manager.setToolTipDismissDelay((int) toolTipDismissDelaySpinner.getValue() * 1000); // convert to milliseconds from seconds
             this.dirty = true;
         });
-        this.toolTipTimeSpinner.setToolTipText(MessageFormat.format(rb.getString("GUIToolTipTimeToolTip"), MIN_TOOLTIP_TIME, MAX_TOOLTIP_TIME));
-        toolTipTimeLabel.setToolTipText(this.toolTipTimeSpinner.getToolTipText());
-        JLabel toolTipTimeUoM = new JLabel(rb.getString("GUIToolTipTimeUoM"));
-        toolTipTimeUoM.setToolTipText(this.toolTipTimeSpinner.getToolTipText());
-        panel.add(toolTipTimeLabel);
-        panel.add(toolTipTimeSpinner);
-        panel.add(toolTipTimeUoM);
+        this.toolTipDismissDelaySpinner.setToolTipText(MessageFormat.format(rb.getString("GUIToolTipDismissDelayToolTip"), MIN_TOOLTIP_TIME, MAX_TOOLTIP_TIME));
+        toolTipDismissDelayLabel.setToolTipText(this.toolTipDismissDelaySpinner.getToolTipText());
+        JLabel toolTipDismissDelayUoM = new JLabel(rb.getString("GUIToolTipDismissDelayUoM"));
+        toolTipDismissDelayUoM.setToolTipText(this.toolTipDismissDelaySpinner.getToolTipText());
+        panel.add(toolTipDismissDelayLabel);
+        panel.add(toolTipDismissDelaySpinner);
+        panel.add(toolTipDismissDelayUoM);
     }
 
     public String getClassName() {
