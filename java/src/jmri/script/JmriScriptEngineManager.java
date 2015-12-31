@@ -90,6 +90,7 @@ public final class JmriScriptEngineManager {
                 names.put(name, factory.getEngineName());
                 log.debug("\tNames: {}", name);
             });
+            this.names.put(factory.getLanguageName(), factory.getEngineName());
             this.factories.put(factory.getEngineName(), factory);
         });
         Bindings bindings = new SimpleBindings();
@@ -331,6 +332,70 @@ public final class JmriScriptEngineManager {
         this.factories.keySet().stream().forEach((name) -> {
             this.getEngine(name);
         });
+    }
+
+    /**
+     * Get the default {@link javax.script.ScriptContext} for all
+     * {@link javax.script.ScriptEngine}s.
+     *
+     * @return the default ScriptContext;
+     */
+    public ScriptContext getDefaultContext() {
+        return this.context;
+    }
+
+    /**
+     * Given a file extension, get the ScriptEngineFactory registered to handle
+     * that extension.
+     *
+     * @param extension
+     * @return a ScriptEngineFactory or null
+     */
+    public ScriptEngineFactory getFactoryByExtension(String extension) {
+        String name = this.names.get(extension);
+        if (name == null) {
+            log.error("Could not find script engine factory name for extension \"{}\"", extension);
+        }
+        return this.getFactory(name);
+    }
+
+    /**
+     * Given a mime type, get the ScriptEngineFactory registered to handle that
+     * mime type.
+     *
+     * @param mimeType
+     * @return a ScriptEngineFactory or null
+     */
+    public ScriptEngineFactory getFactoryByMimeType(String mimeType) {
+        String name = this.names.get(mimeType);
+        if (name == null) {
+            log.error("Could not find script engine factory name for mime type \"{}\"", mimeType);
+        }
+        return this.getFactory(name);
+    }
+
+    /**
+     * Given a short name, get the ScriptEngineFactory registered by that name.
+     *
+     * @param shortName
+     * @return a ScriptEngineFactory or null
+     */
+    public ScriptEngineFactory getFactoryByName(String shortName) {
+        String name = this.names.get(shortName);
+        if (name == null) {
+            log.error("Could not find script engine factory name for short name \"{}\"", shortName);
+        }
+        return this.getFactory(name);
+    }
+
+    /**
+     * Get a ScriptEngineFactory by it's name.
+     *
+     * @param factoryName
+     * @return a ScriptEngineFactory or null
+     */
+    public ScriptEngineFactory getFactory(String factoryName) {
+        return this.factories.get(factoryName);
     }
 
     /**
