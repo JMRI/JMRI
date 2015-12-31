@@ -37,21 +37,21 @@
       <aspectname>Clear</aspectname>
       <show>green</show>
       <reference>Page 60</reference>
-	  <imagelink>../../../resources/icons/smallschematics/aspects/NW-1981/NW-CPL-1arm permissive/rule-281.gif</imagelink>
+	  <imagelink>../../../resources/icons/smallschematics/aspects/NW-1981/NW-CPL-1arm-permissive/rule-281.gif</imagelink>
     </appearance>
 	
 	<appearance>
       <aspectname>Approach</aspectname>
       <show>yellow</show>
       <reference>Page 63</reference>
-	  <imagelink>../../../resources/icons/smallschematics/aspects/NW-1981/NW-CPL-1arm permissive/rule-285.gif</imagelink>
+	  <imagelink>../../../resources/icons/smallschematics/aspects/NW-1981/NW-CPL-1arm-permissive/rule-285.gif</imagelink>
     </appearance>
 	
     <appearance>
       <aspectname>Stop and Proceed</aspectname>
       <show>red</show>
       <reference>Page 66</reference>
-	  <imagelink>../../../resources/icons/smallschematics/aspects/NW-1981/NW-CPL-1arm permissive/rule-291.gif</imagelink>
+	  <imagelink>../../../resources/icons/smallschematics/aspects/NW-1981/NW-CPL-1arm-permissive/rule-291.gif</imagelink>
     </appearance>
 	
   </appearances>
@@ -68,7 +68,7 @@
 	
 	<dark>
 	  <aspect>Not Lit</aspect>
-	  <imagelink>../../../resources/icons/smallschematics/aspects/NW-1981/NW-CPL-1arm permissive/notlit.gif</imagelink>
+	  <imagelink>../../../resources/icons/smallschematics/aspects/NW-1981/NW-CPL-1arm-permissive/notlit.gif</imagelink>
 	</dark>
 	
   </specificappearances>
