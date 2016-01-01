@@ -22,7 +22,7 @@
 <em>The support on this page is rapidly evolving; the
 actual code might be ahead or behind the documentation
 on any given day.</em>
-<ul><!-- TOC -->
+<ul class="snav"><!-- TOC -->
 <li><a href="#connecting">Connecting</a>
 <li><a href="#tools">JMRI CBUS Tools</a>
 <li><a href="#documentation">Documentation</a>

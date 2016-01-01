@@ -17,7 +17,7 @@
     <div id="mainContent">
 
 <h1>Hardware Support: CAN Network</h1>
-<ul><!-- TOC -->
+<ul class="snav"><!-- TOC -->
 	<li><a href="#hardware">Hardware</a></li>
 	<li><a href="#connect">Connecting</a></li>
 	<li><a href="#tools">JMRI CAN Tools</a></li>

@@ -18,22 +18,23 @@
     <div id="mainContent">
 
 <h1>Hardware Support: RailDriver Throttle</h1>
+
 <p>
-RailDriver support was first available in 
-<a href="http://jmri.sf.net/releasenotes/jmri2.1.7.shtml">JMRI 2.1.7</a>.
-It is evolving rapidly, so check back here or on the
+JMRI support for RailDriver is evolving rapidly, so check back here or on the
 <a href="https://groups.yahoo.com/neo/groups/jmriusers/info">JMRI users Yahoo group<a/> for changes.
 <br>
 <a href="RailDriver.gif">
 <img src="RailDriver.gif" align="right" width="389" height="236" alternate="RailDriver line drawing">
 </a>
 
+<a name="hardware"></a><h2>Supported Hardware</h2>
 <p>
 JMRI allows you to use a 
 <a href="http://raildriver.com/">RailDriver</a> from
 <a href="http://www.piengineering.com/">PI Engineering</a>
-as a Hardware Throttle to run Locomotives with your DCC system.
-    
+as a Hardware Throttle to run Locomotives with your DCC system. RailDriver support was first available in 
+<a href="http://jmri.sf.net/releasenotes/jmri2.1.7.shtml">JMRI 2.1.7</a>.
+
 <a name="connecting"></a><h2>Connecting</h2>
 <h3>Wiring</h3>
 <p>

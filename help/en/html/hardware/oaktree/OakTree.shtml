@@ -22,7 +22,7 @@
     <div id="mainContent">
 
   <h1>Hardware Support: Oak Tree Systems Railroad Control Interface (RCI)</h1>
-<ul><!-- TOC -->
+<ul class="snav"><!-- TOC -->
 	<li><a href="#hardware">Hardware</a></li>
 	<li><a href="#limitations">Limitations</a></li>
 	<li><a href="#connecting">Connecting</a></li>

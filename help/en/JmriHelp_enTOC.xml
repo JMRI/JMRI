@@ -15,7 +15,7 @@
 
   <tocitem text="Configuration Profiles " target="html.profiles"/>
 
-  <tocitem text="Error Codes " target="html.Errors"/>
+  <tocitem text="Error Codes " target="html.setup.Errors"/>
 
   <tocitem text="InstallTest " target="package.apps.InstallTest.InstallTest"/>
 

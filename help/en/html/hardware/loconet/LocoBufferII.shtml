@@ -76,20 +76,20 @@ tested is the LocoNet jack itself.
 
 <p>
 Steps:
-<ol>
-<li>Unplug The LocoNet cable
-<li>Open case (use a small screw driver to work open the latches at the small slots on the sides)
-<li>Install terminator
-<li>Set Sw 7-8 ON, all other switches OFF
-<li>Set the JMRI LocoBuffer options to 19,200 baud and hardware 
-handshaking enabled
-<li>Open the JMRI LocoNet Monitor window.
-<li>Using JMRI send some commands (e.g. switch commands)
-<li>The commands should appear in the LocoNet monitor window and the 
-LocoBuffer-II activity LED should blink
-<li>Remove the terminator (unless your application requires it)
-<li>Restore the LocoBuffer-II option switches to their normal settings for your application
-</ol>
+	<ol>
+	<li>Unplug The LocoNet cable
+	<li>Open case (use a small screw driver to work open the latches at the small slots on the sides)
+	<li>Install terminator
+	<li>Set Sw 7-8 ON, all other switches OFF
+	<li>Set the JMRI LocoBuffer options to 19,200 baud and hardware 
+	handshaking enabled
+	<li>Open the JMRI LocoNet Monitor window.
+	<li>Using JMRI send some commands (e.g. switch commands)
+	<li>The commands should appear in the LocoNet monitor window and the 
+	LocoBuffer-II activity LED should blink
+	<li>Remove the terminator (unless your application requires it)
+	<li>Restore the LocoBuffer-II option switches to their normal settings for your application
+	</ol>
 
 <h2><a name="locoBufferIIPower">LocoBuffer-II Power</a></h2>
 
