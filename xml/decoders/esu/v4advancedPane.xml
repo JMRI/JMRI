@@ -1,0 +1,176 @@
+<?xml version="1.0" encoding="utf-8"?>
+<pane xmlns:xi="http://www.w3.org/2001/XInclude" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="http://jmri.org/xml/schema/decoder.xsd">
+  <name>Advanced</name>
+  <column>
+    <separator/>
+    <label>
+      <text>Enabled Protocols</text>
+      <text xml:lang="it">Protocolli Abilitati</text>
+    </label>
+    <label>
+      <text> </text>
+    </label>
+    <display item="ESU V4 Advanced Protocols Option 1" format="checkbox"/>
+    <display item="ESU V4 Advanced Protocols Option 2" format="checkbox"/>
+    <display item="ESU V4 Advanced Protocols Option 3" format="checkbox"/>
+    <display item="ESU V4 Advanced Protocols Option 4" format="checkbox"/>
+    <display item="ESU V4 Advanced Protocols Option 11"/>
+    <label>
+      <text> </text>
+    </label>
+    <separator/>
+    <label>
+      <text>Memory Settings</text>
+    </label>
+    <label>
+      <text> </text>
+    </label>
+    <display item="ESU V4 Advanced Memory Settings Option 1)"/>
+    <display item="ESU V4 Advanced Memory Settings Option 2)"/>
+    <label>
+      <text> </text>
+    </label>
+    <separator/>
+    <label>
+      <text>Command Station Compatibility</text>
+      <text xml:lang="it">Centrali Compatibili</text>
+    </label>
+    <label>
+      <text> </text>
+    </label>
+    <display item="ESU V4 Advanced Compatibility Option 1" format="checkbox"/>
+    <display item="ESU V4 Advanced Compatibility Option 2" format="checkbox"/>
+    <display item="ESU V4 Advanced Compatibility Option 3" format="checkbox"/>
+    <display item="ESU V4 Advanced Compatibility Option 4" format="checkbox"/>
+    <label>
+      <text> </text>
+    </label>
+    <separator/>
+    <label>
+      <text>RailCom Settings</text>
+      <text xml:lang="it">RailCom</text>
+    </label>
+    <label>
+      <text> </text>
+    </label>
+    <display item="ESU V4 Advanced RailCom Option 1" format="checkbox"/>
+    <display item="ESU V4 Advanced RailCom Option 2" format="checkbox"/>
+    <display item="ESU V4 Advanced RailCom Option 3" format="checkbox"/>
+    <display item="ESU V4 Advanced RailCom Option 4" format="checkbox"/>
+    <label>
+      <text> </text>
+    </label>
+    <separator/>
+    <label>
+      <text>Speed Step Mode</text>
+      <text xml:lang="it">Modalità Passaggio Velocità</text>
+    </label>
+    <label>
+      <text> </text>
+    </label>
+    <display item="ESU V4 Adavanced Speed Step Option 1"/>
+    <label>
+      <text> </text>
+    </label>
+    <separator/>
+    <label>
+      <text>Decoder Lock</text>
+    </label>
+    <label>
+      <text> </text>
+    </label>
+    <display item="ESU V4 Advanced Decoder Lock Option 1" format="checkbox"/>
+    <display item="ESU V4 Advanced Decoder Lock Option 2" format="checkbox"/>
+    <display item="ESU V4 Advanced Decoder Lock Option 3" format="checkbox"/>
+  </column>
+  <column>
+    <separator/>
+    <label>
+      <text>Allowed Brake Sections</text>
+    </label>
+    <label>
+      <text> </text>
+    </label>
+    <display item="ESU V4 Advanced Brake Sections Option 1" format="checkbox"/>
+    <display item="ESU V4 Advanced Brake Sections Option 2" format="checkbox"/>
+    <row>
+      <display item="ESU V4 Advanced Brake Sections Slider 1" layout="above" label=""/>
+      <display item="ESU V4 Advanced Brake Sections Slider 1" layout="above" format="hslider"/>
+    </row>
+    <row>
+      <display item="ESU V4 Advanced Brake Sections Slider 2" layout="above" label=""/>
+      <display item="ESU V4 Advanced Brake Sections Slider 2" layout="above" format="hslider"/>
+    </row>
+    <display item="ESU V4 Advanced Brake Sections Option 11" format="checkbox"/>
+    <display item="ESU V4 Advanced Brake Sections Option 12" format="checkbox"/>
+    <display item="ESU V4 Advanced Brake Sections Option 13" format="checkbox"/>
+    <label>
+      <text> </text>
+    </label>
+    <separator/>
+    <label>
+      <text>Constant Brake Distance</text>
+    </label>
+    <label>
+      <text> </text>
+    </label>
+    <display item="ESU V4 Advanced Constant Brake Option 2"/>
+    <display item="ESU V4 Advanced Constant Brake Option 3"/>
+    <display item="ESU V4 Advanced Constant Brake Option 1"/>
+    <display item="ESU V4 Advanced Constant Brake Option 4" format="checkbox"/>
+    <label>
+      <text> </text>
+    </label>
+    <separator/>
+    <label>
+      <text>Power Pack</text>
+    </label>
+    <label>
+      <text> </text>
+    </label>
+    <row>
+      <display item="ESU V4 Advanced Power Pack Slider 1" layout="above" label=""/>
+      <display item="ESU V4 Advanced Power Pack Slider 1" layout="above" format="hslider"/>
+    </row>
+    <label>
+      <text> </text>
+    </label>
+    <separator/>
+    <label>
+      <text>Preserve Direction</text>
+    </label>
+    <label>
+      <text> </text>
+    </label>
+    <display item="ESU V4 Adavanced Preserve Direction Option 1" format="checkbox"/>
+    <label>
+      <text> </text>
+    </label>
+    <separator/>
+    <label>
+      <text>Starting Delay</text>
+    </label>
+    <label>
+      <text> </text>
+    </label>
+        <display item="Sound Option 1" format="checkbox"/>
+    <label>
+      <text> </text>
+    </label>
+    <row>
+      <display item="ESU V4 Advanced Starting Delay Slider 1" layout="above" label=""/>
+      <display item="ESU V4 Advanced Starting Delay Slider 1" layout="above" format="hslider"/>
+    </row>
+    <label>
+      <text> </text>
+    </label>
+    <separator/>
+    <label>
+      <text>Stop Behaviour</text>
+    </label>
+    <label>
+      <text> </text>
+    </label>
+    <display item="ESU V4 Advanced Stop Behaviour Option 1" format="checkbox"/>
+  </column>
+</pane>

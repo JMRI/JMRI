@@ -9,6 +9,7 @@
 # sense for your layout
 
 import jmri
+import java
 
 # First, define the listener class.  This gets messages
 # from the reporter, uses them to keep track of the decoders
