@@ -4,7 +4,7 @@
 <!-- Copyright ($Author$) 2008 -->
 <!-- $Id$ -->
 <!-- UpDated by Blorec Herv&#233; le 2013-09-09-->
-<title>JMRI: Error Messages and Codes</title>
+<title>JMRI: Codes et Messages d'erreurs</title>
 
 <!-- Style -->
 <META HTTP-EQUIV="Content-Type" CONTENT="text/html; charset=iso-8859-1">
@@ -56,6 +56,8 @@ JMRI: Codes et Messages d'erreurs
 
 </dl>
     
-<!--#include virtual="/Footer" -->
+			<!--#include virtual="/Footer" -->
+</div>
+</div>
 </body>
 </html>

@@ -126,6 +126,8 @@
   <indexitem text="Options " target="package.jmri.jmrit.dispatcher.Options"/>
 
  </indexitem>
+ <indexitem text="Dropbox " target="html.setup.Dropbox"/>
+
  <indexitem text="Error Codes " target="html.setup.Errors"/>
 
  <indexitem text="FindBugs " target="html.doc.Technical.FindBugs"/>

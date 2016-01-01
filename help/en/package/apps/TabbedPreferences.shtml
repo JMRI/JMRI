@@ -21,9 +21,9 @@
   <div class="nomenu" id="mBody">
     <div id="mainContent">
 
-<h1>JMRI: Preferences Window</h1>
+<h1>JMRI: Preferences Pane</h1>
 
-The preferences window is where you 
+The Preferences pane is where you 
 configure the basic operation of your JMRI application.
 <p>
 The screen is split into two sections: on the left hand side is a list of the Preference groups that can be set. 
@@ -55,61 +55,62 @@ program will prompt you to do that after saving the Preferences.
 <a name="Connection">
 <h2>Connections</h2></a>
 
-You can select any of the various JMRI layout connections here.<p>
-Each connection has its own unique tab, to get started, first select your DCC System Manufacturer,
-followed by the type of connection that you are using.  You will then be presented with a series of 
+You can select any of the various JMRI layout Connections here.<p>
+Each connection has its own unique tab. To get started, first select your DCC System Manufacturer,
+followed by the type of Connection that you are using.  You will then be presented with a series of 
 most commonly required settings that need to be set.  If you need to change some of the more advanced 
 settings then connection then check the "Additional Connection Settings" box and this will provide you with 
 further details.
 <p>
-To add an additional connection click on the tab with a "+", this will then present you with a fresh 
-connection tab.  To remove a connection, in the system manufacture drop down list, select (none selected) 
-and this will remove the configuration for that connection.
+To add an additional layout Connection, in the Connections pane click on the tab with a "+", this will then present you with a fresh 
+connection tab.  To remove a Connection, in the System Manufacturer drop down list, select <strong>(none selected)</strong> to just clear your present choices and enter new ones, or click on the small "x" in the Tab name to delete the Connection.
 <p>
 For more information on how to configure this for your particular hardware,
-see the <a href="../../html/hardware/index.shtml">hardware pages</a>.
+see the <a href="../../html/hardware/index.shtml">Hardware Help pages</a>.
 <p>
 Remember to press <strong>Save</strong>!
 <a name="Defaults">
 <h2>Defaults</h2></a>
 
 If you are using multiple connections of the same type, e.g. multiple
-LocoNet connections, this pane lets you select which one is connected
-to e.g. the CV programmer you want to use.
+LocoNet connections, the Connection pane lets you select which one is connected
+to e.g. the CV programmer you want to use. A second Connection of the same type will have the number (2) added in its main menu.
 
 <a name="FileLocations">
 <h2>File Locations</h2></a>
 These allow you to set the default location for where scripts and user files are loaded and saved to.
 <p>
-Note that when changing the "User Files Location" this will also change the default location for where the following are stored.
-<dl><dd>Panels<br>
+Note that when changing the "User Files Location" this will also change the default location for where the following are stored:
+<dl>
+<dd>Panels<br>
 Rosters<br>
 Operations<br>
 Throttle<br>
 Resources<br>
 Dispatcher options<br>
-Rps<br></dl>
+Rps
+</dl>
 
 <p>There's a 
-<a href="../../html/Dropbox.shtml">separate page</a>
+<a href="../../html/setup/Dropbox.shtml">separate Help page</a>
 with information on sharing files between computers using Dropbox.
 
 <a name="Startup">
 <h2>Start Up</h2></a>
-This deals with all the preferences that are invoked at start up such as loading panel files and running scripts.
+This deals with all the Preferences that are invoked at start up such as loading Panel files and running scripts.
 <dl>
 <dt>Actions
 <dd>
 This section lets you have the program automatically
 execute various menu selections at startup.  For example,
-you can have the Turnout Table automatically open, or 
+you can have the Turnouts Table automatically open, or 
 automatically open a window for programming on the main.
 <P>
-For example, to automatically open the Turnout Table, 
+For example, to automatically open the Turnouts Table, 
 click the "Add Action" button in this section of the advanced preferences. 
-From the list that's presented, select "Open Turnout Table". 
+From the list that's presented, select "Open Turnouts Table". 
 Don't forget
-to save your updated preferences with the button at the bottom of the screen!
+to save your updated Preferences with the button at the bottom of the screen!
 
 <dt>Buttons
 <dd>
@@ -118,7 +119,7 @@ that are connected to specific menu choices.
 <P>
 For example, to add a button that will open the Power Control when clicked, 
 click the "Add Action" button in this section of the advanced preferences.  
-From the list that's presented, select "Open Turnout Table". Don't forget
+From the list that's presented, select "Open Turnouts Table". Don't forget
 to save your updated preferences with the button at the bottom of the screen!
 From the list that's presented, select "Open Power Control". 
 Don't forget
@@ -290,7 +291,7 @@ specifies one set of preferences.  You can then select which one to use.
 
 <p>
 For more information, see the 
-<a href="../../html/profiles.shtml">Configuration Profiles</a> 
+<a href="../../html/setup/profiles.shtml">Configuration Profiles</a> 
 page.
 
 <a name="JSONServer">
@@ -307,13 +308,13 @@ message.
 <a name="WebServer">
 <h2>Web Server</h2></a>
 
-The JMRI web server lets you 
+The JMRI Web Server lets you 
 connect to JMRI from a web browser on your computer, tablet or phone
 and work with your railroad.  
 <p>
 This tab lets you control what the web server provides.
 For more information, see the 
-<a href="../../html/web/index.shtml#Configure">web server preference pane</a> page.
+<a href="../../html/web/index.shtml#Configure">Web Server Preferences pane</a> page.
 <p>
 <a name="Warrants">
 <h2>Warrants and Speed Map</h2></a>
@@ -336,7 +337,7 @@ a scale track speed; Miles per Hour or Kilometers per Hour.  Use the radio butto
 the code should interpret the Speed Map. 
 <p>
 The Head Appearance Map is used when Signal Heads are used as signals.  It maps the appearance to a speed
-name which in turn is mapped by the speed map table.
+name which in turn is mapped by the Speed Map table.
 <p>
 It is important that the correct scale is chosen and that the value of "Throttle Setting/Speed Factor" is reasonable for
 engine addresses that run on warrants.  The factor adjusts the throttle setting to be scale track speed.  

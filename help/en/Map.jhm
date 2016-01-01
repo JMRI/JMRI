@@ -282,8 +282,6 @@
 
 <mapID target="manual.DecoderPro3.Main_FastClockSetup" url="manual/DecoderPro3/Main_FastClockSetup.shtml"/>
 
-<mapID target="html.Dropbox" url="html/Dropbox.shtml"/>
-
 <mapID target="package.jmri.jmrit.logix.Warrant" url="package/jmri/jmrit/logix/Warrant.shtml"/>
 
 <mapID target="Acknowledgements_T" url="Acknowledgements.shtml#T"/>
@@ -956,6 +954,8 @@
 
 <mapID target="manual.DecoderPro3.Start_Preferences_Defaults" url="manual/DecoderPro3/Start_Preferences.shtml#Defaults"/>
 
+<mapID target="html.hardware.rps.index_hardware" url="html/hardware/rps/index.shtml#hardware"/>
+
 <mapID target="package.jmri.jmrit.ussctc.FollowerFrame" url="package/jmri/jmrit/ussctc/FollowerFrame.shtml"/>
 
 <mapID target="package.jmri.jmrix.loconet.ds64.DS64Frame" url="package/jmri/jmrix/loconet/ds64/DS64Frame.shtml"/>
@@ -1183,6 +1183,8 @@
 <mapID target="html.web.RosterServlet" url="html/web/RosterServlet.shtml"/>
 
 <mapID target="package.jmri.jmrit.dispatcher.Dispatcher_require" url="package/jmri/jmrit/dispatcher/Dispatcher.shtml#require"/>
+
+<mapID target="html.hardware.rps.index_documentation" url="html/hardware/rps/index.shtml#documentation"/>
 
 <mapID target="package.jmri.jmrit.catalog.ImageIndex" url="package/jmri/jmrit/catalog/ImageIndex.shtml"/>
 
@@ -1966,6 +1968,8 @@
 
 <mapID target="manual.DecoderPro3.Main_LocoNet_DS64Programmer" url="manual/DecoderPro3/Main_LocoNet.shtml#DS64Programmer"/>
 
+<mapID target="html.hardware.raildriver.index_hardware" url="html/hardware/raildriver/index.shtml#hardware"/>
+
 <mapID target="html.hardware.hardware-template_documentation" url="html/hardware/hardware-template.shtml#documentation"/>
 
 <mapID target="package.jmri.jmrit.operations.Operations_SynchronizeWithNCEConsists" url="package/jmri/jmrit/operations/Operations.shtml#SynchronizeWithNCEConsists"/>
@@ -2197,6 +2201,8 @@
 <mapID target="manual.DecoderPro.Main_RPS_TrackingFrame" url="manual/DecoderPro/Main_RPS.shtml#TrackingFrame"/>
 
 <mapID target="package.jmri.jmrit.operations.Operations_ImportingCars" url="package/jmri/jmrit/operations/Operations.shtml#ImportingCars"/>
+
+<mapID target="html.setup.Errors" url="html/setup/Errors.shtml"/>
 
 <mapID target="html.tools.throttle.ThrottleChapter2_ControlPanel" url="html/tools/throttle/ThrottleChapter2.shtml#ControlPanel"/>
 
@@ -2439,6 +2445,8 @@
 <mapID target="html.hardware.loconet.KeyspanUSB" url="html/hardware/loconet/KeyspanUSB.shtml"/>
 
 <mapID target="package.jmri.jmrit.operations.Operations_BuildReport" url="package/jmri/jmrit/operations/Operations.shtml#BuildReport"/>
+
+<mapID target="html.setup.profiles" url="html/setup/profiles.shtml"/>
 
 <mapID target="DecoderProManual.index" url="DecoderProManual/index.shtml"/>
 
@@ -3069,6 +3077,8 @@
 <mapID target="package.jmri.jmrit.logix.OBlockTable" url="package/jmri/jmrit/logix/OBlockTable.shtml"/>
 
 <mapID target="html.tools.signaling.index_variable" url="html/tools/signaling/index.shtml#variable"/>
+
+<mapID target="html.setup.Dropbox" url="html/setup/Dropbox.shtml"/>
 
 <mapID target="manual.DecoderPro3.Main_Speedo" url="manual/DecoderPro3/Main_Speedo.shtml"/>
 
