@@ -39,6 +39,7 @@
 # and everything will slow right down....
 
 import jmri
+import java
 
 #
 # Set the name of the controller you're using

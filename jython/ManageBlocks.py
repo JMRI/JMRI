@@ -26,6 +26,7 @@
 
 from java.awt import Color
 import jmri
+import java
 
 debug = False
 

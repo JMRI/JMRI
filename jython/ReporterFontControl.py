@@ -14,6 +14,7 @@
 # Part of the JMRI distribution
 
 import jmri
+import java
 
 # set the desired colour and size in the two lines below.
 # Many normal colour names can be used instead of WHITE 
