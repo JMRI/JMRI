@@ -256,6 +256,29 @@ public abstract class AbstractMonPane extends JmriPanel {
         if (p!=null) alwaysOnTopCheckBox.setSelected(p.getSimplePreferenceState(alwaysOnTopCheck));
         if (getTopLevelAncestor() != null) {
             ((jmri.util.JmriJFrame) getTopLevelAncestor()).setAlwaysOnTop(alwaysOnTopCheckBox.isSelected());
+        } else {
+            // this pane isn't yet part of a frame,
+            // which can be normal, but 
+            if (alwaysOnTopCheckBox.isSelected()) {
+                // in this case we want to access the enclosing frame to setAlwaysOnTop.  So defer for a bit....
+                log.debug("Cannot set Always On Top from preferences due to no Top Level Ancestor");
+                timerCount = 0;
+                timer = new javax.swing.Timer(20, (java.awt.event.ActionEvent evt)->{
+                    if (getTopLevelAncestor() != null && timerCount> 3) {
+                        timer.stop();
+                        ((jmri.util.JmriJFrame) getTopLevelAncestor()).setAlwaysOnTop(alwaysOnTopCheckBox.isSelected());
+                        log.debug("set Always On Top");
+                    } else {
+                        log.debug("Have to repeat attempt to set Always on Top");
+                        timerCount++;
+                        if (timerCount > 50) {
+                            log.debug("Set Always on Top failed");
+                            timer.stop();
+                        }
+                    }      
+                });
+                timer.start();
+            }
         }
 
         autoScrollCheckBox.setText(Bundle.getMessage("ButtonAutoScroll")); // NOI18N
@@ -359,6 +382,8 @@ public abstract class AbstractMonPane extends JmriPanel {
 
     }
 
+    private int timerCount = 0;
+    private javax.swing.Timer timer;
     /**
      * Sets the display window to fixed width font, so that e.g. columns line up
      */
