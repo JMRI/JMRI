@@ -61,9 +61,9 @@ If you're attempting to perform this on MS Windows, refer to the MS Windows note
 
 - Go to the master branch on your local repository. Pull back from the main JMRI/JMRI repository to make sure you're up to date.
 
-- If it's a new year, update copyright dates (done for 2015):
+- If it's a new year, update copyright dates (done for 2016):
     JMRI:
-    * build.xml (3) in the jmri.copyright.years property value
+    * build.xml in the jmri.copyright.years property value
     * xml/XSLT/build.xml in the property value, index.html, CSVindex.html
     website:
     * Copyright.html (3 places)
