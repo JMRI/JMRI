@@ -2418,7 +2418,7 @@ public class PaneProgPane extends javax.swing.JPanel
 
         // create the paired label
         JLabel l = new WatchingLabel(" " + label + " ", rep);
-        if (label.startsWith("<html>")) { // allow html in labels
+        if (label.startsWith(HTML_OPEN_TAG)) { // allow html in labels
             l.setText(label);
         }
 
@@ -2542,7 +2542,8 @@ public class PaneProgPane extends javax.swing.JPanel
         return start;
     }
 
-    public static final String CLOSE_TAG = "</html>";
+    public static final String HTML_OPEN_TAG = "<html>";
+    public static final String HTML_CLOSE_TAG = "</html>";
 
     /**
      * Appends text to a String possibly in HTML format (as used in many Swing
@@ -2561,8 +2562,8 @@ public class PaneProgPane extends javax.swing.JPanel
         if (baseText == null || baseText.length() < 1) {
             result = extraText;
         } else {
-            if (baseText.endsWith(CLOSE_TAG)) {
-                result = baseText.substring(0, baseText.length() - CLOSE_TAG.length()) + extraText + CLOSE_TAG;
+            if (baseText.endsWith(HTML_CLOSE_TAG)) {
+                result = baseText.substring(0, baseText.length() - HTML_CLOSE_TAG.length()) + extraText + HTML_CLOSE_TAG;
             } else {
                 result = baseText + extraText;
             }
