@@ -2418,6 +2418,9 @@ public class PaneProgPane extends javax.swing.JPanel
 
         // create the paired label
         JLabel l = new WatchingLabel(" " + label + " ", rep);
+        if (label.startsWith("<html>")) { // allow html in labels
+            l.setText(label);
+        }
 
         // now handle the four orientations
         // assemble v from label, rep
