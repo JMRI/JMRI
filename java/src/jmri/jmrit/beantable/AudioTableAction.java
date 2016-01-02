@@ -213,14 +213,14 @@ public class AudioTableAction extends AbstractTableAction {
     }
 
     protected void editAudio(Audio a) {
-        Thread t;
+        Runnable t;
         switch (a.getSubType()) {
             case Audio.LISTENER:
                 if (listenerFrame == null) {
                     listenerFrame = new AudioListenerFrame(Bundle.getMessage("TitleAddAudioListener"), listeners);
                 }
                 listenerFrame.populateFrame(a);
-                t = new Thread() {
+                t = new Runnable() {
                     @Override
                     public void run() {
                         listenerFrame.pack();
@@ -234,7 +234,7 @@ public class AudioTableAction extends AbstractTableAction {
                     bufferFrame = new AudioBufferFrame(Bundle.getMessage("TitleAddAudioBuffer"), buffers);
                 }
                 bufferFrame.populateFrame(a);
-                t = new Thread() {
+                t = new Runnable() {
                     @Override
                     public void run() {
                         bufferFrame.pack();
@@ -249,7 +249,7 @@ public class AudioTableAction extends AbstractTableAction {
                 }
                 sourceFrame.updateBufferList();
                 sourceFrame.populateFrame(a);
-                t = new Thread() {
+                t = new Runnable() {
                     @Override
                     public void run() {
                         sourceFrame.pack();

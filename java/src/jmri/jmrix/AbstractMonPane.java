@@ -212,17 +212,22 @@ public abstract class AbstractMonPane extends JmriPanel {
         }
         //automatically uppercase input in filterField, and only accept spaces and valid hex characters
         ((AbstractDocument) filterField.getDocument()).setDocumentFilter(new DocumentFilter() {
+            final String pattern = "[0-9a-fA-F ]*+"; // typing inserts individual characters
             public void insertString(DocumentFilter.FilterBypass fb, int offset, String text,
-                    AttributeSet attr) throws BadLocationException {
-                if (text.matches("[[0-9a-fA-F]{0,7}| ]")) { // NOI18N
-                    fb.insertString(offset, text.toUpperCase(), attr);
+                    AttributeSet attrs) throws BadLocationException {
+                if (text.matches(pattern)) { // NOI18N
+                    fb.insertString(offset, text.toUpperCase(), attrs);
+                } else {
+                    fb.insertString(offset, "", attrs);
                 }
             }
 
             public void replace(DocumentFilter.FilterBypass fb, int offset, int length, String text,
                     AttributeSet attrs) throws BadLocationException {
-                if (text.matches("[[0-9a-fA-F]{0,7}| ]")) { // NOI18N
+                if (text.matches(pattern)) { // NOI18N
                     fb.replace(offset, length, text.toUpperCase(), attrs);
+                } else {
+                    fb.replace(offset, length, "", attrs);
                 }
             }
         });
@@ -465,12 +470,11 @@ public abstract class AbstractMonPane extends JmriPanel {
      * useful.
      */
     protected boolean isFiltered(String raw) {
-        //note: raw is now formatted like "Tx - BB 01 00 45", so extract the correct bytes from it (BB) for comparison
+        String checkRaw = getOpCodeForFilter(raw);
         //don't bother to check filter if no raw value passed
-        if (raw != null && raw.length() >= 7) {
+        if (raw != null) {
             // if first bytes are in the skip list,  exit without adding to the Swing thread
             String[] filters = filterField.getText().toUpperCase().split(" ");
-            String checkRaw = raw.substring(5, 7);
 
             for (String s : filters) {
                 if (s.equals(checkRaw)) {
@@ -480,6 +484,16 @@ public abstract class AbstractMonPane extends JmriPanel {
             }
         }
         return false;
+    }
+    
+    /** 
+     * Get hex opcode for filtering
+     */
+    protected String getOpCodeForFilter(String raw) {
+        //note: Generic raw is formatted like "Tx - BB 01 00 45", so extract the correct bytes from it (BB) for comparison
+        if (raw != null && raw.length() >= 7) {
+            return raw.substring(5, 7);
+        } else return null;
     }
     
     String newline = System.getProperty("line.separator"); // NOI18N
@@ -537,6 +551,14 @@ public abstract class AbstractMonPane extends JmriPanel {
 
     public synchronized String getFrameText() {
         return monTextPane.getText();
+    }
+
+    public String getFilterText() {
+        return filterField.getText();
+    }
+
+    public synchronized void setFilterText(String text) {
+        filterField.setText(text);
     }
 
     /**

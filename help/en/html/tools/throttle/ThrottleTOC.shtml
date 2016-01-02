@@ -21,9 +21,9 @@
 <!--#include virtual="Sidebar" -->
 
 <div id="mainContent">
-<h1 style="color:#ff0000">Throttle Documentation Index</h1>
+<h1>Throttle Documentation</h1>
 
-<p>Please note that this documentation was updated. New contents:</p>
+<p>Please note that the Throttles Help was updated. Current version:</p>
 <ul>
   <li>The <a href="ToolsMenuThrottleEntry.shtml">JMRI Throttle menu</a></li>
   <li>The <a href="BasicThrottleWindow.shtml">Throttle</a></li>
@@ -35,7 +35,7 @@
 </ul>
 
 <hr>
-<h1>JMRI v2 Throttle Help</h1>
+<h1>Throttles in JMRI v2.x</h2>
 <dl class="toc">
   <dt><a href="ThrottleMain.shtml"
   title="Introduction and table of contents (this page)">INTRODUCTION</a></dt>
@@ -147,7 +147,7 @@
   <dt>C. <a href="ThrottleChapter4.shtml#CloseThrottle"
   title="Closing A Throttle Window">Closing a Throttle Window</a></dt>
 </dl>
-<br>
+
 <!--#include virtual="/Footer" -->
 
       </div><!-- closes #mainContent-->

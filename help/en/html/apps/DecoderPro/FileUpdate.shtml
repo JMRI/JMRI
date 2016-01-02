@@ -38,7 +38,7 @@ The installation process was simplified in JMRI 2.3.6, where
 menu items were added to the Debug menu.
 
 <a name="after236">
-<h2>JMRI Version 2.3.6 And After</h2>
+<h2>JMRI v 2.3.6 and later</h2>
 
 This section describes adding a new decoder definition when you are using JMRI
 version 2.3.6 or later.
@@ -94,7 +94,7 @@ the one in the new JMRI version, just delete yours from your preferences directo
 and select "Rebuild Decoder Index" in the debug menu.
 
 <a name="before236">
-<h2>JMRI Version 2.3.5 And Before</h2>
+<h2>JMRI v 2.3.5 and earlier</h2>
 
 This section describes adding a new decoder definition when you are using JMRI
 version 2.3.5 or before.

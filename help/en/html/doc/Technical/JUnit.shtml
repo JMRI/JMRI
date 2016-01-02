@@ -230,6 +230,12 @@ It will be a JUnit error if a log.warn(...) or log.error(...) message is
 produced that isn't matched to a JUnitAppender.assertWarnMessage(...) call.
 </OL>
 
+In any case, all of your main() routines should start with 
+<PRE><CODE>
+    apps.tests.Log4JFixture.initLogging();
+</CODE></PRE>
+so that they can be run independently.
+
 <h3><a name="ResetInstMgr">Resetting the InstanceManager</a></h3>
 
 If you are testing code that is going to reference the InstanceManager, 

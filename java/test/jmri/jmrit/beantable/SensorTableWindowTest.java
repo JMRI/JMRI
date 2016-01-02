@@ -25,8 +25,7 @@ public class SensorTableWindowTest extends jmri.util.SwingTestCase {
 
     public void testShowAndClose() throws Exception {
 
-        jmri.InstanceManager.store(jmri.managers.DefaultUserMessagePreferences.getInstance(), jmri.UserPreferencesManager.class);
-
+        // ask for the window to open
         SensorTableAction a = new SensorTableAction();
         a.actionPerformed(new java.awt.event.ActionEvent(a, 1, ""));
 
@@ -43,15 +42,22 @@ public class SensorTableWindowTest extends jmri.util.SwingTestCase {
 
         // Find add window by name
         JmriJFrame fa = JmriJFrame.getFrame("Add New Sensor");
+        Assert.assertNotNull("add window", fa);
 
         // Find system name field
         NamedComponentFinder ncfinder = new NamedComponentFinder(JComponent.class, "sysName");
         JTextField sysNameField = (JTextField) ncfinder.find(fa, 0);
-        Assert.assertNotNull(sysNameField);
+        Assert.assertNotNull("sys name field", sysNameField);
 
         // set to "1"
-        getHelper().sendString(new StringEventData(this, sysNameField, "1"));
-
+        
+        // The following line works on the CI servers, but not in some standalone cases
+        //getHelper().sendString(new StringEventData(this, sysNameField, "1"));
+        sysNameField.setText("1"); // workaround
+        
+        flushAWT();
+        Assert.assertEquals("name content", "1", sysNameField.getText());
+        
         // Find system combobox
         ncfinder = new NamedComponentFinder(JComponent.class, "prefixBox");
         JComboBox<?> prefixBox = (JComboBox<?>) ncfinder.find(fa, 0);
@@ -74,7 +80,6 @@ public class SensorTableWindowTest extends jmri.util.SwingTestCase {
         // Ask to close table window
         TestHelper.disposeWindow(ft, this);
 
-        flushAWT();
         flushAWT();
         
         // check for existing sensor
@@ -103,6 +108,7 @@ public class SensorTableWindowTest extends jmri.util.SwingTestCase {
         super.setUp();
         apps.tests.Log4JFixture.setUp();
         jmri.util.JUnitUtil.resetInstanceManager();
+        jmri.util.JUnitUtil.initDefaultUserMessagePreferences();
         jmri.util.JUnitUtil.initInternalTurnoutManager();
         jmri.util.JUnitUtil.initInternalSensorManager();
     }

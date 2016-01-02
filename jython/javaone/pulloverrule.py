@@ -2,6 +2,8 @@
 # When loco is at the start of the loop and the siding ahead is clear, 
 # sometimes pull into it and throw the turnouts for a pass
 import jarray
+import java
+
 class PullOver(jmri.jmrit.automat.Siglet):
   # to1 is the turnout on the siding entry
   # to2 is the turnout on the siding exit

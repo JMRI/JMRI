@@ -25,8 +25,7 @@ public class TurnoutTableWindowTest extends jmri.util.SwingTestCase {
 
     public void testShowAndClose() throws Exception {
 
-        jmri.InstanceManager.store(jmri.managers.DefaultUserMessagePreferences.getInstance(), jmri.UserPreferencesManager.class);
-
+       // ask for the window to open
         TurnoutTableAction a = new TurnoutTableAction();
         a.actionPerformed(new java.awt.event.ActionEvent(a, 1, ""));
 
@@ -43,13 +42,21 @@ public class TurnoutTableWindowTest extends jmri.util.SwingTestCase {
 
         // Find add window by name
         JmriJFrame fa = JmriJFrame.getFrame("Add New Turnout");
+        Assert.assertNotNull("add window", fa);
 
         // Find hardware number field
         NamedComponentFinder ncfinder = new NamedComponentFinder(JComponent.class, "sysName");
         JTextField sysNameField = (JTextField) ncfinder.find(fa, 0);
         Assert.assertNotNull(sysNameField);
+
         // set to "1"
-        getHelper().sendString(new StringEventData(this, sysNameField, "1"));
+        
+        // The following line works on the CI servers, but not in some standalone cases
+        //getHelper().sendString(new StringEventData(this, sysNameField, "1"));
+        sysNameField.setText("1"); // workaround
+        
+        flushAWT();
+        Assert.assertEquals("name content", "1", sysNameField.getText());
 
         // Find system combobox
         ncfinder = new NamedComponentFinder(JComponent.class, "prefixBox");
@@ -73,7 +80,6 @@ public class TurnoutTableWindowTest extends jmri.util.SwingTestCase {
         // Ask to close table window
         TestHelper.disposeWindow(ft, this);
 
-        flushAWT();
         flushAWT();
         
         // check that turnout was created
@@ -102,6 +108,7 @@ public class TurnoutTableWindowTest extends jmri.util.SwingTestCase {
         super.setUp();
         apps.tests.Log4JFixture.setUp();
         jmri.util.JUnitUtil.resetInstanceManager();
+        jmri.util.JUnitUtil.initDefaultUserMessagePreferences();
         jmri.util.JUnitUtil.initInternalTurnoutManager();
         jmri.util.JUnitUtil.initInternalSensorManager();
     }
