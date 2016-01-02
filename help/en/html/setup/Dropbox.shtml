@@ -15,9 +15,11 @@
 
 <body>
 <!--#include virtual="/Header" -->
-  <div class="nomenu" id="mBody">
-    <div id="mainContent">
 
+<!--#include virtual="Sidebar" -->
+<div id="mainContent">
+
+<!-- Page Body -->
 <h1>JMRI Setup: Sharing Files with Dropbox</h1>
 
 <p>

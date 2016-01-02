@@ -14,9 +14,11 @@
 
 <body>
 <!--#include virtual="/Header" -->
-  <div class="nomenu" id="mBody">
-    <div id="mainContent">
 
+<!--#include virtual="Sidebar" -->
+<div id="mainContent">
+
+<!-- Page Body -->
 <h1>JMRI Setup: Configuration Profiles</h1>
 
 <p><em>Configuration Profiles</em> allow a single JMRI application to be launched
