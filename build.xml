@@ -331,7 +331,7 @@
             <fileset file="${javadir}/manifest"/>
             <fileset dir="${tempdir}"/>
         </delete>
-        <ant dir="xml/XSLT" target="clean" />
+        <ant dir="xml/XSLT" target="clean" inheritAll="false"  />
     </target>
 
     <!-- end of utility targets -->
