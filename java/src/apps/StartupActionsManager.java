@@ -1,7 +1,7 @@
 package apps;
 
 import apps.gui.GuiLafPreferencesManager;
-import java.util.HashSet;
+import java.util.LinkedHashSet;
 import java.util.Set;
 import jmri.configurexml.ConfigXmlManager;
 import jmri.configurexml.XmlAdapter;
@@ -28,7 +28,7 @@ import org.slf4j.LoggerFactory;
  */
 public class StartupActionsManager extends AbstractPreferencesProvider {
 
-    private final Set<StartupModel> models = new HashSet<>();
+    private final Set<StartupModel> models = new LinkedHashSet<>();
     public final static String STARTUP = "startup"; // NOI18N
     public final static String NAMESPACE = "http://jmri.org/xml/schema/auxiliary-configuration/startup-2-9-6.xsd"; // NOI18N
     private final static Logger log = LoggerFactory.getLogger(StartupActionsManager.class);

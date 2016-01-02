@@ -4,6 +4,7 @@
 # Author: Bob Jacobsen, copyright 2007
 # Part of the JMRI distribution
 
+import java
 import jmri
 
 # Change the next line to the name of the turnout you want to
