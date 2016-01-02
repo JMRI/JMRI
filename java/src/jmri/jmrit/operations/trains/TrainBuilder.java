@@ -4031,13 +4031,17 @@ public class TrainBuilder extends TrainCommon {
                     // report if track has planned pickups
                     if (testTrack.getIgnoreUsedLengthPercentage() > 0) {
                         // calculate the available space
-                        int available = testTrack.getLength() - (testTrack.getUsedLength() + testTrack.getReserved());
-                        int available2 = testTrack.getLength()
-                                -
+//                        int available = testTrack.getLength() - (testTrack.getUsedLength() + testTrack.getReserved());
+                        int available = testTrack.getLength() -
                                 (testTrack.getUsedLength() * (100 - testTrack.getIgnoreUsedLengthPercentage()) / 100 + testTrack
                                         .getReservedLengthDrops());
-                        if (available2 > available) {
-                            available = available2;
+                        int available3 = testTrack.getLength() + (testTrack.getLength() * testTrack.getIgnoreUsedLengthPercentage() / 100) 
+                                - (testTrack.getUsedLength() + testTrack.getReserved());
+//                        if (available2 > available) {
+//                            available = available2;
+//                        }
+                        if (available3 < available) {
+                            available = available3;
                         }
                         addLine(_buildReport, SEVEN, MessageFormat.format(Bundle
                                 .getMessage("buildTrackHasPlannedPickups"), new Object[]{testTrack.getName(),
