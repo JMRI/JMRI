@@ -3,6 +3,7 @@ package jmri.jmrit.operations.trains;
 
 import java.awt.Color;
 import java.awt.Dimension;
+import java.awt.GridBagLayout;
 import java.beans.PropertyChangeEvent;
 import java.beans.PropertyChangeListener;
 import java.util.Enumeration;
@@ -18,6 +19,7 @@ import javax.swing.JMenuBar;
 import javax.swing.JPanel;
 import javax.swing.JRadioButton;
 import javax.swing.JScrollPane;
+import javax.swing.JTextArea;
 import javax.swing.ScrollPaneConstants;
 import jmri.jmrit.operations.OperationsFrame;
 import jmri.jmrit.operations.OperationsXml;
@@ -38,10 +40,7 @@ import org.slf4j.LoggerFactory;
 public class TrainsScheduleTableFrame extends OperationsFrame implements PropertyChangeListener {
 
     // public static SwingShutDownTask trainDirtyTask;
-    /**
-     *
-     */
-    private static final long serialVersionUID = -2436589778859368847L;
+
     public static final String NAME = Bundle.getMessage("Name"); // Sort by choices
     public static final String TIME = Bundle.getMessage("Time");
 
@@ -81,6 +80,11 @@ public class TrainsScheduleTableFrame extends OperationsFrame implements Propert
     // check boxes
     // panel
     JPanel schedule = new JPanel();
+    
+    // text area
+    JTextArea commentTextArea = new JTextArea(2, 70);
+    JScrollPane commentScroller = new JScrollPane(commentTextArea, JScrollPane.VERTICAL_SCROLLBAR_AS_NEEDED,
+            JScrollPane.HORIZONTAL_SCROLLBAR_AS_NEEDED);
 
     public TrainsScheduleTableFrame() {
 
@@ -92,6 +96,15 @@ public class TrainsScheduleTableFrame extends OperationsFrame implements Propert
         trainsPane.setVerticalScrollBarPolicy(ScrollPaneConstants.VERTICAL_SCROLLBAR_AS_NEEDED);
         trainsPane.setHorizontalScrollBarPolicy(ScrollPaneConstants.HORIZONTAL_SCROLLBAR_AS_NEEDED);
         trainsScheduleModel.initTable(trainsScheduleTable, this);
+        
+        // row comment
+        JPanel pC = new JPanel();
+        pC.setBorder(BorderFactory.createTitledBorder(Bundle.getMessage("Comment")));
+        pC.setLayout(new GridBagLayout());
+        addItem(pC, commentScroller, 1, 0);
+        
+        // adjust text area width based on window size
+        adjustTextAreaColumnWidth(commentScroller, commentTextArea);
 
         // Set up the control panel
         // row 1
@@ -150,13 +163,14 @@ public class TrainsScheduleTableFrame extends OperationsFrame implements Propert
         // place controls in scroll pane
         JPanel controlPanel = new JPanel();
         controlPanel.setLayout(new BoxLayout(controlPanel, BoxLayout.Y_AXIS));
+        controlPanel.add(pC);
         controlPanel.add(cp1);
         controlPanel.add(pButtons);
 
         JScrollPane controlPane = new JScrollPane(controlPanel);
         // make sure control panel is the right size
-        controlPane.setMinimumSize(new Dimension(500, 130));
-        controlPane.setMaximumSize(new Dimension(2000, 200));
+        controlPane.setMinimumSize(new Dimension(500, 480));
+        controlPane.setMaximumSize(new Dimension(2000, 500));
         controlPane.setVerticalScrollBarPolicy(ScrollPaneConstants.VERTICAL_SCROLLBAR_NEVER);
 
         getContentPane().add(trainsPane);
@@ -195,7 +209,7 @@ public class TrainsScheduleTableFrame extends OperationsFrame implements Propert
 
         setTitle(Bundle.getMessage("TitleTimeTableTrains"));
 
-        initMinimumSize();
+        initMinimumSize(new Dimension(Control.panelWidth700, Control.panelHeight500));
 
         addHorizontalScrollBarKludgeFix(controlPane, controlPanel);
 
@@ -214,9 +228,13 @@ public class TrainsScheduleTableFrame extends OperationsFrame implements Propert
             trainsScheduleModel.setSort(trainsScheduleModel.SORTBYTIME);
         } else if (ae.getSource() == noneButton) {
             enableButtons(false);
+            commentTextArea.setText(""); // no text for the noneButton
             // must be one of the schedule radio buttons
         } else {
             enableButtons(true);
+            // update comment field
+            TrainSchedule ts = scheduleManager.getScheduleById(getSelectedScheduleId());
+            commentTextArea.setText(ts.getComment());
         }
     }
 
@@ -259,12 +277,13 @@ public class TrainsScheduleTableFrame extends OperationsFrame implements Propert
     }
 
     /*
-     * Update radio button names in the same order was the table
+     * Update radio button names in the same order as the table
      */
     private void updateControlPanel() {
         schedule.removeAll();
         noneButton.setName(""); // Name holds schedule id for the selected radio button
         noneButton.setSelected(true);
+        commentTextArea.setText(""); // no text for the noneButton
         enableButtons(false);
         schedule.add(noneButton);
         schGroup.add(noneButton);
@@ -282,6 +301,8 @@ public class TrainsScheduleTableFrame extends OperationsFrame implements Propert
                 if (b.getName().equals(trainManager.getTrainScheduleActiveId())) {
                     b.setSelected(true);
                     enableButtons(true);
+                    // update comment field
+                    commentTextArea.setText(ts.getComment());
                 }
             }
         }
@@ -289,7 +310,7 @@ public class TrainsScheduleTableFrame extends OperationsFrame implements Propert
     }
 
     private void updateCheckboxes(boolean selected) {
-        TrainSchedule ts = TrainScheduleManager.instance().getScheduleById(getSelectedScheduleId());
+        TrainSchedule ts = scheduleManager.getScheduleById(getSelectedScheduleId());
         if (ts != null) {
             for (Train train : trainManager.getTrainsByIdList()) {
                 if (selected) {
@@ -302,7 +323,7 @@ public class TrainsScheduleTableFrame extends OperationsFrame implements Propert
     }
 
     private void applySchedule() {
-        TrainSchedule ts = TrainScheduleManager.instance().getScheduleById(getSelectedScheduleId());
+        TrainSchedule ts = scheduleManager.getScheduleById(getSelectedScheduleId());
         if (ts != null) {
             for (Train train : trainManager.getTrainsByIdList()) {
                 train.setBuildEnabled(ts.containsTrainId(train.getId()));
@@ -336,6 +357,8 @@ public class TrainsScheduleTableFrame extends OperationsFrame implements Propert
 
         activateButton.setEnabled(getSelectedScheduleId() != null
                 && !getSelectedScheduleId().equals(trainManager.getTrainScheduleActiveId()));
+        
+        commentTextArea.setEnabled(enable);
     }
 
     private List<Train> getSortByList() {
@@ -374,12 +397,12 @@ public class TrainsScheduleTableFrame extends OperationsFrame implements Propert
                 trainSwitchLists.buildSwitchList(location);
                 // // print or print changes
                 if (Setup.isSwitchListRealTime() && !location.getStatus().equals(Location.PRINTED)) {
-                    trainSwitchLists.printSwitchList(location, TrainManager.instance().isPrintPreviewEnabled());
+                    trainSwitchLists.printSwitchList(location, trainManager.isPrintPreviewEnabled());
                 }
             }
         }
         // set trains switch lists printed
-        TrainManager.instance().setTrainsSwitchListStatus(Train.PRINTED);
+        trainManager.setTrainsSwitchListStatus(Train.PRINTED);
     }
 
     private void updateSwitchListButton() {
@@ -395,7 +418,12 @@ public class TrainsScheduleTableFrame extends OperationsFrame implements Propert
     }
 
     protected void storeValues() {
-        updateControlPanel();
+        // Save comment
+        TrainSchedule ts = scheduleManager.getScheduleById(getSelectedScheduleId());
+        if (ts != null) {
+            ts.setComment(commentTextArea.getText());
+        }
+//        updateControlPanel();
         saveTableDetails(trainsScheduleTable);
         OperationsXml.save();
     }
