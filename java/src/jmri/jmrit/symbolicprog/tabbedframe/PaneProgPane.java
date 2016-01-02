@@ -216,7 +216,7 @@ public class PaneProgPane extends javax.swing.JPanel
         }
 
         // explain why pane is empty
-        if (cvList.isEmpty() && varList.isEmpty() && indexedCvList.isEmpty() && isProgPane) { 
+        if (cvList.isEmpty() && varList.isEmpty() && indexedCvList.isEmpty() && isProgPane) {
             JPanel pe = new JPanel();
             pe.setLayout(new BoxLayout(pe, BoxLayout.Y_AXIS));
             int line = 1;
@@ -2390,7 +2390,8 @@ public class PaneProgPane extends javax.swing.JPanel
             log.trace("Variable \"{}\" not found, omitted", name);
             return;
         }
-//        log.info("Display item="+name);
+//        Leave here for now. Need to track pre-existing corner-case issue
+//        log.info("Entry item="+name+";cs.gridx="+cs.gridx+";cs.gridy="+cs.gridy+";cs.anchor="+cs.anchor+";cs.ipadx="+cs.ipadx);
 
         // check label orientation
         Attribute attr;
@@ -2417,17 +2418,18 @@ public class PaneProgPane extends javax.swing.JPanel
         }
 
         // create the paired label
-        JLabel l = new WatchingLabel(" " + label + " ", rep);
-        if (label.startsWith(HTML_OPEN_TAG)) { // allow html in labels
-            l.setText(label);
-        }
+        JLabel l = new WatchingLabel(label, rep);
+
+        int spaceWidth = getFontMetrics(l. getFont()).stringWidth(" ");
 
         // now handle the four orientations
         // assemble v from label, rep
         if (layout.equals("left")) {
             cs.anchor = GridBagConstraints.EAST;
+            cs.ipadx = spaceWidth;
             g.setConstraints(l, cs);
             col.add(l);
+            cs.ipadx = 0;
 
             cs.gridx++;
             cs.anchor = GridBagConstraints.WEST;
@@ -2441,8 +2443,10 @@ public class PaneProgPane extends javax.swing.JPanel
 
             cs.gridx++;
             cs.anchor = GridBagConstraints.WEST;
+            cs.ipadx = spaceWidth;
             g.setConstraints(l, cs);
             col.add(l);
+            cs.ipadx = 0;
 
         } else if (layout.equals("below")) {
             // variable in center of upper line
@@ -2453,14 +2457,18 @@ public class PaneProgPane extends javax.swing.JPanel
             // label aligned like others
             cs.gridy++;
             cs.anchor = GridBagConstraints.WEST;
+            cs.ipadx = spaceWidth;
             g.setConstraints(l, cs);
             col.add(l);
+            cs.ipadx = 0;
 
         } else if (layout.equals("above")) {
             // label aligned like others
             cs.anchor = GridBagConstraints.WEST;
+            cs.ipadx = spaceWidth;
             g.setConstraints(l, cs);
             col.add(l);
+            cs.ipadx = 0;
 
             // variable in center of lower line
             cs.gridy++;
@@ -2472,6 +2480,7 @@ public class PaneProgPane extends javax.swing.JPanel
             log.error("layout internally inconsistent: " + layout);
             return;
         }
+//        log.info("Exit item="+name+";cs.gridx="+cs.gridx+";cs.gridy="+cs.gridy+";cs.anchor="+cs.anchor+";cs.ipadx="+cs.ipadx);
     }
 
     /**
