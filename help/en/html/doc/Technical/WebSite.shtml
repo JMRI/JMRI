@@ -86,6 +86,14 @@ Eventually, all but a few index pages will have
 ".shtml" extensions. (The remaining index.html pages keep that name
 so that people who request just a directory URL will be served something useful).</p>
 
+<p><a name="redirect" id="redirect"></a>
+We are using .htaccess files to do redirects when a web page is removed.  This
+lets older bookmarks continue to work.  
+The 
+<a href="https://github.com/JMRI/website/tree/master/hardware/.htaccess">hardware/.htaccess file</a> provides an example.
+For more information on the syntax, see the 
+<a href="https://httpd.apache.org/docs/current/mod/mod_rewrite.html#rewriterule">Apache mod_rewrite documentation</a>.
+
 <h2>Directory Organization</h2>
 
 <p>The web site contains several separate areas, which translate to different 
@@ -183,6 +191,34 @@ Add the word "Includes" to the last line so it looks like
     AddType text/html .shtml
     AddHandler server-parsed .shtml
 </PRE>
+
+    <li>Finally, configure the server to allow <a href="#redirect">.htaccess files to provide redirects</a>.  
+        We use this to allow people with old URLs in bookmarks to reach the right current pages.
+        <p>
+        Find a section that looks like:
+<PRE>
+DocumentRoot "/Library/WebServer/Documents"
+<Directory "/Library/WebServer/Documents">
+</PRE>
+        There's an indented section directly below that.  Find the part that looks like:
+<PRE>
+    #
+    # AllowOverride controls what directives may be placed in .htaccess files.
+    # It can be "All", "None", or any combination of the keywords:
+    #   AllowOverride FileInfo AuthConfig Limit
+    #
+    AllowOverride None
+</PRE>
+        Change the last line to allow overrides (which is what a .htaccess file does):
+<PRE>
+    AllowOverride All
+</PRE>
+        Then find the reference to the rewrite_module and make sure it's loaded by a line like:
+<PRE>
+LoadModule rewrite_module libexec/apache2/mod_rewrite.so
+</PRE>
+        By default, that's commented out with a leading # character.
+          
     </ul>
 
 <LI>To check out a copy of the JMRI files that will be served:
