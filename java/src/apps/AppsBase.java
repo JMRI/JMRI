@@ -119,7 +119,7 @@ public abstract class AppsBase {
                     try {
                         InstanceManager.tabbedPreferencesInstance().init();
                     } catch (Exception ex) {
-                        log.error(ex.toString());
+                        log.error(ex.toString(), ex);
                     }
                 }
             };

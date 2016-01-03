@@ -2,8 +2,7 @@
 <html lang="en">
 <head>
 <!-- Copyright Bob Jacobsen 2008 -->
-<!-- $Id$ -->
-<title>JMRI: PanelPro, An Application For Making Control Panels</title>
+<title>JMRI: PanelPro, an application for making Control Panels</title>
 
 <!-- Style -->
 <meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
@@ -27,22 +26,21 @@ contain the PanelPro application for creating simple control panels.
 This page describes that application, and how to use it.
 <p>
 PanelPro provides two separate ways to create control panels.
-<ul>
-<li>The 
-<a href="../../../package/jmri/jmrit/display/PanelEditor.shtml">Panel Editor</a>
-lets you draw a panel exactly the
-way you want it, and then animate parts of it to show the status of 
-your layout and let you click to control it.
-<li>The 
-<a href="../../../package/jmri/jmrit/display/LayoutEditor.shtml">Layout Editor</a>
-provides tools for drawing your layout
-while constructing the logic for signals, etc.  It constrains how 
-the panel appears a little, but it can save significant time when
-first bringing your layout up.
-</UL>
+	<ul>
+	<li>The 
+	<a href="../../../package/jmri/jmrit/display/PanelEditor.shtml">Panel Editor</a>
+	lets you draw a panel exactly the
+	way you want it, and then animate parts of it to show the status of 
+	your layout and let you click to control it.
+	<li>The 
+	<a href="../../../package/jmri/jmrit/display/LayoutEditor.shtml">Layout Editor</a>
+	provides tools for drawing your layout
+	while constructing the logic for signals, etc.  It constrains how 
+	the panel appears a little, but it can save significant time when
+	first bringing your layout up.
+	</ul>
 
-
-<h2>Which to use ?  Layout Editor or Panel Editor ? </h2>
+<h2>Which to use: Layout Editor or Panel Editor ?</h2>
 
 <p> 
 The Layout Editor builds a "Layout" which is a <i>logical description</i> of
@@ -105,7 +103,7 @@ application is another tool for creating modern-style control panels.
 
 
 <h2>The Panel Editor</h2>
-<a href="../../../images/CornwallPanelLit.gif"><IMG src="../../../images/CornwallPanelLit.gif" ALT="screen shot of Cornwall panel" WIDTH="333" HEIGHT="200" HSPACE="0" VSPACE="0"></a>
+<a href="../../../images/CornwallPanelLit.gif"><img src="../../../images/CornwallPanelLit.gif" ALT="screen shot of Cornwall panel" WIDTH="333" HEIGHT="200" HSPACE="0" VSPACE="0"></a>
 
 <p>
 Using the JMRI Panel Editor, 
@@ -120,23 +118,23 @@ program (image above right).
 <p>
 You can use these tools to configure quite complicated panels for
 large layouts.  The example above is from 
-<A href="http://kc.pennsyrr.com/layouts/kulp/index.html">Nick Kulp's Cornwall Railroad</a>.
+<a href="http://kc.pennsyrr.com/layouts/kulp/index.html">Nick Kulp's Cornwall Railroad</a>.
 There's a
-<A HREF="http://jmri.sourceforge.net/community/examples/Panels-Cornwall/Cornwall.html">page on the main web site</a>
+<a href="http://jmri.sourceforge.net/community/examples/Panels-Cornwall/Cornwall.html">page on the main web site</a>
 that describes this in detail.
 There's also a
-<A HREF="http://ownry.squarespace.com/blog/2011/4/7/ctc-dispatcher-panel-on-the-ownry.html?SSScrollPosition=0">page describing the panel</a> 
+<a href="http://ownry.squarespace.com/blog/2011/4/7/ctc-dispatcher-panel-on-the-ownry.html?SSScrollPosition=0">page describing the panel</a> 
 for Kent Williams's
-<A HREF="http://ownry.squarespace.com/modelrailroad/">Oregon Washington Navigation &amp; Railway<a/>.
+<a href="http://ownry.squarespace.com/modelrailroad/">Oregon Washington Navigation &amp; Railway<a/>.
 Robert Bucklew's Quaker Valley Lines is also building a 
-<A HREF="http://www.quaker-valley.com/CTC/QV_CTCnew.html">CTC panel</a>
+<a href="http://www.quaker-valley.com/CTC/QV_CTCnew.html">CTC panel</a>
 using PanelPro.
 (This is a second generation panel with some advanced features; there's also
 a page describing the 
-<A HREF="http://www.quaker-valley.com/CTC/QV_CTC.html">older, simpler panel</a>)_
+<a href="http://www.quaker-valley.com/CTC/QV_CTC.html">older, simpler panel</a>)_
 <P>
 Also, refer to the
-<A HREF="../../tools/signaling/index.shtml">signaling page</a>
+<a href="../../tools/signaling/index.shtml">signaling page</a>
 for information on adding logic to operate the signals on your layout
 under the control of your panel.
 
@@ -170,13 +168,13 @@ The rest of this page gives you a walk-through of the
 process.  If you'd like to see animated clinics that
 show how each of these things are actually done on the computer screen,
 please see 
-<A HREF="http://www.rr-cirkits.com/Clinics/Clinics.html">Dick Bronson's clinics page</a>.
+<a href="http://www.rr-cirkits.com/Clinics/Clinics.html">Dick Bronson's clinics page</a>.
 <p>
 You start the editor by selecting "New Panel..." then "Panel Editor" from the "Panels" menu
 on the main window.  You'll get a blank control panel, plus the
 editor window:<BR>
-<A HREF="../../../images/paneleditor.gif">
-<IMG SRC="../../../images/paneleditor.gif" ALT="Screen shot of panel editor" 
+<a href="../../../images/paneleditor.gif">
+<img SRC="../../../images/paneleditor.gif" ALT="Screen shot of panel editor" 
 WIDTH="208" HEIGHT="364" HSPACE="0" VSPACE="0" align="right"></a>
 <P>
 From the top, this contains:
@@ -195,8 +193,8 @@ slide the label around after inserting it, but you currently can't edit the text
 <LI>A button to add an icon as a label.  This is a way to add track symbols, etc. To select the
 icon, click the "edit icon..." button to pop an
 icon editor panel.<BR>
-<A HREF="../../../images/iconeditor.gif">
-<IMG SRC="../../../images/iconeditor.gif" ALT="Screen shot of icon editor" 
+<a href="../../../images/iconeditor.gif">
+<img SRC="../../../images/iconeditor.gif" ALT="Screen shot of icon editor" 
 WIDTH="148" HEIGHT="214" HSPACE="0" VSPACE="0" align="right"></a><br>
 The current icon is shown at the top.
 To change it, use the tree in the bottom of the window to select a new one, then click on 
@@ -267,12 +265,12 @@ and faster operation, as you prefer.
 <P>It's also possible to create a panel where the "track" lines 
 change color to indicate whether the track is occupied.  The
 procedure for doing that is described on a 
-<A HREF="ColorTrack.shtml">separate page</a>.
+<a href="ColorTrack.shtml">separate page</a>.
 
 <h2>Using the Layout Editor</h2>
 
-<A href="../../../package/jmri/jmrit/display/images/EnhancedPanel.gif">
-<IMG src="../../../package/jmri/jmrit/display/images/EnhancedPanel.gif" ALIGN="right" ALT="screen shot of layout editor panel" WIDTH="296" HEIGHT="86" HSPACE="0" VSPACE="0"></A>
+<a href="../../../package/jmri/jmrit/display/images/EnhancedPanel.gif">
+<img src="../../../package/jmri/jmrit/display/images/EnhancedPanel.gif" ALIGN="right" ALT="screen shot of layout editor panel" WIDTH="296" HEIGHT="86" HSPACE="0" VSPACE="0"></A>
 
 The 
 <a href="../../../package/jmri/jmrit/display/LayoutEditor.shtml">Layout Editor</a>
@@ -283,8 +281,8 @@ located and how each signal is related to blocks.  On the other hand, it
 provides only limited ability to customize how the panel appears.
 <p>
 
-<A href="../../../package/jmri/jmrit/display/images/OvalLayoutEditMode.gif">
-<IMG src="../../../package/jmri/jmrit/display/images/OvalLayoutEditMode.gif" ALIGN="right" ALT="screen shot of layout editor panel" WIDTH="271" HEIGHT="85" HSPACE="0" VSPACE="0"></A>
+<a href="../../../package/jmri/jmrit/display/images/OvalLayoutEditMode.gif">
+<img src="../../../package/jmri/jmrit/display/images/OvalLayoutEditMode.gif" ALIGN="right" ALT="screen shot of layout editor panel" WIDTH="271" HEIGHT="85" HSPACE="0" VSPACE="0"></A>
 
 You edit via "Edit Mode", which makes the connections between elements and
 the layout visible (See figure to the right).  For example, you can click on
@@ -303,23 +301,24 @@ PanelPro can communicate with more than one layout control system.  For
 example, the Cornwall Railroad mentioned above uses C/MRI hardware for sensing the status
 of blocks and turnouts on the layout, but drives turnout positions through
 a Digitrax DCC system.
-<P>
+<p>
 To configure the program to talk to multiple systems, just select the first one in 
 standard part of the the
 preferences panel, and the select the second in the "<a href="../../../package/apps/TabbedPreferences.shtml#advanced">Advanced Preferences</a>".
-For more information, see the preferences panel
-<a href="../../../package/apps/TabbedPreferences.shtml">help page</a>.
-<P>
+For more information, see the 
+<a href="../../../package/apps/TabbedPreferences.shtml">Preferences panel Help page</a>.
+<p>
 If you add a turnout, sensor or signal to a panel using just a number, e.g. "23",
 it will be assigned to the first system on the preference panel.  To
 access the 2nd system, you have to use JMRI 
-<A HREF="../../doc/Technical/Names.shtml">system names</a>.  For example, if the second attachment is
+<a href="../../doc/Technical/Names.shtml">system names</a>.  For example, if the second attachment is
 to a LocoNet system, you'd refer to a LocoNet Turnout as LT13; a LocoNet sensor
 as LS21, etc.  See the page on 
-<A href="../../doc/Technical/Names.shtml">names</a>
+<a href="../../doc/Technical/Names.shtml">names</a>
 for more information.
 
-    
 <!--#include virtual="/Footer" -->
-</body>
+  </div><!-- closes #mainContent-->
+ </div> <!-- closes #mBody-->
+ </body>
 </html>

@@ -14,6 +14,7 @@
 # Part of the JMRI distribution
 
 import jmri
+import java
 
 # Define the listener. 
 class SignalSensorListener(java.beans.PropertyChangeListener):

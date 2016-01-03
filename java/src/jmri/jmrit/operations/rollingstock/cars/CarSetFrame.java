@@ -571,10 +571,10 @@ public class CarSetFrame extends RollingStockSetFrame implements java.beans.Prop
 
     private Car getTestCar(Car car) {
         Car c = car;
-        // clone car and set the load to default empty and a length of zero
+        // clone car and set the load to RWE and a length of zero
         if (car != null) {
             c = car.copy();
-            c.setLoadName(CarLoads.instance().getDefaultEmptyName());
+            c.setLoadName(car.getReturnWhenEmptyLoadName());
             c.setLength("0"); // ignore car length
         }
         return c;

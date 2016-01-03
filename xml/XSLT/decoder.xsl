@@ -7,7 +7,7 @@
 <!-- This XSLT transform is used when a JMRI decoder definition -->
 <!-- file is displayed by a web browser -->
 
-<!-- This file is part of JMRI.  Copyright 2007-2013.                       -->
+<!-- This file is part of JMRI.  Copyright 2007-2016.                       -->
 <!--                                                                        -->
 <!-- JMRI is free software; you can redistribute it and/or modify it under  -->
 <!-- the terms of version 2 of the GNU General Public License as published  -->
@@ -21,7 +21,7 @@
  
 <xsl:stylesheet	version="1.0" xmlns:xsl="http://www.w3.org/1999/XSL/Transform" xmlns:docbook="http://docbook.org/ns/docbook">
       <xsl:param name="JmriCopyrightYear">
-        2000 - 2015
+        2000 - 2016
       </xsl:param>
 
 <!-- Need to instruct the XSLT processor to use HTML output rules.

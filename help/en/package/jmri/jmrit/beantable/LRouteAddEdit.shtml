@@ -1,31 +1,30 @@
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
-<!-- $Id$ -->
-<HTML LANG="en">
-<HEAD>
-<TITLE>JMRI: Adding/Editing LRoutes</TITLE>
-<META HTTP-EQUIV="Content-Type" CONTENT="text/html; charset=iso-8859-1">
-<META CONTENT="Bob Jacobsen" NAME="Author">
-<META NAME="keywords" CONTENT="JMRI help LRoute Add Edit">
+<html lang="en">
+<head>
+<title>JMRI: Adding/Editing LRoutes</title>
+<meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
+<meta content="Bob Jacobsen" name="Author">
+<meta name="keywords" content="JMRI help LRoute Add Edit">
 
 <!--#include virtual="/Style" -->
-</HEAD>
+</head>
 
-<BODY>
+<body>
 <!--#include virtual="/Header" -->
   <div class="nomenu" id="mBody">
     <div id="mainContent">
 
-<H1><A NAME="Adding/Editing LRoutes"></A>Adding/Editing LRoutes</H1>
+<h1><a name="Adding/Editing LRoutes"></a>Adding/Editing LRoutes</h1>
 
-<p>There are four tabs for adding and editing lroutes:
+<p>There are four tabs for adding and editing LRoutes:
 
-<H3>Tab 1. Basic LRoute</H3>
+<h3>Tab 1. Basic LRoute</h3>
 
-<P>The first thing you must do when creating a route is name it. In
+<p>The first thing you must do when creating a route is name it. In
 the box labeled "System Name" enter a unique name for your lroute.
 The prefix "RTX" will be added to the system name, 
 You can optionally enter a more descriptive name in the "User
-Name" box.</P>
+Name" box.</p>
 
 <dl>
 <dt>Logix Route Type</dt>
@@ -39,15 +38,15 @@ Name" box.</P>
 
 The buttons at the bottom of the LRoute Table
 
-<DL>	
-<DT>Add Route</DT>
-	<DD>Push this button to add a new logix route. </DD>
+<dl>	
+<dt>Add Route</dt>
+	<dd>Push this button to add a new logix route. </dd>
         
-<DT>Cancel</DT>
-	<DD>Push this button to cancel editing. </DD>
-</DL>
+<dt>Cancel</dt>
+	<dd>Push this button to cancel editing. </dd>
+</dl>
 
-<H3>Tab 2. Actions (output)</H3>
+<h3>Tab 2. Actions (output)</h3>
 
 <p>This tab contains a pick list of all the Sensors, Turnouts, Lights and SignalHeads 
 that have been created.  Click the checkbox in the <b>Include</b> column to select the 
@@ -58,7 +57,7 @@ Action</b> column.</p>
 <p>The radio buttons allow you to limit the display of devices to only those you
 have selected.</p>
 
-<H3>Tab 3. Triggers/Controls (intput)</H3>
+<h3>Tab 3. Triggers/Controls (intput)</h3>
 
 <p>This tab contains a pick list of all the Sensors, Turnouts, Lights and SignalHeads 
 that have been created.  Click the checkbox in the <b>Include</b> column to select the 
@@ -91,7 +90,7 @@ of these variables.
 <p>The radio buttons allow you to limit the display of devices to only those you
 have selected.</p>
 
-<H3>Tab 4. Alignment/Locks/Etc.</H3>
+<h3>Tab 4. Alignment/Locks/Etc.</h3>
 
 <p>This tab contains a pick list of the Sensors 
 that have been created.  Click the checkbox in the <b>Include</b> column to select a 
@@ -107,6 +106,7 @@ have selected.</p>
 file may be run when the l-route is triggered. 
 
 <!--#include virtual="/Footer" -->
-</BODY>
-</HTML>
-
+ </div><!-- closes #mainContent-->
+</div> <!-- closes #mBody-->
+</body>
+</html>

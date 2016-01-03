@@ -88,16 +88,14 @@ public class DCCppPowerManager implements PowerManager, DCCppListener {
         if (log.isDebugEnabled()) {
             log.debug("Message recieved: " + m.toString());
         }
-	if (m.getElement(0) == DCCppConstants.POWER_REPLY) {
-	    if (m.getElement(1) == '1') {
-		power = ON;
-		firePropertyChange("Power", null, null);
-	    } else if (m.getElement(1) == '0') {
-		power = OFF;
-		firePropertyChange("Power", null, null);
-	    } else {
-		// Malformed response.  Call an error?
-	    }
+        if (m.isPowerReply()) {
+            if (m.getPowerBool()) {
+                power = ON;
+                firePropertyChange("Power", null, null);
+            } else {
+                power = OFF;
+                firePropertyChange("Power", null, null);
+            }
 	}
 	
     }

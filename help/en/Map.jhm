@@ -600,6 +600,8 @@
 
 <mapID target="html.tools.programmer.messages" url="html/tools/programmer/messages.shtml"/>
 
+<mapID target="package.jmri.jmrit.operations.Operations_PrintSavedTrainManifests" url="package/jmri/jmrit/operations/Operations.shtml#PrintSavedTrainManifests"/>
+
 <mapID target="package.jmri.jmrix.sprog.packetgen.SprogPacketGenFrame" url="package/jmri/jmrix/sprog/packetgen/SprogPacketGenFrame.shtml"/>
 
 <mapID target="html.hardware.tams.index_limitations" url="html/hardware/tams/index.shtml#limitations"/>
@@ -2301,6 +2303,8 @@
 <mapID target="html.tools.throttle.ThrottleChapter4_SaveThrottlePreferences" url="html/tools/throttle/ThrottleChapter4.shtml#SaveThrottlePreferences"/>
 
 <mapID target="html.hardware.maple.index_limitations" url="html/hardware/maple/index.shtml#limitations"/>
+
+<mapID target="html.tools.Sections" url="html/tools/Sections.shtml"/>
 
 <mapID target="package.jmri.jmrit.operations.Operations_GenerateCsvSwitchLists" url="package/jmri/jmrit/operations/Operations.shtml#GenerateCsvSwitchLists"/>
 

@@ -1,20 +1,12 @@
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
-<!-- $Id$ -->
 <html lang="en">
 <head>
-  <title>Throttle: Introduction </title>
+  <title>JMRI Throttles Documentation</title>
   <meta name="keywords" content="JMRI decoderpro dcc nmra throttle throttlepro">
   <meta name="Description" content="Throttle documentation for JMRI project">
-  <meta name="Keywords" content="JMRI">
   <meta name="Author" content="Paul Fraker (paul@frakers.com)">
   <meta name="Language" content="EN">
-  <meta name="Robots" content="Index, Follow">
-  <meta name="Revisit-After" content="7 Days">
-  <!-- The combination of "Define" and {Header,Style, Logo and Footer} comments -->
-  <!-- are an arbitrary design pattern used by the update.pl script to -->
-  <!-- easily replace the common header/footer code for all the web pages -->
-  <!-- delete the following 2 Defines if you want to use the default JMRI logo -->
-  <!-- or change them to reflect your alternative logo -->
+
   <!-- Style -->
   <meta http-equiv="content-type" content="text/html; charset=iso-8859-1">
   <link rel="stylesheet" type="text/css" href="/css/default.css" media="screen">
@@ -29,38 +21,27 @@
 <!--#include virtual="Sidebar" -->
 
 <div id="mainContent">
-<h1>Introduction: What Is The Throttle Tool</h1>
+<h1>JMRI: Throttles Documentation</h1>
 
 <p>The <b>JMRI Throttle Tool</b> is just one of the many digital railroading
 tools that are part of the <b>JMRI Project</b>. It has the ability to run a DCC
-decoder equipped locomotive around a layout using a computer keyboard and mouse
-for control instead of a hand-held throttle. This tool offers many of the same
-common features that can be found on most hand-held throttles, including the
+decoder equipped Locomotive around a layout using a computer keyboard and mouse
+for control instead of a hand-held throttle. The Throttle tool offers many of the same
+features that can be found on most hand-held throttles, including the
 ability to control light and sound functions.</p>
 
-<p>This user guide was intended to introduce those unfamiliar with the throttle
-tool. After reading through the sections identified below, and trying the
-throttle tool on your own, hopefully it will increase your enjoyment of the DCC
-model railroading hobby.</p>
-
-<p></p>
-
-<h1>Updated version of the Throttle documentation</h1>
-
-<p>Please note that this documentation was updated. Refer to links below:</p>
+<h2>Throttle Help</h2>
 <ul>
-  <li>The <a href="ToolsMenuThrottleEntry.shtml">Throttle menu in JMRI</a></li>
-  <li>The <a href="BasicThrottleWindow.shtml">Throttle Window itself</a></li>
-  <li>The <a href="ThrottleWindowMenus.shtml">Throttle Window menus</a></li>
-  <li>The <a href="ThrottleToolBar.shtml">Throttle Window toolbar</a></li>
-  <li>The <a href="AdvancedThrottleControl.shtml">Throttle Window
-  controls</a></li>
-  <li>The <a href="ThrottlesListWindow.shtml">Throttles List Window</a></li>
-  <li><a href="ThrottlesListWindow.shtml"></a>The <a href="ThrottlesPreferencesPane.shtml">Throttles preferences pane</a></li>
+  <li>The <a href="ToolsMenuThrottleEntry.shtml">JMRI Throttle menu</a></li>
+  <li>The <a href="BasicThrottleWindow.shtml">Throttle</a></li>
+  <li>The <a href="ThrottleWindowMenus.shtml">Throttle menus</a></li>
+  <li>The <a href="ThrottleToolBar.shtml">Throttle pane toolbar</a></li>
+  <li>The <a href="AdvancedThrottleControl.shtml">Throttle controls</a></li>
+  <li>The <a href="ThrottlesListWindow.shtml">Throttles List</a></li>
+  <li>The <a href="ThrottlesPreferencesPane.shtml">Throttles Preferences</a></li>
 </ul>
 
-<p style="margin-left:0em">See also:
-</p>
+<p>See also:</p>
 
 <ul>
   <li>The <a href="RostersMediaPane.shtml">Media and Function label panels in
@@ -71,70 +52,13 @@ model railroading hobby.</p>
     href="HowToJMRIOrientedThrottle.shtml">How to build a Throttle oriented JMRI</a></li>
 </ul>
 
-<h1>How To Use This Guide</h1>
+<hr>
 
-<p>This user guide was set up almost as a training guide. Each section link in
-the left column is organized like a book. If you are new to using the
-throttles, follow each section chapter in sequence and the text will walk you
-through the process step-by-step — including the opening up of a new throttle
-layout, customizing it, and then saving all your hard work.</p>
+<p><a href="ThrottleChapter1.shtml">Throttles Help for JMRI v 1.x/2.x</a>
 
-<p>If you have already found the throttle layout tools, but are looking for
-more information about them, then hopefully there is a section or two that can
-also be of help. The list of chapters and sections will always be available in
-the left column from any page while viewing this guide. There is also a couple
-of navigation buttons at the bottom of each page. These will take you to the
-next or previous chapters; or the the main table of contents page (see next
-paragraph).</p>
+<!--#include virtual="/Footer" -->
 
-<p>In the list of links provided on the left, and located at the conclusion of
-each chapter page, there is a link identified as <a href="ThrottleTOC.shtml"
-title="Go to the Table Of Contents page"><i><strong>TOC</strong></i></a> or <a
-href="ThrottleTOC.shtml"
-title="Go to the Table Of Contents page"><i><strong>Table Of
-Contents</strong></i></a>. This link will take you to a dedicated table of contents
-page. Some may find it easier to navigate using that page instead. However, the
-left column does contain all available links that the TOC page contains.</p>
-
-<p class="important"><b style="color: #FF0000">Important Note</b>: Multiple
-programmers are involved with the code development on this project. Some work
-on the "front end" of the code (which is the interface that you see on your
-computer screen), and others are working on the "back end" of the software for
-each particular DCC system needs. Although the "front end" should remain
-constant across all systems, there may be slight differences experienced on
-your particular DCC system and computer in comparison to what is described and
-shown in this user guide.<br>
-<br>
-<b>The examples and references shown in this guide are based on version 1.5.3
-of the software, operating under Microsoft Windows 2000 Professional with a
-Digitrax system.</b> </p>
-
-<p><a
-href="http://downloads.sourceforge.net/sourceforge/jmri/ThrottleDocs.1.5.3.pdf?download"
-title="Click to view this user guide in PDF format">Download the Throttle user guide</a> in PDF format.</p>
-<br>
-
-<p>Use these links to either advance to the next chapter for an introduction to
-the Throttle Tool, or to view the complete table of contents page.</p>
-
-<table border="0" width="100%" cellpadding="0" cellspacing="0">
-  <tbody>
-    <tr>
-      <td align="right">  </td>
-      <td><img src="images/spacer.gif" width="30" height="10"> </td>
-      <td align="center"><b><a href="ThrottleTOC.shtml"
-        title="Jump to the Table Of Contents page">TOC</a></b> </td>
-      <td><img src="images/spacer.gif" width="30" height="10"> </td>
-      <td align="left"><b><a href="ThrottleChapter1.shtml"
-        title="Advance to the next chapter"><img width="18" height="18"
-        src="images/RightArrow2.jpg"></a></b> </td>
-    </tr>
-  </tbody>
-</table>
-<br>
-<br>
-<br>
-<br>
-<!--#include virtual="/Footer" --> </div>
+      </div><!-- closes #mainContent-->
+    </div> <!-- closes #mBody-->
 </body>
 </html>

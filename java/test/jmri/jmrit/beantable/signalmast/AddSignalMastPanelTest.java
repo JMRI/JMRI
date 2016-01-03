@@ -16,8 +16,6 @@ public class AddSignalMastPanelTest extends TestCase {
     public void testDefaultSystems() {
         AddSignalMastPanel a = new AddSignalMastPanel();
 
-        jmri.util.JUnitAppender.assertWarnMessage("Won't protect preferences at shutdown without registered ShutDownManager");
-
         // check that "Basic Model Signals" (basic directory) system is present
         boolean found = false;
         for (int i = 0; i < a.sigSysBox.getItemCount(); i++) {
@@ -33,8 +31,6 @@ public class AddSignalMastPanelTest extends TestCase {
             SignalSystemTestUtil.createMockSystem();
 
             AddSignalMastPanel a = new AddSignalMastPanel();
-
-            jmri.util.JUnitAppender.assertWarnMessage("Won't protect preferences at shutdown without registered ShutDownManager");
 
             // check that mock (test) system is present
             boolean found = false;
@@ -73,11 +69,10 @@ public class AddSignalMastPanelTest extends TestCase {
         super.setUp();
 
         jmri.util.JUnitUtil.resetInstanceManager();
+        jmri.util.JUnitUtil.initDefaultUserMessagePreferences();
         jmri.util.JUnitUtil.initInternalTurnoutManager();
         jmri.util.JUnitUtil.initInternalLightManager();
         jmri.util.JUnitUtil.initInternalSensorManager();
-        jmri.managers.DefaultUserMessagePreferences.resetInstance();
-        jmri.InstanceManager.store(jmri.managers.DefaultUserMessagePreferences.getInstance(), jmri.UserPreferencesManager.class);
     }
 
     protected void tearDown() throws Exception {

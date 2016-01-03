@@ -182,7 +182,7 @@ public class JsonClientHandler {
                 this.connection.close();
             } else if (type.equals(HELLO)) {
                 this.receiveHello(data);
-                this.sendHello(JsonServerManager.getJsonServerPreferences().getHeartbeatInterval());
+                this.sendHello(JsonServerPreferences.getDefault().getHeartbeatInterval());
             } else if (type.equals(LOCALE)) {
                 this.receiveHello(data);
             } else if (type.equals(LIST)) {

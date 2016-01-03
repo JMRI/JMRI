@@ -243,7 +243,7 @@ public class TrainBuilder extends TrainCommon {
         int requested = 0;
         for (RouteLocation rl : _routeList) {
             // check to see if there's a location for each stop in the route
-            Location location = locationManager.getLocationByName(rl.getName());
+            Location location = locationManager.getLocationByName(rl.getName()); // this checks for a deleted location
             if (location == null || rl.getLocation() == null) {
                 throw new BuildFailedException(MessageFormat.format(Bundle.getMessage("buildErrorLocMissing"),
                         new Object[]{_train.getRoute().getName()}));
@@ -630,6 +630,7 @@ public class TrainBuilder extends TrainCommon {
         }
 
         _train.setCurrentLocation(_train.getTrainDepartsRouteLocation());
+        
         if (_numberCars < requested) {
             _train.setStatus(Train.CODE_PARTIAL_BUILT);
             addLine(_buildReport, ONE, Train.PARTIAL_BUILT + " " + _train.getNumberCarsWorked() + "/"
@@ -1031,14 +1032,23 @@ public class TrainBuilder extends TrainCommon {
                         break;
                     }
                 }
-                // now add the rest "A" or "B" units
-                for (Engine engine : singleLocos) {
-                    if (setLocoDestination(engine, rl, rld, terminateStageTrack)) {
-                        _engineList.remove(engine);
-                        locos++;
+                // did we find an "A" unit?
+                if (locos > 0) {
+                    // now add the rest "A" or "B" units
+                    for (Engine engine : singleLocos) {
+                        if (setLocoDestination(engine, rl, rld, terminateStageTrack)) {
+                            _engineList.remove(engine);
+                            locos++;
+                        }
+                        if (locos == numberOfEngines) {
+                            return true; // done
+                        }
                     }
-                    if (locos == numberOfEngines) {
-                        return true; // done
+                // list the engines found
+                } else for (Engine engine : singleLocos) {       
+                    if (engine.isBunit()) {
+                        addLine(_buildReport, FIVE, MessageFormat.format(Bundle.getMessage("BuildEngineBunit"), new Object[]{
+                            engine.toString(), engine.getLocationName(), engine.getTrackName()}));
                     }
                 }
             }
@@ -4021,13 +4031,17 @@ public class TrainBuilder extends TrainCommon {
                     // report if track has planned pickups
                     if (testTrack.getIgnoreUsedLengthPercentage() > 0) {
                         // calculate the available space
-                        int available = testTrack.getLength() - (testTrack.getUsedLength() + testTrack.getReserved());
-                        int available2 = testTrack.getLength()
-                                -
+//                        int available = testTrack.getLength() - (testTrack.getUsedLength() + testTrack.getReserved());
+                        int available = testTrack.getLength() -
                                 (testTrack.getUsedLength() * (100 - testTrack.getIgnoreUsedLengthPercentage()) / 100 + testTrack
                                         .getReservedLengthDrops());
-                        if (available2 > available) {
-                            available = available2;
+                        int available3 = testTrack.getLength() + (testTrack.getLength() * testTrack.getIgnoreUsedLengthPercentage() / 100) 
+                                - (testTrack.getUsedLength() + testTrack.getReserved());
+//                        if (available2 > available) {
+//                            available = available2;
+//                        }
+                        if (available3 < available) {
+                            available = available3;
                         }
                         addLine(_buildReport, SEVEN, MessageFormat.format(Bundle
                                 .getMessage("buildTrackHasPlannedPickups"), new Object[]{testTrack.getName(),

@@ -803,7 +803,7 @@
     <label xml:lang="fr">Courbe de vitesse</label>
     <label xml:lang="de">Kennlinie</label>
   </variable>
-  <variable CV="63" default="0" item="Start delay for speed step 1" tooltip="CV63 (0-250)">
+  <variable CV="63" default="0" item="Start delay for speed step 1" tooltip="CV63 (0-250)" exclude="Combo sound decoders">
     <decVal min="0" max="250"/>
     <label>Start delay for speed step 1</label>
     <label xml:lang="it">Inizio ritardo velocità step 1</label>

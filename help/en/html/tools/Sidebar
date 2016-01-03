@@ -21,6 +21,7 @@
 		    <li><dfn><a href="Memories.shtml">Memory Variables</a></dfn>
 		    <li><dfn><a href="Routes.shtml">Routes</a></dfn>
 		    <li><dfn><a href="LRoutes.shtml">LRoutes</a></dfn>
+		    <li><dfn><a href="Sections.shtml">Sections</a></dfn>
 		    <li><dfn><a href="Logix.shtml">Logix</a></dfn>
 		    <li><dfn><a href="fastclock/index.shtml">Fast Clocks</a></dfn>
 		    <li><dfn><a href="speedometer/index.shtml">Speedometer</a></dfn>
@@ -29,14 +30,15 @@
 		    </ul>
 		</dd>
 
-		<dt><h3><a href="index.shtml">System-specific Tools</a></h3></dt>
+		<dt><h3><a href="index.shtml#systemSpecificTools">System-specific Tools</a></h3></dt>
 		<dd>
 		    <ul>
-		    <li><dfn><a href="../hardware/acela/index.shtml#tools">Acela</a></dfn>
+		    <li><dfn><a href="../hardware/acela/index.shtml#tools">Acela (CTI)</a></dfn>
 		    <li><dfn><a href="../hardware/cmri/CMRI.shtml#tools">C/MRI</a></dfn>
-		    <li><dfn><a href="../hardware/can/index.shtml#tools">MERG CBUS</a></dfn>
+		    <li><dfn><a href="../hardware/can/index.shtml#tools">CAN</a></dfn>
+		    <li><dfn><a href="../hardware/can/cbus/index.shtml#tools">MERG CBUS</a></dfn>
 		    <li><dfn><a href="../hardware/dccpp/index.shtml#tools">DCC++</a></dfn>
-		    <li><dfn><a href="../hardware/easydcc/EasyDCC#tools">EasyDCC</a></dfn>
+		    <li><dfn><a href="../hardware/easydcc/EasyDCC.shtml#tools">EasyDCC</a></dfn>
 		    <li><dfn><a href="../hardware/ecos/index.shtml#tools">ESU ECoS</a></dfn>
 		    <li><dfn><a href="../hardware/grapevine/index.shtml#tools">Grapevine</a></dfn>
 		    <li><dfn><a href="../apps/LocoTools/index.shtml">LocoNet (Digitrax)</a></dfn>
@@ -45,7 +47,7 @@
 		    <li><dfn><a href="../hardware/openlcb/index.shtml#tools">OpenLCB</a></dfn>
 		    <li><dfn><a href="../hardware/rps/index.shtml#tools">RPS</a></dfn>
 		    <li><dfn><a href="../hardware/sprog/SPROG.shtml#tools">SPROG</a></dfn>
-				<li><dfn><a href="../hardware/xbee/index.shtml#tools">XBee</a></dfn>
+				<li><dfn><a href="../hardware/XBee/index.shtml#tools">XBee</a></dfn>
 				<li><dfn><a href="../hardware/XPressNet/index.shtml#tools">XPressNet (Lenz)</a></dfn>
 				</ul>
     </dd>

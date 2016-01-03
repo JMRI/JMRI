@@ -26,6 +26,7 @@
 #
 
 import jmri
+import java
 
 from time import sleep
 

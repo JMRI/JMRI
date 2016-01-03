@@ -134,6 +134,8 @@ bluecove-gpl-2.1.1-SNAPSHOT.jar
         
   version 0.5.7
   libusbJava.jnilib for MacOS X
+        to get 64-bit, from http://wiki.ztex.de/doku.php?id=en:software:porting#macos_port
+        requires /usr/local/lib/libusb-0.1.4.dylib via MacPorts or Homebrew or an installer from http://www.ellert.se/twain-sane/
   LibusbJava.dll for Windows is 0.2.3.0 (Feb 18, 2008)
   libusbJava.so for Linux was built on Ubuntu 7.10 w libusb 2:0.1.12-7
   
