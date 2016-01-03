@@ -1,0 +1,6 @@
+RewriteEngine on
+
+# Provide redirects for removed pages
+
+RewriteRule "index.shtml" "/help/en/manual/index.shtml" [R=302,L]
+
