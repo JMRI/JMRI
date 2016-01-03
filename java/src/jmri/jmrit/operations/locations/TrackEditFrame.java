@@ -683,7 +683,12 @@ public class TrackEditFrame extends OperationsFrame implements java.beans.Proper
             log.error("Track length can not be less than used and reserved");
             JOptionPane.showMessageDialog(this, Bundle.getMessage("TrackMustBeGreater"), Bundle
                     .getMessage("ErrorTrackLength"), JOptionPane.ERROR_MESSAGE);
-            return false;
+            // does the user want to force the track length?
+            if (JOptionPane.showConfirmDialog(this, MessageFormat.format(Bundle.getMessage("TrackForceLength"),
+                    new Object[]{track.getLength(), trackLength, Setup.getLengthUnit().toLowerCase()}), Bundle
+                    .getMessage("ErrorTrackLength"), JOptionPane.YES_NO_OPTION) != JOptionPane.YES_OPTION) {
+                return false;
+            }
         }
         // if everything is okay, save length
         track.setLength(trackLength);
