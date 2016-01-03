@@ -2,9 +2,9 @@
 <html lang="en">
 <head>
  <title>
-      JMRI: Preferences Window
+      JMRI: Preferences Pane
  </title>
-    <meta content="Bob Jacobsen" name="Author">
+    <meta name="Author" content="Bob Jacobsen">
     <meta name="keywords" content="JMRI help preferences">
 
 <!-- Style -->
@@ -39,13 +39,15 @@ Clicking on each item will then populate the right hand side with the various op
 <a href="#Messages">Messages</a><br>
 <a href="#Roster">Roster</a><br>
 <a href="#Throttle">Throttle</a><br>
+<a href="images/JMRIPrefsChanges.png">
+<img src="images/JMRIPrefsChanges.png" height="112" width="250" align="right" alt="Save? dialog"></a>
 <a href="#WiThrottle">WiThrottle</a><br>
 <a href="#Profiles">Config Profiles</a><br>
 <a href="#JSONServer">JSON Server</a><br>
 <a href="#WebServer">Web Server</a><br>
 <a href="#Warrants">Warrants</a><br>
 <p>Perhaps the most important control is at the bottom of this section:
-The "Save" button!  
+The <strong>Save</strong> button!  
 <p><img src="images/PrefsRestart.png" height="112" width="390" align="right">
 Be sure to click "Save" when leaving this window. Your changes to the Preferences
 don't take effect until the program is stopped and restarted, so the
@@ -56,6 +58,8 @@ program will prompt you to do that after saving the Preferences.
 <h2>Connections</h2></a>
 
 You can select any of the various JMRI layout Connections here.<p>
+<a href="images/Ops_SetConnection214.png">
+<img src="images/Ops_SetConnection214.png" height="222" width="423" align="right" alt="JMRI v2.14 Connection Prefs tab"></a>
 Each connection has its own unique tab. To get started, first select your DCC System Manufacturer,
 followed by the type of Connection that you are using.  You will then be presented with a series of 
 most commonly required settings that need to be set.  If you need to change some of the more advanced 
@@ -69,12 +73,14 @@ For more information on how to configure this for your particular hardware,
 see the <a href="../../html/hardware/index.shtml">Hardware Help pages</a>.
 <p>
 Remember to press <strong>Save</strong>!
+
+<a href="images/JMRI_PrefsDefaults.png">
+<img src="images/JMRI_PrefsDefaults.png" height="222" width="419" align="right" alt="JMRI v2.14 Defaults Prefs tab"></a>
 <a name="Defaults">
 <h2>Defaults</h2></a>
-
-If you are using multiple connections of the same type, e.g. multiple
-LocoNet connections, the Connection pane lets you select which one is connected
-to e.g. the CV programmer you want to use. A second Connection of the same type will have the number (2) added in its main menu.
+If you are using multiple connections, e.g. a
+LocoNet Connection and a MERG Connection, the Defaults pane lets you select which one is connected
+to e.g. the CV programmer and the Command Station you want to use. A second Connection of the same type will have the number (2) added in its name and its System-specific menu.
 
 <a name="FileLocations">
 <h2>File Locations</h2></a>
@@ -107,7 +113,7 @@ you can have the Turnouts Table automatically open, or
 automatically open a window for programming on the main.
 <P>
 For example, to automatically open the Turnouts Table, 
-click the "Add Action" button in this section of the advanced preferences. 
+click the "Add Action" button in this section of the Advanced Preferences. 
 From the list that's presented, select "Open Turnouts Table". 
 Don't forget
 to save your updated Preferences with the button at the bottom of the screen!
@@ -118,13 +124,13 @@ This allows you to add extra buttons to the main JMRI window
 that are connected to specific menu choices.
 <P>
 For example, to add a button that will open the Power Control when clicked, 
-click the "Add Action" button in this section of the advanced preferences.  
+click the "Add Action" button in this section of the Advanced Preferences.  
 From the list that's presented, select "Open Turnouts Table". Don't forget
-to save your updated preferences with the button at the bottom of the screen!
+to save your updated Preferences with the button at the bottom of the screen!
 From the list that's presented, select "Open Power Control". 
 Don't forget
-to save your updated preferences with the button at the bottom of the screen!
-The button will appear when you next start the program.
+to save your updated Preferences with the button at the bottom of the screen!
+The button(s) you set here will appear when you next start the program.
 
 <dt>Files
 <dd>
@@ -195,6 +201,8 @@ It will also allow you to configure a default responses and the question being d
 
 <a name="Roster">
 <h2>Roster</h2></a>
+<a href="images/PrefsRoster42.png">
+<img src="images/PrefsRoster42.png" height="177" width="419" align="right" alt="JMRI v4.2 Roster Prefs tab"></a>
 
 <dl>
 <dt>Programmer
@@ -208,12 +216,11 @@ have to select it each time you open a decoder.
 <p>
 This section also has a checkbox that lets you decide whether the DecoderPro
 programmer will display empty panes (tabs). 
-Some people like to see them, even though they're empty,
+Some people like to see them, even though they're empty;
 some people would prefer not to see them, 
 so they don't keep trying to look at them.  
 We provide this preference so you can choose.
 
-<a id="roster">
 <dt>Roster
 <dd>
 Normally, the Roster is stored in a standard location
@@ -238,7 +245,7 @@ existing entries, even if changed.
 <a name="Throttle">
 <h2>Throttle</h2></a>
 
-This preference pane lets you select whether the extended throttle
+This Preference pane tab lets you select whether the extended Throttle
 features are available, and which ones can be used.
 
 <a name="WiThrottle">
@@ -253,7 +260,7 @@ If the server does not receive any communication in the
 chosen time, the affected JMRI throttle will idle its train.
 
 <p>
-The chosen time is approximate, the response may be a few seconds
+The chosen time is approximate; the response may be a few seconds
 earlier or later.
 
 <dt>Network
@@ -287,11 +294,11 @@ new settings, its connection must be closed and reopened.
 
 JMRI Configuration Profiles make it easy to set up your 
 JMRI applications to work with different setups.  Each profile
-specifies one set of preferences.  You can then select which one to use.
+specifies one set of Preferences.  You can then select which one to use.
 
 <p>
 For more information, see the 
-<a href="../../html/setup/profiles.shtml">Configuration Profiles</a> 
+<a href="../../html/setup/profiles.shtml">Configuration Profiles</a> help
 page.
 
 <a name="JSONServer">
@@ -319,10 +326,10 @@ For more information, see the
 <a name="Warrants">
 <h2>Warrants and Speed Map</h2></a>
 
-This panel sets parameters used in computing routes for Warrants and for
+This tab sets parameters used in computing routes for Warrants and for
 controlling the events that warranted trains may encounter.
 <p>
-When an automatically running train encounters a signal that calls for a speed change,
+When an automatically running train encounters a Signal that calls for a speed change,
 or progress is blocked by occupancy ahead, the speed map table is used to make the 
 necessary speed change.  Other parameters control the way the speed change is ramped. 
 
@@ -352,7 +359,7 @@ occupancy ahead. The speed change is made with a series of incremental throttle 
 Step Time" is the duration of each step and "Ramp Step Throttle Increment" is the amount of 
 throttle setting change.
 <p> 
-For more information on warrant preferences, see  
+For more information on Warrant preferences, see  
 <a href="../jmri/jmrit/logix/Warrant.shtml#SpeedMap">About Warrants</a> and follow its links.
 
 <!--#include virtual="/Footer" -->

@@ -4,9 +4,9 @@
  <title>
       JMRI: SoundPro Main Window
  </title>
-    <meta content="Bob Jacobsen" name="Author">
-    <meta content="Matthew Harris" name="Author">
-    <meta name="keywords" content="JMRI help preferences">
+    <meta name="Author" content="Bob Jacobsen">
+    <meta name="Author" content="Matthew Harris">
+    <meta name="keywords" content="JMRI help SoundPro">
 
 <!-- Style -->
   <meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
