@@ -19,6 +19,32 @@ import org.slf4j.LoggerFactory;
  * Based on XNetReply
  *
  */
+
+/*
+ * A few notes on implementation
+ * 
+ * DCCppReply objects are (usually) created by parsing a String that is the result
+ * of an incoming reply message from the Base Station.
+ * The information is stored as a String, along with a Regex string that allows
+ * the individual data elements to be extracted when needed.
+ *
+ * Listeners and other higher level code should first check to make sure the
+ * DCCppReply is of the correct type by calling the relevant isMessageType() method.
+ * Then, call the various getThisDataElement() method to retrieve the data of 
+ * interest.
+ * 
+ * For example, to get the Speed from a Throttle Reply, first check that it
+ * /is/ a ThrottleReply by calling message.isThrottleReply(), and then
+ * get the speed by calling message.getSpeedInt() or getSpeedString().
+ *
+ * The reason for all of this misdirection is to make sure that the upper layer
+ * JMRI code is isolated/insulated from any changes in the actual Base Station
+ * message format.  For example, there is no need for the listener code to know
+ * that the speed is the second number after the "T" in the reply (nor that a
+ * Throttle reply starts with a "T"). 
+ *
+ */
+
 public class DCCppReply extends jmri.jmrix.AbstractMRReply {
     
     private ArrayList<Integer> valueList = new ArrayList<>();

@@ -19,7 +19,6 @@ public class RouteTableActionTest extends TestCase {
 
     public void testCreate() {
         new RouteTableAction();
-        jmri.InstanceManager.store(jmri.managers.DefaultUserMessagePreferences.getInstance(), jmri.UserPreferencesManager.class);
 //    }
 //  test order isn't guaranteed!
 //    public void testInvoke() {
@@ -52,6 +51,8 @@ public class RouteTableActionTest extends TestCase {
     // The minimal setup for log4J
     protected void setUp() {
         apps.tests.Log4JFixture.setUp();
+        jmri.util.JUnitUtil.resetInstanceManager();
+        jmri.util.JUnitUtil.initDefaultUserMessagePreferences();
     }
 
     protected void tearDown() {

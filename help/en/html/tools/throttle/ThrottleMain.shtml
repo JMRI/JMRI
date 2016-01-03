@@ -54,33 +54,8 @@ ability to control light and sound functions.</p>
 
 <hr>
 
-<h3>How to use this guide</h3>
+<p><a href="ThrottleChapter1.shtml">Throttles Help for JMRI v 1.x/2.x</a>
 
-<p>A list of Help sections will always be available in
-the left column from any page in this guide. There is also a couple
-of navigation buttons at the bottom of each page. These will take you to the
-next or previous chapters; or to the main Table of Contents page.</p>
-
-<p>In the list of links provided on the left, and located at the bottom of
-each Throttle Help page is a link named <a href="ThrottleTOC.shtml"
-title="Go to the Table Of Contents page"><i><strong>TOC</strong></i></a>.
-This link will take you to the Throttle Help Table of Contents.</p>
-
-<table border="0" width="100%" cellpadding="0" cellspacing="0">
-  <tbody>
-    <tr>
-      <td align="right">  </td>
-      <td><img src="images/spacer.gif" width="30" height="10"> </td>
-      <td align="center"><b><a href="ThrottleTOC.shtml"
-        title="Jump to the Table Of Contents page">TOC</a></b> </td>
-      <td><img src="images/spacer.gif" width="30" height="10"> </td>
-      <td align="left"><b><a href="ThrottleChapter1.shtml"
-        title="Advance to the next chapter"><img width="18" height="18"
-        src="images/RightArrow2.jpg"></a></b> </td>
-    </tr>
-  </tbody>
-</table>
-<br>
 <!--#include virtual="/Footer" -->
 
       </div><!-- closes #mainContent-->

@@ -29,7 +29,6 @@ public class LRouteTableActionTest extends jmri.util.SwingTestCase //TestCase //
     private LogixTableAction _logixTable;
 
     public void testCreate() {
-        jmri.InstanceManager.store(jmri.managers.DefaultUserMessagePreferences.getInstance(), jmri.UserPreferencesManager.class);
         _lRouteTable.actionPerformed(null);
         _lRouteTable.addPressed(null);
         _lRouteTable._userName.setText("TestLRoute");
@@ -111,6 +110,7 @@ public class LRouteTableActionTest extends jmri.util.SwingTestCase //TestCase //
         super.setUp();
 
         JUnitUtil.resetInstanceManager();
+        jmri.util.JUnitUtil.initDefaultUserMessagePreferences();
         JUnitUtil.initInternalTurnoutManager();
         JUnitUtil.initInternalLightManager();
         JUnitUtil.initInternalSensorManager();

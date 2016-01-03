@@ -237,7 +237,6 @@ public class SignalMastLogicTableAction extends AbstractTableAction {
                         }
 
                         public void run() {
-                            //Thread.yield();
                             editLogic(row, 0);
                         }
                     }
@@ -506,7 +505,7 @@ public class SignalMastLogicTableAction extends AbstractTableAction {
 
         if (retval == 0) {
             InstanceManager.signalMastLogicManagerInstance().addPropertyChangeListener(propertyGenerateListener);
-            //This process can take some time, so we do not want to hog the GUI thread
+            // This process can take some time, so we do split it off then return to Swing/AWT
             Runnable r = new Runnable() {
                 public void run() {
                     //While the global discovery is taking place we remove the listener as this can result in a race condition.
@@ -514,15 +513,35 @@ public class SignalMastLogicTableAction extends AbstractTableAction {
                     try {
                         InstanceManager.signalMastLogicManagerInstance().automaticallyDiscoverSignallingPairs();
                     } catch (jmri.JmriException e) {
-                        InstanceManager.signalMastLogicManagerInstance().removePropertyChangeListener(propertyGenerateListener);
-                        JOptionPane.showMessageDialog(null, e.toString());
-                        signalMastLogicFrame.setVisible(false);
+                        // Notify of problem
+                        try {
+                            javax.swing.SwingUtilities.invokeAndWait(()->{
+                                InstanceManager.signalMastLogicManagerInstance().removePropertyChangeListener(propertyGenerateListener);
+                                JOptionPane.showMessageDialog(null, e.toString());
+                                signalMastLogicFrame.setVisible(false);
+                            });
+                        } catch (java.lang.reflect.InvocationTargetException ex) {
+                            log.error("failed to notify of problem with automaticallyDiscoverSignallingPairs", ex );
+                        } catch (InterruptedException ex) {
+                            log.error("interrupted while notifying of problem with automaticallyDiscoverSignallingPairs", ex );
+                        }
                     }
-                    m.updateNameList();
-                    suppressUpdate = false;
-                    m.fireTableDataChanged();
-                    if (genSect.isSelected()) {
-                        ((jmri.managers.DefaultSignalMastLogicManager) InstanceManager.signalMastLogicManagerInstance()).generateSection();
+                    
+                    // process complete, update GUI
+                    try {
+                        javax.swing.SwingUtilities.invokeAndWait(()->{
+                            m.updateNameList();
+                            suppressUpdate = false;
+                            m.fireTableDataChanged();
+                            if (genSect.isSelected()) {
+                                ((jmri.managers.DefaultSignalMastLogicManager) 
+                                    InstanceManager.signalMastLogicManagerInstance()).generateSection();
+                            }
+                        });
+                    } catch (java.lang.reflect.InvocationTargetException ex) {
+                        log.error("failed to update at end of automaticallyDiscoverSignallingPairs", ex );
+                    } catch (InterruptedException ex) {
+                        log.error("interrupted during update at end of automaticallyDiscoverSignallingPairs", ex );
                     }
                 }
             };

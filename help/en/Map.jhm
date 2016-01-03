@@ -2304,6 +2304,8 @@
 
 <mapID target="html.hardware.maple.index_limitations" url="html/hardware/maple/index.shtml#limitations"/>
 
+<mapID target="html.tools.Sections" url="html/tools/Sections.shtml"/>
+
 <mapID target="package.jmri.jmrit.operations.Operations_GenerateCsvSwitchLists" url="package/jmri/jmrit/operations/Operations.shtml#GenerateCsvSwitchLists"/>
 
 <mapID target="manual.DecoderPro3.dp3_Main_Throttle_addressPanel_Top" url="manual/DecoderPro3/dp3_Main_Throttle_addressPanel.shtml#Top"/>

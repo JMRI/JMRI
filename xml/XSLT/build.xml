@@ -23,7 +23,7 @@
   Provides build services for JMRI web pages
   </description>
 
-  <property name="jmri.copyright.year" value="1997-2015"/>
+  <property name="jmri.copyright.year" value="1997-2016"/>
 
   <!-- set global properties for this build -->
   <property name="xml" value=".."/>
@@ -52,12 +52,14 @@
     <mkdir dir="${propertiesdir}"/>
   </target>
 
-  <target name="clean" depends="init"
+  <target name="clean" 
   			description="remove results">
-    <delete dir="${target}" />
-    <delete dir="${toDTD}"/>
-    <delete dir="${propertiesdir}"/>
-    <delete dir="xml"/>
+    <delete includeEmptyDirs="true" quiet="true" >
+       <fileset dir="${target}"/>
+       <fileset dir="${toDTD}"/>
+       <fileset dir="${propertiesdir}"/>
+       <fileset dir="xml"/>
+    </delete>
   </target>
 
   <target name="copyDTD" description="ensure local DTD file copies present where needed for processing">

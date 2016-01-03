@@ -4,8 +4,6 @@ package jmri.jmrit.withrottle;
  * @author Brett Hoffman Copyright (C) 2010
  * @version $Revision$
  */
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
 import java.io.File;
 import java.util.ResourceBundle;
 import javax.swing.BorderFactory;
@@ -19,7 +17,6 @@ import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JRadioButton;
 import javax.swing.JSpinner;
-import javax.swing.JTextField;
 import javax.swing.SpinnerNumberModel;
 import jmri.InstanceManager;
 import jmri.swing.PreferencesPanel;
@@ -33,8 +30,7 @@ public class WiThrottlePrefsPanel extends JPanel implements PreferencesPanel {
 
     JCheckBox momF2CB;
 
-    JCheckBox portCB;
-    JTextField port;
+    JSpinner port;
 
     JCheckBox powerCB;
     JCheckBox turnoutCB;
@@ -74,9 +70,7 @@ public class WiThrottlePrefsPanel extends JPanel implements PreferencesPanel {
 
         momF2CB.setSelected(localPrefs.isUseMomF2());
 
-        portCB.setSelected(localPrefs.isUseFixedPort());
-        updatePortField();
-
+        port.setValue(localPrefs.getPort());
         powerCB.setSelected(localPrefs.isAllowTrackPower());
         turnoutCB.setSelected(localPrefs.isAllowTurnout());
         routeCB.setSelected(localPrefs.isAllowRoute());
@@ -98,23 +92,20 @@ public class WiThrottlePrefsPanel extends JPanel implements PreferencesPanel {
 
         localPrefs.setUseMomF2(momF2CB.isSelected());
 
-        localPrefs.setUseFixedPort(portCB.isSelected());
-        if (portCB.isSelected()) {
-            int portNum;
-            try {
-                portNum = Integer.parseInt(port.getText());
-            } catch (NumberFormatException NFE) { //  Not a number
-                portNum = 0;
-            }
-            if ((portNum < 1024) || (portNum > 65535)) { //  Invalid port value
-                javax.swing.JOptionPane.showMessageDialog(this,
-                        Bundle.getMessage("WarningInvalidPort"),
-                        Bundle.getMessage("TitlePortWarningDialog"),
-                        JOptionPane.WARNING_MESSAGE);
-                didSet = false;
-            } else {
-                localPrefs.setPort(port.getText());
-            }
+        int portNum;
+        try {
+            portNum = (int) port.getValue();
+        } catch (NumberFormatException NFE) { //  Not a number
+            portNum = 0;
+        }
+        if ((portNum < 1) || (portNum > 65535)) { //  Invalid port value
+            javax.swing.JOptionPane.showMessageDialog(this,
+                    Bundle.getMessage("WarningInvalidPort"),
+                    Bundle.getMessage("TitlePortWarningDialog"),
+                    JOptionPane.WARNING_MESSAGE);
+            didSet = false;
+        } else {
+            localPrefs.setPort((int) port.getValue());
         }
 
         localPrefs.setAllowTrackPower(powerCB.isSelected());
@@ -178,19 +169,12 @@ public class WiThrottlePrefsPanel extends JPanel implements PreferencesPanel {
         SPPanel.setBorder(BorderFactory.createCompoundBorder(
                 BorderFactory.createTitledBorder(Bundle.getMessage("TitleNetworkPanel")),
                 BorderFactory.createEmptyBorder(5, 5, 5, 5)));
-        portCB = new JCheckBox(Bundle.getMessage("LabelUseFixedPortNumber"));
-        portCB.setToolTipText(Bundle.getMessage("ToolTipUseFixedPortNumber"));
-        portCB.addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent event) {
-                updatePortField();
-            }
-        });
-        port = new JTextField();
-        port.setText(Bundle.getMessage("LabelNotFixed"));
-        port.setPreferredSize(port.getPreferredSize());
-        SPPanel.add(portCB);
+        port = new JSpinner(new SpinnerNumberModel(localPrefs.getPort(), 1, 65535, 1));
+        port.setToolTipText(Bundle.getMessage("PortToolTip"));
+        JLabel label = new JLabel(Bundle.getMessage("PortLabel"));
+        label.setToolTipText(port.getToolTipText());
         SPPanel.add(port);
+        SPPanel.add(label);
         return SPPanel;
     }
 
@@ -231,16 +215,6 @@ public class WiThrottlePrefsPanel extends JPanel implements PreferencesPanel {
         panel.add(conPanel);
 
         return panel;
-    }
-
-    private void updatePortField() {
-        if (portCB.isSelected()) {
-            port.setText(localPrefs.getPort());
-
-        } else {
-            port.setText(Bundle.getMessage("LabelNotFixed"));
-        }
-
     }
 
     //private static Logger log = LoggerFactory.getLogger(WiThrottlePrefsPanel.class.getName());

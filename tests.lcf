@@ -71,6 +71,9 @@ log4j.appender.R.layout.ConversionPattern=%-5p - %m [%t] %c{2}.%M()%n
 log4j.category.org.eclipse.jetty=WARN
 log4j.category.org.eclipse.jetty.server.handler=WARN
 
+# Turning off logging for Java Xerces; emits WARNING messages during routine use
+log4j.category.org.jdom2.transform=SEVERE
+
 # Turning off logging for Java JMDNS; logs SEVERE and WARNING to j.u.l too routinely
 log4j.category.com.strangeberry=OFF
 log4j.category.javax.jmdns=OFF

@@ -4,6 +4,7 @@
 # Author: Paul Bender, Copyright 2009
 #
 
+import java
 import jmri
 
 # first, define the listener.  This one just prints some information

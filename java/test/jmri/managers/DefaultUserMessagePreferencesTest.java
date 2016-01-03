@@ -53,11 +53,13 @@ public class DefaultUserMessagePreferencesTest extends TestCase {
     // The minimal setup for log4J
     protected void setUp() {
         apps.tests.Log4JFixture.setUp();
+        jmri.util.JUnitUtil.resetInstanceManager();
         System.setProperty("org.jmri.Apps.configFilename", "jmriconfig2.xml");
     }
 
     protected void tearDown() {
         apps.tests.Log4JFixture.tearDown();
+        jmri.util.JUnitUtil.resetInstanceManager();
     }
 
     static Logger log = LoggerFactory.getLogger(DefaultUserMessagePreferencesTest.class.getName());
