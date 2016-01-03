@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <?xml-stylesheet href="/xml/XSLT/DecoderID.xsl" type="text/xsl"?>
 <decoderIndex-config xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="http://jmri.org/xml/schema/decoder.xsd">
-  <!--Written by JMRI version 4.3.1ish-201512310717-jake-Rac0591d on Wed Dec 30 23:17:32 PST 2015 $Id$-->
-  <decoderIndex version="680">
+  <!--Written by JMRI version 4.3.2ish-201601031120-Alain Le Marchand on Sun Jan 03 12:20:07 CET 2016 $Id$-->
+  <decoderIndex version="682">
     <mfgList nmraListDate="2015-03-06" updated="2015-03-25" lastadd="107,124,126,128,134">
       <manufacturer mfg="NMRA" mfgID="999" />
       <manufacturer mfg="A-Train Electronics" mfgID="137" />
@@ -12806,7 +12806,7 @@
           <functionlabel num="12" lockable="true">Coupler</functionlabel>
         </functionlabels>
       </family>
-      <family name="Tsunami Diesel Genesis OEM" mfg="SoundTraxx (Throttle-Up)" comment="These are OEM for Athearn Genesis Tsunami diesel decoders" file="SoundTraxx_Tsu_Diesel_Genesis.xml">
+      <family name="Tsunami Diesel Genesis OEM" mfg="SoundTraxx (Throttle-Up)" comment="These are OEM for Athearn Genesis and RTR Tsunami diesel decoders" file="SoundTraxx_Tsu_Diesel_Genesis.xml">
         <model model="DDA40X" numOuts="4" numFns="14" connector="other" productID="DD">
           <versionCV lowVersionID="64" />
           <output name="Air Horn" />
@@ -13146,6 +13146,50 @@
           <output name="Compressor" label="RPM -" />
           <output name="Brakes" />
           <output name="Coupler" />
+        </model>
+        <model model="SD40" numOuts="4" numFns="14" connector="other" productID="SD40" comment="Athearn RTR SD40">
+          <versionCV lowVersionID="82" />
+          <output name="3" label="Lighting|Effect" />
+          <output name="4" label="  FX6  " />
+          <output name="5" label="Airhorn| ">
+            <label xml:lang="it">Tromba| </label>
+          </output>
+          <output name="6" label="Bell| ">
+            <label xml:lang="it">Campana| </label>
+          </output>
+          <output name="7" label="Dynamic|Brakes">
+            <label xml:lang="it">Freni|Dinamici</label>
+          </output>
+          <output name="8" label="Short|Horn">
+            <label xml:lang="it">Breve|Tromba</label>
+          </output>
+          <output name="9" label="|" />
+          <!-- Not used for for this decoder -->
+          <output name="10" label="Fans|RPM +" />
+          <output name="11" label="Dimming| ">
+            <label xml:lang="it">Smorzam| </label>
+          </output>
+          <output name="12" label="Mute| ">
+            <label xml:lang="it">Silenzio| </label>
+          </output>
+          <output name="13" label="Compressor|RPM -" />
+          <output name="14" label="Brakes| " />
+          <output name="15" label="Coupler| ">
+            <label xml:lang="it">Accoppiatore| </label>
+          </output>
+          <functionlabels>
+            <functionlabel num="4" lockable="true" />
+            <!-- Dynamic Brake (not used)-->
+            <functionlabel num="5" lockable="true">Lighting Effect</functionlabel>
+            <functionlabel num="6" lockable="true" />
+            <!-- FX6 Light (not used)-->
+            <functionlabel num="7" lockable="true" />
+            <!-- Dimmer (not used)-->
+            <functionlabel num="9" lockable="true" />
+            <!-- Brake Squeal (not used)-->
+            <functionlabel num="10" lockable="true" />
+            <!-- Coupler (not used)-->
+          </functionlabels>
         </model>
         <model model="SD45-2" numOuts="4" numFns="14" connector="other" productID="F45">
           <versionCV lowVersionID="64" />
