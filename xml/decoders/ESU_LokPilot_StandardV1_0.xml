@@ -320,7 +320,7 @@
       <!-- Startup Delay -->
       <variable CV="128" default="0" tooltip="Unit is 0.06535 seconds" item="ESU V4 Advanced Starting Delay Slider 1">
         <decVal/>
-        <label>Prime Mover Startup Delay if Virtual Drive Sound Enabled</label>
+        <label>&lt;html&gt;Prime Mover Startup Delay&lt;br&gt;if Virtual Drive Sound Enabled&lt;/html&gt;</label>
       </variable>
       <!-- Indexed variables -->
       <constant item="PICV" default="31" comment="CV used for Primary Index"/>

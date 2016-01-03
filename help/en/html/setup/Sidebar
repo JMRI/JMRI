@@ -1,20 +1,44 @@
 <!-- Sidebar -->
-<!-- This is the common sidebar definition for html/apps pages -->
+<!-- This is the common sidebar definition for html/setup pages -->
 
 	  <hr class="hide">
 	  <div id="mBody">
 	  <div id="side"> <!-- Block of text on left side of page -->
 	    <div style="text-align: center">JMRI&reg; is...</div>
 	    <dl class="toc">
+
+		<dt><h3>Setup</h3></dt>
+		<dd>
+			<ul>
+			<li><a href="../../package/apps/TabbedPreferences.shtml">Preference Pane</a></li>
+			<li><a href="../setup/profiles.shtml">Configuration Profiles</a></li>
+			<li><a href="../setup/Errors.shtml">Error Codes</a></li>
+			<li><a href="../../package/apps/InstallTest/InstallTest.shtml">InstallTest</a></li>
+			</ul>
+    </dd>
+
+		<dt><h3 style="padding-left: 1em;">Installation</h3></dt>
+		<dd> 
+		    <ul>
+        <li><a href="http://jmri.sourceforge.net/install/WindowsNew.shtml">Windows</a>
+        <li><a href="http://jmri.sourceforge.net/install/MacOSX.shtml">Mac OS X</a>
+        <li><a href="http://jmri.sourceforge.net/install/Linux.shtml">Linux</a>
+	        <ul>
+	        <li><a href="http://jmri.sourceforge.net/install/Raspbian.shtml">RasPi</a>
+	        </ul>
+        <li><a href="http://jmri.sourceforge.net/install/Debug.shtml">Debugging an installation</a>
+		    </ul>
+		</dd>
+
 		<dt><h3>Applications</h3></dt>
 		<dd>
 			<ul>
-			<li><a href="DecoderPro/index.shtml">DecoderPro&reg;</a></li>
-			<li><a href="PanelPro/PanelPro.shtml">PanelPro&trade;</a></li>
-			<li><a href="DispatcherPro/index.shtml">DispatcherPro&trade;</a></li>
+			<li><a href="../apps/DecoderPro/index.shtml">DecoderPro&reg;</a></li>
+			<li><a href="../apps/PanelPro/PanelPro.shtml">PanelPro&trade;</a></li>
+			<li><a href="../apps/DispatcherPro/index.shtml">DispatcherPro&trade;</a></li>
 	    <li><a href="../../package/jmri/jmrit/operations/Operations.shtml">OperationsPro&trade;</a></li>
-			<li><a href="SoundPro/SoundPro.shtml">SoundPro</a></li>
-			<li><a href="SignalPro/index.shtml">SignalPro</a></li>
+			<li><a href="../apps/SoundPro/SoundPro.shtml">SoundPro</a></li>
+			<li><a href="../apps/SignalPro/index.shtml">SignalPro</a></li>
 			</ul>
     </dd>
 
@@ -32,7 +56,6 @@
 			<li><dfn><a href="../tools/Memories.shtml">Memory Variables</a></dfn>
 	    <li><dfn><a href="../tools/Routes.shtml">Routes</a></dfn>
 	    <li><dfn><a href="../tools/LRoutes.shtml">LRoutes</a></dfn>
-      <li><dfn><a href="../tools/Sections.shtml">Sections</a></dfn>
 	    <li><dfn><a href="../tools/Logix.shtml">Logix</a></dfn>
 	    <li><dfn><a href="../tools/fastclock/index.shtml">Fast Clocks</a></dfn>
 	    <li><dfn><a href="../tools/speedometer/index.shtml">Speedometer</a></dfn>
@@ -102,16 +125,6 @@
 		    </ul>
 		</dd>
 
-		<div style="clear: both"></div>
-		<dt><h3 style="padding-left: 1em;">Supported Computers</h3></dt>
-		<dd> 
-		    <ul>
-        <li><a href="http://jmri.sourceforge.net/install/WindowsNew.shtml">Windows</a>
-        <li><a href="http://jmri.sourceforge.net/install/MacOSX.shtml">Mac OS X</a>
-        <li><a href="http://jmri.sourceforge.net/install/Linux.shtml">Linux</a>
-        <li><a href="http://jmri.sourceforge.net/install/Debug.shtml">Debugging an installation</a>
-		    </ul>
-		</dd>
 </dl>
 
 <a href="/donations.shtml">
