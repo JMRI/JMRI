@@ -54,8 +54,8 @@
       <indication>Stop</indication>
       <description>Red or Red + Yellow</description>
       <comment></comment>
-      <speed>0</speed>
-      <speed2>0</speed2>
+      <speed>Stop</speed>
+      <speed2>Stop</speed2>
     </aspect>
     
     <aspect>
@@ -63,8 +63,8 @@
       <indication>Proceed at Caution</indication>
       <description>Dark signal.</description>
       <comment></comment>
-      <speed>0</speed>
-      <speed2>0</speed2>
+      <speed>Stop</speed>
+      <speed2>Stop</speed2>
     </aspect>
 
   </aspects>
