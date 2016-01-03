@@ -46,7 +46,7 @@ Clicking on each item will then populate the right hand side with the various op
 <a href="#Warrants">Warrants</a><br>
 <p>Perhaps the most important control is at the bottom of this section:
 The "Save" button!  
-<p><img src="images/PrefsRestart.png" height="127" width="440" align="right">
+<p><img src="images/PrefsRestart.png" height="112" width="390" align="right">
 Be sure to click "Save" when leaving this window. Your changes to the Preferences
 don't take effect until the program is stopped and restarted, so the
 program will prompt you to do that after saving the Preferences.
