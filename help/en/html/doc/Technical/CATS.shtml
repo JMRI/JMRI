@@ -35,7 +35,7 @@
 The Crandic Automated Traffic System (CATS) is a JMRI-based application by 
 Rodney Black for controlling and operating a model railroad. 
 There's more information on the 
-<a href="http://home.comcast.net/~kb0oys/">CATS web site</a>.
+<a href="http://cats4ctc.org/">CATS web site</a>.
 
 <p>
 JMRI is a library, and CATS is a large, separately maintained application
@@ -54,9 +54,9 @@ CATS development does not use a public code repository, and the code is not gene
 available while it's being developed.  
 Rodney Black periodoically mades releases
 available, including source code, as zip-file archives at the
-<a href="http://home.comcast.net/%7Ekb0oys/">CATS web site</a>,
+<a href="http://cats4ctc.org/">CATS web site</a>,
 see the download links at the bottom of the 
-<a href="http://home.comcast.net/%7Ekb0oys/license.htm">CATS license page</a>.
+<a href="http://cats4ctc.org/license.htm">CATS license page</a>.
 
 <p>
 As of early 2014, the current CATS distribution (2037) works
@@ -105,9 +105,9 @@ CATS source, so will only give you warnings from those classes.
 <h3>From CATS from a local JMRI build</h3>
 
 Download the most recent CATS release from the bottom of the 
-<a href="http://home.comcast.net/%7Ekb0oys/license.htm">CATS license page</a>.
+<a href="http://cats4ctc.org/license.htm">CATS license page</a>.
 As of this writing (2.2014), that was the 
-&quot;<a href="http://home.comcast.net/%7Ekb0oys/release2037.zip">Executables compatible with JMRI 3.3.1</a>&quot; 
+&quot;<a href="http://cats4ctc.org/release2037.zip">Executables compatible with JMRI 3.3.1</a>&quot; 
 link which gives version 2037 of CATS.
 
 <p>
