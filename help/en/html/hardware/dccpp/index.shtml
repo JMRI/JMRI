@@ -21,7 +21,7 @@
     <div id="mainContent">
 
 <h1>Hardware Support: DCC++</h1>
-<ul><!-- TOC -->
+<ul class="snav"><!-- TOC -->
 	<li><a href="#hardware">Hardware</a></li>
 	<li><a href="#Limitations">Limitations</a></li>
 	<li><a href="#connecting">Connecting</a></li>
@@ -32,6 +32,8 @@
 <h2 name="overview" id="overview">Overview</h2>
 <p>
 DCC++ is an Open Source Arduino-based <a href="#documentation">Do-it-Yourself</a> DCC Command Station.
+
+<p><strong><em>NOTE:</em> DCC++ Support only works in JMRI 4.1.5 (for now).  Do not use 4.1.6 or 4.2.0 with DCC++</strong></p>
 
 <a name="hardware"></a><h2>Supported Hardware</h2>
 

@@ -10,7 +10,7 @@
         content="sensor model railroad JMRI decoderpro panelpro">
 
 <!-- Style -->
-  <META http-equiv=Content-Type content="text/html; charset=iso-8859-1">
+  <meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
   <link rel="stylesheet" type="text/css" href="/css/default.css" media="screen">
   <link rel="stylesheet" type="text/css" href="/css/print.css" media="print">
   <link rel="icon" href="/images/jmri.ico" type="image/png">
@@ -76,7 +76,7 @@ check to see if the sensor state is in the same state as it was before it restar
 the process. If not the process is re-started again until the state is the same
 before and after the timer is run.
 
-<h3>Saving Sensor configuration to disk</h3>
+<h3>Saving Sensor to disk</h3>
 
 <p>Sensors are saved in your layout configuration file, along with Turnouts, 
 Lights, Signal Heads, etc. To store this information on disk, use <b>Store 
@@ -86,44 +86,44 @@ in the <b>Panel</b> menu.
 
 <a name="add"><h3>Adding a new Sensor</h3></a>
 <p>To create a new Sensor, follow this procedure:</p>
-<ol>
+	<ol>
 	<li><p>Click the <b>Tools</b> -&gt; <b>Tables</b> -&gt; 
-<a href="../../package/jmri/jmrit/beantable/SensorTable.shtml"><b>Sensors</b></a> menu to bring up
-the Sensors Table pane, and click the 
-<a href="../../package/jmri/jmrit/beantable/SensorAddEdit.shtml"><b>Add...</b></a>
-button at the bottom of the 
-pane to bring up the Add/Edit Sensor window.</p>
+	<a href="../../package/jmri/jmrit/beantable/SensorTable.shtml"><b>Sensors</b></a> menu to bring up
+	the Sensors Table pane, and click the 
+	<a href="../../package/jmri/jmrit/beantable/SensorAddEdit.shtml"><b>Add...</b></a>
+	button at the bottom of the 
+	pane to bring up the Add/Edit Sensor window.</p>
 	<li><p>From the <b>System</b> drop down list select the system to which the 
-    Sensor is connected. In the <b>Hardware Address</b> field enter the
-    <a href="../doc/Technical/Names.shtml#systeminfo">hardware address of the input connection</a> 
-    being referenced.<br>The format of the Hardware Address can often be made in 
-    the format of "board:channel" or "Cab Address:Pin"; you will need to confirm 
-    the specifics of each system's <a href="../doc/Technical/Names.shtml#systeminfo">Naming Rules</a>.
-    
+	Sensor is connected. In the <b>Hardware Address</b> field enter the
+	<a href="../doc/Technical/Names.shtml#systeminfo">hardware address of the input connection</a> 
+	being referenced.<br>The format of the Hardware Address can often be made in 
+	the format of "board:channel" or "Cab Address:Pin"; you will need to confirm 
+	the specifics of each system's <a href="../doc/Technical/Names.shtml#systeminfo">Naming Rules</a>.
+	
 	</li>
 	<li><p>Enter a User Name for the Sensor. Any string of characters that is different 
-from the User Name of other Sensors will be accepted, but it's 
-wise to use a string that describes the intended use of the Sensor.
-You can leave this field blank if you'd like.</p>
+	from the User Name of other Sensors will be accepted, but it's 
+	wise to use a string that describes the intended use of the Sensor.
+	You can leave this field blank if you'd like.</p>
 	</li>
-    
-    <li><p>If you wish to add a number of Sensors at once, click on the 
-    <b>Add a Range</b> checkbox and then in the <b>Number to Add</b> field enter
-    the number of Sensors that you wish to add. If you have entered a User
-    Name, then this will be appended with a number to ensure that each User Name
-    is unique. If a hardware address already exists in the Sensors range that is being
-    added, then JMRI will skip that address and carry on.
-    </li>
-
+	
+	<li><p>If you wish to add a number of Sensors at once, click on the 
+	<b>Add a Range</b> checkbox and then in the <b>Number to Add</b> field enter
+	the number of Sensors that you wish to add. If you have entered a User
+	Name, then this will be appended with a number to ensure that each User Name
+	is unique. If a hardware address already exists in the Sensors range that is being
+	added, then JMRI will skip that address and carry on.
+	</li>
+	
 	<li><p>Click the <b>OK</b> button at the bottom of the pane.  
-If everything is fine, a message stating "New Sensor added..." will be 
-displayed in the notes area. If there is trouble with anything, an error or 
-warning message will be displayed in the notes area; you should then
-correct the error and click <b>OK</b> again.</p>
-    </li>
-    <LI><p>Back in the main Sensors Table, you can then see the current
-    status of the Sensor.
-</ol>
+	If everything is fine, a message stating "New Sensor added..." will be 
+	displayed in the notes area. If there is trouble with anything, an error or 
+	warning message will be displayed in the notes area; you should then
+	correct the error and click <b>OK</b> again.</p>
+	</li>
+	<li><p>Back in the main Sensors Table, you can then see the current
+	status of the Sensor.
+	</ol>
 
 <!--#include virtual="/Footer" -->
 
@@ -132,5 +132,4 @@ correct the error and click <b>OK</b> again.</p>
   </div> <!-- closes #container -->
 </body>
 </html>
-
 

@@ -55,6 +55,8 @@ public class DCCppPacketizer extends DCCppTrafficController {
      *
      * @param m Message to send;
      */
+    //TODO: Can this method be folded back up into the parent 
+    // DCCppTrafficController class?
     public void sendDCCppMessage(DCCppMessage m, DCCppListener reply) {
         if (m.length() != 0) {
             sendMessage(m, reply);
@@ -68,6 +70,8 @@ public class DCCppPacketizer extends DCCppTrafficController {
      * @param msg The output byte stream
      * @return next location in the stream to fill
      */
+    //TODO: Can this method be folded back up into the parent 
+    // DCCppTrafficController class?
     protected int addHeaderToOutput(byte[] msg, jmri.jmrix.AbstractMRMessage m) {
         if (log.isDebugEnabled()) {
             log.debug("Appending '<' to start of outgoing message. msg length = {}", msg.length);
@@ -89,6 +93,8 @@ public class DCCppPacketizer extends DCCppTrafficController {
      * @param msg    The output byte stream
      * @param offset the first byte not yet used
      */
+    //TODO: Can this method be folded back up into the parent 
+    // DCCppTrafficController class?
     @Override
     protected void addTrailerToOutput(byte[] msg, int offset, jmri.jmrix.AbstractMRMessage m) {
 	log.debug("aTTO offset = {} message = {} msg length = {}", offset, m.toString(), msg.length);
@@ -128,6 +134,9 @@ public class DCCppPacketizer extends DCCppTrafficController {
      * @param istream character source.
      * @throws java.io.IOException when presented by the input source.
      */
+    
+    //TODO: Can this method be folded back up into the parent 
+    // DCCppTrafficController class?
     @Override
     protected void loadChars(jmri.jmrix.AbstractMRReply msg, java.io.DataInputStream istream) throws java.io.IOException {
         int i;

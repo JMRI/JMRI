@@ -2,10 +2,10 @@
 <html lang="en">
 <head>
   <title>
- 	JMRI: Reporter Documentation
+ 	JMRI: Reporters Documentation
   </title>
   
-  <meta content="Bob Jacobsen" name="Author">
+  <meta name="Author" content="Bob Jacobsen">
   <meta name="keywords"
         content="sensor model railroad JMRI decoderpro panelpro">
 
@@ -24,13 +24,13 @@
 <!--#include virtual="/Header" -->
 <!--#include virtual="Sidebar" -->
 
-      <div id="mainContent">
-      <!-- Page Body -->
+ <div id="mainContent">
+  <!-- Page Body -->
         <h1>
-		JMRI: Reporter Documentation
+		JMRI: Reporters Documentation
         </h1>
 
-<h2>Reporter</h2>
+<h2>What is a Reporter?</h2>
 
 <p>
 A Reporter is JMRI's way of representing information reported back from the layout.
@@ -51,7 +51,9 @@ like "1234 enter" and "1234 exits".  There is also a LocoNet Reporter
 implementation for displaying messages from 
 <a href="http://www.rjftrains.com/intellibox/uhlenbrock.htm">Lissy detectors</a>.
 
-<h2>The Reporters Table</h2>
+<h2>How to setup Reporters</h2>
+
+<h3>The Reporters Table</h3>
 The 
 <a href="../../package/jmri/jmrit/beantable/ReporterTable.shtml">Reporters Table</a>
 provides easy access to the contents of all Reporters that JMRI knows about.
@@ -60,17 +62,20 @@ There's also an
 for creating your own internal Reporters; JMRI automatically creates
 Reporter objects for devices on the layout.
 
-<h2>Displaying Reporter Values on Panels</h2>
-A Reporter's value can be displayed on a panel via an icon.
+<h3>Displaying Reporter Values on Panels</h3>
+<a href="images/AddReportertoPanel.png">
+<img src="images/AddReportertoPanel.png" height="146" width="166" align="right">
+</a>
+<p>A Reporter's value can be displayed on a Panel via an icon.
 To do this:
 	<ul>
-	<li>On the Panel Editor window for your panel, find the "Add Reporter" 
+	<li>On the Panel Editor window for your Panel, find the "Add Reporter" 
 	button.
-	<li>In the text box next to that button, type the user name or system name of the
+	<li>In the text box next to that button, type the user name or System Name of the
 	desired Reporter.
-	<li>Click the button.  The Reporter icon will be placed on the panel.
+	<li>Click the "Add to Panel" button. The Reporter icon will be placed on your Panel.
 	If it's not visible, that might be because the value is currently blank;
-	use the Reporter Table to change the value to something that will be visible.
+	use the Reporters Table to change the value to something that will be visible.
 	<li>You can drag the icon to where you want it in the usual way.
 	<li>The pop-up menu on the icon will let you change the formatting.
 	</ul>
@@ -82,5 +87,3 @@ To do this:
   </div> <!-- closes #container -->
 </body>
 </html>
-
-

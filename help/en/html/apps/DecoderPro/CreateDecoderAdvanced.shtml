@@ -2,7 +2,6 @@
 <html lang="en">
 <head>
 <!-- Copyright Bob Jacobsen 2008 -->
-<!-- $Id$ -->
 <title>JMRI: DecoderPro User Guide - Advanced Decoder Definitions</title>
 
 <!-- Style -->
@@ -21,7 +20,8 @@
 <div id="mainContent">
 
 
-<h1>DecoderPro User Guide - Advanced Decoder Definitions</h1>
+<h1>JMRI: DecoderPro User Guide</h1>
+<h2>Advanced Decoder Definitions</h2>
 
 <p>This page provides information on advanced features in
 the decoder definition
@@ -41,7 +41,7 @@ being replaced by &amp;quot;.</p>
 <p>
 For example:
 </p>
-<pre>
+<pre style="white-space: pre-wrap;">
    &lt;label label="&amp;lt;html&amp;gt;&amp;lt;strong&amp;gt;JMRI 3.7.2 or later is required to use this definition.&amp;lt;/strong&amp;gt;&amp;lt;/html&amp;gt;"/&gt;
 </pre>
 After the XML is read, the contents of that label will be displayed from the text in the "label" attribute, which is:
@@ -172,25 +172,25 @@ file remains in JMRI) until they decide to move forward to a new one.
 The model element "show" attribute helps ensure that new users
 starts with the new definition.
 Its possible values are:
-<ul>
-<li>"yes" (default) - the traditional behavior, always show this model and the family it contains
-<li>"no" - never show this model, even if it matches a possible selection.
-            Used for legacy (old) definitions that have been replaced with newer ones.
-<li>"maybe" - only show if it matches a (possible) automatic identification.
-</ul>
+	<ul>
+	<li>"yes" (default) - the traditional behavior, always show this model and the family it contains
+	<li>"no" - never show this model, even if it matches a possible selection.
+	            Used for legacy (old) definitions that have been replaced with newer ones.
+	<li>"maybe" - only show if it matches a (possible) automatic identification.
+	</ul>
 
 To create a completely new definition for an existing model:
-<ol>
-<li>Decide where you want the new model defined.  It has to have either a new model 
-name, a new family name (new file) or both.
-<li>Create your definition.
-<li>Add "replacementModel" and "replacementFamily" attributes to the old definition.
-<li>Generally, set the "show" attribute in the old definition to "no".  The only exception to this
-is when some users will want to select the old definition still for a new decoder, perhaps
-because automatic identification can tell the uses of the old definition from the new one.
-(E.g. you're splitting the old definition into two parts because a new locomotive version
-exists)
-</ol>
+	<ol>
+	<li>Decide where you want the new model defined.  It has to have either a new model 
+	name, a new family name (new file) or both.
+	<li>Create your definition.
+	<li>Add "replacementModel" and "replacementFamily" attributes to the old definition.
+	<li>Generally, set the "show" attribute in the old definition to "no".  The only exception to this
+	is when some users will want to select the old definition still for a new decoder, perhaps
+	because automatic identification can tell the uses of the old definition from the new one.
+	(E.g. you're splitting the old definition into two parts because a new locomotive version
+	exists)
+	</ol>
 
 <h3>Programming Capabilities</h3>
 
@@ -205,37 +205,38 @@ decoder manufacturers have built in mechanisms to bypass this.  For example,
 some ESU decoders can use writes to various CVs to access high-address CVs.
 To tell DecoderPro that a decoder can do this, use an element like:
 <code><pre>
-        &lt;capability&gt;
-            &lt;name&gt;High Access via Double Index&lt;/name&gt;
-            &lt;parameter name="Max Regular CV address"&gt;256&lt;/parameter&gt;
-            &lt;parameter name="High Address CV"&gt;96&lt;/parameter&gt;
-            &lt;parameter name="Low Address CV"&gt;97&lt;/parameter&gt;
-            &lt;parameter name="Access Register CV"&gt;99&lt;/parameter&gt;
-            &lt;parameter name="Modulo"&gt;100&lt;/parameter&gt;
-        &lt;/capability&gt;
+    &lt;capability&gt;
+        &lt;name&gt;High Access via Double Index&lt;/name&gt;
+        &lt;parameter name="Max Regular CV address"&gt;256&lt;/parameter&gt;
+        &lt;parameter name="High Address CV"&gt;96&lt;/parameter&gt;
+        &lt;parameter name="Low Address CV"&gt;97&lt;/parameter&gt;
+        &lt;parameter name="Access Register CV"&gt;99&lt;/parameter&gt;
+        &lt;parameter name="Modulo"&gt;100&lt;/parameter&gt;
+    &lt;/capability&gt;
 </pre></code>
 <p>
-The parameters must appear in the order shown. They mean:<ul>
-<li>"Max Regular CV address" - CV addresses equal or below this don't 
-    use this mechanism. (The mechanism won't be used if the command
-    station can directly read/write the CV being requested, but 
-    even if it can't, this mechanism won't be used below this value)
-<li>"High Address CV" - The high part (see Modulo) of the CV address
-    is written here at the start of the operation
-<li>"Low Address CV" - The low part (see Modulo) of the CV address is
-    written here as the 2nd part of the operation.
-<li>"Access Register CV" - after the address values are set, this is the
-    CV that's read or written to read or set the desired real CV.
-<li>"Modulo" - value used to split the real CV address between the high and low address
-    CVs.
-</ul>
+The parameters must appear in the order shown. They mean:
+	<ul>
+	<li>"Max Regular CV address" - CV addresses equal or below this don't 
+	    use this mechanism. (The mechanism won't be used if the command
+	    station can directly read/write the CV being requested, but 
+	    even if it can't, this mechanism won't be used below this value)
+	<li>"High Address CV" - The high part (see Modulo) of the CV address
+	    is written here at the start of the operation
+	<li>"Low Address CV" - The low part (see Modulo) of the CV address is
+	    written here as the 2nd part of the operation.
+	<li>"Access Register CV" - after the address values are set, this is the
+	    CV that's read or written to read or set the desired real CV.
+	<li>"Modulo" - value used to split the real CV address between the high and low address
+	    CVs.
+	</ul>
 <p>
 For example, to write 21 to CV 614 with the values shown, DecoderPro will:
-<ul>
-<li>Write 6 =(614/100) to CV 96 for the high address part
-<li>Write 14 = (614 mod 100) to CV 97 for the low address part
-<li>Write 21 to CV 99 to do the actual CV write
-</ul>
+	<ul>
+	<li>Write 6 =(614/100) to CV 96 for the high address part
+	<li>Write 14 = (614 mod 100) to CV 97 for the low address part
+	<li>Write 21 to CV 99 to do the actual CV write
+	</ul>
 <p>
 For an example of where to position this capability element in the file, etc., see the 
 <a href="http://sourceforge.net/p/jmri/code/HEAD/tree/trunk/jmri/xml/decoders/ESU_LokSoundV4_0.xml" target="_blank">
@@ -245,10 +246,10 @@ For an example of where to position this capability element in the file, etc., s
 <a name="zimocapability" id="zimocapability"></a>
 Another approach, used by e.g. Zimo, is to provide a way to page the access.
 For example, to write 21 to CV614 with one of these, you need to:
-<ul>
-<li>Write 60 =(614/100)*10 to CV 7 for the high address part
-<li>Write 21 to CV 14 (614 mod 100) to do the actual CV write
-</ul>
+	<ul>
+	<li>Write 60 =(614/100)*10 to CV 7 for the high address part
+	<li>Write 21 to CV 14 (614 mod 100) to do the actual CV write
+	</ul>
 This capability element will do that:
 <code><pre>
         &lt;capability&gt;
@@ -262,32 +263,33 @@ This capability element will do that:
 Note that it has a different "name" value. That's what selects the 
 different algorithm needed here.
 <p>
-The parameters must appear in the order shown. They mean:<ul>
-<li>"Max Regular CV address" - CV addresses equal or below this don't 
-    use this mechanism. (The mechanism won't be used if the command
-    station can directly read/write the CV being requested, but 
-    even if it can't, this mechanism won't be used below this value)
-<li>"High Address CV" - The high part (see Modulo) of the CV address
-    is written here at the start of the operation
-<li>"High Address Multiplier" - This multiplies the high part of the CV
-    address before it's stored to the High Address CV.  For example, 
-    putting a 10 here will store the high address part in the "10's digit" of
-    the High Address CV.
-<li>"Modulo" - value used to split the real CV address between the high and low address
-    CVs.
-</ul>
+The parameters must appear in the order shown. They mean:
+	<ul>
+	<li>"Max Regular CV address" - CV addresses equal or below this don't 
+	    use this mechanism. (The mechanism won't be used if the command
+	    station can directly read/write the CV being requested, but 
+	    even if it can't, this mechanism won't be used below this value)
+	<li>"High Address CV" - The high part (see Modulo) of the CV address
+	    is written here at the start of the operation
+	<li>"High Address Multiplier" - This multiplies the high part of the CV
+	    address before it's stored to the High Address CV.  For example, 
+	    putting a 10 here will store the high address part in the "10's digit" of
+	    the High Address CV.
+	<li>"Modulo" - value used to split the real CV address between the high and low address
+	    CVs.
+	</ul>
 
 <p>
 <a id="zimobis"></a>
 Another approach used by e.g. Zimo uses a page register that
 has to be reset afterwards. 
 For example, to write 21 to CV614 with one of these, you need to:
-<ul>
-<li>Write 260 =(614/100)*10+200 to CV 7 for the high address part.
-    The "200" is an indicator to use this mode.
-<li>Write 21 to CV 14 (614 mod 100) to do the actual CV write
-<li>Write 0 back to CV7 to reset the indexing.
-</ul>
+	<ul>
+	<li>Write 260 =(614/100)*10+200 to CV 7 for the high address part.
+	    The "200" is an indicator to use this mode.
+	<li>Write 21 to CV 14 (614 mod 100) to do the actual CV write
+	<li>Write 0 back to CV7 to reset the indexing.
+	</ul>
 This capability element will do that:
 <code><pre>
         &lt;capability&gt;
@@ -300,22 +302,23 @@ This capability element will do that:
         &lt;/capability&gt;
 </pre></code>
 <p>
-The parameters must appear in the order shown. They mean:<ul>
-<li>"Max Regular CV address" - CV addresses equal or below this don't 
-    use this mechanism. (The mechanism won't be used if the command
-    station can directly read/write the CV being requested, but 
-    even if it can't, this mechanism won't be used below this value)
-<li>"High Address CV" - The high part (see Modulo) of the CV address
-    is written here at the start of the operation
-<li>"High Address Multiplier" - This multiplies the high part of the CV
-    address before it's stored to the High Address CV.  For example, 
-    putting a 10 here will store the high address part in the "10's digit" of
-    the High Address CV.
-<li>"Modulo" - value used to split the real CV address between the high and low address
-    CVs.
-<li>"Indicator" - value added to the value being stored to High Address CV 
-    to tell the decoder to use this mode.
-</ul>
+The parameters must appear in the order shown. They mean:
+	<ul>
+	<li>"Max Regular CV address" - CV addresses equal or below this don't 
+	    use this mechanism. (The mechanism won't be used if the command
+	    station can directly read/write the CV being requested, but 
+	    even if it can't, this mechanism won't be used below this value)
+	<li>"High Address CV" - The high part (see Modulo) of the CV address
+	    is written here at the start of the operation
+	<li>"High Address Multiplier" - This multiplies the high part of the CV
+	    address before it's stored to the High Address CV.  For example, 
+	    putting a 10 here will store the high address part in the "10's digit" of
+	    the High Address CV.
+	<li>"Modulo" - value used to split the real CV address between the high and low address
+	    CVs.
+	<li>"Indicator" - value added to the value being stored to High Address CV 
+	    to tell the decoder to use this mode.
+	</ul>
 
 <a id="accessoryops"></a>
 <h4>Accessory Decoder Ops Mode</h4>
@@ -364,12 +367,12 @@ JMRI accommodates them via a special capability element:
 </pre></code>
 
 This provides two custom CV formats:
-<ul>
-<li> T2CV.11.12 Writes 11 to the first index CV (201), 12 to the 2nd index CV (202), 
-      then does write/read/confirm operations on CV 203 and 204
-<li> T3CV.11.12.13 Writes 11 to the first index CV (201), the data to the 2nd index CV (202), 
-      then writes 12 to CV203 and 13 to CV204.
-</ul>
+	<ul>
+	<li> T2CV.11.12 Writes 11 to the first index CV (201), 12 to the 2nd index CV (202), 
+	      then does write/read/confirm operations on CV 203 and 204
+	<li> T3CV.11.12.13 Writes 11 to the first index CV (201), the data to the 2nd index CV (202), 
+	      then writes 12 to CV203 and 13 to CV204.
+	</ul>
 For examples of how to use these, see the TCS WOW decoder definition.
 
 <h4>Split Variables - "long" addresses over 2 CVs</h4>
@@ -389,10 +392,10 @@ For examples of how to use these, see the TCS WOW decoder definition.
 <p>The first declared CV is the LSB (Least Significant Byte) whereas the "high CV" is the MSB (Most Significant Byte).</p>
 
 <p>splitVal actually has two parameters, a "Factor" and an "Offset":</p>
-<ul>
-    <li>Value to put in CVs = ((value in text field) - Offset)/Factor</li>
-    <li>Value to put in text field = ((value in CVs) * Factor) + Offset</li>
-</ul>
+	<ul>
+	<li>Value to put in CVs = ((value in text field) - Offset)/Factor</li>
+	<li>Value to put in text field = ((value in CVs) * Factor) + Offset</li>
+	</ul>
 <code><pre>
     &lt;splitVal highCV="9" factor="4" offset="-3"/&gt;
 </pre></code>
@@ -422,12 +425,12 @@ decoder type using "include" and "exclude" attributes on &lt;variables&gt; and &
 <p>
 A variable definition will not be expanded and used:
 </p>
-<ul>
-<li>If an exclude attribute is present, neither the
-decoders product ID, model name, nor family name is found in the exclude list.
-<li>If an include attribute is present, at least one of the
-decoders product ID, model name, nor family name is found in the include list.
-</ul>
+	<ul>
+	<li>If an exclude attribute is present, neither the
+	decoders product ID, model name, nor family name is found in the exclude list.
+	<li>If an include attribute is present, at least one of the
+	decoders product ID, model name, nor family name is found in the include list.
+	</ul>
 Both of these conditions must be true, and it's possible to use 
 both include and exclude on the same element, but it's more usual to just 
 use one.
@@ -462,12 +465,12 @@ decoder type using "include" and "exclude" attributes on &lt;pane&gt; and &lt;gr
 <p>
 A pane will not be created:
 </p>
-<ul>
-<li>If an exclude attribute is present, neither the
-decoders product ID, model name, nor family name is found in the exclude list.
-<li>If an include attribute is present, at least one of the
-decoders product ID, model name, nor family name is found in the include list.
-</ul>
+	<ul>
+	<li>If an exclude attribute is present, neither the
+	decoders product ID, model name, nor family name is found in the exclude list.
+	<li>If an include attribute is present, at least one of the
+	decoders product ID, model name, nor family name is found in the include list.
+	</ul>
 Both of these conditions must be true, and it's possible to use 
 both include and exclude on the same element, but it's more usual to just 
 use one.
@@ -490,7 +493,7 @@ Elements within the &lt;group&gt; will be created only if the &lt;group&gt; cond
 This can be used to e.g. display specific text labels only for certain
 decoder models.
 </p>
-<p></p>
+<p>
 Example:
 
 <pre>
@@ -643,8 +646,8 @@ variable has a too-low value:</p>
   be misleading to the user.
 </p>
 
-
 <!--#include virtual="/Footer" -->
-</div>
+ </div><!-- closes #mainContent-->
+</div> <!-- closes #mBody-->
 </body>
 </html>

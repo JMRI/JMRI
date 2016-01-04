@@ -23,9 +23,9 @@
 <!--#include virtual="Sidebar" -->
 <div id="mainContent">
 
-<h2>JMRI: Blocks Documentation</h2>
+<h1>JMRI: Blocks Documentation</h1>
 
-<h3>What are Blocks?</h3>
+<h2>What are Blocks?</h2>
 <p>Blocks are sections of track whose occupancy may be individually monitored. Dividing 
 track into Blocks is optional. Blocks set up in a track diagram normally correspond 
 to physical blocks on a layout. Block occupancy is indicated by the state of an 
@@ -33,6 +33,9 @@ occupancy <a href="Sensors.shtml">Sensor</a>. When a layout's track is divided i
 not belong to a Block. For example, yard track may not be in a Block, whereas mainline 
 track almost always would be divided into Blocks. The main use of Blocks is to facilitate 
 Signaling, but Blocks may be used for other layout control and animation functions.</p>
+
+<h2>How to setup Blocks</h2>
+
 <p>Blocks may be set up using a script, or automatically in a Layout Editor Panel. When a 
 Block is defined in a Layout Editor Panel, a new Block is created if one does not already
 exist. In Layout Editor, Blocks are identified by their User Name, so if a Block shown 

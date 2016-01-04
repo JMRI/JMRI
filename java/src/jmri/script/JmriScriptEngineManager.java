@@ -90,6 +90,7 @@ public final class JmriScriptEngineManager {
                 names.put(name, factory.getEngineName());
                 log.debug("\tNames: {}", name);
             });
+            this.names.put(factory.getLanguageName(), factory.getEngineName());
             this.factories.put(factory.getEngineName(), factory);
         });
         Bindings bindings = new SimpleBindings();
@@ -334,6 +335,70 @@ public final class JmriScriptEngineManager {
     }
 
     /**
+     * Get the default {@link javax.script.ScriptContext} for all
+     * {@link javax.script.ScriptEngine}s.
+     *
+     * @return the default ScriptContext;
+     */
+    public ScriptContext getDefaultContext() {
+        return this.context;
+    }
+
+    /**
+     * Given a file extension, get the ScriptEngineFactory registered to handle
+     * that extension.
+     *
+     * @param extension
+     * @return a ScriptEngineFactory or null
+     */
+    public ScriptEngineFactory getFactoryByExtension(String extension) {
+        String name = this.names.get(extension);
+        if (name == null) {
+            log.error("Could not find script engine factory name for extension \"{}\"", extension);
+        }
+        return this.getFactory(name);
+    }
+
+    /**
+     * Given a mime type, get the ScriptEngineFactory registered to handle that
+     * mime type.
+     *
+     * @param mimeType
+     * @return a ScriptEngineFactory or null
+     */
+    public ScriptEngineFactory getFactoryByMimeType(String mimeType) {
+        String name = this.names.get(mimeType);
+        if (name == null) {
+            log.error("Could not find script engine factory name for mime type \"{}\"", mimeType);
+        }
+        return this.getFactory(name);
+    }
+
+    /**
+     * Given a short name, get the ScriptEngineFactory registered by that name.
+     *
+     * @param shortName
+     * @return a ScriptEngineFactory or null
+     */
+    public ScriptEngineFactory getFactoryByName(String shortName) {
+        String name = this.names.get(shortName);
+        if (name == null) {
+            log.error("Could not find script engine factory name for short name \"{}\"", shortName);
+        }
+        return this.getFactory(name);
+    }
+
+    /**
+     * Get a ScriptEngineFactory by it's name.
+     *
+     * @param factoryName
+     * @return a ScriptEngineFactory or null
+     */
+    public ScriptEngineFactory getFactory(String factoryName) {
+        return this.factories.get(factoryName);
+    }
+
+    /**
      * The Python ScriptEngine can be configured using a custom
      * python.properties file and will run jmri_defaults.py if found in the
      * user's configuration profile or settings directory. See python.properties
@@ -354,13 +419,14 @@ public final class JmriScriptEngineManager {
                 Properties properties;
                 try {
                     properties = new Properties(System.getProperties());
+                    properties.setProperty("python.console.encoding", "UTF-8"); // NOI18N
+                    properties.setProperty("python.cachedir", FileUtil.getAbsoluteFilename(properties.getProperty("python.cachedir", "settings:jython/cache"))); // NOI18N
                     properties.load(is);
                     String path = properties.getProperty("python.path", "");
                     if (path.length() != 0) {
                         path = path.concat(File.pathSeparator);
                     }
                     properties.setProperty("python.path", path.concat(FileUtil.getScriptsPath().concat(File.pathSeparator).concat(FileUtil.getAbsoluteFilename("program:jython"))));
-                    properties.setProperty("python.cachedir", FileUtil.getAbsoluteFilename(properties.getProperty("python.cachedir", "settings:jython/cache"))); // NOI18N
                     execJython = Boolean.valueOf(properties.getProperty("jython.exec", Boolean.toString(false)));
                 } catch (IOException ex) {
                     log.error("Found, but unable to read python.properties: {}", ex.getMessage());

@@ -16,6 +16,7 @@ import javax.swing.JLabel;
 import javax.swing.JPanel;
 import jmri.InstanceManager;
 import jmri.profile.ProfileManager;
+import jmri.script.ScriptFileChooser;
 import jmri.swing.PreferencesPanel;
 
 /**
@@ -79,7 +80,7 @@ public class PerformScriptPanel extends JPanel implements PreferencesPanel {
         }
     }
 
-    JFileChooser fc = jmri.jmrit.XmlFile.userFileChooser("Python script files", "py");
+    JFileChooser fc = new ScriptFileChooser();
 
     @Override
     public String getPreferencesItem() {

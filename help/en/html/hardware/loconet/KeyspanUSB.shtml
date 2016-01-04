@@ -35,8 +35,8 @@
     <h2>Summary</h2>
 
 	<dl>
-        <dt class=left>Keyspan PDA adapter P/N USA-19</dt>
-	<dt class=left>Summary: This worked fine.</dt>
+        <dt class="left">Keyspan PDA adapter P/N USA-19</dt>
+	<dt class="left">Summary: This worked fine.</dt>
 	<dd>
 	<p> Unfortunately, this adapter is no longer made. We believe that the
 	replacement "Keyspan High Speed Serial Adapter" Part# USA-19QW is the
@@ -48,8 +48,8 @@
 	some of them will only work to 56,000 baud.</p>
 	</dd>
 
-	<dt class=left>Keyspan Dual Serial Adapter P/N USA-28X</dt>
-	<dt class=left>Summary: This did not work.</dt>
+	<dt class="left">Keyspan Dual Serial Adapter P/N USA-28X</dt>
+	<dt class="left">Summary: This did not work.</dt>
 	<dd>
 	Problems:  the USB adapter provides only one control line output, and
 	the serial port outputs were only +/- 5V.  This was not enough to power
@@ -60,8 +60,8 @@
     <h2>Details</h2>
 
 	<dl>
-        <dt class=left>Keyspan PDA adapter P/N USA-19</dt>
-	<dt class=left>Summary: This worked fine.</dt>
+        <dt class="left">Keyspan PDA adapter P/N USA-19</dt>
+	<dt class="left">Summary: This worked fine.</dt>
 	<dd>
 	<p> This was actually the second USB serial adapter I tried, after the
 	Keyspan Dual Serial Adapter (see below).  This adapter provides a DB9
@@ -96,8 +96,8 @@ RI       9            22
 	
 	</dd>
 
-	<dt class=left>Keyspan Dual Serial Adapter P/N USA-28X</dt>
-	<dt class=left>Summary: This did not work.</dt>
+	<dt class="left">Keyspan Dual Serial Adapter P/N USA-28X</dt>
+	<dt class="left">Summary: This did not work.</dt>
 	<dd>
 	<p>
 	The initial problem was that the USB adapter provides only one control
@@ -112,7 +112,6 @@ RI       9            22
 	<p>
 	<a href="./images/KeyspanJumper.jpg"><img src="./images/KeyspanJumper-thumb.jpg"
                 alt="Keyspan USA-28X did not function">(click to enlarge)</a></p>
-
 
 	<p> The second problem was that the serial port outputs were only +/-
 	5V.  This was not enough to power the MS100 during receive.
@@ -137,7 +136,7 @@ RI       9            22
                 alt="Oscilloscope image showing inadequate Keyspan USA-28X RxD voltages">
 (click to enlarge)</a></p>
 
-	<h3>Hardware &amp; software used</h3>
+	<h3>Hardware &amp; Software used</h3>
 
 	<p>The tests were done with a PowerBook G4 400MHz, Mac OS 9.1.  The
 	test program was a Java application created with CodeWarrior 4.1.0.3

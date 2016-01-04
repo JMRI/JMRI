@@ -4,7 +4,7 @@
 <html lang="fr">
 <head>
   <TITLE>
- 	JMRI: Hardware Support
+ 	JMRI: Support Materiel
   </TITLE>
 
 <!-- Style -->
@@ -24,9 +24,9 @@
   <div class="nomenu" id="mBody">
     <div id="mainContent">
 
-        <H2>
+        <h1>
 		JMRI: Support Materiel
-        </H2>
+        </h1>
 
 	<p>JMRI prend en charge un large &#233;ventail de "Centrale de Commande" DCC produits par diff&#233;rents fournisseurs pour l'automatisation de 
 chemin de fer mod&#232;les. Nous prenons en charge &#233;galement la disposition non-DCC. 
@@ -72,7 +72,7 @@ sur le groupe <a href="http://groups.yahoo.com/group/jmriusers"> liste de diffus
 <dt class="im">
 <img width="122" height="27" src="http://www.cti-electronics.com/banner.gif" alt="CTI"></a>
 </dt>
-<dt> CTI Acela Electronics </ dt>
+<dt> CTI Acela Electronics </dt>dt>
 <dd><p class="dl"> Configurer:Cartes Electroniques CTI via l'adaptateur
 <A HREF="acela/index.shtml">Acela </a>   </p>
 <p>&nbsp;</p>
@@ -81,7 +81,7 @@ sur le groupe <a href="http://groups.yahoo.com/group/jmriusers"> liste de diffus
 <dt class="im">
 <a href="http://www.cvpusa.com/"><a
 <img width="44" height="34" src="images/ico-cvp.gif" alt="CVP"></a>
-</ dt>
+</dt>
 <dt>Produits CVP  EasyDCC </dt>
 <dd><p class="dl"> Configurer:centrale de commande via EasyDCC
 <A HREF="easydcc/EasyDCC.shtml"> s&#233;rie </a> ou 

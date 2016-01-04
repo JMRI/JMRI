@@ -7,6 +7,7 @@
 # based on SensorLog.py and BlockLister.py
 # Part of the JMRI distribution
 
+import java
 import jmri
 
 # Define routine to map status numbers to text

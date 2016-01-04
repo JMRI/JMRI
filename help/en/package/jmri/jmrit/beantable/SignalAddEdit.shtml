@@ -2,14 +2,14 @@
 <!-- $Id: SignalAddEdit.shtml 29368 2015-05-29 03:33:37Z jacobsen $ -->
 <html lang="en">
 <head>
- <TITLE>
+ <title>
       JMRI: Adding/Editing Signal Heads
- </TITLE>
-    <META http-equiv=Content-Type content="text/html; charset=iso-8859-1">
-<meta name="Author" content="Bob Jacobsen">
-<meta name="Author" content="Egbert Broerse">
-	<meta name="Date.Modified" content="20150920"/>
-    <META name="keywords" content="JMRI help Signal Heads Add Edit">
+ </title>
+    <meta http-equiv=Content-Type content="text/html; charset=iso-8859-1">
+	  <meta name="Author" content="Bob Jacobsen">
+	  <meta name="Author" content="Egbert Broerse">
+		<meta name="Date.Modified" content="20150920"/>
+	  <meta name="keywords" content="JMRI help Signal Heads Add Edit">
 
 <!--#include virtual="/Style" -->
 </head>
@@ -20,8 +20,7 @@
   <div class="nomenu" id="mBody">
     <div id="mainContent">
 
-<h1>Adding &amp; Editing Signal Heads
-</h1>
+<h1>Adding &amp; Editing Signal Heads</h1>
     
 <p>JMRI needs to know how a Signal Head on the layout is connected to the electrical hardware. Once JMRI knows that, it can send the right DCC commands to control the Appearance of a Signal Head.</p>
 <p>The "Edit Signal Head" window provides for viewing and changing optional 
@@ -294,18 +293,6 @@ Approach, all three On controls the Restricting, and all three Closed (Off) make
 	<li>Contact us via the <a href="http://groups.yahoo.com/group/jmriusers">JMRI users</a> mailing list</li>
 	</ul>
 
-	<p>Thanks and congratulations to
-	   <A href="/help/en/Acknowledgements.shtml" title="Who is JMRI">
-	   	all who contributed</A>! </p>
-
-	<p>Copyright &copy; 1997 - 2015 JMRI Community. 
-	<P>JMRI&reg;, DecoderPro&reg;, PanelPro&trade;, SignalPro&trade;, TrainPro&trade;, DispatcherPro&trade;, OperationsPro&trade; and associated logos are our trademarks.
-	<P><A href="/Copyright.html">Additional information on copyright, trademarks and licenses is linked here.</a></p>
-    
-       <BR/>Site hosted by: <BR/>
-<a href="http://sourceforge.net/projects/jmri"><img src="http://sflogo.sourceforge.net/sflogo.php?group_id=26788&type=12" width="120" height="30" border="0" alt="Get JMRI Model Railroad Interface at SourceForge.net. Fast, secure and Free Open Source software downloads" /></a>
-    </div>
-
 <!-- Piwik -->
 <script type="text/javascript">
 var pkBaseURL = (("https:" == document.location.protocol) ? "https://apps.sourceforge.net/piwik/jmri/" : "http://apps.sourceforge.net/piwik/jmri/");
@@ -319,8 +306,9 @@ piwik_log(piwik_action_name, piwik_idsite, piwik_url);
 <object><noscript><p><img src="http://apps.sourceforge.net/piwik/jmri/piwik.php?idsite=1" alt="piwik"/></p></noscript></object>
 <!-- End Piwik Tag -->
 
-<!-- /Footer -->
+<!--#include virtual="/Footer" -->
 
+      </div><!-- closes #mainContent-->
+    </div> <!-- closes #mBody-->
 </body>
 </html>
-

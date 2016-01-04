@@ -1,7 +1,7 @@
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
 <html lang="en">
 <head>
-<title>JMRI Hardware Support - CBUS</title>
+<title>JMRI Hardware Support - MERG CBUS</title>
 
 <!-- Style -->
 <meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
@@ -17,14 +17,14 @@
   <div class="nomenu" id="mBody">
     <div id="mainContent">
 
-<h1>Hardware Support: CBUS</h1>
+<h1>Hardware Support: MERG CBUS</h1>
 <p>
-<em>The support on this page is rapidly evolving; the
+<em>The support for MERG is rapidly evolving; the
 actual code might be ahead or behind the documentation
-on any given day.</em>
-<ul><!-- TOC -->
+on any given day.</em> 
+<ul class="snav"><!-- TOC -->
 <li><a href="#connecting">Connecting</a>
-<li><a href="#tools">JMRI CBUS Tools</a>
+<li><a href="#tools">JMRI MERG CBUS Tools</a>
 <li><a href="#documentation">Documentation</a>
 </ul>
 
@@ -39,7 +39,7 @@ in terms of CBUS "events".
 
 <p>
 The <a href="../../../doc/Technical/Names.shtml">system letter</a> 
-for CBUS connections is "M".
+for MERG CBUS connections is "M".
 <p>Details of CBUS Event and object names are 
 described below, with technical details on a
 <a href="Names.shtml">separate page</a>.
@@ -146,11 +146,15 @@ the type letter is "T" instead of "S", e.g. <code>MT-18;+21</code>)
 <p>(To be written, but the scheme is similar to Turnouts above, 
 except the type letter is "L" instead of "T", e.g. <code>ML-18;+21</code>)
 
-<a name="tools"></a><h2>JMRI CBUS Tools</h2> 
+<a name="tools"></a><h2>JMRI MERG CBUS Tools</h2></a>
+<img src="../images/MERG_Menu.png" alt="MERG menu" align="right" height="132" width="227">
+<p>The MERG menu contains 5 tools:
 	<ul>
-	<li><a href="../../../../package/jmri/jmrix/can/cbus/swing/console/CbusConsoleFrame.shtml">CBUS Monitor</a>
-	<li><a href="../../../../package/jmri/jmrix/can/cbus/swing/configtool/ConfigToolFrame.shtml">CBUS Event Capture Tool</a>
-	<li><a href="../../../../package/jmri/jmrix/can/cbus/swing/console/CbusConsoleFrame.shtml#cbusSend">Send Frame</a></li>
+  <li><a href="../../../../package/jmri/jmrix/can/cbus/swing/console/CbusConsoleFrame.shtml">Console</a>
+ 	<li><a href="../../../../package/jmri/jmrix/can/cbus/swing/console/CbusConsoleFrame.shtml#cbusSend">Send Frame</a></li>
+	<li><a href="../../../../package/jmri/jmrix/can/cbus/swing/configtool/ConfigToolFrame.shtml">Event Capture Tool</a>
+	<li>Event Table</li>
+	<li><a href="../../package/jmri/jmrix/can/cbus/swing/console/CbusConsoleFrame.shtml">Node Config Tool</a></li>
 	</ul>
 
 <a name="documentation"></a><h2>Documentation</h2>

@@ -14,10 +14,10 @@
 	<li><a href="./Files.shtml">Configuration files</a>
 	<li><a href="./Roster.shtml">Working with the roster</a>
 	<li><a href="./FAQ.shtml">Frequently asked questions</a>
-	<li><a href="./Install.shtml">Downloading and installing DecoderPro</a>
+	<li><a href="./Install.shtml">Downloading and installing</a>
 	</ul>
 
-<dt><h3>More advanced</h3></dt>
+<dt><h3>Advanced</h3></dt>
 <dd>
 	<ul>
 	<li><a href="./IntroXML.shtml">Intro to XML files</a>
@@ -26,9 +26,21 @@
 	<li><a href="./RosterFile.shtml">Store/update a Roster</a>
 	<li><a href="./LocoFile.shtml">Locomotive (roster) files</a>
 	<li><a href="./Debug.shtml">Debugging</a>
-	<li><a href="./NetworkFiles.shtml">Sharing Rosters Among Computers</a>
-	<li><a href="./FileUpdate.shtml">Updating Decoder Definitions</a>
+	<li><a href="./NetworkFiles.shtml">Sharing Rosters among computers</a>
+	<li><a href="./FileUpdate.shtml">Updating decoder definitions</a>
 	</ul>
+</dd>
+
+<dt><h3>Other Apps</h3></dt>
+<dd>
+		<ul>
+		<!-- <li><a href="../DecoderPro/index.shtml">DecoderPro&reg;</a></li> -->
+		<li><a href="../PanelPro/PanelPro.shtml">PanelPro&trade;</a></li>
+		<li><a href="../DispatcherPro/index.shtml">DispatcherPro&trade;</a></li>
+    <li><a href="../../../package/jmri/jmrit/operations/Operations.shtml">OperationsPro&trade;</a></li>
+		<li><a href="../SoundPro/SoundPro.shtml">SoundPro</a></li>
+		<li><a href="../SignalPro/index.shtml">SignalPro</a></li>
+		</ul>
 </dd>
 
 <dt><h3><a href="tools/index.shtml">Tools</a></h3></dt>
@@ -45,6 +57,7 @@ layout.
 		<li><dfn><a href="../../tools/Memories.shtml">Memory Variables</a></dfn>
 		<li><dfn><a href="../../tools/Routes.shtml">Routes</a></dfn>
 		<li><dfn><a href="../../tools/LRoutes.shtml">LRoutes</a></dfn>
+    <li><dfn><a href="../../tools/Sections.shtml">Sections</a></dfn>
 		<li><dfn><a href="../../tools/Logix.shtml">Logix</a></dfn>
 		<li><dfn><a href="../../tools/fastclock/index.shtml">Fast Clocks</a></dfn>
 		<li><dfn><a href="../../tools/speedometer/index.shtml">Speedometer</a></dfn>

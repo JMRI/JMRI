@@ -4,7 +4,7 @@
  <title>
       JMRI: Setting Preferences
  </title>
-    <meta content="Bob Jacobsen" name="author">
+    <meta name="author" content="Bob Jacobsen">
     <meta name="keywords" content="JMRI help preferences">
 
 <!-- Style -->
@@ -28,9 +28,9 @@ have not been set, or there was a Preferences-related error while
 the program was starting up. 
 
 <p>
-Once the preferences are set properly, this screen won't display.
-The Help pane for setting your Preferences is at 
-<a href="./AppConfigPanel.shtml">main Preferences Help page</a>. You can also open the pane 
+Once the Preferences are set properly, this screen won't display.
+The Help pane for setting your Preferences is at <a href="./TabbedPreferences.shtml">Preferences Help (v2.9 and up)</a> or
+<a href="./AppConfigPanel.shtml">Preferences Help (older)</a>. You can also open the help 
 by selecting "Window Help" in the Help menu of the Preferences pane.
 
 This is the help\en\package\apps\AppConfixPanelErrorPage.shtml pane
@@ -39,4 +39,3 @@ This is the help\en\package\apps\AppConfixPanelErrorPage.shtml pane
 </div> <!-- closes #mBody-->
 </body>
 </html>
-

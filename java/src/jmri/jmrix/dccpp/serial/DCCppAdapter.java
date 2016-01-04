@@ -38,8 +38,8 @@ public class DCCppAdapter extends DCCppSerialPortController implements jmri.jmri
 
     public DCCppAdapter() {
         super();
-        option1Name = "FlowControl";
-        options.put(option1Name, new Option("DCC++ connection uses : ", validOption1));
+        //option1Name = "FlowControl";
+        //options.put(option1Name, new Option("DCC++ connection uses : ", validOption1));
         this.manufacturerName = jmri.jmrix.DCCManufacturerList.DCCPP;
     }
 
@@ -294,11 +294,11 @@ public class DCCppAdapter extends DCCppSerialPortController implements jmri.jmri
         activeSerialPort.setDTR(true);		// pin 1 in DIN8; on main connector, this is DTR
 
         // find and configure flow control
-        int flow = SerialPort.FLOWCONTROL_RTSCTS_OUT; // default, but also deftaul for getOptionState(option1Name)
-        //int flow = SerialPort.FLOWCONTROL_NONE; // default, but also deftaul for getOptionState(option1Name)
-        if (!getOptionState(option1Name).equals(validOption1[0])) {
-            flow = SerialPort.FLOWCONTROL_NONE;
-        }
+        //int flow = SerialPort.FLOWCONTROL_RTSCTS_OUT; // default, but also deftaul for getOptionState(option1Name)
+        int flow = SerialPort.FLOWCONTROL_NONE;
+//        if (!getOptionState(option1Name).equals(validOption1[0])) {
+//            flow = SerialPort.FLOWCONTROL_NONE;
+//        }
         activeSerialPort.setFlowControlMode(flow);
         //if (getOptionState(option2Name).equals(validOption2[0]))
         //    checkBuffer = true;
@@ -317,7 +317,8 @@ public class DCCppAdapter extends DCCppSerialPortController implements jmri.jmri
     protected int[] validSpeedValues = new int[]{115200};
 
     // meanings are assigned to these above, so make sure the order is consistent
-    protected String[] validOption1 = new String[]{"hardware flow control", "no flow control"};
+//    protected String[] validOption1 = new String[]{"hardware flow control", "no flow control"};
+    protected String[] validOption1 = new String[]{"no flow control"};
 
     private boolean opened = false;
     InputStream serialStream = null;

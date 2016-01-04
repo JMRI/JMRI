@@ -41,16 +41,16 @@ are also referenced via the "Turnout" name.
 
 <h3>Controlling a Turnout</h3>
 <p>
+The two states of the output are called "Closed" and "Thrown".  
+"Closed" is the off, inactive, not commanded state.
+"Thrown" is the on, active, commanded state.</p>
+<p>
 In most cases, you can just operate a Turnout and JMRI will 
 figure out why you mean.  
-For example, you can open the "Turnout Control"
+For example, you can open the "Turnout Control" tool
 from the "Tools" menu, enter a Turnout number (DCC or C/MRI address number),
 and click Thrown or Closed. JMRI will take it from there.
 </p>
-<p>
-The two states of the output are called "Closed" and "Thrown".  
-"Closed" is the off, inactive, not commanded state.
-"Thrown" is the on, active, commanded state. 
    
 <h3>Saving Turnout configuration to disk</h3>
 
@@ -101,5 +101,4 @@ in the <b>Panel</b> menu.
   </div> <!-- closes #container -->
 </body>
 </html>
-
 
