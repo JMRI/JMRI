@@ -126,7 +126,7 @@ public class GuiLafPreferencesManager extends Bean implements PreferencesProvide
      */
     public void setFontSize(int fontSize) {
         int oldFontSize = this.fontSize;
-        this.fontSize = (fontSize == 0) ? 0 : ((fontSize < 9) ? 9 : ((fontSize > 18) ? 18 : fontSize));
+        this.fontSize = (fontSize == 0) ? 0 : ((fontSize < 9) ? 9 : ((fontSize > 20) ? 20 : fontSize));
         if (this.fontSize != oldFontSize) {
             propertyChangeSupport.firePropertyChange(FONT_SIZE, oldFontSize, this.fontSize);
         }
