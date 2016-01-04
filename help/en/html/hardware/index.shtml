@@ -41,8 +41,8 @@
 	
 	<div class="list">
 	<dl>
-    <dt>Manufacturer <!-- header, link--></dt>
-    <dd>JMRI Support <!-- header, link--></dd>
+    <dt class="im">Manufacturer <!-- header, link--></dt>
+    <dt>JMRI Support <!-- header, link--></dt>
     
     <dt class="im">
 			<a href="http://www.atlasrr.com/dccsupport.htm">

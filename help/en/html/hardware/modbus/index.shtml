@@ -19,6 +19,13 @@
 
 <img src="http://www.modbus.org/images/logo_new.jpg" alt="Modbus logo" height="40" width="145" align="right">
 <h1>Hardware Support: Modbus</h1>
+<ul class="snav"><!-- TOC -->
+<li><a href="#hardware">Hardware</a>
+<li><a href="#limitations">Limitations</a>
+<li><a href="#connecting">Connecting</a>
+<li><a href="#tools">Tools</a>
+<li><a href="#documentation">Documentation</a>
+</ul>
 
 <p><a href="http://www.modbus.org">Modbus is an industrial control system</a>
 that's usually used with pretty tough, 

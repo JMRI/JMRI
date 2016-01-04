@@ -27,7 +27,7 @@
 
 <a name="hardware"></a><h2>Supported Hardware</h2>
 <p>Theoretically, any Raspberry Pi supported by <a href="http://pi4j.com/">Pi4J</a> is supported by JMRI.<br>
-JMRI support has been tested with the Models B, B+ and 2B.</p>
+JMRI support has been tested with the Models B, B+ and 2B. There's also a <a href="http://jmri.sourceforge.net/install/Raspberry.html">JMRI install help page for the Pi</a>.</p>
 
 <a name="connecting"></a><h2>Connecting</h2>
 <h3>Wiring</h3>
@@ -70,6 +70,8 @@ JMRI currently uses the default Pi4J pin numbering.  The Pin numbers may differ 
   </ol>
 
 <a name="documentation"></a><h2>Documentation</h2>
+<h3>JMRI Help</h3>
+<p><a href="http://jmri.sourceforge.net/install/Raspberry.html">JMRI installation on Pi/Raspbian</a>.
 <h3>Third Party info</h3>
 <p>The <a href="http://pi4j.com/">Pi4J website</a> provides model specific Java I/O information.
 
@@ -78,4 +80,3 @@ JMRI currently uses the default Pi4J pin numbering.  The Pin numbers may differ 
 </div> <!-- closes #mBody-->
 </body>
 </html>
-

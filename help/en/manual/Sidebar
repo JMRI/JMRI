@@ -3,7 +3,7 @@
 	  <div id="mBody">
 	  <div id="side"> <!-- Block of text on left side of page for /help/en/manual Index page -->
 
-<div id="manual" style="text-align: center;">The JMRI Manuals</div>
+<div id="manual" style="text-align: center;">JMRI Manuals</div>
 
 <dl>
 
@@ -12,16 +12,16 @@
       <ul>
         <li><a href="http://jmri.org/manual/pdf/DP3_Man_3-4.pdf">DP3 Guide v3.4</a></li>
         <li><a href="http://jmri.org/manual/pdf/DP_man_3-4.pdf">DP Guide v3.4</a></li>
-        <li><a href="http://jmri.org/manual/pdf/DP3_Man_3-2.pdf">DP3 Guide v3.2</a></li>
+        <!-- hide old manuals <li><a href="http://jmri.org/manual/pdf/DP3_Man_3-2.pdf">DP3 Guide v3.2</a></li>
         <li><a href="http://jmri.org/manual/pdf/DP_man_3-2.pdf">DP Guide v3.2</a></li>
         <li><a href="http://jmri.org/manual/pdf/JMRI_3-0%20Operations_Users%20Guide.pdf">OP Guide v3.0</a></li>
         <li><a href="http://jmri.org/manual/pdf/DP3_Man_3-0.pdf">DP3 Guide v3.0</a></li>
-        <li><a href="http://jmri.org/manual/pdf/DP_man_3-0.pdf">DP Guide v3.0</a></li>
+        <li><a href="http://jmri.org/manual/pdf/DP_man_3-0.pdf">DP Guide v3.0</a></li> -->
         <li><a href="http://jmri.org/manual/pdf/DP3_Man_2_14.pdf">DP3 Guide v2.14</a></li>
       </ul>
       </dd>
 
-<h3>Online Manuals</h3>
+<h3>Online</h3>
 
 <dt>JMRI&reg; v4.x</dt>
   <dd>
@@ -88,8 +88,8 @@
     <dd> 
     <ul>
 		<li><a href="http://jmri.sourceforge.net/install/WindowsNew.shtml">Windows</a>
-		<li><a href="http://jmri.sourceforge.net/install/MacOSX.html">Mac OS X</a>
-		<li><a href="http://jmri.sourceforge.net/install/Linux.html">Linux</a>
+		<li><a href="http://jmri.sourceforge.net/install/MacOSX.shtml">Mac OS X</a>
+		<li><a href="http://jmri.sourceforge.net/install/Linux.shtml">Linux</a>
 		<li><a href="http://jmri.sourceforge.net/install/Debug.shtml">Debugging an installation</a>
     </ul>
     </dd>  
