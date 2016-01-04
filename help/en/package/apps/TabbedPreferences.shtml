@@ -324,17 +324,17 @@ For more information, see the
 <a href="../../html/web/index.shtml#Configure">Web Server Preferences pane</a> page.
 <p>
 <a name="Warrants">
-<h2>Warrants and Speed Map</h2></a>
+<h2>Warrants</h2></a>
 
 This tab sets parameters used in computing routes for Warrants and for
 controlling the events that warranted trains may encounter.
+
+<h3>Speed Map</h3>
 <p>
 When an automatically running train encounters a Signal that calls for a speed change,
 or progress is blocked by occupancy ahead, the speed map table is used to make the 
 necessary speed change.  Other parameters control the way the speed change is ramped. 
-
-<h3>Speed Map</h3>
-
+<p>
 The Speed Map maps the speed names found in the aspects definition of a signal system to a value.
 It is important that all the speed names used in your signal system be listed in the Speed Map Table.
 The value associated with a speed name can be interpreted in four different ways: As a percentage of 
