@@ -112,7 +112,7 @@ public class IntlUtilitiesTest extends TestCase {
 
     // Main entry point
     static public void main(String[] args) {
-        String[] testCaseName = {IntlUtilitiesTest.class.getName()};
+        String[] testCaseName = {"-noloading", IntlUtilitiesTest.class.getName()};
         junit.swingui.TestRunner.main(testCaseName);
     }
 

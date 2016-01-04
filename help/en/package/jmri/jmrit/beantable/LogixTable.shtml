@@ -1,13 +1,12 @@
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
-<!-- $Id$ -->
 <html lang="en">
 <head>
- <TITLE>
+ <title>
       JMRI: Logix Table Help
- </TITLE>
-    <META http-equiv=Content-Type content="text/html; charset=iso-8859-1">
-    <META content="Bob Jacobsen" name=Author>
-    <META name="keywords" content="JMRI help Logix Table">
+ </title>
+    <meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
+    <meta content="Bob Jacobsen" name="Author">
+    <meta name="keywords" content="JMRI help Logix Table">
 
 <!--#include virtual="/Style" -->
 </head>
@@ -17,7 +16,7 @@
   <div class="nomenu" id="mBody">
     <div id="mainContent">
 
-<H1>The Logix Table</H1>
+<h1>The Logix Table</h1>
 	<p> A Logix is a small group of Conditionals focused on a single task 
 	on the layout. Each Conditional may be viewed as a statement of the form:
 	<ul>if (logical expression) then (action).</ul>
@@ -26,7 +25,7 @@
 	turnouts are closed or thrown, or whether a block is occupied. The "action" 
 	part of the Conditional specifies what action is to be taken if the state of 
 	the logical expression changes.</p>
-	<p> The Logix Table lists all currently defined Logixs by their system name 
+	<p> The Logix Table lists all currently defined Logix by their system name 
 	and user name. The last column of the table provides three things you can do 
         with a Logix; Edit it, Duplicate it, or Delete it.  Simply clicking <b>Select</b>
         will drop down a menu with the choices: <b>Edit</b>, <b>Copy</b>, <b>Delete</b>
@@ -64,6 +63,7 @@
 	<a href="../../../../html/tools/Logix.shtml">main Logix documentation</a>.</p>
 
 <!--#include virtual="/Footer" -->
+ </div><!-- closes #mainContent-->
+</div> <!-- closes #mBody-->
 </body>
 </html>
-

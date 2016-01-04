@@ -1,29 +1,27 @@
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
-<!-- $Id$ -->
-<HTML LANG="en">
-<HEAD>
-<TITLE>Operations</TITLE>
-<META HTTP-EQUIV="Content-Type" CONTENT="text/html; charset=iso-8859-1">
-<META CONTENT="Dan Boudreau" NAME="Author">
-<META NAME="keywords"
- CONTENT="JMRI Help Operations Setup Settings Cars Engines Locomotives Trains Routes Locations Schedules">
+<html lang="en">
+<head>
+<title>JMRI - Operations</title>
+<meta name="Author" content="Dan Boudreau">
+<meta name="keywords"
+ content="JMRI Help Operations Setup Settings Cars Engines Locomotives Trains Routes Locations Schedules">
 
 <!-- Style -->
-<META HTTP-EQUIV="Content-Type" CONTENT="text/html; charset=iso-8859-1">
-<LINK REL="stylesheet" TYPE="text/css" HREF="/css/default.css" MEDIA="screen">
-<LINK REL="stylesheet" TYPE="text/css" HREF="/css/print.css" MEDIA="print">
-<LINK REL="icon" HREF="/images/jmri.ico" TYPE="image/png">
-<LINK REL="home" TITLE="Home" HREF="/">
+<meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
+<link rel="stylesheet" type="text/css" href="/css/default.css" media="screen">
+<link rel="stylesheet" type="text/css" href="/css/print.css" media="print">
+<link rel="icon" href="/images/jmri.ico" type="image/png">
+<link rel="home" title="Home" href="/">
 <!-- /Style -->
-</HEAD>
+</head>
 
-<BODY>
- <!--#include virtual="/Header" -->
+<body>
+ <!--#include virtual="/header" -->
 
- <DIV CLASS="nomenu" ID="mBody">
-  <DIV ID="mainContent">
+ <div class="nomenu" id="mBody">
+  <div id="mainContent">
 
-   <H2>OperationsPro&trade;</H2>
+   <h1>JMRI: OperationsPro&trade;</h1>
 
    The JMRI operations program allows you to create computer generated train manifests for your railroad.
    A train
@@ -418,7 +416,7 @@
    travel, the scale that you are using, printer and icon controls, and the ability to create
    backups and restore files for operations.
    <P>
-    <img src="images/Settings.png">
+    <img src="images/Settings.png" alt="Operations Settings pane, version 4.2">
    </P>
    <H4>Railroad Name</H4>
 
@@ -525,12 +523,15 @@
 
    When selected, the program will automatically save the operation files after they have been
    changed. When a change occurs the program will after 1 to 2 minutes automatically save the
-   operations files.
+   operations files. The program will also automatically save the operation files if you close
+   the <A HREF="#Trains">Trains</A> window or shutdown JMRI.
 
    <H4>Auto Backup</H4>
 
    When selected, the program will create a set of operation backup files each time the program is
-   started. See <A HREF="#BackupRestore">Backup and Restore</A> for more information.
+   started. This is very useful when experimenting with the program, if you don't like what you've
+   done, just restore one of the previous backups. See
+   <A HREF="#Backup">Backup and Restore</A> for more information. 
    
    <A NAME="PanelOptionsTrainIcons"></A>
    <H3>Panel Options (Train Icons)</H3>
@@ -765,39 +766,63 @@
    the train's requirements. 
    
    <A NAME="CarRouting"></A>
-   <H3>Car Routing</H3>
+   <H3>Car Routing Options</H3>
+   
+   <H4>Enable Car Routing</H4>
 
    When car routing is enabled, the program will use multiple trains to deliver a car to its final
    destination. It is recommended that you leave this option enabled. With car routing enabled, you
    can use a
-   <A HREF="#Schedules">Schedule</A> to deliver a car to a specific location. The car routing
-   algorithm will search for the most efficient route for the car to travel. The algorithm will
-   attempt to use classification/interchange tracks and then yards to move cars. If you don't want
-   the router to use yards, you can deselect the "Enable Car Routing via Yards" checkbox. Routing
-   through staging is disabled by default. The algorithm will try and find a route using a maximum
-   of five trains to complete the car move. Note that the program never gives up trying to route a
-   car. If a car has been assigned a
+   <A HREF="#Schedules">Schedule</A> to deliver a car to a specific location using the car's final
+   destination fields. The car routing algorithm will search for the most efficient route for the
+   car to travel. The router will attempt to use classification/interchange tracks and then yards to
+   move cars. If you don't want the router to use yards, you can deselect the "Enable Car Routing
+   via Yards" checkbox. The program will try and find a route using a maximum of five trains to
+   complete the car move. Note that the program never gives up trying to route a car. If a car has
+   been assigned a
    <A HREF="#CarsSet">Final Destination</A> or <A HREF="#EditCarLoads">Custom Load</A> the program
-   will try and route the car after every move.
+   will try and route the car during every train build that has access to the car.
 
-   <P>The option "Use all Trains when Routing" when selected instructs the program
-    to use all of your trains to route a car. If you only want the router to use the trains that
-    you've selected in the "Build" column of the "Trains" window, then deselect this option.</P>
+   <H4>Enable Car Routing via Yards</H4>
+   
+   The program when routing a car will first try to find classification/interchange tracks to move the
+   car to its final destination.  If you want the program to also consider using yard tracks when routing,
+   select this option.
+   
+   <H4>Enable Car Routing through Staging</H4>
+   
+   Routing through staging is disabled by default. This is considered to be an advanced feature and shouldn't
+   be used until you've become very familiar with the program. When enabled the program will try to route
+   cars through staging if it couldn't find a route using C/I and yard tracks. Enabling this feature can increase
+   train build times.
+   
+   <H4>Use all Trains when Routing</H4>
+
+   <P>The option "Use all Trains when Routing" when selected instructs the program to use all of
+    your trains to route a car. If you only want the router to use the trains that you've selected
+    in the "Build" column of the "Trains" window, then deselect this option.</P>
+
+   <H4>Enable Track Destination Restrictions when Routing</H4>
 
    <P>
-    The last routing option "Enable Track Destination Restrictions when Routing" when selected tells the router
-    to use the <A HREF="#Interchange">classification/interchange</A> track destinations control when
-    routing a car. It is recommended that you leave this feature disabled, even if you've placed
-    destination restrictions on your C/I tracks. When this feature is enabled, you must enter the
-    destination and any interim destination needed to route a car to that destination. For example,
-    say the route for a car looks something like this: New York to Springfield to Worcester
-    to Boston. With the "Enable Track Destination Restrictions when Routing" disabled, you only
-    have to enter "Boston" as the destination for the departure C/I track in New York. The program when
-    routing a car to Boston from New York, will determine that sending the car first to Springfield
-    is okay because that's the route to get the car to Boston. However, if you enable this option,
-    you must add Springfield in addition to Boston as valid destinations. But now cars
-    going to Springfield and not just Boston could be added to the train since there are now two
-    destinations for the C/I track out of New York.
+    The last routing option "Enable Track Destination Restrictions when Routing" is disabled by
+    default, and is recommended that you leave it disabled. This option makes the track destination
+    feature of a classification/interchange track more restrictive. When selected it tells the
+    router to only use <A HREF="#Interchange">classification/interchange</A> tracks that match a
+    car's final destination AND the car's very next destination. Again, it is recommended that you
+    leave this feature disabled, even if you've placed destination restrictions on your C/I tracks.
+    When this feature is enabled, you must enter the destination AND the next destination needed
+    to route a car to its final destination. For example, say the route for a car looks something like
+    this: New York to Springfield to Worcester to Boston with each city hop requiring a separate
+    train. In this case three trains are need to move the car from NY to Boston. With the "Enable
+    Track Destination Restrictions when Routing" disabled, which is the default, you only have to enter
+    "Boston" as the destination for the departure C/I track in New York. The program when routing a
+    car to Boston from New York, will determine that sending the car first to Springfield and then
+    Worcester is okay because that's the route to get the car to Boston. However, if you enable this
+    option, you must add Springfield in addition to Boston as valid destinations out of NY for the
+    C/I track. The C/I track out of Springfield would need to allow destinations of Worcester and
+    Boston. You would only use this feature if you needed to hard sort your cars by the car's next
+    destination and final destination to specific C/I tracks.
    </P>
 
    <A NAME="LoggingOptions"></A>
@@ -1087,6 +1112,15 @@
 
    <A NAME="Options"></A>
    <H3>Options</H3>
+   <h4>Save Train Manifests</h4>
+
+   When the option "Save Train Manifests" is selected the program will save the current train
+   manifest before creating a new one. The program will store the old manifests in a directory
+   called "manifestBackups" located in the "operations" directory. You can review your old manifest
+   using the
+   <A HREF="#PrintSavedTrainManifests">Print Saved Train Manifests</A> under tools in the 
+   <A HREF="#Trains">Trains</A> window.
+
    <H4>Enable Value Fields and Identification Tag Fields</H4>
 
    <P>There are two other options, "Enable Value Fields" and "Identification Fields". You can
@@ -1186,10 +1220,10 @@
    
    <H4>Switch List Options</H4>
 
-   The first option "By Track Summary" lists all car pick ups, set outs, and holds at a location by
-   track and train at the end of the switch list. Deselect this option if you don't want this
-   summary. 
-   
+   The first option "By Track Summary" when selected, lists all car pick ups, set outs, and holds at
+   a location by track and train. This summary is appended to the end of the switch list. This
+   option is only available when you operate the switch list in <A HREF="#SwitchListOptions">Real Time</A>.
+
    <P>You can include in your switch lists the train's
    <A HREF="#EditRoute">route</A> location comments by selecting the "Route Location" checkbox.</P>
    
@@ -1862,7 +1896,10 @@
    <P>You can access this useful tool from the Schedules window. The Schedules window can be
     found under "Tools" in the Locations window. It allows you to select a car type, and then any
     load that you've created for the that type of car. The window then shows which schedules by
-    location are receiving or shipping that specific car load.</P>
+    location are receiving or shipping that specific car load. Selecting the "All Loads" checkbox
+    will show you every schedule for the car type selected. Selecting the "All Types" checkbox
+    allows you to see which loads are being serviced by your schedules. And selecting both
+    checkboxes will list all of the schedules by car types, along with the loads received and shipped.</P>
 
    <P>If you want a list of custom car loads for each of your car types, you can use the "Print
     Car Loads" or "Preview Car Loads" found under the "Tools" menu in the "Show schedules by car type and load"
@@ -2149,6 +2186,7 @@
    select the load name or combo you want, and then press the "Add Load" button. To remove a load
    name from the list, select the load name you want to remove, and press "Delete Load". "Delete
    All" will remove all load names from the load list.
+   
    <A NAME="SpurOption"></A>
    <H5>Spur Option</H5>
 
@@ -2263,11 +2301,17 @@
     program, otherwise you will most likely overload your tracks when using this feature.</P>
     
    <A NAME="TrackDestinations"></A>
-   <H3>Track Destinations</H3>
+   <H4>Track Destinations</H4>
 
-   You can control which destinations a classification/interchange (C/I) or staging track will service. Under
-   "Tools" in the edit track window for a C/I or staging track, the menu item
-   "Track Destinations" allows you to select which destinations are valid for the track.
+   You can control which destinations a classification/interchange (C/I) or staging track will
+   service. Under "Tools" in the edit track window for a C/I or staging track, the menu item "Track
+   Destinations" allows you to select which destinations are valid for the track.
+
+   <P>For C/I tracks there's an option to only accept cars with a final destination. This
+    prevents cars without a final destination from using the track. This is useful where the C/I
+    allowed track destinations are two or more trains away requiring the cars to be routed. Cars
+    without a final destination could be stranded on the C/I track if there isn't a train that
+    directly services at least one of the C/I destinations.</P>
 
    <P>After you've selected the destinations that you want the track to service, you can use
     the "Check Destinations" button to verify that all of the destinations you've selected can also
@@ -2557,25 +2601,26 @@
    <H4>Kernel</H4>
 
    A "Kernel" is a group of cars that move as a single unit. If wish this car to be part of a kernel
-   press "Edit" across from "Kernel" and create a kernel name. Then select the kernel from the
-   menu box. The first car you assign to the kernel becomes the lead car. The program when searching
-   for a track to set out the kernel will only use the lead car's attributes when determining if the
-   track can accept the kernel. However, the program does use the entire length of the kernel to
-   determine if the group of cars will fit on the destination track.
-   
+   press "Edit" across from "Kernel" and create a kernel name. Then select the kernel name from the
+   menu box in the "Edit Car" window. The first car you assign to the kernel becomes the lead car.
+   The program when searching for a track to set out the kernel will only use the lead car's
+   attributes when determining if the track can accept the kernel. However, the program does use the
+   entire length of the kernel to determine if the group of cars will fit on the destination track.
+
    Manifest and switch lists will show the cars in the order that you assigned them to the kernel.
 
    <H4>Optional Fields</H4>
 
    Finally you can optionally enter the color, built date, owner and comment for this car. The built
    date can be entered as a four digit year, or in the format of month-year.
+   
    <A NAME="CARIDTAG"></A>
-   <H3>Id Tag</H3>
+   <H4>Id Tag</H4>
    The Id Tag dropdown allows you to associate a <a
     href="../../../../html/tools/IdTags.shtml">IdTag</a> with this piece of rolling stock. If any of
    the locations have an associated
    <a href=#LocationReporter>Id Tag Reader at Location</a> and the Id Tag associated with this car
-   is read by that Reporter, then the location will be updated.
+   is read by that Reporter, then the location will be updated. See <A HREF="#Options">Options</A> to enable this feature.
 
    <H3>Add</H3>
 
@@ -2895,18 +2940,45 @@
    feature when building trains.
 
    <p>Now set the locomotive's location on the layout. If the locomotive is off the layout, set
-    the location to none (blank space). If wish this locomotive to be part of a consist, press
-    "Edit" across from "Consist" and enter a consist name. Then select the consist name from the
-    menu box. Finally you can optionally enter the built date, owner and comment for this
-    locomotive.</P>
-
+    the location to none (blank space). You can also enter the built date, owner and a comment for
+    this locomotive.</P>
+   
    <A NAME="LocomotiveModels"></A>
-   <H3>Locomotive Models</H3>
+   <H4>Locomotive Models</H4>
 
    OperationsPro&trade; allows you organize your locomotives by model. Each model can only have one
    locomotive type, length, weight and horsepower rating associated with it. For example, if you
    assign the model name "RS11" to a set of locomotives, when you change the length of one of the
-   "RS11"s, the length will also change for the others.
+   "RS11"s, the length will also change for the others. Also associated with a locomotive model is
+   whether the engine is to be used as a "B" or booster unit. "B" units are never assigned to a
+   train that requires only one locomotive, and they are never assigned by the program as the lead
+   engine in a consist. One useful trick is to assign the "B" unit designation to non-sound units
+   to prevent them from becoming the lead engine when building a consist.
+
+   <H4>Locomotive Consists</H4>
+
+   If wish this locomotive to be part of a consist assigned by you, press the "Edit" button across
+   from "Consist" in the "Edit Locomotive" window. Now enter a consist name and press "Add" in the
+   "Edit Locomotive Consist" window. Finally select the consist name from the menu box in the "Edit
+   Locomotive" window and press save.
+   
+   <A NAME="SynchronizeWithNCEConsists"></A>
+   <H4>Synchronize with NCE Consists</H4>
+
+   If you are using NCE as your DCC command station, you can have the program synchronize your
+   consist numbers with your locomotives. The program will read all of the consists out of the NCE
+   system and then will search for matching locomotives in your operations roster. The program will
+   assign the consist name nce_xxx where xxx is the consist number. To synchronize your consists,
+   select "Synchronize with NCE Consists" under the "Tools" from the "Locomotives" menu.
+   
+   <A NAME="LocomotiveIDTAG"></A>
+   <H4>Id Tag</H4>
+   The Id Tag dropdown allows you to associate a <a
+    href="../../../../html/tools/IdTags.shtml">IdTag</a> with this piece of rolling stock. If any of
+   the locations have an associated
+   <a href=#LocationReporter>Id Tag Reader at Location</a> and the Id Tag associated with this
+   locomotive is read by that Reporter, then the location will be updated. See
+   <A HREF="#Options">Options</A> to enable this feature.
 
    <H3>Save</H3>
 
@@ -2922,22 +2994,6 @@
    locomotive's destination and train. Normally the locomotive's destination and assigned train are
    generated by the program, but you can use these fields to force a locomotive to a specific
    location using a specified train.
-   <A NAME="LocomotiveIDTAG"></A>
-   <H3>Id Tag</H3>
-   The Id Tag dropdown allows you to associate a <a
-    href="../../../../html/tools/IdTags.shtml">IdTag</a> with this piece of rolling stock. If any of
-   the locations have an associated
-   <a href=#LocationReporter>Id Tag Reader at Location</a> and the Id Tag associated with this
-   locomotive is read by that Reporter, then the location will be updated. 
-   
-   <A NAME="SynchronizeWithNCEConsists"></A>
-   <H3>Synchronize with NCE Consists</H3>
-
-   If you are using NCE as your DCC command station, you can have the program synchronize your
-   consist numbers with your locomotives. The program will read all of the consists out of the NCE
-   system and then will search for matching locomotives in your operations roster. The program will
-   assign the consist name nce_xxx where xxx is the consist number. To synchronize your consists,
-   select "Synchronize with NCE Consists" under the "Tools" menu. 
    
    <A NAME="Routes"></A>
    <H2>Routes</H2>
@@ -3645,6 +3701,7 @@
     </tr>
    </table>
    
+   <img src="images/TrainsPaneMenu.png" width="376" height="300" align="right" alt="Operations Trains window Tools Menu">
    <A NAME="TrainsTools"></A>
    <H3>Trains Tools</H3>
    
@@ -3659,7 +3716,7 @@
    Trains-&gt;Tools. Very useful when adding a new car type to your roster.
 
    <P>
-    <img src="images/ModifyTrainsByCarType.png">
+  
    </P>
 
    <P>First select the car type you wish to modify. The window will then show which trains can
@@ -3686,6 +3743,7 @@
    the row colored red if a train fails to build. You can find this feature under "Tools" in the
    "Trains" window.
    
+   <a href="images/TrainsTimetable214.png"><img src="images/TrainsTimetable214.png" width="407" height="215" align="right" alt="Operations Trains window Tools Menu v2.14"></a>
    <A NAME="Timetable"></A>
    <H4>Timetable</H4>
 
@@ -3715,7 +3773,13 @@
     "Update Switch Lists" when you deselect the "Real Time" checkbox in the <A HREF="#SwitchList">Switch
      Lists by Location</A> window.
    </P>
+    
+   <A NAME="PrintSavedTrainManifests"></A>
+   <H4>Print or Preview Saved Train Manifests</H4>
 
+   If you've selected the <a HREF="#Options">Save Train Manifests</a> option, you can print or preview
+   a train manifest that was previously created by the program and saved. 
+   
    <A NAME="SetupExcelProgram"></A>
    <H4>Setup Excel Program (Manifest Creator)</H4>
 
@@ -4104,6 +4168,7 @@
     window for a <A HREF="#Locations">location.</A>
    </P>
 
+   <A NAME="SwitchListOptions"></A>
    <H3>Switch List Options</H3>
 
    There are three options for adjusting the switch lists to your liking. The first checkbox option
@@ -4157,6 +4222,9 @@
     next change occurs to that location. If there are no changes to a location, then the switch list
     is a copy of the last one printed. This allows you to print more than one copy of the switch
     list if needed.</P>
+    
+    <P>The <A HREF="#Timetable">Timetable</A> window has buttons along the bottom of the window that simplify the building
+    of train manifests and consolidating train switch lists.</P>
 
    <P>If you select or deselect any of the switch list options, you will need to press the
     "Save" button to activate them.</P>
@@ -4248,9 +4316,9 @@
     match the locations in the program you can build a new train.</P>
 
    <A NAME="OperationWindows"></A>
-   <H2>Operation Windows</H2>
+   <H2>Operations Windows</H2>
 
-   All of the operation windows can be resized and placed to your liking. When you close the window,
+   All of the Operations windows can be resized and placed to your liking. When you close the window,
    the size and window location on your screen is saved.
 
    <P>OperationsPro&trade; also allows you to resize the Cars, Locomotives, Trains and Timetable table
@@ -4264,11 +4332,9 @@
     <A HREF="http://jmri.sourceforge.net/help/en/html/web/">JMRI Web Access</A>.
 
    <P>End of OperationsPro&trade; help.</P>
-  </DIV>
-  <!-- closes #mainContent-->
- </DIV>
- <!-- closes #mBody-->
-</BODY>
-</HTML>
-
-
+  </div>
+  <!-- closes #maincontent-->
+ </div>
+ <!-- closes #mbody-->
+</body>
+</html>

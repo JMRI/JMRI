@@ -9,10 +9,9 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 /**
- * Action to start a web server
+ * Action to start a web server. Doesn't show a panel.
  *
  * @author	Randall Wood Copyright (C) 2012
- * @version $Revision$
  */
 public class WebServerAction extends JmriAbstractAction {
 
@@ -42,6 +41,9 @@ public class WebServerAction extends JmriAbstractAction {
         }
     }
 
+    @Override
+    public jmri.util.swing.JmriPanel makePanel() { return null; } // not used by this classes actionPerformed, as it doesn't show anything
+    
     static class ServerThread extends Thread {
 
         @Override

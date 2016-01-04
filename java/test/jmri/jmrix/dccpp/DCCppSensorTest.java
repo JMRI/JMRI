@@ -103,11 +103,13 @@ public class DCCppSensorTest extends TestCase {
     }
 
     // The minimal setup for log4J
-    protected void setUp() {
+    protected void setUp() throws Exception {
         apps.tests.Log4JFixture.setUp();
+        super.setUp();
     }
 
-    protected void tearDown() {
+    protected void tearDown() throws Exception {
+        super.tearDown();
         apps.tests.Log4JFixture.tearDown();
     }
 

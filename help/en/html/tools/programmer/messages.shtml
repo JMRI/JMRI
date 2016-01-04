@@ -1,8 +1,7 @@
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
 <html lang="en">
 <head>
-<!-- Copyright Bob Jacobsen 2008 -->
-<title>JMRI: Decoder Programmer Error Messages</title>
+<title>JMRI:  Error Messages</title>
 
 <!-- Style -->
 <meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
@@ -19,14 +18,14 @@
 <!--#include virtual="Sidebar" -->
 <div id="mainContent">
 
-<h2> 
-JMRI: DecoderPro Error Messages
-</h2>
+<h1> 
+JMRI: Error Messages
+</h1>
 <!-- Copy any new content below from page http://jmri.sourceforge.net/help/en/manual/DecoderPro3/Error.shtml -->
 <hr>
 <p>Various things can go wrong when JMRI tries to work with your DCC command station to program a DCC decoder. 
 This page lists the error message that can result, and describes what they mean.</p>
-<h4><a href="../html/Errors.shtml">JMRI Error Codes</a></h4>
+<h2><a href="../html/setup/Errors.shtml">JMRI Error Codes</a></h2>
 
 <dl>
  

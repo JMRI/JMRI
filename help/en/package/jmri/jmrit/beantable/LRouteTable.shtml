@@ -1,10 +1,10 @@
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
-<HTML LANG="en">
+<html lang="en">
 <head>
 <title>JMRI: LRoutes Table Help</title>
-<META HTTP-EQUIV="Content-Type" CONTENT="text/html; charset=iso-8859-1">
-<META CONTENT="Bob Jacobsen" NAME="Author">
-<META NAME="keywords" CONTENT="JMRI help LRoutes Table">
+<meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
+<meta content="Bob Jacobsen" name="Author">
+<meta name="keywords" content="JMRI help LRoutes Table">
 
 <!--#include virtual="/Style" -->
 </head>
@@ -32,45 +32,43 @@ capabilities by editing it from the Logix Table.</p>
 All Logix with this prefix are displayed in the LRoutes Table.  Please note that an
 "RTX" Logix that has had capabilities added with 
 Logix editing may not be able to display
-these addtional capabilities for LRoute editing.  Once Logix editing is done to an
+these additional capabilities for LRoute editing.  Once Logix editing is done to an
 LRoute, it is recommended that further editing be done from the Logix Table.</p>
 
-<h2>LRoute Table Columns</h2>
+<h2>LRoutes Table Columns</h2>
 
-<DL>
-	<DT>System Name</DT>
-	<DD>The System Name cannot be changed once entered into the table.
+<dl>
+	<dt>System Name</dt>
+	<dd>The System Name cannot be changed once entered into the table.
 	The <b>Add</b> button located in the lower left corner of the table allows
-	you to add a new l-route to the table.</DD>
+	you to add a new l-route to the table.</dd>
 
-	<DT>User Name</DT>
-	<DD>You can directly enter or change the "User Name" for an
-	existing logix route.</DD>
+	<dt>User Name</dt>
+	<dd>You can directly enter or change the "User Name" for an
+	existing logix route.</dd>
 
-	<DT>Enabled</DT>
-	<DD>To disable a l-route from triggering, uncheck the "Enabled" box
+	<dt>Enabled</dt>
+	<dd>To disable a l-route from triggering, uncheck the "Enabled" box
 	for the route. This sets its Logix to a disabled state.  The l-route can
-        be enabled or disabled from either the LRoute Table or the Logix Table.</DD>
+        be enabled or disabled from either the LRoutes Table or the Logix Table.</dd>
         
-	<DT>Edit</DT>
-	<DD>Push this button to edit the l-route. For more information see <a
-		href="LRouteAddEdit.shtml">Adding/Editing LRoutes</a>.</DD>
-</DL>
+	<dt>Edit</dt>
+	<dd>Push this button to edit the LRoute. For more information see <a
+		href="LRouteAddEdit.shtml">Adding/Editing LRoutes</a>.</dd>
+</dl>
 
-<h3>LRoute Table Controls</h3>
+<h3>LRoutes Table Controls</h3>
 
-There is a button at the bottom of the LRoutes Table:
+There is a button at the bottom of the LRoutes Table pane:
 
-<DL>	
-	<DT>Add</DT>
-	<DD>Push this button to add a new logix route. For more information see
-	<A HREF="LRouteAddEdit.shtml">Adding/Editing LRoutes</A>.</DD>
-</DL>
-
+<dl>	
+	<dt>Add</dt>
+	<dd>Push this button to add a new logix route. For more information see
+	<a href="LRouteAddEdit.shtml">Adding/Editing LRoutes</a>.</dd>
+</dl>
 
 <!--#include virtual="/Footer" -->
-    </div>
-  </div>
+ </div><!-- closes #mainContent-->
+</div> <!-- closes #mBody-->
 </body>
 </html>
-

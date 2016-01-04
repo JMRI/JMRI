@@ -77,7 +77,7 @@ abstract public class AbstractDCCppInitializationManager {
             //Send Information request to the Base Station
 	    //First, we need to send a request for the Command Station
             // hardware and software version 
-            DCCppMessage msg = DCCppMessage.getCSStatusMsg();
+            DCCppMessage msg = DCCppMessage.makeCSStatusMsg();
             //Then Send the version request to the controller
             systemMemo.getDCCppTrafficController().sendDCCppMessage(msg, this);
         }

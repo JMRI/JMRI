@@ -1,164 +1,49 @@
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
-<!-- $Id$ -->
 <html lang="en">
 <head>
-<title>JMRI Hardware Guide: NCE</title>
+<title>JMRI Hardware Support - NCE</title>
 
-<META HTTP-EQUIV="Content-Type" CONTENT="text/html; charset=iso-8859-1">
-<META CONTENT="Bob Jacobsen" NAME="Author">
-<META NAME="keywords" CONTENT="JMRI help NCE">
+<meta name="Author" content="Bob Jacobsen">
+<meta name="keywords" content="JMRI help NCE">
 
 <!-- Style -->
-<META HTTP-EQUIV="Content-Type" CONTENT="text/html; charset=iso-8859-1">
-<LINK REL="stylesheet" TYPE="text/css" HREF="/css/default.css"
-	MEDIA="screen">
-<LINK REL="stylesheet" TYPE="text/css" HREF="/css/print.css"
-	MEDIA="print">
-<LINK REL="icon" HREF="/images/jmri.ico" TYPE="image/png">
-<LINK REL="home" TITLE="Home" HREF="/">
+<meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
+<link rel="stylesheet" type="text/css" href="/css/default.css" media="screen">
+<link rel="stylesheet" type="text/css" href="/css/print.css" media="print">
+<link rel="icon" href="/images/jmri.ico" type="image/png">
+<link rel="home" title="Home" href="/">
 <!-- /Style -->
 </head>
 
 <body>
 <!--#include virtual="/Header" -->
 
-<DIV CLASS="nomenu" ID="mBody"></DIV>
-<DIV ID="mainContent"></DIV>
+<div class="nomenu" ID="mBody"></div>
+<div id="mainContent"></div>
 
-<h1>JMRI Hardware Guide: NCE</h1>
+<h1>Hardware Support: NCE</h1>
 
+<ul class="snav"><!-- TOC -->
+	<li><a href="#hardware">Hardware</a></li>
+	<li><a href="#limitations">Limitations</a></li>
+	<li><a href="#connecting">Connecting</a></li>
+	<li><a href="#troubleShoot">Troubleshooting</a></li>
+	<li><a href="#tools">JMRI NCE Tools</a></li>
+	<li><a href="#documentation">Documentation</a></li>
+</ul>
+
+<a name="hardware"></a><h2>Supported Hardware</h2>
+<h3>Command Station</h3>
 <p>JMRI supports three NCE layout connections:
-Power Pro (PowerHouse) via serial cable, 
-Power Pro (PowerHouse) via network connection, 
-and NCE USB Interface via a USB cable. 
-They are shown in the preferences menu as NCE, NCE via network,
-and NCE USB Interface respectively.</P>
+<ul>
+<li>Power Pro (PowerHouse) via serial cable
+<li>Power Pro (PowerHouse) via network connection
+<li>NCE USB Interface via a USB cable
+</ul> 
+They are shown in the JMRI Preferences Connection pane as NCE, NCE via network,
+and NCE USB Interface, respectively.</p>
 
-<a name="phpro"></a>
-<h2>Power Pro (PowerHouse) via serial cable</h2>
-<IMG SRC="../images/NcePowerPro.gif" WIDTH="168" HEIGHT="66" ALIGN="right" ALT="NCE Power Pro" >
-
-This section discusses JMRI's support for connecting to 
-the NCE Power Pro and PowerHouse via the serial cable connector
-on their front panel.
-
-<h3>Setup</h3>
-
-<ol>
-	<li>To connect your computer to an NCE Power Pro or PowerHouse system, you
-	can usually just connect the command station to the computer's serial
-	port using a 9-pin serial cable. This cable must be a 'straight through' extension
-	cable and not a 'modem' type cable.
-	On newer computers there might not be
-	a serial port, so you will need to use one of the computers USB ports and a USB
-	to serial adapter. See
-	<a href="../USBtoSerial.shtml">Via a USB to Serial adapter</a>
-	for more information.
-	<br>
-	Many USB-Serial devices will still need a serial extension cable to connect the command station to the USB-Serial adapter.
-	<br>
-	Note that this is <em>not</em> the same thing
-	as the 
-	<a href="#powercab">NCE USB Interface</a>, 
-	which is mostly for 
-	<a href="#usblimitations">use with the PowerCab</a>, 
-	not the Power Pro or Powerhouse system.</li>
-	<li>Then go to the preferences panel of a JMRI-based program. This
-	opens automatically the first time a program is run, or you can select
-	it from the "Edit" menu.</li>
-	<li>Select "NCE" from the top selection box. You can then select
-	the proper serial port in the second selection box.</li>
-	<li>If given the option to select a baud rate choose 9,600 which
-	is the default for NCE.</li>
-	<li>Now confirm that the AIU broadcasts are disabled and the baud
-	rate set in the NCE command station is the same as JMRI. These are the
-	normal defaults for NCE. Use a ProCab to select "SET CMD STATION" by
-	pressing the PROG/ESC button 5 times. Then press the ENTER button 14
-	times to determine if AIU broadcasts are disabled. Press 0 to disable.
-	Now press the ENTER button once more to select the baud rate. Press 1
-	to set the baud rate to 9,600, and press PROG/ESC to exit.</li>
-	<li>Select the version of EPROM present in your
-	command station, either "2004 or earlier" or "2006 or later".
-	See <a href="#eeprom">below</a> for more information on this.
-    </li>
-	<li>The series of radio buttons labeled "GUI style" allows you to
-	select how the program will look. "Metal" is the native Java look
-	available on all types. Other choices will vary with your computer
-	type. "CDE/Motif", "Windows", and "Mac OS X" look native on
-	Linux, Windows, and Mac OS X respectively.</li>
-	<li>In the bottom selection box, you can pick the default
-	programmer format. You can override this each time you open the
-	programmer, so this is here just for convenience.</li>
-	<li>Click "Save". You'll be asked if it's OK for the program to
-	quit, click "Yes".</LI>
-	<li>Restart the program. You should be up and running.</li>
-	<li>If not see the 
-	<A HREF="#troubleShoot">Troubleshooting</A> section below.</li>
-</OL>
-<P>For reliable operation, we recommend that you disable "AIU
-broadcast", and set the baud rate to 9,600. These are the normal
-defaults for NCE. Both of these parameters can be found in your NCE
-user's manual under "Setup Command Station".</P>
-
-<a id="eeprom"></a>
-<H3>EPROM Versions</H3>
-
-<P>The NCE Power Pro command station uses an "EPROM" to contain
-it's software. NCE has made several of these available to it's users.
-JMRI has been updated to work with these as they come out. To determine
-which ROM version you have, go to the 'setup command station' menu on
-the ProCab. The first screen will show you the EPROM version currently
-installed.</P>
-<UL>
-	<LI>December 2004 EPROM - JMRI 1.6.1 or any JMRI 1.7 version or
-	later should work fine.</LI>
-	<LI>2007 EPROM - you need JMRI 1.7.6 or later.</LI>
-	<LI>Various "beta test" versions from early 2006 - ask NCE to send
-	you an update to the 2007 EPROM, then use JMRI 1.7.6 or later</LI>
-</UL>
-
-<P>If you wish to use MONITORING for turnout feedback, you must
-upgrade your command station to the Mar 1 2007A EPROM or newer.
-(For more information on turnout feedback, please see the
-<a href="../../doc/Technical/TurnoutFeedback.shtml">feedback documentation page</a>)
-The release in the first half of 2007 had a problem with odd turnout status.
-Every other odd accessory shared the same status bit. JMRI checks the
-revision number at startup, and will send a warning to the console
-window if it finds the early 2007 EPROM. If you're not sure if you have
-the latest, you can perform a simple test. First normal accessory 1 and
-5 using the "Select Accy" button on your ProCab. Then using the "Select
-Accy" button, change accessory 1 to REV. Then check accessory 5, and if
-NOW = REV for accessory 5, you have the earlier revision with the known
-problem. If you have the early 2007 EPROM and wish to use MONITORING for
-feedback, contact NCE for an EPROM upgrade.</P>
-
-<a name="AIU"></a>
-<a name="names"></a>
-<h3>AIU (Input) Numbering</h3>
-The NCE "AIU" device allows the NCE command station to check the status
-of inputs from the layout. These are referenced in JMRI as "Sensors"
-with names like "NS785". "NS" means "NCE Sensor", and 785 is the number
-of a specific sensor input.
-<p>The sensor number can be found by using the following formula:</p>
-<P>Sensor ID = (AIU Cab Address - 1) * 16 + (Pin Number On AIU) -1</p>
-<P>For example: The AIU cab address is set to 50 and one of the
-BD20s is connected to pin 2. Therefore the Sensor ID would be:</p>
-<p>Sensor ID = (50 - 1) * 16 + (2) -1</p>
-<p>Sensor ID = 785</p>
-
-<p>In the hardware address field of the Add Sensor window you can enter in the 
-AIU cab address followed by the pin number separated by a semicolon. 
-So for a sensor on AIU cab address 50, pin 2 you would enter the following: <b>50:2</b></p>
-
-<h3>Turnout Numbering</h3>
-JMRI can access accessory decoders as NCE Turnouts and Lights.
-They are addressed using the same numbers that you would use on your
-NCE throttle to throw the accessory decoder.  For example, if you
-can access turnout 21 from your throttle, JMRI would address it as 
-"NT21" or just "21".
-
-<h3>Limitations</h3>
-
+<a name="limitations"></a><h2>Limitations</h2>
 <p>A very small number of early (pre-2002) 
 NCE Power Pro (PowerHouse) command stations
 have an "optional analog control circuit". (If you don't recall special
@@ -167,10 +52,132 @@ paragraph!) In these, pins 5, 6, and 9 are used with an analog voltage
 as a separate throttle. If you have one of these command stations, a
 normal 9-pin serial cable will not work! You'll need to make a custom
 cable that just connects the "send data", "receive data" and "ground"
-pins. See your NCE manual for details.</P>
+pins. See your NCE manual for details.</p>
+
+<a name="connecting"></a><h2>Connecting</h2>
+<h3>Settings</h3>
+	<a name="AIU"></a>
+	<a name="names"></a>
+	<h4>AIU (Input) Numbering</h4>
+	The NCE "AIU" device allows the NCE command station to check the status
+	of inputs from the layout. These are referenced in JMRI as "Sensors"
+	with names like "NS785". "NS" means "NCE Sensor", and 785 is the number
+	of a specific sensor input.
+	<p>The sensor number can be found by using the following formula:</p>
+	<p>Sensor ID = (AIU Cab Address - 1) * 16 + (Pin Number On AIU) -1</p>
+	<p>For example: The AIU cab address is set to 50 and one of the
+	BD20s is connected to pin 2. Therefore the Sensor ID would be:</p>
+	<p>Sensor ID = (50 - 1) * 16 + (2) -1</p>
+	<p>Sensor ID = 785</p>
+	
+	<p>In the hardware address field of the Add Sensor window you can enter in the 
+	AIU cab address followed by the pin number separated by a semicolon. 
+	So for a sensor on AIU cab address 50, pin 2 you would enter the following: <b>50:2</b></p>
+	
+	<h4>Turnout Numbering</h4>
+	JMRI can access accessory decoders as NCE Turnouts and Lights.
+	They are addressed using the same numbers that you would use on your
+	NCE throttle to throw the accessory decoder.  For example, if you
+	can access turnout 21 from your throttle, JMRI would address it as 
+	"NT21" or just "21".	
+
+	<a id="eeprom"></a>
+	<h4>EPROM Versions</h4>
+	<p>The NCE Power Pro command station uses an "EPROM" to contain
+	it's software. NCE has made several of these available to it's users.
+	JMRI has been updated to work with these as they come out. To determine
+	which ROM version you have, go to the 'setup command station' menu on
+	the ProCab. The first screen will show you the EPROM version currently
+	installed.</p>
+	<ul>
+		<li>December 2004 EPROM - JMRI 1.6.1 or any JMRI 1.7 version or
+		later should work fine.</li>
+		<li>2007 EPROM - you need JMRI 1.7.6 or later.</li>
+		<li>Various "beta test" versions from early 2006 - ask NCE to send
+		you an update to the 2007 EPROM, then use JMRI 1.7.6 or later</li>
+	</ul>
+	
+	<p>If you wish to use MONITORING for Turnout feedback, you must
+	upgrade your Command Station to the Mar 1 2007A EPROM or newer.
+	(For more information on turnout feedback, please see the
+	<a href="../../doc/Technical/TurnoutFeedback.shtml">feedback documentation page</a>)
+	The release in the first half of 2007 had a problem with odd turnout status.
+	Every other odd accessory shared the same status bit. JMRI checks the
+	revision number at startup, and will send a warning to the console
+	window if it finds the early 2007 EPROM. If you're not sure if you have
+	the latest, you can perform a simple test. First normal accessory 1 and
+	5 using the "Select Accy" button on your ProCab. Then using the "Select
+	Accy" button, change accessory 1 to REV. Then check accessory 5, and if
+	NOW = REV for accessory 5, you have the earlier revision with the known
+	problem. If you have the early 2007 EPROM and wish to use MONITORING for
+	feedback, contact NCE for an EPROM upgrade.</p>
+
+<h3>Wiring</h3>
+<a name="phpro"></a>
+<h4>Power Pro (PowerHouse) via serial cable</h4>
+<img src="../images/NcePowerPro.gif" width="168" height="66" align="right" alt="NCE Power Pro" >
+	
+	<p>This section discusses JMRI's support for connecting to 
+	the NCE Power Pro and PowerHouse via the serial cable connector
+	on their front panel.
+	<ol>
+		<li>To connect your computer to an NCE Power Pro or PowerHouse system, you
+		can usually just connect the command station to the computer's serial
+		port using a 9-pin serial cable. This cable must be a 'straight through' extension
+		cable and not a 'modem' type cable.
+		On newer computers there might not be
+		a serial port, so you will need to use one of the computers USB ports and a USB
+		to serial adapter. See
+		<a href="../USBtoSerial.shtml">Via a USB to Serial adapter</a>
+		for more information.
+		<br>
+		Many USB-Serial devices will still need a serial extension cable to connect the command station to the USB-Serial adapter.
+		<br>
+		Note that this is <em>not</em> the same thing
+		as the 
+		<a href="#powercab">NCE USB Interface</a>, 
+		which is mostly for 
+		<a href="#usblimitations">use with the PowerCab</a>, 
+		not the Power Pro or Powerhouse system.</li>
+		<li>Then go to the preferences panel of a JMRI-based program. This
+		opens automatically the first time a program is run, or you can select
+		it from the "Edit" menu.</li>
+		<li>Select "NCE" from the top selection box. You can then select
+		the proper serial port in the second selection box.</li>
+		<li>If given the option to select a baud rate choose 9,600 which
+		is the default for NCE.</li>
+		<li>Now confirm that the AIU broadcasts are disabled and the baud
+		rate set in the NCE command station is the same as JMRI. These are the
+		normal defaults for NCE. Use a ProCab to select "SET CMD STATION" by
+		pressing the PROG/ESC button 5 times. Then press the ENTER button 14
+		times to determine if AIU broadcasts are disabled. Press 0 to disable.
+		Now press the ENTER button once more to select the baud rate. Press 1
+		to set the baud rate to 9,600, and press PROG/ESC to exit.</li>
+		<li>Select the version of EPROM present in your
+		command station, either "2004 or earlier" or "2006 or later".
+		See <a href="#eeprom">below</a> for more information on this.
+	  </li>
+		<li>The series of radio buttons labeled "GUI style" allows you to
+		select how the program will look. "Metal" is the native Java look
+		available on all types. Other choices will vary with your computer
+		type. "CDE/Motif", "Windows", and "Mac OS X" look native on
+		Linux, Windows, and Mac OS X respectively.</li>
+		<li>In the bottom selection box, you can pick the default
+		programmer format. You can override this each time you open the
+		programmer, so this is here just for convenience.</li>
+		<li>Click "Save". You'll be asked if it's OK for the program to
+		quit, click "Yes".</li>
+		<li>Restart the program. You should be up and running.</li>
+		<li>If not see the 
+		<a href="#troubleShoot">Troubleshooting</a> section below.</li>
+	</ol>
+	<p>For reliable operation, we recommend that you disable "AIU
+	broadcast", and set the baud rate to 9,600. These are the normal
+	defaults for NCE. Both of these parameters can be found in your NCE
+	user's manual under "Setup Command Station".</p>
 
 <a name="vianetwork"></a>
-<h2>Power Pro (PowerHouse) via Network</h2>
+<h3>Power Pro (PowerHouse) via Network</h3>
 
 Instead of connecting a serial cable from your computer to a Power Pro,
 you can also connect JMRI to your Power Pro via a network connection
@@ -181,8 +188,6 @@ to a layout in another without having to run a long serial cable.
 <p>
 (There's also a <a href="../TerminalServer.shtml">general page</a>
 on the use of serial-network adapters, also known as terminal servers)</p>
-
-<h3>Setup</h3>
 
 <ol>
 	<li>Connect your serial-network adapter to 
@@ -202,16 +207,13 @@ on the use of serial-network adapters, also known as terminal servers)</p>
 	opens automatically the first time a program is run, or you can select
 	it from the "Edit" menu.</li>
 	<li>Select "NCE via network" from the top selection box.</li>
-
-    <li>In the "Server hostname" box, enter the Internet name
-    or Internet address numbers for your serial-network adapter.
-    In the "Port number" box, enter the port on the serial-network
-    adapter to be used.</li>
-    
-    <li>Select the version of EPROM present in your
-    command station, either "2004 or earlier" or "2006 or later".
-    See <a href="#eeprom">above</a> for more information on this.</li>
-    
+	<li>In the "Server hostname" box, enter the Internet name
+	or Internet address numbers for your serial-network adapter.
+	In the "Port number" box, enter the port on the serial-network
+	adapter to be used.</li>
+	<li>Select the version of EPROM present in your
+	command station, either "2004 or earlier" or "2006 or later".
+	See <a href="#eeprom">above</a> for more information on this.</li> 
 	<li>The series of radio buttons labeled "GUI style" allows you to
 	select how the program will look. "Metal" is the native Java look
 	available on all types. Other choices will vary with your computer
@@ -221,7 +223,7 @@ on the use of serial-network adapters, also known as terminal servers)</p>
 	programmer format. You can override this each time you open the
 	programmer, so this is here just for convenience.</li>
 	<li>Click "Save". You'll be asked if it's OK for the program to
-	quit, click "Yes".</LI>
+	quit, click "Yes".</li>
 	<li>Restart the program. You should be up and running.</li>
 	<li>If not see the 
 	<a href="#troubleShoot">trouble shooting</A> section below.</li>
@@ -232,60 +234,30 @@ broadcast", and set the baud rate to 9,600. These are the normal
 defaults for NCE. Both of these parameters can be found in your NCE
 user's manual under "Setup Command Station".</p>
 
-
 <a name="powercab"></a>
-<h2>NCE USB Interface</h2>
+<h3>NCE USB Interface</h3>
 
-<img src="../images/nceUSB.jpg" WIDTH="85" HEIGHT="85" ALIGN="right" ALT="NCE USB Interface" >
+<img src="../images/nceUSB.jpg" WIDTH="85" HEIGHT="85" ALIGN="right" alt="NCE USB Interface" >
 
 <p>The NCE USB Interface can be connected to all NCE systems,
 Power Cab, SB3 (SmartBooster), SB5, Twin or Power Pro. You must select the correct
 system from the preference menu for reliable operation.</p>
-
-<h3>Setup</h3>
-
-<ol>
-	<li>To connect your computer using a NCE USB Interface, you will need in
-    addition to the USB adapter, a USB A to USB B cable to connect the adapter
-    to your computer and a throttle cable to connect the adapter to your NCE
-    system.
-	The throttle cable may be another of the 'coily cords' that came with another throttle
-	or the PowerCab system.
-	<br>
-    It is important to use a straight through RJ11 cable and not a crossover
-    like some phone cables. Look at the end connectors to make sure that the
-    colors are in the same order. You can use a RJ12 cable with six conductors
-    in place of the RJ11 because it's only the four center conductors that are
-    used, but it must also be a straight through cable.
-    <br>
-    NOTE: If using with a PowerCab, you must have firmware version 1.28c or later installed.
-	<br>
-	The connection order is also thought to be important:
 	<ul>
-	    <li>Plug in the cab-bus side and power up the
-	        attached PowerCab</li>
-	    <li>Once the PowerCab is up and working, then
-	        plug the USB cable into the computer.</li>
-	</ul>
-	</li>
 	<li>On most computers, you'll need to install a driver for the
-    <a href="https://www.silabs.com/products/mcu/Pages/USBtoUARTBridgeVCPDrivers.aspx">CP201x USB to UART Bridge VCP</a>
+	<a href="https://www.silabs.com/products/mcu/Pages/USBtoUARTBridgeVCPDrivers.aspx">CP201x USB to UART Bridge VCP</a>
 	used in the NCE USB Interface. 
-	    <ul>
-	    <li><a href="http://www.silabs.com/products/mcu/Pages/USBtoUARTBridgeVCPDrivers.aspx">Windows driver</a></li>
-	    <li><a href="https://www.silabs.com/Support%20Documents/Software/Mac_OSX_VCP_Driver.zip">Mac OS X driver</a></li>
-	    <li><a href="https://www.silabs.com/Support%20Documents/Software/cp210x-3.0.0.tar.gz">Linux driver</a></li>
-        <li>
-        If one of the above links doesn't work, you can
-        perhaps find the needed driver on the
-        <a href="https://www.silabs.com/products/interface/usbtouart/Pages/default.aspx">support web site</a>
-        for
-        <a href="http://www.silabs.com/Pages/default.aspx">SiLabs</a> chips.</li>
-	    </ul>
+		<ul>
+			<li><a href="http://www.silabs.com/products/mcu/Pages/USBtoUARTBridgeVCPDrivers.aspx">Windows driver</a></li>
+			<li><a href="https://www.silabs.com/Support%20Documents/Software/Mac_OSX_VCP_Driver.zip">Mac OS X driver</a></li>
+			<li><a href="https://www.silabs.com/Support%20Documents/Software/cp210x-3.0.0.tar.gz">Linux driver</a></li>
+			<li>If one of the above links doesn't work, you can perhaps find the needed driver on the
+			<a href="https://www.silabs.com/products/interface/usbtouart/Pages/default.aspx">support web site</a>
+			for <a href="http://www.silabs.com/Pages/default.aspx">SiLabs</a> chips.</li>
+		</ul>
 	Download the proper file, unpack it, and execute the installer.
 	Be sure to follow the directions:  On some computers,
 	it matters whether or not the NCE USB Interface is connected
-	and powered on when you do the install.
+	and powered on when you do the install.</li>
 	<li>Now go to the preferences panel of a JMRI-based program. This
 	opens automatically the first time a program is run, or you can select
 	it from the "Edit" menu.</li>
@@ -312,10 +284,33 @@ system from the preference menu for reliable operation.</p>
 	<li>Restart the program. You should be up and running.</li>
 	<li>If not see the <a Hhref="#troubleShoot">
 	trouble shooting </a> section below.</li>
-</ol>
+</ul>
+
+<p>To connect your computer using a NCE USB Interface, you will need in
+    addition to the USB Adapter, a USB A to USB B cable to connect the Adapter
+    to your computer and a Throttle cable to connect the adapter to your NCE
+    system.
+	The Throttle cable may be another of the 'coily cords' that came with another hardware throttle
+	or the PowerCab system.
+	<br>
+    It is important to use a straight through RJ11 cable and not a crossover
+    like some phone cables. Look at the end connectors to make sure that the
+    colors are in the same order. You can use a RJ12 cable with six conductors
+    in place of the RJ11 because it's only the four center conductors that are
+    used, but it must also be a straight through cable.
+    <br>
+    NOTE: If using a PowerCab, you must have firmware version 1.28c or later installed on that.
+	<br>
+	The connection order is also important:
+	<ul>
+	    <li>Plug in the cab-bus side and power up the
+	        attached PowerCab</li>
+	    <li>Once the PowerCab is up and working, then
+	        plug the USB cable into the computer.</li>
+	</ul>
 
 <a name="usblimitations">
-<h3>NCE USB Interface Limitations</h3></a>
+<h4>NCE USB Interface Limitations</h4></a>
 
 <p>The NCE USB Interface doesn't support all of the current JMRI
 features and functions. Some of the restrictions are based on the type
@@ -335,43 +330,42 @@ JMRI program.</p>
 address accessories (turnouts) between 1 and 250. There isn't a
 limitation when connected to a Power Pro.</p> -->
 
+<p>USB Adapter Limitation Summary</p>
 
-<h4>USB Adapter Limitation Summary</h4>
+<dl>
+	<dt>All systems:</dt>
+	<dd>No Turnout MONITORING, No Clock functions.</dd>
 
-<DL>
-	<DT>All systems:</DT>
-	<DD>No Turnout MONITORING, No Clock functions.</DD>
+	<!--  <dt>Power Cab and SB3:</dt>
+	<dd>Can only access accessory addresses between 1 and 250.</dd> -->
 
-	<!--  <DT>Power Cab and SB3:</DT>
-	<DD>Can only access accessory addresses between 1 and 250.</DD> -->
+	<dt>SB3:</dt>
+	<dd>No programming track support, operation mode only.</dd>
 
-	<DT>SB3:</DT>
-	<DD>No programming track support, operation mode only.</DD>
-
-	<DT>Power Pro:</DT>
-	<DD>No loco programming</DD>
+	<dt>Power Pro:</dt>
+	<dd>No loco programming</dd>
 	
-	<DT>AIU Support:</DT>
-	<DD>USB below 7.* version, no AIU support</DD>
-	<DD>USB version 7.* and above, system with version 1.65 and above firmware, AIU supported</DD>
-</DL>
+	<dt>AIU Support:</dt>
+	<dd>USB below 7.* version, no AIU support</dd>
+	<dd>USB version 7.* and above, system with version 1.65 and above firmware, AIU supported</dd>
+</dl>
 
 <a name="troubleShoot">
 <h2>Troubleshooting</h2></a>
-
+<p>
 When the connection to your NCE is okay and your NCE system is powered
-up you should see after starting PanelPro the following control panel:
+up, after starting PanelPro you should see the following JMRI Startup screen:
 <p><img src="../images/jmriMainPageOk.jpg"
-	ALT="JMRI PanelPro Main Panel" ></p>
-<p>If your are using JMRI 2.1.2 or newer and the panel looks like
-the above, congratulations you are up and running. The panel for
+	alt="JMRI PanelPro Main Panel" ></p>
+<p>If your are using JMRI v 2.1.2 or newer and the screen looks like
+the above, congratulations; you are up and running. The startup screen for
 DecoderPro is similar to PanelPro's.</p>
 <p>If you have the following control panel with the words "NCE: ERROR SERIAL
 USING COMx" in the right center of the panel:</p>
-<p><IMG SRC="../images/jmriMainPageFail.jpg"
-	ALT="JMRI PanelPro Main Panel" ></p>
-<p>You have a problem that needs your attention. The following is a
-list of potential issues that might help you resolve your problem.</p>
+<p><img src="../images/jmriMainPageFail.jpg"
+	alt="JMRI PanelPro Main Panel" ><br>
+you have a problem that needs your attention. The following is a
+list of potential issues that might help you resolve your problem:</p>
 <ol>
 	<li>Confirm that your NCE Command Station is powered up.</li>
 	<li>Check your cables, make sure they are installed correctly.</li>
@@ -381,68 +375,104 @@ list of potential issues that might help you resolve your problem.</p>
 	NCE Command Station are set to the same rates.</li>
 </ol>
 
-<h3>System Console</h3>
-<p>
-JMRI provides connection information via the system console.  You can find
-the system console under the main menu header "Help" then "System console...".
-Below is an image of the console window when the program is
-operating normally. Note that the window size has been adjusted so we
-can read it a bit more easily.
-<p><img src="../images/jmriConsoleOk.jpg" ALT="JMRI Console" ></p>
-<p>If you're having problems, the console window can look like the
-one below:</P>
-<p><img src="../images/jmriConsoleFail.jpg" ALT="JMRI Console" ></p>
-<p>To help you better understand what might be happening and to
-possibly resolve your problem we'll explain some of the warning and
-error messages displayed in the above console window.</p>
-<p>The very first messages are information message labeled "INFO".
-The first message occurs at
-time "0" which can be found at the left side of the message. The next
-"INFO" message states where this log file is stored.  The next info provides the version of JMRI and JAVA that you are using.
-And the last info message provides the communication port that you've selected in
-preferences, along with the baud rate or the speed of your connection.</P>
-<P>The first warning message states that there was a timeout to
-message "AA". During startup, JMRI checks to see if your preferences
-match those in the NCE command station. Message "AA" requests the EPROM
-revision of the command station. The response is normally three
-characters, something like "6.2.1". A timeout means that JMRI asked for
-something and the command station didn't respond. When the connection is
-correct and the system is powered up, you should not see any timeout
-messages.</p>
-<p>The next warning message states that because there was a timeout,
-the program didn't get the information requested from the command
-station. The next messages continue as the program tries every 10
-seconds to read the EPROM revision by issuing the "AA" command. You can
-try and trouble shoot your connections knowing that every 10 seconds
-JMRI will retest to see if you've fixed the problem.</p>
-<p>Whenever JMRI detects a problem with the connection or NCE
-command station, it will request the EPROM revision to see if the
-connection and command station is still operational. So if you see
-timeouts and "AA" commands you have either poor or failed connection, or
-a powered down or failed command station.</p>
+		<h3>Using the System Console</h3>
+		<p>
+		JMRI provides connection information via the system console.  You can find
+		the system console under the main menu header "Help" then "System console...".
+		Below is an image of the console window when the program is
+		operating normally. Note that the window size has been adjusted so we
+		can read it a bit more easily.
+		<p><img src="../images/jmriConsoleOk.jpg" alt="JMRI Console" ></p>
+		<p>If you're having problems, the console window can look like the
+		one below:</p>
+		<p><img src="../images/jmriConsoleFail.jpg" alt="JMRI Console" ></p>
+		<p>To help you better understand what might be happening and to
+		possibly resolve your problem we'll explain some of the warning and
+		error messages displayed in the above console window.</p>
+		<p>The very first messages are information message labeled "INFO".
+		The first message occurs at
+		time "0" which can be found at the left side of the message. The next
+		"INFO" message states where this log file is stored.  The next info provides the version of JMRI and JAVA that you are using.
+		And the last info message provides the communication port that you've selected in
+		preferences, along with the baud rate or the speed of your connection.</p>
+		<p>The first warning message states that there was a timeout to
+		message "AA". During startup, JMRI checks to see if your Preferences
+		match those in the NCE command station. Message "AA" requests the EPROM
+		revision of the command station. The response is normally three
+		characters, something like "6.2.1". A timeout means that JMRI asked for
+		something and the command station didn't respond. When the connection is
+		correct and the system is powered up, you should not see any timeout
+		messages.</p>
+		<p>The next warning message states that because there was a timeout,
+		the program didn't get the information requested from the command
+		station. The next messages continue as the program tries every 10
+		seconds to read the EPROM revision by issuing the "AA" command. You can
+		try and trouble shoot your connections knowing that every 10 seconds
+		JMRI will retest to see if you've fixed the problem.</p>
+		<p>Whenever JMRI detects a problem with the connection or NCE
+		command station, it will request the EPROM revision to see if the
+		connection and command station is still operational. So if you see
+		timeouts and "AA" commands you have either poor or failed connection, or
+		a powered down or failed command station.</p>
+		
+		<h3>Using a Loop Back Serial Cable</h3>
+		<p>
+		You can confirm that you've selected the correct port and that your
+		cable is okay by connecting the male connector pins 2 and 3 with a
+		small jumper wire. Doing this will loop the message "AA" back to JMRI
+		via the Receive line. The console messages should change and look like
+		the ones in the following image:
+		<p><img src="../images/jmriConsoleLoopback.jpg" alt="JMRI Console Loopback" ></p>
 
+<a name="tools"></a><h2>JMRI NCE Tools</h2>
+<img src="images/NCEmenu.png" width="214" height="221" align="right" alt="Menu">
+<p>When JMRI is connected to a layout via this system, an <b>NCE</b> menu is shown:</p>
+<ul>   
+<li>Command Monitor<br>
+<a href="images/NCEMonitor.png">
+<img src="images/NCEMonitor.png" alt="Command Monitor Pane" width="398" height="94"></a></li>
+<li><a href="../../../package/jmri/jmrix/nce/packetgen/NcePacketGenFrame.shtml">Send Command </a><br>
+<a href="images/NCESendCommand.png">
+<img src="images/NCESendCommand.png" alt="Send NCE Command Pane" width="126" height="71"></a></li>
+<li>Send Macro<br>
+<a href="images/NCEGenerateMacro.png">
+<img src="images/NCEGenerateMacro.png" alt="Send NCE Macro Pane" width="124" height="57"></a></li>
+<li><a href="../../../package/jmri/jmrix/nce/macro/NceMacroEditFrame.shtml">Edit Macro </a><br>
+<a href="images/NCEEditMacro.png">
+<img src="images/NCEEditMacro.png" alt="Edit NCE Macro Pane" width="232" height="224"></a></li>
+<li><a href="../../../package/jmri/jmrix/nce/consist/NceConsistEditFrame.shtml">Edit Consist </a><br>
+<img src="images/NCEConsistMsg1.png" alt="Save Consist message" width="281" height="84">&nbsp;
+<img src="images/NCEConsistMsg2.png" alt="Loading NCE Consists message" width="327" height="128">&nbsp;
+<img src="images/NCEConsistThrottleMsg.png" alt="Consist Throttle message" width="192" height="84">
+</li>
+<li><a href="../../../package/jmri/jmrix/nce/analyzer/NcePacketMonitorFrame.shtml">DCC Packet Analyzer </a><br>
+<a href="images/NCEDCCPackAnalyzer.png">
+<img src="images/NCEDCCPackAnalyzer.png" alt="NCE Packet Analyzer Pane" width="642" height="307"></a></li>
+<li><a href="../../../package/jmri/jmrix/nce/clockmon/ClockMonFrame.shtml">Monitor Clock </a><br>
+<a href="images/NCEMonitorClock.png">
+<img src="images/NCEMonitorClock.png" alt="Clock Monitor Pane" width="366" height="271"></a></li>
+<li>Show Cabs<br>
+<a href="images/NCEShowNCECabs.png">
+<img src="images/NCEShowNCECabs.png" alt="Show NCE Cabs Pane" width="350" height="85"></a></li>
+<li>Program Booster<br>
+<a href="images/NCEBooster.png">
+<img src="images/NCEBooster.png" alt="Booster Programming Pane" width="212" height="65"></a></li>
+<li>Configure USB Interface<br>
+<a href="images/NCEConfigureUSB.png">
+<img src="images/NCEConfigureUSB.png" alt="Diagnostic Pane" width="145" height="62"></a></li>
+</ul>
 
-<h3>Loop Back Serial Cable</h3>
+<a name="documentation"></a><h2>Documentation</h2>
+<h3>JMRI Help</h3>
+<p>If you are having problems, you should try the <a
+	href="https://groups.yahoo.com/neo/groups/jmriusers/info">JMRI users</a> Yahoo group to contact other JMRI users that can help you out.</p>
 
-You can confirm that you've selected the correct port and that your
-cable is okay by by connecting the male connector pins 2 and 3 with a
-small jumper wire. Doing this will loop the message "AA" back to JMRI
-via the receive line. The console messages should change and look like
-the ones in the following image:
-<p><img src="../images/jmriConsoleLoopback.jpg" ALT="JMRI Console Loopback" ></p>
-
-<p>If you are still having problems, you should try the <a
-	href="https://groups.yahoo.com/neo/groups/jmriusers/info">JMRI users</a> Yahoo group.
-There you should be able to contact other JMRI users that can help you
-out.</p>
-
-<h3>More Information</h3>
-
+<h3>Third Party info</h3>
 <p><a href="http://www.ncedcc.com/">NCE Systems and
 Cabs Catalog</a></p>
 
 <!--#include virtual="/Footer" -->
-
-</BODY>
-</HTML>
-
+  </div><!-- closes #mainContent-->
+</div> <!-- closes #mBody-->
+</body>
+</html>

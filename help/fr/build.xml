@@ -26,7 +26,7 @@
   <!-- set global properties for this build -->
   <property name="target" value="."/>
 
-  <target name="init" description="create needed directories">
+  <target name="init" description="create needed directories for fr/help">
     <!-- Create the time stamp -->
     <tstamp/>
     <!-- Create the build directory structure used by compile -->
@@ -35,7 +35,7 @@
 
   
   <target name="index" depends="init" 
-  			description="create an index page">
+  			description="create an fr/index page">
     <xslt  basedir="${basedir}"
     		destdir="${target}"
     		extension=".html"
@@ -58,7 +58,7 @@
   </target>
 
   <target name="TOC" depends="init" 
-  			description="create a TOC page">
+  			description="create an fr/TOC page">
     <xslt  basedir="${basedir}"
     		destdir="${target}"
     		extension=".html"
@@ -81,7 +81,7 @@
   </target>
 
   <target name="all" depends="init, index, TOC" 
-  			description="create all" />
+  			description="create all fr/help pages" />
  
 </project>
 

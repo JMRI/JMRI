@@ -166,7 +166,7 @@ public class OrderedHashtableTest extends TestCase {
 
     // Main entry point
     static public void main(String[] args) {
-        String[] testCaseName = {OrderedHashtableTest.class.getName()};
+        String[] testCaseName = {"-noloading", OrderedHashtableTest.class.getName()};
         junit.swingui.TestRunner.main(testCaseName);
     }
 

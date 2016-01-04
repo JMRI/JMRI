@@ -1,69 +1,58 @@
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
-<!-- $Id$ -->
 <html lang="en">
 <head>
- <TITLE>
-      JMRI Hardware Guide: Connecting a LocoBuffer to LocoNet&reg;
- </TITLE>
-    <META http-equiv=Content-Type content="text/html; charset=iso-8859-1">
-    <META content="Bob Jacobsen" name=Author>
-    <META name="keywords" content="Digitrax Chief DCS Command Station MS-100 LocoBuffer java model railroad JMRI install windows">
+ <title>JMRI Hardware Support - LocoBuffer to LocoNet&reg;</title>
+    <meta name="Author" content="Bob Jacobsen">
+    <meta name="keywords" content="Digitrax Chief DCS Command Station MS-100 LocoBuffer java model railroad JMRI install windows">
 
 <!-- Style -->
-<META HTTP-EQUIV="Content-Type" CONTENT="text/html; charset=iso-8859-1">
-<LINK REL="stylesheet" TYPE="text/css" HREF="/css/default.css"
-	MEDIA="screen">
-<LINK REL="stylesheet" TYPE="text/css" HREF="/css/print.css"
-	MEDIA="print">
-<LINK REL="icon" HREF="/images/jmri.ico" TYPE="image/png">
-<LINK REL="home" TITLE="Home" HREF="/">
+<meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
+<link rel="stylesheet" type="text/css" href="/css/default.css" media="screen">
+<link rel="stylesheet" type="text/css" href="/css/print.css" media="print">
+<link rel="icon" href="/images/jmri.ico" type="image/png">
+<link rel="home" title="Home" href="/">
 <!-- /Style -->
-</HEAD>
+</head>
 
-<BODY>
+<body>
 <!--#include virtual="/Header" -->
   <div class="nomenu" id="mBody">
     <div id="mainContent">
 
-      <h1> 
-      JMRI Hardware Guide: Connecting a LocoBuffer to LocoNet&reg;
-      </h1>
-
+  <h1>Hardware Support: Connecting a LocoBuffer to LocoNet&reg;</h1>
 
 <p>
 John Jabour designed the LocoBuffer as a reliable way of connecting
-a computer to a LocoNet&reg;.  He's no longer making them, but 
-<A HREF="http://users.pandora.be/deloof/page5.html">Hans deLoof</a>
+a computer to a LocoNet&reg;. He's no longer making them, but 
+<a href="http://users.pandora.be/deloof/page5.html">Hans deLoof</a>
 has taken over for people who want to build their own.
 </p>
-<p>
-The 
-<A HREF="LocoBufferII.shtml">LocoBuffer II</a>
+<p>The 
+<a href="LocoBufferII.shtml">LocoBuffer II</a>
 is currently the most reliable commercially-available way to 
 connect a computer to a LocoNet.  It is produced by Dick Bronson's
-<A HREF="http://www.rr-cirkits.com">RR-CirKits</a> 
+<a href="http://www.rr-cirkits.com">RR-CirKits</a> 
 company, based in part on the original LocoBuffer design.
 </p>
-
 
 <h2>Recommended setup</h2>
 <p>
 The recommended setup for the LocoBuffer is:
 </p>
 
-<UL>
-<LI>The LocoBuffer should be configured with J1, J4 and J5 set on
-pins 1 and 2, J2 and J3 set to pins 2 and 3. This configures it
-for a 19,200 baud connection, with echo on.
-<LI>
-Start DecoderPro or other program and configure it for:
-<UL>
-<LI>LocoNet LocoBuffer
-<LI>Select your port
-<LI>19,200 baud
-<LI>Hardware flow control
-</UL>
-</UL>
+	<ul>
+	<li>The LocoBuffer should be configured with J1, J4 and J5 set on
+	pins 1 and 2, J2 and J3 set to pins 2 and 3. This configures it
+	for a 19,200 baud connection, with echo on.
+	<li>
+	Start DecoderPro or other program and configure it for:
+		<ul>
+		<li>LocoNet LocoBuffer
+		<li>Select your port
+		<li>19,200 baud
+		<li>Hardware flow control
+		</ul>
+	</ul>
 
 <h2>Usage suggestions</h2>
 
@@ -83,7 +72,7 @@ Start DecoderPro or other program and configure it for:
 	  If you got your LocoBuffer chip after February 2002, this should
 	  not be a problem for you.</p>
 
-<h2><A NAME="flow">LocoBuffer flow control</a></h2>
+<h2><a name="flow">LocoBuffer flow control</a></h2>
 
 	  <p>Some Windows versions, in particular Win2000, cannot handle
 	  the LocoBuffer's control leads properly.  You'll see this as
@@ -93,7 +82,7 @@ Start DecoderPro or other program and configure it for:
 	  select "no flow control" option, click save, then quit and
 	  restart the program.  Note that this problem is specific to
 	  certain Windows versions, and you generally should have "hardware
-	  flow control" selected.  </p>
+	  flow control" selected.</p>
 
 	  <P> If the problem persists, please try jumpering-together the
 	  pins 5, 6 and 8 on the LocoBuffer's 25-pin connector.  These are
@@ -110,11 +99,12 @@ Start DecoderPro or other program and configure it for:
 
 	  <P> So the suggestion is to connect pin 5 (with a trace) to pin 6
 	  and 8 (without traces).  Be careful not to short to pin 7, which
-	  is already connected.  </p>
+	  is already connected.</p>
 	  
 <p>LocoNet&reg; is a registered trademark of <a href="http://www.digitrax.com">Digitrax, Inc.</a></p>
-    </div>
 
 <!--#include virtual="/Footer" -->
+  </div><!-- closes #mainContent-->
+</div> <!-- closes #mBody-->
 </body>
 </html>

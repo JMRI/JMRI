@@ -35,31 +35,31 @@ the GUI thread.  For example, once a 'message', e.g. a LocoNet packet,
 is accumulated in a separate thread, the message is processed in the 
 GUI thread via:
 <PRE>
-	// message is complete, dispatch it !!
-	{ 
-	final LocoNetMessage thisMsg = msg;
-	final LnTrafficController thisTC = this;
-	// return a notification via the queue to ensure end
-	Runnable r = new Runnable() {
-		LocoNetMessage msgForLater = thisMsg;
-		LnTrafficController myTC = thisTC;
-		public void run() { 
-				log.debug("Delayed notify starts");
-           		myTC.notify(msgForLater);
-			}
+	// message is complete, dispatch it !!<br/>
+	{ <br/>
+	final LocoNetMessage thisMsg = msg;<br/>
+	final LnTrafficController thisTC = this;<br/>
+	// return a notification via the queue to ensure end<br/>
+	Runnable r = new Runnable() {<br/>
+		LocoNetMessage msgForLater = thisMsg;<br/>
+		LnTrafficController myTC = thisTC;<br/>
+		public void run() { <br/>
+				log.debug("Delayed notify starts");<br/>
+           		myTC.notify(msgForLater);<br/>
+			}<br/>
 		};
-		javax.swing.SwingUtilities.invokeLater(r);
-	}
+		javax.swing.SwingUtilities.invokeLater(r);<br/>
+	}<br/>
 </PRE>
 
 This does a nice job of serializing the activity from the layout.
 <p>
-Note that this does <em>not</em> mean that other things can't be happening. For example, 
+Note that this does <em>not</em> mean that other things can't be happening. For example, this script fragment:
 
 <pre><code>
-    state = sensors.provideSensor("mySensor").getState()
-    turnouts.provideTurnout("myTurnout").setState(THROWN)
-    print state == sensors.provideSensor("mySensor").getState()
+    state = sensors.provideSensor("mySensor").getState()<br/>
+    turnouts.provideTurnout("myTurnout").setState(THROWN)<br/>
+    print state == sensors.provideSensor("mySensor").getState()<br/>
 </code></pre>
 
 can print either true or false, because changing that turnout <em>can</em> change associated sensors instantaneously.

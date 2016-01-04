@@ -10,6 +10,16 @@ A similar mechanism is used for Linux under the linux/ directory.
 
 MacOS X fat binaries are treated slightly differently, see the README file there.
 
+#### Updates
+
+If you make a change in this directory (add/change/remove a file), please make corresponding changes in the control files that are used for various JMRI development and release operations:
+- build.xml - used by Ant, and in turn by various IDEs
+- .classpath - used by Eclipse
+- nbproject/ide-file-targets.xml, nbproject/project.xml - used by NetBeans
+
+Note that Windows installers don't necessarily remove existing library versions. (See [JMRI Issue #359](https://github.com/JMRI/JMRI/issues/359) for discussion on this)  Until that's changed, if you remove a library from here that really needs to _not_ be in user installs, you need to add an explicit delete to the scripts/WinInstallFiles/InstallJMRI.nsi file, in addition to modifying those above. 
+
+
 ### Specific components:
 
 ##### vecmath.jar
@@ -124,6 +134,8 @@ bluecove-gpl-2.1.1-SNAPSHOT.jar
         
   version 0.5.7
   libusbJava.jnilib for MacOS X
+        to get 64-bit, from http://wiki.ztex.de/doku.php?id=en:software:porting#macos_port
+        requires /usr/local/lib/libusb-0.1.4.dylib via MacPorts or Homebrew or an installer from http://www.ellert.se/twain-sane/
   LibusbJava.dll for Windows is 0.2.3.0 (Feb 18, 2008)
   libusbJava.so for Linux was built on Ubuntu 7.10 w libusb 2:0.1.12-7
   

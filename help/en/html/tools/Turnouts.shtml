@@ -26,9 +26,9 @@
 
       <div id="mainContent">
       <!-- Page Body -->
-<h2>JMRI: Turnouts Documentation</h2>
+<h1>JMRI: Turnouts Documentation</h1>
 
-<h3>What are Turnouts?</h3>
+<h2>What are Turnouts?</h2>
 
 <p>JMRI calls just about any output to the layout a "Turnout".  
 Originally, JMRI controlled just Turnouts via DCC accessory decoders.
@@ -37,19 +37,20 @@ Now, for example, the individual output pins on a C/MRI system
 are also referenced via the "Turnout" name.
 </p>
 
-<h3>Controlling a Turnout</h3>
+<h2>How to setup Turnouts</h2>
 
-<p>
-In most cases, you can just operate a Turnout and JMRI will 
-figure out why you mean.  
-For example, you can open the "Turnout Control"
-from the "Tools" menu, enter a Turnout number (DCC or C/MRI address number),
-and click Thrown or Closed. JMRI will take it from there.
-</p>
+<h3>Controlling a Turnout</h3>
 <p>
 The two states of the output are called "Closed" and "Thrown".  
 "Closed" is the off, inactive, not commanded state.
-"Thrown" is the on, active, commanded state. 
+"Thrown" is the on, active, commanded state.</p>
+<p>
+In most cases, you can just operate a Turnout and JMRI will 
+figure out why you mean.  
+For example, you can open the "Turnout Control" tool
+from the "Tools" menu, enter a Turnout number (DCC or C/MRI address number),
+and click Thrown or Closed. JMRI will take it from there.
+</p>
    
 <h3>Saving Turnout configuration to disk</h3>
 
@@ -61,35 +62,37 @@ in the <b>Panel</b> menu.
 
 <a name="add"><h3>Adding a new Turnout</h3></a>
 <p>To fully configure a new Turnout, follow this procedure:</p>
-<ol>
-	<li><p>Click <b>Tables</b> -&gt; <b>Turnouts</b> in the <b>Tools</b> menu to bring up
-the Turnouts Table, and click the <b>Add...</b> button at the bottom of the 
-pane to bring up the Add/Edit Turnout window.</p>
-	<li><p>From the <b>System</b> drop down list select the system to which the 
-    Turnout address is connected to. In the <b>Hardware Address</b> field enter the
-    dcc accessory address of the Turnout.</p>
-	</li>
-	<li><p>Enter a User Name. Any string of characters that is different 
-from the User Name of other Turnouts will be accepted, but it's 
-wise to use a string that describes the intended use of the Turnout.
-You can leave this blank if you'd like.</p>
-	</li>
-    <li><p>If you wish to add a number of Turnouts at once, click on the 
-    <b>Add a Range</b> checkbox and then in the <b>Number to Add</b> field enter
-    the number of Turnouts that you wish to add. If you have entered a User
-    Name, then this will be appended with a number to ensure that each User Name
-    is unique. If a hardware address already exists in the range that is being
-    added, then the system will skip that address and carry on.
-    </li>
-	<li><p>Click the <b>OK</b> button at the bottom of the pane.  
-If everything is fine, a message stating "New Turnout added..." will be 
-displayed in the notes area. If there is trouble with anything, an error or 
-warning message will be displayed in the notes area; you should then
-correct the error and click <b>OK</b> again.</p>
-    </li>
-    <li><p>Back in the main Turnouts Table, you can now select
-options for the Turnout and control it by clicking on its State button.
-</ol>
+		<ol>
+		<li><p>Click <b>Tables</b> -&gt; <b>Turnouts</b> in the <b>Tools</b> menu to bring up
+		the Turnouts Table, and click the <b>Add...</b> button at the bottom of the 
+		pane to bring up the Add/Edit Turnout window.</p>
+		</li>
+		<li><p>From the <b>System</b> drop down list select the system to which the 
+		Turnout address is connected to. In the <b>Hardware Address</b> field enter the
+		dcc accessory address of the Turnout.</p>
+		</li>
+		<li><p>Enter a User Name. Any string of characters that is different 
+		from the User Name of other Turnouts will be accepted, but it's 
+		wise to use a string that describes the intended use of the Turnout.
+		You can leave this blank if you'd like.</p>
+		</li>
+		<li><p>If you wish to add a number of Turnouts at once, click on the 
+		<b>Add a Range</b> checkbox and then in the <b>Number to Add</b> field enter
+		the number of Turnouts that you wish to add. If you have entered a User
+		Name, then this will be appended with a number to ensure that each User Name
+		is unique. If a hardware address already exists in the range that is being
+		added, then the system will skip that address and carry on.
+		</li>
+		<li><p>Click the <b>OK</b> button at the bottom of the pane.  
+		If everything is fine, a message stating "New Turnout added..." will be 
+		displayed in the notes area. If there is trouble with anything, an error or 
+		warning message will be displayed in the notes area; you should then
+		correct the error and click <b>OK</b> again.</p>
+		</li>
+		<li><p>Back in the main Turnouts Table, you can now select
+		options for the Turnout and control it by clicking on its State button.
+		</li>
+		</ol>
 
 <!--#include virtual="/Footer" -->
 
@@ -98,5 +101,4 @@ options for the Turnout and control it by clicking on its State button.
   </div> <!-- closes #container -->
 </body>
 </html>
-
 

@@ -13,10 +13,12 @@ import junit.framework.TestSuite;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+import jmri.util.JUnitUtil;
+
 /**
  * Description:	JUnit tests for the EasyDccTrafficController class
  *
- * @author	Bob Jacobsen Copyright (C) 2003, 2007
+ * @author	Bob Jacobsen Copyright (C) 2003, 2007, 2015
  * @version $Revision$
  */
 public class EasyDccTrafficControllerTest extends TestCase {
@@ -55,7 +57,8 @@ public class EasyDccTrafficControllerTest extends TestCase {
         c.sendEasyDccMessage(m, l);
 
         ostream.flush();
-        waitThread();
+        JUnitUtil.waitFor(()->{return tostream.available() == 4;}, "total length");
+        
 		// test the result of sending
 
 		Assert.assertEquals("total length ", 4, tostream.available());
@@ -71,24 +74,11 @@ public class EasyDccTrafficControllerTest extends TestCase {
 
         // drive the mechanism
         c.handleOneIncomingReply();
-        Assert.assertTrue("reply received ", waitForReply());
-        Assert.assertEquals("first char of reply ", 'P', rcvdReply.getOpCode());
-    }
 
-    private boolean waitForReply() {
-        // wait for reply (normally, done by callback; will check that later)
-        int i = 0;
-        while (rcvdReply == null && i++ < 100) {
-            try {
-                Thread.sleep(10);
-            } catch (Exception e) {
-            }
-        }
-        if (log.isDebugEnabled()) {
-            log.debug("past loop, i=" + i
-                    + " reply=" + rcvdReply);
-        }
-        return i < 100;
+        JUnitUtil.waitFor(()->{return rcvdReply != null;}, "reply received");
+
+        Assert.assertTrue("reply received ", rcvdReply != null);
+        Assert.assertEquals("first char of reply ", 'P', rcvdReply.getOpCode());
     }
 
     // internal class to simulate a EasyDccListener
@@ -161,14 +151,6 @@ public class EasyDccTrafficControllerTest extends TestCase {
     DataInputStream istream;  // so the traffic controller can read from this
 
     // from here down is testing infrastructure
-    void waitThread() {
-        synchronized (this) {
-            try {
-                Thread.sleep(200);
-            } catch (Exception e) {
-            }
-        }
-    }
 
     public EasyDccTrafficControllerTest(String s) {
         super(s);

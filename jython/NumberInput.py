@@ -6,6 +6,7 @@
 #
 
 import jmri
+import java
 
 # Define a listener which appends a single character (from its
 # local 'digit' variable) to a memory (in its local 'memory' variable)

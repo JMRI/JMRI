@@ -1,35 +1,26 @@
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
-<!-- $Id$ -->
 <html lang="en">
 <head>
- <TITLE>
- JMRI: Keyspan USB connections
- 
- </TITLE>
-    <META http-equiv=Content-Type content="text/html; charset=iso-8859-1">
-    <META content="Bob Jacobsen" name=Author>
-    <META content="John Plocher" name=Author>
-    <META name="keywords" content="Keyspan USB java model railroad JMRI install">
+ <title>JMRI Hardware Support - Keyspan USB adapter</title>
+    <meta content="Bob Jacobsen" name="Author">
+    <meta content="John Plocher" name="Author">
+    <meta name="keywords" content="Keyspan USB java model railroad JMRI install">
 
 <!-- Style -->
-<META HTTP-EQUIV="Content-Type" CONTENT="text/html; charset=iso-8859-1">
-<LINK REL="stylesheet" TYPE="text/css" HREF="/css/default.css"
-	MEDIA="screen">
-<LINK REL="stylesheet" TYPE="text/css" HREF="/css/print.css"
-	MEDIA="print">
-<LINK REL="icon" HREF="/images/jmri.ico" TYPE="image/png">
-<LINK REL="home" TITLE="Home" HREF="/">
+<meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
+<link rel="stylesheet" type="text/css" href="/css/default.css" media="screen">
+<link rel="stylesheet" type="text/css" href="/css/print.css" media="print">
+<link rel="icon" href="/images/jmri.ico" type="image/png">
+<link rel="home" title="Home" href="/">
 <!-- /Style -->
-</HEAD>
+</head>
 
-<BODY>
+<body>
 <!--#include virtual="/Header" -->
 
   <div class="nomenu" id="mBody">
     <div id="mainContent">
-      <H2> 
-      JMRI Install Guide: Keyspan USB connections
-      </H2>
+      <h1>Hardware Support: Keyspan USB connections</h1>
 
       <p>This page describes tests of two USB serial adapters with the Digitrax
       MS100 LocoNet&reg; interface.
@@ -41,13 +32,13 @@
 
       <p><img src="./images/LN_to_PC.gif" alt="Sample LocoNet to RS232 Interface Schematic"></p>
 
-    <H2>Summary</H2>
+    <h2>Summary</h2>
 
 	<dl>
-        <dt class=left>Keyspan PDA adapter P/N USA-19</dt>
-	<dt class=left>Summary: This worked fine.</dt>
+        <dt class="left">Keyspan PDA adapter P/N USA-19</dt>
+	<dt class="left">Summary: This worked fine.</dt>
 	<dd>
-	<p> Unfortunately, this adapter is no longer made.  I believe that the
+	<p> Unfortunately, this adapter is no longer made. We believe that the
 	replacement "Keyspan High Speed Serial Adapter" Part# USA-19QW is the
 	same unit.</p>
 
@@ -57,8 +48,8 @@
 	some of them will only work to 56,000 baud.</p>
 	</dd>
 
-	<dt class=left>Keyspan Dual Serial Adapter P/N USA-28X</dt>
-	<dt class=left>Summary: This did not work.</dt>
+	<dt class="left">Keyspan Dual Serial Adapter P/N USA-28X</dt>
+	<dt class="left">Summary: This did not work.</dt>
 	<dd>
 	Problems:  the USB adapter provides only one control line output, and
 	the serial port outputs were only +/- 5V.  This was not enough to power
@@ -66,16 +57,16 @@
 	</dd>
 	</dl>
 
-    <H2>Details</H2>
+    <h2>Details</h2>
 
 	<dl>
-        <dt class=left>Keyspan PDA adapter P/N USA-19</dt>
-	<dt class=left>Summary: This worked fine.</dt>
+        <dt class="left">Keyspan PDA adapter P/N USA-19</dt>
+	<dt class="left">Summary: This worked fine.</dt>
 	<dd>
 	<p> This was actually the second USB serial adapter I tried, after the
 	Keyspan Dual Serial Adapter (see below).  This adapter provides a DB9
 	male plug, pinout available from the
-<a HREF="http://www.keyspan.com/products/USB/PDAadapter/docs/mac/html/homepage29.html">
+<a href="http://www.keyspan.com/products/USB/PDAadapter/docs/mac/html/homepage29.html">
 	Keyspan product support page</a>.  Note that there are both RTS and DTR
 	outputs; these can be separately controlled to provide + and - voltage
 	to the MS100.</p>
@@ -99,21 +90,19 @@ DSR      6             6
 RTS      7             4
 CTS      8             5
 RI       9            22
-
 </pre>
 
-	<p> Note that I didn't test the level input from the MS100 (DSR, CTS).
-
-	</p>
+	<p> Note that I didn't test the level input from the MS100 (DSR, CTS).</p>
+	
 	</dd>
 
-	<dt class=left>Keyspan Dual Serial Adapter P/N USA-28X</dt>
-	<dt class=left>Summary: This did not work.</dt>
+	<dt class="left">Keyspan Dual Serial Adapter P/N USA-28X</dt>
+	<dt class="left">Summary: This did not work.</dt>
 	<dd>
 	<p>
 	The initial problem was that the USB adapter provides only one control
 	line output (see pinout on the 
-<a HREF="http://www.keyspan.com/products/USB/usa28x/docs/swp/aPinOuts.html">
+<a href="http://www.keyspan.com/products/USB/usa28x/docs/swp/aPinOuts.html">
 	Keyspan product support page</a>.
 	This means that the serial port can only provide one of the two + and -
 	levels needed for the MS100.  Since there are two ports, I build a
@@ -121,9 +110,8 @@ RI       9            22
 	the other level.</p>
 
 	<p>
-	<a HREF="./images/KeyspanJumper.jpg"><img SRC="./images/KeyspanJumper-thumb.jpg"
+	<a href="./images/KeyspanJumper.jpg"><img src="./images/KeyspanJumper-thumb.jpg"
                 alt="Keyspan USA-28X did not function">(click to enlarge)</a></p>
-
 
 	<p> The second problem was that the serial port outputs were only +/-
 	5V.  This was not enough to power the MS100 during receive.
@@ -133,7 +121,7 @@ RI       9            22
 	enough swing to drive the LocoNet itself, but not to power the receive
 	level shifter in the MS100.
 
-	<p><a HREF="./images/KeyspanTxD.jpg"><img SRC="./images/KeyspanTxD-thumb.jpg" 
+	<p><a href="./images/KeyspanTxD.jpg"><img src="./images/KeyspanTxD-thumb.jpg" 
                 alt="Oscilloscope image showing Keyspan USA-28X TxD voltages">
 	(click to enlarge)</a></p>
 
@@ -142,13 +130,13 @@ RI       9            22
 	picture is the received data, nominally an RS232 signal of at least
 	+/-6 volts, from the MS100.  The received data signal was getting up to
 	6V, marginally OK, but it was not going below ground.  The USB serial
-	adapter was not reporting any received charaters to the Macintosh.
+	adapter was not reporting any received characters to the Macintosh.
 
-	<p><a HREF="./images/KeyspanRxD.jpg"><img SRC="./images/KeyspanRxD-thumb.jpg" 
+	<p><a href="./images/KeyspanRxD.jpg"><img src="./images/KeyspanRxD-thumb.jpg" 
                 alt="Oscilloscope image showing inadequate Keyspan USA-28X RxD voltages">
 (click to enlarge)</a></p>
 
-	<h3>Hardware & software used</h3>
+	<h3>Hardware &amp; Software used</h3>
 
 	<p>The tests were done with a PowerBook G4 400MHz, Mac OS 9.1.  The
 	test program was a Java application created with CodeWarrior 4.1.0.3
@@ -163,8 +151,9 @@ RI       9            22
 	</dd>
 	</dl>
 <p>LocoNet&reg; is a registered trademark of <a href="http://www.digitrax.com">Digitrax, Inc.</a></p>
-    </div>
 
 <!--#include virtual="/Footer" -->
+  </div><!-- closes #mainContent-->
+</div> <!-- closes #mBody-->
 </body>
 </html>

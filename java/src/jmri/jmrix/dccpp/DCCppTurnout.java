@@ -159,18 +159,18 @@ public class DCCppTurnout extends AbstractTurnout implements DCCppListener {
             return;
         }
         if (_activeFeedbackType == EXACT) {
-            msg = DCCppMessage.getOutputCmdMsg(mNumber, (s == THROWN));
+            msg = DCCppMessage.makeOutputCmdMsg(mNumber, (s == THROWN));
             internalState = COMMANDSENT;
         } else if (_activeFeedbackType == MONITORING) {
 
 	    // Convert the integer Turnout value to boolean for DCC++ internal code.
 	    // Assume if it's not THROWN (true), it must be CLOSED (false).
-	    msg = DCCppMessage.getTurnoutCommandMsg(mNumber, (s == THROWN));
+	    msg = DCCppMessage.makeTurnoutCommandMsg(mNumber, (s == THROWN));
 	    internalState = COMMANDSENT;
 	} else { // Assume Direct Mode
 	    int addr = (mNumber -1) / 4 + 1;
 	    int sub = (mNumber - 1) % 4;
-	    msg = DCCppMessage.getAccessoryDecoderMsg(addr, sub, (s == THROWN));
+	    msg = DCCppMessage.makeAccessoryDecoderMsg(addr, sub, (s == THROWN));
 	    internalState = IDLE; // change this!
 	}
 	tc.sendDCCppMessage(msg, this);

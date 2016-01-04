@@ -37,24 +37,24 @@
 des fins sp&#233;cifiques. Outils g&#233;n&#233;raux:
 	    <dl>
 
-		<dt><h3><a href="Sensors.shtml"> Capteurs</a></h3></dt>
+		<dt><h3><a href="Sensors.shtml">Capteurs</a></h3></dt>
 		<dd>
 		    Un capteur est une fa&#231;on pour JMRI de repr&#233;senter une information venant du r&#233;seau.
 </dd>
 
 
-<dt> <h3><a href="Turnouts.shtml"> Aiguillages</a></h3> </dt>
+<dt> <h3><a href="Turnouts.shtml">Aiguillages</a></h3> </dt>
 <dd>
 JMRI appelle  "Aiguillage" &#224; peu pr&#232;s n'importe quelle sortie vers le r&#233;seau.
 </dd>
 
-<dt> <h3><a href="throttle/ThrottleMain.shtml"> R&#233;gulateurs</a></h3> </dt>
+<dt> <h3><a href="throttle/ThrottleMain.shtml">R&#233;gulateurs</a></h3> </dt>
 <dd>
 Vous pouvez ouvrir plusieurs r&#233;gulateurs logiciels pour piloter
 vos locomotives DCC.
 </dd>
 
-<dt> <h3><a href="ConsistTool/ConsistTool.shtml"> Couplage (UM)</a></h3> </dt>
+<dt> <h3><a href="ConsistTool/ConsistTool.shtml">Couplage (UM)</a></h3> </dt>
 <dd>
 JMRI fournit les outils pour g&#233;rer les couplages de locomotives.
 		</dd>
@@ -106,14 +106,14 @@ LItin&#233;raires &#233;tend les capacit&#233;s des Itin&#233;raires par
                      Capacit&#233;s de Logix.
 </dd>
 
-         <dt> <h3><a href="fastclock/index.shtml"> Horloges Rapides</a></h3> </dt>
+         <dt> <h3><a href="fastclock/index.shtml">Horloges Rapides</a></h3> </dt>
          <dd>
              JMRI peut &#224; la fois fournir diff&#233;rents types d'horloges rapides
              sur l'&#233;cran de l'ordinateur, et aussi travailler avec les
              horloges rapides d&#233;j&#224; install&#233;es sur votre r&#233;seau.
          </dd>
 
-    <dt> <h3><a href="speedometer/index.shtml"> Tachym&#232;tre</a></h3> </dt>
+    <dt> <h3><a href="speedometer/index.shtml">Tachym&#232;tre</a></h3> </dt>
 <dd>
 Un outil pour d&#233;terminer la vitesse &#224; l'&#233;chelle de vos locomotives 
 . Vous pouvez l'utiliser pendant leurs r&#233;glages,
@@ -130,7 +130,7 @@ sur le r&#233;seau.
 
 <dt> <h3> <a href="../../package/jmri/jmrit/operations/Operations.shtml">Exploitations (Op&#233;rations) </a> </h3> </dt>
 <dd>
-L'outil d'Explotation vous permet de produire par ordinateur les
+L'outil d'Exploitation vous permet de produire par ordinateur les
 manifestes et les listes de manoeuvre de votre chemin de fer.	
 </dd>
 </dl>

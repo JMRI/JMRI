@@ -4,6 +4,7 @@
 # Author: Ken Cameron, copyright 2009
 # Part of the JMRI distribution
 
+import java
 import jmri
 import javax.swing
 
