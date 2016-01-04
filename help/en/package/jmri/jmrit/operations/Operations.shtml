@@ -1,29 +1,27 @@
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
-<!-- $Id$ -->
-<HTML LANG="en">
-<HEAD>
-<TITLE>Operations</TITLE>
-<META HTTP-EQUIV="Content-Type" CONTENT="text/html; charset=iso-8859-1">
-<META CONTENT="Dan Boudreau" NAME="Author">
-<META NAME="keywords"
- CONTENT="JMRI Help Operations Setup Settings Cars Engines Locomotives Trains Routes Locations Schedules">
+<html lang="en">
+<head>
+<title>JMRI - Operations</title>
+<meta name="Author" content="Dan Boudreau">
+<meta name="keywords"
+ content="JMRI Help Operations Setup Settings Cars Engines Locomotives Trains Routes Locations Schedules">
 
 <!-- Style -->
-<META HTTP-EQUIV="Content-Type" CONTENT="text/html; charset=iso-8859-1">
-<LINK REL="stylesheet" TYPE="text/css" HREF="/css/default.css" MEDIA="screen">
-<LINK REL="stylesheet" TYPE="text/css" HREF="/css/print.css" MEDIA="print">
-<LINK REL="icon" HREF="/images/jmri.ico" TYPE="image/png">
-<LINK REL="home" TITLE="Home" HREF="/">
+<meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
+<link rel="stylesheet" type="text/css" href="/css/default.css" media="screen">
+<link rel="stylesheet" type="text/css" href="/css/print.css" media="print">
+<link rel="icon" href="/images/jmri.ico" type="image/png">
+<link rel="home" title="Home" href="/">
 <!-- /Style -->
-</HEAD>
+</head>
 
-<BODY>
- <!--#include virtual="/Header" -->
+<body>
+ <!--#include virtual="/header" -->
 
- <DIV CLASS="nomenu" ID="mBody">
-  <DIV ID="mainContent">
+ <div class="nomenu" id="mBody">
+  <div id="mainContent">
 
-   <H2>OperationsPro&trade;</H2>
+   <h1>JMRI: OperationsPro&trade;</h1>
 
    The JMRI operations program allows you to create computer generated train manifests for your railroad.
    A train
@@ -418,7 +416,7 @@
    travel, the scale that you are using, printer and icon controls, and the ability to create
    backups and restore files for operations.
    <P>
-    <img src="images/Settings.png">
+    <img src="images/Settings.png" alt="Operations Settings pane, version 4.2">
    </P>
    <H4>Railroad Name</H4>
 
@@ -3703,6 +3701,7 @@
     </tr>
    </table>
    
+   <img src="images/TrainsPaneMenu.png" width="376" height="300" align="right" alt="Operations Trains window Tools Menu">
    <A NAME="TrainsTools"></A>
    <H3>Trains Tools</H3>
    
@@ -3717,7 +3716,7 @@
    Trains-&gt;Tools. Very useful when adding a new car type to your roster.
 
    <P>
-    <img src="images/ModifyTrainsByCarType.png">
+  
    </P>
 
    <P>First select the car type you wish to modify. The window will then show which trains can
@@ -3744,6 +3743,7 @@
    the row colored red if a train fails to build. You can find this feature under "Tools" in the
    "Trains" window.
    
+   <a href="images/TrainsTimetable214.png"><img src="images/TrainsTimetable214.png" width="407" height="215" align="right" alt="Operations Trains window Tools Menu v2.14"></a>
    <A NAME="Timetable"></A>
    <H4>Timetable</H4>
 
@@ -4316,9 +4316,9 @@
     match the locations in the program you can build a new train.</P>
 
    <A NAME="OperationWindows"></A>
-   <H2>Operation Windows</H2>
+   <H2>Operations Windows</H2>
 
-   All of the operation windows can be resized and placed to your liking. When you close the window,
+   All of the Operations windows can be resized and placed to your liking. When you close the window,
    the size and window location on your screen is saved.
 
    <P>OperationsPro&trade; also allows you to resize the Cars, Locomotives, Trains and Timetable table
@@ -4332,11 +4332,9 @@
     <A HREF="http://jmri.sourceforge.net/help/en/html/web/">JMRI Web Access</A>.
 
    <P>End of OperationsPro&trade; help.</P>
-  </DIV>
-  <!-- closes #mainContent-->
- </DIV>
- <!-- closes #mBody-->
-</BODY>
-</HTML>
-
-
+  </div>
+  <!-- closes #maincontent-->
+ </div>
+ <!-- closes #mbody-->
+</body>
+</html>

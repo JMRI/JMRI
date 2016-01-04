@@ -117,6 +117,8 @@ abstract public class PaneProgFrame extends JmriJFrame
     List<JComponent> activeComponents = new ArrayList<JComponent>();
 
     String filename = null;
+    String programmerShowEmptyPanes = "";
+    String decoderShowEmptyPanes = "";
 
     // GUI member declarations
     JTabbedPane tabPane = new JTabbedPane();
@@ -622,7 +624,7 @@ abstract public class PaneProgFrame extends JmriJFrame
                 log.debug("   {} {}", m.getStandardName(), m.toString());
             }
         }
-        
+
         // first try specified modes
         for (Element el1 : programming.getChildren("mode")) {
             String name = el1.getText();
@@ -635,7 +637,7 @@ abstract public class PaneProgFrame extends JmriJFrame
                 }
             }
         }
-        
+
         // go through historical modes
 
         if (modes.contains(DefaultProgrammerManager.DIRECTMODE) && directbit && directbyte) {
@@ -736,15 +738,12 @@ abstract public class PaneProgFrame extends JmriJFrame
             if (log.isDebugEnabled()) {
                 log.debug("Found in decoder " + decoderRoot.getAttribute("showEmptyPanes").getValue());
             }
-            if (decoderRoot.getAttribute("showEmptyPanes").getValue().equals("yes")) {
-                setShowEmptyPanes(true);
-            } else if (decoderRoot.getAttribute("showEmptyPanes").getValue().equals("no")) {
-                setShowEmptyPanes(false);
-            }
-            // leave alone for "default" value
-            if (log.isDebugEnabled()) {
-                log.debug("result " + getShowEmptyPanes());
-            }
+            decoderShowEmptyPanes = decoderRoot.getAttribute("showEmptyPanes").getValue();
+        } else {
+            decoderShowEmptyPanes = "";
+        }
+        if (log.isDebugEnabled()) {
+            log.debug("decoderShowEmptyPanes=" + decoderShowEmptyPanes);
         }
 
         // save the pointer to the model element
@@ -770,18 +769,15 @@ abstract public class PaneProgFrame extends JmriJFrame
                 if (log.isDebugEnabled()) {
                     log.debug("Found in programmer " + programmerRoot.getChild("programmer").getAttribute("showEmptyPanes").getValue());
                 }
-                if (programmerRoot.getChild("programmer").getAttribute("showEmptyPanes").getValue().equals("yes")) {
-                    setShowEmptyPanes(true);
-                } else if (programmerRoot.getChild("programmer").getAttribute("showEmptyPanes").getValue().equals("no")) {
-                    setShowEmptyPanes(false);
-                }
-                // leave alone for "default" value
-                if (log.isDebugEnabled()) {
-                    log.debug("result " + getShowEmptyPanes());
-                }
+                programmerShowEmptyPanes = programmerRoot.getChild("programmer").getAttribute("showEmptyPanes").getValue();
+            } else {
+                programmerShowEmptyPanes = "";
+            }
+            if (log.isDebugEnabled()) {
+                log.debug("programmerShowEmptyPanes=" + programmerShowEmptyPanes);
             }
 
-            // get extra any panes from the decoder file        
+            // get extra any panes from the decoder file
             Attribute a;
             if ((a = programmerRoot.getChild("programmer").getAttribute("decoderFilePanes")) != null
                     && a.getValue().equals("yes")) {
@@ -1222,7 +1218,7 @@ abstract public class PaneProgFrame extends JmriJFrame
 
     public void newPane(String name, Element pane, Element modelElem, boolean enableEmpty, boolean programmerPane) {
         if (log.isDebugEnabled()) {
-            log.debug("newPane with enableEmpty " + enableEmpty + " getShowEmptyPanes() " + getShowEmptyPanes());
+            log.debug("newPane with enableEmpty " + enableEmpty + " showEmptyPanes " + isShowingEmptyPanes());
         }
         // create a panel to hold columns
         PaneProgPane p = new PaneProgPane(this, name, pane, cvModel, iCvModel, variableModel, modelElem, _rosterEntry, programmerPane);
@@ -1233,7 +1229,7 @@ abstract public class PaneProgFrame extends JmriJFrame
             tabPane.addTab(name, p);  // always add if not empty
             index = tabPane.indexOfTab(name);
             tabPane.setToolTipTextAt(index, p.getToolTipText());
-        } else if (getShowEmptyPanes()) {
+        } else if (isShowingEmptyPanes()) {
             // here empty, but showing anyway as disabled
             tabPane.addTab(name, p);
             index = tabPane.indexOfTab(name);
@@ -1734,7 +1730,7 @@ abstract public class PaneProgFrame extends JmriJFrame
     }
 
     /**
-     * Option to control appearance of empty panes
+     * Set value of Preference option to show empty panes
      *
      * @param yes true if empty panes should be shown
      */
@@ -1742,8 +1738,29 @@ abstract public class PaneProgFrame extends JmriJFrame
         InstanceManager.getDefault(ProgrammerConfigManager.class).setShowEmptyPanes(yes);
     }
 
+    /**
+     * get value of Preference option to show empty panes
+     */
     public static boolean getShowEmptyPanes() {
         return InstanceManager.getDefault(ProgrammerConfigManager.class).isShowEmptyPanes();
+    }
+
+    /**
+     * Get value of whether current item should show empty panes
+     */
+    private boolean isShowingEmptyPanes() {
+        boolean temp = getShowEmptyPanes();
+        if (programmerShowEmptyPanes.equals("yes")) {
+            temp = true;
+        } else if (programmerShowEmptyPanes.equals("no")) {
+            temp = false;
+        }
+        if (decoderShowEmptyPanes.equals("yes")) {
+            temp = true;
+        } else if (decoderShowEmptyPanes.equals("no")) {
+            temp = false;
+        }
+        return temp;
     }
 
     /**

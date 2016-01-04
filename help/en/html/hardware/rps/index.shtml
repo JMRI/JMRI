@@ -33,7 +33,8 @@ The system makes up to 10 measurements per second and each
 reading is accurate to much better than an inch, which
 makes many imaginative uses possible.
 
-<h2>Supported DCC Systems</h2>
+<a name="hardware"></a><h2>Supported Hardware</h2>
+<h3>DCC Systems</h3>
 <p>
 The RPS system works in conjunction which your DCC system
 to control when the RPS transmitters are activated.
@@ -205,9 +206,10 @@ You can also display RPS information on PanelPro Control Panels using an
 RPS information may be used to detect occupancy using 
 <a href="sensors.shtml">JMRI RPS Sensors</a>.
 
-<h2>More Information</h2>
+<a name="documentation"></a><h2>Documentation</h2>
+<h3>Third Party info</h3>
 <p>
-More information is available on the 
+More information on the 
 <a href="http://www.proto87.com/model-trains-DCC-decoders.html">RPS Web Site</a>.
 
 <!--#include virtual="/Footer" -->
