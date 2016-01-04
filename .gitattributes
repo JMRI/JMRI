@@ -9,8 +9,11 @@
 # The above will handle all files NOT found below
 #
 # These files are text and should be normalized (Convert crlf => lf)
+*.bat           text
+*.csh           text
 *.css           text
 *.df            text
+*.dtd           text
 *.htm           text
 *.html          text
 *.java          text
@@ -18,23 +21,38 @@
 *.json          text
 *.jsp           text
 *.jspf          text
+*.lcf           text
+*.md            text
+*.plist         text
 *.properties    text
 *.sh            text
+*.shtml         text
 *.svg           text
 *.tld           text
 *.txt           text
 *.xml           text
+*.xsd           text
+*.xsl           text
+Header          text
+Footer          text
+Sidebar         text
+COPYING         text
 
 # These files are binary and should be left untouched
 # (binary is a macro for -text -diff)
+*.app           binary
 *.class         binary
 *.dll           binary
+*.dylib         binary
 *.ear           binary
 *.gif           binary
+*.GIF           binary
 *.ico           binary
 *.jar           binary
+*.jnilib        binary
 *.jpg           binary
 *.jpeg          binary
 *.png           binary
 *.so            binary
 *.war           binary
+*.wav           binary
