@@ -1,0 +1,7 @@
+# default setting for text files
+# this matches all files, so exceptions need to be explicitly set below
+* text eol=lf
+
+*.png binary
+*.jar binary
+*.jpg binary
