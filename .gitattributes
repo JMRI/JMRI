@@ -1,7 +1,40 @@
-# default setting for text files
-# this matches all files, so exceptions need to be explicitly set below
-* text eol=lf
+# From https://github.com/Danimoth/gitattributes/blob/master/Java.gitattributes
+# see also http://adaptivepatchwork.com/2012/03/01/mind-the-end-of-your-line/
 
-*.png binary
-*.jar binary
-*.jpg binary
+# Handle line endings automatically for files detected as text
+# and leave all files detected as binary untouched.
+* text=auto
+
+#
+# The above will handle all files NOT found below
+#
+# These files are text and should be normalized (Convert crlf => lf)
+*.css           text
+*.df            text
+*.htm           text
+*.html          text
+*.java          text
+*.js            text
+*.json          text
+*.jsp           text
+*.jspf          text
+*.properties    text
+*.sh            text
+*.svg           text
+*.tld           text
+*.txt           text
+*.xml           text
+
+# These files are binary and should be left untouched
+# (binary is a macro for -text -diff)
+*.class         binary
+*.dll           binary
+*.ear           binary
+*.gif           binary
+*.ico           binary
+*.jar           binary
+*.jpg           binary
+*.jpeg          binary
+*.png           binary
+*.so            binary
+*.war           binary
