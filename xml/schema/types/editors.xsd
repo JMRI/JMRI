@@ -220,7 +220,9 @@
       </xs:annotation>
 
       <xs:attribute name="class" type="classType" use="required" />
-      <xs:attribute name="ident" type="xs:string" use="required" />
+      <xs:attribute name="ident" type="beanNameType" use="required">
+        <xs:annotation><xs:documentation>Identify this element, for reference in connect* attributes elsewhere</xs:documentation></xs:annotation>
+      </xs:attribute>
       <xs:attribute name="type" type="xs:string" use="required" />
       <xs:attribute name="x" type="xs:float" use="required" />
       <xs:attribute name="y" type="xs:float" use="required" />
@@ -965,7 +967,9 @@
       </xs:sequence>
 
       <xs:attribute name="class" type="classType" use="required" />
-      <xs:attribute name="ident" type="xs:string" use="required" />
+      <xs:attribute name="ident" type="beanNameType" use="required">
+        <xs:annotation><xs:documentation>Identify this element, for reference in connect* attributes elsewhere</xs:documentation></xs:annotation>
+      </xs:attribute>
       <xs:attribute name="type" type="xs:string" use="required" />
       <xs:attribute name="continuing" type="xs:string" use="required" />
 
@@ -1078,7 +1082,9 @@
       </xs:sequence>
 
       <xs:attribute name="class" type="classType" use="required" />
-      <xs:attribute name="ident" type="xs:string" use="required" />
+      <xs:attribute name="ident" type="beanNameType" use="required">
+        <xs:annotation><xs:documentation>Identify this element, for reference in connect* attributes elsewhere</xs:documentation></xs:annotation>
+      </xs:attribute>
       <xs:attribute name="slipType" type="xs:string" use="required" />
       
       <xs:attribute name="xa" type="xs:float" use="required" />
@@ -1149,7 +1155,9 @@
       </xs:annotation>
 
       <xs:attribute name="class" type="classType" use="required" />
-      <xs:attribute name="ident" type="xs:string" use="required" />
+      <xs:attribute name="ident" type="beanNameType" use="required">
+        <xs:annotation><xs:documentation>Identify this element, for reference in connect* attributes elsewhere</xs:documentation></xs:annotation>
+      </xs:attribute>
       <xs:attribute name="blockname" type="beanNameType"/>  <!-- required in DTD, missing from some files -->
       <xs:attribute name="connect1name" type="beanNameType" use="required" />
       <xs:attribute name="type1" type="xs:string" use="required" />
@@ -1187,7 +1195,9 @@
         <xs:element name="sensorD" type="xs:string" minOccurs="0" maxOccurs="1" />
       </xs:sequence>
       <xs:attribute name="class" type="classType" use="required" />
-      <xs:attribute name="ident" type="xs:string" use="required" />
+      <xs:attribute name="ident" type="beanNameType" use="required">
+        <xs:annotation><xs:documentation>Identify this element, for reference in connect* attributes elsewhere</xs:documentation></xs:annotation>
+      </xs:attribute>
 
       <xs:attribute name="blocknameac" type="beanNameType" />
       <xs:attribute name="blocknamebd" type="beanNameType" />
@@ -1238,8 +1248,10 @@
         </xs:element>
       </xs:sequence>
 
-      <xs:attribute name="class" type="xs:string" use="required" />
-      <xs:attribute name="ident" type="xs:string" use="required" />
+      <xs:attribute name="class" type="classType" use="required" />
+      <xs:attribute name="ident" type="beanNameType" use="required">
+        <xs:annotation><xs:documentation>Identify this element, for reference in connect* attributes elsewhere</xs:documentation></xs:annotation>
+      </xs:attribute>
       <xs:attribute name="radius" type="xs:float" use="required" />
       <xs:attribute name="xcen" type="xs:float" use="required" />
       <xs:attribute name="ycen" type="xs:float" use="required" />
