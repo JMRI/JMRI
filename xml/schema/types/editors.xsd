@@ -223,7 +223,7 @@
       <xs:attribute name="ident" type="beanNameType" use="required">
         <xs:annotation><xs:documentation>Identify this element, for reference in connect* attributes elsewhere</xs:documentation></xs:annotation>
       </xs:attribute>
-      <xs:attribute name="type" type="xs:string" use="required" />
+      <xs:attribute name="type" type="xs:int" use="required" />
       <xs:attribute name="x" type="xs:float" use="required" />
       <xs:attribute name="y" type="xs:float" use="required" />
       <xs:attribute name="connect1name" type="xs:string" />
@@ -970,7 +970,7 @@
       <xs:attribute name="ident" type="beanNameType" use="required">
         <xs:annotation><xs:documentation>Identify this element, for reference in connect* attributes elsewhere</xs:documentation></xs:annotation>
       </xs:attribute>
-      <xs:attribute name="type" type="xs:string" use="required" />
+      <xs:attribute name="type" type="xs:int" use="required" />
       <xs:attribute name="continuing" type="xs:string" use="required" />
 
       <xs:attribute name="xa" type="xs:float" />
@@ -1160,9 +1160,9 @@
       </xs:attribute>
       <xs:attribute name="blockname" type="beanNameType"/>  <!-- required in DTD, missing from some files -->
       <xs:attribute name="connect1name" type="beanNameType" use="required" />
-      <xs:attribute name="type1" type="xs:string" use="required" />
+      <xs:attribute name="type1" type="xs:int" use="required" />
       <xs:attribute name="connect2name" type="beanNameType" use="required" />
-      <xs:attribute name="type2" type="xs:string" use="required" />
+      <xs:attribute name="type2" type="xs:int" use="required" />
       <xs:attribute name="dashed" type="yesNoType" />
       <xs:attribute name="mainline" type="yesNoType" />
       <xs:attribute name="hidden" type="yesNoType" />
