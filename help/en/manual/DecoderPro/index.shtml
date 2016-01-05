@@ -45,22 +45,22 @@ You can get Java as a free (but very large) download at: <a href="http://java.co
   to get an overview of what we&#8217;re about to cover.
 </p>
 Notes:
-<ol>
-<li>All screen shots in this manual are from a Windows
-machine using the "Metal" User Interface option. While your screens
-will probably differ in some layout details, they will be essentially
-the same. All programming examples shown are with Digitrax PR3 (in "MS100"
-mode) connected to Digitrax Super Chief Radio Command Station. Most of
-the decoders in locomotive samples will be Digitrax, except for sound
-examples.
-</li>
-<li>This entire manual has been updated to correspond to
-JMRI&reg; v3.6 DecoderPro only, and the SHTML verified using HTML4 and
-Cascading Style Sheets. If the formatting looks odd, you probably need
-to update your browser.</li>
-</ol>
+	<ol>
+	<li>All screen shots in this manual are from a Windows
+	machine using the "Metal" User Interface option. While your screens
+	will probably differ in some layout details, they will be essentially
+	the same. All programming examples shown are with Digitrax PR3 (in "MS100"
+	mode) connected to Digitrax Super Chief Radio Command Station. Most of
+	the decoders in locomotive samples will be Digitrax, except for sound
+	examples.
+	</li>
+	<li>This entire manual has been updated to correspond to
+	JMRI&reg; v3.6 DecoderPro only, and the SHTML verified using HTML4 and
+	Cascading Style Sheets. If the formatting looks odd, you probably need
+	to update your browser.</li>
+	</ol>
 
-<h1>Table of Contents</h1>
+<h2>Table of Contents</h2>
 
 <h4><a name="Installing"></a>Installing JMRI&reg;</h4>
 
