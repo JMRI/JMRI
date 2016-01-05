@@ -168,7 +168,7 @@ public class GuiLafConfigPane extends JPanel implements PreferencesPanel {
     static int fontSize = 0;
 
     public static void setFontSize(int size) {
-        fontSize = size == 0 ? 0 : size < 9 ? 9 : size > 18 ? 18 : size;
+        fontSize = size == 0 ? 0 : size < 9 ? 9 : size > 20 ? 20 : size;
         //fontSizeComboBox.setSelectedItem(fontSize);
     }
 
@@ -204,7 +204,9 @@ public class GuiLafConfigPane extends JPanel implements PreferencesPanel {
         15,
         16,
         17,
-        18};
+        18,
+        19,
+        20};
 
     static JComboBox<Integer> fontSizeComboBox = new JComboBox<>(fontSizes);
     static ActionListener listener;
