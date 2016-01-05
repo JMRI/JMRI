@@ -14,9 +14,11 @@
 
 <body>
 <!--#include virtual="/Header" -->
-  <div class="nomenu" id="mBody">
-    <div id="mainContent">
 
+<!--#include virtual="Sidebar" -->
+<div id="mainContent">
+
+<!-- Page Body -->
 <h1>JMRI Setup: Configuration Profiles</h1>
 
 <p><em>Configuration Profiles</em> allow a single JMRI application to be launched
@@ -33,7 +35,7 @@
     same profile.</p>
 
 <p>By default, when a JMRI application starts up, it prompts the user 
-    for which configuration profile to use: <img src="Set_Active_Profile.png"></p>
+    for which configuration profile to use: <img src="images/Set_Active_Profile.png"></p>
 <p>If the user doesn't select a new profile and click OK, the program will
 continue with the default profile after a short delay. You can check a box in the
 preferences to bypass this step and go directly to the last-used profile.</p>
@@ -43,7 +45,7 @@ preferences to bypass this step and go directly to the last-used profile.</p>
 <p>Configuration profiles can be managed in the application preferences, under
     the Profile Configuration tab.</p>
 
-<img src="Profile_Preferences_prompt.png">
+<img src="images/Profile_Preferences_prompt.png">
 
 <p>The "Currently active profile" is being used by this run of the JMRI application, 
     and is also where preferences changes will be saved.</p>

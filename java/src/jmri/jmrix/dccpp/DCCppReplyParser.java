@@ -14,6 +14,16 @@ import org.slf4j.LoggerFactory;
  *
  * @author munderwd
  */
+
+/* Note: 
+ *
+ * This class was intended to facilitate generating various subclasses of
+ * DCCppReply.  I think, by folding DCCppCommTypeReply back into DCCppReply
+ * that this class could be eliminated.
+ *
+ * TODO: Obsolete this and get rid of DCCppCommTypeReply
+ *
+*/
 public class DCCppReplyParser {
     
     public static void parseReply(DCCppReply r, String s) {

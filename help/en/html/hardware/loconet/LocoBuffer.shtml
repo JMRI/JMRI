@@ -40,19 +40,19 @@ company, based in part on the original LocoBuffer design.
 The recommended setup for the LocoBuffer is:
 </p>
 
-<ul>
-<li>The LocoBuffer should be configured with J1, J4 and J5 set on
-pins 1 and 2, J2 and J3 set to pins 2 and 3. This configures it
-for a 19,200 baud connection, with echo on.
-<li>
-Start DecoderPro or other program and configure it for:
-<ul>
-<li>LocoNet LocoBuffer
-<li>Select your port
-<li>19,200 baud
-<li>Hardware flow control
-</ul>
-</ul>
+	<ul>
+	<li>The LocoBuffer should be configured with J1, J4 and J5 set on
+	pins 1 and 2, J2 and J3 set to pins 2 and 3. This configures it
+	for a 19,200 baud connection, with echo on.
+	<li>
+	Start DecoderPro or other program and configure it for:
+		<ul>
+		<li>LocoNet LocoBuffer
+		<li>Select your port
+		<li>19,200 baud
+		<li>Hardware flow control
+		</ul>
+	</ul>
 
 <h2>Usage suggestions</h2>
 
@@ -72,7 +72,7 @@ Start DecoderPro or other program and configure it for:
 	  If you got your LocoBuffer chip after February 2002, this should
 	  not be a problem for you.</p>
 
-<h2><A NAME="flow">LocoBuffer flow control</a></h2>
+<h2><a name="flow">LocoBuffer flow control</a></h2>
 
 	  <p>Some Windows versions, in particular Win2000, cannot handle
 	  the LocoBuffer's control leads properly.  You'll see this as

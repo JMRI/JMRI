@@ -38,12 +38,28 @@ on how to set this up.
 
 <a name="reportericon"><h3>Reporter Icons</h3></a>
 
+<a href="../../tools/images/AddReportertoPanel.png">
+<img src="../../tools/images/AddReportertoPanel.png" height="146" width="166" align="right"></a>
 The first implementation of Reporter is Digitrax transponding.  
-By adding the appropriate elements to your panel files, you can show 
-decoder ID information on your panels.  
+By adding the appropriate elements to your Panel files, you can show 
+decoder ID information on your Panels.
+<!-- information below was copied from tools/Reporters.shtml 01/2016 -->
+<p>A Reporter's value can be displayed on a Panel via an icon.
+To do this:
+	<ul>
+	<li>On the Panel Editor window for your Panel, find the "Add Reporter" 
+	button.
+	<li>In the text box next to that button, type the user name or System Name of the
+	desired Reporter.
+	<li>Click the "Add to Panel" button. The Reporter icon will be placed on your Panel.
+	If it's not visible, that might be because the value is currently blank;
+	use the Reporters Table to change the value to something that will be visible.
+	<li>You can drag the icon to where you want it in the usual way.
+	<li>The pop-up menu on the icon will let you change the formatting.
+	</ul>
 <p>
 See xml/samples/ReporterIconExample.xml for info 
-on how to set this up.
+on how to set this code up by hand.
 
 	<ul>
 	<li>First check that JMRI is seeing the LocoNet messages OK.  From the tools 

@@ -277,7 +277,10 @@ appear in the Dispatcher window, and this window will be dismissed.</p>
 <li><p>Click <b>Cancel</b> to exit this window without creating a new Active 
 Train.</p>
 </li>
+</ol>
 
 <!--#include virtual="/Footer" -->
-</body>
+  </div><!-- closes #mainContent-->
+ </div> <!-- closes #mBody-->
+ </body>
 </html>

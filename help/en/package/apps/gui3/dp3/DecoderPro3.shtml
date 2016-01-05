@@ -2,10 +2,10 @@
 <html lang="en">
 <head>
   <title>JMRI: Decoder Pro 3 </title>
-  <meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
   <meta content="Nigel Cliffe" name="Author">
   <meta name="keywords" content="JMRI help Decoder Pro 3">
   <!-- Style -->
+  <meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
   <link rel="stylesheet" type="text/css" href="/css/default.css" media="screen">
   <link rel="stylesheet" type="text/css" href="/css/print.css" media="print">
   <link rel="icon" href="/images/jmri.ico" type="image/png">
@@ -27,7 +27,7 @@ to improve this help file ! </p>
 <p>Decoder Pro 3 presents a list of your locomotives (the Roster) and provides
 access to tools for programming decoder configuration variables (CV's). </p>
 
-<h1>Description of Decoder Pro 3 Window</h1>
+<h2>Description of Decoder Pro 3 Window</h2>
 
 <p>The Decoder Pro 3 Window is divided into five main sections from top to
 bottom. </p>
@@ -44,14 +44,14 @@ bottom. </p>
     information is also posted here.</li>
 </ol>
 
-<h1>Main Tasks with Decoder Pro 3</h1>
+<h2>Main Tasks with Decoder Pro 3</h2>
 
 <p>Decoder Pro 3 is designed for the management of DCC decoders fitted to
 locomotives. The locomotives known to Decoder Pro 3 are displayed in the Roster
 Table. The anticipated main tasks are: creating a new locomotive and changing
 the settings in an existing locomotive (programming). </p>
 
-<h2>New Locomotive</h2>
+<h3>New Locomotive</h3>
 
 <p>To add a new locomotive (or first locomotive), click on the "New Loco"
 button on the Tool Bar. This will open a "Create New Loco" window, where the
@@ -64,7 +64,7 @@ click "Save to Roster". You can also proceed to program the decoder, giving it
 a DCC address (in the "Basic" tab), and set other values. On closing the
 Programming window, if prompted, save the results into the Roster. </p>
 
-<h2>Identify Existing Locomotive</h2>
+<h3>Identify Existing Locomotive</h3>
 
 <p>If a locomotive is placed on the Programming Track, the "Identify" button
 will read details from the decoder and try to match it to an entry in the
@@ -74,7 +74,7 @@ button. If a locomotive is correctly identified, it will be highlighted in the
 Roster Table, and its details will appear in the lower Decoder Information
 Area. </p>
 
-<h2>Programming an existing Locomotive</h2>
+<h3>Programming an existing Locomotive</h3>
 
 <p>Once a locomotive has been selected, either by manually finding it within
 the Roster Table, or through the "Identify" button, a summary of its details
@@ -88,7 +88,7 @@ you can open either the Basic Programmer (which allows change of locomotive
 address) or the Comprehensive Programmer (which allows changing of all
 locomotive decoder features known to DecoderPro). </p>
 
-<h2>Changing Throttle Labels and Roster Media</h2>
+<h3>Changing Throttle Labels and Roster Media</h3>
 
 <p>Throttle Labels are used by the JMRI on-screen Throttles and by the
 smart-phone throttles through the WiThrottle interface. They allow Function
@@ -99,7 +99,7 @@ keys to have meaningful names such as "Horn", "Whistle", rather than "F2" and
 are displayed in the Roster, and can be used within Throttles. Their use is
 optional. </p>
 
-<h2>Roster Groups</h2>
+<h3>Roster Groups</h3>
 
 <p>Roster Groups are a means of filtering your entries in the Roster. For
 example, you might have "diesel locos", "steam locos", but also "Burlington
@@ -119,9 +119,9 @@ other groups, and when finished close the window with the close-box in the
 upper right-hand corner. </p>
 <a name="menubar"></a> 
 
-<h1>Menu Bar</h1>
+<h2>Menu Bar</h3>
 
-<h2>File menu</h2>
+<h3>File menu</h3>
 <ul>
   <li>New DecoderPro Window</li>
   <li>Import Roster</li>
@@ -140,7 +140,7 @@ upper right-hand corner. </p>
   <li>Quit</li>
 </ul>
 
-<h2>Edit menu</h2>
+<h3>Edit menu</h3>
 <ul>
   <li>Cut</li>
   <li>Copy</li>
@@ -151,7 +151,7 @@ upper right-hand corner. </p>
   <li>Preferences</li>
 </ul>
 
-<h2>Settings menu</h2>
+<h3>Settings menu</h3>
 <ul>
   <li>Hide/Show Summary Pane</li>
   <li>Reset window sizes</li>
@@ -164,7 +164,7 @@ upper right-hand corner. </p>
   <li>Roster Group Table Association</li>
 </ul>
 
-<h2>Actions menu</h2>
+<h3>Actions menu</h3>
 <ul>
   <li>Basic Programmer</li>
   <li>Comprehensive Programmer</li>
@@ -187,40 +187,40 @@ upper right-hand corner. </p>
   <li>Run Script </li>
 </ul>
 
-<h2>Command Station Specific menu</h2>
+<h3>Command Station Specific menu</h3>
 
 <p>A menu will appear for the command station connected to JMRI. The command
 station is set in the Preferences. The content of this menu will be specific to
 your command station. </p>
 
-<h2>Window menu</h2>
+<h3>Window menu</h3>
 
 <p>Lists the windows that are currently active. </p>
 
-<h2>Help menu</h2>
+<h3>Help menu</h3>
 
 <p>Opens this panel. </p>
 <a name="toolbar"></a> 
 
-<h1>Tool Bar</h1>
+<h2>Tool Bar</h2>
 
-<h2>Help button</h2>
+<h3>Help button</h3>
 
 <p>Opens this panel. </p>
 
-<h2>New Loco button</h2>
+<h3>New Loco button</h3>
 
 <p>Opens Service Mode Programmer Decoder selection Screen. </p>
 
-<h2>Identify button</h2>
+<h3>Identify button</h3>
 
 <p>Attempts to identify the loco on the Programing track. </p>
 
-<h2>Programming mode Set button</h2>
+<h3>Programming mode Set button</h3>
 
 <p>Opens the selection of programing modes. </p>
 
-<h1>Roster Group Pane</h1>
+<h3>Roster Group Pane</h3>
 
 <p>The Roster Group Pane only appears if a Roster Group has been defined. 
 The pane appears to the left of the Roster Table.  Further groups can be added
@@ -235,8 +235,8 @@ the functionality are sought</i>.</p>
 <hr>
 
 <p>Location /package/apps/gui3/dp3/DecoderPro3.shtml
-<!--#include virtual="/Footer" --></p>
-</div>
-</div>
+<!--#include virtual="/Footer" -->
+ </div><!-- closes #mainContent-->
+</div> <!-- closes #mBody-->
 </body>
 </html>

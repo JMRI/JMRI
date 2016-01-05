@@ -188,10 +188,10 @@ to get an overview of what we're about to cover.
 
 <h2>System Requirements</h2>
 
-<p>JMRI&reg; requires that Java be installed, whether your computer is <a href="http://jmri.sourceforge.net/install/MacOSX.html">Mac</a>, <a href="http://jmri.sourceforge.net/install/WindowsNew.shtml">Windows</a>, or <a href="http://jmri.sourceforge.net/install/Linux.html">Linux</a> based.</p>
+<p>JMRI&reg; requires that Java be installed, whether your computer is <a href="http://jmri.sourceforge.net/install/MacOSX.shtml">Mac</a>, <a href="http://jmri.sourceforge.net/install/WindowsNew.shtml">Windows</a>, or <a href="http://jmri.sourceforge.net/install/Linux.shtml">Linux</a> based.</p>
 <p>Version 2.12 can run on any computer system that will
 run Java 1.5 or later.<br>
-Version 2.14.1 requires Java 1.6 (or 1.5 without drag &amp; drop)<br>
+Version 2.14.1 requires Java 1.5 (or 1.6 if you wish for drag &amp; drop)<br>
 Version 3.10.1 requires Java 1.7 or later.<br>
 Version 4.2 requires Java 1.8.</p>
 <p>More on <a href="https://www.java.com/en/download/help/sysreq.xml">Java versions and hardware requirements</a>.<br>

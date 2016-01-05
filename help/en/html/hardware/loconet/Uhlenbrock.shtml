@@ -28,12 +28,12 @@
 
 <a name="hardware"></a><h2>Supported Hardware</h2>
 <h3>Command Station</h3>
-<ul>
-<li>Intellibox-I
-<li>Intellibox-II
-<li>IB-Com
-<li>Fleischmann Twin Center (software version 1.1 or later)
-</ul>
+	<ul>
+	<li>Intellibox-I
+	<li>Intellibox-II
+	<li>IB-Com
+	<li>Fleischmann Twin Center (software version 1.1 or later)
+	</ul>
 
 <a name="limitations"></a><h2>Limitations</h2>
 	<ul>

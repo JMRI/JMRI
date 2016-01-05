@@ -22,6 +22,23 @@ import org.slf4j.LoggerFactory;
  *
  * Based on XNetMessage by Bob Jacobsen and Paul Bender
  */
+
+/*
+ * A few words on implementation
+ *
+ * DCCppMessage objects are (usually) created by calling one of the static makeMessageType()
+ * methods, and are then consumed by the TrafficController/Packetizer by being converted to
+ * a String and sent out the port.
+ *
+ * Internally the DCCppMessage is actually stored as a String, and alongside that is kept
+ * a Regex for easy extraction of the values where needed in the code.
+ *
+ * The various getParameter() type functions are mainly for convenience in places such as the
+ * port monitor where we want to be able to extract the /meaning/ of the DCCppMessage and
+ * present it in a human readable form.  Using the getParameterType() methods insulates
+ * the higher level code from needing to know what order/format the actual message is
+ * in.
+ */
 public class DCCppMessage extends jmri.jmrix.AbstractMRMessage {
 
     static private int _nRetries = 5;

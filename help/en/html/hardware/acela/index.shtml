@@ -18,7 +18,7 @@
     <div id="mainContent">
 
 <h1>Hardware Support: CTI Acela System</h1>
-<ul><!-- TOC -->
+<ul class="snav"><!-- TOC -->
 <li><a href="#hardware">Hardware</a>
 <li><a href="#limitations">Limitations</a>
 <li><a href="#connecting">Connecting</a>
