@@ -339,8 +339,14 @@ signals - obsolete, EMPTY, never used
         <xs:element name="warrants"     type="WarrantManagerType" minOccurs="0" maxOccurs="unbounded" />
 
         <xs:element name="paneleditor"  type="PanelEditorType" minOccurs="0" maxOccurs="unbounded" />
-        <xs:element name="LayoutEditor" type="LayoutEditorType" minOccurs="0" maxOccurs="unbounded" />
-        
+        <xs:element name="LayoutEditor" type="LayoutEditorType" minOccurs="0" maxOccurs="unbounded" >
+            <xs:key name="layoutEditorElementIdent">
+              <xs:annotation><xs:documentation>Insist that each element ident in LayoutEditor is unique</xs:documentation></xs:annotation>
+            <xs:selector xpath="./tracksegment|./positionablepoint|./layoutSlip|./levelxing|./layoutturntable"/> 
+                <!-- elements like sensoricon, memoryicon dont have ident attributes; standardization would have been better -->
+            <xs:field xpath="@ident"/>           
+            </xs:key>
+        </xs:element>
         <xs:element name="entryexitpairs" type="EntryExitPairType" minOccurs="0" maxOccurs="unbounded" />
 
         <xs:element name="filehistory"  type="FileHistoryType" minOccurs="0" maxOccurs="1" />
