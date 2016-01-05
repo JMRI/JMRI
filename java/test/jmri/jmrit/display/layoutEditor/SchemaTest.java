@@ -32,6 +32,7 @@ public class SchemaTest extends jmri.configurexml.SchemaTestBase {
         TestSuite suite = new TestSuite("jmri.jmrit.display.layoutEditor.SchemaTest");
 
         validateDirectory(suite, "java/test/jmri/jmrit/display/layoutEditor/valid");
+        validateDirectoryFail(suite, "java/test/jmri/jmrit/display/layoutEditor/invalid");
 
         return suite;
     }
