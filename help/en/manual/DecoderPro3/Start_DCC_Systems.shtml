@@ -1,15 +1,16 @@
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
-<html lang="en"><head><!-- Copyright ($Author$) 2009 --><!-- $Id$ -->
+<html lang="en">
+<head>
+<title>Decoder Pro Manual: Getting Started</title>
 
-
-
-
-
-<title>Decoder Pro Manual: Getting Started</title><!-- Style --><meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
+<!-- Style -->
+<meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
 <link rel="stylesheet" type="text/css" href="/css/default.css" media="screen">
 <link rel="stylesheet" type="text/css" href="/css/print.css" media="print">
 <link rel="icon" href="/images/jmri.ico" type="image/png">
-<link rel="home" title="Home" href="/"><!-- /Style --></head>
+<link rel="home" title="Home" href="/">
+<!-- /Style -->
+</head>
 
 <body>
 <!--#include virtual="/Header" -->
@@ -18,10 +19,10 @@
 <div id="mainContent">
 
 <a name="Top"></a>
-<h1><img src="images/Logo.gif" alt="JMRI DecoderPro Logo" class="BOXIT" border="10" height="117" vspace="15" width="163"></h1>
+<img src="images/Logo.gif" alt="JMRI DecoderPro Logo" class="BOXIT" border="10" height="117" vspace="15" width="163">
 
 <h1>Getting Started with DecoderPro&reg;</h1>
-<h1>What DCC systems will DecoderPro work with?</h1>
+<h2>What DCC systems will DecoderPro work with?</h2>
 
 <div align="right">
 <p><a href="Basic_Programming.shtml"> </a><a href="Start_DCC.shtml">Previous</a> <a href="Start_DCC_Hardware.shtml">| Next</a>
@@ -29,7 +30,6 @@
 </p></div>
 
 <hr>
-<h3>&nbsp;</h3>
 <p>
 Decoder Pro3&reg; will work with the following DCC systems (Select in <a href="Start_Preferences.shtml"><strong>Preferences</strong></a>):
 </p><ul>
@@ -56,7 +56,7 @@ Decoder Pro3&reg; will work with the following DCC systems (Select in <a href="S
 <li>Lenz</li>
 <li>Lionel TMCC</li>
 <li>Maple Systems</li>
-<li>Marklin</li>
+<li>M&auml;rklin</li>
 <li>MERG CBUS</li><li>Model Rectifier Corp (MRC)</li>
 <li>NCE</li>
 
@@ -67,7 +67,7 @@ Decoder Pro3&reg; will work with the following DCC systems (Select in <a href="S
 <li>QSI Solutions</li>
 <li>PI Engineering RailDriver</li>
 <li>Roco</li>
-<li>SPROG&nbsp;</li>
+<li>SPROG</li>
 <li>SRCP</li>
 <li>Tams</li>
 
@@ -80,13 +80,15 @@ Decoder Pro3&reg; will work with the following DCC systems (Select in <a href="S
 <p>
 Depending on the specifics of your system and computer, some type of hardware
 interface may be required.
+<a href="http://www.jmri.org/help/en/html/hardware/index.shtml" target="_blank">JMRI Hardware Support</a></p>
 
-  <br>
-<a href="http://www.jmri.org/help/en/html/hardware/index.shtml" target="_blank">JMRI Hardware Support</a>
-</p><hr>
+<hr>
 <div align="right">
 <p><a href="Start_DCC.shtml">Previous</a> <a href="Start_DCC_Hardware.shtml">| Next</a>
 </p><p><a href="index.shtml#Getting%20Started">Back to Index</a> </p></div>
 
 <!--#include virtual="/Footer" -->
-</div></body></html>
+  </div><!-- closes #mainContent-->
+ </div> <!-- closes #mBody-->
+ </body>
+</html>

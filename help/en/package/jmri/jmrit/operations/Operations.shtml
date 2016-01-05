@@ -16,7 +16,7 @@
 </head>
 
 <body>
- <!--#include virtual="/header" -->
+ <!--#include virtual="/Header" -->
 
  <div class="nomenu" id="mBody">
   <div id="mainContent">

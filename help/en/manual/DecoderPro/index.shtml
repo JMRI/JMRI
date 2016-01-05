@@ -538,8 +538,8 @@ to update your browser.</li>
 </table>
 
 <hr>
-
 <!--#include virtual="/Footer" -->
-</div> <!-- closes #mainContent -->
-</body>
+  </div><!-- closes #mainContent-->
+ </div> <!-- closes #mBody-->
+ </body>
 </html>

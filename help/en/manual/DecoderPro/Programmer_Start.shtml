@@ -1,15 +1,16 @@
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
-<html lang="en"><head><!-- Copyright ($Author$) 2009 --><!-- $Id$ -->
+<html lang="en">
+<head>
+<title>Using DecoderPro</title>
 
-
-
-
-
-<title>Using DecoderPro</title><!-- Style --><meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
+<!-- Style -->
+<meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
 <link rel="stylesheet" type="text/css" href="/css/default.css" media="screen">
 <link rel="stylesheet" type="text/css" href="/css/print.css" media="print">
 <link rel="icon" href="/images/jmri.ico" type="image/png">
-<link rel="home" title="Home" href="/"><!-- /Style --></head>
+<link rel="home" title="Home" href="/">
+<!-- /Style -->
+</head>
 
 <body>
 <!--#include virtual="/Header" -->
@@ -19,21 +20,19 @@
 
 <div align="center"><a name="Top"></a>
   <img src="images/Logo.gif" alt="JMRI DecoderPro Logo" border="10" height="117" vspace="15" width="163">
-  
 </div>
+
 <h1>Using DecoderPro&reg;</h1>
-<h1><a name="Setting Up"></a>What are the Programming
-Modes?</h1>
+<h2><a name="Setting Up"></a>What are the Programming
+Modes?</h2>
 
 <div align="right">
 <p><a href="Programmer_Setup.shtml"> Previous | </a><a href="Basic_Start.shtml">Next</a></p>
 <p><a href="index.shtml#Basic%20Programmer">Back to Index</a></p>
 </div>
 
-
 <hr>
 
-<h2>&nbsp;</h2>
 <p>Prior to using the programmer you  need to have completed the previous section (<a href="Start_DCC.shtml">Getting Started</a>),
 have your computer connected to your command station/booster with the
 required interface device for your DCC system, you are now ready to
@@ -81,7 +80,7 @@ details on programming mode <a href="Basic_Mode.shtml"><strong>click here</stron
 <p>Since we want to know what type of decoder is in the locomotive, we
 can either look up what was listed when it was entered in the roster
 stored in this computer, or we can ask it what it&#8217;s manufacturer and
-firmware version are. &nbsp;
+firmware version are.
 The first is method is <strong>
 <input name="button6" id="button6" value="Ident" type="button">
 ,</strong> </p>
@@ -135,7 +134,7 @@ of Decoder Pro, because manufacturers are adding models almost faster
 than the team can enter the new decoder definitions into the
 files.&nbsp; You can choose a manufacturer's version which is as close
 as you can find, or if you&#8217;re only interested in basic programming
-functions, use the NMRA© decoder which is a generic file of the CV&#8217;s
+functions, use the NMRA&copy; decoder which is a generic file of the CV&#8217;s
 contained in their standards.</p>
 
 <p>The last item on this pane is the Programmer Format entry.&nbsp; It
@@ -151,8 +150,7 @@ We&#8217;ll get into the other programmers later on.</p>
 button, the selected Programmer window will open. All programmers,
 Basic, Comprehensive and Advanced, open to the Roster Entry pane.</p>
 
-<p>Now lets open the<strong><a href="Basic_Start.shtml">Basic Programmer</a></strong>, which is now completely set-up with a decoder and the Basic  programmer is selected.</p>
-
+<p>Now lets open the <strong><a href="Basic_Start.shtml">Basic Programmer</a></strong>, which is now completely set-up with a decoder and the Basic  programmer is selected.</p>
 
 <div align="right">
   <p><a href="Programmer_Setup.shtml">Previous | </a><a href="Basic_Start.shtml">Next</a></p>
@@ -160,4 +158,7 @@ Basic, Comprehensive and Advanced, open to the Roster Entry pane.</p>
 </div>
 
 <!--#include virtual="/Footer" -->
-</div></body></html>
+  </div><!-- closes #mainContent-->
+ </div> <!-- closes #mBody-->
+</body>
+</html>

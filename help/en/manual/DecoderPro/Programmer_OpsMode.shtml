@@ -1,8 +1,6 @@
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
 <html lang="en">
 <head>
-<!-- Copyright ($Author$) 2009 -->
-<!-- $Id$ -->
 <title>Using DecoderPro</title>
 
 <!-- Style -->
@@ -21,13 +19,13 @@
 <div id="mainContent">
 
 <div align="center"><a NAME="Top"></a>
-  <img SRC="images/Logo.gif" ALT="JMRI DecoderPro Logo" BORDER=10 height=117 width=163 vspace="15">
-  
+  <img src="images/Logo.gif" ALT="JMRI DecoderPro Logo" border="10" height="117" width="163" vspace="15">
 </div>
-<h1>DecoderPro&reg; Programming Modes</h1>
-<h1>Ops Mode Programming</h1>
 
-<div align=right>
+<h1>DecoderPro&reg; Programming Modes</h1>
+<h2>Ops Mode Programming</h2>
+
+<div align="right">
 <p><a href="index.shtml#Basic Programmer">Back to Index</a></p>
 </div>
 
@@ -47,13 +45,16 @@ With a  few exceptions it is not possible to read from a CV on the Main.  If rea
 <strong>Writing  to your decoder on the main:</strong> <br>
 <br>
 Program  on the Main writes are often called a &quot;blind write&quot; because there is  no response from the decoder that the write was successful.&nbsp; POM is very useful for tuning loco  performance while it is operating and the ack is the change in performance.<br>
-The decoder  is first addressed by the Command Station, then the CV is addressed and then  the data that is to be written into that CV of that decoder is sent. An  exception is if address zero is used,(or you forget to enter an address when  you start). &nbsp;Then <strong>ALL</strong> decoders  on the main will write that data into the appropriate CV which usually is an &ldquo;unintended  consequence&rdquo;.</blockquote>
+The decoder  is first addressed by the Command Station, then the CV is addressed and then  the data that is to be written into that CV of that decoder is sent. An  exception is if address zero is used,(or you forget to enter an address when  you start). Then <strong>ALL</strong> decoders  on the main will write that data into the appropriate CV which usually is an &ldquo;unintended  consequence&rdquo;.</blockquote>
 <p>Some command stations will only  &quot;broadcast&quot; programming commands, which can mean every locomotive on  the layout gets the same programming! If in doubt, check your documentation. </p>
-<p>In this window you  select the locomotive in which you wish to change CV values, and what  programmer you want to use.&nbsp; Once they are selected you click <strong>Open Programmer</strong> button just as you would do in the <strong>Service  Mode programmer</strong>.</p>
-<div align=right>
+<p>In this window you  select the locomotive in which you wish to change CV values, and what  programmer you want to use. Once they are selected you click <strong>Open Programmer</strong> button just as you would do in the <strong>Service  Mode programmer</strong>.</p>
+
+<div align="right">
   <p><a href="index.shtml#Basic Programmer">Back to Index</a> </p>
 </div>
 
 <!--#include virtual="/Footer" -->
+  </div><!-- closes #mainContent-->
+ </div> <!-- closes #mBody-->
 </body>
 </html>

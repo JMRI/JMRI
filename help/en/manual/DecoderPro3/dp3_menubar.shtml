@@ -1,15 +1,17 @@
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
-<html lang="en"><head><!-- Copyright ($Author$) 2009 --><!-- $Id$ -->
+<html lang="en">
+<head>
+<title>DecoderPro Menus</title>
 
-
-
-
-
-<title>DecoderPro Menus</title><!-- Style --><meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
+<!-- Style -->
+<meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
 <link rel="stylesheet" type="text/css" href="/css/default.css" media="screen">
 <link rel="stylesheet" type="text/css" href="/css/print.css" media="print">
 <link rel="icon" href="/images/jmri.ico" type="image/png">
-<link rel="home" title="Home" href="/"><!-- /Style --></head>
+<link rel="home" title="Home" href="/">
+<!-- /Style -->
+</head>
+
 <body>
 <!--#include virtual="/Header" -->
 
@@ -18,7 +20,7 @@
 
 <a name="Top"></a>
 <h1>DecoderPro&reg; Main Window</h1>
-<h1>Menu bar</h1>
+<h2>The Menu bar</h2>
 
 <div align="right">
 <p><a href="dp3_Main_Main.shtml">Main Window</a></p>
@@ -324,7 +326,12 @@ the selected roster entry in your roster. Select the <strong><a href="Adv_Functi
     <img style="width: 255px; height: 333px;" alt="about screen" src="images/dp3_About.png"><br></li>
   </ul>
 </ul>
-<div align="right"><a href="dp3_Main_Main.shtml">Main Window</a> </div>
+
+<div align="right">
+<a href="dp3_Main_Main.shtml">Main Window</a></div>
 
 <!--#include virtual="/Footer" -->
-</div></body></html>
+  </div><!-- closes #mainContent-->
+ </div> <!-- closes #mBody-->
+ </body>
+</html>

@@ -1,8 +1,6 @@
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
 <html lang="en">
 <head>
-<!-- Copyright ($Author$) 2009 -->
-<!-- $Id$ -->
 <title>Decoder Pro Manual: Getting Started</title>
 
 <!-- Style -->
@@ -20,16 +18,15 @@
 <!--#include virtual="Sidebar" -->
 <div id="mainContent">
 
-<a NAME="Top"></a>
+<a name="Top"></a>
 <h1>DecoderPro&reg; Main Window</h1>
-<h1>Print/Preview Roster Entry</h1>
+<h2>Print/Preview Roster Entry</h2>
 
-<div align=right>
+<div align="right">
 <p><a href="dp3_menubar.shtml">Back </a> </div>
 
 <hr>
-<p><br>
-The <strong>Select Items to Print</strong> is opened from the DecoderPro Main Window menubar, File --&gt; Print/Preview Roster--&gt;Entry.</p>
+<p>The <strong>Select Items to Print</strong> is opened from the DecoderPro Main Window menubar, File --&gt; Print/Preview Roster--&gt;Entry.</p>
 <p>This dialog allows you to select what features of an individual decoder in Roster you would like to Preview or Print.<br>
 </p>
 <h3><img src="images/Main_file_03.png" width="251" height="438" alt="select"></h3>
@@ -40,10 +37,13 @@ The <strong>Select Items to Print</strong> is opened from the DecoderPro Main Wi
 <p><img src="images/dp3_rosterEntry_labels.png" width="800" height="704"></p>
 <p>Example of Print Preview with both Basic and Speed Table selected.</p>
 <p><img src="images/dp3_printPreview.png" width="665" height="744" alt="preview"></p>
+
 <hr>
-<div align=right>
+<div align="right">
 <p><a href="dp3_menubar.shtml">Back</a> </div>
 
 <!--#include virtual="/Footer" -->
-</body>
+  </div><!-- closes #mainContent-->
+ </div> <!-- closes #mBody-->
+ </body>
 </html>
