@@ -2490,6 +2490,14 @@
    <p>After importing your cars, you must save them if you want to keep them as part of your
     roster. Use the Cars "Save" button or select any car by pressing the edit button and then press
     the "Save" button that can be found at the bottom right of the "Edit Car" window.</p>
+    
+    <h4>Importing Kernel Names</h4>
+
+   To add kernel names to your cars you can import them by creating a file with the first line
+   starting with "kernel" and the following three attributes (number, road, and kernel name) for
+   each car in a kernel:
+
+   <p>kernel <br>21455 UP kernel_name</p>
 
    <a name="CarsEdit"></a>
    <h3>Adding Cars to your Roster</h3>
@@ -3712,7 +3720,7 @@
    Trains-&gt;Tools. Very useful when adding a new car type to your roster.
 
    <p>
-  
+    <img src="images/ModifyTrainsByCarType.png">
    </p>
 
    <p>First select the car type you wish to modify. The window will then show which trains can
@@ -4326,6 +4334,7 @@
     <a href="http://jmri.sourceforge.net/help/en/html/web/">JMRI Web Access</a>.
 
    <p>End of OperationsPro&trade; help.</p>
+   
   </div><!-- closes #maincontent-->
  </div><!-- closes #mbody-->
 </body>
