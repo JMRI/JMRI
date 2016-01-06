@@ -199,7 +199,7 @@ public class ReportPanel extends JPanel {
                     File f = new File(fn);
                     log.debug("add startup panel file: {}", f);
                     msg.addFilePart("logfileupload[]", f);
-                };
+                }
                 // Check that a manual panel file has been loaded
                 File file = jmri.configurexml.LoadXmlUserAction.getCurrentFile();
                 if (file != null) {
