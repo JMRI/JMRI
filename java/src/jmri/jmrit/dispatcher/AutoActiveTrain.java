@@ -402,7 +402,7 @@ public class AutoActiveTrain implements ThrottleListener {
                         stopInCurrentSection(BEGINNING_RESET);
                         removeCurrentSignal();
                     } else {
-                        setupNewCurrentSignal();
+                        setupNewCurrentSignal(as);
                     }
                 } else {
                     // reached last block in this transit
@@ -441,10 +441,7 @@ public class AutoActiveTrain implements ThrottleListener {
         _autoTrainAction.handleBlockStateChange(as, b);
     }
 
-    protected void restart() {
-        setupNewCurrentSignal();
-    }
-
+ 
     /**
      * support methods
      */
@@ -495,7 +492,7 @@ public class AutoActiveTrain implements ThrottleListener {
             }
             if (_nextBlock != null) {
                 // set up new current signal
-                setupNewCurrentSignal();
+                setupNewCurrentSignal(as);
             }
         }
         // if train is stopping for lack of an allocation, set flag to restart it
@@ -567,7 +564,7 @@ public class AutoActiveTrain implements ThrottleListener {
         _controllingSignalMast = null;
     }
 
-    protected synchronized void setupNewCurrentSignal() {
+    protected synchronized void setupNewCurrentSignal(AllocatedSection as) {
         removeCurrentSignal();
         if (DispatcherFrame.instance().getSignalType() == DispatcherFrame.SIGNALHEAD) {
             SignalHead sh = _lbManager.getFacingSignalHead(_currentBlock, _nextBlock);
@@ -596,10 +593,27 @@ public class AutoActiveTrain implements ThrottleListener {
             }
         } else {
             //SignalMast
-            SignalMast sm = _lbManager.getFacingSignalMast(_currentBlock, _nextBlock);
+            SignalMast sm = null;
+            Block cB = _currentBlock;
+            Block nB = _nextBlock;
+            if (as == null) {
+                as = _currentAllocatedSection;
+            }
+            // Find the signal mast at the end of the section by making sure that cB is within as and nB is not.
+            //while (as != null && as.getSection().containsBlock(nB) && nB != null) {
+            //    cB = nB;
+            //    nB = getNextBlock(nB, as);
+            //}
+            while (sm == null && nB != null) {
+                sm = _lbManager.getFacingSignalMast(cB, nB);
+                if (sm == null) {
+                    cB = nB;
+                    nB = getNextBlock(nB, as);
+                }
+            }
             if (sm != null) {
                 _controllingSignalMast = sm;
-                _conSignalProtectedBlock = _nextBlock;
+                _conSignalProtectedBlock = nB;
                 sm.addPropertyChangeListener(_conSignalMastListener = new PropertyChangeListener() {
                     public void propertyChange(PropertyChangeEvent e) {
                         if (e.getPropertyName().equals("Aspect")) {
@@ -722,6 +736,11 @@ public class AutoActiveTrain implements ThrottleListener {
             String displayedAspect = _controllingSignalMast.getAspect();
             if (log.isDebugEnabled()) {
                 log.debug("Controlling Mast for train " + _activeTrain.getTrainName() + " " + _controllingSignalMast.getDisplayName() + " " + displayedAspect);
+                if (_conSignalProtectedBlock == null) {
+                    log.debug("Protected block is null");
+                } else {
+                    log.debug("Protected block: " + _conSignalProtectedBlock.getSensor().getDisplayName() + " state: " + _conSignalProtectedBlock.getSensor().getState());
+                }
             }
             if ((_controllingSignalMast.getAppearanceMap().getSpecificAppearance(jmri.SignalAppearanceMap.DANGER).equals(displayedAspect))
                     || !_controllingSignalMast.getLit() || _controllingSignalMast.getHeld()) {
@@ -962,13 +981,13 @@ public class AutoActiveTrain implements ThrottleListener {
                  if the first block we come to has a stopped or held signal */
                 _previousBlock = _currentBlock;
                 _activeTrain.setTransitReversed(true);
-                _activeTrain.reverseAllAllocatedSections();
+                AllocatedSection aSec = _activeTrain.reverseAllAllocatedSections();
                 setEngineDirection();
                 if ((_nextSection != null) && !isSectionInAllocatedList(_nextSection)) {
                     DispatcherFrame.instance().forceScanOfAllocation();
                     break;
                 }
-                setupNewCurrentSignal();
+                setupNewCurrentSignal(aSec);
                 setSpeedBySignal();
                 break;
             case BEGINNING_RESET:
@@ -987,7 +1006,7 @@ public class AutoActiveTrain implements ThrottleListener {
                             DispatcherFrame.instance().forceScanOfAllocation();
                             break;
                         }
-                        setupNewCurrentSignal();
+                        setupNewCurrentSignal(null);
                         setSpeedBySignal();
                     }
                 } else {
@@ -1393,9 +1412,9 @@ public class AutoActiveTrain implements ThrottleListener {
                 synchronized (this) {
                     try {
                         if (!_ramping) {
-                            wait(500);
+                            wait(50);
                         } else {
-                            wait(200);
+                            wait(20);
                         }
                     } catch (InterruptedException ie) {
                         log.error("InterruptedException in AutoEngineer" + ie);
