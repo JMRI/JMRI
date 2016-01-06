@@ -2,6 +2,7 @@
 package apps;
 
 import java.util.List;
+import jmri.InstanceManager;
 
 /**
  * Provide a GUI for configuring PerformActionModel objects.
@@ -27,7 +28,7 @@ public class PerformActionPanel extends AbstractActionPanel {
 
     @Override
     List<PerformActionModel> rememberedObjects() {
-        return PerformActionModel.rememberedObjects();
+        return InstanceManager.getDefault(StartupActionsManager.class).getActions(PerformActionModel.class);
     }
 
     @Override
