@@ -37,7 +37,7 @@
             <ul>
                 <li><strong>The JMRI JSON servlet</strong>, providing both HTTP and WebSocket access</li>
                 <li><strong>The JMRI JSON server</strong>, providing a standard network socket for streamed access</li>
-                <li><strong>jquery-json</strong>, A jQuery-based JavaScript library that chooses the best method to communicate with a JMRI server using the JMRI JSON protocol</li>
+                <li><strong>jquery.jmri</strong>, A jQuery-based JavaScript library that chooses the best method to communicate with a JMRI server using the JMRI JSON protocol</li>
             </ul>
             <h2>JMRI JSON Servlet</h2>
             <p>The <b>JMRI JSON Servlet</b> provides web access to lists and values for numerous JMRI-defined entities, in the modern
@@ -99,10 +99,10 @@
         <h2>JMRI JSON Server</h2>
         <p>The JMRI JSON server is functionally identical to the JSON WebSocket, but running over a standard network socket.</p>
         
-        <h2>jquery-json</h2>
-        <p><em>jquery-json</em> is a JavaScript library that ships with JMRI and
+        <h2>jquery.jmri</h2>
+        <p><em>jquery.jmri</em> is a JavaScript library that ships with JMRI and
             makes the JSON protocol support just work on most current browsers.</p>
-        <p>Examples of use of the jquery-json JavaScript library that ships with JMRI include (all links assume you are reading this on your JMRI web server):</p>
+        <p>Examples of use of the jquery.jmri JavaScript library that ships with JMRI include (all links assume you are reading this on your JMRI web server):</p>
         <ul>
             <li><a href="/operations">Operations Conductor</a> (implemented in <a href="/js/operations.js">/js/operations.js</a></li>
             <li><a href="/panel">Panel</a> (implemented in <a href="/js/panel.js">/js/panel.js</a></li>
