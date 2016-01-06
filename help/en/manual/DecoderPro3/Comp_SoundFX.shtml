@@ -1,8 +1,6 @@
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
 <html lang="en">
 <head>
-<!-- Copyright ($Author$) 2009, 2010 -->
-<!-- $Id$ -->
 <title>Comprehensive Programmer - Sound FX Pane</title>
 
 <!-- Style -->
@@ -18,11 +16,11 @@
 <!--#include virtual="/Header" -->
 <div id="mainContent">
 
-<a NAME="Top"></a>
+<a name="Top"></a>
 <h1>DecoderPro&reg; Comprehensive Programmer</h1>
-<h1>Sound FX Pane</h1>
+<h2>Sound FX Pane</h2>
 
-<div align=right>
+<div align="right">
 <p><a href="Comp_Analog.shtml"> Previous | </a>
   <a href="Comp_SoundLevels.shtml">Next </a>
 <p><a href="index.shtml#Advanced Programmer">Back to Index</a>
@@ -48,13 +46,16 @@ Others can be set to be triggered at startup or to run in the background.
 <h1><img src="images/Comp_09a_Sound.png" alt="Athearn Sound" width="798" height="178" border="5"></h1>
 <p><strong>Digitrax F40PH</strong></p>
 <h1><img src="images/Comp_09b_Sound.png" alt="Digitrax Sound" border="5"></h1>
+
 <hr>
-<div align=right>
+<div align="right">
 <p><a href="Comp_SoundLevels.shtml"></a>
   <a href="Comp_Analog.shtml">Previous | </a> <a href="Comp_SoundLevels.shtml">Next </a>
 <p><a href="index.shtml#Advanced Programmer">Back to Index</a>
 </div>
 
 <!--#include virtual="/Footer" -->
-</body>
+  </div><!-- closes #mainContent-->
+ </div> <!-- closes #mBody-->
+ </body>
 </html>

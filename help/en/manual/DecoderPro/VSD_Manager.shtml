@@ -1,11 +1,9 @@
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
 <html lang="en">
 <head>
-<!-- Copyright ($Author$) 2009 -->
-<!-- $Id$ -->
-<TITLE>
+<title>
 DecoderPro&reg; Main Window
-</TITLE>
+</title>
 
 <!-- Style -->
 <meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
@@ -23,9 +21,9 @@ DecoderPro&reg; Main Window
 <div id="mainContent">
 
 <h1>DecoderPro&reg; Debug Menu</h1>
-<h1>VSDecoder Manager</h1>
+<h2>VSDecoder Manager</h2>
 
-<div align=right>
+<div align="right">
 <p><a href="Main_Debug.shtml#vsdecoder">Back </a></p>
 </div>
 
@@ -113,13 +111,12 @@ is the same action as the "load VSD File" button on the Config Dialog.</p>
 <p>Set preferences for VSDecoder operation. See <a
 href="Main_VSD.shtml#preferences">VSDecoder Preferences</a> for details.</p>
 
-
-
-
-<div align=right>
+<div align="right">
 <p><a href="Main_Debug.shtml#vsdecoder">Back </a></p>
 </div>
 
 <!--#include virtual="/Footer" -->
+  </div><!-- closes #mainContent-->
+ </div> <!-- closes #mBody-->
 </body>
 </html>

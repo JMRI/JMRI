@@ -1,15 +1,16 @@
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
-<html lang="en"><head><!-- Copyright ($Author$) 2009 --><!-- $Id$ -->
+<html lang="en">
+<head><title>LocoNet Menu</title>
 
-
-
-
-
-<title>LocoNet Menu</title><!-- Style --><meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
+<!-- Style -->
+<meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
 <link rel="stylesheet" type="text/css" href="/css/default.css" media="screen">
 <link rel="stylesheet" type="text/css" href="/css/print.css" media="print">
 <link rel="icon" href="/images/jmri.ico" type="image/png">
-<link rel="home" title="Home" href="/"><!-- /Style --></head>
+<link rel="home" title="Home" href="/">
+<!-- /Style -->
+</head>
+
 <body>
 <!--#include virtual="/Header" -->
 
@@ -18,7 +19,7 @@
 
 <a name="Top"></a>
 <h1>DecoderPro&reg; Main Window</h1>
-<h1>LocoNet Menu </h1>
+<h2>LocoNet Menu</h2>
 
 <div align="right">
 <p><a href="Main_Menu.shtml#System">Back to Index</a></p>
@@ -156,7 +157,7 @@ routes are more powerful and easier to use. </p>
 <p style="margin-left: 40px;"><img src="images/Main_Loconet08.png" alt="loconet if" height="145" width="245"></p><p><span style="font-weight: bold;">Configure Duplex Group</span></p><p style="margin-left: 40px;">Opens the<span style="font-weight: bold;"> Duplex Group Configuration</span> Window<span style="font-weight: bold;">/</span></p><table style="text-align: left; width: 100%;" border="1" cellpadding="2" cellspacing="2"><tbody><tr><td><img style="width: 478px; height: 406px;" alt="duplex" src="images/Main_Loconet_Duplex01.png"></td><td><img style="width: 478px; height: 406px;" alt="duplex" src="images/Main_Loconet_Duplex02.png"></td></tr></tbody></table>
 <p><img src="images/separator.png" alt="sep" height="4" width="340"></p>
 <p><strong>Send Throttle Messages</strong></p>
-<p style="margin-left: 40px;">Opens <strong>Throttle message</strong> prompt with limited capabiltiy to send messages to handheld throttle.</p>
+<p style="margin-left: 40px;">Opens <strong>Throttle message</strong> prompt with limited capability to send messages to handheld throttle.</p>
 <p style="margin-left: 40px;"><img src="images/Main_Loconet10.png" alt="send loconet messages" height="100" width="267"></p>
 <p><img src="images/separator.png" alt="sep" height="4" width="340"></p>
 <p><strong><a name="Packet"></a>Send LocoNet Packet</strong></p>
@@ -218,7 +219,7 @@ first step is to erase the decoders memory so it can take new data.
 This will take up to about 30 seconds, depending on the specific
 decoder. </dd><dt>"Sending initialization message"</dt><dd>Set up the decoder to accept data          after being erased.  This should only take a fraction of a second. </dd><dt>"Send SDF data"</dt><dd>Load the Sound Definition data into the decoder, which          should only take a few seconds </dd><dt>"Send WAV data"</dt><dd>The
 sound data is being downloaded. As each block is sent you'll get an
-update: "Send WAV data block 1", then 2, then 3, etc. </dd><dt>"Done"</dt><dd>The downloadload completed OK. </dd></dl>
+update: "Send WAV data block 1", then 2, then 3, etc. </dd><dt>"Done"</dt><dd>The download completed OK. </dd></dl>
 If something goes wrong, the final status will be "Download aborted".
 The most common reason is that the PR2 couldn't handle the data that
 was being send, which is listed as "PR2</li></ol><p><strong>Edit SPJ Sound</strong> <strong>File</strong></p>
@@ -228,8 +229,13 @@ was being send, which is listed as "PR2</li></ol><p><strong>Edit SPJ Sound</stro
 <p style="margin-left: 40px;">Opens the <strong>LocoNetOver Tcp Server</strong> dialog.</p>
 <p style="margin-left: 40px;"><img src="images/Main_Loconet09.png" alt="LocoNet server" border="4" height="120" width="361"></p>
 
+<hr>
 <div align="right">
   <p><a href="Main_Menu.shtml#System">Back to Index</a></p>
 </div>
-<hr><br>
-</div></body></html>
+
+<!--#include virtual="/Footer" -->
+  </div><!-- closes #mainContent-->
+ </div> <!-- closes #mBody-->
+</body>
+</html>

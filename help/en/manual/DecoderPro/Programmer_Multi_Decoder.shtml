@@ -1,8 +1,6 @@
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
 <html lang="en">
 <head>
-<!-- Copyright ($Author$) 2009 -->
-<!-- $Id$ -->
 <title>Multi-Decoder Control</title>
 
 <!-- Style -->
@@ -21,9 +19,9 @@
 <div id="mainContent">
 
 <h1>DecoderPro&reg; Main Window</h1>
-<h1>Multi-Decoder Control</h1>
+<h2>Multi-Decoder Control</h2>
 
-<div align=right>
+<div align="right">
 <p><a href="Main_Tool.shtml">Back </a></p>
 <p><a href="index.shtml#Main">Back to Index</a></p>
 </div>
@@ -61,11 +59,13 @@
 
 <hr>
 
-<div align=right>
+<div align="right">
 <p><a href="Main_Tool.shtml">Back</a></p>
 <p><a href="index.shtml#Mzin">Back to Index</a></p>
 </div>
 
 <!--#include virtual="/Footer" -->
+  </div><!-- closes #mainContent-->
+ </div> <!-- closes #mBody-->
 </body>
 </html>
