@@ -1,9 +1,7 @@
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
 <html lang="en">
 <head>
-<!-- Copyright ($Author$) 2009 -->
-<!-- $Id$ -->
-<TITLE>DecoderPro&reg; Main Window</TITLE>
+<title>DecoderPro&reg; Main Window</title>
 
 <!-- Style -->
 <meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
@@ -21,9 +19,9 @@
 <div id="mainContent">
 
 <h1>DecoderPro&reg; Main Window</h1>
-<h1>Wangrow Menu</h1>
+<h2>Wangrow Menu</h2>
 
-<div align=right>
+<div align="right">
 <p><a href="dp3_menubar.shtml">Back to Index</a><a href="Main_Menu.shtml#System"></a></p>
 </div>
 
@@ -49,10 +47,13 @@
     <p>Text box at bottom of dialog can be used to override the number of bytes sent.</p></td>
   </tr>
 </table>
-<div align=right>
+
+<div align="right">
 <p><a href="dp3_menubar.shtml">Back to Index</a><a href="Main_Menu.shtml#System"></a></p>
 </div>
 
 <!--#include virtual="/Footer" -->
-</body>
+  </div><!-- closes #mainContent-->
+ </div> <!-- closes #mBody-->
+ </body>
 </html>

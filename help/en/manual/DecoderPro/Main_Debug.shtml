@@ -1,65 +1,36 @@
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
-<html lang="en"><head><!-- Copyright ($Author$) 2009 --><!-- $Id$ -->
+<html lang="en">
+<head><title>Debug Menu</title>
 
-
-
-
-
-
-
-
-
-
-
-<title>Debug Menu</title><!-- Style --><meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
-
+<!-- Style -->
+<meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
 <link rel="stylesheet" type="text/css" href="/css/default.css" media="screen">
-
 <link rel="stylesheet" type="text/css" href="/css/print.css" media="print">
-
 <link rel="icon" href="/images/jmri.ico" type="image/png">
-
-<link rel="home" title="Home" href="/"><!-- /Style --></head>
-
-
+<link rel="home" title="Home" href="/">
+<!-- /Style -->
+</head>
 
 <body>
-
 <!--#include virtual="/Header" -->
-
-
 
 <!--#include virtual="Sidebar" -->
 
 <div id="mainContent">
-
-
-
 <a name="Top"></a>
 
 <h1>DecoderPro&reg; Main Window</h1>
-
-<h1>Debug Menu </h1>
-
-
+<h2>Debug Menu </h2>
 
 <div align="right">
-
 <p><a href="Main_Panels.shtml"> Previous</a> | <a href="Main_Window.shtml">Next </a></p>
-
 <p><a href="index.shtml#Main">Back to Index</a></p>
-
 </div>
 
-
-
 <hr>
-
 <p><strong><a name="memory"></a>Memory Usage Monitor</strong></p>
-
 <blockquote>
-
-  <p>Opens the <span style="font-weight: bold;">Memory Usage Monitor</span> tool that lets you see how much memory JMRI is using in your computer.</p>
+<p>Opens the <span style="font-weight: bold;">Memory Usage Monitor</span> tool that lets you see how much memory JMRI is using in your computer.</p>
 
 <p align="center"><img src="images/Main_Debug01.png" alt="Memory Monitro" border="4" height="188" width="513"> </p>
 
@@ -313,59 +284,27 @@ the Web, to get a web connection to JMRI up and running.</p>
 </blockquote>
 
 <p align="center"><img src="images/Main_Debug03.png" alt="mini server" height="70" width="428"></p>
-
 <p><img src="images/separator.png" alt="sep" height="4" width="340"></p>
-
-<p><strong>Start Wi Throttle</strong></p>
+<p><strong>Start WiThrottle</strong></p>
 
 <blockquote>
-
-  <p>Opens the WiThrottle window which controls the connection between Wi Throttle and iphone, or ipad touch and JMRI</p>
-
-  <p>Additional information on <strong><a href="http://jmri.org/help/en/package/jmri/jmrit/withrottle/UserInterface.shtml" target="_blank">creating a Wi Throttle.</a></strong></p>
-
+  <p>Opens the WiThrottle window which controls the connection between WiThrottle and iPhone, or iPad Touch and JMRI</p>
+  <p>Additional information on <strong><a href="http://jmri.org/help/en/package/jmri/jmrit/withrottle/UserInterface.shtml" target="_blank">creating a WiThrottle.</a></strong></p>
 </blockquote>
 
 <blockquote>
-
   <p align="center"><img src="images/Main_Debug04.png" alt="Wi Throttle" height="267" width="321"></p>
-
 </blockquote>
 
-<hr>
-
-<div align="right">
-
-  <p><a href="Main_Window.shtml"></a><a href="Main_Panels.shtml">Previous</a> | <a href="Main_Window.shtml">Next </a></p>
-
-  <p><a href="index.shtml#Main">Back to Index</a></p>
-
-</div>
-
-<h4>&nbsp;</h4>
-
-<h4><a name="memoryMonitor"></a>&nbsp;</h4><div>
-
-  <div align="right"><a href="#memory">Back</a></div>
-
-</div>
-
-<h4>&nbsp;</h4>
 
 <hr>
-
-
-
 <div align="right">
-
 <p><a href="Main_Window.shtml"></a><a href="Main_Panels.shtml">Previous</a> | <a href="Main_Window.shtml">Next </a></p>
-
 <p><a href="index.shtml#Main">Back to Index</a></p>
-
 </div>
-
-
 
 <!--#include virtual="/Footer" -->
-
-</div></body></html>
+  </div><!-- closes #mainContent-->
+ </div> <!-- closes #mBody-->
+</body>
+</html>

@@ -1,8 +1,6 @@
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
 <html lang="en">
 <head>
-<!-- Copyright ($Author$) 2009 -->
-<!-- $Id$ -->
 <title>DecoderPro Turnout Control</title>
 
 <!-- Style -->
@@ -22,16 +20,14 @@
 
 <a NAME="Top"></a>
 <h1>DecoderPro&reg; Main Window</h1>
-<h1>Menu Bar - Turnout Control Panel</h1>
+<h2>Menu Bar - Turnout Control Panel</h2>
 
-<div align=right>
+<div align="right">
 <p><a href="dp3_menubar.shtml">Back</a></p>
 <p><a href="dp3_menubar.html">Back to Index</a></p>
 </div>
 
 <hr>
-<p>&nbsp;</p>
-
 <table width="90%" border="0" cellspacing="1" cellpadding="1">
   <tr>
     <td width="32%" align="left" valign="top"><img src="images/Main_TurnoutControl_01.png" width="282" height="291" alt="turnout control"></td>
@@ -61,14 +57,16 @@ will only change the state of the internal turnout and will not change a turnout
     <p><strong>Pushbuttons:</strong> Shows state of Pushbuttons.</p></td>
   </tr>
 </table>
-<p>
+
 <hr>
 
-<div align=right>
+<div align="right">
 <p><a href="dp3_menubar.shtml">Back</a></p>
 <p><a href="index.shtml#Main">Back to Index</a></p>
 </div>
 
 <!--#include virtual="/Footer" -->
-</body>
+  </div><!-- closes #mainContent-->
+  </div> <!-- closes #mBody-->
+ </body>
 </html>

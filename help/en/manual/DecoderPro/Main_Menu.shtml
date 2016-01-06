@@ -1,6 +1,7 @@
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
-<html lang="en"><head>
-<!-- Copyright ($Author$) 2009 --><!-- $Id$ --><title>DecoderPro Menus</title>
+<html lang="en">
+<head>
+<title>DecoderPro Menus</title>
 
 <!-- Style -->
 <meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
@@ -14,9 +15,11 @@
 <body>
 <!--#include virtual="/Header" -->
 <!--#include virtual="Sidebar" -->
-<div id="mainContent"><a name="Top"></a>
+<div id="mainContent">
+<a name="Top"></a>
 <h1>DecoderPro&reg; Main Window</h1>
-<h1>Menu Overview</h1>
+<h2>Menu Overview</h2>
+
 <div align="right">
 <p><a href="index.shtml#Main">Back to Index</a></p>
 </div>
@@ -118,7 +121,6 @@ Operations Program User's Guide)
 </ul>
 <ul>
 </ul>
-
 
 <h4><a href="Main_Roster.shtml">Roster</a></h4>
 <ul>
@@ -278,10 +280,14 @@ We are using Digtrax and LocoNet in this User's Guide.</h4>
 </blockquote><ul>
 <li><strong>About DecoderPro</strong></li>
 </ul>
+
 <hr>
 <div align="right">
 <p><a href="index.shtml#Main">Back to Index</a></p>
 </div>
+
 <!--#include virtual="/Footer" -->
-</div>
-</body></html>
+  </div><!-- closes #mainContent-->
+ </div> <!-- closes #mBody-->
+</body>
+</html>
