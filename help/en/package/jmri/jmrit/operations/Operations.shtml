@@ -18,8 +18,8 @@
 <body>
  <!--#include virtual="/Header" -->
 
- <div class="nomenu" id="mbody">
-  <div id="maincontent">
+ <div class="nomenu" id="mBody">
+  <div id="mainContent">
 
    <h1>JMRI: OperationsPro&trade;</h1>
 
@@ -4337,7 +4337,7 @@
 
    <p>End of OperationsPro&trade; help.</p>
    
-  </div><!-- closes #maincontent-->
- </div><!-- closes #mbody-->
+  </div><!-- closes #mainContent-->
+ </div><!-- closes #mBody-->
 </body>
 </html>
