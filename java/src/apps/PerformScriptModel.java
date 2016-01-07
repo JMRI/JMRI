@@ -1,9 +1,6 @@
 // PerformScriptModel.java
 package apps;
 
-import java.util.ArrayList;
-import java.util.List;
-
 /**
  * A PerformScriptModel object runs a script when the program is started.
  * <P>
@@ -31,13 +28,4 @@ public class PerformScriptModel implements StartupModel {
     public void setFileName(String n) {
         fileName = n;
     }
-
-    static public void rememberObject(PerformScriptModel m) {
-        l.add(m);
-    }
-
-    static public List<PerformScriptModel> rememberedObjects() {
-        return l;
-    }
-    static List<PerformScriptModel> l = new ArrayList<PerformScriptModel>();
 }

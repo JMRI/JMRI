@@ -67,7 +67,7 @@
 	in which they're evaluated, nor does it force evaluation
 	of one Conditional when an earlier or later one is evaluated.
 	For more on this, see the discussion on the 
-	<A href="../../../../html/tools/Logix.shtml">Logix main page</a>.
+	<a href="../../../../html/tools/Logix.shtml">Logix main page</a>.
 	<p> When <b>Done</b> is clicked at the bottom of the Edit Logix window, any 
 	change in the Logix user name is checked and made. A check is made for
 	inconsistencies in specifying that an entity (sensor, turnout, etc.) referenced
@@ -81,9 +81,11 @@
 	<p>The Edit Logix window also provides a way to delete a Logix if it is no 
 	longer needed. Click <b>Delete Logix</b> to delete the Logix being edited 
 	and all its Conditionals. </p>
-	<p>For more information, consult the Logix documentation on the JMRI web page 
-	http://jmri.sourceforge.net/ .</p>
 
+  <p>For more information, consult the <a href="../../../../html/tools/Logix.shtml">Logix documentation</a> on the JMRI web page 
+	http://jmri.sourceforge.net/.</p>
+  <p>Back to the <a href="LogixTable.shtml">Logix Table help page<a>.</p>
+  
 <!--#include virtual="/Footer" -->
  </div><!-- closes #mainContent-->
 </div> <!-- closes #mBody-->

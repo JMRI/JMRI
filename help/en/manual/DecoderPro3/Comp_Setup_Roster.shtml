@@ -1,15 +1,16 @@
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
-<html lang="en"><head><!-- Copyright ($Author$) 2009, 2010 --><!-- $Id$ -->
+<html lang="en">
+<head>
+<title>Comprehensive Programmer - Setup and Roster Panes</title>
 
-
-
-
-
-<title>Comprehensive Programmer - Setup and Roster Panes</title><!-- Style --><meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
+<!-- Style -->
+<meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
 <link rel="stylesheet" type="text/css" href="/css/default.css" media="screen">
 <link rel="stylesheet" type="text/css" href="/css/print.css" media="print">
 <link rel="icon" href="/images/jmri.ico" type="image/png">
-<link rel="home" title="Home" href="/"><!-- /Style --></head>
+<link rel="home" title="Home" href="/">
+<!-- /Style -->
+</head>
 
 <body>
 <!--#include virtual="/Header" -->
@@ -17,9 +18,9 @@
 <!--#include virtual="Sidebar" -->
 <div id="mainContent">
 
-<a name="Top">
-</a><h1><a name="Top">DecoderPro&reg; Comprehensive Programmer</a></h1>
-<h1><a name="Top">Roster Entry Pane</a></h1>
+<a name="Top"></a>
+<h1><a name="Top">DecoderPro&reg; Comprehensive Programmer</a></h1>
+<h2><a name="Top">Roster Entry Pane</a></h2>
 
 <div align="right">
 <p><a href="Comp_Basic.shtml">Next </a>
@@ -54,11 +55,15 @@ at the top. If you are unsure how to handle the <b>Roster</b> information,
 go back to that section in the <a href="Basic_Start.shtml"><strong>Basic
 Programmer</strong></a>. If you're ready to move on to bigger and better things,
 let's go to the next tab.</p>
-<hr align="left">
+
+<hr>
 <div align="right">
 <p><a href="Comp_Basic.shtml"> Next </a>
 </p><p><a href="index.shtml#Advanced%20Programmer">Back to Index</a>
 </p></div>
 
 <!--#include virtual="/Footer" -->
-</div></body></html>
+  </div><!-- closes #mainContent-->
+ </div> <!-- closes #mBody-->
+ </body>
+</html>

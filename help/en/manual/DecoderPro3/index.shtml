@@ -212,7 +212,7 @@ Bruce Shanks </td>
 <hr>
 
 <!--#include virtual="/Footer" -->
-</div>
-</div>
+  </div><!-- closes #mainContent-->
+ </div> <!-- closes #mBody-->
 </body>
 </html>
