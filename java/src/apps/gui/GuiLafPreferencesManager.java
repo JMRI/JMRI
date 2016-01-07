@@ -1,6 +1,5 @@
 package apps.gui;
 
-import apps.GuiLafConfigPane;
 import java.awt.Font;
 import java.util.Enumeration;
 import java.util.HashSet;
@@ -12,7 +11,6 @@ import javax.swing.ToolTipManager;
 import javax.swing.UIManager;
 import javax.swing.UIManager.LookAndFeelInfo;
 import javax.swing.UnsupportedLookAndFeelException;
-import javax.swing.plaf.FontUIResource;
 import jmri.beans.Bean;
 import jmri.profile.Profile;
 import jmri.profile.ProfileUtils;
@@ -33,6 +31,20 @@ public class GuiLafPreferencesManager extends Bean implements PreferencesProvide
     public static final String LOOK_AND_FEEL = "lookAndFeel";
     public static final String NONSTANDARD_MOUSE_EVENT = "nonstandardMouseEvent";
     public final static String SHOW_TOOL_TIP_TIME = "showToolTipDismissDelay";
+    /**
+     * Smallest font size a user can set the font size to other than zero
+     * ({@value}). A font size of 0 indicates that the system default font size
+     * will be used.
+     *
+     * @see apps.GuiLafConfigPane#MIN_DISPLAYED_FONT_SIZE
+     */
+    public static final int MIN_FONT_SIZE = 9;
+    /**
+     * Largest font size a user can set the font size to ({@value}).
+     *
+     * @see apps.GuiLafConfigPane#MAX_DISPLAYED_FONT_SIZE
+     */
+    public static final int MAX_FONT_SIZE = 36;
 
     // preferences with default values
     private Locale locale = Locale.getDefault();
@@ -138,7 +150,7 @@ public class GuiLafPreferencesManager extends Bean implements PreferencesProvide
      */
     public void setFontSize(int newFontSize) {
         int oldFontSize = this.fontSize;
-        this.fontSize = (newFontSize == 0) ? 0 : ((newFontSize < 9) ? 9 : ((newFontSize > 20) ? 20 : newFontSize));
+        this.fontSize = (newFontSize == 0) ? 0 : ((newFontSize < MIN_FONT_SIZE) ? MIN_FONT_SIZE : ((newFontSize > MAX_FONT_SIZE) ? MAX_FONT_SIZE : newFontSize));
         if (this.fontSize != oldFontSize) {
             propertyChangeSupport.firePropertyChange(FONT_SIZE, oldFontSize, this.fontSize);
         }
