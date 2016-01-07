@@ -979,7 +979,39 @@
     </target>
 
     <!-- end of file-checking targets -->
-    
+
+    <target name="fixlineends" description="convert specific files to LF line ends">
+        <fixcrlf eol="unix" srcdir="." includes="
+            **/*.css
+            **/*.csh
+            **/*.df
+            **/*.dtd
+            **/*htm
+            **/*html
+            **/*.java
+            **/*.json
+            **/*.jsp
+            **/*.jspf
+            **/*.lcf
+            **/*.md
+            **/*.php
+            **/*.pl
+            **/*.plist
+            **/*.properties
+            **/*.sh
+            **/*.svg
+            **/*.tld
+            **/*.txt
+            **/*.xml
+            **/*.xsd
+            **/*.xsl
+            **/COPYING
+            **/Footer
+            **/Header
+            **/Sidebar
+        " />
+    </target>
+
     <!-- ============================================================================= -->
     <!-- Test execution targets                                                        -->
     <!-- ============================================================================= -->
