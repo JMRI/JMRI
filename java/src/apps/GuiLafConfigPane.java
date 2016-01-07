@@ -15,6 +15,7 @@ import java.util.ResourceBundle;
 import javax.swing.BoxLayout;
 import javax.swing.ButtonGroup;
 import javax.swing.DefaultComboBoxModel;
+import javax.swing.JButton;
 import javax.swing.JCheckBox;
 import javax.swing.JComboBox;
 import javax.swing.JComponent;
@@ -165,35 +166,6 @@ public class GuiLafConfigPane extends JPanel implements PreferencesPanel {
         return (desired != null) ? desired : Locale.getDefault();
     }
 
-    static int fontSize = 0;
-
-    public static void setFontSize(int size) {
-        fontSize = size == 0 ? 0 : size < 9 ? 9 : size > 20 ? 20 : size;
-        //fontSizeComboBox.setSelectedItem(fontSize);
-    }
-
-    public static int getFontSize() {
-        return fontSize;
-    }
-
-    private int getDefaultFontSize() {
-        if (getFontSize() == 0) {
-            java.util.Enumeration<Object> keys = UIManager.getDefaults().keys();
-            while (keys.hasMoreElements()) {
-                Object key = keys.nextElement();
-                Object value = UIManager.get(key);
-
-                if (value instanceof javax.swing.plaf.FontUIResource && key.toString().equals("List.font")) {
-                    Font f = UIManager.getFont(key);
-                    log.debug("Key:" + key.toString() + " Font: " + f.getName() + " size: " + f.getSize());
-                    return f.getSize();
-                }
-            }
-            return 11;	// couldn't find the default return a reasonable font size
-        }
-        return getFontSize();
-    }
-
     private static final Integer fontSizes[] = {
         9,
         10,
@@ -212,21 +184,28 @@ public class GuiLafConfigPane extends JPanel implements PreferencesPanel {
     static ActionListener listener;
 
     public void doFontSize(JPanel panel) {
-
+        GuiLafPreferencesManager manager = InstanceManager.getDefault(GuiLafPreferencesManager.class);
         JLabel fontSizeLabel = new JLabel(rb.getString("ConsoleFontSize"));
         fontSizeComboBox.removeActionListener(listener);
-        fontSizeComboBox.setSelectedItem(getDefaultFontSize());
+        fontSizeComboBox.setSelectedItem(manager.getFontSize());
         JLabel fontSizeUoM = new JLabel(rb.getString("ConsoleFontSizeUoM"));
+        JButton resetButton = new JButton(rb.getString("ResetDefault"));
+        resetButton.setToolTipText(rb.getString("GUIFontSizeReset"));
 
         panel.add(fontSizeLabel);
         panel.add(fontSizeComboBox);
         panel.add(fontSizeUoM);
+        panel.add(resetButton);
 
         fontSizeComboBox.addActionListener(listener = (ActionEvent e) -> {
-            setFontSize((int) fontSizeComboBox.getSelectedItem());
-            InstanceManager.getDefault(GuiLafPreferencesManager.class).setFontSize((int) fontSizeComboBox.getSelectedItem());
+            manager.setFontSize((int) fontSizeComboBox.getSelectedItem());
             this.dirty = true;
             this.restartRequired = true;
+        });
+        resetButton.addActionListener(listener = (ActionEvent e) -> {
+            if ((int) GuiLafConfigPane.fontSizeComboBox.getSelectedItem() != manager.getDefaultFontSize()) {
+                GuiLafConfigPane.fontSizeComboBox.setSelectedItem(manager.getDefaultFontSize());
+            }
         });
     }
 
