@@ -9,7 +9,6 @@
 # The above will handle all files NOT found below
 #
 # These files are text and should be normalized (Convert crlf => lf)
-*.bat           text
 *.csh           text
 *.css           text
 *.df            text
@@ -23,6 +22,8 @@
 *.jspf          text
 *.lcf           text
 *.md            text
+*.php           text
+*.pl            text
 *.plist         text
 *.properties    text
 *.sh            text
