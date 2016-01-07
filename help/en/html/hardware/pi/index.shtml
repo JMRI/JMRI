@@ -25,13 +25,15 @@
 
 <p>The <a href="http://www.raspberrypi.org">Raspberry Pi</a> is a family of inexpensive credit card size single board computers that have many applications in embedded electronics.  This page describe's the use of the Raspberry Pi's GPIO pins under JMRI.  Since the Raspberry Pi runs Linux natively, other connections are also possible using either a <a href="../USBtoSerial.shtml">USB connection</a> or via the Raspberry Pi's built in serial ports.</p>
 
+<img src="Pi2ModB1GB_-comp.jpg" alt="Raspberry Pi2 model B (courtesy www.raspberrypi.org" width="528" height="300" align="right" title="Pi2 model B (&copy; www.raspberrypi.org)">
 <a name="hardware"></a><h2>Supported Hardware</h2>
 <p>Theoretically, any Raspberry Pi supported by <a href="http://pi4j.com/">Pi4J</a> is supported by JMRI.<br>
-JMRI support has been tested with the Models B, B+ and 2B. There's also a <a href="http://jmri.sourceforge.net/install/Raspberry.html">JMRI install help page for the Pi</a>.</p>
+JMRI support has been tested with the Models B, B+ and 2B. There's also a <a href="http://jmri.sourceforge.net/install/Raspbian.shtml">JMRI install help page for the Pi</a>.</p>
 
 <a name="connecting"></a><h2>Connecting</h2>
 <h3>Wiring</h3>
-<p>Underlying support for the Raspberry Pi's GPIO connections is provided using the <a href="http://pi4j.com/">Pi4J library for Java</a>. <b><i>This library requires that applications using GPIO pins be run as root (or using <code>sudo</code></i></b>).</p>
+<p>Underlying support for the Raspberry Pi's GPIO connections is provided using the <a href="http://pi4j.com/">Pi4J library for Java</a>.<br>
+<b><i>This library requires that applications using GPIO pins be run as root (or using <code>sudo</code></i></b>).</p>
 <p>JMRI currently supports inputs (Sensors) and outputs (Turnouts) via the Raspberry Pi's GPIO pins.</p> 
 
 <h4>Input/Output pin addressing</h4>
@@ -71,12 +73,12 @@ JMRI currently uses the default Pi4J pin numbering.  The Pin numbers may differ 
 
 <a name="documentation"></a><h2>Documentation</h2>
 <h3>JMRI Help</h3>
-<p><a href="http://jmri.sourceforge.net/install/Raspberry.html">JMRI installation on Pi/Raspbian</a>.
+<p><a href="http://jmri.sourceforge.net/install/Raspbian.shtml">JMRI installation on Pi/Raspbian</a>.
 <h3>Third Party info</h3>
 <p>The <a href="http://pi4j.com/">Pi4J website</a> provides model specific Java I/O information.
 
 <!--#include virtual="/Footer" -->
- </div><!-- closes #mainContent-->
-</div> <!-- closes #mBody-->
-</body>
+   </div><!-- closes #mainContent-->
+  </div> <!-- closes #mBody-->
+ </body>
 </html>

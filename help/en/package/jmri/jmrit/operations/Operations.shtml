@@ -1114,7 +1114,7 @@
 
    When the option "Save Train Manifests" is selected, OperationsPro will save the current train
    Manifest before creating a new one. The program will store the old Manifests in a directory
-   called "ManifestBackups" located in the "operations" directory. You can review your old Manifest
+   called "manifestBackups" located in the "operations" directory. You can review your old Manifest
    using the
    <a href="#PrintSavedTrainManifests">Print Saved Train Manifests</a> under tools in the 
    <a href="#Trains">Trains</a> window.
@@ -3705,13 +3705,14 @@
     </tr>
    </table>
    
-   <img src="images/TrainsPaneMenu.png" width="376" height="300" align="right" alt="Operations Trains window Tools Menu">
    <a name="TrainsTools"></a>
    <h3>Trains Tools</h3>
    
-   In the upper left side of the "Trains" window is the "Tools" menu. The first three items; <a href="#SettingsOptions">Options</a>,
+   <img src="images/TrainsPaneMenu.png" alt="Operations Trains window Tools Menu">
+   
+   <p>In the upper left side of the "Trains" window is the "Tools" menu. The first three items; <a href="#SettingsOptions">Options</a>,
    <a href="#PrintOptions">Manifest Print Options</a>, and <a href="#BuildReportDetails">Build Report Options</a>
-   can also be accessed from the "Settings" tools menu. 
+   can also be accessed from the "Settings" tools menu. </p>
 
    <a name="ModifyTrainsByCarType"></a>
    <h4>Modify Trains by Car Type</h4>
@@ -3747,15 +3748,16 @@
    the row colored red if a train fails to build. You can find this feature under "Tools" in the
    "Trains" window.
    
-   <a href="images/TrainsTimetable214.png"><img src="images/TrainsTimetable214.png" width="407" height="215" align="right" alt="Operations Trains window Tools Menu v2.14"></a>
    <a name="Timetable"></a>
    <h4>Timetable</h4>
+   
+   <a href="images/Timetable.png"><img src="images/Timetable.png" alt="Operations Train Timetable"></a>
 
-   The Timetable window allows you to define which trains will run on any given day, and can be
+   <p>The Timetable window allows you to define which trains will run on any given day, and can be
    found under the Trains-&gt;Tools. For each day of the week, select which trains you want to
    build. Then select which day you want by selecting the appropriate radio button. Then press the
    "Apply" button to update the Trains build checkboxes. Use the "Save" button to store any changes
-   you made to the timetable.
+   you made to the timetable.</p>
 
    <p>To change which day of the week is active, select the appropriate radio button and then
     press the "Activate" button. The day selected is then used by your schedules (Delivery and
@@ -4335,7 +4337,7 @@
 
    <p>End of OperationsPro&trade; help.</p>
    
-  </div><!-- closes #maincontent-->
- </div><!-- closes #mbody-->
+  </div><!-- closes #mainContent-->
+ </div><!-- closes #mBody-->
 </body>
 </html>

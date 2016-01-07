@@ -22,7 +22,7 @@
 <h1>JMRI&reg;: Setup</h1>
 <h2>General Installation</h2>
 
-<p>Full instructions for installing on different platform can be found her:</p>
+<p>Full instructions for installing on different platforms can be found here:</p>
 	<ul>
 	<li><a href="http://jmri.sourceforge.net/install/WindowsNew.shtml">Windows</a>
 	<li><a href="http://jmri.sourceforge.net/install/MacOSX.shtml">Mac OS X</a>
@@ -34,7 +34,7 @@
 
 <h2>Starting the program</h2>
 <p>
-  Once you have downloaded the DecoderPro&reg; software and installed it, simply
+  Once you have downloaded the JMRI&reg; software and installed it, simply
 open the program in the usual manner for your operating system, windows will show icon on desktop.
 </p><p><img src="../../manual/DecoderPro/images/DesktopIcons.png" alt="desktop icons" height="79" width="223"> 
 </p><p>Double click on the icon for the program to open, in this case we will open DecoderPro&reg;
