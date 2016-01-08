@@ -22,6 +22,9 @@
 
 <h1><a name="Top">JMRI&reg; DecoderPro&reg; Manual</a></h1>
 
+<p class="important">This Manual deals with DP version 3.6.<br>
+Online Help for the current version of JMRI&reg; DecoderPro&reg; is <a href="../../html/apps/DecoderPro/index.shtml">here</a>.</p>
+
 <p><strong>JMRI</strong> is a Java-based cross-platform application
 for model railroaders. JMRI contains applications for:</p>
 
