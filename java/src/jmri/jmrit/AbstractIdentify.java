@@ -68,7 +68,9 @@ public abstract class AbstractIdentify implements jmri.ProgListener {
             log.error("start with state " + state + ", should have been zero");
         }
 
-        savedMode = programmer.getMode(); // In case we need to change modes
+        if (programmer != null) {
+            savedMode = programmer.getMode(); // In case we need to change modes
+        }
 
         // The first test is invoked here; the rest are handled in the programmingOpReply callback
         state = 1;
@@ -102,7 +104,7 @@ public abstract class AbstractIdentify implements jmri.ProgListener {
                     + jmri.InstanceManager.programmerManagerInstance().getGlobalProgrammer().decodeErrorCode(status));
                 state--;
                 retry++;
-            } else if (programmer.getMode() != DefaultProgrammerManager.PAGEMODE &&
+            } else if (programmer != null && programmer.getMode() != DefaultProgrammerManager.PAGEMODE &&
                         programmer.getSupportedModes().contains(DefaultProgrammerManager.PAGEMODE)) {
                 programmer.setMode(DefaultProgrammerManager.PAGEMODE);
                 retry = 0;
@@ -114,10 +116,10 @@ public abstract class AbstractIdentify implements jmri.ProgListener {
                     + jmri.InstanceManager.programmerManagerInstance().getGlobalProgrammer().decodeErrorCode(status));
                 statusUpdate("Stopping due to error: "
                     + jmri.InstanceManager.programmerManagerInstance().getGlobalProgrammer().decodeErrorCode(status));
-            if (programmer.getMode() != savedMode) {  // restore original mode
-                log.warn("Restoring " + savedMode.toString() + " mode");
-                programmer.setMode(savedMode);
-            }
+                if (programmer != null && programmer.getMode() != savedMode) {  // restore original mode
+                    log.warn("Restoring " + savedMode.toString() + " mode");
+                    programmer.setMode(savedMode);
+                }
             state = 0;
             retry = 0;
             error();
