@@ -55,9 +55,9 @@ JavaDocs, etc.
 <ol>
 <li>Run-time user information is made available by putting the help system
 on the web site.
-<li>Other user information is stored in our repository as the
-  <tt>trunk/jmri-website</tt> directory and
-placed directly on the web site.
+<li>Other user information is stored in our 
+<a href="https://github.com/JMRI/website"><tt>JMRI/website</tt> GitHub repository</a>
+and placed directly on the web site.
 <li>Reference information is put on the web site from their own repository locations,
 or created by automated Ant scripts during release builds.
 </ol>
@@ -86,20 +86,30 @@ Eventually, all but a few index pages will have
 ".shtml" extensions. (The remaining index.html pages keep that name
 so that people who request just a directory URL will be served something useful).</p>
 
+<p><a name="redirect" id="redirect"></a>
+We are using .htaccess files to do redirects when a web page is removed.  This
+lets older bookmarks continue to work.  
+The 
+<a href="https://github.com/JMRI/website/tree/master/hardware/.htaccess">hardware/.htaccess file</a> provides an example.
+For more information on the syntax, see the 
+<a href="https://httpd.apache.org/docs/current/mod/mod_rewrite.html#rewriterule">Apache mod_rewrite documentation</a>.
+
 <h2>Directory Organization</h2>
 
-<p>The web site contains several separate areas, which translate to different 
-SVN directories:</p>
+<p>The web site contains several separate areas:</p>
 <UL>
 <LI>jython, resources, xml, web - these are taken directly from the
-directories of the same name under <tt>trunk/jmri/</tt>. They are only occasionally referenced
-directly.
+directories of the same name in the 
+<a href="https://github.com/JMRI/website"><tt>JMRI/JMRI</tt> repository</a>
+They are only occasionally referenced directly.
 <LI>help - also used for the JavaHelp system, this has the internal
 structure described below and on our
 <A HREF="Help.shtml">JavaHelp</a>
 page.
 </ul>
-<p>Another group are from the <tt>trunk/jmri-website</tt>, and are checked out at 
+<p>Another group are from the 
+<a href="https://github.com/JMRI/website"><tt>JMRI/website</tt> repository</a>,
+and are checked out at 
 the root of the web server.</p>
 <ul>
 <LI>releasenotes - Specific information on each test and production release
@@ -109,8 +119,8 @@ the root of the web server.</p>
 <li>contact - 
 </ul>
 <p>Finally, some of the site is generated from the JMRI source itself, as opposed to being contained in 
-the source.  The <a href="/JavaDoc/doc">JavaDoc</a> is one such section, along with some of the 
-<a href="/xml/XSLT">human-readable information</a> about defined decoders.  
+the source.  The <a href="http://jmri.org/JavaDoc/doc">JavaDoc</a> is one such section, along with some of the 
+<a href="http://jmri.org/xml/XSLT">human-readable information</a> about defined decoders.  
 
 <h2>Updating the jmri.org site</h2>
 
@@ -183,30 +193,57 @@ Add the word "Includes" to the last line so it looks like
     AddType text/html .shtml
     AddHandler server-parsed .shtml
 </PRE>
+
+    <li>Finally, configure the server to allow <a href="#redirect">.htaccess files to provide redirects</a>.  
+        We use this to allow people with old URLs in bookmarks to reach the right current pages.
+        <p>
+        Find a section that looks like:
+<PRE>
+DocumentRoot "/Library/WebServer/Documents"
+<Directory "/Library/WebServer/Documents">
+</PRE>
+        There's an indented section directly below that.  Find the part that looks like:
+<PRE>
+    #
+    # AllowOverride controls what directives may be placed in .htaccess files.
+    # It can be "All", "None", or any combination of the keywords:
+    #   AllowOverride FileInfo AuthConfig Limit
+    #
+    AllowOverride None
+</PRE>
+        Change the last line to allow overrides (which is what a .htaccess file does):
+<PRE>
+    AllowOverride All
+</PRE>
+        Then find the reference to the rewrite_module and make sure it's loaded by a line like:
+<PRE>
+LoadModule rewrite_module libexec/apache2/mod_rewrite.so
+</PRE>
+        By default, that's commented out with a leading # character.
+          
     </ul>
 
-<LI>To check out a copy of the JMRI files that will be served:
+<LI>Install the JMRI files to be served:
     <UL>
+    <LI><a name="link" id="link"></a>Check out both the JMRI/JMRI
+        and JMRI/website repositories to somewhere on your computer.  It's OK for these
+        to be outside the web server's directory tree.
     <LI>Change to the web server directory
 <PRE>
 cd /Library/WebServer/Documents
 </PRE>
-    <LI>Check out the relevant files.<br/>
-    <em>Note: these are the old SVN instructions. 
-    The new Git ones are not written yet.</em><br/>
+    <li>Set symbolic links to bring in content from the two repositories:
 <PRE>
-# the trailing dot on the next line is important!
-svn checkout https://svn.code.sf.net/p/jmri/code/trunk/jmri-website .  
-svn checkout https://svn.code.sf.net/p/jmri/code/trunk/jmri/help 
-svn checkout https://svn.code.sf.net/p/jmri/code/trunk/jmri/jython
-svn checkout https://svn.code.sf.net/p/jmri/code/trunk/jmri/resources
-svn checkout https://svn.code.sf.net/p/jmri/code/trunk/jmri/web
-svn checkout https://svn.code.sf.net/p/jmri/code/trunk/jmri/xml
+~me/git/website/setSymLinks.sh  ~me/git/JMRI ~me/git/website
 </PRE>
+where "~me/git/website" is the path to the JMRI/website repository that you just checked out,
+and "~me/git/JMRI" is the path to the JMRI/website repository. setSymLinks.sh sets up 
+symbolic links that let your web server see the top of the JMRI web site as if the files
+were directly present.
 </UL>
 <LI>Restart your computer to reinitialize the web server.
 <LI>Test it by trying to display the URL
-<A HREF="http://localhost/">http://localhost/</a>, 
+<A HREF="http://localhost/">http://localhost/index.shtml</a>, 
 which should get you a JMRI top-level page.
 </OL>
 

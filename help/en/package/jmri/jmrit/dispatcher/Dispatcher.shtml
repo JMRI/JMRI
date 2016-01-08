@@ -1,16 +1,14 @@
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
-<!-- $Id$ -->
 <html lang="en">
 <head>
  <TITLE>
       JMRI: Dispatcher Help
  </TITLE>
-    <META http-equiv=Content-Type content="text/html; charset=iso-8859-1">
-    <META content="Dave Duchamp" name=Author>
+    <META content="Dave Duchamp" name="Author">
     <META name="keywords" content="JMRI help Dispatcher">
 
 <!-- Style -->
-  <META http-equiv=Content-Type content="text/html; charset=iso-8859-1">
+  <META http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
   <link rel="stylesheet" type="text/css" href="/css/default.css" media="screen">
   <link rel="stylesheet" type="text/css" href="/css/print.css" media="print">
   <link rel="icon" href="/images/jmri.ico" type="image/png">
@@ -23,7 +21,7 @@
   <div class="nomenu" id="mBody">
     <div id="mainContent">
 
-<H1>Dispatcher</H1>
+<h1>Dispatcher</h1>
 
 <a name="contents"></a><h2>Contents</h2>
 
@@ -230,7 +228,10 @@ created or edited in the
 <H2>The Dispatcher Window</H2>
 
 <p>The <b>Dispatcher</b> window is opened when <b>Dispatcher...</b> is selected 
-in the JMRI <b>Tools</b> menu. It displays a table of <b>Active Trains</b> and 
+in the JMRI <b>Tools</b> menu. It is also accessible from the LocoTools "Dispatcher" menu:<br>
+<img src="images/DispatcherMenu413.png" height="76" width="609"></p>
+<p>
+It displays a table of <b>Active Trains</b> and 
 their status, and a table of pending <b>Allocation Requests</b>. It provides 
 buttons that allow the dispatcher to easily allocate Sections, create new Active 
 Trains, terminate Active trains, and display a table of all 
@@ -698,7 +699,7 @@ acts as a connectivity data base, supplying connectivity information as needed t
 Dispatcher or the Auto Active Train's <i>virtual engineer</i>.</p>
 </li>
 <li><p>Hardware signals on the layout need not be present, but signals and signal 
-logic (Either SignalHeads & SSL or SignalMasts & SML) must be configured in the 
+logic (Either SignalHeads &amp; SSL or SignalMasts &amp; SML) must be configured in the 
 Layout Editor panel. Auto Active Trains follow signals, requiring signals on the 
 Layout Editor panel.</p>
 </li>
@@ -709,7 +710,7 @@ up.</p>
 </li>
 <li><p>All entry points and exit points from Sections in the Transit must have 
 signals on the Layout Editor panel. If Using Signal Heads/SSL then boundaries between 
-Blocks in Sections should be signalled on the Layout Editor panel. 
+Blocks in Sections should be signaled on the Layout Editor panel. 
 Portions of the layout that are not in Sections in Transits only need those 
 signals that are necessary to allow setup of signal logic, either SSL (Simple Signal Logic) 
 or SML (Signal Mast Logic) for signals in Sections of the Transit. 
@@ -753,7 +754,8 @@ at slower speeds. Derailing problems must have been solved.
 <b>A train should run flawlessly in manual mode, before automatic running 
 is attempted.</b></p>
 
-
 <!--#include virtual="/Footer" -->
-</body>
+  </div><!-- closes #mainContent-->
+ </div> <!-- closes #mBody-->
+ </body>
 </html>

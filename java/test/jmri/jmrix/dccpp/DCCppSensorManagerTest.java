@@ -109,8 +109,6 @@ public class DCCppSensorManagerTest extends TestCase {
         // see if sensor exists
         Assert.assertTrue(null != l.getBySystemName("DCCPPS22"));
         
-        jmri.util.JUnitAppender.assertErrorMessage("Malformed Validator Command: Q 22 pattern \\s*Q\\s*(\\d+)\\s+(\\d+)\\s+([0|1])\\s*");
-        jmri.util.JUnitAppender.assertErrorMessage("Malformed Validator Command: Q 22 pattern \\s*Q\\s*(\\d+)\\s+(\\d+)\\s+([0|1])\\s*");
     }
 
     public void testAsAbstractFactory() {

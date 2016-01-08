@@ -6,6 +6,7 @@
 
 # make the jmri libraries easily availble
 import jmri
+import java
 
 class SampleLnStats(jmri.jmrit.automat.AbstractAutomaton) :
     

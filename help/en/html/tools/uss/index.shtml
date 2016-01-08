@@ -1,34 +1,28 @@
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
 <html lang="en">
 <head>
-<!-- Copyright Bob Jacobsen 2008 -->
-<!-- $Id$ -->
 <title>JMRI: USS CTC Tools</title>
 
 <!-- Style -->
-<META HTTP-EQUIV="Content-Type" CONTENT="text/html; charset=iso-8859-1">
-<LINK REL="stylesheet" TYPE="text/css" HREF="/css/default.css"
-	MEDIA="screen">
-<LINK REL="stylesheet" TYPE="text/css" HREF="/css/print.css"
-	MEDIA="print">
-<LINK REL="icon" HREF="/images/jmri.ico" TYPE="image/png">
-<LINK REL="home" TITLE="Home" HREF="/">
+<meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
+<link rel="stylesheet" type="text/css" href="/css/default.css" media="screen">
+<link rel="stylesheet" type="text/css" href="/css/print.css" media="print">
+<link rel="icon" href="/images/jmri.ico" type="image/png">
+<link rel="home" title="Home" href="/">
 <!-- /Style -->
-</HEAD>
+</head>
 
-<BODY>
+<body>
 <!--#include virtual="/Header" -->
   <div class="nomenu" id="mBody">
     <div id="mainContent">
-
 
 <h2> 
 JMRI: USS CTC Tools
 </h2>
 
-JMRI contains some tools to help in the automation of USS CTC
-panels.
-These can be used for either screen-based panels, or to
+<p>JMRI contains tools to help in the automation of USS CTC
+Panels. These can be used for either screen-based Panels, or to
 drive a physical panel with real levers and lights.
 
 <dl>
@@ -42,29 +36,31 @@ This could, for example, make a layout turnout follow a fascia switch connected 
 <dt>
 <a href="../../../package/jmri/jmrit/ussctc/OsIndicatorFrame.shtml">OS Indicator</a>
 <dd>
-Drives the occupancy indicator lamps on the panel. This takes input from a sensor
+Drives the occupancy indicator lamps on the Panel. This takes input from a Sensor
 to show the track section is occupied, and also optionally can light the indicator
 if the section has been unlocked.
 
 <dt>
 <a href="../../../package/jmri/jmrit/ussctc/TurnoutLeverFrame.shtml">Turnout Lever</a>
 <dd>
-Controls a turnout from a lever on the panel, along with the two
-indicator lights. (Not yet released)
+Controls a Turnout from a lever on the Panel, along with the two
+indicator lights (not yet released)
 
 <dt>
 <a href="../../../package/jmri/jmrit/ussctc/SignalLeverFrame.shtml">Signal Lever</a>
 <dd>
-Controls a set of signals from a lever on the panel, along with the three
-indicator lights. (Not yet released)
+Controls a set of Signals from a lever on the Panel, along with the three
+indicator lights (not yet released)
 
 <dt>
 <a href="../../../package/jmri/jmrit/ussctc/CodeButtonFrame.shtml">Code Button</a>
 <dd>
-Implements the code button and code lamp. (Not yet released)
+Implements the Code button and Code lamp (not yet released)
 
 </dl>
     
 <!--#include virtual="/Footer" -->
+ </div><!-- closes #mainContent-->
+</div> <!-- closes #mBody-->
 </body>
 </html>

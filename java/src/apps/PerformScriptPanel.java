@@ -16,6 +16,7 @@ import javax.swing.JLabel;
 import javax.swing.JPanel;
 import jmri.InstanceManager;
 import jmri.profile.ProfileManager;
+import jmri.script.ScriptFileChooser;
 import jmri.swing.PreferencesPanel;
 
 /**
@@ -58,11 +59,9 @@ public class PerformScriptPanel extends JPanel implements PreferencesPanel {
         });
 
         // are there any existing objects from reading existing config?
-        int n = PerformScriptModel.rememberedObjects().size();
-        for (int i = 0; i < n; i++) {
-            PerformScriptModel m = PerformScriptModel.rememberedObjects().get(i);
+        InstanceManager.getDefault(StartupActionsManager.class).getActions(PerformScriptModel.class).stream().forEach((m) -> {
             add(new Item(m));
-        }
+        });
     }
 
     protected void addItem() {
@@ -71,7 +70,7 @@ public class PerformScriptPanel extends JPanel implements PreferencesPanel {
             if (i.model.getFileName() == null) {
                 return;  // cancelled
             }
-            InstanceManager.getDefault(StartupActionsManager.class).addModel(i.model);
+            InstanceManager.getDefault(StartupActionsManager.class).addAction(i.model);
             add(i);
             revalidate();
             repaint();
@@ -79,7 +78,7 @@ public class PerformScriptPanel extends JPanel implements PreferencesPanel {
         }
     }
 
-    JFileChooser fc = jmri.jmrit.XmlFile.userFileChooser("Python script files", "py");
+    JFileChooser fc = new ScriptFileChooser();
 
     @Override
     public String getPreferencesItem() {
@@ -187,7 +186,7 @@ public class PerformScriptPanel extends JPanel implements PreferencesPanel {
                 parent.repaint();
                 // unlink to encourage garbage collection
                 removeButton.removeActionListener(this);
-                InstanceManager.getDefault(StartupActionsManager.class).removeModel(model);
+                InstanceManager.getDefault(StartupActionsManager.class).removeAction(model);
                 model = null;
                 dirty = true;
             }

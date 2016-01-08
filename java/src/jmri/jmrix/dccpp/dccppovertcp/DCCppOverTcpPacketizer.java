@@ -10,6 +10,7 @@ import jmri.jmrix.dccpp.DCCppNetworkPortController;
 import jmri.jmrix.dccpp.DCCppPacketizer;
 import jmri.jmrix.dccpp.DCCppMessage;
 import jmri.jmrix.dccpp.DCCppReply;
+import jmri.jmrix.dccpp.DCCppReplyParser;
 import jmri.jmrix.dccpp.DCCppListener;
 import jmri.jmrix.dccpp.DCCppMessageException; // TODO: we don't have this one!
 import org.slf4j.Logger;
@@ -46,6 +47,18 @@ import org.slf4j.LoggerFactory;
  * Based on LnOverTcpPacketizer
  *
  */
+
+// TODO: Consider ditching the LocoNet-inherited "RECEIVE" and "SEND" prefixes
+// and just rely on the already-present "<" and ">" to mark start and end
+// of frame.  This would pretty much make DCCppOverTCP redundant with the
+// Network Port interface to the Base Station (that is, the "host" JMRI
+// application would look just like a Network Base Station to the "client" JMRI
+// application).
+//
+// However, at minimum, this would break backward compatibility for the interface,
+// so there is that to consider.  Probably best to do this sooner than later,
+// to minimize that impact.
+// 
 public class DCCppOverTcpPacketizer extends DCCppPacketizer {
 
     static final String RECEIVE_PREFIX = "RECEIVE";
@@ -232,7 +245,7 @@ public class DCCppOverTcpPacketizer extends DCCppPacketizer {
 		    int lastidx = rxLine.lastIndexOf(">");
 		    log.debug("String {} Index1 {} Index 2{}", rxLine, firstidx, lastidx);
 		    //  Note: the substring call below also strips off the "< >"
-		    DCCppReply msg = DCCppReply.parseDCCppReply(rxLine.substring(rxLine.indexOf("<")+1,
+		    DCCppReply msg = DCCppReplyParser.parseReply(rxLine.substring(rxLine.indexOf("<")+1,
 							    rxLine.lastIndexOf(">")));
 		    
 		    if (!msg.isValidReplyFormat()) {

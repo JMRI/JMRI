@@ -20,7 +20,6 @@ public class PackageTest extends TestCase {
     }
 
     public void testExecute() {
-        jmri.InstanceManager.store(jmri.managers.DefaultUserMessagePreferences.getInstance(), jmri.UserPreferencesManager.class);
         new MemoryTableAction().actionPerformed(null);
 //    }
 //  test order isn't guaranteed!
@@ -59,9 +58,12 @@ public class PackageTest extends TestCase {
     // The minimal setup for log4J
     protected void setUp() {
         apps.tests.Log4JFixture.setUp();
+        jmri.util.JUnitUtil.resetInstanceManager();
+        jmri.util.JUnitUtil.initDefaultUserMessagePreferences();
     }
 
     protected void tearDown() {
+        jmri.util.JUnitUtil.resetInstanceManager();
         apps.tests.Log4JFixture.tearDown();
     }
 

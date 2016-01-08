@@ -2,6 +2,7 @@
 package jmri.jmrit.symbolicprog.tabbedframe;
 
 import java.awt.Color;
+import java.awt.Component;
 import java.awt.Dimension;
 import java.awt.Font;
 import java.awt.GridBagConstraints;
@@ -136,9 +137,14 @@ public class PaneProgPane extends javax.swing.JPanel
     public PaneProgPane() {
     }
 
+    public PaneProgPane(PaneContainer parent, String name, Element pane, CvTableModel cvModel, IndexedCvTableModel icvModel, VariableTableModel varModel, Element modelElem, RosterEntry pRosterEntry) {
+        this(parent, name, pane, cvModel, icvModel, varModel, modelElem, pRosterEntry, false);
+    }
+
     /**
      * Construct the Pane from the XML definition element.
      *
+     * @param parent       The parent pane
      * @param name         Name to appear on tab of pane
      * @param pane         The JDOM Element for the pane definition
      * @param cvModel      Already existing TableModel containing the CV
@@ -150,8 +156,9 @@ public class PaneProgPane extends javax.swing.JPanel
      * @param modelElem    "model" element from the Decoder Index, used to check
      *                     what decoder options are present.
      * @param pRosterEntry The current roster entry, used to get sound labels.
+     * @param isProgPane   True if the pane is a default programmer pane
      */
-    public PaneProgPane(PaneContainer parent, String name, Element pane, CvTableModel cvModel, IndexedCvTableModel icvModel, VariableTableModel varModel, Element modelElem, RosterEntry pRosterEntry) {
+    public PaneProgPane(PaneContainer parent, String name, Element pane, CvTableModel cvModel, IndexedCvTableModel icvModel, VariableTableModel varModel, Element modelElem, RosterEntry pRosterEntry, boolean isProgPane) {
 
         container = parent;
         mName = name;
@@ -208,12 +215,36 @@ public class PaneProgPane extends javax.swing.JPanel
             p.add(newGroup(((groupList.get(i))), showItem, modelElem));
         }
 
+        // explain why pane is empty
+        if (cvList.isEmpty() && varList.isEmpty() && indexedCvList.isEmpty() && isProgPane) {
+            JPanel pe = new JPanel();
+            pe.setLayout(new BoxLayout(pe, BoxLayout.Y_AXIS));
+            int line = 1;
+            while (line >= 0) {
+                try {
+                    String msg = SymbolicProgBundle.getMessage("TextTabEmptyExplain" + line);
+                    if (msg.isEmpty()) {
+                        msg = " ";
+                    }
+                    JLabel l = new JLabel(msg);
+                    l.setAlignmentX(Component.CENTER_ALIGNMENT);
+                    pe.add(l);
+                    line++;
+                } catch (Exception e) {
+                    line = -1;
+                }
+            }
+            add(pe);
+            panelList.add(pe);
+            return;
+        }
+
         // add glue to the right to allow resize - but this isn't working as expected? Alignment?
         add(Box.createHorizontalGlue());
 
-        add(new JScrollPane(p));
+            add(new JScrollPane(p));
 
-        // add buttons in a new panel
+            // add buttons in a new panel
         bottom = new JPanel();
         panelList.add(p);
         bottom.setLayout(new BoxLayout(bottom, BoxLayout.X_AXIS));
@@ -2359,7 +2390,8 @@ public class PaneProgPane extends javax.swing.JPanel
             log.trace("Variable \"{}\" not found, omitted", name);
             return;
         }
-//        log.info("Display item="+name);
+//        Leave here for now. Need to track pre-existing corner-case issue
+//        log.info("Entry item="+name+";cs.gridx="+cs.gridx+";cs.gridy="+cs.gridy+";cs.anchor="+cs.anchor+";cs.ipadx="+cs.ipadx);
 
         // check label orientation
         Attribute attr;
@@ -2386,14 +2418,18 @@ public class PaneProgPane extends javax.swing.JPanel
         }
 
         // create the paired label
-        JLabel l = new WatchingLabel(" " + label + " ", rep);
+        JLabel l = new WatchingLabel(label, rep);
+
+        int spaceWidth = getFontMetrics(l. getFont()).stringWidth(" ");
 
         // now handle the four orientations
         // assemble v from label, rep
         if (layout.equals("left")) {
             cs.anchor = GridBagConstraints.EAST;
+            cs.ipadx = spaceWidth;
             g.setConstraints(l, cs);
             col.add(l);
+            cs.ipadx = 0;
 
             cs.gridx++;
             cs.anchor = GridBagConstraints.WEST;
@@ -2407,8 +2443,10 @@ public class PaneProgPane extends javax.swing.JPanel
 
             cs.gridx++;
             cs.anchor = GridBagConstraints.WEST;
+            cs.ipadx = spaceWidth;
             g.setConstraints(l, cs);
             col.add(l);
+            cs.ipadx = 0;
 
         } else if (layout.equals("below")) {
             // variable in center of upper line
@@ -2419,14 +2457,18 @@ public class PaneProgPane extends javax.swing.JPanel
             // label aligned like others
             cs.gridy++;
             cs.anchor = GridBagConstraints.WEST;
+            cs.ipadx = spaceWidth;
             g.setConstraints(l, cs);
             col.add(l);
+            cs.ipadx = 0;
 
         } else if (layout.equals("above")) {
             // label aligned like others
             cs.anchor = GridBagConstraints.WEST;
+            cs.ipadx = spaceWidth;
             g.setConstraints(l, cs);
             col.add(l);
+            cs.ipadx = 0;
 
             // variable in center of lower line
             cs.gridy++;
@@ -2438,6 +2480,7 @@ public class PaneProgPane extends javax.swing.JPanel
             log.error("layout internally inconsistent: " + layout);
             return;
         }
+//        log.info("Exit item="+name+";cs.gridx="+cs.gridx+";cs.gridy="+cs.gridy+";cs.anchor="+cs.anchor+";cs.ipadx="+cs.ipadx);
     }
 
     /**
@@ -2508,7 +2551,8 @@ public class PaneProgPane extends javax.swing.JPanel
         return start;
     }
 
-    public static final String CLOSE_TAG = "</html>";
+    public static final String HTML_OPEN_TAG = "<html>";
+    public static final String HTML_CLOSE_TAG = "</html>";
 
     /**
      * Appends text to a String possibly in HTML format (as used in many Swing
@@ -2527,8 +2571,8 @@ public class PaneProgPane extends javax.swing.JPanel
         if (baseText == null || baseText.length() < 1) {
             result = extraText;
         } else {
-            if (baseText.endsWith(CLOSE_TAG)) {
-                result = baseText.substring(0, baseText.length() - CLOSE_TAG.length()) + extraText + CLOSE_TAG;
+            if (baseText.endsWith(HTML_CLOSE_TAG)) {
+                result = baseText.substring(0, baseText.length() - HTML_CLOSE_TAG.length()) + extraText + HTML_CLOSE_TAG;
             } else {
                 result = baseText + extraText;
             }

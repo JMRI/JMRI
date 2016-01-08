@@ -10,6 +10,16 @@ A similar mechanism is used for Linux under the linux/ directory.
 
 MacOS X fat binaries are treated slightly differently, see the README file there.
 
+#### Updates
+
+If you make a change in this directory (add/change/remove a file), please make corresponding changes in the control files that are used for various JMRI development and release operations:
+- build.xml - used by Ant, and in turn by various IDEs
+- .classpath - used by Eclipse
+- nbproject/ide-file-targets.xml, nbproject/project.xml - used by NetBeans
+
+Note that Windows installers don't necessarily remove existing library versions. (See [JMRI Issue #359](https://github.com/JMRI/JMRI/issues/359) for discussion on this)  Until that's changed, if you remove a library from here that really needs to _not_ be in user installs, you need to add an explicit delete to the scripts/WinInstallFiles/InstallJMRI.nsi file, in addition to modifying those above. 
+
+
 ### Specific components:
 
 ##### vecmath.jar
@@ -124,6 +134,8 @@ bluecove-gpl-2.1.1-SNAPSHOT.jar
         
   version 0.5.7
   libusbJava.jnilib for MacOS X
+        to get 64-bit, from http://wiki.ztex.de/doku.php?id=en:software:porting#macos_port
+        requires /usr/local/lib/libusb-0.1.4.dylib via MacPorts or Homebrew or an installer from http://www.ellert.se/twain-sane/
   LibusbJava.dll for Windows is 0.2.3.0 (Feb 18, 2008)
   libusbJava.so for Linux was built on Ubuntu 7.10 w libusb 2:0.1.12-7
   
@@ -131,28 +143,56 @@ bluecove-gpl-2.1.1-SNAPSHOT.jar
 - mailapi.jar
 - smtp.jar
   
-##### Joal 1.1.2
-  from <https://joal.dev.java.net/servlets/ProjectDocumentList?folderID=9265&expandFolder=9265&folderID=9264>
+##### Joal 2.3.1
+  from <http://jogamp.org/deployment/archive/rc/v2.3.1/jar/>
   cross-platform .jar files
-    from any one of the platform-specific download .zip files
-      joal.jar
-      gluegen-rt.jar
+    joal.jar
+    gluegen-rt.jar
 
   plus helper native libraries:
   for MacOS X 10.4+
-    from joal-1.1.2-macosx-universal.zip download
-      libjoal_native.jnilib
+    extracted from joal-natives-macosx-universal.jar
+      libjoal.jnilib
+    extracted from gluegen-rt-natives-macosx-universal.jar
       libgluegen-rt.jnilib
 
-  for Windows
-    from joal-1.1.2-windows-i586.zip download
-      joal_native.dll
+  for Windows x86
+    extracted from joal-natives-windows-i586.jar
+      joal.dll
+    extracted from glugen-rt-natives-windows-i586.jar
       gluegen-rt.dll
-  
-  for Linux
-    from joal-1.1.2-linux-i586.zip download
-      libjoal_native.so
+
+  for Windows x64
+    extracted from joal-natives-windows-amd64.jar
+      joal.dll
+    extracted from glugen-rt-natives-windows-amd64.jar
+      gluegen-rt.dll
+
+  for Linux i386
+    extracted from joal-natives-linux-i586.jar
+      libjoal.so
+    extracted from glugen-rt-natives-linux-i586.jar
       libgluegen-rt.so
+
+  for Linux x86_64
+    extracted from joal-natives-linux-amd64.jar
+      libjoal.so
+    extracted from glugen-rt-natives-linux-amd64.jar
+      libgluegen-rt.so
+
+  for Linux armv6l
+    extracted from joal-natives-linux-armv6.jar
+      libjoal.so
+    extracted from glugen-rt-natives-linux-armv6.jar
+      libgluegen-rt.so
+
+  for Linux armv7l
+    extracted from joal-natives-linux-armv6hf.jar
+      libjoal.so
+    extracted from glugen-rt-natives-linux-armv6hf.jar
+      libgluegen-rt.so
+
+NOTE: joal.jar is currently replaced by an own-built version with modifications to correct the load of WAV files with appended metadata - see [GitHub PR](https://github.com/sgothel/joal/pull/15) for details of modifications.
 
 ##### jmdns.jar 
 - Version 3.4.1, 429,083 bytes, 2011-08-25

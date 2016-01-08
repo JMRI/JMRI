@@ -1,8 +1,6 @@
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
 <html lang="en">
 <head>
-<!-- Copyright ($Author$) 2009 -->
-<!-- $Id$ -->
 <title>Comprehensive Programmer - Advanced Features Pane</title>
 
 <!-- Style -->
@@ -24,7 +22,7 @@
 <h1>DecoderPro&reg; Main Window</h1>
 <h1>EasyDCC Menu</h1>
 
-<div align=right>
+<div align="right">
 <p><a href="Main_Menu.shtml#System">Back to Index</a></p>
 </div>
 
@@ -34,13 +32,14 @@
 <p><strong>Send Command</strong></p>
 <p>Opens the Send EasyDcc command prompt, which is used to send commands using DecoderPro.</p>
 <p align="center"><img src="images/Main_EasyDCC_01.png" alt="Send Command" width="263" height="99" border="4"></p>
-<p>
 <hr>
 
-<div align=right>
+<div align="right">
 <p><a href="Main_Menu.shtml#System">Back to Index</a></p>
 </div>
 
 <!--#include virtual="/Footer" -->
+  </div><!-- closes #mainContent-->
+ </div> <!-- closes #mBody-->
 </body>
 </html>

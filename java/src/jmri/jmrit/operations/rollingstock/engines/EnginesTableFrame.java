@@ -154,7 +154,7 @@ public class EnginesTableFrame extends OperationsFrame implements PropertyChange
         controlPanel.add(cp2);
 
         // some tool tips
-        sortByLast.setToolTipText(Bundle.getMessage("LastMoved"));
+        sortByLast.setToolTipText(Bundle.getMessage("TipLastMoved"));
 
         JScrollPane controlPane = new JScrollPane(controlPanel);
 

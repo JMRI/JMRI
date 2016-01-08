@@ -1,8 +1,6 @@
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
 <html lang="en">
 <head>
-<!-- Copyright ($Author$) 2009 -->
-<!-- $Id$ -->
 <TITLE>
 Error Messages
 </TITLE>
@@ -23,16 +21,16 @@ Error Messages
 <div id="mainContent">
 
 <h1>DecoderPro&reg; Error Messages</h1>
-<h1>Decoder Programmer Common Error Messages</h1>
-<h1></h1>
-<div align=right>
-  <p><a href="index.shtml#Error">Back to Index</a></p>
+<h2>Decoder Programmer Common Error Messages</h2>
+
+<div align="right">
+  <p><a href="index.shtml">Back to Index</a></p>
 </div>
 
 <hr>
 <p>Various things can go wrong when JMRI tries to work  with your DCC command station to program a DCC decoder.  
 This page lists the error message that can result, and   describes what they mean.</p>
-<h4><a href="../html/Errors.shtml">JMRI Error Codes</a></h4>
+<h4><a href="../../html/setup/Errors.shtml">JMRI Error Codes</a></h4>
 
 <dl>
  
@@ -54,7 +52,7 @@ This page lists the error message that can result, and   describes what they mea
     <p> This means that JMRI has requested the command station do something  that it doesn't support. </p>
   </dd>
   <dd>
-    <p> This is not supposed to happen, as JMRI should disable  programming modes that the command station can't provide.  If you do see this message, please report the circumstances on  the jmriusers mailing list. </p>
+    <p> This is not supposed to happen, as JMRI should disable  programming modes that the command station can't provide.  If you do see this message, please report the circumstances on  the JMRI users Yahoo group (link at bottom of this page). </p>
   </dd>
   <dt><strong>304 &#8212; aborted by user</strong></dt>
   <dd>
@@ -77,7 +75,7 @@ This page lists the error message that can result, and   describes what they mea
   </dd>
   <dt><strong>307 &#8212; Unknown error</strong></dt>
   <dd>
-    <p> An error has happened, but JMRI doesn't know enough about it  to be able to report more detail.    </p>
+    <p> An error has happened, but JMRI doesn't know enough about it  to be able to report more detail.</p>
   </dd>
   <dd>
     <p> In general, JMRI is pretty good at deciphering what went wrong, and  this message isn't very common.  If you do see this message, please report the circumstances on  the jmriusers mailing list. </p>
@@ -96,13 +94,15 @@ This page lists the error message that can result, and   describes what they mea
  
     <p> Check the electrical connections to the programming track, and  also within the locomotive. </p>
   </dd>
-
 </dl>
+
 <hr>
-<div align=right>
+<div align="right">
 <p><a href="index.shtml#Error">Back to Index</a></p>
 </div>
 
 <!--#include virtual="/Footer" -->
+  </div><!-- closes #mainContent-->
+ </div> <!-- closes #mBody-->
 </body>
 </html>

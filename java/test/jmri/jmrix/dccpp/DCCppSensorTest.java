@@ -46,8 +46,6 @@ public class DCCppSensorTest extends TestCase {
         t.message(m);
 
         Assert.assertEquals("Known state after inactivate ", jmri.Sensor.INACTIVE, t.getKnownState());
-        jmri.util.JUnitAppender.assertErrorMessage("Malformed Validator Command: Q 4 pattern \\s*Q\\s*(\\d+)\\s+(\\d+)\\s+([0|1])\\s*");
-        jmri.util.JUnitAppender.assertErrorMessage("Malformed Validator Command: q 4 pattern \\s*Q\\s*(\\d+)\\s+(\\d+)\\s+([0|1])\\s*");
 
     }
 

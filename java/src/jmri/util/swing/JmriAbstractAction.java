@@ -121,10 +121,10 @@ abstract public class JmriAbstractAction extends javax.swing.AbstractAction {
     public void setParameter(String parameter, Object value) {
     }
 
-    public JmriPanel makePanel() {
+    abstract public JmriPanel makePanel(); /* {
         log.error("makePanel must be overridden", new Exception());
         return null;
-    }
+    } */
 }
 
 /*

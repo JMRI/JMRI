@@ -222,7 +222,7 @@ public class RouteTableAction extends AbstractTableAction {
                     nBean.setUserName((String) value);
                     fireTableRowsUpdated(row, row);
                 } else if (col == SETCOL) {
-                    // set up to edit. Use separate Thread so window is created on top
+                    // set up to edit. Use separate Runnable so window is created on top
                     class WindowMaker implements Runnable {
 
                         int row;
@@ -232,7 +232,6 @@ public class RouteTableAction extends AbstractTableAction {
                         }
 
                         public void run() {
-                            //Thread.yield();
                             addPressed(null);
                             _systemName.setText((String) getValueAt(row, SYSNAMECOL));
                             editPressed(null); // don't really want to stop Route w/o user action

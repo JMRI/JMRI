@@ -1,16 +1,14 @@
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
-<!-- $Id$ -->
 <html lang="en">
 <head>
- <TITLE>
+ <title>
       JMRI: Setting Preferences
- </TITLE>
-    <META http-equiv=Content-Type content="text/html; charset=iso-8859-1">
-    <META content="Bob Jacobsen" name=Author>
-    <META name="keywords" content="JMRI help preferences">
+ </title>
+    <meta name="author" content="Bob Jacobsen">
+    <meta name="keywords" content="JMRI help preferences">
 
 <!-- Style -->
-  <META http-equiv=Content-Type content="text/html; charset=iso-8859-1">
+  <meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
   <link rel="stylesheet" type="text/css" href="/css/default.css" media="screen">
   <link rel="stylesheet" type="text/css" href="/css/print.css" media="print">
   <link rel="icon" href="/images/jmri.ico" type="image/png">
@@ -23,25 +21,21 @@
   <div class="nomenu" id="mBody">
     <div id="mainContent">
 
-<H1>JMRI: Setting The JMRI Preferences</H1>
+<h1>JMRI: Setting The JMRI Preferences</h1>
 
-This help screen opens automatically when the JMRI preferences
-have not been set, or there was a preferences-related error while
+This Help screen opens automatically when the JMRI Preferences
+have not been set, or there was a Preferences-related error while
 the program was starting up. 
 
 <p>
-Once the preferences are set properly, this screen won't display.
-The Help pane for setting the Preferences is at 
-<a href="./AppConfigPanel.shtml">main preferences help page</a>.You can also open the pane 
-by selecting "Window Help" in the Help menu of the preferences window.
-<p>
-<p>
-<p>
-<p>
-
+Once the Preferences are set properly, this screen won't display.
+The Help pane for setting your Preferences is at <a href="./TabbedPreferences.shtml">Preferences Help (v2.9 and up)</a> or
+<a href="./AppConfigPanel.shtml">Preferences Help (older)</a>. You can also open the help 
+by selecting "Window Help" in the Help menu of the Preferences pane.
 
 This is the help\en\package\apps\AppConfixPanelErrorPage.shtml pane
 <!--#include virtual="/Footer" -->
+ </div><!-- closes #mainContent-->
+</div> <!-- closes #mBody-->
 </body>
 </html>
-

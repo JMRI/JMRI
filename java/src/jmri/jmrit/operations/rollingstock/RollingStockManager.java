@@ -455,8 +455,8 @@ public class RollingStockManager {
     // BY_WAIT = 16
     protected static final int BY_LAST = 17;
     protected static final int BY_BLOCKING = 18;
-
     // BY_PICKUP = 19
+    // BY_B_UNIT = 20
 
     protected java.util.Comparator<RollingStock> getComparator(int attribute) {
         switch (attribute) {
@@ -499,9 +499,19 @@ public class RollingStockManager {
 
     private String convertBuildDate(String date) {
         String[] built = date.split("-");
-        if (built.length > 1) {
+        if (built.length == 2) {
             try {
                 int d = Integer.parseInt(built[1]);
+                if (d < 100) {
+                    d = d + 1900;
+                }
+                return Integer.toString(d);
+            } catch (NumberFormatException e2) {
+                log.debug("Unable to parse car built date {}", date);
+            }
+        } else {
+            try {
+                int d = Integer.parseInt(date);
                 if (d < 100) {
                     d = d + 1900;
                 }

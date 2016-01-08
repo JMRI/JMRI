@@ -64,8 +64,7 @@ public class PerformScriptModelXml extends jmri.configurexml.AbstractXmlAdapter 
         // leave an updated object around
         PerformScriptModel m = new PerformScriptModel();
         m.setFileName(fileName);
-        PerformScriptModel.rememberObject(m);
-        InstanceManager.getDefault(StartupActionsManager.class).addModel(m);
+        InstanceManager.getDefault(StartupActionsManager.class).addAction(m);
         InstanceManager.configureManagerInstance().registerPref(new apps.PerformScriptPanel());
         return result;
     }

@@ -1,8 +1,6 @@
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
 <html lang="en">
 <head>
-<!-- Copyright ($Author$) 2009, 2010 -->
-<!-- $Id$ -->
 <title>Comprehensive Programmer - Sound Levels Pane</title>
 
 <!-- Style -->
@@ -20,11 +18,11 @@
 <!--#include virtual="Sidebar" -->
 <div id="mainContent">
 
-<a NAME="Top"></a>
+<a name="Top"></a>
 <h1>DecoderPro&reg; Comprehensive Programmer</h1>
-<h1>Sound Levels Pane</h1>
+<h2>Sound Levels Pane</h2>
 
-<div align=right>
+<div align="right">
 <p><a href="Comp_SoundFX.shtml"> Previous | </a>
   <a href="Comp_GlobalCVs.shtml">Next </a>
 <p><a href="index.shtml#Advanced Programmer">Back to Index</a>
@@ -42,15 +40,16 @@ using a throttle!
 And  even easier, if you are using the <a href="Programmer_OpsMode.shtml"><strong>Ops Mode option </strong></a>to program the unit when it&rsquo;s  running on the track.&nbsp; If you &ldquo;write changes&rdquo; after  doing your selection change, you&rsquo;ll get instant feedback of&nbsp; how the sound has changed. 
 <h1><img src="images/Comp_10_Sound_Levels.png" width="852" height="637" alt="Sound level pane"></h1>
 
-<p>
 <hr>
 
-<div align=right>
+<div align="right">
 <p><a href="Comp_GlobalCVs.shtml"></a>
   <a href="Comp_SoundFX.shtml">Previous | </a> <a href="Comp_GlobalCVs.shtml">Next </a>
 <p><a href="index.shtml#Advanced Programmer">Back to Index</a>
 </div>
 
 <!--#include virtual="/Footer" -->
-</body>
+  </div><!-- closes #mainContent-->
+ </div> <!-- closes #mBody-->
+ </body>
 </html>

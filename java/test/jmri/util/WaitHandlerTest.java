@@ -10,7 +10,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 /**
- * Tests for the jmri.util.FileUtil class.
+ * Tests for the jmri.util.WaitHandler class.
  *
  * These tests are inherently time based, and may fail on a very busy computer.
  * Some have been commented out so they don't run during normal production

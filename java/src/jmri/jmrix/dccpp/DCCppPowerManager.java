@@ -25,7 +25,7 @@ public class DCCppPowerManager implements PowerManager, DCCppListener {
         tc.addDCCppListener(DCCppInterface.CS_INFO, this);
         userName = memo.getUserName();
         // request the current command station status
-        tc.sendDCCppMessage(DCCppMessage.getCSStatusMsg(), this);
+        tc.sendDCCppMessage(DCCppMessage.makeCSStatusMsg(), this);
     }
 
     public String getUserName() {
@@ -41,10 +41,10 @@ public class DCCppPowerManager implements PowerManager, DCCppListener {
         checkTC();
         if (v == ON) {
             // send TRACK_POWER_ON
-            tc.sendDCCppMessage(DCCppMessage.getTrackPowerOnMsg(), this);
+            tc.sendDCCppMessage(DCCppMessage.makeTrackPowerOnMsg(), this);
         } else if (v == OFF) {
             // send TRACK_POWER_OFF
-            tc.sendDCCppMessage(DCCppMessage.getTrackPowerOffMsg(), this);
+            tc.sendDCCppMessage(DCCppMessage.makeTrackPowerOffMsg(), this);
         }
         firePropertyChange("Power", null, null);
     }
@@ -88,16 +88,14 @@ public class DCCppPowerManager implements PowerManager, DCCppListener {
         if (log.isDebugEnabled()) {
             log.debug("Message recieved: " + m.toString());
         }
-	if (m.getElement(0) == DCCppConstants.POWER_REPLY) {
-	    if (m.getElement(1) == '1') {
-		power = ON;
-		firePropertyChange("Power", null, null);
-	    } else if (m.getElement(1) == '0') {
-		power = OFF;
-		firePropertyChange("Power", null, null);
-	    } else {
-		// Malformed response.  Call an error?
-	    }
+        if (m.isPowerReply()) {
+            if (m.getPowerBool()) {
+                power = ON;
+                firePropertyChange("Power", null, null);
+            } else {
+                power = OFF;
+                firePropertyChange("Power", null, null);
+            }
 	}
 	
     }

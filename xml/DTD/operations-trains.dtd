@@ -142,6 +142,7 @@
 <!ATTLIST train TerminationDate		CDATA #IMPLIED>
 <!ATTLIST train RequestedCars		CDATA #IMPLIED>
 <!ATTLIST train statusCode			CDATA #IMPLIED>
+<!ATTLIST train oldStatusCode			CDATA #IMPLIED>
 
 <!ATTLIST rowColor name				CDATA #IMPLIED>
 <!ATTLIST carType name				CDATA #IMPLIED>

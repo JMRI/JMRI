@@ -5,14 +5,10 @@
 <div id="mBody">
 
 <div id="side"> <!-- Block of text at top -->
-    <div style="text-align: center"><strong>The JMRI Manual</strong></div>
+    <div style="text-align: center"><strong>The OpsPro Manual</strong></div>
 
-    <div style="text-align: right">
-      <a href="http://jmri.org/manual/pdf/JMRI_3-0%20Operations_Users%20Guide.pdf">Download 3.0</a>
-    </div>
-
-<dl><!-- main table of contents -->
-<dt>Installing JMRI</dt>
+<dl class="toc"><!-- main table of contents -->
+<dt><h3>Installing JMRI</h3></dt>
 	  <dd>
     <ul>
     <li><a href="Installing_JMRI.shtml">Preparing to Install</a></li>
@@ -20,7 +16,7 @@
     </ul>
     </dd>
 
-<dt>Starting OperationsPro</dt>
+<dt><h3>Starting OperationsPro</h3></dt>
     <dd>
     <ul>
     <li><a href="Start_DecoderPro.shtml">Starting JMRI&reg;</a></li>
@@ -28,7 +24,7 @@
     </ul>
     </dd>
  
-<dt><a name="Main"></a>Using OperationsPro</dt>
+<dt><h3><a name="Main"></a>Using OperationsPro</h3></dt>
     <dd>
     <ul>
       <li><a href="Main_Main.shtml">Main Window Menu</a></li>
@@ -46,6 +42,13 @@
    </ul>
    </dd>
 
-</dl>
+<dt><a name="Error"></a><h3>Error Messages</h3></dt>  
+    <dd>
+    <ul>
+      <li><a href="../../html/setup/Errors.shtml">Error Codes explained</a></li>
+    </ul>
+    </dd>
+  
+  </dl>
 </div> <!-- close #side -->
 <!-- /Sidebar -->

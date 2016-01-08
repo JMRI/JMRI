@@ -1,0 +1,58 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
+<html lang="en">
+<head>
+<!-- Copyright ($Author: jacobsen $) 2009 -->
+<!-- $Id: index.shtml 25755 2014-05-03 21:25:55Z jacobsen $ -->
+<title>N&amp;W 1981 Signaling Definition</title>
+
+<!-- Style -->
+<META HTTP-EQUIV="Content-Type" CONTENT="text/html; charset=iso-8859-1">
+<LINK REL="stylesheet" TYPE="text/css" HREF="/css/default.css"
+	MEDIA="screen">
+<LINK REL="stylesheet" TYPE="text/css" HREF="/css/print.css"
+	MEDIA="print">
+<LINK REL="icon" HREF="/images/jmri.ico" TYPE="image/png">
+<LINK REL="home" TITLE="Home" HREF="/">
+<!-- /Style -->
+</HEAD>
+
+<BODY>
+<!--#include virtual="/Header" -->
+  <div class="nomenu" id="mBody">
+    <div id="mainContent">
+
+<h1> 
+N&amp;W 1981 Signaling Definition
+</h1>
+
+This directory contains signaling definitions corresponding to 
+the Norfolk and Western 1981 rule book.
+<p>
+The 2 arm version of the NW CPLs are illustrated using two complete round faces.  In the field, the actual signal may not have included a complete face depending on the indications needed at a given location. In general, a two arm signal would be used at an interlocking or as the advance signal for an interlocking.  Signal installations at the end of a siding may only have a single head.  In those instances I reused the clear signal icon and renamed it to diverging clear to get the system to work properly in JMRI.  A number plate was drawn on the Rule 291 signal to show a stop and proceed indication.
+<p>
+The single arm absolute signals include a single marker for the stop and stay indication.  
+<p>
+The rule book illustrates two versions of the NW CPL dwarf.  Early versions of this style dwarf had the arc from 12 to 3-o-clock position.  Due to clearnance issues, the arc was change to the 9 to 12-o-clock position.  I don't know if this changed the aspects the signal could display.  I am assuming that either version could display the up to 4 aspects.  There is a stop and proceed version that includes a numbner plate.  The left lower red light is mapped to lunar based on the later version of the signal.  
+  
+</body>
+
+
+<p>
+See the 
+<a href="aspects.xml">aspect page</a>.
+
+<p>
+Signal Mast definitions:
+<ul>
+<li><a href="appearance-CPL-1-arm-absolute.xml">Single Arm Absolute Color Position Light Mast Signals</a>
+<li><a href="appearance-CPL-1-arm-permissive.xml">Single Arm Permissive Color Light Position Mast Signals</a>
+<li><a href="appearance-CPL-2-arm-absolute.xml">2 Arm Absolute Color Position Light Mast Signals</a>
+<li><a href="appearance-CPL-2-arm-permissive.xml">2 Arm Permissive Color Position Light Mast Signals</a>
+<li><a href="appearance-CPL-Dwarf-absolute.xml">Absolute Color Position Light Dwarf Signals</a>
+<li><a href="appearance-CPL-Dwarf-permissive.xml">Permissive Color Position Light Dwarf Signals</a>
+</ul>
+    </div>
+</div>
+<!--#include virtual="/Footer" -->
+</body>
+</html>

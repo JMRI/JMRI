@@ -8,6 +8,16 @@ import jmri.jmrix.AbstractMRReply;
 import jmri.jmrix.AbstractMRTrafficController;
 import java.io.BufferedReader;
 import java.io.IOException;
+import java.io.DataInputStream;
+import javax.swing.SwingUtilities;
+import static jmri.jmrix.AbstractMRTrafficController.AUTORETRYSTATE;
+import static jmri.jmrix.AbstractMRTrafficController.NORMALMODE;
+import static jmri.jmrix.AbstractMRTrafficController.NOTIFIEDSTATE;
+import static jmri.jmrix.AbstractMRTrafficController.OKSENDMSGSTATE;
+import static jmri.jmrix.AbstractMRTrafficController.PROGRAMINGMODE;
+import static jmri.jmrix.AbstractMRTrafficController.WAITMSGREPLYSTATE;
+import static jmri.jmrix.AbstractMRTrafficController.WAITREPLYINNORMMODESTATE;
+import static jmri.jmrix.AbstractMRTrafficController.WAITREPLYINPROGMODESTATE;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -91,6 +101,7 @@ public abstract class DCCppTrafficController extends AbstractMRTrafficController
         ((DCCppListener) reply).message((DCCppMessage) m);
     }
 
+    
     /**
      * Forward a preformatted DCCppMessage to the registered DCCppListeners. NOTE:
      * this drops the packet if the checksum is bad.
@@ -99,6 +110,10 @@ public abstract class DCCppTrafficController extends AbstractMRTrafficController
      * @param m Message to send # @param client is the client getting the
      *          message
      */
+    
+    // TODO: This should be fleshed out to allow listeners to register for only
+    // certain types of DCCppReply-s.  The analogous code from the Lenz interface
+    // has been left here and commented out for future reference.
     @Override
     public void forwardReply(AbstractMRListener client, AbstractMRReply m) {
         // check parity
@@ -264,6 +279,7 @@ public abstract class DCCppTrafficController extends AbstractMRTrafficController
      * @param istream character source.
      * @throws java.io.IOException when presented by the input source.
      */
+    /*
         protected void loadChars(AbstractMRReply msg, java.io.DataInputStream istream) throws java.io.IOException {
 	// Spin waiting for start-of-frame '<' character (and toss it)
 	String s = new String();
@@ -280,7 +296,7 @@ public abstract class DCCppTrafficController extends AbstractMRTrafficController
 		log.debug("Found starting < ");
 		break; // A bit redundant with setting the loop condition true (false)
 	    } else {
-		char1 = readByteProtected(istream);
+		//char1 = readByteProtected(istream);
 	    }
 	}
 	
@@ -301,7 +317,7 @@ public abstract class DCCppTrafficController extends AbstractMRTrafficController
 	log.debug("Complete message = {}", s);
         ((DCCppReply)msg).parseReply(s);
     }
-
+*/
     protected void handleTimeout(AbstractMRMessage msg, AbstractMRListener l) {
         super.handleTimeout(msg, l);
         if (l != null) {

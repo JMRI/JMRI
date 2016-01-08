@@ -19,7 +19,7 @@ import java.util.regex.PatternSyntaxException;
  *
  * Based on LenzCommandStation by Bob Jacobsen and Paul Bender
  */
-public class DCCppCommandStation implements jmri.jmrix.DccCommandStation, jmri.CommandStation {
+public class DCCppCommandStation implements jmri.CommandStation {
 
     /* The First group of routines is for obtaining the Software and
      hardware version of the Command station */
@@ -173,7 +173,7 @@ public class DCCppCommandStation implements jmri.jmrix.DccCommandStation, jmri.C
         }
 
 	int reg = 1; // TODO: Fix this when I understand registers...
-	DCCppMessage msg = DCCppMessage.getWriteDCCPacketMainMsg(reg, packet.length, packet);
+	DCCppMessage msg = DCCppMessage.makeWriteDCCPacketMainMsg(reg, packet.length, packet);
 
         for (int i = 0; i < repeats; i++) {
             _tc.sendDCCppMessage(msg, null);

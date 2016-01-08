@@ -101,7 +101,6 @@ import org.slf4j.LoggerFactory;
  * @author Dave Duchamp Copyright (C) 2007
  * @author Pete Cressman Copyright (C) 2009, 2010, 2011
  * @author Matthew Harris copyright (c) 2009
- * @version $Revision$
  */
 public class LogixTableAction extends AbstractTableAction {
 
@@ -749,9 +748,8 @@ public class LogixTableAction extends AbstractTableAction {
         if (!checkFlags(sName)) {
             return;
         }
-        Thread t = new Thread() {
+        Runnable t = new Runnable() {
             public void run() {
-                //Thread.yield();
                 JPanel panel5 = makeAddLogixFrame("TitleCopyLogix", "CopyLogixMessage");
                 // Create Logix
                 JButton create = new JButton(rbx.getString("ButtonCopy"));
@@ -770,10 +768,9 @@ public class LogixTableAction extends AbstractTableAction {
             }
         };
         if (log.isDebugEnabled()) {
-            log.debug("copyPressed Thread started for " + sName);
+            log.debug("copyPressed started for " + sName);
         }
         javax.swing.SwingUtilities.invokeLater(t);
-        //t.start();
         inCopyMode = true;
         _logixSysName = sName;
     }
@@ -1029,15 +1026,14 @@ public class LogixTableAction extends AbstractTableAction {
         _curLogix = _logixManager.getBySystemName(sName);
         numConditionals = _curLogix.getNumConditionals();
         // create the Edit Logix Window
-        // Use separate Thread so window is created on top
-        Thread t = new Thread() {
+        // Use separate operation so window is created on top
+        Runnable t = new Runnable() {
             public void run() {
-                //Thread.yield();
                 makeEditLogixWindow();
             }
         };
         if (log.isDebugEnabled()) {
-            log.debug("editPressed Thread started for " + sName);
+            log.debug("editPressed Runnable started for " + sName);
         }
         javax.swing.SwingUtilities.invokeLater(t);
     }
@@ -5117,7 +5113,7 @@ public class LogixTableAction extends AbstractTableAction {
                                     new Object[]{SensorGroupFrame.logixUserName, SensorGroupFrame.logixSysName}),
                             rbx.getString("WarnTitle"), javax.swing.JOptionPane.WARNING_MESSAGE);
                 } else {
-                    // Use separate Thread so window is created on top
+                    // Use separate Runnable so window is created on top
                     class WindowMaker implements Runnable {
 
                         int row;
@@ -5127,7 +5123,6 @@ public class LogixTableAction extends AbstractTableAction {
                         }
 
                         public void run() {
-                            //Thread.yield();
                             editConditionalPressed(row);
                         }
                     }
@@ -5337,7 +5332,7 @@ public class LogixTableAction extends AbstractTableAction {
                                 javax.swing.JOptionPane.ERROR_MESSAGE);
                         break;
                     }
-                    // Use separate Thread so window is created on top
+                    // Use separate Runnable so window is created on top
                     class WindowMaker implements Runnable {
 
                         int row;
@@ -5347,7 +5342,6 @@ public class LogixTableAction extends AbstractTableAction {
                         }
 
                         public void run() {
-                            //Thread.yield();
                             makeEditVariableWindow(row);
                         }
                     }
@@ -5443,7 +5437,7 @@ public class LogixTableAction extends AbstractTableAction {
 
         public void setValueAt(Object value, int row, int col) {
             if (col == EDIT_COLUMN) {
-                // Use separate Thread so window is created on top
+                // Use separate Runnable so window is created on top
                 class WindowMaker implements Runnable {
 
                     int row;
@@ -5453,7 +5447,6 @@ public class LogixTableAction extends AbstractTableAction {
                     }
 
                     public void run() {
-                        //Thread.yield();
                         makeEditActionWindow(row);
                     }
                 }

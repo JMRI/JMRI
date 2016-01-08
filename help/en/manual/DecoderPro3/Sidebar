@@ -7,15 +7,11 @@
 <div id="side"> <!-- Block of text on left side of page -->
     <div style="text-align: center"><strong>DecoderPro&reg; Manual</strong></div>
 
-    <div style="text-align: center">
-       <a href="http://jmri.org/manual/pdf/DP3_Man_3-2.pdf">Download</a>
-    </div>
-
 <dl class="toc"><!-- main table of contents -->
-<dt><h3>Installing JMRI</strong></h3></dt>
-    <dd> 
+<dt><h3>Installing JMRI</h3></dt>
+	  <dd>
     <ul>
-	  <li><a href="Installing_JMRI.shtml">Preparing to Install JMRI</a></li>
+	  <li><a href="Installing_JMRI.shtml">Preparing to Install</a></li>
     <li><a href="Installing_JMRI.shtml#InstalJMRI">Installing JMRI</a></li>
     </ul>
     </dd>
@@ -24,7 +20,7 @@
     <dd>    
     <ul>
     <li><a href="Start_DCC.shtml">What is DCC?</a>
-    <li><a href="Start_DCC_Systems.shtml">What DCC systems will DecoderPro&reg; work with?</a>
+    <li><a href="Start_DCC_Systems.shtml">What DCC systems will DecoderPro work with?</a>
     <li><a href="Start_DCC_Hardware.shtml">What hardware do I need?</a>
     <li><a href="Start_DecoderPro.shtml">How do I start the program?</a>
     <li><a href="Start_DecoderPro_New.shtml">How do I start DecoderPro&reg; program for the First Time User?</a>
@@ -51,7 +47,7 @@
 <dt><h3>The Basic Programmer</h3></dt>    
     <dd>
     <ul>
-    <li><a href="Basic_Start.shtml">Entering locomotives in the "Roster"</a></li>
+    <li><a href="Basic_Start.shtml">Entering Locomotives in the "Roster"</a></li>
     <li><a href="Basic_BasicPane.shtml">The basic programmer</a></li>
     <li><a href="Basic_BasicPane.shtml">Reading the data from the decoder</a></li>
     <li><a href="Basic_BasicPane.shtml">Entering and editing new data</a></li>
@@ -99,11 +95,12 @@
       <li><a href="dp3_decoderInfo.shtml">Decoder Information</a></li>
       <li><a href="dp3_Main_Main.shtml#status">Status Bar</a></li>
     </ul>
-  
-<dt><h3>Error Messages</h3></dt>  
+    </dd>  
+    
+<dt><a name="Error"></a><h3>Error Messages</h3></dt>  
     <dd>
     <ul>
-      <li><a href="Error.shtml">Decoder Programmer Error Messages</a></li>
+      <li><a href="../../html/setup/Errors.shtml">Error Codes explained</a></li>
     </ul>
     </dd>
     

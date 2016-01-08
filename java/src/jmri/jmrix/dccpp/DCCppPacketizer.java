@@ -55,6 +55,8 @@ public class DCCppPacketizer extends DCCppTrafficController {
      *
      * @param m Message to send;
      */
+    //TODO: Can this method be folded back up into the parent 
+    // DCCppTrafficController class?
     public void sendDCCppMessage(DCCppMessage m, DCCppListener reply) {
         if (m.length() != 0) {
             sendMessage(m, reply);
@@ -68,6 +70,8 @@ public class DCCppPacketizer extends DCCppTrafficController {
      * @param msg The output byte stream
      * @return next location in the stream to fill
      */
+    //TODO: Can this method be folded back up into the parent 
+    // DCCppTrafficController class?
     protected int addHeaderToOutput(byte[] msg, jmri.jmrix.AbstractMRMessage m) {
         if (log.isDebugEnabled()) {
             log.debug("Appending '<' to start of outgoing message. msg length = {}", msg.length);
@@ -89,6 +93,8 @@ public class DCCppPacketizer extends DCCppTrafficController {
      * @param msg    The output byte stream
      * @param offset the first byte not yet used
      */
+    //TODO: Can this method be folded back up into the parent 
+    // DCCppTrafficController class?
     @Override
     protected void addTrailerToOutput(byte[] msg, int offset, jmri.jmrix.AbstractMRMessage m) {
 	log.debug("aTTO offset = {} message = {} msg length = {}", offset, m.toString(), msg.length);
@@ -124,41 +130,51 @@ public class DCCppPacketizer extends DCCppTrafficController {
      * <P>
      * Only used in the Receive thread.
      *
-     * @returns filled message
-     * @throws IOException when presented by the input source.
+     * @param msg     message to fill
+     * @param istream character source.
+     * @throws java.io.IOException when presented by the input source.
      */
-    private DCCppMessage loadChars() throws java.io.IOException {
-	// Spin waiting for start-of-frame '<' character (and toss it)
-	String s = new String();
-	byte char1;
-	boolean found_start = false;
-
-	while (!found_start) {
-	    char1 = readByteProtected(istream);
-	    if ((char1 & 0xFF) == '<') {
-		found_start = true;
-		log.debug("Found starting < ");
-		break; // A bit redundant with setting the loop condition true (false)
-	    } else {
-		char1 = readByteProtected(istream);
-	    }
-	}
-	// Now, suck in the rest of the message...
-        for (int i = 0; i < DCCppConstants.MAX_MESSAGE_SIZE; i++) {
+    
+    //TODO: Can this method be folded back up into the parent 
+    // DCCppTrafficController class?
+    @Override
+    protected void loadChars(jmri.jmrix.AbstractMRReply msg, java.io.DataInputStream istream) throws java.io.IOException {
+        int i;
+        String m;
+        DCCppReply dm;
+        if (log.isDebugEnabled()) {
+            log.debug("loading characters from port");
+        }
+        
+        if (!(msg instanceof DCCppReply)) {
+            log.error("SerialDCCppPacketizer.loadChars called on non-DCCppReply msg!");
+            return;
+        }
+        
+        dm = (DCCppReply)msg;
+        
+        byte char1 = readByteProtected(istream);
+        m = "";
+        while (char1 != '<') {
+            // Spin waiting for '<'
+            char1 = readByteProtected(istream);
+        }
+        log.debug("Serial: Message started...");
+        // Pick up the rest of the command
+        for (i = 0; i < msg.maxSize(); i++) {
             char1 = readByteProtected(istream);
 	    if (char1 == '>') {
-		log.debug("msg found > ");
-		// Don't store the >
+                log.debug("Received: {}", m);
+                // NOTE: Cast is OK because we checked runtime type of msg above.
+                ((DCCppReply)msg).parseReply(m);
 		break;
 	    } else {
-		log.debug("msg read byte {}", char1);
-		char c = (char) (char1 & 0x00FF);
-		s += Character.toString(c);
+                m += Character.toString((char)char1);
+                //char1 = readByteProtected(istream);
+                log.debug("msg char[{}]: {} ({})", i, char1, Character.toString((char)char1));
+		//msg.setElement(i, char1 & 0xFF);
 	    }
-	}
-	// TODO: Still need to strip leading and trailing whitespace.
-	log.debug("Complete message = {}", s);
-	return(DCCppMessage.parseDCCppMessage(s));
+        }
     }
 
     static Logger log = LoggerFactory.getLogger(DCCppPacketizer.class.getName());

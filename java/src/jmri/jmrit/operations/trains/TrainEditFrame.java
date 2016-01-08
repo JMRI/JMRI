@@ -1009,9 +1009,8 @@ public class TrainEditFrame extends OperationsFrame implements java.beans.Proper
             Route route = _train.getRoute();
             if (route != null) {
                 route.removePropertyChangeListener(this);
-                List<RouteLocation> routeList = route.getLocationsBySequenceList();
-                for (int i = 0; i < routeList.size(); i++) {
-                    Location loc = LocationManager.instance().getLocationByName(routeList.get(i).getName());
+                for (RouteLocation rl : route.getLocationsBySequenceList()) {
+                    Location loc = rl.getLocation();
                     if (loc != null) {
                         loc.removePropertyChangeListener(this);
                     }

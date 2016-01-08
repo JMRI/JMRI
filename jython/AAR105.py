@@ -38,6 +38,7 @@
 # Calibration window! If you don't there will be too many events triggered 
 # and everything will slow right down....
 
+import java
 import jmri
 
 #
