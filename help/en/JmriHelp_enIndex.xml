@@ -23,13 +23,13 @@
 
  </indexitem>
  <indexitem text="C/MRI " target="html.hardware.cmri.CMRI">
+  <indexitem text="C/MRI Signals " target="html.hardware.cmri.Signals"/>
+
   <indexitem text="Check Pin Assignments " target="package.jmri.jmrix.cmri.serial.assignment.ListFrame"/>
 
   <indexitem text="Configure Nodes " target="package.jmri.jmrix.cmri.serial.nodeconfig.NodeConfigFrame"/>
 
   <indexitem text="Diagnostics " target="package.jmri.jmrix.cmri.serial.diagnostic.DiagnosticFrame"/>
-
-  <indexitem text="C/MRI Signals " target="html.hardware.cmri.Signals"/>
 
  </indexitem>
  <indexitem text="CAN Bus " target="html.hardware.can.index"/>
@@ -44,7 +44,7 @@
   <indexitem text="Setting The Internal Clock " target="package.jmri.jmrit.simpleclock.SimpleClockFrame"/>
 
  </indexitem>
- <indexitem text="Configuration Profiles " target="html.profiles"/>
+ <indexitem text="Configuration Profiles " target="html.setup.profiles"/>
 
  <indexitem text="Consisting Tool " target="html.tools.consisttool.ConsistTool"/>
 
@@ -211,8 +211,6 @@
 
  </indexitem>
  <indexitem text="LocoNet ">
-  <indexitem text="LocoNet Addressing " target="html.hardware.loconet.Addressing"/>
-
   <indexitem text="Command Station Configuration Tool " target="package.jmri.jmrix.loconet.cmdstnconfig.CmdStnConfigFrame"/>
 
   <indexitem text="DS54 " target="html.hardware.loconet.DS54"/>
@@ -222,6 +220,8 @@
   <indexitem text="Fast Clock " target="package.jmri.jmrix.loconet.clockmon.ClockMonFrame"/>
 
   <indexitem text="LocoIO " target="package.jmri.jmrix.loconet.locoio.LocoIOFrame"/>
+
+  <indexitem text="LocoNet Addressing " target="html.hardware.loconet.Addressing"/>
 
   <indexitem text="PM4 " target="package.jmri.jmrix.loconet.pm4.PM4Frame"/>
 
@@ -252,11 +252,11 @@
   <indexitem text="LRoute Table " target="package.jmri.jmrit.beantable.LRouteTable"/>
 
  </indexitem>
- <indexitem text="Marklin " target="html.hardware.marklin.index"/>
-
  <indexitem text="MacOS Serial Ports " target="html.hardware.MacintoshSerialPorts"/>
 
  <indexitem text="Manuals " target="manual.index"/>
+
+ <indexitem text="Marklin " target="html.hardware.marklin.index"/>
 
  <indexitem text="Memory " target="html.tools.Memories">
   <indexitem text="Add Memory Variable " target="package.jmri.jmrit.beantable.MemoryAddEdit"/>
@@ -390,6 +390,8 @@
   <indexitem text="Sensors Table " target="package.jmri.jmrit.beantable.SensorTable"/>
 
  </indexitem>
+ <indexitem text="Setting up JMRI " target="html.setup.index"/>
+
  <indexitem text="Signal Aspects " target="html.tools.signaling.AspectSignaling"/>
 
  <indexitem text="Signal Heads ">
@@ -467,15 +469,15 @@
  <indexitem text="TAMs " target="html.hardware.tams.index"/>
 
  <indexitem text="Technical ">
-  <indexitem text="NetBeans IDE " target="html.doc.Technical.NetBeans"/>
-
   <indexitem text="Eclipse IDE " target="html.doc.Technical.Eclipse"/>
 
   <indexitem text="JBuilder IDE " target="html.doc.Technical.JBuilder"/>
 
-  <indexitem text="XCode IDE " target="html.doc.Technical.XCode"/>
+  <indexitem text="NetBeans IDE " target="html.doc.Technical.NetBeans"/>
 
   <indexitem text="Thread Monitor " target="package.jmri.jmrit.automat.monitor.AutomatTableFrame"/>
+
+  <indexitem text="XCode IDE " target="html.doc.Technical.XCode"/>
 
  </indexitem>
  <indexitem text="Terminal Server connection " target="html.hardware.TerminalServer"/>
@@ -547,11 +549,11 @@
  <indexitem text="XBee " target="html.hardware.XBee.index"/>
 
  <indexitem text="XML " target="html.apps.DecoderPro.IntroXML">
-  <indexitem text="XML Editors " target="html.doc.Technical.XmlEditors"/>
-
   <indexitem text="Technical Information " target="html.doc.Technical.XmlView"/>
 
   <indexitem text="Viewing Panel Files " target="html.apps.PanelPro.ShowPanel"/>
+
+  <indexitem text="XML Editors " target="html.doc.Technical.XmlEditors"/>
 
  </indexitem>
 </index>

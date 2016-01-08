@@ -47,12 +47,12 @@ changes to existing features. If you are familiar with JMRI and want to
 help in the validation and testing process, then use this version.</li>
 </ul>
 
-<p>Check the <a href="http://www.jmri.org/help/en/html/hardware/index.shtml" target="_blank"> supported hardware</a> systems to verify your computer can run JMRI.</p>
+<p>Check the <a href="http://www.jmri.org/help/en/html/hardware/index.shtml" target="_blank">supported hardware</a> systems to verify your computer can run JMRI.</p>
 <p>If it can, <a href="http://www.jmri.org/download/index.shtml" target="_blank">download</a> the correct installer for your computer system:</p>
 <ul>
   <li><a href="http://www.jmri.org/install/WindowsNew.shtml">Windows</a></li>
-  <li><a href="http://www.jmri.org/install/MacOSX.html">Mac OS X</a></li>
-  <li><a href="http://www.jmri.org/install/Linux.html">Linux</a></li>
+  <li><a href="http://www.jmri.org/install/MacOSX.shtml">Mac OS X</a></li>
+  <li><a href="http://www.jmri.org/install/Linux.shtml">Linux</a></li>
 </ul>
 
 <h3>Installing Java</h3>
@@ -65,8 +65,8 @@ free (but large) download at: <a href="http://java.com/download/" target="_blank
 <p>After downloading the JMRI file, install using the appropriate Installation guide:</p>
 <ul>
   <li><a href="http://www.jmri.org/install/WindowsNew.shtml" target="_blank">Windows Installation Guide</a></li>
-  <li><a href="http://www.jmri.org/install/MacOSX.html" target="_blank">Mac OS X  Installation Guide</a></li>
-  <li><a href="http://www.jmri.org/install/Linux.html" target="_blank">Linux Installation Guide</a>
+  <li><a href="http://www.jmri.org/install/MacOSX.shtml" target="_blank">Mac OS X  Installation Guide</a></li>
+  <li><a href="http://www.jmri.org/install/Linux.shtml" target="_blank">Linux Installation Guide</a>
     <ul>
       <li><a href="http://www.jmri.org/install/Ubuntu.shtml" target="_blank">Ubuntu GNU/Linux</a></li>
       <li><a href="http://www.jmri.org/install/decTop.shtml" target="_blank">Xubuntu</a></li>

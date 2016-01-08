@@ -18,7 +18,7 @@
 <div id="mainContent">
 
 <a name="Top"></a>
-<h1><a name="Top">DecoderPro&reg;Comprehensive Programmer</a></h1>
+<h1><a name="Top">DecoderPro&reg; Comprehensive Programmer</a></h1>
 <h2><a name="Top">Roster Entry Pane</a></h2>
 
 <div align="right">
@@ -28,7 +28,7 @@
 
 <hr>
 <p>The Comprehensive Programmer begins the same way as the Basic Programmer, opening with the <strong>Roster Entry Pane</strong>.
-The contents are identical, so they will not be repeated here. . To use
+The contents are identical, so they will not be repeated here. To use
 the Comprehensive Programmer just be sure that you select the
 Comprehensive Programmer in the <strong><a href="Start_Preferences.shtml">Preferences</a></strong>.
 </p><p>When you are  on the<a href="Basic_Programming.shtml">Service Mode Programmer Setup</a> and click on the <b>Open Programmer</b>
@@ -36,7 +36,7 @@ button, the appropriate Programmer window will open, in this case the
 Comprehensive Programmer.. All programmers, Basic and Comprehensive,
 open to the Roster Entry pane, which will be similar to that shown
 below. (Using Tsunami Diesel Genesis OEM for Athearn N FP45 decoder
-examples) in the<strong> Program(locomotive roster title) (Programming Track)</strong>
+examples) in the<strong> Program [locomotive roster title] [Programming Track]</strong>
 </p><h1><img style="width: 816px; height: 613px;" alt="comp roster" src="images/Comp_Roste_01.png"><br></h1>
 
 <p>
