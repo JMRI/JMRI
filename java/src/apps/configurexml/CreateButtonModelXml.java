@@ -81,8 +81,7 @@ public class CreateButtonModelXml extends jmri.configurexml.AbstractXmlAdapter {
         }
         CreateButtonModel m = new CreateButtonModel();
         m.setClassName(className);
-        CreateButtonModel.rememberObject(m);
-        InstanceManager.getDefault(StartupActionsManager.class).addModel(m);
+        InstanceManager.getDefault(StartupActionsManager.class).addAction(m);
         InstanceManager.configureManagerInstance().registerPref(new apps.CreateButtonPanel());
         return result;
     }

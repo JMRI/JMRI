@@ -1,11 +1,9 @@
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
 <html lang="en">
 <head>
-<!-- Copyright ($Author$) 2009, 2010 -->
-<!-- $Id$ -->
-<TITLE>
+<title>
 DecoderPro&reg; Comprehensive Programmer
-</TITLE>
+</title>
 
 <!-- Style -->
 <meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
@@ -22,14 +20,16 @@ DecoderPro&reg; Comprehensive Programmer
 <!--#include virtual="Sidebar" -->
 <div id="mainContent">
 
-<a NAME="Top">
-<img SRC="images/Comp_09c_PrintData.png" ALT="Comprehensive Programmer - Advanced Features"  BORDER=5 height=494 width=382 hspace="20">
+<a name="Top"></a>
+<img src="images/Comp_09c_PrintData.png" alt="Comprehensive Programmer - Advanced Features"  border="5" height="494" width="382" hspace="20">
 
 
-<div align=right>
+<div align="right">
 <p><a href="Comp_PrintData.shtml#Print">Back</a>
 </div>
 
 <!--#include virtual="/Footer" -->
-</body>
+  </div><!-- closes #mainContent-->
+ </div> <!-- closes #mBody-->
+ </body>
 </html>

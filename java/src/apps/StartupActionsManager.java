@@ -1,7 +1,9 @@
 package apps;
 
 import apps.gui.GuiLafPreferencesManager;
-import java.util.LinkedHashSet;
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.List;
 import java.util.Set;
 import jmri.configurexml.ConfigXmlManager;
 import jmri.configurexml.XmlAdapter;
@@ -28,10 +30,20 @@ import org.slf4j.LoggerFactory;
  */
 public class StartupActionsManager extends AbstractPreferencesProvider {
 
-    private final Set<StartupModel> models = new LinkedHashSet<>();
+    private final List<StartupModel> actions = new ArrayList<>();
+    private final HashMap<String, Class<? extends StartupModel>> factories = new HashMap<>();
     public final static String STARTUP = "startup"; // NOI18N
     public final static String NAMESPACE = "http://jmri.org/xml/schema/auxiliary-configuration/startup-2-9-6.xsd"; // NOI18N
     private final static Logger log = LoggerFactory.getLogger(StartupActionsManager.class);
+
+    public StartupActionsManager() {
+        super();
+        // TODO: make this modular so that the factories provide their human readable type
+        this.factories.put(ConfigBundle.getMessage(PerformScriptModel.class.getCanonicalName()), PerformScriptModel.class);
+        this.factories.put(ConfigBundle.getMessage(PerformFileModel.class.getCanonicalName()), PerformFileModel.class);
+        this.factories.put(ConfigBundle.getMessage(PerformActionModel.class.getCanonicalName()), PerformActionModel.class);
+        this.factories.put(ConfigBundle.getMessage(CreateButtonModel.class.getCanonicalName()), CreateButtonModel.class);
+    }
 
     @Override
     public void initialize(Profile profile) throws InitializationException {
@@ -73,10 +85,10 @@ public class StartupActionsManager extends AbstractPreferencesProvider {
     @Override
     public synchronized void savePreferences(Profile profile) {
         Element element = new Element(STARTUP, NAMESPACE);
-        for (StartupModel model : models) {
-            log.debug("model is {} ({})", model.getName(), model);
-            if (model.getName() != null) {
-                Element e = ConfigXmlManager.elementFromObject(model, true);
+        for (StartupModel action : actions) {
+            log.debug("model is {} ({})", action.getName(), action);
+            if (action.getName() != null) {
+                Element e = ConfigXmlManager.elementFromObject(action, true);
                 if (e != null) {
                     element.addContent(e);
                 }
@@ -92,15 +104,48 @@ public class StartupActionsManager extends AbstractPreferencesProvider {
         }
     }
 
-    public Set<StartupModel> getModels() {
-        return this.models;
+    public StartupModel[] getActions() {
+        return this.actions.toArray(new StartupModel[this.actions.size()]);
     }
 
-    public void addModel(StartupModel model) {
-        this.models.add(model);
+    @SuppressWarnings("unchecked")
+    public <T extends StartupModel> List<T> getActions(Class<T> type) {
+        ArrayList<T> result = new ArrayList<>();
+        this.actions.stream().filter((action) -> (type.isInstance(action))).forEach((action) -> {
+            result.add((T) action);
+        });
+        return result;
+    }
+    
+    public StartupModel getActions(int index) {
+        return this.actions.get(index);
     }
 
-    public void removeModel(StartupModel model) {
-        this.models.remove(model);
+    public void setActions(int index, StartupModel model) {
+        if (!this.actions.contains(model)) {
+            this.actions.add(index, model);
+        }
+    }
+
+    public void moveAction(int start, int end) {
+        StartupModel model = this.getActions(start);
+        this.removeAction(model);
+        this.setActions(end, model);
+    }
+
+    public void addAction(StartupModel model) {
+        this.setActions(this.actions.size(), model);
+    }
+
+    public void removeAction(StartupModel model) {
+        this.actions.remove(model);
+    }
+
+    public HashMap<String, Class<? extends StartupModel>> getFactories() {
+        return this.factories;
+    }
+    
+    public Class<? extends StartupModel> getFactories(String model) {
+        return this.factories.get(model);
     }
 }

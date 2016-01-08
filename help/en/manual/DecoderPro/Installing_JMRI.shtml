@@ -19,8 +19,7 @@
 <div id="mainContent">
 
 <a name="Top"></a>
-<h1>
-<img src="images/logo.gif" ALT="JMRI DecoderPro Logo" border="0" height="135" width="160" vspace="15"></h1>
+<img src="images/logo.gif" ALT="JMRI DecoderPro Logo" border="0" height="135" width="160" vspace="15">
 
 <h1>Installing JMRI&reg;</h1>
 <div align="right">
@@ -69,7 +68,7 @@
 </div>
 
 <!--#include virtual="/Footer" -->
-</div> <!-- closes #mainContent -->
-</div> 
-</body>
+  </div><!-- closes #mainContent-->
+ </div> <!-- closes #mBody-->
+ </body>
 </html>

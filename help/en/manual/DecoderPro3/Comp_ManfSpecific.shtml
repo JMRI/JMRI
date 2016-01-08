@@ -1,9 +1,6 @@
-<!doctype html public "-//w3c//dtd html 4.0 transitional//en">
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
 <html lang="en">
 <head>
-<!-- Copyright ($Author$) 2009, 2010 -->
-<!-- $Id$ -->
 
 <!-- Style -->
 <meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
@@ -20,11 +17,11 @@
 <!--#include virtual="Sidebar" -->
 <div id="mainContent">
 
-<a NAME="Top"></a>
+<a name="Top"></a>
 <h1>DecoderPro&reg; Comprehensive Programmer</h1>
-<h1>Manufacturer Specific Data Pane</h1>
+<h2>Manufacturer Specific Data Pane</h2>
 
-<div align=right>
+<div align="right">
 <p><a href="Comp_GlobalCVs.shtml">Previous</a> | <a href="Comp_PrintData.shtml">Next </a>
 <p><a href="index.shtml#Advanced Programmer">Back to Index</a>
 </div>
@@ -42,14 +39,15 @@ This pane will be manufacturer dependent and decoder family dependent<h1><img sr
   Once again, your best resource is the documentation for the specific decoder
   you are programming and this pane in the programmer for that decoder.
   
-<p>
 <hr>
-<div ALIGN=right>
+<div align="right">
 <p><a href="Comp_PrintData.shtml"></a>
   <a href="Comp_GlobalCVs.shtml">Previous</a> | <a href="Comp_PrintData.shtml">Next </a>
 <p><a href="index.shtml#Advanced Programmer">Back to Index</a>
 </div>
 
 <!--#include virtual="/Footer" -->
-</body>
+  </div><!-- closes #mainContent-->
+ </div> <!-- closes #mBody-->
+ </body>
 </html>

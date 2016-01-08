@@ -1,7 +1,8 @@
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
-<html lang="en"><head><!-- Copyright ($Author$) 2015 --><!-- $Id$ -->
-
+<html lang="en">
+<head>
 <title>LocoNet Menu</title>
+
 <!-- Style -->
 <meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
 <link rel="stylesheet" type="text/css" href="/css/default.css" media="screen">
@@ -18,7 +19,7 @@
 
 <a name="Top"></a>
 <h1>DecoderPro&reg;3 Main Window</h1>
-<h1>LocoNet Menu</h1>
+<h2>LocoNet Menu</h2>
 
 <div align="right">
 <p><a href="dp3_menubar.shtml">Back to Index</a><a href="index.shtml"></a></p>
@@ -317,13 +318,9 @@ was being send, which is listed as "PR2 not ready". If this happens
 repeatedly, make sure that the serial port and cable that the PR2 is
 using as the control lea</li>
 </ol>
-<div>
-  <div align="right"><a href="#Sounds">Back</a></div>
-</div>
-<hr>
-
-<div align="right">
+<div align="right"><a href="#Sounds">Back</a>
 <p><a href="dp3_menubar.shtml">Back to Index</a><a href="index.shtml"></a></p>
+</div>
 
 <!--#include virtual="/Footer" -->
   </div><!-- closes #mainContent-->

@@ -62,9 +62,7 @@ abstract public class AbstractActionPanel extends JPanel implements PreferencesP
         });
 
         // are there any existing objects from reading existing config?
-        int n = rememberedObjects().size();
-        for (int i = 0; i < n; i++) {
-            AbstractActionModel m = (AbstractActionModel) rememberedObjects().get(i);
+        for (AbstractActionModel m : rememberedObjects()) {
             add(new Item(m));
             this.dirty = false; // reset to false - setting the model in the Item ctor sets this true
         }
@@ -80,13 +78,13 @@ abstract public class AbstractActionPanel extends JPanel implements PreferencesP
         });
     }
 
-    abstract List<?> rememberedObjects();
+    abstract List<? extends AbstractActionModel> rememberedObjects();
 
     protected void addItem() {
         synchronized (self) {
             Item i = new Item();
             add(i);
-            InstanceManager.getDefault(StartupActionsManager.class).addModel(i.model);
+            InstanceManager.getDefault(StartupActionsManager.class).addAction(i.model);
             revalidate();
             repaint();
             this.dirty = true;
@@ -204,7 +202,7 @@ abstract public class AbstractActionPanel extends JPanel implements PreferencesP
                 parent.repaint();
                 // unlink to encourage garbage collection
                 removeButton.removeActionListener(this);
-                InstanceManager.getDefault(StartupActionsManager.class).removeModel(model);
+                InstanceManager.getDefault(StartupActionsManager.class).removeAction(model);
                 model = null;
                 dirty = true;
             }
