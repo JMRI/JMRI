@@ -165,11 +165,11 @@ We encourage contributions of code, decoder definitions, improvements to
 web pages, etc, to the JMRI project so that 
 we can distribute them to the rest of the community.
 <p>
-For your first small contributions, e.g. a new decoder file or small bug fix,
-please fill out a new "Patches" entry on SourceForge using 
+For initial and/or small contributions, e.g. a new decoder file or small bug fix,
+you can fill out a new "Patches" entry on SourceForge using 
 <a href="http://sourceforge.net/tracker/?group_id=26788&atid=388315">our patches page</a>
 (click new on the middle-left, then fill out the resulting form).
-You can attach the entire file there.  If it's multiple files,
+You can attach the entire file there.  If it's more than one files,
 and you're using an IDE like
 <a href="NetBeans.shtml">NetBeans</a>, it's very easy to create a "diff patch file"
 to carry your changes, and that will save us a significant amount of
@@ -181,9 +181,14 @@ It saves us a lot of work if, before you create and send the patch file,
 you make sure that your copy of the code is up to date, and that the
 <a href="JUnit.shtml#run">unit tests<a/>
 all work.
+
 <p>
-If you are doing a significant amount of development, please
-see the page on 
+If you're contributing multiple changes, or working on a larger project,
+JMRI has tools and procedures that make it easy and reliable to 
+connect your work to the rest of the JMRI community.  Basically, you
+work in a local copy of the JMRI code repository, and you're changes
+can be "pulled" in when you're ready to contribute them.
+See our page on
 "<a href="gitdeveloper.shtml">Being A JMRI Developer</a>"
 for instructions on how to more effectively contribute code changes.
 
