@@ -982,13 +982,14 @@
 
     <target name="fixlineends" description="convert specific files to LF line ends">
         <fixcrlf eol="unix" srcdir="." includes="
-            **/*.css
             **/*.csh
+            **/*.css
             **/*.df
             **/*.dtd
             **/*htm
             **/*html
             **/*.java
+            **/*.js
             **/*.json
             **/*.jsp
             **/*.jspf
@@ -997,7 +998,11 @@
             **/*.php
             **/*.pl
             **/*.plist
+            **/*.policy
+            **/*.prefs
             **/*.properties
+            **/*.project
+            **/*.py
             **/*.sh
             **/*.svg
             **/*.tld
