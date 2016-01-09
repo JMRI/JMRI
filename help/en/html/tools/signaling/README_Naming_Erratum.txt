@@ -1,7 +1,9 @@
 File naming erratum
-Because SHTML file names and paths cannot be corrected after they are created in the JMRI code, the following files will retain their (wrongly spelled) names:
 
-jmri/help/en/tools/signaling/
+Because SHTML file names and paths cannot easily be corrected after they are created in the JMRI code, 
+the following files will retain their (wrongly spelled) names:
+
+jmri/help/en/tools/signaling/  (There's a US-English vs UK-English difference here too)
 
 
 jmri/help/en/package/jmri/jmrit/beantable/ 
