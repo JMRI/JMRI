@@ -1,4 +1,8 @@
-# From https://github.com/Danimoth/gitattributes/blob/master/Java.gitattributes
+# Common Git rules for JMRI/JMRI repository
+#
+# See also the JMRI/website repository file of the same name
+#
+# Initially from https://github.com/Danimoth/gitattributes/blob/master/Java.gitattributes
 # see also http://adaptivepatchwork.com/2012/03/01/mind-the-end-of-your-line/
 
 # Handle line endings automatically for files detected as text
@@ -9,6 +13,8 @@
 # The above will handle all files NOT found below
 #
 # These files are text and should be normalized (Convert crlf => lf)
+# This list should be kept consistent with the one in the build.xml ant "fixlineends" target
+#
 *.csh           text
 *.css           text
 *.df            text
@@ -25,7 +31,11 @@
 *.php           text
 *.pl            text
 *.plist         text
+*.policy        text
+*.prefs         text
 *.properties    text
+*.project       text
+*.py            text
 *.sh            text
 *.shtml         text
 *.svg           text
@@ -34,10 +44,12 @@
 *.xml           text
 *.xsd           text
 *.xsl           text
-Header          text
-Footer          text
-Sidebar         text
 COPYING         text
+Footer          text
+README          text
+Header          text
+Sidebar         text
+TODO            text
 
 # These files are binary and should be left untouched
 # (binary is a macro for -text -diff)
@@ -53,7 +65,10 @@ COPYING         text
 *.jnilib        binary
 *.jpg           binary
 *.jpeg          binary
+*.pdf           binary
 *.png           binary
 *.so            binary
+*.vsd           binary
 *.war           binary
 *.wav           binary
+*.zip           binary
