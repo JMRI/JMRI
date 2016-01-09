@@ -51,7 +51,7 @@ going to do is show you how to gain access to the throttles. This section will
 also touch on the menu options that are available.</p>
 
 <p>First, it is important to understand that the JMRI Project is a group of
-many "<b>tools</b>" for your railroad — with many contributions from different
+many "<b>tools</b>" for your railroad ï¿½ with many contributions from different
 programmers. There are four primary startup applications available</p>
 <ul>
   <li><b>DecoderPro</b> (the most widely and commonly known piece of the
@@ -75,7 +75,7 @@ throttles.</p>
   "<i>primary</i>" main window displayed on your screen (similar to that shown
   below in figure 1-1). Close down this window and the whole application will
   terminate. This main window contains a primary set of menu options. This is
-  where you will find most of the tools and options available — including the
+  where you will find most of the tools and options available ï¿½ including the
   Throttles.</p>
 </dir>
 <ul type="square">
@@ -103,15 +103,15 @@ Figure 1-1: JMRI main menu structure </p>
   following menu options, which are defined as:</p>
 </dir>
 <ul>
-  <li><b>New Throttle...</b> — opens a single new throttle window with default
+  <li><b>New Throttle...</b> ï¿½ opens a single new throttle window with default
     throttle settings enabled.<br>
     <br>
   </li>
-  <li><b>Save Throttle Layout...</b> — saves one or more currently opened
+  <li><b>Save Throttle Layout...</b> ï¿½ saves one or more currently opened
     throttle windows to a user-named file on your hard drive.<br>
     <br>
   </li>
-  <li><b>Load Throttle Layout...</b> — opens a previously saved throttle file.
+  <li><b>Load Throttle Layout...</b> ï¿½ opens a previously saved throttle file.
     This file can contain one or more throttle windows depending on how the
     layout was originally saved.<br>
     <br>
