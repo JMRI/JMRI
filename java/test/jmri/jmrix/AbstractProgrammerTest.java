@@ -22,7 +22,34 @@ public class AbstractProgrammerTest extends TestCase {
     AbstractProgrammer abstractprogrammer;
 
     public void testDefault() {
-        Assert.assertEquals("Check Default", DefaultProgrammerManager.PAGEMODE,
+        Assert.assertEquals("Check Default", DefaultProgrammerManager.DIRECTMODE,
+                abstractprogrammer.getMode());        
+    }
+    
+    public void testDefaultViaBestMode() {
+        // Programmer implementation that uses getBestMode for setting default
+        abstractprogrammer = new AbstractProgrammer() {
+
+            public List<ProgrammingMode> getSupportedModes() {
+                java.util.ArrayList retval = new java.util.ArrayList<ProgrammingMode>();
+                
+                retval.add(DefaultProgrammerManager.DIRECTMODE);
+                retval.add(DefaultProgrammerManager.PAGEMODE);
+                retval.add(DefaultProgrammerManager.REGISTERMODE);
+
+                return retval;
+            }
+
+            public ProgrammingMode getBestMode() { return DefaultProgrammerManager.REGISTERMODE; }
+            
+            public void writeCV(int i, int j, ProgListener l) {}
+            public void confirmCV(int i, int j, ProgListener l) {}
+            public void readCV(int i, ProgListener l) {}
+            public void timeout() {}
+            public boolean getCanRead() { return true;}
+        };
+
+        Assert.assertEquals("Check Default", DefaultProgrammerManager.REGISTERMODE,
                 abstractprogrammer.getMode());        
     }
     
@@ -97,30 +124,22 @@ public class AbstractProgrammerTest extends TestCase {
         apps.tests.Log4JFixture.setUp();
 
         abstractprogrammer = new AbstractProgrammer() {
-            public void writeCV(int i, int j, ProgListener l) {
-            }
-
-            public void confirmCV(int i, int j, ProgListener l) {
-            }
-
-            public void readCV(int i, ProgListener l) {
-            }
 
             public List<ProgrammingMode> getSupportedModes() {
                 java.util.ArrayList retval = new java.util.ArrayList<ProgrammingMode>();
                 
+                retval.add(DefaultProgrammerManager.DIRECTMODE);
                 retval.add(DefaultProgrammerManager.PAGEMODE);
                 retval.add(DefaultProgrammerManager.REGISTERMODE);
 
                 return retval;
             }
 
-            public void timeout() {
-            }
-
-            public boolean getCanRead() {
-                return true;
-            }
+            public void writeCV(int i, int j, ProgListener l) {}
+            public void confirmCV(int i, int j, ProgListener l) {}
+            public void readCV(int i, ProgListener l) {}
+            public void timeout() {}
+            public boolean getCanRead() { return true;}
         };
     }
 
