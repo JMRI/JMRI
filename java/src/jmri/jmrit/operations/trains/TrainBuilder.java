@@ -4542,7 +4542,9 @@ public class TrainBuilder extends TrainCommon {
         leadEngine.reset(); // remove this engine from the train
         _engineList.add(0, leadEngine); // put engine back into the pool
         _train.setLeadEngine(null);
-
+        if (hpNeeded <= 0) {
+            hpNeeded = 50; // the minimum HP
+        }
         int hpMax = hpNeeded;
         // largest single engine HP known today is less than 15,000
         hpLoop: while (hpMax < 20000) {

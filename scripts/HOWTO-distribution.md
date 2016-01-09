@@ -173,7 +173,7 @@ If you fix anything, commit it back.
         ant make-test-release-branch
 
   - This will do (more or less) the following actions:
-
+    
         git checkout master
         git pull
         (commit a version number increment to master)
@@ -182,7 +182,6 @@ If you fix anything, commit it back.
         git push JMRI/JMRI {branch}
         git checkout master    
         git pull
-
 
  - Put a comment in the release GitHub item saying the branch exists, and all future changes should be documented in the new release note
  
