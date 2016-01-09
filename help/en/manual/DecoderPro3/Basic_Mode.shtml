@@ -46,14 +46,14 @@ activated. </p>
 <p>  If you experience difficulty programming a decoder in Paged Mode, try Direct Byte Mode, then <br>
   Register Mode, and finally Address Mode. The EasyDCC AD4 Accessory Decoder can only be <br>
 programmed in Direct Byte Mode.</p>
-<hr>
 
+<hr>
 <div align="right">
 <p><a href="Comp_Basic.shtml">Back</a></p>
 </div>
 
 <!--#include virtual="/Footer" -->
-</div>
-</div>
-</body>
+  </div><!-- closes #mainContent-->
+ </div> <!-- closes #mBody-->
+ </body>
 </html>

@@ -12,7 +12,7 @@
 	  <dd>
     <ul>
     <li><a href="Installing_JMRI.shtml">Preparing to Install</a></li>
-    <li><a href="Installing_JMRI.shtml#InstallJMRI">Installing JMRI</a></li>
+    <li><a href="Installing_JMRI.shtml#InstallJMRI">Installing</a></li>
     </ul>
     </dd>
 
@@ -133,7 +133,7 @@
 <dt><h3><a name="Error"></a>Error Messages</h3></dt>
     <dd>
     <ul>
-      <li><a href="Error.shtml">Decoder Programmer Error Messages</a></li>
+      <li><a href="../../html/setup/Errors.shtml">Error Codes explained</a></li>
     </ul>
     </dd>
 

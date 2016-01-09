@@ -1,15 +1,16 @@
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
-<html lang="en"><head><!-- Copyright ($Author$) 2009, 2010 --><!-- $Id$ -->
+<html lang="en">
+<head>
+<title>Comprehensive Programmer - Advanced Features Pane</title>
 
-
-
-
-
-<title>Comprehensive Programmer - Advanced Features Pane</title><!-- Style --><meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
+<!-- Style -->
+<meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
 <link rel="stylesheet" type="text/css" href="/css/default.css" media="screen">
 <link rel="stylesheet" type="text/css" href="/css/print.css" media="print">
 <link rel="icon" href="/images/jmri.ico" type="image/png">
-<link rel="home" title="Home" href="/"><!-- /Style --></head>
+<link rel="home" title="Home" href="/">
+<!-- /Style -->
+</head>
 
 <body>
 <!--#include virtual="/Header" -->
@@ -19,7 +20,7 @@
 
 <a name="Top"></a>
 <h1>DecoderPro&reg; Advanced Feature</h1>
-<h1>Roster Media Pane</h1>
+<h2>Roster Media Pane</h2>
 
 <div align="right">
 <p><a href="index.shtml">Back to Index</a></p>
@@ -37,7 +38,8 @@ part of the DecoderPro initial screen, once you have selected a
 locomotive from the list. The icon will also display in the icon column
 of the Locomotive Roster List.</p>
 <p align="center"><img src="images/Adv_04_RosterMedia.png" alt="roster media" height="768" width="916"></p>
-<p align="left"><strong>Image to be used as main image for that roster:</strong> The  large black box is the  image holder. The image  is placed into  the image holder by following these instructions. </p>
+<p align="left"><strong>Image to be used as main image for that Roster:</strong>
+The  large black box is the  image holder. The image  is placed into  the image holder by following these instructions. </p>
 <ol>
   <ol>
     <li>First you must find the image of the Locomotive and store it on your disk drive.
@@ -135,4 +137,7 @@ appear in your roster list in DecoderPro.
 </div>
 
 <!--#include virtual="/Footer" -->
-</div></body></html>
+  </div><!-- closes #mainContent-->
+ </div> <!-- closes #mBody-->
+ </body>
+</html>

@@ -1,11 +1,9 @@
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
 <html lang="en">
 <head>
-<!-- Copyright ($Author$) 2009 -->
-<!-- $Id$ -->
-<TITLE>
-DecoderPro&reg; Main Window<
-</TITLE>
+<title>
+DecoderPro&reg; Main Window
+</title>
 
 <!-- Style -->
 <meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
@@ -23,9 +21,9 @@ DecoderPro&reg; Main Window<
 <div id="mainContent">
 
 <h1>DecoderPro&reg; Main Window</h1>
-<h1>Multi-Decoder Control</h1>
+<h2>Multi-Decoder Control</h2>
 
-<div align=right>
+<div align="right">
 <p><a href="Main_Tool.shtml">Back </a></p>
 <p><a href="index.shtml#Main">Back to Index</a></p>
 </div>
@@ -41,7 +39,7 @@ DecoderPro&reg; Main Window<
   <li>other uses values of 4 thru 7</li>
 </ul>
 <p>Decoders should ship with the value of 0 in both CV15 and CV16, You can only perform a read or write operation on the decoder if CV15 and CV16 are the same value. In effect, CV16 is a lock and CV15 is the key.</p>
-<table width="90%" border="1" cellspacing="1" cellpadding="1">
+<table width="90%" border="0" cellspacing="1" cellpadding="1">
   <tr>
     <td width="41%" align="center" valign="middle"><img src="images/Main_Multi-Decoder_Control.png" alt="Multi-Prorammer" width="260" height="600" border="4"></td>
     <td width="59%" align="left" valign="top"><p>The <strong>ID number</strong> buttons numbered 0 thru 6 let you select the value that will unlock the decoder with the corresponding number in it's lock CV16.</p>
@@ -58,5 +56,7 @@ DecoderPro&reg; Main Window<
 </table>
 
 <!--#include virtual="/Footer" -->
+  </div><!-- closes #mainContent-->
+ </div> <!-- closes #mBody-->
 </body>
 </html>

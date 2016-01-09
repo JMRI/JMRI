@@ -2,19 +2,18 @@
 package apps;
 
 import apps.gui.GuiLafPreferencesManager;
+import static apps.gui.GuiLafPreferencesManager.MIN_FONT_SIZE;
 import java.awt.FlowLayout;
-import java.awt.Font;
 import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
 import java.awt.event.ItemEvent;
 import java.text.MessageFormat;
 import java.util.Arrays;
 import java.util.HashMap;
 import java.util.Locale;
-import java.util.ResourceBundle;
 import javax.swing.BoxLayout;
 import javax.swing.ButtonGroup;
 import javax.swing.DefaultComboBoxModel;
+import javax.swing.JButton;
 import javax.swing.JCheckBox;
 import javax.swing.JComboBox;
 import javax.swing.JComponent;
@@ -27,6 +26,7 @@ import javax.swing.SwingUtilities;
 import javax.swing.UIManager;
 import javax.swing.event.ChangeEvent;
 import jmri.InstanceManager;
+import jmri.profile.ProfileManager;
 import jmri.swing.PreferencesPanel;
 import jmri.util.swing.SwingSettings;
 import org.slf4j.Logger;
@@ -51,7 +51,18 @@ public class GuiLafConfigPane extends JPanel implements PreferencesPanel {
     public static final int MAX_TOOLTIP_TIME = 3600;
     public static final int MIN_TOOLTIP_TIME = 1;
     private static final long serialVersionUID = -3846942336860819413L;
-    static final ResourceBundle rb = ResourceBundle.getBundle("apps.AppsConfigBundle");
+    /**
+     * Smallest font size shown to a user ({@value}).
+     *
+     * @see apps.gui.GuiLafPreferencesManager#MIN_FONT_SIZE
+     */
+    public static final int MIN_DISPLAYED_FONT_SIZE = MIN_FONT_SIZE;
+    /**
+     * Largest font size shown to a user ({@value}).
+     *
+     * @see apps.gui.GuiLafPreferencesManager#MAX_FONT_SIZE
+     */
+    public static final int MAX_DISPLAYED_FONT_SIZE = 20;
 
     private final JComboBox<String> localeBox = new JComboBox<>(new String[]{
         Locale.getDefault().getDisplayName(),
@@ -61,6 +72,7 @@ public class GuiLafConfigPane extends JPanel implements PreferencesPanel {
     public JCheckBox mouseEvent;
     private boolean dirty = false;
     private boolean restartRequired = false;
+    private JComboBox<Integer> fontSizeComboBox;
 
     public GuiLafConfigPane() {
         setLayout(new BoxLayout(this, BoxLayout.Y_AXIS));
@@ -165,84 +177,48 @@ public class GuiLafConfigPane extends JPanel implements PreferencesPanel {
         return (desired != null) ? desired : Locale.getDefault();
     }
 
-    static int fontSize = 0;
-
-    public static void setFontSize(int size) {
-        fontSize = size == 0 ? 0 : size < 9 ? 9 : size > 20 ? 20 : size;
-        //fontSizeComboBox.setSelectedItem(fontSize);
-    }
-
-    public static int getFontSize() {
-        return fontSize;
-    }
-
-    private int getDefaultFontSize() {
-        if (getFontSize() == 0) {
-            java.util.Enumeration<Object> keys = UIManager.getDefaults().keys();
-            while (keys.hasMoreElements()) {
-                Object key = keys.nextElement();
-                Object value = UIManager.get(key);
-
-                if (value instanceof javax.swing.plaf.FontUIResource && key.toString().equals("List.font")) {
-                    Font f = UIManager.getFont(key);
-                    log.debug("Key:" + key.toString() + " Font: " + f.getName() + " size: " + f.getSize());
-                    return f.getSize();
-                }
-            }
-            return 11;	// couldn't find the default return a reasonable font size
-        }
-        return getFontSize();
-    }
-
-    private static final Integer fontSizes[] = {
-        9,
-        10,
-        11,
-        12,
-        13,
-        14,
-        15,
-        16,
-        17,
-        18,
-        19,
-        20};
-
-    static JComboBox<Integer> fontSizeComboBox = new JComboBox<>(fontSizes);
-    static ActionListener listener;
-
     public void doFontSize(JPanel panel) {
-
-        JLabel fontSizeLabel = new JLabel(rb.getString("ConsoleFontSize"));
-        fontSizeComboBox.removeActionListener(listener);
-        fontSizeComboBox.setSelectedItem(getDefaultFontSize());
-        JLabel fontSizeUoM = new JLabel(rb.getString("ConsoleFontSizeUoM"));
+        Integer[] sizes = new Integer[MAX_DISPLAYED_FONT_SIZE - MIN_DISPLAYED_FONT_SIZE + 1];
+        for (int i = 0; i < sizes.length; i++) {
+            sizes[i] = i + MIN_DISPLAYED_FONT_SIZE;
+        }
+        fontSizeComboBox = new JComboBox<>(sizes);
+        fontSizeComboBox.setEditable(true); // allow users to set font sizes not listed
+        JLabel fontSizeLabel = new JLabel(ConfigBundle.getMessage("ConsoleFontSize"));
+        fontSizeComboBox.setSelectedItem(manager().getFontSize());
+        JLabel fontSizeUoM = new JLabel(ConfigBundle.getMessage("ConsoleFontSizeUoM"));
+        JButton resetButton = new JButton(ConfigBundle.getMessage("ResetDefault"));
+        resetButton.setToolTipText(ConfigBundle.getMessage("GUIFontSizeReset"));
 
         panel.add(fontSizeLabel);
         panel.add(fontSizeComboBox);
         panel.add(fontSizeUoM);
+        panel.add(resetButton);
 
-        fontSizeComboBox.addActionListener(listener = (ActionEvent e) -> {
-            setFontSize((int) fontSizeComboBox.getSelectedItem());
-            InstanceManager.getDefault(GuiLafPreferencesManager.class).setFontSize((int) fontSizeComboBox.getSelectedItem());
+        fontSizeComboBox.addActionListener((ActionEvent e) -> {
+            manager().setFontSize((int) fontSizeComboBox.getSelectedItem());
             this.dirty = true;
             this.restartRequired = true;
+        });
+        resetButton.addActionListener((ActionEvent e) -> {
+            if ((int) fontSizeComboBox.getSelectedItem() != manager().getDefaultFontSize()) {
+                fontSizeComboBox.setSelectedItem(manager().getDefaultFontSize());
+            }
         });
     }
 
     private JSpinner toolTipDismissDelaySpinner;
 
     public void doToolTipDismissDelay(JPanel panel) {
-        GuiLafPreferencesManager manager = InstanceManager.getDefault(GuiLafPreferencesManager.class);
-        JLabel toolTipDismissDelayLabel = new JLabel(rb.getString("GUIToolTipDismissDelay"));
-        toolTipDismissDelaySpinner = new JSpinner(new SpinnerNumberModel(manager.getToolTipDismissDelay() / 1000, MIN_TOOLTIP_TIME, MAX_TOOLTIP_TIME, 1));
+        JLabel toolTipDismissDelayLabel = new JLabel(ConfigBundle.getMessage("GUIToolTipDismissDelay"));
+        toolTipDismissDelaySpinner = new JSpinner(new SpinnerNumberModel(manager().getToolTipDismissDelay() / 1000, MIN_TOOLTIP_TIME, MAX_TOOLTIP_TIME, 1));
         this.toolTipDismissDelaySpinner.addChangeListener((ChangeEvent e) -> {
-            manager.setToolTipDismissDelay((int) toolTipDismissDelaySpinner.getValue() * 1000); // convert to milliseconds from seconds
+            manager().setToolTipDismissDelay((int) toolTipDismissDelaySpinner.getValue() * 1000); // convert to milliseconds from seconds
             this.dirty = true;
         });
-        this.toolTipDismissDelaySpinner.setToolTipText(MessageFormat.format(rb.getString("GUIToolTipDismissDelayToolTip"), MIN_TOOLTIP_TIME, MAX_TOOLTIP_TIME));
+        this.toolTipDismissDelaySpinner.setToolTipText(MessageFormat.format(ConfigBundle.getMessage("GUIToolTipDismissDelayToolTip"), MIN_TOOLTIP_TIME, MAX_TOOLTIP_TIME));
         toolTipDismissDelayLabel.setToolTipText(this.toolTipDismissDelaySpinner.getToolTipText());
-        JLabel toolTipDismissDelayUoM = new JLabel(rb.getString("GUIToolTipDismissDelayUoM"));
+        JLabel toolTipDismissDelayUoM = new JLabel(ConfigBundle.getMessage("GUIToolTipDismissDelayUoM"));
         toolTipDismissDelayUoM.setToolTipText(this.toolTipDismissDelaySpinner.getToolTipText());
         panel.add(toolTipDismissDelayLabel);
         panel.add(toolTipDismissDelaySpinner);
@@ -263,17 +239,17 @@ public class GuiLafConfigPane extends JPanel implements PreferencesPanel {
 
     @Override
     public String getPreferencesItemText() {
-        return rb.getString("MenuDisplay"); // NOI18N
+        return ConfigBundle.getMessage("MenuDisplay"); // NOI18N
     }
 
     @Override
     public String getTabbedPreferencesTitle() {
-        return rb.getString("TabbedLayoutGUI"); // NOI18N
+        return ConfigBundle.getMessage("TabbedLayoutGUI"); // NOI18N
     }
 
     @Override
     public String getLabelKey() {
-        return rb.getString("LabelTabbedLayoutGUI"); // NOI18N
+        return ConfigBundle.getMessage("LabelTabbedLayoutGUI"); // NOI18N
     }
 
     @Override
@@ -293,7 +269,7 @@ public class GuiLafConfigPane extends JPanel implements PreferencesPanel {
 
     @Override
     public void savePreferences() {
-        // do nothing - the persistant manager will take care of this
+        manager().savePreferences(ProfileManager.getDefault().getActiveProfile());
     }
 
     @Override
@@ -312,4 +288,9 @@ public class GuiLafConfigPane extends JPanel implements PreferencesPanel {
     public boolean isPreferencesValid() {
         return true; // no validity checking performed
     }
+    
+    private GuiLafPreferencesManager manager() {
+        return InstanceManager.getDefault(GuiLafPreferencesManager.class);
+    }
+
 }

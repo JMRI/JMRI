@@ -499,9 +499,19 @@ public class RollingStockManager {
 
     private String convertBuildDate(String date) {
         String[] built = date.split("-");
-        if (built.length > 1) {
+        if (built.length == 2) {
             try {
                 int d = Integer.parseInt(built[1]);
+                if (d < 100) {
+                    d = d + 1900;
+                }
+                return Integer.toString(d);
+            } catch (NumberFormatException e2) {
+                log.debug("Unable to parse car built date {}", date);
+            }
+        } else {
+            try {
+                int d = Integer.parseInt(date);
                 if (d < 100) {
                     d = d + 1900;
                 }

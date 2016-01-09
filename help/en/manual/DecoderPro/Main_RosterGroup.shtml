@@ -1,15 +1,16 @@
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
-<html lang="en"><head><!-- Copyright ($Author$) 2009 --><!-- $Id$ -->
+<html lang="en">
+<head>
+<title>Main-Roster group</title>
 
-
-
-
-
-<title>Main-Roster group</title><!-- Style --><meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
+<!-- Style -->
+<meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
 <link rel="stylesheet" type="text/css" href="/css/default.css" media="screen">
 <link rel="stylesheet" type="text/css" href="/css/print.css" media="print">
 <link rel="icon" href="/images/jmri.ico" type="image/png">
-<link rel="home" title="Home" href="/"><!-- /Style --></head>
+<link rel="home" title="Home" href="/">
+<!-- /Style -->
+</head>
 
 <body>
 <!--#include virtual="/Header" -->
@@ -152,11 +153,11 @@ if you do not want to associate an engine to a roster Group</p>
 </ul>
 <blockquote>
   <p>&nbsp;Once the associations have been made, then you
-can select the Active Roster Group.&nbsp; Once this is done then the
+can select the Active Roster Group. Once this is done then the
 Print and Print Summary actions will show only the roster entries
-associated with that group.&nbsp; As an example you could select the
+associated with that group. As an example you could select the
 Group <strong>Santa Fe</strong> and only the roster entries in this
-Roster Group will be printed.&nbsp; The printout does not currently
+Roster Group will be printed. The printout does not currently
 show the active group in the header.&nbsp;&nbsp; The active group will
 also influence any drop down box which has a list of entries in it,
 such as Throttle, edit entry, copy, etc.&nbsp; Also, when adding a new
@@ -196,10 +197,14 @@ group to return the active group to Global. </p>
     </tbody></table>
   </blockquote>
 </ul>
+
 <div align="right">
   <p><a href="Main_Roster.shtml">Back</a></p>
   <p><a href="index.shtml#Main">Back to Index</a></p>
 </div>
 
 <!--#include virtual="/Footer" -->
-</div></body></html>
+  </div><!-- closes #mainContent-->
+ </div> <!-- closes #mBody-->
+</body>
+</html>

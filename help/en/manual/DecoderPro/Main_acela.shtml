@@ -1,11 +1,10 @@
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
 <html lang="en">
 <head>
-<!-- Copyright ($Author$) 2009 -->
-<!-- $Id$ -->
-<TITLE>
+<title>
 DecoderPro&reg; Main Window
-</TITLE>
+</title>
+
 <!-- Style -->
 <meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
 <link rel="stylesheet" type="text/css" href="/css/default.css" media="screen">
@@ -22,7 +21,7 @@ DecoderPro&reg; Main Window
 <div id="mainContent">
 
 <h1>DecoderPro&reg; Main Window</h1>
-<h1>Acela Menu</h1>
+<h2>Acela Menu</h2>
 
 <div align=right>
 <p><a href="Main_Menu.shtml#System">Back to Index</a></p>
@@ -39,10 +38,12 @@ DecoderPro&reg; Main Window
 <p align="center"><img src="images/Main_Acela_02.png" alt="Configure Nodes" width="590" height="683" border="4">
 <hr>
 
-<div align=right>
+<div align="right">
 <p><a href="Main_Menu.shtml#System">Back to Index</a></p>
 </div>
 
 <!--#include virtual="/Footer" -->
+  </div><!-- closes #mainContent-->
+ </div> <!-- closes #mBody-->
 </body>
 </html>

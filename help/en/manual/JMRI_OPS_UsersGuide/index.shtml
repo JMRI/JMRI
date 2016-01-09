@@ -18,9 +18,11 @@
 <div id="mainContent">
 <a name="Top" id="Top"></a>
 
-<h1>JMRI&reg; OperationsPro Manual</h1>
+<h1>JMRI&reg; OperationsPro&trade; Manual</h1>
 <h2>Introduction</h2>
-<p><a href="#revisions">Revised</a> to cover versions 3.6 and <a href="#newfeatures">3.8 - 3.10</a></p>
+
+<p class="important">This Manual deals with OperationsPro versions 3.6 <a href="#newfeatures">up to 3.10</a>.<br>
+Online Help for the current version of JMRI&reg; OperationsPro is <a href="../../package/jmri/jmrit/operations/Operations.shtml">here</a></p>
 
 <p>JMRI <strong>OperationsPro</strong> is contained within the
 DecoderPro, PanelPro and SoundPro modules and accessible from their main menu bar. Through the Operations menu you will be able to build trains from all your rolling stock, follow them on your JMRI Panels, print the paperwork to hand out to your crew and much more.<br>&nbsp;<br>
@@ -39,7 +41,6 @@ for model railroaders. It contains modular applications for:</p>
 <li>Controlling lighting and sound in the room, and so forth (SoundPro&trade;)</li>
 </ul>
 <p>All this capability is contained in one install.</p>
-
 
 <hr>
 

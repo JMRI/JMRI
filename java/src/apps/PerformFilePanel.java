@@ -58,11 +58,9 @@ public class PerformFilePanel extends JPanel implements PreferencesPanel {
         });
 
         // are there any existing objects from reading existing config?
-        int n = PerformFileModel.rememberedObjects().size();
-        for (int i = 0; i < n; i++) {
-            PerformFileModel m = PerformFileModel.rememberedObjects().get(i);
+        InstanceManager.getDefault(StartupActionsManager.class).getActions(PerformFileModel.class).stream().forEach((m) -> {
             add(new Item(m));
-        }
+        });
     }
 
     protected void addItem() {
@@ -71,7 +69,7 @@ public class PerformFilePanel extends JPanel implements PreferencesPanel {
             if (i.model.getFileName() == null) {
                 return;  // cancelled
             }
-            InstanceManager.getDefault(StartupActionsManager.class).addModel(i.model);
+            InstanceManager.getDefault(StartupActionsManager.class).addAction(i.model);
             add(i);
             revalidate();
             repaint();
@@ -187,7 +185,7 @@ public class PerformFilePanel extends JPanel implements PreferencesPanel {
                 parent.repaint();
                 // unlink to encourage garbage collection
                 removeButton.removeActionListener(this);
-                InstanceManager.getDefault(StartupActionsManager.class).removeModel(model);
+                InstanceManager.getDefault(StartupActionsManager.class).removeAction(model);
                 model = null;
                 dirty = true;
             }
