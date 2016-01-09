@@ -400,6 +400,7 @@
 <a name="Q"></a>
 <a name="R"></a>
 	<li>Balazs Racz, who fixed a bug in startup and improved our tech documentation
+	<li>Steve Rawlinson, who fixed a bug in Layout Blocks.</li>
 	<li>Simon Reader, who improved the throttle,
 	added a check for completed status to Routes,
 	and added the "invert" option to LocoNet Turnouts.
