@@ -19,20 +19,17 @@
 <div id="mainContent">
 
 <a name="Top"></a>
-<h1>JMRI&reg;: Setup</h1>
+<h1>JMRI Setup</h1>
 <h2>General Installation</h2>
 
-<h3>System Requirements</h3>
+	<ul class="snav"><!-- TOC -->
+	<li><a href="#install">Installation</a>
+	<li><a href="#startprog">Starting JMRI</a>
+	<li><a href="#setprefs">Setting Preferences</a>
+	<li><a href="#debug">Fixing Problems</a>
+	</ul>
 
-<p>JMRI&reg; requires that Java be installed, whether your computer is <a href="http://jmri.sourceforge.net/install/MacOSX.shtml">Mac</a>, <a href="http://jmri.sourceforge.net/install/WindowsNew.shtml">Windows</a>, or <a href="http://jmri.sourceforge.net/install/Linux.shtml">Linux</a> based.</p>
-<p>Version 2.12 can run on any computer system that will
-run Java 1.5 or later.<br>
-Version 2.14.1 requires Java 1.5 (or 1.6 if you wish for drag &amp; drop)<br>
-Version 3.10.1 requires Java 1.7 or later.<br>
-Version 4.2 requires Java 1.8.</p>
-<p>More on <a href="https://www.java.com/en/download/help/sysreq.xml">Java versions and hardware requirements</a>.<br>
-Get the latest Java as a free download at: 
-<a href="http://java.com/download/" target="_blank">java.com/download</a>.
+<a name="install"></a><h3>Installation</h3>
 
 <p>Full instructions for installing on different platforms can be found here:</p>
 	<ul>
@@ -44,7 +41,13 @@ Get the latest Java as a free download at:
 	    </ul>
 	</ul>
 
-<h2>Starting the program</h2>
+<p>JMRI&reg; requires that Java be installed.<br>
+Version 2.12 can run on any computer system that will run Java 1.5 or later.<br>
+Version 2.14.1 requires Java 1.5 (or 1.6 if you wish for drag &amp; drop)<br>
+Version 3.10.1 requires Java 1.7 or later.<br>
+Version 4.2 requires Java 1.8.</p>
+
+<a name="startprog"></a><h2>Starting the program</h2>
 <p>
   Once you have downloaded the JMRI&reg; software and installed it, simply
 open the program in the usual manner for your operating system, windows will show icon on desktop.
@@ -65,18 +68,20 @@ you want to play with JMRI there is a simulator mode you may want to
 try.<br>
 [To be continued]</p>
 
-<h2>Setting Preferences</h2>
+<a name="setprefs"></a><h2>Setting your Preferences</h2>
 	<ul>
 	<li>The <a href="../../package/apps/TabbedPreferences.shtml">Preference Pane</a></li>
-	<li><a href="../setup/profiles.shtml">Configuration Profiles</a></li>
+	<li><a href="profiles.shtml">Configuration Profiles</a></li>
+	<li><a href="Files.shtml">Configuration Files &amp; Locations</a></li>
 	</ul>
 
-<h2>Debugging</h2>	
+<a name="debug"></a><h2>Fixing Problems</h2>	
 	<ul>
-	<li><a href="../setup/Errors.shtml">Error Codes</a></li>
-	<li><a href="../../package/apps/InstallTest/InstallTest.shtml">InstallTest</a></li>
   <li><a href="http://jmri.sourceforge.net/install/Debug.shtml">Debugging an installation</a>
-  </ul>
+  <li><a href="../setup/Errors.shtml">Error Codes</a></li>
+	<li><a href="../../package/apps/InstallTest/InstallTest.shtml">InstallTest</a></li>
+	<li><a href="Faq.shtml">Frequently Asked Questions</a></li>
+	</ul>
 
 <!--#include virtual="/Footer" -->
   </div><!-- closes #mainContent-->

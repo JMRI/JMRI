@@ -8,11 +8,10 @@
     <div style="text-align: center"><strong>DecoderPro&reg; Manual</strong></div>
 
 <dl><!-- main table of contents -->
-<dt><h3>Installing JMRI</h3></dt>
+<dt><h3>Setup JMRI</h3></dt>
 	  <dd>
     <ul>
     <li><a href="Installing_JMRI.shtml">Preparing to Install</a></li>
-    <li><a href="Installing_JMRI.shtml#InstallJMRI">Installing</a></li>
     </ul>
     </dd>
 

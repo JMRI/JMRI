@@ -22,8 +22,11 @@
 </p><p><a href="index.shtml#GettingStarted">Back to Index</a> </p></div>
 
 <hr>
+
+<p class="important">The current JMRI Preferences Help is <a href="../../html/setup/index.shtml#setprefs">here</a>.</p>
+
 <p>
-Click on the <strong>Edit</strong> menu and then Preferences... This opens the Preferences window (This window may open automatically the first time you run the program.)</p>
+Click on the <strong>Edit</strong> menu and then Preferences... to open the Preferences window. On Mac OS X choose Preferences... from the DecoderPro application menu. (This window may open automatically the first time you run the program.)</p>
 <p>As a first time user the most  important information is the <strong>Connections</strong>
 screen where you describe how the computer will talk to the command
 station. Most of rest you can leave at the initial or &#8220;default&#8221;
@@ -31,13 +34,12 @@ settings until you find a need to change things to suit your fancy.
 </p><p><strong>Most importantly, you must click  
   <input name="button9" id="button9" value="Save" type="button">
    to finalize your settings and then re-start the program to have them  take effect.</strong>
-</p><p>The Preferences window provides access to the basic
+</p><p>The Preferences panel provides access to the basic
 configuration information to connect your computer to your DCC
 system.&nbsp; You will be using that system to actually&nbsp; program
-and operate trains equipped with DCC decoders. </p><p>The window is split into two panes, on the left side is a list
+and operate trains equipped with DCC decoders. </p><p>The panel is split into two panes: on the left side is a list
 of preference groups that may be set. Clicking on one of the items
-opens the options that may be set in the right side pane. No selection
-have been made</p>
+opens the options that may be set in the right side pane. The Connections tab was selected in the following screen shot:</p>
 
 <h1><img src="images/Preferences.png" alt="preferences" height="432" width="755"></h1>
 <a name="Top"></a>
@@ -283,10 +285,10 @@ connection.</p>
 <p>Use this pane to setup MinServer if you are using it.</p>
 <p style="text-align: center;"><img src="images/Preferences_miniServer.png" alt="mini server" height="396" width="726"></p>
 <p><strong><a href="#Top">Top</a></strong></p>
-<h2 align="center">Before you exit the Preferences, click the          
+<p>Before you exit the Preferences, click the          
   <input name="button8" id="button8" value="Save" type="submit">
-button to save all your selections.</h2>
-<h2 align="center">You must restart DecoderPro for Preferences to take effect</h2>
+button to save all your selections.<br>
+You must restart DecoderPro for Preferences to take effect</p>
 
 <hr>
 <div align="right">
