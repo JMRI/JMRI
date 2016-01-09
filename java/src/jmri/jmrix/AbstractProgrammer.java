@@ -126,7 +126,7 @@ public abstract class AbstractProgrammer implements Programmer {
     }
 
     // handle mode
-    private ProgrammingMode mode = DefaultProgrammerManager.PAGEMODE;
+    private ProgrammingMode mode = null;
 
     @Override
     public final void setMode(ProgrammingMode m) {
