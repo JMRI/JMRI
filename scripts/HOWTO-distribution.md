@@ -396,7 +396,7 @@ If there are any changes in other files, do both of:
 
    - Figure out what went wrong and fix it in these instructions
 
-- Lastly, if this release is one of the special series at the end of a development cycle that leads to a test release, create the next release branch now.  Those test releases are made cumulatively from each other, rather than each from master. We start the process now so that people can open pull requests for it, and discuss whether changes should be included.
+Lastly, if this release is one of the special series at the end of a development cycle that leads to a test release, create the next release branch now.  Those test releases are made cumulatively from each other, rather than each from master. We start the process now so that people can open pull requests for it, and discuss whether changes should be included.
 
 (Maybe we should change their nomenclature to get this across?  E.g. instead of 4.1.5, 4.1.6, 4.1.7, 4.2 where the last two look like regular "from master" test releases, call them 4.1.6, 4.1.6.1, 4.1.6.2, 4.2 - this will make the operations clearer)
 
