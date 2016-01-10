@@ -506,8 +506,8 @@ public class RollingStockManager {
                     d = d + 1900;
                 }
                 return Integer.toString(d);
-            } catch (NumberFormatException e2) {
-                log.debug("Unable to parse car built date {}", date);
+            } catch (NumberFormatException e) {
+                log.debug("Unable to parse built date ({})", date);
             }
         } else {
             try {
@@ -516,8 +516,8 @@ public class RollingStockManager {
                     d = d + 1900;
                 }
                 return Integer.toString(d);
-            } catch (NumberFormatException e2) {
-                log.debug("Unable to parse car built date {}", date);
+            } catch (NumberFormatException e) {
+                log.debug("Unable to parse built date ({})", date);
             }
         }
         return date;
