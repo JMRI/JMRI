@@ -968,7 +968,7 @@
     <target name="checklineends">
       <exec executable="sh" outputproperty="checklineeds.files">
         <arg value="-c" />
-        <arg value="find xml help java/src java/test -not -type d -exec file '{}' ';' | grep CRLF" />
+        <arg value="find xml help java/src java/test jython -not -type d -exec file '{}' ';' | grep CRLF" />
       </exec>      
       
       <fail message="${checklineeds.files}">
