@@ -173,7 +173,7 @@ If you fix anything, commit it back.
         ant make-test-release-branch
 
   - This will do (more or less) the following actions:
-
+    
         git checkout master
         git pull
         (commit a version number increment to master)
@@ -182,7 +182,6 @@ If you fix anything, commit it back.
         git push JMRI/JMRI {branch}
         git checkout master    
         git pull
-
 
  - Put a comment in the release GitHub item saying the branch exists, and all future changes should be documented in the new release note
  
@@ -305,7 +304,7 @@ Download from CI, check integrity (make sure compressed files not expanded), the
     
     (clean up and logout)
 
-- Create and upload the JavaDocs (as of late 2013, [CloudBees](https://jmri.ci.cloudbees.com/job/Development/job/Web%20Site/job/Generate%20Website%20Components/) was updating these from git weekly, in which case skip): 
+- Create and upload the JavaDocs (as of late 2013, [CloudBees](https://jmri.ci.cloudbees.com/job/Development/job/Web%20Site/job/Generate%20Website%20Components/) was updating these from git weekly, in which case skip; not that this might take an hour or more to upload on a home connection, and it's OK to defer the uploadjavadoc step): 
 
     ant javadoc-uml uploadjavadoc
 
@@ -333,45 +332,47 @@ Note: Unlike releasing files to SourceForge, once a GitHub Release is created it
     https://github.com/JMRI/JMRI/releases/new
 
 - Fill out form:
+
+   - "tag version field" gets vN.N.N (e.g. leading lower-case "v")
+   - @ branch: select the release-n.n.n release branch
 ```
-    "tag version field" gets vN.N.N (e.g. leading lower-case "v")
-    @ branch: select the release-n.n.n release branch
-    "Release title" field gets "Test/Prod Release N.N.N"
-    Description content (really need to automate this!):
-    
-        [Release notes](http://jmri.org/releasenotes/jmri4.1.6.shtml)
+"Release title" field gets "Test/Prod Release N.N.N"
+```
+   - Description content (really need to automate this!):
+```    
+[Release notes](http://jmri.org/releasenotes/jmri4.1.6.shtml)
 
-        Checksums:
+Checksums:
 
-        File | SHA256 checksum
-        ---|---
-        [JMRI.4.3.1-R47390b0.dmg](https://github.com/JMRI/JMRI/releases/download/v4.3.1/JMRI.4.3.1-R47390b0.dmg) | ee2e47d840ffd8ae1efea9ba11c289b8ac1d76dc8dc5cbd330a581d364421fe6
-        [JMRI.4.3.1-R47390b0.exe](https://github.com/JMRI/JMRI/releases/download/v4.3.1/JMRI.4.3.1-R47390b0.exe) | 64828358712a9fb7c67556f2ead48961c531f878ca2ebb6e367483f5521ad75f
-        [JMRI.4.3.1-R47390b0.tgz](https://github.com/JMRI/JMRI/releases/download/v4.3.1/JMRI.4.3.1-R47390b0.tgz) | fb28ed2d3dc8dfa2c6cf57ad740c7185e7c75990b2426d2864543d63add7c00a
-    
-    
-    Attach files by dragging them in (you might have to have downloaded them above via e.g. a separate 
-
-    curl -o release.zip "http://builds.jmri.org/jenkins/job/Test%20Releases/job/4.1.4/ws/dist/release/*zip*/release.zip" 
-
-    and expansion; it's slow to upload from a typical home machine, though, so wish we had a way to cross-load from somewhere fast - if release.zip is still on SF.net, you can do
-    ssh user,jmri@shell.sf.net create
-    scp user,jmri@shell.sf.net:release.zip .
-
-    then expand the release.zip file and drag-and-drop the three files onto the web page one at a time.
-
-    Note there's a little progress bar that has to go across & "Uploading your release now..." has to complete before you publish
-    
-    Click "Publish Release"
-    Wait for completion, which might be a while with big uploads
+File | SHA256 checksum
+---|---
+[JMRI.4.3.1-R47390b0.dmg](https://github.com/JMRI/JMRI/releases/download/v4.3.1/JMRI.4.3.1-R47390b0.dmg) | ee2e47d840ffd8ae1efea9ba11c289b8ac1d76dc8dc5cbd330a581d364421fe6
+[JMRI.4.3.1-R47390b0.exe](https://github.com/JMRI/JMRI/releases/download/v4.3.1/JMRI.4.3.1-R47390b0.exe) | 64828358712a9fb7c67556f2ead48961c531f878ca2ebb6e367483f5521ad75f
+[JMRI.4.3.1-R47390b0.tgz](https://github.com/JMRI/JMRI/releases/download/v4.3.1/JMRI.4.3.1-R47390b0.tgz) | fb28ed2d3dc8dfa2c6cf57ad740c7185e7c75990b2426d2864543d63add7c00a
 ```
 
-(It might be possible to automate this in Ant, see http://stackoverflow.com/questions/24585609/upload-build-artifact-to-github-as-release-in-jenkins and https://github.com/JMRI/JMRI/issues/103 )
+- Attach files by dragging them in (you might have to have downloaded them above via e.g. a separate 
+```
+curl -o release.zip "http://builds.jmri.org/jenkins/job/Test%20Releases/job/4.1.4/ws/dist/release/*zip*/release.zip" 
+```
+and expansion; it's slow to upload from a typical home machine, though, so wish we had a way to cross-load from somewhere fast - if release.zip is still on SF.net, you can do
+```
+ssh user,jmri@shell.sf.net create
+scp user,jmri@shell.sf.net:release.zip .
+```
+then expand the release.zip file and drag-and-drop the three files onto the web page one at a time.
+
+Note there's a little progress bar that has to go across & "Uploading your release now..." has to complete before you publish; make sure all three files show.
+    
+- Click "Publish Release"
+- Wait for completion, which might be a while with big uploads
+
+(It might be possible to automate this in Ant, see http://stackoverflow.com/questions/24585609/upload-build-artifact-to-github-as-release-in-jenkins )
     
 
 ### Final Branch Management
 
-It's important that any changes that were made on the branch also get onto master. Normally this happens automatically with the procedure in "Further Changes" above. But we need to check. Start with your Git repository up to date on master and the release branch, and then:
+It's important that any changes that were made on the branch also get onto master. Normally this happens automatically with the procedure in "Further Changes" above. But we need to check. Start with your Git repository up to date on master and the release branch, and then (*need a cleaner, more robust mechanism for this*; maybe GitX?):
 
 ```
 git fetch
@@ -397,9 +398,9 @@ If there are any changes in other files, do both of:
 
 Lastly, if this release is one of the special series at the end of a development cycle that leads to a test release, create the next release branch now.  Those test releases are made cumulatively from each other, rather than each from master. We start the process now so that people can open pull requests for it, and discuss whether changes should be included.
 
-(Maybe we should change their nomenclature to get this across?  E.g. instead of 4.1.5, 4.1.6, 4.1.7, 4.2 where the last two look like regular "from master" test releases, call them 4.1.6, 4.1.6.1, 4.1.6.2, 4.2)
+(Maybe we should change their nomenclature to get this across?  E.g. instead of 4.1.5, 4.1.6, 4.1.7, 4.2 where the last two look like regular "from master" test releases, call them 4.1.6, 4.1.6.1, 4.1.6.2, 4.2 - this will make the operations clearer)
 
-- Create this branch:
+   - Create the next pre-production branch (*pre-production case only*):
 
 ```
 git checkout (release-n.n.n)
@@ -410,7 +411,7 @@ git push github
 
 - Create the next [GitHub Issue](https://github.com/JMRI/JMRI/issues) to hold discussion with conventional title "Create release-n.n.n+1". Add the next release milestone (created above) to it.
 
-- Confirm that the v4.1.4 tag is in place, manually delete the release-4.1.4 branch via the [GitHub UI](https://github.com/JMRI/JMRI/branches).
+- Confirm that the tag for the current release (release-4.1.4) is in place, then manually delete the current release branch via the [GitHub UI](https://github.com/JMRI/JMRI/branches).
 
 ====================================================================================
 ## Associated Documentation

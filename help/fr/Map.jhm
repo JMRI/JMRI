@@ -148,9 +148,9 @@
 
 <mapID target="package.jmri.jmrit.beantable.ReporterAddEdit" url="package/jmri/jmrit/beantable/ReporterAddEdit.shtml"/>
 
-<mapID target="package.jmri.jmrit.beantable.UserMessagePreferences" url="package/jmri/jmrit/beantable/UserMessagePreferences.shtml"/>
+<mapID target="html.setup.profiles" url="html/setup/profiles.shtml"/>
 
-<mapID target="DecoderProManual.index" url="DecoderProManual/index.shtml"/>
+<mapID target="package.jmri.jmrit.beantable.UserMessagePreferences" url="package/jmri/jmrit/beantable/UserMessagePreferences.shtml"/>
 
 <mapID target="package.jmri.jmrit.operations.Operations_EditRoute" url="package/jmri/jmrit/operations/Operations.shtml#EditRoute"/>
 
@@ -229,8 +229,6 @@
 <mapID target="package.jmri.jmrit.operations.Operations_BuildingTrains" url="package/jmri/jmrit/operations/Operations.shtml#BuildingTrains"/>
 
 <mapID target="html.apps.DecoderPro.FAQ" url="html/apps/DecoderPro/FAQ.shtml"/>
-
-<mapID target="html.Errors" url="html/Errors.shtml"/>
 
 <mapID target="package.jmri.jmrit.display.CoordinateEdit" url="package/jmri/jmrit/display/CoordinateEdit.shtml"/>
 
@@ -1064,6 +1062,8 @@
 
 <mapID target="html.hardware.loconet.LocoNetSim" url="html/hardware/loconet/LocoNetSim.shtml"/>
 
+<mapID target="html.setup.Errors" url="html/setup/Errors.shtml"/>
+
 <mapID target="html.tools.throttle.ThrottleChapter2_ControlPanel" url="html/tools/throttle/ThrottleChapter2.shtml#ControlPanel"/>
 
 <mapID target="html.hardware.loconet.StandaloneLocoNet_jmriconfig" url="html/hardware/loconet/StandaloneLocoNet.shtml#jmriconfig"/>
@@ -1213,6 +1213,8 @@
 <mapID target="package.jmri.jmrit.dispatcher.NewTrain" url="package/jmri/jmrit/dispatcher/NewTrain.shtml"/>
 
 <mapID target="package.jmri.jmrit.beantable.RouteTable" url="package/jmri/jmrit/beantable/RouteTable.shtml"/>
+
+<mapID target="html.setup.Dropbox" url="html/setup/Dropbox.shtml"/>
 
 <mapID target="html.hardware.loconet.Digitrax_Network" url="html/hardware/loconet/Digitrax.shtml#Network"/>
 

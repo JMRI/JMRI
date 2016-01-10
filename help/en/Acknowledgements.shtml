@@ -82,6 +82,7 @@
 	<a href="http://cats4ctc.org/">CATS</a> system.
 	<li>Bob Blackwell, who moderates the jmriusers mailing list,
 	accumulating the decoder ID info, and updated the DecoderPro manual
+	<li>Herve Blorec, who worked on the French translation
 	<li>Don Borden, who loaned a Soundtraxx decoder for testing the
 	dual-decoder support
 	<li>Joseph T. Bore, who contributed the code upon which we built the
@@ -399,6 +400,7 @@
 <a name="Q"></a>
 <a name="R"></a>
 	<li>Balazs Racz, who fixed a bug in startup and improved our tech documentation
+	<li>Steve Rawlinson, who fixed a bug in Layout Blocks.</li>
 	<li>Simon Reader, who improved the throttle,
 	added a check for completed status to Routes,
 	and added the "invert" option to LocoNet Turnouts.

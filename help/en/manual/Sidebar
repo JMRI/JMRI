@@ -90,7 +90,7 @@
 		<li><a href="http://jmri.sourceforge.net/install/WindowsNew.shtml">Windows</a>
 		<li><a href="http://jmri.sourceforge.net/install/MacOSX.shtml">Mac OS X</a>
 		<li><a href="http://jmri.sourceforge.net/install/Linux.shtml">Linux</a>
-		<li><a href="http://jmri.sourceforge.net/install/Debug.shtml">Debugging an installation</a>
+		<li><a href="../html/setup.shtml">Setup JMRI</a>
     </ul>
     </dd>  
   

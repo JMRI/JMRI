@@ -2395,7 +2395,7 @@
 
    The cars window allows you to edit your car roster. You can enter a car's road (reporting mark),
    number, type, and length. The program will automatically calculate the car's weight based on
-   length and the scale your modeling. You can optionally add the car's color, build date, load and
+   length and the scale your modeling. You can optionally add the car's color, built date, load and
    owner. If you want a group of cars to be switched as a unit, you can create a "kernel". You can
    assign any number of cars to a kernel but the type of the first car assigned will be used by the
    program to determine if the kernel is allowed at a location. The entire length of the kernel is
@@ -2617,7 +2617,8 @@
    <h4>Optional Fields</h4>
 
    Finally you can optionally enter the color, built date, owner and comment for this car. The built
-   date can be entered as a four digit year, or in the format of month-year.
+   date can be entered as a two or four digit year, or in the format of month-year (mm-yy). A two
+   digit year will be converted to a car built in the 1900s. 
    
    <a name="CARIDTAG"></a>
    <h4>Id Tag</h4>
@@ -2946,7 +2947,8 @@
 
    <p>Now set the locomotive's location on the layout. If the locomotive is off the layout, set
     the location to none (blank space). You can also enter the built date, owner and a comment for
-    this locomotive.</p>
+    this locomotive. The built date can be in the format of a two or four digit year, or month-year
+    (mm-yy), were a two digit year will be converted to a loco built in the 1900s.</p>
    
    <a name="LocomotiveModels"></a>
    <h4>Locomotive Models</h4>
