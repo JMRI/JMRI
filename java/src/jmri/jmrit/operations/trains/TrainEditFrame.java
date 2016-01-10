@@ -555,10 +555,7 @@ public class TrainEditFrame extends OperationsFrame implements java.beans.Proper
                             .getMessage("CanNot"), new Object[]{s}), JOptionPane.ERROR_MESSAGE);
             return false;
         }
-        if (trainName.contains(".") || trainName.contains("<") || trainName.contains(">") // NOI18N
-                || trainName.contains(":") || trainName.contains("\"") || trainName.contains("\\") // NOI18N
-                || trainName.contains("/") || trainName.contains("|") || trainName.contains("?") // NOI18N
-                || trainName.contains("*")) { // NOI18N
+        if (!OperationsXml.checkFileName(trainName)) { // NOI18N
             log.error("Train name must not contain reserved characters");
             JOptionPane.showMessageDialog(this, Bundle.getMessage("TrainNameResChar") + NEW_LINE
                     + Bundle.getMessage("ReservedChar"), MessageFormat.format(Bundle.getMessage("CanNot"),

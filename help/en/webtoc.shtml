@@ -44,7 +44,9 @@
 </li>
 
  
-<li>Setup <ul>
+<li>
+<a href="html/setup/index.shtml">Setup </a>
+<ul>
   
 <li>
 <a href="package/apps/TabbedPreferences.shtml">Preferences Pane </a>

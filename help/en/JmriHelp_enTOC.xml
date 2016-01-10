@@ -10,7 +10,7 @@
 
  <tocitem text="Manuals " target="manual.index_Top"/>
 
- <tocitem text="Setup ">
+ <tocitem text="Setup " target="html.setup.index">
   <tocitem text="Preferences Pane " target="package.apps.TabbedPreferences"/>
 
   <tocitem text="Configuration Profiles " target="html.setup.profiles"/>
