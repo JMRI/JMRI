@@ -128,9 +128,9 @@ n&#233;cessaire ici pour d&#233;terminer ce qui vous semblera bon .</p>
 
 <p>La case &#224; cocher<strong>Verrouillable</strong> peut &#234;tre un peu d&#233;routante au premier abord.
 Lorsqu'elle est activ&#233;e  &#8212; comme elle l'est par d&#233;faut &#8212; cela signifie simplement que lorsque l'on clique sur le bouton
-, il va se "verrouiller" lui-m&#234;me soit dans un &#233;tat "On" ou un &#233;tat "Off».
+, il va se "verrouiller" lui-m&#234;me soit dans un &#233;tat "On" ou un &#233;tat "Offï¿½.
 Autrement dit, le bouton agira comme un interrupteur &#224; bascule &#8212; cliquez une fois pour la
-fonction "On»; cliquez &#224; nouveau pour activer la fonction "Off". Le contraire de ce qui se produit
+fonction "Onï¿½; cliquez &#224; nouveau pour activer la fonction "Off". Le contraire de ce qui se produit
  lorsque la case est <b>d&#233;sactiv&#233;e</b>. L'appui sur le bouton agit 
 comme un commutateur momentan&#233; #8212; fournissant une commande "On" passag&#232;re  aussi longtemps
 que le bouton de la souris est cliqu&#233; <i>et tenu</i> sur le bouton. Quand 
@@ -143,7 +143,7 @@ coup de sifflet. Maintenez la touche un peu plus long donnerait un coup de siffl
 
 
 <p>La  case &#224; cocher <strong>Visible</strong> permet la "suppression" des boutons ind&#233;sirables
-. Par d&#233;faut, tous les boutons de fonction sont activ&#233;s comme "visible» de sorte qu'ils
+. Par d&#233;faut, tous les boutons de fonction sont activ&#233;s comme "visibleï¿½ de sorte qu'ils
 peuvent &#233;videmment &#234;tre vus. Mais s'il n'y a qu'une seule fonction d'utilis&#233;e &#8212; pour 
 par exemple les "lumi&#232;res" (F0) &#8212; Alors cette option fournit la capacit&#233; de "cacher"
 tous les autres boutons.</p>
@@ -270,7 +270,7 @@ situ&#233; juste sous la barre de titre principal de la fen&#234;tre.</p>
       <tr>
         <td colspan="3" align="left" valign="top"><p>Quand "<b>Propri&#233;t&#233;s du Cadre</b>" est cliqu&#233;, une bo&#238;te unique avec un champ de dialogue appara&#238;tra.
            Tapez le titre de votre fen&#234;tre de R&#233;gulateur dans ce domaine. 
-           Par exemple, "Santa Fe # 8259 EMD SD60-» peut &#234;tre suffisamment descriptif pour une
+           Par exemple, "Santa Fe # 8259 EMD SD60-ï¿½ peut &#234;tre suffisamment descriptif pour une
            seule locomotive. Si le R&#233;gulateur est pour un couplage, vous pouvez
            l'identifier comme quelque chose du genre  "couplage # 221". Votre seule limitation est
            le nombre de caract&#232;res que vous pouvez entrer dans la largeur de la fen&#234;tre de titre
