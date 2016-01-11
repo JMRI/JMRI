@@ -215,9 +215,9 @@ More information about these is available on the
 <a href="../../../package/jmri/jmrit/display/PanelEditor.shtml">Panel Editor help page</a>.
 
 <p>
-After getting the panel the way you want, you can use the "Store panel..." 
-entry in the "Panels" menu
-to write it to an XML file.
+After getting the Panel the way you want, you can use the "Store panel..." 
+entry in the "Panels" menu to write it to an .xml file.
+More information about the <a href="../../setup/Files.shtml">JMRI Configuration Files</a> 
 
 <h3>Available Icons</h3>
 The JMRI library contains lots of contributed icons
