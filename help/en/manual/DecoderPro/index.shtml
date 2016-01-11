@@ -22,6 +22,9 @@
 
 <h1><a name="Top">JMRI&reg; DecoderPro&reg; Manual</a></h1>
 
+<p class="important">This Manual deals with DP version 3.6.<br>
+Online Help for the current version of JMRI&reg; DecoderPro&reg; is <a href="../../html/apps/DecoderPro/index.shtml">here</a>.</p>
+
 <p><strong>JMRI</strong> is a Java-based cross-platform application
 for model railroaders. JMRI contains applications for:</p>
 
@@ -35,32 +38,26 @@ for model railroaders. JMRI contains applications for:</p>
 </ul>
 <p>All this capability is contained in one program (JMRI) which has several &quot;start-up&quot; screens for the various applications.</p>
 
-<p><a href="../DecoderPro3/Installing_JMRI.shtml#InstallJMRI">Versions of JMRI&reg;</a> can run on any computer system that will run Java 1.6.0
-or later, whether it is Macintosh, Windows, or Linux based. It does
-require that Java be installed on the computer.<br>
-You can get Java as a free (but very large) download at: <a href="http://java.com/download/" target="_blank">java.com/download/</a>
-</p>
-
 <p>If  this is your first visit to our manual we suggest that you take the Decoder Pro&reg; tour at <a target="_blank" href="http://jmri.sourceforge.net/help/en/html/apps/DecoderPro/Tour.shtml">http://jmri.sourceforge.net/help/en/html/apps/DecoderPro/Tour.shtml</a><br>
   to get an overview of what we&#8217;re about to cover.
 </p>
 Notes:
-<ol>
-<li>All screen shots in this manual are from a Windows
-machine using the "Metal" User Interface option. While your screens
-will probably differ in some layout details, they will be essentially
-the same. All programming examples shown are with Digitrax PR3 (in "MS100"
-mode) connected to Digitrax Super Chief Radio Command Station. Most of
-the decoders in locomotive samples will be Digitrax, except for sound
-examples.
-</li>
-<li>This entire manual has been updated to correspond to
-JMRI&reg; v3.6 DecoderPro only, and the SHTML verified using HTML4 and
-Cascading Style Sheets. If the formatting looks odd, you probably need
-to update your browser.</li>
-</ol>
+	<ol>
+	<li>All screen shots in this manual are from a Windows
+	machine using the "Metal" User Interface option. While your screens
+	will probably differ in some layout details, they will be essentially
+	the same. All programming examples shown are with Digitrax PR3 (in "MS100"
+	mode) connected to Digitrax Super Chief Radio Command Station. Most of
+	the decoders in locomotive samples will be Digitrax, except for sound
+	examples.
+	</li>
+	<li>This entire manual has been updated to correspond to
+	JMRI&reg; v3.6 DecoderPro only, and the SHTML verified using HTML4 and
+	Cascading Style Sheets. If the formatting looks odd, you probably need
+	to update your browser.</li>
+	</ol>
 
-<h1>Table of Contents</h1>
+<h2>Table of Contents</h2>
 
 <h4><a name="Installing"></a>Installing JMRI&reg;</h4>
 
@@ -434,9 +431,6 @@ to update your browser.</li>
 
 <hr>
 
-<p>To give feedback on this On Line manual, ask questions about things not covered, or make suggestions for improvements to the manual or the software, join us on the <a href="https://groups.yahoo.com/neo/groups/jmriusers/info">JMRI Users Yahoo Group</a>.
-</p>
-
 <p>Thanks for reading, and Let's Run Trains!
 </p>
 
@@ -538,8 +532,8 @@ to update your browser.</li>
 </table>
 
 <hr>
-
 <!--#include virtual="/Footer" -->
-</div> <!-- closes #mainContent -->
-</body>
+  </div><!-- closes #mainContent-->
+ </div> <!-- closes #mBody-->
+ </body>
 </html>

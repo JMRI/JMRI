@@ -1,6 +1,6 @@
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
 <html lang="en"><head>
-<!-- Copyright ($Author$) 2009 --><!-- $Id$ --><title>DecoderPro&reg; Main Window</title>
+<title>DecoderPro&reg; Main Window</title>
 
 <!-- Style -->
 <meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
@@ -14,13 +14,16 @@
 <body>
 <!--#include virtual="/Header" -->
 <!--#include virtual="Sidebar" -->
+
 <div id="mainContent">
 <h1>DecoderPro&reg; Main Window</h1>
-<h1>Communications Monitor Window</h1>
+<h2>Communications Monitor Window</h2>
+
 <div align="right">
 <p><a href="dp3_menubar.shtml">Back to Index</a></p>
 </div>
 <hr>
+
 <p>DecoderPro provides a communications monitor window so that
 you can see what is happening on the communications link between the
 program and the layout hardware.</p>
@@ -32,7 +35,7 @@ your DCC systems communications link.</p>
 </p>
 <p align="left">&nbsp;</p>
 <p align="left">The messages that are sent and received
-over the communictions link are displayed in the main pane of the
+over the communications link are displayed in the main pane of the
 window.</p>
 <h4 align="left">Controls at the bottom of the window.</h4>
 <p align="left"><strong>Clear screen </strong>button&#8212;
@@ -76,7 +79,7 @@ recovery for diagnostics, and sharing data with others.</p>
 logging </span>button -- Starts sending data in <span style="font-weight: bold;">Monitor Window</span> to
 selected file.</p>
 <h4 align="left"><span style="font-weight: normal;"><span style="font-weight: bold;">Stop logging</span> button
--- &nbsp;Stops sending data &nbsp;in <span style="font-weight: bold;">Monitor Window</span> to
+-- Stops sending data &nbsp;in <span style="font-weight: bold;">Monitor Window</span> to
 selected file.</span><br>
 </h4>
 <h4 style="font-weight: normal;" align="left">Logging
@@ -98,17 +101,21 @@ will be overwritten). Click on Save button.</li>
 <li>When you are ready to capture the data that you want to
 save, click on the <strong>Start logging </strong>button
 on the monitor window.</li>
-<li>When done, clidk the <strong>Stop logging</strong>
+<li>When done, click the <strong>Stop logging</strong>
 button to store the data and close the file.</li>
 </ol>
 <h4>Adding Message&nbsp;</h4> button&nbsp;<input size="50" name="v">
-<p>Type your message in the Add Messge text box, then clidk on
+<p>Type your message in the Add Message text box, then click on
 the <strong>Add Message</strong> button to add your
 message to the log file.</p>
-<p align="left">&nbsp;</p>
+
 <hr>
 <a href="dp3_menubar.shtml">Back to Index</a>
-<div align="right"> </div>
+<div align="right"></div>
+
 <!--#include virtual="/Footer" -->
-</div>
-</body></html>
+  </div><!-- closes #mainContent-->
+ </div> <!-- closes #mBody-->
+  </body>
+ </html>
+ 

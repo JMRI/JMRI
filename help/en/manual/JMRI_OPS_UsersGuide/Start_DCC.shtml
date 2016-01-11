@@ -19,7 +19,7 @@
 <div id="mainContent">
 
 <a name="Top"></a>
-<h1><img src="images/Logo.gif" alt="JMRI DecoderPro Logo" width=163 height=117 vspace="15" border=10 class="BOXIT"></h1>
+<h1><img src="images/Logo.gif" alt="JMRI DecoderPro Logo" width=163 height=117 vspace="15" class="BOXIT"></h1>
 
 <h1>Using JMRI&reg; to Operate Trains</h1>
 <h2>What is DCC?</h2>
@@ -45,5 +45,6 @@ Although this Manual deals with just OperationsPro, the JMRI&reg; suite of appli
 
 <!--#include virtual="/Footer" -->
 </div>
-</div></body>
+</div>
+</body>
 </html>

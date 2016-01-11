@@ -1,11 +1,9 @@
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
 <html lang="en">
 <head>
-<!-- Copyright ($Author$) 2009 -->
-<!-- $Id$ -->
-<TITLE>
+<title>
 DecoderPro&reg; Main Window
-</TITLE>
+</title>
 
 <!-- Style -->
 <meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
@@ -23,9 +21,9 @@ DecoderPro&reg; Main Window
 <div id="mainContent">
 
 <h1>DecoderPro&reg; Main Window</h1>
-<h1>GrapeVine Menu</h1>
+<h2>GrapeVine Menu</h2>
 
-<div align=right>
+<div align="right">
 <p><a href="Main_Menu.shtml#System">Back to Index</a></p>
 </div>
 
@@ -35,7 +33,7 @@ DecoderPro&reg; Main Window
 <p><strong>Send Command</strong></p>
 <p>Opens <strong>Send Grapevine serial command</strong> prompt. Type <strong>Command </strong>and click  the <strong>Send </strong>button to send the command via serial Bus. Type node <strong>Address</strong> and click on <strong>Query Node</strong> button to query the Grapevine serial bus node.</p>
 <p align="center"><img src="images/Main_grapevine_01.png" alt="Send Command" width="302" height="165" border="4"></p>
-<p><strong>Configrue Nodes</strong></p>
+<p><strong>Configure Nodes</strong></p>
 <p>Opens <strong>Configure Nodes</strong>  window, which provides the tools for setting the Grapevine Serial Bus nodes.</p>
 <p align="center"><img src="images/Main_grapevine_02.png" alt="nodes" width="463" height="236" border="4"></p>
 <p><strong>Node Table
@@ -45,11 +43,12 @@ DecoderPro&reg; Main Window
 <p><img src="images/Main_grapevine_03.png" alt="nodes table" width="607" height="184">
 
 <hr>
-
-<div align=right>
+<div align="right">
 <p><a href="Main_Menu.shtml#System">Back to Index</a></p>
 </div>
 
 <!--#include virtual="/Footer" -->
+  </div><!-- closes #mainContent-->
+ </div> <!-- closes #mBody-->
 </body>
 </html>

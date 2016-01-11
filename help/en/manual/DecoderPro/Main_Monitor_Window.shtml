@@ -1,19 +1,25 @@
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
-<html lang="en"><head><!-- Copyright ($Author$) 2009 --><!-- $Id$ -->
+<html lang="en">
+<head>
+<title>DecoderPro&reg; Main Window</title>
 
-
-
-<title>DecoderPro&reg; Main Window</title><!-- Style --><meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
+<!-- Style -->
+<meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
 <link rel="stylesheet" type="text/css" href="/css/default.css" media="screen">
 <link rel="stylesheet" type="text/css" href="/css/print.css" media="print">
 <link rel="icon" href="/images/jmri.ico" type="image/png">
-<link rel="home" title="Home" href="/"><!-- /Style --></head>
+<link rel="home" title="Home" href="/">
+<!-- /Style -->
+</head>
+
 <body>
 <!--#include virtual="/Header" -->
 <!--#include virtual="Sidebar" -->
 <div id="mainContent">
+
 <h1>DecoderPro&reg; Main Window</h1>
-<h1>Communications Monitor Window</h1>
+<h2>Communications Monitor Window</h2>
+
 <div align="right">
 <p><a href="Main_LocoNet.shtml">Back</a></p><p><a href="dp3_menubar.shtml">Back to Index</a></p>
 </div>
@@ -98,14 +104,16 @@ on the monitor window.</li>
 <li>When done, click the <strong>Stop logging</strong>
 button to store the data and close the file.</li>
 </ol>
-<h4>Adding Message&nbsp;</h4> button&nbsp;<input size="50" name="v">
-<p>Type your message in the Add Messge text box, then clidk on
+<h4>Adding Message</h4> button&nbsp;<input size="50" name="v">
+<p>Type your message in the Add Message text box, then click on
 the <strong>Add Message</strong> button to add your
 message to the log file.</p>
-<p align="left">&nbsp;</p>
+
 <hr>
 <div style="text-align: right;"><p><a href="Main_LocoNet.shtml">Back</a></p><a href="dp3_menubar.shtml">Back to Index</a></div>
-<div align="right"> </div>
+
 <!--#include virtual="/Footer" -->
-</div>
-</body></html>
+  </div><!-- closes #mainContent-->
+ </div> <!-- closes #mBody-->
+</body>
+</html>

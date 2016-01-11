@@ -339,8 +339,25 @@ signals - obsolete, EMPTY, never used
         <xs:element name="warrants"     type="WarrantManagerType" minOccurs="0" maxOccurs="unbounded" />
 
         <xs:element name="paneleditor"  type="PanelEditorType" minOccurs="0" maxOccurs="unbounded" />
-        <xs:element name="LayoutEditor" type="LayoutEditorType" minOccurs="0" maxOccurs="unbounded" />
-        
+        <xs:element name="LayoutEditor" type="LayoutEditorType" minOccurs="0" maxOccurs="unbounded" >
+            <xs:key name="layoutEditorElementIdent">
+              <xs:annotation><xs:documentation>Insist that each element ident attribute value in LayoutEditor is unique</xs:documentation></xs:annotation>
+              <xs:selector xpath="./tracksegment|./positionablepoint|./layoutSlip|./levelxing|./layoutturntable|./layoutturnout"/> 
+                <!-- elements like sensoricon, memoryicon dont have ident attributes; standardization would have been better -->
+            <xs:field xpath="@ident"/>           
+            </xs:key>
+            
+            <xs:keyref name="trackSegmentConnect1NameValueExists" refer="layoutEditorElementIdent"> 
+              <xs:annotation><xs:documentation>Insist that each tracksegment connection1name attribute value refer to an existing ident</xs:documentation></xs:annotation>
+              <xs:selector xpath="tracksegment"/> 
+              <xs:field xpath="@connect1name"/> 
+            </xs:keyref> 
+            <xs:keyref name="trackSegmentConnect2NameValueExists" refer="layoutEditorElementIdent"> 
+              <xs:annotation><xs:documentation>Insist that each tracksegment connection2name attribute value refer to an existing ident</xs:documentation></xs:annotation>
+              <xs:selector xpath="tracksegment"/> 
+              <xs:field xpath="@connect2name"/> 
+            </xs:keyref> 
+        </xs:element>
         <xs:element name="entryexitpairs" type="EntryExitPairType" minOccurs="0" maxOccurs="unbounded" />
 
         <xs:element name="filehistory"  type="FileHistoryType" minOccurs="0" maxOccurs="1" />

@@ -43,12 +43,12 @@ public class GuiLocalePreferencesPanel implements PreferencesSubPanel {
 
     @Override
     public String getTabbedPreferencesTitle() {
-        return GuiLafConfigPane.rb.getString("TabbedLayoutLocale"); // NOI18N
+        return ConfigBundle.getMessage("TabbedLayoutLocale"); // NOI18N
     }
 
     @Override
     public String getLabelKey() {
-        return GuiLafConfigPane.rb.getString("LabelTabbedLayoutLocale"); // NOI18N
+        return ConfigBundle.getMessage("LabelTabbedLayoutLocale"); // NOI18N
     }
 
     @Override

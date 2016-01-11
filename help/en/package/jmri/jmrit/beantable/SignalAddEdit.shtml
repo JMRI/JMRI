@@ -289,9 +289,6 @@ Approach, all three On controls the Restricting, and all three Closed (Off) make
 <!-- Footer -->
     <hr class="hide">
     <div id="footer">
-	<ul id="bn">
-	<li>Contact us via the <a href="http://groups.yahoo.com/group/jmriusers">JMRI users</a> mailing list</li>
-	</ul>
 
 <!-- Piwik -->
 <script type="text/javascript">
@@ -305,7 +302,7 @@ piwik_log(piwik_action_name, piwik_idsite, piwik_url);
 </script>
 <object><noscript><p><img src="http://apps.sourceforge.net/piwik/jmri/piwik.php?idsite=1" alt="piwik"/></p></noscript></object>
 <!-- End Piwik Tag -->
-
+</div><!-- closes #footer-->
 <!--#include virtual="/Footer" -->
 
       </div><!-- closes #mainContent-->

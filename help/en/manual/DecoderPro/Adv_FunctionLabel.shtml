@@ -63,7 +63,7 @@ button labeled "Bell" would ring until pressed again.</p>
   <tr>
     <td><strong>shunt</strong></td>
     <td>Sets
-"virtual" funtion key for software throttle. The "lock" option also
+"virtual" function key for software throttle. The "lock" option also
 needs to be set simultaneously with the "shunt" virtual function key
 activation. When this Function key is pressed the throttle speed slider
 on the software throttle changes to "center off" style for shunting,
@@ -83,7 +83,7 @@ rather than the "full-range with separate direction key"</td>
 </div>
 
 <!--#include virtual="/Footer" -->
-</div>
-</div>
-</body>
+  </div><!-- closes #mainContent-->
+ </div> <!-- closes #mBody-->
+ </body>
 </html>

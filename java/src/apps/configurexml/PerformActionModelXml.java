@@ -78,8 +78,7 @@ public class PerformActionModelXml extends jmri.configurexml.AbstractXmlAdapter 
         }
         PerformActionModel m = new PerformActionModel();
         m.setClassName(className);
-        PerformActionModel.rememberObject(m);
-        InstanceManager.getDefault(StartupActionsManager.class).addModel(m);
+        InstanceManager.getDefault(StartupActionsManager.class).addAction(m);
         InstanceManager.configureManagerInstance().registerPref(new apps.PerformActionPanel());
         return result;
     }

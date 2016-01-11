@@ -47,7 +47,7 @@ is used.</li>
 control) Enable Analog Operation with caution, as some decoders will
 jump to full speed resulting in a &#8220;Runaway locomotive&#8221; if they are
 enabled for Analog Operation and encounter power spikes on a DCC
-digital signal.&nbsp; They seem to get confused, and revert to Analog
+digital signal. They seem to get confused, and revert to Analog
 operation and use the full track voltage DCC power to take off and
 GO!&nbsp; There is no stopping them without removing layout
 power.&nbsp; Very disturbing to your operating mates, but better than
@@ -97,7 +97,7 @@ trying until the write operation is successful. In some instances the
 system will &#8220;time-out&#8221; after a certain number of tries without an
 acknowledgement from the decoder.&nbsp; This does not necessarily mean
 that the values have not been written, just that the program has not
-received an acknowledgement.&nbsp; This can be due to &nbsp;the
+received an acknowledgement. This can be due to &nbsp;the
 locomotive moving and getting on dirty track so that it can&#8217;t pulse
 back, or possibly because the command station or decoder cannot read
 back.&nbsp; Try moving the loco and try again.&nbsp; If it is a command
@@ -124,7 +124,7 @@ Programming window.</p>
 <p><img style="width: 900px; height: 425px;" alt="main" src="images/Main_01b_main.png"><br></p>
 <p><a name="DoMore"></a>What we&#8217;ve done so far is what is available in
 the Basic mode of programming in DecoderPro. Which is basically put
-Locomotive in the roster and assign an address.&nbsp; A good place to
+Locomotive in the roster and assign an address. A good place to
 start for new folks or at a club.&nbsp; It&#8217;s hard to go wrong, but you
 can change the loco address and add it the roster, which are the two
 most often needed actions with programming. <br>
@@ -141,7 +141,7 @@ features is the only other programmer that DecoderPro offers. <br>
 <p>At the bottom of the window is the  <a href="RosterMedia.shtml">Labels &amp; Media</a> and<a href="dp3_Main_Throttle.shtml">Throttle</a>
 buttons. Use these buttons to set up the Icon photos for your roster
 entries and to set-up the Function Labels on the software throttle
-included in JMRI.&nbsp; Click the links that we&#8217;ve included and take a
+included in JMRI. Click the links that we&#8217;ve included and take a
 look.</p>
 
 <div align="right">
@@ -150,7 +150,7 @@ look.</p>
 </div>
 
 <!--#include virtual="/Footer" -->
-</div>
-</div>
-</body>
+  </div><!-- closes #mainContent-->
+ </div> <!-- closes #mBody-->
+ </body>
 </html>

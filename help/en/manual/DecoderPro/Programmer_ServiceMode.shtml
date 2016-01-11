@@ -1,15 +1,16 @@
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
-<html lang="en"><head><!-- Copyright ($Author$) 2009 --><!-- $Id$ -->
+<html lang="en">
+<head>
+<title>Using DecoderPro</title>
 
-
-
-
-
-<title>Using DecoderPro</title><!-- Style --><meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
+<!-- Style -->
+<meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
 <link rel="stylesheet" type="text/css" href="/css/default.css" media="screen">
 <link rel="stylesheet" type="text/css" href="/css/print.css" media="print">
 <link rel="icon" href="/images/jmri.ico" type="image/png">
-<link rel="home" title="Home" href="/"><!-- /Style --></head>
+<link rel="home" title="Home" href="/">
+<!-- /Style -->
+</head>
 
 <body>
 <!--#include virtual="/Header" -->
@@ -18,18 +19,17 @@
 <div id="mainContent">
 
 <h1>DecoderPro&reg; Programming Modes</h1>
-<h1>Service Mode Programmer</h1>
+<h2>Service Mode Programmer</h2>
 
 <div align="right">
 <p><a href="index.shtml#Setting%20up">Back to Index</a></p>
 </div>
 
-
 <hr>
 <b>Service Mode (programming track) Programmer</b> - Select to program
 the locomotive on the dedicated programming track. (Probably because
 the Locomotive has to be taken to the servicing track to be
-programmed).&nbsp; Not all command stations support a dedicated
+programmed). Not all command stations support a dedicated
 programming track, and some brands will shut down the mainline power
 when in programming mode (not pleasant when you have an ops session in
 progress. <blockquote>
@@ -42,7 +42,7 @@ station.&nbsp; They just respond to instructions, so special
 instructions were developed which allow the Command Station &nbsp;to
 determine the contents of the decoder's memories <br>
 <br>
-Basically the decoder is asked a whole&nbsp;series of questions and
+Basically the decoder is asked a wholeseries of questions and
 when the answer is &#8220;yes&#8221; it turns on the motor for only a very brief
 time.&nbsp; The command station notices the current being drawn and
 stops asking questions, since it got the <strong><em>yes</em></strong>
@@ -51,10 +51,10 @@ the command station must ask all possible values waiting for the <strong><em>yes
 normally shown when the programmer is inactive.&nbsp; When DecoderPro
 is working it will show you what events are being performed.&nbsp;
 Sometimes you can see the loco jump a bit as the decoder pulses the
-motor for &#8220;yes&#8221;.&nbsp; The computer folks call this an ack (for
+motor for &#8220;yes&#8221;. The computer folks call this an ack (for
 acknowledgement).&nbsp; When the Command Station sends the decoder data
 that is in agreement with what is in the CV of the decoder, the decoder
-will send an ack.&nbsp; If the ack is never received the Command
+will send an ack. If the ack is never received the Command
 Station tells DecoderPro that the Decoder did not respond.<br>
 <br>
 <strong>Writing  to Decoder on the programming track:</strong><br>
@@ -121,10 +121,10 @@ and fastest way if you know for sure &#8220;What&#8217;s in there&#8221;.</p>
 you have a decoder that doesn&#8217;t appear in the listing, you may want to
 check to be sure that you are using the most up to date version of
 Decoder Pro, because manufacturers are adding models almost faster than
-the team can enter the new decoder definitions into the files.&nbsp;
+the team can enter the new decoder definitions into the files.
 You can choose a manufacturer's version which is as close as you can
 find, or if you&#8217;re only interested in basic programming functions, use
-the NMRA© decoder which is a generic file of the CV&#8217;s contained in
+the NMRAï¿½ decoder which is a generic file of the CV&#8217;s contained in
 their standards.</p>
   <p>The last item on this pane is the Programmer
 Format entry.&nbsp; It is preset by your Preferences entry, but you can
@@ -135,10 +135,12 @@ button, the selected Programmer window will open. All programmers,
 Basic, Comprehensive and Advanced, open to the Roster Entry pane.</p>
 </blockquote>
 
-
 <div align="right">
   <p><a href="index.shtml#Setting%20up">Back to Index</a> </p>
 </div>
 
 <!--#include virtual="/Footer" -->
-</div></body></html>
+  </div><!-- closes #mainContent-->
+ </div> <!-- closes #mBody-->
+</body>
+</html>

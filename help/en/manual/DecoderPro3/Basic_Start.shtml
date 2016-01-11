@@ -1,15 +1,15 @@
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
-<html lang="en"><head><!-- Copyright ($Author$) 2009, 2010 --><!-- $Id$ -->
+<html lang="en">
+<head><title>Basic Programming</title>
 
-
-
-
-
-<title>Basic Programming</title><!-- Style --><meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
+<!-- Style -->
+<meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
 <link rel="stylesheet" type="text/css" href="/css/default.css" media="screen">
 <link rel="stylesheet" type="text/css" href="/css/print.css" media="print">
 <link rel="icon" href="/images/jmri.ico" type="image/png">
-<link rel="home" title="Home" href="/"><!-- /Style --></head>
+<link rel="home" title="Home" href="/">
+<!-- /Style -->
+</head>
 
 <body>
 <!--#include virtual="/Header" -->
@@ -18,18 +18,15 @@
 <div id="mainContent">
 
 <h1>The Basic Programmer</h1>
-<h1>The Roster Entry Pane</h1>
+<h2>The Roster Entry Pane</h2>
 
 <div align="right">
 <p><a href="Programmer_Setup.shtml">Previous | </a><a href="Basic_BasicPane.shtml">Next</a></p>
 <p><a href="index.shtml#Basic%20Programmer">Back to Index</a></p>
 </div>
 
-
 <hr>
-
-<h2>&nbsp;</h2>
-<p>The Basic Programmer &nbsp;uses only the required sceens to set up
+<p>The Basic Programmer uses only the required panes to set up
 the decoder for DCC operation and creating a Roster entry and uses only
 the first two TABs. &nbsp;The first action in programming a locomotive
 with DecoderPro&reg; is to fill out the roster entry screen.</p>
@@ -52,7 +49,7 @@ together. DecoderPro also allows you to categorize roster
 entries into Groups, so you could have a separate group for each
 member.&nbsp; </p>
 <p>We&#8217;ll get to Groups and all the other neat stuff that can be done
-with DecoderPro in a while.&nbsp; I just thought I&#8217;d give you peek
+with DecoderPro in a while. I just thought I&#8217;d give you peek
 behind the curtain, and give you a chance to mentally thank the JMRI
 developers for all their work on DecoderPro version 3.&nbsp; Of course a message
 to that effect posted to the JMRI Yahoo group would also be warmly
@@ -126,10 +123,15 @@ to save this data. Note that there will be brief message in status bar
 at the bottom of the screen that roster has been saved.</p>
 
 <p>Let&#8217;s  move on to the Basic Programmer.</p>
+
+<hr>
 <div align="right">
   <p><a href="Programmer_Setup.shtml">Previous | </a><a href="Basic_BasicPane.shtml">Next</a></p>
   <p><a href="index.shtml#Basic%20Programmer">Back to Index</a></p>
 </div>
 
 <!--#include virtual="/Footer" -->
-</div></body></html>
+  </div><!-- closes #mainContent-->
+ </div> <!-- closes #mBody-->
+ </body>
+</html>

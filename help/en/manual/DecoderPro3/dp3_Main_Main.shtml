@@ -1,15 +1,15 @@
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
-<html lang="en"><head><!-- Copyright ($Author$) 2009 --><!-- $Id$ -->
+<html lang="en">
+<head><title>DecodePro Main window</title>
 
-
-
-
-
-<title>DecodePro Main window</title><!-- Style --><meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
+<!-- Style -->
+<meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
 <link rel="stylesheet" type="text/css" href="/css/default.css" media="screen">
 <link rel="stylesheet" type="text/css" href="/css/print.css" media="print">
 <link rel="icon" href="/images/jmri.ico" type="image/png">
-<link rel="home" title="Home" href="/"><!-- /Style --></head>
+<link rel="home" title="Home" href="/">
+<!-- /Style -->
+</head>
 
 <body>
 <!--#include virtual="/Header" -->
@@ -18,7 +18,7 @@
 
 <a name="Top"></a>
 <h1>DecoderPro&reg; Main Window</h1>
-<h1>Main Window Overview</h1>
+<h2>Main Window Overview</h2>
 
 <div align="right">
 <p><a href="index.shtml#Main">Back to Index</a></p>
@@ -48,10 +48,13 @@ on the DecoderPro window.</p>
 </ol>
 <h3><img style="width: 1317px; height: 59px;" alt="status bar" src="images/status_bar.png"><br></h3>
 <p>Displays message, so that you can determine the state of DecoderPro during operation.</p>
-<p align="left">&nbsp;</p>
+
 <div align="right">
   <p><a href="index.shtml#Main">Back to Index</a></p>
 </div>
 
 <!--#include virtual="/Footer" -->
-</div></body></html>
+  </div><!-- closes #mainContent-->
+ </div> <!-- closes #mBody-->
+</body>
+</html>
