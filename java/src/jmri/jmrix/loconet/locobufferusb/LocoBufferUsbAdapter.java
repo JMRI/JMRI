@@ -1,10 +1,11 @@
 // LocoBufferUsbAdapter.java
 package jmri.jmrix.loconet.locobufferusb;
 
-import gnu.io.SerialPort;
 import jmri.jmrix.loconet.locobuffer.LocoBufferAdapter;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import purejavacomm.SerialPort;
+import purejavacomm.UnsupportedCommOperationException;
 
 /**
  * Update the code in jmri.jmrix.loconet.locobuffer so that it refers to the
@@ -23,7 +24,7 @@ public class LocoBufferUsbAdapter extends LocoBufferAdapter {
     /**
      * Always use flow control, not considered a user-setable option
      */
-    protected void setSerialPort(SerialPort activeSerialPort) throws gnu.io.UnsupportedCommOperationException {
+    protected void setSerialPort(SerialPort activeSerialPort) throws UnsupportedCommOperationException {
         // find the baud rate value, configure comm options
         int baud = 19200;  // default, but also defaulted in the initial value of selectedSpeed
         for (int i = 0; i < validBaudNumber().length; i++) {

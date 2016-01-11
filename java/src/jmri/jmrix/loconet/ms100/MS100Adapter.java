@@ -5,9 +5,6 @@ import Serialio.SerInputStream;
 import Serialio.SerOutputStream;
 import Serialio.SerialConfig;
 import Serialio.SerialPortLocal;
-import gnu.io.CommPortIdentifier;
-import gnu.io.PortInUseException;
-import gnu.io.SerialPort;
 import java.io.DataInputStream;
 import java.io.DataOutputStream;
 import java.io.InputStream;
@@ -20,6 +17,11 @@ import jmri.jmrix.loconet.LocoNetSystemConnectionMemo;
 import jmri.util.SystemType;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import purejavacomm.CommPortIdentifier;
+import purejavacomm.NoSuchPortException;
+import purejavacomm.PortInUseException;
+import purejavacomm.SerialPort;
+import purejavacomm.UnsupportedCommOperationException;
 
 /**
  * Provide access to LocoNet via a MS100 attached to a serial comm port.
@@ -144,11 +146,11 @@ public class MS100Adapter extends LnPortController implements jmri.jmrix.SerialP
             return portNameVector;
         }
 
-        public String openPort(String portName, String appName) throws gnu.io.NoSuchPortException, gnu.io.UnsupportedCommOperationException,
+        public String openPort(String portName, String appName) throws NoSuchPortException, UnsupportedCommOperationException,
                 java.io.IOException {
             // get and open the primary port
             CommPortIdentifier portID = CommPortIdentifier.getPortIdentifier(portName);
-            gnu.io.SerialPort activeSerialPort = null;
+            SerialPort activeSerialPort = null;
             try {
                 activeSerialPort = (SerialPort) portID.open(appName, 2000);  // name of program, msec to wait
             } catch (PortInUseException p) {
@@ -159,12 +161,12 @@ public class MS100Adapter extends LnPortController implements jmri.jmrix.SerialP
             // spec is 16600, says 16457 is OK also. Try that as a second choice
             try {
                 activeSerialPort.setSerialPortParams(16600, SerialPort.DATABITS_8, SerialPort.STOPBITS_1, SerialPort.PARITY_NONE);
-            } catch (gnu.io.UnsupportedCommOperationException e) {
+            } catch (UnsupportedCommOperationException e) {
                 // assume that's a baudrate problem, fall back.
                 log.warn("attempting to fall back to 16457 baud after 16600 failed");
                 try {
                     activeSerialPort.setSerialPortParams(16457, SerialPort.DATABITS_8, SerialPort.STOPBITS_1, SerialPort.PARITY_NONE);
-                } catch (gnu.io.UnsupportedCommOperationException e2) {
+                } catch (UnsupportedCommOperationException e2) {
                     log.warn("trouble setting 16600 baud");
                     javax.swing.JOptionPane.showMessageDialog(null,
                             "Failed to set the correct baud rate for the MS100. Port is set to "
