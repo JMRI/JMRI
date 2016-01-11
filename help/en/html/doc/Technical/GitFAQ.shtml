@@ -314,6 +314,71 @@ on how to
       </ol>
     </dd>
 
+    <dt id="ci-tests">Continuous Integration Tests</dt>
+    <dd>
+    The main JMRI repositories run a set of tests on every Pull Request (PR).  This is 
+    called Continuous Integration (CI), and is a time-proven method to keep code quality up.
+    <p>
+    You can add this to your repositor(ies) so that each push will get automatically tested.
+    <p>
+    The two CI test services are called "Travis" and "Appveyor":
+    <ul>
+    <li>Travis runs on Linux. It first does a check for wrong line ends (see
+        <a href="#lineends">later section</a>), 
+        then runs the complete set of JUnit tests, including testing screen operations.
+    <li>Appveyor runs on Windows.  It skips the line end test, as that isn't reliable on Windows.
+        In the interest of time, it also skips some of the XML format tests 
+        (Travis is covering those anyway). 
+    </ul>
+    To add these to your own repository:
+    <ul>
+    <li>For Travis, go to the 
+        <a href="https://travis-ci.org">Travis web page</a>
+        and "Sign Up".  Use your GitHub account and email.
+        At the end of that process, it will ask you which of your GitHub repositories
+        to monitor; you can select both the "JMRI" and "website" forks.
+    <li>For Appveyor, go to the 
+        <a href="https://www.appveyor.com">Appveyor web page</a>
+        and "Sign up for free".  Use your GitHub account and email.
+        At the end of that process, it will ask you which of your GitHub repositories
+        to monitor; you can select both the "JMRI" and "website" forks.
+    </ul>
+    From then on, pushing to your own repository will run the tests.  You'll get
+    an email when the tests are complete, or you can check on the web.
+    
+    <dt id="lineends">Handling Line Ends</dt>
+    <dd>
+    Mac and Linux use a LF character at the end of each line; Windows uses the CRLF pair.
+    JMRI's text files are, by convention, stored in Git with LF line ends. 
+    <p>
+    It's very important that Windows users not accidentally convert a file to CRLF line ends.
+    When that happens, Git thinks that every line has been changed: Git can no longer provide
+    useful, granular history information about earlier changes to the file.  
+    <p>
+    There is a ".gitattributes" file that tells (most) command-line Git implementations how to 
+    handle this properly.  Unfortunately, not all IDEs obey the directives in the file.
+    For example, to get NetBeans on Windows to handle line-ends properly, a 
+    specific plugin must be installed. See the 
+    <a href="NetBeans.shtml">NetBeans JMRI page</a> for specifics.
+    <p>
+    If a file with changed line-ends is accidentally committed and forwarded in a pull-request (PR), 
+    the bad file in that PR will be detected during the Travis CI test and the PI will <b>not</b> 
+    be accepted and merged.  Further, the PR will be marked with a "CRLF" label. Since the history
+    has already been lost in this file, the CRLF label reminds the maintainers that it's not sufficient
+    to just change the line-ends back to LF, commit and push:  The history has been <u>lost</u>, 
+    and more complicated measures must be taken.  The two approaches are:
+    <ul>
+        <li>Abandon the PR and underlying edits, delete the branch, and redo it right.
+            If you're working properly, with your changes in a separate branch, and committing
+            small changes, this is the recommended course of action.
+        <li>Alternately, it's possible to use Git tools to remove the improper commit(s) from
+            the branch.  This is much more complicated.  Get one of the developers with 
+            Git expertise to do it for you, and then send them cookies as a thank-you.
+    </ul>
+    Maintainers who encounter an updated PR with the CRLF label should check to see that all
+    the files in the PR do <u>not</u> show all lines changed. If they do, even if they have
+    the correct LF line ends, the PR should not be merged.
+    
     <dt id="testPR">Testing a Pull Request</dt>
     <dd>
     Pull requests are just a special case of a branch.  If you want to test them

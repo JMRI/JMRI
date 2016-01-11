@@ -3337,7 +3337,7 @@ public class TrainBuilder extends TrainCommon {
         }
         List<Track> tracks = locationManager.getTracks(Track.STAGING);
 //        log.debug("Found {} staging tracks for load generation", tracks.size());
-        addLine(_buildReport, SEVEN, MessageFormat.format(Bundle.getMessage("buildTryStagingToStaging"),
+        addLine(_buildReport, FIVE, MessageFormat.format(Bundle.getMessage("buildTryStagingToStaging"),
                 new Object[]{car.toString(), tracks.size()}));
         // list of locations that can't be reached by the router
         List<Location> locationsNotReachable = new ArrayList<Location>();

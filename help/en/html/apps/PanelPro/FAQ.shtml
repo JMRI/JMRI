@@ -176,9 +176,9 @@ Now, to ensure this configuration information automatically loads when the progr
 <a name="location">
 <h3>Where should I put my custom icons and other files?</h3></a>
 
-The best place to put your own files is in the program's
-preferences directory. (DecoderPro uses
-<a href="../DecoderPro/Files.shtml#location">the same directory<a/>)
+The best place to put your own files is in the JMRI
+Preferences directory (all JMRI apps use
+<a href="../../setup/Files.shtml#location">the same directory<a/>).
 You should put any locally-modified
 versions of files here so they don't get overwritten by a new version
 of the program. Any files that the program writes to contain local
@@ -210,11 +210,11 @@ file to find this directory
 <img src="../../../images/IconFileTree.gif" ALT="Screen shot of file tree" ALIGN="RIGHT" WIDTH="288" HEIGHT="327" HSPACE="5" VSPACE="0"/>
 
 If you have created icons that you want to be able from the panel editor,
-put them in a directory called "resources" in the preferences directory.
+put them in a directory called "resources" in the Preferences directory.
 They'll then show up in the "files" part of the selection box when you press
 a "Change icon..." button on the panel editor.
 
-<p>For example, if the preferences directory contains the files shown below,
+<p>For example, if the Preferences directory contains the files shown below,
 you'll get the file display shown at the right.</p>
 <code>
 > ls resources/
@@ -229,8 +229,10 @@ tester.gif
 It's also possible to put your files in the <code>resources</code> directory
 within the JMRI distribution directory that you get when you install the program.
 This is <em>not</em> recommended, because files there will likely be overwritten 
-when you install a future version.  (A newer version of a file, perhaps to fix a problem, 
-will overwrite your copy; the replacement is based on the file's date)
+when you install a future version (a newer version of a file, perhaps to fix a problem, 
+will overwrite your copy; the replacement is based on the file's date).
+
+More information about the <a href="../../setup/Files.shtml">JMRI Configuration Files</a> 
     
 <!--#include virtual="/Footer" -->
   </div><!-- closes #mainContent-->

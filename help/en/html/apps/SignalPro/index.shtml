@@ -36,6 +36,8 @@ Help on specific menus:
 	<li><a href="../DecoderPro/Roster.shtml#menu">Roster</a>
 	</ul>
 
+More information about the <a href="../../setup/Files.shtml">JMRI Configuration Files</a> 
+
 <!--#include virtual="/Footer" -->
 </div> <!-- close #mainContent -->
 </div> <!-- close #mBody -->
