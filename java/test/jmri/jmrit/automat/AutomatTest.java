@@ -43,11 +43,10 @@ public class AutomatTest extends TestCase {
         // now run it
         a.start();
 
-        // wait so thread can exec
-        jmri.util.JUnitUtil.releaseThread(this);
+        // wait for thread to exec, failing if not
+        jmri.util.JUnitUtil.waitFor(()->{return initDone;},"initDone after run");
 
         // and check
-        Assert.assertTrue("initDone after run", initDone);
         Assert.assertTrue("handleDone after run", handleDone);
     }
 
@@ -70,13 +69,10 @@ public class AutomatTest extends TestCase {
         // now run it
         a.start();
 
-        // wait so thread can exec
-        synchronized (this) {
-            wait(100);
-        }
+        // wait for thread to exec, failing if not
+        jmri.util.JUnitUtil.waitFor(()->{return initDone;},"initDone after run");
 
         // and check
-        Assert.assertTrue("initDone after run", initDone);
         Assert.assertTrue("handleDone after run", handleDone);
 
         // restart
@@ -88,13 +84,10 @@ public class AutomatTest extends TestCase {
         // now run it again
         a.start();
 
-        // wait so thread can exec
-        synchronized (this) {
-            wait(100);
-        }
+        // wait for thread to exec, failing if not
+        jmri.util.JUnitUtil.waitFor(()->{return initDone;},"initDone after 2nd run");
 
         // and check
-        Assert.assertTrue("initDone after 2nd run", initDone);
         Assert.assertTrue("handleDone after 2nd run", handleDone);
     }
 
