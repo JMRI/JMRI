@@ -8,11 +8,10 @@
     <div style="text-align: center"><strong>The OpsPro Manual</strong></div>
 
 <dl class="toc"><!-- main table of contents -->
-<dt><h3>Installing JMRI</h3></dt>
+<dt><h3>Setup JMRI</h3></dt>
 	  <dd>
     <ul>
     <li><a href="Installing_JMRI.shtml">Preparing to Install</a></li>
-    <li><a href="Installing_JMRI.shtml#InstallJMRI">Installing JMRI</a></li>
     </ul>
     </dd>
 
@@ -40,9 +39,7 @@
      </ul></li>
      <li><a href="Ops_TripThruOperations.shtml">A Trip through OperationsPro</a></li>
    </ul>
-
    </dd>
-
 <dt><a name="Error"></a><h3>Error Messages</h3></dt>  
     <dd>
     <ul>

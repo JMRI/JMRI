@@ -34,8 +34,8 @@
 <dt>JMRI&reg; v3.10</dt>
   <dd>
     <ul>
-    <li style="font-weight: bold;"><a href="http://jmri.org/manual/3-6_DecoderPro3/index.shtml">DecoderPro3&reg;</a></li>
-    <li style="font-weight: bold;"><a href="http://jmri.org/manual/3-6_DecoderPro/index.shtml">DecoderPro&reg;</a></li>
+    <li style="font-weight: bold;"><a href="DecoderPro3/index.shtml">DecoderPro3&reg;</a></li>
+    <li style="font-weight: bold;"><a href="DecoderPro/index.shtml">DecoderPro&reg;</a></li>
     <li style="font-weight: bold;"><a href="JMRI_OPS_UsersGuide/index.shtml">OperationsPro</li>
     </ul>
   </dd>

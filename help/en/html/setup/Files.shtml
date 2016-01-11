@@ -20,10 +20,9 @@
 <div id="mainContent">
 
 
-<h1>JMRI: DecoderPro User Guide</h1>
-<h2>Configuration Files</h2>
+<h1>JMRI Setup: Configuration Files</h1>
 
-<p>This section attempts to explain where DecoderPro Configuration (settings) Files are stored on your computer and what information they contain.
+<p>This section attempts to explain where JMRI Configuration (settings) Files are stored on your computer and what information they contain.
 </p>
 
 <dl>
@@ -67,7 +66,7 @@
 		for Windows users: if you go to the Windows Start Menu, in the JMRI section, 
 		you can select "Preferences" to have it open that directory for you.
 		<p>You may set or change the location scripts and user files in the 
-		<a href="../../../package/apps/TabbedPreferences.shtml#FileLocations">Preferences... -&gt;
+		<a href="../../package/apps/TabbedPreferences.shtml#FileLocations">Preferences... -&gt;
 		File Locations</a> panel.	Note that
 		changing the "User Files Location" will also change the default location for Panels, Rosters etc.	
 		</li>
@@ -76,21 +75,20 @@
 	</dd>
 	
 	<dt class="left">Types of Configuration Files</dt>
-	<dd>
-	Inside your JMRI Preferences folder are a number of types of configuration
-	files used by DecoderPro:
-		<ul>
-		<li>Decoder definitions - Stored in the <strong>decoders</strong> subdirectory, one for any customized decoder; these
-		define how a specific family of decoders is configured.
-		<li>Locomotive configurations - Stored in the <strong>roster</strong> subdirectory, one for each Locomotive;
-		these record the specific configuration of each Locomotive in your
-		Roster.
-		<li>Programmer definitions - Stored in the <strong>programmers</strong> subdirectory when you've used at least one Programmer;
-		these define the formats for the various programming sheets that are
-		available in Decoder Pro.
-    <li>The DecoderPro folder, containing your profiles.
-		</ul>
-	</dd>
+<dd>
+Inside your JMRI Preferences folder are a number of types of configuration
+files used by DecoderPro:
+	<ul>
+	<li>Decoder definitions - Stored in the <strong>decoders</strong> subdirectory, one for any customized decoder; these
+	define how a specific family of decoders is configured.
+	<li>Locomotive configurations - Stored in the <strong>roster</strong> subdirectory, one for each Locomotive;
+	these record the specific configuration of each Locomotive in your
+	Roster.
+	<li>Programmer definitions - Stored in the <strong>programmers</strong> subdirectory when you've used at least one Programmer;
+	these define the formats for the various programming sheets that are
+	available in Decoder Pro.
+	<li>The DecoderPro folder, containing your profiles.
+	</ul>
 	
 	<dt class="left">General Configuration Files</dt>
 	<dd>
@@ -107,8 +105,7 @@
 		</ul>
 	</dd>
 </dl>
-
-More information about the <a href="../../setup/Files.shtml">JMRI Configuration Files</a>    
+    
 <!--#include virtual="/Footer" -->
  </div><!-- closes #mainContent-->
 </div> <!-- closes #mBody-->
