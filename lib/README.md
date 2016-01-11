@@ -61,13 +61,13 @@ Note that Windows installers don't necessarily remove existing library versions.
 ##### javax.comm.properties
 - left over from javax.comm version 2.0 (minor version unknown) from Sun
 
-##### RXTXcomm.jar, librxtxSerial.jnilib
-- From Rxtx-2.2pre2  http://rxtx.qbang.org (http://rxtx.qbang.org/pub/rxtx/rxtx-2.2pre2-bins.zip)
-- The win32 and win64 directories contain the necessary rxtxSerial.dll for the two windows varients
-- The i686-pc-linux-gnu directory contains two .so libraries for 32-bit Linux
-- For MacOS X:
-    macosx/librxtxSerial.jnilib     169488  from rxtx-2.2pre2-bins distribution
-    macosx/ppc/librxtxSerial.jnilib 301908  built for MacOS X 10.4 by John Plocher 2010-02-04
+##### purejavacomm.jar
+- version 1.0.0
+- from https://github.com/nyholku/purejavacomm/tree/master/bin
+
+##### jna.jar
+- version 4.2.0
+- from https://github.com/java-native-access/jna/releases/tag/4.2.0
 
 ##### security.policy
 - (JMRI file)
@@ -275,3 +275,11 @@ NOTE: joal.jar is currently replaced by an own-built version with modifications 
 ##### servlet.jar:
 - jakarta-servletapi-3.2.3-src/lib/servlet.jar but no longer included
 
+##### RXTXcomm.jar, librxtxSerial.jnilib
+- From Rxtx-2.2pre2  http://rxtx.qbang.org (http://rxtx.qbang.org/pub/rxtx/rxtx-2.2pre2-bins.zip)
+- The win32 and win64 directories contain the necessary rxtxSerial.dll for the two windows varients
+- The i686-pc-linux-gnu directory contains two .so libraries for 32-bit Linux
+- For MacOS X:
+    macosx/librxtxSerial.jnilib     169488  from rxtx-2.2pre2-bins distribution
+    macosx/ppc/librxtxSerial.jnilib 301908  built for MacOS X 10.4 by John Plocher 2010-02-04
+- No longer used as of JMRI 4.3.X
