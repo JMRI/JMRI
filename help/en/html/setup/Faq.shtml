@@ -1,0 +1,43 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
+<html lang="en">
+<head>
+<title>JMRI Setup - FAQ</title>
+
+<!-- Style -->
+<meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
+<link rel="stylesheet" type="text/css" href="/css/default.css" media="screen">
+<link rel="stylesheet" type="text/css" href="/css/print.css" media="print">
+<link rel="icon" href="/images/jmri.ico" TYPE="image/png">
+<link rel="home" title="Home" href="/">
+<!-- /Style -->
+</head>
+
+<body>
+<!--#include virtual="/Header" -->
+
+<!--#include virtual="Sidebar" -->
+<div id="mainContent">
+
+<!-- Page Body -->
+<h1> 
+JMRI Setup: Frequently Asked Questions
+</h1>
+
+<!-- From JMRI users Yahoo group forum -->
+<hr>
+<p>Here are some tips from fellow JMRI Users:</p>
+
+<ul>
+<li>Question: Is JMRI fun?<br>
+Answer: Yes</li>
+<li>Question: Is it complicated to set up?<br>
+Answer: Sometimes</li>
+</ul>
+
+<hr>
+  
+<!--#include virtual="/Footer" -->
+  </div><!-- closes #mainContent-->
+ </div> <!-- closes #mBody-->
+</body>
+</html>
