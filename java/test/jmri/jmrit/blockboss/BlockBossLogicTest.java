@@ -34,16 +34,13 @@ public class BlockBossLogicTest extends TestCase {
         Assert.assertEquals("driven signal name", "IH1", p.getDrivenSignal());
 
         h2.setAppearance(SignalHead.RED);
-        JUnitUtil.releaseThread(this);  // release control
-        Assert.assertEquals("red sets yellow", SignalHead.YELLOW, h1.getAppearance());
+        JUnitUtil.waitFor(()->{return SignalHead.YELLOW == h1.getAppearance();}, "red sets yellow");  // wait and test
 
         h2.setAppearance(SignalHead.YELLOW);
-        JUnitUtil.releaseThread(this);  // release control
-        Assert.assertEquals("yellow sets green", SignalHead.GREEN, h1.getAppearance());
+        JUnitUtil.waitFor(()->{return SignalHead.GREEN == h1.getAppearance();}, "yellow sets green");  // wait and test
 
         h2.setAppearance(SignalHead.GREEN);
-        JUnitUtil.releaseThread(this);  // release control
-        Assert.assertEquals("green sets green", SignalHead.GREEN, h1.getAppearance());
+        JUnitUtil.waitFor(()->{return SignalHead.GREEN == h1.getAppearance();}, "green sets green");  // wait and test
 
         p.stop();
     }
@@ -58,16 +55,13 @@ public class BlockBossLogicTest extends TestCase {
         Assert.assertEquals("driven signal name", "IH1", p.getDrivenSignal());
 
         h2.setAppearance(SignalHead.RED);
-        JUnitUtil.releaseThread(this);  // release control
-        Assert.assertEquals("red sets red", SignalHead.RED, h1.getAppearance());
+        JUnitUtil.waitFor(()->{return SignalHead.RED == h1.getAppearance();}, "red sets red");  // wait and test
 
         h2.setAppearance(SignalHead.YELLOW);
-        JUnitUtil.releaseThread(this);  // release control
-        Assert.assertEquals("yellow sets yellow", SignalHead.YELLOW, h1.getAppearance());
+        JUnitUtil.waitFor(()->{return SignalHead.YELLOW == h1.getAppearance();}, "yellow sets yellow");  // wait and test
 
         h2.setAppearance(SignalHead.GREEN);
-        JUnitUtil.releaseThread(this);  // release control
-        Assert.assertEquals("green sets green", SignalHead.GREEN, h1.getAppearance());
+        JUnitUtil.waitFor(()->{return SignalHead.GREEN == h1.getAppearance();}, "green sets green");  // wait and test
 
         p.stop();
     }
@@ -82,16 +76,13 @@ public class BlockBossLogicTest extends TestCase {
         p.start();
 
         h2.setAppearance(SignalHead.RED);
-        JUnitUtil.releaseThread(this);  // release control
-        Assert.assertEquals("red sets yellow", SignalHead.YELLOW, h1.getAppearance());
+        JUnitUtil.waitFor(()->{return SignalHead.YELLOW == h1.getAppearance();}, "red sets yellow");  // wait and test
 
         h2.setAppearance(SignalHead.YELLOW);
-        JUnitUtil.releaseThread(this);  // release control
-        Assert.assertEquals("yellow sets yellow", SignalHead.YELLOW, h1.getAppearance());
+        JUnitUtil.waitFor(()->{return SignalHead.YELLOW == h1.getAppearance();}, "yellow sets yellow");  // wait and test
 
         h2.setAppearance(SignalHead.GREEN);
-        JUnitUtil.releaseThread(this);  // release control
-        Assert.assertEquals("green sets yellow", SignalHead.YELLOW, h1.getAppearance());
+        JUnitUtil.waitFor(()->{return SignalHead.YELLOW == h1.getAppearance();}, "green sets yellow");  // wait and test
 
         p.stop();
     }
@@ -106,16 +97,13 @@ public class BlockBossLogicTest extends TestCase {
         p.start();
 
         h2.setAppearance(SignalHead.RED);
-        JUnitUtil.releaseThread(this);  // release control
-        Assert.assertEquals("red sets red", SignalHead.RED, h1.getAppearance());
+        JUnitUtil.waitFor(()->{return SignalHead.RED == h1.getAppearance();}, "red sets red");  // wait and test
 
         h2.setAppearance(SignalHead.YELLOW);
-        JUnitUtil.releaseThread(this);  // release control
-        Assert.assertEquals("yellow sets yellow", SignalHead.YELLOW, h1.getAppearance());
+        JUnitUtil.waitFor(()->{return SignalHead.YELLOW == h1.getAppearance();}, "yellow sets yellow");  // wait and test
 
         h2.setAppearance(SignalHead.GREEN);
-        JUnitUtil.releaseThread(this);  // release control
-        Assert.assertEquals("green sets yellow", SignalHead.YELLOW, h1.getAppearance());
+        JUnitUtil.waitFor(()->{return SignalHead.YELLOW == h1.getAppearance();}, "green sets yellow");  // wait and test
 
         p.stop();
     }
@@ -126,8 +114,7 @@ public class BlockBossLogicTest extends TestCase {
         p.setMode(BlockBossLogic.SINGLEBLOCK);
         p.start();
 
-        JUnitUtil.releaseThread(this);  // release control
-        Assert.assertEquals("missing signal is green", SignalHead.GREEN, h1.getAppearance());
+        JUnitUtil.waitFor(()->{return SignalHead.GREEN == h1.getAppearance();}, "missing signal is green");  // wait and test
         p.stop();
     }
 
@@ -138,8 +125,7 @@ public class BlockBossLogicTest extends TestCase {
         p.setLimitSpeed1(true);
         p.start();
 
-        JUnitUtil.releaseThread(this);  // release control
-        Assert.assertEquals("missing signal is green, show yellow", SignalHead.YELLOW, h1.getAppearance());
+        JUnitUtil.waitFor(()->{return SignalHead.YELLOW == h1.getAppearance();}, "missing signal is green, show yellow");  // wait and test
         p.stop();
     }
 
