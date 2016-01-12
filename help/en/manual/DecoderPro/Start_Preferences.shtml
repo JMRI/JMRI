@@ -2,14 +2,12 @@
 <html lang="en">
 <head>
 <title>Decoder Pro Manual: Getting Started</title>
-
 <meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
 <link rel="stylesheet" type="text/css" href="/css/default.css" media="screen">
 <link rel="stylesheet" type="text/css" href="/css/print.css" media="print">
 <link rel="icon" href="/images/jmri.ico" type="image/png">
 <link rel="home" title="Home" href="/">
 </head>
-
 <body>
 
 
@@ -22,8 +20,10 @@
 </p><p><a href="index.shtml#GettingStarted">Back to Index</a> </p></div>
 
 <hr>
+<p class="important">The current JMRI Preferences Help is <a href="../../html/setup/index.shtml#setprefs">here</a>.</p>
+
 <p>
-Click on the <strong>Edit</strong> menu and then Preferences... This opens the Preferences window (This window may open automatically the first time you run the program.)</p>
+Click on the <strong>Edit</strong> menu and then Preferences... to open the Preferences window. On Mac OS X choose Preferences... from the DecoderPro application menu. (This window may open automatically the first time you run the program.)</p>
 <p>As a first time user the most  important information is the <strong>Connections</strong>
 screen where you describe how the computer will talk to the command
 station. Most of rest you can leave at the initial or &#8220;default&#8221;
@@ -31,17 +31,15 @@ settings until you find a need to change things to suit your fancy.
 </p><p><strong>Most importantly, you must click  
   <input name="button9" id="button9" value="Save" type="button">
    to finalize your settings and then re-start the program to have them  take effect.</strong>
-</p><p>The Preferences window provides access to the basic
+</p><p>The Preferences panel provides access to the basic
 configuration information to connect your computer to your DCC
 system.&nbsp; You will be using that system to actually&nbsp; program
-and operate trains equipped with DCC decoders. </p><p>The window is split into two panes, on the left side is a list
+and operate trains equipped with DCC decoders. </p><p>The panel is split into two panes: on the left side is a list
 of preference groups that may be set. Clicking on one of the items
-opens the options that may be set in the right side pane. No selection
-have been made</p>
+opens the options that may be set in the right side pane. The Connections tab was selected in the following screen shot:</p>
 
 <h1><img src="images/Preferences.png" alt="preferences" height="432" width="755"></h1>
 <a name="Top"></a>
-
 <table class="BOXIT" align="center" border="1" cellpadding="1" cellspacing="1" width="80%">
   <tbody><tr>
     <td align="left" valign="top" width="22%"><strong><a href="#Connections">Connections</a><a href="#Connectorss"></a></strong></td>
@@ -98,81 +96,25 @@ roster on the System Drive.</td>
   </tr>
 </tbody></table>
 
-<h3><a name="Connections"></a>Connections Pane (Tabs are configured for the system you selected)</h3>
-<p>Select Connections to display the Connection options in right pane:</p>
-<blockquote>
-  <div style="text-align: center;">
-  </div>
-<p style="text-align: center;"><img src="images/Preferences2.png" alt="commections" height="432" width="755"></p>
-</blockquote>
-<table align="center" border="1" cellpadding="2" cellspacing="1" width="80%">
-  <tbody><tr>
-    <td width="21%">System manufacturer:</td>
-    <td colspan="2">Drop-down list with all the supported DCC manufacturers, select the manufacturer of your system.</td>
-  </tr>
-  <tr>
-    <td>System connection:</td>
-    <td colspan="2">Drop-down
-list with all of the supported DCC system interfaces supported by the
-manufacturer that you selected, select the interface that you are using.</td>
-  </tr>
-  <tr>
-    <td rowspan="4">Settings:</td>
-    <td width="22%">Serial Port:</td>
-    <td width="57%">Drop-down
-list to select the serial port to which your DCC interface is
-connected. If you do not know, check your system hardware configuration
-manual. A second drop-down list may include a selection if there are
-more than one possibility. possibilityDrop-down list to select the
-serial port to which your DCC interface is connected. If you do not
-know, check your system hardware configuration manual. A second
-drop-down list may include a selection if there are more than one
-possibility</td>
-  </tr>
-  <tr>
-    <td>Command station type:</td>
-    <td>Drop-down list to select the command station type that JMRI will be using to send your DCC commands.</td>
-  </tr>
-  <tr>
-    <td>Connection prefix</td>
-    <td>Include the prefix for your connection, in the case shown the "L" is default</td>
-  </tr>
-  <tr>
-    <td>Connection name</td>
-    <td>	Should default to the connection used</td>
-  </tr>
-</tbody></table>
-<p style="text-align: center;">
-  <input name="checkbox" id="checkbox" type="checkbox"> 
-Additional Connection Settings, if checked: <img src="images/Preferences3.png" height="222" width="419"> </p>
-<p>
-  <input name="button2" id="button2" value="Disable  Connection" type="submit">
-will disable all the connection settings.</p>
-<p> 
-  <input name="button" id="button" value="Delete Connection" type="submit">
-will delete all the connection settings. </p>
+<h3><a name="Throttle"></a>Throttle Pane</h3>
+<p>Select throttle startup conditions, shown are defaults, but you may change the settings.</p>
+<p style="text-align: center;"><img src="images/Preferences_throttle.png" alt="throttle" height="423" width="726"></p>
 <p><strong><a href="#Top">Top</a></strong></p>
-<h3><a name="Defaults"></a>Defaults Pane</h3>
-<p style="text-align: center;"><img src="../../package/apps/images/JMRI_PrefsDefaults.png" alt="default" height="419" width="755"></p>
-<p>Shows the default Connection for several JMRI parts (only useful when 2 or more systems are connected).</p>
-<p><a href="#Top">Top</a></p>
-<h3><a name="FileLocations"></a>File locations Pane</h3>
-<p style="text-align: center;"><img src="images/Preferences5.png" alt="file" height="302" width="755"></p>
-<table align="center" border="1" cellpadding="2" cellspacing="1" width="50%">
-  <tbody>
-    <tr>
-      <td align="left" valign="top" width="26%"><strong>User Files Location</strong></td>
-      <td align="left" width="74%">Select the location for your user files on your system</td>
-    </tr>
-    <tr>
-      <td align="left" valign="top"><strong>Jython Script Location</strong></td>
-      <td align="left">Set the location of Jython Script files</td>
-    </tr>
-  </tbody>
-</table>
+<h3><a name="WiThrottle"></a>WiThrottle Pane</h3>
+<p>This pane allows WiThrottle users to customize the setup.</p>
+<p style="text-align: center;"><img src="images/Preferences_Wi.png" alt="Wi Throttle" height="396" width="726"></p>
 <p><strong><a href="#Top">Top</a></strong></p>
-<h3><a name="StartUp"></a>Start Up Pane</h3>
-<blockquote>
+<h2><a name="JOSN"></a>JSON Server Pane</h2>
+<p style="text-align: center;"><img src="images/Preference_JSON_Server.png" alt="json" height="432" width="755"></p>
+<p><strong><a href="#Top">Top</a></strong></p>
+<h2><a name="MiniServer"></a>Web Server Pane</h2>
+<p>Use this pane to setup MinServer if you are using it.</p>
+<p style="text-align: center;"><img src="images/Preferences_miniServer.png" alt="mini server" height="396" width="726"></p>
+<p><strong><a href="#Top">Top</a></strong></p>
+<p>Before you exit the Preferences, click the          
+  <input name="button8" id="button8" value="Save" type="submit">
+button to save all your selections.<br>
+You must restart DecoderPro for Preferences to take effect</p>
 
 <p style="text-align: center;"><img src="images/Preferences6.png" alt="start up" height="302" width="755"></p>
 </blockquote>
@@ -267,7 +209,6 @@ removes the item from the Start Up sequence. All of the panes are of the same fo
 location is a Network accessible location for my three systems and WiFi
 connection.</p>
 <p><strong><a href="#Top">Top</a></strong></p>
-
 <h3><a name="Throttle"></a>Throttle Pane</h3>
 <p>Select throttle startup conditions, shown are defaults, but you may change the settings.</p>
 <p style="text-align: center;"><img src="images/Preferences_throttle.png" alt="throttle" height="423" width="726"></p>
@@ -287,13 +228,11 @@ connection.</p>
   <input name="button8" id="button8" value="Save" type="submit">
 button to save all your selections.</h2>
 <h2 align="center">You must restart DecoderPro for Preferences to take effect</h2>
-
 <hr>
 <div align="right">
 <p><a href="Start_DecoderPro.shtml">Previous</a></p>
 <p><a href="index.shtml#GettingStarted">Back to Index</a></p>
 </div>
-
 <!--#include virtual="/Footer" -->
   </div><!-- closes #mainContent-->
  </div> <!-- closes #mBody-->
