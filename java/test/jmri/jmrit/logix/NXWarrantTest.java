@@ -101,14 +101,12 @@ public class NXWarrantTest extends jmri.util.SwingTestCase {
         sensor = _sensorMgr.getBySystemName("IS10");
         Assert.assertEquals("Train in last block", sensor, runtimes(sensor, route));
         
-        jmri.util.JUnitUtil.releaseThread(this);             
+        flushAWT();
+        flushAWT();   // let calm down before running abort
+                
         warrant.controlRunTrain(Warrant.ABORT);
-        jmri.util.JUnitUtil.releaseThread(this);            
-/*        while (warrant.getEngineer()!=null) {
-          jmri.util.JUnitUtil.releaseThread(this);             
-        }
-        Assert.assertEquals("Script done.", Bundle.getMessage("Idle"), warrant.getRunningMessage());
-*/
+        flushAWT();
+        
         // passed test - cleanup.  Do it here so failure leaves traces.
         TestHelper.disposeWindow(tableFrame, this);
         ControlPanelEditor panel = (ControlPanelEditor)jmri.util.JmriJFrame.getFrame("NXWarrantTest");
@@ -117,6 +115,9 @@ public class NXWarrantTest extends jmri.util.SwingTestCase {
         // Dialog has popped up, so handle that. First, locate it.
         List<JDialog> dialogList = new DialogFinder(null).findAll(panel);
         TestHelper.disposeWindow(dialogList.get(0), this);
+        
+        // confirm one message logged
+        jmri.util.JUnitAppender.assertWarnMessage("RosterSpeedProfile not found. Using default ThrottleFactor 0.75");
     }
     
     private javax.swing.AbstractButton pressButton(java.awt.Container frame, String text) {
@@ -170,12 +171,12 @@ public class NXWarrantTest extends jmri.util.SwingTestCase {
      * @throws Exception
      */
     private Sensor runtimes(Sensor sensor, String[] sensors) throws Exception {
-        jmri.util.JUnitUtil.releaseThread(this); 
+        flushAWT();
         for (int i=0; i<sensors.length; i++) {
-            jmri.util.JUnitUtil.releaseThread(this); 
+            flushAWT();
             Sensor sensorNext = _sensorMgr.getSensor(sensors[i]);
             sensorNext.setState(Sensor.ACTIVE);
-            jmri.util.JUnitUtil.releaseThread(this);            
+            flushAWT();           
             sensor.setState(Sensor.INACTIVE);
             sensor = sensorNext;
         }
@@ -201,6 +202,7 @@ public class NXWarrantTest extends jmri.util.SwingTestCase {
     @Override
     protected void setUp() throws Exception {
         super.setUp();
+        apps.tests.Log4JFixture.setUp();
          // set the locale to US English
         Locale.setDefault(Locale.ENGLISH);
         JUnitUtil.resetInstanceManager();
@@ -219,6 +221,7 @@ public class NXWarrantTest extends jmri.util.SwingTestCase {
     @Override
     protected void tearDown() throws Exception {
         JUnitUtil.resetInstanceManager();
+        apps.tests.Log4JFixture.tearDown();
         super.tearDown();
     }
 
