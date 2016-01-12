@@ -33,7 +33,7 @@
 <p>
 DCC++ is an Open Source Arduino-based <a href="#documentation">Do-it-Yourself</a> DCC Command Station.
 
-<p><strong><em>NOTE:</em> DCC++ Support only works in JMRI 4.1.5 (for now).  Do not use 4.1.6 or 4.2.0 with DCC++</strong></p>
+<p><strong><em>NOTE:</em>DCC++ support is broken in JMRI 4.1.6 and 4.2.x releases. Please use JMRI 4.3.1 or newer releases with DCC++</strong></p>
 
 <a name="hardware"></a><h2>Supported Hardware</h2>
 
