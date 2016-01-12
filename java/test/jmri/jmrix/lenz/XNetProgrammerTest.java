@@ -62,10 +62,9 @@ public class XNetProgrammerTest extends TestCase {
         // traffic controller to exit from service mode.  We just
         // need to wait a few seconds and see that the listener we
         // registered earlier received the values we expected.
-        jmri.util.JUnitUtil.releaseThread(this);
 
-        //failure in this test occurs with the next line.
-        Assert.assertFalse("Receive Called by Programmer", l.getRcvdInvoked() == 0);
+        // failure in this test occurs with the next line.
+        jmri.util.JUnitUtil.waitFor(()->{return l.getRcvdInvoked() != 0;}, "Receive Called by Programmer");
         Assert.assertEquals("Direct mode received value", 34, l.getRcvdValue());
     }
 
@@ -114,11 +113,9 @@ public class XNetProgrammerTest extends TestCase {
         // traffic controller to exit from service mode.  We just
         // need to wait a few seconds and see that the listener we
         // registered earlier received the values we expected.
-        jmri.util.JUnitUtil.releaseThread(this);
 
-        //failure in this test occurs with the next line.
-        Assert.assertFalse("Receive Called by Programmer", l.getRcvdInvoked() == 0);
-
+        // failure in this test occurs with the next line.
+        jmri.util.JUnitUtil.waitFor(()->{return l.getRcvdInvoked() != 0;}, "Receive Called by Programmer");
         Assert.assertEquals("Register mode received value", 12, l.getRcvdValue());
     }
 
@@ -164,11 +161,9 @@ public class XNetProgrammerTest extends TestCase {
         // traffic controller to exit from service mode.  We just
         // need to wait a few seconds and see that the listener we
         // registered earlier received the values we expected.
-        jmri.util.JUnitUtil.releaseThread(this);
 
-        //failure in this test occurs with the next line.
-        Assert.assertFalse("Receive Called by Programmer", l.getRcvdInvoked() == 0);
-
+        // failure in this test occurs with the next line.
+        jmri.util.JUnitUtil.waitFor(()->{return l.getRcvdInvoked() != 0;}, "Receive Called by Programmer");
         Assert.assertEquals("Register mode received value", 34, l.getRcvdValue());
     }
 
@@ -216,10 +211,9 @@ public class XNetProgrammerTest extends TestCase {
         // traffic controller to exit from service mode.  We just
         // need to wait a few seconds and see that the listener we
         // registered earlier received the values we expected.
-        jmri.util.JUnitUtil.releaseThread(this);
 
-        //failure in this test occurs with the next line.
-        Assert.assertFalse("Receive Called by Programmer", l.getRcvdInvoked() == 0);
+        // failure in this test occurs with the next line.
+        jmri.util.JUnitUtil.waitFor(()->{return l.getRcvdInvoked() != 0;}, "Receive Called by Programmer");
         Assert.assertEquals("Register mode received value", 34, l.getRcvdValue());
     }
 
@@ -267,10 +261,9 @@ public class XNetProgrammerTest extends TestCase {
         // traffic controller to exit from service mode.  We just
         // need to wait a few seconds and see that the listener we
         // registered earlier received the values we expected.
-        jmri.util.JUnitUtil.releaseThread(this);
 
         //failure in this test occurs with the next line.
-        Assert.assertFalse("Receive Called by Programmer", l.getRcvdInvoked() == 0);
+        jmri.util.JUnitUtil.waitFor(()->{return l.getRcvdInvoked() != 0;}, "Receive Called by Programmer");
         Assert.assertEquals("Direct mode received value", 34, l.getRcvdValue());
     }
 
@@ -319,11 +312,9 @@ public class XNetProgrammerTest extends TestCase {
         // traffic controller to exit from service mode.  We just
         // need to wait a few seconds and see that the listener we
         // registered earlier received the values we expected.
-        jmri.util.JUnitUtil.releaseThread(this);
 
         //failure in this test occurs with the next line.
-        Assert.assertFalse("Receive Called by Programmer", l.getRcvdInvoked() == 0);
-
+        jmri.util.JUnitUtil.waitFor(()->{return l.getRcvdInvoked() != 0;}, "Receive Called by Programmer");
         Assert.assertEquals("Direct mode received value", 34, l.getRcvdValue());
     }
 
