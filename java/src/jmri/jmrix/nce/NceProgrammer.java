@@ -40,14 +40,16 @@ public class NceProgrammer extends AbstractProgrammer implements NceListener {
         if (tc != null && tc.getUsbSystem() != NceTrafficController.USB_SYSTEM_POWERCAB
                 && tc.getUsbSystem() != NceTrafficController.USB_SYSTEM_NONE) {
             log.warn("NCE USB-SB3/SB5/TWIN getSupportedModes returns no modes");
-            return ret;
+            return ret;  // empty list
         }
-        ret.add(DefaultProgrammerManager.PAGEMODE);
-        ret.add(DefaultProgrammerManager.REGISTERMODE);
 
         if (tc != null && tc.getCommandOptions() >= NceTrafficController.OPTION_2006) {
             ret.add(DefaultProgrammerManager.DIRECTMODE);
         }
+
+        ret.add(DefaultProgrammerManager.PAGEMODE);
+        ret.add(DefaultProgrammerManager.REGISTERMODE);
+
         return ret;
     }
 
