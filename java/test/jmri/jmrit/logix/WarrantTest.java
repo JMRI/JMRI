@@ -199,7 +199,7 @@ public class WarrantTest extends TestCase {
         msg = warrant.setRunMode(Warrant.MODE_RUN, null, null, null, false);
         Assert.assertNull("setRunMode - "+msg, msg);
         try {
-            jmri.util.JUnitUtil.releaseThread(this);            
+            jmri.util.JUnitUtil.releaseThread(this); // nothing specific to wait for...
             sWest.setState(Sensor.ACTIVE);
             jmri.util.JUnitUtil.releaseThread(this);             
             sSouth.setState(Sensor.ACTIVE);
