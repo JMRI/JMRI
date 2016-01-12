@@ -1016,6 +1016,7 @@
             **/README*
             **/Sidebar
             **/TODO
+            **/.classpath
         " />
     </target>
 
