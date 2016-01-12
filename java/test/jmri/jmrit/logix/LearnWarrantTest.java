@@ -77,7 +77,7 @@ public class LearnWarrantTest extends jmri.util.SwingTestCase {
         sensor = runtimes(sensor, null);
         while (w.getThrottle() != null) {
             // Sometimes the engineer is blocked
-            jmri.util.JUnitUtil.releaseThread(this);           
+            flushAWT();          
         }        
         String msg = w.getRunModeMessage();
         Assert.assertEquals("run finished", Bundle.getMessage("NotRunning", w.getDisplayName()), msg);
@@ -130,15 +130,15 @@ public class LearnWarrantTest extends jmri.util.SwingTestCase {
      * @throws Exception
      */
     private Sensor runtimes(Sensor sensor, DccThrottle throttle) throws Exception {
-        jmri.util.JUnitUtil.releaseThread(this); 
+        flushAWT();
         if (throttle!=null) {
             throttle.setSpeedSetting(0.5f);
         }
         for (int i=2; i<=5; i++) {
-            jmri.util.JUnitUtil.releaseThread(this); 
+            flushAWT();
             Sensor sensorNext = _sensorMgr.getBySystemName("IS"+i);
             sensorNext.setState(Sensor.ACTIVE);
-            jmri.util.JUnitUtil.releaseThread(this);            
+            flushAWT();          
             sensor.setState(Sensor.INACTIVE);
             sensor = sensorNext;
         }
