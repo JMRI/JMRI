@@ -73,10 +73,18 @@
             look for a link similar to "JDK with NetBeans IDE Java SE bundle".)</li>
         <li> Run the NetBeans package installer</li>
     </ul>
-	<p></p>
 	<p>Many Linux distributions have NetBeans available in their software repositories
 	- search your package manager for NetBeans.</p>
     
+    <p><em>Note: If you are using NetBeans on Windows, you <u>must</u> 
+        install the
+        <a href="http://plugins.netbeans.org/plugin/46829/change-line-endings-on-save">Change Line Endings on Save plugin</a>
+        before using Git via NetBeans.</em>
+        If you don't do this, you'll mess up the line endings in the files you commit, which will in turn
+        make their revision history much harder to access. Files in this condition will not be accepted
+        as pull requests.  Please install the plug-in to make sure that NetBeans properly 
+        maintains the LF characters at the ends of source-code lines.
+        
     <h2><a id="gituse" name="gituse"></a>Using NetBeans with JMRI's Git Code Repository</h2>
     
       <p>GitHub provides JMRI's code repository using the Git tool. 
