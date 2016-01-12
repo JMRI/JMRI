@@ -196,7 +196,7 @@ public class LightTableAction extends AbstractTableAction {
 
             public void setValueAt(Object value, int row, int col) {
                 if (col == EDITCOL) {
-                    // Use separate Thread so window is created on top
+                    // Use separate Runnable so window is created on top
                     class WindowMaker implements Runnable {
 
                         int row;
@@ -206,7 +206,6 @@ public class LightTableAction extends AbstractTableAction {
                         }
 
                         public void run() {
-                            //Thread.yield();
                             // set up to edit
                             addPressed(null);
                             fixedSystemName.setText((String) getValueAt(row, SYSNAMECOL));
@@ -1064,7 +1063,7 @@ public class LightTableAction extends AbstractTableAction {
             // cancel Edit and reactivate the edited light
             cancelControlPressed(null);
         }
-        // set up to edit. Use separate Thread so window is created on top
+        // set up to edit. Use separate Runnable so window is created on top
         class WindowMaker implements Runnable {
 
             WindowMaker() {
@@ -1899,7 +1898,7 @@ public class LightTableAction extends AbstractTableAction {
 
         public void setValueAt(Object value, int row, int col) {
             if (col == EDIT_COLUMN) {
-                // set up to edit. Use separate Thread so window is created on top
+                // set up to edit. Use separate Runnable so window is created on top
                 class WindowMaker implements Runnable {
 
                     WindowMaker(int _row) {

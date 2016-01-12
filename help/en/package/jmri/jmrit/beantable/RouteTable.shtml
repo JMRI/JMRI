@@ -1,48 +1,48 @@
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
-<HTML LANG="en">
-<HEAD>
-<TITLE>JMRI: Routes Table Help</TITLE>
+<html lang="en">
+<head>
+<title>JMRI: Routes Table Help</title>
 
-<META HTTP-EQUIV="Content-Type" CONTENT="text/html; charset=iso-8859-1">
-<META CONTENT="Bob Jacobsen" NAME="Author">
-<META NAME="keywords" CONTENT="JMRI help Routes Table">
+<meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
+<meta content="Bob Jacobsen" name="Author">
+<meta name="keywords" content="JMRI help Routes Table">
 
 <!--#include virtual="/Style" -->
-</HEAD>
+</head>
 
-<BODY>
+<body>
 <!--#include virtual="/Header" -->
   <div class="nomenu" id="mBody">
     <div id="mainContent">
 
-<H1>The Routes Table</H1>
+<h1>The Routes Table</h1>
 
-<P>A Route consists of one or more Turnouts or Sensors that you
+<p>A Route consists of one or more Turnouts or Sensors that you
 would like to control. Before creating a Route, you should first add
 some Turnouts or Sensors by using either the Turnouts Table or Sensors
 Table. These tables can be found under the main menu "Tools -> Tables".
 
-<P>Once you have some Turnouts or Sensors to manage, use the "Add"
-button in the lower left hand corner of the Routes Table to create a new
+<p>Once you have some Turnouts or Sensors set up, use the "Add..."
+button in the lower left hand corner of the Routes Table pane to create a new
 Route.
 
-<H2>Routes Table Columns</H2>
+<h2>Routes Table Columns</h2>
 
-<DL>
-	<DT>System Name</DT>
-	<DD>The System Name cannot be changed once entered into the table.
-	The "Add..." button located in the lower left corner of the table allows
-	you to add a new Route to the table.</DD>
+<dl>
+	<dt>System Name</dt>
+	<dd>The System Name cannot be changed once entered into the table.
+	The "Add..." button located in the lower left corner of the pane allows
+	you to add a new Route to the table.</dd>
 
-	<DT>User Name</DT>
-	<DD>You can directly enter or change the User Name for an
-	existing Route.</DD>
+	<dt>User Name</dt>
+	<dd>You can directly enter or change the User Name for an
+	existing Route.</dd>
 
-	<DT>Set</DT>
-	<DD>Pushing the "Set" button will trigger an existing Route.</DD>
+	<dt>Set</dt>
+	<dd>Pushing the "Set" button will trigger an existing Route.</dd>
 
-	<DT>Delete</DT>
-	<DD>Pushing the "Delete" button will remove the route from the
+	<dt>Delete</dt>
+	<dd>Pushing the "Delete" button will remove the route from the
 	table. 
 	<p>
 	Note that this doesn't remove the Route from any files you've
@@ -50,43 +50,43 @@ Route.
 	when you restart the program, the Route will reappear. 
 	You should use one of the "Store to file" options in the "File"
 	menu to save new versions of any files that contain this route.
-	</DD>
+	</dd>
 
-	<DT>Enabled</DT>
-	<DD>To disable a Route from triggering, uncheck the "Enabled" box
+	<dt>Enabled</dt>
+	<dd>To disable a Route from triggering, uncheck the "Enabled" box
 	for the Route. Enabled is not saved and will be restored when a Panel
-	is loaded at startup.</DD>
+	is loaded at startup.</dd>
 
-	<DT>Locked</DT>
-	<DD>When checked the Route is locked. This means that Turnouts
+	<dt>Locked</dt>
+	<dd>When checked the Route is locked. This means that Turnouts
 	included in the Route
 	that can be locked by JMRI will not respond to commands from cabs or
 	pushbuttons to change. For more information see the
-	    <A HREF="TurnoutTable.shtml#Lock Mode">Lock Mode section</A> 
+	    <a href="TurnoutTable.shtml#Lock Mode">Lock Mode section</a> 
 	    on the
-	    <A HREF="TurnoutTable.shtml">Turnouts Table page</A> 
+	    <a href="TurnoutTable.shtml">Turnouts Table page</a> 
         and the 
-        <A HREF="#Turnout lock feature">section on the Turnout Lock feature</A>
-	    below.</DD>
+        <a href="#Turnout lock feature">section on the Turnout Lock feature</a>
+	    below.</dd>
 
-	<DT>Edit</DT>
-	<DD>Push this button to edit the Route. For more information see <A
-		HREF="RouteAddEdit.shtml">Adding/Editing Routes</A>.</DD>
-</DL>
+	<dt>Edit</dt>
+	<dd>Push this button to edit the Route. For more information see <a
+		href="RouteAddEdit.shtml">Adding/Editing Routes</a>.</dd>
+</dl>
 
-<H3>Routes Table Controls</H3>
+<h3>Routes Table Controls</h3>
 
-There is also a button at the bottom of the Routes Table
+There is a button at the bottom of the Routes Table:
 
-<DL>	
-	<DT>Add...</DT>
-	<DD>Push this button to add a new route. For more information see
-	<A HREF="RouteAddEdit.shtml">Adding/Editing Routes</A>.</DD>
-</DL>
+<dl>	
+	<dt>Add...</dt>
+	<dd>Push this button to add a new route. For more information see
+	<a href="RouteAddEdit.shtml">Adding/Editing Routes</a>.</dd>
+</dl>
 
-<H2><A NAME="Turnout lock feature">Turnout Lock feature</A></H2>
+<h2><a name="Turnout lock feature">Turnout Lock feature</a></h2>
 
-<P>The Turnout Lock feature allows you to selectively disable
+<p>The Turnout Lock feature allows you to selectively disable
 accessory (Turnout) commands from cabs and/or locally-wired pushbuttons. JMRI
 disables pushbuttons by sending pushbutton disable commands to the
 Turnout decoders when the Route is locked, and enables the pushbuttons
@@ -95,18 +95,23 @@ the JMRI program will monitor the Turnout's accessory address and if it
 detects a change command from a cab, will cancel the command immediately
 by sending out the opposite command to the Turnout. All Turnouts that
 are being monitored by the JMRI program and are included in the Route
-will be locked.</P>
-<P>To help you select a set of Turnouts to lock or unlock, a Route
+will be locked.</p>
+<p>To help you select a set of Turnouts to lock or unlock, a Route
 can be locked or unlocked. In the Route edit window, an optional Lock
 Control Turnout is available. You can use the Lock Control Turnout to
 enable or disable the Route Lock function from a Panel Turnout icon, a
 layout turnout or a phantom turnout. A phantom turnout is a turnout that
-can be accessed by your cab but doesn't actually exist on your layout.</P>
-<P>For more information on how to set Turnouts to be lockable,
-please see the <A HREF="TurnoutTable.shtml#Turnout%20lock%20feature">Turnouts
-Table page</A>.</P>
+can be accessed by your cab but doesn't actually exist on your layout.</p>
+
+<p>For more information on how to set Turnouts to be lockable,
+please see the <a href="TurnoutTable.shtml#Turnout%20lock%20feature">Turnouts
+Table page</a>.</p>
+<p>
+For more information on Routes, see the 
+<a href="../../../../html/tools/Routes.shtml">Routes help page</a>.
 
 <!--#include virtual="/Footer" -->
-</BODY>
-</HTML>
-
+ </div><!-- closes #mainContent-->
+</div> <!-- closes #mBody-->
+</body>
+</html>

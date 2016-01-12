@@ -22,6 +22,12 @@
     <div id="mainContent">
 
 <h1>Hardware Support: Digi XBee Network</h1>
+	<ul class="snav"><!-- TOC -->
+	<li><a href="#hardware">Hardware</a>
+	<li><a href="#connecting">Connecting</a>
+	<li><a href="#tools">Tools</a>
+	<li><a href="#documentation">Documentation</a>
+	</ul>
 
 <p>The <a href="http://www.digi.com/xbee">Digi International XBee Modules</a> are family of wireless communication devices that have their own microcontroller and IO pins that make them useful for many distributed control networks, including on model railroads.</p>
 

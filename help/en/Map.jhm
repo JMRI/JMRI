@@ -282,8 +282,6 @@
 
 <mapID target="manual.DecoderPro3.Main_FastClockSetup" url="manual/DecoderPro3/Main_FastClockSetup.shtml"/>
 
-<mapID target="html.Dropbox" url="html/Dropbox.shtml"/>
-
 <mapID target="package.jmri.jmrit.logix.Warrant" url="package/jmri/jmrit/logix/Warrant.shtml"/>
 
 <mapID target="Acknowledgements_T" url="Acknowledgements.shtml#T"/>
@@ -676,8 +674,6 @@
 
 <mapID target="html.hardware.rps.sensors_connecting" url="html/hardware/rps/sensors.shtml#connecting"/>
 
-<mapID target="manual.DecoderPro.Main_Debug_memoryMonitor" url="manual/DecoderPro/Main_Debug.shtml#memoryMonitor"/>
-
 <mapID target="manual.DecoderPro3.Start_Preferences_StartUp" url="manual/DecoderPro3/Start_Preferences.shtml#StartUp"/>
 
 <mapID target="manual.DecoderPro.Main_LocoNet_Firmware" url="manual/DecoderPro/Main_LocoNet.shtml#Firmware"/>
@@ -898,6 +894,8 @@
 
 <mapID target="manual.JMRI_OPS_UsersGuide.Start_Preferences_StartUp" url="manual/JMRI_OPS_UsersGuide/Start_Preferences.shtml#StartUp"/>
 
+<mapID target="manual.DecoderPro.Comp_PrintData_b_Top" url="manual/DecoderPro/Comp_PrintData_b.shtml#Top"/>
+
 <mapID target="html.doc.Technical.Names" url="html/doc/Technical/Names.shtml"/>
 
 <mapID target="manual.DecoderPro3.Start_Preferences_Messages" url="manual/DecoderPro3/Start_Preferences.shtml#Messages"/>
@@ -955,6 +953,8 @@
 <mapID target="html.apps.LocoTools.index_clockmon" url="html/apps/LocoTools/index.shtml#clockmon"/>
 
 <mapID target="manual.DecoderPro3.Start_Preferences_Defaults" url="manual/DecoderPro3/Start_Preferences.shtml#Defaults"/>
+
+<mapID target="html.hardware.rps.index_hardware" url="html/hardware/rps/index.shtml#hardware"/>
 
 <mapID target="package.jmri.jmrit.ussctc.FollowerFrame" url="package/jmri/jmrit/ussctc/FollowerFrame.shtml"/>
 
@@ -1183,6 +1183,8 @@
 <mapID target="html.web.RosterServlet" url="html/web/RosterServlet.shtml"/>
 
 <mapID target="package.jmri.jmrit.dispatcher.Dispatcher_require" url="package/jmri/jmrit/dispatcher/Dispatcher.shtml#require"/>
+
+<mapID target="html.hardware.rps.index_documentation" url="html/hardware/rps/index.shtml#documentation"/>
 
 <mapID target="package.jmri.jmrit.catalog.ImageIndex" url="package/jmri/jmrit/catalog/ImageIndex.shtml"/>
 
@@ -1558,6 +1560,8 @@
 
 <mapID target="html.hardware.grapevine.index_tools" url="html/hardware/grapevine/index.shtml#tools"/>
 
+<mapID target="manual.DecoderPro3.Comp_PrintData_b_Top" url="manual/DecoderPro3/Comp_PrintData_b.shtml#Top"/>
+
 <mapID target="html.hardware.zimo.Zimo_documentation" url="html/hardware/zimo/Zimo.shtml#documentation"/>
 
 <mapID target="manual.DecoderPro.Main_Tool" url="manual/DecoderPro/Main_Tool.shtml"/>
@@ -1616,6 +1620,8 @@
 
 <mapID target="package.jmri.jmrit.operations.Operations_MakeDepartureTrackAvailable" url="package/jmri/jmrit/operations/Operations.shtml#MakeDepartureTrackAvailable"/>
 
+<mapID target="manual.DecoderPro3.Comp_PrintData_a_Top" url="manual/DecoderPro3/Comp_PrintData_a.shtml#Top"/>
+
 <mapID target="html.hardware.sprog.SPROG_documentation" url="html/hardware/sprog/SPROG.shtml#documentation"/>
 
 <mapID target="html.doc.Technical.FindBugs" url="html/doc/Technical/FindBugs.shtml"/>
@@ -1667,8 +1673,6 @@
 <mapID target="package.jmri.jmrit.withrottle.UserInterface" url="package/jmri/jmrit/withrottle/UserInterface.shtml"/>
 
 <mapID target="package.jmri.jmrix.secsi.nodeconfig.NodeConfigFrame" url="package/jmri/jmrix/secsi/nodeconfig/NodeConfigFrame.shtml"/>
-
-<mapID target="html.profiles" url="html/profiles.shtml"/>
 
 <mapID target="manual.DecoderPro3.Comp_Analog" url="manual/DecoderPro3/Comp_Analog.shtml"/>
 
@@ -1745,8 +1749,6 @@
 <mapID target="manual.DecoderPro.Main_Throttle_addressPanel_Top" url="manual/DecoderPro/Main_Throttle_addressPanel.shtml#Top"/>
 
 <mapID target="manual.JMRI_OPS_UsersGuide.Ops_PrintOptions" url="manual/JMRI_OPS_UsersGuide/Ops_PrintOptions.shtml"/>
-
-<mapID target="manual.DecoderPro.Installing_JMRI_InstallJMRI" url="manual/DecoderPro/Installing_JMRI.shtml#InstallJMRI"/>
 
 <mapID target="manual.DecoderPro.Basic_BasicPane_Write Data" url="manual/DecoderPro/Basic_BasicPane.shtml#Write Data"/>
 
@@ -1853,6 +1855,8 @@
 <mapID target="html.hardware.bachrus.index_documentation" url="html/hardware/bachrus/index.shtml#documentation"/>
 
 <mapID target="package.jmri.jmrit.operations.Operations_TrackBlockingOrder" url="package/jmri/jmrit/operations/Operations.shtml#TrackBlockingOrder"/>
+
+<mapID target="html.setup.index" url="html/setup/index.shtml"/>
 
 <mapID target="manual.JMRI_OPS_UsersGuide.Start_DecoderPro" url="manual/JMRI_OPS_UsersGuide/Start_DecoderPro.shtml"/>
 
@@ -1966,6 +1970,8 @@
 
 <mapID target="manual.DecoderPro3.Main_LocoNet_DS64Programmer" url="manual/DecoderPro3/Main_LocoNet.shtml#DS64Programmer"/>
 
+<mapID target="html.hardware.raildriver.index_hardware" url="html/hardware/raildriver/index.shtml#hardware"/>
+
 <mapID target="html.hardware.hardware-template_documentation" url="html/hardware/hardware-template.shtml#documentation"/>
 
 <mapID target="package.jmri.jmrit.operations.Operations_SynchronizeWithNCEConsists" url="package/jmri/jmrit/operations/Operations.shtml#SynchronizeWithNCEConsists"/>
@@ -2027,6 +2033,8 @@
 <mapID target="package.jmri.jmrix.loconet.duplexgroup.DuplexGroupTabbedPanel_NameField" url="package/jmri/jmrix/loconet/duplexgroup/DuplexGroupTabbedPanel.shtml#NameField"/>
 
 <mapID target="package.jmri.jmrix.acela.nodeconfig.NodeConfigFrame" url="package/jmri/jmrix/acela/nodeconfig/NodeConfigFrame.shtml"/>
+
+<mapID target="html.setup.index_Top" url="html/setup/index.shtml#Top"/>
 
 <mapID target="package.jmri.jmrit.operations.Operations_ManifestComments" url="package/jmri/jmrit/operations/Operations.shtml#ManifestComments"/>
 
@@ -2198,6 +2206,8 @@
 
 <mapID target="package.jmri.jmrit.operations.Operations_ImportingCars" url="package/jmri/jmrit/operations/Operations.shtml#ImportingCars"/>
 
+<mapID target="html.setup.Errors" url="html/setup/Errors.shtml"/>
+
 <mapID target="html.tools.throttle.ThrottleChapter2_ControlPanel" url="html/tools/throttle/ThrottleChapter2.shtml#ControlPanel"/>
 
 <mapID target="manual.DecoderPro.Installing_JMRI_Top" url="manual/DecoderPro/Installing_JMRI.shtml#Top"/>
@@ -2304,6 +2314,8 @@
 
 <mapID target="html.hardware.maple.index_limitations" url="html/hardware/maple/index.shtml#limitations"/>
 
+<mapID target="html.tools.Sections" url="html/tools/Sections.shtml"/>
+
 <mapID target="package.jmri.jmrit.operations.Operations_GenerateCsvSwitchLists" url="package/jmri/jmrit/operations/Operations.shtml#GenerateCsvSwitchLists"/>
 
 <mapID target="manual.DecoderPro3.dp3_Main_Throttle_addressPanel_Top" url="manual/DecoderPro3/dp3_Main_Throttle_addressPanel.shtml#Top"/>
@@ -2372,8 +2384,6 @@
 
 <mapID target="manual.JMRI_OPS_UsersGuide.Ops_Engines_menu" url="manual/JMRI_OPS_UsersGuide/Ops_Engines_menu.shtml"/>
 
-<mapID target="manual.DecoderPro3.Installing_JMRI_InstallJMRI" url="manual/DecoderPro3/Installing_JMRI.shtml#InstallJMRI"/>
-
 <mapID target="manual.JMRI_OPS_UsersGuide.Ops_EditTrain_Top" url="manual/JMRI_OPS_UsersGuide/Ops_EditTrain.shtml#Top"/>
 
 <mapID target="package.jmri.jmrit.display.PanelTarget" url="package/jmri/jmrit/display/PanelTarget.shtml"/>
@@ -2438,7 +2448,7 @@
 
 <mapID target="package.jmri.jmrit.operations.Operations_BuildReport" url="package/jmri/jmrit/operations/Operations.shtml#BuildReport"/>
 
-<mapID target="DecoderProManual.index" url="DecoderProManual/index.shtml"/>
+<mapID target="html.setup.profiles" url="html/setup/profiles.shtml"/>
 
 <mapID target="manual.DecoderPro3.dp3_settings_rosterGroups_Delete" url="manual/DecoderPro3/dp3_settings_rosterGroups.shtml#Delete"/>
 
@@ -2494,9 +2504,9 @@
 
 <mapID target="package.jmri.jmrix.loconet.sdfeditor.TriggerConditions" url="package/jmri/jmrix/loconet/sdfeditor/TriggerConditions.shtml"/>
 
-<mapID target="html.Errors" url="html/Errors.shtml"/>
-
 <mapID target="html.hardware.raildriver.index_connecting" url="html/hardware/raildriver/index.shtml#connecting"/>
+
+<mapID target="manual.DecoderPro.Comp_PrintData_a_Top" url="manual/DecoderPro/Comp_PrintData_a.shtml#Top"/>
 
 <mapID target="manual.DecoderPro3.Main_LocoNet_FirmwareDownloader" url="manual/DecoderPro3/Main_LocoNet.shtml#FirmwareDownloader"/>
 
@@ -2726,6 +2736,8 @@
 
 <mapID target="html.hardware.openlcb.Details_documentation" url="html/hardware/openlcb/Details.shtml#documentation"/>
 
+<mapID target="manual.DecoderPro.Comp_PrintData_c_Top" url="manual/DecoderPro/Comp_PrintData_c.shtml#Top"/>
+
 <mapID target="manual.DecoderPro3.Main_NCE_Clock" url="manual/DecoderPro3/Main_NCE.shtml#Clock"/>
 
 <mapID target="manual.DecoderPro.Main_VSD_compatibility" url="manual/DecoderPro/Main_VSD.shtml#compatibility"/>
@@ -2741,8 +2753,6 @@
 <mapID target="html.hardware.cmri.CMRI_documentation" url="html/hardware/cmri/CMRI.shtml#documentation"/>
 
 <mapID target="html.doc.Technical.JUnit_tempFileCreation" url="html/doc/Technical/JUnit.shtml#tempFileCreation"/>
-
-<mapID target="html.doc.Technical.getcode" url="html/doc/Technical/getcode.shtml"/>
 
 <mapID target="html.tools.speedometer.NCE-Speedometer" url="html/tools/speedometer/NCE-Speedometer.shtml"/>
 
@@ -2962,6 +2972,8 @@
 
 <mapID target="manual.JMRI_OPS_UsersGuide.Ops_EditRoutes" url="manual/JMRI_OPS_UsersGuide/Ops_EditRoutes.shtml"/>
 
+<mapID target="manual.DecoderPro3.Comp_PrintData_c_Top" url="manual/DecoderPro3/Comp_PrintData_c.shtml#Top"/>
+
 <mapID target="html.hardware.loconet.StandaloneLocoNet_hwdctorailsync" url="html/hardware/loconet/StandaloneLocoNet.shtml#hwdctorailsync"/>
 
 <mapID target="package.jmri.jmrit.operations.Operations_EditCarAttributes" url="package/jmri/jmrit/operations/Operations.shtml#EditCarAttributes"/>
@@ -3067,6 +3079,8 @@
 <mapID target="package.jmri.jmrit.logix.OBlockTable" url="package/jmri/jmrit/logix/OBlockTable.shtml"/>
 
 <mapID target="html.tools.signaling.index_variable" url="html/tools/signaling/index.shtml#variable"/>
+
+<mapID target="html.setup.Dropbox" url="html/setup/Dropbox.shtml"/>
 
 <mapID target="manual.DecoderPro3.Main_Speedo" url="manual/DecoderPro3/Main_Speedo.shtml"/>
 

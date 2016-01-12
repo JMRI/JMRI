@@ -1,8 +1,6 @@
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
 <html lang="en">
 <head>
-<!-- Copyright ($Author$) 2009 -->
-<!-- $Id$ -->
 <title>DecoderPro Throttle</title>
 
 <!-- Style -->
@@ -20,9 +18,9 @@
 <!--#include virtual="Sidebar" -->
 <div id="mainContent">
 
-<a NAME="Top"></a>
+<a name="Top"></a>
 <h1>DecoderPro&reg; Main Menu Bar</h1>
-<h1>JMRI&reg; Throttle Window - Frame Properties</h1>
+<h2>JMRI&reg; Throttle Window - Frame Properties</h2>
 
 <div align=right>
 <p><a href="dp3_Main_Throttle.shtml">Back </a></p>
@@ -53,16 +51,14 @@ Frame Decorations</strong>: </p>
 <p>
   <input type="submit" name="button2" id="button2" value="Cancel">
 aborts the operation</p>
-<div>
-  <div align="right"></div>
-</div>
-<div> </div>
-<hr>
 
-<div align=right>
+<hr>
+<div align="right">
 <p><a href="dp3_Main_Throttle.shtml">Back </a></p>
 </div>
 
 <!--#include virtual="/Footer" -->
-</body>
+  </div><!-- closes #mainContent-->
+ </div> <!-- closes #mBody-->
+ </body>
 </html>

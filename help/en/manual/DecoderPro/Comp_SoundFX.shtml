@@ -1,17 +1,18 @@
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
-<html lang="en"><head><!-- Copyright ($Author$) 2009, 2010 --><!-- $Id$ --><title>Comprehensive Programmer - Sound FX Pane</title><!-- Style -->
+<html lang="en">
+<head>
+<title>Comprehensive Programmer - Sound FX Pane</title>
 
-
-
-
-
-
-
+<!-- Style -->
 <meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
 <link rel="stylesheet" type="text/css" href="/css/default.css" media="screen">
 <link rel="stylesheet" type="text/css" href="/css/print.css" media="print">
 <link rel="icon" href="/images/jmri.ico" type="image/png">
-<link rel="home" title="Home" href="/"><!-- /Style --></head><body>
+<link rel="home" title="Home" href="/">
+<!-- /Style -->
+</head>
+
+<body>
 <!--#include virtual="/Header" -->
 
 <!--#include virtual="Sidebar" -->
@@ -19,7 +20,7 @@
 
 <a name="Top"></a>
 <h1>DecoderPro&reg; Comprehensive Programmer</h1>
-<h1>Sound FX Pane</h1>
+<h2>Sound FX Pane</h2>
 
 <div align="right">
 <p><a href="Comp_Analog.shtml"> Previous | </a>
@@ -44,11 +45,11 @@ the programmer for the specific decoder. &nbsp;Sometimes (depending on
 the volunteer that wrote the decoder definition file) there are &#8220;tool
 tips&#8221; that appear if you hover over a selection entry box.
 </p><p>Here are is a sampling of sound functions on  some other decoders: 
-</p><p><strong>Athearn N Scale Big Boy and Challenger
-</strong>
-</p><h1><img src="images/Comp_09a_Sound.png" alt="Athearn Sound" border="5" height="178" width="798"></h1>
+</p><p><strong>Athearn N Scale Big Boy and Challenger</strong></p>
+<img src="images/Comp_09a_Sound.png" alt="Athearn Sound" border="5" height="178" width="798">
 <p><strong>Digitrax F40PH</strong></p>
-<h1><img src="images/Comp_09b_Sound.png" alt="Digitrax Sound" border="5"></h1>
+<img src="images/Comp_09b_Sound.png" alt="Digitrax Sound" border="5">
+
 <hr>
 <div align="right">
 <p><a href="Comp_SoundLevels.shtml"></a>
@@ -57,4 +58,7 @@ tips&#8221; that appear if you hover over a selection entry box.
 </p></div>
 
 <!--#include virtual="/Footer" -->
-</div></body></html>
+  </div><!-- closes #mainContent-->
+ </div> <!-- closes #mBody-->
+ </body>
+</html>

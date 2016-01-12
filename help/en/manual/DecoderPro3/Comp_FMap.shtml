@@ -23,7 +23,7 @@
 <h1>DecoderPro&reg; Comprehensive Programmer</h1>
 <h2>Function Mapping Pane</h2>
 
-<div align=right>
+<div align="right">
 <p><a href="Comp_Speed_Talble.shtml">Previous | </a>
   <a href="Comp_LightFX.shtml">Next </a>
 <p><a href="index.shtml#Advanced Programmer">Back to Index</a>
@@ -37,14 +37,14 @@
 <p>If a checkbox is dimmed that indicates that  no changes in function assignments are possible. Not all decoders allow you to  remap the functions and others have very limited functions. Only remap functions if you are sure you know what you are doing.
 <hr>
 
-<div align=right>
+<div align="right">
 <p><a href="Comp_FunctionLabel.shtml"></a>
   <a href="Comp_Speed_Talble.shtml">Previous | </a> <a href="Comp_LightFX.shtml">Next </a></p>
 <p><a href="index.shtml#Advanced Programmer">Back to Index</a></p>
 </div>
 
 <!--#include virtual="/Footer" -->
-</div>
-</div>
-</body>
+  </div><!-- closes #mainContent-->
+ </div> <!-- closes #mBody-->
+ </body>
 </html>

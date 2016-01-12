@@ -86,6 +86,12 @@
 <ul>
   
 <li>
+<a href="html/hardware/cmri/Signals.shtml">C/MRI Signals </a>
+<ul></ul>
+</li>
+
+  
+<li>
 <a href="package/jmri/jmrix/cmri/serial/assignment/ListFrame.shtml">Check Pin Assignments </a>
 <ul></ul>
 </li>
@@ -99,12 +105,6 @@
   
 <li>
 <a href="package/jmri/jmrix/cmri/serial/diagnostic/DiagnosticFrame.shtml">Diagnostics </a>
-<ul></ul>
-</li>
-
-  
-<li>
-<a href="html/hardware/cmri/Signals.shtml">C/MRI Signals </a>
 <ul></ul>
 </li>
 
@@ -148,7 +148,7 @@
 </li>
  
 <li>
-<a href="html/profiles.shtml">Configuration Profiles </a>
+<a href="html/setup/profiles.shtml">Configuration Profiles </a>
 <ul></ul>
 </li>
 
@@ -394,7 +394,13 @@
 </li>
  
 <li>
-<a href="html/Errors.shtml">Error Codes </a>
+<a href="html/setup/Dropbox.shtml">Dropbox </a>
+<ul></ul>
+</li>
+
+ 
+<li>
+<a href="html/setup/Errors.shtml">Error Codes </a>
 <ul></ul>
 </li>
 
@@ -645,12 +651,6 @@
 <li>LocoNet <ul>
   
 <li>
-<a href="html/hardware/loconet/Addressing.shtml">LocoNet Addressing </a>
-<ul></ul>
-</li>
-
-  
-<li>
 <a href="package/jmri/jmrix/loconet/cmdstnconfig/CmdStnConfigFrame.shtml">Command Station Configuration Tool </a>
 <ul></ul>
 </li>
@@ -676,6 +676,12 @@
   
 <li>
 <a href="package/jmri/jmrix/loconet/locoio/LocoIOFrame.shtml">LocoIO </a>
+<ul></ul>
+</li>
+
+  
+<li>
+<a href="html/hardware/loconet/Addressing.shtml">LocoNet Addressing </a>
 <ul></ul>
 </li>
 
@@ -766,12 +772,6 @@
 </li>
  
 <li>
-<a href="html/hardware/marklin/index.shtml">Marklin </a>
-<ul></ul>
-</li>
-
- 
-<li>
 <a href="html/hardware/MacintoshSerialPorts.shtml">MacOS Serial Ports </a>
 <ul></ul>
 </li>
@@ -779,6 +779,12 @@
  
 <li>
 <a href="manual/index.shtml">Manuals </a>
+<ul></ul>
+</li>
+
+ 
+<li>
+<a href="html/hardware/marklin/index.shtml">Marklin </a>
 <ul></ul>
 </li>
 
@@ -1188,6 +1194,12 @@
 </li>
  
 <li>
+<a href="html/setup/index.shtml">Setting up JMRI </a>
+<ul></ul>
+</li>
+
+ 
+<li>
 <a href="html/tools/signaling/AspectSignaling.shtml">Signal Aspects </a>
 <ul></ul>
 </li>
@@ -1419,12 +1431,6 @@
 <li>Technical <ul>
   
 <li>
-<a href="html/doc/Technical/NetBeans.shtml">NetBeans IDE </a>
-<ul></ul>
-</li>
-
-  
-<li>
 <a href="html/doc/Technical/Eclipse.shtml">Eclipse IDE </a>
 <ul></ul>
 </li>
@@ -1437,13 +1443,19 @@
 
   
 <li>
-<a href="html/doc/Technical/XCode.shtml">XCode IDE </a>
+<a href="html/doc/Technical/NetBeans.shtml">NetBeans IDE </a>
 <ul></ul>
 </li>
 
   
 <li>
 <a href="package/jmri/jmrit/automat/monitor/AutomatTableFrame.shtml">Thread Monitor </a>
+<ul></ul>
+</li>
+
+  
+<li>
+<a href="html/doc/Technical/XCode.shtml">XCode IDE </a>
 <ul></ul>
 </li>
 
@@ -1662,12 +1674,6 @@
 <ul>
   
 <li>
-<a href="html/doc/Technical/XmlEditors.shtml">XML Editors </a>
-<ul></ul>
-</li>
-
-  
-<li>
 <a href="html/doc/Technical/XmlView.shtml">Technical Information </a>
 <ul></ul>
 </li>
@@ -1675,6 +1681,12 @@
   
 <li>
 <a href="html/apps/PanelPro/ShowPanel.shtml">Viewing Panel Files </a>
+<ul></ul>
+</li>
+
+  
+<li>
+<a href="html/doc/Technical/XmlEditors.shtml">XML Editors </a>
 <ul></ul>
 </li>
 

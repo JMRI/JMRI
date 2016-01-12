@@ -44,22 +44,24 @@
 </li>
 
  
-<li>Setup <ul>
+<li>
+<a href="html/setup/index.shtml">Setup </a>
+<ul>
   
 <li>
-<a href="package/apps/TabbedPreferences.shtml">Preference Pane </a>
+<a href="package/apps/TabbedPreferences.shtml">Preferences Pane </a>
 <ul></ul>
 </li>
 
   
 <li>
-<a href="html/profiles.shtml">Configuration Profiles </a>
+<a href="html/setup/profiles.shtml">Configuration Profiles </a>
 <ul></ul>
 </li>
 
   
 <li>
-<a href="html/Errors.shtml">Error Codes </a>
+<a href="html/setup/Errors.shtml">Error Codes </a>
 <ul></ul>
 </li>
 

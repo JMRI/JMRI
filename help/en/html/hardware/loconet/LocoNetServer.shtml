@@ -23,7 +23,7 @@
 
 This page describes how to use the inbuilt LocoNet&reg; Client/Server 
 capability of JMRI to connect multiple computers to a single LocoNet-equipped layout.
-<P>
+<p>
 Briefly, one computer is physically connected to the LocoNet, and acts as a "Server"
 for others.  One or more "Client" computers can then connect via standard TCP/IP
 protocols to the Server.
@@ -31,55 +31,55 @@ protocols to the Server.
 <h2>Setup for JMRI LocoNet Client/Server</h2>
 One computer running JMRI acts as the Server, which is directly connected to the 
 LocoNet, the other computers running JMRI connect to the Server computer as Clients.  
-<ul>
-<li>Configure the LocoNet connection just like for any other use.
-Select the protocol that corresponds to your hardware (e.g. LocoBuffer-II, etc),
-the communication port, and other options.  It's best to make sure this is
-working well before proceeding.
-<li>You can then manually start the server by selecting "Start LocoNet Server"
-from the LocoNet menu.  This will allow other computers to connect to the layout
-until you stop the program; the next time you start it, you'll have to do this again.
-<li>You can also have the server start automatically every time you start the
-program by
-<ul>
-<li>Open the preferences from the Edit menu
-<li>Check the box to "Show Advanced Preferences"
-<li>Under "Do Action At Startup", click "Add Action"
-<li>A list of possibilities will be shown.  Find and select "Start LocoNet Server".
-<li>Save the preferences.
-</ul>
-</ul>
+	<ul>
+	<li>Configure the LocoNet connection just like for any other use.
+	Select the protocol that corresponds to your hardware (e.g. LocoBuffer-II, etc),
+	the communication port, and other options.  It's best to make sure this is
+	working well before proceeding.
+	<li>You can then manually start the server by selecting "Start LocoNet Server"
+	from the LocoNet menu.  This will allow other computers to connect to the layout
+	until you stop the program; the next time you start it, you'll have to do this again.
+	<li>You can also have the server start automatically every time you start the
+	program by
+		<ul>
+		<li>Open the preferences from the Edit menu
+		<li>Check the box to "Show Advanced Preferences"
+		<li>Under "Do Action At Startup", click "Add Action"
+		<li>A list of possibilities will be shown.  Find and select "Start LocoNet Server".
+		<li>Save the preferences.
+		</ul>
+	</ul>
 
 <P>
 The program in the Client computer can then be configured to 
 connect to the layout via the LocoNet Server by:
-<ul>
-<li>Make sure the Server computer is running the LocoNet server
-<li>Open the program on the Client computer
-<li>Open the preferences from the Edit menu
-<li>For layout connection, select "LocoNet Server"
-<li>In the "Server hostname" box that appears, type the Internet name
-or address of the computer that's running the LocoNet Server.
-An internet address is something like 127.0.1.12; a name is something
-like jmri.sf.net
-<li>Save the preferences and restart the program.
-</ul>
+	<ul>
+	<li>Make sure the Server computer is running the LocoNet server
+	<li>Open the program on the Client computer
+	<li>Open the preferences from the Edit menu
+	<li>For layout connection, select "LocoNet Server"
+	<li>In the "Server hostname" box that appears, type the Internet name
+	or address of the computer that's running the LocoNet Server.
+	An internet address is something like 127.0.1.12; a name is something
+	like jmri.sf.net
+	<li>Save the preferences and restart the program.
+	</ul>
 
 <h2>Notes:</h2>
-<ul>
-<li>It's strongly recommended that you connect the master computer
-to the LocoNet with a LocoBuffer or LocoBuffer-II.  Although a MS-100
-will basically work for this application, correction of the resulting occasional LocoNet
-errors may cause noticeable delays in updating the remote computers.
-<li>
-If the computers are all close to the LocoNet, e.g. acting as local control
-panels, you don't really need LocoNet Server to do this.  You can instead
-connect each of the computers to the LocoNet via their own LocoBuffer or LocoBuffer-II
-(or MS-100, though this is not recommended) and have them individually take part
-in the LocoNet communications.  This doesn't cause any additional communications load.
-It does cost a little more for the extra adapters, and doesn't permit you to
-put a computer remote from the layout.
-</ul>
+	<ul>
+	<li>It's strongly recommended that you connect the master computer
+	to the LocoNet with a LocoBuffer or LocoBuffer-II.  Although a MS-100
+	will basically work for this application, correction of the resulting occasional LocoNet
+	errors may cause noticeable delays in updating the remote computers.
+	<li>
+	If the computers are all close to the LocoNet, e.g. acting as local control
+	panels, you don't really need LocoNet Server to do this.  You can instead
+	connect each of the computers to the LocoNet via their own LocoBuffer or LocoBuffer-II
+	(or MS-100, though this is not recommended) and have them individually take part
+	in the LocoNet communications.  This doesn't cause any additional communications load.
+	It does cost a little more for the extra adapters, and doesn't permit you to
+	put a computer remote from the layout.
+	</ul>
 <p>LocoNet&reg; is a registered trademark of <a href="http://www.digitrax.com">Digitrax, Inc.</a></p>
 
 <!--#include virtual="/Footer" -->

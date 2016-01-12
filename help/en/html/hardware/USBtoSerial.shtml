@@ -22,34 +22,34 @@
 <div class="nomenu" ID="mBody">
 <div id="mainContent">
 
-<a name="usb2serial"><h1>Hardware Setup Support: Using a USB to Serial adapter</h1></a>
+<a name="usb2serial"><h1>Hardware Setup Support: Using a USB-to-Serial Adapter</h1></a>
 
 <p>If your model railroad hardware is supposed to connect to a
 computer via a traditional RS232 serial connection, but your computer
 doesn't have any RS232 ports, what do you do? This is becoming more
-common as new computers are sold with USB ports instead of RS232 serial
+common as computers since 2000 are sold with USB ports instead of RS232 serial
 ports.</p>
 
 <a name="hardware"></a><h2>Supported Hardware</h2>
 <ul>
-<li>One solution is to use a "USB to Serial" adapter to solve this. A
+<li>One solution is to use a "USB-to-Serial" Adapter to solve this. A
 typical unit is the 
 <a href="http://www.tripplite.com/high-speed-usb-to-serial-adapter-keyspan~USA19HS/">Keyspan USA-19HS series of adapters</a> by Tripplite. 
 We recommend these Keyspan adapters; we use a
 Keyspan 19-series adapter during the release testing, and have found
 them to work reliably in all cases so far.</li>
 <li>Other companies, such as <a href="http://www.belkin.com">Belkin</a>,
-market adapters under their own name, and you can often find off-brand
-adapters at your local computer store.</li>
+market adapters under their own name, and you can often also find off-brand
+adapters at your local computer store for as little as $10.</li>
 </ul>
 <p>Before you buy any adapter, make sure that it will work with your
 particular computer and operating system version. The important issue
 here is the "drivers" the computer needs to talk to the hardware
-adapter; some adapter manufacturers only provide Windows drivers, which
+adapter; many adapter manufacturers only provide Windows drivers, which
 makes their products useless to a Macintosh or Linux user. Also note
 that MacOS 8/9 and OS X drivers are different, and can't be
 interchanged.</p>
-<p>Many DCC systems don't require very much of their serial ports,
+<p>Many <a href="index.shtml">DCC systems</a> don't require very much of their serial ports,
 and in that case any adapter will probably work. But some DCC systems
 require either special baud rates and/or RS232 control leads that not
 all adapters can provide. The rest of this page addresses those special

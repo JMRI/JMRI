@@ -21,6 +21,13 @@
     <div id="mainContent">
 
   <h1>Hardware Support: SPROG</h1>
+<ul class="snav"><!-- TOC -->
+<li><a href="#hardware">Hardware</a>
+<li><a href="#limitations">Limitations</a>
+<li><a href="#connecting">Connecting</a>
+<li><a href="#tools">Tools</a>
+<li><a href="#documentation">Documentation</a>
+</ul>
 
 	<a name="hardware"></a><h2>Supported Hardware</h2>
 	<h3>Computer Interfaces</h3>

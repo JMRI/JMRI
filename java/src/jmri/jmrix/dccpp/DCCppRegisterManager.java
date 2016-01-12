@@ -15,6 +15,15 @@ import org.slf4j.LoggerFactory;
  *
  */
 
+/* A few notes on implementation
+ *
+ * This class is used by the DCCppCommandStation to allocate/free and keep
+ * track of the registers in the BaseStation.  This is assuming the BaseStation
+ * doesn't provide its own method of allocating registers.  It would be better
+ * if the BaseStation handled this, since there may be more than just JMRI
+ * asking for slots.
+*/
+
 public class DCCppRegisterManager {
 
     final protected DCCppRegister registers[] = new DCCppRegister[DCCppConstants.MAX_MAIN_REGISTERS];

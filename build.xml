@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!-- Ant build.xml file for JMRI development                                -->
-<!-- Bob Jacobsen, Copyright 2002-2015                                      -->
+<!-- Bob Jacobsen, Copyright 2002-2016                                      -->
 
 <!-- This file is part of JMRI.                                             -->
 <!--                                                                        -->
@@ -24,7 +24,7 @@
     Provides build services for JMRI libraries and applications
     </description>
 
-    <property name="jmri.copyright.year" value="1997-2015"/>
+    <property name="jmri.copyright.year" value="1997-2016"/>
 
     <property environment="env"/>
 
@@ -59,7 +59,7 @@
     <!--    nsis.home=/opt/nsis/nsis-2.46/          -->
     <!-- in their "invoke ant" step                 -->
     <!-- The Packages build (dev downloads) forces: -->
-    <!--    release.official=true                   -->
+    <!--    release.official=false                  -->
     <!--    nsis.home=/opt/nsis/nsis-2.46/          -->
     <!-- in its "invoke ant" step                   -->
     
@@ -114,6 +114,7 @@
     <property name="test"         value="${javadir}/test"/>
     <property name="templatedir"  value="${javadir}/template"/>
     <property name="tmptarget"    value="${javadir}/tmp"/>
+    <property name="lineendtmp"   value="${tmptarget}/lineend"/>
     <property name="tempdir"      value="${basedir}/tempdir"/>    <!-- actual tmp files -->
     <property name="java.debugging" value="yes" />
 
@@ -331,7 +332,7 @@
             <fileset file="${javadir}/manifest"/>
             <fileset dir="${tempdir}"/>
         </delete>
-        <ant dir="xml/XSLT" target="clean" />
+        <ant dir="xml/XSLT" target="clean" inheritAll="false"  />
     </target>
 
     <!-- end of utility targets -->
@@ -961,7 +962,62 @@
         </resourceCheck>
     </target>
 
+    <!-- check for bad line ends, e.g. not ready to go into Git -->
+    <!-- May not (probably will not) work on Windows -->
+
+    <target name="checklineends">
+      <exec executable="sh" outputproperty="checklineeds.files">
+        <arg value="-c" />
+        <arg value="find xml help java/src java/test jython -not -type d -exec file '{}' ';' | grep CRLF" />
+      </exec>      
+      
+      <fail message="${checklineeds.files}">
+        <condition>
+          <length string="${checklineeds.files}" when="greater" length="0" />
+        </condition>     
+      </fail> 
+    </target>
+
     <!-- end of file-checking targets -->
+
+    <target name="fixlineends" description="convert specific files to LF line ends">
+        <fixcrlf eol="unix" srcdir="." includes="
+            **/*.csh
+            **/*.css
+            **/*.df
+            **/*.dtd
+            **/*htm
+            **/*html
+            **/*.java
+            **/*.js
+            **/*.json
+            **/*.jsp
+            **/*.jspf
+            **/*.lcf
+            **/*.md
+            **/*.php
+            **/*.pl
+            **/*.plist
+            **/*.policy
+            **/*.prefs
+            **/*.properties
+            **/*.project
+            **/*.py
+            **/*.sh
+            **/*.svg
+            **/*.tld
+            **/*.txt
+            **/*.xml
+            **/*.xsd
+            **/*.xsl
+            **/COPYING
+            **/Footer
+            **/Header
+            **/README*
+            **/Sidebar
+            **/TODO
+        " />
+    </target>
 
     <!-- ============================================================================= -->
     <!-- Test execution targets                                                        -->

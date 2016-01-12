@@ -205,7 +205,7 @@ public class UserInterface extends JmriJFrame implements DeviceListener, DeviceM
             public void actionPerformed(ActionEvent e) {
                 userPreferences.addComboBoxLastSelection(rosterGroupSelectorPreferencesName, (String) ((JComboBox<String>) e.getSource()).getSelectedItem());
 //              Send new selected roster group to all devices
-                for (DeviceServer device : deviceList){
+                for (DeviceServer device : deviceList) {
                     device.sendPacketToDevice(device.sendRoster());
                 }
             }
@@ -256,10 +256,7 @@ public class UserInterface extends JmriJFrame implements DeviceListener, DeviceM
     }
 
     public void listen() {
-        int socketPort = 0;
-        if (WiThrottleManager.withrottlePreferencesInstance().isUseFixedPort()) {
-            socketPort = Integer.parseInt(WiThrottleManager.withrottlePreferencesInstance().getPort());
-        }
+        int socketPort = WiThrottleManager.withrottlePreferencesInstance().getPort();
 
         try {	//Create socket on available port
             socket = new ServerSocket(socketPort);

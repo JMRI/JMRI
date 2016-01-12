@@ -1,0 +1,61 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
+<html lang="fr">
+<head>
+<!-- UpDated by Blorec Herv&#233; le 2013-09-09-->
+<title>JMRI: Codes et Messages d'Erreurs</title>
+
+<!-- Style -->
+<meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
+<link rel="stylesheet" type="text/css" href="/css/default.css" media="screen">
+<link rel="stylesheet" type="text/css" href="/css/print.css" media="print">
+<link rel="icon" href="/images/jmri.ico" type="image/png">
+<link rel="home" title="Home" href="/">
+<!-- /Style -->
+</head>
+
+<body>
+<!--#include virtual="/Header" -->
+
+<!--#include virtual="Sidebar" -->
+<div id="mainContent">
+
+<!-- Page Body -->
+<h1> 
+JMRI: Codes et Messages d'Erreurs
+</h1>
+
+<dl>
+
+<dt>301
+<dd>Pas de Locomotive d&#233;tect&#233;e
+
+<dt>302
+<dd>Programmateur occup&#233;.
+<dt>303
+<dd>Op&#233;ration Requise non impl&#233;ment&#233;e dans la station de commande.
+
+<dt>304
+<dd>Annul&#233; par l'utilisateur.
+
+<dt>305
+<dd>Confirmation d'&#233;chec
+
+<dt>306
+<dd>Temps de dialogue d&#233;pass&#233; avec la station de commande.
+
+<dt>307
+<dd>Erreur Inconnue.
+
+<dt>308
+<dd>Pas d'acquittement depuis la locomotive.
+
+<dt>309
+<dd>Court Circuit sur la voie de Programmation.
+
+</dl>
+    
+			<!--#include virtual="/Footer" -->
+</div>
+</div>
+</body>
+</html>

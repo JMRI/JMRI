@@ -49,12 +49,7 @@ public class PackageTest extends TestCase {
         super.setUp();
         apps.tests.Log4JFixture.setUp();
         jmri.util.JUnitUtil.resetInstanceManager();
-        jmri.InstanceManager.setConfigureManager(new jmri.configurexml.ConfigXmlManager());
-        jmri.InstanceManager.setShutDownManager(
-                new jmri.managers.DefaultShutDownManager());
-        jmri.InstanceManager.store(
-                jmri.managers.DefaultUserMessagePreferences.getInstance(),
-                jmri.UserPreferencesManager.class);
+        jmri.util.JUnitUtil.initDefaultUserMessagePreferences();
     }
 
     protected void tearDown() {

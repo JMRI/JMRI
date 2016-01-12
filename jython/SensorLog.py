@@ -12,6 +12,7 @@
 # Part of the JMRI distribution
 
 import jmri
+import java
 
 # Define routine to map status numbers to text
 def stateName(state) :

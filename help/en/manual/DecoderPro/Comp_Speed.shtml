@@ -1,17 +1,18 @@
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
-<html lang="en"><head><!-- Copyright ($Author$) 2009, 2010 --><!-- $Id$ --><title>Comprehensive Programmer - Speed Control Pane</title><!-- Style -->
+<html lang="en">
+<head>
+<title>Comprehensive Programmer - Speed Control Pane</title>
 
-
-
-
-
-
-
+<!-- Style -->
 <meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
 <link rel="stylesheet" type="text/css" href="/css/default.css" media="screen">
 <link rel="stylesheet" type="text/css" href="/css/print.css" media="print">
 <link rel="icon" href="/images/jmri.ico" type="image/png">
-<link rel="home" title="Home" href="/"><!-- /Style --></head><body>
+<link rel="home" title="Home" href="/">
+<!-- /Style -->
+</head>
+
+<body>
 <!--#include virtual="/Header" -->
 
 <!--#include virtual="Sidebar" -->
@@ -19,7 +20,7 @@
 
 <a name="Top"></a>
 <h1>DecoderPro&reg; Comprehensive Programmer</h1>
-<h1>Basic Speed Control Pane</h1>
+<h2>Basic Speed Control Pane</h2>
 
 <div align="right">
 <p><a href="Comp_Motor.shtml">Previous &nbsp;| </a>
@@ -75,8 +76,8 @@ increase speed, and lower it below 128 to decrease speed in this pane.
 The Forward and Reverse Trim does not work the same for all decoders,
 with variations between manufacturers.
 </p><div class="BOXIT">
-  <h3>Some suggestions on using the basic motor controls and programming on the main.<br>
-  </h3>
+  <h3>Some suggestions on using the basic motor controls and programming on the main.</h3>
+  
   <p> Unless you want to get into some precision speed matching, you probably won't need to use the <b>Speed Tables</b> you'll see on the <a href="Comp_Speed_Talble.shtml" target="_parent"><strong>Speed Table pane</strong></a>- you'll be able to accomplish much of what you want using just <b>Kick start</b> (<a href="Comp_Motor.shtml">previous  pane</a>), and <b>Start Volts</b>, <b>Mid Volts</b>, and <b>Max Volts</b> if  they are available in this pane...  but how to do this?
   </p><p> Start with the <b>Kick start</b> value, and <a href="Basic_Programming.shtml#OpsMode">Programming on the main</a> rather than the programming track. Set the locomotive to be programmed on throttle step 1. If it moves <span class="ACCENT">at all</span>, don't change the <b>Kick start</b>
 value. If it doesn't move, slowly step up the throttle until it does.
@@ -108,4 +109,7 @@ Pro for the specific decoder.
 </p></div>
 
 <!--#include virtual="/Footer" -->
-</div></body></html>
+  </div><!-- closes #mainContent-->
+ </div> <!-- closes #mBody-->
+ </body>
+</html>

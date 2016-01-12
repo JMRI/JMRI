@@ -1,17 +1,15 @@
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
-<!-- $Id$ -->
 <html lang="en">
 <head>
- <TITLE>
+ <title>
       JMRI: SoundPro Main Window
- </TITLE>
-    <META http-equiv=Content-Type content="text/html; charset=iso-8859-1">
-    <META content="Bob Jacobsen" name=Author>
-    <META content="Matthew Harris" name=Author>
-    <META name="keywords" content="JMRI help preferences">
+ </title>
+    <meta content="Bob Jacobsen" name="Author">
+    <meta content="Matthew Harris" name="Author">
+    <meta name="keywords" content="JMRI help preferences">
 
 <!-- Style -->
-  <META http-equiv=Content-Type content="text/html; charset=iso-8859-1">
+  <meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
   <link rel="stylesheet" type="text/css" href="/css/default.css" media="screen">
   <link rel="stylesheet" type="text/css" href="/css/print.css" media="print">
   <link rel="icon" href="/images/jmri.ico" type="image/png">
@@ -24,25 +22,23 @@
 <!--#include virtual="Sidebar" -->
     <div id="mainContent">
 
-<H1>JMRI: SoundPro Main Window</H1>
+<h1>JMRI: SoundPro Main Window</h1>
 
 <img src="../../../../../resources/SoundPro.gif" align="right" height="100" width="100">
-The SoundPro main window gives you access to all the 
+The SoundPro main window gives access to all the 
 capabilities of JMRI.
 
 <p>
-<p>
 Help on specific menus:
-<ul>
-<li>Edit - (<a href="../../../package/apps/TabbedPreferences.shtml">Preferences</a>)
-<li><a href="../../tools/index.shtml">Tools</a>
-<li><a href="../../../html/apps/DecoderPro/Roster.shtml#menu">Roster</a>
-<li><a href="../../../html/tools/Audio.shtml">Audio</a>
-</ul>
+	<ul>
+	<li>Edit - (<a href="../../../package/apps/TabbedPreferences.shtml">Preferences</a>)
+	<li><a href="../../tools/index.shtml">Tools</a>
+	<li><a href="../../../html/apps/DecoderPro/Roster.shtml#menu">Roster</a>
+	<li><a href="../../../html/tools/Audio.shtml">Audio</a>
+	</ul>
 
-<p>
+More information about the <a href="../../setup/Files.shtml">JMRI Configuration Files</a> 
 
 <!--#include virtual="/Footer" -->
 </body>
 </html>
-

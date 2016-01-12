@@ -56,7 +56,6 @@ import org.slf4j.LoggerFactory;
  *
  * @author	Bob Jacobsen Copyright (C) 2003,2006,2007, 2008, 2009
  * @author	Petr Koud'a Copyright (C) 2007
- * @version $Revision$
  */
 public class SignalHeadTableAction extends AbstractTableAction {
 
@@ -1543,15 +1542,14 @@ public class SignalHeadTableAction extends AbstractTableAction {
         _curSignal = InstanceManager.signalHeadManagerInstance().getBySystemName(eSName);
         //numConditionals = _curLogix.getNumConditionals();
         // create the Edit Logix Window
-        // Use separate Thread so window is created on top
-        Thread t = new Thread() {
+        // Use separate Runnable so window is created on top
+        Runnable t = new Runnable() {
             public void run() {
-                //Thread.yield();
                 makeEditSignalWindow();
             }
         };
         if (log.isDebugEnabled()) {
-            log.debug("editPressed Thread started for " + eSName);
+            log.debug("editPressed started for " + eSName);
         }
         javax.swing.SwingUtilities.invokeLater(t);
     }

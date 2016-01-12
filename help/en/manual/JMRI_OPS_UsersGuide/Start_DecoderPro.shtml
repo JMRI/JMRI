@@ -28,9 +28,9 @@
 
 <hr>
 
-<h3>The Operations Program is run from the DecoderPro&reg; Menu which is activated in the Operations Preferences.</h3>
+<p>The Operations Program is run from the DecoderPro&reg; Menu which is activated in the Operations Preferences.</p>
 <p>Once you have downloaded the DecoderPro&reg; software and installed it, simply
-open the program in the usual manner for your operating system. On MS Windows the installer will place an icon on your Desktop. For details please refer to the <a href="../DecoderPro3/index.shtml">DecoderPro&reg; Manual</a>.</p>
+open the program in the usual manner for your operating system. On MS Windows the installer will place an icon on your Desktop. For details please refer to the <a href="../../html/setup/index.shtml">JMRI Setup Help</a>.</p>
 <p>
   <img src="images/DesktopIcons.png" width="223" height="79" alt="desktop icons">
 <p>Double click on the icon for the program to open, in this case we will open DecoderPro&reg;.

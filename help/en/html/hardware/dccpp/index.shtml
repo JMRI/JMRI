@@ -21,7 +21,7 @@
     <div id="mainContent">
 
 <h1>Hardware Support: DCC++</h1>
-<ul><!-- TOC -->
+<ul class="snav"><!-- TOC -->
 	<li><a href="#hardware">Hardware</a></li>
 	<li><a href="#Limitations">Limitations</a></li>
 	<li><a href="#connecting">Connecting</a></li>

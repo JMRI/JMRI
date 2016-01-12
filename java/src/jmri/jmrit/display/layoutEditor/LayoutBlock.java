@@ -75,7 +75,6 @@ import org.slf4j.MDC;
  * configuration is saved.
  * <P>
  * @author Dave Duchamp Copyright (c) 2004-2008
- * @version $Revision$
  */
 public class LayoutBlock extends AbstractNamedBean implements java.beans.PropertyChangeListener {
 
@@ -459,7 +458,7 @@ public class LayoutBlock extends AbstractNamedBean implements java.beans.Propert
     public void setMemoryName(String name) {
         if (name == null || name.equals("")) {
             namedMemory = null;
-            memoryName = name;
+            memoryName = "";
             return;
         }
         memoryName = name;
@@ -473,7 +472,7 @@ public class LayoutBlock extends AbstractNamedBean implements java.beans.Propert
     public void setMemory(Memory m, String name) {
         if (m == null) {
             namedMemory = null;
-            memoryName = name;
+            memoryName = name == null ? "" : name;
             return;
         }
         namedMemory = jmri.InstanceManager.getDefault(jmri.NamedBeanHandleManager.class).getNamedBeanHandle(name, m);
@@ -1963,19 +1962,18 @@ public class LayoutBlock extends AbstractNamedBean implements java.beans.Propert
         }
 
         final LayoutBlock neighLBlock = neighbour.getLayoutBlock();
-
         Runnable r = new Runnable() {
             public void run() {
                 neighLBlock.updateNeighbourPacketFlow(block, flow);
             }
         };
-        Thread thr = new Thread(r);
 
         Block neighBlock = neighbour.getBlock();
         int oldPacketFlow = neighbour.getPacketFlow();
 
         neighbour.setPacketFlow(flow);
-        thr.start();
+
+        javax.swing.SwingUtilities.invokeLater(r);
 
         if (flow == TXONLY) {
             neighBlock.addBlockDenyList(this.block);
@@ -2083,7 +2081,9 @@ public class LayoutBlock extends AbstractNamedBean implements java.beans.Propert
                         if (enableDeleteRouteLogging) {
                             log.info(msgPrefix + " We only have a single valid route left to " + destBlock.getDisplayName() + " So will tell " + layoutBlock.getDisplayName() + " we no longer have it");
                         }
-                        if (layoutBlock!=null) layoutBlock.removeRouteFromNeighbour(this, newUpdate);
+                        if (layoutBlock != null) {
+                            layoutBlock.removeRouteFromNeighbour(this, newUpdate);
+                        }
                         getAdjacency(nextHop).removeRouteAdvertisedToNeighbour(routesToRemove.get(j));
                     }
 

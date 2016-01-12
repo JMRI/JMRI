@@ -30,6 +30,7 @@ public class PackageTest extends TestCase {
     public static Test suite() {
         TestSuite suite = new TestSuite("jmri.jmrix.loconet.locomon.LocoMonTest");  // no tests in this class itself
         suite.addTest(LlnmonTest.suite());
+        suite.addTest(LocoMonPaneTest.suite());
         return suite;
     }
 

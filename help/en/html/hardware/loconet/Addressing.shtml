@@ -26,6 +26,13 @@
 
 <h1>Support: LocoNet&reg; addressing</h1>
 
+<ul class="snav"><!-- h2 TOC -->
+<li><a href="#turnouts">Turnouts</a>
+<li><a href="#sensor">Sensors</a>
+<li><a href="#transponding">Transponding</a>
+<li><a href="#SVs">SVs</a>
+</ul>
+
 LocoNet&reg; systems address input Sensors and output Turnouts using numbers.
 This page describes how those numbers are defined in JMRI, and how they relate
 to the numbers in other (hardware) systems.
@@ -114,7 +121,7 @@ If it's the switch input, you add one more to that:
 <p>Additional information on Sensors and the Sensors Table may be found at the
     <a href="../../tools/Sensors.shtml">main Sensors page</a>.</p>
 
-<h2>Addressing Transponding</h2>
+<a name="transponding" id="transponding"></a><h2>Addressing Transponding</h2>
 
 <p>Digitrax Transponding is handled via the Reporter mechanism
 in JMRI.  Reporters gather information from the layout and make it

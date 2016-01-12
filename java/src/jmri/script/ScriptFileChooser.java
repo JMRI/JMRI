@@ -57,6 +57,9 @@ public class ScriptFileChooser extends JFileChooser {
         try {
             return Bundle.getMessage(language);
         } catch (MissingResourceException ex) {
+            if (!language.endsWith(Bundle.getMessage("files"))) { // NOI18N
+                return language + " " + Bundle.getMessage("files");
+            }
             return language;
         }
     }

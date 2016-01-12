@@ -25,7 +25,7 @@
 <h1>JMRI: SignalPro Main Window</h1>
 
 <img src="../../../../../resources/logo.gif" align="right" height="100" width="100">
-The SignalPro main window gives you access to all the 
+The SignalPro main window gives access to all the 
 capabilities of JMRI.
 
 <p>
@@ -35,6 +35,8 @@ Help on specific menus:
 	<li><a href="../../tools/signaling/index.shtml#tools">Tools -&gt; Tables -&gt; Signals</a>
 	<li><a href="../DecoderPro/Roster.shtml#menu">Roster</a>
 	</ul>
+
+More information about the <a href="../../setup/Files.shtml">JMRI Configuration Files</a> 
 
 <!--#include virtual="/Footer" -->
 </div> <!-- close #mainContent -->

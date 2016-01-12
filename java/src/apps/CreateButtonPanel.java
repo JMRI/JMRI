@@ -2,6 +2,7 @@
 package apps;
 
 import java.util.List;
+import jmri.InstanceManager;
 
 /**
  * Provide a GUI for configuring start-up actions.
@@ -27,7 +28,7 @@ public class CreateButtonPanel extends AbstractActionPanel {
 
     @Override
     List<CreateButtonModel> rememberedObjects() {
-        return CreateButtonModel.rememberedObjects();
+        return InstanceManager.getDefault(StartupActionsManager.class).getActions(CreateButtonModel.class);
     }
 
     @Override

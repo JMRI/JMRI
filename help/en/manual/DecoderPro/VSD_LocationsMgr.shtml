@@ -1,11 +1,9 @@
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
 <html lang="en">
 <head>
-<!-- Copyright ($Author$) 2009 -->
-<!-- $Id$ -->
-<TITLE>
+<title>
 DecoderPro&reg; Main Window
-</TITLE>
+</title>
 
 <!-- Style -->
 <meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
@@ -23,9 +21,9 @@ DecoderPro&reg; Main Window
 <div id="mainContent">
 
 <h1>DecoderPro&reg; Debug Menu</h1>
-<h1>Virtual Sound Decoder</h1>
+<h2>Virtual Sound Decoder</h2>
 
-<div align=right>
+<div align="right">
 <p><a href="Main_Debug.shtml#pricom">Back </a></p>
 </div>
 
@@ -111,7 +109,7 @@ the room, a corner of the room, or a corner of the layout.</p>
 
 <p>The X / Y / Z location values can be in any unit you choose,
 including an arbitrary relative scheme, as long as you are
-consistent. By default, positive X is to the space's right, positve Y
+consistent. By default, positive X is to the space's right, positive Y
 is "forward", and positive Z is "up".
 Negative values are left, behind, and
 down, respectively. Alternately you may prefer to think of +X as
@@ -179,11 +177,13 @@ move to the next location on the Route.</p>
 <p><em>Note:</em> Operations Locations following is temporarily
 disabled in JMRI 3.1.6 but will be re-enabled in 3.1.7.
 
-
-<div align=right>
+<hr>
+<div align="right">
 <p><a href="Main_Debug.shtml#pricom">Back </a></p>
 </div>
 
 <!--#include virtual="/Footer" -->
+  </div><!-- closes #mainContent-->
+ </div> <!-- closes #mBody-->
 </body>
 </html>

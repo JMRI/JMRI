@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<?xml-stylesheet href="/xml/XSLT/panelfile-2-9-6.xsl" type="text/xsl"?>
+<layout-config xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+xsi:noNamespaceSchemaLocation="http://jmri.org/xml/schema/layout-2-9-6.xsd">
+  <jmriversion>
+    <major>4</major>
+    <minor>2</minor>
+    <test>0</test>
+    <modifier />
+  </jmriversion>
+  <LayoutEditor class="jmri.jmrit.display.layoutEditor.configurexml.LayoutEditorXml" name="Eastern Canyon Valley 20160103a" x="7" y="16" height="780" width="1580" windowheight="838" windowwidth="1593" panelheight="780" panelwidth="1580" sliders="no" scrollable="none" editable="yes" positionable="yes" controlling="yes" animating="yes" showhelpbar="yes" drawgrid="no" snaponadd="no" snaponmove="no" antialiasing="no" turnoutcircles="no" tooltipsnotedit="no" tooltipsinedit="yes" mainlinetrackwidth="4" xscale="1.0" yscale="1.0" sidetrackwidth="2" defaulttrackcolor="black" defaultoccupiedtrackcolor="red" defaultalternativetrackcolor="white" defaulttextcolor="black" turnoutcirclecolor="black" turnoutcirclesize="2" turnoutdrawunselectedleg="yes" turnoutbx="20.0" turnoutcx="20.0" turnoutwid="10.0" xoverlong="30.0" xoverhwid="10.0" xovershort="10.0" autoblkgenerate="no" openDispatcher="no" useDirectTurnoutControl="no">    
+    <tracksegment ident=""  connect1name="A4" type1="1" connect2name="A5" type2="1" dashed="no" mainline="no" hidden="no" arc="no" class="jmri.jmrit.display.configurexml.TrackSegmentXml" />
+
+    <positionablepoint ident="A4" type="1" x="890.806" y="386.977" connect1name="T1" class="jmri.jmrit.display.configurexml.PositionablePointXml" />
+    <positionablepoint ident="A5" type="1" x="895.173" y="401.143" connect1name="T2" class="jmri.jmrit.display.configurexml.PositionablePointXml" />
+
+  </LayoutEditor>
+  </layout-config>  
+
+
+
+
+
+
+<!-- neodl4.grp.bf1.yahoo.com Mon Jan  4 05:09:16 PST 2016 -->

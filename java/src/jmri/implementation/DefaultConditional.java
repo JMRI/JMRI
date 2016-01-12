@@ -40,6 +40,7 @@ import jmri.jmrit.audio.AudioSource;
 import jmri.jmrit.logix.OBlock;
 import jmri.jmrit.logix.Warrant;
 import jmri.script.JmriScriptEngineManager;
+import jmri.script.ScriptOutput;
 import jmri.util.PythonInterp;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -1005,7 +1006,7 @@ public class DefaultConditional extends AbstractNamedBean
                         }
                         break;
                     case Conditional.ACTION_JYTHON_COMMAND:
-                        if (!(getActionString(action).equals(""))) {
+                        if (!(getActionString(action).isEmpty())) {
                             PythonInterp.getPythonInterpreter();
 
                             String cmd = getActionString(action) + "\n";
@@ -1020,7 +1021,7 @@ public class DefaultConditional extends AbstractNamedBean
                             // intermediate \n characters need to be prefixed
                             echo = echo.replaceAll("\n", "\n... ");
                             echo = echo.substring(0, echo.length() - 4);
-                            PythonInterp.getOutputArea().append(echo);
+                            ScriptOutput.getDefault().getOutputArea().append(echo);
 
                             // and execute
                             try {

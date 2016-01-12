@@ -1,15 +1,15 @@
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
-<html lang="en"><head><!-- Copyright ($Author$) 2009, 2010 --><!-- $Id$ -->
+<html lang="en">
+<head><title>Comprehensive Programmer - Lighting Functions and FX Pane</title>
 
-
-
-
-
-<title>Comprehensive Programmer - Lighting Functions and FX Pane</title><!-- Style --><meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
+<!-- Style -->
+<meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
 <link rel="stylesheet" type="text/css" href="/css/default.css" media="screen">
 <link rel="stylesheet" type="text/css" href="/css/print.css" media="print">
 <link rel="icon" href="/images/jmri.ico" type="image/png">
-<link rel="home" title="Home" href="/"><!-- /Style --></head>
+<link rel="home" title="Home" href="/">
+<!-- /Style -->
+</head>
 
 <body>
 <!--#include virtual="/Header" -->
@@ -19,7 +19,7 @@
 
 <a name="Top"></a>
 <h1>DecoderPro&reg; Comprehensive Programmer</h1>
-<h1>Lighting and FX Functions Pane</h1>
+<h2>Lighting and FX Functions Pane</h2>
 
 <div align="right">
 <p><a href="Comp_FMap.shtml">Previous | </a>
@@ -77,12 +77,15 @@ more functions than normal motor control decoders.
   satisfying of all the capabilities of the decoders!
 </p><p>Even if the function and effect are available, you may have to
 add the lighting to your locomotive in order to be able to use that
-function, such as adding ditch lights, beacons, etc.
-</p><p>
-</p><hr>
+function, such as adding ditch lights, beacons, etc.</p>
+
+<hr>
 <div align="right">
 <p><a href="Comp_Consist.shtml"></a><a href="Comp_FMap.shtml">Previous | </a> <a href="Comp_Analog.shtml">Next</a>
 </p><p><a href="index.shtml#Advanced%20Programmer">Back to Index</a> </p></div>
 
 <!--#include virtual="/Footer" -->
-</div></body></html>
+  </div><!-- closes #mainContent-->
+ </div> <!-- closes #mBody-->
+ </body>
+</html>
