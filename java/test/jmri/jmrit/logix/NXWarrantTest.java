@@ -203,6 +203,7 @@ public class NXWarrantTest extends jmri.util.SwingTestCase {
         JUnitUtil.initInternalLightManager();
         JUnitUtil.initInternalSensorManager();
         JUnitUtil.initInternalSignalHeadManager();
+        JUnitUtil.initDebugPowerManager();
         JUnitUtil.initDebugThrottleManager();
         JUnitUtil.initMemoryManager();
         JUnitUtil.initOBlockManager();

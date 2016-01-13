@@ -96,6 +96,10 @@ public class LearnWarrantTest extends jmri.util.SwingTestCase {
         // Dialog has popped up, so handle that. First, locate it.
         List<JDialog> dialogList = new DialogFinder(null).findAll(panel);
         TestHelper.disposeWindow(dialogList.get(0), this);
+
+        flushAWT();
+        // confirm one message logged
+        jmri.util.JUnitAppender.assertWarnMessage("RosterSpeedProfile not found. Using default ThrottleFactor 0.75");
     }
     
     private javax.swing.AbstractButton pressButton(java.awt.Container frame, String text) {
@@ -158,6 +162,7 @@ public class LearnWarrantTest extends jmri.util.SwingTestCase {
     // The minimal setup for log4J
     @Override
     protected void setUp() throws Exception {
+        apps.tests.Log4JFixture.setUp(); 
         super.setUp();
          // set the locale to US English
         Locale.setDefault(Locale.ENGLISH);
@@ -167,6 +172,7 @@ public class LearnWarrantTest extends jmri.util.SwingTestCase {
         JUnitUtil.initInternalLightManager();
         JUnitUtil.initInternalSensorManager();
         JUnitUtil.initInternalSignalHeadManager();
+        JUnitUtil.initDebugPowerManager();
         JUnitUtil.initDebugThrottleManager();
         JUnitUtil.initMemoryManager();
         JUnitUtil.initOBlockManager();
@@ -179,6 +185,7 @@ public class LearnWarrantTest extends jmri.util.SwingTestCase {
     protected void tearDown() throws Exception {
         JUnitUtil.resetInstanceManager();
         super.tearDown();
+        apps.tests.Log4JFixture.tearDown(); 
     }
 
 }
