@@ -51,7 +51,7 @@
 ; - Version History
 ; -------------------------------------------------------------------------
 ; - Version 0.1.22.5
-; - Remove RXTX files as now replaced by purejavacomm
+; - Remove RXTX and SerialIO files as now replaced by purejavacomm
 ; -------------------------------------------------------------------------
 ; - Version 0.1.22.4
 ; - Remove more outmoded jetty files
@@ -589,7 +589,8 @@ SectionGroup "JMRI Core Files" SEC_CORE
     ; -- Delete old JOAL .dll files
     Delete "$OUTDIR\lib\x86\joal_native.dll"
 
-    ; -- Delete RXTX files
+    ; -- Delete RXTX/SerialIO files
+    Delete "$OUTDIR\lib\Serialio.jar"
     Delete "$OUTDIR\lib\RXTXcomm.jar"
     Delete "$OUTDIR\lib\x86\rxtxSerial.dll"
     Delete "$OUTDIR\lib\x64\rxtxSerial.dll"
