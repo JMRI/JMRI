@@ -4,7 +4,6 @@ package jmri.util;
 import purejavacomm.SerialPort;
 import purejavacomm.UnsupportedCommOperationException;
 
-
 /**
  * Common utility methods for working with Serial Ports.
  * <P>
@@ -27,7 +26,7 @@ public class SerialUtil {
          */
         try {
             activeSerialPort.setSerialPortParams(baud, databits, stopbits, parity);
-        } catch (Exception et) {
+        } catch (UnsupportedCommOperationException et) {
             // Work around Sun Comm bug
         }
         activeSerialPort.setSerialPortParams(baud, databits, stopbits, parity);
