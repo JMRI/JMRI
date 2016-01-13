@@ -56,7 +56,7 @@ emplacements par d&#233;faut pour le r&#233;pertoire des pr&#233;f&#233;rences.
 <dt>
 purejavacomm.portnamepattern
 <dd>
-    NEEDS TRANSLATION
+    NEEDS RETRANSLATION
 La biblioth&#232;que de communication RXTX utilise cette option pour sp&#233;cifier les
 ports suppl&#233;mentaires &#224; utiliser. Si vous avez par exemple un adaptateur USB vers un adaptateur s&#233;rie
 qui ne s'affiche pas dans les bo&#238;tes du s&#233;lecteur de pr&#233;f&#233;rences,
