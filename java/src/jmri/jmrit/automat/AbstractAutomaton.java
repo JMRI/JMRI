@@ -69,6 +69,8 @@ import org.slf4j.LoggerFactory;
  * {@link #waitTurnoutConsistent(jmri.Turnout[])}
  * <LI>Wait for any one of a number of Sensors, Turnouts and/or other objects to
  * change: {@link #waitChange(jmri.NamedBean[])}
+ * <LI>Wait for any one of a number of Sensors, Turnouts and/or other objects to
+ * change, up to a specified time: {@link #waitChange(jmri.NamedBean[], int)}
  * <LI>Obtain a DCC throttle: {@link #getThrottle}
  * <LI>Read a CV from decoder on programming track: {@link #readServiceModeCV}
  * <LI>Write a value to a CV in a decoder on the programming track:
@@ -545,19 +547,22 @@ public class AbstractAutomaton implements Runnable {
     }
 
     /**
-     * Wait for one of a list of NamedBeans (sensors, signal heads and/or
+     * Wait, up to a specified time, for one of a list of NamedBeans (sensors, signal heads and/or
      * turnouts) to change.
-     * <P>
-     * This works by registering a listener, which is likely to run in another
-     * thread. That listener then interrupts the automaton's thread, who
-     * confirms the change.
      *
      * @param mInputs Array of NamedBeans to watch
+     * @param maxDelay maximum amount of time (milliseconds) to wait before continuing anyway. -1 means forever
      */
-    // dboudreau, removed synchronized from the method below.
+    //
+    // This works by registering a listener, which is likely to run in another
+    // thread. That listener then interrupts the automaton's thread, who
+    // then cleans up.
+    //
+    // dboudreau: removed synchronized from the method below.
     // The synchronized can cause thread lockup when a one thread
     // is held at the inner synchronized (self)
-    public void waitChange(NamedBean[] mInputs) {
+    //
+    public void waitChange(NamedBean[] mInputs, int maxDelay) {
         if (!inThread) {
             log.warn("waitChange invoked from invalid context");
         }
@@ -583,7 +588,7 @@ public class AbstractAutomaton implements Runnable {
         }
 
         // wait for notify
-        wait(-1);
+        wait(maxDelay);
 
         // remove the listeners
         for (i = 0; i < mInputs.length; i++) {
@@ -593,6 +598,16 @@ public class AbstractAutomaton implements Runnable {
         return;
     }
 
+    /**
+     * Wait forever for one of a list of NamedBeans (sensors, signal heads and/or
+     * turnouts) to change, or for a specific time to pass.
+     *
+     * @param mInputs Array of NamedBeans to watch
+     */
+    public void waitChange(NamedBean[] mInputs) {
+        waitChange(mInputs, -1);
+    }
+    
     /**
      * Wait for one of an array of sensors to change.
      * <P>

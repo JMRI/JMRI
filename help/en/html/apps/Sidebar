@@ -109,8 +109,8 @@
         <li><a href="http://jmri.sourceforge.net/install/WindowsNew.shtml">Windows</a>
         <li><a href="http://jmri.sourceforge.net/install/MacOSX.shtml">Mac OS X</a>
         <li><a href="http://jmri.sourceforge.net/install/Linux.shtml">Linux</a>
-        <li><a href="http://jmri.sourceforge.net/install/Debug.shtml">Debugging an installation</a>
-		    </ul>
+        <li><a href="../setup/index.shtml">JMRI Setup</a></li>
+   		  </ul>
 		</dd>
 </dl>
 

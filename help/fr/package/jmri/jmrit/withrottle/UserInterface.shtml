@@ -37,7 +37,7 @@ par exemple un IPhone, IPod Touch, ou t&#233;l&#233;phone Android, et JMRI.
 Il peut &#234;tre configur&#233; pour d&#233;marrer automatiquement avec le
 "<a href="../../../apps/TabbedPreferences.shtml#Startup"> D&#233;marrage </a>" dans la section
 "<a href="../../../apps/TabbedPreferences.shtml"> JMRI Pr&#233;f&#233;rences </a>"
-section Pr&#233;f&#233;rences JMRI sous la rubrique «Actions».
+section Pr&#233;f&#233;rences JMRI sous la rubrique ï¿½Actionsï¿½.
 
 <p>
 <a href="../../../apps/TabbedPreferences.shtml#WiThrottle"> Les Pr&#233;f&#233;rences </a>
@@ -98,7 +98,7 @@ Itin&#233;raires et Aiguillages
 
 </h3>
 L'application peut commander tous les aiguillages (et itin&#233;raires) que JMRI commande. S'is sont disponibless dans le tableau aiguillage (ou itin&#233;raire) de JMRI,
-ils sont automatiquement disponibles dans les r&#233;gulateurs WiFi. 
+ils sont automatiquement disponibles dans les r&#233;gulateurs WiFi.ï¿½
 S'il n'y a pas d'aiguillages (ou itin&#233;raires dans le tableau(x) alors l'&#233;cran de commande pour eux n'apparaitra pas dans l'application.
 Par d&#233;faut,il peut faire tout ceci.
 Toutefois, si JMRI n'est pas capable de les commander, les r&#233;gulateurs ne seront pas capables de le faire.
