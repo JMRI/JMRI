@@ -131,11 +131,10 @@ symboles pour contr&#244;ler le fonctionnement
 
 <dt>Autres noms de port
 <dd>
-RXTX ne conna&#238;t pas les noms de certains des ports s&#233;rie connect&#233;s
+    NEEDS RETRANSLATION
+PureJavaComm ne conna&#238;t pas les noms de certains des ports s&#233;rie connect&#233;s
 via USB. Cette section cherche quelques noms connus et les ajoute
-au programme si elle est pr&#233;sente. Si vous avez un nom de fichier de p&#233;riph&#233;rique que
-JMRI ne trouve pas, vous pouvez d&#233;finir la variable d'environnement <tt> JMRI_SERIAL_PORTS</tt>
-pour &#234;tre une liste de noms s&#233;par&#233; par des virgules.
+au programme si elle est pr&#233;sente.
 
 <dt> Java commande
 <dd> Enfin, le script met tout cela ensemble dans une commande java, qui l'ex&#233;cute.

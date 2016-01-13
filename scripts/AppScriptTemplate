@@ -8,11 +8,6 @@
 # If you need to add any additional Java options or defines,
 # include them in the JMRI_OPTIONS environment variable
 #
-# If your serial ports are not shown in the initial list, you
-# can include them in the environment variable JMRI_SERIAL_PORTS
-# separated by commas:
-#    export JMRI_SERIAL_PORTS="/dev/locobuffer,/dev/cmri"
-#
 # You can run separate instances of the program with their
 # own preferences and setup if you either
 # *) Provide the name of a configuration file as a parameter
@@ -328,25 +323,6 @@ OPTIONS="${OPTIONS} -Djava.library.path=.:$SYSLIBPATH:${LIBDIR}"
 
 # memory start and max limits
 OPTIONS="${OPTIONS} ${OS_OPTIONS} ${MEMORY_OPTIONS}"
-
-# RXTX options (only works in some versions)
-OPTIONS="${OPTIONS} -Dgnu.io.rxtx.NoVersionOutput=true"
-[ -n "${DEBUG}" ] && echo "OPTIONS: '${OPTIONS}'"
-
-if [ -n "$JMRI_SERIAL_PORTS" ] ; then
-    JMRI_SERIAL_PORTS="$JMRI_SERIAL_PORTS,"
-fi
-
-if [ "$OS" = "macosx" ] ; then
-    ALTPORTS=
-else
-    # locate alternate serial ports
-    ALTPORTS=$( echo "$JMRI_SERIAL_PORTS $( ls -fm /dev/ttyS* /dev/ttyUSB* /dev/ttyACM* /dev/ttyAMA* 2>/dev/null )" | tr -d " \n" | tr "," ":" )
-    if [ "${ALTPORTS}" ] ; then
-        ALTPORTS=-Dgnu.io.rxtx.SerialPorts=${ALTPORTS}
-    fi
-    [ -n "${DEBUG}" ] && echo "ALTPORTS: '${ALTPORTS}'"
-fi
 
 declare -a DOCK_OPTIONS
 # Apple dock extensions to java get mangled by bash if included in ${OPTIONS}
