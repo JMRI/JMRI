@@ -40,7 +40,6 @@ public class NXWarrantTest extends jmri.util.SwingTestCase {
     
     @SuppressWarnings("unchecked") // For types from DialogFinder().findAll(..)
     public void testNXWarrant() throws Exception {
-        jmri.util.JUnitAppender.clearBacklog();
 
         // load and display
         File f = new File("java/test/jmri/jmrit/logix/valid/NXWarrantTest.xml");
@@ -60,7 +59,6 @@ public class NXWarrantTest extends jmri.util.SwingTestCase {
         nxFrame.init();
         nxFrame.setVisible(true);
         nxFrame._maxSpeedBox.setText("0.30");
-        connectThrottle();
         
         nxFrame._origin.blockBox.setText("OB0");
         nxFrame._destination.blockBox.setText("OB10");
@@ -149,16 +147,7 @@ public class NXWarrantTest extends jmri.util.SwingTestCase {
         }
         pressButton(pane, buttonLabel);
     }
-    
-    private static void connectThrottle() {
-        jmri.jmrix.nce.simulator.SimulatorAdapter nceSimulator = new jmri.jmrix.nce.simulator.SimulatorAdapter();
-        Assert.assertNotNull("Nce SimulatorAdapter", nceSimulator);
-        jmri.jmrix.nce.NceSystemConnectionMemo memo = nceSimulator.getSystemConnectionMemo();
-        nceSimulator.openPort("(None Selected)", "JMRI test");
-        nceSimulator.configure();
-        Assert.assertNotNull("NceSystemConnectionMemo", memo);        
-    }
-    
+        
     @SuppressWarnings("unchecked") // For types from DialogFinder().findAll(..)
     private static List<JRadioButton> getRadioButtons(java.awt.Container frame) {
         ComponentFinder finder = new ComponentFinder(JRadioButton.class);
@@ -214,6 +203,7 @@ public class NXWarrantTest extends jmri.util.SwingTestCase {
         JUnitUtil.initInternalLightManager();
         JUnitUtil.initInternalSensorManager();
         JUnitUtil.initInternalSignalHeadManager();
+        JUnitUtil.initDebugThrottleManager();
         JUnitUtil.initMemoryManager();
         JUnitUtil.initOBlockManager();
         JUnitUtil.initLogixManager();

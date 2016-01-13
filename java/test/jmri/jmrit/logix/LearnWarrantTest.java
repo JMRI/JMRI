@@ -62,7 +62,6 @@ public class LearnWarrantTest extends jmri.util.SwingTestCase {
         // occupy starting block
         Sensor sensor = _sensorMgr.getBySystemName("IS1");
         sensor.setState(Sensor.ACTIVE);
-        connectThrottle();
         pressButton(frame, Bundle.getMessage("Start"));
 
         Assert.assertNotNull("Throttle not found", frame._learnThrottle.getThrottle());
@@ -115,15 +114,6 @@ public class LearnWarrantTest extends jmri.util.SwingTestCase {
         pressButton(pane, text);
     }
     
-    private static void connectThrottle() {
-        jmri.jmrix.nce.simulator.SimulatorAdapter nceSimulator = new jmri.jmrix.nce.simulator.SimulatorAdapter();
-        Assert.assertNotNull("Nce SimulatorAdapter", nceSimulator);
-        jmri.jmrix.nce.NceSystemConnectionMemo memo = nceSimulator.getSystemConnectionMemo();
-        nceSimulator.openPort("(None Selected)", "JMRI test");
-        nceSimulator.configure();
-        Assert.assertNotNull("NceSystemConnectionMemo", memo);        
-    }
-
     /**
      * @param sensor - active start sensor
      * @return - active end sensor
@@ -177,6 +167,7 @@ public class LearnWarrantTest extends jmri.util.SwingTestCase {
         JUnitUtil.initInternalLightManager();
         JUnitUtil.initInternalSensorManager();
         JUnitUtil.initInternalSignalHeadManager();
+        JUnitUtil.initDebugThrottleManager();
         JUnitUtil.initMemoryManager();
         JUnitUtil.initOBlockManager();
         JUnitUtil.initLogixManager();
