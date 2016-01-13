@@ -30,16 +30,22 @@ public class BlockBossLogicTest extends TestCase {
         BlockBossLogic p = new BlockBossLogic("IH1");
         p.setMode(BlockBossLogic.SINGLEBLOCK);
         p.setWatchedSignal1("IH2", false);
+        h1.setAppearance(SignalHead.RED); // starting point, to ensure it really changes
+
         p.start();
         Assert.assertEquals("driven signal name", "IH1", p.getDrivenSignal());
-
-        h1.setAppearance(SignalHead.RED); // starting point, to ensure it really changes
         
         h2.setAppearance(SignalHead.YELLOW);
         JUnitUtil.waitFor(()->{return SignalHead.GREEN == h1.getAppearance();}, "yellow sets green");  // wait and test
 
+        h1.setAppearance(SignalHead.RED); // starting point, to ensure it really changes
+        JUnitUtil.waitFor(()->{return SignalHead.RED == h1.getAppearance();}, "reset to red");  // ensure ready for next test
+
         h2.setAppearance(SignalHead.RED);
         JUnitUtil.waitFor(()->{return SignalHead.YELLOW == h1.getAppearance();}, "red sets yellow");  // wait and test
+
+        h1.setAppearance(SignalHead.RED); // starting point, to ensure it really changes
+        JUnitUtil.waitFor(()->{return SignalHead.RED == h1.getAppearance();}, "reset to red");  // ensure ready for next test
 
         h2.setAppearance(SignalHead.GREEN);
         JUnitUtil.waitFor(()->{return SignalHead.GREEN == h1.getAppearance();}, "green sets green");  // wait and test
@@ -53,16 +59,22 @@ public class BlockBossLogicTest extends TestCase {
         p.setMode(BlockBossLogic.SINGLEBLOCK);
         p.setWatchedSignal1("IH2", false);
         p.setDistantSignal(true);
+        h1.setAppearance(SignalHead.GREEN); // starting point, to ensure it really changes
+
         p.start();
         Assert.assertEquals("driven signal name", "IH1", p.getDrivenSignal());
-
-        h1.setAppearance(SignalHead.GREEN); // starting point, to ensure it really changes
 
         h2.setAppearance(SignalHead.RED);
         JUnitUtil.waitFor(()->{return SignalHead.RED == h1.getAppearance();}, "red sets red");  // wait and test
 
+        h1.setAppearance(SignalHead.RED); // starting point, to ensure it really changes
+        JUnitUtil.waitFor(()->{return SignalHead.RED == h1.getAppearance();}, "reset to red");  // ensure ready for next test
+
         h2.setAppearance(SignalHead.YELLOW);
         JUnitUtil.waitFor(()->{return SignalHead.YELLOW == h1.getAppearance();}, "yellow sets yellow");  // wait and test
+
+        h1.setAppearance(SignalHead.RED); // starting point, to ensure it really changes
+        JUnitUtil.waitFor(()->{return SignalHead.RED == h1.getAppearance();}, "reset to red");  // ensure ready for next test
 
         h2.setAppearance(SignalHead.GREEN);
         JUnitUtil.waitFor(()->{return SignalHead.GREEN == h1.getAppearance();}, "green sets green");  // wait and test
@@ -77,9 +89,9 @@ public class BlockBossLogicTest extends TestCase {
         p.setMode(BlockBossLogic.SINGLEBLOCK);
         p.setWatchedSignal1("IH2", false);
         p.setLimitSpeed1(true);
-        p.start();
-
         h1.setAppearance(SignalHead.RED); // starting point, to ensure it really changes
+
+        p.start();
 
         h2.setAppearance(SignalHead.RED);
         JUnitUtil.waitFor(()->{return SignalHead.YELLOW == h1.getAppearance();}, "red sets yellow");  // wait and test
@@ -106,9 +118,9 @@ public class BlockBossLogicTest extends TestCase {
         p.setWatchedSignal1("IH2", false);
         p.setDistantSignal(true);
         p.setLimitSpeed1(true);
-        p.start();
-
         h1.setAppearance(SignalHead.RED); // starting point, to ensure it really changes
+
+        p.start();
 
         h2.setAppearance(SignalHead.YELLOW);
         JUnitUtil.waitFor(()->{return SignalHead.YELLOW == h1.getAppearance();}, "yellow sets yellow");  // wait and test
@@ -137,6 +149,7 @@ public class BlockBossLogicTest extends TestCase {
         BlockBossLogic p = new BlockBossLogic("IH1");
         p.setMode(BlockBossLogic.SINGLEBLOCK);
         p.setLimitSpeed1(true);
+
         p.start();
 
         JUnitUtil.waitFor(()->{return SignalHead.YELLOW == h1.getAppearance();}, "missing signal is green, show yellow");  // wait and test
