@@ -70,7 +70,6 @@ abstract public class AbstractSerialPortController extends AbstractPortControlle
             }
             if (getPortNames().size() <= 0) {
                 log.error("No usable ports returned");
-                new Exception("travis test traceback").printStackTrace();
                 return null;
             }
             return null;
