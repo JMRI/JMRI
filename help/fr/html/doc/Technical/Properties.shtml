@@ -55,16 +55,15 @@ JMRI l'utilise, sur certains systèmes, pour localiser les
 emplacements par défaut pour le répertoire des préférences.
 
 <dt>
-gnu.io.rxtx.SerialPorts
+purejavacomm.portnamepattern
 <dd>
+NEEDS RETRANSLATION
 La bibliothèque RXTX communications utilise cette option pour spécifier les
 ports supplémentaires à utiliser. Si vous avez par exemple un adaptateur USB vers un adaptateur série
  qui ne s'affiche pas dans les boîtes du sélecteur de préférences,
 attribuer son nom à cette propriété.
 <p>
--Dgnu.io.rxtx.SerialPorts=/dev/ttyUSB0
-<p>
-Les scripts de démarrage Linux le fera si vous avez défini la variable d'environnement JMRI_SERIAL_PORT.
+-J-Dpurejavacomm.portnamepattern=ttyUSB0
 
 </dl>
 

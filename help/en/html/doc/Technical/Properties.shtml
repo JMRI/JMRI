@@ -57,16 +57,14 @@ JMRI uses it, on some systems, for locating the default
 locations for the preferences directory.
 
 <dt>
-gnu.io.rxtx.SerialPorts
+purejavacomm.portnamepattern
 <dd>
-The RXTX communications library uses this to specify 
-additional ports to use.  If you have e.g. a USB to serial
+The PureJavaComm communications library uses this to specify 
+the pattern for serial ports to use.  If you have e.g. a USB to serial
 adapter which is not showing up in the preferences chooser boxes,
 assign its name to this property.
 <p>
--Dgnu.io.rxtx.SerialPorts=/dev/ttyUSB0
-<p>
-The Linux startup scripts will do this if you have set the JMRI_SERIAL_PORT environment variable.
+-J-Dpurejavacomm.portnamepattern=ttyUSB0
 
 </dl>
 
