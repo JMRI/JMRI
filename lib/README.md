@@ -26,9 +26,6 @@ Note that Windows installers don't necessarily remove existing library versions.
 - from Java3D 1.3.2
 - from <https://java3d.dev.java.net/binary-builds-old.html>
 
-##### Serialio.jar
-- from <http://serialio.com>
-
 ##### commons-lang3-3.2.1.jar
 - version 3.2.1
 - provides org.apache.commons.lang3
@@ -283,3 +280,7 @@ NOTE: joal.jar is currently replaced by an own-built version with modifications 
     macosx/librxtxSerial.jnilib     169488  from rxtx-2.2pre2-bins distribution
     macosx/ppc/librxtxSerial.jnilib 301908  built for MacOS X 10.4 by John Plocher 2010-02-04
 - No longer used as of JMRI 4.3.X
+
+##### Serialio.jar
+- from <http://serialio.com>
+- No longer uses as of JMRI 4.3.X
