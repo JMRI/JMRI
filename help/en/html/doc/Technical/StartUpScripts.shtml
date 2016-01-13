@@ -140,7 +140,8 @@ symbols to control operation.
 PureJavaComm does not know about certain names for serial ports connected
 via USB.  This section looks for a few known names and adds them
 to the program if present.  If you have a device file name that JMRI
-cannot find, you can specify its use with the <code>purejavacomm.portnamepattern</code>
+cannot find, you can specify its use with the
+<a href="Properties.shtml"><code>purejavacomm.portnamepattern</code></a>
 system property.
 
 <dt>Java command
