@@ -84,19 +84,19 @@
 
     <appearance>
       <aspectname>Stop</aspectname>
-      <show>green</show>
+      <show>red</show>
       <reference>Rule 292</reference>
       <imagelink>../../../resources/icons/smallschematics/aspects/NYC-1956/SL-1-low/Rule 292.gif</imagelink>
     </appearance>
 
   </appearances>
   <specificappearances>
-    <danger>
-      <aspect>Stop</aspect>
-    </danger>
-    <held>
-      <aspect>Stop</aspect>
-    </held>
+  	<danger>
+  		<aspect>Stop</aspect>
+  	</danger>
+  	<held>
+  		<aspect>Stop</aspect>
+  	</held>
   </specificappearances>
   
   <aspectMappings>
