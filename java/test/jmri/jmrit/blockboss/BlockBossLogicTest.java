@@ -33,11 +33,13 @@ public class BlockBossLogicTest extends TestCase {
         p.start();
         Assert.assertEquals("driven signal name", "IH1", p.getDrivenSignal());
 
-        h2.setAppearance(SignalHead.RED);
-        JUnitUtil.waitFor(()->{return SignalHead.YELLOW == h1.getAppearance();}, "red sets yellow");  // wait and test
-
+        h1.setAppearance(SignalHead.RED); // starting point, to ensure it really changes
+        
         h2.setAppearance(SignalHead.YELLOW);
         JUnitUtil.waitFor(()->{return SignalHead.GREEN == h1.getAppearance();}, "yellow sets green");  // wait and test
+
+        h2.setAppearance(SignalHead.RED);
+        JUnitUtil.waitFor(()->{return SignalHead.YELLOW == h1.getAppearance();}, "red sets yellow");  // wait and test
 
         h2.setAppearance(SignalHead.GREEN);
         JUnitUtil.waitFor(()->{return SignalHead.GREEN == h1.getAppearance();}, "green sets green");  // wait and test
@@ -53,6 +55,8 @@ public class BlockBossLogicTest extends TestCase {
         p.setDistantSignal(true);
         p.start();
         Assert.assertEquals("driven signal name", "IH1", p.getDrivenSignal());
+
+        h1.setAppearance(SignalHead.GREEN); // starting point, to ensure it really changes
 
         h2.setAppearance(SignalHead.RED);
         JUnitUtil.waitFor(()->{return SignalHead.RED == h1.getAppearance();}, "red sets red");  // wait and test
@@ -75,11 +79,19 @@ public class BlockBossLogicTest extends TestCase {
         p.setLimitSpeed1(true);
         p.start();
 
+        h1.setAppearance(SignalHead.RED); // starting point, to ensure it really changes
+
         h2.setAppearance(SignalHead.RED);
         JUnitUtil.waitFor(()->{return SignalHead.YELLOW == h1.getAppearance();}, "red sets yellow");  // wait and test
 
+        h1.setAppearance(SignalHead.RED); // starting point, to ensure it really changes
+        JUnitUtil.waitFor(()->{return SignalHead.RED == h1.getAppearance();}, "reset to red");  // ensure ready for next test
+
         h2.setAppearance(SignalHead.YELLOW);
         JUnitUtil.waitFor(()->{return SignalHead.YELLOW == h1.getAppearance();}, "yellow sets yellow");  // wait and test
+
+        h1.setAppearance(SignalHead.RED); // starting point, to ensure it really changes
+        JUnitUtil.waitFor(()->{return SignalHead.RED == h1.getAppearance();}, "reset to red");  // ensure ready for next test
 
         h2.setAppearance(SignalHead.GREEN);
         JUnitUtil.waitFor(()->{return SignalHead.YELLOW == h1.getAppearance();}, "green sets yellow");  // wait and test
@@ -96,11 +108,13 @@ public class BlockBossLogicTest extends TestCase {
         p.setLimitSpeed1(true);
         p.start();
 
-        h2.setAppearance(SignalHead.RED);
-        JUnitUtil.waitFor(()->{return SignalHead.RED == h1.getAppearance();}, "red sets red");  // wait and test
+        h1.setAppearance(SignalHead.RED); // starting point, to ensure it really changes
 
         h2.setAppearance(SignalHead.YELLOW);
         JUnitUtil.waitFor(()->{return SignalHead.YELLOW == h1.getAppearance();}, "yellow sets yellow");  // wait and test
+
+        h2.setAppearance(SignalHead.RED);
+        JUnitUtil.waitFor(()->{return SignalHead.RED == h1.getAppearance();}, "red sets red");  // wait and test
 
         h2.setAppearance(SignalHead.GREEN);
         JUnitUtil.waitFor(()->{return SignalHead.YELLOW == h1.getAppearance();}, "green sets yellow");  // wait and test
@@ -108,7 +122,7 @@ public class BlockBossLogicTest extends TestCase {
         p.stop();
     }
 
-    // if no next signal, it's considered green
+    // if no next signal, next signal considered green
     public void testSimpleBlockNoNext() {
         BlockBossLogic p = new BlockBossLogic("IH1");
         p.setMode(BlockBossLogic.SINGLEBLOCK);
@@ -118,7 +132,7 @@ public class BlockBossLogicTest extends TestCase {
         p.stop();
     }
 
-    // if no next signal, it's considered green
+    // if no next signal, next signal is considered green
     public void testSimpleBlockNoNextLimited() {
         BlockBossLogic p = new BlockBossLogic("IH1");
         p.setMode(BlockBossLogic.SINGLEBLOCK);
