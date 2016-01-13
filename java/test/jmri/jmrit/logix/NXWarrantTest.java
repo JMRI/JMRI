@@ -40,6 +40,8 @@ public class NXWarrantTest extends jmri.util.SwingTestCase {
     
     @SuppressWarnings("unchecked") // For types from DialogFinder().findAll(..)
     public void testNXWarrant() throws Exception {
+        jmri.util.JUnitAppender.clearBacklog();
+
         // load and display
         File f = new File("java/test/jmri/jmrit/logix/valid/NXWarrantTest.xml");
         InstanceManager.getDefault(ConfigureManager.class).load(f);
@@ -190,6 +192,7 @@ public class NXWarrantTest extends jmri.util.SwingTestCase {
 
     // Main entry point
     static public void main(String[] args) {
+        apps.tests.Log4JFixture.initLogging();
         String[] testCaseName = {"-noloading", NXWarrantTest.class.getName()};
         junit.swingui.TestRunner.main(testCaseName);
     }
@@ -201,8 +204,8 @@ public class NXWarrantTest extends jmri.util.SwingTestCase {
 
     @Override
     protected void setUp() throws Exception {
-        super.setUp();
         apps.tests.Log4JFixture.setUp();
+        super.setUp();
          // set the locale to US English
         Locale.setDefault(Locale.ENGLISH);
         JUnitUtil.resetInstanceManager();
@@ -221,8 +224,8 @@ public class NXWarrantTest extends jmri.util.SwingTestCase {
     @Override
     protected void tearDown() throws Exception {
         JUnitUtil.resetInstanceManager();
-        apps.tests.Log4JFixture.tearDown();
         super.tearDown();
+        apps.tests.Log4JFixture.tearDown();
     }
 
 }
