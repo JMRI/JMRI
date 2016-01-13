@@ -201,6 +201,9 @@ public class WarrantTest extends TestCase {
             System.out.println(e);            
         }
 
+        // confirm one message logged
+        jmri.util.JUnitAppender.assertWarnMessage("RosterSpeedProfile not found. Using default ThrottleFactor 0.75");
+
         // wait for done
         jmri.util.JUnitUtil.waitFor(()->{return warrant.getThrottle()==null;}, "engineer blocked");
 
