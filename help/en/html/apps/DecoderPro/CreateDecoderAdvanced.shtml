@@ -190,7 +190,7 @@ Pane visibility is governed by a complex set of rules:
 </ul>
 <a name="pane_best_practice" id="pane_best_practice"></a>
 <h4>Best Pactice</h4>
-Advanced users may choose to hide empty panes but,Show Empty Tabs is enabled by default so beginner users need to see why panes are empty or where to find items not on the expected panes.
+Advanced users may choose to hide empty panes, but Show Empty Tabs is enabled by default so beginner users need to see why panes are empty or where to find items not on the expected panes.
 <p>
 The recommended best practice is:
 <ul>
@@ -242,7 +242,7 @@ The recommended best practice is:
 In some cases, e.g. a non-locomotive decoder for servos where none of the
 locomotive-decoder panes make sense so the decoder definition contains lots of
 custom panes, it's a simplification to put a showEmptyPanes="no" attribute in
-the &lt;decoder-config&gt; element of the definition XML and just remove all those.
+the &lt;decoder-config&gt; element of the definition XML and just hide all those empty panes by default.
 
 <a name="frag_include" id="frag_include"></a>
 <h3>Including Fragment Files</h3>
