@@ -22,6 +22,7 @@ import javax.swing.JScrollPane;
 import javax.swing.JTable;
 import jmri.jmrit.operations.OperationsFrame;
 import jmri.jmrit.operations.OperationsXml;
+import jmri.jmrit.operations.automation.AutomationsTableFrameAction;
 import jmri.jmrit.operations.locations.Location;
 import jmri.jmrit.operations.locations.LocationManager;
 import jmri.jmrit.operations.rollingstock.cars.CarManagerXml;
@@ -270,6 +271,7 @@ public class TrainsTableFrame extends OperationsFrame implements java.beans.Prop
         toolMenu.add(new ChangeDepartureTimesAction(Bundle.getMessage("TitleChangeDepartureTime")));
         toolMenu.add(new TrainsTableSetColorAction());
         toolMenu.add(new TrainsScheduleAction(Bundle.getMessage("TitleTimeTableTrains")));
+        toolMenu.add(new AutomationsTableFrameAction());
         toolMenu.add(new TrainCopyAction(Bundle.getMessage("TitleTrainCopy")));
         toolMenu.add(new TrainsScriptAction(Bundle.getMessage("MenuItemScripts"), this));
         toolMenu.add(new PrintSavedTrainManifestAction(Bundle.getMessage("MenuItemPrintSavedManifest"), false));
