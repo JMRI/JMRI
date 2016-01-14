@@ -962,6 +962,21 @@
         </resourceCheck>
     </target>
 
+    <!-- check for non-ASCII characters in properties files -->
+
+    <target name="checknonascii">
+        <exec executable="sh" outputproperty="checknonascii.files">
+            <arg value="-c" />
+            <arg value="grep -rlI -P '[^\x00-\x7f]' --exclude-dir={classes,help,jython,lib,nbproject,resources,scripts,web,xml} --include=*.properties" />
+        </exec>
+
+        <fail message="${checknonascii.files}">
+            <condition>
+                <length string="${checknonascii.files}" when="greater" length="0" />
+            </condition>
+        </fail>
+    </target>
+
     <!-- check for bad line ends, e.g. not ready to go into Git -->
     <!-- May not (probably will not) work on Windows -->
 
@@ -1016,6 +1031,7 @@
             **/README*
             **/Sidebar
             **/TODO
+            **/.classpath
         " />
     </target>
 

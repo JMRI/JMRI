@@ -3190,6 +3190,33 @@ public class Train implements java.beans.PropertyChangeListener {
         }
         return false;
     }
+    
+    public boolean move(RouteLocation rl) {
+        if (rl == null) {
+            return false;
+        }
+        log.info("Move train ({}) to location ({})", getName(), rl.getName());
+        if (getRoute() == null || getCurrentLocation() == null) {
+            return false;
+        }
+        boolean foundCurrent = false;
+        for (RouteLocation xrl : getRoute().getLocationsBySequenceList()) {
+            if (getCurrentLocation() == xrl) {
+                foundCurrent = true;
+            }
+            if (xrl == rl) {
+                break; // train passed this location
+            }
+            if (!foundCurrent) {
+                continue;
+            }
+            if (xrl == rl) {
+                return true; // done
+            }
+            move();
+        }
+        return false;
+    }
 
     /**
      * Move train to the next location in the train's route. The location name
