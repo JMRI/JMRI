@@ -129,10 +129,12 @@ of the file. Examples are the <code>apps/AppsStructureBundle.properties</code>,
 <p>
 To check your work:
 <ol>
-<li>Rebuild your copy of the program in an <a href="index.shtml#buildyourcopy">IDE</a>;
-<li>Start the JMRI&reg; application and select "Preferences" from the Edit menu;
+<li>Rebuild your copy of the program, i.e. with your <a href="index.shtml#buildyourcopy">IDE</a> or however you're doing that
+<li>Start the JMRI&reg; application and select "<b>Preferences</b>" from the Edit menu;
 <li>Click the <b>Display</b> tab at the left, and the <b>Locale</b> tab in the right hand pane;
-<li>Select your Language from the drop-down box (mind that once you run JMRI in another Locale, the list of Langauages will also be translated to thta language, changing the order for e.g. &quot;Anglais&quot; instead of &quot;English&quot;;
+<li>Select your language from the drop-down box (mind that once you run JMRI in another Locale, 
+    the list of languages will also be translated to thta language, changing the order 
+    for e.g. &quot;Anglais&quot; instead of &quot;English&quot;;
 <li>Click "Save" at lower left, quit and restart;
 <li>You should immediately seen the items you've translated.
 </ol>
@@ -145,7 +147,6 @@ by the Locale you selected in the preferences above.
 <p>
 To make your work available to other JMRI users, please 
 share it with us <a href="index.shtml#contributing">contributing via GitHub</a>.
-
 By using a GitHub Pull Request, it's easy for us to merge your new and/or changed
 files into the code repository. If anything goes wrong, please don't hesitate to 
 ask for help with this.
@@ -156,15 +157,17 @@ ask for help with this.
 extra care. The .properties files must contain only
 ISO 8859-1 characters.  If you want to use Unicode characters, 
 these must be manually escaped.  
-(The 'native2ascii' command-line tool can help with this.)
 Please see the 
 <a href="https://web.archive.org/web/20030217222249/http://java.sun.com/j2se/1.3/docs/guide/intl/faq.html">Java internationalization FAQ</a>
 for more info on how to include those characters in your .properties files, particularly the
 question on "How do I specify non-ASCII strings in a properties file?".
-An example is the 
-<a href="https://sourceforge.net/p/jmri/code/22287/tree/trunk/jmri/java/src/apps/AppsBundle_cs_CZ.properties">java/src/apps/AppsBundle_cs_CZ.properties</a> 
+<p>An example is the 
+<a href="https://github.com/JMRI/JMRI/blob/master/java/src/apps/AppsBundle_cs_CZ.properties">java/src/apps/AppsBundle_cs_CZ.properties</a> 
 file, which contains diacritical letters for the Czech translation. 
-The "<a href="http://docs.oracle.com/javase/7/docs/technotes/tools/index.html#intl">native2ascii</a>" tool can help with this.
+<p>The "<a href="http://docs.oracle.com/javase/7/docs/technotes/tools/index.html#intl">native2ascii</a>" tool can help with this
+by converting special characters to the right sequences, but you must run your files through it before submitting them to JMRI.
+Special characters are somewhat machine-specific, so to make they're properly handled, they have to be converted to
+ISO 8859-1 sequences on your computer before submission.
 
 <a name="xml" id="xml"><h3>Translating XML files</h3>
 XML files can also be internationalized.  There are examples in the 
