@@ -967,7 +967,7 @@
     <target name="checknonascii">
         <exec executable="sh" outputproperty="checknonascii.files">
             <arg value="-c" />
-            <arg value="grep -rIn '[^[:blank:] -~]' --include=*.properties java/src" />
+            <arg value="grep -rIn -P '[^\x00-\x7f]' --include=*.properties java/src" />
         </exec>
 
         <fail message="${checknonascii.files}">
