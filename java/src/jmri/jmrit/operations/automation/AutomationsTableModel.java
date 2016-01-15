@@ -5,6 +5,8 @@ import java.awt.event.ActionEvent;
 import java.beans.PropertyChangeEvent;
 import java.beans.PropertyChangeListener;
 import java.text.MessageFormat;
+import java.util.Enumeration;
+import java.util.Hashtable;
 import java.util.List;
 import javax.swing.JButton;
 import javax.swing.JComboBox;
@@ -21,7 +23,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 /**
- * Table Model for edit of automations used by operations
+ * Table model allowing the edit and status of an automation used by operations.
  *
  * @author Daniel Boudreau Copyright (C) 2016
  * @version $Revision$
@@ -237,19 +239,26 @@ public class AutomationsTableModel extends javax.swing.table.AbstractTableModel 
         });
     }
 
-    AutomationEditFrame aef = null;
+    Hashtable<String, AutomationEditFrame> automationEditFrames = new Hashtable<String, AutomationEditFrame>();
 
     private void editAutomation(int row) {
         log.debug("Edit automation");
-        if (aef != null) {
-            aef.dispose();
-        }
         Automation automation = _sysList.get(row);
+        
+        // is the edit window already open?
+        if (automationEditFrames.containsKey(automation.getId())) {
+            AutomationEditFrame frame = automationEditFrames.get(automation.getId());
+            if (frame.isVisible()) {
+                frame.toFront();
+                return; // done
+            }
+        }
 
         // use invokeLater so new window appears on top
         SwingUtilities.invokeLater(new Runnable() {
             public void run() {
-                aef = new AutomationEditFrame(automation);
+                AutomationEditFrame frame = new AutomationEditFrame(automation);
+                automationEditFrames.put(automation.getId(), frame);
             }
         });
     }
@@ -284,9 +293,12 @@ public class AutomationsTableModel extends javax.swing.table.AbstractTableModel 
         if (log.isDebugEnabled()) {
             log.debug("dispose");
         }
-        if (aef != null) {
-            aef.dispose();
+        Enumeration<String> en = automationEditFrames.keys();
+        while (en.hasMoreElements()) {
+            AutomationEditFrame frame = automationEditFrames.get(en.nextElement());
+            frame.dispose();
         }
+
         automationManager.removePropertyChangeListener(this);
         removePropertyChangeAutomations();
     }

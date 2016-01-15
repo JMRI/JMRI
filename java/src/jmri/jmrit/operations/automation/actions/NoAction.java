@@ -22,7 +22,7 @@ public class NoAction extends Action {
         if (getAutomationItem() != null) {
             if (!getAutomationItem().getMessage().equals(AutomationItem.NONE)) {
                 JOptionPane.showMessageDialog(null, getAutomationItem().getMessage(),
-                        toString(),
+                        getAutomationItem().getId() + " " + toString(),
                         JOptionPane.INFORMATION_MESSAGE);
             }
             firePropertyChange(ACTION_COMPLETE_CHANGED_PROPERTY, false, true);

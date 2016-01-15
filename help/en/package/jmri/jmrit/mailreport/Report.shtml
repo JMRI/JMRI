@@ -31,8 +31,8 @@ can easily find it.  The information contains all
 of the specific details of your JMRI installation, including the
 log from the most recent running of the program,
 but doesn't contain any of your private information.
-You can see previous problem reports in the 
-<a href="http://groups.google.com/group/jmri-problem-reports">jmri-problem-reports Google group</a>.
+You can see previous problem reports on the 
+<a href="https://sourceforge.net/p/jmri/mailman/jmri-reports/">jmri-reports SourceForge mailing list</a>.
 
 <p>
 To make the information most useful, you should 
@@ -60,7 +60,19 @@ don't want to include those for some reason, just uncheck the them.
 <p>
 Finally, push send.  If everything goes OK, the window will close itself
 in a couple of seconds after the information has been sent.
-    
+
+<p>
+<b>Note: Uploading this information will not necessarily 
+result in somebody leaping up to fix your problem.</b> 
+This is not a support request, it's just a convenient 
+way to get your program information where people can see it.
+
+<p>
+If you want quick help with 
+a problem, you should talk some JMRI users in your area (it's always good to
+talk to friends), or ask on the 
+<a href="https://groups.yahoo.com/neo/groups/jmriusers/info">JMRI users Yahoo group</a>.
+
 <!--#include virtual="/Footer" -->
 </body>
 </html>

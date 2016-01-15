@@ -44,7 +44,7 @@ public class WaitTrainAction extends Action implements PropertyChangeListener {
             // now show message if there's one
             if (!getAutomationItem().getMessage().equals(AutomationItem.NONE)) {
                 JOptionPane.showMessageDialog(null, getAutomationItem().getMessage(),
-                        toString() + " " + train.getName() + " " + train.getCurrentLocationName(),
+                        getAutomationItem().getId() + " " + toString() + " " + train.getName() + " " + train.getCurrentLocationName(),
                         JOptionPane.INFORMATION_MESSAGE);
             }
             train.removePropertyChangeListener(this);
