@@ -202,7 +202,6 @@ public class Automation implements java.beans.PropertyChangeListener {
      * Allowable sequence numbers are 0 to max size of automation. 0 = start of
      * list.
      *
-     * @param item
      * @param sequence
      * @return automation item
      */
