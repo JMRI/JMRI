@@ -27,7 +27,7 @@ public class BuildTrainIfSelectedAction extends Action {
                 // now show message if there's one
                 if (!getAutomationItem().getMessage().equals(AutomationItem.NONE)) {
                     JOptionPane.showMessageDialog(null, getAutomationItem().getMessage(),
-                            toString() + " " + train.getName(),
+                            getAutomationItem().getId() + " " + toString() + " " + train.getName(),
                             JOptionPane.INFORMATION_MESSAGE);
                 }
             }

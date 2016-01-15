@@ -45,7 +45,7 @@ public class TrainsScheduleTableFrame extends OperationsFrame implements Propert
     public static final String TIME = Bundle.getMessage("Time");
 
     TrainManager trainManager = TrainManager.instance();
-    TrainScheduleManager scheduleManager = TrainScheduleManager.instance();
+    TrainScheduleManager trainScheduleManager = TrainScheduleManager.instance();
     LocationManager locationManager = LocationManager.instance();
 
     TrainsScheduleTableModel trainsScheduleModel = new TrainsScheduleTableModel();
@@ -215,7 +215,7 @@ public class TrainsScheduleTableFrame extends OperationsFrame implements Propert
 
         Setup.addPropertyChangeListener(this);
         trainManager.addPropertyChangeListener(this);
-        scheduleManager.addPropertyChangeListener(this);
+        trainScheduleManager.addPropertyChangeListener(this);
         addPropertyChangeLocations();
         addPropertyChangeTrainSchedules();
     }
@@ -233,7 +233,7 @@ public class TrainsScheduleTableFrame extends OperationsFrame implements Propert
         } else {
             enableButtons(true);
             // update comment field
-            TrainSchedule ts = scheduleManager.getScheduleById(getSelectedScheduleId());
+            TrainSchedule ts = trainScheduleManager.getScheduleById(getSelectedScheduleId());
             commentTextArea.setText(ts.getComment());
         }
     }
@@ -259,7 +259,7 @@ public class TrainsScheduleTableFrame extends OperationsFrame implements Propert
             trainManager.printSelectedTrains(getSortByList());
         }
         if (ae.getSource() == switchListsButton) {
-            buildSwitchList();
+            trainScheduleManager.buildSwitchLists();
         }
         if (ae.getSource() == terminateButton) {
             trainManager.terminateSelectedTrains(getSortByList());
@@ -290,7 +290,7 @@ public class TrainsScheduleTableFrame extends OperationsFrame implements Propert
 
         for (int i = trainsScheduleModel.getFixedColumn(); i < trainsScheduleModel.getColumnCount(); i++) {
             log.debug("Column name: {}", trainsScheduleTable.getColumnName(i));
-            TrainSchedule ts = scheduleManager.getScheduleByName(trainsScheduleTable.getColumnName(i));
+            TrainSchedule ts = trainScheduleManager.getScheduleByName(trainsScheduleTable.getColumnName(i));
             if (ts != null) {
                 JRadioButton b = new JRadioButton();
                 b.setText(ts.getName());
@@ -310,7 +310,7 @@ public class TrainsScheduleTableFrame extends OperationsFrame implements Propert
     }
 
     private void updateCheckboxes(boolean selected) {
-        TrainSchedule ts = scheduleManager.getScheduleById(getSelectedScheduleId());
+        TrainSchedule ts = trainScheduleManager.getScheduleById(getSelectedScheduleId());
         if (ts != null) {
             for (Train train : trainManager.getTrainsByIdList()) {
                 if (selected) {
@@ -323,7 +323,7 @@ public class TrainsScheduleTableFrame extends OperationsFrame implements Propert
     }
 
     private void applySchedule() {
-        TrainSchedule ts = scheduleManager.getScheduleById(getSelectedScheduleId());
+        TrainSchedule ts = trainScheduleManager.getScheduleById(getSelectedScheduleId());
         if (ts != null) {
             for (Train train : trainManager.getTrainsByIdList()) {
                 train.setBuildEnabled(ts.containsTrainId(train.getId()));
@@ -390,20 +390,20 @@ public class TrainsScheduleTableFrame extends OperationsFrame implements Propert
         }
     }
 
-    private void buildSwitchList() {
-        TrainSwitchLists trainSwitchLists = new TrainSwitchLists();
-        for (Location location : locationManager.getLocationsByNameList()) {
-            if (location.isSwitchListEnabled()) {
-                trainSwitchLists.buildSwitchList(location);
-                // // print or print changes
-                if (Setup.isSwitchListRealTime() && !location.getStatus().equals(Location.PRINTED)) {
-                    trainSwitchLists.printSwitchList(location, trainManager.isPrintPreviewEnabled());
-                }
-            }
-        }
-        // set trains switch lists printed
-        trainManager.setTrainsSwitchListStatus(Train.PRINTED);
-    }
+//    private void buildSwitchList() {
+//        TrainSwitchLists trainSwitchLists = new TrainSwitchLists();
+//        for (Location location : locationManager.getLocationsByNameList()) {
+//            if (location.isSwitchListEnabled()) {
+//                trainSwitchLists.buildSwitchList(location);
+//                // // print or print changes
+//                if (Setup.isSwitchListRealTime() && !location.getStatus().equals(Location.PRINTED)) {
+//                    trainSwitchLists.printSwitchList(location, trainManager.isPrintPreviewEnabled());
+//                }
+//            }
+//        }
+//        // set trains switch lists printed
+//        trainManager.setTrainsSwitchListStatus(Train.PRINTED);
+//    }
 
     private void updateSwitchListButton() {
         log.debug("update switch list button");
@@ -419,7 +419,7 @@ public class TrainsScheduleTableFrame extends OperationsFrame implements Propert
 
     protected void storeValues() {
         // Save comment
-        TrainSchedule ts = scheduleManager.getScheduleById(getSelectedScheduleId());
+        TrainSchedule ts = trainScheduleManager.getScheduleById(getSelectedScheduleId());
         if (ts != null) {
             ts.setComment(commentTextArea.getText());
         }
@@ -431,7 +431,7 @@ public class TrainsScheduleTableFrame extends OperationsFrame implements Propert
     public void dispose() {
         Setup.removePropertyChangeListener(this);
         trainManager.removePropertyChangeListener(this);
-        scheduleManager.removePropertyChangeListener(this);
+        trainScheduleManager.removePropertyChangeListener(this);
         removePropertyChangeTrainSchedules();
         removePropertyChangeLocations();
         trainsScheduleModel.dispose();
@@ -451,14 +451,14 @@ public class TrainsScheduleTableFrame extends OperationsFrame implements Propert
     }
 
     private void addPropertyChangeTrainSchedules() {
-        List<TrainSchedule> trainSchedules = scheduleManager.getSchedulesByIdList();
+        List<TrainSchedule> trainSchedules = trainScheduleManager.getSchedulesByIdList();
         for (TrainSchedule ts : trainSchedules) {
             ts.addPropertyChangeListener(this);
         }
     }
 
     private void removePropertyChangeTrainSchedules() {
-        List<TrainSchedule> trainSchedules = scheduleManager.getSchedulesByIdList();
+        List<TrainSchedule> trainSchedules = trainScheduleManager.getSchedulesByIdList();
         for (TrainSchedule ts : trainSchedules) {
             ts.removePropertyChangeListener(this);
         }

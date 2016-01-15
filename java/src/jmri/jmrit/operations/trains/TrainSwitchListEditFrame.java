@@ -301,9 +301,7 @@ public class TrainSwitchListEditFrame extends OperationsFrame implements java.be
      */
     private void buildSwitchList(boolean isPreview, boolean isChanged, boolean isCsv, boolean isUpdate) {
         TrainSwitchLists trainSwitchLists = new TrainSwitchLists();
-        for (int i = 0; i < locationCheckBoxes.size(); i++) {
-            String locationName = locationCheckBoxes.get(i).getName();
-            Location location = locationManager.getLocationByName(locationName);
+        for (Location location : LocationManager.instance().getLocationsByNameList()) {
             if (location.isSwitchListEnabled()) {
                 if (!isCsv) {
                     trainSwitchLists.buildSwitchList(location);

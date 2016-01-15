@@ -2,12 +2,12 @@ package jmri.jmrit.operations.automation.actions;
 
 import javax.swing.JOptionPane;
 import jmri.jmrit.operations.automation.AutomationItem;
-import jmri.jmrit.operations.routes.RouteLocation;
 import jmri.jmrit.operations.trains.Train;
+import jmri.jmrit.operations.trains.TrainManager;
 
-public class MoveTrainAction extends Action {
+public class PrintTrainManifestAction extends Action {
 
-    private static final int _code = ActionCodes.MOVE_TRAIN;
+    private static final int _code = ActionCodes.PRINT_TRAIN_MANIFEST;
 
     @Override
     public int getCode() {
@@ -16,7 +16,10 @@ public class MoveTrainAction extends Action {
 
     @Override
     public String toString() {
-        return Bundle.getMessage("MoveTrain");
+        if (TrainManager.instance().isPrintPreviewEnabled())
+            return Bundle.getMessage("PreviewTrainManifest");
+        else
+            return Bundle.getMessage("PrintTrainManifest");
     }
 
     @Override
@@ -24,16 +27,11 @@ public class MoveTrainAction extends Action {
         if (getAutomationItem() != null) {
             Train train = getAutomationItem().getTrain();
             if (train != null && train.isBuilt()) {
-                RouteLocation rl = getAutomationItem().getRouteLocation();
-                if (rl != null) {
-                    train.move(rl);
-                } else {
-                    train.move();
-                }
+                train.printManifest(TrainManager.instance().isPrintPreviewEnabled());
                 // now show message if there's one
                 if (!getAutomationItem().getMessage().equals(AutomationItem.NONE)) {
                     JOptionPane.showMessageDialog(null, getAutomationItem().getMessage(),
-                            getAutomationItem().getId() + " " + toString() + " " + train.getName() + " " + train.getCurrentLocationName(),
+                            getAutomationItem().getId() + " " + toString() + " " + train.getName(),
                             JOptionPane.INFORMATION_MESSAGE);
                 }
             }

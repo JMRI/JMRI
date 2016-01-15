@@ -226,23 +226,26 @@ public class Automation implements java.beans.PropertyChangeListener {
     /**
      * Remember a NamedBean Object created outside the manager.
      */
-    public void register(AutomationItem si) {
+    public void register(AutomationItem item) {
         Integer old = Integer.valueOf(_automationHashTable.size());
-        _automationHashTable.put(si.getId(), si);
+        _automationHashTable.put(item.getId(), item);
 
         // find last id created
-        String[] getId = si.getId().split("c");
+        String[] getId = item.getId().split("c");
         int id = Integer.parseInt(getId[1]);
         if (id > _IdNumber) {
             _IdNumber = id;
         }
         // find highest sequence number
-        if (si.getSequenceId() > _sequenceNum) {
-            _sequenceNum = si.getSequenceId();
+        if (item.getSequenceId() > _sequenceNum) {
+            _sequenceNum = item.getSequenceId();
+        }
+        if (getCurrentAutomationItem() == null) {
+            setCurrentAutomationItem(item); // default is to load the first item saved.
         }
         setDirtyAndFirePropertyChange(LISTCHANGE_CHANGED_PROPERTY, old, Integer.valueOf(_automationHashTable.size()));
         // listen for set out and pick up changes to forward
-        si.addPropertyChangeListener(this);
+        item.addPropertyChangeListener(this);
     }
 
     /**
@@ -313,15 +316,15 @@ public class Automation implements java.beans.PropertyChangeListener {
         // now re-sort
         List<AutomationItem> items = new ArrayList<AutomationItem>();
 
-        for (AutomationItem si : sortList) {
+        for (AutomationItem item : sortList) {
             for (int j = 0; j < items.size(); j++) {
-                if (si.getSequenceId() < items.get(j).getSequenceId()) {
-                    items.add(j, si);
+                if (item.getSequenceId() < items.get(j).getSequenceId()) {
+                    items.add(j, item);
                     break;
                 }
             }
-            if (!items.contains(si)) {
-                items.add(si);
+            if (!items.contains(item)) {
+                items.add(item);
             }
         }
         return items;
@@ -330,19 +333,19 @@ public class Automation implements java.beans.PropertyChangeListener {
     /**
      * Places a AutomationItem earlier in the automation
      *
-     * @param si
+     * @param item
      */
-    public void moveItemUp(AutomationItem si) {
-        int sequenceId = si.getSequenceId();
+    public void moveItemUp(AutomationItem item) {
+        int sequenceId = item.getSequenceId();
         if (sequenceId - 1 <= 0) {
-            si.setSequenceId(_sequenceNum + 1); // move to the end of the list
+            item.setSequenceId(_sequenceNum + 1); // move to the end of the list
             resequenceIds();
         } else {
             // adjust the other item taken by this one
             AutomationItem replaceSi = getItemBySequenceId(sequenceId - 1);
             if (replaceSi != null) {
                 replaceSi.setSequenceId(sequenceId);
-                si.setSequenceId(sequenceId - 1);
+                item.setSequenceId(sequenceId - 1);
             } else {
                 resequenceIds(); // error the sequence number is missing
             }
@@ -353,19 +356,19 @@ public class Automation implements java.beans.PropertyChangeListener {
     /**
      * Places a AutomationItem later in the automation
      *
-     * @param si
+     * @param item
      */
-    public void moveItemDown(AutomationItem si) {
-        int sequenceId = si.getSequenceId();
+    public void moveItemDown(AutomationItem item) {
+        int sequenceId = item.getSequenceId();
         if (sequenceId + 1 > _sequenceNum) {
-            si.setSequenceId(0); // move to the start of the list
+            item.setSequenceId(0); // move to the start of the list
             resequenceIds();
         } else {
             // adjust the other item taken by this one
             AutomationItem replaceSi = getItemBySequenceId(sequenceId + 1);
             if (replaceSi != null) {
                 replaceSi.setSequenceId(sequenceId);
-                si.setSequenceId(sequenceId + 1);
+                item.setSequenceId(sequenceId + 1);
             } else {
                 resequenceIds(); // error the sequence number is missing
             }
@@ -374,9 +377,9 @@ public class Automation implements java.beans.PropertyChangeListener {
     }
 
     public AutomationItem getItemBySequenceId(int sequenceId) {
-        for (AutomationItem si : getItemsByIdList()) {
-            if (si.getSequenceId() == sequenceId) {
-                return si;
+        for (AutomationItem item : getItemsByIdList()) {
+            if (item.getSequenceId() == sequenceId) {
+                return item;
             }
         }
         return null;
@@ -430,10 +433,9 @@ public class Automation implements java.beans.PropertyChangeListener {
         if (getCurrentAutomationItem() != null) {
             e.setAttribute(Xml.CURRENT_ITEM, getCurrentAutomationItem().getId());
         }
-        for (AutomationItem si : getItemsBySequenceList()) {
-            e.addContent(si.store());
+        for (AutomationItem item : getItemsBySequenceList()) {
+            e.addContent(item.store());
         }
-
         return e;
     }
 
