@@ -967,7 +967,7 @@
     <target name="checknonascii">
         <exec executable="sh" outputproperty="checknonascii.files">
             <arg value="-c" />
-            <arg value="grep -rlI -P '[^\x00-\x7f]' --exclude-dir={classes,help,jython,lib,nbproject,resources,scripts,web,xml} --include=*.properties" />
+            <arg value="grep -rIn '[^[:blank:] -~]' --exclude-dir={classes,help,jython,lib,nbproject,resources,scripts,web,xml} --include=*.properties" />
         </exec>
 
         <fail message="${checknonascii.files}">
