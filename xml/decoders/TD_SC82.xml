@@ -1,0 +1,4037 @@
+<?xml version="1.0" encoding="utf-8"?>
+<?xml-stylesheet type="text/xsl" href="../XSLT/decoder.xsl"?>
+<!-- Copyright (C) JMRI 2003, 2004, 2008, 2014 All rights reserved -->
+<!-- $Id: TD_SC8.xml 27260 2014-09-21 00:21:27Z jacobsen $ -->
+<!--                                                                        -->
+<!-- JMRI is free software; you can redistribute it and/or modify it under  -->
+<!-- the terms of version 2 of the GNU General Public License as published  -->
+<!-- by the Free Software Foundation. See the "COPYING" file for a copy     -->
+<!-- of this license.                                                       -->
+<!--                                                                        -->
+<!-- JMRI is distributed in the hope that it will be useful, but WITHOUT    -->
+<!-- ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or  -->
+<!-- FITNESS FOR A PARTICULAR PURPOSE.  See the GNU General Public License  -->
+<!-- for more details.                                                      -->
+<decoder-config xmlns:xi="http://www.w3.org/2001/XInclude" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" showEmptyPanes="no" xsi:noNamespaceSchemaLocation="http://jmri.org/xml/schema/decoder.xsd">
+  <version author="td@teamdigital1.com" version="1.2" lastUpdated="20150720"/>
+  <!-- Version 1 initial release 7/20/15-->
+  <decoder>
+    <family name="Stationary Decoder" mfg="Team Digital" type="stationary">
+      <model model="SC82" lowVersionID="1" comment="SC82 is a stationary decoder, but it can be programmed in the usual way"/>
+    </family>
+    <programming direct="yes" paged="yes" register="no" ops="yes"/>
+    <variables>
+      <variable CV="1" mask="VVVVVVVV" item="Short Address" tooltip="Range 1-16000, max value of 127 when programming via DCC" default="1">
+        <splitVal highCV="2" upperMask="XXVVVVVV"/>
+        <label>Ops Mode Address</label>
+      </variable>
+      <!-- Startup delay variable definition -->
+      <variable item="Start up delay" CV="6" mask="VVVVVVVV" default="1" tooltip="Only in SC82 version 16 and later">
+        <decVal min="1" max="30"/>
+        <label>Start up delay</label>
+      </variable>
+      <variable item="Test State" CV="7" mask="XXXVVVVV" default="00">
+        <enumVal>
+          <enumChoice choice="None">
+            <choice>None</choice>
+          </enumChoice>
+          <enumChoice choice="Restart the SC82">
+            <choice>Restart the SC82</choice>
+          </enumChoice>
+          <enumChoice choice="Move servos to center position">
+            <choice>Move servos to center position</choice>
+          </enumChoice>
+          <enumChoice choice="Move servos back and forth">
+            <choice>Move servos back and forth</choice>
+          </enumChoice>
+          <enumChoice choice="Move servos to one end">
+            <choice>Move servos to one end</choice>
+          </enumChoice>
+          <enumChoice choice="Move servos to the other end">
+            <choice>Move servos to the other end</choice>
+          </enumChoice>
+        </enumVal>
+        <label>Test State</label>
+      </variable>
+      <variable CV="7" item="Decoder Version">
+        <decVal/>
+        <label>Version ID</label>
+      </variable>
+      <variable CV="8" item="Manufacturer" default="25">
+        <decVal/>
+        <label>Manufacturer ID</label>
+      </variable>
+      <!-- Decoder Configuration variable definition -->
+      <variable item="Mode" CV="9" mask="XXXXXXXV" default="0">
+        <enumVal>
+          <enumChoice choice="Mode 1 - Servos 2 Pos">
+            <choice>Mode 1 - Servos 2 Pos</choice>
+          </enumChoice>
+          <enumChoice choice="Mode 2 - Servos 3 Pos">
+            <choice>Mode 2 - Servos 3 Pos</choice>
+          </enumChoice>
+        </enumVal>
+        <label>Mode</label>
+      </variable>
+      <variable item="Select Power On Option" CV="9" mask="XXXXXXVX" default="0">
+        <enumVal>
+          <enumChoice choice="Use Memory (Power Off) State">
+            <choice>Use Memory (Power Off) State</choice>
+          </enumChoice>
+          <enumChoice choice="Use Fixed State">
+            <choice>Use Fixed State</choice>
+          </enumChoice>
+        </enumVal>
+        <label>Select Power On Option</label>
+      </variable>
+      <variable CV="9" mask="XXXXXVXX" item="Op1">
+        <enumVal>
+          <enumChoice choice="No">
+            <choice>No</choice>
+          </enumChoice>
+          <enumChoice choice="Yes">
+            <choice>Yes</choice>
+          </enumChoice>
+        </enumVal>
+        <label>Ops Mode</label>
+      </variable>
+      <variable item="DCC gateway" CV="9" mask="XXXXVXXX">
+        <enumVal>
+          <enumChoice choice="No">
+            <choice>No</choice>
+          </enumChoice>
+          <enumChoice choice="Yes">
+            <choice>Yes</choice>
+          </enumChoice>
+        </enumVal>
+        <label>DCC gateway</label>
+      </variable>
+      <variable item="Bus interface" CV="9" mask="XXXVXXXX">
+        <enumVal>
+          <enumChoice choice="No">
+            <choice>No</choice>
+          </enumChoice>
+          <enumChoice choice="Yes">
+            <choice>Yes</choice>
+          </enumChoice>
+        </enumVal>
+        <label>Bus interface</label>
+      </variable>
+      <variable item="DCC control" CV="9" mask="XXVXXXXX">
+        <enumVal>
+          <enumChoice choice="Yes">
+            <choice>Yes</choice>
+          </enumChoice>
+          <enumChoice choice="No">
+            <choice>No</choice>
+          </enumChoice>
+        </enumVal>
+        <label>DCC control</label>
+      </variable>
+      <variable item="Disable Power Save" CV="9" mask="XVXXXXXX">
+        <enumVal>
+          <enumChoice choice="No">
+            <choice>No</choice>
+          </enumChoice>
+          <enumChoice choice="Yes">
+            <choice>Yes</choice>
+          </enumChoice>
+        </enumVal>
+        <label>Disable Power Save</label>
+      </variable>
+      <variable item="Common Cathode" CV="9" mask="VXXXXXXX">
+        <enumVal>
+          <enumChoice choice="No">
+            <choice>No</choice>
+          </enumChoice>
+          <enumChoice choice="Yes">
+            <choice>Yes</choice>
+          </enumChoice>
+        </enumVal>
+        <label>Common Cathode</label>
+      </variable>
+      <variable item="Power On Send Input State" CV="10" mask="XXXXXXXV">
+        <enumVal>
+          <enumChoice choice="No">
+            <choice>No</choice>
+          </enumChoice>
+          <enumChoice choice="Yes">
+            <choice>Yes</choice>
+          </enumChoice>
+        </enumVal>
+        <label>Power On Send Input State</label>
+      </variable>
+      <variable item="Power On Send Output State" CV="10" mask="XXXXXXVX">
+        <enumVal>
+          <enumChoice choice="No">
+            <choice>No</choice>
+          </enumChoice>
+          <enumChoice choice="Yes">
+            <choice>Yes</choice>
+          </enumChoice>
+        </enumVal>
+        <label>Power On Send Output State</label>
+      </variable>
+      <variable item="Interrogate input" CV="10" mask="XXXXXVXX">
+        <enumVal>
+          <enumChoice choice="No">
+            <choice>No</choice>
+          </enumChoice>
+          <enumChoice choice="Yes">
+            <choice>Yes</choice>
+          </enumChoice>
+        </enumVal>
+        <label>Interrogate input</label>
+      </variable>
+      <variable item="Interrogate output" CV="10" mask="XXXXVXXX">
+        <enumVal>
+          <enumChoice choice="No">
+            <choice>No</choice>
+          </enumChoice>
+          <enumChoice choice="Yes">
+            <choice>Yes</choice>
+          </enumChoice>
+        </enumVal>
+        <label>Interrogate output</label>
+      </variable>
+      <variable item="One LED output" CV="10" mask="XXXVXXXX">
+        <enumVal>
+          <enumChoice choice="No">
+            <choice>No</choice>
+          </enumChoice>
+          <enumChoice choice="Yes">
+            <choice>Yes</choice>
+          </enumChoice>
+        </enumVal>
+        <label>One LED output</label>
+      </variable>
+      
+      <!-- Route send delay variable definition -->
+      <variable item="Route send delay" CV="11" mask="XVVVVVVV">
+        <decVal min="0" max="127"/>
+        <label>Route send delay</label>
+      </variable>
+
+      <!-- Power on State variable definition -->
+      <variable item="OS1" CV="12" mask="XXXXXXVV" default="3">
+        <enumVal>
+          <enumChoice choice="b" value="3">
+            <choice>b</choice>
+          </enumChoice>
+          <enumChoice choice="t" value="1">
+            <choice>t</choice>
+          </enumChoice>
+          <enumChoice choice="c" value="2">
+            <choice>c</choice>
+          </enumChoice>
+        </enumVal>
+        <label/>
+      </variable>
+      <variable item="OS2" CV="12" mask="XXXXVVXX" default="3">
+        <enumVal>
+          <enumChoice choice="b" value="3">
+            <choice>b</choice>
+          </enumChoice>
+          <enumChoice choice="t" value="1">
+            <choice>t</choice>
+          </enumChoice>
+          <enumChoice choice="c" value="2">
+            <choice>c</choice>
+          </enumChoice>
+        </enumVal>
+        <label/>
+      </variable>
+      <variable item="OS3" CV="12" mask="XXVVXXXX" default="3">
+        <enumVal>
+          <enumChoice choice="b" value="3">
+            <choice>b</choice>
+          </enumChoice>
+          <enumChoice choice="t" value="1">
+            <choice>t</choice>
+          </enumChoice>
+          <enumChoice choice="c" value="2">
+            <choice>c</choice>
+          </enumChoice>
+        </enumVal>
+        <label/>
+      </variable>
+      <variable item="OS4" CV="12" mask="VVXXXXXX" default="3">
+        <enumVal>
+          <enumChoice choice="b" value="3">
+            <choice>b</choice>
+          </enumChoice>
+          <enumChoice choice="t" value="1">
+            <choice>t</choice>
+          </enumChoice>
+          <enumChoice choice="c" value="2">
+            <choice>c</choice>
+          </enumChoice>
+        </enumVal>
+        <label/>
+      </variable>
+      <variable item="OS5" CV="13" mask="XXXXXXVV" default="3">
+        <enumVal>
+          <enumChoice choice="b" value="3">
+            <choice>b</choice>
+          </enumChoice>
+          <enumChoice choice="t" value="1">
+            <choice>t</choice>
+          </enumChoice>
+          <enumChoice choice="c" value="2">
+            <choice>c</choice>
+          </enumChoice>
+        </enumVal>
+        <label/>
+      </variable>
+      <variable item="OS6" CV="13" mask="XXXXVVXX" default="3">
+        <enumVal>
+          <enumChoice choice="b" value="3">
+            <choice>b</choice>
+          </enumChoice>
+          <enumChoice choice="t" value="1">
+            <choice>t</choice>
+          </enumChoice>
+          <enumChoice choice="c" value="2">
+            <choice>c</choice>
+          </enumChoice>
+        </enumVal>
+        <label/>
+      </variable>
+      <variable item="OS7" CV="13" mask="XXVVXXXX" default="3">
+        <enumVal>
+          <enumChoice choice="b" value="3">
+            <choice>b</choice>
+          </enumChoice>
+          <enumChoice choice="t" value="1">
+            <choice>t</choice>
+          </enumChoice>
+          <enumChoice choice="c" value="2">
+            <choice>c</choice>
+          </enumChoice>
+        </enumVal>
+        <label/>
+      </variable>
+      <variable item="OS8" CV="13" mask="VVXXXXXX" default="3">
+        <enumVal>
+          <enumChoice choice="b" value="3">
+            <choice>b</choice>
+          </enumChoice>
+          <enumChoice choice="t" value="1">
+            <choice>t</choice>
+          </enumChoice>
+          <enumChoice choice="c" value="2">
+            <choice>c</choice>
+          </enumChoice>
+        </enumVal>
+        <label/>
+      </variable>
+      <!-- Input Lockout variable definition -->
+      <variable CV="14" mask="VVVVVVVV" item="Lockout">
+        <splitVal highCV="15" max="7" upperMask="XXXXVVVV"/>
+        <label>Address</label>
+      </variable>
+      
+     <!-- Begin inputs 1-8 variable definition -->
+      <variable CV="16" mask="VVVVVVVV" item="PA1" default="1">
+        <splitVal highCV="17" max="7" upperMask="XXXXVVVV"/>
+        <label>Address</label>
+      </variable>
+      <variable CV="17" mask="VXXXXXXX" item="PInv P1">
+        <enumVal>
+          <enumChoice choice="No">
+            <choice>No</choice>
+          </enumChoice>
+          <enumChoice choice="Yes">
+            <choice>Yes</choice>
+          </enumChoice>
+        </enumVal>
+        <label>Invert</label>
+      </variable>
+      <variable CV="17" mask="XVXXXXXX" item="PTog P1" default="1">
+        <enumVal>
+          <enumChoice choice="No">
+            <choice>No</choice>
+          </enumChoice>
+          <enumChoice choice="Yes">
+            <choice>Yes</choice>
+          </enumChoice>
+        </enumVal>
+        <label>Toggle</label>
+      </variable>
+      <variable CV="17" mask="XXVVXXXX" item="PTy1">
+        <enumVal>
+          <enumChoice choice="Switch Request">
+            <choice>Switch Request</choice>
+          </enumChoice>
+          <enumChoice choice="Switch Feedback">
+            <choice>Switch Feedback</choice>
+          </enumChoice>
+          <enumChoice choice="Sensor Message">
+            <choice>Sensor Message</choice>
+          </enumChoice>
+        </enumVal>
+        <label>Type</label>
+      </variable>
+      <variable CV="18" mask="XXXXXXVV" item="PTr1" default="2">
+        <enumVal>
+          <enumChoice choice="No Message">
+            <choice>No Message</choice>
+          </enumChoice>
+          <enumChoice choice="Send on Rising Edge">
+            <choice>Send on Rising Edge</choice>
+          </enumChoice>
+          <enumChoice choice="Send on Falling Edge">
+            <choice>Send on Falling Edge</choice>
+          </enumChoice>
+          <enumChoice choice="Send on Both Edges">
+            <choice>Send on Both Edges</choice>
+          </enumChoice>
+        </enumVal>
+        <label>Transition</label>
+      </variable>
+      <variable CV="18" mask="VVVVXXXX" item="Rte Num P1" default="0">
+        <decVal min="0" max="8"/>
+        <label>Route Number</label>
+      </variable>
+      <variable CV="19" mask="VVVVVVVV" item="PA2" default="2">
+        <splitVal highCV="20" max="7" upperMask="XXXXVVVV"/>
+        <label>Address</label>
+      </variable>
+      <variable CV="20" mask="VXXXXXXX" item="PInv P2">
+        <enumVal>
+          <enumChoice choice="No">
+            <choice>No</choice>
+          </enumChoice>
+          <enumChoice choice="Yes">
+            <choice>Yes</choice>
+          </enumChoice>
+        </enumVal>
+        <label>Invert</label>
+      </variable>
+      <variable CV="20" mask="XVXXXXXX" item="PTog P2" default="1">
+        <enumVal>
+          <enumChoice choice="No">
+            <choice>No</choice>
+          </enumChoice>
+          <enumChoice choice="Yes">
+            <choice>Yes</choice>
+          </enumChoice>
+        </enumVal>
+        <label>Toggle</label>
+      </variable>
+      <variable CV="20" mask="XXVVXXXX" item="PTy2">
+        <enumVal>
+          <enumChoice choice="Switch Request">
+            <choice>Switch Request</choice>
+          </enumChoice>
+          <enumChoice choice="Switch Feedback">
+            <choice>Switch Feedback</choice>
+          </enumChoice>
+          <enumChoice choice="Sensor Message">
+            <choice>Sensor Message</choice>
+          </enumChoice>
+        </enumVal>
+        <label>Type</label>
+      </variable>
+      <variable CV="21" mask="XXXXXXVV" item="PTr2" default="2">
+        <enumVal>
+          <enumChoice choice="No Message">
+            <choice>No Message</choice>
+          </enumChoice>
+          <enumChoice choice="Send on Rising Edge">
+            <choice>Send on Rising Edge</choice>
+          </enumChoice>
+          <enumChoice choice="Send on Falling Edge">
+            <choice>Send on Falling Edge</choice>
+          </enumChoice>
+          <enumChoice choice="Send on Both Edges">
+            <choice>Send on Both Edges</choice>
+          </enumChoice>
+        </enumVal>
+        <label>Transition</label>
+      </variable>
+      <variable CV="21" mask="VVVVXXXX" item="Rte Num P2" default="0">
+        <decVal min="0" max="8"/>
+        <label>Route Number</label>
+      </variable>
+      <variable CV="22" mask="VVVVVVVV" item="PA3" default="3">
+        <splitVal highCV="23" max="7" upperMask="XXXXVVVV"/>
+        <label>Address</label>
+      </variable>
+      <variable CV="23" mask="VXXXXXXX" item="PInv P3">
+        <enumVal>
+          <enumChoice choice="No">
+            <choice>No</choice>
+          </enumChoice>
+          <enumChoice choice="Yes">
+            <choice>Yes</choice>
+          </enumChoice>
+        </enumVal>
+        <label>Invert</label>
+      </variable>
+      <variable CV="23" mask="XVXXXXXX" item="PTog P3" default="1">
+        <enumVal>
+          <enumChoice choice="No">
+            <choice>No</choice>
+          </enumChoice>
+          <enumChoice choice="Yes">
+            <choice>Yes</choice>
+          </enumChoice>
+        </enumVal>
+        <label>Toggle</label>
+      </variable>
+      <variable CV="23" mask="XXVVXXXX" item="PTy3">
+        <enumVal>
+          <enumChoice choice="Switch Request">
+            <choice>Switch Request</choice>
+          </enumChoice>
+          <enumChoice choice="Switch Feedback">
+            <choice>Switch Feedback</choice>
+          </enumChoice>
+          <enumChoice choice="Sensor Message">
+            <choice>Sensor Message</choice>
+          </enumChoice>
+        </enumVal>
+        <label>Type</label>
+      </variable>
+      <variable CV="24" mask="XXXXXXVV" item="PTr3" default="2">
+        <enumVal>
+          <enumChoice choice="No Message">
+            <choice>No Message</choice>
+          </enumChoice>
+          <enumChoice choice="Send on Rising Edge">
+            <choice>Send on Rising Edge</choice>
+          </enumChoice>
+          <enumChoice choice="Send on Falling Edge">
+            <choice>Send on Falling Edge</choice>
+          </enumChoice>
+          <enumChoice choice="Send on Both Edges">
+            <choice>Send on Both Edges</choice>
+          </enumChoice>
+        </enumVal>
+        <label>Transition</label>
+      </variable>
+      <variable CV="24" mask="VVVVXXXX" item="Rte Num P3" default="0">
+        <decVal min="0" max="8"/>
+        <label>Route Number</label>
+      </variable>
+      <variable CV="25" mask="VVVVVVVV" item="PA4" default="4">
+        <splitVal highCV="26" max="7" upperMask="XXXXVVVV"/>
+        <label>Address</label>
+      </variable>
+      <variable CV="26" mask="VXXXXXXX" item="PInv P4">
+        <enumVal>
+          <enumChoice choice="No">
+            <choice>No</choice>
+          </enumChoice>
+          <enumChoice choice="Yes">
+            <choice>Yes</choice>
+          </enumChoice>
+        </enumVal>
+        <label>Invert</label>
+      </variable>
+      <variable CV="26" mask="XVXXXXXX" item="PTog P4" default="1">
+        <enumVal>
+          <enumChoice choice="No">
+            <choice>No</choice>
+          </enumChoice>
+          <enumChoice choice="Yes">
+            <choice>Yes</choice>
+          </enumChoice>
+        </enumVal>
+        <label>Toggle</label>
+      </variable>
+      <variable CV="26" mask="XXVVXXXX" item="PTy4">
+        <enumVal>
+          <enumChoice choice="Switch Request">
+            <choice>Switch Request</choice>
+          </enumChoice>
+          <enumChoice choice="Switch Feedback">
+            <choice>Switch Feedback</choice>
+          </enumChoice>
+          <enumChoice choice="Sensor Message">
+            <choice>Sensor Message</choice>
+          </enumChoice>
+        </enumVal>
+        <label>Type</label>
+      </variable>
+      <variable CV="27" mask="XXXXXXVV" item="PTr4" default="2">
+        <enumVal>
+          <enumChoice choice="No Message">
+            <choice>No Message</choice>
+          </enumChoice>
+          <enumChoice choice="Send on Rising Edge">
+            <choice>Send on Rising Edge</choice>
+          </enumChoice>
+          <enumChoice choice="Send on Falling Edge">
+            <choice>Send on Falling Edge</choice>
+          </enumChoice>
+          <enumChoice choice="Send on Both Edges">
+            <choice>Send on Both Edges</choice>
+          </enumChoice>
+        </enumVal>
+        <label>Transition</label>
+      </variable>
+      <variable CV="27" mask="VVVVXXXX" item="Rte Num P4" default="0">
+        <decVal min="0" max="8"/>
+        <label>Route Number</label>
+      </variable>
+      <variable CV="28" mask="VVVVVVVV" item="PA5" default="5">
+        <splitVal highCV="29" max="7" upperMask="XXXXVVVV"/>
+        <label>Address</label>
+      </variable>
+      <variable CV="29" mask="VXXXXXXX" item="PInv P5">
+        <enumVal>
+          <enumChoice choice="No">
+            <choice>No</choice>
+          </enumChoice>
+          <enumChoice choice="Yes">
+            <choice>Yes</choice>
+          </enumChoice>
+        </enumVal>
+        <label>Invert</label>
+      </variable>
+      <variable CV="29" mask="XVXXXXXX" item="PTog P5" default="1">
+        <enumVal>
+          <enumChoice choice="No">
+            <choice>No</choice>
+          </enumChoice>
+          <enumChoice choice="Yes">
+            <choice>Yes</choice>
+          </enumChoice>
+        </enumVal>
+        <label>Toggle</label>
+      </variable>
+      <variable CV="29" mask="XXVVXXXX" item="PTy5">
+        <enumVal>
+          <enumChoice choice="Switch Request">
+            <choice>Switch Request</choice>
+          </enumChoice>
+          <enumChoice choice="Switch Feedback">
+            <choice>Switch Feedback</choice>
+          </enumChoice>
+          <enumChoice choice="Sensor Message">
+            <choice>Sensor Message</choice>
+          </enumChoice>
+        </enumVal>
+        <label>Type</label>
+      </variable>
+      <variable CV="30" mask="XXXXXXVV" item="PTr5" default="2">
+        <enumVal>
+          <enumChoice choice="No Message">
+            <choice>No Message</choice>
+          </enumChoice>
+          <enumChoice choice="Send on Rising Edge">
+            <choice>Send on Rising Edge</choice>
+          </enumChoice>
+          <enumChoice choice="Send on Falling Edge">
+            <choice>Send on Falling Edge</choice>
+          </enumChoice>
+          <enumChoice choice="Send on Both Edges">
+            <choice>Send on Both Edges</choice>
+          </enumChoice>
+        </enumVal>
+        <label>Transition</label>
+      </variable>
+      <variable CV="30" mask="VVVVXXXX" item="Rte Num P5" default="0">
+        <decVal min="0" max="8"/>
+        <label>Route Number</label>
+      </variable>
+      <variable CV="31" mask="VVVVVVVV" item="PA6" default="6">
+        <splitVal highCV="32" max="7" upperMask="XXXXVVVV"/>
+        <label>Address</label>
+      </variable>
+      <variable CV="32" mask="VXXXXXXX" item="PInv P6">
+        <enumVal>
+          <enumChoice choice="No">
+            <choice>No</choice>
+          </enumChoice>
+          <enumChoice choice="Yes">
+            <choice>Yes</choice>
+          </enumChoice>
+        </enumVal>
+        <label>Invert</label>
+      </variable>
+      <variable CV="32" mask="XVXXXXXX" item="PTog P6" default="1">
+        <enumVal>
+          <enumChoice choice="No">
+            <choice>No</choice>
+          </enumChoice>
+          <enumChoice choice="Yes">
+            <choice>Yes</choice>
+          </enumChoice>
+        </enumVal>
+        <label>Toggle</label>
+      </variable>
+      <variable CV="32" mask="XXVVXXXX" item="PTy6">
+        <enumVal>
+          <enumChoice choice="Switch Request">
+            <choice>Switch Request</choice>
+          </enumChoice>
+          <enumChoice choice="Switch Feedback">
+            <choice>Switch Feedback</choice>
+          </enumChoice>
+          <enumChoice choice="Sensor Message">
+            <choice>Sensor Message</choice>
+          </enumChoice>
+        </enumVal>
+        <label>Type</label>
+      </variable>
+      <variable CV="33" mask="XXXXXXVV" item="PTr6" default="2">
+        <enumVal>
+          <enumChoice choice="No Message">
+            <choice>No Message</choice>
+          </enumChoice>
+          <enumChoice choice="Send on Rising Edge">
+            <choice>Send on Rising Edge</choice>
+          </enumChoice>
+          <enumChoice choice="Send on Falling Edge">
+            <choice>Send on Falling Edge</choice>
+          </enumChoice>
+          <enumChoice choice="Send on Both Edges">
+            <choice>Send on Both Edges</choice>
+          </enumChoice>
+        </enumVal>
+        <label>Transition</label>
+      </variable>
+      <variable CV="33" mask="VVVVXXXX" item="Rte Num P6" default="0">
+        <decVal min="0" max="8"/>
+        <label>Route Number</label>
+      </variable>
+      <variable CV="34" mask="VVVVVVVV" item="PA7" default="7">
+        <splitVal highCV="35" max="7" upperMask="XXXXVVVV"/>
+        <label>Address</label>
+      </variable>
+      <variable CV="35" mask="VXXXXXXX" item="PInv P7">
+        <enumVal>
+          <enumChoice choice="No">
+            <choice>No</choice>
+          </enumChoice>
+          <enumChoice choice="Yes">
+            <choice>Yes</choice>
+          </enumChoice>
+        </enumVal>
+        <label>Invert</label>
+      </variable>
+      <variable CV="35" mask="XVXXXXXX" item="PTog P7" default="1">
+        <enumVal>
+          <enumChoice choice="No">
+            <choice>No</choice>
+          </enumChoice>
+          <enumChoice choice="Yes">
+            <choice>Yes</choice>
+          </enumChoice>
+        </enumVal>
+        <label>Toggle</label>
+      </variable>
+      <variable CV="35" mask="XXVVXXXX" item="PTy7">
+        <enumVal>
+          <enumChoice choice="Switch Request">
+            <choice>Switch Request</choice>
+          </enumChoice>
+          <enumChoice choice="Switch Feedback">
+            <choice>Switch Feedback</choice>
+          </enumChoice>
+          <enumChoice choice="Sensor Message">
+            <choice>Sensor Message</choice>
+          </enumChoice>
+        </enumVal>
+        <label>Type</label>
+      </variable>
+      <variable CV="36" mask="XXXXXXVV" item="PTr7" default="2">
+        <enumVal>
+          <enumChoice choice="No Message">
+            <choice>No Message</choice>
+          </enumChoice>
+          <enumChoice choice="Send on Rising Edge">
+            <choice>Send on Rising Edge</choice>
+          </enumChoice>
+          <enumChoice choice="Send on Falling Edge">
+            <choice>Send on Falling Edge</choice>
+          </enumChoice>
+          <enumChoice choice="Send on Both Edges">
+            <choice>Send on Both Edges</choice>
+          </enumChoice>
+        </enumVal>
+        <label>Transition</label>
+      </variable>
+      <variable CV="36" mask="VVVVXXXX" item="Rte Num P7" default="0">
+        <decVal min="0" max="8"/>
+        <label>Route Number</label>
+      </variable>
+      <variable CV="37" mask="VVVVVVVV" item="PA8" default="8">
+        <splitVal highCV="38" max="7" upperMask="XXXXVVVV"/>
+        <label>Address</label>
+      </variable>
+      <variable CV="38" mask="VXXXXXXX" item="PInv P8">
+        <enumVal>
+          <enumChoice choice="No">
+            <choice>No</choice>
+          </enumChoice>
+          <enumChoice choice="Yes">
+            <choice>Yes</choice>
+          </enumChoice>
+        </enumVal>
+        <label>Invert</label>
+      </variable>
+      <variable CV="38" mask="XVXXXXXX" item="PTog P8" default="1">
+        <enumVal>
+          <enumChoice choice="No">
+            <choice>No</choice>
+          </enumChoice>
+          <enumChoice choice="Yes">
+            <choice>Yes</choice>
+          </enumChoice>
+        </enumVal>
+        <label>Toggle</label>
+      </variable>
+      <variable CV="38" mask="XXVVXXXX" item="PTy8">
+        <enumVal>
+          <enumChoice choice="Switch Request">
+            <choice>Switch Request</choice>
+          </enumChoice>
+          <enumChoice choice="Switch Feedback">
+            <choice>Switch Feedback</choice>
+          </enumChoice>
+          <enumChoice choice="Sensor Message">
+            <choice>Sensor Message</choice>
+          </enumChoice>
+        </enumVal>
+        <label>Type</label>
+      </variable>
+      <variable CV="39" mask="XXXXXXVV" item="PTr8" default="2">
+        <enumVal>
+          <enumChoice choice="No Message">
+            <choice>No Message</choice>
+          </enumChoice>
+          <enumChoice choice="Send on Rising Edge">
+            <choice>Send on Rising Edge</choice>
+          </enumChoice>
+          <enumChoice choice="Send on Falling Edge">
+            <choice>Send on Falling Edge</choice>
+          </enumChoice>
+          <enumChoice choice="Send on Both Edges">
+            <choice>Send on Both Edges</choice>
+          </enumChoice>
+        </enumVal>
+        <label>Transition</label>
+      </variable>
+      <variable CV="39" mask="VVVVXXXX" item="Rte Num P8" default="0">
+        <decVal min="0" max="8"/>
+        <label>Route Number</label>
+      </variable>
+
+      <!-- Begin servo address variable definition -->
+     <variable item="Servo 1 Address" CV="56" mask="VVVVVVVV" default="1" tooltip="Range 1-2040">
+        <splitVal highCV="57" upperMask="XXXXVVVV"/>
+        <label>Servo 1 Address</label>
+      </variable>
+     <variable item="Servo 2 Address" CV="58" mask="VVVVVVVV" default="2" tooltip="Range 1-2040">
+        <splitVal highCV="59" offset="0" upperMask="XXXXVVVV"/>
+        <label>Servo 2 Address</label>
+      </variable>
+      <variable item="Servo 3 Address" CV="60" mask="VVVVVVVV" default="3" tooltip="Range 1-2040">
+        <splitVal highCV="61" upperMask="XXXXVVVV"/>
+        <label>Servo 3 Address</label>
+      </variable>
+      <variable item="Servo 4 Address" CV="62" mask="VVVVVVVV" default="4" tooltip="Range 1-2040">
+        <splitVal highCV="63" upperMask="XXXXVVVV"/>
+        <label>Servo 4 Address</label>
+      </variable>
+      <variable item="Servo 5 Address" CV="64" mask="VVVVVVVV" default="5" tooltip="Range 1-2040">
+        <splitVal highCV="65" upperMask="XXXXVVVV"/>
+        <label>Servo 5 Address</label>
+      </variable>
+      <variable item="Servo 6 Address" CV="66" mask="VVVVVVVV" default="6" tooltip="Range 1-2040">
+        <splitVal highCV="67" upperMask="XXXXVVVV"/>
+        <label>Servo 6 Address</label>
+      </variable>
+      <variable item="Servo 7 Address" CV="68" mask="VVVVVVVV" default="7" tooltip="Range 1-2040">
+        <splitVal highCV="69" upperMask="XXXXVVVV"/>
+        <label>Servo 7 Address</label>
+      </variable>
+      <variable item="Servo 8 Address" CV="70" mask="VVVVVVVV" default="8" tooltip="Range 1-2040">
+        <splitVal highCV="71" upperMask="XXXXVVVV"/>
+        <label>Servo 8 Address</label>
+      </variable>
+      
+      <variable item="Servo 1 Position 1" CV="72" mask="VVVVVVVV" default="146">
+        <decVal min="1" max="200"/>
+        <label>Servo 1 Position 1</label>
+      </variable>
+      <variable item="Servo 1 Position 2" CV="73" mask="VVVVVVVV" default="106">
+        <decVal min="1" max="200"/>
+        <label>Servo 1 Position 2</label>
+      </variable>      
+      <variable item="Servo 2 Position 1" CV="74" mask="VVVVVVVV" default="146">
+        <decVal min="1" max="200"/>
+        <label>Servo 2 Position 1</label>
+      </variable>
+      <variable item="Servo 2 Position 2" CV="75" mask="VVVVVVVV" default="106">
+        <decVal min="1" max="200"/>
+        <label>Servo 2 Position 2</label>
+      </variable>
+      <variable item="Servo 3 Position 1" CV="76" mask="VVVVVVVV" default="146">
+        <decVal min="1" max="200"/>
+        <label>Servo 3 Position 1</label>
+      </variable>
+      <variable item="Servo 3 Position 2" CV="77" mask="VVVVVVVV" default="106">
+        <decVal min="1" max="200"/>
+        <label>Servo 3 Position 2</label>
+      </variable>
+      <variable item="Servo 4 Position 1" CV="78" mask="VVVVVVVV" default="146">
+        <decVal min="1" max="200"/>
+        <label>Servo 4 Position 1</label>
+      </variable>
+      <variable item="Servo 4 Position 2" CV="79" mask="VVVVVVVV" default="106">
+        <decVal min="1" max="200"/>
+        <label>Servo 4 Position 2</label>
+      </variable>      
+      <variable item="Servo 5 Position 1" CV="80" mask="VVVVVVVV" default="146">
+        <decVal min="1" max="200"/>
+        <label>Servo 5 Position 1</label>
+      </variable>
+      <variable item="Servo 5 Position 2" CV="81" mask="VVVVVVVV" default="106">
+        <decVal min="1" max="200"/>
+        <label>Servo 5 Position 2</label>
+      </variable>      
+      <variable item="Servo 6 Position 1" CV="82" mask="VVVVVVVV" default="146">
+        <decVal min="1" max="200"/>
+        <label>Servo 6 Position 1</label>
+      </variable>
+      <variable item="Servo 6 Position 2" CV="83" mask="VVVVVVVV" default="106">
+        <decVal min="1" max="200"/>
+        <label>Servo 6 Position 2</label>
+      </variable>      
+      <variable item="Servo 7 Position 1" CV="84" mask="VVVVVVVV" default="146">
+        <decVal min="1" max="200"/>
+        <label>Servo 7 Position 1</label>
+      </variable>
+      <variable item="Servo 7 Position 2" CV="85" mask="VVVVVVVV" default="106">
+        <decVal min="1" max="200"/>
+        <label>Servo 7 Position 2</label>
+      </variable>      
+      <variable item="Servo 8 Position 1" CV="86" mask="VVVVVVVV" default="146">
+        <decVal min="1" max="200"/>
+        <label>Servo 8 Position 1</label>
+      </variable>
+      <variable item="Servo 8 Position 2" CV="87" mask="VVVVVVVV" default="106">
+        <decVal min="1" max="200"/>
+        <label>Servo 8 Position 2</label>
+      </variable>        
+      
+      <!-- Begin servo speed variable definition -->
+      <variable item="Servo 1 Move Speed D1" CV="88" mask="XVVVVVVV" default="18">
+        <decVal min="1" max="127"/>
+        <label>Servo 1 Move Speed D1</label>
+      </variable>
+      <variable item="Servo 2 Move Speed D1" CV="89" mask="XVVVVVVV" default="18">
+        <decVal min="1" max="127"/>
+        <label>Servo 2 Move Speed D1</label>
+      </variable>
+      <variable item="Servo 3 Move Speed D1" CV="90" mask="XVVVVVVV" default="18">
+        <decVal min="1" max="127"/>
+        <label>Servo 3 Move Speed D1</label>
+      </variable>
+      <variable item="Servo 4 Move Speed D1" CV="91" mask="XVVVVVVV" default="18">
+        <decVal min="1" max="127"/>
+        <label>Servo 4 Move Speed D1</label>
+      </variable>
+      <variable item="Servo 5 Move Speed D1" CV="92" mask="XVVVVVVV" default="18">
+        <decVal min="1" max="127"/>
+        <label>Servo 5 Move Speed D1</label>
+      </variable>
+      <variable item="Servo 6 Move Speed D1" CV="93" mask="XVVVVVVV" default="18">
+        <decVal min="1" max="127"/>
+        <label>Servo 6 Move Speed D1</label>
+      </variable>
+      <variable item="Servo 7 Move Speed D1" CV="94" mask="XVVVVVVV" default="18">
+        <decVal min="1" max="127"/>
+        <label>Servo 7 Move Speed D1</label>
+      </variable>
+      <variable item="Servo 8 Move Speed D1" CV="95" mask="XVVVVVVV" default="18">
+        <decVal min="1" max="127"/>
+        <label>Servo 8 Move Speed D1</label>
+      </variable>
+      <variable item="Servo 1 Move Speed D2" CV="96" mask="XVVVVVVV" default="18">
+        <decVal min="1" max="127"/>
+        <label>Servo 1 Move Speed D2</label>
+      </variable>
+      <variable item="Servo 2 Move Speed D2" CV="97" mask="XVVVVVVV" default="18">
+        <decVal min="1" max="127"/>
+        <label>Servo 2 Move Speed D2</label>
+      </variable>
+      <variable item="Servo 3 Move Speed D2" CV="98" mask="XVVVVVVV" default="18">
+        <decVal min="1" max="127"/>
+        <label>Servo 3 Move Speed D2</label>
+      </variable>
+      <variable item="Servo 4 Move Speed D2" CV="99" mask="XVVVVVVV" default="18">
+        <decVal min="1" max="127"/>
+        <label>Servo 4 Move Speed D2</label>
+      </variable>
+      <variable item="Servo 5 Move Speed D2" CV="100" mask="XVVVVVVV" default="18">
+        <decVal min="1" max="127"/>
+        <label>Servo 5 Move Speed D2</label>
+      </variable>
+      <variable item="Servo 6 Move Speed D2" CV="101" mask="XVVVVVVV" default="18">
+        <decVal min="1" max="127"/>
+        <label>Servo 6 Move Speed D2</label>
+      </variable>
+      <variable item="Servo 7 Move Speed D2" CV="102" mask="XVVVVVVV" default="18">
+        <decVal min="1" max="127"/>
+        <label>Servo 7 Move Speed D2</label>
+      </variable>
+      <variable item="Servo 8 Move Speed D2" CV="103" mask="XVVVVVVV" default="18">
+        <decVal min="1" max="127"/>
+        <label>Servo 8 Move Speed D2</label>
+      </variable>
+
+      <!-- Begin servo behavior variable definition -->
+      <variable item="Beh1" CV="104" mask="XXXVXXXX" default="0">
+        <enumVal>
+          <enumChoice choice="no">
+          </enumChoice>
+          <enumChoice choice="yes">
+          </enumChoice>
+        </enumVal>
+        <label>Servo 1 Postion Indication</label>
+      </variable>
+      <variable item="Rev1" CV="104" mask="VXXXXXXX" default="0">
+        <enumVal>
+          <enumChoice choice="no">
+          </enumChoice>
+          <enumChoice choice="yes">
+          </enumChoice>
+        </enumVal>
+        <label>Reverse</label>
+      </variable>
+      <variable item="Beh2" CV="105" mask="XXXVXXXX" default="0">
+        <enumVal>
+          <enumChoice choice="no">
+          </enumChoice>
+          <enumChoice choice="yes">
+          </enumChoice>
+        </enumVal>
+        <label>Servo 2 Postion Indication</label>
+      </variable>
+      <variable item="Rev2" CV="105" mask="VXXXXXXX" default="0">
+        <enumVal>
+          <enumChoice choice="no">
+          </enumChoice>
+          <enumChoice choice="yes">
+          </enumChoice>
+        </enumVal>
+        <label>Reverse</label>
+      </variable>
+      <variable item="Beh3" CV="106" mask="XXXVXXXX" default="0">
+        <enumVal>
+          <enumChoice choice="no">
+          </enumChoice>
+          <enumChoice choice="yes">
+          </enumChoice>
+        </enumVal>
+        <label>Servo 3 Postion Indication</label>
+      </variable>
+      <variable item="Rev3" CV="106" mask="VXXXXXXX" default="0">
+        <enumVal>
+          <enumChoice choice="no">
+          </enumChoice>
+          <enumChoice choice="yes">
+          </enumChoice>
+        </enumVal>
+        <label>Reverse</label>
+      </variable>
+      <variable item="Beh4" CV="107" mask="XXXVXXXX" default="0">
+        <enumVal>
+          <enumChoice choice="no">
+          </enumChoice>
+          <enumChoice choice="yes">
+          </enumChoice>
+        </enumVal>
+        <label>Servo 4 Postion Indication</label>
+      </variable>
+      <variable item="Rev4" CV="107" mask="VXXXXXXX" default="0">
+        <enumVal>
+          <enumChoice choice="no">
+            <choice>no</choice>
+          </enumChoice>
+          <enumChoice choice="yes">
+            <choice>yes</choice>
+          </enumChoice>
+        </enumVal>
+        <label>Reverse</label>
+      </variable>
+      <variable item="Beh5" CV="108" mask="XXXVXXXX" default="0">
+        <enumVal>
+          <enumChoice choice="no">
+          </enumChoice>
+          <enumChoice choice="yes">
+          </enumChoice>
+        </enumVal>
+        <label>Servo 5 Postion Indication</label>
+      </variable>
+      <variable item="Rev5" CV="108" mask="VXXXXXXX" default="0">
+        <enumVal>
+          <enumChoice choice="no">
+            <choice>no</choice>
+          </enumChoice>
+          <enumChoice choice="yes">
+            <choice>yes</choice>
+          </enumChoice>
+        </enumVal>
+        <label>Reverse</label>
+      </variable>
+      <variable item="Beh6" CV="109" mask="XXXVXXXX" default="0">
+        <enumVal>
+          <enumChoice choice="no">
+          </enumChoice>
+          <enumChoice choice="yes">
+          </enumChoice>
+        </enumVal>
+        <label>Servo 6 Postion Indication</label>
+      </variable>
+      <variable item="Rev6" CV="109" mask="VXXXXXXX" default="0">
+        <enumVal>
+          <enumChoice choice="no">
+            <choice>no</choice>
+          </enumChoice>
+          <enumChoice choice="yes">
+            <choice>yes</choice>
+          </enumChoice>
+        </enumVal>
+        <label>Reverse</label>
+      </variable>
+      <variable item="Beh7" CV="110" mask="XXXVXXXX" default="0">
+        <enumVal>
+          <enumChoice choice="no">
+          </enumChoice>
+          <enumChoice choice="yes">
+          </enumChoice>
+        </enumVal>
+        <label>Servo 7 Postion Indication</label>
+      </variable>
+      <variable item="Rev7" CV="110" mask="VXXXXXXX" default="0">
+        <enumVal>
+          <enumChoice choice="no">
+            <choice>no</choice>
+          </enumChoice>
+          <enumChoice choice="yes">
+            <choice>yes</choice>
+          </enumChoice>
+        </enumVal>
+        <label>Reverse</label>
+      </variable>
+      <variable item="Beh8" CV="111" mask="XXXVXXXX" default="0">
+        <enumVal>
+          <enumChoice choice="no">
+          </enumChoice>
+          <enumChoice choice="yes">
+          </enumChoice>
+        </enumVal>
+        <label>Servo 8 Postion Indication</label>
+      </variable>
+      <variable item="Rev8" CV="111" mask="VXXXXXXX" default="0">
+        <enumVal>
+          <enumChoice choice="no">
+            <choice>no</choice>
+          </enumChoice>
+          <enumChoice choice="yes">
+            <choice>yes</choice>
+          </enumChoice>
+        </enumVal>
+        <label>Reverse</label>
+      </variable>
+      
+      <!-- Begin route variable definition -->
+      <variable CV="112" mask="VVVVVVVV" item="Rt Top1">
+        <splitVal highCV="113" upperMask="XXXXVVVV"/>
+        <label>Top Address</label>
+      </variable>
+      <variable CV="113" mask="XVXXXXXX" item="Sw state1">
+        <enumVal>
+          <enumChoice choice="t">
+            <choice>t</choice>
+          </enumChoice>
+          <enumChoice choice="c">
+            <choice>c</choice>
+          </enumChoice>
+        </enumVal>
+        <label>Switch State</label>
+      </variable>
+      <variable CV="113" mask="XXVVXXXX" item="MType1">
+        <enumVal>
+          <enumChoice choice="No" value="0">
+            <choice>No</choice>
+          </enumChoice>
+          <enumChoice choice="Yes" value="2">
+            <choice>Yes</choice>
+          </enumChoice>
+        </enumVal>
+        <label>Sensor Route Execution</label>
+      </variable>
+      <variable CV="114" mask="VVVVVVVV" item="Rt Top2">
+        <splitVal highCV="115" upperMask="XXXXVVVV"/>
+        <label>Top Address</label>
+      </variable>
+      <variable CV="115" mask="XVXXXXXX" item="Sw state2">
+        <enumVal>
+          <enumChoice choice="t">
+            <choice>t</choice>
+          </enumChoice>
+          <enumChoice choice="c">
+            <choice>c</choice>
+          </enumChoice>
+        </enumVal>
+        <label>Switch State</label>
+      </variable>
+      <variable CV="115" mask="XXVVXXXX" item="MType2">
+        <enumVal>
+          <enumChoice choice="No" value="0">
+            <choice>No</choice>
+          </enumChoice>
+          <enumChoice choice="Yes" value="2">
+            <choice>Yes</choice>
+          </enumChoice>
+        </enumVal>
+        <label>Sensor Route Execution</label>
+      </variable>
+      <variable CV="116" mask="VVVVVVVV" item="Rt Top3">
+        <splitVal highCV="117" upperMask="XXXXVVVV"/>
+        <label>Top Address</label>
+      </variable>
+      <variable CV="117" mask="XVXXXXXX" item="Sw state3">
+        <enumVal>
+          <enumChoice choice="t">
+            <choice>t</choice>
+          </enumChoice>
+          <enumChoice choice="c">
+            <choice>c</choice>
+          </enumChoice>
+        </enumVal>
+        <label>Switch State</label>
+      </variable>
+      <variable CV="117" mask="XXVVXXXX" item="MType3">
+        <enumVal>
+          <enumChoice choice="No" value="0">
+            <choice>No</choice>
+          </enumChoice>
+          <enumChoice choice="Yes" value="2">
+            <choice>Yes</choice>
+          </enumChoice>
+        </enumVal>
+        <label>Sensor Route Execution</label>
+      </variable>
+      <variable CV="118" mask="VVVVVVVV" item="Rt Top4">
+        <splitVal highCV="119" upperMask="XXXXVVVV"/>
+        <label>Top Address</label>
+      </variable>
+      <variable CV="119" mask="XVXXXXXX" item="Sw state4">
+        <enumVal>
+          <enumChoice choice="t">
+            <choice>t</choice>
+          </enumChoice>
+          <enumChoice choice="c">
+            <choice>c</choice>
+          </enumChoice>
+        </enumVal>
+        <label>Switch State</label>
+      </variable>
+      <variable CV="119" mask="XXVVXXXX" item="MType4">
+        <enumVal>
+          <enumChoice choice="No" value="0">
+            <choice>No</choice>
+          </enumChoice>
+          <enumChoice choice="Yes" value="2">
+            <choice>Yes</choice>
+          </enumChoice>
+        </enumVal>
+        <label>Sensor Route Execution</label>
+      </variable>
+      <variable CV="120" mask="VVVVVVVV" item="Rt Top5">
+        <splitVal highCV="121" upperMask="XXXXVVVV"/>
+        <label>Top Address</label>
+      </variable>
+      <variable CV="121" mask="XVXXXXXX" item="Sw state5">
+        <enumVal>
+          <enumChoice choice="t">
+            <choice>t</choice>
+          </enumChoice>
+          <enumChoice choice="c">
+            <choice>c</choice>
+          </enumChoice>
+        </enumVal>
+        <label>Switch State</label>
+      </variable>
+      <variable CV="121" mask="XXVVXXXX" item="MType5">
+        <enumVal>
+          <enumChoice choice="No" value="0">
+            <choice>No</choice>
+          </enumChoice>
+          <enumChoice choice="Yes" value="2">
+            <choice>Yes</choice>
+          </enumChoice>
+        </enumVal>
+        <label>Sensor Route Execution</label>
+      </variable>
+      <variable CV="122" mask="VVVVVVVV" item="Rt Top6">
+        <splitVal highCV="123" upperMask="XXXXVVVV"/>
+        <label>Top Address</label>
+      </variable>
+      <variable CV="123" mask="XVXXXXXX" item="Sw state6">
+        <enumVal>
+          <enumChoice choice="t">
+            <choice>t</choice>
+          </enumChoice>
+          <enumChoice choice="c">
+            <choice>c</choice>
+          </enumChoice>
+        </enumVal>
+        <label>Switch State</label>
+      </variable>
+      <variable CV="123" mask="XXVVXXXX" item="MType6">
+        <enumVal>
+          <enumChoice choice="No" value="0">
+            <choice>No</choice>
+          </enumChoice>
+          <enumChoice choice="Yes" value="2">
+            <choice>Yes</choice>
+          </enumChoice>
+        </enumVal>
+        <label>Sensor Route Execution</label>
+      </variable>
+      <variable CV="124" mask="VVVVVVVV" item="Rt Top7">
+        <splitVal highCV="125" upperMask="XXXXVVVV"/>
+        <label>Top Address</label>
+      </variable>
+      <variable CV="125" mask="XVXXXXXX" item="Sw state7">
+        <enumVal>
+          <enumChoice choice="t">
+            <choice>t</choice>
+          </enumChoice>
+          <enumChoice choice="c">
+            <choice>c</choice>
+          </enumChoice>
+        </enumVal>
+        <label>Switch State</label>
+      </variable>
+      <variable CV="125" mask="XXVVXXXX" item="MType7">
+        <enumVal>
+          <enumChoice choice="No" value="0">
+            <choice>No</choice>
+          </enumChoice>
+          <enumChoice choice="Yes" value="2">
+            <choice>Yes</choice>
+          </enumChoice>
+        </enumVal>
+        <label>Sensor Route Execution</label>
+      </variable>
+      <variable CV="126" mask="VVVVVVVV" item="Rt Top8">
+        <splitVal highCV="127" upperMask="XXXXVVVV"/>
+        <label>Top Address</label>
+      </variable>
+      <variable CV="127" mask="XVXXXXXX" item="Sw state8">
+        <enumVal>
+          <enumChoice choice="t">
+            <choice>t</choice>
+          </enumChoice>
+          <enumChoice choice="c">
+            <choice>c</choice>
+          </enumChoice>
+        </enumVal>
+        <label>Switch State</label>
+      </variable>
+      <variable CV="127" mask="XXVVXXXX" item="MType8">
+        <enumVal>
+          <enumChoice choice="No" value="0">
+            <choice>No</choice>
+          </enumChoice>
+          <enumChoice choice="Yes" value="2">
+            <choice>Yes</choice>
+          </enumChoice>
+        </enumVal>
+        <label>Sensor Route Execution</label>
+      </variable>
+      <!-- Route 1 variable definition -->
+      <variable CV="128" mask="VVVVVVVV" item="Rt Cell 11">
+        <splitVal highCV="129" upperMask="XXXXVVVV"/>
+        <label>Cell 1 Address</label>
+      </variable>
+      <variable CV="129" mask="XVXXXXXX" item="Sw state11">
+        <enumVal>
+          <enumChoice choice="t">
+            <choice>t</choice>
+          </enumChoice>
+          <enumChoice choice="c">
+            <choice>c</choice>
+          </enumChoice>
+        </enumVal>
+        <label>Switch State</label>
+      </variable>
+      <variable CV="130" mask="VVVVVVVV" item="Rt Cell 12">
+        <splitVal highCV="131" upperMask="XXXXVVVV"/>
+        <label>Cell 2 Address</label>
+      </variable>
+      <variable CV="131" mask="XVXXXXXX" item="Sw state12">
+        <enumVal>
+          <enumChoice choice="t">
+            <choice>t</choice>
+          </enumChoice>
+          <enumChoice choice="c">
+            <choice>c</choice>
+          </enumChoice>
+        </enumVal>
+        <label>Switch State</label>
+      </variable>
+      <variable CV="132" mask="VVVVVVVV" item="Rt Cell 13">
+        <splitVal highCV="133" upperMask="XXXXVVVV"/>
+        <label>Cell 3 Address</label>
+      </variable>
+      <variable CV="133" mask="XVXXXXXX" item="Sw state13">
+        <enumVal>
+          <enumChoice choice="t">
+            <choice>t</choice>
+          </enumChoice>
+          <enumChoice choice="c">
+            <choice>c</choice>
+          </enumChoice>
+        </enumVal>
+        <label>Switch State</label>
+      </variable>
+      <variable CV="134" mask="VVVVVVVV" item="Rt Cell 14">
+        <splitVal highCV="135" upperMask="XXXXVVVV"/>
+        <label>Cell 4 Address</label>
+      </variable>
+      <variable CV="135" mask="XVXXXXXX" item="Sw state14">
+        <enumVal>
+          <enumChoice choice="t">
+            <choice>t</choice>
+          </enumChoice>
+          <enumChoice choice="c">
+            <choice>c</choice>
+          </enumChoice>
+        </enumVal>
+        <label>Switch State</label>
+      </variable>
+      <variable CV="136" mask="VVVVVVVV" item="Rt Cell 15">
+        <splitVal highCV="137" upperMask="XXXXVVVV"/>
+        <label>Cell 5 Address</label>
+      </variable>
+      <variable CV="137" mask="XVXXXXXX" item="Sw state15">
+        <enumVal>
+          <enumChoice choice="t">
+            <choice>t</choice>
+          </enumChoice>
+          <enumChoice choice="c">
+            <choice>c</choice>
+          </enumChoice>
+        </enumVal>
+        <label>Switch State</label>
+      </variable>
+      <variable CV="138" mask="VVVVVVVV" item="Rt Cell 16">
+        <splitVal highCV="139" upperMask="XXXXVVVV"/>
+        <label>Cell 6 Address</label>
+      </variable>
+      <variable CV="139" mask="XVXXXXXX" item="Sw state16">
+        <enumVal>
+          <enumChoice choice="t">
+            <choice>t</choice>
+          </enumChoice>
+          <enumChoice choice="c">
+            <choice>c</choice>
+          </enumChoice>
+        </enumVal>
+        <label>Switch State</label>
+      </variable>
+      <variable CV="140" mask="VVVVVVVV" item="Rt Cell 17">
+        <splitVal highCV="141" upperMask="XXXXVVVV"/>
+        <label>Cell 7 Address</label>
+      </variable>
+      <variable CV="141" mask="XVXXXXXX" item="Sw state17">
+        <enumVal>
+          <enumChoice choice="t">
+            <choice>t</choice>
+          </enumChoice>
+          <enumChoice choice="c">
+            <choice>c</choice>
+          </enumChoice>
+        </enumVal>
+        <label>Switch State</label>
+      </variable>
+      <variable CV="142" mask="VVVVVVVV" item="Rt Cell 18">
+        <splitVal highCV="143" upperMask="XXXXVVVV"/>
+        <label>Cell 8 Address</label>
+      </variable>
+      <variable CV="143" mask="XVXXXXXX" item="Sw state18">
+        <enumVal>
+          <enumChoice choice="t">
+            <choice>t</choice>
+          </enumChoice>
+          <enumChoice choice="c">
+            <choice>c</choice>
+          </enumChoice>
+        </enumVal>
+        <label>Switch State</label>
+      </variable>
+      <variable CV="144" mask="VVVVVVVV" item="Rt Cell 21">
+        <splitVal highCV="145" upperMask="XXXXVVVV"/>
+        <label>Cell 1 Address</label>
+      </variable>
+      <variable CV="145" mask="XVXXXXXX" item="Sw state21">
+        <enumVal>
+          <enumChoice choice="t">
+            <choice>t</choice>
+          </enumChoice>
+          <enumChoice choice="c">
+            <choice>c</choice>
+          </enumChoice>
+        </enumVal>
+        <label>Switch State</label>
+      </variable>
+      <variable CV="146" mask="VVVVVVVV" item="Rt Cell 22">
+        <splitVal highCV="147" upperMask="XXXXVVVV"/>
+        <label>Cell 2 Address</label>
+      </variable>
+      <variable CV="147" mask="XVXXXXXX" item="Sw state22">
+        <enumVal>
+          <enumChoice choice="t">
+            <choice>t</choice>
+          </enumChoice>
+          <enumChoice choice="c">
+            <choice>c</choice>
+          </enumChoice>
+        </enumVal>
+        <label>Switch State</label>
+      </variable>
+      <variable CV="148" mask="VVVVVVVV" item="Rt Cell 23">
+        <splitVal highCV="149" upperMask="XXXXVVVV"/>
+        <label>Cell 3 Address</label>
+      </variable>
+      <variable CV="149" mask="XVXXXXXX" item="Sw state23">
+        <enumVal>
+          <enumChoice choice="t">
+            <choice>t</choice>
+          </enumChoice>
+          <enumChoice choice="c">
+            <choice>c</choice>
+          </enumChoice>
+        </enumVal>
+        <label>Switch State</label>
+      </variable>
+      <variable CV="150" mask="VVVVVVVV" item="Rt Cell 24">
+        <splitVal highCV="151" upperMask="XXXXVVVV"/>
+        <label>Cell 4 Address</label>
+      </variable>
+      <variable CV="151" mask="XVXXXXXX" item="Sw state24">
+        <enumVal>
+          <enumChoice choice="t">
+            <choice>t</choice>
+          </enumChoice>
+          <enumChoice choice="c">
+            <choice>c</choice>
+          </enumChoice>
+        </enumVal>
+        <label>Switch State</label>
+      </variable>
+      <variable CV="152" mask="VVVVVVVV" item="Rt Cell 25">
+        <splitVal highCV="153" upperMask="XXXXVVVV"/>
+        <label>Cell 5 Address</label>
+      </variable>
+      <variable CV="153" mask="XVXXXXXX" item="Sw state25">
+        <enumVal>
+          <enumChoice choice="t">
+            <choice>t</choice>
+          </enumChoice>
+          <enumChoice choice="c">
+            <choice>c</choice>
+          </enumChoice>
+        </enumVal>
+        <label>Switch State</label>
+      </variable>
+      <variable CV="154" mask="VVVVVVVV" item="Rt Cell 26">
+        <splitVal highCV="155" upperMask="XXXXVVVV"/>
+        <label>Cell 6 Address</label>
+      </variable>
+      <variable CV="155" mask="XVXXXXXX" item="Sw state26">
+        <enumVal>
+          <enumChoice choice="t">
+            <choice>t</choice>
+          </enumChoice>
+          <enumChoice choice="c">
+            <choice>c</choice>
+          </enumChoice>
+        </enumVal>
+        <label>Switch State</label>
+      </variable>
+      <variable CV="156" mask="VVVVVVVV" item="Rt Cell 27">
+        <splitVal highCV="157" upperMask="XXXXVVVV"/>
+        <label>Cell 7 Address</label>
+      </variable>
+      <variable CV="157" mask="XVXXXXXX" item="Sw state27">
+        <enumVal>
+          <enumChoice choice="t">
+            <choice>t</choice>
+          </enumChoice>
+          <enumChoice choice="c">
+            <choice>c</choice>
+          </enumChoice>
+        </enumVal>
+        <label>Switch State</label>
+      </variable>
+      <variable CV="158" mask="VVVVVVVV" item="Rt Cell 28">
+        <splitVal highCV="159" upperMask="XXXXVVVV"/>
+        <label>Cell 8 Address</label>
+      </variable>
+      <variable CV="159" mask="XVXXXXXX" item="Sw state28">
+        <enumVal>
+          <enumChoice choice="t">
+            <choice>t</choice>
+          </enumChoice>
+          <enumChoice choice="c">
+            <choice>c</choice>
+          </enumChoice>
+        </enumVal>
+        <label>Switch State</label>
+      </variable>
+      <variable CV="160" mask="VVVVVVVV" item="Rt Cell 31">
+        <splitVal highCV="161" upperMask="XXXXVVVV"/>
+        <label>Cell 1 Address</label>
+      </variable>
+      <variable CV="161" mask="XVXXXXXX" item="Sw state31">
+        <enumVal>
+          <enumChoice choice="t">
+            <choice>t</choice>
+          </enumChoice>
+          <enumChoice choice="c">
+            <choice>c</choice>
+          </enumChoice>
+        </enumVal>
+        <label>Switch State</label>
+      </variable>
+      <variable CV="162" mask="VVVVVVVV" item="Rt Cell 32">
+        <splitVal highCV="163" upperMask="XXXXVVVV"/>
+        <label>Cell 2 Address</label>
+      </variable>
+      <variable CV="163" mask="XVXXXXXX" item="Sw state32">
+        <enumVal>
+          <enumChoice choice="t">
+            <choice>t</choice>
+          </enumChoice>
+          <enumChoice choice="c">
+            <choice>c</choice>
+          </enumChoice>
+        </enumVal>
+        <label>Switch State</label>
+      </variable>
+      <variable CV="164" mask="VVVVVVVV" item="Rt Cell 33">
+        <splitVal highCV="165" upperMask="XXXXVVVV"/>
+        <label>Cell 3 Address</label>
+      </variable>
+      <variable CV="165" mask="XVXXXXXX" item="Sw state33">
+        <enumVal>
+          <enumChoice choice="t">
+            <choice>t</choice>
+          </enumChoice>
+          <enumChoice choice="c">
+            <choice>c</choice>
+          </enumChoice>
+        </enumVal>
+        <label>Switch State</label>
+      </variable>
+      <variable CV="166" mask="VVVVVVVV" item="Rt Cell 34">
+        <splitVal highCV="167" upperMask="XXXXVVVV"/>
+        <label>Cell 4 Address</label>
+      </variable>
+      <variable CV="167" mask="XVXXXXXX" item="Sw state34">
+        <enumVal>
+          <enumChoice choice="t">
+            <choice>t</choice>
+          </enumChoice>
+          <enumChoice choice="c">
+            <choice>c</choice>
+          </enumChoice>
+        </enumVal>
+        <label>Switch State</label>
+      </variable>
+      <variable CV="168" mask="VVVVVVVV" item="Rt Cell 35">
+        <splitVal highCV="169" upperMask="XXXXVVVV"/>
+        <label>Cell 5 Address</label>
+      </variable>
+      <variable CV="169" mask="XVXXXXXX" item="Sw state35">
+        <enumVal>
+          <enumChoice choice="t">
+            <choice>t</choice>
+          </enumChoice>
+          <enumChoice choice="c">
+            <choice>c</choice>
+          </enumChoice>
+        </enumVal>
+        <label>Switch State</label>
+      </variable>
+      <variable CV="170" mask="VVVVVVVV" item="Rt Cell 36">
+        <splitVal highCV="171" upperMask="XXXXVVVV"/>
+        <label>Cell 6 Address</label>
+      </variable>
+      <variable CV="171" mask="XVXXXXXX" item="Sw state36">
+        <enumVal>
+          <enumChoice choice="t">
+            <choice>t</choice>
+          </enumChoice>
+          <enumChoice choice="c">
+            <choice>c</choice>
+          </enumChoice>
+        </enumVal>
+        <label>Switch State</label>
+      </variable>
+      <variable CV="172" mask="VVVVVVVV" item="Rt Cell 37">
+        <splitVal highCV="173" upperMask="XXXXVVVV"/>
+        <label>Cell 7 Address</label>
+      </variable>
+      <variable CV="173" mask="XVXXXXXX" item="Sw state37">
+        <enumVal>
+          <enumChoice choice="t">
+            <choice>t</choice>
+          </enumChoice>
+          <enumChoice choice="c">
+            <choice>c</choice>
+          </enumChoice>
+        </enumVal>
+        <label>Switch State</label>
+      </variable>
+      <variable CV="174" mask="VVVVVVVV" item="Rt Cell 38">
+        <splitVal highCV="175" upperMask="XXXXVVVV"/>
+        <label>Cell 8 Address</label>
+      </variable>
+      <variable CV="175" mask="XVXXXXXX" item="Sw state38">
+        <enumVal>
+          <enumChoice choice="t">
+            <choice>t</choice>
+          </enumChoice>
+          <enumChoice choice="c">
+            <choice>c</choice>
+          </enumChoice>
+        </enumVal>
+        <label>Switch State</label>
+      </variable>
+      <variable CV="176" mask="VVVVVVVV" item="Rt Cell 41">
+        <splitVal highCV="177" upperMask="XXXXVVVV"/>
+        <label>Cell 1 Address</label>
+      </variable>
+      <variable CV="177" mask="XVXXXXXX" item="Sw state41">
+        <enumVal>
+          <enumChoice choice="t">
+            <choice>t</choice>
+          </enumChoice>
+          <enumChoice choice="c">
+            <choice>c</choice>
+          </enumChoice>
+        </enumVal>
+        <label>Switch State</label>
+      </variable>
+      <variable CV="178" mask="VVVVVVVV" item="Rt Cell 42">
+        <splitVal highCV="179" upperMask="XXXXVVVV"/>
+        <label>Cell 2 Address</label>
+      </variable>
+      <variable CV="179" mask="XVXXXXXX" item="Sw state42">
+        <enumVal>
+          <enumChoice choice="t">
+            <choice>t</choice>
+          </enumChoice>
+          <enumChoice choice="c">
+            <choice>c</choice>
+          </enumChoice>
+        </enumVal>
+        <label>Switch State</label>
+      </variable>
+      <variable CV="180" mask="VVVVVVVV" item="Rt Cell 43">
+        <splitVal highCV="181" upperMask="XXXXVVVV"/>
+        <label>Cell 3 Address</label>
+      </variable>
+      <variable CV="181" mask="XVXXXXXX" item="Sw state43">
+        <enumVal>
+          <enumChoice choice="t">
+            <choice>t</choice>
+          </enumChoice>
+          <enumChoice choice="c">
+            <choice>c</choice>
+          </enumChoice>
+        </enumVal>
+        <label>Switch State</label>
+      </variable>
+      <variable CV="182" mask="VVVVVVVV" item="Rt Cell 44">
+        <splitVal highCV="183" upperMask="XXXXVVVV"/>
+        <label>Cell 4 Address</label>
+      </variable>
+      <variable CV="183" mask="XVXXXXXX" item="Sw state44">
+        <enumVal>
+          <enumChoice choice="t">
+            <choice>t</choice>
+          </enumChoice>
+          <enumChoice choice="c">
+            <choice>c</choice>
+          </enumChoice>
+        </enumVal>
+        <label>Switch State</label>
+      </variable>
+      <variable CV="184" mask="VVVVVVVV" item="Rt Cell 45">
+        <splitVal highCV="185" upperMask="XXXXVVVV"/>
+        <label>Cell 5 Address</label>
+      </variable>
+      <variable CV="185" mask="XVXXXXXX" item="Sw state45">
+        <enumVal>
+          <enumChoice choice="t">
+            <choice>t</choice>
+          </enumChoice>
+          <enumChoice choice="c">
+            <choice>c</choice>
+          </enumChoice>
+        </enumVal>
+        <label>Switch State</label>
+      </variable>
+      <variable CV="186" mask="VVVVVVVV" item="Rt Cell 46">
+        <splitVal highCV="187" upperMask="XXXXVVVV"/>
+        <label>Cell 6 Address</label>
+      </variable>
+      <variable CV="187" mask="XVXXXXXX" item="Sw state46">
+        <enumVal>
+          <enumChoice choice="t">
+            <choice>t</choice>
+          </enumChoice>
+          <enumChoice choice="c">
+            <choice>c</choice>
+          </enumChoice>
+        </enumVal>
+        <label>Switch State</label>
+      </variable>
+      <variable CV="188" mask="VVVVVVVV" item="Rt Cell 47">
+        <splitVal highCV="189" upperMask="XXXXVVVV"/>
+        <label>Cell 7 Address</label>
+      </variable>
+      <variable CV="189" mask="XVXXXXXX" item="Sw state47">
+        <enumVal>
+          <enumChoice choice="t">
+            <choice>t</choice>
+          </enumChoice>
+          <enumChoice choice="c">
+            <choice>c</choice>
+          </enumChoice>
+        </enumVal>
+        <label>Switch State</label>
+      </variable>
+      <variable CV="190" mask="VVVVVVVV" item="Rt Cell 48">
+        <splitVal highCV="191" upperMask="XXXXVVVV"/>
+        <label>Cell 8 Address</label>
+      </variable>
+      <variable CV="191" mask="XVXXXXXX" item="Sw state48">
+        <enumVal>
+          <enumChoice choice="t">
+            <choice>t</choice>
+          </enumChoice>
+          <enumChoice choice="c">
+            <choice>c</choice>
+          </enumChoice>
+        </enumVal>
+        <label>Switch State</label>
+      </variable>
+      <variable CV="192" mask="VVVVVVVV" item="Rt Cell 51">
+        <splitVal highCV="193" upperMask="XXXXVVVV"/>
+        <label>Cell 1 Address</label>
+      </variable>
+      <variable CV="193" mask="XVXXXXXX" item="Sw state51">
+        <enumVal>
+          <enumChoice choice="t">
+            <choice>t</choice>
+          </enumChoice>
+          <enumChoice choice="c">
+            <choice>c</choice>
+          </enumChoice>
+        </enumVal>
+        <label>Switch State</label>
+      </variable>
+      <variable CV="194" mask="VVVVVVVV" item="Rt Cell 52">
+        <splitVal highCV="195" upperMask="XXXXVVVV"/>
+        <label>Cell 2 Address</label>
+      </variable>
+      <variable CV="195" mask="XVXXXXXX" item="Sw state52">
+        <enumVal>
+          <enumChoice choice="t">
+            <choice>t</choice>
+          </enumChoice>
+          <enumChoice choice="c">
+            <choice>c</choice>
+          </enumChoice>
+        </enumVal>
+        <label>Switch State</label>
+      </variable>
+      <variable CV="196" mask="VVVVVVVV" item="Rt Cell 53">
+        <splitVal highCV="197" upperMask="XXXXVVVV"/>
+        <label>Cell 3 Address</label>
+      </variable>
+      <variable CV="197" mask="XVXXXXXX" item="Sw state53">
+        <enumVal>
+          <enumChoice choice="t">
+            <choice>t</choice>
+          </enumChoice>
+          <enumChoice choice="c">
+            <choice>c</choice>
+          </enumChoice>
+        </enumVal>
+        <label>Switch State</label>
+      </variable>
+      <variable CV="198" mask="VVVVVVVV" item="Rt Cell 54">
+        <splitVal highCV="199" upperMask="XXXXVVVV"/>
+        <label>Cell 4 Address</label>
+      </variable>
+      <variable CV="199" mask="XVXXXXXX" item="Sw state54">
+        <enumVal>
+          <enumChoice choice="t">
+            <choice>t</choice>
+          </enumChoice>
+          <enumChoice choice="c">
+            <choice>c</choice>
+          </enumChoice>
+        </enumVal>
+        <label>Switch State</label>
+      </variable>
+      <variable CV="200" mask="VVVVVVVV" item="Rt Cell 55">
+        <splitVal highCV="201" upperMask="XXXXVVVV"/>
+        <label>Cell 5 Address</label>
+      </variable>
+      <variable CV="201" mask="XVXXXXXX" item="Sw state55">
+        <enumVal>
+          <enumChoice choice="t">
+            <choice>t</choice>
+          </enumChoice>
+          <enumChoice choice="c">
+            <choice>c</choice>
+          </enumChoice>
+        </enumVal>
+        <label>Switch State</label>
+      </variable>
+      <variable CV="202" mask="VVVVVVVV" item="Rt Cell 56">
+        <splitVal highCV="203" upperMask="XXXXVVVV"/>
+        <label>Cell 6 Address</label>
+      </variable>
+      <variable CV="203" mask="XVXXXXXX" item="Sw state56">
+        <enumVal>
+          <enumChoice choice="t">
+            <choice>t</choice>
+          </enumChoice>
+          <enumChoice choice="c">
+            <choice>c</choice>
+          </enumChoice>
+        </enumVal>
+        <label>Switch State</label>
+      </variable>
+      <variable CV="204" mask="VVVVVVVV" item="Rt Cell 57">
+        <splitVal highCV="205" upperMask="XXXXVVVV"/>
+        <label>Cell 7 Address</label>
+      </variable>
+      <variable CV="205" mask="XVXXXXXX" item="Sw state57">
+        <enumVal>
+          <enumChoice choice="t">
+            <choice>t</choice>
+          </enumChoice>
+          <enumChoice choice="c">
+            <choice>c</choice>
+          </enumChoice>
+        </enumVal>
+        <label>Switch State</label>
+      </variable>
+      <variable CV="206" mask="VVVVVVVV" item="Rt Cell 58">
+        <splitVal highCV="207" upperMask="XXXXVVVV"/>
+        <label>Cell 8 Address</label>
+      </variable>
+      <variable CV="207" mask="XVXXXXXX" item="Sw state58">
+        <enumVal>
+          <enumChoice choice="t">
+            <choice>t</choice>
+          </enumChoice>
+          <enumChoice choice="c">
+            <choice>c</choice>
+          </enumChoice>
+        </enumVal>
+        <label>Switch State</label>
+      </variable>
+      <variable CV="208" mask="VVVVVVVV" item="Rt Cell 61">
+        <splitVal highCV="209" upperMask="XXXXVVVV"/>
+        <label>Cell 1 Address</label>
+      </variable>
+      <variable CV="209" mask="XVXXXXXX" item="Sw state61">
+        <enumVal>
+          <enumChoice choice="t">
+            <choice>t</choice>
+          </enumChoice>
+          <enumChoice choice="c">
+            <choice>c</choice>
+          </enumChoice>
+        </enumVal>
+        <label>Switch State</label>
+      </variable>
+      <variable CV="210" mask="VVVVVVVV" item="Rt Cell 62">
+        <splitVal highCV="211" upperMask="XXXXVVVV"/>
+        <label>Cell 2 Address</label>
+      </variable>
+      <variable CV="211" mask="XVXXXXXX" item="Sw state62">
+        <enumVal>
+          <enumChoice choice="t">
+            <choice>t</choice>
+          </enumChoice>
+          <enumChoice choice="c">
+            <choice>c</choice>
+          </enumChoice>
+        </enumVal>
+        <label>Switch State</label>
+      </variable>
+      <variable CV="212" mask="VVVVVVVV" item="Rt Cell 63">
+        <splitVal highCV="213" upperMask="XXXXVVVV"/>
+        <label>Cell 3 Address</label>
+      </variable>
+      <variable CV="213" mask="XVXXXXXX" item="Sw state63">
+        <enumVal>
+          <enumChoice choice="t">
+            <choice>t</choice>
+          </enumChoice>
+          <enumChoice choice="c">
+            <choice>c</choice>
+          </enumChoice>
+        </enumVal>
+        <label>Switch State</label>
+      </variable>
+      <variable CV="214" mask="VVVVVVVV" item="Rt Cell 64">
+        <splitVal highCV="215" upperMask="XXXXVVVV"/>
+        <label>Cell 4 Address</label>
+      </variable>
+      <variable CV="215" mask="XVXXXXXX" item="Sw state64">
+        <enumVal>
+          <enumChoice choice="t">
+            <choice>t</choice>
+          </enumChoice>
+          <enumChoice choice="c">
+            <choice>c</choice>
+          </enumChoice>
+        </enumVal>
+        <label>Switch State</label>
+      </variable>
+      <variable CV="216" mask="VVVVVVVV" item="Rt Cell 65">
+        <splitVal highCV="217" upperMask="XXXXVVVV"/>
+        <label>Cell 5 Address</label>
+      </variable>
+      <variable CV="217" mask="XVXXXXXX" item="Sw state65">
+        <enumVal>
+          <enumChoice choice="t">
+            <choice>t</choice>
+          </enumChoice>
+          <enumChoice choice="c">
+            <choice>c</choice>
+          </enumChoice>
+        </enumVal>
+        <label>Switch State</label>
+      </variable>
+      <variable CV="218" mask="VVVVVVVV" item="Rt Cell 66">
+        <splitVal highCV="219" upperMask="XXXXVVVV"/>
+        <label>Cell 6 Address</label>
+      </variable>
+      <variable CV="219" mask="XVXXXXXX" item="Sw state66">
+        <enumVal>
+          <enumChoice choice="t">
+            <choice>t</choice>
+          </enumChoice>
+          <enumChoice choice="c">
+            <choice>c</choice>
+          </enumChoice>
+        </enumVal>
+        <label>Switch State</label>
+      </variable>
+      <variable CV="220" mask="VVVVVVVV" item="Rt Cell 67">
+        <splitVal highCV="221" upperMask="XXXXVVVV"/>
+        <label>Cell 7 Address</label>
+      </variable>
+      <variable CV="221" mask="XVXXXXXX" item="Sw state67">
+        <enumVal>
+          <enumChoice choice="t">
+            <choice>t</choice>
+          </enumChoice>
+          <enumChoice choice="c">
+            <choice>c</choice>
+          </enumChoice>
+        </enumVal>
+        <label>Switch State</label>
+      </variable>
+      <variable CV="222" mask="VVVVVVVV" item="Rt Cell 68">
+        <splitVal highCV="223" upperMask="XXXXVVVV"/>
+        <label>Cell 8 Address</label>
+      </variable>
+      <variable CV="223" mask="XVXXXXXX" item="Sw state68">
+        <enumVal>
+          <enumChoice choice="t">
+            <choice>t</choice>
+          </enumChoice>
+          <enumChoice choice="c">
+            <choice>c</choice>
+          </enumChoice>
+        </enumVal>
+        <label>Switch State</label>
+      </variable>
+      <variable CV="224" mask="VVVVVVVV" item="Rt Cell 71">
+        <splitVal highCV="225" upperMask="XXXXVVVV"/>
+        <label>Cell 1 Address</label>
+      </variable>
+      <variable CV="225" mask="XVXXXXXX" item="Sw state71">
+        <enumVal>
+          <enumChoice choice="t">
+            <choice>t</choice>
+          </enumChoice>
+          <enumChoice choice="c">
+            <choice>c</choice>
+          </enumChoice>
+        </enumVal>
+        <label>Switch State</label>
+      </variable>
+      <variable CV="226" mask="VVVVVVVV" item="Rt Cell 72">
+        <splitVal highCV="227" upperMask="XXXXVVVV"/>
+        <label>Cell 2 Address</label>
+      </variable>
+      <variable CV="227" mask="XVXXXXXX" item="Sw state72">
+        <enumVal>
+          <enumChoice choice="t">
+            <choice>t</choice>
+          </enumChoice>
+          <enumChoice choice="c">
+            <choice>c</choice>
+          </enumChoice>
+        </enumVal>
+        <label>Switch State</label>
+      </variable>
+      <variable CV="228" mask="VVVVVVVV" item="Rt Cell 73">
+        <splitVal highCV="229" upperMask="XXXXVVVV"/>
+        <label>Cell 3 Address</label>
+      </variable>
+      <variable CV="229" mask="XVXXXXXX" item="Sw state73">
+        <enumVal>
+          <enumChoice choice="t">
+            <choice>t</choice>
+          </enumChoice>
+          <enumChoice choice="c">
+            <choice>c</choice>
+          </enumChoice>
+        </enumVal>
+        <label>Switch State</label>
+      </variable>
+      <variable CV="230" mask="VVVVVVVV" item="Rt Cell 74">
+        <splitVal highCV="231" upperMask="XXXXVVVV"/>
+        <label>Cell 4 Address</label>
+      </variable>
+      <variable CV="231" mask="XVXXXXXX" item="Sw state74">
+        <enumVal>
+          <enumChoice choice="t">
+            <choice>t</choice>
+          </enumChoice>
+          <enumChoice choice="c">
+            <choice>c</choice>
+          </enumChoice>
+        </enumVal>
+        <label>Switch State</label>
+      </variable>
+      <variable CV="232" mask="VVVVVVVV" item="Rt Cell 75">
+        <splitVal highCV="233" upperMask="XXXXVVVV"/>
+        <label>Cell 5 Address</label>
+      </variable>
+      <variable CV="233" mask="XVXXXXXX" item="Sw state75">
+        <enumVal>
+          <enumChoice choice="t">
+            <choice>t</choice>
+          </enumChoice>
+          <enumChoice choice="c">
+            <choice>c</choice>
+          </enumChoice>
+        </enumVal>
+        <label>Switch State</label>
+      </variable>
+      <variable CV="234" mask="VVVVVVVV" item="Rt Cell 76">
+        <splitVal highCV="235" upperMask="XXXXVVVV"/>
+        <label>Cell 6 Address</label>
+      </variable>
+      <variable CV="235" mask="XVXXXXXX" item="Sw state76">
+        <enumVal>
+          <enumChoice choice="t">
+            <choice>t</choice>
+          </enumChoice>
+          <enumChoice choice="c">
+            <choice>c</choice>
+          </enumChoice>
+        </enumVal>
+        <label>Switch State</label>
+      </variable>
+      <variable CV="236" mask="VVVVVVVV" item="Rt Cell 77">
+        <splitVal highCV="237" upperMask="XXXXVVVV"/>
+        <label>Cell 7 Address</label>
+      </variable>
+      <variable CV="237" mask="XVXXXXXX" item="Sw state77">
+        <enumVal>
+          <enumChoice choice="t">
+            <choice>t</choice>
+          </enumChoice>
+          <enumChoice choice="c">
+            <choice>c</choice>
+          </enumChoice>
+        </enumVal>
+        <label>Switch State</label>
+      </variable>
+      <variable CV="238" mask="VVVVVVVV" item="Rt Cell 78">
+        <splitVal highCV="239" upperMask="XXXXVVVV"/>
+        <label>Cell 8 Address</label>
+      </variable>
+      <variable CV="239" mask="XVXXXXXX" item="Sw state78">
+        <enumVal>
+          <enumChoice choice="t">
+            <choice>t</choice>
+          </enumChoice>
+          <enumChoice choice="c">
+            <choice>c</choice>
+          </enumChoice>
+        </enumVal>
+        <label>Switch State</label>
+      </variable>
+      <variable CV="240" mask="VVVVVVVV" item="Rt Cell 81">
+        <splitVal highCV="241" upperMask="XXXXVVVV"/>
+        <label>Cell 1 Address</label>
+      </variable>
+      <variable CV="241" mask="XVXXXXXX" item="Sw state81">
+        <enumVal>
+          <enumChoice choice="t">
+            <choice>t</choice>
+          </enumChoice>
+          <enumChoice choice="c">
+            <choice>c</choice>
+          </enumChoice>
+        </enumVal>
+        <label>Switch State</label>
+      </variable>
+      <variable CV="242" mask="VVVVVVVV" item="Rt Cell 82">
+        <splitVal highCV="243" upperMask="XXXXVVVV"/>
+        <label>Cell 2 Address</label>
+      </variable>
+      <variable CV="243" mask="XVXXXXXX" item="Sw state82">
+        <enumVal>
+          <enumChoice choice="t">
+            <choice>t</choice>
+          </enumChoice>
+          <enumChoice choice="c">
+            <choice>c</choice>
+          </enumChoice>
+        </enumVal>
+        <label>Switch State</label>
+      </variable>
+      <variable CV="244" mask="VVVVVVVV" item="Rt Cell 83">
+        <splitVal highCV="245" upperMask="XXXXVVVV"/>
+        <label>Cell 3 Address</label>
+      </variable>
+      <variable CV="245" mask="XVXXXXXX" item="Sw state83">
+        <enumVal>
+          <enumChoice choice="t">
+            <choice>t</choice>
+          </enumChoice>
+          <enumChoice choice="c">
+            <choice>c</choice>
+          </enumChoice>
+        </enumVal>
+        <label>Switch State</label>
+      </variable>
+      <variable CV="246" mask="VVVVVVVV" item="Rt Cell 84">
+        <splitVal highCV="247" upperMask="XXXXVVVV"/>
+        <label>Cell 4 Address</label>
+      </variable>
+      <variable CV="247" mask="XVXXXXXX" item="Sw state84">
+        <enumVal>
+          <enumChoice choice="t">
+            <choice>t</choice>
+          </enumChoice>
+          <enumChoice choice="c">
+            <choice>c</choice>
+          </enumChoice>
+        </enumVal>
+        <label>Switch State</label>
+      </variable>
+      <variable CV="248" mask="VVVVVVVV" item="Rt Cell 85">
+        <splitVal highCV="249" upperMask="XXXXVVVV"/>
+        <label>Cell 5 Address</label>
+      </variable>
+      <variable CV="249" mask="XVXXXXXX" item="Sw state85">
+        <enumVal>
+          <enumChoice choice="t">
+            <choice>t</choice>
+          </enumChoice>
+          <enumChoice choice="c">
+            <choice>c</choice>
+          </enumChoice>
+        </enumVal>
+        <label>Switch State</label>
+      </variable>
+      <variable CV="250" mask="VVVVVVVV" item="Rt Cell 86">
+        <splitVal highCV="251" upperMask="XXXXVVVV"/>
+        <label>Cell 6 Address</label>
+      </variable>
+      <variable CV="251" mask="XVXXXXXX" item="Sw state86">
+        <enumVal>
+          <enumChoice choice="t">
+            <choice>t</choice>
+          </enumChoice>
+          <enumChoice choice="c">
+            <choice>c</choice>
+          </enumChoice>
+        </enumVal>
+        <label>Switch State</label>
+      </variable>
+      <variable CV="252" mask="VVVVVVVV" item="Rt Cell 87">
+        <splitVal highCV="253" upperMask="XXXXVVVV"/>
+        <label>Cell 7 Address</label>
+      </variable>
+      <variable CV="253" mask="XVXXXXXX" item="Sw state87">
+        <enumVal>
+          <enumChoice choice="t">
+            <choice>t</choice>
+          </enumChoice>
+          <enumChoice choice="c">
+            <choice>c</choice>
+          </enumChoice>
+        </enumVal>
+        <label>Switch State</label>
+      </variable>
+      <variable CV="254" mask="VVVVVVVV" item="Rt Cell 88">
+        <splitVal highCV="255" upperMask="XXXXVVVV"/>
+        <label>Cell 8 Address</label>
+      </variable>
+      <variable CV="255" mask="XVXXXXXX" item="Sw state88">
+        <enumVal>
+          <enumChoice choice="t">
+            <choice>t</choice>
+          </enumChoice>
+          <enumChoice choice="c">
+            <choice>c</choice>
+          </enumChoice>
+        </enumVal>
+        <label>Switch State</label>
+      </variable>
+    </variables>
+  </decoder>
+  <pane>
+    <column>
+      <label>
+        <text>------  SC82 Output Addresses  ------ </text>
+      </label>
+      <label>
+        <text>Use this number to set the address number</text>
+      </label>
+      <label>
+        <text>of the device the output is connected to.</text>
+      </label>
+      <label>
+        <text> </text>
+      </label>
+      <label>
+        <text> </text>
+      </label>
+      <display item="Servo 1 Address"/>
+      <display item="Warning"/>
+      <display item="Servo 2 Address"/>
+      <display item="Servo 3 Address"/>
+      <display item="Servo 4 Address"/>
+      <label>
+        <text> </text>
+      </label>
+      <display item="Servo 5 Address"/>
+      <display item="Servo 6 Address"/>
+      <display item="Servo 7 Address"/>
+      <display item="Servo 8 Address"/>
+      <label>
+        <text> </text>
+      </label>
+      <label>
+        <text> </text>
+      </label>
+      <label>
+        <text>------  Basic Operation  ------ </text>
+      </label>
+      <label>
+          <text>&lt;html&gt;&lt;span style=&quot;color: red;&quot;&gt;&lt;strong&gt;Warning! be sure to allow 3 addresses per servo when in mode 2.&lt;/span&gt;&lt;/strong&gt;&lt;/html&gt;</text>
+             <qualifier>
+              <variableref>Mode</variableref>
+              <relation>eq</relation>
+              <value>1</value>
+            </qualifier>
+      </label>
+      <label>
+        <text> </text>
+             <qualifier>
+              <variableref>Mode</variableref>
+              <relation>eq</relation>
+              <value>0</value>
+            </qualifier>
+      </label>
+      <label>
+        <text> </text>
+      </label>
+      <display item="Mode"/>
+      <label>
+        <text> </text>
+      </label>
+      <label>
+        <text> </text>
+      </label>
+      <label>
+        <text>------  Notes:  ------ </text>
+      </label>
+      <label>
+        <text>The Custom Programmer format is recommended</text>
+      </label>
+    </column>
+    <name>SC82</name>
+  </pane>
+  <pane>
+    <column>
+      <row>
+        <column>
+          <label>
+            <text>Note: Changes to Option CVs are not recognized until SC82 power is cycled.</text>
+          </label>
+          <label>
+            <text> </text>
+          </label>
+          <label>
+            <text> </text>
+          </label>
+        </column>
+      </row>
+      <row>
+        <column>
+          <label>
+            <text>------ Decoder Configuration CV9  ------ </text>
+          </label>
+          <label>
+            <text>------    Communication Options    ------ </text>
+          </label>
+          <label>
+            <text> </text>
+          </label>
+          <display item="DCC gateway"/>
+          <label>
+            <text>Opt4 Enable gateway for DCC commands from track to bus</text>
+          </label>
+          <label>
+            <text>- Requires bus interface and DCC control to be enabled</text>
+          </label>
+          <label>
+            <text> </text>
+          </label>
+          <display item="Bus interface"/>
+          <label>
+            <text>Opt5 Enable transmit and receive on bus</text>
+          </label>
+          <label>
+            <text> </text>
+          </label>
+          <display item="DCC control"/>
+          <label>
+            <text>Opt6 Enable receiving DCC commands from track</text>
+          </label>
+          <label>
+            <text>- When disabled, DCC gateway is disabled</text>
+          </label>
+          <label>
+            <text> </text>
+          </label>
+          <label>
+            <text>Note: In a Digirax system the bus is called LocoNet</text>
+          </label>
+          <label>
+            <text> </text>
+          </label>
+          <label>
+            <text> </text>
+          </label>
+          <label>
+            <text> </text>
+          </label>
+          <label>
+            <text>------  Special Options  ------ </text>
+          </label>
+          <label>
+            <text> </text>
+          </label>
+          <display item="Op1" tooltip="Required for ops mode"/>
+          <label>
+            <text>Opt3 Enable operations mode programming</text>
+          </label>
+          <label>
+            <text> </text>
+          </label>
+          <dccaddress/>
+          <label>
+            <text>Ops Mode Address: Range 1-16000</text>
+          </label>
+          <label>
+            <text>Used ONLY for programming</text>
+          </label>
+          <label>
+            <text>Max value of 127 when using DCC</text>
+          </label>
+          <label>
+            <text>Values greater than 127 can be used with Loconet</text>
+          </label>
+          <label>
+            <text> </text>
+          </label>
+          <display item="Disable Power Save"/>
+          <label>
+            <text>Opt7 Disable power save - not recommended</text>
+          </label>
+          <label>
+            <text>Note: Power save reduces SC82 current draw</text>
+          </label>
+          <label>
+            <text>and reduces servo buss</text>
+          </label>
+          <label>
+            <text> </text>
+          </label>
+          <display item="Common Cathode" tooltip=""/>
+          <label>
+            <text>Opt8 Enable to invert the drive for all outputs</text>
+          </label>
+        </column>
+        <column>
+          <label>
+            <text>------  Status Report CV10  ------ </text>
+          </label>
+          <label>
+            <text>------        Options              ------ </text>
+          </label>
+          <label>
+            <text> </text>
+          </label>
+          <display item="Power On Send Input State"/>
+          <label>
+            <text>Opt1 Send input state at power on</text>
+          </label>
+          <label>
+            <text>- Only sensor type inputs</text>
+          </label>
+          <label>
+            <text> </text>
+          </label>
+          <display item="Power On Send Output State"/>
+          <label>
+            <text>Opt2 Send output state at power on</text>
+          </label>
+          <label>
+            <text>- Switch type messages</text>
+          </label>
+          <label>
+            <text> </text>
+          </label>
+          <display item="Interrogate input"/>
+          <label>
+            <text>Opt5 Send primary input state at Digitrax interrogation request</text>
+          </label>
+          <label>
+            <text>- Only sensor type inputs</text>
+          </label>
+          <label>
+            <text> </text>
+          </label>
+          <display item="Interrogate output"/>
+          <label>
+            <text>Opt4 Send output state at Digitrax interrogation request</text>
+          </label>
+          <label>
+            <text> </text>
+          </label>
+          <display item="One LED output"/>
+          <label>
+            <text>Opt5 Use one LED output for servo state indication instead of 2</text>
+          </label>
+          <label>
+            <text>- Required if using Touch Toggles</text>
+          </label>
+        </column>
+      </row>
+    </column>
+    <name>Options</name>
+  </pane>
+  <pane>
+    <column>
+      <label>
+        <text>---- Sets the SC82 to a paricular test state - Use to help adjust servos ----</text>
+      </label>
+      <label>
+        <text>            Only works in Ops mode</text>
+      </label>
+      <label>
+        <text>            Changes the value of CV7 (Version ID) as displayed in DP</text>
+      </label>
+      <label>
+        <text>            Test State may change when Version ID is read</text>
+      </label>
+      <label>
+        <text> </text>
+      </label>
+      <display item="Test State"/>
+      <label>
+        <text> </text>
+      </label>
+      <label>
+        <text> </text>
+      </label>
+      <label>
+        <text> </text>
+      </label>
+      <label>
+        <text> </text>
+      </label>
+      <display item="Decoder Version" tooltip="The decoder version number (read only)"/>
+      <display item="Manufacturer" tooltip="The manufacturer's ID number (read only)"/>
+    </column>
+    <name>Mfg</name>
+  </pane>
+  <pane>
+    <column>
+      <label>
+        <text> </text>
+      </label>
+      <label>
+        <text>------  Input 1  ------ </text>
+      </label>
+      <label>
+        <text> </text>
+      </label>
+      <row>
+        <column>
+          <label>
+            <text/>
+          </label>
+        </column>
+        <column>
+          <display item="PA1" tooltip="Determines the input addess"/>
+        </column>
+        <column>
+          <display item="PTog P1" format="checkbox" tooltip="Sends opposite switch state from previous send - Switch Request only"/>
+        </column>
+      </row>
+      <row>
+        <column>
+          <label>
+            <text>               </text>
+          </label>
+        </column>
+        <column>
+          <display item="PTy1" tooltip="Configures the input for specfic use"/>
+        </column>
+        <column>
+          <display item="PInv P1" format="checkbox" tooltip="Inverts the normal state of Close when input goes hi"/>
+        </column>
+      </row>
+      <display item="PTr1" tooltip="Configures the input simulas"/>
+      <display item="Rte Num P1" tooltip="number of the route"/>
+      <label>
+        <text> </text>
+      </label>
+      <label>
+        <text>------  Input 2  ------ </text>
+      </label>
+      <label>
+        <text> </text>
+      </label>
+      <row>
+        <column>
+          <label>
+            <text>          </text>
+          </label>
+        </column>
+        <column>
+          <display item="PA2" tooltip="Determines the input addess"/>
+        </column>
+        <column>
+          <display item="PTog P2" format="checkbox" tooltip="Sends opposite switch state from previous send - Switch Request only"/>
+        </column>
+        <column>
+          <label>
+            <text/>
+          </label>
+        </column>
+      </row>
+      <row>
+        <column>
+          <label>
+            <text>               </text>
+          </label>
+        </column>
+        <column>
+          <display item="PTy2" tooltip="Configures the input for specfic use"/>
+        </column>
+        <column>
+          <display item="PInv P2" format="checkbox" tooltip="Inverts the normal state of Close when input goes hi"/>
+        </column>
+      </row>
+      <display item="PTr2" tooltip="Configures the input simulas"/>
+      <display item="Rte Num P2" tooltip="number of the route"/>
+      <label>
+        <text> </text>
+      </label>
+      <label>
+        <text>------  Input 3  ------ </text>
+      </label>
+      <label>
+        <text> </text>
+      </label>
+      <row>
+        <column>
+          <label>
+            <text>          </text>
+          </label>
+        </column>
+        <column>
+          <display item="PA3" tooltip="Determines the input addess"/>
+        </column>
+        <column>
+          <display item="PTog P3" format="checkbox" tooltip="Sends opposite switch state from previous send - Switch Request only"/>
+        </column>
+        <column>
+          <label>
+            <text/>
+          </label>
+        </column>
+      </row>
+      <row>
+        <column>
+          <label>
+            <text>               </text>
+          </label>
+        </column>
+        <column>
+          <display item="PTy3" tooltip="Configures the input for specfic use"/>
+        </column>
+        <column>
+          <display item="PInv P3" format="checkbox" tooltip="Inverts the normal state of Close when input goes hi"/>
+        </column>
+      </row>
+      <display item="PTr3" tooltip="Configures the input simulas"/>
+      <display item="Rte Num P3" tooltip="number of the route"/>
+      <label>
+        <text> </text>
+      </label>
+      <label>
+        <text>------  Input 4  ------ </text>
+      </label>
+      <label>
+        <text> </text>
+      </label>
+      <row>
+        <column>
+          <label>
+            <text>          </text>
+          </label>
+        </column>
+        <column>
+          <display item="PA4" tooltip="Determines the input addess"/>
+        </column>
+        <column>
+          <display item="PTog P4" format="checkbox" tooltip="Sends opposite switch state from previous send - Switch Request only"/>
+        </column>
+        <column>
+          <label>
+            <text/>
+          </label>
+        </column>
+      </row>
+      <row>
+        <column>
+          <label>
+            <text>               </text>
+          </label>
+        </column>
+        <column>
+          <display item="PTy4" tooltip="Configures the input for specfic use"/>
+        </column>
+        <column>
+          <display item="PInv P4" format="checkbox" tooltip="Inverts the normal state of Close when input goes hi"/>
+        </column>
+      </row>
+      <display item="PTr4" tooltip="Configures the input simulas"/>
+      <display item="Rte Num P4" tooltip="number of the route"/>
+    </column>
+    <column>
+      <label>
+        <text> </text>
+      </label>
+      <label>
+        <text>------  Input 5  ------ </text>
+      </label>
+      <label>
+        <text> </text>
+      </label>
+      <row>
+        <column>
+          <label>
+            <text/>
+          </label>
+        </column>
+        <column>
+          <display item="PA5" tooltip="Determines the input addess"/>
+        </column>
+        <column>
+          <display item="PTog P5" format="checkbox" tooltip="Sends opposite switch state from previous send - Switch Request only"/>
+        </column>
+        <column>
+          <label>
+            <text/>
+          </label>
+        </column>
+      </row>
+      <row>
+        <column>
+          <label>
+            <text>               </text>
+          </label>
+        </column>
+        <column>
+          <display item="PTy5" tooltip="Configures the input for specfic use"/>
+        </column>
+        <column>
+          <display item="PInv P5" format="checkbox" tooltip="Inverts the normal state of Close when input goes hi"/>
+        </column>
+      </row>
+      <display item="PTr5" tooltip="Configures the input simulas"/>
+      <display item="Rte Num P5" tooltip="number of the route"/>
+      <label>
+        <text> </text>
+      </label>
+      <label>
+        <text>------  Input 6  ------ </text>
+      </label>
+      <label>
+        <text> </text>
+      </label>
+      <row>
+        <column>
+          <label>
+            <text>          </text>
+          </label>
+        </column>
+        <column>
+          <display item="PA6" tooltip="Determines the input addess"/>
+        </column>
+        <column>
+          <display item="PTog P6" format="checkbox" tooltip="Sends opposite switch state from previous send - Switch Request only"/>
+        </column>
+        <column>
+          <label>
+            <text/>
+          </label>
+        </column>
+      </row>
+      <row>
+        <column>
+          <label>
+            <text>               </text>
+          </label>
+        </column>
+        <column>
+          <display item="PTy6" tooltip="Configures the input for specfic use"/>
+        </column>
+        <column>
+          <display item="PInv P6" format="checkbox" tooltip="Inverts the normal state of Close when input goes hi"/>
+        </column>
+      </row>
+      <display item="PTr6" tooltip="Configures the input simulas"/>
+      <display item="Rte Num P6" tooltip="number of the route"/>
+      <label>
+        <text> </text>
+      </label>
+      <label>
+        <text>------  Input 7  ------ </text>
+      </label>
+      <label>
+        <text> </text>
+      </label>
+      <row>
+        <column>
+          <label>
+            <text>          </text>
+          </label>
+        </column>
+        <column>
+          <display item="PA7" tooltip="Determines the input addess"/>
+        </column>
+        <column>
+          <display item="PTog P7" format="checkbox" tooltip="Sends opposite switch state from previous send - Switch Request only"/>
+        </column>
+        <column>
+          <label>
+            <text/>
+          </label>
+        </column>
+      </row>
+      <row>
+        <column>
+          <label>
+            <text>               </text>
+          </label>
+        </column>
+        <column>
+          <display item="PTy7" tooltip="Configures the input for specfic use"/>
+        </column>
+        <column>
+          <display item="PInv P7" format="checkbox" tooltip="Inverts the normal state of Close when input goes hi"/>
+        </column>
+      </row>
+      <display item="PTr7" tooltip="Configures the input simulas"/>
+      <display item="Rte Num P7" tooltip="number of the route"/>
+      <label>
+        <text> </text>
+      </label>
+      <label>
+        <text>------  Input 8  ------ </text>
+      </label>
+      <label>
+        <text> </text>
+      </label>
+      <row>
+        <column>
+          <label>
+            <text>          </text>
+          </label>
+        </column>
+        <column>
+          <display item="PA8" tooltip="Determines the input addess"/>
+        </column>
+        <column>
+          <display item="PTog P8" format="checkbox" tooltip="Sends opposite switch state from previous send - Switch Request only"/>
+        </column>
+        <column>
+          <label>
+            <text/>
+          </label>
+        </column>
+      </row>
+      <row>
+        <column>
+          <label>
+            <text>               </text>
+          </label>
+        </column>
+        <column>
+          <display item="PTy8" tooltip="Configures the input for specfic use"/>
+        </column>
+        <column>
+          <display item="PInv P8" format="checkbox" tooltip="Inverts the normal state of Close when input goes hi"/>
+        </column>
+      </row>
+      <display item="PTr8" tooltip="Configures the input simulas"/>
+      <display item="Rte Num P8" tooltip="number of the route"/>
+    </column>
+    <name>Inputs 1-8</name>
+  </pane>
+  <pane>
+    <column>
+      <label>
+        <text>When a switch (turnout) throw command is issued that matches this address the SC82 inputs are disabled.</text>
+      </label>
+      <label>
+        <text>When a close command is issued with this address the inputs are enabled.</text>
+      </label>
+      <label>
+        <text>This feature is useful for dispatcher control when the SC82 inputs are used for local turnout control. </text>
+      </label>
+      <label>
+        <text> </text>
+      </label>
+      <label>
+        <text>Input lockout address</text>
+      </label>
+      <label>
+        <text> </text>
+      </label>
+      <display item="Lockout"/>
+    </column>
+    <name>Input Lockout</name>
+  </pane>
+  <pane>
+    <column>
+      <label>
+        <text>---- Servo Configuration ----</text>
+      </label>
+      <label>
+        <text> </text>
+      </label>
+      <row>
+        <column>
+          <display item="Servo 1 Position 1" tooltip="Range 1-200"/>
+          <display item="Servo 1 Position 2" tooltip="Range 1-200"/>
+          <display item="Servo 1 Move Speed D1" tooltip="Range 1-127"/>
+          <display item="Servo 1 Move Speed D2" tooltip="Range 1-127"/>
+          <row>
+            <column>
+              <label>
+                <text>Servo 1 Behavior - </text>
+              </label>
+            </column>
+            <column>
+              <display item="Rev1" format="checkbox" tooltip="Servo moves in oposite direction"/>
+            </column>
+          </row>
+        </column>
+        <column>
+          <label>
+            <text>   </text>
+          </label>
+        </column>
+        <column>
+          <display item="Servo 5 Position 1" tooltip="Range 1-200"/>
+          <display item="Servo 5 Position 2" tooltip="Range 1-200"/>
+          <display item="Servo 5 Move Speed D1" tooltip="Range 1-127"/>
+          <display item="Servo 5 Move Speed D2" tooltip="Range 1-127"/>
+          <row>
+            <column>
+              <label>
+                <text>Servo 5 Behavior - </text>
+              </label>
+            </column>
+            <column>
+              <display item="Rev5" format="checkbox" tooltip="Servo moves in oposite direction"/>
+            </column>
+          </row>
+        </column>
+      </row>
+      <label>
+        <text> </text>
+      </label>
+      <row>
+        <column>
+          <display item="Servo 2 Position 1" tooltip="Range 1-200"/>
+          <display item="Servo 2 Position 2" tooltip="Range 1-200"/>
+          <display item="Servo 2 Move Speed D1" tooltip="Range 1-127"/>
+          <display item="Servo 2 Move Speed D2" tooltip="Range 1-127"/>
+          <row>
+            <column>
+              <label>
+                <text>Servo 2 Behavior - </text>
+              </label>
+            </column>
+            <column>
+              <display item="Rev2" format="checkbox" tooltip="Servo moves in oposite direction"/>
+            </column>
+          </row>
+        </column>
+        <column>
+          <label>
+            <text>   </text>
+          </label>
+        </column>
+        <column>
+          <display item="Servo 6 Position 1" tooltip="Range 1-200"/>
+          <display item="Servo 6 Position 2" tooltip="Range 1-200"/>
+          <display item="Servo 6 Move Speed D1" tooltip="Range 1-127"/>
+          <display item="Servo 6 Move Speed D2" tooltip="Range 1-127"/>
+          <row>
+            <column>
+              <label>
+                <text>Servo 6 Behavior - </text>
+              </label>
+            </column>
+            <column>
+              <display item="Rev6" format="checkbox" tooltip="Servo moves in oposite direction"/>
+            </column>
+          </row>
+        </column>
+      </row>
+      <label>
+        <text> </text>
+      </label>
+      <row>
+        <column>
+          <display item="Servo 3 Position 1" tooltip="Range 1-200"/>
+          <display item="Servo 3 Position 2" tooltip="Range 1-200"/>
+          <display item="Servo 3 Move Speed D1" tooltip="Range 1-127"/>
+          <display item="Servo 3 Move Speed D2" tooltip="Range 1-127"/>
+          <row>
+            <column>
+              <label>
+                <text>Servo 3 Behavior - </text>
+              </label>
+            </column>
+            <column>
+              <display item="Rev3" format="checkbox" tooltip="Servo moves in oposite direction"/>
+            </column>
+          </row>
+        </column>
+        <column>
+          <label>
+            <text>   </text>
+          </label>
+        </column>
+        <column>
+          <display item="Servo 7 Position 1" tooltip="Range 1-200"/>
+          <display item="Servo 7 Position 2" tooltip="Range 1-200"/>
+          <display item="Servo 7 Move Speed D1" tooltip="Range 1-127"/>
+          <display item="Servo 7 Move Speed D2" tooltip="Range 1-127"/>
+          <row>
+            <column>
+              <label>
+                <text>Servo 7 Behavior - </text>
+              </label>
+            </column>
+            <column>
+              <display item="Rev7" format="checkbox" tooltip="Servo moves in oposite direction"/>
+            </column>
+          </row>
+        </column>
+      </row>
+      <label>
+        <text> </text>
+      </label>
+      <row>
+        <column>
+          <display item="Servo 4 Position 1" tooltip="Range 1-200"/>
+          <display item="Servo 4 Position 2" tooltip="Range 1-200"/>
+          <display item="Servo 4 Move Speed D1" tooltip="Range 1-127"/>
+          <display item="Servo 4 Move Speed D2" tooltip="Range 1-127"/>
+          <row>
+            <column>
+              <label>
+                <text>Servo 4 Behavior - </text>
+              </label>
+            </column>
+            <column>
+              <display item="Rev4" format="checkbox" tooltip="Servo moves in oposite direction"/>
+            </column>
+          </row>
+        </column>
+        <column>
+          <label>
+            <text>   </text>
+          </label>
+        </column>
+        <column>
+          <display item="Servo 8 Position 1" tooltip="Range 1-200"/>
+          <display item="Servo 8 Position 2" tooltip="Range 1-200"/>
+          <display item="Servo 8 Move Speed D1" tooltip="Range 1-127"/>
+          <display item="Servo 8 Move Speed D2" tooltip="Range 1-127"/>
+          <row>
+            <column>
+              <label>
+                <text>Servo 8 Behavior - </text>
+              </label>
+            </column>
+            <column>
+              <display item="Rev8" format="checkbox" tooltip="Servo moves in oposite direction"/>
+            </column>
+          </row>
+        </column>
+      </row>
+      <label>
+        <text> </text>
+      </label>
+      <label>
+        <text> </text>
+      </label>
+      <label>
+        <text>---- Sets the output state at power on ----</text>
+      </label>
+      <label>
+        <text> </text>
+      </label>
+      <display item="Select Power On Option"/>
+      <label>
+        <text>Use to select fixed state</text>
+      </label>
+      <row>
+        <column>
+          <label>
+            <text> </text>
+          </label>
+          <label>
+            <text> </text>
+          </label>
+          <label>
+            <text> </text>
+          </label>
+          <label>
+            <text> </text>
+          </label>
+        </column>
+        <column>
+          <label>
+            <text>Output#</text>
+          </label>
+          <label>
+            <text>   Both</text>
+          </label>
+          <label>
+            <text>  Throw</text>
+          </label>
+          <label>
+            <text>  Close</text>
+          </label>
+        </column>
+        <column>
+          <label>
+            <text>   1</text>
+          </label>
+          <display item="OS1" format="radiobuttons"/>
+        </column>
+        <column>
+          <label>
+            <text>   2</text>
+          </label>
+          <display item="OS2" format="radiobuttons"/>
+        </column>
+        <column>
+          <label>
+            <text>   3</text>
+          </label>
+          <display item="OS3" format="radiobuttons"/>
+        </column>
+        <column>
+          <label>
+            <text>   4</text>
+          </label>
+          <display item="OS4" format="radiobuttons"/>
+        </column>
+        <column>
+          <label>
+            <text> </text>
+          </label>
+          <label>
+            <text> </text>
+          </label>
+          <label>
+            <text> </text>
+          </label>
+          <label>
+            <text> </text>
+          </label>
+        </column>
+        <column>
+          <label>
+            <text>   5</text>
+          </label>
+          <display item="OS5" format="radiobuttons"/>
+        </column>
+        <column>
+          <label>
+            <text>   6</text>
+          </label>
+          <display item="OS6" format="radiobuttons"/>
+        </column>
+        <column>
+          <label>
+            <text>   7</text>
+          </label>
+          <display item="OS7" format="radiobuttons"/>
+        </column>
+        <column>
+          <label>
+            <text>   8</text>
+          </label>
+          <display item="OS8" format="radiobuttons"/>
+        </column>
+      </row>
+    </column>
+    <name>Servo Outputs</name>
+  </pane>
+  <pane>
+    <column>
+      <label>
+        <text>---- LED Indicator Outputs ----</text>
+      </label>
+      <label>
+        <text> </text>
+      </label>
+      <row>
+            <column>
+              <display item="Beh1" format="checkbox" tooltip="Changes which LED is lit"/>
+            </column>
+      </row>
+      <row>
+            <column>
+              <display item="Beh2" format="checkbox" tooltip="Changes which LED is lit"/>
+            </column>
+      </row>
+      <row>
+            <column>
+              <display item="Beh3" format="checkbox" tooltip="Changes which LED is lit"/>
+            </column>
+      </row>
+      <row>
+            <column>
+              <display item="Beh4" format="checkbox" tooltip="Changes which LED is lit"/>
+            </column>
+      </row>
+      <row>
+            <column>
+              <display item="Beh5" format="checkbox" tooltip="Changes which LED is lit"/>
+            </column>
+      </row>
+      <row>
+            <column>
+              <display item="Beh6" format="checkbox" tooltip="Changes which LED is lit"/>
+            </column>
+      </row>
+      <row>
+            <column>
+              <display item="Beh7" format="checkbox" tooltip="Changes which LED is lit"/>
+            </column>
+      </row>
+      <row>
+            <column>
+              <display item="Beh8" format="checkbox" tooltip="Changes which LED is lit"/>
+            </column>
+      </row>
+    </column>
+    <name>LED Outputs</name>
+  </pane> 
+  <pane>
+    <column>
+      <label>
+        <text> </text>
+      </label>
+      <label>
+        <text>Note: If a sensor message is selected to execute a route then</text>
+      </label>
+      <label>
+        <text>switch state c and t is used for sensor hi and lo respectively.</text>
+      </label>
+      <label>
+        <text> </text>
+      </label>
+      <label>
+        <text>------ Route 1 ------ </text>
+      </label>
+      <label>
+        <text> </text>
+      </label>
+      <row>
+        <column>
+          <display item="Rt Top1" tooltip="Address that executes this route"/>
+        </column>
+        <column>
+          <display item="Sw state1"/>
+        </column>
+      </row>
+      <row>
+        <column>
+          <display item="MType1" tooltip="A sensor type messsage will executes this route"/>
+        </column>
+      </row>
+      <label>
+        <text> </text>
+      </label>
+      <row>
+        <column>
+          <display item="Rt Cell 11"/>
+        </column>
+        <column>
+          <display item="Sw state11"/>
+        </column>
+      </row>
+      <row>
+        <column>
+          <display item="Rt Cell 12"/>
+        </column>
+        <column>
+          <display item="Sw state12"/>
+        </column>
+      </row>
+      <row>
+        <column>
+          <display item="Rt Cell 13"/>
+        </column>
+        <column>
+          <display item="Sw state13"/>
+        </column>
+      </row>
+      <row>
+        <column>
+          <display item="Rt Cell 14"/>
+        </column>
+        <column>
+          <display item="Sw state14"/>
+        </column>
+      </row>
+      <row>
+        <column>
+          <display item="Rt Cell 15"/>
+        </column>
+        <column>
+          <display item="Sw state15"/>
+        </column>
+      </row>
+      <row>
+        <column>
+          <display item="Rt Cell 16"/>
+        </column>
+        <column>
+          <display item="Sw state16"/>
+        </column>
+      </row>
+      <row>
+        <column>
+          <display item="Rt Cell 17"/>
+        </column>
+        <column>
+          <display item="Sw state17"/>
+        </column>
+      </row>
+      <row>
+        <column>
+          <display item="Rt Cell 18"/>
+        </column>
+        <column>
+          <display item="Sw state18"/>
+        </column>
+      </row>
+      <label>
+        <text> </text>
+      </label>
+      <label>
+        <text>------ Route 2 ------ </text>
+      </label>
+      <label>
+        <text> </text>
+      </label>
+      <row>
+        <column>
+          <display item="Rt Top2" tooltip="Address that executes this route"/>
+        </column>
+        <column>
+          <display item="Sw state2"/>
+        </column>
+      </row>
+      <row>
+        <column>
+          <display item="MType2" tooltip="A sensor type messsage will executes this route"/>
+        </column>
+      </row>
+      <label>
+        <text> </text>
+      </label>
+      <row>
+        <column>
+          <display item="Rt Cell 21"/>
+        </column>
+        <column>
+          <display item="Sw state21"/>
+        </column>
+      </row>
+      <row>
+        <column>
+          <display item="Rt Cell 22"/>
+        </column>
+        <column>
+          <display item="Sw state22"/>
+        </column>
+      </row>
+      <row>
+        <column>
+          <display item="Rt Cell 23"/>
+        </column>
+        <column>
+          <display item="Sw state23"/>
+        </column>
+      </row>
+      <row>
+        <column>
+          <display item="Rt Cell 24"/>
+        </column>
+        <column>
+          <display item="Sw state24"/>
+        </column>
+      </row>
+      <row>
+        <column>
+          <display item="Rt Cell 25"/>
+        </column>
+        <column>
+          <display item="Sw state25"/>
+        </column>
+      </row>
+      <row>
+        <column>
+          <display item="Rt Cell 26"/>
+        </column>
+        <column>
+          <display item="Sw state26"/>
+        </column>
+      </row>
+      <row>
+        <column>
+          <display item="Rt Cell 27"/>
+        </column>
+        <column>
+          <display item="Sw state27"/>
+        </column>
+      </row>
+      <row>
+        <column>
+          <display item="Rt Cell 28"/>
+        </column>
+        <column>
+          <display item="Sw state28"/>
+        </column>
+      </row>
+      <label>
+        <text> </text>
+      </label>
+      <label>
+        <text>------ Route 3 ------ </text>
+      </label>
+      <label>
+        <text> </text>
+      </label>
+      <row>
+        <column>
+          <display item="Rt Top3" tooltip="Address that executes this route"/>
+        </column>
+        <column>
+          <display item="Sw state3"/>
+        </column>
+      </row>
+      <row>
+        <column>
+          <display item="MType3" tooltip="A sensor type messsage will executes this route"/>
+        </column>
+      </row>
+      <label>
+        <text> </text>
+      </label>
+      <row>
+        <column>
+          <display item="Rt Cell 31"/>
+        </column>
+        <column>
+          <display item="Sw state31"/>
+        </column>
+      </row>
+      <row>
+        <column>
+          <display item="Rt Cell 32"/>
+        </column>
+        <column>
+          <display item="Sw state32"/>
+        </column>
+      </row>
+      <row>
+        <column>
+          <display item="Rt Cell 33"/>
+        </column>
+        <column>
+          <display item="Sw state33"/>
+        </column>
+      </row>
+      <row>
+        <column>
+          <display item="Rt Cell 34"/>
+        </column>
+        <column>
+          <display item="Sw state34"/>
+        </column>
+      </row>
+      <row>
+        <column>
+          <display item="Rt Cell 35"/>
+        </column>
+        <column>
+          <display item="Sw state35"/>
+        </column>
+      </row>
+      <row>
+        <column>
+          <display item="Rt Cell 36"/>
+        </column>
+        <column>
+          <display item="Sw state36"/>
+        </column>
+      </row>
+      <row>
+        <column>
+          <display item="Rt Cell 37"/>
+        </column>
+        <column>
+          <display item="Sw state37"/>
+        </column>
+      </row>
+      <row>
+        <column>
+          <display item="Rt Cell 38"/>
+        </column>
+        <column>
+          <display item="Sw state38"/>
+        </column>
+      </row>
+      <label>
+        <text> </text>
+      </label>
+      <label>
+        <text>------ Route 4 ------ </text>
+      </label>
+      <label>
+        <text> </text>
+      </label>
+      <row>
+        <column>
+          <display item="Rt Top4" tooltip="Address that executes this route"/>
+        </column>
+        <column>
+          <display item="Sw state4"/>
+        </column>
+      </row>
+      <row>
+        <column>
+          <display item="MType4" tooltip="A sensor type messsage will executes this route"/>
+        </column>
+      </row>
+      <label>
+        <text> </text>
+      </label>
+      <row>
+        <column>
+          <display item="Rt Cell 41"/>
+        </column>
+        <column>
+          <display item="Sw state41"/>
+        </column>
+      </row>
+      <row>
+        <column>
+          <display item="Rt Cell 42"/>
+        </column>
+        <column>
+          <display item="Sw state42"/>
+        </column>
+      </row>
+      <row>
+        <column>
+          <display item="Rt Cell 43"/>
+        </column>
+        <column>
+          <display item="Sw state43"/>
+        </column>
+      </row>
+      <row>
+        <column>
+          <display item="Rt Cell 44"/>
+        </column>
+        <column>
+          <display item="Sw state44"/>
+        </column>
+      </row>
+      <row>
+        <column>
+          <display item="Rt Cell 45"/>
+        </column>
+        <column>
+          <display item="Sw state45"/>
+        </column>
+      </row>
+      <row>
+        <column>
+          <display item="Rt Cell 46"/>
+        </column>
+        <column>
+          <display item="Sw state46"/>
+        </column>
+      </row>
+      <row>
+        <column>
+          <display item="Rt Cell 47"/>
+        </column>
+        <column>
+          <display item="Sw state47"/>
+        </column>
+      </row>
+      <row>
+        <column>
+          <display item="Rt Cell 48"/>
+        </column>
+        <column>
+          <display item="Sw state48"/>
+        </column>
+      </row>
+      <label>
+        <text> </text>
+      </label>
+    </column>
+    <column>
+      <label>
+        <text>  </text>
+      </label>
+      <display item="Route send delay" tooltip="The delay is CV value X.26 seconds"/>
+      <label>
+        <text> </text>
+      </label>
+      <label>
+        <text>------ Route 5 ------ </text>
+      </label>
+      <label>
+        <text> </text>
+      </label>
+      <row>
+        <column>
+          <display item="Rt Top5" tooltip="Address that executes this route"/>
+        </column>
+        <column>
+          <display item="Sw state5"/>
+        </column>
+      </row>
+      <row>
+        <column>
+          <display item="MType5" tooltip="A sensor type messsage will executes this route"/>
+        </column>
+      </row>
+      <label>
+        <text> </text>
+      </label>
+      <row>
+        <column>
+          <display item="Rt Cell 51"/>
+        </column>
+        <column>
+          <display item="Sw state51"/>
+        </column>
+      </row>
+      <row>
+        <column>
+          <display item="Rt Cell 52"/>
+        </column>
+        <column>
+          <display item="Sw state52"/>
+        </column>
+      </row>
+      <row>
+        <column>
+          <display item="Rt Cell 53"/>
+        </column>
+        <column>
+          <display item="Sw state53"/>
+        </column>
+      </row>
+      <row>
+        <column>
+          <display item="Rt Cell 54"/>
+        </column>
+        <column>
+          <display item="Sw state54"/>
+        </column>
+      </row>
+      <row>
+        <column>
+          <display item="Rt Cell 55"/>
+        </column>
+        <column>
+          <display item="Sw state55"/>
+        </column>
+      </row>
+      <row>
+        <column>
+          <display item="Rt Cell 56"/>
+        </column>
+        <column>
+          <display item="Sw state56"/>
+        </column>
+      </row>
+      <row>
+        <column>
+          <display item="Rt Cell 57"/>
+        </column>
+        <column>
+          <display item="Sw state57"/>
+        </column>
+      </row>
+      <row>
+        <column>
+          <display item="Rt Cell 58"/>
+        </column>
+        <column>
+          <display item="Sw state58"/>
+        </column>
+      </row>
+      <label>
+        <text> </text>
+      </label>
+      <label>
+        <text>------ Route 6 ------ </text>
+      </label>
+      <label>
+        <text> </text>
+      </label>
+      <row>
+        <column>
+          <display item="Rt Top6" tooltip="Address that executes this route"/>
+        </column>
+        <column>
+          <display item="Sw state6"/>
+        </column>
+      </row>
+      <row>
+        <column>
+          <display item="MType6" tooltip="A sensor type messsage will executes this route"/>
+        </column>
+      </row>
+      <label>
+        <text> </text>
+      </label>
+      <row>
+        <column>
+          <display item="Rt Cell 61"/>
+        </column>
+        <column>
+          <display item="Sw state61"/>
+        </column>
+      </row>
+      <row>
+        <column>
+          <display item="Rt Cell 62"/>
+        </column>
+        <column>
+          <display item="Sw state62"/>
+        </column>
+      </row>
+      <row>
+        <column>
+          <display item="Rt Cell 63"/>
+        </column>
+        <column>
+          <display item="Sw state63"/>
+        </column>
+      </row>
+      <row>
+        <column>
+          <display item="Rt Cell 64"/>
+        </column>
+        <column>
+          <display item="Sw state64"/>
+        </column>
+      </row>
+      <row>
+        <column>
+          <display item="Rt Cell 65"/>
+        </column>
+        <column>
+          <display item="Sw state65"/>
+        </column>
+      </row>
+      <row>
+        <column>
+          <display item="Rt Cell 66"/>
+        </column>
+        <column>
+          <display item="Sw state66"/>
+        </column>
+      </row>
+      <row>
+        <column>
+          <display item="Rt Cell 67"/>
+        </column>
+        <column>
+          <display item="Sw state67"/>
+        </column>
+      </row>
+      <row>
+        <column>
+          <display item="Rt Cell 68"/>
+        </column>
+        <column>
+          <display item="Sw state68"/>
+        </column>
+      </row>
+      <label>
+        <text> </text>
+      </label>
+      <label>
+        <text>------ Route 7 ------ </text>
+      </label>
+      <label>
+        <text> </text>
+      </label>
+      <row>
+        <column>
+          <display item="Rt Top7" tooltip="Address that executes this route"/>
+        </column>
+        <column>
+          <display item="Sw state7"/>
+        </column>
+      </row>
+      <row>
+        <column>
+          <display item="MType7" tooltip="A sensor type messsage will executes this route"/>
+        </column>
+      </row>
+      <label>
+        <text> </text>
+      </label>
+      <row>
+        <column>
+          <display item="Rt Cell 71"/>
+        </column>
+        <column>
+          <display item="Sw state71"/>
+        </column>
+      </row>
+      <row>
+        <column>
+          <display item="Rt Cell 72"/>
+        </column>
+        <column>
+          <display item="Sw state72"/>
+        </column>
+      </row>
+      <row>
+        <column>
+          <display item="Rt Cell 73"/>
+        </column>
+        <column>
+          <display item="Sw state73"/>
+        </column>
+      </row>
+      <row>
+        <column>
+          <display item="Rt Cell 74"/>
+        </column>
+        <column>
+          <display item="Sw state74"/>
+        </column>
+      </row>
+      <row>
+        <column>
+          <display item="Rt Cell 75"/>
+        </column>
+        <column>
+          <display item="Sw state75"/>
+        </column>
+      </row>
+      <row>
+        <column>
+          <display item="Rt Cell 76"/>
+        </column>
+        <column>
+          <display item="Sw state76"/>
+        </column>
+      </row>
+      <row>
+        <column>
+          <display item="Rt Cell 77"/>
+        </column>
+        <column>
+          <display item="Sw state77"/>
+        </column>
+      </row>
+      <row>
+        <column>
+          <display item="Rt Cell 78"/>
+        </column>
+        <column>
+          <display item="Sw state78"/>
+        </column>
+      </row>
+      <label>
+        <text> </text>
+      </label>
+      <label>
+        <text>------ Route 8 ------ </text>
+      </label>
+      <label>
+        <text> </text>
+      </label>
+      <row>
+        <column>
+          <display item="Rt Top8" tooltip="Address that executes this route"/>
+        </column>
+        <column>
+          <display item="Sw state8"/>
+        </column>
+      </row>
+      <row>
+        <column>
+          <display item="MType8" tooltip="A sensor type messsage will executes this route"/>
+        </column>
+      </row>
+      <label>
+        <text> </text>
+      </label>
+      <row>
+        <column>
+          <display item="Rt Cell 81"/>
+        </column>
+        <column>
+          <display item="Sw state81"/>
+        </column>
+      </row>
+      <row>
+        <column>
+          <display item="Rt Cell 82"/>
+        </column>
+        <column>
+          <display item="Sw state82"/>
+        </column>
+      </row>
+      <row>
+        <column>
+          <display item="Rt Cell 83"/>
+        </column>
+        <column>
+          <display item="Sw state83"/>
+        </column>
+      </row>
+      <row>
+        <column>
+          <display item="Rt Cell 84"/>
+        </column>
+        <column>
+          <display item="Sw state84"/>
+        </column>
+      </row>
+      <row>
+        <column>
+          <display item="Rt Cell 85"/>
+        </column>
+        <column>
+          <display item="Sw state85"/>
+        </column>
+      </row>
+      <row>
+        <column>
+          <display item="Rt Cell 86"/>
+        </column>
+        <column>
+          <display item="Sw state86"/>
+        </column>
+      </row>
+      <row>
+        <column>
+          <display item="Rt Cell 87"/>
+        </column>
+        <column>
+          <display item="Sw state87"/>
+        </column>
+      </row>
+      <row>
+        <column>
+          <display item="Rt Cell 88"/>
+        </column>
+        <column>
+          <display item="Sw state88"/>
+        </column>
+      </row>
+      <label>
+        <text> </text>
+      </label>
+    </column>
+    <name>Routes</name>
+  </pane>
+  <pane>
+    <column>
+      <cvtable/>
+    </column>
+    <name>CVs</name>
+  </pane>
+</decoder-config>
