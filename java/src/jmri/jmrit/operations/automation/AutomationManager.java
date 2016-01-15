@@ -12,8 +12,13 @@ import jmri.jmrit.operations.automation.actions.BuildTrainAction;
 import jmri.jmrit.operations.automation.actions.BuildTrainIfSelectedAction;
 import jmri.jmrit.operations.automation.actions.MoveTrainAction;
 import jmri.jmrit.operations.automation.actions.NoAction;
+import jmri.jmrit.operations.automation.actions.PrintTrainManifestAction;
+import jmri.jmrit.operations.automation.actions.PrintTrainManifestIfSelectedAction;
+import jmri.jmrit.operations.automation.actions.ResumeAutomationAction;
 import jmri.jmrit.operations.automation.actions.RunAutomationAction;
+import jmri.jmrit.operations.automation.actions.StopAutomationAction;
 import jmri.jmrit.operations.automation.actions.TerminateTrainAction;
+import jmri.jmrit.operations.automation.actions.UpdateSwitchListAction;
 import jmri.jmrit.operations.automation.actions.WaitTrainAction;
 import jmri.jmrit.operations.setup.Control;
 import jmri.jmrit.operations.trains.TrainManagerXml;
@@ -206,10 +211,15 @@ public class AutomationManager implements java.beans.PropertyChangeListener {
         list.add(new NoAction());
         list.add(new BuildTrainAction());
         list.add(new BuildTrainIfSelectedAction());
+        list.add(new PrintTrainManifestAction());
+        list.add(new PrintTrainManifestIfSelectedAction());
         list.add(new MoveTrainAction());
         list.add(new TerminateTrainAction());
         list.add(new WaitTrainAction());
+        list.add(new UpdateSwitchListAction());
         list.add(new RunAutomationAction());
+        list.add(new ResumeAutomationAction());
+        list.add(new StopAutomationAction());
         return list;
     }
     

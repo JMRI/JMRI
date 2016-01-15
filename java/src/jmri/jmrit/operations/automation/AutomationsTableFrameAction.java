@@ -6,7 +6,7 @@ import java.awt.event.ActionEvent;
 import javax.swing.AbstractAction;
 
 /**
- * Swing action to create and register a ScheduleTableFrame object.
+ * Swing action create a AutomationsTableFrame.
  *
  * @author Bob Jacobsen Copyright (C) 2001
  * @author Daniel Boudreau Copyright (C) 2016

@@ -2,12 +2,12 @@ package jmri.jmrit.operations.automation.actions;
 
 import javax.swing.JOptionPane;
 import jmri.jmrit.operations.automation.AutomationItem;
-import jmri.jmrit.operations.routes.RouteLocation;
 import jmri.jmrit.operations.trains.Train;
+import jmri.jmrit.operations.trains.TrainManager;
 
-public class MoveTrainAction extends Action {
+public class PrintTrainManifestIfSelectedAction extends Action {
 
-    private static final int _code = ActionCodes.MOVE_TRAIN;
+    private static final int _code = ActionCodes.PRINT_TRAIN_MANIFEST_IF_SELECTED;
 
     @Override
     public int getCode() {
@@ -16,24 +16,22 @@ public class MoveTrainAction extends Action {
 
     @Override
     public String toString() {
-        return Bundle.getMessage("MoveTrain");
+        if (TrainManager.instance().isPrintPreviewEnabled())
+            return Bundle.getMessage("PreviewTrainManifestIfSelected");
+        else
+            return Bundle.getMessage("PrintTrainManifestIfSelected");
     }
 
     @Override
     public void doAction() {
         if (getAutomationItem() != null) {
             Train train = getAutomationItem().getTrain();
-            if (train != null && train.isBuilt()) {
-                RouteLocation rl = getAutomationItem().getRouteLocation();
-                if (rl != null) {
-                    train.move(rl);
-                } else {
-                    train.move();
-                }
+            if (train != null && train.isBuilt() && train.isBuildEnabled()) {
+                train.printManifest(false); // print
                 // now show message if there's one
                 if (!getAutomationItem().getMessage().equals(AutomationItem.NONE)) {
                     JOptionPane.showMessageDialog(null, getAutomationItem().getMessage(),
-                            getAutomationItem().getId() + " " + toString() + " " + train.getName() + " " + train.getCurrentLocationName(),
+                            getAutomationItem().getId() + " " + toString() + " " + train.getName(),
                             JOptionPane.INFORMATION_MESSAGE);
                 }
             }
