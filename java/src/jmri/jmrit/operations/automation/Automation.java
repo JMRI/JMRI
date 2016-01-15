@@ -78,7 +78,7 @@ public class Automation implements java.beans.PropertyChangeListener {
     public String getComment() {
         return _comment;
     }
-    
+
     public String getMessage() {
         if (getCurrentAutomationItem() != null) {
             return getCurrentAutomationItem().getMessage();
@@ -133,7 +133,7 @@ public class Automation implements java.beans.PropertyChangeListener {
     public boolean isRunning() {
         return _running;
     }
-    
+
     public void setActionRunning(boolean actionRunning) {
         boolean old = _actionRunning;
         _actionRunning = actionRunning;
@@ -157,14 +157,13 @@ public class Automation implements java.beans.PropertyChangeListener {
                         setCurrentAutomationItem(items.get(index + 1));
                     } else {
                         setCurrentAutomationItem(getItemsBySequenceList().get(0));
-                        setRunning(false);
+                        setRunning(false); // reached the end of the list
                     }
-                    break;
+                    return;
                 }
             }
-        } else {
-            setCurrentAutomationItem(null);
         }
+        setCurrentAutomationItem(null);
     }
 
     public void setCurrentAutomationItem(AutomationItem item) {
@@ -257,7 +256,6 @@ public class Automation implements java.beans.PropertyChangeListener {
         if (item != null) {
             if (_currentAutomationItem == item) {
                 stop();
-                setNextAutomationItem();
             }
             item.removePropertyChangeListener(this);
             String id = item.getId();
@@ -265,6 +263,9 @@ public class Automation implements java.beans.PropertyChangeListener {
             Integer old = Integer.valueOf(_automationHashTable.size());
             _automationHashTable.remove(id);
             resequenceIds();
+            if (_currentAutomationItem == item) {
+                setNextAutomationItem();
+            }
             setDirtyAndFirePropertyChange(LISTCHANGE_CHANGED_PROPERTY, old, Integer.valueOf(_automationHashTable.size()));
         }
     }
@@ -457,9 +458,6 @@ public class Automation implements java.beans.PropertyChangeListener {
         log.debug("Property change: ({}) old: ({}) new: ({})", e.getPropertyName(), e.getOldValue(), e
                 .getNewValue());
         CheckForActionPropertyChange(e);
-
-        // forward all automation item changes
-        // setDirtyAndFirePropertyChange(e.getPropertyName(), e.getOldValue(), e.getNewValue());
     }
 
     java.beans.PropertyChangeSupport pcs = new java.beans.PropertyChangeSupport(this);
