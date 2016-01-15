@@ -256,6 +256,7 @@ public class Automation implements java.beans.PropertyChangeListener {
     public void deleteItem(AutomationItem item) {
         if (item != null) {
             if (_currentAutomationItem == item) {
+                stop();
                 setNextAutomationItem();
             }
             item.removePropertyChangeListener(this);

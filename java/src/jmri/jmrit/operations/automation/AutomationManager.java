@@ -7,7 +7,7 @@ import java.util.Hashtable;
 import java.util.List;
 import javax.swing.JComboBox;
 import jmri.jmrit.operations.automation.actions.Action;
-import jmri.jmrit.operations.automation.actions.BlankAction;
+import jmri.jmrit.operations.automation.actions.HaltAction;
 import jmri.jmrit.operations.automation.actions.BuildTrainAction;
 import jmri.jmrit.operations.automation.actions.BuildTrainIfSelectedAction;
 import jmri.jmrit.operations.automation.actions.MoveTrainAction;
@@ -207,7 +207,7 @@ public class AutomationManager implements java.beans.PropertyChangeListener {
      */
     public List<Action> getActionList() {
         List<Action> list = new ArrayList<Action>();
-        list.add(new BlankAction());
+        list.add(new HaltAction());
         list.add(new NoAction());
         list.add(new BuildTrainAction());
         list.add(new BuildTrainIfSelectedAction());

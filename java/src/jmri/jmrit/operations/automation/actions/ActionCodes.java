@@ -18,7 +18,7 @@ public class ActionCodes {
 
     // codes using upper byte   
     public static final int CODE_MASK = 0xFF00; // upper byte only
-    public static final int NOP_ACTION = 0x0000;
+    public static final int HALT_ACTION = 0x0000;
     public static final int NO_ACTION = 0x0000 + ENABLE_MESSAGES;
     public static final int BUILD_TRAIN = 0x0100 + ENABLE_TRAINS + ENABLE_MESSAGES;
     public static final int BUILD_TRAIN_IF_SELECTED = 0x0200 + ENABLE_TRAINS + ENABLE_MESSAGES;
