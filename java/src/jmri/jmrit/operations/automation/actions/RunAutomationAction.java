@@ -1,8 +1,6 @@
 package jmri.jmrit.operations.automation.actions;
 
-import javax.swing.JOptionPane;
 import jmri.jmrit.operations.automation.Automation;
-import jmri.jmrit.operations.automation.AutomationItem;
 
 public class RunAutomationAction extends Action {
 
@@ -24,14 +22,9 @@ public class RunAutomationAction extends Action {
             Automation automation = getAutomationItem().getAutomation();
             if (automation != null) {
                 automation.run();
-                // now show message if there's one
-                if (!getAutomationItem().getMessage().equals(AutomationItem.NONE)) {
-                    JOptionPane.showMessageDialog(null, getAutomationItem().getMessage(),
-                            getAutomationItem().getId() + " " + toString(),
-                            JOptionPane.INFORMATION_MESSAGE);
-                }
             }
-            firePropertyChange(ACTION_COMPLETE_CHANGED_PROPERTY, false, true);
+            // now show message if there's one
+            finishAction();
         }
     }
 

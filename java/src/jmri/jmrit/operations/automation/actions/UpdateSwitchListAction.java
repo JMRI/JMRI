@@ -1,7 +1,5 @@
 package jmri.jmrit.operations.automation.actions;
 
-import javax.swing.JOptionPane;
-import jmri.jmrit.operations.automation.AutomationItem;
 import jmri.jmrit.operations.setup.Setup;
 import jmri.jmrit.operations.trains.TrainManager;
 import jmri.jmrit.operations.trains.TrainScheduleManager;
@@ -31,12 +29,7 @@ public class UpdateSwitchListAction extends Action {
         if (getAutomationItem() != null) {
             TrainScheduleManager.instance().buildSwitchLists();
             // now show message if there's one
-            if (!getAutomationItem().getMessage().equals(AutomationItem.NONE)) {
-                JOptionPane.showMessageDialog(null, getAutomationItem().getMessage(),
-                        getAutomationItem().getId() + " " + toString(),
-                        JOptionPane.INFORMATION_MESSAGE);
-            }
-            firePropertyChange(ACTION_COMPLETE_CHANGED_PROPERTY, false, true);
+            finishAction();
         }
     }
 

@@ -1,7 +1,5 @@
 package jmri.jmrit.operations.automation.actions;
 
-import javax.swing.JOptionPane;
-import jmri.jmrit.operations.automation.AutomationItem;
 import jmri.jmrit.operations.trains.Train;
 import jmri.jmrit.operations.trains.TrainManager;
 
@@ -27,15 +25,10 @@ public class PrintTrainManifestIfSelectedAction extends Action {
         if (getAutomationItem() != null) {
             Train train = getAutomationItem().getTrain();
             if (train != null && train.isBuilt() && train.isBuildEnabled()) {
-                train.printManifest(false); // print
-                // now show message if there's one
-                if (!getAutomationItem().getMessage().equals(AutomationItem.NONE)) {
-                    JOptionPane.showMessageDialog(null, getAutomationItem().getMessage(),
-                            getAutomationItem().getId() + " " + toString() + " " + train.getName(),
-                            JOptionPane.INFORMATION_MESSAGE);
-                }
+                train.printManifest(TrainManager.instance().isPrintPreviewEnabled());
             }
-            firePropertyChange(ACTION_COMPLETE_CHANGED_PROPERTY, false, true);
+            // now show message if there's one
+            finishAction();
         }
     }
 

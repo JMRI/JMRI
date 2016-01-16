@@ -293,7 +293,8 @@ public class AutomationTableModel extends javax.swing.table.AbstractTableModel i
     }
     
     private JComboBox<Action> getActionComboBox(AutomationItem item) {
-        JComboBox<Action> cb = AutomationManager.instance().getActionComboBox();
+        JComboBox<Action> cb = item.getActionComboBox();
+//      cb.setSelectedItem(item.getAction()); TODO understand why this didn't work
         for (int index = 0; index < cb.getItemCount(); index++) {
             // select the action based on it's action code
             if (item.getAction() != null && ((Action)cb.getItemAt(index)).getCode() == item.getAction().getCode()) {
@@ -301,7 +302,6 @@ public class AutomationTableModel extends javax.swing.table.AbstractTableModel i
                 break;
             }
         }
-//        cb.setSelectedItem(item.getAction()); TODO understand why this didn't work
         return cb;
     }
 
@@ -334,20 +334,6 @@ public class AutomationTableModel extends javax.swing.table.AbstractTableModel i
         cb.setEnabled(acb.getSelectedItem() != null && ((Action) acb.getSelectedItem()).isAutomationMenuEnabled());
         return cb;
     }
-
-    /*
-     * Returns true if string is okay, doesn't have the string "Not Valid <>".
-     */
-//    private boolean checkForNotValidString(String s) {
-//        if (s.length() < 12) {
-//            return true;
-//        }
-//        String test = s.substring(0, 11);
-//        if (test.equals(Bundle.getMessage("NotValid").substring(0, 11))) {
-//            return false;
-//        }
-//        return true;
-//    }
     
     private void setAction(Object value, AutomationItem item) {
         @SuppressWarnings("unchecked")
