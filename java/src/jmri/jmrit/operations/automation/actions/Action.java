@@ -19,11 +19,18 @@ public abstract class Action {
 
     abstract public int getCode();
 
-    abstract public String toString(); // for combo boxes
+    abstract public String getName();
 
     abstract public void doAction();
 
     abstract public void cancelAction();
+    
+    /**
+     * for combo boxes
+     */
+    public String toString() {
+        return getName();
+    }
 
     /**
      * Mask off menu bits.
@@ -70,6 +77,20 @@ public abstract class Action {
      * @return OKAY, HALT, NO_MESSAGE_SENT, CLOSED
      */
     public int finishAction() {
+        int response = sendMessage(new Object[]{Bundle.getMessage("OK"), Bundle.getMessage("HALT")});
+        if (response != HALT) {
+            firePropertyChange(ACTION_COMPLETE_CHANGED_PROPERTY, false, true);
+        }
+        return response;
+    }
+
+    /**
+     * Displays message if there's one.
+     * 
+     * @param buttons the buttons to display
+     * @return which button was pressed or NO_MESSAGE_SENT, CLOSED
+     */
+    public int sendMessage(Object[] buttons) {
         int response = NO_MESSAGE_SENT;
         if (getAutomationItem() != null) {
             if (!getAutomationItem().getMessage().equals(AutomationItem.NONE)) {
@@ -90,16 +111,13 @@ public abstract class Action {
                 }
                 String title = getAutomationItem().getId() +
                         " " +
-                        toString() +
+                        getName() +
                         trainName +
                         routeLocationName +
                         automationName;
                 response = JOptionPane.showOptionDialog(null, getAutomationItem().getMessage(), title,
-                        JOptionPane.OK_CANCEL_OPTION, JOptionPane.INFORMATION_MESSAGE, null, new Object[]
-                        {Bundle.getMessage("OK"), Bundle.getMessage("HALT")}, null);
-            }
-            if (response != HALT) {
-                firePropertyChange(ACTION_COMPLETE_CHANGED_PROPERTY, false, true);
+                        JOptionPane.OK_CANCEL_OPTION, JOptionPane.INFORMATION_MESSAGE, null, buttons
+                        , null);
             }
         }
         return response;

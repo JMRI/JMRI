@@ -9,17 +9,18 @@ package jmri.jmrit.operations.automation.actions;
  */
 public class ActionCodes {
 
-    // constants using in the construction of action codes
+    // lower byte used in the construction of action codes
     public static final int ENABLE_TRAINS = 0x1;
     public static final int ENABLE_ROUTES = 0x2;
     public static final int ENABLE_MESSAGES = 0x4;
     public static final int ENABLE_AUTOMATION_LIST = 0x08;
     public static final int ENABLE_GOTO_LIST = 0x10;
 
-    // codes using upper byte   
+    // codes use upper byte   
     public static final int CODE_MASK = 0xFF00; // upper byte only
-    public static final int HALT_ACTION = 0x0000;
+    
     public static final int NO_ACTION = 0x0000 + ENABLE_MESSAGES;
+    
     public static final int BUILD_TRAIN = 0x0100 + ENABLE_TRAINS + ENABLE_MESSAGES;
     public static final int BUILD_TRAIN_IF_SELECTED = 0x0200 + ENABLE_TRAINS + ENABLE_MESSAGES;
     public static final int PRINT_TRAIN_MANIFEST = 0x0300 + ENABLE_TRAINS + ENABLE_MESSAGES;
@@ -40,5 +41,7 @@ public class ActionCodes {
     public static final int WAIT_MESSAGE_OK = 0x4100 + ENABLE_MESSAGES;
     public static final int WAIT_MESSAGE_YES_NO = 0x4200 + ENABLE_MESSAGES;
     public static final int IF_MESSAGE_NO = 0x4300 + ENABLE_MESSAGES + ENABLE_GOTO_LIST;
+    
+    public static final int HALT_ACTION = 0xFF00 + ENABLE_MESSAGES;
 
 }

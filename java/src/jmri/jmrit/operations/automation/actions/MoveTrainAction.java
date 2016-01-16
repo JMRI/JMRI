@@ -13,7 +13,7 @@ public class MoveTrainAction extends Action {
     }
 
     @Override
-    public String toString() {
+    public String getName() {
         return Bundle.getMessage("MoveTrain");
     }
 

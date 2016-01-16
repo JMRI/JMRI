@@ -57,7 +57,7 @@ public class Automation implements java.beans.PropertyChangeListener {
 
     // for combo boxes
     public String toString() {
-        return _name;
+        return getName();
     }
 
     public String getName() {
@@ -99,7 +99,7 @@ public class Automation implements java.beans.PropertyChangeListener {
     public void step() {
         log.debug("step automation ({})", getName());
         if (getCurrentAutomationItem() != null && getCurrentAutomationItem().getAction() != null) {
-            log.debug("Perform action ({})", getCurrentAutomationItem().getAction().toString());
+            log.debug("Perform action ({})", getCurrentAutomationItem().getAction().getName());
             getCurrentAutomationItem().getAction().removePropertyChangeListener(this);
             getCurrentAutomationItem().getAction().addPropertyChangeListener(this);
             setActionRunning(true);

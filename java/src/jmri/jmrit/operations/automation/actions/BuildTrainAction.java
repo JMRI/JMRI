@@ -12,7 +12,7 @@ public class BuildTrainAction extends Action {
     }
 
     @Override
-    public String toString() {
+    public String getName() {
         return Bundle.getMessage("BuildTrain");
     }
 

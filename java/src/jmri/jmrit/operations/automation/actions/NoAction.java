@@ -11,7 +11,7 @@ public class NoAction extends Action {
     }
 
     @Override
-    public String toString() {
+    public String getName() {
         return Bundle.getMessage("NoAction");
     }
 

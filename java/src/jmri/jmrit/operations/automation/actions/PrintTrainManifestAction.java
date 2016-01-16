@@ -13,7 +13,7 @@ public class PrintTrainManifestAction extends Action {
     }
 
     @Override
-    public String toString() {
+    public String getName() {
         if (TrainManager.instance().isPrintPreviewEnabled())
             return Bundle.getMessage("PreviewTrainManifest");
         else

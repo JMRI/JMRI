@@ -12,7 +12,7 @@ public class BuildTrainIfSelectedAction extends Action {
     }
 
     @Override
-    public String toString() {
+    public String getName() {
         return Bundle.getMessage("BuildTrainIfSelected");
     }
 
