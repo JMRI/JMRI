@@ -43,6 +43,8 @@ public class AutomationItem implements java.beans.PropertyChangeListener {
     protected RouteLocation _routeLocation = null;
     protected String _automationId = NONE;
     protected String _message = NONE;
+    protected String _messageFail = NONE;
+    protected boolean _haltFail = true;
 
     public static final String DISPOSE = "automationItemDispose"; // NOI18N
 
@@ -161,14 +163,38 @@ public class AutomationItem implements java.beans.PropertyChangeListener {
 
     public void setMessage(String message) {
         String old = _message;
+        _message = message;
         if (!old.equals(message)) {
             setDirtyAndFirePropertyChange("AutomationItemMessageChange", old, message); // NOI18N
         }
-        _message = message;
     }
 
     public String getMessage() {
         return _message;
+    }
+
+    public void setMessageFail(String message) {
+        String old = _messageFail;
+        _messageFail = message;
+        if (!old.equals(message)) {
+            setDirtyAndFirePropertyChange("AutomationItemMessageFailChange", old, message); // NOI18N
+        }
+    }
+
+    public String getMessageFail() {
+        return _messageFail;
+    }
+    
+    public boolean isHaltFailureEnabled() {
+        return _haltFail;
+    }
+    
+    public void setHaltFailureEnabled(boolean enable) {
+        boolean old = _haltFail;
+        _haltFail = enable;
+        if (old != enable) {
+            setDirtyAndFirePropertyChange("AutomationItemHaltFailureChange", old, enable); // NOI18N
+        }
     }
 
     public void copyItem(AutomationItem item) {
@@ -250,6 +276,12 @@ public class AutomationItem implements java.beans.PropertyChangeListener {
         if ((a = e.getAttribute(Xml.MESSAGE)) != null) {
             _message = a.getValue();
         }
+        if ((a = e.getAttribute(Xml.MESSAGE_FAIL)) != null) {
+            _messageFail = a.getValue();
+        }
+        if ((a = e.getAttribute(Xml.HALT_FAIL)) != null) {
+            _haltFail = a.getValue().equals(Xml.TRUE);
+        }
     }
 
     /**
@@ -273,6 +305,10 @@ public class AutomationItem implements java.beans.PropertyChangeListener {
             e.setAttribute(Xml.AUTOMATION_ID, getAutomation().getId());
         }
         e.setAttribute(Xml.MESSAGE, getMessage());
+        if (!getMessageFail().equals(NONE)) {
+            e.setAttribute(Xml.MESSAGE_FAIL, getMessageFail());
+        }
+        e.setAttribute(Xml.HALT_FAIL, isHaltFailureEnabled() ? Xml.TRUE : Xml.FALSE);
         return e;
     }
 
