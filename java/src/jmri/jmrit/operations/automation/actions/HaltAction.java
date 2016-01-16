@@ -12,7 +12,7 @@ public class HaltAction extends Action {
 
     @Override
     public String toString() {
-        return "";
+        return Bundle.getMessage("Halt");
     }
 
     @Override

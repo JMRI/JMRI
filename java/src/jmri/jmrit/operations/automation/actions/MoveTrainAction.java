@@ -1,7 +1,5 @@
 package jmri.jmrit.operations.automation.actions;
 
-import javax.swing.JOptionPane;
-import jmri.jmrit.operations.automation.AutomationItem;
 import jmri.jmrit.operations.routes.RouteLocation;
 import jmri.jmrit.operations.trains.Train;
 
@@ -30,14 +28,9 @@ public class MoveTrainAction extends Action {
                 } else {
                     train.move();
                 }
-                // now show message if there's one
-                if (!getAutomationItem().getMessage().equals(AutomationItem.NONE)) {
-                    JOptionPane.showMessageDialog(null, getAutomationItem().getMessage(),
-                            getAutomationItem().getId() + " " + toString() + " " + train.getName() + " " + train.getCurrentLocationName(),
-                            JOptionPane.INFORMATION_MESSAGE);
-                }
             }
-            firePropertyChange(ACTION_COMPLETE_CHANGED_PROPERTY, false, true);
+            // now show message if there's one
+            finishAction();
         }
     }
 
