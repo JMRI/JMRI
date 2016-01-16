@@ -211,6 +211,12 @@ public class AutomationManager implements java.beans.PropertyChangeListener {
         }
     }
 
+    /**
+     * Construct this Entry from XML. This member has to remain synchronized
+     * with the detailed DTD in operations-trains.dtd
+     *
+     * @param root Consist XML element
+     */
     public void load(Element root) {
         if (root.getChild(Xml.AUTOMATIONS) != null) {
             @SuppressWarnings("unchecked")
@@ -222,6 +228,12 @@ public class AutomationManager implements java.beans.PropertyChangeListener {
         }
     }
 
+    /**
+     * Create an XML element to represent this Entry. This member has to remain
+     * synchronized with the detailed DTD in operations-trains.dtd.
+     *
+     * @return Contents in a JDOM Element
+     */
     public void store(Element root) {
         Element values;
         root.addContent(values = new Element(Xml.AUTOMATIONS));

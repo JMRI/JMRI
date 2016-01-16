@@ -219,7 +219,7 @@ public class AutomationItem implements java.beans.PropertyChangeListener {
 
     /**
      * Construct this Entry from XML. This member has to remain synchronized
-     * with the detailed DTD in operations-config.xml
+     * with the detailed DTD in operations-trains.xml
      *
      * @param e Consist XML element
      */

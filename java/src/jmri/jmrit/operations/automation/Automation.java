@@ -372,7 +372,7 @@ public class Automation implements java.beans.PropertyChangeListener {
 
     /**
      * Construct this Entry from XML. This member has to remain synchronized
-     * with the detailed DTD in operations-config.xml
+     * with the detailed DTD in operations-trains.dtd
      *
      * @param e Consist XML element
      */
@@ -406,11 +406,11 @@ public class Automation implements java.beans.PropertyChangeListener {
 
     /**
      * Create an XML element to represent this Entry. This member has to remain
-     * synchronized with the detailed DTD in operations-config.xml.
+     * synchronized with the detailed DTD in operations-trains.dtd.
      *
      * @return Contents in a JDOM Element
      */
-    public org.jdom2.Element store() {
+    public Element store() {
         Element e = new org.jdom2.Element(Xml.AUTOMATION);
         e.setAttribute(Xml.ID, getId());
         e.setAttribute(Xml.NAME, getName());
