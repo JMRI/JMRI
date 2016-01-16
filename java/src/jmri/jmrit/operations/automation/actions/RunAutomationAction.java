@@ -23,8 +23,7 @@ public class RunAutomationAction extends Action {
             if (automation != null) {
                 automation.run();
             }
-            // now show message if there's one
-            finishAction();
+            finishAction(automation != null);
         }
     }
 

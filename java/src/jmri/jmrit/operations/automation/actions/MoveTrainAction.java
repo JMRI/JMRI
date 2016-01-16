@@ -28,9 +28,10 @@ public class MoveTrainAction extends Action {
                 } else {
                     train.move();
                 }
+                finishAction(true);
+            } else {
+                finishAction(false);
             }
-            // now show message if there's one
-            finishAction();
         }
     }
 

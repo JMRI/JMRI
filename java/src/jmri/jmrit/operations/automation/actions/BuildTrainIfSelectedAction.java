@@ -20,11 +20,11 @@ public class BuildTrainIfSelectedAction extends Action {
     public void doAction() {
         if (getAutomationItem() != null) {
             Train train = getAutomationItem().getTrain();
-            if (train != null && !train.isBuilt()) {
-                train.buildIfSelected();
+            if (train == null || train.isBuilt()) {
+                finishAction(false); // failed to build train
+            } else {
+                finishAction(train.buildIfSelected()); // okay
             }
-            // now show message if there's one
-            finishAction();
         }
     }
 

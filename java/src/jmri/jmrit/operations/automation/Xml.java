@@ -31,5 +31,7 @@ public class Xml {
     static final String ROUTE_LOCATION_ID = "routeLocationId"; // NOI18N
     static final String AUTOMATION_ID = "automationId"; // NOI18N
     static final String MESSAGE = "message"; // NOI18N
+    static final String MESSAGE_FAIL = "messageFail"; // NOI18N
+    static final String HALT_FAIL = "haltFail"; // NOI18N
 
 }

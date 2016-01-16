@@ -81,8 +81,8 @@ public class Automation implements java.beans.PropertyChangeListener {
     }
 
     public String getMessage() {
-        if (getCurrentAutomationItem() != null) {
-            return getCurrentAutomationItem().getMessage();
+        if (getCurrentAutomationItem() != null && getCurrentAutomationItem().getAction() != null) {
+            return getCurrentAutomationItem().getAction().getFormatedMessage(getCurrentAutomationItem().getMessage());
         }
         return "";
     }

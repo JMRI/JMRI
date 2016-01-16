@@ -18,7 +18,7 @@ public class NoAction extends Action {
     @Override
     public void doAction() {
         // nothing to do except display a message if there's one.
-        finishAction();
+        finishAction(getAutomationItem().getMessage());
     }
 
     @Override

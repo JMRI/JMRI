@@ -28,8 +28,7 @@ public class UpdateSwitchListAction extends Action {
     public void doAction() {
         if (getAutomationItem() != null) {
             TrainScheduleManager.instance().buildSwitchLists();
-            // now show message if there's one
-            finishAction();
+            finishAction(true);
         }
     }
 

@@ -188,4 +188,6 @@
 <!ATTLIST item routeLocationId		CDATA #IMPLIED>
 <!ATTLIST item automationId			CDATA #IMPLIED>
 <!ATTLIST item message				CDATA #IMPLIED>
+<!ATTLIST item messageFail			CDATA #IMPLIED>
+<!ATTLIST item haltFail				(true | false) "true">
 
