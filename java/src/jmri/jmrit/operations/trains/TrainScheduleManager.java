@@ -6,7 +6,10 @@ import java.util.Enumeration;
 import java.util.Hashtable;
 import java.util.List;
 import javax.swing.JComboBox;
+import jmri.jmrit.operations.locations.Location;
+import jmri.jmrit.operations.locations.LocationManager;
 import jmri.jmrit.operations.setup.Control;
+import jmri.jmrit.operations.setup.Setup;
 import org.jdom2.Element;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -226,6 +229,21 @@ public class TrainScheduleManager implements java.beans.PropertyChangeListener {
         for (TrainSchedule sch : getSchedulesByNameList()) {
             box.addItem(sch);
         }
+    }
+    
+    public void buildSwitchLists() {
+        TrainSwitchLists trainSwitchLists = new TrainSwitchLists();
+        for (Location location : LocationManager.instance().getLocationsByNameList()) {
+            if (location.isSwitchListEnabled()) {
+                trainSwitchLists.buildSwitchList(location);
+                // print switch lists for locations that have changes
+                if (Setup.isSwitchListRealTime() && !location.getStatus().equals(Location.PRINTED)) {
+                    trainSwitchLists.printSwitchList(location, TrainManager.instance().isPrintPreviewEnabled());
+                }
+            }
+        }
+        // set trains switch lists printed
+        TrainManager.instance().setTrainsSwitchListStatus(Train.PRINTED);
     }
 
     /**

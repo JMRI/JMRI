@@ -1,9 +1,9 @@
 package jmri.jmrit.operations.automation.actions;
 
 
-public class BlankAction extends Action {
+public class HaltAction extends Action {
 
-    private static final int _code = ActionCodes.NOP_ACTION;
+    private static final int _code = ActionCodes.HALT_ACTION;
 
     @Override
     public int getCode() {
@@ -12,7 +12,7 @@ public class BlankAction extends Action {
 
     @Override
     public String toString() {
-        return "";
+        return Bundle.getMessage("Halt");
     }
 
     @Override

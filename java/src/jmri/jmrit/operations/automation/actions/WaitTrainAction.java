@@ -2,8 +2,6 @@ package jmri.jmrit.operations.automation.actions;
 
 import java.beans.PropertyChangeEvent;
 import java.beans.PropertyChangeListener;
-import javax.swing.JOptionPane;
-import jmri.jmrit.operations.automation.AutomationItem;
 import jmri.jmrit.operations.routes.RouteLocation;
 import jmri.jmrit.operations.setup.Control;
 import jmri.jmrit.operations.trains.Train;
@@ -42,13 +40,8 @@ public class WaitTrainAction extends Action implements PropertyChangeListener {
                     return; // haven't reached this location continue waiting
             }
             // now show message if there's one
-            if (!getAutomationItem().getMessage().equals(AutomationItem.NONE)) {
-                JOptionPane.showMessageDialog(null, getAutomationItem().getMessage(),
-                        toString() + " " + train.getName() + " " + train.getCurrentLocationName(),
-                        JOptionPane.INFORMATION_MESSAGE);
-            }
             train.removePropertyChangeListener(this);
-            firePropertyChange(ACTION_COMPLETE_CHANGED_PROPERTY, false, true);
+            finishAction();
         }
     }
 

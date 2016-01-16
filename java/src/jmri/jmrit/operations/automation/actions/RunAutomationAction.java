@@ -20,15 +20,18 @@ public class RunAutomationAction extends Action {
     public void doAction() {
         if (getAutomationItem() != null) {
             Automation automation = getAutomationItem().getAutomation();
-            automation.run();
-            firePropertyChange(ACTION_COMPLETE_CHANGED_PROPERTY, false, true);
-        } 
+            if (automation != null) {
+                automation.run();
+            }
+            // now show message if there's one
+            finishAction();
+        }
     }
 
     @Override
     public void cancelAction() {
         // no cancel for this action
-        
+
     }
 
 }
