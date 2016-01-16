@@ -479,7 +479,7 @@ public class ProfileManager extends Bean {
             XMLOutputter fmt = new XMLOutputter();
             fmt.setFormat(Format.getPrettyFormat()
                     .setLineSeparator(System.getProperty("line.separator"))
-                    .setTextMode(Format.TextMode.TRIM_FULL_WHITE));
+                    .setTextMode(Format.TextMode.NORMALIZE));
             fmt.output(doc, fw);
             fw.close();
         } catch (IOException ex) {
