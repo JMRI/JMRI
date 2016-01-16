@@ -12,7 +12,7 @@ public class TerminateTrainAction extends Action {
     }
 
     @Override
-    public String toString() {
+    public String getName() {
         return Bundle.getMessage("TerminateTrain");
     }
 
@@ -22,9 +22,10 @@ public class TerminateTrainAction extends Action {
             Train train = getAutomationItem().getTrain();
             if (train != null && train.isBuilt()) {
                 train.terminate();
+                finishAction(true);
+            } else {
+                finishAction(false);
             }
-            // now show message if there's one
-            finishAction();
         }
     }
 

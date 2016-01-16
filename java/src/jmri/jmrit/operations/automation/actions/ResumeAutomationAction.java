@@ -12,7 +12,7 @@ public class ResumeAutomationAction extends Action {
     }
 
     @Override
-    public String toString() {
+    public String getName() {
         return Bundle.getMessage("ResumeAutomation");
     }
 
@@ -23,8 +23,7 @@ public class ResumeAutomationAction extends Action {
             if (automation != null) {
                 automation.resume();
             }
-            // now show message if there's one
-            finishAction();
+            finishAction(automation != null);
         }
     }
 

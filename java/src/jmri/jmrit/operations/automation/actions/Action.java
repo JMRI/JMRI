@@ -1,5 +1,6 @@
 package jmri.jmrit.operations.automation.actions;
 
+import java.text.MessageFormat;
 import javax.swing.JOptionPane;
 import jmri.jmrit.operations.automation.Automation;
 import jmri.jmrit.operations.automation.AutomationItem;
@@ -14,16 +15,24 @@ public abstract class Action {
     public static final int HALT = 1;
     public static final int CLOSED = JOptionPane.CLOSED_OPTION; // -1
     public static final int NO_MESSAGE_SENT = -2;
+    public static final int FINISH_FAILED = -3;
 
     protected AutomationItem _automationItem = null;
 
     abstract public int getCode();
 
-    abstract public String toString(); // for combo boxes
+    abstract public String getName();
 
     abstract public void doAction();
 
     abstract public void cancelAction();
+
+    /**
+     * for combo boxes
+     */
+    public String toString() {
+        return getName();
+    }
 
     /**
      * Mask off menu bits.
@@ -43,8 +52,12 @@ public abstract class Action {
         return (getCode() & ActionCodes.ENABLE_ROUTES) == ActionCodes.ENABLE_ROUTES;
     }
 
-    public boolean isMessagesEnabled() {
-        return (getCode() & ActionCodes.ENABLE_MESSAGES) == ActionCodes.ENABLE_MESSAGES;
+    public boolean isMessageOkEnabled() {
+        return (getCode() & ActionCodes.ENABLE_OK_MESSAGE) == ActionCodes.ENABLE_OK_MESSAGE;
+    }
+
+    public boolean isMessageFailEnabled() {
+        return (getCode() & ActionCodes.ENABLE_FAIL_MESSAGE) == ActionCodes.ENABLE_FAIL_MESSAGE;
     }
 
     public boolean isAutomationMenuEnabled() {
@@ -67,42 +80,80 @@ public abstract class Action {
      * Displays message if there's one. Gives the user the option to halt the
      * automation.
      * 
+     * @param message the message to be displayed
      * @return OKAY, HALT, NO_MESSAGE_SENT, CLOSED
      */
-    public int finishAction() {
-        int response = NO_MESSAGE_SENT;
+    public int finishAction(String message) {
+        int response = sendMessage(message, new Object[]{Bundle.getMessage("OK"), Bundle.getMessage("HALT")});
+        if (response != HALT) {
+            firePropertyChange(ACTION_COMPLETE_CHANGED_PROPERTY, false, true);
+        }
+        return response;
+    }
+
+    /**
+     * Completes the action by displaying the correct message if there's one.
+     * Will halt if the option to halt the automation is enabled or the user
+     * requested the automation to halt.
+     * 
+     * @param success true if action succeeded
+     * @return OKAY, HALT, CLOSED, NO_MESSAGE_SENT, FINISH_FAILED
+     */
+    public int finishAction(boolean success) {
+        int response = FINISH_FAILED;
         if (getAutomationItem() != null) {
-            if (!getAutomationItem().getMessage().equals(AutomationItem.NONE)) {
-                String trainName = "";
-                Train train = getAutomationItem().getTrain();
-                if (train != null) {
-                    trainName = " " + train.getName();
+            String message = getAutomationItem().getMessage();
+            Object[] buttons = new Object[]{Bundle.getMessage("OK"), Bundle.getMessage("HALT")};
+            if (!success) {
+                message = getAutomationItem().getMessageFail();
+                if (getAutomationItem().isHaltFailureEnabled()) {
+                    buttons = new Object[]{Bundle.getMessage("HALT")}; // Must halt, only the HALT button shown
                 }
-                String routeLocationName = "";
-                RouteLocation rl = getAutomationItem().getRouteLocation();
-                if (rl != null) {
-                    routeLocationName = " " + rl.getName();
-                }
-                String automationName = "";
-                Automation automation = getAutomationItem().getAutomation();
-                if (automation != null) {
-                    automationName = " " + automation.getName();
-                }
-                String title = getAutomationItem().getId() +
-                        " " +
-                        toString() +
-                        trainName +
-                        routeLocationName +
-                        automationName;
-                response = JOptionPane.showOptionDialog(null, getAutomationItem().getMessage(), title,
-                        JOptionPane.OK_CANCEL_OPTION, JOptionPane.INFORMATION_MESSAGE, null, new Object[]
-                        {Bundle.getMessage("OK"), Bundle.getMessage("HALT")}, null);
             }
-            if (response != HALT) {
+            response = sendMessage(message, buttons);
+            if (response != HALT && (success || !getAutomationItem().isHaltFailureEnabled())) {
                 firePropertyChange(ACTION_COMPLETE_CHANGED_PROPERTY, false, true);
             }
         }
         return response;
+    }
+
+    /**
+     * Displays message if there's one.
+     * 
+     * @param buttons the buttons to display
+     * @return which button was pressed or NO_MESSAGE_SENT, CLOSED
+     */
+    public int sendMessage(String message, Object[] buttons) {
+        int response = NO_MESSAGE_SENT;
+        if (getAutomationItem() != null && !message.equals(AutomationItem.NONE)) {
+            // use formatter to create title
+            String title = getAutomationItem().getId() + " {0} {1} {2} {3}";
+
+            response = JOptionPane.showOptionDialog(null, getFormatedMessage(message), getFormatedMessage(title),
+                    JOptionPane.OK_CANCEL_OPTION, JOptionPane.INFORMATION_MESSAGE, null, buttons
+                    , null);
+        }
+        return response;
+    }
+
+    public String getFormatedMessage(String message) {
+        String trainName = "";
+        Train train = getAutomationItem().getTrain();
+        if (train != null) {
+            trainName = " " + train.getName();
+        }
+        String routeLocationName = "";
+        RouteLocation rl = getAutomationItem().getRouteLocation();
+        if (rl != null) {
+            routeLocationName = " " + rl.getName();
+        }
+        String automationName = "";
+        Automation automation = getAutomationItem().getAutomation();
+        if (automation != null) {
+            automationName = " " + automation.getName();
+        }
+        return MessageFormat.format(message, new Object[]{getName(), trainName, routeLocationName, automationName});
     }
 
     java.beans.PropertyChangeSupport pcs = new java.beans.PropertyChangeSupport(this);

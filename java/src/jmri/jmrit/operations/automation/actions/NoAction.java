@@ -11,14 +11,14 @@ public class NoAction extends Action {
     }
 
     @Override
-    public String toString() {
+    public String getName() {
         return Bundle.getMessage("NoAction");
     }
 
     @Override
     public void doAction() {
         // nothing to do except display a message if there's one.
-        finishAction();
+        finishAction(getAutomationItem().getMessage());
     }
 
     @Override
