@@ -5,6 +5,7 @@ import java.util.ArrayList;
 import java.util.Enumeration;
 import java.util.Hashtable;
 import java.util.List;
+import jmri.jmrit.operations.automation.actions.HaltAction;
 import jmri.jmrit.operations.setup.Control;
 import jmri.jmrit.operations.trains.TrainManagerXml;
 import org.jdom2.Element;
@@ -33,7 +34,7 @@ public class Automation implements java.beans.PropertyChangeListener {
     public static final String LISTCHANGE_CHANGED_PROPERTY = "automationListChange"; // NOI18N
     public static final String CURRENT_ITEM_CHANGED_PROPERTY = "automationCurrentItemChange"; // NOI18N
     public static final String RUNNING_CHANGED_PROPERTY = "automationRunningChange"; // NOI18N
-    public static final String ACTION_RUNNING_CHANGED_PROPERTY = "automationActionRunningChange"; // NOI18N
+    public static final String ACTION_RUNNING_CHANGED_PROPERTY = "actionRunningChange"; // NOI18N
     public static final String DISPOSE = "automationDispose"; // NOI18N
 
     public Automation(String id, String name) {
@@ -97,8 +98,8 @@ public class Automation implements java.beans.PropertyChangeListener {
 
     public void step() {
         log.debug("step automation ({})", getName());
-        if (getCurrentAutomationItem().getAction() != null) {
-            log.debug("Perform action {}", getCurrentAutomationItem().getAction().toString());
+        if (getCurrentAutomationItem() != null && getCurrentAutomationItem().getAction() != null) {
+            log.debug("Perform action ({})", getCurrentAutomationItem().getAction().toString());
             getCurrentAutomationItem().getAction().removePropertyChangeListener(this);
             getCurrentAutomationItem().getAction().addPropertyChangeListener(this);
             setActionRunning(true);
@@ -112,6 +113,9 @@ public class Automation implements java.beans.PropertyChangeListener {
         setActionRunning(false);
         getCurrentAutomationItem().getAction().removePropertyChangeListener(this);
         getCurrentAutomationItem().getAction().cancelAction();
+        if (getCurrentAutomationItem().getAction().getClass().equals(HaltAction.class)) {
+            setNextAutomationItem();
+        }
     }
 
     public void resume() {
@@ -188,12 +192,12 @@ public class Automation implements java.beans.PropertyChangeListener {
         log.debug("Adding new item to ({}) id: {}", getName(), id);
         AutomationItem item = new AutomationItem(id);
         _automationHashTable.put(item.getId(), item);
-        item.setSequenceId(_automationHashTable.size());
+        item.setSequenceId(getSize());
 
         if (getCurrentAutomationItem() == null) {
             setCurrentAutomationItem(item);
         }
-        setDirtyAndFirePropertyChange(LISTCHANGE_CHANGED_PROPERTY, _automationHashTable.size() - 1, _automationHashTable.size());
+        setDirtyAndFirePropertyChange(LISTCHANGE_CHANGED_PROPERTY, getSize() - 1, getSize());
         return item;
     }
 
@@ -207,10 +211,10 @@ public class Automation implements java.beans.PropertyChangeListener {
      */
     public AutomationItem addItem(int sequence) {
         AutomationItem item = addItem();
-        if (sequence < 0 || sequence > _automationHashTable.size()) {
+        if (sequence < 0 || sequence > getSize()) {
             return item;
         }
-        for (int i = 0; i < _automationHashTable.size() - sequence - 1; i++) {
+        for (int i = 0; i < getSize() - sequence - 1; i++) {
             moveItemUp(item);
         }
         return item;
@@ -220,9 +224,7 @@ public class Automation implements java.beans.PropertyChangeListener {
      * Remember a NamedBean Object created outside the manager.
      */
     public void register(AutomationItem item) {
-        Integer old = Integer.valueOf(_automationHashTable.size());
         _automationHashTable.put(item.getId(), item);
-
         // find last id created
         String[] getId = item.getId().split("c");
         int id = Integer.parseInt(getId[1]);
@@ -232,7 +234,7 @@ public class Automation implements java.beans.PropertyChangeListener {
         if (getCurrentAutomationItem() == null) {
             setCurrentAutomationItem(item); // default is to load the first item saved.
         }
-        setDirtyAndFirePropertyChange(LISTCHANGE_CHANGED_PROPERTY, old, Integer.valueOf(_automationHashTable.size()));
+        setDirtyAndFirePropertyChange(LISTCHANGE_CHANGED_PROPERTY, getSize() - 1, getSize());
     }
 
     /**
@@ -247,13 +249,13 @@ public class Automation implements java.beans.PropertyChangeListener {
             }
             String id = item.getId();
             item.dispose();
-            Integer old = Integer.valueOf(_automationHashTable.size());
+            int old = getSize();
             _automationHashTable.remove(id);
             resequenceIds();
             if (getCurrentAutomationItem() == item) {
                 setNextAutomationItem();
             }
-            setDirtyAndFirePropertyChange(LISTCHANGE_CHANGED_PROPERTY, old, Integer.valueOf(_automationHashTable.size()));
+            setDirtyAndFirePropertyChange(LISTCHANGE_CHANGED_PROPERTY, old, getSize());
         }
     }
 
@@ -278,7 +280,7 @@ public class Automation implements java.beans.PropertyChangeListener {
     }
 
     private List<AutomationItem> getItemsByIdList() {
-        String[] arr = new String[_automationHashTable.size()];
+        String[] arr = new String[getSize()];
         List<AutomationItem> out = new ArrayList<AutomationItem>();
         Enumeration<String> en = _automationHashTable.keys();
         int i = 0;
@@ -321,7 +323,7 @@ public class Automation implements java.beans.PropertyChangeListener {
     public void moveItemUp(AutomationItem item) {
         int sequenceId = item.getSequenceId();
         if (sequenceId - 1 <= 0) {
-            item.setSequenceId(_automationHashTable.size() + 1); // move to the end of the list
+            item.setSequenceId(getSize() + 1); // move to the end of the list
             resequenceIds();
         } else {
             // adjust the other item taken by this one
@@ -333,7 +335,7 @@ public class Automation implements java.beans.PropertyChangeListener {
                 resequenceIds(); // error the sequence number is missing
             }
         }
-        setDirtyAndFirePropertyChange(LISTCHANGE_CHANGED_PROPERTY, null, Integer.toString(sequenceId));
+        setDirtyAndFirePropertyChange(LISTCHANGE_CHANGED_PROPERTY, null, sequenceId);
     }
 
     /**
@@ -343,7 +345,7 @@ public class Automation implements java.beans.PropertyChangeListener {
      */
     public void moveItemDown(AutomationItem item) {
         int sequenceId = item.getSequenceId();
-        if (sequenceId + 1 > _automationHashTable.size()) {
+        if (sequenceId + 1 > getSize()) {
             item.setSequenceId(0); // move to the start of the list
             resequenceIds();
         } else {
@@ -356,7 +358,7 @@ public class Automation implements java.beans.PropertyChangeListener {
                 resequenceIds(); // error the sequence number is missing
             }
         }
-        setDirtyAndFirePropertyChange(LISTCHANGE_CHANGED_PROPERTY, null, Integer.toString(sequenceId));
+        setDirtyAndFirePropertyChange(LISTCHANGE_CHANGED_PROPERTY, null, sequenceId);
     }
 
     public AutomationItem getItemBySequenceId(int sequenceId) {
@@ -370,7 +372,7 @@ public class Automation implements java.beans.PropertyChangeListener {
 
     /**
      * Construct this Entry from XML. This member has to remain synchronized
-     * with the detailed DTD in operations-config.xml
+     * with the detailed DTD in operations-trains.dtd
      *
      * @param e Consist XML element
      */
@@ -404,11 +406,11 @@ public class Automation implements java.beans.PropertyChangeListener {
 
     /**
      * Create an XML element to represent this Entry. This member has to remain
-     * synchronized with the detailed DTD in operations-config.xml.
+     * synchronized with the detailed DTD in operations-trains.dtd.
      *
      * @return Contents in a JDOM Element
      */
-    public org.jdom2.Element store() {
+    public Element store() {
         Element e = new org.jdom2.Element(Xml.AUTOMATION);
         e.setAttribute(Xml.ID, getId());
         e.setAttribute(Xml.NAME, getName());
