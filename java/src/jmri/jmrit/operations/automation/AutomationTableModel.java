@@ -150,7 +150,7 @@ public class AutomationTableModel extends javax.swing.table.AbstractTableModel i
             case TRAIN_COLUMN:
                 return Bundle.getMessage("Train");
             case ROUTE_COLUMN:
-                return Bundle.getMessage("Route");
+                return Bundle.getMessage("RouteLocation");
             case AUTOMATION_COLUMN:
                 return Bundle.getMessage("Automation");
             case MESSAGE_COLUMN:

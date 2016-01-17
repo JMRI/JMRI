@@ -23,6 +23,7 @@ import jmri.jmrit.operations.setup.Control;
 import jmri.jmrit.operations.trains.Train;
 import jmri.jmrit.operations.trains.TrainManager;
 import jmri.jmrit.operations.trains.TrainManagerXml;
+import org.jdom2.Element;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -184,11 +185,11 @@ public class AutomationItem implements java.beans.PropertyChangeListener {
     public String getMessageFail() {
         return _messageFail;
     }
-    
+
     public boolean isHaltFailureEnabled() {
         return _haltFail;
     }
-    
+
     public void setHaltFailureEnabled(boolean enable) {
         boolean old = _haltFail;
         _haltFail = enable;
@@ -249,7 +250,7 @@ public class AutomationItem implements java.beans.PropertyChangeListener {
      *
      * @param e Consist XML element
      */
-    public AutomationItem(org.jdom2.Element e) {
+    public AutomationItem(Element e) {
         // if (log.isDebugEnabled()) log.debug("ctor from element "+e);
         org.jdom2.Attribute a;
         if ((a = e.getAttribute(Xml.ID)) != null) {
@@ -273,14 +274,19 @@ public class AutomationItem implements java.beans.PropertyChangeListener {
             // in the process of loading automations, so we can't get them now, save id and get later.
             _automationId = a.getValue();
         }
-        if ((a = e.getAttribute(Xml.MESSAGE)) != null) {
-            _message = a.getValue();
-        }
-        if ((a = e.getAttribute(Xml.MESSAGE_FAIL)) != null) {
-            _messageFail = a.getValue();
-        }
         if ((a = e.getAttribute(Xml.HALT_FAIL)) != null) {
             _haltFail = a.getValue().equals(Xml.TRUE);
+        }
+        Element eMessages = e.getChild(Xml.MESSAGES);
+        if (eMessages != null) {
+            Element eMessageOk = eMessages.getChild(Xml.MESSAGE_OK);
+            if (eMessageOk != null && (a = eMessageOk.getAttribute(Xml.MESSAGE)) != null) {
+                _message = a.getValue();
+            }
+            Element eMessageFail = eMessages.getChild(Xml.MESSAGE_FAIL);
+            if (eMessageFail != null && (a = eMessageFail.getAttribute(Xml.MESSAGE)) != null) {
+                _messageFail = a.getValue();
+            }
         }
     }
 
@@ -290,8 +296,8 @@ public class AutomationItem implements java.beans.PropertyChangeListener {
      *
      * @return Contents in a JDOM Element
      */
-    public org.jdom2.Element store() {
-        org.jdom2.Element e = new org.jdom2.Element(Xml.ITEM);
+    public Element store() {
+        Element e = new Element(Xml.ITEM);
         e.setAttribute(Xml.ID, getId());
         e.setAttribute(Xml.SEQUENCE_ID, Integer.toString(getSequenceId()));
         e.setAttribute(Xml.ACTION_CODE, "0x" + Integer.toHexString(getActionCode()));
@@ -304,11 +310,22 @@ public class AutomationItem implements java.beans.PropertyChangeListener {
         if (getAutomation() != null) {
             e.setAttribute(Xml.AUTOMATION_ID, getAutomation().getId());
         }
-        e.setAttribute(Xml.MESSAGE, getMessage());
-        if (!getMessageFail().equals(NONE)) {
-            e.setAttribute(Xml.MESSAGE_FAIL, getMessageFail());
-        }
         e.setAttribute(Xml.HALT_FAIL, isHaltFailureEnabled() ? Xml.TRUE : Xml.FALSE);
+        if (!getMessage().equals(NONE) || !getMessageFail().equals(NONE)) {
+            Element eMessages = new Element(Xml.MESSAGES);
+            e.addContent(eMessages);
+            Element eMessageOk = new Element(Xml.MESSAGE_OK);
+            eMessageOk.setAttribute(Xml.MESSAGE, getMessage());
+            Element eMessageFail = new Element(Xml.MESSAGE_FAIL);
+            eMessageFail.setAttribute(Xml.MESSAGE, getMessageFail());
+            eMessages.addContent(eMessageOk);
+            eMessages.addContent(eMessageFail);
+        }
+        //        e.setAttribute(Xml.MESSAGE, getMessage());
+        //        if (!getMessageFail().equals(NONE)) {
+        //            e.setAttribute(Xml.MESSAGE_FAIL, getMessageFail());
+        //        }
+
         return e;
     }
 
