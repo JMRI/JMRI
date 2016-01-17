@@ -123,9 +123,8 @@ public class BlockBossLogicTest extends TestCase {
 
     // test signal following in distant, limited simple block
     public void testSimpleBlockDistantLimited() {
-        p = new BlockBossLogic("IH1");
-        p.setMode(BlockBossLogic.SINGLEBLOCK);
-        p.setWatchedSignal1("IH2", false);
+        setupSimpleBlock();
+
         p.setDistantSignal(true);
         p.setLimitSpeed1(true);
 
