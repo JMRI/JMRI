@@ -1,9 +1,9 @@
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
 <html lang="en">
 <head>
-<title>JMRI: Building with Eclipse</title>
-<meta content="Bob Jacobsen" name="Author">
-<meta name="keywords" content="JMRI technical code Eclipse">
+<title>JMRI: Building with IntelliJ IDEA</title>
+<meta content="Egbert Broerse" name="Author">
+<meta name="keywords" content="JMRI technical code IntelliJ IDEA 15">
 
 <!--#include virtual="/Style" -->
 </head>
@@ -18,47 +18,37 @@
 	<!-- -------- -->
 
 
-	<h1>JMRI: Building with Eclipse</h1>
+	<h1>JMRI: Building with IntelliJ IDEA</h1>
 
 	<p>
-		Eclipse (available at <a href="http://www.eclipse.org">www.eclipse.org</a>)
-		makes a great platform for working with JMRI.
-	</p>
-
-	<p>
-		Eclipse is a complex environment to work with. If you're already
-		familiar with IDEs like Microsoft Visual Studio it won't be too hard
-		to get used to, but it is definitely worth buying a textbook (e.g. <a
-			href="http://www.amazon.com/exec/obidos/tg/detail/-/0321305027/qid=1124158635">
-			The Java Developer's Guide to Eclipse</a>).
-	</p>
+		IntelliJ IDEA (available at <a href="https://www.jetbrains.com/idea/">www.jetbrains.com/idea/</a>)
+		makes a great platform for working with JMRI and Java.</p>
 
 	<p>
 		JMRI developers use Git for source control. Source control using Git
-		is including as part of the Eclipse "Luna" download. For more
-		information or an alternate method for getting the JMRI source, see <a
+		is including as part of the IntelliJ IDEA 15 download. For more
+		information for getting the JMRI source, see <a
 			href="getgitcode.shtml">JMRI: Getting the Code</a>.
 	</p>
 
-	<p>These instructions were developed and tested using "Eclipse IDE
-		for Java Developers" version "Luna Service Release 1a (4.4.1)".</p>
-	<p>Also note that at the time of writing this help document that
-		JMRI requires JAVA version 8. You must confirm that JRE 8 is the
-		default Java Runtime Environment. Eclipse recommends installing
-		release Luna for Java 8, but there are workarounds described online.</p>
+	<p>These instructions were developed and tested using IntelliJ IDEA 15 Community Edition (free).</p>
+	<p>Also note that at the time of writing this help document
+		JMRI 4 requires Java version 8. You must confirm that JRE 8 is the
+		default Java Runtime Environment in IntelliJ (see <a href="#settings">Settings</a>).</p>
 
 	<a name="getwgit"></a>
 	<h2>Getting the JMRI Source using Git</h2>
 
-	To get the source code from GitHub using Git you need to do the
+	To get the source code from GitHub into IntelliJ you need to do the
 	following:
 
 	<ol>
 		<li>Go to <a href="https://github.com/">GitHub.com</a> and create
 			an account.
-		<li>Then open Eclipse.</li>
+		<li>In GitHub web, Fork the JMRI/JMRI to your own remote copy (see <a href="getgitcode.shtml#get">Get the Code</a>)
+		<li>Open IntelliJ.</li>
 		<li>From the main menu bar select "File" then "Import..."</li>
-		<li>Click on "Git" then "Project from Git" then the "Next"
+		<li>Click on "GitHub" then "Project from Git" then the "Next"
 			button.</li>
 		<li>Now select the repository source by clicking on "Clone URI".
 			The Source Git Repository screen should appear.</li>
