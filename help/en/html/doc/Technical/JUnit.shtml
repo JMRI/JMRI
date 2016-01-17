@@ -242,7 +242,7 @@ If you are testing code that is going to reference the InstanceManager,
 you should
 clear and reset it to ensure you get reproducible results.
 <p>
-Your <code>setUp()</code> implementation should start with:
+Depending on what managers your code uses, your <code>setUp()</code> implementation should start with:
 <p><CODE><PRE>
     super.setUp();<br/>
     jmri.util.JUnitUtil.resetInstanceManager();<br/>
@@ -250,8 +250,10 @@ Your <code>setUp()</code> implementation should start with:
     jmri.util.JUnitUtil.initInternalLightManager();<br/>
     jmri.util.JUnitUtil.initInternalSensorManager();<br/>
 </PRE></code>
-<p>
 (You can omit the initialization managers you don't need)
+See the jmri.util.JUnitUtil class for the full list of available ones, and please add 
+more if you need one that's not there yet.
+
 <p>
 Your <code>tearDown()</code> should end with:
 <p>
@@ -260,17 +262,11 @@ Your <code>tearDown()</code> should end with:
     super.tearDown();
 </PRE></code>
 
-<h3><a name="RunningListeners">Running Listeners</a></h3>
+<h3><a name="RunningListeners">Working with Listeners</a></h3>
 
 JMRI is a multi-threaded application. Listeners for
 JMRI objects are notified on various threads.
 Sometimes you have to wait for that to take place.
-To do that, after you invoke a something that will notifylisteners, 
-but before you check the results, do
-<pre><code>
-    JUnitUtil.releaseThread(this);
-</code></pre>
-This uses a nominal delay.
 <p>
 If you want to wait for some specific condition to be true, e.g. 
 receiving a reply object, you can use 
@@ -284,12 +280,60 @@ be evaluated repeatedly until true.  The String second argument is the
 text of the assertion (error message) you'll get if the condition
 doesn't come true in a reasonable length of time.
 <p>
+Waiting for a specific result is fastest and most reliable.
+If you can't do that for some reason, 
+you can do a short time-based wait:
+<pre><code>
+    JUnitUtil.releaseThread(this);
+</code></pre>
+This uses a nominal delay.
+<p>
 Note that this should <b>not</b> be used to synchronize with
 Swing threads.  
 See the <a href="#testSwingCode">Testing Swing Code</a> section for that.
 <p>
 In general, you should not have calls to sleep(), wait() or yield() in your code.
 Use the JUnitUtil and JFCUtil support for those instead.
+
+<h3><a name="threads">Working with Threads</a></h3>
+
+(See a 
+<a href="#testSwingCode">following section<a/>
+for how to work with 
+<a href="#testSwingCode">Swing (GUI) objects<a/>
+and the
+<a href="#testSwingCode">Swing/AWT thread</a>)
+<p>
+Some tests will need to start threads, for example to test signal controls
+or aspects of layout I/O.
+<p>
+General principles your tests must obey for reliable operation:
+<ul>
+<li>At the end of each test, you need to stop() any threads you started.
+Doing this in tearDown() can be most reliable, because tearDown runs
+even if your test method exists due to an error.
+<p>
+If you're doing multiple tests with threads, you should
+wait for thread to actually stop before moving on to the next operation.
+You can do that with a <code>JUnitUtil.waitFor(..)</code> call
+that waits on some flag in the thread.
+<li>If your thread does any operations at <code>code()</code>
+that need to happen before you test its operation, you also have to wait for those to complete.
+</ul>
+<p>
+For example, if creating a thread based on
+<a href="http://jmri.sourceforge.net/JavaDoc/doc/jmri/jmrit/automat/AbstractAutomaton.html">AbstractAutomat</a>, 
+you can check the start with:
+<pre><code>
+    AbsractAutomat p = new MyThreadClass();<br/>
+    p.start();<br/>
+    JUnitUtil.waitFor(()->{return p.isRunning();}, "logic running");
+</code></pre>
+and ensure termination with
+<pre><code>
+    p.stop();<br/>
+    JUnitUtil.waitFor(()->{return !p.isRunning();}, "logic stopped");
+</code></pre>
 
 <h3><a id="io" name="io"></a>Testing I/O</h3>
 
