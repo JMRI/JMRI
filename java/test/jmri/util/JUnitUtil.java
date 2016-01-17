@@ -103,7 +103,7 @@ public class JUnitUtil {
      * Typical use:
      * waitFor(()->{return replyVariable != null;},"reply not received")
      *
-     * @param name label for Assert.fail if condition not true fast enough
+     * @param condition name of condition being waited for; will appear in Assert.fail if condition not true fast enough
      */
     static public void waitFor(ReleaseUntil condition, String name) {
         if (javax.swing.SwingUtilities.isEventDispatchThread()) {
@@ -125,9 +125,9 @@ public class JUnitUtil {
                     Thread.currentThread().setPriority(priority);
                 }
             }
-            Assert.fail(name);
+            Assert.fail("\""+name+"\" did not occur in time");
         } catch (Exception ex) {
-            Assert.fail("Exception while  looking for "+name+" "+ex);
+            Assert.fail("Exception while waiting for \""+name+"\" "+ex);
         }
     }
 
