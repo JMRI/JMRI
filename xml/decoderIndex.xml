@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <?xml-stylesheet href="/xml/XSLT/DecoderID.xsl" type="text/xsl"?>
 <decoderIndex-config xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="http://jmri.org/xml/schema/decoder.xsd">
-  <!--Written by JMRI version 4.3.2ish-201601031120-Alain Le Marchand on Sun Jan 03 12:20:07 CET 2016 $Id$-->
-  <decoderIndex version="682">
+  <!--Written by JMRI version 4.3.3ish-201601130034-heap-R92b29a6 on Wed Jan 13 11:34:34 AEDT 2016 $Id$-->
+  <decoderIndex version="690">
     <mfgList nmraListDate="2015-03-06" updated="2015-03-25" lastadd="107,124,126,128,134">
       <manufacturer mfg="NMRA" mfgID="999" />
       <manufacturer mfg="A-Train Electronics" mfgID="137" />
@@ -19720,7 +19720,7 @@
         </model>
       </family>
       <family name="Zimo Silent BEMF decoders, late model" mfg="Zimo" file="Zimo_MX63_MX64H_v22-30.xml">
-        <model model="MX63 version 22-30" lowVersionID="22" highVersionID="30" maxInputVolts="12-24V" maxMotorCurrent="1A, peak=2A for 5 sec." maxTotalCurrent="1.2A" formFactor="HO" numOuts="8" numFns="14">
+        <model model="MX63 version 22-30" lowVersionID="22" highVersionID="34" maxInputVolts="12-24V" maxMotorCurrent="1A, peak=2A for 5 sec." maxTotalCurrent="1.2A" formFactor="HO" numOuts="8" numFns="14">
           <output name="1" label="White" />
           <output name="2" label="Yellow" />
           <output name="3" label="Brown" />
@@ -19731,7 +19731,7 @@
           <output name="8" label="SUSI Data(+5v)" />
           <size length="20" width="12" height="4" units="mm" />
         </model>
-        <model model="MX64 version 22-30" lowVersionID="22" highVersionID="30" maxInputVolts="12-24V" maxMotorCurrent="1A, peak=2A for 5 sec." maxTotalCurrent="1.2A" formFactor="HO" numOuts="8" numFns="14">
+        <model model="MX64 version 22-30" lowVersionID="22" highVersionID="34" maxInputVolts="12-24V" maxMotorCurrent="1A, peak=2A for 5 sec." maxTotalCurrent="1.2A" formFactor="HO" numOuts="8" numFns="14">
           <output name="1" label="White" />
           <output name="2" label="Yellow" />
           <output name="3" label="Brown" />
@@ -19742,7 +19742,7 @@
           <output name="8" label="SUSI Data(+5v)" />
           <size length="26" width="16" height="3" units="mm" />
         </model>
-        <model model="MX64H version 22-30" lowVersionID="22" highVersionID="30" maxInputVolts="12-24V" maxMotorCurrent="1.6A, peak=2A for 5 sec." maxTotalCurrent="1.8A" formFactor="HO" numOuts="8" numFns="14">
+        <model model="MX64H version 22-30" lowVersionID="22" highVersionID="34" maxInputVolts="12-24V" maxMotorCurrent="1.6A, peak=2A for 5 sec." maxTotalCurrent="1.8A" formFactor="HO" numOuts="8" numFns="14">
           <output name="1" label="White" />
           <output name="2" label="Yellow" />
           <output name="3" label="Brown" />
@@ -22953,7 +22953,7 @@
         </model>
       </family>
       <family name="Zimo Unified software (version 32+)" mfg="Zimo" file="Zimo_Unified_software_v32_MX658.xml">
-        <model model="MX658N18 version 32+" lowVersionID="32" highVersionID="33" maxInputVolts="35V" maxMotorCurrent="0.8A, peak=1.5A" maxTotalCurrent="0.8A" formFactor="N" connector="Next18" numOuts="6" numFns="14" productID="246">
+        <model model="MX658N18 version 32+" lowVersionID="32" highVersionID="42" maxInputVolts="35V" maxMotorCurrent="0.8A, peak=1.5A" maxTotalCurrent="0.8A" formFactor="N" connector="Next18" numOuts="6" numFns="14" productID="246">
           <output name="1" label="Front Light" />
           <output name="2" label="Rear Light" />
           <output name="3" label="FO 1" />
@@ -23056,7 +23056,7 @@
         </model>
       </family>
       <family name="Zimo Unified software (version 34+)" mfg="Zimo" file="Zimo_Unified_software_v34_MX644.xml">
-        <model model="MX644 version 34+" lowVersionID="34" highVersionID="35" maxInputVolts="35V" maxMotorCurrent="1.2A, peak=2.5A" maxTotalCurrent="1.2A" formFactor="HO" connector="21MTC" numOuts="8" numFns="14" productID="222">
+        <model show="no" model="MX644 version 34+" replacementModel="MX644 version 32+" replacementFamily="Zimo Unified software (version 32+)" lowVersionID="34" highVersionID="35" maxInputVolts="35V" maxMotorCurrent="1.2A, peak=2.5A" maxTotalCurrent="1.2A" formFactor="HO" connector="21MTC" numOuts="8" numFns="14" productID="222">
           <output name="1" label="Front Light" />
           <output name="2" label="Rear Light" />
           <output name="3" label="FO 1" />
@@ -23069,7 +23069,7 @@
         </model>
       </family>
       <family name="Zimo Unified software (version 34+)" mfg="Zimo" file="Zimo_Unified_software_v34_MX645.xml">
-        <model model="MX645 version 34+" lowVersionID="34" highVersionID="35" maxInputVolts="35V" maxMotorCurrent="1.2A, peak=2.5A" maxTotalCurrent="1.2A" formFactor="HO" numOuts="10" numFns="14" productID="221">
+        <model show="no" model="MX645 version 34+" replacementModel="MX645 version 32+" replacementFamily="Zimo Unified software (version 32+)" lowVersionID="34" highVersionID="35" maxInputVolts="35V" maxMotorCurrent="1.2A, peak=2.5A" maxTotalCurrent="1.2A" formFactor="HO" numOuts="10" numFns="14" productID="221">
           <output name="1" label="Front Light" />
           <output name="2" label="Rear Light" />
           <output name="3" label="FO 1" />
@@ -23082,7 +23082,7 @@
           <output name="10" label="FO 8 (+5v)" />
           <size length="30" width="15" height="4" units="mm" />
         </model>
-        <model model="MX645R version 34+" lowVersionID="34" highVersionID="35" maxInputVolts="35V" maxMotorCurrent="1.2A, peak=2.5A" maxTotalCurrent="1.2A" formFactor="HO" connector="NMRAmedium" numOuts="10" numFns="14" productID="221">
+        <model show="no" model="MX645R version 34+" replacementModel="MX645R version 32+" replacementFamily="Zimo Unified software (version 32+)" lowVersionID="34" highVersionID="35" maxInputVolts="35V" maxMotorCurrent="1.2A, peak=2.5A" maxTotalCurrent="1.2A" formFactor="HO" connector="NMRAmedium" numOuts="10" numFns="14" productID="221">
           <output name="1" label="Front Light" />
           <output name="2" label="Rear Light" />
           <output name="3" label="FO 1" />
@@ -23095,7 +23095,7 @@
           <output name="10" label="FO 8 (+5v)" />
           <size length="30" width="15" height="4" units="mm" />
         </model>
-        <model model="MX645F version 34+" lowVersionID="34" highVersionID="35" maxInputVolts="35V" maxMotorCurrent="1.2A, peak=2.5A" maxTotalCurrent="1.2A" formFactor="HO" connector="NMRAsmall" numOuts="10" numFns="14" productID="221">
+        <model show="no" model="MX645F version 34+" replacementModel="MX645F version 32+" replacementFamily="Zimo Unified software (version 32+)" lowVersionID="34" highVersionID="35" maxInputVolts="35V" maxMotorCurrent="1.2A, peak=2.5A" maxTotalCurrent="1.2A" formFactor="HO" connector="NMRAsmall" numOuts="10" numFns="14" productID="221">
           <output name="1" label="Front Light" />
           <output name="2" label="Rear Light" />
           <output name="3" label="FO 1" />
@@ -23108,7 +23108,7 @@
           <output name="10" label="FO 8 (+5v)" />
           <size length="30" width="15" height="4" units="mm" />
         </model>
-        <model model="MX645P22 version 34+" lowVersionID="34" highVersionID="35" maxInputVolts="35V" maxMotorCurrent="1.2A, peak=2.5A" maxTotalCurrent="1.2A" formFactor="HO" connector="PluX22" numOuts="10" numFns="14" productID="221">
+        <model show="no" model="MX645P22 version 34+" replacementModel="MX645P22 version 32+" replacementFamily="Zimo Unified software (version 32+)" lowVersionID="34" highVersionID="35" maxInputVolts="35V" maxMotorCurrent="1.2A, peak=2.5A" maxTotalCurrent="1.2A" formFactor="HO" connector="PluX22" numOuts="10" numFns="14" productID="221">
           <output name="1" label="Front Light" />
           <output name="2" label="Rear Light" />
           <output name="3" label="FO 1" />
@@ -23123,7 +23123,7 @@
         </model>
       </family>
       <family name="Zimo Unified software (version 34+)" mfg="Zimo" file="Zimo_Unified_software_v34_MX646.xml">
-        <model model="MX646 version 34+" lowVersionID="34" highVersionID="35" maxInputVolts="30V" maxMotorCurrent="1.0A, peak=1.5A" maxTotalCurrent="1.2A" formFactor="N" numOuts="6" numFns="14" productID="217">
+        <model show="no" model="MX646 version 34+" replacementModel="MX646 version 32+" replacementFamily="Zimo Unified software (version 32+)" lowVersionID="34" highVersionID="35" maxInputVolts="30V" maxMotorCurrent="1.0A, peak=1.5A" maxTotalCurrent="1.2A" formFactor="N" numOuts="6" numFns="14" productID="217">
           <output name="1" label="Front Light" />
           <output name="2" label="Rear Light" />
           <output name="3" label="FO 1" />
@@ -23132,7 +23132,7 @@
           <output name="6" label="FO 4 (+5v)" />
           <size length="28" width="10.5" height="4" units="mm" />
         </model>
-        <model model="MX646R version 34+" lowVersionID="34" highVersionID="35" maxInputVolts="30V" maxMotorCurrent="1.0A, peak=1.5A" maxTotalCurrent="1.2A" formFactor="N" connector="NMRAmedium" numOuts="6" numFns="14" productID="217">
+        <model show="no" model="MX646R version 34+" replacementModel="MX646R version 32+" replacementFamily="Zimo Unified software (version 32+)" lowVersionID="34" highVersionID="35" maxInputVolts="30V" maxMotorCurrent="1.0A, peak=1.5A" maxTotalCurrent="1.2A" formFactor="N" connector="NMRAmedium" numOuts="6" numFns="14" productID="217">
           <output name="1" label="Front Light" />
           <output name="2" label="Rear Light" />
           <output name="3" label="FO 1" />
@@ -23141,7 +23141,7 @@
           <output name="6" label="FO 4 (+5v)" />
           <size length="28" width="10.5" height="4" units="mm" />
         </model>
-        <model model="MX646F version 34+" lowVersionID="34" highVersionID="35" maxInputVolts="30V" maxMotorCurrent="1.0A, peak=1.5A" maxTotalCurrent="1.2A" formFactor="N" connector="NMRAsmall" numOuts="6" numFns="14" productID="217">
+        <model show="no" model="MX646F version 34+" replacementModel="MX646F version 32+" replacementFamily="Zimo Unified software (version 32+)" lowVersionID="34" highVersionID="35" maxInputVolts="30V" maxMotorCurrent="1.0A, peak=1.5A" maxTotalCurrent="1.2A" formFactor="N" connector="NMRAsmall" numOuts="6" numFns="14" productID="217">
           <output name="1" label="Front Light" />
           <output name="2" label="Rear Light" />
           <output name="3" label="FO 1" />
@@ -23150,7 +23150,7 @@
           <output name="6" label="FO 4 (+5v)" />
           <size length="28" width="10.5" height="4" units="mm" />
         </model>
-        <model model="MX646N version 34+" lowVersionID="34" highVersionID="35" maxInputVolts="30V" maxMotorCurrent="1.0A, peak=1.5A" maxTotalCurrent="1.2A" formFactor="N" connector="NMRAsmall" numOuts="6" numFns="14" productID="217">
+        <model show="no" model="MX646N version 34+" replacementModel="MX646N version 32+" replacementFamily="Zimo Unified software (version 32+)" lowVersionID="34" highVersionID="35" maxInputVolts="30V" maxMotorCurrent="1.0A, peak=1.5A" maxTotalCurrent="1.2A" formFactor="N" connector="NMRAsmall" numOuts="6" numFns="14" productID="217">
           <output name="1" label="Front Light" />
           <output name="2" label="Rear Light" />
           <output name="3" label="FO 1" />
@@ -23161,7 +23161,7 @@
         </model>
       </family>
       <family name="Zimo Unified software (version 34+)" mfg="Zimo" file="Zimo_Unified_software_v34_MX648.xml">
-        <model model="MX648 version 34+" lowVersionID="34" highVersionID="38" maxInputVolts="30V" maxMotorCurrent="0.8A, peak=1.5A" maxTotalCurrent="1.2A" formFactor="N" numOuts="6" numFns="14" productID="225">
+        <model show="no" model="MX648 version 34+" replacementModel="MX648 version 32+" replacementFamily="Zimo Unified software (version 32+)" lowVersionID="34" highVersionID="38" maxInputVolts="30V" maxMotorCurrent="0.8A, peak=1.5A" maxTotalCurrent="1.2A" formFactor="N" numOuts="6" numFns="14" productID="225">
           <output name="1" label="Front Light" />
           <output name="2" label="Rear Light" />
           <output name="3" label="FO 1" />
@@ -23170,7 +23170,7 @@
           <output name="6" label="FO 4 (+5v)" />
           <size length="20" width="11" height="4" units="mm" />
         </model>
-        <model model="MX648R version 34+" lowVersionID="34" highVersionID="38" maxInputVolts="30V" maxMotorCurrent="0.8A, peak=1.5A" maxTotalCurrent="1.2A" formFactor="N" connector="NMRAmedium" numOuts="6" numFns="14" productID="225">
+        <model show="no" model="MX648R version 34+" replacementModel="MX648R version 32+" replacementFamily="Zimo Unified software (version 32+)" lowVersionID="34" highVersionID="38" maxInputVolts="30V" maxMotorCurrent="0.8A, peak=1.5A" maxTotalCurrent="1.2A" formFactor="N" connector="NMRAmedium" numOuts="6" numFns="14" productID="225">
           <output name="1" label="Front Light" />
           <output name="2" label="Rear Light" />
           <output name="3" label="FO 1" />
@@ -23179,7 +23179,7 @@
           <output name="6" label="FO 4" />
           <size length="20" width="11" height="4" units="mm" />
         </model>
-        <model model="MX648F version 34+" lowVersionID="34" highVersionID="38" maxInputVolts="30V" maxMotorCurrent="0.8A, peak=1.5A" maxTotalCurrent="1.2A" formFactor="N" connector="NMRAsmall" numOuts="6" numFns="14" productID="225">
+        <model show="no" model="MX648F version 34+" replacementModel="MX648F version 32+" replacementFamily="Zimo Unified software (version 32+)" lowVersionID="34" highVersionID="38" maxInputVolts="30V" maxMotorCurrent="0.8A, peak=1.5A" maxTotalCurrent="1.2A" formFactor="N" connector="NMRAsmall" numOuts="6" numFns="14" productID="225">
           <output name="1" label="Front Light" />
           <output name="2" label="Rear Light" />
           <output name="3" label="FO 1" />
@@ -23188,7 +23188,7 @@
           <output name="6" label="FO 4" />
           <size length="28" width="10.5" height="4" units="mm" />
         </model>
-        <model model="MX648N version 34+" lowVersionID="34" highVersionID="38" maxInputVolts="30V" maxMotorCurrent="0.8A, peak=1.5A" maxTotalCurrent="1.2A" formFactor="N" connector="NMRAsmall" numOuts="6" numFns="14" productID="225">
+        <model show="no" model="MX648N version 34+" replacementModel="MX648N version 32+" replacementFamily="Zimo Unified software (version 32+)" lowVersionID="34" highVersionID="38" maxInputVolts="30V" maxMotorCurrent="0.8A, peak=1.5A" maxTotalCurrent="1.2A" formFactor="N" connector="NMRAsmall" numOuts="6" numFns="14" productID="225">
           <output name="1" label="Front Light" />
           <output name="2" label="Rear Light" />
           <output name="3" label="FO 1" />
@@ -23199,7 +23199,7 @@
         </model>
       </family>
       <family name="Zimo Unified software (version 34+)" mfg="Zimo" file="Zimo_Unified_software_v34_MX658.xml">
-        <model model="MX658N18 version 34+" lowVersionID="34" highVersionID="35" maxInputVolts="35V" maxMotorCurrent="0.8A, peak=1.5A" maxTotalCurrent="0.8A" formFactor="N" connector="Next18" numOuts="6" numFns="14" productID="246">
+        <model show="no" model="MX658N18 version 34+" replacementModel="MX644 version 32+" replacementFamily="Zimo Unified software (version 32+)" lowVersionID="34" highVersionID="35" maxInputVolts="35V" maxMotorCurrent="0.8A, peak=1.5A" maxTotalCurrent="0.8A" formFactor="N" connector="Next18" numOuts="6" numFns="14" productID="246">
           <output name="1" label="Front Light" />
           <output name="2" label="Rear Light" />
           <output name="3" label="FO 1" />

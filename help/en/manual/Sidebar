@@ -34,8 +34,8 @@
 <dt>JMRI&reg; v3.10</dt>
   <dd>
     <ul>
-    <li style="font-weight: bold;"><a href="http://jmri.org/manual/3-6_DecoderPro3/index.shtml">DecoderPro3&reg;</a></li>
-    <li style="font-weight: bold;"><a href="http://jmri.org/manual/3-6_DecoderPro/index.shtml">DecoderPro&reg;</a></li>
+    <li style="font-weight: bold;"><a href="DecoderPro3/index.shtml">DecoderPro3&reg;</a></li>
+    <li style="font-weight: bold;"><a href="DecoderPro/index.shtml">DecoderPro&reg;</a></li>
     <li style="font-weight: bold;"><a href="JMRI_OPS_UsersGuide/index.shtml">OperationsPro</li>
     </ul>
   </dd>
@@ -90,7 +90,7 @@
 		<li><a href="http://jmri.sourceforge.net/install/WindowsNew.shtml">Windows</a>
 		<li><a href="http://jmri.sourceforge.net/install/MacOSX.shtml">Mac OS X</a>
 		<li><a href="http://jmri.sourceforge.net/install/Linux.shtml">Linux</a>
-		<li><a href="http://jmri.sourceforge.net/install/Debug.shtml">Debugging an installation</a>
+		<li><a href="../html/setup.shtml">Setup JMRI</a>
     </ul>
     </dd>  
   

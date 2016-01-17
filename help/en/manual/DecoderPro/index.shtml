@@ -22,6 +22,9 @@
 
 <h1><a name="Top">JMRI&reg; DecoderPro&reg; Manual</a></h1>
 
+<p class="important">This Manual deals with DP version 3.6.<br>
+Online Help for the current version of JMRI&reg; DecoderPro&reg; is <a href="../../html/apps/DecoderPro/index.shtml">here</a>.</p>
+
 <p><strong>JMRI</strong> is a Java-based cross-platform application
 for model railroaders. JMRI contains applications for:</p>
 
@@ -34,12 +37,6 @@ for model railroaders. JMRI contains applications for:</p>
 <li>Controlling lighting and sound in the room, and so forth (SoundPro&trade;)</li>
 </ul>
 <p>All this capability is contained in one program (JMRI) which has several &quot;start-up&quot; screens for the various applications.</p>
-
-<p><a href="../DecoderPro3/Installing_JMRI.shtml#InstallJMRI">Versions of JMRI&reg;</a> can run on any computer system that will run Java 1.6.0
-or later, whether it is Macintosh, Windows, or Linux based. It does
-require that Java be installed on the computer.<br>
-You can get Java as a free (but very large) download at: <a href="http://java.com/download/" target="_blank">java.com/download/</a>
-</p>
 
 <p>If  this is your first visit to our manual we suggest that you take the Decoder Pro&reg; tour at <a target="_blank" href="http://jmri.sourceforge.net/help/en/html/apps/DecoderPro/Tour.shtml">http://jmri.sourceforge.net/help/en/html/apps/DecoderPro/Tour.shtml</a><br>
   to get an overview of what we&#8217;re about to cover.
@@ -433,9 +430,6 @@ Notes:
 </ul>
 
 <hr>
-
-<p>To give feedback on this On Line manual, ask questions about things not covered, or make suggestions for improvements to the manual or the software, join us on the <a href="https://groups.yahoo.com/neo/groups/jmriusers/info">JMRI Users Yahoo Group</a>.
-</p>
 
 <p>Thanks for reading, and Let's Run Trains!
 </p>

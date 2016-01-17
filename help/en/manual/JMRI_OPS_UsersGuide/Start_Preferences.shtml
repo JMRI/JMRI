@@ -10,14 +10,6 @@
 <link rel="icon" href="/images/jmri.ico" TYPE="image/png">
 <link rel="home" title="Home" href="/">
 <!-- /Style -->
-<script type="text/javascript">
-<!--
-function MM_jumpMenu(targ,selObj,restore){ //v3.0
-  eval(targ+".location='"+selObj.options[selObj.selectedIndex].value+"'");
-  if (restore) selObj.selectedIndex=0;
-}
-//-->
-</script>
 </head>
 
 <body>
@@ -33,6 +25,8 @@ function MM_jumpMenu(targ,selObj,restore){ //v3.0
 <p><a href="index.shtml#startOps">Back to Index</a> </div>
 
 <hr>
+<p class="important">The current JMRI Preferences Help is <a href="../../html/setup/index.shtml#setprefs">here</a>.</p>
+
 <p>In either PanelPro or DecoderPro, in the main menu bar click on the Edit menu -&gt; Preferences... (Windows) or click on Preferences... in the PanelPro application menu (OS X). This opens the <strong>Preferences</strong> panel (The panel may open automatically the first time you run JMRI&reg;).</p>
 <p>The <strong>Preferences</strong> panel is split into two panes: on the left side is a list of Preference groups that may be set. Clicking on one of the Tabs opens that set of Preference options in the right side pane where options may be checked or changed.<br>Note: <strong>Remember to click  
   <input type="button" name="button9" id="button9" value="Save">

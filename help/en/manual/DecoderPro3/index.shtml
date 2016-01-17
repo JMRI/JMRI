@@ -3,10 +3,12 @@
 <head>
 <title>JMRI DP3 Manual: Index</title>
 
-<meta name="Author" content="Dale A. Tripp, Bruce Shanks, Egbert Broerse">
+<meta name="Author" content="Dale A. Tripp">
+<meta name="Author" content="Bruce Shanks">
+<meta name="Author" content="Egbert Broerse">
 
 <!-- Style -->
-<meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
+<meta http-equiv="content-type" content="text/html; charset=iso-8859-1">
 <link rel="stylesheet" type="text/css" href="/css/default.css" media="screen">
 <link rel="stylesheet" type="text/css" href="/css/print.css" media="print">
 <link rel="icon" href="/images/jmri.ico" type="image/png">
@@ -21,7 +23,8 @@
 <div id="mainContent"><a name="Top"></a>
 
 <h1>JMRI&reg;: DecoderPro3&reg; Manual</h1>
-<p><a href="#revisions">Revised</a> 2/17/2014 to cover version 3.6</p>
+<p class="important">This Manual deals with DP3 up to version 3.6.<br>
+Online Help for the current version of JMRI&reg; DecoderPro&reg; is <a href="../../html/apps/DecoderPro/index.shtml">here</a>.</p>
 
 <p><strong>DecoderPro3&reg;</strong> is a Java-based cross-platform application for model railroaders.</p>
 
@@ -47,7 +50,7 @@ to update your browser.</li>
 <li>DecoderPro&reg; v3.x was at one time known as DecoderPro3&reg; v3.x, however since JMRI version 4 we leave out the 3 in the name.</li>
 </ol>
 
-<h1 name="index" id="index">Table of Contents</h1>
+<h2 name="index" id="index">Table of Contents</h2>
 
 <h4><a name="Installing"></a>Installing JMRI</h4>
 <ul>
@@ -149,9 +152,6 @@ to update your browser.</li>
 </ul>
 
 <hr>
-
-<p>To give feedback on this On Line manual, ask questions about things not covered, or make suggestions for improvements to the manual or the software, join us on the <a href="https://groups.yahoo.com/neo/groups/jmriusers/info">JMRI Users Yahoo Group</a>.
-</p>
 
 <p>Thanks for reading, and Let's Run Trains!
 </p>

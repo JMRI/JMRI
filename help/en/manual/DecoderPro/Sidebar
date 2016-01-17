@@ -8,11 +8,10 @@
     <div style="text-align: center"><strong>DecoderPro&reg; Manual</strong></div>
 
 <dl><!-- main table of contents -->
-<dt><h3>Installing JMRI</h3></dt>
+<dt><h3>Setup JMRI</h3></dt>
 	  <dd>
     <ul>
     <li><a href="Installing_JMRI.shtml">Preparing to Install</a></li>
-    <li><a href="Installing_JMRI.shtml#InstallJMRI">Installing</a></li>
     </ul>
     </dd>
 
@@ -78,65 +77,6 @@
     <li><a href="Comp_PrintData.shtml">Printing the Decoder Data</a></li>
     </ul>
     </dd>
-
-<dt><h3>The Advanced Programmer</h3></dt>
-    <dd>
-    <ul>
-    <li><a href="Adv_start.shtml">Starting Advanced Programmer</a></li>
-    <li><a href="Adv_FunctionLabel.shtml">Function Labels Pane</a></li>
-    <li><a href="Adv_RosterMedia.shtml">Roster Media</a></li>
-    <li><a href="Comp_Basic.shtml">Expanded Basic Pane</a></li>
-    <li><a href="Comp_Motor.shtml">Motor Control Pane</a></li>
-    <li><a href="Comp_Speed.shtml">Speed Control Pane</a></li>
-    <li><a href="Comp_Speed_Talble.shtml">Speed Table Pane</a></li>
-    <li><a href="Comp_FMap.shtml">Function Mapping Pane</a></li>
-    
-    <li><a href="Comp_LightFX.shtml">Lights Pane</a></li>
-    <li><a href="Comp_Consist.shtml">Consisting Pane</a></li>
-    <li><a href="Comp_Advanced.shtml">Advanced Features Pane</a></li>
-    <li><a href="Comp_Analog.shtml">Analog Controls Pane</a></li>
-    <li><a href="Comp_SoundFX.shtml">Sound Pane</a></li>
-    <li><a href="Comp_SoundLevels.shtml"> Sound Levels Pane</a></li>
-    <li><a href="Comp_GlobalCVs.shtml">Global CV Pane</a></li>
-    <li><a href="Comp_ManfSpecific.shtml">Manufacturer-Specific Pane</a></li>
-    <li><a href="Comp_PrintData.shtml">Printing the Decoder Data</a></li>
-    </ul>
-    </dd>
-
-<dt><h3><a name="Main"></a>DecoderPro&reg; Main Window</h3></dt>
-    <dd>
-    <ul>
-      <li><a href="Main_Main.shtml">Main Window</a></li>
-      <li><a href="Main_Menu.shtml">Menu Overview</a></li>
-      <li><a href="Main_File.shtml">File Menu</a></li>
-      <li><a href="Main_Edit.shtml">Edit Menu</a></li>
-      <li><a href="Main_Tool.shtml">Tools Menu</a></li>
-      <li><a href="Main_Roster.shtml">Roster Menu</a></li>
-      <li><a href="Main_Panels.shtml">Panels Menu</a></li>
-      <li><a href="Main_Menu.shtml#System">System dependent menu </a></li>
-      <li><a href="Main_Debug.shtml">Debug Menu</a></li>
-      <li><a href="Main_Window.shtml">Window Menu</a></li>
-      <li><a href="Main_Help.shtml">Help Menu</a></li>
-    </ul>
-    </dd>
-
-<dt><h3><a name="DecoderDefinition"></a>Creating a Decoder Definition</h3></dt>
-    <dd>
-    <ul>
-    <li><a href="Dcode_Start.shtml">Getting Started</a></li>
-    <li><a href="Dcode_Format.shtml">Format</a></li>
-    <li><a href="Dcode_Testing.shtml">Testing</a></li>
-    <li><a href="Dcode_Submit.shtml">Submitting to JMRI</a></li>
-    </ul>
-    </dd>
-
-<dt><h3><a name="Error"></a>Error Messages</h3></dt>
-    <dd>
-    <ul>
-      <li><a href="Error.shtml">Decoder Programmer Error Messages</a></li>
-    </ul>
-    </dd>
-
 </dl>
 </div>
 <!-- /Sidebar -->

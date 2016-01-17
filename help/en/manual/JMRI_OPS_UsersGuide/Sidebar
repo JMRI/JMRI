@@ -8,11 +8,10 @@
     <div style="text-align: center"><strong>The OpsPro Manual</strong></div>
 
 <dl class="toc"><!-- main table of contents -->
-<dt><h3>Installing JMRI</h3></dt>
+<dt><h3>Setup JMRI</h3></dt>
 	  <dd>
     <ul>
     <li><a href="Installing_JMRI.shtml">Preparing to Install</a></li>
-    <li><a href="Installing_JMRI.shtml#InstallJMRI">Installing JMRI</a></li>
     </ul>
     </dd>
 
@@ -41,16 +40,12 @@
      <li><a href="Ops_TripThruOperations.shtml">A Trip through OperationsPro</a></li>
    </ul>
    </dd>
-
-<dt><h3>Supported Computers</h3></dt>
-    <dd> 
+<dt><a name="Error"></a><h3>Error Messages</h3></dt>  
+    <dd>
     <ul>
-		<li><a href="http://jmri.sourceforge.net/install/WindowsNew.shtml">Windows</a>
-		<li><a href="http://jmri.sourceforge.net/install/MacOSX.shtml">Mac OS X</a>
-		<li><a href="http://jmri.sourceforge.net/install/Linux.shtml">Linux</a>
-		<li><a href="http://jmri.sourceforge.net/install/Debug.shtml">Debugging an installation</a>
+      <li><a href="../../html/setup/Errors.shtml">Error Codes explained</a></li>
     </ul>
-    </dd>  
+    </dd>
   
   </dl>
 </div> <!-- close #side -->

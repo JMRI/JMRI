@@ -28,11 +28,12 @@
 </p></div>
 
 <hr>
-<p>The <strong>Comprehensive Programmer </strong>begins the same way as the <strong>Basic Programmer</strong>, with  a <strong>Programmer Setup Pane</strong> and a <strong>Roster </strong>Pane.  The content  are identical, so they will not be repeated here.
-</p><p> Just be sure that you select the <strong>Comprehensive Programmer</strong> in the DecoderPro <strong>Preferences</strong>, <strong>Roster</strong>
+<p>The <strong>Comprehensive Programmer </strong>begins the same way as the <strong>Basic Programmer</strong>, with  a <strong>Programmer Setup Pane</strong> and a <strong>Roster </strong>Pane.  The content  are identical, so they will not be repeated here.</p>
+<p>Just be sure that you select the <strong>Comprehensive Programmer</strong> in the DecoderPro <strong>Preferences</strong>, <strong>Roster</strong>
 pane, Program TAB, then select the locomotive you wish to program from the
-DecoderPro main screen from the roster list, now press the <strong>Program </strong>button .
-</p><h1><img style="width: 900px; height: 425px;" alt="roster list" src="images/dp3_roster_list.png"><br></h1>
+DecoderPro main screen from the roster list, now press the <strong>Program </strong>button.</p>
+
+<h1><img style="width: 900px; height: 425px;" alt="roster list" src="images/dp3_roster_list.png"></h1>
   <p>We
 have programmed the Athearn FP-45 in the Basic Programmer, it is on the
 roster list and has been addressed. If we want to add the extra
@@ -48,7 +49,7 @@ allowing us to open many panes to program more features. The number of
 TABS will depend upon the decoder being programmed. This Tsunami Sound
 Programming has several TABS that are unique to sound decoders.</p>
 <p align="center"><img style="width: 903px; height: 582px;" alt="comprehensive rostre" src="images/Comp_Roste_02.png"><br></p>
-  <p align="left">
+<p>
 Note that the <b>Roster</b> pane is essentially unchanged from the <b>Basic</b>
 programmer, but the window has a LOT more options in the <b>Tabs</b>
 at the top. If you are unsure how to handle the <b>Roster</b> information,
