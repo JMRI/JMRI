@@ -1,11 +1,14 @@
 package jmri.util;
 
 import java.beans.PropertyChangeListener;
+import java.lang.reflect.InvocationTargetException;
+
 import jmri.ConditionalManager;
 import jmri.ConfigureManager;
 import jmri.InstanceManager;
 import jmri.JmriException;
 import jmri.LogixManager;
+import jmri.NamedBean;
 import jmri.MemoryManager;
 import jmri.PowerManager;
 import jmri.SignalHeadManager;
@@ -24,6 +27,7 @@ import jmri.managers.DefaultSignalMastLogicManager;
 import jmri.managers.InternalLightManager;
 import jmri.managers.InternalSensorManager;
 import jmri.managers.InternalTurnoutManager;
+
 import junit.framework.Assert;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -127,10 +131,38 @@ public class JUnitUtil {
         }
     }
 
-    public interface ReleaseUntil {
+    static public interface ReleaseUntil {
         public boolean ready() throws Exception;
     }
 
+    /** 
+     * Set a NamedBean (Turnout, Sensor, SignalHead, ...)
+     * to a specific value in a thread-safe way.
+     * 
+     * You can't assume that all the consequences of that setting
+     * will have propagated through when this returns; those might
+     * take a long time.  But the set operation itself will be complete.
+     * @param NamedBean
+     * @param state
+     */
+    static public void setBeanState(NamedBean bean, int state) {
+        try {
+            javax.swing.SwingUtilities.invokeAndWait(
+                () -> {
+                    try {
+                        bean.setState(state);
+                    } catch (JmriException e) {
+                        log.error("Threw exception while setting state: ", e);
+                    }
+                }
+            );
+        } catch (InterruptedException e) {
+            log.warn("Interrupted while setting state: ", e);
+        } catch (InvocationTargetException e) {
+            log.warn("Failed during invocation while setting state: ", e);
+        }
+    }
+    
     public static void resetInstanceManager() {
         // create a new instance manager
         new InstanceManager() {
