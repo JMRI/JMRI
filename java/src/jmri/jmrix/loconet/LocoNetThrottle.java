@@ -387,8 +387,9 @@ public class LocoNetThrottle extends AbstractThrottle implements SlotListener {
         // It is possible that the slot status change we are being notified of
         // is the slot being set to status COMMON. In which case the slot just
         // got set to null. No point in continuing. In fact to do so causes a NPE.
-        if (slot == null)
+        if (slot == null) {
             return;
+        }
         
         // Functions
         if (this.f0 != slot.isF0()) {
