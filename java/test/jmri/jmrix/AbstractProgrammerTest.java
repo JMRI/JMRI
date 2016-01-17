@@ -31,7 +31,7 @@ public class AbstractProgrammerTest extends TestCase {
         abstractprogrammer = new AbstractProgrammer() {
 
             public List<ProgrammingMode> getSupportedModes() {
-                java.util.ArrayList retval = new java.util.ArrayList<ProgrammingMode>();
+                java.util.ArrayList<ProgrammingMode> retval = new java.util.ArrayList<ProgrammingMode>();
                 
                 retval.add(DefaultProgrammerManager.DIRECTMODE);
                 retval.add(DefaultProgrammerManager.PAGEMODE);
@@ -126,7 +126,7 @@ public class AbstractProgrammerTest extends TestCase {
         abstractprogrammer = new AbstractProgrammer() {
 
             public List<ProgrammingMode> getSupportedModes() {
-                java.util.ArrayList retval = new java.util.ArrayList<ProgrammingMode>();
+                java.util.ArrayList<ProgrammingMode> retval = new java.util.ArrayList<ProgrammingMode>();
                 
                 retval.add(DefaultProgrammerManager.DIRECTMODE);
                 retval.add(DefaultProgrammerManager.PAGEMODE);
