@@ -36,7 +36,8 @@ public class AutomationsTableModel extends javax.swing.table.AbstractTableModel 
     private static final int ID_COLUMN = 0;
     private static final int NAME_COLUMN = ID_COLUMN + 1;
     private static final int COMMENT_COLUMN = NAME_COLUMN + 1;
-    private static final int MESSAGE_COLUMN = COMMENT_COLUMN + 1;
+    private static final int STATUS_COLUMN = COMMENT_COLUMN + 1;
+    private static final int MESSAGE_COLUMN = STATUS_COLUMN + 1;
     private static final int RUN_COLUMN = MESSAGE_COLUMN + 1;
     private static final int EDIT_COLUMN = RUN_COLUMN + 1;
     private static final int DELETE_COLUMN = EDIT_COLUMN + 1;
@@ -113,7 +114,8 @@ public class AutomationsTableModel extends javax.swing.table.AbstractTableModel 
         table.getColumnModel().getColumn(ID_COLUMN).setPreferredWidth(40);
         table.getColumnModel().getColumn(NAME_COLUMN).setPreferredWidth(200);
         table.getColumnModel().getColumn(COMMENT_COLUMN).setPreferredWidth(350);
-        table.getColumnModel().getColumn(MESSAGE_COLUMN).setPreferredWidth(350);
+        table.getColumnModel().getColumn(STATUS_COLUMN).setPreferredWidth(250);
+        table.getColumnModel().getColumn(MESSAGE_COLUMN).setPreferredWidth(250);
         table.getColumnModel().getColumn(RUN_COLUMN).setPreferredWidth(70);
         table.getColumnModel().getColumn(EDIT_COLUMN).setPreferredWidth(70);
         table.getColumnModel().getColumn(DELETE_COLUMN).setPreferredWidth(90);
@@ -135,6 +137,8 @@ public class AutomationsTableModel extends javax.swing.table.AbstractTableModel 
                 return Bundle.getMessage("Name");
             case COMMENT_COLUMN:
                 return Bundle.getMessage("Comment");
+            case STATUS_COLUMN:
+                return Bundle.getMessage("Status");
             case MESSAGE_COLUMN:
                 return Bundle.getMessage("Message");
             case RUN_COLUMN:
@@ -155,6 +159,8 @@ public class AutomationsTableModel extends javax.swing.table.AbstractTableModel 
             case NAME_COLUMN:
                 return String.class;
             case COMMENT_COLUMN:
+                return String.class;
+            case STATUS_COLUMN:
                 return String.class;
             case MESSAGE_COLUMN:
                 return String.class;
@@ -195,6 +201,8 @@ public class AutomationsTableModel extends javax.swing.table.AbstractTableModel 
                 return automation.getName();
             case COMMENT_COLUMN:
                 return automation.getComment();
+            case STATUS_COLUMN:
+                return automation.getStatus();
             case MESSAGE_COLUMN:
                 return automation.getMessage();
             case RUN_COLUMN:
