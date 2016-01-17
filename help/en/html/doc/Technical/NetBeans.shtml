@@ -76,15 +76,48 @@
 	<p>Many Linux distributions have NetBeans available in their software repositories
 	- search your package manager for NetBeans.</p>
     
-    <p><em>Note: If you are using NetBeans on Windows, you <u>must</u> 
-        install the
-        <a href="http://plugins.netbeans.org/plugin/46829/change-line-endings-on-save">Change Line Endings on Save plugin</a>
+    <h3>Important note for Windows users</h3>
+    
+    <p>Due to different handling of Line Endings characters (<code>LF / CR LF</code>) between Windows and other systems - namely Unix and OS X 
+        (see <a href="GitFAQ.shtml#lineends">Handling Line Ends</a>) - it is of the utmost importance that all Windows users
+    adopt the following settings for their development environment. This is absolutely required so that Git can track individual changes on files that you commit.</p>
+    <p>If you don't follow these instructions, you'll mess up the line endings in the files you commit, which will in turn
+        make their revision history much harder to access. Files in this condition will not be accepted as pull requests.</p>
+
+    
+    <p>As a first step, as JMRI has adopted <code>LF</code> as a convention for Line Endings,
+        it is required to set the <code>core.autocrlf</code> setting to <code>true</code> 
+        (see <a href=https://help.github.com/articles/dealing-with-line-endings>"Dealing with line endings" on GitHub Help)</a> </p>
+    
+    <h4>Additional important note for Netbeans Windows users</h4>    
+
+    <p><em>Moreover, if you are using <b>NetBeans</b> on Windows, you <u>must</u> install the
+        <a href="http://plugins.netbeans.org/plugin/46829/change-line-endings-on-save">"Change Line Endings on Save" plugin</a>
         before using Git via NetBeans.</em>
-        If you don't do this, you'll mess up the line endings in the files you commit, which will in turn
-        make their revision history much harder to access. Files in this condition will not be accepted
-        as pull requests.  Please install the plug-in to make sure that NetBeans properly 
-        maintains the LF characters at the ends of source-code lines.
-        
+    <p>Please install the plug-in to make sure that NetBeans properly 
+        maintains the LF characters at the ends of source-code lines.</p>
+    <p>Actually the plug-in is already available in the NetBeans distribution, 
+        so go to <code>Tools > Plugins > Available Plugins</code>
+        and there select <code>Change Line Endings on Save</code> and then <code>Install</code>.</p>
+    <p>You can check that the plug-in is properly installed by going to go to <code>Tools > Plugins > Installed</code>,
+        where you should see something like this (versions might differ):</p>
+    <p><a href="images/NetbeansChangeLineEndingsPluginInstalled.png"><img src="images/NetbeansChangeLineEndingsPluginInstalled.png" align="center" height="102" width="224"></a></p>  
+
+    <p>Once the plug-in has been installed and activated, it is necessary to configure it for the desired line ending character(s), via the <code>Tools > Options > Editor > Line Endings</code> tab.</p>
+    <p>For JMRI, we want to use the Unix-style line ending character, <code>LF</code>.</p>    
+    <p><a href="images/NetbeansChangeLineEndingsPluginConfiguration.png"><img src="images/NetbeansChangeLineEndingsPluginConfiguration.png" align="center" height="168" width="237"></a></p>
+
+    <p>The plug-in may be enabled via a button in the toolbar.
+    <a href="images/NetbeansChangeLineEndingsPluginEnabled.png"><img src="images/NetbeansChangeLineEndingsPluginEnabled.png" align="center" height="19" width="55"></a></p>
+
+    <p>And the plug-in may be disabled via that button.
+    <a href="images/NetbeansChangeLineEndingsPluginDisabled.png"><img src="images/NetbeansChangeLineEndingsPluginDisabled.png" align="center" height="19" width="55"></a></p>
+
+    <p>When a file is saved (assuming the the plug-in is configured and is enabled) and that file has line-endings which do not match the type configured for the plug-in, the following message pops up.</p>
+    <p><a href="images/NetbeansChangeLineEndingsPluginPopUpWarmingUponSavingAFileWithImproperLineEndings.png"><img src="images/NetbeansChangeLineEndingsPluginPopUpWarmingUponSavingAFileWithImproperLineEndings.png" align="center" height="50" width="174"></a></p>
+
+    <p>When "OK" is selected, the plug-in updates the line-endings to the configured form and saves the file.  If "CANCEL" is selected, the file will be saved WITHOUT changing any line-endings.</p>   
+    
     <h2><a id="gituse" name="gituse"></a>Using NetBeans with JMRI's Git Code Repository</h2>
     
       <p>GitHub provides JMRI's code repository using the Git tool. 

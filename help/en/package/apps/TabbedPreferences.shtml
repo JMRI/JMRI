@@ -194,9 +194,11 @@ Also, you can choose to save both the size and location of the System Console
 window so that it always appears in the same place and at the same size.
 </dl>
 
+<a href="images/PrefsMsgPane421.png">
+<img src="images/PrefsMsgPane421.png" height="214" width="375" align="right" alt="JMRI v4.2 Roster Prefs tab"></a>
 <a name="Messages">
 <h2>Messages</h2></a>
-This allows you to change the way that information and warning messages are displayed in JMRI.  <br>
+This allows you to change the way that information and warning messages are displayed in JMRI.<br>
 It will also allow you to configure a default responses and the question being displayed.
 
 <a name="Roster">
