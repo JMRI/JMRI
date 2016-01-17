@@ -24,11 +24,11 @@ public class MoveTrainAction extends Action {
             if (train != null && train.isBuilt()) {
                 RouteLocation rl = getAutomationItem().getRouteLocation();
                 if (rl != null) {
-                    train.move(rl);
+                    finishAction(train.move(rl));
                 } else {
                     train.move();
+                    finishAction(true);
                 }
-                finishAction(true);
             } else {
                 finishAction(false);
             }

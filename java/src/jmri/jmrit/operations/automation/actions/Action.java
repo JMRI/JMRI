@@ -75,20 +75,9 @@ public abstract class Action {
     public AutomationItem getAutomationItem() {
         return _automationItem;
     }
-
-    /**
-     * Displays message if there's one. Gives the user the option to halt the
-     * automation.
-     * 
-     * @param message the message to be displayed
-     * @return OKAY, HALT, NO_MESSAGE_SENT, CLOSED
-     */
-    public int finishAction(String message) {
-        int response = sendMessage(message, new Object[]{Bundle.getMessage("OK"), Bundle.getMessage("HALT")});
-        if (response != HALT) {
-            firePropertyChange(ACTION_COMPLETE_CHANGED_PROPERTY, false, true);
-        }
-        return response;
+    
+    public String getStatus() {
+        return getFormatedMessage("{0} {1} {2} {3}");
     }
 
     /**
@@ -110,7 +99,7 @@ public abstract class Action {
                     buttons = new Object[]{Bundle.getMessage("HALT")}; // Must halt, only the HALT button shown
                 }
             }
-            response = sendMessage(message, buttons);
+            response = sendMessage(message, buttons, success);
             if (response != HALT && (success || !getAutomationItem().isHaltFailureEnabled())) {
                 firePropertyChange(ACTION_COMPLETE_CHANGED_PROPERTY, false, true);
             }
@@ -122,13 +111,13 @@ public abstract class Action {
      * Displays message if there's one.
      * 
      * @param buttons the buttons to display
-     * @return which button was pressed or NO_MESSAGE_SENT, CLOSED
+     * @return which button was pressed, NO_MESSAGE_SENT, CLOSED
      */
-    public int sendMessage(String message, Object[] buttons) {
+    public int sendMessage(String message, Object[] buttons, boolean success) {
         int response = NO_MESSAGE_SENT;
         if (getAutomationItem() != null && !message.equals(AutomationItem.NONE)) {
             // use formatter to create title
-            String title = getAutomationItem().getId() + " {0} {1} {2} {3}";
+            String title = getAutomationItem().getId() + " " + (success ? "":Bundle.getMessage("Failed")) + " {0} {1} {2} {3}";
 
             response = JOptionPane.showOptionDialog(null, getFormatedMessage(message), getFormatedMessage(title),
                     JOptionPane.OK_CANCEL_OPTION, JOptionPane.INFORMATION_MESSAGE, null, buttons
