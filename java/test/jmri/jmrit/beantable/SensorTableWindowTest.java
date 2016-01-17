@@ -30,7 +30,8 @@ public class SensorTableWindowTest extends jmri.util.SwingTestCase {
         a.actionPerformed(new java.awt.event.ActionEvent(a, 1, ""));
 
         // Find new table window by name
-        JmriJFrame ft = JmriJFrame.getFrame("Sensor Table");
+        JmriJFrame ft = JmriJFrame.getFrame("Sensors Table");
+        flushAWT();
 
         // Find the add button
         AbstractButtonFinder abfinder = new AbstractButtonFinder("Add...");
