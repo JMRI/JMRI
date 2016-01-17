@@ -42,7 +42,7 @@ Version 4.2 requires Java 1.8.</p>
 <p>
   Once you have downloaded the JMRI&reg; software and installed it, simply
 open the program in the usual manner for your operating system, windows will show icon on desktop.
-</p><p><img src="../../manual/DecoderPro/images/DesktopIcons.png" alt="desktop icons" height="79" width="223"> 
+</p><p><img src="images/JMRIDesktopIcons42.png" alt="windows desktop icons" height="138" width="231"> 
 </p><p>Double click on the icon for the program to open, in this case we will open DecoderPro&reg;
 </p><p>This dialog will appear briefly as the program is loading.
 </p><p>
@@ -67,7 +67,7 @@ try.<br>
 	<ul>
   <li><a href="http://jmri.sourceforge.net/install/Debug.shtml">Debugging an installation</a>
   <li><a href="../setup/Errors.shtml">Error Codes</a></li>
-	<li><a href="../../package/apps/InstallTest/InstallTest.shtml">InstallTest</a></li>
+	<li><a href="http://jmri.sourceforge.net/install/WindowsNew.shtml#installtest">InstallTest</a> (Windows only)</li>
 	<li><a href="Faq.shtml">Frequently Asked Questions</a></li>
 	</ul>
 <!--#include virtual="/Footer" -->
