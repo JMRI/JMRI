@@ -15,7 +15,7 @@ public class UpdateSwitchListAction extends Action {
     }
 
     @Override
-    public String toString() {
+    public String getName() {
         if (Setup.isSwitchListRealTime() && TrainManager.instance().isPrintPreviewEnabled())
             return Bundle.getMessage("PrintSwitchList");
         else if (Setup.isSwitchListRealTime() && !TrainManager.instance().isPrintPreviewEnabled())
@@ -28,8 +28,7 @@ public class UpdateSwitchListAction extends Action {
     public void doAction() {
         if (getAutomationItem() != null) {
             TrainScheduleManager.instance().buildSwitchLists();
-            // now show message if there's one
-            finishAction();
+            finishAction(true);
         }
     }
 

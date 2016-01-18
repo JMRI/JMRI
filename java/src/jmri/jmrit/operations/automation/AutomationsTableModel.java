@@ -1,6 +1,7 @@
 // AutomationsTableModel.java
 package jmri.jmrit.operations.automation;
 
+import java.awt.Frame;
 import java.awt.event.ActionEvent;
 import java.beans.PropertyChangeEvent;
 import java.beans.PropertyChangeListener;
@@ -36,8 +37,10 @@ public class AutomationsTableModel extends javax.swing.table.AbstractTableModel 
     private static final int ID_COLUMN = 0;
     private static final int NAME_COLUMN = ID_COLUMN + 1;
     private static final int COMMENT_COLUMN = NAME_COLUMN + 1;
-    private static final int MESSAGE_COLUMN = COMMENT_COLUMN + 1;
-    private static final int RUN_COLUMN = MESSAGE_COLUMN + 1;
+    private static final int ACTION_COLUMN = COMMENT_COLUMN + 1;
+//    private static final int MESSAGE_COLUMN = ACTION_COLUMN + 1;
+    private static final int STATUS_COLUMN = ACTION_COLUMN + 1;
+    private static final int RUN_COLUMN = STATUS_COLUMN + 1;
     private static final int EDIT_COLUMN = RUN_COLUMN + 1;
     private static final int DELETE_COLUMN = EDIT_COLUMN + 1;
 
@@ -113,7 +116,9 @@ public class AutomationsTableModel extends javax.swing.table.AbstractTableModel 
         table.getColumnModel().getColumn(ID_COLUMN).setPreferredWidth(40);
         table.getColumnModel().getColumn(NAME_COLUMN).setPreferredWidth(200);
         table.getColumnModel().getColumn(COMMENT_COLUMN).setPreferredWidth(350);
-        table.getColumnModel().getColumn(MESSAGE_COLUMN).setPreferredWidth(350);
+        table.getColumnModel().getColumn(ACTION_COLUMN).setPreferredWidth(250);
+//        table.getColumnModel().getColumn(MESSAGE_COLUMN).setPreferredWidth(250);
+        table.getColumnModel().getColumn(STATUS_COLUMN).setPreferredWidth(90);
         table.getColumnModel().getColumn(RUN_COLUMN).setPreferredWidth(70);
         table.getColumnModel().getColumn(EDIT_COLUMN).setPreferredWidth(70);
         table.getColumnModel().getColumn(DELETE_COLUMN).setPreferredWidth(90);
@@ -135,8 +140,12 @@ public class AutomationsTableModel extends javax.swing.table.AbstractTableModel 
                 return Bundle.getMessage("Name");
             case COMMENT_COLUMN:
                 return Bundle.getMessage("Comment");
-            case MESSAGE_COLUMN:
-                return Bundle.getMessage("Message");
+            case ACTION_COLUMN:
+                return Bundle.getMessage("Action");
+//            case MESSAGE_COLUMN:
+//                return Bundle.getMessage("Message");
+            case STATUS_COLUMN:
+                return Bundle.getMessage("LastAction");
             case RUN_COLUMN:
                 return Bundle.getMessage("Run");
             case EDIT_COLUMN:
@@ -156,8 +165,12 @@ public class AutomationsTableModel extends javax.swing.table.AbstractTableModel 
                 return String.class;
             case COMMENT_COLUMN:
                 return String.class;
-            case MESSAGE_COLUMN:
+            case STATUS_COLUMN:
                 return String.class;
+            case ACTION_COLUMN:
+                return String.class;
+//            case MESSAGE_COLUMN:
+//                return String.class;
             case RUN_COLUMN:
                 return JButton.class;
             case EDIT_COLUMN:
@@ -195,8 +208,12 @@ public class AutomationsTableModel extends javax.swing.table.AbstractTableModel 
                 return automation.getName();
             case COMMENT_COLUMN:
                 return automation.getComment();
-            case MESSAGE_COLUMN:
-                return automation.getMessage();
+            case ACTION_COLUMN:
+                return automation.getCurrentActionString();
+            case STATUS_COLUMN:
+                return automation.getLastActionResults();
+//            case MESSAGE_COLUMN:
+//                return automation.getMessage();
             case RUN_COLUMN:
                 if (automation.isActionRunning())
                     return Bundle.getMessage("Stop");
@@ -250,6 +267,7 @@ public class AutomationsTableModel extends javax.swing.table.AbstractTableModel 
             AutomationEditFrame frame = automationEditFrames.get(automation.getId());
             if (frame.isVisible()) {
                 frame.toFront();
+                frame.setExtendedState(Frame.NORMAL);
                 return; // done
             }
         }

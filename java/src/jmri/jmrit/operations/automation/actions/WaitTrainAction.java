@@ -18,7 +18,7 @@ public class WaitTrainAction extends Action implements PropertyChangeListener {
     }
 
     @Override
-    public String toString() {
+    public String getName() {
         return Bundle.getMessage("WaitForTrain");
     }
 
@@ -28,20 +28,22 @@ public class WaitTrainAction extends Action implements PropertyChangeListener {
             Train train = getAutomationItem().getTrain();
             if (train != null) {
                 train.addPropertyChangeListener(this);
+            } else {
+                finishAction(false);
             }
         }
     }
-    
+
     private void trainUpdate() {
         if (getAutomationItem() != null) {
             Train train = getAutomationItem().getTrain();
             RouteLocation rl = getAutomationItem().getRouteLocation();
             if (rl != null && rl != train.getCurrentLocation()) {
-                    return; // haven't reached this location continue waiting
+                return; // haven't reached this location continue waiting
             }
             // now show message if there's one
             train.removePropertyChangeListener(this);
-            finishAction();
+            finishAction(true);
         }
     }
 
@@ -49,7 +51,9 @@ public class WaitTrainAction extends Action implements PropertyChangeListener {
     public void cancelAction() {
         if (getAutomationItem() != null) {
             Train train = getAutomationItem().getTrain();
-            train.removePropertyChangeListener(this);
+            if (train != null) {
+                train.removePropertyChangeListener(this);
+            }
         }
     }
 
@@ -60,9 +64,9 @@ public class WaitTrainAction extends Action implements PropertyChangeListener {
                     .getNewValue());
         if (evt.getPropertyName().equals(Train.TRAIN_MOVE_COMPLETE_CHANGED_PROPERTY)) {
             trainUpdate();
-        }   
+        }
     }
-    
+
     static Logger log = LoggerFactory.getLogger(WaitTrainAction.class.getName());
 
 }

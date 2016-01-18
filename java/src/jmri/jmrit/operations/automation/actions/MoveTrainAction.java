@@ -13,7 +13,7 @@ public class MoveTrainAction extends Action {
     }
 
     @Override
-    public String toString() {
+    public String getName() {
         return Bundle.getMessage("MoveTrain");
     }
 
@@ -24,13 +24,14 @@ public class MoveTrainAction extends Action {
             if (train != null && train.isBuilt()) {
                 RouteLocation rl = getAutomationItem().getRouteLocation();
                 if (rl != null) {
-                    train.move(rl);
+                    finishAction(train.move(rl));
                 } else {
                     train.move();
+                    finishAction(true);
                 }
+            } else {
+                finishAction(false);
             }
-            // now show message if there's one
-            finishAction();
         }
     }
 

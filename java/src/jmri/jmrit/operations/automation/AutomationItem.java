@@ -12,6 +12,7 @@ import jmri.jmrit.operations.automation.actions.MoveTrainAction;
 import jmri.jmrit.operations.automation.actions.NoAction;
 import jmri.jmrit.operations.automation.actions.PrintTrainManifestAction;
 import jmri.jmrit.operations.automation.actions.PrintTrainManifestIfSelectedAction;
+import jmri.jmrit.operations.automation.actions.ResetTrainAction;
 import jmri.jmrit.operations.automation.actions.ResumeAutomationAction;
 import jmri.jmrit.operations.automation.actions.RunAutomationAction;
 import jmri.jmrit.operations.automation.actions.StopAutomationAction;
@@ -23,6 +24,7 @@ import jmri.jmrit.operations.setup.Control;
 import jmri.jmrit.operations.trains.Train;
 import jmri.jmrit.operations.trains.TrainManager;
 import jmri.jmrit.operations.trains.TrainManagerXml;
+import org.jdom2.Element;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -43,6 +45,8 @@ public class AutomationItem implements java.beans.PropertyChangeListener {
     protected RouteLocation _routeLocation = null;
     protected String _automationId = NONE;
     protected String _message = NONE;
+    protected String _messageFail = NONE;
+    protected boolean _haltFail = true;
 
     public static final String DISPOSE = "automationItemDispose"; // NOI18N
 
@@ -161,14 +165,38 @@ public class AutomationItem implements java.beans.PropertyChangeListener {
 
     public void setMessage(String message) {
         String old = _message;
+        _message = message;
         if (!old.equals(message)) {
             setDirtyAndFirePropertyChange("AutomationItemMessageChange", old, message); // NOI18N
         }
-        _message = message;
     }
 
     public String getMessage() {
         return _message;
+    }
+
+    public void setMessageFail(String message) {
+        String old = _messageFail;
+        _messageFail = message;
+        if (!old.equals(message)) {
+            setDirtyAndFirePropertyChange("AutomationItemMessageFailChange", old, message); // NOI18N
+        }
+    }
+
+    public String getMessageFail() {
+        return _messageFail;
+    }
+
+    public boolean isHaltFailureEnabled() {
+        return _haltFail;
+    }
+
+    public void setHaltFailureEnabled(boolean enable) {
+        boolean old = _haltFail;
+        _haltFail = enable;
+        if (old != enable) {
+            setDirtyAndFirePropertyChange("AutomationItemHaltFailureChange", old, enable); // NOI18N
+        }
     }
 
     public void copyItem(AutomationItem item) {
@@ -189,6 +217,7 @@ public class AutomationItem implements java.beans.PropertyChangeListener {
         list.add(new PrintTrainManifestIfSelectedAction());
         list.add(new MoveTrainAction());
         list.add(new TerminateTrainAction());
+        list.add(new ResetTrainAction());
         list.add(new WaitTrainAction());
         list.add(new UpdateSwitchListAction());
         list.add(new RunAutomationAction());
@@ -223,7 +252,7 @@ public class AutomationItem implements java.beans.PropertyChangeListener {
      *
      * @param e Consist XML element
      */
-    public AutomationItem(org.jdom2.Element e) {
+    public AutomationItem(Element e) {
         // if (log.isDebugEnabled()) log.debug("ctor from element "+e);
         org.jdom2.Attribute a;
         if ((a = e.getAttribute(Xml.ID)) != null) {
@@ -247,8 +276,19 @@ public class AutomationItem implements java.beans.PropertyChangeListener {
             // in the process of loading automations, so we can't get them now, save id and get later.
             _automationId = a.getValue();
         }
-        if ((a = e.getAttribute(Xml.MESSAGE)) != null) {
-            _message = a.getValue();
+        if ((a = e.getAttribute(Xml.HALT_FAIL)) != null) {
+            _haltFail = a.getValue().equals(Xml.TRUE);
+        }
+        Element eMessages = e.getChild(Xml.MESSAGES);
+        if (eMessages != null) {
+            Element eMessageOk = eMessages.getChild(Xml.MESSAGE_OK);
+            if (eMessageOk != null && (a = eMessageOk.getAttribute(Xml.MESSAGE)) != null) {
+                _message = a.getValue();
+            }
+            Element eMessageFail = eMessages.getChild(Xml.MESSAGE_FAIL);
+            if (eMessageFail != null && (a = eMessageFail.getAttribute(Xml.MESSAGE)) != null) {
+                _messageFail = a.getValue();
+            }
         }
     }
 
@@ -258,8 +298,8 @@ public class AutomationItem implements java.beans.PropertyChangeListener {
      *
      * @return Contents in a JDOM Element
      */
-    public org.jdom2.Element store() {
-        org.jdom2.Element e = new org.jdom2.Element(Xml.ITEM);
+    public Element store() {
+        Element e = new Element(Xml.ITEM);
         e.setAttribute(Xml.ID, getId());
         e.setAttribute(Xml.SEQUENCE_ID, Integer.toString(getSequenceId()));
         e.setAttribute(Xml.ACTION_CODE, "0x" + Integer.toHexString(getActionCode()));
@@ -272,7 +312,22 @@ public class AutomationItem implements java.beans.PropertyChangeListener {
         if (getAutomation() != null) {
             e.setAttribute(Xml.AUTOMATION_ID, getAutomation().getId());
         }
-        e.setAttribute(Xml.MESSAGE, getMessage());
+        e.setAttribute(Xml.HALT_FAIL, isHaltFailureEnabled() ? Xml.TRUE : Xml.FALSE);
+        if (!getMessage().equals(NONE) || !getMessageFail().equals(NONE)) {
+            Element eMessages = new Element(Xml.MESSAGES);
+            e.addContent(eMessages);
+            Element eMessageOk = new Element(Xml.MESSAGE_OK);
+            eMessageOk.setAttribute(Xml.MESSAGE, getMessage());
+            Element eMessageFail = new Element(Xml.MESSAGE_FAIL);
+            eMessageFail.setAttribute(Xml.MESSAGE, getMessageFail());
+            eMessages.addContent(eMessageOk);
+            eMessages.addContent(eMessageFail);
+        }
+        //        e.setAttribute(Xml.MESSAGE, getMessage());
+        //        if (!getMessageFail().equals(NONE)) {
+        //            e.setAttribute(Xml.MESSAGE_FAIL, getMessageFail());
+        //        }
+
         return e;
     }
 

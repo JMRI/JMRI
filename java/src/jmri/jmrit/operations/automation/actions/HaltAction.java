@@ -11,13 +11,14 @@ public class HaltAction extends Action {
     }
 
     @Override
-    public String toString() {
+    public String getName() {
         return Bundle.getMessage("Halt");
     }
 
     @Override
     public void doAction() {
         // no action, stop run or step
+        sendMessage(getAutomationItem().getMessage(), new Object[]{Bundle.getMessage("HALT")}, true);
     }
 
     @Override

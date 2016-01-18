@@ -3191,6 +3191,11 @@ public class Train implements java.beans.PropertyChangeListener {
         return false;
     }
     
+    /**
+     * Moves the train to the specified route location
+     * @param rl route location
+     * @return true if successful
+     */
     public boolean move(RouteLocation rl) {
         if (rl == null) {
             return false;
@@ -3205,15 +3210,15 @@ public class Train implements java.beans.PropertyChangeListener {
                 foundCurrent = true;
             }
             if (xrl == rl) {
-                break; // train passed this location
+                if (foundCurrent) {
+                    return true; // done
+                } else {
+                    break; // train passed this location
+                }
             }
-            if (!foundCurrent) {
-                continue;
+            if (foundCurrent) {
+                move();
             }
-            if (xrl == rl) {
-                return true; // done
-            }
-            move();
         }
         return false;
     }
