@@ -5,6 +5,7 @@ import java.util.ArrayList;
 import java.util.Enumeration;
 import java.util.Hashtable;
 import java.util.List;
+import jmri.jmrit.operations.automation.actions.Action;
 import jmri.jmrit.operations.automation.actions.HaltAction;
 import jmri.jmrit.operations.setup.Control;
 import jmri.jmrit.operations.trains.TrainManagerXml;
@@ -25,7 +26,7 @@ public class Automation implements java.beans.PropertyChangeListener {
     protected String _comment = "";
     protected AutomationItem _currentAutomationItem = null;
     protected boolean _running = false;
-    protected boolean _actionRunning = false;
+    protected boolean _actionRunning = false; // when true action is running, for example waiting for a train
     protected boolean _actionSuccessful = true;
 
     // stores AutomationItems for this automation
@@ -121,12 +122,14 @@ public class Automation implements java.beans.PropertyChangeListener {
 
     public void stop() {
         log.debug("stop automation ({})", getName());
-        setRunning(false);
-        setActionRunning(false);
-        getCurrentAutomationItem().getAction().removePropertyChangeListener(this);
-        getCurrentAutomationItem().getAction().cancelAction();
-        if (getCurrentAutomationItem().getAction().getClass().equals(HaltAction.class)) {
-            setNextAutomationItem();
+        if (getCurrentAutomationItem() != null && getCurrentAutomationItem().getAction() != null) {
+            setRunning(false);
+            setActionRunning(false);
+            getCurrentAutomationItem().getAction().removePropertyChangeListener(this);
+            getCurrentAutomationItem().getAction().cancelAction();
+            if (getCurrentAutomationItem().getAction().getClass().equals(HaltAction.class)) {
+                setNextAutomationItem();
+            }
         }
     }
 
@@ -139,6 +142,7 @@ public class Automation implements java.beans.PropertyChangeListener {
     }
 
     public void reset() {
+        stop();
         if (getSize() > 0) {
             setCurrentAutomationItem(getItemsBySequenceList().get(0));
         }
@@ -462,13 +466,20 @@ public class Automation implements java.beans.PropertyChangeListener {
 
     private void CheckForActionPropertyChange(PropertyChangeEvent e) {
         if (getCurrentAutomationItem() != null && getCurrentAutomationItem().getAction() == e.getSource()) {
-            getCurrentAutomationItem().getAction().removePropertyChangeListener(this);
-            getCurrentAutomationItem().getAction().cancelAction();
-            setActionRunning(false);
-            setNextAutomationItem();
-            setActionSuccessful((boolean) e.getNewValue());
-            if (isRunning()) {
-                step();
+            if (e.getPropertyName().equals(Action.ACTION_COMPLETE_CHANGED_PROPERTY) ||
+                    e.getPropertyName().equals(Action.ACTION_HALT_CHANGED_PROPERTY)) {
+                getCurrentAutomationItem().getAction().removePropertyChangeListener(this);
+                getCurrentAutomationItem().getAction().cancelAction();
+                setActionRunning(false);
+                setActionSuccessful((boolean) e.getNewValue());
+                if (e.getPropertyName().equals(Action.ACTION_COMPLETE_CHANGED_PROPERTY)) {
+                    setNextAutomationItem();
+                    if (isRunning()) {
+                        step();
+                    }
+                } else if (e.getPropertyName().equals(Action.ACTION_HALT_CHANGED_PROPERTY)) {
+                    stop();
+                }
             }
         }
     }

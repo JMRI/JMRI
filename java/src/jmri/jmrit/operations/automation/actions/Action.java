@@ -10,6 +10,7 @@ import jmri.jmrit.operations.trains.Train;
 public abstract class Action {
 
     public static final String ACTION_COMPLETE_CHANGED_PROPERTY = "actionComplete"; // NOI18N
+    public static final String ACTION_HALT_CHANGED_PROPERTY = "actionHalt"; // NOI18N
 
     public static final int OKAY = 0;
     public static final int HALT = 1;
@@ -100,7 +101,9 @@ public abstract class Action {
                 }
             }
             response = sendMessage(message, buttons, success);
-            if (response != HALT && (success || !getAutomationItem().isHaltFailureEnabled())) {
+            if (response == HALT || (!success && getAutomationItem().isHaltFailureEnabled())) {
+                firePropertyChange(ACTION_HALT_CHANGED_PROPERTY, !success, success);
+            } else {
                 firePropertyChange(ACTION_COMPLETE_CHANGED_PROPERTY, !success, success);
             }
         }

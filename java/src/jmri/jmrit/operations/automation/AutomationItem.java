@@ -323,11 +323,6 @@ public class AutomationItem implements java.beans.PropertyChangeListener {
             eMessages.addContent(eMessageOk);
             eMessages.addContent(eMessageFail);
         }
-        //        e.setAttribute(Xml.MESSAGE, getMessage());
-        //        if (!getMessageFail().equals(NONE)) {
-        //            e.setAttribute(Xml.MESSAGE_FAIL, getMessageFail());
-        //        }
-
         return e;
     }
 
