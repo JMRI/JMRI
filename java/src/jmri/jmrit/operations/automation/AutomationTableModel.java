@@ -297,7 +297,7 @@ public class AutomationTableModel extends javax.swing.table.AbstractTableModel i
 
     private JComboBox<Action> getActionComboBox(AutomationItem item) {
         JComboBox<Action> cb = item.getActionComboBox();
-        //      cb.setSelectedItem(item.getAction()); TODO understand why this didn't work
+        //      cb.setSelectedItem(item.getAction()); TODO understand why this didn't work, class?
         for (int index = 0; index < cb.getItemCount(); index++) {
             // select the action based on it's action code
             if (item.getAction() != null && ((Action) cb.getItemAt(index)).getCode() == item.getAction().getCode()) {
@@ -413,6 +413,21 @@ public class AutomationTableModel extends javax.swing.table.AbstractTableModel i
             }
         });
         buttonPane.add(cancelButton);
+        
+        JButton defaultMessagesButton = new JButton(Bundle.getMessage("DefaultMessages"));
+        defaultMessagesButton.setToolTipText(Bundle.getMessage("TipDefaultButton"));
+        defaultMessagesButton.addActionListener(new ActionListener() {
+            public void actionPerformed(ActionEvent arg0) {
+                if (messageTextArea.getText().equals(AutomationItem.NONE)) {
+                    messageTextArea.setText(Bundle.getMessage("DefaultMessageOk"));
+                }
+                if (messageFailTextArea.getText().equals(AutomationItem.NONE)) {
+                    messageFailTextArea.setText(Bundle.getMessage("DefaultMessageFail"));
+                }
+                return;
+            }
+        });
+        buttonPane.add(defaultMessagesButton);
 
         dialog.setModal(true);
         dialog.pack();

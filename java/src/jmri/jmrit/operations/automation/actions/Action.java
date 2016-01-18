@@ -76,7 +76,7 @@ public abstract class Action {
         return _automationItem;
     }
     
-    public String getStatus() {
+    public String getActionString() {
         return getFormatedMessage("{0} {1} {2} {3}");
     }
 
@@ -101,7 +101,7 @@ public abstract class Action {
             }
             response = sendMessage(message, buttons, success);
             if (response != HALT && (success || !getAutomationItem().isHaltFailureEnabled())) {
-                firePropertyChange(ACTION_COMPLETE_CHANGED_PROPERTY, false, true);
+                firePropertyChange(ACTION_COMPLETE_CHANGED_PROPERTY, !success, success);
             }
         }
         return response;

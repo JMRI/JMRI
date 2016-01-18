@@ -186,9 +186,11 @@
       <li><a href="#TrainsTools">Trains Tools</a>
        <ul>
         <li><a href="#ModifyTrainsByCarType">Modify Trains by Car Type</a></li>
+        <li><a href="#TrainShowCarTypesServiced">Show Car Types Serviced</a></li>
         <li><a href="#ChangeTrainDepartureTimes">Change Train Departure Times</a></li>
-        <li><a href="#TrainsTableColors">Trains Table Colors</a></li>
+        <li><a href="#TrainsTableColors">Train Row Color</a></li>
         <li><a href="#Timetable">Timetable</a></li>
+        <li><a href="#Automation">Automation</a></li>
         <li><a href="#SetupExcelProgram">Setup Excel Program (Manifest Creator)</a></li>
        </ul>
       <li><a href="#SwitcherService">Switcher Service</a></li>
@@ -3734,6 +3736,11 @@
     the right of the checkbox, then select the type of car you want to modify, and press "Save" to
     have both car types serviced by the same trains.</p>
     
+   <a name="ShowCarTypesServiced"></a>
+   <h4>Show Car Types Serviced</h4>
+   
+   See <a href="#TrainShowCarTypesServiced">Show Car Types Serviced</a> train tool for more information.
+    
    <a name="ChangeTrainDepartureTimes"></a>
    <h4>Change Train Departure Times</h4>
 
@@ -3781,7 +3788,50 @@
     "Update Switch Lists" when you deselect the "Real Time" checkbox in the <a href="#SwitchList">Switch
      Lists by Location</a> window.
    </p>
-    
+
+   <a name="Automation"></a>
+   <h4>Automation</h4>
+   This tool allows you to automate the building, moving, and termination of trains. It can also
+   automate the printing of manifests and switch lists. To create an new automation select
+   "Automation" from the
+   <a href="#TrainsTools">Trains Tools</a> menu, and then press the "Add Automation" button at the
+   bottom of the automations page. This will open a new window called "Add Automation". Give the
+   automation a name and an optional comment, and then press the "Add Automation" button to create
+   the automation. Each automation must have a unique name.
+
+   <p>To add your first action to the table, press the "Add" button in the lower left part of
+    the window in a section labeled "Add Item". This should add a line to the table, with four pull
+    down menus labeled "Action", "Train", "Route Location", and "Automation". The three pull down
+    menus after "Action" are enabled if the action selected requires them. For example to build a
+    train, you need to select under the "Action" column "Build Train" and under the "Train" column
+    which train you want to build. If the desired action is to wait for a train to arrive at a
+    certain location in the train's route, you would select the action "Wait for Train", then the
+    name of the train from the "Train" menu, and then finally the location in the train's route from
+    the "Route Location" menu.</p>
+
+   <p>In addition to the four pull down menus, there's a button called "Add" under the column
+    called "Messages". This allows you to enter a message that will pop up when the action is
+    completed. Some actions have two messages, one will show when the action succeeds and another
+    when it fails. Once you enter text into the message areas and press "Okay", the "Add" button for
+    that action becomes "Edit". If it's possible for an action to fail, in addition to the extra
+    failure message text area, there's a checkbox labeled "Halt if action fails". When selected the
+    automation will halt in the event that the action fails to complete. The "Create Default
+    Messages" button will automatically create a success and failure message for you if there isn't
+    any text entered.</p>
+
+   <p>If you want more than one action for your automation, press the "Add" button in the "Add
+    Item" area for each action you want to perform. The automation action sequence is from top to
+    bottom. Once you've entered all of the actions you want, you can either step through your
+    actions one at a time using the "Step Automation" button, or run through the entire action
+    sequence using the "Run Automation" button. To stop the action or sequence of actions, you can
+    press the "Stop Automation" button. The "Current" column shows where in the sequence the
+    automation is executing. Pressing the "Resume Automation" button continues running the actions
+    from where the current pointer is. The "Run Automation" button always restarts the automation at
+    the top of the table.</p>
+
+   <p>And finally press the "Save Automation" button to save your automation to the
+    OperationsTrainRoster.xml file.</p>
+
    <a name="PrintSavedTrainManifests"></a>
    <h4>Print or Preview Saved Train Manifests</h4>
 
