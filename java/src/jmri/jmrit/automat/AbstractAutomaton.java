@@ -259,6 +259,13 @@ public class AbstractAutomaton implements Runnable {
     }
 
     private boolean waiting = false;
+    
+    /**
+     * Indicates that object is waiting on a waitSomething call
+     * <p>
+     * Specifically, the wait has progressed far enough that 
+     * any change to the waited-on-condition will be detected
+     */
     public boolean isWaiting() { return waiting; }
 
     /**
