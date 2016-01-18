@@ -258,6 +258,9 @@ public class AbstractAutomaton implements Runnable {
         }
     }
 
+    private boolean waiting = false;
+    public boolean isWaiting() { return waiting; }
+
     /**
      * Part of the intenal implementation, not intended for users.
      * <P>
@@ -275,6 +278,7 @@ public class AbstractAutomaton implements Runnable {
             log.debug("wait invoked from invalid context");
         }
         synchronized (this) {
+            waiting = true;
             try {
                 if (milliseconds < 0) {
                     super.wait();
@@ -289,6 +293,7 @@ public class AbstractAutomaton implements Runnable {
         if (promptOnWait) {
             debuggingWait();
         }
+        waiting = false;
     }
 
     /**
