@@ -6,7 +6,7 @@
  </title>
     <meta http-equiv=Content-Type content="text/html; charset=iso-8859-1">
     <meta content="Bob Jacobsen" name="Author">
-    <meta name="keywords" content="JMRI help Blocks Table Edit">
+    <meta name="keywords" content="JMRI help Block Table Edit">
 
 <!--#include virtual="/Style" -->
 </head>
@@ -66,7 +66,7 @@ the state change of a sensor.</li>
 <img src="BlocksEditReporterTab.png" width="460" height="62">
 <ul>
 <li><b>Reporter</b>
-Set the Reporter assigned to this Block. See the <a href="ReporterTable.shtml">Reporters Table</a>. Selecting a Reporter and clicking <strong>Apply</strong> puts the Reporter Value into 
+Set the Reporter assigned to this Block. See the <a href="ReporterTable.shtml">Reporter Table</a>. Selecting a Reporter and clicking <strong>Apply</strong> puts the Reporter Value into 
 the Block value.
 
 <li><b>Use Current?</b>
@@ -122,7 +122,7 @@ whereas with 'Use Current?' unselected the Block value will switch between 3 and
 enter the length of the Block here.  The length is used for automatic running of trains. 
 If '0.0' is displayed, the length has not been entered. The entered length should be the 
 actual length of the Block on the model railroad layout. Length is entered and displayed 
-in either inches or centimeters, depending on which unit is next in the Blocks Table.</li>
+in either inches or centimeters, depending on which unit is next in the Block Table.</li>
 <li><b>Units</b> - Choose one of both as the unit for the Block Length
 <li><b>Curvature</b> (optional) - Displays the curvature selected for the track in 
 the Block. Curvature is used for automatic running of trains, and need not be entered 
@@ -155,7 +155,7 @@ determine if a Train can enter an occupied Block and what Aspect should be displ
 
 <p><a href="../../../../html/tools/tracker/index.shtml">More information on Blocks</a></p>
 <p><a href="../display/LayoutEditor.shtml">More information on using Blocks with Layout Editor</a>
-<p>Back to the <a href="BlockTable.shtml">Blocks Table Help page<a>.</p>
+<p>Back to the <a href="BlockTable.shtml">Block Table Help page<a>.</p>
 
 Located at package/jmri/jmrt/beantable/BlockEdit
 <!--#include virtual="/Footer" -->

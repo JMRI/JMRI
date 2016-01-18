@@ -2,11 +2,11 @@
 <html lang="en">
 <head>
  <title>
-      JMRI: Sections Table Help
+      JMRI: Section Table Help
  </title>
     <meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
     <meta content="Dave Duchamp" name="Author">
-    <meta name="keywords" content="JMRI help Sections Table">
+    <meta name="keywords" content="JMRI help Section Table">
 
 <!--#include virtual="/Style" -->
 </head>
@@ -16,7 +16,7 @@
   <div class="nomenu" id="mBody">
     <div id="mainContent">
 
-<h1>The Sections Table</h1>
+<h1>The Section Table</h1>
 
 <h2>Requirements for using Sections</h2>
 <p>Sections may be used with a Panel Editor panel, with a Layout Editor panel, with 
@@ -40,15 +40,15 @@ for Sections also.</p>
 signals installed. If signals are installed, the direction sensors included in 
 Sections provide an easy way to set up simple APB signaling (see below).</p> 
 
-<h2>Using the Sections Table</h2>
+<h2>Using the Section Table</h2>
 <p>All the Sections that JMRI knows about can be viewed using the <b>Sections 
-Table</b>. Sections can either be created manually within the Sections Table pane, 
+Table</b>. Sections can either be created manually within the Section Table pane, 
 or they can be created automatically if you also plan to use Signal Mast Logic  <a href="#SignalMast">(see below)</a>.
 <p>To open this tool, select <b>Sections</b> in the <b>Tables</b> submenu of the <b>Tools</b> menu 
 of the main JMRI program window.
 
-<h3>Sections Table Columns</h3>
-There are eight columns in the Sections Table:</p>
+<h3>Section Table Columns</h3>
+There are eight columns in the Section Table:</p>
 	<ul>
 	<li><b>System Name</b> - The system name is assigned to the Section when it's created, 
 	and can't be changed.</li>
@@ -80,7 +80,7 @@ There are eight columns in the Sections Table:</p>
 	
 <h3>Creating a new Section</h3>
 <p>To Create a new Section, click the 
-"<a href="SectionAddEdit.shtml">Add.." button</a> at the bottom of the Sections Table pane. A window will be brought up 
+"<a href="SectionAddEdit.shtml">Add.." button</a> at the bottom of the Section Table pane. A window will be brought up 
 that will allow you to define the blocks included in the new Section, and if 
 necessary, designate which entry points to the section result in travel in the 
 FORWARD and REVERSE directions.</p>
@@ -108,8 +108,8 @@ directions are consistent. That is:
 <p><b>WARNING: If Entry Points are not consistent strange behavior may result 
 when using the Section.</b></p>
 
-<a name="tools"><h3>Sections Table Tools</h3></a>
-<p> The Sections Table has a <b>Tools</b> menu to facilitate use of Sections. 
+<a name="tools"><h3>Section Table Tools</h3></a>
+<p> The Section Table has a <b>Tools</b> menu to facilitate use of Sections. 
 Normally these tools would be used after all Sections are defined. 
 The menu items and their use are described below:</p>
 	<ul>
@@ -162,7 +162,7 @@ The menu items and their use are described below:</p>
 	</li>
 	<li><b>Remove Direction Sensors from Logic...</b> (not required when using SignalMast Logic) 
 	- This tool assembles a list 
-	of all direction Sensors defined in Sections currently in the Sections Table, then 
+	of all direction Sensors defined in Sections currently in the Section Table, then 
 	removes all Sensors that are contained in this list from the Simple Signal Logic 
 	(SSL) of all Signal Heads. This tool cancels the effect of the <b>Set Direction 
 	Sensors in Logic...</b> tool, removes any direction Sensors that may have been placed 
@@ -191,7 +191,7 @@ forward direction sensor is <b>INACTIVE</b> and the reverse direction sensor is
 direction sensor is <b>ACTIVE</b> and the reverse direction sensor is <b>INACTIVE</b>. 
 These sensors may be used in signal logic to force signals for travel in the direction 
 opposite to the allocated direction to <b>RED</b>. Tools are provided here in the 
-Sections Table to automatically add add direction sensors to signal logic or to 
+Section Table to automatically add add direction sensors to signal logic or to 
 automatically remove all direction sensors from Signal Mast Logic (<a href="#tools">see above</a>).
 Alternatively, if <a href="../dispatcher/Dispatcher.shtml"><b>Dispatcher</b></a>
 is being used, it can add direction sensors to signal logic as needed.</p>
@@ -225,7 +225,7 @@ you will also need to set the <a href="../dispatcher/Dispatcher.shtml"><b>Dispat
 to use SignalMast Logic via the Dispatcher's <a href="../dispatcher/Options.shtml"><b>Options</b></a> menu.
 
 <h2> Saving Sections to Disk</h2>
-<p> Use the <b>Store</b> item in the <b>File</b> menu of the Sections Table (or 
+<p> Use the <b>Store</b> item in the <b>File</b> menu of the Section Table (or 
 the <b>Store Panels...</b> item in the <b>Panels</b> menu of the main JMRI 
 window) to save Section information to disk. This information (and any modified 
 signal logic information) is saved with the configuration and panels in an XML 

@@ -53,9 +53,9 @@ implementation for displaying messages from
 
 <h2>How to setup Reporters</h2>
 
-<h3>The Reporters Table</h3>
+<h3>The Reporter Table</h3>
 The 
-<a href="../../package/jmri/jmrit/beantable/ReporterTable.shtml">Reporters Table</a>
+<a href="../../package/jmri/jmrit/beantable/ReporterTable.shtml">Reporter Table</a>
 provides easy access to the contents of all Reporters that JMRI knows about.
 There's also an 
 <a href="../../package/jmri/jmrit/beantable/ReporterAddEdit.shtml">"Add..." button</a> 
@@ -75,7 +75,7 @@ To do this:
 	desired Reporter.
 	<li>Click the "Add to Panel" button. The Reporter icon will be placed on your Panel.
 	If it's not visible, that might be because the value is currently blank;
-	use the Reporters Table to change the value to something that will be visible.
+	use the Reporter Table to change the value to something that will be visible.
 	<li>You can drag the icon to where you want it in the usual way.
 	<li>The pop-up menu on the icon will let you change the formatting.
 	</ul>

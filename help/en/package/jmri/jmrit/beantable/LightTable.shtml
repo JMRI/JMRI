@@ -2,11 +2,11 @@
 <html lang="en">
 <head>
  <title>
-      JMRI: Lights Table Help
+      JMRI: Light Table Help
  </title>
     <meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
     <meta content="Bob Jacobsen" name="Author">
-    <meta name="keywords" content="JMRI help Lights Table">
+    <meta name="keywords" content="JMRI help Light Table">
 
 <!--#include virtual="/Style" -->
 </head>
@@ -16,7 +16,7 @@
   <div class="nomenu" id="mBody">
     <div id="mainContent">
 
-<h1>The Lights Table</h1>
+<h1>The Light Table</h1>
     
 <p>Lights are digital output bits that function as on/off switches. Lights
 were created to provide easy control for fascia panel lights and scenery
@@ -40,7 +40,7 @@ other on/off tasks where the control mechanisms of Lights fit the need.</p>
 controlled by a single Sensor, by two Sensors, by a Turnout, by the JMRI 
 Fast Clock, or switched on for a specified time by a Sensor. One or more of 
 these controls may be specified when the Light is created, or when it is 
-edited via the Lights Table.</p> 
+edited via the Light Table.</p> 
 <p>When a Light is created, or when it 
 is read from a configuration file, the Light is 'activated'; it is set up
 to monitor automatically any changes in state of its control Sensor(s), 
@@ -49,7 +49,7 @@ changes in a user-specified way, the Light is switched on or off. Lights
 can also be controlled by <a href="Logix.shtml">Logix</a>, if more 
 complicated control logic is needed.</p>
 
-<p>The Lights Table contains an 'Enabled' column. For a Light to be 
+<p>The Light Table contains an 'Enabled' column. For a Light to be 
 triggered by its control Sensor, the Fast Clock, or its control Turnout,
 it must be "Enabled", that is, its check box in the 'Enabled' column
 must be checked.  You can uncheck this box to temporarily disable a 
@@ -64,7 +64,7 @@ mechanism fires.</p>
 <h2>Switching a Light On or Off</h2>
 
 <p>Lights may be turned on or off by clicking the button in the State
-column of the Lights Table. A Light may be set up to follow the state of 
+column of the Light Table. A Light may be set up to follow the state of 
 a track switch (Turnout), On when the Turnout is Closed, and Off when it is
 Thrown, or vice versa. A Light may be set to follow the state of a block 
 occupancy sensor, on when the sensor is active, and off when it is inactive, or
@@ -79,7 +79,7 @@ control your Light, consider using a <a href="Logix.shtml">Logix</a>.</p>
 
 <p>Note that Enabled/Disabled applies only to a Light's automated
 control mechanism.  A 'Disabled' state will not prevent a Light
-from being turned on or off using the button in the Lights Table or from 
+from being turned on or off using the button in the Light Table or from 
 being controlled by a Logix.</p>
 
 <p>
@@ -100,7 +100,7 @@ being controlled by a Logix.</p>
 <h2>Creating New Lights</h2>
 
 To define a new light, click the
-<a href="LightAddEdit.shtml">Add...</a> button the Lights Table.
+<a href="LightAddEdit.shtml">Add...</a> button the Light Table.
 This will take you to a 
 <a href="LightAddEdit.shtml">new pane</a>
 for adding or editing Lights.
