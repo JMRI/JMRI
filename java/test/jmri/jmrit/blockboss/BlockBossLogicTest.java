@@ -29,11 +29,14 @@ public class BlockBossLogicTest extends TestCase {
         p = new BlockBossLogic("IH1");
         p.setMode(BlockBossLogic.SINGLEBLOCK);
         p.setWatchedSignal1("IH2", false);
+    }
+
+    protected void startLogic(BlockBossLogic b) {
         p.start();
         JUnitUtil.waitFor(()->{return p.isRunning();}, "logic running");
     }
-    
-    protected void tearDownSimpleBlock() {
+        
+    protected void stopLogic() {
         if (p!=null) {
             p.stop();
             JUnitUtil.waitFor(()->{return !p.isRunning();}, "logic stopped");
@@ -50,19 +53,14 @@ public class BlockBossLogicTest extends TestCase {
     // test simplest block, just signal following
     public void testSimpleBlock() {
         setupSimpleBlock();
-
-        setAndWait(h1, SignalHead.RED); // ensure starting point
+        startLogic(p);
         Assert.assertEquals("driven signal name", "IH1", p.getDrivenSignal());
         
         JUnitUtil.setBeanState(h2, SignalHead.YELLOW);
         JUnitUtil.waitFor(()->{return SignalHead.GREEN == h1.getAppearance();}, "yellow sets green");  // wait and test
 
-        setAndWait(h1, SignalHead.RED); // ensure starting point
-
         JUnitUtil.setBeanState(h2, SignalHead.RED);
         JUnitUtil.waitFor(()->{return SignalHead.YELLOW == h1.getAppearance();}, "red sets yellow");  // wait and test
-
-        setAndWait(h1, SignalHead.RED); // ensure starting point
 
         h2.setAppearance(SignalHead.GREEN);
         JUnitUtil.waitFor(()->{return SignalHead.GREEN == h1.getAppearance();}, "green sets green");  // wait and test
@@ -70,10 +68,8 @@ public class BlockBossLogicTest extends TestCase {
 
     // test that initial conditions are set right
     public void testSimpleBlockInitial() {
-        setAndWait(h1, SignalHead.RED); // ensure starting point
-        setAndWait(h2, SignalHead.RED); // ensure starting point
-
         setupSimpleBlock();
+        startLogic(p);
 
         JUnitUtil.waitFor(()->{return SignalHead.YELLOW == h1.getAppearance();}, "initial red sets yellow");  // wait and test
     }
@@ -81,20 +77,16 @@ public class BlockBossLogicTest extends TestCase {
     // test signal following in distant simple block
     public void testSimpleBlockDistant() {
         setupSimpleBlock();
-
         p.setDistantSignal(true);
-        setAndWait(h1, SignalHead.GREEN); // ensure starting point
+        startLogic(p);
+
         Assert.assertEquals("driven signal name", "IH1", p.getDrivenSignal());
-
-        h2.setAppearance(SignalHead.RED);
-        JUnitUtil.waitFor(()->{return SignalHead.RED == h1.getAppearance();}, "red sets red");  // wait and test
-
-        setAndWait(h1, SignalHead.RED); // ensure starting point
 
         h2.setAppearance(SignalHead.YELLOW);
         JUnitUtil.waitFor(()->{return SignalHead.YELLOW == h1.getAppearance();}, "yellow sets yellow");  // wait and test
 
-        setAndWait(h1, SignalHead.RED); // ensure starting point
+        h2.setAppearance(SignalHead.RED);
+        JUnitUtil.waitFor(()->{return SignalHead.RED == h1.getAppearance();}, "red sets red");  // wait and test
 
         h2.setAppearance(SignalHead.GREEN);
         JUnitUtil.waitFor(()->{return SignalHead.GREEN == h1.getAppearance();}, "green sets green");  // wait and test
@@ -104,22 +96,14 @@ public class BlockBossLogicTest extends TestCase {
     // (not particularly interesting, as next signal can't set red)
     public void testSimpleBlockLimited() {
         setupSimpleBlock();
-
-        setAndWait(h1, SignalHead.RED); // ensure starting point
-
         p.setLimitSpeed1(true);
-
-        setAndWait(h1, SignalHead.RED); // ensure starting point
+        startLogic(p);
 
         h2.setAppearance(SignalHead.RED);
         JUnitUtil.waitFor(()->{return SignalHead.YELLOW == h1.getAppearance();}, "red sets yellow");  // wait and test
 
-        setAndWait(h1, SignalHead.RED); // ensure starting point
-
         h2.setAppearance(SignalHead.YELLOW);
         JUnitUtil.waitFor(()->{return SignalHead.YELLOW == h1.getAppearance();}, "yellow sets yellow");  // wait and test
-
-        setAndWait(h1, SignalHead.RED); // ensure starting point
 
         h2.setAppearance(SignalHead.GREEN);
         JUnitUtil.waitFor(()->{return SignalHead.YELLOW == h1.getAppearance();}, "green sets yellow");  // wait and test
@@ -128,38 +112,27 @@ public class BlockBossLogicTest extends TestCase {
     // test signal following in distant, limited simple block
     public void testSimpleBlockDistantLimited() {
         setupSimpleBlock();
-
         p.setDistantSignal(true);
         p.setLimitSpeed1(true);
-
-        setAndWait(h1, SignalHead.RED); // ensure starting point
+        startLogic(p);
 
         h2.setAppearance(SignalHead.YELLOW);
         JUnitUtil.waitFor(()->{return SignalHead.YELLOW == h1.getAppearance();}, "yellow sets yellow");  // wait and test
 
-        setAndWait(h1, SignalHead.RED); // ensure starting point
-
         h2.setAppearance(SignalHead.RED);
         JUnitUtil.waitFor(()->{return SignalHead.RED == h1.getAppearance();}, "red sets red");  // wait and test
 
-        setAndWait(h1, SignalHead.RED); // ensure starting point
-
         h2.setAppearance(SignalHead.GREEN);
         JUnitUtil.waitFor(()->{return SignalHead.YELLOW == h1.getAppearance();}, "green sets yellow");  // wait and test
-
-        tearDownSimpleBlock(); // not just in standalone tearDown so we know where failed.
     }
 
     // if no next signal, next signal considered green
     public void testSimpleBlockNoNext() {
         p = new BlockBossLogic("IH1");
         p.setMode(BlockBossLogic.SINGLEBLOCK);
-        p.start();
-        JUnitUtil.waitFor(()->{return p.isRunning();}, "logic running");
+        startLogic(p);
 
         JUnitUtil.waitFor(()->{return SignalHead.GREEN == h1.getAppearance();}, "missing signal is green");  // wait and test
-
-        tearDownSimpleBlock(); // not just in standalone tearDown so we know where failed.
     }
 
     // if no next signal, next signal is considered green
@@ -168,8 +141,7 @@ public class BlockBossLogicTest extends TestCase {
         p.setMode(BlockBossLogic.SINGLEBLOCK);
         p.setLimitSpeed1(true);
 
-        p.start();
-        JUnitUtil.waitFor(()->{return p.isRunning();}, "logic running");
+        startLogic(p);
 
         JUnitUtil.waitFor(()->{return SignalHead.YELLOW == h1.getAppearance();}, "missing signal is green, show yellow");  // wait and test
     }
@@ -313,12 +285,19 @@ public class BlockBossLogicTest extends TestCase {
 
         h1 = new jmri.implementation.VirtualSignalHead("IH1", "1");
         InstanceManager.signalHeadManagerInstance().register(h1);
+        setAndWait(h1, SignalHead.RED); // ensure starting point
+        
         h2 = new jmri.implementation.VirtualSignalHead("IH2", "2");
         InstanceManager.signalHeadManagerInstance().register(h2);
+        setAndWait(h2, SignalHead.RED); // ensure starting point
+
         h3 = new jmri.implementation.VirtualSignalHead("IH3", "3");
         InstanceManager.signalHeadManagerInstance().register(h3);
+        setAndWait(h3, SignalHead.RED); // ensure starting point
+
         h4 = new jmri.implementation.VirtualSignalHead("IH4", "4");
         InstanceManager.signalHeadManagerInstance().register(h4);
+        setAndWait(h4, SignalHead.RED); // ensure starting point
     }
 
     public BlockBossLogicTest(String s) {
@@ -340,7 +319,7 @@ public class BlockBossLogicTest extends TestCase {
 
     // The minimal setup for log4J
     protected void tearDown() {
-        tearDownSimpleBlock();
+        stopLogic();
         apps.tests.Log4JFixture.tearDown();
     }
 }

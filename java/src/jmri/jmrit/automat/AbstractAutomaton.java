@@ -165,6 +165,7 @@ public class AbstractAutomaton implements Runnable {
         }
         currentThread = null;
         done();
+        // note we don't set running = false here.  It's still running until the run() routine thinks it's not.
     }
 
     /**
