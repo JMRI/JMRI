@@ -22,6 +22,7 @@ public class Xml {
     
     // Automation.java
     static final String CURRENT_ITEM = "currentItem"; // NOI18N
+    static final String ACTION_SUCCESSFUL = "actionSuccessful"; // NOI18N
 
     // AutomationItem.java
     static final String ITEM = "item"; // NOI18N
