@@ -138,6 +138,12 @@ public class Automation implements java.beans.PropertyChangeListener {
         }
     }
 
+    public void reset() {
+        if (getSize() > 0) {
+            setCurrentAutomationItem(getItemsBySequenceList().get(0));
+        }
+    }
+
     public void setRunning(boolean running) {
         boolean old = _running;
         _running = running;
