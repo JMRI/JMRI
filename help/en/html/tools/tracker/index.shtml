@@ -93,10 +93,10 @@ all features are completely present.  For example, you cannot
 store Block objects in a Configuration file; they must be manually
 created in your scripts.  This limitations will be removed with time.
 
-<h3>Blocks Table</h3>
+<h3>Block Table</h3>
 
 The 
-<a href="../../../package/jmri/jmrit/beantable/BlockTable.shtml">Blocks Table</a>
+<a href="../../../package/jmri/jmrit/beantable/BlockTable.shtml">Block Table</a>
 lets you see the status of your Blocks.
 
 <h3>Issues</h3>

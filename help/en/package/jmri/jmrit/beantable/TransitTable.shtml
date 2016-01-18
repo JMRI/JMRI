@@ -6,7 +6,7 @@
  </title>
     <meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
     <meta content="Dave Duchamp" name="Author">
-    <meta name="keywords" content="JMRI help Transits Table">
+    <meta name="keywords" content="JMRI help Transit Table">
 
 <!--#include virtual="/Style" -->
 </head>
@@ -16,7 +16,7 @@
   <div class="nomenu" id="mBody">
     <div id="mainContent">
 
-<h1>Transits and the Transits Table</h1>
+<h1>Transits and the Transit Table</h1>
 <h2>What is a Transit?</h2>
 
 <p>A <b>Transit</b> is a group of two or more connected 
@@ -84,12 +84,12 @@ or semi-automatically by the computer. If a requested Section is currently in
 use, a request for assignment is placed in the dispatcher's queue. When a Section 
 is freed, the queue is scanned for the highest priority train requesting it.</p>
 
-<h2>Using the Transits Table to Set Up Transits</h2>
-<p>Transits are set up in the Transits Table. When set up, Transits are independent 
+<h2>Using the Transit Table to Set Up Transits</h2>
+<p>Transits are set up in the Transit Table. When set up, Transits are independent 
 of the trains that use them.  
 <p>All Transits that currently exist can be referenced
 using the <b>Transits</b> tool under <b>Tables</b> in the Tools menu of most 
-JMRI programs. There are seven columns in the Transits Table:</p>
+JMRI programs. There are seven columns in the Transit Table:</p>
 	<ul>
 	<li><b>System Name</b> - The system name is assigned to the Transit when it's created, 
 	and can't be changed.</li>

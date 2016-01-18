@@ -18,12 +18,12 @@
  
 <h1>Adding/Editing Blocks</h1>
 
-<p>To add a new Block, click the <strong>Add..</strong> button at the bottom left edge of the Blocks Table pane.</p>
+<p>To add a new Block, click the <strong>Add..</strong> button at the bottom left edge of the Block Table pane.</p>
 <img src="AddBlock.png">
 <p>In the pane that opens, enter a valid Hardware Address for the Block and if desired enter a User Name. For example, a valid System Name for a LocoNet layout could be LB456. Another
 example, a valid Internal Block system name could be IB123. The
 optional User Name can be anything you wish to describe the Block as long as it is unique in your JMRI setup. See the "<a href="../../../../html/doc/Technical/Names.shtml">Names</a>" Help page for more information.</p>
-<p>Complete the definition of the new Block by closing the Add/Edit Block pane and clicking the <strong>Edit</strong> button at the right of the newly created Block entry in the <a href="BlockTable.shtml">Blocks Table</a>. Fill out all fields as described on the <a href="BlockEdit.shtml">Block Attributes</a> Help page.</p>
+<p>Complete the definition of the new Block by closing the Add/Edit Block pane and clicking the <strong>Edit</strong> button at the right of the newly created Block entry in the <a href="BlockTable.shtml">Block Table</a>. Fill out all fields as described on the <a href="BlockEdit.shtml">Block Attributes</a> Help page.</p>
 
 <h2>Creating A Number of Blocks</h2>
 <p>It is also possible to create a number of Blocks in one go.<br/>
@@ -35,12 +35,12 @@ If a User Name has been entered, a number will be added to the end of the name (
 each Block User Name unique.</p>
 
 <h2>Adding Block Properties</h2>
-<p>To add the details of a new Block, close the Add Block pane by clicking the Close/X button and click <strong><a href="BlockEdit.shtml">Edit</a></strong> to the right of the new entry in the Blocks Table.</p>
+<p>To add the details of a new Block, close the Add Block pane by clicking the Close/X button and click <strong><a href="BlockEdit.shtml">Edit</a></strong> to the right of the new entry in the Block Table.</p>
 
 <p>See <a href="../../../../html/doc/Technical/Names.shtml">Names</a>
 under General Help for more information on JMRI object naming.
 
-<p>Back to the <a href="BlockTable.shtml">Blocks Table help page<a>.</p>
+<p>Back to the <a href="BlockTable.shtml">Block Table help page<a>.</p>
 
 This is the package/jmri/jmrit/beantable/BlockAddEdit help page
 

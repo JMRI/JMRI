@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
  <title>
-      JMRI: Memory Variables Table Help
+      JMRI: Memory Variable Table Help
  </title>
     <meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
     <meta content="Bob Jacobsen" name="Author">
@@ -16,9 +16,9 @@
   <div class="nomenu" id="mBody">
     <div id="mainContent">
 
-<h1>The Memory Variables Table</h1>
+<h1>The Memory Variable Table</h1>
     
-You can use the Memory Variables Table to look at the contents of JMRI memory variables.
+You can use the Memory Variable Table to look at the contents of JMRI memory variables.
 <p>
 Note that you can sort the table by each of the columns, just click on the
 column heading.

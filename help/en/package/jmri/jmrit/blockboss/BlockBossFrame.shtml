@@ -131,21 +131,21 @@ simple as that. It took you more time to read this tutorial than to create your 
 		
 <ol>
 		<li> Select <b>Tables > Turnouts</b> in the <b>Tools</b> menu.
-		</li><li> Check to be sure that the outputs (Turnout addresses) that will control your Signals Heads are in the Turnouts Table. If not, click the <b>Add</b> button at the bottom of the Turnouts Table.
+		</li><li> Check to be sure that the outputs (Turnout addresses) that will control your Signals Heads are in the Turnout Table. If not, click the <b>Add</b> button at the bottom of the Turnout Table.
 		</li><li> In the Add New Turnout window that appears, enter a system name, (e.g. LT1)
 	and "test" for user name, then click <b>OK</b>.<br/>
 	<i>Note:</i> All System Names of JMRI objects must follow the JMRI Naming rules, starting with a capital letter for the DCC connection type (e.g. L for LocoNet) followed bij a capital T
 in the case of Turnouts and the actual hardware number of the Turnout.
-		</li><li>Clicking on the corresponding <b>Closed/Thrown</b> entries in the Turnouts Table should now cause your Signal Head to change.
-		</li><li>Select <b>Signal Heads Table</b> in the <b>Tools</b> menu.
-		</li><li>In the Signal Heads Table window that appears, click <b>Add...</b> to begin defining a new Signal Head.
+		</li><li>Clicking on the corresponding <b>Closed/Thrown</b> entries in the Turnout Table should now cause your Signal Head to change.
+		</li><li>Select <b>Signal Head Table</b> in the <b>Tools</b> menu.
+		</li><li>In the Signal Head Table window that appears, click <b>Add...</b> to begin defining a new Signal Head.
 		</li><li>In the Add New Signal window that appears choose the correct signal type to 
 		match your hardware. The required item boxes will appear.
 		</li><li>Enter a system name. For example LH152. <i>Note:</i> Signal Head system names must start 
 		with CH, IH, LH, NH, XH, etc. and be followed by the number of the Signal Head.
 		</li><li>Next enter one or more Turnout numbers that will control this signal. <i>Note:</i> In the case of
 		SE8c style signals just enter the first Turnout number of each pair. The second Turnout number is automatically known. 
-		</li><li>Click <b>OK</b> to enter this head into the Signal Heads Table.  
+		</li><li>Click <b>OK</b> to enter this head into the Signal Head Table.  
 		</li><li>Enter all the Signal Heads that you will be using.
 	</li><li> Now select <b>Simple Signal Logic</b> in the <b>Tools</b> menu.
 		</li><li>Fill in the various entries to match the requirements of your first Signal (Head) as 

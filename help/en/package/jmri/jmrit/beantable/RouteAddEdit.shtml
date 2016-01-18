@@ -28,7 +28,7 @@ the desired turnouts or sensor to your route. Next to the "Include" box
 is the action that the turnout or sensor can perform when the route is
 triggered. For example, if you wish the turnout to throw when the route
 is triggered select "Set Thrown" in the drop down box.</p>
-<p>Below the Turnouts Table and Sensors Table are three optional features.
+<p>Below the Turnout Table and Sensor Table are three optional features.
 Playing a sound file, running a script, and specifying a sensor to go
 active when all the turnouts specified for the route are correctly
 aligned. Sound files and Scripts are configured by hitting the
@@ -86,7 +86,7 @@ can be accessed by your cab but doesn't actually exist on your layout.</p>
 please see the <a href="TurnoutTable.shtml#Turnout%20lock%20feature">Turnouts
 Table page</a>.</p>
 
-<p>Back to the <a href="RouteTable.shtml">Routes Table help page<a>.</p>
+<p>Back to the <a href="RouteTable.shtml">Route Table help page<a>.</p>
 <!--#include virtual="/Footer" -->
  </div><!-- closes #mainContent-->
 </div> <!-- closes #mBody-->

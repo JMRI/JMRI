@@ -2,11 +2,11 @@
 <html lang="en">
 <head>
  <title>
-      JMRI: Reporters Table Help
+      JMRI: Reporter Table Help
  </title>
     <meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
     <meta content="Bob Jacobsen" name="Author">
-    <meta name="keywords" content="JMRI Help Reporters Table">
+    <meta name="keywords" content="JMRI Help Reporter Table">
 
 <!--#include virtual="/Style" -->
 </head>
@@ -16,13 +16,13 @@
   <div class="nomenu" id="mBody">
     <div id="mainContent">
 
-<h1>The Reporters Table</h1>
+<h1>The Reporter Table</h1>
 <p>
 JMRI "Reporters" show status information received from your layout.
 For example, 
 <a href="http://www.digitrax.com/menu_transponding.php">Digitrax transponding</a>
 provides information via JMRI Reporter objects.
-The Reporters Table shows all the existing Reporters and their most recent
+The Reporter Table shows all the existing Reporters and their most recent
 status information.
 
 <p>
