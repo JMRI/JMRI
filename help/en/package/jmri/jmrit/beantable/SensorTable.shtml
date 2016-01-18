@@ -1,7 +1,7 @@
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
 <html lang="en">
 <head>
-<title>JMRI: Sensors Table Help</title>
+<title>JMRI: Sensor Table Help</title>
 <meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
 <meta content="Bob Jacobsen" name="Author">
 <meta name="keywords" content="JMRI help Sensor Table">
@@ -14,12 +14,12 @@
   <div class="nomenu" id="mBody">
     <div id="mainContent">
 
-<h1>The Sensors Table</h1>
+<h1>The Sensor Table</h1>
 
-<p>The Sensors Table contains a list of the Sensors that exist for this
+<p>The Sensor Table contains a list of the Sensors that exist for this
 Panel.
 
-<h2>Sensors Table Columns</h2>
+<h2>Sensor Table Columns</h2>
 
 <dl>
 	<dt>User Name</dt>
@@ -59,7 +59,7 @@ Panel.
     
 </dl>
 
-<h2>Sensors Table Controls</h2>
+<h2>Sensor Table Controls</h2>
 
 There is a button at the bottom of the Sensor Table:
 

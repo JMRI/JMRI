@@ -1,11 +1,11 @@
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
 <html lang="en">
 <head>
-<title>JMRI: Routes Table Help</title>
+<title>JMRI: Route Table Help</title>
 
 <meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
 <meta content="Bob Jacobsen" name="Author">
-<meta name="keywords" content="JMRI help Routes Table">
+<meta name="keywords" content="JMRI help Route Table">
 
 <!--#include virtual="/Style" -->
 </head>
@@ -15,18 +15,18 @@
   <div class="nomenu" id="mBody">
     <div id="mainContent">
 
-<h1>The Routes Table</h1>
+<h1>The Route Table</h1>
 
 <p>A Route consists of one or more Turnouts or Sensors that you
 would like to control. Before creating a Route, you should first add
-some Turnouts or Sensors by using either the Turnouts Table or Sensors
+some Turnouts or Sensors by using either the Turnout Table or Sensors
 Table. These tables can be found under the main menu "Tools -> Tables".
 
 <p>Once you have some Turnouts or Sensors set up, use the "Add..."
-button in the lower left hand corner of the Routes Table pane to create a new
+button in the lower left hand corner of the Route Table pane to create a new
 Route.
 
-<h2>Routes Table Columns</h2>
+<h2>Route Table Columns</h2>
 
 <dl>
 	<dt>System Name</dt>
@@ -64,7 +64,7 @@ Route.
 	pushbuttons to change. For more information see the
 	    <a href="TurnoutTable.shtml#Lock Mode">Lock Mode section</a> 
 	    on the
-	    <a href="TurnoutTable.shtml">Turnouts Table page</a> 
+	    <a href="TurnoutTable.shtml">Turnout Table page</a> 
         and the 
         <a href="#Turnout lock feature">section on the Turnout Lock feature</a>
 	    below.</dd>
@@ -74,9 +74,9 @@ Route.
 		href="RouteAddEdit.shtml">Adding/Editing Routes</a>.</dd>
 </dl>
 
-<h3>Routes Table Controls</h3>
+<h3>Route Table Controls</h3>
 
-There is a button at the bottom of the Routes Table:
+There is a button at the bottom of the Route Table:
 
 <dl>	
 	<dt>Add...</dt>

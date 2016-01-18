@@ -20,7 +20,7 @@
     
 To create an Id Tag, click the
 "Add..." button at the bottom of the 
-<a href="IdTagTable.shtml">Id Tags Table</a> pane.
+<a href="IdTagTable.shtml">Id Tag Table</a> pane.
 This will open a new pane with space to enter
 a System Name and User Name for the new Id Tag, plus
 an "Add" button.
@@ -38,7 +38,7 @@ The User Name is optional, but if given has to be unique.
 <p>
 The Tag ID shown in the table is determined from the System Name.
 
-<p>Back to the <a href="IdTagTable.shtml">IdTags Table help page<a>.</p>
+<p>Back to the <a href="IdTagTable.shtml">IdTag Table help page<a>.</p>
 
 <!--#include virtual="/Footer" -->
  </div><!-- closes #mainContent-->

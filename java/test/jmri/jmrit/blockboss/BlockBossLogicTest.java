@@ -33,7 +33,7 @@ public class BlockBossLogicTest extends TestCase {
 
     protected void startLogic(BlockBossLogic b) {
         p.start();
-        JUnitUtil.waitFor(()->{return p.isRunning();}, "logic running");
+        JUnitUtil.waitFor(()->{return p.isWaiting();}, "logic running");
     }
         
     protected void stopLogic() {

@@ -164,7 +164,7 @@ capable of displaying
 red/yellow/green and associated flashing Aspects, 
 you must define it as a "Grapevine Signal Head" using the
 <a href="../../../package/jmri/jmrit/beantable/SignalAddEdit.shtml">Add...</a> button in the 
-<a href="../../../package/jmri/jmrit/beantable/SignalHeadTable.shtml">Signal Heads Table</a>.
+<a href="../../../package/jmri/jmrit/beantable/SignalHeadTable.shtml">Signal Head Table</a>.
 Give it a system name that starts with "GH", and is followed by the node and
 output numbers.  
 

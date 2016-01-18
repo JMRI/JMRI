@@ -109,12 +109,12 @@ This deals with all the Preferences that are invoked at start up such as loading
 <dd>
 This section lets you have the program automatically
 execute various menu selections at startup.  For example,
-you can have the Turnouts Table automatically open, or 
+you can have the Turnout Table automatically open, or 
 automatically open a window for programming on the main.
 <P>
-For example, to automatically open the Turnouts Table, 
+For example, to automatically open the Turnout Table, 
 click the "Add Action" button in this section of the Advanced Preferences. 
-From the list that's presented, select "Open Turnouts Table". 
+From the list that's presented, select "Open Turnout Table". 
 Don't forget
 to save your updated Preferences with the button at the bottom of the screen!
 
@@ -125,7 +125,7 @@ that are connected to specific menu choices.
 <P>
 For example, to add a button that will open the Power Control when clicked, 
 click the "Add Action" button in this section of the Advanced Preferences.  
-From the list that's presented, select "Open Turnouts Table". Don't forget
+From the list that's presented, select "Open Turnout Table". Don't forget
 to save your updated Preferences with the button at the bottom of the screen!
 From the list that's presented, select "Open Power Control". 
 Don't forget
