@@ -20,6 +20,7 @@ public class z21MessageTest extends TestCase {
     public void testCtor() {
         z21Message m = new z21Message(3);
         Assert.assertEquals("length", 3, m.getNumDataElements());
+        jmri.util.JUnitAppender.assertErrorMessage("invalid length in call to ctor");
     }
 
     // check opcode inclusion in message
@@ -56,6 +57,7 @@ public class z21MessageTest extends TestCase {
 
     // Main entry point
     static public void main(String[] args) {
+        apps.tests.Log4JFixture.initLogging();
         String[] testCaseName = {"-noloading", z21MessageTest.class.getName()};
         junit.swingui.TestRunner.main(testCaseName);
     }
