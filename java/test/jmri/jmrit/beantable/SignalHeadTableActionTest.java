@@ -57,7 +57,7 @@ public class SignalHeadTableActionTest extends jmri.util.SwingTestCase {
         new SignalHeadTableAction().actionPerformed(null);
         flushAWT();
 
-        JFrame f = jmri.util.JmriJFrame.getFrame("Signal Heads Table");
+        JFrame f = jmri.util.JmriJFrame.getFrame("Signal Head Table");
         Assert.assertTrue("found frame", f != null);
         f.dispose();
     }
