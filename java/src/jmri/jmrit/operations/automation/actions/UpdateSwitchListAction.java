@@ -27,6 +27,7 @@ public class UpdateSwitchListAction extends Action {
     @Override
     public void doAction() {
         if (getAutomationItem() != null) {
+            setRunning(true);
             TrainScheduleManager.instance().buildSwitchLists();
             finishAction(true);
         }

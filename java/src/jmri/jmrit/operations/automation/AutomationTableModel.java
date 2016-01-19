@@ -45,7 +45,8 @@ public class AutomationTableModel extends javax.swing.table.AbstractTableModel i
     private static final int TRAIN_COLUMN = ACTION_COLUMN + 1;
     private static final int ROUTE_COLUMN = TRAIN_COLUMN + 1;
     private static final int AUTOMATION_COLUMN = ROUTE_COLUMN + 1;
-    private static final int MESSAGE_COLUMN = AUTOMATION_COLUMN + 1;
+    private static final int STATUS_COLUMN = AUTOMATION_COLUMN + 1;
+    private static final int MESSAGE_COLUMN = STATUS_COLUMN + 1;
     private static final int UP_COLUMN = MESSAGE_COLUMN + 1;
     private static final int DOWN_COLUMN = UP_COLUMN + 1;
     private static final int DELETE_COLUMN = DOWN_COLUMN + 1;
@@ -125,6 +126,7 @@ public class AutomationTableModel extends javax.swing.table.AbstractTableModel i
         table.getColumnModel().getColumn(TRAIN_COLUMN).setPreferredWidth(200);
         table.getColumnModel().getColumn(ROUTE_COLUMN).setPreferredWidth(200);
         table.getColumnModel().getColumn(AUTOMATION_COLUMN).setPreferredWidth(200);
+        table.getColumnModel().getColumn(STATUS_COLUMN).setPreferredWidth(70);
         table.getColumnModel().getColumn(MESSAGE_COLUMN).setPreferredWidth(70);
         table.getColumnModel().getColumn(UP_COLUMN).setPreferredWidth(60);
         table.getColumnModel().getColumn(DOWN_COLUMN).setPreferredWidth(70);
@@ -153,6 +155,8 @@ public class AutomationTableModel extends javax.swing.table.AbstractTableModel i
                 return Bundle.getMessage("RouteLocation");
             case AUTOMATION_COLUMN:
                 return Bundle.getMessage("Automation");
+            case STATUS_COLUMN:
+                return Bundle.getMessage("Status");
             case MESSAGE_COLUMN:
                 return Bundle.getMessage("Message");
             case UP_COLUMN:
@@ -180,6 +184,8 @@ public class AutomationTableModel extends javax.swing.table.AbstractTableModel i
                 return JComboBox.class;
             case AUTOMATION_COLUMN:
                 return JComboBox.class;
+            case STATUS_COLUMN:
+                return String.class;
             case MESSAGE_COLUMN:
                 return JButton.class;
             case UP_COLUMN:
@@ -235,6 +241,8 @@ public class AutomationTableModel extends javax.swing.table.AbstractTableModel i
                 return getRouteLocationComboBox(item);
             case AUTOMATION_COLUMN:
                 return getAutomationComboBox(item);
+            case STATUS_COLUMN:
+                return getStatus(item);
             case MESSAGE_COLUMN:
                 if (item.getMessage().equals(AutomationItem.NONE)
                         && item.getMessageFail().equals(AutomationItem.NONE))
@@ -336,6 +344,12 @@ public class AutomationTableModel extends javax.swing.table.AbstractTableModel i
         JComboBox<Action> acb = getActionComboBox(item);
         cb.setEnabled(acb.getSelectedItem() != null && ((Action) acb.getSelectedItem()).isAutomationMenuEnabled());
         return cb;
+    }
+    
+    private String getStatus(AutomationItem item) {
+        if (_automation.getCurrentAutomationItem() == item)
+            return "";
+        return item.getStatus();
     }
 
     private void setAction(Object value, AutomationItem item) {

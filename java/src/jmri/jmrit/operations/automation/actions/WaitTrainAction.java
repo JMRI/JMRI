@@ -27,6 +27,7 @@ public class WaitTrainAction extends Action implements PropertyChangeListener {
         if (getAutomationItem() != null) {
             Train train = getAutomationItem().getTrain();
             if (train != null) {
+                setRunning(true);
                 train.addPropertyChangeListener(this);
             } else {
                 finishAction(false);
@@ -50,6 +51,7 @@ public class WaitTrainAction extends Action implements PropertyChangeListener {
     @Override
     public void cancelAction() {
         if (getAutomationItem() != null) {
+            setRunning(false);
             Train train = getAutomationItem().getTrain();
             if (train != null) {
                 train.removePropertyChangeListener(this);
