@@ -93,6 +93,13 @@ public class Automation implements java.beans.PropertyChangeListener {
         }
         return "";
     }
+    
+    public String getActionStatus() {
+        if (getCurrentAutomationItem() != null) {
+            return getCurrentAutomationItem().getStatus();
+        }
+        return "";
+    }
 
     public String getMessage() {
         if (getCurrentAutomationItem() != null && getCurrentAutomationItem().getAction() != null) {
@@ -113,6 +120,9 @@ public class Automation implements java.beans.PropertyChangeListener {
     public void step() {
         log.debug("step automation ({})", getName());
         if (getCurrentAutomationItem() != null && getCurrentAutomationItem().getAction() != null) {
+            if (getCurrentAutomationItem() == getItemsBySequenceList().get(0)) {
+                resetActionRan();
+            }
             log.debug("Perform action ({})", getCurrentAutomationItem().getAction().getName());
             getCurrentAutomationItem().getAction().removePropertyChangeListener(this);
             getCurrentAutomationItem().getAction().addPropertyChangeListener(this);
@@ -144,6 +154,13 @@ public class Automation implements java.beans.PropertyChangeListener {
         stop();
         if (getSize() > 0) {
             setCurrentAutomationItem(getItemsBySequenceList().get(0));
+            resetActionRan();
+        }
+    }
+    
+    private void resetActionRan() {
+        for (AutomationItem item : getItemsBySequenceList()) {
+            item.setActionRan(false);
         }
     }
 

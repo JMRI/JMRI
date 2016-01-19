@@ -100,6 +100,7 @@ public abstract class Action {
     public int finishAction(boolean success) {
         int response = FINISH_FAILED;
         if (getAutomationItem() != null) {
+            setRunning(true);
             getAutomationItem().setActionSuccessful(success);
             setRunning(false);
             String message = getAutomationItem().getMessage();

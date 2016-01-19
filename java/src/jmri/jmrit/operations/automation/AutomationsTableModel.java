@@ -145,7 +145,7 @@ public class AutomationsTableModel extends javax.swing.table.AbstractTableModel 
 //            case MESSAGE_COLUMN:
 //                return Bundle.getMessage("Message");
             case STATUS_COLUMN:
-                return Bundle.getMessage("LastAction");
+                return Bundle.getMessage("Status");
             case RUN_COLUMN:
                 return Bundle.getMessage("Run");
             case EDIT_COLUMN:
@@ -211,7 +211,7 @@ public class AutomationsTableModel extends javax.swing.table.AbstractTableModel 
             case ACTION_COLUMN:
                 return automation.getCurrentActionString();
             case STATUS_COLUMN:
-                return automation.getLastActionResults();
+                return automation.getActionStatus();
 //            case MESSAGE_COLUMN:
 //                return automation.getMessage();
             case RUN_COLUMN:
