@@ -192,6 +192,7 @@
 <!ATTLIST item trainId				CDATA #IMPLIED>
 <!ATTLIST item routeLocationId		CDATA #IMPLIED>
 <!ATTLIST item automationId			CDATA #IMPLIED>
+<!ATTLIST item gotoAutomationId		CDATA #IMPLIED>
 <!ATTLIST item haltFail				(true | false) "true">
 <!ATTLIST item actionRan			(true | false) "false">
 <!ATTLIST item actionSuccessful		(true | false) "false">

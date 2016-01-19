@@ -12,6 +12,7 @@ public abstract class Action {
     public static final String ACTION_COMPLETE_CHANGED_PROPERTY = "actionComplete"; // NOI18N
     public static final String ACTION_HALT_CHANGED_PROPERTY = "actionHalt"; // NOI18N
     public static final String ACTION_RUNNING_CHANGED_PROPERTY = "actionRunning"; // NOI18N
+    public static final String ACTION_GOTO_CHANGED_PROPERTY = "actionGoto"; // NOI18N
 
     public static final int OKAY = 0;
     public static final int HALT = 1;
@@ -55,11 +56,11 @@ public abstract class Action {
     }
 
     public boolean isMessageOkEnabled() {
-        return (getCode() & ActionCodes.ENABLE_OK_MESSAGE) == ActionCodes.ENABLE_OK_MESSAGE;
+        return (getCode() & ActionCodes.OK_MESSAGE) == ActionCodes.OK_MESSAGE;
     }
 
     public boolean isMessageFailEnabled() {
-        return (getCode() & ActionCodes.ENABLE_FAIL_MESSAGE) == ActionCodes.ENABLE_FAIL_MESSAGE;
+        return (getCode() & ActionCodes.FAIL_MESSAGE) == ActionCodes.FAIL_MESSAGE;
     }
 
     public boolean isAutomationMenuEnabled() {
@@ -77,15 +78,18 @@ public abstract class Action {
     public AutomationItem getAutomationItem() {
         return _automationItem;
     }
-    
+
     public String getActionString() {
-        return getFormatedMessage("{0} {1} {2} {3}");
+        return getFormatedMessage("{0} {1} {2} {3} {4}");
     }
-    
+
     public void setRunning(boolean running) {
         if (getAutomationItem() != null) {
+            boolean old = getAutomationItem().isActionRunning();
             getAutomationItem().setActionRunning(running);
-            firePropertyChange(ACTION_RUNNING_CHANGED_PROPERTY, !running, running);
+            if (old != running) {
+                firePropertyChange(ACTION_RUNNING_CHANGED_PROPERTY, old, running);
+            }
         }
     }
 
@@ -111,7 +115,7 @@ public abstract class Action {
                     buttons = new Object[]{Bundle.getMessage("HALT")}; // Must halt, only the HALT button shown
                 }
             }
-            response = sendMessage(message, buttons, success);     
+            response = sendMessage(message, buttons, success);
             if (response == HALT || (!success && getAutomationItem().isHaltFailureEnabled())) {
                 firePropertyChange(ACTION_HALT_CHANGED_PROPERTY, !success, success);
             } else {
@@ -131,7 +135,10 @@ public abstract class Action {
         int response = NO_MESSAGE_SENT;
         if (getAutomationItem() != null && !message.equals(AutomationItem.NONE)) {
             // use formatter to create title
-            String title = getAutomationItem().getId() + " " + (success ? "":Bundle.getMessage("Failed")) + " {0} {1} {2} {3}";
+            String title = getAutomationItem().getId() +
+                    " " +
+                    (success ? "" : Bundle.getMessage("Failed")) +
+                    " {0} {1} {2} {3} {4}";
 
             response = JOptionPane.showOptionDialog(null, getFormatedMessage(message), getFormatedMessage(title),
                     JOptionPane.OK_CANCEL_OPTION, JOptionPane.INFORMATION_MESSAGE, null, buttons
@@ -156,7 +163,12 @@ public abstract class Action {
         if (automation != null) {
             automationName = " " + automation.getName();
         }
-        return MessageFormat.format(message, new Object[]{getName(), trainName, routeLocationName, automationName});
+        String itemId = "";
+        AutomationItem item = getAutomationItem().getGotoAutomationItem();
+        if (item != null) {
+            itemId = " " + item.getId();
+        }
+        return MessageFormat.format(message, new Object[]{getName(), trainName, routeLocationName, automationName, itemId});
     }
 
     java.beans.PropertyChangeSupport pcs = new java.beans.PropertyChangeSupport(this);
