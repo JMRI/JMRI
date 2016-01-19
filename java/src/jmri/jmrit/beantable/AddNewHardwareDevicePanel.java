@@ -5,7 +5,6 @@ import java.awt.FlowLayout;
 import java.awt.event.ActionListener;
 import java.awt.event.ItemEvent;
 import java.awt.event.ItemListener;
-import java.util.ResourceBundle;
 import javax.swing.BoxLayout;
 import javax.swing.JButton;
 import javax.swing.JCheckBox;
@@ -72,7 +71,7 @@ public class AddNewHardwareDevicePanel extends jmri.util.swing.JmriPanel {
         p.add(userName, c);
         add(p);
         JButton ok;
-        add(ok = new JButton(rb.getString(addButtonLabel)));
+        add(ok = new JButton(Bundle.getMessage(addButtonLabel)));
         ok.addActionListener(listener);
         addRange.addItemListener(
                 new ItemListener() {
@@ -114,10 +113,9 @@ public class AddNewHardwareDevicePanel extends jmri.util.swing.JmriPanel {
     JCheckBox _range;
     JLabel sysNameLabel = new JLabel("System");
     JLabel sysAddressLabel = new JLabel("Hardware Address");
-    JLabel userNameLabel = new JLabel(rb.getString("LabelUserName"));
+    JLabel userNameLabel = new JLabel(Bundle.getMessage("LabelUserName"));
     JLabel finishLabel = new JLabel("Number to Add");
 
-    static final ResourceBundle rb = ResourceBundle.getBundle("jmri.jmrit.beantable.BeanTableBundle");
     static final Logger log = LoggerFactory.getLogger(AddNewHardwareDevicePanel.class.getName());
 }
 
