@@ -95,6 +95,13 @@ public class AutomationItem implements java.beans.PropertyChangeListener {
     public Action getAction() {
         return _action;
     }
+    
+    public String getActionName() {
+        if (getAction() != null) {
+            return getAction().getName();
+        }
+        return NONE;
+    }
 
     public int getActionCode() {
         if (getAction() != null) {
@@ -311,6 +318,9 @@ public class AutomationItem implements java.beans.PropertyChangeListener {
         if ((a = e.getAttribute(Xml.HALT_FAIL)) != null) {
             _haltFail = a.getValue().equals(Xml.TRUE);
         }
+        if ((a = e.getAttribute(Xml.ACTION_SUCCESSFUL)) != null) {
+            _actionSuccessful = a.getValue().equals(Xml.TRUE);
+        }
         Element eMessages = e.getChild(Xml.MESSAGES);
         if (eMessages != null) {
             Element eMessageOk = eMessages.getChild(Xml.MESSAGE_OK);
@@ -334,6 +344,7 @@ public class AutomationItem implements java.beans.PropertyChangeListener {
         Element e = new Element(Xml.ITEM);
         e.setAttribute(Xml.ID, getId());
         e.setAttribute(Xml.SEQUENCE_ID, Integer.toString(getSequenceId()));
+        e.setAttribute(Xml.NAME, getActionName());
         e.setAttribute(Xml.ACTION_CODE, "0x" + Integer.toHexString(getActionCode()));
         if (getTrain() != null) {
             e.setAttribute(Xml.TRAIN_ID, getTrain().getId());
