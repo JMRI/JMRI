@@ -53,7 +53,7 @@ To do this:
 	desired Reporter.
 	<li>Click the "Add to Panel" button. The Reporter icon will be placed on your Panel.
 	If it's not visible, that might be because the value is currently blank;
-	use the Reporters Table to change the value to something that will be visible.
+	use the Reporter Table to change the value to something that will be visible.
 	<li>You can drag the icon to where you want it in the usual way.
 	<li>The pop-up menu on the icon will let you change the formatting.
 	</ul>

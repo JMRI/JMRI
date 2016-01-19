@@ -1,7 +1,6 @@
 // AddSensorJFrame.java
 package jmri.jmrit.beantable.sensor;
 
-import java.util.ResourceBundle;
 import javax.swing.BoxLayout;
 import jmri.util.JmriJFrame;
 
@@ -22,8 +21,7 @@ public class AddSensorJFrame extends JmriJFrame {
     private static final long serialVersionUID = 764691745775053638L;
 
     public AddSensorJFrame() {
-        super(ResourceBundle.getBundle("jmri.jmrit.beantable.BeanTableBundle")
-                .getString("TitleAddSensor"));
+        super(Bundle.getMessage("TitleAddSensor"));
 
         addHelpMenu("package.jmri.jmrit.beantable.SensorAddEdit", true);
         getContentPane().setLayout(new BoxLayout(this.getContentPane(), BoxLayout.Y_AXIS));

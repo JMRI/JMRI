@@ -3827,7 +3827,9 @@
     press the "Stop Automation" button. The "Current" column shows where in the sequence the
     automation is executing. Pressing the "Resume Automation" button continues running the actions
     from where the current pointer is. The "Run Automation" button always restarts the automation at
-    the top of the table.</p>
+    the top of the table. If you want to manually reset the current pointer, find under "Tools"
+    "Reset". Useful if you're stepping through the various actions and want to begin at the start of
+    the table.</p>
 
    <p>And finally press the "Save Automation" button to save your automation to the
     OperationsTrainRoster.xml file.</p>

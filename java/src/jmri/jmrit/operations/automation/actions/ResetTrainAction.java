@@ -23,6 +23,7 @@ public class ResetTrainAction extends Action {
             if (train == null) {
                 finishAction(false); // failed, need train to reset
             } else {
+                setRunning(true);
                 finishAction(train.reset());
             }
         }

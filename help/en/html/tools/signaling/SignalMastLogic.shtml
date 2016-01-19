@@ -114,7 +114,7 @@ re-generation of information is not done on the "fly" when a Layout Editor panel
 The Signal Mast Logic works only between a source and destination Signal Mast, so 
 if you have a valid route to an End Bumper/Buffer Stop/Dark Area, then there is 
 no specific destination Signal Mast. In this situation you would create a "dummy"
-Signal Mast of type Virtual in de Signal Masts Table to act as your destination Signal Mast. It doesn't have to represent a signal 
+Signal Mast of type Virtual in de Signal Mast Table to act as your destination Signal Mast. It doesn't have to represent a signal 
 on the layout or have Signal Heads associated.  All that this Virtual Signal Mast has to do is display a "Danger" aspect.
 <p>
 <h2>Using the Layout Editor for Signal Mast Logic</h2>
@@ -162,7 +162,7 @@ can take some time.
 	Access to configuring Signal Mast Logic can be done from three different locations:
 <ul>
 <li>In the <a href="../../../package/jmri/jmrit/beantable/SignalMastLogicTable.shtml">Signal Mast Logic Table</a> there is an Edit button for each Signal Mast Logic pair</li>
-<li>From the <a href="../../../package/jmri/jmrit/beantable/SignalMastTable.shtml">Signal Masts Table</a>, there is an Edit Logic button for each Signal Mast, wich opens a window from which you can select one of the Signalling Pairs set for this Signal Mast.</li>
+<li>From the <a href="../../../package/jmri/jmrit/beantable/SignalMastTable.shtml">Signal Mast Table</a>, there is an Edit Logic button for each Signal Mast, wich opens a window from which you can select one of the Signalling Pairs set for this Signal Mast.</li>
 <li>From the pop-up menu that appears when you right-click on a Signal Mast Icon on a Layout Editor panel, there is a menu item for Signal Mast Logic</li>
 </ul>
 

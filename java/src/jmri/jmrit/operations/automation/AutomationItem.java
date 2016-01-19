@@ -48,6 +48,10 @@ public class AutomationItem implements java.beans.PropertyChangeListener {
     protected String _messageFail = NONE;
     protected boolean _haltFail = true;
 
+    protected boolean _actionRunning = false; // when true action is running, for example waiting for a train
+    protected boolean _actionSuccessful = false;
+    protected boolean _actionRan = false;
+
     public static final String DISPOSE = "automationItemDispose"; // NOI18N
 
     /**
@@ -90,6 +94,13 @@ public class AutomationItem implements java.beans.PropertyChangeListener {
 
     public Action getAction() {
         return _action;
+    }
+
+    public String getActionName() {
+        if (getAction() != null) {
+            return getAction().getName();
+        }
+        return NONE;
     }
 
     public int getActionCode() {
@@ -199,6 +210,51 @@ public class AutomationItem implements java.beans.PropertyChangeListener {
         }
     }
 
+    public void setActionRunning(boolean actionRunning) {
+        boolean old = _actionRunning;
+        _actionRunning = actionRunning;
+        if (old != actionRunning) {
+            if (!actionRunning) {
+                setActionRan(true);
+            }
+            firePropertyChange("actionRunningChange", old, actionRunning); // NOI18N
+        }
+    }
+
+    public boolean isActionRunning() {
+        return _actionRunning;
+    }
+
+    public void setActionSuccessful(boolean successful) {
+        boolean old = _actionSuccessful;
+        _actionSuccessful = successful;
+        if (old != successful) {
+            setDirtyAndFirePropertyChange("actionSuccessful", old, successful); // NOI18N
+        }
+    }
+    
+    public void setActionRan(boolean ran) {
+        _actionRan = ran;
+        firePropertyChange("actionRan", !ran, ran); // NOI18N
+    }
+    
+    public boolean isActionRan() {
+        return _actionRan;
+    }
+
+    public boolean isActionSuccessful() {
+        return _actionSuccessful;
+    }
+
+    public String getStatus() {
+        if (isActionRunning())
+            return Bundle.getMessage("Running");
+        if (!isActionRan())
+            return NONE;
+        else
+            return isActionSuccessful() ? Bundle.getMessage("OK") : Bundle.getMessage("FAILED");
+    }
+
     public void copyItem(AutomationItem item) {
         setMessage(item.getMessage());
     }
@@ -279,6 +335,12 @@ public class AutomationItem implements java.beans.PropertyChangeListener {
         if ((a = e.getAttribute(Xml.HALT_FAIL)) != null) {
             _haltFail = a.getValue().equals(Xml.TRUE);
         }
+        if ((a = e.getAttribute(Xml.ACTION_RAN)) != null) {
+            _actionRan = a.getValue().equals(Xml.TRUE);
+        }
+        if ((a = e.getAttribute(Xml.ACTION_SUCCESSFUL)) != null) {
+            _actionSuccessful = a.getValue().equals(Xml.TRUE);
+        }
         Element eMessages = e.getChild(Xml.MESSAGES);
         if (eMessages != null) {
             Element eMessageOk = eMessages.getChild(Xml.MESSAGE_OK);
@@ -302,6 +364,7 @@ public class AutomationItem implements java.beans.PropertyChangeListener {
         Element e = new Element(Xml.ITEM);
         e.setAttribute(Xml.ID, getId());
         e.setAttribute(Xml.SEQUENCE_ID, Integer.toString(getSequenceId()));
+        e.setAttribute(Xml.NAME, getActionName());
         e.setAttribute(Xml.ACTION_CODE, "0x" + Integer.toHexString(getActionCode()));
         if (getTrain() != null) {
             e.setAttribute(Xml.TRAIN_ID, getTrain().getId());
@@ -313,6 +376,8 @@ public class AutomationItem implements java.beans.PropertyChangeListener {
             e.setAttribute(Xml.AUTOMATION_ID, getAutomation().getId());
         }
         e.setAttribute(Xml.HALT_FAIL, isHaltFailureEnabled() ? Xml.TRUE : Xml.FALSE);
+        e.setAttribute(Xml.ACTION_RAN, isActionRan() ? Xml.TRUE : Xml.FALSE);
+        e.setAttribute(Xml.ACTION_SUCCESSFUL, isActionSuccessful() ? Xml.TRUE : Xml.FALSE);
         if (!getMessage().equals(NONE) || !getMessageFail().equals(NONE)) {
             Element eMessages = new Element(Xml.MESSAGES);
             e.addContent(eMessages);
@@ -323,11 +388,6 @@ public class AutomationItem implements java.beans.PropertyChangeListener {
             eMessages.addContent(eMessageOk);
             eMessages.addContent(eMessageFail);
         }
-        //        e.setAttribute(Xml.MESSAGE, getMessage());
-        //        if (!getMessageFail().equals(NONE)) {
-        //            e.setAttribute(Xml.MESSAGE_FAIL, getMessageFail());
-        //        }
-
         return e;
     }
 
@@ -346,6 +406,10 @@ public class AutomationItem implements java.beans.PropertyChangeListener {
 
     public synchronized void removePropertyChangeListener(java.beans.PropertyChangeListener l) {
         pcs.removePropertyChangeListener(l);
+    }
+
+    protected void firePropertyChange(String p, Object old, Object n) {
+        pcs.firePropertyChange(p, old, n);
     }
 
     protected void setDirtyAndFirePropertyChange(String p, Object old, Object n) {

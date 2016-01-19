@@ -92,9 +92,9 @@ also just drag and drop the value into the lower field.
 
 Once you've created a CBUS Sensor or Turnout, you can
 use the 
-<a href="../../../../../jmrit/beantable/SensorTable.shtml">Sensors Table</a>
+<a href="../../../../../jmrit/beantable/SensorTable.shtml">Sensor Table</a>
 or
-<a href="../../../../../jmrit/beantable/TurnoutTable.shtml">Turnouts Table</a>
+<a href="../../../../../jmrit/beantable/TurnoutTable.shtml">Turnout Table</a>
 to adjust the details.
 
 <p>
