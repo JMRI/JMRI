@@ -271,7 +271,7 @@ function processPanelXML($returnedData, $success, $xhr) {
                                 $widget.jsonType = "signalMast"; // JSON object type
                                 var icons = $(this).find('icons').children(); //get array of icons
                                 icons.each(function(i, item) {  //loop thru icons array and set all iconXX urls for widget
-                                    $widget['icon' + item.nodeName] = $(item).attr('url');
+		                          	$widget['icon' + $(item).attr('aspect')] = $(item).attr('url');
                                 });
                                 $widget['degrees'] = $(this).attr('degrees') * 1;
                                 $widget['scale'] = $(this).attr('scale');
@@ -1233,8 +1233,8 @@ var $setWidgetPosition = function(e) {
 var $reDrawIcon = function($widget) {
     //additional naming for indicator*icon widgets to reflect occupancy
     $indicator = ($widget.occupancysensor && $widget.occupancystate == ACTIVE ? "Occupied" : "");
-    if ($widget['icon' + $indicator + ($widget.state + "").replace(/ /g, "_")]) { //set image src to requested state's image, if defined
-        $('img#' + $widget.id).attr('src', $widget['icon' + $indicator + ($widget.state + "").replace(/ /g, "_")]);  
+    if ($widget['icon' + $indicator + ($widget.state + "")]) { //set image src to requested state's image, if defined
+        $('img#' + $widget.id).attr('src', $widget['icon' + $indicator + ($widget.state + "")]);  
     } else if ($widget['defaulticon']) {  //if state icon not found, use default icon if provided
         $('img#' + $widget.id).attr('src', $widget['defaulticon']); 
     } else {
@@ -1258,8 +1258,8 @@ var $setWidgetState = function($id, $newState) {
                 if ($widget.jsonType == "memory") {
                     if ($widget.widgetType == "fastclock") {
                         $drawClock($widget);
-                    } else {
-                        $('div#' + $id).text($newState);  //set memory text to new value from server
+                    } else {  //set memory text to new value from server, suppressing "null"
+                        $('div#' + $id).text(($newState != null) ? $newState : "");
                     }
                 } else {
                     if (typeof $widget['text' + $newState] !== "undefined") {
@@ -1392,7 +1392,8 @@ var $getNextState = function($widget) {
         var $firstState = undefined;
         var $currentState = undefined;
         for (k in $widget) {
-            var s = k.substr(4).replace(/_/g, " "); //extract the state from current icon var, replace underscores with blanks
+//            var s = k.substr(4).replace(/_/g, " "); //extract the state from current icon var, replace underscores with blanks
+            var s = k.substr(4); //extract the state from current icon var
             if (k.indexOf('icon') == 0 && typeof $widget[k] !== "undefined" && s != 'Held' && s != 'Dark' && s != 'Unknown') { //valid value, name starts with 'icon', but not the HELD one
                 if (typeof $firstState == "undefined")
                     $firstState = s;  //remember the first state (for last one)
