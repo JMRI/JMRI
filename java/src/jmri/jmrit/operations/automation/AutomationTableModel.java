@@ -347,8 +347,6 @@ public class AutomationTableModel extends javax.swing.table.AbstractTableModel i
     }
     
     private String getStatus(AutomationItem item) {
-        if (_automation.getCurrentAutomationItem() == item)
-            return "";
         return item.getStatus();
     }
 
