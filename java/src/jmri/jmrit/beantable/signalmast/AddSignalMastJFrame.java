@@ -1,7 +1,6 @@
 // AddSignalMastJFrame.java
 package jmri.jmrit.beantable.signalmast;
 
-import java.util.ResourceBundle;
 import javax.swing.BoxLayout;
 import jmri.util.JmriJFrame;
 
@@ -19,8 +18,7 @@ public class AddSignalMastJFrame extends JmriJFrame {
     private static final long serialVersionUID = -6193330521542648003L;
 
     public AddSignalMastJFrame() {
-        super(ResourceBundle.getBundle("jmri.jmrit.beantable.BeanTableBundle")
-                .getString("TitleAddSignalMast"), false, true);
+        super(Bundle.getMessage("TitleAddSignalMast"), false, true);
 
         addHelpMenu("package.jmri.jmrit.beantable.SignalMastAddEdit", true);
         getContentPane().setLayout(new BoxLayout(this.getContentPane(), BoxLayout.Y_AXIS));
@@ -30,8 +28,7 @@ public class AddSignalMastJFrame extends JmriJFrame {
     }
 
     public AddSignalMastJFrame(jmri.SignalMast mast) {
-        super(ResourceBundle.getBundle("jmri.jmrit.beantable.BeanTableBundle")
-                .getString("TitleAddSignalMast"), false, true);
+        super(Bundle.getMessage("TitleAddSignalMast"), false, true);
 
         addHelpMenu("package.jmri.jmrit.beantable.SignalMastAddEdit", true);
         getContentPane().setLayout(new BoxLayout(this.getContentPane(), BoxLayout.Y_AXIS));

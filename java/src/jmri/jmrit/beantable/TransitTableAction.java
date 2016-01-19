@@ -83,8 +83,7 @@ public class TransitTableAction extends AbstractTableAction {
         this("Transit Table");
     }
 
-    static final ResourceBundle rbx = ResourceBundle
-            .getBundle("jmri.jmrit.beantable.SectionTransitTableBundle");
+    static final ResourceBundle rbx = ResourceBundle.getBundle("jmri.jmrit.beantable.SectionTransitTableBundle");
 
     /**
      * Create the JTable DataModel, along with the changes for the specific case
@@ -157,7 +156,7 @@ public class TransitTableAction extends AbstractTableAction {
                         }
                     }
                 } else if (col == EDITCOL) {
-                    return rb.getString("ButtonEdit");
+                    return Bundle.getMessage("ButtonEdit");
                 } else if (col == DUPLICATECOL) {
                     return rbx.getString("ButtonDuplicate");
                 } else {
@@ -286,7 +285,7 @@ public class TransitTableAction extends AbstractTableAction {
     }
 
     protected void setTitle() {
-        f.setTitle(f.rb.getString("TitleTransitTable"));
+        f.setTitle(Bundle.getMessage("TitleTransitTable"));
     }
 
     protected String helpTarget() {
@@ -324,8 +323,8 @@ public class TransitTableAction extends AbstractTableAction {
     JTextField sysName = new JTextField(5);
     JLabel sysNameFixed = new JLabel("");
     JTextField userName = new JTextField(17);
-    JLabel sysNameLabel = new JLabel(rb.getString("LabelSystemName"));
-    JLabel userNameLabel = new JLabel(rb.getString("LabelUserName"));
+    JLabel sysNameLabel = new JLabel(Bundle.getMessage("LabelSystemName"));
+    JLabel userNameLabel = new JLabel(Bundle.getMessage("LabelUserName"));
     JButton create = null;
     JButton update = null;
     JButton deleteSections = null;
@@ -342,7 +341,7 @@ public class TransitTableAction extends AbstractTableAction {
     JButton addAlternateForSequence = null;
     JComboBox<String> alternateSectionBox = new JComboBox<String>();
     JButton addAlternateSection = null;
-    JCheckBox _autoSystemName = new JCheckBox(rb.getString("LabelAutoSysName"));
+    JCheckBox _autoSystemName = new JCheckBox(Bundle.getMessage("LabelAutoSysName"));
     jmri.UserPreferencesManager pref;
     String systemNameAuto = this.getClass().getName() + ".AutoSystemName";
 
@@ -387,7 +386,7 @@ public class TransitTableAction extends AbstractTableAction {
     void addEditPressed() {
         pref = jmri.InstanceManager.getDefault(jmri.UserPreferencesManager.class);
         if (addFrame == null) {
-            addFrame = new JmriJFrame(rb.getString("TitleAddTransit"));
+            addFrame = new JmriJFrame(Bundle.getMessage("TitleAddTransit"));
             addFrame.addHelpMenu("package.jmri.jmrit.beantable.TransitAddEdit", true);
             addFrame.getContentPane().setLayout(new BoxLayout(addFrame.getContentPane(), BoxLayout.Y_AXIS));
             JPanel p;
@@ -553,21 +552,21 @@ public class TransitTableAction extends AbstractTableAction {
             JButton cancel = null;
             JPanel pb = new JPanel();
             pb.setLayout(new FlowLayout());
-            pb.add(cancel = new JButton(rb.getString("ButtonCancel")));
+            pb.add(cancel = new JButton(Bundle.getMessage("ButtonCancel")));
             cancel.addActionListener(new ActionListener() {
                 public void actionPerformed(ActionEvent e) {
                     cancelPressed(e);
                 }
             });
             cancel.setToolTipText(rbx.getString("CancelButtonHint"));
-            pb.add(create = new JButton(rb.getString("ButtonCreate")));
+            pb.add(create = new JButton(Bundle.getMessage("ButtonCreate")));
             create.addActionListener(new ActionListener() {
                 public void actionPerformed(ActionEvent e) {
                     createPressed(e);
                 }
             });
             create.setToolTipText(rbx.getString("SectionCreateButtonHint"));
-            pb.add(update = new JButton(rb.getString("ButtonUpdate")));
+            pb.add(update = new JButton(Bundle.getMessage("ButtonUpdate")));
             update.addActionListener(new ActionListener() {
                 public void actionPerformed(ActionEvent e) {
                     updatePressed(e);
@@ -1672,7 +1671,7 @@ public class TransitTableAction extends AbstractTableAction {
                 }
             });
             updateActionButton.setToolTipText(rbx.getString("UpdateActionButtonHint"));
-            but.add(cancelAddEditActionButton = new JButton(rb.getString("ButtonCancel")));
+            but.add(cancelAddEditActionButton = new JButton(Bundle.getMessage("ButtonCancel")));
             cancelAddEditActionButton.addActionListener(new ActionListener() {
                 public void actionPerformed(ActionEvent e) {
                     cancelAddEditActionPressed(e);
@@ -2524,9 +2523,9 @@ public class TransitTableAction extends AbstractTableAction {
                 case WHAT_COLUMN:
                     return (getWhatText(rx));
                 case EDIT_COLUMN:
-                    return rb.getString("ButtonEdit");
+                    return Bundle.getMessage("ButtonEdit");
                 case REMOVE_COLUMN:
-                    return rb.getString("ButtonDelete");
+                    return Bundle.getMessage("ButtonDelete");
                 default:
                     return rbx.getString("Unknown");
             }
@@ -2549,7 +2548,7 @@ public class TransitTableAction extends AbstractTableAction {
     }
 
     public String getClassDescription() {
-        return rb.getString("TitleTransitTable");
+        return Bundle.getMessage("TitleTransitTable");
     }
 
     static final Logger log = LoggerFactory.getLogger(TransitTableAction.class.getName());

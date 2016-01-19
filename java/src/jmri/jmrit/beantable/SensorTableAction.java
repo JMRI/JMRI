@@ -75,7 +75,7 @@ public class SensorTableAction extends AbstractTableAction {
     }
 
     protected void setTitle() {
-        f.setTitle(f.rb.getString("TitleSensorTable"));
+        f.setTitle(Bundle.getMessage("TitleSensorTable"));
     }
 
     protected String helpTarget() {
@@ -90,7 +90,7 @@ public class SensorTableAction extends AbstractTableAction {
     JTextField numberToAdd = new JTextField(5);
     JCheckBox range = new JCheckBox("Add a range");
     JLabel sysNameLabel = new JLabel("Hardware Address");
-    JLabel userNameLabel = new JLabel(rb.getString("LabelUserName"));
+    JLabel userNameLabel = new JLabel(Bundle.getMessage("LabelUserName"));
     String systemSelectionCombo = this.getClass().getName() + ".SystemSelected";
     String userNameError = this.getClass().getName() + ".DuplicateUserName";
     jmri.UserPreferencesManager p;
@@ -99,7 +99,7 @@ public class SensorTableAction extends AbstractTableAction {
         p = jmri.InstanceManager.getDefault(jmri.UserPreferencesManager.class);
 
         if (addFrame == null) {
-            addFrame = new JmriJFrame(rb.getString("TitleAddSensor"));
+            addFrame = new JmriJFrame(Bundle.getMessage("TitleAddSensor"));
             //addFrame.addHelpMenu("package.jmri.jmrit.beantable.SensorAddEdit", true);
             addFrame.getContentPane().setLayout(new BoxLayout(addFrame.getContentPane(), BoxLayout.Y_AXIS));
 
@@ -235,9 +235,9 @@ public class SensorTableAction extends AbstractTableAction {
     void handleCreateException(String sysName) {
         javax.swing.JOptionPane.showMessageDialog(addFrame,
                 java.text.MessageFormat.format(
-                        rb.getString("ErrorSensorAddFailed"),
+                        Bundle.getMessage("ErrorSensorAddFailed"),
                         new Object[]{sysName}),
-                rb.getString("ErrorTitle"),
+                Bundle.getMessage("ErrorTitle"),
                 javax.swing.JOptionPane.ERROR_MESSAGE);
     }
 
@@ -246,15 +246,15 @@ public class SensorTableAction extends AbstractTableAction {
         JTextField inActiveField = new JTextField(String.valueOf(senManager.getDefaultSensorDebounceGoingInActive()), 4);
 
         JPanel active = new JPanel();
-        active.add(new JLabel(rb.getString("SensorActiveTimer")));
+        active.add(new JLabel(Bundle.getMessage("SensorActiveTimer")));
         active.add(activeField);
 
         JPanel inActive = new JPanel();
-        inActive.add(new JLabel(rb.getString("SensorInactiveTimer")));
+        inActive.add(new JLabel(Bundle.getMessage("SensorInactiveTimer")));
         inActive.add(inActiveField);
 
         int retval = JOptionPane.showOptionDialog(_who,
-                rb.getString("SensorGlobalDebounceMessageBox"), rb.getString("SensorGlobalDebounceMessageTitle"),
+                Bundle.getMessage("SensorGlobalDebounceMessageBox"), Bundle.getMessage("SensorGlobalDebounceMessageTitle"),
                 0, JOptionPane.INFORMATION_MESSAGE, null,
                 new Object[]{"Cancel", "OK", active, inActive}, null);
         if (retval != 1) {
@@ -266,14 +266,14 @@ public class SensorTableAction extends AbstractTableAction {
             long goingActive = Long.valueOf(activeField.getText());
             senManager.setDefaultSensorDebounceGoingActive(goingActive);
         } catch (NumberFormatException ex) {
-            JOptionPane.showMessageDialog(_who, rb.getString("SensorDebounceActError") + "\n" + activeField.getText(), "Input Error", JOptionPane.ERROR_MESSAGE);
+            JOptionPane.showMessageDialog(_who, Bundle.getMessage("SensorDebounceActError") + "\n" + activeField.getText(), "Input Error", JOptionPane.ERROR_MESSAGE);
         }
 
         try {
             long goingInActive = Long.valueOf(inActiveField.getText());
             senManager.setDefaultSensorDebounceGoingInActive(goingInActive);
         } catch (NumberFormatException ex) {
-            JOptionPane.showMessageDialog(_who, rb.getString("SensorDebounceActError") + "\n" + inActiveField.getText(), "Input Error", JOptionPane.ERROR_MESSAGE);
+            JOptionPane.showMessageDialog(_who, Bundle.getMessage("SensorDebounceActError") + "\n" + inActiveField.getText(), "Input Error", JOptionPane.ERROR_MESSAGE);
         }
         m.fireTableDataChanged();
     }
@@ -342,11 +342,11 @@ public class SensorTableAction extends AbstractTableAction {
         a.showDebounce(showDebounceBox.isSelected());
     }
 
-    JCheckBox showDebounceBox = new JCheckBox(rb.getString("SensorDebounceCheckBox"));
+    JCheckBox showDebounceBox = new JCheckBox(Bundle.getMessage("SensorDebounceCheckBox"));
 
     public void addToFrame(BeanTableFrame f) {
         f.addToBottomBox(showDebounceBox, this.getClass().getName());
-        showDebounceBox.setToolTipText(rb.getString("SensorDebounceToolTip"));
+        showDebounceBox.setToolTipText(Bundle.getMessage("SensorDebounceToolTip"));
         showDebounceBox.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
                 showDebounceChanged();
@@ -361,7 +361,7 @@ public class SensorTableAction extends AbstractTableAction {
             systemPrefix = "All";
         }
         f.addToBottomBox(showDebounceBox, systemPrefix);
-        showDebounceBox.setToolTipText(rb.getString("SensorDebounceToolTip"));
+        showDebounceBox.setToolTipText(Bundle.getMessage("SensorDebounceToolTip"));
         showDebounceBox.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
                 showDebounceChanged();
@@ -370,7 +370,7 @@ public class SensorTableAction extends AbstractTableAction {
     }
 
     public void setMessagePreferencesDetails() {
-        jmri.InstanceManager.getDefault(jmri.UserPreferencesManager.class).preferenceItemDetails(getClassName(), "duplicateUserName", rb.getString("DuplicateUserNameWarn"));
+        jmri.InstanceManager.getDefault(jmri.UserPreferencesManager.class).preferenceItemDetails(getClassName(), "duplicateUserName", Bundle.getMessage("DuplicateUserNameWarn"));
         super.setMessagePreferencesDetails();
     }
 
@@ -379,7 +379,7 @@ public class SensorTableAction extends AbstractTableAction {
     }
 
     public String getClassDescription() {
-        return rb.getString("TitleSensorTable");
+        return Bundle.getMessage("TitleSensorTable");
     }
 
     static final Logger log = LoggerFactory.getLogger(SensorTableAction.class.getName());

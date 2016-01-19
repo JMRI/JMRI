@@ -65,8 +65,7 @@ public class RouteTableAction extends AbstractTableAction {
      *
      */
     private static final long serialVersionUID = 8319726020695754089L;
-    static final ResourceBundle rbx = ResourceBundle
-            .getBundle("jmri.jmrit.beantable.LogixTableBundle");
+    static final ResourceBundle rbx = ResourceBundle.getBundle("jmri.jmrit.beantable.LogixTableBundle");
 
     /**
      * Create an action with a specific title.
@@ -94,7 +93,7 @@ public class RouteTableAction extends AbstractTableAction {
     }
 
     public RouteTableAction() {
-        this(rb.getString("TitleRouteTable"));
+        this(Bundle.getMessage("TitleRouteTable"));
     }
 
     /**
@@ -209,11 +208,9 @@ public class RouteTableAction extends AbstractTableAction {
                         if (nB != null) {
                             log.error("User name is not unique " + value);
                             String msg;
-                            msg = java.text.MessageFormat.format(AbstractTableAction.rb
-                                    .getString("WarningUserName"),
-                                    new Object[]{("" + value)});
+                            msg = Bundle.getMessage("WarningUserName", new Object[]{("" + value)});
                             JOptionPane.showMessageDialog(null, msg,
-                                    AbstractTableAction.rb.getString("WarningTitle"),
+                                    Bundle.getMessage("WarningTitle"),
                                     JOptionPane.ERROR_MESSAGE);
                             return;
                         }
@@ -314,7 +311,7 @@ public class RouteTableAction extends AbstractTableAction {
             }
 
             protected String getBeanType() {
-                return AbstractTableAction.rbean.getString("BeanNameRoute");
+                return Bundle.getMessage("BeanNameRoute");
             }
             /*Routes do not get references by other parts of the code, we therefore 
              do not need to worry about controlling how the username is changed
@@ -367,7 +364,7 @@ public class RouteTableAction extends AbstractTableAction {
 
     JTextField _systemName = new JTextField(10);
     JTextField _userName = new JTextField(22);
-    JCheckBox _autoSystemName = new JCheckBox(rb.getString("LabelAutoSysName"));
+    JCheckBox _autoSystemName = new JCheckBox(Bundle.getMessage("LabelAutoSysName"));
     String systemNameAuto = this.getClass().getName() + ".AutoSystemName";
     jmri.UserPreferencesManager pref;
 
@@ -1635,9 +1632,9 @@ public class RouteTableAction extends AbstractTableAction {
     void handleCreateException(String sysName) {
         javax.swing.JOptionPane.showMessageDialog(addFrame,
                 java.text.MessageFormat.format(
-                        rb.getString("ErrorLightAddFailed"),
+                        Bundle.getMessage("ErrorLightAddFailed"),
                         new Object[]{sysName}),
-                rb.getString("ErrorTitle"),
+                Bundle.getMessage("ErrorTitle"),
                 javax.swing.JOptionPane.ERROR_MESSAGE);
     }
     
@@ -2127,7 +2124,7 @@ public class RouteTableAction extends AbstractTableAction {
     }
 
     public void setMessagePreferencesDetails() {
-        jmri.InstanceManager.getDefault(jmri.UserPreferencesManager.class).preferenceItemDetails(getClassName(), "remindSaveRoute", rb.getString("HideSaveReminder"));
+        jmri.InstanceManager.getDefault(jmri.UserPreferencesManager.class).preferenceItemDetails(getClassName(), "remindSaveRoute", Bundle.getMessage("HideSaveReminder"));
         super.setMessagePreferencesDetails();
     }
 
@@ -2136,7 +2133,7 @@ public class RouteTableAction extends AbstractTableAction {
     }
 
     public String getClassDescription() {
-        return rb.getString("TitleRouteTable");
+        return Bundle.getMessage("TitleRouteTable");
     }
 
     static final Logger log = LoggerFactory.getLogger(RouteTableAction.class.getName());

@@ -59,7 +59,6 @@ public class AudioTablePanel extends JPanel {
 
     static final int bottomStrutWidth = 20;
 
-    //private static final ResourceBundle rb = ResourceBundle.getBundle("jmri.jmrit.beantable.BeanTableBundle");
     private static final ResourceBundle rba = ResourceBundle.getBundle("jmri.jmrit.audio.swing.AudioTableBundle");
 
     @SuppressWarnings("OverridableMethodCallInConstructor")
