@@ -113,7 +113,7 @@ Routes & Turnouts
 </h3>
 The app can control any turnouts (and routes) that JMRI has control of.
 If they are available in the JMRI turnout (or route) table,
-they are automatically available in WiFi throttles. 
+they are automatically available in WiFi throttles.ï¿½
 If there are no turnouts (or routes) on the table(s),
 then the control screen for them does not show in the app.
 It will do all of this by default.

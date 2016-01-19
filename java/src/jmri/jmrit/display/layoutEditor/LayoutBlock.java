@@ -458,7 +458,7 @@ public class LayoutBlock extends AbstractNamedBean implements java.beans.Propert
     public void setMemoryName(String name) {
         if (name == null || name.equals("")) {
             namedMemory = null;
-            memoryName = name;
+            memoryName = "";
             return;
         }
         memoryName = name;
@@ -472,7 +472,7 @@ public class LayoutBlock extends AbstractNamedBean implements java.beans.Propert
     public void setMemory(Memory m, String name) {
         if (m == null) {
             namedMemory = null;
-            memoryName = name;
+            memoryName = name == null ? "" : name;
             return;
         }
         namedMemory = jmri.InstanceManager.getDefault(jmri.NamedBeanHandleManager.class).getNamedBeanHandle(name, m);
@@ -2081,7 +2081,9 @@ public class LayoutBlock extends AbstractNamedBean implements java.beans.Propert
                         if (enableDeleteRouteLogging) {
                             log.info(msgPrefix + " We only have a single valid route left to " + destBlock.getDisplayName() + " So will tell " + layoutBlock.getDisplayName() + " we no longer have it");
                         }
-                        if (layoutBlock!=null) layoutBlock.removeRouteFromNeighbour(this, newUpdate);
+                        if (layoutBlock != null) {
+                            layoutBlock.removeRouteFromNeighbour(this, newUpdate);
+                        }
                         getAdjacency(nextHop).removeRouteAdvertisedToNeighbour(routesToRemove.get(j));
                     }
 

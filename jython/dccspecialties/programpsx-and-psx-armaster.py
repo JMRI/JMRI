@@ -73,7 +73,7 @@ class setStartup(jmri.jmrit.automat.AbstractAutomaton) :
     # self.waitMsec(750)
 
 
-    # CV49 – Sets the Current Trip Value. If CV49=0, then the Trip Current jumpers on J6 are enabled. 
+    # CV49 ï¿½ Sets the Current Trip Value. If CV49=0, then the Trip Current jumpers on J6 are enabled. 
     # REMEMBER TO USE EITHER JUMPERS (J6) OR CV SETTINGS, !!! NOT BOTH !!! 
 
     # Next Two Lines - CV49 - Current Trip Value (Values 00-15)

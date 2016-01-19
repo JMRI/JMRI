@@ -26,6 +26,7 @@ public class EasyDccProgrammerTest extends TestCase {
         EasyDccListenerScaffold l = new EasyDccListenerScaffold();
 
         EasyDccProgrammer p = new EasyDccProgrammer();
+        p.setMode(DefaultProgrammerManager.PAGEMODE);
 
         // and do the write
         p.writeCV(10, 20, l);
@@ -46,6 +47,7 @@ public class EasyDccProgrammerTest extends TestCase {
         EasyDccListenerScaffold l = new EasyDccListenerScaffold();
 
         EasyDccProgrammer p = new EasyDccProgrammer();
+        p.setMode(DefaultProgrammerManager.PAGEMODE);
 
         // and do the write
         p.writeCV("10", 20, l);
@@ -100,6 +102,7 @@ public class EasyDccProgrammerTest extends TestCase {
         EasyDccListenerScaffold l = new EasyDccListenerScaffold();
 
         EasyDccProgrammer p = new EasyDccProgrammer();
+        p.setMode(DefaultProgrammerManager.PAGEMODE);
 
         // and do the read
         p.readCV(10, l);
@@ -128,6 +131,7 @@ public class EasyDccProgrammerTest extends TestCase {
         EasyDccListenerScaffold l = new EasyDccListenerScaffold();
 
         EasyDccProgrammer p = new EasyDccProgrammer();
+        p.setMode(DefaultProgrammerManager.PAGEMODE);
 
         // and do the read
         p.readCV("10", l);
@@ -220,6 +224,7 @@ public class EasyDccProgrammerTest extends TestCase {
         EasyDccListenerScaffold l = new EasyDccListenerScaffold();
 
         EasyDccProgrammer p = new EasyDccProgrammer();
+        p.setMode(DefaultProgrammerManager.PAGEMODE);
 
         // and do the read
         p.readCV(10, l);

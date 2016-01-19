@@ -14,6 +14,8 @@
 <!-- for more details.                                                      -->
 <decoder-config xmlns:xi="http://www.w3.org/2001/XInclude" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="http://jmri.org/xml/schema/decoder.xsd">
   <version version="1" author="PB, pierre.bln@me.com" lastUpdated="20150412"/>
+  <version version="1.1" author="Mark Waters mark16jmri@mybtinternet.com" lastUpdated="20160103"/>
+  <!-- 1.1 Changed to use generic CV739-CV744.xml file.   Mark Waters, 3 Jan 2016 -->
   <!-- 1 Creation 
 		File based on Zimo_Unified_software_v32_MX644.xml by Mark Waters. 
 		Following notes from original file.
@@ -28,7 +30,7 @@
   <!-- variables on the proper pane of the Comprehensive programmer.                         -->
   <decoder>
     <family name="Zimo Unified software (version 32+)" mfg="Zimo">
-      <model model="MX658N18 version 32+" lowVersionID="32" highVersionID="33" maxInputVolts="35V" maxMotorCurrent="0.8A, peak=1.5A" maxTotalCurrent="0.8A" formFactor="N" connector="Next18" numOuts="6" numFns="14" productID="246">
+      <model model="MX658N18 version 32+" lowVersionID="32" highVersionID="42" maxInputVolts="35V" maxMotorCurrent="0.8A, peak=1.5A" maxTotalCurrent="0.8A" formFactor="N" connector="Next18" numOuts="6" numFns="14" productID="246">
         <output name="1" label="Front Light"/>
         <output name="2" label="Rear Light"/>
         <output name="3" label="FO 1"/>
@@ -77,7 +79,7 @@
       <!-- more sound variables -->
       <xi:include href="http://jmri.org/xml/decoders/zimo/CV500-CV603.xml"/>
       <xi:include href="http://jmri.org/xml/decoders/zimo/CV604-CV699.xml"/>
-      <xi:include href="http://jmri.org/xml/decoders/zimo/CV739-CV744oneSwitchIP.xml"/>
+      <xi:include href="http://jmri.org/xml/decoders/zimo/CV739-CV744.xml"/>
       <xi:include href="http://jmri.org/xml/decoders/zimo/CV745-CV768.xml"/>
 
       <!-- end of more sound variables -->

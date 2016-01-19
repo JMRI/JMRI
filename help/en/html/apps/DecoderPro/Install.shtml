@@ -40,7 +40,7 @@ downloads.  The steps to getting it working are:
 	</dt><dd class="first">The
 	<a href="../../hardware/index.shtml">hardware page</a>
 	lists the DCC systems compatible with
-	DecoderPro, along with the known limitations.
+	DecoderPro, along with the known limitations and the available tools.
 	</dd>
 	
 	<dt class="left">Download and install JMRI
@@ -48,23 +48,17 @@ downloads.  The steps to getting it working are:
 	<a href="http://jmri.sourceforge.net/download/index.shtml">Download page</a>
 	on the main JMRI web site
 	provides links to download various JMRI versions, along
-	with links to release notes, etc.  We strongly recommend
-	that you first download and install the most recent production release
-	and make sure that it's working, before you try some of the 
-	more recent development releases.
+	with links to release notes, etc.
 	<p>
-	Note that there are different downloads for the different types
-	of computer (Macintosh, Windows, etc), and the procedures for
-	installing the program differ. You'll find all that explained on the
+	Note that there are different downloads for different types
+	of computers (Macintosh, Windows, etc), and the procedures for
+	installing JMRI differ. You'll find all that explained on the
 	<a href="http://jmri.sourceforge.net/download/index.shtml">Download page</a>.</p>
 	</dd>
 	
-	<dt class="left">Start up and configure the program
-	</dt><dd class="first">The install instructions
-	reached through the 
-	<a href="http://jmri.sourceforge.net/download/index.shtml">Download page</a>
-	will have told you how to start up the program and configure 
-	it.  When that's done, you should have a working DecoderPro
+	<dt class="left">Setup JMRI
+	</dt><dd class="first">Please consult <a href="../../setup/index.shtml">JMRI Setup Help</a>.
+  When Setup is completed, you should have a working DecoderPro
 	installation.
 	</dd>
 

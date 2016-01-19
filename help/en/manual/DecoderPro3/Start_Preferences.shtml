@@ -1,22 +1,14 @@
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
-<html lang="en"><head><!-- Copyright ($Author$) 2009 --><!-- $Id$ -->
+<html lang="en"><head>
 
-<title>Decoder Pro Manual: Getting Started</title>
+<title>JMRI:  DecodePro Preferences</title>
 <!-- Style -->
 <meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
 <link rel="stylesheet" type="text/css" href="/css/default.css" media="screen">
 <link rel="stylesheet" type="text/css" href="/css/print.css" media="print">
 <link rel="icon" href="/images/jmri.ico" type="image/png">
-<link rel="home" title="Home" href="/"><!-- /Style -->
-
-<script type="text/javascript">
-<!--
-function MM_jumpMenu(targ,selObj,restore){ //v3.0
-  eval(targ+".location='"+selObj.options[selObj.selectedIndex].value+"'");
-  if (restore) selObj.selectedIndex=0;
-}
-//-->
-</script>
+<link rel="home" title="Home" href="/">
+<!-- /Style -->
 </head>
 
 <body>
@@ -25,19 +17,19 @@ function MM_jumpMenu(targ,selObj,restore){ //v3.0
 <!--#include virtual="Sidebar" -->
 <div id="mainContent">
 <h1>Getting Started with DecoderPro&reg;</h1>
-<h2>How do I set up my preferences?</h2>
+<h2>How to set up Preferences</h2>
 
 <div align="right">
-<p><a href="Start_DecoderPro.shtml">Previous</a>
-</p><p><a href="index.shtml#Getting%20Started">Back to Index</a> </p></div>
+<p><a href="Start_DecoderPro.shtml">Previous</a><br>
+<a href="index.shtml#Getting%20Started">Back to Index</a> </p></div>
 
-<hr>
-<p>From the Edit menu in DecoderPro select <strong>Preferences</strong> option:</p>
+<p class="important">The current JMRI Preferences Help is <a href="../../html/setup/index.shtml#setprefs">here</a>.</p>
+
+<p>From the Edit menu in DecoderPro select <strong>Preferences</strong>. On Mac OS X choose Preferences... from the DecoderPro application menu. This window may open automatically the first time you
+run the program.</p>
 <p><img src="images/preferences_menu.png" alt="prefernces menu" height="252" width="275"></p>
-<p>
-  (This window may open automatically the first time you
-run the program.) 
-</p><p>As a first time user the most  important information is the <strong>Connections</strong>
+
+<p>As a first time user the most  important information is the <strong>Connections</strong>
 screen where you describe how the computer will talk to the command
 station.&nbsp; Most of rest you can leave at the initial or &#8220;default&#8221;
 settings until you find a need to change things to suit your fancy.
@@ -63,7 +55,7 @@ opens the options that may be set in the right side pane. No selection
 have been made
 </p><blockquote>
   <blockquote>
-    <h1><img src="images/Preferences.png" alt="Preferences" height="432" width="755"></h1>
+    <h1><img src="images/Preferences.png" alt="Preferences" height="288" width="502"></h1>
   </blockquote>
 </blockquote>
 <p><a name="Top"></a>
@@ -126,7 +118,7 @@ used to customize your specific system.</td>
   <tbody><tr>
     <td>I
 am using a Digitrax Super Chief Command Station (radio) interfaced to
-the computer via loconet, PR3 (MS100 mode) and USB port. I keep master
+the computer via LocoNet, PR3 (MS100 mode) and USB port. I keep master
 roster on the System Drive.;</td>
   </tr>
 </tbody></table>
@@ -148,7 +140,7 @@ Digitrax Chief system with PR3 interface.</p>
   <tr>
     <td>System connection:</td>
     <td colspan="2">Drop-down
-list with all of the supported DCC system interfaces supportted by the
+list with all of the supported DCC system interfaces supported by the
 manufacturer that you selected, select the interface that you are using.</td>
   </tr>
   <tr>
@@ -255,7 +247,7 @@ possibility</td>
 </blockquote>
 <table align="center" border="1" cellpadding="2" cellspacing="1" width="80%">
   <tbody><tr>
-    <td rowspan="5" width="51%"><strong>Select your preferred appearane for buttons, menus, etc.</strong></td>
+    <td rowspan="5" width="51%"><strong>Select your preferred appearance for buttons, menus, etc.</strong></td>
     <td width="49%"><input name="radio" id="radio" value="radio" checked="checked" type="radio">
       Metal</td>
   </tr>
@@ -312,7 +304,7 @@ possibility</td>
     <p><img style="width: 677px; height: 450px;" src="images/Preferences_throttle.png" alt="throttle"></p>
     <p><strong><a href="#Top">Top</a></strong></p>
     <h3><a name="WiThrottle"></a>WiThrottle Pane</h3>
-    <p>This pane allows WiThottle users to customize the setup.</p>
+    <p>This pane allows WiThrottle users to customize the setup.</p>
     <p><img src="images/Preferences_Wi.png" height="446" width="669"></p>
     <p><strong><a href="#Top">Top</a></strong></p>
     <h2><a name="JSON"></a>JSON Server Pane</h2>

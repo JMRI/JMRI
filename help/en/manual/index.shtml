@@ -30,7 +30,7 @@
 </tr>
 
 <tr>
-<td><span style="font-weight: bold;">JMRI&reg; v4.0</span></td>
+<td><span style="font-weight: bold;">JMRI&reg; current</span></td>
 <td style="font-weight: bold;"><a href="../html/apps/DecoderPro/index.shtml">DecoderPro v4.0</a></td>
 <td></td>
 </tr>
@@ -42,12 +42,14 @@
 </tr>
 
 <tr>
-<td><span style="font-weight: bold;">JMRI&reg; v3.10</span></td><td style="font-weight: bold;"><a href="http://jmri.org/manual/3-6_DecoderPro3/index.shtml">DecoderPro3 v3.6 </a></td><td><br></td>
+<td><span style="font-weight: bold;">JMRI&reg; v3.10</span></td>
+<td style="font-weight: bold;"><a href="DecoderPro3/index.shtml">DecoderPro3 v3.6 </a></td>
+<td><br></td>
 </tr>
 
 <tr>
 <td></td>
-<td style="font-weight: bold;"><a href="http://jmri.org/manual/3-6_DecoderPro/index.shtml">DecoderPro&reg; v3.6</a></td>
+<td style="font-weight: bold;"><a href="DecoderPro/index.shtml">DecoderPro&reg; v3.6</a></td>
 <td></td>
 </tr>
 

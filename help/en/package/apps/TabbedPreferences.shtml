@@ -109,12 +109,12 @@ This deals with all the Preferences that are invoked at start up such as loading
 <dd>
 This section lets you have the program automatically
 execute various menu selections at startup.  For example,
-you can have the Turnouts Table automatically open, or 
+you can have the Turnout Table automatically open, or 
 automatically open a window for programming on the main.
 <P>
-For example, to automatically open the Turnouts Table, 
+For example, to automatically open the Turnout Table, 
 click the "Add Action" button in this section of the Advanced Preferences. 
-From the list that's presented, select "Open Turnouts Table". 
+From the list that's presented, select "Open Turnout Table". 
 Don't forget
 to save your updated Preferences with the button at the bottom of the screen!
 
@@ -125,7 +125,7 @@ that are connected to specific menu choices.
 <P>
 For example, to add a button that will open the Power Control when clicked, 
 click the "Add Action" button in this section of the Advanced Preferences.  
-From the list that's presented, select "Open Turnouts Table". Don't forget
+From the list that's presented, select "Open Turnout Table". Don't forget
 to save your updated Preferences with the button at the bottom of the screen!
 From the list that's presented, select "Open Power Control". 
 Don't forget
@@ -194,9 +194,11 @@ Also, you can choose to save both the size and location of the System Console
 window so that it always appears in the same place and at the same size.
 </dl>
 
+<a href="images/PrefsMsgPane421.png">
+<img src="images/PrefsMsgPane421.png" height="214" width="375" align="right" alt="JMRI v4.2 Roster Prefs tab"></a>
 <a name="Messages">
 <h2>Messages</h2></a>
-This allows you to change the way that information and warning messages are displayed in JMRI.  <br>
+This allows you to change the way that information and warning messages are displayed in JMRI.<br>
 It will also allow you to configure a default responses and the question being displayed.
 
 <a name="Roster">

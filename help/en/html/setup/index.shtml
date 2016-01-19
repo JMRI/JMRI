@@ -2,7 +2,6 @@
 <html lang="en">
 <head>
 <title>JMRI: Setup</title>
-
 <!-- Style -->
 <meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
 <link rel="stylesheet" type="text/css" href="/css/default.css" media="screen">
@@ -11,18 +10,21 @@
 <link rel="home" title="Home" href="/">
 <!-- /Style -->
 </head>
-
 <body>
 <!--#include virtual="/Header" -->
-
 <!--#include virtual="Sidebar" -->
 <div id="mainContent">
-
 <a name="Top"></a>
 <h1>JMRI&reg;: Setup</h1>
 <h2>General Installation</h2>
-
-<p>Full instructions for installing on different platform can be found her:</p>
+	<ul class="snav"><!-- TOC -->
+	<li><a href="#install">Installation</a>
+	<li><a href="#startprog">Starting JMRI</a>
+	<li><a href="#setprefs">Setting Preferences</a>
+	<li><a href="#debug">Fixing Problems</a>
+	</ul>
+<a name="install"></a><h3>Installation</h3>
+<p>Full instructions for installing on different platforms can be found here:</p>
 	<ul>
 	<li><a href="http://jmri.sourceforge.net/install/WindowsNew.shtml">Windows</a>
 	<li><a href="http://jmri.sourceforge.net/install/MacOSX.shtml">Mac OS X</a>
@@ -31,12 +33,16 @@
 	    <li><a href="http://jmri.sourceforge.net/install/Raspbian.shtml">RasPi</a>
 	    </ul>
 	</ul>
-
-<h2>Starting the program</h2>
+<p>JMRI&reg; requires that Java be installed.<br>
+Version 2.12 can run on any computer system that will run Java 1.5 or later.<br>
+Version 2.14.1 requires Java 1.5 (or 1.6 if you wish for drag &amp; drop)<br>
+Version 3.10.1 requires Java 1.7 or later.<br>
+Version 4.2 requires Java 1.8.</p>
+<a name="startprog"></a><h2>Starting the program</h2>
 <p>
-  Once you have downloaded the DecoderPro&reg; software and installed it, simply
+  Once you have downloaded the JMRI&reg; software and installed it, simply
 open the program in the usual manner for your operating system, windows will show icon on desktop.
-</p><p><img src="../../manual/DecoderPro/images/DesktopIcons.png" alt="desktop icons" height="79" width="223"> 
+</p><p><img src="images/JMRIDesktopIcons42.png" alt="windows desktop icons" height="138" width="231"> 
 </p><p>Double click on the icon for the program to open, in this case we will open DecoderPro&reg;
 </p><p>This dialog will appear briefly as the program is loading.
 </p><p>
@@ -45,33 +51,25 @@ open the program in the usual manner for your operating system, windows will sho
   see this or a similar opening screen displayed after program starts:</p>
   
 <p><img style="width: 456px; height: 282px;" alt="Splash screen" src="../../manual/DecoderPro/images/Splash_Screen.png"></p>
-
-<p>
-It may take a while for this screen to come up, especially on older
-and slower computers. Remember that you are essentially running the program
-on a Java emulator over your native operating system software. New computers
-can do this fairly quickly, but older ones will feel like they're taking
-forever. <strong>Be patient</strong> - it will come up eventually! Even on older computers, once the program is up the response time is quite good.
-</p><p>If this is the first time you have run the program after you installed the software, the Preferences screen will come up automatically to allow you to set up the system for
+<p>If this is the first time you have run the program after you installed the software, the Preferences screen will come up automatically to allow you to set up the system for
 your particular configuration. Also if you change your system
 configuration, OR if you have your laptop away from the railroad, but
 you want to play with JMRI there is a simulator mode you may want to
 try.<br>
 [To be continued]</p>
-
-<h2>Setting Preferences</h2>
+<a name="setprefs"></a><h2>Setting your Preferences</h2>
 	<ul>
-	<li><a href="../../package/apps/TabbedPreferences.shtml">Preference Pane</a></li>
-	<li><a href="../setup/profiles.shtml">Configuration Profiles</a></li>
+	<li>The <a href="../../package/apps/TabbedPreferences.shtml">Preference Pane</a></li>
+	<li><a href="profiles.shtml">Configuration Profiles</a></li>
+	<li><a href="Files.shtml">Configuration Files &amp; Locations</a></li>
 	</ul>
-
-<h2>Debugging</h2>	
+<a name="debug"></a><h2>Fixing Problems</h2>	
 	<ul>
-	<li><a href="../setup/Errors.shtml">Error Codes</a></li>
-	<li><a href="../../package/apps/InstallTest/InstallTest.shtml">InstallTest</a></li>
   <li><a href="http://jmri.sourceforge.net/install/Debug.shtml">Debugging an installation</a>
-  </ul>
-
+  <li><a href="../setup/Errors.shtml">Error Codes</a></li>
+	<li><a href="http://jmri.sourceforge.net/install/WindowsNew.shtml#installtest">InstallTest</a> (Windows only)</li>
+	<li><a href="Faq.shtml">Frequently Asked Questions</a></li>
+	</ul>
 <!--#include virtual="/Footer" -->
   </div><!-- closes #mainContent-->
  </div> <!-- closes #mBody-->

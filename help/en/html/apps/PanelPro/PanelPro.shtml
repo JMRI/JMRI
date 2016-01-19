@@ -19,23 +19,23 @@
 <!--#include virtual="Sidebar" -->
 <div id="mainContent">
 
-<h1>JMRI: PanelPro, An Application For Making Control Panels</h1>
+<h1>JMRI: PanelPro, an application to make Control Panels</h1>
 
 The  JMRI libraries
 contain the PanelPro application for creating simple control panels.
-This page describes that application, and how to use it.
+This page describes the application, and how to use it.
 <p>
-PanelPro provides two separate ways to create control panels.
+PanelPro provides two separate ways to create Control Panels:
 	<ul>
 	<li>The 
 	<a href="#pe">Panel Editor</a>
-	lets you draw a panel exactly the
+	lets you graphically draw a Panel exactly the
 	way you want it, and then animate parts of it to show the status of 
 	your layout and let you click to control it.
 	<li>The 
 	<a href="#le">Layout Editor</a>
-	provides tools for drawing your layout
-	while constructing the logic for signals, etc.  It constrains how 
+	provides tools to make a smart schematic of your layout
+	while constructing the logic for signals, etc.  This constrains how 
 	the panel appears a little, but it can save significant time when
 	first bringing your layout up.
 	</ul>
@@ -48,7 +48,7 @@ your entire layout. You only have a single Layout, otherwise it is not
 possible for the software to connect track elements together across the boundaries
 between multiple Layouts. 
 A Layout, built with the Layout Editor, can be used for directly controlling
-elements such as turnouts and signals; indeed many users find it very suitable for 
+elements such as Turnouts and Signals; indeed many users find it very suitable for 
 this task. But, it is primarily designed for automation and
 semi-automation within JMRI. For example, you can use the Layout Editor to
 construct a description of your track and its blocks and signals.
@@ -66,8 +66,8 @@ naming of blocks, etc..  In order to function, there are
 constraints on the appearance of track elements and how they are used.  
 
 <p> 
-The Panel Editor builds <i>graphical control</i> Panels.  You can have as
-many of Panels as you like, covering as much or as little of
+The Panel Editor builds <i>graphical</i> control Panels.  You can have as
+many Panels as you like, covering as much or as little of
 your railway as you like, with overlaps in area or functionality if required.   
 Panels might be diagrams showing the state of the track and signals, or 
 they might be prototypical signaling and dispatcher panels.  Or anything else
@@ -91,14 +91,14 @@ that describes how Panel Pro and Layout Editor can be used together.
 
 <p>
 Please see our
-<a href="http://jmri.sf.net/community/examples/Gallery.shtml">gallery page</a>
+<a href="http://jmri.sf.net/community/examples/Gallery.shtml">Gallery page</a>
 for examples of how model railroaders have used this on their own layouts.
 There's also an example of using PanelPro for
 <a href="http://jmri.sf.net/community/examples/Modules.shtml">modular layouts</a>.
 
 <p>
 Rodney Black's <a href="http://cats4ctc.org/">CATS</a>
-application is another tool for creating modern-style control panels.
+application is another tool for creating modern-style Control Panels.
 
 <a name="pe"><h2>The Panel Editor</h2></a>
 <a href="../../../images/CornwallPanelLit.gif"><img src="../../../images/CornwallPanelLit.gif" alt="screen shot of Cornwall panel" width="333" height="200" hspace="0" vspace="0"></a>
@@ -215,9 +215,9 @@ More information about these is available on the
 <a href="../../../package/jmri/jmrit/display/PanelEditor.shtml">Panel Editor help page</a>.
 
 <p>
-After getting the panel the way you want, you can use the "Store panel..." 
-entry in the "Panels" menu
-to write it to an XML file.
+After getting the Panel the way you want, you can use the "Store panel..." 
+entry in the "Panels" menu to write it to an .xml file.
+More information about the <a href="../../setup/Files.shtml">JMRI Configuration Files</a> 
 
 <h3>Available Icons</h3>
 The JMRI library contains lots of contributed icons

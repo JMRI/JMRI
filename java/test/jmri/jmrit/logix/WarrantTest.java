@@ -189,17 +189,10 @@ public class WarrantTest extends TestCase {
         Assert.assertNotNull("PropertyChangeListener", listener);
         warrant.addPropertyChangeListener(listener);
         
-        jmri.jmrix.nce.simulator.SimulatorAdapter nceSimulator = new jmri.jmrix.nce.simulator.SimulatorAdapter();
-        Assert.assertNotNull("Nce SimulatorAdapter", nceSimulator);
-        jmri.jmrix.nce.NceSystemConnectionMemo memo = nceSimulator.getSystemConnectionMemo();
-        nceSimulator.openPort("(None Selected)", "JMRI test");
-        nceSimulator.configure();
-        Assert.assertNotNull("NceSystemConnectionMemo", memo);
-
         msg = warrant.setRunMode(Warrant.MODE_RUN, null, null, null, false);
         Assert.assertNull("setRunMode - "+msg, msg);
         try {
-            jmri.util.JUnitUtil.releaseThread(this);            
+            jmri.util.JUnitUtil.releaseThread(this); // nothing specific to wait for...
             sWest.setState(Sensor.ACTIVE);
             jmri.util.JUnitUtil.releaseThread(this);             
             sSouth.setState(Sensor.ACTIVE);
@@ -207,6 +200,9 @@ public class WarrantTest extends TestCase {
         } catch (Exception e) {
             System.out.println(e);            
         }
+
+        // confirm one message logged
+        jmri.util.JUnitAppender.assertWarnMessage("RosterSpeedProfile not found. Using default ThrottleFactor 0.75");
 
         // wait for done
         jmri.util.JUnitUtil.waitFor(()->{return warrant.getThrottle()==null;}, "engineer blocked");
@@ -269,6 +265,7 @@ public class WarrantTest extends TestCase {
         JUnitUtil.initInternalLightManager();
         JUnitUtil.initInternalSensorManager();
         JUnitUtil.initInternalSignalHeadManager();
+        JUnitUtil.initDebugThrottleManager();
         JUnitUtil.initMemoryManager();
         JUnitUtil.initOBlockManager();
         JUnitUtil.initLogixManager();

@@ -1484,6 +1484,7 @@ public class Train implements java.beans.PropertyChangeListener {
         }
         int startYear = 0; // default start year;
         int endYear = 99999; // default end year;
+        int builtYear = -1900;
         try {
             startYear = Integer.parseInt(getBuiltStartYear());
         } catch (NumberFormatException e1) {
@@ -1495,33 +1496,26 @@ public class Train implements java.beans.PropertyChangeListener {
             log.debug("Train (" + getName() + ") built end date not initialized, end: " + getBuiltEndYear());
         }
         try {
-            int builtYear = Integer.parseInt(date);
-            if (startYear < builtYear && builtYear < endYear) {
-                return true;
-            } else {
-                return false;
-            }
+            builtYear = Integer.parseInt(date);
         } catch (NumberFormatException e1) {
             // log.debug("Built date: "+date+" isn't an integer");
             // maybe the built date is in the format month-year
             String[] built = date.split("-");
-            if (built.length > 1) {
+            if (built.length == 2) {
                 try {
-                    int builtYear = Integer.parseInt(built[1]);
-                    if (builtYear < 100) {
-                        builtYear = builtYear + 1900;
-                    }
-                    if (startYear < builtYear && builtYear < endYear) {
-                        return true;
-                    } else {
-                        return false;
-                    }
+                    builtYear = Integer.parseInt(built[1]);
                 } catch (NumberFormatException e2) {
                     log.debug("Unable to parse car built date " + date);
                 }
             }
-            return false;
         }
+        if (builtYear < 100) {
+            builtYear = builtYear + 1900;
+        }
+        if (startYear < builtYear && builtYear < endYear) {
+            return true;
+        }
+        return false;
     }
 
     private boolean debugFlag = false;
@@ -3192,6 +3186,38 @@ public class Train implements java.beans.PropertyChangeListener {
                     }
                 }
                 break; // done
+            }
+        }
+        return false;
+    }
+    
+    /**
+     * Moves the train to the specified route location
+     * @param rl route location
+     * @return true if successful
+     */
+    public boolean move(RouteLocation rl) {
+        if (rl == null) {
+            return false;
+        }
+        log.info("Move train ({}) to location ({})", getName(), rl.getName());
+        if (getRoute() == null || getCurrentLocation() == null) {
+            return false;
+        }
+        boolean foundCurrent = false;
+        for (RouteLocation xrl : getRoute().getLocationsBySequenceList()) {
+            if (getCurrentLocation() == xrl) {
+                foundCurrent = true;
+            }
+            if (xrl == rl) {
+                if (foundCurrent) {
+                    return true; // done
+                } else {
+                    break; // train passed this location
+                }
+            }
+            if (foundCurrent) {
+                move();
             }
         }
         return false;

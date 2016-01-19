@@ -33,7 +33,7 @@ To add a new Transit, follow this procedure:
 			The created name will be IZnn, where nn is the next available number.</li>
 			<li>Uncheck <b>Automatically Generate System Name</b>, and enter a <b>System Name</b>,
 			according to the JMRI convention. Since Transits are internal objects, the first 
-			letter should be "I" (for internal). The second letter should be "Z" to indicate a 
+			letter should be "I" (for Internal). The second letter should be "Z" to indicate a 
 			Transit. This is usually followed by a number, but the program will accept any 
 			numeric or alphabetic characters. The system name must be different from the System 
 			Name of other Transits.  If the name you enter does not begin with "IZ", the program
@@ -113,7 +113,7 @@ To add a new Transit, follow this procedure:
 	</ol>
 
 <p>Note: The <b>Direction</b> and <b>Alternate</b> columns in the Add/Edit 
-Transit table are for information only. They are set automatically as you 
+Transit Table are for information only. They are set automatically as you 
 build the Transit. The Direction column indicates the direction of travel 
 through the Section, and the Alternate column indicates whether the Section 
 is the <i>primary</i> Section for this order number or an <i>alternate</i> 
@@ -142,6 +142,8 @@ To edit an existing Transit, follow  this procedure:
 	is automatically selected, and no changes are made to the selected Transit.
 	</li>
 	</ol>
+
+<p>Back to the <a href="TransitTable.shtml">Transit Table help page<a>.</p>
 
 <!--#include virtual="/Footer" -->
 

@@ -49,6 +49,7 @@ public class TrainBuilder extends TrainCommon {
     protected static final String FIVE = Setup.BUILD_REPORT_DETAILED;
     protected static final String SEVEN = Setup.BUILD_REPORT_VERY_DETAILED;
 
+    private static final int DISPLAY_CAR_LIMIT_20 = 20; // build exception out of staging
     private static final int DISPLAY_CAR_LIMIT_50 = 50;
     private static final int DISPLAY_CAR_LIMIT_100 = 100;
 
@@ -2310,15 +2311,11 @@ public class TrainBuilder extends TrainCommon {
                 if (car.getKernel() != null) {
                     for (Car c : car.getKernel().getCars()) {
                         carCount++;
-                        if (carCount < 21) {
-                            buf.append(NEW_LINE + " " + c.toString());
-                        }
+                        addCarToBuf(c, buf, carCount);
                     }
                 } else {
                     carCount++;
-                    if (carCount < 21) {
-                        buf.append(NEW_LINE + " " + car.toString());
-                    }
+                    addCarToBuf(car, buf, carCount);
                 }
             }
         }
@@ -2327,6 +2324,15 @@ public class TrainBuilder extends TrainCommon {
             String msg = MessageFormat.format(Bundle.getMessage("buildStagingCouldNotFindDest"), new Object[]{
                     carCount, _departStageTrack.getLocation().getName(), _departStageTrack.getName()});
             throw new BuildFailedException(msg + buf.toString(), BuildFailedException.STAGING);
+        }
+    }
+    
+    private void addCarToBuf(Car car, StringBuffer buf, int carCount) {
+        if (carCount <= DISPLAY_CAR_LIMIT_20) {
+            buf.append(NEW_LINE + " " + car.toString());
+        } else if (carCount == DISPLAY_CAR_LIMIT_20 + 1) {
+            buf.append(NEW_LINE + MessageFormat.format(Bundle.getMessage("buildOnlyFirstXXXCars"),
+                    new Object[]{DISPLAY_CAR_LIMIT_20, _departStageTrack.getName()}));
         }
     }
 
@@ -3330,7 +3336,9 @@ public class TrainBuilder extends TrainCommon {
             return false;
         }
         List<Track> tracks = locationManager.getTracks(Track.STAGING);
-        log.debug("Found {} staging tracks for load generation", tracks.size());
+//        log.debug("Found {} staging tracks for load generation", tracks.size());
+        addLine(_buildReport, FIVE, MessageFormat.format(Bundle.getMessage("buildTryStagingToStaging"),
+                new Object[]{car.toString(), tracks.size()}));
         // list of locations that can't be reached by the router
         List<Location> locationsNotReachable = new ArrayList<Location>();
         while (tracks.size() > 0) {
@@ -4542,7 +4550,9 @@ public class TrainBuilder extends TrainCommon {
         leadEngine.reset(); // remove this engine from the train
         _engineList.add(0, leadEngine); // put engine back into the pool
         _train.setLeadEngine(null);
-
+        if (hpNeeded <= 0) {
+            hpNeeded = 50; // the minimum HP
+        }
         int hpMax = hpNeeded;
         // largest single engine HP known today is less than 15,000
         hpLoop: while (hpMax < 20000) {

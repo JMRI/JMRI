@@ -30,10 +30,32 @@
 </ul>
 
 <h2 name="overview" id="overview">Overview</h2>
-<p>
-DCC++ is an Open Source Arduino-based <a href="#documentation">Do-it-Yourself</a> DCC Command Station.
+<p>DCC++ is an Open Source Arduino-based <a href="#documentation">Do-it-Yourself</a> DCC Command Station.</p>
+<p>You can learn more about DCC++ on the 
+    <a href="https://sites.google.com/site/dccppsite/home" target="_blank">DCC++ Website</a>.</p>
 
-<p><strong><em>NOTE:</em> DCC++ Support only works in JMRI 4.1.5 (for now).  Do not use 4.1.6 or 4.2.0 with DCC++</strong></p>
+<p>Features include:
+<ul>
+    <li>Fully compliant with NMRA DCC standards</li>
+    <li>2-byte and 4-byte locomotive addressing</li>
+    <li>Simultaneous control of multiple locomotives</li>
+    <li>128-step speed control</li>
+    <li>Control all cab functions F0-F28</li>
+    <li>Activate/de-activate all accessory function addresses 0-2048</li>
+    <li>Programming on the Programming Track</li>
+    <ul><li>Write configuration variable bytes</li>
+        <li>Set/clear specific configuration variable bits</li>
+        <li>Read configuration variable bytes</li>
+    </ul>
+    <li>Programming on the Main Operations Track</li>
+    <ul><li>Write configuration variable bytes</li>
+        <li>Set/clear specific configuration variable bits</li>
+    </ul>
+    <li>Control DCC turnouts and sensors</li>
+    <li>Directly access and control Arduino IO pins for accessory functions and sensors</li>
+</ul>
+
+<p><strong><em>NOTE:</em>DCC++ support is broken in JMRI 4.1.6 and 4.2.x releases. Please use JMRI 4.3.1 or newer releases with DCC++</strong></p>
 
 <a name="hardware"></a><h2>Supported Hardware</h2>
 

@@ -2,11 +2,11 @@
 <html lang="en">
 <head>
  <title>
-      JMRI: Blocks Table Help
+      JMRI: Block Table Help
  </title>
     <meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
     <meta content="Bob Jacobsen" name="Author">
-    <meta name="keywords" content="JMRI help Blocks Table">
+    <meta name="keywords" content="JMRI help Block Table">
 
 <!--#include virtual="/Style" -->
 </head>
@@ -16,29 +16,29 @@
   <div class="nomenu" id="mBody">
     <div id="mainContent">
 
-<h1>The Blocks Table</h1>
+<h1>The Block Table</h1>
 
 <p>Back to the <a href="../../../../html/tools/Blocks.shtml">Blocks Help page</a>
 
-<p>Blocks may be set up manually in the Blocks Table, using a script, or automatically in a Layout Editor Panel. When a 
+<p>Blocks may be set up manually in the Block Table, using a script, or automatically in a Layout Editor Panel. When a 
 Block is defined in a Layout Editor Panel, a new Block is created if one does not already
 exist. In Layout Editor, Blocks are identified by their User Name, so if a Block shown 
-in the Blocks Table is used in a Layout Editor Panel, its User Name should not be changed.<br>
+in the Block Table is used in a Layout Editor Panel, its User Name should not be changed.<br>
 If you want to change the User Name of a Block used in a Layout Editor Panel, make the 
-change in the Layout Editor, not in the Blocks Table.</p>
+change in the Layout Editor, not in the Block Table.</p>
 <p>To complete the definition of a Block, Paths and Bean Settings must be attached to 
 each Block. Paths describe entry points to the Block. Each Block has one or more Paths
 associated with it. Sometimes a Turnout must be set a certain way to use a Path; Bean 
 Settings carry that information. Paths and Bean Settings are set up automatically for 
 Blocks defined in a Layout Editor Panel. They can also be set up in a script. There is 
 currently no way to manually enter Paths or Bean Settings. Paths and Bean Settings are 
-not shown in the Blocks Table, and are described here only for completeness.</p>
+not shown in the Block Table, and are described here only for completeness.</p>
 <p>For use in automatically running Trains, a Length attribute and a Curvature attribute 
 may optionally be assigned to a Block. These optional attributes are entered manually 
-in this table. If Trains will not be run automatically through 
+in this Table. If Trains will not be run automatically through 
 a Block, there is no need to add these attributes.</p>
 
-<h2>Columns in the Blocks Table:</h2>
+<h2>Columns in the Block Table:</h2>
 <ul>
 <li><p><b>System Name</b> - The System Name of the Block. There is no functional 
 requirement for a type letter in the System Name of a Block, but by convention we use 
@@ -73,7 +73,7 @@ enter the length of the Block here. The length is used for automatic running of 
 If '0.0' is displayed, the length has not yet been entered. The entered length should be the 
 actual length of the Block on the model railroad layout. Length is entered and displayed 
 in either inches or centimeters, depending on which unit is requested at the bottom of 
-the Blocks Table pane.</p></li>
+the Block Table pane.</p></li>
 
 <li><p><b>Curvature</b> (optional) - Displays the Curvature selected for the track in 
 the Block. Curvature is used for automatic running of trains, and need not be entered 
@@ -88,7 +88,7 @@ selection should be made according to the most limiting part of the Block.</p></
 Shows the current state of the block, Occupied or UnOccupied
 
 <li><p><b>Reporter</b>
-The Reporter assigned to this Block. See the <a href="ReporterTable.shtml">Reporters Table</a>. Puts the Reporter Value into 
+The Reporter assigned to this Block. See the <a href="ReporterTable.shtml">Reporter Table</a>. Puts the Reporter Value into 
 the Block value.
 
 <li><p><b>Use Current?</b>
@@ -137,7 +137,7 @@ have been predefined in the <code>signalSpeed.xml</code> file, in addition to a 
 <p>To add a new Block, see <a href="BlockAddEdit.shtml">Add/Edit Block Entries</a></p>
 
 <h3>Editing an existing Block</h3>
-<p>To check or change the properties of a Block, click the <strong><a href="BlockEdit.shtml">Edit</a></strong> button to the right of a Block entry in the Blocks Table, see <a href="BlockEdit.shtml">Edit Block</a>.</p>
+<p>To check or change the properties of a Block, click the <strong><a href="BlockEdit.shtml">Edit</a></strong> button to the right of a Block entry in the Block Table, see <a href="BlockEdit.shtml">Edit Block</a>.</p>
 
 <p><a href="../../../../html/tools/tracker/index.shtml">More on Block Tracking</a></p>
 <p><a href="../display/LayoutEditor.shtml">Using Blocks with Layout Editor</a></p>

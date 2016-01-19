@@ -1,6 +1,5 @@
 package apps.gui;
 
-import apps.GuiLafConfigPane;
 import java.awt.Font;
 import java.util.Enumeration;
 import java.util.HashSet;
@@ -12,7 +11,6 @@ import javax.swing.ToolTipManager;
 import javax.swing.UIManager;
 import javax.swing.UIManager.LookAndFeelInfo;
 import javax.swing.UnsupportedLookAndFeelException;
-import javax.swing.plaf.FontUIResource;
 import jmri.beans.Bean;
 import jmri.profile.Profile;
 import jmri.profile.ProfileUtils;
@@ -33,10 +31,25 @@ public class GuiLafPreferencesManager extends Bean implements PreferencesProvide
     public static final String LOOK_AND_FEEL = "lookAndFeel";
     public static final String NONSTANDARD_MOUSE_EVENT = "nonstandardMouseEvent";
     public final static String SHOW_TOOL_TIP_TIME = "showToolTipDismissDelay";
+    /**
+     * Smallest font size a user can set the font size to other than zero
+     * ({@value}). A font size of 0 indicates that the system default font size
+     * will be used.
+     *
+     * @see apps.GuiLafConfigPane#MIN_DISPLAYED_FONT_SIZE
+     */
+    public static final int MIN_FONT_SIZE = 9;
+    /**
+     * Largest font size a user can set the font size to ({@value}).
+     *
+     * @see apps.GuiLafConfigPane#MAX_DISPLAYED_FONT_SIZE
+     */
+    public static final int MAX_FONT_SIZE = 36;
 
     // preferences with default values
     private Locale locale = Locale.getDefault();
     private int fontSize = 0;
+    private int defaultFontSize = 0;
     private boolean nonStandardMouseEvent = false;
     private String lookAndFeel = UIManager.getLookAndFeel().getClass().getName();
     private int toolTipDismissDelay = ToolTipManager.sharedInstance().getDismissDelay();
@@ -52,13 +65,16 @@ public class GuiLafPreferencesManager extends Bean implements PreferencesProvide
     public void initialize(Profile profile) throws InitializationException {
         if (!this.initialized) {
             Preferences preferences = ProfileUtils.getPreferences(profile, this.getClass(), true);
-            this.setFontSize(preferences.getInt(FONT_SIZE, this.getFontSize()));
             this.setLocale(Locale.forLanguageTag(preferences.get(LOCALE, this.getLocale().toLanguageTag())));
             this.setLookAndFeel(preferences.get(LOOK_AND_FEEL, this.getLookAndFeel()));
+            this.setDefaultFontSize(); // before we change anything
+            this.setFontSize(preferences.getInt(FONT_SIZE, this.getDefaultFontSize()));
+            if (this.getFontSize() == 0) {
+                this.setFontSize(this.getDefaultFontSize());
+            }
             this.setNonStandardMouseEvent(preferences.getBoolean(NONSTANDARD_MOUSE_EVENT, this.isNonStandardMouseEvent()));
             this.setToolTipDismissDelay(preferences.getInt(SHOW_TOOL_TIP_TIME, this.getToolTipDismissDelay()));
             Locale.setDefault(this.getLocale());
-            GuiLafConfigPane.setFontSize(this.getFontSize()); // This is backwards - GuiLafConfigPane should be getting our fontSize when it needs it
             this.applyLookAndFeel();
             this.applyFontSize();
             SwingSettings.setNonStandardMouseEvent(this.isNonStandardMouseEvent());
@@ -88,7 +104,13 @@ public class GuiLafPreferencesManager extends Bean implements PreferencesProvide
         Preferences preferences = ProfileUtils.getPreferences(profile, this.getClass(), true);
         preferences.put(LOCALE, this.getLocale().toLanguageTag());
         preferences.put(LOOK_AND_FEEL, this.getLookAndFeel());
-        preferences.putInt(FONT_SIZE, this.getFontSize());
+        int temp = this.getFontSize();
+        if (temp == this.getDefaultFontSize()) {
+            temp = 0;
+        }
+        if (temp != preferences.getInt(FONT_SIZE, -1)) {
+            preferences.putInt(FONT_SIZE, temp);
+        }
         preferences.putBoolean(NONSTANDARD_MOUSE_EVENT, this.isNonStandardMouseEvent());
         preferences.putInt(SHOW_TOOL_TIP_TIME, this.getToolTipDismissDelay());
         try {
@@ -115,28 +137,71 @@ public class GuiLafPreferencesManager extends Bean implements PreferencesProvide
     }
 
     /**
-     * @return the fontSize
+     * @return the currently selected font size
      */
     public int getFontSize() {
         return fontSize;
     }
 
     /**
-     * @param fontSize the fontSize to set
+     * Sets a new font size
+     *
+     * @param newFontSize the new font size to set
      */
-    public void setFontSize(int fontSize) {
+    public void setFontSize(int newFontSize) {
         int oldFontSize = this.fontSize;
-        this.fontSize = (fontSize == 0) ? 0 : ((fontSize < 9) ? 9 : ((fontSize > 20) ? 20 : fontSize));
+        this.fontSize = (newFontSize == 0) ? 0 : ((newFontSize < MIN_FONT_SIZE) ? MIN_FONT_SIZE : ((newFontSize > MAX_FONT_SIZE) ? MAX_FONT_SIZE : newFontSize));
         if (this.fontSize != oldFontSize) {
             propertyChangeSupport.firePropertyChange(FONT_SIZE, oldFontSize, this.fontSize);
         }
     }
 
+   /**
+     * @return the current Look & Feel default font size
+     */
+    public int getDefaultFontSize() {
+        return defaultFontSize;
+    }
+
+   /**
+     * Called to load the current Look & Feel default font size, based on looking up the "List.font" size
+     * <br><br>
+     * The value can be can be read by calling {@link #getDefaultFontSize()}
+     */
+    public void setDefaultFontSize() {
+        java.util.Enumeration<Object> keys = UIManager.getDefaults().keys();
+        while (keys.hasMoreElements()) {
+            Object key = keys.nextElement();
+            Object value = UIManager.get(key);
+
+            if (value instanceof javax.swing.plaf.FontUIResource && key.toString().equals("List.font")) {
+                Font f = UIManager.getFont(key);
+                log.debug("Key:" + key.toString() + " Font: " + f.getName() + " size: " + f.getSize());
+                defaultFontSize = f.getSize();
+                return;
+            }
+        }
+        defaultFontSize = 11;	// couldn't find the default return a reasonable font size
+    }
+
+    private void listLAFfonts() {
+        log.info("******** LAF=" + UIManager.getLookAndFeel().getClass().getName());
+        java.util.Enumeration<Object> keys = UIManager.getDefaults().keys();
+        while (keys.hasMoreElements()) {
+            Object key = keys.nextElement();
+            Object value = UIManager.get(key);
+            if (value instanceof javax.swing.plaf.FontUIResource || value instanceof java.awt.Font || key.toString().endsWith(".font")) {
+                Font f = UIManager.getFont(key);
+                log.info("Class=" + value.getClass().getName() + ";Key:" + key.toString() + " Font: " + f.getName() + " size: " + f.getSize());
+            }
+        }
+    }
+
     /**
      * Sets the time a tooltip is displayed before it goes away.
-     * 
+     *
      * Note that this preference takes effect immediately.
-     * 
+     *
      * @param time the delay in seconds.
      */
     public void setToolTipDismissDelay(int time) {
@@ -213,22 +278,38 @@ public class GuiLafPreferencesManager extends Bean implements PreferencesProvide
         }
     }
 
+    /**
+     * Applies a new calculated font size to all found fonts.
+     * <br><br>
+     * Calls {@link #getCalcFontSize(int) getCalcFontSize} to calculate new size for each.
+     */
     private void applyFontSize() {
-        if (this.getFontSize() != 0) {
+        if (log.isDebugEnabled()) {
+            listLAFfonts();
+        }
+        if (this.getFontSize() != this.getDefaultFontSize()) {
 //            UIManager.getDefaults().keySet().stream().forEach((key) -> {
-//                Object value = UIManager.get(key);
-//                if (value instanceof FontUIResource) {
-//                    UIManager.put(key, UIManager.getFont(key).deriveFont(((Font)value).getStyle(), (float) this.getFontSize()));
-//                }
-//            });
             Enumeration<Object> keys = UIManager.getDefaults().keys();
             while (keys.hasMoreElements()) {
                 Object key = keys.nextElement();
                 Object value = UIManager.get(key);
-                if (value instanceof FontUIResource) {
-                    UIManager.put(key, UIManager.getFont(key).deriveFont(((Font) value).getStyle(), this.getFontSize()));
+                if (value instanceof javax.swing.plaf.FontUIResource || value instanceof java.awt.Font || key.toString().endsWith(".font")) {
+                    UIManager.put(key, UIManager.getFont(key).deriveFont(((Font) value).getStyle(), getCalcFontSize(((Font) value).getSize())));
                 }
             }
+            if (log.isDebugEnabled()) {
+                listLAFfonts();
+            }
         }
+    }
+
+    /**
+     * @return a new calculated font size based on difference between default
+     * size and selected size
+     *
+     * @param oldSize the old font size
+     */
+    private int getCalcFontSize(int oldSize) {
+        return oldSize + (this.getFontSize() - this.getDefaultFontSize());
     }
 }

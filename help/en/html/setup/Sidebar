@@ -7,7 +7,7 @@
 	    <div style="text-align: center">JMRI&reg; is...</div>
 	    <dl class="toc">
 
-		<dt><h3>Setup</h3></dt>
+		<dt><h3><a href="index.shtml">Setup</a></h3></dt>
 		<dd>
 			<ul>
 			<li><a href="../../package/apps/TabbedPreferences.shtml">Preference Pane</a></li>

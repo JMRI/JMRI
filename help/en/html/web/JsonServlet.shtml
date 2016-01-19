@@ -19,6 +19,10 @@
                 border: 1px solid grey;
                 width: 33%;
             }
+            table.data {
+                margin: initial;
+                margin-left: 2em;
+            }
             code {
                 white-space: normal;
             }
@@ -76,33 +80,33 @@
             <h3>List Names</h3>
             <p>Currently the servlet supports the following list names (not all of these are actually lists) used for GET operations to return lists. 
                 These lists are roughly grouped according to the module that uses them.</p>
-            <table>
-                <tr><th>Name</th><th>GET</th><th>PUT</th><th>POST</th><th>Module</th></tr>
-                <tr><td>cars</td><td>*</td><td></td><td></td><td>OperationsPro</td></tr>
-                <tr><td>consits</td><td>*</td><td></td><td></td><td>DecoderPro</td></tr>
-                <tr><td>engines</td><td>*</td><td></td><td></td><td>OperationsPro</td></tr>
-                <tr><td>hello</td><td>*</td><td></td><td></td><td>DecoderPro</td></tr>
-                <tr><td>lights</td><td>*</td><td></td><td></td><td>LocoTools</td></tr>
-                <tr><td>locations</td><td>*</td><td></td><td></td><td>OperationsPro</td></tr>
-                <tr><td>panels</td><td>*</td><td></td><td></td><td>PanelPro</td></tr>
-                <tr><td>memories</td><td>*</td><td></td><td></td><td>DecoderPro</td></tr>
-                <tr><td>metadata</td><td>*</td><td></td><td></td><td>DecoderPro</td></tr>
-                <tr><td>networkServices</td><td>*</td><td></td><td></td><td>DecoderPro</td></tr>
-                <tr><td>node</td><td>*</td><td></td><td></td><td>DecoderPro</td></tr>
-                <tr><td>power</td><td>*</td><td>*</td><td>*</td><td>DecoderPro</td></tr>
-                <tr><td>railroad</td><td>*</td><td></td><td></td><td>DecoderPro</td></tr>
-                <tr><td>roster</td><td>*</td><td></td><td></td><td>DecoderPro</td></tr>
-                <tr><td>rosterGroups</td><td>*</td><td></td><td></td><td>DecoderPro</td></tr>
-                <tr><td>routes</td><td>*</td><td></td><td></td><td>OperationsPro</td></tr>
-                <tr><td>systemConnections</td><td>*</td><td></td><td></td><td>DecoderPro</td></tr>
-                <tr><td>time</td><td>*</td><td></td><td></td><td>DecoderPro</td></tr>
-                <tr><td>trains</td><td>*</td><td></td><td></td><td>OperationsPro</td></tr>
-                <tr><td>reporters</td><td>*</td><td></td><td></td><td>LocoTools</td></tr>
-                <tr><td>routes</td><td>*</td><td></td><td></td><td>LocoTools</td></tr>
-                <tr><td>signalHeads</td><td>*</td><td></td><td></td><td>LocoTools</td></tr>
-                <tr><td>signalMasts</td><td>*</td><td></td><td></td><td>LocoTools</td></tr>
-                <tr><td>sensors</td><td>*</td><td></td><td></td><td>LocoTools</td></tr>
-                <tr><td>turnouts</td><td>*</td><td></td><td></td><td>LocoTools</td></tr>
+            <table class="data">
+                <tr><th>Name</th>             <th>GET</th> <th>PUT</th> <th>POST</th> <th>Module</th></tr>
+                <tr><td>cars</td>             <td>*</td>   <td></td>    <td></td>     <td>OperationsPro</td></tr>
+                <tr><td>consits</td>          <td>*</td>   <td></td>    <td></td>     <td>DecoderPro</td></tr>
+                <tr><td>engines</td>          <td>*</td>   <td></td>    <td></td>     <td>OperationsPro</td></tr>
+                <tr><td>hello</td>            <td>*</td>   <td></td>    <td></td>     <td>DecoderPro</td></tr>
+                <tr><td>lights</td>           <td>*</td>   <td></td>    <td></td>     <td>LocoTools</td></tr>
+                <tr><td>locations</td>        <td>*</td>   <td></td>    <td></td>     <td>OperationsPro</td></tr>
+                <tr><td>panels</td>           <td>*</td>   <td></td>    <td></td>     <td>PanelPro</td></tr>
+                <tr><td>memories</td>         <td>*</td>   <td></td>    <td></td>     <td>DecoderPro</td></tr>
+                <tr><td>metadata</td>         <td>*</td>   <td></td>    <td></td>     <td>DecoderPro</td></tr>
+                <tr><td>networkServices</td>  <td>*</td>   <td></td>    <td></td>     <td>DecoderPro</td></tr>
+                <tr><td>node</td>             <td>*</td>   <td></td>    <td></td>     <td>DecoderPro</td></tr>
+                <tr><td>power</td>            <td>*</td>   <td>*</td>   <td>*</td>    <td>DecoderPro</td></tr>
+                <tr><td>railroad</td>         <td>*</td>   <td></td>    <td></td>     <td>DecoderPro</td></tr>
+                <tr><td>roster</td>           <td>*</td>   <td></td>    <td></td>     <td>DecoderPro</td></tr>
+                <tr><td>rosterGroups</td>     <td>*</td>   <td></td>    <td></td>     <td>DecoderPro</td></tr>
+                <tr><td>routes</td>           <td>*</td>   <td></td>    <td></td>     <td>OperationsPro</td></tr>
+                <tr><td>systemConnections</td><td>*</td>   <td></td>    <td></td>     <td>DecoderPro</td></tr>
+                <tr><td>time</td>             <td>*</td>   <td></td>    <td></td>     <td>DecoderPro</td></tr>
+                <tr><td>trains</td>           <td>*</td>   <td></td>    <td></td>     <td>OperationsPro</td></tr>
+                <tr><td>reporters</td>        <td>*</td>   <td></td>    <td></td>     <td>LocoTools</td></tr>
+                <tr><td>routes</td>           <td>*</td>   <td></td>    <td></td>     <td>LocoTools</td></tr>
+                <tr><td>signalHeads</td>      <td>*</td>   <td></td>    <td></td>     <td>LocoTools</td></tr>
+                <tr><td>signalMasts</td>      <td>*</td>   <td></td>    <td></td>     <td>LocoTools</td></tr>
+                <tr><td>sensors</td>          <td>*</td>   <td></td>    <td></td>     <td>LocoTools</td></tr>
+                <tr><td>turnouts</td>         <td>*</td>   <td></td>    <td></td>     <td>LocoTools</td></tr>
             </table>
 
             <p>Note that these names are case sensitive, so you must supply them as shown above. As an example, let's say you issued the following GET command:</p>
@@ -138,25 +142,25 @@
             <h3>Type Names</h3>
             <p>Here are the different type names supported for the second pattern, along with which HTTP operations are supported:</p>
 
-            <table>
-                <tr><th>Name</th><th>GET</th><th>PUT</th><th>POST</th><th>DELETE</th</th><th>Module</th></tr>
-                <tr><td>car</td><td>*</td><td></td><td></td><td></td><td>OperationsPro</td></tr>
-                <tr><td>consit</td><td>*</td><td>*</td><td>*</td><td>*</td><td>DecoderPro</td></tr>
-                <tr><td>engine</td><td>*</td><td></td><td></td><td></td><td>OperationsPro</td></tr>
-                <tr><td>light</td><td>*</td><td>*</td><td>*</td><td></td><td>LocoTools</td></tr>
-                <tr><td>location</td><td>*</td><td></td><td></td><td></td><td>OperationsPro</td></tr>
-                <tr><td>memory</td><td>*</td><td>*</td><td>*</td><td></td><td>DecoderPro</td></tr>
-                <tr><td>metadata</td><td>*</td><td></td><td></td><td></td><td>DecoderPro</td></tr>
-                <tr><td>reporter</td><td>*</td><td>*</td><td>*</td><td></td><td>LocoTools</td></tr>
-                <tr><td>roster</td><td>*</td><td></td><td></td><td></td><td>DecoderPro</td></tr>
-                <tr><td>rosterEntry</td><td>*</td><td></td><td></td><td></td><td>DecoderPro</td></tr>
-                <tr><td>rosterGroup</td><td>*</td><td></td><td></td><td></td><td>DecoderPro</td></tr>
-                <tr><td>route</td><td>*</td><td></td><td>*</td><td></td><td>OperationsPro</td></tr>
-                <tr><td>sensor</td><td>*</td><td>*</td><td>*</td><td></td><td>LocoTools</td></tr>
-                <tr><td>signalHead</td><td>*</td><td></td><td>*</td><td></td><td>LocoTools</td></tr>
-                <tr><td>signalMast</td><td>*</td><td></td><td>*</td><td></td><td>LocoTools</td></tr>
-                <tr><td>train</td><td>*</td><td></td><td>*</td><td></td><td>OperationsPro</td></tr>
-                <tr><td>turnout</td><td>*</td><td>*</td><td>*</td><td></td><td>LocoTools</td></tr>
+            <table class="data">
+                <tr><th>Name</th>        <th>GET</th>   <th>PUT</th>    <th>POST</th>   <th>DELETE</th</th><th>Module</th></tr>
+                <tr><td>car</td>         <td>*</td>     <td></td>       <td></td>       <td></td><td>OperationsPro</td></tr>
+                <tr><td>consit</td>      <td>*</td>     <td>*</td>      <td>*</td>      <td>*</td><td>DecoderPro</td></tr>
+                <tr><td>engine</td>      <td>*</td>     <td></td>       <td></td>       <td></td><td>OperationsPro</td></tr>
+                <tr><td>light</td>       <td>*</td>     <td>*</td>      <td>*</td>      <td></td><td>LocoTools</td></tr>
+                <tr><td>location</td>    <td>*</td>     <td></td>       <td></td>       <td></td><td>OperationsPro</td></tr>
+                <tr><td>memory</td>      <td>*</td>     <td>*</td>      <td>*</td>      <td></td><td>DecoderPro</td></tr>
+                <tr><td>metadata</td>    <td>*</td>     <td></td>       <td></td>       <td></td><td>DecoderPro</td></tr>
+                <tr><td>reporter</td>    <td>*</td>     <td>*</td>      <td>*</td>      <td></td><td>LocoTools</td></tr>
+                <tr><td>roster</td>      <td>*</td>     <td></td>       <td></td>       <td></td><td>DecoderPro</td></tr>
+                <tr><td>rosterEntry</td> <td>*</td>     <td></td>       <td></td>       <td></td><td>DecoderPro</td></tr>
+                <tr><td>rosterGroup</td> <td>*</td>     <td></td>       <td></td>       <td></td><td>DecoderPro</td></tr>
+                <tr><td>route</td>       <td>*</td>     <td></td>       <td>*</td>      <td></td><td>OperationsPro</td></tr>
+                <tr><td>sensor</td>      <td>*</td>     <td>*</td>      <td>*</td>      <td></td><td>LocoTools</td></tr>
+                <tr><td>signalHead</td>  <td>*</td>     <td></td>       <td>*</td>      <td></td><td>LocoTools</td></tr>
+                <tr><td>signalMast</td>  <td>*</td>     <td></td>       <td>*</td>      <td></td><td>LocoTools</td></tr>
+                <tr><td>train</td>       <td>*</td>     <td></td>       <td>*</td>      <td></td><td>OperationsPro</td></tr>
+                <tr><td>turnout</td>     <td>*</td>     <td>*</td>      <td>*</td>      <td></td><td>LocoTools</td></tr>
             </table>
 
             <h2>Using HTTP JSON POST/PUT/DELETE</h2>

@@ -82,20 +82,20 @@ public class EngineManagerTest extends OperationsTestCase {
         EngineManager manager=EngineManager.instance();
 
         //setup the engines
-        e1.setBuilt("2800");
+        e1.setBuilt("2016");
         e2.setBuilt("1212");
-        e3.setBuilt("100");
-        e4.setBuilt("10");
-        e5.setBuilt("1000");
+        e3.setBuilt("100"); // this stays 100
+        e4.setBuilt("10"); // this becomes 1910
+        e5.setBuilt("07-55"); // this becomes 1955
         e6.setBuilt("1956");
 
         // now get engines by built
         List<RollingStock> engineList = manager.getByBuiltList();
         Assert.assertEquals("Number of Engines by built", 6, engineList.size());
-        Assert.assertEquals("1st engine in list by built", e4, engineList.get(0));
-        Assert.assertEquals("2nd engine in list by built", e3, engineList.get(1));
-        Assert.assertEquals("3rd engine in list by built", e5, engineList.get(2));
-        Assert.assertEquals("4th engine in list by built", e2, engineList.get(3));
+        Assert.assertEquals("1st engine in list by built", e3, engineList.get(0));
+        Assert.assertEquals("2nd engine in list by built", e2, engineList.get(1));
+        Assert.assertEquals("3rd engine in list by built", e4, engineList.get(2));
+        Assert.assertEquals("4th engine in list by built", e5, engineList.get(3));
         Assert.assertEquals("5th engine in list by built", e6, engineList.get(4));
         Assert.assertEquals("6th engine in list by built", e1, engineList.get(5));
     }

@@ -45,7 +45,7 @@
 	<li>Ian Anderson, who set up the
 	<a href="http://www.editthis.info/JMRI/index.php/Main_Page">documentation Wiki</a>,
 	which lets a lot of people easily contribute to building better documentation
-	<li>Ron W. Auld, who's llnmon program formed the basis for the LocoNet
+	<li>Ron W. Auld, whose llnmon program formed the basis for the LocoNet
 	monitoring
 <a name="B"></a>
 	<li>Harald Barth, who improved the SRCP implementation
@@ -82,6 +82,7 @@
 	<a href="http://cats4ctc.org/">CATS</a> system.
 	<li>Bob Blackwell, who moderates the jmriusers mailing list,
 	accumulating the decoder ID info, and updated the DecoderPro manual
+	<li>Herve Blorec, who worked on the French translation
 	<li>Don Borden, who loaned a Soundtraxx decoder for testing the
 	dual-decoder support
 	<li>Joseph T. Bore, who contributed the code upon which we built the
@@ -114,7 +115,7 @@
 	for decoderpro.com, despite Matt Katzer's
 	<a href="http://jmri.org/k/UDRP/index.shtml">despicable behavior</a>,
 	and wrote a scripting example page
-	<li>Egbert Broerse, who improved the signaling help and website content
+	<li>Egbert Broerse, who worked on translations, improved the signaling help and website content and contributed the Rio Grande 1965 signal definition
 	<li>Dick Bronson, who created the great LocoBuffer-II and worked hard
 	to make sure it worked well with JMRI. He also contributed sets
 	of USS, PRR and B&amp;O panel icons for PanelPro, worked on the PanelPro logo,
@@ -138,9 +139,9 @@
 	    added the Light Control, provided sample scripts,
 	    improved the titling of throttle windows,
 	    and created the InstallTest app.
-	<li>Paco Cañada, who provided decoder definitions for <a href="http://www.ppp-digital.es/">PpP decoders</a>.
+	<li>Paco Ca&ntilde;ada, who provided decoder definitions for <a href="http://www.ppp-digital.es/">PpP decoders</a>.
 	<li>Bill Carman, who located information on the MRC/Athearn F Unit and Challenger decoders
-	<li>Joan Carrancà, who provided the German DB signal set.
+	<li>Joan Carranc&agrave;, who provided the German DB signal set.
 	<li>Alain Carraso, who provided decoder definition for Arnold and Mistral Train decoders
 	<li>Peter Cesaro provided MRC decoder definitions
 	<li>Xavier Chazelle, who provided a definition for the N scale
@@ -399,6 +400,7 @@
 <a name="Q"></a>
 <a name="R"></a>
 	<li>Balazs Racz, who fixed a bug in startup and improved our tech documentation
+	<li>Steve Rawlinson, who fixed a bug in Layout Blocks.</li>
 	<li>Simon Reader, who improved the throttle,
 	added a check for completed status to Routes,
 	and added the "invert" option to LocoNet Turnouts.
@@ -450,6 +452,7 @@
 	decoder information on several models
 	<li>Ed Sisk, who loaned a DCS51 for testing
 	<li>Don Smith, who ran down some NCE decoder information
+        <li>John Socha-Leialoha, who improved the WiThrottle protocol documentation
 	<li>Alfredo Sola provides the Spanish translation
 	<li>The good people at
 	<a href="http://www.sf.net">SourceForge</a>
@@ -545,4 +548,3 @@ the <a href="http://jmri.org/community/codeswarm.shtml">Code Swarm</a> page.</p>
 </div> <!-- closes #mBody-->
 </body>
 </html>
-

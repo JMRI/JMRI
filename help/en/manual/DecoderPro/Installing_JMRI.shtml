@@ -27,39 +27,24 @@
 </div>
 
 <hr>
-<h1>Preparing to Install JMRI</h1>
-<p>The JMRI software package includes:</p>
-<ul>
-  <li>DecoderPro&reg;</li>
-  <li>PanelPro&trade;</li>
-  <li>SoundPro&trade;</li>
-</ul>
-<p>Two versions of the software are available:</p>
-<ul>
-  <li>Production Version: The current stable version that is fixed in design and for general use. If just starting, this is the version for you.</li>
-  <li>Development Version: The version that is under development for testing and is used to validate new features and changes to existing features. If you are familiar with JMRI and want to help in the validation and testing process, then use this version.</li>
-</ul>
-<p>Supported systems (check<a href="http://www.jmri.org/help/en/html/hardware/index.shtml" target="_blank"> supported hardware</a> systems.)</p>
-<p>Prior to installing JMRI, you must <a href="http://www.jmri.org/download/index.shtml" target="_blank">download</a> the correct version for your computer system. </p>
-<ul>
-  <li>Windows</li>
-  <li>Mac OS X</li>
-  <li>Linux</li>
-</ul>
+<p class="important">Please consult <a href="../../html/setup/index.shtml">JMRI Setup Help</a>.</p>
 
-<h1><a name="InstallJMRI"></a>Installing JMRI software</h1>
-<p>After downloading the JMRI file, now install using the appropriate Installation guide:</p>
-<ul>
-  <li><a href="http://www.jmri.org/install/WindowsNew.shtml" target="_blank">Windows Installation Guide</a></li>
-  <li><a href="http://www.jmri.org/install/MacOSX.html" target="_blank">Mac OS X  Installation Guide</a></li>
-  <li><a href="http://www.jmri.org/install/Linux.html" target="_blank">Linux Installation Guide</a>
-    <ul>
-      <li><a href="http://www.jmri.org/install/Ubuntu.shtml" target="_blank">Ubuntu GNU/Linux</a></li>
-      <li><a href="http://www.jmri.org/install/decTop.shtml" target="_blank">Xubuntu</a></li>
-      <li><a href="http://www.jmri.org/install/OpenSUSE.shtml" target="_blank">Open SUSE linux</a></li>
-    </ul>
-  </li>
-</ul>
+<p>JMRI&reg; requires that Java be installed, whether your computer is <a href="http://jmri.sourceforge.net/install/MacOSX.shtml">Mac</a>, <a href="http://jmri.sourceforge.net/install/WindowsNew.shtml">Windows</a>, or <a href="http://jmri.sourceforge.net/install/Linux.shtml">Linux</a> based.</p>
+<p>Version 2.12 can run on any computer system that will
+run Java 1.5 or later.<br>
+Version 2.14.1 requires Java 1.5 (or 1.6 if you wish for drag &amp; drop)<br>
+Version 3.10.1 requires Java 1.7 or later.<br>
+Version 4.2 requires Java 1.8.</p>
+
+<p>Full instructions for installing on different platforms can be found here:</p>
+	<ul>
+	<li><a href="http://jmri.sourceforge.net/install/WindowsNew.shtml">Windows</a>
+	<li><a href="http://jmri.sourceforge.net/install/MacOSX.shtml">Mac OS X</a>
+	<li><a href="http://jmri.sourceforge.net/install/Linux.shtml">Linux</a>
+	    <ul>
+	    <li><a href="http://jmri.sourceforge.net/install/Raspbian.shtml">RasPi</a>
+	    </ul>
+	</ul>
 
 <hr>
 

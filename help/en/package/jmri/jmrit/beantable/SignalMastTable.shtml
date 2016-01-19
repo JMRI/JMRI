@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
  <title>
-      JMRI: Signal Masts Table Help
+      JMRI: Signal Mast Table Help
  </title>
     <meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
     <meta name="Author" content="Bob Jacobsen, Egbert Broerse">
@@ -17,14 +17,14 @@
   <div class="nomenu" id="mBody">
     <div id="mainContent">
 
-<h1>The Signal Masts Table</h1>
+<h1>The Signal Mast Table</h1>
 
 <a href="SignalMasts-num.png">
    <img src="SignalMasts-num.png" 
         width="619" height="166" align="right">
 </a>
-		<p>JMRI Signals Masts are managed in the Signal Masts Table. You access this tool from the <b>Tools > Tables > Signal Masts</b> menu.</p>
-		<p>There are nine columns in the Signal Heads Table:</p>
+		<p>JMRI Signals Masts are managed in the Signal Mast Table. You access this tool from the <b>Tools > Tables > Signal Masts</b> menu.</p>
+		<p>There are nine columns in the Signal Head Table:</p>
 			<ol>
 			<li>System Name, most often set automatically based on the Signal Mast connection type and other settings
 			<li>User Name, double click to enter your own description or number for this Signal Mast
@@ -42,13 +42,13 @@
 			</ol>
 		
 <p>To define a new Signal Mast, click on the 
-"<a href="SignalMastAddEdit.shtml">Add..</a>" button below the Signal Masts Table.
+"<a href="SignalMastAddEdit.shtml">Add..</a>" button below the Signal Mast Table.
 	  The window that opens next will prompt you for whatever setup information is needed.</p>
 
 	<a href="SignalingPairs.png">
- <img src="SignalingPairs.png" ALIGN=RIGHT WIDTH="303" HEIGHT="122" HSPACE="0" VSPACE="0" ALT="Signaling Pairs window">
+ <img src="SignalingPairs.png" align="right" width="303" height="122" hspace="0" vspace="0" alt="Signaling Pairs window">
 </a>
-		<p>After you clicked on one of the "Edit Logic" buttons in the Signal Masts Table, the Signaling Pairs window appears. Choose one of the displayed lines and click the "Edit" button to open the Edit window.</p>
+		<p>After you clicked on one of the "Edit Logic" buttons in the Signal Mast Table, the Signaling Pairs window appears. Choose one of the displayed lines and click the "Edit" button to open the Edit window.</p>
 		
 		<p> Use the <b>Store</b> item in the File menu to save signal information to disk. 
 This information is saved with the configuration in an XML file, along

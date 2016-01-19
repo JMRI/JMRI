@@ -25,7 +25,7 @@
 	<ol>
 	<li><p>Click <b><a href="SectionTable.shtml">Sections</a></b> in the 
 	<b>Tables</b> submenu of the <b>Tools</b> menu to bring up
-	the Sections Table, and click the <b>Add...</b> button at the bottom of the 
+	the Section Table, and click the <b>Add...</b> button at the bottom of the 
 	table to bring up the Add/Edit Section window.</p>
 	<img src="SectionAddFrame.jpg" height="591" width="638">
 	<li><p>Enter a <b>System Name</b>, according to the JMRI convention. Since Sections 
@@ -81,7 +81,7 @@
 	<b>Forward Sensor</b> and <b>Reverse Sensor</b> in the designated fields. These 
 	sensors are usually internal sensors (beginning with "IS" in their system name). 
 	If you haven't yet created the sensors, enter their system names, and entries will 
-	be made in the Sensors Table for those sensors. More information on direction 
+	be made in the Sensor Table for those sensors. More information on direction 
 	sensors and their use is given in the <a href="SectionTable.shtml">Sections 
 	Table help file</a>. If direction sensors are not needed, leave the fields 
 	blank--you can always add them later via the Edit function.</p>
@@ -91,14 +91,14 @@
 	designated fields. These sensors are physical sensors on the layout that 
 	go active when a train has reached the end of the Section when traveling in 
 	the FORWARD direction or the REVERSE direction. If you haven't yet created entries 
-	for these sensors in the Sensors Table, enter their system names, and entries will 
-	be added to the Sensors Table. More information on stopping 
+	for these sensors in the Sensor Table, enter their system names, and entries will 
+	be added to the Sensor Table. More information on stopping 
 	sensors and their use is given in the <a href="SectionTable.shtml">Sections 
 	Table help file</a>. If stopping sensors are not needed, leave the fields 
 	blank--you can always add them later via the Edit function.</p>
 	</li><li><p>Click the <b>Create</b> button at the bottom of the window.  
 	If everything is fine, the window will close and a new Section will appear in 
-	the Sections Table. If there is trouble with anything, a message will be 
+	the Section Table. If there is trouble with anything, a message will be 
 	displayed indicating the error and what you should do to fix it. 
 	Correct the error and click <b>Create</b> again.</p></li>
 	</ol>
@@ -107,7 +107,7 @@
 To edit an existing Section, follow  this procedure:
 	<ol>
 	<li><p>Click a Section's <b>Edit</b> button in the <a href="SectionTable.shtml">
-	Sections Table</a> to bring up the Add/Edit Section window. The window will 
+	Section Table</a> to bring up the Add/Edit Section window. The window will 
 	be the same as that shown above, except the System Name will be fixed, and 
 	the <b>Create</b> button will be replaced with an <b>Update</b> Button.</p>
 	</li>
@@ -127,6 +127,7 @@ To edit an existing Section, follow  this procedure:
 	</li>
 	</ol>
 
+  <p>Back to the <a href="SectionTable.shtml">Section Table help page<a>.</p>
 <!--#include virtual="/Footer" -->
  </div><!-- closes #mainContent-->
 </div> <!-- closes #mBody-->

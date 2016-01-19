@@ -37,7 +37,7 @@ needed.</p>
 window to select the Active Train and the Section to be allocated. Once allocated, 
 extra Sections will show in the <b>Allocated Sections</b> table in the 
 <b><a href="Dispatcher.shtml">Dispatcher</a></b> window.  The <b>Release</b> button 
-in the Allocated Sections table should be used to release the extra Sections when 
+in the Allocated Section Table should be used to release the extra Sections when 
 they are no longer required. The <b>Auto Release</b> option does not release extra 
 Sections; extra Sections must be released manually.</p>
 

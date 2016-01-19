@@ -53,7 +53,7 @@
 
         <p>The example image on the right shows the default Function Panel
         window. When the mouse pointer hovers over the top of the button, a
-        <strong>right click</strong> of the mouse will display a menu — with
+        <strong>right click</strong> of the mouse will display a menu ï¿½ with
         the only option on this menu at this time being "<b>Properties</b>".</p>
       </td>
       <td><img width="20" height="20" src="images/spacer.gif"> </td>
@@ -83,14 +83,14 @@
         clicked on, the "<b>Edit Function Button</b>" window opens (see the
         example image on the left).</p>
         <ul>
-          <li><strong>Function Number</strong> — associates the button with a
+          <li><strong>Function Number</strong> ï¿½ associates the button with a
             function number </li>
-          <li><strong>Text</strong> — customizable button label text </li>
-          <li><strong>Font Size</strong> — size of text displayed on button
+          <li><strong>Text</strong> ï¿½ customizable button label text </li>
+          <li><strong>Font Size</strong> ï¿½ size of text displayed on button
           </li>
-          <li><strong>Lockable</strong> — identifies whether the button acts as
+          <li><strong>Lockable</strong> ï¿½ identifies whether the button acts as
             an "on/off" toggle switch; or as a momentary switch </li>
-          <li><strong>Visible</strong> — identifies whether the button is
+          <li><strong>Visible</strong> ï¿½ identifies whether the button is
             visible in the Function Panel window </li>
         </ul>
       </td>
@@ -103,13 +103,13 @@ button number that you initially right-clicked on. For example, in the figures
 shown above, function number "1" (F1) is being edited. It is recommended that
 you leave this number as is, however, you <u>can</u> change this to a different
 function number if you really wish. An example of why you might want to do this
-is if you really want the "lights" button — which is usually F0 (located as the
-last/bottom button by default) — to be located as the first button in the
+is if you really want the "lights" button ï¿½ which is usually F0 (located as the
+last/bottom button by default) ï¿½ to be located as the first button in the
 Function Panel.</p>
 
-<p class="important"><b>Warning!   If any modifications are done to the
+<p class="important"><b>Warning! ï¿½ If any modifications are done to the
 "Function Number" field, verify to make sure that no two buttons are assigned
-the same function number — some unwanted consequences may occur.</b> </p>
+the same function number ï¿½ some unwanted consequences may occur.</b> </p>
 
 <p>The <strong>Text</strong> field will be the most welcome and modified field.
 By default, it is set similar to hand-held throttles: F1...F2...F3...etc. The
@@ -117,15 +117,15 @@ content of the field is pretty much open to the imagination, however, there is
 going to be a point where the length of the text is <u>not</u> going to fit on
 the button. The <strong>Font Size</strong> field is available to also assist in
 getting the wanted text to fit on the button. A little experimentation will be
-required here to determine what looks good for you — and what will fit.</p>
+required here to determine what looks good for you ï¿½ and what will fit.</p>
 
 <p>The <strong>Lockable</strong> check box may be a little confusing at first.
-When enabled — as it is by default — it simply means that when the button is
+When enabled ï¿½ as it is by default ï¿½ it simply means that when the button is
 clicked on, it will "lock" itself in either an "on" state or an "off" state. In
-other words, the button will act as a toggle switch — click once to turn the
+other words, the button will act as a toggle switch ï¿½ click once to turn the
 function "on"; click again to turn the function "off". The opposite of this
 action is what happens when the check box is <b>disabled</b>. Then the button
-acts like a momentary switch — supplying a momentary "on" command for as long
+acts like a momentary switch ï¿½ supplying a momentary "on" command for as long
 as the mouse button is clicked <i>and held</i> over the button. When the mouse
 button is released, an "off" command is sent to the function. A good example of
 where one might want to use this is when customizing a throttle setup for a
@@ -137,11 +137,11 @@ blast of the whistle.</p>
 
 <p>The <strong>Visible</strong> check box allows for the "removal" of unwanted
 buttons. By default, all function buttons are enabled as "visible" so that they
-can obviously be seen. But if there is only a single function being used — for
-example the "lights" (F0) — then this option does provide the ability to "hide"
+can obviously be seen. But if there is only a single function being used ï¿½ for
+example the "lights" (F0) ï¿½ then this option does provide the ability to "hide"
 all of the other buttons.</p>
 
-<p class="important"><b>Warning!   Disabling the "Visible" check box should be
+<p class="important"><b>Warning! ï¿½ Disabling the "Visible" check box should be
 one of the last steps performed during this customization process. The reason
 for this is that once the button is marked as "invisible" (by removing the
 check box), it is indeed invisible to the user and therefore can't be
@@ -188,7 +188,7 @@ located just under the main title bar of the window.</p>
     <tbody>
       <tr>
         <td align="left" valign="top"><p>Clicking on the "<big>View</big>" menu
-          option displays a small menu of 3 items — by default, each with a
+          option displays a small menu of 3 items ï¿½ by default, each with a
           check mark preceding the item. This corresponds to the 3 sub-windows
           (Address Panel, Function Panel, &amp; Control Panel) that make up the
           overall throttle window.</p>

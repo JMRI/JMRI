@@ -1,3 +1,4 @@
+
 <!-- Sidebar -->
 <!-- This is the common sidebar definition for (current) DP(3) Manual pages -->
 <hr class="hide">
@@ -8,11 +9,10 @@
     <div style="text-align: center"><strong>DecoderPro&reg; Manual</strong></div>
 
 <dl class="toc"><!-- main table of contents -->
-<dt><h3>Installing JMRI</h3></dt>
+<dt><h3>Setup JMRI</h3></dt>
 	  <dd>
     <ul>
 	  <li><a href="Installing_JMRI.shtml">Preparing to Install</a></li>
-    <li><a href="Installing_JMRI.shtml#InstalJMRI">Installing JMRI</a></li>
     </ul>
     </dd>
      
@@ -56,7 +56,6 @@
     <li><a href="Basic_BasicPane.shtml#DoMore">What if I need to do more?</a></li>
     </ul>
     </dd>
-
 <dt><h3>The Comprehensive Programmer</h3></dt>   
     <dd>
     <ul>
@@ -85,7 +84,6 @@
        <li><a href="RosterMedia.shtml">Roster Media</a></li>
      </ul>
      </dd>
-
 <dt><h3>DecoderPro&reg; Main Window</h3></dt>    
     <dd>
     <ul>
@@ -100,7 +98,7 @@
 <dt><a name="Error"></a><h3>Error Messages</h3></dt>  
     <dd>
     <ul>
-      <li><a href="Error.shtml">Decoder Programmer Error Messages</a></li>
+      <li><a href="../../html/setup/Errors.shtml">Error Codes explained</a></li>
     </ul>
     </dd>
     

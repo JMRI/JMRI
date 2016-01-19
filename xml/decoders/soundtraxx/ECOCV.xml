@@ -314,13 +314,17 @@
         <decVal/>
         <label>Brake Release Volume</label>
       </variable>
-      <variable CV="148" mask="VVVVVVVV" item="Sound Setting 29" default="70" tooltip="Sets the volume of the emergency brake application">
+      <variable CV="148" mask="VVVVVVVV" item="Sound Setting 28" default="70" tooltip="Sets the volume of the emergency brake application">
         <decVal/>
         <label>E-Brake App Volume</label>
       </variable>
-      <variable CV="149" mask="VVVVVVVV" item="Sound Setting 30" default="150" tooltip="Sets the volume of the glad hand release">
+      <variable CV="149" mask="VVVVVVVV" item="Sound Setting 29" default="150" tooltip="Sets the volume of the glad hand release">
         <decVal/>
         <label>Glad Hand Release Volume</label>
+      </variable>
+      <variable CV="150" mask="VVVVVVVV" item="Sound Setting 30" default="152" tooltip="Not included in software releases prior to version 1.3">
+        <decVal/>
+        <label>All Aboard!/Coach Doors Volume</label>
       </variable>
       <!-- Automatic Sound Controls (ASC) follow -->
       <variable item="Bell-On Set Point" CV="193" mask="XVVVVVVV" default="1" tooltip="Specifies the throttle speed step where the automatic bell will first turn on">
@@ -330,6 +334,59 @@
       <variable item="Bell-Off Set Point" CV="194" mask="VVVVVVVV" default="15" tooltip="Set the duration in seconds that elapses from the time the bell sound effect is automatically turned on to the time it is turned off">
         <decVal max="255"/>
         <label>Auto-Bell On Time</label>
+      </variable>
+      <variable item="Sound Option 13" CV="195" mask="VVVVVVVV" default="5" tooltip="Not included in software releases prior to version 1.3">
+        <enumVal>
+          <enumChoice>
+            <choice>Disabled</choice>
+          </enumChoice>
+          <enumChoice>
+            <choice>1 slam</choice>
+          </enumChoice>
+          <enumChoice>
+            <choice>2 slams</choice>
+          </enumChoice>
+          <enumChoice>
+            <choice>3 slams</choice>
+          </enumChoice>
+          <enumChoice>
+            <choice>4 slams</choice>
+          </enumChoice>
+          <enumChoice>
+            <choice>5 slams</choice>
+          </enumChoice>
+          <enumChoice>
+            <choice>6 slams</choice>
+          </enumChoice>
+          <enumChoice>
+            <choice>7 slams</choice>
+          </enumChoice>
+          <enumChoice>
+            <choice>8 slams</choice>
+          </enumChoice>
+          <enumChoice>
+            <choice>9 slams</choice>
+          </enumChoice>
+          <enumChoice>
+            <choice>10 slams</choice>
+          </enumChoice>
+          <enumChoice>
+            <choice>11 slams</choice>
+          </enumChoice>
+          <enumChoice>
+            <choice>12 slams</choice>
+          </enumChoice>
+          <enumChoice>
+            <choice>13 slams</choice>
+          </enumChoice>
+          <enumChoice>
+            <choice>14 slams</choice>
+          </enumChoice>
+          <enumChoice>
+            <choice>15 slams</choice>
+          </enumChoice>
+        </enumVal>
+        <label>Max Coach Door Count</label>
       </variable>
       <variable item="Brake Squeal Sensitivity" CV="196" mask="VVVVVVVV" default="3" tooltip="Specifies the negative rate of throttle change needed to activate the automatic brake squeal">
         <decVal/>
@@ -379,6 +436,10 @@
       <variable CV="215" mask="VVVVVVVV" item="EMF Option 4" default="150" tooltip="Sets the back-EMF reference voltage by 0.1 volt increments, A value of 0 indicates that track voltage is used">
         <decVal/>
         <label>BEMF Reference Voltage (0-255)</label>
+      </variable>
+      <variable CV="216" mask="VVVVVVVV" item="Motor Option 1" default="0" tooltip="determine the speed step at which voltage is first applied to the motor output to put the locomotive into motion, Not included in software releases prior to version 1.3">
+        <decVal max="127"/>
+        <label>Motor Speed Step Deadband (0-127)</label>
       </variable>
       <variable CV="217" mask="XXXXXXVX" item="EMF Enable" default="1" tooltip="Enable back-EMF motor control">
 	<xi:include href="http://jmri.org/xml/decoders/parts/enum-disabledEnabled.xml"/>
@@ -774,6 +835,10 @@
         <xi:include href="http://jmri.org/xml/decoders/soundtraxx/ECOenumFnMap.xml"/>
 		<tooltip>Mapping function keys F0-F28 to any of Econami’s effects</tooltip>
 	  </variable>
+	  <variable CV="1.311" item="Extended Function Map All Aboard/Coach Doors" default="23">
+        <xi:include href="http://jmri.org/xml/decoders/soundtraxx/ECOenumFnMap.xml"/>
+		<tooltip>Mapping function keys F0-F28 to any of Econami’s effects</tooltip>
+	  </variable>
 	  <variable CV="1.321" item="Extended Function Map E-Brake App." default="255">
         <xi:include href="http://jmri.org/xml/decoders/soundtraxx/ECOenumFnMap.xml"/>
 		<tooltip>Mapping function keys F0-F28 to any of Econami’s effects</tooltip>
@@ -1135,6 +1200,26 @@
 		<tooltip>Sets the status of automatic effects when stopped in reverse direction</tooltip>
 	  </variable>
 	  <variable CV="1.434" mask="XXXVXXXX" item="Coupler Release Automatic Effects - ESTP" default="0">
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-DisableEnable_01.xml"/>
+		<tooltip>Sets the status of automatic effects when in emergency stop</tooltip>
+	  </variable>
+	  <variable CV="1.439" mask="XXXXXXXV" item="Coach Doors Automatic Effects - FWDD" default="0">
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-DisableEnable_01.xml"/>
+		<tooltip>Sets the status of automatic effects when moving in forward direction</tooltip>
+	  </variable>
+	  <variable CV="1.439" mask="XXXXXXVX" item="Coach Doors Automatic Effects - REVD" default="0">
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-DisableEnable_01.xml"/>
+		<tooltip>Sets the status of automatic effects when moving in reverse direction</tooltip>
+	  </variable>
+	  <variable CV="1.439" mask="XXXXXVXX" item="Coach Doors Automatic Effects - FWDS" default="0">
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-DisableEnable_01.xml"/>
+		<tooltip>Sets the status of automatic effects when stopped in forward direction</tooltip>
+	  </variable>
+	  <variable CV="1.439" mask="XXXXVXXX" item="Coach Doors Automatic Effects - REVS" default="0">
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-DisableEnable_01.xml"/>
+		<tooltip>Sets the status of automatic effects when stopped in reverse direction</tooltip>
+	  </variable>
+	  <variable CV="1.439" mask="XXXVXXXX" item="Coach Doors Automatic Effects - ESTP" default="0">
         <xi:include href="http://jmri.org/xml/decoders/parts/enum-DisableEnable_01.xml"/>
 		<tooltip>Sets the status of automatic effects when in emergency stop</tooltip>
 	  </variable>

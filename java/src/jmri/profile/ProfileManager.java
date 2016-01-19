@@ -306,8 +306,15 @@ public class ProfileManager extends Bean {
         if (!profiles.contains(profile)) {
             profiles.add(profile);
             if (!this.readingProfiles) {
+                profiles.sort(null);
                 int index = profiles.indexOf(profile);
                 this.propertyChangeSupport.fireIndexedPropertyChange(PROFILES, index, null, profile);
+                if (index != profiles.size() - 1) {
+                    for (int i = index + 1; i < profiles.size() - 1; i++) {
+                        this.propertyChangeSupport.fireIndexedPropertyChange(PROFILES, i, profiles.get(i + 1), profiles.get(i));
+                    }
+                    this.propertyChangeSupport.fireIndexedPropertyChange(PROFILES, profiles.size() - 1, null, profiles.get(profiles.size() - 1));
+                }
                 try {
                     this.writeProfiles();
                 } catch (IOException ex) {
@@ -445,6 +452,7 @@ public class ProfileManager extends Bean {
             if (reWrite) {
                 this.writeProfiles();
             }
+            this.profiles.sort(null);
         } catch (JDOMException | IOException ex) {
             this.readingProfiles = false;
             throw ex;
@@ -479,7 +487,7 @@ public class ProfileManager extends Bean {
             XMLOutputter fmt = new XMLOutputter();
             fmt.setFormat(Format.getPrettyFormat()
                     .setLineSeparator(System.getProperty("line.separator"))
-                    .setTextMode(Format.TextMode.PRESERVE));
+                    .setTextMode(Format.TextMode.NORMALIZE));
             fmt.output(doc, fw);
             fw.close();
         } catch (IOException ex) {

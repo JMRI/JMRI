@@ -23,8 +23,8 @@ To add a new Light, follow this procedure:
 <ol>
 	<li><p>Click <b>Lights</b> in the <b>Tables</b> submenu of the 
 <b>Tools</b> menu to bring up
-the <b><a href="LightTable.shtml">Lights Table</a></b>, and click the 
-<b>Add...</b> button at the bottom of the <b>Lights Table</b> pane to bring up 
+the <b><a href="LightTable.shtml">Light Table</a></b>, and click the 
+<b>Add...</b> button at the bottom of the <b>Light Table</b> pane to bring up 
 the "Add" version of the <b>Add/Edit Light</b> pane.</p>
 <img src="LightAddFrame.jpg" height="399" width="575">
 	<li><p>Select a <b>System:</b> if your layout is connected to more 
@@ -105,13 +105,13 @@ apply when creating several Lights at once. Note the following:</p>
 To edit an existing Light, follow  this procedure:
 <ol>
 	<li><p>To Edit of an existing Light click on a Light's <b>Edit</b> button 
-in the <a href="LightTable.shtml">Lights Table</a> to bring up 
+in the <a href="LightTable.shtml">Light Table</a> to bring up 
 the "Edit" version of the <b>Add/Edit Light</b> pane.</p>
 <img src="LightEditWindow.jpg" height="361" width="575">
 	</li>
 	<li><p>The <b>System Name:</b> of the Light is displayed at the top of 
 	the pane and cannot be changed. The <b>User Name:</b> may be changed 
-	either here or in the Lights Table. The Light Control and notes areas 
+	either here or in the Light Table. The Light Control and notes areas 
 	are the same as above.</p>
 	</li>
 	<li><p>After making changes to the Light information, click <b>Update</b> 
@@ -190,7 +190,7 @@ The operation of a Light can be controlled in the following ways:
 <ul>
 	<li><p>If you need to enter a Sensor name or a Turnout name, you must enter the name 
 	(System Name or User Name) of an existing Sensor or Turnout. The Sensor or 
-	Turnout must be in the Sensors Table or the Turnouts Table respectively.</p>
+	Turnout must be in the Sensor Table or the Turnout Table respectively.</p>
 	</li>
 	<li><p>After you enter a User Name to specify a Sensor or a Turnout, be very 
 	careful about changing the User Name of your Sensor or Turnout. A simple 
@@ -223,6 +223,8 @@ Attempting to set the <b>Target Intensity</b> outside the <b>Minimum
 Intensity to Maximum Intensity</b> range will result in the <b>Target 
 Intensity</b> being set to the relevant limit.</p>
 <p>
+
+<p>Back to the <a href="LightTable.shtml">Light Table help page<a>.</p>
 
 <!--#include virtual="/Footer" -->
  </div><!-- closes #mainContent-->

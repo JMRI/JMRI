@@ -20,6 +20,8 @@
     
 This is the package/jmri/jmrit/beantable/ReporterAddEdit Help page
 
+  <p>Back to the <a href="ReporterTable.shtml">Reporter Table help page<a>.</p>
+  
 <!--#include virtual="/Footer" -->
  </div><!-- closes #mainContent-->
 </div> <!-- closes #mBody-->

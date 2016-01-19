@@ -268,56 +268,56 @@ public abstract class DCCppTrafficController extends AbstractMRTrafficController
         return new DCCppReply();
     }
 
-    /**
-     * Get characters from the input source, and file a message.
-     * <P>
-     * Returns only when the message is complete.
-     * <P>
-     * Only used in the Receive thread.
-     *
-     * @param msg     message to fill
-     * @param istream character source.
-     * @throws java.io.IOException when presented by the input source.
-     */
-    /*
-        protected void loadChars(AbstractMRReply msg, java.io.DataInputStream istream) throws java.io.IOException {
-	// Spin waiting for start-of-frame '<' character (and toss it)
-	String s = new String();
-	byte char1;
-	boolean found_start = false;
-        
-        log.debug("Calling DCCppTrafficController.loadChars()");
+//    /**
+//     * Get characters from the input source, and file a message.
+//     * <P>
+//     * Returns only when the message is complete.
+//     * <P>
+//     * Only used in the Receive thread.
+//     *
+//     * @param msg     message to fill
+//     * @param istream character source.
+//     * @throws java.io.IOException when presented by the input source.
+//     */
+//        protected void loadChars(AbstractMRReply msg, java.io.DataInputStream istream) throws java.io.IOException {
+//	// Spin waiting for start-of-frame '<' character (and toss it)
+//	String s = new String();
+//	byte char1;
+//	boolean found_start = false;
+//        
+//        log.debug("Calling DCCppTrafficController.loadChars()");
+//
+//	while (!found_start) {
+//	    char1 = readByteProtected(istream);
+//	    log.debug("Char1: {}", char1);
+//	    if ((char1 & 0xFF) == '<') {
+//		found_start = true;
+//		log.debug("Found starting < ");
+//		break; // A bit redundant with setting the loop condition true (false)
+//	    } else {
+//		//char1 = readByteProtected(istream);
+//	    }
+//	}
+//	
+//	// Now, suck in the rest of the message...
+//        for (int i = 0; i < DCCppConstants.MAX_MESSAGE_SIZE; i++) {
+//            char1 = readByteProtected(istream);
+//	    if (char1 == '>') {
+//		log.debug("msg found > ");
+//		// Don't store the >
+//		break;
+//	    } else {
+//		log.debug("msg read byte {}", char1);
+//		char c = (char) (char1 & 0x00FF);
+//		s += Character.toString(c);
+//	    }
+//	}
+//	// TODO: Still need to strip leading and trailing whitespace.
+//	log.debug("Complete message = {}", s);
+//        ((DCCppReply)msg).parseReply(s);
+//    }
 
-	while (!found_start) {
-	    char1 = readByteProtected(istream);
-	    log.debug("Char1: {}", char1);
-	    if ((char1 & 0xFF) == '<') {
-		found_start = true;
-		log.debug("Found starting < ");
-		break; // A bit redundant with setting the loop condition true (false)
-	    } else {
-		//char1 = readByteProtected(istream);
-	    }
-	}
-	
-	// Now, suck in the rest of the message...
-        for (int i = 0; i < DCCppConstants.MAX_MESSAGE_SIZE; i++) {
-            char1 = readByteProtected(istream);
-	    if (char1 == '>') {
-		log.debug("msg found > ");
-		// Don't store the >
-		break;
-	    } else {
-		log.debug("msg read byte {}", char1);
-		char c = (char) (char1 & 0x00FF);
-		s += Character.toString(c);
-	    }
-	}
-	// TODO: Still need to strip leading and trailing whitespace.
-	log.debug("Complete message = {}", s);
-        ((DCCppReply)msg).parseReply(s);
-    }
-*/
+
     protected void handleTimeout(AbstractMRMessage msg, AbstractMRListener l) {
         super.handleTimeout(msg, l);
         if (l != null) {

@@ -25,7 +25,7 @@
 
 <p>The Roster information presented in the selection box, and used for
 automatic selection of a Locomotive, is stored in the roster.xml file
-in the "prefs" directory. You can find your 
+in the JMRI Preferences directory. You can find your 
 Preferences directory location by choosing "Locations" from the main JMRI Help menu. Click the "Open Roster Location" button to open the directory in Finder/Explorer.
 More information is available on the
 <a href="Files.shtml#location">"Configuration Files" Help page</a>. You may open your Roster file and look at it to see
@@ -39,6 +39,8 @@ To move the entire Roster to another computer, choose "Export Roster" from the R
 To do this manually at the file level, in the Preferences directory there will be a file called "roster.xml", and 
 a directory called "roster".  You need to move the "roster.xml" file, the 
 "roster" directory, and all it's contents.
+
+Read more about the <a href="../../setup/Files.shtml">JMRI Configuration Files</a>.
 
   <!--#include virtual="/Footer" -->
   </div> <!-- close #mainContent -->

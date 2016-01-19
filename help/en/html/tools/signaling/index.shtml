@@ -121,7 +121,7 @@ Example #2: Dennis Drury's CTC signals get even numbers with a directional modif
 	Aspect Signaling in JMRI uses of a series of Aspect definition files that come with JMRI since version 2.9. In addition to tapping into one of the more than 20 prototypical <a href="AspectSignaling.shtml#systems">Signaling Systems</a> that come with JMRI, you can tweak one to suit your hardware and operations or define your own and share it as part of a next version of JMRI.<br/>
 	JMRI provides the following core Signaling Tools, available from the <b>Tools > Tables > Signals ></b> menu:</p>
 	
-	<p>1. <b><a href="SignalHeads.shtml">Signal Head</a></b> objects represent the individual lights of a signal and can be created, changed, deleted and set to specific Appearances (colors) in the <a href="../../../package/jmri/jmrit/beantable/SignalHeadTable.shtml">Signal Heads Table</a>. One or more Signal Heads usually are part of a Signal Mast. For signaling decoders that directly support multiple Aspects, it may not be necessary to create individual Signal Heads before creating Signal Mast objects.</p>
+	<p>1. <b><a href="SignalHeads.shtml">Signal Head</a></b> objects represent the individual lights of a signal and can be created, changed, deleted and set to specific Appearances (colors) in the <a href="../../../package/jmri/jmrit/beantable/SignalHeadTable.shtml">Signal Head Table</a>. One or more Signal Heads usually are part of a Signal Mast. For signaling decoders that directly support multiple Aspects, it may not be necessary to create individual Signal Heads before creating Signal Mast objects.</p>
 	
 	<p>2. <b><a href="SignalMasts.shtml">Signal Mast</a></b> objects represent an entire signal with one or more Signal Heads. Using Signal Mast objects allows you to display prototypical Aspects on signals. You specify what kind of <a href="AspectSignaling.shtml#systems">Signaling System</a> is to be used,
 the specific Signal Mast type e.g. "double searchlight" or "single head dwarf" and which Signal Heads or aspect aware signal hardware this Signal Mast is going to drive. 
@@ -131,7 +131,7 @@ the specific Signal Mast type e.g. "double searchlight" or "single head dwarf" a
         width="338" height="86" align="right">
 </a>
 Signal Masts are configured through the
-	<a href="../../../package/jmri/jmrit/beantable/SignalMastTable.shtml">Signal Masts Table</a>. From the Signal Masts Table, you can create and edit Signal Masts and set individual Signal Masts to any Aspect that they're able to display by clicking in the "Aspect" column.
+	<a href="../../../package/jmri/jmrit/beantable/SignalMastTable.shtml">Signal Mast Table</a>. From the Signal Mast Table, you can create and edit Signal Masts and set individual Signal Masts to any Aspect that they're able to display by clicking in the "Aspect" column.
 	<br/>
 	You can add a Signal Mast icon in the Panel Editor in the usual way. The Signal Mast icon will display the images from the Appearance definition for that particular Signal Mast type and Signal System. </p>
 	<p>3. <b><a href="SignalGroups.shtml">Signal Groups</a></b> are used to define a number of Signal Heads, where only one Signal Head can be illuminated at any given time, depending upon the Appearance (Status) of the associated Signal Mast and a set of conditions.<br>

@@ -128,7 +128,7 @@ e.g. clicking on the screen, can be read back and used to control the railroad.
 	Click "Save", quit and restart.
 	
 	<p>
-	Next, use the Turnouts Table and Sensors Table to define Turnouts and Sensors, 
+	Next, use the Turnout Table and Sensor Table to define Turnouts and Sensors, 
 	which will in the process define the Coils and Discrete inputs
 	that Modbus will read and write. Save this configuration to a Panel file
 	so that it can be reloaded when you start JMRI again later.

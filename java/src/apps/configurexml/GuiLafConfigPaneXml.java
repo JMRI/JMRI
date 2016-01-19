@@ -37,6 +37,7 @@ public class GuiLafConfigPaneXml extends jmri.configurexml.AbstractXmlAdapter {
      * @param o Object to store, of type GuiLafConfigPane
      * @return Element containing the complete info
      */
+    @Override
     public Element store(Object o) {
         Element e = new Element("gui");
         GuiLafConfigPane g = (GuiLafConfigPane) o;
@@ -50,8 +51,9 @@ public class GuiLafConfigPaneXml extends jmri.configurexml.AbstractXmlAdapter {
         e.setAttribute("LocaleCountry", l.getCountry());
         e.setAttribute("LocaleVariant", l.getVariant());
 
-        if (GuiLafConfigPane.getFontSize() != 0) {
-            e.setAttribute("fontsize", Integer.toString(GuiLafConfigPane.getFontSize()));
+        GuiLafPreferencesManager manager = InstanceManager.getDefault(GuiLafPreferencesManager.class);
+        if (manager.getFontSize() != manager.getDefaultFontSize()) {
+            e.setAttribute("fontsize", Integer.toString(manager.getFontSize()));
         }
 
         e.setAttribute("nonStandardMouseEvent",
@@ -106,7 +108,6 @@ public class GuiLafConfigPaneXml extends jmri.configurexml.AbstractXmlAdapter {
         Attribute fontsize = shared.getAttribute("fontsize");
         if (fontsize != null) {
             int size = Integer.parseInt(fontsize.getValue());
-            GuiLafConfigPane.setFontSize(size);
             InstanceManager.getDefault(GuiLafPreferencesManager.class).setFontSize(size);
             this.setUIFontSize(size);
         }
@@ -145,6 +146,7 @@ public class GuiLafConfigPaneXml extends jmri.configurexml.AbstractXmlAdapter {
      * @param element Top level Element to unpack.
      * @param o       ignored
      */
+    @Override
     public void load(Element element, Object o) {
         log.error("Unexpected call of load(Element, Object)");
     }

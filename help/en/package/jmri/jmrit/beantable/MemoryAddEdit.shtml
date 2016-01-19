@@ -20,7 +20,7 @@
     
 To create a Memory Variable, click the 
 "Add..." button on the 
-<a href="MemoryTable.shtml">Memory Variables Table</a>.
+<a href="MemoryTable.shtml">Memory Variable Table</a>.
 This will open a new pane with space to enter
 a System Name and User Name for the new Memory Variable, plus
 and "Add" button.
@@ -33,6 +33,8 @@ required.
 <p>
 The User Name is optional, but if given has to be unique.
 
+<p>Back to the <a href="MemoryTable.shtml">Memory Variable Table help page<a>.</p>
+  
 <!--#include virtual="/Footer" -->
  </div><!-- closes #mainContent-->
 </div> <!-- closes #mBody-->

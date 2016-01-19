@@ -39,19 +39,19 @@ Signaling, but Blocks may be used for other layout control and animation functio
 <p>Blocks may be set up using a script, or automatically in a Layout Editor Panel. When a 
 Block is defined in a Layout Editor Panel, a new Block is created if one does not already
 exist. In Layout Editor, Blocks are identified by their User Name, so if a Block shown 
-in the Blocks Table is used in a Layout Editor Panel, its User Name should not be changed.<br>
+in the Block Table is used in a Layout Editor Panel, its User Name should not be changed.<br>
 If you want to change the User Name of a Block used in a Layout Editor Panel, make the 
-change in the Layout Editor, not in the Blocks Table.</p>
+change in the Layout Editor, not in the Block Table.</p>
 
 <h3>Block Properties</h3>
-<p>Blocks are created and edited in the <a href="../../package/jmri/jmrit/beantable/BlockTable.shtml">Blocks Table</a>.</p>
+<p>Blocks are created and edited in the <a href="../../package/jmri/jmrit/beantable/BlockTable.shtml">Block Table</a>.</p>
 <p>To complete the definition of a Block, Paths and Bean Settings must be attached to 
 each Block. Paths describe entry points to the Block. Each Block has one or more Paths
 associated with it. Sometimes a Turnout must be set a certain way to use a Path; Bean 
 Settings carry that information. Paths and Bean Settings are set up automatically for 
 Blocks defined in a Layout Editor Panel. They can also be set up in a script. There is 
 currently no way to manually enter Paths or Bean Settings. Paths and Bean Settings are 
-not shown in the Blocks Table, and are described here only for completeness.</p>
+not shown in the Block Table, and are described here only for completeness.</p>
 <p>For use in automatically running Trains, a Length attribute and a Curvature attribute 
 may optionally be assigned to a Block. These optional attributes are entered manually 
 in this table. If Trains will not be run automatically through 

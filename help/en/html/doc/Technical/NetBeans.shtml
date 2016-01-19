@@ -41,11 +41,11 @@
         <li><a href="#updating">Updating the code from Git</a>
         <li><a href="#buildandrun">Building and running JMRI</a>
         <li><a href="#jar">Making a Jar File</a>
-        <li><a href="#patch">Making a Patch File</a>
         <li><a href="#nsis">Making a release package for Windows using NSIS</a></li>
         <li><a href="#xmltools">Using NetBeans XML tools</a></li>
         <li><a href="#findbugs">Running FindBugs</a></li>
         <li><a href="#compileIndividualFile">NetBeans and compiling individual files</a></li>            
+        <li><a href="#patch">Making a Patch File</a>
     </ul>
 <a href="#SeeAlso">See Also</a>    
     <h2><a id="intro">Introduction</a></h2>
@@ -73,9 +73,50 @@
             look for a link similar to "JDK with NetBeans IDE Java SE bundle".)</li>
         <li> Run the NetBeans package installer</li>
     </ul>
-	<p></p>
 	<p>Many Linux distributions have NetBeans available in their software repositories
 	- search your package manager for NetBeans.</p>
+    
+    <h3>Important note for Windows users</h3>
+    
+    <p>Due to different handling of Line Endings characters (<code>LF / CR LF</code>) between Windows and other systems - namely Unix and OS X 
+        (see <a href="GitFAQ.shtml#lineends">Handling Line Ends</a>) - it is of the utmost importance that all Windows users
+    adopt the following settings for their development environment. This is absolutely required so that Git can track individual changes on files that you commit.</p>
+    <p>If you don't follow these instructions, you'll mess up the line endings in the files you commit, which will in turn
+        make their revision history much harder to access. Files in this condition will not be accepted as pull requests.</p>
+
+    
+    <p>As a first step, as JMRI has adopted <code>LF</code> as a convention for Line Endings,
+        it is required to set the <code>core.autocrlf</code> setting to <code>true</code> 
+        (see <a href=https://help.github.com/articles/dealing-with-line-endings>"Dealing with line endings" on GitHub Help)</a> </p>
+    
+    <h4>Additional important note for Netbeans Windows users</h4>    
+
+    <p><em>Moreover, if you are using <b>NetBeans</b> on Windows, you <u>must</u> install the
+        <a href="http://plugins.netbeans.org/plugin/46829/change-line-endings-on-save">"Change Line Endings on Save" plugin</a>
+        before using Git via NetBeans.</em>
+    <p>Please install the plug-in to make sure that NetBeans properly 
+        maintains the LF characters at the ends of source-code lines.</p>
+    <p>Actually the plug-in is already available in the NetBeans distribution, 
+        so go to <code>Tools > Plugins > Available Plugins</code>
+        and there select <code>Change Line Endings on Save</code> and then <code>Install</code>.</p>
+    <p>You can check that the plug-in is properly installed by going to go to <code>Tools > Plugins > Installed</code>,
+        where you should see something like this (versions might differ):</p>
+    <p><a href="images/NetbeansChangeLineEndingsPluginInstalled.png"><img src="images/NetbeansChangeLineEndingsPluginInstalled.png" align="center" height="102" width="224"></a></p>  
+
+    <p>Once the plug-in has been installed and activated, it is necessary to configure it for the desired line ending character(s), via the <code>Tools > Options > Editor > Line Endings</code> tab.</p>
+    <p>For JMRI, we want to use the Unix-style line ending character, <code>LF</code>.</p>    
+    <p><a href="images/NetbeansChangeLineEndingsPluginConfiguration.png"><img src="images/NetbeansChangeLineEndingsPluginConfiguration.png" align="center" height="168" width="237"></a></p>
+
+    <p>The plug-in may be enabled via a button in the toolbar.
+    <a href="images/NetbeansChangeLineEndingsPluginEnabled.png"><img src="images/NetbeansChangeLineEndingsPluginEnabled.png" align="center" height="19" width="55"></a></p>
+
+    <p>And the plug-in may be disabled via that button.
+    <a href="images/NetbeansChangeLineEndingsPluginDisabled.png"><img src="images/NetbeansChangeLineEndingsPluginDisabled.png" align="center" height="19" width="55"></a></p>
+
+    <p>When a file is saved (assuming the the plug-in is configured and is enabled) and that file has line-endings which do not match the type configured for the plug-in, the following message pops up.</p>
+    <p><a href="images/NetbeansChangeLineEndingsPluginPopUpWarmingUponSavingAFileWithImproperLineEndings.png"><img src="images/NetbeansChangeLineEndingsPluginPopUpWarmingUponSavingAFileWithImproperLineEndings.png" align="center" height="50" width="174"></a></p>
+
+    <p>When "OK" is selected, the plug-in updates the line-endings to the configured form and saves the file.  If "CANCEL" is selected, the file will be saved WITHOUT changing any line-endings.</p>   
     
     <h2><a id="gituse" name="gituse"></a>Using NetBeans with JMRI's Git Code Repository</h2>
     
@@ -277,7 +318,7 @@
         the path to a report file in HTML format.  Open that file with a browser 
         to review the FindBugs results.</p>        
 
-        <h2><a id="compileIndividualFile">NetBeans and compiling individual files</a></h2>
+    <h2><a id="compileIndividualFile">NetBeans and compiling individual files</a></h2>
         <p>The NetBeans IDE shows icons to the side of each object in the Projects window,
             and to the side of each file in the Files window.  These icons can reflect the
             status of each item, including local change and proper compilation status.</p>
@@ -299,6 +340,29 @@
         <p><a href="http://sourceforge.net/projects/nsis">The NSIS project web site</a></p>
         <p><a href="http://findbugs.sourceforge.net">The FindBugs web site</a></p>
 
+ <h2><a id="patch">Making a Patch File</a></h2>
+    
+    <p>A "diff patch file" is an easy way to gather up all your changes, even
+    if they span multiple files, into one file.
+    This can be used to e.g. submit a patch.
+    Now that we're using Git and GitHub, hoever, we prefer that you 
+    contribute your code changes 
+    <a href="gitdeveloper.shtml">via GitHub Pull Requests</a>.
+    </p>
+
+    <p>
+    To create the "diff patch file":
+    <ul>
+ 
+    <li>From the [Team] menu, select "Export Diff Patch ..."
+    <li>A file browser will open; enter a new file name
+        in your preferred location and hit "Save" or "Open", 
+        depending on what the dialog shows. 
+    <li>After it finishes calculating the diffs, the file you selected will contain
+        the patches, along with an information header.
+    </ul>
+
+    
   <!--#include virtual="/Footer" -->
 
   </div><!-- closes #mainContent-->

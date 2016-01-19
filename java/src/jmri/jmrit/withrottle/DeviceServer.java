@@ -13,13 +13,21 @@ package jmri.jmrit.withrottle;
  * Thread with input and output streams for each connected device. Creates an
  * invisible throttle window for each.
  *
- * Sorting codes: 'T'hrottle - sends to throttleController 'S'econdThrottle -
- * sends to secondThrottleController 'C' - Not used anymore except to provide
- * backward compliance, same as 'T' 'N'ame of device 'H' hardware info -
- * followed by: 'U' UDID - unique device identifier 'P' panel - followed by: 'P'
- * track power 'T' turnouts 'R' routes 'R' roster - followed by: 'C' consists
- * 'Q'uit - device has quit, close its throttleWindow '*' - heartbeat from
- * client device ('*+' starts, '*-' stops)
+ * Sorting codes: 
+ *  'T'hrottle - sends to throttleController 
+ *  'S'econdThrottle - sends to secondThrottleController
+ *  'C' - Not used anymore except to provide backward compliance, same as 'T' 
+ *  'N'ame of device 
+ *  'H' hardware info - followed by:
+ *      'U' UDID - unique device identifier 
+ *  'P' panel - followed by: 
+ *      'P' track power
+ *      'T' turnouts 
+ *      'R' routes
+ *  'R' roster - followed by: 
+ *      'C' consists
+ *  'Q'uit - device has quit, close its throttleWindow
+ *  '*' - heartbeat from client device ('*+' starts, '*-' stops)
  *
  * Added in v2.0: 'M'ultiThrottle - forwards to MultiThrottle class, see notes
  * there for use. Followed by id character to create or control appropriate

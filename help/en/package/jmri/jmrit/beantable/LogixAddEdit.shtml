@@ -36,11 +36,11 @@
 	system name and user name of the Logix are displayed at the top. The user name 
 	may be changed by entering/modifying the text in the User Name field. Next is a 
 	table of Conditionals belonging to the Logix. To add a new Conditional, click 
-	the <b>New Conditional</b> button under the Conditionals table.  
+	the <b>New Conditional</b> button under the Conditional Table.  
 	(See also the 
 	<a href="ConditionalAddEdit.shtml">separate help page on adding/editing Conditionals</a>)
 	This will 
-	create a new Conditional (a new row in the Conditionals table),
+	create a new Conditional (a new row in the Conditional Table),
 	and open the Edit Conditional window allowing the logical expression and
 	actions of the new Conditional to be defined.  An existing Conditional may be 
 	edited by clicking the <b>Edit</b> button of that Conditional in the 
@@ -51,13 +51,13 @@
 	any JMRI table) please remember to move to another cell in the table so that 
 	the program is notified that you have finished your entry, otherwise the entry 
 	may not take effect.</b></p> 
-	<P>Clicking <b>Calculate</b> under the conditionals table causes all 
+	<P>Clicking <b>Calculate</b> under the Conditional Table causes all 
 	Conditionals of the Logix to be calculated. Resulting states are displayed in 
 	the State column of the table. Since the Logix is "inactive" while being edited, 
 	no Conditional actions are taken when the <b>Calculate</b> button is pressed.  
 	</p>
-  <p>The order of Conditionals in the Conditionals table may be changed
-	by clicking <b>Reorder</b> (below the Conditionals table). Clicking
+  <p>The order of Conditionals in the Conditional Table may be changed
+	by clicking <b>Reorder</b> (below the Conditional Table). Clicking
 	<b>Reorder</b> changes all edit buttons in the last Column of the table to 
 	<b>First</b>. Select the Conditional that is to be first, and it
 	is immediately moved to the top of the table. All remaining buttons change
@@ -67,7 +67,7 @@
 	in which they're evaluated, nor does it force evaluation
 	of one Conditional when an earlier or later one is evaluated.
 	For more on this, see the discussion on the 
-	<A href="../../../../html/tools/Logix.shtml">Logix main page</a>.
+	<a href="../../../../html/tools/Logix.shtml">Logix main page</a>.
 	<p> When <b>Done</b> is clicked at the bottom of the Edit Logix window, any 
 	change in the Logix user name is checked and made. A check is made for
 	inconsistencies in specifying that an entity (sensor, turnout, etc.) referenced
@@ -81,9 +81,11 @@
 	<p>The Edit Logix window also provides a way to delete a Logix if it is no 
 	longer needed. Click <b>Delete Logix</b> to delete the Logix being edited 
 	and all its Conditionals. </p>
-	<p>For more information, consult the Logix documentation on the JMRI web page 
-	http://jmri.sourceforge.net/ .</p>
 
+  <p>For more information, consult the <a href="../../../../html/tools/Logix.shtml">Logix documentation</a> on the JMRI web page 
+	http://jmri.sourceforge.net/.</p>
+  <p>Back to the <a href="LogixTable.shtml">Logix Table help page<a>.</p>
+  
 <!--#include virtual="/Footer" -->
  </div><!-- closes #mainContent-->
 </div> <!-- closes #mBody-->

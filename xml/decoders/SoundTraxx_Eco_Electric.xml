@@ -50,11 +50,18 @@
       <authorinitials>DGH</authorinitials>
       <revremark>Promoted Extended Function Map to the default</revremark>
     </revision>
+    <revision>
+      <revnumber>1.4</revnumber>
+      <date>2016-01-04</date>
+      <authorinitials>MJM</authorinitials>
+      <revremark>Revise for Soundtraxx doc ver 1.30</revremark>
+    </revision>
   </revhistory>
   <version author="Michael Mosher" version="1" lastUpdated="20150725"/>
   <version author="Alain Le Marchand" version="1.1" lastUpdated="20150726"/>
   <version author="Alain Le Marchand" version="1.2" lastUpdated="20150726"/>
-  <version author="Dave Heap" version="1.2" lastUpdated="20150813"/>
+  <version author="Dave Heap" version="1.3" lastUpdated="20150813"/>
+  <version author="Michael Mosher" version="1.4" lastUpdated="20160104"/>
 <!-- Decoder Model information follows -->
   <decoder>
     <family name="Econami Electric" mfg="SoundTraxx (Throttle-Up)" comment="These are the -retail- version Econami Electric decoders">
@@ -1022,7 +1029,7 @@
       <!-- "Sound Group 1 Option (none yet)" -->
       <!-- "Sound Group 2 Option (none yet)" -->
       <!-- "Sound Group 3 Option 2" -->
-      <!-- "Sound Setting 25" -->
+      <!-- "Sound Setting 30" -->
     </variables>
     <resets>
       <factReset label="Reset all CVs to factory defaults" CV="8" default="8"/>

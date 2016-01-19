@@ -53,12 +53,12 @@ DecoderPro is also covered in Joe Fugate's
 through 9.2 and OS X). It will probably also work on most
 other modern operating systems that have Java available; contact us for
 help if you'd like to try it on some other system. You need to have a
-serial port available, either on the computer itself, or via a 
+serial port or USB port available, either on the computer itself, or via a 
 <a href="../../hardware/USBtoSerial.shtml">USB adapter</a>. 
 For more information, please see the
-<a href="http://jmri.sourceforge.net/download/index.shtml">Download pages</a>.</p>
+<a href="../../setup/index.shtml">Setup pages</a>.</p>
 
-<p>You also need to have a serial connection to your DCC system.
+<p>You also need to have a connection to your DCC system.
 For more information, please see the
 <a href="../../hardware/index.shtml">DCC hardware pages</a>.</p>
 
@@ -70,15 +70,15 @@ The following User Guide sections follow the
 to provide more information on how DecoderPro works and how to
 install and adapt it:
 <dl class="toc">
-<dt><a href="./MoreInfo.shtml">DecoderPro Details</a></dt>
+<dt><a href="./MoreInfo.shtml">Some Details</a></dt>
 <dt><a href="./Files.shtml">Configuration Files</a></dt>
 <dt><a href="./Roster.shtml">Working with the Roster</a></dt>
-<dt><a href="./FAQ.shtml">Frequently Asked Questions</a></dt>
-<dt><a href="./Install.shtml">Downloading and installing DecoderPro</a></dt>
+<dt><a href="./FAQ.shtml">Frequently Asked DecoderPro Questions</a></dt>
+<dt><a href="./Install.shtml">Install</a></dt>
 </dl>
 <p>
 Also refer to the 
-<a href="../../../manual/index.shtml">DecoderPro Manual</a>
+<a href="../../../manual/DecoderPro3.shtml">DecoderPro Manual</a>
 for more information on how to use DecoderPro.
 
 <h3>Advanced Guide</h3>

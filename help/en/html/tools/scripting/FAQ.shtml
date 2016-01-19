@@ -360,11 +360,15 @@ import myImport
 myImport.x = x # make x available to myImport
 </pre>
 
-<h2>Can a script wait for more than one thing to change?</h2>
+<h2><a id="several" name="several"></a>Can a script wait for more than one thing to change?</h2>
 
 <div class="para">
-If your script is based on a Siglet or AbstractAutomaton class (e.g. if you're
-writing a "handle" routine", there's a general "waitChange" routine which waits
+If your script is based on a Siglet or 
+<a href="http://jmri.org/JavaDoc/doc/jmri/jmrit/automat/AbstractAutomaton.html">AbstractAutomaton</a>
+class (e.g. if you're
+writing a "handle" routine"), there's a general
+"<a href="http://jmri.org/JavaDoc/doc/jmri/jmrit/automat/AbstractAutomaton.html#waitChange-jmri.NamedBean:A-">waitChange</a>"
+routine which waits
 for any of several sensors to change before returning to you. Note that more
 than one may change at the same time, so you can't assume that just one has a
 different value! And you'll then have to check whether they've become some
@@ -380,8 +384,14 @@ You can then check for various combinations like:
         print "Would you believe a really fast bird?"
    else
         print "Nothing to see here, move along..."</pre>
-(I haven't actually typed these into a script &amp; run it, so there might be
-typos, sorry) </div>
+You can also wait for any changes in objects of multiple types:
+<pre>    self.waitChange([self.sensorA, self.turnoutB, self.signalC])</pre>
+Finally, you can specify the maximum time to wait before continuing
+even though nothing has changed:
+<pre>    self.waitChange([self.sensorA, self.sensorB, self.sensorC], 5000)</pre>
+will wait a maximum of 5000 milliseconds, e.g. 5 seconds. If nothing has 
+changed, the script will continue anyway.
+</div>
 
 <h2>Can a script listen to more than one Turnout?</h2>
 
