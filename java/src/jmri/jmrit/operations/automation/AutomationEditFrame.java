@@ -19,6 +19,7 @@ import javax.swing.JTextField;
 import javax.swing.ScrollPaneConstants;
 import jmri.jmrit.operations.OperationsFrame;
 import jmri.jmrit.operations.OperationsXml;
+import jmri.jmrit.operations.automation.actions.Action;
 import jmri.jmrit.operations.setup.Control;
 import jmri.jmrit.operations.setup.Setup;
 import org.slf4j.Logger;
@@ -360,7 +361,7 @@ public class AutomationEditFrame extends OperationsFrame implements java.beans.P
                 .getNewValue());
         if (e.getPropertyName().equals(Automation.LISTCHANGE_CHANGED_PROPERTY) ||
                 e.getPropertyName().equals(Automation.RUNNING_CHANGED_PROPERTY) ||
-                e.getPropertyName().equals(Automation.ACTION_RUNNING_CHANGED_PROPERTY)) {
+                e.getPropertyName().equals(Action.ACTION_RUNNING_CHANGED_PROPERTY)) {
             enableControlButtons(true);
         }
     }

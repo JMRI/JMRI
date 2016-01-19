@@ -11,6 +11,7 @@ public abstract class Action {
 
     public static final String ACTION_COMPLETE_CHANGED_PROPERTY = "actionComplete"; // NOI18N
     public static final String ACTION_HALT_CHANGED_PROPERTY = "actionHalt"; // NOI18N
+    public static final String ACTION_RUNNING_CHANGED_PROPERTY = "actionRunning"; // NOI18N
 
     public static final int OKAY = 0;
     public static final int HALT = 1;
@@ -80,6 +81,13 @@ public abstract class Action {
     public String getActionString() {
         return getFormatedMessage("{0} {1} {2} {3}");
     }
+    
+    public void setRunning(boolean running) {
+        if (getAutomationItem() != null) {
+            getAutomationItem().setActionRunning(running);
+            firePropertyChange(ACTION_RUNNING_CHANGED_PROPERTY, !running, running);
+        }
+    }
 
     /**
      * Completes the action by displaying the correct message if there's one.
@@ -92,6 +100,8 @@ public abstract class Action {
     public int finishAction(boolean success) {
         int response = FINISH_FAILED;
         if (getAutomationItem() != null) {
+            getAutomationItem().setActionSuccessful(success);
+            setRunning(false);
             String message = getAutomationItem().getMessage();
             Object[] buttons = new Object[]{Bundle.getMessage("OK"), Bundle.getMessage("HALT")};
             if (!success) {
@@ -100,7 +110,7 @@ public abstract class Action {
                     buttons = new Object[]{Bundle.getMessage("HALT")}; // Must halt, only the HALT button shown
                 }
             }
-            response = sendMessage(message, buttons, success);
+            response = sendMessage(message, buttons, success);     
             if (response == HALT || (!success && getAutomationItem().isHaltFailureEnabled())) {
                 firePropertyChange(ACTION_HALT_CHANGED_PROPERTY, !success, success);
             } else {

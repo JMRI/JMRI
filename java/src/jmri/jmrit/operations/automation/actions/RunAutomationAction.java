@@ -21,6 +21,7 @@ public class RunAutomationAction extends Action {
         if (getAutomationItem() != null) {
             Automation automation = getAutomationItem().getAutomation();
             if (automation != null) {
+                setRunning(true);
                 automation.run();
             }
             finishAction(automation != null);
