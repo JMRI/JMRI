@@ -180,7 +180,7 @@ abstract class AbstractPanelServlet extends HttpServlet {
             if (!url.contains("preference:")) {
                 url = "program:" + url.substring(url.indexOf("resources"));
             }
-            ea.setAttribute("aspect", aspect);        
+            ea.setAttribute(JSON.ASPECT, aspect);        
             ea.setAttribute("url", url);        
             icons.addContent(ea);
         }
@@ -189,8 +189,8 @@ abstract class AbstractPanelServlet extends HttpServlet {
             if (!url.contains("preference:")) {
                 url = "program:" + url.substring(url.indexOf("resources"));
             }
-            Element ea = new Element("Held");
-            ea.setAttribute("aspect", "Held");        
+            Element ea = new Element(JSON.ASPECT_HELD);
+            ea.setAttribute(JSON.ASPECT, JSON.ASPECT_HELD);        
             ea.setAttribute("url", url);
             icons.addContent(ea);
         }
@@ -199,13 +199,13 @@ abstract class AbstractPanelServlet extends HttpServlet {
             if (!url.contains("preference:")) {
                 url = "program:" + url.substring(url.indexOf("resources"));
             }
-            Element ea = new Element("Dark");
-            ea.setAttribute("aspect", "Dark");        
+            Element ea = new Element(JSON.ASPECT_DARK);
+            ea.setAttribute(JSON.ASPECT, JSON.ASPECT_DARK);        
             ea.setAttribute("url", url);
             icons.addContent(ea);
         }
-        Element ea = new Element("Unknown");
-        ea.setAttribute("aspect", "Unknown");        
+        Element ea = new Element(JSON.ASPECT_UNKNOWN);
+        ea.setAttribute(JSON.ASPECT, JSON.ASPECT_UNKNOWN);        
         ea.setAttribute("url", "program:resources/icons/misc/X-red.gif");  //add icon for unknown state
         icons.addContent(ea);
 

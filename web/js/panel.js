@@ -1392,7 +1392,6 @@ var $getNextState = function($widget) {
         var $firstState = undefined;
         var $currentState = undefined;
         for (k in $widget) {
-//            var s = k.substr(4).replace(/_/g, " "); //extract the state from current icon var, replace underscores with blanks
             var s = k.substr(4); //extract the state from current icon var
             if (k.indexOf('icon') == 0 && typeof $widget[k] !== "undefined" && s != 'Held' && s != 'Dark' && s != 'Unknown') { //valid value, name starts with 'icon', but not the HELD one
                 if (typeof $firstState == "undefined")
@@ -1404,8 +1403,8 @@ var $getNextState = function($widget) {
                 if (window.console)
                     console.log('key: ' + k + " first=" + $firstState);
             }
-        }
-        ;
+        };
+        
         if (typeof $nextState == "undefined")
             $nextState = $firstState;  //if still not set, start over
 
