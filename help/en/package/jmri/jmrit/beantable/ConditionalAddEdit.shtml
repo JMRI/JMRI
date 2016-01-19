@@ -37,7 +37,7 @@ A Conditional has two distinct parts: its "logical expression" and its
 </p>
 <p>The logical expression section contains a table of state
 variables, with two buttons below.  The first
-column in the state variables table displays the row number of the 
+column in the state variable table displays the row number of the 
 state variable.  This is only of importance when the <b>Logic Operator</b>
 choice is set to 'Mixed'.  The second column contains an automatic AND when
 the <b>Logic Operator</b> choice is set to 'AND' or an automatic OR
@@ -99,7 +99,7 @@ Some examples:
 </pre>
 <h2>Adding a New State Variable</h2>
         <p>Press the <b>Add State Variable</b> to add a state 
-	variable (a row in the state variables table).  This brings up a
+	variable (a row in the state variable table).  This brings up a
         window with a choice box for the user to select a state variable type.
         Available state  variables are documented 
 	<a href="#variable">below</a>.  When a type is choosen the Edit Variable

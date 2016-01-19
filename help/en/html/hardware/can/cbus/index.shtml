@@ -130,7 +130,7 @@ doesn't do what's desired. When it doesn't, you can manually
 create the proper Sensors using the 
 <a href="../../../../package/jmri/jmrit/beantable/SensorAddEdit.shtml">Add...</a>
 button on the
-<a href="../../../../package/jmri/jmrit/beantable/SensorTable.shtml">Sensors Table</a>.
+<a href="../../../../package/jmri/jmrit/beantable/SensorTable.shtml">Sensor Table</a>.
 
 <p>
 Note that there's a 

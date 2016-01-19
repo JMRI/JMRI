@@ -138,6 +138,8 @@
 
 <mapID target="package.jmri.jmrit.display.CoordinateEdit" url="package/jmri/jmrit/display/CoordinateEdit.shtml"/>
 
+<mapID target="html.doc.Technical.JUnit_threads" url="html/doc/Technical/JUnit.shtml#threads"/>
+
 <mapID target="html.hardware.oaktree.OakTree" url="html/hardware/oaktree/OakTree.shtml"/>
 
 <mapID target="package.jmri.jmrit.operations.Operations_demo" url="package/jmri/jmrit/operations/Operations.shtml#demo"/>
@@ -450,8 +452,6 @@
 
 <mapID target="manual.DecoderPro3.Comp_ManfSpecific_Top" url="manual/DecoderPro3/Comp_ManfSpecific.shtml#Top"/>
 
-<mapID target="manual.DecoderPro.Start_Preferences_FileLocations" url="manual/DecoderPro/Start_Preferences.shtml#FileLocations"/>
-
 <mapID target="html.apps.LocoTools.index_soundloader" url="html/apps/LocoTools/index.shtml#soundloader"/>
 
 <mapID target="package.jmri.jmrit.operations.Operations_SchedulesAndLoads" url="package/jmri/jmrit/operations/Operations.shtml#SchedulesAndLoads"/>
@@ -459,6 +459,8 @@
 <mapID target="manual.DecoderPro.Main_LocoNet_SE8C" url="manual/DecoderPro/Main_LocoNet.shtml#SE8C"/>
 
 <mapID target="manual.JMRI_OPS_UsersGuide.Ops_BuildReportPreveiw_Top" url="manual/JMRI_OPS_UsersGuide/Ops_BuildReportPreveiw.shtml#Top"/>
+
+<mapID target="html.setup.index_debug" url="html/setup/index.shtml#debug"/>
 
 <mapID target="html.hardware.powerline.index" url="html/hardware/powerline/index.shtml"/>
 
@@ -1138,6 +1140,8 @@
 
 <mapID target="package.jmri.jmrit.operations.Operations_Trains" url="package/jmri/jmrit/operations/Operations.shtml#Trains"/>
 
+<mapID target="package.jmri.jmrit.operations.Operations_Automation" url="package/jmri/jmrit/operations/Operations.shtml#Automation"/>
+
 <mapID target="html.apps.DecoderPro.Tour" url="html/apps/DecoderPro/Tour.shtml"/>
 
 <mapID target="manual.DecoderPro3.Comp_Speed_Talble_Top" url="manual/DecoderPro3/Comp_Speed_Talble.shtml#Top"/>
@@ -1416,6 +1420,8 @@
 
 <mapID target="manual.DecoderPro.Main_Throttle_functionPanel_Top" url="manual/DecoderPro/Main_Throttle_functionPanel.shtml#Top"/>
 
+<mapID target="package.jmri.jmrit.operations.Operations_ShowCarTypesServiced" url="package/jmri/jmrit/operations/Operations.shtml#ShowCarTypesServiced"/>
+
 <mapID target="html.tools.consisttool.ConsistTool" url="html/tools/consisttool/ConsistTool.shtml"/>
 
 <mapID target="manual.DecoderPro.index_Operations" url="manual/DecoderPro/index.shtml#Operations"/>
@@ -1491,8 +1497,6 @@
 <mapID target="manual.DecoderPro.Start_Preferences_Display" url="manual/DecoderPro/Start_Preferences.shtml#Display"/>
 
 <mapID target="html.tools.Memories" url="html/tools/Memories.shtml"/>
-
-<mapID target="manual.DecoderPro.Start_Preferences_StartUp" url="manual/DecoderPro/Start_Preferences.shtml#StartUp"/>
 
 <mapID target="manual.DecoderPro.Main_Panels" url="manual/DecoderPro/Main_Panels.shtml"/>
 
@@ -1786,6 +1790,8 @@
 
 <mapID target="manual.JMRI_OPS_UsersGuide.Ops_Locations_printByCarType" url="manual/JMRI_OPS_UsersGuide/Ops_Locations_printByCarType.shtml"/>
 
+<mapID target="html.setup.index_setprefs" url="html/setup/index.shtml#setprefs"/>
+
 <mapID target="manual.DecoderPro.Comp_Setup_Roster_Top" url="manual/DecoderPro/Comp_Setup_Roster.shtml#Top"/>
 
 <mapID target="manual.DecoderPro.Main_RPS" url="manual/DecoderPro/Main_RPS.shtml"/>
@@ -1867,8 +1873,6 @@
 <mapID target="package.jmri.jmrit.beantable.LRouteTable" url="package/jmri/jmrit/beantable/LRouteTable.shtml"/>
 
 <mapID target="manual.DecoderPro3.Main_CMRI_Nodes" url="manual/DecoderPro3/Main_CMRI.shtml#Nodes"/>
-
-<mapID target="manual.DecoderPro.Start_Preferences_Defaults" url="manual/DecoderPro/Start_Preferences.shtml#Defaults"/>
 
 <mapID target="manual.DecoderPro.Main_Throttle_controlPanel" url="manual/DecoderPro/Main_Throttle_controlPanel.shtml"/>
 
@@ -1955,6 +1959,8 @@
 <mapID target="manual.DecoderPro.Programmer_OpsMode_Top" url="manual/DecoderPro/Programmer_OpsMode.shtml#Top"/>
 
 <mapID target="package.jmri.jmrit.operations.Operations_PlannedPickUps" url="package/jmri/jmrit/operations/Operations.shtml#PlannedPickUps"/>
+
+<mapID target="html.setup.index_startprog" url="html/setup/index.shtml#startprog"/>
 
 <mapID target="html.apps.LocoTools.index_loconetstats" url="html/apps/LocoTools/index.shtml#loconetstats"/>
 
@@ -2431,6 +2437,8 @@
 <mapID target="package.jmri.jmrix.loconet.duplexgroup.DuplexGroupTabbedPanel_Overview" url="package/jmri/jmrix/loconet/duplexgroup/DuplexGroupTabbedPanel.shtml#Overview"/>
 
 <mapID target="manual.DecoderPro.Main_XpressNet_LV100CM" url="manual/DecoderPro/Main_XpressNet.shtml#LV100CM"/>
+
+<mapID target="html.setup.index_install" url="html/setup/index.shtml#install"/>
 
 <mapID target="package.jmri.jmrix.openlcb.swing.downloader.OpenLCBlibrary" url="package/jmri/jmrix/openlcb/swing/downloader/OpenLCBlibrary.html"/>
 
@@ -2918,6 +2926,8 @@
 
 <mapID target="html.tools.index_scripting" url="html/tools/index.shtml#scripting"/>
 
+<mapID target="html.setup.Files" url="html/setup/Files.shtml"/>
+
 <mapID target="manual.DecoderPro.Main_RosterGroup" url="manual/DecoderPro/Main_RosterGroup.shtml"/>
 
 <mapID target="html.hardware.USBtoSerial" url="html/hardware/USBtoSerial.shtml"/>
@@ -2967,6 +2977,8 @@
 <mapID target="package.jmri.jmrit.operations.Operations_TrainManifestOptions" url="package/jmri/jmrit/operations/Operations.shtml#TrainManifestOptions"/>
 
 <mapID target="manual.DecoderPro3.Start_DCC_Systems" url="manual/DecoderPro3/Start_DCC_Systems.shtml"/>
+
+<mapID target="html.setup.Faq" url="html/setup/Faq.shtml"/>
 
 <mapID target="package.jmri.jmrit.dispatcher.Dispatcher_intro" url="package/jmri/jmrit/dispatcher/Dispatcher.shtml#intro"/>
 
@@ -3067,8 +3079,6 @@
 <mapID target="package.jmri.jmrix.mrc.swing.monitor.MrcMonPanel" url="package/jmri/jmrix/mrc/swing/monitor/MrcMonPanel.shtml"/>
 
 <mapID target="package.jmri.jmrit.vsdecoder.VSDecoderFrame" url="package/jmri/jmrit/vsdecoder/VSDecoderFrame.shtml"/>
-
-<mapID target="manual.DecoderPro.Start_Preferences_Connections" url="manual/DecoderPro/Start_Preferences.shtml#Connections"/>
 
 <mapID target="manual.DecoderPro3.Main_LocoNet_LocoIOProgrammer" url="manual/DecoderPro3/Main_LocoNet.shtml#LocoIOProgrammer"/>
 
