@@ -170,17 +170,18 @@ abstract class AbstractPanelServlet extends HttpServlet {
     }
 
     //build and return an "icons" element containing icon urls for all signalmast states,
-    //  element names are aspect names, with blanks replaced by underscores
+    //  element names are cleaned-up aspect names, aspect attribute is actual name of aspect
     Element getSignalMastIconsElement(String name) {
         Element icons = new Element("icons");
         jmri.SignalMast signalMast = jmri.InstanceManager.signalMastManagerInstance().getSignalMast(name);
         for (String aspect : signalMast.getValidAspects()) {
-            Element ea = new Element(aspect.replaceAll(" ", "_")); //create element for aspect after replacing spaces
+            Element ea = new Element(aspect.replaceAll("[ ()]", "")); //create element for aspect after removing invalid chars
             String url = signalMast.getAppearanceMap().getImageLink(aspect, "default");  //TODO: use correct imageset
             if (!url.contains("preference:")) {
                 url = "program:" + url.substring(url.indexOf("resources"));
             }
-            ea.setAttribute("url", url); //        
+            ea.setAttribute("aspect", aspect);        
+            ea.setAttribute("url", url);        
             icons.addContent(ea);
         }
         String url = signalMast.getAppearanceMap().getImageLink("$held", "default");  //add "Held" aspect if defined
@@ -189,6 +190,7 @@ abstract class AbstractPanelServlet extends HttpServlet {
                 url = "program:" + url.substring(url.indexOf("resources"));
             }
             Element ea = new Element("Held");
+            ea.setAttribute("aspect", "Held");        
             ea.setAttribute("url", url);
             icons.addContent(ea);
         }
@@ -198,10 +200,12 @@ abstract class AbstractPanelServlet extends HttpServlet {
                 url = "program:" + url.substring(url.indexOf("resources"));
             }
             Element ea = new Element("Dark");
+            ea.setAttribute("aspect", "Dark");        
             ea.setAttribute("url", url);
             icons.addContent(ea);
         }
         Element ea = new Element("Unknown");
+        ea.setAttribute("aspect", "Unknown");        
         ea.setAttribute("url", "program:resources/icons/misc/X-red.gif");  //add icon for unknown state
         icons.addContent(ea);
 
