@@ -68,7 +68,7 @@ package jmri.jmrit.withrottle;
  *
  *
  * Heartbeat send '*0' to tell device to stop heartbeat, '*#' # = number of
- * seconds until eStop This class sends initial to device, but does not start
+ * seconds until eStop. This class sends initial to device, but does not start
  * monitoring until it gets a response of '*+' Device should send heartbeat to
  * server in shorter time than eStop
  *
@@ -204,7 +204,7 @@ public class DeviceServer implements Runnable, ThrottleControllerListener, Contr
                             }
                             char id = inPackage.charAt(1);
                             if (!multiThrottles.containsKey(id)) {   //  Create a MT if this is a new id
-                                multiThrottles.put(id, new MultiThrottle(inPackage.charAt(1), this, this));
+                                multiThrottles.put(id, new MultiThrottle(id, this, this));
                             }
 
                             // Strips 'M' and id, forwards rest
