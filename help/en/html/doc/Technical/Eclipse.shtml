@@ -231,7 +231,7 @@
 	changes to a repository belonging to you on GitHub, and then finally
 	making a request for somebody to "pull" your changes into the main JMRI
 	repository. See
-	<a href="GitFAQ.shtml">JMRI: Git FAQ</a> "Setting up a GIT environment
+	<a href="GitFAQ.shtml">JMRI: Git FAQ</a> "Setting up a Git environment
 	for JMRI Developers" for more information.
 
 	<p>It is also good practice to "pull" all of the recent changes
