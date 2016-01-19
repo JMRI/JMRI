@@ -3816,8 +3816,8 @@
     that action becomes "Edit". If it's possible for an action to fail, in addition to the extra
     failure message text area, there's a checkbox labeled "Halt if action fails". When selected the
     automation will halt in the event that the action fails to complete. The "Create Default
-    Messages" button will automatically create a success and failure message for you if there isn't
-    any text entered.</p>
+    Messages" button will automatically create a success and failure message for you if the text
+    window is empty.</p>
 
    <p>If you want more than one action for your automation, press the "Add" button in the "Add
     Item" area for each action you want to perform. The automation action sequence is from top to
