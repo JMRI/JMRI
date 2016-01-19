@@ -21,6 +21,7 @@ public class TerminateTrainAction extends Action {
         if (getAutomationItem() != null) {
             Train train = getAutomationItem().getTrain();
             if (train != null && train.isBuilt()) {
+                setRunning(true);
                 train.terminate();
                 finishAction(true);
             } else {

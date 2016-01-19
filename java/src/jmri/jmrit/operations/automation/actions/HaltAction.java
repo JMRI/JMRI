@@ -19,6 +19,7 @@ public class HaltAction extends Action {
     public void doAction() {
         // no action, stop run or step
         sendMessage(getAutomationItem().getMessage(), new Object[]{Bundle.getMessage("HALT")}, true);
+        firePropertyChange(ACTION_HALT_CHANGED_PROPERTY, false, true);
     }
 
     @Override
