@@ -278,7 +278,11 @@ function processPanelXML($returnedData, $success, $xhr) {
                                 if ($widget.forcecontroloff != "true") {
                                     $widget.classes += $widget.jsonType + " clickable ";
                                 }
-                                $widget['state'] = "Unknown"; //set the default to match JMRI
+                                if (typeof $widget["iconUnlit"] !== "undefined") {
+                                    $widget['state'] = "Unlit"; //set the initial aspect to Unlit if defined                                	
+                                } else {
+                                    $widget['state'] = "Unknown"; //else set to Unknown                             	                                	
+                                }
                                 jmri.getSignalMast($widget["systemName"]);
                                 break;
                             case "multisensoricon" :
@@ -1393,7 +1397,8 @@ var $getNextState = function($widget) {
         var $currentState = undefined;
         for (k in $widget) {
             var s = k.substr(4); //extract the state from current icon var
-            if (k.indexOf('icon') == 0 && typeof $widget[k] !== "undefined" && s != 'Held' && s != 'Dark' && s != 'Unknown') { //valid value, name starts with 'icon', but not the HELD one
+            //look for next icon value, skipping Held, Dark and Unknown
+            if (k.indexOf('icon') == 0 && typeof $widget[k] !== "undefined" && s != 'Held' && s != 'Dark' && s != 'Unknown') { 
                 if (typeof $firstState == "undefined")
                     $firstState = s;  //remember the first state (for last one)
                 if (typeof $currentState !== "undefined" && typeof $nextState == "undefined")
