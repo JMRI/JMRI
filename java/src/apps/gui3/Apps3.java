@@ -25,6 +25,8 @@ import javax.swing.JLabel;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JToolBar;
+import javax.swing.UIManager;
+import javax.swing.UnsupportedLookAndFeelException;
 import javax.swing.WindowConstants;
 import jmri.InstanceManager;
 import jmri.plaf.macosx.AboutHandler;
@@ -70,6 +72,14 @@ public abstract class Apps3 extends AppsBase {
         // Put this here rather than in apps.AppsBase as this is only relevant
         // for GUI applications - non-gui apps will use STDOUT & STDERR
         SystemConsole.create();
+
+        try {
+            // Set default LookAndFeel to be platform-specific
+            // Can be overridden later in preferences
+            UIManager.setLookAndFeel(UIManager.getSystemLookAndFeelClassName());
+        } catch (ClassNotFoundException | InstantiationException | IllegalAccessException | UnsupportedLookAndFeelException ex) {
+            log.error("Error setting system look and feel: {} ", ex);
+        }
 
         splash(true);
 
