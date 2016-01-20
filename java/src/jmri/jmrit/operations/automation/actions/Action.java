@@ -159,7 +159,7 @@ public abstract class Action {
             routeLocationName = " " + rl.getName();
         }
         String automationName = "";
-        Automation automation = getAutomationItem().getAutomation();
+        Automation automation = getAutomationItem().getAutomationToRun();
         if (automation != null) {
             automationName = " " + automation.getName();
         }

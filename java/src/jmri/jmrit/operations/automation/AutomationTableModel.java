@@ -353,7 +353,7 @@ public class AutomationTableModel extends javax.swing.table.AbstractTableModel i
             return cb;
         } else {
             JComboBox<Automation> cb = AutomationManager.instance().getComboBox();
-            cb.setSelectedItem(item.getAutomation());
+            cb.setSelectedItem(item.getAutomationToRun());
             // determine if automation combo box is enabled
             cb.setEnabled(acb.getSelectedItem() != null && ((Action) acb.getSelectedItem()).isAutomationMenuEnabled());
             return cb;

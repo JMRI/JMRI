@@ -7,6 +7,7 @@ import jmri.jmrit.operations.automation.actions.Action;
 import jmri.jmrit.operations.automation.actions.ActionCodes;
 import jmri.jmrit.operations.automation.actions.BuildTrainAction;
 import jmri.jmrit.operations.automation.actions.BuildTrainIfSelectedAction;
+import jmri.jmrit.operations.automation.actions.DeselectTrainAction;
 import jmri.jmrit.operations.automation.actions.GotoAction;
 import jmri.jmrit.operations.automation.actions.GotoFailureAction;
 import jmri.jmrit.operations.automation.actions.GotoSuccessAction;
@@ -18,9 +19,13 @@ import jmri.jmrit.operations.automation.actions.PrintTrainManifestIfSelectedActi
 import jmri.jmrit.operations.automation.actions.ResetTrainAction;
 import jmri.jmrit.operations.automation.actions.ResumeAutomationAction;
 import jmri.jmrit.operations.automation.actions.RunAutomationAction;
+import jmri.jmrit.operations.automation.actions.RunSwitchListAction;
+import jmri.jmrit.operations.automation.actions.RunTrainAction;
+import jmri.jmrit.operations.automation.actions.SelectTrainAction;
 import jmri.jmrit.operations.automation.actions.StopAutomationAction;
 import jmri.jmrit.operations.automation.actions.TerminateTrainAction;
 import jmri.jmrit.operations.automation.actions.UpdateSwitchListAction;
+import jmri.jmrit.operations.automation.actions.WaitSwitchListAction;
 import jmri.jmrit.operations.automation.actions.WaitTrainAction;
 import jmri.jmrit.operations.routes.RouteLocation;
 import jmri.jmrit.operations.setup.Control;
@@ -171,7 +176,7 @@ public class AutomationItem implements java.beans.PropertyChangeListener {
      * 
      * @return Automation for this action
      */
-    public Automation getAutomation() {
+    public Automation getAutomationToRun() {
         if (getAction() != null && getAction().isAutomationMenuEnabled()) {
             return AutomationManager.instance().getAutomationById(_automationId);
         }
@@ -310,11 +315,16 @@ public class AutomationItem implements java.beans.PropertyChangeListener {
         list.add(new BuildTrainIfSelectedAction());
         list.add(new PrintTrainManifestAction());
         list.add(new PrintTrainManifestIfSelectedAction());
+        list.add(new RunTrainAction());
         list.add(new MoveTrainAction());
         list.add(new TerminateTrainAction());
         list.add(new ResetTrainAction());
         list.add(new WaitTrainAction());
+        list.add(new SelectTrainAction());
+        list.add(new DeselectTrainAction());
         list.add(new UpdateSwitchListAction());
+        list.add(new WaitSwitchListAction());
+        list.add(new RunSwitchListAction());
         list.add(new RunAutomationAction());
         list.add(new ResumeAutomationAction());
         list.add(new StopAutomationAction());
@@ -418,8 +428,8 @@ public class AutomationItem implements java.beans.PropertyChangeListener {
                 e.setAttribute(Xml.ROUTE_LOCATION_ID, getRouteLocation().getId());
             }
         }
-        if (getAutomation() != null) {
-            e.setAttribute(Xml.AUTOMATION_ID, getAutomation().getId());
+        if (getAutomationToRun() != null) {
+            e.setAttribute(Xml.AUTOMATION_ID, getAutomationToRun().getId());
         }
         if (getGotoAutomationItem() != null) {
             e.setAttribute(Xml.GOTO_AUTOMATION_ID, getGotoAutomationItem().getId());
