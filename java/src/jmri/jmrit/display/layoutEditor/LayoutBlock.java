@@ -318,7 +318,10 @@ public class LayoutBlock extends AbstractNamedBean implements java.beans.Propert
     public Sensor validateSensor(String sensorName, Component openFrame) {
         // check if anything entered	
         if (sensorName == null || sensorName.length() < 1) {
-            // no sensor entered
+            // no sensor name entered
+            if (occupancyNamedSensor != null) {
+                setOccupancySensorName(null);
+            }
             return null;
         }
         // get the sensor corresponding to this name
@@ -507,11 +510,13 @@ public class LayoutBlock extends AbstractNamedBean implements java.beans.Propert
                 occupancyNamedSensor.getBean().removePropertyChangeListener(mBlockListener);
             }
             occupancyNamedSensor = null;
+            occupancySensorName = "";
+            if (block != null)
+                block.setNamedSensor(null);
             return;
         }
         occupancySensorName = name;
-        Sensor sensor = jmri.InstanceManager.sensorManagerInstance().
-                getSensor(name);
+        Sensor sensor = jmri.InstanceManager.sensorManagerInstance().getSensor(name);
         if (sensor != null) {
             occupancyNamedSensor = jmri.InstanceManager.getDefault(jmri.NamedBeanHandleManager.class).getNamedBeanHandle(name, sensor);
             if (block != null) {
@@ -878,7 +883,11 @@ public class LayoutBlock extends AbstractNamedBean implements java.beans.Propert
         if (!(getOccupancySensorName()).equals(sensorNameField.getText().trim())) {
             // sensor has changed
             String newName = sensorNameField.getText().trim();
-            if (validateSensor(newName, editLayoutBlockFrame) == null) {
+            if (newName == null || newName.length() < 1) {
+                setOccupancySensorName(newName);
+                sensorNameField.setText("");
+                needsRedraw = true;
+            } else if (validateSensor(newName, editLayoutBlockFrame) == null) {
                 // invalid sensor entered
                 occupancyNamedSensor = null;
                 occupancySensorName = "";
