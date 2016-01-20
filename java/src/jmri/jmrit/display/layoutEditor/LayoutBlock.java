@@ -343,13 +343,15 @@ public class LayoutBlock extends AbstractNamedBean implements java.beans.Propert
         LayoutBlock b = InstanceManager.getDefault(jmri.jmrit.display.layoutEditor.LayoutBlockManager.class).
                 getBlockWithSensorAssigned(s);
         if (b != null) {
-            // new sensor is not unique, return to the old one
-            occupancyNamedSensor = savedNamedSensor;
-            JOptionPane.showMessageDialog(openFrame,
-                    java.text.MessageFormat.format(rb.getString("Error6"),
-                            new Object[]{sensorName, b.getID()}),
-                    rb.getString("Error"), JOptionPane.ERROR_MESSAGE);
-            return null;
+            if (b.getUseCount() > 0) {
+                // new sensor is not unique, return to the old one
+                occupancyNamedSensor = savedNamedSensor;
+                JOptionPane.showMessageDialog(openFrame,
+                        java.text.MessageFormat.format(rb.getString("Error6"),
+                                new Object[]{sensorName, b.getID()}),
+                        rb.getString("Error"), JOptionPane.ERROR_MESSAGE);
+                return null;
+            }
         }
         // sensor is unique
         setOccupancySensorName(sensorName);
