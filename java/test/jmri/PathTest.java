@@ -37,6 +37,30 @@ public class PathTest extends TestCase {
         p.setBlock(b);
     }
 
+    public void testEquals() {
+        TurnoutManager sm = new jmri.managers.InternalTurnoutManager();
+        Turnout s1 = sm.provideTurnout("IT12");
+        Turnout s2 = sm.provideTurnout("IT14");
+        
+        Path p1 = new Path();
+        Path p2 = new Path();
+        
+        assertTrue(p1.equals(p2));
+
+        p1.addSetting(new BeanSetting(s1, "IT12", Turnout.CLOSED));
+        assertFalse(p1.equals(p2));
+        
+        p2.addSetting(new BeanSetting(s1, "IT12", Turnout.CLOSED));
+        assertTrue(p1.equals(p2));
+        
+        Block b = new Block("IB1");
+        p1.setBlock(b);
+        assertFalse(p1.equals(p2));
+
+        p2.setBlock(b);
+        assertTrue(p1.equals(p2));
+    }
+    
     public void testBlockRetrieve() {
         Path p = new Path();
 
