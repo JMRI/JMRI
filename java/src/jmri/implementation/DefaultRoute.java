@@ -574,11 +574,29 @@ public class DefaultRoute extends AbstractNamedBean
     }
 
     /**
+     * Method returns true if the sensor provided is already in the 
+     * list of control sensors for this route.
+     * 
+     * @param sensor the sensor to check for
+     * @return true if the sensor is found, false otherwise
+     */
+    public boolean isControlSensorIncluded(ControlSensor sensor) {
+        int i;
+        for (i = 0; i < _controlSensorList.size(); i++) {
+          if (_controlSensorList.get(i).getName().equals(sensor.getName()) && 
+                  _controlSensorList.get(i).getState() == sensor.getState()) {
+              return true;
+          }
+        }
+        return false;
+    }
+    /**
      * Method to add a Sensor to the list of control Sensors for this Route.
      *
      * @param sensorName either a system or username of a sensor
      */
     public boolean addSensorToRoute(String sensorName, int mode) {
+   
         if (_controlSensorList.size() >= MAX_CONTROL_SENSORS) {
             // reached maximum
             log.warn("Reached maximum number of control Sensors for Route: "
@@ -591,7 +609,12 @@ public class DefaultRoute extends AbstractNamedBean
         if (!sensor.setState(mode)) {
             return false;
         }
-        _controlSensorList.add(sensor);
+        if (isControlSensorIncluded(sensor)) {
+            log.warn("Not adding duplicate control sensor " + sensorName + 
+                    " to route " + getSystemName());
+        } else {
+            _controlSensorList.add(sensor);
+        }
         return true;
     }
 
