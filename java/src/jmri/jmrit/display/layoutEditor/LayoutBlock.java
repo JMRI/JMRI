@@ -351,9 +351,19 @@ public class LayoutBlock extends AbstractNamedBean implements java.beans.Propert
                                 new Object[]{sensorName, b.getID()}),
                         rb.getString("Error"), JOptionPane.ERROR_MESSAGE);
                 return null;
+            } else {
+                // the user is assigning a sensor which is already assigned to 
+                // layout block b. Layout block b is no longer in use so this
+                // should be fine but it's technically possible to put
+                // this discarded layout block back into service (possibly
+                // by mistake) by entering its name in any edit layout block window.
+                // That would cause a problem with the sensor being in use in
+                // two active blocks, so as a precaution we remove the sensor 
+                // from the discarded block here.
+                b.setOccupancySensorName(null);
             }
         }
-        // sensor is unique
+        // sensor is unique, or was only in use on a layout block not in use
         setOccupancySensorName(sensorName);
         return s;
     }
