@@ -5,6 +5,8 @@ import java.util.ArrayList;
 import java.util.Enumeration;
 import java.util.Hashtable;
 import java.util.List;
+import javax.swing.JComboBox;
+import jmri.jmrit.operations.automation.actions.Action;
 import jmri.jmrit.operations.automation.actions.HaltAction;
 import jmri.jmrit.operations.setup.Control;
 import jmri.jmrit.operations.trains.TrainManagerXml;
@@ -24,8 +26,9 @@ public class Automation implements java.beans.PropertyChangeListener {
     protected String _name = "";
     protected String _comment = "";
     protected AutomationItem _currentAutomationItem = null;
+    protected AutomationItem _lastAutomationItem = null;
+    protected AutomationItem _gotoAutomationItem = null;
     protected boolean _running = false;
-    protected boolean _actionRunning = false;
 
     // stores AutomationItems for this automation
     protected Hashtable<String, AutomationItem> _automationHashTable = new Hashtable<String, AutomationItem>();
@@ -34,7 +37,6 @@ public class Automation implements java.beans.PropertyChangeListener {
     public static final String LISTCHANGE_CHANGED_PROPERTY = "automationListChange"; // NOI18N
     public static final String CURRENT_ITEM_CHANGED_PROPERTY = "automationCurrentItemChange"; // NOI18N
     public static final String RUNNING_CHANGED_PROPERTY = "automationRunningChange"; // NOI18N
-    public static final String ACTION_RUNNING_CHANGED_PROPERTY = "actionRunningChange"; // NOI18N
     public static final String DISPOSE = "automationDispose"; // NOI18N
 
     public Automation(String id, String name) {
@@ -80,9 +82,16 @@ public class Automation implements java.beans.PropertyChangeListener {
         return _comment;
     }
 
-    public String getStatus() {
+    public String getCurrentActionString() {
         if (getCurrentAutomationItem() != null && getCurrentAutomationItem().getAction() != null) {
-            return getCurrentAutomationItem().getId() + " " + getCurrentAutomationItem().getAction().getStatus();
+            return getCurrentAutomationItem().getId() + " " + getCurrentAutomationItem().getAction().getActionString();
+        }
+        return "";
+    }
+
+    public String getActionStatus() {
+        if (getCurrentAutomationItem() != null) {
+            return getCurrentAutomationItem().getStatus();
         }
         return "";
     }
@@ -92,6 +101,25 @@ public class Automation implements java.beans.PropertyChangeListener {
             return getCurrentAutomationItem().getAction().getFormatedMessage(getCurrentAutomationItem().getMessage());
         }
         return "";
+    }
+
+    public void setRunning(boolean running) {
+        boolean old = _running;
+        _running = running;
+        if (old != running) {
+            firePropertyChange(RUNNING_CHANGED_PROPERTY, old, running); // NOI18N
+        }
+    }
+
+    public boolean isRunning() {
+        return _running;
+    }
+
+    public boolean isActionRunning() {
+        if (getCurrentAutomationItem() != null) {
+            return getCurrentAutomationItem().isActionRunning();
+        }
+        return false;
     }
 
     public void run() {
@@ -106,22 +134,35 @@ public class Automation implements java.beans.PropertyChangeListener {
     public void step() {
         log.debug("step automation ({})", getName());
         if (getCurrentAutomationItem() != null && getCurrentAutomationItem().getAction() != null) {
-            log.debug("Perform action ({})", getCurrentAutomationItem().getAction().getName());
-            getCurrentAutomationItem().getAction().removePropertyChangeListener(this);
-            getCurrentAutomationItem().getAction().addPropertyChangeListener(this);
-            setActionRunning(true);
-            getCurrentAutomationItem().getAction().doAction();
+            if (getCurrentAutomationItem() == getItemsBySequenceList().get(0)) {
+                resetAutomationItems();
+            }
+            performAction(getCurrentAutomationItem());
         }
+    }
+
+    private void performAction(AutomationItem item) {
+        log.debug("Perform action ({}) item id: {}", item.getAction().getName(), item.getId());
+        item.getAction().removePropertyChangeListener(this);
+        item.getAction().addPropertyChangeListener(this);
+        item.getAction().doAction();
     }
 
     public void stop() {
         log.debug("stop automation ({})", getName());
-        setRunning(false);
-        setActionRunning(false);
-        getCurrentAutomationItem().getAction().removePropertyChangeListener(this);
-        getCurrentAutomationItem().getAction().cancelAction();
-        if (getCurrentAutomationItem().getAction().getClass().equals(HaltAction.class)) {
-            setNextAutomationItem();
+        if (getCurrentAutomationItem() != null && getCurrentAutomationItem().getAction() != null) {
+            setRunning(false);
+            cancelActions();
+            if (getCurrentAutomationItem().getAction().getClass().equals(HaltAction.class)) {
+                setNextAutomationItem();
+            }
+        }
+    }
+
+    private void cancelActions() {
+        for (AutomationItem item : getItemsBySequenceList()) {
+            item.getAction().cancelAction();
+            item.getAction().removePropertyChangeListener(this);
         }
     }
 
@@ -133,55 +174,70 @@ public class Automation implements java.beans.PropertyChangeListener {
         }
     }
 
-    public void setRunning(boolean running) {
-        boolean old = _running;
-        _running = running;
-        if (old != running) {
-            setDirtyAndFirePropertyChange(RUNNING_CHANGED_PROPERTY, old, running); // NOI18N
+    public void reset() {
+        stop();
+        if (getSize() > 0) {
+            setCurrentAutomationItem(getItemsBySequenceList().get(0));
+            resetAutomationItems();
         }
     }
 
-    public boolean isRunning() {
-        return _running;
-    }
-
-    public void setActionRunning(boolean actionRunning) {
-        boolean old = _actionRunning;
-        _actionRunning = actionRunning;
-        if (old != actionRunning) {
-            setDirtyAndFirePropertyChange(ACTION_RUNNING_CHANGED_PROPERTY, old, actionRunning); // NOI18N
+    private void resetAutomationItems() {
+        for (AutomationItem item : getItemsBySequenceList()) {
+            item.setActionRan(false);
+            item.setActionSuccessful(false);
         }
-    }
-
-    public boolean isActionRunning() {
-        return _actionRunning;
     }
 
     public void setNextAutomationItem() {
         log.debug("set next automation ({})", getName());
         if (getSize() > 0) {
+            // goto?
+            if (_gotoAutomationItem != null) {
+                setCurrentAutomationItem(_gotoAutomationItem);
+                _gotoAutomationItem = null;
+                return; // done
+            }
             List<AutomationItem> items = getItemsBySequenceList();
             for (int index = 0; index < items.size(); index++) {
                 AutomationItem item = items.get(index);
                 if (item == getCurrentAutomationItem()) {
                     if (index + 1 < items.size()) {
-                        setCurrentAutomationItem(items.get(index + 1));
+                        item = items.get(index + 1);
+                        setCurrentAutomationItem(item);
+                        if (item.isActionRan()) {
+                            continue;
+                        }
                     } else {
                         setCurrentAutomationItem(getItemsBySequenceList().get(0));
                         setRunning(false); // reached the end of the list
                     }
-                    return;
+                    return; // done
                 }
             }
         }
         setCurrentAutomationItem(null);
     }
 
+    private AutomationItem getNextAutomationItem(AutomationItem item) {
+        List<AutomationItem> items = getItemsBySequenceList();
+        for (int index = 0; index < items.size(); index++) {
+            if (item == items.get(index)) {
+                if (index + 1 < items.size()) {
+                    return items.get(index + 1);
+                } else {
+                    break;
+                }
+            }
+        }
+        return null;
+    }
+
     public void setCurrentAutomationItem(AutomationItem item) {
-        AutomationItem old = _currentAutomationItem;
+        _lastAutomationItem = _currentAutomationItem;
         _currentAutomationItem = item;
-        if (old != item) {
-            setDirtyAndFirePropertyChange(CURRENT_ITEM_CHANGED_PROPERTY, old, item); // NOI18N
+        if (_lastAutomationItem != item) {
+            setDirtyAndFirePropertyChange(CURRENT_ITEM_CHANGED_PROPERTY, _lastAutomationItem, item); // NOI18N
         }
     }
 
@@ -189,8 +245,26 @@ public class Automation implements java.beans.PropertyChangeListener {
         return _currentAutomationItem;
     }
 
+    public AutomationItem getLastAutomationItem() {
+        return _lastAutomationItem;
+    }
+
+    public boolean isLastActionSuccessful() {
+        if (getLastAutomationItem() != null) {
+            return getLastAutomationItem().isActionSuccessful();
+        }
+        return false;
+    }
+
+    public String getLastActionResults() {
+        if (getLastAutomationItem() != null) {
+            return getLastAutomationItem().getStatus();
+        }
+        return "";
+    }
+
     public void dispose() {
-        setDirtyAndFirePropertyChange(DISPOSE, null, DISPOSE);
+        firePropertyChange(DISPOSE, null, DISPOSE);
     }
 
     public AutomationItem addItem() {
@@ -323,6 +397,19 @@ public class Automation implements java.beans.PropertyChangeListener {
     }
 
     /**
+     * Gets a JComboBox loaded with automation items.
+     *
+     * @return JComboBox with a list of automation items.
+     */
+    public JComboBox<AutomationItem> getComboBox() {
+        JComboBox<AutomationItem> box = new JComboBox<>();
+        for (AutomationItem item : getItemsBySequenceList()) {
+            box.addItem(item);
+        }
+        return box;
+    }
+
+    /**
      * Places a AutomationItem earlier in the automation
      *
      * @param item
@@ -406,9 +493,11 @@ public class Automation implements java.beans.PropertyChangeListener {
                 register(new AutomationItem(eAutomationItem));
             }
         }
+        // get the current item after all of the items above have been loaded
         if ((a = e.getAttribute(Xml.CURRENT_ITEM)) != null) {
             _currentAutomationItem = getItemById(a.getValue());
         }
+
     }
 
     /**
@@ -433,12 +522,41 @@ public class Automation implements java.beans.PropertyChangeListener {
 
     private void CheckForActionPropertyChange(PropertyChangeEvent e) {
         if (getCurrentAutomationItem() != null && getCurrentAutomationItem().getAction() == e.getSource()) {
-            getCurrentAutomationItem().getAction().removePropertyChangeListener(this);
-            getCurrentAutomationItem().getAction().cancelAction();
-            setActionRunning(false);
-            setNextAutomationItem();
-            if (isRunning()) {
-                step();
+            if (e.getPropertyName().equals(Action.ACTION_COMPLETE_CHANGED_PROPERTY) ||
+                    e.getPropertyName().equals(Action.ACTION_HALT_CHANGED_PROPERTY)) {
+                getCurrentAutomationItem().getAction().removePropertyChangeListener(this);
+                getCurrentAutomationItem().getAction().cancelAction();
+                if (e.getPropertyName().equals(Action.ACTION_COMPLETE_CHANGED_PROPERTY)) {
+                    setNextAutomationItem();
+                    if (isRunning()) {
+                        step();
+                    }
+                } else if (e.getPropertyName().equals(Action.ACTION_HALT_CHANGED_PROPERTY)) {
+                    stop();
+                }
+            }
+            if (e.getPropertyName().equals(Action.ACTION_GOTO_CHANGED_PROPERTY)) {
+                // the old property is used for conditional branch
+                // if old = null then it is a non-conditional goto
+                // if old = true, branch if success
+                // if old = false, branch if failure
+                if (e.getOldValue() == null || (boolean) e.getOldValue() == isLastActionSuccessful()) {
+                    _gotoAutomationItem = (AutomationItem) e.getNewValue();
+                }
+            }
+        }
+        if (e.getPropertyName().equals(Action.ACTION_RUNNING_CHANGED_PROPERTY)) {
+            firePropertyChange(e.getPropertyName(), e.getOldValue(), e.getNewValue());
+            if ((boolean) e.getNewValue()) {
+                Action action = (Action) e.getSource();
+                log.debug("Action ({}) is running", action.getActionString());
+                if (action.isConcurrentAction()) {
+                    AutomationItem item = action.getAutomationItem();
+                    AutomationItem nextItem = getNextAutomationItem(item);
+                    if (nextItem != null && nextItem.getAction().isConcurrentAction()) {
+                        performAction(nextItem); // start this wait action
+                    }
+                }
             }
         }
     }
@@ -458,6 +576,10 @@ public class Automation implements java.beans.PropertyChangeListener {
 
     public synchronized void removePropertyChangeListener(java.beans.PropertyChangeListener l) {
         pcs.removePropertyChangeListener(l);
+    }
+
+    protected void firePropertyChange(String p, Object old, Object n) {
+        pcs.firePropertyChange(p, old, n);
     }
 
     protected void setDirtyAndFirePropertyChange(String p, Object old, Object n) {

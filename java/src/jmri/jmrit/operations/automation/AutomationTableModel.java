@@ -45,7 +45,8 @@ public class AutomationTableModel extends javax.swing.table.AbstractTableModel i
     private static final int TRAIN_COLUMN = ACTION_COLUMN + 1;
     private static final int ROUTE_COLUMN = TRAIN_COLUMN + 1;
     private static final int AUTOMATION_COLUMN = ROUTE_COLUMN + 1;
-    private static final int MESSAGE_COLUMN = AUTOMATION_COLUMN + 1;
+    private static final int STATUS_COLUMN = AUTOMATION_COLUMN + 1;
+    private static final int MESSAGE_COLUMN = STATUS_COLUMN + 1;
     private static final int UP_COLUMN = MESSAGE_COLUMN + 1;
     private static final int DOWN_COLUMN = UP_COLUMN + 1;
     private static final int DELETE_COLUMN = DOWN_COLUMN + 1;
@@ -125,6 +126,7 @@ public class AutomationTableModel extends javax.swing.table.AbstractTableModel i
         table.getColumnModel().getColumn(TRAIN_COLUMN).setPreferredWidth(200);
         table.getColumnModel().getColumn(ROUTE_COLUMN).setPreferredWidth(200);
         table.getColumnModel().getColumn(AUTOMATION_COLUMN).setPreferredWidth(200);
+        table.getColumnModel().getColumn(STATUS_COLUMN).setPreferredWidth(70);
         table.getColumnModel().getColumn(MESSAGE_COLUMN).setPreferredWidth(70);
         table.getColumnModel().getColumn(UP_COLUMN).setPreferredWidth(60);
         table.getColumnModel().getColumn(DOWN_COLUMN).setPreferredWidth(70);
@@ -153,6 +155,8 @@ public class AutomationTableModel extends javax.swing.table.AbstractTableModel i
                 return Bundle.getMessage("RouteLocation");
             case AUTOMATION_COLUMN:
                 return Bundle.getMessage("Automation");
+            case STATUS_COLUMN:
+                return Bundle.getMessage("Status");
             case MESSAGE_COLUMN:
                 return Bundle.getMessage("Message");
             case UP_COLUMN:
@@ -180,6 +184,8 @@ public class AutomationTableModel extends javax.swing.table.AbstractTableModel i
                 return JComboBox.class;
             case AUTOMATION_COLUMN:
                 return JComboBox.class;
+            case STATUS_COLUMN:
+                return String.class;
             case MESSAGE_COLUMN:
                 return JButton.class;
             case UP_COLUMN:
@@ -235,6 +241,8 @@ public class AutomationTableModel extends javax.swing.table.AbstractTableModel i
                 return getRouteLocationComboBox(item);
             case AUTOMATION_COLUMN:
                 return getAutomationComboBox(item);
+            case STATUS_COLUMN:
+                return getStatus(item);
             case MESSAGE_COLUMN:
                 if (item.getMessage().equals(AutomationItem.NONE)
                         && item.getMessageFail().equals(AutomationItem.NONE))
@@ -297,7 +305,7 @@ public class AutomationTableModel extends javax.swing.table.AbstractTableModel i
 
     private JComboBox<Action> getActionComboBox(AutomationItem item) {
         JComboBox<Action> cb = item.getActionComboBox();
-        //      cb.setSelectedItem(item.getAction()); TODO understand why this didn't work
+        //      cb.setSelectedItem(item.getAction()); TODO understand why this didn't work, class?
         for (int index = 0; index < cb.getItemCount(); index++) {
             // select the action based on it's action code
             if (item.getAction() != null && ((Action) cb.getItemAt(index)).getCode() == item.getAction().getCode()) {
@@ -329,13 +337,31 @@ public class AutomationTableModel extends javax.swing.table.AbstractTableModel i
         return cb;
     }
 
-    private JComboBox<Automation> getAutomationComboBox(AutomationItem item) {
-        JComboBox<Automation> cb = AutomationManager.instance().getComboBox();
-        cb.setSelectedItem(item.getAutomation());
-        // determine if automation combo box is enabled
+    /**
+     * Returns either a comboBox loaded with automations, or a goto list of
+     * automationItems for this automation.
+     * 
+     * @param item
+     * @return comboBox loaded with automations or a goto automationIem list
+     */
+    private JComboBox<?> getAutomationComboBox(AutomationItem item) {
         JComboBox<Action> acb = getActionComboBox(item);
-        cb.setEnabled(acb.getSelectedItem() != null && ((Action) acb.getSelectedItem()).isAutomationMenuEnabled());
-        return cb;
+        if (acb.getSelectedItem() != null && ((Action) acb.getSelectedItem()).isGotoMenuEnabled()) {
+            JComboBox<AutomationItem> cb = _automation.getComboBox();
+            cb.setSelectedItem(item.getGotoAutomationItem());
+//            cb.setEnabled(acb.getSelectedItem() != null && ((Action) acb.getSelectedItem()).isGotoMenuEnabled());
+            return cb;
+        } else {
+            JComboBox<Automation> cb = AutomationManager.instance().getComboBox();
+            cb.setSelectedItem(item.getAutomationToRun());
+            // determine if automation combo box is enabled
+            cb.setEnabled(acb.getSelectedItem() != null && ((Action) acb.getSelectedItem()).isAutomationMenuEnabled());
+            return cb;
+        }
+    }
+
+    private String getStatus(AutomationItem item) {
+        return item.getStatus();
     }
 
     private void setAction(Object value, AutomationItem item) {
@@ -357,9 +383,16 @@ public class AutomationTableModel extends javax.swing.table.AbstractTableModel i
     }
 
     private void setAutomation(Object value, AutomationItem item) {
-        @SuppressWarnings("unchecked")
-        JComboBox<Automation> cb = (JComboBox<Automation>) value;
-        item.setAutomation((Automation) cb.getSelectedItem());
+        JComboBox<Action> acb = getActionComboBox(item);
+        if (acb.getSelectedItem() != null && ((Action) acb.getSelectedItem()).isGotoMenuEnabled()) {
+            @SuppressWarnings("unchecked")
+            JComboBox<AutomationItem> cb = (JComboBox<AutomationItem>) value;
+            item.setGotoAutomationItem((AutomationItem) cb.getSelectedItem());
+        } else {
+            @SuppressWarnings("unchecked")
+            JComboBox<Automation> cb = (JComboBox<Automation>) value;
+            item.setAutomation((Automation) cb.getSelectedItem());
+        }
     }
 
     private void setMessage(Object value, AutomationItem item) {
@@ -374,25 +407,25 @@ public class AutomationTableModel extends javax.swing.table.AbstractTableModel i
         dialog.add(messageScroller, BorderLayout.NORTH);
         messageTextArea.setText(item.getMessage());
         messageTextArea.setToolTipText(Bundle.getMessage("TipMessage"));
-        
+
         JPanel buttonPane = new JPanel();
         buttonPane.setLayout(new FlowLayout(FlowLayout.CENTER));
         dialog.add(buttonPane, BorderLayout.SOUTH);
-        
+
         JCheckBox haltCheckBox = new JCheckBox(Bundle.getMessage("HaltIfFail"));
         haltCheckBox.setSelected(item.isHaltFailureEnabled());
-       
+
         final JTextArea messageFailTextArea = new JTextArea(5, 100);
-        if (item.getAction() != null && item.getAction().isMessageFailEnabled()) {           
+        if (item.getAction() != null && item.getAction().isMessageFailEnabled()) {
             JScrollPane messageFailScroller = new JScrollPane(messageFailTextArea);
             messageFailScroller.setBorder(BorderFactory.createTitledBorder(Bundle.getMessage("MessageFail")));
             dialog.add(messageFailScroller, BorderLayout.CENTER);
             messageFailTextArea.setText(item.getMessageFail());
             messageFailTextArea.setToolTipText(Bundle.getMessage("TipMessage"));
-            
+
             buttonPane.add(haltCheckBox);
         }
-        
+
         JButton okayButton = new JButton(Bundle.getMessage("Okay"));
         okayButton.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent arg0) {
@@ -413,6 +446,21 @@ public class AutomationTableModel extends javax.swing.table.AbstractTableModel i
             }
         });
         buttonPane.add(cancelButton);
+
+        JButton defaultMessagesButton = new JButton(Bundle.getMessage("DefaultMessages"));
+        defaultMessagesButton.setToolTipText(Bundle.getMessage("TipDefaultButton"));
+        defaultMessagesButton.addActionListener(new ActionListener() {
+            public void actionPerformed(ActionEvent arg0) {
+                if (messageTextArea.getText().equals(AutomationItem.NONE)) {
+                    messageTextArea.setText(Bundle.getMessage("DefaultMessageOk"));
+                }
+                if (messageFailTextArea.getText().equals(AutomationItem.NONE)) {
+                    messageFailTextArea.setText(Bundle.getMessage("DefaultMessageFail"));
+                }
+                return;
+            }
+        });
+        buttonPane.add(defaultMessagesButton);
 
         dialog.setModal(true);
         dialog.pack();

@@ -8,6 +8,8 @@ import javax.swing.BorderFactory;
 import javax.swing.BoxLayout;
 import javax.swing.ButtonGroup;
 import javax.swing.JButton;
+import javax.swing.JMenu;
+import javax.swing.JMenuBar;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JRadioButton;
@@ -17,6 +19,7 @@ import javax.swing.JTextField;
 import javax.swing.ScrollPaneConstants;
 import jmri.jmrit.operations.OperationsFrame;
 import jmri.jmrit.operations.OperationsXml;
+import jmri.jmrit.operations.automation.actions.Action;
 import jmri.jmrit.operations.setup.Control;
 import jmri.jmrit.operations.setup.Setup;
 import org.slf4j.Logger;
@@ -72,7 +75,7 @@ public class AutomationEditFrame extends OperationsFrame implements java.beans.P
 
         // load managers
         automationManager = AutomationManager.instance();
-        
+
         // tool tips
         stepActionButton.setToolTipText(Bundle.getMessage("TipStepAutomation"));
         runActionButton.setToolTipText(Bundle.getMessage("TipRunAutomation"));
@@ -146,7 +149,7 @@ public class AutomationEditFrame extends OperationsFrame implements java.beans.P
         addItem(pControl, runActionButton, 1, 0);
         addItem(pControl, resumeActionButton, 2, 0);
         addItem(pControl, stopActionButton, 3, 0);
-        
+
         // row 11 buttons
         JPanel pB = new JPanel();
         pB.setLayout(new GridBagLayout());
@@ -180,12 +183,13 @@ public class AutomationEditFrame extends OperationsFrame implements java.beans.P
         }
 
         // build menu
-        //        JMenuBar menuBar = new JMenuBar();
-        //        JMenu toolMenu = new JMenu("Tools");
-        //        menuBar.add(toolMenu);
-        //        toolMenu.add(new AutomationCopyAction(automation));
-        //        setJMenuBar(menuBar);
-        //        addHelpMenu("package.jmri.jmrit.operations.Operations_Automations", true); // NOI18N
+        JMenuBar menuBar = new JMenuBar();
+        JMenu toolMenu = new JMenu("Tools");
+        menuBar.add(toolMenu);
+        toolMenu.add(new ResetAutomationAction(this));
+        //               toolMenu.add(new AutomationCopyAction(automation));
+        setJMenuBar(menuBar);
+        addHelpMenu("package.jmri.jmrit.operations.Operations_Automation", true); // NOI18N
 
         // set frame size and automation for display
         initMinimumSize(new Dimension(Control.panelWidth700, Control.panelHeight400));
@@ -193,6 +197,7 @@ public class AutomationEditFrame extends OperationsFrame implements java.beans.P
 
     // Save, Delete, Add
     public void buttonActionPerformed(java.awt.event.ActionEvent ae) {
+        stopCellEditing();
         if (_automation != null) {
             if (ae.getSource() == stepActionButton) {
                 _automation.step();
@@ -284,15 +289,17 @@ public class AutomationEditFrame extends OperationsFrame implements java.beans.P
         _automation.setName(automationNameTextField.getText());
         _automation.setComment(commentTextField.getText());
 
+        saveTableDetails(automationTable);
+        // save automation file
+        OperationsXml.save();
+    }
+    
+    private void stopCellEditing() {
         if (automationTable.isEditing()) {
             log.debug("automation table edit true");
             automationTable.getCellEditor().stopCellEditing();
             automationTable.clearSelection();
         }
-
-        saveTableDetails(automationTable);
-        // save automation file
-        OperationsXml.save();
     }
 
     /**
@@ -357,9 +364,9 @@ public class AutomationEditFrame extends OperationsFrame implements java.beans.P
                 .getNewValue());
         if (e.getPropertyName().equals(Automation.LISTCHANGE_CHANGED_PROPERTY) ||
                 e.getPropertyName().equals(Automation.RUNNING_CHANGED_PROPERTY) ||
-                e.getPropertyName().equals(Automation.ACTION_RUNNING_CHANGED_PROPERTY)) {
+                e.getPropertyName().equals(Action.ACTION_RUNNING_CHANGED_PROPERTY)) {
             enableControlButtons(true);
-        }    
+        }
     }
 
     static Logger log = LoggerFactory.getLogger(AutomationEditFrame.class.getName());

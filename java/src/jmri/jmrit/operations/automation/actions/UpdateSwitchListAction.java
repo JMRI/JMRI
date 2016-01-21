@@ -16,10 +16,10 @@ public class UpdateSwitchListAction extends Action {
 
     @Override
     public String getName() {
-        if (Setup.isSwitchListRealTime() && TrainManager.instance().isPrintPreviewEnabled())
-            return Bundle.getMessage("PrintSwitchList");
-        else if (Setup.isSwitchListRealTime() && !TrainManager.instance().isPrintPreviewEnabled())
-            return Bundle.getMessage("PreviewSwitchList");
+        if (Setup.isSwitchListRealTime() && !TrainManager.instance().isPrintPreviewEnabled())
+            return Bundle.getMessage("PrintSwitchListChanges");
+        else if (Setup.isSwitchListRealTime() && TrainManager.instance().isPrintPreviewEnabled())
+            return Bundle.getMessage("PreviewSwitchListChanges");
         else
             return Bundle.getMessage("UpdateSwitchList");
     }
@@ -27,6 +27,7 @@ public class UpdateSwitchListAction extends Action {
     @Override
     public void doAction() {
         if (getAutomationItem() != null) {
+            setRunning(true);
             TrainScheduleManager.instance().buildSwitchLists();
             finishAction(true);
         }

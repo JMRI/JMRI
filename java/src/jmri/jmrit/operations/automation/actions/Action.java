@@ -10,6 +10,9 @@ import jmri.jmrit.operations.trains.Train;
 public abstract class Action {
 
     public static final String ACTION_COMPLETE_CHANGED_PROPERTY = "actionComplete"; // NOI18N
+    public static final String ACTION_HALT_CHANGED_PROPERTY = "actionHalt"; // NOI18N
+    public static final String ACTION_RUNNING_CHANGED_PROPERTY = "actionRunning"; // NOI18N
+    public static final String ACTION_GOTO_CHANGED_PROPERTY = "actionGoto"; // NOI18N
 
     public static final int OKAY = 0;
     public static final int HALT = 1;
@@ -53,11 +56,11 @@ public abstract class Action {
     }
 
     public boolean isMessageOkEnabled() {
-        return (getCode() & ActionCodes.ENABLE_OK_MESSAGE) == ActionCodes.ENABLE_OK_MESSAGE;
+        return (getCode() & ActionCodes.OK_MESSAGE) == ActionCodes.OK_MESSAGE;
     }
 
     public boolean isMessageFailEnabled() {
-        return (getCode() & ActionCodes.ENABLE_FAIL_MESSAGE) == ActionCodes.ENABLE_FAIL_MESSAGE;
+        return (getCode() & ActionCodes.FAIL_MESSAGE) == ActionCodes.FAIL_MESSAGE;
     }
 
     public boolean isAutomationMenuEnabled() {
@@ -67,6 +70,14 @@ public abstract class Action {
     public boolean isGotoMenuEnabled() {
         return (getCode() & ActionCodes.ENABLE_GOTO_LIST) == ActionCodes.ENABLE_GOTO_LIST;
     }
+    
+    /**
+     * Used to determine if this action can run concurrently with other actions.
+     * @return true if a concurrent action
+     */
+    public boolean isConcurrentAction() {
+        return false; // override if concurrent action
+    }
 
     public void setAutomationItem(AutomationItem item) {
         _automationItem = item;
@@ -75,9 +86,19 @@ public abstract class Action {
     public AutomationItem getAutomationItem() {
         return _automationItem;
     }
-    
-    public String getStatus() {
-        return getFormatedMessage("{0} {1} {2} {3}");
+
+    public String getActionString() {
+        return getFormatedMessage("{0} {1} {2} {3} {4}");
+    }
+
+    public void setRunning(boolean running) {
+        if (getAutomationItem() != null) {
+            boolean old = getAutomationItem().isActionRunning();
+            getAutomationItem().setActionRunning(running);
+            if (old != running) {
+                firePropertyChange(ACTION_RUNNING_CHANGED_PROPERTY, old, running);
+            }
+        }
     }
 
     /**
@@ -91,6 +112,9 @@ public abstract class Action {
     public int finishAction(boolean success) {
         int response = FINISH_FAILED;
         if (getAutomationItem() != null) {
+            setRunning(true);
+            getAutomationItem().setActionSuccessful(success);
+            setRunning(false);
             String message = getAutomationItem().getMessage();
             Object[] buttons = new Object[]{Bundle.getMessage("OK"), Bundle.getMessage("HALT")};
             if (!success) {
@@ -100,8 +124,10 @@ public abstract class Action {
                 }
             }
             response = sendMessage(message, buttons, success);
-            if (response != HALT && (success || !getAutomationItem().isHaltFailureEnabled())) {
-                firePropertyChange(ACTION_COMPLETE_CHANGED_PROPERTY, false, true);
+            if (response == HALT || (!success && getAutomationItem().isHaltFailureEnabled())) {
+                firePropertyChange(ACTION_HALT_CHANGED_PROPERTY, !success, success);
+            } else {
+                firePropertyChange(ACTION_COMPLETE_CHANGED_PROPERTY, !success, success);
             }
         }
         return response;
@@ -117,7 +143,10 @@ public abstract class Action {
         int response = NO_MESSAGE_SENT;
         if (getAutomationItem() != null && !message.equals(AutomationItem.NONE)) {
             // use formatter to create title
-            String title = getAutomationItem().getId() + " " + (success ? "":Bundle.getMessage("Failed")) + " {0} {1} {2} {3}";
+            String title = getAutomationItem().getId() +
+                    " " +
+                    (success ? "" : Bundle.getMessage("Failed")) +
+                    " {0} {1} {2} {3} {4}";
 
             response = JOptionPane.showOptionDialog(null, getFormatedMessage(message), getFormatedMessage(title),
                     JOptionPane.OK_CANCEL_OPTION, JOptionPane.INFORMATION_MESSAGE, null, buttons
@@ -138,11 +167,16 @@ public abstract class Action {
             routeLocationName = " " + rl.getName();
         }
         String automationName = "";
-        Automation automation = getAutomationItem().getAutomation();
+        Automation automation = getAutomationItem().getAutomationToRun();
         if (automation != null) {
             automationName = " " + automation.getName();
         }
-        return MessageFormat.format(message, new Object[]{getName(), trainName, routeLocationName, automationName});
+        String itemId = "";
+        AutomationItem item = getAutomationItem().getGotoAutomationItem();
+        if (item != null) {
+            itemId = " " + item.getId();
+        }
+        return MessageFormat.format(message, new Object[]{getName(), trainName, routeLocationName, automationName, itemId});
     }
 
     java.beans.PropertyChangeSupport pcs = new java.beans.PropertyChangeSupport(this);

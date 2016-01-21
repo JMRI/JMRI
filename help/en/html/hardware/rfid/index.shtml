@@ -88,7 +88,7 @@ RFID Reader, the associated sensor is ACTIVE; outside of these times it is INACT
 You create Sensors using the 
 <a href="../../../../package/jmri/jmrit/beantable/SensorAddEdit.shtml">Add...</a>
 button on the
-<a href="../../../../package/jmri/jmrit/beantable/SensorTable.shtml">Sensors Table</a>.
+<a href="../../../../package/jmri/jmrit/beantable/SensorTable.shtml">Sensor Table</a>.
 
 <h3>Reporters</h3>
 <p>
@@ -108,8 +108,8 @@ Reporter will contain details of the specific
 <a href="../../tools/IdTags.shtml">IdTag</a>
 seen.  This then enables other JMRI tools to react to this information.
 
-<h4>Reporters Table</h4>
-<p>The <a href="../../../package/jmri/jmrit/beantable/ReporterTable.shtml">Reporters Table</a>
+<h4>Reporter Table</h4>
+<p>The <a href="../../../package/jmri/jmrit/beantable/ReporterTable.shtml">Reporter Table</a>
 provides easy access to the contents of all Reporters that JMRI knows about.
 JMRI automatically creates
 Reporter objects for devices discovered on the layout.<br>
@@ -126,7 +126,7 @@ To do this:
 	desired Reporter.
 	<li>Click the button.  The Reporter icon will be placed on the Panel.
 	If it's not visible, that might be because the value is currently blank;
-	use the Reporters Table to change the value to something that will be visible.
+	use the Reporter Table to change the value to something that will be visible.
 	<li>You can drag the icon to where you want it in the usual way.
 	<li>The pop-up menu on the icon will let you change the formatting.
 </ul>

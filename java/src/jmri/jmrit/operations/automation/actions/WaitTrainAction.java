@@ -21,12 +21,18 @@ public class WaitTrainAction extends Action implements PropertyChangeListener {
     public String getName() {
         return Bundle.getMessage("WaitForTrain");
     }
+    
+    @Override
+    public boolean isConcurrentAction() {
+        return true;
+    }
 
     @Override
     public void doAction() {
         if (getAutomationItem() != null) {
             Train train = getAutomationItem().getTrain();
             if (train != null) {
+                setRunning(true);
                 train.addPropertyChangeListener(this);
             } else {
                 finishAction(false);
@@ -50,6 +56,7 @@ public class WaitTrainAction extends Action implements PropertyChangeListener {
     @Override
     public void cancelAction() {
         if (getAutomationItem() != null) {
+            setRunning(false);
             Train train = getAutomationItem().getTrain();
             if (train != null) {
                 train.removePropertyChangeListener(this);

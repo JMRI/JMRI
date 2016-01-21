@@ -1,5 +1,4 @@
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
-<!-- $Id$ -->
 <html lang="en">
     <head>
         <title>Using the NetBeans Swing GUI Builder</title>
@@ -30,7 +29,7 @@
         <p>Portions of the JMRI Graphical User Interface (GUI) code are maintained
             using the
             <a href="https://netbeans.org/features/java/swing.html">NetBeans Swing GUI Builder</a>
-            (the Builder). This is a guide to using the Builder tool. See
+            (the "Builder"). This page is a guide to using the Builder tool. See
             <a href="NetBeans.shtml">Building with NetBeans</a> for a general
             introduction to using NetBeans for maintaining JMRI.</p>
         <!-- - - - - - - - - -->

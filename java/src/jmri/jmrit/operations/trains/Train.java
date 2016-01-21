@@ -2849,8 +2849,7 @@ public class Train implements java.beans.PropertyChangeListener {
      */
     public boolean buildIfSelected() {
         if (isBuildEnabled() && !isBuilt()) {
-            build();
-            return true;
+            return build();
         }
         log.debug("Train (" + getName() + ") not selected or already built, skipping build");
         return false;
@@ -2859,16 +2858,17 @@ public class Train implements java.beans.PropertyChangeListener {
     /**
      * Build this train. Creates a train manifest.
      */
-    public void build() {
+    public boolean build() {
         reset();
         // run before build scripts
         runScripts(getBuildScripts());
         TrainBuilder tb = new TrainBuilder();
-        tb.build(this);
+        boolean results = tb.build(this);
         setPrinted(false);
         setSwitchListStatus(UNKNOWN);
         // run after build scripts
         runScripts(getAfterBuildScripts());
+        return results;
     }
 
     /**

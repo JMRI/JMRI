@@ -5,7 +5,6 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.ResourceBundle;
 import javax.swing.Box;
 import javax.swing.JButton;
 import javax.swing.JComponent;
@@ -27,8 +26,6 @@ abstract public class AbstractTableTabAction extends AbstractTableAction {
      *
      */
     private static final long serialVersionUID = -7423371299023131468L;
-
-    public static final ResourceBundle rbean = ResourceBundle.getBundle("jmri.jmrit.beantable.BeanTableBundle");
 
     protected JPanel dataPanel;
     protected JTabbedPane dataTabs;
@@ -208,7 +205,7 @@ abstract public class AbstractTableTabAction extends AbstractTableAction {
 
             dataPanel.add(bottomBox, BorderLayout.SOUTH);
             if (tableAction.includeAddButton()) {
-                JButton addButton = new JButton(rbean.getString("ButtonAdd"));
+                JButton addButton = new JButton(Bundle.getMessage("ButtonAdd"));
                 addToBottomBox(addButton);
                 addButton.addActionListener(new ActionListener() {
                     public void actionPerformed(ActionEvent e) {

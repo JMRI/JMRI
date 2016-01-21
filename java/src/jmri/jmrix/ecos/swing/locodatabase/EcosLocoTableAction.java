@@ -565,7 +565,7 @@ public class EcosLocoTableAction extends AbstractTableAction {
                         b = getByEcosObject(ecosObjectIdList.get(row));
                         return (b != null) ? (b.getDirectionAsString() + " : " + b.getSpeed()) : null;
                     case DELETECOL:  //
-                        return AbstractTableAction.rb.getString("ButtonDelete");
+                        return Bundle.getMessage("ButtonDelete");
                     default:
                         //log.error("internal state inconsistent with table requst for "+row+" "+col);
                         return null;

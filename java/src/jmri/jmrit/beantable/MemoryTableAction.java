@@ -140,13 +140,13 @@ public class MemoryTableAction extends AbstractTableAction {
             }
 
             protected String getBeanType() {
-                return AbstractTableAction.rbean.getString("BeanNameMemory");
+                return Bundle.getMessage("BeanNameMemory");
             }
         };
     }
 
     protected void setTitle() {
-        f.setTitle(f.rb.getString("TitleMemoryTable"));
+        f.setTitle(Bundle.getMessage("TitleMemoryTable"));
     }
 
     protected String helpTarget() {
@@ -156,18 +156,18 @@ public class MemoryTableAction extends AbstractTableAction {
     JmriJFrame addFrame = null;
     JTextField sysName = new JTextField(5);
     JTextField userName = new JTextField(5);
-    JLabel sysNameLabel = new JLabel(rb.getString("LabelSystemName"));
-    JLabel userNameLabel = new JLabel(rb.getString("LabelUserName"));
+    JLabel sysNameLabel = new JLabel(Bundle.getMessage("LabelSystemName"));
+    JLabel userNameLabel = new JLabel(Bundle.getMessage("LabelUserName"));
 
     JTextField numberToAdd = new JTextField(10);
-    JCheckBox range = new JCheckBox(rb.getString("LabelNumberToAdd"));
-    JCheckBox autoSystemName = new JCheckBox(rb.getString("LabelAutoSysName"));
+    JCheckBox range = new JCheckBox(Bundle.getMessage("LabelNumberToAdd"));
+    JCheckBox autoSystemName = new JCheckBox(Bundle.getMessage("LabelAutoSysName"));
     jmri.UserPreferencesManager p;
 
     protected void addPressed(ActionEvent e) {
         p = jmri.InstanceManager.getDefault(jmri.UserPreferencesManager.class);
         if (addFrame == null) {
-            addFrame = new JmriJFrame(rb.getString("TitleAddMemory"), false, true);
+            addFrame = new JmriJFrame(Bundle.getMessage("TitleAddMemory"), false, true);
             addFrame.addHelpMenu("package.jmri.jmrit.beantable.MemoryAddEdit", true);
             addFrame.getContentPane().setLayout(new BoxLayout(addFrame.getContentPane(), BoxLayout.Y_AXIS));
 
@@ -252,14 +252,14 @@ public class MemoryTableAction extends AbstractTableAction {
     void handleCreateException(String sysName) {
         javax.swing.JOptionPane.showMessageDialog(addFrame,
                 java.text.MessageFormat.format(
-                        rb.getString("ErrorMemoryAddFailed"),
+                        Bundle.getMessage("ErrorMemoryAddFailed"),
                         new Object[]{sysName}),
-                rb.getString("ErrorTitle"),
+                Bundle.getMessage("ErrorTitle"),
                 javax.swing.JOptionPane.ERROR_MESSAGE);
     }
 
     public String getClassDescription() {
-        return rb.getString("TitleMemoryTable");
+        return Bundle.getMessage("TitleMemoryTable");
     }
 
     protected String getClassName() {
