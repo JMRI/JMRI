@@ -337,18 +337,30 @@ public class AutomationTableModel extends javax.swing.table.AbstractTableModel i
         return cb;
     }
 
-    private JComboBox<Automation> getAutomationComboBox(AutomationItem item) {
-        JComboBox<Automation> cb = AutomationManager.instance().getComboBox();
-        cb.setSelectedItem(item.getAutomation());
-        // determine if automation combo box is enabled
+    /**
+     * Returns either a comboBox loaded with automations, or a goto list of
+     * automationItems for this automation.
+     * 
+     * @param item
+     * @return comboBox loaded with automations or a goto automationIem list
+     */
+    private JComboBox<?> getAutomationComboBox(AutomationItem item) {
         JComboBox<Action> acb = getActionComboBox(item);
-        cb.setEnabled(acb.getSelectedItem() != null && ((Action) acb.getSelectedItem()).isAutomationMenuEnabled());
-        return cb;
+        if (acb.getSelectedItem() != null && ((Action) acb.getSelectedItem()).isGotoMenuEnabled()) {
+            JComboBox<AutomationItem> cb = _automation.getComboBox();
+            cb.setSelectedItem(item.getGotoAutomationItem());
+//            cb.setEnabled(acb.getSelectedItem() != null && ((Action) acb.getSelectedItem()).isGotoMenuEnabled());
+            return cb;
+        } else {
+            JComboBox<Automation> cb = AutomationManager.instance().getComboBox();
+            cb.setSelectedItem(item.getAutomationToRun());
+            // determine if automation combo box is enabled
+            cb.setEnabled(acb.getSelectedItem() != null && ((Action) acb.getSelectedItem()).isAutomationMenuEnabled());
+            return cb;
+        }
     }
-    
+
     private String getStatus(AutomationItem item) {
-        if (_automation.getCurrentAutomationItem() == item)
-            return "";
         return item.getStatus();
     }
 
@@ -371,9 +383,16 @@ public class AutomationTableModel extends javax.swing.table.AbstractTableModel i
     }
 
     private void setAutomation(Object value, AutomationItem item) {
-        @SuppressWarnings("unchecked")
-        JComboBox<Automation> cb = (JComboBox<Automation>) value;
-        item.setAutomation((Automation) cb.getSelectedItem());
+        JComboBox<Action> acb = getActionComboBox(item);
+        if (acb.getSelectedItem() != null && ((Action) acb.getSelectedItem()).isGotoMenuEnabled()) {
+            @SuppressWarnings("unchecked")
+            JComboBox<AutomationItem> cb = (JComboBox<AutomationItem>) value;
+            item.setGotoAutomationItem((AutomationItem) cb.getSelectedItem());
+        } else {
+            @SuppressWarnings("unchecked")
+            JComboBox<Automation> cb = (JComboBox<Automation>) value;
+            item.setAutomation((Automation) cb.getSelectedItem());
+        }
     }
 
     private void setMessage(Object value, AutomationItem item) {
@@ -388,25 +407,25 @@ public class AutomationTableModel extends javax.swing.table.AbstractTableModel i
         dialog.add(messageScroller, BorderLayout.NORTH);
         messageTextArea.setText(item.getMessage());
         messageTextArea.setToolTipText(Bundle.getMessage("TipMessage"));
-        
+
         JPanel buttonPane = new JPanel();
         buttonPane.setLayout(new FlowLayout(FlowLayout.CENTER));
         dialog.add(buttonPane, BorderLayout.SOUTH);
-        
+
         JCheckBox haltCheckBox = new JCheckBox(Bundle.getMessage("HaltIfFail"));
         haltCheckBox.setSelected(item.isHaltFailureEnabled());
-       
+
         final JTextArea messageFailTextArea = new JTextArea(5, 100);
-        if (item.getAction() != null && item.getAction().isMessageFailEnabled()) {           
+        if (item.getAction() != null && item.getAction().isMessageFailEnabled()) {
             JScrollPane messageFailScroller = new JScrollPane(messageFailTextArea);
             messageFailScroller.setBorder(BorderFactory.createTitledBorder(Bundle.getMessage("MessageFail")));
             dialog.add(messageFailScroller, BorderLayout.CENTER);
             messageFailTextArea.setText(item.getMessageFail());
             messageFailTextArea.setToolTipText(Bundle.getMessage("TipMessage"));
-            
+
             buttonPane.add(haltCheckBox);
         }
-        
+
         JButton okayButton = new JButton(Bundle.getMessage("Okay"));
         okayButton.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent arg0) {
@@ -427,7 +446,7 @@ public class AutomationTableModel extends javax.swing.table.AbstractTableModel i
             }
         });
         buttonPane.add(cancelButton);
-        
+
         JButton defaultMessagesButton = new JButton(Bundle.getMessage("DefaultMessages"));
         defaultMessagesButton.setToolTipText(Bundle.getMessage("TipDefaultButton"));
         defaultMessagesButton.addActionListener(new ActionListener() {

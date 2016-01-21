@@ -5,6 +5,7 @@ import java.util.ArrayList;
 import java.util.Enumeration;
 import java.util.Hashtable;
 import java.util.List;
+import javax.swing.JComboBox;
 import jmri.jmrit.operations.automation.actions.Action;
 import jmri.jmrit.operations.automation.actions.HaltAction;
 import jmri.jmrit.operations.setup.Control;
@@ -26,6 +27,7 @@ public class Automation implements java.beans.PropertyChangeListener {
     protected String _comment = "";
     protected AutomationItem _currentAutomationItem = null;
     protected AutomationItem _lastAutomationItem = null;
+    protected AutomationItem _gotoAutomationItem = null;
     protected boolean _running = false;
 
     // stores AutomationItems for this automation
@@ -87,9 +89,9 @@ public class Automation implements java.beans.PropertyChangeListener {
         return "";
     }
 
-    public String getLastActionResults() {
-        if (getLastAutomationItem() != null) {
-            return getLastAutomationItem().getStatus();
+    public String getActionStatus() {
+        if (getCurrentAutomationItem() != null) {
+            return getCurrentAutomationItem().getStatus();
         }
         return "";
     }
@@ -113,6 +115,9 @@ public class Automation implements java.beans.PropertyChangeListener {
     public void step() {
         log.debug("step automation ({})", getName());
         if (getCurrentAutomationItem() != null && getCurrentAutomationItem().getAction() != null) {
+            if (getCurrentAutomationItem() == getItemsBySequenceList().get(0)) {
+                resetActionRan();
+            }
             log.debug("Perform action ({})", getCurrentAutomationItem().getAction().getName());
             getCurrentAutomationItem().getAction().removePropertyChangeListener(this);
             getCurrentAutomationItem().getAction().addPropertyChangeListener(this);
@@ -144,6 +149,13 @@ public class Automation implements java.beans.PropertyChangeListener {
         stop();
         if (getSize() > 0) {
             setCurrentAutomationItem(getItemsBySequenceList().get(0));
+            resetActionRan();
+        }
+    }
+
+    private void resetActionRan() {
+        for (AutomationItem item : getItemsBySequenceList()) {
+            item.setActionRan(false);
         }
     }
 
@@ -169,6 +181,12 @@ public class Automation implements java.beans.PropertyChangeListener {
     public void setNextAutomationItem() {
         log.debug("set next automation ({})", getName());
         if (getSize() > 0) {
+            // goto?
+            if (_gotoAutomationItem != null) {
+                setCurrentAutomationItem(_gotoAutomationItem);
+                _gotoAutomationItem = null;
+                return; // done
+            }
             List<AutomationItem> items = getItemsBySequenceList();
             for (int index = 0; index < items.size(); index++) {
                 AutomationItem item = items.get(index);
@@ -179,7 +197,7 @@ public class Automation implements java.beans.PropertyChangeListener {
                         setCurrentAutomationItem(getItemsBySequenceList().get(0));
                         setRunning(false); // reached the end of the list
                     }
-                    return;
+                    return; // done
                 }
             }
         }
@@ -196,6 +214,20 @@ public class Automation implements java.beans.PropertyChangeListener {
 
     public AutomationItem getLastAutomationItem() {
         return _lastAutomationItem;
+    }
+
+    public boolean isLastActionSuccessful() {
+        if (getLastAutomationItem() != null) {
+            return getLastAutomationItem().isActionSuccessful();
+        }
+        return false;
+    }
+
+    public String getLastActionResults() {
+        if (getLastAutomationItem() != null) {
+            return getLastAutomationItem().getStatus();
+        }
+        return "";
     }
 
     public AutomationItem getCurrentAutomationItem() {
@@ -336,6 +368,19 @@ public class Automation implements java.beans.PropertyChangeListener {
     }
 
     /**
+     * Gets a JComboBox loaded with automation items.
+     *
+     * @return JComboBox with a list of automation items.
+     */
+    public JComboBox<AutomationItem> getComboBox() {
+        JComboBox<AutomationItem> box = new JComboBox<>();
+        for (AutomationItem item : getItemsBySequenceList()) {
+            box.addItem(item);
+        }
+        return box;
+    }
+
+    /**
      * Places a AutomationItem earlier in the automation
      *
      * @param item
@@ -464,6 +509,15 @@ public class Automation implements java.beans.PropertyChangeListener {
             if (e.getPropertyName().equals(Action.ACTION_RUNNING_CHANGED_PROPERTY)) {
                 firePropertyChange(e.getPropertyName(), e.getOldValue(), e.getNewValue());
             }
+            if (e.getPropertyName().equals(Action.ACTION_GOTO_CHANGED_PROPERTY)) {
+                // the old property is used for conditional branch
+                // if old = null then it is a non-conditional goto
+                // if old = true, branch if success
+                // if old = false, branch if failure
+                if (e.getOldValue() == null || (boolean) e.getOldValue() == isLastActionSuccessful()) {
+                    _gotoAutomationItem = (AutomationItem) e.getNewValue();
+                }
+            }
         }
     }
 
@@ -483,7 +537,7 @@ public class Automation implements java.beans.PropertyChangeListener {
     public synchronized void removePropertyChangeListener(java.beans.PropertyChangeListener l) {
         pcs.removePropertyChangeListener(l);
     }
-    
+
     protected void firePropertyChange(String p, Object old, Object n) {
         pcs.firePropertyChange(p, old, n);
     }

@@ -121,9 +121,9 @@
     <h2><a id="gituse" name="gituse"></a>Using NetBeans with JMRI's Git Code Repository</h2>
     
       <p>GitHub provides JMRI's code repository using the Git tool. 
-        For more information on how JMRI uses Git, see the
-        "<a href="getgitcode.shtml">getting the code via Git</a>" and
-        JMRI <a href="GitFAQ.shtml">Git FAQ</a> pages.
+        For more information on how JMRI uses Git, see the JMRI Help on
+        <a href="getgitcode.shtml">Getting the code via Git</a> and
+         <a href="GitFAQ.shtml">Git FAQ</a>.
         
         <p>Once set up, NetBeans provides built-in support 
         for using Git.</p>
@@ -163,17 +163,17 @@
             needed if you've made conflicting changes, and then pushing that up to your
             own GitHub repository.
             
-        <p>To do this, use the NetBeans [Team] &gt; [Remote] &gt; [Pull from Upstream] menu choice.
+        <p>To do this, use the NetBeans [Team] -&gt; [Remote] -&gt; [Pull from Upstream] menu choice.
             Tell NetBeans to pull from the "github" remote you defined above.
         
         <p>You may also update a single file or the contents of a folder, by
             right-clicking on an item in the "Files" window, then selecting 
-            [Git]-&gt;[Remote]-&gt;[Pull from Upstream].</p>
+            [Git] -&gt; [Remote] -&gt; [Pull from Upstream].</p>
     
 
     <h3><a id="pullreq" name="pullreq"></a>Creating a Pull Request</h3>
     
-        <p>A "pull request" is an easy way to gather up all your changes, even
+        <p>A "Pull Request" (PR) is an easy way to gather up all your changes, even
         if they span multiple files, into something that you can then submit
         for inclusion in the main JMRI repository.
         
@@ -288,7 +288,7 @@
     NetBeans
     at Tools -> DTDs and XML Schemas.
     This will allow NetBeans to use your local schema when validating an XML document in the editor. 
-    Note that this is global setting in NetBeans, so if you are working on mutiple JMRI branches, 
+    Note that this is global setting in NetBeans, so if you are working on multiple JMRI branches, 
     whichever branch you add the catalog from, that branch's schema is what is used.
 
     <h2><a id="findbugs">Running FindBugs</a></h2>
@@ -333,25 +333,28 @@
             build.xml file.  JMRI's developers have generally kept this file up-to-date,
             so building the JMRI .jar file, and executing a JMRI tool from within NetBeans
             generally does not suffer from the shortcomings of the configuration information
-            found in the files in the project's nbproject/ directory.</p>        
-        <h1><a id="SeeAlso">See Also</a></h1>
-        <p><a href="http://netbeans.org/">The NetBeans Integrated Development Environment web site</a></p>
-        <p><a href="http://subversion.apache.org/">The Apache Subversion project web site</a></p>
-        <p><a href="http://sourceforge.net/projects/nsis">The NSIS project web site</a></p>
-        <p><a href="http://findbugs.sourceforge.net">The FindBugs web site</a></p>
+            found in the files in the project's nbproject/ directory.</p>
+                  
+	<h2><a id="SeeAlso">See Also</a></h2>
+        <ul>
+        <li><a href="http://netbeans.org/">The NetBeans.org Integrated Development Environment web site</a></li>
+        <li><a href="http://subversion.apache.org/">The Apache.org Subversion project web site</a></li>
+        <li><a href="http://sourceforge.net/projects/nsis">The NSIS project web site</a></li>
+        <li><a href="http://findbugs.sourceforge.net">The SourceForge FindBugs web site</a></li>
+        </ul>
 
- <h2><a id="patch">Making a Patch File</a></h2>
+  <h2><a id="patch">Making a Patch File</a></h2>
     
-    <p>A "diff patch file" is an easy way to gather up all your changes, even
+    <p>A "diff patch file" was an easy way with SVN to gather up all your changes, even
     if they span multiple files, into one file.
     This can be used to e.g. submit a patch.
-    Now that we're using Git and GitHub, hoever, we prefer that you 
-    contribute your code changes 
-    <a href="gitdeveloper.shtml">via GitHub Pull Requests</a>.
+    Now that we're using Git and GitHub, however, we prefer that you 
+    contribute your code changes as a
+    <a href="gitdeveloper.shtml">GitHub Pull Requests</a>.
     </p>
 
     <p>
-    To create the "diff patch file":
+    To create the "diff patch file" <strong>[deprecated]</strong>:
     <ul>
  
     <li>From the [Team] menu, select "Export Diff Patch ..."
@@ -362,7 +365,6 @@
         the patches, along with an information header.
     </ul>
 
-    
   <!--#include virtual="/Footer" -->
 
   </div><!-- closes #mainContent-->

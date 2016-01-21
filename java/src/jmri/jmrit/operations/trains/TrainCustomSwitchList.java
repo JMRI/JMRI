@@ -82,6 +82,7 @@ public class TrainCustomSwitchList {
         if (fileCount == 0) {
             return false;
         }
+        fileCount = 0;
 
         // Build our command string out of these bits
         // We need to use cmd and start to allow launching data files like

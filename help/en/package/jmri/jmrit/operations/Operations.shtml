@@ -3816,8 +3816,8 @@
     that action becomes "Edit". If it's possible for an action to fail, in addition to the extra
     failure message text area, there's a checkbox labeled "Halt if action fails". When selected the
     automation will halt in the event that the action fails to complete. The "Create Default
-    Messages" button will automatically create a success and failure message for you if there isn't
-    any text entered.</p>
+    Messages" button will automatically create a success and failure message for you if the text
+    window is empty.</p>
 
    <p>If you want more than one action for your automation, press the "Add" button in the "Add
     Item" area for each action you want to perform. The automation action sequence is from top to
@@ -3831,9 +3831,96 @@
     "Reset". Useful if you're stepping through the various actions and want to begin at the start of
     the table.</p>
 
-   <p>And finally press the "Save Automation" button to save your automation to the
-    OperationsTrainRoster.xml file.</p>
+   <p>And finally press the "Save Automation" button to make your menu selections valid and save
+    your automation to the OperationsTrainRoster.xml file. The next section provides the details for
+    some of the available actions.</p>
 
+   <h5>Build Train</h5>
+
+   This action will build the specific train. You must select a train using the "Train" menu adjacent
+   to the action.
+
+   <h5>Build Train if Selected</h5>
+
+   This action will build a train if the "Build" checkbox in the
+   <a href="#Trains">Trains</a> window is selected for the train. You must select a train using the
+   "Train" menu.
+
+   <h5>Preview or Print Train Manifest</h5>
+
+   This action's name depends on the "Preview" checkbox in the
+   <a href="#Trains">Trains</a> window. If the "Preview" checkbox is selected, then the action
+   becomes "Preview Train Manifest". If the checkbox is not selected, then the action becomes "Print
+   Train Manifest". You must select a train using the "Train" menu.
+
+   <h5>Run Excel for Train</h5>
+
+   This action will cause an external Excel program to run for the selected train. See
+   <a href="#SetupExcelProgram">Setup Excel Program (Manifest Creator)</a> for more information. You
+   must select a train using the "Train" menu.
+
+   <h5>Move Train</h5>
+
+   This action will move the selected train to the next location in a train's route, or terminate a
+   train that has arrived at its terminal. If a "Route Location" is selected the program will move
+   the train to the location selected in the train's route. The action will fail if a train isn't
+   selected, or if the train isn't built, or if the train has already passed the location selected.
+
+   <h5>Wait for Train</h5>
+   
+   This action will wait for a train to move before executing the next action in the table. If a location
+   is selected in the "Route Location" menu, the program will wait until the train arrives at the location
+   selected. Note that if the train is already at the location selected, that the program will wait until the
+   next time the train arrives at that location. You must select a train using the "Train" menu.
+   
+   <h5>Select Train Build</h5>
+   
+   Selects the "Build" checkbox for the specified train in the
+   <a href="#Trains">Trains</a> window. One use is to control which trains are displayed in the "Trains" window.  See
+   the "Show All" checkbox in the <a href="#Trains">Trains</a> window. You must select a train using the "Train" menu.
+   
+   <h5>Preview, Print, or Update Switch Lists</h5>
+
+   This action can preview, print, or update your switch lists depending on the "Preview" checkbox
+   in the
+   <a href="#Trains">Trains</a> window, and the "Real Time" checkbox in the
+   <a href="#SwitchListByLocation">Switch Lists by Location</a> window. If the "Real Time" checkbox
+   isn't selected, the program is running in consolidation mode which allows you to build a switch
+   list using multiple trains. When the action is "Update Switch List" runs, switch lists are
+   updated with the work created by building new trains. The other two actions are "Preview Switch
+   Lists" and "Print Switch Lists" and these are available when running the program in real time.
+
+   <h5>Wait for Switch List Change</h5>
+
+   This action will wait for new work for locations created by train builds. The locations monitored
+   are selected in the
+   <a href="#SwitchListByLocation">Switch Lists by Location</a> window. 
+   
+   <h5>Run Excel Switch List Changes</h5>
+
+   This action works like the "Run Changes" button in the
+   <a href="#SwitchListByLocation">Switch Lists by Location</a> window. There has to be new work at
+   one of the locations selected in the
+   <a href="#SwitchListByLocation">Switch Lists by Location</a> window for this action to succeed. 
+   
+   <h5>Run Automation</h5>
+   
+   This action can run any automation. You must select an automation from the "Automation" menu.
+   
+   <h5>GOTO</h5>
+   
+   This action allows you to jump to any action in the table.  You must select the action id you want
+   to go to from the "Automation" menu.
+   
+   <h5>Halt</h5>
+   
+   This action stops the execution of the automation.  The current pointer will jump to the next action
+   in the table allowing you to continue using the "Resume Automation" button if you wish.
+   
+   
+   <p>This is the end of the automation section.</p>
+   
+   
    <a name="PrintSavedTrainManifests"></a>
    <h4>Print or Preview Saved Train Manifests</h4>
 
@@ -4210,7 +4297,7 @@
     to preview or print. Once you've determined which locations you want to print or preview, press
     the "Save" button to keep your selections.</p>
     
-       
+   <a name="SwitchListByLocation"></a>
    <img src="images/SwitchListMenu.png">
    
    <p>The "Print Switch List Changes" button will become active after you've printed out your switch lists, and

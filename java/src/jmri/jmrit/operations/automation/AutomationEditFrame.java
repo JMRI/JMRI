@@ -197,6 +197,7 @@ public class AutomationEditFrame extends OperationsFrame implements java.beans.P
 
     // Save, Delete, Add
     public void buttonActionPerformed(java.awt.event.ActionEvent ae) {
+        stopCellEditing();
         if (_automation != null) {
             if (ae.getSource() == stepActionButton) {
                 _automation.step();
@@ -288,15 +289,17 @@ public class AutomationEditFrame extends OperationsFrame implements java.beans.P
         _automation.setName(automationNameTextField.getText());
         _automation.setComment(commentTextField.getText());
 
+        saveTableDetails(automationTable);
+        // save automation file
+        OperationsXml.save();
+    }
+    
+    private void stopCellEditing() {
         if (automationTable.isEditing()) {
             log.debug("automation table edit true");
             automationTable.getCellEditor().stopCellEditing();
             automationTable.clearSelection();
         }
-
-        saveTableDetails(automationTable);
-        // save automation file
-        OperationsXml.save();
     }
 
     /**
