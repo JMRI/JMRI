@@ -24,8 +24,7 @@ public class BuildTrainAction extends Action {
                 finishAction(false); // failed to build train
             } else {
                 setRunning(true);
-                train.build();
-                finishAction(true); // okay
+                finishAction(train.build());
             }
         }
     }

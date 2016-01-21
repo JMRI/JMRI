@@ -21,6 +21,11 @@ public class WaitSwitchListAction extends Action implements PropertyChangeListen
     public String getName() {
         return Bundle.getMessage("WaitForSwitchListChange");
     }
+    
+    @Override
+    public boolean isConcurrentAction() {
+        return true;
+    }
 
     @Override
     public void doAction() {

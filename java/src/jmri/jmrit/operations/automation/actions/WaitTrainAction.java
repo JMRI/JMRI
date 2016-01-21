@@ -21,6 +21,11 @@ public class WaitTrainAction extends Action implements PropertyChangeListener {
     public String getName() {
         return Bundle.getMessage("WaitForTrain");
     }
+    
+    @Override
+    public boolean isConcurrentAction() {
+        return true;
+    }
 
     @Override
     public void doAction() {

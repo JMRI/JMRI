@@ -70,6 +70,14 @@ public abstract class Action {
     public boolean isGotoMenuEnabled() {
         return (getCode() & ActionCodes.ENABLE_GOTO_LIST) == ActionCodes.ENABLE_GOTO_LIST;
     }
+    
+    /**
+     * Used to determine if this action can run concurrently with other actions.
+     * @return true if a concurrent action
+     */
+    public boolean isConcurrentAction() {
+        return false; // override if concurrent action
+    }
 
     public void setAutomationItem(AutomationItem item) {
         _automationItem = item;
