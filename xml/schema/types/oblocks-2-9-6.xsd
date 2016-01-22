@@ -71,7 +71,7 @@
                         <xs:element name="toBlock" minOccurs="0" maxOccurs="unbounded" >
                             <xs:complexType>
                               <xs:sequence>
-                                <xs:element name="path" type="OBlockPathType" minOccurs="1" maxOccurs="unbounded" />
+                                <xs:element name="path" type="OBlockPathType" minOccurs="0" maxOccurs="unbounded" />
                               </xs:sequence>
                               <xs:attribute name="blockName" type="xs:string" />
                             </xs:complexType>
