@@ -1,6 +1,11 @@
 package apps;
 
 import apps.gui.GuiLafPreferencesManager;
+import apps.startup.CreateButtonModelFactory;
+import apps.startup.PerformActionModelFactory;
+import apps.startup.PerformFileModelFactory;
+import apps.startup.PerformScriptModelFactory;
+import apps.startup.StartupModelFactory;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -31,18 +36,22 @@ import org.slf4j.LoggerFactory;
 public class StartupActionsManager extends AbstractPreferencesProvider {
 
     private final List<StartupModel> actions = new ArrayList<>();
-    private final HashMap<String, Class<? extends StartupModel>> factories = new HashMap<>();
+    private final HashMap<Class<? extends StartupModel>, StartupModelFactory> factories = new HashMap<>();
     public final static String STARTUP = "startup"; // NOI18N
     public final static String NAMESPACE = "http://jmri.org/xml/schema/auxiliary-configuration/startup-2-9-6.xsd"; // NOI18N
     private final static Logger log = LoggerFactory.getLogger(StartupActionsManager.class);
 
     public StartupActionsManager() {
         super();
-        // TODO: make this modular so that the factories provide their human readable type
-        this.factories.put(ConfigBundle.getMessage(PerformScriptModel.class.getCanonicalName()), PerformScriptModel.class);
-        this.factories.put(ConfigBundle.getMessage(PerformFileModel.class.getCanonicalName()), PerformFileModel.class);
-        this.factories.put(ConfigBundle.getMessage(PerformActionModel.class.getCanonicalName()), PerformActionModel.class);
-        this.factories.put(ConfigBundle.getMessage(CreateButtonModel.class.getCanonicalName()), CreateButtonModel.class);
+        // TODO: use a ServiceLoader to get the factories, so this can be extended
+        StartupModelFactory factory = new PerformFileModelFactory();
+        this.factories.put(factory.getModelClass(), factory);
+        factory = new PerformScriptModelFactory();
+        this.factories.put(factory.getModelClass(), factory);
+        factory = new PerformActionModelFactory();
+        this.factories.put(factory.getModelClass(), factory);
+        factory = new CreateButtonModelFactory();
+        this.factories.put(factory.getModelClass(), factory);
     }
 
     @Override
@@ -116,7 +125,7 @@ public class StartupActionsManager extends AbstractPreferencesProvider {
         });
         return result;
     }
-    
+
     public StartupModel getActions(int index) {
         return this.actions.get(index);
     }
@@ -124,12 +133,13 @@ public class StartupActionsManager extends AbstractPreferencesProvider {
     public void setActions(int index, StartupModel model) {
         if (!this.actions.contains(model)) {
             this.actions.add(index, model);
+            this.propertyChangeSupport.fireIndexedPropertyChange(STARTUP, index, null, model);
         }
     }
 
     public void moveAction(int start, int end) {
         StartupModel model = this.getActions(start);
-        this.removeAction(model);
+        this.removeAction(model, false);
         this.setActions(end, model);
     }
 
@@ -138,14 +148,22 @@ public class StartupActionsManager extends AbstractPreferencesProvider {
     }
 
     public void removeAction(StartupModel model) {
-        this.actions.remove(model);
+        this.removeAction(model, true);
     }
 
-    public HashMap<String, Class<? extends StartupModel>> getFactories() {
-        return this.factories;
+    private void removeAction(StartupModel model, boolean fireChange) {
+        int index = this.actions.indexOf(model);
+        this.actions.remove(model);
+        if (fireChange) {
+            this.propertyChangeSupport.fireIndexedPropertyChange(STARTUP, index, model, null);
+        }
     }
     
-    public Class<? extends StartupModel> getFactories(String model) {
+    public HashMap<Class<? extends StartupModel>, StartupModelFactory> getFactories() {
+        return this.factories;
+    }
+
+    public StartupModelFactory getFactories(Class<? extends StartupModel> model) {
         return this.factories.get(model);
     }
 }

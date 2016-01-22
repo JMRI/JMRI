@@ -28,4 +28,9 @@ public class PerformFileModel implements StartupModel {
     public void setFileName(String n) {
         fileName = n;
     }
+
+    @Override
+    public void setName(String name) {
+        this.setFileName(name);
+    }
 }
