@@ -6,7 +6,7 @@ package apps;
  * <P>
  * @author	Bob Jacobsen Copyright 2003
  * @version $Revision$
- * @see PerformFilePanel
+ * @see apps.startup.PerformFileModelFactory
  */
 public class PerformFileModel implements StartupModel {
 
