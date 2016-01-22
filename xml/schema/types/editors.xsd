@@ -169,6 +169,7 @@
       <xs:attribute name="red" type="xs:int" />
       <xs:attribute name="green" type="xs:int" />
       <xs:attribute name="blue" type="xs:int" />
+      <xs:attribute name="hasBackground" type="yesNoType" />
       <xs:attribute name="redBack" type="xs:int" />
       <xs:attribute name="greenBack" type="xs:int" />
       <xs:attribute name="blueBack" type="xs:int" />
@@ -530,6 +531,7 @@
       <xs:attribute name="fixedHeight" type="xs:string" />
       <xs:attribute name="fixedWidth" type="xs:string" />
       <xs:attribute name="margin" type="xs:int" />
+      <xs:attribute name="hasBackground" type="yesNoType" />
       <xs:attribute name="redBack" type="xs:int" />
       <xs:attribute name="greenBack" type="xs:int" />
       <xs:attribute name="blueBack" type="xs:int" />
