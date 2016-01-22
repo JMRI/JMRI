@@ -79,13 +79,13 @@
                         <xs:element name="fromSignal" minOccurs="0" maxOccurs="unbounded" >
                             <xs:complexType>
                               <xs:attribute name="signalName" type="beanNameType" />
-                              <xs:attribute name="signalDelay" type="xs:integer" />
+                              <xs:attribute name="signalDelay" type="xs:float" />
                             </xs:complexType>
                         </xs:element >
                         <xs:element name="toSignal" minOccurs="0" maxOccurs="unbounded" >
                             <xs:complexType>
                               <xs:attribute name="signalName" type="beanNameType" />
-                              <xs:attribute name="signalDelay" type="xs:integer" />
+                              <xs:attribute name="signalDelay" type="xs:float" />
                             </xs:complexType>
                         </xs:element >
                     </xs:sequence>
