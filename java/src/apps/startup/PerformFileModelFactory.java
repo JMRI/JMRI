@@ -17,7 +17,7 @@ public class PerformFileModelFactory implements StartupModelFactory {
 
     private JFileChooser chooser = null;
     private final static Logger log = LoggerFactory.getLogger(PerformFileModelFactory.class);
-    
+
     @Override
     public Class<? extends StartupModel> getModelClass() {
         return PerformFileModel.class;
@@ -53,5 +53,5 @@ public class PerformFileModelFactory implements StartupModelFactory {
             }
         }
     }
-    
+
 }
