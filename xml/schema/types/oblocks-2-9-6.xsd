@@ -56,7 +56,7 @@
                   <xs:attribute name="systemName" type="systemNameType" />
                 </xs:complexType>
               </xs:element>
-              <xs:element name="path" type="OBlockPathType" minOccurs="1" maxOccurs="unbounded" />
+              <xs:element name="path" type="OBlockPathType" minOccurs="0" maxOccurs="unbounded" />
               <xs:element name="portal" minOccurs="1" maxOccurs="unbounded" >
                 <xs:complexType>
                     <xs:sequence minOccurs="0" maxOccurs="unbounded" >
