@@ -113,7 +113,7 @@ you can have the Turnout Table automatically open, or
 automatically open a window for programming on the main.
 <P>
 For example, to automatically open the Turnout Table, 
-click the "Add Action" button in this section of the Advanced Preferences. 
+click the "Add..." button and select "Perform action" from the menu. 
 From the list that's presented, select "Open Turnout Table". 
 Don't forget
 to save your updated Preferences with the button at the bottom of the screen!

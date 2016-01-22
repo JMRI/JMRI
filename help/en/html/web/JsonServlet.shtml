@@ -63,9 +63,11 @@
                 <li>If you want the web server to run each time you start JMRI:</li>
                 <ul>
                     <li>Open the <b>Preferences</b> dialog</li>
-                    <li>Click <b>Start Up</b></li>
-                    <li>Click <b>Add Action</b></li>
+                    <li>Select <b>Start Up</b></li>
+                    <li>Click <b>Add...</b></li>
+                    <li>Select <b>Perform action</b></li>
                     <li>Select <b>Start Web Server</b></li>
+                    <li>Click <b>OK</b></li>
                 </ul>
             </ul>
 
