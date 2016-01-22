@@ -34,6 +34,7 @@ import jmri.swing.PreferencesPanel;
 public class StartupActionsPreferencesPanel extends JPanel implements PreferencesPanel {
 
     private static final long serialVersionUID = 1L;
+    private boolean dirty = false;
 
     /**
      * Creates new form StartupActionsPreferencesPanel
@@ -235,8 +236,10 @@ public class StartupActionsPreferencesPanel extends JPanel implements Preference
 
     @Override
     public boolean isDirty() {
-        // TODO: be real
-        return true;
+        // Any change to the list of actions in the StartupActionsManager,
+        // even if undone, makes this dirty, since we are not maintaining an
+        // asloaded state.
+        return this.dirty;
     }
 
     @Override
@@ -246,7 +249,8 @@ public class StartupActionsPreferencesPanel extends JPanel implements Preference
 
     @Override
     public boolean isPreferencesValid() {
-        // TODO: be real
+        // To really test would require that the models know their valid state
+        // they don't, and it can change externally, so we don't really check.
         return true;
     }
 
@@ -347,6 +351,7 @@ public class StartupActionsPreferencesPanel extends JPanel implements Preference
         @Override
         public void propertyChange(PropertyChangeEvent evt) {
             this.fireTableDataChanged();
+            StartupActionsPreferencesPanel.this.dirty = true;
         }
     }
 }
