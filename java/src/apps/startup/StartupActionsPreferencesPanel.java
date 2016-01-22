@@ -7,6 +7,7 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.beans.PropertyChangeEvent;
 import java.beans.PropertyChangeListener;
+import java.util.ArrayList;
 import java.util.ResourceBundle;
 import javax.swing.GroupLayout;
 import javax.swing.JButton;
@@ -44,6 +45,7 @@ public class StartupActionsPreferencesPanel extends JPanel implements Preference
             this.upBtn.setEnabled(row != 0);
             this.downBtn.setEnabled(row != this.actionsTbl.getRowCount() - 1);
         });
+        ArrayList<JMenuItem> items = new ArrayList<>();
         InstanceManager.getDefault(StartupActionsManager.class).getFactories().values().stream().forEach((factory) -> {
             JMenuItem item = new JMenuItem(factory.getDescription());
             item.addActionListener((ActionEvent e) -> {
@@ -53,6 +55,10 @@ public class StartupActionsPreferencesPanel extends JPanel implements Preference
                     InstanceManager.getDefault(StartupActionsManager.class).addAction(model);
                 }
             });
+            items.add(item);
+        });
+        items.sort((JMenuItem o1, JMenuItem o2) -> o1.getText().compareTo(o2.getText()));
+        items.stream().forEach((item) -> {
             this.actionsMenu.add(item);
         });
     }
@@ -74,7 +80,8 @@ public class StartupActionsPreferencesPanel extends JPanel implements Preference
         startupLbl = new JLabel();
         upBtn = new JButton();
         downBtn = new JButton();
-        jLabel1 = new JLabel();
+        moveLbl = new JLabel();
+        recommendationsLbl = new JLabel();
 
         actionsTbl.setModel(new TableModel(InstanceManager.getDefault(StartupActionsManager.class)));
         actionsTbl.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
@@ -113,7 +120,9 @@ public class StartupActionsPreferencesPanel extends JPanel implements Preference
             }
         });
 
-        jLabel1.setText(bundle.getString("StartupActionsPreferencesPanel.jLabel1.text")); // NOI18N
+        moveLbl.setText(bundle.getString("StartupActionsPreferencesPanel.moveLbl.text")); // NOI18N
+
+        recommendationsLbl.setText(bundle.getString("StartupActionsPreferencesPanel.recommendationsLbl.text")); // NOI18N
 
         GroupLayout layout = new GroupLayout(this);
         this.setLayout(layout);
@@ -121,11 +130,12 @@ public class StartupActionsPreferencesPanel extends JPanel implements Preference
             .addGroup(layout.createSequentialGroup()
                 .addContainerGap()
                 .addGroup(layout.createParallelGroup(GroupLayout.Alignment.LEADING)
+                    .addComponent(recommendationsLbl)
                     .addComponent(jScrollPane1, GroupLayout.DEFAULT_SIZE, 487, Short.MAX_VALUE)
                     .addGroup(layout.createSequentialGroup()
                         .addComponent(addBtn)
                         .addGap(18, 18, 18)
-                        .addComponent(jLabel1)
+                        .addComponent(moveLbl)
                         .addPreferredGap(LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(upBtn)
                         .addPreferredGap(LayoutStyle.ComponentPlacement.RELATED)
@@ -140,14 +150,16 @@ public class StartupActionsPreferencesPanel extends JPanel implements Preference
                 .addContainerGap()
                 .addComponent(startupLbl, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jScrollPane1, GroupLayout.DEFAULT_SIZE, 222, Short.MAX_VALUE)
+                .addComponent(jScrollPane1, GroupLayout.DEFAULT_SIZE, 200, Short.MAX_VALUE)
+                .addPreferredGap(LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(recommendationsLbl, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(layout.createParallelGroup(GroupLayout.Alignment.BASELINE)
                     .addComponent(addBtn)
                     .addComponent(removeBtn)
                     .addComponent(upBtn)
                     .addComponent(downBtn)
-                    .addComponent(jLabel1))
+                    .addComponent(moveLbl))
                 .addContainerGap())
         );
     }// </editor-fold>//GEN-END:initComponents
@@ -244,8 +256,9 @@ public class StartupActionsPreferencesPanel extends JPanel implements Preference
     JTable actionsTbl;
     JButton addBtn;
     JButton downBtn;
-    JLabel jLabel1;
     JScrollPane jScrollPane1;
+    JLabel moveLbl;
+    JLabel recommendationsLbl;
     JButton removeBtn;
     JLabel startupLbl;
     JButton upBtn;
@@ -283,7 +296,7 @@ public class StartupActionsPreferencesPanel extends JPanel implements Preference
                 case 1:
                     return InstanceManager.getDefault(StartupActionsManager.class).getFactories(model.getClass()).getDescription();
                 default:
-                    return new TableActionsPanel(model);
+                    return null;
             }
 
         }
@@ -334,13 +347,6 @@ public class StartupActionsPreferencesPanel extends JPanel implements Preference
         @Override
         public void propertyChange(PropertyChangeEvent evt) {
             this.fireTableDataChanged();
-        }
-    }
-
-    class TableActionsPanel extends JPanel {
-
-        public TableActionsPanel(StartupModel model) {
-
         }
     }
 }
