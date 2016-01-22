@@ -141,11 +141,9 @@ public class XNetPacketizerTest extends TestCase {
             c.sendXNetMessage(m1, l2);
 
             p.flush();
-            jmri.util.JUnitUtil.releaseThread(this);
 
             // and now we verify l1 is the last sender.
             jmri.util.JUnitUtil.waitFor(()->{return l1 == c.getLastSender();},"iteration " + i + " Last Sender l1, before l1 reply");
-            //Assert.assertEquals("iteration " + i + " Last Sender l1, before l1 reply", l1, c.getLastSender());
 
             l.rcvdRply = null;
             l1.rcvdRply = null;
@@ -167,11 +165,9 @@ public class XNetPacketizerTest extends TestCase {
             Assert.assertNotNull("iteration " + i + " l1 reply after l1 message",l1.rcvdRply);
             Assert.assertNull("iteration " + i + " l2 reply after l1 message",l2.rcvdRply);
 
-            jmri.util.JUnitUtil.releaseThread(this); // Allow time for messages to process into the system
-
             // and now we verify l2 is the last sender.
             jmri.util.JUnitUtil.waitFor(()->{return l2 == c.getLastSender();},"Last Sender l2");
-            //Assert.assertEquals("Last Sender l2", l2, c.getLastSender());
+
             l.rcvdRply = null;
             l1.rcvdRply = null;
             l2.rcvdRply = null;
