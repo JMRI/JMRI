@@ -1,6 +1,18 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <?xml-stylesheet href="/xml/XSLT/panelfile-2-9-6.xsl" type="text/xsl"?>
 <layout-config xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="http://jmri.org/xml/schema/layout-2-9-6.xsd">
+  <jmriversion>
+    <major>4</major>
+    <minor>3</minor>
+    <test>3</test>
+    <modifier>.3ish</modifier>
+  </jmriversion>
+  <sensors class="jmri.managers.configurexml.InternalSensorManagerXml">
+    <defaultInitialState>unknown</defaultInitialState>
+    <sensor systemName="ISCLOCKRUNNING" inverted="false">
+      <systemName>ISCLOCKRUNNING</systemName>
+    </sensor>
+  </sensors>
   <memories class="jmri.managers.configurexml.DefaultMemoryManagerXml">
     <memory systemName="IM10" userName="Icon with Black Text" value="123">
       <systemName>IM10</systemName>
@@ -25,11 +37,20 @@
       <systemName>IMRATEFACTOR</systemName>
     </memory>
   </memories>
+  <signalmasts class="jmri.managers.configurexml.DefaultSignalMastManagerXml" />
+  <signalgroups class="jmri.managers.configurexml.DefaultSignalGroupManagerXml" />
+  <oblocks class="jmri.jmrit.logix.configurexml.OBlockManagerXml" />
+  <warrants class="jmri.jmrit.logix.configurexml.WarrantManagerXml" />
+  <signalmastlogics class="jmri.managers.configurexml.DefaultSignalMastLogicManagerXml">
+    <logicDelay>500</logicDelay>
+  </signalmastlogics>
+  <timebase class="jmri.jmrit.simpleclock.configurexml.SimpleTimebaseXml" time="Thu Jan 21 20:58:00 PST 2016" rate="1.0" run="yes" master="yes" sync="no" correct="no" display="no" startstopped="no" startsettime="no" startclockoption="0" />
+  <entryexitpairs class="jmri.jmrit.signalling.configurexml.EntryExitPairsXml" />
   <paneleditor class="jmri.jmrit.display.panelEditor.configurexml.PanelEditorXml" name="Test memory" x="846" y="22" height="382" width="280" editable="yes" positionable="yes" showtooltips="yes" controlling="yes" hide="yes" panelmenu="yes" scrollable="both">
-    <memoryicon memory="IM10" x="10" y="10" level="5" forcecontroloff="false" hidden="no" positionable="false" showtooltip="false" editable="true" size="12" style="0" red="0" green="0" blue="0" hasBackground="no" justification="left" selectable="no" class="jmri.jmrit.display.configurexml.MemoryIconXml" defaulticon="scripts:resources/icons/misc/X-red.gif" />
-    <memoryicon memory="IM11" x="10" y="30" level="5" forcecontroloff="false" hidden="no" positionable="false" showtooltip="false" editable="true" size="24" style="0" red="0" green="0" blue="0" hasBackground="no" justification="left" selectable="no" class="jmri.jmrit.display.configurexml.MemoryIconXml" defaulticon="scripts:resources/icons/misc/X-red.gif" />
-    <memoryicon memory="IM12" x="10" y="100" level="5" forcecontroloff="false" hidden="no" positionable="false" showtooltip="false" editable="true" size="12" style="2" red="255" green="255" blue="0" hasBackground="no" justification="left" selectable="no" class="jmri.jmrit.display.configurexml.MemoryIconXml" defaulticon="scripts:resources/icons/misc/X-red.gif" />
-    <memoryicon memory="IM20" x="10" y="120" level="5" forcecontroloff="false" hidden="no" positionable="false" showtooltip="false" editable="true" size="13" style="0" red="0" green="0" blue="0" hasBackground="no" justification="left" selectable="no" class="jmri.jmrit.display.configurexml.MemoryIconXml" defaulticon="scripts:resources/icons/misc/X-red.gif">
+    <memoryicon memory="IM10" x="10" y="10" level="5" forcecontroloff="false" hidden="no" positionable="false" showtooltip="false" editable="true" size="12" style="0" red="0" green="0" blue="0" hasBackground="no" justification="left" selectable="no" class="jmri.jmrit.display.configurexml.MemoryIconXml" defaulticon="program:resources/icons/misc/X-red.gif" />
+    <memoryicon memory="IM11" x="10" y="30" level="5" forcecontroloff="false" hidden="no" positionable="false" showtooltip="false" editable="true" size="24" style="0" red="0" green="0" blue="0" hasBackground="no" justification="left" selectable="no" class="jmri.jmrit.display.configurexml.MemoryIconXml" defaulticon="program:resources/icons/misc/X-red.gif" />
+    <memoryicon memory="IM12" x="10" y="100" level="5" forcecontroloff="false" hidden="no" positionable="false" showtooltip="false" editable="true" size="12" style="2" red="255" green="255" blue="0" hasBackground="no" justification="left" selectable="no" class="jmri.jmrit.display.configurexml.MemoryIconXml" defaulticon="program:resources/icons/misc/X-red.gif" />
+    <memoryicon memory="IM20" x="10" y="120" level="5" forcecontroloff="false" hidden="no" positionable="false" showtooltip="false" editable="true" size="13" style="0" red="0" green="0" blue="0" hasBackground="no" justification="left" selectable="no" class="jmri.jmrit.display.configurexml.MemoryIconXml" defaulticon="program:resources/icons/misc/X-red.gif">
       <memorystate value="0" icon="program:resources/icons/misc/Nixie/M0B.gif" />
       <memorystate value="1" icon="program:resources/icons/misc/Nixie/M1B.gif" />
       <memorystate value="2" icon="program:resources/icons/misc/Nixie/M2B.gif" />
@@ -42,7 +63,7 @@
       <memorystate value="8" icon="program:resources/icons/misc/Nixie/M8B.gif" />
       <memorystate value="9" icon="program:resources/icons/misc/Nixie/M9B.gif" />
     </memoryicon>
-    <memoryicon memory="IM20" x="145" y="120" level="5" forcecontroloff="false" hidden="no" positionable="false" showtooltip="false" editable="true" size="13" style="0" red="0" green="0" blue="0" hasBackground="no" justification="left" selectable="yes" class="jmri.jmrit.display.configurexml.MemoryIconXml" defaulticon="scripts:resources/icons/misc/X-red.gif">
+    <memoryicon memory="IM20" x="145" y="120" level="5" forcecontroloff="false" hidden="no" positionable="false" showtooltip="false" editable="true" size="13" style="0" red="0" green="0" blue="0" hasBackground="no" justification="left" selectable="yes" class="jmri.jmrit.display.configurexml.MemoryIconXml" defaulticon="program:resources/icons/misc/X-red.gif">
       <memorystate value="0" icon="program:resources/icons/misc/Nixie/M0B.gif" />
       <memorystate value="1" icon="program:resources/icons/misc/Nixie/M1B.gif" />
       <memorystate value="2" icon="program:resources/icons/misc/Nixie/M2B.gif" />
@@ -56,5 +77,27 @@
       <memorystate value="9" icon="program:resources/icons/misc/Nixie/M9B.gif" />
     </memoryicon>
   </paneleditor>
-  <!--Written by JMRI version 4.3.3ish-201601220318-jake-Rec6b85c on Thu Jan 21 19:20:12 PST 2016 $Id$-->
+  <filehistory>
+    <operation>
+      <type>app</type>
+      <date>Thu Jan 21 20:57:59 PST 2016</date>
+      <filename>JMRI program</filename>
+    </operation>
+    <operation>
+      <type>Load OK</type>
+      <date>Thu Jan 21 20:57:59 PST 2016</date>
+      <filename>/Users/jake/Library/Preferences/JMRI/PanelPro/UserPrefsProfileConfig.xml</filename>
+    </operation>
+    <operation>
+      <type>Load OK</type>
+      <date>Thu Jan 21 20:58:29 PST 2016</date>
+      <filename>/Users/jake/JMRI/projects/JMRI/xml/samples/MemoryIconExample.xml</filename>
+    </operation>
+    <operation>
+      <type>Store</type>
+      <date>Thu Jan 21 20:58:47 PST 2016</date>
+      <filename />
+    </operation>
+  </filehistory>
+  <!--Written by JMRI version 4.3.3ish-201601220457-jake-Rfb47c3d on Thu Jan 21 20:58:47 PST 2016 $Id$-->
 </layout-config>
