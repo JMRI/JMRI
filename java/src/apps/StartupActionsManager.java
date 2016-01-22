@@ -1,14 +1,11 @@
 package apps;
 
 import apps.gui.GuiLafPreferencesManager;
-import apps.startup.CreateButtonModelFactory;
-import apps.startup.PerformActionModelFactory;
-import apps.startup.PerformFileModelFactory;
-import apps.startup.PerformScriptModelFactory;
 import apps.startup.StartupModelFactory;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
+import java.util.ServiceLoader;
 import java.util.Set;
 import jmri.configurexml.ConfigXmlManager;
 import jmri.configurexml.XmlAdapter;
@@ -43,15 +40,9 @@ public class StartupActionsManager extends AbstractPreferencesProvider {
 
     public StartupActionsManager() {
         super();
-        // TODO: use a ServiceLoader to get the factories, so this can be extended
-        StartupModelFactory factory = new PerformFileModelFactory();
-        this.factories.put(factory.getModelClass(), factory);
-        factory = new PerformScriptModelFactory();
-        this.factories.put(factory.getModelClass(), factory);
-        factory = new PerformActionModelFactory();
-        this.factories.put(factory.getModelClass(), factory);
-        factory = new CreateButtonModelFactory();
-        this.factories.put(factory.getModelClass(), factory);
+        for (StartupModelFactory factory : ServiceLoader.load(StartupModelFactory.class)) {
+            this.factories.put(factory.getModelClass(), factory);
+        }
     }
 
     @Override
@@ -158,7 +149,7 @@ public class StartupActionsManager extends AbstractPreferencesProvider {
             this.propertyChangeSupport.fireIndexedPropertyChange(STARTUP, index, model, null);
         }
     }
-    
+
     public HashMap<Class<? extends StartupModel>, StartupModelFactory> getFactories() {
         return this.factories;
     }
