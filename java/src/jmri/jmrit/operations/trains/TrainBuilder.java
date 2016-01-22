@@ -95,12 +95,14 @@ public class TrainBuilder extends TrainCommon {
      * @param train the train that is to be built
      *
      */
-    public void build(Train train) {
+    public boolean build(Train train) {
         this._train = train;
         try {
             build();
+            return true;
         } catch (BuildFailedException e) {
             buildFailed(e);
+            return false;
         }
     }
 
