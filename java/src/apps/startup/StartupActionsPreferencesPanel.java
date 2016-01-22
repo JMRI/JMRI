@@ -50,7 +50,7 @@ public class StartupActionsPreferencesPanel extends JPanel implements Preference
             JMenuItem item = new JMenuItem(factory.getDescription());
             item.addActionListener((ActionEvent e) -> {
                 StartupModel model = factory.newModel();
-                factory.editModel(model);
+                factory.editModel(model, this.getTopLevelAncestor());
                 if (model.getName() != null && !model.getName().isEmpty()) {
                     InstanceManager.getDefault(StartupActionsManager.class).addAction(model);
                 }

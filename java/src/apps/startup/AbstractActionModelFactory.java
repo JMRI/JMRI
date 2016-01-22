@@ -19,21 +19,18 @@ abstract public class AbstractActionModelFactory implements StartupModelFactory 
     }
 
     @Override
-    public void editModel(StartupModel model) {
-        this.editModel(model, null);
-    }
-
-    @Override
     public void editModel(StartupModel model, Component parent) {
-        String name = (String) JOptionPane.showInputDialog(parent,
-                "Adding " + this.getDescription(),
-                "Add " + this.getDescription(),
-                JOptionPane.PLAIN_MESSAGE,
-                null,
-                AbstractActionModel.nameList(),
-                model.getName());
-        if (name != null && !name.equals(model.getName())) {
-            model.setName(name);
+        if (this.getModelClass().isInstance(model)) {
+            String name = (String) JOptionPane.showInputDialog(parent,
+                    "Adding " + this.getDescription(),
+                    "Add " + this.getDescription(),
+                    JOptionPane.PLAIN_MESSAGE,
+                    null,
+                    AbstractActionModel.nameList(),
+                    model.getName());
+            if (name != null && !name.equals(model.getName())) {
+                model.setName(name);
+            }
         }
     }
 }

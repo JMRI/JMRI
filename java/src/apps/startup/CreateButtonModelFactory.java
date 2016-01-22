@@ -22,11 +22,4 @@ public class CreateButtonModelFactory extends AbstractActionModelFactory {
         return new CreateButtonModel();
     }
 
-    @Override
-    public void editModel(StartupModel model) {
-        if (this.getModelClass().isInstance(model)) {
-            super.editModel(model);
-        }
-    }
-
 }

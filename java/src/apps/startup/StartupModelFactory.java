@@ -4,6 +4,11 @@ import apps.StartupModel;
 import java.awt.Component;
 
 /**
+ * A factory for {@link apps.StartupModel}s.
+ *
+ * StartupModelFactories are loaded via the Java {@link java.util.ServiceLoader}
+ * mechanism to allow the actions JMRI can take on startup to be extended within
+ * an external JAR.
  *
  * @author Randall Wood
  */
@@ -33,14 +38,7 @@ public interface StartupModelFactory {
     public StartupModel newModel();
 
     /**
-     * Allow user to edit the model.
-     *
-     * @param model the model to edit
-     */
-    public void editModel(StartupModel model);
-
-    /**
-     * Allow user to edit the model.
+     * Allow user to edit the model. 
      *
      * @param model  the model to edit
      * @param parent the parent component for the editing UI
