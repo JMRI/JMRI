@@ -220,7 +220,7 @@ public class StartupActionsPreferencesPanel extends JPanel implements Preference
 
     @Override
     public boolean isPersistant() {
-        return false;
+        return true;
     }
 
     @Override
