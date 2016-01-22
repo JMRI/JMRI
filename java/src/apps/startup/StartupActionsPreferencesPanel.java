@@ -26,6 +26,7 @@ import jmri.profile.ProfileManager;
 import jmri.swing.PreferencesPanel;
 
 /**
+ * Preferences panel to configure optional actions taken at startup.
  *
  * @author Randall Wood (C) 2016
  */
@@ -76,8 +77,6 @@ public class StartupActionsPreferencesPanel extends JPanel implements Preference
         jLabel1 = new JLabel();
 
         actionsTbl.setModel(new TableModel(InstanceManager.getDefault(StartupActionsManager.class)));
-        actionsTbl.setCellSelectionEnabled(false);
-        actionsTbl.setRowSelectionAllowed(true);
         actionsTbl.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
         actionsTbl.getTableHeader().setReorderingAllowed(false);
         jScrollPane1.setViewportView(actionsTbl);
@@ -154,7 +153,8 @@ public class StartupActionsPreferencesPanel extends JPanel implements Preference
     }// </editor-fold>//GEN-END:initComponents
 
     private void addBtnActionPerformed(ActionEvent evt) {//GEN-FIRST:event_addBtnActionPerformed
-        this.actionsMenu.show((Component) evt.getSource(), 0, 0);
+        Component c = (Component) evt.getSource();
+        this.actionsMenu.show(c, 0 - 1, c.getHeight());
     }//GEN-LAST:event_addBtnActionPerformed
 
     private void removeBtnActionPerformed(ActionEvent evt) {//GEN-FIRST:event_removeBtnActionPerformed
@@ -281,7 +281,7 @@ public class StartupActionsPreferencesPanel extends JPanel implements Preference
                 case 0:
                     return model.getName();
                 case 1:
-                    return model.getClass().getSimpleName();
+                    return InstanceManager.getDefault(StartupActionsManager.class).getFactories(model.getClass()).getDescription();
                 default:
                     return new TableActionsPanel(model);
             }
