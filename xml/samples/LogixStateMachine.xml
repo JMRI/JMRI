@@ -33,7 +33,6 @@
   <memories class="jmri.configurexml.DefaultMemoryManagerXml">
     <memory systemName="IM1"/>
   </memories>
-  <routes class="jmri.configurexml.DefaultRouteManagerXml" />
   <conditionals class="jmri.configurexml.DefaultConditionalManagerXml">
     <conditional systemName="IX1C1" userName="Invalid state">
       <conditionalStateVariable operator="2" type="9" systemName="IM1" dataString="1" num1="0" num2="0" triggersCalc="yes" />

@@ -4829,13 +4829,6 @@
       </portal>
     </oblock>
   </oblocks>
-  <routes class="jmri.managers.configurexml.DefaultRouteManagerXml">
-    <route systemName="IR:AUTO:0001" userName="StartUp">
-      <systemName>IR:AUTO:0001</systemName>
-      <userName>StartUp</userName>
-      <routeOutputTurnout systemName="IT1" state="THROWN" />
-    </route>
-  </routes>
   <warrants class="jmri.jmrit.logix.configurexml.WarrantManagerXml">
     <nxparams>
       <maxspeed>0.5</maxspeed>
