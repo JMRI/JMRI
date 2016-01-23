@@ -256,7 +256,7 @@ public class AutomationsTableModel extends javax.swing.table.AbstractTableModel 
         });
     }
 
-    Hashtable<String, AutomationEditFrame> automationEditFrames = new Hashtable<String, AutomationEditFrame>();
+    Hashtable<String, AutomationTableFrame> automationEditFrames = new Hashtable<String, AutomationTableFrame>();
 
     private void editAutomation(int row) {
         log.debug("Edit automation");
@@ -264,7 +264,7 @@ public class AutomationsTableModel extends javax.swing.table.AbstractTableModel 
         
         // is the edit window already open?
         if (automationEditFrames.containsKey(automation.getId())) {
-            AutomationEditFrame frame = automationEditFrames.get(automation.getId());
+            AutomationTableFrame frame = automationEditFrames.get(automation.getId());
             if (frame.isVisible()) {
                 frame.toFront();
                 frame.setExtendedState(Frame.NORMAL);
@@ -275,7 +275,7 @@ public class AutomationsTableModel extends javax.swing.table.AbstractTableModel 
         // use invokeLater so new window appears on top
         SwingUtilities.invokeLater(new Runnable() {
             public void run() {
-                AutomationEditFrame frame = new AutomationEditFrame(automation);
+                AutomationTableFrame frame = new AutomationTableFrame(automation);
                 automationEditFrames.put(automation.getId(), frame);
             }
         });
@@ -313,7 +313,7 @@ public class AutomationsTableModel extends javax.swing.table.AbstractTableModel 
         }
         Enumeration<String> en = automationEditFrames.keys();
         while (en.hasMoreElements()) {
-            AutomationEditFrame frame = automationEditFrames.get(en.nextElement());
+            AutomationTableFrame frame = automationEditFrames.get(en.nextElement());
             frame.dispose();
         }
 
