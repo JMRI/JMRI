@@ -514,7 +514,8 @@
    <p>
     You can also automatically open any of the six operations windows when you start JMRI. From the
     main menu, under "Edit-&gt;Preferences" select <a
-     href="../../../apps/TabbedPreferences.shtml#Startup">Start Up</a>, and add an "Perform action".
+     href="../../../apps/TabbedPreferences.shtml#Startup">Start Up</a>, and add a "Perform action"
+     startup item for the desired window.
    </p>
 
    <h4>Close on Save</h4>

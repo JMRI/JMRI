@@ -103,60 +103,43 @@ with information on sharing files between computers using Dropbox.
 
 <a name="Startup">
 <h2>Start Up</h2></a>
-This deals with all the Preferences that are invoked at start up such as loading Panel files and running scripts.
+<p><em>Start Up</em> preferences allow windows and files to be opened, scripts
+    to be run, and additional buttons to be placed on the main window when the
+    application starts.</p>
+<p>Click the <strong>Add &#x25BE;</strong> button and select the type of start up
+    action to add. The new action will be added last.</p>
+<p>Start up action order is important. In most cases, scripts should be the last
+    items in the start up order. Start up order can be changed by selecting a
+    start up item and moving it <em>up</em> or <em>down</em> in the list.</p>
+<p>There are four types of start up actions:</p>
 <dl>
-<dt>Actions
-<dd>
-This section lets you have the program automatically
+    <dt>Perform action</dt>
+    <dd>
+Have the program automatically
 execute various menu selections at startup.  For example,
 you can have the Turnout Table automatically open, or 
 automatically open a window for programming on the main.
-<P>
-For example, to automatically open the Turnout Table, 
-click the "Add..." button and select "Perform action" from the menu. 
-From the list that's presented, select "Open Turnout Table". 
-Don't forget
-to save your updated Preferences with the button at the bottom of the screen!
-
-<dt>Buttons
-<dd>
-This allows you to add extra buttons to the main JMRI window
-that are connected to specific menu choices.
-<P>
-For example, to add a button that will open the Power Control when clicked, 
-click the "Add Action" button in this section of the Advanced Preferences.  
-From the list that's presented, select "Open Turnout Table". Don't forget
-to save your updated Preferences with the button at the bottom of the screen!
-From the list that's presented, select "Open Power Control". 
-Don't forget
-to save your updated Preferences with the button at the bottom of the screen!
-The button(s) you set here will appear when you next start the program.
-
-<dt>Files
-<dd>
-This section lets you automatically load panel files when the program
-starts up.  The previous sections will have already executed, so any actions
-they're configured for will have taken place.  You can load
+    </dd>
+    <dt>Add button to main window</dt>
+    <dd>
+Add extra buttons to the main JMRI window
+that are connected to specific actions in menus for easy and quick access to that action.
+    </dd>
+    <dt>Open file</dt>
+    <dd>
+Automatically load panel files when the program
+starts up.  You can load
 as many panel files as you'd like; each will be completely loaded before the next
 is started.
-<p>
-Click "Add File", which will open a file section window in which you can select the 
-desired file.  If you later want to stop loading the file at startup, 
-click the "Remove" button next to the filename.
-
-<dt>Scripts
-<dd>
-This section lets you automatically run a script file when the program
-starts up.  The previous sections will have already executed, so any actions
-they're configured for will have taken place
-and all panel files will have been loaded.  
+    </dd>
+    <dt>Run script</dt>
+    <dd>
+Automatically run a script file when the program
+starts up.
 You can run as many script files
 as you'd like; each will be run to the end of the file before the next
 is started.
-<p>
-Click "Add File", which will open a file section window in which you can select the 
-desired file.  If you later want to stop executing a particular script at startup, 
-click the "Remove" button next to the filename.
+    </dd>
 </dl>
 
 <a name="Display">

@@ -64,8 +64,8 @@
                 <ul>
                     <li>Open the <b>Preferences</b> dialog</li>
                     <li>Select <b>Start Up</b></li>
-                    <li>Click <b>Add...</b></li>
-                    <li>Select <b>Perform action</b></li>
+                    <li>Click <b>Add &#x25BE;</b></li>
+                    <li>Select <b>Perform action...</b></li>
                     <li>Select <b>Start Web Server</b></li>
                     <li>Click <b>OK</b></li>
                 </ul>
