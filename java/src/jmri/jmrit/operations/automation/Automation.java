@@ -334,10 +334,9 @@ public class Automation implements java.beans.PropertyChangeListener {
      */
     public void deleteItem(AutomationItem item) {
         if (item != null) {
-            if (getCurrentAutomationItem() == item) {
+            if (item.isActionRunning()) {
                 stop();
             }
-            // stop above could have bumped the current automation item
             if (getCurrentAutomationItem() == item) {
                 setNextAutomationItem();
             }

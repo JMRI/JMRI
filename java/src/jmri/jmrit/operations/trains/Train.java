@@ -758,22 +758,22 @@ public class Train implements java.beans.PropertyChangeListener {
      * Set the train's machine readable status. Calls update train table row
      * color.
      *
-     * @param status machine readable stringCode
+     * @param code machine readable
      */
-    public void setStatus(int status) {
-        String oldStatus = this.getStatus();
-        int oldCode = _statusCode;
-        _statusCode = status;
+    public void setStatusCode(int code) {
+        String oldStatus = getStatus();
+        int oldCode = getStatusCode();
+        _statusCode = code;
         // always fire property change for train in route
-        if (oldCode != this._statusCode || status == CODE_TRAIN_EN_ROUTE) {
-            setDirtyAndFirePropertyChange(STATUS_CHANGED_PROPERTY, oldStatus, this.getStatus());
+        if (oldCode != getStatusCode() || code == CODE_TRAIN_EN_ROUTE) {
+            setDirtyAndFirePropertyChange(STATUS_CHANGED_PROPERTY, oldStatus, getStatus());
         }
         updateTrainTableRowColor();
     }
 
     private void updateTrainTableRowColor() {
         if (!TrainManager.instance().isRowColorManual()) {
-            switch (_statusCode) {
+            switch (getStatusCode()) {
                 case CODE_TRAIN_RESET:
                     setTableRowColorName(NONE);
                     break;
@@ -853,18 +853,18 @@ public class Train implements java.beans.PropertyChangeListener {
     }
 
     public String getMRStatus() {
-        switch (this._statusCode) {
+        switch (getStatusCode()) {
             case CODE_PARTIAL_BUILT:
-                return this._statusCode + "||" + this.getNumberCarsRequested(); // NOI18N
+                return getStatusCode() + "||" + this.getNumberCarsRequested(); // NOI18N
             case CODE_TERMINATED:
-                return this._statusCode + "||" + this.getTerminationDate(); // NOI18N
+                return getStatusCode() + "||" + this.getTerminationDate(); // NOI18N
             default:
-                return Integer.toString(this._statusCode);
+                return Integer.toString(getStatusCode());
         }
     }
 
     public int getStatusCode() {
-        return this._statusCode;
+        return _statusCode;
     }
     
     protected void setOldStatusCode(int code ) {
@@ -2775,9 +2775,9 @@ public class Train implements java.beans.PropertyChangeListener {
                 if (getStatusCode() != CODE_RUN_SCRIPTS) {
                     setOldStatusCode(getStatusCode());
                 }
-                setStatus(CODE_MANIFEST_MODIFIED);
+                setStatusCode(CODE_MANIFEST_MODIFIED);
             } else {
-                setStatus(getOldStatusCode()); // restore previous train status
+                setStatusCode(getOldStatusCode()); // restore previous train status
             }
             setDirtyAndFirePropertyChange(TRAIN_MODIFIED_CHANGED_PROPERTY, old ? "true" : "false", modified ? "true" // NOI18N
             : "false"); // NOI18N
@@ -2878,7 +2878,7 @@ public class Train implements java.beans.PropertyChangeListener {
         if (scripts.size() > 0) {
             // save the current status
             setOldStatusCode(getStatusCode());
-            setStatus(CODE_RUN_SCRIPTS);
+            setStatusCode(CODE_RUN_SCRIPTS);
             JmriScriptEngineManager.getDefault().initializeAllEngines(); // create the python interpreter thread
             // find the number of active threads
             ThreadGroup root = Thread.currentThread().getThreadGroup();
@@ -2906,7 +2906,7 @@ public class Train implements java.beans.PropertyChangeListener {
                     }
                 }
             }
-            setStatus(getOldStatusCode());
+            setStatusCode(getOldStatusCode());
         }
     }
 
@@ -3419,13 +3419,13 @@ public class Train implements java.beans.PropertyChangeListener {
     // LocationManager locationManager = LocationManager.instance();
     private void updateStatus(RouteLocation old, RouteLocation next) {
         if (next != null) {
-            setStatus(CODE_TRAIN_EN_ROUTE);
+            setStatusCode(CODE_TRAIN_EN_ROUTE);
             // run move scripts
             runScripts(getMoveScripts());
         } else {
             log.debug("Train (" + getName() + ") terminated");
             setTerminationDate(TrainCommon.getDate(false));
-            setStatus(CODE_TERMINATED);
+            setStatusCode(CODE_TERMINATED);
             setBuilt(false);
             // run termination scripts
             runScripts(getTerminationScripts());
@@ -3468,7 +3468,7 @@ public class Train implements java.beans.PropertyChangeListener {
         setBuildFailedMessage(NONE);
         setPrinted(false);
         // remove cars and engines from this train via property change
-        setStatus(CODE_TRAIN_RESET);
+        setStatusCode(CODE_TRAIN_RESET);
         // remove train icon
         if (_trainIcon != null && _trainIcon.isActive()) {
             _trainIcon.remove();

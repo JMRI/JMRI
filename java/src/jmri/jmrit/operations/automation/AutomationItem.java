@@ -27,6 +27,7 @@ import jmri.jmrit.operations.automation.actions.TerminateTrainAction;
 import jmri.jmrit.operations.automation.actions.UpdateSwitchListAction;
 import jmri.jmrit.operations.automation.actions.WaitSwitchListAction;
 import jmri.jmrit.operations.automation.actions.WaitTrainAction;
+import jmri.jmrit.operations.automation.actions.WaitTrainTerminatedAction;
 import jmri.jmrit.operations.routes.RouteLocation;
 import jmri.jmrit.operations.setup.Control;
 import jmri.jmrit.operations.trains.Train;
@@ -326,6 +327,7 @@ public class AutomationItem implements java.beans.PropertyChangeListener {
         list.add(new TerminateTrainAction());
         list.add(new ResetTrainAction());
         list.add(new WaitTrainAction());
+        list.add(new WaitTrainTerminatedAction());
         list.add(new SelectTrainAction());
         list.add(new DeselectTrainAction());
         list.add(new UpdateSwitchListAction());

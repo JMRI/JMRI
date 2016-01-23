@@ -19,7 +19,7 @@ public class WaitTrainAction extends Action implements PropertyChangeListener {
 
     @Override
     public String getName() {
-        return Bundle.getMessage("WaitForTrain");
+        return Bundle.getMessage("WaitForTrainToMove");
     }
     
     @Override
@@ -69,7 +69,8 @@ public class WaitTrainAction extends Action implements PropertyChangeListener {
         if (Control.showProperty)
             log.debug("Property change AutomationItem {}: ({}) old: ({}) new: ({})", getAutomationItem().getId(),
                     evt.getPropertyName(), evt.getOldValue(), evt.getNewValue());
-        if (evt.getPropertyName().equals(Train.TRAIN_MOVE_COMPLETE_CHANGED_PROPERTY)) {
+        if (evt.getPropertyName().equals(Train.TRAIN_MOVE_COMPLETE_CHANGED_PROPERTY) ||
+                evt.getPropertyName().equals(Train.BUILT_CHANGED_PROPERTY)) {
             trainUpdate();
         }
     }
