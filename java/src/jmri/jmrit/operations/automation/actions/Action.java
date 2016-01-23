@@ -90,6 +90,14 @@ public abstract class Action {
     public String getActionString() {
         return getFormatedMessage("{0} {1} {2} {3} {4}");
     }
+    
+    public String getActionSuccessfulString() {
+        return Bundle.getMessage("OK");
+    }
+    
+    public String getActionFailedString() {
+        return Bundle.getMessage("FAILED");
+    }
 
     public void setRunning(boolean running) {
         if (getAutomationItem() != null) {
