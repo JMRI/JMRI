@@ -34,7 +34,9 @@ import org.slf4j.LoggerFactory;
  * <P>
  * @author	Bob Jacobsen Copyright 2003
  * @version $Revision$
+ * @deprecated use {@link apps.startup.StartupModelFactory} to implement preferences handlers for startup actions.
  */
+@Deprecated
 abstract public class AbstractActionPanel extends JPanel implements PreferencesPanel {
 
     JPanel self;  // used for synchronization

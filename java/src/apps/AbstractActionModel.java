@@ -17,7 +17,7 @@ import org.slf4j.LoggerFactory;
  * <P>
  * @author	Bob Jacobsen Copyright 2003, 2007, 2014
  * @version $Revision$
- * @see PerformActionPanel
+ * @see apps.startup.AbstractActionModelFactory
  */
 public abstract class AbstractActionModel implements StartupModel {
 
