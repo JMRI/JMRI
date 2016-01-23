@@ -23,7 +23,19 @@ public abstract class AbstractFileModelFactory implements StartupModelFactory {
         return Bundle.getMessage(this.getModelClass().getCanonicalName());
     }
 
+    /**
+     * This factory simply displays a {@link javax.swing.JFileChooser} to allow
+     * users to configure the action. Subclasses to initialize the correct file
+     * chooser by implementing this method.
+     *
+     * @return a configured file chooser.
+     */
     abstract protected JFileChooser setFileChooser();
+
+    @Override
+    public String getActionText() {
+        return Bundle.getMessage("EditableStartupAction", this.getDescription());
+    }
 
     @Override
     public void editModel(StartupModel model, Component parent) {

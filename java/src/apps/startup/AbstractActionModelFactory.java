@@ -19,6 +19,11 @@ abstract public class AbstractActionModelFactory implements StartupModelFactory 
     }
 
     @Override
+    public String getActionText() {
+        return Bundle.getMessage("EditableStartupAction", this.getDescription());
+    }
+
+    @Override
     public void editModel(StartupModel model, Component parent) {
         if (this.getModelClass().isInstance(model)) {
             String name = (String) JOptionPane.showInputDialog(parent,
