@@ -610,7 +610,8 @@ public class DefaultRoute extends AbstractNamedBean
             return false;
         }
         if (isControlSensorIncluded(sensor)) {
-            log.warn("Not adding duplicate control sensor " + sensorName + 
+            // this is a normal condition, but log in case
+            log.debug("Not adding duplicate control sensor " + sensorName + 
                     " to route " + getSystemName());
         } else {
             _controlSensorList.add(sensor);
