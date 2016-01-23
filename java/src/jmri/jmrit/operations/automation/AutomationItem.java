@@ -93,6 +93,9 @@ public class AutomationItem implements java.beans.PropertyChangeListener {
     public void setAction(Action action) {
         Action old = _action;
         _action = action;
+        if (old != null) {
+            old.cancelAction();
+        }
         if (action != null) {
             action.setAutomationItem(this); // associate action with this item
         }
@@ -160,7 +163,7 @@ public class AutomationItem implements java.beans.PropertyChangeListener {
      * 
      * @param automation
      */
-    public void setAutomation(Automation automation) {
+    public void setAutomationToRun(Automation automation) {
         Automation old = AutomationManager.instance().getAutomationById(_automationId);
         if (automation != null)
             _automationId = automation.getId();
@@ -295,8 +298,11 @@ public class AutomationItem implements java.beans.PropertyChangeListener {
             return Bundle.getMessage("Running");
         if (!isActionRan())
             return NONE;
+        if (getAction() != null)
+            return isActionSuccessful() ? getAction().getActionSuccessfulString() : getAction().getActionFailedString();
         else
-            return isActionSuccessful() ? Bundle.getMessage("OK") : Bundle.getMessage("FAILED");
+            return "unknown";
+
     }
 
     public void copyItem(AutomationItem item) {

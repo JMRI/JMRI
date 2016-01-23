@@ -337,13 +337,17 @@ public class Automation implements java.beans.PropertyChangeListener {
             if (getCurrentAutomationItem() == item) {
                 stop();
             }
+            // stop above could have bumped the current automation item
+            if (getCurrentAutomationItem() == item) {
+                setNextAutomationItem();
+            }
             String id = item.getId();
             item.dispose();
             int old = getSize();
             _automationHashTable.remove(id);
             resequenceIds();
-            if (getCurrentAutomationItem() == item) {
-                setNextAutomationItem();
+            if (getSize() <= 0) {
+                setCurrentAutomationItem(null);
             }
             setDirtyAndFirePropertyChange(LISTCHANGE_CHANGED_PROPERTY, old, getSize());
         }
