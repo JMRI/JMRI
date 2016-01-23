@@ -27,6 +27,7 @@ import jmri.jmrit.operations.automation.actions.TerminateTrainAction;
 import jmri.jmrit.operations.automation.actions.UpdateSwitchListAction;
 import jmri.jmrit.operations.automation.actions.WaitSwitchListAction;
 import jmri.jmrit.operations.automation.actions.WaitTrainAction;
+import jmri.jmrit.operations.automation.actions.WaitTrainTerminatedAction;
 import jmri.jmrit.operations.routes.RouteLocation;
 import jmri.jmrit.operations.setup.Control;
 import jmri.jmrit.operations.trains.Train;
@@ -93,6 +94,9 @@ public class AutomationItem implements java.beans.PropertyChangeListener {
     public void setAction(Action action) {
         Action old = _action;
         _action = action;
+        if (old != null) {
+            old.cancelAction();
+        }
         if (action != null) {
             action.setAutomationItem(this); // associate action with this item
         }
@@ -160,7 +164,7 @@ public class AutomationItem implements java.beans.PropertyChangeListener {
      * 
      * @param automation
      */
-    public void setAutomation(Automation automation) {
+    public void setAutomationToRun(Automation automation) {
         Automation old = AutomationManager.instance().getAutomationById(_automationId);
         if (automation != null)
             _automationId = automation.getId();
@@ -295,8 +299,11 @@ public class AutomationItem implements java.beans.PropertyChangeListener {
             return Bundle.getMessage("Running");
         if (!isActionRan())
             return NONE;
+        if (getAction() != null)
+            return isActionSuccessful() ? getAction().getActionSuccessfulString() : getAction().getActionFailedString();
         else
-            return isActionSuccessful() ? Bundle.getMessage("OK") : Bundle.getMessage("FAILED");
+            return "unknown";
+
     }
 
     public void copyItem(AutomationItem item) {
@@ -320,6 +327,7 @@ public class AutomationItem implements java.beans.PropertyChangeListener {
         list.add(new TerminateTrainAction());
         list.add(new ResetTrainAction());
         list.add(new WaitTrainAction());
+        list.add(new WaitTrainTerminatedAction());
         list.add(new SelectTrainAction());
         list.add(new DeselectTrainAction());
         list.add(new UpdateSwitchListAction());

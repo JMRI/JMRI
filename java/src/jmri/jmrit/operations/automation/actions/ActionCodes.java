@@ -33,6 +33,7 @@ public class ActionCodes {
     public static final int RUN_TRAIN = 0x0900 + ENABLE_TRAINS + OK_MESSAGE + FAIL_MESSAGE;
     public static final int SELECT_TRAIN = 0x0A00 + ENABLE_TRAINS + OK_MESSAGE + FAIL_MESSAGE;
     public static final int DESELECT_TRAIN = 0x0B00 + ENABLE_TRAINS + OK_MESSAGE + FAIL_MESSAGE;
+    public static final int WAIT_FOR_TRAIN_TERMINATE = 0x0C00 + ENABLE_TRAINS + OK_MESSAGE + FAIL_MESSAGE;
     
     public static final int UPDATE_SWITCHLIST = 0x1000 + OK_MESSAGE;
     public static final int PRINT_SWITCHLIST = 0x1100 + OK_MESSAGE;
@@ -44,7 +45,7 @@ public class ActionCodes {
     public static final int STOP_AUTOMATION = 0x3200 + OK_MESSAGE + FAIL_MESSAGE + ENABLE_AUTOMATION_LIST;
     public static final int RESUME_AUTOMATION = 0x3300 + OK_MESSAGE + FAIL_MESSAGE + ENABLE_AUTOMATION_LIST;
     
-    public static final int MESSAGE = 0x4000 + OK_MESSAGE;
+    public static final int MESSAGE = 0x4000  + ENABLE_TRAINS + ENABLE_ROUTES + ENABLE_AUTOMATION_LIST + OK_MESSAGE;
     public static final int WAIT_MESSAGE_OK = 0x4100 + OK_MESSAGE;
     public static final int WAIT_MESSAGE_YES_NO = 0x4200 + OK_MESSAGE;
     public static final int IF_MESSAGE_NO = 0x4300 + OK_MESSAGE + ENABLE_GOTO_LIST;

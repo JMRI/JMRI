@@ -334,16 +334,19 @@ public class Automation implements java.beans.PropertyChangeListener {
      */
     public void deleteItem(AutomationItem item) {
         if (item != null) {
-            if (getCurrentAutomationItem() == item) {
+            if (item.isActionRunning()) {
                 stop();
+            }
+            if (getCurrentAutomationItem() == item) {
+                setNextAutomationItem();
             }
             String id = item.getId();
             item.dispose();
             int old = getSize();
             _automationHashTable.remove(id);
             resequenceIds();
-            if (getCurrentAutomationItem() == item) {
-                setNextAutomationItem();
+            if (getSize() <= 0) {
+                setCurrentAutomationItem(null);
             }
             setDirtyAndFirePropertyChange(LISTCHANGE_CHANGED_PROPERTY, old, getSize());
         }

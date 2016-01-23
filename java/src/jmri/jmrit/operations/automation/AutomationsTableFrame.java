@@ -104,7 +104,7 @@ public class AutomationsTableFrame extends OperationsFrame {
     public void buttonActionPerformed(java.awt.event.ActionEvent ae) {
         log.debug("add automation button activated");
         if (ae.getSource() == addButton) {
-            new AutomationEditFrame(null);
+            new AutomationTableFrame(null);
         }
     }
     
