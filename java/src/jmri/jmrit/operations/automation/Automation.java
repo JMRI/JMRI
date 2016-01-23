@@ -116,8 +116,10 @@ public class Automation implements java.beans.PropertyChangeListener {
     }
 
     public boolean isActionRunning() {
-        if (getCurrentAutomationItem() != null) {
-            return getCurrentAutomationItem().isActionRunning();
+        for (AutomationItem item : getItemsBySequenceList()) {
+            if (item.isActionRunning()) {
+                return true;
+            }
         }
         return false;
     }
