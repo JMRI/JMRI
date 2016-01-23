@@ -31,7 +31,7 @@ import org.slf4j.LoggerFactory;
  * @author Dan Boudreau Copyright (C) 2016
  * @version $Revision$
  */
-public class AutomationEditFrame extends OperationsFrame implements java.beans.PropertyChangeListener {
+public class AutomationTableFrame extends OperationsFrame implements java.beans.PropertyChangeListener {
 
     AutomationTableModel automationTableModel = new AutomationTableModel();
     JTable automationTable = new JTable(automationTableModel);
@@ -68,7 +68,7 @@ public class AutomationEditFrame extends OperationsFrame implements java.beans.P
     public static final String NAME = Bundle.getMessage("Name");
     public static final String DISPOSE = "dispose"; // NOI18N
 
-    public AutomationEditFrame(Automation automation) {
+    public AutomationTableFrame(Automation automation) {
         super();
 
         _automation = automation;
@@ -369,5 +369,5 @@ public class AutomationEditFrame extends OperationsFrame implements java.beans.P
         }
     }
 
-    static Logger log = LoggerFactory.getLogger(AutomationEditFrame.class.getName());
+    static Logger log = LoggerFactory.getLogger(AutomationTableFrame.class.getName());
 }

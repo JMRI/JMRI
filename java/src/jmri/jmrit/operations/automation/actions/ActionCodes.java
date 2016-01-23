@@ -45,7 +45,7 @@ public class ActionCodes {
     public static final int STOP_AUTOMATION = 0x3200 + OK_MESSAGE + FAIL_MESSAGE + ENABLE_AUTOMATION_LIST;
     public static final int RESUME_AUTOMATION = 0x3300 + OK_MESSAGE + FAIL_MESSAGE + ENABLE_AUTOMATION_LIST;
     
-    public static final int MESSAGE = 0x4000 + OK_MESSAGE;
+    public static final int MESSAGE = 0x4000  + ENABLE_TRAINS + ENABLE_ROUTES + ENABLE_AUTOMATION_LIST + OK_MESSAGE;
     public static final int WAIT_MESSAGE_OK = 0x4100 + OK_MESSAGE;
     public static final int WAIT_MESSAGE_YES_NO = 0x4200 + OK_MESSAGE;
     public static final int IF_MESSAGE_NO = 0x4300 + OK_MESSAGE + ENABLE_GOTO_LIST;
