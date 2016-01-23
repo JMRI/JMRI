@@ -34,7 +34,7 @@ import jmri.swing.PreferencesPanel;
 public class StartupActionsPreferencesPanel extends JPanel implements PreferencesPanel {
 
     private static final long serialVersionUID = 1L;
-    private boolean dirty = false;
+    private boolean isRestartRequired = false;
 
     /**
      * Creates new form StartupActionsPreferencesPanel
@@ -236,15 +236,12 @@ public class StartupActionsPreferencesPanel extends JPanel implements Preference
 
     @Override
     public boolean isDirty() {
-        // Any change to the list of actions in the StartupActionsManager,
-        // even if undone, makes this dirty, since we are not maintaining an
-        // asloaded state.
-        return this.dirty;
+        return InstanceManager.getDefault(StartupActionsManager.class).isDirty();
     }
 
     @Override
     public boolean isRestartRequired() {
-        return this.isDirty();
+        return this.isDirty() || this.isRestartRequired;
     }
 
     @Override
@@ -351,7 +348,7 @@ public class StartupActionsPreferencesPanel extends JPanel implements Preference
         @Override
         public void propertyChange(PropertyChangeEvent evt) {
             this.fireTableDataChanged();
-            StartupActionsPreferencesPanel.this.dirty = true;
+            StartupActionsPreferencesPanel.this.isRestartRequired = true;
         }
     }
 }
