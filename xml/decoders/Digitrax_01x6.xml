@@ -17,6 +17,7 @@
   <version author="Alain Le Marchand" version="1" lastUpdated="20140615"/>
   <version author="Alain Le Marchand" version="1.1" lastUpdated="20140630"/>
   <version author="Alain Le Marchand" version="1.2" lastUpdated="20140830"/>
+  <version author="Alain Le Marchand" version="1.3" lastUpdated="20160124"/>
   <!-- Created from version 36 of the Digitrax_01x3 file -->
   <!-- Version 0 - New Series 6 non-sound Digitrax decoders (Alain Le Marchand) -->
   <!--             DH166D, DH166P, DH166PD, DN136D, DN136PS, DN146IP, DN166PS, DZ126, DZ126PS, DS126IN, DZ126T, DZ146, DZ146PS
@@ -24,9 +25,11 @@
   <!-- Version 1 - Add N Scale Intermountain Board Replacement DN166I0, DN166I1A, DN166I1B, DN166I1C, DN166I1D, DN166I2 -->
   <!-- Version 1.1-Add DN126M2, DZ146IN -->
   <!-- Version 1.2-Add DN166I2B -->
-  <!-- WARNING :   Low and High Versions of decoders (CV07) unknown (by me) - to be adjusted after users feed back  -->
+  <!-- Version 1.3-CV7 checked equal to 51 on DN136D - suspect all versions starting with 51, in full overlap with Series 5 (Alain Le Marchand)    -->
+  <!--             Changed Low Version from 52 to 51                                                -->
+  <!-- WARNING :   High Versions of decoders (CV07) unknown (by me) - to be adjusted after users feed back  -->
   <decoder>
-    <family name="Series 6 with FX3, silent, improved BEMF" mfg="Digitrax" lowVersionID="52" highVersionID="64">
+    <family name="Series 6 with FX3, silent, improved BEMF" mfg="Digitrax" lowVersionID="51" highVersionID="64">
       <model model="DH166D" numOuts="6" numFns="10" maxMotorCurrent="1.5A (peak=2A)" formFactor="HO" connector="9pin" comment="HO-Scale, wired">
         <output name="1" label="White" connection="wire"/>
         <output name="2" label="Yellow" connection="wire"/>
