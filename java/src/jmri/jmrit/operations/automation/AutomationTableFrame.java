@@ -1,4 +1,4 @@
-// AutomationEditFrame.java
+// AutomationTableFrame.java
 package jmri.jmrit.operations.automation;
 
 import java.awt.Dimension;

@@ -200,6 +200,7 @@ public class Automation implements java.beans.PropertyChangeListener {
         if (getSize() > 0) {
             // goto?
             if (_gotoAutomationItem != null) {
+                resetAutomationItems();
                 setCurrentAutomationItem(_gotoAutomationItem);
                 _gotoAutomationItem = null;
                 return; // done with goto
