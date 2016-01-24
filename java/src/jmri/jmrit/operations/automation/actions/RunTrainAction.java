@@ -22,8 +22,8 @@ public class RunTrainAction extends Action {
         if (getAutomationItem() != null) {
             Train train = getAutomationItem().getTrain();
             if (train != null && train.isBuilt() && TrainCustomManifest.manifestCreatorFileExists()) {
-                Thread excel = new Thread(new Runnable() {
-                    public void run() {
+//                Thread excel = new Thread(new Runnable() {
+//                    public void run() {
                         setRunning(true);
                         TrainCustomManifest.addCVSFile(train.createCSVManifestFile());
                         boolean status = TrainCustomManifest.process();
@@ -36,10 +36,10 @@ public class RunTrainAction extends Action {
                             }
                         }
                         finishAction(status);
-                    }
-                });
-                excel.setName("Run Excel Program"); // NOI18N
-                excel.start();
+//                    }
+//                });
+//                excel.setName("Run Excel Program"); // NOI18N
+//                excel.start();
             } else {
                 finishAction(false);
             }

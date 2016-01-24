@@ -150,7 +150,13 @@ public class Automation implements java.beans.PropertyChangeListener {
             log.debug("Perform action ({}) item id: {}", item.getAction().getName(), item.getId());
             item.getAction().removePropertyChangeListener(this);
             item.getAction().addPropertyChangeListener(this);
-            item.getAction().doAction();
+            Thread runAction = new Thread(new Runnable() {
+                public void run() {
+                    item.getAction().doAction();
+                }
+            });
+            runAction.setName("Run Action item: " + item.getId()); // NOI18N
+            runAction.start();
         }
     }
 
@@ -188,17 +194,17 @@ public class Automation implements java.beans.PropertyChangeListener {
         }
     }
 
-//    private void resetAutomationItems() {
-//        for (AutomationItem item : getItemsBySequenceList()) {
-//            item.setActionRan(false);
-//            item.setActionSuccessful(false);
-//        }
-//    }
-    
+    //    private void resetAutomationItems() {
+    //        for (AutomationItem item : getItemsBySequenceList()) {
+    //            item.setActionRan(false);
+    //            item.setActionSuccessful(false);
+    //        }
+    //    }
+
     private void resetAutomationItems() {
         resetAutomationItems(getCurrentAutomationItem());
     }
-    
+
     private void resetAutomationItems(AutomationItem item) {
         boolean found = false;
         for (AutomationItem automationItem : getItemsBySequenceList()) {

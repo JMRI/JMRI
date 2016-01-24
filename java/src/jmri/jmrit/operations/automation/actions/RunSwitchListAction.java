@@ -43,8 +43,8 @@ public class RunSwitchListAction extends Action {
                 finishAction(false);
                 return;
             }
-            Thread excel = new Thread(new Runnable() {
-                public void run() {
+//            Thread excel = new Thread(new Runnable() {
+//                public void run() {
                     setRunning(true);
                     TrainSwitchLists trainSwitchLists = new TrainSwitchLists();
                     TrainCsvSwitchLists trainCsvSwitchLists = new TrainCsvSwitchLists();
@@ -79,10 +79,10 @@ public class RunSwitchListAction extends Action {
                     TrainManager.instance().setTrainsSwitchListStatus(Train.PRINTED);
                     finishAction(status);
                 }
-            });
-            excel.setName("Run Excel Program for Switch Lists"); // NOI18N
-            excel.start();
-        }
+//            });
+//            excel.setName("Run Excel Program for Switch Lists"); // NOI18N
+//            excel.start();
+//        }
     }
 
     @Override
