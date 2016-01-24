@@ -866,9 +866,9 @@
     <!-- Note if modifying the profile target, please be sure to up date the -->
     <!-- NetBeans IDE profile target in this file -->
     <target name="profile"
-            description="build and run JmriDemo app with profiling"
+            description="build and run PanelPro app with profiling"
             depends="debug, runtime-library-selection">
-        <java classname="apps.JmriDemo.JMRIdemo"
+        <java classname="apps.PanelPro.PanelPro"
               dir="."
               fork="yes" >
             <classpath refid="project.class.path"/>
@@ -885,13 +885,13 @@
     <!-- can use other info defined in this file -->
     <!-- The profiler is not so well integrated into the IDE and requires -->
     <!-- the build target to be specified in the ANT build script -->
-    <target name="profile-nb" depends="debug, runtime-library-selection" description="build and run DecoderPro app with NetBeans profiling">
-        <property name="antargline" value="DecoderProConfig2.xml"/>
+    <target name="profile-nb" depends="debug, runtime-library-selection" description="build and run PanelPro app with NetBeans profiling">
+        <property name="antargline" value="PanelProConfig2.xml"/>
         <fail unless="netbeans.home">This target can only run inside the NetBeans IDE.</fail>
         <nbprofiledirect>
             <classpath refid="project.class.path"/>
         </nbprofiledirect>
-        <java classname="apps.DecoderPro.DecoderPro"
+        <java classname="apps.PanelPro.PanelPro"
             dir="."
                 fork="yes" >
             <classpath refid="project.class.path"/>
@@ -1613,7 +1613,6 @@
                 <exclude name="JMRI/PanelPro"/>
                 <exclude name="JMRI/SoundPro"/>
                 <exclude name="JMRI/LocoTools"/>
-                <exclude name="JMRI/JmriDemo"/>
                 <exclude name="JMRI/InstallTest"/>
                 <exclude name="JMRI/RXTXuninstall.sh"/>
                 <exclude name="JMRI/JmriFaceless"/>
@@ -1622,10 +1621,7 @@
                 <include name="JMRI/DecoderPro"/>
                 <include name="JMRI/PanelPro"/>
                 <include name="JMRI/SoundPro"/>
-                <include name="JMRI/SignalPro"/>
-                <include name="JMRI/DispatcherPro"/>
                 <include name="JMRI/LocoTools"/>
-                <include name="JMRI/JmriDemo"/>
                 <include name="JMRI/InstallTest"/>
                 <include name="JMRI/RXTXuninstall.sh"/>
                 <include name="JMRI/JmriFaceless"/>
@@ -1696,10 +1692,7 @@
     <target name="startup-scripts-linux"> <!-- Internal target to create all of the app specific startup scripts for Linux -->
         <make-startup-script script.name="DecoderPro"   script.class="apps.gui3.dp3.DecoderPro3"/>
         <make-startup-script script.name="PanelPro"      script.class="apps.PanelPro.PanelPro"/>
-        <make-startup-script script.name="DispatcherPro" script.class="apps.DispatcherPro.DispatcherPro"/>
-        <make-startup-script script.name="JMRIdemo"      script.class="apps.JmriDemo.JMRIdemo"/>
         <make-startup-script script.name="LocoTools"     script.class="apps.LocoTools.LocoTools"/>
-        <make-startup-script script.name="SignalPro"     script.class="apps.SignalPro"/>
         <make-startup-script script.name="SoundPro"      script.class="apps.SoundPro.SoundPro"/>
         <make-startup-script script.name="InstallTest"   script.class="apps.InstallTest.InstallTest"/>
         <make-startup-script script.name="JmriFaceless"   script.class="apps.JmriFaceless"/>
@@ -1709,10 +1702,7 @@
         <create-macosx-application-directory script.name="DecoderPro"  script.class="apps.gui3.dp3.DecoderPro3"
                                              script.icon="DecoderPro"/>
         <create-macosx-application-directory script.name="PanelPro"      script.class="apps.PanelPro.PanelPro"/>
-        <create-macosx-application-directory script.name="DispatcherPro" script.class="apps.DispatcherPro.DispatcherPro"/>
-        <create-macosx-application-directory script.name="JMRI Demo"     script.class="apps.JmriDemo.JMRIdemo"/>
         <create-macosx-application-directory script.name="Loco Tools"    script.class="apps.LocoTools.LocoTools"/>
-        <create-macosx-application-directory script.name="SignalPro"     script.class="apps.SignalPro"/>
         <create-macosx-application-directory script.name="SoundPro"      script.class="apps.SoundPro.SoundPro"/>
         <create-macosx-application-directory script.name="InstallTest"   script.class="apps.InstallTest.InstallTest"/>
     </target>
