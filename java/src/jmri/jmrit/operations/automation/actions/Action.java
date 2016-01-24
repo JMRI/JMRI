@@ -88,7 +88,7 @@ public abstract class Action {
     }
 
     public String getActionString() {
-        return getFormatedMessage("{0} {1} {2} {3} {4}");
+        return getFormatedMessage("{0}{1}{2}{3}{4}");
     }
     
     public String getActionSuccessfulString() {
