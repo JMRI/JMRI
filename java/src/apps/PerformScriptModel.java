@@ -6,7 +6,7 @@ package apps;
  * <P>
  * @author	Bob Jacobsen Copyright 2003
  * @version $Revision$
- * @see PerformScriptPanel
+ * @see apps.startup.PerformScriptModelFactory
  */
 public class PerformScriptModel implements StartupModel {
 
@@ -27,5 +27,10 @@ public class PerformScriptModel implements StartupModel {
 
     public void setFileName(String n) {
         fileName = n;
+    }
+
+    @Override
+    public void setName(String name) {
+        this.setFileName(name);
     }
 }

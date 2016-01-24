@@ -16,9 +16,9 @@
   <div class="nomenu" id="mBody">
     <div id="mainContent">
 
-<h1>The Id Tags Table</h1>
+<h1>The Id Tag Table</h1>
     
-You can use the Id Tags Table to look at the contents of JMRI IdTag objects.
+You can use the Id Tag Table to look at the contents of JMRI IdTag objects.
 <p>
 Note that you can sort the table by each of the columns; just click on a
 column heading.

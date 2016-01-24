@@ -5,13 +5,18 @@ package jmri.web.server;
  * @author Randall Wood Copyright (C) 2012, 2014
  * @version $Revision$
  */
+import apps.PerformActionModel;
+import apps.StartupActionsManager;
 import java.awt.Color;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.awt.event.ItemEvent;
+import java.awt.event.ItemListener;
+import java.beans.PropertyChangeEvent;
 import java.util.ArrayList;
+import java.util.Arrays;
 import javax.swing.BorderFactory;
 import javax.swing.BoxLayout;
-import javax.swing.JButton;
 import javax.swing.JCheckBox;
 import javax.swing.JComponent;
 import javax.swing.JFrame;
@@ -19,13 +24,13 @@ import javax.swing.JLabel;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
-import javax.swing.JSeparator;
 import javax.swing.JSpinner;
 import javax.swing.JTextField;
 import javax.swing.SpinnerNumberModel;
 import javax.swing.border.Border;
 import javax.swing.event.ListDataEvent;
 import javax.swing.event.ListDataListener;
+import jmri.InstanceManager;
 import jmri.swing.DefaultEditableListModel;
 import jmri.swing.DefaultListCellEditor;
 import jmri.swing.EditableList;
@@ -44,13 +49,12 @@ public class WebServerPreferencesPanel extends JPanel implements ListDataListene
     EditableList<String> disallowedFrames;
     JCheckBox useAjaxCB;
     JTextField port;
-    JButton saveB;
-    JButton cancelB;
     JCheckBox readonlyPower;
     WebServerPreferences preferences;
-    JFrame parentFrame = null;
-    boolean enableSave;
     private boolean restartRequired = false;
+    private JCheckBox startup;
+    private ItemListener startupItemListener;
+    int startupActionPosition = -1;
 
     public WebServerPreferencesPanel() {
         preferences = WebServerManager.getWebServerPreferences();
@@ -58,32 +62,14 @@ public class WebServerPreferencesPanel extends JPanel implements ListDataListene
         setGUI();
     }
 
-    public WebServerPreferencesPanel(JFrame f) {
-        this();
-        parentFrame = f;
-    }
-
-    /*
-     private void initComponents() {
-     GroupLayout layout = new GroupLayout(this);
-     this.setLayout(layout);
-     layout.setAutoCreateGaps(true);
-     layout.setAutoCreateContainerGaps(true);
-     SequentialGroup group = layout.createSequentialGroup();
-     group.addComponent(new JTitledSeparator(Bundle.getMessage("TitleWebServerPreferences")));
-     group.addGroup(webServerPreferences(layout));
-     layout.setVerticalGroup(group);
-     }
-     */
     private void initGUI() {
         this.setLayout(new BoxLayout(this, BoxLayout.PAGE_AXIS));
         add(new JTitledSeparator(Bundle.getMessage("TitleWebServerPreferences")));
         add(portPanel());
         add(powerPanel());
+        add(startupPanel());
         add(new JTitledSeparator(Bundle.getMessage("TitleDelayPanel")));
         add(delaysPanel());
-        add(new JSeparator());
-        add(cancelApplySave());
     }
 
     /*
@@ -110,14 +96,9 @@ public class WebServerPreferencesPanel extends JPanel implements ListDataListene
         useAjaxCB.setSelected(preferences.useAjax());
         port.setText(Integer.toString(preferences.getPort()));
         readonlyPower.setSelected(preferences.isReadonlyPower());
-    }
-
-    /**
-     * Show the save and cancel buttons if displayed in its own frame.
-     */
-    public void enableSave() {
-        saveB.setVisible(true);
-        cancelB.setVisible(true);
+        InstanceManager.getDefault(StartupActionsManager.class).addPropertyChangeListener((PropertyChangeEvent evt) -> {
+            this.startup.setSelected(this.isStartupAction());
+        });
     }
 
     /**
@@ -162,12 +143,7 @@ public class WebServerPreferencesPanel extends JPanel implements ListDataListene
     public void storeValues() {
         if (setValues()) {
             preferences.save();
-
-            if (parentFrame != null) {
-                parentFrame.dispose();
-            }
         }
-
     }
 
     /**
@@ -248,35 +224,30 @@ public class WebServerPreferencesPanel extends JPanel implements ListDataListene
         return panel;
     }
 
-    private JPanel cancelApplySave() {
+    private JPanel startupPanel() {
         JPanel panel = new JPanel();
-        cancelB = new JButton(Bundle.getMessage("ButtonCancel"));
-        cancelB.setVisible(false);
-        cancelB.addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent event) {
-                cancelValues();
+        this.startup = new JCheckBox(Bundle.getMessage("LabelStartup"), this.isStartupAction());
+        this.startupItemListener = (ItemEvent e) -> {
+            this.startup.removeItemListener(this.startupItemListener);
+            StartupActionsManager manager = InstanceManager.getDefault(StartupActionsManager.class);
+            if (this.startup.isSelected()) {
+                PerformActionModel model = new PerformActionModel();
+                model.setClassName(WebServerAction.class.getName());
+                if (this.startupActionPosition == -1 || this.startupActionPosition >= manager.getActions().length) {
+                    manager.addAction(model);
+                } else {
+                    manager.setActions(this.startupActionPosition, model);
+                }
+            } else {
+                manager.getActions(PerformActionModel.class).stream().filter((model) -> (model.getClassName().equals(WebServerAction.class.getName()))).forEach((model) -> {
+                    this.startupActionPosition = Arrays.asList(manager.getActions()).indexOf(model);
+                    manager.removeAction(model);
+                });
             }
-        });
-        JButton applyB = new JButton(Bundle.getMessage("ButtonApply"));
-        applyB.addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent event) {
-                applyValues();
-            }
-        });
-        saveB = new JButton(Bundle.getMessage("ButtonSave"));
-        saveB.setVisible(false);
-        saveB.addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent event) {
-                storeValues();
-            }
-        });
-        panel.add(cancelB);
-        panel.add(saveB);
-        panel.add(new JLabel(Bundle.getMessage("LabelApplyWarning")));
-        panel.add(applyB);
+            this.startup.addItemListener(this.startupItemListener);
+        };
+        this.startup.addItemListener(this.startupItemListener);
+        panel.add(this.startup);
         return panel;
     }
 
@@ -296,7 +267,7 @@ public class WebServerPreferencesPanel extends JPanel implements ListDataListene
         DefaultEditableListModel<String> model = (DefaultEditableListModel) disallowedFrames.getModel();
         if (!model.getElementAt(model.getSize() - 1).equals(" ")) {
             model.addElement(" ");
-        } else if (model.getElementAt(lde.getIndex0()).toString().isEmpty()) {
+        } else if (model.getElementAt(lde.getIndex0()).isEmpty()) {
             model.removeElementAt(lde.getIndex0());
         }
     }
@@ -354,5 +325,19 @@ public class WebServerPreferencesPanel extends JPanel implements ListDataListene
     @Override
     public boolean isPreferencesValid() {
         return true; // no validity checking performed
+
+    }
+
+    private boolean isStartupAction() {
+        return InstanceManager.getDefault(StartupActionsManager.class).getActions(PerformActionModel.class).stream()
+                .anyMatch((model) -> (model.getClassName().equals(WebServerAction.class.getName())));
+        // The above is what NetBeans recommended the following be condenced to
+        // It's readable, but different, so including alternate form
+        //for (PerformActionModel model : InstanceManager.getDefault(StartupActionsManager.class).getActions(PerformActionModel.class)) {
+        //    if (model.getClassName().equals(WebServerAction.class.getName())) {
+        //        return true;
+        //    }
+        //}
+        //return false;
     }
 }

@@ -19,8 +19,9 @@ public class RunAutomationAction extends Action {
     @Override
     public void doAction() {
         if (getAutomationItem() != null) {
-            Automation automation = getAutomationItem().getAutomation();
+            Automation automation = getAutomationItem().getAutomationToRun();
             if (automation != null) {
+                setRunning(true);
                 automation.run();
             }
             finishAction(automation != null);

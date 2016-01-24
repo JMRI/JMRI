@@ -167,8 +167,8 @@ name", CSnxxx, where nxxx is the address of the bit
 (<a href="#numbers">see below</a>). Before you can refer to a Sensor in JMRI, 
 it must be "created". A Sensor may be created in a number of ways, including 
 automatically.  All JMRI Sensors that have been created may be viewed in the
-JMRI Sensors Table, accessed by selecting <b>Sensors Table</b> in the Tools 
-menu. A new Sensor may be created via the Sensors Table as illustrated 
+JMRI Sensor Table, accessed by selecting <b>Sensor Table</b> in the Tools 
+menu. A new Sensor may be created via the Sensor Table as illustrated 
 <a href="#smini">below</a>. Creating a Sensor to refer to a specific C/MRI 
 input bit, is called "assigning" that input bit. Each input bit may be 
 assigned only once, i.e., two different Sensors may not refer to the same
@@ -200,10 +200,10 @@ including automatically. All JMRI Turnouts that have been created may be
 viewed in the JMRI Turnout table, accessed by selecting <b>Turnout Table</b> 
 in the Tools menu. A new Turnout may be created via the Turnout table by 
 clicking "Add" at the bottom of the table. Similarly, a new Light may be 
-created via the JMRI Lights Table by clicking "Add" at the bottom of that 
-table.  The JMRI Lights Table is accessed by selecting <b>Lights</b> in 
+created via the JMRI Light Table by clicking "Add" at the bottom of that 
+table.  The JMRI Light Table is accessed by selecting <b>Lights</b> in 
 the Tools &gt; Tables menu. All JMRI Lights that have been created are listed in the 
-JMRI Lights Table. Creating a Turnout or a Light to refer to a specific C/MRI 
+JMRI Light Table. Creating a Turnout or a Light to refer to a specific C/MRI 
 output bit, is called "assigning" that output bit. Each Light or Turnout is 
 linked to a specific output line via the address part of the System Name. 
 </p>
@@ -253,7 +253,7 @@ assignments for its bits.)
         when it asks if you want to quit.
     </ul>
 <li>Restart the program. You need to assign an input bit to start 
-    polling. Select <b>Sensors Table</b> from the Tools menu, and proceed:
+    polling. Select <b>Sensor Table</b> from the Tools menu, and proceed:
     <ul>
     <li>Click "Add..." at the bottom of the table.
     <li>In the Add New Sensor dialog:
@@ -263,8 +263,8 @@ assignments for its bits.)
         <li>For User Name enter "Test".
         <li>Click "OK".
         </ul>
-    <li>The System Name and User Name will appear in the Sensors Table. 
-        The state of your Sensor in the Sensors Table will initially be 
+    <li>The System Name and User Name will appear in the Sensor Table. 
+        The state of your Sensor in the Sensor Table will initially be 
         "Unknown", but will quickly switch to "Inactive" when polling 
         begins (assuming nothing is connected to input pin 1).
     </ul>
@@ -348,7 +348,7 @@ your SUSIC's bits.</p>
 <li>Restart the program. You need to assign an input bit to start 
     polling. Select <b>Sensors</b> from the Tools &gt; Tables menu, and proceed:
     <ul>
-    <li>Click "Add..." at the bottom of the Sensors Table pane.
+    <li>Click "Add..." at the bottom of the Sensor Table pane.
     <li>In the Add New Sensor dialog:
         <ul>
         <li> For System Name, enter CS1 if your SUSIC's node address was
@@ -356,8 +356,8 @@ your SUSIC's bits.</p>
         <li> For User Name enter "Test".
         <li> Click "OK".
         </ul>
-    <li>The System Name and User Name will appear in the Sensors Table. 
-        The state of your Sensor in the Sensors Table will initially be 
+    <li>The System Name and User Name will appear in the Sensor Table. 
+        The state of your Sensor in the Sensor Table will initially be 
         "Unknown", but will quickly switch to "Inactive" when polling 
         begins (assuming nothing is connected to input pin 1).
     </ul>
@@ -426,7 +426,7 @@ dialog.</p>
 configured the correct numbers of input and output bits and the correct node 
 address for each node.  The List Assignments software works from the current 
 C/MRI configuration, so if a node has been configured, it will be selectable 
-in the List C/MRI Assignments dialog. The Assignments Table contains a line 
+in the List C/MRI Assignments dialog. The Assignment Table contains a line 
 for each configured input or output bit. Each line also contains an address 
 column showing what address to use for that bit in JMRI's C/MRI system 
 names.  Printing blank assignment lists for each node provides a convenient 

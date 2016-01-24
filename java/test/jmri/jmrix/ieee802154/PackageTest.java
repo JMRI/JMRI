@@ -30,6 +30,7 @@ public class PackageTest extends TestCase {
     public static Test suite() {
         TestSuite suite = new TestSuite("jmri.jmrix.ieee802154.IEEE802154Test");  // no tests in this class itself
         suite.addTest(new TestSuite(IEEE802154MessageTest.class));
+        suite.addTest(new TestSuite(IEEE802154ReplyTest.class));
         suite.addTest(new TestSuite(IEEE802154SystemConnectionMemoTest.class));
         suite.addTest(jmri.jmrix.ieee802154.xbee.PackageTest.suite());
         suite.addTest(jmri.jmrix.ieee802154.serialdriver.PackageTest.suite());

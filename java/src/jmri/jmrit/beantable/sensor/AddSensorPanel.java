@@ -4,7 +4,6 @@ package jmri.jmrit.beantable.sensor;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.util.List;
-import java.util.ResourceBundle;
 import javax.swing.JCheckBox;
 import javax.swing.JComboBox;
 import javax.swing.JLabel;
@@ -73,10 +72,10 @@ public class AddSensorPanel extends jmri.util.swing.JmriPanel {
         sysName.setName("sysName");
         userName.setName("userName");
         prefixBox.setName("prefixBox");
-        add(new AddNewHardwareDevicePanel(sysName, userName, prefixBox, numberToAdd, range, rb.getString("ButtonAddSensor"), listener, rangeListener));
+        add(new AddNewHardwareDevicePanel(sysName, userName, prefixBox, numberToAdd, range, Bundle.getMessage("ButtonAddSensor"), listener, rangeListener));
         canAddRange(null);
 
-        //super.AddnewHardwareDevicePanel(sysName, userName, prefixBox, , rb.getString("ButtonAddSensor")
+        //super.AddnewHardwareDevicePanel(sysName, userName, prefixBox, , Bundle.getMessage("ButtonAddSensor")
     }
 
     private void canAddRange(ActionEvent e) {
@@ -128,7 +127,7 @@ public class AddSensorPanel extends jmri.util.swing.JmriPanel {
      add(p);
 
      JButton ok;
-     add(ok = new JButton(rb.getString("ButtonAddSensor")));
+     add(ok = new JButton(Bundle.getMessage("ButtonAddSensor")));
      ok.addActionListener(new ActionListener() {
      public void actionPerformed(ActionEvent e) {
      okPressed(e);
@@ -138,8 +137,8 @@ public class AddSensorPanel extends jmri.util.swing.JmriPanel {
      */
     JTextField sysName = new JTextField(5);
     JTextField userName = new JTextField(5);
-    JLabel sysNameLabel = new JLabel(rb.getString("LabelSystemName"));
-    JLabel userNameLabel = new JLabel(rb.getString("LabelUserName"));
+    JLabel sysNameLabel = new JLabel(Bundle.getMessage("LabelSystemName"));
+    JLabel userNameLabel = new JLabel(Bundle.getMessage("LabelUserName"));
 
     protected SensorManager senManager = jmri.InstanceManager.sensorManagerInstance();
 
@@ -231,13 +230,12 @@ public class AddSensorPanel extends jmri.util.swing.JmriPanel {
     void handleCreateException(String sysName) {
         javax.swing.JOptionPane.showMessageDialog(AddSensorPanel.this,
                 java.text.MessageFormat.format(
-                        rb.getString("ErrorSensorAddFailed"),
+                        Bundle.getMessage("ErrorSensorAddFailed"),
                         new Object[]{sysName}),
-                rb.getString("ErrorTitle"),
+                Bundle.getMessage("ErrorTitle"),
                 javax.swing.JOptionPane.ERROR_MESSAGE);
     }
 
-    static final ResourceBundle rb = ResourceBundle.getBundle("jmri.jmrit.beantable.BeanTableBundle");
     static final Logger log = LoggerFactory.getLogger(AddSensorPanel.class.getName());
 }
 

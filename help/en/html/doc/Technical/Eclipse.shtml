@@ -65,7 +65,7 @@
 	</ol>
 
 	<a href="images/EclipseSourceGitRepository.png">
-	<img src="images/EclipseSourceGitRepository.png" width="350" height="312" alt="Eclipse Git pane"></a>>
+	<img src="images/EclipseSourceGitRepository.png" width="350" height="312" alt="Eclipse Git pane"></a>
 
 	<ol>
 
@@ -78,7 +78,7 @@
 	</ol>
 
 	<a href="images/EclipseGitBranchSelection.png">
-	<img src="images/EclipseGitBranchSelection.png" width="350" height="312" alt="Eclipse Branch pane"></a>>
+	<img src="images/EclipseGitBranchSelection.png" width="350" height="312" alt="Eclipse Branch pane"></a>
 
 	<ol>
 
@@ -94,7 +94,7 @@
 	<p>After the download is complete the Eclipse Package Explorer
 		should look like this:</p>
 	<a href="images/EclipsePackageExplorer.png">
-	<img src="images/EclipsePackageExplorer.png" width="350" height="312" alt="Eclipse Package Explorer pane"></a>>
+	<img src="images/EclipsePackageExplorer.png" width="350" height="312" alt="Eclipse Package Explorer pane"></a>
 	<p>After the download is complete, Eclipse will be reporting an
 		error: Project 'jmri' is missing required source folder: 'java/tmp'.
 		This will be fixed by running the ant build as described below.
@@ -169,7 +169,7 @@
 			(lower case important) for "Project:" and
 			"apps.DecoderPro.DecoderPro" for "Main class:".</li>
 
-		<li>Select the "Arguments" tab, and under VM argments enter (You
+		<li>Select the "Arguments" tab, and under VM arguments enter (You
 			should probably cut and paste): <br> <pre>
 -Xms10m
 -Xmx300m
@@ -231,7 +231,7 @@
 	changes to a repository belonging to you on GitHub, and then finally
 	making a request for somebody to "pull" your changes into the main JMRI
 	repository. See
-	<a href="GitFAQ.shtml">JMRI: Git FAQ</a> "Setting up a GIT environment
+	<a href="GitFAQ.shtml">JMRI: Git FAQ</a> "Setting up a Git environment
 	for JMRI Developers" for more information.
 
 	<p>It is also good practice to "pull" all of the recent changes
@@ -270,15 +270,15 @@
 				window, click on the "Push URIs" and then the "Add" button. In the
 				"New URI" window enter the URL of your
 				GitHub repository along with your username and password. After
-				pressing finish the "Configure Push" window should look like the
+				pressing "Finish" the "Configure Push" window should look like the
 				image below:</p>
 				<a href="images/EclipseConfigurePush.png">
 				<img src="images/EclipseConfigurePush.png" width="350" height="322" alt="Eclipse Error pane"></a>
 			<p>Press either the "Save and Push" or the "Save" button. Later
 				when you want to push new changes to your repository on GitHub, you
-				can simply committed them as described above, and then use the
+				can simply commit them as described above, and then use the
 				"Push" icon in the Synchronize window.</p>
-		<li>Finally, request a "pull" to the main JMRI code repository on
+		<li>Finally, submit a "Pull Request" to the main JMRI code repository on
 			the GitHub website.
 			<p>
 				To do this, start by signing on to the <a href="http://github.com">GitHub

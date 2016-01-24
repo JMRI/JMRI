@@ -67,8 +67,7 @@ public class LRouteTableAction extends AbstractTableAction {
      *
      */
     private static final long serialVersionUID = 9004336444814249851L;
-    static final ResourceBundle rbx = ResourceBundle
-            .getBundle("jmri.jmrit.beantable.LRouteTableBundle");
+    static final ResourceBundle rbx = ResourceBundle.getBundle("jmri.jmrit.beantable.LRouteTableBundle");
 
     /**
      * Create an action with a specific title.
@@ -110,7 +109,7 @@ public class LRouteTableAction extends AbstractTableAction {
         // overlay the state column with the edit column
         static public final int ENABLECOL = VALUECOL;
         static public final int EDITCOL = DELETECOL;
-        protected String enabledString = rb.getString("ColumnHeadEnabled");
+        protected String enabledString = Bundle.getMessage("ColumnHeadEnabled");
 
         /**
          * Overide to filter out the LRoutes from the rest of Logix
@@ -1872,9 +1871,9 @@ public class LRouteTableAction extends AbstractTableAction {
     void handleCreateException(String sysName) {
         javax.swing.JOptionPane.showMessageDialog(_addFrame,
                 java.text.MessageFormat.format(
-                        rb.getString("ErrorLRouteAddFailed"),
+                        Bundle.getMessage("ErrorLRouteAddFailed"),
                         new Object[]{sysName}),
-                rb.getString("ErrorTitle"),
+                Bundle.getMessage("ErrorTitle"),
                 javax.swing.JOptionPane.ERROR_MESSAGE);
     }
 
@@ -2930,7 +2929,7 @@ public class LRouteTableAction extends AbstractTableAction {
     }
 
     public void setMessagePreferencesDetails() {
-        jmri.InstanceManager.getDefault(jmri.UserPreferencesManager.class).preferenceItemDetails(getClassName(), "remindSaveRoute", rb.getString("HideSaveReminder"));
+        jmri.InstanceManager.getDefault(jmri.UserPreferencesManager.class).preferenceItemDetails(getClassName(), "remindSaveRoute", Bundle.getMessage("HideSaveReminder"));
         super.setMessagePreferencesDetails();
     }
 

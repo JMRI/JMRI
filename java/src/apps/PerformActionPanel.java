@@ -14,7 +14,9 @@ import jmri.InstanceManager;
  * @author	Bob Jacobsen Copyright 2003
  * @version $Revision$
  * @see apps.PerformActionModel
+ * @deprecated Replaced by {@link apps.startup.PerformActionModelFactory}
  */
+@Deprecated
 public class PerformActionPanel extends AbstractActionPanel {
 
     /**

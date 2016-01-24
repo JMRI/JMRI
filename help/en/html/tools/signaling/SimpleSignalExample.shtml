@@ -66,7 +66,7 @@ Since the Simple Signal Logic isn't sure yet whether Blocks are occupied nor how
 are set, it shows a "Red" Appearance on all Signal Heads.
 <p>
 You can click on your Panel icons to change the occupancy and
-turnout status, or use another tool (e.g. the Turnouts Table) to do that.
+turnout status, or use another tool (e.g. the Turnout Table) to do that.
 <p>Click on each of the Turnout icons to set them "Closed". Click on the 
 Sensor icons to set them "Unoccupied", which is shown as a 
 grey circle ("Occupied" would be indicated by a yellow circle).</li>
@@ -81,7 +81,7 @@ about the item. For example, a Turnout might pop up "Turnout 1 (LT1)".
 LT1 is the "System Name" for that Turnout. In this case, it
 means "LocoNet Turnout with address 1". "Turnout 1" is the "User Name", 
 which can be anything you want it to be as long as it is unique on your Panel.  You can edit these from the
-"Turnouts Table" accessed from the Tools > Tables > Turnouts menu.<br>
+"Turnout Table" accessed from the Tools > Tables > Turnouts menu.<br>
 Signal Heads and Sensors
 are identified using similar names (see the
 <a href="../../doc/Technical/Names.shtml">JMRI help page on System Names and Naming</a>).</li>
@@ -165,7 +165,7 @@ PanelPro, please see the
       throttle or the "Power Control..." pane from the Tools menu.
       PanelPro will capture all sensor addresses from 
       the resulting LocoNet traffic.
-   <li>For layouts with a different System Connection, use the "Add..." button at the bottom of the Sensors Table to create the needed sensors.  
+   <li>For layouts with a different System Connection, use the "Add..." button at the bottom of the Sensor Table to create the needed sensors.  
    </ul>
 
 <li>Save your work by selecting "Save Panels..." from the "Panels" menu,
@@ -178,7 +178,7 @@ typing a filename, and hitting "Save Panels". (You might want to do this often!)
       throw or close each Turnout from a throttle.
       PanelPro will capture the Turnout addresses from 
       the resulting LocoNet traffic.
-   <li>You can also use the "Add..." button on the Turnouts Table to open a 
+   <li>You can also use the "Add..." button on the Turnout Table to open a 
       pane to enter new Turnouts.
    <li>The "Turnout Control..." pane in the Tools menu also creates a new
       Turnout entry for every turnout address you operate.
@@ -201,7 +201,7 @@ tell the program about those Turnout addresses too (SE8c users skip this step).
       <dd>A Signal Head Connection Type with red/yellow/green lights that
       are driven by three separate outputs.  
       The outputs are driven by JMRI turnout logic, and 
-      appear in the Turnouts Table.
+      appear in the Turnout Table.
       <br>To configure one of these,
       enter the name you want to give it (typically something like "IH2"), and
       the address numbers of the three outputs that drive the lamps (like "258" etc.).
@@ -211,7 +211,7 @@ tell the program about those Turnout addresses too (SE8c users skip this step).
       The two outputs drive red and green lights separately; PanelPro
       will turn them both On to make yellow.
       The outputs are driven by JMRI turnout logic, and 
-      appear in the Turnouts Table.
+      appear in the Turnout Table.
       <br>
       To configure one of these,
       enter the name you want to give it (typically something like "IH2"), and
@@ -288,7 +288,7 @@ Although it's a lot less fun than actually running the layout,
 you can also test your Simple Signal Logic by changing Turnout
 and Sensor states on the computer itself.  Just click on the status
 information in one of the Tables to change it. For example, if Turnout
-"LT23" is showing "Thrown" in the Turnouts Table, click on that word to change it to "Closed". The
+"LT23" is showing "Thrown" in the Turnout Table, click on that word to change it to "Closed". The
 signal icon will update to the new Appearance.
 <p>
 You can create a small Control Panel to do this graphically. For more

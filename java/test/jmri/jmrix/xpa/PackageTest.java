@@ -30,6 +30,8 @@ public class PackageTest extends TestCase {
     public static Test suite() {
         TestSuite suite = new TestSuite("jmri.jmrix.xpa.XpaTest");  // no tests in this class itself
         suite.addTest(new TestSuite(XpaMessageTest.class));
+        suite.addTest(new TestSuite(XpaTrafficControllerTest.class));
+        suite.addTest(new TestSuite(XpaSystemConnectionMemoTest.class));
         suite.addTest(new TestSuite(XpaTurnoutTest.class));
         suite.addTest(new TestSuite(XpaThrottleTest.class));
         //suite.addTest(new TestSuite(XpaPacketizerTest.class));

@@ -70,7 +70,7 @@ is the system name for esU ECoS, "T" means turnout, and
 
 <h3>ECoS initialisation</h3>
 When JMRI first starts up, it reads the Turnout, Sensor and Locomotive information from the ECoS, which might take a couple of seconds. Turnouts and 
-Sensors are both automatically added to the JMRI Sensors Table. This is necessary so that a link can be made between the Sensors and Turnouts configured in the Ecos and the accessory address that JMRI uses.<br>
+Sensors are both automatically added to the JMRI Sensor Table. This is necessary so that a link can be made between the Sensors and Turnouts configured in the Ecos and the accessory address that JMRI uses.<br>
 While gathering the Locomotive information from the Ecos, JMRI will check to see if there is already a Roster entry associated with each Loco. If the check fails, the system will ask if you wish to add/import the Loco to the Roster.
 <p>
 

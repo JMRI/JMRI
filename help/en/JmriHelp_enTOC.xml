@@ -171,9 +171,9 @@
 
     <tocitem text="Dispatcher Window " target="package.jmri.jmrit.dispatcher.Dispatcher_window"/>
 
-    <tocitem text="Active Trains Table " target="package.jmri.jmrit.dispatcher.Dispatcher_atrains"/>
+    <tocitem text="Active Train Table " target="package.jmri.jmrit.dispatcher.Dispatcher_atrains"/>
 
-    <tocitem text="Allocation Requests Table " target="package.jmri.jmrit.dispatcher.Dispatcher_arequests"/>
+    <tocitem text="Allocation Request Table " target="package.jmri.jmrit.dispatcher.Dispatcher_arequests"/>
 
    </tocitem>
    <tocitem text="Options Menu " target="package.jmri.jmrit.dispatcher.Options"/>
@@ -237,36 +237,36 @@
 
  </tocitem>
  <tocitem text="Tables ">
-  <tocitem text="Turnouts Table " target="package.jmri.jmrit.beantable.TurnoutTable"/>
+  <tocitem text="Turnout Table " target="package.jmri.jmrit.beantable.TurnoutTable"/>
 
-  <tocitem text="Lights Table " target="package.jmri.jmrit.beantable.LightTable"/>
+  <tocitem text="Light Table " target="package.jmri.jmrit.beantable.LightTable"/>
 
-  <tocitem text="Sensors Table " target="package.jmri.jmrit.beantable.SensorTable"/>
+  <tocitem text="Sensor Table " target="package.jmri.jmrit.beantable.SensorTable"/>
 
-  <tocitem text="Signal Heads Table " target="package.jmri.jmrit.beantable.SignalHeadTable"/>
+  <tocitem text="Signal Head Table " target="package.jmri.jmrit.beantable.SignalHeadTable"/>
 
-  <tocitem text="Signal Masts Table " target="package.jmri.jmrit.beantable.SignalMastTable"/>
+  <tocitem text="Signal Mast Table " target="package.jmri.jmrit.beantable.SignalMastTable"/>
 
-  <tocitem text="Blocks Table " target="package.jmri.jmrit.beantable.BlockTable"/>
+  <tocitem text="Block Table " target="package.jmri.jmrit.beantable.BlockTable"/>
 
   <tocitem text="O(ccupancy)Block Table " target="package.jmri.jmrit.logix.OBlockTable"/>
 
-  <tocitem text="Routes Table " target="package.jmri.jmrit.beantable.RouteTable"/>
+  <tocitem text="Route Table " target="package.jmri.jmrit.beantable.RouteTable"/>
 
-  <tocitem text="LRoutes Table " target="package.jmri.jmrit.beantable.LRouteTable"/>
+  <tocitem text="LRoute Table " target="package.jmri.jmrit.beantable.LRouteTable"/>
 
   <tocitem text="Logix Table " target="package.jmri.jmrit.beantable.LogixTable"/>
 
-  <tocitem text="Memory Variables Table " target="package.jmri.jmrit.beantable.MemoryTable"/>
+  <tocitem text="Memory Variable Table " target="package.jmri.jmrit.beantable.MemoryTable"/>
 
-  <tocitem text="Reporters Table " target="package.jmri.jmrit.beantable.ReporterTable"/>
+  <tocitem text="Reporter Table " target="package.jmri.jmrit.beantable.ReporterTable"/>
 
  </tocitem>
  <tocitem text="Tools " target="html.tools.index">
   <tocitem text="Audio " target="html.tools.Audio"/>
 
   <tocitem text="Blocks " target="html.tools.Blocks">
-   <tocitem text="Blocks Table " target="package.jmri.jmrit.beantable.BlockTable"/>
+   <tocitem text="Block Table " target="package.jmri.jmrit.beantable.BlockTable"/>
 
    <tocitem text="Add/Edit Blocks " target="html.tools.Blocks_addBlock"/>
 
@@ -282,7 +282,7 @@
 
   </tocitem>
   <tocitem text="Lights " target="html.tools.Lights">
-   <tocitem text="Lights Table " target="package.jmri.jmrit.beantable.LightTable"/>
+   <tocitem text="Light Table " target="package.jmri.jmrit.beantable.LightTable"/>
 
    <tocitem text="Add/Edit Light " target="package.jmri.jmrit.beantable.LightAddEdit"/>
 
@@ -300,13 +300,13 @@
 
   </tocitem>
   <tocitem text="LRoutes " target="html.tools.LRoutes">
-   <tocitem text="LRoutes Table " target="package.jmri.jmrit.beantable.LRouteTable"/>
+   <tocitem text="LRoute Table " target="package.jmri.jmrit.beantable.LRouteTable"/>
 
    <tocitem text="Add/Edit LRoutes " target="package.jmri.jmrit.beantable.LRouteAddEdit"/>
 
   </tocitem>
   <tocitem text="Memory Variables " target="html.tools.Memories">
-   <tocitem text="Memory Variables Table " target="package.jmri.jmrit.beantable.MemoryTable"/>
+   <tocitem text="Memory Variable Table " target="package.jmri.jmrit.beantable.MemoryTable"/>
 
    <tocitem text="Add/Edit Memory Variables " target="package.jmri.jmrit.beantable.MemoryAddEdit"/>
 
@@ -320,13 +320,13 @@
 
   </tocitem>
   <tocitem text="Reporters " target="html.tools.Reporters">
-   <tocitem text="Reporters Table " target="package.jmri.jmrit.beantable.ReporterTable"/>
+   <tocitem text="Reporter Table " target="package.jmri.jmrit.beantable.ReporterTable"/>
 
    <tocitem text="Add/Edit Reporters " target="package.jmri.jmrit.beantable.ReporterAddEdit"/>
 
   </tocitem>
   <tocitem text="Routes " target="html.tools.Routes">
-   <tocitem text="Routes Table " target="package.jmri.jmrit.beantable.RouteTable"/>
+   <tocitem text="Route Table " target="package.jmri.jmrit.beantable.RouteTable"/>
 
    <tocitem text="Add/Edit Routes " target="package.jmri.jmrit.beantable.RouteAddEdit"/>
 
@@ -344,7 +344,7 @@
 
   </tocitem>
   <tocitem text="Sections ">
-   <tocitem text="Sections Table " target="package.jmri.jmrit.beantable.SectionTable"/>
+   <tocitem text="Section Table " target="package.jmri.jmrit.beantable.SectionTable"/>
 
    <tocitem text="Add/Edit Sections " target="package.jmri.jmrit.beantable.SectionAddEdit"/>
 
@@ -352,7 +352,7 @@
   <tocitem text="Send DCC Packet Tool " target="package.jmri.jmrit.sendpacket.SendPacketFrame"/>
 
   <tocitem text="Sensors " target="html.tools.Sensors">
-   <tocitem text="Sensors Table " target="package.jmri.jmrit.beantable.SensorTable"/>
+   <tocitem text="Sensor Table " target="package.jmri.jmrit.beantable.SensorTable"/>
 
    <tocitem text="Add/Edit Sensors " target="package.jmri.jmrit.beantable.SensorAddEdit"/>
 
@@ -361,7 +361,7 @@
   </tocitem>
   <tocitem text="Signaling " target="html.tools.signaling.index">
    <tocitem text="Signal Heads " target="html.tools.signaling.SignalHeads">
-    <tocitem text="Signal Heads Table " target="package.jmri.jmrit.beantable.SignalHeadTable"/>
+    <tocitem text="Signal Head Table " target="package.jmri.jmrit.beantable.SignalHeadTable"/>
 
     <tocitem text="Add/Edit Signal Heads " target="package.jmri.jmrit.beantable.SignalAddEdit"/>
 
@@ -371,7 +371,7 @@
    <tocitem text="Signal Aspects " target="html.tools.signaling.AspectSignaling"/>
 
    <tocitem text="Signal Masts " target="html.tools.signaling.SignalMasts">
-    <tocitem text="Signal Masts Table " target="package.jmri.jmrit.beantable.SignalMastTable"/>
+    <tocitem text="Signal Mast Table " target="package.jmri.jmrit.beantable.SignalMastTable"/>
 
     <tocitem text="Add/Edit Signal Masts " target="package.jmri.jmrit.beantable.SignalMastAddEdit"/>
 
@@ -396,13 +396,13 @@
   <tocitem text="Tracker (Blocks) " target="html.tools.tracker.index"/>
 
   <tocitem text="Transits ">
-   <tocitem text="Transits Table " target="package.jmri.jmrit.beantable.TransitTable"/>
+   <tocitem text="Transit Table " target="package.jmri.jmrit.beantable.TransitTable"/>
 
    <tocitem text="Add/Edit Transits " target="package.jmri.jmrit.beantable.TransitAddEdit"/>
 
   </tocitem>
   <tocitem text="Turnouts " target="html.tools.Turnouts">
-   <tocitem text="Turnouts Table " target="package.jmri.jmrit.beantable.TurnoutTable"/>
+   <tocitem text="Turnout Table " target="package.jmri.jmrit.beantable.TurnoutTable"/>
 
    <tocitem text="Add/Edit Turnouts " target="package.jmri.jmrit.beantable.TurnoutAddEdit"/>
 

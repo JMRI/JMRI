@@ -65,7 +65,6 @@ public class PerformFileModelXml extends jmri.configurexml.AbstractXmlAdapter {
         PerformFileModel m = new PerformFileModel();
         m.setFileName(fileName);
         InstanceManager.getDefault(StartupActionsManager.class).addAction(m);
-        InstanceManager.configureManagerInstance().registerPref(new apps.PerformFilePanel());
         return result;
     }
 

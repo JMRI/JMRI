@@ -81,10 +81,10 @@ public class BlockTableAction extends AbstractTableAction {
         this("Block Table");
     }
 
-    private String noneText = rb.getString("BlockNone");
-    private String gradualText = rb.getString("BlockGradual");
-    private String tightText = rb.getString("BlockTight");
-    private String severeText = rb.getString("BlockSevere");
+    private String noneText = Bundle.getMessage("BlockNone");
+    private String gradualText = Bundle.getMessage("BlockGradual");
+    private String tightText = Bundle.getMessage("BlockTight");
+    private String severeText = Bundle.getMessage("BlockSevere");
     private String[] curveOptions = {noneText, gradualText, tightText, severeText};
     private java.util.Vector<String> speedList = new java.util.Vector<String>();
     private String[] sensorList;
@@ -204,13 +204,13 @@ public class BlockTableAction extends AbstractTableAction {
                 } else if (col == STATECOL) {
                     switch (b.getState()) {
                         case (Block.OCCUPIED):
-                            return rb.getString("BlockOccupied");
+                            return Bundle.getMessage("BlockOccupied");
                         case (Block.UNOCCUPIED):
-                            return rb.getString("BlockUnOccupied");
+                            return Bundle.getMessage("BlockUnOccupied");
                         case (Block.UNKNOWN):
-                            return rb.getString("BlockUnknown");
+                            return Bundle.getMessage("BlockUnknown");
                         default:
-                            return rb.getString("BlockInconsistent");
+                            return Bundle.getMessage("BlockInconsistent");
                     }
                 } else if (col == SENSORCOL) {
                     Sensor sensor = b.getSensor();
@@ -227,7 +227,7 @@ public class BlockTableAction extends AbstractTableAction {
                 } else if (col == CURRENTREPCOL) {
                     return Boolean.valueOf(b.isReportingCurrent());
                 } else if (col == EDITCOL) {  //
-                    return AbstractTableAction.rb.getString("ButtonEdit");
+                    return Bundle.getMessage("ButtonEdit");
                 } else {
                     return super.getValueAt(row, col);
                 }
@@ -327,28 +327,28 @@ public class BlockTableAction extends AbstractTableAction {
                     return "Value";
                 }
                 if (col == CURVECOL) {
-                    return rb.getString("BlockCurveColName");
+                    return Bundle.getMessage("BlockCurveColName");
                 }
                 if (col == LENGTHCOL) {
-                    return rb.getString("BlockLengthColName");
+                    return Bundle.getMessage("BlockLengthColName");
                 }
                 if (col == PERMISCOL) {
-                    return rb.getString("BlockPermColName");
+                    return Bundle.getMessage("BlockPermColName");
                 }
                 if (col == SPEEDCOL) {
-                    return rb.getString("BlockSpeedColName");
+                    return Bundle.getMessage("BlockSpeedColName");
                 }
                 if (col == STATECOL) {
-                    return rb.getString("BlockState");
+                    return Bundle.getMessage("BlockState");
                 }
                 if (col == REPORTERCOL) {
-                    return rb.getString("BlockReporter");
+                    return Bundle.getMessage("BlockReporter");
                 }
                 if (col == SENSORCOL) {
-                    return rb.getString("BlockSensor");
+                    return Bundle.getMessage("BlockSensor");
                 }
                 if (col == CURRENTREPCOL) {
-                    return rb.getString("BlockReporterCurrent");
+                    return Bundle.getMessage("BlockReporterCurrent");
                 }
                 if (col == EDITCOL) {
                     return Bundle.getMessage("ButtonEdit");
@@ -489,7 +489,7 @@ public class BlockTableAction extends AbstractTableAction {
             }
 
             protected String getBeanType() {
-                return AbstractTableAction.rbean.getString("BeanNameBlock");
+                return Bundle.getMessage("BeanNameBlock");
             }
 
             synchronized public void dispose() {
@@ -532,11 +532,11 @@ public class BlockTableAction extends AbstractTableAction {
     }
 
     protected void setTitle() {
-        f.setTitle(f.rb.getString("TitleBlockTable"));
+        f.setTitle(Bundle.getMessage("TitleBlockTable"));
     }
 
-    JCheckBox inchBox = new JCheckBox(rb.getString("LengthInches"));
-    JCheckBox centimeterBox = new JCheckBox(rb.getString("LengthCentimeters"));
+    JCheckBox inchBox = new JCheckBox(Bundle.getMessage("LengthInches"));
+    JCheckBox centimeterBox = new JCheckBox(Bundle.getMessage("LengthCentimeters"));
 
     /**
      * Add the checkboxes
@@ -544,14 +544,14 @@ public class BlockTableAction extends AbstractTableAction {
     public void addToFrame(BeanTableFrame f) {
         //final BeanTableFrame finalF = f;	// needed for anonymous ActionListener class
         f.addToBottomBox(inchBox, this.getClass().getName());
-        inchBox.setToolTipText(rb.getString("InchBoxToolTip"));
+        inchBox.setToolTipText(Bundle.getMessage("InchBoxToolTip"));
         inchBox.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
                 inchBoxChanged();
             }
         });
         f.addToBottomBox(centimeterBox, this.getClass().getName());
-        centimeterBox.setToolTipText(rb.getString("CentimeterBoxToolTip"));
+        centimeterBox.setToolTipText(Bundle.getMessage("CentimeterBoxToolTip"));
         centimeterBox.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
                 centimeterBoxChanged();
@@ -631,23 +631,23 @@ public class BlockTableAction extends AbstractTableAction {
     JmriJFrame addFrame = null;
     JTextField sysName = new JTextField(5);
     JTextField userName = new JTextField(5);
-    JLabel sysNameLabel = new JLabel(rb.getString("LabelSystemName"));
-    JLabel userNameLabel = new JLabel(rb.getString("LabelUserName"));
+    JLabel sysNameLabel = new JLabel(Bundle.getMessage("LabelSystemName"));
+    JLabel userNameLabel = new JLabel(Bundle.getMessage("LabelUserName"));
 
     JComboBox<String> cur = new JComboBox<String>(curveOptions);
     JTextField lengthField = new JTextField(7);
     JTextField blockSpeed = new JTextField(7);
-    JCheckBox checkPerm = new JCheckBox(rb.getString("BlockPermColName"));
+    JCheckBox checkPerm = new JCheckBox(Bundle.getMessage("BlockPermColName"));
 
     JTextField numberToAdd = new JTextField(10);
-    JCheckBox range = new JCheckBox(rb.getString("LabelNumberToAdd"));
-    JCheckBox _autoSystemName = new JCheckBox(rb.getString("LabelAutoSysName"));
+    JCheckBox range = new JCheckBox(Bundle.getMessage("LabelNumberToAdd"));
+    JCheckBox _autoSystemName = new JCheckBox(Bundle.getMessage("LabelAutoSysName"));
     jmri.UserPreferencesManager pref;
 
     protected void addPressed(ActionEvent e) {
         pref = jmri.InstanceManager.getDefault(jmri.UserPreferencesManager.class);
         if (addFrame == null) {
-            addFrame = new JmriJFrame(rb.getString("TitleAddBlock"), false, true);
+            addFrame = new JmriJFrame(Bundle.getMessage("TitleAddBlock"), false, true);
             addFrame.addHelpMenu("package.jmri.jmrit.beantable.BlockAddEdit", true); //IN18N
             addFrame.getContentPane().setLayout(new BoxLayout(addFrame.getContentPane(), BoxLayout.Y_AXIS));
             ActionListener listener = new ActionListener() {
@@ -671,10 +671,10 @@ public class BlockTableAction extends AbstractTableAction {
         GridLayout additionLayout = new GridLayout(0, 2);
         JPanel mainPanel = new JPanel();
         mainPanel.setLayout(additionLayout);
-        mainPanel.add(new JLabel(rb.getString("BlockLengthColName")));
+        mainPanel.add(new JLabel(Bundle.getMessage("BlockLengthColName")));
         mainPanel.add(lengthField);
 
-        mainPanel.add(new JLabel(rb.getString("BlockCurveColName")));
+        mainPanel.add(new JLabel(Bundle.getMessage("BlockCurveColName")));
         mainPanel.add(cur);
 
         mainPanel.add(new JLabel("  "));
@@ -697,9 +697,8 @@ public class BlockTableAction extends AbstractTableAction {
             public void keyReleased(KeyEvent keyEvent) {
                 String text = lengthField.getText();
                 if (!validateNumericalInput(text)) {
-                    String msg = java.text.MessageFormat.format(rb
-                            .getString("ShouldBeNumber"), new Object[]{rb.getString("BlockLengthColName")});
-                    jmri.InstanceManager.getDefault(jmri.UserPreferencesManager.class).showWarningMessage(rb.getString("ErrorTitle"), msg, getClassName(), "length", false, false);
+                    String msg = Bundle.getMessage("ShouldBeNumber", new Object[]{Bundle.getMessage("BlockLengthColName")});
+                    jmri.InstanceManager.getDefault(jmri.UserPreferencesManager.class).showWarningMessage(Bundle.getMessage("ErrorTitle"), msg, getClassName(), "length", false, false);
                 }
             }
 
@@ -730,18 +729,16 @@ public class BlockTableAction extends AbstractTableAction {
                 intNumberToAdd = Integer.parseInt(numberToAdd.getText());
             } catch (NumberFormatException ex) {
                 log.error("Unable to convert " + numberToAdd.getText() + " to a number");
-                String msg = java.text.MessageFormat.format(rb
-                        .getString("ShouldBeNumber"), new Object[]{rb.getString("LabelNumberToAdd")});
+                String msg = Bundle.getMessage("ShouldBeNumber", new Object[]{Bundle.getMessage("LabelNumberToAdd")});
                 jmri.InstanceManager.getDefault(jmri.UserPreferencesManager.class).
-                        showErrorMessage(rb.getString("ErrorTitle"), msg, "" + ex, "", true, false);
+                        showErrorMessage(Bundle.getMessage("ErrorTitle"), msg, "" + ex, "", true, false);
                 return;
             }
         }
         if (intNumberToAdd >= 65) {
-            String msg = java.text.MessageFormat.format(rb
-                    .getString("WarnExcessBeans"), new Object[]{intNumberToAdd, AbstractTableAction.rbean.getString("BeanNameBlock")});
+            String msg = Bundle.getMessage("WarnExcessBeans", new Object[]{intNumberToAdd, Bundle.getMessage("BeanNameBlock")});
             if (JOptionPane.showConfirmDialog(addFrame,
-                    msg, rb.getString("WarningTitle"),
+                    msg, Bundle.getMessage("WarningTitle"),
                     JOptionPane.YES_NO_OPTION) == 1) {
                 return;
             }
@@ -813,9 +810,9 @@ public class BlockTableAction extends AbstractTableAction {
     void handleCreateException(String sysName) {
         javax.swing.JOptionPane.showMessageDialog(addFrame,
                 java.text.MessageFormat.format(
-                        rb.getString("ErrorBlockAddFailed"),
+                        Bundle.getMessage("ErrorBlockAddFailed"),
                         new Object[]{sysName}),
-                rb.getString("ErrorTitle"),
+                Bundle.getMessage("ErrorTitle"),
                 javax.swing.JOptionPane.ERROR_MESSAGE);
     }
     //private boolean noWarn = false;
@@ -826,7 +823,7 @@ public class BlockTableAction extends AbstractTableAction {
         Object[] options = {"Remove",
             "Keep"};
 
-        int retval = JOptionPane.showOptionDialog(f, rb.getString("BlockPathMessage"), rb.getString("BlockPathSaveTitle"),
+        int retval = JOptionPane.showOptionDialog(f, Bundle.getMessage("BlockPathMessage"), Bundle.getMessage("BlockPathSaveTitle"),
                 JOptionPane.YES_NO_OPTION,
                 JOptionPane.QUESTION_MESSAGE, null, options, options[1]);
         if (retval != 0) {
@@ -845,7 +842,7 @@ public class BlockTableAction extends AbstractTableAction {
     }
 
     public String getClassDescription() {
-        return rb.getString("TitleBlockTable");
+        return Bundle.getMessage("TitleBlockTable");
     }
 
     protected String getClassName() {

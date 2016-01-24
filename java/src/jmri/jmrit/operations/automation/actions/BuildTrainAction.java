@@ -23,8 +23,8 @@ public class BuildTrainAction extends Action {
             if (train == null || train.isBuilt()) {
                 finishAction(false); // failed to build train
             } else {
-                train.build();
-                finishAction(true); // okay
+                setRunning(true);
+                finishAction(train.build());
             }
         }
     }

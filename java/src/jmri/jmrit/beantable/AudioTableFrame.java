@@ -26,7 +26,6 @@ import javax.swing.JMenuBar;
  */
 public class AudioTableFrame extends BeanTableFrame {
 
-    //static final ResourceBundle rba = ResourceBundle.getBundle("jmri.jmrit.audio.swing.AudioTableBundle");
     /**
      *
      */

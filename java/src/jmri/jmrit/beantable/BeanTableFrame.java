@@ -45,7 +45,6 @@ public class BeanTableFrame extends jmri.util.JmriJFrame {
     int bottomBoxIndex;	// index to insert extra stuff
     static final int bottomStrutWidth = 20;
 
-    ResourceBundle rb = ResourceBundle.getBundle("jmri.jmrit.beantable.BeanTableBundle");
     ResourceBundle rbapps = ResourceBundle.getBundle("apps.AppsBundle");
 
     public BeanTableFrame() {
