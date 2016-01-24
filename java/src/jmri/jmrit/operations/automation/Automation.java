@@ -188,10 +188,26 @@ public class Automation implements java.beans.PropertyChangeListener {
         }
     }
 
+//    private void resetAutomationItems() {
+//        for (AutomationItem item : getItemsBySequenceList()) {
+//            item.setActionRan(false);
+//            item.setActionSuccessful(false);
+//        }
+//    }
+    
     private void resetAutomationItems() {
-        for (AutomationItem item : getItemsBySequenceList()) {
-            item.setActionRan(false);
-            item.setActionSuccessful(false);
+        resetAutomationItems(getCurrentAutomationItem());
+    }
+    
+    private void resetAutomationItems(AutomationItem item) {
+        boolean found = false;
+        for (AutomationItem automationItem : getItemsBySequenceList()) {
+            if (!found && automationItem != item) {
+                continue;
+            }
+            found = true;
+            automationItem.setActionRan(false);
+            automationItem.setActionSuccessful(false);
         }
     }
 
@@ -200,8 +216,8 @@ public class Automation implements java.beans.PropertyChangeListener {
         if (getSize() > 0) {
             // goto?
             if (_gotoAutomationItem != null) {
-                resetAutomationItems();
                 setCurrentAutomationItem(_gotoAutomationItem);
+                resetAutomationItems(_gotoAutomationItem);
                 _gotoAutomationItem = null;
                 return; // done with goto
             }
