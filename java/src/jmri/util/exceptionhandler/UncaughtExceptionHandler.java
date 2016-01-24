@@ -4,6 +4,8 @@ package jmri.util.exceptionhandler;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+import java.io.*;
+
 /**
  * Class to log exceptions that rise to the top of threads, including to the top
  * of the AWT event processing loop.
@@ -25,7 +27,15 @@ public class UncaughtExceptionHandler implements Thread.UncaughtExceptionHandler
             return;
         }
 
-        log.error("Unhandled Exception: " + e, e);
+        log.error("Uncaught Exception: {}", generateStackTrace(e));
+    }
+
+    private String generateStackTrace(Throwable e) {
+        StringWriter writer = new StringWriter();
+        PrintWriter pw = new PrintWriter(writer);
+        e.printStackTrace(pw);
+        pw.close();
+        return writer.toString();
     }
 
     static Logger log = LoggerFactory.getLogger(UncaughtExceptionHandler.class.getName());
