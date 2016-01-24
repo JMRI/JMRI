@@ -43,30 +43,46 @@ public class RunSwitchListAction extends Action {
                 finishAction(false);
                 return;
             }
-            TrainSwitchLists trainSwitchLists = new TrainSwitchLists();
-            TrainCsvSwitchLists trainCsvSwitchLists = new TrainCsvSwitchLists();
-            for (Location location : LocationManager.instance().getLocationsByNameList()) {
-                if (location.isSwitchListEnabled()
-                        && (!isChanged || isChanged && location.getStatus().equals(Location.MODIFIED))) {
-                    // also build the regular switch lists so they can be used
-                    if (!Setup.isSwitchListRealTime()) {
-                        trainSwitchLists.buildSwitchList(location);
+//            Thread excel = new Thread(new Runnable() {
+//                public void run() {
+                    setRunning(true);
+                    TrainSwitchLists trainSwitchLists = new TrainSwitchLists();
+                    TrainCsvSwitchLists trainCsvSwitchLists = new TrainCsvSwitchLists();
+                    for (Location location : LocationManager.instance().getLocationsByNameList()) {
+                        if (location.isSwitchListEnabled()
+                                && (!isChanged || isChanged && location.getStatus().equals(Location.MODIFIED))) {
+                            // also build the regular switch lists so they can be used
+                            if (!Setup.isSwitchListRealTime()) {
+                                trainSwitchLists.buildSwitchList(location);
+                            }
+                            File csvFile = trainCsvSwitchLists.buildSwitchList(location);
+                            if (csvFile == null || !csvFile.exists()) {
+                                log.error("CSV switch list file was not created for location {}", location.getName());
+                                finishAction(false);
+                                return;
+                            }
+                            TrainCustomSwitchList.addCVSFile(csvFile);
+                        }
                     }
-                    File csvFile = trainCsvSwitchLists.buildSwitchList(location);
-                    if (csvFile == null || !csvFile.exists()) {
-                        log.error("CSV switch list file was not created for location {}", location.getName());
-                        finishAction(false);
-                        return;
+                    // Processes the CSV Manifest files using an external custom program.
+                    int fileCount = TrainCustomSwitchList.getFileCount();
+                    boolean status = TrainCustomSwitchList.process();
+                    if (status) {
+                        try {
+                            TrainCustomSwitchList.waitForProcessToComplete(60 * fileCount); // wait up to 60 seconds per file
+                        } catch (InterruptedException e) {
+                            // TODO Auto-generated catch block
+                            e.printStackTrace();
+                        }
                     }
-                    TrainCustomSwitchList.addCVSFile(csvFile);
+                    // set trains switch lists printed
+                    TrainManager.instance().setTrainsSwitchListStatus(Train.PRINTED);
+                    finishAction(status);
                 }
-            }
-            // Processes the CSV Manifest files using an external custom program.
-            boolean status = TrainCustomSwitchList.process();
-            // set trains switch lists printed
-            TrainManager.instance().setTrainsSwitchListStatus(Train.PRINTED);
-            finishAction(status);
-        }
+//            });
+//            excel.setName("Run Excel Program for Switch Lists"); // NOI18N
+//            excel.start();
+//        }
     }
 
     @Override

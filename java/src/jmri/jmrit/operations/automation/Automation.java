@@ -150,7 +150,13 @@ public class Automation implements java.beans.PropertyChangeListener {
             log.debug("Perform action ({}) item id: {}", item.getAction().getName(), item.getId());
             item.getAction().removePropertyChangeListener(this);
             item.getAction().addPropertyChangeListener(this);
-            item.getAction().doAction();
+            Thread runAction = new Thread(new Runnable() {
+                public void run() {
+                    item.getAction().doAction();
+                }
+            });
+            runAction.setName("Run Action item: " + item.getId()); // NOI18N
+            runAction.start();
         }
     }
 
@@ -188,10 +194,26 @@ public class Automation implements java.beans.PropertyChangeListener {
         }
     }
 
+    //    private void resetAutomationItems() {
+    //        for (AutomationItem item : getItemsBySequenceList()) {
+    //            item.setActionRan(false);
+    //            item.setActionSuccessful(false);
+    //        }
+    //    }
+
     private void resetAutomationItems() {
-        for (AutomationItem item : getItemsBySequenceList()) {
-            item.setActionRan(false);
-            item.setActionSuccessful(false);
+        resetAutomationItems(getCurrentAutomationItem());
+    }
+
+    private void resetAutomationItems(AutomationItem item) {
+        boolean found = false;
+        for (AutomationItem automationItem : getItemsBySequenceList()) {
+            if (!found && automationItem != item) {
+                continue;
+            }
+            found = true;
+            automationItem.setActionRan(false);
+            automationItem.setActionSuccessful(false);
         }
     }
 
@@ -200,8 +222,8 @@ public class Automation implements java.beans.PropertyChangeListener {
         if (getSize() > 0) {
             // goto?
             if (_gotoAutomationItem != null) {
-                resetAutomationItems();
                 setCurrentAutomationItem(_gotoAutomationItem);
+                resetAutomationItems(_gotoAutomationItem);
                 _gotoAutomationItem = null;
                 return; // done with goto
             }
@@ -533,18 +555,18 @@ public class Automation implements java.beans.PropertyChangeListener {
         return e;
     }
 
-    private void CheckForActionPropertyChange(PropertyChangeEvent e) {
-        if (e.getPropertyName().equals(Action.ACTION_COMPLETE_CHANGED_PROPERTY) ||
-                e.getPropertyName().equals(Action.ACTION_HALT_CHANGED_PROPERTY)) {
-            Action action = (Action) e.getSource();
+    private void CheckForActionPropertyChange(PropertyChangeEvent evt) {
+        if (evt.getPropertyName().equals(Action.ACTION_COMPLETE_CHANGED_PROPERTY) ||
+                evt.getPropertyName().equals(Action.ACTION_HALT_CHANGED_PROPERTY)) {
+            Action action = (Action) evt.getSource();
             action.removePropertyChangeListener(this);
         }
         // the following code causes multiple wait actions to run concurrently
-        if (e.getPropertyName().equals(Action.ACTION_RUNNING_CHANGED_PROPERTY)) {
-            firePropertyChange(e.getPropertyName(), e.getOldValue(), e.getNewValue());
+        if (evt.getPropertyName().equals(Action.ACTION_RUNNING_CHANGED_PROPERTY)) {
+            firePropertyChange(evt.getPropertyName(), evt.getOldValue(), evt.getNewValue());
             // when new value is true the action is running
-            if ((boolean) e.getNewValue()) {
-                Action action = (Action) e.getSource();
+            if ((boolean) evt.getNewValue()) {
+                Action action = (Action) evt.getSource();
                 log.debug("Action ({}) is running", action.getActionString());
                 if (action.isConcurrentAction()) {
                     AutomationItem item = action.getAutomationItem();
@@ -555,26 +577,35 @@ public class Automation implements java.beans.PropertyChangeListener {
                 }
             }
         }
-        if (getCurrentAutomationItem() != null && getCurrentAutomationItem().getAction() == e.getSource()) {
-            if (e.getPropertyName().equals(Action.ACTION_COMPLETE_CHANGED_PROPERTY) ||
-                    e.getPropertyName().equals(Action.ACTION_HALT_CHANGED_PROPERTY)) {
+        if (getCurrentAutomationItem() != null && getCurrentAutomationItem().getAction() == evt.getSource()) {
+            if (evt.getPropertyName().equals(Action.ACTION_COMPLETE_CHANGED_PROPERTY) ||
+                    evt.getPropertyName().equals(Action.ACTION_HALT_CHANGED_PROPERTY)) {
                 getCurrentAutomationItem().getAction().cancelAction();
-                if (e.getPropertyName().equals(Action.ACTION_COMPLETE_CHANGED_PROPERTY)) {
+                if (evt.getPropertyName().equals(Action.ACTION_COMPLETE_CHANGED_PROPERTY)) {
                     setNextAutomationItem();
                     if (isRunning()) {
                         step();
                     }
-                } else if (e.getPropertyName().equals(Action.ACTION_HALT_CHANGED_PROPERTY)) {
+                } else if (evt.getPropertyName().equals(Action.ACTION_HALT_CHANGED_PROPERTY)) {
                     stop();
                 }
             }
-            if (e.getPropertyName().equals(Action.ACTION_GOTO_CHANGED_PROPERTY)) {
+            if (evt.getPropertyName().equals(Action.ACTION_GOTO_CHANGED_PROPERTY)) {
+                synchronized (this) {
+                    // pause thread in case goto is a loop
+                    try {
+                        wait(250);
+                    } catch (InterruptedException e) {
+                        // TODO Auto-generated catch block
+                        e.printStackTrace();
+                    }
+                }
                 // the old property is used for conditional branch
                 // if old = null then it is a non-conditional goto
                 // if old = true, branch if success
                 // if old = false, branch if failure
-                if (e.getOldValue() == null || (boolean) e.getOldValue() == isLastActionSuccessful()) {
-                    _gotoAutomationItem = (AutomationItem) e.getNewValue();
+                if (evt.getOldValue() == null || (boolean) evt.getOldValue() == isLastActionSuccessful()) {
+                    _gotoAutomationItem = (AutomationItem) evt.getNewValue();
                 }
             }
         }

@@ -3869,7 +3869,7 @@
 
    <h5>Wait for Train</h5>
 
-   This action will wait for a train to move before executing the next action in the table. If a
+   This action will wait for a train to build or move before executing the next action in the table. If a
    location is selected in the "Route Location" menu, the program will wait until the train arrives
    at the location selected. Note that if the train is already at the location selected, that the
    program will wait until the next time the train arrives at that location. You must select a train
