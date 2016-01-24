@@ -7,7 +7,6 @@ import java.io.FileInputStream;
 import java.io.IOException;
 import java.util.Enumeration;
 import java.util.Properties;
-import jmri.util.exceptionhandler.AwtHandler;
 import jmri.util.exceptionhandler.UncaughtExceptionHandler;
 import org.apache.log4j.Appender;
 import org.apache.log4j.BasicConfigurator;
@@ -115,8 +114,7 @@ public class Log4JUtil {
             BasicConfigurator.configure();
             org.apache.log4j.Logger.getRootLogger().setLevel(Level.WARN);
         }
-        // install default exception handlers
-        System.setProperty("sun.awt.exception.handler", AwtHandler.class.getName());
+        // install default exception handler so uncaught exceptions are logged, not printed
         Thread.setDefaultUncaughtExceptionHandler(new UncaughtExceptionHandler());
     }
 
