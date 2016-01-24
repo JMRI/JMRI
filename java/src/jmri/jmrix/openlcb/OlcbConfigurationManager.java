@@ -25,6 +25,7 @@ import org.openlcb.can.OpenLcbCanFrame;
 import org.openlcb.implementations.DatagramMeteringBuffer;
 import org.openlcb.implementations.DatagramService;
 import org.openlcb.implementations.MemoryConfigurationService;
+import org.openlcb.LoaderClient;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -85,7 +86,7 @@ public class OlcbConfigurationManager extends jmri.jmrix.can.ConfigurationManage
         dmb = new DatagramMeteringBuffer(connection);
         dcs = new DatagramService(nodeID, dmb);
         mcs = new MemoryConfigurationService(nodeID, dcs);
-
+        loaderClient = new LoaderClient(connection,mcs,dcs);
         // show active
         ActiveFlag.setActive();
     }
@@ -99,6 +100,7 @@ public class OlcbConfigurationManager extends jmri.jmrix.can.ConfigurationManage
     DatagramMeteringBuffer dmb;
     DatagramService dcs;
     MemoryConfigurationService mcs;
+    LoaderClient loaderClient;
 
     /**
      * Tells which managers this provides by class
@@ -171,6 +173,9 @@ public class OlcbConfigurationManager extends jmri.jmrix.can.ConfigurationManage
         }
         if (T.equals(DatagramService.class)) {
             return (T) dcs;
+        }
+        if (T.equals(LoaderClient.class)) {
+            return (T) loaderClient;
         }
         if (T.equals(NodeID.class)) {
             return (T) nodeID;
@@ -393,6 +398,7 @@ public class OlcbConfigurationManager extends jmri.jmrix.can.ConfigurationManage
                 nodeStore.put(m, null);
                 dmb.connectionForRepliesFromDownstream().put(m, null);
                 dcs.put(m, null);
+                loaderClient.put(m,null);
             }
         }
     }

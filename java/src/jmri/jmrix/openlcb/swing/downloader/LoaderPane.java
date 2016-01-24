@@ -6,6 +6,11 @@ import java.awt.event.ActionListener;
 import javax.swing.*;
 import jmri.jmrit.MemoryContents;
 
+import java.io.File;
+import java.io.FileInputStream;
+import java.io.FileNotFoundException;
+import java.io.IOException;
+
 import jmri.jmrix.can.CanSystemConnectionMemo;
 
 import org.openlcb.implementations.DatagramService;
@@ -13,6 +18,9 @@ import org.openlcb.implementations.MemoryConfigurationService;
 import org.openlcb.MimicNodeStore;
 import org.openlcb.swing.NodeSelector;
 import org.openlcb.NodeID;
+import org.openlcb.LoaderClient;
+import org.openlcb.LoaderClient.LoaderStatusReporter;
+import org.openlcb.Connection;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -40,6 +48,7 @@ public class LoaderPane extends jmri.jmrix.AbstractLoaderPane
         implements ActionListener, jmri.jmrix.can.swing.CanPanelInterface {
 
     protected CanSystemConnectionMemo memo;
+    Connection connection;
     MemoryConfigurationService mcs;
     DatagramService dcs;
     MimicNodeStore store;
@@ -47,6 +56,12 @@ public class LoaderPane extends jmri.jmrix.AbstractLoaderPane
     JPanel selectorPane;
     JTextField spaceField;
     JCheckBox lockNode;
+    LoaderClient loaderClient;
+    NodeID nid;
+            
+    enum State { IDLE, ABORT, FREEZE, INITCOMPL, PIP, PIPREPLY, SETUPSTREAM, STREAM, STREAMDATA, DG, UNFREEEZE, SUCCESS, FAIL, FAKE };
+    State state;
+
     /**
      * LnPanelInterface implementation creates standard form of title
      */
@@ -54,11 +69,14 @@ public class LoaderPane extends jmri.jmrix.AbstractLoaderPane
 
     public void initComponents(CanSystemConnectionMemo memo) throws Exception {
         this.memo = memo;
+        this.connection = memo.get(Connection.class);
         this.mcs = memo.get(MemoryConfigurationService.class);
         this.dcs = memo.get(DatagramService.class);
         this.store = memo.get(MimicNodeStore.class);
         this.nodeSelector = new NodeSelector(store);
-        
+        this.loaderClient = memo.get(LoaderClient.class);
+        this.nid = memo.get(NodeID.class);
+        state = State.FAKE;
         // We can add to GUI here       
         JPanel p;
         
@@ -71,7 +89,8 @@ public class LoaderPane extends jmri.jmrix.AbstractLoaderPane
         p = new JPanel();
         p.setLayout(new FlowLayout());
         p.add(new JLabel("Address Space: "));
-        p.add(spaceField = new JTextField(""+0xFD));
+        p.add(spaceField = new JTextField(""+0xEF));
+        //p.add( spaceField = new JTextField(String.format("0x%2X",0xEF)) );
         selectorPane.add(p);
         spaceField.setToolTipText("The decimal number of the address space, e.g. 239");
 
@@ -82,6 +101,19 @@ public class LoaderPane extends jmri.jmrix.AbstractLoaderPane
         
         // Verify not an option
         verifyButton.setVisible(false);
+    }
+
+    @Override
+    protected void addChooserFilters(JFileChooser chooser) {}
+
+    @Override
+    public void doRead() {
+        System.out.println("LC - doRead");
+        String fn = chooser.getSelectedFile().getPath();
+               System.out.println("LC - filename="+fn);
+        readFile(fn);
+        bar.setValue(0);
+        loadButton.setEnabled(true);
     }
 
     public LoaderPane() {
@@ -108,7 +140,60 @@ public class LoaderPane extends jmri.jmrix.AbstractLoaderPane
     @Override
     protected void handleOptionsInFileContent(MemoryContents inputContent){
     }
-
+            
+    @Override
+    protected void doLoad() {
+        super.doLoad();
+                                                //System.out.println("LC - doLoad");
+        setOperationAborted(false);
+        Integer ispace = Integer.valueOf(spaceField.getText());
+        long addr = 0;
+        //fdata = new byte[100];
+        //for(byte i=0;i<100;i++) fdata[i] = i;
+        loaderClient.doLoad(nid,destNodeID(),ispace,addr,fdata, new LoaderStatusReporter() {
+            public void onProgress(float percent) {
+                updateGUI(Math.round(percent));
+            }
+            public void onDone(int errorCode, String errorString) {
+                if(errorCode==0) {
+                    sendDataDone(true);
+                    status.setText(Bundle.getMessage("StatusDone"));
+                } else status.setText(Bundle.getMessage("StatusAbort"));
+                log.info("   Download completed, errorCode:"+errorCode+": "+errorString);
+            }
+        });
+    }
+    void updateGUI(final int value) {
+        javax.swing.SwingUtilities.invokeLater(new Runnable() {
+            @Override
+            public void run() {
+                if (log.isDebugEnabled()) {
+                    log.debug("updateGUI with " + value);
+                }
+                // update progress bar
+                bar.setValue(value);
+            }
+        });
+    }
+    void sendDataDone(boolean OK) {
+        // report OK or not to GUI
+        setOperationAborted(!OK);
+        // send end (after wait)
+        // ...
+        this.updateGUI(100); //draw bar to 100%
+        // signal end to GUI via the queue to ensure synchronization
+        Runnable r = new Runnable() {
+            @Override
+            public void run() {
+                enableGUI();
+            }
+        };
+        javax.swing.SwingUtilities.invokeLater(r);
+    }
+    void enableGUI() {
+        LoaderPane.this.enableDownloadVerifyButtons();
+    }
+/*
     @Override
     protected void doLoad() {
         super.doLoad();
@@ -182,7 +267,7 @@ public class LoaderPane extends jmri.jmrix.AbstractLoaderPane
         // rest of operation if via callbacks inside sendNext();
 
     }
-
+*/
 
     /**
      * Do an OpenLCB write operation for up to 64 bytes from the current
@@ -190,7 +275,7 @@ public class LoaderPane extends jmri.jmrix.AbstractLoaderPane
      *<p>
      * Contains call-back for next message.
      */
-    void sendNext() {
+/*    void sendNext() {
         // ensure threading
         javax.swing.SwingUtilities.invokeLater(new Runnable() {
             @Override
@@ -258,20 +343,20 @@ public class LoaderPane extends jmri.jmrix.AbstractLoaderPane
         };
         javax.swing.SwingUtilities.invokeLater(r);
     }
-    
+*/
     /**
      * Signal GUI that it's the end of the download
      * <P>
      * Should be invoked on the Swing thread
      */
-    void enableGUI() {
+/*    void enableGUI() {
         LoaderPane.this.enableDownloadVerifyButtons();
     }
-
+*/
     /**
      * Update the GUI for progress
      */
-    void updateGUI(final int value) {
+/*    void updateGUI(final int value) {
         javax.swing.SwingUtilities.invokeLater(new Runnable() {
             @Override
             public void run() {
@@ -299,7 +384,7 @@ public class LoaderPane extends jmri.jmrix.AbstractLoaderPane
                 }
             });
     }
-
+*/
 
 
     /**
@@ -314,7 +399,39 @@ public class LoaderPane extends jmri.jmrix.AbstractLoaderPane
 
         parametersAreValid();
     }
+    
+    byte[] fdata;
+    public void readFile(String filename) {
+        System.out.println("LC - readFile()");
+        File file = new File(filename);
+        FileInputStream fis = null;
+        try {
+            fis = new FileInputStream(file);
+            
+            System.out.println("Total file size to read (in bytes) : "
+                               + fis.available());
+            fdata = new byte[fis.available()];
+            int i = 0;
+            int content;
+            while ((content = fis.read()) != -1) {
+                // convert to char and display it
+                //System.out.print((char) content);
+                fdata[i++] = (byte)content;
+            }
+            
+        } catch (IOException e) {
+            e.printStackTrace();
+        } finally {
+            try {
+                if (fis != null)
+                    fis.close();
+            } catch (IOException ex) {
+                ex.printStackTrace();
+            }
+        }
+    }
 
+            
     /**
      * Checks the values in the GUI text boxes to determine if any are invalid.
      * Intended for use immediately after reading a firmware file for the
@@ -333,6 +450,7 @@ public class LoaderPane extends jmri.jmrix.AbstractLoaderPane
     protected boolean parametersAreValid() {
         return true;
     }
+            
 
 
     /**
