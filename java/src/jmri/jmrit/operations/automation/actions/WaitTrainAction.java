@@ -19,7 +19,7 @@ public class WaitTrainAction extends Action implements PropertyChangeListener {
 
     @Override
     public String getName() {
-        return Bundle.getMessage("WaitForTrainToMove");
+        return Bundle.getMessage("WaitForTrain");
     }
     
     @Override
