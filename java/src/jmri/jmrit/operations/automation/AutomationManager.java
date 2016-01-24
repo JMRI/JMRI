@@ -64,12 +64,12 @@ public class AutomationManager implements java.beans.PropertyChangeListener {
      * @return requested Automation object or null if none exists
      */
     public Automation getAutomationByName(String name) {
-        Automation s;
+        Automation automation;
         Enumeration<Automation> en = _automationHashTable.elements();
         while (en.hasMoreElements()) {
-            s = en.nextElement();
-            if (s.getName().equals(name)) {
-                return s;
+            automation = en.nextElement();
+            if (automation.getName().equals(name)) {
+                return automation;
             }
         }
         return null;
