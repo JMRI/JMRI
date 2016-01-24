@@ -411,13 +411,9 @@
  <indexitem text="Signaling " target="html.tools.signaling.index">
   <indexitem text="Signal Mast Logic " target="package.jmri.jmrit.beantable.SignalMastLogicTable"/>
 
-  <indexitem text="SignalPro " target="html.apps.SignalPro.index"/>
-
   <indexitem text="Simple Signal Logic " target="package.jmri.jmrit.blockboss.BlockBossFrame"/>
 
  </indexitem>
- <indexitem text="SignalPro " target="html.apps.SignalPro.index"/>
-
  <indexitem text="Simple Clock " target="package.jmri.jmrit.simpleclock.SimpleClockFrame"/>
 
  <indexitem text="Slot Monitor " target="package.jmri.jmrix.loconet.slotmon.SlotMonFrame"/>

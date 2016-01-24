@@ -64,6 +64,8 @@
 
 <mapID target="manual.DecoderPro.Comp_Speed_Talble" url="manual/DecoderPro/Comp_Speed_Talble.shtml"/>
 
+<mapID target="html.doc.Technical.IntelliJ_more" url="html/doc/Technical/IntelliJ.shtml#more"/>
+
 <mapID target="html.hardware.can.index" url="html/hardware/can/index.shtml"/>
 
 <mapID target="html.doc.Technical.gitdeveloper" url="html/doc/Technical/gitdeveloper.shtml"/>
@@ -113,6 +115,8 @@
 <mapID target="package.jmri.jmrit.symbolicprog.tabbedframe.PaneProgFrame_Speed Table" url="package/jmri/jmrit/symbolicprog/tabbedframe/PaneProgFrame.shtml#Speed Table"/>
 
 <mapID target="manual.DecoderPro.Main_SPROG" url="manual/DecoderPro/Main_SPROG.shtml"/>
+
+<mapID target="package.jmri.jmrit.operations.Operations_SwitchListByLocation" url="package/jmri/jmrit/operations/Operations.shtml#SwitchListByLocation"/>
 
 <mapID target="manual.DecoderPro.Main_Throttle_FrameProperties" url="manual/DecoderPro/Main_Throttle_FrameProperties.shtml"/>
 
@@ -864,6 +868,8 @@
 
 <mapID target="html.apps.LocoTools.index" url="html/apps/LocoTools/index.shtml"/>
 
+<mapID target="html.doc.Technical.IntelliJ_ijprojectwin" url="html/doc/Technical/IntelliJ.shtml#ijprojectwin"/>
+
 <mapID target="manual.DecoderPro3.Installing_JMRI" url="manual/DecoderPro3/Installing_JMRI.shtml"/>
 
 <mapID target="manual.DecoderPro3.Basic_BasicPane" url="manual/DecoderPro3/Basic_BasicPane.shtml"/>
@@ -959,6 +965,8 @@
 <mapID target="html.hardware.rps.index_hardware" url="html/hardware/rps/index.shtml#hardware"/>
 
 <mapID target="package.jmri.jmrit.ussctc.FollowerFrame" url="package/jmri/jmrit/ussctc/FollowerFrame.shtml"/>
+
+<mapID target="html.doc.Technical.IntelliJ_getgit" url="html/doc/Technical/IntelliJ.shtml#getgit"/>
 
 <mapID target="package.jmri.jmrix.loconet.ds64.DS64Frame" url="package/jmri/jmrix/loconet/ds64/DS64Frame.shtml"/>
 
@@ -1215,6 +1223,8 @@
 <mapID target="package.jmri.jmrit.beantable.IdTagAddEdit" url="package/jmri/jmrit/beantable/IdTagAddEdit.shtml"/>
 
 <mapID target="package.jmri.jmrit.ussctc.OsIndicatorFrame" url="package/jmri/jmrit/ussctc/OsIndicatorFrame.shtml"/>
+
+<mapID target="html.doc.Technical.IntelliJ" url="html/doc/Technical/IntelliJ.shtml"/>
 
 <mapID target="package.jmri.jmrit.operations.Operations_TrainMove" url="package/jmri/jmrit/operations/Operations.shtml#TrainMove"/>
 
@@ -2514,6 +2524,8 @@
 
 <mapID target="html.hardware.raildriver.index_connecting" url="html/hardware/raildriver/index.shtml#connecting"/>
 
+<mapID target="html.doc.Technical.IntelliJ_errors" url="html/doc/Technical/IntelliJ.shtml#errors"/>
+
 <mapID target="manual.DecoderPro.Comp_PrintData_a_Top" url="manual/DecoderPro/Comp_PrintData_a.shtml#Top"/>
 
 <mapID target="manual.DecoderPro3.Main_LocoNet_FirmwareDownloader" url="manual/DecoderPro3/Main_LocoNet.shtml#FirmwareDownloader"/>
@@ -2667,6 +2679,8 @@
 <mapID target="manual.DecoderPro3.dp3_Main_Throttle_List" url="manual/DecoderPro3/dp3_Main_Throttle_List.shtml"/>
 
 <mapID target="html.hardware.loconet.PR3" url="html/hardware/loconet/PR3.shtml"/>
+
+<mapID target="html.doc.Technical.IntelliJ_push" url="html/doc/Technical/IntelliJ.shtml#push"/>
 
 <mapID target="html.hardware.loconet.PR2" url="html/hardware/loconet/PR2.shtml"/>
 
@@ -2840,6 +2854,8 @@
 
 <mapID target="html.hardware.USBtoSerial_connecting" url="html/hardware/USBtoSerial.shtml#connecting"/>
 
+<mapID target="html.doc.Technical.IntelliJ_build" url="html/doc/Technical/IntelliJ.shtml#build"/>
+
 <mapID target="package.jmri.jmrit.signalling.EntryExitFrame" url="package/jmri/jmrit/signalling/EntryExitFrame.shtml"/>
 
 <mapID target="manual.DecoderPro.Main_VSD_locations" url="manual/DecoderPro/Main_VSD.shtml#locations"/>
@@ -2929,6 +2945,8 @@
 <mapID target="html.setup.Files" url="html/setup/Files.shtml"/>
 
 <mapID target="manual.DecoderPro.Main_RosterGroup" url="manual/DecoderPro/Main_RosterGroup.shtml"/>
+
+<mapID target="html.doc.Technical.IntelliJ_install" url="html/doc/Technical/IntelliJ.shtml#install"/>
 
 <mapID target="html.hardware.USBtoSerial" url="html/hardware/USBtoSerial.shtml"/>
 
