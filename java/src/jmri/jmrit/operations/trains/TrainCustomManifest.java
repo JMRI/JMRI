@@ -2,6 +2,7 @@ package jmri.jmrit.operations.trains;
 
 import java.io.File;
 import java.io.IOException;
+import java.util.concurrent.TimeUnit;
 import jmri.jmrit.operations.OperationsManager;
 import jmri.util.FileUtil;
 import jmri.util.SystemType;
@@ -21,6 +22,8 @@ public class TrainCustomManifest {
     private static String csvNamesFileName = "CSVFilesFile.txt"; // NOI18N
 
     private static int fileCount = 0;
+    
+    private static Process process;
 
     public static String getFileName() {
         return mcAppName;
@@ -105,25 +108,34 @@ public class TrainCustomManifest {
         if (SystemType.isWindows()) {
             String cmd = "cmd /c start " + getFileName() + " " + mcAppArg; // NOI18N
             try {
-                Runtime.getRuntime().exec(cmd, null, OperationsManager.getInstance().getFile(getDirectoryName()));
+                process = Runtime.getRuntime().exec(cmd, null, OperationsManager.getInstance().getFile(getDirectoryName()));
             } catch (IOException e) {
                 e.printStackTrace();
             }
         } else {
             String cmd = "open " + getFileName() + " " + mcAppArg; // NOI18N
             try {
-                Runtime.getRuntime().exec(cmd, null, OperationsManager.getInstance().getFile(getDirectoryName()));
+                process = Runtime.getRuntime().exec(cmd, null, OperationsManager.getInstance().getFile(getDirectoryName()));
             } catch (IOException e) {
                 e.printStackTrace();
             }
         }
         return true;
-
     }
 
     public static boolean manifestCreatorFileExists() {
         File file = new File(OperationsManager.getInstance().getFile(getDirectoryName()), getFileName());
         return file.exists();
+    }
+    
+    public static boolean isProcessAlive() {
+        return process.isAlive();
+    }
+    
+    public static void waitForProcessToComplete(int waitTimeSeconds) throws InterruptedException {
+        synchronized (process) {
+            process.waitFor(waitTimeSeconds, TimeUnit.SECONDS);
+        }
     }
 
     public static void load(Element options) {

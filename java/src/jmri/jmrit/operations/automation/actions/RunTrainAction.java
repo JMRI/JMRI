@@ -14,7 +14,7 @@ public class RunTrainAction extends Action {
 
     @Override
     public String getName() {
-           return Bundle.getMessage("RunTrain");
+        return Bundle.getMessage("RunTrain");
     }
 
     @Override
@@ -22,10 +22,24 @@ public class RunTrainAction extends Action {
         if (getAutomationItem() != null) {
             Train train = getAutomationItem().getTrain();
             if (train != null && train.isBuilt() && TrainCustomManifest.manifestCreatorFileExists()) {
-                setRunning(true);
-                TrainCustomManifest.addCVSFile(train.createCSVManifestFile());
-                TrainCustomManifest.process();
-                finishAction(true);
+//                Thread excel = new Thread(new Runnable() {
+//                    public void run() {
+                        setRunning(true);
+                        TrainCustomManifest.addCVSFile(train.createCSVManifestFile());
+                        boolean status = TrainCustomManifest.process();
+                        if (status) {
+                            try {
+                                TrainCustomManifest.waitForProcessToComplete(60); // wait up to 60 seconds
+                            } catch (InterruptedException e) {
+                                // TODO Auto-generated catch block
+                                e.printStackTrace();
+                            }
+                        }
+                        finishAction(status);
+//                    }
+//                });
+//                excel.setName("Run Excel Program"); // NOI18N
+//                excel.start();
             } else {
                 finishAction(false);
             }
