@@ -59,7 +59,7 @@ public class AutomationTableModel extends javax.swing.table.AbstractTableModel i
 
     Automation _automation;
     JTable _table;
-    AutomationEditFrame _frame;
+    AutomationTableFrame _frame;
     boolean _matchMode = false;
 
     synchronized void updateList() {
@@ -77,7 +77,7 @@ public class AutomationTableModel extends javax.swing.table.AbstractTableModel i
 
     List<AutomationItem> _list = new ArrayList<AutomationItem>();
 
-    void initTable(AutomationEditFrame frame, JTable table, Automation automation) {
+    void initTable(AutomationTableFrame frame, JTable table, Automation automation) {
         _automation = automation;
         _table = table;
         _frame = frame;
@@ -391,7 +391,7 @@ public class AutomationTableModel extends javax.swing.table.AbstractTableModel i
         } else {
             @SuppressWarnings("unchecked")
             JComboBox<Automation> cb = (JComboBox<Automation>) value;
-            item.setAutomation((Automation) cb.getSelectedItem());
+            item.setAutomationToRun((Automation) cb.getSelectedItem());
         }
     }
 

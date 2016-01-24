@@ -2,15 +2,14 @@ package jmri.jmrit.operations.automation.actions;
 
 import java.beans.PropertyChangeEvent;
 import java.beans.PropertyChangeListener;
-import jmri.jmrit.operations.routes.RouteLocation;
 import jmri.jmrit.operations.setup.Control;
 import jmri.jmrit.operations.trains.Train;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-public class WaitTrainAction extends Action implements PropertyChangeListener {
+public class WaitTrainTerminatedAction extends Action implements PropertyChangeListener {
 
-    private static final int _code = ActionCodes.WAIT_FOR_TRAIN;
+    private static final int _code = ActionCodes.WAIT_FOR_TRAIN_TERMINATE;
 
     @Override
     public int getCode() {
@@ -19,9 +18,9 @@ public class WaitTrainAction extends Action implements PropertyChangeListener {
 
     @Override
     public String getName() {
-        return Bundle.getMessage("WaitForTrain");
+        return Bundle.getMessage("WaitForTrainToTerminate");
     }
-    
+
     @Override
     public boolean isConcurrentAction() {
         return true;
@@ -43,13 +42,10 @@ public class WaitTrainAction extends Action implements PropertyChangeListener {
     private void trainUpdate() {
         if (getAutomationItem() != null) {
             Train train = getAutomationItem().getTrain();
-            RouteLocation rl = getAutomationItem().getRouteLocation();
-            if (rl != null && rl != train.getCurrentLocation()) {
-                return; // haven't reached this location continue waiting
+            if (train.getStatusCode() == Train.CODE_TERMINATED) {
+                train.removePropertyChangeListener(this);
+                finishAction(true);
             }
-            // now show message if there's one
-            train.removePropertyChangeListener(this);
-            finishAction(true);
         }
     }
 
@@ -69,12 +65,11 @@ public class WaitTrainAction extends Action implements PropertyChangeListener {
         if (Control.showProperty)
             log.debug("Property change AutomationItem {}: ({}) old: ({}) new: ({})", getAutomationItem().getId(),
                     evt.getPropertyName(), evt.getOldValue(), evt.getNewValue());
-        if (evt.getPropertyName().equals(Train.TRAIN_MOVE_COMPLETE_CHANGED_PROPERTY) ||
-                evt.getPropertyName().equals(Train.BUILT_CHANGED_PROPERTY)) {
+        if (evt.getPropertyName().equals(Train.BUILT_CHANGED_PROPERTY)) {
             trainUpdate();
         }
     }
 
-    static Logger log = LoggerFactory.getLogger(WaitTrainAction.class.getName());
+    static Logger log = LoggerFactory.getLogger(WaitTrainTerminatedAction.class.getName());
 
 }

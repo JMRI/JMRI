@@ -12,7 +12,7 @@ package apps;
  *
  * @author	Bob Jacobsen Copyright 2003
  * @version $Revision$
- * @see CreateButtonPanel
+ * @see apps.startup.CreateButtonModelFactory
  */
 public class CreateButtonModel extends AbstractActionModel {
 

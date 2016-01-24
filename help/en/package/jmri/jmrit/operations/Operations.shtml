@@ -514,7 +514,8 @@
    <p>
     You can also automatically open any of the six operations windows when you start JMRI. From the
     main menu, under "Edit-&gt;Preferences" select <a
-     href="../../../apps/TabbedPreferences.shtml#Startup">Start Up</a>, and add an "Action".
+     href="../../../apps/TabbedPreferences.shtml#Startup">Start Up</a>, and add a "Perform action"
+     startup item for the desired window.
    </p>
 
    <h4>Close on Save</h4>
@@ -3867,12 +3868,17 @@
    selected, or if the train isn't built, or if the train has already passed the location selected.
 
    <h5>Wait for Train</h5>
-   
-   This action will wait for a train to move before executing the next action in the table. If a location
-   is selected in the "Route Location" menu, the program will wait until the train arrives at the location
-   selected. Note that if the train is already at the location selected, that the program will wait until the
-   next time the train arrives at that location. You must select a train using the "Train" menu.
-   
+
+   This action will wait for a train to move before executing the next action in the table. If a
+   location is selected in the "Route Location" menu, the program will wait until the train arrives
+   at the location selected. Note that if the train is already at the location selected, that the
+   program will wait until the next time the train arrives at that location. You must select a train
+   using the "Train" menu.
+
+   <p>The program also allows you to wait for more than one train. Just enter each of the trains
+    you want to wait for in consecutive rows. The program will then continue when all of the trains
+    either move or arrived at the locations selected.</p>
+
    <h5>Select Train Build</h5>
    
    Selects the "Build" checkbox for the specified train in the

@@ -10,6 +10,7 @@
 </head>
 <body>
 
+    <!-- NEEDS REWRITE -->
 
 <div id="mainContent">
 <h1>Getting Started with DecoderPro&reg;</h1>
@@ -104,51 +105,29 @@ roster on the System Drive.</td>
 <p>This pane allows WiThrottle users to customize the setup.</p>
 <p style="text-align: center;"><img src="images/Preferences_Wi.png" alt="Wi Throttle" height="396" width="726"></p>
 <p><strong><a href="#Top">Top</a></strong></p>
-<h2><a name="JOSN"></a>JSON Server Pane</h2>
+<h3><a name="JOSN"></a>JSON Server Pane</h3>
 <p style="text-align: center;"><img src="images/Preference_JSON_Server.png" alt="json" height="432" width="755"></p>
 <p><strong><a href="#Top">Top</a></strong></p>
-<h2><a name="MiniServer"></a>Web Server Pane</h2>
-<p>Use this pane to setup MinServer if you are using it.</p>
+<h3><a name="MiniServer"></a>Web Server Pane</h3>
+<p>Use this pane to setup the web server if you are using it.</p>
 <p style="text-align: center;"><img src="images/Preferences_miniServer.png" alt="mini server" height="396" width="726"></p>
 <p><strong><a href="#Top">Top</a></strong></p>
 <p>Before you exit the Preferences, click the          
   <input name="button8" id="button8" value="Save" type="submit">
 button to save all your selections.<br>
-You must restart DecoderPro for Preferences to take effect</p>
+You must restart DecoderPro for Preferences to take effect if prompted to do so.</p>
 
-<p style="text-align: center;"><img src="images/Preferences6.png" alt="start up" height="302" width="755"></p>
-</blockquote>
-<table align="center" border="1" cellpadding="0" cellspacing="0" width="80%">
-  <tbody><tr>
-    <td width="17%"><strong>Actions TAB</strong></td>
-    <td width="41%"><input name="button3" id="button3" value="Add Action" type="submit">
-    to set up a Startup action</td>
-    <td width="42%"><img src="images/Preferences11.png" alt="actions" height="182" width="328"></td>
-  </tr>
-  <tr>
-    <td width="17%"><strong>Buttons TAB</strong></td>
-    <td><input name="button4" id="button4" value="Add Button " type="submit">
-    to the Splash Screen</td>
-    <td><img src="images/Preferences8.png" alt="buttons" height="188" width="333"></td>
-  </tr>
-  <tr>
-    <td width="17%"><strong>Files TAB</strong></td>
-    <td><input name="button5" id="button5" value="Add Files" type="submit">
-    that you want to load at startup</td>
-    <td><img src="images/Preferences9.png" alt="files" height="186" width="264"></td>
-  </tr>
-  <tr>
-    <td width="17%"><strong>Scripts TAB</strong></td>
-    <td><input name="button6" id="button6" value="Add Scripts" type="submit">
-    to load at startup</td>
-    <td><img src="images/Preferences10.png" alt="scripts" height="190" width="265"></td>
-  </tr>
-</tbody></table>
-<p>You may add as many items as you want to open on start up.  Example of <strong>Actions</strong></p>
-<p style="text-align: center;"><img src="images/Preferences7.png" alt="preferences" height="501" width="672"></p>
-<p>
-  <input name="button7" id="button7" value="Remove" type="submit"> 
-removes the item from the Start Up sequence. All of the panes are of the same format.</p>
+<p><strong><a href="#Top">Top</a></strong></p>
+<h3>Start Up</h3>
+<p><em>Start Up</em> preferences allow windows and files to be opened, scripts
+    to be run, and additional buttons to be placed on the main window when the
+    application starts.</p>
+<p>Click the <strong>Add &#x25BE;</strong> button and select the type of start up
+    action to add. The new action will be added last.</p>
+<p>Start up action order is important. In most cases, scripts should be the last
+    items in the start up order. Start up order can be changed by selecting a
+    start up item and moving it <em>up</em> or <em>down</em> in the list.</p>
+
 <p><strong><a href="#Top">Top</a></strong></p>
 <h3><a name="Display"></a>Display Panes</h3>
 <h4>GUI Pane</h4>
