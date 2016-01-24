@@ -31,8 +31,7 @@ e.g. an iPhone, iPod Touch, or Android Phone, and JMRI.
 <p>
 It can be set to start automatically with the 
 "<a href="../../../apps/TabbedPreferences.shtml#Startup">Start Up</a>" section in the
-"<a href="../../../apps/TabbedPreferences.shtml">JMRI Preferences</a>"
-section of JMRI Preferences under the heading of "Actions".
+"<a href="../../../apps/TabbedPreferences.shtml">JMRI Preferences</a>".
 
 <p>
 <a href="../../../apps/TabbedPreferences.shtml#WiThrottle">Preferences</a>

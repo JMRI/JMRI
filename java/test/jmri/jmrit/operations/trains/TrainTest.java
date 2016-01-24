@@ -146,7 +146,7 @@ public class TrainTest extends OperationsTestCase {
         Assert.assertEquals("Train Road Option EXCLUDEROADS", "EXCLUDEROADS", train1.getRoadOption());
         train1.setRoadOption("ALLROADS");
         Assert.assertEquals("Train Road Option ALLROADS", "ALLROADS", train1.getRoadOption());
-        train1.setStatus(Train.CODE_UNKNOWN);
+        train1.setStatusCode(Train.CODE_UNKNOWN);
         Assert.assertEquals("Train Status", Train.UNKNOWN, train1.getStatus());
         train1.setRequirements(Train.CABOOSE);
         Assert.assertEquals("Train Requirements CABOOSE", 1, train1.getRequirements());

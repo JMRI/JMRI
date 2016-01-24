@@ -67,9 +67,10 @@ public class WaitTrainAction extends Action implements PropertyChangeListener {
     @Override
     public void propertyChange(PropertyChangeEvent evt) {
         if (Control.showProperty)
-            log.debug("Property change: ({}) old: ({}) new: ({})", evt.getPropertyName(), evt.getOldValue(), evt
-                    .getNewValue());
-        if (evt.getPropertyName().equals(Train.TRAIN_MOVE_COMPLETE_CHANGED_PROPERTY)) {
+            log.debug("Property change AutomationItem {}: ({}) old: ({}) new: ({})", getAutomationItem().getId(),
+                    evt.getPropertyName(), evt.getOldValue(), evt.getNewValue());
+        if (evt.getPropertyName().equals(Train.TRAIN_MOVE_COMPLETE_CHANGED_PROPERTY) ||
+                evt.getPropertyName().equals(Train.BUILT_CHANGED_PROPERTY)) {
             trainUpdate();
         }
     }
