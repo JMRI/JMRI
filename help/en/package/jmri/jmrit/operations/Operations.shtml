@@ -3902,6 +3902,14 @@
    are selected in the
    <a href="#SwitchListByLocation">Switch Lists by Location</a> window. 
    
+   <h5>Run Excel Switch List</h5>
+
+   This action works like the "Run" button in the
+   <a href="#SwitchListByLocation">Switch Lists by Location</a> window. It will create CSV files for
+   each of the locations selected in the window, and then run the configured Excel program to
+   generate custom printouts. See
+   <a href="#SetupExcelProgram">Setup Excel Program (Manifest Creator)</a> for more information.
+
    <h5>Run Excel Switch List Changes</h5>
 
    This action works like the "Run Changes" button in the

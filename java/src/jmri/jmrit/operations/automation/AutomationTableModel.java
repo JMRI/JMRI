@@ -308,7 +308,7 @@ public class AutomationTableModel extends javax.swing.table.AbstractTableModel i
         //      cb.setSelectedItem(item.getAction()); TODO understand why this didn't work, class?
         for (int index = 0; index < cb.getItemCount(); index++) {
             // select the action based on it's action code
-            if (item.getAction() != null && ((Action) cb.getItemAt(index)).getCode() == item.getAction().getCode()) {
+            if (item.getAction() != null && (cb.getItemAt(index)).getCode() == item.getAction().getCode()) {
                 cb.setSelectedIndex(index);
                 break;
             }

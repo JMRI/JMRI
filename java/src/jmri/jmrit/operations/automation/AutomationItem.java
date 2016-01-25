@@ -20,6 +20,7 @@ import jmri.jmrit.operations.automation.actions.ResetTrainAction;
 import jmri.jmrit.operations.automation.actions.ResumeAutomationAction;
 import jmri.jmrit.operations.automation.actions.RunAutomationAction;
 import jmri.jmrit.operations.automation.actions.RunSwitchListAction;
+import jmri.jmrit.operations.automation.actions.RunSwitchListChangesAction;
 import jmri.jmrit.operations.automation.actions.RunTrainAction;
 import jmri.jmrit.operations.automation.actions.SelectTrainAction;
 import jmri.jmrit.operations.automation.actions.StopAutomationAction;
@@ -333,6 +334,7 @@ public class AutomationItem implements java.beans.PropertyChangeListener {
         list.add(new UpdateSwitchListAction());
         list.add(new WaitSwitchListAction());
         list.add(new RunSwitchListAction());
+        list.add(new RunSwitchListChangesAction());
         list.add(new RunAutomationAction());
         list.add(new ResumeAutomationAction());
         list.add(new StopAutomationAction());
