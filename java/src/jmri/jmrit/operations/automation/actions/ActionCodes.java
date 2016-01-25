@@ -38,7 +38,8 @@ public class ActionCodes {
     public static final int UPDATE_SWITCHLIST = 0x1000 + OK_MESSAGE;
     public static final int PRINT_SWITCHLIST = 0x1100 + OK_MESSAGE;
     public static final int WAIT_SWITCHLIST = 0x1200 + OK_MESSAGE;
-    public static final int RUN_SWITCHLIST = 0x1300 + OK_MESSAGE  + FAIL_MESSAGE;
+    public static final int RUN_SWITCHLIST_CHANGES = 0x1300 + OK_MESSAGE  + FAIL_MESSAGE;
+    public static final int RUN_SWITCHLIST = 0x1400 + OK_MESSAGE  + FAIL_MESSAGE;
     
     public static final int STEP_AUTOMATION = 0x3000 + OK_MESSAGE + FAIL_MESSAGE + ENABLE_AUTOMATION_LIST;
     public static final int RUN_AUTOMATION = 0x3100 + OK_MESSAGE + FAIL_MESSAGE + ENABLE_AUTOMATION_LIST;
