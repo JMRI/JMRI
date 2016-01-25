@@ -500,6 +500,18 @@ public class Automation implements java.beans.PropertyChangeListener {
         }
         return null;
     }
+    
+    public void copyAutomation(Automation automation) {
+        for (AutomationItem item : getItemsBySequenceList()) {
+            item.copyItem(automation.addItem());
+        }
+        // now adjust GOTOs to reference the new automation
+        for (AutomationItem item : automation.getItemsBySequenceList()) {
+            if (item.getGotoAutomationItem() != null) {
+                item.setGotoAutomationItem(automation.getItemBySequenceId(item.getGotoAutomationItem().getSequenceId()));
+            }
+        }
+    }
 
     /**
      * Construct this Entry from XML. This member has to remain synchronized

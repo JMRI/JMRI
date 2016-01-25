@@ -10,11 +10,11 @@ import javax.swing.AbstractAction;
  * @author Daniel Boudreau Copyright (C) 2016
  * @version $Revision$
  */
-public class ResetAutomationAction extends AbstractAction {
+public class AutomationResetAction extends AbstractAction {
 
     private AutomationTableFrame _frame;
 
-    public ResetAutomationAction(AutomationTableFrame frame) {
+    public AutomationResetAction(AutomationTableFrame frame) {
         super(Bundle.getMessage("MenuResetAutomation"));
         _frame = frame;
     }
