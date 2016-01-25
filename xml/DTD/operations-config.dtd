@@ -355,7 +355,7 @@
 <!ATTLIST switchListTrack text			CDATA #IMPLIED>
 <!ATTLIST holdCar text					CDATA #IMPLIED>
 
-<!ELEMENT control (backwardCompatibility | maximumStringLengths | reports)*>
+<!ELEMENT control (backwardCompatibility | maximumStringLengths | reports | actions)*>
 
 <!ELEMENT backwardCompatibility EMPTY>
 <!ATTLIST backwardCompatibility saveUsingPre_2013_Format	(true | false ) "false">
@@ -392,3 +392,6 @@
 <!ELEMENT reports EMPTY>
 <!ATTLIST reports fontSize CDATA #IMPLIED>
 <!ATTLIST reports fontName CDATA #IMPLIED>
+
+<!ELEMENT actions EMPTY>
+<!ATTLIST actions excelWaitTime CDATA #IMPLIED>

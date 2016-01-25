@@ -33,6 +33,8 @@ public class Automation implements java.beans.PropertyChangeListener {
     // stores AutomationItems for this automation
     protected Hashtable<String, AutomationItem> _automationHashTable = new Hashtable<String, AutomationItem>();
     protected int _IdNumber = 0; // each item in a automation gets its own unique id
+    
+    public static final String REGEX = "c";  // NOI18N
 
     public static final String LISTCHANGE_CHANGED_PROPERTY = "automationListChange"; // NOI18N
     public static final String CURRENT_ITEM_CHANGED_PROPERTY = "automationCurrentItemChange"; // NOI18N
@@ -301,7 +303,7 @@ public class Automation implements java.beans.PropertyChangeListener {
 
     public AutomationItem addItem() {
         _IdNumber++;
-        String id = getId() + "c" + Integer.toString(_IdNumber);
+        String id = getId() + REGEX + Integer.toString(_IdNumber);
         log.debug("Adding new item to ({}) id: {}", getName(), id);
         AutomationItem item = new AutomationItem(id);
         _automationHashTable.put(item.getId(), item);
@@ -339,7 +341,7 @@ public class Automation implements java.beans.PropertyChangeListener {
     public void register(AutomationItem item) {
         _automationHashTable.put(item.getId(), item);
         // find last id created
-        String[] getId = item.getId().split("c");
+        String[] getId = item.getId().split(Automation.REGEX);
         int id = Integer.parseInt(getId[1]);
         if (id > _IdNumber) {
             _IdNumber = id;
