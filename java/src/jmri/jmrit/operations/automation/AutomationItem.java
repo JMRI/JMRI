@@ -128,6 +128,14 @@ public class AutomationItem implements java.beans.PropertyChangeListener {
         }
         return ActionCodes.NO_ACTION;
     }
+    
+    public Action getActionByCode(int code) {
+        for (Action action : getActionList()) {
+            if (action.getCode() == code)
+                return action;
+        }
+        return new NoAction(); // default if code not found
+    }
 
     public void doAction() {
         if (getAction() != null) {
@@ -346,8 +354,21 @@ public class AutomationItem implements java.beans.PropertyChangeListener {
 
     }
 
+    /**
+     * Copies this AutomationItem parameters into item.
+     * @param item
+     */
     public void copyItem(AutomationItem item) {
-        setMessage(item.getMessage());
+        item.setAction(getAction());
+        item.setAutomationToRun(getAutomationToRun());
+        item.setGotoAutomationItem(getGotoAutomationItem()); //needs an adjustment to work properly
+        item.setRouteLocation(getRouteLocation());
+        item.setSequenceId(getSequenceId());
+        item.setTrain(getTrain());
+        item.setTrainSchedule(getTrainSchedule());
+        item.setMessage(getMessage());
+        item.setMessageFail(getMessageFail());
+        item.setHaltFailureEnabled(isHaltFailureEnabled());
     }
 
     /**
@@ -391,14 +412,6 @@ public class AutomationItem implements java.beans.PropertyChangeListener {
         for (Action action : getActionList())
             box.addItem(action);
         return box;
-    }
-
-    public Action getActionByCode(int code) {
-        for (Action action : getActionList()) {
-            if (action.getCode() == code)
-                return action;
-        }
-        return null;
     }
 
     public void dispose() {
