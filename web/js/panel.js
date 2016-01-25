@@ -988,34 +988,40 @@ function $drawTurnout($widget) {
 //store the various points defined with a Turnout (pass in widget)
 //see jmri.jmrit.display.layoutEditor.LayoutTurnout.java for background
 function $storeTurnoutPoints($widget) {
-    var $t = [];
-    $t['ident'] = $widget.ident + PT_B;  //store B endpoint
-    $t['x'] = $widget.xb * 1.0;
-    $t['y'] = $widget.yb * 1.0;
-    $gPts[$t.ident] = $t;
-    $t = [];
-    $t['ident'] = $widget.ident + PT_C;  //store C endpoint
-    $t['x'] = $widget.xc * 1.0;
-    $t['y'] = $widget.yc * 1.0;
-    $gPts[$t.ident] = $t;
-    if ($widget.type == LH_TURNOUT || $widget.type == RH_TURNOUT || $widget.type == WYE_TURNOUT) {
-        $t = [];
-        $t['ident'] = $widget.ident + PT_A;  //calculate and store A endpoint (mirror of B for these)
-        $t['x'] = $widget.xcen - ($widget.xb - $widget.xcen);
-        $t['y'] = $widget.ycen - ($widget.yb - $widget.ycen);
-        $gPts[$t.ident] = $t;
-    } else if ($widget.type == LH_XOVER || $widget.type == RH_XOVER || $widget.type == DOUBLE_XOVER) {
-        $t = [];
-        $t['ident'] = $widget.ident + PT_A;  //calculate and store A endpoint (mirror of C for these)
-        $t['x'] = $widget.xcen - ($widget.xc - $widget.xcen);
-        $t['y'] = $widget.ycen - ($widget.yc - $widget.ycen);
-        $gPts[$t.ident] = $t;
-        $t = [];
-        $t['ident'] = $widget.ident + PT_D;  //calculate and store D endpoint (mirror of B for these)
-        $t['x'] = $widget.xcen - ($widget.xb - $widget.xcen);
-        $t['y'] = $widget.ycen - ($widget.yb - $widget.ycen);
-        $gPts[$t.ident] = $t;
-    }
+	var $t = [];
+	$t['ident'] = $widget.ident + PT_B;  //store B endpoint
+	$t['x'] = $widget.xb * 1.0;
+	$t['y'] = $widget.yb * 1.0;
+	$gPts[$t.ident] = $t;
+	$t = [];
+	$t['ident'] = $widget.ident + PT_C;  //store C endpoint
+	$t['x'] = $widget.xc * 1.0;
+	$t['y'] = $widget.yc * 1.0;
+	$gPts[$t.ident] = $t;
+	if ($widget.type == LH_TURNOUT || $widget.type == RH_TURNOUT) {
+		$t = [];
+		$t['ident'] = $widget.ident + PT_A;  //calculate and store A endpoint (mirror of B for these)
+		$t['x'] = $widget.xcen - ($widget.xb - $widget.xcen);
+		$t['y'] = $widget.ycen - ($widget.yb - $widget.ycen);
+		$gPts[$t.ident] = $t;
+	} else if ($widget.type == WYE_TURNOUT) {
+		$t = [];
+		$t['ident'] = $widget.ident + PT_A;  //store A endpoint
+		$t['x'] = $widget.xa * 1.0;
+		$t['y'] = $widget.ya * 1.0;
+		$gPts[$t.ident] = $t;
+	} else if ($widget.type == LH_XOVER || $widget.type == RH_XOVER || $widget.type == DOUBLE_XOVER) {
+		$t = [];
+		$t['ident'] = $widget.ident + PT_A;  //calculate and store A endpoint (mirror of C for these)
+		$t['x'] = $widget.xcen - ($widget.xc - $widget.xcen);
+		$t['y'] = $widget.ycen - ($widget.yc - $widget.ycen);
+		$gPts[$t.ident] = $t;
+		$t = [];
+		$t['ident'] = $widget.ident + PT_D;  //calculate and store D endpoint (mirror of B for these)
+		$t['x'] = $widget.xcen - ($widget.xb - $widget.xcen);
+		$t['y'] = $widget.ycen - ($widget.yb - $widget.ycen);
+		$gPts[$t.ident] = $t;
+	}
 }
 
 //store the various points defined with a LevelXing (pass in widget)
