@@ -268,7 +268,7 @@ public class EngineEditFrame extends OperationsFrame implements java.beans.Prope
         // setup checkbox
         // build menu
         // JMenuBar menuBar = new JMenuBar();
-        // JMenu toolMenu = new JMenu("Tools");
+        // JMenu toolMenu = new JMenu(Bundle.getMessage("Tools"));
         // menuBar.add(toolMenu);
         // setJMenuBar(menuBar);
         addHelpMenu("package.jmri.jmrit.operations.Operations_LocomotivesAdd", true); // NOI18N
