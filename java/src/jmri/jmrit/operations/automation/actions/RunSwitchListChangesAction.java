@@ -3,6 +3,7 @@ package jmri.jmrit.operations.automation.actions;
 import java.io.File;
 import jmri.jmrit.operations.locations.Location;
 import jmri.jmrit.operations.locations.LocationManager;
+import jmri.jmrit.operations.setup.Control;
 import jmri.jmrit.operations.setup.Setup;
 import jmri.jmrit.operations.trains.Train;
 import jmri.jmrit.operations.trains.TrainCsvSwitchLists;
@@ -67,7 +68,7 @@ public class RunSwitchListChangesAction extends Action {
             boolean status = TrainCustomSwitchList.process();
             if (status) {
                 try {
-                    TrainCustomSwitchList.waitForProcessToComplete(60 * fileCount); // wait up to 60 seconds per file
+                    TrainCustomSwitchList.waitForProcessToComplete(Control.excelWaitTime * fileCount); // wait up to 60 seconds per file
                 } catch (InterruptedException e) {
                     // TODO Auto-generated catch block
                     e.printStackTrace();
