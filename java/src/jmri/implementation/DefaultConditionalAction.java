@@ -76,6 +76,47 @@ public class DefaultConditionalAction implements ConditionalAction {
         }
     }
 
+    @Override
+    public boolean equals(Object obj) {
+        if (obj == this) {
+            return true;
+        }
+        if (obj == null) {
+            return false;
+        }
+
+        if (!(getClass() == obj.getClass())) {
+            return false;
+        } else {
+            DefaultConditionalAction p = (DefaultConditionalAction)obj;
+            if (p._option != this._option) return false;
+            if (p._type != this._type) return false;
+            if (p._actionData != this._actionData) return false;
+
+            if (p._namedBean == null &&  this._namedBean != null) return false;
+            if (p._namedBean != null &&  this._namedBean == null) return false;
+            if (p._namedBean != null &&  this._namedBean != null && !p._namedBean.equals(this._namedBean)) return false;
+
+            if (p._deviceName == null &&  this._deviceName != null) return false;
+            if (p._deviceName != null &&  this._deviceName == null) return false;
+            if (p._deviceName != null &&  this._deviceName != null && !p._deviceName.equals(this._deviceName)) return false;
+
+            if (p._actionString == null &&  this._actionString != null) return false;
+            if (p._actionString != null &&  this._actionString == null) return false;
+            if (p._actionString != null &&  this._actionString != null && !p._actionString.equals(this._actionString)) return false;
+
+        }
+        return true;
+    }
+
+    @Override
+    public int hashCode() {
+        int hash = _option*1000+_type*1000*1000+_actionData;
+        if (_deviceName!=null) hash += _deviceName.hashCode();
+        
+        return hash;
+    }
+
     /**
      * If this is an indirect reference return the Memory bean
      *
