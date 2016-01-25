@@ -28,6 +28,7 @@ public class SwingTestCase extends JFCTestCase {
 
     public SwingTestCase(String s) {
         super(s);
+        setLockWait(10); // getLockWait() found default value 25 in JMRI 4.3.4
     }
 
     /**
