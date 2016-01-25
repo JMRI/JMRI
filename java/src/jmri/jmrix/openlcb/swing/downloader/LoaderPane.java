@@ -77,7 +77,9 @@ public class LoaderPane extends jmri.jmrix.AbstractLoaderPane
         this.loaderClient = memo.get(LoaderClient.class);
         this.nid = memo.get(NodeID.class);
         state = State.FAKE;
-        // We can add to GUI here       
+        // We can add to GUI here
+        loadButton.setText("Load");
+        loadButton.setToolTipText("Start Load Process");
         JPanel p;
         
         p = new JPanel();
@@ -146,10 +148,10 @@ public class LoaderPane extends jmri.jmrix.AbstractLoaderPane
         super.doLoad();
                                                 //System.out.println("LC - doLoad");
         setOperationAborted(false);
+        abortButton.setEnabled(false);
+        abortButton.setToolTipText(Bundle.getMessage("TipAbortDisabled"));
         Integer ispace = Integer.valueOf(spaceField.getText());
         long addr = 0;
-        //fdata = new byte[100];
-        //for(byte i=0;i<100;i++) fdata[i] = i;
         loaderClient.doLoad(nid,destNodeID(),ispace,addr,fdata, new LoaderStatusReporter() {
             public void onProgress(float percent) {
                 updateGUI(Math.round(percent));
