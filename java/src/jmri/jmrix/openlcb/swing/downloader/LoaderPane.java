@@ -158,10 +158,16 @@ public class LoaderPane extends jmri.jmrix.AbstractLoaderPane
             }
             public void onDone(int errorCode, String errorString) {
                 if(errorCode==0) {
-                    sendDataDone(true);
-                    status.setText(Bundle.getMessage("StatusDone"));
-                } else status.setText(Bundle.getMessage("StatusAbort"));
-                log.info("   Download completed, errorCode:"+errorCode+": "+errorString);
+                    //status.setText(Bundle.getMessage("StatusDone"));
+                    setOperationAborted(false);
+                    status.setText(errorString);
+                } else {
+                    // status.setText(Bundle.getMessage("StatusAbort"));
+                    setOperationAborted(true);
+                    status.setText(errorString);
+                    log.info("   Download failed, errorCode:"+errorCode+": "+errorString);
+                }
+                //sendDataDone(errorCode==0);
             }
         });
     }
