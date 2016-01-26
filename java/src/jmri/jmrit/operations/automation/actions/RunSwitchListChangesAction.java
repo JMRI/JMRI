@@ -13,9 +13,9 @@ import jmri.jmrit.operations.trains.TrainSwitchLists;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-public class RunSwitchListAction extends Action {
+public class RunSwitchListChangesAction extends Action {
 
-    private static final int _code = ActionCodes.RUN_SWITCHLIST;
+    private static final int _code = ActionCodes.RUN_SWITCHLIST_CHANGES;
 
     @Override
     public int getCode() {
@@ -24,13 +24,13 @@ public class RunSwitchListAction extends Action {
 
     @Override
     public String getName() {
-        return Bundle.getMessage("RunSwitchList");
+        return Bundle.getMessage("RunSwitchListChanges");
     }
 
     @Override
     public void doAction() {
         if (getAutomationItem() != null) {
-            boolean isChanged = false;
+            boolean isChanged = true;
             // TODO should we check this?
             if (!Setup.isGenerateCsvSwitchListEnabled()) {
                 log.info("Generate CSV Switch List isn't enabled!");
@@ -85,6 +85,6 @@ public class RunSwitchListAction extends Action {
         // no cancel for this action     
     }
 
-    static Logger log = LoggerFactory.getLogger(RunSwitchListAction.class.getName());
+    static Logger log = LoggerFactory.getLogger(RunSwitchListChangesAction.class.getName());
 
 }

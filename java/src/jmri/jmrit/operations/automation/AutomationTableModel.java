@@ -154,7 +154,7 @@ public class AutomationTableModel extends javax.swing.table.AbstractTableModel i
             case ROUTE_COLUMN:
                 return Bundle.getMessage("RouteLocation");
             case AUTOMATION_COLUMN:
-                return Bundle.getMessage("Automation");
+                return Bundle.getMessage("AutomationOther");
             case STATUS_COLUMN:
                 return Bundle.getMessage("Status");
             case MESSAGE_COLUMN:
@@ -277,7 +277,7 @@ public class AutomationTableModel extends javax.swing.table.AbstractTableModel i
                 setRouteLocation(value, item);
                 break;
             case AUTOMATION_COLUMN:
-                setAutomation(value, item);
+                setAutomationColumn(value, item);
                 break;
             case MESSAGE_COLUMN:
                 setMessage(value, item);
@@ -308,7 +308,7 @@ public class AutomationTableModel extends javax.swing.table.AbstractTableModel i
         //      cb.setSelectedItem(item.getAction()); TODO understand why this didn't work, class?
         for (int index = 0; index < cb.getItemCount(); index++) {
             // select the action based on it's action code
-            if (item.getAction() != null && ((Action) cb.getItemAt(index)).getCode() == item.getAction().getCode()) {
+            if (item.getAction() != null && (cb.getItemAt(index)).getCode() == item.getAction().getCode()) {
                 cb.setSelectedIndex(index);
                 break;
             }
@@ -320,8 +320,7 @@ public class AutomationTableModel extends javax.swing.table.AbstractTableModel i
         JComboBox<Train> cb = TrainManager.instance().getTrainComboBox();
         cb.setSelectedItem(item.getTrain());
         // determine if train combo box is enabled
-        JComboBox<Action> acb = getActionComboBox(item);
-        cb.setEnabled(acb.getSelectedItem() != null && ((Action) acb.getSelectedItem()).isTrainMenuEnabled());
+        cb.setEnabled(item.getAction() != null && item.getAction().isTrainMenuEnabled());
         return cb;
     }
 
@@ -332,32 +331,22 @@ public class AutomationTableModel extends javax.swing.table.AbstractTableModel i
             cb.setSelectedItem(item.getRouteLocation());
         }
         // determine if route combo box is enabled
-        JComboBox<Action> acb = getActionComboBox(item);
-        cb.setEnabled(acb.getSelectedItem() != null && ((Action) acb.getSelectedItem()).isRouteMenuEnabled());
+        cb.setEnabled(item.getAction() != null && item.getAction().isRouteMenuEnabled());
         return cb;
     }
 
     /**
-     * Returns either a comboBox loaded with automations, or a goto list of
-     * automationItems for this automation.
+     * Returns either a comboBox loaded with Automations, or a goto list of
+     * AutomationItems, or TrainSchedules.
      * 
      * @param item
      * @return comboBox loaded with automations or a goto automationIem list
      */
     private JComboBox<?> getAutomationComboBox(AutomationItem item) {
-        JComboBox<Action> acb = getActionComboBox(item);
-        if (acb.getSelectedItem() != null && ((Action) acb.getSelectedItem()).isGotoMenuEnabled()) {
-            JComboBox<AutomationItem> cb = _automation.getComboBox();
-            cb.setSelectedItem(item.getGotoAutomationItem());
-//            cb.setEnabled(acb.getSelectedItem() != null && ((Action) acb.getSelectedItem()).isGotoMenuEnabled());
-            return cb;
-        } else {
-            JComboBox<Automation> cb = AutomationManager.instance().getComboBox();
-            cb.setSelectedItem(item.getAutomationToRun());
-            // determine if automation combo box is enabled
-            cb.setEnabled(acb.getSelectedItem() != null && ((Action) acb.getSelectedItem()).isAutomationMenuEnabled());
-            return cb;
+        if (item.getAction() != null) {
+            return item.getAction().getComboBox();
         }
+        return null;
     }
 
     private String getStatus(AutomationItem item) {
@@ -382,17 +371,8 @@ public class AutomationTableModel extends javax.swing.table.AbstractTableModel i
         item.setRouteLocation((RouteLocation) cb.getSelectedItem());
     }
 
-    private void setAutomation(Object value, AutomationItem item) {
-        JComboBox<Action> acb = getActionComboBox(item);
-        if (acb.getSelectedItem() != null && ((Action) acb.getSelectedItem()).isGotoMenuEnabled()) {
-            @SuppressWarnings("unchecked")
-            JComboBox<AutomationItem> cb = (JComboBox<AutomationItem>) value;
-            item.setGotoAutomationItem((AutomationItem) cb.getSelectedItem());
-        } else {
-            @SuppressWarnings("unchecked")
-            JComboBox<Automation> cb = (JComboBox<Automation>) value;
-            item.setAutomationToRun((Automation) cb.getSelectedItem());
-        }
+    private void setAutomationColumn(Object value, AutomationItem item) {
+        item.setOther(((JComboBox<?>) value).getSelectedItem());
     }
 
     private void setMessage(Object value, AutomationItem item) {

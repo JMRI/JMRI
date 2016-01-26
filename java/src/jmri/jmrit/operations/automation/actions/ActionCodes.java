@@ -14,8 +14,10 @@ public class ActionCodes {
     public static final int ENABLE_ROUTES = 0x2;
     public static final int OK_MESSAGE = 0x4;
     public static final int FAIL_MESSAGE = 0x8;
-    public static final int ENABLE_AUTOMATION_LIST = 0x10;
-    public static final int ENABLE_GOTO_LIST = 0x20;
+    
+    public static final int ENABLE_AUTOMATION = 0x10;
+    public static final int ENABLE_GOTO = 0x20;
+    public static final int ENABLE_OTHER = 0x40;
 
     // codes use upper byte   
     public static final int CODE_MASK = 0xFF00; // upper byte only
@@ -38,21 +40,25 @@ public class ActionCodes {
     public static final int UPDATE_SWITCHLIST = 0x1000 + OK_MESSAGE;
     public static final int PRINT_SWITCHLIST = 0x1100 + OK_MESSAGE;
     public static final int WAIT_SWITCHLIST = 0x1200 + OK_MESSAGE;
-    public static final int RUN_SWITCHLIST = 0x1300 + OK_MESSAGE  + FAIL_MESSAGE;
+    public static final int RUN_SWITCHLIST_CHANGES = 0x1300 + OK_MESSAGE + FAIL_MESSAGE;
+    public static final int RUN_SWITCHLIST = 0x1400 + OK_MESSAGE + FAIL_MESSAGE;
     
-    public static final int STEP_AUTOMATION = 0x3000 + OK_MESSAGE + FAIL_MESSAGE + ENABLE_AUTOMATION_LIST;
-    public static final int RUN_AUTOMATION = 0x3100 + OK_MESSAGE + FAIL_MESSAGE + ENABLE_AUTOMATION_LIST;
-    public static final int STOP_AUTOMATION = 0x3200 + OK_MESSAGE + FAIL_MESSAGE + ENABLE_AUTOMATION_LIST;
-    public static final int RESUME_AUTOMATION = 0x3300 + OK_MESSAGE + FAIL_MESSAGE + ENABLE_AUTOMATION_LIST;
+    public static final int ACTIVATE_TIMETABLE = 0x2000 + OK_MESSAGE + ENABLE_OTHER; 
+    public static final int APPLY_TIMETABLE = 0x2100 + OK_MESSAGE + FAIL_MESSAGE;
     
-    public static final int MESSAGE = 0x4000  + ENABLE_TRAINS + ENABLE_ROUTES + ENABLE_AUTOMATION_LIST + OK_MESSAGE;
+    public static final int STEP_AUTOMATION = 0x3000 + OK_MESSAGE + FAIL_MESSAGE + ENABLE_AUTOMATION;
+    public static final int RUN_AUTOMATION = 0x3100 + OK_MESSAGE + FAIL_MESSAGE + ENABLE_AUTOMATION;
+    public static final int STOP_AUTOMATION = 0x3200 + OK_MESSAGE + FAIL_MESSAGE + ENABLE_AUTOMATION;
+    public static final int RESUME_AUTOMATION = 0x3300 + OK_MESSAGE + FAIL_MESSAGE + ENABLE_AUTOMATION;
+    
+    public static final int MESSAGE = 0x4000  + ENABLE_TRAINS + ENABLE_ROUTES + ENABLE_AUTOMATION + OK_MESSAGE;
     public static final int WAIT_MESSAGE_OK = 0x4100 + OK_MESSAGE;
     public static final int WAIT_MESSAGE_YES_NO = 0x4200 + OK_MESSAGE;
-    public static final int IF_MESSAGE_NO = 0x4300 + OK_MESSAGE + ENABLE_GOTO_LIST;
+//    public static final int IF_MESSAGE_NO = 0x4300 + OK_MESSAGE + ENABLE_GOTO_LIST;
     
-    public static final int GOTO = 0x5000 + OK_MESSAGE + FAIL_MESSAGE + ENABLE_GOTO_LIST;
-    public static final int GOTO_IF_TRUE = 0x5100 + OK_MESSAGE + FAIL_MESSAGE + ENABLE_GOTO_LIST;
-    public static final int GOTO_IF_FALSE = 0x5200 + OK_MESSAGE + FAIL_MESSAGE + ENABLE_GOTO_LIST;
+    public static final int GOTO = 0x5000 + OK_MESSAGE + FAIL_MESSAGE + ENABLE_GOTO;
+    public static final int GOTO_IF_TRUE = 0x5100 + OK_MESSAGE + FAIL_MESSAGE + ENABLE_GOTO;
+    public static final int GOTO_IF_FALSE = 0x5200 + OK_MESSAGE + FAIL_MESSAGE + ENABLE_GOTO;
     
     public static final int HALT_ACTION = 0xFF00 + OK_MESSAGE;
 

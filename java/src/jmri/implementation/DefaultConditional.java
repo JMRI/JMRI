@@ -182,7 +182,7 @@ public class DefaultConditional extends AbstractNamedBean
     /**
      * Only used for store
      */
-    public List<ConditionalVariable> getStateVariableList() {
+    public ArrayList<ConditionalVariable> getStateVariableList() {
         return _variableList;
     }
 
@@ -209,6 +209,13 @@ public class DefaultConditional extends AbstractNamedBean
             actionList.add(clone);
         }
         return actionList;
+    }
+
+    /**
+     * Only used for store
+     */
+    public ArrayList<ConditionalAction> getActionList() {
+        return _actionList;
     }
 
     /**

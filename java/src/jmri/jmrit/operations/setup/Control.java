@@ -89,6 +89,8 @@ public class Control {
     
     public static int reportFontSize = 10;
     public static String reportFontName = ""; // use default
+    
+    public static int excelWaitTime = 120; // in seconds
 
     // must synchronize changes with operation-config.dtd
     public static Element store() {
@@ -126,6 +128,10 @@ public class Control {
         e.addContent(values = new Element(Xml.REPORTS));
         values.setAttribute(Xml.FONT_SIZE, Integer.toString(reportFontSize));
         values.setAttribute(Xml.FONT_NAME, reportFontName);
+        // actions
+        e.addContent(values = new Element(Xml.ACTIONS));
+        values.setAttribute(Xml.EXCEL_WAIT_TIME, Integer.toString(excelWaitTime));
+        
         return e;
     }
 
@@ -201,6 +207,17 @@ public class Control {
             }
             if ((a = eReports.getAttribute(Xml.FONT_NAME)) != null) {
                 reportFontName = a.getValue();
+            }
+        }   
+        Element eActions = eControl.getChild(Xml.ACTIONS);
+        if (eActions != null) {
+            Attribute a;
+            if ((a = eActions.getAttribute(Xml.EXCEL_WAIT_TIME)) != null) {
+                try {
+                    excelWaitTime = a.getIntValue();
+                } catch (DataConversionException e1) {
+                    log.error("Excel wait time ({}) isn't a number", a.getValue());
+                }
             }
         }
     }
