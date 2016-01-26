@@ -119,13 +119,13 @@
       <aspect>Stop and Stay</aspect>
     </danger>
 
-    <held>
-      <aspect>Stop and Stay</aspect>
-    </held>
-
     <permissive>
       <aspect>Restricting</aspect>
     </permissive>
+
+    <held>
+      <aspect>Stop and Stay</aspect>
+    </held>
 
   </specificappearances>
 
