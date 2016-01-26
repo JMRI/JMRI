@@ -381,7 +381,7 @@ public class AutomationTableModel extends javax.swing.table.AbstractTableModel i
         dialog.setLayout(new BorderLayout());
         dialog.setTitle(Bundle.getMessage("Message"));
 
-        final JTextArea messageTextArea = new JTextArea(5, 100);
+        final JTextArea messageTextArea = new JTextArea(6, 100);
         JScrollPane messageScroller = new JScrollPane(messageTextArea);
         messageScroller.setBorder(BorderFactory.createTitledBorder(Bundle.getMessage("MessageOk")));
         dialog.add(messageScroller, BorderLayout.NORTH);
@@ -395,7 +395,7 @@ public class AutomationTableModel extends javax.swing.table.AbstractTableModel i
         JCheckBox haltCheckBox = new JCheckBox(Bundle.getMessage("HaltIfFail"));
         haltCheckBox.setSelected(item.isHaltFailureEnabled());
 
-        final JTextArea messageFailTextArea = new JTextArea(5, 100);
+        final JTextArea messageFailTextArea = new JTextArea(6, 100);
         if (item.getAction() != null && item.getAction().isMessageFailEnabled()) {
             JScrollPane messageFailScroller = new JScrollPane(messageFailTextArea);
             messageFailScroller.setBorder(BorderFactory.createTitledBorder(Bundle.getMessage("MessageFail")));

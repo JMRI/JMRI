@@ -605,21 +605,22 @@ public class Automation implements java.beans.PropertyChangeListener {
                 }
             }
             if (evt.getPropertyName().equals(Action.ACTION_GOTO_CHANGED_PROPERTY)) {
-                synchronized (this) {
-                    // pause thread in case goto is a loop
-                    try {
-                        wait(250);
-                    } catch (InterruptedException e) {
-                        // TODO Auto-generated catch block
-                        e.printStackTrace();
-                    }
-                }
                 // the old property is used for conditional branch
                 // if old = null then it is a non-conditional goto
                 // if old = true, branch if success
                 // if old = false, branch if failure
                 if (evt.getOldValue() == null || (boolean) evt.getOldValue() == isLastActionSuccessful()) {
                     _gotoAutomationItem = (AutomationItem) evt.getNewValue();
+                    // pause thread in case goto is a loop
+                    // this allows the user to "Stop" the automation
+                    synchronized (this) {
+                        try {
+                            wait(250);
+                        } catch (InterruptedException e) {
+                            // TODO Auto-generated catch block
+                            e.printStackTrace();
+                        }
+                    }
                 }
             }
         }
