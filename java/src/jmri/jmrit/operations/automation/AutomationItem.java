@@ -359,7 +359,7 @@ public class AutomationItem implements java.beans.PropertyChangeListener {
      * @param item
      */
     public void copyItem(AutomationItem item) {
-        item.setAction(getAction());
+        item.setAction(getNewAction(getAction()));
         item.setAutomationToRun(getAutomationToRun());
         item.setGotoAutomationItem(getGotoAutomationItem()); //needs an adjustment to work properly
         item.setRouteLocation(getRouteLocation());
@@ -369,6 +369,14 @@ public class AutomationItem implements java.beans.PropertyChangeListener {
         item.setMessage(getMessage());
         item.setMessageFail(getMessageFail());
         item.setHaltFailureEnabled(isHaltFailureEnabled());
+    }
+    
+    private Action getNewAction(Action action) {
+        for (Action newAction : getActionList()) {
+            if (newAction.getCode() == action.getCode())
+                return newAction;
+        }
+        return null;
     }
 
     /**
