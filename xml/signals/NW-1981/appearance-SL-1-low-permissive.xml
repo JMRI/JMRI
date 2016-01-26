@@ -20,56 +20,48 @@
   <revhistory xmlns="http://docbook.org/ns/docbook">
     <revision>
         <revnumber>1</revnumber>
-        <date>2015-10-19</date>
+        <date>2016-01-26</date>
         <authorinitials>GPM</authorinitials>
-        <revremark>Initial version of the signal set.</revremark>
-		
-		<revnumber>2</revnumber>
-		<date>2016-01-26</date>
-		<authorinitials>GPM</authorinitials>
-		<revremark>Corrected the aspect mapping to eliminate aspects not possible on this signal.</revremark>
+        <revremark>Initial version of the the NW color light, search light, and semaphore signals.</revremark>
     </revision>   
   </revhistory>
   
   <aspecttable>N&amp;W 1981</aspecttable>
-  <name>CPL Single Arm Absolute Mast Signal</name>
+  <name>Color Light Single Arm Permissive Dwarf Signal</name>
   <reference>As described in the 1981 version of the Norfolk and Western Railroad Operating Rules.</reference>
-  <description>Appearances N&amp;W absolute CPL mast signals</description>
+  <description>Appearances for N&amp;W single head permissive color light dwarf signals.</description>
   
   <appearances>
 
     <appearance>
       <aspectname>Clear</aspectname>
       <show>green</show>
-      <show>dark</show>
       <reference>Page 60</reference>
-	  <imagelink>../../../resources/icons/smallschematics/aspects/NW-1981/NW-CPL-1arm-absolute/rule-281.gif</imagelink>
+	  <imagelink>../../../resources/icons/smallschematics/aspects/NW-1981/NW-SL-1-low-permissive/rule-281.gif</imagelink>
     </appearance>
 	
 	<appearance>
       <aspectname>Approach</aspectname>
       <show>yellow</show>
-      <show>dark</show>
       <reference>Page 63</reference>
-	  <imagelink>../../../resources/icons/smallschematics/aspects/NW-1981/NW-CPL-1arm-absolute/rule-285.gif</imagelink>
+	  <imagelink>../../../resources/icons/smallschematics/aspects/NW-1981/NW-SL-1-low-permissive/rule-285.gif</imagelink>
     </appearance>
 	
     <appearance>
-      <aspectname>Stop and Stay</aspectname>
+      <aspectname>Stop and Proceed</aspectname>
       <show>red</show>
-      <show>lunar</show>
       <reference>Page 66</reference>
-	  <imagelink>../../../resources/icons/smallschematics/aspects/NW-1981/NW-CPL-1arm-absolute/rule-292.gif</imagelink>
+	  <imagelink>../../../resources/icons/smallschematics/aspects/NW-1981/NW-SL-1-low-permissive/rule-291.gif</imagelink>
     </appearance>
 	
   </appearances>
 	
   <specificappearances>
     <danger>
-      <aspect>Stop and Stay</aspect>
+      <aspect>Stop and Proceed</aspect>
     </danger>
     <held>
-      <aspect>Stop and Stay</aspect>
+      <aspect>Stop and Proceed</aspect>
     </held>
   </specificappearances>
 	

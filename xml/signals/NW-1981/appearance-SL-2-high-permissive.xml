@@ -20,57 +20,71 @@
   <revhistory xmlns="http://docbook.org/ns/docbook">
     <revision>
         <revnumber>1</revnumber>
-        <date>2015-10-19</date>
+        <date>2016-01-26</date>
         <authorinitials>GPM</authorinitials>
-        <revremark>Initial version of the signal set.</revremark>
-		
-		<revnumber>2</revnumber>
-		<date>2016-01-26</date>
-		<authorinitials>GPM</authorinitials>
-		<revremark>Corrected the aspect mapping to eliminate aspects not possible on this signal.</revremark>
+        <revremark>Initial version of the the NW color light, search light, and semaphore signals.</revremark>
     </revision>   
   </revhistory>
   
   <aspecttable>N&amp;W 1981</aspecttable>
-  <name>CPL Single Arm Absolute Mast Signal</name>
+  <name>Color Light 2 Arm Permissive Mast Signal</name>
   <reference>As described in the 1981 version of the Norfolk and Western Railroad Operating Rules.</reference>
-  <description>Appearances N&amp;W absolute CPL mast signals</description>
+  <description>Appearances for N&amp;W 2 arm color light, search light, and semaphore permissive mast signals</description>
   
   <appearances>
 
     <appearance>
       <aspectname>Clear</aspectname>
       <show>green</show>
-      <show>dark</show>
+      <show>red</show>
       <reference>Page 60</reference>
-	  <imagelink>../../../resources/icons/smallschematics/aspects/NW-1981/NW-CPL-1arm-absolute/rule-281.gif</imagelink>
+	  <imagelink>../../../resources/icons/smallschematics/aspects/NW-1981/NW-SL-2-high-permissive/rule-281.gif</imagelink>
+    </appearance>
+	
+	<appearance>
+      <aspectname>Approach Diverging</aspectname>
+      <show>yellow</show>
+      <show>green</show>
+      <reference>Page 61</reference>
+	  <imagelink>../../../resources/icons/smallschematics/aspects/NW-1981/NW-SL-2-high-permissive/rule-282.gif</imagelink>
+    </appearance>
+	
+	<appearance>
+      <aspectname>Advance Approach</aspectname>
+      <show>yellow</show>
+      <show>yellow</show>
+      <reference>Page 61</reference>
+	  <imagelink>../../../resources/icons/smallschematics/aspects/NW-1981/NW-SL-2-high-permissive/rule-282-A.gif</imagelink>
     </appearance>
 	
 	<appearance>
       <aspectname>Approach</aspectname>
       <show>yellow</show>
-      <show>dark</show>
+      <show>red</show>
       <reference>Page 63</reference>
-	  <imagelink>../../../resources/icons/smallschematics/aspects/NW-1981/NW-CPL-1arm-absolute/rule-285.gif</imagelink>
+	  <imagelink>../../../resources/icons/smallschematics/aspects/NW-1981/NW-SL-2-high-permissive/rule-285.gif</imagelink>
     </appearance>
 	
     <appearance>
-      <aspectname>Stop and Stay</aspectname>
+      <aspectname>Stop and Proceed</aspectname>
       <show>red</show>
-      <show>lunar</show>
+      <show>dark</show>
       <reference>Page 66</reference>
-	  <imagelink>../../../resources/icons/smallschematics/aspects/NW-1981/NW-CPL-1arm-absolute/rule-292.gif</imagelink>
+	  <imagelink>../../../resources/icons/smallschematics/aspects/NW-1981/NW-SL-2-high-permissive/rule-291.gif</imagelink>
     </appearance>
 	
   </appearances>
 	
   <specificappearances>
+   
     <danger>
-      <aspect>Stop and Stay</aspect>
+      <aspect>Stop and Proceed</aspect>
     </danger>
-    <held>
-      <aspect>Stop and Stay</aspect>
+	
+	<held>
+      <aspect>Stop and Proceed</aspect>
     </held>
+	
   </specificappearances>
 	
   <aspectMappings>
@@ -92,22 +106,23 @@
 	
 	<aspectMapping>
 	  <advancedAspect>Diverging Clear</advancedAspect>
-	  <ourAspect>Approach</ourAspect>
+	  <ourAspect>Approach Diverging</ourAspect>
 	</aspectMapping>
 	
 	<aspectMapping>
 	  <advancedAspect>Diverging Approach Diverging</advancedAspect>
-	  <ourAspect>Approach</ourAspect>
+	  <ourAspect>Approach Diverging</ourAspect>
 	</aspectMapping>
 	
 	<aspectMapping>
 	  <advancedAspect>Approach</advancedAspect>
+	  <ourAspect>Advance Approach</ourAspect>
 	  <ourAspect>Clear</ourAspect>
 	</aspectMapping>
 	
 	<aspectMapping>
 	  <advancedAspect>Diverging Approach</advancedAspect>
-	  <ourAspect>Approach</ourAspect>
+	  <ourAspect>Approach Diverging</ourAspect>
 	</aspectMapping>
 	
 	<aspectMapping>
@@ -118,6 +133,7 @@
 	<aspectMapping>
 	  <advancedAspect>Slow Approach</advancedAspect>
 	  <ourAspect>Approach</ourAspect>
+	  <ourAspect>Approach Diverging</ourAspect>
 	</aspectMapping>
 	
 	<aspectMapping>

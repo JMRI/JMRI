@@ -22,12 +22,17 @@
         <revnumber>1</revnumber>
         <date>2015-10-19</date>
         <authorinitials>GPM</authorinitials>
-        <revremark>comment</revremark>
-    </revision>        
+        <revremark>Initial version of the signal set.</revremark>
+		
+		<revnumber>2</revnumber>
+		<date>2016-01-26</date>
+		<authorinitials>GPM</authorinitials>
+		<revremark>Corrected the aspect mapping to eliminate aspects not possible on this signal.</revremark>
+    </revision>   
   </revhistory>
   
   <aspecttable>N&amp;W 1981</aspecttable>
-  <name>CPL Permissve Dwarf Signals</name>
+  <name>CPL Permissve Dwarf Signal</name>
   <reference>As described in the 1981 version of the Norfolk and Western Railroad Operating Rules.</reference>
   <description>Appearances for N&amp;W CPL permissive dwarf signals</description>
   
@@ -67,96 +72,77 @@
 	
   </appearances>
 	
-	<specificappearances>
+  <specificappearances>
+  
     <danger>
       <aspect>Stop and Proceed</aspect>
     </danger>
+	
     <held>
       <aspect>Stop and Proceed</aspect>
     </held>
+	
   </specificappearances>
 	
   <aspectMappings>
   
 	<aspectMapping>
 	  <advancedAspect>Clear</advancedAspect>
-	  <ourAspect>Clear</ourAspect>
-	  <ourAspect>Diverging Clear</ourAspect>
 	  <ourAspect>Slow Clear</ourAspect>
 	</aspectMapping>
 	
 	<aspectMapping>
 	  <advancedAspect>Approach Diverging</advancedAspect>
-	  <ourAspect>Clear</ourAspect>
-	  <ourAspect>Diverging Clear</ourAspect>
 	  <ourAspect>Slow Clear</ourAspect>
 	</aspectMapping>
 	
 	<aspectMapping>
 	  <advancedAspect>Advance Approach</advancedAspect>
-	  <ourAspect>Clear</ourAspect>
-	  <ourAspect>Diverging Clear</ourAspect>
 	  <ourAspect>Slow Clear</ourAspect>
 	</aspectMapping>
 	
 	<aspectMapping>
 	  <advancedAspect>Diverging Clear</advancedAspect>
-	  <ourAspect>Approach Diverging</ourAspect>
-	  <ourAspect>Diverging Approach Diverging</ourAspect>
+	  <ourAspect>Slow Approach</ourAspect>
 	</aspectMapping>
 	
 	<aspectMapping>
 	  <advancedAspect>Diverging Approach Diverging</advancedAspect>
-	  <ourAspect>Approach Diverging</ourAspect>
-	  <ourAspect>Diverging Approach Diverging</ourAspect>
+	  <ourAspect>Slow Approach</ourAspect>
 	</aspectMapping>
 	
 	<aspectMapping>
 	  <advancedAspect>Approach</advancedAspect>
-	  <ourAspect>Advance Approach</ourAspect>
-	  <ourAspect>Clear</ourAspect>
-	  <ourAspect>Diverging Clear</ourAspect>
 	  <ourAspect>Slow Clear</ourAspect>
 	</aspectMapping>
 	
 	<aspectMapping>
 	  <advancedAspect>Diverging Approach</advancedAspect>
-	  <ourAspect>Approach Diverging</ourAspect>
-	  <ourAspect>Diverging Approach Diverging</ourAspect>
+	  <ourAspect>Slow Approach</ourAspect>
 	</aspectMapping>
 	
 	<aspectMapping>
 	  <advancedAspect>Slow Clear</advancedAspect>
-	  <ourAspect>Approach</ourAspect>
-	  <ourAspect>Diverging Approach</ourAspect>
+	  <ourAspect>Slow Clear</ourAspect>
 	</aspectMapping>
 	
 	<aspectMapping>
 	  <advancedAspect>Slow Approach</advancedAspect>
-	  <ourAspect>Approach</ourAspect>
-	  <ourAspect>Approach Diverging</ourAspect>
-	  <ourAspect>Diverging Approach</ourAspect>
+	  <ourAspect>Slow Clear</ourAspect>
 	</aspectMapping>
-	
 	
 	<aspectMapping>
 	  <advancedAspect>Restricting</advancedAspect>
-	  <ourAspect>Approach</ourAspect>
-	  <ourAspect>Diverging Approach</ourAspect>
 	  <ourAspect>Slow Approach</ourAspect>
 	</aspectMapping>
 	
 	<aspectMapping>
 	  <advancedAspect>Stop and Proceed</advancedAspect>
-	  <ourAspect>Approach</ourAspect>
-	  <ourAspect>Diverging Approach</ourAspect>
 	  <ourAspect>Slow Approach</ourAspect>
 	</aspectMapping>
 
     <aspectMapping>
 	  <advancedAspect>Stop and Stay</advancedAspect>
-	  <ourAspect>Approach</ourAspect>
-	  <ourAspect>Diverging Approach</ourAspect>
 	  <ourAspect>Slow Approach</ourAspect>
 	</aspectMapping>	
 	

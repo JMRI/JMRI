@@ -21,12 +21,21 @@
   </authorgroup>
 
   <revhistory xmlns="http://docbook.org/ns/docbook">
-    <revision>
-        <revnumber>1</revnumber>
-        <date>2015-10-15</date>
+    
+	<revision>
+        
+		<revnumber>1</revnumber>
+        <date>2015-10-19</date>
         <authorinitials>GPM</authorinitials>
-        <revremark>Initial version</revremark>
-    </revision>    
+        <revremark>Initial version of the signal set.</revremark>
+		
+		<revnumber>2</revnumber>
+		<date>2016-01-26</date>
+		<authorinitials>GPM</authorinitials>
+		<revremark>Corrected the aspect mapping and added the NW color, search, and semaphore signals.</revremark>
+    
+	</revision>
+	
   </revhistory>
 
   <aspects>
@@ -38,7 +47,6 @@
       <reference>Page 60</reference>
       <speed>Normal</speed>
       <speed2>Normal</speed2>
-      <route>Normal</route>
     </aspect>
 	
 	<aspect>
@@ -48,7 +56,6 @@
       <reference>Page 61</reference>
       <speed>Normal</speed>
       <speed2>Medium</speed2>
-      <route>Normal</route>
     </aspect>
 	
 	<aspect>
@@ -58,7 +65,6 @@
       <reference>Page 61</reference>
       <speed>Normal</speed>
       <speed2>Normal</speed2>
-      <route>Normal</route>
     </aspect>
 	
 	<aspect>
@@ -67,7 +73,7 @@
       <indication>Proceed through turnout or turnouts at prescribed speed.</indication>
       <reference>Page 62</reference>
       <speed>Medium</speed>
-      <speed2>Normal</speed2>
+      <speed2>Medium</speed2>
       <route>Diverging</route>
     </aspect>
 	
@@ -88,7 +94,6 @@
       <reference>Page 63</reference>
       <speed>Medium</speed>
       <speed2>Slow</speed2>
-      <route>Normal</route>
     </aspect>
 	
 	<aspect>
@@ -160,6 +165,16 @@
 	<appearancefile href="appearance-CPL-1-arm-permissive.xml"/>
 	<appearancefile href="appearance-CPL-Dwarf-absolute.xml"/>
 	<appearancefile href="appearance-CPL-Dwarf-permissive.xml"/>
+	<appearancefile href="appearance-SL-3-high-absolute.xml"/>
+	<appearancefile href="appearance-SL-2-high-permissive.xml"/>
+	<appearancefile href="appearance-SL-2-high-absolute.xml"/>
+	<appearancefile href="appearance-SL-2-low-absolute.xml"/>
+	<appearancefile href="appearance-Wab-2-high-absolute.xml"/>
+	<appearancefile href="appearance-Wab-2-low-absolute.xml"/>
+	<appearancefile href="appearance-SL-1-high-absolute.xml"/>
+	<appearancefile href="appearance-SL-1-high-permissive.xml"/>
+	<appearancefile href="appearance-SL-1-low-permissive.xml"/>
+	<appearancefile href="appearance-SL-1-low-absolute.xml"/>
   </appearancefiles>
   
 </aspecttable>
