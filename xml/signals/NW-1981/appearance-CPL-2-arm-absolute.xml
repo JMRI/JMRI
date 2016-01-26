@@ -9,12 +9,12 @@
   <copyright xmlns="http://docbook.org/ns/docbook">
     <year>2009</year><year>2010</year><holder>JMRI</holder>
   </copyright>
-  
+
   <authorgroup xmlns="http://docbook.org/ns/docbook">
     <author>
         <personname><firstname>Greg</firstname><surname>McCartney</surname></personname>
         <email>gpmccartney@gmail.com</email>
-    </author>    
+    </author>
   </authorgroup>
 
   <revhistory xmlns="http://docbook.org/ns/docbook">
@@ -23,19 +23,20 @@
         <date>2015-10-19</date>
         <authorinitials>GPM</authorinitials>
         <revremark>Initial version of the signal set.</revremark>
-		
-		<revnumber>2</revnumber>
-		<date>2016-01-26</date>
-		<authorinitials>GPM</authorinitials>
-		<revremark>Corrected the aspect mapping to eliminate aspects not possible on this signal.</revremark>
-    </revision>   
+    </revision>
+    <revision>
+        <revnumber>2</revnumber>
+        <date>2016-01-26</date>
+        <authorinitials>GPM</authorinitials>
+        <revremark>Corrected the aspect mapping to eliminate aspects not possible on this signal.</revremark>
+    </revision>
   </revhistory>
-  
+
   <aspecttable>N&amp;W 1981</aspecttable>
   <name>CPL 2 Arm Absolute Mast Signal</name>
   <reference>As described in the 1981 version of the Norfolk and Western Railroad Operating Rules.</reference>
   <description>Appearances for N&amp;W two arm absolute mast signals</description>
-  
+
   <appearances>
 
     <appearance>
@@ -43,31 +44,31 @@
       <show>green</show>
       <show>dark</show>
       <reference>Page 60</reference>
-	  <imagelink>../../../resources/icons/smallschematics/aspects/NW-1981/NW-CPL-2arm-absolute/rule-281.gif</imagelink>
+      <imagelink>../../../resources/icons/smallschematics/aspects/NW-1981/NW-CPL-2arm-absolute/rule-281.gif</imagelink>
     </appearance>
-	
-	<appearance>
+
+    <appearance>
       <aspectname>Approach Diverging</aspectname>
       <show>yellow</show>
       <show>green</show>
       <reference>Page 61</reference>
-	  <imagelink>../../../resources/icons/smallschematics/aspects/NW-1981/NW-CPL-2arm-absolute/rule-282.gif</imagelink>
+      <imagelink>../../../resources/icons/smallschematics/aspects/NW-1981/NW-CPL-2arm-absolute/rule-282.gif</imagelink>
     </appearance>
-	
-	<appearance>
+
+    <appearance>
       <aspectname>Advance Approach</aspectname>
       <show>yellow</show>
       <show>yellow</show>
       <reference>Page 61</reference>
-	  <imagelink>../../../resources/icons/smallschematics/aspects/NW-1981/NW-CPL-2arm-absolute/rule-282-A.gif</imagelink>
+      <imagelink>../../../resources/icons/smallschematics/aspects/NW-1981/NW-CPL-2arm-absolute/rule-282-A.gif</imagelink>
     </appearance>
-	
-	<appearance>
+
+    <appearance>
       <aspectname>Diverging Clear</aspectname>
       <show>red</show>
       <show>green</show>
       <reference>Page 62</reference>
-	  <imagelink>../../../resources/icons/smallschematics/aspects/NW-1981/NW-CPL-2arm-absolute/rule-283.gif</imagelink>
+      <imagelink>../../../resources/icons/smallschematics/aspects/NW-1981/NW-CPL-2arm-absolute/rule-283.gif</imagelink>
     </appearance>
 
     <appearance>
@@ -75,135 +76,135 @@
       <show>red</show>
       <show>flashyellow</show>
       <reference>Page 62</reference>
-	  <imagelink>../../../resources/icons/smallschematics/aspects/NW-1981/NW-CPL-2arm-absolute/rule-283-B.gif</imagelink>
+      <imagelink>../../../resources/icons/smallschematics/aspects/NW-1981/NW-CPL-2arm-absolute/rule-283-B.gif</imagelink>
     </appearance>
-	
+
     <appearance>
       <aspectname>Approach</aspectname>
       <show>yellow</show>
       <show>dark</show>
       <reference>Page 63</reference>
-	  <imagelink>../../../resources/icons/smallschematics/aspects/NW-1981/NW-CPL-2arm-absolute/rule-285.gif</imagelink>
+      <imagelink>../../../resources/icons/smallschematics/aspects/NW-1981/NW-CPL-2arm-absolute/rule-285.gif</imagelink>
     </appearance>
-	
+
     <appearance>
       <aspectname>Diverging Approach</aspectname>
       <show>red</show>
       <show>yellow</show>
       <reference>Page 64</reference>
-	  <imagelink>../../../resources/icons/smallschematics/aspects/NW-1981/NW-CPL-2arm-absolute/rule-286.gif</imagelink>
+      <imagelink>../../../resources/icons/smallschematics/aspects/NW-1981/NW-CPL-2arm-absolute/rule-286.gif</imagelink>
     </appearance>
-	
+
     <appearance>
       <aspectname>Restricting</aspectname>
       <show>red</show>
       <show>lunar</show>
       <reference>Page 65</reference>
-	  <imagelink>../../../resources/icons/smallschematics/aspects/NW-1981/NW-CPL-2arm-absolute/rule-290.gif</imagelink>
+      <imagelink>../../../resources/icons/smallschematics/aspects/NW-1981/NW-CPL-2arm-absolute/rule-290.gif</imagelink>
     </appearance>
-	
+
     <appearance>
       <aspectname>Stop and Stay</aspectname>
       <show>red</show>
       <show>red</show>
       <reference>Page 66</reference>
-	  <imagelink>../../../resources/icons/smallschematics/aspects/NW-1981/NW-CPL-2arm-absolute/rule-292.gif</imagelink>
+      <imagelink>../../../resources/icons/smallschematics/aspects/NW-1981/NW-CPL-2arm-absolute/rule-292.gif</imagelink>
     </appearance>
-	
+
   </appearances>
-	
+
    <specificappearances>
-   
+
     <danger>
       <aspect>Stop and Stay</aspect>
     </danger>
-	
-	<held>
+
+    <held>
       <aspect>Stop and Stay</aspect>
     </held>
-	
-	<permissive>
-	  <aspect>Restricting</aspect>
-	</permissive>
-	
+
+    <permissive>
+      <aspect>Restricting</aspect>
+    </permissive>
+
   </specificappearances>
-	
+
   <aspectMappings>
-  
-	<aspectMapping>
-	  <advancedAspect>Clear</advancedAspect>
-	  <ourAspect>Clear</ourAspect>
-	  <ourAspect>Diverging Clear</ourAspect>
-	</aspectMapping>
-	
-	<aspectMapping>
-	  <advancedAspect>Approach Diverging</advancedAspect>
-	  <ourAspect>Clear</ourAspect>
-	  <ourAspect>Diverging Clear</ourAspect>
-	</aspectMapping>
-	
-	<aspectMapping>
-	  <advancedAspect>Advance Approach</advancedAspect>
-	  <ourAspect>Clear</ourAspect>
-	  <ourAspect>Diverging Clear</ourAspect>
-	</aspectMapping>
-	
-	<aspectMapping>
-	  <advancedAspect>Diverging Clear</advancedAspect>
-	  <ourAspect>Approach Diverging</ourAspect>
-	  <ourAspect>Diverging Approach Diverging</ourAspect>
-	</aspectMapping>
-	
-	<aspectMapping>
-	  <advancedAspect>Diverging Approach Diverging</advancedAspect>
-	  <ourAspect>Approach Diverging</ourAspect>
-	  <ourAspect>Diverging Approach Diverging</ourAspect>
-	</aspectMapping>
-	
-	<aspectMapping>
-	  <advancedAspect>Approach</advancedAspect>
-	  <ourAspect>Advance Approach</ourAspect>
-	  <ourAspect>Clear</ourAspect>
-	  <ourAspect>Diverging Clear</ourAspect>
-	</aspectMapping>
-	
-	<aspectMapping>
-	  <advancedAspect>Diverging Approach</advancedAspect>
-	  <ourAspect>Approach Diverging</ourAspect>
-	  <ourAspect>Diverging Approach Diverging</ourAspect>
-	</aspectMapping>
-	
-	<aspectMapping>
-	  <advancedAspect>Slow Clear</advancedAspect>
-	  <ourAspect>Approach</ourAspect>
-	  <ourAspect>Diverging Approach</ourAspect>
-	</aspectMapping>
-	
-	<aspectMapping>
-	  <advancedAspect>Slow Approach</advancedAspect>
-	  <ourAspect>Approach</ourAspect>
-	  <ourAspect>Approach Diverging</ourAspect>
-	  <ourAspect>Diverging Approach</ourAspect>
-	</aspectMapping>
-	
-	<aspectMapping>
-	  <advancedAspect>Restricting</advancedAspect>
-	  <ourAspect>Approach</ourAspect>
-	  <ourAspect>Diverging Approach</ourAspect>
-	</aspectMapping>
-	
-	<aspectMapping>
-	  <advancedAspect>Stop and Proceed</advancedAspect>
-	  <ourAspect>Approach</ourAspect>
-	  <ourAspect>Diverging Approach</ourAspect>
-	</aspectMapping>
 
     <aspectMapping>
-	  <advancedAspect>Stop and Stay</advancedAspect>
-	  <ourAspect>Approach</ourAspect>
-	  <ourAspect>Diverging Approach</ourAspect>
-	</aspectMapping>	
-	
+      <advancedAspect>Clear</advancedAspect>
+      <ourAspect>Clear</ourAspect>
+      <ourAspect>Diverging Clear</ourAspect>
+    </aspectMapping>
+
+    <aspectMapping>
+      <advancedAspect>Approach Diverging</advancedAspect>
+      <ourAspect>Clear</ourAspect>
+      <ourAspect>Diverging Clear</ourAspect>
+    </aspectMapping>
+
+    <aspectMapping>
+      <advancedAspect>Advance Approach</advancedAspect>
+      <ourAspect>Clear</ourAspect>
+      <ourAspect>Diverging Clear</ourAspect>
+    </aspectMapping>
+
+    <aspectMapping>
+      <advancedAspect>Diverging Clear</advancedAspect>
+      <ourAspect>Approach Diverging</ourAspect>
+      <ourAspect>Diverging Approach Diverging</ourAspect>
+    </aspectMapping>
+
+    <aspectMapping>
+      <advancedAspect>Diverging Approach Diverging</advancedAspect>
+      <ourAspect>Approach Diverging</ourAspect>
+      <ourAspect>Diverging Approach Diverging</ourAspect>
+    </aspectMapping>
+
+    <aspectMapping>
+      <advancedAspect>Approach</advancedAspect>
+      <ourAspect>Advance Approach</ourAspect>
+      <ourAspect>Clear</ourAspect>
+      <ourAspect>Diverging Clear</ourAspect>
+    </aspectMapping>
+
+    <aspectMapping>
+      <advancedAspect>Diverging Approach</advancedAspect>
+      <ourAspect>Approach Diverging</ourAspect>
+      <ourAspect>Diverging Approach Diverging</ourAspect>
+    </aspectMapping>
+
+    <aspectMapping>
+      <advancedAspect>Slow Clear</advancedAspect>
+      <ourAspect>Approach</ourAspect>
+      <ourAspect>Diverging Approach</ourAspect>
+    </aspectMapping>
+
+    <aspectMapping>
+      <advancedAspect>Slow Approach</advancedAspect>
+      <ourAspect>Approach</ourAspect>
+      <ourAspect>Approach Diverging</ourAspect>
+      <ourAspect>Diverging Approach</ourAspect>
+    </aspectMapping>
+
+    <aspectMapping>
+      <advancedAspect>Restricting</advancedAspect>
+      <ourAspect>Approach</ourAspect>
+      <ourAspect>Diverging Approach</ourAspect>
+    </aspectMapping>
+
+    <aspectMapping>
+      <advancedAspect>Stop and Proceed</advancedAspect>
+      <ourAspect>Approach</ourAspect>
+      <ourAspect>Diverging Approach</ourAspect>
+    </aspectMapping>
+
+    <aspectMapping>
+      <advancedAspect>Stop and Stay</advancedAspect>
+      <ourAspect>Approach</ourAspect>
+      <ourAspect>Diverging Approach</ourAspect>
+    </aspectMapping>
+
   </aspectMappings>
-		
-</appearancetable>  
+
+</appearancetable>
