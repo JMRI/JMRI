@@ -8,6 +8,7 @@ import jmri.jmrit.operations.automation.AutomationItem;
 import jmri.jmrit.operations.automation.AutomationManager;
 import jmri.jmrit.operations.routes.RouteLocation;
 import jmri.jmrit.operations.trains.Train;
+import jmri.jmrit.operations.trains.TrainSchedule;
 
 public abstract class Action {
 
@@ -16,8 +17,8 @@ public abstract class Action {
     public static final String ACTION_RUNNING_CHANGED_PROPERTY = "actionRunning"; // NOI18N
     public static final String ACTION_GOTO_CHANGED_PROPERTY = "actionGoto"; // NOI18N
 
-    public static final int OKAY = 0;
-    public static final int HALT = 1;
+    public static final int HALT = 0; // halt is the first button
+    public static final int OKAY = 1;
     public static final int CLOSED = JOptionPane.CLOSED_OPTION; // -1
     public static final int NO_MESSAGE_SENT = -2;
     public static final int FINISH_FAILED = -3;
@@ -94,7 +95,7 @@ public abstract class Action {
     }
 
     public String getActionString() {
-        return getFormatedMessage("{0}{1}{2}{3}{4}");
+        return getFormatedMessage("{0}{1}{2}{3}{4}{5}");
     }
     
     public String getActionSuccessfulString() {
@@ -130,7 +131,7 @@ public abstract class Action {
             getAutomationItem().setActionSuccessful(success);
             setRunning(false);
             String message = getAutomationItem().getMessage();
-            Object[] buttons = new Object[]{Bundle.getMessage("OK"), Bundle.getMessage("HALT")};
+            Object[] buttons = new Object[]{Bundle.getMessage("HALT"), Bundle.getMessage("OK")};
             if (!success) {
                 message = getAutomationItem().getMessageFail();
                 if (getAutomationItem().isHaltFailureEnabled()) {
@@ -156,13 +157,9 @@ public abstract class Action {
     public int sendMessage(String message, Object[] buttons, boolean success) {
         int response = NO_MESSAGE_SENT;
         if (getAutomationItem() != null && !message.equals(AutomationItem.NONE)) {
-            // use formatter to create title
-            String title = getAutomationItem().getId() +
-                    " " +
-                    (success ? "" : Bundle.getMessage("Failed")) +
-                    " {0} {1} {2} {3} {4}";
-
-            response = JOptionPane.showOptionDialog(null, getFormatedMessage(message), getFormatedMessage(title),
+            String title = getAutomationItem().getId() + " " +
+                    (success ? "" : Bundle.getMessage("Failed")) + " " + getActionString();
+            response = JOptionPane.showOptionDialog(null, getFormatedMessage(message), title,
                     JOptionPane.OK_CANCEL_OPTION, JOptionPane.INFORMATION_MESSAGE, null, buttons
                     , null);
         }
@@ -190,7 +187,12 @@ public abstract class Action {
         if (item != null) {
             itemId = " " + item.getId();
         }
-        return MessageFormat.format(message, new Object[]{getName(), trainName, routeLocationName, automationName, itemId});
+        String day = "";
+        TrainSchedule trainSchedule = getAutomationItem().getTrainSchedule();
+        if (trainSchedule != null) {
+            day = " " + trainSchedule.getName();
+        }
+        return MessageFormat.format(message, new Object[]{getName(), trainName, routeLocationName, automationName, itemId, day});
     }
     
     // to be overridden if action needs a ComboBox
