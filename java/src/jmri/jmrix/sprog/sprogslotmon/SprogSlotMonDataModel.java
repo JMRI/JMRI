@@ -133,7 +133,7 @@ public class SprogSlotMonDataModel extends javax.swing.table.AbstractTableModel 
             case ADDRCOLUMN:  //
                     switch (s.slotStatus()) {
                         case SprogConstants.SLOT_IN_USE:
-                            return Integer.toString(s.locoAddr()) + "("+ (s.getIsLong() ? "L" : "S") + ")";
+                            return Integer.toString(s.getAddr()) + "("+ (s.getIsLong() ? "L" : "S") + ")";
                         case SprogConstants.SLOT_FREE:
                             return "-";
                         default:

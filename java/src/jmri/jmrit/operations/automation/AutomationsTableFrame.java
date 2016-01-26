@@ -5,6 +5,8 @@ import java.awt.Dimension;
 import java.awt.FlowLayout;
 import javax.swing.BoxLayout;
 import javax.swing.JButton;
+import javax.swing.JMenu;
+import javax.swing.JMenuBar;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 import javax.swing.ScrollPaneConstants;
@@ -73,11 +75,12 @@ public class AutomationsTableFrame extends OperationsFrame {
         addRadioButtonAction(sortByIdRadioButton);
 
         // build menu
-//        JMenuBar menuBar = new JMenuBar();
-//        JMenu toolMenu = new JMenu("Tools");
-//        menuBar.add(toolMenu);
-//        setJMenuBar(menuBar);
-//        addHelpMenu("package.jmri.jmrit.operations.Operations_Automations", true); // NOI18N
+        JMenuBar menuBar = new JMenuBar();
+        JMenu toolMenu = new JMenu(Bundle.getMessage("Tools"));
+        menuBar.add(toolMenu);
+        toolMenu.add(new AutomationCopyAction());
+        setJMenuBar(menuBar);
+        addHelpMenu("package.jmri.jmrit.operations.Operations_Automations", true); // NOI18N
 
         initMinimumSize();
         // make panel a bit wider than minimum if the very first time opened
