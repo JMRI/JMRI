@@ -92,6 +92,7 @@
             </Property>
           </Properties>
           <AuxValues>
+            <AuxValue name="JavaCodeGenerator_InitCodePre" type="java.lang.String" value="actionsTbl.setDefaultRenderer(StartupModel.class, new StartupModelCellRenderer());&#xa;actionsTbl.setDefaultEditor(StartupModel.class, new StartupModelCellEditor());"/>
             <AuxValue name="JavaCodeGenerator_SerializeTo" type="java.lang.String" value="StartupActionsPreferencesPanel_actionsTbl"/>
           </AuxValues>
         </Component>

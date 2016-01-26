@@ -85,6 +85,8 @@ public class StartupActionsPreferencesPanel extends JPanel implements Preference
         moveLbl = new JLabel();
         recommendationsLbl = new JLabel();
 
+        actionsTbl.setDefaultRenderer(StartupModel.class, new StartupModelCellRenderer());
+        actionsTbl.setDefaultEditor(StartupModel.class, new StartupModelCellEditor());
         actionsTbl.setModel(new TableModel(InstanceManager.getDefault(StartupActionsManager.class)));
         actionsTbl.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
         actionsTbl.getTableHeader().setReorderingAllowed(false);
@@ -297,7 +299,7 @@ public class StartupActionsPreferencesPanel extends JPanel implements Preference
                 case -1: // tooltip
                     return model.getName();
                 case 0:
-                    return model.getName();
+                    return model;
                 case 1:
                     return InstanceManager.getDefault(StartupActionsManager.class).getFactories(model.getClass()).getDescription();
                 default:
@@ -322,7 +324,7 @@ public class StartupActionsPreferencesPanel extends JPanel implements Preference
         public Class<?> getColumnClass(int columnIndex) {
             switch (columnIndex) {
                 case 0:
-                    return String.class;
+                    return StartupModel.class;
                 case 1:
                     return String.class;
                 default:
@@ -332,7 +334,7 @@ public class StartupActionsPreferencesPanel extends JPanel implements Preference
 
         @Override
         public boolean isCellEditable(int rowIndex, int columnIndex) {
-            return false;
+            return columnIndex == 0;
         }
 //
 //        @Override
