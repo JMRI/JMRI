@@ -2808,8 +2808,7 @@ public class Train implements java.beans.PropertyChangeListener {
         boolean old = _build;
         _build = build;
         if (old != build) {
-            setDirtyAndFirePropertyChange(BUILD_CHANGED_PROPERTY, old ? "true" : "false", build ? "true" // NOI18N
-            : "false"); // NOI18N
+            setDirtyAndFirePropertyChange(BUILD_CHANGED_PROPERTY, old, build); // NOI18N
         }
     }
 

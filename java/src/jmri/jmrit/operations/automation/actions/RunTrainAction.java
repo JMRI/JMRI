@@ -22,7 +22,7 @@ public class RunTrainAction extends Action {
     public void doAction() {
         if (getAutomationItem() != null) {
             Train train = getAutomationItem().getTrain();
-            if (train != null && train.isBuilt() && TrainCustomManifest.manifestCreatorFileExists()) {
+            if (train != null  && train.getRoute() != null && train.isBuilt() && TrainCustomManifest.manifestCreatorFileExists()) {
                 setRunning(true);
                 TrainCustomManifest.addCVSFile(train.createCSVManifestFile());
                 boolean status = TrainCustomManifest.process();
