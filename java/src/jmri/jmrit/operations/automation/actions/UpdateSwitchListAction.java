@@ -4,7 +4,6 @@ import jmri.jmrit.operations.setup.Setup;
 import jmri.jmrit.operations.trains.TrainManager;
 import jmri.jmrit.operations.trains.TrainScheduleManager;
 
-
 public class UpdateSwitchListAction extends Action {
 
     private static final int _code = ActionCodes.UPDATE_SWITCHLIST;
@@ -16,12 +15,13 @@ public class UpdateSwitchListAction extends Action {
 
     @Override
     public String getName() {
-        if (Setup.isSwitchListRealTime() && !TrainManager.instance().isPrintPreviewEnabled())
+        if (Setup.isSwitchListRealTime() && !TrainManager.instance().isPrintPreviewEnabled()) {
             return Bundle.getMessage("PrintSwitchListChanges");
-        else if (Setup.isSwitchListRealTime() && TrainManager.instance().isPrintPreviewEnabled())
+        } else if (Setup.isSwitchListRealTime() && TrainManager.instance().isPrintPreviewEnabled()) {
             return Bundle.getMessage("PreviewSwitchListChanges");
-        else
+        } else {
             return Bundle.getMessage("UpdateSwitchList");
+        }
     }
 
     @Override
@@ -37,5 +37,4 @@ public class UpdateSwitchListAction extends Action {
     public void cancelAction() {
         // no cancel for this action     
     }
-
 }

@@ -16,6 +16,7 @@ import jmri.jmrit.operations.automation.actions.GotoSuccessAction;
 import jmri.jmrit.operations.automation.actions.HaltAction;
 import jmri.jmrit.operations.automation.actions.MoveTrainAction;
 import jmri.jmrit.operations.automation.actions.NoAction;
+import jmri.jmrit.operations.automation.actions.PrintSwitchListAction;
 import jmri.jmrit.operations.automation.actions.PrintTrainManifestAction;
 import jmri.jmrit.operations.automation.actions.PrintTrainManifestIfSelectedAction;
 import jmri.jmrit.operations.automation.actions.ResetTrainAction;
@@ -394,6 +395,7 @@ public class AutomationItem implements java.beans.PropertyChangeListener {
         list.add(new ApplyTimetableAction());
         list.add(new SelectTrainAction());
         list.add(new DeselectTrainAction());
+        list.add(new PrintSwitchListAction());
         list.add(new UpdateSwitchListAction());
         list.add(new WaitSwitchListAction());
         list.add(new RunSwitchListAction());
