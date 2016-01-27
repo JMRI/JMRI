@@ -39,10 +39,19 @@ public class WaitTrainTerminatedAction extends Action implements PropertyChangeL
         }
     }
 
-    private void trainUpdate() {
+    /**
+     * Wait for train to terminate or if user deselects the train build
+     * checkbox.
+     * 
+     * @param evt
+     */
+    private void trainUpdate(PropertyChangeEvent evt) {
         if (getAutomationItem() != null) {
             Train train = getAutomationItem().getTrain();
-            if (train.getStatusCode() == Train.CODE_TERMINATED) {
+            if ((evt.getPropertyName().equals(Train.BUILT_CHANGED_PROPERTY)
+                    && train.getStatusCode() == Train.CODE_TERMINATED) ||
+                    (evt.getPropertyName().equals(Train.BUILD_CHANGED_PROPERTY)
+                    && (boolean) evt.getNewValue() == false)) {
                 train.removePropertyChangeListener(this);
                 finishAction(true);
             }
@@ -65,9 +74,7 @@ public class WaitTrainTerminatedAction extends Action implements PropertyChangeL
         if (Control.showProperty)
             log.debug("Property change AutomationItem {}: ({}) old: ({}) new: ({})", getAutomationItem().getId(),
                     evt.getPropertyName(), evt.getOldValue(), evt.getNewValue());
-        if (evt.getPropertyName().equals(Train.BUILT_CHANGED_PROPERTY)) {
-            trainUpdate();
-        }
+        trainUpdate(evt);
     }
 
     static Logger log = LoggerFactory.getLogger(WaitTrainTerminatedAction.class.getName());
