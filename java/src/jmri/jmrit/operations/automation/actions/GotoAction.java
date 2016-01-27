@@ -1,5 +1,6 @@
 package jmri.jmrit.operations.automation.actions;
 
+import javax.swing.JComboBox;
 import jmri.jmrit.operations.automation.AutomationItem;
 
 public class GotoAction extends Action {
@@ -31,7 +32,11 @@ public class GotoAction extends Action {
     @Override
     public void cancelAction() {
         // no cancel for this action
+    }
 
+    @Override
+    public JComboBox<AutomationItem> getComboBox() {
+        return getAutomationItemComboBox();
     }
 
 }

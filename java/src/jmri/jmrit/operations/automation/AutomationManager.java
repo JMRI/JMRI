@@ -210,6 +210,14 @@ public class AutomationManager implements java.beans.PropertyChangeListener {
             box.addItem(automation);
         }
     }
+    
+    public Automation copyAutomation(Automation automation, String newName) {
+        Automation newAutomation = newAutomation(newName);
+        if (automation != null) {
+            automation.copyAutomation(newAutomation);
+        }
+        return newAutomation;
+    }
 
     /**
      * Construct this Entry from XML. This member has to remain synchronized

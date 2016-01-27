@@ -323,9 +323,8 @@ public final class ProfilePreferencesPanel extends JPanel implements Preferences
                             .addComponent(jScrollPane3, GroupLayout.DEFAULT_SIZE, 667, Short.MAX_VALUE)
                             .addGroup(searchPathsPanelLayout.createSequentialGroup()
                                 .addComponent(btnAddSearchPath)
-                                .addPreferredGap(LayoutStyle.ComponentPlacement.RELATED)
-                                .addComponent(btnRemoveSearchPath)
-                                .addGap(0, 0, Short.MAX_VALUE)))
+                                .addPreferredGap(LayoutStyle.ComponentPlacement.RELATED, GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                .addComponent(btnRemoveSearchPath)))
                         .addContainerGap())
                 );
                 searchPathsPanelLayout.setVerticalGroup(searchPathsPanelLayout.createParallelGroup(GroupLayout.Alignment.LEADING)

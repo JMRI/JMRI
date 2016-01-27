@@ -3265,7 +3265,9 @@
 
    <p>One of the most important buttons is the "Save Builds" button. When pressed, the program
     saves all the files that have been modified by building and moving your trains. Pressing this
-    button allows you to shut down the program and resume exactly where you left the program.</p>
+    button allows you to shut down the program and resume exactly where you left the program. 
+    If you attempt to close the "Trains" window before pressing the "Save Builds" button, a warning
+    will pop up asking you to save your files.</p>
     
    <a name="TrainEdit"></a>
    <h3>Add or Edit Train</h3>
@@ -3763,11 +3765,13 @@
    
    <a href="images/Timetable.png"><img src="images/Timetable.png" alt="Operations Train Timetable"></a>
 
-   <p>The Timetable window allows you to define which trains will run on any given day, and can be
-   found under the Trains-&gt;Tools. For each day of the week, select which trains you want to
-   build. Then select which day you want by selecting the appropriate radio button. Then press the
-   "Apply" button to update the Trains build checkboxes. Use the "Save" button to store any changes
-   you made to the timetable.</p>
+   <p>
+    The Timetable window allows you to define which trains will run on any given day, and can be
+    found under the Trains-&gt;Tools. For each day of the week, select which trains you want to
+    build. Then select which day you want by selecting the appropriate radio button. Then press the
+    "Apply" button to update the <a href="#Trains">Trains</a> "Build" checkboxes. Use the "Save"
+    button to store any changes you made to the timetable.
+   </p>
 
    <p>To change which day of the week is active, select the appropriate radio button and then
     press the "Activate" button. The day selected is then used by your schedules (Delivery and
@@ -3878,6 +3882,18 @@
    <p>The program also allows you to wait for more than one train. Just enter each of the trains
     you want to wait for in consecutive rows. The program will then continue when all of the trains
     either move or arrived at the locations selected.</p>
+    
+   <h5>Activate Timetable</h5>
+   
+   This action will activate the selected day in the "Automation / Other" column. Works the same as the
+   "Activate" button in the <a href="#Timetable">Timetable</a> window.
+
+   <h5>Apply Timetable</h5>
+
+   This action will select trains using the checkboxes in the "Build" column from the
+   <a href="#Trains">Trains</a> window based on which day is active, see "Activate Timetable" above to
+   select which day is active. Works the same as the "Apply" button in the
+   <a href="#Timetable">Timetable</a> window.
 
    <h5>Select Train Build</h5>
    
@@ -3902,6 +3918,14 @@
    are selected in the
    <a href="#SwitchListByLocation">Switch Lists by Location</a> window. 
    
+   <h5>Run Excel Switch List</h5>
+
+   This action works like the "Run" button in the
+   <a href="#SwitchListByLocation">Switch Lists by Location</a> window. It will create CSV files for
+   each of the locations selected in the window, and then run the configured Excel program to
+   generate custom printouts. See
+   <a href="#SetupExcelProgram">Setup Excel Program (Manifest Creator)</a> for more information.
+
    <h5>Run Excel Switch List Changes</h5>
 
    This action works like the "Run Changes" button in the
@@ -3923,6 +3947,19 @@
    This action stops the execution of the automation.  The current pointer will jump to the next action
    in the table allowing you to continue using the "Resume Automation" button if you wish.
    
+   <h4>Automation Tools</h4>
+   
+   <h5>Reset Automation</h5>
+   
+   This tool will stop a running automation, reset the current pointer to the start of the table, and clear
+   the status for all of the actions.
+   
+   <a name="CopyAutomation"></a>
+   <h5>Copy Automation</h5>
+   
+   This tool will allow you to make a copy of an automation. Enter a name for the new automation and select which
+   automation you want to copy.  Then press "Copy" and that should open a new automation window with a copy of the
+   automation you selected.
    
    <p>This is the end of the automation section.</p>
    

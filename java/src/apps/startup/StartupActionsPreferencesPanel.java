@@ -43,8 +43,9 @@ public class StartupActionsPreferencesPanel extends JPanel implements Preference
         initComponents();
         this.actionsTbl.getSelectionModel().addListSelectionListener((ListSelectionEvent e) -> {
             int row = this.actionsTbl.getSelectedRow();
-            this.upBtn.setEnabled(row != 0);
-            this.downBtn.setEnabled(row != this.actionsTbl.getRowCount() - 1);
+            this.upBtn.setEnabled(row != 0 && row != -1);
+            this.downBtn.setEnabled(row != this.actionsTbl.getRowCount() - 1 && row != -1);
+            this.removeBtn.setEnabled(row != -1);
         });
         ArrayList<JMenuItem> items = new ArrayList<>();
         InstanceManager.getDefault(StartupActionsManager.class).getFactories().values().stream().forEach((factory) -> {
@@ -84,6 +85,8 @@ public class StartupActionsPreferencesPanel extends JPanel implements Preference
         moveLbl = new JLabel();
         recommendationsLbl = new JLabel();
 
+        actionsTbl.setDefaultRenderer(StartupModel.class, new StartupModelCellRenderer());
+        actionsTbl.setDefaultEditor(StartupModel.class, new StartupModelCellEditor());
         actionsTbl.setModel(new TableModel(InstanceManager.getDefault(StartupActionsManager.class)));
         actionsTbl.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
         actionsTbl.getTableHeader().setReorderingAllowed(false);
@@ -99,6 +102,7 @@ public class StartupActionsPreferencesPanel extends JPanel implements Preference
         });
 
         removeBtn.setText(bundle.getString("StartupActionsPreferencesPanel.removeBtn.text")); // NOI18N
+        removeBtn.setEnabled(false);
         removeBtn.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent evt) {
                 removeBtnActionPerformed(evt);
@@ -108,6 +112,7 @@ public class StartupActionsPreferencesPanel extends JPanel implements Preference
         startupLbl.setText(bundle.getString("StartupActionsPreferencesPanel.startupLbl.text")); // NOI18N
 
         upBtn.setText(bundle.getString("StartupActionsPreferencesPanel.upBtn.text")); // NOI18N
+        upBtn.setEnabled(false);
         upBtn.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent evt) {
                 upBtnActionPerformed(evt);
@@ -115,6 +120,7 @@ public class StartupActionsPreferencesPanel extends JPanel implements Preference
         });
 
         downBtn.setText(bundle.getString("StartupActionsPreferencesPanel.downBtn.text")); // NOI18N
+        downBtn.setEnabled(false);
         downBtn.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent evt) {
                 downBtnActionPerformed(evt);
@@ -293,7 +299,7 @@ public class StartupActionsPreferencesPanel extends JPanel implements Preference
                 case -1: // tooltip
                     return model.getName();
                 case 0:
-                    return model.getName();
+                    return model;
                 case 1:
                     return InstanceManager.getDefault(StartupActionsManager.class).getFactories(model.getClass()).getDescription();
                 default:
@@ -318,7 +324,7 @@ public class StartupActionsPreferencesPanel extends JPanel implements Preference
         public Class<?> getColumnClass(int columnIndex) {
             switch (columnIndex) {
                 case 0:
-                    return String.class;
+                    return StartupModel.class;
                 case 1:
                     return String.class;
                 default:
@@ -328,7 +334,7 @@ public class StartupActionsPreferencesPanel extends JPanel implements Preference
 
         @Override
         public boolean isCellEditable(int rowIndex, int columnIndex) {
-            return false;
+            return columnIndex == 0;
         }
 //
 //        @Override

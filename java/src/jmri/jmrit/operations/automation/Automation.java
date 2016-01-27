@@ -33,6 +33,8 @@ public class Automation implements java.beans.PropertyChangeListener {
     // stores AutomationItems for this automation
     protected Hashtable<String, AutomationItem> _automationHashTable = new Hashtable<String, AutomationItem>();
     protected int _IdNumber = 0; // each item in a automation gets its own unique id
+    
+    public static final String REGEX = "c";  // NOI18N
 
     public static final String LISTCHANGE_CHANGED_PROPERTY = "automationListChange"; // NOI18N
     public static final String CURRENT_ITEM_CHANGED_PROPERTY = "automationCurrentItemChange"; // NOI18N
@@ -301,7 +303,7 @@ public class Automation implements java.beans.PropertyChangeListener {
 
     public AutomationItem addItem() {
         _IdNumber++;
-        String id = getId() + "c" + Integer.toString(_IdNumber);
+        String id = getId() + REGEX + Integer.toString(_IdNumber);
         log.debug("Adding new item to ({}) id: {}", getName(), id);
         AutomationItem item = new AutomationItem(id);
         _automationHashTable.put(item.getId(), item);
@@ -339,7 +341,7 @@ public class Automation implements java.beans.PropertyChangeListener {
     public void register(AutomationItem item) {
         _automationHashTable.put(item.getId(), item);
         // find last id created
-        String[] getId = item.getId().split("c");
+        String[] getId = item.getId().split(Automation.REGEX);
         int id = Integer.parseInt(getId[1]);
         if (id > _IdNumber) {
             _IdNumber = id;
@@ -498,6 +500,18 @@ public class Automation implements java.beans.PropertyChangeListener {
         }
         return null;
     }
+    
+    public void copyAutomation(Automation automation) {
+        for (AutomationItem item : getItemsBySequenceList()) {
+            item.copyItem(automation.addItem());
+        }
+        // now adjust GOTOs to reference the new automation
+        for (AutomationItem item : automation.getItemsBySequenceList()) {
+            if (item.getGotoAutomationItem() != null) {
+                item.setGotoAutomationItem(automation.getItemBySequenceId(item.getGotoAutomationItem().getSequenceId()));
+            }
+        }
+    }
 
     /**
      * Construct this Entry from XML. This member has to remain synchronized
@@ -591,21 +605,22 @@ public class Automation implements java.beans.PropertyChangeListener {
                 }
             }
             if (evt.getPropertyName().equals(Action.ACTION_GOTO_CHANGED_PROPERTY)) {
-                synchronized (this) {
-                    // pause thread in case goto is a loop
-                    try {
-                        wait(250);
-                    } catch (InterruptedException e) {
-                        // TODO Auto-generated catch block
-                        e.printStackTrace();
-                    }
-                }
                 // the old property is used for conditional branch
                 // if old = null then it is a non-conditional goto
                 // if old = true, branch if success
                 // if old = false, branch if failure
                 if (evt.getOldValue() == null || (boolean) evt.getOldValue() == isLastActionSuccessful()) {
                     _gotoAutomationItem = (AutomationItem) evt.getNewValue();
+                    // pause thread in case goto is a loop
+                    // this allows the user to "Stop" the automation
+                    synchronized (this) {
+                        try {
+                            wait(250);
+                        } catch (InterruptedException e) {
+                            // TODO Auto-generated catch block
+                            e.printStackTrace();
+                        }
+                    }
                 }
             }
         }
