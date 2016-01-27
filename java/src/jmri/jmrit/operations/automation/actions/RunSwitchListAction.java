@@ -3,6 +3,7 @@ package jmri.jmrit.operations.automation.actions;
 import java.io.File;
 import jmri.jmrit.operations.locations.Location;
 import jmri.jmrit.operations.locations.LocationManager;
+import jmri.jmrit.operations.setup.Control;
 import jmri.jmrit.operations.setup.Setup;
 import jmri.jmrit.operations.trains.Train;
 import jmri.jmrit.operations.trains.TrainCsvSwitchLists;
@@ -23,13 +24,13 @@ public class RunSwitchListAction extends Action {
 
     @Override
     public String getName() {
-        return Bundle.getMessage("RunSwitchListChanges");
+        return Bundle.getMessage("RunSwitchList");
     }
 
     @Override
     public void doAction() {
         if (getAutomationItem() != null) {
-            boolean isChanged = true;
+            boolean isChanged = false;
             // TODO should we check this?
             if (!Setup.isGenerateCsvSwitchListEnabled()) {
                 log.info("Generate CSV Switch List isn't enabled!");
@@ -43,6 +44,7 @@ public class RunSwitchListAction extends Action {
                 finishAction(false);
                 return;
             }
+            setRunning(true);
             TrainSwitchLists trainSwitchLists = new TrainSwitchLists();
             TrainCsvSwitchLists trainCsvSwitchLists = new TrainCsvSwitchLists();
             for (Location location : LocationManager.instance().getLocationsByNameList()) {
@@ -62,7 +64,16 @@ public class RunSwitchListAction extends Action {
                 }
             }
             // Processes the CSV Manifest files using an external custom program.
+            int fileCount = TrainCustomSwitchList.getFileCount();
             boolean status = TrainCustomSwitchList.process();
+            if (status) {
+                try {
+                    TrainCustomSwitchList.waitForProcessToComplete(Control.excelWaitTime * fileCount); // wait up to 60 seconds per file
+                } catch (InterruptedException e) {
+                    // TODO Auto-generated catch block
+                    e.printStackTrace();
+                }
+            }
             // set trains switch lists printed
             TrainManager.instance().setTrainsSwitchListStatus(Train.PRINTED);
             finishAction(status);

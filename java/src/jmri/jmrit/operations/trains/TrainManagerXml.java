@@ -117,9 +117,9 @@ public class TrainManagerXml extends OperationsXml {
 
         TrainManager.instance().load(root);
         TrainScheduleManager.instance().load(root);
-        AutomationManager.instance().load(root);
 
         fileLoaded = true; // set flag trains are loaded
+        AutomationManager.instance().load(root);
 
         // now load train icons on panels
         TrainManager.instance().loadTrainIcons();

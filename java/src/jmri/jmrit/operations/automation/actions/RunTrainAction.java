@@ -1,5 +1,6 @@
 package jmri.jmrit.operations.automation.actions;
 
+import jmri.jmrit.operations.setup.Control;
 import jmri.jmrit.operations.trains.Train;
 import jmri.jmrit.operations.trains.TrainCustomManifest;
 
@@ -14,7 +15,7 @@ public class RunTrainAction extends Action {
 
     @Override
     public String getName() {
-           return Bundle.getMessage("RunTrain");
+        return Bundle.getMessage("RunTrain");
     }
 
     @Override
@@ -24,8 +25,16 @@ public class RunTrainAction extends Action {
             if (train != null && train.isBuilt() && TrainCustomManifest.manifestCreatorFileExists()) {
                 setRunning(true);
                 TrainCustomManifest.addCVSFile(train.createCSVManifestFile());
-                TrainCustomManifest.process();
-                finishAction(true);
+                boolean status = TrainCustomManifest.process();
+                if (status) {
+                    try {
+                        TrainCustomManifest.waitForProcessToComplete(Control.excelWaitTime); // wait up to 60 seconds
+                    } catch (InterruptedException e) {
+                        // TODO Auto-generated catch block
+                        e.printStackTrace();
+                    }
+                }
+                finishAction(status);
             } else {
                 finishAction(false);
             }

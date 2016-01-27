@@ -1258,12 +1258,6 @@
 
   
 <li>
-<a href="html/apps/SignalPro/index.shtml">SignalPro </a>
-<ul></ul>
-</li>
-
-  
-<li>
 <a href="package/jmri/jmrit/blockboss/BlockBossFrame.shtml">Simple Signal Logic </a>
 <ul></ul>
 </li>
@@ -1271,12 +1265,6 @@
  
 </ul>
 </li>
- 
-<li>
-<a href="html/apps/SignalPro/index.shtml">SignalPro </a>
-<ul></ul>
-</li>
-
  
 <li>
 <a href="package/jmri/jmrit/simpleclock/SimpleClockFrame.shtml">Simple Clock </a>
