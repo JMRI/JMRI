@@ -31,13 +31,13 @@
 
 <tr>
 <td><span style="font-weight: bold;">JMRI&reg; current</span></td>
-<td style="font-weight: bold;"><a href="../html/apps/DecoderPro/index.shtml">DecoderPro v4.0</a></td>
+<td style="font-weight: bold;"><a href="../html/apps/DecoderPro/index.shtml">DecoderPro v4.x</a></td>
 <td></td>
 </tr>
 
 <tr>
 <td></td>
-<td style="font-weight: bold;"><a href="../package/jmri/jmrit/operations/Operations.shtml">OperationsPro&trade; v4.0</a><br>&nbsp;</td>
+<td style="font-weight: bold;"><a href="../package/jmri/jmrit/operations/Operations.shtml">OperationsPro&trade; v4.x</a><br>&nbsp;</td>
 <td></td>
 </tr>
 
