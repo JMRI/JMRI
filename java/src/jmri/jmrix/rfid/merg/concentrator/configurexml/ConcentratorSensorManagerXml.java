@@ -1,4 +1,4 @@
-package jmri.jmrix.rfid.configurexml;
+package jmri.jmrix.rfid.merge.concentrator.configurexml;
 
 import org.jdom2.Element;
 import org.slf4j.Logger;
