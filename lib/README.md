@@ -55,9 +55,6 @@ Note that Windows installers don't necessarily remove existing library versions.
 ##### jlfgr-1_0.jar 
 - icons from see http://www.coderanch.com/t/341737/GUI/java/Expand-Collapse-Panels
 
-##### javax.comm.properties
-- left over from javax.comm version 2.0 (minor version unknown) from Sun
-
 ##### purejavacomm.jar
 - version 1.0.0
 - from https://github.com/nyholku/purejavacomm/tree/master/bin
