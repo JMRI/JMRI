@@ -326,7 +326,7 @@ public class AutomationTableModel extends javax.swing.table.AbstractTableModel i
 
     private JComboBox<RouteLocation> getRouteLocationComboBox(AutomationItem item) {
         JComboBox<RouteLocation> cb = new JComboBox<RouteLocation>();
-        if (item.getTrain() != null) {
+        if (item.getTrain() != null && item.getTrain().getRoute() != null) {
             cb = item.getTrain().getRoute().getComboBox();
             cb.setSelectedItem(item.getRouteLocation());
         }

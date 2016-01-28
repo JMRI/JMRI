@@ -910,7 +910,7 @@ public class PositionableLabel extends JLabel implements Positionable {
     @Override
     public void setText(String text) {
         _unRotatedText = text;
-        _text = (text !=null);
+        _text = (text !=null && text.length()>0);  // when "" is entered for text, and a font has been specified, the descender distance moves the position
         if (/*_rotateText &&*/ !isIcon() && _namedIcon != null) {
             log.debug("setText calls rotate({})", _degrees);
             rotate(_degrees);		//this will change text label as a icon with a new _namedIcon.
