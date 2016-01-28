@@ -36,7 +36,7 @@ Name" box.</p>
         removed, select the <b>New</b> option.</dd>
 </dl>
 
-The buttons at the bottom of the LRoutes Table:
+The buttons at the bottom of the LRoute Table:
 
 <dl>	
 <dt>Add Route</dt>
@@ -105,7 +105,7 @@ have selected.</p>
 <p>A sound file may be entered to play when the LRoute is triggered.  Likewise a script
 file may be run when the LRoute is triggered. 
 
-<p>Back to the <a href="LRouteTable.shtml">LRoutes Table help page<a>.</p>
+<p>Back to the <a href="LRouteTable.shtml">LRoute Table help page<a>.</p>
 
 <!--#include virtual="/Footer" -->
  </div><!-- closes #mainContent-->

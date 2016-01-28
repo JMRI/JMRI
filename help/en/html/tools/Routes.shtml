@@ -46,7 +46,7 @@ and/or control turnout. When the controlling sensors or turnout change
 in the user-specified way, the Route is 'set' ('triggered'); included 
 turnouts and included sensors are set as specified, and if 
 specified, a sound is played or a script is run.</p>
-<p>The Routes Table contains an 'Enabled' column. For a Route to be 
+<p>The Route Table contains an 'Enabled' column. For a Route to be 
 triggered by its control sensors or its control turnout,
 it must be "enabled", that is its check box in the 'Enabled' column
 must be checked.  You can uncheck this box to temporarily disable a 
@@ -55,8 +55,8 @@ sensors, etc. when a control sensor or control turnout changes.</p>
 
 <h2>How to setup Routes</h2>
 
-<p>First make sure the Turnouts Table contains all Turnouts 
-involved in the Routes to be defined, and that the Sensors Table 
+<p>First make sure the Turnout Table contains all Turnouts 
+involved in the Routes to be defined, and that the Sensor Table 
 contains all Sensors needed.  Then select <b>Tools</b> -&gt; <b>Tables</b> -&gt; <b>Routes</b>, 
 and click the <b>Add...</b> button at the bottom of the pane to 
 bring up the Add/Edit Route window.</p>
@@ -120,7 +120,7 @@ detail <a href="#sensorlogic">below</a>.</p>
 the Sensor name you enter here is used to recreate the Route.
 A System Name will always be associated with the same input Sensor.
 A User Name can be moved to another input by changing the entries 
-in the Sensors Table. For example, "East OS Occupancy" could be
+in the Sensor Table. For example, "East OS Occupancy" could be
 changed from LocoNet Sensor input LS12 to LS24 by just associating
 that User Name with a different System Name; this makes layout rewiring
 easy. User Names entered here must exist however; if you change the
@@ -137,7 +137,7 @@ will obey. Logic choices are explained in detail
 the Turnout name you enter here is used to recreate the Route.
 A System Name will always be associated with the same Turnout.
 A User Name can be moved to another Turnout by changing the entries 
-in the Turnouts table. For example, "Set Track 5" could be
+in the Turnout Table. For example, "Set Track 5" could be
 changed from LocoNet Control Turnout 105 to Turnout 5 by just associating
 that User Name with a different System Name; this makes layout rewiring
 easy. User Names entered here must exist however; if you change the
@@ -165,11 +165,11 @@ correct the error and click <b>Add Route</b> again.</p></li>
 <ol>
 	<li>Edit of an existing Route may be started in either of two ways:
 		<ul>
-		<li> Click on a Route's <b>Edit</b> button in the Routes Table.</li>
+		<li> Click on a Route's <b>Edit</b> button in the Route Table.</li>
 		<li> Enter the System Name of the Route to be edited in the 
 		Add/Edit Route pane and click the <b>Edit Route</b> button at 
 		the bottom of the pane. This must be the same 
-		as one of the System Names shown in the Routes Table.</li>
+		as one of the System Names shown in the Route Table.</li>
 		</ul>
 	The <b>Add Route</b> and <b>Edit Route</b> buttons in the 
 	Add/Edit Route pane will change to 
@@ -193,7 +193,7 @@ correct the error and click <b>Add Route</b> again.</p></li>
 <h3>Setting (trigger) a Route</h3>
 
 <p>Routes may be 'set' by clicking the <b>Set</b> button in the State 
-column of the Routes Table. A Route may also be set by fascia panel buttons 
+column of the Route Table. A Route may also be set by fascia panel buttons 
 if Sensors for these buttons are defined as control Sensors in the Route 
 information. If a control Turnout is defined in the Route information, throwing 
 or closing that Turnout from your physical throttle will also trigger the Route.  

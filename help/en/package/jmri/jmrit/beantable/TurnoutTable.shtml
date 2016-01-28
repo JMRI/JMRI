@@ -1,7 +1,7 @@
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
 <html lang="en">
 <head>
-<title>JMRI: Turnouts Table Help</title>
+<title>JMRI: Turnout Table Help</title>
 <meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
 <meta content="Bob Jacobsen" name="Author">
 <meta name="keywords" content="JMRI help Turnout Table">
@@ -14,13 +14,13 @@
   <div class="nomenu" id="mBody">
     <div id="mainContent">
 
-<h1>The Turnouts Table</h1>
+<h1>The Turnout Table</h1>
 
 <p>This table contains a list of all Turnouts that exist for this
 Panel. From this table you can change the state of a Turnout, change the
 feedback mode, enter Sensors for feedback, invert, lock, and delete it.
 
-<h2>Turnouts Table Columns</h2>
+<h2>Turnout Table Columns</h2>
 
 <dl>
 	<dt>System Name</dt>
@@ -120,7 +120,7 @@ feedback mode, enter Sensors for feedback, invert, lock, and delete it.
 	operation. Select the number of pushbuttons used to operate that
 	specific turnout. <code>CVP_AD4_1B</code> means one button, and <code>CVP_AD4_2B</code> means two
 	buttons. We recommend that you enter all four CVP Turnouts per decoder
-	into the Turnouts table, even if you're only locking one. You do not
+	into the Turnout Table, even if you're only locking one. You do not
 	need to specify the number of pushbuttons for NCE. Unfortunately, NCE
 	revisions A and B accessory decoders do not support pushbutton lockout.</p>
 	</dd>
@@ -140,10 +140,10 @@ feedback mode, enter Sensors for feedback, invert, lock, and delete it.
     </dd>
 </dl>
 
-<h3>Turnouts Table Controls</h3>
+<h3>Turnout Table Controls</h3>
 
 There are some buttons and checkboxes along the bottom of the 
-Turnouts Table pane that control its operation.
+Turnout Table pane that control its operation.
 <dl>	
     <dt>Add...</dt>
 	<dd>Pressing this button opens a window where you can
@@ -196,7 +196,7 @@ configure the program to understand the known state properly, given my
 layout hardware?"</p>
 <p>In the Turnouts pane (Tools -> Tables -> Turnouts) click on the box
 in the lower left that is labeled "Show feedback information". Now
-expand the Turnouts table pane and you'll find four columns associated
+expand the Turnouts pane and you'll find four columns associated
 with feedback:</p>
 <dl>
 	<dt>"Feedback"</dt>
@@ -304,7 +304,7 @@ those.  See the "Automate" menu to edit those defaults.
 <p>The Turnout Lock feature allows you to selectively disable
 accessory (Turnouts) commands from cabs and/or locally-wired
 pushbuttons. The Lock can be set (Locked) or unset (Unlocked) from a
-checkbox in the Turnouts Table, from a <a href="RouteAddEdit.shtml#lock">Route</A>
+checkbox in the Turnout Table, from a <a href="RouteAddEdit.shtml#lock">Route</A>
 or Logix, or from scripts.</p>
 
 <h4>Cab Lockout</h4>
@@ -329,7 +329,7 @@ for the messages to move the turnout back and forth, so we have to
 create the right custom ones for each type.) The various types are
 selected in the
 <a href="#decodercol">"Decoder" column</A>
-of the Turnouts Table.
+of the Turnout Table.
 
 <h4>Locking Routes</h4>
 To help you select a set of Turnouts to lock, a Route can also be

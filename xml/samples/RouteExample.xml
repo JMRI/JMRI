@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<?xml-stylesheet href="/xml/XSLT/panelfile-2-9-6.xsl" type="text/xsl"?>
+<layout-config xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="http://jmri.org/xml/schema/layout-2-9-6.xsd">
+  <turnouts class="jmri.managers.configurexml.InternalTurnoutManagerXml">
+    <operations automate="false">
+      <operation name="NoFeedback" class="jmri.configurexml.turnoutoperations.NoFeedbackTurnoutOperationXml" interval="300" maxtries="2" />
+      <operation name="Raw" class="jmri.configurexml.turnoutoperations.RawTurnoutOperationXml" interval="300" maxtries="1" />
+      <operation name="Sensor" class="jmri.configurexml.turnoutoperations.SensorTurnoutOperationXml" interval="300" maxtries="3" />
+    </operations>
+    <defaultclosedspeed>Normal</defaultclosedspeed>
+    <defaultthrownspeed>Restricted</defaultthrownspeed>
+    <turnout systemName="IT1" feedback="DIRECT" inverted="false" automate="Off">
+      <systemName>IT1</systemName>
+    </turnout>
+  </turnouts>
+  <memories class="jmri.managers.configurexml.DefaultMemoryManagerXml">
+    <memory systemName="IMCURRENTTIME" value="7:03 PM">
+      <systemName>IMCURRENTTIME</systemName>
+    </memory>
+    <memory systemName="IMRATEFACTOR" value="1.0">
+      <systemName>IMRATEFACTOR</systemName>
+    </memory>
+  </memories>
+  <routes class="jmri.managers.configurexml.DefaultRouteManagerXml">
+    <route systemName="IR:AUTO:0001" userName="StartUp">
+      <systemName>IR:AUTO:0001</systemName>
+      <userName>StartUp</userName>
+      <routeOutputTurnout systemName="IT1" state="THROWN" />
+    </route>
+  </routes>
+  <!--Written by JMRI version 4.3.3ish-201601220348-jake-R08885b2 on Thu Jan 21 19:49:47 PST 2016 $Id$-->
+</layout-config>

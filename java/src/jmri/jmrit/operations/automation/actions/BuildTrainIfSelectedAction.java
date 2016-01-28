@@ -1,7 +1,5 @@
 package jmri.jmrit.operations.automation.actions;
 
-import javax.swing.JOptionPane;
-import jmri.jmrit.operations.automation.AutomationItem;
 import jmri.jmrit.operations.trains.Train;
 
 public class BuildTrainIfSelectedAction extends Action {
@@ -14,7 +12,7 @@ public class BuildTrainIfSelectedAction extends Action {
     }
 
     @Override
-    public String toString() {
+    public String getName() {
         return Bundle.getMessage("BuildTrainIfSelected");
     }
 
@@ -22,16 +20,12 @@ public class BuildTrainIfSelectedAction extends Action {
     public void doAction() {
         if (getAutomationItem() != null) {
             Train train = getAutomationItem().getTrain();
-            if (train != null && !train.isBuilt()) {
-                train.buildIfSelected();
-                // now show message if there's one
-                if (!getAutomationItem().getMessage().equals(AutomationItem.NONE)) {
-                    JOptionPane.showMessageDialog(null, getAutomationItem().getMessage(),
-                            toString() + " " + train.getName(),
-                            JOptionPane.INFORMATION_MESSAGE);
-                }
+            if (train == null || train.isBuilt() || train.getRoute() == null) {
+                finishAction(false); // failed to build train
+            } else {
+                setRunning(true);
+                finishAction(train.buildIfSelected()); // okay
             }
-            firePropertyChange(ACTION_COMPLETE_CHANGED_PROPERTY, false, true);
         }
     }
 

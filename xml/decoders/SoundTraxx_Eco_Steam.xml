@@ -56,12 +56,19 @@
       <authorinitials>MJM</authorinitials>
       <revremark>Revise for Soundtraxx doc ver 1.30</revremark>
     </revision>
+    <revision>
+      <revnumber>1.5</revnumber>
+      <date>2016-01-17</date>
+      <authorinitials>ALM</authorinitials>
+      <revremark>Fixed enum order for CV123 Exhaust Select, as per latest Econami manual</revremark>
+    </revision>
   </revhistory>
   <version author="Michael Mosher" version="1" lastUpdated="20150725"/>
   <version author="Alain Le Marchand" version="1.1" lastUpdated="20150726"/>
   <version author="Alain Le Marchand" version="1.2" lastUpdated="20150726"/>
   <version author="Dave Heap" version="1.3" lastUpdated="20150813"/>
   <version author="Michael Mosher" version="1.4" lastUpdated="20160104"/>
+  <version author="Alain Le Marchand" version="1.5" lastUpdated="20160117"/>
   <!-- Decoder Model information follows -->
   <decoder>
     <family name="Econami Steam" mfg="SoundTraxx (Throttle-Up)" comment="These are the -retail- version Econami Steam decoders">
@@ -819,10 +826,10 @@
       <variable CV="123" mask="XXXXXVVV" item="Sound Option 1" default="0" tooltip="Select one of five prime mover sound effects">
         <enumVal>
           <enumChoice>
-            <choice>Medium</choice>
+            <choice>Light</choice>
           </enumChoice>
           <enumChoice>
-            <choice>Light</choice>
+            <choice>Medium</choice>
           </enumChoice>
           <enumChoice>
             <choice>Heavy</choice>

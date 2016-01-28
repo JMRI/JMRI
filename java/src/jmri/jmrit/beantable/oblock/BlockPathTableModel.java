@@ -29,7 +29,6 @@ import javax.swing.JOptionPane;
 import javax.swing.JTextField;
 import javax.swing.table.AbstractTableModel;
 import jmri.InstanceManager;
-import jmri.jmrit.beantable.AbstractTableAction;
 import jmri.jmrit.logix.OBlock;
 import jmri.jmrit.logix.OPath;
 import jmri.jmrit.logix.Portal;
@@ -124,7 +123,7 @@ public class BlockPathTableModel extends AbstractTableModel implements PropertyC
             case TO_PORTAL_COLUMN:
                 return Bundle.getMessage("ToPortal");
             case LENGTHCOL:
-                return AbstractTableAction.rb.getString("BlockLengthColName");
+                return Bundle.getMessage("BlockLengthColName");
             case UNITSCOL:
                 return "  ";
         }

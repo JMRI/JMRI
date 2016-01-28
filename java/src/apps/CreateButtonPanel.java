@@ -14,7 +14,9 @@ import jmri.InstanceManager;
  * @author	Bob Jacobsen Copyright 2003
  * @version $Revision$
  * @see apps.CreateButtonModel
+ * @deprecated Replaced by {@link apps.startup.CreateButtonModelFactory}
  */
+@Deprecated
 public class CreateButtonPanel extends AbstractActionPanel {
 
     /**

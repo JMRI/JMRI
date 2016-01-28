@@ -56,8 +56,7 @@ public class SignalGroupTableAction extends AbstractTableAction implements Prope
      *
      */
     private static final long serialVersionUID = -3907892888059515176L;
-    static final ResourceBundle rbx = ResourceBundle
-            .getBundle("jmri.jmrit.beantable.LogixTableBundle");
+    static final ResourceBundle rbx = ResourceBundle.getBundle("jmri.jmrit.beantable.LogixTableBundle");
 
     /**
      * Create an action with a specific title.
@@ -77,7 +76,7 @@ public class SignalGroupTableAction extends AbstractTableAction implements Prope
     }
 
     public SignalGroupTableAction() {
-        this(rb.getString("TitleSignalGroupTable"));
+        this(Bundle.getMessage("TitleSignalGroupTable"));
     }
 
     public void propertyChange(java.beans.PropertyChangeEvent e) {
@@ -196,7 +195,7 @@ public class SignalGroupTableAction extends AbstractTableAction implements Prope
                     return (b != null) ? b.getComment() : null;
                 } else if (col == DELETECOL) //
                 {
-                    return AbstractTableAction.rb.getString("ButtonDelete");
+                    return Bundle.getMessage("ButtonDelete");
                 } else {
                     return super.getValueAt(row, col);
                 }
@@ -248,7 +247,7 @@ public class SignalGroupTableAction extends AbstractTableAction implements Prope
             protected void configDeleteColumn(JTable table) {
                 // have the delete column hold a button
                 SignalGroupTableAction.this.setColumnToHoldButton(table, DELETECOL,
-                        new JButton(AbstractTableAction.rb.getString("ButtonDelete")));
+                        new JButton(Bundle.getMessage("ButtonDelete")));
             }
 
             /**
@@ -1449,7 +1448,7 @@ public class SignalGroupTableAction extends AbstractTableAction implements Prope
     }
 
     public String getClassDescription() {
-        return rb.getString("TitleSignalGroupTable");
+        return Bundle.getMessage("TitleSignalGroupTable");
     }
 
     static final Logger log = LoggerFactory.getLogger(SignalGroupTableAction.class.getName());

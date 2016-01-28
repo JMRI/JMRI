@@ -54,7 +54,7 @@ Turnout, or Fast Clock. When the controlling Sensor, Turnout, or Fast Clock
 changes in a user-specified way, the Light is switched on or off. Lights 
 can also be controlled by <a href="Logix.shtml">Logix</a>, if more 
 complicated control logic is needed.</p>
-<p>The Lights Table contains an 'Enabled' column. For a Light to be 
+<p>The Light Table contains an 'Enabled' column. For a Light to be 
 triggered by its control Sensor, its control Turnout or the Fast Clock 
 it must be "enabled", that is, its check box in the 'Enabled' column
 must be checked.  You can uncheck this box to temporarily disable a 
@@ -66,7 +66,7 @@ mechanism fires.</p>
 <h3>Switching a Light On or Off</h3>
 
 <p>Lights may be turned on or off by clicking the button in the State
-column of the Lights Table. A Light may be set up to follow the state of 
+column of the Light Table. A Light may be set up to follow the state of 
 a track switch (Turnout), On when the Turnout is Closed, and Off when it is
 Thrown, or vice versa. A Light may be set to follow the state of a Block 
 occupancy Sensor, On when the Sensor is Active, and Off when it is Inactive, or
@@ -81,7 +81,7 @@ using a <a href="Logix.shtml">Logix</a>.</p>
 
 <p>Note that enabled/disabled applies only to a Light's automated
 control mechanism. A 'disabled' state will not prevent a Light
-from being turned On or Off using the button in the Lights Table or from 
+from being turned On or Off using the button in the Light Table or from 
 being controlled by a Logix.</p>
    
 <h3>Saving Lights to disk</h3>
@@ -98,7 +98,7 @@ configuration file, they are all enabled.
 <p>To add a new Light, follow this procedure:</p>
 <ol>
 	<li>Click the <b>Tools</b> -&gt; <b>Tables</b> -&gt; <b>Lights</b> menu to bring up
-the Lights Table, and click the <b>Add...</b> button at the bottom of the 
+the Light Table, and click the <b>Add...</b> button at the bottom of the 
 pane to bring up the Add/Edit Light window.</li>
 	<li>Enter a System Name, according to the JMRI convention. The first
 letter designates your hardware system ('L' for LocoNet, 'C" for C/MRI,
@@ -140,11 +140,11 @@ correct the error and click <b>Create</b> again.
 <ol>
 	<li>Edit of an existing Light may be started in either of two ways:
 		<ul>
-			<li>Click on a Light's <b>Edit</b> button in the Lights Table.</li>
+			<li>Click on a Light's <b>Edit</b> button in the Light Table.</li>
 			<li>Enter the system name of the Light to be edited in the 
 		Add/Edit Light window and click the <b>Edit</b> button at 
 		the bottom of the Add/Edit Light window.  This must be the same 
-		as the system name shown in the Lights Table.</li>
+		as the system name shown in the Light Table.</li>
 		</ul>
 	The <b>Create</b> and <b>Edit</b> buttons at the bottom of the Add/Edit 
 	Light window will change to <b>Update</b> and <b>Cancel</b>.</li>

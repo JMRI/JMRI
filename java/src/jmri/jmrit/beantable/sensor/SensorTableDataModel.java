@@ -62,13 +62,13 @@ public class SensorTableDataModel extends BeanTableDataModel {
         int val = senManager.getBySystemName(name).getKnownState();
         switch (val) {
             case Sensor.ACTIVE:
-                return rbean.getString("SensorStateActive");
+                return Bundle.getMessage("SensorStateActive");
             case Sensor.INACTIVE:
-                return rbean.getString("SensorStateInactive");
+                return Bundle.getMessage("SensorStateInactive");
             case Sensor.UNKNOWN:
-                return rbean.getString("BeanStateUnknown");
+                return Bundle.getMessage("BeanStateUnknown");
             case Sensor.INCONSISTENT:
-                return rbean.getString("BeanStateInconsistent");
+                return Bundle.getMessage("BeanStateInconsistent");
             default:
                 return "Unexpected value: " + val;
         }
@@ -128,19 +128,19 @@ public class SensorTableDataModel extends BeanTableDataModel {
 
     public String getColumnName(int col) {
         if (col == INVERTCOL) {
-            return rb.getString("Inverted");
+            return Bundle.getMessage("Inverted");
         }
         if (col == EDITCOL) {
             return "";
         }
         if (col == USEGLOBALDELAY) {
-            return rb.getString("SensorUseGlobalDebounce");
+            return Bundle.getMessage("SensorUseGlobalDebounce");
         }
         if (col == ACTIVEDELAY) {
-            return rb.getString("SensorActiveDebounce");
+            return Bundle.getMessage("SensorActiveDebounce");
         }
         if (col == INACTIVEDELAY) {
-            return rb.getString("SensorInActiveDebounce");
+            return Bundle.getMessage("SensorInActiveDebounce");
         } else {
             return super.getColumnName(col);
         }
@@ -222,7 +222,7 @@ public class SensorTableDataModel extends BeanTableDataModel {
         } else if (col == INACTIVEDELAY) {
             return s.getSensorDebounceGoingInActiveTimer();
         } else if (col == EDITCOL) {
-            return rb.getString("ButtonEdit");
+            return Bundle.getMessage("ButtonEdit");
         } else {
             return super.getValueAt(row, col);
         }
@@ -274,7 +274,7 @@ public class SensorTableDataModel extends BeanTableDataModel {
     }
 
     protected String getBeanType() {
-        return rbean.getString("BeanNameSensor");
+        return Bundle.getMessage("BeanNameSensor");
     }
 
     protected boolean matchPropertyName(java.beans.PropertyChangeEvent e) {
@@ -318,10 +318,9 @@ public class SensorTableDataModel extends BeanTableDataModel {
     public static final ResourceBundle rb = ResourceBundle.getBundle("jmri.jmrit.beantable.BeanTableBundle");
 
     public String getClassDescription() {
-        return rb.getString("TitleSensorTable");
+        return Bundle.getMessage("TitleSensorTable");
     }
 
-    static final ResourceBundle rbean = ResourceBundle.getBundle("jmri.NamedBeanBundle");
     static final Logger log = LoggerFactory.getLogger(SensorTableDataModel.class.getName());
 }
 

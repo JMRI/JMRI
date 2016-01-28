@@ -46,7 +46,7 @@ manufacturer's website.
 You have to add each LDT signal using the 
 <a href="../../../../package/jmri/jmrit/beantable/SignalAddEdit.shtml">Signal Head Add/Edit panel</a>
 from the 
-<a href="../../../../package/jmri/jmrit/beantable/SignalHeadTable.shtml">Signal Heads Table</a>.
+<a href="../../../../package/jmri/jmrit/beantable/SignalHeadTable.shtml">Signal Head Table</a>.
 Select "LDT LS-DEC" for the Signal Connection type, and the window
 will show seven lines for configuring which turnout command
 JMRI sends to the decoder for each of the JMRI Signal Appearances.

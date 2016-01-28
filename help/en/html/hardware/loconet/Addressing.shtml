@@ -50,14 +50,14 @@ from the raw bytes that are displayed, but at least it's consistent with what
 users expect to see.  We agree that's confusing, but there has to be some 
 confusion somewhere, given the way this was set up.
 
-<h3>The Turnouts Table</h3>
-<p>The JMRI Turnouts Table shows a list of all Turnouts JMRI is aware of. Every 
+<h3>The Turnout Table</h3>
+<p>The JMRI Turnout Table shows a list of all Turnouts JMRI is aware of. Every 
     time JMRI sees a LocoNet message which specifies a Turnout, JMRI updates an 
-    existing entry in the Turnouts Table or creates a new entry if one does not already 
+    existing entry in the Turnout Table or creates a new entry if one does not already 
     exist.  Each Turnout in the table can also be assigned a "User Name".</p>
-<p>The Turnouts Table provides a useful snapshot of the current state of all 
+<p>The Turnout Table provides a useful snapshot of the current state of all 
     known Turnouts, and allows the user to change the state of those Turnouts.</p>
-<p>Additional information on Turnouts and the Turnouts Table may be found at the
+<p>Additional information on Turnouts and the Turnout Table may be found at the
     <a href="../../tools/Turnouts.shtml">main Turnouts page</a>.</p>
 
 <a name="sensor" id="sensor"></a>
@@ -111,14 +111,14 @@ If it's the switch input, you add one more to that:
 &nbsp;&nbsp;&nbsp;&nbsp;number = 2 * ( 12 - 1 ) + 2 = 24
 </code>
 
-<h3>The Sensors Table</h3>
-<p>The JMRI Sensors Table shows a list of all Sensors JMRI is aware of. Every 
+<h3>The Sensor Table</h3>
+<p>The JMRI Sensor Table shows a list of all Sensors JMRI is aware of. Every 
     time JMRI sees a LocoNet message which specifies a Sensor, JMRI updates an 
     existing entry in the table or creates a new entry if one does not already 
     exist.  Each Sensor in the table can be assigned a "User Name".</p>
-<p>The Sensors Table provides a useful snapshot of the current state of all 
+<p>The Sensor Table provides a useful snapshot of the current state of all 
     known Sensors.</p>
-<p>Additional information on Sensors and the Sensors Table may be found at the
+<p>Additional information on Sensors and the Sensor Table may be found at the
     <a href="../../tools/Sensors.shtml">main Sensors page</a>.</p>
 
 <a name="transponding" id="transponding"></a><h2>Addressing Transponding</h2>
@@ -169,17 +169,17 @@ available when it changes.  JMRI refers to Reporters using the System Name
     </table>
 
 <a name="reporter" id="reporter"></a>
-<h3>The Reporters Table</h3>
-<p>The JMRI Reporters Table shows a list of all Reporters JMRI is aware of. JMRI 
+<h3>The Reporter Table</h3>
+<p>The JMRI Reporter Table shows a list of all Reporters JMRI is aware of. JMRI 
     creates an entry in this table for each new Transponding zone for which it sees a 
     Transponding message. Each Reporter in the table can be assigned a "User Name".</p>
 <p>Once you have the Transponding hardware installed and at least one Locomotive
-    transponding properly, it is simple to fill in the Reporters Table for each 
+    transponding properly, it is simple to fill in the Reporter Table for each 
     Transponding zone by running the transponding Locomotive through all 
     transponding-capable zones. It may be convenient to fill in a "User Name"
-    in the JMRI Reporters Table at the same time when the Locomotive first enters 
+    in the JMRI Reporter Table at the same time when the Locomotive first enters 
     each Transponding zone.</p>
-<p>Additional information on Reporters and the Reporters Table may be found at the
+<p>Additional information on Reporters and the Reporter Table may be found at the
     <a href="../../tools/Reporters.shtml">main Reporter page</a>.</p>
 
 <a name="SVs" id="SVs"></a>

@@ -14,7 +14,7 @@ import javax.annotation.Nonnull;
  *
  * @author Randall Wood Copyright (C) 2013, 2014, 2015
  */
-public class Profile {
+public class Profile implements Comparable<Profile> {
 
     private String name;
     private String id;
@@ -296,5 +296,15 @@ public class Profile {
             }
         }
         return false;
+    }
+
+    @Override
+    public int compareTo(Profile o) {
+        if (this.equals(o)) {
+            return 0;
+        }
+        String thisString = "" + this.getName() + this.getPath();
+        String thatString = "" + o.getName() + o.getPath();
+        return thisString.compareTo(thatString);
     }
 }

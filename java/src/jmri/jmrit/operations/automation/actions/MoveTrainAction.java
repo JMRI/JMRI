@@ -1,7 +1,5 @@
 package jmri.jmrit.operations.automation.actions;
 
-import javax.swing.JOptionPane;
-import jmri.jmrit.operations.automation.AutomationItem;
 import jmri.jmrit.operations.routes.RouteLocation;
 import jmri.jmrit.operations.trains.Train;
 
@@ -15,7 +13,7 @@ public class MoveTrainAction extends Action {
     }
 
     @Override
-    public String toString() {
+    public String getName() {
         return Bundle.getMessage("MoveTrain");
     }
 
@@ -23,21 +21,18 @@ public class MoveTrainAction extends Action {
     public void doAction() {
         if (getAutomationItem() != null) {
             Train train = getAutomationItem().getTrain();
-            if (train != null && train.isBuilt()) {
+            if (train != null && train.getRoute() != null && train.isBuilt()) {
+                setRunning(true);
                 RouteLocation rl = getAutomationItem().getRouteLocation();
                 if (rl != null) {
-                    train.move(rl);
+                    finishAction(train.move(rl));
                 } else {
                     train.move();
+                    finishAction(true);
                 }
-                // now show message if there's one
-                if (!getAutomationItem().getMessage().equals(AutomationItem.NONE)) {
-                    JOptionPane.showMessageDialog(null, getAutomationItem().getMessage(),
-                            toString() + " " + train.getName() + " " + train.getCurrentLocationName(),
-                            JOptionPane.INFORMATION_MESSAGE);
-                }
+            } else {
+                finishAction(false);
             }
-            firePropertyChange(ACTION_COMPLETE_CHANGED_PROPERTY, false, true);
         }
     }
 
