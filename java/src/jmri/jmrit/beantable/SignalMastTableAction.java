@@ -55,7 +55,7 @@ public class SignalMastTableAction extends AbstractTableAction {
     }
 
     protected void setTitle() {
-        f.setTitle(f.rb.getString("TitleSignalMastTable"));
+        f.setTitle(Bundle.getMessage("TitleSignalMastTable"));
     }
 
     protected String helpTarget() {
@@ -86,7 +86,7 @@ public class SignalMastTableAction extends AbstractTableAction {
              * Include an "add" button
              */
             void extras() {
-                JButton addButton = new JButton(this.rb.getString("ButtonAdd"));
+                JButton addButton = new JButton(Bundle.getMessage("ButtonAdd"));
                 addToBottomBox(addButton, this.getClass().getName());
                 addButton.addActionListener(new ActionListener() {
                     public void actionPerformed(ActionEvent e) {
@@ -113,9 +113,9 @@ public class SignalMastTableAction extends AbstractTableAction {
 
     public void setMenuBar(BeanTableFrame f) {
         JMenuBar menuBar = f.getJMenuBar();
-        JMenu pathMenu = new JMenu(rb.getString("Tools"));
+        JMenu pathMenu = new JMenu(Bundle.getMessage("Tools"));
         menuBar.add(pathMenu);
-        JMenuItem item = new JMenuItem(rb.getString("MenuItemRepeaters"));
+        JMenuItem item = new JMenuItem(Bundle.getMessage("MenuItemRepeaters"));
         pathMenu.add(item);
         item.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
@@ -171,7 +171,7 @@ public class SignalMastTableAction extends AbstractTableAction {
     }
 
     public String getClassDescription() {
-        return rb.getString("TitleSignalGroupTable");
+        return Bundle.getMessage("TitleSignalGroupTable");
     }
 }
 

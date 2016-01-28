@@ -271,14 +271,18 @@ function processPanelXML($returnedData, $success, $xhr) {
                                 $widget.jsonType = "signalMast"; // JSON object type
                                 var icons = $(this).find('icons').children(); //get array of icons
                                 icons.each(function(i, item) {  //loop thru icons array and set all iconXX urls for widget
-                                    $widget['icon' + item.nodeName] = $(item).attr('url');
+		                          	$widget['icon' + $(item).attr('aspect')] = $(item).attr('url');
                                 });
                                 $widget['degrees'] = $(this).attr('degrees') * 1;
                                 $widget['scale'] = $(this).attr('scale');
                                 if ($widget.forcecontroloff != "true") {
                                     $widget.classes += $widget.jsonType + " clickable ";
                                 }
-                                $widget['state'] = "Unknown"; //set the default to match JMRI
+                                if (typeof $widget["iconUnlit"] !== "undefined") {
+                                    $widget['state'] = "Unlit"; //set the initial aspect to Unlit if defined                                	
+                                } else {
+                                    $widget['state'] = "Unknown"; //else set to Unknown                             	                                	
+                                }
                                 jmri.getSignalMast($widget["systemName"]);
                                 break;
                             case "multisensoricon" :
@@ -984,34 +988,40 @@ function $drawTurnout($widget) {
 //store the various points defined with a Turnout (pass in widget)
 //see jmri.jmrit.display.layoutEditor.LayoutTurnout.java for background
 function $storeTurnoutPoints($widget) {
-    var $t = [];
-    $t['ident'] = $widget.ident + PT_B;  //store B endpoint
-    $t['x'] = $widget.xb * 1.0;
-    $t['y'] = $widget.yb * 1.0;
-    $gPts[$t.ident] = $t;
-    $t = [];
-    $t['ident'] = $widget.ident + PT_C;  //store C endpoint
-    $t['x'] = $widget.xc * 1.0;
-    $t['y'] = $widget.yc * 1.0;
-    $gPts[$t.ident] = $t;
-    if ($widget.type == LH_TURNOUT || $widget.type == RH_TURNOUT || $widget.type == WYE_TURNOUT) {
-        $t = [];
-        $t['ident'] = $widget.ident + PT_A;  //calculate and store A endpoint (mirror of B for these)
-        $t['x'] = $widget.xcen - ($widget.xb - $widget.xcen);
-        $t['y'] = $widget.ycen - ($widget.yb - $widget.ycen);
-        $gPts[$t.ident] = $t;
-    } else if ($widget.type == LH_XOVER || $widget.type == RH_XOVER || $widget.type == DOUBLE_XOVER) {
-        $t = [];
-        $t['ident'] = $widget.ident + PT_A;  //calculate and store A endpoint (mirror of C for these)
-        $t['x'] = $widget.xcen - ($widget.xc - $widget.xcen);
-        $t['y'] = $widget.ycen - ($widget.yc - $widget.ycen);
-        $gPts[$t.ident] = $t;
-        $t = [];
-        $t['ident'] = $widget.ident + PT_D;  //calculate and store D endpoint (mirror of B for these)
-        $t['x'] = $widget.xcen - ($widget.xb - $widget.xcen);
-        $t['y'] = $widget.ycen - ($widget.yb - $widget.ycen);
-        $gPts[$t.ident] = $t;
-    }
+	var $t = [];
+	$t['ident'] = $widget.ident + PT_B;  //store B endpoint
+	$t['x'] = $widget.xb * 1.0;
+	$t['y'] = $widget.yb * 1.0;
+	$gPts[$t.ident] = $t;
+	$t = [];
+	$t['ident'] = $widget.ident + PT_C;  //store C endpoint
+	$t['x'] = $widget.xc * 1.0;
+	$t['y'] = $widget.yc * 1.0;
+	$gPts[$t.ident] = $t;
+	if ($widget.type == LH_TURNOUT || $widget.type == RH_TURNOUT) {
+		$t = [];
+		$t['ident'] = $widget.ident + PT_A;  //calculate and store A endpoint (mirror of B for these)
+		$t['x'] = $widget.xcen - ($widget.xb - $widget.xcen);
+		$t['y'] = $widget.ycen - ($widget.yb - $widget.ycen);
+		$gPts[$t.ident] = $t;
+	} else if ($widget.type == WYE_TURNOUT) {
+		$t = [];
+		$t['ident'] = $widget.ident + PT_A;  //store A endpoint
+		$t['x'] = $widget.xa * 1.0;
+		$t['y'] = $widget.ya * 1.0;
+		$gPts[$t.ident] = $t;
+	} else if ($widget.type == LH_XOVER || $widget.type == RH_XOVER || $widget.type == DOUBLE_XOVER) {
+		$t = [];
+		$t['ident'] = $widget.ident + PT_A;  //calculate and store A endpoint (mirror of C for these)
+		$t['x'] = $widget.xcen - ($widget.xc - $widget.xcen);
+		$t['y'] = $widget.ycen - ($widget.yc - $widget.ycen);
+		$gPts[$t.ident] = $t;
+		$t = [];
+		$t['ident'] = $widget.ident + PT_D;  //calculate and store D endpoint (mirror of B for these)
+		$t['x'] = $widget.xcen - ($widget.xb - $widget.xcen);
+		$t['y'] = $widget.ycen - ($widget.yb - $widget.ycen);
+		$gPts[$t.ident] = $t;
+	}
 }
 
 //store the various points defined with a LevelXing (pass in widget)
@@ -1233,8 +1243,8 @@ var $setWidgetPosition = function(e) {
 var $reDrawIcon = function($widget) {
     //additional naming for indicator*icon widgets to reflect occupancy
     $indicator = ($widget.occupancysensor && $widget.occupancystate == ACTIVE ? "Occupied" : "");
-    if ($widget['icon' + $indicator + ($widget.state + "").replace(/ /g, "_")]) { //set image src to requested state's image, if defined
-        $('img#' + $widget.id).attr('src', $widget['icon' + $indicator + ($widget.state + "").replace(/ /g, "_")]);  
+    if ($widget['icon' + $indicator + ($widget.state + "")]) { //set image src to requested state's image, if defined
+        $('img#' + $widget.id).attr('src', $widget['icon' + $indicator + ($widget.state + "")]);  
     } else if ($widget['defaulticon']) {  //if state icon not found, use default icon if provided
         $('img#' + $widget.id).attr('src', $widget['defaulticon']); 
     } else {
@@ -1258,8 +1268,8 @@ var $setWidgetState = function($id, $newState) {
                 if ($widget.jsonType == "memory") {
                     if ($widget.widgetType == "fastclock") {
                         $drawClock($widget);
-                    } else {
-                        $('div#' + $id).text($newState);  //set memory text to new value from server
+                    } else {  //set memory text to new value from server, suppressing "null"
+                        $('div#' + $id).text(($newState != null) ? $newState : "");
                     }
                 } else {
                     if (typeof $widget['text' + $newState] !== "undefined") {
@@ -1392,8 +1402,9 @@ var $getNextState = function($widget) {
         var $firstState = undefined;
         var $currentState = undefined;
         for (k in $widget) {
-            var s = k.substr(4).replace(/_/g, " "); //extract the state from current icon var, replace underscores with blanks
-            if (k.indexOf('icon') == 0 && typeof $widget[k] !== "undefined" && s != 'Held' && s != 'Dark' && s != 'Unknown') { //valid value, name starts with 'icon', but not the HELD one
+            var s = k.substr(4); //extract the state from current icon var
+            //look for next icon value, skipping Held, Dark and Unknown
+            if (k.indexOf('icon') == 0 && typeof $widget[k] !== "undefined" && s != 'Held' && s != 'Dark' && s != 'Unknown') { 
                 if (typeof $firstState == "undefined")
                     $firstState = s;  //remember the first state (for last one)
                 if (typeof $currentState !== "undefined" && typeof $nextState == "undefined")
@@ -1403,8 +1414,8 @@ var $getNextState = function($widget) {
                 if (window.console)
                     console.log('key: ' + k + " first=" + $firstState);
             }
-        }
-        ;
+        };
+        
         if (typeof $nextState == "undefined")
             $nextState = $firstState;  //if still not set, start over
 

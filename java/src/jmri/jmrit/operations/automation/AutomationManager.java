@@ -6,20 +6,6 @@ import java.util.Enumeration;
 import java.util.Hashtable;
 import java.util.List;
 import javax.swing.JComboBox;
-import jmri.jmrit.operations.automation.actions.Action;
-import jmri.jmrit.operations.automation.actions.HaltAction;
-import jmri.jmrit.operations.automation.actions.BuildTrainAction;
-import jmri.jmrit.operations.automation.actions.BuildTrainIfSelectedAction;
-import jmri.jmrit.operations.automation.actions.MoveTrainAction;
-import jmri.jmrit.operations.automation.actions.NoAction;
-import jmri.jmrit.operations.automation.actions.PrintTrainManifestAction;
-import jmri.jmrit.operations.automation.actions.PrintTrainManifestIfSelectedAction;
-import jmri.jmrit.operations.automation.actions.ResumeAutomationAction;
-import jmri.jmrit.operations.automation.actions.RunAutomationAction;
-import jmri.jmrit.operations.automation.actions.StopAutomationAction;
-import jmri.jmrit.operations.automation.actions.TerminateTrainAction;
-import jmri.jmrit.operations.automation.actions.UpdateSwitchListAction;
-import jmri.jmrit.operations.automation.actions.WaitTrainAction;
 import jmri.jmrit.operations.setup.Control;
 import jmri.jmrit.operations.trains.TrainManagerXml;
 import org.jdom2.Element;
@@ -68,9 +54,9 @@ public class AutomationManager implements java.beans.PropertyChangeListener {
     protected Hashtable<String, Automation> _automationHashTable = new Hashtable<String, Automation>();
 
     /**
-     * @return Number of automation
+     * @return Number of automations
      */
-    public int numEntries() {
+    public int getSize() {
         return _automationHashTable.size();
     }
 
@@ -78,12 +64,12 @@ public class AutomationManager implements java.beans.PropertyChangeListener {
      * @return requested Automation object or null if none exists
      */
     public Automation getAutomationByName(String name) {
-        Automation s;
+        Automation automation;
         Enumeration<Automation> en = _automationHashTable.elements();
         while (en.hasMoreElements()) {
-            s = en.nextElement();
-            if (s.getName().equals(name)) {
-                return s;
+            automation = en.nextElement();
+            if (automation.getName().equals(name)) {
+                return automation;
             }
         }
         return null;
@@ -200,43 +186,6 @@ public class AutomationManager implements java.beans.PropertyChangeListener {
         }
         return out;
     }
-    
-    /**
-     * Gets a list of all known automation actions
-     * @return list of automation actions
-     */
-    public List<Action> getActionList() {
-        List<Action> list = new ArrayList<Action>();
-        list.add(new HaltAction());
-        list.add(new NoAction());
-        list.add(new BuildTrainAction());
-        list.add(new BuildTrainIfSelectedAction());
-        list.add(new PrintTrainManifestAction());
-        list.add(new PrintTrainManifestIfSelectedAction());
-        list.add(new MoveTrainAction());
-        list.add(new TerminateTrainAction());
-        list.add(new WaitTrainAction());
-        list.add(new UpdateSwitchListAction());
-        list.add(new RunAutomationAction());
-        list.add(new ResumeAutomationAction());
-        list.add(new StopAutomationAction());
-        return list;
-    }
-    
-    public JComboBox<Action> getActionComboBox() {
-        JComboBox<Action> box = new JComboBox<>();
-        for (Action action : getActionList())
-            box.addItem(action);
-        return box;
-    }
-    
-    public Action getActionByCode(int code) {
-        for (Action action : getActionList()) {
-            if (action.getCode() == code)
-                return action;
-        }
-        return null;
-    }
 
     /**
      * Gets a JComboBox loaded with automations.
@@ -261,7 +210,21 @@ public class AutomationManager implements java.beans.PropertyChangeListener {
             box.addItem(automation);
         }
     }
+    
+    public Automation copyAutomation(Automation automation, String newName) {
+        Automation newAutomation = newAutomation(newName);
+        if (automation != null) {
+            automation.copyAutomation(newAutomation);
+        }
+        return newAutomation;
+    }
 
+    /**
+     * Construct this Entry from XML. This member has to remain synchronized
+     * with the detailed DTD in operations-trains.dtd
+     *
+     * @param root Consist XML element
+     */
     public void load(Element root) {
         if (root.getChild(Xml.AUTOMATIONS) != null) {
             @SuppressWarnings("unchecked")
@@ -273,6 +236,12 @@ public class AutomationManager implements java.beans.PropertyChangeListener {
         }
     }
 
+    /**
+     * Create an XML element to represent this Entry. This member has to remain
+     * synchronized with the detailed DTD in operations-trains.dtd.
+     *
+     * @return Contents in a JDOM Element
+     */
     public void store(Element root) {
         Element values;
         root.addContent(values = new Element(Xml.AUTOMATIONS));
@@ -282,10 +251,6 @@ public class AutomationManager implements java.beans.PropertyChangeListener {
         }
     }
 
-    /**
-     * Check for car type and road name changes.
-     *
-     */
     public void propertyChange(java.beans.PropertyChangeEvent e) {
         if (Control.showProperty) {
             log.debug("Property change: ({}) old: ({}) new: ({})", e.getPropertyName(), e.getOldValue(), e

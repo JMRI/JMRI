@@ -1,7 +1,5 @@
 package jmri.jmrit.operations.automation.actions;
 
-import javax.swing.JOptionPane;
-import jmri.jmrit.operations.automation.AutomationItem;
 
 public class NoAction extends Action {
 
@@ -13,20 +11,13 @@ public class NoAction extends Action {
     }
 
     @Override
-    public String toString() {
+    public String getName() {
         return Bundle.getMessage("NoAction");
     }
 
     @Override
     public void doAction() {
-        if (getAutomationItem() != null) {
-            if (!getAutomationItem().getMessage().equals(AutomationItem.NONE)) {
-                JOptionPane.showMessageDialog(null, getAutomationItem().getMessage(),
-                        getAutomationItem().getId() + " " + toString(),
-                        JOptionPane.INFORMATION_MESSAGE);
-            }
-            firePropertyChange(ACTION_COMPLETE_CHANGED_PROPERTY, false, true);
-        }
+        finishAction(true);
     }
 
     @Override

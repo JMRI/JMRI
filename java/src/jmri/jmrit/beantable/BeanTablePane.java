@@ -2,7 +2,6 @@
 package jmri.jmrit.beantable;
 
 import java.awt.Component;
-import java.util.ResourceBundle;
 import javax.swing.Box;
 import javax.swing.BoxLayout;
 import javax.swing.JScrollPane;
@@ -37,8 +36,6 @@ public class BeanTablePane extends jmri.util.swing.JmriPanel {
     Box bottomBox;		// panel at bottom for extra buttons etc
     int bottomBoxIndex;	// index to insert extra stuff
     static final int bottomStrutWidth = 20;
-
-    ResourceBundle rb = ResourceBundle.getBundle("jmri.jmrit.beantable.BeanTableBundle");
 
     public void init(BeanTableDataModel model) {
 

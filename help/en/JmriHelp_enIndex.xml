@@ -17,7 +17,7 @@
 
   <indexitem text="Block Tracking " target="html.tools.tracker.index"/>
 
-  <indexitem text="Blocks Table " target="package.jmri.jmrit.beantable.BlockTable"/>
+  <indexitem text="Block Table " target="package.jmri.jmrit.beantable.BlockTable"/>
 
   <indexitem text="Edit Blocks " target="package.jmri.jmrit.beantable.BlockEdit"/>
 
@@ -207,7 +207,7 @@
 
   <indexitem text="Light Control " target="package.jmri.jmrit.simplelightctrl.SimpleLightCtrl"/>
 
-  <indexitem text="Lights Table " target="package.jmri.jmrit.beantable.LightTable"/>
+  <indexitem text="Light Table " target="package.jmri.jmrit.beantable.LightTable"/>
 
  </indexitem>
  <indexitem text="LocoNet ">
@@ -263,7 +263,7 @@
 
   <indexitem text="Memory Monitor " target="package.jmri.jmrit.MemoryFrameAction"/>
 
-  <indexitem text="Memory Variables Table " target="package.jmri.jmrit.beantable.MemoryTable"/>
+  <indexitem text="Memory Variable Table " target="package.jmri.jmrit.beantable.MemoryTable"/>
 
  </indexitem>
  <indexitem text="Modbus " target="html.hardware.modbus.index"/>
@@ -351,7 +351,7 @@
  <indexitem text="Routes ">
   <indexitem text="Add/Edit a Route " target="package.jmri.jmrit.beantable.RouteAddEdit"/>
 
-  <indexitem text="Routes Table " target="package.jmri.jmrit.beantable.RouteTable"/>
+  <indexitem text="Route Table " target="package.jmri.jmrit.beantable.RouteTable"/>
 
  </indexitem>
  <indexitem text="RPS Position System " target="html.hardware.rps.index">
@@ -375,7 +375,7 @@
  <indexitem text="Sections " target="package.jmri.jmrit.beantable.SectionTable">
   <indexitem text="Add/Edit a Section " target="package.jmri.jmrit.beantable.SectionAddEdit"/>
 
-  <indexitem text="Sections Table " target="package.jmri.jmrit.beantable.SectionTable"/>
+  <indexitem text="Section Table " target="package.jmri.jmrit.beantable.SectionTable"/>
 
  </indexitem>
  <indexitem text="Send DCC Packet " target="package.jmri.jmrit.sendpacket.SendPacketFrame"/>
@@ -387,7 +387,7 @@
 
   <indexitem text="Sensor Groups " target="package.jmri.jmrit.sensorgroup.SensorGroupFrame"/>
 
-  <indexitem text="Sensors Table " target="package.jmri.jmrit.beantable.SensorTable"/>
+  <indexitem text="Sensor Table " target="package.jmri.jmrit.beantable.SensorTable"/>
 
  </indexitem>
  <indexitem text="Setting up JMRI " target="html.setup.index"/>
@@ -399,25 +399,21 @@
 
   <indexitem text="European Examples " target="html.tools.signaling.ldt.output"/>
 
-  <indexitem text="Signal Heads Table " target="package.jmri.jmrit.beantable.SignalHeadTable"/>
+  <indexitem text="Signal Head Table " target="package.jmri.jmrit.beantable.SignalHeadTable"/>
 
  </indexitem>
  <indexitem text="Signal Masts " target="html.tools.signaling.SignalMasts">
   <indexitem text="Add/Edit a Signal Mast " target="package.jmri.jmrit.beantable.SignalMastAddEdit"/>
 
-  <indexitem text="Signal Masts Table " target="package.jmri.jmrit.beantable.SignalMastTable"/>
+  <indexitem text="Signal Mast Table " target="package.jmri.jmrit.beantable.SignalMastTable"/>
 
  </indexitem>
  <indexitem text="Signaling " target="html.tools.signaling.index">
   <indexitem text="Signal Mast Logic " target="package.jmri.jmrit.beantable.SignalMastLogicTable"/>
 
-  <indexitem text="SignalPro " target="html.apps.SignalPro.index"/>
-
   <indexitem text="Simple Signal Logic " target="package.jmri.jmrit.blockboss.BlockBossFrame"/>
 
  </indexitem>
- <indexitem text="SignalPro " target="html.apps.SignalPro.index"/>
-
  <indexitem text="Simple Clock " target="package.jmri.jmrit.simpleclock.SimpleClockFrame"/>
 
  <indexitem text="Slot Monitor " target="package.jmri.jmrix.loconet.slotmon.SlotMonFrame"/>
@@ -441,29 +437,29 @@
  <indexitem text="Tables ">
   <indexitem text="Audio Table " target="package.jmri.jmrit.beantable.AudioTable"/>
 
-  <indexitem text="Blocks Table " target="package.jmri.jmrit.beantable.BlockTable"/>
+  <indexitem text="Block Table " target="package.jmri.jmrit.beantable.BlockTable"/>
 
-  <indexitem text="Lights Table " target="package.jmri.jmrit.beantable.LightTable"/>
+  <indexitem text="Light Table " target="package.jmri.jmrit.beantable.LightTable"/>
 
   <indexitem text="Logix Table " target="package.jmri.jmrit.beantable.LogixTable"/>
 
-  <indexitem text="LRoutes Table " target="package.jmri.jmrit.beantable.LRouteTable"/>
+  <indexitem text="LRoute Table " target="package.jmri.jmrit.beantable.LRouteTable"/>
 
-  <indexitem text="Memory Variables Table " target="package.jmri.jmrit.beantable.MemoryTable"/>
+  <indexitem text="Memory Variable Table " target="package.jmri.jmrit.beantable.MemoryTable"/>
 
-  <indexitem text="Reporters Table " target="package.jmri.jmrit.beantable.ReporterTable"/>
+  <indexitem text="Reporter Table " target="package.jmri.jmrit.beantable.ReporterTable"/>
 
-  <indexitem text="Routes Table " target="package.jmri.jmrit.beantable.RouteTable"/>
+  <indexitem text="Route Table " target="package.jmri.jmrit.beantable.RouteTable"/>
 
-  <indexitem text="Sensors Table " target="package.jmri.jmrit.beantable.SensorTable"/>
+  <indexitem text="Sensor Table " target="package.jmri.jmrit.beantable.SensorTable"/>
 
-  <indexitem text="Signal Heads Table " target="package.jmri.jmrit.beantable.SignalHeadTable"/>
+  <indexitem text="Signal Head Table " target="package.jmri.jmrit.beantable.SignalHeadTable"/>
 
-  <indexitem text="Signal Masts Table " target="package.jmri.jmrit.beantable.SignalMastTable"/>
+  <indexitem text="Signal Mast Table " target="package.jmri.jmrit.beantable.SignalMastTable"/>
 
-  <indexitem text="Transits Table " target="package.jmri.jmrit.beantable.TransitTable"/>
+  <indexitem text="Transit Table " target="package.jmri.jmrit.beantable.TransitTable"/>
 
-  <indexitem text="Turnouts Table " target="package.jmri.jmrit.beantable.TurnoutTable"/>
+  <indexitem text="Turnout Table " target="package.jmri.jmrit.beantable.TurnoutTable"/>
 
  </indexitem>
  <indexitem text="TAMs " target="html.hardware.tams.index"/>
@@ -503,7 +499,7 @@
  <indexitem text="Transits ">
   <indexitem text="Add/Edit a Transit " target="package.jmri.jmrit.beantable.TransitAddEdit"/>
 
-  <indexitem text="Transits Table " target="package.jmri.jmrit.beantable.TransitTable"/>
+  <indexitem text="Transit Table " target="package.jmri.jmrit.beantable.TransitTable"/>
 
  </indexitem>
  <indexitem text="Turnouts " target="html.tools.Turnouts">
@@ -511,7 +507,7 @@
 
   <indexitem text="Turnout Control " target="package.jmri.jmrit.simpleturnoutctrl.SimpleTurnoutCtrl"/>
 
-  <indexitem text="Turnouts Table " target="package.jmri.jmrit.beantable.TurnoutTable"/>
+  <indexitem text="Turnout Table " target="package.jmri.jmrit.beantable.TurnoutTable"/>
 
  </indexitem>
  <indexitem text="Upload Debugging Information " target="package.jmri.jmrit.mailreport.Report"/>

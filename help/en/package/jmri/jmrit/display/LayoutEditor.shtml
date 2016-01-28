@@ -737,7 +737,7 @@ Some items will show a verify dialog. Most verify dialogs have an option to shut
 off verify dialogs in case you're deleting many of the same items. When an 
 icon object is "removed" from the panel, its icon is deleted, but the item itself 
 (signal head, sensor, memory variable, etc.) is not deleted. If you need to 
-delete the item itself, do so using the corresponding table (Signals Table, Sensor 
+delete the item itself, do so using the corresponding table (Signal Table, Sensor 
 Table, etc.) <b>Important Note: Prior to deleting any item in a table, make sure 
 that all references to that item are removed from other places. Also immediately 
 after deleting an item, save your panel and restart before doing anything else!</b> 
@@ -1095,7 +1095,7 @@ requested, otherwise it uses the unoccupied track color.</p>
 Optionally a Memory Variable may be assigned to a block by entering its name 
 (system name or user name) in the <b>Memory Variable Name:</b> 
 field. This is useful when setting up Train Tracking (<a href="#tracking">see 
-below</a>). Make sure a memory variable is in the Memory Variables Table before 
+below</a>). Make sure a memory variable is in the Memory Variable Table before 
 it is entered here.
 <p>
 Since blocks are items on the physical layout, the same block may be used in 
@@ -1233,7 +1233,7 @@ ALIGN=CENTER WIDTH="592" HEIGHT="171" HSPACE="0" VSPACE="0"></A>
 	<li>Track on the main oval were designated <i>mainline track</i> using the 
 	<b>Edit Track Segment</b> dialog for each track segment. This gave 
 	different track widths for mainline and side track.</li>
-	<li>Signal Heads were defined in the Signals Table for each of the signals 
+	<li>Signal Heads were defined in the Signal Table for each of the signals 
 	to be placed on the panel. Triple output signal head types were used for 
 	all.</li>
 	<li>Signals were placed at turnouts using the <b>Set Signals at Turnout</b> 

@@ -27,18 +27,14 @@ public class UncaughtExceptionHandlerTest extends SwingTestCase {
                 o.toString();
             }
         };
-        //log.warn("before pauseAWT");
-        pauseAWT();  // can't sleep unless you've paused
-        //log.warn("before t.start");
+
         t.start();
-        //log.warn("before sleep");
-        sleep(100);
-        //log.warn("before assertErrorMessage");
-        JUnitAppender.assertErrorMessage("Unhandled Exception: java.lang.NullPointerException");
+        jmri.util.JUnitUtil.releaseThread(this);
+        JUnitAppender.assertErrorMessage("Uncaught Exception: java.lang.NullPointerException\n	at jmri.util.exceptionhandler.UncaughtExceptionHandlerTest$1.deref(UncaughtExceptionHandlerTest.java:27)\n	at jmri.util.exceptionhandler.UncaughtExceptionHandlerTest$1.run(UncaughtExceptionHandlerTest.java:23)\n");
     }
 
+    boolean caught = false;
     public void testSwing() throws Exception {
-        boolean caught = false;
         Runnable r = new Runnable() {
             public void run() {
                 deref(null);
@@ -53,8 +49,8 @@ public class UncaughtExceptionHandlerTest extends SwingTestCase {
         } catch (java.lang.reflect.InvocationTargetException e) {
             caught = true;
         }
-        flushAWT();
-        Assert.assertTrue("threw exception", caught);
+        jmri.util.JUnitUtil.waitFor(()->{return caught;}, "threw exception");
+        // emits no logging, as the UncaughtExceptionHandlerTest handler isn't invoked
     }
 
     // from here down is testing infrastructure

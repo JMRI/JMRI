@@ -318,7 +318,10 @@ public class LayoutBlock extends AbstractNamedBean implements java.beans.Propert
     public Sensor validateSensor(String sensorName, Component openFrame) {
         // check if anything entered	
         if (sensorName == null || sensorName.length() < 1) {
-            // no sensor entered
+            // no sensor name entered
+            if (occupancyNamedSensor != null) {
+                setOccupancySensorName(null);
+            }
             return null;
         }
         // get the sensor corresponding to this name
@@ -340,15 +343,27 @@ public class LayoutBlock extends AbstractNamedBean implements java.beans.Propert
         LayoutBlock b = InstanceManager.getDefault(jmri.jmrit.display.layoutEditor.LayoutBlockManager.class).
                 getBlockWithSensorAssigned(s);
         if (b != null) {
-            // new sensor is not unique, return to the old one
-            occupancyNamedSensor = savedNamedSensor;
-            JOptionPane.showMessageDialog(openFrame,
-                    java.text.MessageFormat.format(rb.getString("Error6"),
-                            new Object[]{sensorName, b.getID()}),
-                    rb.getString("Error"), JOptionPane.ERROR_MESSAGE);
-            return null;
+            if (b.getUseCount() > 0) {
+                // new sensor is not unique, return to the old one
+                occupancyNamedSensor = savedNamedSensor;
+                JOptionPane.showMessageDialog(openFrame,
+                        java.text.MessageFormat.format(rb.getString("Error6"),
+                                new Object[]{sensorName, b.getID()}),
+                        rb.getString("Error"), JOptionPane.ERROR_MESSAGE);
+                return null;
+            } else {
+                // the user is assigning a sensor which is already assigned to 
+                // layout block b. Layout block b is no longer in use so this
+                // should be fine but it's technically possible to put
+                // this discarded layout block back into service (possibly
+                // by mistake) by entering its name in any edit layout block window.
+                // That would cause a problem with the sensor being in use in
+                // two active blocks, so as a precaution we remove the sensor 
+                // from the discarded block here.
+                b.setOccupancySensorName(null);
+            }
         }
-        // sensor is unique
+        // sensor is unique, or was only in use on a layout block not in use
         setOccupancySensorName(sensorName);
         return s;
     }
@@ -507,11 +522,13 @@ public class LayoutBlock extends AbstractNamedBean implements java.beans.Propert
                 occupancyNamedSensor.getBean().removePropertyChangeListener(mBlockListener);
             }
             occupancyNamedSensor = null;
+            occupancySensorName = "";
+            if (block != null)
+                block.setNamedSensor(null);
             return;
         }
         occupancySensorName = name;
-        Sensor sensor = jmri.InstanceManager.sensorManagerInstance().
-                getSensor(name);
+        Sensor sensor = jmri.InstanceManager.sensorManagerInstance().getSensor(name);
         if (sensor != null) {
             occupancyNamedSensor = jmri.InstanceManager.getDefault(jmri.NamedBeanHandleManager.class).getNamedBeanHandle(name, sensor);
             if (block != null) {
@@ -878,7 +895,11 @@ public class LayoutBlock extends AbstractNamedBean implements java.beans.Propert
         if (!(getOccupancySensorName()).equals(sensorNameField.getText().trim())) {
             // sensor has changed
             String newName = sensorNameField.getText().trim();
-            if (validateSensor(newName, editLayoutBlockFrame) == null) {
+            if (newName == null || newName.length() < 1) {
+                setOccupancySensorName(newName);
+                sensorNameField.setText("");
+                needsRedraw = true;
+            } else if (validateSensor(newName, editLayoutBlockFrame) == null) {
                 // invalid sensor entered
                 occupancyNamedSensor = null;
                 occupancySensorName = "";

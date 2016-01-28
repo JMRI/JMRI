@@ -11,7 +11,6 @@ import jmri.implementation.SE8cSignalHead;
 import jmri.util.JUnitUtil;
 import junit.framework.Assert;
 import junit.framework.Test;
-import junit.framework.TestCase;
 import junit.framework.TestSuite;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -22,7 +21,7 @@ import org.slf4j.LoggerFactory;
  * @author	Bob Jacobsen Copyright 2004, 2007, 2008, 2009
  * @version	$Revision$
  */
-public class SignalHeadTableActionTest extends TestCase {
+public class SignalHeadTableActionTest extends jmri.util.SwingTestCase {
 
     public void testCreate() {
         new SignalHeadTableAction();
@@ -55,11 +54,9 @@ public class SignalHeadTableActionTest extends TestCase {
         );
 
         new SignalHeadTableAction().actionPerformed(null);
+        flushAWT();
 
-//    }
-//  test order isn't guaranteed!
-//    public void testX() {
-        JFrame f = jmri.util.JmriJFrame.getFrame("Signal Head Table");
+        JFrame f = jmri.util.JmriJFrame.getFrame(Bundle.getMessage("TitleSignalTable"));
         Assert.assertTrue("found frame", f != null);
         f.dispose();
     }

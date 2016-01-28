@@ -25,10 +25,10 @@
 <p>JMRI needs to know how a Signal Head on the layout is connected to the electrical hardware. Once JMRI knows that, it can send the right DCC commands to control the Appearance of a Signal Head.</p>
 <p>The "Edit Signal Head" window provides for viewing and changing optional 
 information for existing Signal Heads. Use the "Edit" button in the 
-Signal Heads Table to open a dialog for that Signal Head. Only one Signal Head may be edited at a time. Signal type and Signal System may not be 
+Signal Head Table to open a dialog for that Signal Head. Only one Signal Head may be edited at a time. Signal type and Signal System may not be 
 changed once they have been created. After making changes in the dialog, click the "Update" button at the bottom of the window to change Signal 
 Head information.  Click "Cancel" to exit without making any changes. Closing the Edit Signal Head window is equivalent to clicking "Cancel".</p>
-<p>The "Add New Signal" dialog that is opened by clicking on the "Add..." button at the bottom of the Signal Heads Table lets you choose a Signal Head connection type from the following list.</p>
+<p>The "Add New Signal" dialog that is opened by clicking on the "Add..." button at the bottom of the Signal Head Table lets you choose a Signal Head connection type from the following list.</p>
 	
 		<h2>Available Signal Head Connection Types</h2>
 <dl>
@@ -285,7 +285,7 @@ Approach, all three On controls the Restricting, and all three Closed (Off) make
   Setting e.g. the Turnout on the "Green" connection to Thrown should light the green lamp.</li>
 		</ul>
 		
-<p>Back to the <a href="SignalHeadTable.shtml">Signal Heads Table help page</a>.
+<p>Back to the <a href="SignalHeadTable.shtml">Signal Head Table help page</a>.
 <!-- Footer -->
     <hr class="hide">
     <div id="footer">

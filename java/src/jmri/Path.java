@@ -284,6 +284,41 @@ public class Path {
         b.append(t);
     }
 
+    @Override
+    public boolean equals(Object obj) {
+        if (obj == this) {
+            return true;
+        }
+        if (obj == null) {
+            return false;
+        }
+
+        if (!(getClass() == obj.getClass())) {
+            return false;
+        } else {
+            Path p = (Path)obj;
+            if (p._length != this._length) return false;
+            if (p._toBlockDirection != this._toBlockDirection) return false;
+            if (p._fromBlockDirection != this._fromBlockDirection) return false;
+
+            if (p._block == null &&  this._block != null) return false;
+            if (p._block != null &&  this._block == null) return false;
+            if (p._block != null &&  this._block != null && !p._block.equals(this._block)) return false;
+
+            if (p._beans.size() != this._beans.size()) return false;
+            for (int i = 0; i<p._beans.size(); i++) {
+                if (! p._beans.get(i).equals(this._beans.get(i))) return false;
+            }
+        }
+        return true;
+    }
+
+    @Override
+    public int hashCode() {
+        int hash = _toBlockDirection*1000+_fromBlockDirection*1000*1000+(int)(_length)+1000*1000*1000*_beans.size();
+        return hash;
+    }
+    
     private ArrayList<BeanSetting> _beans = new ArrayList<BeanSetting>();
     private Block _block;
     private int _toBlockDirection;

@@ -2,8 +2,6 @@ package jmri.jmrit.operations.automation.actions;
 
 import java.beans.PropertyChangeEvent;
 import java.beans.PropertyChangeListener;
-import javax.swing.JOptionPane;
-import jmri.jmrit.operations.automation.AutomationItem;
 import jmri.jmrit.operations.routes.RouteLocation;
 import jmri.jmrit.operations.setup.Control;
 import jmri.jmrit.operations.trains.Train;
@@ -20,56 +18,73 @@ public class WaitTrainAction extends Action implements PropertyChangeListener {
     }
 
     @Override
-    public String toString() {
+    public String getName() {
         return Bundle.getMessage("WaitForTrain");
+    }
+
+    @Override
+    public boolean isConcurrentAction() {
+        return true;
     }
 
     @Override
     public void doAction() {
         if (getAutomationItem() != null) {
             Train train = getAutomationItem().getTrain();
-            if (train != null) {
+            if (train != null && train.getRoute() != null) {
+                setRunning(true);
                 train.addPropertyChangeListener(this);
+            } else {
+                finishAction(false);
             }
         }
     }
-    
-    private void trainUpdate() {
+
+    /**
+     * Wait for train to build and no location, or train to arrive at location,
+     * or train build to be deselected.
+     * 
+     * @param evt
+     */
+    private void trainUpdate(PropertyChangeEvent evt) {
         if (getAutomationItem() != null) {
-            Train train = getAutomationItem().getTrain();
-            RouteLocation rl = getAutomationItem().getRouteLocation();
-            if (rl != null && rl != train.getCurrentLocation()) {
+            if (evt.getPropertyName().equals(Train.TRAIN_MOVE_COMPLETE_CHANGED_PROPERTY) ||
+                    evt.getPropertyName().equals(Train.BUILT_CHANGED_PROPERTY)) {
+                Train train = getAutomationItem().getTrain();
+                RouteLocation rl = getAutomationItem().getRouteLocation();
+                if (rl != null && rl != train.getCurrentLocation()) {
                     return; // haven't reached this location continue waiting
+                }
+                train.removePropertyChangeListener(this);
+                finishAction(true);
+            } else if (evt.getPropertyName().equals(Train.BUILD_CHANGED_PROPERTY)
+                    && (boolean) evt.getNewValue() == false) {
+                Train train = getAutomationItem().getTrain();
+                train.removePropertyChangeListener(this);
+                finishAction(true);
             }
-            // now show message if there's one
-            if (!getAutomationItem().getMessage().equals(AutomationItem.NONE)) {
-                JOptionPane.showMessageDialog(null, getAutomationItem().getMessage(),
-                        getAutomationItem().getId() + " " + toString() + " " + train.getName() + " " + train.getCurrentLocationName(),
-                        JOptionPane.INFORMATION_MESSAGE);
-            }
-            train.removePropertyChangeListener(this);
-            firePropertyChange(ACTION_COMPLETE_CHANGED_PROPERTY, false, true);
         }
     }
 
     @Override
     public void cancelAction() {
         if (getAutomationItem() != null) {
+            setRunning(false);
             Train train = getAutomationItem().getTrain();
-            train.removePropertyChangeListener(this);
+            if (train != null) {
+                train.removePropertyChangeListener(this);
+            }
         }
     }
 
     @Override
     public void propertyChange(PropertyChangeEvent evt) {
         if (Control.showProperty)
-            log.debug("Property change: ({}) old: ({}) new: ({})", evt.getPropertyName(), evt.getOldValue(), evt
-                    .getNewValue());
-        if (evt.getPropertyName().equals(Train.TRAIN_MOVE_COMPLETE_CHANGED_PROPERTY)) {
-            trainUpdate();
-        }   
+            log.debug("Property change AutomationItem {}: ({}) old: ({}) new: ({})", getAutomationItem().getId(),
+                    evt.getPropertyName(), evt.getOldValue(), evt.getNewValue());
+        trainUpdate(evt);
     }
-    
+
     static Logger log = LoggerFactory.getLogger(WaitTrainAction.class.getName());
 
 }

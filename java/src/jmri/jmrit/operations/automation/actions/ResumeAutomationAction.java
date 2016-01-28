@@ -1,8 +1,7 @@
 package jmri.jmrit.operations.automation.actions;
 
-import javax.swing.JOptionPane;
+import javax.swing.JComboBox;
 import jmri.jmrit.operations.automation.Automation;
-import jmri.jmrit.operations.automation.AutomationItem;
 
 public class ResumeAutomationAction extends Action {
 
@@ -14,31 +13,29 @@ public class ResumeAutomationAction extends Action {
     }
 
     @Override
-    public String toString() {
+    public String getName() {
         return Bundle.getMessage("ResumeAutomation");
     }
 
     @Override
     public void doAction() {
         if (getAutomationItem() != null) {
-            Automation automation = getAutomationItem().getAutomation();
+            Automation automation = getAutomationItem().getAutomationToRun();
             if (automation != null) {
+                setRunning(true);
                 automation.resume();
-                // now show message if there's one
-                if (!getAutomationItem().getMessage().equals(AutomationItem.NONE)) {
-                    JOptionPane.showMessageDialog(null, getAutomationItem().getMessage(),
-                            getAutomationItem().getId() + " " + toString(),
-                            JOptionPane.INFORMATION_MESSAGE);
-                }
             }
-            firePropertyChange(ACTION_COMPLETE_CHANGED_PROPERTY, false, true);
+            finishAction(automation != null);
         }
     }
 
     @Override
     public void cancelAction() {
         // no cancel for this action
-
     }
 
+    @Override
+    public JComboBox<Automation> getComboBox() {
+        return getAutomationComboBox();
+    }
 }

@@ -803,21 +803,23 @@ since the IP address can change due to DHCP addressing.
 </ol>
 
 <a name="tools"></a><h2>JMRI XPressNet Tools</h2>
-	<p>The following tools are available from the XPressNet menu when this connection is active (click on the name to read more on each tool): 
+<img src="images/XpressNetMenu.png" width="236" height="224" align="right" alt="Menu">
+	<p>The following tools are available from the XPressNet menu when this connection is active (click on the name to read more on each tool):
 		<ul>
-		<li><a href="CreateXNetLogFile.shtml">XPressNet Monitor</a>
-		<li><a href="LZV100Configurationtool.shtml">LZV100 Configuration Tool</a>
-		- This is a tool to configure the LZV100 command and power station via
-		software
-		</li>
-		<li><a href="LI101Configurationtool.shtml">LI101 Configuration Tool</a> -
-		This tool configures the LI101 computer interface via software
-		</li>
+		<li><a href="CreateXNetLogFile.shtml">XPressNet Traffic (Monitor)</a></li>
 		<li><a href="XNetSystemInformationtool.shtml">XPressNet System
 		Information</a> - This tool displays the software version and type of
-		the Command Station and the Software version of the LI100/LI100F/LI101F
-		connected to the computer.
-		</li>
+		the Command Station and the software version of the LI100/LI100F/LI101F
+		connected to the computer.</li>
+		<li>Send XpressNet Command</li>
+		<li>Command Station Database Manager</li>		
+		<li><a href="LI101Configurationtool.shtml">LI101 Configuration Manager</a> -
+		to configures the LI101 computer interface</li>
+		<li>LIUSB Configuration Manager</li>		
+		<li>LZ100 Configuration Manager</li>
+		<li><a href="LZV100Configurationtool.shtml">LZV100 Configuration Manager</a>
+		- to configure the LZV100 Command and Power Station</li>
+		<li>LV102 Configuration Manager</li>		
 		</ul>
 
 <a name="documentation"></a><h2>Documentation</h2>

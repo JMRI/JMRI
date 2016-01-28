@@ -1,11 +1,8 @@
 package jmri.jmrit.operations.automation.actions;
 
-import javax.swing.JOptionPane;
-import jmri.jmrit.operations.automation.AutomationItem;
 import jmri.jmrit.operations.setup.Setup;
 import jmri.jmrit.operations.trains.TrainManager;
 import jmri.jmrit.operations.trains.TrainScheduleManager;
-
 
 public class UpdateSwitchListAction extends Action {
 
@@ -17,26 +14,22 @@ public class UpdateSwitchListAction extends Action {
     }
 
     @Override
-    public String toString() {
-        if (Setup.isSwitchListRealTime() && TrainManager.instance().isPrintPreviewEnabled())
-            return Bundle.getMessage("PrintSwitchList");
-        else if (Setup.isSwitchListRealTime() && !TrainManager.instance().isPrintPreviewEnabled())
-            return Bundle.getMessage("PreviewSwitchList");
-        else
+    public String getName() {
+        if (Setup.isSwitchListRealTime() && !TrainManager.instance().isPrintPreviewEnabled()) {
+            return Bundle.getMessage("PrintSwitchListChanges");
+        } else if (Setup.isSwitchListRealTime() && TrainManager.instance().isPrintPreviewEnabled()) {
+            return Bundle.getMessage("PreviewSwitchListChanges");
+        } else {
             return Bundle.getMessage("UpdateSwitchList");
+        }
     }
 
     @Override
     public void doAction() {
         if (getAutomationItem() != null) {
+            setRunning(true);
             TrainScheduleManager.instance().buildSwitchLists();
-            // now show message if there's one
-            if (!getAutomationItem().getMessage().equals(AutomationItem.NONE)) {
-                JOptionPane.showMessageDialog(null, getAutomationItem().getMessage(),
-                        getAutomationItem().getId() + " " + toString(),
-                        JOptionPane.INFORMATION_MESSAGE);
-            }
-            firePropertyChange(ACTION_COMPLETE_CHANGED_PROPERTY, false, true);
+            finishAction(true);
         }
     }
 
@@ -44,5 +37,4 @@ public class UpdateSwitchListAction extends Action {
     public void cancelAction() {
         // no cancel for this action     
     }
-
 }

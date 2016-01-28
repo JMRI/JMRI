@@ -68,5 +68,35 @@ public class BeanSetting {
     private final NamedBeanHandle<NamedBean> _namedBean;
     final private int _setting;
 
+    @Override
+    public boolean equals(Object obj) {
+        if (obj == this) {
+            return true;
+        }
+        if (obj == null) {
+            return false;
+        }
+
+        if (!(getClass() == obj.getClass())) {
+            return false;
+        } else {
+            BeanSetting p = (BeanSetting)obj;
+            if (p._setting != this._setting) return false;
+
+            if (p._namedBean == null &&  this._namedBean != null) return false;
+            if (p._namedBean != null &&  this._namedBean == null) return false;
+            if (p._namedBean != null &&  this._namedBean != null && !p._namedBean.equals(this._namedBean)) return false;
+
+        }
+        return true;
+    }
+
+    @Override
+    public int hashCode() {
+        int hash = _setting*1000;
+        if (_namedBean != null) hash += _namedBean.hashCode();
+        return hash;
+    }
+
     static final Logger log = LoggerFactory.getLogger(BeanSetting.class.getName());
 }
