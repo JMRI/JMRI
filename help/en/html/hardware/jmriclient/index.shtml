@@ -73,7 +73,7 @@ computer network where you would like to operate a panel.</p>
 connection with the prefix 'L'.</p>
 
 <p>On the server computer, open the Preferences, and select the Start Up group.  
-click the "Add Action" button, and select "Start Simple JMRI Server" from the list 
+click the "Add &#x25BE;" button, select "Perform action..." and select "Start Simple JMRI Server" from the list 
 of options.  Save the preferences and restart the program.</p>
 
 <p>

@@ -4,7 +4,6 @@ package jmri.jmrit.beantable;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.util.HashMap;
-import java.util.ResourceBundle;
 import javax.swing.AbstractAction;
 import javax.swing.JButton;
 import javax.swing.JPanel;
@@ -36,9 +35,6 @@ abstract public class AbstractTableAction extends AbstractAction {
     }
 
     protected BeanTableDataModel m;
-
-    public static final ResourceBundle rbean = ResourceBundle.getBundle("jmri.NamedBeanBundle");
-    public static final ResourceBundle rb = ResourceBundle.getBundle("jmri.jmrit.beantable.BeanTableBundle");
 
     /**
      * Create the JTable DataModel, along with the changes for the specific
@@ -75,7 +71,7 @@ abstract public class AbstractTableAction extends AbstractAction {
              */
             void extras() {
                 if (includeAddButton) {
-                    JButton addButton = new JButton(this.rb.getString("ButtonAdd"));
+                    JButton addButton = new JButton(Bundle.getMessage("ButtonAdd"));
                     addToBottomBox(addButton, this.getClass().getName());
                     addButton.addActionListener(new ActionListener() {
                         public void actionPerformed(ActionEvent e) {
@@ -152,10 +148,10 @@ abstract public class AbstractTableAction extends AbstractAction {
 
     public void setMessagePreferencesDetails() {
         HashMap< Integer, String> options = new HashMap< Integer, String>(3);
-        options.put(0x00, rb.getString("DeleteAsk"));
-        options.put(0x01, rb.getString("DeleteNever"));
-        options.put(0x02, rb.getString("DeleteAlways"));
-        jmri.InstanceManager.getDefault(jmri.UserPreferencesManager.class).messageItemDetails(getClassName(), "deleteInUse", rb.getString("DeleteItemInUse"), options, 0x00);
+        options.put(0x00, Bundle.getMessage("DeleteAsk"));
+        options.put(0x01, Bundle.getMessage("DeleteNever"));
+        options.put(0x02, Bundle.getMessage("DeleteAlways"));
+        jmri.InstanceManager.getDefault(jmri.UserPreferencesManager.class).messageItemDetails(getClassName(), "deleteInUse", Bundle.getMessage("DeleteItemInUse"), options, 0x00);
     }
 
     protected abstract String getClassName();

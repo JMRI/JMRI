@@ -86,11 +86,10 @@ public class SectionTableAction extends AbstractTableAction {
     }
 
     public SectionTableAction() {
-        this(rb.getString("TitleSectionTable"));
+        this(Bundle.getMessage("TitleSectionTable"));
     }
 
-    static final ResourceBundle rbx = ResourceBundle
-            .getBundle("jmri.jmrit.beantable.SectionTransitTableBundle");
+    static final ResourceBundle rbx = ResourceBundle.getBundle("jmri.jmrit.beantable.SectionTransitTableBundle");
 
     /**
      * Create the JTable DataModel, along with the changes for the specific case
@@ -169,7 +168,7 @@ public class SectionTableAction extends AbstractTableAction {
                         }
                     }
                 } else if (col == EDITCOL) {
-                    return rb.getString("ButtonEdit");
+                    return Bundle.getMessage("ButtonEdit");
                 } else {
                     return super.getValueAt(row, col);
                 }
@@ -290,7 +289,7 @@ public class SectionTableAction extends AbstractTableAction {
     }
 
     protected void setTitle() {
-        f.setTitle(f.rb.getString("TitleSectionTable"));
+        f.setTitle(Bundle.getMessage("TitleSectionTable"));
     }
 
     protected String helpTarget() {
@@ -323,9 +322,9 @@ public class SectionTableAction extends AbstractTableAction {
     JTextField sysName = new JTextField(5);
     JLabel sysNameFixed = new JLabel("");
     JTextField userName = new JTextField(17);
-    JLabel sysNameLabel = new JLabel(rb.getString("LabelSystemName"));
-    JLabel userNameLabel = new JLabel(rb.getString("LabelUserName"));
-    JCheckBox _autoSystemName = new JCheckBox(rb.getString("LabelAutoSysName"));
+    JLabel sysNameLabel = new JLabel(Bundle.getMessage("LabelSystemName"));
+    JLabel userNameLabel = new JLabel(Bundle.getMessage("LabelUserName"));
+    JCheckBox _autoSystemName = new JCheckBox(Bundle.getMessage("LabelAutoSysName"));
     jmri.UserPreferencesManager pref;
     JButton create = null;
     JButton update = null;
@@ -371,7 +370,7 @@ public class SectionTableAction extends AbstractTableAction {
     void addEditPressed() {
         pref = jmri.InstanceManager.getDefault(jmri.UserPreferencesManager.class);
         if (addFrame == null) {
-            addFrame = new JmriJFrame(rb.getString("TitleAddSection"));
+            addFrame = new JmriJFrame(Bundle.getMessage("TitleAddSection"));
             addFrame.addHelpMenu("package.jmri.jmrit.beantable.SectionAddEdit", true);
             addFrame.getContentPane().setLayout(new BoxLayout(addFrame.getContentPane(), BoxLayout.Y_AXIS));
             JPanel p = new JPanel();
@@ -550,21 +549,21 @@ public class SectionTableAction extends AbstractTableAction {
             JButton cancel = null;
             JPanel pb = new JPanel();
             pb.setLayout(new FlowLayout());
-            pb.add(cancel = new JButton(rb.getString("ButtonCancel")));
+            pb.add(cancel = new JButton(Bundle.getMessage("ButtonCancel")));
             cancel.addActionListener(new ActionListener() {
                 public void actionPerformed(ActionEvent e) {
                     cancelPressed(e);
                 }
             });
             cancel.setToolTipText(rbx.getString("CancelButtonHint"));
-            pb.add(create = new JButton(rb.getString("ButtonCreate")));
+            pb.add(create = new JButton(Bundle.getMessage("ButtonCreate")));
             create.addActionListener(new ActionListener() {
                 public void actionPerformed(ActionEvent e) {
                     createPressed(e);
                 }
             });
             create.setToolTipText(rbx.getString("SectionCreateButtonHint"));
-            pb.add(update = new JButton(rb.getString("ButtonUpdate")));
+            pb.add(update = new JButton(Bundle.getMessage("ButtonUpdate")));
             update.addActionListener(new ActionListener() {
                 public void actionPerformed(ActionEvent e) {
                     updatePressed(e);
@@ -707,9 +706,9 @@ public class SectionTableAction extends AbstractTableAction {
     void handleCreateException(String sysName) {
         javax.swing.JOptionPane.showMessageDialog(addFrame,
                 java.text.MessageFormat.format(
-                        rb.getString("ErrorLightAddFailed"),
+                        Bundle.getMessage("ErrorLightAddFailed"),
                         new Object[]{sysName}),
-                rb.getString("ErrorTitle"),
+                Bundle.getMessage("ErrorTitle"),
                 javax.swing.JOptionPane.ERROR_MESSAGE);
     }
     
@@ -1092,7 +1091,7 @@ public class SectionTableAction extends AbstractTableAction {
         ArrayList<Transit> affectedTransits = jmri.InstanceManager.transitManagerInstance().getListUsingSection(s);
         final JDialog dialog = new JDialog();
         String msg = "";
-        dialog.setTitle(AbstractTableAction.rb.getString("WarningTitle"));
+        dialog.setTitle(Bundle.getMessage("WarningTitle"));
         dialog.setDefaultCloseOperation(javax.swing.JFrame.DISPOSE_ON_CLOSE);
         dialog.getContentPane().setLayout(new BoxLayout(dialog.getContentPane(), BoxLayout.Y_AXIS));
         JPanel p1 = new JPanel();
@@ -1336,9 +1335,9 @@ public class SectionTableAction extends AbstractTableAction {
         public String getColumnName(int col) {
             switch (col) {
                 case SNAME_COLUMN:
-                    return rb.getString("LabelSystemName");
+                    return Bundle.getMessage("LabelSystemName");
                 case UNAME_COLUMN:
-                    return rb.getString("LabelUserName");
+                    return Bundle.getMessage("LabelUserName");
                 default:
                     return "";
             }
@@ -1510,7 +1509,7 @@ public class SectionTableAction extends AbstractTableAction {
     }
 
     public String getClassDescription() {
-        return rb.getString("TitleSectionTable");
+        return Bundle.getMessage("TitleSectionTable");
     }
 
     static final Logger log = LoggerFactory.getLogger(SectionTableAction.class.getName());

@@ -233,6 +233,9 @@ public class LayoutEditor extends jmri.jmrit.display.panelEditor.PanelEditor imp
     //private int numTurnouts = 0;
     private TrackSegment newTrack = null;
     private boolean panelChanged = false;
+    
+    // grid size in pixels
+    private int gridSize = 10;
 
     // selection variables
     private boolean selectionActive = false;
@@ -1029,6 +1032,33 @@ public class LayoutEditor extends jmri.jmrit.display.panelEditor.PanelEditor imp
         });
         snapToGridOnMoveItem.setSelected(snapToGridOnMove);
 
+        // specify grid square size 
+        JMenuItem gridSizeItem = new JMenuItem(rb.getString("EditGridSize") + "...");
+        optionMenu.add(gridSizeItem);
+        gridSizeItem.addActionListener(new ActionListener() {
+            public void actionPerformed(ActionEvent event) {
+                // prompt for new size
+                String newSize = (String) JOptionPane.showInputDialog(getTargetFrame(),
+                        rb.getString("NewGridSize") + ":", rb.getString("EditGridsizeMessageTitle"),
+                        JOptionPane.PLAIN_MESSAGE, null, null, String.valueOf(gridSize));
+                if (newSize == null) {
+                    return;  // cancelled
+                }
+                int gSize = Integer.parseInt(newSize);
+                if (gSize == gridSize) {
+                    return; // no change
+                }
+                if (gSize < 5 || gSize > 100) {
+                    JOptionPane.showMessageDialog(null, rb.getString("GridSizeInvalid"), rb.getString("CannotEditGridSize"),
+                                JOptionPane.ERROR_MESSAGE);
+                        return;
+                }
+                setGridSize(gSize);
+                setDirty(true);
+                repaint();
+            }
+        });
+        
         // Show/Hide Scroll Bars
         scrollMenu = new JMenu(rb.getString("ScrollBarsSubMenu"));
         optionMenu.add(scrollMenu);
@@ -3604,8 +3634,8 @@ public class LayoutEditor extends jmri.jmrit.display.panelEditor.PanelEditor imp
                     && event.isShiftDown()) {
                 currentPoint = new Point2D.Double(xLoc, yLoc);
                 if (snapToGridOnAdd) {
-                    xLoc = ((xLoc + 4) / 10) * 10;
-                    yLoc = ((yLoc + 4) / 10) * 10;
+                    xLoc = ((xLoc + (gridSize / 2)) / gridSize) * gridSize;
+                    yLoc = ((yLoc + (gridSize / 2)) / gridSize) * gridSize;
                     currentPoint.setLocation(xLoc, yLoc);
                 }
                 if (turnoutRHBox.isSelected()) {
@@ -5341,8 +5371,8 @@ public class LayoutEditor extends jmri.jmrit.display.panelEditor.PanelEditor imp
             if ((selectedObject != null) && (event.isMetaDown() || event.isAltDown()) && allPositionable()) {
                 // moving a point
                 if (snapToGridOnMove) {
-                    int xx = (((int) newPos.getX() + 4) / 10) * 10;
-                    int yy = (((int) newPos.getY() + 4) / 10) * 10;
+                    int xx = (((int) newPos.getX() + (gridSize / 2)) / gridSize) * gridSize;
+                    int yy = (((int) newPos.getY() + (gridSize / 2)) / gridSize) * gridSize;
                     newPos.setLocation(xx, yy);
                 }
                 if (_pointSelection != null || _turntableSelection != null || _xingSelection != null
@@ -7473,6 +7503,16 @@ public class LayoutEditor extends jmri.jmrit.display.panelEditor.PanelEditor imp
         }
     }
 
+    public int setGridSize(int newSize) {
+        gridSize = newSize;
+        return gridSize;
+    }
+    
+    public int getGridSize() {
+        int gs = gridSize;
+        return gs;
+    }
+            
     public int getMainlineTrackWidth() {
         int wid = (int) mainlineTrackWidth;
         return wid;
@@ -9414,11 +9454,11 @@ public class LayoutEditor extends jmri.jmrit.display.panelEditor.PanelEditor imp
 
     private void drawPanelGrid(Graphics2D g2) {
         Dimension dim = getSize();
-        double pix = 10.0;
+        double pix = (double) gridSize;
         double maxX = dim.width;
         double maxY = dim.height;
-        Point2D startPt = new Point2D.Double(0.0, 10.0);
-        Point2D stopPt = new Point2D.Double(maxX, 10.0);
+        Point2D startPt = new Point2D.Double(0.0, (double) gridSize);
+        Point2D stopPt = new Point2D.Double(maxX, (double) gridSize);
         BasicStroke narrow = new BasicStroke(1.0F, BasicStroke.CAP_ROUND, BasicStroke.JOIN_ROUND);
         BasicStroke wide = new BasicStroke(2.0F, BasicStroke.CAP_ROUND, BasicStroke.JOIN_ROUND);
         g2.setColor(Color.gray);
@@ -9434,10 +9474,10 @@ public class LayoutEditor extends jmri.jmrit.display.panelEditor.PanelEditor imp
             } else {
                 g2.draw(new Line2D.Double(startPt, stopPt));
             }
-            pix += 10.0;
+            pix += gridSize;
         }
         // draw vertical lines
-        pix = 10.0;
+        pix = (double) gridSize;
         while (pix < maxX) {
             startPt.setLocation(pix, 0.0);
             stopPt.setLocation(pix, maxY);
@@ -9448,7 +9488,7 @@ public class LayoutEditor extends jmri.jmrit.display.panelEditor.PanelEditor imp
             } else {
                 g2.draw(new Line2D.Double(startPt, stopPt));
             }
-            pix += 10.0;
+            pix += gridSize;
         }
     }
 

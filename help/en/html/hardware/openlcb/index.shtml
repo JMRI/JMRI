@@ -74,7 +74,7 @@ the specific Event ID's for a Sensor must be supplied.<br>
 You create Sensors using the 
 <a href="../../../package/jmri/jmrit/beantable/SensorAddEdit.shtml">Add...</a>
 button on the
-<a href="../../../package/jmri/jmrit/beantable/SensorTable.shtml">Sensors Table</a>.
+<a href="../../../package/jmri/jmrit/beantable/SensorTable.shtml">Sensor Table</a>.
 If you supply two event ID's, the first will set the Sensor ACTIVE and 
 the second will set it INACTIVE.  If you provide just one, it
 will set the Sensor ACTIVE, and it will automatically reset itself to INACTIVE

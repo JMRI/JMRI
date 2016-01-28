@@ -28,7 +28,9 @@ import jmri.swing.PreferencesPanel;
  * @author	Bob Jacobsen Copyright 2003
  * @version $Revision$
  * @see apps.PerformFileModel
+ * @deprecated Replaced by {@link apps.startup.PerformFileModelFactory}
  */
+@Deprecated
 public class PerformFilePanel extends JPanel implements PreferencesPanel {
 
     /**

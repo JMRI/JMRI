@@ -46,8 +46,16 @@ public class SprogOpsModeProgrammer extends SprogProgrammer implements Addressed
         _cv = CV;
 
         // Add the packet to the queue rather than send it directly
-        SprogCommandStation.instance().opsModepacket(mAddress, mLongAddr, CV, val);
-        notifyProgListenerEnd(_val, jmri.ProgListener.OK);
+        // [AC 23/01/16] Check that there is a free slot for the ops mode packet.
+        // Delay the reply to allow time for the ops mode packet to be sent and prevent all slots from filling up
+        // when writing multiple CVs, e.g. writing a sheet in the comprehensive programmer.
+        if (SprogCommandStation.instance().opsModepacket(mAddress, mLongAddr, CV, val) != null) {
+            javax.swing.Timer t = new javax.swing.Timer(250, (java.awt.event.ActionEvent evt)->{notifyProgListenerEnd(_val, jmri.ProgListener.OK);});
+            t.setRepeats(false);
+            t.start();
+        } else {
+            notifyProgListenerEnd(_val, jmri.ProgListener.FailedTimeout);
+        }
     }
 
     synchronized public void readCV(int CV, ProgListener p) throws ProgrammerException {

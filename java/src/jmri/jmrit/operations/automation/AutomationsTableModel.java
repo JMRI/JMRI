@@ -1,10 +1,13 @@
 // AutomationsTableModel.java
 package jmri.jmrit.operations.automation;
 
+import java.awt.Frame;
 import java.awt.event.ActionEvent;
 import java.beans.PropertyChangeEvent;
 import java.beans.PropertyChangeListener;
 import java.text.MessageFormat;
+import java.util.Enumeration;
+import java.util.Hashtable;
 import java.util.List;
 import javax.swing.JButton;
 import javax.swing.JComboBox;
@@ -21,7 +24,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 /**
- * Table Model for edit of automations used by operations
+ * Table model allowing the edit and status of an automation used by operations.
  *
  * @author Daniel Boudreau Copyright (C) 2016
  * @version $Revision$
@@ -34,8 +37,10 @@ public class AutomationsTableModel extends javax.swing.table.AbstractTableModel 
     private static final int ID_COLUMN = 0;
     private static final int NAME_COLUMN = ID_COLUMN + 1;
     private static final int COMMENT_COLUMN = NAME_COLUMN + 1;
-    private static final int MESSAGE_COLUMN = COMMENT_COLUMN + 1;
-    private static final int RUN_COLUMN = MESSAGE_COLUMN + 1;
+    private static final int ACTION_COLUMN = COMMENT_COLUMN + 1;
+//    private static final int MESSAGE_COLUMN = ACTION_COLUMN + 1;
+    private static final int STATUS_COLUMN = ACTION_COLUMN + 1;
+    private static final int RUN_COLUMN = STATUS_COLUMN + 1;
     private static final int EDIT_COLUMN = RUN_COLUMN + 1;
     private static final int DELETE_COLUMN = EDIT_COLUMN + 1;
 
@@ -111,7 +116,9 @@ public class AutomationsTableModel extends javax.swing.table.AbstractTableModel 
         table.getColumnModel().getColumn(ID_COLUMN).setPreferredWidth(40);
         table.getColumnModel().getColumn(NAME_COLUMN).setPreferredWidth(200);
         table.getColumnModel().getColumn(COMMENT_COLUMN).setPreferredWidth(350);
-        table.getColumnModel().getColumn(MESSAGE_COLUMN).setPreferredWidth(350);
+        table.getColumnModel().getColumn(ACTION_COLUMN).setPreferredWidth(250);
+//        table.getColumnModel().getColumn(MESSAGE_COLUMN).setPreferredWidth(250);
+        table.getColumnModel().getColumn(STATUS_COLUMN).setPreferredWidth(90);
         table.getColumnModel().getColumn(RUN_COLUMN).setPreferredWidth(70);
         table.getColumnModel().getColumn(EDIT_COLUMN).setPreferredWidth(70);
         table.getColumnModel().getColumn(DELETE_COLUMN).setPreferredWidth(90);
@@ -133,8 +140,12 @@ public class AutomationsTableModel extends javax.swing.table.AbstractTableModel 
                 return Bundle.getMessage("Name");
             case COMMENT_COLUMN:
                 return Bundle.getMessage("Comment");
-            case MESSAGE_COLUMN:
-                return Bundle.getMessage("Message");
+            case ACTION_COLUMN:
+                return Bundle.getMessage("Action");
+//            case MESSAGE_COLUMN:
+//                return Bundle.getMessage("Message");
+            case STATUS_COLUMN:
+                return Bundle.getMessage("Status");
             case RUN_COLUMN:
                 return Bundle.getMessage("Run");
             case EDIT_COLUMN:
@@ -154,8 +165,12 @@ public class AutomationsTableModel extends javax.swing.table.AbstractTableModel 
                 return String.class;
             case COMMENT_COLUMN:
                 return String.class;
-            case MESSAGE_COLUMN:
+            case STATUS_COLUMN:
                 return String.class;
+            case ACTION_COLUMN:
+                return String.class;
+//            case MESSAGE_COLUMN:
+//                return String.class;
             case RUN_COLUMN:
                 return JButton.class;
             case EDIT_COLUMN:
@@ -193,8 +208,12 @@ public class AutomationsTableModel extends javax.swing.table.AbstractTableModel 
                 return automation.getName();
             case COMMENT_COLUMN:
                 return automation.getComment();
-            case MESSAGE_COLUMN:
-                return automation.getMessage();
+            case ACTION_COLUMN:
+                return automation.getCurrentActionString();
+            case STATUS_COLUMN:
+                return automation.getActionStatus();
+//            case MESSAGE_COLUMN:
+//                return automation.getMessage();
             case RUN_COLUMN:
                 if (automation.isActionRunning())
                     return Bundle.getMessage("Stop");
@@ -237,19 +256,27 @@ public class AutomationsTableModel extends javax.swing.table.AbstractTableModel 
         });
     }
 
-    AutomationEditFrame aef = null;
+    Hashtable<String, AutomationTableFrame> automationEditFrames = new Hashtable<String, AutomationTableFrame>();
 
     private void editAutomation(int row) {
         log.debug("Edit automation");
-        if (aef != null) {
-            aef.dispose();
-        }
         Automation automation = _sysList.get(row);
+        
+        // is the edit window already open?
+        if (automationEditFrames.containsKey(automation.getId())) {
+            AutomationTableFrame frame = automationEditFrames.get(automation.getId());
+            if (frame.isVisible()) {
+                frame.toFront();
+                frame.setExtendedState(Frame.NORMAL);
+                return; // done
+            }
+        }
 
         // use invokeLater so new window appears on top
         SwingUtilities.invokeLater(new Runnable() {
             public void run() {
-                aef = new AutomationEditFrame(automation);
+                AutomationTableFrame frame = new AutomationTableFrame(automation);
+                automationEditFrames.put(automation.getId(), frame);
             }
         });
     }
@@ -284,9 +311,12 @@ public class AutomationsTableModel extends javax.swing.table.AbstractTableModel 
         if (log.isDebugEnabled()) {
             log.debug("dispose");
         }
-        if (aef != null) {
-            aef.dispose();
+        Enumeration<String> en = automationEditFrames.keys();
+        while (en.hasMoreElements()) {
+            AutomationTableFrame frame = automationEditFrames.get(en.nextElement());
+            frame.dispose();
         }
+
         automationManager.removePropertyChangeListener(this);
         removePropertyChangeAutomations();
     }

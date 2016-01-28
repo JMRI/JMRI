@@ -1,5 +1,6 @@
 package jmri.jmrit.operations.automation.actions;
 
+import javax.swing.JComboBox;
 import jmri.jmrit.operations.automation.Automation;
 
 public class RunAutomationAction extends Action {
@@ -12,23 +13,29 @@ public class RunAutomationAction extends Action {
     }
 
     @Override
-    public String toString() {
+    public String getName() {
         return Bundle.getMessage("RunAutomation");
     }
 
     @Override
     public void doAction() {
         if (getAutomationItem() != null) {
-            Automation automation = getAutomationItem().getAutomation();
-            automation.run();
-            firePropertyChange(ACTION_COMPLETE_CHANGED_PROPERTY, false, true);
-        } 
+            Automation automation = getAutomationItem().getAutomationToRun();
+            if (automation != null) {
+                setRunning(true);
+                automation.run();
+            }
+            finishAction(automation != null);
+        }
     }
 
     @Override
     public void cancelAction() {
         // no cancel for this action
-        
     }
 
+    @Override
+    public JComboBox<Automation> getComboBox() {
+        return getAutomationComboBox();
+    }
 }

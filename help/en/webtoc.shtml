@@ -532,13 +532,13 @@
 
     
 <li>
-<a href="package/jmri/jmrit/dispatcher/Dispatcher.shtml#atrains">Active Trains Table </a>
+<a href="package/jmri/jmrit/dispatcher/Dispatcher.shtml#atrains">Active Train Table </a>
 <ul></ul>
 </li>
 
     
 <li>
-<a href="package/jmri/jmrit/dispatcher/Dispatcher.shtml#arequests">Allocation Requests Table </a>
+<a href="package/jmri/jmrit/dispatcher/Dispatcher.shtml#arequests">Allocation Request Table </a>
 <ul></ul>
 </li>
 
@@ -734,37 +734,37 @@
 <li>Tables <ul>
   
 <li>
-<a href="package/jmri/jmrit/beantable/TurnoutTable.shtml">Turnouts Table </a>
+<a href="package/jmri/jmrit/beantable/TurnoutTable.shtml">Turnout Table </a>
 <ul></ul>
 </li>
 
   
 <li>
-<a href="package/jmri/jmrit/beantable/LightTable.shtml">Lights Table </a>
+<a href="package/jmri/jmrit/beantable/LightTable.shtml">Light Table </a>
 <ul></ul>
 </li>
 
   
 <li>
-<a href="package/jmri/jmrit/beantable/SensorTable.shtml">Sensors Table </a>
+<a href="package/jmri/jmrit/beantable/SensorTable.shtml">Sensor Table </a>
 <ul></ul>
 </li>
 
   
 <li>
-<a href="package/jmri/jmrit/beantable/SignalHeadTable.shtml">Signal Heads Table </a>
+<a href="package/jmri/jmrit/beantable/SignalHeadTable.shtml">Signal Head Table </a>
 <ul></ul>
 </li>
 
   
 <li>
-<a href="package/jmri/jmrit/beantable/SignalMastTable.shtml">Signal Masts Table </a>
+<a href="package/jmri/jmrit/beantable/SignalMastTable.shtml">Signal Mast Table </a>
 <ul></ul>
 </li>
 
   
 <li>
-<a href="package/jmri/jmrit/beantable/BlockTable.shtml">Blocks Table </a>
+<a href="package/jmri/jmrit/beantable/BlockTable.shtml">Block Table </a>
 <ul></ul>
 </li>
 
@@ -776,13 +776,13 @@
 
   
 <li>
-<a href="package/jmri/jmrit/beantable/RouteTable.shtml">Routes Table </a>
+<a href="package/jmri/jmrit/beantable/RouteTable.shtml">Route Table </a>
 <ul></ul>
 </li>
 
   
 <li>
-<a href="package/jmri/jmrit/beantable/LRouteTable.shtml">LRoutes Table </a>
+<a href="package/jmri/jmrit/beantable/LRouteTable.shtml">LRoute Table </a>
 <ul></ul>
 </li>
 
@@ -794,13 +794,13 @@
 
   
 <li>
-<a href="package/jmri/jmrit/beantable/MemoryTable.shtml">Memory Variables Table </a>
+<a href="package/jmri/jmrit/beantable/MemoryTable.shtml">Memory Variable Table </a>
 <ul></ul>
 </li>
 
   
 <li>
-<a href="package/jmri/jmrit/beantable/ReporterTable.shtml">Reporters Table </a>
+<a href="package/jmri/jmrit/beantable/ReporterTable.shtml">Reporter Table </a>
 <ul></ul>
 </li>
 
@@ -823,7 +823,7 @@
 <ul>
    
 <li>
-<a href="package/jmri/jmrit/beantable/BlockTable.shtml">Blocks Table </a>
+<a href="package/jmri/jmrit/beantable/BlockTable.shtml">Block Table </a>
 <ul></ul>
 </li>
 
@@ -873,7 +873,7 @@
 <ul>
    
 <li>
-<a href="package/jmri/jmrit/beantable/LightTable.shtml">Lights Table </a>
+<a href="package/jmri/jmrit/beantable/LightTable.shtml">Light Table </a>
 <ul></ul>
 </li>
 
@@ -929,7 +929,7 @@
 <ul>
    
 <li>
-<a href="package/jmri/jmrit/beantable/LRouteTable.shtml">LRoutes Table </a>
+<a href="package/jmri/jmrit/beantable/LRouteTable.shtml">LRoute Table </a>
 <ul></ul>
 </li>
 
@@ -948,7 +948,7 @@
 <ul>
    
 <li>
-<a href="package/jmri/jmrit/beantable/MemoryTable.shtml">Memory Variables Table </a>
+<a href="package/jmri/jmrit/beantable/MemoryTable.shtml">Memory Variable Table </a>
 <ul></ul>
 </li>
 
@@ -990,7 +990,7 @@
 <ul>
    
 <li>
-<a href="package/jmri/jmrit/beantable/ReporterTable.shtml">Reporters Table </a>
+<a href="package/jmri/jmrit/beantable/ReporterTable.shtml">Reporter Table </a>
 <ul></ul>
 </li>
 
@@ -1009,7 +1009,7 @@
 <ul>
    
 <li>
-<a href="package/jmri/jmrit/beantable/RouteTable.shtml">Routes Table </a>
+<a href="package/jmri/jmrit/beantable/RouteTable.shtml">Route Table </a>
 <ul></ul>
 </li>
 
@@ -1063,7 +1063,7 @@
 <li>Sections <ul>
    
 <li>
-<a href="package/jmri/jmrit/beantable/SectionTable.shtml">Sections Table </a>
+<a href="package/jmri/jmrit/beantable/SectionTable.shtml">Section Table </a>
 <ul></ul>
 </li>
 
@@ -1088,7 +1088,7 @@
 <ul>
    
 <li>
-<a href="package/jmri/jmrit/beantable/SensorTable.shtml">Sensors Table </a>
+<a href="package/jmri/jmrit/beantable/SensorTable.shtml">Sensor Table </a>
 <ul></ul>
 </li>
 
@@ -1117,7 +1117,7 @@
 <ul>
     
 <li>
-<a href="package/jmri/jmrit/beantable/SignalHeadTable.shtml">Signal Heads Table </a>
+<a href="package/jmri/jmrit/beantable/SignalHeadTable.shtml">Signal Head Table </a>
 <ul></ul>
 </li>
 
@@ -1148,7 +1148,7 @@
 <ul>
     
 <li>
-<a href="package/jmri/jmrit/beantable/SignalMastTable.shtml">Signal Masts Table </a>
+<a href="package/jmri/jmrit/beantable/SignalMastTable.shtml">Signal Mast Table </a>
 <ul></ul>
 </li>
 
@@ -1223,7 +1223,7 @@
 <li>Transits <ul>
    
 <li>
-<a href="package/jmri/jmrit/beantable/TransitTable.shtml">Transits Table </a>
+<a href="package/jmri/jmrit/beantable/TransitTable.shtml">Transit Table </a>
 <ul></ul>
 </li>
 
@@ -1242,7 +1242,7 @@
 <ul>
    
 <li>
-<a href="package/jmri/jmrit/beantable/TurnoutTable.shtml">Turnouts Table </a>
+<a href="package/jmri/jmrit/beantable/TurnoutTable.shtml">Turnout Table </a>
 <ul></ul>
 </li>
 

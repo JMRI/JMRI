@@ -360,9 +360,9 @@ public class AddEntryExitPairPanel extends jmri.util.swing.JmriPanel {
                 case ENABLEDCOL:
                     return !nxPairs.isEnabled(source.get(row), panel, dest.get(row));
                 case CLEARCOL:
-                    return jmri.jmrit.beantable.AbstractTableAction.rb.getString("ButtonClear");
+                    return Bundle.getMessage("ButtonClear");
                 case DELETECOL:  //
-                    return jmri.jmrit.beantable.AbstractTableAction.rb.getString("ButtonDelete");
+                    return Bundle.getMessage("ButtonDelete");
                 case TYPECOL:
                     return NXTYPE_NAMES[nxPairs.getEntryExitType(source.get(row), panel, dest.get(row))];
                 default:

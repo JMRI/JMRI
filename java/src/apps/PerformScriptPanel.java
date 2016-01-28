@@ -29,7 +29,9 @@ import jmri.swing.PreferencesPanel;
  * @author	Bob Jacobsen Copyright 2003
  * @version $Revision$
  * @see apps.PerformScriptModel
+ * @deprecated Replaced by {@link apps.startup.PerformScriptModelFactory}
  */
+@Deprecated
 public class PerformScriptPanel extends JPanel implements PreferencesPanel {
 
     /**

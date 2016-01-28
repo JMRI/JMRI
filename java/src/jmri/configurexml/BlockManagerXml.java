@@ -341,13 +341,23 @@ public class BlockManagerXml extends jmri.managers.configurexml.AbstractMemoryMa
 
         // load paths if present
         List<Element> paths = element.getChildren("path");
-        if (paths.size() > 0 && block.getPaths().size() > 0) {
-            log.warn("Adding " + paths.size() + " paths to block " + sysName + " that already has " + block.getPaths().size() + " blocks. Please report this as an error.");
-        }
+
+        int startSize = block.getPaths().size();
+        int loadCount = 0;
+        
         for (int i = 0; i < paths.size(); i++) {
             Element path = paths.get(i);
-            loadPath(block, path);
+            if (loadPath(block, path)) loadCount++;
         }
+
+        if (startSize > 0 && loadCount > 0) {
+            log.warn("Added " + loadCount++ + " paths to block " + sysName + " that already had " + startSize + " blocks.");
+        }
+
+        if (startSize + loadCount != block.getPaths().size()) {
+            log.error("Started with " + startSize + " paths in block " + sysName + ", added "+loadCount+" but final count is "+block.getPaths().size()+"; something not right.");
+        }
+                
     }
 
     /**
@@ -356,7 +366,7 @@ public class BlockManagerXml extends jmri.managers.configurexml.AbstractMemoryMa
      * @param block   Block to receive path
      * @param element Element containing path information
      */
-    public void loadPath(Block block, Element element) throws jmri.configurexml.JmriConfigureXmlException {
+    public boolean loadPath(Block block, Element element) throws jmri.configurexml.JmriConfigureXmlException {
         // load individual path
         int toDir = 0;
         int fromDir = 0;
@@ -383,7 +393,14 @@ public class BlockManagerXml extends jmri.managers.configurexml.AbstractMemoryMa
             loadBeanSetting(path, setting);
         }
 
-        block.addPath(path);
+        // check if path already in block
+        if (!block.hasPath(path)) {    
+            block.addPath(path);
+            return true;
+        } else {
+            log.debug("Skipping load of duplicate path {}", path);
+            return false;
+        }
     }
 
     /**

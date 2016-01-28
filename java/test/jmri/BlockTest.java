@@ -23,6 +23,15 @@ public class BlockTest extends TestCase {
         new Block("SystemName");
     }
 
+    public void testEquals() {
+        Block b1 = new Block("SystemName1");
+        Block b2 = new Block("SystemName2");
+        
+        Assert.assertTrue(b1.equals(b1)); // identity
+        Assert.assertFalse(b1.equals(b2)); // blocks are named objects
+        
+    }
+    
     public void testSensorAdd() {
         Block b = new Block("SystemName");
         b.setSensor("IS12");

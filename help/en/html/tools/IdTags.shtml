@@ -43,12 +43,12 @@ well as the time it was last seen.
 <p>
 If an unknown Id Tag is detected by a reader, details of this tag will be
 automatically entered into the
-<a href="../../package/jmri/jmrit/beantable/IdTagTable.shtml">Id Tags table</a>.
+<a href="../../package/jmri/jmrit/beantable/IdTagTable.shtml">Id Tag Table</a>.
 <p>
 At system shutdown, the details of all Id Tags known to the system are written
 to a file stored in the "idtags" sub-directory of user Preferences.  The storage of
 details when and where a given Id Tag was last seen is configurable by setting
-the option at the bottom of the Id Tags table.
+the option at the bottom of the Id Tag Table.
 <p>
 Current implementations are for CORE-ID based readers. These are supported in
 stand-alone mode via the 'Generic Stand-alone' protocol and as an up-to 8-way
@@ -62,9 +62,9 @@ extending the kit with the additional concentrator components should the
 
 <h2>How to setup Id Tags</h2>
 
-<h3>Id Tags Table</h3>
+<h3>Id Tag Table</h3>
 The 
-<a href="../../package/jmri/jmrit/beantable/IdTagTable.shtml">Id Tags Table</a>
+<a href="../../package/jmri/jmrit/beantable/IdTagTable.shtml">Id Tag Table</a>
 provides easy access to the contents of all Id Tags that JMRI knows about.
 There's also an 
 <a href="../../package/jmri/jmrit/beantable/IdTagAddEdit.shtml">"Add..." button</a>
@@ -82,7 +82,7 @@ To do this:
 	desired Reporter.
 	<li>Click the button.  The Reporter icon will be placed on the Panel.
 	If it's not visible, that might be because the value is currently blank;
-	use the Reporters Table to change the value to something that will be visible.
+	use the Reporter Table to change the value to something that will be visible.
 	<li>You can drag the icon to where you want it in the usual way.
 	<li>The pop-up menu on the Reporter Icon will let you change the formatting.
 	</ul>

@@ -9,6 +9,7 @@ import java.util.Map;
 import jmri.InstanceManager;
 import jmri.JmriException;
 import jmri.SignalMast;
+import jmri.jmris.json.JsonException;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -34,7 +35,7 @@ abstract public class AbstractSignalMastServer {
 
     abstract public void sendErrorStatus(String signalMast) throws IOException;
 
-    abstract public void parseStatus(String statusString) throws JmriException, IOException;
+    abstract public void parseStatus(String statusString) throws JmriException, IOException, JsonException;
 
     synchronized protected void addSignalMastToList(String signalMastName) {
         if (!signalMasts.containsKey(signalMastName)) {

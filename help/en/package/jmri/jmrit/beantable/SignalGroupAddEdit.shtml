@@ -17,7 +17,7 @@
 Adding/Editing a Signal Group
 </h1>
 
-	<p>After clicking on the "Add..." button below the <a href="../beantable/SignalGroupTable.shtml">Signal Groups Table</a>, the following window appears:</p>
+	<p>After clicking on the "Add..." button below the <a href="../beantable/SignalGroupTable.shtml">Signal Group Table</a>, the following window appears:</p>
 		
 <a href="SignalGroupAdd.png">
    <img src="SignalGroupAdd.png" 
@@ -29,7 +29,7 @@ Adding/Editing a Signal Group
 	<li>A main Signal Mast (by System Name) to which this Signal Group is attached.</li>
     <li>A list of Appearances that cause the Signal Group to become active eg. the main Signal Mast must be set for Proceed or Caution, but not Danger.</li>
 	<li>A list of Signal Heads that make up each indication of the Signal Group.<br/>
-Signal Heads included in a Signal Group are picked from the Signal Heads Table, but only Signal Heads that were created using the Single Output connection type (pictured to the right) show up in the list.
+Signal Heads included in a Signal Group are picked from the Signal Head Table, but only Signal Heads that were created using the Single Output connection type (pictured to the right) show up in the list.
 <a href="SingleSignalHead.png">
    <img src="SingleSignalHead.png" 
     height="179" width="115" align="right">
@@ -37,7 +37,7 @@ Signal Heads included in a Signal Group are picked from the Signal Heads Table, 
 	</ul>
 	<p>In the Add/Edit Signal Group window, after entering a User Name for the new Signal Group and the (existing) System Name of the main Signal Mast, select one or more Appearances.<br/>
 		Next select one or more Signal Heads by checking its <b>Include</b> check box.<br/>
-		Click the <b>Done</b> button at the bottom of the pane. Reopen the Signal Group pane bij clicking on its <b>Edit</b> button in the Signal Groups Table to have JMRI repopulate the correct values into the lists and Appearances. If necessary, check the correct boxes in both lists.</p>
+		Click the <b>Done</b> button at the bottom of the pane. Reopen the Signal Group pane bij clicking on its <b>Edit</b> button in the Signal Group Table to have JMRI repopulate the correct values into the lists and Appearances. If necessary, check the correct boxes in both lists.</p>
 	
 	<h3>Define Signal Group Conditions</h3>
 	<p>Each Signal Head within the Signal Group has a set of criteria that have to be met before that Signal Head is illuminated. These criteria are made up from Turnout and/or Sensor states and can be changed by clicking on the corresponding <b>edit</b> button in the last column of the Add/Edit Signal Group pane. A new pane like the one shown to the right will open, letting you define a specific Signal Head that is part of your Indicator.</p>
@@ -51,7 +51,7 @@ Signal Heads included in a Signal Group are picked from the Signal Heads Table, 
 	In between both lists there is a final logical OR/AND option to choose from.</p>
 <p>You will need to do some deep thinking to prepare for this last step, as this is the place where you control how your Indicator will behave. The signal hardware on your layout may rule out some options, so build it up in small steps and test often.</p>
 		
-<p>Back to the <a href="SignalGroupTable.shtml">Signal Groups Table help page</a>.
+<p>Back to the <a href="SignalGroupTable.shtml">Signal Group Table help page</a>.
 	
 <!--#include virtual="/Footer" -->
 

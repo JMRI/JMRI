@@ -50,7 +50,7 @@
             <p>JMRI can automatically start the web server when launched.</p>
             <p>Open the <a href="../../package/apps/TabbedPreferences.shtml">Preferences Window</a>
                 to configure JMRI to start the server each time you start the program.</p>
-            <p>Select the "Start Up" tab, and click "Add Action". In the new
+            <p>Select the "Start Up" tab, click "Add &#x25BE;", and select "Perform action...". In the new
                 selection box that appears, select "Start Web Server".
                 Don't forget to save your changes!</p>
 

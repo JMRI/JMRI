@@ -115,7 +115,7 @@
 	for decoderpro.com, despite Matt Katzer's
 	<a href="http://jmri.org/k/UDRP/index.shtml">despicable behavior</a>,
 	and wrote a scripting example page
-	<li>Egbert Broerse, who improved the signaling help and website content and contributed the Rio Grande 1965 signal definition
+	<li>Egbert Broerse, who worked on translations, improved the signaling help and website content and contributed the Rio Grande 1965 signal definition
 	<li>Dick Bronson, who created the great LocoBuffer-II and worked hard
 	to make sure it worked well with JMRI. He also contributed sets
 	of USS, PRR and B&amp;O panel icons for PanelPro, worked on the PanelPro logo,
@@ -452,6 +452,7 @@
 	decoder information on several models
 	<li>Ed Sisk, who loaned a DCS51 for testing
 	<li>Don Smith, who ran down some NCE decoder information
+        <li>John Socha-Leialoha, who improved the WiThrottle protocol documentation
 	<li>Alfredo Sola provides the Spanish translation
 	<li>The good people at
 	<a href="http://www.sf.net">SourceForge</a>
@@ -547,4 +548,3 @@ the <a href="http://jmri.org/community/codeswarm.shtml">Code Swarm</a> page.</p>
 </div> <!-- closes #mBody-->
 </body>
 </html>
-

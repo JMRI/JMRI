@@ -116,6 +116,9 @@ public class AbstractAutomaton implements Runnable {
         count = 0;
     }
 
+    private boolean running = false;
+    public boolean isRunning() { return running; }
+    
     /**
      * Part of the implementation; not for general use.
      * <p>
@@ -127,6 +130,7 @@ public class AbstractAutomaton implements Runnable {
             init();
             // the real processing in the next statement is in handle();
             // and the loop call is just doing accounting
+            running = true;
             while (handle()) {
                 count++;
                 summary.loop(this);
@@ -139,6 +143,7 @@ public class AbstractAutomaton implements Runnable {
         } catch (Exception e2) {
             log.warn("Exception ends AbstractAutomaton thread: " + e2, e2);
         }
+        running = false;
     }
 
     /**
@@ -160,6 +165,7 @@ public class AbstractAutomaton implements Runnable {
         }
         currentThread = null;
         done();
+        // note we don't set running = false here.  It's still running until the run() routine thinks it's not.
     }
 
     /**
@@ -252,6 +258,16 @@ public class AbstractAutomaton implements Runnable {
         }
     }
 
+    private boolean waiting = false;
+    
+    /**
+     * Indicates that object is waiting on a waitSomething call
+     * <p>
+     * Specifically, the wait has progressed far enough that 
+     * any change to the waited-on-condition will be detected
+     */
+    public boolean isWaiting() { return waiting; }
+
     /**
      * Part of the intenal implementation, not intended for users.
      * <P>
@@ -269,6 +285,7 @@ public class AbstractAutomaton implements Runnable {
             log.debug("wait invoked from invalid context");
         }
         synchronized (this) {
+            waiting = true;
             try {
                 if (milliseconds < 0) {
                     super.wait();
@@ -283,6 +300,7 @@ public class AbstractAutomaton implements Runnable {
         if (promptOnWait) {
             debuggingWait();
         }
+        waiting = false;
     }
 
     /**
