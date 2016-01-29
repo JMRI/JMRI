@@ -111,7 +111,7 @@ with information on sharing files between computers using Dropbox.
 <p>Start up action order is important. In most cases, scripts should be the last
     items in the start up order. Start up order can be changed by selecting a
     start up item and moving it <em>up</em> or <em>down</em> in the list.</p>
-<p>There are four types of start up actions:</p>
+<p>There are five types of start up actions:</p>
 <dl>
     <dt>Perform action</dt>
     <dd>
@@ -134,11 +134,16 @@ is started.
     </dd>
     <dt>Run script</dt>
     <dd>
-Automatically run a script file when the program
-starts up.
-You can run as many script files
-as you'd like; each will be run to the end of the file before the next
-is started.
+        Automatically run a scripts when the program starts up. You can run as
+        many scripts as you'd like; each will be run to completion before the
+        next is started. Note that any files the script depends upon need to be
+        opened before running the script.
+    </dd>
+    <dt>Set route</dt>
+    <dd>
+        Set a route when the program starts. You can set as many routes as you
+        like; each will be set in order. Note that any files the route depends
+        upon need to be opened before setting the route.
     </dd>
 </dl>
 
