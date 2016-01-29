@@ -7,7 +7,7 @@ import apps.StartupModel;
  * 
  * @author Randall Wood (c) 2016
  */
-abstract class AbstractStartupModel implements StartupModel {
+public abstract class AbstractStartupModel implements StartupModel {
 
     private String name;
     

@@ -2,9 +2,9 @@
 package apps.gui3;
 
 import apps.AppsBase;
-import apps.CreateButtonModel;
 import apps.SplashWindow;
 import apps.SystemConsole;
+import apps.startup.StartupActionModelUtil;
 import java.awt.AWTEvent;
 import java.awt.Dimension;
 import java.awt.FlowLayout;
@@ -157,18 +157,18 @@ public abstract class Apps3 extends AppsBase {
     abstract protected ResourceBundle getActionModelResourceBundle();
 
     protected void addToActionModel() {
-        CreateButtonModel bm = InstanceManager.getDefault(apps.CreateButtonModel.class);
+        StartupActionModelUtil util = InstanceManager.getDefault(StartupActionModelUtil.class);
         ResourceBundle rb = getActionModelResourceBundle();
-        if (rb == null || bm == null) {
+        if (rb == null || util == null) {
             return;
         }
         Enumeration<String> e = rb.getKeys();
         while (e.hasMoreElements()) {
             String key = e.nextElement();
             try {
-                bm.addAction(key, rb.getString(key));
+                util.addAction(key, rb.getString(key));
             } catch (ClassNotFoundException ex) {
-                log.error("Did not find class " + key);
+                log.error("Did not find class \"{}\"", key);
             }
         }
     }
