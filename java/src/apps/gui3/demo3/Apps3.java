@@ -335,10 +335,6 @@ public class Apps3 {
         p.add("Connection 1", jmri.jmrix.JmrixConfigPane.instance(1));
         p.add("GUI", guiPrefs = new GuiLafConfigPane());
         p.add("Programmer", new jmri.jmrit.symbolicprog.ProgrammerConfigPane());
-        p.add("Actions", new apps.PerformActionPanel());
-        p.add("Buttons", new apps.CreateButtonPanel());
-        p.add("Files", new apps.PerformFilePanel());
-        p.add("Scripts", new apps.PerformScriptPanel());
         p.add("Roster", new jmri.jmrit.roster.RosterConfigPane());
 
         JPanel p2 = new JPanel();
