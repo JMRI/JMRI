@@ -34,7 +34,7 @@ public class TriggerRouteModelXml extends AbstractXmlAdapter {
     public Element store(Object o) {
         Element e = new Element("perform"); // NOI18N
         e.setAttribute("name", ((TriggerRouteModel) o).getName());
-        e.setAttribute("type", "TriggerRoute");
+        e.setAttribute("type", "Action");
         e.setAttribute("class", this.getClass().getName());
         return e;
     }
