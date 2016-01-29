@@ -10,7 +10,7 @@ package jmri.jmrix.dccpp;
  *
  * Based o LnNetworkPortController by Kevin Dickerson
  */
-public abstract class DCCppNetworkPortController extends jmri.jmrix.AbstractNetworkPortController {
+public abstract class DCCppNetworkPortController extends jmri.jmrix.AbstractNetworkPortController implements DCCppPortController {
     // base class. Implementations will provide InputStream and OutputStream
     // objects to LnTrafficController classes, who in turn will deal in messages.
 
@@ -92,6 +92,23 @@ public abstract class DCCppNetworkPortController extends jmri.jmrix.AbstractNetw
         log.debug("configureOption3: " + value);
         setTurnoutHandling(value);
     }
+
+
+     /**
+     * Check that this object is ready to operate. This is a question of
+     * configuration, not transient hardware status.
+     */
+    public abstract boolean status();
+
+    /**
+     * Can the port accept additional characters? This might go false for short
+     * intervals, but it might also stick off if something goes wrong.
+     */
+    public abstract boolean okToSend();
+
+    public void setOutputBufferEmpty(boolean s) {
+    } // Maintained for compatibility with DCCpptPortController. Simply ignore calls !!!
+
 }
 
 
