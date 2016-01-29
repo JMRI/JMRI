@@ -3238,7 +3238,7 @@
     train's route. The last two actions are "Terminate" and "Reset", pressing "Terminate" moves a
     built train to the last location in the train's route, and completes the work assigned to the
     train. "Reset" is used to release all cars assigned to a built train. You can only reset a train
-    that hasn't been moved.</p>
+    that hasn't moved.</p>
 
    <p>There are several checkboxes along the bottom of the Trains window. The "Show All" when
     selected shows all trains in your roster. When deselected, only trains that have the "Build"
@@ -3806,7 +3806,7 @@
 
    <p>To add your first action to the table, press the "Add" button in the lower left part of
     the window in a section labeled "Add Item". This should add a line to the table, with four pull
-    down menus labeled "Action", "Train", "Route Location", and "Automation". The three pull down
+    down menus labeled "Action", "Train", "Route Location", and "Automation / Other". The three pull down
     menus after "Action" are enabled if the action selected requires them. For example to build a
     train, you need to select under the "Action" column "Build Train" and under the "Train" column
     which train you want to build. If the desired action is to wait for a train to arrive at a
@@ -3873,16 +3873,26 @@
 
    <h5>Wait for Train</h5>
 
-   This action will wait for a train to build or move before executing the next action in the table. If a
-   location is selected in the "Route Location" menu, the program will wait until the train arrives
-   at the location selected. Note that if the train is already at the location selected, that the
-   program will wait until the next time the train arrives at that location. You must select a train
-   using the "Train" menu.
+   This action will wait for a train to build or move before executing the next action in the table.
+   If a location is selected in the "Route Location" menu, the program will wait until the train
+   arrives at the location selected. Note that if the train is already at the location selected,
+   that the program will wait until the next time the train arrives at that location. You must
+   select a train using the "Train" menu. If the "Build" checkbox for the train being waited on is
+   deselected, the program will cancel the wait and move to the next action in the table.
 
    <p>The program also allows you to wait for more than one train. Just enter each of the trains
     you want to wait for in consecutive rows. The program will then continue when all of the trains
     either move or arrived at the locations selected.</p>
-    
+
+   <h5>Wait for Train to Terminate</h5>
+
+   This action will wait for a train to terminate before executing the next action in the table.
+   Note that if the train is already terminated, that the program will wait until the next time the
+   train is terminated. You must select a train using the "Train" menu. If the "Build" checkbox for
+   the train being waited on is deselected, the program will cancel the wait and move to the next
+   action in the table. You can wait for more than one train to terminate by entering each train
+   you want to wait for in consecutive rows.
+
    <h5>Activate Timetable</h5>
    
    This action will activate the selected day in the "Automation / Other" column. Works the same as the
@@ -3893,7 +3903,7 @@
    This action will select trains using the checkboxes in the "Build" column from the
    <a href="#Trains">Trains</a> window based on which day is active, see "Activate Timetable" above to
    select which day is active. Works the same as the "Apply" button in the
-   <a href="#Timetable">Timetable</a> window.
+   <a href="#Timetable">Timetable</a> window.  There must be an active day for this action to work.
 
    <h5>Select Train Build</h5>
    
