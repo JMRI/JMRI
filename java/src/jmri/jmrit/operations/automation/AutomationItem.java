@@ -151,6 +151,7 @@ public class AutomationItem implements java.beans.PropertyChangeListener {
         _train = train;
         if (old != train) {
             setDirtyAndFirePropertyChange("AutomationItemTrainChange", old, train); // NOI18N
+            setRouteLocation(null);
         }
     }
 
