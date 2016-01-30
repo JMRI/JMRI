@@ -67,7 +67,7 @@ on how to
       </ul>
 	</dd>
 
-  <dt>Setting up a GIT environment for JMRI Developers</dt>
+  <dt>Setting up a Git environment for JMRI Developers</dt>
   <dd>
 	You can set your local repository to pull automatically
 	from the JMRI master on GitHub and push to your fork (also on GitHub):
@@ -113,45 +113,48 @@ on how to
 	</ul>
 	</dd>
 
-	<dt id="working">Working with GIT</dt>
+	<dt id="working">Working with Git</dt>
 	<dd>
-	      <p>With SVN and CVS, you check out a &quot;working directory&quot; to make your
-	      changes in, work in it for a while, and eventually commit all your changes back to the main repository.
-	      <p>
-	      Git works on a different idea. 
-	      Instead of multiple working directories, you have a single repository that's been
-	      &quot;cloned&quot; from the main repository.  If you're making individual little
-	      changes, you can work directly on the default &quot;master&quot; branch within it.  If not,
-	      see <A href="#branch"> Branching</a>, below.
-	      <p>
-	      To understand Git, it is good to know about the various <em>places</em> in your 
-	      local git repository:
-	      <ul>
-		      <li> The content from the &quot;remote&quot; repo, which lives under the <code>.git/</code> hidden directory,</li>
-		      <li> The &quot;staging&quot; area (also called &quot;index&quot; or &quot;cache&quot;), and </li>
-		      <li> The named &quot;branch&quot; you are using, which lives in</li>
-		      <li> The working tree.</li>
-	      </ul>
+      <p>With SVN and CVS, you check out a &quot;working directory&quot; to make your
+      changes in, work in it for a while, and eventually commit all your changes back to the main repository.
+      <p>
+      Git works on a different idea. 
+      Instead of multiple working directories, you have a single repository that's been
+      &quot;cloned&quot; from the main repository.  If you're making individual little
+      changes, you can work directly on the default &quot;master&quot; branch within it.  If not,
+      see <A href="#branch"> Branching</a>, below.
+      <p>
+      To understand Git, it is good to know about the various <em>places</em> in your 
+      local git repository:
+      <ul>
+	      <li> The content from the &quot;remote&quot; repo, which lives under the <code>.git/</code> hidden directory,</li>
+	      <li> The &quot;staging&quot; area (also called &quot;index&quot; or &quot;cache&quot;), and </li>
+	      <li> The named &quot;branch&quot; you are using, which lives in</li>
+	      <li> The working tree.</li>
+      </ul>
 
-	      <p>When you <i>clone</i> a git repo, you are creating a directory structure that holds 
-	      all of these items.  Unless you tell it otherwise, the working tree starts off 
-	      filled with contents of the <em>master branch</em> of the repo you cloned - and the <em>staging 
-	      area</em> is empty.  As you make changes to the files in the working tree, you need
-	      to explicitly <em>add</em> them to the staging area. Git knows about these files, but 
-	      they aren't yet officially part of your local repo.  
-	      <p>
-	      Once you have populated the staging area with of all the things you have changed, a 
-	      <em>commit</em> operation will, uhm, officially commit your changes to your repo's 
-	      <code>.git/</code> structure.
-	      <p>
-	      When you <em>pull</em> or <em>push</em>, you are telling Git to synchronize your <code>.git/</code> 
-	      content with that of the remote repo you originally cloned things from.
-	      <p>
-	      The following reference should get you started:
+      <p>When you <i>clone</i> a git repo, you are creating a directory structure that holds 
+      all of these items.  Unless you tell it otherwise, the working tree starts off 
+      filled with contents of the <em>master branch</em> of the repo you cloned - and the <em>staging 
+      area</em> is empty.  As you make changes to the files in the working tree, you need
+      to explicitly <em>add</em> them to the staging area. Git knows about these files, but 
+      they aren't yet officially part of your local repo.  
+      <p>
+      Once you have populated the staging area with of all the things you have changed, a 
+      <em>commit</em> operation will, uhm, officially commit your changes to your repo's 
+      <code>.git/</code> structure.
+      <p>
+      When you <em>pull</em> or <em>push</em>, you are telling Git to synchronize your <code>.git/</code> 
+      content with that of the remote repo you originally cloned things from.
+      <p>
+      The following reference should get you started using either the git command line or GotHub Desktop:
 
-	      <ul>
-	      <li>Log in to GitHub and clone your own copy of the main JMRI repo.  
-		      This will give you a safe place to push and pull from without impacting others.
+      <ul>
+      <li>Log in to GitHub and clone your own copy of the main JMRI repo.  
+	      This will give you a safe place to push and pull from without impacting others.
+	    </li>
+	    <li>Using git:
+		    <ul>
 	      <li>Clone the JMRI repo to your local system (or update it):
 		      <blockquote>
 			      <code>$ git clone https://github.com/JMRI/JMRI.git   </code><br/>
@@ -188,11 +191,59 @@ on how to
 			      <code>$ git commit -a -m <i>&quot;commit message&quot;</i>    </code><br/>
 		      </blockquote>
 	      </ul>
-	</dd>
+      </li>
+      <li>Using GitHub Desktop:
+	      <ul>
+	      <li>Clone the JMRI repo to your local system by picking an item from the "Clone" tab in the File -&gt; Clone repository... menu and clicking "Clone":<br>
+	      <a href="images/GhDtCloneDialog.png"><img src="images/GhDtCloneDialog.png" width="267" height="184" alt="GitHub Desktop PR dialog"></a>
+	      </li>
+	      <li>Check your GitHub URL in the "Remote" tab from the Repository -&gt; Repository Settings menu as:<br>
+	      <a href="images/GhDtRepoSetting.png"><img src="images/GhDtRepoSetting.png" width="260" height="98" alt="GitHub Desktop Repo Setting"></a>
+	      </li>
+	      <li>Make your changes locally, test them, etc.<br>
+	      When it all works, <em>commit</em> your edit to your local JMRI repository by returning to the GitHub Desktop application, reviewing all changes noticed by the program, 
+	      enter a Summary [1] and Description [2] and finally clicking the Commit to &lt;branch&gt; [3] button:<br>
+		    <a href="images/GhDtWindow.png"><img src="images/GhDtWindow.png" width="410" height="256" alt="GitHub Desktop Window"></a>
+	      <p>After your Commit, a white dot will appear near the end of the line that looks like a siding in a <em>track plan</em>.
+	      Click it to read the title. 
+	      To see the files changed at another point in time, click an older commit dot:<br>
+		    <a href="images/GhDtWindowSeeCommit.png"><img src="images/GhDtWindowSeeCommit.png" width="456" height="79" alt="GitHub Desktop Commit"></a>
+		    <p>After a commit, your new edits are only added to your local copy of your branch. To have them show up in a place other people can see them, either click the <strong>Sync</strong>
+		    button at top right, choose Sync (Cmd-S) from the Repository menu or make Github Desktop automatically syncing after every commit by checking the Automatically Sync after Committing menu item in the Edit menu:<br>
+		    <a href="images/GhDtSyncSetting.png"><img src="images/GhDtSyncSetting.png" width="154" height="122" alt="GitHub Desktop auto sync menu"></a>
+	      </li>
+	      <li>
+	      When you've worked on something in GhDt for a week or more, other people definitely have worked on other parts of JMRI. 
+	      To integrate these new data into your copy, click the <strong>Update from JMRI/master</strong> button in the top left of the pane (or choose "Pull" from the "Repository" menu).<br>
+	      You will see an animation of a small branch symbol in a circle, moving from the straight white line down to the line below it:<br>
+			  <a href="images/GhDtUpdateFrom.png"><img src="images/GhDtUpdateFrom.png" width="456" height="79" alt="GitHub Desktop Pull"></a>
+	      <p>
+	      This tells you that new code has been copied to your repo, and in a few seconds this new code is also copied to your computer, 
+	      so you can view it or use it, unless they've been working on the same lines of code (See Resolve a Merge Conflict, below)</li>
+	      <li>To make your changes available to the community click "Pull Request" (top right button), enter a title and click "Create". 
+        <br>
+        <table><tr><td>
+		    <a href="images/GhDtPRCreate.png"><img src="images/GhDtPRCreate.png" width="129" height="215" alt="GitHub Desktop Create PR dialog"></a>
+		    <td>The name of the PR button will change into <strong>#123</strong><br>
+		    signaling you can't make another PR in this branch<br>
+		    from here (but you can still commit extra edits to it):
+	      <td>
+	      <a href="images/GhDtPRCreated.png"><img src="images/GhDtPRCreated.png" width="129" height="215" alt="GitHub Desktop PR Created message"></a>
+        </td>
+        </tr>
+        </table>
+        <p>Normally, a PR is meant for the master branch of the _original_ repo, say JMRI:master. You may pull your PR in your own remote repo,
+	      but only a couple of people, the maintainers, can pull your edits into the "real" JMRI:master. Before they do that, they study what 
+	      you've written, maybe even pull it into their own repo to test it before merging it for every other JMRI user to see.<br>
+	      When your PR is pulled &amp; merged &amp; closed, the PR #123 name will disappear and you may delete the branch safely.</li>	      
+	      </ul>
+      </li>
+      </ul>
+	 </dd>
       
    <dt id="branch">Branching</dt>
    <dd>
-	      Always work on a named <em>branch</em>, never on the branch named "master". Though you can work directly on
+	      Always work on a named <em>branch</em>, never on the one named "master". Though you can work directly on
 	      the default &quot;master&quot; branch, good &quot;Git Hygiene&quot; encourages you
 	      to create a feature branch so you can work on it and never mess up your local copy of JMRI:master.  
 	      Branches in Git are easy and cheap to create and use; you can have multiple branches at the same time, 
@@ -207,59 +258,82 @@ on how to
 	      <code>&quot;abc-patch-NNNN&quot;</code>
 	      are all fine.  That way, we know it's you, and you can sort out the rest.
 
-	      <p>
-	      To create a branch called &quot;<em>branchname</em>&quot;, you do <br/>
-	      <blockquote>
-	      <code>git checkout -b <em>branchname</em></code><br/>
-	      </blockquote>
-
-	      The &quot;-b&quot; says to create the branch.  To switch to an existing branch, just leave
-	      out that option:<br/>
-
-	      <blockquote>
-	      <code>git checkout <em>branchname</em></code><br/>
-	      </blockquote>
-
-	      To see all the current branches, do<br/>
-
-	      <blockquote>
-	      <code>git branch</code><br/>
-	      </blockquote>
-
-	      If other people in the community make changes to the master branch, you can keep your 
-	      branch up to date by merging those changes in with your branch<br/>
-	      <blockquote>
-	      <code>
-	      git checkout <em>branchname</em><br/>
-	      git merge -m&quot;merging in current contents of master&quot; master
-	      </code><br/>
-	      </blockquote>
-
-	      (If you leave off the message option, you may be prompted to add one in an editor) If any
-	      changes were picked up and merged in, you can then commit them to your branch:
-	      <blockquote>
-	      <code>git commit -a</code><br/>
-	      </blockquote>
-
-	      <p>When you're done, merge your changes back into the common line of development with<br/>
-
-	      <blockquote>
-	      <code>
-	      git checkout master<br/>
-	      git merge -m&quot;merging to master&quot; <em>branchname</em><br/>
-	      git commit -a
-	      </code>
-	      </blockquote>
+        <ul>
+        <li>Using git:
+	  	    <ul>
+		      <li>To create a branch called &quot;<em>branchname</em>&quot;, you do <br/>
+		      <blockquote>
+		      <code>git checkout -b <em>branchname</em></code><br/>
+		      </blockquote>
+	
+		      The &quot;-b&quot; says to create the branch.  To switch to an existing branch, just leave
+		      out that option:<br/>
+	
+		      <blockquote>
+		      <code>git checkout <em>branchname</em></code><br/>
+		      </blockquote>
+	
+		      To see all the current branches, do<br/>
+	
+		      <blockquote>
+		      <code>git branch</code><br/>
+		      </blockquote>
+					</li>
+					<li>
+		      If other people in the community make changes to the master branch, you can keep your 
+		      branch up to date by merging those changes in with your branch<br/>
+		      <blockquote>
+		      <code>
+		      git checkout <em>branchname</em><br/>
+		      git merge -m&quot;merging in current contents of master&quot; master
+		      </code><br/>
+		      </blockquote>
+	
+		      (If you leave off the message option, you may be prompted to add one in an editor) If any
+		      changes were picked up and merged in, you can then commit them to your branch:
+		      <blockquote>
+		      <code>git commit -a</code><br/>
+		      </blockquote>
+					</li>
+					<li>	
+		      <p>When you're done, merge your changes back into the common line of development with<br/>
+	
+		      <blockquote>
+		      <code>
+		      git checkout master<br/>
+		      git merge -m&quot;merging to master&quot; <em>branchname</em><br/>
+		      git commit -a
+		      </code>
+		      </blockquote>
+					</li>
+					<li>		      
+		      You can then delete your branch (if you're finally done 
+		      with it) with<br/>
+		      
+		      <blockquote>
+		      <code>
+		      git checkout master<br/>
+		      git branch -d branchname
+		      </code>
+		      </blockquote>
+					</li>
+					</ul>
+				</li>
+				<li>Using GitHub Desktop:
+			    <ul>
+			    <li>Click the "Add a Branch (+)" button, provide a name for your new branch and using the From: pop-up, select the branch from where you want to create the new branch:<br>
+		      <a href="images/GhDtNewBranch.png"><img src="images/GhDtNewBranch.png" width="208" height="122" alt="GitHub Desktop Repo Setting"></a>
+		      </li>
+			    <li>To delete a branch, select it in the "Show Branches" pop-up menu, and then select <strong>Delete "my-patch"</strong> from the Branch menu.<br>
+			    You can't do that with the master branch, so don't work in that, always work in a named branch. <br>
+			    <a href="images/GhDtDeleteBranch.png"><img src="images/GhDtDeleteBranch.png" width="156" height="79" alt="GitHub Desktop Repo Setting"></a>
+			    </li>
+			    </ul>
+				</li>
+				<li>You can opt to create and delete branches in Github web just as easily. More help on 
+				<a href="https://help.github.com/articles/creating-and-deleting-branches-within-your-repository/">Github Web Branching</a>.</li>
+				</ul>
 	      
-	      You can then delete your branch (if you're finally done 
-	      with it) with<br/>
-	      
-	      <blockquote>
-	      <code>
-	      git checkout master<br/>
-	      git branch -d branchname
-	      </code>
-	      </blockquote>
       </dd>
 
     <dt id="share">Sharing Branches</dt>
@@ -309,7 +383,26 @@ on how to
       </blockquote>
       </ol>
     </dd>
-
+    
+    <dt id="share">Resolving a Merge Conflict</dt>
+      <dd>
+			It's not uncommon for two or more people to have ideas about the same part of the program or the JMRI website, each making commits and 
+			PR's for parts of the same files. If they were working on different lines of text or code in one file, GitHub knows how to combine 
+			those changes into one updated file. You may have to check your proposal still works, as someone might have deleted the anchor you 
+			were referring to etc. If GHDt discovers that a change from one person was inserted into master, and you have prepared changes to 
+			the same line, GitHub Desktop asks you to help decide what to do by displaying the following Conflict screen (Note the orange dots next to one of the file names):<br>
+		  <a href="images/GhDtConflictNote.png"><img src="images/GhDtConflictNote.png" width="410" height="255" alt="GitHub Merge Conflict Note"></a>
+			<p>Click on that name and choose Show in Finder or Open with External Editor 
+			(GhDt itself has no edit tools).<br>
+			To find the spot where the Conflict occurred, look for the <code>&lt;&lt;&lt; HEAD ==== &gt;&gt;&gt; master</code> markers that were inserted by GitHub:<br>
+			<a href="images/GhDtConfictmark.png"><img src="images/GhDtConfictmark.png" width="212" height="184" alt="GitHub Merge Conflict marking in code"></a><br>
+			Choose which of both versions you wish to keep (or make some combination) and remove the <code>&lt; === &gt;</code> lines!<br>
+			<a href="images/GhDtConflictFixed.png"><img src="images/GhDtConflictFixed.png" width="212" height="184" alt="GitHub Merge Conflict solved in code"></a>
+			<p>This new proposal should still be Committed to JMRI, so give it a fitting title i.e. "Solve conflict" and click Commit (and Sync).
+			This extra commit will be added to your PR and be part of your proposal the maintainers will see. You shouldn't keep merge conflict
+			lurking overnight, as the maintainers have no way to fix them for you and they will have to ignore it till you solved it.
+      </dd>
+    
     <dt id="ci-tests">Continuous Integration Tests</dt>
     <dd>
     The main JMRI repositories run a set of tests on every Pull Request (PR).  This is 
@@ -375,6 +468,12 @@ on how to
     <p>Maintainers who encounter an updated PR with the CRLF label should check to see that all
     the files in the PR do <u>not</u> show all lines changed. If they do, even if they have
     the correct LF line ends, the PR should not be merged.</p>
+    <p>Many <a href="XmlEditors.shtml">XML Editors</a> have a Preference Setting for line ends.<br>
+    For example, in Espresso check that Line Endings are set to <strong> Unix (LF)</strong>
+    before starting to edit any JMRI file:<br> 
+    <a href="images/EspressoPrefsLF.png"><img src="images/EspressoPrefsLF.png" width="226" height="219" alt="Espresso LF Preference setting"></a>
+    </p>
+    <dd>
     
     <dt id="testPR">Testing a Pull Request</dt>
     <dd>
