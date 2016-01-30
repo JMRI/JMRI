@@ -497,8 +497,8 @@ public class RollingStockSetFrame extends OperationsFrame implements java.beans.
                 rs.setTrain(null);
             } else {
                 Train train = (Train) trainBox.getSelectedItem();
-                if (rs.getTrain() != null && !rs.getTrain().equals(train)) // prevent rs from being picked up and delivered
-                {
+                if (rs.getTrain() != null && !rs.getTrain().equals(train)) {
+                    // prevent rs from being picked up and delivered
                     setRouteLocationAndDestination(rs, rs.getTrain(), null, null);
                 }
                 rs.setTrain(train);
@@ -589,6 +589,11 @@ public class RollingStockSetFrame extends OperationsFrame implements java.beans.
             RouteLocation rd) {
         if (rs.getRouteLocation() != null || rl != null) {
             train.setModified(true);
+        }
+        // check destination track is staging
+        if (rl == null && rd == null && rs.getDestinationTrack() != null && rs.getDestinationTrack().getLocation().isStaging()) {
+            log.debug("Rolling stock destination track is staging");
+            rs.setDestination(null, null);
         }
         rs.setRouteLocation(rl);
         rs.setRouteDestination(rd);
