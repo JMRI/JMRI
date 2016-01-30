@@ -62,7 +62,7 @@ are also made available as files in Comma-Separated-Variable (CSV) format.
 
 The definitive version of the data is in XML files. These can be obtained from 
 any JMRI distribution, or via the web at
-<a href="http://jmri.sf.net/xml">http://jmri.sf.net/xml</a>.
+<a href="http://jmri.org/xml">http://jmri.org/xml</a>.
     
   <!--#include virtual="/Footer" -->
   </div> <!-- close #mainContent -->

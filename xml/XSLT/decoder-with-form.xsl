@@ -75,7 +75,7 @@ You can also add a new model in the spaces at the bottom.
 JMRI software, including this file, is distributed under license. That
 license defines the terms under which you can use, modify and/or distribute
 it.  Please see our 
-<a href="http://jmri.sourceforge.net/Copyright.html">licensing page</a> 
+<a href="http://jmri.org/Copyright.html">licensing page</a> 
 for more information.
 </p>
 <hr/>

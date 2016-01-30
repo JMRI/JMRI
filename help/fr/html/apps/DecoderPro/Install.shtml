@@ -48,7 +48,7 @@ dresse la liste des syst&#232;mes DCC compatibles avec DecoderPro, avec les limi
 
 <dt class=left>T&#233;l&#233;chargez et installez JMRI
 </dt> <dd class=first> La
-<A HREF="http://jmri.sourceforge.net/download/index.shtml"> page de t&#233;l&#233;chargement </a>
+<A HREF="http://jmri.org/download/index.shtml"> page de t&#233;l&#233;chargement </a>
 sur le site Web principal JMRI fournit des liens pour t&#233;l&#233;charger les diff&#233;rentes versions JMRI, ainsi que des liens pour les notes, etc Nous vous recommandons fortement d'abord de t&#233;l&#233;charger et d'installer la version de production la plus r&#233;cente et assurez-vous que cela fonctionne, avant d'essayer quelques-unes des versions de d&#233;veloppement plus r&#233;centes.
 <p>
 Notez qu'il existe diff&#233;rents t&#233;l&#233;chargements pour les diff&#233;rents types
@@ -60,7 +60,7 @@ page de t&#233;l&#233;chargement.</P>
 <dt class=left>D&#233;marrer et configurer le programme
 </dt> <dd class=first> Les instructions d'installation
 obtenues par la
-<A HREF="http://jmri.sourceforge.net/download/index.shtml"> page de t&#233;l&#233;chargement </a>
+<A HREF="http://jmri.org/download/index.shtml"> page de t&#233;l&#233;chargement </a>
 vous auront dit comment d&#233;marrer le programme et le configurer. Lorsque c'est fait, vous devriez avoir une installation fonctionnelle DecoderPro.
 </dd>
 

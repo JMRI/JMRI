@@ -75,7 +75,7 @@ on how to set this code up by hand.
 	"ReporterIconExample.xml".
 	<p>
 	(It's also available 
-	<a href="http://jmri.sf.net/xml/samples/ReporterIconExample.xml">on the web</a>
+	<a href="http://jmri.org/xml/samples/ReporterIconExample.xml">on the web</a>
 	but many browsers will try to interpret it instead of showing you the 
 	text; your browser's "View Source" option might help with that)
 	<p>

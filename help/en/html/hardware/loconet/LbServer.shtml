@@ -44,7 +44,7 @@ Configure the JMRI Client computers to connect to the LbServer as follows:
 	<li>In the "Server hostname" box that appears, type the Internet name
 	or address of the computer that's running the LbServer.
 	An internet address is something like 127.0.1.12; a name is something
-	like jmri.sf.net
+	like jmri.org
 	<li>In the "TCP Port Number" box enter the port number that LbServer is using, which by default is 1234. 
 	<li>Save the preferences and restart the program.
 </ul>

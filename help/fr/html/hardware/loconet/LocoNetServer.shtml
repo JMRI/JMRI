@@ -68,7 +68,7 @@ se connecter au réseau ferré via le serveur LocoNet par:
 <LI> Dans la boîte «serveur hostname"qui apparaît, tapez le nom d'Internet
 ou l'adresse de l'ordinateur qui exécute le serveur LocoNet.
 Une adresse Internet est quelque chose comme 127.0.1.12; un nom est quelque chose
-comme jmri.sf.net
+comme jmri.org
 <li> Enregistrer les préférences et redémarrer le programme.
 
 </UL>
