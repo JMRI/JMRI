@@ -5,6 +5,7 @@ import java.io.File;
 import java.text.SimpleDateFormat;
 import jmri.jmrit.operations.OperationsManager;
 import jmri.jmrit.operations.OperationsXml;
+import jmri.jmrit.operations.automation.AutomationManager;
 import jmri.jmrit.operations.setup.Control;
 import jmri.jmrit.operations.setup.Setup;
 import org.jdom2.Document;
@@ -86,6 +87,7 @@ public class TrainManagerXml extends OperationsXml {
 
         TrainManager.instance().store(root);
         TrainScheduleManager.instance().store(root);
+        AutomationManager.instance().store(root);
 
         writeXML(file, doc);
 
@@ -117,6 +119,7 @@ public class TrainManagerXml extends OperationsXml {
         TrainScheduleManager.instance().load(root);
 
         fileLoaded = true; // set flag trains are loaded
+        AutomationManager.instance().load(root);
 
         // now load train icons on panels
         TrainManager.instance().loadTrainIcons();

@@ -128,9 +128,9 @@ modifi&#233;es.
 
 <p>
 Notez que dans certains cas, il y a une relation d'h&#233;ritage entre la persistance des classes qui peut aider. Par exemple, la classe LocoNet
-<a href="http://jmri.sourceforge.net/JavaDoc/doc/jmri/jmrix/loconet/configurexml/LnSensorManagerXml.html"> LnSensorManagerXml </a>
+<a href="http://jmri.org/JavaDoc/doc/jmri/jmrix/loconet/configurexml/LnSensorManagerXml.html"> LnSensorManagerXml </a>
 h&#233;rite de
-<a href="http://jmri.sourceforge.net/JavaDoc/doc/jmri/configurexml/AbstractTurnoutManagerConfigXML.html"> jmri.configurexml.AbstractSensorManagerConfigXML </a>, qui fait
+<a href="http://jmri.org/JavaDoc/doc/jmri/configurexml/AbstractTurnoutManagerConfigXML.html"> jmri.configurexml.AbstractSensorManagerConfigXML </a>, qui fait
 presque tout le travail d'enregistrement et de chargement des capteurs.
 
 <p>
@@ -146,7 +146,7 @@ JMRI contr&#244;le la s&#233;mantique de XML utilisant le <a href="XmlSchema.sht
 Par exemple, l'information mise en page est enregistr&#233;e dans des fichiers XML en tant qu'un &#233;l&#233;ment 
 de "sch&#233;ma de configuration" , dont le contenu est alors d&#233;fini par un
 fichier de sch&#233;ma. Ces fichiers sont conserv&#233;s dans le r&#233;pertoire
-<a href="http://jmri.sf.net/xml/schema"> xml/schema </a>.
+<a href="http://jmri.org/xml/schema"> xml/schema </a>.
 
 <!--#include virtual="/Footer" -->
 

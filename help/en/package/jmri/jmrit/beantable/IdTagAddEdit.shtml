@@ -2,11 +2,11 @@
 <html lang="en">
 <head>
  <title>
-      JMRI: Adding/Editing Id Tags
+      JMRI: Adding/Editing ID Tags
  </title>
     <meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
     <meta content="Matthew Harris" name="Author">
-    <meta name="keywords" content="JMRI help Id Tag Add Edit">
+    <meta name="keywords" content="JMRI help ID Tag Add Edit">
 
 <!--#include virtual="/Style" -->
 </head>
@@ -16,16 +16,16 @@
   <div class="nomenu" id="mBody">
     <div id="mainContent">
 
-<h1>Adding/Editing Id Tags</h1>
+<h1>Adding/Editing ID Tags</h1>
     
-To create an Id Tag, click the
+<p>To create an ID Tag, click the
 "Add..." button at the bottom of the 
-<a href="IdTagTable.shtml">Id Tags Table</a> pane.
+<a href="IdTagTable.shtml">ID Tag Table</a> pane.<br>
 This will open a new pane with space to enter
-a System Name and User Name for the new Id Tag, plus
-an "Add" button.
+a System Name and User Name for the new ID Tag, plus
+an "Add" button to confirm your entry.
 <p>
-You must enter a unique System Name.  System Names for Id Tags should have
+You must enter a unique System Name.  System Names for ID Tags should have
 the following pattern:
 	<ul>
 	<li>they should start with "ID" for "Internal iDentity", 
@@ -38,7 +38,7 @@ The User Name is optional, but if given has to be unique.
 <p>
 The Tag ID shown in the table is determined from the System Name.
 
-<p>Back to the <a href="IdTagTable.shtml">IdTags Table help page<a>.</p>
+<p>Back to the <a href="IdTagTable.shtml">ID Tag Table help page<a>.</p>
 
 <!--#include virtual="/Footer" -->
  </div><!-- closes #mainContent-->

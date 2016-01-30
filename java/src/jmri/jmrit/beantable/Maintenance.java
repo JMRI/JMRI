@@ -61,8 +61,7 @@ import org.slf4j.LoggerFactory;
  */
 public class Maintenance {
 
-    static final ResourceBundle rbm = ResourceBundle
-            .getBundle("jmri.jmrit.beantable.MaintenanceBundle");
+    static final ResourceBundle rbm = ResourceBundle.getBundle("jmri.jmrit.beantable.MaintenanceBundle");
 
     /**
      * Find references of a System or User name in the various Manager Objects

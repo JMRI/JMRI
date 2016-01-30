@@ -57,7 +57,7 @@ that was reported by some other X10 device like a motion sensor or
 light control pad.<br />
 NOTE: Due to a large number of false codes experienced by X10 users,
 Sensors are not automatically generated.
-They must be manually entered in the Sensors Table by the user.
+They must be manually entered in the Sensor Table by the user.
 
 <p>
 JMRI configures the adapter to use House Code "A" now.

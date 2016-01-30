@@ -148,7 +148,7 @@
 	Logix at the top. The user name may be changed by entering/modifying the
 	text in the User Name field. Next is a table of Conditionals belonging
 	to the Logix. To add a new Conditional, click the <b>New Conditional</b>
-	button under the Conditionals table.  This will create a new Conditional
+	button under the Conditional Table.  This will create a new Conditional
 	and open the Edit Conditional window allowing the logical expression and
 	actions of the new Conditional to be defined.  An existing Conditional may be 
 	edited by clicking the <b>Edit</b> button of that Conditional in the 
@@ -160,15 +160,15 @@
 	remember to move to another cell in the table so that the program is 
 	notified that you have finished your entry, otherwise the entry may not
 	take effect.</i></p>
-	<P>Clicking <b>Calculate</b> under the Conditionals table causes all 
+	<P>Clicking <b>Calculate</b> under the Conditional Table causes all 
 	Conditionals of the Logix to be calculated. Resulting states are displayed in 
 	the State column of the table.  However, since the Logix is being edited it is
         inactive and therefore no Conditional actions are taken.  When the editing of the Logix 
         is done, the Logix is activated and may be enabled to allow Conditionals to
         execute their actions.   
 	</p>
-	<p>The order of Conditionals in the Conditionals table may be changed
-	by clicking <b>Reorder</b> (below the Conditionals table). Clicking
+	<p>The order of Conditionals in the Conditional Table may be changed
+	by clicking <b>Reorder</b> (below the Conditional Table). Clicking
 	<b>Reorder</b> changes all edit buttons in the last Column of the table to 
 	<b>First</b>. Select the Conditional that is to be first, and it
 	is immediately moved to the top of the table. All remaining buttons change
@@ -216,7 +216,7 @@
 	than one Conditional within a given Logix, however. 
 	The system name and user name are displayed
 	at the top of the Edit Conditional window. The user name may be 
-	entered/edited there or in the Conditionals table of the Edit Logix window.
+	entered/edited there or in the Conditional Table of the Edit Logix window.
 	The user name of a Conditional may be any useful text, provided it is not the
 	same as the user name of another Conditional in the same Logix.  The user 
 	name may be the same as the user name of a Conditional in another Logix.
@@ -296,7 +296,7 @@
         inserted and the expression modified.  The state variables are represented in 
         the expression by their row number.</p>   
         <p>The first column in the 
-	state variables table is the row number of the variable.  The next column
+	state variable table is the row number of the variable.  The next column
         displays the logic operation preceding the variable in the expression.  
         In the case of "Mixed" a choice box allows the user
         to choose an operation.  However these choices can be
@@ -325,7 +325,7 @@
 	variable if you decide it is no longer needed.
         </p> 
         <p>Press the <b>Add State Variable</b> to add a state 
-	variable (a row in the state variables table).  This brings up a
+	variable (a row in the state variable table).  This brings up a
         window with a choice box for the user to select a state variable type.
         Available state  variables are documented 
 	<a href="#variable">below</a>.  When a type is choosen the Edit Variable

@@ -777,6 +777,13 @@ public class Setup {
         setDirtyAndFirePropertyChange("Switch List All Trains", old, b); // NOI18N
     }
 
+    /**
+     * When true switch list shows all trains visiting a location, even if the
+     * train doesn't have any work at that location. When false, switch lists
+     * only report a train if it has work at the location.
+     * 
+     * @return When true show all trains visiting a location.
+     */
     public static boolean isSwitchListAllTrainsEnabled() {
         return switchListAllTrains;
     }

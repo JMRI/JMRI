@@ -31,13 +31,13 @@
 
 <tr>
 <td><span style="font-weight: bold;">JMRI&reg; current</span></td>
-<td style="font-weight: bold;"><a href="../html/apps/DecoderPro/index.shtml">DecoderPro v4.0</a></td>
+<td style="font-weight: bold;"><a href="../html/apps/DecoderPro/index.shtml">DecoderPro v4.x</a></td>
 <td></td>
 </tr>
 
 <tr>
 <td></td>
-<td style="font-weight: bold;"><a href="../package/jmri/jmrit/operations/Operations.shtml">OperationsPro&trade; v4.0</a><br>&nbsp;</td>
+<td style="font-weight: bold;"><a href="../package/jmri/jmrit/operations/Operations.shtml">OperationsPro&trade; v4.x</a><br>&nbsp;</td>
 <td></td>
 </tr>
 
@@ -183,14 +183,14 @@ It contains <a href="../html/apps/index.shtml">modular applications</a> for:</p>
 	<li>Controlling lighting and sound in the room, and so forth (<a href="../html/tools/Audio.shtml">SoundPro&trade;</a>)</li>
 	</ul>
 <p>If this is your first visit to our manual, we suggest that you
-take the Decoder Pro&reg; tour at <a href="http://jmri.sourceforge.net/help/en/html/apps/DecoderPro/Tour.shtml">http://jmri.sourceforge.net/help/en/html/apps/DecoderPro/Tour.shtml</a><br>
+take the Decoder Pro&reg; tour at <a href="http://jmri.org/help/en/html/apps/DecoderPro/Tour.shtml">http://jmri.org/help/en/html/apps/DecoderPro/Tour.shtml</a><br>
 to get an overview of what we're about to cover.
 </p>
-<p>All this capability is contained in one <a href="http://jmri.sourceforge.net/download/index.shtml">install</a>.</p>
+<p>All this capability is contained in one <a href="http://jmri.org/download/index.shtml">install</a>.</p>
 
 <h2>System Requirements</h2>
 
-<p>JMRI&reg; requires that Java be installed, whether your computer is <a href="http://jmri.sourceforge.net/install/MacOSX.shtml">Mac</a>, <a href="http://jmri.sourceforge.net/install/WindowsNew.shtml">Windows</a>, or <a href="http://jmri.sourceforge.net/install/Linux.shtml">Linux</a> based.</p>
+<p>JMRI&reg; requires that Java be installed, whether your computer is <a href="http://jmri.org/install/MacOSX.shtml">Mac</a>, <a href="http://jmri.org/install/WindowsNew.shtml">Windows</a>, or <a href="http://jmri.org/install/Linux.shtml">Linux</a> based.</p>
 <p>Version 2.12 can run on any computer system that will
 run Java 1.5 or later.<br>
 Version 2.14.1 requires Java 1.5 (or 1.6 if you wish for drag &amp; drop)<br>

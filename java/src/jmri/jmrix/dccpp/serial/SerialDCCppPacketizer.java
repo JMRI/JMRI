@@ -44,58 +44,57 @@ public class SerialDCCppPacketizer extends DCCppPacketizer {
         return len;
     }
 
-    /**
-     * Get characters from the input source, and file a message.
-     * <P>
-     * Returns only when the message is complete.
-     * <P>
-     * Only used in the Receive thread.
-     *
-     * @param msg     message to fill
-     * @param istream character source.
-     * @throws java.io.IOException when presented by the input source.
-     */
-    /*
-    @Override
-    protected void loadChars(jmri.jmrix.AbstractMRReply msg, java.io.DataInputStream istream) throws java.io.IOException {
-        int i;
-        String m;
-        DCCppReply dm;
-        if (log.isDebugEnabled()) {
-            log.debug("loading characters from port");
-        }
-        
-        if (!(msg instanceof DCCppReply)) {
-            log.error("SerialDCCppPacketizer.loadChars called on non-DCCppReply msg!");
-            return;
-        }
-        
-        dm = (DCCppReply)msg;
-        
-        byte char1 = readByteProtected(istream);
-        m = "";
-        while (char1 != '<') {
-            // Spin waiting for '<'
-            char1 = readByteProtected(istream);
-        }
-        log.debug("Serial: Message started...");
-        // Pick up the rest of the command
-        for (i = 0; i < msg.maxSize(); i++) {
-            char1 = readByteProtected(istream);
-	    if (char1 == '>') {
-                log.debug("Received: {}", m);
-                // NOTE: Cast is OK because we checked runtime type of msg above.
-                ((DCCppReply)msg).parseReply(m);
-		break;
-	    } else {
-                m += Character.toString((char)char1);
-                //char1 = readByteProtected(istream);
-                log.debug("msg char[{}]: {} ({})", i, char1, Character.toString((char)char1));
-		//msg.setElement(i, char1 & 0xFF);
-	    }
-        }
-    }
-*/
+//    /**
+//     * Get characters from the input source, and file a message.
+//     * <P>
+//     * Returns only when the message is complete.
+//     * <P>
+//     * Only used in the Receive thread.
+//     *
+//     * @param msg     message to fill
+//     * @param istream character source.
+//     * @throws java.io.IOException when presented by the input source.
+//     */
+//    @Override
+//    protected void loadChars(jmri.jmrix.AbstractMRReply msg, java.io.DataInputStream istream) throws java.io.IOException {
+//        int i;
+//        String m;
+//        DCCppReply dm;
+//        if (log.isDebugEnabled()) {
+//            log.debug("loading characters from port");
+//        }
+//        
+//        if (!(msg instanceof DCCppReply)) {
+//            log.error("SerialDCCppPacketizer.loadChars called on non-DCCppReply msg!");
+//            return;
+//        }
+//        
+//        dm = (DCCppReply)msg;
+//        
+//        byte char1 = readByteProtected(istream);
+//        m = "";
+//        while (char1 != '<') {
+//            // Spin waiting for '<'
+//            char1 = readByteProtected(istream);
+//        }
+//        log.debug("Serial: Message started...");
+//        // Pick up the rest of the command
+//        for (i = 0; i < msg.maxSize(); i++) {
+//            char1 = readByteProtected(istream);
+//	    if (char1 == '>') {
+//                log.debug("Received: {}", m);
+//                // NOTE: Cast is OK because we checked runtime type of msg above.
+//                ((DCCppReply)msg).parseReply(m);
+//		break;
+//	    } else {
+//                m += Character.toString((char)char1);
+//                //char1 = readByteProtected(istream);
+//                log.debug("msg char[{}]: {} ({})", i, char1, Character.toString((char)char1));
+//		//msg.setElement(i, char1 & 0xFF);
+//	    }
+//        }
+//    }
+
     static Logger log = LoggerFactory.getLogger(SerialDCCppPacketizer.class.getName());
 }
 

@@ -84,7 +84,7 @@ public class AbstractMonPaneTest extends jmri.util.SwingTestCase {
         a.enterButtonActionPerformed(null);
         
         a.freezeButton.setSelected(true);
-        jmri.util.JUnitUtil.releaseThread(this);
+        flushAWT();
         
         a.entryField.setText("bar");
         a.enterButtonActionPerformed(null);

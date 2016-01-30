@@ -17,16 +17,26 @@
     <author>
         <personname><firstname>Greg</firstname><surname>McCartney</surname></personname>
         <email>gpmccartney@gmail.com</email>
-    </author>    
+    </author>
   </authorgroup>
 
   <revhistory xmlns="http://docbook.org/ns/docbook">
+
     <revision>
+
         <revnumber>1</revnumber>
-        <date>2015-10-15</date>
+        <date>2015-10-19</date>
         <authorinitials>GPM</authorinitials>
-        <revremark>Initial version</revremark>
-    </revision>    
+        <revremark>Initial version of the signal set.</revremark>
+    </revision>
+    <revision>
+        <revnumber>2</revnumber>
+        <date>2016-01-26</date>
+        <authorinitials>GPM</authorinitials>
+        <revremark>Corrected the aspect mapping and added the NW color, search, and semaphore signals.</revremark>
+
+    </revision>
+
   </revhistory>
 
   <aspects>
@@ -38,40 +48,37 @@
       <reference>Page 60</reference>
       <speed>Normal</speed>
       <speed2>Normal</speed2>
-      <route>Normal</route>
     </aspect>
-	
-	<aspect>
+
+    <aspect>
       <name>Approach Diverging</name>
       <rule>Rule 282</rule>
       <indication>Proceed preparing to take diverging route beyond next signal at prescribed speed.</indication>
       <reference>Page 61</reference>
       <speed>Normal</speed>
       <speed2>Medium</speed2>
-      <route>Normal</route>
     </aspect>
-	
-	<aspect>
+
+    <aspect>
       <name>Advance Approach</name>
       <rule>Rule 282A</rule>
       <indication>Proceed preparing to stop at the second signal</indication>
       <reference>Page 61</reference>
       <speed>Normal</speed>
       <speed2>Normal</speed2>
-      <route>Normal</route>
     </aspect>
-	
-	<aspect>
+
+    <aspect>
       <name>Diverging Clear</name>
       <rule>Rule 283</rule>
       <indication>Proceed through turnout or turnouts at prescribed speed.</indication>
       <reference>Page 62</reference>
       <speed>Medium</speed>
-      <speed2>Normal</speed2>
+      <speed2>Medium</speed2>
       <route>Diverging</route>
     </aspect>
-	
-	<aspect>
+
+    <aspect>
       <name>Diverging Approach Diverging</name>
       <rule>Rule 283B</rule>
       <indication>Proceed through turnout or turnouts at prescribed speed preparing to take diverging route beyond next signal at prescribed speed.</indication>
@@ -80,18 +87,17 @@
       <speed2>Medium</speed2>
       <route>Diverging</route>
     </aspect>
-	
-	<aspect>
+
+    <aspect>
       <name>Approach</name>
       <rule>Rule 285</rule>
       <indication>Proceed preparing to stop at next signal.</indication>
       <reference>Page 63</reference>
       <speed>Medium</speed>
       <speed2>Slow</speed2>
-      <route>Normal</route>
     </aspect>
-	
-	<aspect>
+
+    <aspect>
       <name>Diverging Approach</name>
       <rule>Rule 286</rule>
       <indication>Proceed through turnout or turnouts at prescribed speed preparing to stop at next signal.</indication>
@@ -100,8 +106,8 @@
       <speed2>Slow</speed2>
       <route>Diverging</route>
     </aspect>
-	
-	<aspect>
+
+    <aspect>
       <name>Slow Clear</name>
       <rule>Rule 287</rule>
       <indication>Proceed; Slow speed within interlocking limits or through turnout or turnouts.</indication>
@@ -110,8 +116,8 @@
       <speed2>Normal</speed2>
       <route>Diverging</route>
     </aspect>
-	
-	<aspect>
+
+    <aspect>
       <name>Slow Approach</name>
       <rule>Rule 288</rule>
       <indication>Proceed preparing to stop at next signal; Slow speed within interlocking limits or through turnout or turnouts.</indication>
@@ -120,8 +126,8 @@
       <speed2>Slow</speed2>
       <route>Diverging</route>
     </aspect>
-	
-	<aspect>
+
+    <aspect>
       <name>Restricting</name>
       <rule>Rule 290</rule>
       <indication>Proceed at restricted speed.</indication>
@@ -130,8 +136,8 @@
       <speed2>Restricting</speed2>
       <route>Either</route>
     </aspect>
-	
-	<aspect>
+
+    <aspect>
       <name>Stop and Proceed</name>
       <rule>Rule 291</rule>
       <indication>Stop; then proceed at restricted speed.</indication>
@@ -140,8 +146,8 @@
       <speed2>Stop</speed2>
       <route>Normal</route>
     </aspect>
-	
-	<aspect>
+
+    <aspect>
       <name>Stop and Stay</name>
       <rule>Rule 292</rule>
       <indication>Stop and stay.</indication>
@@ -153,14 +159,24 @@
 
   </aspects>
 
-  <appearancefiles>    
+  <appearancefiles>
     <appearancefile href="appearance-CPL-2-arm-absolute.xml"/>
-	<appearancefile href="appearance-CPL-2-arm-permissive.xml"/>
-	<appearancefile href="appearance-CPL-1-arm-absolute.xml"/>
-	<appearancefile href="appearance-CPL-1-arm-permissive.xml"/>
-	<appearancefile href="appearance-CPL-Dwarf-absolute.xml"/>
-	<appearancefile href="appearance-CPL-Dwarf-permissive.xml"/>
+    <appearancefile href="appearance-CPL-2-arm-permissive.xml"/>
+    <appearancefile href="appearance-CPL-1-arm-absolute.xml"/>
+    <appearancefile href="appearance-CPL-1-arm-permissive.xml"/>
+    <appearancefile href="appearance-CPL-Dwarf-absolute.xml"/>
+    <appearancefile href="appearance-CPL-Dwarf-permissive.xml"/>
+    <appearancefile href="appearance-SL-3-high-absolute.xml"/>
+    <appearancefile href="appearance-SL-2-high-permissive.xml"/>
+    <appearancefile href="appearance-SL-2-high-absolute.xml"/>
+    <appearancefile href="appearance-SL-2-low-absolute.xml"/>
+    <appearancefile href="appearance-Wab-2-high-absolute.xml"/>
+    <appearancefile href="appearance-Wab-2-low-absolute.xml"/>
+    <appearancefile href="appearance-SL-1-high-absolute.xml"/>
+    <appearancefile href="appearance-SL-1-high-permissive.xml"/>
+    <appearancefile href="appearance-SL-1-low-permissive.xml"/>
+    <appearancefile href="appearance-SL-1-low-absolute.xml"/>
   </appearancefiles>
-  
+
 </aspecttable>
-  
+

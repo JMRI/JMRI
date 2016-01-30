@@ -1,7 +1,7 @@
 The jmrix.sprog.sprogslotmon package contains a graphical slot monitor for SPROG
 soft command stations. It is based on the original loconet slot monitor
 
-The JMRI web page is located at http://jmri.sourceforge.net/
+The JMRI web page is located at http://jmri.org/
 
 The SprogSlotMonDataModel object is the Swing datamodel part of a JTable, used 
 as a data member in the SprogSlotMonFrame.  The SprogSlotMonDataModel interacts with

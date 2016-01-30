@@ -72,8 +72,7 @@ public class SampleMinimalProgram {
         } catch (java.lang.NoSuchMethodError e) {
             log.error("Exception starting logging: " + e);
         }
-        // install default exception handlers
-        System.setProperty("sun.awt.exception.handler", jmri.util.exceptionhandler.AwtHandler.class.getName());
+        // install default exception handler
         Thread.setDefaultUncaughtExceptionHandler(new jmri.util.exceptionhandler.UncaughtExceptionHandler());
     }
 

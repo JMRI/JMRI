@@ -12,8 +12,8 @@
 <li><a href="../../../package/jmri/jmrit/display/PanelEditor.shtml">Panel Editor</a>
 <li><a href="../../../package/jmri/jmrit/display/LayoutEditor.shtml">Layout Editor</a>
 <li><a href="FAQ.shtml">FAQ</a>
-<li><a href="http://jmri.sf.net/community/examples/Gallery.shtml">User's Layouts</a>
-<li><a href="http://jmri.sf.net/community/examples/Modules.shtml">Modular Layout Example</a>
+<li><a href="http://jmri.org/community/examples/Gallery.shtml">User's Layouts</a>
+<li><a href="http://jmri.org/community/examples/Modules.shtml">Modular Layout Example</a>
 <li><a href="ShowPanel.shtml">Display a Panel File</a>
 <li><a href="AdvIcons.shtml">Advanced Icons</a>
 <li><a href="../../setup/index.shtml">JMRI Setup</a></li>
@@ -28,7 +28,6 @@
 		<li><a href="../DispatcherPro/index.shtml">DispatcherPro&trade;</a></li>
     <li><a href="../../../package/jmri/jmrit/operations/Operations.shtml">OperationsPro&trade;</a></li>
 		<li><a href="../SoundPro/SoundPro.shtml">SoundPro</a></li>
-		<li><a href="../SignalPro/index.shtml">SignalPro</a></li>
 		</ul>
 </dd>
 

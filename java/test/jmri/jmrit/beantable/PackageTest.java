@@ -24,7 +24,7 @@ public class PackageTest extends TestCase {
 //    }
 //  test order isn't guaranteed!
 //    public void testXCreation() {
-        JFrame f = jmri.util.JmriJFrame.getFrame("Memory Table");
+        JFrame f = jmri.util.JmriJFrame.getFrame(Bundle.getMessage("TitleMemoryTable"));
         Assert.assertTrue("found frame", f != null);
         f.dispose();
     }
