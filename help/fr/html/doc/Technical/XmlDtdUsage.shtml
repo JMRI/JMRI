@@ -62,7 +62,7 @@ En pratique, cela permet deux formes de la ligne DOCTYPE:
 Au d&#233;but des fichiers XML utilis&#233;s &#224; la fois, le programme lui-m&#234;me pourrait g&#233;n&#233;rer
 l'un ou l'autre en fonction des circonstances.
 <li> JMRI 1.9.2 et les versions ult&#233;rieures offrent une proc&#233;dure de recherche plus puissante en utilisant les classe DTD
-<a  href="http://jmri.sourceforge.net/JavaDoc/doc/jmri/util/JmriLocalEntityResolver.html">jmri.util.JmriLocalEntityResolver </a>
+<a  href="http://jmri.org/JavaDoc/doc/jmri/util/JmriLocalEntityResolver.html">jmri.util.JmriLocalEntityResolver </a>
  Il analyse les
 r&#233;f&#233;rences dans le DOCTYPE et les manipule  de plusieurs fa&#231;ons:
     <ul>

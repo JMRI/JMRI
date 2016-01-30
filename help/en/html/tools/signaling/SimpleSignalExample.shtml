@@ -42,7 +42,7 @@ please see the
 <a id="example1"><h2>Predefined example</h2></a>
 
 <p>A predefined SSL example is provided in the JMRI installation (see the
-<a href="http://jmri.sourceforge.net/download">download page</a> for information on downloading).
+<a href="http://jmri.org/download">download page</a> for information on downloading).
 To use this example:
 <ul>
 <li>Start the PanelPro program, and select "Preferences..." from the Edit menu (from the PanelPro menu on OS X).

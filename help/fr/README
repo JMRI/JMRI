@@ -14,7 +14,7 @@ to copy when making a new file.
 
 For more information on maintaining the various metadata in the 
 help system, please see:
-<http://jmri.sourceforge.net/doc/Technical/Help.shtml>
+<http://jmri.org/doc/Technical/Help.shtml>
 
 The JHelpDev.xml file is a convenient project definition for
 JHelpDev (http:jhelpdev.sf.net), a tool for maintaining index,

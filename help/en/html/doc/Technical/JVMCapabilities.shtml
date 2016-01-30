@@ -132,11 +132,11 @@ information on <a href="https://www.java.com/en/download/help/sysreq.xml">Java v
 	<tbody>
 	<tr><th>JMRI</th>
 	<th>Java</th>
-	<th><a href="http://jmri.sourceforge.net/install/MacOSX.shtml#sysreq">OS X</a></th>
-	<th><a href="http://jmri.sourceforge.net/install/WindowsNew.shtml#sysreq">Windows</a></th>
-	<th><a href="http://jmri.sourceforge.net/install/Linux.shtml#sysreq">Linux</a></th>
-	<th><a href="http://jmri.sourceforge.net/install/Ubuntu.shtml#sysreq">Ubuntu</a></th>
-	<th><a href="http://jmri.sourceforge.net/install/Raspbian.shtml#sysreq">Raspbian</a></th>
+	<th><a href="http://jmri.org/install/MacOSX.shtml#sysreq">OS X</a></th>
+	<th><a href="http://jmri.org/install/WindowsNew.shtml#sysreq">Windows</a></th>
+	<th><a href="http://jmri.org/install/Linux.shtml#sysreq">Linux</a></th>
+	<th><a href="http://jmri.org/install/Ubuntu.shtml#sysreq">Ubuntu</a></th>
+	<th><a href="http://jmri.org/install/Raspbian.shtml#sysreq">Raspbian</a></th>
 	</tr>
 	<tr><td>4.2</td>
 	<td>1.8</td>

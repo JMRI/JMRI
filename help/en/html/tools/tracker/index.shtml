@@ -138,8 +138,8 @@ to take care of a particular section of track.
 <h3>Technical Information</h3>
 For technical information, see the JavaDoc pages for
 <ul>
-<li><a href="http://jmri.sourceforge.net/JavaDoc/doc/jmri/Block.html">Block</a> - represents each Block and its connections
-<li><a href="http://jmri.sourceforge.net/JavaDoc/doc/jmri/Path.html">Path</a> - represents the connections to and from another Block, including
+<li><a href="http://jmri.org/JavaDoc/doc/jmri/Block.html">Block</a> - represents each Block and its connections
+<li><a href="http://jmri.org/JavaDoc/doc/jmri/Path.html">Path</a> - represents the connections to and from another Block, including
 any Turnout settings, etc, that are needed.
 </ul>
     

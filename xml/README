@@ -22,14 +22,14 @@ Certain configuration files appear in the top-level directory:
 	names.xml - definition of standard names for use in 
 		the programmer files
 
-The JMRI web page is located at http://jmri.sourceforge.net/
+The JMRI web page is located at http://jmri.org/
 
 More information on these configuration file is available at
-  http://jmri.sourceforge.net/PaneProg/ConfigFile.html
+  http://jmri.org/PaneProg/ConfigFile.html
 
 All the files in this directory are copyrighted (C) by their various
 authors.  The COPYING file describes the terms under which you
 can use them.  Note that you MUST give JMRI credit if you use
 all or part of these files.  For more information, please see
-http://jmri.sourceforge.net/Copyright.html
+http://jmri.org/Copyright.html
 

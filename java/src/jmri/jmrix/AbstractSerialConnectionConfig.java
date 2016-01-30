@@ -1,6 +1,7 @@
 // AbstractSerialConnectionConfig.java
 package jmri.jmrix;
 
+import apps.startup.StartupActionModelUtil;
 import java.awt.Color;
 import java.awt.Component;
 import java.awt.GridBagConstraints;
@@ -24,6 +25,7 @@ import javax.swing.JList;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.ListCellRenderer;
+import jmri.InstanceManager;
 import jmri.util.PortNameMapper;
 import jmri.util.PortNameMapper.SerialPortFriendlyName;
 import org.slf4j.Logger;
@@ -655,35 +657,35 @@ abstract public class AbstractSerialConnectionConfig extends AbstractConnectionC
     }
 
     protected final void addToActionList() {
-        apps.CreateButtonModel bm = jmri.InstanceManager.getDefault(apps.CreateButtonModel.class);
-        ResourceBundle rb = getActionModelResourceBundle();
-        if (rb == null || bm == null) {
+        StartupActionModelUtil util = InstanceManager.getDefault(StartupActionModelUtil.class);
+        ResourceBundle bundle = getActionModelResourceBundle();
+        if (bundle == null || util == null) {
             return;
         }
-        Enumeration<String> e = rb.getKeys();
+        Enumeration<String> e = bundle.getKeys();
         while (e.hasMoreElements()) {
             String key = e.nextElement();
             try {
-                bm.addAction(key, rb.getString(key));
+                util.addAction(key, bundle.getString(key));
             } catch (ClassNotFoundException ex) {
-                log.error("Did not find class " + key);
+                log.error("Did not find class \"{}\"", key);
             }
         }
     }
 
     protected void removeFromActionList() {
-        apps.CreateButtonModel bm = jmri.InstanceManager.getDefault(apps.CreateButtonModel.class);
-        ResourceBundle rb = getActionModelResourceBundle();
-        if (rb == null || bm == null) {
+        StartupActionModelUtil util = InstanceManager.getDefault(StartupActionModelUtil.class);
+        ResourceBundle bundle = getActionModelResourceBundle();
+        if (bundle == null || util == null) {
             return;
         }
-        Enumeration<String> e = rb.getKeys();
+        Enumeration<String> e = bundle.getKeys();
         while (e.hasMoreElements()) {
             String key = e.nextElement();
             try {
-                bm.removeAction(key);
+                util.removeAction(key);
             } catch (ClassNotFoundException ex) {
-                log.error("Did not find class " + key);
+                log.error("Did not find class \"{}\"", key);
             }
         }
     }

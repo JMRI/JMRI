@@ -42,6 +42,8 @@ public abstract class AbstractFileModelFactory implements StartupModelFactory {
         if (this.getModelClass().isInstance(model)) {
             if (this.chooser == null) {
                 this.chooser = this.setFileChooser();
+                this.chooser.setDialogTitle(this.getDescription());
+                this.chooser.setDialogType(JFileChooser.CUSTOM_DIALOG);
             }
             if (this.chooser.showOpenDialog(parent) == JFileChooser.APPROVE_OPTION) {
                 try {
@@ -53,5 +55,10 @@ public abstract class AbstractFileModelFactory implements StartupModelFactory {
                 }
             }
         }
+    }
+    
+    @Override
+    public void initialize() {
+        // nothing to do
     }
 }

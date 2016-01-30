@@ -189,10 +189,10 @@
             to go somewhere)
             <P>
             Some examples use the 
-            <A HREF="http://jmri.sourceforge.net/JavaDoc/doc/jmri/jmrit/automat/AbstractAutomaton.html">AbstractAutomaton</a>
+            <A HREF="http://jmri.org/JavaDoc/doc/jmri/jmrit/automat/AbstractAutomaton.html">AbstractAutomaton</a>
             class as a base, while
             others use the 
-            <A HREF="http://jmri.sourceforge.net/JavaDoc/doc/jmri/jmrit/automat/Siglet.html">Siglet</a>
+            <A HREF="http://jmri.org/JavaDoc/doc/jmri/jmrit/automat/Siglet.html">Siglet</a>
             class. This is because those are intended for two different 
             purposes.
             <P>
@@ -235,7 +235,7 @@
             <P>
             For more info on the routines that AbstractAutomaton provides
             to help you, see the 
-            <A HREF="http://jmri.sourceforge.net/JavaDoc/doc/jmri/jmrit/automat/AbstractAutomaton.html#method_summary">JavaDocs</a>
+            <A HREF="http://jmri.org/JavaDoc/doc/jmri/jmrit/automat/AbstractAutomaton.html#method_summary">JavaDocs</a>
             for the class. (Scroll down to the section called "Method Summary")
             </div>
 

@@ -63,7 +63,7 @@ Vous pouvez personnaliser l'apparence du texte dans l'ic&#244;ne via son menu co
 Vous pouvez &#233;galement d&#233;finir une s&#233;rie d'ic&#244;nes &#224; afficher &#224; la place 
 du contenu propre de la m&#233;moire, si vous le souhaitez. Pour un exemple pour savoir comment cela est
 fait, s'il vous pla&#238;t voir le
-<a href="http://jmri.sourceforge.net/xml/samples/MemoryIconExample.xml"> fichier &#233;chantillon XML </a>.
+<a href="http://jmri.org/xml/samples/MemoryIconExample.xml"> fichier &#233;chantillon XML </a>.
 Utilisez la commande de votre navigateur "voir la source", ou t&#233;l&#233;charger ce fichier pour voir comment c'est fait.
 Fondamentalement, le navigateur de fichiers XML a un &#233;l&#233;ment "memoryicon"  qui transporte des informations diverses
 pour savoir o&#249; placer l'ic&#244;ne, si elle peut &#234;tre choisie, etc
