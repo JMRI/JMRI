@@ -56,6 +56,7 @@ public class AutomationTableFrame extends OperationsFrame implements java.beans.
 
     // radio buttons
     JRadioButton addActionAtTopRadioButton = new JRadioButton(Bundle.getMessage("Top"));
+    JRadioButton addActionAtMiddleRadioButton = new JRadioButton(Bundle.getMessage("Middle"));
     JRadioButton addActionAtBottomRadioButton = new JRadioButton(Bundle.getMessage("Bottom"));
 
     // text field
@@ -132,10 +133,12 @@ public class AutomationTableFrame extends OperationsFrame implements java.beans.
 
         addItem(p3, addActionButton, 1, 1);
         addItem(p3, addActionAtTopRadioButton, 2, 1);
-        addItem(p3, addActionAtBottomRadioButton, 3, 1);
+        addItem(p3, addActionAtMiddleRadioButton, 3, 1);
+        addItem(p3, addActionAtBottomRadioButton, 4, 1);
 
         ButtonGroup group = new ButtonGroup();
         group.add(addActionAtTopRadioButton);
+        group.add(addActionAtMiddleRadioButton);
         group.add(addActionAtBottomRadioButton);
         addActionAtBottomRadioButton.setSelected(true);
 
@@ -264,6 +267,8 @@ public class AutomationTableFrame extends OperationsFrame implements java.beans.
         // add item to this automation
         if (addActionAtTopRadioButton.isSelected()) {
             _automation.addItem(0);
+        } else if (addActionAtMiddleRadioButton.isSelected()) {
+            _automation.addItem(_automation.getSize()/2);
         } else {
             _automation.addItem();
         }
@@ -334,6 +339,7 @@ public class AutomationTableFrame extends OperationsFrame implements java.beans.
 
         addActionButton.setEnabled(enabled);
         addActionAtTopRadioButton.setEnabled(enabled);
+        addActionAtMiddleRadioButton.setEnabled(enabled);
         addActionAtBottomRadioButton.setEnabled(enabled);
         saveAutomationButton.setEnabled(enabled);
         deleteAutomationButton.setEnabled(enabled);
