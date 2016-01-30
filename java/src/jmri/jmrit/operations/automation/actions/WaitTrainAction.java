@@ -49,7 +49,8 @@ public class WaitTrainAction extends Action implements PropertyChangeListener {
     private void trainUpdate(PropertyChangeEvent evt) {
         if (getAutomationItem() != null) {
             if (evt.getPropertyName().equals(Train.TRAIN_MOVE_COMPLETE_CHANGED_PROPERTY) ||
-                    evt.getPropertyName().equals(Train.BUILT_CHANGED_PROPERTY)) {
+                    (evt.getPropertyName().equals(Train.BUILT_CHANGED_PROPERTY)
+                    && (boolean) evt.getNewValue() == true)) {
                 Train train = getAutomationItem().getTrain();
                 RouteLocation rl = getAutomationItem().getRouteLocation();
                 if (rl != null && rl != train.getCurrentLocation()) {
