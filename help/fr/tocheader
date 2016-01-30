@@ -1,22 +1,20 @@
-<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
-<!-- indexheader - This file is included at the top of the page   -->
-<!-- when the web index is displayed online.   $Revision: 1.3 $   -->
-<!-- Copyright 2008 JMRI, Bob Jacobsen  See COPYING file for info -->
-<!-- Translated by Blorec Hervé le 2012-01-23-->
-<html lang="fr">
-<h2> JMRI Système Aide: Index </h2>
+<!-- tocheader - This file is included at the top of the page   -->
+<!-- when the web TOC is displayed online.   $Revision: 1.3 $   -->
+<!-- Copyright 2016 JMRI, Bob Jacobsen  See COPYING file for info -->
+<!-- Translated by Blorec Hervé le 2012-01-23 -->
 
-Ceci est l'index pour le système d'aide pour le programme JMRI .
-<p/>
-Dans le programme, vous obtenez en sélectionnant «Aide» l'une des fenêtres des menus d'Aide
-. Vous trouverez la table des matières et
-l'index sur le côté gauche de la fenêtre d'aide.
-<p/>
-La <a href="webtoc.shtml"> table des matières </a> du système d'aide
-est également disponible en ligne.
-<p/>
-Cette page est générée automatiquement dans le cadre du
+<h1> JMRI Syst&egrave;me Aide: Index</h1>
+<p>
+Ceci est l'index pour le syst&egrave;me d'aide pour le programme JMRI .
+<p>
+Dans le programme, vous obtenez en s&eacute;lectionnant &laquo;Aide&raquo;, l'une des fen&ecirc;tres des menus d'Aide. 
+Vous trouverez la table des mati&egrave;res et
+l'index sur le c&ocirc;t&eacute; gauche de la fen&ecirc;tre d'aide.
+<p>
+<a href="webindex.shtml">L'Index</a> du syst&egrave;me d'aide
+est &eacute;galement disponible en ligne.
+<p>
+Cette page est g&eacute;n&eacute;r&eacute;e automatiquement dans le cadre du
 processus de construction. Pour plus d'informations, consultez la
-Page développeur <a href="http://jmri.org/doc/Technical/Help.shtml"> sur le système d'aide </a>.
-.
+Page d&eacute;veloppeur <a href="http://jmri.org/doc/Technical/Help.shtml"> sur le syst&egrave;me d'aide</a>.
 </p>
