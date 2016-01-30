@@ -502,6 +502,7 @@ public class Automation implements java.beans.PropertyChangeListener {
     }
     
     public void copyAutomation(Automation automation) {
+        automation.setComment(getComment());
         for (AutomationItem item : getItemsBySequenceList()) {
             item.copyItem(automation.addItem());
         }
