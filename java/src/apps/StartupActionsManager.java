@@ -42,6 +42,7 @@ public class StartupActionsManager extends AbstractPreferencesProvider {
     public StartupActionsManager() {
         super();
         for (StartupModelFactory factory : ServiceLoader.load(StartupModelFactory.class)) {
+            factory.initialize();
             this.factories.put(factory.getModelClass(), factory);
         }
     }

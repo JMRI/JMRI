@@ -22,4 +22,8 @@ public class CreateButtonModelFactory extends AbstractActionModelFactory {
         return new CreateButtonModel();
     }
 
+    @Override
+    public String getEditModelMessage() {
+        return Bundle.getMessage("CreateButtonModelFactory.editModel.message");
+    }
 }

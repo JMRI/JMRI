@@ -58,4 +58,8 @@ public class TriggerRouteModelFactory implements StartupModelFactory {
         }
     }
 
+    @Override
+    public void initialize() {
+        // nothing to do
+    }
 }
