@@ -56,7 +56,7 @@ Configurez les ordinateurs clients JMRI pour se connecter au LbServer comme suit
 <LI> Dans la bo&#238;te «serveur hostname" qui appara&#238;t, tapez le nom d'Internet
 ou l'adresse de l'ordinateur qui ex&#233;cute l'LbServer.
 Une adresse Internet est quelque chose comme 127.0.1.12; un nom est quelque chose
-comme jmri.sf.net
+comme jmri.org
 <li> Dans la bo&#238;te "TCP Port Number" entrez le num&#233;ro de port que LbServer utilise, qui par d&#233;faut est 1234.
 <li> Enregistrer les pr&#233;f&#233;rences et red&#233;marrer le programme.
 </UL>

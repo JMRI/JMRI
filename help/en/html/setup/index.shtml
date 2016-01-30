@@ -26,11 +26,11 @@
 <a name="install"></a><h3>Installation</h3>
 <p>Full instructions for installing on different platforms can be found here:</p>
 	<ul>
-	<li><a href="http://jmri.sourceforge.net/install/WindowsNew.shtml">Windows</a>
-	<li><a href="http://jmri.sourceforge.net/install/MacOSX.shtml">Mac OS X</a>
-	<li><a href="http://jmri.sourceforge.net/install/Linux.shtml">Linux</a>
+	<li><a href="http://jmri.org/install/WindowsNew.shtml">Windows</a>
+	<li><a href="http://jmri.org/install/MacOSX.shtml">Mac OS X</a>
+	<li><a href="http://jmri.org/install/Linux.shtml">Linux</a>
 	    <ul>
-	    <li><a href="http://jmri.sourceforge.net/install/Raspbian.shtml">RasPi</a>
+	    <li><a href="http://jmri.org/install/Raspbian.shtml">RasPi</a>
 	    </ul>
 	</ul>
 <p>JMRI&reg; requires that Java be installed.<br>
@@ -65,9 +65,9 @@ try.<br>
 	</ul>
 <a name="debug"></a><h2>Fixing Problems</h2>	
 	<ul>
-  <li><a href="http://jmri.sourceforge.net/install/Debug.shtml">Debugging an installation</a>
+  <li><a href="http://jmri.org/install/Debug.shtml">Debugging an installation</a>
   <li><a href="../setup/Errors.shtml">Error Codes</a></li>
-	<li><a href="http://jmri.sourceforge.net/install/WindowsNew.shtml#installtest">InstallTest</a> (Windows only)</li>
+	<li><a href="http://jmri.org/install/WindowsNew.shtml#installtest">InstallTest</a> (Windows only)</li>
 	<li><a href="Faq.shtml">Frequently Asked Questions</a></li>
 	</ul>
 <!--#include virtual="/Footer" -->

@@ -80,7 +80,7 @@ they're also available somewhere else.
 	<p>
 	Updates occur continuously between versions of the program.
 	As files are contributed, we make them available on our
-	<a href="http://jmri.sourceforge.net/xml/decoders">collected decoder definitions</a>
+	<a href="http://jmri.org/xml/decoders">collected decoder definitions</a>
 	web page. You can download them from there, but note that most
 	web browsers will not let you directly view them; you really
 	do have to download them.

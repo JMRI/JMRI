@@ -12,4 +12,4 @@ It contains many new features, including:
 along with other changes.
 
 For more information, please see the release note at 
-http://jmri.sf.net/releasenotes/jmri2.7.4.shtml
+http://jmri.org/releasenotes/jmri2.7.4.shtml

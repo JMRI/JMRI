@@ -61,7 +61,7 @@ connect to the layout via the LocoNet Server by:
 	<li>In the "Server hostname" box that appears, type the Internet name
 	or address of the computer that's running the LocoNet Server.
 	An internet address is something like 127.0.1.12; a name is something
-	like jmri.sf.net
+	like jmri.org
 	<li>Save the preferences and restart the program.
 	</ul>
 

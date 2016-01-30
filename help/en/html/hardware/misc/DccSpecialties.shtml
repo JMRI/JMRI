@@ -51,10 +51,10 @@ of how to use them.  The writeup also covers how they document their layout, and
 discusses the pros and cons of several ways of connecting the Hare and Wabbit.
 <p>
 You can download 
-<a href="http://jmri.sourceforge.net/jython/dccspecialties/">their scripts</a> from the JMRI web site,
+<a href="http://jmri.org/jython/dccspecialties/">their scripts</a> from the JMRI web site,
 and it also available in the 
-<a href="http://jmri.sf.net/jython">sample scripts directory</a> in the 
-<a href="http://jmri.sourceforge.net/download/">JMRI downloads</a>.
+<a href="http://jmri.org/jython">sample scripts directory</a> in the 
+<a href="http://jmri.org/download/">JMRI downloads</a>.
 </p>
 
 <!--#include virtual="/Footer" -->
