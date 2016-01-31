@@ -56,7 +56,9 @@ public class WarrantManagerXml //extends XmlFile
             Element elem = new Element("warrant");
             elem.setAttribute("systemName", sname);
             if (uname==null) uname = "";
-            elem.setAttribute("userName", uname);
+            if (uname.length()>0) {
+                elem.setAttribute("userName", uname);
+            }
             String comment = warrant.getComment();
             if (comment != null) {
                 Element c = new Element("comment");
@@ -119,7 +121,9 @@ public class WarrantManagerXml //extends XmlFile
             blk.setAttribute("systemName", block.getSystemName());
             String uname = block.getUserName();
             if (uname==null) uname = "";
-            blk.setAttribute("userName", uname);
+            if (uname.length()>0) {
+                blk.setAttribute("userName", uname);
+            }
             elem.addContent(blk);
         } else {
             log.error("Null block in BlockOrder!");

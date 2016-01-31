@@ -20,7 +20,8 @@ public class TerminateTrainAction extends Action {
     public void doAction() {
         if (getAutomationItem() != null) {
             Train train = getAutomationItem().getTrain();
-            if (train != null && train.isBuilt()) {
+            if (train != null && train.getRoute() != null && train.isBuilt()) {
+                setRunning(true);
                 train.terminate();
                 finishAction(true);
             } else {

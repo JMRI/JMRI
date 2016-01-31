@@ -278,6 +278,13 @@ public class Block extends jmri.implementation.AbstractNamedBean implements Phys
         }
     }
 
+    public boolean hasPath(Path p) { 
+        for (Path t : paths) {
+            if (t.equals(p)) return true;
+        }
+        return false;
+    }
+    
     /**
      * Get a copy of the list of Paths
      */
@@ -507,6 +514,42 @@ public class Block extends jmri.implementation.AbstractNamedBean implements Phys
     public float getLengthIn() {
         return (_length / 25.4f);
     }  // return length in inches
+
+
+    /** 
+     * Note: this has to make choices about identity values (always the same)
+     * and operation values (can change as the block works).  Might be missing
+     * some identity values. 
+     */
+    @Override
+    public boolean equals(Object obj) {
+        if (obj == this) {
+            return true;
+        }
+        if (obj == null) {
+            return false;
+        }
+
+        if (!(getClass() == obj.getClass())) {
+            return false;
+        } else {
+            Block b = (Block) obj;
+            
+//            if (b._direction != this._direction) return false;
+//            if (b._curvature != this._curvature) return false;
+//            if (b._length != this._length) return false;
+            
+            if (!b.getSystemName().equals(this.getSystemName())) return false;
+            
+        }
+        return true;
+    }
+
+    @Override
+    public int hashCode() {
+        int hash = 100*_direction+1000*_curvature+10000*_current+(int)_length+CntOfPossibleEntrancePaths;
+        return hash;
+    }
 
     // internal data members
     private int _current = UNDETECTED; // state until sensor is set

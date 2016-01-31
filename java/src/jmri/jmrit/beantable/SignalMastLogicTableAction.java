@@ -49,7 +49,7 @@ public class SignalMastLogicTableAction extends AbstractTableAction {
     }
 
     public SignalMastLogicTableAction() {
-        this(AbstractTableAction.rb.getString("TitleSignalMastLogicTable"));
+        this(Bundle.getMessage("TitleSignalMastLogicTable"));
     }
 
     @Override
@@ -260,21 +260,21 @@ public class SignalMastLogicTableAction extends AbstractTableAction {
             public String getColumnName(int col) {
                 switch (col) {
                     case SOURCECOL:
-                        return AbstractTableAction.rb.getString("Source");
+                        return Bundle.getMessage("Source");
                     case DESTCOL:
-                        return AbstractTableAction.rb.getString("Destination");
+                        return Bundle.getMessage("Destination");
                     case SOURCEAPPCOL:
-                        return AbstractTableAction.rb.getString("SignalMastAppearance");
+                        return Bundle.getMessage("SignalMastAppearance");
                     case DESTAPPCOL:
-                        return AbstractTableAction.rb.getString("SignalMastAppearance");
+                        return Bundle.getMessage("SignalMastAppearance");
                     case COMCOL:
-                        return AbstractTableAction.rb.getString("Comment");
+                        return Bundle.getMessage("Comment");
                     case DELCOL:
-                        return AbstractTableAction.rb.getString("ButtonDelete");
+                        return Bundle.getMessage("ButtonDelete");
                     case EDITLOGICCOL:
-                        return AbstractTableAction.rb.getString("ButtonEdit");
+                        return Bundle.getMessage("ButtonEdit");
                     case ENABLECOL:
-                        return AbstractTableAction.rb.getString("ColumnHeadEnabled");
+                        return Bundle.getMessage("ColumnHeadEnabled");
                     default:
                         return "unknown";
                 }
@@ -431,9 +431,9 @@ public class SignalMastLogicTableAction extends AbstractTableAction {
                     case COMCOL:
                         return (b != null) ? b.getComment(getDestMastFromRow(row)) : null;
                     case DELCOL:
-                        return AbstractTableAction.rb.getString("ButtonDelete");
+                        return Bundle.getMessage("ButtonDelete");
                     case EDITLOGICCOL:  //
-                        return AbstractTableAction.rb.getString("ButtonEdit");
+                        return Bundle.getMessage("ButtonEdit");
                     case ENABLECOL:
                         return (b != null) ? b.isEnabled(getDestMastFromRow(row)) : null;
                     default:
@@ -445,7 +445,7 @@ public class SignalMastLogicTableAction extends AbstractTableAction {
             protected void configDeleteColumn(JTable table) {
                 // have the delete column hold a button
                 setColumnToHoldButton(table, DELCOL,
-                        new JButton(AbstractTableAction.rb.getString("ButtonDelete")));
+                        new JButton(Bundle.getMessage("ButtonDelete")));
             }
 
             protected String getBeanType() {
@@ -460,7 +460,7 @@ public class SignalMastLogicTableAction extends AbstractTableAction {
     }
 
     protected void setTitle() {
-        f.setTitle(AbstractTableAction.rb.getString("TitleSignalMastLogicTable"));
+        f.setTitle(Bundle.getMessage("TitleSignalMastLogicTable"));
     }
 
     @Override

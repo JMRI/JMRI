@@ -64,7 +64,7 @@ VCP). Ces pilotes sont compatibles avec la version la plus r&#233;cente du logic
 , ainsi vous pouvez alterner entre
 l'utilisation de JMRI et le programmateur Quantum (mais pas dans en m&#234;me temps, bien s&#251;r)<p>
 Max Ettinger a fourni
-des <a href="http://jmri.sourceforge.net/install/qsidriver/"> instructions d&#233;taill&#233;es</a>
+des <a href="http://jmri.org/install/qsidriver/"> instructions d&#233;taill&#233;es</a>
 pour savoir comment installer ces derniers.
 
 <a id="driverMac">

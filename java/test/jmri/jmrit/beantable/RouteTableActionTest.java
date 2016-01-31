@@ -26,7 +26,7 @@ public class RouteTableActionTest extends TestCase {
 //    }
 //  test order isn't guaranteed!
 //    public void testX() {
-        JFrame f = jmri.util.JmriJFrame.getFrame("Route Table");
+        JFrame f = jmri.util.JmriJFrame.getFrame(Bundle.getMessage("TitleRouteTable"));
         Assert.assertTrue("found frame", f != null);
         f.dispose();
     }

@@ -1,7 +1,6 @@
 package jmri.jmrit.beantable;
 
 import java.awt.event.ActionEvent;
-import java.util.ResourceBundle;
 import javax.swing.AbstractAction;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -21,8 +20,7 @@ public class ListedTableAction extends AbstractAction {
      */
     private static final long serialVersionUID = 6097143838837199839L;
     String gotoListItem = null;
-    String title = rbean.getString("TitleListedTable");
-    public static final ResourceBundle rbean = ResourceBundle.getBundle("jmri.jmrit.beantable.BeanTableBundle");
+    String title = Bundle.getMessage("TitleListedTable");
 
     /**
      * Create an action with a specific title.
@@ -57,7 +55,7 @@ public class ListedTableAction extends AbstractAction {
     }
 
     public ListedTableAction() {
-        this(rbean.getString("TitleListedTable"));
+        this(Bundle.getMessage("TitleListedTable"));
     }
 
     ListedTableFrame f;

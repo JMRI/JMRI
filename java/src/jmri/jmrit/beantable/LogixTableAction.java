@@ -131,8 +131,7 @@ public class LogixTableAction extends AbstractTableAction {
         this("Logix Table");
     }
 
-    static final ResourceBundle rbx = ResourceBundle
-            .getBundle("jmri.jmrit.beantable.LogixTableBundle");
+    static final ResourceBundle rbx = ResourceBundle.getBundle("jmri.jmrit.beantable.LogixTableBundle");
 
     // *********** Methods for Logix Table Window ********************
     /**
@@ -151,7 +150,7 @@ public class LogixTableAction extends AbstractTableAction {
             // overlay the state column with the edit column
             static public final int ENABLECOL = VALUECOL;
             static public final int EDITCOL = DELETECOL;
-            protected String enabledString = rb.getString("ColumnHeadEnabled");
+            protected String enabledString = Bundle.getMessage("ColumnHeadEnabled");
 
             public String getColumnName(int col) {
                 if (col == EDITCOL) {
@@ -306,14 +305,14 @@ public class LogixTableAction extends AbstractTableAction {
             }
 
             protected String getBeanType() {
-                return AbstractTableAction.rbean.getString("BeanNameLogix");
+                return Bundle.getMessage("BeanNameLogix");
             }
         };
     }
 
     // set title for Logix table
     protected void setTitle() {
-        f.setTitle(f.rb.getString("TitleLogixTable"));
+        f.setTitle(Bundle.getMessage("TitleLogixTable"));
     }
     /*    
      public void addToFrame(BeanTableFrame f) {
@@ -477,7 +476,7 @@ public class LogixTableAction extends AbstractTableAction {
     JmriJFrame addLogixFrame = null;
     JTextField _systemName = new JTextField(10);
     JTextField _addUserName = new JTextField(10);
-    JCheckBox _autoSystemName = new JCheckBox(rb.getString("LabelAutoSysName"));
+    JCheckBox _autoSystemName = new JCheckBox(Bundle.getMessage("LabelAutoSysName"));
     JLabel _sysNameLabel = new JLabel(rbx.getString("LogixSystemName"));
     JLabel _userNameLabel = new JLabel(rbx.getString("LogixUserName"));
     jmri.UserPreferencesManager prefMgr = jmri.InstanceManager.getDefault(jmri.UserPreferencesManager.class);
@@ -1009,9 +1008,9 @@ public class LogixTableAction extends AbstractTableAction {
     void handleCreateException(String sysName) {
         javax.swing.JOptionPane.showMessageDialog(addLogixFrame,
                 java.text.MessageFormat.format(
-                        rb.getString("ErrorLogixAddFailed"),
+                        Bundle.getMessage("ErrorLogixAddFailed"),
                         new Object[]{sysName}),
-                rb.getString("ErrorTitle"),
+                Bundle.getMessage("ErrorTitle"),
                 javax.swing.JOptionPane.ERROR_MESSAGE);
     }
     // *********** Methods for Edit Logix Window ********************
@@ -1336,9 +1335,9 @@ public class LogixTableAction extends AbstractTableAction {
 
     public void setMessagePreferencesDetails() {
         HashMap<Integer, String> options = new HashMap< Integer, String>(3);
-        options.put(0x00, rb.getString("DeleteAsk"));
-        options.put(0x01, rb.getString("DeleteNever"));
-        options.put(0x02, rb.getString("DeleteAlways"));
+        options.put(0x00, Bundle.getMessage("DeleteAsk"));
+        options.put(0x01, Bundle.getMessage("DeleteNever"));
+        options.put(0x02, Bundle.getMessage("DeleteAlways"));
         jmri.InstanceManager.getDefault(jmri.UserPreferencesManager.class).messageItemDetails(getClassName(), "delete", rbx.getString("DeleteLogix"), options, 0x00);
         jmri.InstanceManager.getDefault(jmri.UserPreferencesManager.class).preferenceItemDetails(getClassName(), "remindSaveLogix", rbx.getString("SuppressWithDisable"));
         super.setMessagePreferencesDetails();
@@ -5062,7 +5061,7 @@ public class LogixTableAction extends AbstractTableAction {
             switch (col) {
                 case BUTTON_COLUMN:
                     if (!_inReorderMode) {
-                        return rb.getString("ButtonEdit");
+                        return Bundle.getMessage("ButtonEdit");
                     } else if (_nextInOrder == 0) {
                         return rbx.getString("ButtonFirst");
                     } else if (_nextInOrder <= r) {
@@ -5424,7 +5423,7 @@ public class LogixTableAction extends AbstractTableAction {
                     return rbx.getString("ButtonEdit");
                 case DELETE_COLUMN:
                     if (!_inReorderMode) {
-                        return rb.getString("ButtonDelete");
+                        return Bundle.getMessage("ButtonDelete");
                     } else if (_nextInOrder == 0) {
                         return rbx.getString("ButtonFirst");
                     } else if (_nextInOrder <= row) {
@@ -5463,7 +5462,7 @@ public class LogixTableAction extends AbstractTableAction {
     }
 
     public String getClassDescription() {
-        return rb.getString("TitleLogixTable");
+        return Bundle.getMessage("TitleLogixTable");
     }
 
     protected String getClassName() {

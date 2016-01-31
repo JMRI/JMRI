@@ -165,7 +165,7 @@ public class XmlTest extends OperationsTestCase {
         t3.setRequirements(Train.CABOOSE);
         t3.setRoadOption("t3 X raod option");
         t3.setRoute(B);
-        t3.setStatus(Train.CODE_UNKNOWN);
+        t3.setStatusCode(Train.CODE_UNKNOWN);
 
         TrainManagerXml.instance().writeOperationsFile();
 
@@ -212,7 +212,7 @@ public class XmlTest extends OperationsTestCase {
         t1.setSecondLegOptions(Train.ADD_CABOOSE);
         t1.setSecondLegStartLocation(endC);
         t1.setSendCarsToTerminalEnabled(true);
-        t1.setStatus(Train.CODE_UNKNOWN);
+        t1.setStatusCode(Train.CODE_UNKNOWN);
         t1.setSwitchListStatus(Train.PRINTED);
         t1.setThirdLegCabooseRoad("t1 third leg caboose road");
         t1.setThirdLegEndLocation(startC);
@@ -245,7 +245,7 @@ public class XmlTest extends OperationsTestCase {
         t3.setRequirements(Train.NO_CABOOSE_OR_FRED);
         t3.setRoadOption("t3 raod option");
         t3.setRoute(A);
-        t3.setStatus(Train.CODE_UNKNOWN);
+        t3.setStatusCode(Train.CODE_UNKNOWN);
 
         t5.setBuildEnabled(true);
         t5.setBuildFailed(false);
@@ -269,7 +269,7 @@ public class XmlTest extends OperationsTestCase {
         t5.setRequirements(Train.NO_CABOOSE_OR_FRED);
         t5.setRoadOption("t5 raod option");
         t5.setRoute(B);
-        t5.setStatus(Train.CODE_UNKNOWN);
+        t5.setStatusCode(Train.CODE_UNKNOWN);
 
         TrainManagerXml.instance().writeOperationsFile();
 

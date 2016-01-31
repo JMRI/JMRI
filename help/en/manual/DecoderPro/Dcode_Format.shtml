@@ -38,7 +38,7 @@ Although you can call this new file anything you like, it will work
 best if you use the same convention as the provided files. That is "<strong>manufacturer  name</strong>"_"<strong>decoder family</strong>".xml, for example: <strong>Digitrax_1x2.xml</strong>  and <strong>Atlas_DualMode.xml</strong>. </p>
 <p>Now that you have located a Decoder Definition file as a starting point  open the file with an XML editor 
 (editors recommended by JMRI are discussed on a  
-<a target="_blank" href="http://jmri.sourceforge.net/help/en/html/doc/Technical/XmlDtdUsage.shtml">separate page)</a>  or your favorite text editor.
+<a target="_blank" href="http://jmri.org/help/en/html/doc/Technical/XmlDtdUsage.shtml">separate page)</a>  or your favorite text editor.
 <strong>DO NOT</strong> try an advanced word processor like  Word.
 Use a basic text file editor like  Notepad, or an XML editor, XML Marker is a good one and it&#8217;s free.</p>
 <p>The beginning XML lines deal with the Header:</p>

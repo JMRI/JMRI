@@ -41,7 +41,7 @@
 </p>
 <p>
     JMRI uses a fairly simple text-based client-server protocol over TCP/IP sockets. Throttles (or other applications)
-    can located JMRI by sending a multi-cast DNS request, using ZeroConf/Bonjour, for the address "_withrottle._tcp.local."
+    can located JMRI by sending a multi-cast DNS request, using ZeroConf/Bonjour, for the address "_withrottle._tcp.local".
     JMRI won't always reply (it depends on your operating system, firewall settings, and network environment), so your
     application should also allow entering an IP address and port.
 </p>
@@ -49,6 +49,10 @@
     When you first open the connection, JMRI responds with a number of lines of text that provide information about the
     JMRI instance to which you've connected. Your application then sends comands to JMRI. Each of these commands is
     plain text, with a newline character at the end (0A hex). Likewise, lines sent back from JMRI are newline terminated.
+</p>
+<p class="note">
+    Because the Java code calls the println method, you will actually get two newline characters at the end of each
+    line returned.
 </p>
         
 <h2>String Parsing</h2>
@@ -77,7 +81,11 @@ PPA2
 PTT]\[Turnouts}|{Turnout]\[Closed}|{2]\[Thrown}|{4
 PRT]\[Routes}|{Route]\[Active}|{2]\[Inactive}|{4
 RCC0
-PW12080</pre>  
+PW12080
+*10</pre>
+<p class="note">
+    Each line is actually followed by two newline characters. For brevity, the extra blank line is not shown.
+</p>
 <p>
     Each line contains information for part of JMRI, as described below, so your application can show things like engines,
     turnouts, etc.
@@ -194,7 +202,7 @@ PW12080
     <li>'S' sends a throttle command to a second throttle</li>
     <li>'M' sends a command to a "multi" throttle</li>
     <li>'D' sends a hex packet to the command station</li>
-    <li>'*' sends a heartbeat</li>
+    <li>'*' sends a heartbeat, or sets heartbeat on or off</li>
     <li>'C' is not used anymore and forwards to the throttle controller.</li>
     <li>'N' sets the device name</li>
     <li>'H' sets the device ID.</li>
@@ -203,7 +211,43 @@ PW12080
     <li>'Q' indicates the device has quit, close its window.</li>
 </ul>
 
+<h3>'N' Device Name</h3>
 <p>
+    Sets the name that will appear in the WiThrottle window. In Engine Driver, this is the throttle name that you can set.
+    The syntax is <code>N<i>name</i></code>, where <i>name</i> can be any text, except for a newline, as the newline terminates
+    the command. For example:
+</p>
+<pre class="code">
+NJohn's Throttle
+</pre>
+<p>
+    Reply: <code>*</code><i>StopSeconds</i>
+</p>
+<pre class="code">
+*10
+</pre>
+<p>
+    The number after '*' indicates how often your throttle will need to send a command or heartbeat (0 means a heartbeat is
+    not required). JMRI will send an EStop to the locomotive if it hasn't received a command or heartbeat within the
+    number of seconds provided.
+</p>
+
+<h3>'*' Heartbeat</h3>
+<p>
+    There are three versions of this command:
+</p>
+<table class="data">
+    <tr><td>Command</td>    <td>Description</td></tr>
+    <tr><td>*</td>          <td>Send heartbeat</td></tr>
+    <tr><td>*+</td>         <td>Turn heartbeat monitoring on</td></tr>
+    <tr><td>*-</td>         <td>Turn heartbeat monitoring off</td></tr>
+</table>
+<p>
+    The idea of the heartbeat is that JMRI will issue an emergency stop if it has not received any commands from your throttle
+    within the heartbeat period. When you set your throttle name, using the N command, JMRI returns the emergency stop delay,
+    in seconds, but it doesn't turn heartbeat monitoring on until you explicitly tell it to do so. Once you've turned it on,
+    your throttle will need to ensure it sends periodic heartbeat commands (or any other command) to keep your engine(s) alive.
+</p>
 
 <h3>T, S, M - Throttle Controller</h3>
 <p>
@@ -259,6 +303,59 @@ MT+S3&lt;;&gt;ED&amp;RGW 341
     The first element is "+S3" has the '+' to indicate that this is a request to add a locomotive to the multi throttle.
     The rest of the string looks like an address, but it's actually a key used to identify the engine within the
     multi throttle. Engine Driver uses the DCC address as the key.
+</p>
+<p>
+    The reply from this command is quite verbose, and contains details about this locomotive as known by JMRI.
+    If the engine number is in JMRI's roster, it will return information like the following:
+</p>
+<pre class="code">
+MT+L41&lt;;&gt;
+MTLL41&lt;;&gt;]\[Headlight]\[Bell]\[Whistle]\[Short Whistle]\[Steam Release]\[FX5 Light]\[FX6 Light]\[Dimmer]\[Mute]\[Water Stop]\[Injectors]\[Brake Squeal]\[Coupler]\[]\[]\[]\[]\[]\[]\[]\[]\[]\[]\[]\[]\[]\[]\[]\[
+MTAL41&lt;;&gt;F00
+MTAL41&lt;;&gt;F01
+MTAL41&lt;;&gt;F02
+...
+MTAL41&lt;;&gt;F027
+MTAL41&lt;;&gt;F028
+MTAL41&lt;;&gt;V0
+MTAL41&lt;;&gt;R1
+MTAL41&lt;;&gt;s1
+</pre>
+
+<p>
+    If, on the other hand, JMRI does not have the engine number in it's roster, it returns information like the following:
+</p>
+<pre class="code">
+MT+L341&lt;;&gt;
+MTAL341&lt;;&gt;F00
+MTAL341&lt;;&gt;F01
+...
+MTAL341&lt;;&gt;F027
+MTAL341&lt;;&gt;F028
+MTAL341&lt;;&gt;V0
+MTAL341&lt;;&gt;R1
+MTAL341&lt;;&gt;s1
+</pre>
+<p class="note">
+    the examples above are all replies from the multi throttle.
+</p>
+<p>
+    The reply consists of the following sections:
+</p>
+<ul>
+    <li>Function labels</li>
+    <li>Function states (pressed or released)</li>
+    <li>Current speed</li>
+    <li>Current direction</li>
+    <li>Current speed step mode</li>
+</ul>
+<p>
+    For all except the function lables, see the appropriate throttle commands, such as 'V' below, for details.
+</p>
+<p>
+    The function labels are an array of strings, with ]\[ used as the array delimeter. So in the example above,
+    F0 is called Headlight, F1 Bell, etc. Note that, unlike with other arrays, the array delimeter appears at
+    the start and end of the array, as well as between elements.
 </p>
 
 <h5>'-' -- Remove Locomotive</h5>

@@ -24,7 +24,7 @@ To add a new Transit, follow this procedure:
 	<ol>
 	<li><p>Click <b><a href="TransitTable.shtml">Transits</a></b> in the 
 	<b>Tables</b> submenu of the <b>Tools</b> menu to bring up
-	the Transits Table, and click the <b>Add...</b> button at the bottom of the 
+	the Transit Table, and click the <b>Add...</b> button at the bottom of the 
 	table to bring up the Add/Edit Transit window.</p>
 	<img src="TransitAddFrame.jpg" height="550" width="770">
 	<li><p>Do either:</p>
@@ -66,7 +66,7 @@ To add a new Transit, follow this procedure:
 	Section listed in the popup menu is a valid alternate Section</b>, i.e. 
 	will connect to the next primary Section. For more information on alternate 
 	Sections and their use, refer to the 
-	<a href="TransitTable.shtml">Transits Table help file</a>.
+	<a href="TransitTable.shtml">Transit Table help file</a>.
 	</li>
 	<li><p>If you decide you need to add a Section at the beginning of the Transit, 
 	select a Section in the popup menu to the left of the <b>Insert As First Section</b>
@@ -107,13 +107,13 @@ To add a new Transit, follow this procedure:
 	</li>
 	<li><p>Click the <b>Create</b> button at the bottom of the window.  
 	If everything is fine, the window will close and a new Transit will appear in 
-	the Transits Table. If there is trouble with anything, a message will be 
+	the Transit Table. If there is trouble with anything, a message will be 
 	displayed indicating the error and what you should do to fix it. 
 	Correct the error and click <b>Create</b> again.</p></li>
 	</ol>
 
 <p>Note: The <b>Direction</b> and <b>Alternate</b> columns in the Add/Edit 
-Transits Table are for information only. They are set automatically as you 
+Transit Table are for information only. They are set automatically as you 
 build the Transit. The Direction column indicates the direction of travel 
 through the Section, and the Alternate column indicates whether the Section 
 is the <i>primary</i> Section for this order number or an <i>alternate</i> 
@@ -123,7 +123,7 @@ Section.</p>
 To edit an existing Transit, follow  this procedure:
 	<ol>
 	<li><p>Click a Transit's <b>Edit</b> button in the <a href="TransitTable.shtml">
-	Transits Table</a> to bring up the Add/Edit Transit window. The window will 
+	Transit Table</a> to bring up the Add/Edit Transit window. The window will 
 	be the same as that shown above, except the System Name will be fixed, and 
 	the <b>Create</b> button will be replaced with an <b>Update</b> Button.</p>
 	<img src="TransitEditFrame.jpg" height="550" width="770"></li>
@@ -143,7 +143,7 @@ To edit an existing Transit, follow  this procedure:
 	</li>
 	</ol>
 
-<p>Back to the <a href="TransitTable.shtml">Transits Table help page<a>.</p>
+<p>Back to the <a href="TransitTable.shtml">Transit Table help page<a>.</p>
 
 <!--#include virtual="/Footer" -->
 

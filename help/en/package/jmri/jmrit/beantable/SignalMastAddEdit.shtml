@@ -42,7 +42,7 @@ The fourth pop-up menu on the Add Signal Mast panel lets you select one of five 
 		<li>LNCP Signal Mast Decoder<br/>
 		Like the previous option, the LocoNet Control Point (LNCP) Driver type needs only a decoder ID and optionally Aspect ID's to drive a <a href="http://www.rr-cirkits.com/manuals/LNCP-manual.pdf">RR_Cirkits LNCP</a> module.
 		</ul>
-	<p>Back to the <a href="SignalMastTable.shtml">Signal Masts Table help page</a>.
+	<p>Back to the <a href="SignalMastTable.shtml">Signal Mast Table help page</a>.
 		
 		<!--#include virtual="/Footer" -->
 
