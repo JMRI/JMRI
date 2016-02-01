@@ -272,7 +272,10 @@ public class AutomationTableFrame extends OperationsFrame implements java.beans.
         } else {
             // middle radio button selected
             if (_automationTable.getSelectedRow() >= 0) {
-                _automation.addItem(_automationTable.getSelectedRow());
+                int row = _automationTable.getSelectedRow();
+                _automation.addItem(row);
+                // we need to reselect the table since the content has changed
+                _automationTable.getSelectionModel().setSelectionInterval(row, row);
             } else {
                 _automation.addItem(_automation.getSize() / 2);
             }
