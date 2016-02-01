@@ -3823,10 +3823,19 @@
     automation will halt in the event that the action fails to complete. The "Create Default
     Messages" button will automatically create a success and failure message for you if the text
     window is empty.</p>
+    
+    <p>The messages can be useful when debugging your automation, or if you need to pause the automation
+    as it will wait until you press either the "Halt" or "OK" button.  If you press the "Halt" button,
+    you can continue from where you were in the automation by pressing the "Resume Automation" button.</p>
 
    <p>If you want more than one action for your automation, press the "Add" button in the "Add
     Item" area for each action you want to perform. The automation action sequence is from top to
-    bottom. Once you've entered all of the actions you want, you can either step through your
+    bottom. You can if you wish add actions to the middle or end of your sequence by selecting the
+    "Middle or Before Selected Row" or "End" radio buttons respectively. If you select the "Middle
+    or Before Selected Row" radio button you can add an action to the middle of the table, or above
+    a row you've selected in the automation table.</p>
+
+   <p>Once you've entered all of the actions you want, you can either step through your
     actions one at a time using the "Step Automation" button, or run through the entire action
     sequence using the "Run Automation" button. To stop the action or sequence of actions, you can
     press the "Stop Automation" button. The "Current" column shows where in the sequence the
