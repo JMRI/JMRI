@@ -33,8 +33,8 @@ public class Automation implements java.beans.PropertyChangeListener {
     // stores AutomationItems for this automation
     protected Hashtable<String, AutomationItem> _automationHashTable = new Hashtable<String, AutomationItem>();
     protected int _IdNumber = 0; // each item in a automation gets its own unique id
-    
-    public static final String REGEX = "c";  // NOI18N
+
+    public static final String REGEX = "c"; // NOI18N
 
     public static final String LISTCHANGE_CHANGED_PROPERTY = "automationListChange"; // NOI18N
     public static final String CURRENT_ITEM_CHANGED_PROPERTY = "automationCurrentItemChange"; // NOI18N
@@ -125,13 +125,14 @@ public class Automation implements java.beans.PropertyChangeListener {
         }
         return false;
     }
-    
+
     /**
      * Used to determine if automation is at the start of its sequence.
+     * 
      * @return true if the current action is the first action in the list.
      */
     public boolean isReadyToRun() {
-        return (getCurrentAutomationItem() == getItemsBySequenceList().get(0));
+        return (getSize() > 0 && getCurrentAutomationItem() == getItemsBySequenceList().get(0));
     }
 
     public void run() {
@@ -502,16 +503,22 @@ public class Automation implements java.beans.PropertyChangeListener {
         }
         return null;
     }
-    
+
+    /**
+     * Copies automation.
+     * @param automation the automation to copy
+     */
     public void copyAutomation(Automation automation) {
-        automation.setComment(getComment());
-        for (AutomationItem item : getItemsBySequenceList()) {
-            item.copyItem(automation.addItem());
-        }
-        // now adjust GOTOs to reference the new automation
-        for (AutomationItem item : automation.getItemsBySequenceList()) {
-            if (item.getGotoAutomationItem() != null) {
-                item.setGotoAutomationItem(automation.getItemBySequenceId(item.getGotoAutomationItem().getSequenceId()));
+        if (automation != null) {
+            setComment(automation.getComment());
+            for (AutomationItem item : automation.getItemsBySequenceList()) {
+                addItem().copyItem(item);
+            }
+            // now adjust GOTOs to reference the new automation
+            for (AutomationItem item : getItemsBySequenceList()) {
+                if (item.getGotoAutomationItem() != null) {
+                    item.setGotoAutomationItem(getItemBySequenceId(item.getGotoAutomationItem().getSequenceId()));
+                }
             }
         }
     }
