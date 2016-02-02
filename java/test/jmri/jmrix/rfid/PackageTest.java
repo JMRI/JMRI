@@ -36,6 +36,8 @@ public class PackageTest extends TestCase {
 
         suite.addTest(jmri.jmrix.rfid.RfidStreamPortControllerTest.suite());
         suite.addTest(jmri.jmrix.rfid.RfidSystemConnectionMemoTest.suite());
+        suite.addTest(jmri.jmrix.rfid.RfidSensorTest.suite());
+        suite.addTest(jmri.jmrix.rfid.RfidReporterTest.suite());
         suite.addTest(jmri.jmrix.rfid.protocol.coreid.CoreIdRfidProtocolTest.suite());
         suite.addTest(jmri.jmrix.rfid.protocol.em18.Em18RfidProtocolTest.suite());
         suite.addTest(jmri.jmrix.rfid.protocol.olimex.OlimexRfidProtocolTest.suite());

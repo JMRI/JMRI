@@ -21,5 +21,9 @@ public class PerformActionModelFactory extends AbstractActionModelFactory {
     public PerformActionModel newModel() {
         return new PerformActionModel();
     }
-    
+
+    @Override
+    public String getEditModelMessage() {
+        return Bundle.getMessage("PerformActionModelFactory.editModel.message");
+    }    
 }

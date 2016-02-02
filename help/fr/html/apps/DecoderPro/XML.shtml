@@ -65,7 +65,7 @@ Pour rendre ces infos plus facile &#224; importer dans un tableur ou un autre pr
 
 La version d&#233;finitive des donn&#233;es est dans des fichiers XML. Ceux-ci peuvent &#234;tre obtenus aupr&#232;s de
 toute distribution jmri, ou via le Web &#224; l'adresse
-<A HREF="http://jmri.sf.net/xml"> http://jmri.sf.net/xml</a>.
+<A HREF="http://jmri.org/xml"> http://jmri.org/xml</a>.
     
 <!--#include virtual="/Footer" -->
 </body>

@@ -271,12 +271,12 @@ Pour quitter, soit ^ C &#224; partir de la ligne de commande ou utilisez la comm
 
 <H2>Utilisation de Python pour signal logique et automatisation</h2>
 
-Les classes "<A HREF="http://jmri.sourceforge.net/JavaDoc/doc/jmri/jmrit/automat/package-summary.html">Automate</a>"
+Les classes "<A HREF="http://jmri.org/JavaDoc/doc/jmri/jmrit/automat/package-summary.html">Automate</a>"
 existantes de JMRI fournissent des crochets pour l'automatisation du r&#233;seau utilisateur, y compris la signalisation.
 Mais ils exigent que vous &#233;criviez du code Java et de le compiler en fichiers .class.
 <P>
 La classe 
-<A HREF="http://jmri.sourceforge.net/JavaDoc/doc/jmri/jmrit/automat/JythonAutomaton.html">JythonAutomaton</a>
+<A HREF="http://jmri.org/JavaDoc/doc/jmri/jmrit/automat/JythonAutomaton.html">JythonAutomaton</a>
  est destin&#233;e &#224; faciliter la mise en page personnalis&#233;e du code d'automatisation, car elle vous permettra d'appeler un script Jython. Une fois qu'il est int&#233;gr&#233; dans le processus de configuration, vous serez capable de coder votre automatisation dans un ou plusieurs fichiers .Py, et ont le programme de d&#233;marrage pour les ex&#233;cuter au d&#233;marrage.
 
 <h2>Etapes suivantes</h2>

@@ -125,6 +125,14 @@ public class Automation implements java.beans.PropertyChangeListener {
         }
         return false;
     }
+    
+    /**
+     * Used to determine if automation is at the start of its sequence.
+     * @return true if the current action is the first action in the list.
+     */
+    public boolean isReadyToRun() {
+        return (getCurrentAutomationItem() == getItemsBySequenceList().get(0));
+    }
 
     public void run() {
         if (getSize() > 0) {
@@ -140,6 +148,10 @@ public class Automation implements java.beans.PropertyChangeListener {
         if (getCurrentAutomationItem() != null && getCurrentAutomationItem().getAction() != null) {
             if (getCurrentAutomationItem() == getItemsBySequenceList().get(0)) {
                 resetAutomationItems();
+            }
+            if (getCurrentAutomationItem().getAction().getClass().equals(HaltAction.class)
+                    && getCurrentAutomationItem().isActionRan()) {
+                setNextAutomationItem();
             }
             performAction(getCurrentAutomationItem());
         }
@@ -157,7 +169,7 @@ public class Automation implements java.beans.PropertyChangeListener {
                     item.getAction().doAction();
                 }
             });
-            runAction.setName("Run Action item: " + item.getId()); // NOI18N
+            runAction.setName("Run action item: " + item.getId()); // NOI18N
             runAction.start();
         }
     }
@@ -167,9 +179,6 @@ public class Automation implements java.beans.PropertyChangeListener {
         if (getCurrentAutomationItem() != null && getCurrentAutomationItem().getAction() != null) {
             setRunning(false);
             cancelActions();
-            if (getCurrentAutomationItem().getAction().getClass().equals(HaltAction.class)) {
-                setNextAutomationItem();
-            }
         }
     }
 
@@ -195,13 +204,6 @@ public class Automation implements java.beans.PropertyChangeListener {
             resetAutomationItems();
         }
     }
-
-    //    private void resetAutomationItems() {
-    //        for (AutomationItem item : getItemsBySequenceList()) {
-    //            item.setActionRan(false);
-    //            item.setActionSuccessful(false);
-    //        }
-    //    }
 
     private void resetAutomationItems() {
         resetAutomationItems(getCurrentAutomationItem());
@@ -502,6 +504,7 @@ public class Automation implements java.beans.PropertyChangeListener {
     }
     
     public void copyAutomation(Automation automation) {
+        automation.setComment(getComment());
         for (AutomationItem item : getItemsBySequenceList()) {
             item.copyItem(automation.addItem());
         }
@@ -598,21 +601,21 @@ public class Automation implements java.beans.PropertyChangeListener {
                 if (evt.getPropertyName().equals(Action.ACTION_COMPLETE_CHANGED_PROPERTY)) {
                     setNextAutomationItem();
                     if (isRunning()) {
-                        step();
+                        step(); // continue running by doing the next action
                     }
                 } else if (evt.getPropertyName().equals(Action.ACTION_HALT_CHANGED_PROPERTY)) {
                     stop();
                 }
             }
             if (evt.getPropertyName().equals(Action.ACTION_GOTO_CHANGED_PROPERTY)) {
-                // the old property is used for conditional branch
-                // if old = null then it is a non-conditional goto
+                // the old property is used to control branch
+                // if old = null, then it is a unconditional branch
                 // if old = true, branch if success
                 // if old = false, branch if failure
                 if (evt.getOldValue() == null || (boolean) evt.getOldValue() == isLastActionSuccessful()) {
                     _gotoAutomationItem = (AutomationItem) evt.getNewValue();
                     // pause thread in case goto is a loop
-                    // this allows the user to "Stop" the automation
+                    // this gives the user a chance to "Stop" the automation
                     synchronized (this) {
                         try {
                             wait(250);

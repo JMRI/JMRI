@@ -322,7 +322,7 @@ that need to happen before you test its operation, you also have to wait for tho
 </ul>
 <p>
 For example, if creating a thread based on
-<a href="http://jmri.sourceforge.net/JavaDoc/doc/jmri/jmrit/automat/AbstractAutomaton.html">AbstractAutomat</a>, 
+<a href="http://jmri.org/JavaDoc/doc/jmri/jmrit/automat/AbstractAutomaton.html">AbstractAutomat</a>, 
 you can check the start with:
 <pre><code>
     AbsractAutomat p = new MyThreadClass();<br/>

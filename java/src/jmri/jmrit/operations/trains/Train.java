@@ -2741,8 +2741,7 @@ public class Train implements java.beans.PropertyChangeListener {
         boolean old = _built;
         _built = built;
         if (old != built) {
-            setDirtyAndFirePropertyChange(BUILT_CHANGED_PROPERTY, old ? "true" : "false", built ? "true" // NOI18N
-            : "false"); // NOI18N
+            setDirtyAndFirePropertyChange(BUILT_CHANGED_PROPERTY, old, built); // NOI18N
         }
     }
 
@@ -3199,7 +3198,7 @@ public class Train implements java.beans.PropertyChangeListener {
         if (rl == null) {
             return false;
         }
-        log.info("Move train ({}) to location ({})", getName(), rl.getName());
+        log.debug("Move train ({}) to location ({})", getName(), rl.getName());
         if (getRoute() == null || getCurrentLocation() == null) {
             return false;
         }

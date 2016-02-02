@@ -42,11 +42,11 @@ LocoNet, the other computers running JMRI connect to the Server computer as Clie
 	<li>You can also have the server start automatically every time you start the
 	program by
 		<ul>
-		<li>Open the preferences from the Edit menu
-		<li>Check the box to "Show Advanced Preferences"
-		<li>Under "Do Action At Startup", click "Add Action"
-		<li>A list of possibilities will be shown.  Find and select "Start LocoNet Server".
-		<li>Save the preferences.
+                    <li>Open the Preferences from the Edit menu (on Windows or Linux) or from the Application menu (OS X)</li>
+                    <li>Under "Start Up", click "Add &#x25BE;"</li>
+                    <li>Select "Perform action..."</li>
+                    <li>Find and select "Start LocoNet Server" and click "OK"</li>
+                    <li>Save the preferences.</li>
 		</ul>
 	</ul>
 
@@ -61,7 +61,7 @@ connect to the layout via the LocoNet Server by:
 	<li>In the "Server hostname" box that appears, type the Internet name
 	or address of the computer that's running the LocoNet Server.
 	An internet address is something like 127.0.1.12; a name is something
-	like jmri.sf.net
+	like jmri.org
 	<li>Save the preferences and restart the program.
 	</ul>
 
