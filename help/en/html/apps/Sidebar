@@ -14,7 +14,6 @@
 			<li><a href="DispatcherPro/index.shtml">DispatcherPro&trade;</a></li>
 	    <li><a href="../../package/jmri/jmrit/operations/Operations.shtml">OperationsPro&trade;</a></li>
 			<li><a href="SoundPro/SoundPro.shtml">SoundPro</a></li>
-			<li><a href="SignalPro/index.shtml">SignalPro</a></li>
 			</ul>
     </dd>
 
@@ -106,9 +105,9 @@
 		<dt><h3 style="padding-left: 1em;">Supported Computers</h3></dt>
 		<dd> 
 		    <ul>
-        <li><a href="http://jmri.sourceforge.net/install/WindowsNew.shtml">Windows</a>
-        <li><a href="http://jmri.sourceforge.net/install/MacOSX.shtml">Mac OS X</a>
-        <li><a href="http://jmri.sourceforge.net/install/Linux.shtml">Linux</a>
+        <li><a href="http://jmri.org/install/WindowsNew.shtml">Windows</a>
+        <li><a href="http://jmri.org/install/MacOSX.shtml">Mac OS X</a>
+        <li><a href="http://jmri.org/install/Linux.shtml">Linux</a>
         <li><a href="../setup/index.shtml">JMRI Setup</a></li>
    		  </ul>
 		</dd>

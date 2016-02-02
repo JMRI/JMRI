@@ -64,7 +64,7 @@ in the <b>Panel</b> menu.
 <p>To fully configure a new Turnout, follow this procedure:</p>
 		<ol>
 		<li><p>Click <b>Tables</b> -&gt; <b>Turnouts</b> in the <b>Tools</b> menu to bring up
-		the Turnouts Table, and click the <b>Add...</b> button at the bottom of the 
+		the Turnout Table, and click the <b>Add...</b> button at the bottom of the 
 		pane to bring up the Add/Edit Turnout window.</p>
 		</li>
 		<li><p>From the <b>System</b> drop down list select the system to which the 
@@ -89,7 +89,7 @@ in the <b>Panel</b> menu.
 		warning message will be displayed in the notes area; you should then
 		correct the error and click <b>OK</b> again.</p>
 		</li>
-		<li><p>Back in the main Turnouts Table, you can now select
+		<li><p>Back in the main Turnout Table, you can now select
 		options for the Turnout and control it by clicking on its State button.
 		</li>
 		</ol>

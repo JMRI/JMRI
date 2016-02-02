@@ -8,7 +8,6 @@ import javax.swing.JTextField;
 import jmri.util.JmriJFrame;
 import junit.extensions.jfcunit.TestHelper;
 import junit.extensions.jfcunit.eventdata.MouseEventData;
-import junit.extensions.jfcunit.eventdata.StringEventData;
 import junit.extensions.jfcunit.finder.AbstractButtonFinder;
 import junit.extensions.jfcunit.finder.NamedComponentFinder;
 import junit.framework.Assert;
@@ -30,7 +29,8 @@ public class TurnoutTableWindowTest extends jmri.util.SwingTestCase {
         a.actionPerformed(new java.awt.event.ActionEvent(a, 1, ""));
 
         // Find new table window by name
-        JmriJFrame ft = JmriJFrame.getFrame("Turnout Table");
+        JmriJFrame ft = JmriJFrame.getFrame(Bundle.getMessage("TitleTurnoutTable"));
+        flushAWT();
 
         // Find the add button
         AbstractButtonFinder abfinder = new AbstractButtonFinder("Add...");

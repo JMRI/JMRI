@@ -157,7 +157,7 @@ click.
 <p>It's also possible to create a panel where the "track" lines
 change color to indicate whether the track is occupied. The procedure
 for doing that is described on a <a
-	href="http://jmri.sourceforge.net/apps/PanelPro/ColorTrack.html">separate
+	href="http://jmri.org/apps/PanelPro/ColorTrack.html">separate
 page</a>.</p>
 
 <h2>Manipulating Icons</h2>

@@ -1,9 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<?xml-stylesheet type="text/xsl" href="http://jmri.sourceforge.net/xml/XSLT/panelfile.xsl"?>
-<!DOCTYPE layout-config SYSTEM "http://jmri.sourceforge.net/xml/DTD/layout-config.dtd">
+<?xml-stylesheet href="/xml/XSLT/panelfile-2-9-6.xsl" type="text/xsl"?>
+<layout-config xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="http://jmri.org/xml/schema/layout-2-9-6.xsd">
 <!-- This is an example panel containing a LocoNet reporter        -->
 <!-- which shows a transponding response from transponding zone 12 -->
-<layout-config>
   <paneleditor class="jmri.jmrit.display.configurexml.PanelEditorXml" name="Test memory" x="20" y="22" height="282" width="238" editable="yes" positionable="yes" controlling="yes" hide="no">
     <reportericon reporter="LR12" x="10" y="10" class="jmri.jmrit.display.configurexml.ReporterIconXml"/>
   </paneleditor>

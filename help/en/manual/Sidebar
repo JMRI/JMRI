@@ -87,9 +87,9 @@
 <dt><h3>Supported Computers</h3></dt>
     <dd> 
     <ul>
-		<li><a href="http://jmri.sourceforge.net/install/WindowsNew.shtml">Windows</a>
-		<li><a href="http://jmri.sourceforge.net/install/MacOSX.shtml">Mac OS X</a>
-		<li><a href="http://jmri.sourceforge.net/install/Linux.shtml">Linux</a>
+		<li><a href="http://jmri.org/install/WindowsNew.shtml">Windows</a>
+		<li><a href="http://jmri.org/install/MacOSX.shtml">Mac OS X</a>
+		<li><a href="http://jmri.org/install/Linux.shtml">Linux</a>
 		<li><a href="../html/setup.shtml">Setup JMRI</a>
     </ul>
     </dd>  

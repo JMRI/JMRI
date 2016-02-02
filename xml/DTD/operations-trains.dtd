@@ -187,11 +187,16 @@
 
 <!ATTLIST item id					CDATA #REQUIRED>          
 <!ATTLIST item sequenceId			CDATA #IMPLIED>
+<!ATTLIST item name					CDATA #IMPLIED>
 <!ATTLIST item actionCode			CDATA #IMPLIED>
 <!ATTLIST item trainId				CDATA #IMPLIED>
 <!ATTLIST item routeLocationId		CDATA #IMPLIED>
 <!ATTLIST item automationId			CDATA #IMPLIED>
+<!ATTLIST item gotoAutomationId		CDATA #IMPLIED>
+<!ATTLIST item trainScheduleId		CDATA #IMPLIED>
 <!ATTLIST item haltFail				(true | false) "true">
+<!ATTLIST item actionRan			(true | false) "false">
+<!ATTLIST item actionSuccessful		(true | false) "false">
 
 <!ATTLIST messageOk message			CDATA #IMPLIED>
 <!ATTLIST messageFail message		CDATA #IMPLIED>

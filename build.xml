@@ -247,8 +247,7 @@
     <!-- Utility targets                                                               -->
     <!-- ============================================================================= -->
 
-    <target name="init"
-            description="create needed directories">
+    <target name="init"> <!-- create timestamp and needed directories, not for user use -->
         <!-- Create the time stamp properties -->
         <tstamp>
             <format property="TODAY" pattern="yyyyMMdd" timezone="GMT"/>
@@ -277,17 +276,14 @@
         </filterset>
     </target>
 
-    <target name="check-ant-requirements"
-            description="check build system requirements">
+    <target name="check-ant-requirements"> <!-- check build system requirements, not for user use -->
       <antversion property="ant-version-ok" atleast="1.8.0"/>
       <antversion property="ant-version-actual"/>
       <fail unless="ant-version-ok" message="Minimum ant version required is 1.8.0, this is ${ant-version-actual}"/>
     </target>
 
 
-    <target name="get-version-string"
-            description="Gets the current version string"
-            depends="compile">
+    <target name="get-version-string" depends="compile"><!-- compute the version string, not for user use -->
         <java classname="jmri.Version"
               dir="${basedir}"
               fork="yes"
@@ -309,7 +305,7 @@
     </target>
 
     <target name="realclean"
-            description="remove more files from a build"
+            description="remove all non-respository files from a build"
             depends="clean">
         <delete quiet="true">
             <fileset file="findbugs.xml"/>
@@ -341,9 +337,7 @@
     <!-- Program build targets                                                         -->
     <!-- ============================================================================= -->
 
-    <target name="copyfiles"
-            description="copy resource files"
-            depends="init">
+    <target name="copyfiles" depends="init"><!-- copy resource files, not for user use -->
         <!-- Copy top level resources to include in jar file -->
         <copy todir="${target}/resources/">
             <fileset dir="${resourcedir}" includes="*.gif"/>
@@ -360,9 +354,7 @@
     <!-- file from java/templates/jmri and copy it, expanded, to -->
     <!-- java/classes where the jmri.Version class can reference -->
     <!-- the values at run time -->
-    <target name="update-template-code"
-            description="create the substituted template java code"
-            depends="init">
+    <target name="update-template-code" depends="init"><!-- create the substituted template java code, not for user use -->
         <copy todir="${genjavasrcdir}" overwrite="true" >
             <filterset refid="release-information"/>
             <fileset dir="${templatedir}"/>
@@ -440,8 +432,7 @@
     <!-- this one target handles the compiler processing for all of the JDK based
          compilation - normal code, generated code and tests -->
 
-    <target name="-java-compile-internal"
-            description="internal target for compiling Java source from a specified directory">
+    <target name="-java-compile-internal"> <!-- Internal target for compiling Java source from a specified directory -->
         <javac compiler="modern"
                srcdir="${java.source.directory}"
                destdir="${target}"
@@ -458,8 +449,7 @@
 
 
     <target name="compile-generated-source"
-            description="compile all generated Java source"
-            depends="javacc, update-template-code">
+            depends="javacc, update-template-code"><!-- compile all generated Java source; internal target -->
         <!-- Compile the java code from ${genjavasrcdir} into ${target} -->
         <antcall target="-java-compile-internal">
             <param name="java.source.directory" value="${genjavasrcdir}"/>
@@ -512,8 +502,7 @@
     <!-- By default, we set them explicitly, so that new ones will show up -->
     <!-- See http://help.eclipse.org/galileo/index.jsp?topic=/org.eclipse.jdt.doc.isv/guide/jdt_api_compile.htm -->
     <!--                                        -->
-    <target name="-ecj-compile-internal"
-            description="internal target for compiling Java source from a specified directory using ECJ">
+    <target name="-ecj-compile-internal"> <!-- internal target for compiling Java source from a specified directory using ECJ -->
         <!-- Compile the java code from ${source} into ${target} -->
         <property name="build.compiler" value="org.eclipse.jdt.core.JDTCompilerAdapter"/>
         <javac srcdir="${java.source.directory}"
@@ -632,15 +621,22 @@
             </and>
         </condition>
      
+        <condition property="baseArch" value="armv6l">
+            <and>
+                <os family="unix" />
+                <equals arg1="${os.arch}" arg2='arm' />
+            </and>
+        </condition>
+     
         <property name="arch.lib.path" value="${libdir}/${baseOS}/${baseArch}:${libdir}/${baseOS}"/>
         <echo message="arch.lib.path ${arch.lib.path}"/>
     </target>
 
 
     <!-- the two targets in the depends are correct: only one will run, depending upon ${debugger} -->
-    <target name="-run-jmri-application"
-            description="run a given JMRI application, under the debugger if the debugger property is set"
-            depends="-normal-jmri-application,-debug-jmri-application">
+    
+    <!-- Internal target to run a given JMRI application, under the debugger if the debugger property is set -->
+    <target name="-run-jmri-application" depends="-normal-jmri-application,-debug-jmri-application">
         <echo>${application.classname} finished with return code ${application.returncode}</echo>
         <condition property="application.relaunch" value="yes">
             <equals arg1="${application.returncode}" arg2="100"/>
@@ -667,8 +663,7 @@
     -->
     <target name="-normal-jmri-application"
             unless="debugger"
-            depends="runtime-library-selection"
-            description="build and run a JMRI Java application">
+            depends="runtime-library-selection">
         <echo>Launch normally (no debugger support)</echo>
         <java classname="${application.classname}" dir="${basedir}" fork="yes" resultproperty="application.returncode">
             <classpath refid="project.class.path"/>
@@ -692,10 +687,10 @@
         </java>
     </target>
 
+	<!-- see comment just above -->
     <target name="-debug-jmri-application"
             if="debugger"
-            depends="runtime-library-selection"
-            description="build and run a JMRI Java application">
+            depends="runtime-library-selection">
         <echo>Launch with debugger support</echo>
         <java classname="${application.classname}" dir="${basedir}" fork="yes" resultproperty="application.returncode">
             <classpath refid="project.class.path"/>
@@ -878,9 +873,9 @@
     <!-- Note if modifying the profile target, please be sure to up date the -->
     <!-- NetBeans IDE profile target in this file -->
     <target name="profile"
-            description="build and run JmriDemo app with profiling"
+            description="build and run PanelPro app with profiling"
             depends="debug, runtime-library-selection">
-        <java classname="apps.JmriDemo.JMRIdemo"
+        <java classname="apps.PanelPro.PanelPro"
               dir="."
               fork="yes" >
             <classpath refid="project.class.path"/>
@@ -897,13 +892,13 @@
     <!-- can use other info defined in this file -->
     <!-- The profiler is not so well integrated into the IDE and requires -->
     <!-- the build target to be specified in the ANT build script -->
-    <target name="profile-nb" depends="debug, runtime-library-selection" description="build and run DecoderPro app with NetBeans profiling">
-        <property name="antargline" value="DecoderProConfig2.xml"/>
+    <target name="profile-nb" depends="debug, runtime-library-selection" description="build and run PanelPro app with NetBeans profiling">
+        <property name="antargline" value="PanelProConfig2.xml"/>
         <fail unless="netbeans.home">This target can only run inside the NetBeans IDE.</fail>
         <nbprofiledirect>
             <classpath refid="project.class.path"/>
         </nbprofiledirect>
-        <java classname="apps.DecoderPro.DecoderPro"
+        <java classname="apps.PanelPro.PanelPro"
             dir="."
                 fork="yes" >
             <classpath refid="project.class.path"/>
@@ -964,7 +959,7 @@
 
     <!-- check for non-ASCII characters in properties files -->
 
-    <target name="checknonascii">
+    <target name="checknonascii" description="check for non-ASCII characters in properties files (Linux only)">
         <exec executable="sh" outputproperty="checknonascii.files">
             <arg value="-c" />
             <arg value="grep -rIn -P '[^\x00-\x7f]' --include=*.properties java/src" />
@@ -980,7 +975,7 @@
     <!-- check for bad line ends, e.g. not ready to go into Git -->
     <!-- May not (probably will not) work on Windows -->
 
-    <target name="checklineends">
+    <target name="checklineends" description="check text files for proper LF line ends (Linux, Mac only)">
       <exec executable="sh" outputproperty="checklineeds.files">
         <arg value="-c" />
         <arg value="find xml help java/src java/test jython -not -type d -exec file '{}' ';' | grep CRLF" />
@@ -1625,7 +1620,6 @@
                 <exclude name="JMRI/PanelPro"/>
                 <exclude name="JMRI/SoundPro"/>
                 <exclude name="JMRI/LocoTools"/>
-                <exclude name="JMRI/JmriDemo"/>
                 <exclude name="JMRI/InstallTest"/>
                 <exclude name="JMRI/RXTXuninstall.sh"/>
                 <exclude name="JMRI/JmriFaceless"/>
@@ -1634,10 +1628,7 @@
                 <include name="JMRI/DecoderPro"/>
                 <include name="JMRI/PanelPro"/>
                 <include name="JMRI/SoundPro"/>
-                <include name="JMRI/SignalPro"/>
-                <include name="JMRI/DispatcherPro"/>
                 <include name="JMRI/LocoTools"/>
-                <include name="JMRI/JmriDemo"/>
                 <include name="JMRI/InstallTest"/>
                 <include name="JMRI/RXTXuninstall.sh"/>
                 <include name="JMRI/JmriFaceless"/>
@@ -1705,28 +1696,20 @@
 
     <!-- I dislike how much of these startup-scripts targets are shared.  Maybe they should be combined? -->
 
-    <target name="startup-scripts-linux"
-            description="Create all of the app specific startup scripts for Linux">
+    <target name="startup-scripts-linux"> <!-- Internal target to create all of the app specific startup scripts for Linux -->
         <make-startup-script script.name="DecoderPro"   script.class="apps.gui3.dp3.DecoderPro3"/>
         <make-startup-script script.name="PanelPro"      script.class="apps.PanelPro.PanelPro"/>
-        <make-startup-script script.name="DispatcherPro" script.class="apps.DispatcherPro.DispatcherPro"/>
-        <make-startup-script script.name="JMRIdemo"      script.class="apps.JmriDemo.JMRIdemo"/>
         <make-startup-script script.name="LocoTools"     script.class="apps.LocoTools.LocoTools"/>
-        <make-startup-script script.name="SignalPro"     script.class="apps.SignalPro"/>
         <make-startup-script script.name="SoundPro"      script.class="apps.SoundPro.SoundPro"/>
         <make-startup-script script.name="InstallTest"   script.class="apps.InstallTest.InstallTest"/>
         <make-startup-script script.name="JmriFaceless"   script.class="apps.JmriFaceless"/>
     </target>
 
-    <target name="startup-scripts-macosx"
-            description="Create all of the app specific startup scripts for Mac OS X">
+    <target name="startup-scripts-macosx"> <!-- Internal target to create all of the app specific startup scripts for Mac OS X -->
         <create-macosx-application-directory script.name="DecoderPro"  script.class="apps.gui3.dp3.DecoderPro3"
                                              script.icon="DecoderPro"/>
         <create-macosx-application-directory script.name="PanelPro"      script.class="apps.PanelPro.PanelPro"/>
-        <create-macosx-application-directory script.name="DispatcherPro" script.class="apps.DispatcherPro.DispatcherPro"/>
-        <create-macosx-application-directory script.name="JMRI Demo"     script.class="apps.JmriDemo.JMRIdemo"/>
         <create-macosx-application-directory script.name="Loco Tools"    script.class="apps.LocoTools.LocoTools"/>
-        <create-macosx-application-directory script.name="SignalPro"     script.class="apps.SignalPro"/>
         <create-macosx-application-directory script.name="SoundPro"      script.class="apps.SoundPro.SoundPro"/>
         <create-macosx-application-directory script.name="InstallTest"   script.class="apps.InstallTest.InstallTest"/>
     </target>

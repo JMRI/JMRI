@@ -169,6 +169,7 @@
       <xs:attribute name="red" type="xs:int" />
       <xs:attribute name="green" type="xs:int" />
       <xs:attribute name="blue" type="xs:int" />
+      <xs:attribute name="hasBackground" type="yesNoType" />
       <xs:attribute name="redBack" type="xs:int" />
       <xs:attribute name="greenBack" type="xs:int" />
       <xs:attribute name="blueBack" type="xs:int" />
@@ -512,6 +513,12 @@
         <xs:element name="toolTip" type="xs:string" minOccurs="0" maxOccurs="1">
             <xs:annotation><xs:documentation>Deprecated since JMRI 3.5.2</xs:documentation></xs:annotation>
         </xs:element>
+        <xs:element name="memorystate" minOccurs="0" maxOccurs="unbounded">
+          <xs:complexType>
+            <xs:attribute name="value" type="xs:string" use="required" />
+            <xs:attribute name="icon" type="xs:string" use="required" />
+          </xs:complexType>
+        </xs:element>
       </xs:sequence>
 
       <xs:attributeGroup ref="EditorCommonAttributesGroup" />
@@ -530,6 +537,7 @@
       <xs:attribute name="fixedHeight" type="xs:string" />
       <xs:attribute name="fixedWidth" type="xs:string" />
       <xs:attribute name="margin" type="xs:int" />
+      <xs:attribute name="hasBackground" type="yesNoType" />
       <xs:attribute name="redBack" type="xs:int" />
       <xs:attribute name="greenBack" type="xs:int" />
       <xs:attribute name="blueBack" type="xs:int" />

@@ -218,7 +218,7 @@ There are different ways to set up the logic for a single head at the
 throat of a 3-way turnout. The following procedure will work, and is fairly 
 straightforward. 
 <ul>
-<li><p>Define three virtual signal heads in the Signals Table, and enter them 
+<li><p>Define three virtual signal heads in the Signal Table, and enter them 
 as the <b>Throat - Continuing</b>, <b>Throat - Diverging A</b>, and 
 <b>Throat - Diverging B</b> heads, along with the real <b>Diverging A</b>, 
 <b>Continuing</b>, and <b>Diverging B</b> signal heads. Virtual signal heads are 
