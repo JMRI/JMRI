@@ -3797,12 +3797,17 @@
    <a name="Automation"></a>
    <h4>Automation</h4>
    This tool allows you to automate the building, moving, and termination of trains. It can also
-   automate the printing of manifests and switch lists. To create an new automation select
-   "Automation" from the
-   <a href="#TrainsTools">Trains Tools</a> menu, and then press the "Add Automation" button at the
-   bottom of the automations page. This will open a new window called "Add Automation". Give the
-   automation a name and an optional comment, and then press the "Add Automation" button to create
-   the automation. Each automation must have a unique name.
+   automate the printing of manifests and switch lists. This is an advanced feature for operations
+   and is recommended for users that have some experience with the program. If you're new to the
+   program it is recommended that you skip this section.
+
+   <p>
+    To create an new automation select "Automation" from the <a href="#TrainsTools">Trains Tools</a>
+    menu, and then press the "Add Automation" button at the bottom of the automations page. This
+    will open a new window called "Add Automation". Give the automation a name and an optional
+    comment, and then press the "Add Automation" button to create the automation. Each automation
+    must have a unique name.
+   </p>
 
    <p>To add your first action to the table, press the "Add" button in the lower left part of
     the window in a section labeled "Add Item". This should add a line to the table, with four pull
@@ -3851,56 +3856,61 @@
 
    <h5>Build Train</h5>
 
-   This action will build the specific train. You must select a train using the "Train" menu adjacent
-   to the action.
+   This action will build the train selected in the "Train" menu adjacent to the "Build Train"
+   column. This action will report "FAILED" if the train fails to build or if you haven't selected a
+   train.
 
    <h5>Build Train if Selected</h5>
 
    This action will build a train if the "Build" checkbox in the
-   <a href="#Trains">Trains</a> window is selected for the train. You must select a train using the
-   "Train" menu.
+   <a href="#Trains">Trains</a> window is selected for the train. You must choose a train using the
+   "Train" menu. This action will report "FAILED" if the "Build" checkbox isn't selected for the
+   train in the <a href="#Trains">Trains</a> window or the train fails to build.
 
    <h5>Preview or Print Train Manifest</h5>
 
-   This action's name depends on the "Preview" checkbox in the
+   This action's name and function depends on the "Preview" checkbox in the
    <a href="#Trains">Trains</a> window. If the "Preview" checkbox is selected, then the action
    becomes "Preview Train Manifest". If the checkbox is not selected, then the action becomes "Print
-   Train Manifest". You must select a train using the "Train" menu.
+   Train Manifest". You must choose a train using the "Train" menu.
 
    <h5>Run Excel for Train</h5>
 
    This action will cause an external Excel program to run for the selected train. See
    <a href="#SetupExcelProgram">Setup Excel Program (Manifest Creator)</a> for more information. You
-   must select a train using the "Train" menu.
+   must choose a train using the "Train" menu.  This action will fail if there isn't an Excel program
+   configured and enabled. Failure info messages are reported to the system console.
 
    <h5>Move Train</h5>
 
    This action will move the selected train to the next location in a train's route, or terminate a
    train that has arrived at its terminal. If a "Route Location" is selected the program will move
    the train to the location selected in the train's route. The action will fail if a train isn't
-   selected, or if the train isn't built, or if the train has already passed the location selected.
+   selected, or if the train isn't built, or if the train has already passed the location chosen.
 
    <h5>Wait for Train</h5>
 
    This action will wait for a train to build or move before executing the next action in the table.
-   If a location is selected in the "Route Location" menu, the program will wait until the train
-   arrives at the location selected. Note that if the train is already at the location selected,
+   If a location is selected from the "Route Location" menu, the program will wait until the train
+   arrives at the location selected. Note that if the train is already at the location chosen,
    that the program will wait until the next time the train arrives at that location. You must
-   select a train using the "Train" menu. If the "Build" checkbox for the train being waited on is
-   deselected, the program will cancel the wait and move to the next action in the table.
+   choose a train using the "Train" menu. If the "Build" checkbox for the train being waited on is
+   manually changed from selected to deselected while the "Wait for Train" action is running, the
+   program will cancel the wait and move to the next action in the table.
 
    <p>The program also allows you to wait for more than one train. Just enter each of the trains
     you want to wait for in consecutive rows. The program will then continue when all of the trains
-    either move or arrived at the locations selected.</p>
+    either move or arrive at the selected locations.</p>
 
    <h5>Wait for Train to Terminate</h5>
 
    This action will wait for a train to terminate before executing the next action in the table.
    Note that if the train is already terminated, that the program will wait until the next time the
-   train is terminated. You must select a train using the "Train" menu. If the "Build" checkbox for
-   the train being waited on is deselected, the program will cancel the wait and move to the next
-   action in the table. You can wait for more than one train to terminate by entering each train
-   you want to wait for in consecutive rows.
+   train is terminated. You must choose a train using the "Train" menu. If the "Build" checkbox for
+   the train being waited on is manually changed from selected to deselected while the wait is
+   running, the program will cancel the wait and move to the next action in the table. You can wait
+   for more than one train to terminate by entering each train you want to wait for in consecutive
+   rows.
 
    <h5>Activate Timetable</h5>
    
@@ -3914,22 +3924,34 @@
    select which day is active. Works the same as the "Apply" button in the
    <a href="#Timetable">Timetable</a> window.  There must be an active day for this action to work.
 
-   <h5>Select Train Build</h5>
+   <h5>Select Train (Build)</h5>
    
    Selects the "Build" checkbox for the specified train in the
    <a href="#Trains">Trains</a> window. One use is to control which trains are displayed in the "Trains" window.  See
-   the "Show All" checkbox in the <a href="#Trains">Trains</a> window. You must select a train using the "Train" menu.
+   the "Show All" checkbox in the <a href="#Trains">Trains</a> window. You must choose a train using the "Train" menu.
    
-   <h5>Preview, Print, or Update Switch Lists</h5>
+   <h5>Preview Switch List or Print Switch List</h5>
 
-   This action can preview, print, or update your switch lists depending on the "Preview" checkbox
-   in the
+   This action can preview or print switch lists for your locations depending on the "Preview"
+   checkbox in the
+   <a href="#Trains">Trains</a> window. Switch lists are created for the locations selected in the
+   <a href="#SwitchListByLocation">Switch Lists by Location</a> window.
+
+   <h5>Preview Switch List Changes, Print Switch List Changes, or Update Switch Lists</h5>
+
+   This action can either preview switch list changes, print switch list changes, or update your
+   switch lists depending on the "Preview" checkbox in the
    <a href="#Trains">Trains</a> window, and the "Real Time" checkbox in the
    <a href="#SwitchListByLocation">Switch Lists by Location</a> window. If the "Real Time" checkbox
-   isn't selected, the program is running in consolidation mode which allows you to build a switch
-   list using multiple trains. When the action is "Update Switch List" runs, switch lists are
-   updated with the work created by building new trains. The other two actions are "Preview Switch
-   Lists" and "Print Switch Lists" and these are available when running the program in real time.
+   isn't selected, the program is running in
+   <a href="#SwitchListOptions">consolidation mode</a> which allows you to build a switch list by
+   building and terminating multiple trains. When the action is "Update Switch List" runs, switch
+   lists are updated with the work created by building new trains. The other two actions are
+   "Preview Switch Lists Changes" and "Print Switch Lists Changes" and these are available when
+   running the program in real time, and allows you to preview or print switch lists that have new
+   work since the last time they were printed. Switch lists are previewed, printed, or updated
+   depending on the locations selected in the
+   <a href="#SwitchListByLocation">Switch Lists by Location</a> window.
 
    <h5>Wait for Switch List Change</h5>
 
@@ -3959,12 +3981,12 @@
    <h5>GOTO</h5>
    
    This action allows you to jump to any action in the table.  You must select the action id you want
-   to go to from the "Automation" menu.
+   to goto from the "Automation" menu.
    
    <h5>Halt</h5>
    
-   This action stops the execution of the automation.  The current pointer will jump to the next action
-   in the table allowing you to continue using the "Resume Automation" button if you wish.
+   This action stops the execution of the automation. You can use the "Step Automation" or "Resume Automation" button
+   to continue the automation by running the next action in the list.
    
    <h4>Automation Tools</h4>
    
@@ -3981,7 +4003,6 @@
    automation you selected.
    
    <p>This is the end of the automation section.</p>
-   
    
    <a name="PrintSavedTrainManifests"></a>
    <h4>Print or Preview Saved Train Manifests</h4>
