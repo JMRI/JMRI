@@ -40,6 +40,7 @@ public class NXWarrantTest extends jmri.util.SwingTestCase {
     
     @SuppressWarnings("unchecked") // For types from DialogFinder().findAll(..)
     public void testNXWarrant() throws Exception {
+
         // load and display
         File f = new File("java/test/jmri/jmrit/logix/valid/NXWarrantTest.xml");
         InstanceManager.getDefault(ConfigureManager.class).load(f);
@@ -58,7 +59,6 @@ public class NXWarrantTest extends jmri.util.SwingTestCase {
         nxFrame.init();
         nxFrame.setVisible(true);
         nxFrame._maxSpeedBox.setText("0.30");
-        connectThrottle();
         
         nxFrame._origin.blockBox.setText("OB0");
         nxFrame._destination.blockBox.setText("OB10");
@@ -101,14 +101,12 @@ public class NXWarrantTest extends jmri.util.SwingTestCase {
         sensor = _sensorMgr.getBySystemName("IS10");
         Assert.assertEquals("Train in last block", sensor, runtimes(sensor, route));
         
-        jmri.util.JUnitUtil.releaseThread(this);             
+        flushAWT();
+        flushAWT();   // let calm down before running abort
+                
         warrant.controlRunTrain(Warrant.ABORT);
-        jmri.util.JUnitUtil.releaseThread(this);            
-/*        while (warrant.getEngineer()!=null) {
-          jmri.util.JUnitUtil.releaseThread(this);             
-        }
-        Assert.assertEquals("Script done.", Bundle.getMessage("Idle"), warrant.getRunningMessage());
-*/
+        flushAWT();
+        
         // passed test - cleanup.  Do it here so failure leaves traces.
         TestHelper.disposeWindow(tableFrame, this);
         ControlPanelEditor panel = (ControlPanelEditor)jmri.util.JmriJFrame.getFrame("NXWarrantTest");
@@ -117,6 +115,9 @@ public class NXWarrantTest extends jmri.util.SwingTestCase {
         // Dialog has popped up, so handle that. First, locate it.
         List<JDialog> dialogList = new DialogFinder(null).findAll(panel);
         TestHelper.disposeWindow(dialogList.get(0), this);
+        
+        // confirm one message logged
+        jmri.util.JUnitAppender.assertWarnMessage("RosterSpeedProfile not found. Using default ThrottleFactor 0.75");
     }
     
     private javax.swing.AbstractButton pressButton(java.awt.Container frame, String text) {
@@ -146,16 +147,7 @@ public class NXWarrantTest extends jmri.util.SwingTestCase {
         }
         pressButton(pane, buttonLabel);
     }
-    
-    private static void connectThrottle() {
-        jmri.jmrix.nce.simulator.SimulatorAdapter nceSimulator = new jmri.jmrix.nce.simulator.SimulatorAdapter();
-        Assert.assertNotNull("Nce SimulatorAdapter", nceSimulator);
-        jmri.jmrix.nce.NceSystemConnectionMemo memo = nceSimulator.getSystemConnectionMemo();
-        nceSimulator.openPort("(None Selected)", "JMRI test");
-        nceSimulator.configure();
-        Assert.assertNotNull("NceSystemConnectionMemo", memo);        
-    }
-    
+        
     @SuppressWarnings("unchecked") // For types from DialogFinder().findAll(..)
     private static List<JRadioButton> getRadioButtons(java.awt.Container frame) {
         ComponentFinder finder = new ComponentFinder(JRadioButton.class);
@@ -170,12 +162,12 @@ public class NXWarrantTest extends jmri.util.SwingTestCase {
      * @throws Exception
      */
     private Sensor runtimes(Sensor sensor, String[] sensors) throws Exception {
-        jmri.util.JUnitUtil.releaseThread(this); 
+        flushAWT();
         for (int i=0; i<sensors.length; i++) {
-            jmri.util.JUnitUtil.releaseThread(this); 
+            flushAWT();
             Sensor sensorNext = _sensorMgr.getSensor(sensors[i]);
             sensorNext.setState(Sensor.ACTIVE);
-            jmri.util.JUnitUtil.releaseThread(this);            
+            flushAWT();           
             sensor.setState(Sensor.INACTIVE);
             sensor = sensorNext;
         }
@@ -189,6 +181,7 @@ public class NXWarrantTest extends jmri.util.SwingTestCase {
 
     // Main entry point
     static public void main(String[] args) {
+        apps.tests.Log4JFixture.initLogging();
         String[] testCaseName = {"-noloading", NXWarrantTest.class.getName()};
         junit.swingui.TestRunner.main(testCaseName);
     }
@@ -200,6 +193,7 @@ public class NXWarrantTest extends jmri.util.SwingTestCase {
 
     @Override
     protected void setUp() throws Exception {
+        apps.tests.Log4JFixture.setUp();
         super.setUp();
          // set the locale to US English
         Locale.setDefault(Locale.ENGLISH);
@@ -209,6 +203,8 @@ public class NXWarrantTest extends jmri.util.SwingTestCase {
         JUnitUtil.initInternalLightManager();
         JUnitUtil.initInternalSensorManager();
         JUnitUtil.initInternalSignalHeadManager();
+        JUnitUtil.initDebugPowerManager();
+        JUnitUtil.initDebugThrottleManager();
         JUnitUtil.initMemoryManager();
         JUnitUtil.initOBlockManager();
         JUnitUtil.initLogixManager();
@@ -220,6 +216,7 @@ public class NXWarrantTest extends jmri.util.SwingTestCase {
     protected void tearDown() throws Exception {
         JUnitUtil.resetInstanceManager();
         super.tearDown();
+        apps.tests.Log4JFixture.tearDown();
     }
 
 }

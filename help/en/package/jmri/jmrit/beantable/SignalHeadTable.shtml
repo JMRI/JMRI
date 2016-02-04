@@ -2,12 +2,12 @@
 <html lang="en">
 <head>
  <title>
-      JMRI: Signal Heads Table Help
+      JMRI: Signal Head Table Help
  </title>
     <meta http-equiv=Content-Type content="text/html; charset=iso-8859-1">
     <meta name="Author" content="Bob Jacobsen, Kevin Dickerson, Egbert Broerse">
 	  <meta name="Date.Modified" content="20140515"/>
-    <meta name="keywords" content="JMRI help Signal Heads Table">
+    <meta name="keywords" content="JMRI help Signal Head Table">
 
 <!--#include virtual="/Style" -->
 </head>
@@ -17,15 +17,15 @@
   <div class="nomenu" id="mBody">
     <div id="mainContent">
 
-<h1>The Signal Heads Table</h1>
+<h1>The Signal Head Table</h1>
 
 <a href="SignalHeads.png">
- <img src="SignalHeads.png" align="right" width="554" height="184" hspace="0" vspace="0" alt="Signal Heads Table">
+ <img src="SignalHeads.png" align="right" width="554" height="184" hspace="0" vspace="0" alt="Signal Head Table">
 </a>
 
 <p>All the Signal Heads that JMRI knows about can be referenced
-using the "Signal Heads Table" tool in the Tools menu of most JMRI programs. Signal Heads are also referenced to build Signal Masts in a later step.
-There are eight columns in the Signal Heads Table:
+using the "Signal Head Table" tool in the Tools menu of most JMRI programs. Signal Heads are also referenced to build Signal Masts in a later step.
+There are eight columns in the Signal Head Table:
 	<ol>
 	<li>The System Name is assigned to the Signal Head when it's created, 
 	and can't be changed later.
@@ -56,7 +56,7 @@ There are eight columns in the Signal Heads Table:
 	</ol>
 		
 <p>To define a new Signal Head, click on the 
-	"<a href="SignalAddEdit.shtml">Add.."</a> button at the bottom of the Signal Heads Table.
+	"<a href="SignalAddEdit.shtml">Add.."</a> button at the bottom of the Signal Head Table.
 It will prompt you for the Signal Head connection type and whatever information is needed.
 	
 <p> Use the Store item in the File menu to save signal information to disk. 

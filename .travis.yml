@@ -5,7 +5,7 @@ before_script:
   - "sh -e /etc/init.d/xvfb start"
   - sleep 3 # give xvfb some time to start
 
-script: travis_wait ant checklineends ci-test
+script: travis_wait ant checklineends checknonascii ci-test
 
 jdk:
   - oraclejdk8

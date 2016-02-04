@@ -51,7 +51,7 @@ be very convenient to temporarily change how a Sensor is set without having to
 run out to the layout and push a button or put a locomotive in a block.
 
 <p>
-Therefore, we let you locally change a Sensor via the Sensors Table (see below), or 
+Therefore, we let you locally change a Sensor via the Sensor Table (see below), or 
 by clicking on a sensor icon on a panel (See the 
 <a href="../apps/PanelPro/PanelPro.shtml">PanelPro pages</a> 
 for more info on Panels).
@@ -89,7 +89,7 @@ in the <b>Panel</b> menu.
 	<ol>
 	<li><p>Click the <b>Tools</b> -&gt; <b>Tables</b> -&gt; 
 	<a href="../../package/jmri/jmrit/beantable/SensorTable.shtml"><b>Sensors</b></a> menu to bring up
-	the Sensors Table pane, and click the 
+	the Sensor Table pane, and click the 
 	<a href="../../package/jmri/jmrit/beantable/SensorAddEdit.shtml"><b>Add...</b></a>
 	button at the bottom of the 
 	pane to bring up the Add/Edit Sensor window.</p>
@@ -121,7 +121,7 @@ in the <b>Panel</b> menu.
 	warning message will be displayed in the notes area; you should then
 	correct the error and click <b>OK</b> again.</p>
 	</li>
-	<li><p>Back in the main Sensors Table, you can then see the current
+	<li><p>Back in the main Sensor Table, you can then see the current
 	status of the Sensor.
 	</ol>
 

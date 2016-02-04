@@ -47,7 +47,7 @@ l'&#233;volution du volume du son du d&#233;codeur quand un train passe dans un 
 pour votre r&#233;seau en utilisant JMRI.</p>
 
 <p> La classe cl&#233; est
-<A    HREF="http://jmri.sourceforge.net/JavaDoc/doc/jmri/jmrit/automat/AbstractAutomaton.html">AbstractAutomaton</a>,
+<A    HREF="http://jmri.org/JavaDoc/doc/jmri/jmrit/automat/AbstractAutomaton.html">AbstractAutomaton</a>,
 qui fournit un  support de liaison  pour simplifier le code d'automatisation personnalis&#233;es.</p>
 
 <p>Aspect essentiel:  Ceux-ci  s'ex&#233;cutent dans un liens&#233;par&#233;, de sorte qu'ils peuvent attendre que quelque chose se produise pour que le reste du  programme continue.

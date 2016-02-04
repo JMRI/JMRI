@@ -135,7 +135,7 @@ public class JUnitAppender extends org.apache.log4j.ConsoleAppender {
             Assert.fail("Level mismatch when looking for ERROR message: \"" + msg + "\" found \"" + (String) evt.getMessage() + "\"");
         }
 
-        if (!((String) evt.getMessage()).equals(msg)) {
+        if (!compare((String) evt.getMessage(), msg)) {
             Assert.fail("Looking for ERROR message \"" + msg + "\" got \"" + evt.getMessage() + "\"");
         }
     }
@@ -166,11 +166,15 @@ public class JUnitAppender extends org.apache.log4j.ConsoleAppender {
             Assert.fail("Level mismatch when looking for WARN message: \"" + msg + "\" found \"" + (String) evt.getMessage() + "\"");
         }
 
-        if (!((String) evt.getMessage()).equals(msg)) {
+        if (!compare((String) evt.getMessage(), msg)) {
             Assert.fail("Looking for WARN message \"" + msg + "\" got \"" + evt.getMessage() + "\"");
         }
     }
 
+    protected static boolean compare(String s1, String s2) {
+        return org.apache.commons.lang3.StringUtils.deleteWhitespace(s1).equals(org.apache.commons.lang3.StringUtils.deleteWhitespace(s2));
+    }
+    
     public static JUnitAppender instance() {
         return JUnitAppender.instance;
     }

@@ -3,7 +3,7 @@
 # ATTENTION: Special version for HidRawEnvironmentPlugin of JInput
 # ATTENTION: Currently works in Windows only
 #
-# See <http://jmri.sf.net/help/en/html/hardware/raildriver/index.shtml>
+# See <http://jmri.org/help/en/html/hardware/raildriver/index.shtml>
 #
 # Author: Lionel Jeanson, copyright 2011
 # - Based on Joan Carranc� RailDriver modifications, copyright 2010

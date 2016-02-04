@@ -422,7 +422,7 @@ when there is no speed name the warrant continues at its current speed.
 <p>
 <h2>Using the Warrant List</h2>
 The <b>Warrant List</b> menu item opens the <b>Warrant Table</b>.  Each row is a
-warrant that has been created and saved or is a running NXWarrant.  The Warrants Table
+warrant that has been created and saved or is a running NXWarrant.  The Warrant Table
 reports the current status of each warrant in the list and can issue commands to
 Halt, Resume or Abort. Warrant routes can be allocated, i.e. reserved
 for that warrant, the turnouts for route can be set and when the warrant is run, its status

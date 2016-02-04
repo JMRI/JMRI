@@ -2,6 +2,8 @@
 package jmri.jmrit.operations.rollingstock.cars;
 
 import java.text.MessageFormat;
+import java.util.ArrayList;
+import java.util.List;
 import javax.swing.JOptionPane;
 import javax.swing.JTable;
 import jmri.util.com.sun.TableSorter;
@@ -72,6 +74,7 @@ public class CarsSetFrame extends CarSetFrame implements java.beans.PropertyChan
         ignoreFinalDestinationCheckBox.setSelected(ignoreFinalDestinationCheckBoxSelected);
         ignoreTrainCheckBox.setSelected(ignoreTrainCheckBoxSelected);
 
+        // first car in the list becomes the master
         int rows[] = _carsTable.getSelectedRows();
         if (rows.length > 0) {
             Car car = _carsTableModel.getCarAtIndex(_sorter.modelIndex(rows[0]));
@@ -113,29 +116,31 @@ public class CarsSetFrame extends CarSetFrame implements java.beans.PropertyChan
         ignoreFinalDestinationCheckBoxSelected = ignoreFinalDestinationCheckBox.isSelected();
         ignoreTrainCheckBoxSelected = ignoreTrainCheckBox.isSelected();
 
+        // need to get selected cars before they are modified their location in the table can change
+        List<Car> cars = new ArrayList<Car>();
         int rows[] = _carsTable.getSelectedRows();
+        for (int row : rows) {
+            Car car = _carsTableModel.getCarAtIndex(_sorter.modelIndex(row));
+            log.debug("Adding selected car {} to change list", car.toString());
+            cars.add(car);
+        }
         if (rows.length == 0) {
             JOptionPane.showMessageDialog(this, Bundle.getMessage("selectCars"), Bundle
                     .getMessage("carNoneSelected"), JOptionPane.WARNING_MESSAGE);
+            return false;
+        } else if (cars.get(0) != _car) {
+            log.debug("Default car isn't the first one selected");
+            if (JOptionPane.showConfirmDialog(this, MessageFormat.format(Bundle
+                    .getMessage("doYouWantToChange"), new Object[]{cars.get(0).toString()}), Bundle
+                    .getMessage("changeDefaultCar"), JOptionPane.YES_NO_OPTION) == JOptionPane.YES_OPTION) {
+                super.loadCar(cars.get(0)); // new default car
+                return false; // done, don't modify any of the cars selected
+            }
         }
 
         askKernelChange = true;
 
-        for (int i = 0; i < rows.length; i++) {
-            Car car = _carsTableModel.getCarAtIndex(_sorter.modelIndex(rows[i]));
-            if (_car == null) {
-                super.loadCar(car);
-                continue;
-            }
-            if (i == 0 && car != _car) {
-                log.debug("Default car isn't the first one selected");
-                if (JOptionPane.showConfirmDialog(this, MessageFormat.format(Bundle
-                        .getMessage("doYouWantToChange"), new Object[]{car.toString()}), Bundle
-                        .getMessage("changeDefaultCar"), JOptionPane.YES_NO_OPTION) == JOptionPane.YES_OPTION) {
-                    super.loadCar(car); // new default car
-                    break; // done, don't modify any of the cars selected
-                }
-            }
+        for (Car car : cars) {
             if (!super.change(car)) {
                 return false;
             } else if (car.getKernel() != null && !ignoreKernelCheckBox.isSelected()) {

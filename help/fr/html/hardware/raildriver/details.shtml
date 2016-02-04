@@ -32,7 +32,7 @@ JMRI: D&#233;tails R&#233;gulateurs RailDriver
 <img src="../../../images/bangdesk.gif" align="left">
 Cette page est en construction.
 Le support RailDriver JMRI a d'abord &#233;t&#233; disponible en
-<a href="http://jmri.sf.net/releasenotes/jmri2.1.7.shtml"> JMRI 2.1.7 </a>.
+<a href="http://jmri.org/releasenotes/jmri2.1.7.shtml"> JMRI 2.1.7 </a>.
 Il &#233;volue rapidement, alors revenez ici ou sur le
 <a href="http://groups.yahoo.com/group/jmriusers/">  jmriusers mailing liste </a>
 pour des changements.
@@ -47,7 +47,7 @@ href="RailDriver.gif">
 
 Alors que nous d&#233;veloppons le support RailDriver, il est principalement mis en oeuvre
 via un script
-<a href="http://jmri.sf.net/jython/RailDriver.py"> RailDriverThrottle.py </a>.
+<a href="http://jmri.org/jython/RailDriver.py"> RailDriverThrottle.py </a>.
  Ceci permet aux utilisateurs de l'&#233;diter facilement pour le personnaliser
 suivant leurs d&#233;sirs tandis que nous trions ce qui est g&#233;n&#233;ralement n&#233;cessaire.
 <p>

@@ -55,7 +55,7 @@
    <ul>
     <li><a href="#newUserAdvice">New User Advice</a></li>
     <li><a href="#demo">Operations Demo Files</a></li>
-    <li><a href="#Display">Display</a></li>
+    <li><a href="#Display">Display and Help</a></li>
     <li><a href="#MultipleLayouts">Multiple Layout Support</a></li>
     <li><a href="#QuickStartHelp">Quick Start Help</a></li>
     <li><a href="#Settings">Settings</a>
@@ -186,9 +186,11 @@
       <li><a href="#TrainsTools">Trains Tools</a>
        <ul>
         <li><a href="#ModifyTrainsByCarType">Modify Trains by Car Type</a></li>
+        <li><a href="#TrainShowCarTypesServiced">Show Car Types Serviced</a></li>
         <li><a href="#ChangeTrainDepartureTimes">Change Train Departure Times</a></li>
-        <li><a href="#TrainsTableColors">Trains Table Colors</a></li>
+        <li><a href="#TrainsTableColors">Train Row Color</a></li>
         <li><a href="#Timetable">Timetable</a></li>
+        <li><a href="#Automation">Automation</a></li>
         <li><a href="#SetupExcelProgram">Setup Excel Program (Manifest Creator)</a></li>
        </ul>
       <li><a href="#SwitcherService">Switcher Service</a></li>
@@ -255,7 +257,7 @@
     letting your crew, and not the program, decide which tracks to use when servicing a train.</p>
     
     <a name="Display"></a>
-    <h3>Display</h3>
+    <h3>Display and Help</h3>
     
     To adjust the display font size or appearance of the JMRI windows, select "Preferences.." found under
     "Edit" in the main window menu bar. A new window will appear with options to make layout connections, change
@@ -291,59 +293,81 @@
    In the top level menu for JMRI find the "Tools-&gt;Operations" menu. There are six items in this
    menu. We recommend that you start with
    <a href="#Settings">Settings</a> and work your way down to <a
-    href="#Trains">Trains</a>. Entering and requiring locomotives for your trains is completely
-   optional, and locomotives are not needed for the program to operate correctly. So if you want to
-   manually assign your locomotives to your trains, don't bother entering the locomotive data into
-   the program. We also recommend that when defining your locations that you first use
-   <a href="#Yards">yard</a> and <a href="#Sidings">spur</a> tracks, and try <a
-    href="#Staging">staging</a> and <a href="#Interchange">classification/interchange</a> tracks
-   when you're more comfortable with how the program operates.
+    href="#Trains">Trains</a>.
 
    <p>
-    If this is your first time using a computer generated car forwarding program, it is best to
-    start off small and gradually work your way through the various options and features available.
-    Start by entering only three or four <a href="#Locations">locations</a> with each location
-    having only two or three tracks. Keep things simple and don't modify the location and track
-    defaults by making them restrictive with regards to the type of cars or locomotives that they
-    will service. Also, the track and location default is to allow a train to service the location
-    and track by trains traveling in any direction. Don't change the defaults until you can
-    successfully build trains to your liking.
+    So let's start with the <a href="#Settings">Settings</a> window. Enter a name for your railroad
+    and decide of you're are going to use descriptive names or AAR codes for your rolling stock. You
+    can also optionally decide which direction or directions your railroad travels. Leave the rest
+    of the fields in the <a href="#Settings">Settings</a> window alone for now, you can always come
+    back and change them later. Now press the "Save" button in the lower right corner and close the
+    window by pressing the "X" in the upper right corner.
    </p>
 
    <p>
-    Now enter some <a href="#CarsEdit">cars</a> into the operations database, don't bother entering
-    locomotives for now. Be sure to place the cars on a track using either the <a href="#CarsEdit">edit
-     car</a> or the <a href="#CarsSet">set car</a> window. The program works best if you keep at least
-    50% of your tracks empty, so don't place too many cars on tracks until you understand how the
-    program builds trains.
+    Now open the <a href="#Locations">locations</a> window. This window will allow you to enter the
+    locations or stations that your trains will visit. If this is your first time using a computer
+    generated car forwarding program, it is best to start off small and gradually work your way
+    through the various options and features available. Start by entering only three or four <a
+     href="#AddLocation">locations</a> with each location having only two or three tracks. Keep things
+    simple and don't modify the location and track defaults by making them restrictive with regards
+    to the type of cars or locomotives that they will service. Also, the track and location default
+    is to allow a train to service the location and track by trains traveling in any direction.
+    Don't change the defaults until you can successfully build trains to your liking.
+    We also recommend that when creating your locations that you first use <a href="#Yards">yard</a>
+    and <a href="#Sidings">spur</a> tracks, and try <a href="#Staging">staging</a> and <a
+     href="#Interchange">classification/interchange</a> tracks when you're more comfortable with how
+    the program operates.
    </p>
 
    <p>
-    Now create a simple <a href="#Routes">route</a> for your first train to follow. Enter each of
-    your locations in the route, and keep it simple by only entering each of your locations once in
-    the route. For now don't modify the route in any way, just use the "Add Location" button.
+    The next window to try is the <a href="#Cars">cars</a> window. This is where you enter the
+    non-powered rolling stock for your railroad. Press the "Add" button at the bottom of the <a
+     href="#Cars">cars</a> window and the <a href="#CarsEdit">add car</a> window will allow you to
+    enter cars into your operations database. Be sure to place the cars on a track using the
+    "Location and Track" field found in either the <a href="#CarsEdit">add / edit car</a> or <a
+     href="#CarsSet">set car</a> window. The program works best if you keep at least 50% of your
+    tracks empty, so don't place too many cars on tracks until you understand how the program builds
+    trains.
    </p>
 
    <p>
-    Now you're ready to create your first train by pressing the <a
-     href="#TrainEdit">Add</a> button at the bottom left of the <a
-     href="#Trains">Trains</a> window. Be sure to select the route you created for your first train. Leave
-    all of the train checkboxes alone which means the train will service all car and locomotive
-    types. Leave the
-    <a href="#TrainRequires">Optional Train Requirements</a> for locomotives and caboose area alone
-    for now. Save the train, close the window, and return to the Trains window. Press the
-    <a href="#BuildingTrains">Build</a> button for the train. It should build. Now pressing the
-    "Print" or "Preview" button will produce a Manifest for your train. Review the Manifest and you
-    should see that the train serviced all car types. If you examine the
-    <a href="#Cars">Cars</a> window you can see that cars are now assigned to your train.
+    The <a href="#Locomotives">locomotives</a> window is similar to the <a href="#Cars">cars</a> window
+    and allows you to enter locomotives for your trains. Entering and requiring locomotives for your
+    trains is completely optional, and locomotives are not needed for the program to operate
+    correctly. So if you want to manually assign your locomotives to your trains, don't bother
+    entering the locomotive data into the program.
+   </p>
+
+   <p>
+    Now create a simple <a href="#Routes">route</a> for your first train to follow by pressing the
+    "Add" button in the <a href="#Routes">Routes</a> window. Enter each of your locations in the
+    route by selecting them from the menu and pressing the "Add Location" button in the <a
+     href="#AddRoute">Add Route</a> window. Try and keep it simple by only entering each of your
+    locations once in the route. For now don't modify the route in any way, later you can come back
+    and modify how many cars are serviced at each location by adjusting the move count.
+   </p>
+
+   <p>
+    Now you're ready to create your first train by pressing the <a href="#TrainEdit">Add</a> button
+    at the bottom left of the <a href="#Trains">Trains</a> window. Be sure to select the route you
+    created for your first train. Leave all of the train checkboxes alone which means the train will
+    service all car and locomotive types. Leave the <a href="#TrainRequires">Optional Train
+     Requirements</a> for locomotives and caboose area alone for now. Save the train, close the window,
+    and return to the Trains window. Press the <a href="#BuildingTrains">Build</a> button for the
+    train. It should build. Now pressing the "Print" or "Preview" button will produce a Manifest for
+    your train. Review the Manifest and you should see that the train serviced all car types. If you
+    examine the <a href="#Cars">Cars</a> window you can see that cars are now assigned to your
+    train.
    </p>
 
    <p>
     Now try limiting the car types that the train will service by modifying some of the car types
-    checkboxes in the <a href="#TrainEdit">Edit Train </a> window. Use the train <a href="#TrainReset">reset</a>
-    to release the cars that were assigned to the train so you can build it again without moving the
-    train. With the new car types restriction in place, you should see that the train will only pick
-    up and set out car types that are selected in the Edit Train window.
+    checkboxes in the <a href="#TrainEdit">Edit Train</a> window. Use the train <a
+     href="#TrainReset">reset</a> to release the cars that were assigned to the train so you can
+    build it again without moving the train. With the new car types restriction in place, you should
+    see that the train will only pick up and set out car types that are selected in the <a
+     href="#TrainEdit">Edit Train</a> window.
    </p>
 
    <p>
@@ -353,7 +377,7 @@
    </p>
 
    <p>
-    Press the <a href="#TrainMove">Move</a> button located in the <a href="#Trains">Trains </a>
+    Press the <a href="#TrainMove">Move</a> button located in the <a href="#Trains">Trains</a>
     window and you will see that the train's location will change to the next in the route. You will
     also see that the <a href="#Cars">Cars</a> window will update to show the cars serviced by the
     train moving to their new location as the trains moves from location to location.
@@ -371,11 +395,10 @@
 
    <p>
     If you want a caboose or car with FRED for your train, first configure some of the cars to be
-    the last car in the train by selecting the "Caboose" or "FRED"
-    <a href="#CabooseFredHazardous">checkbox</a> in the "Edit Car" window. Now change the optional
-    train requirements radio button to "Caboose" or "FRED" in the Edit Train window. Be sure that
-    the last location in your trains route has a track that will accept the caboose car or the train
-    will not build properly.
+    the last car in the train by selecting the "Caboose" or "FRED" <a href="#CabooseFredHazardous">checkbox</a>
+    in the "Edit Car" window. Now change the optional train requirements radio button to "Caboose"
+    or "FRED" in the Edit Train window. Be sure that the last location in your trains route has a
+    track that will accept the caboose car or the train will not build properly.
    </p>
 
    <p>
@@ -391,8 +414,8 @@
     You should now be well on your way with regards to JMRI operations. Each window in
     OperationsPro&trade; has a "Help" item on the menu bar which will direct you to the section in
     this document that covers that window's capabilities. Help is also available at the <a
-     href="http://groups.yahoo.com/group/jmriusers/">JMRI users</a> which is part of the
-    Yahoo groups. Another good source for help is a series of articles written by David Haynes <a
+     href="http://groups.yahoo.com/group/jmriusers/">JMRI users</a> which is part of the Yahoo
+    groups. Another good source for help is a series of articles written by David Haynes <a
      href="http://rcairgallery.com/stuff/Using-JMRI-Operations-A-Worked-Example.pdf">http://rcairgallery.com/stuff/Using-JMRI-Operations-A-Worked-Example.pdf</a>.
 
     And finally under the "Tools" item on the menu bar, you will find many useful functions, like
@@ -512,7 +535,8 @@
    <p>
     You can also automatically open any of the six operations windows when you start JMRI. From the
     main menu, under "Edit-&gt;Preferences" select <a
-     href="../../../apps/TabbedPreferences.shtml#Startup">Start Up</a>, and add an "Action".
+     href="../../../apps/TabbedPreferences.shtml#Startup">Start Up</a>, and add a "Perform action"
+     startup item for the desired window.
    </p>
 
    <h4>Close on Save</h4>
@@ -829,7 +853,10 @@
    If you want the OperationsPro&trade; to log your locomotive, car, or train movements to a file,
    select the appropriate checkboxes. The program will create a new directory called "logger" in the
    operations directory. For each day's session the program will create a new file (.csv) using the
-   day's date. Use a program like Microsoft Excel to view the file. 
+   day's date and the file will include all of the rolling stock movements for that day. Use a
+   program like Microsoft Excel to view the file. The program will also create and maintain a
+   separate file for each car's history and it can be also found in the "logger" directory in a
+   second directory called "rollingStock". 
    
    <a name="ManifestOptions"></a>
    <h3>Custom Manifests and Switch Lists</h3>
@@ -3235,7 +3262,7 @@
     train's route. The last two actions are "Terminate" and "Reset", pressing "Terminate" moves a
     built train to the last location in the train's route, and completes the work assigned to the
     train. "Reset" is used to release all cars assigned to a built train. You can only reset a train
-    that hasn't been moved.</p>
+    that hasn't moved.</p>
 
    <p>There are several checkboxes along the bottom of the Trains window. The "Show All" when
     selected shows all trains in your roster. When deselected, only trains that have the "Build"
@@ -3262,7 +3289,9 @@
 
    <p>One of the most important buttons is the "Save Builds" button. When pressed, the program
     saves all the files that have been modified by building and moving your trains. Pressing this
-    button allows you to shut down the program and resume exactly where you left the program.</p>
+    button allows you to shut down the program and resume exactly where you left the program. 
+    If you attempt to close the "Trains" window before pressing the "Save Builds" button, a warning
+    will pop up asking you to save your files.</p>
     
    <a name="TrainEdit"></a>
    <h3>Add or Edit Train</h3>
@@ -3734,6 +3763,11 @@
     the right of the checkbox, then select the type of car you want to modify, and press "Save" to
     have both car types serviced by the same trains.</p>
     
+   <a name="ShowCarTypesServiced"></a>
+   <h4>Show Car Types Serviced</h4>
+   
+   See <a href="#TrainShowCarTypesServiced">Show Car Types Serviced</a> train tool for more information.
+    
    <a name="ChangeTrainDepartureTimes"></a>
    <h4>Change Train Departure Times</h4>
 
@@ -3755,11 +3789,13 @@
    
    <a href="images/Timetable.png"><img src="images/Timetable.png" alt="Operations Train Timetable"></a>
 
-   <p>The Timetable window allows you to define which trains will run on any given day, and can be
-   found under the Trains-&gt;Tools. For each day of the week, select which trains you want to
-   build. Then select which day you want by selecting the appropriate radio button. Then press the
-   "Apply" button to update the Trains build checkboxes. Use the "Save" button to store any changes
-   you made to the timetable.</p>
+   <p>
+    The Timetable window allows you to define which trains will run on any given day, and can be
+    found under the Trains-&gt;Tools. For each day of the week, select which trains you want to
+    build. Then select which day you want by selecting the appropriate radio button. Then press the
+    "Apply" button to update the <a href="#Trains">Trains</a> "Build" checkboxes. Use the "Save"
+    button to store any changes you made to the timetable.
+   </p>
 
    <p>To change which day of the week is active, select the appropriate radio button and then
     press the "Activate" button. The day selected is then used by your schedules (Delivery and
@@ -3781,7 +3817,217 @@
     "Update Switch Lists" when you deselect the "Real Time" checkbox in the <a href="#SwitchList">Switch
      Lists by Location</a> window.
    </p>
+
+   <a name="Automation"></a>
+   <h4>Automation</h4>
+   This tool allows you to automate the building, moving, and termination of trains. It can also
+   automate the printing of manifests and switch lists. This is an advanced feature for operations
+   and is recommended for users that have some experience with the program. If you're new to the
+   program it is recommended that you skip this section.
+
+   <p>
+    To create an new automation select "Automation" from the <a href="#TrainsTools">Trains Tools</a>
+    menu, and then press the "Add Automation" button at the bottom of the automations page. This
+    will open a new window called "Add Automation". Give the automation a name and an optional
+    comment, and then press the "Add Automation" button to create the automation. Each automation
+    must have a unique name.
+   </p>
+
+   <p>To add your first action to the table, press the "Add" button in the lower left part of
+    the window in a section labeled "Add Item". This should add a line to the table, with four pull
+    down menus labeled "Action", "Train", "Route Location", and "Automation / Other". The three pull down
+    menus after "Action" are enabled if the action selected requires them. For example to build a
+    train, you need to select under the "Action" column "Build Train" and under the "Train" column
+    which train you want to build. If the desired action is to wait for a train to arrive at a
+    certain location in the train's route, you would select the action "Wait for Train", then the
+    name of the train from the "Train" menu, and then finally the location in the train's route from
+    the "Route Location" menu.</p>
+
+   <p>In addition to the four pull down menus, there's a button called "Add" under the column
+    called "Messages". This allows you to enter a message that will pop up when the action is
+    completed. Some actions have two messages, one will show when the action succeeds and another
+    when it fails. Once you enter text into the message areas and press "Okay", the "Add" button for
+    that action becomes "Edit". If it's possible for an action to fail, in addition to the extra
+    failure message text area, there's a checkbox labeled "Halt if action fails". When selected the
+    automation will halt in the event that the action fails to complete. The "Create Default
+    Messages" button will automatically create a success and failure message for you if the text
+    window is empty.</p>
     
+    <p>The messages can be useful when debugging your automation, or if you need to pause the automation
+    as it will wait until you press either the "Halt" or "OK" button.  If you press the "Halt" button,
+    you can continue from where you were in the automation by pressing the "Resume Automation" button.</p>
+
+   <p>If you want more than one action for your automation, press the "Add" button in the "Add
+    Item" area for each action you want to perform. The automation action sequence is from top to
+    bottom. You can if you wish add actions to the middle or end of your sequence by selecting the
+    "Middle or Before Selected Row" or "End" radio buttons respectively. If you select the "Middle
+    or Before Selected Row" radio button you can add an action to the middle of the table, or above
+    a row you've selected in the automation table.</p>
+
+   <p>Once you've entered all of the actions you want, you can either step through your actions
+    one at a time using the "Step Automation" button, or run through the entire action sequence
+    using the "Run Automation" button. To stop the action or sequence of actions, you can press the
+    "Stop Automation" button. The "Current" column shows where in the sequence the automation is
+    executing. Pressing the "Resume Automation" button continues running the actions from where the
+    current pointer is. The "Run Automation" button always restarts the automation at the top of the
+    table. If you want to manually reset the current pointer to the start of the table, find under
+    "Tools" "Reset Automation". Useful if you're stepping through the various actions and want to
+    begin at the start of the table.</p>
+
+   <p>And finally press the "Save Automation" button to make your menu selections valid and save
+    your automation to the OperationsTrainRoster.xml file. The next section provides the details for
+    some of the available actions.</p>
+
+   <h5>Build Train</h5>
+
+   This action will build the train selected in the "Train" menu adjacent to the "Build Train"
+   column. This action will report "FAILED" if the train fails to build or if you haven't selected a
+   train.
+
+   <h5>Build Train if Selected</h5>
+
+   This action will build a train if the "Build" checkbox in the
+   <a href="#Trains">Trains</a> window is selected for the train. You must choose a train using the
+   "Train" menu. This action will report "FAILED" if the "Build" checkbox isn't selected for the
+   train in the <a href="#Trains">Trains</a> window or the train fails to build.
+
+   <h5>Preview or Print Train Manifest</h5>
+
+   This action's name and function depends on the "Preview" checkbox in the
+   <a href="#Trains">Trains</a> window. If the "Preview" checkbox is selected, then the action
+   becomes "Preview Train Manifest". If the checkbox is not selected, then the action becomes "Print
+   Train Manifest". You must choose a train using the "Train" menu.
+
+   <h5>Run Excel for Train</h5>
+
+   This action will cause an external Excel program to run for the selected train. See
+   <a href="#SetupExcelProgram">Setup Excel Program (Manifest Creator)</a> for more information. You
+   must choose a train using the "Train" menu.  This action will fail if there isn't an Excel program
+   configured and enabled. Failure info messages are sent to the system console.
+
+   <h5>Move Train</h5>
+
+   This action will move the selected train to the next location in a train's route, or terminate a
+   train that has arrived at its terminal. If a "Route Location" is selected the program will move
+   the train to the location selected in the train's route. The action will fail if a train isn't
+   selected, or if the train isn't built, or if the train has already passed the location chosen.
+
+   <h5>Wait for Train</h5>
+
+   This action will wait for a train to build or move before executing the next action in the table.
+   If a location is selected from the "Route Location" menu, the program will wait until the train
+   arrives at the location selected. Note that if the train is already at the location chosen,
+   that the program will wait until the next time the train arrives at that location. You must
+   choose a train using the "Train" menu. If the "Build" checkbox for the train being waited on is
+   manually changed from selected to deselected while the "Wait for Train" action is running, the
+   program will cancel the wait and move to the next action in the table.
+
+   <p>The program also allows you to wait for more than one train. Just enter each of the trains
+    you want to wait for in consecutive rows. The program will then continue when all of the trains
+    either move or arrive at the selected locations.</p>
+
+   <h5>Wait for Train to Terminate</h5>
+
+   This action will wait for a train to terminate before executing the next action in the table.
+   Note that if the train is already terminated, that the program will wait until the next time the
+   train is terminated. You must choose a train using the "Train" menu. If the "Build" checkbox for
+   the train being waited on is manually changed from selected to deselected while the wait is
+   running, the program will cancel the wait and move to the next action in the table. You can wait
+   for more than one train to terminate by entering each train you want to wait for in consecutive
+   rows.
+
+   <h5>Activate Timetable</h5>
+   
+   This action will activate the selected day in the "Automation / Other" column. Works the same as the
+   "Activate" button in the <a href="#Timetable">Timetable</a> window.
+
+   <h5>Apply Timetable</h5>
+
+   This action will select trains using the checkboxes in the "Build" column from the
+   <a href="#Trains">Trains</a> window based on which day is active, see "Activate Timetable" above to
+   select which day is active. Works the same as the "Apply" button in the
+   <a href="#Timetable">Timetable</a> window.  There must be an active day for this action to work.
+
+   <h5>Select Train (Build)</h5>
+   
+   Selects the "Build" checkbox for the specified train in the
+   <a href="#Trains">Trains</a> window. One use is to control which trains are displayed in the "Trains" window.  See
+   the "Show All" checkbox in the <a href="#Trains">Trains</a> window. You must choose a train using the "Train" menu.
+   
+   <h5>Preview Switch List or Print Switch List</h5>
+
+   This action can preview or print switch lists for your locations depending on the "Preview"
+   checkbox in the
+   <a href="#Trains">Trains</a> window. Switch lists are created for the locations selected in the
+   <a href="#SwitchListByLocation">Switch Lists by Location</a> window.
+
+   <h5>Preview Switch List Changes, Print Switch List Changes, or Update Switch Lists</h5>
+
+   This action can either preview switch list changes, print switch list changes, or update your
+   switch lists depending on the "Preview" checkbox in the
+   <a href="#Trains">Trains</a> window, and the "Real Time" checkbox in the
+   <a href="#SwitchListByLocation">Switch Lists by Location</a> window. If the "Real Time" checkbox
+   isn't selected, the program is running in
+   <a href="#SwitchListOptions">consolidation mode</a> which allows you to build a switch list by
+   building and terminating multiple trains. When the action "Update Switch List" runs, switch
+   lists are updated with the work created by building new trains. The other two actions are
+   "Preview Switch Lists Changes" and "Print Switch Lists Changes" and these are available when
+   running the program in real time, and allows you to preview or print switch lists that have new
+   work since the last time they were printed. Switch lists are previewed, printed, or updated
+   depending on the locations selected in the
+   <a href="#SwitchListByLocation">Switch Lists by Location</a> window.
+
+   <h5>Wait for Switch List Change</h5>
+
+   This action will wait for new work for locations created by train builds. The locations monitored
+   are selected in the
+   <a href="#SwitchListByLocation">Switch Lists by Location</a> window. 
+   
+   <h5>Run Excel Switch List</h5>
+
+   This action works like the "Run" button in the
+   <a href="#SwitchListByLocation">Switch Lists by Location</a> window. It will create CSV files for
+   each of the locations selected in the window, and then run the configured Excel program to
+   generate custom printouts. See
+   <a href="#SetupExcelProgram">Setup Excel Program (Manifest Creator)</a> for more information.
+
+   <h5>Run Excel Switch List Changes</h5>
+
+   This action works like the "Run Changes" button in the
+   <a href="#SwitchListByLocation">Switch Lists by Location</a> window. There has to be new work at
+   one of the locations selected in the
+   <a href="#SwitchListByLocation">Switch Lists by Location</a> window for this action to succeed. 
+   
+   <h5>Run Automation</h5>
+   
+   This action can run any automation. You must select an automation from the "Automation" menu.
+   
+   <h5>GOTO</h5>
+   
+   This action allows you to jump to any action in the table.  You must select the action id you want
+   to goto from the "Automation" menu.
+   
+   <h5>Halt</h5>
+   
+   This action stops the execution of the automation. You can use the "Step Automation" or "Resume Automation" button
+   to continue the automation by running the next action in the list.
+   
+   <h4>Automation Tools</h4>
+   
+   <h5>Reset Automation</h5>
+   
+   This tool will stop a running automation, reset the current pointer to the start of the table, and clear
+   the status for all of the actions.
+   
+   <a name="CopyAutomation"></a>
+   <h5>Copy Automation</h5>
+   
+   This tool will allow you to make a copy of an automation. Enter a name for the new automation and select which
+   automation you want to copy.  Then press "Copy" and that should open a new automation window with a copy of the
+   automation you selected.
+   
+   <p>This is the end of the automation section.</p>
+   
    <a name="PrintSavedTrainManifests"></a>
    <h4>Print or Preview Saved Train Manifests</h4>
 
@@ -4158,7 +4404,7 @@
     to preview or print. Once you've determined which locations you want to print or preview, press
     the "Save" button to keep your selections.</p>
     
-       
+   <a name="SwitchListByLocation"></a>
    <img src="images/SwitchListMenu.png">
    
    <p>The "Print Switch List Changes" button will become active after you've printed out your switch lists, and
@@ -4335,7 +4581,7 @@
     <h2>Operations Web Access</h2>
     
     You can also access some of the OperationPro&trade; windows from a browser.  For more information see
-    <a href="http://jmri.sourceforge.net/help/en/html/web/">JMRI Web Access</a>.
+    <a href="http://jmri.org/help/en/html/web/">JMRI Web Access</a>.
 
    <p>End of OperationsPro&trade; help.</p>
    

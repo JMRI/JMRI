@@ -26,7 +26,7 @@ JMRI: Memory Variables Documentation
 A JMRI memory variable can hold any type of object.  It's really up to 
 user code what to put in them, and how to manipulate them.
 
-<h2>The Memory Variables Table</h2>
+<h2>The Memory Variable Table</h2>
 The 
 <a href="../../package/jmri/jmrit/beantable/MemoryTable.shtml">Memory Table</a>
 lets you see what memories have been defined, and what value
@@ -59,7 +59,7 @@ You can customize the appearance of text in the icon via its pop-up menu.
 You can also define a series of icons to be displayed in place of the 
 memories own content's if you'd like. For an example of how this is
 done, please see the 
-<a href="http://jmri.sourceforge.net/xml/samples/MemoryIconExample.xml">sample XML file</a>.
+<a href="http://jmri.org/xml/samples/MemoryIconExample.xml">sample XML file</a>.
 Use your browser's "view source" command, or download that file to see how it's done.
 Basically, the XML browser file has a "memoryicon" element that carries various information
 about where to put the icon, whether it can be selected, etc.

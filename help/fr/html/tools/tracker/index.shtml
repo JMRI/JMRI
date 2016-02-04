@@ -141,8 +141,8 @@ de prendre soin d'une section particuli&#232;re de la voie.
 <h3>  Information Technique</h3>
 Pour plus d'informations techniques, consultez les pages JavaDoc pour
 <ul>
-<li> <a href="http://jmri.sourceforge.net/JavaDoc/doc/jmri/Block.html">Canton </a> - repr&#233;sente chaque canton et ses connexions
-<li> <a href="http://jmri.sourceforge.net/JavaDoc/doc/jmri/Path.html"> chemin </a> - repr&#233;sente les connexions depuis et vers un autre canton, y compris
+<li> <a href="http://jmri.org/JavaDoc/doc/jmri/Block.html">Canton </a> - repr&#233;sente chaque canton et ses connexions
+<li> <a href="http://jmri.org/JavaDoc/doc/jmri/Path.html"> chemin </a> - repr&#233;sente les connexions depuis et vers un autre canton, y compris
 Les  param&#232;tres des aiguillages, etc, qui sont n&#233;cessaires.</ul>
     
 <!--#include virtual="/Footer" -->

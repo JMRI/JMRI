@@ -13,7 +13,7 @@
 <!-- FITNESS FOR A PARTICULAR PURPOSE.  See the GNU General Public License  -->
 <!-- for more details.                                                      -->
 
-<!ELEMENT operations-config (trains | options | schedules)*>
+<!ELEMENT operations-config (trains | options | schedules | automations)*>
 
 <!ELEMENT options (trainOptions | rowColorOptions | trainEditOptions | trainScheduleOptions | scripts | manifestCreator 
 | switchlistCreator)*>
@@ -172,4 +172,32 @@
 <!ATTLIST location id				CDATA #REQUIRED>          
 <!ATTLIST location name				CDATA #IMPLIED>
 
+<!ELEMENT automations (automation)*>
+<!ELEMENT automation (item)*>
+<!ELEMENT item (messages)*>
+<!ELEMENT messages (messageOk | messageFail)*>
+<!ELEMENT messageOk EMPTY>
+<!ELEMENT messageFail EMPTY>
+
+
+<!ATTLIST automation id				CDATA #REQUIRED>
+<!ATTLIST automation name			CDATA #REQUIRED>
+<!ATTLIST automation comment		CDATA #REQUIRED>
+<!ATTLIST automation currentItem	CDATA #REQUIRED>
+
+<!ATTLIST item id					CDATA #REQUIRED>          
+<!ATTLIST item sequenceId			CDATA #IMPLIED>
+<!ATTLIST item name					CDATA #IMPLIED>
+<!ATTLIST item actionCode			CDATA #IMPLIED>
+<!ATTLIST item trainId				CDATA #IMPLIED>
+<!ATTLIST item routeLocationId		CDATA #IMPLIED>
+<!ATTLIST item automationId			CDATA #IMPLIED>
+<!ATTLIST item gotoAutomationId		CDATA #IMPLIED>
+<!ATTLIST item trainScheduleId		CDATA #IMPLIED>
+<!ATTLIST item haltFail				(true | false) "true">
+<!ATTLIST item actionRan			(true | false) "false">
+<!ATTLIST item actionSuccessful		(true | false) "false">
+
+<!ATTLIST messageOk message			CDATA #IMPLIED>
+<!ATTLIST messageFail message		CDATA #IMPLIED>
 

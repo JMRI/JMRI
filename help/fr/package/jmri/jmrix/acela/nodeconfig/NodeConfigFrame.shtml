@@ -84,7 +84,7 @@ Il va ressembler à (à noter la seconde ligne "port de connexion"):
 <p>
 &lt?xml version="1.0" encoding="UTF-8"?>
 <p>
-&lt?xml-stylesheet type="text/xsl" href="http://jmri.sourceforge.net/xml/XSLT/panelfile.xsl"?>
+&lt?xml-stylesheet type="text/xsl" href="http://jmri.org/xml/XSLT/panelfile.xsl"?>
 <p>
 &lt!DOCTYPE layout-config SYSTEM "layout-config-2-1-7.dtd">
 <p>
@@ -121,7 +121,7 @@ Il ressemblera à (notez les lignes après le second "port de connexion" ligne):
 <p>
 &lt?xml version="1.0" encoding="UTF-8"?>
 <p>
-&lt?xml-stylesheet type="text/xsl" href="http://jmri.sourceforge.net/xml/XSLT/panelfile.xsl"?>
+&lt?xml-stylesheet type="text/xsl" href="http://jmri.org/xml/XSLT/panelfile.xsl"?>
 <p>
 &lt!DOCTYPE layout-config SYSTEM "layout-config-2-1-7.dtd">
 <p>

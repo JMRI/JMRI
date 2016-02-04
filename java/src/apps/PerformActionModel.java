@@ -12,7 +12,7 @@ package apps;
  *
  * @author	Bob Jacobsen Copyright 2003
  * @version $Revision$
- * @see PerformActionPanel
+ * @see apps.startup.PerformActionModelFactory
  */
 public class PerformActionModel extends AbstractActionModel {
 

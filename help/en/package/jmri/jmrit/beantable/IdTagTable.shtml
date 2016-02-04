@@ -2,11 +2,11 @@
 <html lang="en">
 <head>
  <title>
-      JMRI: Id Tag Table Help
+      JMRI: ID Tag Table Help
  </title>
     <meta http-equiv=Content-Type content="text/html; charset=iso-8859-1">
-    <meta content="Matthew Harris" name=Author>
-    <meta name="keywords" content="JMRI help Id Tag Table">
+    <meta content="Matthew Harris" name="Author">
+    <meta name="keywords" content="JMRI help ID Tag Table">
 
 <!--#include virtual="/Style" -->
 </head>
@@ -16,19 +16,19 @@
   <div class="nomenu" id="mBody">
     <div id="mainContent">
 
-<h1>The Id Tags Table</h1>
+<h1>The ID Tag Table</h1>
     
-You can use the Id Tags Table to look at the contents of JMRI IdTag objects.
+You can use the ID Tag Table to look at the contents of JMRI IdTag objects.
 <p>
 Note that you can sort the table by each of the columns; just click on a
 column heading.
 <p>
-To create a new Id Tag, click on the
+To create a new ID Tag, click on the
 "<a href="IdTagAddEdit.shtml">Add...</a>" button at the bottom left of the pane.
 
 <p>
-For more information on Id Tags, see the
-<a href="../../../../html/tools/IdTags.shtml">Id Tag help page</a>.
+For more information on ID Tags, see the
+<a href="../../../../html/tools/IdTags.shtml">ID Tag help page</a>.
 
 <!--#include virtual="/Footer" -->
  </div><!-- closes #mainContent-->

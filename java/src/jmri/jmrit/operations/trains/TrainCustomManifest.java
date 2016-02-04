@@ -2,7 +2,9 @@ package jmri.jmrit.operations.trains;
 
 import java.io.File;
 import java.io.IOException;
+import java.util.concurrent.TimeUnit;
 import jmri.jmrit.operations.OperationsManager;
+import jmri.jmrit.operations.setup.Control;
 import jmri.util.FileUtil;
 import jmri.util.SystemType;
 import org.jdom2.Attribute;
@@ -21,6 +23,8 @@ public class TrainCustomManifest {
     private static String csvNamesFileName = "CSVFilesFile.txt"; // NOI18N
 
     private static int fileCount = 0;
+    
+    private static Process process;
 
     public static String getFileName() {
         return mcAppName;
@@ -57,7 +61,7 @@ public class TrainCustomManifest {
         if (csvFile == null) {
             return;
         }
-
+        alive = true;
         File workingDir = OperationsManager.getInstance().getFile(getDirectoryName());
         File csvNamesFile = new File(workingDir, csvNamesFileName);
 
@@ -105,25 +109,57 @@ public class TrainCustomManifest {
         if (SystemType.isWindows()) {
             String cmd = "cmd /c start " + getFileName() + " " + mcAppArg; // NOI18N
             try {
-                Runtime.getRuntime().exec(cmd, null, OperationsManager.getInstance().getFile(getDirectoryName()));
+                process = Runtime.getRuntime().exec(cmd, null, OperationsManager.getInstance().getFile(getDirectoryName()));
             } catch (IOException e) {
                 e.printStackTrace();
             }
         } else {
             String cmd = "open " + getFileName() + " " + mcAppArg; // NOI18N
             try {
-                Runtime.getRuntime().exec(cmd, null, OperationsManager.getInstance().getFile(getDirectoryName()));
+                process = Runtime.getRuntime().exec(cmd, null, OperationsManager.getInstance().getFile(getDirectoryName()));
             } catch (IOException e) {
                 e.printStackTrace();
             }
         }
         return true;
-
     }
 
     public static boolean manifestCreatorFileExists() {
         File file = new File(OperationsManager.getInstance().getFile(getDirectoryName()), getFileName());
         return file.exists();
+    }
+    
+    public void checkProcessComplete() {
+        if (alive) {
+            int loopCount = Control.excelWaitTime; // number of seconds to wait
+            while (loopCount > 0 && alive) {
+                loopCount--;
+                synchronized (this) {
+                    try {
+                        wait(1000); // 1 sec
+                    } catch (InterruptedException e) {
+                        // TODO Auto-generated catch block
+                        e.printStackTrace();
+                    }
+                }
+            }
+        }
+    }
+    
+    public static boolean isProcessAlive() {
+        if (process != null) {
+            return process.isAlive();
+        } else {
+            return false;
+        }
+    }
+    
+    static boolean alive = false;
+    public static void waitForProcessToComplete() throws InterruptedException {
+        synchronized (process) {
+            process.waitFor(Control.excelWaitTime, TimeUnit.SECONDS);
+        }
+        alive = false;
     }
 
     public static void load(Element options) {

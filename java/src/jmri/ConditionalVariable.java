@@ -164,6 +164,39 @@ public class ConditionalVariable {
         }
     }
 
+    @Override
+    public boolean equals(Object obj) {
+        if (obj == this) {
+            return true;
+        }
+        if (obj == null) {
+            return false;
+        }
+
+        if (!(getClass() == obj.getClass())) {
+            return false;
+        } else {
+            ConditionalVariable c = (ConditionalVariable) obj;
+            if (c._opern != this._opern) return false;
+            if (c._type != this._type) return false;
+            if (c._num1 != this._num1) return false;
+            if (c._num2 != this._num2) return false;
+            
+            if (this._dataString != null && !this._dataString.equals(c._dataString)) return false;
+            if (c._dataString != null && !c._dataString.equals(this._dataString)) return false;
+
+            if (this._name != null && !this._name.equals(c._name)) return false;
+            if (c._name != null && !c._name.equals(this._name)) return false;
+        }
+        return true;
+    }
+
+    @Override
+    public int hashCode() {
+        int hash = _name.hashCode()+1000*_opern+1000+1000*_type+_num1+_num2+_dataString.hashCode();
+        return hash;
+    }
+
     public boolean isNegated() {
         return _not;
     }

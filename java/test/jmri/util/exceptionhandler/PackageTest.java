@@ -29,7 +29,6 @@ public class PackageTest extends TestCase {
         TestSuite suite = new TestSuite("jmri.util.exceptionhandler.PackageTest");   // no tests in this class itself
 
         suite.addTest(UncaughtExceptionHandlerTest.suite());
-        suite.addTest(AwtHandlerTest.suite());
 
         return suite;
     }

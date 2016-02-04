@@ -28,8 +28,8 @@ public class SprogProgrammer extends AbstractProgrammer implements SprogListener
     @Override
     public List<ProgrammingMode> getSupportedModes() {
         List<ProgrammingMode> ret = new ArrayList<ProgrammingMode>();
-        ret.add(DefaultProgrammerManager.PAGEMODE);
         ret.add(DefaultProgrammerManager.DIRECTBITMODE);
+        ret.add(DefaultProgrammerManager.PAGEMODE);
         return ret;
     }
 

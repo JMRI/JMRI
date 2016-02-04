@@ -22,7 +22,8 @@ public class PackageTest extends TestCase {
 
     // Main entry point
     static public void main(String[] args) {
-        String[] testCaseName = {PackageTest.class.getName()};
+        apps.tests.Log4JFixture.initLogging();
+        String[] testCaseName = {"-noloading", PackageTest.class.getName()};
         junit.swingui.TestRunner.main(testCaseName);
     }
 
@@ -31,10 +32,6 @@ public class PackageTest extends TestCase {
         TestSuite suite = new TestSuite("jmri.jmrix.roco.RocoTest");  // no tests in this class itself
         suite.addTest(new TestSuite(RocoConnectionTypeListTest.class));
         suite.addTest(jmri.jmrix.roco.z21.z21Test.suite());
-
-        if (!System.getProperty("jmri.headlesstest", "false").equals("true")) {
-            suite.addTest(jmri.jmrix.lenz.swing.SwingTest.suite());
-        }
 
         return suite;
     }

@@ -1,6 +1,7 @@
 // AppsLaunchPane.java
 package apps;
 
+import apps.startup.StartupActionModelUtil;
 import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.FlowLayout;
@@ -78,15 +79,15 @@ public abstract class AppsLaunchPane extends JPanel implements PropertyChangeLis
     }
 
     protected final void addToActionModel() {
-        apps.CreateButtonModel bm = InstanceManager.getDefault(apps.CreateButtonModel.class);
+        StartupActionModelUtil util = InstanceManager.getDefault(StartupActionModelUtil.class);
         ResourceBundle actionList = ResourceBundle.getBundle("apps.ActionListBundle");
         Enumeration<String> e = actionList.getKeys();
         while (e.hasMoreElements()) {
             String key = e.nextElement();
             try {
-                bm.addAction(key, actionList.getString(key));
+                util.addAction(key, actionList.getString(key));
             } catch (ClassNotFoundException ex) {
-                log.error("Did not find class {}", key);
+                log.error("Did not find class \"{}\"", key);
             }
         }
     }

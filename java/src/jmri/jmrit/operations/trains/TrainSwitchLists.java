@@ -43,7 +43,8 @@ public class TrainSwitchLists extends TrainCommon {
     String messageFormatText = ""; // the text being formated in case there's an exception
 
     /**
-     * builds a switch list for a location
+     * builds a switch list for a location.  If not running in real time,
+     * new train work is appended to the end of the file.
      *
      * @param location The Location needing a switch list
      */

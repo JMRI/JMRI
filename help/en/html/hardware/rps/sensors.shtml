@@ -23,7 +23,7 @@
 <em>Please note that JMRI's RPS support is being rapidly improved.
 This page refers to most recent JMRI test version. If you're using
 an RPS system, you should update to new test versions as they 
-<a href="http://jmri.sf.net/download/index.shtml">are announced</a>.</em>
+<a href="http://jmri.org/download/index.shtml">are announced</a>.</em>
 
 <p>The <a href="http://www.proto87.com/model-trains-DCC-decoders.html">RPS System</a>
 provides an absolute location of RPS-equipped rolling stock.
@@ -54,7 +54,7 @@ defining a square one unit on a side are:
  (1,1,0)
  (0,1,0)
 </pre></code>
-If you use the Sensors Table's "Add..." button
+If you use the Sensor Table's "Add..." button
 to create a Sensor with the System Name
 <code><pre>
   RS(0,0,0);(1,0,0);(1,1,0);(0,1,0)
