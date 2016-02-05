@@ -147,12 +147,13 @@ public class Automation implements java.beans.PropertyChangeListener {
     public void step() {
         log.debug("step automation ({})", getName());
         if (getCurrentAutomationItem() != null && getCurrentAutomationItem().getAction() != null) {
+            if (getCurrentAutomationItem().getAction().getClass().equals(HaltAction.class)
+                    && getCurrentAutomationItem().isActionRan() 
+                    && getCurrentAutomationItem() != getItemsBySequenceList().get(0)) {
+                setNextAutomationItem();
+            }
             if (getCurrentAutomationItem() == getItemsBySequenceList().get(0)) {
                 resetAutomationItems();
-            }
-            if (getCurrentAutomationItem().getAction().getClass().equals(HaltAction.class)
-                    && getCurrentAutomationItem().isActionRan()) {
-                setNextAutomationItem();
             }
             performAction(getCurrentAutomationItem());
         }
