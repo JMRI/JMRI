@@ -462,11 +462,12 @@ abstract class BeanEditAction extends AbstractAction {
 
         private static class KeyValueModel {
 
-            public KeyValueModel(Object k, Object v) {
+            public KeyValueModel(String k, Object v) {
                 key = k;
                 value = v;
             }
-            public Object key, value;
+            public String key;
+            public Object value;
         }
 
         public BeanPropertiesTableModel() {
@@ -478,9 +479,9 @@ abstract class BeanEditAction extends AbstractAction {
         public void setModel(NamedBean nb) {
             if (nb.getPropertyKeys() != null) {
                 attributes = new Vector<KeyValueModel>(nb.getPropertyKeys().size());
-                Iterator<Object> ite = nb.getPropertyKeys().iterator();
+                Iterator<String> ite = nb.getPropertyKeys().iterator();
                 while (ite.hasNext()) {
-                    Object key = ite.next();
+                    String key = ite.next();
                     KeyValueModel kv = new KeyValueModel(key, nb.getProperty(key));
                     attributes.add(kv);
                 }
@@ -503,7 +504,7 @@ abstract class BeanEditAction extends AbstractAction {
             }
             //remove undefined keys
             if (nb.getPropertyKeys() != null) {
-                Iterator<Object> ite = nb.getPropertyKeys().iterator();
+                Iterator<String> ite = nb.getPropertyKeys().iterator();
                 while (ite.hasNext()) {
                     if (!keyExist(ite.next())) // not very efficient algorithm!
                     {

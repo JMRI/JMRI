@@ -190,35 +190,35 @@ public abstract class AbstractNamedBean implements NamedBean, java.io.Serializab
         pcs = null;
     }
 
-    public void setProperty(Object key, Object value) {
+    public void setProperty(String key, Object value) {
         if (parameters == null) {
-            parameters = new HashMap<Object, Object>();
+            parameters = new HashMap<String, Object>();
         }
         parameters.put(key, value);
     }
 
-    public Object getProperty(Object key) {
+    public Object getProperty(String key) {
         if (parameters == null) {
             return null;
         }
         return parameters.get(key);
     }
 
-    public java.util.Set<Object> getPropertyKeys() {
+    public java.util.Set<String> getPropertyKeys() {
         if (parameters == null) {
             return null;
         }
         return parameters.keySet();
     }
 
-    public void removeProperty(Object key) {
+    public void removeProperty(String key) {
         if (parameters == null || key == null) {
             return;
         }
         parameters.remove(key);
     }
 
-    HashMap<Object, Object> parameters = null;
+    HashMap<String, Object> parameters = null;
 
     public void vetoableChange(java.beans.PropertyChangeEvent evt) throws java.beans.PropertyVetoException {
     }
