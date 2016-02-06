@@ -1,6 +1,6 @@
 The xml/ directory contains DTDs defining various model railroad constructs, XML files describing various types of model railroad equipment, and some sample XML files. 
 
-Currently, these are defined via DTDs. We intend to move to schema eventually, particularly to pick up validity checking.
+New files are defined via [XML Schema](http://jmri.org/help/en/html/doc/Technical/XmlSchema.shtml). Some older ones still use DTDs, and will eventually be migrated.
 
 Subdirectories:
 
