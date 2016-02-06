@@ -132,7 +132,7 @@ public class ConnectionsPreferencesPanel extends JTabbedPane implements Managing
 
         JPanel c = new JPanel();
         c.setLayout(new FlowLayout(FlowLayout.LEFT, 0, 0));
-        final JCheckBox disable = new JCheckBox("Disable Connection");
+        final JCheckBox disable = new JCheckBox(rb.getString("ButtonDisableConnection"));
         disable.setSelected(configPane.getDisabled());
         disable.addActionListener((ActionEvent e) -> {
             configPane.setDisabled(disable.isSelected());

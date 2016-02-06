@@ -246,7 +246,8 @@ public abstract class Apps3 extends AppsBase {
     }
 
     static protected JPanel splashDebugMsg() {
-        JLabel panelLabel = new JLabel("Press F8 to disable logixs");
+        JLabel panelLabel = new JLabel("Press F8 to disable Logixs");
+        // Could this be Localized? TODO
         panelLabel.setFont(panelLabel.getFont().deriveFont(9f));
         JPanel panel = new JPanel();
         panel.add(panelLabel);

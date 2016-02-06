@@ -58,9 +58,8 @@ public class TabbedPreferences extends AppConfigBase {
     }
 
     @Override
-    public String getTitle() {
-        return rb.getString("TitlePreferences");
-    }
+    public String getTitle() { return Bundle.getMessage("TitlePreferences"); }
+    // Preferences Window Title
 
     @Override
     public boolean isMultipleInstances() {
