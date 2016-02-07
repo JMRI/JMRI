@@ -34,7 +34,7 @@ public class Engineer extends Thread implements Runnable, java.beans.PropertyCha
     private boolean _runOnET = false;   // Execute commands on ET only - do not synch
     private boolean _setRunOnET= false; // Need to delay _runOnET from the block that set it
     private int     _syncIdx;           // block order index of current command
-    private DccThrottle _throttle;
+    protected DccThrottle _throttle;
     private Warrant _warrant;
     private Sensor  _waitSensor;
     private int     _sensorWaitState;
@@ -76,8 +76,8 @@ public class Engineer extends Thread implements Runnable, java.beans.PropertyCha
             }
             _runOnET = _setRunOnET;     // OK to set here
             long time = (long)(ts.getTime()*timeRatio);
-//            if (_debug) log.debug("Start Cmd #"+(_idxCurrentCommand)+" for block \""+ts.getBlockName()+
-//                  "\" currently in \""+_warrant.getBlockAt(cmdBlockIdx).getDisplayName()+"\". Warrant "+_warrant.getDisplayName());
+            if (_debug) log.debug("Start Cmd #"+(_idxCurrentCommand)+" for block \""+ts.getBlockName()+
+                  "\" currently in \""+_warrant.getBlockAt(cmdBlockIdx).getDisplayName()+"\". Warrant "+_warrant.getDisplayName());
             if (cmdBlockIdx < _warrant.getCurrentOrderIndex()) {
                 // Train advancing too fast, need to process commands more quickly,
                 // allowing half second for whistle toots etc.
@@ -308,7 +308,7 @@ public class Engineer extends Thread implements Runnable, java.beans.PropertyCha
         return throttleSpeed;
     }
 
-    private void setSpeed(float s) {
+    protected void setSpeed(float s) {
         float speed = s;
         float minIncre = _throttle.getSpeedIncrement();
         if (0.0f < speed && speed < minIncre) {    // don't let speed be less than 1 speed step

@@ -179,6 +179,16 @@ larger number in the <b>Max Number of Blocks in Route</b> box.
 <P>
 When you are satisfied with the route, select the <b>Record/Playback Script</b> tab.</p>
 
+<H2>Choosing the warrant type</H2>
+You may select whether your warrant shall be of the <A HREF="Warrant.shtml">normal kind</A> 
+(by selecting "Use throttle commands") or it shall be a <A HREF="SCWarrant.shtml">signal controlled warrant</A> 
+(by selecting "Use signals").
+<p>
+For signal controlled warrants, you can select whether your train shall move backwards or forwards 
+and how many milliseconds it shall run into the destination block.
+<p>
+Standard warrants are somewhat more flexible, i.e. you can determine which throttle commands that 
+shall be executed as the train moves along its route. This is described further in the following.
 <H2>Recording and Editing a Script</H2>
 Recording a script is done from the <b>Record/Playback Script</b> tab.
 Radio buttons on this tab allow you to select either the <b>Route Table</b> or the <b>Throttle Command

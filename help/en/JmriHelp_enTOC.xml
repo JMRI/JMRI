@@ -409,8 +409,20 @@
    <tocitem text="Turnout Control " target="package.jmri.jmrit.simpleturnoutctrl.SimpleTurnoutCtrl"/>
 
   </tocitem>
-  <tocitem text="Warrants " target="package.jmri.jmrit.logix.Warrant"/>
-
+  <tocitem text="Warrants " target="package.jmri.jmrit.logix.Warrant">
+   <tocitem text="The Warrant List " target="package.jmri.jmrit.logix.WarrantTable"/>
+   
+   <tocitem text="Creating and Editing Warrants " target="package.jmri.jmrit.logix.CreateEditWarrant"/>
+   
+   <tocitem text="NXWarrants " target="package.jmri.jmrit.logix.NXWarrant"/>
+   
+   <tocitem text="Signal Controlled Warrants " target="package.jmri.jmrit.logix.SCWarrant"/>
+   
+   <tocitem text="The Occupancy Block Tables " target="package.jmri.jmrit.logix.OBlockTable"/>
+   
+   <tocitem text="Creating and Editing OBlocks, Portals and OPaths " target="package.jmri.jmrit.logix.OBlockEdit"/>
+   
+  </tocitem>
   <tocitem text="USS CTC Tools " target="html.tools.uss.index">
    <tocitem text="Turnout Lever " target="package.jmri.jmrit.ussctc.TurnoutLeverFrame"/>
 

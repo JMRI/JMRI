@@ -405,6 +405,10 @@ public class OBlock extends jmri.Block implements java.beans.PropertyChangeListe
     protected Warrant getWarrant() {
         return _warrant;
     }
+    
+    public boolean isAllocatedTo(Warrant warrant) {
+        return (warrant == _warrant);
+    }
 
     public String getAllocatedPathName() {
         return _pathName;
