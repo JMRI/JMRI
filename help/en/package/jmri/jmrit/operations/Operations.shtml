@@ -1800,10 +1800,10 @@
     alternate track. The program when it finds a spur full will try to send cars to the alternate
     track. If you don't specify an alternate, the program will try to send cars with a custom load
     or final destination to a yard at that location. The alternate track feature can be used to
-    create an "Off Spot" track for your cars. See <a href="#AlternateTrack">Alternate Track</a>
-    below for more details.
+    create an "Off Spot" track for your cars. See <a href="#AlternateTrack">Alternate Track or
+     "Off Spot"</a> below for more details.
    </p>
-   
+
    <h4>Sequential or Match Mode</h4>
 
    <p>Schedules can operate in one of two modes, sequential as described above, or in match
