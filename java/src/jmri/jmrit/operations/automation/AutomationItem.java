@@ -229,7 +229,7 @@ public class AutomationItem implements java.beans.PropertyChangeListener {
             oldItem = automation.getItemById(_gotoAutomationItemId);
             _gotoAutomationItemId = automationItem.getId();
         } else {
-            _automationId = NONE;
+            _gotoAutomationItemId = NONE;
         }
         if (oldItem != automationItem) {
             setDirtyAndFirePropertyChange("AutomationItemAutomationChange", oldItem, automationItem); // NOI18N
@@ -359,20 +359,20 @@ public class AutomationItem implements java.beans.PropertyChangeListener {
     }
 
     /**
-     * Copies this AutomationItem parameters into item.
-     * @param item
+     * Copies item.
+     * @param The item to copy.
      */
     public void copyItem(AutomationItem item) {
-        item.setAction(getActionByCode(getActionCode())); // must create a new action for each item
-        item.setAutomationToRun(getAutomationToRun());
-        item.setGotoAutomationItem(getGotoAutomationItem()); //needs an adjustment to work properly
-        item.setRouteLocation(getRouteLocation());
-        item.setSequenceId(getSequenceId());
-        item.setTrain(getTrain());
-        item.setTrainSchedule(getTrainSchedule());
-        item.setMessage(getMessage());
-        item.setMessageFail(getMessageFail());
-        item.setHaltFailureEnabled(isHaltFailureEnabled());
+        setAction(item.getActionByCode(item.getActionCode())); // must create a new action for each item
+        setAutomationToRun(item.getAutomationToRun());
+        setGotoAutomationItem(item.getGotoAutomationItem()); //needs an adjustment to work properly
+        setTrain(item.getTrain()); // must set train before route location
+        setRouteLocation(item.getRouteLocation());
+        setSequenceId(item.getSequenceId());
+        setTrainSchedule(item.getTrainSchedule());
+        setMessage(item.getMessage());
+        setMessageFail(item.getMessageFail());
+        setHaltFailureEnabled(item.isHaltFailureEnabled());
     }
 
     /**
