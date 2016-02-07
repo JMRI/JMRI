@@ -661,7 +661,6 @@ public class TrainBuilder extends TrainCommon {
             addLine(_buildReport, ONE, BLANK_LINE);
         }
 
-        _train.setBuilt(true);
         addLine(_buildReport, FIVE, MessageFormat.format(Bundle.getMessage("buildTime"), new Object[]{
                 _train.getName(), new Date().getTime() - startTime.getTime()}));
         _buildReport.flush();
@@ -678,6 +677,7 @@ public class TrainBuilder extends TrainCommon {
         if (Setup.isGenerateCsvManifestEnabled()) {
             new TrainCsvManifest(_train);
         }
+        _train.setBuilt(true);
         // now create and place train icon
         _train.moveTrainIcon(_train.getTrainDepartsRouteLocation());
         log.debug("Done building train ({})", _train.getName());
