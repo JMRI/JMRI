@@ -369,7 +369,10 @@ public final class XNetConstants {
     public final static int LI101_REQUEST_BAUD = 0x02;
 
     /* The following are error messages sent by the LIUSB (version 3.6) */
-    public final static int LIUSB_WRONG_SYNTAX = 0x0A;
+    public final static int LIUSB_TIMESLOT_RESTORED = 0x07;
+    public final static int LIUSB_REQUEST_SENT_WHILE_NO_TIMESLOT = 0x08;
+    public final static int LIUSB_BAD_DATA_IN_REQUEST = 0x09;
+    public final static int LIUSB_RETRANSMIT_REQUEST = 0x0A;
 
 }
 

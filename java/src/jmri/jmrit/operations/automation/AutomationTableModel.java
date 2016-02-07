@@ -18,6 +18,7 @@ import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 import javax.swing.JTable;
 import javax.swing.JTextArea;
+import javax.swing.ListSelectionModel;
 import javax.swing.table.TableCellEditor;
 import javax.swing.table.TableColumnModel;
 import jmri.jmrit.operations.automation.actions.Action;
@@ -112,6 +113,8 @@ public class AutomationTableModel extends javax.swing.table.AbstractTableModel i
         updateList();
         // have to shut off autoResizeMode to get horizontal scroll to work (JavaSwing p 541)
         table.setAutoResizeMode(JTable.AUTO_RESIZE_OFF);
+        // only allow one row at a time to be selected
+        table.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
     }
 
     private void setPreferredWidths(JTable table) {

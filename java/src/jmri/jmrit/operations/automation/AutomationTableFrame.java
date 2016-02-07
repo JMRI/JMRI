@@ -33,9 +33,9 @@ import org.slf4j.LoggerFactory;
  */
 public class AutomationTableFrame extends OperationsFrame implements java.beans.PropertyChangeListener {
 
-    AutomationTableModel automationTableModel = new AutomationTableModel();
-    JTable automationTable = new JTable(automationTableModel);
-    JScrollPane automationPane;
+    AutomationTableModel _automationTableModel = new AutomationTableModel();
+    JTable _automationTable = new JTable(_automationTableModel);
+    JScrollPane _automationPane;
 
     AutomationManager automationManager;
 
@@ -84,10 +84,10 @@ public class AutomationTableFrame extends OperationsFrame implements java.beans.
         resumeActionButton.setToolTipText(Bundle.getMessage("TipResumeAutomation"));
 
         // Set up the jtable in a Scroll Pane..
-        automationPane = new JScrollPane(automationTable);
-        automationPane.setVerticalScrollBarPolicy(ScrollPaneConstants.VERTICAL_SCROLLBAR_AS_NEEDED);
+        _automationPane = new JScrollPane(_automationTable);
+        _automationPane.setVerticalScrollBarPolicy(ScrollPaneConstants.VERTICAL_SCROLLBAR_AS_NEEDED);
 
-        automationTableModel.initTable(this, automationTable, automation);
+        _automationTableModel.initTable(this, _automationTable, automation);
         if (_automation != null) {
             automationNameTextField.setText(_automation.getName());
             commentTextField.setText(_automation.getComment());
@@ -165,7 +165,7 @@ public class AutomationTableFrame extends OperationsFrame implements java.beans.
         addItem(pB, saveAutomationButton, 3, 0);
 
         getContentPane().add(p1Pane);
-        getContentPane().add(automationPane);
+        getContentPane().add(_automationPane);
         getContentPane().add(p3);
         getContentPane().add(pControl);
         getContentPane().add(pB);
@@ -267,10 +267,18 @@ public class AutomationTableFrame extends OperationsFrame implements java.beans.
         // add item to this automation
         if (addActionAtTopRadioButton.isSelected()) {
             _automation.addItem(0);
-        } else if (addActionAtMiddleRadioButton.isSelected()) {
-            _automation.addItem(_automation.getSize()/2);
-        } else {
+        } else if (addActionAtBottomRadioButton.isSelected()) {
             _automation.addItem();
+        } else {
+            // middle radio button selected
+            if (_automationTable.getSelectedRow() >= 0) {
+                int row = _automationTable.getSelectedRow();
+                _automation.addItem(row);
+                // we need to reselect the table since the content has changed
+                _automationTable.getSelectionModel().setSelectionInterval(row, row);
+            } else {
+                _automation.addItem(_automation.getSize() / 2);
+            }
         }
     }
 
@@ -279,7 +287,7 @@ public class AutomationTableFrame extends OperationsFrame implements java.beans.
             return;
         }
         Automation automation = automationManager.newAutomation(automationNameTextField.getText());
-        automationTableModel.initTable(this, automationTable, automation);
+        _automationTableModel.initTable(this, _automationTable, automation);
         _automation = automation;
         _automation.addPropertyChangeListener(this);
         // enable checkboxes
@@ -294,16 +302,15 @@ public class AutomationTableFrame extends OperationsFrame implements java.beans.
         _automation.setName(automationNameTextField.getText());
         _automation.setComment(commentTextField.getText());
 
-        saveTableDetails(automationTable);
+        saveTableDetails(_automationTable);
         // save automation file
         OperationsXml.save();
     }
-    
+
     private void stopCellEditing() {
-        if (automationTable.isEditing()) {
+        if (_automationTable.isEditing()) {
             log.debug("automation table edit true");
-            automationTable.getCellEditor().stopCellEditing();
-            automationTable.clearSelection();
+            _automationTable.getCellEditor().stopCellEditing();
         }
     }
 
@@ -343,7 +350,7 @@ public class AutomationTableFrame extends OperationsFrame implements java.beans.
         addActionAtBottomRadioButton.setEnabled(enabled);
         saveAutomationButton.setEnabled(enabled);
         deleteAutomationButton.setEnabled(enabled);
-        automationTable.setEnabled(enabled);
+        _automationTable.setEnabled(enabled);
         // the inverse!
         addAutomationButton.setEnabled(!enabled);
     }
@@ -360,7 +367,7 @@ public class AutomationTableFrame extends OperationsFrame implements java.beans.
         if (_automation != null) {
             _automation.removePropertyChangeListener(this);
         }
-        automationTableModel.dispose();
+        _automationTableModel.dispose();
         super.dispose();
     }
 

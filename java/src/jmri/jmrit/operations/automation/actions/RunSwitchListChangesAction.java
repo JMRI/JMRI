@@ -31,9 +31,8 @@ public class RunSwitchListChangesAction extends Action {
     public void doAction() {
         if (getAutomationItem() != null) {
             boolean isChanged = true;
-            // TODO should we check this?
             if (!Setup.isGenerateCsvSwitchListEnabled()) {
-                log.info("Generate CSV Switch List isn't enabled!");
+                log.warn("Generate CSV Switch List isn't enabled!");
                 finishAction(false);
                 return;
             }
