@@ -6,7 +6,10 @@ before_script:
   - sleep 3 # give xvfb some time to start
 
 script: 
-  - travis_wait ant ci-test checklineends checknonascii 
+#  - travis_wait ant ci-test checklineends checknonascii 
+  - ant ci-test
+  - ant checklineends
+  - ant checknonascii 
 
 after_script:
   - "head -120 /home/travis/build.sh"
