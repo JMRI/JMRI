@@ -92,11 +92,21 @@ public class XNetMonPane extends jmri.jmrix.AbstractMonPane implements XNetListe
                     text
                             = "Command Station no longer providing a timeslot for communications";
                     break;
+                case XNetConstants.LIUSB_TIMESLOT_RESTORED:
+                    text
+                            = "Command Station is providing a timeslot for communications again.";
+                    break;
                 case XNetConstants.LI_MESSAGE_RESPONSE_BUFFER_OVERFLOW:
                     text = "Buffer Overflow in interface";
                     break;
-                case XNetConstants.LIUSB_WRONG_SYNTAX:
-                    text = "Wrong Message Syntax";
+                case XNetConstants.LIUSB_RETRANSMIT_REQUEST:
+                    text = "Retransmission requested by LIUSB";
+                    break;
+                case XNetConstants.LIUSB_BAD_DATA_IN_REQUEST:
+                    text = "Bad data in transmitted message.";
+                    break;
+                case XNetConstants.LIUSB_REQUEST_SENT_WHILE_NO_TIMESLOT:
+                    text = "Request sent while the command station was not providing a timeslot.";
                     break;
                 default:
                     text = l.toString();

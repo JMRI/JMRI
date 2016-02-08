@@ -23,6 +23,7 @@ public class GotoAction extends Action {
             AutomationItem automationItem = getAutomationItem().getGotoAutomationItem();
             if (automationItem != null) {
                 setRunning(true);
+                // the old property = null unconditional branch 
                 firePropertyChange(ACTION_GOTO_CHANGED_PROPERTY, null, automationItem);
             }
             finishAction(automationItem != null);

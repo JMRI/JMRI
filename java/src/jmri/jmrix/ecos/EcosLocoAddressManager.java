@@ -632,8 +632,9 @@ public class EcosLocoAddressManager extends jmri.managers.AbstractManager implem
         }
         if (line.contains("cv")) {
             String cv = EcosReply.getContentDetails(line, "cv");
+            cv = cv.replaceAll("\\s","");  //remove all white spaces, as 4.1.0 version removed the space after the ,
             int cvnum = Integer.parseInt(cv.substring(0, cv.indexOf(",")));
-            int cvval = Integer.parseInt(cv.substring(cv.indexOf(", ") + 2, cv.length()));
+            int cvval = Integer.parseInt(cv.substring(cv.indexOf(",") + 1, cv.length()));
             tmploco.setCV(cvnum, cvval);
             if (cvnum == 8 && processLocoToRosterQueue) {
                 locoToRoster.processQueue();

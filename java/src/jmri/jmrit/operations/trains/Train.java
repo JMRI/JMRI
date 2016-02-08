@@ -3198,7 +3198,7 @@ public class Train implements java.beans.PropertyChangeListener {
         if (rl == null) {
             return false;
         }
-        log.info("Move train ({}) to location ({})", getName(), rl.getName());
+        log.debug("Move train ({}) to location ({})", getName(), rl.getName());
         if (getRoute() == null || getCurrentLocation() == null) {
             return false;
         }
