@@ -16,26 +16,16 @@ import org.slf4j.LoggerFactory;
  */
 public class StartupActionModelUtil extends Bean {
 
-    private final HashMap<Class<?>, String> actions = new HashMap<>();
+    private HashMap<Class<?>, String> actions = null;
     private final static Logger log = LoggerFactory.getLogger(StartupActionModelUtil.class);
 
-    public StartupActionModelUtil() {
-        ResourceBundle rb = ResourceBundle.getBundle("apps.ActionListBundle");
-        rb.keySet().stream().filter((key) -> (!key.isEmpty())).forEach((key) -> {
-            try {
-                Class<?> clazz = Class.forName(key);
-                actions.put(clazz, rb.getString(key));
-            } catch (ClassNotFoundException ex) {
-                log.error("Did not find class \"{}\"", key);
-            }
-        });
-    }
-
     public String getActionName(Class<?> clazz) {
+        this.prepareActionsHashMap();
         return this.actions.get(clazz);
     }
 
     public String getActionName(String className) {
+        this.prepareActionsHashMap();
         try {
             return this.getActionName(Class.forName(className));
         } catch (ClassNotFoundException ex) {
@@ -45,6 +35,7 @@ public class StartupActionModelUtil extends Bean {
     }
 
     public String getClassName(String name) {
+        this.prepareActionsHashMap();
         for (Entry<Class<?>, String> entry : this.actions.entrySet()) {
             if (entry.getValue().equals(name)) {
                 return entry.getKey().getName();
@@ -54,16 +45,19 @@ public class StartupActionModelUtil extends Bean {
     }
 
     public String[] getNames() {
+        this.prepareActionsHashMap();
         String[] names = actions.values().toArray(new String[actions.size()]);
         Arrays.sort(names);
         return names;
     }
 
     public Class<?>[] getClasses() {
+        this.prepareActionsHashMap();
         return actions.keySet().toArray(new Class<?>[actions.size()]);
     }
 
     public void addAction(String strClass, String name) throws ClassNotFoundException {
+        this.prepareActionsHashMap();
         Class<?> clazz;
         try {
             clazz = Class.forName(strClass);
@@ -76,6 +70,7 @@ public class StartupActionModelUtil extends Bean {
     }
 
     public void removeAction(String strClass) throws ClassNotFoundException {
+        this.prepareActionsHashMap();
         Class<?> clazz;
         try {
             clazz = Class.forName(strClass);
@@ -87,4 +82,18 @@ public class StartupActionModelUtil extends Bean {
         this.propertyChangeSupport.firePropertyChange("length", null, null);
     }
 
+    private void prepareActionsHashMap() {
+        if (this.actions == null) {
+            this.actions = new HashMap<>();
+            ResourceBundle rb = ResourceBundle.getBundle("apps.ActionListBundle");
+            rb.keySet().stream().filter((key) -> (!key.isEmpty())).forEach((key) -> {
+                try {
+                    Class<?> clazz = Class.forName(key);
+                    this.actions.put(clazz, rb.getString(key));
+                } catch (ClassNotFoundException ex) {
+                    log.error("Did not find class \"{}\"", key);
+                }
+            });
+        }
+    }
 }
