@@ -10,6 +10,7 @@ script:
 
 after_script:
   - "ls -la"
+  - "cat travis_wait*"
 
 jdk:
   - oraclejdk8
