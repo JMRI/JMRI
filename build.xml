@@ -1084,10 +1084,6 @@
                 <formatter usefile="no" type="brief"/>
             </test>
         </junit>
-		  <exec executable="sh">
-			<arg value="-c" />
-			<arg value="ls -la" />
-		  </exec>      
         <fail>
             <condition>
                 <istrue value="${test.failed}" />
