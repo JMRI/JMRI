@@ -1071,7 +1071,7 @@
 
 
     <target name="ci-test" depends="tests, runtime-library-selection" description="run headless test suite using Travis-CI default target">
-        <junit haltonerror="false" haltonfailure="false" printsummary="yes" fork="yes" dir="." errorProperty="test.failed" failureProperty="test.failed">
+        <junit haltonerror="false" haltonfailure="false" printsummary="yes" fork="no" dir="." errorProperty="test.failed" failureProperty="test.failed" showoutput="yes">
             <sysproperty key="java.security.policy" value="${libdir}/security.policy"/>
             <sysproperty key="apple.laf.useScreenMenuBar" value="true"/>
             <sysproperty key="log4j.ignoreTCL" path="true/"/>
@@ -1092,16 +1092,17 @@
     </target>
 
     <target name="appveyor-ci-test" depends="tests, runtime-library-selection" description="run headless test suite using Appveyor default target">
-        <!-- identical to CI Test except test output is different -->
+        <!-- setup identical to CI Test except test output is different -->
         <junit haltonerror="false" haltonfailure="false" printsummary="yes" fork="yes" dir="." errorProperty="test.failed" failureProperty="test.failed">
             <sysproperty key="java.security.policy" value="${libdir}/security.policy"/>
             <sysproperty key="apple.laf.useScreenMenuBar" value="true"/>
             <sysproperty key="log4j.ignoreTCL" path="true/"/>
             <sysproperty key="java.library.path" path=".:${libdir}:${arch.lib.path}"/>
             <sysproperty key="jinput.plugins" path="net.bobis.jinput.hidraw.HidRawEnvironmentPlugin"/>
-            <sysproperty key="jmri.skipschematests" value="true"/>  <!-- skip schema checks to improve speed -->
 
             <classpath refid="test.class.path"/>
+
+            <sysproperty key="jmri.skipschematests" value="true"/>  <!-- skip schema checks to improve speed -->
 
             <test name="apps.tests.AllTest" outfile="junit-results">
                 <formatter type="xml"/>
