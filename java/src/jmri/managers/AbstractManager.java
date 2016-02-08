@@ -40,7 +40,7 @@ abstract public class AbstractManager
     protected void registerSelf() {
         if (InstanceManager.configureManagerInstance() != null) {
             InstanceManager.configureManagerInstance().registerConfig(this, getXMLOrder());
-            log.debug("register for config");
+            log.debug("register for config of type {}", getClass());
         }
     }
 
