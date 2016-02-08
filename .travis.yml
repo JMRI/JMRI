@@ -9,8 +9,7 @@ script:
   - travis_wait ant ci-test checklineends checknonascii 
 
 after_script:
-  - "ls -la"
-  - "cat travis_wait*"
+  - "head -120 /home/travis/build.sh"
 
 jdk:
   - oraclejdk8
