@@ -38,9 +38,10 @@ abstract public class AbstractManager
      *
      */
     protected void registerSelf() {
+        log.debug("registerSelf for config of type {}", getClass());
         if (InstanceManager.configureManagerInstance() != null) {
             InstanceManager.configureManagerInstance().registerConfig(this, getXMLOrder());
-            log.debug("register for config of type {}", getClass());
+            log.debug("registering for config of type {}", getClass());
         }
     }
 
