@@ -6,8 +6,7 @@ before_script:
   - sleep 3 # give xvfb some time to start
 
 script: 
-  - travis_wait ant checklineends checknonascii 
-  - travis_wait ant ci-test
+ - travis_wait ant checklineends checknonascii ci-test 
 
 jdk:
   - oraclejdk8
