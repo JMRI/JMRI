@@ -272,6 +272,6 @@ public class JmriConfigurationManager implements ConfigureManager {
     }
 
     public HashMap<PreferencesProvider, InitializationException> getInitializationExceptions() {
-        return initializationExceptions;
+        return new HashMap<>(initializationExceptions);
     }
 }
