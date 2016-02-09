@@ -1,36 +1,23 @@
 // PerformScriptModel.java
 package apps;
 
+import apps.startup.AbstractStartupModel;
+
 /**
  * A PerformScriptModel object runs a script when the program is started.
  * <P>
  * @author	Bob Jacobsen Copyright 2003
+ * @author Randall Wood (c) 2016
  * @version $Revision$
  * @see apps.startup.PerformScriptModelFactory
  */
-public class PerformScriptModel implements StartupModel {
-
-    public PerformScriptModel() {
-        fileName = null;
-    }
-
-    String fileName;
-
-    @Override
-    public String getName() {
-        return this.getFileName();
-    }
+public class PerformScriptModel extends AbstractStartupModel {
 
     public String getFileName() {
-        return fileName;
+        return this.getName();
     }
 
     public void setFileName(String n) {
-        fileName = n;
-    }
-
-    @Override
-    public void setName(String name) {
-        this.setFileName(name);
+        this.setName(n);
     }
 }

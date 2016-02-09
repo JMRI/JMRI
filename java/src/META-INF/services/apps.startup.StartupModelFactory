@@ -4,3 +4,4 @@ apps.startup.CreateButtonModelFactory
 apps.startup.PerformActionModelFactory
 apps.startup.PerformFileModelFactory
 apps.startup.PerformScriptModelFactory
+apps.startup.TriggerRouteModelFactory

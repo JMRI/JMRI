@@ -38,6 +38,61 @@
 system every time it changes, so that you rapidly learn of
 new problems and are motivated to remove existing ones.
 
+<p>
+The core of our system is a series of 
+<a href="">Jenkins</a>
+jobs that routinely build the code, run checks,
+and creates downloadable installers.  That means that we
+can and do put changes into our users hands very quickly.
+
+<p>
+We also use two additioanl CI engines to test every change
+entered into our GitHub code repository.
+
+<h2>Travis CI</h2>
+
+We use
+<a href="https://travis-ci.org/">Travis CI</a>
+to do integration/test builds on Linux for every pull into our main 
+<a href="http://github.com/JMRI">GitHub</a> repositories.
+<p>
+Travis will build any branch that contains a .travis.yml file. 
+The build history for the main JMRI repository is at
+<a href="https://travis-ci.org/JMRI/JMRI">https://travis-ci.org/JMRI/JMRI</a>.
+<p>
+Travis normally runs the checks for valid line-ends, the check for proper ASCII characters, 
+followed by building the code and running the "AllTest" test routine.  A screen buffer (not a real screen) 
+is used for all the GUI tests.
+<p>
+You can enable Travis CI for your fork (personal GitHub repository) as well. 
+After merging JMRI/master into your own fork, 
+allow Travis CI to monitor your fork, and it will begin testing after your next push to GitHub. 
+Follow the instructions at <a href="https://travis-ci.org/">Travis CI</a> to set up your forks.
+<p>
+You can prevent a Travis CI from running against a specific commit by 
+including &quot;[ci skip]&quot; (including the brackets, but not the quotes) 
+anywhere in the commit message if so desired.
+
+<h2>AppVeyor CI</h2>
+
+We use
+<a href="http://www.appveyor.com">AppVeyor CI</a>
+to do integration/test builds on Windows for every pull into our main 
+<a href="http://github.com/JMRI">GitHub</a> repositories.
+<p>
+AppVeyor will build any branch that contains a appveyor.yml file. 
+The build history for the main JMRI repository is at
+<a href="https://ci.appveyor.com/project/JMRI/jmri">https://ci.appveyor.com/project/JMRI/jmri</a>.
+
+<p>
+AppVeyor normally runs the property-files checks (for duplicate targets and other errors), 
+followed by building the code and running the "AllTest" test routine.  A screen buffer (not a real screen) 
+is used for all the GUI tests.
+
+<p>
+Although it is possible to enable AppVeyor to build commits to your own fork of the JMRI
+repositories, it's a bit complicated to do it within the AppVeyor security model. 
+
 <h2 id="jenkins">Jenkins</h2>
 JMRI uses the 
 <a href="http://jenkins-ci.org/">Jenkins</a>
@@ -92,26 +147,6 @@ window by expanding the 'JMRI' entry under 'Hudson Builders'.
 <p><img src="images/NetBeansJenkinsOverview.png" width="342" height="452" alt="Jenkins Overview">
 
 
-<h2>Travis CI</h2>
-
-We also use
-<a href="https://travis-ci.org/">Travis CI</a>
-to do integration/test builds with every pull into our main 
-<a href="http://github.com/JMRI">GitHub</a> repositories.
-<p>
-Travis will build any branch that contains a .travis.yml file. 
-The build history for the main JMRI repository is at
-<a href="https://travis-ci.org/JMRI/JMRI">https://travis-ci.org/JMRI/JMRI</a>.
-
-<p>
-You can enable Travis CI for your fork (personal GitHub repository) as well. 
-After merging JMRI/master into your own fork, 
-allow Travis CI to monitor your fork, and it will begin testing after your next push to GitHub. 
-Follow the instructions at <a href="https://travis-ci.org/">Travis CI</a> to set up your forks.
-<p>
-You can prevent a Travis CI from running against a specific commit by 
-including &quot;[ci skip]&quot; (including the brackets, but not the quotes) 
-anywhere in the commit message if so desired.
 
 <!--#include virtual="/Footer" -->
 

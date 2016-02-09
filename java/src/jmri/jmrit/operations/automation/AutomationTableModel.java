@@ -18,6 +18,7 @@ import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 import javax.swing.JTable;
 import javax.swing.JTextArea;
+import javax.swing.ListSelectionModel;
 import javax.swing.table.TableCellEditor;
 import javax.swing.table.TableColumnModel;
 import jmri.jmrit.operations.automation.actions.Action;
@@ -112,6 +113,8 @@ public class AutomationTableModel extends javax.swing.table.AbstractTableModel i
         updateList();
         // have to shut off autoResizeMode to get horizontal scroll to work (JavaSwing p 541)
         table.setAutoResizeMode(JTable.AUTO_RESIZE_OFF);
+        // only allow one row at a time to be selected
+        table.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
     }
 
     private void setPreferredWidths(JTable table) {
@@ -326,7 +329,7 @@ public class AutomationTableModel extends javax.swing.table.AbstractTableModel i
 
     private JComboBox<RouteLocation> getRouteLocationComboBox(AutomationItem item) {
         JComboBox<RouteLocation> cb = new JComboBox<RouteLocation>();
-        if (item.getTrain() != null) {
+        if (item.getTrain() != null && item.getTrain().getRoute() != null) {
             cb = item.getTrain().getRoute().getComboBox();
             cb.setSelectedItem(item.getRouteLocation());
         }

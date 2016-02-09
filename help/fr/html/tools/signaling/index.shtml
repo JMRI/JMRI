@@ -206,7 +206,7 @@ sur la cr&#233;ation et l'affichage des panneaux, y compris la fa&#231;on de mon
 sur vos panneaux, s'il vous pla&#238;t voir le
 <A  HREF="../../apps/PanelPro/Panels.shtml"> page d'aide Panneaux</a>
 et les pages web sur le
-<A HREF="http://jmri.sourceforge.net/community/examples/Panels-Cornwall/Cornwall.html">  panneau de commande de chemin de fer Cornwall </a>.
+<A HREF="http://jmri.org/community/examples/Panels-Cornwall/Cornwall.html">  panneau de commande de chemin de fer Cornwall </a>.
 <A name="logic"> 
 <a name="intro"><h3> Introduction &#224; la simple logique signal </h3></a></a></dt>
 
@@ -396,7 +396,7 @@ votre r&#233;seau. Les plus puissants d'entre eux sont destin&#233;s
 &#224; l'automatisation en g&#233;n&#233;ral; voir la
 <A HREF="../automation/viaJava.shtml"> page web automatisation</a>.
 La
-<A HREF="http://jmri.sourceforge.net/JavaDoc/doc/jmri/jmrit/automat/Siglet.html"> classe "Siglet"</A>
+<A HREF="http://jmri.org/JavaDoc/doc/jmri/jmrit/automat/Siglet.html"> classe "Siglet"</A>
 et s'est "kin" sont cens&#233;s rendre
 facile l'&#233;criture de la logique du signal; une variante de ceux-ci a &#233;t&#233; utilis&#233;e
 pour le chemin de fer de Cornwall.

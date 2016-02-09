@@ -20,13 +20,13 @@
 		<dt><h3 style="padding-left: 1em;">Installation</h3></dt>
 		<dd> 
 		    <ul>
-        <li><a href="http://jmri.sourceforge.net/install/WindowsNew.shtml">Windows</a>
-        <li><a href="http://jmri.sourceforge.net/install/MacOSX.shtml">Mac OS X</a>
-        <li><a href="http://jmri.sourceforge.net/install/Linux.shtml">Linux</a>
+        <li><a href="http://jmri.org/install/WindowsNew.shtml">Windows</a>
+        <li><a href="http://jmri.org/install/MacOSX.shtml">Mac OS X</a>
+        <li><a href="http://jmri.org/install/Linux.shtml">Linux</a>
 	        <ul>
-	        <li><a href="http://jmri.sourceforge.net/install/Raspbian.shtml">RasPi</a>
+	        <li><a href="http://jmri.org/install/Raspbian.shtml">RasPi</a>
 	        </ul>
-        <li><a href="http://jmri.sourceforge.net/install/Debug.shtml">Debugging an installation</a>
+        <li><a href="http://jmri.org/install/Debug.shtml">Debugging an installation</a>
 		    </ul>
 		</dd>
 

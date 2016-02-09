@@ -47,7 +47,7 @@ sur les sujets DCC de Joe Fugate.
 <h2>De Quoi Avez vous Besoin pour Utiliser DecoderPro?</h2>
 
 <p>Le logiciel DecoderPro fonctionne sur Windows, Linux, Macintosh (OS 8.6 &#224; 9.2 et Mac OS X), et OS/2. Il pourra sans doute aussi travailler avec la plupart des autres syst&#232;mes d'exploitation modernes qui disposent de Java; nous contacter pour vous aider si vous souhaitez l'essayer sur un autre syst&#232;me. Vous avez besoin d'un port s&#233;rie disponible, soit sur l'ordinateur lui-m&#234;me, ou via un <A HREF="../../hardware/USBtoSerial.shtml">adaptateur USB</a>. Pour plus d'informations sur la fa&#231;on de l'utiliser, ou consultez les
-<a href="http://jmri.sourceforge.net/download/index.shtml">pages de t&#233;l&#233;chargement</a>.</p>
+<a href="http://jmri.org/download/index.shtml">pages de t&#233;l&#233;chargement</a>.</p>
 
 <p>Vous devez &#233;galement disposer d'une connexion s&#233;rie &#224; votre syst&#232;me DCC.
 Pour plus d'informations, s'il vous pla&#238;t voir la
@@ -57,7 +57,7 @@ Pour plus d'informations, s'il vous pla&#238;t voir la
 
 DecoderPro est la cr&#233;ation d'un grand nombre de
 <a href="../../../Acknowledgements.shtml"> b&#233;n&#233;voles</a>, les mod&#233;listes ferroviaires comme vous qui avez contribu&#233; &#224; faire de chaque DecoderPro une grande ressource pour nous tous. Vous pouvez aussi aider, m&#234;me si vous n'&#234;tes pas un programmateur informatique;
-<a href="http://jmri.sourceforge.net/Help.html">cliquez ici pour des suggestions sur la fa&#231;on d'apporter de l'aide</a>.
+<a href="http://jmri.org/Help.html">cliquez ici pour des suggestions sur la fa&#231;on d'apporter de l'aide</a>.
 
 <a name="guide">
 <h2>DecoderPro Guide Utilisateur</h2></a>
@@ -99,7 +99,7 @@ Les pages Guide de l'utilisateur:
 <p>
 Le projet JMRI a compil&#233; un grand nombre d'informations sur les d&#233;codeurs de nombreux fabricants, nous les laissons librement disponible sous plusieurs formes. 
 Pour en savoir plus, consultez les
-<a href="http://jmri.sourceforge.net/xml/XSLT/">informations sur la page d&#233;codeur</a>.
+<a href="http://jmri.org/xml/XSLT/">informations sur la page d&#233;codeur</a>.
 
 <!--#include virtual="/Footer" -->
   </div><!-- closes #mainContent-->

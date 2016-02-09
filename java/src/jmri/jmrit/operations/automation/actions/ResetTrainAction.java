@@ -20,7 +20,7 @@ public class ResetTrainAction extends Action {
     public void doAction() {
         if (getAutomationItem() != null) {
             Train train = getAutomationItem().getTrain();
-            if (train == null) {
+            if (train == null || train.getRoute() == null) {
                 finishAction(false); // failed, need train to reset
             } else {
                 setRunning(true);

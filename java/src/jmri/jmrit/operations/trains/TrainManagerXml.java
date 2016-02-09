@@ -292,9 +292,9 @@ public class TrainManagerXml extends OperationsXml {
                 String lastModified = new SimpleDateFormat("yyyyMMdd-HHmmss").format(file.lastModified());
                 String backupName = getBackupManifestFilename(name, lastModified); // NOI18N
                 if (file.renameTo(new File(backupName))) {
-                    log.debug("created new backup file {}", backupName);
+                    log.debug("created new manifest backup file {}", backupName);
                 } else {
-                    log.error("could not create backup file {}", backupName);
+                    log.error("could not create manifest backup file {}", backupName);
                 }
             }
         }

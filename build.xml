@@ -621,6 +621,13 @@
             </and>
         </condition>
      
+        <condition property="baseArch" value="armv6l">
+            <and>
+                <os family="unix" />
+                <equals arg1="${os.arch}" arg2='arm' />
+            </and>
+        </condition>
+     
         <property name="arch.lib.path" value="${libdir}/${baseOS}/${baseArch}:${libdir}/${baseOS}"/>
         <echo message="arch.lib.path ${arch.lib.path}"/>
     </target>

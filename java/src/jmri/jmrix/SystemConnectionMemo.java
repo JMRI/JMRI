@@ -1,6 +1,7 @@
 // SystemConnectionMemo.java
 package jmri.jmrix;
 
+import apps.startup.StartupActionModelUtil;
 import java.beans.PropertyChangeEvent;
 import java.beans.PropertyChangeListener;
 import java.util.ArrayList;
@@ -277,35 +278,35 @@ abstract public class SystemConnectionMemo {
     abstract protected ResourceBundle getActionModelResourceBundle();
 
     protected void addToActionList() {
-        apps.CreateButtonModel bm = jmri.InstanceManager.getDefault(apps.CreateButtonModel.class);
+        StartupActionModelUtil util = jmri.InstanceManager.getDefault(StartupActionModelUtil.class);
         ResourceBundle rb = getActionModelResourceBundle();
-        if (rb == null || bm == null) {
+        if (rb == null || util == null) {
             return;
         }
         Enumeration<String> e = rb.getKeys();
         while (e.hasMoreElements()) {
             String key = e.nextElement();
             try {
-                bm.addAction(key, rb.getString(key));
+                util.addAction(key, rb.getString(key));
             } catch (ClassNotFoundException ex) {
-                log.error("Did not find class " + key);
+                log.error("Did not find class \"{}\"", key);
             }
         }
     }
 
     protected void removeFromActionList() {
-        apps.CreateButtonModel bm = jmri.InstanceManager.getDefault(apps.CreateButtonModel.class);
+        StartupActionModelUtil util = jmri.InstanceManager.getDefault(StartupActionModelUtil.class);
         ResourceBundle rb = getActionModelResourceBundle();
-        if (rb == null || bm == null) {
+        if (rb == null || util == null) {
             return;
         }
         Enumeration<String> e = rb.getKeys();
         while (e.hasMoreElements()) {
             String key = e.nextElement();
             try {
-                bm.removeAction(key);
+                util.removeAction(key);
             } catch (ClassNotFoundException ex) {
-                log.error("Did not find class " + key);
+                log.error("Did not find class \"{}\"", key);
             }
         }
     }

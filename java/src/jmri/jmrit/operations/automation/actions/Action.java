@@ -5,7 +5,6 @@ import javax.swing.JComboBox;
 import javax.swing.JOptionPane;
 import jmri.jmrit.operations.automation.Automation;
 import jmri.jmrit.operations.automation.AutomationItem;
-import jmri.jmrit.operations.automation.AutomationManager;
 import jmri.jmrit.operations.routes.RouteLocation;
 import jmri.jmrit.operations.trains.Train;
 import jmri.jmrit.operations.trains.TrainSchedule;
@@ -73,13 +72,14 @@ public abstract class Action {
     public boolean isGotoMenuEnabled() {
         return (getCode() & ActionCodes.ENABLE_GOTO) == ActionCodes.ENABLE_GOTO;
     }
-    
+
     public boolean isOtherMenuEnabled() {
         return (getCode() & ActionCodes.ENABLE_OTHER) == ActionCodes.ENABLE_OTHER;
     }
-    
+
     /**
      * Used to determine if this action can run concurrently with other actions.
+     * 
      * @return true if a concurrent action
      */
     public boolean isConcurrentAction() {
@@ -97,11 +97,11 @@ public abstract class Action {
     public String getActionString() {
         return getFormatedMessage("{0}{1}{2}{3}{4}{5}");
     }
-    
+
     public String getActionSuccessfulString() {
         return Bundle.getMessage("OK");
     }
-    
+
     public String getActionFailedString() {
         return Bundle.getMessage("FAILED");
     }
@@ -125,13 +125,25 @@ public abstract class Action {
      * @return OKAY, HALT, CLOSED, NO_MESSAGE_SENT, FINISH_FAILED
      */
     public int finishAction(boolean success) {
+        return finishAction(success, new Object[]{Bundle.getMessage("HALT"), Bundle.getMessage("OK")});
+    }
+
+    /**
+     * Completes the action by displaying the correct message if there's one.
+     * Will halt if the option to halt the automation is enabled or the user
+     * requested the automation to halt.
+     * 
+     * @param success true if action succeeded
+     * @param buttons buttons to display in message
+     * @return OKAY, HALT, CLOSED, NO_MESSAGE_SENT, FINISH_FAILED
+     */
+    public int finishAction(boolean success, Object[] buttons) {
         int response = FINISH_FAILED;
         if (getAutomationItem() != null) {
             setRunning(true);
             getAutomationItem().setActionSuccessful(success);
             setRunning(false);
             String message = getAutomationItem().getMessage();
-            Object[] buttons = new Object[]{Bundle.getMessage("HALT"), Bundle.getMessage("OK")};
             if (!success) {
                 message = getAutomationItem().getMessageFail();
                 if (getAutomationItem().isHaltFailureEnabled()) {
@@ -139,7 +151,8 @@ public abstract class Action {
                 }
             }
             response = sendMessage(message, buttons, success);
-            if (response == HALT || (!success && getAutomationItem().isHaltFailureEnabled())) {
+            if (response == HALT && buttons[0].equals(Bundle.getMessage("HALT"))
+                    || (!success && getAutomationItem().isHaltFailureEnabled())) {
                 firePropertyChange(ACTION_HALT_CHANGED_PROPERTY, !success, success);
             } else {
                 firePropertyChange(ACTION_COMPLETE_CHANGED_PROPERTY, !success, success);
@@ -194,34 +207,12 @@ public abstract class Action {
         }
         return MessageFormat.format(message, new Object[]{getName(), trainName, routeLocationName, automationName, itemId, day});
     }
-    
+
     // to be overridden if action needs a ComboBox
     public JComboBox<?> getComboBox() {
-        JComboBox<?> cb =  new JComboBox<>();
+        JComboBox<?> cb = new JComboBox<>();
         cb.setEnabled(false);
         return cb;
-    }
-    /**
-     * ComboBox for GOTO
-     * @return ComboBox with a list of automationItems.
-     */
-    protected JComboBox<AutomationItem> getAutomationItemComboBox() {
-        if (getAutomationItem() != null) {
-            Automation automation = AutomationManager.instance().getAutomationById(getAutomationItem().getId().split(Automation.REGEX)[0]);
-            JComboBox<AutomationItem> cb = automation.getComboBox();
-            cb.setSelectedItem(getAutomationItem().getGotoAutomationItem());
-            return cb;
-        }
-        return null;
-    }
-    
-    protected JComboBox<Automation> getAutomationComboBox() {
-        if (getAutomationItem() != null) {
-            JComboBox<Automation> cb = AutomationManager.instance().getComboBox();
-            cb.setSelectedItem(getAutomationItem().getAutomationToRun());
-            return cb;
-        }
-        return null;
     }
 
     java.beans.PropertyChangeSupport pcs = new java.beans.PropertyChangeSupport(this);

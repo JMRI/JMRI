@@ -29,7 +29,7 @@
 <hr>
 <p class="important">Please consult <a href="../../html/setup/index.shtml">JMRI Setup Help</a>.</p>
 
-<p>JMRI&reg; requires that Java be installed, whether your computer is <a href="http://jmri.sourceforge.net/install/MacOSX.shtml">Mac</a>, <a href="http://jmri.sourceforge.net/install/WindowsNew.shtml">Windows</a>, or <a href="http://jmri.sourceforge.net/install/Linux.shtml">Linux</a> based.</p>
+<p>JMRI&reg; requires that Java be installed, whether your computer is <a href="http://jmri.org/install/MacOSX.shtml">Mac</a>, <a href="http://jmri.org/install/WindowsNew.shtml">Windows</a>, or <a href="http://jmri.org/install/Linux.shtml">Linux</a> based.</p>
 <p>Version 2.12 can run on any computer system that will
 run Java 1.5 or later.<br>
 Version 2.14.1 requires Java 1.5 (or 1.6 if you wish for drag &amp; drop)<br>
@@ -38,11 +38,11 @@ Version 4.2 requires Java 1.8.</p>
 
 <p>Full instructions for installing on different platforms can be found here:</p>
 	<ul>
-	<li><a href="http://jmri.sourceforge.net/install/WindowsNew.shtml">Windows</a>
-	<li><a href="http://jmri.sourceforge.net/install/MacOSX.shtml">Mac OS X</a>
-	<li><a href="http://jmri.sourceforge.net/install/Linux.shtml">Linux</a>
+	<li><a href="http://jmri.org/install/WindowsNew.shtml">Windows</a>
+	<li><a href="http://jmri.org/install/MacOSX.shtml">Mac OS X</a>
+	<li><a href="http://jmri.org/install/Linux.shtml">Linux</a>
 	    <ul>
-	    <li><a href="http://jmri.sourceforge.net/install/Raspbian.shtml">RasPi</a>
+	    <li><a href="http://jmri.org/install/Raspbian.shtml">RasPi</a>
 	    </ul>
 	</ul>
 

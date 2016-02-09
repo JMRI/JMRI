@@ -56,7 +56,7 @@ In practice, this allows two forms for the DOCTYPE line:
 Early XML files used both; the program itself could generate
 either depending on the circumstances.
 <li>JMRI 1.9.2 and later provide a more powerful DTD search procedure using the 
-<a href="http://jmri.sourceforge.net/JavaDoc/doc/jmri/util/JmriLocalEntityResolver.html">jmri.util.JmriLocalEntityResolver</a>
+<a href="http://jmri.org/JavaDoc/doc/jmri/util/JmriLocalEntityResolver.html">jmri.util.JmriLocalEntityResolver</a>
 class. It parses the
 reference in the DOCTYPE and handles it in several ways:
     <ul>

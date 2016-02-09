@@ -6,161 +6,136 @@
     xsi:noNamespaceSchemaLocation = "http://jmri.org/xml/schema/appearancetable.xsd"
 >
 
-  <copyright xmlns="http://docbook.org/ns/docbook">
+    <copyright xmlns="http://docbook.org/ns/docbook">
     <year>2009</year><year>2010</year><holder>JMRI</holder>
-  </copyright>
-  
-  <authorgroup xmlns="http://docbook.org/ns/docbook">
-    <author>
+    </copyright>
+
+    <authorgroup xmlns="http://docbook.org/ns/docbook">
+        <author>
         <personname><firstname>Greg</firstname><surname>McCartney</surname></personname>
-        <email>gpmccartney@gmail.com</email>
-    </author>    
-  </authorgroup>
+            <email>gpmccartney@gmail.com</email>
+        </author>
+    </authorgroup>
 
-  <revhistory xmlns="http://docbook.org/ns/docbook">
-    <revision>
-        <revnumber>1</revnumber>
-        <date>2015-10-19</date>
-        <authorinitials>GPM</authorinitials>
-        <revremark>comment</revremark>
-    </revision>   
-  </revhistory>
-  
-  <aspecttable>N&amp;W 1981</aspecttable>
-  <name>CPL Single Arm Absolute Mast Signal</name>
-  <reference>As described in the 1981 version of the Norfolk and Western Railroad Operating Rules.</reference>
-  <description>Appearances N&amp;W absolute CPL mast signals</description>
-  
-  <appearances>
+    <revhistory xmlns="http://docbook.org/ns/docbook">
+        <revision>
+            <revnumber>1</revnumber>
+            <date>2015-10-19</date>
+            <authorinitials>GPM</authorinitials>
+            <revremark>Initial version of the signal set.</revremark>
+        </revision>
+        <revision>
+            <revnumber>2</revnumber>
+            <date>2016-01-26</date>
+            <authorinitials>GPM</authorinitials>
+            <revremark>Corrected the aspect mapping to eliminate aspects not possible on this signal.</revremark>
+        </revision>
+    </revhistory>
 
-    <appearance>
-      <aspectname>Clear</aspectname>
-      <show>green</show>
-      <show>dark</show>
-      <reference>Page 60</reference>
-	  <imagelink>../../../resources/icons/smallschematics/aspects/NW-1981/NW-CPL-1arm-absolute/rule-281.gif</imagelink>
-    </appearance>
-	
-	<appearance>
-	  <aspectname>Diverging Clear</aspectname>
-	  <show>green</show>
-	  <show>dark</show>
-	  <reference>Page 60</reference>
-	  <comment>Because the N&amp;W used a route signaling system, certain locations only had a single head for the signal out of the siding.  To make this work in JMRI a single head clear signal had to be renamed as diverging clear.</comment>
-	  <imagelink>../../../resources/icons/smallschematics/aspects/NW-1981/NW-CPL-1arm-absolute/rule-281.gif</imagelink>
-	</appearance>
-	  
-	<appearance>
-      <aspectname>Approach</aspectname>
-      <show>yellow</show>
-      <show>dark</show>
-      <reference>Page 63</reference>
-	  <imagelink>../../../resources/icons/smallschematics/aspects/NW-1981/NW-CPL-1arm-absolute/rule-285.gif</imagelink>
-    </appearance>
-	
-    <appearance>
-      <aspectname>Stop and Stay</aspectname>
-      <show>red</show>
-      <show>red</show>
-      <reference>Page 66</reference>
-	  <imagelink>../../../resources/icons/smallschematics/aspects/NW-1981/NW-CPL-1arm-absolute/rule-292.gif</imagelink>
-    </appearance>
-	
-  </appearances>
-	
-  <specificappearances>
-    <danger>
-      <aspect>Stop and Stay</aspect>
-    </danger>
-    <held>
-      <aspect>Stop and Stay</aspect>
-    </held>
-  </specificappearances>
-	
-  <aspectMappings>
-  
-	<aspectMapping>
-	  <advancedAspect>Clear</advancedAspect>
-	  <ourAspect>Clear</ourAspect>
-	  <ourAspect>Diverging Clear</ourAspect>
-	  <ourAspect>Slow Clear</ourAspect>
-	</aspectMapping>
-	
-	<aspectMapping>
-	  <advancedAspect>Approach Diverging</advancedAspect>
-	  <ourAspect>Clear</ourAspect>
-	  <ourAspect>Diverging Clear</ourAspect>
-	  <ourAspect>Slow Clear</ourAspect>
-	</aspectMapping>
-	
-	<aspectMapping>
-	  <advancedAspect>Advance Approach</advancedAspect>
-	  <ourAspect>Clear</ourAspect>
-	  <ourAspect>Diverging Clear</ourAspect>
-	  <ourAspect>Slow Clear</ourAspect>
-	</aspectMapping>
-	
-	<aspectMapping>
-	  <advancedAspect>Diverging Clear</advancedAspect>
-	  <ourAspect>Approach Diverging</ourAspect>
-	  <ourAspect>Diverging Approach Diverging</ourAspect>
-	</aspectMapping>
-	
-	<aspectMapping>
-	  <advancedAspect>Diverging Approach Diverging</advancedAspect>
-	  <ourAspect>Approach Diverging</ourAspect>
-	  <ourAspect>Diverging Approach Diverging</ourAspect>
-	</aspectMapping>
-	
-	<aspectMapping>
-	  <advancedAspect>Approach</advancedAspect>
-	  <ourAspect>Advance Approach</ourAspect>
-	  <ourAspect>Clear</ourAspect>
-	  <ourAspect>Diverging Clear</ourAspect>
-	  <ourAspect>Slow Clear</ourAspect>
-	</aspectMapping>
-	
-	<aspectMapping>
-	  <advancedAspect>Diverging Approach</advancedAspect>
-	  <ourAspect>Approach Diverging</ourAspect>
-	  <ourAspect>Diverging Approach Diverging</ourAspect>
-	</aspectMapping>
-	
-	<aspectMapping>
-	  <advancedAspect>Slow Clear</advancedAspect>
-	  <ourAspect>Approach</ourAspect>
-	  <ourAspect>Diverging Approach</ourAspect>
-	</aspectMapping>
-	
-	<aspectMapping>
-	  <advancedAspect>Slow Approach</advancedAspect>
-	  <ourAspect>Approach</ourAspect>
-	  <ourAspect>Approach Diverging</ourAspect>
-	  <ourAspect>Diverging Approach</ourAspect>
-	</aspectMapping>
-	
-	
-	<aspectMapping>
-	  <advancedAspect>Restricting</advancedAspect>
-	  <ourAspect>Approach</ourAspect>
-	  <ourAspect>Diverging Approach</ourAspect>
-	  <ourAspect>Slow Approach</ourAspect>
-	</aspectMapping>
-	
-	<aspectMapping>
-	  <advancedAspect>Stop and Proceed</advancedAspect>
-	  <ourAspect>Approach</ourAspect>
-	  <ourAspect>Diverging Approach</ourAspect>
-	  <ourAspect>Slow Approach</ourAspect>
-	</aspectMapping>
+    <aspecttable>N&amp;W 1981</aspecttable>
+    <name>CPL Single Arm Absolute Mast Signal</name>
+    <reference>As described in the 1981 version of the Norfolk and Western Railroad Operating Rules.</reference>
+    <description>Appearances N&amp;W absolute CPL mast signals</description>
 
-    <aspectMapping>
-	  <advancedAspect>Stop and Stay</advancedAspect>
-	  <ourAspect>Approach</ourAspect>
-	  <ourAspect>Diverging Approach</ourAspect>
-	  <ourAspect>Slow Approach</ourAspect>
-	</aspectMapping>	
-	
-  </aspectMappings>
-		
-</appearancetable>  
+    <appearances>
+
+        <appearance>
+            <aspectname>Clear</aspectname>
+            <show>green</show>
+            <show>dark</show>
+            <reference>Page 60</reference>
+            <imagelink>../../../resources/icons/smallschematics/aspects/NW-1981/NW-CPL-1arm-absolute/rule-281.gif</imagelink>
+        </appearance>
+
+        <appearance>
+            <aspectname>Approach</aspectname>
+            <show>yellow</show>
+            <show>dark</show>
+            <reference>Page 63</reference>
+            <imagelink>../../../resources/icons/smallschematics/aspects/NW-1981/NW-CPL-1arm-absolute/rule-285.gif</imagelink>
+        </appearance>
+
+        <appearance>
+            <aspectname>Stop and Stay</aspectname>
+            <show>red</show>
+            <show>lunar</show>
+            <reference>Page 66</reference>
+            <imagelink>../../../resources/icons/smallschematics/aspects/NW-1981/NW-CPL-1arm-absolute/rule-292.gif</imagelink>
+        </appearance>
+
+    </appearances>
+
+    <specificappearances>
+        <danger>
+            <aspect>Stop and Stay</aspect>
+        </danger>
+        <held>
+            <aspect>Stop and Stay</aspect>
+        </held>
+    </specificappearances>
+
+    <aspectMappings>
+
+        <aspectMapping>
+            <advancedAspect>Clear</advancedAspect>
+            <ourAspect>Clear</ourAspect>
+        </aspectMapping>
+
+        <aspectMapping>
+            <advancedAspect>Approach Diverging</advancedAspect>
+            <ourAspect>Clear</ourAspect>
+        </aspectMapping>
+
+        <aspectMapping>
+            <advancedAspect>Advance Approach</advancedAspect>
+            <ourAspect>Clear</ourAspect>
+        </aspectMapping>
+
+        <aspectMapping>
+            <advancedAspect>Diverging Clear</advancedAspect>
+            <ourAspect>Approach</ourAspect>
+        </aspectMapping>
+
+        <aspectMapping>
+            <advancedAspect>Diverging Approach Diverging</advancedAspect>
+            <ourAspect>Approach</ourAspect>
+        </aspectMapping>
+
+        <aspectMapping>
+            <advancedAspect>Approach</advancedAspect>
+            <ourAspect>Clear</ourAspect>
+        </aspectMapping>
+
+        <aspectMapping>
+            <advancedAspect>Diverging Approach</advancedAspect>
+            <ourAspect>Approach</ourAspect>
+        </aspectMapping>
+
+        <aspectMapping>
+            <advancedAspect>Slow Clear</advancedAspect>
+            <ourAspect>Approach</ourAspect>
+        </aspectMapping>
+
+        <aspectMapping>
+            <advancedAspect>Slow Approach</advancedAspect>
+            <ourAspect>Approach</ourAspect>
+        </aspectMapping>
+
+        <aspectMapping>
+            <advancedAspect>Restricting</advancedAspect>
+            <ourAspect>Approach</ourAspect>
+        </aspectMapping>
+
+        <aspectMapping>
+            <advancedAspect>Stop and Proceed</advancedAspect>
+            <ourAspect>Approach</ourAspect>
+        </aspectMapping>
+
+        <aspectMapping>
+            <advancedAspect>Stop and Stay</advancedAspect>
+            <ourAspect>Approach</ourAspect>
+        </aspectMapping>
+
+    </aspectMappings>
+
+</appearancetable>

@@ -23,7 +23,7 @@
 <h1> 
 JMRI Setup: Error Messages and Codes
 </h1>
-<!-- Copy any new content below from page http://jmri.sourceforge.net/help/en/manual/DecoderPro3/Error.shtml, another copy is in tools/programmer/ -->
+<!-- Copy any new content below from page http://jmri.org/help/en/manual/DecoderPro3/Error.shtml, another copy is in tools/programmer/ -->
 <hr>
 <p>Various things can go wrong when JMRI tries to work with your DCC command station to program a DCC decoder. 
 This page lists the error message that can result, and describes what they mean.</p>

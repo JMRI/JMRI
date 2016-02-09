@@ -247,9 +247,9 @@ For more information see the <a href="../scripting/index.shtml">JMRI Scripting h
 JMRI provides classes to help you write Java code to control your layout. The most powerful of these are aimed
 at general automation and make it easy to code your own signal logic into the program; see the <a href="../automation/viaJava.shtml">Automation page</a>.
 The 
-<a href="http://jmri.sourceforge.net/JavaDoc/doc/jmri/jmrit/automat/Siglet.html">"Siglet" class</a> 
+<a href="http://jmri.org/JavaDoc/doc/jmri/jmrit/automat/Siglet.html">"Siglet" class</a> 
 and it's kin are meant to make it
-easy to write complex custom signal logic; a variant of these was used by Nick Kulp's for signaling automation on his <a href="http://jmri.sourceforge.net/community/examples/Panels-Cornwall/CornwallRunning.html">Cornwall Railroad</a>.
+easy to write complex custom signal logic; a variant of these was used by Nick Kulp's for signaling automation on his <a href="http://jmri.org/community/examples/Panels-Cornwall/CornwallRunning.html">Cornwall Railroad</a>.
 <p>
 Although Automation Classes require writing code instead of just filling
 out a GUI form, JMRI handles all of the details of reading

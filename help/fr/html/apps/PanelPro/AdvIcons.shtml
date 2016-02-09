@@ -57,7 +57,7 @@ Ensuite, vous devez ajouter la "ReporterIcon" qui affiche directement ceci dans 
 <P>
 Rechercher dans le r&#233;pertoire "xml/samples" dans JMRI un fichier appel&#233; "ReporterIconExample.xml".
 <P>
-(Il est &#233;galement disponible <a href="http://jmri.sf.net/xml/samples/ReporterIconExample.xml"> sur le Web </a>
+(Il est &#233;galement disponible <a href="http://jmri.org/xml/samples/ReporterIconExample.xml"> sur le Web </a>
 mais de nombreux navigateurs vont essayer de l'interpr&#233;ter au lieu de vous montrer le texte, (votre option 
 navigateur "Afficher la source" tableau pourrait vous aider &#231; cet &#233;gard)
 <P>
