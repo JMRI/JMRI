@@ -1070,8 +1070,8 @@
     </target>
 
 
-    <target name="ci-test" depends="tests, runtime-library-selection" description="run headless test suite using Travis-CI default target">
-        <junit haltonerror="false" haltonfailure="false" printsummary="yes" fork="no" dir="." errorProperty="test.failed" failureProperty="test.failed" showoutput="yes">
+    <target name="ci-test" depends="tests, runtime-library-selection" description="run AllTest for e.g. Travis-CI">
+        <junit haltonerror="false" haltonfailure="false" printsummary="yes" fork="yes" dir="." errorProperty="test.failed" failureProperty="test.failed">
             <sysproperty key="java.security.policy" value="${libdir}/security.policy"/>
             <sysproperty key="apple.laf.useScreenMenuBar" value="true"/>
             <sysproperty key="log4j.ignoreTCL" path="true/"/>
@@ -1091,8 +1091,8 @@
         </fail>
     </target>
 
-    <target name="appveyor-ci-test" depends="tests, runtime-library-selection" description="run headless test suite using Appveyor default target">
-        <!-- setup identical to CI Test except test output is different -->
+    <target name="appveyor-ci-test" depends="tests, runtime-library-selection" description="run AllTest using Appveyor">
+        <!-- identical to ci-test target except test output is different -->
         <junit haltonerror="false" haltonfailure="false" printsummary="yes" fork="yes" dir="." errorProperty="test.failed" failureProperty="test.failed">
             <sysproperty key="java.security.policy" value="${libdir}/security.policy"/>
             <sysproperty key="apple.laf.useScreenMenuBar" value="true"/>
