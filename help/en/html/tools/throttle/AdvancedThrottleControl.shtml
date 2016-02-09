@@ -110,9 +110,9 @@ but easier to use (imho).</span></p>
 <h4><span style="font-style: italic;"></span>Default controls:</h4>
 
 <h5 style="margin-left: 40px;">Browsing throttles:</h5>
-<div style="margin-left: 80px;">To browse through the curently assigned
+<div style="margin-left: 80px;">To browse through the currently assigned
 throttles for the controlled window, the pov right and left buttons are
-used. (the pov also known as switch hat, is the four or eight
+used (the pov, also known as switch hat, is the four or eight
 directions button on the left of the pad).</div>
 
 <h5 style="margin-left: 40px;">Speed:</h5>
@@ -133,13 +133,13 @@ the middle of the gamepad)</div>
 <br>
 <span style="font-style: italic;">Note that joypads buttons layout, and
 even sticks events differ from one manufacturer to another, hence you
-should customize a driver.py for your own harware.</span>
+should customize a driver.py for your own hardware.</span>
 
 <a name="wii" />
 <h3>Nintendo Wiimote (WiimoteThrottle.jyn)</h3>
 There is a Jynstrument named WiimoteThrottle.jyn to be dropped on a Throttle
 Window toolbar to get control of that Window with a Nintendo Wiimote device.
-<span style="font-weight: bold;">See the .py file for </span>default button settings and<span style="font-weight: bold;"> set up.</span> (some jars are to be downloaded and copied in JMRI lib folder)<br style="font-weight: bold;">
+<span style="font-weight: bold;">See the .py file for </span>default button settings and<span style="font-weight: bold;"> set up</span> (some jars are to be downloaded and copied in JMRI lib folder).<br style="font-weight: bold;">
 <br>
 At the moment, none of the accelerometers of the Wiimote are used,
 hence it's only a kind of deluxe remote as we only use the buttons. But
