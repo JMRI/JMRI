@@ -3,17 +3,10 @@ language: java
 before_script:
   - "export DISPLAY=:99.0"
   - "sh -e /etc/init.d/xvfb start"
-  - "ulimit"
   - sleep 3 # give xvfb some time to start
 
 script: 
-#  - travis_wait ant ci-test checklineends checknonascii 
-  - ant ci-test
-  - ant checklineends
-  - ant checknonascii 
-
-after_script:
-  - "head -120 /home/travis/build.sh"
+ - travis_wait ant ci-test checklineends checknonascii 
 
 jdk:
   - oraclejdk8
