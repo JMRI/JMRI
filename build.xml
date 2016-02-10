@@ -1101,8 +1101,6 @@
 
             <classpath refid="test.class.path"/>
 
-            <sysproperty key="jmri.skipschematests" value="true"/>  <!-- skip schema checks to improve speed -->
-
             <test name="apps.tests.AllTest">
                 <formatter usefile="no" type="brief"/>
             </test>
