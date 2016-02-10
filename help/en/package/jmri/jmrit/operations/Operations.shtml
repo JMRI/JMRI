@@ -296,12 +296,12 @@
     href="#Trains">Trains</a>.
 
    <p>
-    So let's start with the <a href="#Settings">Settings</a> window. Enter a name for your railroad
-    and decide of you're are going to use descriptive names or AAR codes for your rolling stock. You
-    can also optionally decide which direction or directions your railroad travels. Leave the rest
-    of the fields in the <a href="#Settings">Settings</a> window alone for now, you can always come
-    back and change them later. Now press the "Save" button in the lower right corner and close the
-    window by pressing the "X" in the upper right corner.
+    So let's start with the <a href="#Settings">Settings</a> window. Enter a name for your railroad,
+    the scale that you're modeling, and decide of you're are going to use descriptive names or AAR
+    codes for your rolling stock. You can also optionally select which direction or directions your
+    railroad travels. Leave the rest of the fields in the <a href="#Settings">Settings</a> window
+    alone for now, you can always come back and change them later. Now press the "Save" button in
+    the lower right corner and close the window by pressing the "X" in the upper right corner.
    </p>
 
    <p>
@@ -773,19 +773,19 @@
    <h4>Prompt for Departure Track from Staging</h4>
 
    If you would like the program to ask you which track a train should depart from staging during
-   the train build, select this option. Normally during the train build the program would selected
-   the least recently used track when determining the track to depart from. Note that the program
-   will only prompt you if there are two or more trains available in staging that meet the train's
-   requirements. 
+   the train build, select this option. Normally during the train build the program would select the
+   track with the least amount of use when determining which track to depart from. Note that
+   the program will only prompt you if there are two or more trains available in staging that meet
+   the train's requirements. 
    
    <a name="PromptArrivalTrack"></a>
    <h4>Prompt for Arrival Track into Staging</h4>
 
    If you would like the program to ask you which track a train should use when arriving into
    staging during the train build, select this option. Normally during the train build the program
-   would selected the least recently used track when determining the track to arrive on. Note that
-   the program will only prompt you if there are two or more tracks available in staging that meet
-   the train's requirements. 
+   would select the track with the least amount of use when determining the track to arrive on.
+   Note that the program will only prompt you if there are two or more tracks available in staging
+   that meet the train's requirements. 
    
    <a name="CarRouting"></a>
    <h3>Car Routing Options</h3>
@@ -1143,7 +1143,7 @@
    Manifest before creating a new one. The program will store the old Manifests in a directory
    called "manifestBackups" located in the "operations" directory. You can review your old Manifest
    using the
-   <a href="#PrintSavedTrainManifests">Print Saved Train Manifests</a> under tools in the 
+   <a href="#PrintSavedTrainManifests">Print or Preview Saved Train Manifests</a> under tools in the 
    <a href="#Trains">Trains</a> window.
 
    <h4>Enable Value Fields and Identification Tag Fields</h4>

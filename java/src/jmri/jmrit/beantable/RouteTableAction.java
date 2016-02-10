@@ -101,6 +101,21 @@ public class RouteTableAction extends AbstractTableAction {
      * of Routes
      */
     protected void createModel() {
+
+        // late initialization of string "constants" so that TurnoutManager 
+        // has time to be fully configured
+        SET_TO_CLOSED = rbx.getString("Set") + " "
+            + InstanceManager.turnoutManagerInstance().getClosedText();
+        SET_TO_THROWN = rbx.getString("Set") + " "
+            + InstanceManager.turnoutManagerInstance().getThrownText();
+        turnoutInputModes = new String[]{"On " + InstanceManager.turnoutManagerInstance().getClosedText(),
+            "On " + InstanceManager.turnoutManagerInstance().getThrownText(),
+            "On Change", "Veto Closed", "Veto Thrown"};
+        lockTurnoutInputModes = new String[]{"On " + InstanceManager.turnoutManagerInstance().getClosedText(),
+            "On " + InstanceManager.turnoutManagerInstance().getThrownText(),
+            "On Change"};
+
+
         m = new BeanTableDataModel() {
             /**
              *
@@ -1985,26 +2000,30 @@ public class RouteTableAction extends AbstractTableAction {
         rbx.getString("ColumnLabelSetState")};
     private static String SET_TO_ACTIVE = rbx.getString("Set") + " " + rbx.getString("SensorActive");
     private static String SET_TO_INACTIVE = rbx.getString("Set") + " " + rbx.getString("SensorInactive");
-    private static String SET_TO_CLOSED = rbx.getString("Set") + " "
-            + InstanceManager.turnoutManagerInstance().getClosedText();
-    private static String SET_TO_THROWN = rbx.getString("Set") + " "
-            + InstanceManager.turnoutManagerInstance().getThrownText();
+
     private static String SET_TO_TOGGLE = rbx.getString("Set") + " " + rbx.getString("Toggle");
 
     private static String[] sensorInputModes = new String[]{"On Active", "On Inactive", "On Change", "Veto Active", "Veto Inactive"};
     private static int[] sensorInputModeValues = new int[]{Route.ONACTIVE, Route.ONINACTIVE, Route.ONCHANGE,
         Route.VETOACTIVE, Route.VETOINACTIVE};
-
-    private static String[] turnoutInputModes = new String[]{"On " + InstanceManager.turnoutManagerInstance().getClosedText(),
-        "On " + InstanceManager.turnoutManagerInstance().getThrownText(),
+    
+    // This group will get runtime updates to system-specific contents at 
+    // the start of buildModel() above.  This is done to prevent
+    // invoking the TurnoutManager at class construction time, 
+    // when it hasn't been configured yet
+    private static String SET_TO_CLOSED = rbx.getString("Set") + " "
+            + Bundle.getMessage("TurnoutStateClosed");
+    private static String SET_TO_THROWN = rbx.getString("Set") + " "
+            + Bundle.getMessage("TurnoutStateThrown");
+    private static String[] turnoutInputModes = new String[]{"On " + Bundle.getMessage("TurnoutStateClosed"),
+        "On " + Bundle.getMessage("TurnoutStateThrown"),
         "On Change", "Veto Closed", "Veto Thrown"};
+    private static String[] lockTurnoutInputModes = new String[]{"On " + Bundle.getMessage("TurnoutStateClosed"),
+        "On " + Bundle.getMessage("TurnoutStateThrown"),
+        "On Change"};
+
     private static int[] turnoutInputModeValues = new int[]{Route.ONCLOSED, Route.ONTHROWN, Route.ONCHANGE,
         Route.VETOCLOSED, Route.VETOTHROWN};
-
-    private static String[] lockTurnoutInputModes = new String[]{"On " + InstanceManager.turnoutManagerInstance().getClosedText(),
-        "On " + InstanceManager.turnoutManagerInstance().getThrownText(),
-        "On Change"};
-    //private static int[] lockTurnoutInputModeValues = new int[]{Route.ONCLOSED, Route.ONTHROWN, Route.ONCHANGE};    
 
     private ArrayList<RouteTurnout> _turnoutList;      // array of all Turnouts
     private ArrayList<RouteTurnout> _includedTurnoutList;

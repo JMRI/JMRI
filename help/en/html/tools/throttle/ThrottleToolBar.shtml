@@ -53,7 +53,7 @@ Send a stop message to all throttles managed by JMRI.
 
 <h2>Power Button</h2>
 
-Allows for layout power control if possible (red is off, green is on, yellow is status unknown).
+Allows for layout power control if possible (red icon is Off, green is On, yellow is status Unknown).
 
 <h2>List Button</h2>
 

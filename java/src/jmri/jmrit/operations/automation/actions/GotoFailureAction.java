@@ -1,9 +1,8 @@
 package jmri.jmrit.operations.automation.actions;
 
-import javax.swing.JComboBox;
 import jmri.jmrit.operations.automation.AutomationItem;
 
-public class GotoFailureAction extends Action {
+public class GotoFailureAction extends GotoAction {
 
     private static final int _code = ActionCodes.GOTO_IF_FALSE;
 
@@ -28,15 +27,5 @@ public class GotoFailureAction extends Action {
             }
             finishAction(automationItem != null);
         }
-    }
-
-    @Override
-    public void cancelAction() {
-        // no cancel for this action
-    }
-    
-    @Override
-    public JComboBox<AutomationItem> getComboBox() {
-        return getAutomationItemComboBox();
     }
 }
