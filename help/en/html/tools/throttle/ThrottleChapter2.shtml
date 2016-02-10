@@ -84,24 +84,24 @@ shown.</p>
   Throttle window. These are identified as:</p>
 </dir>
 <ul>
-  <li><b>Control Panel</b> � contains a throttle slider to control the speed of
+  <li><b>Control Panel</b> contains a throttle slider to control the speed of
     the loco, a forward and reverse selector, an Emergency Stop action button,
     and an Idle action button (mostly used for sound equipped decoders).<br>
     <br>
   </li>
-  <li><b>Function Panel</b> � is used to associate the function buttons with
+  <li><b>Function Panel</b> is used to associate the function buttons with
     the active output functions of the decoder.<br>
     <br>
   </li>
-  <li><b>Address Panel</b> � is used to identify the decoder's address, and to
+  <li><b>Address Panel</b> is used to identify the decoder's address, and to
     dispatch or release the identified address.<br>
     <br>
   </li>
 </ul>
 
-<p class="important"><b>Important!</b> � These three panels are actually
+<p class="important"><b>Important!</b> These three panels are actually
 windows defined within an overall window. Please note that each of these panels
-contain their own "minimize" and "close" buttons � as well as can also be
+contain their own "minimize" and "close" buttons - as well as can also be
 resized. You can actually minimize one or more of these panels within the
 Throttle window. This is being pointed out in event that you accidentally click
 on one of the buttons and the panel disappears on you. </p>
@@ -136,7 +136,7 @@ other options on the panels will become enabled.</p>
 						<li>Manually enter the decoder's address in the large text box,
 						then click on the "<big>Set</big>" button.<br>
 							<dir>
-							<p class="important"><b>Important!</b> � when manually entering
+							<p class="important"><b>Important!</b> When manually entering
 							an address, be sure to click on the <big>Set</big> button.
 							Without this step, all throttle actions remain disabled. </p>
 							</dir>
@@ -144,7 +144,7 @@ other options on the panels will become enabled.</p>
 						<li>Or, use the drop down list to select from the roster list (as
 						shown in the figure on the right).<br>
 						Please note that when you select a loco from this list, it simply
-						reads the decoders address from the roster file � it currently
+						reads the decoders address from the roster file - it currently
 						does <u>not</u> cross reference this to any saved throttle layout
 						files.</li>
 						</ol>
@@ -171,14 +171,14 @@ other options on the panels will become enabled.</p>
             described as...</p>
           </dir>
           <ul>
-            <li><strong>Dispatch</strong> � releases the decoder address back
+            <li><strong>Dispatch</strong> releases the decoder address back
               to the command station in a "dispatch" mode. Usually, only one
-              address can be in dispatch state at the command station � all
+              address can be in dispatch state at the command station - all
               others are either "in use" or "idle" (released). The controls and
               options in the throttle window will become disabled until another
               address is "<big>Set</big>".
             </li>
-            <li><strong>Release</strong> � releases the decoder address back to
+            <li><strong>Release</strong> releases the decoder address back to
               the command station as "no longer needed". The controls and
               options in the throttle window will become disabled until another
               address is "<big>Set</big>".
@@ -228,7 +228,7 @@ other options on the panels will become enabled.</p>
           differences, you may discover that not everything noted in the
           following text will function as defined for your system.</p>
 
-          <p class="important"><b>Important!</b> � The "Control Panel" must
+          <p class="important"><b>Important!</b> The "Control Panel" must
           have the "focus" for it to become active (and usable). In other
           words, it's window bar must be active. If you are following along
           with this text with your own locomotive and just entered an address
@@ -261,7 +261,7 @@ other options on the panels will become enabled.</p>
               off on you unexpectedly (more on this below).</b>
             </li>
             <li><b>If you click anywhere on the words "Forward" or "Reverse",
-              you will activate that action � which isn't too bad � except if
+              you will activate that action - which isn't too bad - except if
               the loco is running in the opposite direction from what action
               you clicked on.</b>
             </li>
@@ -277,14 +277,14 @@ other options on the panels will become enabled.</p>
           stopped, it is suggested to click on the "Idle" button (if you know
           for fact that your loco is stopped), or the forward or reverse area
           (depending of course on the current direction of the loco). In other
-          words, you want to click somewhere in within the border of the
-          Control Panel window � yet not cause your loco to do something that
+          words, you want to click somewhere within the border of the
+          Control Panel window, yet not cause your loco to do something that
           you don't want it to do.</p>
 
           <p>After a little experimentation, you will discover what is
           comfortable for your usage. The only point we are trying to make here
           is that many new users immediately get frustrated with the throttles
-          because they can't get their loco to move � not realizing that the
+          because they can't get their loco to move, not realizing that the
           Control Panel does not have the focus. Or they have clicked on a
           function button (more on these below), which then changes the
           "active" window to the Function Panel.</p>
@@ -381,7 +381,7 @@ other options on the panels will become enabled.</p>
     </table>
 
     <div>
-    <p class="important"><b>Note:</b> � *The implied keys noted above (with the
+    <p class="important"><b>Note:</b> The implied keys noted above (with the
     exception of the arrow keys) are those found on the numeric keypad of the
     keyboard. For laptops and other keyboards that don't have a separate
     numeric keypad, experimentation on your part may be needed to find the
@@ -440,7 +440,7 @@ other options on the panels will become enabled.</p>
           </td>
           <td>Clicking on this button will perform an immediate physical stop
             of the locomotive. If any braking momentum feature is enabled for
-            the decoder, it will be ignored � halting the locomotive
+            the decoder, it will be ignored halting the locomotive
             immediately. When using a sound decoder (such as a Soundtraxx
             DSD-150), and the decoder has a "sound shutdown action" (like in
             the diesel decoders), the associated engine shutdown sound will
@@ -452,7 +452,7 @@ other options on the panels will become enabled.</p>
           </td>
           <td>Clicking on this button will set the speed of the locomotive to
             0. If any braking momentum feature is enabled for the decoder, it
-            will still be active � slowing the locomotive down to a stop. When
+            will still be active and slow the locomotive down to a stop. When
             using a sound decoder (such as a Soundtraxx DSD-150), the engine
             sound will remain in its "idle" state. </td>
         </tr>
@@ -496,17 +496,17 @@ other options on the panels will become enabled.</p>
               <br>
             </li>
           </ul>
-          <p class="important"><b>Note:</b> � Clicking too far below the slider
+          <p class="important"><b>Note:</b> Clicking too far below the slider
           (especially when close to the bottom of the slider bar) may not have
           any effect because you are actually clicking on the "Forward" option.
           Therefore, it is suggested that when decreasing speed with this
-          method, that you click on the word "Stop" � not the emergency stop
-          button (STOP!) � but the word "Stop" located at the lower end of the
-          speed slider. </p>
+          method, that you click on the word "Stop" (not the emergency stop
+          button (STOP!) but the word "Stop" located at the lower end of the
+          speed slider). </p>
           <br>
           <br>
 
-          <p class="important"><b>Note:</b> � If the decoder has acceleration
+          <p class="important"><b>Note:</b> If the decoder has acceleration
           or braking rates enabled, the loco will speed up or slow down
           accordingly. If no momentum values are enabled, the loco will speed
           up or slow down abruptly. </p>
@@ -522,7 +522,7 @@ other options on the panels will become enabled.</p>
               decoder.
             </li>
           </ul>
-          <p class="important"><b>Note:</b> � If the decoder has acceleration
+          <p class="important"><b>Note:</b> If the decoder has acceleration
           or braking rates enabled, the loco will speed up or slow down
           accordingly. If no momentum values are enabled, the loco will speed
           up or slow down abruptly to the speed set when the mouse button was
@@ -547,17 +547,17 @@ other options on the panels will become enabled.</p>
               be changed to approximately 25%. </li>
           </ul>
 
-          <p class="important"><b>Note:</b> � If the decoder has acceleration
+          <p class="important"><b>Note:</b> If the decoder has acceleration
           or braking rates enabled, the loco will speed up or slow down
           accordingly. If no momentum values are enabled, the loco will speed
           up or slow down abruptly. </p>
 
-          <p class="important"><b>Note:</b> � Clicking too far below the slider
+          <p class="important"><b>Note:</b> Clicking too far below the slider
           (especially when close to the bottom of the slider bar) may not have
           any effect because you are actually clicking on the "Forward" option.
           Therefore, it is suggested that when decreasing speed with this
-          method, that you click on the word "Stop" � not the emergency stop
-          button (STOP!) � but the word "Stop" located at the lower end of the
+          method, that you click on the word "Stop" (not the emergency stop
+          button (STOP!) but the word "Stop" located at the lower end of the
           speed slider. </p>
         </li>
       </ol>
@@ -597,7 +597,7 @@ other options on the panels will become enabled.</p>
   that are "active" (in the "on" state). But, if the loco is moving, the loco's
   speed is not established on the Speed Control slider bar.</p>
 
-  <p class="important"><b>Note:</b> � At this time, the slider bar does
+  <p class="important"><b>Note:</b> At this time, the slider bar does
   <u>not</u> automatically correspond to the actual speed. This is important to
   understand because of what action you are going to see when you first click
   on the speed slider bar. When you first "<big>Set</big>" a decoder address,
@@ -629,7 +629,7 @@ other options on the panels will become enabled.</p>
           used for the lights.</p>
 
           <p>This is the basic functionality of the Function Panel. All buttons
-          function like an on/off toggle � click once to turn "on"; click again
+          function like an on/off toggle: click once to turn "on"; click again
           to turn "off".</p>
 
           <p>The next chapter provides more advanced features for customizing

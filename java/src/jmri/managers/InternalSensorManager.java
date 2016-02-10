@@ -12,6 +12,10 @@ import jmri.implementation.AbstractSensor;
  */
 public class InternalSensorManager extends AbstractSensorManager {
 
+    public InternalSensorManager() {
+        log.debug("InternalSensorManager constructed");
+    }
+    
     public boolean allowMultipleAdditions(String systemName) {
         return true;
     }
@@ -91,6 +95,8 @@ public class InternalSensorManager extends AbstractSensorManager {
     public String getSystemPrefix() {
         return prefix;
     }
+
+    static org.slf4j.Logger log = org.slf4j.LoggerFactory.getLogger(InternalSensorManager.class.getName());
 }
 
 /* @(#)InternalSensorManager.java */

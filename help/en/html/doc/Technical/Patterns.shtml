@@ -33,6 +33,38 @@ structure and patterns by looking at older code pieces.
 This page attempts to describe the recommended structure and patterns,
 and point to examples of current best practices.
 
+<a id="namedbeans" name="namedbeans"></a><h2>Names, NamedBeans, and Managers</h2>
+
+The "NamedBean" concept is basic to JMRI.
+A <a href="http://jmri.org/JavaDoc/doc/jmri/NamedBean.html">NamedBean</a>
+is a basic JMRI object that represents something, typically something 
+like a specific Sensor or Turnout.  
+<ul>
+<li>They're called a "Bean" because they're a unit of 
+interaction:  Multiple pieces of code can work with one, it can be loaded and stored, etc.
+<li>They're "Named" to make sure they're unique and retrievable:  There's only one Turnout NamedBean with 
+called "LT01", and it represents a specific addressed (named) layout object.
+See the <a href="Names.shtml">page on Names</a> for more on this.
+</ul>
+Functionally, all the device object classes (Sensor, Turnout, ...) and 
+their specific implementations (LnSensor, XNetTurnout, ...) inherit from the 
+base
+<a href="http://jmri.org/JavaDoc/doc/jmri/NamedBean.html">NamedBean</a> class.
+<p>
+To get access to a specific object (a NamedBean of a specific type with a specific name), you
+make requests of a manager:  You ask a 
+<a href="http://jmri.org/JavaDoc/doc/jmri/TurnoutManager.html">TurnoutManager</a> for a specific Turnout.
+In turn, you 
+<a href="IntroStructure.shtml">access the managers through the common InstanceManager</a>.
+
+<p>
+A user might want to reference a NamedBean via a user name, and in turn might want 
+to change the specific NamedBean that user name refers to.  "Yard East Turnout" might be
+"LT12" at one point, and later get moved to "CT5".  To handle this, 
+your code should use 
+<a href="http://jmri.org/JavaDoc/doc/jmri/NamedBeanHandle.html">NamedBeanHandle</a>
+objects to handle references to NamedBeans.  They automate the process of renaming.
+
 <h2>Code Organization</h2>
 <p>
 At the highest level, we separate test code from 
