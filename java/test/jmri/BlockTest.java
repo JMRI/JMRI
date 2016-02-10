@@ -27,9 +27,34 @@ public class BlockTest extends TestCase {
         Block b1 = new Block("SystemName1");
         Block b2 = new Block("SystemName2");
         
+        //multiple Block objects with same SystemName are really the same
+        Block b1a = new Block("SystemName1");
+        
         Assert.assertTrue(b1.equals(b1)); // identity
         Assert.assertFalse(b1.equals(b2)); // blocks are named objects
+
+        Assert.assertTrue(b1a.equals(b1));
+        Assert.assertTrue(b1.equals(b1a)); // commutes
         
+        // check null
+        Assert.assertFalse(b1.equals(null));
+
+        // check another type
+        Assert.assertFalse(b1.equals(new StringBuffer("foo")));        
+    }
+
+    public void testHashCode() {
+        Block b1 = new Block("SystemName1");
+        Block b2 = new Block("SystemName2");
+        
+        //multiple Block objects with same SystemName are really the same
+        Block b1a = new Block("SystemName1");
+        
+        Assert.assertTrue(b1.hashCode() == b1a.hashCode());
+
+        b1a.setLength(120);
+        b1a.setCurvature(21);
+        Assert.assertTrue(b1.hashCode() == b1a.hashCode());
     }
     
     public void testSensorAdd() {
