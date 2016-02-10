@@ -48,29 +48,34 @@
     <node name="Export Roster">
         <name xml:lang="it">Esporta Roster Completo</name>
         <name xml:lang="fr">Exporter Listes</name>
+        <name xml:lang="de">Exportiere Lokpark</name>
         <adapter>jmri.jmrit.roster.FullBackupExportAction</adapter>
     </node>
     <node name="Import Roster">
         <name xml:lang="fr">Importer Listes</name>
         <name xml:lang="it">Importa Roster</name>
+        <name xml:lang="de">Importiere Lokpark</name>
         <adapter>jmri.jmrit.roster.FullBackupImportAction</adapter>
     </node>
     <node>separator</node><!-- separator -->
     <node name="Rebuild Roster">
         <name xml:lang="fr">Recreate Listes</name>
         <name xml:lang="it">Rebuild Roster</name>
-         <name xml:lang="da">Genopbyg Roster</name>
+        <name xml:lang="da">Genopbyg Roster</name>
+        <name xml:lang="de">Baue Lokpark wieder auf</name>
         <adapter>jmri.jmrit.roster.RecreateRosterAction</adapter>
     </node>
     <node>separator</node><!-- separator -->
     <node name="Open PanelPro Window">
-     <name xml:lang="da">Åben PanelPro Window</name>
+        <name xml:lang="da">Åben PanelPro Window</name>
+        <name xml:lang="de">Öffne PanelPro Fenster</name>
         <adapter>apps.PanelPro.PanelProAction</adapter>
     </node>
     <node>separator</node><!-- separator -->
     <node name="Close Window">
         <name xml:lang="fr">Fermer</name>
         <name xml:lang="it">Chiudi</name>
+        <name xml:lang="de">Schließe</name>
         <mnemonic>c</mnemonic>
         <current>closewindow</current>
     </node>
@@ -84,7 +89,8 @@
             <current>printloco</current>
         </node>
         <node name="Summary">
-             <name xml:lang="it">Sommario</name>
+            <name xml:lang="it">Sommario</name>
+            <name xml:lang="de">Übersicht</name>
             <adapter>jmri.jmrit.roster.PrintRosterAction</adapter>
             <option class="boolean.class" setting="false">isPreview</option>
         </node>
