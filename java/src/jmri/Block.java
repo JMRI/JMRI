@@ -546,9 +546,9 @@ public class Block extends jmri.implementation.AbstractNamedBean implements Phys
     }
 
     @Override
+    // This can't change, so can't include mutable values
     public int hashCode() {
-        int hash = 100*_direction+1000*_curvature+10000*_current+(int)_length+CntOfPossibleEntrancePaths;
-        return hash;
+        return this.getSystemName().hashCode();
     }
 
     // internal data members
