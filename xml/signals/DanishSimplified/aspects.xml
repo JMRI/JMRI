@@ -5,7 +5,7 @@
     xmlns:xsi = "http://www.w3.org/2001/XMLSchema-instance"
     xsi:noNamespaceSchemaLocation = "http://localhost/xml/schema/aspecttable.xsd"
 >
-  <name>DanishVerySimplified</name>
+  <name>DanishSimplified</name>
   <date>2015</date>
   <reference>B and I signals from Togdillen or Banestyrelsen - not exactly prototypical</reference>
 
