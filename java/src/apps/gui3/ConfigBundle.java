@@ -1,5 +1,5 @@
 // ConfigBundle.java
-package apps;
+package apps.gui3;
 
 import edu.umd.cs.findbugs.annotations.CheckReturnValue;
 import edu.umd.cs.findbugs.annotations.DefaultAnnotation;
@@ -22,9 +22,9 @@ import edu.umd.cs.findbugs.annotations.SuppressWarnings;
  * @version $Revision: 17977 $
  * @since 3.3.1
  */
-public class ConfigBundle extends jmri.Bundle {
+public class ConfigBundle extends apps.ConfigBundle {
 
-    private final static String name = "apps.AppsConfigBundle"; // NOI18N
+    private final static String name = null; // no local resources
 
     //
     // below here is boilerplate to be copied exactly
@@ -59,7 +59,7 @@ public class ConfigBundle extends jmri.Bundle {
         return b.handleGetMessage(key, subs);
     }
 
-    private final static ConfigBundle b = new ConfigBundle();
+    private final static Bundle b = new Bundle();
 
     @Override
     @Nullable
