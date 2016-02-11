@@ -26,7 +26,7 @@ public class Xml {
     static final String ROUTE = "route"; // NOI18N
     static final String SKIPS = "skips"; // NOI18N
     static final String LOCATION = "location"; // NOI18N
-    static final String ROUTE_ID = "routeId"; // NOI18N old format
+    static final String ROUTE_ID = "routeId"; // old format // NOI18N
     static final String SKIP = "skip"; // NOI18N
     static final String CAR_TYPES = "carTypes"; // NOI18N
     static final String TYPES = "types"; // NOI18N
@@ -114,7 +114,7 @@ public class Xml {
     static final String OPEN_FILE = "openFile"; // NOI18N
     static final String TRAIN_ACTION = "trainAction"; // NOI18N
 
-    static final String COLUMN_WIDTHS = "columnWidths"; // NOI18N TODO This here is for backwards compatibility, remove after next major release
+    static final String COLUMN_WIDTHS = "columnWidths"; // TODO This here is for backwards compatibility, remove after next major release // NOI18N
 
     static final String TRAIN_SCHEDULE_OPTIONS = "trainScheduleOptions"; // NOI18N
     static final String ACTIVE_ID = "activeId"; // NOI18N
@@ -198,7 +198,7 @@ public class Xml {
 
     // TrainManifestHeaderText.jafa
     static final String MANIFEST_HEADER_TEXT_STRINGS = "manifestHeaderTextStrings"; // NOI18N
-    static final String ROAD = "road"; // the supported message format options NOI18N 
+    static final String ROAD = "road"; // the supported message format options // NOI18N
     static final String NUMBER = "number"; // NOI18N
     static final String ENGINE_NUMBER = "engineNumber"; // NOI18N
     static final String TYPE = "type"; // NOI18N

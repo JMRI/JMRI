@@ -12,59 +12,70 @@
     <name xml:lang="fr">Fichier</name>
     <name xml:lang="it">File</name>
     <name xml:lang="da">Filer</name>
+    <name xml:lang="de">Ablage</name>
     <mnemonic>f</mnemonic>
     <node name="New Roster Window">
         <name xml:lang="it">Nuova Finestra Roster</name>
         <name xml:lang="da">Nyt Roster Window</name>
+        <name xml:lang="de">Neues Lokparkfenster</name>
         <mnemonic>n</mnemonic>
         <current>newwindow</current>
     </node>
     <node name="Import Decoder File">
         <name xml:lang="it">Importa File Decoder</name>
         <name xml:lang="da">Importer Dekoder Fil</name>
+        <name xml:lang="de">Importiere Decoderdatei</name>
         <adapter>jmri.jmrit.decoderdefn.InstallDecoderFileAction</adapter>
     </node>
     <node name="Import Decoder URL">
         <name xml:lang="it">Importa URL Decoder</name>
         <name xml:lang="da">Importer Dekoder URL</name>
+        <name xml:lang="de">Importiere Decoder URL</name>
         <adapter>jmri.jmrit.decoderdefn.InstallDecoderURLAction</adapter>
     </node>
     <node>separator</node><!-- separator -->
     <node name="Export Roster Entry">
         <name xml:lang="it">Esporta Voce Roster</name>
+        <name xml:lang="de">Exportiere Lokparkeingabe</name>
         <current>exportloco</current>
     </node>
     <node name="Import Roster Entry">
         <name xml:lang="it">Importa Voce Roster</name>
+        <name xml:lang="de">Importiere Lokparkeingabe</name>
         <adapter>jmri.jmrit.roster.ImportRosterItemAction</adapter>
     </node>
     <node>separator</node><!-- separator -->
     <node name="Export Roster">
         <name xml:lang="it">Esporta Roster Completo</name>
         <name xml:lang="fr">Exporter Listes</name>
+        <name xml:lang="de">Exportiere Lokpark</name>
         <adapter>jmri.jmrit.roster.FullBackupExportAction</adapter>
     </node>
     <node name="Import Roster">
         <name xml:lang="fr">Importer Listes</name>
         <name xml:lang="it">Importa Roster</name>
+        <name xml:lang="de">Importiere Lokpark</name>
         <adapter>jmri.jmrit.roster.FullBackupImportAction</adapter>
     </node>
     <node>separator</node><!-- separator -->
     <node name="Rebuild Roster">
         <name xml:lang="fr">Recreate Listes</name>
         <name xml:lang="it">Rebuild Roster</name>
-         <name xml:lang="da">Genopbyg Roster</name>
+        <name xml:lang="da">Genopbyg Roster</name>
+        <name xml:lang="de">Baue Lokpark wieder auf</name>
         <adapter>jmri.jmrit.roster.RecreateRosterAction</adapter>
     </node>
     <node>separator</node><!-- separator -->
     <node name="Open PanelPro Window">
-     <name xml:lang="da">Åben PanelPro Window</name>
+        <name xml:lang="da">Åben PanelPro Window</name>
+        <name xml:lang="de">Öffne PanelPro Fenster</name>
         <adapter>apps.PanelPro.PanelProAction</adapter>
     </node>
     <node>separator</node><!-- separator -->
     <node name="Close Window">
         <name xml:lang="fr">Fermer</name>
         <name xml:lang="it">Chiudi</name>
+        <name xml:lang="de">Schließe</name>
         <mnemonic>c</mnemonic>
         <current>closewindow</current>
     </node>
@@ -78,7 +89,8 @@
             <current>printloco</current>
         </node>
         <node name="Summary">
-             <name xml:lang="it">Sommario</name>
+            <name xml:lang="it">Sommario</name>
+            <name xml:lang="de">Übersicht</name>
             <adapter>jmri.jmrit.roster.PrintRosterAction</adapter>
             <option class="boolean.class" setting="false">isPreview</option>
         </node>
@@ -101,6 +113,7 @@
         <name xml:lang="fr">Quitter</name>
         <name xml:lang="it">Esci</name>
         <name xml:lang="da">Afslut</name>
+        <name xml:lang="de">Beenden</name>
         <mnemonic>q</mnemonic>
         <current>quit</current>
     </node>
@@ -110,6 +123,7 @@
     <name xml:lang="fr">Édition</name>
     <name xml:lang="it">Modifica</name>
     <name xml:lang="da">Rediger</name>
+    <name xml:lang="de">Bearbeiten</name>
     <mnemonic>e</mnemonic>
     <node name="Cut">
         <name xml:lang="fr">Couper</name>
@@ -145,6 +159,7 @@
         <name xml:lang="fr">Préférences</name>
         <name xml:lang="it">Preferenze</name>
         <name xml:lang="da">Indstillinger</name>
+        <name xml:lang="de">Voreinstellungen...</name>
         <mnemonic>s</mnemonic>
         <adapter>apps.gui3.TabbedPreferencesAction</adapter>
     </node>
@@ -153,6 +168,7 @@
   <node name="Settings">
     <name xml:lang="it">Impostazioni</name>
     <name xml:lang="da">Indstillinger</name>
+    <name xml:lang="de">Einstellungen</name>
     <mnemonic>s</mnemonic>
     <node name="Hide/Show Summary Pane">
         <name xml:lang="it">Nascondi/Vedi Pannello</name>
@@ -242,6 +258,7 @@
   <node name="Actions">
     <name xml:lang="it">Azioni</name>
     <name xml:lang="da">Værktøjer</name>
+    <name xml:lang="de">Aktionen</name>
     <mnemonic>a</mnemonic>
     <node name="Program">
         <name xml:lang="it">Programma</name>
@@ -324,7 +341,8 @@
     <node name="Run Script">
          <name xml:lang="it">Esegui Script</name>
          <name xml:lang="da">Kør Script</name>
-        <adapter>jmri.jmrit.jython.RunJythonScript</adapter>
+         <name xml:lang="de">Lade Skript</name>
+         <adapter>jmri.jmrit.jython.RunJythonScript</adapter>
     </node>
   </node>
 

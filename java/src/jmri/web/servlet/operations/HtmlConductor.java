@@ -38,7 +38,7 @@ public class HtmlConductor extends HtmlTrainCommon {
                     "ConductorSnippet.html"))), train.getIconName(), StringEscapeUtils.escapeHtml4(train
                             .getDescription()), StringEscapeUtils.escapeHtml4(train.getComment()), Setup
                     .isPrintRouteCommentsEnabled() ? train.getRoute().getComment() : "", strings
-                    .getProperty("Terminated"), "", // NOI18N terminated train has nothing to do
+                    .getProperty("Terminated"), "", // terminated train has nothing to do // NOI18N
                     "", // engines in separate section
                     "", // pickup=true, local=false
                     "", // pickup=false, local=false
