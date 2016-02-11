@@ -49,7 +49,7 @@ public class Xml {
     static final String OPTIONS = "options"; // NOI18N
     static final String CARS = "cars"; // NOI18N
     static final String CARS_OPTIONS = "carsOptions"; // NOI18N
-    static final String COLUMN_WIDTHS = "columnWidths"; // NOI18N backwards compatible TODO remove in 2013 after production release
+    static final String COLUMN_WIDTHS = "columnWidths"; // backwards compatible TODO remove in 2013 after production release // NOI18N
     static final String KERNELS = "kernels"; // NOI18N
     static final String NEW_KERNELS = "newKernels"; // NOI18N
 

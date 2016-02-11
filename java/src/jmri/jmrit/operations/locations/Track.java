@@ -81,10 +81,10 @@ public class Track {
     protected String _dropOption = ANY; // controls which route or train can set out cars
     protected String _pickupOption = ANY; // controls which route or train can pick up cars
     public static final String ANY = "Any"; // track accepts any train or route
-    public static final String TRAINS = "trains"; // NOI18N track only accepts certain trains
-    public static final String ROUTES = "routes"; // NOI18N track only accepts certain routes
-    public static final String EXCLUDE_TRAINS = "excludeTrains"; // NOI18N track excludes certain trains
-    public static final String EXCLUDE_ROUTES = "excludeRoutes"; // NOI18N track excludes certain routes
+    public static final String TRAINS = "trains"; // track only accepts certain trains // NOI18N
+    public static final String ROUTES = "routes"; // track only accepts certain routes // NOI18N
+    public static final String EXCLUDE_TRAINS = "excludeTrains"; // track excludes certain trains // NOI18N
+    public static final String EXCLUDE_ROUTES = "excludeRoutes"; // track excludes certain routes // NOI18N
 
     // load options
     protected int _loadOptions = 0;
@@ -109,7 +109,7 @@ public class Track {
     public static final String STAGING = "Staging";
     public static final String INTERCHANGE = "Interchange";
     public static final String YARD = "Yard";
-    public static final String SPUR = "Siding"; // NOI18N note that early code used Siding as the spur type
+    public static final String SPUR = "Siding"; // note that early code used Siding as the spur type // NOI18N
 
     // train directions serviced by this track
     public static final int EAST = 1;
