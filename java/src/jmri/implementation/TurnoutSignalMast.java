@@ -52,7 +52,7 @@ public class TurnoutSignalMast extends AbstractSignalMast {
             throw new IllegalArgumentException("System name needs at least three parts: " + systemName);
         }
         if (!parts[0].equals("IF$tsm")) {
-            log.warn("SignalMast system name should start with IF: " + systemName);
+            log.warn("SignalMast system name should start with IF$tsm but is " + systemName);
         }
         String system = parts[1];
         String mast = parts[2];

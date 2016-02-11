@@ -63,7 +63,7 @@ public class SignalHeadSignalMast extends AbstractSignalMast implements java.bea
             throw new IllegalArgumentException("System name needs at least three parts: " + systemName);
         }
         if (!parts[0].equals("IF$shsm")) {
-            log.warn("SignalMast system name should start with IF: " + systemName);
+            log.warn("SignalMast system name should start with IF$shsm but is " + systemName);
         }
         String prefix = parts[0];
         String system = parts[1];
