@@ -689,11 +689,11 @@
       </properties>
       <unlit allowed="yes" />
     </virtualsignalmast>
-    <signalmast class="jmri.implementation.configurexml.SignalHeadSignalMastXml">
+    <signalmast class="jmri.implementation.configurexml.VirtualSignalMastXml">
       <systemName>IF$vsm:BNSF-1996:SL-3A($0139)</systemName>
       <unlit allowed="yes" />
     </signalmast>
-    <signalmast class="jmri.implementation.configurexml.SignalHeadSignalMastXml">
+    <signalmast class="jmri.implementation.configurexml.VirtualSignalMastXml">
       <systemName>IF$vsm:BNSF-1996:SL-3A($0140)</systemName>
       <unlit allowed="yes" />
     </signalmast>
