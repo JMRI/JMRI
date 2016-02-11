@@ -144,10 +144,6 @@
       <unlit allowed="yes" />
     </virtualsignalmast>
     <virtualsignalmast class="jmri.implementation.configurexml.VirtualSignalMastXml">
-      <systemName>IF$vsm:BNSF-1996:SE-2A($0165)</systemName>
-      <unlit allowed="yes" />
-    </virtualsignalmast>
-    <virtualsignalmast class="jmri.implementation.configurexml.VirtualSignalMastXml">
       <systemName>IF$vsm:BNSF-1996:SE-2D($0166)</systemName>
       <unlit allowed="yes" />
     </virtualsignalmast>
@@ -161,10 +157,6 @@
     </virtualsignalmast>
     <virtualsignalmast class="jmri.implementation.configurexml.VirtualSignalMastXml">
       <systemName>IF$vsm:BNSF-1996:SE-3A($0158)</systemName>
-      <unlit allowed="yes" />
-    </virtualsignalmast>
-    <virtualsignalmast class="jmri.implementation.configurexml.VirtualSignalMastXml">
-      <systemName>IF$vsm:BNSF-1996:SL-1A($0145)</systemName>
       <unlit allowed="yes" />
     </virtualsignalmast>
     <virtualsignalmast class="jmri.implementation.configurexml.VirtualSignalMastXml">
@@ -693,10 +685,6 @@
       <systemName>IF$vsm:BNSF-1996:SL-3A($0139)</systemName>
       <unlit allowed="yes" />
     </signalmast>
-    <signalmast class="jmri.implementation.configurexml.VirtualSignalMastXml">
-      <systemName>IF$vsm:BNSF-1996:SL-3A($0140)</systemName>
-      <unlit allowed="yes" />
-    </signalmast>
     <virtualsignalmast class="jmri.implementation.configurexml.VirtualSignalMastXml">
       <systemName>IF$vsm:BNSF-1996:SL-3A($0142)</systemName>
       <unlit allowed="yes" />
@@ -713,14 +701,6 @@
     </virtualsignalmast>
     <virtualsignalmast class="jmri.implementation.configurexml.VirtualSignalMastXml">
       <systemName>IF$vsm:BNSF-1996:SL-3A($0144)</systemName>
-      <unlit allowed="yes" />
-    </virtualsignalmast>
-    <virtualsignalmast class="jmri.implementation.configurexml.VirtualSignalMastXml">
-      <systemName>IF$vsm:BNSF-1996:SL-3L2($0156)</systemName>
-      <unlit allowed="yes" />
-    </virtualsignalmast>
-    <virtualsignalmast class="jmri.implementation.configurexml.VirtualSignalMastXml">
-      <systemName>IF$vsm:BNSF-1996:SL-3L3($0157)</systemName>
       <unlit allowed="yes" />
     </virtualsignalmast>
     <virtualsignalmast class="jmri.implementation.configurexml.VirtualSignalMastXml">
@@ -855,16 +835,6 @@
     </virtualsignalmast>
     <virtualsignalmast class="jmri.implementation.configurexml.VirtualSignalMastXml">
       <systemName>IF$vsm:UP-2008:SL-3A($0186)</systemName>
-      <unlit allowed="yes" />
-    </virtualsignalmast>
-    <virtualsignalmast class="jmri.implementation.configurexml.VirtualSignalMastXml">
-      <systemName>IF$vsm:UP-2008:SL-3A($0187)</systemName>
-      <properties>
-        <property>
-          <key class="java.lang.String">intermediateSignal</key>
-          <value class="java.lang.Boolean">true</value>
-        </property>
-      </properties>
       <unlit allowed="yes" />
     </virtualsignalmast>
     <virtualsignalmast class="jmri.implementation.configurexml.VirtualSignalMastXml">
@@ -3204,371 +3174,6 @@
         <lockTurnouts>no</lockTurnouts>
       </destinationMast>
     </signalmastlogic>
-    <signalmastlogic source="IF$vsm:BNSF-1996:SL-1A($0145)">
-      <sourceSignalMast>IF$vsm:BNSF-1996:SL-1A($0145)</sourceSignalMast>
-      <destinationMast destination="IF$vsm:UP-2008:SL-3A($0199)">
-        <destinationSignalMast>IF$vsm:UP-2008:SL-3A($0199)</destinationSignalMast>
-        <comment />
-        <enabled>yes</enabled>
-        <allowAutoMaticSignalMastGeneration>no</allowAutoMaticSignalMastGeneration>
-        <useLayoutEditor>yes</useLayoutEditor>
-        <useLayoutEditorTurnouts>yes</useLayoutEditorTurnouts>
-        <useLayoutEditorBlocks>yes</useLayoutEditorBlocks>
-        <lockTurnouts>no</lockTurnouts>
-      </destinationMast>
-      <destinationMast destination="IF$vsm:UP-2008:SL-3A($0191)">
-        <destinationSignalMast>IF$vsm:UP-2008:SL-3A($0191)</destinationSignalMast>
-        <comment />
-        <enabled>yes</enabled>
-        <allowAutoMaticSignalMastGeneration>no</allowAutoMaticSignalMastGeneration>
-        <useLayoutEditor>yes</useLayoutEditor>
-        <useLayoutEditorTurnouts>yes</useLayoutEditorTurnouts>
-        <useLayoutEditorBlocks>yes</useLayoutEditorBlocks>
-        <lockTurnouts>no</lockTurnouts>
-      </destinationMast>
-      <destinationMast destination="IF$vsm:UP-2008:SL-3A($0170)">
-        <destinationSignalMast>IF$vsm:UP-2008:SL-3A($0170)</destinationSignalMast>
-        <comment />
-        <enabled>yes</enabled>
-        <allowAutoMaticSignalMastGeneration>no</allowAutoMaticSignalMastGeneration>
-        <useLayoutEditor>yes</useLayoutEditor>
-        <useLayoutEditorTurnouts>yes</useLayoutEditorTurnouts>
-        <useLayoutEditorBlocks>yes</useLayoutEditorBlocks>
-        <lockTurnouts>no</lockTurnouts>
-      </destinationMast>
-      <destinationMast destination="IF$vsm:UP-2008:SL-3A($0189)">
-        <destinationSignalMast>IF$vsm:UP-2008:SL-3A($0189)</destinationSignalMast>
-        <comment />
-        <enabled>yes</enabled>
-        <allowAutoMaticSignalMastGeneration>no</allowAutoMaticSignalMastGeneration>
-        <useLayoutEditor>yes</useLayoutEditor>
-        <useLayoutEditorTurnouts>yes</useLayoutEditorTurnouts>
-        <useLayoutEditorBlocks>yes</useLayoutEditorBlocks>
-        <lockTurnouts>no</lockTurnouts>
-      </destinationMast>
-      <destinationMast destination="IF$vsm:UP-2008:SL-3A($0176)">
-        <destinationSignalMast>IF$vsm:UP-2008:SL-3A($0176)</destinationSignalMast>
-        <comment />
-        <enabled>yes</enabled>
-        <allowAutoMaticSignalMastGeneration>no</allowAutoMaticSignalMastGeneration>
-        <useLayoutEditor>yes</useLayoutEditor>
-        <useLayoutEditorTurnouts>yes</useLayoutEditorTurnouts>
-        <useLayoutEditorBlocks>yes</useLayoutEditorBlocks>
-        <lockTurnouts>no</lockTurnouts>
-      </destinationMast>
-      <destinationMast destination="IF$vsm:UP-2008:SL-3A($0239)">
-        <destinationSignalMast>IF$vsm:UP-2008:SL-3A($0239)</destinationSignalMast>
-        <comment />
-        <enabled>yes</enabled>
-        <allowAutoMaticSignalMastGeneration>no</allowAutoMaticSignalMastGeneration>
-        <useLayoutEditor>yes</useLayoutEditor>
-        <useLayoutEditorTurnouts>yes</useLayoutEditorTurnouts>
-        <useLayoutEditorBlocks>yes</useLayoutEditorBlocks>
-        <lockTurnouts>no</lockTurnouts>
-      </destinationMast>
-      <destinationMast destination="IF$vsm:BNSF-1996:SL-3A($0139)">
-        <destinationSignalMast>IF$vsm:BNSF-1996:SL-3A($0139)</destinationSignalMast>
-        <comment />
-        <enabled>yes</enabled>
-        <allowAutoMaticSignalMastGeneration>no</allowAutoMaticSignalMastGeneration>
-        <useLayoutEditor>yes</useLayoutEditor>
-        <useLayoutEditorTurnouts>yes</useLayoutEditorTurnouts>
-        <useLayoutEditorBlocks>yes</useLayoutEditorBlocks>
-        <lockTurnouts>no</lockTurnouts>
-      </destinationMast>
-    </signalmastlogic>
-    <signalmastlogic source="IF$vsm:BNSF-1996:SL-3L3($0157)">
-      <sourceSignalMast>IF$vsm:BNSF-1996:SL-3L3($0157)</sourceSignalMast>
-      <destinationMast destination="IF$vsm:UP-2008:SL-3A($0199)">
-        <destinationSignalMast>IF$vsm:UP-2008:SL-3A($0199)</destinationSignalMast>
-        <comment />
-        <enabled>yes</enabled>
-        <allowAutoMaticSignalMastGeneration>no</allowAutoMaticSignalMastGeneration>
-        <useLayoutEditor>yes</useLayoutEditor>
-        <useLayoutEditorTurnouts>yes</useLayoutEditorTurnouts>
-        <useLayoutEditorBlocks>yes</useLayoutEditorBlocks>
-        <lockTurnouts>no</lockTurnouts>
-      </destinationMast>
-      <destinationMast destination="IF$vsm:UP-2008:SL-3A($0191)">
-        <destinationSignalMast>IF$vsm:UP-2008:SL-3A($0191)</destinationSignalMast>
-        <comment />
-        <enabled>yes</enabled>
-        <allowAutoMaticSignalMastGeneration>no</allowAutoMaticSignalMastGeneration>
-        <useLayoutEditor>yes</useLayoutEditor>
-        <useLayoutEditorTurnouts>yes</useLayoutEditorTurnouts>
-        <useLayoutEditorBlocks>yes</useLayoutEditorBlocks>
-        <lockTurnouts>no</lockTurnouts>
-      </destinationMast>
-      <destinationMast destination="IF$vsm:UP-2008:SL-3A($0170)">
-        <destinationSignalMast>IF$vsm:UP-2008:SL-3A($0170)</destinationSignalMast>
-        <comment />
-        <enabled>yes</enabled>
-        <allowAutoMaticSignalMastGeneration>no</allowAutoMaticSignalMastGeneration>
-        <useLayoutEditor>yes</useLayoutEditor>
-        <useLayoutEditorTurnouts>yes</useLayoutEditorTurnouts>
-        <useLayoutEditorBlocks>yes</useLayoutEditorBlocks>
-        <lockTurnouts>no</lockTurnouts>
-      </destinationMast>
-      <destinationMast destination="IF$vsm:UP-2008:SL-3A($0189)">
-        <destinationSignalMast>IF$vsm:UP-2008:SL-3A($0189)</destinationSignalMast>
-        <comment />
-        <enabled>yes</enabled>
-        <allowAutoMaticSignalMastGeneration>no</allowAutoMaticSignalMastGeneration>
-        <useLayoutEditor>yes</useLayoutEditor>
-        <useLayoutEditorTurnouts>yes</useLayoutEditorTurnouts>
-        <useLayoutEditorBlocks>yes</useLayoutEditorBlocks>
-        <lockTurnouts>no</lockTurnouts>
-      </destinationMast>
-      <destinationMast destination="IF$vsm:UP-2008:SL-3A($0176)">
-        <destinationSignalMast>IF$vsm:UP-2008:SL-3A($0176)</destinationSignalMast>
-        <comment />
-        <enabled>yes</enabled>
-        <allowAutoMaticSignalMastGeneration>no</allowAutoMaticSignalMastGeneration>
-        <useLayoutEditor>yes</useLayoutEditor>
-        <useLayoutEditorTurnouts>yes</useLayoutEditorTurnouts>
-        <useLayoutEditorBlocks>yes</useLayoutEditorBlocks>
-        <lockTurnouts>no</lockTurnouts>
-      </destinationMast>
-      <destinationMast destination="IF$vsm:UP-2008:SL-3A($0239)">
-        <destinationSignalMast>IF$vsm:UP-2008:SL-3A($0239)</destinationSignalMast>
-        <comment />
-        <enabled>yes</enabled>
-        <allowAutoMaticSignalMastGeneration>no</allowAutoMaticSignalMastGeneration>
-        <useLayoutEditor>yes</useLayoutEditor>
-        <useLayoutEditorTurnouts>yes</useLayoutEditorTurnouts>
-        <useLayoutEditorBlocks>yes</useLayoutEditorBlocks>
-        <lockTurnouts>no</lockTurnouts>
-      </destinationMast>
-      <destinationMast destination="IF$vsm:BNSF-1996:SL-3A($0139)">
-        <destinationSignalMast>IF$vsm:BNSF-1996:SL-3A($0139)</destinationSignalMast>
-        <comment />
-        <enabled>yes</enabled>
-        <allowAutoMaticSignalMastGeneration>no</allowAutoMaticSignalMastGeneration>
-        <useLayoutEditor>yes</useLayoutEditor>
-        <useLayoutEditorTurnouts>yes</useLayoutEditorTurnouts>
-        <useLayoutEditorBlocks>yes</useLayoutEditorBlocks>
-        <lockTurnouts>no</lockTurnouts>
-      </destinationMast>
-    </signalmastlogic>
-    <signalmastlogic source="IF$vsm:BNSF-1996:SL-3L2($0156)">
-      <sourceSignalMast>IF$vsm:BNSF-1996:SL-3L2($0156)</sourceSignalMast>
-      <destinationMast destination="IF$vsm:UP-2008:SL-3A($0199)">
-        <destinationSignalMast>IF$vsm:UP-2008:SL-3A($0199)</destinationSignalMast>
-        <comment />
-        <enabled>yes</enabled>
-        <allowAutoMaticSignalMastGeneration>no</allowAutoMaticSignalMastGeneration>
-        <useLayoutEditor>yes</useLayoutEditor>
-        <useLayoutEditorTurnouts>yes</useLayoutEditorTurnouts>
-        <useLayoutEditorBlocks>yes</useLayoutEditorBlocks>
-        <lockTurnouts>no</lockTurnouts>
-      </destinationMast>
-      <destinationMast destination="IF$vsm:UP-2008:SL-3A($0191)">
-        <destinationSignalMast>IF$vsm:UP-2008:SL-3A($0191)</destinationSignalMast>
-        <comment />
-        <enabled>yes</enabled>
-        <allowAutoMaticSignalMastGeneration>no</allowAutoMaticSignalMastGeneration>
-        <useLayoutEditor>yes</useLayoutEditor>
-        <useLayoutEditorTurnouts>yes</useLayoutEditorTurnouts>
-        <useLayoutEditorBlocks>yes</useLayoutEditorBlocks>
-        <lockTurnouts>no</lockTurnouts>
-      </destinationMast>
-      <destinationMast destination="IF$vsm:UP-2008:SL-3A($0170)">
-        <destinationSignalMast>IF$vsm:UP-2008:SL-3A($0170)</destinationSignalMast>
-        <comment />
-        <enabled>yes</enabled>
-        <allowAutoMaticSignalMastGeneration>no</allowAutoMaticSignalMastGeneration>
-        <useLayoutEditor>yes</useLayoutEditor>
-        <useLayoutEditorTurnouts>yes</useLayoutEditorTurnouts>
-        <useLayoutEditorBlocks>yes</useLayoutEditorBlocks>
-        <lockTurnouts>no</lockTurnouts>
-      </destinationMast>
-      <destinationMast destination="IF$vsm:UP-2008:SL-3A($0189)">
-        <destinationSignalMast>IF$vsm:UP-2008:SL-3A($0189)</destinationSignalMast>
-        <comment />
-        <enabled>yes</enabled>
-        <allowAutoMaticSignalMastGeneration>no</allowAutoMaticSignalMastGeneration>
-        <useLayoutEditor>yes</useLayoutEditor>
-        <useLayoutEditorTurnouts>yes</useLayoutEditorTurnouts>
-        <useLayoutEditorBlocks>yes</useLayoutEditorBlocks>
-        <lockTurnouts>no</lockTurnouts>
-      </destinationMast>
-      <destinationMast destination="IF$vsm:UP-2008:SL-3A($0176)">
-        <destinationSignalMast>IF$vsm:UP-2008:SL-3A($0176)</destinationSignalMast>
-        <comment />
-        <enabled>yes</enabled>
-        <allowAutoMaticSignalMastGeneration>no</allowAutoMaticSignalMastGeneration>
-        <useLayoutEditor>yes</useLayoutEditor>
-        <useLayoutEditorTurnouts>yes</useLayoutEditorTurnouts>
-        <useLayoutEditorBlocks>yes</useLayoutEditorBlocks>
-        <lockTurnouts>no</lockTurnouts>
-      </destinationMast>
-      <destinationMast destination="IF$vsm:UP-2008:SL-3A($0239)">
-        <destinationSignalMast>IF$vsm:UP-2008:SL-3A($0239)</destinationSignalMast>
-        <comment />
-        <enabled>yes</enabled>
-        <allowAutoMaticSignalMastGeneration>no</allowAutoMaticSignalMastGeneration>
-        <useLayoutEditor>yes</useLayoutEditor>
-        <useLayoutEditorTurnouts>yes</useLayoutEditorTurnouts>
-        <useLayoutEditorBlocks>yes</useLayoutEditorBlocks>
-        <lockTurnouts>no</lockTurnouts>
-      </destinationMast>
-      <destinationMast destination="IF$vsm:BNSF-1996:SL-3A($0139)">
-        <destinationSignalMast>IF$vsm:BNSF-1996:SL-3A($0139)</destinationSignalMast>
-        <comment />
-        <enabled>yes</enabled>
-        <allowAutoMaticSignalMastGeneration>no</allowAutoMaticSignalMastGeneration>
-        <useLayoutEditor>yes</useLayoutEditor>
-        <useLayoutEditorTurnouts>yes</useLayoutEditorTurnouts>
-        <useLayoutEditorBlocks>yes</useLayoutEditorBlocks>
-        <lockTurnouts>no</lockTurnouts>
-      </destinationMast>
-    </signalmastlogic>
-    <signalmastlogic source="IF$vsm:BNSF-1996:SE-2A($0165)">
-      <sourceSignalMast>IF$vsm:BNSF-1996:SE-2A($0165)</sourceSignalMast>
-      <destinationMast destination="IF$vsm:UP-2008:SL-3A($0199)">
-        <destinationSignalMast>IF$vsm:UP-2008:SL-3A($0199)</destinationSignalMast>
-        <comment />
-        <enabled>yes</enabled>
-        <allowAutoMaticSignalMastGeneration>no</allowAutoMaticSignalMastGeneration>
-        <useLayoutEditor>yes</useLayoutEditor>
-        <useLayoutEditorTurnouts>yes</useLayoutEditorTurnouts>
-        <useLayoutEditorBlocks>yes</useLayoutEditorBlocks>
-        <lockTurnouts>no</lockTurnouts>
-      </destinationMast>
-      <destinationMast destination="IF$vsm:UP-2008:SL-3A($0191)">
-        <destinationSignalMast>IF$vsm:UP-2008:SL-3A($0191)</destinationSignalMast>
-        <comment />
-        <enabled>yes</enabled>
-        <allowAutoMaticSignalMastGeneration>no</allowAutoMaticSignalMastGeneration>
-        <useLayoutEditor>yes</useLayoutEditor>
-        <useLayoutEditorTurnouts>yes</useLayoutEditorTurnouts>
-        <useLayoutEditorBlocks>yes</useLayoutEditorBlocks>
-        <lockTurnouts>no</lockTurnouts>
-      </destinationMast>
-      <destinationMast destination="IF$vsm:UP-2008:SL-3A($0170)">
-        <destinationSignalMast>IF$vsm:UP-2008:SL-3A($0170)</destinationSignalMast>
-        <comment />
-        <enabled>yes</enabled>
-        <allowAutoMaticSignalMastGeneration>no</allowAutoMaticSignalMastGeneration>
-        <useLayoutEditor>yes</useLayoutEditor>
-        <useLayoutEditorTurnouts>yes</useLayoutEditorTurnouts>
-        <useLayoutEditorBlocks>yes</useLayoutEditorBlocks>
-        <lockTurnouts>no</lockTurnouts>
-      </destinationMast>
-      <destinationMast destination="IF$vsm:UP-2008:SL-3A($0189)">
-        <destinationSignalMast>IF$vsm:UP-2008:SL-3A($0189)</destinationSignalMast>
-        <comment />
-        <enabled>yes</enabled>
-        <allowAutoMaticSignalMastGeneration>no</allowAutoMaticSignalMastGeneration>
-        <useLayoutEditor>yes</useLayoutEditor>
-        <useLayoutEditorTurnouts>yes</useLayoutEditorTurnouts>
-        <useLayoutEditorBlocks>yes</useLayoutEditorBlocks>
-        <lockTurnouts>no</lockTurnouts>
-      </destinationMast>
-      <destinationMast destination="IF$vsm:UP-2008:SL-3A($0176)">
-        <destinationSignalMast>IF$vsm:UP-2008:SL-3A($0176)</destinationSignalMast>
-        <comment />
-        <enabled>yes</enabled>
-        <allowAutoMaticSignalMastGeneration>no</allowAutoMaticSignalMastGeneration>
-        <useLayoutEditor>yes</useLayoutEditor>
-        <useLayoutEditorTurnouts>yes</useLayoutEditorTurnouts>
-        <useLayoutEditorBlocks>yes</useLayoutEditorBlocks>
-        <lockTurnouts>no</lockTurnouts>
-      </destinationMast>
-      <destinationMast destination="IF$vsm:UP-2008:SL-3A($0239)">
-        <destinationSignalMast>IF$vsm:UP-2008:SL-3A($0239)</destinationSignalMast>
-        <comment />
-        <enabled>yes</enabled>
-        <allowAutoMaticSignalMastGeneration>no</allowAutoMaticSignalMastGeneration>
-        <useLayoutEditor>yes</useLayoutEditor>
-        <useLayoutEditorTurnouts>yes</useLayoutEditorTurnouts>
-        <useLayoutEditorBlocks>yes</useLayoutEditorBlocks>
-        <lockTurnouts>no</lockTurnouts>
-      </destinationMast>
-      <destinationMast destination="IF$vsm:BNSF-1996:SL-3A($0139)">
-        <destinationSignalMast>IF$vsm:BNSF-1996:SL-3A($0139)</destinationSignalMast>
-        <comment />
-        <enabled>yes</enabled>
-        <allowAutoMaticSignalMastGeneration>no</allowAutoMaticSignalMastGeneration>
-        <useLayoutEditor>yes</useLayoutEditor>
-        <useLayoutEditorTurnouts>yes</useLayoutEditorTurnouts>
-        <useLayoutEditorBlocks>yes</useLayoutEditorBlocks>
-        <lockTurnouts>no</lockTurnouts>
-      </destinationMast>
-    </signalmastlogic>
-    <signalmastlogic source="IF$vsm:BNSF-1996:SL-3A($0140)">
-      <sourceSignalMast>IF$vsm:BNSF-1996:SL-3A($0140)</sourceSignalMast>
-      <destinationMast destination="IF$vsm:UP-2008:SL-3A($0199)">
-        <destinationSignalMast>IF$vsm:UP-2008:SL-3A($0199)</destinationSignalMast>
-        <comment />
-        <enabled>yes</enabled>
-        <allowAutoMaticSignalMastGeneration>no</allowAutoMaticSignalMastGeneration>
-        <useLayoutEditor>yes</useLayoutEditor>
-        <useLayoutEditorTurnouts>yes</useLayoutEditorTurnouts>
-        <useLayoutEditorBlocks>yes</useLayoutEditorBlocks>
-        <lockTurnouts>no</lockTurnouts>
-      </destinationMast>
-      <destinationMast destination="IF$vsm:UP-2008:SL-3A($0191)">
-        <destinationSignalMast>IF$vsm:UP-2008:SL-3A($0191)</destinationSignalMast>
-        <comment />
-        <enabled>yes</enabled>
-        <allowAutoMaticSignalMastGeneration>no</allowAutoMaticSignalMastGeneration>
-        <useLayoutEditor>yes</useLayoutEditor>
-        <useLayoutEditorTurnouts>yes</useLayoutEditorTurnouts>
-        <useLayoutEditorBlocks>yes</useLayoutEditorBlocks>
-        <lockTurnouts>no</lockTurnouts>
-      </destinationMast>
-      <destinationMast destination="IF$vsm:UP-2008:SL-3A($0170)">
-        <destinationSignalMast>IF$vsm:UP-2008:SL-3A($0170)</destinationSignalMast>
-        <comment />
-        <enabled>yes</enabled>
-        <allowAutoMaticSignalMastGeneration>no</allowAutoMaticSignalMastGeneration>
-        <useLayoutEditor>yes</useLayoutEditor>
-        <useLayoutEditorTurnouts>yes</useLayoutEditorTurnouts>
-        <useLayoutEditorBlocks>yes</useLayoutEditorBlocks>
-        <lockTurnouts>no</lockTurnouts>
-      </destinationMast>
-      <destinationMast destination="IF$vsm:UP-2008:SL-3A($0189)">
-        <destinationSignalMast>IF$vsm:UP-2008:SL-3A($0189)</destinationSignalMast>
-        <comment />
-        <enabled>yes</enabled>
-        <allowAutoMaticSignalMastGeneration>no</allowAutoMaticSignalMastGeneration>
-        <useLayoutEditor>yes</useLayoutEditor>
-        <useLayoutEditorTurnouts>yes</useLayoutEditorTurnouts>
-        <useLayoutEditorBlocks>yes</useLayoutEditorBlocks>
-        <lockTurnouts>no</lockTurnouts>
-      </destinationMast>
-      <destinationMast destination="IF$vsm:UP-2008:SL-3A($0176)">
-        <destinationSignalMast>IF$vsm:UP-2008:SL-3A($0176)</destinationSignalMast>
-        <comment />
-        <enabled>yes</enabled>
-        <allowAutoMaticSignalMastGeneration>no</allowAutoMaticSignalMastGeneration>
-        <useLayoutEditor>yes</useLayoutEditor>
-        <useLayoutEditorTurnouts>yes</useLayoutEditorTurnouts>
-        <useLayoutEditorBlocks>yes</useLayoutEditorBlocks>
-        <lockTurnouts>no</lockTurnouts>
-      </destinationMast>
-      <destinationMast destination="IF$vsm:UP-2008:SL-3A($0239)">
-        <destinationSignalMast>IF$vsm:UP-2008:SL-3A($0239)</destinationSignalMast>
-        <comment />
-        <enabled>yes</enabled>
-        <allowAutoMaticSignalMastGeneration>no</allowAutoMaticSignalMastGeneration>
-        <useLayoutEditor>yes</useLayoutEditor>
-        <useLayoutEditorTurnouts>yes</useLayoutEditorTurnouts>
-        <useLayoutEditorBlocks>yes</useLayoutEditorBlocks>
-        <lockTurnouts>no</lockTurnouts>
-      </destinationMast>
-      <destinationMast destination="IF$vsm:BNSF-1996:SL-3A($0139)">
-        <destinationSignalMast>IF$vsm:BNSF-1996:SL-3A($0139)</destinationSignalMast>
-        <comment />
-        <enabled>yes</enabled>
-        <allowAutoMaticSignalMastGeneration>no</allowAutoMaticSignalMastGeneration>
-        <useLayoutEditor>yes</useLayoutEditor>
-        <useLayoutEditorTurnouts>yes</useLayoutEditorTurnouts>
-        <useLayoutEditorBlocks>yes</useLayoutEditorBlocks>
-        <lockTurnouts>no</lockTurnouts>
-      </destinationMast>
-    </signalmastlogic>
     <signalmastlogic source="IF$vsm:UP-2008:SL-3A($0240)">
       <sourceSignalMast>IF$vsm:UP-2008:SL-3A($0240)</sourceSignalMast>
       <destinationMast destination="IF$vsm:UP-2008:SL-3A($0195)">
@@ -3896,19 +3501,6 @@
         <lockTurnouts>no</lockTurnouts>
       </destinationMast>
     </signalmastlogic>
-    <signalmastlogic source="IF$vsm:UP-2008:SL-3A($0187)">
-      <sourceSignalMast>IF$vsm:UP-2008:SL-3A($0187)</sourceSignalMast>
-      <destinationMast destination="IF$vsm:UP-2008:SL-3A($0233)">
-        <destinationSignalMast>IF$vsm:UP-2008:SL-3A($0233)</destinationSignalMast>
-        <comment />
-        <enabled>yes</enabled>
-        <allowAutoMaticSignalMastGeneration>no</allowAutoMaticSignalMastGeneration>
-        <useLayoutEditor>yes</useLayoutEditor>
-        <useLayoutEditorTurnouts>yes</useLayoutEditorTurnouts>
-        <useLayoutEditorBlocks>yes</useLayoutEditorBlocks>
-        <lockTurnouts>no</lockTurnouts>
-      </destinationMast>
-    </signalmastlogic>
     <signalmastlogic source="IF$vsm:UP-2008:SL-3L2($0250)">
       <sourceSignalMast>IF$vsm:UP-2008:SL-3L2($0250)</sourceSignalMast>
       <destinationMast destination="IF$vsm:UP-2008:SL-3A($0233)">
@@ -4048,7 +3640,7 @@
   </signalmastlogics>
   <timebase class="jmri.jmrit.simpleclock.configurexml.SimpleTimebaseXml" time="Fri Jan 03 20:11:25 GMT 2014" rate="1.0" run="yes" master="yes" sync="no" correct="no" display="no" startstopped="no" startsettime="no" startclockoption="0" />
   <entryexitpairs class="jmri.jmrit.signalling.configurexml.EntryExitPairsXml" />
-  <LayoutEditor class="jmri.jmrit.display.layoutEditor.configurexml.LayoutEditorXml" name="My Layout" x="0" y="0" height="648" width="1004" windowheight="712" windowwidth="1023" panelheight="648" panelwidth="1004" sliders="no" scrollable="none" editable="no" positionable="yes" controlling="yes" animating="yes" showhelpbar="yes" drawgrid="yes" snaponadd="yes" snaponmove="yes" antialiasing="no" turnoutcircles="no" tooltipsnotedit="no" tooltipsinedit="yes" mainlinetrackwidth="4" xscale="1.0" yscale="1.0" sidetrackwidth="2" defaulttrackcolor="black" defaultoccupiedtrackcolor="black" defaultalternativetrackcolor="black" defaulttextcolor="black" turnoutcirclecolor="black" turnoutcirclesize="2" turnoutdrawunselectedleg="yes" turnoutbx="20.0" turnoutcx="20.0" turnoutwid="10.0" xoverlong="30.0" xoverhwid="10.0" xovershort="10.0" autoblkgenerate="yes" openDispatcher="no">
+  <LayoutEditor class="jmri.jmrit.display.layoutEditor.configurexml.LayoutEditorXml" name="AA1UPtest Layout" x="0" y="0" height="648" width="1004" windowheight="712" windowwidth="1023" panelheight="648" panelwidth="1004" sliders="no" scrollable="none" editable="no" positionable="yes" controlling="yes" animating="yes" showhelpbar="yes" drawgrid="yes" snaponadd="yes" snaponmove="yes" antialiasing="no" turnoutcircles="no" tooltipsnotedit="no" tooltipsinedit="yes" mainlinetrackwidth="4" xscale="1.0" yscale="1.0" sidetrackwidth="2" defaulttrackcolor="black" defaultoccupiedtrackcolor="black" defaultalternativetrackcolor="black" defaulttextcolor="black" turnoutcirclecolor="black" turnoutcirclesize="2" turnoutdrawunselectedleg="yes" turnoutbx="20.0" turnoutcx="20.0" turnoutwid="10.0" xoverlong="30.0" xoverhwid="10.0" xovershort="10.0" autoblkgenerate="yes" openDispatcher="no">
     <positionablelabel x="530" y="130" level="4" forcecontroloff="false" hidden="no" positionable="true" showtooltip="false" editable="false" text="Medium" size="12" style="1" red="51" green="51" blue="51" justification="centre" class="jmri.jmrit.display.configurexml.PositionableLabelXml">
       <tooltip>Text Label</tooltip>
     </positionablelabel>
