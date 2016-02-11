@@ -90,13 +90,13 @@ saved.</p>
 
 <p>After entering a file name of your choosing (and optional location) that
 best supports your railroad environment, the current throttle layout will be
-saved with all preferences � including window size and location.</p>
+saved with all preferences, including window size and location.</p>
 
 <p>After the save is successful, you can close down the throttle window.</p>
 
-<p class="important"><b>Note:</b> � the "Save" option will save <u>all</u>
-currently opened throttle windows � they are <u>not</u> saved as individual
-throttles. This is explained in more detail below. </p>
+<p class="important"><b>Note:</b> The "Save" option will save <u>all</u>
+currently opened Throttle windows. They are <u>not</u> saved as individual
+Throttles. This is explained in more detail below. </p>
 
 <a name="SaveMultiple"></a> 
 <h2>Saving Multiple Throttle Windows</h2>
@@ -109,7 +109,7 @@ throttles. This is explained in more detail below. </p>
   will be saved in the same file. When that file is re-opened, all throttle
   windows identified in that file will get opened.</p>
 
-  <p>This is important to understand � especially further along when working
+  <p>This is important to understand, especially further along when working
   with <a href="#Merging">merging multiple throttles</a>.</p>
 
   <table border="0" width="100%" cellpadding="0" cellspacing="0">
@@ -189,7 +189,7 @@ address was first "Set"). The throttle attempts to determine the current
 direction of the locomotive, as well as identify any functions that are in the
 "on" state.</p>
 
-<p class="important"><b>Note:</b> � Because the JMRI Throttles are still in
+<p class="important"><b>Note:</b> Because the JMRI Throttles are still in
 their "beta" development mode, there are still some quirks that need to be
 ironed out. An example of this is when opening a throttle layout and the DCC
 address is already "in use" by another throttle. Some systems (i.e. Digitrax)
@@ -221,17 +221,17 @@ is verified as not being used by another throttle somewhere.</p>
   the right.</p>
 </dir>
 <ul>
-  <li><strong>Merge</strong> � leaves the currently active open throttle
+  <li><strong>Merge</strong> leaves the currently active open throttle
     windows in place and opens the throttle(s) contained in the layout file
     being opened.<br>
     <br>
   </li>
-  <li><strong>Replace</strong> � closes down the currently active open throttle
+  <li><strong>Replace</strong> closes down the currently active open throttle
     window(s) and opens up the throttle window(s) established in the saved
     layout file.<br>
     <br>
   </li>
-  <li><strong>Cancel</strong> � cancels the "open" request and closes down this
+  <li><strong>Cancel</strong> cancels the "open" request and closes down this
     dialog window. </li>
 </ul>
 
@@ -250,7 +250,7 @@ The only "merging" and "replacing" that occurs is simply on your screen.</b>
         address in multiple throttle layout files. A good example of why you
         may want to do this would be if you create several throttle layout
         files, each consisting of a single throttle window controlling one
-        single locomotive � like one for each loco in your roster. There may be
+        single Locomotive, like one for each loco in your Roster. There may be
         times when you wish to just run a single locomotive and you just open
         up the associated layout file. Simple! But what if you find yourself
         opening up the same locomotive throttles consistently on each session.
@@ -261,8 +261,8 @@ The only "merging" and "replacing" that occurs is simply on your screen.</b>
         defined.</p>
 
         <p>Just remember, when making a change to the configuration of a
-        throttle window, it only gets changed in the layout file that you saved
-        � it is <u>not</u> a global change in every file where that locomotive
+        throttle window, it only gets changed in the layout file that you saved;
+        it is <u>not</u> a global change in every file where that Locomotive
         is used.</p>
       </td>
     </tr>
@@ -296,7 +296,7 @@ completely closing down the throttle window.</p>
 <p>If you have made any configuration changes to the throttle window, and you
 want to save them, you'll need to follow the steps as outlined above.</p>
 
-<p class="important"><b>Note:</b> � If you "save" any changes that you have
+<p class="important"><b>Note:</b> If you "save" any changes that you have
 made during a session back to an existing throttle layout file, beware that
 <u>ALL</u> currently opened throttle windows will also be saved to the same
 file. </p>
@@ -319,7 +319,7 @@ window.</p>
       <td align="center"><b><a href="ThrottleTOC.shtml"
         title="Jump to the Table Of Contents page">TOC</a></b> </td>
       <td><img src="images/spacer.gif" width="30" height="10"> </td>
-      <td align="left">� </td>
+      <td align="left"></td>
     </tr>
   </tbody>
 </table>

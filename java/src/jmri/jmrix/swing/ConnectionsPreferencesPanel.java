@@ -40,7 +40,7 @@ import org.slf4j.LoggerFactory;
  */
 public class ConnectionsPreferencesPanel extends JTabbedPane implements ManagingPreferencesPanel {
 
-    private static final ResourceBundle rb = ResourceBundle.getBundle("apps.AppsConfigBundle"); // NOI18N
+    private static final ResourceBundle rb = ResourceBundle.getBundle("apps.AppsConfigBundle"); // NOI18N for some items
     private static final Logger log = LoggerFactory.getLogger(ConnectionsPreferencesPanel.class);
     private static final long serialVersionUID = 3007932795460089101L;
 
@@ -132,7 +132,7 @@ public class ConnectionsPreferencesPanel extends JTabbedPane implements Managing
 
         JPanel c = new JPanel();
         c.setLayout(new FlowLayout(FlowLayout.LEFT, 0, 0));
-        final JCheckBox disable = new JCheckBox("Disable Connection");
+        final JCheckBox disable = new JCheckBox(rb.getString("ButtonDisableConnection"));
         disable.setSelected(configPane.getDisabled());
         disable.addActionListener((ActionEvent e) -> {
             configPane.setDisabled(disable.isSelected());
