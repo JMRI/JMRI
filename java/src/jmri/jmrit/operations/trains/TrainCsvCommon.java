@@ -22,8 +22,8 @@ import org.slf4j.LoggerFactory;
  */
 public class TrainCsvCommon extends TrainCommon {
 
-    protected final static String DEL = ","; // NOI18N delimiter
-    protected final static String ESC = "\""; // NOI18N escape
+    protected final static String DEL = ","; // delimiter // NOI18N
+    protected final static String ESC = "\""; // escape // NOI18N
 
     protected final static String HEADER = Bundle.getMessage("csvOperator") + DEL + Bundle.getMessage("csvDescription")
             + DEL + Bundle.getMessage("csvParameters");

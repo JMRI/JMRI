@@ -165,7 +165,7 @@ public final class XMLUtil extends Object {
         try {
             return factory.newSAXParser().getXMLReader();
         } catch (ParserConfigurationException ex) {
-            throw new SAXException("Cannot create parser satisfying configuration parameters", ex); //NOI18N                        
+            throw new SAXException("Cannot create parser satisfying configuration parameters", ex); // NOI18N
         }
     }
 
