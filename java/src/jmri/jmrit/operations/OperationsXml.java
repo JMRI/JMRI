@@ -123,7 +123,7 @@ public abstract class OperationsXml extends XmlFile {
         return operationsFileName;
     }
 
-    private String operationsFileName = "DefaultOperations.xml"; // NOI18N should be overridden
+    private String operationsFileName = "DefaultOperations.xml"; // should be overridden // NOI18N
 
     /**
      * Absolute path to location of Operations files.
