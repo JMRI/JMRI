@@ -416,18 +416,16 @@ public class UserInterface extends JmriJFrame implements DeviceListener, DeviceM
     public void servicePublished(ZeroConfServiceEvent se) {
         try {
             try {
-                InetAddress addr = se.getAddress();
-                // most addresses are Inet6Address objects, 
-                if (addr instanceof Inet4Address && !addr.isLoopbackAddress()) {
+                InetAddress addr = se.getDNS().getInetAddress();
+                //output last good ipV4 address to the window to support manual entry
+                if (addr instanceof Inet4Address) {
                     this.portLabel.setText(addr.getHostName());
                     this.manualPortLabel.setText(addr.getHostAddress() + ":" + port); // NOI18N
-                    log.debug("Published IPv4 ZeroConf service for {} on {}:{}", se.getService().key(), addr.getHostAddress(), port); // NOI18N
+                    log.debug("Published IPv4 ZeroConf service for '{}' on {}:{}", se.getService().key(), addr.getHostAddress(), port); // NOI18N
                 } else {
-                    this.portLabel.setText(Inet4Address.getLocalHost().getHostName());
-                    this.manualPortLabel.setText(Inet4Address.getLocalHost().getHostAddress() + ":" + port); // NOI18N
-                    log.debug("Published IPv6 ZeroConf service for {} on {}:{}", se.getService().key(), addr.getHostAddress(), port); // NOI18N
+                    log.debug("Published IPv6 ZeroConf service for '{}' on {}:{}", se.getService().key(), addr.getHostAddress(), port); // NOI18N
                 }
-            } catch (NullPointerException ex) {
+            } catch (NullPointerException | IOException ex) {
                 log.error("Address is invalid: {}", ex.getLocalizedMessage());
                 this.portLabel.setText(Inet4Address.getLocalHost().getHostName());
                 this.manualPortLabel.setText(Inet4Address.getLocalHost().getHostAddress() + ":" + port); // NOI18N
