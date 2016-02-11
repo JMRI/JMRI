@@ -279,9 +279,13 @@ than providing multiple lines in the code itself.
 <p>
 Some parts of JMRI remain English only due to our developer population.
 In particular, comments and variable names in the code should remain in
-English, as should messages sent to the logging system.  
+English, as should messages sent to the logging system. Keys for 
+the translation bundles are another example. 
 In the Java code, these strings can be marked with a "<code>// NOI18N</code>"
-comment at the end of the line.
+comment at the end of the line. If needed, put that after another comment:
+<pre><code>
+  firePropertyChange("size", oldSize, newSize); // promptly! // NOI18N
+</code></pre>
 
 <h3>Adding a new Bundle</h3>
 <p>
