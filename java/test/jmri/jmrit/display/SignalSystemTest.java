@@ -21,6 +21,79 @@ import jmri.util.JUnitUtil;
  */
 public class SignalSystemTest extends jmri.configurexml.SchemaTestBase {
 
+
+    public void testLoadSimplePanelOBlocksDB1969() throws jmri.JmriException {
+        if (System.getProperty("jmri.headlesstest", "false").equals("true")) { return; }
+        
+        // load file
+        InstanceManager.configureManagerInstance()
+                .load(new java.io.File("java/test/jmri/jmrit/display/verify/SimplePanel_OBlocks-DB1969.xml"));
+        InstanceManager.logixManagerInstance().activateAllLogixs();
+        InstanceManager.getDefault(jmri.jmrit.display.layoutEditor.LayoutBlockManager.class).initializeLayoutBlockPaths();
+                
+        // check aspects
+
+        checkAspect("IF$vsm:DB-HV-1969:block_distant($0002)", "Hp1+Vr1");
+        checkAspect("IF$vsm:DB-HV-1969:block_distant($0003)", "Hp1+Vr0");
+        checkAspect("IF$vsm:DB-HV-1969:block_distant($0009)", "Hp1+Vr1");
+        checkAspect("IF$vsm:DB-HV-1969:block_distant($0010)", "Hp1+Vr0");
+        checkAspect("IF$vsm:DB-HV-1969:entry_distant($0004)", "Hp0");
+        checkAspect("IF$vsm:DB-HV-1969:entry_distant($0007)", "Hp0");
+        checkAspect("IF$vsm:DB-HV-1969:entry_distant($0011)", "Hp0");
+        checkAspect("IF$vsm:DB-HV-1969:exit_distant($0005)", "Hp1+Vr1");
+        checkAspect("IF$vsm:DB-HV-1969:exit_distant($0006)", "Hp1+Vr0");
+        checkAspect("IF$vsm:DB-HV-1969:exit_distant($0008)", "Hp1+Vr1");
+        checkAspect("IF$vsm:DB-HV-1969:shunting_dwarf($0012)", "Sh0");
+       
+        InstanceManager.turnoutManagerInstance().getTurnout("IT201").setCommandedState(Turnout.CLOSED);
+
+        checkAspect("IF$vsm:DB-HV-1969:block_distant($0002)", "Hp1+Vr1");
+        checkAspect("IF$vsm:DB-HV-1969:block_distant($0003)", "Hp1+Vr1");
+        checkAspect("IF$vsm:DB-HV-1969:block_distant($0009)", "Hp1+Vr1");
+        checkAspect("IF$vsm:DB-HV-1969:block_distant($0010)", "Hp1+Vr1");
+        checkAspect("IF$vsm:DB-HV-1969:entry_distant($0004)", "Hp1+Vr1");
+        checkAspect("IF$vsm:DB-HV-1969:entry_distant($0007)", "Hp1+Vr1");
+        checkAspect("IF$vsm:DB-HV-1969:entry_distant($0011)", "Hp0");
+        checkAspect("IF$vsm:DB-HV-1969:exit_distant($0005)", "Hp1+Vr1");
+        checkAspect("IF$vsm:DB-HV-1969:exit_distant($0006)", "Hp1+Vr0");
+        checkAspect("IF$vsm:DB-HV-1969:exit_distant($0008)", "Hp1+Vr1");
+        checkAspect("IF$vsm:DB-HV-1969:shunting_dwarf($0012)", "Sh0");
+
+        InstanceManager.sensorManagerInstance().getSensor("IS101").setState(Sensor.ACTIVE);
+
+        checkAspect("IF$vsm:DB-HV-1969:block_distant($0002)", "Hp1+Vr1");
+        checkAspect("IF$vsm:DB-HV-1969:block_distant($0003)", "Hp1+Vr1");
+        checkAspect("IF$vsm:DB-HV-1969:block_distant($0009)", "Hp1+Vr0");
+        checkAspect("IF$vsm:DB-HV-1969:block_distant($0010)", "Hp0");
+        checkAspect("IF$vsm:DB-HV-1969:entry_distant($0004)", "Hp1+Vr0");
+        checkAspect("IF$vsm:DB-HV-1969:entry_distant($0007)", "Hp1+Vr1");
+        checkAspect("IF$vsm:DB-HV-1969:entry_distant($0011)", "Hp0");
+        checkAspect("IF$vsm:DB-HV-1969:exit_distant($0005)", "Hp00");
+        checkAspect("IF$vsm:DB-HV-1969:exit_distant($0006)", "Hp1+Vr0");
+        checkAspect("IF$vsm:DB-HV-1969:exit_distant($0008)", "Hp1+Vr1");
+        checkAspect("IF$vsm:DB-HV-1969:shunting_dwarf($0012)", "Sh0");
+
+        InstanceManager.sensorManagerInstance().getSensor("IS102").setState(Sensor.ACTIVE);
+
+        checkAspect("IF$vsm:DB-HV-1969:block_distant($0002)", "Hp0");
+        checkAspect("IF$vsm:DB-HV-1969:block_distant($0003)", "Hp1+Vr1");
+        checkAspect("IF$vsm:DB-HV-1969:block_distant($0009)", "Hp0");
+        checkAspect("IF$vsm:DB-HV-1969:block_distant($0010)", "Hp0");
+        checkAspect("IF$vsm:DB-HV-1969:entry_distant($0004)", "Hp1+Vr0");
+        checkAspect("IF$vsm:DB-HV-1969:entry_distant($0007)", "Hp1+Vr1");
+        checkAspect("IF$vsm:DB-HV-1969:entry_distant($0011)", "Hp0");
+        checkAspect("IF$vsm:DB-HV-1969:exit_distant($0005)", "Hp00");
+        checkAspect("IF$vsm:DB-HV-1969:exit_distant($0006)", "Hp1+Vr0");
+        checkAspect("IF$vsm:DB-HV-1969:exit_distant($0008)", "Hp1+Vr0");
+        checkAspect("IF$vsm:DB-HV-1969:shunting_dwarf($0012)", "Sh0");
+        
+        // clean up messages from file
+        //jmri.util.JUnitAppender.assertErrorMessage("No facing block found for source mast IF$vsm:BNSF-1996:SL-2A($0100)");
+        //jmri.util.JUnitAppender.clearBacklog();
+        //jmri.util.JUnitAppender.verifyNoBacklog();
+        log.warn("suppressing multiple messages from AA1UPtest.xml file");
+    }
+
     public void testLoadAA1UPtest() throws jmri.JmriException {
         if (System.getProperty("jmri.headlesstest", "false").equals("true")) { return; }
         
