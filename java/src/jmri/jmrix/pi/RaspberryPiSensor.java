@@ -2,11 +2,6 @@
 
 package jmri.jmrix.pi;
 
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
-import jmri.implementation.AbstractSensor;
-import jmri.Sensor;
-
 import com.pi4j.io.gpio.GpioController;
 import com.pi4j.io.gpio.GpioFactory;
 import com.pi4j.io.gpio.GpioPinDigitalInput;
@@ -14,6 +9,10 @@ import com.pi4j.io.gpio.PinPullResistance;
 import com.pi4j.io.gpio.RaspiPin;
 import com.pi4j.io.gpio.event.GpioPinDigitalStateChangeEvent;
 import com.pi4j.io.gpio.event.GpioPinListenerDigital;
+import jmri.Sensor;
+import jmri.implementation.AbstractSensor;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 /**
  * Extend jmri.AbstractSensor for XPressNet layouts.
@@ -42,12 +41,14 @@ public class RaspberryPiSensor extends AbstractSensor implements GpioPinListener
      * Common initialization for both constructors
      */
     private void init(String id) {
+        log.debug("Provisioning sensor {}",id);
         if(gpio==null)
            gpio = GpioFactory.getInstance();
         address=Integer.parseInt(id.substring(id.lastIndexOf("S")+1));
         try {
            pin = gpio.provisionDigitalInputPin(RaspiPin.getPinByName("GPIO "+address),getSystemName(),PinPullResistance.PULL_DOWN);
         } catch(java.lang.RuntimeException re) {
+            log.error("Provisioning sensor {} failed with: {}", id, re.getMessage());
         }
         pin.addListener(this);
         requestUpdateFromLayout(); // set state to match current value.
