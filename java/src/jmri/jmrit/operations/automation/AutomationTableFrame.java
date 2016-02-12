@@ -65,7 +65,7 @@ public class AutomationTableFrame extends OperationsFrame implements java.beans.
 
     // combo boxes
 
-    public static final int MAX_NAME_LENGTH = Control.max_len_string_location_name;
+    public static final int MAX_NAME_LENGTH = Control.max_len_string_automation_name;
     public static final String NAME = Bundle.getMessage("Name");
     public static final String DISPOSE = "dispose"; // NOI18N
 
@@ -323,7 +323,6 @@ public class AutomationTableFrame extends OperationsFrame implements java.beans.
             return false;
         }
         if (automationNameTextField.getText().length() > MAX_NAME_LENGTH) {
-            log.error("Automation name must be less than {} charaters", MAX_NAME_LENGTH + 1);
             JOptionPane.showMessageDialog(this, MessageFormat.format(
                     Bundle.getMessage("AutomationNameLengthMax"),
                     new Object[]{Integer.toString(MAX_NAME_LENGTH)}), MessageFormat.format(

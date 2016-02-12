@@ -46,7 +46,7 @@ public class Car extends RollingStock {
     protected String _pickupScheduleId = NONE;
     protected String _nextPickupScheduleId = NONE; // when the car needs to be pulled
 
-    public static final String LOAD_CHANGED_PROPERTY = "Car load changed"; // NOI18N property change descriptions
+    public static final String LOAD_CHANGED_PROPERTY = "Car load changed"; // property change descriptions // NOI18N
     public static final String WAIT_CHANGED_PROPERTY = "Car wait changed"; // NOI18N
     public static final String NEXT_WAIT_CHANGED_PROPERTY = "Car next wait changed"; // NOI18N
     public static final String FINAL_DESTINATION_CHANGED_PROPERTY = "Car final destination changed"; // NOI18N

@@ -57,7 +57,7 @@ public class XNetReply extends jmri.jmrix.AbstractMRReply {
         _nDataChars = b.length;
         _dataChars = new int[_nDataChars];
         for (int i = 0; i < b.length; i++) {
-            setElement(i, b[i]);
+            setElement(i, ( b[i] & 0xff) );
         }
     }
 
@@ -521,7 +521,7 @@ public class XNetReply extends jmri.jmrix.AbstractMRReply {
      */
     public boolean isTimeSlotRestored() {
         return (this.getElement(0) == XNetConstants.LI_MESSAGE_RESPONSE_HEADER
-                && this.getElement(1) == XNetConstants.LI_MESSAGE_RESPONSE_SEND_SUCCESS);
+                && this.getElement(1) == XNetConstants.LIUSB_TIMESLOT_RESTORED);
     }
 
     /* 
@@ -570,7 +570,7 @@ public class XNetReply extends jmri.jmrix.AbstractMRReply {
      * the errors handeled are:
      *		01 05 04  -- Timeslot Error
      *          01 07 06  -- Timeslot Restored 
-     *          01 08 09  -- Timeslot Restored 
+     *          01 08 09  -- Data sent while there is no Timeslot
      */
     public boolean isTimeSlotErrorMessage() {
         return (this.getElement(0) == XNetConstants.LI_MESSAGE_RESPONSE_HEADER

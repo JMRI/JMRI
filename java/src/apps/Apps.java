@@ -1085,7 +1085,7 @@ public class Apps extends JPanel implements PropertyChangeListener, WindowListen
     }
 
     static protected JPanel splashDebugMsg() {
-        JLabel panelLabel = new JLabel("Press F8 to disable logixs");
+        JLabel panelLabel = new JLabel(Bundle.getMessage("PressF8ToDebug"));
         panelLabel.setFont(panelLabel.getFont().deriveFont(9f));
         JPanel panel = new JPanel();
         panel.add(panelLabel);

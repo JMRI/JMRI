@@ -69,9 +69,9 @@ public class RollingStock implements java.beans.PropertyChangeListener {
 
     protected int number = 0; // used by rolling stock manager for sort by number
 
-    public static final String ERROR_TRACK = "ERROR wrong track for location"; // NOI18N checks for coding error
+    public static final String ERROR_TRACK = "ERROR wrong track for location"; // checks for coding error // NOI18N
 
-    public static final String LOCATION_CHANGED_PROPERTY = "rolling stock location"; // NOI18N 
+    public static final String LOCATION_CHANGED_PROPERTY = "rolling stock location"; // NOI18N
     public static final String TRACK_CHANGED_PROPERTY = "rolling stock track location"; // NOI18N
     public static final String DESTINATION_CHANGED_PROPERTY = "rolling stock destination"; // NOI18N
     public static final String DESTINATION_TRACK_CHANGED_PROPERTY = "rolling stock track destination"; // NOI18N

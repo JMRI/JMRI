@@ -30,7 +30,7 @@ public class TrainLogger extends XmlFile implements java.beans.PropertyChangeLis
     File _fileLogger;
     private boolean _trainLog = false; // when true logging train movements
     static final String DEL = ","; // delimiter
-    static final String ESC = "\""; // NOI18N escape
+    static final String ESC = "\""; // escape // NOI18N
 
     public TrainLogger() {
     }

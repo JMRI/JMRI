@@ -587,9 +587,9 @@ public class ConfigSensorsAndTurnoutsFrame extends JmriJFrame implements DCCppLi
             columnNames[1] = Bundle.getMessage("FieldTablePinColumn");
             columnNames[2] = Bundle.getMessage("FieldTablePullupColumn");
             columnNames[3] = Bundle.getMessage("FieldTableDeleteColumn");
-            columnNames[4] = "isNew"; // NOI18N -- hidden column;
-            columnNames[5] = "isDirty"; // NOI18N -- hidden column;
-            columnNames[6] = "isDelete"; // NOI18N -- hidden column;
+            columnNames[4] = "isNew";       // hidden column // NOI18N
+            columnNames[5] = "isDirty";     // hidden column // NOI18N
+            columnNames[6] = "isDelete";    // hidden column // NOI18N
             rowData = new Vector();
         }
 
@@ -740,9 +740,9 @@ public class ConfigSensorsAndTurnoutsFrame extends JmriJFrame implements DCCppLi
             columnNames[1] = Bundle.getMessage("FieldTableAddressColumn");
             columnNames[2] = Bundle.getMessage("FieldTableSubaddrColumn");
             columnNames[3] = Bundle.getMessage("FieldTableDeleteColumn");
-            columnNames[4] = "isNew"; // NOI18N -- hidden column;
-            columnNames[5] = "isDirty"; // NOI18N -- hidden column;
-            columnNames[6] = "isDelete"; // NOI18N -- hidden column;
+            columnNames[4] = "isNew";        // hidden column // NOI18N
+            columnNames[5] = "isDirty";      // hidden column // NOI18N
+            columnNames[6] = "isDelete";     // hidden column // NOI18N
             rowData = new Vector();
         }
 
@@ -887,9 +887,9 @@ public class ConfigSensorsAndTurnoutsFrame extends JmriJFrame implements DCCppLi
             columnNames[3] = Bundle.getMessage("FieldTableOutputRestoreStateColumn");
             columnNames[4] = Bundle.getMessage("FieldTableOutputForceToColumn");
             columnNames[5] = Bundle.getMessage("FieldTableDeleteColumn");
-            columnNames[6] = "isNew"; // NOI18N -- hidden column;
-            columnNames[7] = "isDirty"; // NOI18N -- hidden column;
-            columnNames[8] = "isDelete"; // NOI18N -- hidden column;
+            columnNames[6] = "isNew";        // hidden column // NOI18N
+            columnNames[7] = "isDirty";      // hidden column // NOI18N
+            columnNames[8] = "isDelete";     // hidden column // NOI18N
             rowData = new Vector();
         }
 
