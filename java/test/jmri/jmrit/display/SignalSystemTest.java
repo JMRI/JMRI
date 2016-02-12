@@ -87,11 +87,6 @@ public class SignalSystemTest extends jmri.configurexml.SchemaTestBase {
         checkAspect("IF$vsm:DB-HV-1969:exit_distant($0008)", "Hp1+Vr0");
         checkAspect("IF$vsm:DB-HV-1969:shunting_dwarf($0012)", "Sh0");
         
-        // clean up messages from file
-        //jmri.util.JUnitAppender.assertErrorMessage("No facing block found for source mast IF$vsm:BNSF-1996:SL-2A($0100)");
-        //jmri.util.JUnitAppender.clearBacklog();
-        //jmri.util.JUnitAppender.verifyNoBacklog();
-        log.warn("suppressing multiple messages from AA1UPtest.xml file");
     }
 
     public void testLoadAA1UPtest() throws jmri.JmriException {
