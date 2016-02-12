@@ -89,7 +89,7 @@ public class GuiLafConfigPane extends JPanel implements PreferencesPanel {
 
     void doClickSelection(JPanel panel) {
         panel.setLayout(new FlowLayout());
-        mouseEvent = new JCheckBox("Use non-standard release event for mouse click?");
+        mouseEvent = new JCheckBox(ConfigBundle.getMessage("GUIButtonNonStandardRelease"));
         mouseEvent.setSelected(SwingSettings.getNonStandardMouseEvent());
         mouseEvent.addItemListener((ItemEvent e) -> {
             InstanceManager.getDefault(GuiLafPreferencesManager.class).setNonStandardMouseEvent(mouseEvent.isSelected());
