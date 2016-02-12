@@ -200,6 +200,7 @@ public class TrackCopyFrame extends OperationsFrame implements java.beans.Proper
                 // move rolling stock
                 moveRollingStock(fromTrack, toTrack);
                 if (deleteTrackCheckBox.isSelected()) {
+                    ScheduleManager.instance().replaceTrack(fromTrack, toTrack);
                     fromTrack.getLocation().deleteTrack(fromTrack);
                 }
             }
