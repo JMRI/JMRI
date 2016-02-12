@@ -6,8 +6,6 @@ import java.awt.event.ActionEvent;
 import java.text.MessageFormat;
 import javax.swing.AbstractAction;
 import javax.swing.JOptionPane;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 
 /**
  * Action to print a train's build report
@@ -63,6 +61,5 @@ public class PrintTrainBuildReportAction extends AbstractAction {
         }
     }
 
-    private final static Logger log = LoggerFactory
-            .getLogger(PrintTrainBuildReportAction.class.getName());
+//    private final static Logger log = LoggerFactory.getLogger(PrintTrainBuildReportAction.class.getName());
 }
