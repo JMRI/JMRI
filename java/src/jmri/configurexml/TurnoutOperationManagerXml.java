@@ -71,5 +71,5 @@ public class TurnoutOperationManagerXml extends jmri.configurexml.AbstractXmlAda
         return elem;
     }
 
-    static Logger log = LoggerFactory.getLogger(TurnoutOperationManagerXml.class.getName());
+    private final static Logger log = LoggerFactory.getLogger(TurnoutOperationManagerXml.class.getName());
 }

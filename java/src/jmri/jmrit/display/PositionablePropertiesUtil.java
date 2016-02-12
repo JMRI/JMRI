@@ -938,5 +938,5 @@ public class PositionablePropertiesUtil {
         }
 
     }
-    static Logger log = LoggerFactory.getLogger(PositionablePropertiesUtil.class.getName());
+    private final static Logger log = LoggerFactory.getLogger(PositionablePropertiesUtil.class.getName());
 }

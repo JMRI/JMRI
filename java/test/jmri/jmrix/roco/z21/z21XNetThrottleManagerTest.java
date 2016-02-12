@@ -57,6 +57,6 @@ public class z21XNetThrottleManagerTest extends XNetThrottleManagerTest {
         apps.tests.Log4JFixture.tearDown();
     }
 
-    static Logger log = LoggerFactory.getLogger(z21XNetThrottleManagerTest.class.getName());
+    private final static Logger log = LoggerFactory.getLogger(z21XNetThrottleManagerTest.class.getName());
 
 }

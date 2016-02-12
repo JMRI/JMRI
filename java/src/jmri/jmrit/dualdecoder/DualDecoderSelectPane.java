@@ -302,6 +302,6 @@ public class DualDecoderSelectPane extends javax.swing.JPanel implements jmri.Pr
         }
     }
 
-    static Logger log = LoggerFactory.getLogger(DualDecoderSelectPane.class.getName());
+    private final static Logger log = LoggerFactory.getLogger(DualDecoderSelectPane.class.getName());
 
 }

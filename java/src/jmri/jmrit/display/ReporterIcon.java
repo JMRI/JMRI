@@ -172,5 +172,5 @@ public class ReporterIcon extends PositionableLabel implements java.beans.Proper
         return ((javax.swing.JLabel) this).getMaximumSize().width;  // defer to superclass
     }
 
-    static Logger log = LoggerFactory.getLogger(ReporterIcon.class.getName());
+    private final static Logger log = LoggerFactory.getLogger(ReporterIcon.class.getName());
 }

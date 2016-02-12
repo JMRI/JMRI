@@ -139,5 +139,5 @@ public class MrcPacketGenPanel extends jmri.jmrix.mrc.swing.MrcPanel {
         }
     }
 
-    static Logger log = LoggerFactory.getLogger(MrcPacketGenPanel.class.getName());
+    private final static Logger log = LoggerFactory.getLogger(MrcPacketGenPanel.class.getName());
 }

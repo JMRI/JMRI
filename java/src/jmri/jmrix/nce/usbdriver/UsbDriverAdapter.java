@@ -249,6 +249,6 @@ public class UsbDriverAdapter extends NcePortController {
     private boolean opened = false;
     InputStream serialStream = null;
 
-    static Logger log = LoggerFactory.getLogger(UsbDriverAdapter.class.getName());
+    private final static Logger log = LoggerFactory.getLogger(UsbDriverAdapter.class.getName());
 
 }

@@ -26,7 +26,7 @@ abstract public class ActiveFlagCS {
         return flag;
     }
 
-    static Logger log = LoggerFactory.getLogger(ActiveFlagCS.class.getName());
+    private final static Logger log = LoggerFactory.getLogger(ActiveFlagCS.class.getName());
 
 }
 

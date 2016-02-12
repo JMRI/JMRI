@@ -26,7 +26,7 @@ public class LoadDemoAction extends AbstractAction {
      *
      */
     private static final long serialVersionUID = 8904435442712923065L;
-    static Logger log = LoggerFactory.getLogger(LoadDemoAction.class
+    private final static Logger log = LoggerFactory.getLogger(LoadDemoAction.class
             .getName());
 
     public LoadDemoAction(String s) {

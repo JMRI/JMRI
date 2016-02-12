@@ -13,7 +13,7 @@ public class JmriSRCPServerManager {
     static private JmriSRCPServerManager instance = null;
     private JmriSRCPServerPreferences preferences;
     private JmriSRCPServer server;
-    static Logger log = LoggerFactory.getLogger(JmriSRCPServer.class.getName());
+    private final static Logger log = LoggerFactory.getLogger(JmriSRCPServer.class.getName());
 
     private JmriSRCPServerManager() {
         if (InstanceManager.getDefault(JmriSRCPServerPreferences.class) == null) {

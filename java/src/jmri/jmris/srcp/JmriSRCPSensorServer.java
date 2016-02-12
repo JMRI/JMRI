@@ -152,5 +152,5 @@ public class JmriSRCPSensorServer extends AbstractSensorServer {
             }
         }
     }
-    static Logger log = LoggerFactory.getLogger(JmriSRCPSensorServer.class.getName());
+    private final static Logger log = LoggerFactory.getLogger(JmriSRCPSensorServer.class.getName());
 }

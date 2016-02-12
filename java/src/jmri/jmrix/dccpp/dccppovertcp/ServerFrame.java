@@ -175,5 +175,5 @@ public class ServerFrame extends jmri.util.JmriJFrame implements ServerListner {
 
     static ServerFrame self;
 
-    static Logger log = LoggerFactory.getLogger(ServerFrame.class.getName());
+    private final static Logger log = LoggerFactory.getLogger(ServerFrame.class.getName());
 }

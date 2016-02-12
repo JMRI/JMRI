@@ -61,5 +61,5 @@ public class RpsMonFrame extends jmri.jmrix.AbstractMonFrame
         nextLine(m.toString() + "\n", raw);
     }
 
-    static Logger log = LoggerFactory.getLogger(RpsMonFrame.class.getName());
+    private final static Logger log = LoggerFactory.getLogger(RpsMonFrame.class.getName());
 }

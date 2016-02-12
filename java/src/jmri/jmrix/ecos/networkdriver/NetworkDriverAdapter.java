@@ -65,6 +65,6 @@ public class NetworkDriverAdapter extends EcosPortController implements jmri.jmr
         }
     }
 
-    static Logger log = LoggerFactory.getLogger(NetworkDriverAdapter.class.getName());
+    private final static Logger log = LoggerFactory.getLogger(NetworkDriverAdapter.class.getName());
 
 }

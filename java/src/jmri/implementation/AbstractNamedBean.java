@@ -223,7 +223,7 @@ public abstract class AbstractNamedBean implements NamedBean, java.io.Serializab
     public void vetoableChange(java.beans.PropertyChangeEvent evt) throws java.beans.PropertyVetoException {
     }
 
-    static Logger log = LoggerFactory.getLogger(AbstractNamedBean.class.getName());
+    private final static Logger log = LoggerFactory.getLogger(AbstractNamedBean.class.getName());
 }
 
 /* @(#)AbstractNamedBean.java */

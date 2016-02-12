@@ -55,6 +55,6 @@ public class DefaultConditionalManagerTest extends TestCase {
         return suite;
     }
 
-    static Logger log = LoggerFactory.getLogger(DefaultConditionalManagerTest.class.getName());
+    private final static Logger log = LoggerFactory.getLogger(DefaultConditionalManagerTest.class.getName());
 
 }

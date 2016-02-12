@@ -37,5 +37,5 @@ public class LightTableTabAction extends AbstractTableTabAction {
         return "package.jmri.jmrit.beantable.LightTable";
     }
 
-    static Logger log = LoggerFactory.getLogger(LightTableTabAction.class.getName());
+    private final static Logger log = LoggerFactory.getLogger(LightTableTabAction.class.getName());
 }

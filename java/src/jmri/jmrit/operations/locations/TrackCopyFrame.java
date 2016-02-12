@@ -291,5 +291,5 @@ public class TrackCopyFrame extends OperationsFrame implements java.beans.Proper
         }
     }
 
-    static Logger log = LoggerFactory.getLogger(TrackCopyFrame.class.getName());
+    private final static Logger log = LoggerFactory.getLogger(TrackCopyFrame.class.getName());
 }

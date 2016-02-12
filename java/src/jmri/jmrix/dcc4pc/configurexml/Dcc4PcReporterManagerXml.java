@@ -36,5 +36,5 @@ public class Dcc4PcReporterManagerXml extends jmri.managers.configurexml.Abstrac
         return loadReporters(shared);
     }
 
-    static Logger log = LoggerFactory.getLogger(Dcc4PcReporterManagerXml.class.getName());
+    private final static Logger log = LoggerFactory.getLogger(Dcc4PcReporterManagerXml.class.getName());
 }

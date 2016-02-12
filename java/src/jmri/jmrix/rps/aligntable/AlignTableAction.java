@@ -47,7 +47,7 @@ public class AlignTableAction extends AbstractAction {
         }
         f.setVisible(true);
     }
-    static Logger log = LoggerFactory.getLogger(AlignTableAction.class.getName());
+    private final static Logger log = LoggerFactory.getLogger(AlignTableAction.class.getName());
 }
 
 

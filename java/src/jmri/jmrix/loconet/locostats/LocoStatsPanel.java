@@ -304,5 +304,5 @@ public class LocoStatsPanel extends LnPanel implements LocoNetListener {
         }
     }
 
-    static Logger log = LoggerFactory.getLogger(LocoStatsPanel.class.getName());
+    private final static Logger log = LoggerFactory.getLogger(LocoStatsPanel.class.getName());
 }

@@ -48,5 +48,5 @@ public class OperationsSetupFrame extends OperationsFrame {
         initMinimumSize(new Dimension(Control.panelWidth700, Control.panelHeight500));
     }
 
-    static Logger log = LoggerFactory.getLogger(OperationsSetupFrame.class.getName());
+    private final static Logger log = LoggerFactory.getLogger(OperationsSetupFrame.class.getName());
 }

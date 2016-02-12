@@ -136,6 +136,6 @@ public class XBeeSensorTest extends TestCase {
         apps.tests.Log4JFixture.tearDown();
     }
 
-    static Logger log = LoggerFactory.getLogger(XBeeSensorTest.class.getName());
+    private final static Logger log = LoggerFactory.getLogger(XBeeSensorTest.class.getName());
 
 }

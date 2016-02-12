@@ -57,6 +57,6 @@ public class SerialLightTest extends AbstractLightTest {
         return suite;
     }
 
-    static Logger log = LoggerFactory.getLogger(SerialLightTest.class.getName());
+    private final static Logger log = LoggerFactory.getLogger(SerialLightTest.class.getName());
 
 }

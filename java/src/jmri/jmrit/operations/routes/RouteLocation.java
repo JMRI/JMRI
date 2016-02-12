@@ -589,6 +589,6 @@ public class RouteLocation implements java.beans.PropertyChangeListener {
         firePropertyChange(p, old, n);
     }
 
-    static Logger log = LoggerFactory.getLogger(RouteLocation.class.getName());
+    private final static Logger log = LoggerFactory.getLogger(RouteLocation.class.getName());
 
 }

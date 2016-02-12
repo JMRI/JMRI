@@ -186,7 +186,7 @@ public class AspectGenerator implements java.beans.PropertyChangeListener {
         pcs.removePropertyChangeListener(l);
     }
 
-    static Logger log = LoggerFactory.getLogger(AspectGenerator.class.getName());
+    private final static Logger log = LoggerFactory.getLogger(AspectGenerator.class.getName());
 
     // for now, this is an internal class
     static class Aspect {

@@ -66,5 +66,5 @@ public class BackgroundPanel extends ResizableImagePanel implements AddressListe
     public void notifyConsistAddressThrottleFound(DccThrottle throttle) {
     }
 
-    static Logger log = LoggerFactory.getLogger(BackgroundPanel.class.getName());
+    private final static Logger log = LoggerFactory.getLogger(BackgroundPanel.class.getName());
 }

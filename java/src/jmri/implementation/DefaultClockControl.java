@@ -121,7 +121,7 @@ public class DefaultClockControl implements ClockControl {
         return;
     }
 
-    static final Logger log = LoggerFactory.getLogger(DefaultClockControl.class.getName());
+    private final static Logger log = LoggerFactory.getLogger(DefaultClockControl.class.getName());
 }
 
 /* @(#)DefaultClockControl.java */

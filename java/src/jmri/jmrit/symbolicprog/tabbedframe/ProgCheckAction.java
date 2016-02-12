@@ -270,6 +270,6 @@ public class ProgCheckAction extends AbstractAction {
     }
 
     // initialize logging
-    static Logger log = LoggerFactory.getLogger(ProgCheckAction.class.getName());
+    private final static Logger log = LoggerFactory.getLogger(ProgCheckAction.class.getName());
 
 }

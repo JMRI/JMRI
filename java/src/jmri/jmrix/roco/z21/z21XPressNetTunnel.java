@@ -227,7 +227,7 @@ public class z21XPressNetTunnel implements z21Listener, XNetListener, Runnable {
     jmri.jmrix.lenz.XNetStreamPortController getStreamPortController() {
        return xsc;
     }
-    static Logger log = LoggerFactory.getLogger(z21XPressNetTunnel.class.getName());
+    private final static Logger log = LoggerFactory.getLogger(z21XPressNetTunnel.class.getName());
 
 }
 

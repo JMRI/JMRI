@@ -77,5 +77,5 @@ public class SRCPReplyTest extends TestCase {
     protected void tearDown() {
         apps.tests.Log4JFixture.tearDown();
     }
-    static Logger log = LoggerFactory.getLogger(SRCPReplyTest.class.getName());
+    private final static Logger log = LoggerFactory.getLogger(SRCPReplyTest.class.getName());
 }

@@ -93,5 +93,5 @@ public class PanelProPane extends apps.AppsLaunchPane {
         return j;
     }
 
-    static Logger log = LoggerFactory.getLogger(PanelProPane.class.getName());
+    private final static Logger log = LoggerFactory.getLogger(PanelProPane.class.getName());
 }

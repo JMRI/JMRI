@@ -50,6 +50,6 @@ public class XNetLightTest extends jmri.implementation.AbstractLightTest {
         apps.tests.Log4JFixture.tearDown();
     }
 
-    static Logger log = LoggerFactory.getLogger(XNetLightTest.class.getName());
+    private final static Logger log = LoggerFactory.getLogger(XNetLightTest.class.getName());
 
 }

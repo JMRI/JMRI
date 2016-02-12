@@ -655,5 +655,5 @@ public class SignalMastIcon extends PositionableIcon implements java.beans.Prope
         super.dispose();
     }
 
-    static Logger log = LoggerFactory.getLogger(SignalMastIcon.class.getName());
+    private final static Logger log = LoggerFactory.getLogger(SignalMastIcon.class.getName());
 }

@@ -988,6 +988,6 @@ public class PositionableLabel extends JLabel implements Positionable {
         return null;
     }
 
-    static Logger log = LoggerFactory.getLogger(PositionableLabel.class.getName());
+    private final static Logger log = LoggerFactory.getLogger(PositionableLabel.class.getName());
 
 }

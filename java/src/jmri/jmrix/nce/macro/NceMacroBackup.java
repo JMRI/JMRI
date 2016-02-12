@@ -299,6 +299,6 @@ public class NceMacroBackup extends Thread implements jmri.jmrix.nce.NceListener
         }
     }
 
-    static Logger log = LoggerFactory
+    private final static Logger log = LoggerFactory
             .getLogger(NceMacroBackup.class.getName());
 }

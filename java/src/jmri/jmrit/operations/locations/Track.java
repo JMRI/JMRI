@@ -2786,6 +2786,6 @@ public class Track {
         pcs.firePropertyChange(p, old, n);
     }
 
-    static Logger log = LoggerFactory.getLogger(Track.class.getName());
+    private final static Logger log = LoggerFactory.getLogger(Track.class.getName());
 
 }

@@ -231,6 +231,6 @@ public class EasyDccThrottle extends AbstractThrottle {
     }
 
     // initialize logging
-    static Logger log = LoggerFactory.getLogger(EasyDccThrottle.class.getName());
+    private final static Logger log = LoggerFactory.getLogger(EasyDccThrottle.class.getName());
 
 }

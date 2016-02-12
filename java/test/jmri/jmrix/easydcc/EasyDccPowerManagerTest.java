@@ -140,6 +140,6 @@ public class EasyDccPowerManagerTest extends AbstractPowerManagerTest {
         apps.tests.Log4JFixture.tearDown();
     }
 
-    static Logger log = LoggerFactory.getLogger(EasyDccPowerManagerTest.class.getName());
+    private final static Logger log = LoggerFactory.getLogger(EasyDccPowerManagerTest.class.getName());
 
 }

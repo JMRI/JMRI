@@ -249,5 +249,5 @@ public class EditPortalDirection extends jmri.util.JmriJFrame implements ActionL
         return _homeBlock;
     }
 
-    static Logger log = LoggerFactory.getLogger(EditPortalDirection.class.getName());
+    private final static Logger log = LoggerFactory.getLogger(EditPortalDirection.class.getName());
 }

@@ -299,5 +299,5 @@ public class DetectionPanel extends JPanel {
         _blockPathPanel.setVisible(true);
     }
 
-    static Logger log = LoggerFactory.getLogger(DetectionPanel.class.getName());
+    private final static Logger log = LoggerFactory.getLogger(DetectionPanel.class.getName());
 }

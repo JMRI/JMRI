@@ -40,7 +40,7 @@ public class AcelaLightManagerXml extends jmri.managers.configurexml.AbstractLig
         return loadLights(shared);
     }
 
-    static Logger log = LoggerFactory.getLogger(AcelaLightManagerXml.class.getName());
+    private final static Logger log = LoggerFactory.getLogger(AcelaLightManagerXml.class.getName());
 }
 
 /* @(#)AcelaLightManagerXml.java */

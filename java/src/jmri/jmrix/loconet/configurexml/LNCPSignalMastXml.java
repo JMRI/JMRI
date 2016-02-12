@@ -35,5 +35,5 @@ public class LNCPSignalMastXml extends jmri.implementation.configurexml.DccSigna
 
     }
 
-    static Logger log = LoggerFactory.getLogger(LNCPSignalMastXml.class.getName());
+    private final static Logger log = LoggerFactory.getLogger(LNCPSignalMastXml.class.getName());
 }

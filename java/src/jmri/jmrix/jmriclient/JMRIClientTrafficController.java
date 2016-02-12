@@ -100,7 +100,7 @@ public class JMRIClientTrafficController extends AbstractMRTrafficController
         return this;
     }
 
-    static Logger log = LoggerFactory.getLogger(JMRIClientTrafficController.class.getName());
+    private final static Logger log = LoggerFactory.getLogger(JMRIClientTrafficController.class.getName());
 }
 
 /* @(#)JMRIClientTrafficController.java */

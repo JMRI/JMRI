@@ -70,5 +70,5 @@ public class AttributeTableModel extends javax.swing.table.AbstractTableModel {
     public void setValueAt(Object value, int row, int col) {
     }
 
-    static final Logger log = LoggerFactory.getLogger(AttributeTableModel.class.getName());
+    private final static Logger log = LoggerFactory.getLogger(AttributeTableModel.class.getName());
 }

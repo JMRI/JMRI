@@ -87,7 +87,7 @@ public class z21Reply extends AbstractMRReply {
         return xnr;
     }
 
-    static Logger log = LoggerFactory.getLogger(z21Reply.class.getName());
+    private final static Logger log = LoggerFactory.getLogger(z21Reply.class.getName());
 
 }
 

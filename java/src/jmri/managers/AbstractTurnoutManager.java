@@ -341,7 +341,7 @@ public abstract class AbstractTurnoutManager extends AbstractManager
         return defaultClosedSpeed;
     }
 
-    static Logger log = LoggerFactory.getLogger(AbstractTurnoutManager.class.getName());
+    private final static Logger log = LoggerFactory.getLogger(AbstractTurnoutManager.class.getName());
 }
 
 /* @(#)AbstractTurnoutManager.java */

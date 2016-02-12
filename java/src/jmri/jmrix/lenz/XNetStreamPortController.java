@@ -59,7 +59,7 @@ public class XNetStreamPortController extends jmri.jmrix.AbstractStreamPortContr
     synchronized public void setOutputBufferEmpty(boolean s) {
     }
 
-    static Logger log = LoggerFactory.getLogger(XNetStreamPortController.class.getName());
+    private final static Logger log = LoggerFactory.getLogger(XNetStreamPortController.class.getName());
 
 }
 

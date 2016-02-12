@@ -25,7 +25,7 @@ import org.slf4j.LoggerFactory;
 //	listen() has to run in a separate thread.
 public class FacelessServer implements DeviceListener, DeviceManager, ZeroConfServiceListener {
 
-    static Logger log = LoggerFactory.getLogger(FacelessServer.class.getName());
+    private final static Logger log = LoggerFactory.getLogger(FacelessServer.class.getName());
     static final ResourceBundle rb = ResourceBundle.getBundle("jmri.jmrit.withrottle.WiThrottleBundle");
 
     UserPreferencesManager userPreferences = InstanceManager.getDefault(UserPreferencesManager.class);
@@ -202,6 +202,6 @@ public class FacelessServer implements DeviceListener, DeviceManager, ZeroConfSe
             log.debug("Leaving ThreadNoUI.run()");
         }
 
-        static Logger log = LoggerFactory.getLogger(FacelessThread.class.getName());
+    private final static Logger log = LoggerFactory.getLogger(FacelessThread.class.getName());
     }
 }

@@ -184,7 +184,7 @@ public class MarklinSystemConnectionMemo extends jmri.jmrix.SystemConnectionMemo
         super.dispose();
     }
 
-    static Logger log = LoggerFactory.getLogger(MarklinSystemConnectionMemo.class.getName());
+    private final static Logger log = LoggerFactory.getLogger(MarklinSystemConnectionMemo.class.getName());
 }
 
 

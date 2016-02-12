@@ -234,5 +234,5 @@ public class MemoryIcon extends jmri.jmrit.display.MemoryIcon {
         return updateBlockValue;
     }
 
-    static Logger log = LoggerFactory.getLogger(MemoryIcon.class.getName());
+    private final static Logger log = LoggerFactory.getLogger(MemoryIcon.class.getName());
 }

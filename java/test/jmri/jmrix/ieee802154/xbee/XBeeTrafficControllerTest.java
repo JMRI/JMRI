@@ -169,6 +169,6 @@ public class XBeeTrafficControllerTest extends TestCase {
         apps.tests.Log4JFixture.tearDown();
     }
 
-    static Logger log = LoggerFactory.getLogger(XBeeTrafficControllerTest.class.getName());
+    private final static Logger log = LoggerFactory.getLogger(XBeeTrafficControllerTest.class.getName());
 
 }

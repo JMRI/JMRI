@@ -118,5 +118,5 @@ public class DccSignalHeadXml extends jmri.managers.configurexml.AbstractNamedBe
         log.error("Invalid method called");
     }
 
-    static Logger log = LoggerFactory.getLogger(DccSignalHeadXml.class.getName());
+    private final static Logger log = LoggerFactory.getLogger(DccSignalHeadXml.class.getName());
 }

@@ -125,7 +125,7 @@ public class NceCmdStationMemory {
     public static final int FUNC_H_F27 = 0x40;		// F27
     public static final int FUNC_H_F28 = 0x80;		// F28
 
-    static Logger log = LoggerFactory.getLogger(NceCmdStationMemory.class.getName());
+    private final static Logger log = LoggerFactory.getLogger(NceCmdStationMemory.class.getName());
 }
 
 /* @(#)NceCmdStationMemory.java */

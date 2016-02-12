@@ -32,5 +32,5 @@ public class QuantumCvMgrImportAction extends GenericImportAction {
         }
     }
 
-    static Logger log = LoggerFactory.getLogger(QuantumCvMgrImportAction.class.getName());
+    private final static Logger log = LoggerFactory.getLogger(QuantumCvMgrImportAction.class.getName());
 }

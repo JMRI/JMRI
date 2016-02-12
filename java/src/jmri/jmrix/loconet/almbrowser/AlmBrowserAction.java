@@ -43,7 +43,7 @@ public class AlmBrowserAction extends AbstractAction {
 
     }
 
-    static Logger log = LoggerFactory.getLogger(AlmBrowserAction.class.getName());
+    private final static Logger log = LoggerFactory.getLogger(AlmBrowserAction.class.getName());
 
 }
 

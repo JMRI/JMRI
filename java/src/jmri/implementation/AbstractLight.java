@@ -3,6 +3,8 @@ package jmri.implementation;
 
 import java.util.ArrayList;
 import jmri.Light;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 /**
  * Abstract class providing partial implementation of the the Light interface.
@@ -48,6 +50,7 @@ public abstract class AbstractLight extends AbstractNamedBean
      *
      */
     private static final long serialVersionUID = -3863736856456563301L;
+    private final static Logger log = LoggerFactory.getLogger(AbstractLight.class);
 
     public AbstractLight(String systemName, String userName) {
         super(systemName.toUpperCase(), userName);

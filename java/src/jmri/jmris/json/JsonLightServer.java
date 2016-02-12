@@ -31,7 +31,7 @@ public class JsonLightServer extends AbstractLightServer {
 
     private final JmriConnection connection;
     private final ObjectMapper mapper;
-    static Logger log = LoggerFactory.getLogger(JsonLightServer.class.getName());
+    private final static Logger log = LoggerFactory.getLogger(JsonLightServer.class.getName());
 
     public JsonLightServer(JmriConnection connection) {
         this.connection = connection;

@@ -51,7 +51,7 @@ public class LnSensorManager extends jmri.jmrix.loconet.LnSensorManager implemen
         }
     }
 
-    static Logger log = LoggerFactory.getLogger(LnSensorManager.class.getName());
+    private final static Logger log = LoggerFactory.getLogger(LnSensorManager.class.getName());
 }
 
 /* @(#)LnSensorManager.java */

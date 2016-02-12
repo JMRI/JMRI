@@ -956,5 +956,5 @@ public class PrintLocationsAction extends AbstractAction {
         }
     }
 
-    static Logger log = LoggerFactory.getLogger(PrintLocationsAction.class.getName());
+    private final static Logger log = LoggerFactory.getLogger(PrintLocationsAction.class.getName());
 }

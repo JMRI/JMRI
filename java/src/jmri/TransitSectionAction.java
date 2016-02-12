@@ -259,7 +259,7 @@ public class TransitSectionAction {
         disposeSensorListener();
     }
 
-    static Logger log = LoggerFactory.getLogger(TransitSectionAction.class.getName());
+    private final static Logger log = LoggerFactory.getLogger(TransitSectionAction.class.getName());
 }
 
 /* @(#)TransitSectionAction.java */

@@ -123,7 +123,7 @@ public class NceMessageCheck {
         throw new JmriException(txt);
     }
 
-    static Logger log = LoggerFactory.getLogger(NceMessageCheck.class.getName());
+    private final static Logger log = LoggerFactory.getLogger(NceMessageCheck.class.getName());
 }
 
 /* @(#)NceMessageCheck.java */

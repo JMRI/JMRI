@@ -47,7 +47,7 @@ public class TamsTurnoutManager extends jmri.managers.AbstractTurnoutManager {
 
     boolean noWarnDelete = false;
 
-    static Logger log = LoggerFactory.getLogger(TamsTurnoutManager.class.getName());
+    private final static Logger log = LoggerFactory.getLogger(TamsTurnoutManager.class.getName());
 }
 
 /* @(#)TamsTurnoutManager.java */

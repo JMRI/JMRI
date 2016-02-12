@@ -1153,7 +1153,7 @@ public class NmraPacket {
      */
     private NmraPacket() {
     }
-    static Logger log = LoggerFactory.getLogger(NmraPacket.class.getName());
+    private final static Logger log = LoggerFactory.getLogger(NmraPacket.class.getName());
 }
 
 

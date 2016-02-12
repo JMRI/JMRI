@@ -124,5 +124,5 @@ public class MemoryIconCoordinateEdit extends CoordinateEdit {
         pack();
     }
 
-    static Logger log = LoggerFactory.getLogger(MemoryIconCoordinateEdit.class.getName());
+    private final static Logger log = LoggerFactory.getLogger(MemoryIconCoordinateEdit.class.getName());
 }

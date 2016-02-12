@@ -269,6 +269,6 @@ public class ProgOpsModePane extends ProgModeSelector implements PropertyChangeL
     public void dispose() {
     }
 
-    static Logger log = LoggerFactory.getLogger(ProgOpsModePane.class.getName());
+    private final static Logger log = LoggerFactory.getLogger(ProgOpsModePane.class.getName());
 
 }

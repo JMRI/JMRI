@@ -42,7 +42,7 @@ public class EditManifestHeaderTextAction extends AbstractAction {
         f.setVisible(true);	// this also brings the frame into focus
     }
 
-    static Logger log = LoggerFactory.getLogger(EditManifestHeaderTextAction.class.getName());
+    private final static Logger log = LoggerFactory.getLogger(EditManifestHeaderTextAction.class.getName());
 }
 
 /* @(#)EditManifestHeaderTextAction.java */

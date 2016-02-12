@@ -202,7 +202,7 @@ public class ConsumerTableModel extends AbstractTableModel {
         }
     }
 
-    static Logger log = LoggerFactory.getLogger(ConsumerTableModel.class.getName());
+    private final static Logger log = LoggerFactory.getLogger(ConsumerTableModel.class.getName());
 
 }
 

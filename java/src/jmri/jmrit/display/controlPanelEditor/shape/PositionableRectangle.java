@@ -67,5 +67,5 @@ public class PositionableRectangle extends PositionableShape {
         return true;
     }
 
-    static Logger log = LoggerFactory.getLogger(PositionableRectangle.class.getName());
+    private final static Logger log = LoggerFactory.getLogger(PositionableRectangle.class.getName());
 }

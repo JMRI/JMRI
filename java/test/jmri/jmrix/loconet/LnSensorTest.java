@@ -95,7 +95,7 @@ public class LnSensorTest extends TestCase {
         return suite;
     }
 
-    static Logger log = LoggerFactory.getLogger(LnSensorTest.class.getName());
+    private final static Logger log = LoggerFactory.getLogger(LnSensorTest.class.getName());
 
     // The minimal setup for log4J
     protected void setUp() {

@@ -46,7 +46,7 @@ public class MonitoringLabelTest extends TestCase {
         return suite;
     }
 
-    static Logger log = LoggerFactory.getLogger(MonitoringLabelTest.class.getName());
+    private final static Logger log = LoggerFactory.getLogger(MonitoringLabelTest.class.getName());
 
     // The minimal setup for log4J
     protected void setUp() {

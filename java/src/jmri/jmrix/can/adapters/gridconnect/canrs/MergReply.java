@@ -56,7 +56,7 @@ public class MergReply extends GridConnectReply {
         return val;
     }
 
-    static Logger log = LoggerFactory.getLogger(MergReply.class.getName());
+    private final static Logger log = LoggerFactory.getLogger(MergReply.class.getName());
 }
 
 /* @(#)MergReply.java */

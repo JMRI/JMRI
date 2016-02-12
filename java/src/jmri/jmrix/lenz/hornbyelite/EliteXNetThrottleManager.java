@@ -42,5 +42,5 @@ public class EliteXNetThrottleManager extends jmri.jmrix.lenz.XNetThrottleManage
 
     }
 
-    static Logger log = LoggerFactory.getLogger(EliteXNetThrottleManager.class.getName());
+    private final static Logger log = LoggerFactory.getLogger(EliteXNetThrottleManager.class.getName());
 }

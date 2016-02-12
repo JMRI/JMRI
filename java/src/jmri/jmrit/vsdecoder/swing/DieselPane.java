@@ -145,6 +145,6 @@ public class DieselPane extends EnginePane {
         throttle_spinner.setValue(t);
     }
 
-    static Logger log = LoggerFactory.getLogger(DieselPane.class.getName());
+    private final static Logger log = LoggerFactory.getLogger(DieselPane.class.getName());
 
 }

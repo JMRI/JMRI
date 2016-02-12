@@ -14,7 +14,7 @@ import org.slf4j.LoggerFactory;
  */
 public class AutoBackup extends BackupBase {
 
-    static Logger log = LoggerFactory
+    private final static Logger log = LoggerFactory
             .getLogger(AutoBackup.class.getName());
 
     /**

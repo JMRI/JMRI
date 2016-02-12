@@ -164,7 +164,7 @@ public class TripleOutputSignalHead extends DoubleTurnoutSignalHead {
         return false;
     }
 
-    static Logger log = LoggerFactory.getLogger(TripleOutputSignalHead.class.getName());
+    private final static Logger log = LoggerFactory.getLogger(TripleOutputSignalHead.class.getName());
 }
 
 /* @(#)TripleOutputSignalHead.java */

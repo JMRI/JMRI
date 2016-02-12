@@ -49,5 +49,5 @@ public class JToolBarUtil extends GuiUtilBase {
 
     }
 
-    static Logger log = LoggerFactory.getLogger(JToolBarUtil.class.getName());
+    private final static Logger log = LoggerFactory.getLogger(JToolBarUtil.class.getName());
 }

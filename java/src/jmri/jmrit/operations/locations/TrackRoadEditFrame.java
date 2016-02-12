@@ -313,5 +313,5 @@ public class TrackRoadEditFrame extends OperationsFrame implements java.beans.Pr
         }
     }
 
-    static Logger log = LoggerFactory.getLogger(TrackRoadEditFrame.class.getName());
+    private final static Logger log = LoggerFactory.getLogger(TrackRoadEditFrame.class.getName());
 }

@@ -322,5 +322,5 @@ public class LocationsTableModel extends javax.swing.table.AbstractTableModel im
         removePropertyChangeLocations();
     }
 
-    static Logger log = LoggerFactory.getLogger(LocationsTableModel.class.getName());
+    private final static Logger log = LoggerFactory.getLogger(LocationsTableModel.class.getName());
 }

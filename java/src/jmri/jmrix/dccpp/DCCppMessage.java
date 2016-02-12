@@ -2133,7 +2133,7 @@ public class DCCppMessage extends jmri.jmrix.AbstractMRMessage {
     }
 
     // initialize logging    
-    static Logger log = LoggerFactory.getLogger(DCCppMessage.class.getName());
+    private final static Logger log = LoggerFactory.getLogger(DCCppMessage.class.getName());
 
 }
 

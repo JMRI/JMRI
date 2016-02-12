@@ -378,6 +378,6 @@ public class SensorIconXml extends PositionableLabelXml {
         }
     }
 
-    static Logger log = LoggerFactory.getLogger(SensorIconXml.class.getName());
+    private final static Logger log = LoggerFactory.getLogger(SensorIconXml.class.getName());
 
 }

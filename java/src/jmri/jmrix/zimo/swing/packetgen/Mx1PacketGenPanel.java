@@ -137,5 +137,5 @@ public class Mx1PacketGenPanel extends jmri.jmrix.zimo.swing.Mx1Panel {
         }
     }
 
-    static Logger log = LoggerFactory.getLogger(Mx1PacketGenPanel.class.getName());
+    private final static Logger log = LoggerFactory.getLogger(Mx1PacketGenPanel.class.getName());
 }

@@ -51,5 +51,5 @@ public class Paned extends apps.gui3.Apps3 {
         return null;
     }
 
-    static Logger log = LoggerFactory.getLogger(Paned.class.getName());
+    private final static Logger log = LoggerFactory.getLogger(Paned.class.getName());
 }

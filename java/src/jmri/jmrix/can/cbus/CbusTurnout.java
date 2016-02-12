@@ -108,7 +108,7 @@ public class CbusTurnout extends jmri.implementation.AbstractTurnout
     protected void turnoutPushbuttonLockout(boolean locked) {
     }
 
-    static Logger log = LoggerFactory.getLogger(CbusTurnout.class.getName());
+    private final static Logger log = LoggerFactory.getLogger(CbusTurnout.class.getName());
 }
 
 /* @(#)CbusTurnout.java */

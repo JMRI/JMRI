@@ -44,6 +44,6 @@ public abstract class AbstractActionModel implements StartupModel {
     }
 
     // initialize logging
-    static Logger log = LoggerFactory.getLogger(AbstractActionModel.class.getName());
+    private final static Logger log = LoggerFactory.getLogger(AbstractActionModel.class.getName());
 
 }

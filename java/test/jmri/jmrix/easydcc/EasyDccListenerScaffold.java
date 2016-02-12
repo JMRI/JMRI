@@ -28,6 +28,6 @@ class EasyDccListenerScaffold implements EasyDccListener {
     EasyDccReply rcvdReply;
     EasyDccMessage rcvdMsg;
 
-    static Logger log = LoggerFactory.getLogger(EasyDccListenerScaffold.class.getName());
+    private final static Logger log = LoggerFactory.getLogger(EasyDccListenerScaffold.class.getName());
 
 }

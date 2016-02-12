@@ -185,5 +185,5 @@ public class EasyDccConsistManager extends AbstractConsistManager {
         public void message(EasyDccMessage m) {
         }
     }
-    static Logger log = LoggerFactory.getLogger(EasyDccConsistManager.class.getName());
+    private final static Logger log = LoggerFactory.getLogger(EasyDccConsistManager.class.getName());
 }

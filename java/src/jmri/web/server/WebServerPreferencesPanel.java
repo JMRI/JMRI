@@ -42,7 +42,7 @@ import org.slf4j.LoggerFactory;
 public class WebServerPreferencesPanel extends JPanel implements ListDataListener, PreferencesPanel {
 
     private static final long serialVersionUID = 6907436730813458420L;
-    static Logger log = LoggerFactory.getLogger(WebServerPreferencesPanel.class.getName());
+    private final static Logger log = LoggerFactory.getLogger(WebServerPreferencesPanel.class.getName());
     Border lineBorder;
     JSpinner clickDelaySpinner;
     JSpinner refreshDelaySpinner;

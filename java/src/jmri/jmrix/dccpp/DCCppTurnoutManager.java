@@ -108,7 +108,7 @@ public class DCCppTurnoutManager extends jmri.managers.AbstractTurnoutManager im
     }
     static DCCppTurnoutManager _instance = null;
 
-    static Logger log = LoggerFactory.getLogger(DCCppTurnoutManager.class.getName());
+    private final static Logger log = LoggerFactory.getLogger(DCCppTurnoutManager.class.getName());
 
 }
 

@@ -77,6 +77,6 @@ public class DCCppTcpDriverAdapter extends DCCppNetworkPortController implements
 
     public boolean okToSend() { return true; }
 
-    static Logger log = LoggerFactory.getLogger(DCCppTcpDriverAdapter.class.getName());
+    private final static Logger log = LoggerFactory.getLogger(DCCppTcpDriverAdapter.class.getName());
 
 }

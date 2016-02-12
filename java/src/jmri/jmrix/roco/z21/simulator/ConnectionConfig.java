@@ -68,6 +68,6 @@ public class ConnectionConfig extends jmri.jmrix.roco.z21.ConnectionConfig {
         return false;  // always fixed, no reason to search.
     }
 
-    static Logger log = LoggerFactory.getLogger(ConnectionConfig.class.getName());
+    private final static Logger log = LoggerFactory.getLogger(ConnectionConfig.class.getName());
 
 }

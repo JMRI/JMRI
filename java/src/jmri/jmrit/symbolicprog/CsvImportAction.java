@@ -32,5 +32,5 @@ public class CsvImportAction extends GenericImportAction {
         }
     }
 
-    static Logger log = LoggerFactory.getLogger(CsvImportAction.class.getName());
+    private final static Logger log = LoggerFactory.getLogger(CsvImportAction.class.getName());
 }

@@ -232,5 +232,5 @@ public class NcePacketGenPanel extends jmri.jmrix.nce.swing.NcePanel implements 
         }
     }
 
-    static Logger log = LoggerFactory.getLogger(NcePacketGenPanel.class.getName());
+    private final static Logger log = LoggerFactory.getLogger(NcePacketGenPanel.class.getName());
 }

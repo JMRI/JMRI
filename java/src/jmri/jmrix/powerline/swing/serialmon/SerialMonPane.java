@@ -100,7 +100,7 @@ public class SerialMonPane extends jmri.jmrix.AbstractMonPane implements SerialL
 
     }
 
-    static Logger log = LoggerFactory.getLogger(SerialMonPane.class.getName());
+    private final static Logger log = LoggerFactory.getLogger(SerialMonPane.class.getName());
 
 }
 

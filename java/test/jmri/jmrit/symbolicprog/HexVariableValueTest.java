@@ -64,6 +64,6 @@ public class HexVariableValueTest extends VariableValueTest {
         return suite;
     }
 
-    static Logger log = LoggerFactory.getLogger(HexVariableValueTest.class.getName());
+    private final static Logger log = LoggerFactory.getLogger(HexVariableValueTest.class.getName());
 
 }

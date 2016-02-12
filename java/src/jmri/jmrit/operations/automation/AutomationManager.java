@@ -278,7 +278,7 @@ public class AutomationManager implements java.beans.PropertyChangeListener {
         pcs.firePropertyChange(p, old, n);
     }
 
-    static Logger log = LoggerFactory.getLogger(AutomationManager.class.getName());
+    private final static Logger log = LoggerFactory.getLogger(AutomationManager.class.getName());
 
 }
 

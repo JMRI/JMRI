@@ -204,7 +204,7 @@ public class BlockManager extends AbstractManager
         return Bundle.getMessage("BeanNameBlock");
     }
 
-    static Logger log = LoggerFactory.getLogger(BlockManager.class.getName());
+    private final static Logger log = LoggerFactory.getLogger(BlockManager.class.getName());
 }
 
 /* @(#)BlockManager.java */

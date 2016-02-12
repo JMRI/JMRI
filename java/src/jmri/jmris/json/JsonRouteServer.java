@@ -24,7 +24,7 @@ public class JsonRouteServer extends AbstractRouteServer {
 
     private final JmriConnection connection;
     private final ObjectMapper mapper;
-    static Logger log = LoggerFactory.getLogger(JsonRouteServer.class);
+    private final static Logger log = LoggerFactory.getLogger(JsonRouteServer.class);
 
     public JsonRouteServer(JmriConnection connection) {
         super();

@@ -107,6 +107,6 @@ public class ListedTableAction extends AbstractAction {
         return "package.jmri.jmrit.beantable.ListedTableAction";
     }
 
-    static Logger log = LoggerFactory.getLogger(ListedTableAction.class.getName());
+    private final static Logger log = LoggerFactory.getLogger(ListedTableAction.class.getName());
 
 }

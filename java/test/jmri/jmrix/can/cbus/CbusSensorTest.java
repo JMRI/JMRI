@@ -82,7 +82,7 @@ public class CbusSensorTest extends TestCase {
         return suite;
     }
 
-    static Logger log = LoggerFactory.getLogger(CbusSensorTest.class.getName());
+    private final static Logger log = LoggerFactory.getLogger(CbusSensorTest.class.getName());
 
     // The minimal setup for log4J
     protected void setUp() {
