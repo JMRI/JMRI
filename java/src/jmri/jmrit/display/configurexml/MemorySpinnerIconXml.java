@@ -57,5 +57,5 @@ public class MemorySpinnerIconXml extends PositionableLabelXml {
         loadCommonAttributes(l, Editor.MEMORIES, element);
     }
 
-    static Logger log = LoggerFactory.getLogger(MemorySpinnerIconXml.class.getName());
+    private final static Logger log = LoggerFactory.getLogger(MemorySpinnerIconXml.class.getName());
 }

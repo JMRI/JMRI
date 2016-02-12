@@ -39,7 +39,7 @@ public class TrainManifestOptionAction extends AbstractAction {
         f.setVisible(true);	// this also brings the frame into focus
     }
 
-    static Logger log = LoggerFactory
+    private final static Logger log = LoggerFactory
             .getLogger(TrainManifestOptionAction.class.getName());
 }
 

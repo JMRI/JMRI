@@ -157,7 +157,7 @@ public class OlcbSystemConnectionMemo extends jmri.jmrix.can.CanSystemConnection
         super.dispose();
     }
 
-    static Logger log = LoggerFactory.getLogger(OlcbSystemConnectionMemo.class.getName());
+    private final static Logger log = LoggerFactory.getLogger(OlcbSystemConnectionMemo.class.getName());
 }
 
 

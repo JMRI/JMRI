@@ -143,6 +143,6 @@ public class LI100XNetInitializationManager extends AbstractXNetInitializationMa
         }
     }
 
-    static Logger log = LoggerFactory.getLogger(LI100XNetInitializationManager.class.getName());
+    private final static Logger log = LoggerFactory.getLogger(LI100XNetInitializationManager.class.getName());
 
 }

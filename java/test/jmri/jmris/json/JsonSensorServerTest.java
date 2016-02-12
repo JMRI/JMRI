@@ -67,6 +67,6 @@ public class JsonSensorServerTest extends TestCase {
     }
 
 
-    static Logger log = LoggerFactory.getLogger(JsonSensorServerTest.class.getName());
+    private final static Logger log = LoggerFactory.getLogger(JsonSensorServerTest.class.getName());
 
 }

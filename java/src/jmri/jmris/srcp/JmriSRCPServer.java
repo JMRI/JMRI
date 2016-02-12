@@ -178,5 +178,5 @@ public class JmriSRCPServer extends JmriServer {
         }
     }
 
-    static Logger log = LoggerFactory.getLogger(JmriSRCPServer.class.getName());
+    private final static Logger log = LoggerFactory.getLogger(JmriSRCPServer.class.getName());
 }

@@ -598,5 +598,5 @@ abstract class BeanEditAction extends AbstractAction {
         }
     }
 
-    static Logger log = LoggerFactory.getLogger(BeanEditAction.class);
+    private final static Logger log = LoggerFactory.getLogger(BeanEditAction.class);
 }

@@ -57,7 +57,7 @@ public class SimpleTurnoutCtrlAction extends JmriAbstractAction {
         throw new IllegalArgumentException("Should not be invoked");
     }
 
-    static Logger log = LoggerFactory.getLogger(SimpleTurnoutCtrlAction.class.getName());
+    private final static Logger log = LoggerFactory.getLogger(SimpleTurnoutCtrlAction.class.getName());
 }
 
 

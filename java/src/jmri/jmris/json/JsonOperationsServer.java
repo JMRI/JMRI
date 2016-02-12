@@ -34,7 +34,7 @@ public class JsonOperationsServer extends AbstractOperationsServer {
 
     private final JmriConnection connection;
     private final ObjectMapper mapper;
-    static Logger log = LoggerFactory.getLogger(JsonOperationsServer.class);
+    private final static Logger log = LoggerFactory.getLogger(JsonOperationsServer.class);
 
     public JsonOperationsServer(JmriConnection connection) {
         super();

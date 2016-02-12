@@ -195,5 +195,5 @@ public class SpeedProfileTable extends jmri.util.JmriJFrame {
         }
     }
     
-    static Logger log = LoggerFactory.getLogger(SpeedProfileTable.class);
+    private final static Logger log = LoggerFactory.getLogger(SpeedProfileTable.class);
 }

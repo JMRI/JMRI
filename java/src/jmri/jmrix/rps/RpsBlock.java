@@ -134,7 +134,7 @@ public class RpsBlock implements java.beans.PropertyChangeListener, jmri.Throttl
 
     static java.util.Hashtable<Integer, DccThrottle> throttleTable = new java.util.Hashtable<Integer, DccThrottle>();
 
-    static Logger log = LoggerFactory.getLogger(RpsBlock.class.getName());
+    private final static Logger log = LoggerFactory.getLogger(RpsBlock.class.getName());
 
 }
 

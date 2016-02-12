@@ -24,7 +24,7 @@ abstract public class LocoNetAutomaton extends jmri.jmrit.automat.AbstractAutoma
     }
 
     // initialize logging
-    static Logger log = LoggerFactory.getLogger(LocoNetAutomaton.class.getName());
+    private final static Logger log = LoggerFactory.getLogger(LocoNetAutomaton.class.getName());
 }
 
 /* @(#)LocoNetAutomaton.java */

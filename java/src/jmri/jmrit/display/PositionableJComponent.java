@@ -302,5 +302,5 @@ public class PositionableJComponent extends JComponent implements Positionable {
         return null;
     }
 
-    static Logger log = LoggerFactory.getLogger(PositionableJComponent.class.getName());
+    private final static Logger log = LoggerFactory.getLogger(PositionableJComponent.class.getName());
 }

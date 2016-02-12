@@ -162,7 +162,7 @@ public class PythonInterp {
     static String defaultContextFile = "program:jython/jmri_defaults.py";
 
     // initialize logging
-    static Logger log = LoggerFactory.getLogger(PythonInterp.class.getName());
+    private final static Logger log = LoggerFactory.getLogger(PythonInterp.class.getName());
 
 }
 

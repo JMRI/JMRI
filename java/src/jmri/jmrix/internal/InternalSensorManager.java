@@ -18,7 +18,7 @@ public class InternalSensorManager extends jmri.managers.InternalSensorManager {
         this.prefix = prefix;
     }
 
-    static Logger log = LoggerFactory.getLogger(InternalSensorManager.class.getName());
+    private final static Logger log = LoggerFactory.getLogger(InternalSensorManager.class.getName());
 }
 
 /* @(#)InternalSensorManager.java */

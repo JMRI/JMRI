@@ -199,7 +199,7 @@ public class CanMessage extends AbstractMRMessage implements CanMutableFrame {
     boolean _isExtended;
     boolean _isRtr;
 
-    static Logger log = LoggerFactory.getLogger(CanMessage.class.getName());
+    private final static Logger log = LoggerFactory.getLogger(CanMessage.class.getName());
 }
 
 /* @(#)CanMessage.java */

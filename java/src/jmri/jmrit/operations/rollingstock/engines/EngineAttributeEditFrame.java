@@ -365,5 +365,5 @@ public class EngineAttributeEditFrame extends OperationsFrame implements java.be
         pcs.firePropertyChange(p, old, n);
     }
 
-    static Logger log = LoggerFactory.getLogger(EngineAttributeEditFrame.class.getName());
+    private final static Logger log = LoggerFactory.getLogger(EngineAttributeEditFrame.class.getName());
 }

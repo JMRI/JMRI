@@ -487,5 +487,5 @@ public class TrainsScheduleTableFrame extends OperationsFrame implements Propert
         }
     }
 
-    static Logger log = LoggerFactory.getLogger(TrainsScheduleTableFrame.class.getName());
+    private final static Logger log = LoggerFactory.getLogger(TrainsScheduleTableFrame.class.getName());
 }

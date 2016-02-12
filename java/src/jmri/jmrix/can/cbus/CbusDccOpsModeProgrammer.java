@@ -9,6 +9,8 @@ import jmri.ProgrammerException;
 import jmri.ProgrammingMode;
 import jmri.jmrix.can.CanReply;
 import jmri.managers.DefaultProgrammerManager;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 /**
  * Provide an Ops Mode Programmer via a wrapper what works with the CBUS command
@@ -24,6 +26,7 @@ public class CbusDccOpsModeProgrammer extends CbusDccProgrammer implements Addre
 
     int mAddress;
     boolean mLongAddr;
+    private final static Logger log = LoggerFactory.getLogger(CbusDccOpsModeProgrammer.class);
 
     public CbusDccOpsModeProgrammer(int pAddress, boolean pLongAddr, jmri.jmrix.can.TrafficController tc) {
         super(tc);

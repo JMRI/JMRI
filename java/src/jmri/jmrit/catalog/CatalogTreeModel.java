@@ -140,5 +140,5 @@ public class CatalogTreeModel extends DefaultTreeModel {
     static final String resourceRoot = "resources";
     static final String fileRoot = FileUtil.getUserFilesPath() + "resources";
 
-    static Logger log = LoggerFactory.getLogger(CatalogTreeModel.class.getName());
+    private final static Logger log = LoggerFactory.getLogger(CatalogTreeModel.class.getName());
 }

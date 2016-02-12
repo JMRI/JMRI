@@ -87,7 +87,7 @@ public class TieToolFrame extends jmri.util.JmriJFrame {
         pack();
     }
 
-    static Logger log = LoggerFactory.getLogger(TieToolFrame.class.getName());
+    private final static Logger log = LoggerFactory.getLogger(TieToolFrame.class.getName());
 
 }
 

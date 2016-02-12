@@ -263,7 +263,7 @@ public class SE8cSignalHead extends DefaultSignalHead {
         );
     }
 
-    static Logger log = LoggerFactory.getLogger(SE8cSignalHead.class.getName());
+    private final static Logger log = LoggerFactory.getLogger(SE8cSignalHead.class.getName());
 }
 
 /* @(#)SE8cSignalHead.java */

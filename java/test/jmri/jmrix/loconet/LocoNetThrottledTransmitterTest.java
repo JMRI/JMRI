@@ -168,7 +168,7 @@ public class LocoNetThrottledTransmitterTest extends TestCase {
         return suite;
     }
 
-    static Logger log = LoggerFactory.getLogger(LocoNetThrottledTransmitterTest.class.getName());
+    private final static Logger log = LoggerFactory.getLogger(LocoNetThrottledTransmitterTest.class.getName());
 
     // The minimal setup for log4J
     protected void setUp() {

@@ -144,7 +144,7 @@ public class OlcbTurnoutTest extends TestCase {
         return suite;
     }
 
-    static Logger log = LoggerFactory.getLogger(OlcbTurnoutTest.class.getName());
+    private final static Logger log = LoggerFactory.getLogger(OlcbTurnoutTest.class.getName());
 
     // The minimal setup for log4J
     protected void setUp() {

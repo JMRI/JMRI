@@ -25,7 +25,7 @@ public class SimplePowerServer extends AbstractPowerServer {
 
     private DataOutputStream output;
     private JmriConnection connection;
-    static Logger log = LoggerFactory.getLogger(SimplePowerServer.class.getName());
+    private final static Logger log = LoggerFactory.getLogger(SimplePowerServer.class.getName());
 
     public SimplePowerServer(DataInputStream inStream, DataOutputStream outStream) {
         output = outStream;

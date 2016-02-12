@@ -506,5 +506,5 @@ public class AutomationTableModel extends javax.swing.table.AbstractTableModel i
         }
     }
 
-    static Logger log = LoggerFactory.getLogger(AutomationTableModel.class.getName());
+    private final static Logger log = LoggerFactory.getLogger(AutomationTableModel.class.getName());
 }

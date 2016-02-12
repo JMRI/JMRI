@@ -324,7 +324,7 @@ abstract public class SystemConnectionMemo {
     // data members to hold contact with the property listeners
     final private static Set<PropertyChangeListener> listeners = new HashSet<>();
 
-    static Logger log = LoggerFactory.getLogger(SystemConnectionMemo.class.getName());
+    private final static Logger log = LoggerFactory.getLogger(SystemConnectionMemo.class.getName());
 }
 
 

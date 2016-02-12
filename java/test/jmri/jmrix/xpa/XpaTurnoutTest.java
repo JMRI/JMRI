@@ -48,6 +48,6 @@ public class XpaTurnoutTest extends TestCase {
         apps.tests.Log4JFixture.tearDown();
     }
 
-    static Logger log = LoggerFactory.getLogger(XpaTurnoutTest.class.getName());
+    private final static Logger log = LoggerFactory.getLogger(XpaTurnoutTest.class.getName());
 
 }

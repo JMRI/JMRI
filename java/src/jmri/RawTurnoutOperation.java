@@ -75,5 +75,5 @@ public class RawTurnoutOperation extends CommonTurnoutOperation {
         return new RawTurnoutOperator(t, interval, maxTries);
     }
 
-    static Logger log = LoggerFactory.getLogger(RawTurnoutOperation.class.getName());
+    private final static Logger log = LoggerFactory.getLogger(RawTurnoutOperation.class.getName());
 }

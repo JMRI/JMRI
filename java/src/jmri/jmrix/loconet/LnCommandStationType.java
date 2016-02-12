@@ -155,7 +155,7 @@ public enum LnCommandStationType {
         return null;
     }
 
-    static Logger log = LoggerFactory.getLogger(LnCommandStationType.class.getName());
+    private final static Logger log = LoggerFactory.getLogger(LnCommandStationType.class.getName());
 }
 
 

@@ -208,5 +208,5 @@ public class ShapeDrawer {
         }
     }
 
-    static Logger log = LoggerFactory.getLogger(ShapeDrawer.class.getName());
+    private final static Logger log = LoggerFactory.getLogger(ShapeDrawer.class.getName());
 }

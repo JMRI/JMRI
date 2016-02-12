@@ -2,6 +2,8 @@
 package jmri.jmrix.zimo.mx1;
 
 import java.util.ResourceBundle;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 /**
  * Definition of objects to handle configuring an LocoBuffer layout connection
@@ -12,6 +14,8 @@ import java.util.ResourceBundle;
  */
 public class ConnectionConfig extends jmri.jmrix.AbstractSerialConnectionConfig {
 
+    private final static Logger log = LoggerFactory.getLogger(ConnectionConfig.class);
+    
     /**
      * Ctor for an object being created during load process; Swing init is
      * deferred.

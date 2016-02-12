@@ -41,7 +41,7 @@ public class SimpleLightCtrlAction extends AbstractAction {
         f.setVisible(true);
 
     }
-    static Logger log = LoggerFactory.getLogger(SimpleLightCtrlAction.class.getName());
+    private final static Logger log = LoggerFactory.getLogger(SimpleLightCtrlAction.class.getName());
 }
 
 

@@ -521,5 +521,5 @@ public class EnginesTableModel extends javax.swing.table.AbstractTableModel impl
         }
     }
 
-    static Logger log = LoggerFactory.getLogger(EnginesTableModel.class.getName());
+    private final static Logger log = LoggerFactory.getLogger(EnginesTableModel.class.getName());
 }

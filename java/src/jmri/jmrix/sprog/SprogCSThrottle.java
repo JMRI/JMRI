@@ -169,6 +169,6 @@ public class SprogCSThrottle extends AbstractThrottle {
     }
 
     // initialize logging
-    static Logger log = LoggerFactory.getLogger(SprogCSThrottle.class.getName());
+    private final static Logger log = LoggerFactory.getLogger(SprogCSThrottle.class.getName());
 
 }

@@ -50,6 +50,6 @@ public class SimpleServerManagerTest extends TestCase {
         apps.tests.Log4JFixture.tearDown();
     }
 
-    static Logger log = LoggerFactory.getLogger(SimpleServerManagerTest.class.getName());
+    private final static Logger log = LoggerFactory.getLogger(SimpleServerManagerTest.class.getName());
 
 }

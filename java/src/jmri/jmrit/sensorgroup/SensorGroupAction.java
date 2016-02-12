@@ -37,7 +37,7 @@ public class SensorGroupAction extends AbstractAction {
         f.initComponents();
         f.setVisible(true);
     }
-    static Logger log = LoggerFactory.getLogger(SensorGroupAction.class.getName());
+    private final static Logger log = LoggerFactory.getLogger(SensorGroupAction.class.getName());
 }
 
 /* @(#)SensorGroupAction.java */

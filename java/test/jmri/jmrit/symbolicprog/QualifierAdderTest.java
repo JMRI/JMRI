@@ -268,7 +268,7 @@ public class QualifierAdderTest extends TestCase {
         return suite;
     }
 
-    static Logger log = LoggerFactory.getLogger(QualifierAdderTest.class.getName());
+    private final static Logger log = LoggerFactory.getLogger(QualifierAdderTest.class.getName());
 
     // The minimal setup for log4J
     protected void setUp() {

@@ -39,5 +39,5 @@ public class Demo3 extends apps.gui3.demo3.Apps3 {
 
     }
 
-    static Logger log = LoggerFactory.getLogger(Demo3.class.getName());
+    private final static Logger log = LoggerFactory.getLogger(Demo3.class.getName());
 }

@@ -36,6 +36,6 @@ public class ComboOffRadioButton extends ComboRadioButtons {
     }
 
     // initialize logging
-    static Logger log = LoggerFactory.getLogger(ComboOffRadioButton.class.getName());
+    private final static Logger log = LoggerFactory.getLogger(ComboOffRadioButton.class.getName());
 
 }

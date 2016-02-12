@@ -43,7 +43,7 @@ public class MarklinSensor extends AbstractSensor {
     static String[] modeNames = null;
     static int[] modeValues = null;
 
-    static Logger log = LoggerFactory.getLogger(MarklinSensor.class.getName());
+    private final static Logger log = LoggerFactory.getLogger(MarklinSensor.class.getName());
 }
 
 /* @(#)MarklinSensor.java */

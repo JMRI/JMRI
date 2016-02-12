@@ -130,5 +130,5 @@ class BlockPortalTableModel extends AbstractTableModel implements PropertyChange
         }
     }
 
-    static Logger log = LoggerFactory.getLogger(BlockPortalTableModel.class.getName());
+    private final static Logger log = LoggerFactory.getLogger(BlockPortalTableModel.class.getName());
 }

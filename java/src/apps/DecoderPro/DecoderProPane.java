@@ -114,5 +114,5 @@ public class DecoderProPane extends apps.AppsLaunchPane {
         return j;
     }
 
-    static Logger log = LoggerFactory.getLogger(DecoderProPane.class.getName());
+    private final static Logger log = LoggerFactory.getLogger(DecoderProPane.class.getName());
 }

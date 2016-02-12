@@ -1020,7 +1020,7 @@ public class AbstractAutomaton implements Runnable {
         }
     }
     // initialize logging
-    static Logger log = LoggerFactory.getLogger(AbstractAutomaton.class.getName());
+    private final static Logger log = LoggerFactory.getLogger(AbstractAutomaton.class.getName());
 }
 
 /* @(#)AbstractAutomaton.java */

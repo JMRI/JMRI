@@ -56,7 +56,7 @@ public class UserInterface extends JmriJFrame implements DeviceListener, DeviceM
      *
      */
     private static final long serialVersionUID = 8012190396840569066L;
-    static Logger log = LoggerFactory.getLogger(UserInterface.class.getName());
+    private final static Logger log = LoggerFactory.getLogger(UserInterface.class.getName());
     static final ResourceBundle rb = ResourceBundle.getBundle("jmri.jmrit.withrottle.WiThrottleBundle");
 
     JMenuBar menuBar;
@@ -460,6 +460,6 @@ public class UserInterface extends JmriJFrame implements DeviceListener, DeviceM
             log.debug("Leaving serverThread.run()");
         }
 
-        static Logger log = LoggerFactory.getLogger(ServerThread.class.getName());
+    private final static Logger log = LoggerFactory.getLogger(ServerThread.class.getName());
     }
 }

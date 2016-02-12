@@ -94,7 +94,7 @@ public class NceReply extends jmri.jmrix.AbstractMRReply {
         }
     }
 
-    static Logger log = LoggerFactory.getLogger(NceReply.class.getName());
+    private final static Logger log = LoggerFactory.getLogger(NceReply.class.getName());
 
 }
 

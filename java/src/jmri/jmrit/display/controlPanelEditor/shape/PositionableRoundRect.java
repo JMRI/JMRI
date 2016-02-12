@@ -76,5 +76,5 @@ public class PositionableRoundRect extends PositionableRectangle {
         return true;
     }
 
-    static Logger log = LoggerFactory.getLogger(PositionableRoundRect.class.getName());
+    private final static Logger log = LoggerFactory.getLogger(PositionableRoundRect.class.getName());
 }

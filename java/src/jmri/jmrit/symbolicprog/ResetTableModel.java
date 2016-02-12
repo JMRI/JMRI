@@ -489,5 +489,5 @@ public class ResetTableModel extends AbstractTableModel implements ActionListene
     }
 
     // initialize logging
-    static Logger log = LoggerFactory.getLogger(ResetTableModel.class.getName());
+    private final static Logger log = LoggerFactory.getLogger(ResetTableModel.class.getName());
 }

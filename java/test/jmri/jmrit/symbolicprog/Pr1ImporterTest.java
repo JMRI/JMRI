@@ -113,7 +113,7 @@ public class Pr1ImporterTest extends TestCase {
         return suite;
     }
 
-    static Logger log = LoggerFactory.getLogger(Pr1ImporterTest.class.getName());
+    private final static Logger log = LoggerFactory.getLogger(Pr1ImporterTest.class.getName());
 
     // The minimal setup for log4J
     protected void setUp() {

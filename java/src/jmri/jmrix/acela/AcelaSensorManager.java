@@ -232,7 +232,7 @@ public class AcelaSensorManager extends jmri.managers.AbstractSensorManager
 
     static AcelaSensorManager _instance = null;
 
-    static Logger log = LoggerFactory.getLogger(AcelaSensorManager.class.getName());
+    private final static Logger log = LoggerFactory.getLogger(AcelaSensorManager.class.getName());
 }
 
 /* @(#)AcelaSensorManager.java */

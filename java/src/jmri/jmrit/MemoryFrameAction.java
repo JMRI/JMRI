@@ -129,6 +129,6 @@ public class MemoryFrameAction extends AbstractAction {
     }
 
     // initialize logging
-    static Logger log = LoggerFactory.getLogger(MemoryFrameAction.class.getName());
+    private final static Logger log = LoggerFactory.getLogger(MemoryFrameAction.class.getName());
 
 }

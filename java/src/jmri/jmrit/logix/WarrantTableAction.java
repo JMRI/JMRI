@@ -682,5 +682,5 @@ public class WarrantTableAction extends AbstractAction {
         }
     }
 
-    static Logger log = LoggerFactory.getLogger(WarrantTableAction.class.getName());
+    private final static Logger log = LoggerFactory.getLogger(WarrantTableAction.class.getName());
 }

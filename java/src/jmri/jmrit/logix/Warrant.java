@@ -1961,5 +1961,5 @@ public class Warrant extends jmri.implementation.AbstractNamedBean
         }
     }
     
-    static Logger log = LoggerFactory.getLogger(Warrant.class.getName());
+    private final static Logger log = LoggerFactory.getLogger(Warrant.class.getName());
 }

@@ -72,6 +72,6 @@ public class I18NTest extends TestCase {
     protected void tearDown() {
         apps.tests.Log4JFixture.tearDown();
     }
-    static Logger log = LoggerFactory.getLogger(I18NTest.class);
+    private final static Logger log = LoggerFactory.getLogger(I18NTest.class);
 
 }

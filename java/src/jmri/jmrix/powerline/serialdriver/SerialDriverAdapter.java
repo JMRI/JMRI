@@ -314,6 +314,6 @@ public class SerialDriverAdapter extends SerialPortController implements jmri.jm
 //        return mInstance;
 //    }
 //    static SerialDriverAdapter mInstance = null;
-    static Logger log = LoggerFactory.getLogger(SerialDriverAdapter.class.getName());
+    private final static Logger log = LoggerFactory.getLogger(SerialDriverAdapter.class.getName());
 
 }

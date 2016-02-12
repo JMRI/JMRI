@@ -48,6 +48,6 @@ public class LI101AdapterTest extends TestCase {
         apps.tests.Log4JFixture.tearDown();
     }
 
-    static Logger log = LoggerFactory.getLogger(LI101AdapterTest.class.getName());
+    private final static Logger log = LoggerFactory.getLogger(LI101AdapterTest.class.getName());
 
 }

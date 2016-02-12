@@ -78,7 +78,7 @@ public class RaspberryPiSensor extends AbstractSensor implements GpioPinListener
        }
     }
 
-    static Logger log = LoggerFactory.getLogger(RaspberryPiSensor.class.getName());
+    private final static Logger log = LoggerFactory.getLogger(RaspberryPiSensor.class.getName());
 
 }
 

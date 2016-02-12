@@ -1149,5 +1149,5 @@ public class ConditionalVariable {
         return super.toString();
     }
 
-    static final Logger log = LoggerFactory.getLogger(ConditionalVariable.class.getName());
+    private final static Logger log = LoggerFactory.getLogger(ConditionalVariable.class.getName());
 }

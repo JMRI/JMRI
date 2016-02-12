@@ -39,6 +39,6 @@ public class SRCPClientParserTests extends TestCase {
         return suite;
     }
 
-    static Logger log = LoggerFactory.getLogger(SRCPClientParserTests.class.getName());
+    private final static Logger log = LoggerFactory.getLogger(SRCPClientParserTests.class.getName());
 
 }

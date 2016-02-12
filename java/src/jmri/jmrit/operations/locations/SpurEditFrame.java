@@ -173,5 +173,5 @@ public class SpurEditFrame extends TrackEditFrame implements java.beans.Property
         super.propertyChange(e);
     }
 
-    static Logger log = LoggerFactory.getLogger(SpurEditFrame.class.getName());
+    private final static Logger log = LoggerFactory.getLogger(SpurEditFrame.class.getName());
 }

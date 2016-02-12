@@ -211,7 +211,7 @@ public class Dcc4PcSystemConnectionMemo extends jmri.jmrix.SystemConnectionMemo 
     public void setDefaultProgrammer(String prog) {
         progManager = prog;
     }
-    static Logger log = LoggerFactory.getLogger(Dcc4PcSystemConnectionMemo.class.getName());
+    private final static Logger log = LoggerFactory.getLogger(Dcc4PcSystemConnectionMemo.class.getName());
 }
 
 

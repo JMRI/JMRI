@@ -366,7 +366,7 @@ public class TrainInfoFile extends jmri.jmrit.XmlFile {
             log.error("failed to delete TrainInfo file - " + name);
         }
     }
-    static Logger log = LoggerFactory.getLogger(TrainInfoFile.class.getName());
+    private final static Logger log = LoggerFactory.getLogger(TrainInfoFile.class.getName());
 }
 
 /* @(#)TrainInfoFile.java */

@@ -59,7 +59,7 @@ public class z21XNetMessage extends jmri.jmrix.lenz.XNetMessage implements Seria
     }
 
     // initialize logging    
-    static Logger log = LoggerFactory.getLogger(z21XNetMessage.class.getName());
+    private final static Logger log = LoggerFactory.getLogger(z21XNetMessage.class.getName());
 
 }
 

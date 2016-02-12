@@ -569,5 +569,5 @@ public class ValidatedTextField extends javax.swing.JTextField {
     public final static java.awt.Color COLOR_BG_UNEDITED = COLOR_BG_OK;
     public final static java.awt.Color COLOR_BG_ERROR = java.awt.Color.red;
 
-    static Logger log = LoggerFactory.getLogger(ValidatedTextField.class.getName());
+    private final static Logger log = LoggerFactory.getLogger(ValidatedTextField.class.getName());
 }

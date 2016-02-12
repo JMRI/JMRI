@@ -672,7 +672,7 @@ public class XNetReply extends jmri.jmrix.AbstractMRReply {
     }
 
     // initialize logging
-    static Logger log = LoggerFactory.getLogger(XNetReply.class.getName());
+    private final static Logger log = LoggerFactory.getLogger(XNetReply.class.getName());
 
 }
 

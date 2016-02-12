@@ -297,7 +297,7 @@ public class ThrottlesPreferencesPane extends JPanel implements PropertyChangeLi
         jbCancel.setText(Bundle.getMessage("ThrottlesPrefsCancel"));
     }
 
-    static Logger log = LoggerFactory.getLogger(ThrottlesPreferencesPane.class.getName());
+    private final static Logger log = LoggerFactory.getLogger(ThrottlesPreferencesPane.class.getName());
 
     @Override
     public void propertyChange(PropertyChangeEvent evt) {

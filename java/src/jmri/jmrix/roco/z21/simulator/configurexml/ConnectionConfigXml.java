@@ -43,6 +43,6 @@ public class ConnectionConfigXml extends jmri.jmrix.roco.z21.configurexml.Connec
     }
 
     // initialize logging
-    static Logger log = LoggerFactory.getLogger(ConnectionConfigXml.class.getName());
+    private final static Logger log = LoggerFactory.getLogger(ConnectionConfigXml.class.getName());
 
 }

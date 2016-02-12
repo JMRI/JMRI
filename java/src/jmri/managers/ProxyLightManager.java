@@ -204,7 +204,7 @@ public class ProxyLightManager extends AbstractProxyManager
     }
 
     // initialize logging
-    static Logger log = LoggerFactory.getLogger(ProxyLightManager.class.getName());
+    private final static Logger log = LoggerFactory.getLogger(ProxyLightManager.class.getName());
 }
 
 /* @(#)ProxyLightManager.java */

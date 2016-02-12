@@ -130,5 +130,5 @@ public class DropJLabel extends JLabel implements DropTargetListener {
         }
     }
 
-    static Logger log = LoggerFactory.getLogger(DropJLabel.class.getName());
+    private final static Logger log = LoggerFactory.getLogger(DropJLabel.class.getName());
 }

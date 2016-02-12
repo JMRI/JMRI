@@ -469,6 +469,6 @@ public class LongAddrVariableValue extends VariableValue
     }
 
     // initialize logging
-    static Logger log = LoggerFactory.getLogger(LongAddrVariableValue.class.getName());
+    private final static Logger log = LoggerFactory.getLogger(LongAddrVariableValue.class.getName());
 
 }

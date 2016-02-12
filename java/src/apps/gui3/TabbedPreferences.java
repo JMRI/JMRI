@@ -517,6 +517,6 @@ public class TabbedPreferences extends AppConfigBase {
         }
     }
 
-    static Logger log = LoggerFactory.getLogger(TabbedPreferences.class.getName());
+    private final static Logger log = LoggerFactory.getLogger(TabbedPreferences.class.getName());
 
 }

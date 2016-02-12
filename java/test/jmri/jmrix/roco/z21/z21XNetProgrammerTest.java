@@ -209,6 +209,6 @@ public class z21XNetProgrammerTest extends jmri.jmrix.lenz.XNetProgrammerTest {
         super.tearDown();
         apps.tests.Log4JFixture.tearDown();
     }
-    static Logger log = LoggerFactory.getLogger(z21XNetProgrammerTest.class.getName());
+    private final static Logger log = LoggerFactory.getLogger(z21XNetProgrammerTest.class.getName());
 
 }

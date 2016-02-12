@@ -32,7 +32,7 @@ public class JsonSensorServer extends AbstractSensorServer {
 
     private final JmriConnection connection;
     private final ObjectMapper mapper;
-    static Logger log = LoggerFactory.getLogger(JsonSensorServer.class);
+    private final static Logger log = LoggerFactory.getLogger(JsonSensorServer.class);
 
     public JsonSensorServer(JmriConnection connection) {
         super();

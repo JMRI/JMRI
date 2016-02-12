@@ -301,7 +301,7 @@ public class IBLnPacketizer extends LnPacketizer {
 
     }
 
-    static Logger log = LoggerFactory.getLogger(IBLnPacketizer.class.getName());
+    private final static Logger log = LoggerFactory.getLogger(IBLnPacketizer.class.getName());
 }
 
 /* @(#)LnPacketizer.java */

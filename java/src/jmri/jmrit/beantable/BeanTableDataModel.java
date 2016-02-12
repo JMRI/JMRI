@@ -1040,6 +1040,6 @@ abstract public class BeanTableDataModel extends javax.swing.table.AbstractTable
             }
         }
     }
-    static final Logger log = LoggerFactory.getLogger(BeanTableDataModel.class.getName());
+    private final static Logger log = LoggerFactory.getLogger(BeanTableDataModel.class.getName());
 
 }

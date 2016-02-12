@@ -85,6 +85,6 @@ public class JsonPowerServerTest extends TestCase {
     }
 
 
-    static Logger log = LoggerFactory.getLogger(JsonPowerServerTest.class.getName());
+    private final static Logger log = LoggerFactory.getLogger(JsonPowerServerTest.class.getName());
 
 }

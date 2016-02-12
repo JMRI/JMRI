@@ -133,6 +133,6 @@ public class EliteXNetTurnoutManagerTest extends jmri.managers.AbstractTurnoutMg
         apps.tests.Log4JFixture.tearDown();
     }
 
-    static Logger log = LoggerFactory.getLogger(EliteXNetTurnoutManagerTest.class.getName());
+    private final static Logger log = LoggerFactory.getLogger(EliteXNetTurnoutManagerTest.class.getName());
 
 }

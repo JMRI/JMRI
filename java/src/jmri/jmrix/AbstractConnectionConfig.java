@@ -229,6 +229,6 @@ abstract public class AbstractConnectionConfig implements ConnectionConfig {
         }
     }
 
-    static protected Logger log = LoggerFactory.getLogger(AbstractConnectionConfig.class.getName());
+    private final static Logger log = LoggerFactory.getLogger(AbstractConnectionConfig.class);
 
 }

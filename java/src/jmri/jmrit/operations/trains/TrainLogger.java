@@ -241,5 +241,5 @@ public class TrainLogger extends XmlFile implements java.beans.PropertyChangeLis
         }
     }
 
-    static Logger log = LoggerFactory.getLogger(TrainLogger.class.getName());
+    private final static Logger log = LoggerFactory.getLogger(TrainLogger.class.getName());
 }

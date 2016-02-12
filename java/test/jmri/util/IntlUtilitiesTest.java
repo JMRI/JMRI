@@ -122,6 +122,6 @@ public class IntlUtilitiesTest extends TestCase {
         return suite;
     }
 
-    static Logger log = LoggerFactory.getLogger(IntlUtilitiesTest.class.getName());
+    private final static Logger log = LoggerFactory.getLogger(IntlUtilitiesTest.class.getName());
 
 }

@@ -230,7 +230,7 @@ public class GuiLafConfigPane extends JPanel implements PreferencesPanel {
 
     }
     // initialize logging
-    static Logger log = LoggerFactory.getLogger(GuiLafConfigPane.class.getName());
+    private final static Logger log = LoggerFactory.getLogger(GuiLafConfigPane.class.getName());
 
     @Override
     public String getPreferencesItem() {

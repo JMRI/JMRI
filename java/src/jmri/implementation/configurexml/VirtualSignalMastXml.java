@@ -93,5 +93,5 @@ public class VirtualSignalMastXml
         log.error("Invalid method called");
     }
 
-    static Logger log = LoggerFactory.getLogger(VirtualSignalMastXml.class.getName());
+    private final static Logger log = LoggerFactory.getLogger(VirtualSignalMastXml.class.getName());
 }

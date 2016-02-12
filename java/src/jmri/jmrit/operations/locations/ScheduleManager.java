@@ -365,7 +365,7 @@ public class ScheduleManager implements java.beans.PropertyChangeListener {
         pcs.firePropertyChange(p, old, n);
     }
 
-    static Logger log = LoggerFactory.getLogger(ScheduleManager.class.getName());
+    private final static Logger log = LoggerFactory.getLogger(ScheduleManager.class.getName());
 
 }
 

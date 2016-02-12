@@ -22,7 +22,7 @@ import org.slf4j.LoggerFactory;
 abstract public class AbstractRouteServer {
 
     private final HashMap<String, RouteListener> routes;
-    static Logger log = LoggerFactory.getLogger(AbstractRouteServer.class);
+    private final static Logger log = LoggerFactory.getLogger(AbstractRouteServer.class);
 
     public AbstractRouteServer() {
         routes = new HashMap<String, RouteListener>();

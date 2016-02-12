@@ -230,5 +230,5 @@ public class TransitManagerXml extends jmri.managers.configurexml.AbstractNamedB
         return InstanceManager.transitManagerInstance().getXMLOrder();
     }
 
-    static Logger log = LoggerFactory.getLogger(TransitManagerXml.class.getName());
+    private final static Logger log = LoggerFactory.getLogger(TransitManagerXml.class.getName());
 }

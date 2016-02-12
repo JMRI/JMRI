@@ -116,6 +116,6 @@ public class Ib1Throttle extends LocoNetThrottle {
     }
 
     // initialize logging
-    static Logger log = LoggerFactory.getLogger(Ib1Throttle.class.getName());
+    private final static Logger log = LoggerFactory.getLogger(Ib1Throttle.class.getName());
 
 }

@@ -61,5 +61,5 @@ public class PositionableCircleXml extends PositionableShapeXml {
         loadCommonAttributes(ps, Editor.MARKERS, element);
     }
 
-    static Logger log = LoggerFactory.getLogger(PositionableCircleXml.class.getName());
+    private final static Logger log = LoggerFactory.getLogger(PositionableCircleXml.class.getName());
 }

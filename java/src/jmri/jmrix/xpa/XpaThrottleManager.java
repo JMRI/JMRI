@@ -68,6 +68,6 @@ public class XpaThrottleManager extends AbstractThrottleManager implements Throt
     static boolean isLongAddress(int num) {
         return (num >= 100);
     }
-    static Logger log = LoggerFactory.getLogger(XpaThrottleManager.class.getName());
+    private final static Logger log = LoggerFactory.getLogger(XpaThrottleManager.class.getName());
 
 }

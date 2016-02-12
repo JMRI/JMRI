@@ -38,6 +38,6 @@ public class ConsistFileTest extends TestCase {
         return suite;
     }
 
-    static Logger log = LoggerFactory.getLogger(ConsistFileTest.class.getName());
+    private final static Logger log = LoggerFactory.getLogger(ConsistFileTest.class.getName());
 
 }

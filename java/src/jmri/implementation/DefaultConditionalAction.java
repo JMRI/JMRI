@@ -861,5 +861,5 @@ public class DefaultConditionalAction implements ConditionalAction {
         return str;
     }
 
-    static final Logger log = LoggerFactory.getLogger(ConditionalAction.class.getName());
+    private final static Logger log = LoggerFactory.getLogger(ConditionalAction.class.getName());
 }

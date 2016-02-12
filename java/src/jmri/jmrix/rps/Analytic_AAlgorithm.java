@@ -337,7 +337,7 @@ public class Analytic_AAlgorithm extends AbstractCalculator {
         double x, y, z, vs;
     }
 
-    static Logger log = LoggerFactory.getLogger(Analytic_AAlgorithm.class.getName());
+    private final static Logger log = LoggerFactory.getLogger(Analytic_AAlgorithm.class.getName());
 }
 
 /* @(#)Analytic_AAlgorithm.java */

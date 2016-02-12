@@ -51,7 +51,7 @@ public class SensorTablePanel extends jmri.jmrit.beantable.BeanTablePane {
         addFrame.setVisible(true);
     }
 
-    static final Logger log = LoggerFactory.getLogger(SensorTablePanel.class.getName());
+    private final static Logger log = LoggerFactory.getLogger(SensorTablePanel.class.getName());
 }
 
 

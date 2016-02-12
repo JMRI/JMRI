@@ -77,6 +77,6 @@ public class z21MessageTest extends TestCase {
         apps.tests.Log4JFixture.tearDown();
     }
 
-    static Logger log = LoggerFactory.getLogger(z21MessageTest.class.getName());
+    private final static Logger log = LoggerFactory.getLogger(z21MessageTest.class.getName());
 
 }

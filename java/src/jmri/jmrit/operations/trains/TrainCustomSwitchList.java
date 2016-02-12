@@ -177,5 +177,5 @@ public class TrainCustomSwitchList {
         options.addContent(mc);
     }
 
-    static Logger log = LoggerFactory.getLogger(TrainCustomSwitchList.class.getName());
+    private final static Logger log = LoggerFactory.getLogger(TrainCustomSwitchList.class.getName());
 }

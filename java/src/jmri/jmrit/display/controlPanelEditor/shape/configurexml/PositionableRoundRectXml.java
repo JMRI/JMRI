@@ -63,5 +63,5 @@ public class PositionableRoundRectXml extends PositionableShapeXml {
         loadCommonAttributes(ps, Editor.MARKERS, element);
     }
 
-    static Logger log = LoggerFactory.getLogger(PositionableRoundRectXml.class.getName());
+    private final static Logger log = LoggerFactory.getLogger(PositionableRoundRectXml.class.getName());
 }

@@ -39,7 +39,7 @@ public class DataSourceAction extends jmri.util.JmriJFrameAction {
         return "jmri.jmrix.pricom.pockettester.DataSource";
     }
 
-    static Logger log = LoggerFactory.getLogger(DataSourceAction.class.getName());
+    private final static Logger log = LoggerFactory.getLogger(DataSourceAction.class.getName());
 
 }
 

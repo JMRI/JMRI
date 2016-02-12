@@ -2136,6 +2136,6 @@ public class RouteTableAction extends AbstractTableAction {
         return Bundle.getMessage("TitleRouteTable");
     }
 
-    static final Logger log = LoggerFactory.getLogger(RouteTableAction.class.getName());
+    private final static Logger log = LoggerFactory.getLogger(RouteTableAction.class.getName());
 }
 /* @(#)RouteTableAction.java */

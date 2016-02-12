@@ -41,6 +41,6 @@ public class PackageTest extends TestCase {
         return suite;
     }
 
-    static Logger log = LoggerFactory.getLogger(PackageTest.class.getName());
+    private final static Logger log = LoggerFactory.getLogger(PackageTest.class.getName());
 
 }

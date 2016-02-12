@@ -58,5 +58,5 @@ public class DebugMenu extends JMenu {
 
     }
 
-    static Logger log = LoggerFactory.getLogger(DebugMenu.class.getName());
+    private final static Logger log = LoggerFactory.getLogger(DebugMenu.class.getName());
 }

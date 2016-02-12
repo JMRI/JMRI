@@ -349,7 +349,7 @@ public class AcelaAddress {
         return ("");
     }
 
-    static Logger log = LoggerFactory.getLogger(AcelaAddress.class.getName());
+    private final static Logger log = LoggerFactory.getLogger(AcelaAddress.class.getName());
 }
 
 /* @(#)AcelaAddress.java */

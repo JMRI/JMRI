@@ -482,6 +482,6 @@ public class XNetSimulatorAdapter extends XNetSimulatorPortController implements
     private DataInputStream inpipe = null; // feed pout
     private Thread sourceThread;
 
-    static Logger log = LoggerFactory.getLogger(XNetSimulatorAdapter.class.getName());
+    private final static Logger log = LoggerFactory.getLogger(XNetSimulatorAdapter.class.getName());
 
 }

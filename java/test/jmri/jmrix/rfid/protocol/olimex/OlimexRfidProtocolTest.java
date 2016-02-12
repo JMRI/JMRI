@@ -136,6 +136,6 @@ public class OlimexRfidProtocolTest extends TestCase {
         apps.tests.Log4JFixture.tearDown();
     }
 
-    static Logger log = LoggerFactory.getLogger(OlimexRfidProtocolTest.class.getName());
+    private final static Logger log = LoggerFactory.getLogger(OlimexRfidProtocolTest.class.getName());
 
 }

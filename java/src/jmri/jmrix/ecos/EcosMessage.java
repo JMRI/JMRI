@@ -45,6 +45,6 @@ public class EcosMessage extends jmri.jmrix.AbstractMRMessage {
         return m;
     }
 
-    static Logger log = LoggerFactory.getLogger(EcosMessage.class.getName());
+    private final static Logger log = LoggerFactory.getLogger(EcosMessage.class.getName());
 }
 /* @(#)EcosMessage.java */

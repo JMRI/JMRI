@@ -51,6 +51,6 @@ public class XNetConsistManagerTest extends TestCase {
         apps.tests.Log4JFixture.tearDown();
     }
 
-    static Logger log = LoggerFactory.getLogger(XNetConsistManagerTest.class.getName());
+    private final static Logger log = LoggerFactory.getLogger(XNetConsistManagerTest.class.getName());
 
 }

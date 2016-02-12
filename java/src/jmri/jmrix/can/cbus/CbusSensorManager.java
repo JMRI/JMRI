@@ -101,7 +101,7 @@ public class CbusSensorManager extends jmri.managers.AbstractSensorManager imple
     public void updateAll() {
     }
 
-    static Logger log = LoggerFactory.getLogger(CbusSensorManager.class.getName());
+    private final static Logger log = LoggerFactory.getLogger(CbusSensorManager.class.getName());
 
 }
 

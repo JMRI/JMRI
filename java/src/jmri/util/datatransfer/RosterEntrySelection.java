@@ -116,6 +116,6 @@ public class RosterEntrySelection implements Transferable, ClipboardOwner {
     }
 
     // initialize logging
-    static Logger log = LoggerFactory.getLogger(RosterEntrySelection.class.getName());
+    private final static Logger log = LoggerFactory.getLogger(RosterEntrySelection.class.getName());
 
 }

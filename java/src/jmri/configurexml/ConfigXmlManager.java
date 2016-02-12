@@ -934,7 +934,7 @@ public class ConfigXmlManager extends jmri.jmrit.XmlFile
     }
 
     // initialize logging
-    static Logger log = LoggerFactory.getLogger(ConfigXmlManager.class.getName());
+    private final static Logger log = LoggerFactory.getLogger(ConfigXmlManager.class.getName());
 
     /**
      * @return the loadDeferredList

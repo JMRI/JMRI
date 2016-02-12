@@ -182,7 +182,7 @@ public class PaneProgFrameTest extends TestCase {
         return suite;
     }
 
-    static Logger log = LoggerFactory.getLogger(PaneProgFrameTest.class.getName());
+    private final static Logger log = LoggerFactory.getLogger(PaneProgFrameTest.class.getName());
 
     // The minimal setup for log4J
     protected void setUp() {

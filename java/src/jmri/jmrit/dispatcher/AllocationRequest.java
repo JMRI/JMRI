@@ -217,7 +217,7 @@ public class AllocationRequest {
 
     }
 
-    static Logger log = LoggerFactory.getLogger(AllocationRequest.class.getName());
+    private final static Logger log = LoggerFactory.getLogger(AllocationRequest.class.getName());
 }
 
 /* @(#)AllocationRequest.java */

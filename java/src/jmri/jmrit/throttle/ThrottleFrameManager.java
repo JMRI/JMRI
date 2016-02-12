@@ -220,5 +220,5 @@ public class ThrottleFrameManager {
         throttlePreferencesFrame.requestFocus();
     }
 
-    static Logger log = LoggerFactory.getLogger(ThrottleFrameManager.class.getName());
+    private final static Logger log = LoggerFactory.getLogger(ThrottleFrameManager.class.getName());
 }

@@ -48,6 +48,6 @@ public class z21AdapterTest extends TestCase {
         apps.tests.Log4JFixture.tearDown();
     }
 
-    static Logger log = LoggerFactory.getLogger(z21AdapterTest.class.getName());
+    private final static Logger log = LoggerFactory.getLogger(z21AdapterTest.class.getName());
 
 }

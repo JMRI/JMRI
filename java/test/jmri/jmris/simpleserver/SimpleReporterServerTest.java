@@ -121,6 +121,6 @@ public class SimpleReporterServerTest extends TestCase {
     }
 
 
-    static Logger log = LoggerFactory.getLogger(SimpleReporterServerTest.class.getName());
+    private final static Logger log = LoggerFactory.getLogger(SimpleReporterServerTest.class.getName());
 
 }

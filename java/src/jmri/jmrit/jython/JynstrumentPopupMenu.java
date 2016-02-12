@@ -87,5 +87,5 @@ public class JynstrumentPopupMenu extends JPopupMenu {
         addSeparator();
     }
 
-    static Logger log = LoggerFactory.getLogger(JynstrumentPopupMenu.class.getName());
+    private final static Logger log = LoggerFactory.getLogger(JynstrumentPopupMenu.class.getName());
 }

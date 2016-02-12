@@ -65,6 +65,6 @@ public class Log4JUtilTest extends TestCase {
         super.tearDown();
     }
 
-    static Logger log = LoggerFactory.getLogger(Log4JUtilTest.class.getName());
+    private final static Logger log = LoggerFactory.getLogger(Log4JUtilTest.class.getName());
 
 }

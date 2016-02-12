@@ -38,7 +38,7 @@ public class QuietShutDownTask extends AbstractShutDownTask {
         return true;
     }
 
-    static Logger log = LoggerFactory.getLogger(QuietShutDownTask.class.getName());
+    private final static Logger log = LoggerFactory.getLogger(QuietShutDownTask.class.getName());
 
 }
 

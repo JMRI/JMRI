@@ -53,7 +53,7 @@ public abstract class DCCppSimulatorPortController extends jmri.jmrix.AbstractSe
         return (DCCppSystemConnectionMemo) super.getSystemConnectionMemo();
     }
 
-    static Logger log = LoggerFactory.getLogger(DCCppSimulatorPortController.class.getName());
+    private final static Logger log = LoggerFactory.getLogger(DCCppSimulatorPortController.class.getName());
 
 }
 

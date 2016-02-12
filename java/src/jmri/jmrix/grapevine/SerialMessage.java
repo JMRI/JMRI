@@ -262,7 +262,7 @@ public class SerialMessage extends jmri.jmrix.AbstractMRMessage {
         return colors[color];
     }
 
-    static Logger log = LoggerFactory.getLogger(SerialMessage.class.getName());
+    private final static Logger log = LoggerFactory.getLogger(SerialMessage.class.getName());
 }
 
 /* @(#)SerialMessage.java */

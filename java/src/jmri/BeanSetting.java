@@ -98,5 +98,5 @@ public class BeanSetting {
         return hash;
     }
 
-    static final Logger log = LoggerFactory.getLogger(BeanSetting.class.getName());
+    private final static Logger log = LoggerFactory.getLogger(BeanSetting.class.getName());
 }

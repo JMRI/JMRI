@@ -270,6 +270,6 @@ abstract public class AbstractTableTabAction extends AbstractTableAction {
         }
     }
 
-    static Logger log = LoggerFactory.getLogger(AbstractTableTabAction.class.getName());
+    private final static Logger log = LoggerFactory.getLogger(AbstractTableTabAction.class.getName());
 
 }

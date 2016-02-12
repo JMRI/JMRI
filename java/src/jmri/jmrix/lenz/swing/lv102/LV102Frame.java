@@ -66,6 +66,6 @@ public class LV102Frame extends jmri.util.JmriJFrame {
         super.dispose();
     }
 
-    static Logger log = LoggerFactory.getLogger(LV102Frame.class.getName());
+    private final static Logger log = LoggerFactory.getLogger(LV102Frame.class.getName());
 
 }

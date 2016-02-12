@@ -18,7 +18,7 @@ public class InternalTurnoutManager extends jmri.managers.InternalTurnoutManager
         this.prefix = prefix;
     }
 
-    static Logger log = LoggerFactory.getLogger(InternalTurnoutManager.class.getName());
+    private final static Logger log = LoggerFactory.getLogger(InternalTurnoutManager.class.getName());
 }
 
 /* @(#)InternalTurnoutManager.java */

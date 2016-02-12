@@ -778,5 +778,5 @@ public class LocoIOData
         v2 = null;
         lim = null;
     }
-    static Logger log = LoggerFactory.getLogger(LocoIOData.class.getName());
+    private final static Logger log = LoggerFactory.getLogger(LocoIOData.class.getName());
 }

@@ -47,6 +47,6 @@ public class EasyDccMonFrame extends jmri.jmrix.AbstractMonFrame implements Easy
         nextLine("rep: \"" + l.toString() + "\"\n", "");
     }
 
-    static Logger log = LoggerFactory.getLogger(EasyDccMonFrame.class.getName());
+    private final static Logger log = LoggerFactory.getLogger(EasyDccMonFrame.class.getName());
 
 }

@@ -50,7 +50,7 @@ public class CbusDccProgrammerManager extends DefaultProgrammerManager {
         return null;
     }
 
-    static Logger log = LoggerFactory.getLogger(CbusDccProgrammerManager.class.getName());
+    private final static Logger log = LoggerFactory.getLogger(CbusDccProgrammerManager.class.getName());
 }
 
 

@@ -182,7 +182,7 @@ public class CbusCommandStation implements CommandStation, DccCommandStation, Ca
         return adapterMemo.getSystemPrefix();
     }
 
-    static Logger log = LoggerFactory.getLogger(CbusCommandStation.class.getName());
+    private final static Logger log = LoggerFactory.getLogger(CbusCommandStation.class.getName());
 }
 
 /* @(#)CbusCommandStation.java */

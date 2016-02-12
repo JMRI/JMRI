@@ -43,6 +43,6 @@ public class DCCppEthernetPacketizerTest extends TestCase {
         apps.tests.Log4JFixture.tearDown();
     }
 
-    static Logger log = LoggerFactory.getLogger(DCCppEthernetPacketizerTest.class.getName());
+    private final static Logger log = LoggerFactory.getLogger(DCCppEthernetPacketizerTest.class.getName());
 
 }

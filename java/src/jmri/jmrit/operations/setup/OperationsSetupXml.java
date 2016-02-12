@@ -113,7 +113,7 @@ public class OperationsSetupXml extends OperationsXml {
 
     private String operationsFileName = "Operations.xml"; // NOI18N
 
-    static Logger log = LoggerFactory.getLogger(OperationsSetupXml.class.getName());
+    private final static Logger log = LoggerFactory.getLogger(OperationsSetupXml.class.getName());
 
     public void dispose(){
         _instance = null;

@@ -33,7 +33,7 @@ public class z21XNetStreamPortController extends jmri.jmrix.lenz.XNetStreamPortC
         jmri.jmrix.lenz.ActiveFlag.setActive();
     }
 
-    static Logger log = LoggerFactory.getLogger(z21XNetStreamPortController.class.getName());
+    private final static Logger log = LoggerFactory.getLogger(z21XNetStreamPortController.class.getName());
 
 }
 

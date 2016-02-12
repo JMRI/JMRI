@@ -104,5 +104,5 @@ public class AffineEntryPanel extends javax.swing.JPanel {
     }
     AffineTransform t = new AffineTransform();
 
-    static Logger log = LoggerFactory.getLogger(AffineEntryPanel.class.getName());
+    private final static Logger log = LoggerFactory.getLogger(AffineEntryPanel.class.getName());
 }

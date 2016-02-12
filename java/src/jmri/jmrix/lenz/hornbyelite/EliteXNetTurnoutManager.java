@@ -82,7 +82,7 @@ public class EliteXNetTurnoutManager extends jmri.jmrix.lenz.XNetTurnoutManager 
         }
     }
 
-    static Logger log = LoggerFactory.getLogger(EliteXNetTurnoutManager.class.getName());
+    private final static Logger log = LoggerFactory.getLogger(EliteXNetTurnoutManager.class.getName());
 
 }
 

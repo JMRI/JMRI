@@ -44,5 +44,5 @@ public class DefaultMemoryManagerXml extends AbstractMemoryManagerConfigXML {
         return true;
     }
 
-    static Logger log = LoggerFactory.getLogger(DefaultMemoryManagerXml.class.getName());
+    private final static Logger log = LoggerFactory.getLogger(DefaultMemoryManagerXml.class.getName());
 }

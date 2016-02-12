@@ -32,7 +32,7 @@ public class HornbyEliteCommandStation extends jmri.jmrix.lenz.LenzCommandStatio
     /*
      * We need to register for logging
      */
-    static Logger log = LoggerFactory.getLogger(HornbyEliteCommandStation.class.getName());
+    private final static Logger log = LoggerFactory.getLogger(HornbyEliteCommandStation.class.getName());
 
 }
 

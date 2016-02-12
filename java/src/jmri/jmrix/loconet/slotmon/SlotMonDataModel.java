@@ -710,6 +710,6 @@ public class SlotMonDataModel extends javax.swing.table.AbstractTableModel imple
         // table = null;
     }
 
-    static Logger log = LoggerFactory.getLogger(SlotMonDataModel.class.getName());
+    private final static Logger log = LoggerFactory.getLogger(SlotMonDataModel.class.getName());
 
 }

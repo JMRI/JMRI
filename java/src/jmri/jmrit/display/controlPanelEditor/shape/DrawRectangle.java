@@ -116,5 +116,5 @@ public class DrawRectangle extends DrawFrame {
         setPositionableParams(pos);
     }
 
-    static Logger log = LoggerFactory.getLogger(DrawRectangle.class.getName());
+    private final static Logger log = LoggerFactory.getLogger(DrawRectangle.class.getName());
 }

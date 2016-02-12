@@ -222,5 +222,5 @@ public class Control {
         }
     }
     
-    static Logger log = LoggerFactory.getLogger(Control.class.getName());
+    private final static Logger log = LoggerFactory.getLogger(Control.class.getName());
 }

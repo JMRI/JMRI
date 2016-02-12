@@ -51,7 +51,7 @@ public class EcosSensor extends AbstractSensor {
         return objectNumber;
     }
 
-    static Logger log = LoggerFactory.getLogger(EcosSensor.class.getName());
+    private final static Logger log = LoggerFactory.getLogger(EcosSensor.class.getName());
 }
 
 /* @(#)EcosSensor.java */

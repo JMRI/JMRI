@@ -1023,6 +1023,6 @@ public class EcosDccThrottle extends AbstractThrottle implements EcosListener {
     }
 
     // initialize logging
-    static Logger log = LoggerFactory.getLogger(EcosDccThrottle.class.getName());
+    private final static Logger log = LoggerFactory.getLogger(EcosDccThrottle.class.getName());
 
 }
