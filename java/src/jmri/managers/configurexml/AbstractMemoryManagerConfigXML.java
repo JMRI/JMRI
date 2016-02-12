@@ -162,5 +162,5 @@ public abstract class AbstractMemoryManagerConfigXML extends AbstractNamedBeanMa
         m.setValue(value);
     }
 
-    static Logger log = LoggerFactory.getLogger(AbstractMemoryManagerConfigXML.class.getName());
+    private final static Logger log = LoggerFactory.getLogger(AbstractMemoryManagerConfigXML.class.getName());
 }

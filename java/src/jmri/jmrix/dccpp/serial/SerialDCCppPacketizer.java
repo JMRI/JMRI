@@ -95,7 +95,7 @@ public class SerialDCCppPacketizer extends DCCppPacketizer {
 //        }
 //    }
 
-    static Logger log = LoggerFactory.getLogger(SerialDCCppPacketizer.class.getName());
+    private final static Logger log = LoggerFactory.getLogger(SerialDCCppPacketizer.class.getName());
 }
 
 /* @(#)SerialDCCppPacketizer.java */

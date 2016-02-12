@@ -46,5 +46,5 @@ public class GetEcosObjectNumber {
     }
 
     // initialize logging
-    static Logger log = LoggerFactory.getLogger(GetEcosObjectNumber.class.getName());
+    private final static Logger log = LoggerFactory.getLogger(GetEcosObjectNumber.class.getName());
 }

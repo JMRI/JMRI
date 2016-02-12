@@ -67,6 +67,6 @@ public class JsonTurnoutServerTest extends TestCase {
     }
 
 
-    static Logger log = LoggerFactory.getLogger(JsonTurnoutServerTest.class.getName());
+    private final static Logger log = LoggerFactory.getLogger(JsonTurnoutServerTest.class.getName());
 
 }

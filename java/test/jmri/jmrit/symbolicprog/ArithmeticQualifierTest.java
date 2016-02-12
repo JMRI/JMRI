@@ -147,7 +147,7 @@ public class ArithmeticQualifierTest extends TestCase {
         return suite;
     }
 
-    static Logger log = LoggerFactory.getLogger(ArithmeticQualifierTest.class.getName());
+    private final static Logger log = LoggerFactory.getLogger(ArithmeticQualifierTest.class.getName());
 
     // The minimal setup for log4J
     protected void setUp() {

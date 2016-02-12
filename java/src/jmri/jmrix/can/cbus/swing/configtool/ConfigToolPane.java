@@ -150,7 +150,7 @@ public class ConfigToolPane extends jmri.jmrix.can.swing.CanPanel implements Can
         tc.removeCanListener(this);
     }
 
-    static Logger log = LoggerFactory.getLogger(ConfigToolPane.class.getName());
+    private final static Logger log = LoggerFactory.getLogger(ConfigToolPane.class.getName());
 
     /**
      * Class to build one NamedBean

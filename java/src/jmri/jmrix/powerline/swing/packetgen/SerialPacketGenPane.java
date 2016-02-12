@@ -130,6 +130,6 @@ public class SerialPacketGenPane extends jmri.jmrix.powerline.swing.PowerlinePan
     public void reply(SerialReply r) {
     } // ignore replies
 
-    static Logger log = LoggerFactory.getLogger(SerialPacketGenPane.class.getName());
+    private final static Logger log = LoggerFactory.getLogger(SerialPacketGenPane.class.getName());
 
 }

@@ -70,6 +70,6 @@ public class LI100XNetInitializationManagerTest extends TestCase {
         apps.tests.Log4JFixture.tearDown();
     }
 
-    static Logger log = LoggerFactory.getLogger(LI100XNetInitializationManagerTest.class.getName());
+    private final static Logger log = LoggerFactory.getLogger(LI100XNetInitializationManagerTest.class.getName());
 
 }

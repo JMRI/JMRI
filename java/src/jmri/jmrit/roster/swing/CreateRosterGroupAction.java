@@ -110,5 +110,5 @@ public class CreateRosterGroupAction extends JmriAbstractAction {
     }
 
     // initialize logging
-    static Logger log = LoggerFactory.getLogger(CreateRosterGroupAction.class.getName());
+    private final static Logger log = LoggerFactory.getLogger(CreateRosterGroupAction.class.getName());
 }

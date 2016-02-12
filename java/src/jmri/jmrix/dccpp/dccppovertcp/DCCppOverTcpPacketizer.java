@@ -359,7 +359,7 @@ public class DCCppOverTcpPacketizer extends DCCppPacketizer {
         }
     }
 
-    static Logger log = LoggerFactory.getLogger(DCCppOverTcpPacketizer.class.getName());
+    private final static Logger log = LoggerFactory.getLogger(DCCppOverTcpPacketizer.class.getName());
 }
 
 /* @(#)LnOverTcpPacketizer.java */

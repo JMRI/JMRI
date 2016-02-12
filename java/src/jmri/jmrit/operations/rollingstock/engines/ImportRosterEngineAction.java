@@ -30,6 +30,6 @@ public class ImportRosterEngineAction extends AbstractAction {
         mb.start();
     }
 
-    static Logger log = LoggerFactory
+    private final static Logger log = LoggerFactory
             .getLogger(ImportRosterEngineAction.class.getName());
 }

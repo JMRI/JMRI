@@ -322,5 +322,5 @@ public class JmriInsets {
         return -1;
     }
 
-    static Logger log = LoggerFactory.getLogger(JmriInsets.class.getName());
+    private final static Logger log = LoggerFactory.getLogger(JmriInsets.class.getName());
 }

@@ -61,7 +61,7 @@ public class ProducerTablePane extends JPanel {
     }
 
     // for Print button support, see jmri.jmrix.cmri.serial.assignment.ListFrame
-    static Logger log = LoggerFactory.getLogger(ProducerTablePane.class.getName());
+    private final static Logger log = LoggerFactory.getLogger(ProducerTablePane.class.getName());
 
 }
 

@@ -473,6 +473,6 @@ public class SerialAdapter extends jmri.jmrix.AbstractSerialPortController imple
         }
     }
 
-    static Logger log = LoggerFactory.getLogger(SerialAdapter.class.getName());
+    private final static Logger log = LoggerFactory.getLogger(SerialAdapter.class.getName());
 
 }

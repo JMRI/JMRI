@@ -69,7 +69,7 @@ public class JMRIClientMessage extends jmri.jmrix.AbstractMRMessage {
 
     final static protected int LONG_TIMEOUT = 180000;  // e.g. for programming options
 
-    static Logger log = LoggerFactory.getLogger(JMRIClientMessage.class.getName());
+    private final static Logger log = LoggerFactory.getLogger(JMRIClientMessage.class.getName());
 
 }
 

@@ -338,5 +338,5 @@ public class SpeedoDial extends JPanel {
         update(0.0f);
     }
 
-    static Logger log = LoggerFactory.getLogger(SpeedoDial.class.getName());
+    private final static Logger log = LoggerFactory.getLogger(SpeedoDial.class.getName());
 }

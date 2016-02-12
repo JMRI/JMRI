@@ -124,7 +124,7 @@ public class SRCPPowerManager implements PowerManager, SRCPListener {
         }
     }
 
-    static Logger log = LoggerFactory.getLogger(SRCPPowerManager.class.getName());
+    private final static Logger log = LoggerFactory.getLogger(SRCPPowerManager.class.getName());
 
 }
 

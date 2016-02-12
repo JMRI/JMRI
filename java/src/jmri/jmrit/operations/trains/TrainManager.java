@@ -1161,7 +1161,7 @@ public class TrainManager implements java.beans.PropertyChangeListener {
         pcs.firePropertyChange(p, old, n);
     }
 
-    static Logger log = LoggerFactory.getLogger(TrainManager.class
+    private final static Logger log = LoggerFactory.getLogger(TrainManager.class
             .getName());
 
 }

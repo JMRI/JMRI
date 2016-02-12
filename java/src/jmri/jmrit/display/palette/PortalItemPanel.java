@@ -70,5 +70,5 @@ public /*abstract*/ class PortalItemPanel extends FamilyItemPanel {
     protected void makeDndIconPanel(HashMap<String, NamedIcon> iconMap, String displayKey) {
     }
 
-    static Logger log = LoggerFactory.getLogger(PortalItemPanel.class.getName());
+    private final static Logger log = LoggerFactory.getLogger(PortalItemPanel.class.getName());
 }

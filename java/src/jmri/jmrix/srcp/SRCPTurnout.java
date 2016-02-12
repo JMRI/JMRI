@@ -96,7 +96,7 @@ public class SRCPTurnout extends AbstractTurnout {
 
     }
 
-    static Logger log = LoggerFactory.getLogger(SRCPTurnout.class.getName());
+    private final static Logger log = LoggerFactory.getLogger(SRCPTurnout.class.getName());
 
 }
 

@@ -1451,5 +1451,5 @@ public class SignalGroupTableAction extends AbstractTableAction implements Prope
         return Bundle.getMessage("TitleSignalGroupTable");
     }
 
-    static final Logger log = LoggerFactory.getLogger(SignalGroupTableAction.class.getName());
+    private final static Logger log = LoggerFactory.getLogger(SignalGroupTableAction.class.getName());
 }

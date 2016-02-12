@@ -253,6 +253,6 @@ public class TrainsScriptFrame extends OperationsFrame {
         super.dispose();
     }
 
-    static Logger log = LoggerFactory.getLogger(TrainsScriptFrame.class
+    private final static Logger log = LoggerFactory.getLogger(TrainsScriptFrame.class
             .getName());
 }

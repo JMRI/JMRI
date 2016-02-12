@@ -55,6 +55,6 @@ public class DefaultLogixManagerTest extends TestCase {
         return suite;
     }
 
-    static Logger log = LoggerFactory.getLogger(DefaultLogixManagerTest.class.getName());
+    private final static Logger log = LoggerFactory.getLogger(DefaultLogixManagerTest.class.getName());
 
 }

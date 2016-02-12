@@ -30,7 +30,7 @@ import org.slf4j.LoggerFactory;
  */
 public class Pr1Importer {
 
-    static Logger log = LoggerFactory.getLogger(Pr1Importer.class.getName());
+    private final static Logger log = LoggerFactory.getLogger(Pr1Importer.class.getName());
     private static final String VERSION_KEY = "Version";
     private static final String CV_PREFIX = "CV";
     private static final int CV_INDEX_OFFSET = 2;

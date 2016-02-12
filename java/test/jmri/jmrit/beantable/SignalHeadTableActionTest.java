@@ -93,5 +93,5 @@ public class SignalHeadTableActionTest extends jmri.util.SwingTestCase {
         super.tearDown();
     }
 
-    static Logger log = LoggerFactory.getLogger(SignalHeadTableActionTest.class.getName());
+    private final static Logger log = LoggerFactory.getLogger(SignalHeadTableActionTest.class.getName());
 }

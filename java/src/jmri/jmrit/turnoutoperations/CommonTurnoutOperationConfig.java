@@ -83,5 +83,5 @@ public class CommonTurnoutOperationConfig extends TurnoutOperationConfig {
         myOp.setMaxTries(newMaxTries);
     }
 
-    static Logger log = LoggerFactory.getLogger(CommonTurnoutOperationConfig.class.getName());
+    private final static Logger log = LoggerFactory.getLogger(CommonTurnoutOperationConfig.class.getName());
 }

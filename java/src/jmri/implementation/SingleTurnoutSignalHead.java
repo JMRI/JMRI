@@ -241,7 +241,7 @@ public class SingleTurnoutSignalHead extends DefaultSignalHead implements Proper
         return false;
     }
 
-    static Logger log = LoggerFactory.getLogger(SingleTurnoutSignalHead.class.getName());
+    private final static Logger log = LoggerFactory.getLogger(SingleTurnoutSignalHead.class.getName());
 
     /* (non-Javadoc)
      * @see java.beans.PropertyChangeListener#propertyChange(java.beans.PropertyChangeEvent)

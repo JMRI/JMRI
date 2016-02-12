@@ -32,5 +32,5 @@ public class LocoBufferIIAdapter extends LocoBufferAdapter {
         return "LocoBuffer-II connection uses ";
     }
 
-    static Logger log = LoggerFactory.getLogger(LocoBufferIIAdapter.class.getName());
+    private final static Logger log = LoggerFactory.getLogger(LocoBufferIIAdapter.class.getName());
 }

@@ -180,5 +180,5 @@ public class StoppingBlock {
     float slow = 0.3f;
     float fast = 0.6f;
 
-    static Logger log = LoggerFactory.getLogger(StoppingBlock.class.getName());
+    private final static Logger log = LoggerFactory.getLogger(StoppingBlock.class.getName());
 }

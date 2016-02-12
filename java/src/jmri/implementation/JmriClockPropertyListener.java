@@ -114,5 +114,5 @@ public class JmriClockPropertyListener extends JmriSimplePropertyListener {
             }
         }
     }
-    static final Logger log = LoggerFactory.getLogger(JmriClockPropertyListener.class.getName());
+    private final static Logger log = LoggerFactory.getLogger(JmriClockPropertyListener.class.getName());
 }

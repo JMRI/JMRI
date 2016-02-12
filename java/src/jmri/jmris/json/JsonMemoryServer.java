@@ -32,7 +32,7 @@ public class JsonMemoryServer extends AbstractMemoryServer {
 
     private final JmriConnection connection;
     private final ObjectMapper mapper;
-    static Logger log = LoggerFactory.getLogger(JsonMemoryServer.class.getName());
+    private final static Logger log = LoggerFactory.getLogger(JsonMemoryServer.class.getName());
 
     public JsonMemoryServer(JmriConnection connection) {
         super();

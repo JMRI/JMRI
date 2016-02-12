@@ -29,6 +29,6 @@ class NceListenerScaffold implements jmri.jmrix.nce.NceListener {
     NceReply rcvdReply;
     NceMessage rcvdMsg;
 
-    static Logger log = LoggerFactory.getLogger(NceListenerScaffold.class.getName());
+    private final static Logger log = LoggerFactory.getLogger(NceListenerScaffold.class.getName());
 
 }

@@ -76,6 +76,6 @@ public class WiThrottleCreationAction extends JmriAbstractAction {
     public jmri.util.swing.JmriPanel makePanel() {
         throw new IllegalArgumentException("Should not be invoked");
     }
-    static Logger log = LoggerFactory.getLogger(WiThrottleCreationAction.class.getName());
+    private final static Logger log = LoggerFactory.getLogger(WiThrottleCreationAction.class.getName());
 
 }

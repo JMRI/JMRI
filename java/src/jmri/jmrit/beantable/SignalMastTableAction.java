@@ -125,7 +125,7 @@ public class SignalMastTableAction extends AbstractTableAction {
         });
     }
 
-    static final Logger log = LoggerFactory.getLogger(SignalMastTableAction.class.getName());
+    private final static Logger log = LoggerFactory.getLogger(SignalMastTableAction.class.getName());
 
     public static class MyComboBoxRenderer extends JComboBox<String> implements TableCellRenderer {
 

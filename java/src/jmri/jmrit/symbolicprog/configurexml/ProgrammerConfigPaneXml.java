@@ -79,6 +79,6 @@ public class ProgrammerConfigPaneXml extends jmri.configurexml.AbstractXmlAdapte
         log.warn("unexpected call of 2nd load form");
     }
     // initialize logging
-    static Logger log = LoggerFactory.getLogger(ProgrammerConfigPaneXml.class.getName());
+    private final static Logger log = LoggerFactory.getLogger(ProgrammerConfigPaneXml.class.getName());
 
 }

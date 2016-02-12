@@ -176,6 +176,6 @@ public class StatusFrame extends jmri.util.JmriJFrame implements DataListener {
         super.dispose();
     }
 
-    static Logger log = LoggerFactory.getLogger(StatusFrame.class.getName());
+    private final static Logger log = LoggerFactory.getLogger(StatusFrame.class.getName());
 
 }

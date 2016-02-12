@@ -523,6 +523,6 @@ public class NceProgrammerTest extends TestCase {
     // apps.tests.Log4JFixture log4jfixtureInst = new apps.tests.Log4JFixture(this);
     // protected void setUp() { log4jfixtureInst.setUp(); }
     // protected void tearDown() { log4jfixtureInst.tearDown(); }
-    static Logger log = LoggerFactory.getLogger(NceProgrammerTest.class.getName());
+    private final static Logger log = LoggerFactory.getLogger(NceProgrammerTest.class.getName());
 
 }

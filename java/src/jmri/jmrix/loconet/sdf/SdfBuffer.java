@@ -144,7 +144,7 @@ public class SdfBuffer {
     // byte[] representation
     byte[] buffer;
 
-    static Logger log = LoggerFactory.getLogger(SdfBuffer.class.getName());
+    private final static Logger log = LoggerFactory.getLogger(SdfBuffer.class.getName());
 
 }
 

@@ -143,7 +143,7 @@ public class z21Message extends AbstractMRMessage {
         return toString();
     }
 
-    static Logger log = LoggerFactory.getLogger(z21Message.class.getName());
+    private final static Logger log = LoggerFactory.getLogger(z21Message.class.getName());
 
 }
 

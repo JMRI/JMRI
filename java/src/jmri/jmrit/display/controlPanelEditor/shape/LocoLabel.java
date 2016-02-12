@@ -55,5 +55,5 @@ import org.slf4j.LoggerFactory;
             g2d.drawString(trainName, hOffset, vOffset);
         }
         
-        static Logger log = LoggerFactory.getLogger(LocoLabel.class.getName());
+        private final static Logger log = LoggerFactory.getLogger(LocoLabel.class.getName());
     }

@@ -170,5 +170,5 @@ public class EliteXNetThrottle extends jmri.jmrix.lenz.XNetThrottle {
     }
 
     // register for notification
-    static Logger log = LoggerFactory.getLogger(EliteXNetThrottle.class.getName());
+    private final static Logger log = LoggerFactory.getLogger(EliteXNetThrottle.class.getName());
 }

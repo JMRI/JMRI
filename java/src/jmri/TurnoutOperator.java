@@ -41,5 +41,5 @@ public abstract class TurnoutOperator extends Thread {
         private static final long serialVersionUID = -9039683362922025389L;
     }
 
-    static Logger log = LoggerFactory.getLogger(TurnoutOperator.class.getName());
+    private final static Logger log = LoggerFactory.getLogger(TurnoutOperator.class.getName());
 }

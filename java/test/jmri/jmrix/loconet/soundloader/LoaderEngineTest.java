@@ -127,7 +127,7 @@ public class LoaderEngineTest extends TestCase {
         return suite;
     }
 
-    static Logger log = LoggerFactory.getLogger(LoaderEngineTest.class.getName());
+    private final static Logger log = LoggerFactory.getLogger(LoaderEngineTest.class.getName());
 
     // The minimal setup for log4J
     protected void setUp() {

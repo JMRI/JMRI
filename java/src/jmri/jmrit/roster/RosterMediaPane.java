@@ -316,5 +316,5 @@ public class RosterMediaPane extends JPanel {
         }
     }
 
-    static Logger log = LoggerFactory.getLogger(RosterMediaPane.class.getName());
+    private final static Logger log = LoggerFactory.getLogger(RosterMediaPane.class.getName());
 }

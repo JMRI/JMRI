@@ -139,7 +139,7 @@ public class ConfigXmlManagerTest extends TestCase {
         return suite;
     }
 
-    static Logger log = LoggerFactory.getLogger(ConfigXmlManagerTest.class.getName());
+    private final static Logger log = LoggerFactory.getLogger(ConfigXmlManagerTest.class.getName());
 
     // The minimal setup for log4J
     protected void setUp() {

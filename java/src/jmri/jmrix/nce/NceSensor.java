@@ -36,7 +36,7 @@ public class NceSensor extends AbstractSensor {
     public void requestUpdateFromLayout() {
     }
 
-    static Logger log = LoggerFactory.getLogger(NceSensor.class.getName());
+    private final static Logger log = LoggerFactory.getLogger(NceSensor.class.getName());
 
 }
 

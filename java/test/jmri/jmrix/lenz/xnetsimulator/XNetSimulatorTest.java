@@ -33,6 +33,6 @@ public class XNetSimulatorTest extends TestCase {
         return suite;
     }
 
-    static Logger log = LoggerFactory.getLogger(XNetSimulatorTest.class.getName());
+    private final static Logger log = LoggerFactory.getLogger(XNetSimulatorTest.class.getName());
 
 }

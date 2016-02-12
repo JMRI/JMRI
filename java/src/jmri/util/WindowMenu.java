@@ -101,6 +101,6 @@ public class WindowMenu extends JMenu implements javax.swing.event.MenuListener 
     public void menuCanceled(MenuEvent e) {
     }
 
-    static Logger log = LoggerFactory.getLogger(WindowMenu.class.getName());
+    private final static Logger log = LoggerFactory.getLogger(WindowMenu.class.getName());
 
 }

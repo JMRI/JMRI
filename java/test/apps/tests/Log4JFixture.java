@@ -27,5 +27,5 @@ public class Log4JFixture extends java.lang.Object {
         jmri.util.Log4JUtil.initLogging("tests.lcf");
     }
 
-    static Logger log = null;
+    private final static Logger log = null;
 }

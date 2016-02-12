@@ -34,6 +34,6 @@ public class XnTcpTest extends TestCase {
         return suite;
     }
 
-    static Logger log = LoggerFactory.getLogger(XnTcpTest.class.getName());
+    private final static Logger log = LoggerFactory.getLogger(XnTcpTest.class.getName());
 
 }

@@ -658,6 +658,6 @@ public class XNetProgrammerTest extends TestCase {
         super.tearDown();
         apps.tests.Log4JFixture.tearDown();
     }
-    static Logger log = LoggerFactory.getLogger(XNetProgrammerTest.class.getName());
+    private final static Logger log = LoggerFactory.getLogger(XNetProgrammerTest.class.getName());
 
 }

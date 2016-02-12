@@ -340,6 +340,6 @@ public class StackMonFrame extends jmri.util.JmriJFrame implements XNetListener 
     }
 
     // Register for logging
-    static Logger log = LoggerFactory.getLogger(StackMonFrame.class.getName());
+    private final static Logger log = LoggerFactory.getLogger(StackMonFrame.class.getName());
 
 }

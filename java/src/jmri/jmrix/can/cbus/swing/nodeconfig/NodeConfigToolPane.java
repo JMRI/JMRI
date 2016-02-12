@@ -131,5 +131,5 @@ public class NodeConfigToolPane extends jmri.jmrix.can.swing.CanPanel implements
         }
     }
 
-    static Logger log = LoggerFactory.getLogger(NodeConfigToolPane.class.getName());
+    private final static Logger log = LoggerFactory.getLogger(NodeConfigToolPane.class.getName());
 }

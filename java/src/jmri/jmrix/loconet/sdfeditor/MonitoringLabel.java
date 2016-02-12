@@ -32,6 +32,6 @@ public class MonitoringLabel extends javax.swing.JTextArea implements java.beans
         setText(evt.getNewValue().toString());
     }
 
-    static Logger log = LoggerFactory.getLogger(MonitoringLabel.class.getName());
+    private final static Logger log = LoggerFactory.getLogger(MonitoringLabel.class.getName());
 
 }

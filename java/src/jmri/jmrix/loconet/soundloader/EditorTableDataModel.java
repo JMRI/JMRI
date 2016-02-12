@@ -480,6 +480,6 @@ public class EditorTableDataModel extends javax.swing.table.AbstractTableModel {
         }
     }
 
-    static final Logger log = LoggerFactory.getLogger(EditorTableDataModel.class.getName());
+    private final static Logger log = LoggerFactory.getLogger(EditorTableDataModel.class.getName());
 
 }

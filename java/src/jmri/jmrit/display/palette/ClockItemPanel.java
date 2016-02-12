@@ -117,5 +117,5 @@ public class ClockItemPanel extends IconItemPanel {
         }
     }
 
-    static Logger log = LoggerFactory.getLogger(ClockItemPanel.class.getName());
+    private final static Logger log = LoggerFactory.getLogger(ClockItemPanel.class.getName());
 }

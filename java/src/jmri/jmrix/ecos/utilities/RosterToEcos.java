@@ -153,5 +153,5 @@ public class RosterToEcos implements EcosListener {
         createloco = false;
     }
 
-    static Logger log = LoggerFactory.getLogger(RosterToEcos.class.getName());
+    private final static Logger log = LoggerFactory.getLogger(RosterToEcos.class.getName());
 }

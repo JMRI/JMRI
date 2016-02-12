@@ -40,7 +40,7 @@ public class SRCPSensorManager extends jmri.managers.AbstractSensorManager {
         return null;
     }
 
-    static Logger log = LoggerFactory.getLogger(SRCPSensorManager.class.getName());
+    private final static Logger log = LoggerFactory.getLogger(SRCPSensorManager.class.getName());
 
 }
 

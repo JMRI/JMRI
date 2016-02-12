@@ -41,6 +41,6 @@ public class z21XNetThrottleManager extends jmri.jmrix.lenz.XNetThrottleManager 
         }
     }
 
-    static Logger log = LoggerFactory.getLogger(z21XNetThrottleManager.class.getName());
+    private final static Logger log = LoggerFactory.getLogger(z21XNetThrottleManager.class.getName());
 
 }

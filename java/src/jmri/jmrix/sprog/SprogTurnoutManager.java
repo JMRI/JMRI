@@ -46,7 +46,7 @@ public class SprogTurnoutManager extends jmri.managers.AbstractTurnoutManager {
     }
     static SprogTurnoutManager _instance = null;
 
-    static Logger log = LoggerFactory.getLogger(SprogTurnoutManager.class.getName());
+    private final static Logger log = LoggerFactory.getLogger(SprogTurnoutManager.class.getName());
 
 }
 

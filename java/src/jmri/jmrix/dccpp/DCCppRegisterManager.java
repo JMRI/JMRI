@@ -80,7 +80,7 @@ public class DCCppRegisterManager {
     /*
      * We need to register for logging
      */
-    static Logger log = LoggerFactory.getLogger(DCCppRegisterManager.class.getName());
+    private final static Logger log = LoggerFactory.getLogger(DCCppRegisterManager.class.getName());
 
 }
 

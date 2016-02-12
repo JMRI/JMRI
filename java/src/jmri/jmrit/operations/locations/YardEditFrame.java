@@ -44,6 +44,6 @@ public class YardEditFrame extends TrackEditFrame implements java.beans.Property
         setVisible(true);
     }
 
-    static Logger log = LoggerFactory.getLogger(YardEditFrame.class
+    private final static Logger log = LoggerFactory.getLogger(YardEditFrame.class
             .getName());
 }

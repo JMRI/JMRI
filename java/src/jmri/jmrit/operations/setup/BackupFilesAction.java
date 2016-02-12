@@ -23,7 +23,7 @@ public class BackupFilesAction extends AbstractAction {
      *
      */
     private static final long serialVersionUID = 2252745243582800660L;
-    static Logger log = LoggerFactory
+    private final static Logger log = LoggerFactory
             .getLogger(BackupFilesAction.class.getName());
 
     public BackupFilesAction(String s) {

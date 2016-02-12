@@ -89,5 +89,5 @@ public class RpsTrackingControlPane extends JPanel {
     public JTextField blYf;
     double trX, trY, blX, blY;
 
-    static Logger log = LoggerFactory.getLogger(RpsTrackingControlPane.class.getName());
+    private final static Logger log = LoggerFactory.getLogger(RpsTrackingControlPane.class.getName());
 }

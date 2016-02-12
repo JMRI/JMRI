@@ -213,6 +213,6 @@ public class SystemInfoFrame extends jmri.util.JmriJFrame implements XNetListene
         super.dispose();
     }
 
-    static Logger log = LoggerFactory.getLogger(SystemInfoFrame.class.getName());
+    private final static Logger log = LoggerFactory.getLogger(SystemInfoFrame.class.getName());
 
 }

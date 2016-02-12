@@ -115,7 +115,7 @@ public class LnLightManager extends AbstractLightManager {
         return true;
     }
 
-    static Logger log = LoggerFactory.getLogger(LnLightManager.class.getName());
+    private final static Logger log = LoggerFactory.getLogger(LnLightManager.class.getName());
 
 }
 

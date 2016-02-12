@@ -85,5 +85,5 @@ public class SimpleSensorServer extends AbstractSensorServer {
             this.connection.sendMessage(message);
         }
     }
-    static Logger log = LoggerFactory.getLogger(SimpleSensorServer.class.getName());
+    private final static Logger log = LoggerFactory.getLogger(SimpleSensorServer.class.getName());
 }

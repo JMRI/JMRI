@@ -48,7 +48,7 @@ public class LnCommandStationTypeTest extends TestCase {
         return suite;
     }
 
-    static Logger log = LoggerFactory.getLogger(LnCommandStationTypeTest.class.getName());
+    private final static Logger log = LoggerFactory.getLogger(LnCommandStationTypeTest.class.getName());
 
     // The minimal setup for log4J
     protected void setUp() {

@@ -37,7 +37,7 @@ public class RaspberryPiTurnoutManager extends jmri.managers.AbstractTurnoutMana
         return t;
     }
 
-    static Logger log = LoggerFactory.getLogger(RaspberryPiTurnoutManager.class.getName());
+    private final static Logger log = LoggerFactory.getLogger(RaspberryPiTurnoutManager.class.getName());
 
 }
 

@@ -220,6 +220,6 @@ public class MakePacketTest extends TestCase {
         TestSuite suite = new TestSuite(MakePacketTest.class);
         return suite;
     }
-    static Logger log = LoggerFactory.getLogger(MakePacketTest.class.getName());
+    private final static Logger log = LoggerFactory.getLogger(MakePacketTest.class.getName());
 
 }

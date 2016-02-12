@@ -167,7 +167,7 @@ public class QsiReply extends jmri.jmrix.AbstractMessage {
     // contents (private)
     private boolean _isBoot = false;
 
-    static Logger log = LoggerFactory.getLogger(QsiReply.class.getName());
+    private final static Logger log = LoggerFactory.getLogger(QsiReply.class.getName());
 }
 
 /* @(#)QsiReply.java */

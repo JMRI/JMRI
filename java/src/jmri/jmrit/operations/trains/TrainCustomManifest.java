@@ -195,5 +195,5 @@ public class TrainCustomManifest {
         options.addContent(mc);
     }
 
-    static Logger log = LoggerFactory.getLogger(TrainCustomManifest.class.getName());
+    private final static Logger log = LoggerFactory.getLogger(TrainCustomManifest.class.getName());
 }

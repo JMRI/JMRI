@@ -992,5 +992,5 @@ public class TrainEditBuildOptionsFrame extends OperationsFrame implements java.
         }
     }
 
-    static Logger log = LoggerFactory.getLogger(TrainEditBuildOptionsFrame.class.getName());
+    private final static Logger log = LoggerFactory.getLogger(TrainEditBuildOptionsFrame.class.getName());
 }

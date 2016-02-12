@@ -350,5 +350,5 @@ public class JmriBeanComboBox extends JComboBox<String> implements java.beans.Pr
         }
     }
 
-    static Logger log = LoggerFactory.getLogger(JmriBeanComboBox.class.getName());
+    private final static Logger log = LoggerFactory.getLogger(JmriBeanComboBox.class.getName());
 }

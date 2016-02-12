@@ -284,7 +284,7 @@ public class DCCppProgrammer extends AbstractProgrammer implements DCCppListener
         return _controller;
     }
 
-    static Logger log = LoggerFactory.getLogger(DCCppProgrammer.class.getName());
+    private final static Logger log = LoggerFactory.getLogger(DCCppProgrammer.class.getName());
 
 }
 

@@ -81,6 +81,6 @@ public class UncaughtExceptionHandlerTest extends SwingTestCase {
         apps.tests.Log4JFixture.tearDown();
     }
 
-    static Logger log = LoggerFactory.getLogger(UncaughtExceptionHandlerTest.class.getName());
+    private final static Logger log = LoggerFactory.getLogger(UncaughtExceptionHandlerTest.class.getName());
 
 }

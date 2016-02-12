@@ -163,5 +163,5 @@ public class WavBuffer {
         return buffer;
     }
 
-    static Logger log = LoggerFactory.getLogger(WavBuffer.class.getName());
+    private final static Logger log = LoggerFactory.getLogger(WavBuffer.class.getName());
 }

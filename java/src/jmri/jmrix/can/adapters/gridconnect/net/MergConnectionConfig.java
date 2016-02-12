@@ -46,5 +46,5 @@ public class MergConnectionConfig extends ConnectionConfig {
         return ResourceBundle.getBundle("jmri.jmrix.can.CanActionListBundle");
     }
 
-    static Logger log = LoggerFactory.getLogger(MergConnectionConfig.class.getName());
+    private final static Logger log = LoggerFactory.getLogger(MergConnectionConfig.class.getName());
 }

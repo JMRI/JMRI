@@ -103,5 +103,5 @@ public class EcosLocoTableTabAction extends AbstractTableTabAction {
         return "Ecos Loco Table";
     }
 
-    static Logger log = LoggerFactory.getLogger(EcosLocoTableTabAction.class.getName());
+    private final static Logger log = LoggerFactory.getLogger(EcosLocoTableTabAction.class.getName());
 }

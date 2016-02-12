@@ -690,7 +690,7 @@ public class InstanceManager {
     //    store(p, TabbedPreferences.class);
     //}
     /* *************************************************************************** */
-    static Logger log = LoggerFactory.getLogger(InstanceManager.class.getName());
+    private final static Logger log = LoggerFactory.getLogger(InstanceManager.class.getName());
 }
 
 /* @(#)InstanceManager.java */

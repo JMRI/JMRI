@@ -41,6 +41,6 @@ public class EliteTest extends TestCase {
         return suite;
     }
 
-    static Logger log = LoggerFactory.getLogger(EliteTest.class.getName());
+    private final static Logger log = LoggerFactory.getLogger(EliteTest.class.getName());
 
 }

@@ -63,5 +63,5 @@ public class SerialSignalHeadXml extends AbstractNamedBeanManagerConfigXML {
         log.error("Invalid method called");
     }
 
-    static Logger log = LoggerFactory.getLogger(SerialSignalHeadXml.class.getName());
+    private final static Logger log = LoggerFactory.getLogger(SerialSignalHeadXml.class.getName());
 }

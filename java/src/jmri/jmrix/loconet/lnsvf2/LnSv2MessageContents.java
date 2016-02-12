@@ -565,7 +565,7 @@ public class LnSv2MessageContents {
     }
 
     // initialize logging
-    static Logger log = LoggerFactory.getLogger(LnSv2MessageContents.class.getName());
+    private final static Logger log = LoggerFactory.getLogger(LnSv2MessageContents.class.getName());
     
     /**
      * Get the data from a SVs Single Read Reply message.  May also be used to

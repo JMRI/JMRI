@@ -50,5 +50,5 @@ public class JTreeUtil extends GuiUtilBase {
         return node;
     }
 
-    static Logger log = LoggerFactory.getLogger(JTreeUtil.class.getName());
+    private final static Logger log = LoggerFactory.getLogger(JTreeUtil.class.getName());
 }

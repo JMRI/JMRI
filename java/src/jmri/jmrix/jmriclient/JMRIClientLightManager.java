@@ -60,7 +60,7 @@ public class JMRIClientLightManager extends jmri.managers.AbstractLightManager {
         return (true);
     }
 
-    static Logger log = LoggerFactory.getLogger(JMRIClientLightManager.class.getName());
+    private final static Logger log = LoggerFactory.getLogger(JMRIClientLightManager.class.getName());
 
 }
 

@@ -284,7 +284,7 @@ public class TurnoutSignalMast extends AbstractSignalMast {
         super.dispose();
     }
 
-    static final protected Logger log = LoggerFactory.getLogger(TurnoutSignalMast.class.getName());
+    private final static Logger log = LoggerFactory.getLogger(TurnoutSignalMast.class.getName());
 }
 
 /* @(#)TurnoutSignalMast.java */

@@ -56,7 +56,7 @@ public class TamsNamedPaneAction extends jmri.util.swing.JmriNamedPaneAction {
         return p;
     }
 
-    static Logger log = LoggerFactory.getLogger(TamsNamedPaneAction.class.getName());
+    private final static Logger log = LoggerFactory.getLogger(TamsNamedPaneAction.class.getName());
 }
 
 /* @(#)TamsNamedPaneAction.java */

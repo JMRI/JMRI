@@ -29,5 +29,5 @@ public class RawTurnoutOperationConfig extends CommonTurnoutOperationConfig {
         super(op);
     }
 
-    static Logger log = LoggerFactory.getLogger(RawTurnoutOperationConfig.class.getName());
+    private final static Logger log = LoggerFactory.getLogger(RawTurnoutOperationConfig.class.getName());
 }

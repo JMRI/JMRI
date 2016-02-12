@@ -74,5 +74,5 @@ public class InterchangeTableModel extends TrackTableModel {
         }
     }
 
-    static Logger log = LoggerFactory.getLogger(InterchangeTableModel.class.getName());
+    private final static Logger log = LoggerFactory.getLogger(InterchangeTableModel.class.getName());
 }

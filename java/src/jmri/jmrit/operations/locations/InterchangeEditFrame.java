@@ -47,5 +47,5 @@ public class InterchangeEditFrame extends TrackEditFrame implements java.beans.P
         setVisible(true);
     }
 
-    static Logger log = LoggerFactory.getLogger(InterchangeEditFrame.class.getName());
+    private final static Logger log = LoggerFactory.getLogger(InterchangeEditFrame.class.getName());
 }

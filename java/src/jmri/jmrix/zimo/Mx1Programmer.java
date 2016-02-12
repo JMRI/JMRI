@@ -259,7 +259,7 @@ public class Mx1Programmer extends AbstractProgrammer implements Mx1Listener {
         }
     }
 
-    static Logger log = LoggerFactory.getLogger(Mx1Programmer.class.getName());
+    private final static Logger log = LoggerFactory.getLogger(Mx1Programmer.class.getName());
 
 }
 

@@ -59,6 +59,6 @@ public class PacketGenFrameTest extends TestCase {
         return suite;
     }
 
-    static Logger log = LoggerFactory.getLogger(PacketGenFrameTest.class.getName());
+    private final static Logger log = LoggerFactory.getLogger(PacketGenFrameTest.class.getName());
 
 }

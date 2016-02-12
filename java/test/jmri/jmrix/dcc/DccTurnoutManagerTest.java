@@ -66,6 +66,6 @@ public class DccTurnoutManagerTest extends jmri.managers.AbstractTurnoutMgrTest 
         return suite;
     }
 
-    static Logger log = LoggerFactory.getLogger(DccTurnoutManagerTest.class.getName());
+    private final static Logger log = LoggerFactory.getLogger(DccTurnoutManagerTest.class.getName());
 
 }

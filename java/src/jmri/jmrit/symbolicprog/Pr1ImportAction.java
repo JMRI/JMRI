@@ -33,5 +33,5 @@ public class Pr1ImportAction extends GenericImportAction {
         }
     }
 
-    static Logger log = LoggerFactory.getLogger(Pr1ImportAction.class.getName());
+    private final static Logger log = LoggerFactory.getLogger(Pr1ImportAction.class.getName());
 }

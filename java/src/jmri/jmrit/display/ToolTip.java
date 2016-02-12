@@ -139,5 +139,5 @@ public class ToolTip {
         g2d.setFont(font);
     }
 
-    static Logger log = LoggerFactory.getLogger(ToolTip.class.getName());
+    private final static Logger log = LoggerFactory.getLogger(ToolTip.class.getName());
 }

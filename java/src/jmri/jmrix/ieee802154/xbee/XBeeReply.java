@@ -78,7 +78,7 @@ public class XBeeReply extends jmri.jmrix.ieee802154.IEEE802154Reply {
         xbresponse = xbr;
     }
 
-    final static Logger log = LoggerFactory.getLogger(XBeeReply.class);
+    private final static Logger log = LoggerFactory.getLogger(XBeeReply.class);
 
 }
 

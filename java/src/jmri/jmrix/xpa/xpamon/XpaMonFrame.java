@@ -46,6 +46,6 @@ public class XpaMonFrame extends jmri.jmrix.AbstractMonFrame implements XpaListe
         nextLine("Recieved: \"" + l.toString() + "\"\n", "");
     }
 
-    static Logger log = LoggerFactory.getLogger(XpaMonFrame.class.getName());
+    private final static Logger log = LoggerFactory.getLogger(XpaMonFrame.class.getName());
 
 }

@@ -66,6 +66,6 @@ public class SimpleOperationsServerTest extends TestCase {
     }
 
 
-    static Logger log = LoggerFactory.getLogger(SimpleOperationsServerTest.class.getName());
+    private final static Logger log = LoggerFactory.getLogger(SimpleOperationsServerTest.class.getName());
 
 }

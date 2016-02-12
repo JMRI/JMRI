@@ -52,6 +52,6 @@ public class FailTest extends TestCase {
         super.tearDown();
     }
 
-    static Logger log = LoggerFactory.getLogger(FailTest.class.getName());
+    private final static Logger log = LoggerFactory.getLogger(FailTest.class.getName());
 
 }

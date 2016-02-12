@@ -315,5 +315,5 @@ public class TableItemPanel extends FamilyItemPanel implements ListSelectionList
         }
     }
 
-    static Logger log = LoggerFactory.getLogger(TableItemPanel.class.getName());
+    private final static Logger log = LoggerFactory.getLogger(TableItemPanel.class.getName());
 }

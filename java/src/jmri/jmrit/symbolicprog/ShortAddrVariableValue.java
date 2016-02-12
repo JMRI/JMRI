@@ -106,6 +106,6 @@ public class ShortAddrVariableValue extends DecVariableValue {
     }
 
     // initialize logging
-    static Logger log = LoggerFactory.getLogger(ShortAddrVariableValue.class.getName());
+    private final static Logger log = LoggerFactory.getLogger(ShortAddrVariableValue.class.getName());
 
 }

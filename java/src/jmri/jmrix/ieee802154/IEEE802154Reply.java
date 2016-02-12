@@ -277,7 +277,7 @@ public class IEEE802154Reply extends jmri.jmrix.AbstractMRReply {
         return toString();
     }
 
-    static Logger log = LoggerFactory.getLogger(IEEE802154Reply.class);
+    private final static Logger log = LoggerFactory.getLogger(IEEE802154Reply.class);
 
 }
 

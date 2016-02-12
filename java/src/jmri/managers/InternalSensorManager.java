@@ -3,6 +3,8 @@ package jmri.managers;
 
 import jmri.Sensor;
 import jmri.implementation.AbstractSensor;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 /**
  * Implementation of the InternalSensorManager interface.
@@ -96,7 +98,7 @@ public class InternalSensorManager extends AbstractSensorManager {
         return prefix;
     }
 
-    static org.slf4j.Logger log = org.slf4j.LoggerFactory.getLogger(InternalSensorManager.class.getName());
+    private final static Logger log = LoggerFactory.getLogger(InternalSensorManager.class);
 }
 
 /* @(#)InternalSensorManager.java */

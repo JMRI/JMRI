@@ -61,5 +61,5 @@ public class PositionableEllipseXml extends PositionableShapeXml {
         loadCommonAttributes(ps, Editor.MARKERS, element);
     }
 
-    static Logger log = LoggerFactory.getLogger(PositionableEllipseXml.class.getName());
+    private final static Logger log = LoggerFactory.getLogger(PositionableEllipseXml.class.getName());
 }

@@ -317,6 +317,6 @@ public class LlnmonTest extends TestCase {
         apps.tests.Log4JFixture.tearDown();
     }
 
-    static Logger log = LoggerFactory.getLogger(LlnmonTest.class.getName());
+    private final static Logger log = LoggerFactory.getLogger(LlnmonTest.class.getName());
 
 }

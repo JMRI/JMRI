@@ -35,7 +35,7 @@ public class OlcbThrottleManagerTest extends TestCase {
         return suite;
     }
 
-    static Logger log = LoggerFactory.getLogger(OlcbThrottleManagerTest.class.getName());
+    private final static Logger log = LoggerFactory.getLogger(OlcbThrottleManagerTest.class.getName());
 
     // The minimal setup for log4J
     protected void setUp() {

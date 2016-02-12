@@ -264,5 +264,5 @@ public class TrainIcon extends LocoIcon {
         }
     }
 
-    static Logger log = LoggerFactory.getLogger(TrainIcon.class.getName());
+    private final static Logger log = LoggerFactory.getLogger(TrainIcon.class.getName());
 }

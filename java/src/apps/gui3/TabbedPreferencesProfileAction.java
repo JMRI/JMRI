@@ -22,6 +22,6 @@ public class TabbedPreferencesProfileAction extends TabbedPreferencesAction {
         preferencesItem = "Profiles";
     }
 
-    static Logger log = LoggerFactory.getLogger(TabbedPreferencesProfileAction.class.getName());
+    private final static Logger log = LoggerFactory.getLogger(TabbedPreferencesProfileAction.class.getName());
 
 }

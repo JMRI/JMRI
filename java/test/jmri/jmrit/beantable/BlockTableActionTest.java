@@ -72,5 +72,5 @@ public class BlockTableActionTest extends jmri.util.SwingTestCase {
         apps.tests.Log4JFixture.tearDown();
     }
 
-    static Logger log = LoggerFactory.getLogger(BlockTableActionTest.class.getName());
+    private final static Logger log = LoggerFactory.getLogger(BlockTableActionTest.class.getName());
 }

@@ -71,7 +71,7 @@ public class ResetAction extends AbstractAction {
         }
     }
 
-    static Logger log = LoggerFactory.getLogger(ResetAction.class
+    private final static Logger log = LoggerFactory.getLogger(ResetAction.class
             .getName());
 }
 

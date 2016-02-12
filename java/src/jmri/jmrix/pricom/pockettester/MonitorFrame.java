@@ -58,6 +58,6 @@ public class MonitorFrame extends jmri.jmrix.AbstractMonFrame implements DataLis
         setTitle(title());
     }
 
-    static Logger log = LoggerFactory.getLogger(MonitorFrame.class.getName());
+    private final static Logger log = LoggerFactory.getLogger(MonitorFrame.class.getName());
 
 }

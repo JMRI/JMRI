@@ -123,6 +123,6 @@ public class DeleteRosterGroupAction extends JmriAbstractAction {
     }
 
     // initialize logging
-    static Logger log = LoggerFactory.getLogger(DeleteRosterGroupAction.class.getName());
+    private final static Logger log = LoggerFactory.getLogger(DeleteRosterGroupAction.class.getName());
 
 }

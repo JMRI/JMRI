@@ -84,5 +84,5 @@ public class LocoLabelXml extends PositionableRectangleXml {
         loadCommonAttributes(ll, Editor.MARKERS, element);
     }
 
-    static Logger log = LoggerFactory.getLogger(LocoLabelXml.class.getName());
+    private final static Logger log = LoggerFactory.getLogger(LocoLabelXml.class.getName());
 }

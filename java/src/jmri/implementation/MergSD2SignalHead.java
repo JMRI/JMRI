@@ -368,6 +368,6 @@ public class MergSD2SignalHead extends DefaultSignalHead {
         return false;
     }
 
-    static Logger log = LoggerFactory.getLogger(MergSD2SignalHead.class.getName());
+    private final static Logger log = LoggerFactory.getLogger(MergSD2SignalHead.class.getName());
 
 }

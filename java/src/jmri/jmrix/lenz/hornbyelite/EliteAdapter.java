@@ -320,6 +320,6 @@ public class EliteAdapter extends XNetSerialPortController implements jmri.jmrix
 
     static volatile EliteAdapter mInstance = null;
 
-    static Logger log = LoggerFactory.getLogger(EliteAdapter.class.getName());
+    private final static Logger log = LoggerFactory.getLogger(EliteAdapter.class.getName());
 
 }

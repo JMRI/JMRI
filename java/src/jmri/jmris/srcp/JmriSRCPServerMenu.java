@@ -38,5 +38,5 @@ public class JmriSRCPServerMenu extends JMenu {
 
     }
 
-    static Logger log = LoggerFactory.getLogger(JmriSRCPServerMenu.class.getName());
+    private final static Logger log = LoggerFactory.getLogger(JmriSRCPServerMenu.class.getName());
 }

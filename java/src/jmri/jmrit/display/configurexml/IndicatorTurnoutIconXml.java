@@ -184,5 +184,5 @@ public class IndicatorTurnoutIconXml extends PositionableLabelXml {
         loadCommonAttributes(l, Editor.TURNOUTS, element);
     }
 
-    static Logger log = LoggerFactory.getLogger(IndicatorTurnoutIconXml.class.getName());
+    private final static Logger log = LoggerFactory.getLogger(IndicatorTurnoutIconXml.class.getName());
 }

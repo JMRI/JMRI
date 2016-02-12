@@ -62,7 +62,7 @@ public class ConsistToolAction extends JmriAbstractAction {
     public jmri.util.swing.JmriPanel makePanel() {
         throw new IllegalArgumentException("Should not be invoked");
     }
-    static Logger log = LoggerFactory.getLogger(ConsistToolAction.class.getName());
+    private final static Logger log = LoggerFactory.getLogger(ConsistToolAction.class.getName());
 }
 
 

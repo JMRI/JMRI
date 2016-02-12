@@ -120,6 +120,6 @@ public class SimpleTurnoutServerTest extends TestCase {
     }
 
 
-    static Logger log = LoggerFactory.getLogger(SimpleTurnoutServerTest.class.getName());
+    private final static Logger log = LoggerFactory.getLogger(SimpleTurnoutServerTest.class.getName());
 
 }
