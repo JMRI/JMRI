@@ -59,7 +59,7 @@ public class ConfigBundle extends apps.ConfigBundle {
         return b.handleGetMessage(key, subs);
     }
 
-    private final static Bundle b = new Bundle();
+    private final static ConfigBundle b = new ConfigBundle();
 
     @Override
     @Nullable

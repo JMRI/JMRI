@@ -142,7 +142,7 @@ public class TabbedPreferences extends AppConfigBase {
         detailpanel.setBorder(BorderFactory.createEmptyBorder(6, 3, 6, 6));
 
         save = new JButton(
-                rb.getString("ButtonSave"),
+                ConfigBundle.getMessage("ButtonSave"),
                 new ImageIcon(FileUtil.findURL("program:resources/icons/misc/gui3/SaveIcon.png", FileUtil.Location.INSTALLED)));
         save.addActionListener((ActionEvent e) -> {
             savePressed(invokeSaveOptions());
