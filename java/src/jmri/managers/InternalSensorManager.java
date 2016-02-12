@@ -14,6 +14,8 @@ public class InternalSensorManager extends AbstractSensorManager {
 
     public InternalSensorManager() {
         log.debug("InternalSensorManager constructed");
+        defaultState = Sensor.UNKNOWN;
+        log.debug("Default new-Sensor state reset to UNKNOWN");
     }
     
     public boolean allowMultipleAdditions(String systemName) {
@@ -48,6 +50,7 @@ public class InternalSensorManager extends AbstractSensorManager {
     static int defaultState = Sensor.UNKNOWN;
 
     public static synchronized void setDefaultStateForNewSensors(int defaultSetting) {
+        log.debug("Default new-Sensor state set to {}", defaultSetting);
         defaultState = defaultSetting;
     }
 
