@@ -7,8 +7,6 @@ import javax.swing.JOptionPane;
 import jmri.jmrit.operations.OperationsXml;
 import jmri.jmrit.operations.rollingstock.RollingStock;
 import jmri.jmrit.operations.rollingstock.RollingStockSetFrame;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 
 /**
  * Frame for user to place engine on the layout
@@ -84,6 +82,5 @@ public class EngineSetFrame extends RollingStockSetFrame implements
         return true;
     }
 
-    private final static Logger log = LoggerFactory.getLogger(EngineSetFrame.class
-            .getName());
+//    private final static Logger log = LoggerFactory.getLogger(EngineSetFrame.class.getName());
 }
