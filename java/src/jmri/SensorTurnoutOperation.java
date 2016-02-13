@@ -63,5 +63,5 @@ public class SensorTurnoutOperation extends CommonTurnoutOperation {
         return new SensorTurnoutOperator(t, interval, maxTries);
     }
 
-    static Logger log = LoggerFactory.getLogger(SensorTurnoutOperation.class.getName());
+    private final static Logger log = LoggerFactory.getLogger(SensorTurnoutOperation.class.getName());
 }

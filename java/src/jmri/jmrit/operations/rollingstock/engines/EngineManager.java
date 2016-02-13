@@ -359,5 +359,5 @@ public class EngineManager extends RollingStockManager {
         super.firePropertyChange(p, old, n);
     }
 
-    static Logger log = LoggerFactory.getLogger(EngineManager.class.getName());
+    private final static Logger log = LoggerFactory.getLogger(EngineManager.class.getName());
 }

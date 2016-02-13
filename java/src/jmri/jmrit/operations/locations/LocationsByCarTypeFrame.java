@@ -360,5 +360,5 @@ public class LocationsByCarTypeFrame extends OperationsFrame implements java.bea
         }
     }
 
-    static Logger log = LoggerFactory.getLogger(LocationsByCarTypeFrame.class.getName());
+    private final static Logger log = LoggerFactory.getLogger(LocationsByCarTypeFrame.class.getName());
 }

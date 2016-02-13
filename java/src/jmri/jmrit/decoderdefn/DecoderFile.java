@@ -502,6 +502,6 @@ public class DecoderFile extends XmlFile {
     static public String fileLocation = "decoders" + File.separator;
 
     // initialize logging
-    static Logger log = LoggerFactory.getLogger(DecoderFile.class.getName());
+    private final static Logger log = LoggerFactory.getLogger(DecoderFile.class.getName());
 
 }

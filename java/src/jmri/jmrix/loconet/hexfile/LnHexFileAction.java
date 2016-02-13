@@ -37,7 +37,7 @@ public class LnHexFileAction extends AbstractAction {
 
     }
 
-    static Logger log = LoggerFactory.getLogger(LnHexFileAction.class.getName());
+    private final static Logger log = LoggerFactory.getLogger(LnHexFileAction.class.getName());
 
 }
 

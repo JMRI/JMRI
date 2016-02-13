@@ -115,5 +115,5 @@ public class Model {
         return _instance;
     }
 
-    static Logger log = LoggerFactory.getLogger(Model.class.getName());
+    private final static Logger log = LoggerFactory.getLogger(Model.class.getName());
 }

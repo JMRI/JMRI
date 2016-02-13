@@ -36,7 +36,7 @@ public class EcosReporterManager extends jmri.managers.AbstractReporterManager {
         return r;
     }
 
-    static Logger log = LoggerFactory.getLogger(EcosReporterManager.class.getName());
+    private final static Logger log = LoggerFactory.getLogger(EcosReporterManager.class.getName());
 }
 
 /* @(#)EcosReporterManager.java */

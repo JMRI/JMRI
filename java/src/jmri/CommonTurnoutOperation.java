@@ -92,5 +92,5 @@ public abstract class CommonTurnoutOperation extends TurnoutOperation {
         }
     }
 
-    static Logger log = LoggerFactory.getLogger(CommonTurnoutOperation.class.getName());
+    private final static Logger log = LoggerFactory.getLogger(CommonTurnoutOperation.class.getName());
 }

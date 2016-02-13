@@ -199,6 +199,6 @@ public class ProxyReporterManagerTest extends TestCase {
         apps.tests.Log4JFixture.tearDown();
     }
 
-    static Logger log = LoggerFactory.getLogger(ProxyReporterManagerTest.class.getName());
+    private final static Logger log = LoggerFactory.getLogger(ProxyReporterManagerTest.class.getName());
 
 }

@@ -153,7 +153,7 @@ public class AutomatSummary {
     }
 
     // initialize logging
-    static Logger log = LoggerFactory.getLogger(AutomatSummary.class.getName());
+    private final static Logger log = LoggerFactory.getLogger(AutomatSummary.class.getName());
 }
 
 /* @(#)AutomatSummary.java */

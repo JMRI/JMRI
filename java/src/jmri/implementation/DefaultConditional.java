@@ -1595,7 +1595,7 @@ public class DefaultConditional extends AbstractNamedBean
         }
     }
 
-    static final Logger log = LoggerFactory.getLogger(DefaultConditional.class.getName());
+    private final static Logger log = LoggerFactory.getLogger(DefaultConditional.class.getName());
 }
 
 /* @(#)DefaultConditional.java */

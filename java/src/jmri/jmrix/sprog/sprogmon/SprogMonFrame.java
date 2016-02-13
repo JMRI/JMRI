@@ -49,6 +49,6 @@ public class SprogMonFrame extends jmri.jmrix.AbstractMonFrame implements SprogL
 
     }
 
-    static Logger log = LoggerFactory.getLogger(SprogMonFrame.class.getName());
+    private final static Logger log = LoggerFactory.getLogger(SprogMonFrame.class.getName());
 
 }

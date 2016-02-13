@@ -453,7 +453,7 @@ public class BlockManagerXmlTest extends TestCase {
     }
 
     /*    
-     static Logger log = LoggerFactory.getLogger(BlockManagerXmlTest.class.getName());
+    private final static Logger log = LoggerFactory.getLogger(BlockManagerXmlTest.class.getName());
 
      // The minimal setup for log4J
      protected void setUp() { apps.tests.Log4JFixture.setUp(); }

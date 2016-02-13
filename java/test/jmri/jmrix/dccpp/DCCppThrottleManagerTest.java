@@ -53,6 +53,6 @@ public class DCCppThrottleManagerTest extends TestCase {
         apps.tests.Log4JFixture.tearDown();
     }
 
-    static Logger log = LoggerFactory.getLogger(DCCppThrottleManagerTest.class.getName());
+    private final static Logger log = LoggerFactory.getLogger(DCCppThrottleManagerTest.class.getName());
 
 }

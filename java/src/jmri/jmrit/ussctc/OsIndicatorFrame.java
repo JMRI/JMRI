@@ -35,6 +35,6 @@ public class OsIndicatorFrame extends jmri.util.JmriJFrame {
         pack();
     }
 
-    static Logger log = LoggerFactory.getLogger(OsIndicatorFrame.class.getName());
+    private final static Logger log = LoggerFactory.getLogger(OsIndicatorFrame.class.getName());
 
 }

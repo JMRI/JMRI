@@ -82,6 +82,6 @@ public class RosterConfigPaneXml extends jmri.configurexml.AbstractXmlAdapter {
         InstanceManager.configureManagerInstance().registerPref(new RosterConfigPane());
     }
     // initialize logging
-    static Logger log = LoggerFactory.getLogger(RosterConfigPaneXml.class.getName());
+    private final static Logger log = LoggerFactory.getLogger(RosterConfigPaneXml.class.getName());
 
 }

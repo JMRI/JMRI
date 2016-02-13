@@ -143,7 +143,7 @@ public class AddNewBeanPanel extends jmri.util.swing.JmriPanel {
     JCheckBox _autoSys;
     JLabel finishLabel = new JLabel(Bundle.getMessage("LabelNumberToAdd"));
 
-    static final Logger log = LoggerFactory.getLogger(AddNewBeanPanel.class.getName());
+    private final static Logger log = LoggerFactory.getLogger(AddNewBeanPanel.class.getName());
 }
 
 

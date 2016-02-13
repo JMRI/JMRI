@@ -36,7 +36,7 @@ public class JsonReporterServer extends AbstractReporterServer {
 
     private final JmriConnection connection;
     private final ObjectMapper mapper;
-    static Logger log = LoggerFactory.getLogger(JsonReporterServer.class);
+    private final static Logger log = LoggerFactory.getLogger(JsonReporterServer.class);
 
     public JsonReporterServer(JmriConnection connection) {
         super();

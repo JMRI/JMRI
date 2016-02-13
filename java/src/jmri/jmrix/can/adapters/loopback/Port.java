@@ -76,7 +76,7 @@ public class Port extends AbstractSerialPortController {
         return (CanSystemConnectionMemo) super.getSystemConnectionMemo();
     }
 
-    static Logger log = LoggerFactory.getLogger(Port.class.getName());
+    private final static Logger log = LoggerFactory.getLogger(Port.class.getName());
 }
 
 /* @(#)Port.java */

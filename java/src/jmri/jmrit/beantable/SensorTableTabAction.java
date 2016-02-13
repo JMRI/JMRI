@@ -37,5 +37,5 @@ public class SensorTableTabAction extends AbstractTableTabAction {
         return "package.jmri.jmrit.beantable.SensorTable";
     }
 
-    static Logger log = LoggerFactory.getLogger(SensorTableTabAction.class.getName());
+    private final static Logger log = LoggerFactory.getLogger(SensorTableTabAction.class.getName());
 }

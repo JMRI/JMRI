@@ -216,6 +216,6 @@ public class SimplePowerServerTest extends TestCase {
     }
 
 
-    static Logger log = LoggerFactory.getLogger(SimplePowerServerTest.class.getName());
+    private final static Logger log = LoggerFactory.getLogger(SimplePowerServerTest.class.getName());
 
 }

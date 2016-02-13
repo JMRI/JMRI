@@ -34,7 +34,7 @@ public class RpsReporterManager extends AbstractReporterManager {
 
     static RpsReporterManager _instance = null;
 
-    static Logger log = LoggerFactory.getLogger(RpsReporterManager.class.getName());
+    private final static Logger log = LoggerFactory.getLogger(RpsReporterManager.class.getName());
 
     static { // class initialization
         // now want a ReporterManager always, not just when RPS is created

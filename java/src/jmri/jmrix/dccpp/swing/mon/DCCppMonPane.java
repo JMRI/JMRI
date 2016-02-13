@@ -370,6 +370,6 @@ public class DCCppMonPane extends jmri.jmrix.AbstractMonPane implements DCCppLis
         }
     }
 
-    static Logger log = LoggerFactory.getLogger(DCCppMonPane.class.getName());
+    private final static Logger log = LoggerFactory.getLogger(DCCppMonPane.class.getName());
 
 }

@@ -111,7 +111,7 @@ public class RaspberryPiSystemConnectionMemo extends jmri.jmrix.SystemConnection
         super.dispose();
     }
 
-    static Logger log = LoggerFactory.getLogger(RaspberryPiSystemConnectionMemo.class.getName());
+    private final static Logger log = LoggerFactory.getLogger(RaspberryPiSystemConnectionMemo.class.getName());
 
 
 }

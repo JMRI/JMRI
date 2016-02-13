@@ -713,5 +713,5 @@ public class EcosLocoTableAction extends AbstractTableAction {
         return EcosLocoTableAction.class.getName();
     }
 
-    static final Logger log = LoggerFactory.getLogger(EcosLocoTableAction.class.getName());
+    private final static Logger log = LoggerFactory.getLogger(EcosLocoTableAction.class.getName());
 }

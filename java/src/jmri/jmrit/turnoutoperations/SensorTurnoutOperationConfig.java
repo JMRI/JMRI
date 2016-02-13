@@ -29,5 +29,5 @@ public class SensorTurnoutOperationConfig extends CommonTurnoutOperationConfig {
         super(op);
     }
 
-    static Logger log = LoggerFactory.getLogger(SensorTurnoutOperationConfig.class.getName());
+    private final static Logger log = LoggerFactory.getLogger(SensorTurnoutOperationConfig.class.getName());
 }

@@ -37,7 +37,7 @@ public class EliteXNetTurnout extends jmri.jmrix.lenz.XNetTurnout {
         internalState = jmri.jmrix.lenz.XNetTurnout.IDLE;
     }
 
-    static Logger log = LoggerFactory.getLogger(EliteXNetTurnout.class.getName());
+    private final static Logger log = LoggerFactory.getLogger(EliteXNetTurnout.class.getName());
 
 }
 

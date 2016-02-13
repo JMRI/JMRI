@@ -51,5 +51,5 @@ public class DecoderIndexCreateAction extends JmriAbstractAction {
         throw new IllegalArgumentException("Should not be invoked");
     }
     // initialize logging
-    static Logger log = LoggerFactory.getLogger(DecoderIndexCreateAction.class.getName());
+    private final static Logger log = LoggerFactory.getLogger(DecoderIndexCreateAction.class.getName());
 }

@@ -81,5 +81,5 @@ public class SimpleReporterServer extends AbstractReporterServer {
             this.connection.sendMessage(message);
         }
     }
-    static Logger log = LoggerFactory.getLogger(SimpleReporterServer.class.getName());
+    private final static Logger log = LoggerFactory.getLogger(SimpleReporterServer.class.getName());
 }

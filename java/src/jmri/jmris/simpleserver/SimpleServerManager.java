@@ -13,7 +13,7 @@ public class SimpleServerManager {
     static private SimpleServerManager instance = null;
     private SimpleServerPreferences preferences;
     private SimpleServer server;
-    static Logger log = LoggerFactory.getLogger(SimpleServer.class.getName());
+    private final static Logger log = LoggerFactory.getLogger(SimpleServer.class.getName());
 
     private SimpleServerManager() {
         if (InstanceManager.getDefault(SimpleServerPreferences.class) == null) {

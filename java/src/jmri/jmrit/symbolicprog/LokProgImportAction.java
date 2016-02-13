@@ -32,5 +32,5 @@ public class LokProgImportAction extends GenericImportAction {
             }
     }
     
-    static Logger log = LoggerFactory.getLogger(LokProgImportAction.class.getName());
+    private final static Logger log = LoggerFactory.getLogger(LokProgImportAction.class.getName());
 }

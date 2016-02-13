@@ -104,7 +104,7 @@ public class MarklinMonPane extends jmri.jmrix.AbstractMonPane implements Markli
         }
     }
 
-    static Logger log = LoggerFactory.getLogger(MarklinMonPane.class.getName());
+    private final static Logger log = LoggerFactory.getLogger(MarklinMonPane.class.getName());
 
 }
 

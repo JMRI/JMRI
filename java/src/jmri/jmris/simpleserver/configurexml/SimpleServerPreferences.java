@@ -12,7 +12,7 @@ public class SimpleServerPreferences extends jmri.jmris.AbstractServerPreference
     private int port = DEFAULT_PORT;
     // as loaded prefences
     private int asLoadedPort = DEFAULT_PORT;
-    private static Logger log = LoggerFactory.getLogger(SimpleServerPreferences.class);
+    private final static Logger log = LoggerFactory.getLogger(SimpleServerPreferences.class);
 
     public SimpleServerPreferences(String fileName) {
         super(fileName);

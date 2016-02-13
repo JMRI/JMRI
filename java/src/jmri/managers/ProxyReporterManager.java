@@ -133,7 +133,7 @@ public class ProxyReporterManager extends AbstractProxyManager implements Report
     }
 
     // initialize logging
-    static Logger log = LoggerFactory.getLogger(ProxyReporterManager.class.getName());
+    private final static Logger log = LoggerFactory.getLogger(ProxyReporterManager.class.getName());
 }
 
 /* @(#)ProxyReporterManager.java */

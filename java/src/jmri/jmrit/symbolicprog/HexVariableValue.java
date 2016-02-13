@@ -34,6 +34,6 @@ public class HexVariableValue extends DecVariableValue {
     }
 
     // initialize logging
-    static Logger log = LoggerFactory.getLogger(HexVariableValue.class.getName());
+    private final static Logger log = LoggerFactory.getLogger(HexVariableValue.class.getName());
 
 }

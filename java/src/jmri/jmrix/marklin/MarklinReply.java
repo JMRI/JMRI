@@ -133,7 +133,7 @@ public class MarklinReply extends jmri.jmrix.AbstractMRReply {
         return arr;
     }
 
-    static Logger log = LoggerFactory.getLogger(MarklinReply.class.getName());
+    private final static Logger log = LoggerFactory.getLogger(MarklinReply.class.getName());
 }
 
 

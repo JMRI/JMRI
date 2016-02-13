@@ -145,6 +145,6 @@ public class SignalMastIconXml extends PositionableLabelXml {
         loadCommonAttributes(l, Editor.SIGNALS, element);
     }
 
-    static Logger log = LoggerFactory.getLogger(SignalMastIconXml.class.getName());
+    private final static Logger log = LoggerFactory.getLogger(SignalMastIconXml.class.getName());
 
 }

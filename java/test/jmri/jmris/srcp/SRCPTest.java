@@ -44,6 +44,6 @@ public class SRCPTest extends TestCase {
         return suite;
     }
 
-    static Logger log = LoggerFactory.getLogger(SRCPTest.class.getName());
+    private final static Logger log = LoggerFactory.getLogger(SRCPTest.class.getName());
 
 }

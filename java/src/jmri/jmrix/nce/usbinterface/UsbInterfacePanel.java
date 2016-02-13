@@ -357,6 +357,6 @@ public class UsbInterfacePanel extends jmri.jmrix.nce.swing.NcePanel implements 
         });
     }
 
-    static Logger log = LoggerFactory
+    private final static Logger log = LoggerFactory
             .getLogger(UsbInterfacePanel.class.getName());
 }

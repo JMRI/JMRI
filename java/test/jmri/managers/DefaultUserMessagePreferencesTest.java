@@ -62,6 +62,6 @@ public class DefaultUserMessagePreferencesTest extends TestCase {
         jmri.util.JUnitUtil.resetInstanceManager();
     }
 
-    static Logger log = LoggerFactory.getLogger(DefaultUserMessagePreferencesTest.class.getName());
+    private final static Logger log = LoggerFactory.getLogger(DefaultUserMessagePreferencesTest.class.getName());
 
 }

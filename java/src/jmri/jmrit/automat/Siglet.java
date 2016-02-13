@@ -78,7 +78,7 @@ public class Siglet extends AbstractAutomaton {
     }
 
     // initialize logging
-    static Logger log = LoggerFactory.getLogger(Siglet.class.getName());
+    private final static Logger log = LoggerFactory.getLogger(Siglet.class.getName());
 }
 
 /* @(#)Siglet.java */

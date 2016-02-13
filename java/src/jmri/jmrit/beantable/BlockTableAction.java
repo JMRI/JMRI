@@ -114,12 +114,12 @@ public class BlockTableAction extends AbstractTableAction {
 
             public String getValue(String name) {
                 if (name == null) {
-                    BeanTableDataModel.log.warn("requested getValue(null)");
+                    log.warn("requested getValue(null)");
                     return "(no name)";
                 }
                 Block b = InstanceManager.blockManagerInstance().getBySystemName(name);
                 if (b == null) {
-                    BeanTableDataModel.log.debug("requested getValue(\"" + name + "\"), Block doesn't exist");
+                    log.debug("requested getValue(\"" + name + "\"), Block doesn't exist");
                     return "(no Block)";
                 }
                 Object m = b.getValue();
@@ -159,12 +159,12 @@ public class BlockTableAction extends AbstractTableAction {
             public Object getValueAt(int row, int col) {
                 // some error checking
                 if (row >= sysNameList.size()) {
-                    BeanTableDataModel.log.debug("requested getValueAt(\"" + row + "\"), row outside of range");
+                    log.debug("requested getValueAt(\"" + row + "\"), row outside of range");
                     return "Error table size";
                 }
                 Block b = (Block) getBySystemName(sysNameList.get(row));
                 if (b == null) {
-                    BeanTableDataModel.log.debug("requested getValueAt(\"" + row + "\"), Block doesn't exist");
+                    log.debug("requested getValueAt(\"" + row + "\"), Block doesn't exist");
                     return "(no Block)";
                 }
                 if (col == DIRECTIONCOL) {
@@ -471,7 +471,7 @@ public class BlockTableAction extends AbstractTableAction {
             }
 
             public JButton configureButton() {
-                BeanTableDataModel.log.error("configureButton should not have been called");
+                log.error("configureButton should not have been called");
                 return null;
             }
 
@@ -849,7 +849,7 @@ public class BlockTableAction extends AbstractTableAction {
         return BlockTableAction.class.getName();
     }
 
-    static final Logger log = LoggerFactory.getLogger(BlockTableAction.class.getName());
+    private final static Logger log = LoggerFactory.getLogger(BlockTableAction.class.getName());
 }
 
 /* @(#)BlockTableAction.java */

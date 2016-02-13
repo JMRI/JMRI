@@ -113,5 +113,5 @@ public class CatalogTreeNode extends DefaultMutableTreeNode {
         _leaves = leaves;
     }
 
-    static Logger log = LoggerFactory.getLogger(CatalogTreeNode.class.getName());
+    private final static Logger log = LoggerFactory.getLogger(CatalogTreeNode.class.getName());
 }

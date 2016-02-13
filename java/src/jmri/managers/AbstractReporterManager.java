@@ -164,7 +164,7 @@ public abstract class AbstractReporterManager extends AbstractManager
             return Integer.toString(iName);
         }
     }
-    static Logger log = LoggerFactory.getLogger(AbstractReporterManager.class.getName());
+    private final static Logger log = LoggerFactory.getLogger(AbstractReporterManager.class.getName());
 }
 
 /* @(#)AbstractReporterManager.java */

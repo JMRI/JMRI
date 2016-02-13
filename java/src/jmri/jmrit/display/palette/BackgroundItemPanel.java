@@ -149,5 +149,5 @@ public class BackgroundItemPanel extends IconItemPanel {
         }
     }
 
-    static Logger log = LoggerFactory.getLogger(BackgroundItemPanel.class.getName());
+    private final static Logger log = LoggerFactory.getLogger(BackgroundItemPanel.class.getName());
 }

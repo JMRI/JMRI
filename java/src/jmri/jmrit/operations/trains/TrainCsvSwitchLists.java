@@ -258,5 +258,5 @@ public class TrainCsvSwitchLists extends TrainCsvCommon {
         return file;
     }
 
-    static Logger log = LoggerFactory.getLogger(TrainCsvSwitchLists.class.getName());
+    private final static Logger log = LoggerFactory.getLogger(TrainCsvSwitchLists.class.getName());
 }

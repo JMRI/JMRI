@@ -211,6 +211,6 @@ public class z21XNetSimulatorAdapter {
     }
 
 
-    static Logger log = LoggerFactory.getLogger(z21XNetSimulatorAdapter.class.getName());
+    private final static Logger log = LoggerFactory.getLogger(z21XNetSimulatorAdapter.class.getName());
 
 }

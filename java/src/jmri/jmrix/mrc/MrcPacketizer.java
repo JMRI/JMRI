@@ -769,7 +769,7 @@ public class MrcPacketizer extends MrcTrafficController {
 
     }
 
-    static Logger log = LoggerFactory.getLogger(MrcPacketizer.class.getName());
+    private final static Logger log = LoggerFactory.getLogger(MrcPacketizer.class.getName());
 }
 
 /* @(#)MrcPacketizer.java */

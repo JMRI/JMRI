@@ -38,7 +38,7 @@ public class SRCPMonAction extends AbstractAction {
         f.setVisible(true);
     }
 
-    static Logger log = LoggerFactory.getLogger(SRCPMonAction.class.getName());
+    private final static Logger log = LoggerFactory.getLogger(SRCPMonAction.class.getName());
 
 }
 

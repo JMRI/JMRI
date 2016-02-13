@@ -203,7 +203,7 @@ public class CbusProgrammer extends AbstractProgrammer implements CanListener, A
         temp.programmingOpReply(value, status);
     }
 
-    static Logger log = LoggerFactory.getLogger(CbusProgrammer.class.getName());
+    private final static Logger log = LoggerFactory.getLogger(CbusProgrammer.class.getName());
 }
 
 

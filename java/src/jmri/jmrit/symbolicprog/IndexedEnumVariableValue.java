@@ -660,5 +660,5 @@ public class IndexedEnumVariableValue extends VariableValue
     }
 
     // initialize logging
-    static Logger log = LoggerFactory.getLogger(IndexedEnumVariableValue.class.getName());
+    private final static Logger log = LoggerFactory.getLogger(IndexedEnumVariableValue.class.getName());
 }

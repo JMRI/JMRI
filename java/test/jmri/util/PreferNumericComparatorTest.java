@@ -62,6 +62,6 @@ public class PreferNumericComparatorTest extends TestCase {
         return suite;
     }
 
-    static Logger log = LoggerFactory.getLogger(PreferNumericComparatorTest.class.getName());
+    private final static Logger log = LoggerFactory.getLogger(PreferNumericComparatorTest.class.getName());
 
 }

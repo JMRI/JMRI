@@ -121,7 +121,7 @@ public class CbusProgrammerTest extends TestCase {
         return suite;
     }
 
-    static Logger log = LoggerFactory.getLogger(CbusProgrammerTest.class.getName());
+    private final static Logger log = LoggerFactory.getLogger(CbusProgrammerTest.class.getName());
 
     // The minimal setup for log4J
     protected void setUp() {

@@ -33,6 +33,6 @@ public class SystemInfoTest extends TestCase {
         return suite;
     }
 
-    static Logger log = LoggerFactory.getLogger(SystemInfoTest.class.getName());
+    private final static Logger log = LoggerFactory.getLogger(SystemInfoTest.class.getName());
 
 }

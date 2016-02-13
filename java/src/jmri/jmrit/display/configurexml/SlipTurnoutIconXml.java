@@ -238,5 +238,5 @@ public class SlipTurnoutIconXml extends PositionableLabelXml {
         }
     }
 
-    static Logger log = LoggerFactory.getLogger(SlipTurnoutIconXml.class.getName());
+    private final static Logger log = LoggerFactory.getLogger(SlipTurnoutIconXml.class.getName());
 }

@@ -47,6 +47,6 @@ public class NewPanelAction extends AbstractAction {
             new jmri.jmrit.display.panelEditor.PanelEditorAction().actionPerformed(null);
         }
     }
-    static Logger log = LoggerFactory.getLogger(NewPanelAction.class.getName());
+    private final static Logger log = LoggerFactory.getLogger(NewPanelAction.class.getName());
 
 }

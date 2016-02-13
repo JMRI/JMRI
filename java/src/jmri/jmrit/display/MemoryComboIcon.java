@@ -337,5 +337,5 @@ public class MemoryComboIcon extends PositionableJPanel
         namedMemory = null;
     }
 
-    static Logger log = LoggerFactory.getLogger(MemoryComboIcon.class.getName());
+    private final static Logger log = LoggerFactory.getLogger(MemoryComboIcon.class.getName());
 }

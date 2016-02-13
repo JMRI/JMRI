@@ -61,5 +61,5 @@ public class PositionableRectangleXml extends PositionableShapeXml {
         loadCommonAttributes(ps, Editor.MARKERS, element);
     }
 
-    static Logger log = LoggerFactory.getLogger(PositionableRectangleXml.class.getName());
+    private final static Logger log = LoggerFactory.getLogger(PositionableRectangleXml.class.getName());
 }

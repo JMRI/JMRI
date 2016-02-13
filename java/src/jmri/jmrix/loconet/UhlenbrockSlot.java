@@ -86,7 +86,7 @@ public class UhlenbrockSlot extends LocoNetSlot {
         }
     }
 
-    static Logger log = LoggerFactory.getLogger(UhlenbrockSlot.class.getName());
+    private final static Logger log = LoggerFactory.getLogger(UhlenbrockSlot.class.getName());
 }
 
 

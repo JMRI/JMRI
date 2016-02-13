@@ -313,5 +313,5 @@ public class JUnitUtil {
         }
     }
 
-    static Logger log = LoggerFactory.getLogger(JUnitUtil.class.getName());
+    private final static Logger log = LoggerFactory.getLogger(JUnitUtil.class.getName());
 }

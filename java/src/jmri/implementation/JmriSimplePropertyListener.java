@@ -118,5 +118,5 @@ public class JmriSimplePropertyListener implements PropertyChangeListener {
         }
     }
 
-    static final Logger log = LoggerFactory.getLogger(JmriSimplePropertyListener.class.getName());
+    private final static Logger log = LoggerFactory.getLogger(JmriSimplePropertyListener.class.getName());
 }

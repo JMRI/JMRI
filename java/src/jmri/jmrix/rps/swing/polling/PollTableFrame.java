@@ -58,5 +58,5 @@ public class PollTableFrame extends jmri.util.JmriJFrame {
         setModifiedFlag(false);
     }
 
-    static Logger log = LoggerFactory.getLogger(PollTableFrame.class.getName());
+    private final static Logger log = LoggerFactory.getLogger(PollTableFrame.class.getName());
 }

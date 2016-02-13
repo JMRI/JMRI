@@ -287,5 +287,5 @@ public class DrawPolygon extends DrawFrame {
         }
     }
 
-    static Logger log = LoggerFactory.getLogger(DrawPolygon.class.getName());
+    private final static Logger log = LoggerFactory.getLogger(DrawPolygon.class.getName());
 }

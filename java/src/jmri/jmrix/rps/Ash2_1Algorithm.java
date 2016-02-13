@@ -401,7 +401,7 @@ public class Ash2_1Algorithm extends AbstractCalculator {
         double x, y, z, t, vs;
     }
 
-    static Logger log = LoggerFactory.getLogger(Ash2_1Algorithm.class.getName());
+    private final static Logger log = LoggerFactory.getLogger(Ash2_1Algorithm.class.getName());
 
 }
 

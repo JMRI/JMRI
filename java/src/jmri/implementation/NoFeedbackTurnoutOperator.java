@@ -46,5 +46,5 @@ public class NoFeedbackTurnoutOperator extends TurnoutOperator {
         }
     }
 
-    static Logger log = LoggerFactory.getLogger(NoFeedbackTurnoutOperator.class.getName());
+    private final static Logger log = LoggerFactory.getLogger(NoFeedbackTurnoutOperator.class.getName());
 }

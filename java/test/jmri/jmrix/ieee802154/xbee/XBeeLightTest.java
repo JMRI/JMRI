@@ -75,6 +75,6 @@ public class XBeeLightTest extends TestCase {
         apps.tests.Log4JFixture.tearDown();
     }
 
-    static Logger log = LoggerFactory.getLogger(XBeeLightTest.class.getName());
+    private final static Logger log = LoggerFactory.getLogger(XBeeLightTest.class.getName());
 
 }

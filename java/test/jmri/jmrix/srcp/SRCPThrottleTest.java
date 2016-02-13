@@ -54,5 +54,5 @@ public class SRCPThrottleTest extends TestCase {
     protected void tearDown() {
         apps.tests.Log4JFixture.tearDown();
     }
-    static Logger log = LoggerFactory.getLogger(SRCPThrottleTest.class.getName());
+    private final static Logger log = LoggerFactory.getLogger(SRCPThrottleTest.class.getName());
 }

@@ -35,6 +35,6 @@ public class LI100Test extends TestCase {
         return suite;
     }
 
-    static Logger log = LoggerFactory.getLogger(LI100Test.class.getName());
+    private final static Logger log = LoggerFactory.getLogger(LI100Test.class.getName());
 
 }

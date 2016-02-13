@@ -12,8 +12,8 @@ import com.pi4j.io.gpio.PinState;
 import com.pi4j.io.gpio.PinPullResistance;
 import com.pi4j.io.gpio.RaspiPin;
 
+import jmri.Turnout;
 import jmri.implementation.AbstractTurnout;
-import jmri.*;
 
 /**
  * Turnout interface to RaspberryPi GPIO pins.
@@ -34,7 +34,8 @@ public class RaspberryPiTurnout extends AbstractTurnout implements Turnout, java
    private int address;
 
    public RaspberryPiTurnout(String systemName) {
-	super(systemName.toUpperCase());
+        super(systemName.toUpperCase());
+	    log.debug("Provisioning turnout {}",systemName);
         if(gpio==null) gpio=GpioFactory.getInstance();
         address=Integer.parseInt(getSystemName().substring(getSystemName().lastIndexOf("T")+1));
         pin = gpio.provisionDigitalOutputPin(RaspiPin.getPinByName("GPIO "+address),getSystemName());
@@ -43,6 +44,7 @@ public class RaspberryPiTurnout extends AbstractTurnout implements Turnout, java
 
    public RaspberryPiTurnout(String systemName, String userName) {
         super(systemName.toUpperCase(), userName);
+        log.debug("Provisioning turnout {} with username {}",systemName, userName);
         if(gpio==null) gpio=GpioFactory.getInstance();
         address=Integer.parseInt(getSystemName().substring(getSystemName().lastIndexOf("T")+1));
         pin = gpio.provisionDigitalOutputPin(RaspiPin.getPinByName("GPIO "+address),getUserName());
@@ -59,8 +61,10 @@ public class RaspberryPiTurnout extends AbstractTurnout implements Turnout, java
    @Override
    protected void forwardCommandChangeToLayout(int s){
       if(s==CLOSED){
+         log.debug("Setting turnout {} to CLOSED", getSystemName());
          pin.high();
       } else if(s==THROWN) {
+         log.debug("Setting turnout {} to THROWN", getSystemName());
          pin.low();
       }
    }
@@ -69,7 +73,7 @@ public class RaspberryPiTurnout extends AbstractTurnout implements Turnout, java
    protected void turnoutPushbuttonLockout(boolean locked){
    }
 
-   static Logger log = LoggerFactory.getLogger(RaspberryPiTurnout.class.getName());
+    private final static Logger log = LoggerFactory.getLogger(RaspberryPiTurnout.class.getName());
 }
 
 /* @(#)RaspberryPiTurnout.java */

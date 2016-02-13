@@ -48,6 +48,6 @@ public class XpaMessageTest extends TestCase {
         apps.tests.Log4JFixture.tearDown();
     }
 
-    static Logger log = LoggerFactory.getLogger(XpaMessageTest.class.getName());
+    private final static Logger log = LoggerFactory.getLogger(XpaMessageTest.class.getName());
 
 }

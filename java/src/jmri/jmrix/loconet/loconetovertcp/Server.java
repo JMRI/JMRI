@@ -258,5 +258,5 @@ public class Server {
             return clients.size();
         }
     }
-    static Logger log = LoggerFactory.getLogger(Server.class.getName());
+    private final static Logger log = LoggerFactory.getLogger(Server.class.getName());
 }

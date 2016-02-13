@@ -569,5 +569,5 @@ public class OBlockManagerXml // extends XmlFile
         return InstanceManager.getDefault(OBlockManager.class).getXMLOrder();
     }
 
-    static Logger log = LoggerFactory.getLogger(OBlockManagerXml.class.getName());
+    private final static Logger log = LoggerFactory.getLogger(OBlockManagerXml.class.getName());
 }

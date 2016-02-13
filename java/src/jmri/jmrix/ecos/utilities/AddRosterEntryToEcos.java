@@ -86,5 +86,5 @@ public class AddRosterEntryToEcos extends AbstractAction {
     }
 
     // initialize logging
-    static Logger log = LoggerFactory.getLogger(AddRosterEntryToEcos.class.getName());
+    private final static Logger log = LoggerFactory.getLogger(AddRosterEntryToEcos.class.getName());
 }

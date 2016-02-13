@@ -14,7 +14,7 @@ import org.slf4j.LoggerFactory;
  */
 public class StartupActionsPreferencesPanelXml extends AbstractXmlAdapter {
 
-    static Logger log = LoggerFactory.getLogger(StartupActionsPreferencesPanelXml.class);
+    private final static Logger log = LoggerFactory.getLogger(StartupActionsPreferencesPanelXml.class);
 
     @Override
     public void load(Element e, Object o) throws Exception {

@@ -33,6 +33,6 @@ public class MonTest extends TestCase {
         return suite;
     }
 
-    static Logger log = LoggerFactory.getLogger(MonTest.class.getName());
+    private final static Logger log = LoggerFactory.getLogger(MonTest.class.getName());
 
 }

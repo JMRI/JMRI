@@ -32,7 +32,7 @@ public class SprogConsoleAction extends AbstractAction {
         }
         f.setVisible(true);
     }
-    static Logger log = LoggerFactory.getLogger(SprogConsoleAction.class.getName());
+    private final static Logger log = LoggerFactory.getLogger(SprogConsoleAction.class.getName());
 }
 
 

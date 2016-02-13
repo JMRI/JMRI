@@ -48,6 +48,6 @@ public class JmriSRCPSensorServerTest extends TestCase {
         return suite;
     }
 
-    static Logger log = LoggerFactory.getLogger(JmriSRCPSensorServerTest.class.getName());
+    private final static Logger log = LoggerFactory.getLogger(JmriSRCPSensorServerTest.class.getName());
 
 }

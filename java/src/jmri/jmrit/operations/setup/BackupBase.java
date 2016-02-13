@@ -22,7 +22,7 @@ import org.slf4j.LoggerFactory;
  */
 public abstract class BackupBase {
 
-    static Logger log = LoggerFactory
+    private final static Logger log = LoggerFactory
             .getLogger(BackupBase.class.getName());
 
     // Just for testing......

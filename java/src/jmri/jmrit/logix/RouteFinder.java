@@ -174,5 +174,5 @@ public class RouteFinder implements Runnable {
         return children;
     }
 
-    static Logger log = LoggerFactory.getLogger(RouteFinder.class.getName());
+    private final static Logger log = LoggerFactory.getLogger(RouteFinder.class.getName());
 }

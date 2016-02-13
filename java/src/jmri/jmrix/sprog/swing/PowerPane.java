@@ -131,6 +131,6 @@ public class PowerPane extends javax.swing.JPanel implements java.beans.Property
     }
 
     SprogPowerManager p = null;
-    static Logger log = LoggerFactory.getLogger(PowerPane.class.getName());
+    private final static Logger log = LoggerFactory.getLogger(PowerPane.class.getName());
 
 }

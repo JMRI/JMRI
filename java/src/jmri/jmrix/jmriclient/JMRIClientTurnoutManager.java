@@ -45,7 +45,7 @@ public class JMRIClientTurnoutManager extends jmri.managers.AbstractTurnoutManag
         return prefix + typeLetter() + curAddress;
     }
 
-    static Logger log = LoggerFactory.getLogger(JMRIClientTurnoutManager.class.getName());
+    private final static Logger log = LoggerFactory.getLogger(JMRIClientTurnoutManager.class.getName());
 
 }
 

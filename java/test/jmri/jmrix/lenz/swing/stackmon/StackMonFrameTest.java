@@ -51,6 +51,6 @@ public class StackMonFrameTest extends TestCase {
         apps.tests.Log4JFixture.tearDown();
     }
 
-    static Logger log = LoggerFactory.getLogger(StackMonFrameTest.class.getName());
+    private final static Logger log = LoggerFactory.getLogger(StackMonFrameTest.class.getName());
 
 }

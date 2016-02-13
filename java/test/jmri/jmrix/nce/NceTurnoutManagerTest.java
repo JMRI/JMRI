@@ -70,6 +70,6 @@ public class NceTurnoutManagerTest extends jmri.managers.AbstractTurnoutMgrTest 
         return suite;
     }
 
-    static Logger log = LoggerFactory.getLogger(NceTurnoutManagerTest.class.getName());
+    private final static Logger log = LoggerFactory.getLogger(NceTurnoutManagerTest.class.getName());
 
 }

@@ -294,7 +294,7 @@ public abstract class CrrSection extends jmri.jmrit.automat.AbstractAutomaton {
     static Turnout[] si = null;
 
     // initialize logging
-    static Logger log = LoggerFactory.getLogger(CrrSection.class.getName());
+    private final static Logger log = LoggerFactory.getLogger(CrrSection.class.getName());
 
 }
 

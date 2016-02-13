@@ -95,7 +95,7 @@ public class LnReporterTest extends TestCase {
         return suite;
     }
 
-    static Logger log = LoggerFactory.getLogger(LnReporterTest.class.getName());
+    private final static Logger log = LoggerFactory.getLogger(LnReporterTest.class.getName());
 
     jmri.jmrix.loconet.LocoNetInterfaceScaffold tc;
 

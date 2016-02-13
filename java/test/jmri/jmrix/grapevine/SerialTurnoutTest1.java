@@ -57,6 +57,6 @@ public class SerialTurnoutTest1 extends AbstractTurnoutTest {
         return suite;
     }
 
-    static Logger log = LoggerFactory.getLogger(SerialTurnoutTest1.class.getName());
+    private final static Logger log = LoggerFactory.getLogger(SerialTurnoutTest1.class.getName());
 
 }

@@ -64,5 +64,5 @@ public class LocoMonFrame extends jmri.jmrix.AbstractMonFrame implements LocoNet
 
     jmri.jmrix.loconet.locomon.Llnmon llnmon = new jmri.jmrix.loconet.locomon.Llnmon();
 
-    static Logger log = LoggerFactory.getLogger(LocoMonFrame.class.getName());
+    private final static Logger log = LoggerFactory.getLogger(LocoMonFrame.class.getName());
 }

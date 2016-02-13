@@ -59,6 +59,6 @@ public class DecVariableValueTest extends VariableValueTest {
         return suite;
     }
 
-    static Logger log = LoggerFactory.getLogger(DecVariableValueTest.class.getName());
+    private final static Logger log = LoggerFactory.getLogger(DecVariableValueTest.class.getName());
 
 }

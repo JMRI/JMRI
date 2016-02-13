@@ -893,5 +893,5 @@ public class OBlock extends jmri.Block implements java.beans.PropertyChangeListe
         return Bundle.getMessage("BeanNameOBlock");
     }
 
-    static Logger log = LoggerFactory.getLogger(OBlock.class.getName());
+    private final static Logger log = LoggerFactory.getLogger(OBlock.class.getName());
 }

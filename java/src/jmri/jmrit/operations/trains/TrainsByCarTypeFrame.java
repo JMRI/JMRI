@@ -278,5 +278,5 @@ public class TrainsByCarTypeFrame extends OperationsFrame implements java.beans.
         }
     }
 
-    static Logger log = LoggerFactory.getLogger(TrainsByCarTypeFrame.class.getName());
+    private final static Logger log = LoggerFactory.getLogger(TrainsByCarTypeFrame.class.getName());
 }

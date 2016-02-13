@@ -95,5 +95,5 @@ public class PortalList extends JList<Portal> {
         }
     }
 
-    static Logger log = LoggerFactory.getLogger(EditPortalFrame.class.getName());
+    private final static Logger log = LoggerFactory.getLogger(EditPortalFrame.class.getName());
 }

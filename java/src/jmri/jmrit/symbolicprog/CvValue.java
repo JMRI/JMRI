@@ -761,6 +761,6 @@ public class CvValue extends AbstractValue implements ProgListener {
     }
 
     // initialize logging
-    static Logger log = LoggerFactory.getLogger(CvValue.class.getName());
+    private final static Logger log = LoggerFactory.getLogger(CvValue.class.getName());
 
 }

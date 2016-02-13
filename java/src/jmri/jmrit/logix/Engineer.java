@@ -825,5 +825,5 @@ public class Engineer extends Thread implements Runnable, java.beans.PropertyCha
         }
     }
 
-    static Logger log = LoggerFactory.getLogger(Engineer.class.getName());
+    private final static Logger log = LoggerFactory.getLogger(Engineer.class.getName());
 }

@@ -57,7 +57,7 @@ public class XNetReply extends jmri.jmrix.AbstractMRReply {
         _nDataChars = b.length;
         _dataChars = new int[_nDataChars];
         for (int i = 0; i < b.length; i++) {
-            setElement(i, b[i]);
+            setElement(i, ( b[i] & 0xff) );
         }
     }
 
@@ -521,7 +521,7 @@ public class XNetReply extends jmri.jmrix.AbstractMRReply {
      */
     public boolean isTimeSlotRestored() {
         return (this.getElement(0) == XNetConstants.LI_MESSAGE_RESPONSE_HEADER
-                && this.getElement(1) == XNetConstants.LI_MESSAGE_RESPONSE_SEND_SUCCESS);
+                && this.getElement(1) == XNetConstants.LIUSB_TIMESLOT_RESTORED);
     }
 
     /* 
@@ -672,7 +672,7 @@ public class XNetReply extends jmri.jmrix.AbstractMRReply {
     }
 
     // initialize logging
-    static Logger log = LoggerFactory.getLogger(XNetReply.class.getName());
+    private final static Logger log = LoggerFactory.getLogger(XNetReply.class.getName());
 
 }
 

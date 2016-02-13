@@ -189,6 +189,6 @@ public class SimpleTimebaseXml extends jmri.configurexml.AbstractXmlAdapter {
         return jmri.Manager.TIMEBASE;
     }
 
-    static Logger log = LoggerFactory.getLogger(SimpleTimebaseXml.class.getName());
+    private final static Logger log = LoggerFactory.getLogger(SimpleTimebaseXml.class.getName());
 
 }

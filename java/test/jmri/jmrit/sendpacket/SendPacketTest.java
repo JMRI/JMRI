@@ -57,6 +57,6 @@ public class SendPacketTest extends TestCase {
         return suite;
     }
 
-    static Logger log = LoggerFactory.getLogger(SendPacketTest.class.getName());
+    private final static Logger log = LoggerFactory.getLogger(SendPacketTest.class.getName());
 
 }

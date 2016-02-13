@@ -30,6 +30,6 @@ abstract public class AbstractXNetSerialConnectionConfigXml extends AbstractSeri
     }
 
     // initialize logging
-    static Logger log = LoggerFactory.getLogger(AbstractXNetSerialConnectionConfigXml.class.getName());
+    private final static Logger log = LoggerFactory.getLogger(AbstractXNetSerialConnectionConfigXml.class.getName());
 
 }

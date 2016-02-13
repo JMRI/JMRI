@@ -32,7 +32,7 @@ public class JsonTurnoutServer extends AbstractTurnoutServer {
 
     private final JmriConnection connection;
     private final ObjectMapper mapper;
-    static Logger log = LoggerFactory.getLogger(JsonTurnoutServer.class.getName());
+    private final static Logger log = LoggerFactory.getLogger(JsonTurnoutServer.class.getName());
 
     public JsonTurnoutServer(JmriConnection connection) {
         this.connection = connection;

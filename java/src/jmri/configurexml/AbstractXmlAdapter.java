@@ -77,7 +77,7 @@ public abstract class AbstractXmlAdapter implements XmlAdapter {
         return 50;
     }
 
-    static Logger log = LoggerFactory.getLogger(AbstractXmlAdapter.class.getName());
+    private final static Logger log = LoggerFactory.getLogger(AbstractXmlAdapter.class.getName());
 
     @Override
     public Element store(Object o, boolean shared) {

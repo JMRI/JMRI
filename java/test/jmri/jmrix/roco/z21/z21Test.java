@@ -41,6 +41,6 @@ public class z21Test extends TestCase {
         return suite;
     }
 
-    static Logger log = LoggerFactory.getLogger(z21Test.class.getName());
+    private final static Logger log = LoggerFactory.getLogger(z21Test.class.getName());
 
 }

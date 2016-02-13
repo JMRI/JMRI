@@ -131,6 +131,6 @@ public class LoadXmlThrottlesLayoutAction extends AbstractAction {
     }
 
     // initialize logging
-    static Logger log = LoggerFactory.getLogger(LoadXmlThrottlesLayoutAction.class.getName());
+    private final static Logger log = LoggerFactory.getLogger(LoadXmlThrottlesLayoutAction.class.getName());
 
 }

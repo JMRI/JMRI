@@ -62,5 +62,5 @@ public class ItemDialog extends JmriJFrame {
     }
 
     // initialize logging
-    static Logger log = LoggerFactory.getLogger(ItemDialog.class.getName());
+    private final static Logger log = LoggerFactory.getLogger(ItemDialog.class.getName());
 }

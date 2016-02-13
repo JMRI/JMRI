@@ -156,6 +156,6 @@ public class TrainSchedule {
         pcs.firePropertyChange(p, old, n);
     }
 
-    static Logger log = LoggerFactory.getLogger(TrainSchedule.class.getName());
+    private final static Logger log = LoggerFactory.getLogger(TrainSchedule.class.getName());
 
 }

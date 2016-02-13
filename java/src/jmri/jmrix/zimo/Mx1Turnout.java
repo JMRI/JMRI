@@ -68,7 +68,7 @@ public class Mx1Turnout extends AbstractTurnout /*implements Mx1TrafficListener*
     protected void turnoutPushbuttonLockout(boolean pushButtonLockout) {
     }
 
-    static Logger log = LoggerFactory.getLogger(Mx1Turnout.class.getName());
+    private final static Logger log = LoggerFactory.getLogger(Mx1Turnout.class.getName());
 
 }
 

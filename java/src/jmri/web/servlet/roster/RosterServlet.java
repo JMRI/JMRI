@@ -64,7 +64,7 @@ public class RosterServlet extends HttpServlet {
 
     private ObjectMapper mapper;
 
-    static Logger log = LoggerFactory.getLogger(RosterServlet.class.getName());
+    private final static Logger log = LoggerFactory.getLogger(RosterServlet.class.getName());
 
     @Override
     public void init() throws ServletException {
