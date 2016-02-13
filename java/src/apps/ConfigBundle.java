@@ -1,4 +1,4 @@
-// Bundle.java
+// ConfigBundle.java
 package apps;
 
 import edu.umd.cs.findbugs.annotations.CheckReturnValue;
@@ -13,7 +13,8 @@ import edu.umd.cs.findbugs.annotations.SuppressWarnings;
 @net.jcip.annotations.Immutable
 
 /**
- * Provides standard access for resource bundles in a package.
+ * Provides access for resource bundles in a package.
+ * This version however is a very special application of that and does not follow the use of Bundle.java
  *
  * Convention is to provide a subclass of this name in each package, working off
  * the local resource bundle name.
@@ -38,7 +39,7 @@ public class ConfigBundle extends apps.Bundle {
      * @param key Bundle key to be translated
      * @return Internationalized text
      */
-    static String getMessage(String key) {
+    public static String getMessage(String key) {
         return b.handleGetMessage(key);
     }
 
@@ -55,7 +56,7 @@ public class ConfigBundle extends apps.Bundle {
      * @param subs One or more objects to be inserted into the message
      * @return Internationalized text
      */
-    static String getMessage(String key, Object... subs) {
+    public static String getMessage(String key, Object... subs) {
         return b.handleGetMessage(key, subs);
     }
 
