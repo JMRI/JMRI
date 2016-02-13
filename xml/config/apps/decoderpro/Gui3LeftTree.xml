@@ -9,12 +9,15 @@
 <node>
   <name>My Roster</name>
   <name xml:lang="it">Il mio Roster</name>
+  <name xml:lang="de">Mein Lokpark</name>
   <node>
       <name>My Roster</name>
       <name xml:lang="it">Il mio Roster</name>
+      <name xml:lang="de">Mein Lokpark</name>
     <node>
         <name>All Entries</name>
         <name xml:lang="it">Tutte le Voci</name>
+        <name xml:lang="de">Alle Eintrage</name>
         <node>
             <name>SP 4554</name>
         </node>
@@ -34,6 +37,7 @@
     <node>
         <name>Club Locos</name>
         <name xml:lang="it">Loco del Club</name>
+        <name xml:lang="de">Klubloks</name>
         <node>
             <name>SP 4554</name>
         </node>
@@ -52,11 +56,13 @@
         <node>
             <name>New Entry</name>
             <name xml:lang="it">Nuova Voce</name>
+            <name xml:lang="de">Neuer Eintrag</name>
         </node>
     </node>
     <node>
         <name>Add Group</name>
         <name xml:lang="it">Aggiungi Gruppor</name>
+        <name xml:lang="de">Füge Lokparkgruppe zu</name>
     </node>
   </node>
 
@@ -64,9 +70,11 @@
   <node>
       <name>Throttles</name>
       <name xml:lang="it">Palmari</name>
+      <name xml:lang="de">Fahrregler</name>
     <node>
         <name>Throttle 1</name>
         <name xml:lang="it">Palmare 1</name>
+        <name xml:lang="de">Fahrregler 1</name>
     </node>
     <node>
         <name>UP 5768</name>
@@ -74,10 +82,12 @@
     <node>
         <name>New Throttle</name>
         <name xml:lang="it">Nuovo Palmare</name>
+        <name xml:lang="de">Neuer Fahrregler</name>
     </node>
     <node>
         <name>Consisting Tool</name>
         <name xml:lang="it">Strumento Multi-Trazione</name>
+        <name xml:lang="de">Mehrfachtraktionswerkzeug</name>
     </node>
   </node>
 </node>
