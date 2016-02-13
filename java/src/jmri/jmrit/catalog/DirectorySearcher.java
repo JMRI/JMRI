@@ -302,5 +302,5 @@ public class DirectorySearcher {
         cancelLooking();
     }
 
-    static Logger log = LoggerFactory.getLogger(DirectorySearcher.class.getName());
+    private final static Logger log = LoggerFactory.getLogger(DirectorySearcher.class.getName());
 }

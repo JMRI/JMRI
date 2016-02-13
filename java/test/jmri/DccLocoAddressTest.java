@@ -168,6 +168,6 @@ public class DccLocoAddressTest extends TestCase {
         return suite;
     }
 
-    static Logger log = LoggerFactory.getLogger(DccLocoAddressTest.class.getName());
+    private final static Logger log = LoggerFactory.getLogger(DccLocoAddressTest.class.getName());
 
 }

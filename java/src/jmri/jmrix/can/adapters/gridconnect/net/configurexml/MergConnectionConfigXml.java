@@ -39,6 +39,6 @@ public class MergConnectionConfigXml extends ConnectionConfigXml {
     }
 
     // initialize logging
-    static Logger log = LoggerFactory.getLogger(MergConnectionConfigXml.class.getName());
+    private final static Logger log = LoggerFactory.getLogger(MergConnectionConfigXml.class.getName());
 
 }

@@ -610,7 +610,7 @@ public class NceTrafficController extends AbstractMRTrafficController implements
         return adaptermemo.getSystemPrefix();
     }
 
-    static Logger log = LoggerFactory.getLogger(NceTrafficController.class.getName());
+    private final static Logger log = LoggerFactory.getLogger(NceTrafficController.class.getName());
 }
 
 

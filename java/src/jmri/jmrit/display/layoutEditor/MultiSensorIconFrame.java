@@ -215,5 +215,5 @@ public class MultiSensorIconFrame extends JmriJFrame {
     }
 
     // initialize logging
-    static Logger log = LoggerFactory.getLogger(MultiSensorIconFrame.class.getName());
+    private final static Logger log = LoggerFactory.getLogger(MultiSensorIconFrame.class.getName());
 }

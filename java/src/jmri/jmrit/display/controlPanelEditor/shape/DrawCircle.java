@@ -98,5 +98,5 @@ public class DrawCircle extends DrawFrame {
         setPositionableParams(pos);
     }
 
-    static Logger log = LoggerFactory.getLogger(DrawCircle.class.getName());
+    private final static Logger log = LoggerFactory.getLogger(DrawCircle.class.getName());
 }

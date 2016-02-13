@@ -407,5 +407,5 @@ public class RpsPositionIcon extends PositionableLabel implements MeasurementLis
     double sxScale, syScale;
     int sxOrigin, syOrigin;
 
-    static Logger log = LoggerFactory.getLogger(SensorIcon.class.getName());
+    private final static Logger log = LoggerFactory.getLogger(SensorIcon.class.getName());
 }

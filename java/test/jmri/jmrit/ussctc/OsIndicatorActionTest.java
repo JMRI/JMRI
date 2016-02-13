@@ -52,6 +52,6 @@ public class OsIndicatorActionTest extends jmri.util.SwingTestCase {
         apps.tests.Log4JFixture.tearDown();
     }
 
-    static Logger log = LoggerFactory.getLogger(OsIndicatorActionTest.class.getName());
+    private final static Logger log = LoggerFactory.getLogger(OsIndicatorActionTest.class.getName());
 
 }

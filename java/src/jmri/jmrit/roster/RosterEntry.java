@@ -1543,7 +1543,7 @@ public class RosterEntry extends ArbitraryBean implements RosterObject, BasicRos
     }
 
     // initialize logging
-    static Logger log = LoggerFactory.getLogger(RosterEntry.class.getName());
+    private final static Logger log = LoggerFactory.getLogger(RosterEntry.class.getName());
 
     @Override
     public String getDisplayName() {

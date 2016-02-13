@@ -33,7 +33,7 @@ public class JmriServerAction extends AbstractAction {
         f.setVisible(true);
 
     }
-    static Logger log = LoggerFactory.getLogger(JmriServerAction.class.getName());
+    private final static Logger log = LoggerFactory.getLogger(JmriServerAction.class.getName());
 }
 
 

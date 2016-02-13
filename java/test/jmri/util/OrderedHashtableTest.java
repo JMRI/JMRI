@@ -194,6 +194,6 @@ public class OrderedHashtableTest extends TestCase {
         }
     }
 
-    static Logger log = LoggerFactory.getLogger(OrderedHashtableTest.class.getName());
+    private final static Logger log = LoggerFactory.getLogger(OrderedHashtableTest.class.getName());
 
 }

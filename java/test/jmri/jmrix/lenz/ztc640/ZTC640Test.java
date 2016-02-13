@@ -34,6 +34,6 @@ public class ZTC640Test extends TestCase {
         return suite;
     }
 
-    static Logger log = LoggerFactory.getLogger(ZTC640Test.class.getName());
+    private final static Logger log = LoggerFactory.getLogger(ZTC640Test.class.getName());
 
 }

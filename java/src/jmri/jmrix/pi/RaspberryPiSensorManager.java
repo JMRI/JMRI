@@ -41,7 +41,7 @@ public class RaspberryPiSensorManager extends jmri.managers.AbstractSensorManage
         return new RaspberryPiSensor(systemName, userName);
     }
 
-    static Logger log = LoggerFactory.getLogger(RaspberryPiSensorManager.class.getName());
+    private final static Logger log = LoggerFactory.getLogger(RaspberryPiSensorManager.class.getName());
 
 }
 

@@ -80,5 +80,5 @@ public class RemoveObjectFromEcos implements EcosListener {
         // messages are ignored
     }
 
-    static Logger log = LoggerFactory.getLogger(RemoveObjectFromEcos.class.getName());
+    private final static Logger log = LoggerFactory.getLogger(RemoveObjectFromEcos.class.getName());
 }

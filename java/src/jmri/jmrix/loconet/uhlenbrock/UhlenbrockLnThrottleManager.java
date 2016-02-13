@@ -118,5 +118,5 @@ public class UhlenbrockLnThrottleManager extends LnThrottleManager implements Th
         super.cancelThrottleRequest(address, isLong, l);
     }
 
-    static Logger log = LoggerFactory.getLogger(UhlenbrockLnThrottleManager.class.getName());
+    private final static Logger log = LoggerFactory.getLogger(UhlenbrockLnThrottleManager.class.getName());
 }

@@ -12,7 +12,7 @@ import org.slf4j.LoggerFactory;
  */
 public class Transform {
 
-    static Logger log = LoggerFactory.getLogger(Transform.class.getName());
+    private final static Logger log = LoggerFactory.getLogger(Transform.class.getName());
 }
 
 /* @(#)Transform.java */

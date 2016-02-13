@@ -115,7 +115,7 @@ public class Reading {
         return rawData;
     }
 
-    final static Logger log = LoggerFactory.getLogger(Reading.class.getName());
+    private final static Logger log = LoggerFactory.getLogger(Reading.class.getName());
 
     final Object rawData;
 }

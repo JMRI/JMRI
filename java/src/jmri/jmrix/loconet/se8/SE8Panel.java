@@ -286,6 +286,6 @@ public class SE8Panel extends jmri.jmrix.loconet.AbstractBoardProgPanel {
     JCheckBox setdefault = new JCheckBox("Restore factory default, including address");  // opsw 20
     JCheckBox exercise = new JCheckBox("Show LED exercise pattern");  // opsw 21
 
-    static Logger log = LoggerFactory.getLogger(SE8Panel.class.getName());
+    private final static Logger log = LoggerFactory.getLogger(SE8Panel.class.getName());
 
 }

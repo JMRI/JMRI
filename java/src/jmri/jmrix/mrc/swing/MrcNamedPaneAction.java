@@ -55,7 +55,7 @@ public class MrcNamedPaneAction extends jmri.util.swing.JmriNamedPaneAction {
         return p;
     }
 
-    static Logger log = LoggerFactory.getLogger(MrcNamedPaneAction.class.getName());
+    private final static Logger log = LoggerFactory.getLogger(MrcNamedPaneAction.class.getName());
 }
 
 /* @(#)MrcNamedPaneAction.java */

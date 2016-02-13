@@ -966,6 +966,6 @@ public class Router extends TrainCommon {
         return NO;
     }
 
-    static Logger log = LoggerFactory.getLogger(Router.class.getName());
+    private final static Logger log = LoggerFactory.getLogger(Router.class.getName());
 
 }

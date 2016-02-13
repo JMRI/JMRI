@@ -143,7 +143,7 @@ public class XNetSensorManagerTest extends TestCase {
         return suite;
     }
 
-    static Logger log = LoggerFactory.getLogger(XNetSensorManagerTest.class.getName());
+    private final static Logger log = LoggerFactory.getLogger(XNetSensorManagerTest.class.getName());
 
     // The minimal setup for log4J
     protected void setUp() {

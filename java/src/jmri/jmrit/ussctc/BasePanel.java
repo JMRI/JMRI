@@ -81,6 +81,6 @@ public class BasePanel extends JPanel implements Constants {
         return true;
     }
 
-    static Logger log = LoggerFactory.getLogger(BasePanel.class.getName());
+    private final static Logger log = LoggerFactory.getLogger(BasePanel.class.getName());
 
 }

@@ -296,6 +296,6 @@ public class LZ100InternalFrame extends javax.swing.JInternalFrame implements XN
         super.dispose();
     }
 
-    static Logger log = LoggerFactory.getLogger(LZ100Frame.class.getName());
+    private final static Logger log = LoggerFactory.getLogger(LZ100Frame.class.getName());
 
 }

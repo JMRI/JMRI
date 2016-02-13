@@ -48,6 +48,6 @@ public class JMRIClientPowerManagerTest extends TestCase {
         apps.tests.Log4JFixture.tearDown();
     }
 
-    static Logger log = LoggerFactory.getLogger(JMRIClientPowerManagerTest.class.getName());
+    private final static Logger log = LoggerFactory.getLogger(JMRIClientPowerManagerTest.class.getName());
 
 }

@@ -1232,7 +1232,7 @@ public class AcelaNode extends AbstractNode {
         }
         timeout = 0;
     }
-    static Logger log = LoggerFactory.getLogger(AcelaNode.class.getName());
+    private final static Logger log = LoggerFactory.getLogger(AcelaNode.class.getName());
 }
 
 /* @(#)AcelaNode.java */

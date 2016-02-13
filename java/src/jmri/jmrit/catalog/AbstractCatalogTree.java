@@ -232,6 +232,6 @@ public abstract class AbstractCatalogTree extends DefaultTreeModel implements Ca
     public void vetoableChange(java.beans.PropertyChangeEvent evt) throws java.beans.PropertyVetoException {
     }
 
-    static Logger log = LoggerFactory.getLogger(AbstractCatalogTree.class.getName());
+    private final static Logger log = LoggerFactory.getLogger(AbstractCatalogTree.class.getName());
 
 }

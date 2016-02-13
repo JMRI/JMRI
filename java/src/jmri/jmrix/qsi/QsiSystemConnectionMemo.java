@@ -137,7 +137,7 @@ public class QsiSystemConnectionMemo extends jmri.jmrix.SystemConnectionMemo {
         super.dispose();
     }
 
-    static Logger log = LoggerFactory.getLogger(QsiSystemConnectionMemo.class.getName());
+    private final static Logger log = LoggerFactory.getLogger(QsiSystemConnectionMemo.class.getName());
 }
 
 

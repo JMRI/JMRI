@@ -280,5 +280,5 @@ public abstract class TurnoutOperation implements Comparable<Object> {
         return (mode & feedbackModes) != 0;
     }
 
-    static Logger log = LoggerFactory.getLogger(TurnoutOperation.class.getName());
+    private final static Logger log = LoggerFactory.getLogger(TurnoutOperation.class.getName());
 }

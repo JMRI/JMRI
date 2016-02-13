@@ -302,7 +302,7 @@ public class EcosTrafficController extends AbstractMRTrafficController implement
         }
         return adaptermemo.getSystemPrefix();
     }
-    static Logger log = LoggerFactory.getLogger(EcosTrafficController.class.getName());
+    private final static Logger log = LoggerFactory.getLogger(EcosTrafficController.class.getName());
 }
 
 /* @(#)EcosTrafficController.java */

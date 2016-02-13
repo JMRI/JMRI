@@ -96,6 +96,6 @@ public class EditorFilePane extends javax.swing.JPanel {
         file = null;  // not for GC, this flags need to reinit
     }
 
-    static Logger log = LoggerFactory.getLogger(EditorFilePane.class.getName());
+    private final static Logger log = LoggerFactory.getLogger(EditorFilePane.class.getName());
 
 }

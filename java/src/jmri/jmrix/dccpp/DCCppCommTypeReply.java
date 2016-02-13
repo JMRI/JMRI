@@ -6,6 +6,8 @@
 package jmri.jmrix.dccpp;
 
 import java.util.regex.Matcher;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 /**
  *
@@ -15,7 +17,8 @@ public class DCCppCommTypeReply extends DCCppReply {
     
     private String comm_type;
     private String port_name;
-    
+    private final static Logger log = LoggerFactory.getLogger(DCCppCommTypeReply.class);
+
     public DCCppCommTypeReply(char o, String regex) {
         super(o, regex);
     }

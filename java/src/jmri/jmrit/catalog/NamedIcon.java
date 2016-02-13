@@ -437,5 +437,5 @@ public class NamedIcon extends ImageIcon {
         transformImage(w, h, _transformF, null);
     }
 
-    static Logger log = LoggerFactory.getLogger(NamedIcon.class.getName());
+    private final static Logger log = LoggerFactory.getLogger(NamedIcon.class.getName());
 }

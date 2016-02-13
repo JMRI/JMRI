@@ -64,7 +64,7 @@ public class AbstractSignalHeadManager extends AbstractManager
         return Bundle.getMessage("BeanNameSignalHead");
     }
 
-    static Logger log = LoggerFactory.getLogger(AbstractSignalHeadManager.class.getName());
+    private final static Logger log = LoggerFactory.getLogger(AbstractSignalHeadManager.class.getName());
 }
 
 /* @(#)AbstractSignalHeadManager.java */

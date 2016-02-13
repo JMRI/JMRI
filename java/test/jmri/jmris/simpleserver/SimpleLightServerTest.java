@@ -119,6 +119,6 @@ public class SimpleLightServerTest extends TestCase {
         apps.tests.Log4JFixture.tearDown();
     }
 
-    static Logger log = LoggerFactory.getLogger(SimpleLightServerTest.class.getName());
+    private final static Logger log = LoggerFactory.getLogger(SimpleLightServerTest.class.getName());
 
 }

@@ -36,6 +36,6 @@ public class InitiateSoundTest extends TestCase {
         return suite;
     }
 
-    static Logger log = LoggerFactory.getLogger(InitiateSoundTest.class.getName());
+    private final static Logger log = LoggerFactory.getLogger(InitiateSoundTest.class.getName());
 
 }

@@ -44,6 +44,6 @@ public class JmriSRCPServerTest extends TestCase {
         return suite;
     }
 
-    static Logger log = LoggerFactory.getLogger(JmriSRCPServerTest.class.getName());
+    private final static Logger log = LoggerFactory.getLogger(JmriSRCPServerTest.class.getName());
 
 }

@@ -20,6 +20,6 @@ public class MergNetworkDriverAdapter extends NetworkDriverAdapter {
         setManufacturer(jmri.jmrix.DCCManufacturerList.MERG);
     }
 
-    static Logger log = LoggerFactory.getLogger(MergNetworkDriverAdapter.class.getName());
+    private final static Logger log = LoggerFactory.getLogger(MergNetworkDriverAdapter.class.getName());
 
 }

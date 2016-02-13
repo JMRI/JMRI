@@ -174,5 +174,5 @@ public class ProgServiceModeComboBox extends ProgModeSelector implements Propert
     // no longer needed, disconnect if still connected
     public void dispose() {
     }
-    static Logger log = LoggerFactory.getLogger(ProgServiceModeComboBox.class.getName());
+    private final static Logger log = LoggerFactory.getLogger(ProgServiceModeComboBox.class.getName());
 }

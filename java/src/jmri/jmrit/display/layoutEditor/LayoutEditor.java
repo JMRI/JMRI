@@ -9883,5 +9883,5 @@ public class LayoutEditor extends jmri.jmrit.display.panelEditor.PanelEditor imp
     }
 
     // initialize logging
-    static Logger log = LoggerFactory.getLogger(LayoutEditor.class.getName());
+    private final static Logger log = LoggerFactory.getLogger(LayoutEditor.class.getName());
 }

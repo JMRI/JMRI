@@ -264,5 +264,5 @@ public class SectionManagerXml extends jmri.managers.configurexml.AbstractNamedB
         return InstanceManager.sectionManagerInstance().getXMLOrder();
     }
 
-    static Logger log = LoggerFactory.getLogger(SectionManagerXml.class.getName());
+    private final static Logger log = LoggerFactory.getLogger(SectionManagerXml.class.getName());
 }

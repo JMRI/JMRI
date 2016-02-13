@@ -118,7 +118,7 @@ public class CanSystemConnectionMemo extends jmri.jmrix.SystemConnectionMemo {
 
     }
     // initialize logging
-    static Logger log = LoggerFactory.getLogger(CanSystemConnectionMemo.class.getName());
+    private final static Logger log = LoggerFactory.getLogger(CanSystemConnectionMemo.class.getName());
 }
 
 

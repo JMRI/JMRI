@@ -207,6 +207,6 @@ public class EditorPane extends javax.swing.JPanel implements TreeSelectionListe
     void dispose() {
     }
 
-    static Logger log = LoggerFactory.getLogger(EditorPane.class.getName());
+    private final static Logger log = LoggerFactory.getLogger(EditorPane.class.getName());
 
 }

@@ -63,6 +63,6 @@ public class EasyDccTurnoutTest extends AbstractTurnoutTest {
         apps.tests.Log4JFixture.tearDown();
     }
 
-    static Logger log = LoggerFactory.getLogger(EasyDccTurnoutTest.class.getName());
+    private final static Logger log = LoggerFactory.getLogger(EasyDccTurnoutTest.class.getName());
 
 }

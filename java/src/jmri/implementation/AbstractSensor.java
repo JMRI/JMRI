@@ -3,6 +3,8 @@ package jmri.implementation;
 
 import jmri.Reporter;
 import jmri.Sensor;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 /**
  * Abstract class providing the basic logic of the Sensor interface
@@ -18,6 +20,7 @@ public abstract class AbstractSensor extends AbstractNamedBean implements Sensor
      *
      */
     private static final long serialVersionUID = 6188852412145851127L;
+    private final static Logger log = LoggerFactory.getLogger(AbstractSensor.class);
 
     // ctor takes a system-name string for initialization
     public AbstractSensor(String systemName) {

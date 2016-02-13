@@ -90,6 +90,6 @@ public class SimpleServerFrame extends jmri.util.JmriJFrame {
         SimpleServer.instance().stop();
     }
 
-    static Logger log = LoggerFactory.getLogger(SimpleServerFrame.class.getName());
+    private final static Logger log = LoggerFactory.getLogger(SimpleServerFrame.class.getName());
 
 }

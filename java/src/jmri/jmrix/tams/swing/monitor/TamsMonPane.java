@@ -127,7 +127,7 @@ public class TamsMonPane extends jmri.jmrix.AbstractMonPane implements TamsListe
         }
     }
 
-    static Logger log = LoggerFactory.getLogger(TamsMonPane.class.getName());
+    private final static Logger log = LoggerFactory.getLogger(TamsMonPane.class.getName());
 
 }
 

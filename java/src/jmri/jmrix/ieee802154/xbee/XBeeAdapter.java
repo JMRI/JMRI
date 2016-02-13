@@ -238,6 +238,6 @@ public class XBeeAdapter extends jmri.jmrix.ieee802154.serialdriver.SerialDriver
         activeSerialPort.close();
     }
 
-    static Logger log = LoggerFactory.getLogger(XBeeAdapter.class.getName());
+    private final static Logger log = LoggerFactory.getLogger(XBeeAdapter.class.getName());
 
 }

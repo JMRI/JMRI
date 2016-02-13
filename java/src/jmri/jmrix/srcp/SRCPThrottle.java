@@ -211,6 +211,6 @@ public class SRCPThrottle extends AbstractThrottle {
     }
 
     // initialize logging
-    static Logger log = LoggerFactory.getLogger(SRCPThrottle.class.getName());
+    private final static Logger log = LoggerFactory.getLogger(SRCPThrottle.class.getName());
 
 }

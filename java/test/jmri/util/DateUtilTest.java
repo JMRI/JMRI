@@ -81,6 +81,6 @@ public class DateUtilTest extends TestCase {
         super.tearDown();
     }
 
-    static Logger log = LoggerFactory.getLogger(DateUtilTest.class.getName());
+    private final static Logger log = LoggerFactory.getLogger(DateUtilTest.class.getName());
 
 }

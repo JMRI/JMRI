@@ -70,8 +70,8 @@ public interface SerialPortAdapter extends PortAdapter {
     public void configureOption2(String value);
 
     /**
-     * Set the third port option. Only to be used after construction, but
-     * before the openPort call
+     * Set the third port option. Only to be used after construction, but before
+     * the openPort call
      */
     public void configureOption3(String value);
 
@@ -86,9 +86,7 @@ public interface SerialPortAdapter extends PortAdapter {
      *
      * @see jmri.jmrix.AbstractSerialPortController
      */
-    public String handlePortBusy(gnu.io.PortInUseException p,
-            String portName,
-            Logger log);
+    public String handlePortBusy(gnu.io.PortInUseException p, String portName, Logger log);
 
     /**
      * Return the System Manufacturers Name

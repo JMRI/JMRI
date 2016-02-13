@@ -102,7 +102,7 @@ public class OlcbTurnoutManager extends AbstractTurnoutManager {
         return range;
     }
 
-    static Logger log = LoggerFactory.getLogger(OlcbTurnoutManager.class.getName());
+    private final static Logger log = LoggerFactory.getLogger(OlcbTurnoutManager.class.getName());
 }
 
 /* @(#)OlcbTurnoutManager.java */

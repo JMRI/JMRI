@@ -134,6 +134,6 @@ public class NcePowerManagerTest extends AbstractPowerManagerTest {
         return suite;
     }
 
-    static Logger log = LoggerFactory.getLogger(NcePowerManagerTest.class.getName());
+    private final static Logger log = LoggerFactory.getLogger(NcePowerManagerTest.class.getName());
 
 }

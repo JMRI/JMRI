@@ -116,7 +116,7 @@ public class AddNewHardwareDevicePanel extends jmri.util.swing.JmriPanel {
     JLabel userNameLabel = new JLabel(Bundle.getMessage("LabelUserName"));
     JLabel finishLabel = new JLabel("Number to Add");
 
-    static final Logger log = LoggerFactory.getLogger(AddNewHardwareDevicePanel.class.getName());
+    private final static Logger log = LoggerFactory.getLogger(AddNewHardwareDevicePanel.class.getName());
 }
 
 

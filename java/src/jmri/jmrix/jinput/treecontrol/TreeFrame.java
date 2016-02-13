@@ -41,7 +41,7 @@ public class TreeFrame extends JmriJFrame {
         pack();
     }
 
-    static Logger log = LoggerFactory.getLogger(TreeFrame.class.getName());
+    private final static Logger log = LoggerFactory.getLogger(TreeFrame.class.getName());
 
 }
 

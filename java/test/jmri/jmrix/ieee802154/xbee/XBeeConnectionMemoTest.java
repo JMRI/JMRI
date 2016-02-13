@@ -49,6 +49,6 @@ public class XBeeConnectionMemoTest extends TestCase {
         apps.tests.Log4JFixture.tearDown();
     }
 
-    static Logger log = LoggerFactory.getLogger(XBeeConnectionMemoTest.class.getName());
+    private final static Logger log = LoggerFactory.getLogger(XBeeConnectionMemoTest.class.getName());
 
 }

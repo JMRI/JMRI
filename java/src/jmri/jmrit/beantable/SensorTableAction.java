@@ -382,7 +382,7 @@ public class SensorTableAction extends AbstractTableAction {
         return Bundle.getMessage("TitleSensorTable");
     }
 
-    static final Logger log = LoggerFactory.getLogger(SensorTableAction.class.getName());
+    private final static Logger log = LoggerFactory.getLogger(SensorTableAction.class.getName());
 }
 
 

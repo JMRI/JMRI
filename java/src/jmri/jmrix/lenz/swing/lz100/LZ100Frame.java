@@ -65,6 +65,6 @@ public class LZ100Frame extends jmri.util.JmriJFrame {
         super.dispose();
     }
 
-    static Logger log = LoggerFactory.getLogger(LZ100Frame.class.getName());
+    private final static Logger log = LoggerFactory.getLogger(LZ100Frame.class.getName());
 
 }

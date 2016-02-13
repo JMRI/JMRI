@@ -415,5 +415,5 @@ public class VSDManagerFrame extends JmriJFrame {
     }
 
     //public List<JMenu> getMenus() { return menuList; }
-    static Logger log = LoggerFactory.getLogger(VSDManagerFrame.class.getName());
+    private final static Logger log = LoggerFactory.getLogger(VSDManagerFrame.class.getName());
 }

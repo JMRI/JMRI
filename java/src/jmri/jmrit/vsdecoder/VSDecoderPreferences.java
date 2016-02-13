@@ -328,5 +328,5 @@ public class VSDecoderPreferences {
         }
     }
 
-    static Logger log = LoggerFactory.getLogger(VSDecoderPreferences.class.getName());
+    private final static Logger log = LoggerFactory.getLogger(VSDecoderPreferences.class.getName());
 }

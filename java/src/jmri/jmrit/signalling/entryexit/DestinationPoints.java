@@ -1157,6 +1157,6 @@ public class DestinationPoints extends jmri.implementation.AbstractNamedBean {
 
     }
 
-    static Logger log = LoggerFactory.getLogger(DestinationPoints.class.getName());
+    private final static Logger log = LoggerFactory.getLogger(DestinationPoints.class.getName());
 
 }

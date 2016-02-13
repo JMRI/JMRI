@@ -26,7 +26,7 @@ public class SprogUpdateAction extends AbstractAction {
     public void actionPerformed(ActionEvent e) {
     }
 
-    static Logger log = LoggerFactory.getLogger(SprogUpdateAction.class.getName());
+    private final static Logger log = LoggerFactory.getLogger(SprogUpdateAction.class.getName());
 
 }
 

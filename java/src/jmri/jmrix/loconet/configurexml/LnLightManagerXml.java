@@ -34,5 +34,5 @@ public class LnLightManagerXml extends jmri.managers.configurexml.AbstractLightM
         return loadLights(shared);
     }
 
-    static Logger log = LoggerFactory.getLogger(LnLightManagerXml.class.getName());
+    private final static Logger log = LoggerFactory.getLogger(LnLightManagerXml.class.getName());
 }

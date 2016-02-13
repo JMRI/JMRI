@@ -35,6 +35,6 @@ public class ResetEngineMovesAction extends AbstractAction {
         }
     }
 
-    static Logger log = LoggerFactory
+    private final static Logger log = LoggerFactory
             .getLogger(ResetEngineMovesAction.class.getName());
 }

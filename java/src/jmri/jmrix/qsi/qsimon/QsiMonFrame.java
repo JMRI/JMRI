@@ -88,6 +88,6 @@ public class QsiMonFrame extends jmri.jmrix.AbstractMonFrame implements QsiListe
         nextLine(text + "\n", l.toString());
     }
 
-    static Logger log = LoggerFactory.getLogger(QsiMonFrame.class.getName());
+    private final static Logger log = LoggerFactory.getLogger(QsiMonFrame.class.getName());
 
 }

@@ -213,7 +213,7 @@ public class EasyDccProgrammer extends AbstractProgrammer implements EasyDccList
         return _controller;
     }
 
-    static Logger log = LoggerFactory.getLogger(EasyDccProgrammer.class.getName());
+    private final static Logger log = LoggerFactory.getLogger(EasyDccProgrammer.class.getName());
 
 }
 

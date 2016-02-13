@@ -64,5 +64,5 @@ public class ThrottleSetting {
         return "ThrottleSetting: wait " + _time + "ms then set " + _command + " " + _value + " at block " + _blockName;
     }
 
-    static Logger log = LoggerFactory.getLogger(ThrottleSetting.class.getName());
+    private final static Logger log = LoggerFactory.getLogger(ThrottleSetting.class.getName());
 }

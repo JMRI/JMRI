@@ -39,7 +39,7 @@ public class AcelaSensor extends AbstractSensor {
     public void requestUpdateFromLayout() {
     }
 
-    static Logger log = LoggerFactory.getLogger(AcelaSensor.class.getName());
+    private final static Logger log = LoggerFactory.getLogger(AcelaSensor.class.getName());
 }
 
 /* @(#)AcelaSensor.java */

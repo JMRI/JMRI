@@ -107,6 +107,6 @@ public class NceConsistRosterMenu extends JMenu {
     }
 
     // initialize logging
-    static Logger log = LoggerFactory.getLogger(NceConsistRosterMenu.class.getName());
+    private final static Logger log = LoggerFactory.getLogger(NceConsistRosterMenu.class.getName());
 
 }

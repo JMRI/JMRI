@@ -221,7 +221,7 @@ public class Mx1SystemConnectionMemo extends jmri.jmrix.SystemConnectionMemo {
         super.dispose();
     }
 
-    static Logger log = LoggerFactory.getLogger(Mx1SystemConnectionMemo.class.getName());
+    private final static Logger log = LoggerFactory.getLogger(Mx1SystemConnectionMemo.class.getName());
 }
 
 

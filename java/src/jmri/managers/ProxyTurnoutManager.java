@@ -273,7 +273,7 @@ public class ProxyTurnoutManager extends AbstractProxyManager implements Turnout
     }
 
     // initialize logging
-    static Logger log = LoggerFactory.getLogger(ProxyTurnoutManager.class.getName());
+    private final static Logger log = LoggerFactory.getLogger(ProxyTurnoutManager.class.getName());
 }
 
 /* @(#)ProxyTurnoutManager.java */

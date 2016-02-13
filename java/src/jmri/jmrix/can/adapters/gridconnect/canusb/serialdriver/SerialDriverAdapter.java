@@ -32,6 +32,6 @@ public class SerialDriverAdapter extends GcSerialDriverAdapter implements jmri.j
         return new int[]{57600, 115200, 230400, 250000, 288000, 333333, 460800};
     }
 
-    static Logger log = LoggerFactory.getLogger(SerialDriverAdapter.class.getName());
+    private final static Logger log = LoggerFactory.getLogger(SerialDriverAdapter.class.getName());
 
 }

@@ -59,6 +59,6 @@ public class IEEE802154MonFrame extends jmri.jmrix.AbstractMonFrame implements I
         _memo.getTrafficController().addIEEE802154Listener(this);
     }
 
-    static Logger log = LoggerFactory.getLogger(IEEE802154MonFrame.class.getName());
+    private final static Logger log = LoggerFactory.getLogger(IEEE802154MonFrame.class.getName());
 
 }

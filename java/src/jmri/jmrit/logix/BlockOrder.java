@@ -183,5 +183,5 @@ public class BlockOrder {
                 + "\" with Portals \"" + _entryName + "\" and \"" + _exitName + "\"");
     }
 
-    static Logger log = LoggerFactory.getLogger(BlockOrder.class.getName());
+    private final static Logger log = LoggerFactory.getLogger(BlockOrder.class.getName());
 }

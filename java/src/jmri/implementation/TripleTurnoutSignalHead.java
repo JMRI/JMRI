@@ -119,7 +119,7 @@ public class TripleTurnoutSignalHead extends DoubleTurnoutSignalHead {
         return false;
     }
 
-    static Logger log = LoggerFactory.getLogger(TripleTurnoutSignalHead.class.getName());
+    private final static Logger log = LoggerFactory.getLogger(TripleTurnoutSignalHead.class.getName());
 }
 
 /* @(#)TripleTurnoutSignalHead.java */

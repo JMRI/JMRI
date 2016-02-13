@@ -34,6 +34,6 @@ public class SdfEditorTest extends TestCase {
         return suite;
     }
 
-    static Logger log = LoggerFactory.getLogger(SdfEditorTest.class.getName());
+    private final static Logger log = LoggerFactory.getLogger(SdfEditorTest.class.getName());
 
 }

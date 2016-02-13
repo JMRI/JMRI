@@ -30,7 +30,7 @@ public class JsonServerPreferences extends Bean {
     // as loaded prefences
     private int asLoadedHeartbeatInterval = 15000;
     private int asLoadedPort = DEFAULT_PORT;
-    private static Logger log = LoggerFactory.getLogger(JsonServerPreferences.class);
+    private final static Logger log = LoggerFactory.getLogger(JsonServerPreferences.class);
 
     public static JsonServerPreferences getDefault() {
         if (InstanceManager.getDefault(JsonServerPreferences.class) == null) {

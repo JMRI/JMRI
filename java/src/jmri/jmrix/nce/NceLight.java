@@ -101,7 +101,7 @@ public class NceLight extends AbstractLight {
 
     }
 
-    static Logger log = LoggerFactory.getLogger(NceLight.class.getName());
+    private final static Logger log = LoggerFactory.getLogger(NceLight.class.getName());
 }
 
 /* @(#)NceLight.java */

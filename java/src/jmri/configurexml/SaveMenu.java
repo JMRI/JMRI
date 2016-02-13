@@ -38,5 +38,5 @@ public class SaveMenu extends JMenu {
 
     }
 
-    static Logger log = LoggerFactory.getLogger(SaveMenu.class.getName());
+    private final static Logger log = LoggerFactory.getLogger(SaveMenu.class.getName());
 }

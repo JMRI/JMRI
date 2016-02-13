@@ -151,6 +151,6 @@ public class RouteCopyFrame extends OperationsFrame {
         super.dispose();
     }
 
-    static Logger log = LoggerFactory.getLogger(RouteCopyFrame.class
+    private final static Logger log = LoggerFactory.getLogger(RouteCopyFrame.class
             .getName());
 }

@@ -74,7 +74,7 @@ public class PrintSavedTrainManifestAction extends AbstractAction {
         return file;
     }
     
-    static Logger log = LoggerFactory.getLogger(PrintSavedTrainManifestAction.class.getName());
+    private final static Logger log = LoggerFactory.getLogger(PrintSavedTrainManifestAction.class.getName());
     
     private static class FileFilter extends javax.swing.filechooser.FileFilter {
         public boolean accept(File f) {

@@ -615,6 +615,6 @@ public class CarManager extends RollingStockManager {
         super.firePropertyChange(p, old, n);
     }
 
-    static Logger log = LoggerFactory.getLogger(CarManager.class.getName());
+    private final static Logger log = LoggerFactory.getLogger(CarManager.class.getName());
 
 }

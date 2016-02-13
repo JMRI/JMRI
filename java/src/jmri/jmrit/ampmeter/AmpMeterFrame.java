@@ -226,7 +226,7 @@ public class AmpMeterFrame extends JmriJFrame implements java.beans.PropertyChan
         }
     }
 
-    static Logger log = LoggerFactory.getLogger(AmpMeterFrame.class.getName());
+    private final static Logger log = LoggerFactory.getLogger(AmpMeterFrame.class.getName());
 
 
 }

@@ -72,5 +72,5 @@ public class EcosMenu extends JMenu {
         String load;
     }
 
-    static Logger log = LoggerFactory.getLogger(EcosMenu.class.getName());
+    private final static Logger log = LoggerFactory.getLogger(EcosMenu.class.getName());
 }

@@ -362,6 +362,6 @@ public class WarrantManagerXml //extends XmlFile
         return InstanceManager.getDefault(WarrantManager.class).getXMLOrder();
     }
     
-    static Logger log = LoggerFactory.getLogger(WarrantManagerXml.class.getName());
+    private final static Logger log = LoggerFactory.getLogger(WarrantManagerXml.class.getName());
 }
 

@@ -1236,7 +1236,7 @@ public class AutoAllocate {
         return false;
     }
 
-    static Logger log = LoggerFactory.getLogger(AutoAllocate.class.getName());
+    private final static Logger log = LoggerFactory.getLogger(AutoAllocate.class.getName());
 }
 
 /* @(#)AutoAllocate.java */

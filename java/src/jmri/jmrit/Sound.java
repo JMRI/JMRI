@@ -332,5 +332,5 @@ public class Sound {
         }
     }
 
-    static Logger log = LoggerFactory.getLogger(Sound.class.getName());
+    private final static Logger log = LoggerFactory.getLogger(Sound.class.getName());
 }

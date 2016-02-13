@@ -224,7 +224,7 @@ public class EcosSystemConnectionMemo extends jmri.jmrix.SystemConnectionMemo {
         super.dispose();
     }
 
-    static Logger log = LoggerFactory.getLogger(EcosSystemConnectionMemo.class.getName());
+    private final static Logger log = LoggerFactory.getLogger(EcosSystemConnectionMemo.class.getName());
 }
 
 

@@ -275,6 +275,6 @@ public class LoaderPane extends jmri.jmrix.loconet.swing.LnPanel {
         engine = null;  // not for GC, this flags need to reinit
     }
 
-    static Logger log = LoggerFactory.getLogger(LoaderPane.class.getName());
+    private final static Logger log = LoggerFactory.getLogger(LoaderPane.class.getName());
 
 }

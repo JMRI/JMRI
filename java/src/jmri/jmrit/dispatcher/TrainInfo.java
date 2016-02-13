@@ -299,7 +299,7 @@ public class TrainInfo {
         return maxTrainLength;
     }
 
-    static Logger log = LoggerFactory.getLogger(TrainInfo.class.getName());
+    private final static Logger log = LoggerFactory.getLogger(TrainInfo.class.getName());
 }
 
 /* @(#)TrainInfo.java */

@@ -780,5 +780,5 @@ public class OBlockTableModel extends jmri.jmrit.beantable.BeanTableDataModel {
         }
     }
 
-    static Logger log = LoggerFactory.getLogger(OBlockTableModel.class.getName());
+    private final static Logger log = LoggerFactory.getLogger(OBlockTableModel.class.getName());
 }

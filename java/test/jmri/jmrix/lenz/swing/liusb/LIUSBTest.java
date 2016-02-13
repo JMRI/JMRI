@@ -33,6 +33,6 @@ public class LIUSBTest extends TestCase {
         return suite;
     }
 
-    static Logger log = LoggerFactory.getLogger(LIUSBTest.class.getName());
+    private final static Logger log = LoggerFactory.getLogger(LIUSBTest.class.getName());
 
 }

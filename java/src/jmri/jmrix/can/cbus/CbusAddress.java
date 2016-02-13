@@ -271,7 +271,7 @@ public class CbusAddress {
         return retval;
     }
 
-    static Logger log = LoggerFactory.getLogger(CbusAddress.class.getName());
+    private final static Logger log = LoggerFactory.getLogger(CbusAddress.class.getName());
 
 }
 

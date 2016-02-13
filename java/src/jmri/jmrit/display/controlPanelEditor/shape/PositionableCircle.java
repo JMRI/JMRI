@@ -83,5 +83,5 @@ public class PositionableCircle extends PositionableShape {
         return true;
     }
 
-    static Logger log = LoggerFactory.getLogger(PositionableCircle.class.getName());
+    private final static Logger log = LoggerFactory.getLogger(PositionableCircle.class.getName());
 }

@@ -162,5 +162,5 @@ public class BeanTableFrame extends jmri.util.JmriJFrame {
         super.dispose();
     }
 
-    static Logger log = LoggerFactory.getLogger(BeanTableFrame.class.getName());
+    private final static Logger log = LoggerFactory.getLogger(BeanTableFrame.class.getName());
 }

@@ -29,6 +29,6 @@ class QsiInterfaceScaffold implements QsiListener {
     QsiReply rcvdReply;
     QsiMessage rcvdMsg;
 
-    static Logger log = LoggerFactory.getLogger(QsiInterfaceScaffold.class.getName());
+    private final static Logger log = LoggerFactory.getLogger(QsiInterfaceScaffold.class.getName());
 
 }

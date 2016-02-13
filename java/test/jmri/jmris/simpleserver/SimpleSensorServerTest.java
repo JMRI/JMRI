@@ -124,6 +124,6 @@ public class SimpleSensorServerTest extends TestCase {
     }
 
 
-    static Logger log = LoggerFactory.getLogger(SimpleSensorServerTest.class.getName());
+    private final static Logger log = LoggerFactory.getLogger(SimpleSensorServerTest.class.getName());
 
 }

@@ -134,7 +134,7 @@ public class OBlockManager extends AbstractManager
         return Bundle.getMessage("BeanNameOBlock");
     }
 
-    static Logger log = LoggerFactory.getLogger(OBlockManager.class.getName());
+    private final static Logger log = LoggerFactory.getLogger(OBlockManager.class.getName());
 }
 
 /* @(#)OBlockManager.java */

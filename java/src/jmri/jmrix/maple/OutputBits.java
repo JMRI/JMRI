@@ -157,7 +157,7 @@ public class OutputBits {
     }
     static OutputBits mInstance = null; // package access for tests
 
-    static Logger log = LoggerFactory.getLogger(OutputBits.class.getName());
+    private final static Logger log = LoggerFactory.getLogger(OutputBits.class.getName());
 }
 
 /* @(#)OutputBits.java */

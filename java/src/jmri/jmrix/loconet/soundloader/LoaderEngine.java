@@ -370,6 +370,6 @@ public class LoaderEngine {
     public void dispose() {
     }
 
-    static Logger log = LoggerFactory.getLogger(LoaderEngine.class.getName());
+    private final static Logger log = LoggerFactory.getLogger(LoaderEngine.class.getName());
 
 }
