@@ -534,7 +534,7 @@ public final class SystemConsole extends JTextArea {
      */
     private void defineSchemes() {
         schemes = new ArrayList<>();
-        schemes.add(new Scheme(rbc.getString("ConsoleSchemeGreenOnBlack","de"), Color.GREEN, Color.BLACK));
+        schemes.add(new Scheme(rbc.getString("ConsoleSchemeGreenOnBlack"), Color.GREEN, Color.BLACK));
         schemes.add(new Scheme(rbc.getString("ConsoleSchemeOrangeOnBlack"), Color.ORANGE, Color.BLACK));
         schemes.add(new Scheme(rbc.getString("ConsoleSchemeWhiteOnBlack"), Color.WHITE, Color.BLACK));
         schemes.add(new Scheme(rbc.getString("ConsoleSchemeBlackOnWhite"), Color.BLACK, Color.WHITE));
