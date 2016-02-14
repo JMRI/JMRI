@@ -1,6 +1,5 @@
 package jmri.jmrit.logix;
 
-import java.util.ArrayList;
 import jmri.DccThrottle;
 import jmri.InstanceManager;
 import jmri.NamedBean;

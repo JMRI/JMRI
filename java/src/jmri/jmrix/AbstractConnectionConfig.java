@@ -13,8 +13,6 @@ import javax.swing.JPanel;
 import javax.swing.JTextField;
 import jmri.InstanceManager;
 import jmri.UserPreferencesManager;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 
 /**
  * Abstract base class for common implementation of the ConnectionConfig
@@ -228,7 +226,5 @@ abstract public class AbstractConnectionConfig implements ConnectionConfig {
             ccm.remove(this);
         }
     }
-
-    private final static Logger log = LoggerFactory.getLogger(AbstractConnectionConfig.class);
 
 }

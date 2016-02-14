@@ -20,9 +20,7 @@ package jmri.jmrix.dccpp.swing;
 
 import java.awt.Frame;
 import java.awt.event.ActionEvent;
-import java.util.HashMap;
 import javax.swing.AbstractAction;
-import jmri.jmrix.dccpp.DCCppSensor;
 import jmri.jmrix.dccpp.DCCppSensorManager; // Need this?
 import jmri.jmrix.dccpp.DCCppTurnoutManager;
 import jmri.jmrix.dccpp.DCCppSystemConnectionMemo;

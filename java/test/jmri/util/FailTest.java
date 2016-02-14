@@ -1,7 +1,6 @@
 // FailTest.java
 package jmri.util;
 
-import java.util.Calendar;
 import junit.framework.Assert;
 import junit.framework.Test;
 import junit.framework.TestCase;

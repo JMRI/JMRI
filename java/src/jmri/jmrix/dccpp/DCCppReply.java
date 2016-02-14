@@ -141,7 +141,6 @@ public class DCCppReply extends jmri.jmrix.AbstractMRReply {
      */
     public static DCCppReply parseDCCppReply(String s) {
         
-        Matcher m;
         log.debug("Parse charAt(0): {} ({})", s.charAt(0), Character.toString(s.charAt(0)));
         DCCppReply r = new DCCppReply(s.charAt(0), null);
         switch(s.charAt(0)) {

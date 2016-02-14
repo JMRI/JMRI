@@ -3,7 +3,6 @@ package jmri.util.exceptionhandler;
 
 import jmri.util.JUnitAppender;
 import jmri.util.SwingTestCase;
-import junit.framework.Assert;
 import junit.framework.Test;
 import junit.framework.TestSuite;
 import org.slf4j.Logger;
