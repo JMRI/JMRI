@@ -42,6 +42,7 @@ public class PackageTest extends TestCase {
             suite.addTest(jmri.jmrit.display.RpsPositionIconTest.suite());
             suite.addTest(jmri.jmrit.display.SensorIconWindowTest.suite());
             suite.addTest(jmri.jmrit.display.SignalMastIconTest.suite());
+            suite.addTest(jmri.jmrit.display.SignalSystemTest.suite());
             suite.addTest(jmri.jmrit.display.TurnoutIconWindowTest.suite());
             suite.addTest(jmri.jmrit.display.TurnoutIconTest.suite());
             suite.addTest(jmri.jmrit.display.IconEditorWindowTest.suite());
