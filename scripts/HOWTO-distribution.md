@@ -110,6 +110,7 @@ In that same directory, also remake the index and toc web pages by doing invokin
 Run the program and make sure help works.
 
         git commit -m"JavaHelp indexing update" .
+        cd ../..
 
 ================================================================================
 ## General Maintenance Items
@@ -122,12 +123,6 @@ We roll some general code maintenance items into the release process.  They can 
 
 It might be necessary to use a Hex editor to remove the erroneous extra Byte-Order-Marks - a valid UTF-8 file should only have either one 3-byte BOM (EF BB BF) or no BOM at all.
 
-- Check for wrong line ends. On MacOS X or Linux, do:
-
-        find xml jython java/test java/src web -type f -exec ./scripts/checkCR.sh {} \; -print
-    
-Then see #426
-
 - Run "ant alltest"; make sure they all pass; fix problems and commit back
 
 - Run "ant decoderpro"; check for no startup errors, right version, help index present and working OK. Fix problems and commit back.
@@ -139,9 +134,7 @@ Then see #426
         
 If you fix anything, commit it back.
 
-- This is a good place to make sure CATS still builds
-
-        http://jmri.org/help/en/html/doc/Technical/CATS.shtml
+- This is a good place to make sure CATS still builds, see the (doc page)[http://jmri.org/help/en/html/doc/Technical/CATS.shtml] - note that CATS has not been updated to compile cleanly with JMRI 4.*
         
 - If you fixed anything, commit it back.
 
