@@ -70,7 +70,6 @@ If you're attempting to perform this on MS Windows, refer to the MS Windows note
     * index.html
     * Footer
     * contact/index.html
-    
     * (grep -r for the previous year in the web site, xml; don't change copyright notices!)
 
 - Bring in all possible GitHub JMRI/JMRI [pull requests](https://github.com/JMRI/JMRI/pulls)
@@ -80,37 +79,42 @@ If you're attempting to perform this on MS Windows, refer to the MS Windows note
 - Bring in all possible [sf.net patches](https://sourceforge.net/p/jmri/patches/), including decoders
 
 - Check if the decoder definitions have changed since the previous release (almost always true) If so, remake the decoder index.
-
+```
         ant remakedecoderindex
+```
 
 (Check 'session.log' and 'messages.log' located in current directory as, in case of errors they might not always be output to the console)
-
+```
         git diff xml/decoderIndex.xml
         git commit -m"update decoder index" xml/decoderIndex.xml
+```
 
 - Update the help/en/Acknowledgements.shtml help page with any recent changes
 
 - Commit any changes in your local web site directory, as these can end up in help, xml, etc (See the JMRI page on local web sites for details)
 
 - Remake the help index (need a command line approach, so can put in ant!)
-
+```
         cd help/en/
         rm ~/.jhelpdev    (to make sure the right preferences are chosen)
         ./JHelpDev.csh   (See the doc page for setup) <-- for Windows, use JHelpDev.bat
         (navigate to JHelpDev.xml in release html/en/ & open it; might take a while)
         (click "Create All", takes a bit of time, wait for button to release)
         (quit)
+```
 
 In that same directory, also remake the index and toc web pages by doing invoking ant (no argument needed).
-
+```
         ant
+```
 
 (Need to consider whether to do this in help/fr, and eventually others)
 
 Run the program and make sure help works.
-
+```
         git commit -m"JavaHelp indexing update" .
         cd ../..
+```
 
 ================================================================================
 ## General Maintenance Items
@@ -118,8 +122,9 @@ Run the program and make sure help works.
 We roll some general code maintenance items into the release process.  They can be skipped occasionally.
 
 - Check for any files with multiple UTF-8 Byte-Order-Marks.  This shouldn't usually happen but when it does can be a bit tricky to find. Scan from the root of the repository and fix any files found:
-
+```
         grep -rlI --exclude-dir=.git '^\xEF\xBB\xBF\xEF\xBB\xBF' .
+```
 
 It might be necessary to use a Hex editor to remove the erroneous extra Byte-Order-Marks - a valid UTF-8 file should only have either one 3-byte BOM (EF BB BF) or no BOM at all.
 
@@ -128,10 +133,11 @@ It might be necessary to use a Hex editor to remove the erroneous extra Byte-Ord
 - Run "ant decoderpro"; check for no startup errors, right version, help index present and working OK. Fix problems and commit back.
 
 - This is a good place to check that the decoder XSLT transforms work
-
+```
         cd xml/XSLT
         ant
-        
+```
+     
 If you fix anything, commit it back.
 
 - This is a good place to make sure CATS still builds, see the (doc page)[http://jmri.org/help/en/html/doc/Technical/CATS.shtml] - note that CATS has not been updated to compile cleanly with JMRI 4.*
@@ -143,10 +149,10 @@ If you fix anything, commit it back.
 
 - Commit any remaining changes, push to your local repository, bring back to the main JMRI/JMRI repository with a pull request, wait for the CI test to complete, and merge the pull request.
 
-- Create a [new milestone](https://github.com/JMRI/JMRI/milestones) with the _next_ release number
+- Create a [new milestone](https://github.com/JMRI/JMRI/milestones) with the _next_ release number, dated the 2nd Saturday of the month (might be already there, we've been posting them a few in advance)
 
 - Create the _next_ release note, so that people will document new (overlapping) changes there. (We need to work through automation of version number values below)
-    
+```    
         cd (local web copy)/releasenotes
         git pull 
         cp jmri4.3.1.shtml jmri4.3.2.shtml
@@ -156,17 +162,19 @@ If you fix anything, commit it back.
             remove old-version change notes
         git add jmri4.3.2.shtml
         git commit -m"start new 4.3.2 release note" jmri4.3.2.shtml
-        PR and pull back.
+        PR-and-merge (or direct push) and pull back.
         cd (local JMRI copy)
+```
 
 - Pull back to make sure your repository is fully up to date
 
 - Start the release by creating a new "release branch" using Ant.  (If you need to make a "branch from a branch", such as nearing the end of the development cycle, this will need to be done manually rather than via ant.)
-
+```
         ant make-test-release-branch
+```
 
-  - This will do (more or less) the following actions:
-    
+ - This will do (more or less) the following actions:
+```    
         git checkout master
         git pull
         (commit a version number increment to master)
@@ -175,8 +183,9 @@ If you fix anything, commit it back.
         git push JMRI/JMRI {branch}
         git checkout master    
         git pull
+```
 
- - Put a comment in the release GitHub item saying the branch exists, and all future changes should be documented in the new release note
+- Put a comment in the release GitHub item saying the branch exists, and all future changes should be documented in the new release note
  
 ```
 The release-4.3.1 branch has been created. 
@@ -215,32 +224,37 @@ If you can't use Jenkins for the actual build, you can create the files locally:
 If you're building locally:
 * You need to have installed NSIS from http://nsis.sourceforge.net (we use version 2.44)
 * Either make sure that 'makensis' is in your path, or set nsis.home in your local.properties file to the root of the nsis installation:
-
+```
         nsis.home=/opt/nsis/nsis-2.46/
+```
 
 - Get the release in your local work directory
-
+```
     git checkout release-4.1.4
+```
 
 - edit release.properties to say release.official=true (last line)
 
 - Do the build:
-
+```
     ant -Dnsis.home="" clean packages
+```
 
 Ant will do the various builds, construct the distribution directories, and finally construct the Linux, Mac OS X and Windows distribution files in dist/releases/
 
 - Put the Linux, Mac OS X and Windows files where developers can take a quick look, send an email to the developer list, and WAIT FOR SOME REPLIES
      
 The main JMRI web site gets completely overwritten by Jenkins, so one approach:
-    
+ ```   
         ssh user,jmri@shell.sf.net create
         scp dist/release/JMRI.* user,jmri@shell.sf.net:htdocs/release/
-    
+```
+ 
 puts them at
-    
+```    
         http://user.users.sf.net/release
-    
+```
+ 
 (The user has to have put the htdocs link in their SF.net account)
 
 ================================================================================
@@ -282,7 +296,7 @@ Download from CI, check integrity (make sure compressed files not expanded), the
 (If you use a browser to download instead of curl, make sure the .tgz wasn't auto-expanded)
 
 (the "./testrelease 4.1.4" local script on shell.sf.net does the following steps, except for the edit, of course)
-
+```
     ssh user,jmri@shell.sf.net create
     ssh user,jmri@shell.sf.net
     curl -o release.zip "http://builds.jmri.org/jenkins/job/Test%20Releases/job/4.1.4/ws/dist/release/*zip*/release.zip"
@@ -296,14 +310,17 @@ Download from CI, check integrity (make sure compressed files not expanded), the
         (for production release, use ".../production\ files/")
     
     (clean up and logout)
+```
 
 - Create and upload the JavaDocs (as of late 2013, [CloudBees](https://jmri.ci.cloudbees.com/job/Development/job/Web%20Site/job/Generate%20Website%20Components/) was updating these from git weekly, in which case skip; not that this might take an hour or more to upload on a home connection, and it's OK to defer the uploadjavadoc step): 
-
+```
     ant javadoc-uml uploadjavadoc
+```
 
 - Create and upload the XSLT'd decoder pages
-
+```
     (cd xml/XSLT; ant xslt upload)
+```
 
 Note: the very first time doing this on a new machine, it will be required to run the rsync command manually as the ssh fingerprint for the server wil need to be added to the local machine. Without this, it will fail via ant.
 
@@ -321,8 +338,9 @@ Note: Unlike releasing files to SourceForge, once a GitHub Release is created it
 - Close the [current milestone](https://github.com/JMRI/JMRI/milestones) with the current release number
 
 - on GitHub JMRI/JMRI go to the "releases" link, then click "Draft a new release" e.g.
-
+```
     https://github.com/JMRI/JMRI/releases/new
+```
 
 - Fill out form:
 
@@ -412,14 +430,16 @@ git push github
 - Format the release note page: change date, comment out "draft release", make sure links work and proper sections are commented/not commented out
 
 - Update the web site front page and downloads page:
-
+```
      index.html download/Sidebar download/index.shtml releaselist
+```
 
 - Commit site, push, etc.
 
 - Consider submitting an anti-virus white-list request at:
-
+```
         https://submit.symantec.com/whitelist/isv/
+```
 
     If you don't, a bunch of Windows users are likely to whine
 
@@ -443,7 +463,7 @@ git push github
     https://eco.copyright.gov/eService_enu/   (Firefox only!)
 
 - Decide if worth announcing elsewhere (production release only, generally we don't do this):
-
+```
         RailRoadSoftware&yahoogroups.com
         MAC_DCC@yahoogroups.com
         loconet_hackers@yahoogroups.com
@@ -455,6 +475,7 @@ git push github
         DigitalPlusbyLenz@yahoogroups.com
         linux-dcc@yahoogroups.com
         rrsoftware@yahoogroups.com
+```
 
 - Commit back any changes made to this doc
 
