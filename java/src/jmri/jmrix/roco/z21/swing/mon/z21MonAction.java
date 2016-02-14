@@ -55,7 +55,7 @@ public class z21MonAction extends AbstractAction {
 
     }
 
-    static Logger log = LoggerFactory.getLogger(z21MonAction.class);
+    private final static Logger log = LoggerFactory.getLogger(z21MonAction.class);
 
 }
 

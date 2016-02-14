@@ -40,6 +40,6 @@ public class JmriServerParserTests extends TestCase {
         return suite;
     }
 
-    static Logger log = LoggerFactory.getLogger(JmriServerParserTests.class.getName());
+    private final static Logger log = LoggerFactory.getLogger(JmriServerParserTests.class.getName());
 
 }

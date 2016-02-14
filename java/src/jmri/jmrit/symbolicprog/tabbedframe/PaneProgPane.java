@@ -3108,6 +3108,6 @@ public class PaneProgPane extends javax.swing.JPanel
         return l;
     }
 
-    static Logger log = LoggerFactory.getLogger(PaneProgPane.class.getName());
+    private final static Logger log = LoggerFactory.getLogger(PaneProgPane.class.getName());
 
 }

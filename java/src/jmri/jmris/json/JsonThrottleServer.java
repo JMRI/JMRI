@@ -23,7 +23,7 @@ public class JsonThrottleServer {
     protected final JmriConnection connection;
     private final HashMap<String, JsonThrottle> throttles;
     private final HashMap<JsonThrottle, String> throttleIds;
-    static final Logger log = LoggerFactory.getLogger(JsonThrottleServer.class.getName());
+    private final static Logger log = LoggerFactory.getLogger(JsonThrottleServer.class.getName());
 
     public JsonThrottleServer(JmriConnection connection) {
         this.connection = connection;

@@ -74,5 +74,5 @@ public class SpurTableModel extends TrackTableModel {
         }
     }
 
-    static Logger log = LoggerFactory.getLogger(SpurTableModel.class.getName());
+    private final static Logger log = LoggerFactory.getLogger(SpurTableModel.class.getName());
 }

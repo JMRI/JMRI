@@ -40,7 +40,7 @@ public class AcelaPacketGenAction extends AbstractAction {
         f.setVisible(true);
     }
 
-    static Logger log = LoggerFactory.getLogger(AcelaPacketGenAction.class.getName());
+    private final static Logger log = LoggerFactory.getLogger(AcelaPacketGenAction.class.getName());
 }
 
 /* @(#)AcelaPacketGenAction.java */

@@ -119,7 +119,7 @@ public class TrackNode {
         return null;
     }
 
-    static Logger log = LoggerFactory.getLogger(TrackNode.class.getName());
+    private final static Logger log = LoggerFactory.getLogger(TrackNode.class.getName());
 }
 
 /* @(#)TrackNode.java */

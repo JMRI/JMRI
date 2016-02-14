@@ -91,6 +91,6 @@ public class JmriSRCPServerFrame extends jmri.util.JmriJFrame {
         JmriSRCPServer.instance().stop();
     }
 
-    static Logger log = LoggerFactory.getLogger(JmriSRCPServerFrame.class.getName());
+    private final static Logger log = LoggerFactory.getLogger(JmriSRCPServerFrame.class.getName());
 
 }

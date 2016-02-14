@@ -405,6 +405,6 @@ abstract public class AbstractNetworkPortController extends AbstractPortControll
         return connTimeout;
     }
 
-    final static protected Logger log = LoggerFactory.getLogger(AbstractNetworkPortController.class.getName());
+    private final static Logger log = LoggerFactory.getLogger(AbstractNetworkPortController.class.getName());
 
 }

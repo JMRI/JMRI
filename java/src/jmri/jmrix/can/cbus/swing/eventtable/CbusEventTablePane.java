@@ -253,5 +253,5 @@ public class CbusEventTablePane extends jmri.jmrix.can.swing.CanPanel {
         }
     }
 
-    static Logger log = LoggerFactory.getLogger(CbusEventTablePane.class.getName());
+    private final static Logger log = LoggerFactory.getLogger(CbusEventTablePane.class.getName());
 }

@@ -145,6 +145,6 @@ public class ConnectionConfig extends jmri.jmrix.AbstractNetworkConnectionConfig
         return true;
     }
 
-    static Logger log = LoggerFactory.getLogger(ConnectionConfig.class.getName());
+    private final static Logger log = LoggerFactory.getLogger(ConnectionConfig.class.getName());
 
 }

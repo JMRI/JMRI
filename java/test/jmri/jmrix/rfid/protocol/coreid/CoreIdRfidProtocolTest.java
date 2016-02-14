@@ -180,6 +180,6 @@ public class CoreIdRfidProtocolTest extends TestCase {
         apps.tests.Log4JFixture.tearDown();
     }
 
-    static Logger log = LoggerFactory.getLogger(CoreIdRfidProtocolTest.class.getName());
+    private final static Logger log = LoggerFactory.getLogger(CoreIdRfidProtocolTest.class.getName());
 
 }

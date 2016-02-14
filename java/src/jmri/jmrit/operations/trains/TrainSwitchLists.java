@@ -419,5 +419,5 @@ public class TrainSwitchLists extends TrainCommon {
         newLine(file, string, !IS_MANIFEST);
     }
 
-    static Logger log = LoggerFactory.getLogger(TrainSwitchLists.class.getName());
+    private final static Logger log = LoggerFactory.getLogger(TrainSwitchLists.class.getName());
 }

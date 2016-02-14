@@ -87,6 +87,6 @@ public class IntelliboxAdapter extends LocoBufferAdapter {
         return retval;
     }
 
-    static Logger log = LoggerFactory.getLogger(IntelliboxAdapter.class.getName());
+    private final static Logger log = LoggerFactory.getLogger(IntelliboxAdapter.class.getName());
 
 }

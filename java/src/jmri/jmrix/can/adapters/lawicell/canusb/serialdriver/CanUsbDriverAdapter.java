@@ -33,6 +33,6 @@ public class CanUsbDriverAdapter
         return new int[]{57600, 115200, 230400, 250000, 333333, 460800, 500000};
     }
 
-    static Logger log = LoggerFactory.getLogger(CanUsbDriverAdapter.class.getName());
+    private final static Logger log = LoggerFactory.getLogger(CanUsbDriverAdapter.class.getName());
 
 }

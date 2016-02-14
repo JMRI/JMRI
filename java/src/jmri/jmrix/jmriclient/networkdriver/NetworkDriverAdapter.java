@@ -142,6 +142,6 @@ public class NetworkDriverAdapter extends JMRIClientPortController {
         return rb.getString("defaultMDNSServiceType");
     }
 
-    static Logger log = LoggerFactory.getLogger(NetworkDriverAdapter.class.getName());
+    private final static Logger log = LoggerFactory.getLogger(NetworkDriverAdapter.class.getName());
 
 }

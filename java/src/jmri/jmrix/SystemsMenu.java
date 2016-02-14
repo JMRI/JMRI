@@ -117,5 +117,5 @@ public class SystemsMenu extends JMenu {
         }
     }
 
-    static Logger log = LoggerFactory.getLogger(SystemsMenu.class.getName());
+    private final static Logger log = LoggerFactory.getLogger(SystemsMenu.class.getName());
 }

@@ -35,6 +35,6 @@ public class ValidateConfigFilesTest extends jmri.util.swing.GuiUtilBaseTest {
         return suite;
     }
 
-    static Logger log = LoggerFactory.getLogger(ValidateConfigFilesTest.class.getName());
+    private final static Logger log = LoggerFactory.getLogger(ValidateConfigFilesTest.class.getName());
 
 }

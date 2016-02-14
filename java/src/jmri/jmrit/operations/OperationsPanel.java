@@ -484,5 +484,5 @@ public class OperationsPanel extends JPanel implements AncestorListener {
         return null;
     }
 
-    static Logger log = LoggerFactory.getLogger(OperationsPanel.class.getName());
+    private final static Logger log = LoggerFactory.getLogger(OperationsPanel.class.getName());
 }

@@ -43,5 +43,5 @@ public class PrintAction extends AbstractAction {
         mFrame.printPanes(isPreview);
     }
 
-    static Logger log = LoggerFactory.getLogger(PrintAction.class.getName());
+    private final static Logger log = LoggerFactory.getLogger(PrintAction.class.getName());
 }

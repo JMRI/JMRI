@@ -226,6 +226,6 @@ public class BoosterProgPanel extends jmri.jmrix.nce.swing.NcePanel {
         }
     }
 
-    static Logger log = LoggerFactory
+    private final static Logger log = LoggerFactory
             .getLogger(BoosterProgPanel.class.getName());
 }

@@ -48,6 +48,6 @@ public class ZTC640AdapterTest extends TestCase {
         apps.tests.Log4JFixture.tearDown();
     }
 
-    static Logger log = LoggerFactory.getLogger(ZTC640AdapterTest.class.getName());
+    private final static Logger log = LoggerFactory.getLogger(ZTC640AdapterTest.class.getName());
 
 }

@@ -373,5 +373,5 @@ public abstract class DrawFrame extends jmri.util.JmriJFrame {
 
     abstract protected void updateFigure(PositionableShape pos);
 
-    static Logger log = LoggerFactory.getLogger(DrawFrame.class.getName());
+    private final static Logger log = LoggerFactory.getLogger(DrawFrame.class.getName());
 }

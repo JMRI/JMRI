@@ -138,6 +138,6 @@ public class DeferringProgrammerManager implements ProgrammerManager {
         return InstanceManager.getDefault(AddressedProgrammerManager.class).getDefaultModes();
     }
 
-    static Logger log = LoggerFactory.getLogger(DeferringProgrammerManager.class.getName());
+    private final static Logger log = LoggerFactory.getLogger(DeferringProgrammerManager.class.getName());
 }
 /* @(#)DeferringProgrammerManager.java */

@@ -311,6 +311,6 @@ public class LocoBufferAdapter extends LnPortController implements jmri.jmrix.Se
     private boolean opened = false;
     InputStream serialStream = null;
 
-    static Logger log = LoggerFactory.getLogger(LocoBufferAdapter.class.getName());
+    private final static Logger log = LoggerFactory.getLogger(LocoBufferAdapter.class.getName());
 
 }

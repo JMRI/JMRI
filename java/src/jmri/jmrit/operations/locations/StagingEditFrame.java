@@ -6,8 +6,6 @@ import javax.swing.BorderFactory;
 import javax.swing.BoxLayout;
 import javax.swing.JCheckBox;
 import javax.swing.JPanel;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 
 /**
  * Frame for user edit of a staging track
@@ -183,6 +181,5 @@ public class StagingEditFrame extends TrackEditFrame implements java.beans.Prope
         }
     }
 
-    static Logger log = LoggerFactory.getLogger(StagingEditFrame.class
-            .getName());
+//    private final static Logger log = LoggerFactory.getLogger(StagingEditFrame.class.getName());
 }

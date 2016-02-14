@@ -61,6 +61,6 @@ public class NceTurnoutTest extends AbstractTurnoutTest {
         return suite;
     }
 
-    static Logger log = LoggerFactory.getLogger(NceTurnoutTest.class.getName());
+    private final static Logger log = LoggerFactory.getLogger(NceTurnoutTest.class.getName());
 
 }

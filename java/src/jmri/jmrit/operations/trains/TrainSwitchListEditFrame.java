@@ -608,5 +608,5 @@ public class TrainSwitchListEditFrame extends OperationsFrame implements java.be
         }
     }
 
-    static Logger log = LoggerFactory.getLogger(TrainSwitchListEditFrame.class.getName());
+    private final static Logger log = LoggerFactory.getLogger(TrainSwitchListEditFrame.class.getName());
 }

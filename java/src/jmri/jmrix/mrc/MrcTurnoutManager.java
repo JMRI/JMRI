@@ -36,7 +36,7 @@ public class MrcTurnoutManager extends jmri.managers.AbstractTurnoutManager {
         return t;
     }
 
-    static Logger log = LoggerFactory.getLogger(MrcTurnoutManager.class.getName());
+    private final static Logger log = LoggerFactory.getLogger(MrcTurnoutManager.class.getName());
 
 }
 

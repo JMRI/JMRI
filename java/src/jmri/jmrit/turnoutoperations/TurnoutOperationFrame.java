@@ -171,5 +171,5 @@ public class TurnoutOperationFrame extends JDialog {
         }
     }
 
-    static Logger log = LoggerFactory.getLogger(TurnoutOperationFrame.class.getName());
+    private final static Logger log = LoggerFactory.getLogger(TurnoutOperationFrame.class.getName());
 }

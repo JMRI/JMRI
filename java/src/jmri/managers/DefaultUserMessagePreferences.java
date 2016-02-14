@@ -1455,5 +1455,5 @@ public class DefaultUserMessagePreferences extends jmri.jmrit.XmlFile implements
 
     }
 
-    static Logger log = LoggerFactory.getLogger(DefaultUserMessagePreferences.class.getName());
+    private final static Logger log = LoggerFactory.getLogger(DefaultUserMessagePreferences.class.getName());
 }

@@ -200,7 +200,7 @@ abstract public class AbstractMRMessage extends AbstractMessage {
         setElement(offset + 2, s.charAt(2));
         setElement(offset + 3, s.charAt(3));
     }
-    static Logger log = LoggerFactory.getLogger(AbstractMRMessage.class.getName());
+    private final static Logger log = LoggerFactory.getLogger(AbstractMRMessage.class.getName());
 
     @Override
     public String toString() {

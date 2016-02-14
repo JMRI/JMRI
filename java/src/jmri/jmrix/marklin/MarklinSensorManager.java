@@ -251,7 +251,7 @@ public class MarklinSensorManager extends jmri.managers.AbstractSensorManager
         }
     }
 
-    static Logger log = LoggerFactory.getLogger(MarklinSensorManager.class.getName());
+    private final static Logger log = LoggerFactory.getLogger(MarklinSensorManager.class.getName());
 }
 
 /* @(#)MarklinSensorManager.java */

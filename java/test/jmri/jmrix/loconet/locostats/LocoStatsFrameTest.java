@@ -107,5 +107,5 @@ public class LocoStatsFrameTest extends TestCase {
         return suite;
     }
 
-    static Logger log = LoggerFactory.getLogger(LocoStatsFrameTest.class.getName());
+    private final static Logger log = LoggerFactory.getLogger(LocoStatsFrameTest.class.getName());
 }

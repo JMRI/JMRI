@@ -4784,6 +4784,6 @@ public class TrainBuilder extends TrainCommon {
         }
     }
 
-    static Logger log = LoggerFactory.getLogger(TrainBuilder.class.getName());
+    private final static Logger log = LoggerFactory.getLogger(TrainBuilder.class.getName());
 
 }

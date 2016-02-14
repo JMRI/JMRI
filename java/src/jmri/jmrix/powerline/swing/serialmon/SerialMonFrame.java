@@ -54,6 +54,6 @@ public class SerialMonFrame extends jmri.jmrix.AbstractMonFrame implements Seria
         nextLine(l.toMonitorString(), l.toString());
     }
 
-    static Logger log = LoggerFactory.getLogger(SerialMonFrame.class.getName());
+    private final static Logger log = LoggerFactory.getLogger(SerialMonFrame.class.getName());
 
 }

@@ -98,6 +98,6 @@ public class PlayTest extends TestCase {
         return suite;
     }
 
-    static Logger log = LoggerFactory.getLogger(PlayTest.class.getName());
+    private final static Logger log = LoggerFactory.getLogger(PlayTest.class.getName());
 
 }

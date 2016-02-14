@@ -99,5 +99,5 @@ public class DrawRoundRect extends DrawRectangle {
         setPositionableParams(pos);
     }
 
-    static Logger log = LoggerFactory.getLogger(DrawRoundRect.class.getName());
+    private final static Logger log = LoggerFactory.getLogger(DrawRoundRect.class.getName());
 }

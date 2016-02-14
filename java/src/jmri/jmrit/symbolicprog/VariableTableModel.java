@@ -1101,6 +1101,6 @@ public class VariableTableModel extends AbstractTableModel implements ActionList
         _status = null;
     }
 
-    static Logger log = LoggerFactory.getLogger(VariableTableModel.class.getName());
+    private final static Logger log = LoggerFactory.getLogger(VariableTableModel.class.getName());
 
 }

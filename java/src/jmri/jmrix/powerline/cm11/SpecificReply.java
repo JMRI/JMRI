@@ -115,7 +115,7 @@ public class SpecificReply extends SerialReply {
         }
     }
 
-    static Logger log = LoggerFactory.getLogger(SpecificReply.class.getName());
+    private final static Logger log = LoggerFactory.getLogger(SpecificReply.class.getName());
 
 }
 

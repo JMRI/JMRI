@@ -153,7 +153,7 @@ public class SecurityElementIcon extends PositionableJPanel
         }
     }
 
-    static Logger log = LoggerFactory.getLogger(SecurityElementIcon.class.getName());
+    private final static Logger log = LoggerFactory.getLogger(SecurityElementIcon.class.getName());
 
     /**
      * Pop-up displays the config

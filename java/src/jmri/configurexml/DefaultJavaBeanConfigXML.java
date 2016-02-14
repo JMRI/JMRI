@@ -157,5 +157,5 @@ public class DefaultJavaBeanConfigXML extends jmri.configurexml.AbstractXmlAdapt
         }
     }
 
-    static Logger log = LoggerFactory.getLogger(DefaultJavaBeanConfigXML.class.getName());
+    private final static Logger log = LoggerFactory.getLogger(DefaultJavaBeanConfigXML.class.getName());
 }

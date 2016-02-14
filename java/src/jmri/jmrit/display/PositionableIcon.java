@@ -155,5 +155,5 @@ public class PositionableIcon extends PositionableLabel {
         return clone;
     }
 
-    static Logger log = LoggerFactory.getLogger(PositionableIcon.class.getName());
+    private final static Logger log = LoggerFactory.getLogger(PositionableIcon.class.getName());
 }

@@ -192,6 +192,6 @@ public class HubPane extends jmri.util.swing.JmriPanel implements CanListener, C
         }
     }
 
-    static Logger log = LoggerFactory.getLogger(HubPane.class.getName());
+    private final static Logger log = LoggerFactory.getLogger(HubPane.class.getName());
 
 }

@@ -379,7 +379,7 @@ public class QsiMessage extends jmri.jmrix.AbstractMessage {
         return m.frame();
     }
 
-    static Logger log = LoggerFactory.getLogger(QsiMessage.class.getName());
+    private final static Logger log = LoggerFactory.getLogger(QsiMessage.class.getName());
 
 }
 

@@ -51,6 +51,6 @@ public class LayoutSensorIconXml extends AbstractXmlAdapter {
 
     }
 
-    static Logger log = LoggerFactory.getLogger(LayoutSensorIconXml.class.getName());
+    private final static Logger log = LoggerFactory.getLogger(LayoutSensorIconXml.class.getName());
 
 }

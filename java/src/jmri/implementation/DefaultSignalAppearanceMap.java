@@ -413,7 +413,7 @@ public class DefaultSignalAppearanceMap extends AbstractNamedBean implements jmr
     }
 
     protected java.util.Hashtable<String, int[]> table = new jmri.util.OrderedHashtable<String, int[]>();
-    static Logger log = LoggerFactory.getLogger(DefaultSignalAppearanceMap.class.getName());
+    private final static Logger log = LoggerFactory.getLogger(DefaultSignalAppearanceMap.class.getName());
 }
 
 /* @(#)DefaultSignalAppearanceMap.java */

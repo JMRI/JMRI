@@ -110,5 +110,5 @@ public class DrawEllipse extends DrawFrame {
         setPositionableParams(pos);
     }
 
-    static Logger log = LoggerFactory.getLogger(DrawEllipse.class.getName());
+    private final static Logger log = LoggerFactory.getLogger(DrawEllipse.class.getName());
 }

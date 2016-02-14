@@ -44,7 +44,7 @@ public class NceTurnoutManager extends jmri.managers.AbstractTurnoutManager impl
 
     }
 
-    static Logger log = LoggerFactory.getLogger(NceTurnoutManager.class.getName());
+    private final static Logger log = LoggerFactory.getLogger(NceTurnoutManager.class.getName());
 }
 
 /* @(#)NceTurnoutManager.java */

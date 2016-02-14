@@ -2,8 +2,6 @@
 package jmri.jmrit.operations.locations;
 
 import javax.swing.BorderFactory;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 
 /**
  * Frame for user edit of a yard
@@ -44,6 +42,5 @@ public class YardEditFrame extends TrackEditFrame implements java.beans.Property
         setVisible(true);
     }
 
-    static Logger log = LoggerFactory.getLogger(YardEditFrame.class
-            .getName());
+//    private final static Logger log = LoggerFactory.getLogger(YardEditFrame.class.getName());
 }

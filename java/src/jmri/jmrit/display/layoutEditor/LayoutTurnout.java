@@ -3243,6 +3243,6 @@ public class LayoutTurnout {
         }
     }
 
-    static Logger log = LoggerFactory.getLogger(LayoutTurnout.class.getName());
+    private final static Logger log = LoggerFactory.getLogger(LayoutTurnout.class.getName());
 
 }

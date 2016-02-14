@@ -139,5 +139,5 @@ public class RollingStockGroup {
         pcs.firePropertyChange(p, old, n);
     }
 
-    static Logger log = LoggerFactory.getLogger(RollingStockGroup.class.getName());
+    private final static Logger log = LoggerFactory.getLogger(RollingStockGroup.class.getName());
 }

@@ -124,7 +124,7 @@ public class EasyDccTrafficController extends AbstractMRTrafficController
         }
     }
 
-    static Logger log = LoggerFactory.getLogger(EasyDccTrafficController.class.getName());
+    private final static Logger log = LoggerFactory.getLogger(EasyDccTrafficController.class.getName());
 }
 
 

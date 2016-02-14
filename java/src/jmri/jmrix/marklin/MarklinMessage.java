@@ -290,7 +290,7 @@ public class MarklinMessage extends jmri.jmrix.AbstractMRMessage {
         return new MarklinMessage();
     }
 
-    static Logger log = LoggerFactory.getLogger(MarklinMessage.class.getName());
+    private final static Logger log = LoggerFactory.getLogger(MarklinMessage.class.getName());
 }
 
 /* @(#)MarklinMessage.java */

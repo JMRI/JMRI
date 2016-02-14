@@ -200,6 +200,6 @@ abstract public class IdentifyDecoder extends jmri.jmrit.AbstractIdentify {
     abstract protected void message(String m);
 
     // initialize logging
-    static Logger log = LoggerFactory.getLogger(IdentifyDecoder.class.getName());
+    private final static Logger log = LoggerFactory.getLogger(IdentifyDecoder.class.getName());
 
 }

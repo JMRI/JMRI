@@ -66,5 +66,5 @@ public class TabbedPreferencesFrame extends JmriJFrame {
         this.setVisible(false);
     }
 
-    static Logger log = LoggerFactory.getLogger(TabbedPreferencesFrame.class);
+    private final static Logger log = LoggerFactory.getLogger(TabbedPreferencesFrame.class);
 }

@@ -5,9 +5,10 @@ import edu.umd.cs.findbugs.annotations.CheckReturnValue;
 import edu.umd.cs.findbugs.annotations.DefaultAnnotation;
 import edu.umd.cs.findbugs.annotations.NonNull;
 import edu.umd.cs.findbugs.annotations.Nullable;
+import edu.umd.cs.findbugs.annotations.SuppressFBWarnings;
 
 @DefaultAnnotation({NonNull.class, CheckReturnValue.class})
-//@SuppressWarnings(value = "NM_SAME_SIMPLE_NAME_AS_SUPERCLASS", justification = "Desired pattern is repeated class names with package-level access to members")
+@SuppressFBWarnings(value = "NM_SAME_SIMPLE_NAME_AS_SUPERCLASS", justification = "Desired pattern is repeated class names with package-level access to members")
 @net.jcip.annotations.Immutable
 
 /**
@@ -20,7 +21,7 @@ import edu.umd.cs.findbugs.annotations.Nullable;
  * @version $Revision: 17977 $
  * @since 3.3.1
  */
-public class Bundle extends apps.ConfigBundle {
+public class Bundle extends apps.Bundle {
 
     private final static String name = "apps.startup.Bundle"; // NOI18N
 

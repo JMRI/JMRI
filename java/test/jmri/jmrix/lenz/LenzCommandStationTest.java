@@ -122,6 +122,6 @@ public class LenzCommandStationTest extends TestCase {
         apps.tests.Log4JFixture.tearDown();
     }
 
-    static Logger log = LoggerFactory.getLogger(LenzCommandStationTest.class.getName());
+    private final static Logger log = LoggerFactory.getLogger(LenzCommandStationTest.class.getName());
 
 }

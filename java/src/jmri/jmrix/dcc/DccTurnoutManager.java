@@ -39,7 +39,7 @@ public class DccTurnoutManager extends jmri.managers.AbstractTurnoutManager {
     }
     static DccTurnoutManager _instance = null;
 
-    static Logger log = LoggerFactory.getLogger(DccTurnoutManager.class.getName());
+    private final static Logger log = LoggerFactory.getLogger(DccTurnoutManager.class.getName());
 
 }
 

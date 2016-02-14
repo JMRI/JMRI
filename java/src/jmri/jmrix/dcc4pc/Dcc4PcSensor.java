@@ -110,7 +110,7 @@ public class Dcc4PcSensor extends AbstractSensor {
      int getPacketLength(){
      return packetLength;
      }*/
-    static Logger log = LoggerFactory.getLogger(Dcc4PcSensor.class.getName());
+    private final static Logger log = LoggerFactory.getLogger(Dcc4PcSensor.class.getName());
 }
 
 /* @(#)Dcc4PcSensor.java */

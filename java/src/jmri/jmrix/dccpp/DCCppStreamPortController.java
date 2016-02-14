@@ -60,7 +60,7 @@ public class DCCppStreamPortController extends jmri.jmrix.AbstractStreamPortCont
     synchronized public void setOutputBufferEmpty(boolean s) {
     }
 
-    static Logger log = LoggerFactory.getLogger(DCCppStreamPortController.class.getName());
+    private final static Logger log = LoggerFactory.getLogger(DCCppStreamPortController.class.getName());
 
 }
 

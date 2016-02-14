@@ -41,7 +41,7 @@ public class SerialSensor extends AbstractSensor {
     public void requestUpdateFromLayout() {
     }
 
-    static Logger log = LoggerFactory.getLogger(SerialSensor.class.getName());
+    private final static Logger log = LoggerFactory.getLogger(SerialSensor.class.getName());
 
 }
 

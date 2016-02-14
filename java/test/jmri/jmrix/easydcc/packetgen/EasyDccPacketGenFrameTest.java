@@ -38,6 +38,6 @@ public class EasyDccPacketGenFrameTest extends TestCase {
         return suite;
     }
 
-    static Logger log = LoggerFactory.getLogger(EasyDccPacketGenFrameTest.class.getName());
+    private final static Logger log = LoggerFactory.getLogger(EasyDccPacketGenFrameTest.class.getName());
 
 }

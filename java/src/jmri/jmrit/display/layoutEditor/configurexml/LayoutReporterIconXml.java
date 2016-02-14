@@ -48,5 +48,5 @@ public class LayoutReporterIconXml extends PositionableLabelXml {
         // create the object
     }
 
-    static Logger log = LoggerFactory.getLogger(LayoutReporterIconXml.class.getName());
+    private final static Logger log = LoggerFactory.getLogger(LayoutReporterIconXml.class.getName());
 }

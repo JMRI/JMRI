@@ -36,6 +36,6 @@ public class ComboOnRadioButton extends ComboRadioButtons {
     }
 
     // initialize logging	
-    static Logger log = LoggerFactory.getLogger(ComboOnRadioButton.class.getName());
+    private final static Logger log = LoggerFactory.getLogger(ComboOnRadioButton.class.getName());
 
 }

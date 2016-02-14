@@ -397,7 +397,7 @@ public class EcosTurnout extends AbstractTurnout
         // messages are ignored
     }
 
-    static Logger log = LoggerFactory.getLogger(EcosTurnout.class.getName());
+    private final static Logger log = LoggerFactory.getLogger(EcosTurnout.class.getName());
 }
 
 /* @(#)EcosTurnout.java */

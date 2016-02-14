@@ -33,6 +33,6 @@ public class StackMonTest extends TestCase {
         return suite;
     }
 
-    static Logger log = LoggerFactory.getLogger(StackMonTest.class.getName());
+    private final static Logger log = LoggerFactory.getLogger(StackMonTest.class.getName());
 
 }

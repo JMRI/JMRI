@@ -48,6 +48,6 @@ public class z21TrafficControllerTest extends TestCase {
         apps.tests.Log4JFixture.tearDown();
     }
 
-    static Logger log = LoggerFactory.getLogger(z21TrafficControllerTest.class.getName());
+    private final static Logger log = LoggerFactory.getLogger(z21TrafficControllerTest.class.getName());
 
 }

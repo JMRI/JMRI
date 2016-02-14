@@ -223,7 +223,7 @@ public class TransitManager extends AbstractManager
         return Bundle.getMessage("BeanNameTransit");
     }
 
-    static Logger log = LoggerFactory.getLogger(TransitManager.class.getName());
+    private final static Logger log = LoggerFactory.getLogger(TransitManager.class.getName());
 }
 
 

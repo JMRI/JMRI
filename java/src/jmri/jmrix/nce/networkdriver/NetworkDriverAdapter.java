@@ -53,6 +53,6 @@ public class NetworkDriverAdapter extends NceNetworkPortController {
         jmri.jmrix.nce.ActiveFlag.setActive();
     }
 
-    static Logger log = LoggerFactory.getLogger(NetworkDriverAdapter.class.getName());
+    private final static Logger log = LoggerFactory.getLogger(NetworkDriverAdapter.class.getName());
 
 }

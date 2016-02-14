@@ -3,6 +3,8 @@ package jmri.managers;
 
 import jmri.Sensor;
 import jmri.implementation.AbstractSensor;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 /**
  * Implementation of the InternalSensorManager interface.
@@ -14,6 +16,8 @@ public class InternalSensorManager extends AbstractSensorManager {
 
     public InternalSensorManager() {
         log.debug("InternalSensorManager constructed");
+        defaultState = Sensor.UNKNOWN;
+        log.debug("Default new-Sensor state reset to UNKNOWN");
     }
     
     public boolean allowMultipleAdditions(String systemName) {
@@ -48,6 +52,7 @@ public class InternalSensorManager extends AbstractSensorManager {
     static int defaultState = Sensor.UNKNOWN;
 
     public static synchronized void setDefaultStateForNewSensors(int defaultSetting) {
+        log.debug("Default new-Sensor state set to {}", defaultSetting);
         defaultState = defaultSetting;
     }
 
@@ -96,7 +101,7 @@ public class InternalSensorManager extends AbstractSensorManager {
         return prefix;
     }
 
-    static org.slf4j.Logger log = org.slf4j.LoggerFactory.getLogger(InternalSensorManager.class.getName());
+    private final static Logger log = LoggerFactory.getLogger(InternalSensorManager.class);
 }
 
 /* @(#)InternalSensorManager.java */

@@ -89,7 +89,7 @@ public class AddNewDevicePanel extends jmri.util.swing.JmriPanel {
     JLabel sysNameLabel = new JLabel(Bundle.getMessage("LabelSystemName"));
     JLabel userNameLabel = new JLabel(Bundle.getMessage("LabelUserName"));
 
-    static final Logger log = LoggerFactory.getLogger(AddNewDevicePanel.class.getName());
+    private final static Logger log = LoggerFactory.getLogger(AddNewDevicePanel.class.getName());
 }
 
 

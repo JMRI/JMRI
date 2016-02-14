@@ -1099,6 +1099,6 @@ public class TrackSegment {
         }
     }
 
-    static Logger log = LoggerFactory.getLogger(TrackSegment.class.getName());
+    private final static Logger log = LoggerFactory.getLogger(TrackSegment.class.getName());
 
 }

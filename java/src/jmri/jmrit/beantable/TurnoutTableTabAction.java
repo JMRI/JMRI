@@ -37,5 +37,5 @@ public class TurnoutTableTabAction extends AbstractTableTabAction {
         return "package.jmri.jmrit.beantable.TurnoutTable";
     }
 
-    static Logger log = LoggerFactory.getLogger(TurnoutTableTabAction.class.getName());
+    private final static Logger log = LoggerFactory.getLogger(TurnoutTableTabAction.class.getName());
 }

@@ -25,6 +25,6 @@ public class InternalTurnoutManagerXml extends jmri.managers.configurexml.Intern
         turnouts.setAttribute("class", this.getClass().getName());
     }
 
-    static Logger log = LoggerFactory.getLogger(InternalTurnoutManagerXml.class.getName());
+    private final static Logger log = LoggerFactory.getLogger(InternalTurnoutManagerXml.class.getName());
 
 }

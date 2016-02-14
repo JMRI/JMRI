@@ -59,6 +59,6 @@ public class z21MonFrame extends jmri.jmrix.AbstractMonFrame implements z21Liste
         _memo.getTrafficController().addz21Listener(this);
     }
 
-    static Logger log = LoggerFactory.getLogger(z21MonFrame.class.getName());
+    private final static Logger log = LoggerFactory.getLogger(z21MonFrame.class.getName());
 
 }

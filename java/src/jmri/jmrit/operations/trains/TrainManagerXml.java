@@ -304,6 +304,6 @@ public class TrainManagerXml extends OperationsXml {
         _instance = null;
     }
 
-    static Logger log = LoggerFactory.getLogger(TrainManagerXml.class.getName());
+    private final static Logger log = LoggerFactory.getLogger(TrainManagerXml.class.getName());
 
 }

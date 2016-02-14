@@ -33,6 +33,6 @@ public class LI100FTest extends TestCase {
         return suite;
     }
 
-    static Logger log = LoggerFactory.getLogger(LI100FTest.class.getName());
+    private final static Logger log = LoggerFactory.getLogger(LI100FTest.class.getName());
 
 }

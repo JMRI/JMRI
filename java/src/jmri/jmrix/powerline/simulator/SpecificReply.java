@@ -123,7 +123,7 @@ public class SpecificReply extends jmri.jmrix.powerline.SerialReply {
         return text + "\n";
     }
 
-    static Logger log = LoggerFactory.getLogger(SpecificReply.class.getName());
+    private final static Logger log = LoggerFactory.getLogger(SpecificReply.class.getName());
 
 }
 

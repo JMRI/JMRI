@@ -66,6 +66,6 @@ public class z21XNetStreamPortControllerTest extends TestCase {
         apps.tests.Log4JFixture.tearDown();
     }
 
-    static Logger log = LoggerFactory.getLogger(z21XNetStreamPortControllerTest.class.getName());
+    private final static Logger log = LoggerFactory.getLogger(z21XNetStreamPortControllerTest.class.getName());
 
 }

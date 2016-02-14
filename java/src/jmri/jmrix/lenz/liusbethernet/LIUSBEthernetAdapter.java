@@ -213,6 +213,6 @@ public class LIUSBEthernetAdapter extends XNetNetworkPortController {
         return rb.getString("defaultMDNSServiceType");
     }
 
-    static Logger log = LoggerFactory.getLogger(LIUSBEthernetAdapter.class.getName());
+    private final static Logger log = LoggerFactory.getLogger(LIUSBEthernetAdapter.class.getName());
 
 }

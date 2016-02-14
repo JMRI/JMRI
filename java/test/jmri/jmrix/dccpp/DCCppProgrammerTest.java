@@ -409,6 +409,6 @@ public class DCCppProgrammerTest extends TestCase {
         super.tearDown();
         apps.tests.Log4JFixture.tearDown();
     }
-    static Logger log = LoggerFactory.getLogger(DCCppProgrammerTest.class.getName());
+    private final static Logger log = LoggerFactory.getLogger(DCCppProgrammerTest.class.getName());
 
 }

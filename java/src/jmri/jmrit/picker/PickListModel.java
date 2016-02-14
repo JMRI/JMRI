@@ -469,7 +469,7 @@ public abstract class PickListModel extends jmri.jmrit.beantable.BeanTableDataMo
         return new EntryExitPickModel();
     }
 
-    static final Logger log = LoggerFactory.getLogger(PickListModel.class.getName());
+    private final static Logger log = LoggerFactory.getLogger(PickListModel.class.getName());
 
     static class TurnoutPickModel extends PickListModel {
 

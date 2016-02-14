@@ -1733,5 +1733,5 @@ public class CircuitBuilder {
         return panel;
     }
 
-    static Logger log = LoggerFactory.getLogger(CircuitBuilder.class.getName());
+    private final static Logger log = LoggerFactory.getLogger(CircuitBuilder.class.getName());
 }

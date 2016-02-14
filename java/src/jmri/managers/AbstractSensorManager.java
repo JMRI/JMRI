@@ -256,7 +256,7 @@ public abstract class AbstractSensorManager extends AbstractManager implements S
         }
     }
 
-    static Logger log = LoggerFactory.getLogger(AbstractSensorManager.class.getName());
+    private final static Logger log = LoggerFactory.getLogger(AbstractSensorManager.class.getName());
 }
 
 /* @(#)AbstractSensorManager.java */

@@ -24,7 +24,7 @@ public class RailroadNamePreferencesPanel extends JPanel implements PreferencesP
      *
      */
     private static final long serialVersionUID = -2483121076473347952L;
-    static Logger log = LoggerFactory.getLogger(RailroadNamePreferencesPanel.class);
+    private final static Logger log = LoggerFactory.getLogger(RailroadNamePreferencesPanel.class);
     Border lineBorder;
     JTextField railroadName;
     JButton saveB;

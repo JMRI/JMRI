@@ -48,6 +48,6 @@ public class EasyDccConsistTest extends TestCase {
         apps.tests.Log4JFixture.tearDown();
     }
 
-    static Logger log = LoggerFactory.getLogger(EasyDccConsistTest.class.getName());
+    private final static Logger log = LoggerFactory.getLogger(EasyDccConsistTest.class.getName());
 
 }

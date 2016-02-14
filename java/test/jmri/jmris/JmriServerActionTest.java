@@ -50,6 +50,6 @@ public class JmriServerActionTest extends TestCase {
         apps.tests.Log4JFixture.tearDown();
     }
 
-    static Logger log = LoggerFactory.getLogger(JmriServerActionTest.class.getName());
+    private final static Logger log = LoggerFactory.getLogger(JmriServerActionTest.class.getName());
 
 }

@@ -189,5 +189,5 @@ public class LayoutBlockRouteTableModel extends javax.swing.table.AbstractTableM
 
     LayoutBlock lBlock;
 
-    static final Logger log = LoggerFactory.getLogger(LayoutBlockRouteTableModel.class.getName());
+    private final static Logger log = LoggerFactory.getLogger(LayoutBlockRouteTableModel.class.getName());
 }

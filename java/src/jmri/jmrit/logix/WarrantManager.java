@@ -146,7 +146,7 @@ public class WarrantManager extends AbstractManager
         return Bundle.getMessage("BeanNameWarrant");
     }
 
-    static Logger log = LoggerFactory.getLogger(WarrantManager.class.getName());
+    private final static Logger log = LoggerFactory.getLogger(WarrantManager.class.getName());
 }
 
 /* @(#)WarrantManager.java */

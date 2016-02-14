@@ -102,6 +102,6 @@ public class DebugProgrammerManagerTest extends TestCase {
         return suite;
     }
 
-    static Logger log = LoggerFactory.getLogger(DebugProgrammerManagerTest.class.getName());
+    private final static Logger log = LoggerFactory.getLogger(DebugProgrammerManagerTest.class.getName());
 
 }

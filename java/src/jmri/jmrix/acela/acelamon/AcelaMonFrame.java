@@ -51,7 +51,7 @@ public class AcelaMonFrame extends jmri.jmrix.AbstractMonFrame implements AcelaL
         nextLine("rep: \"" + l.toString() + "\"\n", "");
     }
 
-    static Logger log = LoggerFactory.getLogger(AcelaMonFrame.class.getName());
+    private final static Logger log = LoggerFactory.getLogger(AcelaMonFrame.class.getName());
 }
 
 /* @(#)AcelaMonFrame.java */

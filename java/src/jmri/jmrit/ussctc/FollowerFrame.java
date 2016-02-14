@@ -35,6 +35,6 @@ public class FollowerFrame extends jmri.util.JmriJFrame {
         pack();
     }
 
-    static Logger log = LoggerFactory.getLogger(FollowerFrame.class.getName());
+    private final static Logger log = LoggerFactory.getLogger(FollowerFrame.class.getName());
 
 }

@@ -458,7 +458,7 @@ public class MakePacket {
         }
     }
 
-    static Logger log = LoggerFactory.getLogger(
+    private final static Logger log = LoggerFactory.getLogger(
             MakePacket.class.getName());
 }
 

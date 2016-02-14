@@ -49,6 +49,6 @@ public class JMRIClientTrafficControllerTest extends TestCase {
         apps.tests.Log4JFixture.tearDown();
     }
 
-    static Logger log = LoggerFactory.getLogger(JMRIClientTrafficControllerTest.class.getName());
+    private final static Logger log = LoggerFactory.getLogger(JMRIClientTrafficControllerTest.class.getName());
 
 }

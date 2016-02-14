@@ -35,7 +35,7 @@ public class OlcbTurnoutManagerTest extends TestCase {
         return suite;
     }
 
-    static Logger log = LoggerFactory.getLogger(OlcbTurnoutManagerTest.class.getName());
+    private final static Logger log = LoggerFactory.getLogger(OlcbTurnoutManagerTest.class.getName());
 
     // The minimal setup for log4J
     protected void setUp() {

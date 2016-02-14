@@ -1024,7 +1024,7 @@ public class DCCppReply extends jmri.jmrix.AbstractMRReply {
     }
 
     // initialize logging
-    static Logger log = LoggerFactory.getLogger(DCCppReply.class.getName());
+    private final static Logger log = LoggerFactory.getLogger(DCCppReply.class.getName());
 
 }
 

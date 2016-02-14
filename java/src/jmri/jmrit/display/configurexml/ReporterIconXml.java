@@ -61,5 +61,5 @@ public class ReporterIconXml extends PositionableLabelXml {
         loadCommonAttributes(l, Editor.REPORTERS, element);
     }
 
-    static Logger log = LoggerFactory.getLogger(ReporterIconXml.class.getName());
+    private final static Logger log = LoggerFactory.getLogger(ReporterIconXml.class.getName());
 }

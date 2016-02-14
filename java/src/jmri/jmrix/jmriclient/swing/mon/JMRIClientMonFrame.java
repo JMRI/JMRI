@@ -50,6 +50,6 @@ public class JMRIClientMonFrame extends jmri.jmrix.AbstractMonFrame implements J
         nextLine("rep: " + l.toString(), "");
     }
 
-    static Logger log = LoggerFactory.getLogger(JMRIClientMonFrame.class.getName());
+    private final static Logger log = LoggerFactory.getLogger(JMRIClientMonFrame.class.getName());
 
 }

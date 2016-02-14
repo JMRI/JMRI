@@ -589,5 +589,5 @@ public class FunctionPanel extends JInternalFrame implements FunctionListener, j
         }
     }
 
-    static Logger log = LoggerFactory.getLogger(FunctionPanel.class.getName());
+    private final static Logger log = LoggerFactory.getLogger(FunctionPanel.class.getName());
 }

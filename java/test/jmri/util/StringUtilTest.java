@@ -395,6 +395,6 @@ public class StringUtilTest extends TestCase {
         return suite;
     }
 
-    static Logger log = LoggerFactory.getLogger(StringUtilTest.class.getName());
+    private final static Logger log = LoggerFactory.getLogger(StringUtilTest.class.getName());
 
 }

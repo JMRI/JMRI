@@ -310,6 +310,6 @@ public class OlcbThrottle extends AbstractThrottle {
     }
 
     // initialize logging
-    static Logger log = LoggerFactory.getLogger(OlcbThrottle.class.getName());
+    private final static Logger log = LoggerFactory.getLogger(OlcbThrottle.class.getName());
 
 }

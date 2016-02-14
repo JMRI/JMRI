@@ -28,7 +28,7 @@ abstract public class JmriAbstractAction extends javax.swing.AbstractAction {
     protected WindowInterface.Hint hint = WindowInterface.Hint.DEFAULT;
     protected WindowInterface wi;
     protected Object context = null;
-    static Logger log = LoggerFactory.getLogger(JmriAbstractAction.class.getName());
+    private final static Logger log = LoggerFactory.getLogger(JmriAbstractAction.class.getName());
 
     /**
      * Enhanced constructor for placing the pane in various GUIs

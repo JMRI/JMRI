@@ -53,5 +53,5 @@ public class JmriMemoryPropertyListener extends JmriSimplePropertyListener {
             }
         }
     }
-    static final Logger log = LoggerFactory.getLogger(JmriMemoryPropertyListener.class.getName());
+    private final static Logger log = LoggerFactory.getLogger(JmriMemoryPropertyListener.class.getName());
 }

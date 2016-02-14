@@ -42,7 +42,7 @@ public class VirtualSignalHead extends DefaultSignalHead {
         super.dispose();
     }
 
-    static Logger log = LoggerFactory.getLogger(VirtualSignalHead.class.getName());
+    private final static Logger log = LoggerFactory.getLogger(VirtualSignalHead.class.getName());
 }
 
 /* @(#)VirtualSignalHead.java */

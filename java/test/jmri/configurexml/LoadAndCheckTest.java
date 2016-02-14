@@ -130,5 +130,5 @@ public class LoadAndCheckTest extends LoadAndStoreTestBase {
         apps.tests.Log4JFixture.tearDown();
     }
 
-    static Logger log = LoggerFactory.getLogger(LoadAndCheckTest.class.getName());
+    private final static Logger log = LoggerFactory.getLogger(LoadAndCheckTest.class.getName());
 }

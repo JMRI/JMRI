@@ -51,6 +51,6 @@ public class LocoSelTreePane extends CombinedLocoSelTreePane {
         return null;
     }
 
-    static Logger log = LoggerFactory.getLogger(LocoSelTreePane.class.getName());
+    private final static Logger log = LoggerFactory.getLogger(LocoSelTreePane.class.getName());
 
 }

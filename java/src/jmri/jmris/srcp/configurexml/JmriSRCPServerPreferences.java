@@ -12,7 +12,7 @@ public class JmriSRCPServerPreferences extends jmri.jmris.AbstractServerPreferen
     private int port = DEFAULT_PORT;
     // as loaded prefences
     private int asLoadedPort = DEFAULT_PORT;
-    private static Logger log = LoggerFactory.getLogger(JmriSRCPServerPreferences.class);
+    private final static Logger log = LoggerFactory.getLogger(JmriSRCPServerPreferences.class);
 
     public JmriSRCPServerPreferences(String fileName) {
         super(fileName);

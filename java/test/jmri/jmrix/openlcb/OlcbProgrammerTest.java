@@ -50,5 +50,5 @@ public class OlcbProgrammerTest extends TestCase {
     protected void tearDown() {
         apps.tests.Log4JFixture.tearDown();
     }
-    static Logger log = LoggerFactory.getLogger(OlcbProgrammerTest.class.getName());
+    private final static Logger log = LoggerFactory.getLogger(OlcbProgrammerTest.class.getName());
 }

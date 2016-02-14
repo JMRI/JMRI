@@ -47,7 +47,7 @@ public class VirtualSignalMast extends AbstractSignalMast {
             throw new IllegalArgumentException("System name needs at least three parts: " + systemName);
         }
         if (!parts[0].equals("IF$vsm")) {
-            log.warn("SignalMast system name should start with IF: " + systemName);
+            log.warn("SignalMast system name should start with IF$vsm but is " + systemName);
         }
 
         String system = parts[1];
@@ -87,7 +87,7 @@ public class VirtualSignalMast extends AbstractSignalMast {
 
     static int lastRef = 0;
 
-    static final protected Logger log = LoggerFactory.getLogger(VirtualSignalMast.class.getName());
+    private final static Logger log = LoggerFactory.getLogger(VirtualSignalMast.class.getName());
 }
 
 /* @(#)VirtualSignalMast.java */

@@ -325,5 +325,5 @@ public class Path {
     private int _fromBlockDirection;
     private float _length = 0.0f;  // always stored in millimeters
 
-    static Logger log = LoggerFactory.getLogger(Path.class.getName());
+    private final static Logger log = LoggerFactory.getLogger(Path.class.getName());
 }

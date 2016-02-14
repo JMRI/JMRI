@@ -164,6 +164,6 @@ public class ExportCars extends XmlFile {
 
     private static String OperationsFileName = "ExportOperationsCarRoster.csv"; // NOI18N
 
-    static Logger log = LoggerFactory.getLogger(ExportCars.class.getName());
+    private final static Logger log = LoggerFactory.getLogger(ExportCars.class.getName());
 
 }

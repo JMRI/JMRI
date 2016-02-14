@@ -145,7 +145,7 @@ public class Reply extends AbstractMRReply {
         return (byte) b;
     }
 
-    static Logger log = LoggerFactory.getLogger(Reply.class.getName());
+    private final static Logger log = LoggerFactory.getLogger(Reply.class.getName());
 }
 
 /* @(#)Reply.java */

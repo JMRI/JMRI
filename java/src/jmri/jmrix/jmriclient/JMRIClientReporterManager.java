@@ -36,7 +36,7 @@ public class JMRIClientReporterManager extends jmri.managers.AbstractReporterMan
         return t;
     }
 
-    static Logger log = LoggerFactory.getLogger(JMRIClientReporterManager.class.getName());
+    private final static Logger log = LoggerFactory.getLogger(JMRIClientReporterManager.class.getName());
 
 }
 

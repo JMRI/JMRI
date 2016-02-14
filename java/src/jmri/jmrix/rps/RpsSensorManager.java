@@ -43,7 +43,7 @@ public class RpsSensorManager extends jmri.managers.AbstractSensorManager {
 
     static RpsSensorManager _instance = null;
 
-    static Logger log = LoggerFactory.getLogger(RpsSensorManager.class.getName());
+    private final static Logger log = LoggerFactory.getLogger(RpsSensorManager.class.getName());
 
     static { // class initialization
         // now want a SensorManager always, not just when RPS is created

@@ -23,7 +23,7 @@ public class SimpleSignalHeadServer extends AbstractSignalHeadServer {
 
     private DataOutputStream output;
     private JmriConnection connection;
-    static Logger log = LoggerFactory.getLogger(SimpleSignalHeadServer.class.getName());
+    private final static Logger log = LoggerFactory.getLogger(SimpleSignalHeadServer.class.getName());
 
     public SimpleSignalHeadServer(JmriConnection connection) {
         super();

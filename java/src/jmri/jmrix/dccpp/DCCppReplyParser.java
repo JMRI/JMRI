@@ -57,6 +57,6 @@ public class DCCppReplyParser {
         }
     }
     // initialize logging
-    static Logger log = LoggerFactory.getLogger(DCCppReplyParser.class.getName());
+    private final static Logger log = LoggerFactory.getLogger(DCCppReplyParser.class.getName());
     
 }

@@ -24,5 +24,5 @@ public class InternalSensorManagerXml extends jmri.managers.configurexml.Interna
         sensors.setAttribute("class", this.getClass().getName());
     }
 
-    static Logger log = LoggerFactory.getLogger(InternalSensorManagerXml.class.getName());
+    private final static Logger log = LoggerFactory.getLogger(InternalSensorManagerXml.class.getName());
 }

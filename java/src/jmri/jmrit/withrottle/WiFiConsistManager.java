@@ -84,6 +84,6 @@ public class WiFiConsistManager extends AbstractConsistManager {
         }
     }
 
-    static Logger log = LoggerFactory.getLogger(WiFiConsistManager.class.getName());
+    private final static Logger log = LoggerFactory.getLogger(WiFiConsistManager.class.getName());
 
 }

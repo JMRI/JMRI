@@ -38,5 +38,5 @@ public class SimpleServerMenu extends JMenu {
 
     }
 
-    static Logger log = LoggerFactory.getLogger(SimpleServerMenu.class.getName());
+    private final static Logger log = LoggerFactory.getLogger(SimpleServerMenu.class.getName());
 }

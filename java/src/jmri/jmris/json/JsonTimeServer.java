@@ -17,7 +17,7 @@ public class JsonTimeServer extends AbstractTimeServer {
 
     private final JmriConnection connection;
     private final ObjectMapper mapper;
-    static Logger log = LoggerFactory.getLogger(JsonTimeServer.class);
+    private final static Logger log = LoggerFactory.getLogger(JsonTimeServer.class);
 
     JsonTimeServer(JmriConnection connection) {
         super();

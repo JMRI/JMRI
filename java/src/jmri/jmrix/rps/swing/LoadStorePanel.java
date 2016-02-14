@@ -112,5 +112,5 @@ public class LoadStorePanel extends javax.swing.JPanel {
         }
     }
 
-    static Logger log = LoggerFactory.getLogger(LoadStorePanel.class.getName());
+    private final static Logger log = LoggerFactory.getLogger(LoadStorePanel.class.getName());
 }

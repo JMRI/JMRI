@@ -321,5 +321,5 @@ public class PositionablePolygon extends PositionableShape {
         }
     }
 
-    static Logger log = LoggerFactory.getLogger(PositionablePolygon.class.getName());
+    private final static Logger log = LoggerFactory.getLogger(PositionablePolygon.class.getName());
 }

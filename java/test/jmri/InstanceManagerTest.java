@@ -232,6 +232,6 @@ public class InstanceManagerTest extends TestCase implements InstanceManagerAuto
         };
     }
 
-    static Logger log = LoggerFactory.getLogger(InstanceManagerTest.class.getName());
+    private final static Logger log = LoggerFactory.getLogger(InstanceManagerTest.class.getName());
 
 }

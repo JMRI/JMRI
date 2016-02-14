@@ -91,6 +91,6 @@ public class JmriServerFrame extends jmri.util.JmriJFrame {
         JmriServer.instance().stop();
     }
 
-    static Logger log = LoggerFactory.getLogger(JmriServerFrame.class.getName());
+    private final static Logger log = LoggerFactory.getLogger(JmriServerFrame.class.getName());
 
 }

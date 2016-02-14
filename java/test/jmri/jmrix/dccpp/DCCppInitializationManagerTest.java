@@ -66,6 +66,6 @@ public class DCCppInitializationManagerTest extends TestCase {
         apps.tests.Log4JFixture.tearDown();
     }
 
-    static Logger log = LoggerFactory.getLogger(DCCppInitializationManagerTest.class.getName());
+    private final static Logger log = LoggerFactory.getLogger(DCCppInitializationManagerTest.class.getName());
 
 }

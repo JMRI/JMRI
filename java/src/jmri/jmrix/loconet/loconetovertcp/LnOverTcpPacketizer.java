@@ -300,7 +300,7 @@ public class LnOverTcpPacketizer extends LnPacketizer {
         }
     }
 
-    static Logger log = LoggerFactory.getLogger(LnOverTcpPacketizer.class.getName());
+    private final static Logger log = LoggerFactory.getLogger(LnOverTcpPacketizer.class.getName());
 }
 
 /* @(#)LnOverTcpPacketizer.java */

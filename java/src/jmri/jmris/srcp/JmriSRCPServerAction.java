@@ -33,7 +33,7 @@ public class JmriSRCPServerAction extends AbstractAction {
         //f.setVisible(true);
         JmriSRCPServerManager.getInstance().getServer().start();
     }
-    static Logger log = LoggerFactory.getLogger(JmriSRCPServerAction.class.getName());
+    private final static Logger log = LoggerFactory.getLogger(JmriSRCPServerAction.class.getName());
 }
 
 

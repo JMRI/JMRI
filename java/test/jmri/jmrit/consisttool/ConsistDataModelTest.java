@@ -38,6 +38,6 @@ public class ConsistDataModelTest extends TestCase {
         return suite;
     }
 
-    static Logger log = LoggerFactory.getLogger(ConsistDataModelTest.class.getName());
+    private final static Logger log = LoggerFactory.getLogger(ConsistDataModelTest.class.getName());
 
 }
