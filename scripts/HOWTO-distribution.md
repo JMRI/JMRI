@@ -79,11 +79,13 @@ If you're attempting to perform this on MS Windows, refer to the MS Windows note
 - Bring in all possible [sf.net patches](https://sourceforge.net/p/jmri/patches/), including decoders
 
 - Check if the decoder definitions have changed since the previous release (almost always true) If so, remake the decoder index.
+
 ```
         ant remakedecoderindex
 ```
+ 
+  Check 'session.log' and 'messages.log' located in current directory as, in case of errors they might not always be output to the console.
 
-    Check 'session.log' and 'messages.log' located in current directory as, in case of errors they might not always be output to the console.
 ```
         git diff xml/decoderIndex.xml
         git commit -m"update decoder index" xml/decoderIndex.xml
@@ -94,6 +96,7 @@ If you're attempting to perform this on MS Windows, refer to the MS Windows note
 - Commit any changes in your local web site directory, as these can end up in help, xml, etc (See the JMRI page on local web sites for details)
 
 - Remake the help index (need a command line approach, so can put in ant!)
+
 ```
         cd help/en/
         rm ~/.jhelpdev    (to make sure the right preferences are chosen)
@@ -104,6 +107,7 @@ If you're attempting to perform this on MS Windows, refer to the MS Windows note
 ```
 
 - In that same directory, also remake the index and toc web pages by doing invoking ant (no argument needed).
+
 ```
         ant
 ```
@@ -111,6 +115,7 @@ If you're attempting to perform this on MS Windows, refer to the MS Windows note
 - [ ] We need to consider whether to do this in help/fr, the French translation; there will perhaps be eventually other translations too, so keep that in mind
 
 - Run the program and make sure help works.
+
 ```
         git commit -m"JavaHelp indexing update" .
         cd ../..
@@ -122,16 +127,19 @@ If you're attempting to perform this on MS Windows, refer to the MS Windows note
 We roll some general code maintenance items into the release process.  They can be skipped occasionally.
 
 - Check for any files with multiple UTF-8 Byte-Order-Marks.  This shouldn't usually happen but when it does can be a bit tricky to find. Scan from the root of the repository and fix any files found:
+
 ```
         grep -rlI --exclude-dir=.git '^\xEF\xBB\xBF\xEF\xBB\xBF' .
 ```
-  It might be necessary to use a Hex editor to remove the erroneous extra Byte-Order-Marks - a valid UTF-8 file should only have either one 3-byte BOM (EF BB BF) or no BOM at all.
+ 
+    It might be necessary to use a Hex editor to remove the erroneous extra Byte-Order-Marks - a valid UTF-8 file should only have either one 3-byte BOM (EF BB BF) or no BOM at all.
 
 - Run "ant alltest"; make sure they all pass; fix problems and commit back
 
 - Run "ant decoderpro"; check for no startup errors, right version, help index present and working OK. Fix problems and commit back.
 
 - This is a good place to check that the decoder XSLT transforms work
+
 ```
         cd xml/XSLT
         ant
@@ -149,6 +157,7 @@ We roll some general code maintenance items into the release process.  They can 
 - Create a [new milestone](https://github.com/JMRI/JMRI/milestones) with the _next_ release number, dated the 2nd Saturday of the month (might be already there, we've been posting them a few in advance)
 
 - Create the _next_ release note, so that people will document new (overlapping) changes there. (We need to work through automation of version number values below)
+
 ```    
         cd (local web copy)/releasenotes
         git pull 
@@ -166,11 +175,13 @@ We roll some general code maintenance items into the release process.  They can 
 - Pull back to make sure your repository is fully up to date
 
 - Start the release by creating a new "release branch" using Ant.  (If you need to make a "branch from a branch", such as nearing the end of the development cycle, this will need to be done manually rather than via ant.)
+
 ```
         ant make-test-release-branch
 ```
+ 
+    This will have done (more or less) the following actions:
 
-  This will have done (more or less) the following actions:
 ```    
         git checkout master
         git pull
@@ -183,7 +194,7 @@ We roll some general code maintenance items into the release process.  They can 
 ```
 
 - Put a comment in the release GitHub item saying the branch exists, and all future changes should be documented in the new release note
- 
+
 ```
 The release-4.3.1 branch has been created. 
 
@@ -221,11 +232,13 @@ If you can't use Jenkins for the actual build, you can create the files locally:
 If you're building locally:
 * You need to have installed NSIS from http://nsis.sourceforge.net (we use version 2.44)
 * Either make sure that 'makensis' is in your path, or set nsis.home in your local.properties file to the root of the nsis installation:
+
 ```
         nsis.home=/opt/nsis/nsis-2.46/
 ```
 
 - Get the release in your local work directory
+
 ```
     git checkout release-4.1.4
 ```
@@ -233,21 +246,24 @@ If you're building locally:
 - edit release.properties to say release.official=true (last line)
 
 - Do the build:
+
 ```
     ant -Dnsis.home="" clean packages
 ```
-
-  Ant will do the various builds, construct the distribution directories, and finally construct the Linux, Mac OS X and Windows distribution files in dist/releases/
+ 
+    Ant will do the various builds, construct the distribution directories, and finally construct the Linux, Mac OS X and Windows distribution files in dist/releases/
 
 - Put the Linux, Mac OS X and Windows files where developers can take a quick look, send an email to the developer list, and WAIT FOR SOME REPLIES
-     
+ 
     The main JMRI web site gets completely overwritten by Jenkins, so one approach:
+
  ```   
         ssh user,jmri@shell.sf.net create
         scp dist/release/JMRI.* user,jmri@shell.sf.net:htdocs/release/
 ```
  
     puts them at
+
 ```    
         http://user.users.sf.net/release
 ```
