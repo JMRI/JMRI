@@ -83,7 +83,7 @@ If you're attempting to perform this on MS Windows, refer to the MS Windows note
         ant remakedecoderindex
 ```
 
-(Check 'session.log' and 'messages.log' located in current directory as, in case of errors they might not always be output to the console)
+  Check 'session.log' and 'messages.log' located in current directory as, in case of errors they might not always be output to the console.
 ```
         git diff xml/decoderIndex.xml
         git commit -m"update decoder index" xml/decoderIndex.xml
@@ -103,14 +103,14 @@ If you're attempting to perform this on MS Windows, refer to the MS Windows note
         (quit)
 ```
 
-In that same directory, also remake the index and toc web pages by doing invoking ant (no argument needed).
+- In that same directory, also remake the index and toc web pages by doing invoking ant (no argument needed).
 ```
         ant
 ```
 
-(Need to consider whether to do this in help/fr, and eventually others)
+- [ ] (Need to consider whether to do this in help/fr, and eventually others)
 
-Run the program and make sure help works.
+- Run the program and make sure help works.
 ```
         git commit -m"JavaHelp indexing update" .
         cd ../..
@@ -126,7 +126,7 @@ We roll some general code maintenance items into the release process.  They can 
         grep -rlI --exclude-dir=.git '^\xEF\xBB\xBF\xEF\xBB\xBF' .
 ```
 
-It might be necessary to use a Hex editor to remove the erroneous extra Byte-Order-Marks - a valid UTF-8 file should only have either one 3-byte BOM (EF BB BF) or no BOM at all.
+  It might be necessary to use a Hex editor to remove the erroneous extra Byte-Order-Marks - a valid UTF-8 file should only have either one 3-byte BOM (EF BB BF) or no BOM at all.
 
 - Run "ant alltest"; make sure they all pass; fix problems and commit back
 
@@ -212,7 +212,7 @@ Jenkins will be creating files shortly at [the usual place](http://builds.jmri.o
         Description
         Git Modules: Branch
     
-and click "Save"
+    and click "Save"
 
 - The build will start shortly (or click "Build Now"). Wait for it to complete.
 
@@ -240,22 +240,22 @@ If you're building locally:
     ant -Dnsis.home="" clean packages
 ```
 
-Ant will do the various builds, construct the distribution directories, and finally construct the Linux, Mac OS X and Windows distribution files in dist/releases/
+  Ant will do the various builds, construct the distribution directories, and finally construct the Linux, Mac OS X and Windows distribution files in dist/releases/
 
 - Put the Linux, Mac OS X and Windows files where developers can take a quick look, send an email to the developer list, and WAIT FOR SOME REPLIES
      
-The main JMRI web site gets completely overwritten by Jenkins, so one approach:
+    The main JMRI web site gets completely overwritten by Jenkins, so one approach:
  ```   
         ssh user,jmri@shell.sf.net create
         scp dist/release/JMRI.* user,jmri@shell.sf.net:htdocs/release/
 ```
  
-puts them at
+    puts them at
 ```    
         http://user.users.sf.net/release
 ```
  
-(The user has to have put the htdocs link in their SF.net account)
+    (The user has to have put the htdocs link in their SF.net account)
 
 ================================================================================
 ## Further Changes
@@ -291,11 +291,11 @@ If anybody wants to add a change from here on in, they should
 
 - Upload the Linux, Mac OS X and Windows files to sourceforge
 
-Download from CI, check integrity (make sure compressed files not expanded), then do (replace "user" with your SourceForge.net user name; must have SSH keys for SourceForge.net set up)
+ - Download from CI, check integrity (make sure compressed files not expanded), then do (replace "user" with your SourceForge.net user name; must have SSH keys for SourceForge.net set up)
 
-(If you use a browser to download instead of curl, make sure the .tgz wasn't auto-expanded)
+ - (If you use a browser to download instead of curl, make sure the .tgz wasn't auto-expanded)
 
-(the "./testrelease 4.1.4" local script on shell.sf.net does the following steps, except for the edit, of course)
+ - (The "./testrelease 4.1.4" local script on shell.sf.net does the following steps, except for the edit, of course)
 ```
     ssh user,jmri@shell.sf.net create
     ssh user,jmri@shell.sf.net
@@ -322,7 +322,7 @@ Download from CI, check integrity (make sure compressed files not expanded), the
     (cd xml/XSLT; ant xslt upload)
 ```
 
-Note: the very first time doing this on a new machine, it will be required to run the rsync command manually as the ssh fingerprint for the server wil need to be added to the local machine. Without this, it will fail via ant.
+  Note: the very first time doing this on a new machine, it will be required to run the rsync command manually as the ssh fingerprint for the server wil need to be added to the local machine. Without this, it will fail via ant.
 
 - Wait until the downloads have propagated to the mirrors; check by trying to download each file
 
