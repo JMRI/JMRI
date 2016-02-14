@@ -4,8 +4,6 @@ package jmri.jmrit.symbolicprog;
 import java.awt.event.ActionEvent;
 import javax.swing.AbstractAction;
 import jmri.jmrit.symbolicprog.tabbedframe.PaneProgFrame;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 
 /**
  * Action to print the information in a VariableTable.
@@ -42,6 +40,4 @@ public class PrintAction extends AbstractAction {
     public void actionPerformed(ActionEvent e) {
         mFrame.printPanes(isPreview);
     }
-
-    private final static Logger log = LoggerFactory.getLogger(PrintAction.class.getName());
 }
