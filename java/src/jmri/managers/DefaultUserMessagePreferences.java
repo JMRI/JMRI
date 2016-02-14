@@ -68,6 +68,7 @@ public class DefaultUserMessagePreferences extends jmri.jmrit.XmlFile implements
         // register a shutdown task to fore storing of preferences at shutdown
         if (userPreferencesShutDownTask == null) {
             userPreferencesShutDownTask = new QuietShutDownTask("User Preferences Shutdown") {
+                //NOI18N
                 @Override
                 public boolean doAction() {
                     if (getChangeMade()) {
@@ -89,8 +90,10 @@ public class DefaultUserMessagePreferences extends jmri.jmrit.XmlFile implements
             }
         }
 
-        preferenceItemDetails(getClassName(), "reminder", "Hide Reminder Location Message");
-        classPreferenceList.get(getClassName()).setDescription("User Preferences");
+        preferenceItemDetails(getClassName(), "reminder", Bundle.getMessage("HideReminderLocationMessage"));
+        //TODO I18N in ManagersBundle.properties (this is a checkbox on prefs tab Messages|Misc items)
+        classPreferenceList.get(getClassName()).setDescription(Bundle.getMessage("UserPreferences"));
+        //TODO I18N in ManagersBundle.properties (this is title on prefs tab Messages|Misc items)
         readUserPreferences();
     }
 
@@ -418,11 +421,13 @@ public class DefaultUserMessagePreferences extends jmri.jmrit.XmlFile implements
             container.setLayout(new BoxLayout(container, BoxLayout.Y_AXIS));
             container.add(new JLabel(message));
             final JCheckBox rememberSession = new JCheckBox("Skip message for this session only?");
+            //TODO I18N in ManagersBundle.properties
             if (sessionOnly) {
                 rememberSession.setFont(rememberSession.getFont().deriveFont(10f));
                 container.add(rememberSession);
             }
             final JCheckBox remember = new JCheckBox("Skip message in future?");
+            //TODO I18N in ManagersBundle.properties
             if (alwaysRemember) {
                 remember.setFont(remember.getFont().deriveFont(10f));
                 container.add(remember);
@@ -610,6 +615,7 @@ public class DefaultUserMessagePreferences extends jmri.jmrit.XmlFile implements
             return;
         }
         showInfoMessage("Reminder", "You can re-display this message from 'Edit|Preferences|Message' Menu.", getClassName(), "reminder");
+        //TODO I18N in ManagersBundle.properties
     }
 
     Hashtable<String, WindowLocations> windowDetails = new Hashtable<String, WindowLocations>();
