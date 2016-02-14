@@ -316,6 +316,7 @@
 	    and coded the function support
 	<li>Alain Le Marchand, who provided a number of decoder definitions and updates
 	<li>Karl Johan Lisby, who made large improvements to the Uhlenbrock Intellibox support
+	    and contributed the Signal Controlled Warrant support
 	<li>Peter Lloyd-Jones, who contributed a script for playing a sound when a function key is pressed on a throttle
 	and wrote instructions and an installer Ubuntu Linux
 	<li>Stephen Lowens, who updated the Digitrax sound decoder definitions
