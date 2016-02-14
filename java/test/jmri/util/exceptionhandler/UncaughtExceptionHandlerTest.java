@@ -5,8 +5,7 @@ import jmri.util.JUnitAppender;
 import jmri.util.SwingTestCase;
 import junit.framework.Test;
 import junit.framework.TestSuite;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
+
 
 /**
  * Tests for the jmri.util.UncaughtExceptionHandler class.
@@ -79,7 +78,5 @@ public class UncaughtExceptionHandlerTest extends SwingTestCase {
         super.tearDown();
         apps.tests.Log4JFixture.tearDown();
     }
-
-    private final static Logger log = LoggerFactory.getLogger(UncaughtExceptionHandlerTest.class.getName());
 
 }
