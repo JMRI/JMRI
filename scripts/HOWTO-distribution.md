@@ -83,7 +83,7 @@ If you're attempting to perform this on MS Windows, refer to the MS Windows note
         ant remakedecoderindex
 ```
 
-- Check 'session.log' and 'messages.log' located in current directory as, in case of errors they might not always be output to the console.
+    Check 'session.log' and 'messages.log' located in current directory as, in case of errors they might not always be output to the console.
 ```
         git diff xml/decoderIndex.xml
         git commit -m"update decoder index" xml/decoderIndex.xml
@@ -125,7 +125,6 @@ We roll some general code maintenance items into the release process.  They can 
 ```
         grep -rlI --exclude-dir=.git '^\xEF\xBB\xBF\xEF\xBB\xBF' .
 ```
-
   It might be necessary to use a Hex editor to remove the erroneous extra Byte-Order-Marks - a valid UTF-8 file should only have either one 3-byte BOM (EF BB BF) or no BOM at all.
 
 - Run "ant alltest"; make sure they all pass; fix problems and commit back
