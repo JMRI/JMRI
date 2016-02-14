@@ -83,7 +83,7 @@ If you're attempting to perform this on MS Windows, refer to the MS Windows note
         ant remakedecoderindex
 ```
 
-  Check 'session.log' and 'messages.log' located in current directory as, in case of errors they might not always be output to the console.
+- Check 'session.log' and 'messages.log' located in current directory as, in case of errors they might not always be output to the console.
 ```
         git diff xml/decoderIndex.xml
         git commit -m"update decoder index" xml/decoderIndex.xml
@@ -108,7 +108,7 @@ If you're attempting to perform this on MS Windows, refer to the MS Windows note
         ant
 ```
 
-- [ ] (Need to consider whether to do this in help/fr, and eventually others)
+- [ ] We need to consider whether to do this in help/fr, the French translation; there will perhaps be eventually other translations too, so keep that in mind
 
 - Run the program and make sure help works.
 ```
@@ -137,8 +137,6 @@ We roll some general code maintenance items into the release process.  They can 
         cd xml/XSLT
         ant
 ```
-     
-If you fix anything, commit it back.
 
 - This is a good place to make sure CATS still builds, see the (doc page)[http://jmri.org/help/en/html/doc/Technical/CATS.shtml] - note that CATS has not been updated to compile cleanly with JMRI 4.*
         
@@ -173,7 +171,7 @@ If you fix anything, commit it back.
         ant make-test-release-branch
 ```
 
- - This will do (more or less) the following actions:
+  This will have done (more or less) the following actions:
 ```    
         git checkout master
         git pull
