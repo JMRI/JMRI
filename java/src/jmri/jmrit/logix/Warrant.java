@@ -384,7 +384,11 @@ public class Warrant extends jmri.implementation.AbstractNamedBean
                 List<RosterEntry> l = Roster.instance().matchingList(null, null, numId, null, null, null, null);
                 if (l.size() > 0) {
                     _train = l.get(0);
-                    _trainId = _train.getId();
+                    if (_trainId == null) {
+                        // In some systems, such as Märklin MFX or ESU ECOS M4, the DCC address is always 0.
+                        // That should not make us overwrite the _trainId.
+                        _trainId = _train.getId();
+                    }
                 } else {
                     _train = null;
                     _trainId = null;
