@@ -2,7 +2,6 @@ package jmri.jmrit.logix;
 
 import java.util.ArrayList;
 import jmri.DccThrottle;
-import static jmri.jmrit.logix.Warrant.log;
 import jmri.InstanceManager;
 import jmri.NamedBean;
 import jmri.SignalHead;
