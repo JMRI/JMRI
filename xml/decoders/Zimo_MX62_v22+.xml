@@ -13,45 +13,17 @@
 <!-- FITNESS FOR A PARTICULAR PURPOSE.  See the GNU General Public License  -->
 <!-- for more details.                                                      -->
 <decoder-config xmlns:xi="http://www.w3.org/2001/XInclude" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="http://jmri.org/xml/schema/decoder.xsd">
-  <version author="Mark Waters mark16jmri@mybtinternet.com" version="1.1" lastUpdated="20160123"/>
-  <version author="Mark Waters mark16w-jmri@yahoo.co.uk" version="1" lastUpdated="20071110"/>
+  <version author="Mark Waters mark16jmri@mybtinternet.com" version="1" lastUpdated="20160123"/>
   <!-- Based on the contribution of many others -->
   <!-- V 1 new file -->
-  <!-- V 1.1 increased highVersion to 34 and added CV144 decoder lock -->
   <decoder>
     <family name="Zimo Silent BEMF decoders, late model" mfg="Zimo">
-      <model model="MX63 version 22-30" lowVersionID="22" highVersionID="34" maxInputVolts="12-24V" maxMotorCurrent="1A, peak=2A for 5 sec." maxTotalCurrent="1.2A" formFactor="HO" numOuts="8" numFns="14">
+      <model model="MX62 version 22+" lowVersionID="22" highVersionID="34" maxInputVolts="22V" maxMotorCurrent="0.8A, peak=2A for 5 sec." maxTotalCurrent="0.8A" formFactor="N" numOuts="4" numFns="14">
         <output name="1" label="White"/>
         <output name="2" label="Yellow"/>
-        <output name="3" label="Brown"/>
-        <output name="4" label="Green"/>
-        <output name="5" label="FO3 Pad (+5v)"/>
-        <output name="6" label="FO4 Pad (+5v)"/>
-        <output name="7" label="SUSI Clock(+5v)"/>
-        <output name="8" label="SUSI Data(+5v)"/>
-        <size length="20" width="12" height="4" units="mm"/>
-      </model>
-      <model model="MX64 version 22-30" lowVersionID="22" highVersionID="34" maxInputVolts="12-24V" maxMotorCurrent="1A, peak=2A for 5 sec." maxTotalCurrent="1.2A" formFactor="HO" numOuts="8" numFns="14">
-        <output name="1" label="White"/>
-        <output name="2" label="Yellow"/>
-        <output name="3" label="Brown"/>
-        <output name="4" label="Green"/>
-        <output name="5" label="FO3 Pad (+5v)"/>
-        <output name="6" label="FO4 Pad (+5v)"/>
-        <output name="7" label="SUSI Clock(+5v)"/>
-        <output name="8" label="SUSI Data(+5v)"/>
-        <size length="26" width="16" height="3" units="mm"/>
-      </model>
-      <model model="MX64H version 22-30" lowVersionID="22" highVersionID="34" maxInputVolts="12-24V" maxMotorCurrent="1.6A, peak=2A for 5 sec." maxTotalCurrent="1.8A" formFactor="HO" numOuts="8" numFns="14">
-        <output name="1" label="White"/>
-        <output name="2" label="Yellow"/>
-        <output name="3" label="Brown"/>
-        <output name="4" label="Green"/>
-        <output name="5" label="FO3 Pad"/>
-        <output name="6" label="FO4 Pad"/>
-        <output name="7" label="FO5/SUSI Clock"/>
-        <output name="8" label="FO6/SUSI Data"/>
-        <size length="26" width="16" height="5" units="mm"/>
+        <output name="3" label="FO1 pad"/>
+        <output name="4" label="FO2 pad"/>
+        <size length="14" width="9" height="3" units="mm"/>
       </model>
     </family>
     <programming direct="yes" paged="yes" register="yes" ops="yes"/>
@@ -145,9 +117,9 @@
         <label>Analog Mode Function Status - F7</label>
         <label xml:lang="it">Funzione di Stato in Analogico : F7</label>
       </variable>
-      <variable CV="13" default="1" mask="VXXXXXXX" item="Analog Mode Function Status - FL(f)">
+      <variable item="Analog Mode Function Status - FL" CV="13" mask="VXXXXXXX" default="1">
         <xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
-        <label>Analog Mode Function Status - F0</label>
+        <label>Analog Mode Function Status - FL</label>
         <label xml:lang="it">Funzione di Stato in Analogico : F0</label>
       </variable>
       <variable CV="19" default="0" item="Consist Address" comment="Allows permanent storage of consist address. Range 0-127">
@@ -228,28 +200,6 @@
         <xi:include href="http://jmri.org/xml/decoders/parts/enum-AddSubtract.xml"/>
         <label>Deceleration Trim Sign</label>
         <label xml:lang="it">Segno Regolazione fine Decellarazione</label>
-      </variable>
-      <variable item="Direction Dependent stops with asymmetrical DCC" CV="27">
-        <enumVal>
-      <enumChoice choice="Does Not Stop">
-        <choice>Does Not Stop</choice>
-        <choice xml:lang="it">Non si ferma</choice>
-      </enumChoice>
-      <enumChoice choice="Stops when Right rail is higher voltage">
-        <choice>Stops when Right rail is higher voltage</choice>
-        <choice xml:lang="it">Si ferma se rotaia destra ha tensione più alta</choice>
-      </enumChoice>
-      <enumChoice choice="Stops when Left rail is higher voltage">
-        <choice>Stops when Left rail is higher voltage</choice>
-        <choice xml:lang="it">Si ferma se rotaia sinistra ha tensione più alta</choice>
-      </enumChoice>
-      <enumChoice choice="Stops in Both Directions">
-        <choice>Stops in Both Directions</choice>
-        <choice xml:lang="it">Si ferma in entrambe le direzioni</choice>
-      </enumChoice>
-    </enumVal>
-        <label>Direction Dependent stops with asymmetrical DCC</label>
-        <label xml:lang="it">Stop Direzionale con DCC asimmetrica</label>
       </variable>
       <variable item="Ch. 1 for Address" CV="28" mask="XXXXXXXV" default="0">
         <xi:include href="http://jmri.org/xml/decoders/parts/enum-disabledEnabled.xml"/>
@@ -1210,16 +1160,6 @@
         <label>Dim Output 4</label>
         <label xml:lang="it">Smorzamento Uscita 4</label>
       </variable>
-      <variable item="Dim Output 5" CV="114" mask="XXXVXXXX" default="0">
-<xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn-1_0.xml"/>
-        <label>Dim Output 5</label>
-        <label xml:lang="it">Smorzamento Uscita 5</label>
-      </variable>
-      <variable item="Dim Output 6" CV="114" mask="XXVXXXXX" default="0">
-        <xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn-1_0.xml"/>
-        <label>Dim Output 6</label>
-        <label xml:lang="it">Smorzamento Uscita 6</label>
-      </variable>
       <variable item="Uncoupler" CV="115" default="0">
         <decVal max="99"/>
         <label>Uncoupler</label>
@@ -1255,25 +1195,10 @@
         <label>Flash Output 4</label>
         <label xml:lang="it">Flash su uscita 4</label>
       </variable>
-      <variable item="Flash Output 5" CV="118" mask="XXXVXXXX" default="0">
-        <xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
-        <label>Flash Output 5</label>
-        <label xml:lang="it">Flash su uscita 5</label>
-      </variable>
-      <variable item="Flash Output 6" CV="118" mask="XXVXXXXX" default="0">
-        <xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
-        <label>Flash Output 6</label>
-        <label xml:lang="it">Flash su uscita 6</label>
-      </variable>
       <variable item="Inverse Flash Output 4" CV="118" mask="XVXXXXXX" default="0">
         <xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
         <label>Inverse Flash Output 4</label>
         <label xml:lang="it">Flash invertito su uscita 4</label>
-      </variable>
-      <variable item="Inverse Flash Output 6" CV="118" mask="VXXXXXXX" default="0">
-       <xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
-        <label>Inverse Flash Output 6</label>
-        <label xml:lang="it">Flash invertito su uscita 6</label>
       </variable>
       <variable item="F6 dims Output 1" CV="119" mask="XXXXXXXV" default="0">
         <xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
@@ -1294,16 +1219,6 @@
         <xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
         <label>F6 dims Output 4</label>
         <label xml:lang="it">F6 smorza uscita 4</label>
-      </variable>
-      <variable item="F6 dims Output 5" CV="119" mask="XXXVXXXX" default="0">
-        <xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
-        <label>F6 dims Output 5</label>
-        <label xml:lang="it">F6 smorza uscita 5</label>
-      </variable>
-      <variable item="F6 dims Output 6" CV="119" mask="XXVXXXXX" default="0">
-        <xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
-        <label>F6 dims Output 6</label>
-        <label xml:lang="it">F6 smorza uscita 6</label>
       </variable>
       <variable item="F6 inverted" CV="119" mask="VXXXXXXX" default="0">
         <xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
@@ -1329,16 +1244,6 @@
        <xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
         <label>F7 dims Output 4</label>
         <label xml:lang="it">F7 smorza uscita 4</label>
-      </variable>
-      <variable item="F7 dims Output 5" CV="120" mask="XXXVXXXX" default="0">
-        <xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
-        <label>F7 dims Output 5</label>
-        <label xml:lang="it">F7 smorza uscita 5</label>
-      </variable>
-      <variable item="F7 dims Output 6" CV="120" mask="XXVXXXXX" default="0">
-        <xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
-        <label>F7 dims Output 6</label>
-        <label xml:lang="it">F7 smorza uscita 6</label>
       </variable>
       <variable item="F7 inverted" CV="120" mask="VXXXXXXX" default="0">
         <xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
@@ -1487,67 +1392,10 @@
         <label>Output 4 behavior</label>
         <label xml:lang="it">Comportamento Uscita 4</label>
       </variable>
-      <variable item="Output 5 effect generated" CV="129" mask="VVVVVVXX">
-        <enumVal>
-          <xi:include href="http://jmri.org/xml/decoders/zimo/Choice-Ligth1.xml"/>
-          <xi:include href="http://jmri.org/xml/decoders/zimo/Choice-Ligth2.xml"/>
-        </enumVal>
-        <label>Output 5 effect generated</label>
-        <label xml:lang="it">Effetti Luci uscita 5</label>
-      </variable>
-      <variable item="Output 5 behavior" CV="129" mask="XXXXXXVV">
-        <xi:include href="http://jmri.org/xml/decoders/parts/enum-both_frw_rev.xml"/>
-        <label>Output 5 behavior</label>
-        <label xml:lang="it">Comportamento Uscita 5</label>
-      </variable>
-      <variable item="Output 6 effect generated" CV="130" mask="VVVVVVXX">
-        <enumVal>
-          <xi:include href="http://jmri.org/xml/decoders/zimo/Choice-Ligth1.xml"/>
-          <xi:include href="http://jmri.org/xml/decoders/zimo/Choice-Ligth2.xml"/>
-        </enumVal>
-        <label>Output 6 effect generated</label>
-        <label xml:lang="it">Effetti Luci uscita 6</label>
-      </variable>
-      <variable item="Output 6 behavior" CV="130" mask="XXXXXXVV">
-        <xi:include href="http://jmri.org/xml/decoders/parts/enum-both_frw_rev.xml"/>
-        <label>Output 6 behavior</label>
-        <label xml:lang="it">Comportamento Uscita 6</label>
-      </variable>
-      <variable item="Output 7 effect generated" CV="131" mask="VVVVVVXX">
-        <enumVal>
-          <xi:include href="http://jmri.org/xml/decoders/zimo/Choice-Ligth1.xml"/>
-          <xi:include href="http://jmri.org/xml/decoders/zimo/Choice-Ligth2.xml"/>
-        </enumVal>
-        <label>Output 7 effect generated</label>
-        <label xml:lang="it">Effetti Luci uscita 7</label>
-      </variable>
-      <variable item="Output 7 behavior" CV="131" mask="XXXXXXVV">
-        <xi:include href="http://jmri.org/xml/decoders/parts/enum-both_frw_rev.xml"/>
-        <label>Output 7 behavior</label>
-        <label xml:lang="it">Comportamento Uscita 7</label>
-      </variable>
-      <variable item="Output 8 effect generated" CV="132" mask="VVVVVVXX">
-        <enumVal>
-          <xi:include href="http://jmri.org/xml/decoders/zimo/Choice-Ligth1.xml"/>
-          <xi:include href="http://jmri.org/xml/decoders/zimo/Choice-Ligth2.xml"/>
-        </enumVal>
-        <label>Output 8 effect generated</label>
-        <label xml:lang="it">Effetti Luci uscita 8</label>
-      </variable>
-      <variable item="Output 8 behavior" CV="132" mask="XXXXXXVV">
-        <xi:include href="http://jmri.org/xml/decoders/parts/enum-both_frw_rev.xml"/>
-        <label>Output 8 behavior</label>
-        <label xml:lang="it">Comportamento Uscita 8</label>
-      </variable>
       <variable item="Function Output 2 as virtual Cam" CV="133" default="0">
         <decVal min="0" max="255"/>
         <label>Function Output 2 as virtual Cam</label>
         <label xml:lang="it">Uscita 2 = Cam Virtuale</label>
-      </variable>
-      <variable item="Asymmetrical DCC Threshold" CV="134" default="106">
-        <decVal max="214"/>
-        <label>Asymmetrical DCC Threshold</label>
-        <label xml:lang="it">Soglia DCC asimmetrica</label>
       </variable>
       <variable item="Deactivating HLU direction bits" CV="137" default="0">
         <enumVal>
@@ -1637,7 +1485,7 @@
       </variable>
       <variable item="Distance controlled stopping" CV="140" default="0">
         <enumVal>
-          <xi:include href="http://jmri.org/xml/decoders/zimo/Choice-Ligth6.xml"/>
+          <xi:include href="http://jmri.org/xml/decoders/zimo/Choice-Light7.xml"/>
         </enumVal>
         <label>Distance controlled stopping</label>
         <label xml:lang="it">Fermata controllata da distanza</label>
@@ -1646,11 +1494,6 @@
         <decVal min="0" max="255"/>
         <label>Distance controlled stopping Distance</label>
         <label xml:lang="it">Distanza di Fermata controllata da distanza</label>
-      </variable>
-      <variable item="Distance controlled stopping speed correction (ABC)" CV="142" default="12">
-        <decVal min="0" max="255"/>
-        <label>Distance controlled stopping speed correction (ABC)</label>
-        <label xml:lang="it">Distanza di Fermata controllata da velocità (ABC)</label>
       </variable>
       <variable item="Distance controlled stopping speed correction (HLU)" CV="143" default="0">
         <decVal min="0" max="255"/>
@@ -2096,8 +1939,8 @@
             <text>    3 </text>
           </label>
           <label>
-            <text> Brown </text>
-            <text xml:lang="it">Marrone</text>
+            <text> FO1 pad </text>
+            <text xml:lang="it">Pad Funz.1</text>
           </label>
           <display item="FL(f) controls output 3" format="checkbox" label="">
             <label/>
@@ -2147,8 +1990,8 @@
             <text>    4 </text>
           </label>
           <label>
-            <text> Green  </text>
-            <text xml:lang="it">Verde</text>
+            <text> FO3 pad  </text>
+            <text xml:lang="it">Pad Funz.2</text>
           </label>
           <display item="FL(f) controls output 4" format="checkbox" label="">
             <label/>
@@ -2191,210 +2034,6 @@
           </display>
           <display item="AltF12 controls output 4" format="checkbox" label="">
             <label/>
-          </display>
-        </column>
-        <column>
-          <label>
-            <text>     5 </text>
-          </label>
-          <label>
-            <text>FO3 Pad  </text>
-            <text xml:lang="it">Pad Funz.3</text>
-          </label>
-          <display item="FL(f) controls output 5" format="checkbox" label="">
-            <label/>
-          </display>
-          <display item="FL(r) controls output 5" format="checkbox" label="">
-            <label/>
-          </display>
-          <display item="F1 controls output 5" format="checkbox" label="">
-            <label/>
-          </display>
-          <display item="F2 controls output 5" format="checkbox" label="">
-            <label/>
-          </display>
-          <display item="AltF3 controls output 5" format="checkbox" label="">
-            <label/>
-          </display>
-          <display item="AltF4 controls output 5" format="checkbox" label="">
-            <label/>
-          </display>
-          <display item="AltF5 controls output 5" format="checkbox" label="">
-            <label/>
-          </display>
-          <display item="AltF6 controls output 5" format="checkbox" label="">
-            <label/>
-          </display>
-          <display item="AltF7 controls output 5" format="checkbox" label="">
-            <label/>
-          </display>
-          <display item="AltF8 controls output 5" format="checkbox" label="">
-            <label/>
-          </display>
-          <display item="AltF9 controls output 5" format="checkbox" label="">
-            <label/>
-          </display>
-          <display item="AltF10 controls output 5" format="checkbox" label="">
-            <label/>
-          </display>
-          <display item="AltF11 controls output 5" format="checkbox" label="">
-            <label/>
-          </display>
-          <display item="AltF12 controls output 5" format="checkbox" label="">
-            <label/>
-          </display>
-        </column>
-        <column>
-          <label>
-            <text>    6  </text>
-          </label>
-          <label>
-            <text>FO4 Pad  </text>
-            <text xml:lang="it">Pad Funz.4</text>
-          </label>
-          <display item="FL(f) controls output 6" format="checkbox" label="">
-            <label/>
-          </display>
-          <display item="FL(r) controls output 6" format="checkbox" label="">
-            <label/>
-          </display>
-          <display item="F1 controls output 6" format="checkbox" label="">
-            <label/>
-          </display>
-          <display item="F2 controls output 6" format="checkbox" label="">
-            <label/>
-          </display>
-          <display item="AltF3 controls output 6" format="checkbox" label="">
-            <label/>
-          </display>
-          <display item="AltF4 controls output 6" format="checkbox" label="">
-            <label/>
-          </display>
-          <display item="AltF5 controls output 6" format="checkbox" label="">
-            <label/>
-          </display>
-          <display item="AltF6 controls output 6" format="checkbox" label="">
-            <label/>
-          </display>
-          <display item="AltF7 controls output 6" format="checkbox" label="">
-            <label/>
-          </display>
-          <display item="AltF8 controls output 6" format="checkbox" label="">
-            <label/>
-          </display>
-          <display item="AltF9 controls output 6" format="checkbox" label="">
-            <label/>
-          </display>
-          <display item="AltF10 controls output 6" format="checkbox" label="">
-            <label/>
-          </display>
-          <display item="AltF11 controls output 6" format="checkbox" label="">
-            <label/>
-          </display>
-          <display item="AltF12 controls output 6" format="checkbox" label="">
-            <label/>
-          </display>
-        </column>
-        <column>
-          <label>
-            <text>     7</text>
-          </label>
-          <label>
-            <text>FO5 pad </text>
-            <text xml:lang="it">Pad Funz.5</text>
-          </label>
-          <display item="FL(f) controls output 7" format="checkbox" label="">
-            <label/>
-          </display>
-          <display item="FL(r) controls output 7" format="checkbox" label="">
-            <label/>
-          </display>
-          <display item="F1 controls output 7" format="checkbox" label="">
-            <label/>
-          </display>
-          <display item="F2 controls output 7" format="checkbox" label="">
-            <label/>
-          </display>
-          <display item="AltF3 controls output 7" format="checkbox" label="">
-            <label/>
-          </display>
-          <display item="AltF4 controls output 7" format="checkbox" label="">
-            <label/>
-          </display>
-          <display item="AltF5 controls output 7" format="checkbox" label="">
-            <label/>
-          </display>
-          <display item="AltF6 controls output 7" format="checkbox" label="">
-            <label/>
-          </display>
-          <display item="AltF7 controls output 7" format="checkbox" label="">
-            <label/>
-          </display>
-          <display item="AltF8 controls output 7" format="checkbox" label="">
-            <label/>
-          </display>
-          <display item="AltF9 controls output 7" format="checkbox" label="">
-            <label/>
-          </display>
-          <display item="AltF10 controls output 7" format="checkbox" label="">
-            <label/>
-          </display>
-          <display item="AltF11 controls output 7" format="checkbox" label=" ">
-            <label> </label>
-          </display>
-          <display item="AltF12 controls output 7" format="checkbox" label=" ">
-            <label> </label>
-          </display>
-        </column>
-        <column>
-          <label>
-            <text>      8</text>
-          </label>
-          <label>
-            <text> FO6 Pad </text>
-            <text xml:lang="it">Pad Funz.6</text>
-          </label>
-          <display item="FL(f) controls output 8" format="checkbox" label="">
-            <label/>
-          </display>
-          <display item="FL(r) controls output 8" format="checkbox" label="">
-            <label/>
-          </display>
-          <display item="F1 controls output 8" format="checkbox" label="">
-            <label/>
-          </display>
-          <display item="F2 controls output 8" format="checkbox" label="">
-            <label/>
-          </display>
-          <display item="AltF3 controls output 8" format="checkbox" label="">
-            <label/>
-          </display>
-          <display item="AltF4 controls output 8" format="checkbox" label="">
-            <label/>
-          </display>
-          <display item="AltF5 controls output 8" format="checkbox" label="">
-            <label/>
-          </display>
-          <display item="AltF6 controls output 8" format="checkbox" label="">
-            <label/>
-          </display>
-          <display item="AltF7 controls output 8" format="checkbox" label="">
-            <label/>
-          </display>
-          <display item="AltF8 controls output 8" format="checkbox" label="">
-            <label/>
-          </display>
-          <display item="AltF9 controls output 8" format="checkbox" label="">
-            <label/>
-          </display>
-          <display item="AltF10 controls output 8" format="checkbox" label="">
-            <label/>
-          </display>
-          <display item="AltF11 controls output 8" format="checkbox" label=" ">
-            <label> </label>
-          </display>
-          <display item="AltF12 controls output 8" format="checkbox" label=" ">
-            <label> </label>
           </display>
         </column>
       </row>
@@ -2703,98 +2342,6 @@
       <display item="Ch. 1 for Acknowledgment"/>
     </column>
     <name>Railcom</name>
-  </pane>
-  <pane>
-    <column>
-      <display item="Direction Dependent stops with asymmetrical DCC"/>
-      <label>
-        <text> </text>
-      </label>
-      <display item="Distance controlled stopping"/>
-      <label>
-        <text> </text>
-      </label>
-      <row>
-        <column>
-          <display item="Distance controlled stopping Distance"/>
-          <label>
-            <text> </text>
-          </label>
-          <display item="Distance controlled stopping speed correction (ABC)"/>
-          <label>
-            <text> </text>
-          </label>
-        </column>
-        <column>
-          <display item="Distance controlled stopping Distance" format="hslider" label="">
-            <label/>
-          </display>
-          <label>
-            <text> </text>
-          </label>
-          <display item="Distance controlled stopping speed correction (ABC)" format="hslider" label="">
-            <label/>
-          </display>
-          <label>
-            <text> </text>
-          </label>
-        </column>
-      </row>
-      <label>
-        <text> </text>
-      </label>
-      <label>
-        <text> </text>
-      </label>
-      <row>
-        <column>
-          <display item="Asymmetrical DCC Threshold"/>
-          <label>
-            <text> </text>
-          </label>
-        </column>
-        <column>
-          <label>
-            <text>    </text>
-          </label>
-        </column>
-        <column>
-          <row>
-            <column>
-              <label>
-                <text>Hundreds digit = sensitivity</text>
-                <text xml:lang="it">Centinaia= sensibilità</text>
-              </label>
-            </column>
-            <column>
-              <label>
-                <text>    </text>
-              </label>
-            </column>
-            <column>
-              <label>
-                <text>0 = Fast recognition</text>
-                <text xml:lang="it">0= sensibilità alta</text>
-              </label>
-              <label>
-                <text>1 = Normal recognition (0.5s)</text>
-                <text xml:lang="it">1= sensibilità normale (0.5s)</text>
-              </label>
-              <label>
-                <text>2 = Slow recognition (1s)</text>
-                <text xml:lang="it">2= sensibilità bassa (1s)</text>
-              </label>
-            </column>
-          </row>
-          <label>
-            <text>Tens and Ones digits = Assymmetrical threshold in tenths of a volt</text>
-            <text xml:lang="it">Decine e Unità= soglia asimmetrica in decimi di Volt</text>
-          </label>
-        </column>
-      </row>
-    </column>
-    <name>ABC</name>
-    <name xml:lang="it">ABC-DCC Asimmetrica</name>
   </pane>
 <pane>
   <column>
