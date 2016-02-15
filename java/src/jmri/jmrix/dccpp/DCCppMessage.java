@@ -1645,7 +1645,7 @@ public class DCCppMessage extends jmri.jmrix.AbstractMRMessage {
 	// Sanity check inputs
 	if (address < 1 || address > DCCppConstants.MAX_LOCO_ADDRESS) return(null);
 	
-        DCCppMessage m = new DCCppMessage((char)DCCppConstants.THROTTLE_CMD);
+        DCCppMessage m = new DCCppMessage(DCCppConstants.THROTTLE_CMD);
         m.myMessage.append(" " + register);
         m.myMessage.append(" " + address);
 	if (speed < 0.0) {
