@@ -20,18 +20,13 @@ package jmri.jmrix.dccpp.swing;
 
 import java.awt.Frame;
 import java.awt.event.ActionEvent;
-import java.util.HashMap;
 import javax.swing.AbstractAction;
-import jmri.jmrix.dccpp.DCCppSensor;
-import jmri.jmrix.dccpp.DCCppSensorManager; // Need this?
-import jmri.jmrix.dccpp.DCCppTurnoutManager;
-import jmri.jmrix.dccpp.DCCppSystemConnectionMemo;
-import jmri.jmrix.dccpp.DCCppTrafficController;
 import jmri.jmrix.dccpp.DCCppInterface;
 import jmri.jmrix.dccpp.DCCppMessage;
-
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
+import jmri.jmrix.dccpp.DCCppSensorManager; // Need this?
+import jmri.jmrix.dccpp.DCCppSystemConnectionMemo;
+import jmri.jmrix.dccpp.DCCppTrafficController;
+import jmri.jmrix.dccpp.DCCppTurnoutManager;
 
 public class ConfigSensorsAndTurnoutsAction extends AbstractAction {
 
@@ -63,8 +58,5 @@ public class ConfigSensorsAndTurnoutsAction extends AbstractAction {
         }
         f.setExtendedState(Frame.NORMAL);
     }
-
-    static private Logger log = LoggerFactory
-            .getLogger(ConfigSensorsAndTurnoutsAction.class.getName());
 
 }

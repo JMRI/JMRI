@@ -3,8 +3,6 @@ package jmri.jmrix.lenz.li100f.configurexml;
 import jmri.jmrix.lenz.configurexml.AbstractXNetSerialConnectionConfigXml;
 import jmri.jmrix.lenz.li100f.ConnectionConfig;
 import jmri.jmrix.lenz.li100f.LI100Adapter;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 
 /**
  * Handle XML persistance of layout connections by persistening the LI100Adapter
@@ -40,8 +38,5 @@ public class ConnectionConfigXml extends AbstractXNetSerialConnectionConfigXml {
     protected void register() {
         this.register(new ConnectionConfig(adapter));
     }
-
-    // initialize logging
-    private final static Logger log = LoggerFactory.getLogger(ConnectionConfigXml.class.getName());
 
 }

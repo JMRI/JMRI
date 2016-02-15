@@ -20,9 +20,6 @@ public class z21XNetSimulatorAdapter {
     private int csStatus;
     // status values from the z21 Documentation.
     private final static int csEmergencyStop = 0x01;
-    private final static int csTrackVoltageOff = 0x02;
-    private final static int csShortCircuit = 0x04;
-    private final static int csProgrammingModeActive = 0x20;
     // 0x00 means normal mode.
     private final static int csNormalMode = 0x00;
 

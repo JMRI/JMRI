@@ -6,18 +6,6 @@ import jmri.jmrix.AbstractMRListener;
 import jmri.jmrix.AbstractMRMessage;
 import jmri.jmrix.AbstractMRReply;
 import jmri.jmrix.AbstractMRTrafficController;
-import java.io.BufferedReader;
-import java.io.IOException;
-import java.io.DataInputStream;
-import javax.swing.SwingUtilities;
-import static jmri.jmrix.AbstractMRTrafficController.AUTORETRYSTATE;
-import static jmri.jmrix.AbstractMRTrafficController.NORMALMODE;
-import static jmri.jmrix.AbstractMRTrafficController.NOTIFIEDSTATE;
-import static jmri.jmrix.AbstractMRTrafficController.OKSENDMSGSTATE;
-import static jmri.jmrix.AbstractMRTrafficController.PROGRAMINGMODE;
-import static jmri.jmrix.AbstractMRTrafficController.WAITMSGREPLYSTATE;
-import static jmri.jmrix.AbstractMRTrafficController.WAITREPLYINNORMMODESTATE;
-import static jmri.jmrix.AbstractMRTrafficController.WAITREPLYINPROGMODESTATE;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 

@@ -3,8 +3,6 @@ package jmri.jmrix.srcp.networkdriver.configurexml;
 import jmri.jmrix.configurexml.AbstractNetworkConnectionConfigXml;
 import jmri.jmrix.srcp.networkdriver.ConnectionConfig;
 import jmri.jmrix.srcp.networkdriver.NetworkDriverAdapter;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 
 /*import org.jdom2.*;
  import javax.swing.*;*/
@@ -45,7 +43,4 @@ public class ConnectionConfigXml extends AbstractNetworkConnectionConfigXml {
     protected void register() {
         this.register(new ConnectionConfig(adapter));
     }
-
-    // initialize logging
-    private final static Logger log = LoggerFactory.getLogger(ConnectionConfigXml.class.getName());
 }

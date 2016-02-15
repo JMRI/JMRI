@@ -12,8 +12,6 @@ import junit.framework.Assert;
 import junit.framework.Test;
 import junit.framework.TestCase;
 import junit.framework.TestSuite;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 
 /**
  * Tests for ConfigXmlManager.
@@ -138,8 +136,6 @@ public class ConfigXmlManagerTest extends TestCase {
         TestSuite suite = new TestSuite(ConfigXmlManagerTest.class);
         return suite;
     }
-
-    private final static Logger log = LoggerFactory.getLogger(ConfigXmlManagerTest.class.getName());
 
     // The minimal setup for log4J
     protected void setUp() {
