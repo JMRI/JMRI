@@ -91,9 +91,9 @@ public class DefaultUserMessagePreferences extends jmri.jmrit.XmlFile implements
         }
 
         preferenceItemDetails(getClassName(), "reminder", Bundle.getMessage("HideReminderLocationMessage"));
-        //TODO I18N in ManagersBundle.properties (this is a checkbox on prefs tab Messages|Misc items)
+        //I18N in ManagersBundle.properties (this is a checkbox on prefs tab Messages|Misc items)
         classPreferenceList.get(getClassName()).setDescription(Bundle.getMessage("UserPreferences"));
-        //TODO I18N in ManagersBundle.properties (this is title on prefs tab Messages|Misc items)
+        //I18N in ManagersBundle.properties (this is the title of prefs tab Messages|Misc items)
         readUserPreferences();
     }
 
@@ -420,14 +420,14 @@ public class DefaultUserMessagePreferences extends jmri.jmrit.XmlFile implements
             JPanel container = new JPanel();
             container.setLayout(new BoxLayout(container, BoxLayout.Y_AXIS));
             container.add(new JLabel(message));
-            final JCheckBox rememberSession = new JCheckBox("Skip message for this session only?");
-            //TODO I18N in ManagersBundle.properties
+            final JCheckBox rememberSession = new JCheckBox(Bundle.getMessage("SkipMessageSession"));
+            //I18N in ManagersBundle.properties
             if (sessionOnly) {
                 rememberSession.setFont(rememberSession.getFont().deriveFont(10f));
                 container.add(rememberSession);
             }
-            final JCheckBox remember = new JCheckBox("Skip message in future?");
-            //TODO I18N in ManagersBundle.properties
+            final JCheckBox remember = new JCheckBox(Bundle.getMessage("SkipMessageFuture"));
+            //I18N in ManagersBundle.properties
             if (alwaysRemember) {
                 remember.setFont(remember.getFont().deriveFont(10f));
                 container.add(remember);
@@ -614,8 +614,8 @@ public class DefaultUserMessagePreferences extends jmri.jmrit.XmlFile implements
         if (_loading) {
             return;
         }
-        showInfoMessage("Reminder", "You can re-display this message from 'Edit|Preferences|Message' Menu.", getClassName(), "reminder");
-        //TODO I18N in ManagersBundle.properties
+        showInfoMessage(Bundle.getMessage("Reminder"), Bundle.getMessage("ReminderLine"), getClassName(), "reminder");
+        //I18N in ManagersBundle.properties, //last element is a key, so NOI18N for that
     }
 
     Hashtable<String, WindowLocations> windowDetails = new Hashtable<String, WindowLocations>();
