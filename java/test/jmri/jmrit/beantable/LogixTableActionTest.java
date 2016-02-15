@@ -15,8 +15,6 @@ import junit.extensions.jfcunit.TestHelper;
 import junit.framework.Assert;
 import junit.framework.Test;
 import junit.framework.TestSuite;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 
 /**
  * Tests for the jmri.jmrit.beantable.LogixTableAction class
@@ -239,6 +237,4 @@ public class LogixTableActionTest extends jmri.util.SwingTestCase {
         super.tearDown();
         apps.tests.Log4JFixture.tearDown();
     }
-
-    private final static Logger log = LoggerFactory.getLogger(LogixTableActionTest.class.getName());
 }

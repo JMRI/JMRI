@@ -4,8 +4,6 @@ import jmri.jmrix.AbstractMRReply;
 import junit.framework.Test;
 import junit.framework.TestCase;
 import junit.framework.TestSuite;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 
 /**
  * Tests for the Em18RfidProtocol class
@@ -144,7 +142,5 @@ public class Em18RfidProtocolTest extends TestCase {
         super.tearDown();
         apps.tests.Log4JFixture.tearDown();
     }
-
-    private final static Logger log = LoggerFactory.getLogger(Em18RfidProtocolTest.class.getName());
 
 }

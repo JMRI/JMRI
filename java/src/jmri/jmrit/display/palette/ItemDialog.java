@@ -2,8 +2,6 @@
 package jmri.jmrit.display.palette;
 
 import jmri.util.JmriJFrame;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 
 /**
  * Container for dialogs that modify the user's changes to his/her icon catalog.
@@ -60,7 +58,4 @@ public class ItemDialog extends JmriJFrame {
         _instance = null;	// remove reference to allow gc
 
     }
-
-    // initialize logging
-    private final static Logger log = LoggerFactory.getLogger(ItemDialog.class.getName());
 }
