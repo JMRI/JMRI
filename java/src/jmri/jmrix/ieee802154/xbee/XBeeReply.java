@@ -2,8 +2,6 @@
 package jmri.jmrix.ieee802154.xbee;
 
 import com.rapplogic.xbee.api.XBeeResponse;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 
 /**
  * Contains the data payload of a serial reply packet. Note that its _only_ the
@@ -77,8 +75,6 @@ public class XBeeReply extends jmri.jmrix.ieee802154.IEEE802154Reply {
     public void setXBeeResponse(XBeeResponse xbr) {
         xbresponse = xbr;
     }
-
-    private final static Logger log = LoggerFactory.getLogger(XBeeReply.class);
 
 }
 
