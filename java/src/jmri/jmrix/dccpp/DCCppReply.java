@@ -277,7 +277,7 @@ public class DCCppReply extends jmri.jmrix.AbstractMRReply {
     }
     
     public int getOpCode() {
-        return((int)(opcode) & 0x00FF);
+        return((opcode) & 0x00FF);
 //	return((getElement(0) & 0x00FF));
     }
 

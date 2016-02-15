@@ -1,8 +1,6 @@
 // SerialMessage.java
 package jmri.jmrix.tmcc;
 
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 
 /**
  * Contains the data payload of a TMCC serial packet.
@@ -83,8 +81,6 @@ public class SerialMessage extends jmri.jmrix.AbstractMRMessage {
     public int getAsWord() {
         return (getElement(1) & 0xFF) * 256 + (getElement(2) & 0xFF);
     }
-
-    private final static Logger log = LoggerFactory.getLogger(SerialMessage.class.getName());
 }
 
 /* @(#)SerialMessage.java */

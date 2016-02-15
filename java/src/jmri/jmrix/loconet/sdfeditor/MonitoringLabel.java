@@ -1,8 +1,6 @@
 // MonitoringPane.java
 package jmri.jmrix.loconet.sdfeditor;
 
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 
 /**
  * Label which displays the contents of parameter messages.
@@ -31,7 +29,5 @@ public class MonitoringLabel extends javax.swing.JTextArea implements java.beans
     public void propertyChange(java.beans.PropertyChangeEvent evt) {
         setText(evt.getNewValue().toString());
     }
-
-    private final static Logger log = LoggerFactory.getLogger(MonitoringLabel.class.getName());
 
 }

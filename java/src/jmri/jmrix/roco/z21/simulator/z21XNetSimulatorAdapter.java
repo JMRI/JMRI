@@ -4,8 +4,6 @@ package jmri.jmrix.roco.z21.simulator;
 import jmri.jmrix.lenz.XNetConstants;
 import jmri.jmrix.lenz.XNetMessage;
 import jmri.jmrix.lenz.XNetReply;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 
 /**
  * Provide access to a simulated z21 XPressNet sub-system.
@@ -206,8 +204,5 @@ public class z21XNetSimulatorAdapter {
         reply.setParity();
         return reply;
     }
-
-
-    private final static Logger log = LoggerFactory.getLogger(z21XNetSimulatorAdapter.class.getName());
 
 }

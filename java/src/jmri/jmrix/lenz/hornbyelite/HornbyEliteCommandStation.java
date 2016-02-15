@@ -3,8 +3,6 @@
  */
 package jmri.jmrix.lenz.hornbyelite;
 
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 
 /**
  * Defines the routines that differentiate a Hornby Elite Command Station from a
@@ -28,11 +26,6 @@ public class HornbyEliteCommandStation extends jmri.jmrix.lenz.LenzCommandStatio
     public boolean isOpsModePossible() {
         return true;
     }
-
-    /*
-     * We need to register for logging
-     */
-    private final static Logger log = LoggerFactory.getLogger(HornbyEliteCommandStation.class.getName());
 
 }
 

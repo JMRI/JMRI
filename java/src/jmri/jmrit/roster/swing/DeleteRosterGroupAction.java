@@ -9,8 +9,6 @@ import jmri.beans.Beans;
 import jmri.jmrit.roster.Roster;
 import jmri.util.swing.JmriAbstractAction;
 import jmri.util.swing.WindowInterface;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 
 /**
  * Remove roster group.
@@ -121,8 +119,5 @@ public class DeleteRosterGroupAction extends JmriAbstractAction {
     public jmri.util.swing.JmriPanel makePanel() {
         throw new IllegalArgumentException("Should not be invoked");
     }
-
-    // initialize logging
-    private final static Logger log = LoggerFactory.getLogger(DeleteRosterGroupAction.class.getName());
 
 }

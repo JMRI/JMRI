@@ -7,8 +7,6 @@ import javax.swing.AbstractAction;
 import javax.swing.Action;
 import javax.swing.JMenu;
 import javax.swing.JSeparator;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 
 /**
  * Create a "Tools" menu containing the Jmri system-independent tools
@@ -146,6 +144,4 @@ public class ToolsMenu extends JMenu {
         add(new jmri.web.server.WebServerAction());
 
     }
-
-    private final static Logger log = LoggerFactory.getLogger(ToolsMenu.class.getName());
 }

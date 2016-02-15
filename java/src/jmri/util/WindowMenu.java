@@ -11,8 +11,6 @@ import javax.swing.JMenuItem;
 import javax.swing.JSeparator;
 import javax.swing.event.MenuEvent;
 import jmri.util.swing.WindowInterface;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 
 /**
  * Creates a menu showing all open windows and allows to bring one in front
@@ -100,7 +98,5 @@ public class WindowMenu extends JMenu implements javax.swing.event.MenuListener 
 
     public void menuCanceled(MenuEvent e) {
     }
-
-    private final static Logger log = LoggerFactory.getLogger(WindowMenu.class.getName());
 
 }

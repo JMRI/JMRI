@@ -1,8 +1,6 @@
 package jmri.jmrix.internal.configurexml;
 
 import org.jdom2.Element;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 
 /**
  * Provides load and store functionality for configuring InternalSensorManagers.
@@ -23,6 +21,4 @@ public class InternalSensorManagerXml extends jmri.managers.configurexml.Interna
     public void setStoreElementClass(Element sensors) {
         sensors.setAttribute("class", this.getClass().getName());
     }
-
-    private final static Logger log = LoggerFactory.getLogger(InternalSensorManagerXml.class.getName());
 }
