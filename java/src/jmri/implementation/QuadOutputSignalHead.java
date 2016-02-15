@@ -3,8 +3,6 @@ package jmri.implementation;
 
 import jmri.NamedBeanHandle;
 import jmri.Turnout;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 
 /**
  * Drive a single signal head via four "Turnout" objects.
@@ -134,8 +132,6 @@ public class QuadOutputSignalHead extends TripleTurnoutSignalHead {
         }
         return false;
     }
-
-    private final static Logger log = LoggerFactory.getLogger(QuadOutputSignalHead.class.getName());
 }
 
 /* @(#)QuadOutputSignalHead.java */

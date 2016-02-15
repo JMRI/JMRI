@@ -2,8 +2,6 @@
 package jmri.jmrix.qsi;
 
 import jmri.ProgrammingMode;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 
 /**
  * Encodes a message to an QSI command station.
@@ -378,8 +376,6 @@ public class QsiMessage extends jmri.jmrix.AbstractMessage {
         m.setChecksum();
         return m.frame();
     }
-
-    private final static Logger log = LoggerFactory.getLogger(QsiMessage.class.getName());
 
 }
 

@@ -1,15 +1,11 @@
 package jmri.jmris.simpleserver.configurexml;
 
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 
 public class SimpleServerPreferences extends jmri.jmris.AbstractServerPreferences {
 
     public static final int DEFAULT_PORT = 2056;
     static final String XML_PREFS_ELEMENT = "SimpleServerPreferences"; // NOI18N
     static final String PORT = "port"; // NOI18N
-    private final static Logger log = LoggerFactory.getLogger(SimpleServerPreferences.class);
-
     public SimpleServerPreferences(String fileName) {
         super(fileName);
     }

@@ -3,8 +3,6 @@ package jmri.jmrix.roco.z21;
 import junit.framework.Test;
 import junit.framework.TestCase;
 import junit.framework.TestSuite;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 
 /**
  * Tests for the jmri.jmrix.roco.z21.z21XPressNetTunnel class
@@ -72,7 +70,5 @@ public class z21XPressNetTunnelTest extends TestCase {
     protected void tearDown() {
         apps.tests.Log4JFixture.tearDown();
     }
-
-    private final static Logger log = LoggerFactory.getLogger(z21XPressNetTunnelTest.class.getName());
 
 }

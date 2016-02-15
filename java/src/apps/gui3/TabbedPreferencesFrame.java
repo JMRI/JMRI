@@ -6,8 +6,6 @@ import javax.swing.JOptionPane;
 import javax.swing.WindowConstants;
 import jmri.InstanceManager;
 import jmri.util.JmriJFrame;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 
 /**
  * Provide access to the various tables via a listed pane.
@@ -65,6 +63,4 @@ public class TabbedPreferencesFrame extends JmriJFrame {
         }
         this.setVisible(false);
     }
-
-    private final static Logger log = LoggerFactory.getLogger(TabbedPreferencesFrame.class);
 }

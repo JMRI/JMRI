@@ -4,8 +4,6 @@ package jmri.jmrix.tams;
 import java.util.ResourceBundle;
 import jmri.InstanceManager;
 import jmri.ProgrammerManager;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 
 /**
  * Lightweight class to denote that a system is active, and provide general
@@ -207,8 +205,6 @@ public class TamsSystemConnectionMemo extends jmri.jmrix.SystemConnectionMemo {
 
         super.dispose();
     }
-
-    private final static Logger log = LoggerFactory.getLogger(TamsSystemConnectionMemo.class.getName());
 }
 
 

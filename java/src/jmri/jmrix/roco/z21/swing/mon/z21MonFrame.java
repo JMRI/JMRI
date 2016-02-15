@@ -5,8 +5,6 @@ import jmri.jmrix.roco.z21.z21Listener;
 import jmri.jmrix.roco.z21.z21Message;
 import jmri.jmrix.roco.z21.z21Reply;
 import jmri.jmrix.roco.z21.z21SystemConnectionMemo;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 
 /**
  * Frame displaying (and logging) Z21 messages
@@ -58,7 +56,5 @@ public class z21MonFrame extends jmri.jmrix.AbstractMonFrame implements z21Liste
         // connect to the TrafficController
         _memo.getTrafficController().addz21Listener(this);
     }
-
-    private final static Logger log = LoggerFactory.getLogger(z21MonFrame.class.getName());
 
 }

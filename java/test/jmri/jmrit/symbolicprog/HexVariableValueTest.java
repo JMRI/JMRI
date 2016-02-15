@@ -7,8 +7,6 @@ import javax.swing.JTextField;
 import junit.framework.Assert;
 import junit.framework.Test;
 import junit.framework.TestSuite;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 
 /**
  * Test the HexVariableValue class
@@ -63,7 +61,5 @@ public class HexVariableValueTest extends VariableValueTest {
         TestSuite suite = new TestSuite(HexVariableValueTest.class);
         return suite;
     }
-
-    private final static Logger log = LoggerFactory.getLogger(HexVariableValueTest.class.getName());
 
 }
