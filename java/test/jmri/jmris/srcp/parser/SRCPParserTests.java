@@ -4,8 +4,6 @@ package jmri.jmris.srcp.parser;
 import junit.framework.Test;
 import junit.framework.TestCase;
 import junit.framework.TestSuite;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 
 /**
  * Tests for the jmri.jmris.srcp.parser package
@@ -39,7 +37,5 @@ public class SRCPParserTests extends TestCase {
 
         return suite;
     }
-
-    private final static Logger log = LoggerFactory.getLogger(SRCPParserTests.class.getName());
 
 }

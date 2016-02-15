@@ -3,8 +3,6 @@ package jmri.jmrix.loconet.duplexgroup.swing;
 
 import java.awt.event.FocusEvent;
 import java.awt.event.FocusListener;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 
 /**
  * Extends JTextField to provide a data validation function and a colorization
@@ -568,6 +566,4 @@ public class ValidatedTextField extends javax.swing.JTextField {
     public final static java.awt.Color COLOR_BG_OK = java.awt.Color.white;
     public final static java.awt.Color COLOR_BG_UNEDITED = COLOR_BG_OK;
     public final static java.awt.Color COLOR_BG_ERROR = java.awt.Color.red;
-
-    private final static Logger log = LoggerFactory.getLogger(ValidatedTextField.class.getName());
 }

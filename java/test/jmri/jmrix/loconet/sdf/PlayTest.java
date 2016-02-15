@@ -5,8 +5,6 @@ import junit.framework.Assert;
 import junit.framework.Test;
 import junit.framework.TestCase;
 import junit.framework.TestSuite;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 
 /**
  * Tests for the jmri.jmrix.loconet.sdf.Play class.
@@ -97,7 +95,5 @@ public class PlayTest extends TestCase {
         TestSuite suite = new TestSuite(PlayTest.class);
         return suite;
     }
-
-    private final static Logger log = LoggerFactory.getLogger(PlayTest.class.getName());
 
 }

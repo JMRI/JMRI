@@ -4,8 +4,6 @@
 package jmri.jmrit.turnoutoperations;
 
 import jmri.TurnoutOperation;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 
 /**
  * Configuration for NoFeedbackTurnoutOperation class All the work is done by
@@ -28,6 +26,4 @@ public class SensorTurnoutOperationConfig extends CommonTurnoutOperationConfig {
     public SensorTurnoutOperationConfig(TurnoutOperation op) {
         super(op);
     }
-
-    private final static Logger log = LoggerFactory.getLogger(SensorTurnoutOperationConfig.class.getName());
 }

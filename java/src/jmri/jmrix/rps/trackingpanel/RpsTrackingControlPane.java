@@ -9,8 +9,6 @@ import javax.swing.JButton;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.JTextField;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 
 /**
  *
@@ -88,6 +86,4 @@ public class RpsTrackingControlPane extends JPanel {
     public JTextField blXf;
     public JTextField blYf;
     double trX, trY, blX, blY;
-
-    private final static Logger log = LoggerFactory.getLogger(RpsTrackingControlPane.class.getName());
 }

@@ -1,16 +1,12 @@
 package jmri.jmrix.srcp;
 
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
+import java.io.StringReader;
+import jmri.jmrix.srcp.parser.ParseException;
+import jmri.jmrix.srcp.parser.SRCPClientParser;
 import junit.framework.Assert;
 import junit.framework.Test;
 import junit.framework.TestCase;
 import junit.framework.TestSuite;
-
-import jmri.jmrix.srcp.parser.SRCPClientParser;
-import jmri.jmrix.srcp.parser.ParseException;
-
-import java.io.StringReader;
 
 /**
  * SRCPReplyTest.java
@@ -77,5 +73,4 @@ public class SRCPReplyTest extends TestCase {
     protected void tearDown() {
         apps.tests.Log4JFixture.tearDown();
     }
-    private final static Logger log = LoggerFactory.getLogger(SRCPReplyTest.class.getName());
 }

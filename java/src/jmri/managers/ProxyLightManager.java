@@ -4,8 +4,6 @@ package jmri.managers;
 import jmri.Light;
 import jmri.LightManager;
 import jmri.NamedBean;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 
 /**
  * Implementation of a LightManager that can serves as a proxy for multiple
@@ -202,9 +200,6 @@ public class ProxyLightManager extends AbstractProxyManager
     public String getBeanTypeHandled() {
         return Bundle.getMessage("BeanNameLight");
     }
-
-    // initialize logging
-    private final static Logger log = LoggerFactory.getLogger(ProxyLightManager.class.getName());
 }
 
 /* @(#)ProxyLightManager.java */
