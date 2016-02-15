@@ -385,7 +385,7 @@ public class Warrant extends jmri.implementation.AbstractNamedBean
                 if (l.size() > 0) {
                     _train = l.get(0);
                     if (_trainId == null) {
-                        // In some systems, such as Märklin MFX or ESU ECOS M4, the DCC address is always 0.
+                        // In some systems, such as Maerklin MFX or ESU ECOS M4, the DCC address is always 0.
                         // That should not make us overwrite the _trainId.
                         _trainId = _train.getId();
                     }
