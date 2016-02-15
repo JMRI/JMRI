@@ -15,7 +15,6 @@ import javax.swing.JOptionPane;
 import javax.swing.table.AbstractTableModel;
 import jmri.Programmer;
 import jmri.ProgrammingMode;
-import jmri.managers.DefaultProgrammerManager;
 import jmri.util.jdom.LocaleSelector;
 import org.jdom2.Element;
 import org.slf4j.Logger;

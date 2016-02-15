@@ -3,8 +3,6 @@
  */
 package jmri.jmrix.dccpp.network;
     
-import jmri.jmrix.dccpp.serial.SerialDCCppPacketizer;
-
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 

@@ -4,8 +4,6 @@ package jmri.managers;
 import jmri.Manager;
 import jmri.SignalHead;
 import jmri.SignalHeadManager;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 
 /**
  * Abstract partial implementation of a SignalHeadManager.
@@ -63,8 +61,6 @@ public class AbstractSignalHeadManager extends AbstractManager
     public String getBeanTypeHandled() {
         return Bundle.getMessage("BeanNameSignalHead");
     }
-
-    private final static Logger log = LoggerFactory.getLogger(AbstractSignalHeadManager.class.getName());
 }
 
 /* @(#)AbstractSignalHeadManager.java */

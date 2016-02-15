@@ -3,8 +3,6 @@ package jmri.jmrix.lenz.ztc640.configurexml;
 import jmri.jmrix.lenz.configurexml.AbstractXNetSerialConnectionConfigXml;
 import jmri.jmrix.lenz.ztc640.ConnectionConfig;
 import jmri.jmrix.lenz.ztc640.ZTC640Adapter;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 
 /**
  * Handle XML persistance of layout connections by persistening the
@@ -40,8 +38,5 @@ public class ConnectionConfigXml extends AbstractXNetSerialConnectionConfigXml {
     protected void register() {
         this.register(new ConnectionConfig(adapter));
     }
-
-    // initialize logging
-    private final static Logger log = LoggerFactory.getLogger(ConnectionConfigXml.class.getName());
 
 }

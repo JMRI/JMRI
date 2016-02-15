@@ -8,10 +8,6 @@ public class JmriSRCPServerPreferences extends jmri.jmris.AbstractServerPreferen
     public static final int DEFAULT_PORT = 2056;
     static final String XML_PREFS_ELEMENT = "SRCPServerPreferences"; // NOI18N
     static final String PORT = "port"; // NOI18N
-    // initial defaults if prefs not found
-    private int port = DEFAULT_PORT;
-    // as loaded prefences
-    private int asLoadedPort = DEFAULT_PORT;
     private final static Logger log = LoggerFactory.getLogger(JmriSRCPServerPreferences.class);
 
     public JmriSRCPServerPreferences(String fileName) {

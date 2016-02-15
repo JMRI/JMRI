@@ -84,8 +84,6 @@ public class ConfigSensorsAndTurnoutsFrame extends JmriJFrame implements DCCppLi
 
     protected EventListenerList listenerList = new javax.swing.event.EventListenerList();
 
-    private DCCppSensorManager sensorManager;
-    private DCCppTurnoutManager turnoutManager;
     private DCCppTrafficController tc;
     
     private JTabbedPane tabbedPane;
@@ -114,8 +112,6 @@ public class ConfigSensorsAndTurnoutsFrame extends JmriJFrame implements DCCppLi
                                          DCCppTurnoutManager tm, 
                                          DCCppTrafficController t) {
         super(false, false);
-        sensorManager = sm;
-        turnoutManager = tm;
         tc = t;
         initGui();
     }

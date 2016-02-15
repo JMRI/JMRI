@@ -3,8 +3,6 @@ package jmri.jmrix.lenz.liusb.configurexml;
 import jmri.jmrix.lenz.configurexml.AbstractXNetSerialConnectionConfigXml;
 import jmri.jmrix.lenz.liusb.ConnectionConfig;
 import jmri.jmrix.lenz.liusb.LIUSBAdapter;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 
 /**
  * Handle XML persistance of layout connections by persistening the LIUSBAdapter
@@ -40,8 +38,5 @@ public class ConnectionConfigXml extends AbstractXNetSerialConnectionConfigXml {
     protected void register() {
         this.register(new ConnectionConfig(adapter));
     }
-
-    // initialize logging
-    private final static Logger log = LoggerFactory.getLogger(ConnectionConfigXml.class.getName());
 
 }

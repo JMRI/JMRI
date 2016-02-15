@@ -4,8 +4,6 @@ package jmri.jmrix.lenz.ztc640;
 import junit.framework.Test;
 import junit.framework.TestCase;
 import junit.framework.TestSuite;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 
 /**
  * Tests for the jmri.jmrix.lenz.ztc640 package
@@ -33,7 +31,5 @@ public class ZTC640Test extends TestCase {
         suite.addTest(new TestSuite(ZTC640XNetPacketizerTest.class));
         return suite;
     }
-
-    private final static Logger log = LoggerFactory.getLogger(ZTC640Test.class.getName());
 
 }

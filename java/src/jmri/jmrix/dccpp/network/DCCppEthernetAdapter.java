@@ -6,7 +6,6 @@ import jmri.jmrix.dccpp.DCCppCommandStation;
 import jmri.jmrix.dccpp.DCCppInitializationManager;
 import jmri.jmrix.dccpp.DCCppNetworkPortController;
 import jmri.jmrix.dccpp.DCCppTrafficController;
-import jmri.jmrix.dccpp.DCCppSystemConnectionMemo;
 import jmri.util.zeroconf.ZeroConfClient;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;

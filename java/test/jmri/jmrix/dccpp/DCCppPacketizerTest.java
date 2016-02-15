@@ -4,7 +4,6 @@ import junit.framework.Assert;
 import junit.framework.TestCase;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import jmri.util.JUnitAppender;
 
 /**
  * <p>

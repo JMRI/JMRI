@@ -14,7 +14,6 @@ import java.io.InputStream;
 import jmri.jmrix.dccpp.DCCppCommandStation;
 import jmri.jmrix.dccpp.DCCppSerialPortController;
 import jmri.jmrix.dccpp.DCCppTrafficController;
-import jmri.jmrix.dccpp.DCCppPacketizer;
 import jmri.jmrix.dccpp.DCCppInitializationManager;
 /*
  * TODO: Replace these with DCC++ equivalents

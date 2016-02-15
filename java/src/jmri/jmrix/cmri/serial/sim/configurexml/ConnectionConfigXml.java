@@ -2,8 +2,6 @@ package jmri.jmrix.cmri.serial.sim.configurexml;
 
 import jmri.jmrix.cmri.serial.sim.ConnectionConfig;
 import jmri.jmrix.cmri.serial.sim.SimDriverAdapter;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 
 /**
  * Handle XML persistance of layout connections by persisting the
@@ -35,8 +33,5 @@ public class ConnectionConfigXml extends jmri.jmrix.cmri.serial.serialdriver.con
     protected void register() {
         this.register(new ConnectionConfig(adapter));
     }
-
-    // initialize logging
-    private final static Logger log = LoggerFactory.getLogger(ConnectionConfigXml.class.getName());
 
 }
