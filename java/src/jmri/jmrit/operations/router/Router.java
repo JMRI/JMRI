@@ -573,11 +573,14 @@ public class Router extends TrainCommon {
                         _status = STATUS_NOT_THIS_TRAIN;
                         continue;// found a route but it doesn't start with the specific train
                     }
-                    if (track.getTrackType().equals(Track.STAGING)) {
-                        _status = car.setDestination(track.getLocation(), null); // don't specify which track in staging
-                    } else {
-                        _status = car.setDestination(track.getLocation(), track);
+                    // is this the staging track assigned to the specific train?
+                    if (track.getTrackType().equals(Track.STAGING) && firstTrain.getTerminationTrack() != track) {
+                        addLine(_buildReport, SEVEN, MessageFormat.format(Bundle.getMessage("RouterTrainIntoStaging"),
+                                new Object[]{firstTrain.getName(), firstTrain.getTerminationTrack().getLocation().getName(),
+                                        firstTrain.getTerminationTrack().getName()}));
+                        continue;
                     }
+                    _status = car.setDestination(track.getLocation(), track);
                     if (debugFlag) {
                         log.debug("Train ({}) can service car ({}) from current location ({}, {}) to {} ({}, {})",
                                 firstTrain.getName(), car.toString(), car.getLocationName(), car.getTrackName(),
