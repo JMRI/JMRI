@@ -4,8 +4,6 @@ package jmri.jmrit.operations.trains;
 import java.awt.Frame;
 import java.awt.event.ActionEvent;
 import javax.swing.AbstractAction;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 
 /**
  * Swing action to load the train manifest options frame.
@@ -39,8 +37,7 @@ public class TrainManifestOptionAction extends AbstractAction {
         f.setVisible(true);	// this also brings the frame into focus
     }
 
-    private final static Logger log = LoggerFactory
-            .getLogger(TrainManifestOptionAction.class.getName());
+//    private final static Logger log = LoggerFactory.getLogger(TrainManifestOptionAction.class.getName());
 }
 
 /* @(#)TrainManifestOptionAction.java */

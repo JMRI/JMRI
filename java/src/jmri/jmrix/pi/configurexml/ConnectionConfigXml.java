@@ -5,8 +5,6 @@ import jmri.jmrix.configurexml.AbstractConnectionConfigXml;
 import jmri.jmrix.pi.ConnectionConfig;
 import jmri.jmrix.pi.RaspberryPiAdapter;
 import org.jdom2.Element;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 
 /**
  * Handle XML persistance of layout connections by persistening
@@ -67,10 +65,5 @@ public class ConnectionConfigXml extends AbstractConnectionConfigXml {
        adapter.configure();
        return true;
     }
-
-
-
-    // initialize logging
-    private final static Logger log = LoggerFactory.getLogger(ConnectionConfigXml.class.getName());
 
 }

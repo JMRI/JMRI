@@ -24,7 +24,7 @@ import org.slf4j.LoggerFactory;
 
 /**
  * Provide a JPanel to configure the ops programming mode.
- * <P>
+ * <p>
  * Note that you should call the dispose() method when you're really done, so
  * that a ProgModePane object can disconnect its listeners.
  *
@@ -46,7 +46,7 @@ public class ProgOpsModePane extends ProgModeSelector implements PropertyChangeL
     JTextField mAddrField = new JTextField(4);
     String oldAddrText = "";
 
-    JCheckBox mLongAddrCheck = new JCheckBox("Long address");
+    JCheckBox mLongAddrCheck = new JCheckBox(Bundle.getMessage("LongAddress"));
     boolean oldLongAddr = false;
     AddressedProgrammer programmer = null;
 
@@ -139,7 +139,7 @@ public class ProgOpsModePane extends ProgModeSelector implements PropertyChangeL
 
         JPanel panel = new JPanel();
         panel.setLayout(new java.awt.FlowLayout());
-        panel.add(new JLabel("Addr:"));
+        panel.add(new JLabel(Bundle.getMessage("AddressLabel")));
         panel.add(mAddrField);
         add(panel);
         add(mLongAddrCheck);

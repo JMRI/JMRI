@@ -9,8 +9,6 @@ import jmri.jmrix.maple.SerialTrafficController;
 import jmri.jmrix.maple.serialdriver.ConnectionConfig;
 import jmri.jmrix.maple.serialdriver.SerialDriverAdapter;
 import org.jdom2.Element;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 
 /**
  * Handle XML persistance of layout connections by persisting the
@@ -126,8 +124,5 @@ public class ConnectionConfigXml extends AbstractSerialConnectionConfigXml {
     protected void register() {
         this.register(new ConnectionConfig(adapter));
     }
-
-    // initialize logging
-    private final static Logger log = LoggerFactory.getLogger(ConnectionConfigXml.class.getName());
 
 }

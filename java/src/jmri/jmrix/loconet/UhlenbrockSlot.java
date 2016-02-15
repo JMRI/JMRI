@@ -1,8 +1,6 @@
 // UhlenbrockSlot.java
 package jmri.jmrix.loconet;
 
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 
 /**
  * Extends representation of a single slot for the UhlenBrock command station
@@ -85,8 +83,6 @@ public class UhlenbrockSlot extends LocoNetSlot {
             notifySlotListeners();
         }
     }
-
-    private final static Logger log = LoggerFactory.getLogger(UhlenbrockSlot.class.getName());
 }
 
 

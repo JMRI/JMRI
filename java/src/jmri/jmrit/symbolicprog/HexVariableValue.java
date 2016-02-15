@@ -3,8 +3,6 @@ package jmri.jmrit.symbolicprog;
 
 import java.util.HashMap;
 import javax.swing.JLabel;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 
 /**
  * LIke DecVariableValue, except that the string representation is in
@@ -32,8 +30,5 @@ public class HexVariableValue extends DecVariableValue {
     String valueToText(int v) {
         return (Integer.toHexString(v));
     }
-
-    // initialize logging
-    private final static Logger log = LoggerFactory.getLogger(HexVariableValue.class.getName());
 
 }

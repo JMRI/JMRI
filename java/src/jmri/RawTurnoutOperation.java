@@ -5,8 +5,6 @@ package jmri;
 
 import jmri.implementation.AbstractTurnout;
 import jmri.implementation.RawTurnoutOperator;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 
 /**
  * RawTurnoutOperation class - specialization of TurnoutOperation to provide
@@ -74,6 +72,4 @@ public class RawTurnoutOperation extends CommonTurnoutOperation {
     public TurnoutOperator getOperator(AbstractTurnout t) {
         return new RawTurnoutOperator(t, interval, maxTries);
     }
-
-    private final static Logger log = LoggerFactory.getLogger(RawTurnoutOperation.class.getName());
 }

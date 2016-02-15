@@ -2,8 +2,6 @@
 package jmri.jmrit.automat;
 
 import jmri.NamedBean;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 
 /**
  * A Siglet is a "an embedded signal automation", like an "applet" an embedded
@@ -76,9 +74,6 @@ public class Siglet extends AbstractAutomaton {
     public void setInputs(NamedBean[] in) {
         inputs = in;
     }
-
-    // initialize logging
-    private final static Logger log = LoggerFactory.getLogger(Siglet.class.getName());
 }
 
 /* @(#)Siglet.java */

@@ -8,8 +8,6 @@ import junit.framework.Test;
 import junit.framework.TestCase;
 import junit.framework.TestSuite;
 import org.jdom2.Element;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 
 /**
  * Checks of basic NamedBean storage
@@ -216,8 +214,6 @@ public class AbstractNamedBeanManagerConfigXMLTest extends TestCase {
         apps.tests.Log4JFixture.tearDown();
     }
 
-    private final static Logger log = LoggerFactory.getLogger(AbstractNamedBeanManagerConfigXMLTest.class.getName());
-    
     private class NamedBeanManagerConfigXMLTest extends AbstractNamedBeanManagerConfigXML {
 
         @Override

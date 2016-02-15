@@ -9,8 +9,6 @@ import jmri.InstanceManager;
 import jmri.jmrix.nce.ActiveFlag;
 import jmri.jmrix.nce.NceSystemConnectionMemo;
 import jmri.jmrix.nce.NceTrafficController;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 
 /**
  * Starts the NceConsistEngine thread
@@ -53,5 +51,5 @@ public class NceConsistEngineAction extends AbstractAction {
         mb.start();
     }
 
-    private final static Logger log = LoggerFactory.getLogger(NceConsistEngineAction.class.getName());
+//    private final static Logger log = LoggerFactory.getLogger(NceConsistEngineAction.class.getName());
 }

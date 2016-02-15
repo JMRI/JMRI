@@ -9,8 +9,6 @@ import jmri.jmrit.operations.ExceptionDisplayFrame;
 import jmri.jmrit.operations.OperationsManager;
 import jmri.jmrit.operations.OperationsXml;
 import jmri.jmrit.operations.UnexpectedExceptionContext;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 
 /**
  * Swing action to load the operation demo files.
@@ -71,8 +69,7 @@ public class ResetAction extends AbstractAction {
         }
     }
 
-    private final static Logger log = LoggerFactory.getLogger(ResetAction.class
-            .getName());
+//    private final static Logger log = LoggerFactory.getLogger(ResetAction.class.getName());
 }
 
 /* @(#)ResetAction.java */

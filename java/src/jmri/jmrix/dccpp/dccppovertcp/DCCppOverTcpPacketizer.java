@@ -12,7 +12,6 @@ import jmri.jmrix.dccpp.DCCppMessage;
 import jmri.jmrix.dccpp.DCCppReply;
 import jmri.jmrix.dccpp.DCCppReplyParser;
 import jmri.jmrix.dccpp.DCCppListener;
-import jmri.jmrix.dccpp.DCCppMessageException; // TODO: we don't have this one!
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 

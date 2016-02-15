@@ -26,8 +26,6 @@ import javax.swing.JLabel;
 import javax.swing.JPanel;
 import jmri.InstanceManager;
 import jmri.swing.PreferencesPanel;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 
 /**
  *
@@ -296,8 +294,6 @@ public class ThrottlesPreferencesPane extends JPanel implements PropertyChangeLi
         jbSave.setVisible(true);
         jbCancel.setText(Bundle.getMessage("ThrottlesPrefsCancel"));
     }
-
-    private final static Logger log = LoggerFactory.getLogger(ThrottlesPreferencesPane.class.getName());
 
     @Override
     public void propertyChange(PropertyChangeEvent evt) {

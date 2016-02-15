@@ -3,8 +3,6 @@ package jmri.jmrit.operations.setup;
 
 import java.io.File;
 import java.io.IOException;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 
 /**
  * Specific Backup class for backing up and restoring Operations working files
@@ -14,8 +12,7 @@ import org.slf4j.LoggerFactory;
  */
 public class AutoBackup extends BackupBase {
 
-    private final static Logger log = LoggerFactory
-            .getLogger(AutoBackup.class.getName());
+//    private final static Logger log = LoggerFactory.getLogger(AutoBackup.class.getName());
 
     /**
      * Creates an AutoBackup instance and initializes the root directory to the

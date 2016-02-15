@@ -5,8 +5,6 @@ import junit.framework.Assert;
 import junit.framework.Test;
 import junit.framework.TestCase;
 import junit.framework.TestSuite;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 
 /**
  * Tests for the jmri.util.StringUtil class.
@@ -394,7 +392,5 @@ public class StringUtilTest extends TestCase {
         TestSuite suite = new TestSuite(StringUtilTest.class);
         return suite;
     }
-
-    private final static Logger log = LoggerFactory.getLogger(StringUtilTest.class.getName());
 
 }

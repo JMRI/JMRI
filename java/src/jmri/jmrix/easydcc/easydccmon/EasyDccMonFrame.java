@@ -5,8 +5,6 @@ import jmri.jmrix.easydcc.EasyDccListener;
 import jmri.jmrix.easydcc.EasyDccMessage;
 import jmri.jmrix.easydcc.EasyDccReply;
 import jmri.jmrix.easydcc.EasyDccTrafficController;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 
 /**
  * Frame displaying (and logging) EasyDcc command messages
@@ -46,7 +44,5 @@ public class EasyDccMonFrame extends jmri.jmrix.AbstractMonFrame implements Easy
     public synchronized void reply(EasyDccReply l) {  // receive a reply message and log it
         nextLine("rep: \"" + l.toString() + "\"\n", "");
     }
-
-    private final static Logger log = LoggerFactory.getLogger(EasyDccMonFrame.class.getName());
 
 }
