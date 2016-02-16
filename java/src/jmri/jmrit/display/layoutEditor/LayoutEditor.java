@@ -9454,11 +9454,11 @@ public class LayoutEditor extends jmri.jmrit.display.panelEditor.PanelEditor imp
 
     private void drawPanelGrid(Graphics2D g2) {
         Dimension dim = getSize();
-        double pix = (double) gridSize;
+        double pix = gridSize;
         double maxX = dim.width;
         double maxY = dim.height;
-        Point2D startPt = new Point2D.Double(0.0, (double) gridSize);
-        Point2D stopPt = new Point2D.Double(maxX, (double) gridSize);
+        Point2D startPt = new Point2D.Double(0.0, gridSize);
+        Point2D stopPt = new Point2D.Double(maxX, gridSize);
         BasicStroke narrow = new BasicStroke(1.0F, BasicStroke.CAP_ROUND, BasicStroke.JOIN_ROUND);
         BasicStroke wide = new BasicStroke(2.0F, BasicStroke.CAP_ROUND, BasicStroke.JOIN_ROUND);
         g2.setColor(Color.gray);
@@ -9477,7 +9477,7 @@ public class LayoutEditor extends jmri.jmrit.display.panelEditor.PanelEditor imp
             pix += gridSize;
         }
         // draw vertical lines
-        pix = (double) gridSize;
+        pix = gridSize;
         while (pix < maxX) {
             startPt.setLocation(pix, 0.0);
             stopPt.setLocation(pix, maxY);
@@ -9883,5 +9883,5 @@ public class LayoutEditor extends jmri.jmrit.display.panelEditor.PanelEditor imp
     }
 
     // initialize logging
-    static Logger log = LoggerFactory.getLogger(LayoutEditor.class.getName());
+    private final static Logger log = LoggerFactory.getLogger(LayoutEditor.class.getName());
 }

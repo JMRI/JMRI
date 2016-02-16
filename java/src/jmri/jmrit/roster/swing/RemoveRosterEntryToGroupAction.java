@@ -107,7 +107,7 @@ public class RemoveRosterEntryToGroupAction extends AbstractAction {
     }
 
     // initialize logging
-    static Logger log = LoggerFactory.getLogger(RemoveRosterEntryToGroupAction.class.getName());
+    private final static Logger log = LoggerFactory.getLogger(RemoveRosterEntryToGroupAction.class.getName());
 
     public void okPressed() {
         String group = rosterBox.getSelectedRosterGroup();

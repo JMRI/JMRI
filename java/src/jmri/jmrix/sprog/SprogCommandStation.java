@@ -643,7 +643,7 @@ public class SprogCommandStation implements CommandStation, SprogListener, Runna
     }
 
     // initialize logging
-    static Logger log = LoggerFactory.getLogger(SprogCommandStation.class.getName());
+    private final static Logger log = LoggerFactory.getLogger(SprogCommandStation.class.getName());
 }
 
 

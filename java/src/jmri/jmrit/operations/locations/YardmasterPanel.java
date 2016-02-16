@@ -345,5 +345,5 @@ public class YardmasterPanel extends CommonConductorYardmasterPanel {
         }
     }
 
-    static Logger log = LoggerFactory.getLogger(YardmasterPanel.class.getName());
+    private final static Logger log = LoggerFactory.getLogger(YardmasterPanel.class.getName());
 }

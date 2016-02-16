@@ -805,5 +805,5 @@ public class PositionablePopupUtil {
         }
     }
 
-    static Logger log = LoggerFactory.getLogger(PositionablePopupUtil.class.getName());
+    private final static Logger log = LoggerFactory.getLogger(PositionablePopupUtil.class.getName());
 }

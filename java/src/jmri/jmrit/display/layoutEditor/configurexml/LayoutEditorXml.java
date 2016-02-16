@@ -612,6 +612,6 @@ public class LayoutEditorXml extends AbstractXmlAdapter {
         return jmri.Manager.PANELFILES;
     }
 
-    static Logger log = LoggerFactory.getLogger(LayoutEditorXml.class.getName());
+    private final static Logger log = LoggerFactory.getLogger(LayoutEditorXml.class.getName());
 
 }

@@ -4,8 +4,6 @@ package jmri.jmrix.roco.z21.simulator;
 import jmri.jmrix.lenz.XNetConstants;
 import jmri.jmrix.lenz.XNetMessage;
 import jmri.jmrix.lenz.XNetReply;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 
 /**
  * Provide access to a simulated z21 XPressNet sub-system.
@@ -20,9 +18,6 @@ public class z21XNetSimulatorAdapter {
     private int csStatus;
     // status values from the z21 Documentation.
     private final static int csEmergencyStop = 0x01;
-    private final static int csTrackVoltageOff = 0x02;
-    private final static int csShortCircuit = 0x04;
-    private final static int csProgrammingModeActive = 0x20;
     // 0x00 means normal mode.
     private final static int csNormalMode = 0x00;
 
@@ -209,8 +204,5 @@ public class z21XNetSimulatorAdapter {
         reply.setParity();
         return reply;
     }
-
-
-    static Logger log = LoggerFactory.getLogger(z21XNetSimulatorAdapter.class.getName());
 
 }

@@ -643,6 +643,6 @@ abstract public class AbstractBoardProgPanel extends jmri.jmrix.loconet.swing.Ln
     // first attempt to access a given OpSw
     private final int MAX_OPSW_ACCESS_RETRIES = 2;
 
-    Logger log = LoggerFactory.getLogger(AbstractBoardProgPanel.class.getName());
+    private final static Logger log = LoggerFactory.getLogger(AbstractBoardProgPanel.class);
 
 }

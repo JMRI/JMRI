@@ -5,8 +5,6 @@ import java.io.File;
 import javax.swing.tree.DefaultMutableTreeNode;
 import javax.swing.tree.DefaultTreeModel;
 import jmri.util.FileUtil;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 
 /**
  * TreeModel used by CatalogPane to create a tree of resources.
@@ -139,6 +137,4 @@ public class CatalogTreeModel extends DefaultTreeModel {
      */
     static final String resourceRoot = "resources";
     static final String fileRoot = FileUtil.getUserFilesPath() + "resources";
-
-    static Logger log = LoggerFactory.getLogger(CatalogTreeModel.class.getName());
 }

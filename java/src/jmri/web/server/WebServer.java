@@ -39,7 +39,7 @@ public final class WebServer implements LifeCycle.Listener {
     protected ZeroConfService zeroConfService = null;
     private WebServerPreferences preferences = null;
     protected ShutDownTask shutDownTask = null;
-    static Logger log = LoggerFactory.getLogger(WebServer.class.getName());
+    private final static Logger log = LoggerFactory.getLogger(WebServer.class.getName());
 
     protected WebServer() {
         preferences = WebServerManager.getWebServerPreferences();

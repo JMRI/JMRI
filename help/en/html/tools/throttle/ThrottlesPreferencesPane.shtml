@@ -73,17 +73,17 @@ described above and bellow if they're enabled).
 
 <h2>Automatic loading Throttle pane preferences when linked to Roster</h2>
 
-When a roster is selected, if a matching Throttle definition file exist,
+When a Roster is selected, if a matching Throttle definition file exist,
 JMRI will automatically loads it.
 <br >
 These files are stored in &lt;JMRI
 Preference Folder&gt;/Throttle/XYZ.xml where XYZ in the Roster ID. <br >
-Using the <a href="ThrottleWindowMenus.shtml">Save menu entry from the
-File menu</a> in a Throttle Window will create or update these files.
+Using the <a href="ThrottleWindowMenus.shtml">Save</a> menu entry from the
+File menu in a Throttle Window will create or update these files.
 
 <h2>Ignore Throttle frame position</h2>
 
-For old throttle files that contain Throttle Window position in them. Do as
+For old Throttle files that contain Throttle Window position in them, do as
 described.
 <br >
 <span style="font-style: italic;">Note: Throttle Windows position are now saved in the <span style="font-weight: bold;">Throttles Layout</span> backup files (not in the Throttles backup files anymore)</span>

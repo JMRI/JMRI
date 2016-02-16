@@ -104,6 +104,6 @@ public class UhlenbrockAdapter extends LocoBufferAdapter {
         return retval;
     }
 
-    static Logger log = LoggerFactory.getLogger(UhlenbrockAdapter.class.getName());
+    private final static Logger log = LoggerFactory.getLogger(UhlenbrockAdapter.class.getName());
 
 }

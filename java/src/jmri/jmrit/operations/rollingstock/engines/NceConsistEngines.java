@@ -286,5 +286,5 @@ public class NceConsistEngines extends Thread implements jmri.jmrix.nce.NceListe
         }
     }
 
-    static Logger log = LoggerFactory.getLogger(NceConsistEngines.class.getName());
+    private final static Logger log = LoggerFactory.getLogger(NceConsistEngines.class.getName());
 }

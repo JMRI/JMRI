@@ -39,7 +39,7 @@ public class SoundSetAction extends AbstractAction {
 
     }
 
-    static Logger log = LoggerFactory.getLogger(SoundSetAction.class.getName());
+    private final static Logger log = LoggerFactory.getLogger(SoundSetAction.class.getName());
 
 }
 

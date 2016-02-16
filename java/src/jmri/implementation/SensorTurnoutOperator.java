@@ -75,5 +75,5 @@ public class SensorTurnoutOperator extends TurnoutOperator {
         myTurnout.removePropertyChangeListener(listener);
     }
 
-    static Logger log = LoggerFactory.getLogger(SensorTurnoutOperator.class.getName());
+    private final static Logger log = LoggerFactory.getLogger(SensorTurnoutOperator.class.getName());
 }

@@ -23,7 +23,7 @@ public class WebServerManager {
     static private WebServerManager instance = null;
     private WebServerPreferences preferences;
     private WebServer server;
-    static Logger log = LoggerFactory.getLogger(WebServer.class.getName());
+    private final static Logger log = LoggerFactory.getLogger(WebServer.class.getName());
 
     private WebServerManager() {
         if (InstanceManager.getDefault(WebServerPreferences.class) == null) {

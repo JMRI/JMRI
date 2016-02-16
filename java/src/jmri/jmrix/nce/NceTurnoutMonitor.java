@@ -468,7 +468,7 @@ public class NceTurnoutMonitor implements NceListener, java.beans.PropertyChange
         }
     }
 
-    static Logger log = LoggerFactory
+    private final static Logger log = LoggerFactory
             .getLogger(NceTurnoutMonitor.class.getName());
 
 }

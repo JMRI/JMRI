@@ -280,5 +280,5 @@ public class MemorySpinnerIcon extends PositionableJPanel implements ChangeListe
         namedMemory = null;
     }
 
-    static Logger log = LoggerFactory.getLogger(MemorySpinnerIcon.class.getName());
+    private final static Logger log = LoggerFactory.getLogger(MemorySpinnerIcon.class.getName());
 }

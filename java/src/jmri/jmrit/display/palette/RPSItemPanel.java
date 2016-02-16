@@ -86,5 +86,5 @@ public class RPSItemPanel extends FamilyItemPanel {
         }
     }
 
-    static Logger log = LoggerFactory.getLogger(RPSItemPanel.class.getName());
+    private final static Logger log = LoggerFactory.getLogger(RPSItemPanel.class.getName());
 }

@@ -130,7 +130,7 @@ public abstract class NetMessage implements Serializable {
     private int mOpCode = 0;
 
     // initialize logging
-    static Logger log = LoggerFactory.getLogger(NetMessage.class.getName());
+    private final static Logger log = LoggerFactory.getLogger(NetMessage.class.getName());
 
 }
 

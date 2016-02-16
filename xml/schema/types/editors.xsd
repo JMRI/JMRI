@@ -69,8 +69,8 @@
         </xs:appinfo>
       </xs:annotation>
       <xs:attribute name="text" type="xs:string" />
-      <xs:attribute name="red" type="xs:int" />
-      <xs:attribute name="green" type="xs:int" />
+      <xs:attribute name="red" type="xs:unsignedByte" />
+      <xs:attribute name="green" type="xs:unsignedByte" />
       <xs:attribute name="blue" type="xs:int" />
       <xs:attribute name="redBack" type="xs:int" />
       <xs:attribute name="greenBack" type="xs:int" />
@@ -166,9 +166,9 @@
       <xs:attribute name="size" type="xs:string" />
       <xs:attribute name="style" type="xs:string" />
       <xs:attribute name="margin" type="xs:int" />
-      <xs:attribute name="red" type="xs:int" />
-      <xs:attribute name="green" type="xs:int" />
-      <xs:attribute name="blue" type="xs:int" />
+      <xs:attribute name="red" type="xs:unsignedByte" />
+      <xs:attribute name="green" type="xs:unsignedByte" />
+      <xs:attribute name="blue" type="xs:unsignedByte" />
       <xs:attribute name="hasBackground" type="yesNoType" />
       <xs:attribute name="redBack" type="xs:int" />
       <xs:attribute name="greenBack" type="xs:int" />
@@ -237,7 +237,67 @@
       <xs:attribute name="westboundsignalmast" type="xs:string" />
       <xs:attribute name="eastboundsensor" type="xs:string" />
       <xs:attribute name="westboundsensor" type="xs:string" />
+    </xs:complexType>
+    
+    <xs:complexType name="EditorPositionableRectangleType">
+      <xs:annotation>
+        <xs:documentation>
+          Define the XML stucture for storing a PositionableRectangle
+        </xs:documentation>
+        <xs:appinfo>
+          jmri.jmrit.display.configurexml.PositionableRectangleXml
+        </xs:appinfo>
+      </xs:annotation>
 
+      <xs:sequence minOccurs="0" maxOccurs="unbounded">
+        <xs:element name="toolTip" type="xs:string" minOccurs="0" maxOccurs="1" />
+        <xs:element name="lineColor" minOccurs="0" maxOccurs="1" >
+          <xs:complexType>
+            <xs:simpleContent>
+              <xs:extension base="xs:string">
+                <xs:attribute name="red" type="xs:unsignedByte" />
+                <xs:attribute name="green" type="xs:unsignedByte" />
+                <xs:attribute name="blue" type="xs:unsignedByte" />
+              </xs:extension>
+            </xs:simpleContent>
+          </xs:complexType>
+        </xs:element>
+        <xs:element name="fillColor" minOccurs="0" maxOccurs="1" >
+          <xs:complexType>
+            <xs:simpleContent>
+              <xs:extension base="xs:string">
+                <xs:attribute name="red" type="xs:unsignedByte" />
+                <xs:attribute name="green" type="xs:unsignedByte" />
+                <xs:attribute name="blue" type="xs:unsignedByte" />
+              </xs:extension>
+            </xs:simpleContent>
+          </xs:complexType>
+        </xs:element>
+        <xs:element name="size" minOccurs="0" maxOccurs="1" >
+          <xs:complexType>
+            <xs:simpleContent>
+              <xs:extension base="xs:string">
+                <xs:attribute name="width" type="xs:int" />
+                <xs:attribute name="height" type="xs:int" />
+              </xs:extension>
+            </xs:simpleContent>
+          </xs:complexType>
+        </xs:element>
+      </xs:sequence>
+
+      <xs:attribute name="class" type="classType" use="required" />
+      <xs:attribute name="changeLevelOnSensor" type="xs:int" use="required" />
+      <xs:attribute name="hideOnSensor" type="trueFalseType" />
+      <xs:attribute name="alpha" type="xs:int" use="required" />
+      <xs:attribute name="lineWidth" type="xs:int" use="required" />
+      <xs:attribute name="showtooltip" type="trueFalseType" />
+      <xs:attribute name="editable" type="trueFalseType" />
+      <xs:attribute name="positionable" type="trueFalseType" />
+      <xs:attribute name="hidden" type="yesNoType" />
+      <xs:attribute name="forcecontroloff" type="trueFalseType" />
+      <xs:attribute name="level" type="xs:int" use="required" />
+      <xs:attribute name="x" type="xs:float" use="required" />
+      <xs:attribute name="y" type="xs:float" use="required" />
     </xs:complexType>
     
     <xs:complexType name="EditorSensorIconType">
@@ -321,13 +381,13 @@
         </xs:simpleType>
       </xs:attribute>
       
-      <xs:attribute name="red" type="xs:int" >
+      <xs:attribute name="red" type="xs:unsignedByte" >
         <xs:annotation><xs:documentation>Deprecated since JMRI 2.8</xs:documentation></xs:annotation>
       </xs:attribute>
-      <xs:attribute name="green" type="xs:int" >
+      <xs:attribute name="green" type="xs:unsignedByte" >
         <xs:annotation><xs:documentation>Deprecated since JMRI 2.8</xs:documentation></xs:annotation>
       </xs:attribute>
-      <xs:attribute name="blue" type="xs:int" >
+      <xs:attribute name="blue" type="xs:unsignedByte" >
         <xs:annotation><xs:documentation>Deprecated since JMRI 2.8</xs:documentation></xs:annotation>
       </xs:attribute>
 
@@ -475,9 +535,9 @@
       <xs:attribute name="text" type="xs:string" />
       <xs:attribute name="size" type="xs:string" />
       <xs:attribute name="style" type="xs:string" />
-      <xs:attribute name="red" type="xs:int" />
-      <xs:attribute name="green" type="xs:int" />
-      <xs:attribute name="blue" type="xs:int" />
+      <xs:attribute name="red" type="xs:unsignedByte" />
+      <xs:attribute name="green" type="xs:unsignedByte" />
+      <xs:attribute name="blue" type="xs:unsignedByte" />
       <xs:attribute name="reporter" type="beanNameType" />
 
       <xs:attribute name="height" type="xs:integer" >
@@ -526,9 +586,9 @@
       <xs:attribute name="class" type="classType" use="required" />
       <xs:attribute name="size" type="xs:string" />
       <xs:attribute name="style" type="xs:string" />
-      <xs:attribute name="red" type="xs:int" />
-      <xs:attribute name="green" type="xs:int" />
-      <xs:attribute name="blue" type="xs:int" />
+      <xs:attribute name="red" type="xs:unsignedByte" />
+      <xs:attribute name="green" type="xs:unsignedByte" />
+      <xs:attribute name="blue" type="xs:unsignedByte" />
       <xs:attribute name="rotate" type="xs:string" />
       <xs:attribute name="memory" type="beanNameType" />
       <xs:attribute name="defaulticon" type="xs:string" />
@@ -613,9 +673,9 @@
       <xs:attribute name="colWidth" type="xs:string" />
       <xs:attribute name="size" type="xs:int" />
       <xs:attribute name="style" type="xs:int" />
-      <xs:attribute name="red" type="xs:int" />
-      <xs:attribute name="green" type="xs:int" />
-      <xs:attribute name="blue" type="xs:int" />
+      <xs:attribute name="red" type="xs:unsignedByte" />
+      <xs:attribute name="green" type="xs:unsignedByte" />
+      <xs:attribute name="blue" type="xs:unsignedByte" />
       <xs:attribute name="redBorder" type="xs:int" />
       <xs:attribute name="greenBorder" type="xs:int" />
       <xs:attribute name="blueBorder" type="xs:int" />
@@ -1135,9 +1195,9 @@
       <xs:attribute name="text" type="xs:string" />
       <xs:attribute name="size" type="xs:string" />
       <xs:attribute name="style" type="xs:string" />
-      <xs:attribute name="red" type="xs:int" />
-      <xs:attribute name="green" type="xs:int" />
-      <xs:attribute name="blue" type="xs:int" />
+      <xs:attribute name="red" type="xs:unsignedByte" />
+      <xs:attribute name="green" type="xs:unsignedByte" />
+      <xs:attribute name="blue" type="xs:unsignedByte" />
       <xs:attribute name="justification" default="left" >
         <xs:simpleType>
           <xs:restriction base="xs:token">

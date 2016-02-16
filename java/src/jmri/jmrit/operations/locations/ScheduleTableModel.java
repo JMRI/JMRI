@@ -749,5 +749,5 @@ public class ScheduleTableModel extends javax.swing.table.AbstractTableModel imp
 
     }
 
-    static Logger log = LoggerFactory.getLogger(ScheduleTableModel.class.getName());
+    private final static Logger log = LoggerFactory.getLogger(ScheduleTableModel.class.getName());
 }

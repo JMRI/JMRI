@@ -203,7 +203,7 @@ public class XpaMessage {
         return m;
     }
 
-    static Logger log = LoggerFactory.getLogger(XpaMessage.class.getName());
+    private final static Logger log = LoggerFactory.getLogger(XpaMessage.class.getName());
 
 }
 

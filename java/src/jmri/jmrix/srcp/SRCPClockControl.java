@@ -4,8 +4,6 @@ package jmri.jmrix.srcp;
 import java.util.Date;
 import jmri.InstanceManager;
 import jmri.implementation.DefaultClockControl;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 
 /**
  * Class providing SRCP Clock Control to the SRCP client.
@@ -100,8 +98,6 @@ public class SRCPClockControl extends DefaultClockControl {
     public void initializeHardwareClock(double rate, Date now, boolean getTime) {
         return;
     }
-
-    static final Logger log = LoggerFactory.getLogger(SRCPClockControl.class.getName());
 }
 
 /* @(#)SRCPClockControl.java */

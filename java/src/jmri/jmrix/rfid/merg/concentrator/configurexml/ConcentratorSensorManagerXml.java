@@ -1,8 +1,6 @@
 package jmri.jmrix.rfid.merg.concentrator.configurexml;
 
 import org.jdom2.Element;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 
 /**
  * Provides load and store functionality for configuring ConcentratorSensorManagers.
@@ -24,6 +22,4 @@ public class ConcentratorSensorManagerXml extends jmri.jmrix.rfid.configurexml.R
     public void setStoreElementClass(Element sensors) {
         sensors.setAttribute("class", this.getClass().getName());
     }
-
-    private static final Logger log = LoggerFactory.getLogger(ConcentratorSensorManagerXml.class.getName());
 }

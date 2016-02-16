@@ -65,5 +65,5 @@ public class MarklinMenu extends JMenu {
         String load;
     }
 
-    static Logger log = LoggerFactory.getLogger(MarklinMenu.class.getName());
+    private final static Logger log = LoggerFactory.getLogger(MarklinMenu.class.getName());
 }

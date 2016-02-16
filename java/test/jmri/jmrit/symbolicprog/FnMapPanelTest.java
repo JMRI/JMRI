@@ -7,8 +7,6 @@ import jmri.progdebugger.ProgDebugger;
 import junit.framework.Test;
 import junit.framework.TestCase;
 import junit.framework.TestSuite;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 import org.jdom2.Element;
 
 /**
@@ -64,8 +62,6 @@ public class FnMapPanelTest extends TestCase {
         TestSuite suite = new TestSuite(FnMapPanelTest.class);
         return suite;
     }
-
-    static Logger log = LoggerFactory.getLogger(FnMapPanelTest.class.getName());
 
     // The minimal setup for log4J
     protected void setUp() {

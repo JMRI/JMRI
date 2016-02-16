@@ -61,6 +61,6 @@ public class QsiTrafficControlScaffold extends QsiTrafficController {
         return cmdListeners.size();
     }
 
-    static Logger log = LoggerFactory.getLogger(QsiTrafficControlScaffold.class.getName());
+    private final static Logger log = LoggerFactory.getLogger(QsiTrafficControlScaffold.class.getName());
 
 }

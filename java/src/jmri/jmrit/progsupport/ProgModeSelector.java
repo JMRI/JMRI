@@ -5,15 +5,15 @@ import jmri.Programmer;
 
 /**
  * Provide a JPanel to configure the programming mode.
- * <P>
+ * <p>
  * The using code should get a configured programmer with getProgrammer.
- * <P>
+ * <p>
  * This pane will only display ops mode options if ops mode is available, as
  * evidenced by an attempt to get an ops mode programmer at startup time.
- * <P>
+ * <p>
  * For service mode, you can get the programmer either from here or direct from
  * the instance manager. For ops mode, you have to get it from here.
- * <P>
+ * <p>
  * Note that you should call the dispose() method when you're really done, so
  * that a ProgModeSelector object can disconnect its listeners.
  *

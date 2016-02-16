@@ -93,6 +93,6 @@ public class VSDListener {
         _listener.setPosition(p);
     }
 
-    static Logger log = LoggerFactory.getLogger(VSDListener.class.getName());
+    private final static Logger log = LoggerFactory.getLogger(VSDListener.class.getName());
 
 }

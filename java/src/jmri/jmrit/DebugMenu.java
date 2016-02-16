@@ -4,8 +4,6 @@ package jmri.jmrit;
 import javax.swing.JMenu;
 import javax.swing.JPanel;
 import javax.swing.JSeparator;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 
 /**
  * Create a "Debug" menu containing the JMRI system-independent debugging tools.
@@ -57,6 +55,4 @@ public class DebugMenu extends JMenu {
         add(vsdMenu);
 
     }
-
-    static Logger log = LoggerFactory.getLogger(DebugMenu.class.getName());
 }

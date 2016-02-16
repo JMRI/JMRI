@@ -205,6 +205,6 @@ public class DS64Panel extends jmri.jmrix.loconet.AbstractBoardProgPanel {
     JCheckBox opsw20 = new JCheckBox("OpSw 20: Output 4 is crossing gate");
     JCheckBox opsw21 = new JCheckBox("OpSw 21: Send turnout sensor messages (general sensor messages if off)");
 
-    static Logger log = LoggerFactory.getLogger(DS64Panel.class.getName());
+    private final static Logger log = LoggerFactory.getLogger(DS64Panel.class.getName());
 
 }

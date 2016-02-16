@@ -1,5 +1,6 @@
 package apps.startup;
 
+import apps.ConfigBundle;
 import apps.StartupActionsManager;
 import apps.StartupModel;
 import java.awt.Component;
@@ -207,7 +208,7 @@ public class StartupActionsPreferencesPanel extends JPanel implements Preference
 
     @Override
     public String getPreferencesItemText() {
-        return Bundle.getMessage("MenuStartUp"); // NOI18N
+        return ConfigBundle.getMessage("MenuStartUp"); // NOI18N
     }
 
     @Override

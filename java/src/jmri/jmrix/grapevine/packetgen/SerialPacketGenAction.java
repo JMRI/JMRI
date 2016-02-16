@@ -36,7 +36,7 @@ public class SerialPacketGenAction extends AbstractAction {
         }
         f.setVisible(true);
     }
-    static Logger log = LoggerFactory.getLogger(SerialPacketGenAction.class.getName());
+    private final static Logger log = LoggerFactory.getLogger(SerialPacketGenAction.class.getName());
 }
 
 

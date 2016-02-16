@@ -412,7 +412,7 @@ public class DataSource extends jmri.util.JmriJFrame {
             justification = "Class is no longer active, no hardware with which to test fix")
     OutputStream ostream = null;
 
-    static Logger log = LoggerFactory.getLogger(DataSource.class.getName());
+    private final static Logger log = LoggerFactory.getLogger(DataSource.class.getName());
 
     /**
      * Internal class to handle the separate character-receive thread

@@ -20,28 +20,28 @@ import org.slf4j.LoggerFactory;
 
 /**
  * Provide a JPanel with a JComboBox to configure the service mode programmer.
- * <P>
+ * <p>
  * The using code should get a configured programmer with getProgrammer.
- * <P>
+ * <p>
  * A ProgModePane may "share" between one of these and a ProgOpsModePane, which
  * means that there might be _none_ of these buttons selected. When that
  * happens, the mode of the underlying programmer is left unchanged and no
  * message is propagated.
- * <P>
+ * <p>
  * Note that you should call the dispose() method when you're really done, so
  * that a ProgModePane object can disconnect its listeners.
  *
  * <hr>
  * This file is part of JMRI.
- * <P>
+ * <p>
  * JMRI is free software; you can redistribute it and/or modify it under the
  * terms of version 2 of the GNU General Public License as published by the Free
  * Software Foundation. See the "COPYING" file for a copy of this license.
- * <P>
+ * <p>
  * JMRI is distributed in the hope that it will be useful, but WITHOUT ANY
  * WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS FOR
  * A PARTICULAR PURPOSE. See the GNU General Public License for more details.
- * <P>
+ * <p>
  * @author	Bob Jacobsen Copyright (C) 2001
  * @version	$Revision$
  */
@@ -174,5 +174,5 @@ public class ProgServiceModeComboBox extends ProgModeSelector implements Propert
     // no longer needed, disconnect if still connected
     public void dispose() {
     }
-    static Logger log = LoggerFactory.getLogger(ProgServiceModeComboBox.class.getName());
+    private final static Logger log = LoggerFactory.getLogger(ProgServiceModeComboBox.class.getName());
 }

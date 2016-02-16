@@ -77,5 +77,5 @@ public class TripleTurnoutSignalHeadXml extends DoubleTurnoutSignalHeadXml {
         log.error("Invalid method called");
     }
 
-    static Logger log = LoggerFactory.getLogger(TripleTurnoutSignalHeadXml.class.getName());
+    private final static Logger log = LoggerFactory.getLogger(TripleTurnoutSignalHeadXml.class.getName());
 }

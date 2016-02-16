@@ -258,6 +258,6 @@ public class NceConsistRestore extends Thread implements jmri.jmrix.nce.NceListe
         }
     }
 
-    static Logger log = LoggerFactory
+    private final static Logger log = LoggerFactory
             .getLogger(NceConsistRestore.class.getName());
 }

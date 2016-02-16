@@ -3,7 +3,6 @@ package jmri.jmrix.ecos;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import jmri.PowerManager;
 import jmri.*;
 import jmri.jmrix.AbstractProgrammer;
 import jmri.jmrix.ecos.utilities.GetEcosObjectNumber;
@@ -225,7 +224,7 @@ public class EcosProgrammer extends AbstractProgrammer implements EcosListener {
         }
     }
 
-    static Logger log = LoggerFactory.getLogger(EcosProgrammer.class.getName());
+    private final static Logger log = LoggerFactory.getLogger(EcosProgrammer.class.getName());
 
 }
 

@@ -12,8 +12,6 @@ import javax.swing.JSpinner;
 import javax.swing.SpinnerNumberModel;
 import javax.swing.event.ChangeEvent;
 import javax.swing.event.ChangeListener;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 
 /**
  * Frame displaying and programming a DCCpp clock monitor.
@@ -174,6 +172,4 @@ public class ServerFrame extends jmri.util.JmriJFrame implements ServerListner {
     JButton saveButton = new JButton("Save Settings");
 
     static ServerFrame self;
-
-    static Logger log = LoggerFactory.getLogger(ServerFrame.class.getName());
 }

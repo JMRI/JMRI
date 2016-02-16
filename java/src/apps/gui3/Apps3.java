@@ -246,7 +246,7 @@ public abstract class Apps3 extends AppsBase {
     }
 
     static protected JPanel splashDebugMsg() {
-        JLabel panelLabel = new JLabel("Press F8 to disable logixs");
+        JLabel panelLabel = new JLabel(Bundle.getMessage("PressF8ToDebug"));
         panelLabel.setFont(panelLabel.getFont().deriveFont(9f));
         JPanel panel = new JPanel();
         panel.add(panelLabel);
@@ -377,6 +377,6 @@ public abstract class Apps3 extends AppsBase {
         }
     }
 
-    static Logger log = LoggerFactory.getLogger(Apps3.class.getName());
+    private final static Logger log = LoggerFactory.getLogger(Apps3.class.getName());
 
 }

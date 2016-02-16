@@ -3,8 +3,6 @@ package jmri.jmrix.srcp;
 import jmri.DccLocoAddress;
 import jmri.LocoAddress;
 import jmri.jmrix.AbstractThrottle;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 
 /**
  * An implementation of DccThrottle with code specific to an SRCP connection.
@@ -209,8 +207,5 @@ public class SRCPThrottle extends AbstractThrottle {
     protected void throttleDispose() {
         finishRecord();
     }
-
-    // initialize logging
-    static Logger log = LoggerFactory.getLogger(SRCPThrottle.class.getName());
 
 }

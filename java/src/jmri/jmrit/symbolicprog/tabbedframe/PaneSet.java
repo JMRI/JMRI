@@ -209,5 +209,5 @@ public class PaneSet {
         re.writeFile(cvModel, iCvModel, variableModel);
     }
 
-    static Logger log = LoggerFactory.getLogger(PaneSet.class.getName());
+    private final static Logger log = LoggerFactory.getLogger(PaneSet.class.getName());
 }

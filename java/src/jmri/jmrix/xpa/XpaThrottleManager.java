@@ -3,8 +3,6 @@ package jmri.jmrix.xpa;
 import jmri.LocoAddress;
 import jmri.ThrottleManager;
 import jmri.jmrix.AbstractThrottleManager;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 
 /**
  * XPA implementation of a ThrottleManager
@@ -68,6 +66,5 @@ public class XpaThrottleManager extends AbstractThrottleManager implements Throt
     static boolean isLongAddress(int num) {
         return (num >= 100);
     }
-    static Logger log = LoggerFactory.getLogger(XpaThrottleManager.class.getName());
 
 }

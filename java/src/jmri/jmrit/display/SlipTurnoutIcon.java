@@ -1270,7 +1270,7 @@ public class SlipTurnoutIcon extends PositionableLabel implements java.beans.Pro
             thread.start();
         }
     }
-    static Logger log = LoggerFactory.getLogger(SlipTurnoutIcon.class.getName());
+    private final static Logger log = LoggerFactory.getLogger(SlipTurnoutIcon.class.getName());
 
     static class SetSlipThread extends Thread {
 
@@ -1304,7 +1304,6 @@ public class SlipTurnoutIcon extends PositionableLabel implements java.beans.Pro
         }
 
         private SlipTurnoutIcon s;
-        static final Logger log = LoggerFactory.getLogger(SetSlipThread.class.getName());
 
     }
 }

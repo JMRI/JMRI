@@ -3,8 +3,6 @@ package jmri.jmrit.display.configurexml;
 import jmri.jmrit.display.Editor;
 import jmri.jmrit.display.ReporterIcon;
 import org.jdom2.Element;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 
 /**
  * Handle configuration for display.ReporterIcon objects.
@@ -60,6 +58,4 @@ public class ReporterIconXml extends PositionableLabelXml {
         // load individual item's option settings after editor has set its global settings
         loadCommonAttributes(l, Editor.REPORTERS, element);
     }
-
-    static Logger log = LoggerFactory.getLogger(ReporterIconXml.class.getName());
 }

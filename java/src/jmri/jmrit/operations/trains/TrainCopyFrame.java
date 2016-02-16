@@ -142,5 +142,5 @@ public class TrainCopyFrame extends OperationsFrame {
         super.dispose();
     }
 
-    static Logger log = LoggerFactory.getLogger(TrainCopyFrame.class.getName());
+    private final static Logger log = LoggerFactory.getLogger(TrainCopyFrame.class.getName());
 }

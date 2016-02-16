@@ -277,6 +277,6 @@ public class Mx1Throttle extends AbstractThrottle implements Mx1Listener {
     }
 
     // initialize logging
-    static Logger log = LoggerFactory.getLogger(Mx1Throttle.class.getName());
+    private final static Logger log = LoggerFactory.getLogger(Mx1Throttle.class.getName());
 
 }

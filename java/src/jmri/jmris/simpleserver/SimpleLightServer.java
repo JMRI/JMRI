@@ -80,5 +80,5 @@ public class SimpleLightServer extends AbstractLightServer {
         }
     }
 
-    static Logger log = LoggerFactory.getLogger(SimpleLightServer.class.getName());
+    private final static Logger log = LoggerFactory.getLogger(SimpleLightServer.class.getName());
 }

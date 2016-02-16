@@ -288,6 +288,6 @@ public class NceTrafficControllerTest extends TestCase {
         return suite;
     }
 
-    static Logger log = LoggerFactory.getLogger(NceTrafficControllerTest.class.getName());
+    private final static Logger log = LoggerFactory.getLogger(NceTrafficControllerTest.class.getName());
 
 }

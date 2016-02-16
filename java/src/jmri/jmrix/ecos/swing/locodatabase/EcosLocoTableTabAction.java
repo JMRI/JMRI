@@ -9,8 +9,6 @@ import jmri.Manager;
 import jmri.jmrit.beantable.AbstractTableAction;
 import jmri.jmrit.beantable.AbstractTableTabAction;
 import jmri.jmrix.ecos.EcosSystemConnectionMemo;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 
 public class EcosLocoTableTabAction extends AbstractTableTabAction {
 
@@ -102,6 +100,4 @@ public class EcosLocoTableTabAction extends AbstractTableTabAction {
     public String getClassDescription() {
         return "Ecos Loco Table";
     }
-
-    static Logger log = LoggerFactory.getLogger(EcosLocoTableTabAction.class.getName());
 }

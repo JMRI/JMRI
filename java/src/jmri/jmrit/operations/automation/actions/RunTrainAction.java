@@ -59,5 +59,5 @@ public class RunTrainAction extends Action {
     public void cancelAction() {
         // no cancel for this action     
     }
-    static Logger log = LoggerFactory.getLogger(RunTrainAction.class.getName());
+    private final static Logger log = LoggerFactory.getLogger(RunTrainAction.class.getName());
 }

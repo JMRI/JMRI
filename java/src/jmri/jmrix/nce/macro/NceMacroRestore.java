@@ -298,6 +298,6 @@ public class NceMacroRestore extends Thread implements jmri.jmrix.nce.NceListene
         }
     }
 
-    static Logger log = LoggerFactory
+    private final static Logger log = LoggerFactory
             .getLogger(NceMacroRestore.class.getName());
 }

@@ -135,5 +135,5 @@ public class ImportRollingStock extends Thread {
         }
     }
 
-    static Logger log = LoggerFactory.getLogger(ImportRollingStock.class.getName());
+    private final static Logger log = LoggerFactory.getLogger(ImportRollingStock.class.getName());
 }

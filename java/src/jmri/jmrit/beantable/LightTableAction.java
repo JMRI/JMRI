@@ -284,7 +284,7 @@ public class LightTableAction extends AbstractTableAction {
                         break;
                     default:
                         newState = Light.OFF;
-                        BeanTableDataModel.log.warn("Unexpected Light state " + oldState + " becomes OFF");
+                        log.warn("Unexpected Light state " + oldState + " becomes OFF");
                         break;
                 }
                 ((Light) t).setState(newState);
@@ -1928,6 +1928,6 @@ public class LightTableAction extends AbstractTableAction {
         return LightTableAction.class.getName();
     }
 
-    static final Logger log = LoggerFactory.getLogger(LightTableAction.class.getName());
+    private final static Logger log = LoggerFactory.getLogger(LightTableAction.class.getName());
 }
 /* @(#)LightTableAction.java */

@@ -582,6 +582,6 @@ public class SplitVariableValue extends VariableValue
     }
 
     // initialize logging
-    static Logger log = LoggerFactory.getLogger(SplitVariableValue.class.getName());
+    private final static Logger log = LoggerFactory.getLogger(SplitVariableValue.class.getName());
 
 }

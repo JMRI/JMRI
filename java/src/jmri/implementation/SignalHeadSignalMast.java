@@ -63,7 +63,7 @@ public class SignalHeadSignalMast extends AbstractSignalMast implements java.bea
             throw new IllegalArgumentException("System name needs at least three parts: " + systemName);
         }
         if (!parts[0].equals("IF$shsm")) {
-            log.warn("SignalMast system name should start with IF: " + systemName);
+            log.warn("SignalMast system name should start with IF$shsm but is " + systemName);
         }
         String prefix = parts[0];
         String system = parts[1];
@@ -183,15 +183,15 @@ public class SignalHeadSignalMast extends AbstractSignalMast implements java.bea
             // some extensive checking
             boolean error = false;
             if (heads.get(i) == null) {
-                log.error("Null head " + i + " in setAppearances");
+                log.error("Head {} unexpectedly null in setAppearances while setting aspect \"{}\" for {}", i, aspect, getSystemName());
                 error = true;
             }
             if (heads.get(i).getBean() == null) {
-                log.error("Could not get bean for head " + i + " in setAppearances");
+                log.error("Head {} getBean() unexpectedly null in setAppearances while setting aspect \"{}\" for {}", i, aspect, getSystemName());
                 error = true;
             }
             if (map.getAspectSettings(aspect) == null) {
-                log.error("Couldn't get table array for aspect \"" + aspect + "\" in setAppearances");
+                log.error("Couldn't get table array for aspect \"{}\" in setAppearances for {}", aspect, getSystemName());
                 error = true;
             }
 
@@ -208,7 +208,7 @@ public class SignalHeadSignalMast extends AbstractSignalMast implements java.bea
                     delayedSet.put(head, toSet);
                 }
             } else {
-                log.error("head appearance not set due to an error");
+                log.error("     head appearance not set due to above error");
             }
         }
         if (delay != 0) {
@@ -307,7 +307,7 @@ public class SignalHeadSignalMast extends AbstractSignalMast implements java.bea
         }
     }
 
-    static final protected Logger log = LoggerFactory.getLogger(SignalHeadSignalMast.class.getName());
+    private final static Logger log = LoggerFactory.getLogger(SignalHeadSignalMast.class.getName());
 }
 
 /* @(#)SignalHeadSignalMast.java */

@@ -164,7 +164,7 @@ public class ProxySensorManager extends AbstractProxyManager
     }
 
     // initialize logging
-    static Logger log = LoggerFactory.getLogger(ProxySensorManager.class.getName());
+    private final static Logger log = LoggerFactory.getLogger(ProxySensorManager.class.getName());
 }
 
 /* @(#)ProxySensorManager.java */

@@ -152,6 +152,6 @@ abstract public class AbstractDCCppInitializationManager {
         }
     }
 
-    static Logger log = LoggerFactory.getLogger(AbstractDCCppInitializationManager.class.getName());
+    private final static Logger log = LoggerFactory.getLogger(AbstractDCCppInitializationManager.class.getName());
 
 }

@@ -183,7 +183,7 @@ public class DefaultSignalSystem extends AbstractNamedBean implements SignalSyst
         return Bundle.getMessage("BeanNameSignalSystem");
     }
 
-    static Logger log = LoggerFactory.getLogger(DefaultSignalSystem.class.getName());
+    private final static Logger log = LoggerFactory.getLogger(DefaultSignalSystem.class.getName());
 }
 
 /* @(#)DefaultSignalSystem.java */

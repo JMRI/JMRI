@@ -180,6 +180,6 @@ public class LayoutConnectivity {
         return anchor;
     }
 
-    static Logger log = LoggerFactory.getLogger(LayoutConnectivity.class.getName());
+    private final static Logger log = LoggerFactory.getLogger(LayoutConnectivity.class.getName());
 
 }

@@ -121,7 +121,7 @@ public class SprogOpsModeProgrammer extends SprogProgrammer implements Addressed
     }
 
     // initialize logging
-    static Logger log = LoggerFactory.getLogger(SprogOpsModeProgrammer.class.getName());
+    private final static Logger log = LoggerFactory.getLogger(SprogOpsModeProgrammer.class.getName());
 
 }
 

@@ -164,7 +164,7 @@ public class DCCppSensorManagerTest extends TestCase {
         return suite;
     }
 
-    static Logger log = LoggerFactory.getLogger(DCCppSensorManagerTest.class.getName());
+    private final static Logger log = LoggerFactory.getLogger(DCCppSensorManagerTest.class.getName());
 
     // The minimal setup for log4J
     protected void setUp() throws Exception {

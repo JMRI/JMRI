@@ -327,7 +327,7 @@ public class TamsTrafficController extends AbstractMRTrafficController implement
         }
         return adaptermemo.getSystemPrefix();
     }
-    static Logger log = LoggerFactory.getLogger(TamsTrafficController.class.getName());
+    private final static Logger log = LoggerFactory.getLogger(TamsTrafficController.class.getName());
 }
 
 

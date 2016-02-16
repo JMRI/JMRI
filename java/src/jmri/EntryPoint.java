@@ -153,7 +153,7 @@ public class EntryPoint {
         return mFromBlockDirection;
     }
 
-    static Logger log = LoggerFactory.getLogger(EntryPoint.class.getName());
+    private final static Logger log = LoggerFactory.getLogger(EntryPoint.class.getName());
 }
 
 /* @(#)EntryPoint.java */

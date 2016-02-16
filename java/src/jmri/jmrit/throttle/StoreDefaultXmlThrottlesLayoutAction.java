@@ -3,8 +3,6 @@ package jmri.jmrit.throttle;
 import java.awt.event.ActionEvent;
 import java.io.File;
 import javax.swing.AbstractAction;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 
 /**
  * Save throttles to XML
@@ -42,8 +40,5 @@ public class StoreDefaultXmlThrottlesLayoutAction extends AbstractAction {
         StoreXmlThrottlesLayoutAction sxta = new StoreXmlThrottlesLayoutAction();
         sxta.saveThrottlesLayout(new File(ThrottleFrame.getDefaultThrottleFilename()));
     }
-
-    // initialize logging
-    static Logger log = LoggerFactory.getLogger(StoreXmlThrottlesLayoutAction.class.getName());
 
 }

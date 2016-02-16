@@ -129,6 +129,6 @@ public class ResettingOffsetHighCvProgrammerFacadeTest extends TestCase {
         return suite;
     }
 
-    static Logger log = LoggerFactory.getLogger(ResettingOffsetHighCvProgrammerFacadeTest.class.getName());
+    private final static Logger log = LoggerFactory.getLogger(ResettingOffsetHighCvProgrammerFacadeTest.class.getName());
 
 }

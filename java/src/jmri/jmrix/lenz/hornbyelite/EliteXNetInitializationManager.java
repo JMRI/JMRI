@@ -57,6 +57,6 @@ public class EliteXNetInitializationManager extends AbstractXNetInitializationMa
         }
     }
 
-    static Logger log = LoggerFactory.getLogger(EliteXNetInitializationManager.class.getName());
+    private final static Logger log = LoggerFactory.getLogger(EliteXNetInitializationManager.class.getName());
 
 }

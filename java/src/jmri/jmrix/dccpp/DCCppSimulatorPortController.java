@@ -3,8 +3,6 @@ package jmri.jmrix.dccpp;
 
 import java.io.DataInputStream;
 import java.io.DataOutputStream;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 
 /**
  * Abstract base for classes representing a DCCpp communications port
@@ -52,8 +50,6 @@ public abstract class DCCppSimulatorPortController extends jmri.jmrix.AbstractSe
     public DCCppSystemConnectionMemo getSystemConnectionMemo() {
         return (DCCppSystemConnectionMemo) super.getSystemConnectionMemo();
     }
-
-    static Logger log = LoggerFactory.getLogger(DCCppSimulatorPortController.class.getName());
 
 }
 

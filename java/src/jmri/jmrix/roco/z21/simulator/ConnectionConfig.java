@@ -2,8 +2,6 @@
 package jmri.jmrix.roco.z21.simulator;
 
 import javax.swing.JPanel;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 
 
 /**
@@ -67,7 +65,5 @@ public class ConnectionConfig extends jmri.jmrix.roco.z21.ConnectionConfig {
     public boolean isAutoConfigPossible() {
         return false;  // always fixed, no reason to search.
     }
-
-    static Logger log = LoggerFactory.getLogger(ConnectionConfig.class.getName());
 
 }

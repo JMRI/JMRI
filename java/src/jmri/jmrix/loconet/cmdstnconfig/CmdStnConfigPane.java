@@ -337,5 +337,5 @@ public class CmdStnConfigPane extends LnPanel implements LocoNetListener {
     }
 
     // initialize logging
-    static Logger log = LoggerFactory.getLogger(CmdStnConfigPane.class.getName());
+    private final static Logger log = LoggerFactory.getLogger(CmdStnConfigPane.class.getName());
 }

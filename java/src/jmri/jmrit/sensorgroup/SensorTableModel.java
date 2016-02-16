@@ -87,7 +87,7 @@ public class SensorTableModel extends BeanTableModel implements PropertyChangeLi
         }
     }
 
-    static final Logger log = LoggerFactory.getLogger(SensorTableModel.class.getName());
+    private final static Logger log = LoggerFactory.getLogger(SensorTableModel.class.getName());
 
 }
 /* @(#)SensorTableModel.java */

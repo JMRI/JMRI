@@ -1264,9 +1264,46 @@
   
 <li>
 <a href="package/jmri/jmrit/logix/Warrant.shtml">Warrants </a>
+<ul>
+   
+<li>
+<a href="package/jmri/jmrit/logix/WarrantTable.shtml">The Warrant List </a>
 <ul></ul>
 </li>
 
+   
+<li>
+<a href="package/jmri/jmrit/logix/CreateEditWarrant.shtml">Creating and Editing Warrants </a>
+<ul></ul>
+</li>
+
+   
+<li>
+<a href="package/jmri/jmrit/logix/NXWarrant.shtml">NXWarrants </a>
+<ul></ul>
+</li>
+
+   
+<li>
+<a href="package/jmri/jmrit/logix/SCWarrant.shtml">Signal Controlled Warrants </a>
+<ul></ul>
+</li>
+
+   
+<li>
+<a href="package/jmri/jmrit/logix/OBlockTable.shtml">The Occupancy Block Tables </a>
+<ul></ul>
+</li>
+
+   
+<li>
+<a href="package/jmri/jmrit/logix/OBlockEdit.shtml">Creating and Editing OBlocks, Portals and OPaths </a>
+<ul></ul>
+</li>
+
+  
+</ul>
+</li>
   
 <li>
 <a href="html/tools/uss/index.shtml">USS CTC Tools </a>

@@ -9,7 +9,6 @@ import jmri.ProgListener;
 import jmri.Programmer;
 import jmri.ProgrammerException;
 import jmri.ProgrammingMode;
-import jmri.managers.DefaultProgrammerManager;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -262,6 +261,6 @@ public abstract class AbstractProgrammer implements Programmer {
 
     javax.swing.Timer timer = null;
 
-    static Logger log = LoggerFactory.getLogger(AbstractProgrammer.class.getName());
+    private final static Logger log = LoggerFactory.getLogger(AbstractProgrammer.class.getName());
 
 }
