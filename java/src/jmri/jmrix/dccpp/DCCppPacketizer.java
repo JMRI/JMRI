@@ -141,7 +141,6 @@ public class DCCppPacketizer extends DCCppTrafficController {
     protected void loadChars(jmri.jmrix.AbstractMRReply msg, java.io.DataInputStream istream) throws java.io.IOException {
         int i;
         String m;
-        DCCppReply dm;
         if (log.isDebugEnabled()) {
             log.debug("loading characters from port");
         }
@@ -150,8 +149,6 @@ public class DCCppPacketizer extends DCCppTrafficController {
             log.error("SerialDCCppPacketizer.loadChars called on non-DCCppReply msg!");
             return;
         }
-        
-        dm = (DCCppReply)msg;
         
         byte char1 = readByteProtected(istream);
         m = "";

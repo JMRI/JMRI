@@ -1,9 +1,7 @@
 // DCCppMultiMeter.java
 package jmri.jmrix.dccpp;
 
-import java.beans.PropertyChangeEvent;
 import java.beans.PropertyChangeListener;
-import java.beans.PropertyChangeSupport;
 import java.util.Timer;
 import java.util.TimerTask;
 import jmri.MultiMeter;

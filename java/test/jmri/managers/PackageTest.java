@@ -33,6 +33,7 @@ public class PackageTest extends TestCase {
         suite.addTest(DefaultSignalSystemManagerTest.suite());
         suite.addTest(DefaultUserMessagePreferencesTest.suite());
         suite.addTest(InternalLightManagerTest.suite());
+        suite.addTest(InternalSensorManagerTest.suite());
         suite.addTest(ProxyLightManagerTest.suite());
         suite.addTest(ProxySensorManagerTest.suite());
         suite.addTest(ProxyTurnoutManagerTest.suite());

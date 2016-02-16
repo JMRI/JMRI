@@ -4,8 +4,6 @@ package jmri.jmrix.zimo;
 import java.util.ResourceBundle;
 import jmri.InstanceManager;
 import jmri.ProgrammerManager;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 
 /**
  * Lightweight class to denote that a system is active, and provide general
@@ -220,8 +218,6 @@ public class Mx1SystemConnectionMemo extends jmri.jmrix.SystemConnectionMemo {
         }
         super.dispose();
     }
-
-    private final static Logger log = LoggerFactory.getLogger(Mx1SystemConnectionMemo.class.getName());
 }
 
 

@@ -10,8 +10,6 @@ import junit.framework.Assert;
 import junit.framework.Test;
 import junit.framework.TestCase;
 import junit.framework.TestSuite;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 
 /**
  * Tests for Pr1Importer class.
@@ -112,8 +110,6 @@ public class Pr1ImporterTest extends TestCase {
         TestSuite suite = new TestSuite(Pr1ImporterTest.class);
         return suite;
     }
-
-    private final static Logger log = LoggerFactory.getLogger(Pr1ImporterTest.class.getName());
 
     // The minimal setup for log4J
     protected void setUp() {

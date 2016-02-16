@@ -10,8 +10,6 @@ import junit.framework.Assert;
 import junit.framework.Test;
 import junit.framework.TestCase;
 import junit.framework.TestSuite;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 
 /**
  * Tests for the jmri.jmrix.can.cbus.CbusProgrammer class.
@@ -120,8 +118,6 @@ public class CbusProgrammerTest extends TestCase {
         TestSuite suite = new TestSuite(CbusProgrammerTest.class);
         return suite;
     }
-
-    private final static Logger log = LoggerFactory.getLogger(CbusProgrammerTest.class.getName());
 
     // The minimal setup for log4J
     protected void setUp() {

@@ -5,8 +5,6 @@ import jmri.implementation.AbstractTurnoutTest;
 import junit.framework.Assert;
 import junit.framework.Test;
 import junit.framework.TestSuite;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 
 /**
  * Tests for the jmri.jmrix.grapevine.SerialTurnout class, middle bank.
@@ -56,7 +54,5 @@ public class SerialTurnoutTest1 extends AbstractTurnoutTest {
         TestSuite suite = new TestSuite(SerialTurnoutTest1.class);
         return suite;
     }
-
-    private final static Logger log = LoggerFactory.getLogger(SerialTurnoutTest1.class.getName());
 
 }

@@ -4,8 +4,6 @@ package jmri.jmrix.lenz.swing.liusb;
 import junit.framework.Test;
 import junit.framework.TestCase;
 import junit.framework.TestSuite;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 
 /**
  * Tests for the jmri.jmrix.lenz.swing.liusb package
@@ -32,7 +30,5 @@ public class LIUSBTest extends TestCase {
         suite.addTest(new TestSuite(LIUSBConfigFrameTest.class));
         return suite;
     }
-
-    private final static Logger log = LoggerFactory.getLogger(LIUSBTest.class.getName());
 
 }

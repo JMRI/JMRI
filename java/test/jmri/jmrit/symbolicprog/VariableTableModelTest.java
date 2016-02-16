@@ -7,8 +7,6 @@ import junit.framework.Assert;
 import junit.framework.Test;
 import junit.framework.TestCase;
 import junit.framework.TestSuite;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 import org.jdom2.DocType;
 import org.jdom2.Document;
 import org.jdom2.Element;
@@ -322,8 +320,6 @@ public class VariableTableModelTest extends TestCase {
         TestSuite suite = new TestSuite(VariableTableModelTest.class);
         return suite;
     }
-
-    private final static Logger log = LoggerFactory.getLogger(VariableTableModelTest.class.getName());
 
     // The minimal setup for log4J
     protected void setUp() {
