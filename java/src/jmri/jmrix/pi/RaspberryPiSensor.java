@@ -2,6 +2,11 @@
 
 package jmri.jmrix.pi;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+import jmri.implementation.AbstractSensor;
+import jmri.Sensor;
+
 import com.pi4j.io.gpio.GpioController;
 import com.pi4j.io.gpio.GpioFactory;
 import com.pi4j.io.gpio.GpioPinDigitalInput;
@@ -9,13 +14,9 @@ import com.pi4j.io.gpio.PinPullResistance;
 import com.pi4j.io.gpio.RaspiPin;
 import com.pi4j.io.gpio.event.GpioPinDigitalStateChangeEvent;
 import com.pi4j.io.gpio.event.GpioPinListenerDigital;
-import jmri.Sensor;
-import jmri.implementation.AbstractSensor;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 
 /**
- * Extend jmri.AbstractSensor for XPressNet layouts.
+ * Extend jmri.AbstractSensor for RaspberryPi GPIO pins.
  * <P>
  * @author			Paul Bender Copyright (C) 2003-2010
  * @version         $Revision$
