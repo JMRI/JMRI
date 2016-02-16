@@ -13,9 +13,11 @@
 <!-- FITNESS FOR A PARTICULAR PURPOSE.  See the GNU General Public License  -->
 <!-- for more details.                                                      -->
 <decoder-config xmlns:xi="http://www.w3.org/2001/XInclude" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="http://jmri.org/xml/schema/decoder.xsd">
+  <version author="Mark Waters mark16jmri@mybtinternet.com" version="1.1" lastUpdated="20160123"/>
   <version author="Mark Waters mark16w-jmri@yahoo.co.uk" version="1" lastUpdated="20071110"/>
   <!-- Based on the contribution of many others -->
   <!-- V 1 new file -->
+  <!-- V 1.1 increased highVersion to 34 and added CV144 decoder lock -->
   <decoder>
     <family name="Zimo Silent BEMF decoders, late model" mfg="Zimo">
       <model model="MX63 version 22-30" lowVersionID="22" highVersionID="34" maxInputVolts="12-24V" maxMotorCurrent="1A, peak=2A for 5 sec." maxTotalCurrent="1.2A" formFactor="HO" numOuts="8" numFns="14">
@@ -1432,6 +1434,14 @@
         <xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
         <label>Polarity Dependent DC stopping method</label>
         <label xml:lang="it">Fermata in DC dipendente da polarità</label>
+      </variable>
+      <variable item="Output 1 effect generated" CV="125" mask="VVVVVVXX">
+        <enumVal>
+          <xi:include href="http://jmri.org/xml/decoders/zimo/Choice-Ligth1.xml"/>
+          <xi:include href="http://jmri.org/xml/decoders/zimo/Choice-Ligth2.xml"/>
+        </enumVal>
+        <label>Light Effects Output 1</label>
+        <label xml:lang="it">Effetti Luci uscita 1</label>
       </variable>
       <variable item="Output 1 behavior" CV="125" mask="XXXXXXVV">
         <xi:include href="http://jmri.org/xml/decoders/parts/enum-both_frw_rev.xml"/>

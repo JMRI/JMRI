@@ -14,8 +14,6 @@ import javax.swing.table.TableColumn;
 import jmri.implementation.SignalSpeedMap;
 import jmri.jmrit.roster.RosterSpeedProfile;
 import jmri.jmrit.roster.RosterSpeedProfile.SpeedStep;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 /**
  * Display Speed Profile
  *
@@ -194,6 +192,4 @@ public class SpeedProfileTable extends jmri.util.JmriJFrame {
         public void setValueAt(Object value, int row, int col) {
         }
     }
-    
-    private final static Logger log = LoggerFactory.getLogger(SpeedProfileTable.class);
 }

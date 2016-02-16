@@ -5,8 +5,6 @@ import jmri.jmrix.AbstractMRListener;
 import jmri.jmrix.AbstractMRMessage;
 import jmri.jmrix.AbstractMRReply;
 import jmri.jmrix.AbstractMRTrafficController;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 
 /**
  * Converts Stream-based I/O to/from JMRIClient messages. The
@@ -99,8 +97,6 @@ public class JMRIClientTrafficController extends AbstractMRTrafficController
     public JMRIClientTrafficController instance() {
         return this;
     }
-
-    private final static Logger log = LoggerFactory.getLogger(JMRIClientTrafficController.class.getName());
 }
 
 /* @(#)JMRIClientTrafficController.java */

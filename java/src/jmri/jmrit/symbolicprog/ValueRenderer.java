@@ -12,8 +12,6 @@ import java.awt.Component;
 import javax.swing.JLabel;
 import javax.swing.JTable;
 import javax.swing.table.TableCellRenderer;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 
 public class ValueRenderer implements TableCellRenderer {
 
@@ -36,6 +34,4 @@ public class ValueRenderer implements TableCellRenderer {
             return new JLabel("Unknown value type!");
         }
     }
-
-    private final static Logger log = LoggerFactory.getLogger(ValueEditor.class.getName());
 }

@@ -23,8 +23,6 @@ import jmri.jmrit.logix.OBlock;
 import jmri.jmrit.logix.OPath;
 import jmri.jmrit.picker.PickListModel;
 import jmri.jmrit.picker.PickPanel;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 
 /**
  * Panel for Occupancy and Error detection,
@@ -298,6 +296,4 @@ public class DetectionPanel extends JPanel {
         _blockPathPanel.add(_checkBoxPanel, 1);
         _blockPathPanel.setVisible(true);
     }
-
-    private final static Logger log = LoggerFactory.getLogger(DetectionPanel.class.getName());
 }

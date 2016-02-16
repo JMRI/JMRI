@@ -16,7 +16,7 @@ import com.pi4j.io.gpio.event.GpioPinDigitalStateChangeEvent;
 import com.pi4j.io.gpio.event.GpioPinListenerDigital;
 
 /**
- * Extend jmri.AbstractSensor for XPressNet layouts.
+ * Extend jmri.AbstractSensor for RaspberryPi GPIO pins.
  * <P>
  * @author			Paul Bender Copyright (C) 2003-2010
  * @version         $Revision$

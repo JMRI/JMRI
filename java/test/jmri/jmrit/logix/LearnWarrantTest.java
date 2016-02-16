@@ -82,6 +82,7 @@ public class LearnWarrantTest extends jmri.util.SwingTestCase {
         Assert.assertEquals("run finished", Bundle.getMessage("NotRunning", w.getDisplayName()), msg);
 //        sensor.setState(Sensor.INACTIVE);
         pressButton(frame, Bundle.getMessage("ButtonSave"));
+        w = InstanceManager.getDefault(WarrantManager.class).getWarrant("Learning");
         List<ThrottleSetting> commands = w.getThrottleCommands();
         Assert.assertEquals("9 ThrottleCommands", 9, commands.size());
         WarrantTableFrame tableFrame = WarrantTableFrame.getInstance();

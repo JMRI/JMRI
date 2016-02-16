@@ -5,8 +5,6 @@ package jmri.jmris.srcp;
 
 import java.util.ResourceBundle;
 import javax.swing.JMenu;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 
 /**
  * Create a "JMRI SRCP Server" menu containing the Server interface to the JMRI
@@ -37,6 +35,4 @@ public class JmriSRCPServerMenu extends JMenu {
         add(new jmri.jmris.srcp.JmriSRCPServerAction(rb.getString("MenuItemStartServer")));
 
     }
-
-    private final static Logger log = LoggerFactory.getLogger(JmriSRCPServerMenu.class.getName());
 }

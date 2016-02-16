@@ -10,8 +10,6 @@ import jmri.jmrix.nce.NceReply;
 import jmri.jmrix.nce.NceSystemConnectionMemo;
 import jmri.jmrix.nce.NceTrafficController;
 import jmri.util.StringUtil;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 
 /**
  * Frame for user input of Nce messages
@@ -231,6 +229,4 @@ public class NcePacketGenPanel extends jmri.jmrix.nce.swing.NcePanel implements 
                     jmri.InstanceManager.getDefault(NceSystemConnectionMemo.class));
         }
     }
-
-    private final static Logger log = LoggerFactory.getLogger(NcePacketGenPanel.class.getName());
 }

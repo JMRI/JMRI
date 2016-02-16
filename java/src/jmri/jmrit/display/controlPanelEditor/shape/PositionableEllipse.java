@@ -6,8 +6,6 @@ import java.awt.geom.Ellipse2D;
 import javax.swing.JPopupMenu;
 import jmri.jmrit.display.Editor;
 import jmri.jmrit.display.Positionable;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 
 /**
  * PositionableRoundRect.
@@ -67,6 +65,4 @@ public class PositionableEllipse extends PositionableRectangle {
         });
         return true;
     }
-
-    private final static Logger log = LoggerFactory.getLogger(PositionableEllipse.class.getName());
 }

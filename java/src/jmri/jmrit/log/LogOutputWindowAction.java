@@ -4,8 +4,6 @@ package jmri.jmrit.log;
 import java.awt.event.ActionEvent;
 import javax.swing.AbstractAction;
 import javax.swing.JFrame;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 
 /**
  * Open a window to recieve Log4J output
@@ -30,7 +28,4 @@ public class LogOutputWindowAction extends AbstractAction {
         JFrame f = jmri.util.JLogoutputFrame.getInstance().getMainFrame();
         f.setVisible(true);
     }
-
-    // initialize logging
-    private final static Logger log = LoggerFactory.getLogger(LogOutputWindowAction.class.getName());
 }

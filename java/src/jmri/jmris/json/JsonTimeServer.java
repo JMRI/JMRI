@@ -1,5 +1,9 @@
 package jmri.jmris.json;
 
+import static jmri.jmris.json.JSON.METHOD;
+import static jmri.jmris.json.JSON.POST;
+import static jmri.jmris.json.JSON.TIME;
+
 import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import java.io.IOException;
@@ -7,18 +11,11 @@ import java.util.Locale;
 import jmri.JmriException;
 import jmri.jmris.AbstractTimeServer;
 import jmri.jmris.JmriConnection;
-import static jmri.jmris.json.JSON.METHOD;
-import static jmri.jmris.json.JSON.POST;
-import static jmri.jmris.json.JSON.TIME;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 
 public class JsonTimeServer extends AbstractTimeServer {
 
     private final JmriConnection connection;
     private final ObjectMapper mapper;
-    private final static Logger log = LoggerFactory.getLogger(JsonTimeServer.class);
-
     JsonTimeServer(JmriConnection connection) {
         super();
         this.connection = connection;

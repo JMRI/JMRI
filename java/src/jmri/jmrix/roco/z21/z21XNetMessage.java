@@ -3,8 +3,6 @@ package jmri.jmrix.roco.z21;
 
 import java.io.Serializable;
 import jmri.jmrix.lenz.XNetMessage;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 
 /**
  * Represents a single command or response on the XpressNet.
@@ -57,9 +55,6 @@ public class z21XNetMessage extends jmri.jmrix.lenz.XNetMessage implements Seria
         m.setParity(); // Set the parity bit
         return m;
     }
-
-    // initialize logging    
-    private final static Logger log = LoggerFactory.getLogger(z21XNetMessage.class.getName());
 
 }
 
