@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <?xml-stylesheet href="/xml/XSLT/DecoderID.xsl" type="text/xsl"?>
 <decoderIndex-config xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="http://jmri.org/xml/schema/decoder.xsd">
-  <!--Written by JMRI version 4.3.3ish-201602142104-jake-R97dcc3a on Sun Feb 14 13:04:39 PST 2016 $Id$-->
-  <decoderIndex version="692">
+  <!--Written by JMRI version 4.3.4ish-201602162313-Matt H-Rac415ac on Wed Feb 17 00:13:48 CET 2016 $Id$-->
+  <decoderIndex version="694">
     <mfgList nmraListDate="2015-03-06" updated="2015-03-25" lastadd="107,124,126,128,134">
       <manufacturer mfg="NMRA" mfgID="999" />
       <manufacturer mfg="A-Train Electronics" mfgID="137" />
@@ -18224,7 +18224,69 @@
           <output name="Brake" />
           <size length="1.28" width="0.69" height="0.22" units="inches" />
         </model>
-        <model model="WOW Diesel 501 SS2" numOuts="6" numFns="14" maxMotorCurrent="5A" formFactor="screw" lowVersionID="3" highVersionID="3" productID="172">
+        <model model="WOW Diesel 501 SS2" numOuts="6" numFns="14" maxMotorCurrent="5A" formFactor="screw" lowVersionID="2" highVersionID="2" productID="172">
+          <output name="1" label="White" connection="solder" maxcurrent="100 mA" />
+          <output name="2" label="Yellow" connection="solder" maxcurrent="100 mA" />
+          <output name="3" label="Green" connection="solder" maxcurrent="100 mA" />
+          <output name="4" label="Purple" connection="solder" maxcurrent="100 mA" />
+          <output name="5" label="Brown" connection="solder" maxcurrent="100 mA" />
+          <output name="6" label="Pink" connection="solder" maxcurrent="100 mA" />
+          <output name="Dim" />
+          <output name="Ditch" />
+          <output name="Motor" />
+          <output name="Brake" />
+          <size length="3.00" width="1.45" units="inches" />
+        </model>
+        <functionlabels>
+          <functionlabel num="0" lockable="true">Headlight</functionlabel>
+          <functionlabel num="1" lockable="true">Bell</functionlabel>
+          <functionlabel num="2" lockable="false">Horn Long</functionlabel>
+          <functionlabel num="3" lockable="true">Horn Short</functionlabel>
+          <functionlabel num="4" lockable="true">Horn Quill</functionlabel>
+          <functionlabel num="5" lockable="true">Dynamic Brake</functionlabel>
+          <functionlabel num="6" lockable="true">Brake Release</functionlabel>
+          <functionlabel num="7" lockable="true">Train Brake</functionlabel>
+          <functionlabel num="8" lockable="true">Mute</functionlabel>
+          <functionlabel num="9" lockable="true">Rotate Horn/Bell</functionlabel>
+          <functionlabel num="10" lockable="true">Manual Notch Up</functionlabel>
+          <functionlabel num="11" lockable="true">Manual Notch Down</functionlabel>
+          <functionlabel num="12" lockable="true">Prime Mover</functionlabel>
+          <functionlabel num="13" lockable="true">Coupling</functionlabel>
+          <functionlabel num="14" lockable="true">Uncoupling</functionlabel>
+          <functionlabel num="15" lockable="true">Mainline/Switching Momentum</functionlabel>
+          <functionlabel num="16" lockable="true">Crew Alert</functionlabel>
+          <functionlabel num="17" lockable="true">Windshield Wipers</functionlabel>
+          <functionlabel num="18" lockable="true">Air Spitter</functionlabel>
+        </functionlabels>
+      </family>
+      <family name="WOW Diesel Sound Set 3" mfg="Train Control Systems" file="TCS_WOW_Diesel03.xml">
+        <model model="WOW Diesel 101 SS3" numOuts="6" numFns="14" maxMotorCurrent="1.3A (peak=2A)" connector="9pin" lowVersionID="2" highVersionID="2" productID="170">
+          <output name="1" label="White" connection="solder" maxcurrent="100 mA" />
+          <output name="2" label="Yellow" connection="solder" maxcurrent="100 mA" />
+          <output name="3" label="Green" connection="solder" maxcurrent="100 mA" />
+          <output name="4" label="Purple" connection="solder" maxcurrent="100 mA" />
+          <output name="5" label="Brown" connection="solder" maxcurrent="100 mA" />
+          <output name="6" label="Pink" connection="solder" maxcurrent="100 mA" />
+          <output name="Dim" />
+          <output name="Ditch" />
+          <output name="Motor" />
+          <output name="Brake" />
+          <size length="1.35" width="0.66" height="0.22" units="inches" />
+        </model>
+        <model model="WOW Diesel 121 SS3" numOuts="6" numFns="14" maxMotorCurrent="1.3A (peak=2A)" connector="21pin" lowVersionID="2" highVersionID="2" productID="171">
+          <output name="1" label="White" connection="solder" maxcurrent="100 mA" />
+          <output name="2" label="Yellow" connection="solder" maxcurrent="100 mA" />
+          <output name="3" label="Green" connection="solder" maxcurrent="100 mA" />
+          <output name="4" label="Purple" connection="solder" maxcurrent="100 mA" />
+          <output name="5" label="Brown" connection="solder" maxcurrent="100 mA" />
+          <output name="6" label="Pink" connection="solder" maxcurrent="100 mA" />
+          <output name="Dim" />
+          <output name="Ditch" />
+          <output name="Motor" />
+          <output name="Brake" />
+          <size length="1.28" width="0.69" height="0.22" units="inches" />
+        </model>
+        <model model="WOW Diesel 501 SS3" numOuts="6" numFns="14" maxMotorCurrent="5A" formFactor="screw" lowVersionID="3" highVersionID="3" productID="172">
           <output name="1" label="White" connection="solder" maxcurrent="100 mA" />
           <output name="2" label="Yellow" connection="solder" maxcurrent="100 mA" />
           <output name="3" label="Green" connection="solder" maxcurrent="100 mA" />
