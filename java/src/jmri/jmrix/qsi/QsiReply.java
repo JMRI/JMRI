@@ -1,8 +1,6 @@
 // QsiReply.java
 package jmri.jmrix.qsi;
 
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 
 /**
  * Carries the reply to an QsiMessage
@@ -166,8 +164,6 @@ public class QsiReply extends jmri.jmrix.AbstractMessage {
 
     // contents (private)
     private boolean _isBoot = false;
-
-    private final static Logger log = LoggerFactory.getLogger(QsiReply.class.getName());
 }
 
 /* @(#)QsiReply.java */

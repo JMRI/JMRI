@@ -1,6 +1,11 @@
 //JsonSensorServer.java
 package jmri.jmris.json;
 
+import static jmri.jmris.json.JSON.METHOD;
+import static jmri.jmris.json.JSON.NAME;
+import static jmri.jmris.json.JSON.PUT;
+import static jmri.jmris.json.JSON.SENSOR;
+
 import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import java.io.IOException;
@@ -8,12 +13,6 @@ import java.util.Locale;
 import jmri.JmriException;
 import jmri.jmris.AbstractSensorServer;
 import jmri.jmris.JmriConnection;
-import static jmri.jmris.json.JSON.METHOD;
-import static jmri.jmris.json.JSON.NAME;
-import static jmri.jmris.json.JSON.PUT;
-import static jmri.jmris.json.JSON.SENSOR;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 
 /**
  * JSON Web Socket interface between the JMRI Sensor manager and a network
@@ -32,8 +31,6 @@ public class JsonSensorServer extends AbstractSensorServer {
 
     private final JmriConnection connection;
     private final ObjectMapper mapper;
-    private final static Logger log = LoggerFactory.getLogger(JsonSensorServer.class);
-
     public JsonSensorServer(JmriConnection connection) {
         super();
         this.connection = connection;

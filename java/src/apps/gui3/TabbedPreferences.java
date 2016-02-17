@@ -2,6 +2,7 @@
 package apps.gui3;
 
 import apps.AppConfigBase;
+import apps.ConfigBundle;
 import com.fasterxml.jackson.core.type.TypeReference;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import java.awt.BorderLayout;
@@ -142,7 +143,7 @@ public class TabbedPreferences extends AppConfigBase {
         detailpanel.setBorder(BorderFactory.createEmptyBorder(6, 3, 6, 6));
 
         save = new JButton(
-                rb.getString("ButtonSave"),
+                ConfigBundle.getMessage("ButtonSave"),
                 new ImageIcon(FileUtil.findURL("program:resources/icons/misc/gui3/SaveIcon.png", FileUtil.Location.INSTALLED)));
         save.addActionListener((ActionEvent e) -> {
             savePressed(invokeSaveOptions());

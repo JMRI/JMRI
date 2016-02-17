@@ -3,8 +3,6 @@ package jmri.jmrix.sprog.update;
 
 import java.awt.event.ActionEvent;
 import javax.swing.AbstractAction;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 
 /**
  * Swing action to create and register a SprogIIUpdateFrame object
@@ -25,8 +23,6 @@ public class SprogUpdateAction extends AbstractAction {
 
     public void actionPerformed(ActionEvent e) {
     }
-
-    private final static Logger log = LoggerFactory.getLogger(SprogUpdateAction.class.getName());
 
 }
 

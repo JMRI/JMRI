@@ -7,8 +7,6 @@ import jmri.jmrix.mrc.MrcMessage;
 import jmri.jmrix.mrc.MrcSystemConnectionMemo;
 import jmri.jmrix.mrc.MrcTrafficController;
 import jmri.util.StringUtil;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 
 /**
  * Frame for user input of Mrc messages
@@ -138,6 +136,4 @@ public class MrcPacketGenPanel extends jmri.jmrix.mrc.swing.MrcPanel {
                     jmri.InstanceManager.getDefault(MrcSystemConnectionMemo.class));//IN18N
         }
     }
-
-    private final static Logger log = LoggerFactory.getLogger(MrcPacketGenPanel.class.getName());
 }

@@ -2,9 +2,7 @@
 
 package jmri;
 
-import java.beans.PropertyChangeEvent;
 import java.beans.PropertyChangeListener;
-import java.beans.PropertyChangeSupport;
 
 /**
  * MultiMeter

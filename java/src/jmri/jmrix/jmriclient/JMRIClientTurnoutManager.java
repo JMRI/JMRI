@@ -2,8 +2,6 @@
 package jmri.jmrix.jmriclient;
 
 import jmri.Turnout;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 
 /**
  * Implement turnout manager for JMRIClient systems
@@ -44,8 +42,6 @@ public class JMRIClientTurnoutManager extends jmri.managers.AbstractTurnoutManag
     public String createSystemName(String curAddress, String prefix) throws jmri.JmriException {
         return prefix + typeLetter() + curAddress;
     }
-
-    private final static Logger log = LoggerFactory.getLogger(JMRIClientTurnoutManager.class.getName());
 
 }
 

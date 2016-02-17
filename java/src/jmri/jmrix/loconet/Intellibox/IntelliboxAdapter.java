@@ -3,8 +3,6 @@ package jmri.jmrix.loconet.Intellibox;
 
 import jmri.jmrix.loconet.LnCommandStationType;
 import jmri.jmrix.loconet.locobuffer.LocoBufferAdapter;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 
 /**
  * Update the code in jmri.jmrix.loconet.locobuffer so that it operates
@@ -86,7 +84,5 @@ public class IntelliboxAdapter extends LocoBufferAdapter {
         };
         return retval;
     }
-
-    private final static Logger log = LoggerFactory.getLogger(IntelliboxAdapter.class.getName());
 
 }

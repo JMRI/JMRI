@@ -4,8 +4,6 @@
 package jmri.jmrix.dccpp.serial;
 
 import jmri.jmrix.dccpp.DCCppPacketizer;
-import jmri.jmrix.dccpp.DCCppReply;
-import jmri.jmrix.dccpp.DCCppReplyParser;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 

@@ -382,6 +382,8 @@
 
 <mapID target="html.tools.Turnouts" url="html/tools/Turnouts.shtml"/>
 
+<mapID target="package.jmri.jmrit.operations.Operations_CopyAutomation" url="package/jmri/jmrit/operations/Operations.shtml#CopyAutomation"/>
+
 <mapID target="manual.DecoderPro.Comp_Analog_Top" url="manual/DecoderPro/Comp_Analog.shtml#Top"/>
 
 <mapID target="manual.DecoderPro.Start_Preferences_WiThrottle" url="manual/DecoderPro/Start_Preferences.shtml#WiThrottle"/>
@@ -2875,6 +2877,8 @@
 <mapID target="html.hardware.easydcc.EasyDCC_limitations" url="html/hardware/easydcc/EasyDCC.shtml#limitations"/>
 
 <mapID target="manual.JMRI_OPS_UsersGuide.Ops_Locations_Menu" url="manual/JMRI_OPS_UsersGuide/Ops_Locations_Menu.shtml"/>
+
+<mapID target="package.jmri.jmrit.logix.SCWarrant" url="package/jmri/jmrit/logix/SCWarrant.shtml"/>
 
 <mapID target="html.hardware.raildriver.index" url="html/hardware/raildriver/index.shtml"/>
 

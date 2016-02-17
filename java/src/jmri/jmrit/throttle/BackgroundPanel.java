@@ -5,8 +5,6 @@ import jmri.DccThrottle;
 import jmri.LocoAddress;
 import jmri.jmrit.roster.RosterEntry;
 import jmri.util.swing.ResizableImagePanel;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 
 public class BackgroundPanel extends ResizableImagePanel implements AddressListener {
 
@@ -65,6 +63,4 @@ public class BackgroundPanel extends ResizableImagePanel implements AddressListe
 
     public void notifyConsistAddressThrottleFound(DccThrottle throttle) {
     }
-
-    private final static Logger log = LoggerFactory.getLogger(BackgroundPanel.class.getName());
 }

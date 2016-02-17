@@ -9,8 +9,6 @@ import jmri.jmrit.operations.ExceptionContext;
 import jmri.jmrit.operations.ExceptionDisplayFrame;
 import jmri.jmrit.operations.OperationsManager;
 import jmri.jmrit.operations.OperationsXml;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 
 /**
  * Swing action to load the operation demo files.
@@ -26,8 +24,7 @@ public class LoadDemoAction extends AbstractAction {
      *
      */
     private static final long serialVersionUID = 8904435442712923065L;
-    private final static Logger log = LoggerFactory.getLogger(LoadDemoAction.class
-            .getName());
+//    private final static Logger log = LoggerFactory.getLogger(LoadDemoAction.class.getName());
 
     public LoadDemoAction(String s) {
         super(s);

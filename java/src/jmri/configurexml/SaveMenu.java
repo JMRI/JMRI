@@ -3,8 +3,6 @@ package jmri.configurexml;
 
 import java.util.ResourceBundle;
 import javax.swing.JMenu;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 
 /**
  * Create a "Save" menu item containing actions for storing various data
@@ -37,6 +35,4 @@ public class SaveMenu extends JMenu {
         add(new jmri.configurexml.StoreXmlUserAction(rb.getString("MenuItemStoreUser")));
 
     }
-
-    private final static Logger log = LoggerFactory.getLogger(SaveMenu.class.getName());
 }

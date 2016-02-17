@@ -3,8 +3,6 @@ package jmri.jmrix.roco.z21;
 
 import java.io.DataInputStream;
 import java.io.DataOutputStream;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 
 /**
  * Override default XPressNet classes to use z21 specific versions.
@@ -32,8 +30,6 @@ public class z21XNetStreamPortController extends jmri.jmrix.lenz.XNetStreamPortC
 
         jmri.jmrix.lenz.ActiveFlag.setActive();
     }
-
-    private final static Logger log = LoggerFactory.getLogger(z21XNetStreamPortController.class.getName());
 
 }
 

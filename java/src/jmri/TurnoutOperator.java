@@ -4,8 +4,6 @@
 package jmri;
 
 import jmri.implementation.AbstractTurnout;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 
 /**
  * Some (not much) common machinery for the concrete turnout operator classes.
@@ -40,6 +38,4 @@ public abstract class TurnoutOperator extends Thread {
          */
         private static final long serialVersionUID = -9039683362922025389L;
     }
-
-    private final static Logger log = LoggerFactory.getLogger(TurnoutOperator.class.getName());
 }

@@ -8,8 +8,6 @@ import jmri.util.FileUtil;
 import jmri.util.SystemType;
 import org.jdom2.Attribute;
 import org.jdom2.Element;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 
 public class TrainCustomSwitchList {
 
@@ -177,5 +175,5 @@ public class TrainCustomSwitchList {
         options.addContent(mc);
     }
 
-    private final static Logger log = LoggerFactory.getLogger(TrainCustomSwitchList.class.getName());
+//    private final static Logger log = LoggerFactory.getLogger(TrainCustomSwitchList.class.getName());
 }

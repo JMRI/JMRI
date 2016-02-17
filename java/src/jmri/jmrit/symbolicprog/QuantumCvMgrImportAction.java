@@ -5,8 +5,6 @@ import java.io.File;
 import java.io.IOException;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 
 /**
  * Action to import the CV values from a Quantum CV Manager .qcv file.
@@ -31,6 +29,4 @@ public class QuantumCvMgrImportAction extends GenericImportAction {
                 return false;
         }
     }
-
-    private final static Logger log = LoggerFactory.getLogger(QuantumCvMgrImportAction.class.getName());
 }

@@ -3,8 +3,6 @@ package jmri.jmrix.rps;
 
 import jmri.Reporter;
 import jmri.managers.AbstractReporterManager;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 
 /**
  * RPS implementation of a ReporterManager.
@@ -33,8 +31,6 @@ public class RpsReporterManager extends AbstractReporterManager {
     }
 
     static RpsReporterManager _instance = null;
-
-    private final static Logger log = LoggerFactory.getLogger(RpsReporterManager.class.getName());
 
     static { // class initialization
         // now want a ReporterManager always, not just when RPS is created

@@ -11,8 +11,6 @@ import jmri.AddressedProgrammer;
 import jmri.ProgListener;
 import jmri.ProgrammerException;
 import jmri.jmrix.nce.NceSystemConnectionMemo;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 
 /**
  * Panel for configuring a NCE booster
@@ -225,7 +223,4 @@ public class BoosterProgPanel extends jmri.jmrix.nce.swing.NcePanel {
             releaseProgrammer();
         }
     }
-
-    private final static Logger log = LoggerFactory
-            .getLogger(BoosterProgPanel.class.getName());
 }
