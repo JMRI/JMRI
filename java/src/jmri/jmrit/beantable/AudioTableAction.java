@@ -523,7 +523,7 @@ public class AudioTableAction extends AbstractTableAction {
 
     @Override
     public void setMessagePreferencesDetails(){
-        jmri.InstanceManager.getDefault(jmri.UserPreferencesManager.class).preferenceItemDetails(getClassName(), "nullAudio", "Hide Null Audio Warning Message");
+        jmri.InstanceManager.getDefault(jmri.UserPreferencesManager.class).preferenceItemDetails(getClassName(), "nullAudio", Bundle.getMessage("HideNullAudioWarningMessage"));
         super.setMessagePreferencesDetails();
     }
 

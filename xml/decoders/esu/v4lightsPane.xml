@@ -11,8 +11,18 @@
           &lt;li&gt;Function Settings (blink rate and grade crossing hold time)&lt;/li&gt;
         &lt;/ul&gt;
         &lt;br&gt;
-        &lt;strong&gt;To hide empty tabs, uncheck Preferences->Roster->Programmer->Show empty tabs.&lt;/strong&gt;
+        &lt;strong&gt;To hide empty tabs, uncheck Preferences -> Roster -> Programmer -> Show empty tabs.&lt;/strong&gt;
       &lt;/html&gt;</text>
+      <text xml:lang="de">&lt;html&gt;
+        &lt;strong&gt;Diese Reiter ist leer weil Lichter auf dem folgenden Reiter konfiguriert werden:&lt;/strong&gt;
+        &lt;ul&gt;
+        &lt;li&gt;Funktionszuordnung (weise Funktionsknöpfe, Richtung u. Geschwindigkeitsstufen an Ausgänge zu)&lt;/li&gt;
+        &lt;li&gt;Function Outputs = Funktionsausgänge (wähle Lichttyp, Helligkeit usw.)&lt;/li&gt;
+        &lt;li&gt;Function Settings = Funktionseinstellungen (Blinkfrequenz u. Bahnübergangswartezeit)&lt;/li&gt;
+        &lt;/ul&gt;
+        &lt;br&gt;
+        &lt;strong&gt;Um leere Reiter zu verbirgen, deselektiere Voreinstellungen -> Lokpark -> Programmierer -> Zeige leere Reiter.&lt;/strong&gt;
+        &lt;/html&gt;</text>
     </label>
   </column>
 </pane>
