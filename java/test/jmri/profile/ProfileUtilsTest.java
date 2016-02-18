@@ -49,6 +49,7 @@ public class ProfileUtilsTest extends TestCase {
             TestCase.fail("Unable to copy profiles with IllegalArgumentException.");
             return;
         } catch (IOException ex) {
+            log.error("Failure copying profiles", ex);
             TestCase.fail("Unable to copy profiles with IOException.");
             return;
         }
@@ -78,10 +79,9 @@ public class ProfileUtilsTest extends TestCase {
             ProfileUtils.copy(source, destination);
         } catch (IllegalArgumentException ex) {
             // This exception is expected and throwing it passes the test
-            return;
         } catch (IOException ex) {
+            log.error("Failure copying profiles", ex);
             TestCase.fail("Unable to copy profiles with IOException.");
-            return;
         }
     }
 
