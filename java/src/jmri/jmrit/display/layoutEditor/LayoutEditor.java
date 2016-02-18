@@ -961,7 +961,10 @@ public class LayoutEditor extends jmri.jmrit.display.panelEditor.PanelEditor imp
         editModeItem = new JCheckBoxMenuItem(rb.getString("EditMode"));
         optionMenu.add(editModeItem);
         editModeItem.setMnemonic(KeyEvent.VK_E);
-        editModeItem.setAccelerator(KeyStroke.getKeyStroke(java.awt.event.KeyEvent.VK_E, java.awt.Event.CTRL_MASK));
+        if (SystemType.isMacOSX())
+            editModeItem.setAccelerator(KeyStroke.getKeyStroke(KeyEvent.VK_E, ActionEvent.META_MASK));
+        else
+            editModeItem.setAccelerator(KeyStroke.getKeyStroke(KeyEvent.VK_E, ActionEvent.CTRL_MASK));
         editModeItem.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent event) {
                 setAllEditable(editModeItem.isSelected());
@@ -1471,7 +1474,10 @@ public class LayoutEditor extends jmri.jmrit.display.panelEditor.PanelEditor imp
         JRadioButtonMenuItem zoom40Item = new JRadioButtonMenuItem("x 4.0");
         
         JMenuItem zoomInItem = new JMenuItem("Zoom in");
-        zoomInItem.setAccelerator(KeyStroke.getKeyStroke(java.awt.event.KeyEvent.VK_ADD, java.awt.Event.CTRL_MASK));
+        if (SystemType.isMacOSX())
+            zoomInItem.setAccelerator(KeyStroke.getKeyStroke(KeyEvent.VK_ADD, ActionEvent.META_MASK));
+        else
+            zoomInItem.setAccelerator(KeyStroke.getKeyStroke(KeyEvent.VK_ADD, ActionEvent.CTRL_MASK));       
         zoomMenu.add(zoomInItem);
         zoomInItem.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent event) {
@@ -1498,7 +1504,10 @@ public class LayoutEditor extends jmri.jmrit.display.panelEditor.PanelEditor imp
         });
         JMenuItem zoomOutItem = new JMenuItem("Zoom out");
         zoomMenu.add(zoomOutItem);
-        zoomOutItem.setAccelerator(KeyStroke.getKeyStroke(java.awt.event.KeyEvent.VK_SUBTRACT, java.awt.Event.CTRL_MASK));
+        if (SystemType.isMacOSX())
+            zoomOutItem.setAccelerator(KeyStroke.getKeyStroke(KeyEvent.VK_SUBTRACT, ActionEvent.META_MASK));
+        else
+            zoomOutItem.setAccelerator(KeyStroke.getKeyStroke(KeyEvent.VK_SUBTRACT, ActionEvent.CTRL_MASK));       
         zoomOutItem.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent event) {
                 int  newZoom = (int)(zoomOut() * 100);
