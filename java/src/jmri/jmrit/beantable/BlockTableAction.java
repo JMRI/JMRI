@@ -17,6 +17,7 @@ import javax.swing.JMenu;
 import javax.swing.JMenuBar;
 import javax.swing.JMenuItem;
 import javax.swing.JOptionPane;
+import javax.swing.JRadioButton;
 import javax.swing.JPanel;
 import javax.swing.JTable;
 import javax.swing.JTextField;
@@ -321,10 +322,10 @@ public class BlockTableAction extends AbstractTableAction {
 
             public String getColumnName(int col) {
                 if (col == DIRECTIONCOL) {
-                    return "Direction";
+                    return Bundle.getMessage("BlockDirection");
                 }
                 if (col == VALUECOL) {
-                    return "Value";
+                    return Bundle.getMessage("BlockValue");
                 }
                 if (col == CURVECOL) {
                     return Bundle.getMessage("BlockCurveColName");
@@ -535,11 +536,14 @@ public class BlockTableAction extends AbstractTableAction {
         f.setTitle(Bundle.getMessage("TitleBlockTable"));
     }
 
-    JCheckBox inchBox = new JCheckBox(Bundle.getMessage("LengthInches"));
-    JCheckBox centimeterBox = new JCheckBox(Bundle.getMessage("LengthCentimeters"));
+    JRadioButton inchBox = new JRadioButton(Bundle.getMessage("LengthInches"));
+    JRadioButton centimeterBox = new JRadioButton(Bundle.getMessage("LengthCentimeters"));
 
     /**
-     * Add the checkboxes
+     * Add the radiobuttons (only 1 may be selected)
+     * TODO change names from -box to radio-
+     * add radio buttons to a ButtongGroup
+     * delete extra inchBoxChanged() and centimeterBoxChanged() methods
      */
     public void addToFrame(BeanTableFrame f) {
         //final BeanTableFrame finalF = f;	// needed for anonymous ActionListener class
