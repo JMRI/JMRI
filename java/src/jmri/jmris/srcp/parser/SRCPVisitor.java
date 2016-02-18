@@ -189,6 +189,15 @@ public class SRCPVisitor implements SRCPParserVisitor {
         } else if (((SimpleNode) node.jjtGetChild(1)).jjtGetValue().equals("GL")
                 && isSupported(bus, "GL")) {
             // This is a Generic Loco request
+            // the 3rd child is the address of the locomotive we are 
+            // requesting status of.
+            int address=Integer.parseInt(((String) ((SimpleNode)node.jjtGetChild(2)).jjtGetValue()));
+            // This is a Throttle Status request
+            try {
+                ((jmri.jmris.srcp.JmriSRCPThrottleServer)(((jmri.jmris.ServiceHandler) data).getThrottleServer())).sendStatus(bus,address);
+            } catch (java.io.IOException ie) {
+            }
+            
         } else if (((SimpleNode) node.jjtGetChild(1)).jjtGetValue().equals("TIME")) {
             // This is a Time request
             try {
