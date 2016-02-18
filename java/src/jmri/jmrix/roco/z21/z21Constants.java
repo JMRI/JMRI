@@ -29,6 +29,10 @@ public final class z21Constants {
     public final static int LAN_X_CV_RESULT_XHEADER = 0x64;
     public final static int LAN_X_CV_RESULT_DB0 = 0x14;
 
+    /* XPressNet Locomotive Message Constants */
+    public final static int LAN_X_LOCO_INFO_REQUEST_Z21 = 0xF0; // defined in section 4.1 of the protocol documentation.
+    public final static int LAN_X_LOCO_INFO_RESPONSE = 0xE8; // defined in section 4.4 of the protocol documentation.
+    public final static int LAN_X_SET_LOCO_FUNCTION = 0xF8; // defined in section 4.3 of the protocol documentation.
     /* LocoNet Tunnel Constants */
 }
 
