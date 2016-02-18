@@ -1,6 +1,5 @@
 package jmri.jmrix.pi.configurexml;
 
-import jmri.InstanceManager;
 import jmri.jmrix.configurexml.AbstractConnectionConfigXml;
 import jmri.jmrix.pi.ConnectionConfig;
 import jmri.jmrix.pi.RaspberryPiAdapter;
@@ -61,7 +60,12 @@ public class ConnectionConfigXml extends AbstractConnectionConfigXml {
     public boolean load(Element shared, Element perNode) throws Exception {
        getInstance();
        loadCommon(shared, perNode, adapter);
-       InstanceManager.configureManagerInstance().registerPref(new ConnectionConfig(adapter));
+
+       //InstanceManager.configureManagerInstance().registerPref(new ConnectionConfig(adapter));
+
+       // register, so can be picked up next time
+       register();
+
        adapter.configure();
        return true;
     }
