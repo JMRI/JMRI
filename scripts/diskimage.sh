@@ -99,9 +99,8 @@ then
   rm -f "$OUTPUT"
   hdiutil convert "$IMAGEFILE" -format UDZO -imagekey zlib-level=9 -o "$OUTPUT"
 else
-  # we don't know how to do this on linux right now...
-  # so we just create the output file directly from the input file
-  mv "$IMAGEFILE" "$OUTPUT"
+  # this relies on the 'dmg' tool from https://github.com/erwint/libdmg-hfsplus
+  dmg dmg "$IMAGEFILE" "$OUTPUT"
 fi
 
 # clean up
