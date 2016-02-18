@@ -58,7 +58,7 @@ then
     hdiutil attach "$IMAGEFILE" -mountpoint "$tmpdir" -nobrowse
     trap '[ "$EJECTED" = 0 ] && hdiutil eject "$IMAGEFILE"' 0
 else
-    dd if=/dev/zero of="$IMAGEFILE" bs=1m count=${imagesize}
+    dd if=/dev/zero of="$IMAGEFILE" bs=1M count=${imagesize}
     mkfs.hfsplus -v "JMRI ${REL_VER}" "${IMAGEFILE}"
     sudo mount -t hfsplus -o loop,rw,uid=$UID "$IMAGEFILE" $tmpdir
     trap '[ "$EJECTED" = 0 ] && sudo umount "$tmpdir"' 0
