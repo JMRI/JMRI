@@ -31,6 +31,7 @@ import java.util.HashMap;
 import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
+import java.lang.reflect.Field;
 import java.util.ResourceBundle;
 import javax.swing.AbstractAction;
 import javax.swing.BoxLayout;
@@ -413,7 +414,9 @@ public class LayoutEditor extends jmri.jmrit.display.panelEditor.PanelEditor imp
     private double stepUnderOne = 0.25;
     private double stepOverOne = 0.5;
     private double stepOverTwo = 1.0;
-            
+    
+    // A hash to store string -> KeyEvent constants, used to set keyboard shortcuts per locale
+    private HashMap<String, Integer> stringsToVTCodes = new HashMap<String,Integer>();
     
     // Antialiasing rendering
     private static final RenderingHints antialiasing = new RenderingHints(
@@ -427,6 +430,8 @@ public class LayoutEditor extends jmri.jmrit.display.panelEditor.PanelEditor imp
     public LayoutEditor(String name) {
         super(name);
         layoutName = name;
+        // initialise keycode map
+        initStringsToVTCodes();
         // initialize frame
         Container contentPane = getContentPane();
         contentPane.setLayout(new BoxLayout(contentPane, BoxLayout.Y_AXIS));
@@ -434,7 +439,7 @@ public class LayoutEditor extends jmri.jmrit.display.panelEditor.PanelEditor imp
         JMenuBar menuBar = new JMenuBar();
         // set up File menu
         JMenu fileMenu = new JMenu(rb.getString("MenuFile"));
-        fileMenu.setMnemonic(KeyEvent.VK_F);
+        fileMenu.setMnemonic(stringsToVTCodes.get(rb.getString("MenuFileMnemonic")));
         menuBar.add(fileMenu);
         fileMenu.add(new jmri.configurexml.StoreXmlUserAction(rbx.getString("MenuItemStore")));
         fileMenu.addSeparator();
@@ -802,13 +807,42 @@ public class LayoutEditor extends jmri.jmrit.display.panelEditor.PanelEditor imp
                 || (savedShowHelpBar != showHelpBar));
         targetWindowClosing(save);
     }
+    
+    
+    /**
+     * Grabs a subset of the possible KeyEvent constants
+     * and puts them into a hash for fast lookups later.
+     * These lookups are used to enable bundles to 
+     * specify keyboard shortcuts on a per-locale basis.
+     */
+    private void initStringsToVTCodes() {
+        Field[] fields = KeyEvent.class.getFields();
 
+        for (Field field : fields ) {
+
+            String name = field.getName();
+
+            if (name.startsWith("VK")) {
+                int code = 0;
+                try {
+                    code = field.getInt(null);
+                } catch (Exception e) {
+                    log.error("This error message, which nobody will ever see, shuts my IDE up.");
+                }
+                    
+                String key = name.substring(3);
+                stringsToVTCodes.put(key, code);
+           }
+        }
+    }
+
+    
     LayoutEditorTools tools = null;
     jmri.jmrit.signalling.AddEntryExitPairAction entryExit = null;
 
     void setupToolsMenu(JMenuBar menuBar) {
         JMenu toolsMenu = new JMenu(rb.getString("MenuTools"));
-        toolsMenu.setMnemonic(KeyEvent.VK_T);
+        toolsMenu.setMnemonic(stringsToVTCodes.get(rb.getString("MenuToolsMnemonic")));
         menuBar.add(toolsMenu);
         // scale track diagram
         JMenuItem scaleItem = new JMenuItem(rb.getString("ScaleTrackDiagram") + "...");
@@ -955,16 +989,18 @@ public class LayoutEditor extends jmri.jmrit.display.panelEditor.PanelEditor imp
 
     protected JMenu setupOptionMenu(JMenuBar menuBar) {
         JMenu optionMenu = new JMenu(rbx.getString("Options"));
-        optionMenu.setMnemonic(KeyEvent.VK_O);
+        optionMenu.setMnemonic(stringsToVTCodes.get(rb.getString("OptionsMnemonic")));
         menuBar.add(optionMenu);
         // edit mode item
         editModeItem = new JCheckBoxMenuItem(rb.getString("EditMode"));
         optionMenu.add(editModeItem);
-        editModeItem.setMnemonic(KeyEvent.VK_E);
+        editModeItem.setMnemonic(stringsToVTCodes.get(rb.getString("EditModeMnemonic")));
         if (SystemType.isMacOSX())
-            editModeItem.setAccelerator(KeyStroke.getKeyStroke(KeyEvent.VK_E, ActionEvent.META_MASK));
+            editModeItem.setAccelerator(KeyStroke.getKeyStroke(
+                    stringsToVTCodes.get(rb.getString("EditModeAccelerator")), ActionEvent.META_MASK));
         else
-            editModeItem.setAccelerator(KeyStroke.getKeyStroke(KeyEvent.VK_E, ActionEvent.CTRL_MASK));
+            editModeItem.setAccelerator(KeyStroke.getKeyStroke(
+                    stringsToVTCodes.get(rb.getString("EditModeAccelerator")), ActionEvent.CTRL_MASK));
         editModeItem.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent event) {
                 setAllEditable(editModeItem.isSelected());
@@ -1460,7 +1496,7 @@ public class LayoutEditor extends jmri.jmrit.display.panelEditor.PanelEditor imp
 
     private void setupZoomMenu(JMenuBar menuBar) {
         JMenu zoomMenu = new JMenu(rb.getString("MenuZoom"));
-        zoomMenu.setMnemonic(KeyEvent.VK_Z);
+        zoomMenu.setMnemonic(stringsToVTCodes.get(rb.getString("MenuZoomMnemonic")));
         menuBar.add(zoomMenu);
         ButtonGroup zoomButtonGroup = new ButtonGroup();
         // add zoom choices to menu
@@ -1474,10 +1510,13 @@ public class LayoutEditor extends jmri.jmrit.display.panelEditor.PanelEditor imp
         JRadioButtonMenuItem zoom40Item = new JRadioButtonMenuItem("x 4.0");
         
         JMenuItem zoomInItem = new JMenuItem("Zoom in");
+        zoomInItem.setMnemonic(stringsToVTCodes.get(rb.getString("zoomOutMnemonic")));
         if (SystemType.isMacOSX())
-            zoomInItem.setAccelerator(KeyStroke.getKeyStroke(KeyEvent.VK_ADD, ActionEvent.META_MASK));
+            zoomInItem.setAccelerator(KeyStroke.getKeyStroke(stringsToVTCodes.get(
+                    rb.getString("zoomInAccelerator")), ActionEvent.META_MASK));
         else
-            zoomInItem.setAccelerator(KeyStroke.getKeyStroke(KeyEvent.VK_ADD, ActionEvent.CTRL_MASK));       
+            zoomInItem.setAccelerator(KeyStroke.getKeyStroke(stringsToVTCodes.get(
+                    rb.getString("zoomInAccelerator")), ActionEvent.CTRL_MASK));       
         zoomMenu.add(zoomInItem);
         zoomInItem.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent event) {
@@ -1503,11 +1542,14 @@ public class LayoutEditor extends jmri.jmrit.display.panelEditor.PanelEditor imp
             }
         });
         JMenuItem zoomOutItem = new JMenuItem("Zoom out");
-        zoomMenu.add(zoomOutItem);
+        zoomOutItem.setMnemonic(stringsToVTCodes.get(rb.getString("zoomOutMnemonic")));
         if (SystemType.isMacOSX())
-            zoomOutItem.setAccelerator(KeyStroke.getKeyStroke(KeyEvent.VK_SUBTRACT, ActionEvent.META_MASK));
+            zoomOutItem.setAccelerator(KeyStroke.getKeyStroke(stringsToVTCodes.get(
+                    rb.getString("zoomOutAccelerator")), ActionEvent.META_MASK));
         else
-            zoomOutItem.setAccelerator(KeyStroke.getKeyStroke(KeyEvent.VK_SUBTRACT, ActionEvent.CTRL_MASK));       
+            zoomOutItem.setAccelerator(KeyStroke.getKeyStroke(stringsToVTCodes.get(
+                    rb.getString("zoomOutAccelerator")), ActionEvent.CTRL_MASK));       
+        zoomMenu.add(zoomOutItem);
         zoomOutItem.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent event) {
                 int  newZoom = (int)(zoomOut() * 100);
@@ -1663,7 +1705,7 @@ public class LayoutEditor extends jmri.jmrit.display.panelEditor.PanelEditor imp
 
     private void setupMarkerMenu(JMenuBar menuBar) {
         JMenu markerMenu = new JMenu(rbx.getString("MenuMarker"));
-        markerMenu.setMnemonic(KeyEvent.VK_M);
+        markerMenu.setMnemonic(stringsToVTCodes.get(rbx.getString("MenuMarkerMnemonic")));
         menuBar.add(markerMenu);
         markerMenu.add(new AbstractAction(rbx.getString("AddLoco") + "...") {
             /**
@@ -1699,7 +1741,7 @@ public class LayoutEditor extends jmri.jmrit.display.panelEditor.PanelEditor imp
 
     private void setupDispatcherMenu(JMenuBar menuBar) {
         JMenu dispMenu = new JMenu(Bundle.getMessage("MenuDispatcher"));
-        dispMenu.setMnemonic(KeyEvent.VK_D);
+        dispMenu.setMnemonic(stringsToVTCodes.get(rb.getString("MenuDispatcherMnemonic")));
         dispMenu.add(new JMenuItem(new jmri.jmrit.dispatcher.DispatcherAction(Bundle.getMessage("MenuItemOpen"))));
         menuBar.add(dispMenu);
         JMenuItem newTrainItem = new JMenuItem(Bundle.getMessage("MenuItemNewTrain"));
