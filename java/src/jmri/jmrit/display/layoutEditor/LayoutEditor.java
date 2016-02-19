@@ -1509,7 +1509,7 @@ public class LayoutEditor extends jmri.jmrit.display.panelEditor.PanelEditor imp
         JRadioButtonMenuItem zoom30Item = new JRadioButtonMenuItem("x 3.0");
         JRadioButtonMenuItem zoom40Item = new JRadioButtonMenuItem("x 4.0");
         
-        JMenuItem zoomInItem = new JMenuItem("Zoom in");
+        JMenuItem zoomInItem = new JMenuItem(rb.getString("ZoomIn"));
         zoomInItem.setMnemonic(stringsToVTCodes.get(rb.getString("zoomOutMnemonic")));
         if (SystemType.isMacOSX())
             zoomInItem.setAccelerator(KeyStroke.getKeyStroke(stringsToVTCodes.get(
@@ -1541,7 +1541,7 @@ public class LayoutEditor extends jmri.jmrit.display.panelEditor.PanelEditor imp
                 }
             }
         });
-        JMenuItem zoomOutItem = new JMenuItem("Zoom out");
+        JMenuItem zoomOutItem = new JMenuItem(rb.getString("ZoomOut"));
         zoomOutItem.setMnemonic(stringsToVTCodes.get(rb.getString("zoomOutMnemonic")));
         if (SystemType.isMacOSX())
             zoomOutItem.setAccelerator(KeyStroke.getKeyStroke(stringsToVTCodes.get(
