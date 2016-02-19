@@ -1516,10 +1516,10 @@
             <fileset dir="${jartarget}"
                      includes="jmri.jar"/>
             <fileset dir="."
-                     includes="xml/,resources/,help/,web/,jython/"
+                     includes="xml/,resources/,help/,web/,jython/,COPYING"
                      excludes="help/en/manual/**" />
             <fileset dir="${scriptdir}"
-                     includes="default.lcf,COPYING"/>
+                     includes="default.lcf"/>
             <fileset dir="${scriptdir}/WinInstallFiles"
                      includes="*"/>
             <fileset dir="."
@@ -1555,13 +1555,13 @@
             <fileset dir="${jartarget}"
                      includes="jmri.jar"/>
             <fileset dir="."
-                     includes="xml/,resources/,help/,web/,jython/"
+                     includes="xml/,resources/,help/,web/,jython/,COPYING"
                      excludes="help/en/manual/**" />
             <!-- use question marks for spaces in filename; Ant will split the list on commas and spaces -->
             <fileset dir="${dist.apps}"
                      includes="DecoderPro.app/,PanelPro.app/,SoundPro.app/,JMRI?Demo.app/,Loco?Tools.app/"/>
             <fileset dir="scripts"
-                     includes="default.lcf,COPYING"/>
+                     includes="default.lcf"/>
             <fileset dir="."
                      includes="python.properties"/>
         </copy>
@@ -1614,10 +1614,10 @@
             <fileset dir="${jartarget}"
                      includes="jmri.jar"/>
             <fileset dir="."
-                     includes="xml/,resources/,help/,web/,jython/"
+                     includes="xml/,resources/,help/,web/,jython/,COPYING"
                      excludes="help/en/manual/**" />
             <fileset dir="${scriptdir}"
-                     includes="default.lcf,COPYING"/>
+                     includes="default.lcf"/>
             <fileset dir="."
                      includes="python.properties"/>
         </copy>
