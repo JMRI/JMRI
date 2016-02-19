@@ -86,8 +86,6 @@
 			this was:<br/>
 			<code>svn add powerline powerline/serialdriver powerline/serialmon<br/>
 			svn add powerline/configurexml powerline/serialdriver/configurexml</code>
-			<li>Add all the COPYING files:<br/>
-			<code>svn add powerline/COPYING powerline/*/COPYING powerline/*/*/COPYING</code>
             <li>Finally, commmit those files (but only those files):<br/>
 			<code>svn commit -m"usual file" powerline</code>            
 			</ul>
