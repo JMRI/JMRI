@@ -40,7 +40,6 @@ public class NceProgrammer extends AbstractProgrammer implements NceListener {
         if (tc != null && tc.getUsbSystem() != NceTrafficController.USB_SYSTEM_POWERCAB
                 && tc.getUsbSystem() != NceTrafficController.USB_SYSTEM_NONE) {
             log.warn("NCE USB-SB3/SB5/TWIN getSupportedModes returns no modes");
-            ret.add(DefaultProgrammerManager.NONE);
             return ret;  // empty list
         }
 
