@@ -1,13 +1,12 @@
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
-<!-- $Id$ -->
 <html lang="en">
 <head>
- <TITLE>
+ <title>
       JMRI: LocoNet Fast Clock Control
- </TITLE>
-    <META http-equiv=Content-Type content="text/html; charset=iso-8859-1">
-    <META content="Bob Jacobsen" name=Author>
-    <META name="keywords" content="JMRI help loconet fast clock monitor">
+ </title>
+    <meta http-equiv="content-type" content="text/html; charset=iso-8859-1">
+    <meta name="author" content="Bob Jacobsen">
+    <meta name="keywords" content="JMRI help loconet fast clock monitor">
 
 <!-- Style -->
   <META http-equiv=Content-Type content="text/html; charset=iso-8859-1">
@@ -23,12 +22,16 @@
   <div class="nomenu" id="mBody">
     <div id="mainContent">
 
-<H1>LocoNet Fast Clock Control
-</H1>
-    
+<h1>LocoNet Fast Clock Control
+</h1>
+<p>
+See the <a href="../../../../../html/tools/fastclock/LocoNetClock.shtml">LocoNet Clock Help</a>
+</p>
 This is the help/jmri/jmrix/loconet/clockmon/ClockMonFrame help page
 
-<!--#include virtual="/Footer" -->
+        <!--#include virtual="/Footer" -->
+    </div><!-- closes #mainContent-->
+  </div> <!-- closes #mBody-->
 </body>
 </html>
 
