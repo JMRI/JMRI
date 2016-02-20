@@ -18,7 +18,6 @@ import jmri.managers.DefaultProgrammerManager;
  * <p>
  *
  * @author	Bob Jacobsen Copyright (C) 2001, 2015
- * @version	$Revision$
  * @see jmri.jmrit.symbolicprog.CombinedLocoSelPane
  * @see jmri.jmrit.symbolicprog.NewLocoSelPane
  */
