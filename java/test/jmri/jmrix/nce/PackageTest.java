@@ -9,7 +9,6 @@ import junit.framework.TestSuite;
  * tests for the jmri.jmrix.nce package
  *
  * @author	Bob Jacobsen
- * @version $Revision$
  */
 public class PackageTest extends TestCase {
 
@@ -38,6 +37,7 @@ public class PackageTest extends TestCase {
         suite.addTest(jmri.jmrix.nce.NceSensorManagerTest.suite());
         suite.addTest(jmri.jmrix.nce.NceAIUTest.suite());
         suite.addTest(jmri.jmrix.nce.NceProgrammerTest.suite());
+        suite.addTest(jmri.jmrix.nce.NceProgrammerManagerTest.suite());
         suite.addTest(jmri.jmrix.nce.NceTrafficControllerTest.suite());
         suite.addTest(jmri.jmrix.nce.NceMessageTest.suite());
         suite.addTest(jmri.jmrix.nce.NceReplyTest.suite());
