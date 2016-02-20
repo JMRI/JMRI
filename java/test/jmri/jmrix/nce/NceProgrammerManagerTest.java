@@ -18,29 +18,27 @@ public class NceProgrammerManagerTest extends TestCase {
 
     public void testDefaultAccess() {
         // this is checking the "as default ctor built" options, which might not be valid
-        Assert.assertTrue("can global program", memo.provides(GlobalProgrammerManager.class));
-        Assert.assertNotNull("programmerManager exists", memo.get(GlobalProgrammerManager.class));
-        Assert.assertNotNull("global programmer exists", ((GlobalProgrammerManager)memo.get(GlobalProgrammerManager.class)).getGlobalProgrammer());
+        Assert.assertTrue("provides global programmerManager", memo.provides(GlobalProgrammerManager.class));
+        Assert.assertNotNull("global ProgrammerManager exists", memo.get(GlobalProgrammerManager.class));
+        Assert.assertNotNull("global Programmer exists", ((GlobalProgrammerManager)memo.get(GlobalProgrammerManager.class)).getGlobalProgrammer());
     }
 
     public void test_USB_SYSTEM_POWERCAB_PROGTRACK() {
         memo.setNceUsbSystem(NceTrafficController.USB_SYSTEM_POWERCAB);
         memo.setNceCmdGroups(NceTrafficController.CMDS_PROGTRACK);
         
-        Assert.assertTrue("can global program", memo.provides(GlobalProgrammerManager.class));
-        Assert.assertNotNull("programmerManager exists", memo.get(GlobalProgrammerManager.class));
-        Assert.assertNotNull("global programmer exists", ((GlobalProgrammerManager)memo.get(GlobalProgrammerManager.class)).getGlobalProgrammer());
+        Assert.assertTrue("provides global programmerManager", memo.provides(GlobalProgrammerManager.class));
+        Assert.assertNotNull("global ProgrammerManager exists", memo.get(GlobalProgrammerManager.class));
+        Assert.assertNotNull("global Programmer exists", ((GlobalProgrammerManager)memo.get(GlobalProgrammerManager.class)).getGlobalProgrammer());
     }
 
     public void test_USB_SYSTEM_SB3_NO_PROGTRACK() {
         memo.setNceUsbSystem(NceTrafficController.USB_SYSTEM_SB3);
         memo.setNceCmdGroups(0);
         
-        Assert.assertTrue("can't global program", ! memo.provides(GlobalProgrammerManager.class));
-        Assert.assertNotNull("programmerManager exists", memo.get(GlobalProgrammerManager.class));
-        Assert.assertNull("no global programmer", ((GlobalProgrammerManager)memo.get(GlobalProgrammerManager.class)).getGlobalProgrammer());
+        Assert.assertFalse("doesn't provide global programmerManager", memo.provides(GlobalProgrammerManager.class));
+        Assert.assertNull("no global ProgrammerManager exists", memo.get(GlobalProgrammerManager.class));
     }
-
 
 
     // from here down is testing infrastructure
