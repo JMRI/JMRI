@@ -114,7 +114,6 @@ import org.slf4j.LoggerFactory;
  * @author Bob Jacobsen Copyright (C) 2010
  * @author Kevin Dickerson Copyright (C) 2011
  * @author Randall Wood Copyright (C) 2012
- * @version $Revision: 20027 $
  */
 public class RosterFrame extends TwoPaneTBWindow implements RosterEntrySelector, RosterGroupSelector {
 
