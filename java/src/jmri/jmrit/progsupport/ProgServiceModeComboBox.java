@@ -79,8 +79,16 @@ public class ProgServiceModeComboBox extends ProgModeSelector implements Propert
         this(BoxLayout.X_AXIS);
     }
 
+    /**
+     * Get the list of global managers
+     * @return empty list if none
+     */
     protected List<GlobalProgrammerManager> getMgrList() {
-        return InstanceManager.getList(jmri.GlobalProgrammerManager.class);
+        List<GlobalProgrammerManager> retval;
+        
+        retval = InstanceManager.getList(jmri.GlobalProgrammerManager.class);
+        if (retval!=null) return retval;
+        return new ArrayList<>();
     }
 
     public ProgServiceModeComboBox(int direction) {
@@ -93,17 +101,15 @@ public class ProgServiceModeComboBox extends ProgModeSelector implements Propert
 
         // create the programmer display combo box
         progBox = new JComboBox<GlobalProgrammerManager>();
-        Vector<GlobalProgrammerManager> v = new Vector<GlobalProgrammerManager>();
-        List<GlobalProgrammerManager> mgrList = getMgrList();
-        if (mgrList != null) {
-            for (GlobalProgrammerManager pm : getMgrList()) {
-                if (pm != null && pm.getGlobalProgrammer() != null) {
-                    v.add(pm);
-                    // listen for changes
-                    pm.getGlobalProgrammer().addPropertyChangeListener(this);
-                }
+        Vector<GlobalProgrammerManager> v = new Vector<>();
+        for (GlobalProgrammerManager pm : getMgrList()) {
+            if (pm != null && pm.getGlobalProgrammer() != null) {
+                v.add(pm);
+                // listen for changes
+                pm.getGlobalProgrammer().addPropertyChangeListener(this);
             }
         }
+
         add(progBox = new JComboBox<GlobalProgrammerManager>(v));
         // if only one, don't show
         if (progBox.getItemCount() < 2) {
