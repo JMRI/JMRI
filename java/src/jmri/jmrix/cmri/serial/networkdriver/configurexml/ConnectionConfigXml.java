@@ -7,8 +7,6 @@ import jmri.jmrix.cmri.serial.networkdriver.ConnectionConfig;
 import jmri.jmrix.cmri.serial.networkdriver.NetworkDriverAdapter;
 import jmri.jmrix.configurexml.AbstractNetworkConnectionConfigXml;
 import org.jdom2.Element;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 
 /**
  * Handle XML persistence of layout connections by persisting the
@@ -150,8 +148,5 @@ public class ConnectionConfigXml extends AbstractNetworkConnectionConfigXml {
     protected void register() {
         this.register(new ConnectionConfig(adapter));
     }
-
-    // initialize logging
-    private final static Logger log = LoggerFactory.getLogger(ConnectionConfigXml.class.getName());
 
 }

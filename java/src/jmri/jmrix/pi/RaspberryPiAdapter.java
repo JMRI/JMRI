@@ -2,8 +2,6 @@
 
 package jmri.jmrix.pi;
 
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 import com.pi4j.io.gpio.GpioController;
 import com.pi4j.io.gpio.GpioFactory;
 
@@ -73,7 +71,4 @@ public class RaspberryPiAdapter extends jmri.jmrix.AbstractPortController
    }
 
    public GpioController getGPIOController(){ return gpio; }
-    
-    private final static Logger log = LoggerFactory
-		.getLogger(RaspberryPiAdapter.class.getName());
 }

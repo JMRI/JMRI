@@ -11,8 +11,6 @@ import javax.swing.JTextField;
 import jmri.jmrix.can.CanListener;
 import jmri.jmrix.can.CanSystemConnectionMemo;
 import jmri.jmrix.can.TrafficController;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 
 /**
  * Pane to for setting node configuration
@@ -130,6 +128,4 @@ public class NodeConfigToolPane extends jmri.jmrix.can.swing.CanPanel implements
                     jmri.InstanceManager.getDefault(CanSystemConnectionMemo.class));
         }
     }
-
-    private final static Logger log = LoggerFactory.getLogger(NodeConfigToolPane.class.getName());
 }

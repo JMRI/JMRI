@@ -4,6 +4,7 @@
 <!-- version 1.1 15 Aug 11 JES
                  - added F9-F12 to CV 22
 -->
+<!-- version 1.3 18 Jan 2015 Mark Waters -  additional include for CV14 for newer decoder -->
 <variables xmlns:xi="http://www.w3.org/2001/XInclude" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="http://jmri.org/xml/schema/decoder.xsd">
   <xi:include href="http://jmri.org/xml/decoders/nmra/shortAndLongAddress.xml"/>
   <xi:include href="http://jmri.org/xml/decoders/nmra/accelDecel_255.xml"/>
@@ -94,7 +95,7 @@
     <label>Analog operation with accel/decel from CV3/4</label>
     <label xml:lang="it">Operatività in Analogico con accell/decell. da CV 3/4</label>
   </variable>
-  <variable CV="14" item="Trix Power Conversion" mask="VXXXXXXX" default="0" exclude="223">
+  <variable CV="14" item="Trix Power Conversion" mask="VXXXXXXX" default="0" exclude="223,236">
     <xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
     <label>DC Regulation</label>
     <label xml:lang="it">Regolazioni in DC</label>

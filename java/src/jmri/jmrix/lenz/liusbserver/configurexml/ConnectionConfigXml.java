@@ -4,8 +4,6 @@ import jmri.jmrix.configurexml.AbstractNetworkConnectionConfigXml;
 import jmri.jmrix.lenz.liusbserver.ConnectionConfig;
 import jmri.jmrix.lenz.liusbserver.LIUSBServerAdapter;
 import org.jdom2.Element;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 
 /**
  * Handle XML persistance of layout connections by persistening the LIUSB Server
@@ -82,8 +80,5 @@ public class ConnectionConfigXml extends AbstractNetworkConnectionConfigXml {
     protected void register() {
         this.register(new ConnectionConfig(adapter));
     }
-
-    // initialize logging
-    private final static Logger log = LoggerFactory.getLogger(ConnectionConfigXml.class.getName());
 
 }

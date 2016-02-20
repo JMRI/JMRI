@@ -9,8 +9,6 @@ import jmri.JmriException;
 import jmri.SignalHead;
 import jmri.jmris.AbstractSignalHeadServer;
 import jmri.jmris.JmriConnection;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 
 /**
  * Simple Server interface between the JMRI Sensor manager and a network
@@ -23,8 +21,6 @@ public class SimpleSignalHeadServer extends AbstractSignalHeadServer {
 
     private DataOutputStream output;
     private JmriConnection connection;
-    private final static Logger log = LoggerFactory.getLogger(SimpleSignalHeadServer.class.getName());
-
     public SimpleSignalHeadServer(JmriConnection connection) {
         super();
         this.connection = connection;

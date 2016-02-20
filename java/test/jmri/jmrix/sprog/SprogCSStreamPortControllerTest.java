@@ -8,8 +8,6 @@ import junit.framework.Assert;
 import junit.framework.Test;
 import junit.framework.TestCase;
 import junit.framework.TestSuite;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 
 /**
  * SprogCSStreamPortControllerTest.java
@@ -64,7 +62,5 @@ public class SprogCSStreamPortControllerTest extends TestCase {
         super.tearDown();
         apps.tests.Log4JFixture.tearDown();
     }
-
-    private final static Logger log = LoggerFactory.getLogger(SprogCSStreamPortControllerTest.class.getName());
 
 }

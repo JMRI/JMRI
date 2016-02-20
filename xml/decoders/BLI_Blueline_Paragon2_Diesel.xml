@@ -19,6 +19,8 @@
   <!-- for JMRI 2.5.2 use, the max functions is set to 27 instead of 28 -->
   <version author="Michael Mosher" version="3" lastUpdated="20151203"/>
   <!-- General cleanup, more use of external files to go along with P3 file -->
+  <version author="Dave Heap" version="4" lastUpdated="20160215"/>
+  <!-- Fixed missing pane includes, converted some to Pane Replacement -->
   <decoder>
     <family name="Paragon 2" mfg="Broadway Limited Imports, LLC">
       <model model="Diesel" numOuts="3" numFns="28" connector="9pin">
@@ -268,4 +270,8 @@
       <factReset label="Reset All CVs Even If Decoder Locked" CV="8" default="254"/>
     </resets>
   </decoder>
+  <xi:include href="http://jmri.org/xml/decoders/bli/PxPaneFunction.xml"/>
+  <xi:include href="http://jmri.org/xml/decoders/bli/PxPaneDCC.xml"/>
+  <xi:include href="http://jmri.org/xml/decoders/bli/PxPaneDC.xml"/>
+  <xi:include href="http://jmri.org/xml/decoders/bli/PxPaneSettings.xml"/>
 </decoder-config>

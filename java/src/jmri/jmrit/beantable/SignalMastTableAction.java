@@ -14,8 +14,6 @@ import javax.swing.JMenuItem;
 import javax.swing.JTable;
 import javax.swing.table.TableCellRenderer;
 import jmri.util.com.sun.TableSorter;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 
 /**
  * Swing action to create and register a SignalMastTable GUI.
@@ -124,8 +122,6 @@ public class SignalMastTableAction extends AbstractTableAction {
             }
         });
     }
-
-    private final static Logger log = LoggerFactory.getLogger(SignalMastTableAction.class.getName());
 
     public static class MyComboBoxRenderer extends JComboBox<String> implements TableCellRenderer {
 

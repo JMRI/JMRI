@@ -1,8 +1,6 @@
 // SerialReply.java
 package jmri.jmrix.cmri.serial;
 
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 
 /**
  * Contains the data payload of a CMRI serial reply packet. Note that _only_ the
@@ -57,8 +55,6 @@ public class SerialReply extends jmri.jmrix.AbstractMRReply {
         // doesn't have to do anything
         return index;
     }
-
-    private final static Logger log = LoggerFactory.getLogger(SerialReply.class.getName());
 
 }
 

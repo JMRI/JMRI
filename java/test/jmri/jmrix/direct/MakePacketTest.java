@@ -6,8 +6,6 @@ import junit.framework.Assert;
 import junit.framework.Test;
 import junit.framework.TestCase;
 import junit.framework.TestSuite;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 
 /**
  * JUnit tests for the MakePacketTest class
@@ -220,6 +218,5 @@ public class MakePacketTest extends TestCase {
         TestSuite suite = new TestSuite(MakePacketTest.class);
         return suite;
     }
-    private final static Logger log = LoggerFactory.getLogger(MakePacketTest.class.getName());
 
 }

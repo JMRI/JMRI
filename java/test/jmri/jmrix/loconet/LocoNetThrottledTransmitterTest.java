@@ -2,14 +2,11 @@
 package jmri.jmrix.loconet;
 
 import java.util.concurrent.TimeUnit;
+import jmri.util.JUnitUtil;
 import junit.framework.Assert;
 import junit.framework.Test;
 import junit.framework.TestCase;
 import junit.framework.TestSuite;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
-
-import jmri.util.JUnitUtil;
 
 /**
  * Tests for the jmri.jmrix.loconet.LocoNetThrottledTransmitter class.
@@ -167,8 +164,6 @@ public class LocoNetThrottledTransmitterTest extends TestCase {
         TestSuite suite = new TestSuite(LocoNetThrottledTransmitterTest.class);
         return suite;
     }
-
-    private final static Logger log = LoggerFactory.getLogger(LocoNetThrottledTransmitterTest.class.getName());
 
     // The minimal setup for log4J
     protected void setUp() {

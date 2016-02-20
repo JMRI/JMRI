@@ -3,7 +3,6 @@ package jmri.jmrix.ecos;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import jmri.PowerManager;
 import jmri.*;
 import jmri.jmrix.AbstractProgrammer;
 import jmri.jmrix.ecos.utilities.GetEcosObjectNumber;

@@ -11,8 +11,6 @@
 package jmri.jmrix.lenz.hornbyelite;
 
 import jmri.jmrix.lenz.XNetTrafficController;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 
 public class EliteXNetTurnout extends jmri.jmrix.lenz.XNetTurnout {
 
@@ -36,8 +34,6 @@ public class EliteXNetTurnout extends jmri.jmrix.lenz.XNetTurnout {
         newKnownState(getCommandedState());
         internalState = jmri.jmrix.lenz.XNetTurnout.IDLE;
     }
-
-    private final static Logger log = LoggerFactory.getLogger(EliteXNetTurnout.class.getName());
 
 }
 

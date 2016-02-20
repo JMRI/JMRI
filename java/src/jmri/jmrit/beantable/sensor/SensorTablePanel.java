@@ -2,8 +2,6 @@
 package jmri.jmrit.beantable.sensor;
 
 import java.awt.event.ActionEvent;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 
 /**
  * Swing action to create and register a SensorTable GUI in a JPanel
@@ -50,8 +48,6 @@ public class SensorTablePanel extends jmri.jmrit.beantable.BeanTablePane {
         }
         addFrame.setVisible(true);
     }
-
-    private final static Logger log = LoggerFactory.getLogger(SensorTablePanel.class.getName());
 }
 
 

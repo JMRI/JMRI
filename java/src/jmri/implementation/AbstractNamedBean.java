@@ -6,8 +6,6 @@ import java.util.Enumeration;
 import java.util.HashMap;
 import java.util.Hashtable;
 import jmri.NamedBean;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 
 /**
  * Abstract base for the NamedBean interface.
@@ -222,8 +220,6 @@ public abstract class AbstractNamedBean implements NamedBean, java.io.Serializab
 
     public void vetoableChange(java.beans.PropertyChangeEvent evt) throws java.beans.PropertyVetoException {
     }
-
-    private final static Logger log = LoggerFactory.getLogger(AbstractNamedBean.class.getName());
 }
 
 /* @(#)AbstractNamedBean.java */

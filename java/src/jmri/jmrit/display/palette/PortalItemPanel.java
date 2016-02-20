@@ -10,8 +10,6 @@ import jmri.jmrit.catalog.NamedIcon;
 import jmri.jmrit.display.Editor;
 import jmri.jmrit.display.controlPanelEditor.ControlPanelEditor;
 import jmri.util.JmriJFrame;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 
 /**
  * ItemPanel for for PortalIcons. Since this class has been introduced after
@@ -69,6 +67,4 @@ public /*abstract*/ class PortalItemPanel extends FamilyItemPanel {
 
     protected void makeDndIconPanel(HashMap<String, NamedIcon> iconMap, String displayKey) {
     }
-
-    private final static Logger log = LoggerFactory.getLogger(PortalItemPanel.class.getName());
 }
