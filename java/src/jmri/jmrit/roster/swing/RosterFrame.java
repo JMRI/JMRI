@@ -58,6 +58,7 @@ import javax.swing.event.ListSelectionEvent;
 import javax.swing.table.TableColumn;
 import jmri.AddressedProgrammerManager;
 import jmri.GlobalProgrammerManager;
+import jmri.ProgrammerManager;
 import jmri.InstanceManager;
 import jmri.Programmer;
 import jmri.UserPreferencesManager;
@@ -111,7 +112,7 @@ import org.slf4j.LoggerFactory;
  *
  * @see jmri.jmrit.symbolicprog.tabbedframe.PaneSet
  *
- * @author Bob Jacobsen Copyright (C) 2010
+ * @author Bob Jacobsen Copyright (C) 2010, 2016
  * @author Kevin Dickerson Copyright (C) 2011
  * @author Randall Wood Copyright (C) 2012
  */
@@ -1333,21 +1334,35 @@ public class RosterFrame extends TwoPaneTBWindow implements RosterEntrySelector,
      */
     //taken out of CombinedLocoSelPane
     protected void startIdentifyLoco() {
-        if (InstanceManager.getDefault(GlobalProgrammerManager.class) == null) {
-            log.error("Identify loco called when no service mode programmer is available");
-            JOptionPane.showMessageDialog(null, Bundle.getMessage("IdentifyError"));
-            return;
-        }
-        // start identifying a loco
         final RosterFrame me = this;
         Programmer programmer = null;
         if (modePanel.isSelected()) {
             programmer = modePanel.getProgrammer();
         }
         if (programmer == null) {
-            log.warn("Selector did not provide a programmer, use default");
-            programmer = InstanceManager.programmerManagerInstance().getGlobalProgrammer();
+            GlobalProgrammerManager gpm = InstanceManager.getDefault(GlobalProgrammerManager.class);
+            if (gpm!=null) {
+                programmer = gpm.getGlobalProgrammer();
+                log.warn("Selector did not provide a programmer, attempt to use GlobalProgrammerManager default: {}", programmer);
+            } else {
+                ProgrammerManager dpm = InstanceManager.programmerManagerInstance();
+                if (dpm!=null) {
+                    programmer = dpm.getGlobalProgrammer();
+                    log.warn("Selector did not provide a programmer, attempt to use InstanceManager default: {}", programmer);
+                } else {
+                    log.warn("Selector did not provide a programmer, and no ProgramManager found in InstanceManager");
+                }
+            }
         }
+
+        // if failed to get programmer, tell user and stop
+        if (programmer == null) {
+            log.error("Identify loco called when no service mode programmer is available");
+            JOptionPane.showMessageDialog(null, Bundle.getMessage("IdentifyError"));
+            return;
+        }
+        
+        // and now do the work
         IdentifyLoco ident = new IdentifyLoco(programmer) {
             private final RosterFrame who = me;
 
