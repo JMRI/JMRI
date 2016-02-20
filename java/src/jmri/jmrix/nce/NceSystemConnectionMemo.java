@@ -77,7 +77,7 @@ public class NceSystemConnectionMemo extends jmri.jmrix.SystemConnectionMemo {
             return null;
         }
         if (programmerManager == null) {
-            programmerManager = new NceProgrammerManager(new NceProgrammer(getNceTrafficController()), this);
+            programmerManager = new NceProgrammerManager(this);
         }
         return programmerManager;
     }
