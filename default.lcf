@@ -1,4 +1,7 @@
 # Default logging configuration file for JMRI project development.
+#
+# If making changes here that should be included in the distribution
+# please also update the file for distribution at 'scripts/default.lcf'
 
 # #############################################################
 #  Log4J configuration

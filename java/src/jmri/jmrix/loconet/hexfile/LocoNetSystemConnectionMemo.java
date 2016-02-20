@@ -2,8 +2,6 @@
 package jmri.jmrix.loconet.hexfile;
 
 import edu.umd.cs.findbugs.annotations.SuppressWarnings;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 
 /**
  * Lightweight class to denote that a system is active, and provide general
@@ -28,8 +26,6 @@ public class LocoNetSystemConnectionMemo extends jmri.jmrix.loconet.LocoNetSyste
 
         return /*(jmri.jmrix.loconet.LnSensorManager)*/ sensorManager;
     }
-
-    private final static Logger log = LoggerFactory.getLogger(LocoNetSystemConnectionMemo.class.getName());
 }
 
 

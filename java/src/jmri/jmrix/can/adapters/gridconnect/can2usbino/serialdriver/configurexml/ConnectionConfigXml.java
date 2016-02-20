@@ -3,8 +3,6 @@ package jmri.jmrix.can.adapters.gridconnect.can2usbino.serialdriver.configurexml
 import jmri.jmrix.can.adapters.gridconnect.can2usbino.serialdriver.ConnectionConfig;
 import jmri.jmrix.can.adapters.gridconnect.can2usbino.serialdriver.SerialDriverAdapter;
 import jmri.jmrix.configurexml.AbstractSerialConnectionConfigXml;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 
 /**
  * Handle XML persistance of layout connections by persistening the
@@ -38,8 +36,5 @@ public class ConnectionConfigXml extends AbstractSerialConnectionConfigXml {
     protected void register() {
         this.register(new ConnectionConfig(adapter));
     }
-
-    // initialize logging
-    private final static Logger log = LoggerFactory.getLogger(ConnectionConfigXml.class.getName());
 
 }

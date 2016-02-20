@@ -3,8 +3,6 @@ package jmri.jmrix.loconet.sdfeditor;
 import junit.framework.Test;
 import junit.framework.TestCase;
 import junit.framework.TestSuite;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 
 /**
  * Tests for the jmri.jmrix.loconet.sdfeditor package.
@@ -33,7 +31,5 @@ public class SdfEditorTest extends TestCase {
         suite.addTest(EditorFrameTest.suite());
         return suite;
     }
-
-    private final static Logger log = LoggerFactory.getLogger(SdfEditorTest.class.getName());
 
 }

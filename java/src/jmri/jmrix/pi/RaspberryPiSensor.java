@@ -2,11 +2,6 @@
 
 package jmri.jmrix.pi;
 
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
-import jmri.implementation.AbstractSensor;
-import jmri.Sensor;
-
 import com.pi4j.io.gpio.GpioController;
 import com.pi4j.io.gpio.GpioFactory;
 import com.pi4j.io.gpio.GpioPinDigitalInput;
@@ -14,9 +9,13 @@ import com.pi4j.io.gpio.PinPullResistance;
 import com.pi4j.io.gpio.RaspiPin;
 import com.pi4j.io.gpio.event.GpioPinDigitalStateChangeEvent;
 import com.pi4j.io.gpio.event.GpioPinListenerDigital;
+import jmri.Sensor;
+import jmri.implementation.AbstractSensor;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 /**
- * Extend jmri.AbstractSensor for XPressNet layouts.
+ * Extend jmri.AbstractSensor for RaspberryPi GPIO pins.
  * <P>
  * @author			Paul Bender Copyright (C) 2003-2010
  * @version         $Revision$
@@ -42,7 +41,7 @@ public class RaspberryPiSensor extends AbstractSensor implements GpioPinListener
      * Common initialization for both constructors
      */
     private void init(String id) {
-        log.debug("Provisioning sensor {}",id);
+        log.debug("Provisioning sensor {}", id);
         if(gpio==null)
            gpio = GpioFactory.getInstance();
         address=Integer.parseInt(id.substring(id.lastIndexOf("S")+1));
@@ -74,9 +73,11 @@ public class RaspberryPiSensor extends AbstractSensor implements GpioPinListener
        // log pin state change
        log.debug("GPIO PIN STATE CHANGE: {} = {}",event.getPin(),event.getState());
        if(event.getPin()==pin){
-          if(event.getState().isHigh()) 
-             setOwnState(Sensor.ACTIVE);
-          else setOwnState(Sensor.INACTIVE);
+          if(event.getState().isHigh()) { 
+             setOwnState(!getInverted() ? Sensor.ACTIVE : Sensor.INACTIVE);
+          } else {
+             setOwnState(!getInverted() ? Sensor.INACTIVE : Sensor.ACTIVE);
+          }
        }
     }
 

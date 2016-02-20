@@ -12,8 +12,6 @@ import javax.swing.JTextField;
 import jmri.jmrit.decoderdefn.DecoderIndexFile;
 import jmri.jmrit.roster.Roster;
 import jmri.util.JmriJFrame;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 
 /**
  * Display memory usage on request
@@ -127,8 +125,5 @@ public class MemoryFrameAction extends AbstractAction {
         free1.setText(nf.format(free));
         total1.setText(nf.format(total));
     }
-
-    // initialize logging
-    private final static Logger log = LoggerFactory.getLogger(MemoryFrameAction.class.getName());
 
 }

@@ -1,8 +1,6 @@
 // NceCmdStationMemory.java
 package jmri.jmrix.nce;
 
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 
 /**
  * Contains the map for the command station and memory parts
@@ -124,8 +122,6 @@ public class NceCmdStationMemory {
     public static final int FUNC_H_F26 = 0x20;		// F26
     public static final int FUNC_H_F27 = 0x40;		// F27
     public static final int FUNC_H_F28 = 0x80;		// F28
-
-    private final static Logger log = LoggerFactory.getLogger(NceCmdStationMemory.class.getName());
 }
 
 /* @(#)NceCmdStationMemory.java */

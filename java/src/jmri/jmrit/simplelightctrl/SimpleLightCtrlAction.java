@@ -11,8 +11,6 @@ package jmri.jmrit.simplelightctrl;
 
 import java.awt.event.ActionEvent;
 import javax.swing.AbstractAction;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 
 public class SimpleLightCtrlAction extends AbstractAction {
 
@@ -41,7 +39,6 @@ public class SimpleLightCtrlAction extends AbstractAction {
         f.setVisible(true);
 
     }
-    private final static Logger log = LoggerFactory.getLogger(SimpleLightCtrlAction.class.getName());
 }
 
 

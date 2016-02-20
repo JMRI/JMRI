@@ -431,7 +431,7 @@ public class UserInterface extends JmriJFrame implements DeviceListener, DeviceM
                 this.manualPortLabel.setText(Inet4Address.getLocalHost().getHostAddress() + ":" + port); // NOI18N
             }
         } catch (UnknownHostException ex) {
-            log.error("Failed to determine this system's IP address: {}" + ex.getLocalizedMessage());
+            log.error("Failed to determine this system's IP address: {}", ex.getLocalizedMessage());
             this.portLabel.setText(rb.getString("LabelUnknown")); // NOI18N
             this.manualPortLabel.setText(null);
         }

@@ -5,8 +5,6 @@ import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 import jmri.jmrix.can.CanMessage;
 import jmri.jmrix.can.CanReply;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 
 /**
  * Utilities for handling CBUS addresses.
@@ -270,8 +268,6 @@ public class CbusAddress {
         }
         return retval;
     }
-
-    private final static Logger log = LoggerFactory.getLogger(CbusAddress.class.getName());
 
 }
 

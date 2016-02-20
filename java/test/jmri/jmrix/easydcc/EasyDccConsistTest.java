@@ -12,8 +12,6 @@ import junit.framework.Assert;
 import junit.framework.Test;
 import junit.framework.TestCase;
 import junit.framework.TestSuite;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 
 public class EasyDccConsistTest extends TestCase {
 
@@ -47,7 +45,5 @@ public class EasyDccConsistTest extends TestCase {
     protected void tearDown() {
         apps.tests.Log4JFixture.tearDown();
     }
-
-    private final static Logger log = LoggerFactory.getLogger(EasyDccConsistTest.class.getName());
 
 }

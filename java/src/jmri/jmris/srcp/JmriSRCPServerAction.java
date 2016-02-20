@@ -3,8 +3,6 @@ package jmri.jmris.srcp;
 
 import java.awt.event.ActionEvent;
 import javax.swing.AbstractAction;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 
 /**
  * Swing action to create and register a JmriSRCPServerControlFrame object
@@ -33,7 +31,6 @@ public class JmriSRCPServerAction extends AbstractAction {
         //f.setVisible(true);
         JmriSRCPServerManager.getInstance().getServer().start();
     }
-    private final static Logger log = LoggerFactory.getLogger(JmriSRCPServerAction.class.getName());
 }
 
 

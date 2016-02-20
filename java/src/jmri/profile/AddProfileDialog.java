@@ -283,9 +283,11 @@ public class AddProfileDialog extends javax.swing.JDialog {
             Profile p = new Profile(this.profileName.getText(), this.profileId, new File(this.profileFolder.getText()));
             ProfileManager.getDefault().addProfile(p);
             if (this.source != null) {
-                // TODO: if source is active profile, save source first
-                FileUtil.copy(source.getPath(), p.getPath());
-                p.save();
+                if (this.source.equals(ProfileManager.getDefault().getActiveProfile())) {
+                    // TODO: if source is active profile, prompt user to save source
+                    //InstanceManager.getDefault(ConfigureManager.class).storePrefs();
+                }
+                ProfileUtils.copy(source, p);
             }
             if (this.setNextProfile) {
                 ProfileManager.getDefault().setNextActiveProfile(p);

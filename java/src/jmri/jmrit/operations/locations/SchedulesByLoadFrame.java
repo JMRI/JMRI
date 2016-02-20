@@ -31,10 +31,6 @@ import org.slf4j.LoggerFactory;
  */
 public class SchedulesByLoadFrame extends OperationsFrame implements java.beans.PropertyChangeListener {
 
-    /**
-     *
-     */
-    private static final long serialVersionUID = -1010990061006978311L;
     // combo box
     JComboBox<String> typesComboBox = CarTypes.instance().getComboBox();
     JComboBox<String> loadsComboBox = new JComboBox<>();
@@ -149,8 +145,8 @@ public class SchedulesByLoadFrame extends OperationsFrame implements java.beans.
         addItemLeft(locationsPanel, new JLabel(Bundle.getMessage("destinationTrack")), 4, x++);
 
         for (Location location : locationManager.getLocationsByNameList()) {
-            // don't show staging
-            if (location.isStaging())
+            // only spurs have schedules
+            if (!location.hasSpurs())
                 continue;
             addItemLeft(locationsPanel, new JLabel(location.getName()), 0, x++);
             // now look for a spur with a schedule

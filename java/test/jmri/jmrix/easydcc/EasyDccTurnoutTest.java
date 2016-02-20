@@ -12,8 +12,6 @@ import jmri.implementation.AbstractTurnoutTest;
 import junit.framework.Assert;
 import junit.framework.Test;
 import junit.framework.TestSuite;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 
 public class EasyDccTurnoutTest extends AbstractTurnoutTest {
 
@@ -62,7 +60,5 @@ public class EasyDccTurnoutTest extends AbstractTurnoutTest {
     protected void tearDown() {
         apps.tests.Log4JFixture.tearDown();
     }
-
-    private final static Logger log = LoggerFactory.getLogger(EasyDccTurnoutTest.class.getName());
 
 }

@@ -117,19 +117,20 @@ and to position icons that represent them.
 <p>
 
 <h2>Creating a Warrant</h2>
-There are two types of warrants;
+There are three types of warrants;
 <ul>		
 		<li>A recorded script Warrant, where 
 		throttle commands are recorded from a throttle you use to drive a train over
 		preselected route.  The warrant then replicates all the commands when played back.
 		To create a recorded script warrant, select the menu item <b>Create New Warrant</b>
 		from the <b>Warrants</b> menu.</li>
-	and
-		<li>An NXwarrant, that is, an eNtry/eXit warrant. These warrants are created by
-		selecting a start position and an end position and having the warrant 
-		generate the commands to drive the train from start to end.  To create an
-		NXwarrant select the menu item <b>Create NXWarrant</b> from the <b>Warrants</b>
+		<li>An <A HREF="NXWarrant.shtml">NXwarrant</A>, that is, an eNtry/eXit warrant. 
+                These warrants are created by selecting a start position and an end position and 
+                having the warrant generate the commands to drive the train from start to end.  
+                To create an NXwarrant select the menu item <b>Create NXWarrant</b> from the <b>Warrants</b>
 		menu.</li>
+		<li>A <A HREF="SCWarrant.shtml">signal controlled warrant</A>, that is specially suited 
+                    for small layouts fully covered by sensors and preferably also with signals.</li>
 </ul>
 <p>
 In either case, first a route must be chosen on which to run the train. The <b>Creating Routes</b>

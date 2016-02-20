@@ -14,6 +14,8 @@ import jmri.ProgListener;
 import jmri.Programmer;
 import jmri.ProgrammerException;
 import jmri.Sensor;
+import jmri.jmrit.logix.Warrant;
+import jmri.jmrit.logix.OBlock;
 import jmri.ThrottleListener;
 import jmri.ThrottleManager;
 import jmri.Turnout;
@@ -62,6 +64,12 @@ import org.slf4j.LoggerFactory;
  * {@link #waitSensorState(jmri.Sensor, int)}
  * <LI>Wait for a specific sensor to change:
  * {@link #waitSensorChange(int, jmri.Sensor)}
+ * <LI>Wait for a specific warrant to change run state:
+ * {@link #waitWarrantRunState(Warrant, int)}
+ * <LI>Wait for a specific warrant to enter or leave a specific block:
+ * {@link #waitWarrantBlock(Warrant, String, boolean)}
+ * <LI>Wait for a specific warrant to enter the next block or to stop:
+ * {@link #waitWarrantBlockChange(Warrant)}
  * <LI>Set a group of turnouts and wait for them to be consistent (actual
  * position matches desired position):
  * {@link #setTurnouts(jmri.Turnout[], jmri.Turnout[])}
@@ -490,6 +498,152 @@ public class AbstractAutomaton implements Runnable {
         }
 
         return;
+    }
+
+    /**
+     * Wait for a warrant to change into or out of running state.
+     * <P>
+     * This works by registering a listener, which is likely to run in another
+     * thread. That listener then interrupts the automaton's thread, who
+     * confirms the change.
+     *
+     * @param Warrant  The name of the warrant to watch
+     * @param state    State to check (static value from jmri.logix.warrant)
+     */
+    public synchronized void waitWarrantRunState(Warrant Warrant, int state) {
+        if (!inThread) {
+            log.warn("waitWarrantRunState invoked from invalid context");
+        }
+        if (log.isDebugEnabled()) {
+            log.debug("waitWarrantRunState "+Warrant.getDisplayName()+", "+state+" starts");
+        }
+
+        // do a quick check first, just in case
+        if (Warrant.getRunMode() == state) {
+            log.debug("waitWarrantRunState returns immediately");
+            return;
+        }
+        // register listener
+        java.beans.PropertyChangeListener listener;
+        Warrant.addPropertyChangeListener(listener = new java.beans.PropertyChangeListener() {
+            public void propertyChange(java.beans.PropertyChangeEvent e) {
+                synchronized (self) {
+                   log.debug("notify waitWarrantRunState of property change");
+                   self.notifyAll(); // should be only one thread waiting, but just in case
+                }
+            }
+        });
+
+        while (Warrant.getRunMode() != state) {
+            wait(-1);
+        }
+
+        // remove the listener
+        Warrant.removePropertyChangeListener(listener);
+
+        return;
+    }
+
+    /**
+     * Wait for a warrant to enter a named block.
+     * <P>
+     * This works by registering a listener, which is likely to run in another
+     * thread. That listener then interrupts the automation's thread, who
+     * confirms the change.
+     *
+     * @param Warrant  The name of the warrant to watch
+     * @param Block    Block to check
+     * @param Occupied Determines whether to wait for the block to become occupied or unoccupied
+     */
+    public synchronized void waitWarrantBlock(Warrant Warrant, String Block, boolean Occupied) {
+        if (!inThread) {
+            log.warn("waitWarrantBlock invoked from invalid context");
+        }
+        if (log.isDebugEnabled()) {
+            log.debug("waitWarrantBlock "+Warrant.getDisplayName()+", "+Block+" "+Occupied+" starts");
+        }
+
+        // do a quick check first, just in case
+        if (Warrant.getCurrentBlockName().equals(Block) == Occupied) {
+            log.debug("waitWarrantBlock returns immediately");
+            return;
+        }
+        // register listener
+        java.beans.PropertyChangeListener listener;
+        Warrant.addPropertyChangeListener(listener = new java.beans.PropertyChangeListener() {
+            public void propertyChange(java.beans.PropertyChangeEvent e) {
+                synchronized (self) {
+                   log.debug("notify waitWarrantBlock of property change");
+                   self.notifyAll(); // should be only one thread waiting, but just in case
+                }
+            }
+        });
+
+        while (Warrant.getCurrentBlockName().equals(Block) != Occupied) {
+            wait(-1);
+        }
+
+        // remove the listener
+        Warrant.removePropertyChangeListener(listener);
+
+        return;
+    }
+
+    /**
+     * Wait for a warrant to either enter a new block or to stop running.
+     * <P>
+     * This works by registering a listener, which is likely to run in another
+     * thread. That listener then interrupts the automation's thread, who
+     * confirms the change.
+     *
+     * @param Warrant  The name of the warrant to watch
+     *
+     * Return value: The name of the block that was entered or null if the warrant is no longer running.
+     */
+    private boolean blockChanged = false;
+    private String blockName = null;
+    public synchronized String waitWarrantBlockChange(Warrant Warrant) {
+        if (!inThread) {
+            log.warn("waitWarrantBlockChange invoked from invalid context");
+        }
+        if (log.isDebugEnabled()) {
+            log.debug("waitWarrantBlockChange "+Warrant.getDisplayName());
+        }
+
+        // do a quick check first, just in case
+        if (Warrant.getRunMode() != Warrant.MODE_RUN) {
+            log.debug("waitWarrantBlockChange returns immediately");
+            return null;
+        }
+        // register listener
+        blockChanged = false;
+        blockName = null;
+        java.beans.PropertyChangeListener listener;
+        Warrant.addPropertyChangeListener(listener = new java.beans.PropertyChangeListener() {
+            public void propertyChange(java.beans.PropertyChangeEvent e) {
+                synchronized (self) {
+                    if (e.getPropertyName().equals("blockChange")) {
+                        blockChanged = true;
+                        blockName = ((OBlock)e.getNewValue()).getDisplayName();
+                    }
+                    log.debug("notify waitWarrantBlockChange of property change");
+                    self.notifyAll(); // should be only one thread waiting, but just in case
+                }
+            }
+        });
+
+        while (!blockChanged && Warrant.getRunMode() == Warrant.MODE_RUN) {
+            wait(-1);
+        }
+
+        if (Warrant.getRunMode() != Warrant.MODE_RUN) {
+            blockName = null;
+        }
+
+        // remove the listener
+        Warrant.removePropertyChangeListener(listener);
+
+        return blockName;
     }
 
     /**

@@ -1304,7 +1304,6 @@ public class SlipTurnoutIcon extends PositionableLabel implements java.beans.Pro
         }
 
         private SlipTurnoutIcon s;
-    private final static Logger log = LoggerFactory.getLogger(SetSlipThread.class.getName());
 
     }
 }

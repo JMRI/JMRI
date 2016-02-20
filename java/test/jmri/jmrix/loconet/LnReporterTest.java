@@ -6,8 +6,6 @@ import junit.framework.Assert;
 import junit.framework.Test;
 import junit.framework.TestCase;
 import junit.framework.TestSuite;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 
 /**
  * Tests for the jmri.jmrix.loconet.LnReporter class.
@@ -94,8 +92,6 @@ public class LnReporterTest extends TestCase {
         TestSuite suite = new TestSuite(LnReporterTest.class);
         return suite;
     }
-
-    private final static Logger log = LoggerFactory.getLogger(LnReporterTest.class.getName());
 
     jmri.jmrix.loconet.LocoNetInterfaceScaffold tc;
 
