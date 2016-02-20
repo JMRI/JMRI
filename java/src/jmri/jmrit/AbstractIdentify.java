@@ -100,7 +100,7 @@ public abstract class AbstractIdentify implements jmri.ProgListener {
         if (status != jmri.ProgListener.OK) {
             if ( retry < RETRY_COUNT) {
                 statusUpdate("Programmer error: "
-                    + jmri.InstanceManager.programmerManagerInstance().getGlobalProgrammer().decodeErrorCode(status));
+                    + programmer.decodeErrorCode(status));
                 state--;
                 retry++;
             } else if (programmer != null && programmer.getMode() != DefaultProgrammerManager.PAGEMODE &&
@@ -108,13 +108,13 @@ public abstract class AbstractIdentify implements jmri.ProgListener {
                 programmer.setMode(DefaultProgrammerManager.PAGEMODE);
                 retry = 0;
                 state--;
-                log.warn(jmri.InstanceManager.programmerManagerInstance().getGlobalProgrammer().decodeErrorCode(status) +
+                log.warn(programmer.decodeErrorCode(status) +
                         ", trying " + programmer.getMode().toString() + " mode");
             } else {
                 log.warn("Stopping due to error: "
-                    + jmri.InstanceManager.programmerManagerInstance().getGlobalProgrammer().decodeErrorCode(status));
+                    + programmer.decodeErrorCode(status));
                 statusUpdate("Stopping due to error: "
-                    + jmri.InstanceManager.programmerManagerInstance().getGlobalProgrammer().decodeErrorCode(status));
+                    + programmer.decodeErrorCode(status));
                 if (programmer != null && programmer.getMode() != savedMode) {  // restore original mode
                     log.warn("Restoring " + savedMode.toString() + " mode");
                     programmer.setMode(savedMode);
