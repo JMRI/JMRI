@@ -10,12 +10,11 @@ import org.slf4j.LoggerFactory;
 
 /**
  * Provides a very-basic implementation of ProgrammerManager. You give it a
- * service-mode Programmer at construction time; Ops Mode requests get a null in
+ * service-mode Programmer (perhaps null) at construction time; Ops Mode requests get a null in
  * response.
  *
  * @see jmri.ProgrammerManager
  * @author	Bob Jacobsen Copyright (C) 2001, 2015
- * @version	$Revision$
  */
 public class DefaultProgrammerManager implements ProgrammerManager {
 
