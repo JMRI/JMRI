@@ -37,7 +37,25 @@
 
 <tr>
 <td></td>
-<td style="font-weight: bold;"><a href="../package/jmri/jmrit/operations/Operations.shtml">OperationsPro&trade; v4.x</a><br>&nbsp;</td>
+<td style="font-weight: bold;"><a href="../html/apps/PanelPro/PanelPro.shtml">PanelPro&trade; v4.x</a></td>
+<td></td>
+</tr>
+
+<tr>
+<td></td>
+<td style="font-weight: bold;"><a href="../package/jmri/jmrit/operations/Operations.shtml">OperationsPro&trade; v4.x</a></td>
+<td></td>
+</tr>
+
+<tr>
+<td></td>
+<td style="font-weight: bold;"><a href="../package/jmri/jmrit/dispatcher/Dispatcher.shtml">DispatcherPro&trade; v4.x</a></td>
+<td></td>
+</tr>
+
+<tr>
+<td></td>
+<td style="font-weight: bold;"><a href="../html/setup/index.shtml">General Set Up v4.x</a><br>&nbsp;</td>
 <td></td>
 </tr>
 

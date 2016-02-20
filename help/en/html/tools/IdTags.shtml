@@ -4,7 +4,7 @@
   <title>
  	JMRI: ID Tag Documentation
   </title>
-  <meta content="Matthew Harris" name="Author">
+  <meta name="author" content="Matthew Harris">
   <meta name="keywords"
         content="rfID tag ID tag model railroad JMRI decoderpro panelpro">
 
@@ -21,9 +21,9 @@
   <div ID="container">
 
 <!--#include virtual="/Header" -->
-<!--#include virtual="SIDebar" -->
+<!--#include virtual="Sidebar" -->
 
-      <div ID="mainContent">
+      <div id="mainContent">
       <!-- Page Body -->
         <h1>
 		JMRI: ID Tags Documentation
@@ -46,7 +46,7 @@ automatically entered into the
 <a href="../../package/jmri/jmrit/beantable/IdTagTable.shtml">ID Tag Table</a>.
 <p>
 At system shutdown, the details of all ID Tags known to the system are written
-to a file stored in the "IDtags" sub-directory of user Preferences.  The storage of
+to a file stored in the "IDtags" sub-directory of user <a href="../../package/apps/TabbedPreferences.shtml">Preferences</a>.  The storage of
 details when and where a given ID Tag was last seen is configurable by setting
 the option at the bottom of the ID Tag Table.
 <p>
