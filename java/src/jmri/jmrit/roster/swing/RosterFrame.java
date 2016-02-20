@@ -1527,7 +1527,7 @@ public class RosterFrame extends TwoPaneTBWindow implements RosterEntrySelector,
         AddressedProgrammerManager apm = InstanceManager.getDefault(AddressedProgrammerManager.class);
         if (apm != null) {
             //Ideally we should probably have the progDebugger manager reference the username configured in the system connection memo.
-            //but as DP3 (jmri can not use mutliple programmers!) isn't designed for multi-connection enviroments this should be sufficient*/
+            //but as DecoderPro (nee DP3) isn't (yet) designed for multi-connection enviroments this should be sufficient
             String opsModeProgrammer = apm.getUserName();
             for (ConnectionConfig connection : InstanceManager.getDefault(ConnectionConfigManager.class)) {
                 if (connection.getConnectionName() != null && connection.getConnectionName().equals(opsModeProgrammer)) {
