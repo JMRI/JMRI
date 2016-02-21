@@ -19,8 +19,9 @@ import org.slf4j.LoggerFactory;
 
 /**
  * Exports the car roster into a comma delimitated file (CSV).
+ * Only the cars shown in the CarsTableTrame window are exported.
  *
- * @author Daniel Boudreau Copyright (C) 2010, 2011
+ * @author Daniel Boudreau Copyright (C) 2010, 2011, 2016
  * @version $Revision$
  *
  */
@@ -28,9 +29,11 @@ public class ExportCars extends XmlFile {
 
     static final String ESC = "\""; // escape character NOI18N
     private String del = ","; // delimiter
+    
+    CarsTableFrame _carsTableFrame;
 
-    public ExportCars() {
-
+    public ExportCars(CarsTableFrame carsTableFrame) {
+        _carsTableFrame = carsTableFrame;
     }
 
     public void setDeliminter(String delimiter) {
@@ -79,12 +82,13 @@ public class ExportCars extends XmlFile {
             fileOut = new PrintWriter(new BufferedWriter(new OutputStreamWriter(new FileOutputStream(file), "UTF-8")), // NOI18N
                     true); // NOI18N
         } catch (IOException e) {
-            log.error("Can not open export cars CSV file: " + file.getName());
+            log.error("Can not open export cars CSV file: {}", file.getName());
             return;
         }
-
-        CarManager manager = CarManager.instance();
-        List<RollingStock> carList = manager.getByNumberList();
+        
+        List<RollingStock> carList = _carsTableFrame.carsTableModel.getSelectedCarList();
+//        List<RollingStock> carList = CarManager.instance().getByNumberList();
+        
         String line = "";
         // check for delimiter in the following car fields
         String carType;
