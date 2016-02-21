@@ -311,9 +311,10 @@ public class Path {
         return true;
     }
 
+    // Can't include _toBlockDirection, _fromBlockDirection, or block information as they can change
     @Override
     public int hashCode() {
-        int hash = _toBlockDirection*1000+_fromBlockDirection*1000*1000+(int)(_length)+1000*1000*1000*_beans.size();
+        int hash = 100;
         return hash;
     }
     
