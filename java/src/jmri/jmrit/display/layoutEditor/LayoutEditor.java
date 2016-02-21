@@ -34,6 +34,7 @@ import java.util.Map;
 import java.lang.reflect.Field;
 import java.util.ResourceBundle;
 import javax.swing.AbstractAction;
+import javax.swing.Action;
 import javax.swing.BoxLayout;
 import javax.swing.ButtonGroup;
 import javax.swing.JButton;
@@ -441,7 +442,14 @@ public class LayoutEditor extends jmri.jmrit.display.panelEditor.PanelEditor imp
         JMenu fileMenu = new JMenu(rb.getString("MenuFile"));
         fileMenu.setMnemonic(stringsToVTCodes.get(rb.getString("MenuFileMnemonic")));
         menuBar.add(fileMenu);
-        fileMenu.add(new jmri.configurexml.StoreXmlUserAction(rbx.getString("MenuItemStore")));
+        jmri.configurexml.StoreXmlUserAction store = new jmri.configurexml.StoreXmlUserAction(rbx.getString("MenuItemStore"));
+        if (SystemType.isMacOSX())
+            store.putValue(store.ACCELERATOR_KEY, KeyStroke.getKeyStroke(
+                    stringsToVTCodes.get(rbx.getString("MenuItemStoreAccelerator")), ActionEvent.CTRL_MASK));
+        else
+            store.putValue(store.ACCELERATOR_KEY, KeyStroke.getKeyStroke(
+                    stringsToVTCodes.get(rbx.getString("MenuItemStoreAccelerator")), ActionEvent.CTRL_MASK));
+        fileMenu.add(store);
         fileMenu.addSeparator();
         JMenuItem deleteItem = new JMenuItem(rbx.getString("DeletePanel"));
         fileMenu.add(deleteItem);
