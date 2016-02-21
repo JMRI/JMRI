@@ -152,10 +152,17 @@ public class NceSystemConnectionMemo extends jmri.jmrix.SystemConnectionMemo {
             return (T) getProgrammerManager();
         }
         if (T.equals(jmri.GlobalProgrammerManager.class)) {
-            return (T) getProgrammerManager();
+            ProgrammerManager pm = getProgrammerManager();
+            if ((pm != null) && pm.isGlobalProgrammerAvailable()) {
+                return (T) getProgrammerManager();
+            }
         }
+        
         if (T.equals(jmri.AddressedProgrammerManager.class)) {
-            return (T) getProgrammerManager();
+            ProgrammerManager pm = getProgrammerManager();
+            if ((pm != null) && pm.isAddressedModePossible()) {
+                return (T) getProgrammerManager();
+            }
         }
 
         if (T.equals(jmri.ThrottleManager.class)) {
