@@ -20,15 +20,10 @@ import org.slf4j.LoggerFactory;
 /**
  * Table Model for edit of cars used by operations
  *
- * @author Daniel Boudreau Copyright (C) 2008, 2011, 2012
+ * @author Daniel Boudreau Copyright (C) 2008, 2011, 2012, 2016
  * @version $Revision$
  */
 public class CarsTableModel extends javax.swing.table.AbstractTableModel implements PropertyChangeListener {
-
-    /**
-     *
-     */
-    private static final long serialVersionUID = -5846367542654823901L;
 
     CarManager manager = CarManager.instance(); // There is only one manager
 
@@ -716,6 +711,10 @@ public class CarsTableModel extends javax.swing.table.AbstractTableModel impleme
             }
             if (row >= 0) {
                 fireTableRowsUpdated(row, row);
+            // next is needed when only showing cars at a location or track
+            } else if (e.getPropertyName().equals(Car.TRACK_CHANGED_PROPERTY)) {
+                updateList();
+                fireTableDataChanged();
             }
         }
     }
