@@ -1537,7 +1537,7 @@ public class RosterFrame extends TwoPaneTBWindow implements RosterEntrySelector,
             }
         }
 
-        if (serModeProCon != null) {
+        if (serModeProCon != null && gpm.isGlobalProgrammerAvailable()) {
             if (ConnectionStatus.instance().isConnectionOk(serModeProCon.getInfo())
                     && gpm != null) {
                 serviceModeProgrammerLabel.setText(
@@ -1572,7 +1572,7 @@ public class RosterFrame extends TwoPaneTBWindow implements RosterEntrySelector,
             getToolBar().getComponents()[1].setEnabled(false);
         }
 
-        if (opsModeProCon != null) {
+        if (opsModeProCon != null && apm.isAddressedModePossible()) {
             if (ConnectionStatus.instance().isConnectionOk(opsModeProCon.getInfo()) && apm != null) {
                 operationsModeProgrammerLabel.setText(
                         Bundle.getMessage("OpsModeProgOnline", opsModeProCon.getConnectionName()));
