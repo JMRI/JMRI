@@ -15,7 +15,6 @@ import org.slf4j.LoggerFactory;
  * <p>
  *
  * @author	Bob Jacobsen Copyright (C) 2001, 2015
- * @version $Revision$
  * @see jmri.jmrit.symbolicprog.CombinedLocoSelPane
  * @see jmri.jmrit.symbolicprog.NewLocoSelPane
  */
@@ -34,8 +33,6 @@ abstract public class IdentifyLoco extends jmri.jmrit.AbstractIdentify {
 
     // steps of the identification state machine
     public boolean test1() {
-        // insure available?
-        InstanceManager.programmerManagerInstance().getGlobalProgrammer();
         // request contents of CV 29
         statusUpdate(java.util.ResourceBundle.getBundle("jmri/jmrit/roster/JmritRosterBundle").getString("READ CV 29"));
         readCV(29);

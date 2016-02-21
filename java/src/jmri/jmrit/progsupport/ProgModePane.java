@@ -27,7 +27,6 @@ import org.slf4j.LoggerFactory;
  * that a ProgModePane object can disconnect its listeners.
  *
  * @author	Bob Jacobsen Copyright (C) 2001
- * @version	$Revision$
  */
 public class ProgModePane extends ProgModeSelector {
 
