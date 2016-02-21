@@ -36,8 +36,9 @@ public class NceSystemConnectionMemoTest extends TestCase {
         memo.setNceUsbSystem(NceTrafficController.USB_SYSTEM_SB3);
         memo.setNceCmdGroups(0);
         
-        Assert.assertFalse("doesn't provide global programmerManager", memo.provides(GlobalProgrammerManager.class));
-        Assert.assertNull("no global ProgrammerManager exists", memo.get(GlobalProgrammerManager.class));
+        Assert.assertTrue("provides global programmerManager", memo.provides(GlobalProgrammerManager.class));
+        Assert.assertNotNull("global ProgrammerManager exists", memo.get(GlobalProgrammerManager.class));
+        Assert.assertNull("no global Programmer exists", ((GlobalProgrammerManager)memo.get(GlobalProgrammerManager.class)).getGlobalProgrammer());
     }
 
 
