@@ -66,6 +66,8 @@ public class BeanSetting {
     private final NamedBeanHandle<NamedBean> _namedBean;
     final private int _setting;
 
+    // include _namedBean and _setting in equals() and hashCode() because they can't 
+    // change after construction
     @Override
     public boolean equals(Object obj) {
         if (obj == this) {
