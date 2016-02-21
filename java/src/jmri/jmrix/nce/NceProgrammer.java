@@ -26,11 +26,6 @@ public class NceProgrammer extends AbstractProgrammer implements NceListener {
         this.tc = tc;
         super.SHORT_TIMEOUT = 4000;
 
-        if (tc != null && tc.getUsbSystem() != NceTrafficController.USB_SYSTEM_POWERCAB
-                && tc.getUsbSystem() != NceTrafficController.USB_SYSTEM_NONE) {
-            log.warn("NceProgrammer cannot function, shouldn't have been created", new Exception("traceback"));
-        }
-
         if (getSupportedModes().size() > 0) {
             setMode(getSupportedModes().get(0));
         }
