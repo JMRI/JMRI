@@ -44,7 +44,6 @@ import org.slf4j.LoggerFactory;
  * A PARTICULAR PURPOSE. See the GNU General Public License for more details.
  * <p>
  * @author	Bob Jacobsen Copyright (C) 2001, 2014
- * @version	$Revision$
  */
 public class ProgServiceModePane extends ProgModeSelector implements PropertyChangeListener, ActionListener {
 
@@ -107,17 +106,16 @@ public class ProgServiceModePane extends ProgModeSelector implements PropertyCha
         setLayout(new BoxLayout(this, direction));
 
         // create the programmer display combo box
-        java.util.Vector<GlobalProgrammerManager> v = new java.util.Vector<GlobalProgrammerManager>();
+        java.util.Vector<GlobalProgrammerManager> v = new java.util.Vector<>();
         for (GlobalProgrammerManager pm : getMgrList()) {
-            v.add(pm);
-            // listen for changes
-            if (pm.getGlobalProgrammer() != null) {
+            if (pm != null && pm.getGlobalProgrammer() != null) {
+                v.add(pm);
+                // listen for changes
                 pm.getGlobalProgrammer().addPropertyChangeListener(this);
-            } else {
-                log.warn("No GlobalProgrammer present in GlobalProgrammerManager, is there a problem with layout connection?");
             }
         }
-        add(progBox = new JComboBox<GlobalProgrammerManager>(v));
+
+        add(progBox = new JComboBox<>(v));
         // if only one, don't show
         if (progBox.getItemCount() < 2) {
             // no choice, so don't display, don't monitor for changes
