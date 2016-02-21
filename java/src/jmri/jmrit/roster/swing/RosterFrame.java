@@ -909,7 +909,7 @@ public class RosterFrame extends TwoPaneTBWindow implements RosterEntrySelector,
         pre.printPanes(boo);
     }
 
-    //Matches the first argument in the array against a locally know method
+    //Matches the first argument in the array against a locally-known method
     @Override
     public void remoteCalls(String[] args) {
         args[0] = args[0].toLowerCase();
@@ -1555,6 +1555,7 @@ public class RosterFrame extends TwoPaneTBWindow implements RosterEntrySelector,
                 firePropertyChange("setprogservice", "setEnabled", true);
             }
         } else {
+            // No service programmer available, disable interface sections not available
             serviceModeProgrammerLabel.setText(Bundle.getMessage("NoServiceProgrammerAvailable"));
             serviceModeProgrammerLabel.setForeground(Color.red);
             if (oldServMode != null) {
@@ -1564,6 +1565,10 @@ public class RosterFrame extends TwoPaneTBWindow implements RosterEntrySelector,
                 service.setVisible(false);
                 firePropertyChange("setprogservice", "setEnabled", false);
             }
+            // Disable Identify in toolBar
+            // This relies on it being the 2nd item in the tool bar, as defined in xml//config/parts/jmri/jmrit/roster/swing/RosterFrameToolBar.xml
+            // Because of I18N, we don't look for a particular Action name here
+            getToolBar().getComponents()[1].setEnabled(false);
         }
 
         if (opsModeProCon != null) {
