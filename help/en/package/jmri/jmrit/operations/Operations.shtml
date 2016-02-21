@@ -3888,22 +3888,35 @@
 
    This action will build a train if the "Build" checkbox in the
    <a href="#Trains">Trains</a> window is selected for the train. You must choose a train using the
-   "Train" menu. This action will report "FAILED" if the "Build" checkbox isn't selected for the
-   train in the <a href="#Trains">Trains</a> window or the train fails to build.
+   "Train" menu. This action will report "FAILED" if you haven't selected a train, or if the "Build"
+   checkbox isn't selected for the train in the
+   <a href="#Trains">Trains</a> window or if the train fails to build.
 
    <h5>Preview or Print Train Manifest</h5>
 
    This action's name and function depends on the "Preview" checkbox in the
    <a href="#Trains">Trains</a> window. If the "Preview" checkbox is selected, then the action
    becomes "Preview Train Manifest". If the checkbox is not selected, then the action becomes "Print
-   Train Manifest". You must choose a train using the "Train" menu.
+   Train Manifest". You must choose a train using the "Train" menu. This action will report "FAILED"
+   if a train isn't selected from the "Train" menu, or the train isn't built.
+
+   <h5>Preview or Print Train Manifest if Selected</h5>
+
+   This action's name and function depends on the "Preview" checkbox in the
+   <a href="#Trains">Trains</a> window. If the "Preview" checkbox is selected, then the action
+   becomes "Preview Train Manifest if Selected". If the checkbox is not selected, then the action
+   becomes "Print Train Manifest if Selected". You must choose a train using the "Train" menu. This
+   action will report "FAILED" if a train isn't selected from the "Train" menu, the train isn't
+   built, or the "Build" checkbox isn't selected for the train in the
+   <a href="#Trains">Trains</a> window.
 
    <h5>Run Excel for Train</h5>
 
    This action will cause an external Excel program to run for the selected train. See
    <a href="#SetupExcelProgram">Setup Excel Program (Manifest Creator)</a> for more information. You
-   must choose a train using the "Train" menu.  This action will fail if there isn't an Excel program
-   configured and enabled. Failure info messages are sent to the system console.
+   must choose a train using the "Train" menu. This action will fail if a train isn't selected from
+   the "Train" menu, of if there isn't an Excel program configured and enabled. Failure info
+   messages are sent to the system console.
 
    <h5>Move Train</h5>
 

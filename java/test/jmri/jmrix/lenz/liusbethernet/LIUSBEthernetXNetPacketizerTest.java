@@ -2,8 +2,6 @@ package jmri.jmrix.lenz.liusbethernet;
 
 import junit.framework.Assert;
 import junit.framework.TestCase;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 
 /**
  * <p>
@@ -42,7 +40,5 @@ public class LIUSBEthernetXNetPacketizerTest extends TestCase {
     protected void tearDown() {
         apps.tests.Log4JFixture.tearDown();
     }
-
-    static Logger log = LoggerFactory.getLogger(LIUSBEthernetXNetPacketizerTest.class.getName());
 
 }

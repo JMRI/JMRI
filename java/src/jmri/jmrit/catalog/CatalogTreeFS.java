@@ -3,8 +3,6 @@ package jmri.jmrit.catalog;
 
 import java.io.File;
 import java.util.HashMap;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 
 /**
  * TreeModel used by CatalogPanel to create a tree of resources.
@@ -133,6 +131,4 @@ public class CatalogTreeFS extends AbstractCatalogTree {
     }
 
     HashMap<Object, Object> parameters = null;
-
-    static Logger log = LoggerFactory.getLogger(CatalogTreeFS.class.getName());
 }

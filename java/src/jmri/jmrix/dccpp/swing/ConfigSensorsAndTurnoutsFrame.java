@@ -20,32 +20,45 @@ package jmri.jmrix.dccpp.swing;
  */
 import java.awt.Component;
 import java.awt.Dimension;
+import java.awt.FlowLayout;
 import java.awt.GridBagLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.KeyEvent;
-import java.awt.FlowLayout;
 import java.util.ArrayList;
 import java.util.Collections;
-import java.util.Iterator;
 import java.util.HashMap;
+import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
 import java.util.Vector;
-import javax.swing.*;
+import javax.swing.BoxLayout;
+import javax.swing.DefaultCellEditor;
+import javax.swing.JButton;
+import javax.swing.JCheckBox;
+import javax.swing.JMenu;
+import javax.swing.JMenuBar;
+import javax.swing.JOptionPane;
+import javax.swing.JPanel;
+import javax.swing.JScrollPane;
+import javax.swing.JTabbedPane;
+import javax.swing.JTable;
+import javax.swing.RowSorter;
+import javax.swing.SortOrder;
+import javax.swing.UIManager;
+import javax.swing.event.ChangeEvent;
+import javax.swing.event.ChangeListener;
 import javax.swing.event.EventListenerList;
 import javax.swing.table.AbstractTableModel;
 import javax.swing.table.TableCellRenderer;
-import javax.swing.table.TableRowSorter;
 import javax.swing.table.TableModel;
-import javax.swing.event.ChangeEvent;
-import javax.swing.event.ChangeListener;
-import jmri.jmrix.dccpp.DCCppTurnoutManager;
-import jmri.jmrix.dccpp.DCCppSensorManager;
-import jmri.jmrix.dccpp.DCCppTrafficController;
+import javax.swing.table.TableRowSorter;
 import jmri.jmrix.dccpp.DCCppListener;
 import jmri.jmrix.dccpp.DCCppMessage;
 import jmri.jmrix.dccpp.DCCppReply;
+import jmri.jmrix.dccpp.DCCppSensorManager;
+import jmri.jmrix.dccpp.DCCppTrafficController;
+import jmri.jmrix.dccpp.DCCppTurnoutManager;
 import jmri.util.JmriJFrame;
 import jmri.util.WindowMenu;
 import org.slf4j.Logger;
@@ -84,8 +97,6 @@ public class ConfigSensorsAndTurnoutsFrame extends JmriJFrame implements DCCppLi
 
     protected EventListenerList listenerList = new javax.swing.event.EventListenerList();
 
-    private DCCppSensorManager sensorManager;
-    private DCCppTurnoutManager turnoutManager;
     private DCCppTrafficController tc;
     
     private JTabbedPane tabbedPane;
@@ -114,8 +125,6 @@ public class ConfigSensorsAndTurnoutsFrame extends JmriJFrame implements DCCppLi
                                          DCCppTurnoutManager tm, 
                                          DCCppTrafficController t) {
         super(false, false);
-        sensorManager = sm;
-        turnoutManager = tm;
         tc = t;
         initGui();
     }
@@ -587,9 +596,9 @@ public class ConfigSensorsAndTurnoutsFrame extends JmriJFrame implements DCCppLi
             columnNames[1] = Bundle.getMessage("FieldTablePinColumn");
             columnNames[2] = Bundle.getMessage("FieldTablePullupColumn");
             columnNames[3] = Bundle.getMessage("FieldTableDeleteColumn");
-            columnNames[4] = "isNew"; // NOI18N -- hidden column;
-            columnNames[5] = "isDirty"; // NOI18N -- hidden column;
-            columnNames[6] = "isDelete"; // NOI18N -- hidden column;
+            columnNames[4] = "isNew";       // hidden column // NOI18N
+            columnNames[5] = "isDirty";     // hidden column // NOI18N
+            columnNames[6] = "isDelete";    // hidden column // NOI18N
             rowData = new Vector();
         }
 
@@ -695,7 +704,7 @@ public class ConfigSensorsAndTurnoutsFrame extends JmriJFrame implements DCCppLi
         }
 
         public void setValueAt(Object value, int row, int col) {
-            ((Vector)((Vector)rowData.elementAt(row))).setElementAt(value, col);
+            ((Vector)rowData.elementAt(row)).setElementAt(value, col);
             if (col < 3) {
                 // Only set dirty if data changed, not state
                 // Data is in columns 0-2
@@ -740,9 +749,9 @@ public class ConfigSensorsAndTurnoutsFrame extends JmriJFrame implements DCCppLi
             columnNames[1] = Bundle.getMessage("FieldTableAddressColumn");
             columnNames[2] = Bundle.getMessage("FieldTableSubaddrColumn");
             columnNames[3] = Bundle.getMessage("FieldTableDeleteColumn");
-            columnNames[4] = "isNew"; // NOI18N -- hidden column;
-            columnNames[5] = "isDirty"; // NOI18N -- hidden column;
-            columnNames[6] = "isDelete"; // NOI18N -- hidden column;
+            columnNames[4] = "isNew";        // hidden column // NOI18N
+            columnNames[5] = "isDirty";      // hidden column // NOI18N
+            columnNames[6] = "isDelete";     // hidden column // NOI18N
             rowData = new Vector();
         }
 
@@ -887,9 +896,9 @@ public class ConfigSensorsAndTurnoutsFrame extends JmriJFrame implements DCCppLi
             columnNames[3] = Bundle.getMessage("FieldTableOutputRestoreStateColumn");
             columnNames[4] = Bundle.getMessage("FieldTableOutputForceToColumn");
             columnNames[5] = Bundle.getMessage("FieldTableDeleteColumn");
-            columnNames[6] = "isNew"; // NOI18N -- hidden column;
-            columnNames[7] = "isDirty"; // NOI18N -- hidden column;
-            columnNames[8] = "isDelete"; // NOI18N -- hidden column;
+            columnNames[6] = "isNew";        // hidden column // NOI18N
+            columnNames[7] = "isDirty";      // hidden column // NOI18N
+            columnNames[8] = "isDelete";     // hidden column // NOI18N
             rowData = new Vector();
         }
 

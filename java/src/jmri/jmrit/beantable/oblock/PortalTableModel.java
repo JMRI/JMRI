@@ -331,5 +331,5 @@ public class PortalTableModel extends jmri.jmrit.beantable.BeanTableDataModel {
         return 5;
     }
 
-    static Logger log = LoggerFactory.getLogger(PortalTableModel.class.getName());
+    private final static Logger log = LoggerFactory.getLogger(PortalTableModel.class.getName());
 }

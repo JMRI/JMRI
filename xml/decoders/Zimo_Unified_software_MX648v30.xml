@@ -13,6 +13,7 @@
 <!-- FITNESS FOR A PARTICULAR PURPOSE.  See the GNU General Public License  -->
 <!-- for more details.                                                      -->
 <decoder-config xmlns:xi="http://www.w3.org/2001/XInclude" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="http://jmri.org/xml/schema/decoder.xsd">
+  <version author="Mark Waters mark16jmri@mybtinternet.com" version="1.2" lastUpdated="20160123"/>
   <version author="Mark Waters mark16w-jmri@yahoo.co.uk" version="1" lastUpdated="20110917"/>
   <!-- This decoder configuration file is based on the Zimo_MX640_v9.xml                     -->
   <!-- V 1 file, dated 20090222. With the Sound tabs from Jeff Schmaltz' MX69/MX690 file.    -->
@@ -26,9 +27,10 @@
   <!-- variables on the proper pane of the Comprehensive programmer.                         -->
   <!-- V 1 new file -->
   <!-- v1.1,  small change to refer CV's 260-355 to the "version 30" file,  Nigel Cliffe. 9th Dec 2011 -->
+  <!-- V 1.2 additional productID 249 -->
   <decoder>
     <family name="Zimo Unified software (version 25+)" mfg="Zimo">
-      <model model="MX648 version 30+" lowVersionID="30" highVersionID="35" maxInputVolts="30V" maxMotorCurrent="0.8A, peak=1.5A" maxTotalCurrent="1.2A" formFactor="N" numOuts="6" numFns="14" productID="225">
+      <model model="MX648 version 30+" lowVersionID="30" highVersionID="45" maxInputVolts="30V" maxMotorCurrent="0.8A, peak=1.5A" maxTotalCurrent="1.2A" formFactor="N" numOuts="6" numFns="14" productID="225,249">
         <output name="1" label="Front Light"/>
         <output name="2" label="Rear Light"/>
         <output name="3" label="FO 1"/>
@@ -37,7 +39,7 @@
         <output name="6" label="FO 4 (+5v)"/>
         <size length="20" width="11" height="4" units="mm"/>
       </model>
-      <model model="MX648R version 30+" lowVersionID="30" highVersionID="35" maxInputVolts="30V" maxMotorCurrent="0.8A, peak=1.5A" maxTotalCurrent="1.2A" formFactor="N" connector="NMRAmedium" numOuts="6" numFns="14" productID="225">
+      <model model="MX648R version 30+" lowVersionID="30" highVersionID="45" maxInputVolts="30V" maxMotorCurrent="0.8A, peak=1.5A" maxTotalCurrent="1.2A" formFactor="N" connector="NMRAmedium" numOuts="6" numFns="14" productID="225,249">
         <output name="1" label="Front Light"/>
         <output name="2" label="Rear Light"/>
         <output name="3" label="FO 1"/>
@@ -46,7 +48,7 @@
         <output name="6" label="FO 4"/>
         <size length="20" width="11" height="4" units="mm"/>
       </model>
-      <model model="MX648F version 30+" lowVersionID="30" highVersionID="35" maxInputVolts="30V" maxMotorCurrent="0.8A, peak=1.5A" maxTotalCurrent="1.2A" formFactor="N" connector="NMRAsmall" numOuts="6" numFns="14" productID="225">
+      <model model="MX648F version 30+" lowVersionID="30" highVersionID="45" maxInputVolts="30V" maxMotorCurrent="0.8A, peak=1.5A" maxTotalCurrent="1.2A" formFactor="N" connector="NMRAsmall" numOuts="6" numFns="14" productID="225,249">
         <output name="1" label="Front Light"/>
         <output name="2" label="Rear Light"/>
         <output name="3" label="FO 1"/>
@@ -55,7 +57,7 @@
         <output name="6" label="FO 4"/>
         <size length="28" width="10.5" height="4" units="mm"/>
       </model>
-      <model model="MX648N version 30+" lowVersionID="30" highVersionID="35" maxInputVolts="30V" maxMotorCurrent="0.8A, peak=1.5A" maxTotalCurrent="1.2A" formFactor="N" connector="NMRAsmall" numOuts="6" numFns="14" productID="225">
+      <model model="MX648N version 30+" lowVersionID="30" highVersionID="45" maxInputVolts="30V" maxMotorCurrent="0.8A, peak=1.5A" maxTotalCurrent="1.2A" formFactor="N" connector="NMRAsmall" numOuts="6" numFns="14" productID="225,249">
         <output name="1" label="Front Light"/>
         <output name="2" label="Rear Light"/>
         <output name="3" label="FO 1"/>

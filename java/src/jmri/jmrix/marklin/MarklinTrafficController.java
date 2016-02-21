@@ -239,7 +239,7 @@ public class MarklinTrafficController extends AbstractMRTrafficController implem
         return adaptermemo.getSystemPrefix();
     }
 
-    static Logger log = LoggerFactory.getLogger(MarklinTrafficController.class.getName());
+    private final static Logger log = LoggerFactory.getLogger(MarklinTrafficController.class.getName());
 }
 
 

@@ -6,8 +6,6 @@ import junit.framework.Assert;
 import junit.framework.Test;
 import junit.framework.TestCase;
 import junit.framework.TestSuite;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 
 /**
  * Tests for the jmri.jmrix.loconet.sdfeditor.MonitoringLabel class.
@@ -45,8 +43,6 @@ public class MonitoringLabelTest extends TestCase {
         TestSuite suite = new TestSuite(MonitoringLabelTest.class);
         return suite;
     }
-
-    static Logger log = LoggerFactory.getLogger(MonitoringLabelTest.class.getName());
 
     // The minimal setup for log4J
     protected void setUp() {

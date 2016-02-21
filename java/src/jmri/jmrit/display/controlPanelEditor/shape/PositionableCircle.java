@@ -6,8 +6,6 @@ import java.awt.geom.Ellipse2D;
 import javax.swing.JPopupMenu;
 import jmri.jmrit.display.Editor;
 import jmri.jmrit.display.Positionable;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 
 /**
  * PositionableCircle PositionableShapes.
@@ -82,6 +80,4 @@ public class PositionableCircle extends PositionableShape {
         });
         return true;
     }
-
-    static Logger log = LoggerFactory.getLogger(PositionableCircle.class.getName());
 }

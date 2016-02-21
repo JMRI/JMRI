@@ -1091,6 +1091,6 @@ public class PositionablePoint {
 
     JDialog editLink = null;
 
-    static Logger log = LoggerFactory.getLogger(PositionablePoint.class.getName());
+    private final static Logger log = LoggerFactory.getLogger(PositionablePoint.class.getName());
 
 }

@@ -73,7 +73,7 @@ public class SerialTurnout extends AbstractTurnout {
         SerialTrafficController.instance().sendSerialMessage(m, null);
     }
 
-    static Logger log = LoggerFactory.getLogger(SerialTurnout.class.getName());
+    private final static Logger log = LoggerFactory.getLogger(SerialTurnout.class.getName());
 }
 
 /* @(#)SerialTurnout.java */

@@ -4,6 +4,8 @@ package jmri.implementation;
 import java.util.Date;
 import jmri.InstanceManager;
 import jmri.Timebase;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 /**
  * Abstract class providing partial implementation of the logic of the Light
@@ -43,6 +45,7 @@ public abstract class AbstractVariableLight extends AbstractLight
      *
      */
     private static final long serialVersionUID = -2569969486641421337L;
+    private final static Logger log = LoggerFactory.getLogger(AbstractVariableLight.class);
 
     public AbstractVariableLight(String systemName, String userName) {
         super(systemName, userName);

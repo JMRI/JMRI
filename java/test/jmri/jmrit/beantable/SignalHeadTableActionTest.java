@@ -12,8 +12,6 @@ import jmri.util.JUnitUtil;
 import junit.framework.Assert;
 import junit.framework.Test;
 import junit.framework.TestSuite;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 
 /**
  * Tests for the jmri.jmrit.beantable.SignalHeadTableAction class
@@ -92,6 +90,4 @@ public class SignalHeadTableActionTest extends jmri.util.SwingTestCase {
         apps.tests.Log4JFixture.tearDown();
         super.tearDown();
     }
-
-    static Logger log = LoggerFactory.getLogger(SignalHeadTableActionTest.class.getName());
 }

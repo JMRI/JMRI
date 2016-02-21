@@ -606,6 +606,6 @@ public class Dcc4PcTrafficController extends AbstractMRTrafficController impleme
         return adaptermemo.getSystemPrefix();
     }
 
-    static Logger log = LoggerFactory.getLogger(Dcc4PcTrafficController.class.getName());
+    private final static Logger log = LoggerFactory.getLogger(Dcc4PcTrafficController.class.getName());
 }
 /* @(#)Dcc4PcTrafficController.java */

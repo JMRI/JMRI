@@ -420,7 +420,7 @@ public class SprogHexFile extends jmri.util.JmriJFrame {
         }
     }
 
-    static Logger log = LoggerFactory
+    private final static Logger log = LoggerFactory
             .getLogger(SprogHexFile.class.getName());
 
 }

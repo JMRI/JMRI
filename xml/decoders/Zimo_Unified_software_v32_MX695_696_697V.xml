@@ -13,7 +13,8 @@
 <!-- FITNESS FOR A PARTICULAR PURPOSE.  See the GNU General Public License  -->
 <!-- for more details.                                                      -->
 <decoder-config xmlns:xi="http://www.w3.org/2001/XInclude" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="http://jmri.org/xml/schema/decoder.xsd">
-  <version author="Mark Waters mark16jmri@mybtinternet.com" version="1.1" lastUpdated="20150103"/>
+  <version author="Mark Waters mark16jmri@mybtinternet.com" version="1.1" lastUpdated="20160123"/>
+  <version author="Mark Waters mark16jmri@mybtinternet.com" version="1" lastUpdated="20150103"/>
   <!-- This decoder configuration file is based on the Zimo_MX640_v9.xml                     -->
   <!-- V 1 file, dated 20090222. With the Sound tabs from Jeff Schmaltz' MX69/MX690 file.    -->
   <!--                                                                                       -->
@@ -25,10 +26,11 @@
   <!-- This decoder XML is meant to be used with the "Comprehensive" programmer format.      -->
   <!-- Continued the practice of using unrelated "item" names to place Zimo unique           -->
   <!-- variables on the proper pane of the Comprehensive programmer.                         -->
-  <!-- V 1 new file -->
+  <!-- V 1 new file -->  
+  <!-- V 1.1 added MX697 and additional productID 227 -->
   <decoder>
     <family name="Zimo Unified software (version 32+)" mfg="Zimo">
-      <model model="MX695KV version 32+" lowVersionID="32" highVersionID="42" maxInputVolts="30 V" maxMotorCurrent="6 A (peak 10 A)" maxTotalCurrent="6 A (peak 10 A)" numOuts="14" numFns="14" formFactor="G" connector="other" productID="224">
+      <model model="MX695KV version 32+" lowVersionID="32" highVersionID="42" maxInputVolts="30 V" maxMotorCurrent="6 A (peak 10 A)" maxTotalCurrent="6 A (peak 10 A)" numOuts="14" numFns="14" formFactor="G" connector="other" productID="224,227">
         <output name="1" label="Front light" maxcurrent="2 A total per group" connection="plug"/>
         <output name="2" label="Rear light " maxcurrent="2 A total per group" connection="plug"/>
         <output name="3" label="   FO  1   " maxcurrent="2 A total per group" connection="plug"/>
@@ -45,7 +47,7 @@
         <output name="14" label="   FO 12   " maxcurrent="2 A total per group" connection="plug"/>
         <size length="50" width="40" height="14" units="mm"/>
       </model>
-      <model model="MX695LV version 32+" lowVersionID="32" highVersionID="42" maxInputVolts="30 V" maxMotorCurrent="6 A (peak 10 A)" maxTotalCurrent="6 A (peak 10 A)" numOuts="14" numFns="14" formFactor="G" connector="other" productID="224">
+      <model model="MX695LV version 32+" lowVersionID="32" highVersionID="42" maxInputVolts="30 V" maxMotorCurrent="6 A (peak 10 A)" maxTotalCurrent="6 A (peak 10 A)" numOuts="14" numFns="14" formFactor="G" connector="other" productID="224,227">
         <output name="1" label="Front light" maxcurrent="2 A total per group" connection="plug"/>
         <output name="2" label="Rear light " maxcurrent="2 A total per group" connection="plug"/>
         <output name="3" label="   FO  1   " maxcurrent="2 A total per group" connection="plug"/>
@@ -62,7 +64,7 @@
         <output name="14" label="   FO 12   " maxcurrent="2 A total per group" connection="plug"/>
         <size length="50" width="40" height="14" units="mm"/>
       </model>
-      <model model="MX695KS version 32+" lowVersionID="32" highVersionID="42" maxInputVolts="30 V" maxMotorCurrent="6 A (peak 10 A)" maxTotalCurrent="6 A (peak 10 A)" numOuts="8" numFns="14" formFactor="G" connector="other" productID="224">
+      <model model="MX695KS version 32+" lowVersionID="32" highVersionID="42" maxInputVolts="30 V" maxMotorCurrent="6 A (peak 10 A)" maxTotalCurrent="6 A (peak 10 A)" numOuts="8" numFns="14" formFactor="G" connector="other" productID="224,227">
         <output name="1" label="Front light" maxcurrent="2 A total per group" connection="plug"/>
         <output name="2" label="Rear light " maxcurrent="2 A total per group" connection="plug"/>
         <output name="3" label="   FO  1   " maxcurrent="2 A total per group" connection="plug"/>
@@ -73,7 +75,7 @@
         <output name="8" label="   FO  6   " maxcurrent="2 A total per group" connection="plug"/>
         <size length="50" width="40" height="14" units="mm"/>
       </model>
-      <model model="MX695LS version 32+" lowVersionID="32" highVersionID="42" maxInputVolts="30 V" maxMotorCurrent="6 A (peak 10 A)" maxTotalCurrent="6 A (peak 10 A)" numOuts="8" numFns="14" formFactor="G" connector="other" productID="224">
+      <model model="MX695LS version 32+" lowVersionID="32" highVersionID="42" maxInputVolts="30 V" maxMotorCurrent="6 A (peak 10 A)" maxTotalCurrent="6 A (peak 10 A)" numOuts="8" numFns="14" formFactor="G" connector="other" productID="224,227">
         <output name="1" label="Front light" maxcurrent="2 A total per group" connection="plug"/>
         <output name="2" label="Rear light " maxcurrent="2 A total per group" connection="plug"/>
         <output name="3" label="   FO  1   " maxcurrent="2 A total per group" connection="plug"/>
@@ -117,6 +119,32 @@
         <output name="13" label="   FO 11   " maxcurrent="2 A total per group" connection="plug"/>
         <output name="14" label="   FO 12   " maxcurrent="2 A total per group" connection="plug"/>
         <size length="55" width="29" height="16" units="mm"/>
+      </model>
+      <model model="MX697V version 32+" lowVersionID="32" highVersionID="42" maxInputVolts="30 V" maxMotorCurrent="4 A (peak 10 A)" maxTotalCurrent="4 A (peak 10 A)" numOuts="10" numFns="14" formFactor="G" connector="other" productID="245">
+        <output name="1" label="Front light" maxcurrent="2 A total per group" connection="plug"/>
+        <output name="2" label="Rear light " maxcurrent="2 A total per group" connection="plug"/>
+        <output name="3" label="   FO  1   " maxcurrent="2 A total per group" connection="plug"/>
+        <output name="4" label="   FO  2   " maxcurrent="2 A total per group" connection="plug"/>
+        <output name="5" label="   FO  3   " maxcurrent="2 A total per group" connection="plug"/>
+        <output name="6" label="   FO  4   " maxcurrent="2 A total per group" connection="plug"/>
+        <output name="7" label="   FO  5   " maxcurrent="2 A total per group" connection="plug"/>
+        <output name="8" label="   FO  6   " maxcurrent="2 A total per group" connection="plug"/>
+        <output name="9" label="   FO  7   " maxcurrent="2 A total per group" connection="plug"/>
+        <output name="10" label="   FO  8   " maxcurrent="2 A total per group" connection="plug"/>
+        <size length="56" width="32" height="21" units="mm"/>
+      </model>
+      <model model="MX697S version 32+" lowVersionID="32" highVersionID="42" maxInputVolts="30 V" maxMotorCurrent="4 A (peak 10 A)" maxTotalCurrent="4 A (peak 10 A)" numOuts="10" numFns="14" formFactor="G" connector="other" productID="245">
+        <output name="1" label="Front light" maxcurrent="2 A total per group" connection="plug"/>
+        <output name="2" label="Rear light " maxcurrent="2 A total per group" connection="plug"/>
+        <output name="3" label="   FO  1   " maxcurrent="2 A total per group" connection="plug"/>
+        <output name="4" label="   FO  2   " maxcurrent="2 A total per group" connection="plug"/>
+        <output name="5" label="   FO  3   " maxcurrent="2 A total per group" connection="plug"/>
+        <output name="6" label="   FO  4   " maxcurrent="2 A total per group" connection="plug"/>
+        <output name="7" label="   FO  5   " maxcurrent="2 A total per group" connection="plug"/>
+        <output name="8" label="   FO  6   " maxcurrent="2 A total per group" connection="plug"/>
+        <output name="9" label="   FO  7   " maxcurrent="2 A total per group" connection="plug"/>
+        <output name="10" label="   FO  8   " maxcurrent="2 A total per group" connection="plug"/>
+        <size length="56" width="32" height="21" units="mm"/>
       </model>
     </family>
     <programming direct="yes" paged="yes" register="yes" ops="yes"/>

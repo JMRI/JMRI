@@ -11,8 +11,6 @@ import java.util.HashMap;
 import java.util.Iterator;
 import java.util.Map.Entry;
 import jmri.jmrit.catalog.NamedIcon;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 
 public class PositionableIcon extends PositionableLabel {
     private static final long serialVersionUID = 5192041937901708011L;
@@ -154,6 +152,4 @@ public class PositionableIcon extends PositionableLabel {
         }
         return clone;
     }
-
-    static Logger log = LoggerFactory.getLogger(PositionableIcon.class.getName());
 }

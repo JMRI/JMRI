@@ -235,7 +235,7 @@ public class AutomationTableModel extends javax.swing.table.AbstractTableModel i
             case ID_COLUMN:
                 return item.getId();
             case CURRENT_COLUMN:
-                return getCurrentPointer(item);
+                return getCurrentPointer(row, item);
             case ACTION_COLUMN:
                 return getActionComboBox(item);
             case TRAIN_COLUMN:
@@ -299,11 +299,12 @@ public class AutomationTableModel extends javax.swing.table.AbstractTableModel i
         }
     }
 
-    private String getCurrentPointer(AutomationItem item) {
-        if (_automation.getCurrentAutomationItem() == item)
+    private String getCurrentPointer(int row, AutomationItem item) {
+        if (_automation.getCurrentAutomationItem() == item) {
             return "    -->"; // NOI18N
-        else
+        } else {
             return "";
+        }
     }
 
     private JComboBox<Action> getActionComboBox(AutomationItem item) {
@@ -476,6 +477,8 @@ public class AutomationTableModel extends javax.swing.table.AbstractTableModel i
             fireTableDataChanged();
         }
         if (e.getPropertyName().equals(Automation.CURRENT_ITEM_CHANGED_PROPERTY)) {
+            int row = _list.indexOf(_automation.getCurrentAutomationItem());
+            _table.scrollRectToVisible(_table.getCellRect(row, 0, true));
             fireTableDataChanged();
         }
         // update automation item?
@@ -506,5 +509,5 @@ public class AutomationTableModel extends javax.swing.table.AbstractTableModel i
         }
     }
 
-    static Logger log = LoggerFactory.getLogger(AutomationTableModel.class.getName());
+    private final static Logger log = LoggerFactory.getLogger(AutomationTableModel.class.getName());
 }

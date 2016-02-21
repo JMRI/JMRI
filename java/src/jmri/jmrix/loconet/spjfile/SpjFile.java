@@ -723,7 +723,7 @@ public class SpjFile {
         }
     }
 
-    static Logger log = LoggerFactory.getLogger(SpjFile.class.getName());
+    private final static Logger log = LoggerFactory.getLogger(SpjFile.class.getName());
 
 }
 

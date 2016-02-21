@@ -124,7 +124,7 @@ public class DefaultSignalMastManager extends AbstractManager
         }
     }
 
-    static Logger log = LoggerFactory.getLogger(DefaultSignalMastManager.class.getName());
+    private final static Logger log = LoggerFactory.getLogger(DefaultSignalMastManager.class.getName());
 }
 
 /* @(#)DefaultSignalMastManager.java */

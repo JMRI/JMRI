@@ -2,13 +2,10 @@
 package jmri.jmris.json;
 
 import jmri.jmris.JmriConnection;
-
 import junit.framework.Assert;
 import junit.framework.Test;
 import junit.framework.TestCase;
 import junit.framework.TestSuite;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 
 /**
  * Tests for the jmri.jmris.json.JsonSensorServer class
@@ -65,8 +62,5 @@ public class JsonSensorServerTest extends TestCase {
         super.tearDown();
         apps.tests.Log4JFixture.tearDown();
     }
-
-
-    static Logger log = LoggerFactory.getLogger(JsonSensorServerTest.class.getName());
 
 }

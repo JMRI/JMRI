@@ -143,7 +143,7 @@ public class TransitSection {
         return list;
     }
 
-    static Logger log = LoggerFactory.getLogger(TransitSection.class.getName());
+    private final static Logger log = LoggerFactory.getLogger(TransitSection.class.getName());
 }
 
 /* @(#)TransitSection.java */

@@ -10,8 +10,6 @@ import javax.swing.JSpinner;
 import javax.swing.SpinnerNumberModel;
 import jmri.CommonTurnoutOperation;
 import jmri.TurnoutOperation;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 
 /**
  * Extension of TurnoutOperationConfig to handle config for common aspects of
@@ -82,6 +80,4 @@ public class CommonTurnoutOperationConfig extends TurnoutOperationConfig {
         int newMaxTries = ((Integer) maxTriesSpinner.getValue()).intValue();
         myOp.setMaxTries(newMaxTries);
     }
-
-    static Logger log = LoggerFactory.getLogger(CommonTurnoutOperationConfig.class.getName());
 }

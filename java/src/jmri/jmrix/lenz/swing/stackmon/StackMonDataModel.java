@@ -160,6 +160,6 @@ public class StackMonDataModel extends javax.swing.table.AbstractTableModel {
         _typeList = new java.util.Hashtable<Integer, String>();
         fireTableDataChanged();
     }
-    static Logger log = LoggerFactory.getLogger(StackMonDataModel.class.getName());
+    private final static Logger log = LoggerFactory.getLogger(StackMonDataModel.class.getName());
 
 }

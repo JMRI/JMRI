@@ -3,8 +3,6 @@ package jmri.jmrix.easydcc;
 import jmri.DccLocoAddress;
 import jmri.LocoAddress;
 import jmri.jmrix.AbstractThrottle;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 
 /**
  * An implementation of DccThrottle with code specific to an NCE connection.
@@ -229,8 +227,5 @@ public class EasyDccThrottle extends AbstractThrottle {
         active = false;
         finishRecord();
     }
-
-    // initialize logging
-    static Logger log = LoggerFactory.getLogger(EasyDccThrottle.class.getName());
 
 }

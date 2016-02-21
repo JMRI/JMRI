@@ -109,7 +109,7 @@ public class CarRosterMenu extends JMenu {
     }
 
     // initialize logging
-    static Logger log = LoggerFactory.getLogger(CarRosterMenu.class
+    private final static Logger log = LoggerFactory.getLogger(CarRosterMenu.class
             .getName());
 
 }

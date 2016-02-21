@@ -1,7 +1,9 @@
 package jmri.jmrit.jython;
 
 import java.io.File;
-import org.python.util.PythonInterpreter;
+import java.io.FileReader;
+import javax.script.ScriptEngine;
+import jmri.script.JmriScriptEngineManager;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -30,15 +32,15 @@ public class JynstrumentFactory {
             }
         }
         String jyFile = path + File.separator + className + ".py";
-        PythonInterpreter interp = jmri.util.PythonInterp.getPythonInterpreter();
+        ScriptEngine engine = JmriScriptEngineManager.getDefault().getEngine(JmriScriptEngineManager.PYTHON);
         Jynstrument jyns;
         try {
-            interp.execfile(jyFile);
-            interp.exec(instanceName + " = " + className + "()");		// instantiate one
-            jyns = interp.get(instanceName, Jynstrument.class); // get it
-            interp.exec("del " + instanceName);  // delete reference in Jython interpreter
-        } catch (Exception e) {
-            log.error("Exception while creating Jynstrument: " + e);
+            engine.eval(new FileReader(jyFile));
+            engine.eval(instanceName + " = " + className + "()");
+            jyns = (Jynstrument) engine.get(instanceName);
+            engine.eval("del " + instanceName);
+        } catch (Exception ex) {
+            log.error("Exception while creating Jynstrument: " + ex);
             return null;
         }
         jyns.setClassName(className);
@@ -89,5 +91,5 @@ public class JynstrumentFactory {
         return className;
     }
 
-    static Logger log = LoggerFactory.getLogger(JynstrumentFactory.class.getName());
+    private final static Logger log = LoggerFactory.getLogger(JynstrumentFactory.class.getName());
 }

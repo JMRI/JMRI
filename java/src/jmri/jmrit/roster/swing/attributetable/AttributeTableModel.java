@@ -3,8 +3,6 @@ package jmri.jmrit.roster.swing.attributetable;
 
 import jmri.jmrit.roster.Roster;
 import jmri.jmrit.roster.RosterEntry;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 
 /**
  * Table data model for display of Roster attribute values.
@@ -69,6 +67,4 @@ public class AttributeTableModel extends javax.swing.table.AbstractTableModel {
 
     public void setValueAt(Object value, int row, int col) {
     }
-
-    static final Logger log = LoggerFactory.getLogger(AttributeTableModel.class.getName());
 }

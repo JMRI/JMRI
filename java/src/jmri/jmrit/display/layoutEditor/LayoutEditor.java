@@ -31,6 +31,7 @@ import java.util.HashMap;
 import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
+import java.lang.reflect.Field;
 import java.util.ResourceBundle;
 import javax.swing.AbstractAction;
 import javax.swing.BoxLayout;
@@ -52,6 +53,7 @@ import javax.swing.JRadioButtonMenuItem;
 import javax.swing.JScrollPane;
 import javax.swing.JTextField;
 import javax.swing.SwingUtilities;
+import javax.swing.KeyStroke;
 import jmri.InstanceManager;
 import jmri.Memory;
 import jmri.NamedBean;
@@ -233,7 +235,7 @@ public class LayoutEditor extends jmri.jmrit.display.panelEditor.PanelEditor imp
     //private int numTurnouts = 0;
     private TrackSegment newTrack = null;
     private boolean panelChanged = false;
-    
+
     // grid size in pixels
     private int gridSize = 10;
 
@@ -405,6 +407,17 @@ public class LayoutEditor extends jmri.jmrit.display.panelEditor.PanelEditor imp
     private boolean savedControlLayout = true;
     private boolean savedAnimatingLayout = true;
     private boolean savedShowHelpBar = false;
+    
+    // zoom
+    private double maxZoom = 4.0;
+    private double minZoom = 0.25;
+    private double stepUnderOne = 0.25;
+    private double stepOverOne = 0.5;
+    private double stepOverTwo = 1.0;
+    
+    // A hash to store string -> KeyEvent constants, used to set keyboard shortcuts per locale
+    private HashMap<String, Integer> stringsToVTCodes = new HashMap<String,Integer>();
+    
     // Antialiasing rendering
     private static final RenderingHints antialiasing = new RenderingHints(
             RenderingHints.KEY_ANTIALIASING,
@@ -417,6 +430,8 @@ public class LayoutEditor extends jmri.jmrit.display.panelEditor.PanelEditor imp
     public LayoutEditor(String name) {
         super(name);
         layoutName = name;
+        // initialise keycode map
+        initStringsToVTCodes();
         // initialize frame
         Container contentPane = getContentPane();
         contentPane.setLayout(new BoxLayout(contentPane, BoxLayout.Y_AXIS));
@@ -424,6 +439,7 @@ public class LayoutEditor extends jmri.jmrit.display.panelEditor.PanelEditor imp
         JMenuBar menuBar = new JMenuBar();
         // set up File menu
         JMenu fileMenu = new JMenu(rb.getString("MenuFile"));
+        fileMenu.setMnemonic(stringsToVTCodes.get(rb.getString("MenuFileMnemonic")));
         menuBar.add(fileMenu);
         fileMenu.add(new jmri.configurexml.StoreXmlUserAction(rbx.getString("MenuItemStore")));
         fileMenu.addSeparator();
@@ -791,12 +807,42 @@ public class LayoutEditor extends jmri.jmrit.display.panelEditor.PanelEditor imp
                 || (savedShowHelpBar != showHelpBar));
         targetWindowClosing(save);
     }
+    
+    
+    /**
+     * Grabs a subset of the possible KeyEvent constants
+     * and puts them into a hash for fast lookups later.
+     * These lookups are used to enable bundles to 
+     * specify keyboard shortcuts on a per-locale basis.
+     */
+    private void initStringsToVTCodes() {
+        Field[] fields = KeyEvent.class.getFields();
 
+        for (Field field : fields ) {
+
+            String name = field.getName();
+
+            if (name.startsWith("VK")) {
+                int code = 0;
+                try {
+                    code = field.getInt(null);
+                } catch (Exception e) {
+                    log.error("This error message, which nobody will ever see, shuts my IDE up.");
+                }
+                    
+                String key = name.substring(3);
+                stringsToVTCodes.put(key, code);
+           }
+        }
+    }
+
+    
     LayoutEditorTools tools = null;
     jmri.jmrit.signalling.AddEntryExitPairAction entryExit = null;
 
     void setupToolsMenu(JMenuBar menuBar) {
         JMenu toolsMenu = new JMenu(rb.getString("MenuTools"));
+        toolsMenu.setMnemonic(stringsToVTCodes.get(rb.getString("MenuToolsMnemonic")));
         menuBar.add(toolsMenu);
         // scale track diagram
         JMenuItem scaleItem = new JMenuItem(rb.getString("ScaleTrackDiagram") + "...");
@@ -943,10 +989,18 @@ public class LayoutEditor extends jmri.jmrit.display.panelEditor.PanelEditor imp
 
     protected JMenu setupOptionMenu(JMenuBar menuBar) {
         JMenu optionMenu = new JMenu(rbx.getString("Options"));
+        optionMenu.setMnemonic(stringsToVTCodes.get(rb.getString("OptionsMnemonic")));
         menuBar.add(optionMenu);
         // edit mode item
         editModeItem = new JCheckBoxMenuItem(rb.getString("EditMode"));
         optionMenu.add(editModeItem);
+        editModeItem.setMnemonic(stringsToVTCodes.get(rb.getString("EditModeMnemonic")));
+        if (SystemType.isMacOSX())
+            editModeItem.setAccelerator(KeyStroke.getKeyStroke(
+                    stringsToVTCodes.get(rb.getString("EditModeAccelerator")), ActionEvent.META_MASK));
+        else
+            editModeItem.setAccelerator(KeyStroke.getKeyStroke(
+                    stringsToVTCodes.get(rb.getString("EditModeAccelerator")), ActionEvent.CTRL_MASK));
         editModeItem.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent event) {
                 setAllEditable(editModeItem.isSelected());
@@ -1032,7 +1086,7 @@ public class LayoutEditor extends jmri.jmrit.display.panelEditor.PanelEditor imp
         });
         snapToGridOnMoveItem.setSelected(snapToGridOnMove);
 
-        // specify grid square size 
+        // specify grid square size
         JMenuItem gridSizeItem = new JMenuItem(rb.getString("EditGridSize") + "...");
         optionMenu.add(gridSizeItem);
         gridSizeItem.addActionListener(new ActionListener() {
@@ -1058,7 +1112,7 @@ public class LayoutEditor extends jmri.jmrit.display.panelEditor.PanelEditor imp
                 repaint();
             }
         });
-        
+
         // Show/Hide Scroll Bars
         scrollMenu = new JMenu(rb.getString("ScrollBarsSubMenu"));
         optionMenu.add(scrollMenu);
@@ -1344,7 +1398,7 @@ public class LayoutEditor extends jmri.jmrit.display.panelEditor.PanelEditor imp
         JMenu turnoutOptionsMenu = new JMenu(rb.getString("TurnoutOptions"));
         optionMenu.add(turnoutOptionsMenu);
 
-        // circle on Turnouts 
+        // circle on Turnouts
         turnoutCirclesOnItem = new JCheckBoxMenuItem(rb.getString("TurnoutCirclesOn"));
         turnoutOptionsMenu.add(turnoutCirclesOnItem);
         turnoutCirclesOnItem.addActionListener(new ActionListener() {
@@ -1355,7 +1409,7 @@ public class LayoutEditor extends jmri.jmrit.display.panelEditor.PanelEditor imp
         });
         turnoutCirclesOnItem.setSelected(turnoutCirclesWithoutEditMode);
 
-        // select turnout circle color 
+        // select turnout circle color
         JMenu turnoutCircleColorMenu = new JMenu(rb.getString("TurnoutCircleColor"));
         turnoutCircleColorButtonGroup = new ButtonGroup();
         addTurnoutCircleColorMenuEntry(turnoutCircleColorMenu, rb.getString("UseDefaultTrackColor"), null);
@@ -1374,7 +1428,7 @@ public class LayoutEditor extends jmri.jmrit.display.panelEditor.PanelEditor imp
         addTurnoutCircleColorMenuEntry(turnoutCircleColorMenu, rb.getString("Cyan"), Color.cyan);
         turnoutOptionsMenu.add(turnoutCircleColorMenu);
 
-        // select turnout circle size 
+        // select turnout circle size
         JMenu turnoutCircleSizeMenu = new JMenu(rb.getString("TurnoutCircleSize"));
         turnoutCircleSizeButtonGroup = new ButtonGroup();
         addTurnoutCircleSizeMenuEntry(turnoutCircleSizeMenu, "1", 1);
@@ -1442,10 +1496,84 @@ public class LayoutEditor extends jmri.jmrit.display.panelEditor.PanelEditor imp
 
     private void setupZoomMenu(JMenuBar menuBar) {
         JMenu zoomMenu = new JMenu(rb.getString("MenuZoom"));
+        zoomMenu.setMnemonic(stringsToVTCodes.get(rb.getString("MenuZoomMnemonic")));
         menuBar.add(zoomMenu);
         ButtonGroup zoomButtonGroup = new ButtonGroup();
         // add zoom choices to menu
         JRadioButtonMenuItem zoom025Item = new JRadioButtonMenuItem("x 0.25");
+        JRadioButtonMenuItem zoom05Item = new JRadioButtonMenuItem("x 0.5");
+        JRadioButtonMenuItem zoom075Item = new JRadioButtonMenuItem("x 0.75");
+        JRadioButtonMenuItem zoom15Item = new JRadioButtonMenuItem("x 1.5");
+        JRadioButtonMenuItem zoom20Item = new JRadioButtonMenuItem("x 2.0");
+        JRadioButtonMenuItem noZoomItem = new JRadioButtonMenuItem(rb.getString("NoZoom"));
+        JRadioButtonMenuItem zoom30Item = new JRadioButtonMenuItem("x 3.0");
+        JRadioButtonMenuItem zoom40Item = new JRadioButtonMenuItem("x 4.0");
+        
+        JMenuItem zoomInItem = new JMenuItem(rb.getString("ZoomIn"));
+        zoomInItem.setMnemonic(stringsToVTCodes.get(rb.getString("zoomOutMnemonic")));
+        if (SystemType.isMacOSX())
+            zoomInItem.setAccelerator(KeyStroke.getKeyStroke(stringsToVTCodes.get(
+                    rb.getString("zoomInAccelerator")), ActionEvent.META_MASK));
+        else
+            zoomInItem.setAccelerator(KeyStroke.getKeyStroke(stringsToVTCodes.get(
+                    rb.getString("zoomInAccelerator")), ActionEvent.CTRL_MASK));       
+        zoomMenu.add(zoomInItem);
+        zoomInItem.addActionListener(new ActionListener() {
+            public void actionPerformed(ActionEvent event) {
+                int  newZoom = (int)(zoomIn() * 100);
+                switch (newZoom) {
+                    case 25:    zoom025Item.setSelected(true);
+                                break;  
+                    case 50:    zoom05Item.setSelected(true);
+                                break;
+                    case 75:    zoom075Item.setSelected(true);
+                                break;
+                    case 100:   noZoomItem.setSelected(true);
+                                break;
+                    case 150:   zoom15Item.setSelected(true);
+                                break;
+                    case 200:   zoom20Item.setSelected(true);
+                                break;
+                    case 300:   zoom30Item.setSelected(true);
+                                break;
+                    case 400:   zoom40Item.setSelected(true);
+                                break;
+                }
+            }
+        });
+        JMenuItem zoomOutItem = new JMenuItem(rb.getString("ZoomOut"));
+        zoomOutItem.setMnemonic(stringsToVTCodes.get(rb.getString("zoomOutMnemonic")));
+        if (SystemType.isMacOSX())
+            zoomOutItem.setAccelerator(KeyStroke.getKeyStroke(stringsToVTCodes.get(
+                    rb.getString("zoomOutAccelerator")), ActionEvent.META_MASK));
+        else
+            zoomOutItem.setAccelerator(KeyStroke.getKeyStroke(stringsToVTCodes.get(
+                    rb.getString("zoomOutAccelerator")), ActionEvent.CTRL_MASK));       
+        zoomMenu.add(zoomOutItem);
+        zoomOutItem.addActionListener(new ActionListener() {
+            public void actionPerformed(ActionEvent event) {
+                int  newZoom = (int)(zoomOut() * 100);
+                switch (newZoom) {
+                    case 25:    zoom025Item.setSelected(true);
+                                break;  
+                    case 50:    zoom05Item.setSelected(true);
+                                break;
+                    case 75:    zoom075Item.setSelected(true);
+                                break;
+                    case 100:   noZoomItem.setSelected(true);
+                                break;
+                    case 150:   zoom15Item.setSelected(true);
+                                break;
+                    case 200:   zoom20Item.setSelected(true);
+                                break;
+                    case 300:   zoom30Item.setSelected(true);
+                                break;
+                    case 400:   zoom40Item.setSelected(true);
+                                break;
+                }
+            }
+        });
+        // add zoom choices to menu
         zoomMenu.add(zoom025Item);
         zoom025Item.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent event) {
@@ -1453,7 +1581,7 @@ public class LayoutEditor extends jmri.jmrit.display.panelEditor.PanelEditor imp
             }
         });
         zoomButtonGroup.add(zoom025Item);
-        JRadioButtonMenuItem zoom05Item = new JRadioButtonMenuItem("x 0.5");
+        
         zoomMenu.add(zoom05Item);
         zoom05Item.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent event) {
@@ -1461,7 +1589,7 @@ public class LayoutEditor extends jmri.jmrit.display.panelEditor.PanelEditor imp
             }
         });
         zoomButtonGroup.add(zoom05Item);
-        JRadioButtonMenuItem zoom075Item = new JRadioButtonMenuItem("x 0.75");
+       
         zoomMenu.add(zoom075Item);
         zoom075Item.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent event) {
@@ -1469,7 +1597,7 @@ public class LayoutEditor extends jmri.jmrit.display.panelEditor.PanelEditor imp
             }
         });
         zoomButtonGroup.add(zoom075Item);
-        JRadioButtonMenuItem noZoomItem = new JRadioButtonMenuItem(rb.getString("NoZoom"));
+        
         zoomMenu.add(noZoomItem);
         noZoomItem.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent event) {
@@ -1477,7 +1605,7 @@ public class LayoutEditor extends jmri.jmrit.display.panelEditor.PanelEditor imp
             }
         });
         zoomButtonGroup.add(noZoomItem);
-        JRadioButtonMenuItem zoom15Item = new JRadioButtonMenuItem("x 1.5");
+        
         zoomMenu.add(zoom15Item);
         zoom15Item.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent event) {
@@ -1485,7 +1613,7 @@ public class LayoutEditor extends jmri.jmrit.display.panelEditor.PanelEditor imp
             }
         });
         zoomButtonGroup.add(zoom15Item);
-        JRadioButtonMenuItem zoom20Item = new JRadioButtonMenuItem("x 2.0");
+        
         zoomMenu.add(zoom20Item);
         zoom20Item.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent event) {
@@ -1493,7 +1621,7 @@ public class LayoutEditor extends jmri.jmrit.display.panelEditor.PanelEditor imp
             }
         });
         zoomButtonGroup.add(zoom20Item);
-        JRadioButtonMenuItem zoom30Item = new JRadioButtonMenuItem("x 3.0");
+        
         zoomMenu.add(zoom30Item);
         zoom30Item.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent event) {
@@ -1501,7 +1629,7 @@ public class LayoutEditor extends jmri.jmrit.display.panelEditor.PanelEditor imp
             }
         });
         zoomButtonGroup.add(zoom30Item);
-        JRadioButtonMenuItem zoom40Item = new JRadioButtonMenuItem("x 4.0");
+        
         zoomMenu.add(zoom40Item);
         zoom40Item.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent event) {
@@ -1515,7 +1643,51 @@ public class LayoutEditor extends jmri.jmrit.display.panelEditor.PanelEditor imp
     private void setZoom(double factor) {
         setPaintScale(factor);
     }
+    
+    private double zoomIn() {
+        double newScale;
+        if (_paintScale < 1.0) {
+            newScale = _paintScale + stepUnderOne;
+        } else if (_paintScale < 2 ) {
+            newScale = _paintScale + stepOverOne;
+        } else {
+            newScale = _paintScale + stepOverTwo;
+        }
 
+        if (newScale > maxZoom) {
+            newScale = maxZoom;
+        } else if (newScale < minZoom) {
+            newScale = minZoom;
+        }
+        
+        if (newScale != _paintScale)
+            setZoom(newScale);
+        return newScale;
+    }
+   
+    private double zoomOut() {
+        double newScale;
+        if (_paintScale > 2.0) {
+            newScale = _paintScale - stepOverTwo;
+        } else if (_paintScale > 1.0) {
+            newScale = _paintScale - stepOverOne;
+        } else {
+            newScale = _paintScale - stepUnderOne;
+        }
+
+        if (newScale > maxZoom) {
+            newScale = maxZoom;
+        } else if (newScale < minZoom) {
+            newScale = minZoom;
+        }
+        
+        if (newScale != _paintScale)
+            setZoom(newScale);
+
+        return newScale;
+    }
+   
+    
     private Point2D windowCenter() {
         // Returns window's center coordinates converted to layout space
         // Used for initial setup of turntables and reporters
@@ -1533,6 +1705,7 @@ public class LayoutEditor extends jmri.jmrit.display.panelEditor.PanelEditor imp
 
     private void setupMarkerMenu(JMenuBar menuBar) {
         JMenu markerMenu = new JMenu(rbx.getString("MenuMarker"));
+        markerMenu.setMnemonic(stringsToVTCodes.get(rbx.getString("MenuMarkerMnemonic")));
         menuBar.add(markerMenu);
         markerMenu.add(new AbstractAction(rbx.getString("AddLoco") + "...") {
             /**
@@ -1568,6 +1741,7 @@ public class LayoutEditor extends jmri.jmrit.display.panelEditor.PanelEditor imp
 
     private void setupDispatcherMenu(JMenuBar menuBar) {
         JMenu dispMenu = new JMenu(Bundle.getMessage("MenuDispatcher"));
+        dispMenu.setMnemonic(stringsToVTCodes.get(rb.getString("MenuDispatcherMnemonic")));
         dispMenu.add(new JMenuItem(new jmri.jmrit.dispatcher.DispatcherAction(Bundle.getMessage("MenuItemOpen"))));
         menuBar.add(dispMenu);
         JMenuItem newTrainItem = new JMenuItem(Bundle.getMessage("MenuItemNewTrain"));
@@ -7507,12 +7681,12 @@ public class LayoutEditor extends jmri.jmrit.display.panelEditor.PanelEditor imp
         gridSize = newSize;
         return gridSize;
     }
-    
+
     public int getGridSize() {
         int gs = gridSize;
         return gs;
     }
-            
+
     public int getMainlineTrackWidth() {
         int wid = (int) mainlineTrackWidth;
         return wid;
@@ -9263,7 +9437,7 @@ public class LayoutEditor extends jmri.jmrit.display.panelEditor.PanelEditor imp
                     double delX = end1.getX() - end2.getX();
                     double delY = end1.getY() - end2.getY();
                     double cLength = Math.sqrt((delX * delX) + (delY * delY));
-                    // note: The preferred dimension of a dash (solid + blank space) is 
+                    // note: The preferred dimension of a dash (solid + blank space) is
                     //         5 * the track width - about 60% solid and 40% blank.
                     int nDashes = (int) (cLength / ((trackWidth) * 5.0));
                     if (nDashes < 3) {
@@ -9454,11 +9628,11 @@ public class LayoutEditor extends jmri.jmrit.display.panelEditor.PanelEditor imp
 
     private void drawPanelGrid(Graphics2D g2) {
         Dimension dim = getSize();
-        double pix = (double) gridSize;
+        double pix = gridSize;
         double maxX = dim.width;
         double maxY = dim.height;
-        Point2D startPt = new Point2D.Double(0.0, (double) gridSize);
-        Point2D stopPt = new Point2D.Double(maxX, (double) gridSize);
+        Point2D startPt = new Point2D.Double(0.0, gridSize);
+        Point2D stopPt = new Point2D.Double(maxX, gridSize);
         BasicStroke narrow = new BasicStroke(1.0F, BasicStroke.CAP_ROUND, BasicStroke.JOIN_ROUND);
         BasicStroke wide = new BasicStroke(2.0F, BasicStroke.CAP_ROUND, BasicStroke.JOIN_ROUND);
         g2.setColor(Color.gray);
@@ -9477,7 +9651,7 @@ public class LayoutEditor extends jmri.jmrit.display.panelEditor.PanelEditor imp
             pix += gridSize;
         }
         // draw vertical lines
-        pix = (double) gridSize;
+        pix = gridSize;
         while (pix < maxX) {
             startPt.setLocation(pix, 0.0);
             stopPt.setLocation(pix, maxY);
@@ -9883,5 +10057,5 @@ public class LayoutEditor extends jmri.jmrit.display.panelEditor.PanelEditor imp
     }
 
     // initialize logging
-    static Logger log = LoggerFactory.getLogger(LayoutEditor.class.getName());
+    private final static Logger log = LoggerFactory.getLogger(LayoutEditor.class.getName());
 }

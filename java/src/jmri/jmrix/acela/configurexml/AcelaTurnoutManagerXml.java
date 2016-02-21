@@ -36,5 +36,5 @@ public class AcelaTurnoutManagerXml extends jmri.managers.configurexml.AbstractT
         return loadTurnouts(shared, perNode);
     }
 
-    static Logger log = LoggerFactory.getLogger(AcelaTurnoutManagerXml.class.getName());
+    private final static Logger log = LoggerFactory.getLogger(AcelaTurnoutManagerXml.class.getName());
 }

@@ -512,5 +512,5 @@ public class CarAttributeEditFrame extends OperationsFrame implements java.beans
         pcs.firePropertyChange(p, old, n);
     }
 
-    static Logger log = LoggerFactory.getLogger(CarAttributeEditFrame.class.getName());
+    private final static Logger log = LoggerFactory.getLogger(CarAttributeEditFrame.class.getName());
 }

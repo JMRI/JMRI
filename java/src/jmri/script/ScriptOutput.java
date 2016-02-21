@@ -64,4 +64,22 @@ public class ScriptOutput {
         }
         return InstanceManager.getDefault(ScriptOutput.class);
     }
+
+    /**
+     * Write a script to the output area. The output is prepended with a leading
+     * "&gt;&gt;&gt;" on the first line and a leading ellipsis on subsequent
+     * lines.
+     *
+     * @param script The script to write.
+     */
+    static public void writeScript(final String script) {
+        String output = ">>> " + script; // NOI18N
+        // Strip ending newlines
+        while (output.endsWith("\n")) { // NOI18N
+            output = output.substring(0, output.length() - 1);
+        }
+        output = output.replaceAll("\n", "\n... "); // NOI18N
+        output += "\n"; // NOI18N
+        ScriptOutput.getDefault().getOutputArea().append(output);
+    }
 }

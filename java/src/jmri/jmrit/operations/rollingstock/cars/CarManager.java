@@ -332,6 +332,7 @@ public class CarManager extends RollingStockManager {
             }
             // pickup allowed at destination? Don't include cars in staging
             if (destination != null && destination.isPickUpAllowed()
+                    && destination.getLocation() != null
                     && !destination.getLocation().isStaging()) {
                 destination = null; // include cars at destination
             }
@@ -615,6 +616,6 @@ public class CarManager extends RollingStockManager {
         super.firePropertyChange(p, old, n);
     }
 
-    static Logger log = LoggerFactory.getLogger(CarManager.class.getName());
+    private final static Logger log = LoggerFactory.getLogger(CarManager.class.getName());
 
 }

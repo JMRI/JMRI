@@ -80,5 +80,5 @@ public class XmlFileCheckAction extends AbstractAction {
     }
 
     // initialize logging
-    static Logger log = LoggerFactory.getLogger(XmlFileCheckAction.class.getName());
+    private final static Logger log = LoggerFactory.getLogger(XmlFileCheckAction.class.getName());
 }

@@ -36,7 +36,7 @@ public class CbusLightManagerXml extends jmri.managers.configurexml.AbstractLigh
         return loadLights(shared);
     }
 
-    static Logger log = LoggerFactory.getLogger(CbusLightManagerXml.class.getName());
+    private final static Logger log = LoggerFactory.getLogger(CbusLightManagerXml.class.getName());
 }
 
 /* @(#)CbusLightManagerXml.java */

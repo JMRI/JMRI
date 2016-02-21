@@ -26,8 +26,6 @@ import javax.swing.event.ChangeListener;
 import jmri.NamedBeanHandle;
 import jmri.Sensor;
 import jmri.jmrit.display.Editor.TargetPane;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 
 //import javax.swing.JRadioButton;
 /**
@@ -372,6 +370,4 @@ public abstract class DrawFrame extends jmri.util.JmriJFrame {
     abstract protected boolean makeFigure(MouseEvent event);
 
     abstract protected void updateFigure(PositionableShape pos);
-
-    static Logger log = LoggerFactory.getLogger(DrawFrame.class.getName());
 }

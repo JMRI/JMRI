@@ -152,7 +152,7 @@ public class NceOpsModeProgrammer extends NceProgrammer implements AddressedProg
     }
 
     // initialize logging
-    static Logger log = LoggerFactory.getLogger(NceOpsModeProgrammer.class.getName());
+    private final static Logger log = LoggerFactory.getLogger(NceOpsModeProgrammer.class.getName());
 
 }
 

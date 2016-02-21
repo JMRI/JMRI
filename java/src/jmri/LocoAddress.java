@@ -30,7 +30,7 @@ public interface LocoAddress {
     public enum Protocol {
 
         DCC_SHORT("dcc_short", "ProtocolDCC_Short"), // NOI18N
-        DCC_LONG("dcc_long", "ProtocolDCC_Long"), // NOI18N 
+        DCC_LONG("dcc_long", "ProtocolDCC_Long"), // NOI18N
         DCC("dcc", "ProtocolDCC"), // NOI18N
         SELECTRIX("selectrix", "ProtocolSelectrix"), // NOI18N
         MOTOROLA("motorola", "ProtocolMotorola"), // NOI18N

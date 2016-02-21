@@ -228,6 +228,6 @@ public class MrcProgrammer extends AbstractProgrammer implements MrcTrafficListe
         temp.programmingOpReply(value, status);
     }
 
-    static Logger log = LoggerFactory.getLogger(MrcProgrammer.class.getName());
+    private final static Logger log = LoggerFactory.getLogger(MrcProgrammer.class.getName());
 }
 /* @(#)MrcProgrammer.java */

@@ -11,6 +11,7 @@
   <node>
     <name>New PP Window</name>
     <name xml:lang="it">Nuova Finestra PanelPro</name>
+    <name xml:lang="de">Neues PanelPro Fenster</name>
     <adapter>apps.gui3.paned.PanelProAction</adapter>
   </node>
   <node>
@@ -20,11 +21,13 @@
   <node>
     <name>Preferences</name>
     <name xml:lang="it">Preferenze</name>
+    <name xml:lang="de">Voreinstellungen</name>
     <panel>apps.gui3.TabbedPreferences</panel>
   </node>
   <node>
     <name>Help</name>
     <name xml:lang="it">Aiuto</name>
+    <name xml:lang="de">Hilfe</name>
     <help>index</help>
   </node>
 

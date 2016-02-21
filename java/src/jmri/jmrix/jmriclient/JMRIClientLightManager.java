@@ -2,8 +2,6 @@
 package jmri.jmrix.jmriclient;
 
 import jmri.Light;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 
 /**
  * Implement light manager for JMRIClient systems
@@ -59,8 +57,6 @@ public class JMRIClientLightManager extends jmri.managers.AbstractLightManager {
     public boolean validSystemNameConfig(String systemName) {
         return (true);
     }
-
-    static Logger log = LoggerFactory.getLogger(JMRIClientLightManager.class.getName());
 
 }
 

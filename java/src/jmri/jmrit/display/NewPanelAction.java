@@ -4,8 +4,6 @@ package jmri.jmrit.display;
 import java.awt.event.ActionEvent;
 import javax.swing.AbstractAction;
 import javax.swing.JOptionPane;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 
 /**
  * Start a Panel Editor or a Layout Editor for a new Panel.
@@ -47,6 +45,5 @@ public class NewPanelAction extends AbstractAction {
             new jmri.jmrit.display.panelEditor.PanelEditorAction().actionPerformed(null);
         }
     }
-    static Logger log = LoggerFactory.getLogger(NewPanelAction.class.getName());
 
 }

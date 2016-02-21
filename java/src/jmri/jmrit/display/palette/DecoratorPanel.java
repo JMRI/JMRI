@@ -36,8 +36,6 @@ import jmri.jmrit.display.PositionableLabel;
 import jmri.jmrit.display.PositionablePopupUtil;
 import jmri.jmrit.display.SensorIcon;
 import jmri.jmrit.display.palette.TextItemPanel.DragDecoratorLabel;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 
 /**
  * Panel for positionables with text and/or colored margins and borders
@@ -673,6 +671,4 @@ public class DecoratorPanel extends JPanel implements ChangeListener, ItemListen
             updateSamples();
         }
     }
-
-    static Logger log = LoggerFactory.getLogger(DecoratorPanel.class.getName());
 }

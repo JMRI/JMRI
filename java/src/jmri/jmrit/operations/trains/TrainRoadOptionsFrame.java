@@ -307,5 +307,5 @@ public class TrainRoadOptionsFrame extends OperationsFrame implements java.beans
         }
     }
 
-    static Logger log = LoggerFactory.getLogger(TrainRoadOptionsFrame.class.getName());
+    private final static Logger log = LoggerFactory.getLogger(TrainRoadOptionsFrame.class.getName());
 }

@@ -142,7 +142,6 @@ public class NceShowCabPanel extends jmri.jmrix.nce.swing.NcePanel implements jm
     private int[] cabLocoArray = new int[CAB_MAX_CABDATA];
     private boolean[] cabLongShortArray = new boolean[CAB_MAX_CABDATA];
     private int[] cabConsistArray = new int[CAB_MAX_CABDATA];
-    private int[] cabConsistPosArray = new int[CAB_MAX_CABDATA];
     private int[] cabF0Array = new int[CAB_MAX_CABDATA];
     private int[] cabF5Array = new int[CAB_MAX_CABDATA];
     private int[] cabF13Array = new int[CAB_MAX_CABDATA];
@@ -2043,5 +2042,5 @@ public class NceShowCabPanel extends jmri.jmrix.nce.swing.NcePanel implements jm
         }
     }
 
-    static Logger log = LoggerFactory.getLogger(NceShowCabPanel.class.getName());
+    private final static Logger log = LoggerFactory.getLogger(NceShowCabPanel.class.getName());
 }

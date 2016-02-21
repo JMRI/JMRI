@@ -720,5 +720,5 @@ public class CarsTableModel extends javax.swing.table.AbstractTableModel impleme
         }
     }
 
-    static Logger log = LoggerFactory.getLogger(CarsTableModel.class.getName());
+    private final static Logger log = LoggerFactory.getLogger(CarsTableModel.class.getName());
 }

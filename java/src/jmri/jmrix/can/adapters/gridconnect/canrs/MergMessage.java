@@ -113,7 +113,7 @@ public class MergMessage extends GridConnectMessage {
         }
     }
 
-    static Logger log = LoggerFactory.getLogger(MergMessage.class.getName());
+    private final static Logger log = LoggerFactory.getLogger(MergMessage.class.getName());
 }
 
 /* @(#)MergMessage.java */

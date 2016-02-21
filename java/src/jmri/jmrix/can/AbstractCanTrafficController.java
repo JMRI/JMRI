@@ -302,7 +302,7 @@ abstract public class AbstractCanTrafficController
         }
     }
 
-    static Logger log = LoggerFactory.getLogger(AbstractCanTrafficController.class.getName());
+    private final static Logger log = LoggerFactory.getLogger(AbstractCanTrafficController.class.getName());
 
 }
 

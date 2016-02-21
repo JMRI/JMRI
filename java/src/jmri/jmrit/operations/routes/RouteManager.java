@@ -318,7 +318,7 @@ public class RouteManager {
         pcs.firePropertyChange(p, old, n);
     }
 
-    static Logger log = LoggerFactory.getLogger(RouteManager.class.getName());
+    private final static Logger log = LoggerFactory.getLogger(RouteManager.class.getName());
 
 }
 

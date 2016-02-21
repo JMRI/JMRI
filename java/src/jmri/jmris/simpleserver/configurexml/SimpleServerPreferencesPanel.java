@@ -13,17 +13,13 @@ import javax.swing.JLabel;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JTextField;
+import jmri.jmris.simpleserver.SimpleServerManager;
 import jmri.swing.JTitledSeparator;
 import jmri.swing.PreferencesPanel;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
-
-import jmri.jmris.simpleserver.SimpleServerManager;
 
 public class SimpleServerPreferencesPanel extends JPanel implements PreferencesPanel {
 
     private static final long serialVersionUID = 03_16_2015L;
-    static Logger log = LoggerFactory.getLogger(SimpleServerPreferencesPanel.class.getName());
     private JTextField port;
     private JButton btnSave;
     private JButton btnCancel;

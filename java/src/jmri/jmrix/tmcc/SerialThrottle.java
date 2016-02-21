@@ -3,8 +3,6 @@ package jmri.jmrix.tmcc;
 import jmri.DccLocoAddress;
 import jmri.LocoAddress;
 import jmri.jmrix.AbstractThrottle;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 
 /**
  * An implementation of DccThrottle.
@@ -266,8 +264,5 @@ public class SerialThrottle extends AbstractThrottle {
     protected void throttleDispose() {
         finishRecord();
     }
-
-    // initialize logging
-    static Logger log = LoggerFactory.getLogger(SerialThrottle.class.getName());
 
 }

@@ -46,7 +46,7 @@ public class Xml {
 
     static final String PHYSICAL_LOCATION = "physicalLocation"; // NOI18N
     static final String SWITCH_LIST_COMMENT = "switchListComment"; // NOI18N
-    static final String SECONDARY = "secondary"; // NOI18N early version of operations called tracks "secondary"
+    static final String SECONDARY = "secondary"; // early version of operations called tracks "secondary" // NOI18N
 
     // SccheduleManager.java
     static final String SCHEDULES = "schedules"; // NOI18N

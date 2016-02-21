@@ -110,7 +110,7 @@ public class OlcbSensorManager extends jmri.managers.AbstractSensorManager imple
     public void updateAll() {
     }
 
-    static Logger log = LoggerFactory.getLogger(OlcbSensorManager.class.getName());
+    private final static Logger log = LoggerFactory.getLogger(OlcbSensorManager.class.getName());
 
 }
 

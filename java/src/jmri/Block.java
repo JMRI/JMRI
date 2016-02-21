@@ -968,5 +968,5 @@ public class Block extends jmri.implementation.AbstractNamedBean implements Phys
         return Bundle.getMessage("BeanNameBlock");
     }
 
-    static Logger log = LoggerFactory.getLogger(Block.class.getName());
+    private final static Logger log = LoggerFactory.getLogger(Block.class.getName());
 }

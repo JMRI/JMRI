@@ -34,5 +34,5 @@ public class XBeeSensorManagerXml extends jmri.managers.configurexml.AbstractSen
         return loadSensors(shared);
     }
 
-    static Logger log = LoggerFactory.getLogger(XBeeSensorManagerXml.class.getName());
+    private final static Logger log = LoggerFactory.getLogger(XBeeSensorManagerXml.class.getName());
 }

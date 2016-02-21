@@ -51,5 +51,5 @@ public class ErrorHandler {
     }
 
     // initialize logging
-    static Logger log = LoggerFactory.getLogger(ErrorHandler.class.getName());
+    private final static Logger log = LoggerFactory.getLogger(ErrorHandler.class.getName());
 }

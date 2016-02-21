@@ -136,6 +136,6 @@ public class RoutesTableFrame extends OperationsFrame {
         super.dispose();
     }
 
-    static Logger log = LoggerFactory.getLogger(RoutesTableFrame.class
+    private final static Logger log = LoggerFactory.getLogger(RoutesTableFrame.class
             .getName());
 }

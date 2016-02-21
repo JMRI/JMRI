@@ -12,8 +12,6 @@ import javax.swing.JComboBox;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.JTextField;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 
 /**
  * JPanel to create a new JMRI devices HiJacked to serve other beantable tables.
@@ -115,8 +113,6 @@ public class AddNewHardwareDevicePanel extends jmri.util.swing.JmriPanel {
     JLabel sysAddressLabel = new JLabel("Hardware Address");
     JLabel userNameLabel = new JLabel(Bundle.getMessage("LabelUserName"));
     JLabel finishLabel = new JLabel("Number to Add");
-
-    static final Logger log = LoggerFactory.getLogger(AddNewHardwareDevicePanel.class.getName());
 }
 
 

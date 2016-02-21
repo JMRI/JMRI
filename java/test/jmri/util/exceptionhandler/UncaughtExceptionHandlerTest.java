@@ -3,11 +3,9 @@ package jmri.util.exceptionhandler;
 
 import jmri.util.JUnitAppender;
 import jmri.util.SwingTestCase;
-import junit.framework.Assert;
 import junit.framework.Test;
 import junit.framework.TestSuite;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
+
 
 /**
  * Tests for the jmri.util.UncaughtExceptionHandler class.
@@ -20,17 +18,19 @@ public class UncaughtExceptionHandlerTest extends SwingTestCase {
     public void testThread() throws Exception {
         Thread t = new Thread() {
             public void run() {
+                // The deref has to be on line 22 or test will fail
                 deref(null);
             }
 
             void deref(Object o) {
+                // The NPE has to be on line 27 or test will fail
                 o.toString();
             }
         };
 
         t.start();
         jmri.util.JUnitUtil.releaseThread(this);
-        JUnitAppender.assertErrorMessage("Uncaught Exception: java.lang.NullPointerException\n	at jmri.util.exceptionhandler.UncaughtExceptionHandlerTest$1.deref(UncaughtExceptionHandlerTest.java:27)\n	at jmri.util.exceptionhandler.UncaughtExceptionHandlerTest$1.run(UncaughtExceptionHandlerTest.java:23)\n");
+        JUnitAppender.assertErrorMessage("Uncaught Exception: java.lang.NullPointerException\n	at jmri.util.exceptionhandler.UncaughtExceptionHandlerTest$1.deref(UncaughtExceptionHandlerTest.java:27)\n	at jmri.util.exceptionhandler.UncaughtExceptionHandlerTest$1.run(UncaughtExceptionHandlerTest.java:22)\n");
     }
 
     boolean caught = false;
@@ -80,7 +80,4 @@ public class UncaughtExceptionHandlerTest extends SwingTestCase {
         super.tearDown();
         apps.tests.Log4JFixture.tearDown();
     }
-
-    static Logger log = LoggerFactory.getLogger(UncaughtExceptionHandlerTest.class.getName());
-
 }

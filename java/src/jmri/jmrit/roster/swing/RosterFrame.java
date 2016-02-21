@@ -122,7 +122,7 @@ public class RosterFrame extends TwoPaneTBWindow implements RosterEntrySelector,
      *
      */
     private static final long serialVersionUID = 6820971027038275933L;
-    static Logger log = LoggerFactory.getLogger(RosterFrame.class.getName());
+    private final static Logger log = LoggerFactory.getLogger(RosterFrame.class.getName());
     static ArrayList<RosterFrame> frameInstances = new ArrayList<>();
     protected boolean allowQuit = true;
     protected String baseTitle = "Roster";

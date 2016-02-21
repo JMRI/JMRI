@@ -174,6 +174,9 @@ public class TrainByCarTypeFrame extends OperationsFrame implements java.beans.P
             loc.setText(locationName);
             addItemLeft(pRoute, loc, 0, y++);
             Location location = locationManager.getLocationByName(locationName);
+            if (location == null) {
+                continue;
+            }
             if (_car != null && _car.getTrack() != null && !_car.getTrack().acceptsDestination(location)) {
                 JLabel locText = new JLabel();
                 locText.setText(MessageFormat.format(Bundle.getMessage("CarOnTrackDestinationRestriction"),
@@ -465,5 +468,5 @@ public class TrainByCarTypeFrame extends OperationsFrame implements java.beans.P
         }
     }
 
-    static Logger log = LoggerFactory.getLogger(TrainByCarTypeFrame.class.getName());
+    private final static Logger log = LoggerFactory.getLogger(TrainByCarTypeFrame.class.getName());
 }

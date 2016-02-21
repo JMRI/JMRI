@@ -220,7 +220,7 @@ public class IdTagTableAction extends AbstractTableAction {
 
             @Override
             public JButton configureButton() {
-                BeanTableDataModel.log.error("configureButton should not have been called");
+                log.error("configureButton should not have been called");
                 return null;
             }
 

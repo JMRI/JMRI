@@ -663,5 +663,5 @@ public class IndexedVariableValue extends VariableValue
     }
 
     // initialize logging
-    static Logger log = LoggerFactory.getLogger(IndexedVariableValue.class.getName());
+    private final static Logger log = LoggerFactory.getLogger(IndexedVariableValue.class.getName());
 }

@@ -485,7 +485,7 @@ public class SerialAddress {
         }
     }
 
-    static Logger log = LoggerFactory.getLogger(SerialAddress.class.getName());
+    private final static Logger log = LoggerFactory.getLogger(SerialAddress.class.getName());
 }
 
 /* @(#)SerialAddress.java */

@@ -980,7 +980,7 @@ public class EcosLocoToRoster implements EcosListener {
         adaptermemo.getTrafficController().sendEcosMessage(m, this);
     }
 
-    static Logger log = LoggerFactory.getLogger(EcosLocoToRoster.class.getName());
+    private final static Logger log = LoggerFactory.getLogger(EcosLocoToRoster.class.getName());
 }
 /*
  cv8 - mfgIdFromName

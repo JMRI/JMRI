@@ -251,5 +251,5 @@ public class NamedBeanHandleManager extends jmri.managers.AbstractManager implem
         return Bundle.getMessage("BeanName");
     }
 
-    static Logger log = LoggerFactory.getLogger(NamedBeanHandleManager.class.getName());
+    private final static Logger log = LoggerFactory.getLogger(NamedBeanHandleManager.class.getName());
 }

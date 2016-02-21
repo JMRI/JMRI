@@ -82,7 +82,7 @@ public class Bundle extends jmri.jmrix.loconet.Bundle {
         return super.getBundle().handleGetMessage(key);
     }
     // initialize logging
-    static Logger log = LoggerFactory.getLogger(LnSv2MessageContents.class.getName());
+    private final static Logger log = LoggerFactory.getLogger(LnSv2MessageContents.class.getName());
 
     /**
      * Merges user data with a translated string for a given key in a given

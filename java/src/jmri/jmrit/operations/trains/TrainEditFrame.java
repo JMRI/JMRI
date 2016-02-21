@@ -338,7 +338,9 @@ public class TrainEditFrame extends OperationsFrame implements java.beans.Proper
             Route route = _train.getRoute();
             if (route != null) {
                 route.addPropertyChangeListener(this);
-                if (_train.getTrainDepartsRouteLocation() != null && !_train.getTrainDepartsRouteLocation().getLocation().isStaging())
+                if (_train.getTrainDepartsRouteLocation() != null
+                        && _train.getTrainDepartsRouteLocation().getLocation() != null
+                        && !_train.getTrainDepartsRouteLocation().getLocation().isStaging())
                     numEnginesBox.addItem(Train.AUTO_HPT);
             }
            numEnginesBox.setSelectedItem(_train.getNumberEngines());
@@ -1064,5 +1066,5 @@ public class TrainEditFrame extends OperationsFrame implements java.beans.Proper
         }
     }
 
-    static Logger log = LoggerFactory.getLogger(TrainEditFrame.class.getName());
+    private final static Logger log = LoggerFactory.getLogger(TrainEditFrame.class.getName());
 }

@@ -311,5 +311,5 @@ public class GraphPane extends JPanel implements Printable {
         }
     }
 
-    static Logger log = LoggerFactory.getLogger(GraphPane.class.getName());
+    private final static Logger log = LoggerFactory.getLogger(GraphPane.class.getName());
 }
