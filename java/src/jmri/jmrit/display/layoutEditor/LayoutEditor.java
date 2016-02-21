@@ -1065,6 +1065,12 @@ public class LayoutEditor extends jmri.jmrit.display.panelEditor.PanelEditor imp
         showHelpItem.setSelected(showHelpBar);
         // show grid item
         showGridItem = new JCheckBoxMenuItem(rb.getString("ShowEditGrid"));
+        if (SystemType.isMacOSX())
+            showGridItem.setAccelerator(KeyStroke.getKeyStroke(stringsToVTCodes.get(
+                        rb.getString("ShowEditGridAccelerator")), ActionEvent.META_MASK)); 
+        else
+            showGridItem.setAccelerator(KeyStroke.getKeyStroke(stringsToVTCodes.get(
+                        rb.getString("ShowEditGridAccelerator")), ActionEvent.CTRL_MASK)); 
         optionMenu.add(showGridItem);
         showGridItem.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent event) {
