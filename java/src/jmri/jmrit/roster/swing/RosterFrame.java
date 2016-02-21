@@ -1515,22 +1515,23 @@ public class RosterFrame extends TwoPaneTBWindow implements RosterEntrySelector,
         ConnectionConfig oldServMode = serModeProCon;
         ConnectionConfig oldOpsMode = opsModeProCon;
 
+        // Find the connection that goes with the global programmer
         GlobalProgrammerManager gpm = InstanceManager.getDefault(GlobalProgrammerManager.class);
         if (gpm != null) {
-            String serviceModeProgrammer = gpm.getUserName();
+            String serviceModeProgrammerName = gpm.getUserName();
             for (ConnectionConfig connection : InstanceManager.getDefault(ConnectionConfigManager.class)) {
-                if (connection.getConnectionName() != null && connection.getConnectionName().equals(serviceModeProgrammer)) {
+                if (connection.getConnectionName() != null && connection.getConnectionName().equals(serviceModeProgrammerName)) {
                     serModeProCon = connection;
                 }
             }
         }
+
+        // Find the connection that goes with the addressed programmer
         AddressedProgrammerManager apm = InstanceManager.getDefault(AddressedProgrammerManager.class);
         if (apm != null) {
-            //Ideally we should probably have the progDebugger manager reference the username configured in the system connection memo.
-            //but as DecoderPro (nee DP3) isn't (yet) designed for multi-connection enviroments this should be sufficient
-            String opsModeProgrammer = apm.getUserName();
+            String opsModeProgrammerName = apm.getUserName();
             for (ConnectionConfig connection : InstanceManager.getDefault(ConnectionConfigManager.class)) {
-                if (connection.getConnectionName() != null && connection.getConnectionName().equals(opsModeProgrammer)) {
+                if (connection.getConnectionName() != null && connection.getConnectionName().equals(opsModeProgrammerName)) {
                     opsModeProCon = connection;
                 }
             }
