@@ -1357,7 +1357,7 @@ public class RosterFrame extends TwoPaneTBWindow implements RosterEntrySelector,
 
         // if failed to get programmer, tell user and stop
         if (programmer == null) {
-            log.error("Identify loco called when no service mode programmer is available");
+            log.error("Identify loco called when no service mode programmer is available; button should have been disabled");
             JOptionPane.showMessageDialog(null, Bundle.getMessage("IdentifyError"));
             return;
         }
