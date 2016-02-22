@@ -111,7 +111,7 @@ public class CarManager extends RollingStockManager {
      */
     public Kernel newKernel(String name) {
         Kernel kernel = getKernelByName(name);
-        if (kernel == null) {
+        if (kernel == null && !name.equals(NONE)) {
             kernel = new Kernel(name);
             Integer oldSize = Integer.valueOf(_kernelHashTable.size());
             _kernelHashTable.put(name, kernel);

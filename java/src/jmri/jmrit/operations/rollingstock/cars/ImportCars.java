@@ -20,9 +20,10 @@ import org.slf4j.LoggerFactory;
  * This routine will import cars into the operation database.
  *
  * Each field is space or comma delimited. Field order: Number Road Type Length
- * Weight Color Owner Year Location
+ * Weight Color Owner Built Location - Track Load Kernel Moves Value Comment
+ * Miscellaneous Extensions 
  *
- * @author Dan Boudreau Copyright (C) 2008 2010 2011, 2013
+ * @author Dan Boudreau Copyright (C) 2008 2010 2011, 2013, 2016
  * @version $Revision$
  */
 public class ImportCars extends ImportRollingStock {
@@ -81,6 +82,8 @@ public class ImportCars extends ImportRollingStock {
         String carBuilt = "";
         String carLocation = "";
         String carTrack = "";
+        String carLoad = "";
+        String carKernel = "";
         String[] inputLine;
 
         // does the file name end with .csv?
@@ -153,6 +156,8 @@ public class ImportCars extends ImportRollingStock {
                 carBuilt = "";
                 carLocation = "";
                 carTrack = "";
+                carLoad = CarLoads.instance().getDefaultEmptyName();
+                carKernel = "";
 
                 if (inputLine.length > base + 4) {
                     carWeight = inputLine[base + 4];
@@ -302,7 +307,6 @@ public class ImportCars extends ImportRollingStock {
                                     carLocation = carLocation + " " + inputLine[base + 10];
                                 }
                             }
-                            // get track name if there's one
                         }
                         log.debug("Car ({} {}) has location ({})", carRoad, carNumber, carLocation);
                         // now get the track name
@@ -322,7 +326,18 @@ public class ImportCars extends ImportRollingStock {
                         }
                         log.debug("Car ({} {}) has track ({})", carRoad, carNumber, carTrack);
                     }
-
+                    
+                    // is there a load name?
+                    if (comma && inputLine.length > base + 11) {
+                        carLoad = inputLine[11];
+                        log.debug("Car ({} {}) has load ({})", carRoad, carNumber, carLoad);
+                    }
+                    // is there a kernel name?
+                    if (comma && inputLine.length > base + 12) {
+                        carKernel = inputLine[12];
+                        log.debug("Car ({} {}) has kernel name ({})", carRoad, carNumber, carKernel);
+                    }
+                    
                     if (carLocation.length() > Control.max_len_string_location_name) {
                         JOptionPane.showMessageDialog(null, MessageFormat.format(Bundle
                                 .getMessage("CarLocationNameTooLong"), new Object[]{(carRoad + " " + carNumber),
@@ -421,9 +436,35 @@ public class ImportCars extends ImportRollingStock {
                     car.setColor(carColor);
                     car.setOwner(carOwner);
                     car.setBuilt(carBuilt);
+                    car.setLoadName(carLoad);
+                    car.setKernel(manager.newKernel(carKernel));
                     carsAdded++;
-
+                    
                     car.setCaboose(carType.equals("Caboose"));
+                    // determine if there are any car extensions
+                    if (comma && inputLine.length > base + 17) {
+                        String extensions = inputLine[17];
+                        log.debug("Car ({} {}) has extension ({})", carRoad, carNumber, extensions);
+                        String[] ext = extensions.split(Car.EXTENSION_REGEX);
+                        for (int i = 0; i < ext.length; i++) {
+                            if (ext[i].equals(Car.CABOOSE_EXTENSION)) {
+                                car.setCaboose(true);
+                            }
+                            if (ext[i].equals(Car.FRED_EXTENSION)) {
+                                car.setFred(true);
+                            }
+                            if (ext[i].equals(Car.PASSENGER_EXTENSION)) {
+                                car.setPassenger(true);
+                                car.setBlocking(Integer.parseInt(ext[i + 1]));
+                            }
+                            if (ext[i].equals(Car.UTILITY_EXTENSION)) {
+                                car.setUtility(true);
+                            }
+                            if (ext[i].equals(Car.HAZARDOUS_EXTENSION)) {
+                                car.setHazardous(true);
+                            }
+                        }
+                    }
 
                     // add new roads
                     if (!CarRoads.instance().containsName(carRoad)) {
