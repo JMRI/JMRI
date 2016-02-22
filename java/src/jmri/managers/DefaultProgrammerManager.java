@@ -1,4 +1,3 @@
-/* DefaultProgrammerManager.java */
 package jmri.managers;
 
 import jmri.AddressedProgrammer;
@@ -10,8 +9,8 @@ import org.slf4j.LoggerFactory;
 import edu.umd.cs.findbugs.annotations.NonNull;
 
 /**
- * Provides a very-basic implementation of ProgrammerManager. You give it a
- * service-mode Programmer at construction time that it returns when requests; 
+ * Provides a very basic implementation of ProgrammerManager. You give it a
+ * service-mode Programmer (perhaps null) at construction time that it returns when requested; 
  * Ops Mode requests get a null in response to a request, showing there's no programmer
  * of that type.
  *<p>
@@ -19,7 +18,6 @@ import edu.umd.cs.findbugs.annotations.NonNull;
  *
  * @see jmri.ProgrammerManager
  * @author	Bob Jacobsen Copyright (C) 2001, 2015, 2016
- * @version	$Revision$
  */
 public class DefaultProgrammerManager implements ProgrammerManager {
 
@@ -199,4 +197,4 @@ public class DefaultProgrammerManager implements ProgrammerManager {
 
     private final static Logger log = LoggerFactory.getLogger(DefaultProgrammerManager.class.getName());
 }
-/* @(#)DefaultProgrammerManager.java */
+
