@@ -10,8 +10,11 @@ import java.io.IOException;
 import java.net.SocketTimeoutException;
 import java.net.URLDecoder;
 import java.nio.charset.StandardCharsets;
+import java.util.HashMap;
+import java.util.HashSet;
 import java.util.Locale;
 import java.util.Map;
+import java.util.ServiceLoader;
 import javax.servlet.AsyncContext;
 import javax.servlet.AsyncEvent;
 import javax.servlet.AsyncListener;
@@ -93,6 +96,8 @@ import static jmri.jmrit.operations.trains.Train.TRAIN_MOVE_COMPLETE_CHANGED_PRO
 import static jmri.jmrit.operations.trains.Train.TRAIN_REQUIREMENTS_CHANGED_PROPERTY;
 import static jmri.jmrit.operations.trains.Train.TRAIN_ROUTE_CHANGED_PROPERTY;
 import jmri.jmrit.operations.trains.TrainManager;
+import jmri.server.json.JsonHttpService;
+import jmri.spi.JsonServiceFactory;
 import jmri.util.FileUtil;
 import jmri.web.servlet.ServletUtil;
 import static jmri.web.servlet.ServletUtil.APPLICATION_JSON;
@@ -133,12 +138,23 @@ public class JsonServlet extends WebSocketServlet {
     private static final long serialVersionUID = -671593634343578915L;
     private static final long longPollTimeout = 30000; // 5 minutes
     private ObjectMapper mapper;
+    private final HashMap<String, HashSet<JsonHttpService>> services = new HashMap<>();
     private static final Logger log = LoggerFactory.getLogger(JsonServlet.class);
 
     @Override
     public void init() throws ServletException {
         super.init();
         this.mapper = new ObjectMapper();
+        for (JsonServiceFactory factory : ServiceLoader.load(JsonServiceFactory.class)) {
+            for (String type : factory.getTypes()) {
+                HashSet<JsonHttpService> set = this.services.get(type);
+                if (set == null) {
+                    this.services.put(type, new HashSet<>());
+                    set = this.services.get(type);
+                }
+                set.add(factory.getHttpService(this.mapper));
+            }
+        }
     }
 
     @Override
@@ -207,7 +223,7 @@ public class JsonServlet extends WebSocketServlet {
                 }
                 longPoll = true;
             }
-            JsonNode reply;
+            JsonNode reply = null;
             try {
                 if (name == null) {
                     switch (type) {
@@ -235,21 +251,21 @@ public class JsonServlet extends WebSocketServlet {
                         case PANELS:
                             reply = JsonUtil.getPanels(request.getLocale(), (request.getParameter(FORMAT) != null) ? request.getParameter(FORMAT) : XML);
                             break;
-                        case POWER:
-                            if (longPoll) {
-                                try {
-                                    if (InstanceManager.getDefault(PowerManager.class).getPower() == parameters.path(STATE).asInt()) {
-                                        final AsyncContext context = request.startAsync(request, response);
-                                        context.setTimeout(longPollTimeout);
-                                        context.start(new PowerPollingHandler(request.getLocale(), parameters.path(STATE).asInt(), context));
-                                        return;
-                                    }
-                                } catch (JmriException | NullPointerException ex) {
-                                    // do nothing -- the following JsonUtil.getPower(request.getLocale()) statement should report the error to the client
-                                }
-                            }
-                            reply = JsonUtil.getPower(request.getLocale());
-                            break;
+//                        case POWER:
+//                            if (longPoll) {
+//                                try {
+//                                    if (InstanceManager.getDefault(PowerManager.class).getPower() == parameters.path(STATE).asInt()) {
+//                                        final AsyncContext context = request.startAsync(request, response);
+//                                        context.setTimeout(longPollTimeout);
+//                                        context.start(new PowerPollingHandler(request.getLocale(), parameters.path(STATE).asInt(), context));
+//                                        return;
+//                                    }
+//                                } catch (JmriException | NullPointerException ex) {
+//                                    // do nothing -- the following JsonUtil.getPower(request.getLocale()) statement should report the error to the client
+//                                }
+//                            }
+//                            reply = JsonUtil.getPower(request.getLocale());
+//                            break;
                         case RAILROAD:
                             reply = JsonUtil.getRailroad(request.getLocale());
                             break;
@@ -302,8 +318,16 @@ public class JsonServlet extends WebSocketServlet {
                             reply = JsonUtil.getNode(request.getLocale());
                             break;
                         default:
-                            log.warn("Type {} unknown.", type);
-                            reply = JsonUtil.getUnknown(request.getLocale(), type);
+                            if (this.services.get(type) != null) {
+                                for (JsonHttpService service : this.services.get(type)) {
+                                    // TODO: take all replies and massage into single reply
+                                    reply = service.doGetList(type, request.getLocale());
+                                }
+                            }
+                            if (reply == null) {
+                                log.warn("Type {} unknown.", type);
+                                reply = JsonUtil.getUnknown(request.getLocale(), type);
+                            }
                             break;
                     }
                 } else {
@@ -427,8 +451,16 @@ public class JsonServlet extends WebSocketServlet {
                             reply = JsonUtil.getTurnout(request.getLocale(), name);
                             break;
                         default:
-                            log.warn("Type {} unknown.", type);
-                            reply = JsonUtil.getUnknown(request.getLocale(), type);
+                            if (this.services.get(type) != null) {
+                                for (JsonHttpService service : this.services.get(type)) {
+                                    // TODO: take all replies and massage into single reply
+                                    reply = service.doGet(type, name, request.getLocale());
+                                }
+                            }
+                            if (reply == null) {
+                                log.warn("Type {} unknown.", type);
+                                reply = JsonUtil.getUnknown(request.getLocale(), type);
+                            }
                             break;
                     }
                 }
@@ -469,7 +501,7 @@ public class JsonServlet extends WebSocketServlet {
         String type = (rest.length > 1) ? rest[1] : null;
         String name = (rest.length > 2) ? rest[2] : null;
         JsonNode data;
-        JsonNode reply;
+        JsonNode reply = null;
         try {
             if (request.getContentType().contains(APPLICATION_JSON)) {
                 data = this.mapper.readTree(request.getReader());
@@ -508,10 +540,10 @@ public class JsonServlet extends WebSocketServlet {
                             JsonUtil.setMemory(request.getLocale(), name, data);
                             reply = JsonUtil.getMemory(request.getLocale(), name);
                             break;
-                        case POWER:
-                            JsonUtil.setPower(request.getLocale(), data);
-                            reply = JsonUtil.getPower(request.getLocale());
-                            break;
+//                        case POWER:
+//                            JsonUtil.setPower(request.getLocale(), data);
+//                            reply = JsonUtil.getPower(request.getLocale());
+//                            break;
                         case REPORTER:
                             JsonUtil.setReporter(request.getLocale(), name, data);
                             reply = JsonUtil.getReporter(request.getLocale(), name);
@@ -541,8 +573,17 @@ public class JsonServlet extends WebSocketServlet {
                             reply = JsonUtil.getTurnout(request.getLocale(), name);
                             break;
                         default:
-                            log.warn("Type {} unknown.", type);
-                            reply = JsonUtil.getUnknown(request.getLocale(), type);
+                            if (this.services.get(type) != null) {
+                                log.debug("Using data: {}", data);
+                                for (JsonHttpService service : this.services.get(type)) {
+                                    // TODO: take all replies and massage into single reply
+                                    reply = service.doPost(type, name, data, request.getLocale());
+                                }
+                            }
+                            if (reply == null) {
+                                log.warn("Type {} unknown.", type);
+                                reply = JsonUtil.getUnknown(request.getLocale(), type);
+                            }
                             break;
                     }
                 } else {
@@ -575,7 +616,7 @@ public class JsonServlet extends WebSocketServlet {
         String type = (rest.length > 1) ? rest[1] : null;
         String name = (rest.length > 2) ? rest[2] : null;
         JsonNode data;
-        JsonNode reply;
+        JsonNode reply = null;
         try {
             if (request.getContentType().contains(APPLICATION_JSON)) {
                 data = this.mapper.readTree(request.getReader());
@@ -605,10 +646,10 @@ public class JsonServlet extends WebSocketServlet {
                             JsonUtil.putMemory(request.getLocale(), name, data);
                             reply = JsonUtil.getMemory(request.getLocale(), name);
                             break;
-                        case POWER:
-                            JsonUtil.setPower(request.getLocale(), data);
-                            reply = JsonUtil.getPower(request.getLocale());
-                            break;
+//                        case POWER:
+//                            JsonUtil.setPower(request.getLocale(), data);
+//                            reply = JsonUtil.getPower(request.getLocale());
+//                            break;
                         case REPORTER:
                             JsonUtil.putReporter(request.getLocale(), name, data);
                             reply = JsonUtil.getReporter(request.getLocale(), name);
@@ -622,8 +663,17 @@ public class JsonServlet extends WebSocketServlet {
                             reply = JsonUtil.getTurnout(request.getLocale(), name);
                             break;
                         default:
-                            // not a creatable item
-                            throw new JsonException(400, type + " is not a creatable type"); // need to I18N
+                            if (this.services.get(type) != null) {
+                                for (JsonHttpService service : this.services.get(type)) {
+                                    // TODO: take all replies and massage into single reply
+                                    reply = service.doPut(type, name, data, request.getLocale());
+                                }
+                            }
+                            if (reply == null) {
+                                // not a creatable item
+                                throw new JsonException(400, type + " is not a creatable type"); // need to I18N
+                            }
+                            break;
                     }
                 } else {
                     log.warn("Type {} unknown.", type);
@@ -663,8 +713,15 @@ public class JsonServlet extends WebSocketServlet {
                 if (type.equals(CONSIST)) {
                     JsonUtil.delConsist(request.getLocale(), JsonUtil.addressForString(name));
                 } else {
-                    // not a deletable item
-                    throw new JsonException(400, type + " is not a deletable type"); // need to I18N
+                    if (this.services.get(type) != null) {
+                        for (JsonHttpService service : this.services.get(type)) {
+                            // TODO: take all replies and massage into single reply
+                            reply = service.doDelete(type, name, request.getLocale());
+                        }
+                    } else {
+                        // not a deletable item
+                        throw new JsonException(400, type + " is not a deletable type"); // need to I18N
+                    }
                 }
             } else {
                 log.warn("Type not specified.");

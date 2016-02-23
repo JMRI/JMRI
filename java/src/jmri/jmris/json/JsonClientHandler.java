@@ -5,7 +5,10 @@ import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.node.ObjectNode;
 import java.io.IOException;
+import java.util.HashMap;
+import java.util.HashSet;
 import java.util.Locale;
+import java.util.ServiceLoader;
 import jmri.JmriException;
 import static jmri.jmris.json.JSON.CARS;
 import static jmri.jmris.json.JSON.CONSIST;
@@ -29,7 +32,6 @@ import static jmri.jmris.json.JSON.NETWORK_SERVICES;
 import static jmri.jmris.json.JSON.PANELS;
 import static jmri.jmris.json.JSON.PING;
 import static jmri.jmris.json.JSON.PONG;
-import static jmri.jmris.json.JSON.POWER;
 import static jmri.jmris.json.JSON.PROGRAMMER;
 import static jmri.jmris.json.JSON.REPORTER;
 import static jmri.jmris.json.JSON.REPORTERS;
@@ -54,6 +56,8 @@ import static jmri.jmris.json.JSON.TURNOUT;
 import static jmri.jmris.json.JSON.TURNOUTS;
 import static jmri.jmris.json.JSON.TYPE;
 import static jmri.jmris.json.JSON.XML;
+import jmri.server.json.JsonSocketService;
+import jmri.spi.JsonServiceFactory;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -63,7 +67,6 @@ public class JsonClientHandler {
     private final JsonLightServer lightServer;
     private final JsonMemoryServer memoryServer;
     private final JsonOperationsServer operationsServer;
-    private final JsonPowerServer powerServer;
     private final JsonProgrammerServer programmerServer;
     private final JsonReporterServer reporterServer;
     private final JsonRosterServer rosterServer;
@@ -76,6 +79,7 @@ public class JsonClientHandler {
     private final JsonTurnoutServer turnoutServer;
     private final JsonConnection connection;
     private final ObjectMapper mapper;
+    private final HashMap<String, HashSet<JsonSocketService>> services = new HashMap<>();
     private static final Logger log = LoggerFactory.getLogger(JsonClientHandler.class);
 
     public JsonClientHandler(JsonConnection connection, ObjectMapper mapper) {
@@ -85,7 +89,6 @@ public class JsonClientHandler {
         this.lightServer = new JsonLightServer(this.connection);
         this.memoryServer = new JsonMemoryServer(this.connection);
         this.operationsServer = new JsonOperationsServer(this.connection);
-        this.powerServer = new JsonPowerServer(this.connection);
         this.programmerServer = new JsonProgrammerServer(this.connection);
         this.reporterServer = new JsonReporterServer(this.connection);
         this.rosterServer = new JsonRosterServer(this.connection);
@@ -96,6 +99,16 @@ public class JsonClientHandler {
         this.throttleServer = new JsonThrottleServer(this.connection);
         this.timeServer = new JsonTimeServer(this.connection);
         this.turnoutServer = new JsonTurnoutServer(this.connection);
+        for (JsonServiceFactory factory : ServiceLoader.load(JsonServiceFactory.class)) {
+            for (String type : factory.getTypes()) {
+                HashSet<JsonSocketService> set = this.services.get(type);
+                if (set == null) {
+                    this.services.put(type, new HashSet<>());
+                    set = this.services.get(type);
+                }
+                set.add(factory.getSocketService(connection));
+            }
+        }
     }
 
     public void dispose() {
@@ -104,7 +117,6 @@ public class JsonClientHandler {
         this.lightServer.dispose();
         this.memoryServer.dispose();
         this.operationsServer.dispose();
-        this.powerServer.dispose();
         this.programmerServer.dispose();
         this.reporterServer.dispose();
         this.rosterServer.dispose();
@@ -114,6 +126,11 @@ public class JsonClientHandler {
         this.signalMastServer.dispose();
         this.timeServer.dispose();
         this.turnoutServer.dispose();
+        services.values().stream().forEach((set) -> {
+            set.stream().forEach((service) -> {
+                service.onClose();
+            });
+        });
     }
 
     /**
@@ -249,10 +266,17 @@ public class JsonClientHandler {
                         reply = JsonUtil.getSystemConnections(this.connection.getLocale());
                         break;
                     default:
-                        this.sendErrorMessage(404, Bundle.getMessage(this.connection.getLocale(), "ErrorUnknownList", list));
-                        return;
+                        if (this.services.get(list) != null) {
+                            for (JsonSocketService service : this.services.get(list)) {
+                                service.onList(list, data, this.connection.getLocale());
+                            }
+                            return;
+                        } else {
+                            this.sendErrorMessage(404, Bundle.getMessage(this.connection.getLocale(), "ErrorUnknownList", list));
+                            return;
+                        }
                 }
-                //if (log.isDebugEnabled()) log.debug("Sending to client: " + this.mapper.writeValueAsString(reply));
+                //log.debug("Sending to client: {}", this.mapper.writeValueAsString(reply));
                 this.connection.sendMessage(this.mapper.writeValueAsString(reply));
             } else if (!data.isMissingNode()) {
                 switch (type) {
@@ -267,9 +291,6 @@ public class JsonClientHandler {
                         break;
                     case METADATA:
                         this.connection.sendMessage(this.mapper.writeValueAsString(JsonUtil.getMetadata(this.connection.getLocale(), data.path(NAME).asText())));
-                        break;
-                    case POWER:
-                        this.powerServer.parseRequest(this.connection.getLocale(), data);
                         break;
                     case PROGRAMMER:
                         this.programmerServer.parseRequest(this.connection.getLocale(), data);
@@ -308,7 +329,13 @@ public class JsonClientHandler {
                         this.turnoutServer.parseRequest(this.connection.getLocale(), data);
                         break;
                     default:
-                        this.sendErrorMessage(404, Bundle.getMessage(this.connection.getLocale(), "ErrorUnknownType", type));
+                        if (this.services.get(type) != null) {
+                            for (JsonSocketService service : this.services.get(type)) {
+                                service.onMessage(type, data, this.connection.getLocale());
+                            }
+                        } else {
+                            this.sendErrorMessage(404, Bundle.getMessage(this.connection.getLocale(), "ErrorUnknownType", type));
+                        }
                         break;
                 }
             } else {
