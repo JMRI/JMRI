@@ -45,4 +45,4 @@
  *        <!-- Put @see and @since tags down here. -->
  */
 @edu.umd.cs.findbugs.annotations.SuppressWarnings({})
-package jmri.profile;
+package jmri.jmrix.rps;
