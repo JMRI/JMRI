@@ -105,20 +105,28 @@ For more information about these annotations, please see the
 
 We have turned off the routine FindBugs checking of certain kinds of conditions:
 <dl>
-<dt><a href="">RI_REDUNDANT_INTERFACES</a><dd>This flags cases where a class implements an interface, and also inherits from 
+<dt><a href="http://findbugs.sourceforge.net/bugDescriptions.html#RI_REDUNDANT_INTERFACES">RI_REDUNDANT_INTERFACES</a>
+    <dd>This flags cases where a class implements an interface, and also inherits from 
     a superclass that already implements that interface.  This is redundant and untidy, but it can't cause the code to malfunction.
     We have enough of them that we've turned off the warning, and will come back to it some later time.
-<dt>SIC_INNER_SHOULD_BE_STATIC_ANON, SIC_INNER_SHOULD_BE_STATIC_NEEDS_THIS<dd>Static, as opposed to non-static, 
+<dt><a href="http://findbugs.sourceforge.net/bugDescriptions.html#SIC_INNER_SHOULD_BE_STATIC_ANON">SIC_INNER_SHOULD_BE_STATIC_ANON</a>, 
+    <a href="http://findbugs.sourceforge.net/bugDescriptions.html#SIC_INNER_SHOULD_BE_STATIC_NEEDS_THIS">SIC_INNER_SHOULD_BE_STATIC_NEEDS_THIS</a>
+    <dd>Static, as opposed to non-static, 
     inner classes (classes defined within another class) take less space
     because they don't maintain references to the containing object.  This warning suggests moving an 
     anonymous (defined in-line to the code) inner class to a regular (defined not in-line) class so it can
     be made static.  Although probably a small improvement, it's a bit of work for a small improvement.
     We have enough of them that we've turned off the warning, and will come back to it some later time.
-<dt>PZLA_PREFER_ZERO_LENGTH_ARRAYS<dd>What should a method that returns an array of values do when there aren't any?
+<dt><a href="http://findbugs.sourceforge.net/bugDescriptions.html#PZLA_PREFER_ZERO_LENGTH_ARRAYS">PZLA_PREFER_ZERO_LENGTH_ARRAYS</a>
+    <dd>What should a method that returns an array of values do when there aren't any?
     Returning "null", as opposed to an empty array, requires all the calling code to handle a special case.
     In many cases, returning an empty array makes the code simpler.  But for existing code, that 
     simplification is marginal. As this is a design issue, but it crops up a lot, we've suppressed these 
     for now just to focus on more pressing problems.
+<dt>Malicious Code
+    <dd>This is a class of warnings centered around the idea that data and code methods shouldn't be too
+        visible, especially when static.  This is true, but JMRI isn't a hardened library that's being
+        released into a world of people trying to break it, as these changes are a lower priority. 
 <dt>Nm<dd>The convention is that class names start with a capital letter, and method names (data and code)
     with a small letter.  
 <dt>Se,SvVI<dd>This is a large class of warnings associated with Java serialization.  JMRI
