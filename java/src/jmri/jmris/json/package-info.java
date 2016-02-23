@@ -35,5 +35,4 @@
  * </ul></dd>
  * </dl>
  */
-@edu.umd.cs.findbugs.annotations.SuppressWarnings({})
 package jmri.jmris.json;
