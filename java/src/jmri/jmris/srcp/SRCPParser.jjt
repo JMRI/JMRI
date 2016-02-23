@@ -391,7 +391,7 @@ SimpleNode init():{}
 {
   <INIT> bus() ( fb() | 
                  ga() address() protocol() | 
-                 gl() address() protocol() |  
+                 gl() address() protocol() (nonzeroaddress() address() address())? |  
                  sm() <NMRA> | 
                  time() nonzeroaddress() nonzeroaddress() | 
                  power() )
@@ -419,10 +419,13 @@ SimpleNode verify():{}
   }
 }
 
-SimpleNode gl():{}
+SimpleNode gl():{Token t;}
 {
-  <GL>
-  {return jjtThis;}
+  t=<GL>
+  {
+     jjtThis.jjtSetValue(t.image);
+     return jjtThis;
+  }
 }
 
 SimpleNode sm():{Token t;}

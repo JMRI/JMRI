@@ -37,11 +37,18 @@ abstract public class AbstractThrottleServer implements ThrottleListener {
 
     abstract public void sendErrorStatus() throws IOException;
 
+    abstract public void sendThrottleFound(jmri.LocoAddress address) throws IOException;
+
     abstract public void parsecommand(String statusString) throws JmriException, IOException;
 
     // implementation of ThrottleListener
     public void notifyThrottleFound(DccThrottle t){
-        throttleList.add(t);
+       throttleList.add(t);
+       try{
+          sendThrottleFound(t.getLocoAddress());
+       } catch(java.io.IOException ioe){
+           //Something failed writing data to the port.
+       }
     }
 
     public void notifyFailedThrottleRequest(DccLocoAddress address, String reason){

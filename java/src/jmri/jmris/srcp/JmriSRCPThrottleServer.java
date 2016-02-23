@@ -29,8 +29,13 @@ public class JmriSRCPThrottleServer extends jmri.jmris.AbstractThrottleServer {
 
     private DataOutputStream output;
 
+    private ArrayList busList;
+    private ArrayList addressList;
+
     public JmriSRCPThrottleServer(DataInputStream inStream, DataOutputStream outStream) {
         super();
+        busList=new ArrayList<>();
+        addressList=new ArrayList<>();
         output = outStream;
     }
 
@@ -38,6 +43,7 @@ public class JmriSRCPThrottleServer extends jmri.jmris.AbstractThrottleServer {
     /*
      * Protocol Specific Functions
      */
+    @Override
     public void sendStatus() throws IOException {
         TimeStampedOutput.writeTimestamp(output, Bundle.getMessage("Error499"));
     }
@@ -155,11 +161,59 @@ public class JmriSRCPThrottleServer extends jmri.jmris.AbstractThrottleServer {
         }
     }
 
+    @Override
     public void sendErrorStatus() throws IOException{
         TimeStampedOutput.writeTimestamp(output, Bundle.getMessage("Error499"));
     }
 
+    @Override
     public void parsecommand(String statusString) throws JmriException, IOException {
+    }
+
+    @Override
+    public void sendThrottleFound(jmri.LocoAddress address) throws IOException{
+        Integer bus;
+        if(addressList.contains(address)){
+           bus = (Integer)busList.get(addressList.indexOf(address));
+        } else {
+           // we didn't request this address.
+           return;
+        }
+
+        // Build the output string to send
+        String StatusString="101 INFO " + bus + " GL " + address.getNumber() + " "; // assume DCC for now.
+        StatusString+= address.getProtocol()==jmri.LocoAddress.Protocol.DCC_SHORT?"N 1 28":"N 2 28";
+        StatusString+= "\n\r";
+        TimeStampedOutput.writeTimestamp(output, StatusString);
+    }
+
+
+    public void initThrottle(int bus, int address, boolean isLong, 
+                             int speedsteps, int functions) throws IOException {
+        log.debug("initThrottle called with bus {} and address {}", bus, address);
+
+        /* translate the bus into a system connection memo */
+        java.util.List<SystemConnectionMemo> list = jmri.InstanceManager.getList(SystemConnectionMemo.class);
+        SystemConnectionMemo memo = null;
+        try {
+            memo = list.get(bus - 1);
+        } catch (java.lang.IndexOutOfBoundsException obe) {
+            TimeStampedOutput.writeTimestamp(output, Bundle.getMessage("Error412"));
+            return;
+        }
+
+        /* request the throttle for this particular locomotive address */
+        if(memo.provides(jmri.ThrottleManager.class)) {
+           ThrottleManager t=memo.get(jmri.ThrottleManager.class);
+           // we will use getThrottleInfo to request information about the
+           // address, so we need to convert the address to a DccLocoAddress 
+           // object first.
+           DccLocoAddress addr = new DccLocoAddress(address,isLong);
+           busList.add(new Integer(bus));
+           addressList.add(addr);
+           t.requestThrottle(addr,(ThrottleListener)this);
+        }
+        
     }
 
 }

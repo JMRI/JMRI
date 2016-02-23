@@ -510,7 +510,36 @@ public class SRCPVisitor implements SRCPParserVisitor {
         } else if (((SimpleNode) node.jjtGetChild(1)).jjtGetValue().equals("GL")
                 && isSupported(bus, "GL")) {
             /* Initilize a new locomotive */
-            //int address = Integer.parseInt(((String)((SimpleNode)node.jjtGetChild(2)).jjtGetValue()));
+            int address = Integer.parseInt(((String)((SimpleNode)node.jjtGetChild(2)).jjtGetValue()));
+            SimpleNode protocolNode = (SimpleNode)node.jjtGetChild(3);
+            String protocol = (String)(protocolNode.jjtGetValue());
+            switch(protocol){
+            case "N": // NMRA DCC
+                 int protocolversion = Integer.parseInt(((String)((SimpleNode)protocolNode.jjtGetChild(0)).jjtGetValue()));
+                 int speedsteps = Integer.parseInt(((String)((SimpleNode)protocolNode.jjtGetChild(1)).jjtGetValue()));
+                 int functions = Integer.parseInt(((String)((SimpleNode)protocolNode.jjtGetChild(2)).jjtGetValue()));
+                 try {
+                   ((jmri.jmris.srcp.JmriSRCPThrottleServer)(((jmri.jmris.ServiceHandler) data).getThrottleServer())).initThrottle(bus,address,protocolversion==2,speedsteps,functions);
+                 } catch (java.io.IOException ie) {
+                 }
+                 break;
+            case "A": // analog operation
+                      // the documentation says this is reserved for address 0.
+                      // but this could be used if we ever build support for
+                      // analog non-dcc throttles.
+            case "P": // protocol by server.  The documentation indicates
+                      // the server gets to choose the type of decoder,
+                      // but otherwise is silent on what parameters this 
+                      // should take.
+            case "F": // Fleischmann
+            case "L": // LocoNet
+            case "M": // Maerklin/Motorola
+            case "S": // Selectrix
+            case "Z": // zimo
+            default:
+               outputString = "420 ERROR unsupported device protocol";
+               return data;
+            }
         } else if (((SimpleNode) node.jjtGetChild(1)).jjtGetValue().equals("TIME")) {
             /* Initilize fast clock ratio */
             try {
