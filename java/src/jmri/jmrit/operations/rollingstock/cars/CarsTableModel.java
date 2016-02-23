@@ -517,23 +517,7 @@ public class CarsTableModel extends javax.swing.table.AbstractTableModel impleme
             case LENGTH_COLUMN:
                 return car.getLengthInteger();
             case TYPE_COLUMN: {
-                StringBuffer buf = new StringBuffer(car.getTypeName());
-                if (car.isCaboose()) {
-                    buf.append(" " + Bundle.getMessage("(C)"));
-                }
-                if (car.hasFred()) {
-                    buf.append(" " + Bundle.getMessage("(F)"));
-                }
-                if (car.isPassenger()) {
-                    buf.append(" " + Bundle.getMessage("(P)") + " " + car.getBlocking());
-                }
-                if (car.isUtility()) {
-                    buf.append(" " + Bundle.getMessage("(U)"));
-                }
-                if (car.isHazardous()) {
-                    buf.append(" " + Bundle.getMessage("(H)"));
-                }
-                return buf.toString();
+                return car.getTypeName() + car.getTypeExtensions();
             }
             case KERNEL_COLUMN: {
                 if (car.getKernel() != null && car.getKernel().isLead(car)) {
