@@ -1,0 +1,21 @@
+<FindBugsFilter>
+     <Match>
+       <!-- JMRI does not use serialization, ignore -->
+       <Bug code="Se,SE_NO_SERIALVERSIONID" />
+     </Match>
+
+     <Match>
+       <!-- Design issue, for later -->
+       <Bug code="SIC_INNER_SHOULD_BE_STATIC_ANON" />
+     </Match>
+
+     <Match>
+       <!-- Design issue, for later -->
+       <Bug code="PZLA_PREFER_ZERO_LENGTH_ARRAYS" />
+     </Match>
+
+     <Match>
+       <!-- Minor clean-up issue, for later -->
+       <Bug code="RI_REDUNDANT_INTERFACES" />
+     </Match>
+</FindBugsFilter>
