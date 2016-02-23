@@ -11,5 +11,4 @@
  * <li><a href="http://openlcb.org/">OpenLCB project overview page</a>
  * </ul>
  */
-@edu.umd.cs.findbugs.annotations.SuppressWarnings({})
 package jmri.jmrix.openlcb.swing.tie;
