@@ -34,6 +34,7 @@ import java.util.Map;
 import java.lang.reflect.Field;
 import java.util.ResourceBundle;
 import javax.swing.AbstractAction;
+import javax.swing.Action;
 import javax.swing.BoxLayout;
 import javax.swing.ButtonGroup;
 import javax.swing.JButton;
@@ -441,7 +442,14 @@ public class LayoutEditor extends jmri.jmrit.display.panelEditor.PanelEditor imp
         JMenu fileMenu = new JMenu(rb.getString("MenuFile"));
         fileMenu.setMnemonic(stringsToVTCodes.get(rb.getString("MenuFileMnemonic")));
         menuBar.add(fileMenu);
-        fileMenu.add(new jmri.configurexml.StoreXmlUserAction(rbx.getString("MenuItemStore")));
+        jmri.configurexml.StoreXmlUserAction store = new jmri.configurexml.StoreXmlUserAction(rbx.getString("MenuItemStore"));
+        if (SystemType.isMacOSX())
+            store.putValue(store.ACCELERATOR_KEY, KeyStroke.getKeyStroke(
+                    stringsToVTCodes.get(rbx.getString("MenuItemStoreAccelerator")), ActionEvent.CTRL_MASK));
+        else
+            store.putValue(store.ACCELERATOR_KEY, KeyStroke.getKeyStroke(
+                    stringsToVTCodes.get(rbx.getString("MenuItemStoreAccelerator")), ActionEvent.CTRL_MASK));
+        fileMenu.add(store);
         fileMenu.addSeparator();
         JMenuItem deleteItem = new JMenuItem(rbx.getString("DeletePanel"));
         fileMenu.add(deleteItem);
@@ -1057,6 +1065,12 @@ public class LayoutEditor extends jmri.jmrit.display.panelEditor.PanelEditor imp
         showHelpItem.setSelected(showHelpBar);
         // show grid item
         showGridItem = new JCheckBoxMenuItem(rb.getString("ShowEditGrid"));
+        if (SystemType.isMacOSX())
+            showGridItem.setAccelerator(KeyStroke.getKeyStroke(stringsToVTCodes.get(
+                        rb.getString("ShowEditGridAccelerator")), ActionEvent.META_MASK)); 
+        else
+            showGridItem.setAccelerator(KeyStroke.getKeyStroke(stringsToVTCodes.get(
+                        rb.getString("ShowEditGridAccelerator")), ActionEvent.CTRL_MASK)); 
         optionMenu.add(showGridItem);
         showGridItem.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent event) {
@@ -1067,6 +1081,12 @@ public class LayoutEditor extends jmri.jmrit.display.panelEditor.PanelEditor imp
         showGridItem.setSelected(drawGrid);
         // snap to grid on add item
         snapToGridOnAddItem = new JCheckBoxMenuItem(rb.getString("SnapToGridOnAdd"));
+        if (SystemType.isMacOSX())
+            snapToGridOnAddItem.setAccelerator(KeyStroke.getKeyStroke(stringsToVTCodes.get(
+                        rb.getString("SnapToGridOnAddAccelerator")), ActionEvent.META_MASK | ActionEvent.SHIFT_MASK)); 
+        else
+            snapToGridOnAddItem.setAccelerator(KeyStroke.getKeyStroke(stringsToVTCodes.get(
+                        rb.getString("SnapToGridOnAddAccelerator")), ActionEvent.CTRL_MASK | ActionEvent.SHIFT_MASK)); 
         optionMenu.add(snapToGridOnAddItem);
         snapToGridOnAddItem.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent event) {
@@ -1077,6 +1097,12 @@ public class LayoutEditor extends jmri.jmrit.display.panelEditor.PanelEditor imp
         snapToGridOnAddItem.setSelected(snapToGridOnAdd);
         // snap to grid on move item
         snapToGridOnMoveItem = new JCheckBoxMenuItem(rb.getString("SnapToGridOnMove"));
+        if (SystemType.isMacOSX())
+            snapToGridOnMoveItem.setAccelerator(KeyStroke.getKeyStroke(stringsToVTCodes.get(
+                        rb.getString("SnapToGridOnMoveAccelerator")), ActionEvent.META_MASK | ActionEvent.SHIFT_MASK)); 
+        else
+            snapToGridOnMoveItem.setAccelerator(KeyStroke.getKeyStroke(stringsToVTCodes.get(
+                        rb.getString("SnapToGridOnMoveAccelerator")), ActionEvent.CTRL_MASK | ActionEvent.SHIFT_MASK)); 
         optionMenu.add(snapToGridOnMoveItem);
         snapToGridOnMoveItem.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent event) {
