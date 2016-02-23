@@ -58,6 +58,7 @@ import javax.swing.event.ListSelectionEvent;
 import javax.swing.table.TableColumn;
 import jmri.AddressedProgrammerManager;
 import jmri.GlobalProgrammerManager;
+import jmri.ProgrammerManager;
 import jmri.InstanceManager;
 import jmri.Programmer;
 import jmri.UserPreferencesManager;
@@ -111,10 +112,9 @@ import org.slf4j.LoggerFactory;
  *
  * @see jmri.jmrit.symbolicprog.tabbedframe.PaneSet
  *
- * @author Bob Jacobsen Copyright (C) 2010
+ * @author Bob Jacobsen Copyright (C) 2010, 2016
  * @author Kevin Dickerson Copyright (C) 2011
  * @author Randall Wood Copyright (C) 2012
- * @version $Revision: 20027 $
  */
 public class RosterFrame extends TwoPaneTBWindow implements RosterEntrySelector, RosterGroupSelector {
 
@@ -909,7 +909,7 @@ public class RosterFrame extends TwoPaneTBWindow implements RosterEntrySelector,
         pre.printPanes(boo);
     }
 
-    //Matches the first argument in the array against a locally know method
+    //Matches the first argument in the array against a locally-known method
     @Override
     public void remoteCalls(String[] args) {
         args[0] = args[0].toLowerCase();
@@ -1334,21 +1334,35 @@ public class RosterFrame extends TwoPaneTBWindow implements RosterEntrySelector,
      */
     //taken out of CombinedLocoSelPane
     protected void startIdentifyLoco() {
-        if (InstanceManager.getDefault(GlobalProgrammerManager.class) == null) {
-            log.error("Identify loco called when no service mode programmer is available");
-            JOptionPane.showMessageDialog(null, Bundle.getMessage("IdentifyError"));
-            return;
-        }
-        // start identifying a loco
         final RosterFrame me = this;
         Programmer programmer = null;
         if (modePanel.isSelected()) {
             programmer = modePanel.getProgrammer();
         }
         if (programmer == null) {
-            log.warn("Selector did not provide a programmer, use default");
-            programmer = InstanceManager.programmerManagerInstance().getGlobalProgrammer();
+            GlobalProgrammerManager gpm = InstanceManager.getDefault(GlobalProgrammerManager.class);
+            if (gpm!=null) {
+                programmer = gpm.getGlobalProgrammer();
+                log.warn("Selector did not provide a programmer, attempt to use GlobalProgrammerManager default: {}", programmer);
+            } else {
+                ProgrammerManager dpm = InstanceManager.programmerManagerInstance();
+                if (dpm!=null) {
+                    programmer = dpm.getGlobalProgrammer();
+                    log.warn("Selector did not provide a programmer, attempt to use InstanceManager default: {}", programmer);
+                } else {
+                    log.warn("Selector did not provide a programmer, and no ProgramManager found in InstanceManager");
+                }
+            }
         }
+
+        // if failed to get programmer, tell user and stop
+        if (programmer == null) {
+            log.error("Identify loco called when no service mode programmer is available; button should have been disabled");
+            JOptionPane.showMessageDialog(null, Bundle.getMessage("IdentifyError"));
+            return;
+        }
+        
+        // and now do the work
         IdentifyLoco ident = new IdentifyLoco(programmer) {
             private final RosterFrame who = me;
 
@@ -1501,28 +1515,29 @@ public class RosterFrame extends TwoPaneTBWindow implements RosterEntrySelector,
         ConnectionConfig oldServMode = serModeProCon;
         ConnectionConfig oldOpsMode = opsModeProCon;
 
+        // Find the connection that goes with the global programmer
         GlobalProgrammerManager gpm = InstanceManager.getDefault(GlobalProgrammerManager.class);
         if (gpm != null) {
-            String serviceModeProgrammer = gpm.getUserName();
+            String serviceModeProgrammerName = gpm.getUserName();
             for (ConnectionConfig connection : InstanceManager.getDefault(ConnectionConfigManager.class)) {
-                if (connection.getConnectionName() != null && connection.getConnectionName().equals(serviceModeProgrammer)) {
+                if (connection.getConnectionName() != null && connection.getConnectionName().equals(serviceModeProgrammerName)) {
                     serModeProCon = connection;
                 }
             }
         }
+
+        // Find the connection that goes with the addressed programmer
         AddressedProgrammerManager apm = InstanceManager.getDefault(AddressedProgrammerManager.class);
         if (apm != null) {
-            //Ideally we should probably have the progDebugger manager reference the username configured in the system connection memo.
-            //but as DP3 (jmri can not use mutliple programmers!) isn't designed for multi-connection enviroments this should be sufficient*/
-            String opsModeProgrammer = apm.getUserName();
+            String opsModeProgrammerName = apm.getUserName();
             for (ConnectionConfig connection : InstanceManager.getDefault(ConnectionConfigManager.class)) {
-                if (connection.getConnectionName() != null && connection.getConnectionName().equals(opsModeProgrammer)) {
+                if (connection.getConnectionName() != null && connection.getConnectionName().equals(opsModeProgrammerName)) {
                     opsModeProCon = connection;
                 }
             }
         }
 
-        if (serModeProCon != null) {
+        if (serModeProCon != null && gpm.isGlobalProgrammerAvailable()) {
             if (ConnectionStatus.instance().isConnectionOk(serModeProCon.getInfo())
                     && gpm != null) {
                 serviceModeProgrammerLabel.setText(
@@ -1541,6 +1556,7 @@ public class RosterFrame extends TwoPaneTBWindow implements RosterEntrySelector,
                 firePropertyChange("setprogservice", "setEnabled", true);
             }
         } else {
+            // No service programmer available, disable interface sections not available
             serviceModeProgrammerLabel.setText(Bundle.getMessage("NoServiceProgrammerAvailable"));
             serviceModeProgrammerLabel.setForeground(Color.red);
             if (oldServMode != null) {
@@ -1550,9 +1566,13 @@ public class RosterFrame extends TwoPaneTBWindow implements RosterEntrySelector,
                 service.setVisible(false);
                 firePropertyChange("setprogservice", "setEnabled", false);
             }
+            // Disable Identify in toolBar
+            // This relies on it being the 2nd item in the tool bar, as defined in xml//config/parts/jmri/jmrit/roster/swing/RosterFrameToolBar.xml
+            // Because of I18N, we don't look for a particular Action name here
+            getToolBar().getComponents()[1].setEnabled(false);
         }
 
-        if (opsModeProCon != null) {
+        if (opsModeProCon != null && apm.isAddressedModePossible()) {
             if (ConnectionStatus.instance().isConnectionOk(opsModeProCon.getInfo()) && apm != null) {
                 operationsModeProgrammerLabel.setText(
                         Bundle.getMessage("OpsModeProgOnline", opsModeProCon.getConnectionName()));

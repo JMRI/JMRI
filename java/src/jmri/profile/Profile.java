@@ -218,12 +218,12 @@ public class Profile implements Comparable<Profile> {
     /**
      * Test if the profile is complete. A profile is considered complete if it
      * can be instantiated using {@link #Profile(java.io.File)} and has a
-     * ProfileConfig.xml file within it's private directory.
+     * profile.properties file within its "profile" directory.
      *
-     * @return true if ProfileConfig.xml exists where expected.
+     * @return true if profile.properties exists where expected.
      */
     public boolean isComplete() {
-        return (new File(this.getPath(), Profile.CONFIG_FILENAME)).exists();
+        return (new File(this.getPath(), Profile.SHARED_PROPERTIES)).exists();
     }
 
     /**

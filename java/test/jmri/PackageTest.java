@@ -38,6 +38,7 @@ public class PackageTest extends TestCase {
         suite.addTest(jmri.InstanceManagerTest.suite());
         suite.addTest(jmri.LightTest.suite());
         suite.addTest(jmri.NmraPacketTest.suite());
+        suite.addTest(jmri.ConditionalVariableTest.suite());
         suite.addTest(jmri.PathTest.suite());
         suite.addTest(jmri.PathLengthTest.suite());
         suite.addTest(jmri.PushbuttonPacketTest.suite());
@@ -59,6 +60,7 @@ public class PackageTest extends TestCase {
         suite.addTest(jmri.util.PackageTest.suite());
         suite.addTest(jmri.web.PackageTest.suite());
         suite.addTest(jmri.jmris.PackageTest.suite());
+        suite.addTest(jmri.profile.PackageTest.suite());
         return suite;
     }
 

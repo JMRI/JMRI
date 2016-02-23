@@ -16,6 +16,8 @@
 #    on the Java command line. A line like: OPTIONS="${OPTIONS} -Djna.library.path=.:$SYSLIBPATH:lib" should be added in 
 #    the StartJMRI shell script in the JMRI application bundle you use (by the end of the file where other lines like that appear)
 
+import java
+import jmri
 import jmri.jmrit.jython.Jynstrument as Jynstrument
 import java.awt.CardLayout as CardLayout
 import jmri.util.swing.ResizableImagePanel as ResizableImagePanel

@@ -1,6 +1,10 @@
 /* AddressedProgrammerManager.java */
 package jmri;
 
+import edu.umd.cs.findbugs.annotations.NonNull;
+import edu.umd.cs.findbugs.annotations.Nullable;
+import edu.umd.cs.findbugs.annotations.CheckForNull;
+
 import java.util.List;
 
 /**
@@ -44,6 +48,7 @@ public interface AddressedProgrammerManager {
      * @param pAddress     Specific decoder address to use.
      * @return null only if there isn't an Ops Mode Programmer in the system
      */
+    @CheckForNull
     public AddressedProgrammer getAddressedProgrammer(boolean pLongAddress, int pAddress);
 
     /**
@@ -54,13 +59,14 @@ public interface AddressedProgrammerManager {
      * @param pAddress     Specific decoder address to use.
      * @return null if the address is in use by a reserved programmer
      */
+    @CheckForNull
     public AddressedProgrammer reserveAddressedProgrammer(boolean pLongAddress, int pAddress);
 
     /**
      * Return access to an Addressed Mode Programmer, so that it can be used
      * elsewhere.
      */
-    public void releaseAddressedProgrammer(AddressedProgrammer p);
+    public void releaseAddressedProgrammer(@NonNull AddressedProgrammer p);
 
     /**
      * Convenience method to check whether you'll be able to get an Addressed
@@ -76,7 +82,7 @@ public interface AddressedProgrammerManager {
      *
      * @return false if there's no chance of getting one
      */
-    public boolean isAddressedModePossible(LocoAddress address);
+    public boolean isAddressedModePossible(@NonNull LocoAddress address);
 
     /**
      * Get the list of {@link ProgrammingMode} (generally) supported by
@@ -87,6 +93,7 @@ public interface AddressedProgrammerManager {
      * <p>
      * If the order is significant, earlier modes are better.
      */
+    @NonNull
     public List<ProgrammingMode> getDefaultModes();
 
     /**
@@ -94,6 +101,7 @@ public interface AddressedProgrammerManager {
      * ProgrammerManagers directly in e.g. JComboBoxes, so it should return a
      * user-provided name for this particular one.
      */
+    @NonNull
     public String getUserName();
 
     /**
@@ -101,6 +109,7 @@ public interface AddressedProgrammerManager {
      * ProgrammerManagers directly in e.g. JComboBoxes, so it should return a
      * user-provided name for this particular one.
      */
+    @NonNull
     public String toString();
 }
 

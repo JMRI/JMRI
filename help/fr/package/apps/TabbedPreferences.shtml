@@ -1,5 +1,4 @@
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
-<!-- $Id$ -->
 <!-- UpDated  by Blorec Herv&#233; 2013-10-08-->
 <html lang="fr">
 <head>
@@ -7,7 +6,7 @@
       JMRI: Preferences Window
  </TITLE>
     <META http-equiv=Content-Type content="text/html; charset=iso-8859-1">
-    <META content="Bob Jacobsen" name=Author>
+    <META content="Bob Jacobsen" name="Author">
     <META name="keywords" content="JMRI help preferences">
 
 <!-- Style -->
@@ -24,15 +23,16 @@
   <div class="nomenu" id="mBody">
     <div id="mainContent">
 
-<H1>JMRI:Fen&#234;tre pr&#233;f&#233;rences</H1>
+<H1>JMRI:Fen&#234;tre Pr&#233;f&#233;rences</H1>
 
 La fen&#234;tre de pr&#233;f&#233;rences vous
-configure le fonctionnement de base de votre applicaton JMRI.
+configure le fonctionnement de base de votre application JMRI.
 <p>
 L'&#233;cran est divis&#233; en deux sections, sur le c&#244;t&#233; gauche est une liste des groupes de pr&#233;f&#233;rence qui peut &#234;tre r&#233;gl&#233;.
 Cliquer sur chaque pr&#233;f&#233;rence va ensuite remplir le c&#244;t&#233; droit, avec les diff&#233;rentes options qui peuvent &#234;tre configur&#233;es.
-<a href="../../manual/images/Preferences.png">
-<img src="../../manual/images/Preferences.png" height="156" width="256" align="right"></a>
+<a href="../../html/setup/images/PrefsConnexions_fr.png">
+<img src="../../html/setup/images/PrefsConnexions_fr.png" height="277" width="431
+" align="right"></a>
 <p>
 <a href="#Connection">Connexions</a><br>
 <a href="#Defaults">D&#233;fauts</a><br>
