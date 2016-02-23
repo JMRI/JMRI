@@ -1,0 +1,3 @@
+# Providers of JSON services
+# order is unimportant
+jmri.server.json.power.JsonPowerServiceFactory
