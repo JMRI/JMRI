@@ -650,8 +650,6 @@
 
 <mapID target="package.jmri.jmrit.operations.Operations_BackupRestore" url="package/jmri/jmrit/operations/Operations.shtml#BackupRestore"/>
 
-<mapID target="html.doc.Technical.JBuilder" url="html/doc/Technical/JBuilder.shtml"/>
-
 <mapID target="html.tools.signaling.AspectSignaling" url="html/tools/signaling/AspectSignaling.shtml"/>
 
 <mapID target="package.jmri.jmrix.sprog.sprogslotmon.SprogSlotMonFrame" url="package/jmri/jmrix/sprog/sprogslotmon/SprogSlotMonFrame.shtml"/>
@@ -875,8 +873,6 @@
 <mapID target="package.jmri.jmrit.dispatcher.Dispatcher_automatic" url="package/jmri/jmrit/dispatcher/Dispatcher.shtml#automatic"/>
 
 <mapID target="html.tools.scripting.AppleScript" url="html/tools/scripting/AppleScript.shtml"/>
-
-<mapID target="html.doc.Technical.XCode" url="html/doc/Technical/XCode.shtml"/>
 
 <mapID target="package.jmri.jmrit.operations.Operations_ImportLocomotives" url="package/jmri/jmrit/operations/Operations.shtml#ImportLocomotives"/>
 

@@ -1425,12 +1425,6 @@
 
   
 <li>
-<a href="html/doc/Technical/JBuilder.shtml">JBuilder IDE </a>
-<ul></ul>
-</li>
-
-  
-<li>
 <a href="html/doc/Technical/NetBeans.shtml">NetBeans IDE </a>
 <ul></ul>
 </li>
@@ -1438,12 +1432,6 @@
   
 <li>
 <a href="package/jmri/jmrit/automat/monitor/AutomatTableFrame.shtml">Thread Monitor </a>
-<ul></ul>
-</li>
-
-  
-<li>
-<a href="html/doc/Technical/XCode.shtml">XCode IDE </a>
 <ul></ul>
 </li>
 
