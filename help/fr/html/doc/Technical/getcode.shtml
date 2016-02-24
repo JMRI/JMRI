@@ -17,7 +17,7 @@
     <!-- or change them to reflect your alternative logo -->
 
 <!-- Style -->
-  <META http-equiv=Content-Type content="text/html; charset= iso-8859-1">
+  <META http-equiv=Content-Type content="text/html; charset=ISO-8859-1">
   <link rel="stylesheet" type="text/css" href="/css/default.css" media="screen">
   <link rel="stylesheet" type="text/css" href="/css/print.css" media="print">
   <link rel="icon" href="/images/jmri.ico" type="image/png">
@@ -92,9 +92,7 @@ svn update
    compiler et ex&#233;cuter, vous avez besoin d'un des outils de compilation d&#233;crit
    sur la barre &#224; gauche: <a href="Ant.shtml"> Ant </a>, <a
     href = "Eclipse.shtml"> Eclipse </a>, <a
-    href = " NetBeans.shtml"> NetBeans </a>, <a
-    href = "JBuilder.shtml"> JBuilder </a>, etc (Ant peut-&#234;tre le plus facile &#224;
-   installer et &#224; utiliser, et c'est le principal exemple dans la documentation) </p>
+    href = " NetBeans.shtml"> NetBeans </a>, etc.</p>
 
    <p> Une fois que vous travaillez avec le code, vous aurez probablement cr&#233;er quelques am&#233;liorations
    que vous souhaitez contribuer en retour au projet. C'est l&#224; que Subversion a un &#233;norme

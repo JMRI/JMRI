@@ -552,10 +552,6 @@
 
    <tocitem text="Building with Eclipse " target="html.doc.Technical.Eclipse"/>
 
-   <tocitem text="Building with JBuilder " target="html.doc.Technical.JBuilder"/>
-
-   <tocitem text="Building with XCode " target="html.doc.Technical.XCode"/>
-
   </tocitem>
   <tocitem text="How We Do Stuff ">
    <tocitem text="Recommended Practices for Programmers " target="html.doc.Technical.RP"/>
