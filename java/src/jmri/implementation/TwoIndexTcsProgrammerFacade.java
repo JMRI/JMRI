@@ -1,11 +1,11 @@
 // TwoIndexTcsProgrammerFacade.java
 package jmri.implementation;
-
 import jmri.ProgListener;
 import jmri.Programmer;
 import jmri.jmrix.AbstractProgrammerFacade;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+
 
 /**
  * Programmer facade for single index multi-CV access.
@@ -164,7 +164,15 @@ public class TwoIndexTcsProgrammerFacade extends AbstractProgrammerFacade implem
         if (_usingProgrammer == null) {
             log.error("No listener to notify");
         }
-
+        
+        //added so that WOWDecoder will go through a complete power on reset and not brown out between CV read/writes
+        try {
+            Thread.sleep(150);
+        } catch (InterruptedException e1) {
+            // TODO Auto-generated catch block
+            e1.printStackTrace(); 
+        }
+        
         switch (state) {
             case DOSIFORREAD:
                 try {
