@@ -443,9 +443,14 @@ public class JsonServlet extends WebSocketServlet {
                             break;
                         default:
                             if (this.services.get(type) != null) {
+                                ArrayNode array = this.mapper.createArrayNode();
                                 for (JsonHttpService service : this.services.get(type)) {
-                                    // TODO: take all replies and massage into single reply
-                                    reply = service.doGet(type, name, request.getLocale());
+                                    array.add(service.doGet(type, name, request.getLocale()));
+                                }
+                                if (array.size() == 1) {
+                                    reply = array.get(0);
+                                } else {
+                                    reply = array;
                                 }
                             }
                             if (reply == null) {
