@@ -20,7 +20,7 @@ import static jmri.server.json.power.JsonPowerServiceFactory.POWER;
  */
 public class JsonPowerSocketService extends JsonSocketService implements PropertyChangeListener {
 
-    private PowerManager manager;
+    private boolean listening = false;
     private final JsonPowerHttpService service;
 
     public JsonPowerSocketService(JsonConnection connection) {
@@ -30,11 +30,11 @@ public class JsonPowerSocketService extends JsonSocketService implements Propert
 
     @Override
     public void onMessage(String type, JsonNode data, Locale locale) throws IOException, JmriException, JsonException {
-        if (this.manager == null) {
-            this.manager = InstanceManager.getDefault(PowerManager.class);
-            this.manager.addPropertyChangeListener(this);
+        if (!this.listening) {
+            InstanceManager.getDefault(PowerManager.class).addPropertyChangeListener(this);
+            this.listening = true;
         }
-        this.service.doPost(type, POWER, data, locale);
+        this.service.doPost(type, null, data, locale);
     }
 
     @Override
@@ -57,9 +57,7 @@ public class JsonPowerSocketService extends JsonSocketService implements Propert
 
     @Override
     public void onClose() {
-        if (this.manager != null) {
-            this.manager.removePropertyChangeListener(this);
-        }
+        InstanceManager.getDefault(PowerManager.class).removePropertyChangeListener(this);
     }
 
 }

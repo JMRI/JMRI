@@ -27,14 +27,12 @@ public class JsonPowerServiceFactory implements JsonServiceFactory {
 
     @Override
     public JsonSocketService getSocketService(JsonConnection connection) {
-        // do not include in imports to prevent class loading if never called
-        return new jmri.server.json.power.JsonPowerSocketService(connection);
+        return new JsonPowerSocketService(connection);
     }
 
     @Override
     public JsonHttpService getHttpService(ObjectMapper mapper) {
-        // do not include in imports to prevent class loading if never called
-        return new jmri.server.json.power.JsonPowerHttpService(mapper);
+        return new JsonPowerHttpService(mapper);
     }
     
 }
