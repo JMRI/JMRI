@@ -642,6 +642,7 @@ public class JsonUtil {
         return root;
     }
 
+    @Deprecated
     static public JsonNode getPower(Locale locale) throws JsonException {
         ObjectNode root = mapper.createObjectNode();
         root.put(TYPE, POWER);
@@ -668,6 +669,7 @@ public class JsonUtil {
         return root;
     }
 
+    @Deprecated
     static public void setPower(Locale locale, JsonNode data) throws JsonException {
         int state = data.path(STATE).asInt(UNKNOWN);
         try {
@@ -1451,6 +1453,16 @@ public class JsonUtil {
         return root;
     }
 
+    /**
+     * JSON errors should be handled by throwing a
+     * {@link jmri.server.json.JsonException}.
+     *
+     * @param code
+     * @param message
+     * @return
+     * @deprecated
+     */
+    @Deprecated
     static public ObjectNode handleError(int code, String message) {
         ObjectNode root = mapper.createObjectNode();
         root.put(TYPE, ERROR);

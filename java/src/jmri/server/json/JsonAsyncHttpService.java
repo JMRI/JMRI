@@ -1,7 +1,6 @@
 package jmri.server.json;
 
 import com.fasterxml.jackson.databind.JsonNode;
-import javax.servlet.AsyncContext;
 
 /**
  *
@@ -9,6 +8,14 @@ import javax.servlet.AsyncContext;
  */
 public interface JsonAsyncHttpService {
 
-    public void doAsyncGet(String type, String name, JsonNode data, AsyncContext context);
-    
+    /**
+     * Create a listener that can be disposed of.
+     *
+     * @param type The type of object to listen for changes to
+     * @param name The name of the object to listen for changes to
+     * @param data The current start of the object to listen to
+     * @return
+     */
+    public JsonAsyncHttpListener getListener(String type, String name, JsonNode data);
+
 }

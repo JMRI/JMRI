@@ -10,12 +10,14 @@ import jmri.PowerManager;
 import static jmri.jmris.json.JSON.DATA;
 import static jmri.jmris.json.JSON.OFF;
 import static jmri.jmris.json.JSON.ON;
-import static jmri.jmris.json.JSON.POWER;
 import static jmri.jmris.json.JSON.STATE;
 import static jmri.jmris.json.JSON.TYPE;
 import static jmri.jmris.json.JSON.UNKNOWN;
-import jmri.jmris.json.JsonException;
+import jmri.server.json.JsonAsyncHttpListener;
+import jmri.server.json.JsonAsyncHttpService;
+import jmri.server.json.JsonException;
 import jmri.server.json.JsonHttpService;
+import static jmri.server.json.power.JsonPowerServiceFactory.POWER;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -23,10 +25,10 @@ import org.slf4j.LoggerFactory;
  *
  * @author Randall Wood
  */
-public class JsonPowerHttpService extends JsonHttpService {
+public class JsonPowerHttpService extends JsonHttpService implements JsonAsyncHttpService {
 
     private static final Logger log = LoggerFactory.getLogger(JsonPowerHttpService.class);
-    
+
     public JsonPowerHttpService(ObjectMapper mapper) {
         super(mapper);
     }
@@ -85,10 +87,37 @@ public class JsonPowerHttpService extends JsonHttpService {
     public JsonNode doPut(String type, String name, JsonNode data, Locale locale) throws JsonException {
         return this.doPost(type, name, data, locale);
     }
-    
+
     @Override
     public JsonNode doGetList(String type, Locale locale) throws JsonException {
         return this.doGet(type, type, locale);
     }
-    
+
+    @Override
+    public JsonAsyncHttpListener getListener(String type, String name, JsonNode data) {
+        return new JsonAsyncHttpListener(type, name, data, this) {
+
+            @Override
+            public boolean listen() {
+                PowerManager instance = InstanceManager.powerManagerInstance();
+                try {
+                    if (instance.getPower() == this.data.path(STATE).asInt(UNKNOWN)) {
+                        instance.addPropertyChangeListener(this.listener);
+                    } else {
+                        return false;
+                    }
+                } catch (JmriException ex) {
+                    log.error("Unable to get Power state.", ex);
+                    return false;
+                }
+                return true;
+            }
+
+            @Override
+            public void stopListening() {
+                InstanceManager.powerManagerInstance().removePropertyChangeListener(this.listener);
+            }
+        };
+    }
+
 }

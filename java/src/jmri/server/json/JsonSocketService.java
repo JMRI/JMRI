@@ -6,7 +6,6 @@ import java.io.IOException;
 import java.util.Locale;
 import jmri.JmriException;
 import jmri.jmris.json.JsonConnection;
-import jmri.jmris.json.JsonException;
 
 /**
  * Interface for all JSON Services.

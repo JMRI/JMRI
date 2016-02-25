@@ -56,6 +56,7 @@ import static jmri.jmris.json.JSON.TURNOUT;
 import static jmri.jmris.json.JSON.TURNOUTS;
 import static jmri.jmris.json.JSON.TYPE;
 import static jmri.jmris.json.JSON.XML;
+import jmri.server.json.JsonException;
 import jmri.server.json.JsonSocketService;
 import jmri.spi.JsonServiceFactory;
 import org.slf4j.Logger;

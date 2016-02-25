@@ -1,16 +1,11 @@
-package jmri.jmris.json;
-
-import jmri.server.json.JsonException;
-import jmri.server.json.power.JsonPowerServiceFactory;
+package jmri.server.json;
 
 /**
- * Constants used in the JMRI JSON protocol through version 3.0.
- * <p>
- * With the exception of the constants F0-F28 (see {@link #F}), all object names
- * used in the JMRI JSON protocol are constants in this class.
+ * Common constants used in the JMRI JSON protocol starting with protocol
+ * version 4.0.
  *
  * @author Randall Wood (C) 2013, 2014, 2016
- * @see jmri.server.json.JSON
+ * @see jmri.jmris.json.JSON
  */
 public final class JSON {
 
@@ -21,16 +16,16 @@ public final class JSON {
      * the protocol, while changes to the minor number represent an addition to
      * the protocol.
      * <p>
-     * Protocol version 1.0 was first introduced in JMRI 3.4<br>
-     * Protocol version 1.1 was first introduced in JMRI 3.7.1 and finalized in
-     * JMRI 3.8<br>
-     * Protocol version 2.0 was first introduced in JMRI 3.9.3 and finalized in
-     * JMRI 3.10<br>
-     * Protocol version 3.0 was first introduced in JMRI 3.11.2.
+     * Protocol version 4.0 was first introduced in JMRI 4.3.4.
+     * <p>
+     * Prior to version 4.0, the JSON servers had a single definition for all
+     * tokens used in JSON communications. As of version 4.0, the JSON servers
+     * use a modular protocol, fixing as constants only the tokens used for the
+     * basic protocol structure as well as some tokens used by multiple modules.
      * <p>
      * {@value #JSON_PROTOCOL_VERSION}
      */
-    public static final String JSON_PROTOCOL_VERSION = jmri.server.json.JSON.JSON_PROTOCOL_VERSION; // NOI18N
+    public static final String JSON_PROTOCOL_VERSION = "4.0"; // NOI18N
 
     /* JSON structure */
     /**
@@ -115,20 +110,6 @@ public final class JSON {
      * {@value #STATUS_CODE}
      */
     public static final String STATUS_CODE = "statusCode"; // NOI18N
-
-    /* JSON error */
-    /**
-     * {@value #ERROR}
-     */
-    public static final String ERROR = JsonException.ERROR; // NOI18N
-    /**
-     * {@value #CODE}
-     */
-    public static final String CODE = JsonException.CODE; // NOI18N
-    /**
-     * {@value #MESSAGE}
-     */
-    public static final String MESSAGE = JsonException.MESSAGE; // NOI18N
 
     /* JSON hello and metadata */
     /**
@@ -291,10 +272,6 @@ public final class JSON {
      * {@value #PANEL}
      */
     public static final String PANEL = "panel"; // NOI18N
-    /**
-     * {@value #POWER}
-     */
-    public static final String POWER = JsonPowerServiceFactory.POWER; // NOI18N
     /**
      * {@value #PROGRAMMER}
      */
@@ -828,7 +805,7 @@ public final class JSON {
      * JSON State (an unsigned integer)
      */
 
-    /* Common state */
+ /* Common state */
     /**
      * {@value #UNKNOWN}
      * <p>

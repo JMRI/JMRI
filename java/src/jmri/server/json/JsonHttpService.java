@@ -4,7 +4,6 @@ import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import java.util.Locale;
 import javax.servlet.http.HttpServletResponse;
-import jmri.jmris.json.JsonException;
 
 /**
  * Provide HTTP method handlers for JSON RESTful messages
@@ -75,14 +74,15 @@ public abstract class JsonHttpService {
      *
      * Throw an HTTP 405 Method Not Allowed exception if the object is not
      * intendended to be removable.
+     * 
+     * Do not throw an error if the requested object does not exist.
      *
-     * @param type   the type of the requested object.
-     * @param name   the name of the requested object.
+     * @param type   the type of the deleted object.
+     * @param name   the name of the deleted object.
      * @param locale the requesting client's Locale.
-     * @return a JSON description of the requested object.
      * @throws JsonException
      */
-    public JsonNode doDelete(String type, String name, Locale locale) throws JsonException {
+    public void doDelete(String type, String name, Locale locale) throws JsonException {
         throw new JsonException(HttpServletResponse.SC_METHOD_NOT_ALLOWED, Bundle.getMessage(locale, "DeleteNotAllowed", type));
     }
 
