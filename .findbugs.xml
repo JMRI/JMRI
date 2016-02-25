@@ -10,6 +10,19 @@
      </Match>
 
      <Match>
+       <!-- Most of these are non-I18N, internal changes of case.
+            We should find the I18N ones, but it seems excessive
+            to track down and annotate all the others first thing -->
+       <Bug pattern="DM_CONVERT_CASE" />
+     </Match>
+
+     <Match>
+       <!-- Efficiency issue, bu hard to ensure refactor doesn't introduce
+            bugs, so leaving for later -->
+       <Bug pattern="WMI_WRONG_MAP_ITERATOR" />
+     </Match>
+
+     <Match>
        <!-- Design issue, for later -->
        <Bug pattern="SIC_INNER_SHOULD_BE_STATIC_NEEDS_THIS" />
      </Match>
