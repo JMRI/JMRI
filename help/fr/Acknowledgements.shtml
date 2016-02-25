@@ -438,7 +438,7 @@
 				investigated how to display the throttle ID in the LocoNet Slot Monitor,
 				updated the Comprehensive programmer format to improve speed,
 				and co-wrote the 2009 DecoderPro manual.
-			<LI>Alex Shepherd, who helped move development to JBuilder, a much better tool, and
+			<LI>Alex Shepherd, who helped move development to JBuilder, and
 				created the client/server implementation for LocoNet. He's also improved
 				the LocoNet monitor formatting and added support for a new
 				type of accessory decoder
