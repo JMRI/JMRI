@@ -13,8 +13,6 @@ import static jmri.jmris.json.JSON.ON;
 import static jmri.jmris.json.JSON.STATE;
 import static jmri.jmris.json.JSON.TYPE;
 import static jmri.jmris.json.JSON.UNKNOWN;
-import jmri.server.json.JsonAsyncHttpListener;
-import jmri.server.json.JsonAsyncHttpService;
 import jmri.server.json.JsonException;
 import jmri.server.json.JsonHttpService;
 import static jmri.server.json.power.JsonPowerServiceFactory.POWER;
@@ -25,7 +23,7 @@ import org.slf4j.LoggerFactory;
  *
  * @author Randall Wood
  */
-public class JsonPowerHttpService extends JsonHttpService implements JsonAsyncHttpService {
+public class JsonPowerHttpService extends JsonHttpService {
 
     private static final Logger log = LoggerFactory.getLogger(JsonPowerHttpService.class);
 
@@ -92,32 +90,4 @@ public class JsonPowerHttpService extends JsonHttpService implements JsonAsyncHt
     public JsonNode doGetList(String type, Locale locale) throws JsonException {
         return this.doGet(type, type, locale);
     }
-
-    @Override
-    public JsonAsyncHttpListener getListener(String type, String name, JsonNode data) {
-        return new JsonAsyncHttpListener(type, name, data, this) {
-
-            @Override
-            public boolean listen() {
-                PowerManager instance = InstanceManager.powerManagerInstance();
-                try {
-                    if (instance.getPower() == this.data.path(STATE).asInt(UNKNOWN)) {
-                        instance.addPropertyChangeListener(this);
-                    } else {
-                        return false;
-                    }
-                } catch (JmriException ex) {
-                    log.error("Unable to get Power state.", ex);
-                    return false;
-                }
-                return true;
-            }
-
-            @Override
-            public void stopListening() {
-                InstanceManager.powerManagerInstance().removePropertyChangeListener(this);
-            }
-        };
-    }
-
 }

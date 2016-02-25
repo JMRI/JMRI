@@ -13,8 +13,6 @@ import static jmri.server.json.JSON.ON;
 import static jmri.server.json.JSON.RATE;
 import static jmri.server.json.JSON.STATE;
 import static jmri.server.json.JSON.TYPE;
-import jmri.server.json.JsonAsyncHttpListener;
-import jmri.server.json.JsonAsyncHttpService;
 import jmri.server.json.JsonException;
 import jmri.server.json.JsonHttpService;
 import static jmri.server.json.time.JsonTimeServiceFactory.TIME;
@@ -23,7 +21,7 @@ import static jmri.server.json.time.JsonTimeServiceFactory.TIME;
  *
  * @author Randall Wood
  */
-class JsonTimeHttpService extends JsonHttpService implements JsonAsyncHttpService {
+class JsonTimeHttpService extends JsonHttpService {
 
     public JsonTimeHttpService(ObjectMapper mapper) {
         super(mapper);
@@ -61,21 +59,5 @@ class JsonTimeHttpService extends JsonHttpService implements JsonAsyncHttpServic
     @Override
     public JsonNode doGetList(String type, Locale locale) throws JsonException {
         return this.doGet(type, null, locale);
-    }
-
-    @Override
-    public JsonAsyncHttpListener getListener(String type, String name, JsonNode data) {
-        return new JsonAsyncHttpListener(type, name, data, this) {
-            @Override
-            public boolean listen() {
-                InstanceManager.timebaseInstance().addPropertyChangeListener(this);
-                return true;
-            }
-
-            @Override
-            public void stopListening() {
-                InstanceManager.timebaseInstance().removePropertyChangeListener(this);
-            }
-        };
     }
 }
