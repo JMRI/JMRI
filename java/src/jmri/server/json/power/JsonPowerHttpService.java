@@ -102,7 +102,7 @@ public class JsonPowerHttpService extends JsonHttpService implements JsonAsyncHt
                 PowerManager instance = InstanceManager.powerManagerInstance();
                 try {
                     if (instance.getPower() == this.data.path(STATE).asInt(UNKNOWN)) {
-                        instance.addPropertyChangeListener(this.listener);
+                        instance.addPropertyChangeListener(this);
                     } else {
                         return false;
                     }
@@ -115,7 +115,7 @@ public class JsonPowerHttpService extends JsonHttpService implements JsonAsyncHt
 
             @Override
             public void stopListening() {
-                InstanceManager.powerManagerInstance().removePropertyChangeListener(this.listener);
+                InstanceManager.powerManagerInstance().removePropertyChangeListener(this);
             }
         };
     }
