@@ -4,6 +4,8 @@ import jmri.jmrix.configurexml.AbstractNetworkConnectionConfigXml;
 import jmri.jmrix.lenz.liusbserver.ConnectionConfig;
 import jmri.jmrix.lenz.liusbserver.LIUSBServerAdapter;
 import org.jdom2.Element;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 /**
  * Handle XML persistance of layout connections by persistening the LIUSB Server
@@ -46,15 +48,8 @@ public class ConnectionConfigXml extends AbstractNetworkConnectionConfigXml {
     @Override
     public boolean load(Element shared, Element perNode) {
         boolean result = true;
-        // start the "connection"
-        /*jmri.jmrix.lenz.liusbserver.LIUSBServerAdapter adapter = 
-         new jmri.jmrix.lenz.liusbserver.LIUSBServerAdapter();
-         String errCode = adapter.openPort("localhost","LIUSBServer");
-         if (errCode == null)    {
-         adapter.configure();
-         }*/
-        // register, so can be picked up
         getInstance();
+        // register, so can be picked up
         register();
         return result;
     }
@@ -63,11 +58,12 @@ public class ConnectionConfigXml extends AbstractNetworkConnectionConfigXml {
     protected void getInstance() {
         if (adapter == null) { //adapter=new LIUSBServerAdapter();
             adapter = new LIUSBServerAdapter();
-            String errCode = ((LIUSBServerAdapter) adapter).openPort("localhost", "LIUSBServer");
-            if (errCode == null) {
+            try { 
+                adapter.connect();
                 adapter.configure();
+            } catch(Exception e){
+                log.error("Error connecting or configuring port.");
             }
-
         }
     }
 
@@ -80,5 +76,8 @@ public class ConnectionConfigXml extends AbstractNetworkConnectionConfigXml {
     protected void register() {
         this.register(new ConnectionConfig(adapter));
     }
+
+    private final static Logger log = LoggerFactory.getLogger(ConnectionConfigXml.class.getName());
+
 
 }

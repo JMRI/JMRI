@@ -95,7 +95,7 @@ directory that contains various test routines.
 <p>
 You can look at the code with your favorite text editor.  To compile and
 run it, you need one of the compilation tools described on the bar at the
-left: Ant, JBuilder, etc.  (Ant may be the easiest to install and use)
+left.
 <p>
 Once you're working with the code, you'll probably create some improvements
 you'd like to contribute back to the project.  This is where CVS has tremendous

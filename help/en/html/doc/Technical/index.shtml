@@ -147,8 +147,8 @@ look at the navigation bar to the left for instructions on how to
 build JMRI using
 <a href="NetBeans.shtml">NetBeans</a>,
 <a href="Eclipse.shtml">Eclipse</a>,
-<a href="XCode.shtml">XCode</a>, or
-<a href="JBuilder.shtml">JBuilder</a>.
+or
+<a href="IntelliJ.shtml">IntelliJ</a>.
 <p>
 NetBeans provides a very convenient system for building, running,
 and if need be debugging the program.  If you're not

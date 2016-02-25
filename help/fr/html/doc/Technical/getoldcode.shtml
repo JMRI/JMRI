@@ -104,7 +104,7 @@ qui contient diverses routines de test.
 <P>
 Vous pouvez consulter le code avec votre &#233;diteur de texte favori. Pour compiler et
 ex&#233;cuter, vous avez besoin d'un des outils de compilation d&#233;crits sur la barre &#224; 
-gauche: Ant, JBuilder, etc (Ant peut-&#234;tre le plus facile &#224; installer et &#224; utiliser)
+gauche.
 <P>
 Une fois que vous aurez travaillez avec le code, vous aurez probablement cr&#233;er quelques am&#233;liorations et
 vous souhaitez contribuer en retour au projet. C'est l&#224; que CVS a un &#233;norme
