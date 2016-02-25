@@ -305,10 +305,6 @@ public final class JSON {
      */
     public static final String THROTTLE = "throttle"; // NOI18N
     /**
-     * {@value #TIME}
-     */
-    public static final String TIME = "time"; // NOI18N
-    /**
      * {@value #TRAIN}
      */
     public static final String TRAIN = "train"; // NOI18N

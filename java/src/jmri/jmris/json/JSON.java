@@ -2,6 +2,7 @@ package jmri.jmris.json;
 
 import jmri.server.json.JsonException;
 import jmri.server.json.power.JsonPowerServiceFactory;
+import jmri.server.json.time.JsonTimeServiceFactory;
 
 /**
  * Constants used in the JMRI JSON protocol through version 3.0.
@@ -330,7 +331,7 @@ public final class JSON {
     /**
      * {@value #TIME}
      */
-    public static final String TIME = "time"; // NOI18N
+    public static final String TIME = JsonTimeServiceFactory.TIME; // NOI18N
     /**
      * {@value #TRAIN}
      */

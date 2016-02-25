@@ -71,7 +71,6 @@ import static jmri.jmris.json.JSON.SIGNAL_MAST;
 import static jmri.jmris.json.JSON.SIGNAL_MASTS;
 import static jmri.jmris.json.JSON.STATE;
 import static jmri.jmris.json.JSON.SYSTEM_CONNECTIONS;
-import static jmri.jmris.json.JSON.TIME;
 import static jmri.jmris.json.JSON.TRAIN;
 import static jmri.jmris.json.JSON.TRAINS;
 import static jmri.jmris.json.JSON.TURNOUT;
@@ -275,15 +274,6 @@ public class JsonServlet extends WebSocketServlet {
                             break;
                         case SIGNAL_MASTS:
                             reply = JsonUtil.getSignalMasts(request.getLocale());
-                            break;
-                        case TIME:
-                            if (longPoll) {
-                                final AsyncContext context = request.startAsync(request, response);
-                                context.setTimeout(longPollTimeout);
-                                context.start(new TimePollingHandler(request.getLocale(), context));
-                                return;
-                            }
-                            reply = JsonUtil.getTime(request.getLocale());
                             break;
                         case TRAINS:
                             reply = JsonUtil.getTrains(request.getLocale());
@@ -1134,36 +1124,6 @@ public class JsonServlet extends WebSocketServlet {
                 }
             };
             signalMast.addPropertyChangeListener(listener);
-        }
-    }
-
-    private static class TimePollingHandler extends JsonPollingHandler {
-
-        public TimePollingHandler(Locale locale, AsyncContext context) {
-            super(locale, 0, context);
-        }
-
-        @Override
-        protected void respond() {
-            InstanceManager.timebaseInstance().removeMinuteChangeListener(listener);
-            if (context.getRequest().isAsyncStarted()) {
-                try {
-                    context.getRequest().setAttribute("result", JsonUtil.getTime(locale));
-                } catch (JsonException ex) {
-                    context.getRequest().setAttribute("result", ex.getJsonMessage());
-                }
-                context.dispatch();
-            }
-        }
-
-        @Override
-        public void run() {
-            listener = (PropertyChangeEvent evt) -> {
-                if (evt.getPropertyName().equals("minutes")) {
-                    respond();
-                }
-            };
-            InstanceManager.timebaseInstance().addPropertyChangeListener(listener);
         }
     }
 

@@ -1180,6 +1180,7 @@ public class JsonUtil {
         return root;
     }
 
+    @Deprecated
     static public JsonNode getTime(Locale locale) throws JsonException {
         ObjectNode root = mapper.createObjectNode();
         root.put(TYPE, TIME);
@@ -1190,6 +1191,7 @@ public class JsonUtil {
         return root;
     }
 
+    @Deprecated
     static public void setTime(Locale locale, JsonNode data) throws JsonException {
         try {
             if (data.path(TIME).isTextual()) {

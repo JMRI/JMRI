@@ -1,0 +1,81 @@
+package jmri.server.json.time;
+
+import com.fasterxml.jackson.databind.JsonNode;
+import com.fasterxml.jackson.databind.ObjectMapper;
+import com.fasterxml.jackson.databind.node.ObjectNode;
+import com.fasterxml.jackson.databind.util.ISO8601DateFormat;
+import java.text.ParseException;
+import java.util.Locale;
+import jmri.InstanceManager;
+import static jmri.server.json.JSON.DATA;
+import static jmri.server.json.JSON.OFF;
+import static jmri.server.json.JSON.ON;
+import static jmri.server.json.JSON.RATE;
+import static jmri.server.json.JSON.STATE;
+import static jmri.server.json.JSON.TYPE;
+import jmri.server.json.JsonAsyncHttpListener;
+import jmri.server.json.JsonAsyncHttpService;
+import jmri.server.json.JsonException;
+import jmri.server.json.JsonHttpService;
+import static jmri.server.json.time.JsonTimeServiceFactory.TIME;
+
+/**
+ *
+ * @author Randall Wood
+ */
+class JsonTimeHttpService extends JsonHttpService implements JsonAsyncHttpService {
+
+    public JsonTimeHttpService(ObjectMapper mapper) {
+        super(mapper);
+    }
+
+    @Override
+    public JsonNode doGet(String type, String name, Locale locale) throws JsonException {
+        ObjectNode root = this.mapper.createObjectNode();
+        root.put(TYPE, TIME);
+        ObjectNode data = root.putObject(DATA);
+        data.put(TIME, new ISO8601DateFormat().format(InstanceManager.timebaseInstance().getTime()));
+        data.put(RATE, InstanceManager.timebaseInstance().getRate());
+        data.put(STATE, InstanceManager.timebaseInstance().getRun() ? ON : OFF);
+        return root;
+    }
+
+    @Override
+    public JsonNode doPost(String type, String name, JsonNode data, Locale locale) throws JsonException {
+        try {
+            if (data.path(TIME).isTextual()) {
+                InstanceManager.timebaseInstance().setTime(new ISO8601DateFormat().parse(data.path(TIME).asText()));
+            }
+            if (data.path(RATE).isDouble()) {
+                InstanceManager.clockControlInstance().setRate(data.path(RATE).asDouble());
+            }
+            if (data.path(STATE).isInt()) {
+                InstanceManager.timebaseInstance().setRun(data.path(STATE).asInt() == ON);
+            }
+        } catch (ParseException ex) {
+            throw new JsonException(400, Bundle.getMessage(locale, "ErrorTimeFormat"));
+        }
+        return this.doGet(type, name, locale);
+    }
+
+    @Override
+    public JsonNode doGetList(String type, Locale locale) throws JsonException {
+        return this.doGet(type, null, locale);
+    }
+
+    @Override
+    public JsonAsyncHttpListener getListener(String type, String name, JsonNode data) {
+        return new JsonAsyncHttpListener(type, name, data, this) {
+            @Override
+            public boolean listen() {
+                InstanceManager.timebaseInstance().addPropertyChangeListener(this);
+                return true;
+            }
+
+            @Override
+            public void stopListening() {
+                InstanceManager.timebaseInstance().removePropertyChangeListener(this);
+            }
+        };
+    }
+}

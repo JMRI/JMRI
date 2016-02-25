@@ -49,7 +49,6 @@ import static jmri.jmris.json.JSON.SIGNAL_MAST;
 import static jmri.jmris.json.JSON.SIGNAL_MASTS;
 import static jmri.jmris.json.JSON.SYSTEM_CONNECTIONS;
 import static jmri.jmris.json.JSON.THROTTLE;
-import static jmri.jmris.json.JSON.TIME;
 import static jmri.jmris.json.JSON.TRAIN;
 import static jmri.jmris.json.JSON.TRAINS;
 import static jmri.jmris.json.JSON.TURNOUT;
@@ -76,7 +75,6 @@ public class JsonClientHandler {
     private final JsonSignalHeadServer signalHeadServer;
     private final JsonSignalMastServer signalMastServer;
     private final JsonThrottleServer throttleServer;
-    private final JsonTimeServer timeServer;
     private final JsonTurnoutServer turnoutServer;
     private final JsonConnection connection;
     private final ObjectMapper mapper;
@@ -98,7 +96,6 @@ public class JsonClientHandler {
         this.signalHeadServer = new JsonSignalHeadServer(this.connection);
         this.signalMastServer = new JsonSignalMastServer(this.connection);
         this.throttleServer = new JsonThrottleServer(this.connection);
-        this.timeServer = new JsonTimeServer(this.connection);
         this.turnoutServer = new JsonTurnoutServer(this.connection);
         for (JsonServiceFactory factory : ServiceLoader.load(JsonServiceFactory.class)) {
             for (String type : factory.getTypes()) {
@@ -125,7 +122,6 @@ public class JsonClientHandler {
         this.sensorServer.dispose();
         this.signalHeadServer.dispose();
         this.signalMastServer.dispose();
-        this.timeServer.dispose();
         this.turnoutServer.dispose();
         services.values().stream().forEach((set) -> {
             set.stream().forEach((service) -> {
@@ -319,9 +315,6 @@ public class JsonClientHandler {
                         break;
                     case THROTTLE:
                         this.throttleServer.parseRequest(this.connection.getLocale(), data);
-                        break;
-                    case TIME:
-                        this.timeServer.parseRequest(this.connection.getLocale(), data);
                         break;
                     case TRAIN:
                         this.operationsServer.parseTrainRequest(this.connection.getLocale(), data);
