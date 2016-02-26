@@ -16,7 +16,6 @@ import jmri.jmrit.operations.rollingstock.cars.CarRoads;
 import jmri.jmrit.operations.routes.RouteLocation;
 import jmri.jmrit.operations.setup.Setup;
 import jmri.jmrit.operations.trains.Train;
-import jmri.jmrit.operations.trains.TrainCommon;
 import jmri.jmrit.operations.trains.TrainManager;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -48,7 +47,6 @@ public class RollingStock implements java.beans.PropertyChangeListener {
     protected String _routeId = NONE; // saved route for interchange tracks
     protected String _rfid = NONE;
     protected String _value = NONE;
-    protected String _last = NONE;
     protected Date _lastDate = null;
     protected boolean _locationUnknown = false;
     protected boolean _outOfService = false;
@@ -549,7 +547,7 @@ public class RollingStock implements java.beans.PropertyChangeListener {
                 }
                 if (getRouteDestination() != null) {
                     setMoves(getMoves() + 1);
-                    setLastDate(TrainCommon.getDate(false));
+                    setLastDate(java.util.Calendar.getInstance().getTime());
                 }
                 setRouteLocation(null);
                 setRouteDestination(null);
@@ -863,41 +861,32 @@ public class RollingStock implements java.beans.PropertyChangeListener {
 
     /**
      * Sets the last date when this rolling stock was moved, or was reset from a
-     * built train.
+     * built train. This method is used only for loading data from a file. Use
+     * setLastDate(Date) instead.
      *
-     * @param date
-     * @deprecated This method will become a private method, used only for
-     *             loading data from a file, in the future. Use
-     *             setLastDate(Date) instead.
+     * @param date MM/dd/yyyy HH:mm:ss
      */
-    @Deprecated
-    public void setLastDate(String date) {
+    private void setLastDate(String date) {
         if (date == NONE)
             return; // there was no date specified.
-        String old = _last;
         Date oldDate = _lastDate;
-        _last = date;
-        if (!old.equals(date)) {
-            setDirtyAndFirePropertyChange("rolling stock date", old, date); // NOI18N
-        }
         // create a date object from the value.
         try {
             // try the new format (with seconds).
-            SimpleDateFormat formatter =
-                    new SimpleDateFormat("MM/dd/yyyy HH:mm:ss");
-            _lastDate = formatter.parse(_last);
+            SimpleDateFormat formatter = new SimpleDateFormat("MM/dd/yyyy HH:mm:ss");
+            _lastDate = formatter.parse(date);
         } catch (java.text.ParseException pe0) {
             // try the old 12 hour format (no seconds).
             try {
                 SimpleDateFormat formatter = new SimpleDateFormat("MM/dd/yyyy hh:mmaa");
-                _lastDate = formatter.parse(_last);
+                _lastDate = formatter.parse(date);
             } catch (java.text.ParseException pe1) {
                 try {
                     // try 24hour clock.
                     SimpleDateFormat formatter = new SimpleDateFormat("MM/dd/yyyy HH:mm");
-                    _lastDate = formatter.parse(_last);
+                    _lastDate = formatter.parse(date);
                 } catch (java.text.ParseException pe2) {
-                    log.warn("Not able to parse date: {} for rolling stock ({})", _last, toString());
+                    log.warn("Not able to parse date: {} for rolling stock ({})", date, toString());
                     _lastDate = oldDate; // set the date back to what it was before
                 }
             }
@@ -1033,11 +1022,6 @@ public class RollingStock implements java.beans.PropertyChangeListener {
      */
     public boolean isSelected() {
         return _selected;
-    }
-
-    // normally overridden
-    public String getLoadPriority() {
-        return NONE;
     }
 
     public void setComment(String comment) {
