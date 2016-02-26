@@ -23,7 +23,7 @@
 
    <h1>JMRI: OperationsPro&trade;</h1>
 
-   The JMRI operations program allows you to create computer generated train Manifests for your railroad.
+   The JMRI Operations program allows you to create computer generated train Manifests for your railroad.
    A train
    <a href="#PrintingManifests">Manifest</a> details the work that a crew will perform during an
    operations session. The Manifest provides a list of car pick up and set outs and shows where the

@@ -18,8 +18,8 @@
 <!-- <script src="/js/sorttable.js"></script> for -->
 <style type="text/css">
 table.sortable th {
-	background-color:#eee;
-	color:#666666;
+	background-color: #EEECF6;
+	color: #383DB3;
 	font-weight: bold;
 	cursor: default;
 	}
@@ -73,7 +73,7 @@ Feel free to submit suggestions for improvements or additions to the <a href="ht
 <tr>
   <td class="app">All</td>
   <td class="en">Light</td>
-  <td class="descr"></td>
+  <td class="descr">JMRI output bits that function as on/off switches. When 'Enabled', a Light will respond to changes of its control Sensor, Turnout or Fast Clock. Variable Lights display different intensities (with a special output decoder). Either a Light or a Turnout, but not both, can control a specific digital output bit (address). <a href="../html/tools/Lights.shtml">...</a></td>
   <td class="de">Licht</td>
   <td class="it"></td>
   <td class="fr">Lumi&egrave;re</td>
@@ -92,8 +92,8 @@ Feel free to submit suggestions for improvements or additions to the <a href="ht
 </tr>
 <tr>
   <td class="app">All</td>
-  <td class="en">Memory</td>
-  <td class="descr"></td>
+  <td class="en">Memory (Variable)</td>
+  <td class="descr">JMRI software object that can hold any type of contents, like a string of text or an image. Logix can test - and set - the contents of a Memory Variable. Panels can display them. <a href="../html/tools/Memories.shtml">...</a></td>
   <td class="de">Speicher</td>
   <td class="it"></td>
   <td class="fr">M&eacute;moire</td>
@@ -103,7 +103,7 @@ Feel free to submit suggestions for improvements or additions to the <a href="ht
 <tr>
   <td class="app">All</td>
   <td class="en">Reporter</td>
-  <td class="descr"></td>
+  <td class="descr">JMRI software object representing information reported back from the layout. It can contain arbitrary information, unlike a Sensor. Each Reporter is associated with some specific source of information on the layout. <a href="../html/tools/Reporters.shtml">...</a></td>
   <td class="de">Melder</td>
   <td class="it"></td>
   <td class="fr">Rapport</td>
@@ -123,7 +123,7 @@ Feel free to submit suggestions for improvements or additions to the <a href="ht
 <tr>
   <td class="app">All</td>
   <td class="en">Script Entry</td>
-  <td class="descr"></td>
+  <td class="descr">A series of instructions stored on disk and read into JMRI to interpret, written in the Python language. <a href="../html/tools/scripting/index.shtml">...</a></td>
   <td class="de">Skripteingabe</td>
   <td class="it"></td>
   <td class="fr"></td>
@@ -133,7 +133,7 @@ Feel free to submit suggestions for improvements or additions to the <a href="ht
 <tr>
   <td class="app">All</td>
   <td class="en">Sensor</td>
-  <td class="descr">JMRI's way of representing an input from the layout <a href="../html/tools/Sensors.shtml">...</a></td>
+  <td class="descr">JMRI input from the layout, used to represent the status of a block occupancy detector, a pushbutton on the fascia etc. A Sensor can be either ACTIVE or INACTIVE (or UNKNOWN). <a href="../html/tools/Sensors.shtml">...</a></td>
   <td class="de">Detektor</td>
   <td class="it"></td>
   <td class="fr">Capteur</td>
@@ -153,7 +153,8 @@ Feel free to submit suggestions for improvements or additions to the <a href="ht
 <tr>
   <td class="app">All</td>
   <td class="en">Turnout</td>
-  <td class="descr"></td>
+  <td class="descr">1. A mechanical installation enabling railway trains to be guided from one track to another.<br>
+  2. In JMRI: any On/Off output to the layout, controlled via DCC accessory decoders. The individual output pins on a C/MRI system are also called Turnouts. The two states of the output are called 'Closed' (off, inactive, not commanded state) and 'Thrown' (on, active, commanded state). To report feedback from the layout, Sensor inputs may be assigned to a Turnout. <a href="../html/tools/Turnouts.shtml">...</a></td>
   <td class="de">Weiche</td>
   <td class="it"></td>
   <td class="fr">Aiguillage</td>
@@ -293,8 +294,8 @@ Feel free to submit suggestions for improvements or additions to the <a href="ht
 <tr>
   <td class="app">Logix</td>
   <td class="en">Logix</td>
-  <td class="descr"></td>
-  <td class="de">Logik?</td>
+  <td class="descr">JMRI software objects that monitor one or more conditions on a layout, and take action when these conditions change in a user-specified way to control outputs on the layout. <a href="../html/tools/Logix.shtml">...</a></td>
+  <td class="de">Logik (?)</td>
   <td class="it"></td>
   <td class="fr">Logix</td>
   <td class="en_UK"></td>
@@ -433,7 +434,7 @@ Feel free to submit suggestions for improvements or additions to the <a href="ht
 <tr>
   <td class="app">Ops</td>
   <td class="en">Dispatcher</td>
-  <td class="descr">Role assigned during ops session</td>
+  <td class="descr">Role assigned during an operating session</td>
   <td class="de">Fahrdienstleiter</td>
   <td class="it"></td>
   <td class="fr">R&eacute;partiteur</td>
@@ -513,7 +514,7 @@ Feel free to submit suggestions for improvements or additions to the <a href="ht
 <tr>
   <td class="app">Ops</td>
   <td class="en">Move</td>
-  <td class="descr">Apply one step for train (Button)</td>
+  <td class="descr">Apply one step for a train, moving it to the next Location (Button)</td>
   <td class="de">Schritt</td>
   <td class="it"></td>
   <td class="fr">D&eacute;placer</td>
@@ -523,7 +524,7 @@ Feel free to submit suggestions for improvements or additions to the <a href="ht
 <tr>
   <td class="app">Ops</td>
   <td class="en">Operations (menu)</td>
-  <td class="descr"></td>
+  <td class="descr">JMRI module allowing you to create computer generated train Manifests for your railroad following predefined criteria. <a href="../package/jmri/jmrit/operations/Operations.shtml">...</a></td>
   <td class="de">Betrieb</td>
   <td class="it"></td>
   <td class="fr">Exploitations</td>
@@ -550,10 +551,10 @@ Feel free to submit suggestions for improvements or additions to the <a href="ht
   <td class="en_UK"></td>
   <td class="da"></td>
 </tr>
-<tr>
+<tr id="opsroute">
   <td class="app">Ops</td>
   <td class="en">Route (ops)</td>
-  <td class="descr"></td>
+  <td class="descr">A series of Locations and Tracks where cars can be picked up or set out. Trains are assigned to Routes, optionally following a Time Table. <a href="../package/jmri/jmrit/operations/Operations.shtml#Routes">...</a>  (see <a href="#pproute">PP</a>)</td>
   <td class="de">Fahrstrecke</td>
   <td class="it"></td>
   <td class="fr">Itin&eacute;raire/Chemin (Trains)</td>
@@ -573,7 +574,7 @@ Feel free to submit suggestions for improvements or additions to the <a href="ht
 <tr>
   <td class="app">Ops</td>
   <td class="en">Section</td>
-  <td class="descr"></td>
+  <td class="descr">A set of adjacent Blocks that may be allocated to a train traveling in a given direction. <a href="../html/tools/Sections.shtml">...</a></td>
   <td class="de">Bereich</td>
   <td class="it"></td>
   <td class="fr">Section</td>
@@ -653,7 +654,9 @@ Feel free to submit suggestions for improvements or additions to the <a href="ht
 <tr>
   <td class="app">Ops</td>
   <td class="en">Time Table</td>
-  <td class="descr"></td>
+  <td class="descr">1. On US railroads under timetable and train order (TT&amp;TO) operation: a predetermined operating plan (the timetable) unless superseded by train orders conveyed to the train from the dispatcher, through local intermediaries. <a href="https://en.wikipedia.org/wiki/Train_order_operation">...</a><br>
+  2. In JMRI OperationsPro: a table defining which trains will run on any given day of the week.
+  <a href="../package/jmri/jmrit/operations/Operations.shtml#Timetable">...</a></td>
   <td class="de">Fahrplan/Kursbuch</td>
   <td class="it"></td>
   <td class="fr"></td>
@@ -693,7 +696,8 @@ Feel free to submit suggestions for improvements or additions to the <a href="ht
 <tr>
   <td class="app">Ops</td>
   <td class="en">Warrant</td>
-  <td class="descr"></td>
+  <td class="descr">1. Permission to authorize a train's use of the main line. Dispatchers issue them to train crews instead of using signals. <a href="https://en.wikipedia.org/wiki/Track_warrant">...</a><br>
+  2. A special JMRI Logix with information to run an automated train. Activating it will set the turnouts for a specified <a href="#pproute">Route</a> and drive the train over the route, optionally using prerecorded throttle adjustments. <a href="../package/jmri/jmrit/logix/Warrant.shtml">...</a></td>
   <td class="de">Fahrerlaubnis</td>
   <td class="it"></td>
   <td class="fr">Mandat</td>
@@ -760,10 +764,10 @@ Feel free to submit suggestions for improvements or additions to the <a href="ht
   <td class="en_UK"></td>
   <td class="da"></td>
 </tr>
-<tr>
+<tr id="pproute">
   <td class="app">PP</td>
   <td class="en">Route (PP)</td>
-  <td class="descr"></td>
+  <td class="descr">A collection of Turnouts and/or Sensors whose states may be set all at once. When triggered, you can set it up to play a sound or run a script. <a href="../html/tools/Routes.shtml">...</a> (see <a href="#opsroute">Ops</a>)</td>
   <td class="de">Weichenstra&szlig;e</td>
   <td class="it"></td>
   <td class="fr">Itin&eacute;raire</td>
@@ -823,7 +827,7 @@ Feel free to submit suggestions for improvements or additions to the <a href="ht
 <tr>
   <td class="app">Signals</td>
   <td class="en">Signal Aspect</td>
-  <td class="descr"></td>
+  <td class="descr">One of a series of allowed options for the visual pattern of a Signal Mast using one or more Signal Heads or Arms to convey a speed or route Indication to the engineer. Eg. the "Stop" Aspect has a meaning: "Stop the train". Each aspect has an associated "indication" (set of lights or arms) and both are in the Rule Book. <a href="../html/tools/signaling/AspectSignaling.shtml">...</a></td>
   <td class="de">Signalbegriff</td>
   <td class="it"></td>
   <td class="fr">Aspect</td>
@@ -833,7 +837,7 @@ Feel free to submit suggestions for improvements or additions to the <a href="ht
 <tr>
   <td class="app">Signals</td>
   <td class="en">Signal Head</td>
-  <td class="descr"></td>
+  <td class="descr">Individual signal unit on a lit or semaphore Signal Mast. It shows exactly one Appearance, generally a color (though not always, e.g. semaphores) set by JMRI e.g. 'Red' or 'Flashing Yellow'. <a href="../html/tools/signaling/SignalHeads.shtml">...</a></td>
   <td class="de">Signalschirm</td>
   <td class="it"></td>
   <td class="fr">T&ecirc;te Signal</td>
@@ -843,7 +847,7 @@ Feel free to submit suggestions for improvements or additions to the <a href="ht
 <tr>
   <td class="app">Signals</td>
   <td class="en">Signal Mast</td>
-  <td class="descr"></td>
+  <td class="descr">An entire railroad signal with one or more Signal Heads, showing an Aspect to manage the flow of the Trains. <a href="../html/tools/signaling/SignalMasts.shtml">...</a></td>
   <td class="de">Signalmast</td>
   <td class="it"></td>
   <td class="fr">M&acirc;t Signal</td>
