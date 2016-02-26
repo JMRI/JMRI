@@ -1,7 +1,7 @@
 package jmri.spi;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
-import jmri.jmris.json.JsonConnection;
+import jmri.server.json.JsonConnection;
 import jmri.server.json.JsonHttpService;
 import jmri.server.json.JsonSocketService;
 

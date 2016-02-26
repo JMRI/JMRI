@@ -64,9 +64,9 @@ import static jmri.jmris.json.JSON.TYPE;
 import static jmri.jmris.json.JSON.VALUE;
 import static jmri.jmris.json.JSON.XML;
 import jmri.jmris.json.JsonClientHandler;
-import jmri.jmris.json.JsonConnection;
 import jmri.jmris.json.JsonServerPreferences;
 import jmri.jmris.json.JsonUtil;
+import jmri.server.json.JsonConnection;
 import jmri.server.json.JsonException;
 import static jmri.server.json.JsonException.CODE;
 import jmri.server.json.JsonHttpService;
@@ -630,24 +630,19 @@ public class JsonServlet extends WebSocketServlet {
         protected JsonClientHandler handler;
         protected QuietShutDownTask shutDownTask;
 
-        public void sendMessage(String message) throws IOException {
-            this.connection.sendMessage(message);
-        }
-
         @OnWebSocketConnect
         public void onOpen(Session sn) {
             log.debug("Opening connection");
             this.connection = new JsonConnection(sn);
             sn.setIdleTimeout((long) (JsonServerPreferences.getDefault().getHeartbeatInterval() * 1.1));
-            this.mapper = new ObjectMapper();
+            this.mapper = this.connection.getObjectMapper();
             this.handler = new JsonClientHandler(this.connection, this.mapper);
             this.shutDownTask = new QuietShutDownTask("Close open web socket") { // NOI18N
                 @Override
                 public boolean execute() {
                     try {
-                        JsonWebSocket.this.sendMessage(
-                                JsonWebSocket.this.mapper.writeValueAsString(
-                                        JsonWebSocket.this.mapper.createObjectNode().put(TYPE, GOODBYE)));
+                        JsonWebSocket.this.connection.sendMessage(
+                                JsonWebSocket.this.mapper.createObjectNode().put(TYPE, GOODBYE));
                     } catch (IOException e) {
                         log.warn("Unable to send goodbye while closing socket.\nError was {}", e.getMessage());
                     }

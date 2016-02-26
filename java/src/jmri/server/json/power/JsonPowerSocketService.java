@@ -9,7 +9,7 @@ import javax.servlet.http.HttpServletResponse;
 import jmri.InstanceManager;
 import jmri.JmriException;
 import jmri.PowerManager;
-import jmri.jmris.json.JsonConnection;
+import jmri.server.json.JsonConnection;
 import jmri.server.json.JsonException;
 import jmri.server.json.JsonSocketService;
 import static jmri.server.json.power.JsonPowerServiceFactory.POWER;
@@ -25,7 +25,7 @@ public class JsonPowerSocketService extends JsonSocketService implements Propert
 
     public JsonPowerSocketService(JsonConnection connection) {
         super(connection);
-        this.service = new JsonPowerHttpService(this.mapper);
+        this.service = new JsonPowerHttpService(connection.getObjectMapper());
     }
 
     @Override
@@ -46,7 +46,7 @@ public class JsonPowerSocketService extends JsonSocketService implements Propert
     public void propertyChange(PropertyChangeEvent evt) {
         try {
             try {
-                this.sendMessage(this.service.doGet(POWER, POWER, this.connection.getLocale()));
+                this.connection.sendMessage(this.service.doGet(POWER, POWER, this.connection.getLocale()));
             } catch (JsonException ex) {
                 this.sendErrorMessage(ex);
             }

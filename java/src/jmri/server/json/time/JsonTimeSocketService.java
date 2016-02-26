@@ -1,7 +1,6 @@
 package jmri.server.json.time;
 
 import com.fasterxml.jackson.databind.JsonNode;
-import com.fasterxml.jackson.databind.ObjectMapper;
 import java.beans.PropertyChangeEvent;
 import java.beans.PropertyChangeListener;
 import java.io.IOException;
@@ -10,7 +9,7 @@ import javax.servlet.http.HttpServletResponse;
 import jmri.InstanceManager;
 import jmri.JmriException;
 import jmri.Timebase;
-import jmri.jmris.json.JsonConnection;
+import jmri.server.json.JsonConnection;
 import jmri.server.json.JsonException;
 import jmri.server.json.JsonSocketService;
 import static jmri.server.json.time.JsonTimeServiceFactory.TIME;
@@ -26,7 +25,7 @@ class JsonTimeSocketService extends JsonSocketService implements PropertyChangeL
 
     public JsonTimeSocketService(JsonConnection connection) {
         super(connection);
-        this.service = new JsonTimeHttpService(new ObjectMapper());
+        this.service = new JsonTimeHttpService(connection.getObjectMapper());
     }
 
     @Override
