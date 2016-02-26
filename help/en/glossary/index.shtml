@@ -14,8 +14,9 @@
 <!-- /Style -->
 
 <!-- Sortable tables -->
-<script src="../../../web/js/sorttable.js"></script>
-<!-- <script src="/js/sorttable.js"></script> for -->
+<!-- <script src="../../../web/js/sorttable.js"></script> for local testing -->
+<script src="/js/sorttable.js"></script>
+
 <style type="text/css">
 table.sortable th {
 	background-color: #EEECF6;

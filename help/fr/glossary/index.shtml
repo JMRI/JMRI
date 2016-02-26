@@ -1,23 +1,39 @@
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
-<!-- Translated by Blorec Herv&#233; le 2013-09-25-->
 <html lang="fr">
 <head>
-<!-- Copyright ($Author$) 2008 -->
-<!-- $Id$ -->
-<title>JMRI: Glossary</title>
+<!-- Copyright Egbert Broerse 2016 -->
+<!-- Translated by Blorec Herv&#233; le 2013-09-25-->
+<!-- sort routine Copyright http://www.kryogenix.org/code/browser/sorttable/ -->
+<title>JMRI: Glossaire</title>
 
 <!-- Style -->
-<META HTTP-EQUIV="Content-Type" CONTENT="text/html; charset=iso-8859-1">
-<LINK REL="stylesheet" TYPE="text/css" HREF="/css/default.css"
-	MEDIA="screen">
-<LINK REL="stylesheet" TYPE="text/css" HREF="/css/print.css"
-	MEDIA="print">
-<LINK REL="icon" HREF="/images/jmri.ico" TYPE="image/png">
-<LINK REL="home" TITLE="Home" HREF="/">
+<meta http-equiv="content-type" content="text/html; charset=iso-8859-1">
+<link rel="stylesheet" type="text/css" href="/css/default.css" media="screen">
+<link rel="stylesheet" type="text/css" href="/css/print.css" media="print">
+<link rel="icon" href="/images/jmri.ico" type="image/png">
+<link rel="home" title="home" href="/">
 <!-- /Style -->
-</HEAD>
 
-<BODY>
+<!-- Sortable tables -->
+<!-- <script src="../../../web/js/sorttable.js"></script> for local testing -->
+<script src="/js/sorttable.js"></script>
+
+<style type="text/css">
+table.sortable th {
+	background-color: #EEECF6;
+	color: #383DB3;
+	font-weight: bold;
+	cursor: default;
+	}
+tr:nth-of-type(odd) {
+  background-color:#eee;
+  }
+</style>
+
+</head>
+
+
+<body>
 <!--#include virtual="/Header" -->
   <div class="nomenu" id="mBody">
     <div id="mainContent">
@@ -26,27 +42,1229 @@
 JMRI: Glossaire
 </h1>
 
-Cette page est le glossaire JMRI, fournissant de br&#232;ves d&#233;finitions de termes sp&#233;cifiques JMRI, et dans de nombreux cas, des liens vers des renseignements suppl&#233;mentaires.
+<p>Cette page est le Glossaire JMRI, fournissant de br&#232;ves d&#233;finitions de termes sp&#233;cifiques JMRI, et des liens vers des renseignements suppl&#233;mentaires.</p>
+<p>
+Feel free to submit suggestions for improvements or additions to the <a href="https://groups.yahoo.com/neo/groups/jmriusers/info">JMRI users</a> Yahoo group, titled &quot;Glossary&quot;.<br>
+Click a heading to sort the list up or down.</p>
 
-<dl>
+<table class="sortable">
+<!-- The JMRI Glossary table, sort by clicking a header -->
 
-<dt>Logique Simple Signal   (SSL)
-<dd> Un outil JMRI qui fournit la logique de type Block Automatique (ABS) pour piloter les signaux de votre r&#233;seau.
-(<a href="../html/tools/signaling/SimpleSignalExample.shtml">Plus</a>)
+<tr style="text-align: left"><th>App</th><th>JMRI Terme (US)</th><th width="400">Signification</th><th width="200">Deutsch</th><th width="200">Italiano</th><th width="200">Fran&ccedil;ais</th><th width="100">UK English</th><th width="200">Dansk</th></tr>
+<tr>
+  <td class="app">All</td>
+  <td class="en">Block</td>
+  <td class="descr">A section of track whose occupancy may be individually monitored <a href="../html/tools/Blocks.shtml">...</a></td>
+  <td class="de">(Strecken)Block/Bl&ouml;cke</td>
+  <td class="it"></td>
+  <td class="fr">Canton</td>
+  <td class="en_UK"></td>
+  <td class="da">Blok</td>
+</tr>
+<tr>
+  <td class="app">All</td>
+  <td class="en">Comments</td>
+  <td class="descr"></td>
+  <td class="de">Kommentar</td>
+  <td class="it"></td>
+  <td class="fr">Commentaire</td>
+  <td class="en_UK"></td>
+  <td class="da">Kommentar</td>
+</tr>
+<tr>
+  <td class="app">All</td>
+  <td class="en">Light</td>
+  <td class="descr">JMRI output bits that function as on/off switches. When 'Enabled', a Light will respond to changes of its control Sensor, Turnout or Fast Clock. Variable Lights display different intensities (with a special output decoder). Either a Light or a Turnout, but not both, can control a specific digital output bit (address). <a href="../html/tools/Lights.shtml">...</a></td>
+  <td class="de">Licht</td>
+  <td class="it"></td>
+  <td class="fr">Lumi&egrave;re</td>
+  <td class="en_UK"></td>
+  <td class="da">Lys</td>
+</tr>
+<tr>
+  <td class="app">All</td>
+  <td class="en">Log</td>
+  <td class="descr"></td>
+  <td class="de">Logbuch/Logdatenerfassung</td>
+  <td class="it"></td>
+  <td class="fr"></td>
+  <td class="en_UK"></td>
+  <td class="da">Log</td>
+</tr>
+<tr>
+  <td class="app">All</td>
+  <td class="en">Memory (Variable)</td>
+  <td class="descr">JMRI software object that can hold any type of contents, like a string of text or an image. Logix can test - and set - the contents of a Memory Variable. Panels can display them. <a href="../html/tools/Memories.shtml">...</a></td>
+  <td class="de">Speicher</td>
+  <td class="it"></td>
+  <td class="fr">M&eacute;moire</td>
+  <td class="en_UK"></td>
+  <td class="da">Hukommelse/Memory</td>
+</tr>
+<tr>
+  <td class="app">All</td>
+  <td class="en">Reporter</td>
+  <td class="descr">JMRI software object representing information reported back from the layout. It can contain arbitrary information, unlike a Sensor. Each Reporter is associated with some specific source of information on the layout. <a href="../html/tools/Reporters.shtml">...</a></td>
+  <td class="de">Melder</td>
+  <td class="it"></td>
+  <td class="fr">Rapport</td>
+  <td class="en_UK"></td>
+  <td class="da">Reporter</td>
+</tr>
+<tr>
+  <td class="app">All</td>
+  <td class="en">Script</td>
+  <td class="descr"></td>
+  <td class="de">Ablauf(-programm/datei)/-skript</td>
+  <td class="it"></td>
+  <td class="fr">Script</td>
+  <td class="en_UK"></td>
+  <td class="da">Script</td>
+</tr>
+<tr>
+  <td class="app">All</td>
+  <td class="en">Script Entry</td>
+  <td class="descr">A series of instructions stored on disk and read into JMRI to interpret, written in the Python language. <a href="../html/tools/scripting/index.shtml">...</a></td>
+  <td class="de">Skripteingabe</td>
+  <td class="it"></td>
+  <td class="fr"></td>
+  <td class="en_UK"></td>
+  <td class="da"></td>
+</tr>
+<tr>
+  <td class="app">All</td>
+  <td class="en">Sensor</td>
+  <td class="descr">JMRI input from the layout, used to represent the status of a block occupancy detector, a pushbutton on the fascia etc. A Sensor can be either ACTIVE or INACTIVE (or UNKNOWN). <a href="../html/tools/Sensors.shtml">...</a></td>
+  <td class="de">Detektor</td>
+  <td class="it"></td>
+  <td class="fr">Capteur</td>
+  <td class="en_UK"></td>
+  <td class="da">Sensor</td>
+</tr>
+<tr>
+  <td class="app">All</td>
+  <td class="en">System Name</td>
+  <td class="descr">Une fa&#231;on unique de se r&#233;f&#233;rer &#224; un dispositif sur le r&#233;seau.
+  <a href="../html/doc/Technical/Names.shtml">...</a></td>
+  <td class="de">Systemname</td>
+  <td class="it"></td>
+  <td class="fr">Nom Syst&egrave;me</td>
+  <td class="en_UK"></td>
+  <td class="da">System Navn</td>
+</tr>
+<tr>
+  <td class="app">All</td>
+  <td class="en">Turnout</td>
+  <td class="descr">1. A mechanical installation enabling railway trains to be guided from one track to another.<br>
+  2. In JMRI: any On/Off output to the layout, controlled via DCC accessory decoders. The individual output pins on a C/MRI system are also called Turnouts. The two states of the output are called 'Closed' (off, inactive, not commanded state) and 'Thrown' (on, active, commanded state). To report feedback from the layout, Sensor inputs may be assigned to a Turnout. <a href="../html/tools/Turnouts.shtml">...</a></td>
+  <td class="de">Weiche</td>
+  <td class="it"></td>
+  <td class="fr">Aiguillage</td>
+  <td class="en_UK">Point</td>
+  <td class="da">Sporskifte</td>
+</tr>
+<tr>
+  <td class="app">All</td>
+  <td class="en">User Name</td>
+  <td class="descr">A readable name referring to an item in JMRI, that may be changed and even reused for other items <a href="../html/doc/Technical/Names.shtml">...</a></td>
+  <td class="de">Nutzername</td>
+  <td class="it"></td>
+  <td class="fr">Nom Utilisateur</td>
+  <td class="en_UK"></td>
+  <td class="da">Bruger Navn</td>
+</tr>
+<tr>
+  <td class="app">DP</td>
+  <td class="en">Direct Bit</td>
+  <td class="descr"></td>
+  <td class="de">Direkt Bit (bitweisen Zugriff)</td>
+  <td class="it"></td>
+  <td class="fr"></td>
+  <td class="en_UK"></td>
+  <td class="da"></td>
+</tr>
+<tr>
+  <td class="app">DP</td>
+  <td class="en">Direct Byte</td>
+  <td class="descr"></td>
+  <td class="de">Direkt Byte (Bytezugriff )</td>
+  <td class="it"></td>
+  <td class="fr"></td>
+  <td class="en_UK"></td>
+  <td class="da"></td>
+</tr>
+<tr>
+  <td class="app">DP</td>
+  <td class="en">Locomotive</td>
+  <td class="descr"></td>
+  <td class="de">Lok(omotive) (f)</td>
+  <td class="it">Loco</td>
+  <td class="fr">Locomotive</td>
+  <td class="en_UK">Engine</td>
+  <td class="da">Lokomotive</td>
+</tr>
+<tr>
+  <td class="app">DP</td>
+  <td class="en">Owner</td>
+  <td class="descr"></td>
+  <td class="de">Eigner</td>
+  <td class="it"></td>
+  <td class="fr">Propri&eacute;tiare</td>
+  <td class="en_UK"></td>
+  <td class="da"></td>
+</tr>
+<tr>
+  <td class="app">DP</td>
+  <td class="en">Paged Mode</td>
+  <td class="descr"></td>
+  <td class="de">Paged (seitenweise)</td>
+  <td class="it"></td>
+  <td class="fr"></td>
+  <td class="en_UK"></td>
+  <td class="da"></td>
+</tr>
+<tr>
+  <td class="app">DP</td>
+  <td class="en">Programmer</td>
+  <td class="descr"></td>
+  <td class="de">Programmierer</td>
+  <td class="it"></td>
+  <td class="fr">Programmeur</td>
+  <td class="en_UK"></td>
+  <td class="da">Programmer</td>
+</tr>
+<tr>
+  <td class="app">DP</td>
+  <td class="en">Programming Track</td>
+  <td class="descr"></td>
+  <td class="de">Programmiergleis</td>
+  <td class="it"></td>
+  <td class="fr"></td>
+  <td class="en_UK"></td>
+  <td class="da">Programmerings Spor</td>
+</tr>
+<tr>
+  <td class="app">DP</td>
+  <td class="en">Programming on Main</td>
+  <td class="descr"></td>
+  <td class="de">Betriebsgleis</td>
+  <td class="it"></td>
+  <td class="fr"></td>
+  <td class="en_UK"></td>
+  <td class="da">Programmering p&aring; Anl&aelig;gget</td>
+</tr>
+<tr>
+  <td class="app">DP</td>
+  <td class="en">Reset</td>
+  <td class="descr"></td>
+  <td class="de">Zur&uuml;ckstellen (nach Fabrikswerte)</td>
+  <td class="it"></td>
+  <td class="fr">R&eacute;initialiser</td>
+  <td class="en_UK"></td>
+  <td class="da"></td>
+</tr>
+<tr>
+  <td class="app">DP</td>
+  <td class="en">Roster</td>
+  <td class="descr"></td>
+  <td class="de">Lokpark(eintrag)</td>
+  <td class="it">Elenco Loco (Roster)</td>
+  <td class="fr">Inventaire</td>
+  <td class="en_UK"></td>
+  <td class="da">Loko Bibliotek</td>
+</tr>
+<tr>
+  <td class="app">DP</td>
+  <td class="en">Step</td>
+  <td class="descr"></td>
+  <td class="de">Stufe</td>
+  <td class="it"></td>
+  <td class="fr">Niveau</td>
+  <td class="en_UK"></td>
+  <td class="da"></td>
+</tr>
+<tr>
+  <td class="app">Logix</td>
+  <td class="en">Conditional</td>
+  <td class="descr"></td>
+  <td class="de">Bedingungssatz</td>
+  <td class="it"></td>
+  <td class="fr"></td>
+  <td class="en_UK"></td>
+  <td class="da"></td>
+</tr>
+<tr>
+  <td class="app">Logix</td>
+  <td class="en">Logix</td>
+  <td class="descr">JMRI software objects that monitor one or more conditions on a layout, and take action when these conditions change in a user-specified way to control outputs on the layout. <a href="../html/tools/Logix.shtml">...</a></td>
+  <td class="de">Logik (?)</td>
+  <td class="it"></td>
+  <td class="fr">Logix</td>
+  <td class="en_UK"></td>
+  <td class="da"></td>
+</tr>
+<tr>
+  <td class="app">NX</td>
+  <td class="en">Interlocking</td>
+  <td class="descr"></td>
+  <td class="de">Verriegelung</td>
+  <td class="it"></td>
+  <td class="fr"></td>
+  <td class="en_UK"></td>
+  <td class="da"></td>
+</tr>
+<tr>
+  <td class="app">NX</td>
+  <td class="en">Lock</td>
+  <td class="descr"></td>
+  <td class="de">Gleissloss</td>
+  <td class="it"></td>
+  <td class="fr"></td>
+  <td class="en_UK"></td>
+  <td class="da"></td>
+</tr>
+<tr>
+  <td class="app">NX</td>
+  <td class="en">to Lock</td>
+  <td class="descr"></td>
+  <td class="de">verriegeln</td>
+  <td class="it"></td>
+  <td class="fr"></td>
+  <td class="en_UK"></td>
+  <td class="da"></td>
+</tr>
+<tr>
+  <td class="app">Ops</td>
+  <td class="en">Arrival Track</td>
+  <td class="descr"></td>
+  <td class="de">Einfahrgleis</td>
+  <td class="it"></td>
+  <td class="fr"></td>
+  <td class="en_UK"></td>
+  <td class="da"></td>
+</tr>
+<tr>
+  <td class="app">Ops</td>
+  <td class="en">Build (Train)</td>
+  <td class="descr"></td>
+  <td class="de">Bauen/Zusammenstellen?</td>
+  <td class="it"></td>
+  <td class="fr">Assembler</td>
+  <td class="en_UK"></td>
+  <td class="da"></td>
+</tr>
+<tr>
+  <td class="app">Ops</td>
+  <td class="en">Build Report</td>
+  <td class="descr"></td>
+  <td class="de">Zufbaubericht</td>
+  <td class="it"></td>
+  <td class="fr">Rapport d'Assemblage</td>
+  <td class="en_UK"></td>
+  <td class="da"></td>
+</tr>
+<tr>
+  <td class="app">Ops</td>
+  <td class="en">Caboose</td>
+  <td class="descr"></td>
+  <td class="de">Zugschlusswagen</td>
+  <td class="it"></td>
+  <td class="fr"></td>
+  <td class="en_UK"></td>
+  <td class="da"></td>
+</tr>
+<tr>
+  <td class="app">Ops</td>
+  <td class="en">Car</td>
+  <td class="descr"></td>
+  <td class="de">Wagen</td>
+  <td class="it"></td>
+  <td class="fr">Wagon</td>
+  <td class="en_UK">Waggon</td>
+  <td class="da">Vogn</td>
+</tr>
+<tr>
+  <td class="app">Ops</td>
+  <td class="en">Classification/Interchange</td>
+  <td class="descr"></td>
+  <td class="de">Sortier/Auswechselbahnhof</td>
+  <td class="it"></td>
+  <td class="fr">Classification/&eacute;changes</td>
+  <td class="en_UK"></td>
+  <td class="da"></td>
+</tr>
+<tr>
+  <td class="app">Ops</td>
+  <td class="en">Conductor</td>
+  <td class="descr"></td>
+  <td class="de">Zugbegleiter</td>
+  <td class="it"></td>
+  <td class="fr"></td>
+  <td class="en_UK"></td>
+  <td class="da"></td>
+</tr>
+<tr>
+  <td class="app">Ops</td>
+  <td class="en">Departure Track</td>
+  <td class="descr"></td>
+  <td class="de">Abfahrtgleis</td>
+  <td class="it"></td>
+  <td class="fr">Voie de d&eacute;part</td>
+  <td class="en_UK"></td>
+  <td class="da"></td>
+</tr>
+<tr>
+  <td class="app">Ops</td>
+  <td class="en">Detail Level</td>
+  <td class="descr"></td>
+  <td class="de">Detaillierungsstufe</td>
+  <td class="it"></td>
+  <td class="fr">Niveau de D&eacute;tail</td>
+  <td class="en_UK"></td>
+  <td class="da"></td>
+</tr>
+<tr>
+  <td class="app">Ops</td>
+  <td class="en">Dispatcher</td>
+  <td class="descr">Menu</td>
+  <td class="de">Leitstelle</td>
+  <td class="it"></td>
+  <td class="fr">Dispatcheur</td>
+  <td class="en_UK"></td>
+  <td class="da"></td>
+</tr>
+<tr>
+  <td class="app">Ops</td>
+  <td class="en">Dispatcher</td>
+  <td class="descr">Role assigned during an operating session</td>
+  <td class="de">Fahrdienstleiter</td>
+  <td class="it"></td>
+  <td class="fr">R&eacute;partiteur</td>
+  <td class="en_UK"></td>
+  <td class="da"></td>
+</tr>
+<tr>
+  <td class="app">Ops</td>
+  <td class="en">Empties</td>
+  <td class="descr"></td>
+  <td class="de">Volladen</td>
+  <td class="it"></td>
+  <td class="fr">Vide</td>
+  <td class="en_UK"></td>
+  <td class="da"></td>
+</tr>
+<tr>
+  <td class="app">Ops</td>
+  <td class="en">Final Destination</td>
+  <td class="descr"></td>
+  <td class="de">Eindziel</td>
+  <td class="it"></td>
+  <td class="fr">Derni&egrave;r</td>
+  <td class="en_UK"></td>
+  <td class="da"></td>
+</tr>
+<tr>
+  <td class="app">Ops</td>
+  <td class="en">Hazardous</td>
+  <td class="descr"></td>
+  <td class="de">Gefahrg&uuml;ter</td>
+  <td class="it"></td>
+  <td class="fr">Dangereux</td>
+  <td class="en_UK"></td>
+  <td class="da"></td>
+</tr>
+<tr>
+  <td class="app">Ops</td>
+  <td class="en">Loads</td>
+  <td class="descr"></td>
+  <td class="de">Leerwagen</td>
+  <td class="it"></td>
+  <td class="fr">Charges</td>
+  <td class="en_UK"></td>
+  <td class="da"></td>
+</tr>
+<tr>
+  <td class="app">Ops</td>
+  <td class="en">Location</td>
+  <td class="descr"></td>
+  <td class="de">Ort</td>
+  <td class="it"></td>
+  <td class="fr">Emplacement</td>
+  <td class="en_UK"></td>
+  <td class="da">Lokation</td>
+</tr>
+<tr>
+  <td class="app">Ops</td>
+  <td class="en">Logo</td>
+  <td class="descr"></td>
+  <td class="de">Logo</td>
+  <td class="it"></td>
+  <td class="fr">Logo</td>
+  <td class="en_UK"></td>
+  <td class="da"></td>
+</tr>
+<tr>
+  <td class="app">Ops</td>
+  <td class="en">Manifest</td>
+  <td class="descr"></td>
+  <td class="de">Ladungsverzeichnis</td>
+  <td class="it"></td>
+  <td class="fr">Manifeste</td>
+  <td class="en_UK"></td>
+  <td class="da"></td>
+</tr>
+<tr>
+  <td class="app">Ops</td>
+  <td class="en">Move</td>
+  <td class="descr">Apply one step for a train, moving it to the next Location (Button)</td>
+  <td class="de">Schritt</td>
+  <td class="it"></td>
+  <td class="fr">D&eacute;placer</td>
+  <td class="en_UK"></td>
+  <td class="da"></td>
+</tr>
+<tr>
+  <td class="app">Ops</td>
+  <td class="en">Operations (menu)</td>
+  <td class="descr">JMRI module allowing you to create computer generated train Manifests for your railroad following predefined criteria. <a href="../package/jmri/jmrit/operations/Operations.shtml">...</a></td>
+  <td class="de">Betrieb</td>
+  <td class="it"></td>
+  <td class="fr">Exploitations</td>
+  <td class="en_UK"></td>
+  <td class="da">Operationer</td>
+</tr>
+<tr>
+  <td class="app">Ops</td>
+  <td class="en">Pick Up</td>
+  <td class="descr"></td>
+  <td class="de">Abhol(en)</td>
+  <td class="it"></td>
+  <td class="fr"></td>
+  <td class="en_UK"></td>
+  <td class="da"></td>
+</tr>
+<tr>
+  <td class="app">Ops</td>
+  <td class="en">Restore</td>
+  <td class="descr"></td>
+  <td class="de">Zur&uuml;ckstellen (nach Fabrikswerte)</td>
+  <td class="it"></td>
+  <td class="fr">Restaurer</td>
+  <td class="en_UK"></td>
+  <td class="da"></td>
+</tr>
+<tr id="opsroute">
+  <td class="app">Ops</td>
+  <td class="en">Route (ops)</td>
+  <td class="descr">A series of Locations and Tracks where cars can be picked up or set out. Trains are assigned to Routes, optionally following a Time Table. <a href="../package/jmri/jmrit/operations/Operations.shtml#Routes">...</a>  (see <a href="#pproute">PP</a>)</td>
+  <td class="de">Fahrstrecke</td>
+  <td class="it"></td>
+  <td class="fr">Itin&eacute;raire/Chemin (Trains)</td>
+  <td class="en_UK"></td>
+  <td class="da">Rute</td>
+</tr>
+<tr>
+  <td class="app">Ops</td>
+  <td class="en">Routing</td>
+  <td class="descr"></td>
+  <td class="de">Fahrstreckenplanung</td>
+  <td class="it"></td>
+  <td class="fr"></td>
+  <td class="en_UK"></td>
+  <td class="da"></td>
+</tr>
+<tr>
+  <td class="app">Ops</td>
+  <td class="en">Section</td>
+  <td class="descr">A set of adjacent Blocks that may be allocated to a train traveling in a given direction. <a href="../html/tools/Sections.shtml">...</a></td>
+  <td class="de">Bereich</td>
+  <td class="it"></td>
+  <td class="fr">Section</td>
+  <td class="en_UK"></td>
+  <td class="da"></td>
+</tr>
+<tr>
+  <td class="app">Ops</td>
+  <td class="en">Set Out</td>
+  <td class="descr"></td>
+  <td class="de">Abstell(en)</td>
+  <td class="it"></td>
+  <td class="fr"></td>
+  <td class="en_UK"></td>
+  <td class="da"></td>
+</tr>
+<tr>
+  <td class="app">Ops</td>
+  <td class="en">Spur</td>
+  <td class="descr"></td>
+  <td class="de"></td>
+  <td class="it"></td>
+  <td class="fr">Embranchement</td>
+  <td class="en_UK"></td>
+  <td class="da">Spor</td>
+</tr>
+<tr>
+  <td class="app">Ops</td>
+  <td class="en">Staging</td>
+  <td class="descr"></td>
+  <td class="de">Schattenbahnhof</td>
+  <td class="it"></td>
+  <td class="fr">Coulisse</td>
+  <td class="en_UK"></td>
+  <td class="da">Opbevaring</td>
+</tr>
+<tr>
+  <td class="app">Ops</td>
+  <td class="en">Stop</td>
+  <td class="descr"></td>
+  <td class="de">Anhalten</td>
+  <td class="it"></td>
+  <td class="fr"></td>
+  <td class="en_UK"></td>
+  <td class="da"></td>
+</tr>
+<tr>
+  <td class="app">Ops</td>
+  <td class="en">Switch List</td>
+  <td class="descr"></td>
+  <td class="de">Rangierliste</td>
+  <td class="it"></td>
+  <td class="fr">Liste des Man&oelig;vres</td>
+  <td class="en_UK"></td>
+  <td class="da"></td>
+</tr>
+<tr>
+  <td class="app">Ops</td>
+  <td class="en">Switcher</td>
+  <td class="descr"></td>
+  <td class="de">Rangierlok/-zug</td>
+  <td class="it"></td>
+  <td class="fr"></td>
+  <td class="en_UK"></td>
+  <td class="da"></td>
+</tr>
+<tr>
+  <td class="app">Ops</td>
+  <td class="en">Terminate(d)</td>
+  <td class="descr"></td>
+  <td class="de">Beende(t)</td>
+  <td class="it"></td>
+  <td class="fr">Terminer</td>
+  <td class="en_UK"></td>
+  <td class="da"></td>
+</tr>
+<tr>
+  <td class="app">Ops</td>
+  <td class="en">Time Table</td>
+  <td class="descr">1. On US railroads under timetable and train order (TT&amp;TO) operation: a predetermined operating plan (the timetable) unless superseded by train orders conveyed to the train from the dispatcher, through local intermediaries. <a href="https://en.wikipedia.org/wiki/Train_order_operation">...</a><br>
+  2. In JMRI OperationsPro: a table defining which trains will run on any given day of the week.
+  <a href="../package/jmri/jmrit/operations/Operations.shtml#Timetable">...</a></td>
+  <td class="de">Fahrplan/Kursbuch</td>
+  <td class="it"></td>
+  <td class="fr"></td>
+  <td class="en_UK"></td>
+  <td class="da"></td>
+</tr>
+<tr>
+  <td class="app">Ops</td>
+  <td class="en">Track</td>
+  <td class="descr"></td>
+  <td class="de">Gleis</td>
+  <td class="it">Binario</td>
+  <td class="fr">Voie</td>
+  <td class="en_UK"></td>
+  <td class="da">Spor</td>
+</tr>
+<tr>
+  <td class="app">Ops</td>
+  <td class="en">Train</td>
+  <td class="descr"></td>
+  <td class="de">Zug</td>
+  <td class="it"></td>
+  <td class="fr">Train</td>
+  <td class="en_UK"></td>
+  <td class="da">Train</td>
+</tr>
+<tr>
+  <td class="app">Ops</td>
+  <td class="en">Transit</td>
+  <td class="descr"></td>
+  <td class="de">Verbindung</td>
+  <td class="it"></td>
+  <td class="fr">Transit</td>
+  <td class="en_UK"></td>
+  <td class="da"></td>
+</tr>
+<tr>
+  <td class="app">Ops</td>
+  <td class="en">Warrant</td>
+  <td class="descr">1. Permission to authorize a train's use of the main line. Dispatchers issue them to train crews instead of using signals. <a href="https://en.wikipedia.org/wiki/Track_warrant">...</a><br>
+  2. A special JMRI Logix with information to run an automated train. Activating it will set the turnouts for a specified <a href="#pproute">Route</a> and drive the train over the route, optionally using prerecorded throttle adjustments. <a href="../package/jmri/jmrit/logix/Warrant.shtml">...</a></td>
+  <td class="de">Fahrerlaubnis</td>
+  <td class="it"></td>
+  <td class="fr">Mandat</td>
+  <td class="en_UK"></td>
+  <td class="da"></td>
+</tr>
+<tr>
+  <td class="app">Ops</td>
+  <td class="en">Yard</td>
+  <td class="descr"></td>
+  <td class="de">Betriebshof</td>
+  <td class="it"></td>
+  <td class="fr">Triage</td>
+  <td class="en_UK"></td>
+  <td class="da"></td>
+</tr>
+<tr>
+  <td class="app">PP</td>
+  <td class="en">Layout Editor</td>
+  <td class="descr"></td>
+  <td class="de">Anlageeditor</td>
+  <td class="it"></td>
+  <td class="fr">&Eacute;diteur de R&eacute;seau</td>
+  <td class="en_UK"></td>
+  <td class="da">Layout Editor</td>
+</tr>
+<tr>
+  <td class="app">PP</td>
+  <td class="en">Panel</td>
+  <td class="descr"></td>
+  <td class="de">Gleis(stell)bild</td>
+  <td class="it"></td>
+  <td class="fr">Panneau</td>
+  <td class="en_UK"></td>
+  <td class="da">Panel</td>
+</tr>
+<tr>
+  <td class="app">PP</td>
+  <td class="en">Control Panel Editor</td>
+  <td class="descr"></td>
+  <td class="de">Control Panel Editor</td>
+  <td class="it"></td>
+  <td class="fr">&Eacute;diteur Panneau de Commande</td>
+  <td class="en_UK"></td>
+  <td class="da">Kontrol Panel Editor</td>
+</tr>
+<tr>
+  <td class="app">PP</td>
+  <td class="en">Panel Editor</td>
+  <td class="descr"></td>
+  <td class="de">Gleisstellbildeditor</td>
+  <td class="it"></td>
+  <td class="fr">&Eacute;diteur de Panneaux</td>
+  <td class="en_UK"></td>
+  <td class="da">Panel Editor</td>
+</tr>
+<tr>
+  <td class="app">PP</td>
+  <td class="en">Programming Mode</td>
+  <td class="descr"></td>
+  <td class="de">Programmiermodus</td>
+  <td class="it"></td>
+  <td class="fr"></td>
+  <td class="en_UK"></td>
+  <td class="da"></td>
+</tr>
+<tr id="pproute">
+  <td class="app">PP</td>
+  <td class="en">Route (PP)</td>
+  <td class="descr">A collection of Turnouts and/or Sensors whose states may be set all at once. When triggered, you can set it up to play a sound or run a script. <a href="../html/tools/Routes.shtml">...</a> (see <a href="#opsroute">Ops</a>)</td>
+  <td class="de">Weichenstra&szlig;e</td>
+  <td class="it"></td>
+  <td class="fr">Itin&eacute;raire</td>
+  <td class="en_UK"></td>
+  <td class="da">Rute</td>
+</tr>
+<tr>
+  <td class="app">PP</td>
+  <td class="en">Symbol</td>
+  <td class="descr"></td>
+  <td class="de">Zugsymbol</td>
+  <td class="it"></td>
+  <td class="fr">Ic&ocirc;ne Train</td>
+  <td class="en_UK"></td>
+  <td class="da"></td>
+</tr>
+<tr>
+  <td class="app">Prefs</td>
+  <td class="en">Connection</td>
+  <td class="descr"></td>
+  <td class="de">Verbindung</td>
+  <td class="it"></td>
+  <td class="fr">Connexion</td>
+  <td class="en_UK"></td>
+  <td class="da">Forbindelse</td>
+</tr>
+<tr>
+  <td class="app">Prefs</td>
+  <td class="en">Defaults</td>
+  <td class="descr">Tab showing preferred Connection for each tool (note <a href="#prefsi18n">I18N</a>)</td>
+  <td class="de">Vorzug</td>
+  <td class="it"></td>
+  <td class="fr">D&eacute;fauts</td>
+  <td class="en_UK"></td>
+  <td class="da">Standard</td>
+</tr>
+<tr>
+  <td class="app">Signals</td>
+  <td class="en">Dark</td>
+  <td class="descr"></td>
+  <td class="de">Unbeleuchtet</td>
+  <td class="it"></td>
+  <td class="fr">Eteint</td>
+  <td class="en_UK"></td>
+  <td class="da"></td>
+</tr>
+<tr>
+  <td class="app">Signals</td>
+  <td class="en">Signal Appearance</td>
+  <td class="descr"></td>
+  <td class="de">Signalart</td>
+  <td class="it"></td>
+  <td class="fr">&Eacute;tat</td>
+  <td class="en_UK"></td>
+  <td class="da">Tilstand</td>
+</tr>
+<tr>
+  <td class="app">Signals</td>
+  <td class="en">Signal Aspect</td>
+  <td class="descr">One of a series of allowed options for the visual pattern of a Signal Mast using one or more Signal Heads or Arms to convey a speed or route Indication to the engineer. Eg. the "Stop" Aspect has a meaning: "Stop the train". Each aspect has an associated "indication" (set of lights or arms) and both are in the Rule Book. <a href="../html/tools/signaling/AspectSignaling.shtml">...</a></td>
+  <td class="de">Signalbegriff</td>
+  <td class="it"></td>
+  <td class="fr">Aspect</td>
+  <td class="en_UK"></td>
+  <td class="da">Aspekt</td>
+</tr>
+<tr>
+  <td class="app">Signals</td>
+  <td class="en">Signal Head</td>
+  <td class="descr">Individual signal unit on a lit or semaphore Signal Mast. It shows exactly one Appearance, generally a color (though not always, e.g. semaphores) set by JMRI e.g. 'Red' or 'Flashing Yellow'. <a href="../html/tools/signaling/SignalHeads.shtml">...</a></td>
+  <td class="de">Signalschirm</td>
+  <td class="it"></td>
+  <td class="fr">T&ecirc;te Signal</td>
+  <td class="en_UK"></td>
+  <td class="da">Signal Hoved</td>
+</tr>
+<tr>
+  <td class="app">Signals</td>
+  <td class="en">Signal Mast</td>
+  <td class="descr">An entire railroad signal with one or more Signal Heads, showing an Aspect to manage the flow of the Trains. <a href="../html/tools/signaling/SignalMasts.shtml">...</a></td>
+  <td class="de">Signalmast</td>
+  <td class="it"></td>
+  <td class="fr">M&acirc;t Signal</td>
+  <td class="en_UK"></td>
+  <td class="da">Signal Mast</td>
+</tr>
+<tr>
+  <td class="app">Signals</td>
+  <td class="en">Simple Signal Logic (SSL)</td>
+  <td class="descr">Un outil JMRI qui fournit la logique de type Block Automatique (ABS) pour piloter les signaux de votre r&#233;seau.
+  <a href="../html/tools/signaling/SimpleSignalExample.shtml">...</a></td>
+  <td class="de">Einfache Signallogik</td>
+  <td class="it"></td>
+  <td class="fr">Logique Simple Signal</td>
+  <td class="en_UK"></td>
+  <td class="da"></td>
+</tr>
+<tr>
+  <td class="app">Tools</td>
+  <td class="en">Consist(tool)</td>
+  <td class="descr"><a href="../html/tools/consisttool/ConsistTool.shtml">...</a></td>
+  <td class="de">Mehrfachtraktion(-swerkzeug)</td>
+  <td class="it"></td>
+  <td class="fr">Couplage</td>
+  <td class="en_UK"></td>
+  <td class="da">Forspand(s V&aelig;rkt&oslash;j)</td>
+</tr>
+<tr>
+  <td class="app">Tools</td>
+  <td class="en">Fast Clock</td>
+  <td class="descr"><a href="../html/tools/fastclock/index.shtml">...</a></td>
+  <td class="de">Betriebsuhrzeit</td>
+  <td class="it"></td>
+  <td class="fr">Horloge (Rapide)</td>
+  <td class="en_UK"></td>
+  <td class="da">Modeltids Ur</td>
+</tr>
+<tr>
+  <td class="app">Tools</td>
+  <td class="en">Power</td>
+  <td class="descr">Tool to turn the DCC Rail A/B voltage On or Off<a href="../package/jmri/jmrit/powerpanel/PowerPanelFrame.shtml">...</a></td>
+  <td class="de">Stromversorgung</td>
+  <td class="it"></td>
+  <td class="fr">Alimentation Voie</td>
+  <td class="en_UK"></td>
+  <td class="da">Power Kontrol</td>
+</tr>
+<tr>
+  <td class="app">Tools</td>
+  <td class="en">Speedometer</td>
+  <td class="descr"></td>
+  <td class="de">Laufzeitmonitor?</td>
+  <td class="it"></td>
+  <td class="fr">Calculateur Vitesse</td>
+  <td class="en_UK"></td>
+  <td class="da">Speedometer</td>
+</tr>
+<tr>
+  <td class="app">Tools</td>
+  <td class="en">Throttle</td>
+  <td class="descr">Tool to run a DCC decoder equipped Locomotive using a computer or smartphone for control instead of a hand-held throttle.<a href="../html/tools/throttle/ThrottleMain.shtml">...</a></td>
+  <td class="de">Fahrregler</td>
+  <td class="it">Palmare</td>
+  <td class="fr">R&eacute;gulateur</td>
+  <td class="en_UK"></td>
+  <td class="da">K&oslash;rekontrol</td>
+</tr>
+<tr>
+  <td class="app">I18N</td>
+  <td class="en">Actions</td>
+  <td class="descr"></td>
+  <td class="de">Aktionen</td>
+  <td class="it">Azioni</td>
+  <td class="fr">Actions</td>
+  <td class="en_UK"></td>
+  <td class="da"></td>
+</tr>
+<tr>
+  <td class="app">I18N</td>
+  <td class="en">Debug</td>
+  <td class="descr"></td>
+  <td class="de"></td>
+  <td class="it"></td>
+  <td class="fr">D&eacute;bogage</td>
+  <td class="en_UK"></td>
+  <td class="da">Fejlfinding</td>
+</tr>
+<tr>
+  <td class="app">I18N</td>
+  <td class="en">Audio</td>
+  <td class="descr"></td>
+  <td class="de">Audio(datei)</td>
+  <td class="it"></td>
+  <td class="fr">Audio</td>
+  <td class="en_UK"></td>
+  <td class="da"></td>
+</tr>
+<tr>
+  <td class="app">I18N</td>
+  <td class="en">Backup</td>
+  <td class="descr"></td>
+  <td class="de">Sicherungskopie(datei)</td>
+  <td class="it"></td>
+  <td class="fr">Sauvegarde</td>
+  <td class="en_UK"></td>
+  <td class="da"></td>
+</tr>
+<tr>
+  <td class="app">I18N</td>
+  <td class="en">Add</td>
+  <td class="descr"></td>
+  <td class="de">F&uuml;ge (hin)zu</td>
+  <td class="it"></td>
+  <td class="fr">Ajouter</td>
+  <td class="en_UK"></td>
+  <td class="da">Tilf&oslash;j</td>
+</tr>
+<tr>
+  <td class="app">I18N</td>
+  <td class="en">Apply</td>
+  <td class="descr"></td>
+  <td class="de">Anwenden</td>
+  <td class="it">Applica</td>
+  <td class="fr">Appliquer</td>
+  <td class="en_UK"></td>
+  <td class="da"></td>
+</tr>
+<tr>
+  <td class="app">I18N</td>
+  <td class="en">Button (Icon)</td>
+  <td class="descr"></td>
+  <td class="de">Knopf(bild)</td>
+  <td class="it"></td>
+  <td class="fr">Bouton</td>
+  <td class="en_UK"></td>
+  <td class="da"></td>
+</tr>
+<tr>
+  <td class="app">I18N</td>
+  <td class="en">Cancel</td>
+  <td class="descr"></td>
+  <td class="de">Abbrechen</td>
+  <td class="it">Annula</td>
+  <td class="fr">Annule</td>
+  <td class="en_UK"></td>
+  <td class="da"></td>
+</tr>
+<tr>
+  <td class="app">I18N</td>
+  <td class="en">Default</td>
+  <td class="descr"></td>
+  <td class="de">Standardwert</td>
+  <td class="it"></td>
+  <td class="fr">D&eacute;faut</td>
+  <td class="en_UK"></td>
+  <td class="da"></td>
+</tr>
+<tr>
+  <td class="app">I18N</td>
+  <td class="en">Delete</td>
+  <td class="descr"></td>
+  <td class="de">L&ouml;sche</td>
+  <td class="it"></td>
+  <td class="fr">Supprimer/Eff(-acer)</td>
+  <td class="en_UK"></td>
+  <td class="da"></td>
+</tr>
+<tr>
+  <td class="app">I18N</td>
+  <td class="en">Deselect (All)</td>
+  <td class="descr">Uncheck (Check Box)</td>
+  <td class="de">(Alle) Abw&auml;hlen (Kontrollk&auml;stchen)</td>
+  <td class="it"></td>
+  <td class="fr">(Tout) Effacer</td>
+  <td class="en_UK"></td>
+  <td class="da"></td>
+</tr>
+<tr>
+  <td class="app">I18N</td>
+  <td class="en">Directory</td>
+  <td class="descr"></td>
+  <td class="de">Verzeichnis</td>
+  <td class="it"></td>
+  <td class="fr">R&eacute;pertoire</td>
+  <td class="en_UK"></td>
+  <td class="da"></td>
+</tr>
+<tr>
+  <td class="app">I18N</td>
+  <td class="en">File</td>
+  <td class="descr"></td>
+  <td class="de">Datei</td>
+  <td class="it"></td>
+  <td class="fr">Fichier</td>
+  <td class="en_UK"></td>
+  <td class="da"></td>
+</tr>
+<tr>
+  <td class="app">I18N</td>
+  <td class="en">Help</td>
+  <td class="descr"></td>
+  <td class="de">Hilfe</td>
+  <td class="it">Aiuto</td>
+  <td class="fr">Aide</td>
+  <td class="en_UK"></td>
+  <td class="da">Hj&aelig;lp</td>
+</tr>
+<tr>
+  <td class="app">I18N</td>
+  <td class="en">Hide</td>
+  <td class="descr"></td>
+  <td class="de">Ausblenden</td>
+  <td class="it"></td>
+  <td class="fr"></td>
+  <td class="en_UK"></td>
+  <td class="da"></td>
+</tr>
+<tr>
+  <td class="app">I18N</td>
+  <td class="en">Icon</td>
+  <td class="descr"></td>
+  <td class="de">Grafik/Bild</td>
+  <td class="it"></td>
+  <td class="fr">Ic&ocirc;ne (m)</td>
+  <td class="en_UK"></td>
+  <td class="da"></td>
+</tr>
+<tr>
+  <td class="app">I18N</td>
+  <td class="en">Import</td>
+  <td class="descr"></td>
+  <td class="de">Importiere(n)</td>
+  <td class="it"></td>
+  <td class="fr">Importer</td>
+  <td class="en_UK"></td>
+  <td class="da"></td>
+</tr>
+<tr>
+  <td class="app">I18N</td>
+  <td class="en">Layout</td>
+  <td class="descr"></td>
+  <td class="de">Anlage</td>
+  <td class="it"></td>
+  <td class="fr">R&eacute;seau</td>
+  <td class="en_UK"></td>
+  <td class="da">Anl&aelig;gget</td>
+</tr>
+<tr>
+  <td class="app">I18N</td>
+  <td class="en">OK</td>
+  <td class="descr"></td>
+  <td class="de">OK</td>
+  <td class="it">OK</td>
+  <td class="fr"></td>
+  <td class="en_UK"></td>
+  <td class="da"></td>
+</tr>
+<tr>
+  <td class="app" id="prefsi18n">I18N</td>
+  <td class="en">Preferences</td>
+  <td class="descr"></td>
+  <td class="de">Voreinstellungen</td>
+  <td class="it">Preferenze</td>
+  <td class="fr">Pr&eacute;f&eacute;rences</td>
+  <td class="en_UK"></td>
+  <td class="da">Indstillinger</td>
+</tr>
+<tr>
+  <td class="app">I18N</td>
+  <td class="en">Preview</td>
+  <td class="descr"></td>
+  <td class="de">Vorschau</td>
+  <td class="it"></td>
+  <td class="fr"></td>
+  <td class="en_UK"></td>
+  <td class="da"></td>
+</tr>
+<tr>
+  <td class="app">I18N</td>
+  <td class="en">Railroad</td>
+  <td class="descr"></td>
+  <td class="de">Bahngesellschaft</td>
+  <td class="it"></td>
+  <td class="fr">R&eacute;seau</td>
+  <td class="en_UK"></td>
+  <td class="da"></td>
+</tr>
+<tr>
+  <td class="app">I18N</td>
+  <td class="en">Save</td>
+  <td class="descr"></td>
+  <td class="de">Speichere</td>
+  <td class="it"></td>
+  <td class="fr">Sauvegarder/Enregistrer</td>
+  <td class="en_UK"></td>
+  <td class="da">Gem</td>
+</tr>
+<tr>
+  <td class="app">I18N</td>
+  <td class="en">Select (All)</td>
+  <td class="descr"></td>
+  <td class="de">(Alle) Markieren/Anw&auml;hlen</td>
+  <td class="it"></td>
+  <td class="fr">(Tout) S&eacute;lectionner</td>
+  <td class="en_UK"></td>
+  <td class="da"></td>
+</tr>
+<tr>
+  <td class="app">I18N</td>
+  <td class="en">Show</td>
+  <td class="descr"></td>
+  <td class="de">Einblenden (Zeige?)</td>
+  <td class="it"></td>
+  <td class="fr">Montrer</td>
+  <td class="en_UK"></td>
+  <td class="da"></td>
+</tr>
+<tr>
+  <td class="app">I18N</td>
+  <td class="en">Start</td>
+  <td class="descr"></td>
+  <td class="de">Starte</td>
+  <td class="it"></td>
+  <td class="fr">D&eacute;marrer</td>
+  <td class="en_UK"></td>
+  <td class="da"></td>
+</tr>
+<tr>
+  <td class="app">I18N</td>
+  <td class="en">Stop</td>
+  <td class="descr"></td>
+  <td class="de">Beenden</td>
+  <td class="it">Esci</td>
+  <td class="fr">Arr&ecirc;ter</td>
+  <td class="en_UK"></td>
+  <td class="da"></td>
+</tr>
+<tr>
+  <td class="app">I18N</td>
+  <td class="en">Tab</td>
+  <td class="descr"></td>
+  <td class="de">Reiter</td>
+  <td class="it"></td>
+  <td class="fr">Volet</td>
+  <td class="en_UK"></td>
+  <td class="da"></td>
+</tr>
+<tr>
+  <td class="app">I18N</td>
+  <td class="en">-Table</td>
+  <td class="descr"></td>
+  <td class="de">-Tabelle</td>
+  <td class="it"></td>
+  <td class="fr">Tableau de-</td>
+  <td class="en_UK"></td>
+  <td class="da">Tabeller</td>
+</tr>
+<tr>
+  <td class="app">I18N</td>
+  <td class="en">to Load</td>
+  <td class="descr"></td>
+  <td class="de">Einlesen/Lese ein</td>
+  <td class="it"></td>
+  <td class="fr">Charger</td>
+  <td class="en_UK"></td>
+  <td class="da"></td>
+</tr>
+<tr>
+  <td class="app">I18N</td>
+  <td class="en">Tools (menu)</td>
+  <td class="descr"></td>
+  <td class="de">Werkzeuge</td>
+  <td class="it"></td>
+  <td class="fr">Outils</td>
+  <td class="en_UK"></td>
+  <td class="da">V&aelig;rkt&oslash;jer</td>
+</tr>
+<tr>
+  <td class="app">I18N</td>
+  <td class="en">Update</td>
+  <td class="descr"></td>
+  <td class="de">Aktualisiere</td>
+  <td class="it"></td>
+  <td class="fr"></td>
+  <td class="en_UK"></td>
+  <td class="da"></td>
+</tr>
+<tr>
+  <td class="app">I18N</td>
+  <td class="en">Verify</td>
+  <td class="descr"></td>
+  <td class="de">&Uuml;berpr&uuml;fe</td>
+  <td class="it"></td>
+  <td class="fr"></td>
+  <td class="en_UK"></td>
+  <td class="da"></td>
+</tr>
+<tr>
+  <td class="app">I18N</td>
+  <td class="en">Window</td>
+  <td class="descr"></td>
+  <td class="de">Fenster</td>
+  <td class="it">Finestra</td>
+  <td class="fr">Fen&ecirc;tre</td>
+  <td class="en_UK"></td>
+  <td class="da"></td>
+</tr>
 
-<dt>Nom syst&#232;me
-<dd> Une fa&#231;on unique de se r&#233;f&#233;rer &#224; un dispositif sur le r&#233;seau.
-(<a href="../html/doc/Technical/Names.shtml">Plus</a>)
+</table>
+<!-- end of Glossary table -->
 
-<dt>Mandat ou Mandat&#233;
-<dd> &#201;tat d'un train auquel un itin&#233;raire a &#233;t&#233; affect&#233;.
-<dd> 
-</dl>
+   <!--#include virtual="/Footer" -->
 
+   </div><!-- closes #mainContent-->
+  </div> <!-- closes #mBody-->
 
-
-
-    
-<!--#include virtual="/Footer" -->
-</body>
+ </body>
 </html>
