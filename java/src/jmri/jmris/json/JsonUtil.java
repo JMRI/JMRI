@@ -1287,6 +1287,7 @@ public class JsonUtil {
         }
     }
 
+    @Deprecated
     static public JsonNode getTurnout(Locale locale, String name) throws JsonException {
         ObjectNode root = mapper.createObjectNode();
         root.put(TYPE, TURNOUT);
@@ -1319,6 +1320,7 @@ public class JsonUtil {
         return root;
     }
 
+    @Deprecated
     static public JsonNode getTurnouts(Locale locale) throws JsonException {
         ArrayNode root = mapper.createArrayNode();
         for (String name : InstanceManager.turnoutManagerInstance().getSystemNameList()) {
@@ -1327,6 +1329,7 @@ public class JsonUtil {
         return root;
     }
 
+    @Deprecated
     static public void putTurnout(Locale locale, String name, JsonNode data) throws JsonException {
         try {
             InstanceManager.turnoutManagerInstance().provideTurnout(name);
@@ -1336,6 +1339,7 @@ public class JsonUtil {
         setTurnout(locale, name, data);
     }
 
+    @Deprecated
     static public void setTurnout(Locale locale, String name, JsonNode data) throws JsonException {
         try {
             Turnout turnout = InstanceManager.turnoutManagerInstance().getTurnout(name);

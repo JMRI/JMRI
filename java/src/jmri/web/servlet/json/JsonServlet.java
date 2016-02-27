@@ -58,8 +58,6 @@ import static jmri.jmris.json.JSON.STATE;
 import static jmri.jmris.json.JSON.SYSTEM_CONNECTIONS;
 import static jmri.jmris.json.JSON.TRAIN;
 import static jmri.jmris.json.JSON.TRAINS;
-import static jmri.jmris.json.JSON.TURNOUT;
-import static jmri.jmris.json.JSON.TURNOUTS;
 import static jmri.jmris.json.JSON.TYPE;
 import static jmri.jmris.json.JSON.VALUE;
 import static jmri.jmris.json.JSON.XML;
@@ -242,9 +240,6 @@ public class JsonServlet extends WebSocketServlet {
                         case TRAINS:
                             reply = JsonUtil.getTrains(request.getLocale());
                             break;
-                        case TURNOUTS:
-                            reply = JsonUtil.getTurnouts(request.getLocale());
-                            break;
                         case HELLO:
                             reply = JsonUtil.getHello(request.getLocale(), JsonServerPreferences.getDefault().getHeartbeatInterval());
                             break;
@@ -322,9 +317,6 @@ public class JsonServlet extends WebSocketServlet {
                             break;
                         case TRAIN:
                             reply = JsonUtil.getTrain(request.getLocale(), name);
-                            break;
-                        case TURNOUT:
-                            reply = JsonUtil.getTurnout(request.getLocale(), name);
                             break;
                         default:
                             if (this.services.get(type) != null) {
@@ -445,10 +437,6 @@ public class JsonServlet extends WebSocketServlet {
                             JsonUtil.setTrain(request.getLocale(), name, data);
                             reply = JsonUtil.getTrain(request.getLocale(), name);
                             break;
-                        case TURNOUT:
-                            JsonUtil.setTurnout(request.getLocale(), name, data);
-                            reply = JsonUtil.getTurnout(request.getLocale(), name);
-                            break;
                         default:
                             if (this.services.get(type) != null) {
                                 log.debug("Using data: {}", data);
@@ -535,10 +523,6 @@ public class JsonServlet extends WebSocketServlet {
                         case SENSOR:
                             JsonUtil.putSensor(request.getLocale(), name, data);
                             reply = JsonUtil.getSensor(request.getLocale(), name);
-                            break;
-                        case TURNOUT:
-                            JsonUtil.putTurnout(request.getLocale(), name, data);
-                            reply = JsonUtil.getTurnout(request.getLocale(), name);
                             break;
                         default:
                             if (this.services.get(type) != null) {

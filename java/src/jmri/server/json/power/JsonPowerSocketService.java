@@ -34,7 +34,7 @@ public class JsonPowerSocketService extends JsonSocketService implements Propert
             InstanceManager.getDefault(PowerManager.class).addPropertyChangeListener(this);
             this.listening = true;
         }
-        this.service.doPost(type, null, data, locale);
+        this.connection.sendMessage(this.service.doPost(type, null, data, locale));
     }
 
     @Override

@@ -225,10 +225,6 @@ public final class JSON {
      */
     public static final String TRAINS = "trains"; // NOI18N
     /**
-     * {@value #TURNOUTS}
-     */
-    public static final String TURNOUTS = "turnouts"; // NOI18N
-    /**
      * {@value #NETWORK_SERVICES}
      */
     public static final String NETWORK_SERVICES = "networkServices"; // NOI18N
@@ -308,10 +304,6 @@ public final class JSON {
      * {@value #TRAIN}
      */
     public static final String TRAIN = "train"; // NOI18N
-    /**
-     * {@value #TURNOUT}
-     */
-    public static final String TURNOUT = "turnout"; // NOI18N
 
     /* JSON operations tokens */
     /**
