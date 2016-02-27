@@ -46,7 +46,7 @@ public class JsonPowerSocketService extends JsonSocketService implements Propert
     public void propertyChange(PropertyChangeEvent evt) {
         try {
             try {
-                this.connection.sendMessage(this.service.doGet(POWER, POWER, this.connection.getLocale()));
+                this.connection.sendMessage(this.service.doGet(POWER, null, this.connection.getLocale()));
             } catch (JsonException ex) {
                 this.sendErrorMessage(ex);
             }

@@ -33,6 +33,19 @@ public class JsonConnection extends JmriConnection {
     }
 
     /**
+     * Throws a RuntimeException. Use
+     * {@link #sendMessage(com.fasterxml.jackson.databind.JsonNode)} for
+     * messages in a JSON stream.
+     *
+     * @param message
+     * @throws RuntimeException
+     */
+    @Override
+    public void sendMessage(String message) {
+        throw new RuntimeException("Should never be called.");
+    }
+
+    /**
      * Send a JsonNode to the instantiated connection.
      *
      * This method throws an IOException so the server or servlet holding the
