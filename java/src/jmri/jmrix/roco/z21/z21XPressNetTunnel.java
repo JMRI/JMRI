@@ -116,6 +116,13 @@ public class z21XPressNetTunnel implements z21Listener, XNetListener, Runnable {
         byte char1;
         char1 = readByteProtected(inpipe);
         int len = (char1 & 0x0f) + 2;  // opCode+Nbytes+ECC
+        // The z21 protocol has a special case for
+        // LAN_X_GET_TURNOUT_INFO, which advertises as having
+        // 3 payload bytes, but really only has two.
+        if((char1&0xff)==z21Constants.LAN_X_GET_TURNOUT_INFO)
+        {
+           len=4;
+        }
         XNetMessage msg = new XNetMessage(len);
         msg.setElement(0, char1 & 0xFF);
         for (i = 1; i < len; i++) {
