@@ -29,7 +29,7 @@ import org.slf4j.LoggerFactory;
 public class JsonPowerSocketServiceTest extends TestCase {
 
     private final static Logger log = LoggerFactory.getLogger(JsonPowerSocketServiceTest.class);
-    
+
     public void testCtorSuccess() {
         JsonPowerSocketService service = new JsonPowerSocketService(new JsonMockConnection((DataOutputStream) null));
         Assert.assertNotNull(service);
@@ -60,30 +60,35 @@ public class JsonPowerSocketServiceTest extends TestCase {
         }
     }
 
-    public void testOnMessageChange() throws IOException, JmriException, JsonException {
-        JsonMockConnection connection = new JsonMockConnection((DataOutputStream) null);
-        JsonNode message = connection.getObjectMapper().readTree("{\"state\":2}"); // Power ON
-        JsonPowerSocketService service = new JsonPowerSocketService(connection);
-        PowerManager power = InstanceManager.getDefault(PowerManager.class);
-        power.setPower(PowerManager.UNKNOWN);
-        service.onMessage(JsonPowerServiceFactory.POWER, message, Locale.ENGLISH);
-        Assert.assertEquals(PowerManager.ON, power.getPower());
-        message = connection.getObjectMapper().readTree("{\"state\":4}"); // Power OFF
-        service.onMessage(JsonPowerServiceFactory.POWER, message, Locale.ENGLISH);
-        Assert.assertEquals(PowerManager.OFF, power.getPower());
-        message = connection.getObjectMapper().readTree("{\"state\":0}"); // JSON Power UNKNOWN
-        service.onMessage(JsonPowerServiceFactory.POWER, message, Locale.ENGLISH);
-        Assert.assertEquals(PowerManager.OFF, power.getPower()); // did not change
-        message = connection.getObjectMapper().readTree("{\"state\":1}"); // JSON Invalid
-        JsonException exception = null;
+    public void testOnMessageChange() {
         try {
+            JsonMockConnection connection = new JsonMockConnection((DataOutputStream) null);
+            JsonNode message = connection.getObjectMapper().readTree("{\"state\":2}"); // Power ON
+            JsonPowerSocketService service = new JsonPowerSocketService(connection);
+            PowerManager power = InstanceManager.getDefault(PowerManager.class);
+            power.setPower(PowerManager.UNKNOWN);
             service.onMessage(JsonPowerServiceFactory.POWER, message, Locale.ENGLISH);
-        } catch (JsonException ex) {
-            exception = ex;
+            Assert.assertEquals(PowerManager.ON, power.getPower());
+            message = connection.getObjectMapper().readTree("{\"state\":4}"); // Power OFF
+            service.onMessage(JsonPowerServiceFactory.POWER, message, Locale.ENGLISH);
+            Assert.assertEquals(PowerManager.OFF, power.getPower());
+            message = connection.getObjectMapper().readTree("{\"state\":0}"); // JSON Power UNKNOWN
+            service.onMessage(JsonPowerServiceFactory.POWER, message, Locale.ENGLISH);
+            Assert.assertEquals(PowerManager.OFF, power.getPower()); // did not change
+            message = connection.getObjectMapper().readTree("{\"state\":1}"); // JSON Invalid
+            JsonException exception = null;
+            try {
+                service.onMessage(JsonPowerServiceFactory.POWER, message, Locale.ENGLISH);
+            } catch (JsonException ex) {
+                exception = ex;
+            }
+            Assert.assertEquals(PowerManager.OFF, power.getPower()); // did not change
+            Assert.assertNotNull(exception);
+            Assert.assertEquals(HttpServletResponse.SC_BAD_REQUEST, exception.getCode());
+        } catch (IOException | JmriException | JsonException ex) {
+            log.error("testOnMessageChange threw", ex);
+            Assert.fail("Unexpected Exception");
         }
-        Assert.assertEquals(PowerManager.OFF, power.getPower()); // did not change
-        Assert.assertNotNull(exception);
-        Assert.assertEquals(HttpServletResponse.SC_BAD_REQUEST, exception.getCode());
     }
 
     // from here down is testing infrastructure
