@@ -1,9 +1,10 @@
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
 <html lang="en">
 <head>
-<!-- Copyright Egbert Broerse 2016 -->
 <!-- sort routine Copyright http://www.kryogenix.org/code/browser/sorttable/ -->
 <title>JMRI: Glossary</title>
+<meta name="author" content="Egbert Broerse">
+<meta name="keywords" content="model railroad JMRI decoderpro panelpro operations GUI I18N">
 
 <!-- Style -->
 <meta http-equiv="content-type" content="text/html; charset=iso-8859-1">
@@ -15,7 +16,7 @@
 
 <!-- Sortable tables -->
 <!-- <script src="../../../web/js/sorttable.js"></script> for local testing -->
-<script src="/js/sorttable.js"></script>
+<script src="/web/js/sorttable.js"></script>
 
 <style type="text/css">
 table.sortable th {
@@ -49,6 +50,7 @@ Feel free to submit suggestions for improvements or additions to the <a href="ht
 
 <table class="sortable">
 <!-- The JMRI Glossary table, sort by clicking a header -->
+<!-- Copy all edits to help/en/glossary/index.shtml as weel to keep both up to date -->
 
 <tr style="text-align: left"><th>App</th><th>JMRI term (US)</th><th width="400">Meaning</th><th width="200">Deutsch</th><th width="200">Italiano</th><th width="200">Fran&ccedil;ais</th><th width="100">UK English</th><th width="200">Dansk</th></tr>
 <tr>
@@ -357,7 +359,7 @@ Feel free to submit suggestions for improvements or additions to the <a href="ht
   <td class="en">Build Report</td>
   <td class="descr"></td>
   <td class="de">Zugbaubericht</td>
-  <td class="it"></td>
+  <td class="it">Report Costruzione</td>
   <td class="fr">Rapport d'Assemblage</td>
   <td class="en_UK"></td>
   <td class="da"></td>
@@ -417,7 +419,7 @@ Feel free to submit suggestions for improvements or additions to the <a href="ht
   <td class="en">Detail Level</td>
   <td class="descr"></td>
   <td class="de">Detaillierungsstufe</td>
-  <td class="it"></td>
+  <td class="it">Livello Dettagli</td>
   <td class="fr">Niveau de D&eacute;tail</td>
   <td class="en_UK"></td>
   <td class="da"></td>
@@ -446,7 +448,7 @@ Feel free to submit suggestions for improvements or additions to the <a href="ht
   <td class="app">Ops</td>
   <td class="en">Empties</td>
   <td class="descr"></td>
-  <td class="de">Volladen</td>
+  <td class="de">Leerwagen</td>
   <td class="it"></td>
   <td class="fr">Vide</td>
   <td class="en_UK"></td>
@@ -476,7 +478,7 @@ Feel free to submit suggestions for improvements or additions to the <a href="ht
   <td class="app">Ops</td>
   <td class="en">Loads</td>
   <td class="descr"></td>
-  <td class="de">Leerwagen</td>
+  <td class="de">Volladen</td>
   <td class="it"></td>
   <td class="fr">Charges</td>
   <td class="en_UK"></td>
@@ -507,7 +509,7 @@ Feel free to submit suggestions for improvements or additions to the <a href="ht
   <td class="en">Manifest</td>
   <td class="descr"></td>
   <td class="de">Ladungsverzeichnis</td>
-  <td class="it">Manifest</td>
+  <td class="it">Manifest/Folio Ordini Treno</td>
   <td class="fr">Manifeste</td>
   <td class="en_UK"></td>
   <td class="da"></td>
@@ -520,7 +522,7 @@ Feel free to submit suggestions for improvements or additions to the <a href="ht
   <td class="it">Muovi</td>
   <td class="fr">D&eacute;placer</td>
   <td class="en_UK"></td>
-  <td class="da"></td>
+  <td class="da">Flyt</td>
 </tr>
 <tr>
   <td class="app">Ops</td>
@@ -577,10 +579,10 @@ Feel free to submit suggestions for improvements or additions to the <a href="ht
   <td class="en">Section</td>
   <td class="descr">A set of adjacent Blocks that may be allocated to a train traveling in a given direction. <a href="../html/tools/Sections.shtml">...</a></td>
   <td class="de">Bereich</td>
-  <td class="it"></td>
+  <td class="it">Sezione</td>
   <td class="fr">Section</td>
   <td class="en_UK"></td>
-  <td class="da"></td>
+  <td class="da">Sektion</td>
 </tr>
 <tr>
   <td class="app">Ops</td>
@@ -597,7 +599,7 @@ Feel free to submit suggestions for improvements or additions to the <a href="ht
   <td class="en">Spur</td>
   <td class="descr"></td>
   <td class="de"></td>
-  <td class="it"></td>
+  <td class="it">Raccordo</td>
   <td class="fr">Embranchement</td>
   <td class="en_UK"></td>
   <td class="da">Spor</td>
@@ -659,8 +661,8 @@ Feel free to submit suggestions for improvements or additions to the <a href="ht
   2. In JMRI OperationsPro: a table defining which trains will run on any given day of the week.
   <a href="../package/jmri/jmrit/operations/Operations.shtml#Timetable">...</a></td>
   <td class="de">Fahrplan/Kursbuch</td>
-  <td class="it"></td>
-  <td class="fr"></td>
+  <td class="it">Tabella Orario</td>
+  <td class="fr">Horaire</td>
   <td class="en_UK"></td>
   <td class="da"></td>
 </tr>
@@ -710,7 +712,7 @@ Feel free to submit suggestions for improvements or additions to the <a href="ht
   <td class="en">Yard</td>
   <td class="descr"></td>
   <td class="de">Betriebshof</td>
-  <td class="it"></td>
+  <td class="it">Scalo</td>
   <td class="fr">Triage</td>
   <td class="en_UK"></td>
   <td class="da"></td>
@@ -718,7 +720,7 @@ Feel free to submit suggestions for improvements or additions to the <a href="ht
 <tr>
   <td class="app">PP</td>
   <td class="en">Layout Editor</td>
-  <td class="descr"></td>
+  <td class="descr">A JMRI app for making a smart schematic of your layout while  constructing the logic for signals, routes etc. behind the scenes. <a href="../html/apps/PanelPro/PanelPro.shtml#le">...</a></td>
   <td class="de">Anlageeditor</td>
   <td class="it">Editor Tracciato</td>
   <td class="fr">&Eacute;diteur de R&eacute;seau</td>
@@ -730,7 +732,7 @@ Feel free to submit suggestions for improvements or additions to the <a href="ht
   <td class="en">Panel</td>
   <td class="descr"></td>
   <td class="de">Gleis(stell)bild</td>
-  <td class="it"></td>
+  <td class="it">Panello</td>
   <td class="fr">Panneau</td>
   <td class="en_UK"></td>
   <td class="da">Panel</td>
@@ -738,7 +740,7 @@ Feel free to submit suggestions for improvements or additions to the <a href="ht
 <tr>
   <td class="app">PP</td>
   <td class="en">Control Panel Editor</td>
-  <td class="descr"></td>
+  <td class="descr">A variant of Panel Editor, using menus instead of a separate editing pane <a href="../html/apps/PanelPro/PanelPro.shtml#cpe">...</a></td>
   <td class="de">Control Panel Editor</td>
   <td class="it">Editor Controlli</td>
   <td class="fr">&Eacute;diteur Panneau de Commande</td>
@@ -748,7 +750,7 @@ Feel free to submit suggestions for improvements or additions to the <a href="ht
 <tr>
   <td class="app">PP</td>
   <td class="en">Panel Editor</td>
-  <td class="descr"></td>
+  <td class="descr">A JMRI app for graphically drawing a Panel and then animate parts of it to show the state of items on your layout and click to control them. <a href="../html/apps/PanelPro/PanelPro.shtml#pe">...</a></td>
   <td class="de">Gleisstellbildeditor</td>
   <td class="it">Editor Panello</td>
   <td class="fr">&Eacute;diteur de Panneaux</td>
@@ -763,14 +765,14 @@ Feel free to submit suggestions for improvements or additions to the <a href="ht
   <td class="it"></td>
   <td class="fr"></td>
   <td class="en_UK"></td>
-  <td class="da"></td>
+  <td class="da">Programmerings Tilstand</td>
 </tr>
 <tr id="pproute">
   <td class="app">PP</td>
   <td class="en">Route (PP)</td>
   <td class="descr">A collection of Turnouts and/or Sensors whose states may be set all at once. When triggered, you can set it up to play a sound or run a script. <a href="../html/tools/Routes.shtml">...</a> (see <a href="#opsroute">Ops</a>)</td>
   <td class="de">Weichenstra&szlig;e</td>
-  <td class="it"></td>
+  <td class="it">Itinerario</td>
   <td class="fr">Itin&eacute;raire</td>
   <td class="en_UK"></td>
   <td class="da">Rute</td>
@@ -780,7 +782,7 @@ Feel free to submit suggestions for improvements or additions to the <a href="ht
   <td class="en">Symbol</td>
   <td class="descr"></td>
   <td class="de">Zugsymbol</td>
-  <td class="it"></td>
+  <td class="it">Icona Treno</td>
   <td class="fr">Ic&ocirc;ne Train</td>
   <td class="en_UK"></td>
   <td class="da"></td>
@@ -790,7 +792,7 @@ Feel free to submit suggestions for improvements or additions to the <a href="ht
   <td class="en">Connection</td>
   <td class="descr"></td>
   <td class="de">Verbindung</td>
-  <td class="it"></td>
+  <td class="it">Connessione</td>
   <td class="fr">Connexion</td>
   <td class="en_UK"></td>
   <td class="da">Forbindelse</td>
@@ -811,7 +813,7 @@ Feel free to submit suggestions for improvements or additions to the <a href="ht
   <td class="descr"></td>
   <td class="de">Unbeleuchtet</td>
   <td class="it"></td>
-  <td class="fr">Eteint</td>
+  <td class="fr">&Eacute;teint</td>
   <td class="en_UK"></td>
   <td class="da"></td>
 </tr>
@@ -820,7 +822,7 @@ Feel free to submit suggestions for improvements or additions to the <a href="ht
   <td class="en">Signal Appearance</td>
   <td class="descr"></td>
   <td class="de">Signalart</td>
-  <td class="it"></td>
+  <td class="it">Stato</td>
   <td class="fr">&Eacute;tat</td>
   <td class="en_UK"></td>
   <td class="da">Tilstand</td>
@@ -830,7 +832,7 @@ Feel free to submit suggestions for improvements or additions to the <a href="ht
   <td class="en">Signal Aspect</td>
   <td class="descr">One of a series of allowed options for the visual pattern of a Signal Mast using one or more Signal Heads or Arms to convey a speed or route Indication to the engineer. Eg. the "Stop" Aspect has a meaning: "Stop the train". Each aspect has an associated "indication" (set of lights or arms) and both are in the Rule Book. <a href="../html/tools/signaling/AspectSignaling.shtml">...</a></td>
   <td class="de">Signalbegriff</td>
-  <td class="it">Aspect</td>
+  <td class="it"></td>
   <td class="fr">Aspect</td>
   <td class="en_UK"></td>
   <td class="da">Aspekt</td>
@@ -864,7 +866,7 @@ Feel free to submit suggestions for improvements or additions to the <a href="ht
   <td class="it">Logica Segnali Semplificata</td>
   <td class="fr">Logique Simple Signal</td>
   <td class="en_UK"></td>
-  <td class="da"></td>
+  <td class="da">Simpel Signal Logik</td>
 </tr>
 <tr>
   <td class="app">Tools</td>
@@ -900,8 +902,8 @@ Feel free to submit suggestions for improvements or additions to the <a href="ht
   <td class="app">Tools</td>
   <td class="en">Speedometer</td>
   <td class="descr"></td>
-  <td class="de">Laufzeitmonitor?</td>
-  <td class="it"></td>
+  <td class="de">Laufzeitmonitor</td>
+  <td class="it">Tachimetro</td>
   <td class="fr">Calculateur Vitesse</td>
   <td class="en_UK"></td>
   <td class="da">Speedometer</td>
@@ -930,7 +932,7 @@ Feel free to submit suggestions for improvements or additions to the <a href="ht
   <td class="app">I18N</td>
   <td class="en">Debug</td>
   <td class="descr"></td>
-  <td class="de"></td>
+  <td class="de">Fehlersuch(-werkzeuge)</td>
   <td class="it"></td>
   <td class="fr">D&eacute;bogage</td>
   <td class="en_UK"></td>
@@ -991,7 +993,7 @@ Feel free to submit suggestions for improvements or additions to the <a href="ht
   <td class="en">Cancel</td>
   <td class="descr"></td>
   <td class="de">Abbrechen</td>
-  <td class="it">Annula/Cancella</td>
+  <td class="it">Annula</td>
   <td class="fr">Annule</td>
   <td class="en_UK"></td>
   <td class="da"></td>
@@ -1011,17 +1013,17 @@ Feel free to submit suggestions for improvements or additions to the <a href="ht
   <td class="en">Delete</td>
   <td class="descr"></td>
   <td class="de">L&ouml;sche</td>
-  <td class="it"></td>
+  <td class="it">Cancella</td>
   <td class="fr">Supprimer/Eff(-acer)</td>
   <td class="en_UK"></td>
-  <td class="da"></td>
+  <td class="da">Slet</td>
 </tr>
 <tr>
   <td class="app">I18N</td>
   <td class="en">Deselect (All)</td>
   <td class="descr">Uncheck (Check Box)</td>
   <td class="de">(Alle) Abw&auml;hlen (Kontrollk&auml;stchen)</td>
-  <td class="it"></td>
+  <td class="it">Azzera (Tutti)</td>
   <td class="fr">(Tout) Effacer</td>
   <td class="en_UK"></td>
   <td class="da"></td>
@@ -1035,6 +1037,16 @@ Feel free to submit suggestions for improvements or additions to the <a href="ht
   <td class="fr">R&eacute;pertoire</td>
   <td class="en_UK"></td>
   <td class="da"></td>
+</tr>
+<tr>
+  <td class="app">I18N</td>
+  <td class="en">Export</td>
+  <td class="descr"></td>
+  <td class="de">Exportiere</td>
+  <td class="it">Esporta</td>
+  <td class="fr">Exporter</td>
+  <td class="en_UK"></td>
+  <td class="da">Eksporter</td>
 </tr>
 <tr>
   <td class="app">I18N</td>
@@ -1061,10 +1073,10 @@ Feel free to submit suggestions for improvements or additions to the <a href="ht
   <td class="en">Hide</td>
   <td class="descr"></td>
   <td class="de">Ausblenden</td>
-  <td class="it"></td>
+  <td class="it">Nascondi</td>
   <td class="fr"></td>
   <td class="en_UK"></td>
-  <td class="da"></td>
+  <td class="da">Skjul</td>
 </tr>
 <tr>
   <td class="app">I18N</td>
@@ -1081,17 +1093,17 @@ Feel free to submit suggestions for improvements or additions to the <a href="ht
   <td class="en">Import</td>
   <td class="descr"></td>
   <td class="de">Importiere(n)</td>
-  <td class="it"></td>
+  <td class="it">Importa</td>
   <td class="fr">Importer</td>
   <td class="en_UK"></td>
-  <td class="da"></td>
+  <td class="da">Importer</td>
 </tr>
 <tr>
   <td class="app">I18N</td>
   <td class="en">Layout</td>
   <td class="descr"></td>
   <td class="de">Anlage</td>
-  <td class="it"></td>
+  <td class="it">Tracciato</td>
   <td class="fr">R&eacute;seau</td>
   <td class="en_UK"></td>
   <td class="da">Anl&aelig;gget</td>
@@ -1104,7 +1116,7 @@ Feel free to submit suggestions for improvements or additions to the <a href="ht
   <td class="it">Ok</td>
   <td class="fr"></td>
   <td class="en_UK"></td>
-  <td class="da"></td>
+  <td class="da">OK</td>
 </tr>
 <tr>
   <td class="app" id="prefsi18n">I18N</td>
@@ -1141,7 +1153,7 @@ Feel free to submit suggestions for improvements or additions to the <a href="ht
   <td class="en">Save</td>
   <td class="descr"></td>
   <td class="de">Speichere</td>
-  <td class="it"></td>
+  <td class="it">Salva</td>
   <td class="fr">Sauvegarder/Enregistrer</td>
   <td class="en_UK"></td>
   <td class="da">Gem</td>
@@ -1151,7 +1163,7 @@ Feel free to submit suggestions for improvements or additions to the <a href="ht
   <td class="en">Select (All)</td>
   <td class="descr"></td>
   <td class="de">(Alle) Markieren/Anw&auml;hlen</td>
-  <td class="it"></td>
+  <td class="it">Seleziona (Tutti)</td>
   <td class="fr">(Tout) S&eacute;lectionner</td>
   <td class="en_UK"></td>
   <td class="da"></td>
@@ -1201,7 +1213,7 @@ Feel free to submit suggestions for improvements or additions to the <a href="ht
   <td class="en">-Table</td>
   <td class="descr"></td>
   <td class="de">-Tabelle</td>
-  <td class="it"></td>
+  <td class="it">Tabello</td>
   <td class="fr">Tableau de-</td>
   <td class="en_UK"></td>
   <td class="da">Tabeller</td>

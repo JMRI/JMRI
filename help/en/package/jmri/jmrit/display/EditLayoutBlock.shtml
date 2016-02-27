@@ -1,16 +1,14 @@
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
-<!-- $Id$ -->
 <html lang="en">
 <head>
- <TITLE>
+ <title>
       JMRI: Edit Block Help
- </TITLE>
-    <META http-equiv=Content-Type content="text/html; charset=iso-8859-1">
-    <META content="Bob Jacobsen" name=Author>
-    <META name="keywords" content="JMRI help Layout Editor Block">
+ </title>
+    <meta name="author" content="Bob Jacobsen">
+    <meta name="keywords" content="JMRI help Layout Editor Block">
 
 <!-- Style -->
-  <META http-equiv=Content-Type content="text/html; charset=iso-8859-1">
+  <meta http-equiv=Content-Type content="text/html; charset=iso-8859-1">
   <link rel="stylesheet" type="text/css" href="/css/default.css" media="screen">
   <link rel="stylesheet" type="text/css" href="/css/print.css" media="print">
   <link rel="icon" href="/images/jmri.ico" type="image/png">
@@ -23,7 +21,7 @@
   <div class="nomenu" id="mBody">
     <div id="mainContent">
 
-<H1>Create/Edit Block</H1>
+<h1>Create/Edit Block</h1>
 
 Blocks are sections of track whose occupancy may be individually monitored. 
 Dividing track into blocks is optional. Blocks set up in a track diagram 
@@ -90,7 +88,7 @@ the <b>Occupied Sense:</b> selection box.</p>
 You can edit the sensor debounce options from this window, setting the Sensor Debounce 
 helps to prevent false triggers of a sensor being passed into the system and triggering 
 other events in the system.<br>
-Such false triggers could be due to a dirty piece of track or electrical interferance.
+Such false triggers could be due to a dirty piece of track or electrical interference.
 <b>Use Global Debounce Values</b> check box, allows you to select if the sensor will
  use the default sensor debounce values if configured.<br>
 <b>Sensor Inactive Debounce</b> and <b>Sensor Active Debounce</b> allow you to 
@@ -125,17 +123,17 @@ mainly used within the SignalMast logic.
 <p>
 If layout block routing has been enabled for use with the Signalmast Logic additional
 fields will be presented.<p>
-The <b>Block Metric</b> assigns a cost against a perticular block so it is possible 
+The <b>Block Metric</b> assigns a cost against a particular block so it is possible 
 to determine if the signal logic should use this block over another block if there 
-are multiple paths.  The lower the metric the more prefered it is. By default Main Line
-blocks have a vlaue of 50, while a Side Track has a value of 200<p>
+are multiple paths.  The lower the metric the more preferred it is. By default Main Line
+blocks have a value of 50, while a Side Track has a value of 200<p>
 The <b>Attached Block</b> fields represent each block that is connected to this one, 
-here you can determine if a route to a next block can be used bothways or only in one
-direction in working out the signalling logic.  The options are.<br>
+here you can determine if a route to a next block can be used both ways or only in one
+direction in working out the signaling logic.  The options are.<br>
 <b>Bi-Directional</b> traffic can flow freely between each block.<br>
-<b>Send Only</b> is where this block can only be used to send traffic to the neighbouring 
-block, the neighbouring block can not send traffic to us.<br>
-<b>Recieve Only</b>, this block can only recieve traffic from the adjacent block we can not 
+<b>Send Only</b> is where this block can only be used to send traffic to the neighboring 
+block, the neighboring block can not send traffic to us.<br>
+<b>Receive Only</b>, this block can only receive traffic from the adjacent block we can not 
 send traffic to it.<br>
 So for example you might have a passing loop on a single section of line, you can use this
  so that trains always use the left hand path.
@@ -152,6 +150,8 @@ the Create/Edit Block dialog as <b>Current Use Count:</b>. When panels are saved
 disk, only those blocks with a use count greater than zero are saved.</p>
 
 <!--#include virtual="/Footer" -->
-</body>
+   </div><!-- closes #mainContent-->
+  </div> <!-- closes #mBody-->
+ </body>
 </html>
 

@@ -1,16 +1,14 @@
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
-<!-- $Id$ -->
 <html lang="en">
 <head>
- <TITLE>
+ <title>
       JMRI: Translate Selection Help
- </TITLE>
-    <META http-equiv=Content-Type content="text/html; charset=iso-8859-1">
-    <META content="Bob Jacobsen" name=Author>
-    <META name="keywords" content="JMRI help Layout Editor Translate">
+ </title>
+    <meta name="author" content="Bob Jacobsen">
+    <meta name="keywords" content="JMRI help Layout Editor Translate">
 
 <!-- Style -->
-  <META http-equiv=Content-Type content="text/html; charset=iso-8859-1">
+  <meta http-equiv="content-type" content="text/html; charset=iso-8859-1">
   <link rel="stylesheet" type="text/css" href="/css/default.css" media="screen">
   <link rel="stylesheet" type="text/css" href="/css/print.css" media="print">
   <link rel="icon" href="/images/jmri.ico" type="image/png">
@@ -23,8 +21,8 @@
   <div class="nomenu" id="mBody">
     <div id="mainContent">
 
-<H1>Translate Selection
-</H1>
+<h1>Translate Selection</h1>
+
 <p>    
 The Translate Selection dialog provides for translating a user-selected part of
 a panel created using Layout Editor. Before selecting <b>Translate Selection...</b> 
@@ -34,7 +32,7 @@ to the lower right of the area. The selected area is outlined by a rectangle. Fo
 icon items, the upper left corner of the icon must be within the selection rectangle 
 if the icon is to be translated.</p>
 <p>
-To translate your selected area in the panel window, enter the amount to translate 
+To translate your selected area in the Panel window, enter the amount to translate 
 in the <i>x</i> (horizontal) and <i>y</i> (vertical) directions. The units are 
 pixels--the same units shown in the <i>x,y</i> position display in the Layout Editor
 tool bar. For no translation in either direction enter zero. For horizontal 
@@ -52,9 +50,10 @@ Translation</b> only works for the last <b>Translate Selection...</b> performed.
 Remember to check results immediately after translating a selection in case undoing
 the operation is needed.</p>
 <p>
-<b>To retain your changes, please remember to save your panel!</b></p>
+<b>To retain your changes, please remember to save your Panel!</b></p>
  
 <!--#include virtual="/Footer" -->
+  </div><!-- closes #mainContent-->
+ </div> <!-- closes #mBody-->
 </body>
 </html>
-

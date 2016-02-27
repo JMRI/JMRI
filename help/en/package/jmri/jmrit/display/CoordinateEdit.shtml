@@ -2,15 +2,15 @@
 <html lang="en">
 <head>
 <title>JMRI: Coordinate Edit Help</title>
-<meta content="Dan Boudreau" NAME="Author">
-<meta NAME="keywords" content="JMRI Coordinate Edit Help">
+<meta name="author" content="Dan Boudreau">
+<meta name="keywords" content="JMRI Coordinate Edit Help">
 
 <!-- Style -->
-<meta HTTP-EQUIV="Content-Type" content="text/html; charset=iso-8859-1">
+<meta http-equiv="content-type" content="text/html; charset=iso-8859-1">
 <link rel="stylesheet" type="text/css" href="/css/default.css" media="screen">
 <link rel="stylesheet" type="text/css" href="/css/print.css" media="print">
 <link rel="icon" href="/images/jmri.ico" type="image/png">
-<link rel="home" TITLE="Home" href="/">
+<link rel="home" title="Home" href="/">
 <!-- /Style -->
 </head>
 
@@ -55,7 +55,7 @@ Close this pane by clicking on <strong>Set</strong> to use the value you entered
 <p>Right click an icon and select <strong>Edit Fixed Size...</strong> to edit the width and height for a fixed space to contain the Labels (Note: a small size could obscure the Label). Enter "0" to release the Fixed Size property.</p>
 
 <h3>Label Margin</h3>
-<p>Right click an icon and select <strong>Edit Margin... &gt; Set Margin Size</strong> to edit the size in pixels for the Label Margin (the spave between the text and a Border).</p>
+<p>Right click an icon and select <strong>Edit Margin... &gt; Set Margin Size</strong> to edit the size in pixels for the Label Margin (the space between the text and a Border).</p>
 
 <h3>Label Border</h3>
 <p>Right click an icon and select <strong>Edit Border... &gt; Set Border Size</strong> to edit the size in pixels for the Label Border width.<br>
@@ -69,7 +69,7 @@ Select <strong>Edit Border... &gt; Border Color</strong> to pick a Label Border 
 Close this pane by clicking on "Okay" to update the Panel with your changes, "Cancel" to abort or click "Apply" to update the Panel using your edits but keep the Properties pane open.</p>
 
 <!--#include virtual="/Footer" -->
-</div>
-</div>
-</body>
+   </div><!-- closes #mainContent-->
+  </div> <!-- closes #mBody-->
+ </body>
 </html>
