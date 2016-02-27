@@ -1,16 +1,14 @@
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
-<!-- $Id$ -->
 <html lang="en">
 <head>
- <TITLE>
+ <title>
       JMRI: Set Signals at Block Boundary Help
- </TITLE>
-    <META http-equiv=Content-Type content="text/html; charset=iso-8859-1">
-    <META content="Dave Duchamp" name=Author>
-    <META name="keywords" content="JMRI help Layout Editor Tool">
+ </title>
+    <meta name="author" content="Dave Duchamp">
+    <meta name="keywords" content="JMRI help Layout Editor Tool">
 
 <!-- Style -->
-  <META http-equiv=Content-Type content="text/html; charset=iso-8859-1">
+  <meta http-equiv="content-type" content="text/html; charset=iso-8859-1">
   <link rel="stylesheet" type="text/css" href="/css/default.css" media="screen">
   <link rel="stylesheet" type="text/css" href="/css/print.css" media="print">
   <link rel="icon" href="/images/jmri.ico" type="image/png">
@@ -23,7 +21,7 @@
   <div class="nomenu" id="mBody">
     <div id="mainContent">
 
-<H1>Set Signals at Block Boundary</H1>
+<h1>Set Signals at Block Boundary</h1>
 
 <h2>Introduction</h2>
 <p>
@@ -121,6 +119,8 @@ your special situation cannot be handled by Simple Signal Logic, you should
 refer to Logix to tailor the signal logic to your needs.</p>
 
 <!--#include virtual="/Footer" -->
+  </div><!-- closes #mainContent-->
+ </div> <!-- closes #mBody-->
 </body>
 </html>
 
