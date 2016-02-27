@@ -44,13 +44,10 @@ public class JsonPowerSocketServiceTest extends TestCase {
             power.setPower(PowerManager.UNKNOWN);
             service.onMessage(JsonPowerServiceFactory.POWER, message, Locale.ENGLISH);
             // TODO: test that service is listener in PowerManager
-            System.out.println(connection.getObjectMapper().writeValueAsString(connection.getMessage()));
             Assert.assertEquals(JSON.UNKNOWN, connection.getMessage().path(JSON.DATA).path(JSON.STATE).asInt());
             power.setPower(PowerManager.ON);
-            System.out.println(connection.getObjectMapper().writeValueAsString(connection.getMessage()));
             Assert.assertEquals(JSON.ON, connection.getMessage().path(JSON.DATA).path(JSON.STATE).asInt());
             power.setPower(PowerManager.OFF);
-            System.out.println(connection.getObjectMapper().writeValueAsString(connection.getMessage()));
             Assert.assertEquals(JSON.OFF, connection.getMessage().path(JSON.DATA).path(JSON.STATE).asInt());
             service.onClose();
             // TODO: test that service is no longer a listener in PowerManager
