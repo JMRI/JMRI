@@ -2,7 +2,6 @@ package jmri.server.json;
 
 import com.fasterxml.jackson.databind.JsonNode;
 import java.io.DataOutputStream;
-import java.io.IOException;
 import org.eclipse.jetty.websocket.api.Session;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -27,11 +26,6 @@ public class JsonMockConnection extends JsonConnection {
 
     @Override
     public void sendMessage(JsonNode message) {
-        try {
-            log.error("Message: {}", this.getObjectMapper().writeValueAsString(message));
-        } catch (IOException ex) {
-            log.error("Error logging message", ex);
-        }
         this.message = message;
     }
 
