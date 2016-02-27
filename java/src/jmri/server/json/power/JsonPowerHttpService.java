@@ -4,6 +4,7 @@ import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.node.ObjectNode;
 import java.util.Locale;
+import javax.servlet.http.HttpServletResponse;
 import jmri.InstanceManager;
 import jmri.JmriException;
 import jmri.PowerManager;
@@ -73,21 +74,16 @@ public class JsonPowerHttpService extends JsonHttpService {
                     // quietly ignore
                     break;
                 default:
-                    throw new JsonException(400, Bundle.getMessage(locale, "ErrorUnknownState", POWER, state));
+                    throw new JsonException(HttpServletResponse.SC_BAD_REQUEST, Bundle.getMessage(locale, "ErrorUnknownState", POWER, state));
             }
         } catch (JmriException ex) {
-            throw new JsonException(500, ex);
+            throw new JsonException(HttpServletResponse.SC_INTERNAL_SERVER_ERROR, ex);
         }
         return this.doGet(type, name, locale);
     }
 
     @Override
-    public JsonNode doPut(String type, String name, JsonNode data, Locale locale) throws JsonException {
-        return this.doPost(type, name, data, locale);
-    }
-
-    @Override
     public JsonNode doGetList(String type, Locale locale) throws JsonException {
-        return this.doGet(type, type, locale);
+        throw new JsonException(HttpServletResponse.SC_METHOD_NOT_ALLOWED, Bundle.getMessage(locale, "UnlistableService", POWER));
     }
 }

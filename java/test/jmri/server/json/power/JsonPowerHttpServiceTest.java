@@ -94,6 +94,36 @@ public class JsonPowerHttpServiceTest extends TestCase {
         }
     }
 
+    public void testDoPut() {
+        try {
+            (new JsonPowerHttpService(new ObjectMapper())).doPut(JsonPowerServiceFactory.POWER, null, null, Locale.ENGLISH);
+        } catch (JsonException ex) {
+            Assert.assertEquals(HttpServletResponse.SC_METHOD_NOT_ALLOWED, ex.getCode());
+            return;
+        }
+        Assert.fail("Did not throw expected error.");
+    }
+    
+    public void testDoGetList() {
+        try {
+            (new JsonPowerHttpService(new ObjectMapper())).doGetList(JsonPowerServiceFactory.POWER, Locale.ENGLISH);
+        } catch (JsonException ex) {
+            Assert.assertEquals(HttpServletResponse.SC_METHOD_NOT_ALLOWED, ex.getCode());
+            return;
+        }
+        Assert.fail("Did not throw expected error.");
+    }
+    
+    public void testDelete() {
+        try {
+            (new JsonPowerHttpService(new ObjectMapper())).doDelete(JsonPowerServiceFactory.POWER, null, Locale.ENGLISH);
+        } catch (JsonException ex) {
+            Assert.assertEquals(HttpServletResponse.SC_METHOD_NOT_ALLOWED, ex.getCode());
+            return;
+        }
+        Assert.fail("Did not throw expected error.");
+    }
+    
     // from here down is testing infrastructure
     public JsonPowerHttpServiceTest(String s) {
         super(s);
