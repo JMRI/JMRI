@@ -52,12 +52,12 @@ Click a heading to sort the list up or down.]</p>
 <!-- The JMRI Glossary table, sort by clicking a header -->
 <!-- Copy all edits to help/en/glossary/index.shtml as weel to keep both up to date -->
 
-<tr style="text-align: left"><th>App</th><th>JMRI Terme (US)</th><th width="400">Signification</th><th width="200">Deutsch</th><th width="200">Italiano</th><th width="200">Fran&ccedil;ais</th><th width="100">UK English</th><th width="200">Dansk</th></tr>
+<tr style="text-align: left"><th>App</th><th width="10%">JMRI Terme (US)</th><th>Signification</th><th width="10%">Deutsch</th><th width="10%">Italiano</th><th width="10%">Fran&ccedil;ais</th><th width="10%">UK English</th><th width="10%">Dansk</th></tr>
 <tr>
   <td class="app">All</td>
   <td class="en">Block</td>
   <td class="descr">A section of track whose occupancy may be individually monitored <a href="../html/tools/Blocks.shtml">...</a></td>
-  <td class="de">(Strecken)Block/Bl&ouml;cke</td>
+  <td class="de">(Strecken)Block/ Bl&ouml;cke</td>
   <td class="it">Blocco/Blocchi</td>
   <td class="fr">Canton</td>
   <td class="en_UK"></td>
@@ -87,7 +87,7 @@ Click a heading to sort the list up or down.]</p>
   <td class="app">All</td>
   <td class="en">Log</td>
   <td class="descr"></td>
-  <td class="de">Logbuch/Logdatenerfassung</td>
+  <td class="de">Logbuch/ Logdatenerfassung</td>
   <td class="it"></td>
   <td class="fr"></td>
   <td class="en_UK"></td>
@@ -117,7 +117,7 @@ Click a heading to sort the list up or down.]</p>
   <td class="app">All</td>
   <td class="en">Script</td>
   <td class="descr"></td>
-  <td class="de">Ablauf(-programm/datei)/-skript</td>
+  <td class="de">Ablauf(-programm/ -datei)/-skript</td>
   <td class="it">Script</td>
   <td class="fr">Script</td>
   <td class="en_UK"></td>
@@ -349,7 +349,7 @@ Click a heading to sort the list up or down.]</p>
   <td class="app">Ops</td>
   <td class="en">Build (Train)</td>
   <td class="descr"></td>
-  <td class="de">Bauen/Zusammenstellen(?)</td>
+  <td class="de">Bauen/ Zusammenstellen</td>
   <td class="it">Crea</td>
   <td class="fr">Assembler</td>
   <td class="en_UK"></td>
@@ -387,11 +387,11 @@ Click a heading to sort the list up or down.]</p>
 </tr>
 <tr>
   <td class="app">Ops</td>
-  <td class="en">Classification/Interchange</td>
+  <td class="en">Classification/ Interchange</td>
   <td class="descr"></td>
-  <td class="de">Sortier/Auswechselbahnhof</td>
-  <td class="it">Classificazione/Interscambio</td>
-  <td class="fr">Classification/&eacute;changes</td>
+  <td class="de">Sortier/ Auswechselbahnhof</td>
+  <td class="it">Classificazione/ Interscambio</td>
+  <td class="fr">Classification/ &eacute;changes</td>
   <td class="en_UK"></td>
   <td class="da"></td>
 </tr>
@@ -1155,7 +1155,7 @@ Click a heading to sort the list up or down.]</p>
   <td class="descr"></td>
   <td class="de">Speichere</td>
   <td class="it">Salva</td>
-  <td class="fr">Sauvegarder/Enregistrer</td>
+  <td class="fr">Sauvegarder/ Enregistrer</td>
   <td class="en_UK"></td>
   <td class="da">Gem</td>
 </tr>
