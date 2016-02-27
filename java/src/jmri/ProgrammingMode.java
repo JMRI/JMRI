@@ -1,6 +1,8 @@
 /* ProgrammingMode.java */
 package jmri;
 
+import edu.umd.cs.findbugs.annotations.NonNull;
+
 /**
  * Denote a single programming mode.
  * <P>
@@ -27,7 +29,7 @@ package jmri;
 @net.jcip.annotations.Immutable
 public final class ProgrammingMode {
 
-    public ProgrammingMode(String standardName) {
+    public ProgrammingMode(@NonNull String standardName) {
         this.standardName = standardName;
         this.localName = Bundle.getMessage(standardName);  // note in jmri package
     }
@@ -40,7 +42,7 @@ public final class ProgrammingMode {
      * within some system-specific code, and don't want to add
      * translations to the top-level jmri.Bundle.
      */
-    public ProgrammingMode(String standardName, String localName) {
+    public ProgrammingMode(@NonNull String standardName, @NonNull String localName) {
         this.standardName = standardName;
         this.localName = localName;
     }
@@ -49,14 +51,14 @@ public final class ProgrammingMode {
      * Display the localized (human readable) name
      */
     @Override
-    public String toString() {
+    public @NonNull String toString() {
         return localName;
     }
 
     /**
      * Return the standard (not localized, human readable) name
      */
-    public String getStandardName() {
+    public @NonNull String getStandardName() {
         return standardName;
     }
 
@@ -77,10 +79,7 @@ public final class ProgrammingMode {
         return standardName.hashCode();
     }
 
-    private String standardName;
-    private String localName;
+    private @NonNull final String standardName;
+    private @NonNull final String localName;
 
 }
-
-
-/* @(#)ProgrammingMode.java */

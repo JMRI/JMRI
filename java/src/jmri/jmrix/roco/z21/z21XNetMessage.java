@@ -99,5 +99,50 @@ public class z21XNetMessage extends jmri.jmrix.lenz.XNetMessage implements Seria
         return (msg);
     }
 
+    /*
+     * Given a turnout address, generate a message to request the state. 
+     * @param address is the turnout address
+     */
+    public static XNetMessage getTurnoutInfoRequestMessage(int address ) {
+        // refer to section 5.1 of the z21 lan protocol manual.
+        XNetMessage msg = new XNetMessage(4);
+        msg.setElement(0,z21Constants.LAN_X_GET_TURNOUT_INFO);
+        msg.setElement(1,(address &0xff00)>>8);
+        msg.setElement(2,(address & 0x00ff));
+        msg.setParity();
+        return(msg);
+    }
+
+    /*
+     * Given a turnout address and whether or not it is thrown, generate 
+     * a message to operate the turnout. 
+     * @param address is the turnout address
+     * @param thrown boolean value representing whether the turnout is thrown.
+     * @param active boolean value representing whether the output is being set
+     * to active.
+     * @param queue boolean value representing whehter or not the message is 
+     * added to the queue.
+     */
+    public static XNetMessage getSetTurnoutRequestMessage(int address, boolean thrown,boolean active, boolean queue) {
+        // refer to section 5.2 of the z21 lan protocol manual.
+        XNetMessage msg = new XNetMessage(5);
+        msg.setElement(0,z21Constants.LAN_X_SET_TURNOUT);
+        msg.setElement(1,(address &0xff00)>>8);
+        msg.setElement(2,(address & 0x00ff));
+        int element3=0x80;
+        if(active) {
+           element3 |=  0x08;
+        } 
+        if(thrown) {
+           element3 |=  0x01;
+        } 
+        if(queue) {
+           element3 |=  0x20;
+        } 
+
+        msg.setElement(3,element3);
+        msg.setParity();
+        return(msg);
+    }
 }
 /*@(#)z21XNetMessage.java */
