@@ -43,7 +43,10 @@ class JsonTurnoutSocketService extends JsonSocketService {
             this.connection.sendMessage(this.service.doPost(type, name, data, locale));
         }
         if (!this.turnouts.containsKey(name)) {
-            this.turnouts.put(name, new TurnoutListener(name));
+            Turnout turnout = InstanceManager.getDefault(TurnoutManager.class).getBySystemName(name);
+            TurnoutListener listener = new TurnoutListener(turnout);
+            turnout.addPropertyChangeListener(listener);
+            this.turnouts.put(name, listener);
         }
     }
 
@@ -64,11 +67,9 @@ class JsonTurnoutSocketService extends JsonSocketService {
     private class TurnoutListener implements PropertyChangeListener {
 
         protected final Turnout turnout;
-        private final String name;
 
-        public TurnoutListener(String name) {
-            this.name = name;
-            this.turnout = InstanceManager.getDefault(TurnoutManager.class).getTurnout(name);
+        public TurnoutListener(Turnout turnout) {
+            this.turnout = turnout;
         }
 
         @Override
@@ -77,14 +78,14 @@ class JsonTurnoutSocketService extends JsonSocketService {
             if (e.getPropertyName().equals("KnownState")) {
                 try {
                     try {
-                        service.doGet(TURNOUT, this.name, locale);
+                        connection.sendMessage(service.doGet(TURNOUT, this.turnout.getSystemName(), locale));
                     } catch (JsonException ex) {
                         connection.sendMessage(ex.getJsonMessage());
                     }
                 } catch (IOException ex) {
                     // if we get an error, de-register
                     turnout.removePropertyChangeListener(this);
-                    turnouts.remove(this.name);
+                    turnouts.remove(this.turnout.getSystemName());
                 }
             }
         }
