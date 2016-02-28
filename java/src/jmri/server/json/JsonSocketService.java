@@ -66,14 +66,4 @@ public abstract class JsonSocketService {
      * Perform any teardown required when closing a connection.
      */
     public abstract void onClose();
-
-    /**
-     * Send a JsonException as a message.
-     *
-     * @param ex The exception to send.
-     * @throws IOException If the excepection cannot be sent.
-     */
-    protected void sendErrorMessage(JsonException ex) throws IOException {
-        this.connection.sendMessage(ex.getJsonMessage());
-    }
 }

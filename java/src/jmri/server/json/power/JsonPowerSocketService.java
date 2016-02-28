@@ -48,7 +48,7 @@ public class JsonPowerSocketService extends JsonSocketService implements Propert
             try {
                 this.connection.sendMessage(this.service.doGet(POWER, null, this.connection.getLocale()));
             } catch (JsonException ex) {
-                this.sendErrorMessage(ex);
+                this.connection.sendMessage(ex.getJsonMessage());
             }
         } catch (IOException ex) {
             // do nothing - we can only silently fail at this point
