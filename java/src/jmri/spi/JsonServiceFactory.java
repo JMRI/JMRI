@@ -30,18 +30,19 @@ public interface JsonServiceFactory {
     public String[] getTypes();
 
     /**
-     * Create a JSON service for the given connection.
+     * Create a JSON service for the given connection. This connection can be a
+     * WebSocket or raw socket.
      *
      * @param connection The connection for this service to respond to.
-     * @return A service
+     * @return A service or null if the service does not support sockets.
      */
     public JsonSocketService getSocketService(JsonConnection connection);
 
     /**
-     * Create a JSON Servlet.
+     * Create a JSON HTTP service.
      *
      * @param mapper The object mapper for the HTTP service to use.
-     * @return A servlet 
+     * @return A servlet or null if the service does not support HTTP.
      */
     public JsonHttpService getHttpService(ObjectMapper mapper);
 }

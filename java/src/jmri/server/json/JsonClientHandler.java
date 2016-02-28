@@ -104,12 +104,15 @@ public class JsonClientHandler {
         this.throttleServer = new JsonThrottleServer(this.connection);
         for (JsonServiceFactory factory : ServiceLoader.load(JsonServiceFactory.class)) {
             for (String type : factory.getTypes()) {
-                HashSet<JsonSocketService> set = this.services.get(type);
-                if (set == null) {
-                    this.services.put(type, new HashSet<>());
-                    set = this.services.get(type);
+                JsonSocketService service = factory.getSocketService(connection);
+                if (service != null) {
+                    HashSet<JsonSocketService> set = this.services.get(type);
+                    if (set == null) {
+                        this.services.put(type, new HashSet<>());
+                        set = this.services.get(type);
+                    }
+                    set.add(service);
                 }
-                set.add(factory.getSocketService(connection));
             }
         }
     }

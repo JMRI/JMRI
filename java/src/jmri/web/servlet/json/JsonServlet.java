@@ -117,13 +117,16 @@ public class JsonServlet extends WebSocketServlet {
         super.init();
         this.mapper = new ObjectMapper();
         for (JsonServiceFactory factory : ServiceLoader.load(JsonServiceFactory.class)) {
-            for (String type : factory.getTypes()) {
-                HashSet<JsonHttpService> set = this.services.get(type);
-                if (set == null) {
-                    this.services.put(type, new HashSet<>());
-                    set = this.services.get(type);
+            JsonHttpService service = factory.getHttpService(this.mapper);
+            if (service != null) {
+                for (String type : factory.getTypes()) {
+                    HashSet<JsonHttpService> set = this.services.get(type);
+                    if (set == null) {
+                        this.services.put(type, new HashSet<>());
+                        set = this.services.get(type);
+                    }
+                    set.add(factory.getHttpService(this.mapper));
                 }
-                set.add(factory.getHttpService(this.mapper));
             }
         }
     }
