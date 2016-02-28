@@ -1,16 +1,14 @@
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
-<!-- $Id$ -->
 <html lang="en">
 <head>
- <TITLE>
+ <title>
       JMRI: Set Signals at Throat-to-Throat Turnouts Help
- </TITLE>
-    <META http-equiv=Content-Type content="text/html; charset=iso-8859-1">
-    <META content="Kevin Dickerson" name=Author>
-    <META name="keywords" content="JMRI help Layout Editor panel">
+ </title>
+    <meta name="author" content="Kevin Dickerson">
+    <meta name="keywords" content="JMRI help Layout Editor panel">
 
 <!-- Style -->
-  <META http-equiv=Content-Type content="text/html; charset=iso-8859-1">
+  <meta http-equiv="content-type" content="text/html; charset=iso-8859-1">
   <link rel="stylesheet" type="text/css" href="/css/default.css" media="screen">
   <link rel="stylesheet" type="text/css" href="/css/print.css" media="print">
   <link rel="icon" href="/images/jmri.ico" type="image/png">
@@ -23,13 +21,14 @@
   <div class="nomenu" id="mBody">
     <div id="mainContent">
 
-<H1>Set Signals at A Single/Double Slip</H1>
+<h1>Set Signals at A Single/Double Slip</h1>
+
 <h2>Introduction</h2>
 <p>
 This tool provides an automated procedure for assigning signals at Single or
 double slip.</p>
-<A href="./images/Slip.png"><IMG SRC="./images/Slip.png" 
-ALIGN=CENTER WIDTH="229" HEIGHT="104" HSPACE="0" VSPACE="0"></A>
+<a href="./images/Slip.png"><img src="./images/Slip.png" 
+align="center" width="229" height="104" hspace="0" vspace="0"></a>
 <p>
 If requested, this tool will place signal icons on the panel at the four entrances, 
 to the slip and will set up control logic for specified signal heads. Either one or 
@@ -101,6 +100,7 @@ entries from the information available. If the tool does not have enough
 information available to set up the logic, a message results, and you will have 
 to return later after more blocks (with occupancy sensors) and/or signals have 
 been assigned to turnouts and block boundaries on the panel.</p>
+
 <h3>Notes</h3>
 <p>
 The tool will set up the Simple Signal Logic to set all signals 
@@ -162,6 +162,7 @@ to Logix to tailor the signal logic to your needs.</p>
 <b>Please remember to save your panel after using this tool.</b></p>
 
 <!--#include virtual="/Footer" -->
+  </div><!-- closes #mainContent-->
+ </div> <!-- closes #mBody-->
 </body>
 </html>
-

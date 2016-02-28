@@ -22,22 +22,23 @@
 <h1>JMRI: PanelPro, an application to make Control Panels</h1>
 
 The  JMRI libraries
-contain the PanelPro application for creating simple control panels.
+contain the PanelPro application for creating control panels.
 This page describes the application, and how to use it.
 <p>
-PanelPro provides two separate ways to create Control Panels:
+PanelPro provides three separate ways to create Control Panels:
 	<ul>
 	<li>The 
 	<a href="#pe">Panel Editor</a>
 	lets you graphically draw a Panel exactly the
 	way you want it, and then animate parts of it to show the status of 
-	your layout and let you click to control it.
+	your layout and let you click to control it.</li>
+	<li>The <a href="#cpe">Control Panel Editor</a> works like Panel Editor but provides an alternative interface.</li>
 	<li>The 
 	<a href="#le">Layout Editor</a>
 	provides tools to make a smart schematic of your layout
 	while constructing the logic for signals, etc.  This constrains how 
 	the panel appears a little, but it can save significant time when
-	first bringing your layout up.
+	first bringing your layout up.</li>
 	</ul>
 
 <h2>Which to use: Layout Editor or Panel Editor?</h2>
@@ -66,7 +67,7 @@ naming of blocks, etc..  In order to function, there are
 constraints on the appearance of track elements and how they are used.  
 
 <p> 
-The Panel Editor builds <i>graphical</i> control Panels.  You can have as
+The (Control) Panel Editor builds <i>graphical</i> control Panels.  You can have as
 many Panels as you like, covering as much or as little of
 your railway as you like, with overlaps in area or functionality if required.   
 Panels might be diagrams showing the state of the track and signals, or 
@@ -265,6 +266,12 @@ change color to indicate whether the track is occupied.  The
 procedure for doing that is described on a 
 <a href="ColorTrack.shtml">separate page</a>.
 
+<a name="cpe"><h2>The Control Panel Editor</h2></a>
+<p><b>Control Panel Editor</b> is simply an alternative view and controller with the same content data as <b>Panel Editor</b>. Control Panel Editor allows you to edit a Panel using menus instead of a separate editing window.</p>
+<p>
+For more information, see the 
+<a href="../../../package/jmri/jmrit/display/ControlPanelEditor.shtml">Control Panel Editor help page</a>.
+
 <a name="le"><h2>The Layout Editor</h2></a>
 
 <a href="../../../package/jmri/jmrit/display/images/EnhancedPanel.gif">
@@ -294,20 +301,17 @@ For more information, please see the
 <a href="../../../package/jmri/jmrit/display/LayoutEditor.shtml">Layout Editor help page</a>.
 
 <h2>Communicating with Multiple Systems</h2>
-
+<p>
 PanelPro can communicate with more than one layout control system.  For
 example, the Cornwall Railroad mentioned above uses C/MRI hardware for sensing the status
 of blocks and turnouts on the layout, but drives turnout positions through
 a Digitrax DCC system.
 <p>
-To configure the program to talk to multiple systems, just select the first one in 
-standard part of the the
-preferences panel, and the select the second in the "<a href="../../../package/apps/TabbedPreferences.shtml#advanced">Advanced Preferences</a>".
-For more information, see the 
+To configure the program to talk to multiple systems, add both in JMRI Preferences using the + tab on the Connections pane. For more information, see the 
 <a href="../../../package/apps/TabbedPreferences.shtml">Preferences panel Help page</a>.
 <p>
 If you add a turnout, sensor or signal to a panel using just a number, e.g. "23",
-it will be assigned to the first system on the preference panel.  To
+it will be assigned to the first system on the Preference panel.  To
 access the 2nd system, you have to use JMRI 
 <a href="../../doc/Technical/Names.shtml">System Names</a>.  For example, if the second attachment is
 to a LocoNet system, you'd refer to a LocoNet Turnout as LT13; a LocoNet sensor

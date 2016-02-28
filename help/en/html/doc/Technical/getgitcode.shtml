@@ -149,8 +149,6 @@
   <a href="Ant.shtml">Ant</a>, 
   <a href="Eclipse.shtml">Eclipse</a>, 
   <a href="NetBeans.shtml">NetBeans</a>, 
-  <a href="XCode.shtml">XCode</a>,
-  <a href="JBuilder.shtml">JBuilder</a>, 
   <a href="IntelliJ.shtml">IntelliJ</a>, 
   etc.  (Ant may be the easiest to
   install and use, and is the primary example in the documentation)</p>
@@ -203,8 +201,6 @@
   <a href="Ant.shtml">Ant</a>, 
   <a href="Eclipse.shtml">Eclipse</a>, 
   <a href="NetBeans.shtml">NetBeans</a>, 
-  <a href="XCode.shtml">XCode</a>,
-  <a href="JBuilder.shtml">JBuilder</a>,
   <a href="IntelliJ.shtml">IntelliJ</a> 
   etc. (Ant may be the easiest to
   install and use, and is the primary example in the documentation)</p>
@@ -219,8 +215,6 @@
   <li><a href="Ant.shtml">Ant</a>
   <li><a href="Eclipse.shtml">Eclipse</a>
   <li><a href="NetBeans.shtml">NetBeans</a>
-  <li><a href="XCode.shtml">XCode</a>
-  <li><a href="JBuilder.shtml">JBuilder</a> 
   <li><a href="IntelliJ.shtml">IntelliJ</a>
   </ul>
 

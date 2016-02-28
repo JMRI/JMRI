@@ -1,16 +1,14 @@
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
-<!-- $Id$ -->
 <html lang="en">
 <head>
- <TITLE>
+ <title>
       JMRI: Edit Turntable Help
- </TITLE>
-    <META http-equiv=Content-Type content="text/html; charset=iso-8859-1">
-    <META content="Dave Duchamp" name=Author>
-    <META name="keywords" content="JMRI help Layout Editor turntable">
+ </title>
+    <meta name="author" content="Dave Duchamp">
+    <meta name="keywords" content="JMRI help Layout Editor turntable">
 
 <!-- Style -->
-  <META http-equiv=Content-Type content="text/html; charset=iso-8859-1">
+  <meta http-equiv=Content-Type content="text/html; charset=iso-8859-1">
   <link rel="stylesheet" type="text/css" href="/css/default.css" media="screen">
   <link rel="stylesheet" type="text/css" href="/css/print.css" media="print">
   <link rel="icon" href="/images/jmri.ico" type="image/png">
@@ -23,7 +21,7 @@
   <div class="nomenu" id="mBody">
     <div id="mainContent">
 
-<H1>Edit Turntable</H1>
+<h1>Edit Turntable</h1>
 
 A Layout Editor turntable is a schematic representation of a turntable on the 
 layout. A turntable is drawn as a circle with a variable number of track 
@@ -47,7 +45,7 @@ deletes the turntable and any track segments connected to it. Before a
 turntable is actually deleted, the program asks for verification of that
 action.</p>
 <p>
-<img src="images/EditTurntable.png" align="RIGHT">
+<img src="images/EditTurntable.png" align="right">
 The Edit Turntable dialog allows the following
 <ul>
 <li>Radius of the turntable circle to be changed</li>
@@ -90,6 +88,7 @@ radius, add track segments. Track segments will be aligned fairly
 precisely to the turntable center.</p>
 
 <!--#include virtual="/Footer" -->
-</body>
+   </div><!-- closes #mainContent-->
+  </div> <!-- closes #mBody-->
+ </body>
 </html>
-

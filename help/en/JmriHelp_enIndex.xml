@@ -467,13 +467,9 @@
  <indexitem text="Technical ">
   <indexitem text="Eclipse IDE " target="html.doc.Technical.Eclipse"/>
 
-  <indexitem text="JBuilder IDE " target="html.doc.Technical.JBuilder"/>
-
   <indexitem text="NetBeans IDE " target="html.doc.Technical.NetBeans"/>
 
   <indexitem text="Thread Monitor " target="package.jmri.jmrit.automat.monitor.AutomatTableFrame"/>
-
-  <indexitem text="XCode IDE " target="html.doc.Technical.XCode"/>
 
  </indexitem>
  <indexitem text="Terminal Server connection " target="html.hardware.TerminalServer"/>

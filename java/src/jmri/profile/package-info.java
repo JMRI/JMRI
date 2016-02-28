@@ -8,5 +8,4 @@
  * {@link jmri.profile.ProfilePreferencesPanel}. This allows profiles to be
  * imported into a JMRI instance while that instance is not running.
  */
-@edu.umd.cs.findbugs.annotations.SuppressWarnings({})
 package jmri.profile;
