@@ -56,9 +56,14 @@ class JsonTimeSocketService extends JsonSocketService implements PropertyChangeL
     @Override
     public void propertyChange(PropertyChangeEvent evt) {
         try {
-            this.service.doGet(TIME, null, this.connection.getLocale());
-        } catch (JsonException ex) {
-            // do nothing - we can only silently fail at this point
+            try {
+                this.connection.sendMessage(this.service.doGet(TIME, null, this.connection.getLocale()));
+            } catch (JsonException ex) {
+                this.connection.sendMessage(ex.getJsonMessage());
+            }
+        } catch (IOException ex) {
+            // do nothing - the client has dropped off and a ping failure will
+            // clean up the connection if its not already being torn down
         }
     }
 
