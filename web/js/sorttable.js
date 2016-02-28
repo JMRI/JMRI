@@ -15,7 +15,9 @@
   This basically means: do what you want with it.
 */
 
-
+/*
+Used for help/en/glossary and help/fr/glossary tables, 2016 Egbert Broerse
+*/
 var stIsIE = /*@cc_on!@*/false;
 
 sorttable = {
