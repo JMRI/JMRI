@@ -4,6 +4,7 @@ import java.io.File;
 import java.io.IOException;
 import java.util.concurrent.TimeUnit;
 import jmri.jmrit.operations.OperationsManager;
+import jmri.jmrit.operations.setup.Control;
 import jmri.util.FileUtil;
 import jmri.util.SystemType;
 import org.jdom2.Attribute;
@@ -62,7 +63,7 @@ public class TrainCustomSwitchList {
         if (csvFile == null || !manifestCreatorFileExists()) {
             return;
         }
-
+        alive = true;
         File workingDir = OperationsManager.getInstance().getFile(getDirectoryName());
         File csvNamesFile = new File(workingDir, csvNamesFileName);
 
@@ -132,14 +133,37 @@ public class TrainCustomSwitchList {
         return file.exists();
     }
     
-    public static boolean isProcessAlive() {
-        return process.isAlive();
+    public void checkProcessComplete() {
+        if (alive) {
+            int loopCount = Control.excelWaitTime; // number of seconds to wait
+            while (loopCount > 0 && alive) {
+                loopCount--;
+                synchronized (this) {
+                    try {
+                        wait(1000); // 1 sec
+                    } catch (InterruptedException e) {
+                        // TODO Auto-generated catch block
+                        e.printStackTrace();
+                    }
+                }
+            }
+        }
     }
     
+    public static boolean isProcessAlive() {
+        if (process != null) {
+            return process.isAlive();
+        } else {
+            return false;
+        }
+    }
+    
+    static boolean alive = false;
     public static void waitForProcessToComplete(int waitTimeSeconds) throws InterruptedException {
         synchronized (process) {
             process.waitFor(waitTimeSeconds, TimeUnit.SECONDS);
         }
+        alive = false;
     }
 
     public static void load(Element options) {
