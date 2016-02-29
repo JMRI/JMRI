@@ -681,7 +681,7 @@ public class TrainBuilder extends TrainCommon {
         _train.setBuilt(true);
         // notify that locations have been modified by this train's build
         for (Location location : _modifiedLocations) {
-            location.setStatusModified();
+            location.setStatus(Location.MODIFIED);
         }
         // now create and place train icon
         _train.moveTrainIcon(_train.getTrainDepartsRouteLocation());

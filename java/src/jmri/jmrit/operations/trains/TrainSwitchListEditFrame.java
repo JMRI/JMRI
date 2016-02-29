@@ -198,6 +198,11 @@ public class TrainSwitchListEditFrame extends OperationsFrame implements java.be
         // set frame size and train for display
         initMinimumSize(new Dimension(Control.panelWidth500, Control.panelHeight500));
     }
+    
+    private static final boolean IS_PREVIEW = true;
+    private static final boolean IS_CHANGED = true;
+    private static final boolean IS_CSV = true;
+    private static final boolean IS_UPDATE = true;
 
     // Buttons
     public void buttonActionPerformed(java.awt.event.ActionEvent ae) {
@@ -208,28 +213,28 @@ public class TrainSwitchListEditFrame extends OperationsFrame implements java.be
             selectCheckboxes(true);
         }
         if (ae.getSource() == previewButton) {
-            buildSwitchList(true, false, false, false);
+            buildSwitchList(IS_PREVIEW, !IS_CHANGED, !IS_CSV, !IS_UPDATE);
         }
         if (ae.getSource() == printButton) {
-            buildSwitchList(false, false, false, false);
+            buildSwitchList(!IS_PREVIEW, !IS_CHANGED, !IS_CSV, !IS_UPDATE);
         }
         if (ae.getSource() == printChangesButton) {
-            buildSwitchList(false, true, false, false);
+            buildSwitchList(!IS_PREVIEW, IS_CHANGED, !IS_CSV, !IS_UPDATE);
         }
         if (ae.getSource() == csvGenerateButton) {
-            buildSwitchList(false, false, true, false);
+            buildSwitchList(!IS_PREVIEW, !IS_CHANGED, IS_CSV, !IS_UPDATE);
         }
         if (ae.getSource() == csvChangeButton) {
-            buildSwitchList(false, true, true, false);
+            buildSwitchList(!IS_PREVIEW, IS_CHANGED, IS_CSV, !IS_UPDATE);
         }
         if (ae.getSource() == updateButton) {
-            buildSwitchList(true, false, false, true);
+            buildSwitchList(IS_PREVIEW, !IS_CHANGED, !IS_CSV, IS_UPDATE);
         }
         if (ae.getSource() == runButton) {
-            runCustomSwitchLists(false);
+            runCustomSwitchLists(!IS_CHANGED);
         }
         if (ae.getSource() == runChangeButton) {
-            runCustomSwitchLists(true);
+            runCustomSwitchLists(IS_CHANGED);
         }
         if (ae.getSource() == resetButton) {
             reset();
@@ -295,22 +300,23 @@ public class TrainSwitchListEditFrame extends OperationsFrame implements java.be
      * Print = all false;
      *
      * @param isPreview true if print preview
-     * @param isChanged true if print changes was requested
+     * @param isChanged true if only print changes was requested
      * @param isCsv     true if building a CSV switch list files
-     * @param isUpdate  true if only updating switch lists
+     * @param isUpdate  true if only updating switch lists (no printing or preview)
      */
     private void buildSwitchList(boolean isPreview, boolean isChanged, boolean isCsv, boolean isUpdate) {
         TrainSwitchLists trainSwitchLists = new TrainSwitchLists();
         for (Location location : LocationManager.instance().getLocationsByNameList()) {
             if (location.isSwitchListEnabled()) {
                 if (!isCsv) {
+                    // update switch list
                     trainSwitchLists.buildSwitchList(location);
-                    // print or print changes
-                    if (!isUpdate && !isChanged
-                            || (!isUpdate && isChanged && !location.getStatus().equals(Location.PRINTED))) {
+                    // print or only print changes
+                    if (!isUpdate && (!isChanged || isChanged && location.getStatus().equals(Location.MODIFIED))) {
                         trainSwitchLists.printSwitchList(location, isPreview);
                     }
-                } else if (Setup.isGenerateCsvSwitchListEnabled()) {
+                } else if (Setup.isGenerateCsvSwitchListEnabled()
+                        && (!isChanged || isChanged && location.getStatus().equals(Location.MODIFIED))) {
                     TrainCsvSwitchLists trainCsvSwitchLists = new TrainCsvSwitchLists();
                     trainCsvSwitchLists.buildSwitchList(location);
                 }
@@ -361,7 +367,7 @@ public class TrainSwitchListEditFrame extends OperationsFrame implements java.be
             if (mainLocation != null && TrainCommon.splitString(mainLocation.getName()).equals(name)) {
                 location.setSwitchListEnabled(mainLocation.isSwitchListEnabled());
                 if (mainLocation.isSwitchListEnabled() && location.getStatus().equals(Location.MODIFIED)) {
-                    mainLocation.setStatusModified(); // we need to update the primary location
+                    mainLocation.setStatus(Location.MODIFIED); // we need to update the primary location
                     location.setStatus(Location.UPDATED); // and clear the secondaries
                 }
                 continue;

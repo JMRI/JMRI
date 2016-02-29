@@ -430,17 +430,6 @@ public class Location implements java.beans.PropertyChangeListener {
     }
 
     /**
-     * Automatically sets the print status for this location's switch list to
-     * modified if the switch list was printed or CSV generated.
-     *
-     */
-    public void setStatusModified() {
-        if (getStatus().equals(PRINTED) || getStatus().equals(CSV_GENERATED) || !Setup.isSwitchListRealTime()) {
-            setStatus(MODIFIED);
-        }
-    }
-
-    /**
      * Sets the print status for this location's switch list
      *
      * @param status UNKNOWN PRINTED MODIFIED UPDATED CSV_GENERATED
