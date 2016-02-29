@@ -187,6 +187,22 @@ public class JmriSRCPThrottleServer extends jmri.jmris.AbstractThrottleServer {
         TimeStampedOutput.writeTimestamp(output, StatusString);
     }
 
+    @Override
+    public void sendThrottleReleased(jmri.LocoAddress address) throws IOException{
+        Integer bus;
+        if(addressList.contains(address)){
+           bus = (Integer)busList.get(addressList.indexOf(address));
+        } else {
+           // we didn't request this address.
+           return;
+        }
+
+        // Build the output string to send
+        String StatusString="102 INFO " + bus + " GL " + address.getNumber(); // assume DCC for now.
+        StatusString+= address.getProtocol()==jmri.LocoAddress.Protocol.DCC_SHORT?"N 1 28":"N 2 28";
+        StatusString+= "\n\r";
+        TimeStampedOutput.writeTimestamp(output, StatusString);
+    }
 
     public void initThrottle(int bus, int address, boolean isLong, 
                              int speedsteps, int functions) throws IOException {

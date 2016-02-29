@@ -440,8 +440,10 @@ public class SRCPVisitor implements SRCPParserVisitor {
     }
 
     public Object visit(ASTterm node, Object data) {
-        log.debug("TERM " + ((SimpleNode) node.jjtGetChild(1)).jjtGetValue());
-        if (((SimpleNode) node.jjtGetChild(1)).jjtGetValue().equals("SERVER")) {
+        SimpleNode target = (SimpleNode) node.jjtGetChild(1);
+        int bus = Integer.parseInt(((String) ((SimpleNode) node.jjtGetChild(0)).jjtGetValue()));
+        log.debug("TERM " + bus + " " + target.jjtGetValue());
+        if (target.jjtGetValue().equals("SERVER")) {
             // for the TERM <bus> SERVER request, the protocol requries that
             // we terminate all connections and reset the state to the initial
             // state.  Since we may have a local GUI controlling things, we
@@ -449,14 +451,20 @@ public class SRCPVisitor implements SRCPParserVisitor {
             // requesting client.
             outputString = "200 OK";
             return data;
-        } else if (((SimpleNode) node.jjtGetChild(1)).jjtGetValue().equals("SESSION")) {
+        } else if (target.jjtGetValue().equals("SESSION")) {
             // for the TERM <bus> SERVER request, the protocol requries that
             // we terminate all connections and reset the state to the initial
             // state.  Since we may have a local GUI controlling things, we
             // ignore the request, but send the proper return value to the
             // requesting client.
-            outputString = "102 TERM 0 SESSION " + ((jmri.jmris.srcp.JmriSRCPServiceHandler) data).getSessionNumber();  // we need to set session IDs.
+            outputString = "102 TERM " + bus + " SESSION " + ((jmri.jmris.srcp.JmriSRCPServiceHandler) data).getSessionNumber();  // we need to set session IDs.
             return data;
+        } else if(target.jjtGetValue().equals("GL")) {
+               // terminate a locomotive
+               int address = Integer.parseInt(((String) ((SimpleNode) node.jjtGetChild(2)).jjtGetValue()));
+               // this isn't finished.  Still need to release the throttle.
+               outputString = "102 TERM " + bus + " GL " + address;
+               return data;
         }
 
         return node.childrenAccept(this, data);
