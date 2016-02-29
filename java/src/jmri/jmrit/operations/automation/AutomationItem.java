@@ -400,6 +400,7 @@ public class AutomationItem implements java.beans.PropertyChangeListener {
         list.add(new SelectTrainAction());
         list.add(new DeselectTrainAction());
         list.add(new PrintSwitchListAction());
+//        list.add(new PrintSwitchListChangesAction()); // see UpdateSwitchListAction
         list.add(new UpdateSwitchListAction());
         list.add(new WaitSwitchListAction());
         list.add(new RunSwitchListAction());
