@@ -237,7 +237,7 @@ public class TrainScheduleManager implements java.beans.PropertyChangeListener {
             if (location.isSwitchListEnabled()) {
                 trainSwitchLists.buildSwitchList(location);
                 // print switch lists for locations that have changes
-                if (Setup.isSwitchListRealTime() && !location.getStatus().equals(Location.PRINTED)) {
+                if (Setup.isSwitchListRealTime() && location.getStatus().equals(Location.MODIFIED)) {
                     trainSwitchLists.printSwitchList(location, TrainManager.instance().isPrintPreviewEnabled());
                 }
             }
