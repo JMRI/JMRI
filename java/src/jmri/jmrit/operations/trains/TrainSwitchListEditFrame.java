@@ -61,7 +61,7 @@ public class TrainSwitchListEditFrame extends OperationsFrame implements java.be
     JButton setButton = new JButton(Bundle.getMessage("Select"));
     JButton printButton = new JButton(Bundle.getMessage("PrintSwitchLists"));
     JButton previewButton = new JButton(Bundle.getMessage("PreviewSwitchLists"));
-    JButton changeButton = new JButton(Bundle.getMessage("PrintChanges"));
+    JButton printChangesButton = new JButton(Bundle.getMessage("PrintChanges"));
     JButton runButton = new JButton(Bundle.getMessage("RunFile"));
     JButton runChangeButton = new JButton(Bundle.getMessage("RunFileChanges"));
     JButton csvGenerateButton = new JButton(Bundle.getMessage("CsvGenerate"));
@@ -91,7 +91,7 @@ public class TrainSwitchListEditFrame extends OperationsFrame implements java.be
         switchListAllTrainsCheckBox.setToolTipText(Bundle.getMessage("AllTrainsTip"));
         switchListPageComboBox.setToolTipText(Bundle.getMessage("PageTrainTip"));
         csvChangeButton.setToolTipText(Bundle.getMessage("CsvChangesTip"));
-        changeButton.setToolTipText(Bundle.getMessage("PrintChangesTip"));
+        printChangesButton.setToolTipText(Bundle.getMessage("PrintChangesTip"));
         resetButton.setToolTipText(Bundle.getMessage("ResetSwitchListTip"));
 
         switchPane = new JScrollPane(locationPanelCheckBoxes);
@@ -134,7 +134,7 @@ public class TrainSwitchListEditFrame extends OperationsFrame implements java.be
         // row 3
         addItem(controlPanel, previewButton, 0, 2);
         addItem(controlPanel, printButton, 1, 2);
-        addItem(controlPanel, changeButton, 2, 2);
+        addItem(controlPanel, printChangesButton, 2, 2);
         // row 4
         addItem(controlPanel, updateButton, 0, 3);
         addItem(controlPanel, resetButton, 1, 3);
@@ -170,7 +170,7 @@ public class TrainSwitchListEditFrame extends OperationsFrame implements java.be
         addButtonAction(setButton);
         addButtonAction(printButton);
         addButtonAction(previewButton);
-        addButtonAction(changeButton);
+        addButtonAction(printChangesButton);
         addButtonAction(runButton);
         addButtonAction(runChangeButton);
         addButtonAction(csvGenerateButton);
@@ -213,7 +213,7 @@ public class TrainSwitchListEditFrame extends OperationsFrame implements java.be
         if (ae.getSource() == printButton) {
             buildSwitchList(false, false, false, false);
         }
-        if (ae.getSource() == changeButton) {
+        if (ae.getSource() == printChangesButton) {
             buildSwitchList(false, true, false, false);
         }
         if (ae.getSource() == csvGenerateButton) {
@@ -457,12 +457,12 @@ public class TrainSwitchListEditFrame extends OperationsFrame implements java.be
     }
 
     private void enableChangeButtons() {
-        changeButton.setEnabled(false);
+        printChangesButton.setEnabled(false);
         csvChangeButton.setEnabled(false);
         runChangeButton.setEnabled(false);
         for (Location location : locationManager.getLocationsByNameList()) {
             if (location.getStatus().equals(Location.MODIFIED) && location.isSwitchListEnabled()) {
-                changeButton.setEnabled(true);
+                printChangesButton.setEnabled(true);
                 csvChangeButton.setEnabled(true);
                 runChangeButton.setEnabled(true);
             }

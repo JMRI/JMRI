@@ -443,7 +443,7 @@ public class Location implements java.beans.PropertyChangeListener {
     /**
      * Sets the print status for this location's switch list
      *
-     * @param status UNKNOWN PRINTED MODIFIED
+     * @param status UNKNOWN PRINTED MODIFIED UPDATED CSV_GENERATED
      */
     public void setStatus(String status) {
         String old = _status;
@@ -453,6 +453,10 @@ public class Location implements java.beans.PropertyChangeListener {
         }
     }
 
+    /**
+     * The print status for this location's switch list
+     * @return UNKNOWN PRINTED MODIFIED UPDATED CSV_GENERATED
+     */
     public String getStatus() {
         return _status;
     }

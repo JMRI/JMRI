@@ -72,6 +72,7 @@ public class TrainBuilder extends TrainCommon {
     boolean _success; // true when enough cars have been picked up from a location
     PrintWriter _buildReport; // build report for this train
     List<Car> _notRoutable = new ArrayList<Car>();
+    List<Location> _modifiedLocations = new ArrayList<Location>();
 
     // managers
     CarManager carManager = CarManager.instance();
@@ -678,6 +679,10 @@ public class TrainBuilder extends TrainCommon {
             new TrainCsvManifest(_train);
         }
         _train.setBuilt(true);
+        // notify that locations have been modified by this train's build
+        for (Location location : _modifiedLocations) {
+            location.setStatusModified();
+        }
         // now create and place train icon
         _train.moveTrainIcon(_train.getTrainDepartsRouteLocation());
         log.debug("Done building train ({})", _train.getName());
@@ -2442,23 +2447,31 @@ public class TrainBuilder extends TrainCommon {
 
     private void addRsToTrain(RollingStock rs, RouteLocation rl, RouteLocation rld, Track track, int length,
             int weightTons) {
-        rl.getLocation().setStatusModified();
-        rld.getLocation().setStatusModified();
+        // notify that locations have been modified when build done
+        // allows automation actions to run properly
+//        rl.getLocation().setStatusModified();
+//        rld.getLocation().setStatusModified();
+        if (!_modifiedLocations.contains(rl.getLocation())) {
+            _modifiedLocations.add(rl.getLocation());
+        }
+        if (!_modifiedLocations.contains(rld.getLocation())) {
+            _modifiedLocations.add(rld.getLocation());
+        }
         rs.setTrain(_train);
         rs.setRouteLocation(rl);
         rs.setRouteDestination(rld);
         // now adjust train length and weight for each location that the rolling stock is in the train
         boolean inTrain = false;
-        for (RouteLocation r : _routeList) {
-            if (rl == r) {
+        for (RouteLocation routeLocation : _routeList) {
+            if (rl == routeLocation) {
                 inTrain = true;
             }
-            if (rld == r) {
+            if (rld == routeLocation) {
                 break;
             }
             if (inTrain) {
-                r.setTrainLength(r.getTrainLength() + length); // couplers are included
-                r.setTrainWeight(r.getTrainWeight() + weightTons);
+                routeLocation.setTrainLength(routeLocation.getTrainLength() + length); // couplers are included
+                routeLocation.setTrainWeight(routeLocation.getTrainWeight() + weightTons);
             }
         }
     }
