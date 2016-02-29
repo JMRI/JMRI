@@ -7,8 +7,8 @@
 
 <!-- Style -->
 <meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
-<link rel	="stylesheet" type="text/css" href="/css/default.css" MEDIA="screen">
-<link rel="stylesheet" type="text/css" href="/css/print.css" MEDIA="print">
+<link rel	="stylesheet" type="text/css" href="/css/default.css" media="screen">
+<link rel="stylesheet" type="text/css" href="/css/print.css" media="print">
 <link rel="icon" href="/images/jmri.ico" type="image/png">
 <link rel="home" title="Home" href="/">
 <!-- /Style -->
@@ -116,8 +116,8 @@ Marker from the Panel.
 can save the Panel and the Markers will be saved to your Panel xml file. 
 
 <!--#include virtual="/Footer" -->
-</div>
-</div>
+  </div><!-- closes #mainContent-->
+ </div> <!-- closes #mBody-->
 </body>
 </html>
 
