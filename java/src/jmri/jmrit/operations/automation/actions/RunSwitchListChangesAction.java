@@ -46,6 +46,7 @@ public class RunSwitchListChangesAction extends Action {
             setRunning(true);
             TrainSwitchLists trainSwitchLists = new TrainSwitchLists();
             TrainCsvSwitchLists trainCsvSwitchLists = new TrainCsvSwitchLists();
+            new TrainCustomSwitchList().checkProcessComplete(); // this can wait thread
             for (Location location : LocationManager.instance().getLocationsByNameList()) {
                 if (location.isSwitchListEnabled()
                         && (!isChanged || isChanged && location.getStatus().equals(Location.MODIFIED))) {
@@ -72,6 +73,8 @@ public class RunSwitchListChangesAction extends Action {
                     // TODO Auto-generated catch block
                     e.printStackTrace();
                 }
+            } else {
+                log.info("No switch list changes found");
             }
             // set trains switch lists printed
             TrainManager.instance().setTrainsSwitchListStatus(Train.PRINTED);
