@@ -298,7 +298,7 @@ Feel free to submit suggestions for improvements or additions to the <a href="ht
   <td class="app">Logix</td>
   <td class="en">Logix</td>
   <td class="descr">JMRI software objects that monitor one or more conditions on a layout, and take action when these conditions change in a user-specified way to control outputs on the layout. <a href="../html/tools/Logix.shtml">...</a></td>
-  <td class="de">Logik (?)</td>
+  <td class="de">Logix</td>
   <td class="it">Logix</td>
   <td class="fr">Logix</td>
   <td class="en_UK"></td>
@@ -703,7 +703,7 @@ Feel free to submit suggestions for improvements or additions to the <a href="ht
   2. A special JMRI Logix with information to run an automated train. Activating it will set the turnouts for a specified <a href="#pproute">Route</a> and drive the train over the route, optionally using prerecorded throttle adjustments. <a href="../package/jmri/jmrit/logix/Warrant.shtml">...</a></td>
   <td class="de">Fahrerlaubnis</td>
   <td class="it"></td>
-  <td class="fr">Mandat</td>
+  <td class="fr">Bulletin/Mandat</td>
   <td class="en_UK"></td>
   <td class="da"></td>
 </tr>
@@ -922,7 +922,7 @@ Feel free to submit suggestions for improvements or additions to the <a href="ht
   <td class="app">I18N</td>
   <td class="en">Actions</td>
   <td class="descr"></td>
-  <td class="de">Aktionen</td>
+  <td class="de">Handlungen</td>
   <td class="it">Azioni</td>
   <td class="fr">Actions</td>
   <td class="en_UK"></td>
