@@ -1,6 +1,8 @@
 // Train.java
 package jmri.jmrit.operations.trains;
 
+import jmri.jmrit.operations.trains.excel.TrainCustomManifest;
+
 import java.awt.Color;
 import java.io.File;
 import java.io.IOException;

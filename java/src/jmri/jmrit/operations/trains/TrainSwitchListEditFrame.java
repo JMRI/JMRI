@@ -28,6 +28,8 @@ import jmri.jmrit.operations.locations.Location;
 import jmri.jmrit.operations.locations.LocationManager;
 import jmri.jmrit.operations.setup.Control;
 import jmri.jmrit.operations.setup.Setup;
+import jmri.jmrit.operations.trains.excel.SetupExcelProgramSwitchListFrameAction;
+import jmri.jmrit.operations.trains.excel.TrainCustomSwitchList;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -38,11 +40,6 @@ import org.slf4j.LoggerFactory;
  * @version $Revision$
  */
 public class TrainSwitchListEditFrame extends OperationsFrame implements java.beans.PropertyChangeListener {
-
-    /**
-     *
-     */
-    private static final long serialVersionUID = 3796539428562528626L;
 
     JScrollPane switchPane;
 
@@ -61,7 +58,7 @@ public class TrainSwitchListEditFrame extends OperationsFrame implements java.be
     JButton setButton = new JButton(Bundle.getMessage("Select"));
     JButton printButton = new JButton(Bundle.getMessage("PrintSwitchLists"));
     JButton previewButton = new JButton(Bundle.getMessage("PreviewSwitchLists"));
-    JButton changeButton = new JButton(Bundle.getMessage("PrintChanges"));
+    JButton printChangesButton = new JButton(Bundle.getMessage("PrintChanges"));
     JButton runButton = new JButton(Bundle.getMessage("RunFile"));
     JButton runChangeButton = new JButton(Bundle.getMessage("RunFileChanges"));
     JButton csvGenerateButton = new JButton(Bundle.getMessage("CsvGenerate"));
@@ -91,7 +88,7 @@ public class TrainSwitchListEditFrame extends OperationsFrame implements java.be
         switchListAllTrainsCheckBox.setToolTipText(Bundle.getMessage("AllTrainsTip"));
         switchListPageComboBox.setToolTipText(Bundle.getMessage("PageTrainTip"));
         csvChangeButton.setToolTipText(Bundle.getMessage("CsvChangesTip"));
-        changeButton.setToolTipText(Bundle.getMessage("PrintChangesTip"));
+        printChangesButton.setToolTipText(Bundle.getMessage("PrintChangesTip"));
         resetButton.setToolTipText(Bundle.getMessage("ResetSwitchListTip"));
 
         switchPane = new JScrollPane(locationPanelCheckBoxes);
@@ -134,7 +131,7 @@ public class TrainSwitchListEditFrame extends OperationsFrame implements java.be
         // row 3
         addItem(controlPanel, previewButton, 0, 2);
         addItem(controlPanel, printButton, 1, 2);
-        addItem(controlPanel, changeButton, 2, 2);
+        addItem(controlPanel, printChangesButton, 2, 2);
         // row 4
         addItem(controlPanel, updateButton, 0, 3);
         addItem(controlPanel, resetButton, 1, 3);
@@ -170,7 +167,7 @@ public class TrainSwitchListEditFrame extends OperationsFrame implements java.be
         addButtonAction(setButton);
         addButtonAction(printButton);
         addButtonAction(previewButton);
-        addButtonAction(changeButton);
+        addButtonAction(printChangesButton);
         addButtonAction(runButton);
         addButtonAction(runChangeButton);
         addButtonAction(csvGenerateButton);
@@ -198,6 +195,11 @@ public class TrainSwitchListEditFrame extends OperationsFrame implements java.be
         // set frame size and train for display
         initMinimumSize(new Dimension(Control.panelWidth500, Control.panelHeight500));
     }
+    
+    private static final boolean IS_PREVIEW = true;
+    private static final boolean IS_CHANGED = true;
+    private static final boolean IS_CSV = true;
+    private static final boolean IS_UPDATE = true;
 
     // Buttons
     public void buttonActionPerformed(java.awt.event.ActionEvent ae) {
@@ -208,28 +210,28 @@ public class TrainSwitchListEditFrame extends OperationsFrame implements java.be
             selectCheckboxes(true);
         }
         if (ae.getSource() == previewButton) {
-            buildSwitchList(true, false, false, false);
+            buildSwitchList(IS_PREVIEW, !IS_CHANGED, !IS_CSV, !IS_UPDATE);
         }
         if (ae.getSource() == printButton) {
-            buildSwitchList(false, false, false, false);
+            buildSwitchList(!IS_PREVIEW, !IS_CHANGED, !IS_CSV, !IS_UPDATE);
         }
-        if (ae.getSource() == changeButton) {
-            buildSwitchList(false, true, false, false);
+        if (ae.getSource() == printChangesButton) {
+            buildSwitchList(!IS_PREVIEW, IS_CHANGED, !IS_CSV, !IS_UPDATE);
         }
         if (ae.getSource() == csvGenerateButton) {
-            buildSwitchList(false, false, true, false);
+            buildSwitchList(!IS_PREVIEW, !IS_CHANGED, IS_CSV, !IS_UPDATE);
         }
         if (ae.getSource() == csvChangeButton) {
-            buildSwitchList(false, true, true, false);
+            buildSwitchList(!IS_PREVIEW, IS_CHANGED, IS_CSV, !IS_UPDATE);
         }
         if (ae.getSource() == updateButton) {
-            buildSwitchList(true, false, false, true);
+            buildSwitchList(IS_PREVIEW, !IS_CHANGED, !IS_CSV, IS_UPDATE);
         }
         if (ae.getSource() == runButton) {
-            runCustomSwitchLists(false);
+            runCustomSwitchLists(!IS_CHANGED);
         }
         if (ae.getSource() == runChangeButton) {
-            runCustomSwitchLists(true);
+            runCustomSwitchLists(IS_CHANGED);
         }
         if (ae.getSource() == resetButton) {
             reset();
@@ -295,22 +297,23 @@ public class TrainSwitchListEditFrame extends OperationsFrame implements java.be
      * Print = all false;
      *
      * @param isPreview true if print preview
-     * @param isChanged true if print changes was requested
+     * @param isChanged true if only print changes was requested
      * @param isCsv     true if building a CSV switch list files
-     * @param isUpdate  true if only updating switch lists
+     * @param isUpdate  true if only updating switch lists (no printing or preview)
      */
     private void buildSwitchList(boolean isPreview, boolean isChanged, boolean isCsv, boolean isUpdate) {
         TrainSwitchLists trainSwitchLists = new TrainSwitchLists();
         for (Location location : LocationManager.instance().getLocationsByNameList()) {
             if (location.isSwitchListEnabled()) {
                 if (!isCsv) {
+                    // update switch list
                     trainSwitchLists.buildSwitchList(location);
-                    // print or print changes
-                    if (!isUpdate && !isChanged
-                            || (!isUpdate && isChanged && !location.getStatus().equals(Location.PRINTED))) {
+                    // print or only print changes
+                    if (!isUpdate && (!isChanged || isChanged && location.getStatus().equals(Location.MODIFIED))) {
                         trainSwitchLists.printSwitchList(location, isPreview);
                     }
-                } else if (Setup.isGenerateCsvSwitchListEnabled()) {
+                } else if (Setup.isGenerateCsvSwitchListEnabled()
+                        && (!isChanged || isChanged && location.getStatus().equals(Location.MODIFIED))) {
                     TrainCsvSwitchLists trainCsvSwitchLists = new TrainCsvSwitchLists();
                     trainCsvSwitchLists.buildSwitchList(location);
                 }
@@ -361,7 +364,7 @@ public class TrainSwitchListEditFrame extends OperationsFrame implements java.be
             if (mainLocation != null && TrainCommon.splitString(mainLocation.getName()).equals(name)) {
                 location.setSwitchListEnabled(mainLocation.isSwitchListEnabled());
                 if (mainLocation.isSwitchListEnabled() && location.getStatus().equals(Location.MODIFIED)) {
-                    mainLocation.setStatusModified(); // we need to update the primary location
+                    mainLocation.setStatus(Location.MODIFIED); // we need to update the primary location
                     location.setStatus(Location.UPDATED); // and clear the secondaries
                 }
                 continue;
@@ -457,12 +460,12 @@ public class TrainSwitchListEditFrame extends OperationsFrame implements java.be
     }
 
     private void enableChangeButtons() {
-        changeButton.setEnabled(false);
+        printChangesButton.setEnabled(false);
         csvChangeButton.setEnabled(false);
         runChangeButton.setEnabled(false);
         for (Location location : locationManager.getLocationsByNameList()) {
             if (location.getStatus().equals(Location.MODIFIED) && location.isSwitchListEnabled()) {
-                changeButton.setEnabled(true);
+                printChangesButton.setEnabled(true);
                 csvChangeButton.setEnabled(true);
                 runChangeButton.setEnabled(true);
             }

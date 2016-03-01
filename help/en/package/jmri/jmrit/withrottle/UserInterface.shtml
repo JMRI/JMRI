@@ -98,32 +98,23 @@ if for some reason you can't install an app on the device.
 <h3>
 Function Labels
 </h3>
-Function labels can be customized for each roster entry through JMRI.
+Function labels can be customized for each roster entry through JMRI,
+using the Labels & Media button.
 These labels will then be displayed in place of the generic F1, F2... on the
 screen of the mobile device.
 The labels can be added when a new roster entry is created,
 or by editing an existing roster entry under the Function Labels tab.
-To enter function labels, the programmer format has to be either "Advanced" or "Custom".
-
-
 <p>
 <h3>
 Routes & Turnouts
 </h3>
-The app can control any turnouts (and routes) that JMRI has control of.
-If they are available in the JMRI turnout (or route) table,
-they are automatically available in WiFi throttles.�
-If there are no turnouts (or routes) on the table(s),
-then the control screen for them does not show in the app.
-It will do all of this by default.
-However, if JMRI cannot control them, WiFi throttles will not be able to either.
-
+The app can control any turnouts (and routes) that JMRI can control. 
+The WiThrottle clients list only turnouts and routes which have User Names. 
 <p>
 Additionally, you can limit what turnouts appear.
 In JMRI, with the WiThrottle window active, there is a menu named WiThrottle.
 It has an item titled "Filter Controls"
 that will let you pick which turnouts to display or hide.
-
 <p>
 <h3>
 Advanced Consisting
