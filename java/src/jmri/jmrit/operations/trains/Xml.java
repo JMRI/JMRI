@@ -112,6 +112,7 @@ public class Xml {
     static final String BUILD_REPORT = "buildReport"; // NOI18N
     static final String PRINT_PREVIEW = "printPreview"; // NOI18N
     static final String OPEN_FILE = "openFile"; // NOI18N
+    static final String RUN_FILE = "runFile"; // NOI18N
     static final String TRAIN_ACTION = "trainAction"; // NOI18N
 
     static final String COLUMN_WIDTHS = "columnWidths"; // TODO This here is for backwards compatibility, remove after next major release // NOI18N
@@ -130,15 +131,6 @@ public class Xml {
 
     // TrainManagerXml.java
     static final String TRAINS = "trains"; // NOI18N
-
-    // ManifestCreator.java
-    static final String MANIFEST_CREATOR = "manifestCreator"; // NOI18N
-    static final String RUN_FILE = "runFile"; // NOI18N
-    static final String DIRECTORY = "directory"; // NOI18N
-    static final String COMMON_FILE = "commonFile"; // NOI18N
-
-    // SwitchListCreator
-    static final String SWITCHLIST_CREATOR = "switchlistCreator"; // NOI18N
 
     // TrainManifestText.java
     static final String MANIFEST_TEXT_STRINGS = "manifestTextStrings"; // NOI18N
