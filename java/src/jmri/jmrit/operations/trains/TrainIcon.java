@@ -16,6 +16,7 @@ import jmri.jmrit.operations.rollingstock.cars.Car;
 import jmri.jmrit.operations.rollingstock.cars.CarManager;
 import jmri.jmrit.operations.routes.Route;
 import jmri.jmrit.operations.routes.RouteLocation;
+import jmri.jmrit.operations.trains.tools.ShowCarsInTrainAction;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -29,11 +30,6 @@ import org.slf4j.LoggerFactory;
  * @version $Revision$
  */
 public class TrainIcon extends LocoIcon {
-
-    /**
-     *
-     */
-    private static final long serialVersionUID = 8557652717518925827L;
 
     public TrainIcon(Editor editor) {
         // super ctor call to make sure this is an icon label
