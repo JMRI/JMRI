@@ -1,6 +1,9 @@
 // TrainManifest.java
 package jmri.jmrit.operations.trains;
 
+import jmri.jmrit.operations.trains.timetable.TrainScheduleManager;
+
+import jmri.jmrit.operations.trains.timetable.TrainSchedule;
 import java.io.BufferedWriter;
 import java.io.File;
 import java.io.FileOutputStream;

@@ -1,6 +1,8 @@
 // CarAttributeEditFrame.java
 package jmri.jmrit.operations.rollingstock.cars;
 
+import jmri.jmrit.operations.trains.tools.TrainsByCarTypeFrame;
+
 import java.awt.Dimension;
 import java.awt.GridBagLayout;
 import java.text.MessageFormat;
@@ -18,7 +20,6 @@ import jmri.jmrit.operations.rollingstock.engines.EngineManager;
 import jmri.jmrit.operations.setup.Control;
 import jmri.jmrit.operations.setup.Setup;
 import jmri.jmrit.operations.trains.TrainManager;
-import jmri.jmrit.operations.trains.TrainsByCarTypeFrame;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
