@@ -1,6 +1,9 @@
 // TrainManager.java
 package jmri.jmrit.operations.trains;
 
+import jmri.jmrit.operations.trains.excel.TrainCustomSwitchList;
+
+import jmri.jmrit.operations.trains.excel.TrainCustomManifest;
 import java.io.File;
 import java.io.PrintWriter;
 import java.text.MessageFormat;

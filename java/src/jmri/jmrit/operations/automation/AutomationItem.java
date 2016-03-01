@@ -1,5 +1,8 @@
 package jmri.jmrit.operations.automation;
 
+import jmri.jmrit.operations.trains.timetable.TrainScheduleManager;
+
+import jmri.jmrit.operations.trains.timetable.TrainSchedule;
 import java.util.ArrayList;
 import java.util.List;
 import javax.swing.JComboBox;
@@ -38,8 +41,6 @@ import jmri.jmrit.operations.setup.Control;
 import jmri.jmrit.operations.trains.Train;
 import jmri.jmrit.operations.trains.TrainManager;
 import jmri.jmrit.operations.trains.TrainManagerXml;
-import jmri.jmrit.operations.trains.TrainSchedule;
-import jmri.jmrit.operations.trains.TrainScheduleManager;
 import org.jdom2.Element;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;

@@ -1,6 +1,8 @@
 // CarsTableFrame.java
 package jmri.jmrit.operations.rollingstock.cars;
 
+import jmri.jmrit.operations.trains.tools.TrainsByCarTypeAction;
+
 import java.text.MessageFormat;
 import java.util.List;
 import javax.swing.BorderFactory;
@@ -27,7 +29,6 @@ import jmri.jmrit.operations.locations.ScheduleManager;
 import jmri.jmrit.operations.rollingstock.RollingStock;
 import jmri.jmrit.operations.setup.Control;
 import jmri.jmrit.operations.setup.Setup;
-import jmri.jmrit.operations.trains.TrainsByCarTypeAction;
 import jmri.util.com.sun.TableSorter;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;

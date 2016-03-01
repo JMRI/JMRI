@@ -12,7 +12,6 @@ public class Xml {
     // Common to operation xml files
     static final String ID = "id"; // NOI18N
     static final String NAME = "name"; // NOI18N
-    static final String ROW_COLOR = "rowColor";  // NOI18N
     static final String COMMENT = "comment"; // NOI18N
 
     static final String TRUE = "true"; // NOI18N
@@ -23,6 +22,7 @@ public class Xml {
     static final String DESCRIPTION = "description"; // NOI18N
     static final String DEPART_HOUR = "departHour"; // NOI18N
     static final String DEPART_MINUTE = "departMinute"; // NOI18N
+    static final String ROW_COLOR = "rowColor";  // NOI18N
     static final String ROUTE = "route"; // NOI18N
     static final String SKIPS = "skips"; // NOI18N
     static final String LOCATION = "location"; // NOI18N
@@ -130,13 +130,6 @@ public class Xml {
 
     // TrainManagerXml.java
     static final String TRAINS = "trains"; // NOI18N
-
-    // TrainSchedule.java
-    static final String SCHEDULE = "schedule"; // NOI18N
-    static final String TRAIN_IDS = "trainIds"; // NOI18N
-
-    // TrainScheduleManager.java
-    static final String SCHEDULES = "schedules"; // NOI18N
 
     // ManifestCreator.java
     static final String MANIFEST_CREATOR = "manifestCreator"; // NOI18N
