@@ -195,7 +195,7 @@ public class TrainSwitchListEditFrame extends OperationsFrame implements java.be
         // set frame size and train for display
         initMinimumSize(new Dimension(Control.panelWidth500, Control.panelHeight500));
     }
-    
+
     private static final boolean IS_PREVIEW = true;
     private static final boolean IS_CHANGED = true;
     private static final boolean IS_CSV = true;
@@ -255,8 +255,8 @@ public class TrainSwitchListEditFrame extends OperationsFrame implements java.be
 
     // Remove all terminated or reset trains from the switch lists for selected locations
     private void reset() {
-        for (int i = 0; i < locationCheckBoxes.size(); i++) {
-            String locationName = locationCheckBoxes.get(i).getName();
+        for (JCheckBox checkbox : locationCheckBoxes) {
+            String locationName = checkbox.getName();
             Location location = locationManager.getLocationByName(locationName);
             if (location.isSwitchListEnabled()) {
                 // new switch lists will now be created for the location
@@ -273,7 +273,7 @@ public class TrainSwitchListEditFrame extends OperationsFrame implements java.be
         for (int i = 0; i < locationCheckBoxes.size(); i++) {
             String locationName = locationCheckBoxes.get(i).getName();
             Location location = locationManager.getLocationByName(locationName);
-            JComboBox<?> comboBox = locationComboBoxes.get(i);
+            JComboBox<String> comboBox = locationComboBoxes.get(i);
             String printerName = (String) comboBox.getSelectedItem();
             if (printerName == null || printerName.equals(TrainPrintUtilities.getDefaultPrinterName())) {
                 location.setDefaultPrinterName(Location.NONE);
@@ -298,12 +298,16 @@ public class TrainSwitchListEditFrame extends OperationsFrame implements java.be
      *
      * @param isPreview true if print preview
      * @param isChanged true if only print changes was requested
-     * @param isCsv     true if building a CSV switch list files
-     * @param isUpdate  true if only updating switch lists (no printing or preview)
+     * @param isCsv true if building a CSV switch list files
+     * @param isUpdate true if only updating switch lists (no printing or
+     *            preview)
      */
     private void buildSwitchList(boolean isPreview, boolean isChanged, boolean isCsv, boolean isUpdate) {
         TrainSwitchLists trainSwitchLists = new TrainSwitchLists();
-        for (Location location : LocationManager.instance().getLocationsByNameList()) {
+        // this for loop prevents ConcurrentModificationException when printing and status changes
+        for (int i = 0; i < locationCheckBoxes.size(); i++) {
+            String locationName = locationCheckBoxes.get(i).getName();
+            Location location = locationManager.getLocationByName(locationName);
             if (location.isSwitchListEnabled()) {
                 if (!isCsv) {
                     // update switch list
@@ -324,15 +328,18 @@ public class TrainSwitchListEditFrame extends OperationsFrame implements java.be
     }
 
     private void selectCheckboxes(boolean enable) {
-        for (int i = 0; i < locationCheckBoxes.size(); i++) {
-            String locationName = locationCheckBoxes.get(i).getName();
-            Location l = locationManager.getLocationByName(locationName);
-            l.setSwitchListEnabled(enable);
+        for (JCheckBox checkbox : locationCheckBoxes) {
+            String locationName = checkbox.getName();
+            Location location = locationManager.getLocationByName(locationName);
+            location.setSwitchListEnabled(enable);
         }
         // enable the save button whenever a checkbox is changed
         saveButton.setEnabled(true);
     }
 
+    // TODO there's a ConcurrentModificationException when the printer status changes
+    // when printing. This routine rebuilds the locationCheckBoxes during the update.
+    // A better solution would only update the status for a location.
     // name change or number of locations has changed
     private void updateLocationCheckboxes() {
         List<Location> locations = locationManager.getLocationsByNameList();
@@ -475,10 +482,9 @@ public class TrainSwitchListEditFrame extends OperationsFrame implements java.be
     // The print switch list for a location has changed
     private void changeLocationCheckboxes(PropertyChangeEvent e) {
         Location l = (Location) e.getSource();
-        for (int i = 0; i < locationCheckBoxes.size(); i++) {
-            JCheckBox checkBox = locationCheckBoxes.get(i);
-            if (checkBox.getName().equals(l.getName())) {
-                checkBox.setSelected(l.isSwitchListEnabled());
+        for (JCheckBox checkbox : locationCheckBoxes) {
+            if (checkbox.getName().equals(l.getName())) {
+                checkbox.setSelected(l.isSwitchListEnabled());
                 break;
             }
         }
@@ -553,10 +559,6 @@ public class TrainSwitchListEditFrame extends OperationsFrame implements java.be
 
     private static class TrainSwitchListCommentFrame extends OperationsFrame {
 
-        /**
-         *
-         */
-        private static final long serialVersionUID = 4880037349897207594L;
         // text area
         JTextArea commentTextArea = new JTextArea(10, 90);
         JScrollPane commentScroller = new JScrollPane(commentTextArea, JScrollPane.VERTICAL_SCROLLBAR_AS_NEEDED,
