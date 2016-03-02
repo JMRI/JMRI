@@ -65,7 +65,7 @@ href="../../../../../jython/AppleScript.py">AppleScript.py</a></p>
 AppleScript from JMRI on Mac OS X.</p>
 
 <p><a
-href="../../../../../jython/AutoLayouPowerOff.py">AutoLayoutPowerOff.py</a></p>
+href="../../../../../jython/AutoLayoutPowerOff.py">AutoLayoutPowerOff.py</a></p>
 
 <p>This script turns off power to the layout automatically after there has been
 no activity on the layout for a specified amount of time. (Activity is detected
