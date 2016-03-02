@@ -36,6 +36,7 @@ public class z21Test extends TestCase {
         suite.addTest(new TestSuite(z21XNetProgrammerTest.class));
         suite.addTest(new TestSuite(z21XNetThrottleManagerTest.class));
         suite.addTest(new TestSuite(z21XNetThrottleTest.class));
+        suite.addTest(jmri.jmrix.roco.z21.simulator.z21SimulatorTest.suite());
         return suite;
     }
 
