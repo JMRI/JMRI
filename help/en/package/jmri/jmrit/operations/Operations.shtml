@@ -578,6 +578,11 @@
    <p>
     <img src="images/PanelWithMarkers.png">
    </p>
+   
+   <p>The train icon menu allows you to "Move" a train to the next location in the train's route. You
+   can also quickly move a train to any location in the train's route by selecting "Route" followed by
+   any location in the route. To terminate a train that has reached the last location in a train's route,
+   select "Move".</p>
 
    <h3>Save</h3>
 
