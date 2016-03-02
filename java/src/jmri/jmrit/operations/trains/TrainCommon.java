@@ -63,8 +63,8 @@ public class TrainCommon {
     LocationManager locationManager = LocationManager.instance();
 
     // for manifests
-    protected int cars = 0;
-    protected int emptyCars = 0;
+    protected int cars = 0; // number of cars in train at a RouteLocation
+    protected int emptyCars = 0; // number of empty cars in train at a RouteLocation
 
     // for switch lists
     protected boolean pickupCars;
@@ -273,12 +273,9 @@ public class TrainCommon {
             // now do set outs and local moves
             for (Car car : carList) {
                 if (Setup.isSortByTrackEnabled() && car.getRouteLocation() != null && car.getRouteDestination() == rl) {
-                    // sort local moves by the car's current track name
-                    if (isLocalMove(car)) {
-                        if (!splitString(track.getName()).equals(splitString(car.getTrackName()))) {
-                            continue;
-                        }
-                    } else if (!splitString(track.getName()).equals(splitString(car.getDestinationTrackName()))) {
+                    // must sort local moves by car's destination track name and not car's track name
+                    // sorting by car's track name fails it there are "similar" location names.
+                    if (!splitString(track.getName()).equals(splitString(car.getDestinationTrackName()))) {
                         continue;
                     }
                 }
