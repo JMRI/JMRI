@@ -65,7 +65,7 @@ public class ImportCars extends ImportRollingStock {
     private static final int CAR_BUILT = 7;
     private static final int CAR_LOCATION = 8;
     private static final int CAR_LOCATION_TRACK_SEPARATOR = 9;
-    private static final int CAR_TRACK = 10;
+//    private static final int CAR_TRACK = 10;
     
     // only for CSV files
     private static final int CAR_LOAD = 11;
@@ -73,7 +73,7 @@ public class ImportCars extends ImportRollingStock {
     private static final int CAR_MOVES = 13;
     private static final int CAR_VALUE = 14;
     private static final int CAR_COMMENT = 15;
-    private static final int CAR_MISCELLANEOUS = 16;
+//    private static final int CAR_MISCELLANEOUS = 16;
     private static final int CAR_EXTENSIONS = 17;
     
     private static final int MAXIMUM_NUMBER_FIELDS = CAR_EXTENSIONS - 1;
@@ -111,7 +111,7 @@ public class ImportCars extends ImportRollingStock {
         String carLoad = "";
         String carKernel = "";
         int carMoves = 0;
-        String carValues = "";
+        String carValue = "";
         String carComment = "";
         String[] inputLine;
 
@@ -189,6 +189,7 @@ public class ImportCars extends ImportRollingStock {
                 carLoad = CarLoads.instance().getDefaultEmptyName();
                 carKernel = "";
                 carMoves = 0;
+                carValue = "";
                 carComment = "";
 
                 if (inputLine.length > base + CAR_WEIGHT) {
@@ -373,6 +374,10 @@ public class ImportCars extends ImportRollingStock {
                             log.error("Car ({} {}) has move count ({}) not a number", carRoad, carNumber, carMoves);
                         }
                     }
+                    // is there a car value?
+                    if (comma && inputLine.length > base + CAR_VALUE) {
+                        carValue = inputLine[CAR_VALUE];
+                    }
                     // is there a car comment?
                     if (comma && inputLine.length > base + CAR_COMMENT) {
                         carComment = inputLine[CAR_COMMENT];
@@ -479,6 +484,7 @@ public class ImportCars extends ImportRollingStock {
                     car.setLoadName(carLoad);
                     car.setKernel(manager.newKernel(carKernel));
                     car.setMoves(carMoves);
+                    car.setValue(carValue);
                     car.setComment(carComment);
                     carsAdded++;
 
