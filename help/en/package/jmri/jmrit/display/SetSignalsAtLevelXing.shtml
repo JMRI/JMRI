@@ -1,16 +1,14 @@
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
-<!-- $Id$ -->
 <html lang="en">
 <head>
- <TITLE>
+ <title>
       JMRI: Set Signals at Level Crossing Help
- </TITLE>
-    <META http-equiv=Content-Type content="text/html; charset=iso-8859-1">
-    <META content="Dave Duchamp" name=Author>
-    <META name="keywords" content="JMRI help Layout Editor panel">
+ </title>
+    <meta name="author" content="Dave Duchamp">
+    <meta name="keywords" content="JMRI help Layout Editor panel">
 
 <!-- Style -->
-  <META http-equiv=Content-Type content="text/html; charset=iso-8859-1">
+  <meta http-equiv="content-type" content="text/html; charset=iso-8859-1">
   <link rel="stylesheet" type="text/css" href="/css/default.css" media="screen">
   <link rel="stylesheet" type="text/css" href="/css/print.css" media="print">
   <link rel="icon" href="/images/jmri.ico" type="image/png">
@@ -23,7 +21,7 @@
   <div class="nomenu" id="mBody">
     <div id="mainContent">
 
-<H1>Set Signals at Level Crossing</H1>
+<h1>Set Signals at Level Crossing</h1>
 <h2>Introduction</h2>
 <p>
 A level crossing is a special piece of track that models two tracks crossing
@@ -33,8 +31,8 @@ the track connecting points A and C, and 2 for the track connecting points B and
 When a level crossing is created, track 1 (AC) is the horizontal track, and track 2 
 is the inclined track. The naming convention is shown in the diagram below.
 <p>
-<A href="./images/XingDiagram.gif"><IMG SRC="./images/XingDiagram.gif" 
-ALIGN=CENTER WIDTH="173" HEIGHT="125" HSPACE="0" VSPACE="0"></A>
+<a href="./images/XingDiagram.gif"><IMG SRC="./images/XingDiagram.gif" 
+align="center" width="173" height="125" hspace="0" vspace="0"></a>
 </p>
 <p>
 This tool will only place turnouts if track 1 (AC) is horizontal or vertical (or
@@ -60,6 +58,7 @@ heads to level crossings is important to completely describe your layout in Layo
 Editor.</b> Even if you elect to place your icons and set up your signal logic 
 manually, you should use this tool to assign the signal heads to their 
 level crossing.</p>
+
 <h2>The Set Signals at Level Crossing Dialog</h2>
 <p>
 When this tool is selected, a dialog is shown for entry of information that will 
@@ -115,6 +114,7 @@ more signals and/or blocks have been assigned on the
 panel. If the tool does not have enough information to protect against 
 a crossing train, a warning message results, but the logic is still 
 created.</p>
+
 <h2>Notes</h2>
 <p>
 When setting up logic, this tool will follow track within 
@@ -149,9 +149,10 @@ be accessed from the popup menu of each signal icon. If your special
 situation cannot be handled by Simple Signal Logic, you should refer
 to Logix to tailor the signal logic to your needs.</p>
 <p>
-<b>Please remember to save your panel after using this tool.</b></p>
+<b>Please remember to save your Panel after using this tool.</b></p>
 
 <!--#include virtual="/Footer" -->
+  </div><!-- closes #mainContent-->
+ </div> <!-- closes #mBody-->
 </body>
 </html>
-

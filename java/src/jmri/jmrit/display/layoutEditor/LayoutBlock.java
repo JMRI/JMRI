@@ -407,6 +407,7 @@ public class LayoutBlock extends AbstractNamedBean implements java.beans.Propert
                                         "Would you like to update all memory icons on the panel linked to the block to use the new one?",
                                         "Update Memory Icons",
                                         JOptionPane.YES_NO_OPTION);
+                                        //TODO I18N in Bundle.properties
                                 found = true;
                                 if (n == 0) {
                                     updateall = true;
@@ -861,6 +862,7 @@ public class LayoutBlock extends AbstractNamedBean implements java.beans.Propert
     JTextField metricField = new JTextField(10);
     JComboBox<String> senseBox = new JComboBox<String>();
     JCheckBox permissiveCheck = new JCheckBox("Permissive Working Allowed");
+    //TODO I18N in Bundle.properties
     int senseActiveIndex;
     int senseInactiveIndex;
     JComboBox<String> trackColorBox = new JComboBox<String>();
@@ -886,6 +888,7 @@ public class LayoutBlock extends AbstractNamedBean implements java.beans.Propert
     }
 
     String[] working = {"Bi-Directional", "Recieve Only", "Send Only"};
+    //TODO I18N in ManagersBundle.properties
 
     ArrayList<JComboBox<String>> neighbourDir;
 

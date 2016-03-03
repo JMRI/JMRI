@@ -42,10 +42,6 @@ import org.slf4j.LoggerFactory;
  */
 public class LocationEditFrame extends OperationsFrame implements java.beans.PropertyChangeListener {
 
-    /**
-     *
-     */
-    private static final long serialVersionUID = -820196357214001064L;
     YardTableModel yardModel = new YardTableModel();
     JTable yardTable = new JTable(yardModel);
     JScrollPane yardPane;
@@ -498,6 +494,13 @@ public class LocationEditFrame extends OperationsFrame implements java.beans.Pro
             JOptionPane.showMessageDialog(this, MessageFormat.format(Bundle.getMessage("LocationNameLengthMax"),
                     new Object[]{Integer.toString(MAX_NAME_LENGTH + 1)}), MessageFormat.format(Bundle
                     .getMessage("CanNotLocation"), new Object[]{s}), JOptionPane.ERROR_MESSAGE);
+            return false;
+        }
+        if (!OperationsXml.checkFileName(locationNameTextField.getText())) { // NOI18N
+            log.error("location name must not contain reserved characters");
+            JOptionPane.showMessageDialog(this, Bundle.getMessage("LocationNameResChar") + NEW_LINE
+                    + Bundle.getMessage("ReservedChar"), Bundle.getMessage("CanNotLocation"), 
+                    JOptionPane.ERROR_MESSAGE);
             return false;
         }
         return true;

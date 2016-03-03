@@ -44,12 +44,12 @@ public class ProgrammerConfigPane extends JPanel implements PreferencesPanel {
         // also create the advanced panel
         advancedPanel = new JPanel();
         advancedPanel.setLayout(new BoxLayout(advancedPanel, BoxLayout.Y_AXIS));
-        advancedPanel.add(showEmptyTabs = new JCheckBox("Show empty tabs"));
+        advancedPanel.add(showEmptyTabs = new JCheckBox(this.apb.getString("ProgShowEmptyTabs")));
         showEmptyTabs.setSelected(PaneProgFrame.getShowEmptyPanes());
         showEmptyTabs.addItemListener((ItemEvent e) -> {
             InstanceManager.getDefault(ProgrammerConfigManager.class).setShowEmptyPanes(showEmptyTabs.isSelected());
         });
-        advancedPanel.add(ShowCvNums = new JCheckBox("Show CV numbers in tool tips"));
+        advancedPanel.add(ShowCvNums = new JCheckBox(this.apb.getString("ProgShowCVInTips")));
         ShowCvNums.setSelected(PaneProgFrame.getShowCvNumbers());
         ShowCvNums.addItemListener((ItemEvent e) -> {
             InstanceManager.getDefault(ProgrammerConfigManager.class).setShowCvNumbers(ShowCvNums.isSelected());

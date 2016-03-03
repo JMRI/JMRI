@@ -22,7 +22,7 @@ final class CarDeleteAttributeAction extends AbstractAction {
 
     public void actionPerformed(ActionEvent ae) {
         log.debug("Delete unused attributes");
-        caef.deleteUnusedAttribures();
+        caef.deleteUnusedAttributes();
     }
 
     private final static Logger log = LoggerFactory.getLogger(CarDeleteAttributeAction.class.getName());

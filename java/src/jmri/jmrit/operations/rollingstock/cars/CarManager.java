@@ -111,7 +111,7 @@ public class CarManager extends RollingStockManager {
      */
     public Kernel newKernel(String name) {
         Kernel kernel = getKernelByName(name);
-        if (kernel == null) {
+        if (kernel == null && !name.equals(NONE)) {
             kernel = new Kernel(name);
             Integer oldSize = Integer.valueOf(_kernelHashTable.size());
             _kernelHashTable.put(name, kernel);
@@ -332,42 +332,44 @@ public class CarManager extends RollingStockManager {
             }
             // pickup allowed at destination? Don't include cars in staging
             if (destination != null && destination.isPickUpAllowed()
+                    && destination.getLocation() != null
                     && !destination.getLocation().isStaging()) {
                 destination = null; // include cars at destination
             }
         }
         // get rolling stock by priority and then by moves
-        List<RollingStock> sortByPriority = sortByPriority(getByMovesList());
+        List<Car> sortByPriority = sortByPriority(getByMovesList());
         // now build list of available RollingStock for this route
-        for (RollingStock rs : sortByPriority) {
+        for (Car car : sortByPriority) {
             // only use RollingStock with a location
-            if (rs.getLocation() == null) {
+            if (car.getLocation() == null) {
                 continue;
             }
-            RouteLocation rl = route.getLastLocationByName(rs.getLocationName());
+            RouteLocation rl = route.getLastLocationByName(car.getLocationName());
             // get RollingStock that don't have an assigned train, or the
             // assigned train is this one
-            if (rl != null && rl != destination && (rs.getTrain() == null || train.equals(rs.getTrain()))) {
-                out.add((Car) rs);
+            if (rl != null && rl != destination && (car.getTrain() == null || train.equals(car.getTrain()))) {
+                out.add(car);
             }
         }
         return out;
     }
 
     // sorts the high priority cars to the start of the list
-    protected List<RollingStock> sortByPriority(List<RollingStock> list) {
-        List<RollingStock> out = new ArrayList<RollingStock>();
+    protected List<Car> sortByPriority(List<RollingStock> list) {
+        List<Car> out = new ArrayList<Car>();
         // move high priority cars to the start
-        for (int i = 0; i < list.size(); i++) {
-            RollingStock rs = list.get(i);
-            if (rs.getLoadPriority().equals(CarLoad.PRIORITY_HIGH)) {
-                out.add(list.get(i));
-                list.remove(i--);
+        for (RollingStock rs : list) {
+            Car car = (Car)rs;
+            if (car.getLoadPriority().equals(CarLoad.PRIORITY_HIGH)) {
+                out.add(car);
             }
         }
         // now load all of the remaining low priority cars
         for (RollingStock rs : list) {
-            out.add(rs);
+            if (!out.contains(rs)) {
+                out.add((Car)rs);
+            }
         }
         return out;
     }

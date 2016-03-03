@@ -1,12 +1,13 @@
 package jmri.jmrit.operations.rollingstock.cars;
 
+import jmri.jmrit.operations.trains.timetable.TrainScheduleManager;
+
+import jmri.jmrit.operations.trains.timetable.TrainSchedule;
 import java.beans.PropertyChangeEvent;
 import jmri.jmrit.operations.locations.Location;
 import jmri.jmrit.operations.locations.LocationManager;
 import jmri.jmrit.operations.locations.Track;
 import jmri.jmrit.operations.rollingstock.RollingStock;
-import jmri.jmrit.operations.trains.TrainSchedule;
-import jmri.jmrit.operations.trains.TrainScheduleManager;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -45,6 +46,13 @@ public class Car extends RollingStock {
     protected String _previousScheduleId = NONE; // previous schedule id (for train resets)
     protected String _pickupScheduleId = NONE;
     protected String _nextPickupScheduleId = NONE; // when the car needs to be pulled
+    
+    public static final String EXTENSION_REGEX = " ";
+    public static final String CABOOSE_EXTENSION = Bundle.getMessage("(C)");
+    public static final String FRED_EXTENSION = Bundle.getMessage("(F)");
+    public static final String PASSENGER_EXTENSION = Bundle.getMessage("(P)");
+    public static final String UTILITY_EXTENSION = Bundle.getMessage("(U)");
+    public static final String HAZARDOUS_EXTENSION = Bundle.getMessage("(H)");
 
     public static final String LOAD_CHANGED_PROPERTY = "Car load changed"; // property change descriptions // NOI18N
     public static final String WAIT_CHANGED_PROPERTY = "Car wait changed"; // NOI18N
@@ -703,6 +711,26 @@ public class Car extends RollingStock {
             log.debug("Car ({}) has return when empty destination ({}, {}) load {}", toString(),
                     getFinalDestinationName(), getFinalDestinationTrackName(), getLoadName());
         }
+    }
+    
+    public String getTypeExtensions() {
+        StringBuffer buf = new StringBuffer();
+        if (isCaboose()) {
+            buf.append(EXTENSION_REGEX + CABOOSE_EXTENSION);
+        }
+        if (hasFred()) {
+            buf.append(EXTENSION_REGEX + FRED_EXTENSION);
+        }
+        if (isPassenger()) {
+            buf.append(EXTENSION_REGEX + PASSENGER_EXTENSION + EXTENSION_REGEX + getBlocking());
+        }
+        if (isUtility()) {
+            buf.append(EXTENSION_REGEX + UTILITY_EXTENSION);
+        }
+        if (isHazardous()) {
+            buf.append(EXTENSION_REGEX + HAZARDOUS_EXTENSION);
+        }
+        return buf.toString();
     }
 
     public void reset() {
