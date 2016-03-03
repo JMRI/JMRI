@@ -23,7 +23,7 @@
 
    <h1>JMRI: OperationsPro&trade;</h1>
 
-   The JMRI operations program allows you to create computer generated train Manifests for your railroad.
+   The JMRI Operations program allows you to create computer generated train Manifests for your railroad.
    A train
    <a href="#PrintingManifests">Manifest</a> details the work that a crew will perform during an
    operations session. The Manifest provides a list of car pick up and set outs and shows where the
@@ -578,6 +578,11 @@
    <p>
     <img src="images/PanelWithMarkers.png">
    </p>
+   
+   <p>The train icon menu allows you to "Move" a train to the next location in the train's route. You
+   can also quickly move a train to any location in the train's route by selecting "Route" followed by
+   any location in the route. To terminate a train that has reached the last location in a train's route,
+   select "Move".</p>
 
    <h3>Save</h3>
 
@@ -1552,8 +1557,10 @@
    <a name="ShowCars"></a>
    <h4>Show Cars</h4>
 
-   If you only want to see cars for this location, select "Show Cars" from the "Tools" menu. This
-   tool is also useful when you want to print out cars for a specific location.
+   If you only want to see cars for a location or track, select "Show Cars" from the "Tools" menu.
+   This tool is also useful when you want to print out cars for a specific location or track. Note
+   that the the export cars tool will only export cars for a location or track, and the delete cars
+   tool when only showing cars on a track, will only delete those cars. 
    
    <a name="LocationReporter"></a>
    <h3>Id Tag Reader at this Location</h3>
@@ -2360,7 +2367,20 @@
 
    If you want to change the track type to a spur, interchange or yard, in the edit track window,
    select Tools-&gt;Change Track Type. Select the desired track type and press "Save". 
-    
+   
+   <h4>Show Trains Servicing this Track</h4>
+   
+   This tool will show which trains can service the track being editing. If you only want to see trains that
+   can can actually work the track, deselect the "Show all Trains" checkbox. You can also
+   determine if a certain car type will be serviced by the trains visiting the track. Use the
+   "Type" drop down menu to select a car type. 
+   
+   <h4>Show Cars</h4>
+
+   This will open a "Cars" window displaying only the cars for the track selected. Note that the
+   the export cars tool will only export cars for the track selected, and the delete cars tool
+   will only delete the cars for the track selected. 
+   
    <a name="LocationsTools"></a>
    <h3>Locations Tools</h3>
 
@@ -2389,9 +2409,9 @@
    <a name="ModifyLocationsByCarType"></a>
    <h4>Modify Locations by Car Type</h4>
 
-   This feature can be found under the "Tools" menu in the Locations window. Use this tool to quickly
-   modify the type of cars your locations and tracks will service. Very useful when adding a new car
-   type to your roster.
+   This feature can be found under the "Tools" menu in the "Locations" and "Cars" windows. Use this
+   tool to quickly modify the type of cars your locations and tracks will service. Very useful when
+   adding a new car type to your roster.
 
    <p>
     <img src="images/ModifyLocationsByCarType.png">
@@ -2407,7 +2427,7 @@
     locations and tracks.</p>
     
    <a name="ModifyLocationsByCarLoad"></a>
-   <h4>Modify Location by Car Load</h4>
+   <h4>Modify Locations by Car Load</h4>
 
    The tool "Modify Locations by Car Load" allows you to quickly select a car type and decide which
    locations and tracks will service the car's load. Only tracks that can service the car's type are enabled.
@@ -2846,12 +2866,32 @@
 
    <a name="CarsTools"></a>
    <h3>Cars Tools</h3>
+   
+   The cars window "Tools" menu allows you to perform some useful functions to your car roster.
+   
+   <h4>Car Roster</h4>
 
-   The cars "Tools" menu allows you to perform some useful functions to your car roster. In addition
-   to "Import from file" feature described earlier, you can also export your cars to a comma
-   separated value file. The "Export to file" function creates a file named
-   "ExportOperationsCarRoster.csv" in the JMRI-&gt;operations directory. You can remove all of the
-   cars in your roster using the "Delete all cars" option.
+   The "Car Roster" has a sub-menu that allows you to import and export cars, delete cars, reset car
+   move counts, and print or preview your car roster.
+
+   <h4>Car Roster-&gt;Import from file</h4>
+   
+   See <a href="#ImportingCars">Importing Cars from a File</a>.
+   
+   <h4>Car Roster-&gt;Export to file</h4>
+
+   In addition to <a href="#ImportingCars">Import from file</a> feature described earlier, you can
+   also export your cars to a comma separated value file. The "Export to file" function creates a
+   file named "ExportOperationsCarRoster.csv" in the JMRI-&gt;operations directory. Note that the
+   export cars tool will only export the cars shown in the cars window for a location or track.
+
+   <h4>Car Roster-&gt;Delete all cars</h4>
+   
+   You can remove all of the cars in your roster by using the "Delete all cars" option.  Note that
+   when only viewing cars for a track, the tool changes to "Delete cars on Track track name", and
+   will only delete the cars on the track being viewed.
+   
+   <h4>Car Roster-&gt;Reset move count all cars</h4>
 
    <p>The "Reset move count all cars" will zero out all of the cars move counts. In normal use
     you should never reset the car move counts. The program uses the move counts to determine which
@@ -2862,20 +2902,43 @@
     roster and you don't want your new cars to have priority over your old cars. However in most
     cases, folks do want to see the new cars riding the first train out of town, so don't reset the
     car moves if you want to put your new additions immediately to work!</p>
+    
+    <h4>Car Roster-&gt;Print and Preview</h4>
 
-   You can also preview and print your car roster. The preview and print features use the same "Sort
+   <p>You can also preview and print your car roster. The preview and print features use the same "Sort
    by" radio buttons as the cars window. One of the more useful sorts is by "Location", this allows
-   you to quickly verify your car locations before or after an operations session.
+   you to quickly verify your car locations before or after an operations session.</p>
 
    <p>You can if you wish only preview or print cars for a specific location or track. In the
     "Edit Location" and "Edit Track" windows the "Tools" menu provides a "Show Cars" selection which
     will bring up the "Cars" window but only listing the cars for that location or track. Use the
     roster print or preview features of the "Cars" window to print out a list of the cars for that
-    location or track.</p>
+    location or track. In addition to only printing the cars shown, the export cars tool will only
+    export the cars shown in the cars window for a location or track. When viewing cars for a specific
+    track, you can delete the cars on that track by selecting "Car Roster -> Delete Cars on Track
+    track name".</p>
 
-   <p>You can if you wish add a checkbox for each car in your roster. The checkboxes are useful
-    when performing an audit using a PC or other electronic device.</p>
-    
+   <h4>Show Checkboxes</h4>
+
+   <p>You can if you wish add or remove a checkbox for each car in your roster by selecting
+    "Show Checkboxes" from the "Cars" tools menu. The checkboxes are useful when performing an audit
+    using a PC or other electronic device. There's also a "Reset Checkboxes" tool to return all
+    checkboxes to their unselected state.</p>
+
+   <h4>Modify Locations by Car Type</h4>
+
+   <p>
+    The tool "Modify Locations by Car Type" allows you to select a car type and decide which
+    locations and tracks will service a given car type. See <a href="#ModifyLocationsByCarType">Modify
+     Locations by Car Type</a> for more info.
+   </p>
+
+   <h4>Modify Trains by Car Type</h4>
+
+   <p>The tool "Modify Trains by Car Type" allows you to modify the car types that your trains
+    will service can be found under Trains-&gt;Tools and Cars-&gt;Tools. Very useful when adding a
+    new car type to your roster.</p>
+
    <a name="SetCars"></a>
    <h4>Set Cars</h4>
 
@@ -3749,7 +3812,7 @@
    <h4>Modify Trains by Car Type</h4>
 
    The ability to modify the car types that your trains will service can be found under
-   Trains-&gt;Tools. Very useful when adding a new car type to your roster.
+   Trains-&gt;Tools and Cars-&gt;Tools. Very useful when adding a new car type to your roster.
 
    <p>
     <img src="images/ModifyTrainsByCarType.png">

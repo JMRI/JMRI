@@ -10,7 +10,7 @@
 		<dt><h3><a href="index.shtml">Setup</a></h3></dt>
 		<dd>
 			<ul>
-			<li><a href="../../package/apps/TabbedPreferences.shtml">Preference Pane</a></li>
+			<li><a href="../../package/apps/TabbedPreferences.shtml">Preferences Pane</a></li>
 			<li><a href="../setup/profiles.shtml">Configuration Profiles</a></li>
 			<li><a href="../setup/Errors.shtml">Error Codes</a></li>
 			<li><a href="../../package/apps/InstallTest/InstallTest.shtml">InstallTest</a></li>

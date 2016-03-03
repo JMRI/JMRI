@@ -26,41 +26,40 @@ JMRI: Getting Started with Scripting
 <h2>Running "Hello World"</h2>
 There are several ways to use Python scripts with JMRI.
 The easiest is to use the built-in support in the standard JMRI
-applications: PanelPro, DecoderPro, etc.  To do that:
-<ul>
-<li>
-	<a href="../../../package/jmri/jmrit/beantable/jmriScriptWindow.png">
-<img src="../../../package/jmri/jmrit/beantable/jmriScriptWindow.png" 
-	   width="250" height="136" align="right"></a>From the "Panels" menu, select "Script Entry". This will give
-you a window where you can type one or more commands to execute.  
-(Note that it might take a little while the first time you do this
-as the program finds its libraries; it will be faster the next time)
-The commands stay
-in the window, so you can edit them and rerun them until you like them.
-<li>From the "Panels" menu, select "Script Output". This creates a
-window that shows the output from the script commands you issue.
-<li>To see this in operation, type
-<pre>
-print "Hello World"
-</pre>
-in the input window, and click "Execute". You should see the output in the Script Output
-window immediately:
-<pre>
->>> print "Hello World"
-Hello World
-</pre>
-<li>Python also evaluates expressions, etc. Remove the 
-contents of the input window (select it and hit delete), and enter
-<pre>
-print 1+2
-</pre>
-then click execute.  
-The output window should then show something like:
-<pre>
->>> print 1+2
-3
-</pre>
-</ul>
+applications: PanelPro, DecoderPro, etc.<br>
+To do that:
+	<ul>
+	<li><a href="../../../package/jmri/jmrit/beantable/jmriScriptWindow.png"><img src="../../../package/jmri/jmrit/beantable/jmriScriptWindow.png" 
+	width="250" height="136" align="right"></a>From the "Panels" menu, select "Script Entry". This will give
+	you a window where you can type one or more commands to execute.  
+	(Note that it might take a little while the first time you do this
+	as the program finds its libraries; it will be faster the next time)
+	The commands stay
+	in the window, so you can edit them and rerun them until you like them.
+	<li>From the "Panels" menu, select "Script Output". This creates a
+	window that shows the output from the script commands you issue.
+	<li>To see this in operation, type
+	<pre>
+	print "Hello World"
+	</pre>
+	in the input window, and click "Execute". You should see the output in the Script Output
+	window immediately:
+	<pre>
+	>>> print "Hello World"
+	Hello World
+	</pre>
+	<li>Python also evaluates expressions, etc. Remove the 
+	contents of the input window (select it and hit delete), and enter
+	<pre>
+	print 1+2
+	</pre>
+	then click execute.  
+	The output window should then show something like:
+	<pre>
+	>>> print 1+2
+	3
+	</pre>
+	</ul>
 
 <h2>Sample layout commands</h2>
 

@@ -36,7 +36,6 @@ import org.slf4j.LoggerFactory;
  * <P>
  *
  * @author	Kevin Dickerson Copyright (C) 2011
- * @version	$Revision$
  */
 public class NamedBeanHandleManager extends jmri.managers.AbstractManager implements java.io.Serializable {
 
@@ -58,7 +57,6 @@ public class NamedBeanHandleManager extends jmri.managers.AbstractManager implem
 
         for (NamedBeanHandle<T> h : namedBeanHandles) {
             if (temp.equals(h)) {
-                temp = null;
                 return h;
             }
         }
@@ -87,7 +85,6 @@ public class NamedBeanHandleManager extends jmri.managers.AbstractManager implem
             }
         }
         updateListenerRef(oldName, newName, ((NamedBean) bean));
-        oldBean = null;
     }
 
     /**
@@ -112,7 +109,6 @@ public class NamedBeanHandleManager extends jmri.managers.AbstractManager implem
             }
         }
         moveListener((NamedBean) oldBean, (NamedBean) newBean, name);
-        oldNamedBean = null;
     }
 
     public void updateBeanFromUserToSystem(NamedBean bean) {
@@ -137,7 +133,6 @@ public class NamedBeanHandleManager extends jmri.managers.AbstractManager implem
         NamedBeanHandle<T> temp = new NamedBeanHandle<T>(name, bean);
         for (NamedBeanHandle<T> h : namedBeanHandles) {
             if (temp.equals(h)) {
-                temp = null;
                 return true;
             }
         }
