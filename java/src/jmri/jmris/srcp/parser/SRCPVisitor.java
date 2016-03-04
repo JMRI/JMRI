@@ -457,13 +457,13 @@ public class SRCPVisitor implements SRCPParserVisitor {
             // state.  Since we may have a local GUI controlling things, we
             // ignore the request, but send the proper return value to the
             // requesting client.
-            outputString = "102 TERM " + bus + " SESSION " + ((jmri.jmris.srcp.JmriSRCPServiceHandler) data).getSessionNumber();  // we need to set session IDs.
+            outputString = "102 INFO " + bus + " SESSION " + ((jmri.jmris.srcp.JmriSRCPServiceHandler) data).getSessionNumber();  // we need to set session IDs.
             return data;
         } else if(target.jjtGetValue().equals("GL")) {
                // terminate a locomotive
                int address = Integer.parseInt(((String) ((SimpleNode) node.jjtGetChild(2)).jjtGetValue()));
                // this isn't finished.  Still need to release the throttle.
-               outputString = "102 TERM " + bus + " GL " + address;
+               outputString = "102 INFO " + bus + " GL " + address;
                return data;
         }
 

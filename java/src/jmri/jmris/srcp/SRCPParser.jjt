@@ -352,7 +352,14 @@ SimpleNode set():{}
 
 SimpleNode term():{}
 {
-  <TERM> bus()  ( fb() | gl() address() | sm() | power() | server() | lock() | time() | session() [ address() ] )
+  <TERM> bus()  ( fb() | 
+                  gl() address() | 
+                  sm() | 
+                  power() | 
+                  server() | 
+                  lock() | 
+                  time() | 
+                  session() [ address() ] )
   {return jjtThis;}
 }
 
