@@ -1,8 +1,6 @@
 // CarAttributeEditFrame.java
 package jmri.jmrit.operations.rollingstock.cars;
 
-import jmri.jmrit.operations.trains.tools.TrainsByCarTypeFrame;
-
 import java.awt.Dimension;
 import java.awt.GridBagLayout;
 import java.text.MessageFormat;
@@ -14,27 +12,24 @@ import javax.swing.JMenuBar;
 import javax.swing.JOptionPane;
 import javax.swing.JTextField;
 import jmri.jmrit.operations.OperationsFrame;
+import jmri.jmrit.operations.OperationsXml;
 import jmri.jmrit.operations.locations.LocationsByCarTypeFrame;
 import jmri.jmrit.operations.rollingstock.RollingStock;
 import jmri.jmrit.operations.rollingstock.engines.EngineManager;
 import jmri.jmrit.operations.setup.Control;
 import jmri.jmrit.operations.setup.Setup;
 import jmri.jmrit.operations.trains.TrainManager;
+import jmri.jmrit.operations.trains.tools.TrainsByCarTypeFrame;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 /**
- * Frame for adding and editing the car roster for operations.
+ * Frame for editing a car attribute.
  *
  * @author Daniel Boudreau Copyright (C) 2008, 2014
  * @version $Revision$
  */
 public class CarAttributeEditFrame extends OperationsFrame implements java.beans.PropertyChangeListener {
-
-    /**
-     *
-     */
-    private static final long serialVersionUID = -8817198567309887518L;
 
     CarManager carManager = CarManager.instance();
 
@@ -44,15 +39,17 @@ public class CarAttributeEditFrame extends OperationsFrame implements java.beans
     JLabel quanity = new JLabel("0");
 
     // major buttons
-    JButton addButton = new JButton();
-    JButton deleteButton = new JButton();
-    JButton replaceButton = new JButton();
+    JButton addButton = new JButton(Bundle.getMessage("Add"));
+    JButton deleteButton = new JButton(Bundle.getMessage("Delete"));
+    JButton replaceButton = new JButton(Bundle.getMessage("Replace"));
 
     // combo box
     JComboBox<String> comboBox;
 
     // text box
     JTextField addTextBox = new JTextField(Control.max_len_string_attibute);
+    
+    boolean showQuanity = false;
 
     // property change
     public static final String DISPOSE = "dispose"; // NOI18N
@@ -81,13 +78,6 @@ public class CarAttributeEditFrame extends OperationsFrame implements java.beans
         getContentPane().setLayout(new GridBagLayout());
 
         textAttribute.setText(comboboxName);
-
-        addButton.setText(Bundle.getMessage("Add"));
-        addButton.setVisible(true);
-        deleteButton.setText(Bundle.getMessage("Delete"));
-        deleteButton.setVisible(true);
-        replaceButton.setText(Bundle.getMessage("Replace"));
-        replaceButton.setVisible(true);
 
         quanity.setVisible(showQuanity);
 
@@ -123,7 +113,6 @@ public class CarAttributeEditFrame extends OperationsFrame implements java.beans
         addHelpMenu("package.jmri.jmrit.operations.Operations_EditCarAttributes", true); // NOI18N
 
         initMinimumSize(new Dimension(Control.panelWidth400, Control.panelHeight250));
-
     }
 
     // add, delete, or replace button
@@ -132,17 +121,7 @@ public class CarAttributeEditFrame extends OperationsFrame implements java.beans
         log.debug("edit frame button activated");
         if (ae.getSource() == addButton) {
             String addItem = addTextBox.getText().trim();
-            if (addItem.equals(NONE)) {
-                return;
-            }
-            String[] item = {addItem};
-            if (_comboboxName == CarEditFrame.TYPE) {
-                item = addItem.split("-");
-            }
-            if (item[0].length() > Control.max_len_string_attibute) {
-                JOptionPane.showMessageDialog(this, MessageFormat.format(Bundle.getMessage("carAttribute"),
-                        new Object[]{Control.max_len_string_attibute}), MessageFormat.format(Bundle
-                                .getMessage("canNotAdd"), new Object[]{_comboboxName}), JOptionPane.ERROR_MESSAGE);
+            if (!checkItemName(addItem, Bundle.getMessage("canNotAdd"))) {
                 return;
             }
             addItemToCombobox(addItem);
@@ -152,22 +131,12 @@ public class CarAttributeEditFrame extends OperationsFrame implements java.beans
         }
         if (ae.getSource() == replaceButton) {
             String newItem = addTextBox.getText().trim();
-            if (newItem.equals(NONE)) {
-                return;
-            }
-            String[] item = {newItem};
-            if (_comboboxName == CarEditFrame.TYPE) {
-                item = newItem.split("-");
-            }
-            if (item[0].length() > Control.max_len_string_attibute) {
-                JOptionPane.showMessageDialog(this, MessageFormat.format(Bundle.getMessage("carAttribute"),
-                        new Object[]{Control.max_len_string_attibute}), MessageFormat.format(Bundle
-                                .getMessage("canNotReplace"), new Object[]{_comboboxName}), JOptionPane.ERROR_MESSAGE);
+            if (!checkItemName(newItem, Bundle.getMessage("canNotReplace"))) {
                 return;
             }
             String oldItem = (String) comboBox.getSelectedItem();
             if (JOptionPane.showConfirmDialog(this, MessageFormat.format(Bundle.getMessage("replaceMsg"), new Object[]{
-                oldItem, newItem}), Bundle.getMessage("replaceAll"), JOptionPane.YES_NO_OPTION) != JOptionPane.YES_OPTION) {
+                    oldItem, newItem}), Bundle.getMessage("replaceAll"), JOptionPane.YES_NO_OPTION) != JOptionPane.YES_OPTION) {
                 return;
             }
             if (newItem.equals(oldItem)) {
@@ -184,6 +153,33 @@ public class CarAttributeEditFrame extends OperationsFrame implements java.beans
             replaceItem(oldItem, newItem);
             deleteItemFromCombobox(oldItem);
         }
+    }
+
+    private boolean checkItemName(String itemName, String errorMessage) {
+        if (itemName.equals(NONE)) {
+            return false;
+        }
+        if (_comboboxName == CarEditFrame.ROAD) {
+            if (!OperationsXml.checkFileName(itemName)) { // NOI18N
+                log.error("Road name must not contain reserved characters");
+                JOptionPane.showMessageDialog(this, Bundle.getMessage("NameResChar") + NEW_LINE
+                        + Bundle.getMessage("ReservedChar"),
+                        MessageFormat.format(errorMessage, new Object[]{_comboboxName}),
+                        JOptionPane.ERROR_MESSAGE);
+                return false;
+            }
+        }
+        String[] item = {itemName};
+        if (_comboboxName == CarEditFrame.TYPE) {
+            item = itemName.split("-");
+        }
+        if (item[0].length() > Control.max_len_string_attibute) {
+            JOptionPane.showMessageDialog(this, MessageFormat.format(Bundle.getMessage("carAttribute"),
+                    new Object[]{Control.max_len_string_attibute}), MessageFormat.format(errorMessage,
+                    new Object[]{_comboboxName}), JOptionPane.ERROR_MESSAGE);
+            return false;
+        }
+        return true;
     }
 
     protected void comboBoxActionPerformed(java.awt.event.ActionEvent ae) {
@@ -227,7 +223,7 @@ public class CarAttributeEditFrame extends OperationsFrame implements java.beans
                 int results = JOptionPane.showOptionDialog(this, Bundle.getMessage("AddNewCarType"), Bundle
                         .getMessage("ModifyLocations"), JOptionPane.YES_NO_CANCEL_OPTION, JOptionPane.QUESTION_MESSAGE,
                         null, new Object[]{Bundle.getMessage("ButtonYes"), Bundle.getMessage("ButtonNo"),
-                            Bundle.getMessage("ButtonDontShow")}, Bundle.getMessage("ButtonNo"));
+                                Bundle.getMessage("ButtonDontShow")}, Bundle.getMessage("ButtonNo"));
                 if (results == JOptionPane.YES_OPTION) {
                     LocationsByCarTypeFrame lf = new LocationsByCarTypeFrame();
                     lf.initComponents(addItem);
@@ -238,7 +234,7 @@ public class CarAttributeEditFrame extends OperationsFrame implements java.beans
                 results = JOptionPane.showOptionDialog(this, Bundle.getMessage("AddNewCarType"), Bundle
                         .getMessage("ModifyTrains"), JOptionPane.YES_NO_CANCEL_OPTION, JOptionPane.QUESTION_MESSAGE,
                         null, new Object[]{Bundle.getMessage("ButtonYes"), Bundle.getMessage("ButtonNo"),
-                            Bundle.getMessage("ButtonDontShow")}, Bundle.getMessage("ButtonNo"));
+                                Bundle.getMessage("ButtonDontShow")}, Bundle.getMessage("ButtonNo"));
                 if (results == JOptionPane.YES_OPTION) {
                     TrainsByCarTypeFrame lf = new TrainsByCarTypeFrame();
                     lf.initComponents(addItem);
@@ -289,7 +285,7 @@ public class CarAttributeEditFrame extends OperationsFrame implements java.beans
                 if (addItem.length() > Control.max_len_string_length_name) {
                     JOptionPane.showMessageDialog(this, MessageFormat.format(Bundle.getMessage("carAttribute"),
                             new Object[]{Control.max_len_string_length_name}), MessageFormat.format(Bundle
-                                    .getMessage("canNotAdd"), new Object[]{_comboboxName}), JOptionPane.ERROR_MESSAGE);
+                            .getMessage("canNotAdd"), new Object[]{_comboboxName}), JOptionPane.ERROR_MESSAGE);
                     return;
                 }
             } catch (NumberFormatException e) {
@@ -356,8 +352,6 @@ public class CarAttributeEditFrame extends OperationsFrame implements java.beans
             comboBox = carManager.getKernelComboBox();
         }
     }
-
-    boolean showQuanity = false;
 
     public void toggleShowQuanity() {
         if (showQuanity) {
@@ -429,8 +423,8 @@ public class CarAttributeEditFrame extends OperationsFrame implements java.beans
                         .getMessage("ConfirmDeleteAttribute"), new Object[]{_comboboxName, item}), Bundle
                         .getMessage("DeleteAttribute?"), JOptionPane.YES_NO_CANCEL_OPTION,
                         JOptionPane.QUESTION_MESSAGE, null, new Object[]{Bundle.getMessage("ButtonYes"),
-                            Bundle.getMessage("ButtonNo"), Bundle.getMessage("ButtonCancel")}, Bundle
-                        .getMessage("ButtonYes"));
+                                Bundle.getMessage("ButtonNo"), Bundle.getMessage("ButtonCancel")}, Bundle
+                                .getMessage("ButtonYes"));
                 if (results == JOptionPane.YES_OPTION) {
                     deleteItemFromCombobox((String) comboBox.getSelectedItem());
                 }
@@ -444,7 +438,7 @@ public class CarAttributeEditFrame extends OperationsFrame implements java.beans
     boolean deleteUnused = false;
     boolean cancel = false;
 
-    public void deleteUnusedAttribures() {
+    public void deleteUnusedAttributes() {
         if (!showQuanity) {
             toggleShowQuanity();
         }

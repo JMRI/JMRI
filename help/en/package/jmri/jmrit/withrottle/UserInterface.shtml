@@ -109,7 +109,7 @@ or by editing an existing roster entry under the Function Labels tab.
 Routes & Turnouts
 </h3>
 The app can control any turnouts (and routes) that JMRI can control. 
-The WiThrottle clients list only turnouts and routes which have User Names. 
+NOTE: EngineDriver only lists turnouts and routes which have User Names. 
 <p>
 Additionally, you can limit what turnouts appear.
 In JMRI, with the WiThrottle window active, there is a menu named WiThrottle.

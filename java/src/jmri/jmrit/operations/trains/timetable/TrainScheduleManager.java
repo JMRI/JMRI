@@ -11,6 +11,7 @@ import jmri.jmrit.operations.locations.LocationManager;
 import jmri.jmrit.operations.setup.Control;
 import jmri.jmrit.operations.setup.Setup;
 import jmri.jmrit.operations.trains.Train;
+import jmri.jmrit.operations.trains.TrainCommon;
 import jmri.jmrit.operations.trains.TrainManager;
 import jmri.jmrit.operations.trains.TrainManagerXml;
 import jmri.jmrit.operations.trains.TrainSwitchLists;
@@ -237,12 +238,14 @@ public class TrainScheduleManager implements java.beans.PropertyChangeListener {
     
     public void buildSwitchLists() {
         TrainSwitchLists trainSwitchLists = new TrainSwitchLists();
+        String locationName = ""; // only create switch lists once for locations with similar names
         for (Location location : LocationManager.instance().getLocationsByNameList()) {
-            if (location.isSwitchListEnabled()) {
+            if (location.isSwitchListEnabled() && !locationName.equals(TrainCommon.splitString(location.getName()))) {
                 trainSwitchLists.buildSwitchList(location);
                 // print switch lists for locations that have changes
                 if (Setup.isSwitchListRealTime() && location.getStatus().equals(Location.MODIFIED)) {
                     trainSwitchLists.printSwitchList(location, TrainManager.instance().isPrintPreviewEnabled());
+                    locationName = TrainCommon.splitString(location.getName());
                 }
             }
         }
