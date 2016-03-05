@@ -27,7 +27,6 @@ import org.slf4j.LoggerFactory;
  * is not guaranteed.
  *
  * @author Bob Jacobsen Copyright (C) 2001, 2007
- * @version $Revision$
  */
 public class MultiSensorIcon extends PositionableLabel implements java.beans.PropertyChangeListener {
 
@@ -59,13 +58,13 @@ public class MultiSensorIcon extends PositionableLabel implements java.beans.Pro
 
     ArrayList<Entry> entries = new ArrayList<Entry>();
 
+    @Override
     public Positionable deepClone() {
         MultiSensorIcon pos = new MultiSensorIcon(_editor);
         return finishClone(pos);
     }
 
-    public Positionable finishClone(Positionable p) {
-        MultiSensorIcon pos = (MultiSensorIcon) p;
+    protected Positionable finishClone(MultiSensorIcon pos) {
         pos.setInactiveIcon(cloneIcon(getInactiveIcon(), pos));
         pos.setInconsistentIcon(cloneIcon(getInconsistentIcon(), pos));
         pos.setUnknownIcon(cloneIcon(getUnknownIcon(), pos));

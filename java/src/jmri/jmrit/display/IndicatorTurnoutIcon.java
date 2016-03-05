@@ -94,8 +94,7 @@ public class IndicatorTurnoutIcon extends TurnoutIcon implements IndicatorTrack 
         return finishClone(pos);
     }
 
-    public Positionable finishClone(Positionable p) {
-        IndicatorTurnoutIcon pos = (IndicatorTurnoutIcon) p;
+    protected Positionable finishClone(IndicatorTurnoutIcon pos) {
         pos.setOccBlockHandle(namedOccBlock);
         pos.setOccSensorHandle(namedOccSensor);
         pos._iconMaps = cloneMaps(pos);

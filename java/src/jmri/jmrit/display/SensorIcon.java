@@ -29,8 +29,7 @@ import org.slf4j.LoggerFactory;
  * An icon to display a status of a Sensor.
  *
  * @author Bob Jacobsen Copyright (C) 2001
- * @author PeteCressman Copyright (C) 2010, 2011
- * @version $Revision$
+ * @author Pete Cressman Copyright (C) 2010, 2011
  */
 public class SensorIcon extends PositionableIcon implements java.beans.PropertyChangeListener {
 
@@ -81,9 +80,7 @@ public class SensorIcon extends PositionableIcon implements java.beans.PropertyC
         return finishClone(pos);
     }
 
-    @Override
-    public Positionable finishClone(Positionable p) {
-        SensorIcon pos = (SensorIcon) p;
+    protected Positionable finishClone(SensorIcon pos) {
         pos.setSensor(getNamedSensor().getName());
         pos.makeIconMap();
         pos._iconMap = cloneMap(_iconMap, pos);
