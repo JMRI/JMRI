@@ -228,6 +228,10 @@ public class IndicatorTurnoutIcon extends TurnoutIcon implements IndicatorTrack 
     }
 
     public void setStatus(int state) {
+        // this code is almost certainly an error.  _pathUtil.setStatus(int) is a 
+        // method that converts an int argument to a String explanation.
+        // Perhaps _pathUtil.(OBlock block, int state) was intended,
+        // or that setStatus (in IndicatorTrackPaths) is just wrong.
         _pathUtil.setStatus(state);
     }
 
@@ -246,7 +250,7 @@ public class IndicatorTurnoutIcon extends TurnoutIcon implements IndicatorTrack 
 //                                            ") state= "+_name2stateMap.get(stateName)+
 //                                            " icon: w= "+icon.getIconWidth()+" h= "+icon.getIconHeight());
         if (_iconMaps == null) {
-            initMaps();
+            _iconMaps = initMaps();
         }
         _iconMaps.get(status).put(_name2stateMap.get(stateName), icon);
         setIcon(_iconMaps.get("ClearTrack").get(_name2stateMap.get("BeanStateInconsistent")));
@@ -510,7 +514,6 @@ public class IndicatorTurnoutIcon extends TurnoutIcon implements IndicatorTrack 
         if (namedOccBlock != null) {
             getOccBlock().removePropertyChangeListener(this);
         }
-        namedOccSensor = null;
         namedOccSensor = null;
         super.dispose();
     }
