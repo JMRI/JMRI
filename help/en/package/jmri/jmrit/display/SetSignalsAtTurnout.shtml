@@ -1,16 +1,14 @@
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
-<!-- $Id$ -->
 <html lang="en">
 <head>
- <TITLE>
+ <title>
       JMRI: Set Signals at Turnout Help
- </TITLE>
-    <META http-equiv=Content-Type content="text/html; charset=iso-8859-1">
-    <META content="Dave Duchamp" name=Author>
-    <META name="keywords" content="JMRI help Layout Editor Tool">
+ </title>
+    <meta name="author" content="Dave Duchamp">
+    <meta name="keywords" content="JMRI help Layout Editor Tool">
 
 <!-- Style -->
-  <META http-equiv=Content-Type content="text/html; charset=iso-8859-1">
+  <meta http-equiv="content-type" content="text/html; charset=iso-8859-1">
   <link rel="stylesheet" type="text/css" href="/css/default.css" media="screen">
   <link rel="stylesheet" type="text/css" href="/css/print.css" media="print">
   <link rel="icon" href="/images/jmri.ico" type="image/png">
@@ -23,8 +21,8 @@
   <div class="nomenu" id="mBody">
     <div id="mainContent">
 
-<H1>Set Signals at Turnout
-</H1>
+<h1>Set Signals at Turnout</h1>
+
 <h2>Introduction</h2>
 <p>
 This tool provides an automated procedure for assigning signals to a turnout. 
@@ -61,8 +59,8 @@ be entered. If signal heads at this turnout have been entered previously,
 click <b>Get Saved</b> to retrieve the signal head names previously entered.
 The titles used for the four signal heads follow the model shown below.</p>
 <p>
-<A href="./images/TurnoutSignalModel.gif"><IMG SRC="./images/TurnoutSignalModel.gif" 
-ALIGN=CENTER WIDTH="225" HEIGHT="75" HSPACE="0" VSPACE="0"></A>
+<a href="./images/TurnoutSignalModel.gif"><img src="./images/TurnoutSignalModel.gif" 
+align="center" width="225" height="75" hspace="0" vspace="0"></a>
 </p>
 <p>
 If a signal head is entered for <b>Throat - Diverging</b>, then <b>Throat - 
@@ -97,6 +95,7 @@ the tool does not have enough information available to set up the
 logic, a message results, and you will have to return later after 
 more signals have been assigned to turnouts and block boundaries on the
 panel.</p>
+
 <h2>Notes</h2>
 <p>
 When setting up logic, this tool will follow track within 
@@ -142,6 +141,7 @@ use the <b>Set Signals at Throat-To-Throat Turnouts</b> or the <b>Set Signals at
 <b>Please remember to save your panel after using this tool.</b></p>
 
 <!--#include virtual="/Footer" -->
+  </div><!-- closes #mainContent-->
+ </div> <!-- closes #mBody-->
 </body>
 </html>
-

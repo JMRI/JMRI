@@ -1,4 +1,4 @@
-// XNetMonFrame.java
+// z21MonFrame.java
 package jmri.jmrix.roco.z21.swing.mon;
 
 import jmri.jmrix.roco.z21.z21Listener;

@@ -237,6 +237,16 @@ public class z21XNetSimulatorAdapter {
                 reply.setElement(3, 0x00);
                 reply.setParity();
                 break;
+            case z21Constants.LAN_X_GET_TURNOUT_INFO:
+                log.debug("Get Turnout Info Request Received");
+                reply=lanXTurnoutInfoReply(m.getElement(1),m.getElement(2),
+                                true); // always sends "thrown".
+                break;
+            case z21Constants.LAN_X_SET_TURNOUT:
+                log.debug("Set Turnout Request Received");
+                reply=lanXTurnoutInfoReply(m.getElement(1),m.getElement(2),
+                                (0x01 & m.getElement(3))==0x01);
+                break;
             case XNetConstants.LI101_REQUEST:
             case XNetConstants.CS_SET_POWERMODE:
             //case XNetConstants.PROG_READ_REQUEST:  //PROG_READ_REQUEST 
@@ -323,6 +333,18 @@ public class z21XNetSimulatorAdapter {
         reply.setElement(1, XNetConstants.CS_STATUS_RESPONSE);
         reply.setElement(2, csStatus);
         reply.setElement(3, 0x00); // set the parity byte to 0
+        reply.setParity();
+        return reply;
+    }
+
+    // create a LAN_X_TURNOUT_INFO reply
+    private XNetReply lanXTurnoutInfoReply(int FAdr_MSB,int FAdr_LSB,boolean thrown){
+        XNetReply reply=new XNetReply();
+        reply.setOpCode(z21Constants.LAN_X_TURNOUT_INFO);
+        reply.setElement(1, FAdr_MSB & 0xff );
+        reply.setElement(2, FAdr_LSB & 0xff );
+        reply.setElement(3, thrown?0x02:0x01); // the turnout direction.
+        reply.setElement(4, 0x00); // set the parity byte to 0.
         reply.setParity();
         return reply;
     }

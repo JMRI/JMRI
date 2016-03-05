@@ -37,10 +37,6 @@ import org.slf4j.LoggerFactory;
  */
 public class CarEditFrame extends OperationsFrame implements java.beans.PropertyChangeListener {
 
-    /**
-     *
-     */
-    private static final long serialVersionUID = 4399065932806496248L;
     CarManager carManager = CarManager.instance();
     CarManagerXml managerXml = CarManagerXml.instance();
     LocationManager locationManager = LocationManager.instance();
@@ -566,8 +562,15 @@ public class CarEditFrame extends OperationsFrame implements java.beans.Property
         OperationsXml.save();
     }
 
-    private boolean checkCar(Car c) {
+    private boolean checkCar(Car car) {
         String roadNum = roadNumberTextField.getText();
+        if (!OperationsXml.checkFileName(roadNum)) { // NOI18N
+            log.error("Road number must not contain reserved characters");
+            JOptionPane.showMessageDialog(this, Bundle.getMessage("NameResChar") + NEW_LINE
+                    + Bundle.getMessage("ReservedChar"), Bundle.getMessage("roadNumNG"),
+                    JOptionPane.ERROR_MESSAGE);
+            return false;
+        }
         if (roadNum.length() > Control.max_len_string_road_number) {
             JOptionPane.showMessageDialog(this, MessageFormat.format(Bundle.getMessage("carRoadNum"),
                     new Object[]{Control.max_len_string_road_number + 1}), Bundle.getMessage("carRoadLong"),
@@ -575,17 +578,17 @@ public class CarEditFrame extends OperationsFrame implements java.beans.Property
             return false;
         }
         // check to see if car with road and number already exists
-        Car car = carManager.getByRoadAndNumber((String) roadComboBox.getSelectedItem(), roadNumberTextField
+        Car existingCar = carManager.getByRoadAndNumber((String) roadComboBox.getSelectedItem(), roadNumberTextField
                 .getText());
-        if (car != null) {
+        if (existingCar != null) {
             // new car?
-            if (c == null) {
+            if (car == null) {
                 JOptionPane.showMessageDialog(this, Bundle.getMessage("carRoadExists"), Bundle
                         .getMessage("carCanNotAdd"), JOptionPane.ERROR_MESSAGE);
                 return false;
             }
             // old car with new road or number?
-            if (!car.getId().equals(c.getId())) {
+            if (!existingCar.getId().equals(car.getId())) {
                 JOptionPane.showMessageDialog(this, Bundle.getMessage("carRoadExists"), Bundle
                         .getMessage("carCanNotUpdate"), JOptionPane.ERROR_MESSAGE);
                 return false;

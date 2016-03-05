@@ -55,10 +55,6 @@ public class CatalogTreeModel extends DefaultTreeModel {
      *                where in the tree to insert it.
      */
     void insertResourceNodes(String pName, String pPath, DefaultMutableTreeNode pParent) {
-        // the following (commented) line only worked in JBuilder (July 27 2002)
-        // so we switched to storing this info in the resource/ filetree in
-        // the application directory, using the 2nd two lines (uncommented)
-        // File fp = new File(ClassLoader.getSystemResource(pPath).getFile());
         File fp = new File(pPath);
         if (!fp.exists()) {
             return;

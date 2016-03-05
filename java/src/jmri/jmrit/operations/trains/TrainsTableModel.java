@@ -477,7 +477,7 @@ public class TrainsTableModel extends javax.swing.table.AbstractTableModel imple
      * allocated to another train.
      */
     private boolean checkDepartureTrack(Train train) {
-        return (Setup.isStagingTrackImmediatelyAvail() && !train.isTrainInRoute() && train.getDepartureTrack() != null
+        return (Setup.isStagingTrackImmediatelyAvail() && !train.isTrainEnRoute() && train.getDepartureTrack() != null
                 && train.getDepartureTrack().getTrackType().equals(Track.STAGING)
                 && train.getDepartureTrack() != train.getTerminationTrack() && train.getDepartureTrack().getDropRS() > 0);
     }

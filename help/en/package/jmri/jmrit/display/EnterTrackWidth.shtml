@@ -1,16 +1,14 @@
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
-<!-- $Id$ -->
 <html lang="en">
 <head>
- <TITLE>
+ <title>
       JMRI: Set Track Width Help
- </TITLE>
-    <META http-equiv=Content-Type content="text/html; charset=iso-8859-1">
-    <META content="Bob Jacobsen" name=Author>
-    <META name="keywords" content="JMRI help Layout Editor Track">
+ </title>
+	<meta name="author" content="Bob Jacobsen">
+	<meta name="keywords" content="JMRI help Layout Editor Track">
 
 <!-- Style -->
-  <META http-equiv=Content-Type content="text/html; charset=iso-8859-1">
+  <meta http-equiv=Content-Type content="text/html; charset=iso-8859-1">
   <link rel="stylesheet" type="text/css" href="/css/default.css" media="screen">
   <link rel="stylesheet" type="text/css" href="/css/print.css" media="print">
   <link rel="icon" href="/images/jmri.ico" type="image/png">
@@ -23,11 +21,11 @@
   <div class="nomenu" id="mBody">
     <div id="mainContent">
 
-<H1>Set Track Width</H1>
+<h1>Set Track Width</h1>
    
 The Set Track Width dialog allows changing widths of both types of track 
 used in Layout Editor track diagrams. Track may be designated as <i>mainline 
-track</i> or <i>side track</i> when creating or editting Track Segments. The track
+track</i> or <i>side track</i> when creating or editing Track Segments. The track
 type of turnout parts and level crossing parts are inferred from the track type
 of connected Track Segments. All track initially defaults to <i>side track</i>.
 Specifying <i>mainline track</i> type for specific segments of track is an option 
@@ -37,6 +35,7 @@ Each type of track may be drawn using a different track width. Changing the widt
 track type changes the widths of all track of that type in the track diagram.</p>
 
 <!--#include virtual="/Footer" -->
-</body>
+   </div><!-- closes #mainContent-->
+  </div> <!-- closes #mBody-->
+ </body>
 </html>
-
