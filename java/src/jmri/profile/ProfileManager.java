@@ -774,7 +774,7 @@ public class ProfileManager extends Bean {
         if (file.isDirectory() && !path.endsWith("/")) {
             path = path + "/";
         }
-        return path.replaceAll(File.separator, "/");
+        return path.replace(File.separator, "/");
     }
 
     /**
