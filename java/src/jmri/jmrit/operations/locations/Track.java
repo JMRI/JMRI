@@ -18,8 +18,8 @@ import jmri.jmrit.operations.setup.Control;
 import jmri.jmrit.operations.setup.Setup;
 import jmri.jmrit.operations.trains.Train;
 import jmri.jmrit.operations.trains.TrainManager;
-import jmri.jmrit.operations.trains.TrainSchedule;
-import jmri.jmrit.operations.trains.TrainScheduleManager;
+import jmri.jmrit.operations.trains.timetable.TrainSchedule;
+import jmri.jmrit.operations.trains.timetable.TrainScheduleManager;
 import org.jdom2.Attribute;
 import org.jdom2.Element;
 import org.slf4j.Logger;
@@ -51,7 +51,7 @@ public class Track {
     protected int _length = 0; // length of track
     protected int _reserved = 0; // length of track reserved by trains
     protected int _reservedLengthDrops = 0; // length of track reserved for drops
-    protected int _numberCarsInRoute = 0; // number of cars in route to this track
+    protected int _numberCarsEnRoute = 0; // number of cars en route to this track
     protected int _usedLength = 0; // length of track filled by cars and engines
     protected int _ignoreUsedLengthPercentage = 0; // value between 0 and 100, 100 = ignore 100%
     protected int _moves = 0; // count of the drops since creation
@@ -72,8 +72,8 @@ public class Track {
     protected String _scheduleId = NONE; // Schedule id if there's one
     protected String _scheduleItemId = NONE; // the current scheduled item id
     protected int _scheduleCount = 0; // the number of times the item has been delivered
-    protected int _reservedInRoute = 0; // length of cars in route to this track
-    protected int _reservationFactor = 100; // percentage of track space for cars in route
+    protected int _reservedEnRoute = 0; // length of cars en route to this track
+    protected int _reservationFactor = 100; // percentage of track space for cars en route
     protected int _mode = MATCH; // default is match mode
     protected boolean _holdCustomLoads = false; // when true hold cars with custom loads
 
@@ -364,22 +364,22 @@ public class Track {
     }
 
     public void addReservedInRoute(Car car) {
-        int old = _reservedInRoute;
-        _numberCarsInRoute++;
-        _reservedInRoute = old + car.getTotalLength();
-        if (old != _reservedInRoute) {
+        int old = _reservedEnRoute;
+        _numberCarsEnRoute++;
+        _reservedEnRoute = old + car.getTotalLength();
+        if (old != _reservedEnRoute) {
             setDirtyAndFirePropertyChange("reservedInRoute", Integer.toString(old), // NOI18N
-                    Integer.toString(_reservedInRoute)); // NOI18N
+                    Integer.toString(_reservedEnRoute)); // NOI18N
         }
     }
 
     public void deleteReservedInRoute(Car car) {
-        int old = _reservedInRoute;
-        _numberCarsInRoute--;
-        _reservedInRoute = old - car.getTotalLength();
-        if (old != _reservedInRoute) {
+        int old = _reservedEnRoute;
+        _numberCarsEnRoute--;
+        _reservedEnRoute = old - car.getTotalLength();
+        if (old != _reservedEnRoute) {
             setDirtyAndFirePropertyChange("reservedInRoute", Integer.toString(old), // NOI18N
-                    Integer.toString(_reservedInRoute)); // NOI18N
+                    Integer.toString(_reservedEnRoute)); // NOI18N
         }
     }
 
@@ -387,14 +387,14 @@ public class Track {
      * Used to determine how much track space is going to be consumed by cars in
      * route to this track. See isSpaceAvailable().
      *
-     * @return The length of all cars in route to this track including couplers.
+     * @return The length of all cars en route to this track including couplers.
      */
     public int getReservedInRoute() {
-        return _reservedInRoute;
+        return _reservedEnRoute;
     }
 
     public int getNumberOfCarsInRoute() {
-        return _numberCarsInRoute;
+        return _numberCarsEnRoute;
     }
 
     /**
@@ -475,7 +475,7 @@ public class Track {
 
     /**
      * Used to determine if there's space available at this track for the car.
-     * Considers cars in route to this track. Used to prevent overloading the
+     * Considers cars en route to this track. Used to prevent overloading the
      * track with cars from staging or cars with custom loads.
      *
      * @param car The car to be set out.

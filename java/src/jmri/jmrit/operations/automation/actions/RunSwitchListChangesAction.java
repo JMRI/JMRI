@@ -1,5 +1,7 @@
 package jmri.jmrit.operations.automation.actions;
 
+import jmri.jmrit.operations.trains.excel.TrainCustomSwitchList;
+
 import java.io.File;
 import jmri.jmrit.operations.locations.Location;
 import jmri.jmrit.operations.locations.LocationManager;
@@ -7,7 +9,6 @@ import jmri.jmrit.operations.setup.Control;
 import jmri.jmrit.operations.setup.Setup;
 import jmri.jmrit.operations.trains.Train;
 import jmri.jmrit.operations.trains.TrainCsvSwitchLists;
-import jmri.jmrit.operations.trains.TrainCustomSwitchList;
 import jmri.jmrit.operations.trains.TrainManager;
 import jmri.jmrit.operations.trains.TrainSwitchLists;
 import org.slf4j.Logger;
