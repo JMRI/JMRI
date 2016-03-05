@@ -15,7 +15,6 @@ import javax.swing.JOptionPane;
 import javax.swing.table.AbstractTableModel;
 import jmri.Programmer;
 import jmri.ProgrammingMode;
-import jmri.managers.DefaultProgrammerManager;
 import jmri.util.jdom.LocaleSelector;
 import org.jdom2.Element;
 import org.slf4j.Logger;
@@ -489,5 +488,5 @@ public class ResetTableModel extends AbstractTableModel implements ActionListene
     }
 
     // initialize logging
-    static Logger log = LoggerFactory.getLogger(ResetTableModel.class.getName());
+    private final static Logger log = LoggerFactory.getLogger(ResetTableModel.class.getName());
 }

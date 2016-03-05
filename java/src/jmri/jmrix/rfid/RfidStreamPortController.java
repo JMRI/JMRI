@@ -85,7 +85,7 @@ public class RfidStreamPortController extends AbstractStreamPortController imple
         return (RfidSystemConnectionMemo) super.getSystemConnectionMemo();
     }
 
-    static Logger log = LoggerFactory.getLogger(RfidStreamPortController.class.getName());
+    private final static Logger log = LoggerFactory.getLogger(RfidStreamPortController.class.getName());
 
 }
 

@@ -609,10 +609,7 @@ public class XNetTurnout extends AbstractTurnout implements XNetListener {
             log.debug("Sending off message for turnout " + mNumber + " commanded state= " + getCommandedState());
             log.debug("Current Thread ID: " + java.lang.Thread.currentThread().getId() + " Thread Name " + java.lang.Thread.currentThread().getName());
         }
-        XNetMessage msg = XNetMessage.getTurnoutCommandMsg(mNumber,
-                getCommandedState() == _mClosed,
-                getCommandedState() == _mThrown,
-                false);
+        XNetMessage msg = getOffMessage();
         // Set the known state to the commanded state.
         synchronized (this) {
             //try{
@@ -635,6 +632,15 @@ public class XNetTurnout extends AbstractTurnout implements XNetListener {
         tc.sendHighPriorityXNetMessage(msg, this);
     }
 
+
+    protected XNetMessage getOffMessage(){
+         return ( XNetMessage.getTurnoutCommandMsg(mNumber,
+                getCommandedState() == _mClosed,
+                getCommandedState() == _mThrown,
+                false) );
+    }
+
+
     class offTask extends java.util.TimerTask {
 
         XNetTurnout t;
@@ -652,10 +658,7 @@ public class XNetTurnout extends AbstractTurnout implements XNetListener {
             }
             synchronized (t) {
                 // Generate the message
-                XNetMessage msg = XNetMessage.getTurnoutCommandMsg(mNumber,
-                        getCommandedState() == _mClosed,
-                        getCommandedState() == _mThrown,
-                        false);
+                XNetMessage msg = t.getOffMessage();
                 // Then send the message.
                 tc.sendXNetMessage(msg, t);
             }
@@ -857,7 +860,7 @@ public class XNetTurnout extends AbstractTurnout implements XNetListener {
     protected int mNumber;   // XPressNet turnout number
     XNetTurnoutStateListener _stateListener;  // Internal class object
 
-    static Logger log = LoggerFactory.getLogger(XNetTurnout.class.getName());
+    private final static Logger log = LoggerFactory.getLogger(XNetTurnout.class.getName());
 
 }
 

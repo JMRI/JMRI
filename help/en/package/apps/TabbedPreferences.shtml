@@ -4,7 +4,7 @@
  <title>
       JMRI: Preferences Pane
  </title>
-    <meta name="Author" content="Bob Jacobsen">
+    <meta name="author" content="Bob Jacobsen">
     <meta name="keywords" content="JMRI help preferences">
 
 <!-- Style -->
@@ -28,8 +28,8 @@ configure the basic operation of your JMRI application.
 <p>
 The screen is split into two sections: on the left hand side is a list of the Preference groups that can be set. 
 Clicking on each item will then populate the right hand side with the various options that can be configured for that Tab.
-<a href="../../manual/DecoderPro/images/Preferences.png">
-<img src="../../manual/DecoderPro/images/Preferences.png" height="156" width="256" align="right"></a>
+<a href="../../html/setup/images/PrefsConnections_en.png">
+<img src="../../html/setup/images/PrefsConnections_en.png" height="195" width="425" align="right"></a>
 <p>
 <a href="#Connection">Connections</a><br>
 <a href="#Defaults">Defaults</a><br>
@@ -44,7 +44,10 @@ Clicking on each item will then populate the right hand side with the various op
 <a href="#WiThrottle">WiThrottle</a><br>
 <a href="#Profiles">Config Profiles</a><br>
 <a href="#JSONServer">JSON Server</a><br>
+<a href="#RailroadName">Railroad Name</a><br>
 <a href="#WebServer">Web Server</a><br>
+<a href="#SRCP Server">SRCP Server</a><br>
+<a href="#Simple Server">Simple Server</a><br>
 <a href="#Warrants">Warrants</a><br>
 <p>Perhaps the most important control is at the bottom of this section:
 The <strong>Save</strong> button!  
@@ -111,7 +114,7 @@ with information on sharing files between computers using Dropbox.
 <p>Start up action order is important. In most cases, scripts should be the last
     items in the start up order. Start up order can be changed by selecting a
     start up item and moving it <em>up</em> or <em>down</em> in the list.</p>
-<p>There are four types of start up actions:</p>
+<p>There are five types of start up actions:</p>
 <dl>
     <dt>Perform action</dt>
     <dd>
@@ -134,11 +137,16 @@ is started.
     </dd>
     <dt>Run script</dt>
     <dd>
-Automatically run a script file when the program
-starts up.
-You can run as many script files
-as you'd like; each will be run to the end of the file before the next
-is started.
+        Automatically run a scripts when the program starts up. You can run as
+        many scripts as you'd like; each will be run to completion before the
+        next is started. Note that any files the script depends upon need to be
+        opened before running the script.
+    </dd>
+    <dt>Set route</dt>
+    <dd>
+        Set a route when the program starts. You can set as many routes as you
+        like; each will be set in order. Note that any files the route depends
+        upon need to be opened before setting the route.
     </dd>
 </dl>
 
@@ -280,7 +288,6 @@ new settings, its connection must be closed and reopened.
 JMRI Configuration Profiles make it easy to set up your 
 JMRI applications to work with different setups.  Each profile
 specifies one set of Preferences.  You can then select which one to use.
-
 <p>
 For more information, see the 
 <a href="../../html/setup/profiles.shtml">Configuration Profiles</a> help
@@ -288,14 +295,19 @@ page.
 
 <a name="JSONServer">
 <h2>JSON Server</h2></a>
-
+<p>
 The JMRI JSON server is used by applications on other computers, 
 including tablets and phones, to connect to JMRI to operate your 
-railroad.
+railroad.</p>
 <p>
 On this pane you can specify the port for the connection (usually left at default)
 and how often the server checks for whether the connection has failed via a heartbeat
-message. 
+message.</p>
+
+<a name="RailroadName">
+    <h2>Railroad Name</h2></a>
+<p>
+The Railroad Name tab lets you specify the name of your model railroad (module), as it is used by several server protocols.</p>
 
 <a name="WebServer">
 <h2>Web Server</h2></a>
@@ -307,11 +319,27 @@ and work with your railroad.
 This tab lets you control what the web server provides.
 For more information, see the 
 <a href="../../html/web/index.shtml#Configure">Web Server Preferences pane</a> page.
+
+<a name="SRCP Server">
+<h2>SRCP Server</h2></a>
 <p>
+The JMRI <a href="../../html/hardware/SRCP/index.shtml">SRCP server</a> is a standard way of connecting "client" user programs to a "server".</p>
+<p>
+On this pane you can specify the port for the connection (usually left at default).
+</p>
+
+<a name="Simple Server">
+<h2>Simple Server</h2></a>
+<p>
+JMRI Simple Server is part of <a href="../../html/hardware/jmriclient/index.shtml">JMRIClient</a>, a method to remotely connecting one JMRI program to another.</p>
+<p>
+On this pane you can specify the port for the connection (usually left at default).
+</p>
+
 <a name="Warrants">
 <h2>Warrants</h2></a>
 
-This tab sets parameters used in computing routes for Warrants and for
+This tab sets parameters used in computing routes for <a href="../../package/jmri/jmrit/logix/Warrant.shtml">Warrants</a> and for
 controlling the events that warranted trains may encounter.
 
 <h3>Speed Map</h3>

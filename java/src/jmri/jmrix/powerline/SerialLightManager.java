@@ -100,7 +100,7 @@ abstract public class SerialLightManager extends AbstractLightManager {
         return true;
     }
 
-    static Logger log = LoggerFactory.getLogger(SerialLightManager.class.getName());
+    private final static Logger log = LoggerFactory.getLogger(SerialLightManager.class.getName());
 
 }
 

@@ -1031,6 +1031,6 @@ public class LoaderPane extends jmri.jmrix.AbstractLoaderPane
         updateDownloadVerifyButtons();
         log.info("ActionListener");
     }
-    static Logger log = LoggerFactory.getLogger(LoaderPane.class.getName());
+    private final static Logger log = LoggerFactory.getLogger(LoaderPane.class.getName());
 
 }

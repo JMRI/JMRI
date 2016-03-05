@@ -208,6 +208,6 @@ public class ActiveSystemsMenu extends JMenu {
             return null;
         }
     }
-    static Logger log = LoggerFactory.getLogger(ActiveSystemsMenu.class.getName());
+    private final static Logger log = LoggerFactory.getLogger(ActiveSystemsMenu.class.getName());
 
 }

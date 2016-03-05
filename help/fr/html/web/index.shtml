@@ -1,9 +1,7 @@
-<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd"><!-- Translated by Blorec Herv&#233; le 2013-10-07-->
-
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
+<!-- Translated by Blorec Herv&#233; le 2013-10-07-->
 <html lang="fr">
 <head>
-<!-- Copyright 2008 -->
-<!-- $Id$ -->
 <title>JMRI: Web Access</title>
 
 <!-- Style -->
@@ -24,7 +22,7 @@
 
 <h1> 
 JMRI:  Acc&#232;s  Web
-</H1>
+</h1>
 
 JMRI peut fournir un acc&#232;s Internet &#224; votre r&#233;seau miniature.
 
@@ -47,8 +45,8 @@ Ainsi les applications client trl que <a href="http://withrottle.com" target=_ne
 <a href="http://enginedriver.rrclubs.org" target=_new>EngineDriver</a> peuvent utiliser le serveur web JMRI pour fournir des capacit&#233;s additionnelles telles que l'acc&#232;s au panneau et aux ic&#244;nes figurant sur la liste.
 
 
-id="Start"><a
-<h2>D&#233;marrage de l'Acc&#232;s Web  </h2>
+<a id="Start"></a>
+<h2>D&#233;marrage de l'Acc&#232;s Web</h2>
 
 JMRI Web Access est inclus dans les t&#233;l&#233;chargements JMRI habituels.
 Pour l'utiliser, vous avez juste &#224; le d&#233;marrer.
@@ -70,7 +68,7 @@ Ensuite, v&#233;rifiez la connexion.
 Si vous utilisez un navigateur web Bonjour/Zeroconf activ&#233;, comme
 Safari 
 vous devriez voir un site web "Mon Chemin de Fer JMRI" dans l'onglet "Bonjour". Les utilisateurs de Chrome et FireFox peuvent activer la caract&#233;tistique avec le <a href="http://dnssd.me" target=_new> plug-in DNSSD</a>
-pour obtenirla page d'accueil du serveur Web JMRI.
+pour obtenir la page d'accueil du serveur Web JMRI.
 
 <p>
 Ensuite, faisons en sorte que vous pouvez acc&#233;der aux fonctions JMRI.
@@ -107,10 +105,7 @@ cliquez sur "Ajouter action". Dans la nouvelle bo&#238;te de s&#233;lections qui
 appara&#238;t, s&#233;lectionnez "D&#233;marrer Serveur Web".
 N'oubliez pas de sauvegarder vos changements!
 
- 
 <h2>Pr&#233;f&#233;rences Serveur Web</h2>
-<a href="images/WebServerPreferences.PNG" target=_new alt="click to enlarge">
-<img src="images/WebServerPreferences.PNG" height="200px" style="float:right;"></a> 
 Il y a un certain nombre de param&#232;tres li&#233;s au Serveur Web que vous pouvez modifier dans les Pr&#233;f&#233;rences Serveur Web
 (voir image &#224; droite, cliquez pour agrandir)
 Le port par d&#233;faut MiniServer est 12080, mais cela peut &#234;tre modifi&#233; &#224; l'aide de

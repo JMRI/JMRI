@@ -3,8 +3,6 @@ package jmri.jmrix.can;
 
 import edu.umd.cs.findbugs.annotations.NonNull;
 import jmri.jmrix.AbstractMRReply;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 
 /**
  * Base class for replies in a CANbus based message/reply protocol.
@@ -173,8 +171,6 @@ public class CanReply extends AbstractMRReply implements CanMutableFrame {
     int _header;
     boolean _isExtended;
     boolean _isRtr;
-
-    static Logger log = LoggerFactory.getLogger(CanReply.class.getName());
 }
 
 /* @(#)CanReply.java */

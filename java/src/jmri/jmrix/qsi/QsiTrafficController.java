@@ -348,7 +348,7 @@ public class QsiTrafficController implements QsiInterface, Runnable {
         }
     }
 
-    static Logger log = LoggerFactory.getLogger(QsiTrafficController.class.getName());
+    private final static Logger log = LoggerFactory.getLogger(QsiTrafficController.class.getName());
 }
 
 

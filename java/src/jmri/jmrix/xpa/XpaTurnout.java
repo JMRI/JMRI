@@ -65,7 +65,7 @@ public class XpaTurnout extends AbstractTurnout {
         }
     }
 
-    static Logger log = LoggerFactory.getLogger(XpaTurnout.class.getName());
+    private final static Logger log = LoggerFactory.getLogger(XpaTurnout.class.getName());
 
 }
 

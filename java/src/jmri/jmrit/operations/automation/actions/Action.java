@@ -1,6 +1,9 @@
 package jmri.jmrit.operations.automation.actions;
 
+import jmri.jmrit.operations.trains.timetable.TrainSchedule;
+
 import java.text.MessageFormat;
+import javax.swing.JComboBox;
 import javax.swing.JOptionPane;
 import jmri.jmrit.operations.automation.Automation;
 import jmri.jmrit.operations.automation.AutomationItem;
@@ -14,8 +17,8 @@ public abstract class Action {
     public static final String ACTION_RUNNING_CHANGED_PROPERTY = "actionRunning"; // NOI18N
     public static final String ACTION_GOTO_CHANGED_PROPERTY = "actionGoto"; // NOI18N
 
-    public static final int OKAY = 0;
-    public static final int HALT = 1;
+    public static final int HALT = 0; // halt is the first button
+    public static final int OKAY = 1;
     public static final int CLOSED = JOptionPane.CLOSED_OPTION; // -1
     public static final int NO_MESSAGE_SENT = -2;
     public static final int FINISH_FAILED = -3;
@@ -64,15 +67,20 @@ public abstract class Action {
     }
 
     public boolean isAutomationMenuEnabled() {
-        return (getCode() & ActionCodes.ENABLE_AUTOMATION_LIST) == ActionCodes.ENABLE_AUTOMATION_LIST;
+        return (getCode() & ActionCodes.ENABLE_AUTOMATION) == ActionCodes.ENABLE_AUTOMATION;
     }
 
     public boolean isGotoMenuEnabled() {
-        return (getCode() & ActionCodes.ENABLE_GOTO_LIST) == ActionCodes.ENABLE_GOTO_LIST;
+        return (getCode() & ActionCodes.ENABLE_GOTO) == ActionCodes.ENABLE_GOTO;
     }
-    
+
+    public boolean isOtherMenuEnabled() {
+        return (getCode() & ActionCodes.ENABLE_OTHER) == ActionCodes.ENABLE_OTHER;
+    }
+
     /**
      * Used to determine if this action can run concurrently with other actions.
+     * 
      * @return true if a concurrent action
      */
     public boolean isConcurrentAction() {
@@ -88,13 +96,13 @@ public abstract class Action {
     }
 
     public String getActionString() {
-        return getFormatedMessage("{0} {1} {2} {3} {4}");
+        return getFormatedMessage("{0}{1}{2}{3}{4}{5}");
     }
-    
+
     public String getActionSuccessfulString() {
         return Bundle.getMessage("OK");
     }
-    
+
     public String getActionFailedString() {
         return Bundle.getMessage("FAILED");
     }
@@ -118,13 +126,25 @@ public abstract class Action {
      * @return OKAY, HALT, CLOSED, NO_MESSAGE_SENT, FINISH_FAILED
      */
     public int finishAction(boolean success) {
+        return finishAction(success, new Object[]{Bundle.getMessage("HALT"), Bundle.getMessage("OK")});
+    }
+
+    /**
+     * Completes the action by displaying the correct message if there's one.
+     * Will halt if the option to halt the automation is enabled or the user
+     * requested the automation to halt.
+     * 
+     * @param success true if action succeeded
+     * @param buttons buttons to display in message
+     * @return OKAY, HALT, CLOSED, NO_MESSAGE_SENT, FINISH_FAILED
+     */
+    public int finishAction(boolean success, Object[] buttons) {
         int response = FINISH_FAILED;
         if (getAutomationItem() != null) {
             setRunning(true);
             getAutomationItem().setActionSuccessful(success);
             setRunning(false);
             String message = getAutomationItem().getMessage();
-            Object[] buttons = new Object[]{Bundle.getMessage("OK"), Bundle.getMessage("HALT")};
             if (!success) {
                 message = getAutomationItem().getMessageFail();
                 if (getAutomationItem().isHaltFailureEnabled()) {
@@ -132,7 +152,8 @@ public abstract class Action {
                 }
             }
             response = sendMessage(message, buttons, success);
-            if (response == HALT || (!success && getAutomationItem().isHaltFailureEnabled())) {
+            if (response == HALT && buttons[0].equals(Bundle.getMessage("HALT"))
+                    || (!success && getAutomationItem().isHaltFailureEnabled())) {
                 firePropertyChange(ACTION_HALT_CHANGED_PROPERTY, !success, success);
             } else {
                 firePropertyChange(ACTION_COMPLETE_CHANGED_PROPERTY, !success, success);
@@ -150,13 +171,9 @@ public abstract class Action {
     public int sendMessage(String message, Object[] buttons, boolean success) {
         int response = NO_MESSAGE_SENT;
         if (getAutomationItem() != null && !message.equals(AutomationItem.NONE)) {
-            // use formatter to create title
-            String title = getAutomationItem().getId() +
-                    " " +
-                    (success ? "" : Bundle.getMessage("Failed")) +
-                    " {0} {1} {2} {3} {4}";
-
-            response = JOptionPane.showOptionDialog(null, getFormatedMessage(message), getFormatedMessage(title),
+            String title = getAutomationItem().getId() + " " +
+                    (success ? "" : Bundle.getMessage("Failed")) + " " + getActionString();
+            response = JOptionPane.showOptionDialog(null, getFormatedMessage(message), title,
                     JOptionPane.OK_CANCEL_OPTION, JOptionPane.INFORMATION_MESSAGE, null, buttons
                     , null);
         }
@@ -184,7 +201,19 @@ public abstract class Action {
         if (item != null) {
             itemId = " " + item.getId();
         }
-        return MessageFormat.format(message, new Object[]{getName(), trainName, routeLocationName, automationName, itemId});
+        String day = "";
+        TrainSchedule trainSchedule = getAutomationItem().getTrainSchedule();
+        if (trainSchedule != null) {
+            day = " " + trainSchedule.getName();
+        }
+        return MessageFormat.format(message, new Object[]{getName(), trainName, routeLocationName, automationName, itemId, day});
+    }
+
+    // to be overridden if action needs a ComboBox
+    public JComboBox<?> getComboBox() {
+        JComboBox<?> cb = new JComboBox<>();
+        cb.setEnabled(false);
+        return cb;
     }
 
     java.beans.PropertyChangeSupport pcs = new java.beans.PropertyChangeSupport(this);

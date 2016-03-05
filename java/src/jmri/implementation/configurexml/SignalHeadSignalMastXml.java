@@ -95,5 +95,5 @@ public class SignalHeadSignalMastXml
         log.error("Invalid method called");
     }
 
-    static Logger log = LoggerFactory.getLogger(SignalHeadSignalMastXml.class.getName());
+    private final static Logger log = LoggerFactory.getLogger(SignalHeadSignalMastXml.class.getName());
 }

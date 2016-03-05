@@ -621,6 +621,13 @@
             </and>
         </condition>
      
+        <condition property="baseArch" value="armv6l">
+            <and>
+                <os family="unix" />
+                <equals arg1="${os.arch}" arg2='arm' />
+            </and>
+        </condition>
+     
         <property name="arch.lib.path" value="${libdir}/${baseOS}/${baseArch}:${libdir}/${baseOS}"/>
         <echo message="arch.lib.path ${arch.lib.path}"/>
     </target>
@@ -1063,7 +1070,7 @@
     </target>
 
 
-    <target name="ci-test" depends="tests, runtime-library-selection" description="run headless test suite using Travis-CI default target">
+    <target name="ci-test" depends="tests, runtime-library-selection" description="run AllTest CI tests">
         <junit haltonerror="false" haltonfailure="false" printsummary="yes" fork="yes" dir="." errorProperty="test.failed" failureProperty="test.failed">
             <sysproperty key="java.security.policy" value="${libdir}/security.policy"/>
             <sysproperty key="apple.laf.useScreenMenuBar" value="true"/>
@@ -1084,17 +1091,39 @@
         </fail>
     </target>
 
-    <target name="appveyor-ci-test" depends="tests, runtime-library-selection" description="run headless test suite using Appveyor default target">
-        <!-- identical to CI Test except test output is different -->
+    <target name="ci-test-travis" depends="tests, runtime-library-selection" description="run ci-test using Travis-CI">
         <junit haltonerror="false" haltonfailure="false" printsummary="yes" fork="yes" dir="." errorProperty="test.failed" failureProperty="test.failed">
             <sysproperty key="java.security.policy" value="${libdir}/security.policy"/>
             <sysproperty key="apple.laf.useScreenMenuBar" value="true"/>
             <sysproperty key="log4j.ignoreTCL" path="true/"/>
             <sysproperty key="java.library.path" path=".:${libdir}:${arch.lib.path}"/>
             <sysproperty key="jinput.plugins" path="net.bobis.jinput.hidraw.HidRawEnvironmentPlugin"/>
-            <sysproperty key="jmri.skipschematests" value="true"/>  <!-- skip schema checks to improve speed -->
 
             <classpath refid="test.class.path"/>
+
+            <test name="apps.tests.AllTest">
+                <formatter usefile="no" type="brief"/>
+            </test>
+        </junit>
+        <fail>
+            <condition>
+                <istrue value="${test.failed}" />
+            </condition>
+        </fail>
+    </target>
+
+    <target name="ci-test-appveyor" depends="tests, runtime-library-selection" description="run ci-test using Appveyor">
+        <!-- identical to ci-test target except test output is different -->
+        <junit haltonerror="false" haltonfailure="false" printsummary="yes" fork="yes" dir="." errorProperty="test.failed" failureProperty="test.failed">
+            <sysproperty key="java.security.policy" value="${libdir}/security.policy"/>
+            <sysproperty key="apple.laf.useScreenMenuBar" value="true"/>
+            <sysproperty key="log4j.ignoreTCL" path="true/"/>
+            <sysproperty key="java.library.path" path=".:${libdir}:${arch.lib.path}"/>
+            <sysproperty key="jinput.plugins" path="net.bobis.jinput.hidraw.HidRawEnvironmentPlugin"/>
+
+            <classpath refid="test.class.path"/>
+
+            <sysproperty key="jmri.skipschematests" value="true"/>  <!-- skip schema checks to improve speed -->
 
             <test name="apps.tests.AllTest" outfile="junit-results">
                 <formatter type="xml"/>
@@ -1157,9 +1186,9 @@
         <jar jarfile="${jartarget}/jmri.jar"
              basedir="${target}"
              compress="true"
-             index="true">  <!--  java -jar jmri.jar doesn't start when apps.PanelPro.PanelPro is specified & index="true" -->
+             index="true">
           <manifest>
-            <attribute name="Main-Class" value="jmri.Version"/>  
+            <attribute name="Main-Class" value="jmri.Version"/>
             <attribute name="Class-Path" value="${jar.classpath}"/>
             <section name="jmri">
               <attribute name="Specification-Title" value="Java Model Railroad Interface Classes"/>
@@ -1415,13 +1444,12 @@
         <move file="${decoderindex.file}" todir="xml" />
     </target>
 
-    <!-- dist target forces the jar file to be built without test classes -->
     <target name="dist"
-            description="create a distribution jar file"
+            description="create a distribution jar file without tests"
             depends="clean, init, debug, rmic, jar"/>
 
     <target name="dist-debug"
-            description="create a distribution jar file"
+            description="create a distribution jar file including tests"
             depends="clean, init, debug, rmic, jar"/>
 
     <taskdef name="findbugs"
@@ -1429,25 +1457,37 @@
              onerror="ignore"
              classpath="${findbugs.home}/lib/findbugs.jar"/>
 
-    <target name="findbugs" depends="dist-debug" description="generate FindBugs report. Include &quot;-Dfindbugs.home=YourFindBugsInstallDirectory&quot; in command line." >
+    <target name="findbugs" depends="dist" description="generate FindBugs report. Specify FindBugs install with local.properties file or &quot;-Dfindbugs.home=YourFindBugsInstallDirectory&quot; on command line." >
         <findbugs home="${findbugs.home}"
                   output="html"
                   outputFile="${jartarget}/jmri-fb.html"
-                  jvmargs="-Xmx1024m"
-                  timeout="12000000">
+                  jvmargs="-Xmx1536m"
+                  timeout="12000000"
+                  excludeFilter=".findbugs.xml"
+
+                  effort="max"
+                  reportLevel="low"
+                  >
             <sourcePath path="${source}/"/>
             <class location="${jartarget}/jmri.jar"/>
+            <auxClasspath refid="compile.class.path" />
         </findbugs>
     </target>
 
-    <target name="findbugs-ci" depends="dist-debug" description="generate FindBugs report. Include &quot;-Dfindbugs.home=YourFindBugsInstallDirectory&quot; in command line." >
+    <target name="findbugs-ci" depends="dist" description="generate FindBugs report. Include &quot;-Dfindbugs.home=YourFindBugsInstallDirectory&quot; in command line." >
         <findbugs home="${findbugs.home}"
                   output="xml:withMessages"
                   outputFile="findbugs.xml"
-                  jvmargs="-Xmx1024m"
-                  timeout="12000000">
+                  jvmargs="-Xmx1536m"
+                  timeout="12000000"
+                  excludeFilter=".findbugs.xml"
+                  
+                  effort="max"
+                  reportLevel="low"                  
+                  >
             <sourcePath path="${source}/"/>
             <class location="${jartarget}/jmri.jar"/>
+            <auxClasspath refid="compile.class.path" />
         </findbugs>
     </target>
 

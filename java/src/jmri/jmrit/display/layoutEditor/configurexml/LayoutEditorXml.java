@@ -91,6 +91,7 @@ public class LayoutEditorXml extends AbstractXmlAdapter {
             panel.setAttribute("greenBackground", "" + p.getBackgroundColor().getGreen());
             panel.setAttribute("blueBackground", "" + p.getBackgroundColor().getBlue());
         }
+        panel.setAttribute("gridSize", "" + p.getGridSize());
         p.resetDirty();
         panel.setAttribute("openDispatcher", p.getOpenDispatcherOnLoad() ? "yes" : "no");
         panel.setAttribute("useDirectTurnoutControl", p.getDirectTurnoutControl() ? "yes" : "no");
@@ -423,7 +424,19 @@ public class LayoutEditorXml extends AbstractXmlAdapter {
                 result = false;
             }
         }
-
+        // grid size parameter
+        int iz = 10; // thisw value is never used but it's the default 
+        a = shared.getAttribute("gridSize");
+        if (a != null) {
+            try {
+                iz = (Integer.parseInt(a.getValue()));
+                panel.setGridSize(iz);
+            } catch (Exception e) {
+                log.error("failed to convert to int - " + a.getValue());
+                result = false;
+            }
+        }
+        
         // set contents state
         String slValue = "both";
         if ((a = shared.getAttribute("sliders")) != null && a.getValue().equals("no")) {
@@ -599,6 +612,6 @@ public class LayoutEditorXml extends AbstractXmlAdapter {
         return jmri.Manager.PANELFILES;
     }
 
-    static Logger log = LoggerFactory.getLogger(LayoutEditorXml.class.getName());
+    private final static Logger log = LoggerFactory.getLogger(LayoutEditorXml.class.getName());
 
 }

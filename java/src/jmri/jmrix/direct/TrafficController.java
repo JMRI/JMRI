@@ -154,7 +154,7 @@ public class TrafficController implements jmri.CommandStation {
         return "N";
     }
 
-    static Logger log = LoggerFactory.getLogger(TrafficController.class.getName());
+    private final static Logger log = LoggerFactory.getLogger(TrafficController.class.getName());
 }
 
 

@@ -75,5 +75,5 @@ public class VSDecoderCreationAction extends AbstractAction {
         tf.toFront();
     }
 
-    static Logger log = LoggerFactory.getLogger(VSDecoderCreationAction.class.getName());
+    private final static Logger log = LoggerFactory.getLogger(VSDecoderCreationAction.class.getName());
 }

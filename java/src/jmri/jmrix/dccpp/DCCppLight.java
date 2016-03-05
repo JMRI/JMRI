@@ -155,7 +155,7 @@ public class DCCppLight extends AbstractLight implements DCCppListener {
         }
     }
 
-    static Logger log = LoggerFactory.getLogger(DCCppLight.class.getName());
+    private final static Logger log = LoggerFactory.getLogger(DCCppLight.class.getName());
 }
 
 /* @(#)DCCppLight.java */

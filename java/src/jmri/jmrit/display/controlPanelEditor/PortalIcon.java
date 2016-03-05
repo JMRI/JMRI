@@ -312,5 +312,5 @@ public class PortalIcon extends PositionableIcon implements java.beans.PropertyC
         return false;
     }
 
-    static Logger log = LoggerFactory.getLogger(PortalIcon.class.getName());
+    private final static Logger log = LoggerFactory.getLogger(PortalIcon.class.getName());
 }

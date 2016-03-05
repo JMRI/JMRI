@@ -5,9 +5,6 @@ import java.awt.Graphics2D;
 import java.awt.Point;
 import java.awt.image.BufferedImage;
 
-import javax.swing.JComponent;
-import javax.swing.SwingUtilities;
-
 import junit.extensions.jfcunit.JFCTestCase;
 import junit.extensions.jfcunit.JFCTestHelper;
 import junit.extensions.jfcunit.TestHelper;
@@ -28,6 +25,7 @@ public class SwingTestCase extends JFCTestCase {
 
     public SwingTestCase(String s) {
         super(s);
+        setLockWait(10); // getLockWait() found default value 25 in JMRI 4.3.4
     }
 
     /**

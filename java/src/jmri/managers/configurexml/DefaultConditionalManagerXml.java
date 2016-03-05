@@ -8,6 +8,7 @@ import jmri.ConditionalAction;
 import jmri.ConditionalManager;
 import jmri.ConditionalVariable;
 import jmri.InstanceManager;
+import jmri.implementation.DefaultConditional;
 import jmri.implementation.DefaultConditionalAction;
 import jmri.managers.DefaultConditionalManager;
 import org.jdom2.Element;
@@ -206,174 +207,169 @@ public class DefaultConditionalManagerXml extends jmri.managers.configurexml.Abs
                 log.debug("create conditional: (" + sysName + ")("
                         + (userName == null ? "<null>" : userName) + ")");
             }
-            Conditional c = tm.createNewConditional(sysName, userName);
-            if (c != null) {
-                // load common parts
-                loadCommon(c, condElem);
+            Conditional c = tm.getBySystemName(sysName);
+            if (c == null) c = tm.createNewConditional(sysName, userName);
 
-                String ant = "";
-                int logicType = Conditional.ALL_AND;
-                if (condElem.getAttribute("antecedent") != null) {
-                    ant = condElem.getAttribute("antecedent").getValue();
-                }
-                if (condElem.getAttribute("logicType") != null) {
-                    logicType = Integer.parseInt(
-                            condElem.getAttribute("logicType").getValue());
-                }
-                c.setLogicType(logicType, ant);
+            // conditional already exists
+            // load common parts
+            loadCommon(c, condElem);
 
-                // load state variables, if there are any
-                List<Element> conditionalVarList = condElem.getChildren("conditionalStateVariable");
+            String ant = "";
+            int logicType = Conditional.ALL_AND;
+            if (condElem.getAttribute("antecedent") != null) {
+                ant = condElem.getAttribute("antecedent").getValue();
+            }
+            if (condElem.getAttribute("logicType") != null) {
+                logicType = Integer.parseInt(
+                        condElem.getAttribute("logicType").getValue());
+            }
+            c.setLogicType(logicType, ant);
 
-                if (conditionalVarList.size() == 0) {
-                    log.warn("No state variables found for conditional " + sysName);
-                }
-                ArrayList<ConditionalVariable> variableList = new ArrayList<ConditionalVariable>();
-                for (int n = 0; n < conditionalVarList.size(); n++) {
-                    ConditionalVariable variable = new ConditionalVariable();
-                    if (conditionalVarList.get(n).getAttribute("operator") == null) {
-                        log.warn("unexpected null in operator " + conditionalVarList.get(n)
-                                + " " + conditionalVarList.get(n).getAttributes());
-                    } else {
-                        int oper = Integer.parseInt(conditionalVarList.get(n)
-                                .getAttribute("operator").getValue());
-                        if (oper == Conditional.OPERATOR_AND_NOT) {
-                            variable.setNegation(true);
-                            oper = Conditional.OPERATOR_AND;
-                        } else if (oper == Conditional.OPERATOR_NOT) {
-                            variable.setNegation(true);
-                            oper = Conditional.OPERATOR_NONE;
-                        }
-                        variable.setOpern(oper);
-                    }
-                    if (conditionalVarList.get(n).getAttribute("negated") != null) {
-                        if ("yes".equals(conditionalVarList.get(n)
-                                .getAttribute("negated").getValue())) {
-                            variable.setNegation(true);
-                        } else {
-                            variable.setNegation(false);
-                        }
-                    }
-                    variable.setType(Integer.parseInt(conditionalVarList.get(n)
-                            .getAttribute("type").getValue()));
-                    variable.setName(conditionalVarList.get(n)
-                            .getAttribute("systemName").getValue());
-                    if (conditionalVarList.get(n).getAttribute("dataString") != null) {
-                        variable.setDataString(conditionalVarList.get(n)
-                                .getAttribute("dataString").getValue());
-                    }
-                    if (conditionalVarList.get(n).getAttribute("num1") != null) {
-                        variable.setNum1(Integer.parseInt(conditionalVarList.get(n)
-                                .getAttribute("num1").getValue()));
-                    }
-                    if (conditionalVarList.get(n).getAttribute("num2") != null) {
-                        variable.setNum2(Integer.parseInt(conditionalVarList.get(n)
-                                .getAttribute("num2").getValue()));
-                    }
-                    variable.setTriggerActions(true);
-                    if (conditionalVarList.get(n).getAttribute("triggersCalc") != null) {
-                        if ("no".equals(conditionalVarList.get(n)
-                                .getAttribute("triggersCalc").getValue())) {
-                            variable.setTriggerActions(false);
-                        }
-                    }
-                    variableList.add(variable);
-                }
-                c.setStateVariables(variableList);
+            // load state variables, if there are any
+            List<Element> conditionalVarList = condElem.getChildren("conditionalStateVariable");
 
-                // load actions - there better be some
-                List<Element> conditionalActionList = condElem.getChildren("conditionalAction");
-
-                // Really OK, since a user may use such conditionals to define a reusable
-                // expression of state variables.  These conditions are then used as a 
-                // state variable in other conditionals.  (pwc)
-                //if (conditionalActionList.size() == 0) {
-                //    log.warn("No actions found for conditional "+sysName);
-                //}
-                ArrayList<ConditionalAction> actionList = new ArrayList<ConditionalAction>();
-                org.jdom2.Attribute attr = null;
-                for (int n = 0; n < conditionalActionList.size(); n++) {
-                    ConditionalAction action = new DefaultConditionalAction();
-                    attr = conditionalActionList.get(n).getAttribute("option");
-                    if (attr != null) {
-                        action.setOption(Integer.parseInt(attr.getValue()));
-                    } else {
-                        log.warn("unexpected null in option " + conditionalActionList.get(n)
-                                + " " + conditionalActionList.get(n).getAttributes());
-                    }
-                    // actionDelay is removed.  delay data is stored as a String to allow
-                    // such data be referenced by internal memory.
-                    // For backward compatibility, set delay "int" as a string
-                    attr = conditionalActionList.get(n).getAttribute("delay");
-                    if (attr != null) {
-                        action.setActionString(attr.getValue());
-                    }
-                    attr = conditionalActionList.get(n).getAttribute("type");
-                    if (attr != null) {
-                        action.setType(Integer.parseInt(attr.getValue()));
-                    } else {
-                        log.warn("unexpected null in type " + conditionalActionList.get(n)
-                                + " " + conditionalActionList.get(n).getAttributes());
-                    }
-                    attr = conditionalActionList.get(n).getAttribute("systemName");
-                    if (attr != null) {
-                        action.setDeviceName(attr.getValue());
-                    } else {
-                        log.warn("unexpected null in systemName " + conditionalActionList.get(n)
-                                + " " + conditionalActionList.get(n).getAttributes());
-                    }
-                    attr = conditionalActionList.get(n).getAttribute("data");
-                    if (attr != null) {
-                        action.setActionData(Integer.parseInt(attr.getValue()));
-                    } else {
-                        log.warn("unexpected null in action data " + conditionalActionList.get(n)
-                                + " " + conditionalActionList.get(n).getAttributes());
-                    }
-                    attr = conditionalActionList.get(n).getAttribute("string");
-                    if (attr != null) {
-                        action.setActionString(attr.getValue());
-                    } else {
-                        log.warn("unexpected null in action string " + conditionalActionList.get(n)
-                                + " " + conditionalActionList.get(n).getAttributes());
-                    }
-                    actionList.add(action);
-                }
-                c.setAction(actionList);
-
-                // 1/16/2011 - trigger for execution of the action list changed to execute each 
-                // time state is computed.  Formerly execution of the action list was done only
-                // when state changes.  All conditionals are upgraded to this new policy.
-                // However, for conditionals with actions that toggle on change of state
-                // the old policy should be used.
-                boolean triggerOnChange = false;
-                if (condElem.getAttribute("triggerOnChange") != null) {
-                    if ("yes".equals(condElem.getAttribute("triggerOnChange").getValue())) {
-                        triggerOnChange = true;
-                    }
+            // Note: Because things like (R1 or R2) and R3) return to positions in the 
+            // list of state variables, we can't just append when re-reading a conditional;
+            // we have to drop any existing ConditionalStateVariables and create a clean, new list.
+            
+            if (conditionalVarList.size() == 0) {
+                log.warn("No state variables found for conditional " + sysName);
+            }
+            ArrayList<ConditionalVariable> variableList = new ArrayList<>();
+            for (int n = 0; n < conditionalVarList.size(); n++) {
+                ConditionalVariable variable = new ConditionalVariable();
+                if (conditionalVarList.get(n).getAttribute("operator") == null) {
+                    log.warn("unexpected null in operator " + conditionalVarList.get(n)
+                            + " " + conditionalVarList.get(n).getAttributes());
                 } else {
-                    /* Don't upgrade -Let old be as is
-                     for (int k=0; k<actionList.size(); k++){
-                     ConditionalAction action = actionList.get(k);
-                     if (action.getOption()==Conditional.ACTION_OPTION_ON_CHANGE){
-                     triggerOnChange = true;
-                     break;
-                     }
-                     }
-                     */
+                    int oper = Integer.parseInt(conditionalVarList.get(n)
+                            .getAttribute("operator").getValue());
+                    if (oper == Conditional.OPERATOR_AND_NOT) {
+                        variable.setNegation(true);
+                        oper = Conditional.OPERATOR_AND;
+                    } else if (oper == Conditional.OPERATOR_NOT) {
+                        variable.setNegation(true);
+                        oper = Conditional.OPERATOR_NONE;
+                    }
+                    variable.setOpern(oper);
+                }
+                if (conditionalVarList.get(n).getAttribute("negated") != null) {
+                    if ("yes".equals(conditionalVarList.get(n)
+                            .getAttribute("negated").getValue())) {
+                        variable.setNegation(true);
+                    } else {
+                        variable.setNegation(false);
+                    }
+                }
+                variable.setType(Integer.parseInt(conditionalVarList.get(n)
+                        .getAttribute("type").getValue()));
+                variable.setName(conditionalVarList.get(n)
+                        .getAttribute("systemName").getValue());
+                if (conditionalVarList.get(n).getAttribute("dataString") != null) {
+                    variable.setDataString(conditionalVarList.get(n)
+                            .getAttribute("dataString").getValue());
+                }
+                if (conditionalVarList.get(n).getAttribute("num1") != null) {
+                    variable.setNum1(Integer.parseInt(conditionalVarList.get(n)
+                            .getAttribute("num1").getValue()));
+                }
+                if (conditionalVarList.get(n).getAttribute("num2") != null) {
+                    variable.setNum2(Integer.parseInt(conditionalVarList.get(n)
+                            .getAttribute("num2").getValue()));
+                }
+                variable.setTriggerActions(true);
+                if (conditionalVarList.get(n).getAttribute("triggersCalc") != null) {
+                    if ("no".equals(conditionalVarList.get(n)
+                            .getAttribute("triggersCalc").getValue())) {
+                        variable.setTriggerActions(false);
+                    }
+                }
+                variableList.add(variable);
+            }
+            c.setStateVariables(variableList);
+
+            // load actions - there better be some
+            List<Element> conditionalActionList = condElem.getChildren("conditionalAction");
+
+            // Really OK, since a user may use such conditionals to define a reusable
+            // expression of state variables.  These conditions are then used as a 
+            // state variable in other conditionals.  (pwc)
+            //if (conditionalActionList.size() == 0) {
+            //    log.warn("No actions found for conditional "+sysName);
+            //}
+            ArrayList<ConditionalAction> actionList = ((DefaultConditional)c).getActionList();
+            org.jdom2.Attribute attr = null;
+            for (int n = 0; n < conditionalActionList.size(); n++) {
+                ConditionalAction action = new DefaultConditionalAction();
+                attr = conditionalActionList.get(n).getAttribute("option");
+                if (attr != null) {
+                    action.setOption(Integer.parseInt(attr.getValue()));
+                } else {
+                    log.warn("unexpected null in option " + conditionalActionList.get(n)
+                            + " " + conditionalActionList.get(n).getAttributes());
+                }
+                // actionDelay is removed.  delay data is stored as a String to allow
+                // such data be referenced by internal memory.
+                // For backward compatibility, set delay "int" as a string
+                attr = conditionalActionList.get(n).getAttribute("delay");
+                if (attr != null) {
+                    action.setActionString(attr.getValue());
+                }
+                attr = conditionalActionList.get(n).getAttribute("type");
+                if (attr != null) {
+                    action.setType(Integer.parseInt(attr.getValue()));
+                } else {
+                    log.warn("unexpected null in type " + conditionalActionList.get(n)
+                            + " " + conditionalActionList.get(n).getAttributes());
+                }
+                attr = conditionalActionList.get(n).getAttribute("systemName");
+                if (attr != null) {
+                    action.setDeviceName(attr.getValue());
+                } else {
+                    log.warn("unexpected null in systemName " + conditionalActionList.get(n)
+                            + " " + conditionalActionList.get(n).getAttributes());
+                }
+                attr = conditionalActionList.get(n).getAttribute("data");
+                if (attr != null) {
+                    action.setActionData(Integer.parseInt(attr.getValue()));
+                } else {
+                    log.warn("unexpected null in action data " + conditionalActionList.get(n)
+                            + " " + conditionalActionList.get(n).getAttributes());
+                }
+                attr = conditionalActionList.get(n).getAttribute("string");
+                if (attr != null) {
+                    action.setActionString(attr.getValue());
+                } else {
+                    log.warn("unexpected null in action string " + conditionalActionList.get(n)
+                            + " " + conditionalActionList.get(n).getAttributes());
+                }
+                if (!actionList.contains(action)) actionList.add(action);
+            }
+            c.setAction(actionList);
+
+            // 1/16/2011 - trigger for execution of the action list changed to execute each 
+            // time state is computed.  Formerly execution of the action list was done only
+            // when state changes.  All conditionals are upgraded to this new policy.
+            // However, for conditionals with actions that toggle on change of state
+            // the old policy should be used.
+            boolean triggerOnChange = false;
+            if (condElem.getAttribute("triggerOnChange") != null) {
+                if ("yes".equals(condElem.getAttribute("triggerOnChange").getValue())) {
                     triggerOnChange = true;
                 }
-                c.setTriggerOnChange(triggerOnChange);
             } else {
-                log.warn("Conditional \"" + sysName + "(" + userName + ")\" already exists. This version not loaded.");
-                List<Element> conditionalVarList = condElem.getChildren("conditionalStateVariable");
-                List<Element> conditionalActionList = condElem.getChildren("conditionalAction");
-                c = tm.getBySystemName(sysName);
-                // a cursory check
-                if (c.getCopyOfStateVariables().size() != conditionalVarList.size()
-                        || c.getCopyOfActions().size() != conditionalActionList.size()) {
-                    log.error("Additional version of \"" + sysName + "\"(" + userName + ")\" is diferent from loaded version!");
-                }
+                /* Don't upgrade -Let old be as is
+                 for (int k=0; k<actionList.size(); k++){
+                 ConditionalAction action = actionList.get(k);
+                 if (action.getOption()==Conditional.ACTION_OPTION_ON_CHANGE){
+                 triggerOnChange = true;
+                 break;
+                 }
+                 }
+                 */
+                triggerOnChange = true;
             }
+            c.setTriggerOnChange(triggerOnChange);
         }
     }
 
@@ -404,5 +400,5 @@ public class DefaultConditionalManagerXml extends jmri.managers.configurexml.Abs
         return InstanceManager.conditionalManagerInstance().getXMLOrder();
     }
 
-    static Logger log = LoggerFactory.getLogger(DefaultConditionalManagerXml.class.getName());
+    private final static Logger log = LoggerFactory.getLogger(DefaultConditionalManagerXml.class.getName());
 }

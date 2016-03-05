@@ -139,6 +139,6 @@ public class Throttle extends AbstractThrottle {
     }
 
     // initialize logging
-    static Logger log = LoggerFactory.getLogger(Throttle.class.getName());
+    private final static Logger log = LoggerFactory.getLogger(Throttle.class.getName());
 
 }

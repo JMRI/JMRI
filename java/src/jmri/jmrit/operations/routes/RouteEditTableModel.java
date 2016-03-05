@@ -678,5 +678,5 @@ public class RouteEditTableModel extends javax.swing.table.AbstractTableModel im
         fireTableDataChanged();
     }
 
-    static Logger log = LoggerFactory.getLogger(RouteEditTableModel.class.getName());
+    private final static Logger log = LoggerFactory.getLogger(RouteEditTableModel.class.getName());
 }

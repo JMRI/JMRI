@@ -34,7 +34,7 @@
 and the section on what the configuration files contain 
 <a href="http://jmri.org/xml/DTD/" target="_blank">Configuration  files</a> .</p>
 <p>The easiest way to create a configuration  file is to modify an existing one, so that you can follow the format.&nbsp; The decoder definition is configured per the 
-<a href="http://jmri.sourceforge.net/xml/DTD/" target="_blank">decoder-config.dtd.</a> (most of you will not be interested in this dtd, if you are open in a text editor).</p>
+<a href="http://jmri.org/xml/DTD/" target="_blank">decoder-config.dtd.</a> (most of you will not be interested in this dtd, if you are open in a text editor).</p>
 <p>To get started, locate a decoder definition XML file that is close to the new decoder that you would like to define. .&nbsp; If you don&rsquo;t know what is &ldquo;close&rdquo;, well don&rsquo;t sweat it.&nbsp; Let&rsquo;s just move on to looking at a definition  file and you&rsquo;ll get a feel about what we&rsquo;re talking about.</p>
 <hr>
 

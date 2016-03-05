@@ -12,8 +12,8 @@
 <li><a href="../../../package/jmri/jmrit/display/PanelEditor.shtml">Panel Editor</a>
 <li><a href="../../../package/jmri/jmrit/display/LayoutEditor.shtml">Layout Editor</a>
 <li><a href="FAQ.shtml">FAQ</a>
-<li><a href="http://jmri.sf.net/community/examples/Gallery.shtml">User's Layouts</a>
-<li><a href="http://jmri.sf.net/community/examples/Modules.shtml">Modular Layout Example</a>
+<li><a href="http://jmri.org/community/examples/Gallery.shtml">User's Layouts</a>
+<li><a href="http://jmri.org/community/examples/Modules.shtml">Modular Layout Example</a>
 <li><a href="ShowPanel.shtml">Display a Panel File</a>
 <li><a href="AdvIcons.shtml">Advanced Icons</a>
 <li><a href="../../setup/index.shtml">JMRI Setup</a></li>
@@ -50,7 +50,7 @@ layout.
 		<li><dfn><a href="../../tools/fastclock/index.shtml">Fast Clocks</a></dfn>
 		<li><dfn><a href="../../tools/speedometer/index.shtml">Speedometer</a></dfn>
 		<li><dfn><a href="../../tools/Audio.shtml">Audio</a></dfn>
-		<li><dfn><a href="../../tools/IdTags.shtml">Id Tags</a></dfn>
+		<li><dfn><a href="../../tools/IdTags.shtml">ID Tags</a></dfn>
 		
 		<li><dfn><a href="../../tools/index.shtml#systemSpecificTools">System-specific...</a></dfn>
 	</ul>

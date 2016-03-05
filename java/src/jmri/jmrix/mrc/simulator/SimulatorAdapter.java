@@ -393,7 +393,7 @@ public class SimulatorAdapter extends MrcPortController implements
 //		reply.setElement(0, MRC_OKAY); 		// Mrc okay reply!
 //		return reply;
 //	}
-    static Logger log = LoggerFactory
+    private final static Logger log = LoggerFactory
             .getLogger(SimulatorAdapter.class.getName());
 
 }

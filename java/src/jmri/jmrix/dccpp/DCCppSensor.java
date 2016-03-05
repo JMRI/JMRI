@@ -63,10 +63,7 @@ public class DCCppSensor extends AbstractSensor implements DCCppListener {
         //address = Integer.parseInt(id.substring(6, id.length())); 
 	address = Integer.parseInt(id.substring(id.lastIndexOf('S')+1, id.length()));
 	log.debug("New sensor prefix {} address {}", prefix, address);
-        // calculate the base address, the nibble, and the bit to examine
-        //baseaddress = ((address - 1) / 8);
-        int temp = (address - 1) % 8;
-//        if (temp < 4) {
+        //        if (temp < 4) {
 //            // This address is in the lower nibble
 //            nibble = 0x00;
 //        } else {
@@ -196,7 +193,7 @@ public class DCCppSensor extends AbstractSensor implements DCCppListener {
         return(0);
     }
 
-    static Logger log = LoggerFactory.getLogger(DCCppSensor.class.getName());
+    private final static Logger log = LoggerFactory.getLogger(DCCppSensor.class.getName());
 
 }
 

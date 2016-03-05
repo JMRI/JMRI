@@ -606,7 +606,7 @@ public class LocoNetSlot {
         stat = val & 0x7F;
     }
 
-    static Logger log = LoggerFactory.getLogger(LocoNetSlot.class.getName());
+    private final static Logger log = LoggerFactory.getLogger(LocoNetSlot.class.getName());
 }
 
 

@@ -1,9 +1,7 @@
 // DCCppMultiMeter.java
 package jmri.jmrix.dccpp;
 
-import java.beans.PropertyChangeEvent;
 import java.beans.PropertyChangeListener;
-import java.beans.PropertyChangeSupport;
 import java.util.Timer;
 import java.util.TimerTask;
 import jmri.MultiMeter;
@@ -215,7 +213,7 @@ public class DCCppMultiMeter implements MultiMeter, DCCppListener {
         }
     }
 
-    static Logger log = LoggerFactory.getLogger(DCCppMultiMeter.class.getName());
+    private final static Logger log = LoggerFactory.getLogger(DCCppMultiMeter.class.getName());
 
 
 }

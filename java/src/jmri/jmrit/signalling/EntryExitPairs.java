@@ -921,5 +921,5 @@ public class EntryExitPairs implements jmri.Manager, jmri.InstanceManagerAutoDef
     }
 
     // initialize logging
-    static Logger log = LoggerFactory.getLogger(EntryExitPairs.class.getName());
+    private final static Logger log = LoggerFactory.getLogger(EntryExitPairs.class.getName());
 }

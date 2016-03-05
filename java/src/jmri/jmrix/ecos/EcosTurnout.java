@@ -1,7 +1,6 @@
 // EcosTurnout.java
 package jmri.jmrix.ecos;
 
-import jmri.NmraPacket;
 import jmri.Turnout;
 import jmri.implementation.AbstractTurnout;
 import org.slf4j.Logger;
@@ -397,7 +396,7 @@ public class EcosTurnout extends AbstractTurnout
         // messages are ignored
     }
 
-    static Logger log = LoggerFactory.getLogger(EcosTurnout.class.getName());
+    private final static Logger log = LoggerFactory.getLogger(EcosTurnout.class.getName());
 }
 
 /* @(#)EcosTurnout.java */

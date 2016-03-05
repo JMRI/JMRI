@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
 <title>JMRI: Panel Editor Help</title>
-<meta name="Author" content="Pete Cressman">
+<meta name="author" content="Pete Cressman">
 <meta name="keywords" content="JMRI help Panel Editor">
 
 <!-- Style -->
@@ -48,7 +48,7 @@ Bronson's clinics page</A>.</p>
 	<li>Two text fields, <b>x:</b> and <b>y:</b>, specifying where (in pixels) new components
 	will be inserted on the panel. You can generally ignore these, as once
 	the components has been inserted you can drag it around by holding the
-	meta (Apple, command; Linux & Windows, right button) key down.</li>
+	meta (Apple, command; Linux &amp; Windows, right button) key down.</li>
 	<li>A button to set the title of the Panel you are editing.  Press the 
         button and you will be prompted to enter the text.</li>
 	<li>A button to add a text label. Put the desired text in the
@@ -73,7 +73,7 @@ Bronson's clinics page</A>.</p>
         <li>Add Icon (unassociated to any JMRI device)</li> 
         </ul>
         In most cases, selecting one of these items will open a window from 
-        which icons or values can be choosen.
+        which icons or values can be chosen.
         For the items referring to a JMRI device (e.g. turnout, sensor, etc.) a
         pick list of the available devices is displayed.  From there you select
         the device and the icon to represent it in the panel.  Exceptions to 
@@ -112,7 +112,7 @@ Bronson's clinics page</A>.</p>
 	<li>All panel items can be repositioned. When checked you can move
 	items in your panel by selecting and dragging them with the meta key.
 	Linux and Windows users can hold the right click down and drag.  By default new
-	items can be repositoned even if this box isn't checked.</li>
+	items can be repositioned even if this box isn't checked.</li>
 
 	<li>Show item's coordinates in popup menu. When checked, the
 	item's popup menu will include the item's X and Y coordinates. This can
@@ -157,7 +157,7 @@ click.
 <p>It's also possible to create a panel where the "track" lines
 change color to indicate whether the track is occupied. The procedure
 for doing that is described on a <a
-	href="http://jmri.sourceforge.net/apps/PanelPro/ColorTrack.html">separate
+	href="http://jmri.org/apps/PanelPro/ColorTrack.html">separate
 page</a>.</p>
 
 <h2>Manipulating Icons</h2>
@@ -173,7 +173,7 @@ remove icons from the panel with the popup menu.</p>
 
 <h3>Rotating and Scaling</h3>
 <p>When the checkbox for showing an icon's coordinates is checked, the icon can be scaled or
-rotated an arbitrary mumber of degrees.  When this checkbox is checked, two additional items
+rotated an arbitrary number of degrees.  When this checkbox is checked, two additional items
 appear in the icon's popup menu - <b>Rotate (degrees)...</b> and <b>Scale (percentage)...</b>.
 When these item are selected, a text box will appear near the icon and ask for a number.  
 In the case of 'Rotate (degrees)', a positive or negative integer will rotate the icon that 
@@ -181,7 +181,7 @@ number of degrees.  In the case of 'Scale (percentage)', a positive number is th
 to increase or decrease the size of the icon.</p>  
 
 <p>The <b>Rotate (Orthogonal)</b> item rotates the icon 90 degrees each time it is selected. 
-Choosing an alternative rotation item resets the former rotationm to the default icon image. 
+Choosing an alternative rotation item resets the former rotation to the default icon image. 
 For example, if the icon has been scaled to 75% and set to 30 degrees and then 
 'Rotate (Orthogonal)' is selected, the icon will return to its original size and orientation.
 
@@ -190,12 +190,12 @@ For example, if the icon has been scaled to 75% and set to 30 degrees and then
 Pressing the mouse button down in an open area and dragging will draw a dotted red
 rectangle.  All the icons that lie within this "fence" are items that are selected.  Those
 icons within the "fence" that do <b>not</b> have the <b>fixed</b> or <b>Lock Position</b> 
-checkbox marked in their popup memus can be moved as a group.  Dragging any one of the 
+checkbox marked in their popup menus can be moved as a group.  Dragging any one of the 
 repositionable icons within the fence will move the entire group.  Clicking in an open
 area will remove the "fence" and ungroup the icons.</p>
 
-<p>In addition, grouped icons can be aligned horizonally and vertically.   When grouped,
-the icons have two addtional menu items in their popup memus: <b>Align Vertically</b>
+<p>In addition, grouped icons can be aligned horizontally and vertically.   When grouped,
+the icons have two additional menu items in their popup menus: <b>Align Vertically</b>
 and <b>Align Horizontally</b>.  Once again, the grouped icons that are not fixed or
 locked can be aligned with either their left edges (x coordinate) equal, or top edges 
 (y coordinate) equal.  These menu items disappear when the icons are ungrouped.</p>
@@ -204,8 +204,8 @@ locked can be aligned with either their left edges (x coordinate) equal, or top 
 as a group when any one of the group's popup menu item for lock or fix is checked.
 
 <p> When placing icons on top of one another, the upper icon may prevent moving
-the icon uderneath.  For example when labeling a turnout, you may not be able to 
-reposition the label without dragging the turnout above it.  However, if you press the Shuft key
+the icon underneath.  For example when labeling a turnout, you may not be able to 
+reposition the label without dragging the turnout above it.  However, if you press the Shift key
 before dragging the label the turnout will remain in place while you reposition the label.
 That is a "Shift-Drag" leaves the top icon in place and only moves the icons beneath it.</P>
   
@@ -228,7 +228,7 @@ of panel that is required, and the plates will be precisely located automaticall
 (or icons/USS/background/Panel-left-9.gif) This gives you the left edge of the panel. Change 
 the coordinates to x:12 y:0 and choose the next slice. It may be blank, include a switch
 plate, include a signal plate, or include both plates. Only the "x:" coordinate needs to be changed
-as you continue to add additional panel sections. The 'slices' are each 65 pixles wide, 
+as you continue to add additional panel sections. The 'slices' are each 65 pixels wide, 
 so simply add 65 to the x: value for each 
 additional slice. For example; to build up a 15 position panel from slices, use x:0 for the left side, then 
 x:12, x:77, x:142, x:207, x:272, x:337, x:402, x:467, x:532, x:597, x:662, x:727, x:792, 
@@ -245,17 +245,17 @@ appear where the old one was.</p>
 <p>
 PanelPro can communicate with more than one layout hardware system. 
 To configure JMRI&reg; to talk to multiple systems, select them
-in the Preferences panel (Edit &gt; Preferences &gt; Connections (tab at left) &gt; click on the + tab to add the system
+in the Preferences panel (Edit -&gt; Preferences &gt; Connections (tab at left) -&gt; click on the + tab to add the system
 information for your second System Connection.</p>
 <p>If you add a Turnout, Sensor or Signal Mast to a Panel using just a
 number, e.g. "23", it will be assigned to the Default System as defined on the
-Preference panel &gt; Defaults tab. To access the second system, you have to use JMRI <a
+Preferences panel -&gt; Defaults tab. To access the second system, you have to use JMRI <a
 	href="../../../../html/doc/Technical/Names.shtml">System Names</a>. For
 example, if the second attachment is to a LocoNet system, you'd refer to
 a LocoNet Turnout as LT13; a LocoNet Sensor as LS21, etc.</p>
 
 <!--#include virtual="/Footer" -->
-</div>
-</div>
-</body>
+   </div><!-- closes #mainContent-->
+  </div> <!-- closes #mBody-->
+ </body>
 </html>

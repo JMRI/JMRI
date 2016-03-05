@@ -335,5 +335,5 @@ public class MailMessage {
         }
     }
 
-    static Logger log = LoggerFactory.getLogger(MailMessage.class.getName());
+    private final static Logger log = LoggerFactory.getLogger(MailMessage.class.getName());
 }

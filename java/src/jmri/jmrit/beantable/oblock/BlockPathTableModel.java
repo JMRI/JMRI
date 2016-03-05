@@ -452,5 +452,5 @@ public class BlockPathTableModel extends AbstractTableModel implements PropertyC
         }
     }
 
-    static Logger log = LoggerFactory.getLogger(BlockPathTableModel.class.getName());
+    private final static Logger log = LoggerFactory.getLogger(BlockPathTableModel.class.getName());
 }

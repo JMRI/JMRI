@@ -523,5 +523,5 @@ public class LayoutEditorFindItems {
         return null;
     }
 
-    static Logger log = LoggerFactory.getLogger(LayoutEditorFindItems.class.getName());
+    private final static Logger log = LoggerFactory.getLogger(LayoutEditorFindItems.class.getName());
 }

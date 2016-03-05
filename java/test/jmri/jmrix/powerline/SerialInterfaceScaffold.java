@@ -65,6 +65,6 @@ class SerialInterfaceScaffold extends SerialTrafficController {
         return cmdListeners.size();
     }
 
-    static Logger log = LoggerFactory.getLogger(SerialInterfaceScaffold.class.getName());
+    private final static Logger log = LoggerFactory.getLogger(SerialInterfaceScaffold.class.getName());
 
 }

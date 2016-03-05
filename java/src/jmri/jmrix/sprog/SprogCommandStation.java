@@ -85,6 +85,9 @@ public class SprogCommandStation implements CommandStation, SprogListener, Runna
             log.error("Maximum 6-byte packets accepted: " + packet.length);
         }
         final SprogMessage m = new SprogMessage(packet);
+        if (log.isDebugEnabled()) {
+            log.debug("Sending packet " + m.toString());
+        }
         for (int i = 0; i < repeats; i++) {
             final SprogTrafficController thisTC = SprogTrafficController.instance();
 
@@ -128,6 +131,9 @@ public class SprogCommandStation implements CommandStation, SprogListener, Runna
     private SprogSlot findFree() {
         for (SprogSlot s : slots) {
             if (s.isFree()) {
+                if (log.isDebugEnabled()) {
+                    log.debug("Found free slot " + s.getSlotNumber());
+                }
                 return s;
             }
         }
@@ -282,11 +288,17 @@ public class SprogCommandStation implements CommandStation, SprogListener, Runna
         }
     }
 
-    public void opsModepacket(int address, boolean longAddr, int cv, int val) {
+    public SprogSlot opsModepacket(int address, boolean longAddr, int cv, int val) {
         SprogSlot s = findFree();
         if (s != null) {
             s.setOps(address, longAddr, cv, val);
+            if (log.isDebugEnabled()) {
+                log.debug("opsModePacket() Notify ops mode packet for address " + address);
+            }
             notifySlotListeners(s);
+            return (s);
+        } else {
+             return (null);
         }
     }
 
@@ -317,7 +329,7 @@ public class SprogCommandStation implements CommandStation, SprogListener, Runna
      * @param s SprogSlot to eStop
      */
     private void eStopSlot(SprogSlot s) {
-        log.debug("Estop slot: " + s.getSlotNumber() + " for address: " + s.locoAddr());
+        log.debug("Estop slot: " + s.getSlotNumber() + " for address: " + s.getAddr());
         s.eStop();
         notifySlotListeners(s);
     }
@@ -353,8 +365,8 @@ public class SprogCommandStation implements CommandStation, SprogListener, Runna
      */
     private synchronized void notifySlotListeners(SprogSlot s) {
         if (log.isDebugEnabled()) {
-            log.debug("notify " + slotListeners.size()
-                    + " SlotListeners about slot for address"
+            log.debug("notifySlotListeners() notify " + slotListeners.size()
+                    + " SlotListeners about slot for address "
                     + s.getAddr());
         }
 
@@ -631,7 +643,7 @@ public class SprogCommandStation implements CommandStation, SprogListener, Runna
     }
 
     // initialize logging
-    static Logger log = LoggerFactory.getLogger(SprogCommandStation.class.getName());
+    private final static Logger log = LoggerFactory.getLogger(SprogCommandStation.class.getName());
 }
 
 

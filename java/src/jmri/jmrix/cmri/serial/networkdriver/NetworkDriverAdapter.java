@@ -3,11 +3,8 @@ package jmri.jmrix.cmri.serial.networkdriver;
 
 import jmri.jmrix.cmri.CMRISystemConnectionMemo;
 import jmri.jmrix.cmri.serial.SerialNetworkPortController;
-import jmri.jmrix.cmri.serial.SerialTrafficController;
 import jmri.jmrix.cmri.serial.SerialSensorManager;
-
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
+import jmri.jmrix.cmri.serial.SerialTrafficController;
 
 /**
  * Implements SerialPortAdapter for a network connection.
@@ -40,8 +37,5 @@ public class NetworkDriverAdapter extends SerialNetworkPortController {
         SerialTrafficController.instance().setSensorManager(s);
         jmri.jmrix.cmri.serial.ActiveFlag.setActive();
     }
-
-
-    static Logger log = LoggerFactory.getLogger(NetworkDriverAdapter.class.getName());
 
 }

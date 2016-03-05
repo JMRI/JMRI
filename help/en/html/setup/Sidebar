@@ -10,7 +10,7 @@
 		<dt><h3><a href="index.shtml">Setup</a></h3></dt>
 		<dd>
 			<ul>
-			<li><a href="../../package/apps/TabbedPreferences.shtml">Preference Pane</a></li>
+			<li><a href="../../package/apps/TabbedPreferences.shtml">Preferences Pane</a></li>
 			<li><a href="../setup/profiles.shtml">Configuration Profiles</a></li>
 			<li><a href="../setup/Errors.shtml">Error Codes</a></li>
 			<li><a href="../../package/apps/InstallTest/InstallTest.shtml">InstallTest</a></li>
@@ -20,13 +20,13 @@
 		<dt><h3 style="padding-left: 1em;">Installation</h3></dt>
 		<dd> 
 		    <ul>
-        <li><a href="http://jmri.sourceforge.net/install/WindowsNew.shtml">Windows</a>
-        <li><a href="http://jmri.sourceforge.net/install/MacOSX.shtml">Mac OS X</a>
-        <li><a href="http://jmri.sourceforge.net/install/Linux.shtml">Linux</a>
+        <li><a href="http://jmri.org/install/WindowsNew.shtml">Windows</a>
+        <li><a href="http://jmri.org/install/MacOSX.shtml">Mac OS X</a>
+        <li><a href="http://jmri.org/install/Linux.shtml">Linux</a>
 	        <ul>
-	        <li><a href="http://jmri.sourceforge.net/install/Raspbian.shtml">RasPi</a>
+	        <li><a href="http://jmri.org/install/Raspbian.shtml">RasPi</a>
 	        </ul>
-        <li><a href="http://jmri.sourceforge.net/install/Debug.shtml">Debugging an installation</a>
+        <li><a href="http://jmri.org/install/Debug.shtml">Debugging an installation</a>
 		    </ul>
 		</dd>
 

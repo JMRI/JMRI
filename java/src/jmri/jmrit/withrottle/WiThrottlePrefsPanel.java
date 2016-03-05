@@ -4,7 +4,13 @@ package jmri.jmrit.withrottle;
  * @author Brett Hoffman Copyright (C) 2010
  * @version $Revision$
  */
+import apps.PerformActionModel;
+import apps.StartupActionsManager;
+import java.awt.event.ItemEvent;
+import java.awt.event.ItemListener;
+import java.beans.PropertyChangeEvent;
 import java.io.File;
+import java.util.Arrays;
 import java.util.ResourceBundle;
 import javax.swing.BorderFactory;
 import javax.swing.BoxLayout;
@@ -36,6 +42,9 @@ public class WiThrottlePrefsPanel extends JPanel implements PreferencesPanel {
     JCheckBox turnoutCB;
     JCheckBox routeCB;
     JCheckBox consistCB;
+    JCheckBox startupCB;
+    ItemListener startupItemListener;
+    int startupActionPosition = -1;
     JRadioButton wifiRB;
     JRadioButton dccRB;
 
@@ -75,6 +84,9 @@ public class WiThrottlePrefsPanel extends JPanel implements PreferencesPanel {
         turnoutCB.setSelected(localPrefs.isAllowTurnout());
         routeCB.setSelected(localPrefs.isAllowRoute());
         consistCB.setSelected(localPrefs.isAllowConsist());
+        InstanceManager.getDefault(StartupActionsManager.class).addPropertyChangeListener((PropertyChangeEvent evt) -> {
+            startupCB.setSelected(isStartUpAction());
+        }); 
         wifiRB.setSelected(localPrefs.isUseWiFiConsist());
         dccRB.setSelected(!localPrefs.isUseWiFiConsist());
     }
@@ -171,10 +183,33 @@ public class WiThrottlePrefsPanel extends JPanel implements PreferencesPanel {
                 BorderFactory.createEmptyBorder(5, 5, 5, 5)));
         port = new JSpinner(new SpinnerNumberModel(localPrefs.getPort(), 1, 65535, 1));
         port.setToolTipText(Bundle.getMessage("PortToolTip"));
+        port.setEditor(new JSpinner.NumberEditor(port, "#"));
         JLabel label = new JLabel(Bundle.getMessage("PortLabel"));
         label.setToolTipText(port.getToolTipText());
         SPPanel.add(port);
         SPPanel.add(label);
+        startupCB = new JCheckBox(Bundle.getMessage("LabelStartup"), isStartUpAction());
+        startupItemListener = (ItemEvent e) -> {
+            this.startupCB.removeItemListener(this.startupItemListener);
+            StartupActionsManager manager = InstanceManager.getDefault(StartupActionsManager.class);
+            if (this.startupCB.isSelected()) {
+                PerformActionModel model = new PerformActionModel();
+                model.setClassName(WiThrottleCreationAction.class.getName());
+                if (this.startupActionPosition == -1 || this.startupActionPosition >= manager.getActions().length) {
+                    manager.addAction(model);
+                } else {
+                    manager.setActions(this.startupActionPosition, model);
+                }
+            } else {
+                manager.getActions(PerformActionModel.class).stream().filter((model) -> (model.getClassName().equals(WiThrottleCreationAction.class.getName()))).forEach((model) -> {
+                    this.startupActionPosition = Arrays.asList(manager.getActions()).indexOf(model);
+                    manager.removeAction(model);
+                });
+            }
+            this.startupCB.addItemListener(this.startupItemListener);
+        };
+        this.startupCB.addItemListener(this.startupItemListener);
+        SPPanel.add(startupCB);
         return SPPanel;
     }
 
@@ -272,5 +307,16 @@ public class WiThrottlePrefsPanel extends JPanel implements PreferencesPanel {
     @Override
     public boolean isPreferencesValid() {
         return true; // no validity checking performed
+    }
+
+    private boolean isStartUpAction() {
+        return InstanceManager.getDefault(StartupActionsManager.class).getActions(PerformActionModel.class).stream()
+                .anyMatch((model) -> (model.getClassName().equals(WiThrottleCreationAction.class.getName())));
+//        for (PerformActionModel model : InstanceManager.getDefault(StartupActionsManager.class).getActions(PerformActionModel.class)) {
+//            if (model.getClassName().equals(WiThrottleCreationAction.class.getName())) {
+//                return true;
+//            }
+//        }
+//        return false;
     }
 }

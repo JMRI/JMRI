@@ -147,8 +147,8 @@ look at the navigation bar to the left for instructions on how to
 build JMRI using
 <a href="NetBeans.shtml">NetBeans</a>,
 <a href="Eclipse.shtml">Eclipse</a>,
-<a href="XCode.shtml">XCode</a>, or
-<a href="JBuilder.shtml">JBuilder</a>.
+or
+<a href="IntelliJ.shtml">IntelliJ</a>.
 <p>
 NetBeans provides a very convenient system for building, running,
 and if need be debugging the program.  If you're not
@@ -201,7 +201,7 @@ unlimited-duration license to
 redistribute it consistent with the 
 <a href="#use">JMRI licensing</a>. 
 (We regret this paperwork, but
-<a href="http://jmri.sourceforge.net/k/copycomparison.html">Matt Katzer's misuse of copyright</a>
+<a href="http://jmri.org/k/copycomparison.html">Matt Katzer's misuse of copyright</a>
 makes it necessary).
 If other people also
 helped with the contribution, please let us know so

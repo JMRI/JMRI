@@ -19,7 +19,7 @@ build: off
 # AppVeyor's YAML processing
 test_script:
 - ps: >-
-    ant checkPropertiesFiles appveyor-ci-test
+    ant checkPropertiesFiles ci-test-appveyor
 
 on_finish:
 - ps: >-

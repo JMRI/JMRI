@@ -143,6 +143,7 @@ public class ProfileManager extends Bean {
             return;
         }
         for (Profile p : profiles) {
+            log.debug("Looking for profile {}, found {}", id, p.getId());
             if (p.getId().equals(id)) {
                 this.setActiveProfile(p);
                 return;

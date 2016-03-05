@@ -81,7 +81,7 @@ public class SchedulesTableFrame extends OperationsFrame {
 
         // build menu
         JMenuBar menuBar = new JMenuBar();
-        JMenu toolMenu = new JMenu("Tools");
+        JMenu toolMenu = new JMenu(Bundle.getMessage("Tools"));
         toolMenu.add(new ScheduleCopyAction());
         toolMenu.add(new SchedulesByLoadAction(Bundle.getMessage("MenuItemShowSchedulesByLoad")));
         toolMenu.add(new SchedulesResetHitsAction(Bundle.getMessage("MenuItemResetHits")));
@@ -127,5 +127,5 @@ public class SchedulesTableFrame extends OperationsFrame {
         super.dispose();
     }
 
-    static Logger log = LoggerFactory.getLogger(SchedulesTableFrame.class.getName());
+    private final static Logger log = LoggerFactory.getLogger(SchedulesTableFrame.class.getName());
 }

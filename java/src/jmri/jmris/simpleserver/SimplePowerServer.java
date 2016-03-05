@@ -7,12 +7,10 @@ import java.io.IOException;
 import jmri.PowerManager;
 import jmri.jmris.AbstractPowerServer;
 import jmri.jmris.JmriConnection;
-import jmri.jmris.simpleserver.parser.SimpleVisitor;
-import jmri.jmris.simpleserver.parser.SimpleNode;
 import jmri.jmris.simpleserver.parser.JmriServerParser;
 import jmri.jmris.simpleserver.parser.ParseException;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
+import jmri.jmris.simpleserver.parser.SimpleNode;
+import jmri.jmris.simpleserver.parser.SimpleVisitor;
 
 /**
  * Simple Server interface between the JMRI power manager and a network
@@ -25,8 +23,6 @@ public class SimplePowerServer extends AbstractPowerServer {
 
     private DataOutputStream output;
     private JmriConnection connection;
-    static Logger log = LoggerFactory.getLogger(SimplePowerServer.class.getName());
-
     public SimplePowerServer(DataInputStream inStream, DataOutputStream outStream) {
         output = outStream;
         mgrOK();

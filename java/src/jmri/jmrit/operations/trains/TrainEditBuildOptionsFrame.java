@@ -400,12 +400,14 @@ public class TrainEditBuildOptionsFrame extends OperationsFrame implements java.
             enableButtons(true);
             // does this train depart staging?
             if (_train.getTrainDepartsRouteLocation() != null
+                    && _train.getTrainDepartsRouteLocation().getLocation() != null
                     && _train.getTrainDepartsRouteLocation().getLocation().isStaging()) {
                 buildConsistCheckBox.setEnabled(false);	// can't build a consist out of staging
             }
             // does train depart and return to same staging location?
             if (_train.getTrainDepartsRouteLocation() != null
                     && _train.getTrainTerminatesRouteLocation() != null
+                    && _train.getTrainTerminatesRouteLocation().getLocation() != null
                     && _train.getTrainTerminatesRouteLocation().getLocation().isStaging()
                     && _train.getTrainDepartsRouteLocation().getName().equals(
                             _train.getTrainTerminatesRouteLocation().getName())) {
@@ -992,5 +994,5 @@ public class TrainEditBuildOptionsFrame extends OperationsFrame implements java.
         }
     }
 
-    static Logger log = LoggerFactory.getLogger(TrainEditBuildOptionsFrame.class.getName());
+    private final static Logger log = LoggerFactory.getLogger(TrainEditBuildOptionsFrame.class.getName());
 }

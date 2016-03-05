@@ -61,5 +61,5 @@ public class VirtualSignalHeadXml extends jmri.managers.configurexml.AbstractNam
         log.error("Invalid method called");
     }
 
-    static Logger log = LoggerFactory.getLogger(VirtualSignalHeadXml.class.getName());
+    private final static Logger log = LoggerFactory.getLogger(VirtualSignalHeadXml.class.getName());
 }

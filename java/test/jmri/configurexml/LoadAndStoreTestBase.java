@@ -18,7 +18,9 @@ import org.slf4j.LoggerFactory;
 /**
  * Base for testing load-and-store of configuration files.
  * <p>
- * Will test each file in a "load" directory by loading it, then storing it,
+ * Including "LoadAndStoreTestBase.makeSuite("java/test/jmri/jmrit/display/configurexml/")"
+ * in a subclass's test suite
+ * will test each file in a "load" directory by loading it, then storing it,
  * then comparing (with certain lines skipped) against either a file by the same
  * name in the "loadref" directory, or against the original file itself.
  *
@@ -51,30 +53,16 @@ public class LoadAndStoreTestBase extends TestCase {
         }
     }
 
-    static public void loadStoreFile(File inFile) throws Exception {
+    static void loadInit() {
         JUnitUtil.resetInstanceManager();
         JUnitUtil.initConfigureManager();
         JUnitUtil.initInternalTurnoutManager();
         JUnitUtil.initInternalLightManager();
         JUnitUtil.initInternalSensorManager();
         JUnitUtil.initMemoryManager();
-
-        log.debug("Start check file " + inFile.getCanonicalPath());
-
-        // load file
-        InstanceManager.configureManagerInstance().load(inFile);
-
-        InstanceManager.logixManagerInstance().activateAllLogixs();
-        InstanceManager.getDefault(jmri.jmrit.display.layoutEditor.LayoutBlockManager.class).initializeLayoutBlockPaths();
-        new jmri.jmrit.catalog.configurexml.DefaultCatalogTreeManagerXml().readCatalogTrees();
-
-        String name = inFile.getName();
-
-        // store file
-        FileUtil.createDirectory(FileUtil.getUserFilesPath() + "temp");
-        File outFile = new File(FileUtil.getUserFilesPath() + "temp/" + name);
-        InstanceManager.configureManagerInstance().storeConfig(outFile);
-
+    }
+    
+    static void checkFile(File inFile, File outFile) throws Exception {
         // find comparison files
         File compFile = new File(inFile.getCanonicalFile().getParentFile().getParent() + "/loadref/" + inFile.getName());
         if (!compFile.exists()) {
@@ -114,6 +102,62 @@ public class LoadAndStoreTestBase extends TestCase {
         inFileStream.close();
         outFileStream.close();
     }
+    
+    static void loadFile(File inFile) throws Exception  {
+        // load file
+        InstanceManager.configureManagerInstance().load(inFile);
+
+        InstanceManager.logixManagerInstance().activateAllLogixs();
+        InstanceManager.getDefault(jmri.jmrit.display.layoutEditor.LayoutBlockManager.class).initializeLayoutBlockPaths();
+        new jmri.jmrit.catalog.configurexml.DefaultCatalogTreeManagerXml().readCatalogTrees();
+    }
+    
+    static File storeFile(File inFile) throws Exception  {
+        String name = inFile.getName();
+        FileUtil.createDirectory(FileUtil.getUserFilesPath() + "temp");
+        File outFile = new File(FileUtil.getUserFilesPath() + "temp/" + name);
+        InstanceManager.configureManagerInstance().storeConfig(outFile);
+        return outFile;
+    }
+    
+    static public void loadStoreFileCheck(File inFile) throws Exception {
+
+        log.debug("Start check file " + inFile.getCanonicalPath());
+
+        loadInit();
+        
+        loadFile(inFile);
+
+        // store file
+        String name = inFile.getName();
+        FileUtil.createDirectory(FileUtil.getUserFilesPath() + "temp");
+        File outFile = new File(FileUtil.getUserFilesPath() + "temp/" + name);
+        InstanceManager.configureManagerInstance().storeConfig(outFile);
+
+        checkFile(inFile, outFile);
+    }
+
+    /**
+     * Test by loading twice
+     */
+    static public void loadLoadStoreFileCheck(File inFile) throws Exception {
+
+        log.debug("Start check file " + inFile.getCanonicalPath());
+
+        loadInit();
+        
+        loadFile(inFile);
+        loadFile(inFile);
+
+        String name = inFile.getName();
+
+        // store file
+        FileUtil.createDirectory(FileUtil.getUserFilesPath() + "temp");
+        File outFile = new File(FileUtil.getUserFilesPath() + "temp/" + name);
+        InstanceManager.configureManagerInstance().storeConfig(outFile);
+
+        checkFile(inFile, outFile);
+    }
 
     /**
      * Internal TestCase class to allow separate tests for every file
@@ -128,7 +172,7 @@ public class LoadAndStoreTestBase extends TestCase {
         }
 
         public void runTest() throws Exception {
-            loadStoreFile(file);
+            loadLoadStoreFileCheck(file);
         }
     }
 
@@ -151,5 +195,5 @@ public class LoadAndStoreTestBase extends TestCase {
         super.tearDown();
         apps.tests.Log4JFixture.tearDown();
     }
-    static Logger log = LoggerFactory.getLogger(LoadAndStoreTest.class.getName());
+    private final static Logger log = LoggerFactory.getLogger(LoadAndStoreTest.class.getName());
 }

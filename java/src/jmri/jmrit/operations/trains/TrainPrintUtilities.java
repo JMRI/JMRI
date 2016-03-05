@@ -383,5 +383,5 @@ public class TrainPrintUtilities {
         return ""; // no default printer specified
     }
 
-    static Logger log = LoggerFactory.getLogger(TrainPrintUtilities.class.getName());
+    private final static Logger log = LoggerFactory.getLogger(TrainPrintUtilities.class.getName());
 }

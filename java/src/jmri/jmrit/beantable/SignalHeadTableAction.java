@@ -2483,6 +2483,6 @@ public class SignalHeadTableAction extends AbstractTableAction {
         }
     }
 
-    static final Logger log = LoggerFactory.getLogger(SignalHeadTableAction.class.getName());
+    private final static Logger log = LoggerFactory.getLogger(SignalHeadTableAction.class.getName());
 }
 /* @(#)SignalHeadTableAction.java */

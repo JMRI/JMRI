@@ -15,8 +15,6 @@ import javax.swing.JTextField;
 import javax.swing.border.Border;
 import jmri.swing.JTitledSeparator;
 import jmri.swing.PreferencesPanel;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 
 public class RailroadNamePreferencesPanel extends JPanel implements PreferencesPanel {
 
@@ -24,7 +22,6 @@ public class RailroadNamePreferencesPanel extends JPanel implements PreferencesP
      *
      */
     private static final long serialVersionUID = -2483121076473347952L;
-    static Logger log = LoggerFactory.getLogger(RailroadNamePreferencesPanel.class);
     Border lineBorder;
     JTextField railroadName;
     JButton saveB;

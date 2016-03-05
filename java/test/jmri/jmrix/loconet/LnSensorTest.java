@@ -5,8 +5,6 @@ import junit.framework.Assert;
 import junit.framework.Test;
 import junit.framework.TestCase;
 import junit.framework.TestSuite;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 
 /**
  * Tests for the jmri.jmrix.loconet.LnSensor class.
@@ -94,8 +92,6 @@ public class LnSensorTest extends TestCase {
         TestSuite suite = new TestSuite(LnSensorTest.class);
         return suite;
     }
-
-    static Logger log = LoggerFactory.getLogger(LnSensorTest.class.getName());
 
     // The minimal setup for log4J
     protected void setUp() {

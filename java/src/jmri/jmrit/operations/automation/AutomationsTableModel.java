@@ -119,7 +119,7 @@ public class AutomationsTableModel extends javax.swing.table.AbstractTableModel 
         table.getColumnModel().getColumn(ACTION_COLUMN).setPreferredWidth(250);
 //        table.getColumnModel().getColumn(MESSAGE_COLUMN).setPreferredWidth(250);
         table.getColumnModel().getColumn(STATUS_COLUMN).setPreferredWidth(90);
-        table.getColumnModel().getColumn(RUN_COLUMN).setPreferredWidth(70);
+        table.getColumnModel().getColumn(RUN_COLUMN).setPreferredWidth(90);
         table.getColumnModel().getColumn(EDIT_COLUMN).setPreferredWidth(70);
         table.getColumnModel().getColumn(DELETE_COLUMN).setPreferredWidth(90);
     }
@@ -217,8 +217,10 @@ public class AutomationsTableModel extends javax.swing.table.AbstractTableModel 
             case RUN_COLUMN:
                 if (automation.isActionRunning())
                     return Bundle.getMessage("Stop");
-                else
+                else if (automation.isReadyToRun())
                     return Bundle.getMessage("Run");
+                else
+                    return Bundle.getMessage("Resume");
             case EDIT_COLUMN:
                 return Bundle.getMessage("Edit");
             case DELETE_COLUMN:
@@ -251,7 +253,7 @@ public class AutomationsTableModel extends javax.swing.table.AbstractTableModel 
                 if (automation.isActionRunning())
                     automation.stop();
                 else
-                    automation.run();
+                    automation.resume();
             }
         });
     }
@@ -342,5 +344,5 @@ public class AutomationsTableModel extends javax.swing.table.AbstractTableModel 
         }
     }
 
-    static Logger log = LoggerFactory.getLogger(AutomationsTableModel.class.getName());
+    private final static Logger log = LoggerFactory.getLogger(AutomationsTableModel.class.getName());
 }

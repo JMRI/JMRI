@@ -105,5 +105,5 @@ public class StoreXmlConfigAction extends LoadStoreBaseAction {
     }
 
     // initialize logging
-    static Logger log = LoggerFactory.getLogger(StoreXmlConfigAction.class.getName());
+    private final static Logger log = LoggerFactory.getLogger(StoreXmlConfigAction.class.getName());
 }

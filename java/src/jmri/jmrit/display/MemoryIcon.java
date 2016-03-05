@@ -455,7 +455,7 @@ public class MemoryIcon extends PositionableLabel implements java.beans.Property
             setSize(maxWidth(), maxHeight());
         } else {
             super.updateSize();
-            if (_icon) {
+            if (_icon && _namedIcon != null) {
                 _namedIcon.reduceTo(maxWidthTrue(), maxHeightTrue(), 0.2);
             }
         }
@@ -646,5 +646,5 @@ public class MemoryIcon extends PositionableLabel implements java.beans.Property
 
     }
 
-    static Logger log = LoggerFactory.getLogger(MemoryIcon.class.getName());
+    private final static Logger log = LoggerFactory.getLogger(MemoryIcon.class.getName());
 }

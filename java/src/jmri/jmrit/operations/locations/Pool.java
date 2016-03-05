@@ -19,7 +19,7 @@ public class Pool extends Bean {
     public static final String LISTCHANGE_CHANGED_PROPERTY = "poolListChange"; // NOI18N
     public static final String DISPOSE = "poolDispose"; // NOI18N
 
-    static Logger log = LoggerFactory.getLogger(Pool.class);
+    private final static Logger log = LoggerFactory.getLogger(Pool.class);
 
     // stores tracks for this pool
     protected List<Track> _tracks = new ArrayList<Track>();

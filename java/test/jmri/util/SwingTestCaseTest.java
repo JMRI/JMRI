@@ -6,7 +6,6 @@ import java.awt.Point;
 
 import javax.swing.JCheckBox;
 import javax.swing.JFrame;
-import javax.swing.JPanel;
 import javax.swing.JLabel;
 import javax.swing.ImageIcon;
 import javax.swing.SwingUtilities;

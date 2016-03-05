@@ -11,18 +11,12 @@ import java.util.HashMap;
 import java.util.Iterator;
 import java.util.Map.Entry;
 import jmri.jmrit.catalog.NamedIcon;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 
 public class PositionableIcon extends PositionableLabel {
-
-    /**
-     *
-     */
     private static final long serialVersionUID = 5192041937901708011L;
     protected HashMap<String, NamedIcon> _iconMap;
     protected String _iconFamily;
-    protected double _scale = 1.0;			// getScale, come from net result found in one of the icons
+    protected double _scale = 1.0;          // getScale, come from net result found in one of the icons
     protected int _rotate = 0;
 
     public PositionableIcon(Editor editor) {
@@ -135,17 +129,14 @@ public class PositionableIcon extends PositionableLabel {
     public void rotate(int deg) {
         _rotate = deg % 360;
         setDegrees(deg);
-        if (_text /*&& !_icon*/) {
-            super.rotate(deg);
+        if (_iconMap != null) {
+            Iterator<Entry<String, NamedIcon>> it = _iconMap.entrySet().iterator();
+            while (it.hasNext()) {
+                Entry<String, NamedIcon> entry = it.next();
+                entry.getValue().rotate(deg, this);                    
+            }            
         }
-        if (_iconMap == null) {
-            return;
-        }
-        Iterator<Entry<String, NamedIcon>> it = _iconMap.entrySet().iterator();
-        while (it.hasNext()) {
-            Entry<String, NamedIcon> entry = it.next();
-            entry.getValue().rotate(deg, this);
-        }
+        super.rotate(deg);
         updateSize();
     }
 
@@ -161,6 +152,4 @@ public class PositionableIcon extends PositionableLabel {
         }
         return clone;
     }
-
-    static Logger log = LoggerFactory.getLogger(PositionableIcon.class.getName());
 }

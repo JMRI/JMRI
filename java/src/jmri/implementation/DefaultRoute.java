@@ -610,7 +610,8 @@ public class DefaultRoute extends AbstractNamedBean
             return false;
         }
         if (isControlSensorIncluded(sensor)) {
-            log.warn("Not adding duplicate control sensor " + sensorName + 
+            // this is a normal condition, but log in case
+            log.debug("Not adding duplicate control sensor " + sensorName + 
                     " to route " + getSystemName());
         } else {
             _controlSensorList.add(sensor);
@@ -1240,7 +1241,7 @@ public class DefaultRoute extends AbstractNamedBean
         }
     }
 
-    static final Logger log = LoggerFactory.getLogger(DefaultRoute.class.getName());
+    private final static Logger log = LoggerFactory.getLogger(DefaultRoute.class.getName());
 
     /**
      * Class providing a thread to set route turnouts
@@ -1329,7 +1330,7 @@ public class DefaultRoute extends AbstractNamedBean
 
         private DefaultRoute r;
 
-        static final Logger log = LoggerFactory.getLogger(SetRouteThread.class.getName());
+    private final static Logger log = LoggerFactory.getLogger(SetRouteThread.class.getName());
     }
 }
 

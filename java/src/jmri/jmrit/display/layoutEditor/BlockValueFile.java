@@ -168,6 +168,6 @@ public class BlockValueFile extends XmlFile {
     }
 
     // initialize logging
-    static Logger log = LoggerFactory.getLogger(BlockValueFile.class.getName());
+    private final static Logger log = LoggerFactory.getLogger(BlockValueFile.class.getName());
 
 }

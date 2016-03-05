@@ -9,8 +9,6 @@ import javax.swing.JTable;
 import javax.swing.table.TableColumn;
 import javax.swing.table.TableColumnModel;
 import javax.swing.table.TableModel;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 
 /**
  * Pane for showing the tie table
@@ -56,9 +54,6 @@ public class TieTablePane extends JPanel {
         add(scrollPane);
 
     }
-
-    // for Print button support, see jmri.jmrix.cmri.serial.assignment.ListFrame
-    static Logger log = LoggerFactory.getLogger(ProducerTablePane.class.getName());
 
 }
 

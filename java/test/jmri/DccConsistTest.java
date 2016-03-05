@@ -6,8 +6,6 @@ import junit.framework.Assert;
 import junit.framework.Test;
 import junit.framework.TestCase;
 import junit.framework.TestSuite;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 
 /**
  * Test simple functioning of DccConsist
@@ -46,7 +44,5 @@ public class DccConsistTest extends TestCase {
         TestSuite suite = new TestSuite(DccConsistTest.class);
         return suite;
     }
-
-    static Logger log = LoggerFactory.getLogger(DccConsistTest.class.getName());
 
 }

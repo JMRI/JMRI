@@ -2,7 +2,7 @@ package jmri.jmrit.operations.automation.actions;
 
 import jmri.jmrit.operations.automation.Automation;
 
-public class StopAutomationAction extends Action {
+public class StopAutomationAction extends RunAutomationAction {
 
     private static final int _code = ActionCodes.STOP_AUTOMATION;
 
@@ -27,11 +27,4 @@ public class StopAutomationAction extends Action {
             finishAction(automation != null);
         }
     }
-
-    @Override
-    public void cancelAction() {
-        // no cancel for this action
-
-    }
-
 }

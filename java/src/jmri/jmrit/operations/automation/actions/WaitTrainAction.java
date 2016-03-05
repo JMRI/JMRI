@@ -21,7 +21,7 @@ public class WaitTrainAction extends Action implements PropertyChangeListener {
     public String getName() {
         return Bundle.getMessage("WaitForTrain");
     }
-    
+
     @Override
     public boolean isConcurrentAction() {
         return true;
@@ -31,7 +31,7 @@ public class WaitTrainAction extends Action implements PropertyChangeListener {
     public void doAction() {
         if (getAutomationItem() != null) {
             Train train = getAutomationItem().getTrain();
-            if (train != null) {
+            if (train != null && train.getRoute() != null) {
                 setRunning(true);
                 train.addPropertyChangeListener(this);
             } else {
@@ -40,16 +40,30 @@ public class WaitTrainAction extends Action implements PropertyChangeListener {
         }
     }
 
-    private void trainUpdate() {
+    /**
+     * Wait for train to build and no location, or train to arrive at location,
+     * or train build to be deselected.
+     * 
+     * @param evt
+     */
+    private void trainUpdate(PropertyChangeEvent evt) {
         if (getAutomationItem() != null) {
-            Train train = getAutomationItem().getTrain();
-            RouteLocation rl = getAutomationItem().getRouteLocation();
-            if (rl != null && rl != train.getCurrentLocation()) {
-                return; // haven't reached this location continue waiting
+            if (evt.getPropertyName().equals(Train.TRAIN_MOVE_COMPLETE_CHANGED_PROPERTY) ||
+                    (evt.getPropertyName().equals(Train.BUILT_CHANGED_PROPERTY)
+                    && (boolean) evt.getNewValue() == true)) {
+                Train train = getAutomationItem().getTrain();
+                RouteLocation rl = getAutomationItem().getRouteLocation();
+                if (rl != null && rl != train.getCurrentLocation()) {
+                    return; // haven't reached this location continue waiting
+                }
+                train.removePropertyChangeListener(this);
+                finishAction(true);
+            } else if (evt.getPropertyName().equals(Train.BUILD_CHANGED_PROPERTY)
+                    && (boolean) evt.getNewValue() == false) {
+                Train train = getAutomationItem().getTrain();
+                train.removePropertyChangeListener(this);
+                finishAction(true);
             }
-            // now show message if there's one
-            train.removePropertyChangeListener(this);
-            finishAction(true);
         }
     }
 
@@ -69,12 +83,9 @@ public class WaitTrainAction extends Action implements PropertyChangeListener {
         if (Control.showProperty)
             log.debug("Property change AutomationItem {}: ({}) old: ({}) new: ({})", getAutomationItem().getId(),
                     evt.getPropertyName(), evt.getOldValue(), evt.getNewValue());
-        if (evt.getPropertyName().equals(Train.TRAIN_MOVE_COMPLETE_CHANGED_PROPERTY) ||
-                evt.getPropertyName().equals(Train.BUILT_CHANGED_PROPERTY)) {
-            trainUpdate();
-        }
+        trainUpdate(evt);
     }
 
-    static Logger log = LoggerFactory.getLogger(WaitTrainAction.class.getName());
+    private final static Logger log = LoggerFactory.getLogger(WaitTrainAction.class.getName());
 
 }

@@ -80,5 +80,5 @@ public class WiThrottlesListModel extends AbstractTableModel {
         this.fireTableDataChanged();
     }
 
-    static Logger log = LoggerFactory.getLogger(WiThrottlesListModel.class.getName());
+    private final static Logger log = LoggerFactory.getLogger(WiThrottlesListModel.class.getName());
 }

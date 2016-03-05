@@ -261,5 +261,5 @@ public class MemoryInputIcon extends PositionableJPanel implements java.beans.Pr
         namedMemory = null;
     }
 
-    static Logger log = LoggerFactory.getLogger(MemoryInputIcon.class.getName());
+    private final static Logger log = LoggerFactory.getLogger(MemoryInputIcon.class.getName());
 }

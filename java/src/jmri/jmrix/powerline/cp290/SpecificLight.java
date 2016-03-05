@@ -105,7 +105,7 @@ public class SpecificLight extends jmri.jmrix.powerline.SerialX10Light {
         }
     }
 
-    static Logger log = LoggerFactory.getLogger(SpecificLight.class.getName());
+    private final static Logger log = LoggerFactory.getLogger(SpecificLight.class.getName());
 }
 
 /* @(#)SpecificLight.java */

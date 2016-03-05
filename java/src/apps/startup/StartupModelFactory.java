@@ -56,4 +56,10 @@ public interface StartupModelFactory {
      * @param parent the parent component for the editing UI
      */
     public void editModel(StartupModel model, Component parent);
+
+    /**
+     * Provides a mechanism for the {@link apps.StartupActionsManager} to run
+     * any required post-construction initialization.
+     */
+    public void initialize();
 }

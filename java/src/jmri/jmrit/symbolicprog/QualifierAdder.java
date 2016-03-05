@@ -90,6 +90,6 @@ public abstract class QualifierAdder {
         lq.add(qual);
     }
 
-    static Logger log = LoggerFactory.getLogger(QualifierAdder.class.getName());
+    private final static Logger log = LoggerFactory.getLogger(QualifierAdder.class.getName());
 
 }

@@ -16,6 +16,8 @@ import jmri.CommandStation;
 import jmri.InstanceManager;
 import jmri.NmraPacket;
 import jmri.SignalMast;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 /**
  * This class implements a SignalMast that use <B>Extended Accessory Decoder
@@ -49,6 +51,7 @@ public class DccSignalMast extends AbstractSignalMast {
      *
      */
     private static final long serialVersionUID = 2711857995161461274L;
+    private final static Logger log = LoggerFactory.getLogger(DccSignalMast.class);
 
     public DccSignalMast(String sys, String user) {
         super(sys, user);

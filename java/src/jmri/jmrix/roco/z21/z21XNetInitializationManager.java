@@ -7,7 +7,6 @@ import jmri.jmrix.lenz.XNetLightManager;
 import jmri.jmrix.lenz.XNetProgrammerManager;
 import jmri.jmrix.lenz.XNetSensorManager;
 import jmri.jmrix.lenz.XNetSystemConnectionMemo;
-import jmri.jmrix.lenz.XNetTurnoutManager;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -49,7 +48,7 @@ public class z21XNetInitializationManager extends XNetInitializationManager {
          prevent the default consist manager from being loaded on top of it */
         systemMemo.setConsistManager(new XNetConsistManager(systemMemo));
         jmri.InstanceManager.setConsistManager(systemMemo.getConsistManager());
-        systemMemo.setTurnoutManager(new XNetTurnoutManager(systemMemo.getXNetTrafficController(), systemMemo.getSystemPrefix()));
+        systemMemo.setTurnoutManager(new z21XNetTurnoutManager(systemMemo.getXNetTrafficController(), systemMemo.getSystemPrefix()));
         jmri.InstanceManager.setTurnoutManager(systemMemo.getTurnoutManager());
         systemMemo.setLightManager(new XNetLightManager(systemMemo.getXNetTrafficController(), systemMemo.getSystemPrefix()));
         jmri.InstanceManager.setLightManager(systemMemo.getLightManager());
@@ -61,6 +60,6 @@ public class z21XNetInitializationManager extends XNetInitializationManager {
         }
     }
 
-    static Logger log = LoggerFactory.getLogger(z21XNetInitializationManager.class.getName());
+    private final static Logger log = LoggerFactory.getLogger(z21XNetInitializationManager.class.getName());
 
 }

@@ -13339,5 +13339,5 @@ public class LayoutEditorTools {
         l.rotate(90);
         return l;
     }
-    static Logger log = LoggerFactory.getLogger(LayoutEditorTools.class.getName());
+    private final static Logger log = LoggerFactory.getLogger(LayoutEditorTools.class.getName());
 }

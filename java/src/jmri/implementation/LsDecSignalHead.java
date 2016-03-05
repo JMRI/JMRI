@@ -303,6 +303,6 @@ public class LsDecSignalHead extends DefaultSignalHead {
         return false;
     }
 
-    static Logger log = LoggerFactory.getLogger(LsDecSignalHead.class.getName());
+    private final static Logger log = LoggerFactory.getLogger(LsDecSignalHead.class.getName());
 
 }

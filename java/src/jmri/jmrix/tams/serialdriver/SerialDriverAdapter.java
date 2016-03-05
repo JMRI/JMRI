@@ -171,6 +171,6 @@ public class SerialDriverAdapter extends TamsPortController implements jmri.jmri
     private boolean opened = false;
     InputStream serialStream = null;
 
-    static Logger log = LoggerFactory.getLogger(SerialDriverAdapter.class.getName());
+    private final static Logger log = LoggerFactory.getLogger(SerialDriverAdapter.class.getName());
 
 }

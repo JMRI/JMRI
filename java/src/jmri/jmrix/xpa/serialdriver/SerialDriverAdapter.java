@@ -174,6 +174,6 @@ public class SerialDriverAdapter extends XpaPortController implements jmri.jmrix
     }
     static SerialDriverAdapter mInstance = null;
 
-    static Logger log = LoggerFactory.getLogger(SerialDriverAdapter.class.getName());
+    private final static Logger log = LoggerFactory.getLogger(SerialDriverAdapter.class.getName());
 
 }

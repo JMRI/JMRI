@@ -322,5 +322,5 @@ public abstract class AbstractLightManagerConfigXML extends AbstractNamedBeanMan
         return InstanceManager.lightManagerInstance().getXMLOrder();
     }
 
-    static Logger log = LoggerFactory.getLogger(AbstractLightManagerConfigXML.class.getName());
+    private final static Logger log = LoggerFactory.getLogger(AbstractLightManagerConfigXML.class.getName());
 }

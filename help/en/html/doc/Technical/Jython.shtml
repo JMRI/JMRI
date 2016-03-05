@@ -313,12 +313,12 @@ command from the menu.
 <H2>Using Python for signal logic and automation</h2>
 
 The existing JMRI 
-"<A HREF="http://jmri.sourceforge.net/JavaDoc/doc/jmri/jmrit/automat/package-summary.html">Automat</a>"
+"<A HREF="http://jmri.org/JavaDoc/doc/jmri/jmrit/automat/package-summary.html">Automat</a>"
 classes provide hooks for user layout automation, including signaling.
 But they require that you write Java code and compile it into .class files.
 <P>
 The 
-<A HREF="http://jmri.sourceforge.net/JavaDoc/doc/jmri/jmrit/automat/JythonAutomaton.html">JythonAutomaton</a>
+<A HREF="http://jmri.org/JavaDoc/doc/jmri/jmrit/automat/JythonAutomaton.html">JythonAutomaton</a>
 class is intended to make it easier to code custom layout automation, as
 it will allow you to invoke a Jython script.  Once it's integrated into
 the configuration process, you'll be able to code your automation in one

@@ -299,6 +299,6 @@ public class SerialDriverAdapter extends IEEE802154PortController implements jmr
 //        return mInstance;
 //    }
 //    static SerialDriverAdapter mInstance = null;
-    static Logger log = LoggerFactory.getLogger(SerialDriverAdapter.class.getName());
+    private final static Logger log = LoggerFactory.getLogger(SerialDriverAdapter.class.getName());
 
 }

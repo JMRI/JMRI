@@ -17,6 +17,7 @@ import javax.swing.JMenu;
 import javax.swing.JMenuBar;
 import javax.swing.JMenuItem;
 import javax.swing.JOptionPane;
+import javax.swing.JRadioButton;
 import javax.swing.JPanel;
 import javax.swing.JTable;
 import javax.swing.JTextField;
@@ -114,12 +115,12 @@ public class BlockTableAction extends AbstractTableAction {
 
             public String getValue(String name) {
                 if (name == null) {
-                    BeanTableDataModel.log.warn("requested getValue(null)");
+                    log.warn("requested getValue(null)");
                     return "(no name)";
                 }
                 Block b = InstanceManager.blockManagerInstance().getBySystemName(name);
                 if (b == null) {
-                    BeanTableDataModel.log.debug("requested getValue(\"" + name + "\"), Block doesn't exist");
+                    log.debug("requested getValue(\"" + name + "\"), Block doesn't exist");
                     return "(no Block)";
                 }
                 Object m = b.getValue();
@@ -159,12 +160,12 @@ public class BlockTableAction extends AbstractTableAction {
             public Object getValueAt(int row, int col) {
                 // some error checking
                 if (row >= sysNameList.size()) {
-                    BeanTableDataModel.log.debug("requested getValueAt(\"" + row + "\"), row outside of range");
+                    log.debug("requested getValueAt(\"" + row + "\"), row outside of range");
                     return "Error table size";
                 }
                 Block b = (Block) getBySystemName(sysNameList.get(row));
                 if (b == null) {
-                    BeanTableDataModel.log.debug("requested getValueAt(\"" + row + "\"), Block doesn't exist");
+                    log.debug("requested getValueAt(\"" + row + "\"), Block doesn't exist");
                     return "(no Block)";
                 }
                 if (col == DIRECTIONCOL) {
@@ -321,10 +322,10 @@ public class BlockTableAction extends AbstractTableAction {
 
             public String getColumnName(int col) {
                 if (col == DIRECTIONCOL) {
-                    return "Direction";
+                    return Bundle.getMessage("BlockDirection");
                 }
                 if (col == VALUECOL) {
-                    return "Value";
+                    return Bundle.getMessage("BlockValue");
                 }
                 if (col == CURVECOL) {
                     return Bundle.getMessage("BlockCurveColName");
@@ -471,7 +472,7 @@ public class BlockTableAction extends AbstractTableAction {
             }
 
             public JButton configureButton() {
-                BeanTableDataModel.log.error("configureButton should not have been called");
+                log.error("configureButton should not have been called");
                 return null;
             }
 
@@ -535,11 +536,14 @@ public class BlockTableAction extends AbstractTableAction {
         f.setTitle(Bundle.getMessage("TitleBlockTable"));
     }
 
-    JCheckBox inchBox = new JCheckBox(Bundle.getMessage("LengthInches"));
-    JCheckBox centimeterBox = new JCheckBox(Bundle.getMessage("LengthCentimeters"));
+    JRadioButton inchBox = new JRadioButton(Bundle.getMessage("LengthInches"));
+    JRadioButton centimeterBox = new JRadioButton(Bundle.getMessage("LengthCentimeters"));
 
     /**
-     * Add the checkboxes
+     * Add the radiobuttons (only 1 may be selected)
+     * TODO change names from -box to radio-
+     * add radio buttons to a ButtongGroup
+     * delete extra inchBoxChanged() and centimeterBoxChanged() methods
      */
     public void addToFrame(BeanTableFrame f) {
         //final BeanTableFrame finalF = f;	// needed for anonymous ActionListener class
@@ -849,7 +853,7 @@ public class BlockTableAction extends AbstractTableAction {
         return BlockTableAction.class.getName();
     }
 
-    static final Logger log = LoggerFactory.getLogger(BlockTableAction.class.getName());
+    private final static Logger log = LoggerFactory.getLogger(BlockTableAction.class.getName());
 }
 
 /* @(#)BlockTableAction.java */

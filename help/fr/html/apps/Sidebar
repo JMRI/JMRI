@@ -86,10 +86,10 @@ mise en page..
 		<dt><h3>Syst&#232;mes d'Exploitation Support&#233;s</h3></dt>
 		<dd> 
 		<ul>
-            <LI><A href="http://jmri.sourceforge.net/install/WindowsNew.shtml">Windows</a>
-            <LI><A href="http://jmri.sourceforge.net/install/MacOSX.shtml">Mac OS X</a>
-            <LI><A href="http://jmri.sourceforge.net/install/Linux.shtml">Linux</a>
-            <LI><A href="http://jmri.sourceforge.net/install/Debug.shtml">Debogage d'une installation</a>
+            <LI><A href="http://jmri.org/install/WindowsNew.shtml">Windows</a>
+            <LI><A href="http://jmri.org/install/MacOSX.shtml">Mac OS X</a>
+            <LI><A href="http://jmri.org/install/Linux.shtml">Linux</a>
+            <LI><A href="http://jmri.org/install/Debug.shtml">Debogage d'une installation</a>
 		</ul>
 		</dd>
 </dl>

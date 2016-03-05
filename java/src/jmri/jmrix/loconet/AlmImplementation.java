@@ -184,5 +184,5 @@ public class AlmImplementation implements LocoNetListener {
         }
     }
 
-    static Logger log = LoggerFactory.getLogger(AlmImplementation.class.getName());
+    private final static Logger log = LoggerFactory.getLogger(AlmImplementation.class.getName());
 }

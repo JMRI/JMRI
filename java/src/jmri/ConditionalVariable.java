@@ -10,12 +10,13 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 /**
- * ConditionalVariable.java
- *
  * The variable used in the antecedent (the 'if' part) of the Conditional.
  * proposition. The states of ConditionalVariables and logic expression of the
  * antecedent determine the state of the Conditional.
  * <P>
+ * ConditionalVariable objects are fully mutable, so use the default equals()
+ * operator that checks for identical objects, not identical contents.
+ * 
  * This file is part of JMRI.
  * <P>
  * JMRI is free software; you can redistribute it and/or modify it under the
@@ -27,7 +28,7 @@ import org.slf4j.LoggerFactory;
  * A PARTICULAR PURPOSE. See the GNU General Public License for more details.
  * <P>
  * @author	Pete Cressman Copyright (C) 2009
- * @version	$Revision 1.0 $
+ * @author  Bob Jacobsen  Copyright (C) 2016
  */
 public class ConditionalVariable {
 
@@ -446,7 +447,7 @@ public class ConditionalVariable {
                     log.error("invalid signal mast name= \"" + getName() + "\" in state variable");
                     return (false);
                 }
-                switch ((_type)) {
+                switch (_type) {
                     case Conditional.TYPE_SIGNAL_MAST_LIT:
                         result = f.getLit();
                         break;
@@ -461,6 +462,8 @@ public class ConditionalVariable {
                         } else {
                             result = false;
                         }
+                    default:
+                        log.warn("unexpected type {} in ITEM_TYPE_SIGNALMAST", _type);
                 }
                 break;
             case Conditional.ITEM_TYPE_SIGNALHEAD:
@@ -1116,5 +1119,5 @@ public class ConditionalVariable {
         return super.toString();
     }
 
-    static final Logger log = LoggerFactory.getLogger(ConditionalVariable.class.getName());
+    private final static Logger log = LoggerFactory.getLogger(ConditionalVariable.class.getName());
 }

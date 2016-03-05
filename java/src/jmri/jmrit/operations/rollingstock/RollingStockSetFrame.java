@@ -402,7 +402,7 @@ public class RollingStockSetFrame extends OperationsFrame implements java.beans.
                         boolean foundLoc = false; // when true, found the rs's location in the route
                         boolean foundDes = false;
                         for (RouteLocation rlocation : routeSequence) {
-                            if (train.isTrainInRoute() && !foundTrainLoc) {
+                            if (train.isTrainEnRoute() && !foundTrainLoc) {
                                 if (train.getCurrentLocation() == rlocation) {
                                     foundTrainLoc = true;
                                 } else {
@@ -497,8 +497,8 @@ public class RollingStockSetFrame extends OperationsFrame implements java.beans.
                 rs.setTrain(null);
             } else {
                 Train train = (Train) trainBox.getSelectedItem();
-                if (rs.getTrain() != null && !rs.getTrain().equals(train)) // prevent rs from being picked up and delivered
-                {
+                if (rs.getTrain() != null && !rs.getTrain().equals(train)) {
+                    // prevent rs from being picked up and delivered
                     setRouteLocationAndDestination(rs, rs.getTrain(), null, null);
                 }
                 rs.setTrain(train);
@@ -589,6 +589,11 @@ public class RollingStockSetFrame extends OperationsFrame implements java.beans.
             RouteLocation rd) {
         if (rs.getRouteLocation() != null || rl != null) {
             train.setModified(true);
+        }
+        // check destination track is staging
+        if (rl == null && rd == null && rs.getDestinationTrack() != null && rs.getDestinationTrack().getLocation().isStaging()) {
+            log.debug("Rolling stock destination track is staging");
+            rs.setDestination(null, null);
         }
         rs.setRouteLocation(rl);
         rs.setRouteDestination(rd);
@@ -813,5 +818,5 @@ public class RollingStockSetFrame extends OperationsFrame implements java.beans.
         }
     }
 
-    static Logger log = LoggerFactory.getLogger(RollingStockSetFrame.class.getName());
+    private final static Logger log = LoggerFactory.getLogger(RollingStockSetFrame.class.getName());
 }

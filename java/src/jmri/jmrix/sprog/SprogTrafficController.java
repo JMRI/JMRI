@@ -262,7 +262,7 @@ public class SprogTrafficController implements SprogInterface, SerialPortEventLi
 
     private boolean unsolicited;
 
-    static Logger log = LoggerFactory.getLogger(SprogTrafficController.class.getName());
+    private final static Logger log = LoggerFactory.getLogger(SprogTrafficController.class.getName());
 
     /**
      * serialEvent - respond to an event triggered by RXTX. In this case we are

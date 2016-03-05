@@ -13,7 +13,8 @@
 <!-- FITNESS FOR A PARTICULAR PURPOSE.  See the GNU General Public License  -->
 <!-- for more details.                                                      -->
 <decoder-config xmlns:xi="http://www.w3.org/2001/XInclude" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="http://jmri.org/xml/schema/decoder.xsd">
-  <version author="Mark Waters mark16w-jmri@yahoo.co.uk" version="1" lastUpdated="20121202"/>
+  <version author="Mark Waters mark16jmri@mybtinternet.com" version="1.1" lastUpdated="20160123"/>
+  <version author="Mark Waters mark16jmri@mybtinternet.com" version="1" lastUpdated="20121202"/>
   <!-- This decoder configuration file is based on the Zimo_MX640_v9.xml                     -->
   <!-- V 1 file, dated 20090222. With the Sound tabs from Jeff Schmaltz' MX69/MX690 file.    -->
   <!--                                                                                       -->
@@ -26,6 +27,7 @@
   <!-- Continued the practice of using unrelated "item" names to place Zimo unique           -->
   <!-- variables on the proper pane of the Comprehensive programmer.                         -->
   <!-- V 1 new file -->
+  <!-- V 1.1 added MX621 version 31 - Fleischmann -->
   <decoder>
     <family name="Zimo Unified software (version 25+)" mfg="Zimo">
       <model model="MX621 version 31" lowVersionID="31" highVersionID="31" maxInputVolts="40V" maxMotorCurrent="0.8A, peak=1.5A" maxTotalCurrent="0.8A" formFactor="N" numOuts="4" numFns="14" productID="223">
@@ -56,6 +58,15 @@
         <size length="12" width="8.5" height="2" units="mm"/>
       </model>
       <model model="MX621F version 31" lowVersionID="31" highVersionID="31" maxInputVolts="40V" maxMotorCurrent="0.8A, peak=1.5A" maxTotalCurrent="0.8A" formFactor="N" connector="NMRAsmall" numOuts="4" numFns="14" productID="223">
+        <output name="1" label="Front Light"/>
+        <output name="2" label="Rear Light"/>
+        <output name="3" label="FO 1"/>
+        <output name="4" label="FO 2"/>
+        <output name="5" label="FO 3 (+5v)"/>
+        <output name="6" label="FO 4 (+5v)"/>
+        <size length="12" width="8.5" height="2" units="mm"/>
+      </model>
+      <model model="MX621 version 31 - Fleischmann" lowVersionID="31" highVersionID="31" maxInputVolts="40V" maxMotorCurrent="0.8A, peak=1.5A" maxTotalCurrent="0.8A" formFactor="N" numOuts="4" numFns="14" productID="236">
         <output name="1" label="Front Light"/>
         <output name="2" label="Rear Light"/>
         <output name="3" label="FO 1"/>

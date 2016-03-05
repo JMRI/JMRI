@@ -856,6 +856,6 @@ public class IndexedPairVariableValue extends VariableValue
     }
 
     // initialize logging
-    static Logger log = LoggerFactory.getLogger(IndexedPairVariableValue.class.getName());
+    private final static Logger log = LoggerFactory.getLogger(IndexedPairVariableValue.class.getName());
 
 }

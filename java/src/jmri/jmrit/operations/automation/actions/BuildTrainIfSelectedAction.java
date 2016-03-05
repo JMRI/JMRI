@@ -20,7 +20,7 @@ public class BuildTrainIfSelectedAction extends Action {
     public void doAction() {
         if (getAutomationItem() != null) {
             Train train = getAutomationItem().getTrain();
-            if (train == null || train.isBuilt()) {
+            if (train == null || train.isBuilt() || train.getRoute() == null) {
                 finishAction(false); // failed to build train
             } else {
                 setRunning(true);

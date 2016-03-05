@@ -16,6 +16,7 @@ import java.awt.Frame;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.MouseEvent;
+import java.beans.PropertyChangeListener;
 import java.io.File;
 import java.io.IOException;
 import java.util.ArrayList;
@@ -323,9 +324,8 @@ public final class ProfilePreferencesPanel extends JPanel implements Preferences
                             .addComponent(jScrollPane3, GroupLayout.DEFAULT_SIZE, 667, Short.MAX_VALUE)
                             .addGroup(searchPathsPanelLayout.createSequentialGroup()
                                 .addComponent(btnAddSearchPath)
-                                .addPreferredGap(LayoutStyle.ComponentPlacement.RELATED)
-                                .addComponent(btnRemoveSearchPath)
-                                .addGap(0, 0, Short.MAX_VALUE)))
+                                .addPreferredGap(LayoutStyle.ComponentPlacement.RELATED, GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                .addComponent(btnRemoveSearchPath)))
                         .addContainerGap())
                 );
                 searchPathsPanelLayout.setVerticalGroup(searchPathsPanelLayout.createParallelGroup(GroupLayout.Alignment.LEADING)
@@ -654,7 +654,7 @@ public final class ProfilePreferencesPanel extends JPanel implements Preferences
     }
 
     public void dispose() {
-        ProfileManager.getDefault().removePropertyChangeListener((ProfileTableModel) profilesTbl.getModel());
+        ProfileManager.getDefault().removePropertyChangeListener((PropertyChangeListener) profilesTbl.getModel());
     }
 
     private void profilesTblValueChanged(ListSelectionEvent e) {

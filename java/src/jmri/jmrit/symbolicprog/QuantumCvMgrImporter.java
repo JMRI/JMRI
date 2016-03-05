@@ -32,7 +32,7 @@ import org.slf4j.LoggerFactory;
  */
 public class QuantumCvMgrImporter {
 
-    static Logger log = LoggerFactory.getLogger(QuantumCvMgrImporter.class.getName());
+    private final static Logger log = LoggerFactory.getLogger(QuantumCvMgrImporter.class.getName());
     private static final String SEARCH_STRING = "^CV([0-9.]+)=([0-9.]+)\\s*(//)?\\s*(.*)$";
 
     public QuantumCvMgrImporter(File file, CvTableModel cvModel) throws IOException {

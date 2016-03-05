@@ -670,6 +670,6 @@ public class OpenLcbCanSendPane extends jmri.jmrix.can.swing.CanPanel implements
 
     // private data
     private TrafficController tc = null; //was CanInterface
-    static Logger log = LoggerFactory.getLogger(OpenLcbCanSendPane.class.getName());
+    private final static Logger log = LoggerFactory.getLogger(OpenLcbCanSendPane.class.getName());
 
 }

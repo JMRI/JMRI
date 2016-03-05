@@ -50,7 +50,7 @@ public class RollingStockAttribute {
     }
 
     protected String getDefaultNames() {
-        return "Error"; //  NOI18N overridden
+        return "Error"; // overridden //  NOI18N
     }
 
     public void setNames(String[] names) {
@@ -209,6 +209,6 @@ public class RollingStockAttribute {
         pcs.firePropertyChange(p, old, n);
     }
 
-    static Logger log = LoggerFactory.getLogger(RollingStockAttribute.class.getName());
+    private final static Logger log = LoggerFactory.getLogger(RollingStockAttribute.class.getName());
 
 }

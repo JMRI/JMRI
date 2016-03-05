@@ -383,12 +383,12 @@ abstract public class BeanTableDataModel extends javax.swing.table.AbstractTable
                     container.add(question);
                 }
 
-                final JCheckBox remember = new JCheckBox("Remember this setting for next time?");
+                final JCheckBox remember = new JCheckBox(Bundle.getMessage("MessageRememberSetting"));
                 remember.setFont(remember.getFont().deriveFont(10f));
                 remember.setAlignmentX(Component.CENTER_ALIGNMENT);
 
-                JButton yesButton = new JButton("Yes");
-                JButton noButton = new JButton("No");
+                JButton yesButton = new JButton(Bundle.getMessage("ButtonYes"));
+                JButton noButton = new JButton(Bundle.getMessage("ButtonNo"));
                 JPanel button = new JPanel();
                 button.setAlignmentX(Component.CENTER_ALIGNMENT);
                 button.add(yesButton);
@@ -1040,6 +1040,6 @@ abstract public class BeanTableDataModel extends javax.swing.table.AbstractTable
             }
         }
     }
-    static final Logger log = LoggerFactory.getLogger(BeanTableDataModel.class.getName());
+    private final static Logger log = LoggerFactory.getLogger(BeanTableDataModel.class.getName());
 
 }

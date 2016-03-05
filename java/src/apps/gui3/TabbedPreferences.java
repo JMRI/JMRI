@@ -2,6 +2,7 @@
 package apps.gui3;
 
 import apps.AppConfigBase;
+import apps.ConfigBundle;
 import com.fasterxml.jackson.core.type.TypeReference;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import java.awt.BorderLayout;
@@ -59,8 +60,9 @@ public class TabbedPreferences extends AppConfigBase {
 
     @Override
     public String getTitle() {
-        return rb.getString("TitlePreferences");
+        return Bundle.getMessage("TitlePreferences");
     }
+    // Preferences Window Title
 
     @Override
     public boolean isMultipleInstances() {
@@ -141,7 +143,7 @@ public class TabbedPreferences extends AppConfigBase {
         detailpanel.setBorder(BorderFactory.createEmptyBorder(6, 3, 6, 6));
 
         save = new JButton(
-                rb.getString("ButtonSave"),
+                ConfigBundle.getMessage("ButtonSave"),
                 new ImageIcon(FileUtil.findURL("program:resources/icons/misc/gui3/SaveIcon.png", FileUtil.Location.INSTALLED)));
         save.addActionListener((ActionEvent e) -> {
             savePressed(invokeSaveOptions());
@@ -517,6 +519,6 @@ public class TabbedPreferences extends AppConfigBase {
         }
     }
 
-    static Logger log = LoggerFactory.getLogger(TabbedPreferences.class.getName());
+    private final static Logger log = LoggerFactory.getLogger(TabbedPreferences.class.getName());
 
 }

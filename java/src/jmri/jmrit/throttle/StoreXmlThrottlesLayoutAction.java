@@ -111,6 +111,6 @@ public class StoreXmlThrottlesLayoutAction extends AbstractAction {
     }
 
     // initialize logging
-    static Logger log = LoggerFactory.getLogger(StoreXmlThrottlesLayoutAction.class.getName());
+    private final static Logger log = LoggerFactory.getLogger(StoreXmlThrottlesLayoutAction.class.getName());
 
 }

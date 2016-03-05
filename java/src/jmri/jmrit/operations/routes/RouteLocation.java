@@ -31,7 +31,7 @@ public class RouteLocation implements java.beans.PropertyChangeListener {
     protected String _randomControl = DISABLED;
     protected boolean _drops = true; // when true set outs allowed at this location
     protected boolean _pickups = true; // when true pick ups allowed at this location
-    protected int _sequenceId = 0; // used to determine location order in route
+    protected int _sequenceId = 0; // used to determine location order in a route
     protected double _grade = 0; // maximum grade between locations
     protected int _wait = 0; // wait time at this location
     protected String _departureTime = NONE; // departure time from this location
@@ -589,6 +589,6 @@ public class RouteLocation implements java.beans.PropertyChangeListener {
         firePropertyChange(p, old, n);
     }
 
-    static Logger log = LoggerFactory.getLogger(RouteLocation.class.getName());
+    private final static Logger log = LoggerFactory.getLogger(RouteLocation.class.getName());
 
 }

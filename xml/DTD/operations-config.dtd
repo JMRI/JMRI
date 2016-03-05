@@ -355,7 +355,7 @@
 <!ATTLIST switchListTrack text			CDATA #IMPLIED>
 <!ATTLIST holdCar text					CDATA #IMPLIED>
 
-<!ELEMENT control (backwardCompatibility | maximumStringLengths | reports)*>
+<!ELEMENT control (backwardCompatibility | maximumStringLengths | reports | actions)*>
 
 <!ELEMENT backwardCompatibility EMPTY>
 <!ATTLIST backwardCompatibility saveUsingPre_2013_Format	(true | false ) "false">
@@ -363,7 +363,7 @@
 <!ELEMENT maximumStringLengths (max_len_string_attibute | max_len_string_road_number | max_len_string_location_name
 | max_len_string_track_name | max_len_string_track_length_name | max_len_string_length_name
 | max_len_string_weight_name | max_len_string_built_name | max_len_string_train_name
-| max_len_string_route_name | max_len_string_print_road_number)*>
+| max_len_string_route_name | max_len_string_print_road_number | max_len_string_automation_name)*>
 
 <!ELEMENT max_len_string_attibute EMPTY>
 <!ELEMENT max_len_string_road_number EMPTY>
@@ -376,6 +376,7 @@
 <!ELEMENT max_len_string_built_name EMPTY>
 <!ELEMENT max_len_string_train_name EMPTY>
 <!ELEMENT max_len_string_route_name EMPTY>
+<!ELEMENT max_len_string_automation_name EMPTY>
 
 <!ATTLIST max_len_string_attibute length		CDATA #IMPLIED>
 <!ATTLIST max_len_string_road_number length		CDATA #IMPLIED>
@@ -388,7 +389,11 @@
 <!ATTLIST max_len_string_built_name length		CDATA #IMPLIED>
 <!ATTLIST max_len_string_train_name length		CDATA #IMPLIED>
 <!ATTLIST max_len_string_route_name length		CDATA #IMPLIED>
+<!ATTLIST max_len_string_automation_name length	CDATA #IMPLIED>
 
 <!ELEMENT reports EMPTY>
 <!ATTLIST reports fontSize CDATA #IMPLIED>
 <!ATTLIST reports fontName CDATA #IMPLIED>
+
+<!ELEMENT actions EMPTY>
+<!ATTLIST actions excelWaitTime CDATA #IMPLIED>

@@ -5,8 +5,6 @@ import jmri.jmrix.secsi.SerialListener;
 import jmri.jmrix.secsi.SerialMessage;
 import jmri.jmrix.secsi.SerialReply;
 import jmri.jmrix.secsi.SerialTrafficController;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 
 /**
  * Frame displaying (and logging) serial command messages
@@ -81,7 +79,5 @@ public class SerialMonFrame extends jmri.jmrix.AbstractMonFrame implements Seria
             return;
         }
     }
-
-    static Logger log = LoggerFactory.getLogger(SerialMonFrame.class.getName());
 
 }

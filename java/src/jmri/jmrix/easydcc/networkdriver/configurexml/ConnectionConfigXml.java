@@ -3,8 +3,6 @@ package jmri.jmrix.easydcc.networkdriver.configurexml;
 import jmri.jmrix.configurexml.AbstractNetworkConnectionConfigXml;
 import jmri.jmrix.easydcc.networkdriver.ConnectionConfig;
 import jmri.jmrix.easydcc.networkdriver.NetworkDriverAdapter;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 
 /**
  * Handle XML persistance of layout connections by persistening the
@@ -88,8 +86,5 @@ public class ConnectionConfigXml extends AbstractNetworkConnectionConfigXml {
     /*protected void register(String host, String port, String manufacturer) {
      InstanceManager.configureManagerInstance().registerPref(new ConnectionConfig(host, port, manufacturer));
      }*/
-
-    // initialize logging
-    static Logger log = LoggerFactory.getLogger(ConnectionConfigXml.class.getName());
 
 }
