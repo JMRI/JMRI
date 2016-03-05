@@ -402,7 +402,7 @@ public class RollingStockSetFrame extends OperationsFrame implements java.beans.
                         boolean foundLoc = false; // when true, found the rs's location in the route
                         boolean foundDes = false;
                         for (RouteLocation rlocation : routeSequence) {
-                            if (train.isTrainInRoute() && !foundTrainLoc) {
+                            if (train.isTrainEnRoute() && !foundTrainLoc) {
                                 if (train.getCurrentLocation() == rlocation) {
                                     foundTrainLoc = true;
                                 } else {

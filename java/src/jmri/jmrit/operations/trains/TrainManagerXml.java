@@ -1,6 +1,8 @@
 // TrainManagerXml.java
 package jmri.jmrit.operations.trains;
 
+import jmri.jmrit.operations.trains.timetable.TrainScheduleManager;
+
 import java.io.File;
 import java.text.SimpleDateFormat;
 import jmri.jmrit.operations.OperationsManager;

@@ -97,6 +97,8 @@ public class ExportCars extends XmlFile {
         
         String line = "";
         String carType;
+        String carLoad;
+        String carKernel;
         String carLocationName;
         String carTrackName;
         String value;
@@ -111,6 +113,14 @@ public class ExportCars extends XmlFile {
             if (carType.contains(del)) {
                 carType = ESC + car.getTypeName() + ESC;
             }
+            carLoad = car.getLoadName();
+            if (carLoad.contains(del)) {
+                carLoad = ESC + car.getLoadName() + ESC;
+            }
+            carKernel = car.getKernelName();
+            if (carKernel.contains(del)) {
+                carKernel = ESC + car.getKernelName() + ESC;
+            }
             carLocationName = car.getLocationName();
             if (carLocationName.contains(del)) {
                 carLocationName = ESC + car.getLocationName() + ESC;
@@ -119,13 +129,12 @@ public class ExportCars extends XmlFile {
             if (carTrackName.contains(del)) {
                 carTrackName = ESC + car.getTrackName() + ESC;
             }
-            // only export value field if value has been set.
-            value = "";
-            if (!car.getValue().equals(Car.NONE)) {
+            value = car.getValue();
+            if (value.contains(del)) {
                 value = ESC + car.getValue() + ESC;
             }
-            comment = "";
-            if (!car.getComment().equals(Car.NONE)) {
+            comment = car.getComment();
+            if (comment.contains(del)) {
                 comment = ESC + car.getComment() + ESC;
             }
             miscellaneous = "";
@@ -135,7 +144,7 @@ public class ExportCars extends XmlFile {
             extensions = car.getTypeExtensions();
             line = car.getNumber() + del + car.getRoadName() + del + carType + del + car.getLength() + del
                     + car.getWeight() + del + car.getColor() + del + car.getOwner() + del + car.getBuilt() + del
-                    + carLocationName + ",-," + carTrackName + del + car.getLoadName() + del + car.getKernelName()
+                    + carLocationName + ",-," + carTrackName + del + carLoad + del + carKernel
                     + del + car.getMoves() + del + value + del + comment + del + miscellaneous + del + extensions;
             fileOut.println(line);
         }

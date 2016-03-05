@@ -42,6 +42,7 @@ public class ActionCodes {
     public static final int WAIT_SWITCHLIST = 0x1200 + OK_MESSAGE;
     public static final int RUN_SWITCHLIST_CHANGES = 0x1300 + OK_MESSAGE + FAIL_MESSAGE;
     public static final int RUN_SWITCHLIST = 0x1400 + OK_MESSAGE + FAIL_MESSAGE;
+    public static final int PRINT_SWITCHLIST_CHANGES = 0x1500 + OK_MESSAGE;
     
     public static final int ACTIVATE_TIMETABLE = 0x2000 + OK_MESSAGE + ENABLE_OTHER; 
     public static final int APPLY_TIMETABLE = 0x2100 + OK_MESSAGE + FAIL_MESSAGE;

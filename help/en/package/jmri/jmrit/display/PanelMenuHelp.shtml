@@ -1,22 +1,18 @@
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
 <html lang="en">
 <head>
-<!-- Copyright ($Author$) 2009 -->
-<!-- $Id$ -->
 <title>JMRI: Panels Menu</title>
 
 <!-- Style -->
-<META HTTP-EQUIV="Content-Type" CONTENT="text/html; charset=iso-8859-1">
-<LINK REL="stylesheet" TYPE="text/css" HREF="/css/default.css"
-	MEDIA="screen">
-<LINK REL="stylesheet" TYPE="text/css" HREF="/css/print.css"
-	MEDIA="print">
-<LINK REL="icon" HREF="/images/jmri.ico" TYPE="image/png">
-<LINK REL="home" TITLE="Home" HREF="/">
+<meta http-equiv="content-type" content="text/html; charset=iso-8859-1">
+<link rel="stylesheet" type="text/css" href="/css/default.css" media="screen">
+<link rel="stylesheet" type="text/css" href="/css/print.css" media="print">
+<link rel="icon" href="/images/jmri.ico" type="image/png">
+<link rel="home" title="Home" href="/">
 <!-- /Style -->
-</HEAD>
+</head>
 
-<BODY>
+<body>
 <!--#include virtual="/Header" -->
   <div class="nomenu" id="mBody">
     <div id="mainContent">
@@ -41,34 +37,37 @@ that already exist in the program.
 
 <li>Store Panels...: 
 Store the current setup of the program to a file, 
-includeing all current Panel Editor and Layout editor panels.
+including all current Panel Editor and Layout editor panels.
 Use "Show Panel" below to see the complete list.
 
-<LI>Show History:
+<li>Show History:
 Shows a history of all files loaded into the currently running program, 
 and how they were stored from previous runs of the program, 
 along with what was loaded into those, and so on.
 Only records information from running JMRI 2.9.3 and later.
 
-<LI>Show Panel: 
+<li>Show Panel: 
 Shows the list of Layout and/or Panel Editor panels currently in the program,
 and allows you to bring one to the front by selecting it.
 
-<LI>Run Script...: 
+<li>Run Script...: 
 Select and run a 
 <a href="../../../../html/tools/scripting/index.shtml">script file</a>.
 
-<LI>Thread Monitor: Open a 
+<li>Thread Monitor: Open a 
 <a href="../automat/monitor/AutomatTableFrame.shtml">window displaying currently-running threads</a>,
 which includes long-running scripts.
 
-<LI>Script Output: Open the script output window.  Any messages from scripts will appear here.
+<li>Script Output: Open the script output window.  Any messages from scripts will appear here.
 
-<LI>Script Entry: Open an script input window. You can directly type scripting commands here.
+<li>Script Entry: Open an script input window. You can directly type scripting commands here.
 
 </ul>
 <p>
 This is the jmri.jmrit.display.PanelMenuHelp help page.   
+
 <!--#include virtual="/Footer" -->
-</body>
+   </div><!-- closes #mainContent-->
+  </div> <!-- closes #mBody-->
+ </body>
 </html>
