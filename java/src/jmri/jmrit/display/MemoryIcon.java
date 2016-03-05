@@ -455,7 +455,7 @@ public class MemoryIcon extends PositionableLabel implements java.beans.Property
             setSize(maxWidth(), maxHeight());
         } else {
             super.updateSize();
-            if (_icon) {
+            if (_icon && _namedIcon != null) {
                 _namedIcon.reduceTo(maxWidthTrue(), maxHeightTrue(), 0.2);
             }
         }

@@ -221,6 +221,7 @@
 	<li>Marco Forcone, who sacrificed two turnouts motors to the cause of
 	debugging XPressNet Turnout support
 	<li>Dan Foltz created the Manifest Creator and Switch List Creator for operations</li>
+	<li>John Forsythe, who helped with the timing needs of TCS decoders
 	<li>Enzo Fortuna, who created the Italian translation
 	<li>Marc Fournier, who improved the TCS decoder definition
 	    and did the detail work to update the Soundtraxx manufacturer name.
@@ -442,7 +443,7 @@
 	investigated how to display the throttle ID in the LocoNet Slot Monitor,
 	updated the Comprehensive programmer format to improve speed,
 	and co-wrote the 2009 DecoderPro manual.
-	<li>Alex Shepherd, who helped move development to JBuilder, a much better tool, and
+	<li>Alex Shepherd, who helped move development to JBuilder, and
 	created the client/server implementation for LocoNet. He's also improved
 	the LocoNet monitor formatting and added support for a new
 	type of accessory decoder

@@ -19,7 +19,6 @@ import org.slf4j.LoggerFactory;
 
 /**
  * Exports the car roster into a comma delimitated file (CSV).
- * Only the cars shown in the CarsTableTrame window are exported.
  *
  * @author Daniel Boudreau Copyright (C) 2010, 2011, 2016
  * @version $Revision$
@@ -30,10 +29,10 @@ public class ExportCars extends XmlFile {
     static final String ESC = "\""; // escape character NOI18N
     private String del = ","; // delimiter
     
-    CarsTableFrame _carsTableFrame;
+    List<RollingStock> _carList;
 
-    public ExportCars(CarsTableFrame carsTableFrame) {
-        _carsTableFrame = carsTableFrame;
+    public ExportCars(List<RollingStock> carList) {
+        _carList = carList;
     }
 
     public void setDeliminter(String delimiter) {
@@ -86,17 +85,6 @@ public class ExportCars extends XmlFile {
             return;
         }
         
-        List<RollingStock> carList = _carsTableFrame.carsTableModel.getSelectedCarList();
-//        List<RollingStock> carList = CarManager.instance().getByNumberList();
-        
-        String line = "";
-        // check for delimiter in the following car fields
-        String carType;
-        String carLocationName;
-        String carTrackName;
-        // assume delimiter in the value field
-        String value;
-        String comment;
         // create header
         String header = Bundle.getMessage("Number") + del + Bundle.getMessage("Road") + del + Bundle.getMessage("Type")
                 + del + Bundle.getMessage("Length") + del + Bundle.getMessage("Weight") + del
@@ -104,51 +92,67 @@ public class ExportCars extends XmlFile {
                 + del + Bundle.getMessage("Location") + del + "-" + del + Bundle.getMessage("Track") + del
                 + Bundle.getMessage("Load") + del + Bundle.getMessage("Kernel") 
                 + del + Bundle.getMessage("Moves") + del + Setup.getValueLabel() + del + Bundle.getMessage("Comment")
-                + del + Bundle.getMessage("Miscellaneous");
+                + del + Bundle.getMessage("Miscellaneous") + del + Bundle.getMessage("Extensions");
         fileOut.println(header);
+        
+        String line = "";
+        String carType;
+        String carLoad;
+        String carKernel;
+        String carLocationName;
+        String carTrackName;
+        String value;
+        String comment;
+        String miscellaneous;
+        String extensions;
 
         // store car number, road, type, length, weight, color, owner, built date, location and track
-        for (RollingStock rs : carList) {
+        for (RollingStock rs : _carList) {
             Car car = (Car) rs;
             carType = car.getTypeName();
             if (carType.contains(del)) {
-//				log.debug("Car (" + car.getRoadName() + " " + car.getNumber() + ") has delimiter in type field: "
-//						+ carType); // NOI18N
                 carType = ESC + car.getTypeName() + ESC;
+            }
+            carLoad = car.getLoadName();
+            if (carLoad.contains(del)) {
+                carLoad = ESC + car.getLoadName() + ESC;
+            }
+            carKernel = car.getKernelName();
+            if (carKernel.contains(del)) {
+                carKernel = ESC + car.getKernelName() + ESC;
             }
             carLocationName = car.getLocationName();
             if (carLocationName.contains(del)) {
-//				log.debug("Car (" + car.getRoadName() + " " + car.getNumber() + ") has delimiter in location field: "
-//						+ carLocationName); // NOI18N
                 carLocationName = ESC + car.getLocationName() + ESC;
             }
             carTrackName = car.getTrackName();
             if (carTrackName.contains(del)) {
-//				log.debug("Car (" + car.getRoadName() + " " + car.getNumber() + ") has delimiter in track field: "
-//						+ carTrackName); // NOI18N
                 carTrackName = ESC + car.getTrackName() + ESC;
             }
-            // only export value field if value has been set.
-            value = "";
-            if (!car.getValue().equals(Car.NONE)) {
+            value = car.getValue();
+            if (value.contains(del)) {
                 value = ESC + car.getValue() + ESC;
             }
-            comment = "";
-            if (!car.getComment().equals(Car.NONE)) {
+            comment = car.getComment();
+            if (comment.contains(del)) {
                 comment = ESC + car.getComment() + ESC;
             }
+            miscellaneous = "";
+            if (car.isOutOfService()) {
+                miscellaneous = Bundle.getMessage("OutOfService");
+            }
+            extensions = car.getTypeExtensions();
             line = car.getNumber() + del + car.getRoadName() + del + carType + del + car.getLength() + del
                     + car.getWeight() + del + car.getColor() + del + car.getOwner() + del + car.getBuilt() + del
-                    + carLocationName + ",-," + carTrackName + del + car.getLoadName() + del + car.getKernelName()
-                    + del + car.getMoves() + del + value + del + comment + del 
-                    + (car.isOutOfService()?Bundle.getMessage("OutOfService"):""); // NOI18N
+                    + carLocationName + ",-," + carTrackName + del + carLoad + del + carKernel
+                    + del + car.getMoves() + del + value + del + comment + del + miscellaneous + del + extensions;
             fileOut.println(line);
         }
         fileOut.flush();
         fileOut.close();
-        log.info("Exported " + carList.size() + " cars to file " + defaultOperationsFilename());
+        log.info("Exported " + _carList.size() + " cars to file " + defaultOperationsFilename());
         JOptionPane.showMessageDialog(null, MessageFormat.format(Bundle.getMessage("ExportedCarsToFile"), new Object[]{
-            carList.size(), defaultOperationsFilename()}), Bundle.getMessage("ExportComplete"),
+            _carList.size(), defaultOperationsFilename()}), Bundle.getMessage("ExportComplete"),
                 JOptionPane.INFORMATION_MESSAGE);
     }
 

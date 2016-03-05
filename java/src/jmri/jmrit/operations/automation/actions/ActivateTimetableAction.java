@@ -1,9 +1,10 @@
 package jmri.jmrit.operations.automation.actions;
 
+import jmri.jmrit.operations.trains.timetable.TrainScheduleManager;
+
+import jmri.jmrit.operations.trains.timetable.TrainSchedule;
 import javax.swing.JComboBox;
 import jmri.jmrit.operations.trains.TrainManager;
-import jmri.jmrit.operations.trains.TrainSchedule;
-import jmri.jmrit.operations.trains.TrainScheduleManager;
 
 public class ActivateTimetableAction extends Action {
 

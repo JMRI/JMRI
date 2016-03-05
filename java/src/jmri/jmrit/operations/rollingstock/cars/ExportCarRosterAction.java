@@ -20,8 +20,8 @@ public class ExportCarRosterAction extends AbstractAction {
     }
 
     public void actionPerformed(ActionEvent ae) {
-        ExportCars ex = new ExportCars(_carsTableFrame);
-        ex.writeOperationsCarFile();
+        ExportCars exportCars = new ExportCars(_carsTableFrame.carsTableModel.getSelectedCarList());
+        exportCars.writeOperationsCarFile();
     }
 
 //    private final static Logger log = LoggerFactory.getLogger(ExportCarRosterAction.class.getName());

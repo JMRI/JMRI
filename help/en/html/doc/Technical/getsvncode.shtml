@@ -90,9 +90,7 @@ source code, you should use the detailed instructions below.</p>
   compile and run it, you need one of the compilation tools described
   on the bar at the left: <a href="Ant.shtml">Ant</a>, <a
    href="Eclipse.shtml">Eclipse</a>, <a
-   href="NetBeans.shtml">NetBeans</a>, <a
-   href="JBuilder.shtml">JBuilder</a>, etc.  (Ant may be the easiest to
-  install and use, and is the primary example in the documentation)</p>
+   href="NetBeans.shtml">NetBeans</a>, etc.</p>
 
   <p>Once you're working with the code, you'll probably create some improvements
   you'd like to contribute back to the project.  This is where Subversion has tremendous

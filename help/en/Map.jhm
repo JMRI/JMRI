@@ -408,8 +408,6 @@
 
 <mapID target="package.jmri.jmrit.operations.Operations_LoopingTrainsThroughStaging" url="package/jmri/jmrit/operations/Operations.shtml#LoopingTrainsThroughStaging"/>
 
-<mapID target="html.doc.Technical.JBuilder" url="html/doc/Technical/JBuilder.shtml"/>
-
 <mapID target="package.jmri.jmrix.openlcb.swing.networktree.NetworkTreePane" url="package/jmri/jmrix/openlcb/swing/networktree/NetworkTreePane.shtml"/>
 
 <mapID target="manual.DecoderPro3.Comp_FMap" url="manual/DecoderPro3/Comp_FMap.shtml"/>
@@ -1349,8 +1347,6 @@
 <mapID target="html.tools.Logix" url="html/tools/Logix.shtml"/>
 
 <mapID target="html.tools.scripting.AppleScript" url="html/tools/scripting/AppleScript.shtml"/>
-
-<mapID target="html.doc.Technical.XCode" url="html/doc/Technical/XCode.shtml"/>
 
 <mapID target="manual.DecoderPro3.Start_Preferences_WiThrottle" url="manual/DecoderPro3/Start_Preferences.shtml#WiThrottle"/>
 

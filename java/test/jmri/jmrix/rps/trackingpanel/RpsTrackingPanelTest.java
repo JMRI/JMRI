@@ -1,15 +1,19 @@
 // RpsTrackingPanelTest.java
 package jmri.jmrix.rps.trackingpanel;
 
+import apps.tests.Log4JFixture;
 import javax.swing.BoxLayout;
 import javax.swing.JFrame;
 import javax.vecmath.Point3d;
+import jmri.InstanceManager;
+import jmri.jmrit.roster.RosterConfigManager;
 import jmri.jmrix.rps.Engine;
 import jmri.jmrix.rps.Measurement;
 import jmri.jmrix.rps.Model;
 import jmri.jmrix.rps.Reading;
 import jmri.jmrix.rps.Receiver;
 import jmri.jmrix.rps.Region;
+import jmri.util.JUnitUtil;
 import jmri.util.JmriJFrame;
 import junit.framework.Assert;
 import junit.framework.Test;
@@ -115,6 +119,22 @@ public class RpsTrackingPanelTest extends TestCase {
     public static Test suite() {
         TestSuite suite = new TestSuite(RpsTrackingPanelTest.class);
         return suite;
+    }
+
+    // The minimal setup for log4J
+    @Override
+    protected void setUp() throws Exception {
+        Log4JFixture.setUp();
+        super.setUp();
+        JUnitUtil.resetInstanceManager();
+        InstanceManager.setDefault(RosterConfigManager.class, new RosterConfigManager());
+    }
+
+    @Override
+    protected void tearDown() throws Exception {
+        JUnitUtil.resetInstanceManager();
+        super.tearDown();
+        Log4JFixture.tearDown();
     }
 
 }
