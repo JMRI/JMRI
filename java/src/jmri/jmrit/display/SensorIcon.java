@@ -998,16 +998,13 @@ public class SensorIcon extends PositionableIcon implements java.beans.PropertyC
                 super.setBackgroundMenu(popup);
             }         
         }
+
         @Override
-        @SuppressWarnings("fallthrough")
         protected ButtonGroup makeColorMenu(JMenu colorMenu, int type) {
             ButtonGroup buttonGrp = super.makeColorMenu( colorMenu,  type);
-            switch (type) {
-                case UNKOWN_BACKGROUND_COLOR:
-                case ACTIVE_BACKGROUND_COLOR:
-                case INACTIVE_BACKGROUND_COLOR:
-                case INCONSISTENT_BACKGROUND_COLOR:
-                    addColorMenuEntry(colorMenu, buttonGrp, Bundle.getMessage("Clear"), null, type);
+            if (type == UNKOWN_BACKGROUND_COLOR || type == ACTIVE_BACKGROUND_COLOR 
+                    || type == INACTIVE_BACKGROUND_COLOR || type == INCONSISTENT_BACKGROUND_COLOR) {
+                addColorMenuEntry(colorMenu, buttonGrp, Bundle.getMessage("Clear"), null, type);
             }
             return buttonGrp;
         }
