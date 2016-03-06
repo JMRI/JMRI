@@ -131,13 +131,14 @@ public class IconAdder extends JPanel implements ListSelectionListener {
         initDefaultIcons();
     }
 
-    @SuppressWarnings("unchecked")
     public void initDefaultIcons() {
         CatalogTreeManager manager = InstanceManager.catalogTreeManagerInstance();
         CatalogTree tree = manager.getBySystemName("NXDI");
         if (tree != null) {
-            CatalogTreeNode node = (CatalogTreeNode) tree.getRoot();
+            CatalogTreeNode node = tree.getRoot();
+            
             Enumeration<CatalogTreeNode> e = node.children();
+            
             while (e.hasMoreElements()) {
                 CatalogTreeNode nChild = e.nextElement();
                 if (_type.equals(nChild.toString())) {
@@ -714,9 +715,10 @@ public class IconAdder extends JPanel implements ListSelectionListener {
         if (tree == null) {	// build a new Default Icons tree
             tree = manager.newCatalogTree("NXDI", "Default Icons");
         }
-        CatalogTreeNode root = (CatalogTreeNode) tree.getRoot();
-        @SuppressWarnings("unchecked")
+        CatalogTreeNode root = tree.getRoot();
+
         Enumeration<CatalogTreeNode> e = root.children();
+
         String name = _defaultIcons.toString();
         while (e.hasMoreElements()) {
             CatalogTreeNode nChild = e.nextElement();

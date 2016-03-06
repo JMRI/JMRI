@@ -1,17 +1,15 @@
-// PositionableIcon.java
 package jmri.jmrit.display;
 
-/**
- * Gather common methods for Turnouts, Semsors, SignalHeads, Masts, etc.
- *
- * @author PeteCressman Copyright (C) 2011
- * @version $Revision$
- */
 import java.util.HashMap;
 import java.util.Iterator;
 import java.util.Map.Entry;
 import jmri.jmrit.catalog.NamedIcon;
 
+/**
+ * Gather common methods for Turnouts, Semsors, SignalHeads, Masts, etc.
+ *
+ * @author PeteCressman Copyright (C) 2011
+ */
 public class PositionableIcon extends PositionableLabel {
     private static final long serialVersionUID = 5192041937901708011L;
     protected HashMap<String, NamedIcon> _iconMap;
@@ -34,8 +32,11 @@ public class PositionableIcon extends PositionableLabel {
         super(s, editor);
     }
 
-    public Positionable finishClone(Positionable p) {
-        PositionableIcon pos = (PositionableIcon) p;
+    public Positionable deepClone() {
+        PositionableIcon pos = new PositionableIcon(_editor);
+        return finishClone(pos);
+    }
+    protected Positionable finishClone(PositionableIcon pos) {
         pos._iconFamily = _iconFamily;
         pos._scale = _scale;
         pos._rotate = _rotate;
