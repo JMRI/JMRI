@@ -1,16 +1,14 @@
-/**
- * PackageTest.java
- *
- * Description:	tests for the jmrit.display package
- *
- * @author	Bob Jacobsen Copyright 2008, 2009, 2010, 2015
- */
 package jmri.jmrit.display;
 
 import junit.framework.Test;
 import junit.framework.TestCase;
 import junit.framework.TestSuite;
 
+/**
+ * Tests for the jmrit.display package
+ *
+ * @author	Bob Jacobsen Copyright 2008, 2009, 2010, 2015
+ */
 public class PackageTest extends TestCase {
 
     // from here down is testing infrastructure
@@ -45,6 +43,7 @@ public class PackageTest extends TestCase {
             suite.addTest(jmri.jmrit.display.SignalSystemTest.suite());
             suite.addTest(jmri.jmrit.display.TurnoutIconWindowTest.suite());
             suite.addTest(jmri.jmrit.display.TurnoutIconTest.suite());
+            suite.addTest(jmri.jmrit.display.IndicatorTurnoutIconTest.suite());
             suite.addTest(jmri.jmrit.display.IconEditorWindowTest.suite());
         }
 
