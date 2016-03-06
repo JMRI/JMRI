@@ -602,10 +602,8 @@ class WarrantTableModel extends jmri.jmrit.beantable.BeanTableDataModel // Abstr
                 if (bean.equals(_warList.get(i))) {
 
                     if (_warNX.contains(bean)
-                            && ((property.equals("runMode") && e.getNewValue() == Integer
-                                    .valueOf(Warrant.MODE_NONE)) || (property
-                                    .equals("controlChange") && e.getNewValue() == Integer
-                                    .valueOf(Warrant.ABORT)))) {
+                            && ((property.equals("runMode") && ((Integer)e.getNewValue()).intValue() == Warrant.MODE_NONE) 
+                                    || (property.equals("controlChange") && ((Integer)e.getNewValue()).intValue() == Warrant.ABORT))) {
                         fireTableRowsDeleted(i, i);
                         removeNXWarrant(bean);
                     } else {
