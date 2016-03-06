@@ -209,6 +209,7 @@ public class TrainsTableSetColorFrame extends OperationsFrame implements java.be
     public void comboBoxActionPerformed(ActionEvent ae) {
         Train train = (Train) trainBox.getSelectedItem();
         if (train != null) {
+            colorBox.setSelectedItem(train.getTableRowColorName());
             colorResetBox.setSelectedItem(train.getRowColorNameReset());
         }
     }
