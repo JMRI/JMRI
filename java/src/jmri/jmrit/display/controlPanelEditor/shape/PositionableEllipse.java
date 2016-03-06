@@ -10,8 +10,7 @@ import jmri.jmrit.display.Positionable;
 /**
  * PositionableRoundRect.
  * <P>
- * @author Pete cresman Copyright (c) 2012
- * @version $Revision: 1 $
+ * @author Pete Cressman Copyright (c) 2012
  */
 public class PositionableEllipse extends PositionableRectangle {
 
@@ -36,13 +35,13 @@ public class PositionableEllipse extends PositionableRectangle {
         setShape(new Ellipse2D.Double(0, 0, _width, _height));
     }
 
+    @Override
     public Positionable deepClone() {
         PositionableEllipse pos = new PositionableEllipse(_editor);
         return finishClone(pos);
     }
 
-    public Positionable finishClone(Positionable p) {
-        PositionableEllipse pos = (PositionableEllipse) p;
+    protected Positionable finishClone(PositionableEllipse pos) {
         pos._width = _width;
         pos._height = _height;
         return super.finishClone(pos);

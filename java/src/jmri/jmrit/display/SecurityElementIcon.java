@@ -27,7 +27,6 @@ import org.slf4j.LoggerFactory;
  * this.
  *
  * @author Bob Jacobsen Copyright 2002
- * @version $Revision$
  * @deprecated 2.13.5, Does not work with the multi-connection correctly,
  * believe not to work correctly before hand and that the feature is not used.
  */
@@ -80,13 +79,13 @@ public class SecurityElementIcon extends PositionableJPanel
     // the associated SecurityElement object
     SecurityElement element = null;
 
+    @Override
     public Positionable deepClone() {
         SecurityElementIcon pos = new SecurityElementIcon(_editor);
         return finishClone(pos);
     }
 
-    public Positionable finishClone(Positionable p) {
-        SecurityElementIcon pos = (SecurityElementIcon) p;
+    protected Positionable finishClone(SecurityElementIcon pos) {
         pos.setSecurityElement(Integer.toString(element.getNumber()));
         return super.finishClone(pos);
     }

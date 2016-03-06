@@ -30,7 +30,6 @@ import org.slf4j.LoggerFactory;
  * parameter is local, set from the popup here.
  *
  * @author Bob Jacobsen Copyright (c) 2002
- * @version $Revision$
  */
 public class PositionableLabel extends JLabel implements Positionable {
 
@@ -206,17 +205,6 @@ public class PositionableLabel extends JLabel implements Positionable {
         }
     }
 
-    public Positionable deepClone() {
-        PositionableLabel pos;
-        if (_icon) {
-            NamedIcon icon = new NamedIcon((NamedIcon) getIcon());
-            pos = new PositionableLabel(icon, _editor);
-        } else {
-            pos = new PositionableLabel(getText(), _editor);
-        }
-        return finishClone(pos);
-    }
-
     /**
      * When text is rotated or in an icon mode, the return of getText() may be
      * null or some other value
@@ -230,8 +218,19 @@ public class PositionableLabel extends JLabel implements Positionable {
         _unRotatedText = s;
     }
 
-    public Positionable finishClone(Positionable p) {
-        PositionableLabel pos = (PositionableLabel) p;
+    @Override
+    public Positionable deepClone() {
+        PositionableLabel pos;
+        if (_icon) {
+            NamedIcon icon = new NamedIcon((NamedIcon) getIcon());
+            pos = new PositionableLabel(icon, _editor);
+        } else {
+            pos = new PositionableLabel(getText(), _editor);
+        }
+        return finishClone(pos);
+    }
+
+    protected Positionable finishClone(PositionableLabel pos) {
         pos._text = _text;
         pos._icon = _icon;
         pos._control = _control;

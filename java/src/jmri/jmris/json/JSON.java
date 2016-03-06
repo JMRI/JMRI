@@ -1,12 +1,17 @@
 package jmri.jmris.json;
 
+import jmri.server.json.JsonException;
+import jmri.server.json.power.JsonPowerServiceFactory;
+import jmri.server.json.time.JsonTimeServiceFactory;
+
 /**
- * Constants used in the JMRI JSON protocol.
+ * Constants used in the JMRI JSON protocol through version 3.0.
  * <p>
  * With the exception of the constants F0-F28 (see {@link #F}), all object names
  * used in the JMRI JSON protocol are constants in this class.
  *
- * @author Randall Wood (C) 2013, 2014
+ * @author Randall Wood (C) 2013, 2014, 2016
+ * @see jmri.server.json.JSON
  */
 public final class JSON {
 
@@ -26,7 +31,7 @@ public final class JSON {
      * <p>
      * {@value #JSON_PROTOCOL_VERSION}
      */
-    public static final String JSON_PROTOCOL_VERSION = "3.0"; // NOI18N
+    public static final String JSON_PROTOCOL_VERSION = jmri.server.json.JSON.JSON_PROTOCOL_VERSION; // NOI18N
 
     /* JSON structure */
     /**
@@ -116,15 +121,15 @@ public final class JSON {
     /**
      * {@value #ERROR}
      */
-    public static final String ERROR = "error"; // NOI18N
+    public static final String ERROR = JsonException.ERROR; // NOI18N
     /**
      * {@value #CODE}
      */
-    public static final String CODE = "code"; // NOI18N
+    public static final String CODE = JsonException.CODE; // NOI18N
     /**
      * {@value #MESSAGE}
      */
-    public static final String MESSAGE = "message"; // NOI18N
+    public static final String MESSAGE = JsonException.MESSAGE; // NOI18N
 
     /* JSON hello and metadata */
     /**
@@ -290,7 +295,7 @@ public final class JSON {
     /**
      * {@value #POWER}
      */
-    public static final String POWER = "power"; // NOI18N
+    public static final String POWER = JsonPowerServiceFactory.POWER; // NOI18N
     /**
      * {@value #PROGRAMMER}
      */
@@ -326,7 +331,7 @@ public final class JSON {
     /**
      * {@value #TIME}
      */
-    public static final String TIME = "time"; // NOI18N
+    public static final String TIME = JsonTimeServiceFactory.TIME; // NOI18N
     /**
      * {@value #TRAIN}
      */
