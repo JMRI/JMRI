@@ -1,8 +1,6 @@
 // Train.java
 package jmri.jmrit.operations.trains;
 
-import jmri.jmrit.operations.trains.excel.TrainCustomManifest;
-
 import java.awt.Color;
 import java.io.File;
 import java.io.IOException;
@@ -35,6 +33,7 @@ import jmri.jmrit.operations.routes.RouteLocation;
 import jmri.jmrit.operations.routes.RouteManager;
 import jmri.jmrit.operations.setup.Control;
 import jmri.jmrit.operations.setup.Setup;
+import jmri.jmrit.operations.trains.excel.TrainCustomManifest;
 import jmri.jmrit.roster.Roster;
 import jmri.jmrit.roster.RosterEntry;
 import jmri.script.JmriScriptEngineManager;
@@ -46,7 +45,8 @@ import org.slf4j.LoggerFactory;
 /**
  * Represents a train on the layout
  *
- * @author Daniel Boudreau Copyright (C) 2008, 2009, 2010, 2011, 2012, 2013, 2014, 2015
+ * @author Daniel Boudreau Copyright (C) 2008, 2009, 2010, 2011, 2012, 2013,
+ *         2014, 2015
  *
  * @author Rodney Black Copyright (C) 2011
  * @version $Revision$
@@ -166,7 +166,7 @@ public class Train implements java.beans.PropertyChangeListener {
     public static final String BUILD_FAILED = Bundle.getMessage("BuildFailed");
     public static final String BUILT = Bundle.getMessage("Built");
     public static final String PARTIAL_BUILT = Bundle.getMessage("Partial");
-    public static final String TRAIN_IN_ROUTE = Bundle.getMessage("TrainInRoute");
+    public static final String TRAIN_EN_ROUTE = Bundle.getMessage("TrainEnRoute");
     public static final String TERMINATED = Bundle.getMessage("Terminated");
     public static final String MANIFEST_MODIFIED = Bundle.getMessage("Modified");
 
@@ -445,7 +445,7 @@ public class Train implements java.beans.PropertyChangeListener {
 
     protected int getExpectedTravelTimeInMinutes(RouteLocation routeLocation) {
         int minutes = 0;
-        if (!isTrainInRoute()) {
+        if (!isTrainEnRoute()) {
             minutes += _departureTime.get(Calendar.MINUTE);
             minutes += 60 * _departureTime.get(Calendar.HOUR_OF_DAY);
         } else {
@@ -459,9 +459,9 @@ public class Train implements java.beans.PropertyChangeListener {
                 RouteLocation rl = routeList.get(i);
                 if (rl == routeLocation) {
                     break; // done
-                } 
+                }
                 // start recording time after finding where the train is
-                if (!trainLocFound && isTrainInRoute()) {
+                if (!trainLocFound && isTrainEnRoute()) {
                     if (rl == getCurrentLocation()) {
                         trainLocFound = true;
                         // add travel time
@@ -766,7 +766,7 @@ public class Train implements java.beans.PropertyChangeListener {
         String oldStatus = getStatus();
         int oldCode = getStatusCode();
         _statusCode = code;
-        // always fire property change for train in route
+        // always fire property change for train en route
         if (oldCode != getStatusCode() || code == CODE_TRAIN_EN_ROUTE) {
             setDirtyAndFirePropertyChange(STATUS_CHANGED_PROPERTY, oldStatus, getStatus());
         }
@@ -868,11 +868,11 @@ public class Train implements java.beans.PropertyChangeListener {
     public int getStatusCode() {
         return _statusCode;
     }
-    
-    protected void setOldStatusCode(int code ) {
+
+    protected void setOldStatusCode(int code) {
         _oldStatusCode = code;
     }
-    
+
     protected int getOldStatusCode() {
         return _oldStatusCode;
     }
@@ -883,7 +883,7 @@ public class Train implements java.beans.PropertyChangeListener {
      *
      * @return true if train has departed
      */
-    public boolean isTrainInRoute() {
+    public boolean isTrainEnRoute() {
         return !getCurrentLocationName().equals(NONE) && getTrainDepartsRouteLocation() != getCurrentLocation();
     }
 
@@ -908,9 +908,10 @@ public class Train implements java.beans.PropertyChangeListener {
         }
         return true;
     }
-    
+
     /**
      * Used to determine if train is carrying only passenger cars.
+     * 
      * @return true if only passenger cars have been assigned to this train.
      */
     public boolean isOnlyPassengerCars() {
@@ -2438,7 +2439,7 @@ public class Train implements java.beans.PropertyChangeListener {
     }
 
     /**
-     * Optional changes to train while in route.
+     * Optional changes to train while en route.
      *
      * @param options NONE, CHANGE_ENGINES, ADD_CABOOSE, HELPER_ENGINES,
      *            REMOVE_CABOOSE
@@ -2456,7 +2457,7 @@ public class Train implements java.beans.PropertyChangeListener {
     }
 
     /**
-     * Optional changes to train while in route.
+     * Optional changes to train while en route.
      *
      * @param options NONE, CHANGE_ENGINES, ADD_CABOOSE, HELPER_ENGINES,
      *            REMOVE_CABOOSE
@@ -3130,8 +3131,8 @@ public class Train implements java.beans.PropertyChangeListener {
     }
 
     /**
-     * Move train to next location in route. Will move engines, cars, and train
-     * icon. Will also terminate a train after it arrives at its final
+     * Move train to next location in the route. Will move engines, cars, and
+     * train icon. Will also terminate a train after it arrives at its final
      * destination.
      */
     public void move() {
@@ -3144,7 +3145,7 @@ public class Train implements java.beans.PropertyChangeListener {
         RouteLocation rlNext = getNextLocation(rl);
 
         setCurrentLocation(rlNext);
-        
+
         // cars and engines will move via property change
         setDirtyAndFirePropertyChange(TRAIN_LOCATION_CHANGED_PROPERTY, rl, rlNext);
         moveTrainIcon(rlNext);
@@ -3190,9 +3191,10 @@ public class Train implements java.beans.PropertyChangeListener {
         }
         return false;
     }
-    
+
     /**
      * Moves the train to the specified route location
+     * 
      * @param rl route location
      * @return true if successful
      */
@@ -3343,7 +3345,6 @@ public class Train implements java.beans.PropertyChangeListener {
     public void createTrainIcon(RouteLocation rl) {
         if (_trainIcon != null && _trainIcon.isActive()) {
             _trainIcon.remove();
-            _trainIcon.dispose();
         }
         // if there's a panel specified, get it and place icon
         if (!Setup.getPanelName().equals(Setup.NONE)) {
@@ -3396,8 +3397,8 @@ public class Train implements java.beans.PropertyChangeListener {
             _trainIcon.setLocoColor(Setup.getTrainIconColorTerminate());
             return;
         }
-        // local train?
-        if (getRoute().getLocationsBySequenceList().size() == 1) {
+        // local train serving only one location?
+        if (isLocalSwitcher()) {
             _trainIcon.setLocoColor(Setup.getTrainIconColorLocal());
             return;
         }
@@ -3456,7 +3457,7 @@ public class Train implements java.beans.PropertyChangeListener {
      */
     public boolean reset() {
         // is this train in route?
-        if (isTrainInRoute()) {
+        if (isTrainEnRoute()) {
             log.info("Train (" + getName() + ") has started its route, can not be reset");
             return false;
         }
@@ -3472,7 +3473,6 @@ public class Train implements java.beans.PropertyChangeListener {
         // remove train icon
         if (_trainIcon != null && _trainIcon.isActive()) {
             _trainIcon.remove();
-            _trainIcon.dispose();
         }
         return true;
     }
@@ -3801,7 +3801,7 @@ public class Train implements java.beans.PropertyChangeListener {
                     _statusTerminatedDate = splitStatus[1];
                 }
                 _statusCode = CODE_TERMINATED;
-            } else if (status.startsWith(TRAIN_IN_ROUTE)) {
+            } else if (status.startsWith(TRAIN_EN_ROUTE)) {
                 _statusCode = CODE_TRAIN_EN_ROUTE;
             } else if (status.startsWith(TRAIN_RESET)) {
                 _statusCode = CODE_TRAIN_RESET;

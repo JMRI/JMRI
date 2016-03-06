@@ -60,6 +60,7 @@
     <li><a href="#QuickStartHelp">Quick Start Help</a></li>
     <li><a href="#Settings">Settings</a>
      <ul>
+      <li><a href="#PanelOptionsTrainIcons">Panel Options (Train Icons)</a></li>
       <li><a href="#Backup">Backup</a></li>
       <li><a href="#Restore">Restore</a></li>
       <li><a href="#ResetDatabase">Reset Database</a></li>
@@ -578,6 +579,11 @@
    <p>
     <img src="images/PanelWithMarkers.png">
    </p>
+   
+   <p>The train icon menu allows you to "Move" a train to the next location in the train's route. You
+   can also quickly move a train to any location in the train's route by selecting "Route" followed by
+   any location in the route. To terminate a train that has reached the last location in a train's route,
+   select "Move".</p>
 
    <h3>Save</h3>
 
@@ -2507,6 +2513,9 @@
    </p>
    <p>You need to be very careful with spaces when importing a comma delimitated file. The
     program will include leading and trailing spaces if they exist between the commas.</p>
+    
+    <p>A comma delimitated file can also import a car's load and kernel name, just add them after the
+    track name field.</p>
 
    <p>
     If you enter 0 for the car's weight, the program will automatically calculate the car weight for
@@ -4153,7 +4162,7 @@
     boxes for that track. Only a switcher will service a track that doesn't have any direction boxes
     selected.</p>
 
-   <h3>Switcher Restrictions</h3>
+   <h4>Switcher Restrictions</h4>
 
    OperationsPro&trade; when generating a Manifest for a switcher (a train with a single location in its
    route) will by default never move a car from a spur to a spur or yard to a yard, only yard to
