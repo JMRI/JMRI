@@ -43,8 +43,8 @@ Clicking on each item will then populate the right hand side with the various op
 <img src="images/JMRIPrefsChanges.png" height="112" width="250" align="right" alt="Save? dialog"></a>
 <a href="#WiThrottle">WiThrottle</a><br>
 <a href="#Profiles">Config Profiles</a><br>
-<a href="#JSONServer">JSON Server</a><br>
 <a href="#RailroadName">Railroad Name</a><br>
+<a href="#JSONServer">JSON Server</a><br>
 <a href="#WebServer">Web Server</a><br>
 <a href="#SRCP Server">SRCP Server</a><br>
 <a href="#Simple Server">Simple Server</a><br>
@@ -279,7 +279,7 @@ This will let you to limit what users have the ability to control.
 </dl>
 
 The "Apply" button puts the current settings into effect, without
-saving them permanently.  For a connected throttle to use the
+saving them permanently.  For a connected <a href="../jmri/jmrit/withrottle/UserInterface.shtml">WiThrottle</a> to use the
 new settings, its connection must be closed and reopened.
 
 <a name="Profiles">
@@ -293,21 +293,21 @@ For more information, see the
 <a href="../../html/setup/profiles.shtml">Configuration Profiles</a> help
 page.
 
+<a name="RailroadName">
+<h2>Railroad Name</h2></a>
+<p>
+The Railroad Name tab lets you specify the name of your model railroad (module), as it is used by several server protocols.</p>
+
 <a name="JSONServer">
 <h2>JSON Server</h2></a>
 <p>
-The JMRI JSON server is used by applications on other computers, 
+The JMRI <a href="../../html/web/JsonServlet.shtml">JSON server</a> is used by applications on other computers,
 including tablets and phones, to connect to JMRI to operate your 
 railroad.</p>
 <p>
 On this pane you can specify the port for the connection (usually left at default)
 and how often the server checks for whether the connection has failed via a heartbeat
 message.</p>
-
-<a name="RailroadName">
-    <h2>Railroad Name</h2></a>
-<p>
-The Railroad Name tab lets you specify the name of your model railroad (module), as it is used by several server protocols.</p>
 
 <a name="WebServer">
 <h2>Web Server</h2></a>

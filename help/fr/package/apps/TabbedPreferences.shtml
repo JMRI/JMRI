@@ -225,8 +225,8 @@ Cela vous permettra de limiter ce que les utilisateurs ont la possibilit&#233; d
 </dl>
 
 Le bouton "Appliquer" met les param&#232;tres actuels en vigueur, sans
-les enregistrer de fa&#231;on permanente. Pour qu'un r&#233;gulateur utilisz les
-nouveaux param&#232;tres, sa connexion doit &#234;tre ferm&#233; et r&#233;ouverte..
+les enregistrer de fa&#231;on permanente. Pour qu'un <a href="../jmri/jmrit/withrottle/UserInterface.shtml">r&#233;gulateur WI</a> utilise les
+nouveaux param&#232;tres, sa connexion doit &#234;tre ferm&#233; et r&#233;ouverte.
 
 <!--#include virtual="/Footer" -->
 </body>
