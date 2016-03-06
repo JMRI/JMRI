@@ -12,9 +12,11 @@ import jmri.JmriException;
 import jmri.Throttle;
 import jmri.ThrottleManager;
 import jmri.ThrottleListener;
+import jmri.LocoAddress;
 import jmri.DccLocoAddress;
 import jmri.DccThrottle;
 import jmri.jmrix.SystemConnectionMemo;
+import jmri.jmris.AbstractThrottleServer;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -23,7 +25,7 @@ import org.slf4j.LoggerFactory;
  *
  * @author Paul Bender Copyright (C) 2016
  */
-public class JmriSRCPThrottleServer extends jmri.jmris.AbstractThrottleServer {
+public class JmriSRCPThrottleServer extends AbstractThrottleServer {
 
     private static final Logger log = LoggerFactory.getLogger(JmriSRCPThrottleServer.class);
 
@@ -44,7 +46,7 @@ public class JmriSRCPThrottleServer extends jmri.jmris.AbstractThrottleServer {
      * Protocol Specific Functions
      */
     @Override
-    public void sendStatus() throws IOException {
+    public void sendStatus(LocoAddress l) throws IOException {
         TimeStampedOutput.writeTimestamp(output, Bundle.getMessage("Error499"));
     }
 
@@ -106,23 +108,23 @@ public class JmriSRCPThrottleServer extends jmri.jmris.AbstractThrottleServer {
            Boolean f27=(Boolean)t.getThrottleInfo(addr,"F27");
            Boolean f28=(Boolean)t.getThrottleInfo(addr,"F28");
            // and now build the output string to send
-           String StatusString="100 INFO " + bus + "GL" + address + " ";
+           String StatusString="100 INFO " + bus + " GL " + address + " ";
            StatusString+= isForward?"1 ":"0 ";
            switch(speedStepMode){
                   case DccThrottle.SpeedStepMode14:
-                       StatusString+= java.lang.Math.ceil(speedSetting *14) + " " +14;
+                       StatusString+= (int)java.lang.Math.ceil(speedSetting *14) + " " +14;
                        break;
                   case DccThrottle.SpeedStepMode27:
-                       StatusString+= java.lang.Math.ceil(speedSetting *27) + " " +27;
+                       StatusString+= (int)java.lang.Math.ceil(speedSetting *27) + " " +27;
                        break;
                   case DccThrottle.SpeedStepMode28:
-                       StatusString+= java.lang.Math.ceil(speedSetting *28) + " " +28;
+                       StatusString+= (int)java.lang.Math.ceil(speedSetting *28) + " " +28;
                        break;
                   case DccThrottle.SpeedStepMode128:
-                       StatusString+= java.lang.Math.ceil(speedSetting *126) + " " +126;
+                       StatusString+= (int)java.lang.Math.ceil(speedSetting *126) + " " +126;
                        break;
                   default:
-                       StatusString+= java.lang.Math.ceil(speedSetting *100) + " " +100;
+                       StatusString+= (int)java.lang.Math.ceil(speedSetting *100) + " " +100;
            }
            StatusString+= f0?" 1":" 0";
            StatusString+= f1?" 1":" 0";
@@ -231,5 +233,126 @@ public class JmriSRCPThrottleServer extends jmri.jmris.AbstractThrottleServer {
         }
         
     }
+
+    /*
+     * Set Throttle Speed and Direction
+     *
+     * @param bus, bus the throttle is on.
+     * @param l address of the locomotive to change speed of.
+     * @param speed float representing the speed, -1 for emergency stop.
+     * @param isForward boolean, true if forward, false if reverse or
+     * undefined.
+     */
+    public void setThrottleSpeedAndDirection(int bus,int address, float speed, boolean isForward){
+        log.debug("Setting Speed for address {} bus {} to {} with direction {}",
+                  address,bus,speed,isForward?"forward":"reverse");
+        java.util.List<SystemConnectionMemo> list = jmri.InstanceManager.getList(SystemConnectionMemo.class);
+        SystemConnectionMemo memo = null;
+        try {
+            memo = list.get(bus - 1);
+        } catch (java.lang.IndexOutOfBoundsException obe) {
+            try {
+               TimeStampedOutput.writeTimestamp(output, Bundle.getMessage("Error412"));
+            } catch(IOException ioe) {
+               log.error("Error writing to network port");
+            }
+            return;
+        }
+
+        /* request the throttle for this particular locomotive address */
+        if(memo.provides(jmri.ThrottleManager.class)) {
+           ThrottleManager tm=memo.get(jmri.ThrottleManager.class);
+           // we will use getThrottleInfo to request information about the
+           // address, so we need to convert the address to a DccLocoAddress 
+           // object first.
+           DccLocoAddress addr = new DccLocoAddress(address,tm.canBeLongAddress(address));
+         
+           // get the throttle for the address.     
+           if(addressList.contains(addr)){
+               log.debug("Throttle in throttle list");
+               Throttle t = (Throttle)throttleList.get(addressList.indexOf(addr));
+               // set the speed and direction.
+               t.setSpeedSetting(speed);
+               t.setIsForward(isForward);
+           }
+       }
+   }
+
+
+    // implementation of ThrottleListener
+    @Override
+    public void notifyThrottleFound(DccThrottle t){
+       log.debug("notified throttle found");
+       throttleList.add(t);
+       try{
+          sendThrottleFound(t.getLocoAddress());
+          t.addPropertyChangeListener(new srcpThrottlePropertyChangeListener(this,t, (Integer)busList.get(addressList.indexOf(t.getLocoAddress()))));
+       } catch(java.io.IOException ioe){
+           //Something failed writing data to the port.
+       }
+    }
+
+
+
+
+   class srcpThrottlePropertyChangeListener implements PropertyChangeListener {
+
+      int bus;
+      int address;
+      Throttle throttle=null;
+      JmriSRCPThrottleServer clientServer=null;
+      
+      srcpThrottlePropertyChangeListener(JmriSRCPThrottleServer ts,Throttle t,
+            int bus ){
+            log.debug("property change listener created");
+            clientServer=ts;
+            throttle = t;
+            this.bus=bus;
+            address=t.getLocoAddress().getNumber();
+       }
+
+              // update the state of this throttle if any of the properties change
+       public void propertyChange(java.beans.PropertyChangeEvent e) {
+          if (log.isDebugEnabled()) {
+              log.debug("Property change event received " + e.getPropertyName() + " / " + e.getNewValue());
+          }
+          if (e.getPropertyName().equals("SpeedSetting")) {
+             try {
+                clientServer.sendStatus(bus,address);
+             } catch(IOException ioe){
+                log.error("Error writing to network port");
+             }
+          } else if (e.getPropertyName().equals("SpeedSteps")) {
+             try {
+                clientServer.sendStatus(bus,address);
+             } catch(IOException ioe){
+                log.error("Error writing to network port");
+             }
+          } else {
+              for (int i = 0; i <= 28; i++) {
+                 if (e.getPropertyName().equals("F" + i)) {
+                    try {
+                       clientServer.sendStatus(bus,address);
+                    } catch(IOException ioe){
+                       log.error("Error writing to network port");
+                    }
+                    break; // stop the loop, only one function property
+                    // will be matched.
+                 } else if (e.getPropertyName().equals("F" + i + "Momentary")) {
+                    try {
+                       clientServer.sendStatus(bus,address);
+                    } catch(IOException ioe){
+                       log.error("Error writing to network port");
+                    }
+                    break; // stop the loop, only one function property
+                    // will be matched.
+                 }
+              }
+          }
+
+       }
+
+
+   }
 
 }

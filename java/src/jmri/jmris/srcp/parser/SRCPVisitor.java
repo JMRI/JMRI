@@ -417,6 +417,14 @@ public class SRCPVisitor implements SRCPParserVisitor {
         } else if (((SimpleNode) node.jjtGetChild(1)).jjtGetValue().equals("GL")
                 && isSupported(bus, "GL")) {
             // This is a Generic Loco request
+            int address = Integer.parseInt(((String) ((SimpleNode) node.jjtGetChild(2)).jjtGetValue()));
+            String drivemode = (String) ((SimpleNode) node.jjtGetChild(3)).jjtGetValue(); 
+            
+            int speedstep = Integer.parseInt(((String) ((SimpleNode) node.jjtGetChild(4)).jjtGetValue()));
+
+            int maxspeedstep = Integer.parseInt(((String) ((SimpleNode) node.jjtGetChild(5)).jjtGetValue()));
+            ((jmri.jmris.srcp.JmriSRCPThrottleServer) ((jmri.jmris.ServiceHandler) data).getThrottleServer()).setThrottleSpeedAndDirection(bus,address,(float)speedstep/(float)maxspeedstep,drivemode.equals("0"));
+
         } else if (((SimpleNode) node.jjtGetChild(1)).jjtGetValue().equals("TIME")) {
             // This is a Time request
             try {
