@@ -1,4 +1,3 @@
-// AbstractCatalogTree.java
 package jmri.jmrit.catalog;
 
 import java.beans.PropertyChangeListener;
@@ -20,10 +19,6 @@ import org.slf4j.LoggerFactory;
  */
 public abstract class AbstractCatalogTree extends DefaultTreeModel implements CatalogTree {
 
-    /**
-     *
-     */
-    private static final long serialVersionUID = -6839273293799611575L;
     private String mUserName;
     private String mSystemName;
 
@@ -73,6 +68,14 @@ public abstract class AbstractCatalogTree extends DefaultTreeModel implements Ca
                     + ", pathToRoot= " + pathToRoot);
         }
         insertNodes((String) root.getUserObject(), pathToRoot, root);
+    }
+
+    /**
+     * Get the root element of the tree as a jmri.CatalogTreeNode object.
+     * (Instead of Object, as parent swing.TreeModel provides)
+     */
+    public CatalogTreeNode getRoot() {
+        return (CatalogTreeNode) super.getRoot();
     }
 
     /**

@@ -20,7 +20,7 @@ public class JmriConnection {
 
     private Session session = null;
     private DataOutputStream dataOutputStream = null;
-    protected Locale locale = Locale.getDefault();
+    private Locale locale = Locale.getDefault();
     private final static Logger log = LoggerFactory.getLogger(JmriConnection.class);
 
     /**
