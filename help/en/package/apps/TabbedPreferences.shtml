@@ -278,8 +278,7 @@ This will let you to limit what users have the ability to control.
 </ul>
 </dl>
 
-The "Apply" button puts the current settings into effect, without
-saving them permanently.  For a connected <a href="../jmri/jmrit/withrottle/UserInterface.shtml">WiThrottle</a> to use the
+The "Save" button at lower left puts the new settings into effect.  For a connected <a href="../jmri/jmrit/withrottle/UserInterface.shtml">throttle</a> to use the
 new settings, its connection must be closed and reopened.
 
 <a name="Profiles">
