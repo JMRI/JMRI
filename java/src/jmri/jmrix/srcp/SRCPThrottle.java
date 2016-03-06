@@ -196,6 +196,7 @@ public class SRCPThrottle extends AbstractThrottle {
                  break;
           case SpeedStepMode128:
           default:
+                 maxsteps = 126;
        }
     }
 
