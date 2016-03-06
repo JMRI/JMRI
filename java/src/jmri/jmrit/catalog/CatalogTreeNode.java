@@ -2,13 +2,16 @@
 package jmri.jmrit.catalog;
 
 import java.util.ArrayList;
+import java.util.Enumeration;
+
 import javax.swing.tree.DefaultMutableTreeNode;
+
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 /**
  * Node of a CatalogTree.
- * <P>
+ *
  * Name for the node Path is info needed for leaves.
  *
  * @author	Pete Cressman Copyright 2009
@@ -101,6 +104,10 @@ public class CatalogTreeNode extends DefaultMutableTreeNode {
         return leaves;
     }
 
+    public Enumeration<CatalogTreeNode> children() {
+        return (Enumeration<CatalogTreeNode>) super.children();
+    }
+    
     public ArrayList<CatalogTreeLeaf> getLeaves() {
         return _leaves;
     }

@@ -60,6 +60,7 @@
     <li><a href="#QuickStartHelp">Quick Start Help</a></li>
     <li><a href="#Settings">Settings</a>
      <ul>
+      <li><a href="#PanelOptionsTrainIcons">Panel Options (Train Icons)</a></li>
       <li><a href="#Backup">Backup</a></li>
       <li><a href="#Restore">Restore</a></li>
       <li><a href="#ResetDatabase">Reset Database</a></li>
@@ -2512,6 +2513,9 @@
    </p>
    <p>You need to be very careful with spaces when importing a comma delimitated file. The
     program will include leading and trailing spaces if they exist between the commas.</p>
+    
+    <p>A comma delimitated file can also import a car's load and kernel name, just add them after the
+    track name field.</p>
 
    <p>
     If you enter 0 for the car's weight, the program will automatically calculate the car weight for
@@ -4158,7 +4162,7 @@
     boxes for that track. Only a switcher will service a track that doesn't have any direction boxes
     selected.</p>
 
-   <h3>Switcher Restrictions</h3>
+   <h4>Switcher Restrictions</h4>
 
    OperationsPro&trade; when generating a Manifest for a switcher (a train with a single location in its
    route) will by default never move a car from a spur to a spur or yard to a yard, only yard to
