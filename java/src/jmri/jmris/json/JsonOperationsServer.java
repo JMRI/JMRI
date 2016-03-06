@@ -140,7 +140,7 @@ public class JsonOperationsServer extends AbstractOperationsServer {
         }
     }
 
-    void parseTrainRequest(Locale locale, JsonNode data) throws IOException, JsonException {
+    public void parseTrainRequest(Locale locale, JsonNode data) throws IOException, JsonException {
         String id = data.path(ID).asText();
         if (!data.path(METHOD).isMissingNode()) {
             JsonUtil.setTrain(locale, id, data);
