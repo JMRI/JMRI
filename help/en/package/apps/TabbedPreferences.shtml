@@ -249,7 +249,7 @@ features are available, and which ones can be used.
 
 <dd>If selected,
 listens for a packet to be sent from the connected mobile device.
-If the server does not receive any communication in the
+If WiThrottle Server does not receive any communication in the
 chosen time, the affected JMRI throttle will idle its train.
 
 <p>
@@ -258,11 +258,12 @@ earlier or later.
 
 <dt>Network
 
-<dd>Change the port number to use. Ensure your firewall software allows this port to be used.
+<dd>Change the port number to use. Ensure your firewall software allows this port to be used.<br>
+Only change the Port Number after stopping WiThrottle Server if there is a chance mobile devices are still connected.
 
 <dt>Allowed Controls
 
-<dd>Check boxes to allow specific features to be controlled by mobile devices.
+<dd>Check these boxes to allow specific features to be controlled by mobile devices.
 This will let you to limit what users have the ability to control.
 <ul>
     <li>Track Power - Select whether mobile devices connected through
@@ -278,8 +279,8 @@ This will let you to limit what users have the ability to control.
 </ul>
 </dl>
 
-The "Save" button at lower left puts the new settings into effect.  For a connected <a href="../jmri/jmrit/withrottle/UserInterface.shtml">throttle</a> to use the
-new settings, its connection must be closed and reopened.
+The "Save" button at lower left puts any changed settings into effect. For a connected <a href="../jmri/jmrit/withrottle/UserInterface.shtml">throttle</a> to use the
+new settings, you'll have to restart JMRI (and then restart WiThrottle) as instructed by the dialog.
 
 <a name="Profiles">
 <h2>Config Profiles</h2></a>
