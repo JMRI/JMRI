@@ -11,7 +11,6 @@ import jmri.jmrit.display.Positionable;
  * PositionableRoundRect adds corner radii to PositionableShapes.
  * <P>
  * @author Pete cresman Copyright (c) 2012
- * @version $Revision: 1 $
  */
 public class PositionableRoundRect extends PositionableRectangle {
 
@@ -45,13 +44,13 @@ public class PositionableRoundRect extends PositionableRectangle {
         setShape(new RoundRectangle2D.Double(0, 0, _width, _height, _radius, _radius));
     }
 
+    @Override
     public Positionable deepClone() {
         PositionableRoundRect pos = new PositionableRoundRect(_editor);
         return finishClone(pos);
     }
 
-    public Positionable finishClone(Positionable p) {
-        PositionableRoundRect pos = (PositionableRoundRect) p;
+    protected Positionable finishClone(PositionableRoundRect pos) {
         pos._radius = _radius;
         return super.finishClone(pos);
     }
