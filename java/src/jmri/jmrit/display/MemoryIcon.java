@@ -29,7 +29,6 @@ import org.slf4j.LoggerFactory;
  * The value of the memory can't be changed with this icon.
  * <P>
  * @author Bob Jacobsen Copyright (c) 2004
- * @version $Revision$
  */
 public class MemoryIcon extends PositionableLabel implements java.beans.PropertyChangeListener/*, DropTargetListener*/ {
 
@@ -57,13 +56,13 @@ public class MemoryIcon extends PositionableLabel implements java.beans.Property
         this.setTransferHandler(new TransferHandler());
     }
 
+    @Override
     public Positionable deepClone() {
         MemoryIcon pos = new MemoryIcon("", _editor);
         return finishClone(pos);
     }
 
-    public Positionable finishClone(Positionable p) {
-        MemoryIcon pos = (MemoryIcon) p;
+    protected Positionable finishClone(MemoryIcon pos) {
         pos.setMemory(namedMemory.getName());
         pos.setOriginalLocation(getOriginalX(), getOriginalY());
         if (map != null) {

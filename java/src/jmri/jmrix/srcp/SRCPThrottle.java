@@ -100,6 +100,22 @@ public class SRCPThrottle extends AbstractThrottle {
     }
 
     /**
+     * Send the message to set the state of functions F13, F14, F15, F16, F17,
+     * F18, F19, and F20.
+     */
+    protected void sendFunctionGroup4() {
+        sendUpdate();
+    }
+
+    /**
+     * Send the message to set the state of functions F21, F22, F23, F24,
+     * F25, F26, F27 and F28.
+     */
+    protected void sendFunctionGroup5() {
+        sendUpdate();
+    }
+
+    /**
      * Set the speed & direction.
      * <P>
      * This intentionally skips the emergency stop value of 1.
@@ -196,6 +212,7 @@ public class SRCPThrottle extends AbstractThrottle {
                  break;
           case SpeedStepMode128:
           default:
+                 maxsteps = 126;
        }
     }
 
