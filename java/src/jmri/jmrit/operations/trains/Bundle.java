@@ -1,15 +1,7 @@
 // Bundle.java
 package jmri.jmrit.operations.trains;
 
-import edu.umd.cs.findbugs.annotations.CheckReturnValue;
-import edu.umd.cs.findbugs.annotations.DefaultAnnotation;
-import edu.umd.cs.findbugs.annotations.NonNull;
-import edu.umd.cs.findbugs.annotations.Nullable;
-import edu.umd.cs.findbugs.annotations.SuppressWarnings;
 import java.util.Locale;
-
-@DefaultAnnotation({NonNull.class, CheckReturnValue.class})
-@SuppressWarnings(value = "NM_SAME_SIMPLE_NAME_AS_SUPERCLASS", justification = "Desired pattern is repeated class names with package-level access to members")
 
 @net.jcip.annotations.Immutable
 
@@ -95,7 +87,6 @@ public class Bundle extends jmri.jmrit.operations.Bundle {
     private final static Bundle b = new Bundle();
 
     @Override
-    @Nullable
     protected String bundleName() {
         return name;
     }
