@@ -63,6 +63,37 @@ abstract public class AbstractThrottleServer implements ThrottleListener {
        });
    }
 
+    /*
+     * Set Throttle Functions on/off
+     *
+     * @param l LocoAddress of the locomotive to change speed of.
+     * @param fList an ArrayList of boolean values indicating whether the
+     *         function is active or not.
+     */
+    public void setThrottleFunctions(LocoAddress l, ArrayList fList){
+       // get the throttle for the address.	
+       throttleList.forEach( t -> {
+          if(((Throttle)t).getLocoAddress()==l) {
+             for(int i=0;i< fList.size();i++){
+                 try {
+                   java.lang.reflect.Method setter = t.getClass()
+                       .getMethod("setF"+i,boolean.class);
+                   setter.invoke(t,(Boolean) fList.get(i));
+                 } catch (java.lang.NoSuchMethodException|
+                          java.lang.IllegalAccessException|
+                          java.lang.reflect.InvocationTargetException ex1) {
+                   ex1.printStackTrace();
+                   try {
+                     sendErrorStatus();
+                   } catch(IOException ioe){
+                     log.error("Error writing to network port");
+                   }
+                 }
+             }
+          }
+       });
+   }
+
 
     /*
      * Request a throttle for the specified address from the default
@@ -98,13 +129,17 @@ abstract public class AbstractThrottleServer implements ThrottleListener {
         ThrottleManager t = InstanceManager.throttleManagerInstance();
         t.cancelThrottleRequest(l.getNumber(),this);
         if(l instanceof DccLocoAddress) {
-           // we need to do something to release the throttle here.
-           //t.releaseThrottle(t.getThrottleInfo,this);
-        }
-        try {
-          sendThrottleReleased(l);
-        } catch(IOException ioe) {
-          log.error("Error writing to network port");
+          throttleList.forEach( throttle -> {
+              if(((Throttle)throttle).getLocoAddress()==l) {
+                 t.releaseThrottle((DccThrottle)throttle,this);
+                 throttleList.remove(throttle);
+                 try {
+                    sendThrottleReleased(l);
+                 } catch(IOException ioe) {
+                    log.error("Error writing to network port");
+                 }
+              }
+          });
         }
     }
 

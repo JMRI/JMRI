@@ -424,6 +424,16 @@ public class SRCPVisitor implements SRCPParserVisitor {
 
             int maxspeedstep = Integer.parseInt(((String) ((SimpleNode) node.jjtGetChild(5)).jjtGetValue()));
             ((jmri.jmris.srcp.JmriSRCPThrottleServer) ((jmri.jmris.ServiceHandler) data).getThrottleServer()).setThrottleSpeedAndDirection(bus,address,(float)speedstep/(float)maxspeedstep,drivemode.equals("0"));
+            // setup the array list of function values.
+            
+            int numFunctions = node.jjtGetNumChildren() - 6;
+            java.util.ArrayList functionList = new java.util.ArrayList<>();
+            for(int i = 0; i < numFunctions;i++){
+                // the functions start at the 7th child (index 6) of the node.
+                String functionMode = (String) ((SimpleNode) node.jjtGetChild(i+6)).jjtGetValue(); 
+                functionList.add(new Boolean(functionMode.equals("1")));
+            }
+            ((jmri.jmris.srcp.JmriSRCPThrottleServer) ((jmri.jmris.ServiceHandler) data).getThrottleServer()).setThrottleFunctions(bus,address,functionList);
 
         } else if (((SimpleNode) node.jjtGetChild(1)).jjtGetValue().equals("TIME")) {
             // This is a Time request
@@ -470,8 +480,11 @@ public class SRCPVisitor implements SRCPParserVisitor {
         } else if(target.jjtGetValue().equals("GL")) {
                // terminate a locomotive
                int address = Integer.parseInt(((String) ((SimpleNode) node.jjtGetChild(2)).jjtGetValue()));
-               // this isn't finished.  Still need to release the throttle.
-               outputString = "102 INFO " + bus + " GL " + address;
+               try {
+                  ((jmri.jmris.srcp.JmriSRCPThrottleServer)(((jmri.jmris.ServiceHandler) data).getThrottleServer())).releaseThrottle(bus,address);
+               } catch (java.io.IOException ioe){
+                 log.error("Error writing to network port");
+               }
                return data;
         }
 

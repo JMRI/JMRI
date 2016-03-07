@@ -231,7 +231,31 @@ public class JmriSRCPThrottleServer extends AbstractThrottleServer {
            addressList.add(addr);
            t.requestThrottle(addr,(ThrottleListener)this);
         }
-        
+    }
+
+    public void releaseThrottle(int bus, int address) throws IOException {
+        log.debug("releaseThrottle called with bus {} and address {}", bus, address);
+
+        /* translate the bus into a system connection memo */
+        java.util.List<SystemConnectionMemo> list = jmri.InstanceManager.getList(SystemConnectionMemo.class);
+        SystemConnectionMemo memo = null;
+        try {
+            memo = list.get(bus - 1);
+        } catch (java.lang.IndexOutOfBoundsException obe) {
+            TimeStampedOutput.writeTimestamp(output, Bundle.getMessage("Error412"));
+            return;
+        }
+
+        /* release the throttle for this particular locomotive address */
+        if(memo.provides(jmri.ThrottleManager.class)) {
+           ThrottleManager t=memo.get(jmri.ThrottleManager.class);
+           DccLocoAddress addr = new DccLocoAddress(address,t.canBeLongAddress(address));
+           t.releaseThrottle((DccThrottle)throttleList.get(addressList.indexOf(addr)),this);
+           throttleList.remove(addressList.indexOf(addr));
+           sendThrottleReleased(addr);
+           busList.remove(addressList.indexOf(addr));
+           addressList.remove(addr);
+        }
     }
 
     /*
@@ -277,6 +301,64 @@ public class JmriSRCPThrottleServer extends AbstractThrottleServer {
            }
        }
    }
+
+    /*
+     * Set Throttle Functions on/off
+     *
+     * @param bus, bus the throttle is on.
+     * @param l address of the locomotive to change speed of.
+     * @param fList an ArrayList of boolean values indicating whether the
+     *         function is active or not.
+     */
+    public void setThrottleFunctions(int bus,int address, ArrayList fList ){
+        log.debug("Setting Functions for address {} bus {}",
+                  address,bus);
+        java.util.List<SystemConnectionMemo> list = jmri.InstanceManager.getList(SystemConnectionMemo.class);
+        SystemConnectionMemo memo = null;
+        try {
+            memo = list.get(bus - 1);
+        } catch (java.lang.IndexOutOfBoundsException obe) {
+            try {
+               TimeStampedOutput.writeTimestamp(output, Bundle.getMessage("Error412"));
+            } catch(IOException ioe) {
+               log.error("Error writing to network port");
+            }
+            return;
+        }
+
+        /* request the throttle for this particular locomotive address */
+        if(memo.provides(jmri.ThrottleManager.class)) {
+           ThrottleManager tm=memo.get(jmri.ThrottleManager.class);
+           // we will use getThrottleInfo to request information about the
+           // address, so we need to convert the address to a DccLocoAddress 
+           // object first.
+           DccLocoAddress addr = new DccLocoAddress(address,tm.canBeLongAddress(address));
+         
+           // get the throttle for the address.     
+           if(addressList.contains(addr)){
+               log.debug("Throttle in throttle list");
+               Throttle t = (Throttle)throttleList.get(addressList.indexOf(addr));
+               for(int i=0;i< fList.size();i++){
+                  try {
+                     java.lang.reflect.Method setter = t.getClass()
+                                      .getMethod("setF"+i,boolean.class);
+                     setter.invoke(t,(Boolean) fList.get(i));
+                  } catch (java.lang.NoSuchMethodException|
+                          java.lang.IllegalAccessException|
+                          java.lang.reflect.InvocationTargetException ex1) {
+                      ex1.printStackTrace();
+                      try {
+                         sendErrorStatus();
+                      } catch(IOException ioe){
+                         log.error("Error writing to network port");
+                      }
+                  }
+               }
+
+           }
+       }
+   }
+
 
 
     // implementation of ThrottleListener
