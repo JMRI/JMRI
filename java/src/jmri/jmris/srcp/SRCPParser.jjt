@@ -398,7 +398,7 @@ SimpleNode init():{}
 {
   <INIT> bus() ( fb() | 
                  ga() address() protocol() | 
-                 gl() address() protocol() (nonzeroaddress() address() address())? |  
+                 gl() address() protocol() | 
                  sm() <NMRA> | 
                  time() nonzeroaddress() nonzeroaddress() | 
                  power() )
