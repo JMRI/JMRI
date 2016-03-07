@@ -1808,7 +1808,7 @@ public class Warrant extends jmri.implementation.AbstractNamedBean
     /**
      * build map of BlockSpeedInfo's for the route.
      * 
-     * @return max speed and time in block's first occurrence after current command index
+     * Put max speed and time in block's first occurrence after current command index
      */
     protected void getBlockSpeedTimes() {
         _speedTimeMap =  new HashMap<String, BlockSpeedInfo>();
