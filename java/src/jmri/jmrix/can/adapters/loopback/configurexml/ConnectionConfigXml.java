@@ -102,12 +102,12 @@ public class ConnectionConfigXml extends AbstractSerialConnectionConfigXml {
                 }
             }
         }
-        loadOptions(shared.getChild("options"), adapter);
+        loadOptions(shared.getChild("options"), perNode.getChild("options"), adapter);
         // register, so can be picked up next time
         register();
 
         if (adapter.getDisabled()) {
-            unpackElement(shared);
+            unpackElement(shared, perNode);
             return result;
         }
         adapter.configure();

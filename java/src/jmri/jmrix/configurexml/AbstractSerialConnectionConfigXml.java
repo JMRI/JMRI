@@ -80,17 +80,17 @@ abstract public class AbstractSerialConnectionConfigXml extends AbstractConnecti
         boolean result = true;
         getInstance();
         // configure port name
-        String portName = shared.getAttribute("port").getValue();
+        String portName = perNode.getAttribute("port").getValue();
         adapter.setPort(portName);
-        String baudRate = shared.getAttribute("speed").getValue();
+        String baudRate = perNode.getAttribute("speed").getValue();
         adapter.configureBaudRate(baudRate);
 
-        loadCommon(shared, adapter);
+        loadCommon(shared, perNode, adapter);
         // register, so can be picked up next time
         register();
         // try to open the port
         if (adapter.getDisabled()) {
-            unpackElement(shared);
+            unpackElement(shared, perNode);
             return result;
         }
 
@@ -111,16 +111,8 @@ abstract public class AbstractSerialConnectionConfigXml extends AbstractConnecti
 
         // once all the configure processing has happened, do any
         // extra config
-        unpackElement(shared);
+        unpackElement(shared, perNode);
         return result;
-    }
-
-    /**
-     * Customizable method if you need to add anything more
-     *
-     * @param e Element being created, update as needed
-     */
-    protected void unpackElement(Element e) {
     }
 
     /**
