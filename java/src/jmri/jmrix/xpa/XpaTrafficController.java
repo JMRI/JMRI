@@ -29,7 +29,7 @@ public final class XpaTrafficController implements XpaInterface, Runnable {
      */
     XmtHandler xmtHandler = new XmtHandler();
 
-    @edu.umd.cs.findbugs.annotations.SuppressWarnings(value = "ST_WRITE_TO_STATIC_FROM_INSTANCE_METHOD",
+    @edu.umd.cs.findbugs.annotations.SuppressFBWarnings(value = "ST_WRITE_TO_STATIC_FROM_INSTANCE_METHOD",
             justification = "temporary until mult-system; only set at startup")
     public XpaTrafficController() {
         if (log.isDebugEnabled()) {
@@ -268,7 +268,7 @@ public final class XpaTrafficController implements XpaInterface, Runnable {
      */
     class XmtHandler implements Runnable {
 
-        @edu.umd.cs.findbugs.annotations.SuppressWarnings(value = "UW_UNCOND_WAIT",
+        @edu.umd.cs.findbugs.annotations.SuppressFBWarnings(value = "UW_UNCOND_WAIT",
                 justification = "while loop controls access")
         public void run() {
             while (true) { //  loop forever

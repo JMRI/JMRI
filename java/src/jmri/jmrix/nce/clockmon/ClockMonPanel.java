@@ -1179,7 +1179,7 @@ public class ClockMonPanel extends jmri.jmrix.nce.swing.NcePanel implements NceP
         }
     }
 
-    @edu.umd.cs.findbugs.annotations.SuppressWarnings(value = "SBSC_USE_STRINGBUFFER_CONCATENATION", justification = "Slow operation in debug OK for now")
+    @edu.umd.cs.findbugs.annotations.SuppressFBWarnings(value = "SBSC_USE_STRINGBUFFER_CONCATENATION", justification = "Slow operation in debug OK for now")
     private void debugOutputForRecomputeOffset(double avgDiff) {
         Date now = internalClock.getTime();
         String txt = "";
@@ -1228,7 +1228,7 @@ public class ClockMonPanel extends jmri.jmrix.nce.swing.NcePanel implements NceP
         }
     }
 
-    @edu.umd.cs.findbugs.annotations.SuppressWarnings(value = "SBSC_USE_STRINGBUFFER_CONCATENATION", justification = "Slow operation in debug OK for now")
+    @edu.umd.cs.findbugs.annotations.SuppressFBWarnings(value = "SBSC_USE_STRINGBUFFER_CONCATENATION", justification = "Slow operation in debug OK for now")
     private void debugOutputForRecomputeInternalSync(double pCorr, double iCorr, double dCorr) {
         String txt = "";
         for (int i = 0; i < priorDiffs.size(); i++) {
@@ -1297,7 +1297,7 @@ public class ClockMonPanel extends jmri.jmrix.nce.swing.NcePanel implements NceP
         }
     }
 
-    @edu.umd.cs.findbugs.annotations.SuppressWarnings(value = "SBSC_USE_STRINGBUFFER_CONCATENATION", justification = "Slow operation in debug OK for now")
+    @edu.umd.cs.findbugs.annotations.SuppressFBWarnings(value = "SBSC_USE_STRINGBUFFER_CONCATENATION", justification = "Slow operation in debug OK for now")
     private void debugOutputForRecomputeNceSync(double pCorr, double iCorr, double dCorr, double newInternalRate, double currError) {
         String txt = "";
         for (int i = priorDiffs.size() - 1; i >= 0; i--) {

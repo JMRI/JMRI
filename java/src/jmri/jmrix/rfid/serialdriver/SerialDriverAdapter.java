@@ -359,7 +359,7 @@ public class SerialDriverAdapter extends RfidPortController implements jmri.jmri
      *
      * @return list of rates
      */
-    @edu.umd.cs.findbugs.annotations.SuppressWarnings(value = "EI_EXPOSE_REP")
+    @edu.umd.cs.findbugs.annotations.SuppressFBWarnings(value = "EI_EXPOSE_REP")
     @Override
     public String[] validBaudRates() {
         return validSpeeds;

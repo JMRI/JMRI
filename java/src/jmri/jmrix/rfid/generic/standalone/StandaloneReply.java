@@ -16,7 +16,7 @@ import jmri.jmrix.rfid.RfidTrafficController;
  */
 public class StandaloneReply extends RfidReply {
 
-    @edu.umd.cs.findbugs.annotations.SuppressWarnings(value = "URF_UNREAD_FIELD", justification = "Kept to conform with common RFID framework")
+    @edu.umd.cs.findbugs.annotations.SuppressFBWarnings(value = "URF_UNREAD_FIELD", justification = "Kept to conform with common RFID framework")
     RfidTrafficController tc = null;
     RfidProtocol pr = null;
 

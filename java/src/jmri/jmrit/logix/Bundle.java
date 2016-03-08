@@ -1,14 +1,15 @@
 // Bundle.java
 package jmri.jmrit.logix;
 
-import edu.umd.cs.findbugs.annotations.CheckReturnValue;
-import edu.umd.cs.findbugs.annotations.DefaultAnnotation;
-import edu.umd.cs.findbugs.annotations.NonNull;
-import edu.umd.cs.findbugs.annotations.Nullable;
-import edu.umd.cs.findbugs.annotations.SuppressWarnings;
+import javax.annotation.CheckReturnValue;
+import javax.annotation.ParametersAreNonnullByDefault;
+import javax.annotation.Nonnull;
+import javax.annotation.Nullable;
+import edu.umd.cs.findbugs.annotations.SuppressFBWarnings;
 
-@DefaultAnnotation({NonNull.class, CheckReturnValue.class})
-@SuppressWarnings(value = "NM_SAME_SIMPLE_NAME_AS_SUPERCLASS", justification = "Desired pattern is repeated class names with package-level access to members")
+@ParametersAreNonnullByDefault
+@CheckReturnValue
+@SuppressFBWarnings(value = "NM_SAME_SIMPLE_NAME_AS_SUPERCLASS", justification = "Desired pattern is repeated class names with package-level access to members")
 
 @net.jcip.annotations.Immutable
 
@@ -38,8 +39,8 @@ public class Bundle extends jmri.jmrit.Bundle {
      * @param key Bundle key to be translated
      * @return Internationalized text
      */
-    @NonNull
-    static String getMessage(@NonNull String key) {
+    @Nonnull
+    static String getMessage(@Nonnull String key) {
         return b.handleGetMessage(key);
     }
 
@@ -56,8 +57,8 @@ public class Bundle extends jmri.jmrit.Bundle {
      * @param subs One or more objects to be inserted into the message
      * @return Internationalized text
      */
-    @NonNull
-    static String getMessage(@NonNull String key, @NonNull Object... subs) {
+    @Nonnull
+    static String getMessage(@Nonnull String key, @Nonnull Object... subs) {
         return b.handleGetMessage(key, subs);
     }
 
@@ -70,14 +71,14 @@ public class Bundle extends jmri.jmrit.Bundle {
     }
 
     @Override
-    @NonNull
+    @Nonnull
     protected jmri.Bundle getBundle() {
         return b;
     }
 
     @Override
-    @NonNull
-    protected String retry(@NonNull String key) {
+    @Nonnull
+    protected String retry(@Nonnull String key) {
         return super.getBundle().handleGetMessage(key);
     }
 

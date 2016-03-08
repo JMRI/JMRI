@@ -1,6 +1,6 @@
 package jmri.jmrit.display;
 
-import edu.umd.cs.findbugs.annotations.NonNull;
+import javax.annotation.Nonnull;
 import java.awt.BasicStroke;
 import java.awt.BorderLayout;
 import java.awt.Color;
@@ -2770,7 +2770,7 @@ abstract public class Editor extends JmriJFrame implements MouseListener, MouseM
      * @param event contains the mouse position.
      * @return a list of positionable items or an empty list.
      */
-//    @edu.umd.cs.findbugs.annotations.SuppressWarnings(value="ICAST_IDIV_CAST_TO_DOUBLE", justification="Divide by 2 is only case") 
+//    @edu.umd.cs.findbugs.annotations.SuppressFBWarnings(value="ICAST_IDIV_CAST_TO_DOUBLE", justification="Divide by 2 is only case") 
     protected List<Positionable> getSelectedItems(MouseEvent event) {
         double x;
         double y;
@@ -3310,7 +3310,7 @@ abstract public class Editor extends JmriJFrame implements MouseListener, MouseM
      * @return a List of Editors.
      */
     @SuppressWarnings("unchecked")
-    synchronized public static <T extends Editor> List<T> getEditors(@NonNull Class<T> type) {
+    synchronized public static <T extends Editor> List<T> getEditors(@Nonnull Class<T> type) {
         List<T> result = new ArrayList<T>();
         for (Editor e : Editor.getEditors()) {
             if (type.isInstance(e)) {

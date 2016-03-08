@@ -227,7 +227,7 @@ public abstract class AbstractLight extends AbstractNamedBean
      *                                  current value of the minIntensity
      *                                  property
      */
-    @edu.umd.cs.findbugs.annotations.SuppressWarnings(value = "FE_FLOATING_POINT_EQUALITY") // OK to compare floating point
+    @edu.umd.cs.findbugs.annotations.SuppressFBWarnings(value = "FE_FLOATING_POINT_EQUALITY") // OK to compare floating point
     public void setMaxIntensity(double intensity) {
         if (intensity < 0.0 || intensity > 1.0) {
             throw new IllegalArgumentException("Illegal intensity value: " + intensity);
@@ -268,7 +268,7 @@ public abstract class AbstractLight extends AbstractNamedBean
      *                                  current value of the maxIntensity
      *                                  property
      */
-    @edu.umd.cs.findbugs.annotations.SuppressWarnings(value = "FE_FLOATING_POINT_EQUALITY") // OK to compare floating point
+    @edu.umd.cs.findbugs.annotations.SuppressFBWarnings(value = "FE_FLOATING_POINT_EQUALITY") // OK to compare floating point
     public void setMinIntensity(double intensity) {
         if (intensity < 0.0 || intensity > 1.0) {
             throw new IllegalArgumentException("Illegal intensity value: " + intensity);
@@ -383,7 +383,7 @@ public abstract class AbstractLight extends AbstractNamedBean
      * Change the stored target intensity value and do notification, but don't
      * change anything in the hardware
      */
-    @edu.umd.cs.findbugs.annotations.SuppressWarnings(value = "FE_FLOATING_POINT_EQUALITY") // OK to compare floating point
+    @edu.umd.cs.findbugs.annotations.SuppressFBWarnings(value = "FE_FLOATING_POINT_EQUALITY") // OK to compare floating point
     protected void notifyTargetIntensityChange(double intensity) {
         double oldValue = mCurrentIntensity;
         mCurrentIntensity = intensity;
