@@ -185,14 +185,13 @@ peut vous faire &#233;conomiser un peu de frappe. Elle n'a aucun effet sur les
 entr&#233;es existantes, m&#234;me si elle change.
 <p>
 
-
 </dl>
 
 <a name="Throttle">
 <h2>R&#233;gulateur</h2></a>
 
 Ce panneau de pr&#233;f&#233;rences vous permet de choisir si lesfonctions &#233;tendues du R&#233;gulateur
- sont disponibles, et celles qui peuvent &#234;tre utilis&#233;es
+sont disponibles, et celles qui peuvent &#234;tre utilis&#233;es
 
 <a name="WiThrottle"><h2>R&#233;gulateur WI</h2></a>
 
@@ -224,11 +223,9 @@ Cela vous permettra de limiter ce que les utilisateurs ont la possibilit&#233; d
 </ul>
 </dl>
 
-Le bouton "Appliquer" met les param&#232;tres actuels en vigueur, sans
-les enregistrer de fa&#231;on permanente. Pour qu'un r&#233;gulateur utilisz les
-nouveaux param&#232;tres, sa connexion doit &#234;tre ferm&#233; et r&#233;ouverte..
+Le bouton "Sauvegarder" met les param&#232;tres actuels en vigueur. Pour qu'un <a href="../jmri/jmrit/withrottle/UserInterface.shtml">r&#233;gulateur WI</a> utilise les
+nouveaux param&#232;tres, quittez et red\u00e9marrez JMRI.
 
 <!--#include virtual="/Footer" -->
 </body>
 </html>
-
