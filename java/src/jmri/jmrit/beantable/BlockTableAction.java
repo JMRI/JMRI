@@ -79,7 +79,7 @@ public class BlockTableAction extends AbstractTableAction {
     }
 
     public BlockTableAction() {
-        this("Block Table");
+        this(Bundle.getMessage("TitleBlockTable"));
     }
 
     private String noneText = Bundle.getMessage("BlockNone");
