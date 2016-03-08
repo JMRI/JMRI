@@ -1,0 +1,62 @@
+<?xml version="1.0" encoding="utf-8"?>
+<?xml-stylesheet type="text/xsl" href="../XSLT/decoder.xsl"?>
+<!-- Copyright (C) JMRI 2001, 2005, 2007, 2009, 2010, 2012, 2015 All rights reserved -->
+<!-- $Id: pane-FREDiVersionMap.xml 1810 2015-11-24 12:12:00Z martin $ -->
+<!--                                                                         -->
+<!-- JMRI is free software; you can redistribute it and/or modify it under   -->
+<!-- the terms of version 2 of the GNU General Public License as published   -->
+<!-- by the Free Software Foundation. See the "COPYING" file for a copy      -->
+<!-- of this license.                                                        -->
+<!--                                                                         -->
+<!-- JMRI is distributed in the hope that it will be useful, but WITHOUT     -->
+<!-- ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or   -->
+<!-- FITNESS FOR A PARTICULAR PURPOSE.  See the GNU General Public License   -->
+<!-- for more details.                                                       -->
+<pane xmlns:xi="http://www.w3.org/2001/XInclude" 
+      xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+      xsi:noNamespaceSchemaLocation="http://jmri.org/xml/schema/decoder.xsd">
+    <name>FREDi Version Info</name>
+    <name xml:lang="de">FREDi Versionsübersicht</name>
+    <copyright xmlns="http://docbook.org/ns/docbook">
+        <year>2015</year>
+        <holder>JMRI</holder>
+    </copyright>
+    <authorgroup xmlns="http://docbook.org/ns/docbook">
+        <author>
+            <personname>
+                <firstname>Knut</firstname>
+                <surname>Schwichtenberg</surname>
+            </personname>
+        </author>
+    </authorgroup>
+    <revhistory xmlns="http://docbook.org/ns/docbook">
+        <revision>
+            <revnumber>1</revnumber>
+            <date>2015-11-24</date>
+            <authorinitials>KS</authorinitials>
+            <revremark>Initial release as separate file</revremark>
+        </revision>
+    </revhistory>
+    <column> <!-- TODO use GRID -->
+        <row>
+            <column>
+                <display item="SV2:Software Version" />
+                <display item="SV5:Hardware Version (from makefile)" />
+                <display item="SV6:Hardware Version (from bootloader)" />
+                <display item="SV7:Bootloader Version (from flash)" />
+            </column>
+            <column>
+                <label> <!-- some space -->
+                    <text>&#x0020;&#x0020;&#x0020;&#x0020;&#x0020;&#x0020;&#x0020;&#x0020;</text>
+                </label>
+            </column>
+            <column>
+                <display item="SV13:High part of Software Version No." />
+                <display item="SV14:Low part of Software Version No." />
+                <display item="SV15:Day of Software Compilation" />
+                <display item="SV16:Month of Software Compilation" />
+                <display item="SV17:Year of Software Compilation" />
+            </column>
+        </row>
+    </column>
+</pane>
