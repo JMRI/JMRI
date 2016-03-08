@@ -23,6 +23,7 @@ public class Xml {
     static final String DEPART_HOUR = "departHour"; // NOI18N
     static final String DEPART_MINUTE = "departMinute"; // NOI18N
     static final String ROW_COLOR = "rowColor";  // NOI18N
+    static final String RESET_ROW_COLOR = "resetRowColor";  // NOI18N
     static final String ROUTE = "route"; // NOI18N
     static final String SKIPS = "skips"; // NOI18N
     static final String LOCATION = "location"; // NOI18N

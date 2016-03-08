@@ -3,6 +3,7 @@ package jmri.jmrit.operations.trains.tools;
 
 import java.awt.Dimension;
 import java.awt.GridBagLayout;
+import java.awt.event.ActionEvent;
 import javax.swing.BorderFactory;
 import javax.swing.BoxLayout;
 import javax.swing.ButtonGroup;
@@ -23,7 +24,7 @@ import org.slf4j.LoggerFactory;
  * Frame for setting up the Trains table colors in operations.
  *
  * @author Bob Jacobsen Copyright (C) 2001
- * @author Daniel Boudreau Copyright (C) 2014
+ * @author Daniel Boudreau Copyright (C) 2014, 2016
  * @version $Revision: 17977 $
  */
 public class TrainsTableSetColorFrame extends OperationsFrame implements java.beans.PropertyChangeListener {
@@ -42,6 +43,7 @@ public class TrainsTableSetColorFrame extends OperationsFrame implements java.be
     // combo boxes
     JComboBox<Train> trainBox = TrainManager.instance().getTrainComboBox();
     JComboBox<String> colorBox = TrainManager.instance().getRowColorComboBox();
+    JComboBox<String> colorResetBox = TrainManager.instance().getRowColorComboBox();
 
     JComboBox<String> colorBuiltBox = TrainManager.instance().getRowColorComboBox();
     JComboBox<String> colorBuildFailedBox = TrainManager.instance().getRowColorComboBox();
@@ -51,7 +53,9 @@ public class TrainsTableSetColorFrame extends OperationsFrame implements java.be
     // display panels based on which option is selected
     JPanel pTrains;
     JPanel pColor;
+    JPanel pColorReset;
 
+    // auto
     JPanel pColorBuilt;
     JPanel pColorBuildFailed;
     JPanel pColorTrainEnRoute;
@@ -88,6 +92,11 @@ public class TrainsTableSetColorFrame extends OperationsFrame implements java.be
         pColor.setLayout(new GridBagLayout());
         pColor.setBorder(BorderFactory.createTitledBorder(Bundle.getMessage("SelectRowColor")));
         addItem(pColor, colorBox, 0, 0);
+        
+        pColorReset = new JPanel();
+        pColorReset.setLayout(new GridBagLayout());
+        pColorReset.setBorder(BorderFactory.createTitledBorder(Bundle.getMessage("SelectRowColorReset")));
+        addItem(pColorReset, colorResetBox, 0, 0);
 
         pColorBuilt = new JPanel();
         pColorBuilt.setLayout(new GridBagLayout());
@@ -125,6 +134,7 @@ public class TrainsTableSetColorFrame extends OperationsFrame implements java.be
         getContentPane().add(pOption);
         getContentPane().add(pTrains);
         getContentPane().add(pColor);
+        getContentPane().add(pColorReset);
         getContentPane().add(pColorBuilt);
         getContentPane().add(pColorBuildFailed);
         getContentPane().add(pColorTrainEnRoute);
@@ -143,6 +153,8 @@ public class TrainsTableSetColorFrame extends OperationsFrame implements java.be
         addButtonAction(saveButton);
         addRadioButtonAction(manualRadioButton);
         addRadioButtonAction(autoRadioButton);
+        
+        addComboBoxAction(trainBox);
 
         makePanelsVisible();
 
@@ -155,9 +167,9 @@ public class TrainsTableSetColorFrame extends OperationsFrame implements java.be
             trainManager.setRowColorsManual(manualRadioButton.isSelected());
             if (manualRadioButton.isSelected()) {
                 Train train = (Train) trainBox.getSelectedItem();
-                String colorName = (String) colorBox.getSelectedItem();
                 if (train != null) {
-                    train.setTableRowColorName(colorName);
+                    train.setTableRowColorName((String) colorBox.getSelectedItem());
+                    train.setRowColorNameReset((String) colorResetBox.getSelectedItem());
                 }
             } else {
                 trainManager.setRowColorNameForBuildFailed((String) colorBuildFailedBox.getSelectedItem());
@@ -186,11 +198,20 @@ public class TrainsTableSetColorFrame extends OperationsFrame implements java.be
     private void makePanelsVisible() {
         pTrains.setVisible(manualRadioButton.isSelected());
         pColor.setVisible(manualRadioButton.isSelected());
+        pColorReset.setVisible(manualRadioButton.isSelected());
         // the inverse
         pColorBuildFailed.setVisible(!manualRadioButton.isSelected());
         pColorBuilt.setVisible(!manualRadioButton.isSelected());
         pColorTrainEnRoute.setVisible(!manualRadioButton.isSelected());
         pColorTerminated.setVisible(!manualRadioButton.isSelected());
+    }
+    
+    public void comboBoxActionPerformed(ActionEvent ae) {
+        Train train = (Train) trainBox.getSelectedItem();
+        if (train != null) {
+            colorBox.setSelectedItem(train.getTableRowColorName());
+            colorResetBox.setSelectedItem(train.getRowColorNameReset());
+        }
     }
 
     public void propertyChange(java.beans.PropertyChangeEvent e) {

@@ -352,7 +352,14 @@ SimpleNode set():{}
 
 SimpleNode term():{}
 {
-  <TERM> bus()  ( fb() | gl() address() | sm() | power() | server() | lock() | time() | session() [ address() ] )
+  <TERM> bus()  ( fb() | 
+                  gl() address() | 
+                  sm() | 
+                  power() | 
+                  server() | 
+                  lock() | 
+                  time() | 
+                  session() [ address() ] )
   {return jjtThis;}
 }
 
@@ -391,7 +398,7 @@ SimpleNode init():{}
 {
   <INIT> bus() ( fb() | 
                  ga() address() protocol() | 
-                 gl() address() protocol() |  
+                 gl() address() protocol() | 
                  sm() <NMRA> | 
                  time() nonzeroaddress() nonzeroaddress() | 
                  power() )
@@ -419,10 +426,13 @@ SimpleNode verify():{}
   }
 }
 
-SimpleNode gl():{}
+SimpleNode gl():{Token t;}
 {
-  <GL>
-  {return jjtThis;}
+  t=<GL>
+  {
+     jjtThis.jjtSetValue(t.image);
+     return jjtThis;
+  }
 }
 
 SimpleNode sm():{Token t;}

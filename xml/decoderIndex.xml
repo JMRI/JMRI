@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <?xml-stylesheet href="/xml/XSLT/DecoderID.xsl" type="text/xsl"?>
 <decoderIndex-config xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="http://jmri.org/xml/schema/decoder.xsd">
-  <!--Written by JMRI version 4.3.4ish-201602162313-Matt H-Rac415ac on Wed Feb 17 00:13:48 CET 2016 $Id$-->
-  <decoderIndex version="694">
+  <!--Written by JMRI version 4.3.4ish-201603062022-Alain Le Marchand on Sun Mar 06 21:22:15 CET 2016 $Id$-->
+  <decoderIndex version="696">
     <mfgList nmraListDate="2015-03-06" updated="2015-03-25" lastadd="107,124,126,128,134">
       <manufacturer mfg="NMRA" mfgID="999" />
       <manufacturer mfg="A-Train Electronics" mfgID="137" />
@@ -19621,6 +19621,72 @@
           <output name="8" label="Main Sw" />
           <output name="9" label="Vmid" />
         </model>
+      </family>
+      <family name="Multi-Protocol Decoders" mfg="Viessmann Modellspielwaren GmbH" lowVersionID="1" highVersionID="255" comment="NMRA DCC &amp; Märklin Motorola protocols, RailCom, SUSI interface" file="Viessmann_524x.xml">
+        <model model="5240" numOuts="2" numFns="14" maxMotorCurrent="0.5A (peak 0.8A)" formFactor="N" connector="unspecified" productID="5240" comment="N-Scale, wired">
+          <output name="1" label="AUX1|White" connection="wire" maxcurrent="300mA">
+            <label xml:lang="de">AUX1|Weiss</label>
+          </output>
+          <output name="2" label="AUX2|Yellow" connection="wire" maxcurrent="300mA">
+            <label xml:lang="de">AUX2|Gelb</label>
+          </output>
+          <output name="5" label="Shunting|Mode">
+            <label xml:lang="de">Rangier-|modus</label>
+          </output>
+          <size length="11.5" width="9.5" height="2.6" units="mm" />
+        </model>
+        <model model="5241" numOuts="2" numFns="14" maxMotorCurrent="0.5A (peak 0.8A)" formFactor="N" connector="NEM651" productID="5241" comment="N-Scale, with NEM 651 plug">
+          <output name="1" label="AUX1|White" connection="plug" maxcurrent="300mA">
+            <label xml:lang="de">AUX1|Weiss</label>
+          </output>
+          <output name="2" label="AUX2|Yellow" connection="plug" maxcurrent="300mA">
+            <label xml:lang="de">AUX2|Gelb</label>
+          </output>
+          <output name="5" label="Shunting|Mode">
+            <label xml:lang="de">Rangier-|modus</label>
+          </output>
+          <size length="11.5" width="9.5" height="2.6" units="mm" />
+        </model>
+        <model model="5244" numOuts="4" numFns="14" maxMotorCurrent="1.0A (peak 1.8A)" formFactor="HO" connector="unspecified" productID="5244" comment="HO-Scale, wired">
+          <output name="1" label="AUX1|White" connection="wire" maxcurrent="500mA">
+            <label xml:lang="de">AUX1|Weiss</label>
+          </output>
+          <output name="2" label="AUX2|Yellow" connection="wire" maxcurrent="500mA">
+            <label xml:lang="de">AUX2|Gelb</label>
+          </output>
+          <output name="3" label="AUX3|Green" connection="wire" maxcurrent="500mA">
+            <label xml:lang="de">AUX3|Grün</label>
+          </output>
+          <output name="4" label="AUX4| " connection="wire" maxcurrent="500mA">
+            <label xml:lang="de">AUX4| </label>
+          </output>
+          <output name="5" label="Shunting|Mode">
+            <label xml:lang="de">Rangier-|modus</label>
+          </output>
+          <size length="25" width="15.4" height="3.3" units="mm" />
+        </model>
+        <model model="5245" numOuts="4" numFns="14" maxMotorCurrent="1.0A (peak 1.8A)" formFactor="HO" connector="NEM652" productID="5245" comment="HO-Scale, with NEM 652 plug">
+          <output name="1" label="AUX1|White" connection="plug" maxcurrent="500mA">
+            <label xml:lang="de">AUX1|Weiss</label>
+          </output>
+          <output name="2" label="AUX2|Yellow" connection="plug" maxcurrent="500mA">
+            <label xml:lang="de">AUX2|Gelb</label>
+          </output>
+          <output name="3" label="AUX3|Green" connection="plug" maxcurrent="500mA">
+            <label xml:lang="de">AUX3|Grün</label>
+          </output>
+          <output name="4" label="AUX4| " connection="wire" maxcurrent="500mA">
+            <label xml:lang="de">AUX4| </label>
+          </output>
+          <output name="5" label="Shunting|Mode">
+            <label xml:lang="de">Rangier-|modus</label>
+          </output>
+          <size length="25" width="15.4" height="3.3" units="mm" />
+        </model>
+        <functionlabels>
+          <functionlabel num="0" lockable="true">Headlight</functionlabel>
+          <functionlabel num="4" lockable="true">Shunting Mode</functionlabel>
+        </functionlabels>
       </family>
       <family name="Wangrow basic decoders" mfg="Wangrow" file="Wangrow_2.xml">
         <model model="DH-154" numOuts="4" connector="NMRAmedium" maxMotorCurrent="1.0A" formFactor="HO" nmraWarrant="yes" nmraWarrantStart="200506">

@@ -16,7 +16,7 @@ import org.slf4j.LoggerFactory;
  *
  * @author Bob Jacobsen Copyright: Copyright (c) 2003
  * @version $Revision$
- * @see apps.CreateButtonPanel
+ * @see apps.startup.CreateButtonModelFactory
  */
 public class CreateButtonModelXml extends jmri.configurexml.AbstractXmlAdapter {
 
