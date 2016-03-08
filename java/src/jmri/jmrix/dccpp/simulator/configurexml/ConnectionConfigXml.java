@@ -59,7 +59,7 @@ public class ConnectionConfigXml extends AbstractConnectionConfigXml {
         register();
 
         if (adapter.getDisabled()) {
-            unpackElement(shared);
+            unpackElement(shared, perNode);
             return result;
         }
 
