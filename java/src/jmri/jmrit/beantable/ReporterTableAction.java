@@ -58,7 +58,7 @@ public class ReporterTableAction extends AbstractTableAction {
     }
 
     public ReporterTableAction() {
-        this("Reporter Table");
+        this(Bundle.getMessage("TitleReporterTable"));
     }
 
     /**
