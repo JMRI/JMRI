@@ -4,7 +4,6 @@ package jmri.jmrit.audio.swing;
 
 import javax.annotation.CheckReturnValue;
 import javax.annotation.ParametersAreNonnullByDefault;
-import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
 import edu.umd.cs.findbugs.annotations.SuppressFBWarnings;
 

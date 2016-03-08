@@ -3,7 +3,6 @@ package jmri.jmrit.logix;
 
 import javax.annotation.CheckReturnValue;
 import javax.annotation.ParametersAreNonnullByDefault;
-import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
 import edu.umd.cs.findbugs.annotations.SuppressFBWarnings;
 
@@ -39,8 +38,7 @@ public class Bundle extends jmri.jmrit.Bundle {
      * @param key Bundle key to be translated
      * @return Internationalized text
      */
-    @Nonnull
-    static String getMessage(@Nonnull String key) {
+    static String getMessage(String key) {
         return b.handleGetMessage(key);
     }
 
@@ -57,8 +55,7 @@ public class Bundle extends jmri.jmrit.Bundle {
      * @param subs One or more objects to be inserted into the message
      * @return Internationalized text
      */
-    @Nonnull
-    static String getMessage(@Nonnull String key, @Nonnull Object... subs) {
+    static String getMessage(String key, Object... subs) {
         return b.handleGetMessage(key, subs);
     }
 
@@ -71,14 +68,12 @@ public class Bundle extends jmri.jmrit.Bundle {
     }
 
     @Override
-    @Nonnull
     protected jmri.Bundle getBundle() {
         return b;
     }
 
     @Override
-    @Nonnull
-    protected String retry(@Nonnull String key) {
+    protected String retry(String key) {
         return super.getBundle().handleGetMessage(key);
     }
 
