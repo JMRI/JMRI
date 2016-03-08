@@ -223,7 +223,7 @@ Cela vous permettra de limiter ce que les utilisateurs ont la possibilit&#233; d
 </ul>
 </dl>
 
-Le bouton "Sauvegarder" met les param&#232;tres actuels en vigueur. Pour qu'un <a href="../jmri/jmrit/withrottle/UserInterface.shtml">r&#233;gulateur WI</a> utilise les
+Le bouton "Sauvegarder" met les param&#232;tres actuels en vigueur. Pour qu'un <a href="../jmri/jmrit/withrottle/UserInterface.shtml">r&#233;gulateur</a> utilise les
 nouveaux param&#232;tres, quittez et red\u00e9marrez JMRI.
 
 <!--#include virtual="/Footer" -->
