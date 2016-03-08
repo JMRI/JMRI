@@ -81,7 +81,7 @@ public class SignalHeadTableAction extends AbstractTableAction {
     }
 
     public SignalHeadTableAction() {
-        this("Signal Table");
+        this(Bundle.getMessage("TitleSignalTable"));
     }
 
     /**

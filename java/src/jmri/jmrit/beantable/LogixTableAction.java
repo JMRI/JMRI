@@ -128,7 +128,7 @@ public class LogixTableAction extends AbstractTableAction {
     }
 
     public LogixTableAction() {
-        this("Logix Table");
+        this(Bundle.getMessage("TitleLogixTable"));
     }
 
     static final ResourceBundle rbx = ResourceBundle.getBundle("jmri.jmrit.beantable.LogixTableBundle");

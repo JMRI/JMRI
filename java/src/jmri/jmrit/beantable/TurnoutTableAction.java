@@ -94,7 +94,7 @@ public class TurnoutTableAction extends AbstractTableAction {
     }
 
     public TurnoutTableAction() {
-        this("Turnout Table");
+        this(Bundle.getMessage("TitleTurnoutTable"));
     }
 
     String closedText;
