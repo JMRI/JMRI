@@ -1,7 +1,7 @@
 // PaneProgFrame.java
 package jmri.jmrit.symbolicprog.tabbedframe;
 
-import edu.umd.cs.findbugs.annotations.NonNull;
+import javax.annotation.Nonnull;
 import java.awt.BorderLayout;
 import java.awt.Cursor;
 import java.awt.Dimension;
@@ -413,7 +413,7 @@ abstract public class PaneProgFrame extends JmriJFrame
      * @param pProgrammerFile Name of the programmer file to use
      * @param pProg           Programmer object to be used to access CVs
      */
-    public PaneProgFrame(DecoderFile pDecoderFile, @NonNull RosterEntry pRosterEntry,
+    public PaneProgFrame(DecoderFile pDecoderFile, @Nonnull RosterEntry pRosterEntry,
             String pFrameTitle, String pProgrammerFile, Programmer pProg, boolean opsMode) {
         super(pFrameTitle);
 
@@ -577,7 +577,7 @@ abstract public class PaneProgFrame extends JmriJFrame
         return DecoderFile.isIncluded(e, pID, modelName, familyName, extraIncludes, extraExcludes);
     }
 
-    protected void pickProgrammerMode(@NonNull Element programming) {
+    protected void pickProgrammerMode(@Nonnull Element programming) {
         log.debug("pickProgrammerMode starts");
         boolean paged = true;
         boolean directbit = true;
@@ -700,7 +700,7 @@ abstract public class PaneProgFrame extends JmriJFrame
         }
     }
 
-    protected void loadDecoderFile(@NonNull DecoderFile df, @NonNull RosterEntry re) {
+    protected void loadDecoderFile(@Nonnull DecoderFile df, @Nonnull RosterEntry re) {
         if (df == null) {
             throw new IllegalArgumentException("loadDecoder file invoked with null object");
         }

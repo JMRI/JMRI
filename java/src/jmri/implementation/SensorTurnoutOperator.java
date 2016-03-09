@@ -34,7 +34,7 @@ public class SensorTurnoutOperator extends TurnoutOperator {
     public void run() {
         //long startTime = System.currentTimeMillis();
         listener = new PropertyChangeListener() {
-            @edu.umd.cs.findbugs.annotations.SuppressWarnings(value = "NN_NAKED_NOTIFY",
+            @edu.umd.cs.findbugs.annotations.SuppressFBWarnings(value = "NN_NAKED_NOTIFY",
                     justification = "notify not naked, outside sensor and turnout is shared state")
             public void propertyChange(PropertyChangeEvent e) {
                 if (e.getPropertyName().equals("KnownState")) {

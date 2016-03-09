@@ -173,7 +173,7 @@ public class BlockManager extends AbstractManager
 
     String defaultSpeed = "Normal";
 
-    @edu.umd.cs.findbugs.annotations.SuppressWarnings(value = "NP_NULL_PARAM_DEREF", justification = "We are validating user input however the value is stored in its original format")
+    @edu.umd.cs.findbugs.annotations.SuppressFBWarnings(value = "NP_NULL_PARAM_DEREF", justification = "We are validating user input however the value is stored in its original format")
     public void setDefaultSpeed(String speed) throws JmriException {
         if (speed == null) {
             throw new JmriException("Value of requested default thrown speed can not be null");
