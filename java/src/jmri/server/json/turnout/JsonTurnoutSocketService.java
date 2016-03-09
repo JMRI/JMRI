@@ -43,7 +43,7 @@ class JsonTurnoutSocketService extends JsonSocketService {
             this.connection.sendMessage(this.service.doPost(type, name, data, locale));
         }
         if (!this.turnouts.containsKey(name)) {
-            Turnout turnout = InstanceManager.getDefault(TurnoutManager.class).getBySystemName(name);
+            Turnout turnout = InstanceManager.getDefault(TurnoutManager.class).getTurnout(name);
             TurnoutListener listener = new TurnoutListener(turnout);
             turnout.addPropertyChangeListener(listener);
             this.turnouts.put(name, listener);
