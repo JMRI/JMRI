@@ -4,6 +4,8 @@ import jmri.jmrix.configurexml.AbstractConnectionConfigXml;
 import jmri.jmrix.pi.ConnectionConfig;
 import jmri.jmrix.pi.RaspberryPiAdapter;
 import org.jdom2.Element;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 /**
  * Handle XML persistance of layout connections by persistening
@@ -28,10 +30,12 @@ public class ConnectionConfigXml extends AbstractConnectionConfigXml {
 
     @Override
     protected void getInstance() {
+        log.debug("getInstance without Parameter called");
         if(adapter == null) adapter=new RaspberryPiAdapter();
     }
 
     protected void getInstance(Object object) {
+        log.debug("getInstance with Parameter called");
         adapter=(RaspberryPiAdapter)((ConnectionConfig) object).getAdapter();
     }
 
@@ -61,13 +65,13 @@ public class ConnectionConfigXml extends AbstractConnectionConfigXml {
        getInstance();
        loadCommon(shared, perNode, adapter);
 
-       //InstanceManager.configureManagerInstance().registerPref(new ConnectionConfig(adapter));
-
        // register, so can be picked up next time
        register();
 
        adapter.configure();
        return true;
     }
+
+    private final static Logger log = LoggerFactory.getLogger(ConnectionConfigXml.class.getName());
 
 }
