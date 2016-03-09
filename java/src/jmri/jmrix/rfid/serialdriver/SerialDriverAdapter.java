@@ -117,7 +117,7 @@ public class SerialDriverAdapter extends RfidPortController implements jmri.jmri
             if (log.isDebugEnabled()) {
                 // report additional status
                 log.debug(" port flow control shows "
-                        + (activeSerialPort.getFlowControlMode() == (SerialPort.FLOWCONTROL_RTSCTS_IN | SerialPort.FLOWCONTROL_RTSCTS_OUT) ? "hardware flow control" : "no flow control"));
+                        + (activeSerialPort.getFlowControlMode() == SerialPort.FLOWCONTROL_RTSCTS_OUT ? "hardware flow control" : "no flow control"));
             }
             if (log.isDebugEnabled()) {
                 // arrange to notify later
@@ -354,7 +354,7 @@ public class SerialDriverAdapter extends RfidPortController implements jmri.jmri
         if (getOptionState(option1Name).equals("MERG Concentrator")) {
             // Set Hardware Flow Control for Concentrator
             log.debug("Set hardware flow control for Concentrator");
-            flow = SerialPort.FLOWCONTROL_RTSCTS_IN | SerialPort.FLOWCONTROL_RTSCTS_OUT;
+            flow = SerialPort.FLOWCONTROL_RTSCTS_OUT;
         }
         activeSerialPort.setFlowControlMode(flow);
     }
