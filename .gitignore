@@ -31,6 +31,7 @@ session.log
 /nbproject/private
 /.idea/workspace.xml
 local.properties
+*.original~
 
 # CATS source, sometimes present for test
 /java/src/cats
