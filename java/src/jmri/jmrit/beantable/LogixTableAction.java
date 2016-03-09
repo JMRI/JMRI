@@ -128,7 +128,7 @@ public class LogixTableAction extends AbstractTableAction {
     }
 
     public LogixTableAction() {
-        this("Logix Table");
+        this(Bundle.getMessage("TitleLogixTable"));
     }
 
     static final ResourceBundle rbx = ResourceBundle.getBundle("jmri.jmrit.beantable.LogixTableBundle");
@@ -2175,7 +2175,7 @@ public class LogixTableAction extends AbstractTableAction {
     }
 
     @SuppressWarnings("fallthrough")
-    @edu.umd.cs.findbugs.annotations.SuppressWarnings(value = "SF_SWITCH_FALLTHROUGH")
+    @edu.umd.cs.findbugs.annotations.SuppressFBWarnings(value = "SF_SWITCH_FALLTHROUGH")
     boolean logicTypeChanged(ActionEvent e) {
         int type = _operatorBox.getSelectedIndex() + 1;
         if (type == _logicType) {

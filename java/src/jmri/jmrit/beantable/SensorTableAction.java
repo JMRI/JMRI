@@ -54,7 +54,7 @@ public class SensorTableAction extends AbstractTableAction {
     }
 
     public SensorTableAction() {
-        this("Sensor Table");
+        this(Bundle.getMessage("TitleSensorTable"));
     }
 
     protected SensorManager senManager = jmri.InstanceManager.sensorManagerInstance();

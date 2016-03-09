@@ -6,7 +6,7 @@ import jmri.ProgrammerManager;
 import jmri.ProgrammingMode;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import edu.umd.cs.findbugs.annotations.NonNull;
+import javax.annotation.Nonnull;
 
 /**
  * Provides a very basic implementation of ProgrammerManager. You give it a
@@ -104,13 +104,13 @@ public class DefaultProgrammerManager implements ProgrammerManager {
     //     public static final ProgrammingMode OPSACCEXTBYTEMODE = new ProgrammingMode("OPSACCEXTBYTEMODE", 121);
     //     public static final ProgrammingMode OPSACCEXTBITMODE  = new ProgrammingMode("OPSACCEXTBITMODE", 122);
     
-    @NonNull private Programmer mProgrammer;
+    @Nonnull private Programmer mProgrammer;
 
-    public DefaultProgrammerManager(@NonNull Programmer pProgrammer) {
+    public DefaultProgrammerManager(@Nonnull Programmer pProgrammer) {
         mProgrammer = pProgrammer;
     }
 
-    public DefaultProgrammerManager(@NonNull Programmer pProgrammer, jmri.jmrix.SystemConnectionMemo memo) {
+    public DefaultProgrammerManager(@Nonnull Programmer pProgrammer, jmri.jmrix.SystemConnectionMemo memo) {
         this(pProgrammer);
         this.userName = memo.getUserName();
     }

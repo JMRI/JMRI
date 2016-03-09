@@ -156,7 +156,7 @@ public class Sound {
 
     public static class WavBuffer {
 
-        @edu.umd.cs.findbugs.annotations.SuppressWarnings(value = "EI_EXPOSE_REP2") // OK until Java 1.6 allows cheap array copy
+        @edu.umd.cs.findbugs.annotations.SuppressFBWarnings(value = "EI_EXPOSE_REP2") // OK until Java 1.6 allows cheap array copy
         public WavBuffer(byte[] content) {
             buffer = content;
 
@@ -186,7 +186,7 @@ public class Sound {
         }
 
         // we maintain this, but don't use it for anything yet
-        @edu.umd.cs.findbugs.annotations.SuppressWarnings(value = "URF_UNREAD_FIELD")
+        @edu.umd.cs.findbugs.annotations.SuppressFBWarnings(value = "URF_UNREAD_FIELD")
         int fmtOffset;
 
         byte[] buffer;

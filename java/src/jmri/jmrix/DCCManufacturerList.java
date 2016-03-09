@@ -98,7 +98,7 @@ public class DCCManufacturerList {
         ZTC
     };
 
-    @edu.umd.cs.findbugs.annotations.SuppressWarnings({"EI_EXPOSE_REP", "MS_EXPOSE_REP"}) // OK until Java 1.6 allows return of cheap array copy
+    @edu.umd.cs.findbugs.annotations.SuppressFBWarnings({"EI_EXPOSE_REP", "MS_EXPOSE_REP"}) // OK until Java 1.6 allows return of cheap array copy
     public static String[] getSystemNames() {
         return systemNames;
     }

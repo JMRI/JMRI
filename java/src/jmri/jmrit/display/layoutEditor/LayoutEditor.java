@@ -314,10 +314,10 @@ public class LayoutEditor extends jmri.jmrit.display.panelEditor.PanelEditor imp
     private int selectedPointType = 0;   // connection type within the selected object
     //private boolean selectedNeedsConnect = false; // true if selected object is unconnected
 
-    @edu.umd.cs.findbugs.annotations.SuppressWarnings(value = "SE_TRANSIENT_FIELD_NOT_RESTORED") // no Serializable support at present
+    @edu.umd.cs.findbugs.annotations.SuppressFBWarnings(value = "SE_TRANSIENT_FIELD_NOT_RESTORED") // no Serializable support at present
     private Object foundObject = null; // found object, null if nothing found
 
-    @edu.umd.cs.findbugs.annotations.SuppressWarnings(value = "SE_TRANSIENT_FIELD_NOT_RESTORED") // no Serializable support at present
+    @edu.umd.cs.findbugs.annotations.SuppressFBWarnings(value = "SE_TRANSIENT_FIELD_NOT_RESTORED") // no Serializable support at present
     private transient Point2D foundLocation = new Point2D.Double(0.0, 0.0);  // location of found object
 
     private int foundPointType = 0;   // connection type within the found object

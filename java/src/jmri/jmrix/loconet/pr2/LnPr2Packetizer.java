@@ -19,7 +19,7 @@ public class LnPr2Packetizer extends jmri.jmrix.loconet.LnPacketizer {
 
     boolean debug = false;
 
-    @edu.umd.cs.findbugs.annotations.SuppressWarnings(value = "ST_WRITE_TO_STATIC_FROM_INSTANCE_METHOD",
+    @edu.umd.cs.findbugs.annotations.SuppressFBWarnings(value = "ST_WRITE_TO_STATIC_FROM_INSTANCE_METHOD",
             justification = "Only used during system initialization")
     public LnPr2Packetizer() {
         super();

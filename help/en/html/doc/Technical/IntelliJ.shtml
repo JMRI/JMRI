@@ -3,7 +3,7 @@
 <head>
 <title>JMRI: Building with IntelliJ IDEA</title>
 <meta name="author" content="Egbert Broerse">
-<meta name="keywords" content="JMRI technical code IntelliJ IDEA 15">
+<meta name="keywords" content="JMRI technical code IntelliJ IDEA 15 IDE">
 
 <!--#include virtual="/Style" -->
 </head>
@@ -60,17 +60,27 @@
 <h3>Set vmoptions</h3>
 	<h4>On OS X</h4>
 	<ul>
-	<li>Right click the /Applications/<strong>IntelliJ IDEA 15 CE</strong> application and choose "Show contents".
-	<li>In the folder that appears, open the <code>bin</code> folder and copy the file named <code>idea.vmoptions</code> to <code>/Library/Preferences/IdeaIC15/</code>.
-	Right click the copied file, choose "Open with..." and select TextEdit.<br>
-	<li>Add the line "-Didea.native2ascii.lowercase=true" to the contents of this file and save (as <code>idea.vmoptions</code>).<br>
-		<a href="images/IntelliJ/IjEncodinglowercaseSetting.png">
-	  <img src="images/IntelliJ/IjEncodinglowercaseSetting.png" width="242" height="207" alt="IntelliJ vmoptions line"></a>
+	<li>Open IntelliJ
+	<li>From the Help menu, select "Edit Custom VM Options":<br>
+	<a href="images/IntelliJ/IjVMOptionsMenu.png">
+	<img src="images/IntelliJ/IjVMOptionsMenu.png" width="251" height="170" alt="IntelliJ Edit vmoptions menu"></a>
+	<li>In the dialog, answer "Yes" to create a copy of the application's vmoptions file:<br>
+	<a href="images/IntelliJ/IjVMOptionsDialog.png">
+	<img src="images/IntelliJ/IjVMOptionsDialog.png" width="248" height="98" alt="IntelliJ Edit vmoptions dialog"></a>
+	<li>Add the line "-Didea.native2ascii.lowercase=true" to the contents of this file and select Save All from the File menu:<br>
+	<a href="images/IntelliJ/IjVMOptions.png">
+	<img src="images/IntelliJ/IjVMOptions.png" width="240" height="114" alt="IntelliJ Edit vmoptions"></a>
+	<li>As of version 15, IntelliJ on OS X does not correctly name this vmoptions file ( <a href="https://youtrack.jetbrains.com/issue/IDEA-150830#tab=Linked%20Issues">read more</a>).<br>
+	To correct this, close IntelliJ and in the Finder go to the <code>&tilde;/Library/Preferences/IdeaIC15/</code> folder.<br>
+	Rename the newly created file <code>idea64.vmoptions</code> to <code>idea.vmoptions</code> (effectively removing the "64" part).
   </ul>
   
 	<h4>On Windows and *nix</h4>
-	<p>Copy the existing file <code>[IntelliJ IDEA installation folder]/bin/idea$BITS.vmoptions</code> into the location under user home.<br>
-	That's <code>$HOME/.IdeaICXX/idea$BITS.vmoptions</code> for *nix and <code>%USERPROFILE%\.IdeaICXX\idea%BITS%.exe.vmoptions</code> for Windows.
+	<ul>
+	<li>From the Help menu, select "Edit Custom VM Options".
+	<li>Add the line "-Didea.native2ascii.lowercase=true" to the contents of this file and select Save All from the File menu.<br>
+	It will be saved into the location under user home.	That's <code>$HOME/.IdeaICXX/idea$BITS.vmoptions</code> for *nix and <code>%USERPROFILE%\.IdeaICXX\idea%BITS%.exe.vmoptions</code> for Windows (XX = the version number, BITS = the chip version installed).
+	<ul>
 	<p>If IDEA_VM_OPTIONS environment variable is defined, or the *.vmoptions file exists, then this file is used instead of the file located in the IntelliJ IDEA installation folder.
 	
 	<p>More info on setting these important vmoptions <a href="https://www.jetbrains.com/idea/help/tuning-intellij-idea.html">here</a>.<br>

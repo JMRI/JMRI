@@ -584,7 +584,7 @@ public class DefaultConditional extends AbstractNamedBean
      * Conditional
      */
     @SuppressWarnings({"deprecation", "fallthrough"})
-    @edu.umd.cs.findbugs.annotations.SuppressWarnings(value = "SF_SWITCH_FALLTHROUGH")
+    @edu.umd.cs.findbugs.annotations.SuppressFBWarnings(value = "SF_SWITCH_FALLTHROUGH")
     // it's unfortunate that this is such a huge method, because these annotation
     // have to apply to more than 500 lines of code - jake
     private void takeActionIfNeeded() {

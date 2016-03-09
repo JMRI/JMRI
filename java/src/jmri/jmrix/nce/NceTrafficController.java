@@ -497,7 +497,7 @@ public class NceTrafficController extends AbstractMRTrafficController implements
     public void setInstance() {
     }
 
-    @edu.umd.cs.findbugs.annotations.SuppressWarnings(value = "ST_WRITE_TO_STATIC_FROM_INSTANCE_METHOD",
+    @edu.umd.cs.findbugs.annotations.SuppressFBWarnings(value = "ST_WRITE_TO_STATIC_FROM_INSTANCE_METHOD",
             justification = "temporary until mult-system; only set at startup")
 //    protected synchronized void setInstance() { self = this; }
 
