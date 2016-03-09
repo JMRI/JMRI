@@ -179,7 +179,7 @@ abstract public class AbstractCanTrafficController
      *
      * @throws IOException
      */
-    @edu.umd.cs.findbugs.annotations.SuppressWarnings(value = "DLS_DEAD_LOCAL_STORE")
+    @edu.umd.cs.findbugs.annotations.SuppressFBWarnings(value = "DLS_DEAD_LOCAL_STORE")
     // Ignore false positive that msg is never used
     public void handleOneIncomingReply() throws java.io.IOException {
         // we sit in this until the message is complete, relying on

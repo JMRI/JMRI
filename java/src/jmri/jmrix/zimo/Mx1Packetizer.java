@@ -487,7 +487,7 @@ public class Mx1Packetizer extends Mx1TrafficController {
     /**
      * Captive class to handle transmission
      */
-    @edu.umd.cs.findbugs.annotations.SuppressWarnings(value = "UW_UNCOND_WAIT",
+    @edu.umd.cs.findbugs.annotations.SuppressFBWarnings(value = "UW_UNCOND_WAIT",
             justification = "while loop controls access")
     class XmtHandler implements Runnable {
 

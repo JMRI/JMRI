@@ -1,7 +1,7 @@
 // LocoNetSystemConnectionMemo.java
 package jmri.jmrix.loconet.hexfile;
 
-import edu.umd.cs.findbugs.annotations.SuppressWarnings;
+import edu.umd.cs.findbugs.annotations.SuppressFBWarnings;
 
 /**
  * Lightweight class to denote that a system is active, and provide general
@@ -13,7 +13,7 @@ import edu.umd.cs.findbugs.annotations.SuppressWarnings;
  * @author	Kevin Dickerson Copyright (C) 2010
  * @version $Revision: 22821 $
  */
-@SuppressWarnings(value = "NM_SAME_SIMPLE_NAME_AS_SUPERCLASS", justification = "This is ineffect the same as its super class")
+@SuppressFBWarnings(value = "NM_SAME_SIMPLE_NAME_AS_SUPERCLASS", justification = "This is ineffect the same as its super class")
 public class LocoNetSystemConnectionMemo extends jmri.jmrix.loconet.LocoNetSystemConnectionMemo {
 
     public jmri.jmrix.loconet.LnSensorManager getSensorManager() {

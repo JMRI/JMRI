@@ -12,7 +12,7 @@ import jmri.jmrix.can.CanSystemConnectionMemo;
  * @deprecated 2.99.2
  */
 @Deprecated
-@edu.umd.cs.findbugs.annotations.SuppressWarnings(value = "NM_SAME_SIMPLE_NAME_AS_SUPERCLASS")
+@edu.umd.cs.findbugs.annotations.SuppressFBWarnings(value = "NM_SAME_SIMPLE_NAME_AS_SUPERCLASS")
 public class CbusMenu extends jmri.jmrix.can.cbus.swing.CbusMenu {
 
     /**

@@ -39,7 +39,7 @@ public class PickPanel extends JPanel implements ListSelectionListener, ChangeLi
     JTextField _sysNametext;
     JTextField _userNametext;
 
-    @edu.umd.cs.findbugs.annotations.SuppressWarnings(value = "EI_EXPOSE_REP2")
+    @edu.umd.cs.findbugs.annotations.SuppressFBWarnings(value = "EI_EXPOSE_REP2")
     public PickPanel(PickListModel[] models) {
         _tabPane = new JTabbedPane();
         _models = new PickListModel[models.length];
