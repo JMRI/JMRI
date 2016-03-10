@@ -11,7 +11,6 @@ import jmri.jmrit.display.Positionable;
  * PositionableRoundRect.
  * <P>
  * @author Pete cresman Copyright (c) 2012
- * @version $Revision: 1 $
  */
 public class PositionableRectangle extends PositionableShape {
 
@@ -40,8 +39,7 @@ public class PositionableRectangle extends PositionableShape {
         return finishClone(pos);
     }
 
-    public Positionable finishClone(Positionable p) {
-        PositionableRectangle pos = (PositionableRectangle) p;
+    protected Positionable finishClone(PositionableRectangle pos) {
         pos._width = _width;
         pos._height = _height;
         return super.finishClone(pos);

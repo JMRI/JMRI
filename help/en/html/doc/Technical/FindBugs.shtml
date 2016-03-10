@@ -56,7 +56,7 @@ recent build online
 If FindBugs is finding a false positive, a bug that's not really a 
 bug, you can turn it off with an annotation such as:
 <pre><code>
-@edu.umd.cs.findbugs.annotations.SuppressWarnings("FE_FLOATING_POINT_EQUALITY","OK to compare floats, as even tiny differences should trigger update")
+@edu.umd.cs.findbugs.annotations.SuppressFBWarnings("FE_FLOATING_POINT_EQUALITY","OK to compare floats, as even tiny differences should trigger update")
 </code></pre>
 The second "justification" argument is optional, but highly recommended.  
 Explaining why you've added this annotation to suppress a message will help
@@ -65,9 +65,16 @@ It will also help make sure you properly understand the cause of the underlying
 bug report:  Sometimes what seems a false positive really isn't.
 
 <p>
+For clarity, this annotation also supports the form:
+<pre><code>
+@edu.umd.cs.findbugs.annotations.SuppressFBWarnings(value = "FE_FLOATING_POINT_EQUALITY",
+        justification = "OK to compare floats, as even tiny differences should trigger update")
+</code></pre>
+This can make it easier to see what is what when quickly scanning through the code.
+<p>
 If you need to put more than one message type in an annotation, use array syntax:
 <pre><code>
-@edu.umd.cs.findbugs.annotations.SuppressWarnings("{type1},{type2}","why both are needed")
+@edu.umd.cs.findbugs.annotations.SuppressFBWarnings("{type1},{type2}","why both are needed")
 </code></pre>
 
 <p>
@@ -81,9 +88,9 @@ For more on this, see the
 It can be useful to mark classes with one of the following annotations
 so that FindBugs does a good job of reasoning about it:
 <ul>
-<li><a href="http://findbugs.sourceforge.net/manual/annotations.html">edu.umd.cs.findbugs.annotations.CheckForNull</a> -
+<li><a href="http://findbugs.sourceforge.net/manual/annotations.html">javax.annotation.CheckForNull</a> -
     a variable or parameter may have a null value, so all uses should appropriately handle that.
-<li><a href="http://findbugs.sourceforge.net/manual/annotations.html">edu.umd.cs.findbugs.annotations.CheckReturnValue</a> -
+<li><a href="http://findbugs.sourceforge.net/manual/annotations.html">javax.annotation.CheckReturnValue</a> -
     this method has no side-effects, so there's no point in calling it without checking it's return value
 <li><a href="http://jcip.net/annotations/doc/net/jcip/annotations/Immutable.html">net.jcip.annotations.Immutable</a> -
     An object of this class can't be changed after it's created.  This allows both better checking

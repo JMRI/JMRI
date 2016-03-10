@@ -221,6 +221,7 @@
 	<li>Marco Forcone, who sacrificed two turnouts motors to the cause of
 	debugging XPressNet Turnout support
 	<li>Dan Foltz created the Manifest Creator and Switch List Creator for operations</li>
+	<li>John Forsythe, who helped with the timing needs of TCS decoders
 	<li>Enzo Fortuna, who created the Italian translation
 	<li>Marc Fournier, who improved the TCS decoder definition
 	    and did the detail work to update the Soundtraxx manufacturer name.
@@ -430,6 +431,7 @@
 	and the ESU LokPilot and LokPilotBasic decoders.
 	<li>Mark Schutzer, who helped debug some significant NCE improvements
 	and contributed the Lenz Gold decoder definition
+	<li>Knut Schwichtenberg, who contributed the FREDI definition files
 	<li>Jim Scorse, who gave generously of his time to answer questions about NCE details
 	and provided debug hardware
 	<li>Brett Scott contributed the scripts for programming DCC Specialties products

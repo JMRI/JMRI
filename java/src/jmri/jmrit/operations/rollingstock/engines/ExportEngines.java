@@ -107,29 +107,22 @@ public class ExportEngines extends XmlFile {
             Engine engine = (Engine) rs;
             engineModel = engine.getModel();
             if (engineModel.contains(del)) {
-//				log.debug("Engine (" + engine.getRoadName() + " " + engine.getNumber()
-//						+ ") has delimiter in model field: " + engineModel); // NOI18N
                 engineModel = ESC + engine.getModel() + ESC;
             }
             engineLocationName = engine.getLocationName();
             if (engineLocationName.contains(del)) {
-//				log.debug("Engine (" + engine.getRoadName() + " " + engine.getNumber()
-//						+ ") has delimiter in location field: " + engineLocationName); // NOI18N
                 engineLocationName = ESC + engine.getLocationName() + ESC;
             }
             engineTrackName = engine.getTrackName();
             if (engineTrackName.contains(del)) {
-//				log.debug("Engine (" + engine.getRoadName() + " " + engine.getNumber()
-//						+ ") has delimiter in track field: " + engineTrackName); // NOI18N
                 engineTrackName = ESC + engine.getTrackName() + ESC;
             }
-            // only export value field if value has been set.
-            value = "";
-            if (!engine.getValue().equals(Engine.NONE)) {
+            value = engine.getValue();
+            if (value.contains(del)) {
                 value = ESC + engine.getValue() + ESC;
             }
-            comment = "";
-            if (!engine.getComment().equals(Engine.NONE)) {
+            comment = engine.getComment();
+            if (comment.contains(del)) {
                 comment = ESC + engine.getComment() + ESC;
             }
             line = engine.getNumber() + del + engine.getRoadName() + del + engineModel + del + engine.getLength() + del

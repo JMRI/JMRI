@@ -50,7 +50,7 @@ public class MemoryTableAction extends AbstractTableAction {
     }
 
     public MemoryTableAction() {
-        this("Memory Table");
+        this(Bundle.getMessage("TitleMemoryTable"));
     }
 
     /**

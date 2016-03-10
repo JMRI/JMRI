@@ -363,7 +363,7 @@ public class AutomationItem implements java.beans.PropertyChangeListener {
 
     /**
      * Copies item.
-     * @param The item to copy.
+     * @param item The item to copy.
      */
     public void copyItem(AutomationItem item) {
         setAction(item.getActionByCode(item.getActionCode())); // must create a new action for each item

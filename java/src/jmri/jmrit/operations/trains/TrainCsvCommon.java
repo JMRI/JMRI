@@ -75,7 +75,7 @@ public class TrainCsvCommon extends TrainCommon {
     protected final static String SWLC = "SWLC" + DEL + Bundle.getMessage("csvSwitchListComment") + DEL; // NOI18N
     protected final static String TA = "TA" + DEL + Bundle.getMessage("csvTrainArrives") + DEL; // NOI18N
     protected final static String TDC = "TDC" + DEL + Bundle.getMessage("csvTrainChangesDirection") + DEL; // NOI18N
-    protected final static String TIR = "TIR" + DEL + Bundle.getMessage("csvTrainInRoute"); // NOI18N
+    protected final static String TIR = "TIR" + DEL + Bundle.getMessage("csvTrainEnRoute"); // NOI18N
     protected final static String TDONE = "TDONE" + DEL + Bundle.getMessage("csvTrainHasAlreadyServiced"); // NOI18N
     protected final static String VN = "VN" + DEL + Bundle.getMessage("csvVisitNumber") + DEL; // NOI18N
 

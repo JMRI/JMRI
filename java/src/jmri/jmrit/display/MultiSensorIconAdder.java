@@ -130,7 +130,6 @@ public class MultiSensorIconAdder extends IconAdder {
      * Override. First look for a table selection to set the sensor. If not,
      * then look to change the icon image (super).
      */
-    @SuppressWarnings("null")
     protected void doIconPanel() {
         if (log.isDebugEnabled()) {
             log.debug("doIconPanel: Sizes: _iconMap= " + _iconMap.size()

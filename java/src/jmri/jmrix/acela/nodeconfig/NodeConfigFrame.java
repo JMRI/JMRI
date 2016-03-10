@@ -171,7 +171,7 @@ public class NodeConfigFrame extends jmri.util.JmriJFrame {
     /**
      * Initialize the config window
      */
-    @edu.umd.cs.findbugs.annotations.SuppressWarnings(value = "SBSC_USE_STRINGBUFFER_CONCATENATION")
+    @edu.umd.cs.findbugs.annotations.SuppressFBWarnings(value = "SBSC_USE_STRINGBUFFER_CONCATENATION")
     // Only used occasionally, so inefficient String processing not really a problem
     // though it would be good to fix it if you're working in this area
     public void initComponents() {
@@ -1225,7 +1225,7 @@ public class NodeConfigFrame extends jmri.util.JmriJFrame {
     /**
      * Method to handle info state
      */
-    @edu.umd.cs.findbugs.annotations.SuppressWarnings(value = "SBSC_USE_STRINGBUFFER_CONCATENATION")
+    @edu.umd.cs.findbugs.annotations.SuppressFBWarnings(value = "SBSC_USE_STRINGBUFFER_CONCATENATION")
     // Only used occasionally, so inefficient String processing not really a problem
     // though it would be good to fix it if you're working in this area
     public void infoButtonActionPerformed() {
@@ -1553,7 +1553,7 @@ public class NodeConfigFrame extends jmri.util.JmriJFrame {
     /**
      * Method to handle cancel button
      */
-    @edu.umd.cs.findbugs.annotations.SuppressWarnings(value = "SBSC_USE_STRINGBUFFER_CONCATENATION")
+    @edu.umd.cs.findbugs.annotations.SuppressFBWarnings(value = "SBSC_USE_STRINGBUFFER_CONCATENATION")
     // Only used occasionally, so inefficient String processing not really a problem
     // though it would be good to fix it if you're working in this area
     public void cancelButtonActionPerformed() {

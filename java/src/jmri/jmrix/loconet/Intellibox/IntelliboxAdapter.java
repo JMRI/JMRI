@@ -55,7 +55,7 @@ public class IntelliboxAdapter extends LocoBufferAdapter {
     /**
      * Get an array of valid baud rates.
      */
-    @edu.umd.cs.findbugs.annotations.SuppressWarnings(value = "EI_EXPOSE_REP") // OK to expose array instead of copy until Java 1.6
+    @edu.umd.cs.findbugs.annotations.SuppressFBWarnings(value = "EI_EXPOSE_REP") // OK to expose array instead of copy until Java 1.6
     public String[] validBaudRates() {
         return validSpeeds;
     }
@@ -63,7 +63,7 @@ public class IntelliboxAdapter extends LocoBufferAdapter {
     /**
      * Get an array of valid baud rates as integers.
      */
-    @edu.umd.cs.findbugs.annotations.SuppressWarnings(value = "EI_EXPOSE_REP") // OK to expose array instead of copy until Java 1.6
+    @edu.umd.cs.findbugs.annotations.SuppressFBWarnings(value = "EI_EXPOSE_REP") // OK to expose array instead of copy until Java 1.6
     public int[] validBaudNumber() {
         return validSpeedValues;
     }

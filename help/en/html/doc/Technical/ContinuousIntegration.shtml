@@ -102,8 +102,12 @@ This includes keeping our
 building installer packages from development builds, 
 and building final releases.
 <p>
-
-Specific results of interest:
+Our primary Jenkins engine is at 
+<a href="http://builds.jmri.org/jenkins/">http://builds.jmri.org/jenkins/</a>, with 
+a secondary engine being built at 
+<a href="http://jmri.tagadab.com/jenkins/">http://jmri.tagadab.com/jenkins/</a>.
+<p>
+Specific Jenkins results of interest:
 <ul>
 <li><a href="http://builds.jmri.org/jenkins/">Dashboard</a> page that gives one-line status
 <li><a href="http://builds.jmri.org/jenkins/job/Development/">Development</a> page, 

@@ -377,7 +377,16 @@ public class TrainSwitchListEditFrame extends OperationsFrame implements java.be
                 continue;
             }
             mainLocation = location;
-
+        }
+        
+        mainLocation = null;
+        
+        for (Location location : locations) {
+            String name = TrainCommon.splitString(location.getName());
+            if (mainLocation != null && TrainCommon.splitString(mainLocation.getName()).equals(name)) {
+                continue;
+            }
+            mainLocation = location;
             JCheckBox checkBox = new JCheckBox();
             locationCheckBoxes.add(checkBox);
             checkBox.setSelected(location.isSwitchListEnabled());
@@ -402,7 +411,6 @@ public class TrainSwitchListEditFrame extends OperationsFrame implements java.be
             comboBox.setSelectedItem(location.getDefaultPrinterName());
             addComboBoxAction(comboBox);
             addItem(locationPanelCheckBoxes, comboBox, 6, y++);
-
         }
 
         // restore listeners

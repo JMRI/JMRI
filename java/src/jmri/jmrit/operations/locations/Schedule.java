@@ -169,11 +169,10 @@ public class Schedule implements java.beans.PropertyChangeListener {
      */
     private void resequenceIds() {
         List<ScheduleItem> scheduleItems = getItemsBySequenceList();
-        int i;
-        for (i = 0; i < scheduleItems.size(); i++) {
+        for (int i = 0; i < scheduleItems.size(); i++) {
             scheduleItems.get(i).setSequenceId(i + 1); // start sequence numbers at 1
+            _sequenceNum = i;
         }
-        _sequenceNum = i;
     }
 
     /**

@@ -157,7 +157,7 @@ public class TrainSwitchLists extends TrainCommon {
                         newLine(fileOut);
                         newLine(fileOut, MessageFormat.format(messageFormatText = TrainSwitchListText
                                 .getStringScheduledWork(), new Object[]{train.getName(), train.getDescription()}));
-                        if (train.isTrainInRoute()) {
+                        if (train.isTrainEnRoute()) {
                             if (!trainDone) {
                                 newLine(fileOut, MessageFormat.format(messageFormatText = TrainSwitchListText
                                         .getStringDepartedExpected(), new Object[]{
@@ -184,7 +184,7 @@ public class TrainSwitchLists extends TrainCommon {
                                 fileOut.write(FORM_FEED);
                             }
                             newLine(fileOut);
-                            if (train.isTrainInRoute()) {
+                            if (train.isTrainEnRoute()) {
                                 if (expectedArrivalTime.equals(Train.ALREADY_SERVICED)) {
                                     newLine(fileOut, MessageFormat.format(messageFormatText = TrainSwitchListText
                                             .getStringVisitNumberDone(), new Object[]{stops, train.getName(),
