@@ -11,7 +11,7 @@ import org.slf4j.LoggerFactory;
 
 // This is the same name as display.BlockContentsIcon, it follows 
 // on from the MemoryIcon
-@edu.umd.cs.findbugs.annotations.SuppressWarnings(value = "NM_SAME_SIMPLE_NAME_AS_SUPERCLASS")
+@edu.umd.cs.findbugs.annotations.SuppressFBWarnings(value = "NM_SAME_SIMPLE_NAME_AS_SUPERCLASS")
 public class BlockContentsIcon extends jmri.jmrit.display.BlockContentsIcon {
 
     /**
