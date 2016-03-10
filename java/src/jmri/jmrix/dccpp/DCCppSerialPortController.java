@@ -1,7 +1,7 @@
 // DCCppSerialPortController.java
 package jmri.jmrix.dccpp;
 
-import purejavacomm.SerialPort;
+import gnu.io.SerialPort;
 import java.io.DataInputStream;
 import java.io.DataOutputStream;
 import org.slf4j.Logger;

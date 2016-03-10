@@ -1,11 +1,8 @@
 package jmri.jmrix;
 
-import java.io.IOException;
-import java.io.InputStream;
 import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.Iterator;
-import java.util.Properties;
 import java.util.Set;
 import jmri.configurexml.ConfigXmlManager;
 import jmri.configurexml.XmlAdapter;
@@ -42,7 +39,6 @@ public class ConnectionConfigManager extends AbstractPreferencesProvider impleme
             log.debug("Initializing...");
             Element sharedConnections = null;
             Element perNodeConnections = null;
-            this.setPortNamePattern();
             try {
                 sharedConnections = JDOMUtil.toJDOMElement(ProfileUtils.getAuxiliaryConfiguration(profile).getConfigurationFragment(CONNECTIONS, NAMESPACE, true));
             } catch (NullPointerException ex) {
@@ -150,21 +146,5 @@ public class ConnectionConfigManager extends AbstractPreferencesProvider impleme
     @Override
     public Iterator<ConnectionConfig> iterator() {
         return this.connections.iterator();
-    }
-
-    /**
-     * Override the default port name patterns unless the
-     * purejavacomm.portnamepattern property was set on the command line.
-     */
-    private void setPortNamePattern() {
-        final String pattern = "purejavacomm.portnamepattern";
-        Properties properties = System.getProperties();
-        if (properties.getProperty(pattern) == null) {
-            try (InputStream in = ConnectionConfigManager.class.getResourceAsStream("PortNamePatterns.properties")) { // NOI18N
-                properties.load(in);
-            } catch (IOException ex) {
-                log.error("Unable to read PortNamePatterns.properties", ex);
-            }
-        }
     }
 }
