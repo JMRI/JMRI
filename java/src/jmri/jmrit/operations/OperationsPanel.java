@@ -40,10 +40,6 @@ import org.slf4j.LoggerFactory;
  */
 public class OperationsPanel extends JPanel implements AncestorListener {
 
-    /**
-     *
-     */
-    private static final long serialVersionUID = 4203296733948891651L;
     public static final String NEW_LINE = "\n"; // NOI18N
     public static final String NONE = ""; // NOI18N
 
@@ -484,5 +480,5 @@ public class OperationsPanel extends JPanel implements AncestorListener {
         return null;
     }
 
-    static Logger log = LoggerFactory.getLogger(OperationsPanel.class.getName());
+    private final static Logger log = LoggerFactory.getLogger(OperationsPanel.class.getName());
 }

@@ -29,8 +29,7 @@ import org.slf4j.LoggerFactory;
  * An icon to display a status of a Sensor.
  *
  * @author Bob Jacobsen Copyright (C) 2001
- * @author PeteCressman Copyright (C) 2010, 2011
- * @version $Revision$
+ * @author Pete Cressman Copyright (C) 2010, 2011
  */
 public class SensorIcon extends PositionableIcon implements java.beans.PropertyChangeListener {
 
@@ -81,9 +80,7 @@ public class SensorIcon extends PositionableIcon implements java.beans.PropertyC
         return finishClone(pos);
     }
 
-    @Override
-    public Positionable finishClone(Positionable p) {
-        SensorIcon pos = (SensorIcon) p;
+    protected Positionable finishClone(SensorIcon pos) {
         pos.setSensor(getNamedSensor().getName());
         pos.makeIconMap();
         pos._iconMap = cloneMap(_iconMap, pos);
@@ -998,16 +995,13 @@ public class SensorIcon extends PositionableIcon implements java.beans.PropertyC
                 super.setBackgroundMenu(popup);
             }         
         }
+
         @Override
-        @SuppressWarnings("fallthrough")
         protected ButtonGroup makeColorMenu(JMenu colorMenu, int type) {
             ButtonGroup buttonGrp = super.makeColorMenu( colorMenu,  type);
-            switch (type) {
-                case UNKOWN_BACKGROUND_COLOR:
-                case ACTIVE_BACKGROUND_COLOR:
-                case INACTIVE_BACKGROUND_COLOR:
-                case INCONSISTENT_BACKGROUND_COLOR:
-                    addColorMenuEntry(colorMenu, buttonGrp, Bundle.getMessage("Clear"), null, type);
+            if (type == UNKOWN_BACKGROUND_COLOR || type == ACTIVE_BACKGROUND_COLOR 
+                    || type == INACTIVE_BACKGROUND_COLOR || type == INCONSISTENT_BACKGROUND_COLOR) {
+                addColorMenuEntry(colorMenu, buttonGrp, Bundle.getMessage("Clear"), null, type);
             }
             return buttonGrp;
         }
@@ -1113,5 +1107,5 @@ public class SensorIcon extends PositionableIcon implements java.beans.PropertyC
         }
     }
 
-    static Logger log = LoggerFactory.getLogger(SensorIcon.class.getName());
+    private final static Logger log = LoggerFactory.getLogger(SensorIcon.class.getName());
 }

@@ -1,10 +1,8 @@
 // CanReply.java
 package jmri.jmrix.can;
 
-import edu.umd.cs.findbugs.annotations.NonNull;
+import javax.annotation.Nonnull;
 import jmri.jmrix.AbstractMRReply;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 
 /**
  * Base class for replies in a CANbus based message/reply protocol.
@@ -51,7 +49,7 @@ public class CanReply extends AbstractMRReply implements CanMutableFrame {
 
     // copy one
     @SuppressWarnings("null")
-    public CanReply(@NonNull CanReply m) {
+    public CanReply(@Nonnull CanReply m) {
         _header = m._header;
         _isExtended = m._isExtended;
         _isRtr = m._isRtr;
@@ -65,7 +63,7 @@ public class CanReply extends AbstractMRReply implements CanMutableFrame {
 
     // copy type
     @SuppressWarnings("null")
-    public CanReply(@NonNull CanMessage m) {
+    public CanReply(@Nonnull CanMessage m) {
         _header = m._header;
         _isExtended = m._isExtended;
         _isRtr = m._isRtr;
@@ -139,7 +137,7 @@ public class CanReply extends AbstractMRReply implements CanMutableFrame {
         }
     }
 
-    @edu.umd.cs.findbugs.annotations.SuppressWarnings(value = "EI_EXPOSE_REP") // OK to expose array, can be directly manipulated
+    @edu.umd.cs.findbugs.annotations.SuppressFBWarnings(value = "EI_EXPOSE_REP") // OK to expose array, can be directly manipulated
     public int[] getData() {
         return _dataChars;
     }
@@ -173,8 +171,6 @@ public class CanReply extends AbstractMRReply implements CanMutableFrame {
     int _header;
     boolean _isExtended;
     boolean _isRtr;
-
-    static Logger log = LoggerFactory.getLogger(CanReply.class.getName());
 }
 
 /* @(#)CanReply.java */

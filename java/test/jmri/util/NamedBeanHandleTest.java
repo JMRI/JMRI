@@ -7,8 +7,6 @@ import junit.framework.Assert;
 import junit.framework.Test;
 import junit.framework.TestCase;
 import junit.framework.TestSuite;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 
 /**
  * Tests for the jmri.util.NamedBeanUtil class.
@@ -56,7 +54,5 @@ public class NamedBeanHandleTest extends TestCase {
         TestSuite suite = new TestSuite(NamedBeanHandleTest.class);
         return suite;
     }
-
-    static Logger log = LoggerFactory.getLogger(NamedBeanHandleTest.class.getName());
 
 }

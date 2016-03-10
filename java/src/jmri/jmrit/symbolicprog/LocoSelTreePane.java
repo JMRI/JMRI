@@ -4,9 +4,6 @@ package jmri.jmrit.symbolicprog;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.JToggleButton;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
-
 import jmri.jmrit.progsupport.ProgModeSelector;
 
 /**
@@ -50,7 +47,5 @@ public class LocoSelTreePane extends CombinedLocoSelTreePane {
     JToggleButton addDecoderIdentButton() {
         return null;
     }
-
-    static Logger log = LoggerFactory.getLogger(LocoSelTreePane.class.getName());
 
 }

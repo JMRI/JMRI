@@ -12,26 +12,32 @@
   <node>
     <name>Controls</name>
     <name xml:lang="it">Controlli</name>
+    <name xml:lang="de">Bedienelemente</name>
     <node>
       <name>Power Control</name>
       <name xml:lang="it">Controllo Alimentazione</name>
-        <adapter>jmri.jmrit.powerpanel.PowerPanelAction</adapter>
+      <name xml:lang="de">Hauptschalter</name>
+      <adapter>jmri.jmrit.powerpanel.PowerPanelAction</adapter>
     </node>
     <node>
       <name>Turnout Control</name>
       <name xml:lang="it">Controllo Scambi</name>
+      <name xml:lang="de">Weichensteuerung...</name>
     </node>
     <node>
       <name>Light Control</name>
       <name xml:lang="it">Controllo Luci</name>
+      <name xml:lang="de">Lichtsteuerung...</name>
     </node>
     <node>
       <name>Send DCC Packet</name>
       <name xml:lang="it">Invio Pacchetto DCC</name>
+      <name xml:lang="de">Sende DCC Paket</name>
     </node>
     <node>
       <name>Speedometer</name>
       <name xml:lang="it">Tachimetro</name>
+      <name xml:lang="de">Geschwindigkeitsmesser</name>
     </node>
   </node>
 

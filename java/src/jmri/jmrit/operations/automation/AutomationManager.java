@@ -80,8 +80,8 @@ public class AutomationManager implements java.beans.PropertyChangeListener {
     }
 
     /**
-     * Finds an existing automation or creates a new automation if needed requires
-     * automation's name creates a unique id for this automation
+     * Finds an existing automation or creates a new automation if needed
+     * requires automation's name creates a unique id for this automation
      *
      * @param name
      *
@@ -210,12 +210,16 @@ public class AutomationManager implements java.beans.PropertyChangeListener {
             box.addItem(automation);
         }
     }
-    
+
+    /**
+     * Makes a new copy of automation
+     * @param automation the automation to copy
+     * @param newName name for the copy of automation
+     * @return new copy of automation
+     */
     public Automation copyAutomation(Automation automation, String newName) {
         Automation newAutomation = newAutomation(newName);
-        if (automation != null) {
-            automation.copyAutomation(newAutomation);
-        }
+        newAutomation.copyAutomation(automation);
         return newAutomation;
     }
 
@@ -240,7 +244,7 @@ public class AutomationManager implements java.beans.PropertyChangeListener {
      * Create an XML element to represent this Entry. This member has to remain
      * synchronized with the detailed DTD in operations-trains.dtd.
      *
-     * @return Contents in a JDOM Element
+     * @param root Contents in a JDOM Element
      */
     public void store(Element root) {
         Element values;
@@ -274,7 +278,7 @@ public class AutomationManager implements java.beans.PropertyChangeListener {
         pcs.firePropertyChange(p, old, n);
     }
 
-    static Logger log = LoggerFactory.getLogger(AutomationManager.class.getName());
+    private final static Logger log = LoggerFactory.getLogger(AutomationManager.class.getName());
 
 }
 

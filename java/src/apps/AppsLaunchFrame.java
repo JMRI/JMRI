@@ -274,7 +274,7 @@ public class AppsLaunchFrame extends jmri.util.JmriJFrame {
      * Provide access to a place where applications can expect the configuration
      * code to build run-time buttons.
      *
-     * @see apps.CreateButtonPanel
+     * @see apps.startup.CreateButtonModelFactory
      * @return null if no such space exists
      */
     static public JComponent buttonSpace() {
@@ -285,5 +285,5 @@ public class AppsLaunchFrame extends jmri.util.JmriJFrame {
     // GUI members
     private JMenuBar menuBar;
 
-    static Logger log = LoggerFactory.getLogger(AppsLaunchFrame.class.getName());
+    private final static Logger log = LoggerFactory.getLogger(AppsLaunchFrame.class.getName());
 }

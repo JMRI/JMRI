@@ -30,7 +30,6 @@ import org.slf4j.LoggerFactory;
  * parameter is local, set from the popup here.
  *
  * @author Bob Jacobsen Copyright (c) 2002
- * @version $Revision$
  */
 public class PositionableLabel extends JLabel implements Positionable {
 
@@ -206,17 +205,6 @@ public class PositionableLabel extends JLabel implements Positionable {
         }
     }
 
-    public Positionable deepClone() {
-        PositionableLabel pos;
-        if (_icon) {
-            NamedIcon icon = new NamedIcon((NamedIcon) getIcon());
-            pos = new PositionableLabel(icon, _editor);
-        } else {
-            pos = new PositionableLabel(getText(), _editor);
-        }
-        return finishClone(pos);
-    }
-
     /**
      * When text is rotated or in an icon mode, the return of getText() may be
      * null or some other value
@@ -230,8 +218,19 @@ public class PositionableLabel extends JLabel implements Positionable {
         _unRotatedText = s;
     }
 
-    public Positionable finishClone(Positionable p) {
-        PositionableLabel pos = (PositionableLabel) p;
+    @Override
+    public Positionable deepClone() {
+        PositionableLabel pos;
+        if (_icon) {
+            NamedIcon icon = new NamedIcon((NamedIcon) getIcon());
+            pos = new PositionableLabel(icon, _editor);
+        } else {
+            pos = new PositionableLabel(getText(), _editor);
+        }
+        return finishClone(pos);
+    }
+
+    protected Positionable finishClone(PositionableLabel pos) {
         pos._text = _text;
         pos._icon = _icon;
         pos._control = _control;
@@ -660,28 +659,30 @@ public class PositionableLabel extends JLabel implements Positionable {
         log.debug("rotate({}) with _rotateText {}, _text {}, _icon {}", deg, _rotateText, _text, _icon);
         _degrees = deg;
         if (_rotateText || deg==0) {
-            if (deg == 0) {				// restore unrotated whatever
+            if (deg == 0) {             // restore unrotated whatever
                 _rotateText = false;
                 if(_text) {
                     log.debug("   super.setText(\"{}\");", _unRotatedText);
                     super.setText(_unRotatedText);
-                    setOpaque( _popupUtil.hasBackground());
+                    if (_popupUtil!=null) {
+                        setOpaque( _popupUtil.hasBackground());
+                        _popupUtil.setBorder(true);                        
+                    }
                     if (_icon) {
                         String url = _namedIcon.getURL();
                         _namedIcon = new NamedIcon(url, url);                        
                     } else {
                         _namedIcon = null;
                     }
-                    _popupUtil.setBorder(true);
                     super.setIcon(_namedIcon);
                 } else {
                     _namedIcon.rotate(deg, this);
                     super.setIcon(_namedIcon);
                 }
             } else {
-                if (_text & _icon) {	// update text over icon
+                if (_text & _icon) {    // update text over icon
                     _namedIcon = makeTextOverlaidIcon(_unRotatedText, _namedIcon);
-                } else if (_text) {		// update text only icon image        			
+                } else if (_text) {     // update text only icon image                  
                     _namedIcon = makeTextIcon(_unRotatedText);
                 }
                 _namedIcon.rotate(deg, this);
@@ -689,8 +690,8 @@ public class PositionableLabel extends JLabel implements Positionable {
                 setOpaque(false);   // rotations cannot be opaque
             }
         } else {
-            if (deg != 0) {	// first time text or icon is rotated from horizontal
-                if (_text && _icon) {	// text overlays icon  e.g. LocoIcon
+            if (deg != 0) { // first time text or icon is rotated from horizontal
+                if (_text && _icon) {   // text overlays icon  e.g. LocoIcon
                     _namedIcon = makeTextOverlaidIcon(_unRotatedText, _namedIcon);
                     super.setText(null);
                     _rotateText = true;
@@ -701,7 +702,9 @@ public class PositionableLabel extends JLabel implements Positionable {
                     _rotateText = true;
                     setOpaque(false);
                 }
-                _popupUtil.setBorder(false);
+                if (_popupUtil!=null) {
+                    _popupUtil.setBorder(false);
+                }
                 _namedIcon.rotate(deg, this);
                 super.setIcon(_namedIcon);
             } else if (_namedIcon != null) {
@@ -984,6 +987,6 @@ public class PositionableLabel extends JLabel implements Positionable {
         return null;
     }
 
-    static Logger log = LoggerFactory.getLogger(PositionableLabel.class.getName());
+    private final static Logger log = LoggerFactory.getLogger(PositionableLabel.class.getName());
 
 }

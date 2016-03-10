@@ -54,7 +54,7 @@ public class EcosNamedPaneAction extends jmri.util.swing.JmriNamedPaneAction {
         return p;
     }
 
-    static Logger log = LoggerFactory.getLogger(EcosNamedPaneAction.class.getName());
+    private final static Logger log = LoggerFactory.getLogger(EcosNamedPaneAction.class.getName());
 }
 
 /* @(#)EcosNamedPaneAction.java */

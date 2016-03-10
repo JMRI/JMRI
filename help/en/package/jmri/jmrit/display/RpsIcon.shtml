@@ -2,21 +2,20 @@
 <html lang="en">
 <head>
 <!-- Copyright Bob Jacobsen 2008 -->
-<!-- $Id$ -->
 <title>JMRI: RPS Icon</title>
 
 <!-- Style -->
-<META HTTP-EQUIV="Content-Type" CONTENT="text/html; charset=iso-8859-1">
-<LINK REL="stylesheet" TYPE="text/css" HREF="/css/default.css"
-	MEDIA="screen">
-<LINK REL="stylesheet" TYPE="text/css" HREF="/css/print.css"
-	MEDIA="print">
-<LINK REL="icon" HREF="/images/jmri.ico" TYPE="image/png">
-<LINK REL="home" TITLE="Home" HREF="/">
+<meta http-equiv="content-type" content="text/html; charset=iso-8859-1">
+<link rel="stylesheet" type="text/css" href="/css/default.css"
+	media="screen">
+<link rel="stylesheet" type="text/css" href="/css/print.css"
+	media="print">
+<link rel="icon" href="/images/jmri.ico" type="image/png">
+<link rel="home" title="Home" href="/">
 <!-- /Style -->
-</HEAD>
+</head>
 
-<BODY>
+<body>
 <!--#include virtual="/Header" -->
   <div class="nomenu" id="mBody">
     <div id="mainContent">
@@ -66,23 +65,23 @@ When you calibrate an RPS icon, you're specifying
 how RPS measured locations correspond to positions on the panel.
 <p>
 The steps are:
-<ul>
-<li>Stop the RPS system polling, so things won't move around
-on you.
-<li>Add the icon to the panel.
-<li>Drag the icon until it sits over the position that
-corresponds to the 0,0 origin of your RPS installation.
-<li>Right-click or option-click on the icon to 
-get the pop-up menu, and select "Set Origin".
-<li>Move the actual locomotive to some other point on the
-layout, and start the RPS system polling again.  Get a 
-good measurement of the position.  Stop the RPS system.
-<li>Drag the icon to where you want it to be on the screen
-when the transmitter is in that location.
-<li>From the icon's popup menu, select "Set Current Location".
-<li>Get the popup menu again.  It should no longer say
-"Not Calibrated", and instead should show you the current position.
-</UL>
+	<ul>
+	<li>Stop the RPS system polling, so things won't move around
+	on you.
+	<li>Add the icon to the panel.
+	<li>Drag the icon until it sits over the position that
+	corresponds to the 0,0 origin of your RPS installation.
+	<li>Right-click or option-click on the icon to 
+	get the pop-up menu, and select "Set Origin".
+	<li>Move the actual locomotive to some other point on the
+	layout, and start the RPS system polling again.  Get a 
+	good measurement of the position.  Stop the RPS system.
+	<li>Drag the icon to where you want it to be on the screen
+	when the transmitter is in that location.
+	<li>From the icon's popup menu, select "Set Current Location".
+	<li>Get the popup menu again.  It should no longer say
+	"Not Calibrated", and instead should show you the current position.
+	</ul>
 <p>
 Don't forget to save your panel!
 
@@ -156,13 +155,13 @@ another locomotive transmitter.
 <p>
 If you want to have multiple icons, each showing the position of a single
 locomotive, you can configure filters on each icon.
-<ul>
-<li>Add an RPS icon to the panel
-<li>Open the icon's pop-up menu, and select "Set Filter".
-<li>This will open a small window in which you can enter the ID value for the
-locomotive you want this icon to track.  Once you've done this, 
-the icon will only move to the position measured for this locomotive.
-</ul>
+	<ul>
+	<li>Add an RPS icon to the panel
+	<li>Open the icon's pop-up menu, and select "Set Filter".
+	<li>This will open a small window in which you can enter the ID value for the
+	locomotive you want this icon to track.  Once you've done this, 
+	the icon will only move to the position measured for this locomotive.
+	</ul>
 
 <p>
 This method is a little tedious, particularly if you have a large roster,
@@ -172,10 +171,10 @@ one icon in the panel file, in effect making a bunch of duplicate calibrated ico
 and then set the filters; see below).
 But it has the advantage that you can control exactly which locomotives to 
 display and which not to.
-This method also allowes you to <a href="#custicon">attach custom images</a> (e.g. a picture
+This method also allows you to <a href="#custicon">attach custom images</a> (e.g. a picture
 of a specific locomotive) to the specific icon that represents each ID.
 
-<a id="custom">
+<a id="custom"></a>
 <h2>Customization</h2>
 <h3>Starting Position</h3>
 When you first open the panel, the icons are put back to the same
@@ -186,7 +185,7 @@ They'll stay in that position until a valid reading moves them, so
 you can use this to "park" locomotives that are not on the track 
 off the active part of the panel.
 
-<a id="custicon">
+<a id="custicon"></a>
 <h3>Displaying a Custom Icon</h3>
 Although there is not yet a graphical interface for this yet (it's coming!),
 you can modify the icon for a transmitter that's being tracked by 
@@ -226,9 +225,12 @@ getting good readings and not getting good readings, respectively.
 You can change these to the location of any icon file you'd like.
 For example, you can change them to a (small) photo of
 a locomotive, or to an image with the train number.
-</UL>
+</ul>
 
 A nice graphical interface for this is coming, but it's not here yet.
+
 <!--#include virtual="/Footer" -->
+  </div><!-- closes #mainContent-->
+ </div> <!-- closes #mBody-->
 </body>
 </html>

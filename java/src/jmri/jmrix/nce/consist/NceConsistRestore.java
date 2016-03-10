@@ -209,7 +209,7 @@ public class NceConsistRestore extends Thread implements jmri.jmrix.nce.NceListe
     public void message(NceMessage m) {
     } // ignore replies
 
-    @edu.umd.cs.findbugs.annotations.SuppressWarnings(value = "NN_NAKED_NOTIFY")
+    @edu.umd.cs.findbugs.annotations.SuppressFBWarnings(value = "NN_NAKED_NOTIFY")
     public void reply(NceReply r) {
         if (log.isDebugEnabled()) {
             log.debug("waiting for " + waiting + " responses ");
@@ -258,6 +258,6 @@ public class NceConsistRestore extends Thread implements jmri.jmrix.nce.NceListe
         }
     }
 
-    static Logger log = LoggerFactory
+    private final static Logger log = LoggerFactory
             .getLogger(NceConsistRestore.class.getName());
 }

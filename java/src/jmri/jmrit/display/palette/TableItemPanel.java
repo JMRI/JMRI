@@ -253,7 +253,7 @@ public class TableItemPanel extends FamilyItemPanel implements ListSelectionList
         private static final long serialVersionUID = 2477024053040181591L;
         HashMap<String, NamedIcon> iconMap;
 
-        @edu.umd.cs.findbugs.annotations.SuppressWarnings(value = "EI_EXPOSE_REP2") // icon map is within package 
+        @edu.umd.cs.findbugs.annotations.SuppressFBWarnings(value = "EI_EXPOSE_REP2") // icon map is within package 
         public IconDragJLabel(DataFlavor flavor, HashMap<String, NamedIcon> map) {
             super(flavor);
             iconMap = map;
@@ -315,5 +315,5 @@ public class TableItemPanel extends FamilyItemPanel implements ListSelectionList
         }
     }
 
-    static Logger log = LoggerFactory.getLogger(TableItemPanel.class.getName());
+    private final static Logger log = LoggerFactory.getLogger(TableItemPanel.class.getName());
 }

@@ -4,8 +4,6 @@ package jmri.jmrix.roco.z21;
 import junit.framework.Test;
 import junit.framework.TestCase;
 import junit.framework.TestSuite;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 
 /**
  * Tests for the jmri.jmrix.roco.z21 package
@@ -38,9 +36,10 @@ public class z21Test extends TestCase {
         suite.addTest(new TestSuite(z21XNetProgrammerTest.class));
         suite.addTest(new TestSuite(z21XNetThrottleManagerTest.class));
         suite.addTest(new TestSuite(z21XNetThrottleTest.class));
+        suite.addTest(new TestSuite(z21XNetTurnoutManagerTest.class));
+        suite.addTest(new TestSuite(z21XNetTurnoutTest.class));
+        suite.addTest(jmri.jmrix.roco.z21.simulator.z21SimulatorTest.suite());
         return suite;
     }
-
-    static Logger log = LoggerFactory.getLogger(z21Test.class.getName());
 
 }

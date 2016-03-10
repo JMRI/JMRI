@@ -178,11 +178,10 @@ public class Route implements java.beans.PropertyChangeListener {
      */
     private void resequenceIds() {
         List<RouteLocation> routeList = getLocationsBySequenceList();
-        int i;
-        for (i = 0; i < routeList.size(); i++) {
+        for (int i = 0; i < routeList.size(); i++) {
             routeList.get(i).setSequenceId(i + 1); // start sequence numbers at 1
+            _sequenceNum = i;
         }
-        _sequenceNum = i;
     }
 
     /**
@@ -471,6 +470,6 @@ public class Route implements java.beans.PropertyChangeListener {
         pcs.firePropertyChange(p, old, n);
     }
 
-    static Logger log = LoggerFactory.getLogger(Route.class.getName());
+    private final static Logger log = LoggerFactory.getLogger(Route.class.getName());
 
 }

@@ -31,8 +31,7 @@ import org.slf4j.LoggerFactory;
 /**
  * PositionableShape is item drawn by java.awt.Graphics2D.
  * <P>
- * @author Pete cresman Copyright (c) 2012
- * @version $Revision: 1 $
+ * @author Pete Cressman Copyright (c) 2012
  */
 public class PositionableShape extends PositionableJComponent
         implements java.beans.PropertyChangeListener {
@@ -230,9 +229,7 @@ public class PositionableShape extends PositionableJComponent
         return finishClone(pos);
     }
 
-    @Override
-    public Positionable finishClone(Positionable p) {
-        PositionableShape pos = (PositionableShape) p;
+    protected Positionable finishClone(PositionableShape pos) {
         pos._lineWidth = _lineWidth;
         pos._fillColor = new Color(_fillColor.getRed(), _fillColor.getGreen(), _fillColor.getBlue(), _fillColor.getAlpha());
         pos._lineColor = new Color(_lineColor.getRed(), _lineColor.getGreen(), _lineColor.getBlue(), _lineColor.getAlpha());
@@ -542,5 +539,5 @@ public class PositionableShape extends PositionableJComponent
         return false;
     }
 
-    static Logger log = LoggerFactory.getLogger(PositionableShape.class.getName());
+    private final static Logger log = LoggerFactory.getLogger(PositionableShape.class.getName());
 }

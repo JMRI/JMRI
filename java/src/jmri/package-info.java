@@ -20,5 +20,4 @@
  * @see jmri.managers
  * @see jmri.implementation
  */
-@edu.umd.cs.findbugs.annotations.SuppressWarnings({})
 package jmri;

@@ -1,11 +1,10 @@
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
-<!-- $Id$ -->
 <html lang="en">
 <head>
     <title>
  	JMRI: Getting the Code
     </title>
-    <META content="Bob Jacobsen" name="Author">
+    <meta content="Bob Jacobsen" name="Author">
     <meta name="keywords" content="JMRI technical code Git download">
 
     <!-- The combination of "Define" and {Header,Style, Logo and Footer} comments -->
@@ -102,8 +101,6 @@
   <a name="desktop" id="desktop"></a>
   <h3>Using the GitHub Desktop Application</h3>
   
-  <a href="images/GitHubCloneDeskop.png"><img src="images/GitHubCloneDeskop.png" align="right" height="271" width="113"/></a>
-
   <p>
   The 
   <a href="https://desktop.github.com">GitHub Desktop</a>
@@ -119,19 +116,24 @@
   <li>In your web browser, go to the GitHub site for the 
         "<a href="https://github.com/JMRI/JMRI">JMRI repository</a>"
         (clicking the link should take you there).
-  <li>Click the "Clone in Desktop" button on the middle left.
-  <li>The desktop application will give you a window where you can
-       select the download location. Change that if desired. 
-       Then click "Clone".
+  <li>Click the "Clone in Desktop" button on the top right.<br>
+  <a href="images/GitHubCloneDeskop.png"><img src="images/GitHubCloneDeskop.png" alt="Clone to desktop button in GitHub web" height="315" width="409"></a>
+  <li>The GitHub Desktop application will show a dialog where you can
+       select the download location. Change that if desired:<br>
+       <a href="images/GhDtCloneDialog.png"><img src="images/GhDtCloneDialog.png" alt="Clone dialog in GitHub Desktop Mac" height="279" width="267"></a>
+       <br>
+       and click "Clone".
   <li>The download will start. It's likely to take a couple minutes.
+  <li>For more details, see the our <a href="GitFAQ.shtml">Git FAQ help page</a>.
   </ul>
   
   <p>
   After the download is complete, there are menu items
-  under the application "Repository" menu to access the code directory, 
-  or you can navigate there directly.
+  under the application "Repository" menu to access the code directory:<br>
+  <a href="images/GitDtRepoSettingsMenu.png"><img src="images/GitDtRepoSettingsMenu.png" alt="Repository menu in GitHub Desktop" height="175" width="275"></a>
   
-  <p>
+  <p>You can also navigate there directly using your file system.
+  <br>
   Inside, you'll find 
   directories called <tt>xml</tt>,
   <tt>resources</tt>, <tt>jython</tt>, <tt>help</tt>, <tt>lib</tt>,
@@ -141,21 +143,16 @@
   directory that contains the source code for JMRI itself, and a <tt>tests</tt>
   directory that contains various test routines.</p>
 
-  <p>You can look at the code with your favorite text editor.</p>
-  
-  <p>
+  <p>You can look at the code with your favorite text editor.<br>
   To compile and run the code, you need one of the compilation tools described
   on the bar at the left: 
   <a href="Ant.shtml">Ant</a>, 
   <a href="Eclipse.shtml">Eclipse</a>, 
   <a href="NetBeans.shtml">NetBeans</a>, 
-  <a href="XCode.shtml">XCode</a>,
-  <a href="JBuilder.shtml">JBuilder</a>, 
   <a href="IntelliJ.shtml">IntelliJ</a>, 
   etc.  (Ant may be the easiest to
   install and use, and is the primary example in the documentation)</p>
 
-  
   <a name="cmd" id="cmd"></a>
   <h3>Using the command line</h3>
   
@@ -204,9 +201,8 @@
   <a href="Ant.shtml">Ant</a>, 
   <a href="Eclipse.shtml">Eclipse</a>, 
   <a href="NetBeans.shtml">NetBeans</a>, 
-  <a href="XCode.shtml">XCode</a>,
-  <a href="JBuilder.shtml">JBuilder</a>, 
-  etc.  (Ant may be the easiest to
+  <a href="IntelliJ.shtml">IntelliJ</a> 
+  etc. (Ant may be the easiest to
   install and use, and is the primary example in the documentation)</p>
 
   <a name="ide" id="ide"></a>
@@ -219,8 +215,7 @@
   <li><a href="Ant.shtml">Ant</a>
   <li><a href="Eclipse.shtml">Eclipse</a>
   <li><a href="NetBeans.shtml">NetBeans</a>
-  <li><a href="XCode.shtml">XCode</a>
-  <li><a href="JBuilder.shtml">JBuilder</a> 
+  <li><a href="IntelliJ.shtml">IntelliJ</a>
   </ul>
 
   <h2>Access to Old Releases</h2>

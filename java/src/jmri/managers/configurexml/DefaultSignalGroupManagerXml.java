@@ -251,5 +251,5 @@ public class DefaultSignalGroupManagerXml
         return InstanceManager.signalGroupManagerInstance().getXMLOrder();
     }
 
-    static Logger log = LoggerFactory.getLogger(DefaultSignalGroupManagerXml.class.getName());
+    private final static Logger log = LoggerFactory.getLogger(DefaultSignalGroupManagerXml.class.getName());
 }

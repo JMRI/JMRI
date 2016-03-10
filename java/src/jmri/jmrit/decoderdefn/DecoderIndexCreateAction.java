@@ -5,8 +5,6 @@ import java.awt.event.ActionEvent;
 import javax.swing.Icon;
 import jmri.util.swing.JmriAbstractAction;
 import jmri.util.swing.WindowInterface;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 
 /**
  * Update the decoder index and store
@@ -50,6 +48,4 @@ public class DecoderIndexCreateAction extends JmriAbstractAction {
     public jmri.util.swing.JmriPanel makePanel() {
         throw new IllegalArgumentException("Should not be invoked");
     }
-    // initialize logging
-    static Logger log = LoggerFactory.getLogger(DecoderIndexCreateAction.class.getName());
 }

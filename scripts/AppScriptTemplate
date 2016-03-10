@@ -57,8 +57,8 @@ CONFIGNAME=""
 while [ $# -gt 0 ] ; do
     case $1 in
         -d|--debug) DEBUG="yes" ;;
-        --profile=*) JMRI_OPTIONS="${JMRI_OPTIONS} -Dorg.jmri.profile=\"${1#*=}\"" ;;
-        -p) JMRI_OPTIONS="${JMRI_OPTIONS} -Dorg.jmri.profile=\"$2\"" ; shift ;;
+        --profile=*) JMRI_OPTIONS="${JMRI_OPTIONS} -Dorg.jmri.profile=${1#*=}" ;;
+        -p) JMRI_OPTIONS="${JMRI_OPTIONS} -Dorg.jmri.profile=$2" ; shift ;;
         --config=*) CONFIGNAME="${1#*=}" ;;
         -c) CONFIGNAME="$2" ; shift ;;
         -J*) JMRI_OPTIONS="${JMRI_OPTIONS} ${1#-J}" ;;

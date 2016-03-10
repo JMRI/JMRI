@@ -1,7 +1,5 @@
 package jmri.jmrit.logix;
 
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 
 public class ThrottleSetting {
 
@@ -63,6 +61,4 @@ public class ThrottleSetting {
     public String toString() {
         return "ThrottleSetting: wait " + _time + "ms then set " + _command + " " + _value + " at block " + _blockName;
     }
-
-    static Logger log = LoggerFactory.getLogger(ThrottleSetting.class.getName());
 }

@@ -34,7 +34,7 @@ abstract public class AbstractMRMessage extends AbstractMessage {
 
     // copy one
     @SuppressWarnings("null")
-    @edu.umd.cs.findbugs.annotations.SuppressWarnings(value = "NP_NULL_ON_SOME_PATH",
+    @edu.umd.cs.findbugs.annotations.SuppressFBWarnings(value = "NP_NULL_ON_SOME_PATH",
             justification = "we want to force an exception")
     public AbstractMRMessage(AbstractMRMessage m) {
         this();
@@ -200,7 +200,7 @@ abstract public class AbstractMRMessage extends AbstractMessage {
         setElement(offset + 2, s.charAt(2));
         setElement(offset + 3, s.charAt(3));
     }
-    static Logger log = LoggerFactory.getLogger(AbstractMRMessage.class.getName());
+    private final static Logger log = LoggerFactory.getLogger(AbstractMRMessage.class.getName());
 
     @Override
     public String toString() {

@@ -236,7 +236,7 @@ public class AddSensorPanel extends jmri.util.swing.JmriPanel {
                 javax.swing.JOptionPane.ERROR_MESSAGE);
     }
 
-    static final Logger log = LoggerFactory.getLogger(AddSensorPanel.class.getName());
+    private final static Logger log = LoggerFactory.getLogger(AddSensorPanel.class.getName());
 }
 
 

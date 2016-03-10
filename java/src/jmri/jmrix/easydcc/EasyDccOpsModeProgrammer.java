@@ -127,7 +127,7 @@ public class EasyDccOpsModeProgrammer extends EasyDccProgrammer implements Addre
     }
 
     // initialize logging
-    static Logger log = LoggerFactory.getLogger(EasyDccOpsModeProgrammer.class.getName());
+    private final static Logger log = LoggerFactory.getLogger(EasyDccOpsModeProgrammer.class.getName());
 
 }
 

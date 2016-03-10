@@ -91,7 +91,7 @@ public class JavaSoundAudioFactory extends AbstractAudioFactory {
     }
 
     @Override
-    @edu.umd.cs.findbugs.annotations.SuppressWarnings(value = "ST_WRITE_TO_STATIC_FROM_INSTANCE_METHOD")
+    @edu.umd.cs.findbugs.annotations.SuppressFBWarnings(value = "ST_WRITE_TO_STATIC_FROM_INSTANCE_METHOD")
     // OK to write to static variable mixer as we are cleaning up
     public void cleanup() {
         // Stop the command thread

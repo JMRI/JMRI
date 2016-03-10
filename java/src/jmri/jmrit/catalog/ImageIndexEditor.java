@@ -335,5 +335,5 @@ public final class ImageIndexEditor extends JmriJFrame {
         return cnt;
     }
 
-    static Logger log = LoggerFactory.getLogger(ImageIndexEditor.class.getName());
+    private final static Logger log = LoggerFactory.getLogger(ImageIndexEditor.class.getName());
 }

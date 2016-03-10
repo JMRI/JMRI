@@ -207,7 +207,7 @@ public class SingleTurnoutSignalHead extends DefaultSignalHead implements Proper
     }
 
     @SuppressWarnings("fallthrough")
-    @edu.umd.cs.findbugs.annotations.SuppressWarnings(value = "SF_SWITCH_FALLTHROUGH")
+    @edu.umd.cs.findbugs.annotations.SuppressFBWarnings(value = "SF_SWITCH_FALLTHROUGH")
     private String getSignalColour(int mAppearance) {
         switch (mAppearance) {
             case SignalHead.RED:
@@ -241,7 +241,7 @@ public class SingleTurnoutSignalHead extends DefaultSignalHead implements Proper
         return false;
     }
 
-    static Logger log = LoggerFactory.getLogger(SingleTurnoutSignalHead.class.getName());
+    private final static Logger log = LoggerFactory.getLogger(SingleTurnoutSignalHead.class.getName());
 
     /* (non-Javadoc)
      * @see java.beans.PropertyChangeListener#propertyChange(java.beans.PropertyChangeEvent)

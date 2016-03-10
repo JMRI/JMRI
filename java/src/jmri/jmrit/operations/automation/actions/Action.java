@@ -1,14 +1,14 @@
 package jmri.jmrit.operations.automation.actions;
 
+import jmri.jmrit.operations.trains.timetable.TrainSchedule;
+
 import java.text.MessageFormat;
 import javax.swing.JComboBox;
 import javax.swing.JOptionPane;
 import jmri.jmrit.operations.automation.Automation;
 import jmri.jmrit.operations.automation.AutomationItem;
-import jmri.jmrit.operations.automation.AutomationManager;
 import jmri.jmrit.operations.routes.RouteLocation;
 import jmri.jmrit.operations.trains.Train;
-import jmri.jmrit.operations.trains.TrainSchedule;
 
 public abstract class Action {
 
@@ -214,30 +214,6 @@ public abstract class Action {
         JComboBox<?> cb = new JComboBox<>();
         cb.setEnabled(false);
         return cb;
-    }
-
-    /**
-     * ComboBox for GOTO
-     * 
-     * @return ComboBox with a list of automationItems.
-     */
-    protected JComboBox<AutomationItem> getAutomationItemComboBox() {
-        if (getAutomationItem() != null) {
-            Automation automation = AutomationManager.instance().getAutomationById(getAutomationItem().getId().split(Automation.REGEX)[0]);
-            JComboBox<AutomationItem> cb = automation.getComboBox();
-            cb.setSelectedItem(getAutomationItem().getGotoAutomationItem());
-            return cb;
-        }
-        return null;
-    }
-
-    protected JComboBox<Automation> getAutomationComboBox() {
-        if (getAutomationItem() != null) {
-            JComboBox<Automation> cb = AutomationManager.instance().getComboBox();
-            cb.setSelectedItem(getAutomationItem().getAutomationToRun());
-            return cb;
-        }
-        return null;
     }
 
     java.beans.PropertyChangeSupport pcs = new java.beans.PropertyChangeSupport(this);

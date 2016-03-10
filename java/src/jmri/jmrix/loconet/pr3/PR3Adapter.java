@@ -161,5 +161,5 @@ public class PR3Adapter extends LocoBufferAdapter {
         return (PR3SystemConnectionMemo) super.getSystemConnectionMemo();
     }
 
-    static Logger log = LoggerFactory.getLogger(PR3Adapter.class.getName());
+    private final static Logger log = LoggerFactory.getLogger(PR3Adapter.class.getName());
 }

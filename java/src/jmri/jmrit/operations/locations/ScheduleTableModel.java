@@ -1,6 +1,9 @@
 // ScheduleTableModel.java
 package jmri.jmrit.operations.locations;
 
+import jmri.jmrit.operations.trains.timetable.TrainScheduleManager;
+
+import jmri.jmrit.operations.trains.timetable.TrainSchedule;
 import java.beans.PropertyChangeEvent;
 import java.beans.PropertyChangeListener;
 import java.text.MessageFormat;
@@ -16,8 +19,6 @@ import jmri.jmrit.operations.rollingstock.cars.CarLoads;
 import jmri.jmrit.operations.rollingstock.cars.CarManager;
 import jmri.jmrit.operations.rollingstock.cars.CarRoads;
 import jmri.jmrit.operations.setup.Control;
-import jmri.jmrit.operations.trains.TrainSchedule;
-import jmri.jmrit.operations.trains.TrainScheduleManager;
 import jmri.util.table.ButtonEditor;
 import jmri.util.table.ButtonRenderer;
 import org.slf4j.Logger;
@@ -749,5 +750,5 @@ public class ScheduleTableModel extends javax.swing.table.AbstractTableModel imp
 
     }
 
-    static Logger log = LoggerFactory.getLogger(ScheduleTableModel.class.getName());
+    private final static Logger log = LoggerFactory.getLogger(ScheduleTableModel.class.getName());
 }

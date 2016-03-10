@@ -1,10 +1,10 @@
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
 <html lang="en">
-<head><title>Basic throttle window usage</title>
+<head>
+<title>Basic Throttle window usage</title>
 
 <meta name="keywords" content="JMRI decoderpro dcc nmra throttlepro">
 <meta name="Description" content="Throttle documentation for JMRI project">
-<meta name="Keywords" content="JMRI">
 <meta name="Author" content="Lionel Jeanson">
 <meta name="Language" content="EN">
 <meta name="Robots" content="Index, Follow">
@@ -56,17 +56,15 @@ minimize one or more of these panels within the Throttle window. When
 one of these subwindows is closed, is can be reopened through <a href="ThrottleWindowMenus.shtml">the View menu</a>.<br>
 
 <br>
-
-For details about usage of the <a href="ThrottleWindowMenus.shtml">throttle
-window menus, see there</a>.<br>
-
-For details about usage of the <a href="ThrottleToolBar.shtml">throttle
-window toolbar, see there</a>.<br>
-
-
-For details about usage of the <a href="ThrottlesPreferencesPane.shtml">throttles preferences, see there</a>.<br>
+For details about usage of the <a href="ThrottleWindowMenus.shtml">Throttle
+window menus, see there</a>.
 <br>
-For <a href="AdvancedThrottleControl.shtml">advanced control of a throttle, see there</a>.<br>
+For details about usage of the <a href="ThrottleToolBar.shtml">Throttle
+window toolbar, see there</a>.
+<br>
+For details about usage of the <a href="ThrottlesPreferencesPane.shtml">Throttles Preferences, see there</a>.<br>
+<br>
+For <a href="AdvancedThrottleControl.shtml">advanced control of a Throttle, see there</a>.<br>
 
 <br>
 
@@ -180,7 +178,7 @@ This pane if accessible by right clicking in the AddressPanel pane, on
 a specific Function Button and opening Properties menu entry.<br>
 <br>
 Note that for Throttles that have an associated Roster, it is better to
-define these settings in the Function <a href="RostersMediaPane.shtml">label pane in DecoderPro</a>. (however if you change them here, you can still export these changes to the Roster through the <a href="ThrottleWindowMenus.shtml">Export to roster meu entry</a>)<br>
+define these settings in the <a href="RostersMediaPane.shtml">Function label pane</a> in DecoderPro (however if you change them here, you can still export these changes to the Roster through the <a href="ThrottleWindowMenus.shtml">Export to Roster</a> menu entry).<br>
 
 <ul>
 	<li>Function Number &#8212; associates the button with a function number</li>
@@ -241,7 +239,7 @@ obviously be seen. But if there is only a single function being used &#8212;
 for example the "lights" (F0) &#8212; then this option does provide the
 ability to "hide" all of the other buttons.<br>
 
-<span style="font-weight: bold;">Warning!&nbsp;</span>&nbsp; Disabling
+<span style="font-weight: bold;">Warning!</span> Disabling
 the "Visible" check box should be one of the last steps performed
 during this customization process. The reason for this is that once the
 button is marked as "invisible" (by removing the check box), it is
@@ -253,7 +251,7 @@ All Function Buttons."</a><br>
 <h2>Jynstruments</h2>
 See <a href="../scripting/Jynstruments.shtml">there for more informations about Jynstruments</a>.<br>
 <br>
-The Throttle Window is jynstrumentable, particularly with more advanced function controls.<br>
+The Throttle Window is Jynstrumentable, particularly with more advanced function controls.<br>
 <br>
 At the moment <a href="http://jmri.org/jython/Jynstruments/ThrottleFrame/">3 sample Jynstruments are delivered</a>,
 one for Light, one for Horn and one for Whistle (function 0, 1 and 2).
@@ -261,7 +259,7 @@ But this is only a sample, have a look at the code and customize at
 will for your specific decoder needs.<br>
 
 <span style="font-style: italic;">Note that Throttle Window toolbar is
-Jynstrumentable too, so here we drop the Jynstruments on </span><span style="font-style: italic;">the window content</span><span style="font-style: italic;">
+Jynstrumentable too, so here we drop the Jynstruments on the window content</span><span style="font-style: italic;">
 itself, not on the toolbar.
 </span>
 

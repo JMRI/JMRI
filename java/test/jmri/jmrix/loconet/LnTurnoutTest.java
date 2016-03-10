@@ -288,6 +288,6 @@ public class LnTurnoutTest extends jmri.implementation.AbstractTurnoutTest {
         return suite;
     }
 
-    static Logger log = LoggerFactory.getLogger(LnTurnoutTest.class.getName());
+    private final static Logger log = LoggerFactory.getLogger(LnTurnoutTest.class.getName());
 
 }

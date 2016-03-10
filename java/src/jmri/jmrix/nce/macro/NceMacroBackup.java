@@ -248,7 +248,7 @@ public class NceMacroBackup extends Thread implements jmri.jmrix.nce.NceListener
     public void message(NceMessage m) {
     } // ignore replies
 
-    @edu.umd.cs.findbugs.annotations.SuppressWarnings(value = "NN_NAKED_NOTIFY")
+    @edu.umd.cs.findbugs.annotations.SuppressFBWarnings(value = "NN_NAKED_NOTIFY")
     // this reply always expects two consecutive reads
     public void reply(NceReply r) {
 
@@ -299,6 +299,6 @@ public class NceMacroBackup extends Thread implements jmri.jmrix.nce.NceListener
         }
     }
 
-    static Logger log = LoggerFactory
+    private final static Logger log = LoggerFactory
             .getLogger(NceMacroBackup.class.getName());
 }

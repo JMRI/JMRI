@@ -4,12 +4,7 @@ import java.util.concurrent.LinkedBlockingQueue;
 import jmri.DccLocoAddress;
 import jmri.DccThrottle;
 import jmri.LocoAddress;
-import jmri.Throttle;
 import jmri.jmrix.AbstractThrottle;
-import java.util.regex.Matcher;
-import java.util.regex.Pattern;
-import java.util.regex.PatternSyntaxException;
-
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -557,5 +552,5 @@ public class DCCppThrottle extends AbstractThrottle implements DCCppListener {
     }
 
     // register for notification
-    static Logger log = LoggerFactory.getLogger(DCCppThrottle.class.getName());
+    private final static Logger log = LoggerFactory.getLogger(DCCppThrottle.class.getName());
 }

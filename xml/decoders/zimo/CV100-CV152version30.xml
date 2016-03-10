@@ -9,6 +9,7 @@
 <!-- version 1.2 27 Jan 12 JES  - fixed bug in diesel steam effect enum value -->
 <!-- version 1.3 18 Jan 2015 Mark Waters -  fixed errors in CV114 and CV152 include href, added more includes for CV133 for newer decoders -->
 <!-- version 1.4 5 jan 2015 Mark Waters   - fixed dimming mask inverted -->
+<!-- version 1.5 23 Jan 2015 Mark Waters -  added more includes for CV133 for newer decoders -->
 <variables xmlns:xi="http://www.w3.org/2001/XInclude" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="http://jmri.org/xml/schema/decoder.xsd">
  <xi:include href="http://jmri.org/xml/decoders/nmra/userId.xml"/>
   <!-- Used unrelated item names used to place CV107-108 on the Lights pane -->
@@ -799,7 +800,7 @@
     <label>Function Output 2 as virtual Cam or Smoke Fan</label>
     <label xml:lang="it">Uscita 2 Cam virtuale  o Ventola Fumo</label>
   </variable>
-  <variable CV="133" item="Function Output as virtual Cam or Smoke Fan" default="0" minOut="6" include="201,203,210,211,212,213,214,215,216,218,219,220,221,222,225,233,237,240">
+  <variable CV="133" item="Function Output as virtual Cam or Smoke Fan" default="0" minOut="6" include="201,203,210,211,212,213,214,215,216,218,219,220,221,222,225,233,237,240,234,243,246,253">
     <enumVal>
       <enumChoice choice="Function Output 4 Normal Output">
         <choice>Function Ouptput 4 Normal Output</choice>

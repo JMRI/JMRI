@@ -253,7 +253,7 @@ public class RosterTable extends JmriPanel implements RosterEntrySelector, Roste
     // cache selectedRosterEntries so that multiple calls to this
     // between selection changes will not require the creation of a new array
     @Override
-    @edu.umd.cs.findbugs.annotations.SuppressWarnings(value = "EI_EXPOSE_REP",
+    @edu.umd.cs.findbugs.annotations.SuppressFBWarnings(value = "EI_EXPOSE_REP",
             justification = "Want to give access to mutable, original roster objects")
     public RosterEntry[] getSelectedRosterEntries() {
         if (selectedRosterEntries == null) {

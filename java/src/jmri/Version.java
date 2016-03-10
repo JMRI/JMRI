@@ -37,8 +37,7 @@ import java.util.ResourceBundle;
  * WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS FOR
  * A PARTICULAR PURPOSE. See the GNU General Public License for more details.
  * <P>
- * @author Bob Jacobsen Copyright 1997-2014
- * @version $Revision: 17977 $
+ * @author Bob Jacobsen Copyright 1997-2016
  */
 public class Version {
 
@@ -141,7 +140,7 @@ public class Version {
             return false;
         }
         for (String part : parts) {
-            if (Integer.valueOf(part) == null || Integer.valueOf(part) < 0) {
+            if (Integer.parseInt(part) < 0) {
                 return false;
             }
         }

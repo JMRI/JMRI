@@ -59,7 +59,7 @@ public class NodeConfigAction extends jmri.jmrix.ieee802154.swing.nodeconfig.Nod
         f.setVisible(true);
     }
 
-    static Logger log = LoggerFactory.getLogger(NodeConfigAction.class.getName());
+    private final static Logger log = LoggerFactory.getLogger(NodeConfigAction.class.getName());
 }
 
 

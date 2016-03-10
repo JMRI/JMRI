@@ -128,7 +128,7 @@ public class LogixTableAction extends AbstractTableAction {
     }
 
     public LogixTableAction() {
-        this("Logix Table");
+        this(Bundle.getMessage("TitleLogixTable"));
     }
 
     static final ResourceBundle rbx = ResourceBundle.getBundle("jmri.jmrit.beantable.LogixTableBundle");
@@ -1372,12 +1372,12 @@ public class LogixTableAction extends AbstractTableAction {
             question.setAlignmentX(Component.CENTER_ALIGNMENT);
             container.add(question);
 
-            final JCheckBox remember = new JCheckBox("Remember this setting for next time?");
+            final JCheckBox remember = new JCheckBox(Bundle.getMessage("MessageRememberSetting"));
             remember.setFont(remember.getFont().deriveFont(10f));
             remember.setAlignmentX(Component.CENTER_ALIGNMENT);
 
-            JButton yesButton = new JButton("Yes");
-            JButton noButton = new JButton("No");
+            JButton yesButton = new JButton(Bundle.getMessage("ButtonYes"));
+            JButton noButton = new JButton(Bundle.getMessage("ButtonNo"));
             JPanel button = new JPanel();
             button.setAlignmentX(Component.CENTER_ALIGNMENT);
             button.add(yesButton);
@@ -2175,7 +2175,7 @@ public class LogixTableAction extends AbstractTableAction {
     }
 
     @SuppressWarnings("fallthrough")
-    @edu.umd.cs.findbugs.annotations.SuppressWarnings(value = "SF_SWITCH_FALLTHROUGH")
+    @edu.umd.cs.findbugs.annotations.SuppressFBWarnings(value = "SF_SWITCH_FALLTHROUGH")
     boolean logicTypeChanged(ActionEvent e) {
         int type = _operatorBox.getSelectedIndex() + 1;
         if (type == _logicType) {
@@ -5469,6 +5469,6 @@ public class LogixTableAction extends AbstractTableAction {
         return LogixTableAction.class.getName();
     }
 
-    static final Logger log = LoggerFactory.getLogger(LogixTableAction.class.getName());
+    private final static Logger log = LoggerFactory.getLogger(LogixTableAction.class.getName());
 }
 /* @(#)LogixTableAction.java */

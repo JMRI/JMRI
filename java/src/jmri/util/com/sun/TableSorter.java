@@ -331,7 +331,7 @@ public class TableSorter extends AbstractTableModel {
             this.modelIndex = index;
         }
 
-        @edu.umd.cs.findbugs.annotations.SuppressWarnings(value = "EQ_COMPARETO_USE_OBJECT_EQUALS")
+        @edu.umd.cs.findbugs.annotations.SuppressFBWarnings(value = "EQ_COMPARETO_USE_OBJECT_EQUALS")
         // compareTo used for specific purpose, equals and hashCode not needed
         public int compareTo(Object o) {
             int row1 = modelIndex;

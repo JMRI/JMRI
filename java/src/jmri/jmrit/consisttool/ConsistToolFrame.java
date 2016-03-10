@@ -341,7 +341,7 @@ public class ConsistToolFrame extends jmri.util.JmriJFrame implements jmri.Consi
             return;
         }
         DccLocoAddress address = adrSelector.getAddress();
-        Consist tempConsist = ConsistMan.getConsist(address);
+        ConsistMan.getConsist(address);
         /*
          * get the list of locomotives to delete
          */
@@ -713,5 +713,5 @@ public class ConsistToolFrame extends jmri.util.JmriJFrame implements jmri.Consi
         initializeConsistBox();
     }
 
-    static Logger log = LoggerFactory.getLogger(ConsistToolFrame.class.getName());
+    private final static Logger log = LoggerFactory.getLogger(ConsistToolFrame.class.getName());
 }

@@ -117,7 +117,7 @@ public abstract class CrrSection extends jmri.jmrit.automat.AbstractAutomaton {
         return true;   // never terminate permanently
     }
 
-    @edu.umd.cs.findbugs.annotations.SuppressWarnings({"ST_WRITE_TO_STATIC_FROM_INSTANCE_METHOD", "LI_LAZY_INIT_UPDATE_STATIC"})
+    @edu.umd.cs.findbugs.annotations.SuppressFBWarnings({"ST_WRITE_TO_STATIC_FROM_INSTANCE_METHOD", "LI_LAZY_INIT_UPDATE_STATIC"})
     // this code uses statics poorly, but it's not threaded, and too old to fix, so mark as OK
     CrrSection() {
         SensorManager tm = InstanceManager.sensorManagerInstance();
@@ -294,7 +294,7 @@ public abstract class CrrSection extends jmri.jmrit.automat.AbstractAutomaton {
     static Turnout[] si = null;
 
     // initialize logging
-    static Logger log = LoggerFactory.getLogger(CrrSection.class.getName());
+    private final static Logger log = LoggerFactory.getLogger(CrrSection.class.getName());
 
 }
 

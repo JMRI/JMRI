@@ -128,5 +128,5 @@ public class PortalIconXml extends PositionableLabelXml {
         l.setHideArrows(value);
     }
 
-    static Logger log = LoggerFactory.getLogger(PortalIconXml.class.getName());
+    private final static Logger log = LoggerFactory.getLogger(PortalIconXml.class.getName());
 }

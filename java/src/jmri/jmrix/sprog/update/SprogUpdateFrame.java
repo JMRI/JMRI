@@ -392,6 +392,6 @@ abstract public class SprogUpdateFrame
         timer.start();
     }
 
-    static Logger log = LoggerFactory
+    private final static Logger log = LoggerFactory
             .getLogger(SprogUpdateFrame.class.getName());
 }

@@ -1,7 +1,11 @@
 package jmri.jmrit.operations.automation.actions;
 
+import jmri.jmrit.operations.trains.excel.TrainCustomManifest;
+
+import jmri.jmrit.operations.setup.Setup;
 import jmri.jmrit.operations.trains.Train;
-import jmri.jmrit.operations.trains.TrainCustomManifest;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 public class RunTrainAction extends Action {
 
@@ -20,6 +24,17 @@ public class RunTrainAction extends Action {
     @Override
     public void doAction() {
         if (getAutomationItem() != null) {
+            if (!Setup.isGenerateCsvManifestEnabled()) {
+                log.warn("Generate CSV Manifest isn't enabled!");
+                finishAction(false);
+                return;
+            }
+            if (!TrainCustomManifest.manifestCreatorFileExists()) {
+                log.warn("Manifest creator file not found!, directory name: {}, file name: {}", TrainCustomManifest
+                        .getDirectoryName(), TrainCustomManifest.getFileName());
+                finishAction(false);
+                return;
+            }
             Train train = getAutomationItem().getTrain();
             if (train != null  && train.getRoute() != null && train.isBuilt() && TrainCustomManifest.manifestCreatorFileExists()) {
                 setRunning(true);
@@ -45,5 +60,5 @@ public class RunTrainAction extends Action {
     public void cancelAction() {
         // no cancel for this action     
     }
-
+    private final static Logger log = LoggerFactory.getLogger(RunTrainAction.class.getName());
 }

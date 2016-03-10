@@ -34,5 +34,5 @@ public class NceLightManagerXml extends jmri.managers.configurexml.AbstractLight
         return loadLights(shared);
     }
 
-    static Logger log = LoggerFactory.getLogger(NceLightManagerXml.class.getName());
+    private final static Logger log = LoggerFactory.getLogger(NceLightManagerXml.class.getName());
 }

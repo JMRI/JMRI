@@ -58,7 +58,7 @@ public class ReporterTableAction extends AbstractTableAction {
     }
 
     public ReporterTableAction() {
-        this("Reporter Table");
+        this(Bundle.getMessage("TitleReporterTable"));
     }
 
     /**
@@ -171,7 +171,7 @@ public class ReporterTableAction extends AbstractTableAction {
             }
 
             public JButton configureButton() {
-                BeanTableDataModel.log.error("configureButton should not have been called");
+                log.error("configureButton should not have been called");
                 return null;
             }
 
@@ -331,7 +331,7 @@ public class ReporterTableAction extends AbstractTableAction {
         return Bundle.getMessage("TitleReporterTable");
     }
 
-    static final Logger log = LoggerFactory.getLogger(ReporterTableAction.class.getName());
+    private final static Logger log = LoggerFactory.getLogger(ReporterTableAction.class.getName());
 }
 
 /* @(#)ReporterTableAction.java */

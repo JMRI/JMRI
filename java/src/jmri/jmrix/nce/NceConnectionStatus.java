@@ -373,7 +373,7 @@ public class NceConnectionStatus implements NceListener {
         nceEpromMarch2007 = b;
     }
 
-    static Logger log = LoggerFactory.getLogger(NceConnectionStatus.class.getName());
+    private final static Logger log = LoggerFactory.getLogger(NceConnectionStatus.class.getName());
 
 }
 /* @(#)NceConnectionStatus.java */

@@ -84,5 +84,5 @@ public class JMRIdemo extends Apps {
         splash(false);
     }
 
-    static Logger log = LoggerFactory.getLogger(JMRIdemo.class.getName());
+    private final static Logger log = LoggerFactory.getLogger(JMRIdemo.class.getName());
 }

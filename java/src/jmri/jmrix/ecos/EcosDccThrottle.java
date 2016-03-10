@@ -522,7 +522,7 @@ public class EcosDccThrottle extends AbstractThrottle implements EcosListener {
      * @param speed Number from 0 to 1; less than zero is emergency stop
      */
     //The values here might need a bit of re-working
-    @edu.umd.cs.findbugs.annotations.SuppressWarnings(value = "FE_FLOATING_POINT_EQUALITY") // OK to compare floating point
+    @edu.umd.cs.findbugs.annotations.SuppressFBWarnings(value = "FE_FLOATING_POINT_EQUALITY") // OK to compare floating point
     public void setSpeedSetting(float speed) {
         if (!_haveControl) {
             return;
@@ -587,7 +587,7 @@ public class EcosDccThrottle extends AbstractThrottle implements EcosListener {
         finishRecord();
     }
 
-    @edu.umd.cs.findbugs.annotations.SuppressWarnings(value = "FE_FLOATING_POINT_EQUALITY") // OK to compare floating point
+    @edu.umd.cs.findbugs.annotations.SuppressFBWarnings(value = "FE_FLOATING_POINT_EQUALITY") // OK to compare floating point
     public void reply(EcosReply m) {
         int resultCode = m.getResultCode();
         if (resultCode == 0) {
@@ -1023,6 +1023,6 @@ public class EcosDccThrottle extends AbstractThrottle implements EcosListener {
     }
 
     // initialize logging
-    static Logger log = LoggerFactory.getLogger(EcosDccThrottle.class.getName());
+    private final static Logger log = LoggerFactory.getLogger(EcosDccThrottle.class.getName());
 
 }

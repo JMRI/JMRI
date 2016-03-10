@@ -219,7 +219,7 @@ public class XBeeAdapter extends jmri.jmrix.ieee802154.serialdriver.SerialDriver
      * Get an array of valid baud rates. This is currently just a message saying
      * its fixed
      */
-    @edu.umd.cs.findbugs.annotations.SuppressWarnings(value = "EI_EXPOSE_REP") // OK to expose array instead of copy until Java 1.6
+    @edu.umd.cs.findbugs.annotations.SuppressFBWarnings(value = "EI_EXPOSE_REP") // OK to expose array instead of copy until Java 1.6
     @Override
     public String[] validBaudRates() {
         return validSpeeds;
@@ -241,6 +241,6 @@ public class XBeeAdapter extends jmri.jmrix.ieee802154.serialdriver.SerialDriver
         activeSerialPort.close();
     }
 
-    static Logger log = LoggerFactory.getLogger(XBeeAdapter.class.getName());
+    private final static Logger log = LoggerFactory.getLogger(XBeeAdapter.class.getName());
 
 }

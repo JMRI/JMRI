@@ -2,8 +2,6 @@
 package jmri.jmrix.srcp;
 
 import jmri.Sensor;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 
 /**
  * Implement Sensor manager for SRCP systems
@@ -39,8 +37,6 @@ public class SRCPSensorManager extends jmri.managers.AbstractSensorManager {
     static public SRCPSensorManager instance() {
         return null;
     }
-
-    static Logger log = LoggerFactory.getLogger(SRCPSensorManager.class.getName());
 
 }
 

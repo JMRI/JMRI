@@ -225,7 +225,7 @@ public class NceConsistBackup extends Thread implements jmri.jmrix.nce.NceListen
     public void message(NceMessage m) {
     } // ignore replies
 
-    @edu.umd.cs.findbugs.annotations.SuppressWarnings(value = "NN_NAKED_NOTIFY")
+    @edu.umd.cs.findbugs.annotations.SuppressFBWarnings(value = "NN_NAKED_NOTIFY")
     // this reply always expects two consecutive reads
     public void reply(NceReply r) {
 
@@ -269,6 +269,6 @@ public class NceConsistBackup extends Thread implements jmri.jmrix.nce.NceListen
         }
     }
 
-    static Logger log = LoggerFactory
+    private final static Logger log = LoggerFactory
             .getLogger(NceConsistBackup.class.getName());
 }

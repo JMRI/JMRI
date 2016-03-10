@@ -30,7 +30,6 @@ import org.slf4j.LoggerFactory;
  * A click on the icon does not change any of the above conditions..
  * <P>
  * @author Pete Cressman Copyright (c) 2010
- * @version $Revision$
  */
 public class IndicatorTrackIcon extends PositionableIcon
         implements java.beans.PropertyChangeListener, IndicatorTrack {
@@ -56,8 +55,7 @@ public class IndicatorTrackIcon extends PositionableIcon
         return finishClone(pos);
     }
 
-    public Positionable finishClone(Positionable p) {
-        IndicatorTrackIcon pos = (IndicatorTrackIcon) p;
+    protected Positionable finishClone(IndicatorTrackIcon pos) {
         pos.setOccSensorHandle(namedOccSensor);
         pos.setOccBlockHandle(namedOccBlock);
         pos._iconMap = cloneMap(_iconMap, pos);
@@ -410,5 +408,5 @@ public class IndicatorTrackIcon extends PositionableIcon
         return null;
     }
 
-    static Logger log = LoggerFactory.getLogger(IndicatorTrackIcon.class.getName());
+    private final static Logger log = LoggerFactory.getLogger(IndicatorTrackIcon.class.getName());
 }

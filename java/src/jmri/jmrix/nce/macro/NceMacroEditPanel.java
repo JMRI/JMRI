@@ -1419,7 +1419,7 @@ public class NceMacroEditPanel extends jmri.jmrix.nce.swing.NcePanel implements 
     int recChar = 0;
     int[] recChars = new int[16];
 
-    @edu.umd.cs.findbugs.annotations.SuppressWarnings(value = "NN_NAKED_NOTIFY", justification = "Thread wait from main transfer loop")
+    @edu.umd.cs.findbugs.annotations.SuppressFBWarnings(value = "NN_NAKED_NOTIFY", justification = "Thread wait from main transfer loop")
     public void reply(NceReply r) {
         if (log.isDebugEnabled()) {
             log.debug("Receive character");
@@ -1653,5 +1653,5 @@ public class NceMacroEditPanel extends jmri.jmrix.nce.swing.NcePanel implements 
         }
     }
 
-    static Logger log = LoggerFactory.getLogger(NceMacroEditPanel.class.getName());
+    private final static Logger log = LoggerFactory.getLogger(NceMacroEditPanel.class.getName());
 }

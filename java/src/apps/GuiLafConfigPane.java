@@ -1,8 +1,9 @@
 // GuiLafConfigPane.java
 package apps;
 
-import apps.gui.GuiLafPreferencesManager;
 import static apps.gui.GuiLafPreferencesManager.MIN_FONT_SIZE;
+
+import apps.gui.GuiLafPreferencesManager;
 import java.awt.FlowLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ItemEvent;
@@ -29,8 +30,6 @@ import jmri.InstanceManager;
 import jmri.profile.ProfileManager;
 import jmri.swing.PreferencesPanel;
 import jmri.util.swing.SwingSettings;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 
 /**
  * Provide GUI to configure Swing GUI LAF defaults
@@ -89,7 +88,7 @@ public class GuiLafConfigPane extends JPanel implements PreferencesPanel {
 
     void doClickSelection(JPanel panel) {
         panel.setLayout(new FlowLayout());
-        mouseEvent = new JCheckBox("Use non-standard release event for mouse click?");
+        mouseEvent = new JCheckBox(ConfigBundle.getMessage("GUIButtonNonStandardRelease"));
         mouseEvent.setSelected(SwingSettings.getNonStandardMouseEvent());
         mouseEvent.addItemListener((ItemEvent e) -> {
             InstanceManager.getDefault(GuiLafPreferencesManager.class).setNonStandardMouseEvent(mouseEvent.isSelected());
@@ -229,9 +228,6 @@ public class GuiLafConfigPane extends JPanel implements PreferencesPanel {
         return LAFGroup.getSelection().getActionCommand();
 
     }
-    // initialize logging
-    static Logger log = LoggerFactory.getLogger(GuiLafConfigPane.class.getName());
-
     @Override
     public String getPreferencesItem() {
         return "DISPLAY"; // NOI18N

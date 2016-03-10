@@ -106,6 +106,6 @@ class BoolTrigger extends Trigger implements PropertyChangeListener {
         }
     }
 
-    static Logger log = LoggerFactory.getLogger(BoolTrigger.class.getName());
+    private final static Logger log = LoggerFactory.getLogger(BoolTrigger.class.getName());
 
 }

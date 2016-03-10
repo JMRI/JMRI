@@ -360,5 +360,5 @@ public class DefaultUserMessagePreferencesXml extends jmri.configurexml.Abstract
         return true;
     }
 
-    static Logger log = LoggerFactory.getLogger(DefaultUserMessagePreferencesXml.class.getName());
+    private final static Logger log = LoggerFactory.getLogger(DefaultUserMessagePreferencesXml.class.getName());
 }

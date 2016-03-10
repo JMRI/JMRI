@@ -14,7 +14,7 @@ import org.slf4j.LoggerFactory;
  *
  * @author Bob Jacobsen Copyright: Copyright (c) 2003
  * @version $Revision$
- * @see apps.PerformActionPanel
+ * @see apps.startup.PerformActionModelFactory
  */
 public class PerformActionModelXml extends jmri.configurexml.AbstractXmlAdapter {
 
@@ -92,6 +92,6 @@ public class PerformActionModelXml extends jmri.configurexml.AbstractXmlAdapter 
         log.error("Unexpected call of load(Element, Object)");
     }
     // initialize logging
-    static Logger log = LoggerFactory.getLogger(PerformActionModelXml.class.getName());
+    private final static Logger log = LoggerFactory.getLogger(PerformActionModelXml.class.getName());
 
 }

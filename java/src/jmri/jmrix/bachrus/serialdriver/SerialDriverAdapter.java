@@ -35,7 +35,7 @@ import purejavacomm.UnsupportedCommOperationException;
  */
 public class SerialDriverAdapter extends SpeedoPortController implements jmri.jmrix.SerialPortAdapter {
 
-    @edu.umd.cs.findbugs.annotations.SuppressWarnings(value = "ST_WRITE_TO_STATIC_FROM_INSTANCE_METHOD")
+    @edu.umd.cs.findbugs.annotations.SuppressFBWarnings(value = "ST_WRITE_TO_STATIC_FROM_INSTANCE_METHOD")
     // There can only be one instance
     public SerialDriverAdapter() {
         super(new SpeedoSystemConnectionMemo());
@@ -194,6 +194,6 @@ public class SerialDriverAdapter extends SpeedoPortController implements jmri.jm
     }
     static SerialDriverAdapter mInstance = null;
 
-    static Logger log = LoggerFactory.getLogger(SerialDriverAdapter.class.getName());
+    private final static Logger log = LoggerFactory.getLogger(SerialDriverAdapter.class.getName());
 
 }

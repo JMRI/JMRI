@@ -13,8 +13,6 @@ import jmri.jmrix.ecos.EcosMessage;
 import jmri.jmrix.ecos.EcosReply;
 import jmri.jmrix.ecos.EcosSystemConnectionMemo;
 import jmri.jmrix.ecos.swing.EcosPanelInterface;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 
 public class EcosMonPane extends jmri.jmrix.AbstractMonPane implements EcosListener, EcosPanelInterface {
 
@@ -103,8 +101,6 @@ public class EcosMonPane extends jmri.jmrix.AbstractMonPane implements EcosListe
                     jmri.InstanceManager.getDefault(EcosSystemConnectionMemo.class));
         }
     }
-
-    static Logger log = LoggerFactory.getLogger(EcosMonPane.class.getName());
 
 }
 

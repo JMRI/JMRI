@@ -228,10 +228,14 @@ public class DefaultConditionalManagerXml extends jmri.managers.configurexml.Abs
             // load state variables, if there are any
             List<Element> conditionalVarList = condElem.getChildren("conditionalStateVariable");
 
+            // Note: Because things like (R1 or R2) and R3) return to positions in the 
+            // list of state variables, we can't just append when re-reading a conditional;
+            // we have to drop any existing ConditionalStateVariables and create a clean, new list.
+            
             if (conditionalVarList.size() == 0) {
                 log.warn("No state variables found for conditional " + sysName);
             }
-            ArrayList<ConditionalVariable> variableList = ((DefaultConditional)c).getStateVariableList();
+            ArrayList<ConditionalVariable> variableList = new ArrayList<>();
             for (int n = 0; n < conditionalVarList.size(); n++) {
                 ConditionalVariable variable = new ConditionalVariable();
                 if (conditionalVarList.get(n).getAttribute("operator") == null) {
@@ -280,7 +284,7 @@ public class DefaultConditionalManagerXml extends jmri.managers.configurexml.Abs
                         variable.setTriggerActions(false);
                     }
                 }
-                if (! variableList.contains(variable) ) variableList.add(variable);
+                variableList.add(variable);
             }
             c.setStateVariables(variableList);
 
@@ -396,5 +400,5 @@ public class DefaultConditionalManagerXml extends jmri.managers.configurexml.Abs
         return InstanceManager.conditionalManagerInstance().getXMLOrder();
     }
 
-    static Logger log = LoggerFactory.getLogger(DefaultConditionalManagerXml.class.getName());
+    private final static Logger log = LoggerFactory.getLogger(DefaultConditionalManagerXml.class.getName());
 }

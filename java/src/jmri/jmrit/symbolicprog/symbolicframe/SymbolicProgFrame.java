@@ -443,7 +443,7 @@ public class SymbolicProgFrame extends jmri.util.JmriJFrame {
         variableModel.setFileDirty(false);
     }
 
-    @edu.umd.cs.findbugs.annotations.SuppressWarnings(value = "REC_CATCH_EXCEPTION") // dead class doesn't need this fixed right now
+    @edu.umd.cs.findbugs.annotations.SuppressFBWarnings(value = "REC_CATCH_EXCEPTION") // dead class doesn't need this fixed right now
     void writeFile() {
         log.warn("SymbolicProgFrame writeFile invoked - is this still right, or should the LocoFile method be used?");
         log.warn("Note use of VersionID attribute...");
@@ -522,6 +522,6 @@ public class SymbolicProgFrame extends jmri.util.JmriJFrame {
         }
     }
 
-    static Logger log = LoggerFactory.getLogger(SymbolicProgFrame.class.getName());
+    private final static Logger log = LoggerFactory.getLogger(SymbolicProgFrame.class.getName());
 
 }

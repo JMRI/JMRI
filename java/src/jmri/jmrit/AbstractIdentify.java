@@ -18,7 +18,6 @@ import jmri.managers.DefaultProgrammerManager;
  * <p>
  *
  * @author	Bob Jacobsen Copyright (C) 2001, 2015
- * @version	$Revision$
  * @see jmri.jmrit.symbolicprog.CombinedLocoSelPane
  * @see jmri.jmrit.symbolicprog.NewLocoSelPane
  */
@@ -101,7 +100,7 @@ public abstract class AbstractIdentify implements jmri.ProgListener {
         if (status != jmri.ProgListener.OK) {
             if ( retry < RETRY_COUNT) {
                 statusUpdate("Programmer error: "
-                    + jmri.InstanceManager.programmerManagerInstance().getGlobalProgrammer().decodeErrorCode(status));
+                    + programmer.decodeErrorCode(status));
                 state--;
                 retry++;
             } else if (programmer != null && programmer.getMode() != DefaultProgrammerManager.PAGEMODE &&
@@ -109,13 +108,13 @@ public abstract class AbstractIdentify implements jmri.ProgListener {
                 programmer.setMode(DefaultProgrammerManager.PAGEMODE);
                 retry = 0;
                 state--;
-                log.warn(jmri.InstanceManager.programmerManagerInstance().getGlobalProgrammer().decodeErrorCode(status) +
+                log.warn(programmer.decodeErrorCode(status) +
                         ", trying " + programmer.getMode().toString() + " mode");
             } else {
                 log.warn("Stopping due to error: "
-                    + jmri.InstanceManager.programmerManagerInstance().getGlobalProgrammer().decodeErrorCode(status));
+                    + programmer.decodeErrorCode(status));
                 statusUpdate("Stopping due to error: "
-                    + jmri.InstanceManager.programmerManagerInstance().getGlobalProgrammer().decodeErrorCode(status));
+                    + programmer.decodeErrorCode(status));
                 if (programmer != null && programmer.getMode() != savedMode) {  // restore original mode
                     log.warn("Restoring " + savedMode.toString() + " mode");
                     programmer.setMode(savedMode);
@@ -242,6 +241,6 @@ public abstract class AbstractIdentify implements jmri.ProgListener {
     }
 
     // initialize logging
-    static Logger log = LoggerFactory.getLogger(AbstractIdentify.class.getName());
+    private final static Logger log = LoggerFactory.getLogger(AbstractIdentify.class.getName());
 
 }

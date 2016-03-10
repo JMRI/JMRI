@@ -124,7 +124,7 @@ public class EcosTrafficController extends AbstractMRTrafficController implement
     public void setInstance() {
     }
 
-    @edu.umd.cs.findbugs.annotations.SuppressWarnings(value = "MS_PKGPROTECT")
+    @edu.umd.cs.findbugs.annotations.SuppressFBWarnings(value = "MS_PKGPROTECT")
     // FindBugs wants this package protected, but we're removing it when multi-connection
     // migration is complete
     final static protected EcosTrafficController self = null;
@@ -302,7 +302,7 @@ public class EcosTrafficController extends AbstractMRTrafficController implement
         }
         return adaptermemo.getSystemPrefix();
     }
-    static Logger log = LoggerFactory.getLogger(EcosTrafficController.class.getName());
+    private final static Logger log = LoggerFactory.getLogger(EcosTrafficController.class.getName());
 }
 
 /* @(#)EcosTrafficController.java */

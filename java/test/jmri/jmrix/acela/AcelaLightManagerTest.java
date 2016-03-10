@@ -77,6 +77,6 @@ public class AcelaLightManagerTest extends jmri.managers.AbstractLightMgrTest {
         apps.tests.Log4JFixture.tearDown();
     }
 
-    static Logger log = LoggerFactory.getLogger(AcelaLightManagerTest.class.getName());
+    private final static Logger log = LoggerFactory.getLogger(AcelaLightManagerTest.class.getName());
 
 }

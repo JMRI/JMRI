@@ -30,7 +30,7 @@ public class OBlockTableAction extends AbstractAction {
     private static final long serialVersionUID = 6331453045183182013L;
 
     public OBlockTableAction() {
-        this("OBlock Table");
+        this(Bundle.getMessage("TitleOBlockTable"));
     }
 
     public OBlockTableAction(String actionName) {

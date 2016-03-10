@@ -51,7 +51,7 @@ going to do is show you how to gain access to the throttles. This section will
 also touch on the menu options that are available.</p>
 
 <p>First, it is important to understand that the JMRI Project is a group of
-many "<b>tools</b>" for your railroad � with many contributions from different
+many "<b>tools</b>" for your railroad - with many contributions from different
 programmers. There are four primary startup applications available</p>
 <ul>
   <li><b>DecoderPro</b> (the most widely and commonly known piece of the
@@ -75,18 +75,18 @@ throttles.</p>
   "<i>primary</i>" main window displayed on your screen (similar to that shown
   below in figure 1-1). Close down this window and the whole application will
   terminate. This main window contains a primary set of menu options. This is
-  where you will find most of the tools and options available � including the
+  where you will find most of the tools and options available - including the
   Throttles.</p>
 </dir>
 <ul type="square">
   <li>Click on "<big>Tools</big>".<br>
   </li>
-  <li>This will open a sub-menu.<br>
+  <li>This will open a submenu.<br>
   </li>
   <li>Navigate your mouse pointer down until you locate
     "<big>Throttles</big>".<br>
   </li>
-  <li>This will open another sub-menu.<br>
+  <li>This will open another submenu.<br>
   </li>
   <li>This is the Throttles Menu (refer to figure 1-2).<br>
   </li>
@@ -97,37 +97,37 @@ height="228" src="images/jmri010.jpg" title="JMRI main menu structure"><br>
 Figure 1-1: JMRI main menu structure </p>
 
 <a name="ThrottlesSub"></a> 
-<h2>The Throttles Sub-menu</h2>
+<h2>The Throttles Submenu</h2>
 <dir>
-  <p>The Throttles sub-menu (as shown in figure 1-2 below) contains the
+  <p>The Throttles submenu (as shown in figure 1-2 below) contains the
   following menu options, which are defined as:</p>
 </dir>
 <ul>
-  <li><b>New Throttle...</b> � opens a single new throttle window with default
-    throttle settings enabled.<br>
+  <li><b>New Throttle...</b> opens a single new Throttle window with default
+    Throttle settings enabled.<br>
     <br>
   </li>
-  <li><b>Save Throttle Layout...</b> � saves one or more currently opened
-    throttle windows to a user-named file on your hard drive.<br>
+  <li><b>Save Throttle Layout...</b> saves one or more currently opened
+    Throttle windows to a user-named file on your hard drive.<br>
     <br>
   </li>
-  <li><b>Load Throttle Layout...</b> � opens a previously saved throttle file.
-    This file can contain one or more throttle windows depending on how the
+  <li><b>Load Throttle Layout...</b> opens a previously saved Throttle file.
+    This file can contain one or more Throttle windows depending on how the
     layout was originally saved.<br>
     <br>
   </li>
-  <li><b>Save Throttle Preferences...</b> - Allows you to set up your overall
-    preferences for all throttle windows. </li>
+  <li><b>Save Throttle Preferences...</b> allows you to set up your overall
+    preferences for all Throttle windows. </li>
 </ul>
 
 <p style="text-align: center; font-size: xx-small"><img width="359"
 height="225" src="images/jmri009.jpg"
-title="JMRI Throttles sub-menu structure"><br>
-Figure 1-2: JMRI Throttles sub-menu structure</p>
+title="JMRI Throttles submenu structure"><br>
+Figure 1-2: JMRI Throttles submenu structure</p>
 
 <p>Use the links below to advance to the next chapter to walk through the
-process of opening up a new throttle window and setting up some of the
-available options, and lets not forget... run a locomotive.</p>
+process of opening up a new Throttle window and setting up some of the
+available options, and lets not forget... run a Locomotive.</p>
 
 <table border="0" width="100%" cellpadding="0" cellspacing="0">
   <tbody>

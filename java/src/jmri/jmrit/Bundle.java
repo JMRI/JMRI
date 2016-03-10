@@ -1,17 +1,11 @@
 // Bundle.java
 package jmri.jmrit;
 
-import edu.umd.cs.findbugs.annotations.CheckReturnValue;
-import edu.umd.cs.findbugs.annotations.DefaultAnnotation;
-import edu.umd.cs.findbugs.annotations.NonNull;
-import edu.umd.cs.findbugs.annotations.Nullable;
-import edu.umd.cs.findbugs.annotations.SuppressWarnings;
+import edu.umd.cs.findbugs.annotations.SuppressFBWarnings;
 import java.util.Locale;
-
-@DefaultAnnotation({NonNull.class, CheckReturnValue.class})
-@SuppressWarnings(value = "NM_SAME_SIMPLE_NAME_AS_SUPERCLASS", justification = "Desired pattern is repeated class names with package-level access to members")
-
-@net.jcip.annotations.Immutable
+import javax.annotation.CheckReturnValue;
+import javax.annotation.Nullable;
+import javax.annotation.ParametersAreNonnullByDefault;
 
 /**
  * Provides standard access for resource bundles in a package.
@@ -23,6 +17,10 @@ import java.util.Locale;
  * @version $Revision: 17977 $
  * @since 3.3.1
  */
+@ParametersAreNonnullByDefault
+@CheckReturnValue
+@SuppressFBWarnings(value = "NM_SAME_SIMPLE_NAME_AS_SUPERCLASS", justification = "Desired pattern is repeated class names with package-level access to members")
+@net.jcip.annotations.Immutable
 public class Bundle extends jmri.Bundle {
 
     private final static String name = "jmri.jmrit.Bundle"; // NOI18N

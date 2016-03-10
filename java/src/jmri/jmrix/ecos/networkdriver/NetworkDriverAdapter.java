@@ -45,7 +45,7 @@ public class NetworkDriverAdapter extends EcosPortController implements jmri.jmr
         return opened;
     }
 
-    @edu.umd.cs.findbugs.annotations.SuppressWarnings(value = "DE_MIGHT_IGNORE",
+    @edu.umd.cs.findbugs.annotations.SuppressFBWarnings(value = "DE_MIGHT_IGNORE",
             justification = "We are closing the connection and not worried if it throws an exception as this stage")
     protected void closeConnection() {
         try {
@@ -65,6 +65,6 @@ public class NetworkDriverAdapter extends EcosPortController implements jmri.jmr
         }
     }
 
-    static Logger log = LoggerFactory.getLogger(NetworkDriverAdapter.class.getName());
+    private final static Logger log = LoggerFactory.getLogger(NetworkDriverAdapter.class.getName());
 
 }

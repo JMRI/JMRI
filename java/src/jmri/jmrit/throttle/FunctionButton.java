@@ -536,6 +536,6 @@ public class FunctionButton extends JToggleButton implements ActionListener {
         return isSelectedImageOK;
     }
 
-    static Logger log = LoggerFactory.getLogger(FunctionButton.class.getName());
+    private final static Logger log = LoggerFactory.getLogger(FunctionButton.class.getName());
 
 }

@@ -143,6 +143,7 @@ public class ProfileManager extends Bean {
             return;
         }
         for (Profile p : profiles) {
+            log.debug("Looking for profile {}, found {}", id, p.getId());
             if (p.getId().equals(id)) {
                 this.setActiveProfile(p);
                 return;
@@ -773,7 +774,7 @@ public class ProfileManager extends Bean {
         if (file.isDirectory() && !path.endsWith("/")) {
             path = path + "/";
         }
-        return path.replaceAll(File.separator, "/");
+        return path.replace(File.separator, "/");
     }
 
     /**

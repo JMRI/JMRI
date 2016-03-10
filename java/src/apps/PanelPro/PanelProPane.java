@@ -10,8 +10,6 @@ import javax.swing.BoxLayout;
 import javax.swing.JButton;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 
 /**
  * The JMRI main pane for creating control panels.
@@ -92,6 +90,4 @@ public class PanelProPane extends apps.AppsLaunchPane {
 
         return j;
     }
-
-    static Logger log = LoggerFactory.getLogger(PanelProPane.class.getName());
 }

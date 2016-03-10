@@ -318,5 +318,5 @@ public class Calibrater extends jmri.util.JmriJFrame {
         }
     }
 
-    static Logger log = LoggerFactory.getLogger(Calibrater.class.getName());
+    private final static Logger log = LoggerFactory.getLogger(Calibrater.class.getName());
 }

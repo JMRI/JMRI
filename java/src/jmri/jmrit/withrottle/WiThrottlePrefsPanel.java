@@ -4,9 +4,14 @@ package jmri.jmrit.withrottle;
  * @author Brett Hoffman Copyright (C) 2010
  * @version $Revision$
  */
+import apps.PerformActionModel;
+import apps.StartupActionsManager;
+import java.awt.event.ItemEvent;
+import java.awt.event.ItemListener;
+import java.beans.PropertyChangeEvent;
 import java.io.File;
+import java.util.Arrays;
 import java.util.ResourceBundle;
-import javax.swing.BorderFactory;
 import javax.swing.BoxLayout;
 import javax.swing.ButtonGroup;
 import javax.swing.JCheckBox;
@@ -19,6 +24,7 @@ import javax.swing.JRadioButton;
 import javax.swing.JSpinner;
 import javax.swing.SpinnerNumberModel;
 import jmri.InstanceManager;
+import jmri.swing.JTitledSeparator;
 import jmri.swing.PreferencesPanel;
 import jmri.util.FileUtil;
 
@@ -36,6 +42,9 @@ public class WiThrottlePrefsPanel extends JPanel implements PreferencesPanel {
     JCheckBox turnoutCB;
     JCheckBox routeCB;
     JCheckBox consistCB;
+    JCheckBox startupCB;
+    ItemListener startupItemListener;
+    int startupActionPosition = -1;
     JRadioButton wifiRB;
     JRadioButton dccRB;
 
@@ -58,9 +67,13 @@ public class WiThrottlePrefsPanel extends JPanel implements PreferencesPanel {
 
     public void initGUI() {
         setLayout(new BoxLayout(this, BoxLayout.PAGE_AXIS));
+        add(new JTitledSeparator(Bundle.getMessage("TitleDelayPanel")));
         add(eStopDelayPanel());
+        add(new JTitledSeparator(Bundle.getMessage("TitleFunctionsPanel")));
         add(functionsPanel());
+        add(new JTitledSeparator(Bundle.getMessage("TitleNetworkPanel")));
         add(socketPortPanel());
+        add(new JTitledSeparator(Bundle.getMessage("TitleControllersPanel")));
         add(allowedControllers());
     }
 
@@ -75,6 +88,9 @@ public class WiThrottlePrefsPanel extends JPanel implements PreferencesPanel {
         turnoutCB.setSelected(localPrefs.isAllowTurnout());
         routeCB.setSelected(localPrefs.isAllowRoute());
         consistCB.setSelected(localPrefs.isAllowConsist());
+        InstanceManager.getDefault(StartupActionsManager.class).addPropertyChangeListener((PropertyChangeEvent evt) -> {
+            startupCB.setSelected(isStartUpAction());
+        }); 
         wifiRB.setSelected(localPrefs.isUseWiFiConsist());
         dccRB.setSelected(!localPrefs.isUseWiFiConsist());
     }
@@ -137,9 +153,6 @@ public class WiThrottlePrefsPanel extends JPanel implements PreferencesPanel {
     private JPanel eStopDelayPanel() {
         JPanel panel = new JPanel();
 
-        panel.setBorder(BorderFactory.createCompoundBorder(
-                BorderFactory.createTitledBorder(Bundle.getMessage("TitleDelayPanel")),
-                BorderFactory.createEmptyBorder(5, 5, 5, 5)));
         eStopCB = new JCheckBox(Bundle.getMessage("LabelUseEStop"));
         eStopCB.setToolTipText(Bundle.getMessage("ToolTipUseEStop"));
         SpinnerNumberModel spinMod = new SpinnerNumberModel(10, 4, 60, 2);
@@ -154,9 +167,6 @@ public class WiThrottlePrefsPanel extends JPanel implements PreferencesPanel {
     private JPanel functionsPanel() {
         JPanel panel = new JPanel();
 
-        panel.setBorder(BorderFactory.createCompoundBorder(
-                BorderFactory.createTitledBorder(Bundle.getMessage("TitleFunctionsPanel")),
-                BorderFactory.createEmptyBorder(5, 5, 5, 5)));
         momF2CB = new JCheckBox(Bundle.getMessage("LabelMomF2"));
         momF2CB.setToolTipText(Bundle.getMessage("ToolTipMomF2"));
         panel.add(momF2CB);
@@ -166,24 +176,41 @@ public class WiThrottlePrefsPanel extends JPanel implements PreferencesPanel {
     private JPanel socketPortPanel() {
         JPanel SPPanel = new JPanel();
 
-        SPPanel.setBorder(BorderFactory.createCompoundBorder(
-                BorderFactory.createTitledBorder(Bundle.getMessage("TitleNetworkPanel")),
-                BorderFactory.createEmptyBorder(5, 5, 5, 5)));
         port = new JSpinner(new SpinnerNumberModel(localPrefs.getPort(), 1, 65535, 1));
         port.setToolTipText(Bundle.getMessage("PortToolTip"));
+        port.setEditor(new JSpinner.NumberEditor(port, "#"));
         JLabel label = new JLabel(Bundle.getMessage("PortLabel"));
         label.setToolTipText(port.getToolTipText());
         SPPanel.add(port);
         SPPanel.add(label);
+        startupCB = new JCheckBox(Bundle.getMessage("LabelStartup"), isStartUpAction());
+        startupItemListener = (ItemEvent e) -> {
+            this.startupCB.removeItemListener(this.startupItemListener);
+            StartupActionsManager manager = InstanceManager.getDefault(StartupActionsManager.class);
+            if (this.startupCB.isSelected()) {
+                PerformActionModel model = new PerformActionModel();
+                model.setClassName(WiThrottleCreationAction.class.getName());
+                if (this.startupActionPosition == -1 || this.startupActionPosition >= manager.getActions().length) {
+                    manager.addAction(model);
+                } else {
+                    manager.setActions(this.startupActionPosition, model);
+                }
+            } else {
+                manager.getActions(PerformActionModel.class).stream().filter((model) -> (model.getClassName().equals(WiThrottleCreationAction.class.getName()))).forEach((model) -> {
+                    this.startupActionPosition = Arrays.asList(manager.getActions()).indexOf(model);
+                    manager.removeAction(model);
+                });
+            }
+            this.startupCB.addItemListener(this.startupItemListener);
+        };
+        this.startupCB.addItemListener(this.startupItemListener);
+        SPPanel.add(startupCB);
         return SPPanel;
     }
 
     private JPanel allowedControllers() {
         JPanel panel = new JPanel();
 
-        panel.setBorder(BorderFactory.createCompoundBorder(
-                BorderFactory.createTitledBorder(Bundle.getMessage("TitleControllersPanel")),
-                BorderFactory.createEmptyBorder(5, 5, 5, 5)));
         powerCB = new JCheckBox(Bundle.getMessage("LabelTrackPower"));
         powerCB.setToolTipText(Bundle.getMessage("ToolTipTrackPower"));
         panel.add(powerCB);
@@ -272,5 +299,16 @@ public class WiThrottlePrefsPanel extends JPanel implements PreferencesPanel {
     @Override
     public boolean isPreferencesValid() {
         return true; // no validity checking performed
+    }
+
+    private boolean isStartUpAction() {
+        return InstanceManager.getDefault(StartupActionsManager.class).getActions(PerformActionModel.class).stream()
+                .anyMatch((model) -> (model.getClassName().equals(WiThrottleCreationAction.class.getName())));
+//        for (PerformActionModel model : InstanceManager.getDefault(StartupActionsManager.class).getActions(PerformActionModel.class)) {
+//            if (model.getClassName().equals(WiThrottleCreationAction.class.getName())) {
+//                return true;
+//            }
+//        }
+//        return false;
     }
 }

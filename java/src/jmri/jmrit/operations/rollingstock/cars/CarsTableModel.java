@@ -20,15 +20,10 @@ import org.slf4j.LoggerFactory;
 /**
  * Table Model for edit of cars used by operations
  *
- * @author Daniel Boudreau Copyright (C) 2008, 2011, 2012
+ * @author Daniel Boudreau Copyright (C) 2008, 2011, 2012, 2016
  * @version $Revision$
  */
 public class CarsTableModel extends javax.swing.table.AbstractTableModel implements PropertyChangeListener {
-
-    /**
-     *
-     */
-    private static final long serialVersionUID = -5846367542654823901L;
 
     CarManager manager = CarManager.instance(); // There is only one manager
 
@@ -522,23 +517,7 @@ public class CarsTableModel extends javax.swing.table.AbstractTableModel impleme
             case LENGTH_COLUMN:
                 return car.getLengthInteger();
             case TYPE_COLUMN: {
-                StringBuffer buf = new StringBuffer(car.getTypeName());
-                if (car.isCaboose()) {
-                    buf.append(" " + Bundle.getMessage("(C)"));
-                }
-                if (car.hasFred()) {
-                    buf.append(" " + Bundle.getMessage("(F)"));
-                }
-                if (car.isPassenger()) {
-                    buf.append(" " + Bundle.getMessage("(P)") + " " + car.getBlocking());
-                }
-                if (car.isUtility()) {
-                    buf.append(" " + Bundle.getMessage("(U)"));
-                }
-                if (car.isHazardous()) {
-                    buf.append(" " + Bundle.getMessage("(H)"));
-                }
-                return buf.toString();
+                return car.getTypeName() + car.getTypeExtensions();
             }
             case KERNEL_COLUMN: {
                 if (car.getKernel() != null && car.getKernel().isLead(car)) {
@@ -716,9 +695,13 @@ public class CarsTableModel extends javax.swing.table.AbstractTableModel impleme
             }
             if (row >= 0) {
                 fireTableRowsUpdated(row, row);
+            // next is needed when only showing cars at a location or track
+            } else if (e.getPropertyName().equals(Car.TRACK_CHANGED_PROPERTY)) {
+                updateList();
+                fireTableDataChanged();
             }
         }
     }
 
-    static Logger log = LoggerFactory.getLogger(CarsTableModel.class.getName());
+    private final static Logger log = LoggerFactory.getLogger(CarsTableModel.class.getName());
 }

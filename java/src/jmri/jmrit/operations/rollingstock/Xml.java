@@ -71,7 +71,7 @@ public class Xml {
 //	static final String SOUTH_TRAIN_ICON_Y = "southTrainIconY"; // NOI18N
 //	static final String PHYSICAL_LOCATION = "physicalLocation"; // NOI18N
 //	static final String SWITCH_LIST_COMMENT = "switchListComment"; // NOI18N
-//	static final String SECONDARY = "secondary"; // NOI18N early version of operations called tracks "secondary"
+//	static final String SECONDARY = "secondary"; // early version of operations called tracks "secondary" // NOI18N
     // ScheduleItem.java
 //	static final String ITEM = "item"; // NOI18N
 //	static final String SEQUENCE_ID = "ScheduleId"; // NOI18N
@@ -87,7 +87,7 @@ public class Xml {
 //	static final String LOC_TYPE = "locType"; // NOI18N
 //	
 //	
-//	static final String CAR_ROAD_OPERATION = "carRoadOperation"; // NOI18N misspelled should have been carRoadOption
+//	static final String CAR_ROAD_OPERATION = "carRoadOperation"; //  misspelled should have been carRoadOption // NOI18N
 //	static final String CAR_ROADS = "carRoads"; // NOI18N
 //	static final String CAR_LOAD_OPTION = "carLoadOption"; // NOI18N
 //	static final String CAR_LOADS = "carLoads"; // NOI18N

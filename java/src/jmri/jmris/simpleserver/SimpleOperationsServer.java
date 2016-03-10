@@ -403,6 +403,6 @@ public class SimpleOperationsServer extends AbstractOperationsServer {
         }
     }
 
-    static Logger log = LoggerFactory.getLogger(SimpleOperationsServer.class.getName());
+    private final static Logger log = LoggerFactory.getLogger(SimpleOperationsServer.class.getName());
 
 }

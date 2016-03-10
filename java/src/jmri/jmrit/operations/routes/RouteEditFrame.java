@@ -369,6 +369,8 @@ public class RouteEditFrame extends OperationsFrame implements java.beans.Proper
         saveRouteButton.setEnabled(enabled);
         deleteRouteButton.setEnabled(enabled);
         routeTable.setEnabled(enabled);
+        showWait.setEnabled(enabled);
+        showDepartTime.setEnabled(enabled);
         // the inverse!
         addRouteButton.setEnabled(!enabled);
     }
@@ -404,5 +406,5 @@ public class RouteEditFrame extends OperationsFrame implements java.beans.Proper
         }
     }
 
-    static Logger log = LoggerFactory.getLogger(RouteEditFrame.class.getName());
+    private final static Logger log = LoggerFactory.getLogger(RouteEditFrame.class.getName());
 }

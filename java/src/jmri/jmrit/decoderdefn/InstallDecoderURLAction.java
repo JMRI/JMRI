@@ -120,7 +120,7 @@ public class InstallDecoderURLAction extends JmriAbstractAction {
         JOptionPane.showMessageDialog(who, rb.getString("CompleteOK"));
     }
 
-    @edu.umd.cs.findbugs.annotations.SuppressWarnings(value = "OBL_UNSATISFIED_OBLIGATION", justification = "Looks like false positive")
+    @edu.umd.cs.findbugs.annotations.SuppressFBWarnings(value = "OBL_UNSATISFIED_OBLIGATION", justification = "Looks like false positive")
     boolean copyfile(URL from, File toFile, JPanel who) {
         InputStream in = null;
         OutputStream out = null;
@@ -202,5 +202,5 @@ public class InstallDecoderURLAction extends JmriAbstractAction {
         throw new IllegalArgumentException("Should not be invoked");
     }
     // initialize logging
-    static Logger log = LoggerFactory.getLogger(InstallDecoderURLAction.class.getName());
+    private final static Logger log = LoggerFactory.getLogger(InstallDecoderURLAction.class.getName());
 }

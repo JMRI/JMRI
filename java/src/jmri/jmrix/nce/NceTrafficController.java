@@ -24,7 +24,6 @@ import org.slf4j.LoggerFactory;
  *
  * @author Bob Jacobsen Copyright (C) 2001
  * @author ken cameron Copyright (C) 2013
- * @version $Revision$
  */
 public class NceTrafficController extends AbstractMRTrafficController implements NceInterface, CommandStation {
 
@@ -498,7 +497,7 @@ public class NceTrafficController extends AbstractMRTrafficController implements
     public void setInstance() {
     }
 
-    @edu.umd.cs.findbugs.annotations.SuppressWarnings(value = "ST_WRITE_TO_STATIC_FROM_INSTANCE_METHOD",
+    @edu.umd.cs.findbugs.annotations.SuppressFBWarnings(value = "ST_WRITE_TO_STATIC_FROM_INSTANCE_METHOD",
             justification = "temporary until mult-system; only set at startup")
 //    protected synchronized void setInstance() { self = this; }
 
@@ -610,7 +609,7 @@ public class NceTrafficController extends AbstractMRTrafficController implements
         return adaptermemo.getSystemPrefix();
     }
 
-    static Logger log = LoggerFactory.getLogger(NceTrafficController.class.getName());
+    private final static Logger log = LoggerFactory.getLogger(NceTrafficController.class.getName());
 }
 
 

@@ -155,7 +155,7 @@ public class LawicellTrafficController extends jmri.jmrix.can.TrafficController 
 
     private int gcState;
 
-    static Logger log = LoggerFactory.getLogger(LawicellTrafficController.class.getName());
+    private final static Logger log = LoggerFactory.getLogger(LawicellTrafficController.class.getName());
 }
 
 

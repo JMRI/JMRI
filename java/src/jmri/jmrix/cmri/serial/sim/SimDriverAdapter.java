@@ -17,7 +17,7 @@ import purejavacomm.UnsupportedCommOperationException;
  * @author	Bob Jacobsen Copyright (C) 2002, 2008, 2011
  * @version	$Revision$
  */
-@edu.umd.cs.findbugs.annotations.SuppressWarnings(value = "ST_WRITE_TO_STATIC_FROM_INSTANCE_METHOD",
+@edu.umd.cs.findbugs.annotations.SuppressFBWarnings(value = "ST_WRITE_TO_STATIC_FROM_INSTANCE_METHOD",
         justification = "Access to 'self' OK until multiple instance pattern installed")
 public class SimDriverAdapter extends jmri.jmrix.cmri.serial.serialdriver.SerialDriverAdapter {
 
@@ -42,14 +42,14 @@ public class SimDriverAdapter extends jmri.jmrix.cmri.serial.serialdriver.Serial
     /**
      * set up all of the other objects to operate connected to this port
      */
-    @edu.umd.cs.findbugs.annotations.SuppressWarnings(value = "ST_WRITE_TO_STATIC_FROM_INSTANCE_METHOD",
+    @edu.umd.cs.findbugs.annotations.SuppressFBWarnings(value = "ST_WRITE_TO_STATIC_FROM_INSTANCE_METHOD",
             justification = "Access to 'self' OK until multiple instance pattern installed")
 
     public void configure() {
         // install a traffic controller that doesn't time out
         new SerialTrafficController() {
             // timeout doesn't do anything
-            @edu.umd.cs.findbugs.annotations.SuppressWarnings(value = "ST_WRITE_TO_STATIC_FROM_INSTANCE_METHOD",
+            @edu.umd.cs.findbugs.annotations.SuppressFBWarnings(value = "ST_WRITE_TO_STATIC_FROM_INSTANCE_METHOD",
                     justification = "only until multi-connect update done")
             protected void handleTimeout(jmri.jmrix.AbstractMRMessage m, jmri.jmrix.AbstractMRListener l) {
             }
@@ -102,7 +102,7 @@ public class SimDriverAdapter extends jmri.jmrix.cmri.serial.serialdriver.Serial
     /**
      * Get an array of valid baud rates.
      */
-    @edu.umd.cs.findbugs.annotations.SuppressWarnings(value = "EI_EXPOSE_REP") // OK to expose array instead of copy until Java 1.6
+    @edu.umd.cs.findbugs.annotations.SuppressFBWarnings(value = "EI_EXPOSE_REP") // OK to expose array instead of copy until Java 1.6
     public String[] validBaudRates() {
         return validSpeeds;
     }
@@ -128,6 +128,6 @@ public class SimDriverAdapter extends jmri.jmrix.cmri.serial.serialdriver.Serial
     }
     static SimDriverAdapter mInstance;
 
-    static Logger log = LoggerFactory.getLogger(SimDriverAdapter.class.getName());
+    private final static Logger log = LoggerFactory.getLogger(SimDriverAdapter.class.getName());
 
 }

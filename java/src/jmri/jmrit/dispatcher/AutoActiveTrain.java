@@ -376,7 +376,7 @@ public class AutoActiveTrain implements ThrottleListener {
         }
     }
 
-    @edu.umd.cs.findbugs.annotations.SuppressWarnings(value = "IS2_INCONSISTENT_SYNC",
+    @edu.umd.cs.findbugs.annotations.SuppressFBWarnings(value = "IS2_INCONSISTENT_SYNC",
             justification = "OK to not sync here, no conflict expected")
     protected void handleBlockStateChange(AllocatedSection as, Block b) {
         if (b.getState() == Block.OCCUPIED) {
@@ -1587,7 +1587,7 @@ public class AutoActiveTrain implements ThrottleListener {
         }
     }
 
-    static Logger log = LoggerFactory.getLogger(AutoActiveTrain.class.getName());
+    private final static Logger log = LoggerFactory.getLogger(AutoActiveTrain.class.getName());
 }
 
 /* @(#)AutoActiveTrain.java */

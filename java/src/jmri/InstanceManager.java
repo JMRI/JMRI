@@ -215,7 +215,7 @@ public class InstanceManager {
 
     // This is a separate, protected member so it
     // can be overridden in unit tests
-    @edu.umd.cs.findbugs.annotations.SuppressWarnings(value = "ST_WRITE_TO_STATIC_FROM_INSTANCE_METHOD",
+    @edu.umd.cs.findbugs.annotations.SuppressFBWarnings(value = "ST_WRITE_TO_STATIC_FROM_INSTANCE_METHOD",
             justification = "Only used during system initialization")
     protected void init() {
         log.trace("running default init");
@@ -226,7 +226,7 @@ public class InstanceManager {
      * The "root" object is the instance manager that's answering requests for
      * other instances. Protected access to allow changes during JUnit testing.
      */
-    @edu.umd.cs.findbugs.annotations.SuppressWarnings(
+    @edu.umd.cs.findbugs.annotations.SuppressFBWarnings(
             value = "MS_PKGPROTECT",
             justification = "Protected access to allow changes during JUnit testing.")
     static protected InstanceManager root;
@@ -690,7 +690,7 @@ public class InstanceManager {
     //    store(p, TabbedPreferences.class);
     //}
     /* *************************************************************************** */
-    static Logger log = LoggerFactory.getLogger(InstanceManager.class.getName());
+    private final static Logger log = LoggerFactory.getLogger(InstanceManager.class.getName());
 }
 
 /* @(#)InstanceManager.java */

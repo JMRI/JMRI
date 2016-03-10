@@ -4,8 +4,6 @@ import junit.framework.Assert;
 import junit.framework.Test;
 import junit.framework.TestCase;
 import junit.framework.TestSuite;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 
 /**
  * XpaPowerManagerTest.java
@@ -47,7 +45,5 @@ public class XpaPowerManagerTest extends TestCase {
     protected void tearDown() {
         apps.tests.Log4JFixture.tearDown();
     }
-
-    static Logger log = LoggerFactory.getLogger(XpaPowerManagerTest.class.getName());
 
 }

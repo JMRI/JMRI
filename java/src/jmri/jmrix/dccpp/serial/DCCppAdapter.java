@@ -11,7 +11,6 @@ import java.util.TooManyListenersException;
 import jmri.jmrix.dccpp.DCCppCommandStation;
 import jmri.jmrix.dccpp.DCCppSerialPortController;
 import jmri.jmrix.dccpp.DCCppTrafficController;
-import jmri.jmrix.dccpp.DCCppPacketizer;
 import jmri.jmrix.dccpp.DCCppInitializationManager;
 /*
  * TODO: Replace these with DCC++ equivalents
@@ -312,7 +311,7 @@ public class DCCppAdapter extends DCCppSerialPortController implements jmri.jmri
      * Get an array of valid baud rates. This is currently just a message saying
      * its fixed
      */
-    @edu.umd.cs.findbugs.annotations.SuppressWarnings(value = "EI_EXPOSE_REP") // OK to expose array instead of copy until Java 1.6
+    @edu.umd.cs.findbugs.annotations.SuppressFBWarnings(value = "EI_EXPOSE_REP") // OK to expose array instead of copy until Java 1.6
     public String[] validBaudRates() {
         return validSpeeds;
     }
@@ -336,6 +335,6 @@ public class DCCppAdapter extends DCCppSerialPortController implements jmri.jmri
     }
     static volatile DCCppAdapter mInstance = null; // TODO: Rename this?
 
-    static Logger log = LoggerFactory.getLogger(DCCppAdapter.class.getName());
+    private final static Logger log = LoggerFactory.getLogger(DCCppAdapter.class.getName());
 
 }

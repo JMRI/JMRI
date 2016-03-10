@@ -4,8 +4,6 @@ package apps.gui3.paned;
 import java.util.ResourceBundle;
 import jmri.Application;
 import jmri.util.swing.multipane.MultiPaneWindow;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 
 /**
  * The JMRI application for developing the 3rd GUI
@@ -32,7 +30,7 @@ public class Paned extends apps.gui3.Apps3 {
         this.start();
     }
 
-    @edu.umd.cs.findbugs.annotations.SuppressWarnings(value = "ST_WRITE_TO_STATIC_FROM_INSTANCE_METHOD",
+    @edu.umd.cs.findbugs.annotations.SuppressFBWarnings(value = "ST_WRITE_TO_STATIC_FROM_INSTANCE_METHOD",
             justification = "only one application at a time")
     protected void createMainFrame() {
         // create and populate main window
@@ -50,6 +48,4 @@ public class Paned extends apps.gui3.Apps3 {
     protected ResourceBundle getActionModelResourceBundle() {
         return null;
     }
-
-    static Logger log = LoggerFactory.getLogger(Paned.class.getName());
 }

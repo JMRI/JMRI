@@ -36,7 +36,7 @@ public class SprogTrafficController implements SprogInterface, SerialPortEventLi
 
     private SprogState sprogState = SprogState.NORMAL;
 
-    @edu.umd.cs.findbugs.annotations.SuppressWarnings(value = "ST_WRITE_TO_STATIC_FROM_INSTANCE_METHOD")
+    @edu.umd.cs.findbugs.annotations.SuppressFBWarnings(value = "ST_WRITE_TO_STATIC_FROM_INSTANCE_METHOD")
     // Ignore FindBugs warnings as there can only be one instance at present
     public SprogTrafficController() {
         if (log.isDebugEnabled()) {
@@ -262,7 +262,7 @@ public class SprogTrafficController implements SprogInterface, SerialPortEventLi
 
     private boolean unsolicited;
 
-    static Logger log = LoggerFactory.getLogger(SprogTrafficController.class.getName());
+    private final static Logger log = LoggerFactory.getLogger(SprogTrafficController.class.getName());
 
     /**
      * serialEvent - respond to an event triggered by RXTX. In this case we are

@@ -200,6 +200,7 @@ public class TrackCopyFrame extends OperationsFrame implements java.beans.Proper
                 // move rolling stock
                 moveRollingStock(fromTrack, toTrack);
                 if (deleteTrackCheckBox.isSelected()) {
+                    ScheduleManager.instance().replaceTrack(fromTrack, toTrack);
                     fromTrack.getLocation().deleteTrack(fromTrack);
                 }
             }
@@ -290,5 +291,5 @@ public class TrackCopyFrame extends OperationsFrame implements java.beans.Proper
         }
     }
 
-    static Logger log = LoggerFactory.getLogger(TrackCopyFrame.class.getName());
+    private final static Logger log = LoggerFactory.getLogger(TrackCopyFrame.class.getName());
 }

@@ -12,7 +12,6 @@ public class Xml {
     // Common to operation xml files
     static final String ID = "id"; // NOI18N
     static final String NAME = "name"; // NOI18N
-    static final String ROW_COLOR = "rowColor";  // NOI18N
     static final String COMMENT = "comment"; // NOI18N
 
     static final String TRUE = "true"; // NOI18N
@@ -23,10 +22,12 @@ public class Xml {
     static final String DESCRIPTION = "description"; // NOI18N
     static final String DEPART_HOUR = "departHour"; // NOI18N
     static final String DEPART_MINUTE = "departMinute"; // NOI18N
+    static final String ROW_COLOR = "rowColor";  // NOI18N
+    static final String RESET_ROW_COLOR = "resetRowColor";  // NOI18N
     static final String ROUTE = "route"; // NOI18N
     static final String SKIPS = "skips"; // NOI18N
     static final String LOCATION = "location"; // NOI18N
-    static final String ROUTE_ID = "routeId"; // NOI18N old format
+    static final String ROUTE_ID = "routeId"; // old format // NOI18N
     static final String SKIP = "skip"; // NOI18N
     static final String CAR_TYPES = "carTypes"; // NOI18N
     static final String TYPES = "types"; // NOI18N
@@ -112,9 +113,10 @@ public class Xml {
     static final String BUILD_REPORT = "buildReport"; // NOI18N
     static final String PRINT_PREVIEW = "printPreview"; // NOI18N
     static final String OPEN_FILE = "openFile"; // NOI18N
+    static final String RUN_FILE = "runFile"; // NOI18N
     static final String TRAIN_ACTION = "trainAction"; // NOI18N
 
-    static final String COLUMN_WIDTHS = "columnWidths"; // NOI18N TODO This here is for backwards compatibility, remove after next major release
+    static final String COLUMN_WIDTHS = "columnWidths"; // TODO This here is for backwards compatibility, remove after next major release // NOI18N
 
     static final String TRAIN_SCHEDULE_OPTIONS = "trainScheduleOptions"; // NOI18N
     static final String ACTIVE_ID = "activeId"; // NOI18N
@@ -130,22 +132,6 @@ public class Xml {
 
     // TrainManagerXml.java
     static final String TRAINS = "trains"; // NOI18N
-
-    // TrainSchedule.java
-    static final String SCHEDULE = "schedule"; // NOI18N
-    static final String TRAIN_IDS = "trainIds"; // NOI18N
-
-    // TrainScheduleManager.java
-    static final String SCHEDULES = "schedules"; // NOI18N
-
-    // ManifestCreator.java
-    static final String MANIFEST_CREATOR = "manifestCreator"; // NOI18N
-    static final String RUN_FILE = "runFile"; // NOI18N
-    static final String DIRECTORY = "directory"; // NOI18N
-    static final String COMMON_FILE = "commonFile"; // NOI18N
-
-    // SwitchListCreator
-    static final String SWITCHLIST_CREATOR = "switchlistCreator"; // NOI18N
 
     // TrainManifestText.java
     static final String MANIFEST_TEXT_STRINGS = "manifestTextStrings"; // NOI18N
@@ -198,7 +184,7 @@ public class Xml {
 
     // TrainManifestHeaderText.jafa
     static final String MANIFEST_HEADER_TEXT_STRINGS = "manifestHeaderTextStrings"; // NOI18N
-    static final String ROAD = "road"; // the supported message format options NOI18N 
+    static final String ROAD = "road"; // the supported message format options // NOI18N
     static final String NUMBER = "number"; // NOI18N
     static final String ENGINE_NUMBER = "engineNumber"; // NOI18N
     static final String TYPE = "type"; // NOI18N

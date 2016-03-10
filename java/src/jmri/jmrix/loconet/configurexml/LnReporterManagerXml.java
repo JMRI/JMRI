@@ -33,6 +33,6 @@ public class LnReporterManagerXml extends jmri.managers.configurexml.AbstractRep
         return loadReporters(shared);
     }
 
-    static Logger log = LoggerFactory.getLogger(LnReporterManagerXml.class.getName());
+    private final static Logger log = LoggerFactory.getLogger(LnReporterManagerXml.class.getName());
 
 }

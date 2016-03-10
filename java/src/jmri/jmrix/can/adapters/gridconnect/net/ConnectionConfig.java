@@ -105,5 +105,5 @@ public class ConnectionConfig extends jmri.jmrix.AbstractNetworkConnectionConfig
         return ResourceBundle.getBundle("jmri.jmrix.can.CanActionListBundle");
     }
 
-    static Logger log = LoggerFactory.getLogger(ConnectionConfig.class.getName());
+    private final static Logger log = LoggerFactory.getLogger(ConnectionConfig.class.getName());
 }
