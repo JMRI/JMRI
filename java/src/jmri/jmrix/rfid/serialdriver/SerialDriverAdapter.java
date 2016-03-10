@@ -121,6 +121,7 @@ public class SerialDriverAdapter extends RfidPortController implements jmri.jmri
                         + (activeSerialPort.getFlowControlMode() == SerialPort.FLOWCONTROL_RTSCTS_OUT ? "hardware flow control" : "no flow control"));
             }
             if (log.isDebugEnabled()) {
+                log.debug("Setup SerialPortEventListener for debugging");
                 // arrange to notify later
                 activeSerialPort.addEventListener(new SerialPortEventListener() {
                     @Override
@@ -336,7 +337,7 @@ public class SerialDriverAdapter extends RfidPortController implements jmri.jmri
     /**
      * Local method to do specific port configuration
      *
-     * @throws gnu.io.UnsupportedCommOperationException
+     * @throws UnsupportedCommOperationException
      */
     protected void setSerialPort() throws UnsupportedCommOperationException {
         // find the baud rate value, configure comm options
@@ -358,6 +359,7 @@ public class SerialDriverAdapter extends RfidPortController implements jmri.jmri
             flow = SerialPort.FLOWCONTROL_RTSCTS_OUT;
         }
         activeSerialPort.setFlowControlMode(flow);
+        activeSerialPort.setRTS(true);
     }
 
     /**
