@@ -38,7 +38,7 @@ public enum LnCommandStationType {
     COMMAND_STATION_DCS200("DCS200", true, false, "LnThrottleManager", "SlotManager"), // NOI18N
     COMMAND_STATION_DCS050("DCS50 (Zephyr)", true, false, "LnThrottleManager", "SlotManager"), // NOI18N
     COMMAND_STATION_DCS051("DCS51 (Zephyr Xtra)", true, false, "LnThrottleManager", "SlotManager"), // NOI18N
-    COMMAND_STATION_DB150("DB150 (Empire Builder)", false, false, "LnThrottleManager", "SlotManager"), // NOI18N
+    COMMAND_STATION_DB150("DB150 (Empire Builder)", false, true, "LnThrottleManager", "SlotManager"), // NOI18N
     COMMAND_STATION_LBPS("LocoBuffer (PS)", true, false, "LnThrottleManager", "SlotManager"), // NOI18N
     COMMAND_STATION_MM("Mix-Master", false, true, "LnThrottleManager", "SlotManager"), // NOI18N
     COMMAND_STATION_IBX_TYPE_1("Intellibox-I", true, true, "Ib1ThrottleManager", "SlotManager"), // NOI18N
