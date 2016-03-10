@@ -101,7 +101,7 @@ abstract public class AbstractSerialConnectionConfigXml extends AbstractConnecti
            adapter.configureBaudRate(baudRate);
         }
 
-        //loadCommon(shared, perNode, adapter);
+        loadCommon(shared, perNode, adapter);
         // register, so can be picked up next time
         register();
         // try to open the port
