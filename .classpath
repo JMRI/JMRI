@@ -30,8 +30,8 @@
 	<classpathentry kind="lib" path="lib/openlcb.jar"/>
 	<classpathentry kind="lib" path="lib/jlfgr-1_0.jar"/>
 	<classpathentry kind="lib" path="lib/rscbundlecheck.jar"/>
-	<classpathentry kind="lib" path="lib/RXTXcomm.jar"/>
-	<classpathentry kind="lib" path="lib/Serialio.jar"/>
+	<classpathentry kind="lib" path="lib/jna.jar"/>
+	<classpathentry kind="lib" path="lib/purejavacomm.jar"/>
 	<classpathentry kind="lib" path="lib/slf4j-api-1.7.13.jar"/>
 	<classpathentry kind="lib" path="lib/slf4j-log4j12-1.7.13.jar"/>
 	<classpathentry kind="lib" path="lib/jul-to-slf4j-1.7.13.jar"/>

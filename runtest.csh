@@ -13,11 +13,6 @@
 #  jmri.headlesstest     Tests won't attempt to use screen
 #  jmri.skipschematests  Skip tests of XML schema if true
 #
-# If your serial ports are not shown in the initial list, you 
-# can include them in the environment variable JMRI_SERIAL_PORTS
-# separated by commas:
-#    export JMRI_SERIAL_PORTS="/dev/locobuffer,/dev/cmri"
-#
 # You can run separate instances of the program with their
 # own preferences and setup if you either
 # *) Provide the name of a configuration file as the 1st argument
@@ -140,24 +135,7 @@ OPTIONS="${OPTIONS} -Dsun.java2d.noddraw"
 OPTIONS="${OPTIONS} -Xms30m"
 OPTIONS="${OPTIONS} -Xmx640m"
 
-# RXTX options (only works in some versions)
-OPTIONS="${OPTIONS} -Dgnu.io.rxtx.NoVersionOutput=true"
-[ "${DEBUG}" ] && echo "OPTIONS: '${OPTIONS}'"
-
-if [ -n "$JMRI_SERIAL_PORTS" ]
-then
-  JMRI_SERIAL_PORTS="$JMRI_SERIAL_PORTS,"
-fi
-
-# locate alternate serial ports
-ALTPORTS=`(echo $JMRI_SERIAL_PORTS; ls -fm /dev/ttyUSB* /dev/ttyACM* 2>/dev/null ) | tr -d " \n" | tr "," ":"`
-if [ "${ALTPORTS}" ]
-then
-  ALTPORTS=-Dgnu.io.rxtx.SerialPorts=${ALTPORTS}
-fi
-[ "${DEBUG}" ] && echo "ALTPORTS: '${ALTPORTS}'"
-
-[ "${DEBUG}" ] && echo java ${OPTIONS} "${ALTPORTS}" -cp "${CP}" "${CLASSNAME}" ${CONFIGFILE}
+[ "${DEBUG}" ] && echo java ${OPTIONS} -cp "${CP}" "${CLASSNAME}" ${CONFIGFILE}
 java ${OPTIONS} ${ALTPORTS} -cp "${CP}" "${CLASSNAME}" $2 $3
 
 

@@ -1,7 +1,6 @@
 // ReportContext.java
 package jmri.jmrit.mailreport;
 
-import gnu.io.CommPortIdentifier;
 import java.awt.Dimension;
 import java.awt.GraphicsConfiguration;
 import java.awt.GraphicsDevice;
@@ -27,6 +26,7 @@ import jmri.util.JmriInsets;
 import jmri.util.PortNameMapper;
 import jmri.util.PortNameMapper.SerialPortFriendlyName;
 import jmri.util.zeroconf.ZeroConfService;
+import purejavacomm.CommPortIdentifier;
 
 /**
  * Provide the JMRI context info.
@@ -281,7 +281,7 @@ public class ReportContext {
         @SuppressWarnings("unchecked")
         Enumeration<CommPortIdentifier> portIDs = CommPortIdentifier.getPortIdentifiers();
 
-        ArrayList<CommPortIdentifier> ports = new ArrayList<CommPortIdentifier>();
+        ArrayList<CommPortIdentifier> ports = new ArrayList<>();
 
         // find the names of suitable ports
         while (portIDs.hasMoreElements()) {
