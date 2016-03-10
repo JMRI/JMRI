@@ -8,7 +8,6 @@ import jmri.jmrix.cmri.serial.SerialSensorManager;
 import jmri.jmrix.cmri.serial.SerialTrafficController;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import purejavacomm.UnsupportedCommOperationException;
 
 /**
  * Extends the serialdriver.SimDriverAdapter class to act as simulated
@@ -96,7 +95,7 @@ public class SimDriverAdapter extends jmri.jmrix.cmri.serial.serialdriver.Serial
     /**
      * Local method to do specific port configuration
      */
-    protected void setSerialPort() throws UnsupportedCommOperationException {
+    protected void setSerialPort() throws gnu.io.UnsupportedCommOperationException {
     }
 
     /**

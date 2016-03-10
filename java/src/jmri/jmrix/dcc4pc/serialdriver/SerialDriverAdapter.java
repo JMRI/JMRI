@@ -1,9 +1,11 @@
 // SerialDriverAdapter.java
 package jmri.jmrix.dcc4pc.serialdriver;
 
+import gnu.io.CommPortIdentifier;
+import gnu.io.PortInUseException;
+import gnu.io.SerialPort;
 import java.io.DataInputStream;
 import java.io.DataOutputStream;
-import java.io.IOException;
 import java.io.InputStream;
 import java.util.ArrayList;
 import java.util.List;
@@ -13,11 +15,6 @@ import jmri.jmrix.dcc4pc.Dcc4PcSystemConnectionMemo;
 import jmri.jmrix.dcc4pc.Dcc4PcTrafficController;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import purejavacomm.CommPortIdentifier;
-import purejavacomm.NoSuchPortException;
-import purejavacomm.PortInUseException;
-import purejavacomm.SerialPort;
-import purejavacomm.UnsupportedCommOperationException;
 
 /**
  * Implements SerialPortAdapter for the Dcc4Pc system.
@@ -51,7 +48,7 @@ public class SerialDriverAdapter extends Dcc4PcPortController implements jmri.jm
             try {
                 activeSerialPort.setSerialPortParams(115200, SerialPort.DATABITS_8, SerialPort.STOPBITS_1, SerialPort.PARITY_NONE);
                 activeSerialPort.setFlowControlMode(SerialPort.FLOWCONTROL_NONE);
-            } catch (UnsupportedCommOperationException e) {
+            } catch (gnu.io.UnsupportedCommOperationException e) {
                 log.error("Cannot set serial parameters on port " + portName + ": " + e.getMessage());
             }
             log.debug("Serial timeout was observed as: " + activeSerialPort.getReceiveTimeout()
@@ -80,9 +77,9 @@ public class SerialDriverAdapter extends Dcc4PcPortController implements jmri.jm
 
             opened = true;
 
-        } catch (NoSuchPortException p) {
+        } catch (gnu.io.NoSuchPortException p) {
             return handlePortNotFound(p, portName, log);
-        } catch (IOException ex) {
+        } catch (Exception ex) {
             log.error("Unexpected exception while opening port " + portName + " trace follows: " + ex);
             ex.printStackTrace();
             return "Unexpected error while opening port " + portName + ": " + ex;

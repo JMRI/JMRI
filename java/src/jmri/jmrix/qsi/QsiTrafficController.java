@@ -1,13 +1,13 @@
 // QsiTrafficController.java
 package jmri.jmrix.qsi;
 
+import gnu.io.SerialPort;
 import java.io.DataInputStream;
 import java.io.OutputStream;
 import java.util.Vector;
 import jmri.jmrix.qsi.serialdriver.SerialDriverAdapter;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import purejavacomm.SerialPort;
 
 /**
  * Converts Stream-based I/O to/from QSI messages. The "QsiInterface" side

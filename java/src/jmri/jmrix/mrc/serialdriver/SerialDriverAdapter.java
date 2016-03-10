@@ -1,20 +1,17 @@
 // SerialDriverAdapter.java
 package jmri.jmrix.mrc.serialdriver;
 
+import gnu.io.CommPortIdentifier;
+import gnu.io.PortInUseException;
+import gnu.io.SerialPort;
 import java.io.DataInputStream;
 import java.io.DataOutputStream;
-import java.io.IOException;
 import java.io.InputStream;
 import jmri.jmrix.mrc.MrcPacketizer;
 import jmri.jmrix.mrc.MrcPortController;
 import jmri.jmrix.mrc.MrcSystemConnectionMemo;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import purejavacomm.CommPortIdentifier;
-import purejavacomm.NoSuchPortException;
-import purejavacomm.PortInUseException;
-import purejavacomm.SerialPort;
-import purejavacomm.UnsupportedCommOperationException;
 
 /**
  * Implements SerialPortAdapter for the MRC system. This connects an MRC command
@@ -52,7 +49,7 @@ public class SerialDriverAdapter extends MrcPortController implements jmri.jmrix
             // try to set it for comunication via SerialDriver
             try {
                 activeSerialPort.setSerialPortParams(currentBaudNumber(getCurrentBaudRate()), SerialPort.DATABITS_8, SerialPort.STOPBITS_1, SerialPort.PARITY_ODD);
-            } catch (UnsupportedCommOperationException e) {
+            } catch (gnu.io.UnsupportedCommOperationException e) {
                 log.error("Cannot set serial parameters on port " + portName + ": " + e.getMessage());//IN18N
                 return "Cannot set serial parameters on port " + portName + ": " + e.getMessage();//IN18N
             }
@@ -94,9 +91,9 @@ public class SerialDriverAdapter extends MrcPortController implements jmri.jmrix
 
             opened = true;
 
-        } catch (NoSuchPortException p) {
+        } catch (gnu.io.NoSuchPortException p) {
             return handlePortNotFound(p, portName, log);
-        } catch (UnsupportedCommOperationException | IOException ex) {
+        } catch (Exception ex) {
             log.error("Unexpected exception while opening port " + portName + " trace follows: " + ex);//IN18N
             ex.printStackTrace();
             return "Unexpected error while opening port " + portName + ": " + ex;//IN18N
