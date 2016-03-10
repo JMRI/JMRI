@@ -42,7 +42,7 @@ abstract public class AbstractSerialConnectionConfigXml extends AbstractConnecti
             log.warn("No adapter found while saving serial port configuration {}", object.toString());
             return null;
         }
-        
+
         // many of the following are required by the DTD; failing to include
         // them makes the XML file unreadable, but at least the next
         // invocation of the program can then continue.
@@ -80,26 +80,10 @@ abstract public class AbstractSerialConnectionConfigXml extends AbstractConnecti
         boolean result = true;
         getInstance();
         // configure port name
-        String portName = null;
-        try {
-           portName = perNode.getAttribute("port").getValue();
-           adapter.setPort(portName);
-        } catch (java.lang.NullPointerException npe) {
-           // when the storage format has not been upgraded to the new format,
-           // the portName incorrectly gets added to the shared attributes.
-           portName = shared.getAttribute("port").getValue();
-           adapter.setPort(portName);
-        }
-        String baudRate = null;
-        try {
-           baudRate = perNode.getAttribute("speed").getValue();
-           adapter.configureBaudRate(baudRate);
-        } catch (java.lang.NullPointerException npe) {
-           // when the storage format has not been upgraded to the new format,
-           // the baudRate incorrectly gets added to the shared attributes.
-           baudRate = shared.getAttribute("speed").getValue();
-           adapter.configureBaudRate(baudRate);
-        }
+        String portName = perNode.getAttribute("port").getValue();
+        adapter.setPort(portName);
+        String baudRate = perNode.getAttribute("speed").getValue();
+        adapter.configureBaudRate(baudRate);
 
         loadCommon(shared, perNode, adapter);
         // register, so can be picked up next time
