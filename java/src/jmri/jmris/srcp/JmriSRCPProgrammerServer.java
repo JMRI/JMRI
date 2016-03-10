@@ -47,6 +47,6 @@ public class JmriSRCPProgrammerServer extends AbstractProgrammerServer {
     public void parseRequest(String statusString) throws jmri.JmriException, java.io.IOException {
     }
 
-    static Logger log = LoggerFactory.getLogger(JmriSRCPProgrammerServer.class.getName());
+    private final static Logger log = LoggerFactory.getLogger(JmriSRCPProgrammerServer.class.getName());
 
 }

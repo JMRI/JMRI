@@ -22,8 +22,8 @@ import org.slf4j.LoggerFactory;
  */
 public class TrainCsvCommon extends TrainCommon {
 
-    protected final static String DEL = ","; // NOI18N delimiter
-    protected final static String ESC = "\""; // NOI18N escape
+    protected final static String DEL = ","; // delimiter // NOI18N
+    protected final static String ESC = "\""; // escape // NOI18N
 
     protected final static String HEADER = Bundle.getMessage("csvOperator") + DEL + Bundle.getMessage("csvDescription")
             + DEL + Bundle.getMessage("csvParameters");
@@ -75,7 +75,7 @@ public class TrainCsvCommon extends TrainCommon {
     protected final static String SWLC = "SWLC" + DEL + Bundle.getMessage("csvSwitchListComment") + DEL; // NOI18N
     protected final static String TA = "TA" + DEL + Bundle.getMessage("csvTrainArrives") + DEL; // NOI18N
     protected final static String TDC = "TDC" + DEL + Bundle.getMessage("csvTrainChangesDirection") + DEL; // NOI18N
-    protected final static String TIR = "TIR" + DEL + Bundle.getMessage("csvTrainInRoute"); // NOI18N
+    protected final static String TIR = "TIR" + DEL + Bundle.getMessage("csvTrainEnRoute"); // NOI18N
     protected final static String TDONE = "TDONE" + DEL + Bundle.getMessage("csvTrainHasAlreadyServiced"); // NOI18N
     protected final static String VN = "VN" + DEL + Bundle.getMessage("csvVisitNumber") + DEL; // NOI18N
 

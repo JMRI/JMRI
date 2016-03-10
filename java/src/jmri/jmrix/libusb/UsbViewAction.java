@@ -35,7 +35,7 @@ public class UsbViewAction extends javax.swing.AbstractAction {
         }
     }
 
-    static Logger log = LoggerFactory.getLogger(UsbViewAction.class.getName());
+    private final static Logger log = LoggerFactory.getLogger(UsbViewAction.class.getName());
 }
 
 /* @(#)UsbViewAction.java */

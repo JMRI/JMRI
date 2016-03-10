@@ -77,7 +77,7 @@ public class LnTurnout extends AbstractTurnout implements LocoNetListener {
 
     LocoNetInterface controller;
 
-    @edu.umd.cs.findbugs.annotations.SuppressWarnings(value = "ST_WRITE_TO_STATIC_FROM_INSTANCE_METHOD",
+    @edu.umd.cs.findbugs.annotations.SuppressFBWarnings(value = "ST_WRITE_TO_STATIC_FROM_INSTANCE_METHOD",
             justification = "Only used during creation of 1st turnout")
     private void initFeedbackModes() {
         if (_validFeedbackNames.length != _validFeedbackModes.length) {
@@ -374,7 +374,7 @@ public class LnTurnout extends AbstractTurnout implements LocoNetListener {
     static java.util.Timer consistencyTimer = new java.util.Timer();
     int noConsistencyTimersRunning = 0;
     
-    static Logger log = LoggerFactory.getLogger(LnTurnout.class.getName());
+    private final static Logger log = LoggerFactory.getLogger(LnTurnout.class.getName());
 
 }
 

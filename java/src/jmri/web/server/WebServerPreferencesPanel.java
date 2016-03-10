@@ -17,6 +17,7 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import javax.swing.BorderFactory;
 import javax.swing.BoxLayout;
+import javax.swing.event.ChangeEvent;
 import javax.swing.JCheckBox;
 import javax.swing.JComponent;
 import javax.swing.JFrame;
@@ -36,19 +37,16 @@ import jmri.swing.DefaultListCellEditor;
 import jmri.swing.EditableList;
 import jmri.swing.JTitledSeparator;
 import jmri.swing.PreferencesPanel;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 
 public class WebServerPreferencesPanel extends JPanel implements ListDataListener, PreferencesPanel {
 
     private static final long serialVersionUID = 6907436730813458420L;
-    static Logger log = LoggerFactory.getLogger(WebServerPreferencesPanel.class.getName());
     Border lineBorder;
     JSpinner clickDelaySpinner;
     JSpinner refreshDelaySpinner;
     EditableList<String> disallowedFrames;
     JCheckBox useAjaxCB;
-    JTextField port;
+    JSpinner port;
     JCheckBox readonlyPower;
     WebServerPreferences preferences;
     private boolean restartRequired = false;
@@ -94,7 +92,7 @@ public class WebServerPreferencesPanel extends JPanel implements ListDataListene
         disallowedFrames.setModel(model);
         disallowedFrames.getModel().addListDataListener(this);
         useAjaxCB.setSelected(preferences.useAjax());
-        port.setText(Integer.toString(preferences.getPort()));
+        port.setValue(preferences.getPort());
         readonlyPower.setSelected(preferences.isReadonlyPower());
         InstanceManager.getDefault(StartupActionsManager.class).addPropertyChangeListener((PropertyChangeEvent evt) -> {
             this.startup.setSelected(this.isStartupAction());
@@ -122,7 +120,7 @@ public class WebServerPreferencesPanel extends JPanel implements ListDataListene
         preferences.setUseAjax(useAjaxCB.isSelected());
         int portNum;
         try {
-            portNum = Integer.parseInt(port.getText());
+            portNum = (Integer)port.getValue();
         } catch (NumberFormatException NFE) { //  Not a number
             portNum = 0;
         }
@@ -199,10 +197,13 @@ public class WebServerPreferencesPanel extends JPanel implements ListDataListene
 
     private JPanel portPanel() {
         JPanel panel = new JPanel();
-        port = new JTextField();
-        port.setText(Integer.toString(preferences.getPort()));
-        port.setColumns(6);
-        port.setToolTipText(Bundle.getMessage("ToolTipPort"));
+        port = new JSpinner(new SpinnerNumberModel(preferences.getPort(), 1, 65535, 1));
+        ((JSpinner.DefaultEditor) port.getEditor()).getTextField().setEditable(true);
+        port.setEditor(new JSpinner.NumberEditor(port, "#"));
+        this.port.addChangeListener((ChangeEvent e) -> {
+            this.setValues();
+        });
+        this.port.setToolTipText(Bundle.getMessage("ToolTipPort"));
         panel.add(port);
         panel.add(new JLabel(Bundle.getMessage("LabelPort")));
         return panel;

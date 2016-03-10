@@ -60,7 +60,7 @@ a default Locale (as part of the
 we can customize the JMRI&reg; program to different countries and languages.
 
 <a name="resourcebundles"><h2>Use of Resource Bundles</h2></a>
-The text for menus, buttons and similiar controls is contained in
+The text for menus, buttons and similiar controls is for the most part contained in
 <strong>property files</strong>, which are accessed via the Resource Bundle mechanism
 of java.util.
 <p>
@@ -74,28 +74,29 @@ to refer to the string; to the right of the equals sign is the
 String that will be displayed.
 <p>
 By convention, resource names for GUI elements start with one of
-<ol>
-<li>Field - for a visible field, e.g. label, on the GUI
-<li>Button - for a GUI button
-<li>Menu - the name of a top-level menu
-<li>MenuItem - an item in a menu (may be a nested item)
-<li>ToolTip - contents of a tooltip
-<li>Error - for an error message displayed as part of the GUI
-</ol>
+    <ol>
+    <li>Field - for a visible field, e.g. label, on the GUI
+    <li>Button - for a GUI button
+    <li>Menu - the name of a top-level menu
+    <li>MenuItem - an item in a menu (may be a nested item)
+    <li>ToolTip - contents of a tooltip
+    <li>Error - for an error message displayed as part of the GUI
+    </ol>
 Other resources are named so as not to conflict with these.
 
 <h2>Adapting to a new language</h2>
 The primary steps to adapt JMRI to a new language are:
-<ol>
-<li>Create new versions of the <code>.properties</code> files to change the language
-of the GUI controls.
-<li>Translate the XML files for decoders, programmers and configuration.
-<li>Translate the Help files and other web pages.
-</ol>
+    <ol>
+    <li>Create new versions of the <code>.properties</code> files to change the language
+    of the GUI controls.
+    <li>Translate the XML files for decoders, programmers and configuration.
+    <li>Translate the Help files and other web pages.
+    </ol>
 <p>
 Get a clean copy of the source code from the JMRI code repository.
 (For more info on doing that, please see the 
 <a href="getgitcode.shtml">page on getting a copy of the code</a>.)
+
 <h3>Translating Properties Files</h3>
 If they don't exist already, 
 start by making copies of the properties files with suffix for your
@@ -126,18 +127,24 @@ and should not be translated. These are marked by a comment at the top
 of the file. Examples are the <code>apps/AppsStructureBundle.properties</code>,
 <code>jmri/web/server/Services.properties</code> and <code>jmri/web/server/FilePaths.properties</code> files.
 
+<h3>Translating XML Files</h3>
+<p>The <code>xml/config/parts/jmri/</code> folder contains additional text strings to translate for programmers etc. Just as in <a href="#xml">decoder
+xml files</a>, translated strings are inserted as <code>&lt;name xml:lang="da"&gt;Your Translation&lt;/name&gt;</code> elements in each node.
+We provide a <a href="XmlEditors.shtml">list of editors</a> to effectively work on these files.</p>
+
+<h3>Check your Work</h3>
 <p>
 To check your work:
-<ol>
-<li>Rebuild your copy of the program, i.e. with your <a href="index.shtml#buildyourcopy">IDE</a> or however you're doing that
-<li>Start the JMRI&reg; application and select "<b>Preferences</b>" from the Edit menu;
-<li>Click the <b>Display</b> tab at the left, and the <b>Locale</b> tab in the right hand pane;
-<li>Select your language from the drop-down box (mind that once you run JMRI in another Locale, 
-    the list of languages will also be translated to thta language, changing the order 
-    for e.g. &quot;Anglais&quot; instead of &quot;English&quot;;
-<li>Click "Save" at lower left, quit and restart;
-<li>You should immediately seen the items you've translated.
-</ol>
+    <ol>
+    <li>Rebuild your copy of the program, i.e. with your <a href="index.shtml#buildyourcopy">IDE</a> or however you're doing that
+    <li>Start the JMRI&reg; application and select "<b>Preferences</b>" from the Edit menu;
+    <li>Click the <b>Display</b> tab at the left, and the <b>Locale</b> tab in the right hand pane;
+    <li>Select your language from the drop-down box (mind that once you run JMRI in another Locale,
+        the list of languages will also be translated to thta language, changing the order
+        for e.g. &quot;Anglais&quot; instead of &quot;English&quot;;
+    <li>Click "Save" at lower left, quit and restart;
+    <li>You should immediately seen the items you've translated.
+    </ol>
 <p>
 If there's a problem at this point, check to see what language is
 listed on the application startup screen.  
@@ -279,9 +286,13 @@ than providing multiple lines in the code itself.
 <p>
 Some parts of JMRI remain English only due to our developer population.
 In particular, comments and variable names in the code should remain in
-English, as should messages sent to the logging system.  
+English, as should messages sent to the logging system. Keys for 
+the translation bundles are another example. 
 In the Java code, these strings can be marked with a "<code>// NOI18N</code>"
-comment at the end of the line.
+comment at the end of the line. If needed, put that after another comment:
+<pre><code>
+  firePropertyChange("size", oldSize, newSize); // promptly! // NOI18N
+</code></pre>
 
 <h3>Adding a new Bundle</h3>
 <p>

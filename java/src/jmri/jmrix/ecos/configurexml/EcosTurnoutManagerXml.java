@@ -35,5 +35,5 @@ public class EcosTurnoutManagerXml extends jmri.managers.configurexml.AbstractTu
         return loadTurnouts(shared, perNode);
     }
 
-    static Logger log = LoggerFactory.getLogger(EcosTurnoutManagerXml.class.getName());
+    private final static Logger log = LoggerFactory.getLogger(EcosTurnoutManagerXml.class.getName());
 }

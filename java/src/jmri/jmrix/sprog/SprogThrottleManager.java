@@ -104,6 +104,6 @@ public class SprogThrottleManager extends AbstractThrottleManager {
         return false;
     }
 
-    static Logger log = LoggerFactory.getLogger(SprogThrottleManager.class.getName());
+    private final static Logger log = LoggerFactory.getLogger(SprogThrottleManager.class.getName());
 
 }

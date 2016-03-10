@@ -5,8 +5,6 @@ import java.text.DecimalFormat;
 import java.util.ArrayList;
 import java.util.List;
 import jmri.managers.AbstractManager;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 
 /**
  * Implementation of a Transit Manager
@@ -222,8 +220,6 @@ public class TransitManager extends AbstractManager
     public String getBeanTypeHandled() {
         return Bundle.getMessage("BeanNameTransit");
     }
-
-    static Logger log = LoggerFactory.getLogger(TransitManager.class.getName());
 }
 
 

@@ -58,5 +58,5 @@ public class JTableUtil {
         return dataTable;
     }
 
-    static final Logger log = LoggerFactory.getLogger(JTableUtil.class.getName());
+    private final static Logger log = LoggerFactory.getLogger(JTableUtil.class.getName());
 }

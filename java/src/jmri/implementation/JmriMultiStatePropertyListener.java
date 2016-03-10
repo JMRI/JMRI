@@ -66,5 +66,5 @@ public class JmriMultiStatePropertyListener extends JmriSimplePropertyListener {
             }
         }
     }
-    static final Logger log = LoggerFactory.getLogger(JmriMultiStatePropertyListener.class.getName());
+    private final static Logger log = LoggerFactory.getLogger(JmriMultiStatePropertyListener.class.getName());
 }

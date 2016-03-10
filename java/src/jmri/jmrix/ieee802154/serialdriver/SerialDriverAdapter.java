@@ -243,7 +243,7 @@ public class SerialDriverAdapter extends IEEE802154PortController implements jmr
     /**
      * Get an array of valid baud rates.
      */
-    @edu.umd.cs.findbugs.annotations.SuppressWarnings(value = "EI_EXPOSE_REP")
+    @edu.umd.cs.findbugs.annotations.SuppressFBWarnings(value = "EI_EXPOSE_REP")
     public String[] validBaudRates() {
         return validSpeeds;
     }
@@ -262,7 +262,7 @@ public class SerialDriverAdapter extends IEEE802154PortController implements jmr
     /**
      * Option 1 is not used for anything
      */
-    @edu.umd.cs.findbugs.annotations.SuppressWarnings(value = "EI_EXPOSE_REP")
+    @edu.umd.cs.findbugs.annotations.SuppressFBWarnings(value = "EI_EXPOSE_REP")
     public String[] validOption1() {
         return stdOption1Values;
     }
@@ -303,6 +303,6 @@ public class SerialDriverAdapter extends IEEE802154PortController implements jmr
 //        return mInstance;
 //    }
 //    static SerialDriverAdapter mInstance = null;
-    static Logger log = LoggerFactory.getLogger(SerialDriverAdapter.class.getName());
+    private final static Logger log = LoggerFactory.getLogger(SerialDriverAdapter.class.getName());
 
 }

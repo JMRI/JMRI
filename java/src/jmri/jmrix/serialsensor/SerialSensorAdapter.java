@@ -236,6 +236,6 @@ public class SerialSensorAdapter extends AbstractSerialPortController
         }
     }
 
-    static Logger log = LoggerFactory.getLogger(SerialSensorAdapter.class.getName());
+    private final static Logger log = LoggerFactory.getLogger(SerialSensorAdapter.class.getName());
 
 }

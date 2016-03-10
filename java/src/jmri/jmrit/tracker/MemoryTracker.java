@@ -50,5 +50,5 @@ public class MemoryTracker {
     //Memory m;
     Block block;
 
-    static Logger log = LoggerFactory.getLogger(MemoryTracker.class.getName());
+    private final static Logger log = LoggerFactory.getLogger(MemoryTracker.class.getName());
 }

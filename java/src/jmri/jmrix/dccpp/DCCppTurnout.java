@@ -60,9 +60,9 @@ public class DCCppTurnout extends AbstractTurnout implements DCCppListener {
     static String[] modeNames = null;
     static int[] modeValues = null;
 
-    @edu.umd.cs.findbugs.annotations.SuppressWarnings(value = "IS2_INCONSISTENT_SYNC")
+    @edu.umd.cs.findbugs.annotations.SuppressFBWarnings(value = "IS2_INCONSISTENT_SYNC")
     protected int _mThrown = jmri.Turnout.THROWN;
-    @edu.umd.cs.findbugs.annotations.SuppressWarnings(value = "IS2_INCONSISTENT_SYNC")
+    @edu.umd.cs.findbugs.annotations.SuppressFBWarnings(value = "IS2_INCONSISTENT_SYNC")
     protected int _mClosed = jmri.Turnout.CLOSED;
 
     protected String _prefix = "DCCPP"; // TODO: Shouldn't this be fetched from the system memo?
@@ -537,7 +537,7 @@ public class DCCppTurnout extends AbstractTurnout implements DCCppListener {
     protected int mNumber;   // XPressNet turnout number
     DCCppTurnoutStateListener _stateListener;  // Internal class object
 
-    static Logger log = LoggerFactory.getLogger(DCCppTurnout.class.getName());
+    private final static Logger log = LoggerFactory.getLogger(DCCppTurnout.class.getName());
 
 }
 

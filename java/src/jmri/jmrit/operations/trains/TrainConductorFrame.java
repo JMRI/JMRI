@@ -1,11 +1,11 @@
 // TrainConductorFrame.java
 package jmri.jmrit.operations.trains;
 
-import java.awt.Dimension;
+import jmri.jmrit.operations.trains.tools.ShowCarsInTrainAction;
 
+import java.awt.Dimension;
 import javax.swing.JMenu;
 import javax.swing.JMenuBar;
-
 import jmri.jmrit.operations.OperationsFrame;
 import jmri.jmrit.operations.setup.Control;
 

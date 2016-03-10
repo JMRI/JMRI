@@ -122,6 +122,6 @@ public class EngineManagerXml extends OperationsXml {
     }
 
 
-    static Logger log = LoggerFactory.getLogger(EngineManagerXml.class.getName());
+    private final static Logger log = LoggerFactory.getLogger(EngineManagerXml.class.getName());
 
 }

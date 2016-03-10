@@ -34,7 +34,7 @@ public class JsonOperationsServer extends AbstractOperationsServer {
 
     private final JmriConnection connection;
     private final ObjectMapper mapper;
-    static Logger log = LoggerFactory.getLogger(JsonOperationsServer.class);
+    private final static Logger log = LoggerFactory.getLogger(JsonOperationsServer.class);
 
     public JsonOperationsServer(JmriConnection connection) {
         super();
@@ -140,7 +140,7 @@ public class JsonOperationsServer extends AbstractOperationsServer {
         }
     }
 
-    void parseTrainRequest(Locale locale, JsonNode data) throws IOException, JsonException {
+    public void parseTrainRequest(Locale locale, JsonNode data) throws IOException, JsonException {
         String id = data.path(ID).asText();
         if (!data.path(METHOD).isMissingNode()) {
             JsonUtil.setTrain(locale, id, data);

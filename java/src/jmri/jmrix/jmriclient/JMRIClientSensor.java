@@ -111,7 +111,7 @@ public class JMRIClientSensor extends AbstractSensor implements JMRIClientListen
     public void message(JMRIClientMessage m) {
     }
 
-    static Logger log = LoggerFactory.getLogger(JMRIClientSensor.class.getName());
+    private final static Logger log = LoggerFactory.getLogger(JMRIClientSensor.class.getName());
 
 }
 

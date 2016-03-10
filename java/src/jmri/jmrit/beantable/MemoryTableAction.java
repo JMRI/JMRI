@@ -50,7 +50,7 @@ public class MemoryTableAction extends AbstractTableAction {
     }
 
     public MemoryTableAction() {
-        this("Memory Table");
+        this(Bundle.getMessage("TitleMemoryTable"));
     }
 
     /**
@@ -135,7 +135,7 @@ public class MemoryTableAction extends AbstractTableAction {
             }
 
             public JButton configureButton() {
-                BeanTableDataModel.log.error("configureButton should not have been called");
+                log.error("configureButton should not have been called");
                 return null;
             }
 
@@ -266,7 +266,7 @@ public class MemoryTableAction extends AbstractTableAction {
         return MemoryTableAction.class.getName();
     }
 
-    static final Logger log = LoggerFactory.getLogger(MemoryTableAction.class.getName());
+    private final static Logger log = LoggerFactory.getLogger(MemoryTableAction.class.getName());
 }
 
 /* @(#)MemoryTableAction.java */

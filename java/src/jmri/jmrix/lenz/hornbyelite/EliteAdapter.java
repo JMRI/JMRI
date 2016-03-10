@@ -295,7 +295,7 @@ public class EliteAdapter extends XNetSerialPortController implements jmri.jmrix
      * Get an array of valid baud rates. This is currently just a message saying
      * its fixed
      */
-    @edu.umd.cs.findbugs.annotations.SuppressWarnings(value = "EI_EXPOSE_REP") // OK to expose array instead of copy until Java 1.6
+    @edu.umd.cs.findbugs.annotations.SuppressFBWarnings(value = "EI_EXPOSE_REP") // OK to expose array instead of copy until Java 1.6
     public String[] validBaudRates() {
         return validSpeeds;
     }
@@ -304,7 +304,7 @@ public class EliteAdapter extends XNetSerialPortController implements jmri.jmrix
      * Option 1 controls flow control option
      */
     /*public String option1Name() { return "Elite connection uses "; }
-     @edu.umd.cs.findbugs.annotations.SuppressWarnings(value="EI_EXPOSE_REP") // OK to expose array instead of copy until Java 1.6
+     @edu.umd.cs.findbugs.annotations.SuppressFBWarnings(value="EI_EXPOSE_REP") // OK to expose array instead of copy until Java 1.6
      public String[] validOption1() { return validOption1; }*/
     protected String[] validSpeeds = new String[]{"9,600 baud", "19,200 baud", "38,400 baud", "57,600 baud", "115,200 baud"};
     protected int[] validSpeedValues = new int[]{9600, 19200, 38400, 57600, 115200};
@@ -324,6 +324,6 @@ public class EliteAdapter extends XNetSerialPortController implements jmri.jmrix
 
     static volatile EliteAdapter mInstance = null;
 
-    static Logger log = LoggerFactory.getLogger(EliteAdapter.class.getName());
+    private final static Logger log = LoggerFactory.getLogger(EliteAdapter.class.getName());
 
 }

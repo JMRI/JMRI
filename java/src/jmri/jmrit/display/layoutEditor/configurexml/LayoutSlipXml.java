@@ -285,5 +285,5 @@ public class LayoutSlipXml extends AbstractXmlAdapter {
         return "";
     }
 
-    static Logger log = LoggerFactory.getLogger(LayoutSlipXml.class.getName());
+    private final static Logger log = LoggerFactory.getLogger(LayoutSlipXml.class.getName());
 }

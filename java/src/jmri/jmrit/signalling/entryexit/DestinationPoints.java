@@ -158,7 +158,7 @@ public class DestinationPoints extends jmri.implementation.AbstractNamedBean {
         }
     }
 
-    @edu.umd.cs.findbugs.annotations.SuppressWarnings(value = "SE_TRANSIENT_FIELD_NOT_RESTORED",
+    @edu.umd.cs.findbugs.annotations.SuppressFBWarnings(value = "SE_TRANSIENT_FIELD_NOT_RESTORED",
             justification = "No auto serialization")
     transient protected PropertyChangeListener propertyBlockListener;
 
@@ -1157,6 +1157,6 @@ public class DestinationPoints extends jmri.implementation.AbstractNamedBean {
 
     }
 
-    static Logger log = LoggerFactory.getLogger(DestinationPoints.class.getName());
+    private final static Logger log = LoggerFactory.getLogger(DestinationPoints.class.getName());
 
 }

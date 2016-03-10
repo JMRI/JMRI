@@ -3,8 +3,6 @@ package jmri.jmrix.openlcb;
 import junit.framework.Test;
 import junit.framework.TestCase;
 import junit.framework.TestSuite;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 
 /**
  * OlcbSystemConnectionMemoTest.java
@@ -46,5 +44,4 @@ public class OlcbSystemConnectionMemoTest extends TestCase {
     protected void tearDown() {
         apps.tests.Log4JFixture.tearDown();
     }
-    static Logger log = LoggerFactory.getLogger(OlcbSystemConnectionMemoTest.class.getName());
 }

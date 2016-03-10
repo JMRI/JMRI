@@ -34,7 +34,7 @@ public class DCCppSensorManagerXml extends jmri.managers.configurexml.AbstractSe
         return loadSensors(sensors);
     }
 
-    static Logger log = LoggerFactory.getLogger(DCCppTurnoutManagerXml.class.getName());
+    private final static Logger log = LoggerFactory.getLogger(DCCppTurnoutManagerXml.class.getName());
 
     @Override
     public boolean load(Element sharedSensors, Element perNodeSensors) throws JmriConfigureXmlException {

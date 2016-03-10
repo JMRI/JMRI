@@ -371,7 +371,7 @@ public class NceConsist extends jmri.implementation.DccConsist implements jmri.j
             // not used
         }
 
-        @edu.umd.cs.findbugs.annotations.SuppressWarnings(value = "NN_NAKED_NOTIFY") // notify not naked
+        @edu.umd.cs.findbugs.annotations.SuppressFBWarnings(value = "NN_NAKED_NOTIFY") // notify not naked
         public void reply(NceReply r) {
             if (_busy == 0) {
                 log.debug("Consist " + _consistNum + " read reply not for this consist");
@@ -478,6 +478,6 @@ public class NceConsist extends jmri.implementation.DccConsist implements jmri.j
         }
     }
 
-    static Logger log = LoggerFactory.getLogger(NceConsist.class.getName());
+    private final static Logger log = LoggerFactory.getLogger(NceConsist.class.getName());
 
 }

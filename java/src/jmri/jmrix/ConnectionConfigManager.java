@@ -57,9 +57,10 @@ public class ConnectionConfigManager extends AbstractPreferencesProvider impleme
                     // Normal if the profile has not been used on this computer
                     log.info("No local configuration found.");
                     log.debug("Null pointer thrown reading local configuration.", ex);
+                    // TODO: notify user
                 }
                 for (Element shared : sharedConnections.getChildren(CONNECTION)) {
-                    Element perNode = null;
+                    Element perNode = shared;
                     String className = shared.getAttributeValue(CLASS);
                     String userName = shared.getAttributeValue(USER_NAME, "");
                     String systemName = shared.getAttributeValue(SYSTEM_NAME, "");

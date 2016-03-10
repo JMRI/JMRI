@@ -209,7 +209,7 @@ abstract public class AbstractRosterItemAction extends jmri.util.swing.JmriAbstr
     }
 
     // initialize logging
-    static Logger log
+    private final static Logger log
             = LoggerFactory.getLogger(AbstractRosterItemAction.class.getName());
 
 }

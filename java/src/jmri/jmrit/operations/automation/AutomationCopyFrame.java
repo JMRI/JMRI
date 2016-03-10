@@ -27,7 +27,7 @@ public class AutomationCopyFrame extends OperationsFrame {
 
     // labels
     // text field
-    javax.swing.JTextField automationNameTextField = new javax.swing.JTextField(Control.max_len_string_train_name);
+    javax.swing.JTextField automationNameTextField = new javax.swing.JTextField(Control.max_len_string_automation_name);
 
     // major buttons
     javax.swing.JButton copyButton = new javax.swing.JButton(Bundle.getMessage("Copy"));
@@ -124,9 +124,9 @@ public class AutomationCopyFrame extends OperationsFrame {
                     .getMessage("CanNotCopyAutomation"), JOptionPane.ERROR_MESSAGE);
             return false;
         }
-        if (automationNameTextField.getText().length() > Control.max_len_string_train_name) {
+        if (automationNameTextField.getText().length() > Control.max_len_string_automation_name) {
             JOptionPane.showMessageDialog(this, MessageFormat.format(Bundle.getMessage("AutomationNameLengthMax"),
-                    new Object[]{Control.max_len_string_train_name}), Bundle
+                    new Object[]{Control.max_len_string_automation_name}), Bundle
                             .getMessage("CanNotCopyAutomation"), JOptionPane.ERROR_MESSAGE);
             return false;
         }
@@ -137,5 +137,5 @@ public class AutomationCopyFrame extends OperationsFrame {
         super.dispose();
     }
 
-    static Logger log = LoggerFactory.getLogger(AutomationCopyFrame.class.getName());
+    private final static Logger log = LoggerFactory.getLogger(AutomationCopyFrame.class.getName());
 }

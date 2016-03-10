@@ -136,5 +136,5 @@ public class SimpleServer extends JmriServer {
         }
         inputScanner.close();
     }
-    static Logger log = LoggerFactory.getLogger(SimpleServer.class.getName());
+    private final static Logger log = LoggerFactory.getLogger(SimpleServer.class.getName());
 }

@@ -310,6 +310,6 @@ public class CanSendPane extends jmri.jmrix.can.swing.CanPanel implements CanLis
                     jmri.InstanceManager.getDefault(CanSystemConnectionMemo.class));
         }
     }
-    static Logger log = LoggerFactory.getLogger(CanSendPane.class.getName());
+    private final static Logger log = LoggerFactory.getLogger(CanSendPane.class.getName());
 
 }

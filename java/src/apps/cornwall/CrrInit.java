@@ -101,7 +101,7 @@ public class CrrInit extends jmri.jmrit.automat.AbstractAutomaton {
     }
 
     // initialize logging
-    static Logger log = LoggerFactory.getLogger(CrrInit.class.getName());
+    private final static Logger log = LoggerFactory.getLogger(CrrInit.class.getName());
 
 }
 

@@ -5,8 +5,6 @@ import java.io.File;
 import java.io.IOException;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 
 /**
  * Action to import the CV values from a LokProgrammer CV list file.
@@ -31,6 +29,4 @@ public class LokProgImportAction extends GenericImportAction {
                 return false;
             }
     }
-    
-    static Logger log = LoggerFactory.getLogger(LokProgImportAction.class.getName());
 }

@@ -330,5 +330,5 @@ public class EnginesTableFrame extends OperationsFrame implements PropertyChange
         }
     }
 
-    static Logger log = LoggerFactory.getLogger(EnginesTableFrame.class.getName());
+    private final static Logger log = LoggerFactory.getLogger(EnginesTableFrame.class.getName());
 }

@@ -139,6 +139,6 @@ public class StoreXmlVSDecoderAction extends AbstractAction {
     }
 
     // initialize logging
-    static Logger log = LoggerFactory.getLogger(StoreXmlVSDecoderAction.class.getName());
+    private final static Logger log = LoggerFactory.getLogger(StoreXmlVSDecoderAction.class.getName());
 
 }

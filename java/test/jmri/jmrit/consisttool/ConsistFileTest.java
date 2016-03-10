@@ -5,8 +5,6 @@ import junit.framework.Assert;
 import junit.framework.Test;
 import junit.framework.TestCase;
 import junit.framework.TestSuite;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 
 /**
  * Test simple functioning of ConsistFile
@@ -37,7 +35,5 @@ public class ConsistFileTest extends TestCase {
         TestSuite suite = new TestSuite(ConsistFileTest.class);
         return suite;
     }
-
-    static Logger log = LoggerFactory.getLogger(ConsistFileTest.class.getName());
 
 }

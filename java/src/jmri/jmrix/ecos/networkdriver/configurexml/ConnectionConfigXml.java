@@ -6,8 +6,6 @@ import jmri.jmrix.ecos.EcosPreferences;
 import jmri.jmrix.ecos.networkdriver.ConnectionConfig;
 import jmri.jmrix.ecos.networkdriver.NetworkDriverAdapter;
 import org.jdom2.Element;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 
 /**
  * Handle XML persistance of layout connections by persistening the
@@ -120,8 +118,8 @@ public class ConnectionConfigXml extends AbstractNetworkConnectionConfigXml {
     }
 
     @Override
-    protected void unpackElement(Element e) {
-        List<Element> ecosPref = e.getChildren("commandStationPreferences");
+    protected void unpackElement(Element shared, Element perNode) {
+        List<Element> ecosPref = shared.getChildren("commandStationPreferences");
         EcosPreferences p = ((jmri.jmrix.ecos.EcosSystemConnectionMemo) adapter.getSystemConnectionMemo()).getPreferenceManager();
         for (int i = 0; i < ecosPref.size(); i++) {
             if (ecosPref.get(i).getAttribute("addTurnoutToCS") != null) {
@@ -260,8 +258,5 @@ public class ConnectionConfigXml extends AbstractNetworkConnectionConfigXml {
     protected void register() {
         this.register(new ConnectionConfig(adapter));
     }
-
-    // initialize logging
-    static Logger log = LoggerFactory.getLogger(ConnectionConfigXml.class.getName());
 
 }

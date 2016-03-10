@@ -2,8 +2,6 @@ package jmri.jmrix.can.adapters.gridconnect.net.configurexml;
 
 import jmri.jmrix.can.adapters.gridconnect.net.MergConnectionConfig;
 import jmri.jmrix.can.adapters.gridconnect.net.MergNetworkDriverAdapter;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 
 /**
  * Handle XML persistance of layout connections by persistening the
@@ -37,8 +35,5 @@ public class MergConnectionConfigXml extends ConnectionConfigXml {
     protected void register() {
         this.register(new MergConnectionConfig(adapter));
     }
-
-    // initialize logging
-    static Logger log = LoggerFactory.getLogger(MergConnectionConfigXml.class.getName());
 
 }

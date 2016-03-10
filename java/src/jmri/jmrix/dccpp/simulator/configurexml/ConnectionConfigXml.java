@@ -5,8 +5,6 @@ import jmri.jmrix.configurexml.AbstractConnectionConfigXml;
 import jmri.jmrix.dccpp.simulator.ConnectionConfig;
 import jmri.jmrix.dccpp.simulator.DCCppSimulatorAdapter;
 import org.jdom2.Element;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 
 /**
  * Handle XML persistence of layout connections by persisting the
@@ -61,7 +59,7 @@ public class ConnectionConfigXml extends AbstractConnectionConfigXml {
         register();
 
         if (adapter.getDisabled()) {
-            unpackElement(shared);
+            unpackElement(shared, perNode);
             return result;
         }
 
@@ -84,8 +82,5 @@ public class ConnectionConfigXml extends AbstractConnectionConfigXml {
     protected void register() {
         this.register(new ConnectionConfig(adapter));
     }
-
-    // initialize logging
-    static Logger log = LoggerFactory.getLogger(ConnectionConfigXml.class.getName());
 
 }

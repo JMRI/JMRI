@@ -3,8 +3,6 @@ package jmri.jmrix.srcp.networkdriver;
 
 import jmri.jmrix.srcp.SRCPPortController;
 import jmri.jmrix.srcp.SRCPTrafficController;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 
 /*import java.io.*;
  import java.net.*;
@@ -76,7 +74,5 @@ public class NetworkDriverAdapter extends SRCPPortController implements jmri.jmr
         return mInstance;
     }
     static NetworkDriverAdapter mInstance = null;
-
-    static Logger log = LoggerFactory.getLogger(NetworkDriverAdapter.class.getName());
 
 }

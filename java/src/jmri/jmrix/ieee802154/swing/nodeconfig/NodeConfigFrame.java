@@ -503,6 +503,6 @@ public class NodeConfigFrame extends jmri.util.JmriJFrame {
         nodeAddr64Field.setSelectedIndex(nodeAddrField.getSelectedIndex());
     }
 
-    static Logger log = LoggerFactory.getLogger(NodeConfigFrame.class.getName());
+    private final static Logger log = LoggerFactory.getLogger(NodeConfigFrame.class.getName());
 
 }

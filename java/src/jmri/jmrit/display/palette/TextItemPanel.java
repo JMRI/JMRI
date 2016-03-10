@@ -152,5 +152,5 @@ public class TextItemPanel extends ItemPanel /*implements ActionListener */ {
         }
     }
 
-    static Logger log = LoggerFactory.getLogger(TextItemPanel.class.getName());
+    private final static Logger log = LoggerFactory.getLogger(TextItemPanel.class.getName());
 }

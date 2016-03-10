@@ -156,7 +156,7 @@ public class OlcbSensor extends AbstractSensor implements CanListener {
         super.dispose();
     }
 
-    static Logger log = LoggerFactory.getLogger(OlcbSensor.class.getName());
+    private final static Logger log = LoggerFactory.getLogger(OlcbSensor.class.getName());
 
 }
 

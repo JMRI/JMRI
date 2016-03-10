@@ -4,8 +4,6 @@ import jmri.jmrix.AbstractMRReply;
 import junit.framework.Test;
 import junit.framework.TestCase;
 import junit.framework.TestSuite;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 
 /**
  * Tests for the SeeedStudioRfidProtocol class
@@ -151,7 +149,5 @@ public class SeeedStudioRfidProtocolTest extends TestCase {
         super.tearDown();
         apps.tests.Log4JFixture.tearDown();
     }
-
-    static Logger log = LoggerFactory.getLogger(SeeedStudioRfidProtocolTest.class.getName());
 
 }

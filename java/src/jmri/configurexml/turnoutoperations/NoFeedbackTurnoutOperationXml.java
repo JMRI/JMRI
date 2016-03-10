@@ -38,5 +38,5 @@ public class NoFeedbackTurnoutOperationXml extends CommonTurnoutOperationXml {
         }
     }
 
-    static Logger log = LoggerFactory.getLogger(NoFeedbackTurnoutOperation.class.getName());
+    private final static Logger log = LoggerFactory.getLogger(NoFeedbackTurnoutOperation.class.getName());
 }

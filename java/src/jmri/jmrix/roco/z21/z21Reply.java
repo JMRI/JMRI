@@ -2,8 +2,6 @@
 package jmri.jmrix.roco.z21;
 
 import jmri.jmrix.AbstractMRReply;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 
 /**
  * class for replies in the z21/Z21 protocol.
@@ -86,8 +84,6 @@ public class z21Reply extends AbstractMRReply {
         }
         return xnr;
     }
-
-    static Logger log = LoggerFactory.getLogger(z21Reply.class.getName());
 
 }
 

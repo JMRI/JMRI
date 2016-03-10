@@ -407,6 +407,7 @@ public class LayoutBlock extends AbstractNamedBean implements java.beans.Propert
                                         "Would you like to update all memory icons on the panel linked to the block to use the new one?",
                                         "Update Memory Icons",
                                         JOptionPane.YES_NO_OPTION);
+                                        //TODO I18N in Bundle.properties
                                 found = true;
                                 if (n == 0) {
                                     updateall = true;
@@ -861,6 +862,7 @@ public class LayoutBlock extends AbstractNamedBean implements java.beans.Propert
     JTextField metricField = new JTextField(10);
     JComboBox<String> senseBox = new JComboBox<String>();
     JCheckBox permissiveCheck = new JCheckBox("Permissive Working Allowed");
+    //TODO I18N in Bundle.properties
     int senseActiveIndex;
     int senseInactiveIndex;
     JComboBox<String> trackColorBox = new JComboBox<String>();
@@ -886,6 +888,7 @@ public class LayoutBlock extends AbstractNamedBean implements java.beans.Propert
     }
 
     String[] working = {"Bi-Directional", "Recieve Only", "Send Only"};
+    //TODO I18N in ManagersBundle.properties
 
     ArrayList<JComboBox<String>> neighbourDir;
 
@@ -2322,7 +2325,7 @@ public class LayoutBlock extends AbstractNamedBean implements java.beans.Propert
      * if the reverse path is required, then this need to be added seperately.
      */
     //Was public
-    @edu.umd.cs.findbugs.annotations.SuppressWarnings(value = "DLS_DEAD_LOCAL_STORE")
+    @edu.umd.cs.findbugs.annotations.SuppressFBWarnings(value = "DLS_DEAD_LOCAL_STORE")
     void addThroughPath(Block srcBlock, Block dstBlock, LayoutEditor panel) {
         //Reset connectivity flag.
         layoutConnectivity = true;
@@ -4339,6 +4342,6 @@ public class LayoutBlock extends AbstractNamedBean implements java.beans.Propert
         return Bundle.getMessage("BeanNameLayoutBlock");
     }
 
-    static Logger log = LoggerFactory.getLogger(LayoutBlock.class.getName());
+    private final static Logger log = LoggerFactory.getLogger(LayoutBlock.class.getName());
 
 }

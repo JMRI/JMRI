@@ -137,7 +137,7 @@ public class z21SimulatorAdapter extends z21Adapter implements Runnable {
     // incoming XNetMessage into an outgoing XNetReply.
     @SuppressWarnings("fallthrough")
     private z21Reply generateReply(z21Message m) throws Exception {
-        log.error("generate Reply called");
+        log.debug("generate Reply called with message {}",m);
         z21Reply reply;
         switch (m.getOpCode()) {
              case 0x0010:
@@ -151,6 +151,7 @@ public class z21SimulatorAdapter extends z21Adapter implements Runnable {
              case 0x0040:
                 // XPressNet tunnel message.
                 XNetMessage xnm = getXNetMessage(m);
+                log.debug("Received XNet Message: " + m);
                 XNetReply xnr=xnetadapter.generateReply(xnm);
                 reply = getZ21ReplyFromXNet(xnr);
                 break;
@@ -250,6 +251,6 @@ public class z21SimulatorAdapter extends z21Adapter implements Runnable {
     }
 
 
-    static Logger log = LoggerFactory.getLogger(z21SimulatorAdapter.class.getName());
+    private final static Logger log = LoggerFactory.getLogger(z21SimulatorAdapter.class.getName());
 
 }

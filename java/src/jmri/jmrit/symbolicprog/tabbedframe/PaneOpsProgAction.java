@@ -119,7 +119,7 @@ public class PaneOpsProgAction extends AbstractAction {
         f.setVisible(true);
     }
 
-    static Logger log = LoggerFactory.getLogger(PaneOpsProgAction.class.getName());
+    private final static Logger log = LoggerFactory.getLogger(PaneOpsProgAction.class.getName());
 
 }
 

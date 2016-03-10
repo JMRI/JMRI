@@ -5,8 +5,6 @@ import javax.swing.Action;
 import javax.swing.JButton;
 import javax.swing.JToolBar;
 import org.jdom2.Element;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 
 /**
  * Common utility methods for working with JToolBars.
@@ -48,6 +46,4 @@ public class JToolBarUtil extends GuiUtilBase {
         return retval;
 
     }
-
-    static Logger log = LoggerFactory.getLogger(JToolBarUtil.class.getName());
 }

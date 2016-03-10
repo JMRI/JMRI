@@ -3,8 +3,6 @@ package jmri.jmrix.dccpp.serial.configurexml;
 import jmri.jmrix.dccpp.configurexml.AbstractDCCppSerialConnectionConfigXml;
 import jmri.jmrix.dccpp.serial.ConnectionConfig;
 import jmri.jmrix.dccpp.serial.DCCppAdapter;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 
 /**
  * Handle XML persistance of layout connections by persistening the DCC++ serial adapter
@@ -41,8 +39,5 @@ public class ConnectionConfigXml extends AbstractDCCppSerialConnectionConfigXml 
     protected void register() {
         this.register(new ConnectionConfig(adapter));
     }
-
-    // initialize logging
-    static Logger log = LoggerFactory.getLogger(ConnectionConfigXml.class.getName());
 
 }

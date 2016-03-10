@@ -99,5 +99,5 @@ public class IndexedComboCheckBox extends JCheckBox {
     }
 
     // initialize logging
-    static Logger log = LoggerFactory.getLogger(IndexedComboCheckBox.class.getName());
+    private final static Logger log = LoggerFactory.getLogger(IndexedComboCheckBox.class.getName());
 }

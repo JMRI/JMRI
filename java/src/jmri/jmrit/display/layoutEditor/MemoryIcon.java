@@ -17,7 +17,7 @@ import org.slf4j.LoggerFactory;
 // hard to disentangle that now because it's resident in the
 // panel file that have been written out, so we just annote 
 // the fact.
-@edu.umd.cs.findbugs.annotations.SuppressWarnings(value = "NM_SAME_SIMPLE_NAME_AS_SUPERCLASS")
+@edu.umd.cs.findbugs.annotations.SuppressFBWarnings(value = "NM_SAME_SIMPLE_NAME_AS_SUPERCLASS")
 public class MemoryIcon extends jmri.jmrit.display.MemoryIcon {
 
     /**
@@ -234,5 +234,5 @@ public class MemoryIcon extends jmri.jmrit.display.MemoryIcon {
         return updateBlockValue;
     }
 
-    static Logger log = LoggerFactory.getLogger(MemoryIcon.class.getName());
+    private final static Logger log = LoggerFactory.getLogger(MemoryIcon.class.getName());
 }

@@ -125,7 +125,7 @@ public class RpsSensor extends AbstractSensor
     public void requestUpdateFromLayout() {
     }
 
-    static Logger log = LoggerFactory.getLogger(RpsSensor.class.getName());
+    private final static Logger log = LoggerFactory.getLogger(RpsSensor.class.getName());
 
 }
 

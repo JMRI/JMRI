@@ -9,21 +9,26 @@
   <node>
     <name>DecoderPro</name>
     <name xml:lang="it">DecoderPro</name>
+    <name xml:lang="de">DecoderPro</name>
   <node>
     <name>Read All</name>
     <name xml:lang="it">Leggi Tutto</name>
+    <name xml:lang="de">Lese alles</name>
   </node>
   <node>
     <name>Write All</name>
     <name xml:lang="it">Scrivi Tutto</name>
+    <name xml:lang="de">Schreibe alles</name>
   </node>
   <node>
     <name>Read Changes</name>
     <name xml:lang="it">Leggi Modifiche</name>
+    <name xml:lang="de">Lese Änderungen</name>
   </node>
   <node>
     <name>Write Changes</name>
     <name xml:lang="it">Scrivi Modifiche</name>
+    <name xml:lang="de">Schreibe Änderungen</name>
   </node>
  </node>
 </nodes>

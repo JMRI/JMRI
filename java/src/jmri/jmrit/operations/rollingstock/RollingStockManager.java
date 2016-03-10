@@ -596,6 +596,6 @@ public class RollingStockManager {
         pcs.firePropertyChange(p, old, n);
     }
 
-    static Logger log = LoggerFactory.getLogger(RollingStockManager.class.getName());
+    private final static Logger log = LoggerFactory.getLogger(RollingStockManager.class.getName());
 
 }

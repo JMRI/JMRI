@@ -5,6 +5,8 @@ import java.io.DataInputStream;
 import java.io.DataOutputStream;
 import java.io.PipedInputStream;
 import java.io.PipedOutputStream;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 /**
  * Implementation of XNetPortController that eases
@@ -14,6 +16,8 @@ import java.io.PipedOutputStream;
  * @version $Revision$
  */
 class XNetPortControllerScaffold extends XNetSimulatorPortController {
+
+    private final static Logger log = LoggerFactory.getLogger(XNetPortControllerScaffold.class);
 
     public java.util.Vector<String> getPortNames() {
         return null;

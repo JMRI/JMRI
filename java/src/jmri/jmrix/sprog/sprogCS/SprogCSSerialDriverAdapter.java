@@ -62,7 +62,7 @@ public class SprogCSSerialDriverAdapter
     }
     static volatile SprogCSSerialDriverAdapter mInstance = null;
 
-    @edu.umd.cs.findbugs.annotations.SuppressWarnings(value = "ST_WRITE_TO_STATIC_FROM_INSTANCE_METHOD",
+    @edu.umd.cs.findbugs.annotations.SuppressFBWarnings(value = "ST_WRITE_TO_STATIC_FROM_INSTANCE_METHOD",
             justification = "temporary until mult-system; only set when disposed")
     @Override
     public void dispose() {
@@ -70,7 +70,7 @@ public class SprogCSSerialDriverAdapter
         mInstance = null;
     }
 
-    static Logger log = LoggerFactory.getLogger(SprogCSSerialDriverAdapter.class.getName());
+    private final static Logger log = LoggerFactory.getLogger(SprogCSSerialDriverAdapter.class.getName());
 
 }
 

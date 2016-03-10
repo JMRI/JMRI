@@ -81,7 +81,7 @@ public class SignalHeadTableAction extends AbstractTableAction {
     }
 
     public SignalHeadTableAction() {
-        this("Signal Table");
+        this(Bundle.getMessage("TitleSignalTable"));
     }
 
     /**
@@ -1406,7 +1406,7 @@ public class SignalHeadTableAction extends AbstractTableAction {
     }
 
     @SuppressWarnings("fallthrough")
-    @edu.umd.cs.findbugs.annotations.SuppressWarnings(value = "SF_SWITCH_FALLTHROUGH")
+    @edu.umd.cs.findbugs.annotations.SuppressFBWarnings(value = "SF_SWITCH_FALLTHROUGH")
     void handleMergSignalDriverOkPressed() {
         SignalHead s;
         // Adding Merg Signal Driver.
@@ -2001,7 +2001,7 @@ public class SignalHeadTableAction extends AbstractTableAction {
     }
 
     @SuppressWarnings("fallthrough")
-    @edu.umd.cs.findbugs.annotations.SuppressWarnings(value = "SF_SWITCH_FALLTHROUGH")
+    @edu.umd.cs.findbugs.annotations.SuppressFBWarnings(value = "SF_SWITCH_FALLTHROUGH")
     void updatePressed(ActionEvent e) {
         String nam = eUserName.getText();
         // check if user name changed
@@ -2483,6 +2483,6 @@ public class SignalHeadTableAction extends AbstractTableAction {
         }
     }
 
-    static final Logger log = LoggerFactory.getLogger(SignalHeadTableAction.class.getName());
+    private final static Logger log = LoggerFactory.getLogger(SignalHeadTableAction.class.getName());
 }
 /* @(#)SignalHeadTableAction.java */

@@ -37,7 +37,7 @@ public class ReportAction extends AbstractAction {
         }
         f.setVisible(true);
     }
-    static Logger log = LoggerFactory.getLogger(ReportFrame.class.getName());
+    private final static Logger log = LoggerFactory.getLogger(ReportFrame.class.getName());
 }
 
 /* @(#)ReportAction.java */

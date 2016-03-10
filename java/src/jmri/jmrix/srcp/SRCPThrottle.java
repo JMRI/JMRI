@@ -3,8 +3,6 @@ package jmri.jmrix.srcp;
 import jmri.DccLocoAddress;
 import jmri.LocoAddress;
 import jmri.jmrix.AbstractThrottle;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 
 /**
  * An implementation of DccThrottle with code specific to an SRCP connection.
@@ -102,13 +100,29 @@ public class SRCPThrottle extends AbstractThrottle {
     }
 
     /**
+     * Send the message to set the state of functions F13, F14, F15, F16, F17,
+     * F18, F19, and F20.
+     */
+    protected void sendFunctionGroup4() {
+        sendUpdate();
+    }
+
+    /**
+     * Send the message to set the state of functions F21, F22, F23, F24,
+     * F25, F26, F27 and F28.
+     */
+    protected void sendFunctionGroup5() {
+        sendUpdate();
+    }
+
+    /**
      * Set the speed & direction.
      * <P>
      * This intentionally skips the emergency stop value of 1.
      *
      * @param speed Number from 0 to 1; less than zero is emergency stop
      */
-    @edu.umd.cs.findbugs.annotations.SuppressWarnings(value = "FE_FLOATING_POINT_EQUALITY") // OK to compare floating point, notify on any change
+    @edu.umd.cs.findbugs.annotations.SuppressFBWarnings(value = "FE_FLOATING_POINT_EQUALITY") // OK to compare floating point, notify on any change
     public void setSpeedSetting(float speed) {
         float oldSpeed = this.speedSetting;
         this.speedSetting = speed;
@@ -198,6 +212,7 @@ public class SRCPThrottle extends AbstractThrottle {
                  break;
           case SpeedStepMode128:
           default:
+                 maxsteps = 126;
        }
     }
 
@@ -209,8 +224,5 @@ public class SRCPThrottle extends AbstractThrottle {
     protected void throttleDispose() {
         finishRecord();
     }
-
-    // initialize logging
-    static Logger log = LoggerFactory.getLogger(SRCPThrottle.class.getName());
 
 }

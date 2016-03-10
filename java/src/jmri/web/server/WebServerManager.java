@@ -23,7 +23,7 @@ public class WebServerManager {
     static private WebServerManager instance = null;
     private WebServerPreferences preferences;
     private WebServer server;
-    static Logger log = LoggerFactory.getLogger(WebServer.class.getName());
+    private final static Logger log = LoggerFactory.getLogger(WebServer.class.getName());
 
     private WebServerManager() {
         if (InstanceManager.getDefault(WebServerPreferences.class) == null) {
@@ -70,7 +70,7 @@ public class WebServerManager {
         return getInstance().getServer();
     }
 
-    @edu.umd.cs.findbugs.annotations.SuppressWarnings(value = "REC_CATCH_EXCEPTION",
+    @edu.umd.cs.findbugs.annotations.SuppressFBWarnings(value = "REC_CATCH_EXCEPTION",
             justification = "Catch is covering both JDOMException and IOException, FindBugs seems confused")
     private void preferencesFromMiniServerPreferences(File MSFile, File WSFile) {
         WebServerPreferences.WebServerPreferencesXml xmlFile = new WebServerPreferences.WebServerPreferencesXml();

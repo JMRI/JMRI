@@ -133,7 +133,7 @@ public class Dcc4PcMonPane extends jmri.jmrix.AbstractMonPane implements Dcc4PcL
         //We should be increasing our timeout
     }
 
-    static Logger log = LoggerFactory.getLogger(Dcc4PcMonPane.class.getName());
+    private final static Logger log = LoggerFactory.getLogger(Dcc4PcMonPane.class.getName());
 
 }
 

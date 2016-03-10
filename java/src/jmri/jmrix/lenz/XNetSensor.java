@@ -197,7 +197,7 @@ public class XNetSensor extends AbstractSensor implements XNetListener {
         return nibble;
     }
 
-    static Logger log = LoggerFactory.getLogger(XNetSensor.class.getName());
+    private final static Logger log = LoggerFactory.getLogger(XNetSensor.class.getName());
 
 }
 

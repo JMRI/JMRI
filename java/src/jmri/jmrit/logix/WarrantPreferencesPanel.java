@@ -862,5 +862,5 @@ public class WarrantPreferencesPanel extends JPanel implements PreferencesPanel,
         }
     }
     
-    private static Logger log = LoggerFactory.getLogger(WarrantPreferencesPanel.class.getName());
+    private final static Logger log = LoggerFactory.getLogger(WarrantPreferencesPanel.class.getName());
 }

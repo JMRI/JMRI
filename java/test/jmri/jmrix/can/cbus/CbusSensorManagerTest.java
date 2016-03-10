@@ -6,8 +6,6 @@ import jmri.jmrix.can.TestTrafficController;
 import junit.framework.Test;
 import junit.framework.TestCase;
 import junit.framework.TestSuite;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 
 /**
  * Tests for the jmri.jmrix.can.cbus.CbusSensorManager class.
@@ -41,8 +39,6 @@ public class CbusSensorManagerTest extends TestCase {
         TestSuite suite = new TestSuite(CbusSensorManagerTest.class);
         return suite;
     }
-
-    static Logger log = LoggerFactory.getLogger(CbusSensorManagerTest.class.getName());
 
     // The minimal setup for log4J
     protected void setUp() {

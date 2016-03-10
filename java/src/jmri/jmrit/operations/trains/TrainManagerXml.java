@@ -1,6 +1,8 @@
 // TrainManagerXml.java
 package jmri.jmrit.operations.trains;
 
+import jmri.jmrit.operations.trains.timetable.TrainScheduleManager;
+
 import java.io.File;
 import java.text.SimpleDateFormat;
 import jmri.jmrit.operations.OperationsManager;
@@ -292,9 +294,9 @@ public class TrainManagerXml extends OperationsXml {
                 String lastModified = new SimpleDateFormat("yyyyMMdd-HHmmss").format(file.lastModified());
                 String backupName = getBackupManifestFilename(name, lastModified); // NOI18N
                 if (file.renameTo(new File(backupName))) {
-                    log.debug("created new backup file {}", backupName);
+                    log.debug("created new manifest backup file {}", backupName);
                 } else {
-                    log.error("could not create backup file {}", backupName);
+                    log.error("could not create manifest backup file {}", backupName);
                 }
             }
         }
@@ -304,6 +306,6 @@ public class TrainManagerXml extends OperationsXml {
         _instance = null;
     }
 
-    static Logger log = LoggerFactory.getLogger(TrainManagerXml.class.getName());
+    private final static Logger log = LoggerFactory.getLogger(TrainManagerXml.class.getName());
 
 }

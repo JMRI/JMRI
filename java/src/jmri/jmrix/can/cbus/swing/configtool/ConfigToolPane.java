@@ -19,8 +19,6 @@ import jmri.jmrix.can.CanListener;
 import jmri.jmrix.can.CanSystemConnectionMemo;
 import jmri.jmrix.can.TrafficController;
 import jmri.jmrix.can.cbus.CbusMessage;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 
 /**
  * Pane to ease creation of Sensor, Turnouts and Lights that are linked to CBUS
@@ -149,8 +147,6 @@ public class ConfigToolPane extends jmri.jmrix.can.swing.CanPanel implements Can
         // disconnect from the CBUS
         tc.removeCanListener(this);
     }
-
-    static Logger log = LoggerFactory.getLogger(ConfigToolPane.class.getName());
 
     /**
      * Class to build one NamedBean

@@ -273,7 +273,7 @@ public class SprogReply extends AbstractMRReply {
         }
     }
 
-    static Logger log = LoggerFactory.getLogger(SprogReply.class.getName());
+    private final static Logger log = LoggerFactory.getLogger(SprogReply.class.getName());
 
 }
 

@@ -930,7 +930,7 @@ public class DefaultLogix extends AbstractNamedBean
         }
     }
 
-    static final Logger log = LoggerFactory.getLogger(DefaultLogix.class.getName());
+    private final static Logger log = LoggerFactory.getLogger(DefaultLogix.class.getName());
 }
 
 /* @(#)DefaultLogix.java */

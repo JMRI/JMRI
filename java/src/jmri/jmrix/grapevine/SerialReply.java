@@ -98,7 +98,7 @@ public class SerialReply extends jmri.jmrix.AbstractMRReply {
      * the Message method.
      */
     @SuppressWarnings("fallthrough")
-    @edu.umd.cs.findbugs.annotations.SuppressWarnings(value = "SF_SWITCH_FALLTHROUGH")
+    @edu.umd.cs.findbugs.annotations.SuppressFBWarnings(value = "SF_SWITCH_FALLTHROUGH")
     public String format() {
         int b1 = -1;
         int b2 = -1;
@@ -121,7 +121,7 @@ public class SerialReply extends jmri.jmrix.AbstractMRReply {
         return SerialMessage.staticFormat(b1, b2, b3, b4);
     }
 
-    static Logger log = LoggerFactory.getLogger(SerialReply.class.getName());
+    private final static Logger log = LoggerFactory.getLogger(SerialReply.class.getName());
 
 }
 

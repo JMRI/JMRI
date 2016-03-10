@@ -4,8 +4,6 @@ import jmri.DccLocoAddress;
 import jmri.DccThrottle;
 import jmri.LocoAddress;
 import jmri.jmrix.AbstractThrottle;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 
 /**
  * An implementation of DccThrottle with code specific to a SPROG Command
@@ -167,8 +165,5 @@ public class SprogCSThrottle extends AbstractThrottle {
         commandStation.release(address);
         finishRecord();
     }
-
-    // initialize logging
-    static Logger log = LoggerFactory.getLogger(SprogCSThrottle.class.getName());
 
 }

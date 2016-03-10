@@ -84,6 +84,6 @@ public class SecurityElementIconXml extends AbstractXmlAdapter {
         ed.putItem(l);
     }
 
-    static Logger log = LoggerFactory.getLogger(TurnoutIconXml.class.getName());
+    private final static Logger log = LoggerFactory.getLogger(TurnoutIconXml.class.getName());
 
 }

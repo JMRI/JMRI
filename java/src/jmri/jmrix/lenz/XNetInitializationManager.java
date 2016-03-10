@@ -140,6 +140,6 @@ public class XNetInitializationManager extends AbstractXNetInitializationManager
         }
     }
 
-    static Logger log = LoggerFactory.getLogger(XNetInitializationManager.class.getName());
+    private final static Logger log = LoggerFactory.getLogger(XNetInitializationManager.class.getName());
 
 }

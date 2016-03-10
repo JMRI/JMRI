@@ -7,7 +7,6 @@ import java.io.InputStreamReader;
 import java.io.OutputStream;
 import java.net.Socket;
 import java.util.LinkedList;
-import java.util.StringTokenizer;
 import jmri.InstanceManager;
 import jmri.jmrix.dccpp.DCCppSystemConnectionMemo;
 import jmri.jmrix.dccpp.DCCppTrafficController;
@@ -203,5 +202,5 @@ public final class ClientRxHandler extends Thread implements DCCppListener {
     public void notifyTimeout(DCCppMessage m) {
     }
 
-    static Logger log = LoggerFactory.getLogger(ClientRxHandler.class.getName());
+    private final static Logger log = LoggerFactory.getLogger(ClientRxHandler.class.getName());
 }

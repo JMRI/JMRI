@@ -1,5 +1,4 @@
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
-<!-- $Id$ -->
 <!-- UpDated  by Blorec Herv&#233; 2013-10-08-->
 <html lang="fr">
 <head>
@@ -7,7 +6,7 @@
       JMRI: Preferences Window
  </TITLE>
     <META http-equiv=Content-Type content="text/html; charset=iso-8859-1">
-    <META content="Bob Jacobsen" name=Author>
+    <META content="Bob Jacobsen" name="Author">
     <META name="keywords" content="JMRI help preferences">
 
 <!-- Style -->
@@ -24,15 +23,16 @@
   <div class="nomenu" id="mBody">
     <div id="mainContent">
 
-<H1>JMRI:Fen&#234;tre pr&#233;f&#233;rences</H1>
+<H1>JMRI:Fen&#234;tre Pr&#233;f&#233;rences</H1>
 
 La fen&#234;tre de pr&#233;f&#233;rences vous
-configure le fonctionnement de base de votre applicaton JMRI.
+configure le fonctionnement de base de votre application JMRI.
 <p>
 L'&#233;cran est divis&#233; en deux sections, sur le c&#244;t&#233; gauche est une liste des groupes de pr&#233;f&#233;rence qui peut &#234;tre r&#233;gl&#233;.
 Cliquer sur chaque pr&#233;f&#233;rence va ensuite remplir le c&#244;t&#233; droit, avec les diff&#233;rentes options qui peuvent &#234;tre configur&#233;es.
-<a href="../../manual/images/Preferences.png">
-<img src="../../manual/images/Preferences.png" height="156" width="256" align="right"></a>
+<a href="../../html/setup/images/PrefsConnexions_fr.png">
+<img src="../../html/setup/images/PrefsConnexions_fr.png" height="277" width="431
+" align="right"></a>
 <p>
 <a href="#Connection">Connexions</a><br>
 <a href="#Defaults">D&#233;fauts</a><br>
@@ -185,14 +185,13 @@ peut vous faire &#233;conomiser un peu de frappe. Elle n'a aucun effet sur les
 entr&#233;es existantes, m&#234;me si elle change.
 <p>
 
-
 </dl>
 
 <a name="Throttle">
 <h2>R&#233;gulateur</h2></a>
 
 Ce panneau de pr&#233;f&#233;rences vous permet de choisir si lesfonctions &#233;tendues du R&#233;gulateur
- sont disponibles, et celles qui peuvent &#234;tre utilis&#233;es
+sont disponibles, et celles qui peuvent &#234;tre utilis&#233;es
 
 <a name="WiThrottle"><h2>R&#233;gulateur WI</h2></a>
 
@@ -224,11 +223,9 @@ Cela vous permettra de limiter ce que les utilisateurs ont la possibilit&#233; d
 </ul>
 </dl>
 
-Le bouton "Appliquer" met les param&#232;tres actuels en vigueur, sans
-les enregistrer de fa&#231;on permanente. Pour qu'un r&#233;gulateur utilisz les
-nouveaux param&#232;tres, sa connexion doit &#234;tre ferm&#233; et r&#233;ouverte..
+Le bouton "Sauvegarder" met les param&#232;tres actuels en vigueur. Pour qu'un <a href="../jmri/jmrit/withrottle/UserInterface.shtml">r&#233;gulateur</a> utilise les
+nouveaux param&#232;tres, quittez et red\u00e9marrez JMRI.
 
 <!--#include virtual="/Footer" -->
 </body>
 </html>
-

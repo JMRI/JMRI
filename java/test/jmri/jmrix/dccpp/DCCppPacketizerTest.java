@@ -4,7 +4,6 @@ import junit.framework.Assert;
 import junit.framework.TestCase;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import jmri.util.JUnitAppender;
 
 /**
  * <p>
@@ -254,6 +253,6 @@ public class DCCppPacketizerTest extends TestCase {
         apps.tests.Log4JFixture.tearDown();
     }
 
-    static Logger log = LoggerFactory.getLogger(DCCppPacketizerTest.class.getName());
+    private final static Logger log = LoggerFactory.getLogger(DCCppPacketizerTest.class.getName());
 
 }

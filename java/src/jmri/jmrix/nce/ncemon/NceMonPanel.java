@@ -117,7 +117,7 @@ public class NceMonPanel extends jmri.jmrix.AbstractMonPane implements NceListen
         }
     }
 
-    static Logger log = LoggerFactory.getLogger(NceMonPanel.class.getName());
+    private final static Logger log = LoggerFactory.getLogger(NceMonPanel.class.getName());
 
 }
 

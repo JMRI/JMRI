@@ -142,7 +142,7 @@ public class BeanTableFrame extends jmri.util.JmriJFrame {
      * @param comp
      * @param c
      */
-    @edu.umd.cs.findbugs.annotations.SuppressWarnings(value = "UUF_UNUSED_FIELD",
+    @edu.umd.cs.findbugs.annotations.SuppressFBWarnings(value = "UUF_UNUSED_FIELD",
             justification = "param c is required in the listedtableframe")
     protected void addToBottomBox(Component comp, String c) {
         bottomBox.add(Box.createHorizontalStrut(bottomStrutWidth), bottomBoxIndex);
@@ -162,5 +162,5 @@ public class BeanTableFrame extends jmri.util.JmriJFrame {
         super.dispose();
     }
 
-    static Logger log = LoggerFactory.getLogger(BeanTableFrame.class.getName());
+    private final static Logger log = LoggerFactory.getLogger(BeanTableFrame.class.getName());
 }

@@ -15,6 +15,8 @@ import javax.swing.filechooser.FileNameExtensionFilter;
 import jmri.util.FileUtil;
 import jmri.util.swing.WindowInterface;
 import org.jdom2.Element;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 /**
  * Reload the JMRI Roster ({@link jmri.jmrit.roster.Roster}) from a file
@@ -32,6 +34,7 @@ public class FullBackupImportAction extends ImportRosterItemAction {
      * @author Bob Jacobsen Copyright 2014
      */
     private static final long serialVersionUID = 1L;
+    private final static Logger log = LoggerFactory.getLogger(FullBackupImportAction.class);
 
     //private Component _who;
     public FullBackupImportAction(String s, WindowInterface wi) {

@@ -18,7 +18,6 @@ import org.slf4j.LoggerFactory;
  * traffic.
  *
  * @author Bob Jacobsen Copyright (c) 2002
- * @version $Revision$
  */
 public class LightIcon extends PositionableLabel implements java.beans.PropertyChangeListener {
 
@@ -39,13 +38,13 @@ public class LightIcon extends PositionableLabel implements java.beans.PropertyC
     // the associated Light object
     Light light = null;
 
+    @Override
     public Positionable deepClone() {
         LightIcon pos = new LightIcon(_editor);
         return finishClone(pos);
     }
 
-    public Positionable finishClone(Positionable p) {
-        LightIcon pos = (LightIcon) p;
+    protected Positionable finishClone(LightIcon pos) {
         pos.setLight(getNameString());
         pos.setOffIcon(cloneIcon(getOffIcon(), pos));
         pos.setOnIcon(cloneIcon(getOnIcon(), pos));
@@ -329,5 +328,5 @@ public class LightIcon extends PositionableLabel implements java.beans.PropertyC
         super.dispose();
     }
 
-    static Logger log = LoggerFactory.getLogger(LightIcon.class.getName());
+    private final static Logger log = LoggerFactory.getLogger(LightIcon.class.getName());
 }

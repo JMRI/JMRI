@@ -88,6 +88,6 @@ public class TrafficControllerScaffold extends TrafficController {
         return cmdListeners.size();
     }
 
-    static Logger log = LoggerFactory.getLogger(TrafficControllerScaffold.class.getName());
+    private final static Logger log = LoggerFactory.getLogger(TrafficControllerScaffold.class.getName());
 
 }

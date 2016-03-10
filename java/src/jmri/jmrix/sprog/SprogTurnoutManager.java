@@ -2,8 +2,6 @@
 package jmri.jmrix.sprog;
 
 import jmri.Turnout;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 
 /**
  * Implement turnout manager for Sprog systems.
@@ -15,7 +13,7 @@ import org.slf4j.LoggerFactory;
  */
 public class SprogTurnoutManager extends jmri.managers.AbstractTurnoutManager {
 
-    @edu.umd.cs.findbugs.annotations.SuppressWarnings(value = "ST_WRITE_TO_STATIC_FROM_INSTANCE_METHOD")
+    @edu.umd.cs.findbugs.annotations.SuppressFBWarnings(value = "ST_WRITE_TO_STATIC_FROM_INSTANCE_METHOD")
     // Ignore FindBugs warnings as there can only be one instance at present
     public SprogTurnoutManager() {
         _instance = this;
@@ -45,8 +43,6 @@ public class SprogTurnoutManager extends jmri.managers.AbstractTurnoutManager {
         return _instance;
     }
     static SprogTurnoutManager _instance = null;
-
-    static Logger log = LoggerFactory.getLogger(SprogTurnoutManager.class.getName());
 
 }
 

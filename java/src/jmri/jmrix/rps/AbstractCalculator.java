@@ -75,7 +75,7 @@ public abstract class AbstractCalculator implements Calculator {
         }
     }
 
-    static Logger log = LoggerFactory.getLogger(AbstractCalculator.class.getName());
+    private final static Logger log = LoggerFactory.getLogger(AbstractCalculator.class.getName());
 
 }
 

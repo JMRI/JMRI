@@ -34,7 +34,7 @@ public abstract class AbstractMessage implements Message {
     }
 
     @SuppressWarnings("null")
-    @edu.umd.cs.findbugs.annotations.SuppressWarnings(value = "NP_NULL_ON_SOME_PATH",
+    @edu.umd.cs.findbugs.annotations.SuppressFBWarnings(value = "NP_NULL_ON_SOME_PATH",
             justification = "we want to force an exception")
     public AbstractMessage(AbstractMessage m) {
         if (m == null) {

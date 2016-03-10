@@ -30,7 +30,7 @@ import org.slf4j.LoggerFactory;
  */
 public class CsvImporter {
 
-    static Logger log = LoggerFactory.getLogger(CsvImporter.class.getName());
+    private final static Logger log = LoggerFactory.getLogger(CsvImporter.class.getName());
 
     public CsvImporter(File file, CvTableModel cvModel) throws IOException {
         try {

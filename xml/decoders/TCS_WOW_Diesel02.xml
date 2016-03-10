@@ -14,7 +14,9 @@
 <decoder-config xmlns:xi="http://www.w3.org/2001/XInclude" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="http://jmri.org/xml/schema/decoder.xsd">
 	<version author="Michael Mosher" version="1" lastUpdated="20150730"/>
 	<version author="Michael Mosher" version="2" lastUpdated="20150814"/>
+	<version author="Michael Mosher" version="3" lastUpdated="20160216"/>
 	<!-- new file, based on Wow diesel sound set 1 -->
+	<!-- V3 fix version ID for 501 model -->
 	<decoder>
 		<family name="WOW Diesel Sound Set 2" mfg="Train Control Systems" >
 			<model model="WOW Diesel 101 SS2" numOuts="6" numFns="14" maxMotorCurrent="1.3A (peak=2A)" connector="9pin"
@@ -46,7 +48,7 @@
 				<size length="1.28" width="0.69" height="0.22" units="inches"/>
 			</model>
 			<model model="WOW Diesel 501 SS2" numOuts="6" numFns="14" maxMotorCurrent="5A" formFactor="screw"
-				lowVersionID="3" highVersionID="3" productID="172">
+				lowVersionID="2" highVersionID="2" productID="172">
 				<output name="1" label="White" connection="solder" maxcurrent="100 mA"/>
 				<output name="2" label="Yellow" connection="solder" maxcurrent="100 mA"/>
 				<output name="3" label="Green" connection="solder" maxcurrent="100 mA"/>
@@ -1619,8 +1621,8 @@
 					<enumChoice choice="EMD 645 turbo"/>
 					<enumChoice choice="EMD 710 turbo"/>
 					<enumChoice choice="GE FDL16"/>
-					<enumChoice choice="GE 7FDL16 1"/>
-					<enumChoice choice="GE 7FDL16 2"/>
+					<enumChoice choice="GE 7FDL16 #1"/>
+					<enumChoice choice="GE 7FDL16 #2"/>
 				</enumVal>
 				<label>Primemover type</label>
 			</variable>

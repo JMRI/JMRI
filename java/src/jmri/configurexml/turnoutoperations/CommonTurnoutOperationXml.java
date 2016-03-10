@@ -73,5 +73,5 @@ public abstract class CommonTurnoutOperationXml extends TurnoutOperationXml {
         return result;
     }
 
-    static Logger log = LoggerFactory.getLogger(CommonTurnoutOperationXml.class.getName());
+    private final static Logger log = LoggerFactory.getLogger(CommonTurnoutOperationXml.class.getName());
 }

@@ -1590,5 +1590,5 @@ public class XNetThrottle extends AbstractThrottle implements XNetListener {
     }
 
     // register for notification
-    static Logger log = LoggerFactory.getLogger(XNetThrottle.class.getName());
+    private final static Logger log = LoggerFactory.getLogger(XNetThrottle.class.getName());
 }

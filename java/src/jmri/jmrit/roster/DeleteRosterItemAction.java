@@ -173,7 +173,7 @@ public class DeleteRosterItemAction extends JmriAbstractAction {
                         JOptionPane.YES_NO_OPTION));
     }
     // initialize logging
-    static Logger log = LoggerFactory.getLogger(DeleteRosterItemAction.class.getName());
+    private final static Logger log = LoggerFactory.getLogger(DeleteRosterItemAction.class.getName());
 
     // never invoked, because we overrode actionPerformed above
     @Override

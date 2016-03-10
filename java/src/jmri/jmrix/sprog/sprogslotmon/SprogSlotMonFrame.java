@@ -47,7 +47,7 @@ public class SprogSlotMonFrame extends jmri.util.JmriJFrame {
 
     JTextArea status = new JTextArea("Track Current: ---A");
 
-    @edu.umd.cs.findbugs.annotations.SuppressWarnings(value = "ST_WRITE_TO_STATIC_FROM_INSTANCE_METHOD")
+    @edu.umd.cs.findbugs.annotations.SuppressFBWarnings(value = "ST_WRITE_TO_STATIC_FROM_INSTANCE_METHOD")
     // Ignore FindBugs warnings as there can only be one instance at present
     public SprogSlotMonFrame() {
         super();
@@ -171,6 +171,6 @@ public class SprogSlotMonFrame extends jmri.util.JmriJFrame {
         super.dispose();
     }
 
-    static Logger log = LoggerFactory.getLogger(SprogSlotMonFrame.class.getName());
+    private final static Logger log = LoggerFactory.getLogger(SprogSlotMonFrame.class.getName());
 
 }

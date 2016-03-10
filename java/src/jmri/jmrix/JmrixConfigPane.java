@@ -400,7 +400,7 @@ public class JmrixConfigPane extends JPanel implements PreferencesPanel {
     }
 
     // initialize logging
-    static Logger log = LoggerFactory.getLogger(JmrixConfigPane.class);
+    private final static Logger log = LoggerFactory.getLogger(JmrixConfigPane.class);
 
     @Override
     public String getPreferencesItem() {

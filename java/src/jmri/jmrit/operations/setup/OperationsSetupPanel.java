@@ -44,7 +44,7 @@ public class OperationsSetupPanel extends OperationsPreferencesPanel implements 
      *
      */
     private static final long serialVersionUID = 7662835134616666932L;
-    static Logger log = LoggerFactory.getLogger(OperationsSetupFrame.class.getName());
+    private final static Logger log = LoggerFactory.getLogger(OperationsSetupFrame.class.getName());
 
     // labels
     JLabel textIconNorth = new JLabel(Bundle.getMessage("IconNorth"));

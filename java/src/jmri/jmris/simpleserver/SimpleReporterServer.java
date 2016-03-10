@@ -9,8 +9,6 @@ import jmri.JmriException;
 import jmri.Reporter;
 import jmri.jmris.AbstractReporterServer;
 import jmri.jmris.JmriConnection;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 
 /**
  * Simple Server interface between the JMRI reporter manager and a network
@@ -81,5 +79,4 @@ public class SimpleReporterServer extends AbstractReporterServer {
             this.connection.sendMessage(message);
         }
     }
-    static Logger log = LoggerFactory.getLogger(SimpleReporterServer.class.getName());
 }

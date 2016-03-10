@@ -16,8 +16,6 @@ import javax.swing.event.ChangeListener;
 import jmri.jmrit.catalog.NamedIcon;
 import jmri.jmrit.display.Editor;
 import jmri.util.JmriJFrame;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 
 /**
  * JPanels for the various item types that come from tool Tables - e.g. Sensors,
@@ -148,6 +146,4 @@ public class BackgroundItemPanel extends IconItemPanel {
             _preview.getParent().setBackground(_chooser.getColor());
         }
     }
-
-    static Logger log = LoggerFactory.getLogger(BackgroundItemPanel.class.getName());
 }

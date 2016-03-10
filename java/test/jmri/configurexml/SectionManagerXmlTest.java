@@ -550,7 +550,7 @@ public class SectionManagerXmlTest extends TestCase {
         return suite;
     }
     /*
-     static Logger log = LoggerFactory.getLogger(SectionManagerXmlTest.class.getName());
+    private final static Logger log = LoggerFactory.getLogger(SectionManagerXmlTest.class.getName());
 
      // The minimal setup for log4J
      protected void setUp() { apps.tests.Log4JFixture.setUp(); }

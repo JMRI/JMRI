@@ -67,5 +67,5 @@ public class PacketPro extends Apps {
         splash(false);
     }
 
-    static Logger log = LoggerFactory.getLogger(PacketPro.class.getName());
+    private final static Logger log = LoggerFactory.getLogger(PacketPro.class.getName());
 }

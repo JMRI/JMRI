@@ -56,31 +56,31 @@ public class Warrant extends jmri.implementation.AbstractNamedBean
     private BlockOrder _viaOrder;
     private BlockOrder _avoidOrder;
     private List<ThrottleSetting> _throttleCommands = new ArrayList<ThrottleSetting>();
-    private String _trainName;      // User train name for icon
+    protected String _trainName;      // User train name for icon
     private String _trainId;        // Roster Id
     private DccLocoAddress _dccAddress;
     private boolean _runBlind;              // don't use block detection
     boolean _debug;
 
     // transient members
-    private List<BlockOrder> _orders;       // temp orders used in run mode
+    protected List<BlockOrder> _orders;       // temp orders used in run mode
     private LearnThrottleFrame _student;    // need to callback learning throttle in learn mode
     private boolean _tempRunBlind;          // run mode flag
     private boolean _delayStart;            // allows start block unoccupied and wait for train
     protected List <ThrottleSetting> _commands;   // temp commands used in run mode
-    private int     _idxCurrentOrder;       // Index of block at head of train (if running)
-    private int     _idxLastOrder;          // Index of block at tail of train just left
+    protected int     _idxCurrentOrder;       // Index of block at head of train (if running)
+    protected int     _idxLastOrder;          // Index of block at tail of train just left
     private String  _curSpeedType;          // name of last moving speed, i.e. never "Stop"
     private int     _idxSpeedChange;        // Index of last BlockOrder where slower speed changes were scheduled
     private HashMap<String, BlockSpeedInfo> _speedTimeMap;          // map max speeds and occupation times of each block in route
 //    private String _exitSpeed;            // name of speed to exit the "protected" block
 
-    private int _runMode;
-    private Engineer _engineer;         // thread that runs the train
+    protected int _runMode;
+    protected Engineer _engineer;         // thread that runs the train
     private boolean _allocated;         // initial Blocks of _orders have been allocated
     private boolean _totalAllocated;    // All Blocks of _orders have been allocated
     private boolean _routeSet;          // all allocated Blocks of _orders have paths set for route
-    private OBlock _stoppingBlock;     // Block allocated to another warrant or a rouge train
+    protected OBlock _stoppingBlock;     // Block allocated to another warrant or a rouge train
     private NamedBean _stoppingSignal;  // Signal stopping train movement
     private OBlock _shareTOBlock;       // Block in another warrant that controls a turnout in this block
     private String _message;            // last message returned from an action
@@ -289,6 +289,18 @@ public class Warrant extends jmri.implementation.AbstractNamedBean
     /**
      * Call is only valid when in MODE_LEARN and MODE_RUN
      */
+    public String getCurrentBlockName() {
+        OBlock block = getBlockAt(_idxCurrentOrder);
+        if (block == null) {
+            return "";
+        } else {
+            return block.getDisplayName();
+        }
+    }
+    
+    /**
+     * Call is only valid when in MODE_LEARN and MODE_RUN
+     */
     private int getBlockStateAt(int idx) {
 
         OBlock b = getBlockAt(idx);
@@ -372,7 +384,11 @@ public class Warrant extends jmri.implementation.AbstractNamedBean
                 List<RosterEntry> l = Roster.instance().matchingList(null, null, numId, null, null, null, null);
                 if (l.size() > 0) {
                     _train = l.get(0);
-                    _trainId = _train.getId();
+                    if (_trainId == null) {
+                        // In some systems, such as Maerklin MFX or ESU ECOS M4, the DCC address is always 0.
+                        // That should not make us overwrite the _trainId.
+                        _trainId = _train.getId();
+                    }
                 } else {
                     _train = null;
                     _trainId = null;
@@ -744,7 +760,7 @@ public class Warrant extends jmri.implementation.AbstractNamedBean
         return null;
     }
 
-    private void abortWarrant(String msg) {
+    protected void abortWarrant(String msg) {
         _delayStart = false;
         log.error("Abort warrant \"" + getDisplayName() + "\" " + msg);
         stopWarrant(true);
@@ -925,8 +941,8 @@ public class Warrant extends jmri.implementation.AbstractNamedBean
             return msg;
         }
         OBlock block = getBlockAt(0);
-        msg = block.allocate(this);
-        if (msg!=null) {
+            msg = block.allocate(this);
+            if (msg!=null) {
             return msg;
         }
         // allocate all possible blocks
@@ -939,16 +955,18 @@ public class Warrant extends jmri.implementation.AbstractNamedBean
         for (int i = index; i < _orders.size(); i++) {
             BlockOrder bo = _orders.get(i);
             OBlock block = bo.getBlock();
-            _message = block.allocate(this);
+             if ((block.getState() & OBlock.OCCUPIED) > 0 && !stoppingBlockSet) {
+                setStoppingBlock(block);
+                stoppingBlockSet = true;
+                log.info(block.getDisplayName() + " not allocated, but Occupied.");
+                _totalAllocated = false;
+                return;
+             }
+           _message = block.allocate(this);
             if (_message != null) {
                 _totalAllocated = false;
                 return;
             }
-            if ((block.getState() & OBlock.OCCUPIED) > 0 && !stoppingBlockSet) {
-                setStoppingBlock(block);
-                stoppingBlockSet = true;
-                log.info(block.getDisplayName() + " allocated, but Occupied.");
-             }
             _allocated = true;      // partial allocation
         }
     }
@@ -969,6 +987,14 @@ public class Warrant extends jmri.implementation.AbstractNamedBean
             log.debug("deallocated Route for warrant \"" + getDisplayName() + "\".");
         }
 //        firePropertyChange("deallocate", Boolean.valueOf(old), Boolean.valueOf(false));
+    }
+    
+    /**
+     * Convenience routine to use from Python to start a warrant.
+     */
+    public void runWarrant(int RunMode) {
+        setRoute(0,null);
+        setRunMode(RunMode,null,null,null,false);
     }
 
     /**
@@ -1003,12 +1029,13 @@ public class Warrant extends jmri.implementation.AbstractNamedBean
             OBlock block = bo.getBlock();
             if ((block.getState() & OBlock.OCCUPIED) > 0) {
                 _message = Bundle.getMessage("BlockRougeOccupied", block.getDisplayName());
-                break;
+                _routeSet = false;
+                return null;
             }
             _message = bo.setPath(this);
             if (_message != null) {
                 _routeSet = false;
-                break;
+                return null;
             }
         }
 //        firePropertyChange("setRoute", Boolean.valueOf(false), Boolean.valueOf(_routeSet));
@@ -1232,7 +1259,7 @@ public class Warrant extends jmri.implementation.AbstractNamedBean
      *
      * @param block
      */
-    private void setStoppingBlock(OBlock block) {
+    protected void setStoppingBlock(OBlock block) {
         if (_runMode != MODE_RUN) {
             return;
         }
@@ -1455,7 +1482,7 @@ public class Warrant extends jmri.implementation.AbstractNamedBean
     /**
      * Deallocates all blocks prior to and including block
      */
-    private void releaseBlock(OBlock block, int idx) {
+    protected void releaseBlock(OBlock block, int idx) {
         /* Only deallocate block if train will not use the  block again.  Blocks ahead could loop back over
          * blocks previously traversed.  That is, don't disturb re-allocation of blocks ahead.
          * Previous Dark blocks do need deallocation
@@ -1781,9 +1808,9 @@ public class Warrant extends jmri.implementation.AbstractNamedBean
     /**
      * build map of BlockSpeedInfo's for the route.
      * 
-     * @return max speed and time in block's first occurrence after current command index
+     * Put max speed and time in block's first occurrence after current command index
      */
-    private void getBlockSpeedTimes() {
+    protected void getBlockSpeedTimes() {
         _speedTimeMap =  new HashMap<String, BlockSpeedInfo>();
         String blkName = null;
         float firstSpeed = 0.0f;    // used for entrance
@@ -1961,5 +1988,5 @@ public class Warrant extends jmri.implementation.AbstractNamedBean
         }
     }
     
-    static Logger log = LoggerFactory.getLogger(Warrant.class.getName());
+    private final static Logger log = LoggerFactory.getLogger(Warrant.class.getName());
 }

@@ -23,7 +23,6 @@ import org.slf4j.LoggerFactory;
  * what it finds.
  * <P>
  * @author Pete Cressman Copyright (c) 2009
- * @version $Revision$
  * @since 2.7.2
  */
 public class MemoryInputIcon extends PositionableJPanel implements java.beans.PropertyChangeListener {
@@ -59,13 +58,13 @@ public class MemoryInputIcon extends PositionableJPanel implements java.beans.Pr
         setPopupUtility(new PositionablePopupUtil(this, _textBox));
     }
 
+    @Override
     public Positionable deepClone() {
         MemoryInputIcon pos = new MemoryInputIcon(_nCols, _editor);
         return finishClone(pos);
     }
 
-    public Positionable finishClone(Positionable p) {
-        MemoryInputIcon pos = (MemoryInputIcon) p;
+    protected Positionable finishClone(MemoryInputIcon pos) {
         pos.setMemory(namedMemory.getName());
         return super.finishClone(pos);
     }
@@ -261,5 +260,5 @@ public class MemoryInputIcon extends PositionableJPanel implements java.beans.Pr
         namedMemory = null;
     }
 
-    static Logger log = LoggerFactory.getLogger(MemoryInputIcon.class.getName());
+    private final static Logger log = LoggerFactory.getLogger(MemoryInputIcon.class.getName());
 }

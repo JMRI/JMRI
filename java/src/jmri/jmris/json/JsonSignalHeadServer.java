@@ -34,7 +34,7 @@ public class JsonSignalHeadServer extends AbstractSignalHeadServer {
 
     private final JmriConnection connection;
     private final ObjectMapper mapper;
-    static Logger log = LoggerFactory.getLogger(JsonSignalHeadServer.class.getName());
+    private final static Logger log = LoggerFactory.getLogger(JsonSignalHeadServer.class.getName());
 
     public JsonSignalHeadServer(JmriConnection connection) {
         super();

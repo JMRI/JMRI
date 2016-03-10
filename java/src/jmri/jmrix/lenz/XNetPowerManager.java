@@ -152,7 +152,7 @@ public class XNetPowerManager implements PowerManager, XNetListener {
     }
 
     // Initialize logging information
-    static Logger log = LoggerFactory.getLogger(XNetPowerManager.class.getName());
+    private final static Logger log = LoggerFactory.getLogger(XNetPowerManager.class.getName());
 
 }
 

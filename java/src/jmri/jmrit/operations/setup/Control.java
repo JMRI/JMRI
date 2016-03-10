@@ -82,6 +82,9 @@ public class Control {
 
     // Route name maximum string length
     public static int max_len_string_route_name = 25;
+    
+    // Automation name maximum string length
+    public static int max_len_string_automation_name = 25;
 
     // Backward compatibility for xml saves (pre 2013 releases)
     // backward compatibility to false in 2014
@@ -124,6 +127,8 @@ public class Control {
         length.setAttribute(Xml.LENGTH, Integer.toString(max_len_string_train_name));
         values.addContent(length = new Element(Xml.MAX_LEN_STRING_ROUTE_NAME));
         length.setAttribute(Xml.LENGTH, Integer.toString(max_len_string_route_name));
+        values.addContent(length = new Element(Xml.MAX_LEN_STRING_AUTOMATION_NAME));
+        length.setAttribute(Xml.LENGTH, Integer.toString(max_len_string_automation_name));
         // reports
         e.addContent(values = new Element(Xml.REPORTS));
         values.setAttribute(Xml.FONT_SIZE, Integer.toString(reportFontSize));
@@ -194,6 +199,10 @@ public class Control {
                     && (length = maximumStringLengths.getChild(Xml.MAX_LEN_STRING_ROUTE_NAME).getAttribute(Xml.LENGTH)) != null) {
                 max_len_string_route_name = Integer.parseInt(length.getValue());
             }
+            if ((maximumStringLengths.getChild(Xml.MAX_LEN_STRING_AUTOMATION_NAME) != null)
+                    && (length = maximumStringLengths.getChild(Xml.MAX_LEN_STRING_AUTOMATION_NAME).getAttribute(Xml.LENGTH)) != null) {
+                max_len_string_automation_name = Integer.parseInt(length.getValue());
+            }
         }
         Element eReports = eControl.getChild(Xml.REPORTS);
         if (eReports != null) {
@@ -222,5 +231,5 @@ public class Control {
         }
     }
     
-    static Logger log = LoggerFactory.getLogger(Control.class.getName());
+    private final static Logger log = LoggerFactory.getLogger(Control.class.getName());
 }

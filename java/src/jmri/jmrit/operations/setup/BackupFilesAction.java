@@ -7,8 +7,6 @@ import javax.swing.AbstractAction;
 import javax.swing.JFileChooser;
 import javax.swing.JOptionPane;
 import jmri.jmrit.operations.OperationsXml;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 
 /**
  * Swing action to backup operation files to a directory selected by the user.
@@ -23,8 +21,7 @@ public class BackupFilesAction extends AbstractAction {
      *
      */
     private static final long serialVersionUID = 2252745243582800660L;
-    static Logger log = LoggerFactory
-            .getLogger(BackupFilesAction.class.getName());
+//    private final static Logger log = LoggerFactory.getLogger(BackupFilesAction.class.getName());
 
     public BackupFilesAction(String s) {
         super(s);

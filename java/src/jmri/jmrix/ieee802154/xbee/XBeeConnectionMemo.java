@@ -179,7 +179,7 @@ public class XBeeConnectionMemo extends jmri.jmrix.ieee802154.IEEE802154SystemCo
         super.dispose();
     }
 
-    static Logger log = LoggerFactory.getLogger(XBeeConnectionMemo.class.getName());
+    private final static Logger log = LoggerFactory.getLogger(XBeeConnectionMemo.class.getName());
 
 }
 
