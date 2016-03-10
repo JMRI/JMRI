@@ -137,16 +137,12 @@ symbols to control operation.
 
 <dt>Alternate port names
 <dd>
-PureJavaComm does not know about certain names for serial ports connected
+RXTX does not know about certain names for serial ports connected
 via USB.  This section looks for a few known names and adds them
 to the program if present.  If you have a device file name that JMRI
-cannot find, you can specify its use with the
-<a href="Properties.shtml"><code>purejavacomm.portnamepattern</code></a>
-system property. Multiple ports can be specified using a
-<a href="http://docs.oracle.com/javase/tutorial/essential/regex/">regular expression</a>.
-The simplest regular expression for this is something like
-<code>(ttyUSB0|ttyUSB1)</code> (an <em>or</em> pattern).
-    
+cannot find, you can set the environment variable <tt>JMRI_SERIAL_PORTS</tt>
+to be comma-separated list of the names.
+
 <dt>Java command
 <dd>Finally, the script puts all this together into a java command, which it executes.
 

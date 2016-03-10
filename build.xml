@@ -127,8 +127,8 @@
          packages. Does not include JMRI itself.
     -->
     <path id="runtime.class.path">
-        <pathelement location="${libdir}/jna.jar"/>
-        <pathelement location="${libdir}/purejavacomm.jar"/>
+        <pathelement location="${libdir}/RXTXcomm.jar"/>
+        <pathelement location="${libdir}/Serialio.jar"/>
         <pathelement location="${libdir}/ch.ntb.usb.jar"/>
         <pathelement location="${libdir}/xercesImpl.jar"/>
         <pathelement location="${libdir}/gluegen-rt.jar"/>
@@ -213,9 +213,6 @@
         <path   refid="compile.class.path"/>
         <pathelement location="${target}/"/>  <!-- last to check for name collisions -->
     </path>
-    
-    <!-- PureJavaComm default log level - override in local.properties or Ant command line -->
-    <property name="purejavacomm.loglevel" value="0"/>
     
     <macrodef name="quiet">
         <element name="body" implicit="yes"/>
@@ -681,7 +678,6 @@
                          path=".:${arch.lib.path}:${libdir}"/>
             <sysproperty key="jinput.plugins"
                          path="net.bobis.jinput.hidraw.HidRawEnvironmentPlugin"/>
-            <sysproperty key="purejavacomm.loglevel" value="${purejavacomm.loglevel}"/>
             <jvmarg value="-Xms256m"/>
             <jvmarg value="-Xmx640m"/>
             <!-- <jvmarg value="-verbose"/> -->
@@ -706,7 +702,6 @@
                          path=".:${arch.lib.path}:${libdir}"/>
             <sysproperty key="jinput.plugins"
                          path="net.bobis.jinput.hidraw.HidRawEnvironmentPlugin"/>
-            <sysproperty key="purejavacomm.loglevel" value="${purejavacomm.loglevel}"/>
 
             <jvmarg value="-Xdebug"/>
             <jvmarg value="-Xrunjdwp:transport=dt_socket,server=y,suspend=y,address=5432"/>

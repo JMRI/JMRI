@@ -1,13 +1,16 @@
 // DCCppAdapter.java
 package jmri.jmrix.dccpp.serial;
 
+import gnu.io.CommPortIdentifier;
+import gnu.io.PortInUseException;
+import gnu.io.SerialPort;
+import gnu.io.SerialPortEvent;
+import gnu.io.SerialPortEventListener;
 import java.io.DataInputStream;
 import java.io.BufferedReader;
 import java.io.InputStreamReader;
 import java.io.DataOutputStream;
-import java.io.IOException;
 import java.io.InputStream;
-import java.util.TooManyListenersException;
 import jmri.jmrix.dccpp.DCCppCommandStation;
 import jmri.jmrix.dccpp.DCCppSerialPortController;
 import jmri.jmrix.dccpp.DCCppTrafficController;
@@ -20,13 +23,6 @@ import jmri.jmrix.lenz.XNetInitializationManager;
 import jmri.util.SerialUtil;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import purejavacomm.CommPortIdentifier;
-import purejavacomm.NoSuchPortException;
-import purejavacomm.PortInUseException;
-import purejavacomm.SerialPort;
-import purejavacomm.SerialPortEvent;
-import purejavacomm.SerialPortEventListener;
-import purejavacomm.UnsupportedCommOperationException;
 
 /**
  * Provide access to DCC++ via a FTDI Virtual Comm Port.
@@ -59,7 +55,7 @@ public class DCCppAdapter extends DCCppSerialPortController implements jmri.jmri
             // try to set it for DCC++
             try {
                 setSerialPort();
-            } catch (UnsupportedCommOperationException e) {
+            } catch (gnu.io.UnsupportedCommOperationException e) {
                 log.error("Cannot set serial parameters on port " + portName + ": " + e.getMessage());
                 return "Cannot set serial parameters on port " + portName + ": " + e.getMessage();
             }
@@ -208,9 +204,9 @@ public class DCCppAdapter extends DCCppSerialPortController implements jmri.jmri
 
             opened = true;
 
-        } catch (NoSuchPortException p) {
+        } catch (gnu.io.NoSuchPortException p) {
             return handlePortNotFound(p, portName, log);
-        } catch (IOException | TooManyListenersException ex) {
+        } catch (Exception ex) {
             log.error("Unexpected exception while opening port " + portName + " trace follows: " + ex);
             ex.printStackTrace();
             return "Unexpected error while opening port " + portName + ": " + ex;
@@ -247,8 +243,8 @@ public class DCCppAdapter extends DCCppSerialPortController implements jmri.jmri
     }
 
     public DataInputStream getInputStream() {
-        //log.error("Not Using DataInputStream version anymore!");
-        //return(null);
+	//log.error("Not Using DataInputStream version anymore!");
+    	//return(null);
         if (!opened) {
             log.error("getInputStream called before load(), stream not available");
         }
@@ -279,7 +275,7 @@ public class DCCppAdapter extends DCCppSerialPortController implements jmri.jmri
     /**
      * Local method to do specific configuration
      */
-    protected void setSerialPort() throws UnsupportedCommOperationException {
+    protected void setSerialPort() throws gnu.io.UnsupportedCommOperationException {
         // find the baud rate value, configure comm options
         int baud = validSpeedValues[0];  // default, but also defaulted in the initial value of selectedSpeed
         for (int i = 0; i < validSpeeds.length; i++) {
@@ -327,7 +323,7 @@ public class DCCppAdapter extends DCCppSerialPortController implements jmri.jmri
     InputStream serialStream = null;
 
     @Deprecated
-    static public DCCppAdapter instance() {
+	static public DCCppAdapter instance() {
         if (mInstance == null) {
             mInstance = new DCCppAdapter();
         }

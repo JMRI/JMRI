@@ -54,15 +54,16 @@ JMRI l'utilise, sur certains syst&#232;mes, pour localiser les
 emplacements par d&#233;faut pour le r&#233;pertoire des pr&#233;f&#233;rences.
 
 <dt>
-purejavacomm.portnamepattern
+gnu.io.rxtx.SerialPorts
 <dd>
-    NEEDS RETRANSLATION
 La biblioth&#232;que de communication RXTX utilise cette option pour sp&#233;cifier les
 ports suppl&#233;mentaires &#224; utiliser. Si vous avez par exemple un adaptateur USB vers un adaptateur s&#233;rie
 qui ne s'affiche pas dans les bo&#238;tes du s&#233;lecteur de pr&#233;f&#233;rences,
 attribuer son nom &#224; cette propri&#233;t&#233;.
 <p>
--J-Dpurejavacomm.portnamepattern=ttyUSB0
+-Dgnu.io.rxtx.SerialPorts=/dev/ttyUSB0
+<p>
+Les scripts de d&#233;marrage Linux le fera si vous avez d&#233;fini la variable d'environnement JMRI_SERIAL_PORT.
 
 </dl>
 

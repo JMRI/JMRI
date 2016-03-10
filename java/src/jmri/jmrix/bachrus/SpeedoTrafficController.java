@@ -1,13 +1,13 @@
 // SpeedoTrafficController.java
 package jmri.jmrix.bachrus;
 
+import gnu.io.SerialPortEvent;
+import gnu.io.SerialPortEventListener;
 import java.io.DataInputStream;
 import java.io.OutputStream;
 import java.util.Vector;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import purejavacomm.SerialPortEvent;
-import purejavacomm.SerialPortEventListener;
 
 /**
  * Converts Stream-based I/O to/from speedo messages. The "SpeedoInterface" side
