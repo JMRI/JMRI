@@ -80,10 +80,26 @@ abstract public class AbstractSerialConnectionConfigXml extends AbstractConnecti
         boolean result = true;
         getInstance();
         // configure port name
-        String portName = perNode.getAttribute("port").getValue();
-        adapter.setPort(portName);
-        String baudRate = perNode.getAttribute("speed").getValue();
-        adapter.configureBaudRate(baudRate);
+        String portName = null;
+        try {
+           portName = perNode.getAttribute("port").getValue();
+           adapter.setPort(portName);
+        } catch (java.lang.NullPointerException npe) {
+           // when the storage format has not been upgraded to the new format,
+           // the portName incorrectly gets added to the shared attributes.
+           portName = shared.getAttribute("port").getValue();
+           adapter.setPort(portName);
+        }
+        String baudRate = null;
+        try {
+           baudRate = perNode.getAttribute("speed").getValue();
+           adapter.configureBaudRate(baudRate);
+        } catch (java.lang.NullPointerException npe) {
+           // when the storage format has not been upgraded to the new format,
+           // the baudRate incorrectly gets added to the shared attributes.
+           baudRate = shared.getAttribute("speed").getValue();
+           adapter.configureBaudRate(baudRate);
+        }
 
         loadCommon(shared, perNode, adapter);
         // register, so can be picked up next time
