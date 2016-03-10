@@ -46,7 +46,7 @@ public class WiThrottleCreationAction extends JmriAbstractAction {
      * Create a new network server.
      */
     public WiThrottleCreationAction() {
-        this("Start WiThrottle");
+        this(Bundle.getMessage("MenuStartWiThrottleServer"));
     }
 
     /**

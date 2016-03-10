@@ -568,7 +568,7 @@ public class PaneProgDp3Action extends jmri.util.swing.JmriAbstractAction implem
         }
     }
 
-    @edu.umd.cs.findbugs.annotations.SuppressWarnings(value = "IS2_INCONSISTENT_SYNC", // NOI18N
+    @edu.umd.cs.findbugs.annotations.SuppressFBWarnings(value = "IS2_INCONSISTENT_SYNC", // NOI18N
             justification = "saveBasicRoster protected by ctor invocation, Swing thread when needed")  // NOI18N
     JButton saveBasicRoster;
 

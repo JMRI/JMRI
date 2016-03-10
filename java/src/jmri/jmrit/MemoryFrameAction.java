@@ -90,7 +90,7 @@ public class MemoryFrameAction extends AbstractAction {
             }
         });
         gcButton.addActionListener(new ActionListener() {
-            @edu.umd.cs.findbugs.annotations.SuppressWarnings(value = "DM_GC")  // Garbage collection OK here
+            @edu.umd.cs.findbugs.annotations.SuppressFBWarnings(value = "DM_GC")  // Garbage collection OK here
             public void actionPerformed(ActionEvent event) {
                 Runtime.getRuntime().gc();
                 updateDisplay();
