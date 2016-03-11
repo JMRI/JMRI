@@ -95,6 +95,11 @@ for names, formatting, etc are really useful.
 If you find that you can't read a piece of code, these will help
 make it better.
 
+<p>
+Note that we have a few local conventions beyond those in the Java recommendations.
+You'll find them on other pages in this section, but for example, we recommend
+that you define the <a href="Logging.shtml">logger reference</a> at the bottom of each file.
+
 <h2>Deprecating Code</h2>
 
 As development proceeds, sometimes old ways of doing things have to be replaced by
