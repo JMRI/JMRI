@@ -10,8 +10,8 @@
     <path>[lib/log4j.jar]</path>
     <path>[lib/jhall.jar]</path>
     <path>[lib/junit.jar]</path>
-    <path>[lib/Serialio.jar]</path>
-    <path>[lib/RXTXcomm.jar]</path>
+    <path>[lib/jna.jar]</path>
+    <path>[lib/purejavacomm.jar]</path>
     <path>[lib/jython.jar]</path>
     <path>[lib/jinput.jar]</path>
     <path>[lib/vecmath.jar]</path>

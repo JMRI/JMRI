@@ -1,12 +1,6 @@
 // SerialDriverAdapter.java
 package jmri.jmrix.rfid.serialdriver;
 
-import gnu.io.CommPortIdentifier;
-import gnu.io.PortInUseException;
-import gnu.io.SerialPort;
-import gnu.io.SerialPortEvent;
-import gnu.io.SerialPortEventListener;
-import gnu.io.UnsupportedCommOperationException;
 import java.io.DataInputStream;
 import java.io.DataOutputStream;
 import java.io.IOException;
@@ -29,6 +23,13 @@ import jmri.jmrix.rfid.protocol.parallax.ParallaxRfidProtocol;
 import jmri.jmrix.rfid.protocol.seeedstudio.SeeedStudioRfidProtocol;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import purejavacomm.CommPortIdentifier;
+import purejavacomm.NoSuchPortException;
+import purejavacomm.PortInUseException;
+import purejavacomm.SerialPort;
+import purejavacomm.SerialPortEvent;
+import purejavacomm.SerialPortEventListener;
+import purejavacomm.UnsupportedCommOperationException;
 
 /**
  * Provide access to RFID devices via a serial comm port. Derived from the
@@ -69,7 +70,7 @@ public class SerialDriverAdapter extends RfidPortController implements jmri.jmri
             // try to set it for serial
             try {
                 setSerialPort();
-            } catch (gnu.io.UnsupportedCommOperationException e) {
+            } catch (UnsupportedCommOperationException e) {
                 log.error("Cannot set serial parameters on port " + portName + ": " + e.getMessage());
                 return "Cannot set serial parameters on port " + portName + ": " + e.getMessage();
             }
@@ -120,6 +121,7 @@ public class SerialDriverAdapter extends RfidPortController implements jmri.jmri
                         + (activeSerialPort.getFlowControlMode() == SerialPort.FLOWCONTROL_RTSCTS_OUT ? "hardware flow control" : "no flow control"));
             }
             if (log.isDebugEnabled()) {
+                log.debug("Setup SerialPortEventListener for debugging");
                 // arrange to notify later
                 activeSerialPort.addEventListener(new SerialPortEventListener() {
                     @Override
@@ -190,7 +192,7 @@ public class SerialDriverAdapter extends RfidPortController implements jmri.jmri
 
             opened = true;
 
-        } catch (gnu.io.NoSuchPortException p) {
+        } catch (NoSuchPortException p) {
             return handlePortNotFound(p, portName, log);
         } catch (IOException ex) {
             log.error("Unexpected exception while opening port " + portName + " trace follows: " + ex);
@@ -335,9 +337,9 @@ public class SerialDriverAdapter extends RfidPortController implements jmri.jmri
     /**
      * Local method to do specific port configuration
      *
-     * @throws gnu.io.UnsupportedCommOperationException
+     * @throws UnsupportedCommOperationException
      */
-    protected void setSerialPort() throws gnu.io.UnsupportedCommOperationException {
+    protected void setSerialPort() throws UnsupportedCommOperationException {
         // find the baud rate value, configure comm options
         int baud = 9600;  // default, but also defaulted in the initial value of selectedSpeed
 
@@ -357,6 +359,7 @@ public class SerialDriverAdapter extends RfidPortController implements jmri.jmri
             flow = SerialPort.FLOWCONTROL_RTSCTS_OUT;
         }
         activeSerialPort.setFlowControlMode(flow);
+        activeSerialPort.setRTS(true);
     }
 
     /**

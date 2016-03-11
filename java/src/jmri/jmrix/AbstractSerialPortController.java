@@ -1,11 +1,13 @@
 // AbstractSerialPortController.java
 package jmri.jmrix;
 
-import gnu.io.CommPortIdentifier;
 import java.util.Enumeration;
 import java.util.Vector;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import purejavacomm.CommPortIdentifier;
+import purejavacomm.NoSuchPortException;
+import purejavacomm.PortInUseException;
 
 /**
  * Provide an abstract base for *PortController classes.
@@ -29,7 +31,7 @@ abstract public class AbstractSerialPortController extends AbstractPortControlle
     /**
      * Standard error handling for port-busy case
      */
-    public String handlePortBusy(gnu.io.PortInUseException p, String portName, Logger log) {
+    public String handlePortBusy(PortInUseException p, String portName, Logger log) {
         log.error(portName + " port is in use: " + p.getMessage());
         /*JOptionPane.showMessageDialog(null, "Port is in use",
          "Error", JOptionPane.ERROR_MESSAGE);*/
@@ -40,7 +42,7 @@ abstract public class AbstractSerialPortController extends AbstractPortControlle
     /**
      * Standard error handling for port-not-found case
      */
-    public String handlePortNotFound(gnu.io.NoSuchPortException p, String portName, Logger log) {
+    public String handlePortNotFound(NoSuchPortException p, String portName, Logger log) {
         log.error("Serial port " + portName + " not found");
         /*JOptionPane.showMessageDialog(null, "Serial port "+portName+" not found",
          "Error", JOptionPane.ERROR_MESSAGE);*/
