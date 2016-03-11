@@ -123,7 +123,7 @@ import org.slf4j.LoggerFactory;
  */
 public class Ash1_1Algorithm implements Calculator {
 
-    @edu.umd.cs.findbugs.annotations.SuppressWarnings(value = "EI_EXPOSE_REP2") // OK until Java 1.6 allows cheap array copy
+    @edu.umd.cs.findbugs.annotations.SuppressFBWarnings(value = "EI_EXPOSE_REP2") // OK until Java 1.6 allows cheap array copy
     public Ash1_1Algorithm(Point3d[] sensors, double vsound) {
         this.sensors = sensors;
         this.Vs = vsound;
@@ -242,7 +242,7 @@ public class Ash1_1Algorithm implements Calculator {
     double xi, yi, zi, ri, xj, yj, zj, rj, xk, yk, zk, rk;
 
     //  Compute RPS Position using
-    @edu.umd.cs.findbugs.annotations.SuppressWarnings(value = "IP_PARAMETER_IS_DEAD_BUT_OVERWRITTEN") // it's secretly FORTRAN..
+    @edu.umd.cs.findbugs.annotations.SuppressFBWarnings(value = "IP_PARAMETER_IS_DEAD_BUT_OVERWRITTEN") // it's secretly FORTRAN..
     RetVal RPSpos(int nr, double Tr[], double Xr[], double Yr[], double Zr[],// many
             double Vs, double Xt, double Yt, double Zt) {//         receivers
 
@@ -486,7 +486,7 @@ public class Ash1_1Algorithm implements Calculator {
      *
      * More of a struct, really
      */
-    @edu.umd.cs.findbugs.annotations.SuppressWarnings(value = "UUF_UNUSED_FIELD") // t not formally needed
+    @edu.umd.cs.findbugs.annotations.SuppressFBWarnings(value = "UUF_UNUSED_FIELD") // t not formally needed
     static class RetVal {
 
         RetVal(int code, double x, double y, double z, double vs) {

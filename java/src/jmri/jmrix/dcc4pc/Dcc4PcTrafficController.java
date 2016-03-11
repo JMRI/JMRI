@@ -120,7 +120,7 @@ public class Dcc4PcTrafficController extends AbstractMRTrafficController impleme
     protected void addTrailerToOutput(byte[] msg, int offset, AbstractMRMessage m) {
     }
 
-    @edu.umd.cs.findbugs.annotations.SuppressWarnings(value = "MS_PKGPROTECT")
+    @edu.umd.cs.findbugs.annotations.SuppressFBWarnings(value = "MS_PKGPROTECT")
     // FindBugs wants this package protected, but we're removing it when multi-connection
     // migration is complete
     final static protected Dcc4PcTrafficController self = null;

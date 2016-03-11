@@ -28,7 +28,7 @@ public class SpeedoTrafficController implements SpeedoInterface, SerialPortEvent
 
     private SpeedoReply reply = new SpeedoReply();
 
-    @edu.umd.cs.findbugs.annotations.SuppressWarnings(value = "ST_WRITE_TO_STATIC_FROM_INSTANCE_METHOD")
+    @edu.umd.cs.findbugs.annotations.SuppressFBWarnings(value = "ST_WRITE_TO_STATIC_FROM_INSTANCE_METHOD")
     // Ignore FindBugs warning as we can only have on SPROG instance at this time
     public SpeedoTrafficController() {
         self = this;

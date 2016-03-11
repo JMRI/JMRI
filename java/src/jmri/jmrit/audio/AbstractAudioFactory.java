@@ -49,7 +49,7 @@ public abstract class AbstractAudioFactory implements AudioFactory {
      */
     private static AbstractAudioThread audioCommandThread = null;
 
-    @edu.umd.cs.findbugs.annotations.SuppressWarnings("ST_WRITE_TO_STATIC_FROM_INSTANCE_METHOD")
+    @edu.umd.cs.findbugs.annotations.SuppressFBWarnings("ST_WRITE_TO_STATIC_FROM_INSTANCE_METHOD")
     @Override
     public boolean init() {
         if (initialised) {
@@ -198,7 +198,7 @@ public abstract class AbstractAudioFactory implements AudioFactory {
         return audioCommandThread;
     }
 
-    @edu.umd.cs.findbugs.annotations.SuppressWarnings("ST_WRITE_TO_STATIC_FROM_INSTANCE_METHOD")
+    @edu.umd.cs.findbugs.annotations.SuppressFBWarnings("ST_WRITE_TO_STATIC_FROM_INSTANCE_METHOD")
     @Override
     public void setDistanceAttenuated(boolean attenuated) {
         distanceAttenuated = attenuated;

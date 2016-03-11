@@ -2325,7 +2325,7 @@ public class LayoutBlock extends AbstractNamedBean implements java.beans.Propert
      * if the reverse path is required, then this need to be added seperately.
      */
     //Was public
-    @edu.umd.cs.findbugs.annotations.SuppressWarnings(value = "DLS_DEAD_LOCAL_STORE")
+    @edu.umd.cs.findbugs.annotations.SuppressFBWarnings(value = "DLS_DEAD_LOCAL_STORE")
     void addThroughPath(Block srcBlock, Block dstBlock, LayoutEditor panel) {
         //Reset connectivity flag.
         layoutConnectivity = true;

@@ -56,7 +56,7 @@ public class ConnectionConfig extends jmri.jmrix.AbstractNetworkConnectionConfig
         options.get(adapter.getOption1Name()).getComponent().setEnabled(false); // we can't change this now.
     }
 
-    @edu.umd.cs.findbugs.annotations.SuppressWarnings(value = "URF_UNREAD_PUBLIC_OR_PROTECTED_FIELD", justification = "the server uses a fixed port, but we want users to see what it is")
+    @edu.umd.cs.findbugs.annotations.SuppressFBWarnings(value = "URF_UNREAD_PUBLIC_OR_PROTECTED_FIELD", justification = "the server uses a fixed port, but we want users to see what it is")
     protected JTextField bcastPortField = new JTextField(String.valueOf(LIUSBServerAdapter.BROADCAST_TCP_PORT));
 
 }

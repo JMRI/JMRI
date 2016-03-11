@@ -56,35 +56,70 @@ recent build online
 If FindBugs is finding a false positive, a bug that's not really a 
 bug, you can turn it off with an annotation such as:
 <pre><code>
-@edu.umd.cs.findbugs.annotations.SuppressWarnings("FE_FLOATING_POINT_EQUALITY","OK to compare floats, as even tiny differences should trigger update")
+@edu.umd.cs.findbugs.annotations.SuppressFBWarnings("FE_FLOATING_POINT_EQUALITY","OK to compare floats, as even tiny differences should trigger update")
 </code></pre>
-The second "justification" argument is optional, but highly recommended.  
+Note that this should be all on one line.
+Although Java itself considers it optional, we require the second "justification" argument. 
 Explaining why you've added this annotation to suppress a message will help
 whoever comes after you and is trying to understand the code.
 It will also help make sure you properly understand the cause of the underlying
 bug report:  Sometimes what seems a false positive really isn't.
+Annotations without a justification clause will 
+periodically be removed. 
 
+<p>
+For clarity, this annotation also supports the form:
+<pre><code>
+@edu.umd.cs.findbugs.annotations.SuppressFBWarnings(value = "FE_FLOATING_POINT_EQUALITY", justification = "OK to compare floats, as even tiny differences should trigger update")
+</code></pre>
+This can make it easier to see what is what when quickly scanning through the code.
 <p>
 If you need to put more than one message type in an annotation, use array syntax:
 <pre><code>
-@edu.umd.cs.findbugs.annotations.SuppressWarnings("{type1},{type2}","why both are needed")
+@edu.umd.cs.findbugs.annotations.SuppressFBWarnings("{type1},{type2}","why both are needed")
 </code></pre>
 
 <p>
-There are also FindBugs annotations that can help it 
+There are also Java and FindBugs annotations that can help it 
 better understand your code. Sometimes they'll give it enough understanding of
 e.g. when a variable can be null, that it'll no longer make false-positive mistakes.
 For more on this, see the
-<a href="http://findbugs.sourceforge.net/manual/annotations.html">Findbugs annotation page</a>.
+<a href="https://docs.oracle.com/javase/tutorial/java/annotations/">Java annotations</a> and 
+<a href="http://findbugs.sourceforge.net/manual/annotations.html">Findbugs annotation pages</a>.
 
 <p>
-It can be useful to mark classes with one of the following annotations
+The basics of annotations are covered in a <a href="https://docs.oracle.com/javase/tutorial/java/annotations/">Java annotations tutorial</a>.
+
+<p>
+It can be useful to mark code with one of the following annotations
 so that FindBugs does a good job of reasoning about it:
 <ul>
-<li><a href="http://findbugs.sourceforge.net/manual/annotations.html">edu.umd.cs.findbugs.annotations.CheckForNull</a> -
-    a variable or parameter may have a null value, so all uses should appropriately handle that.
-<li><a href="http://findbugs.sourceforge.net/manual/annotations.html">edu.umd.cs.findbugs.annotations.CheckReturnValue</a> -
+<li><a href="http://findbugs.sourceforge.net/manual/annotations.html">javax.annotation.Nonnull</a> -
+    The annotated element must not be null. 
+    Annotated fields must not be null after construction has completed. 
+    Annotated methods must have non-null return values.
+    Use javax.annotation.ParametersAreNonnullByDefault to set it for an entire class.
+
+<li><a href="http://findbugs.sourceforge.net/manual/annotations.html">javax.annotation.Nullable</a> -
+    The annotated element could be null under some circumstances. 
+    In general, this means developers will have to read the documentation to determine when a null value is acceptable 
+    and whether it is neccessary to check for a null value. 
+    FindBugs will treat the annotated items as though they had no annotation.
+    In practice this annotation is useful only for overriding an overarching NonNull annotation.
+    Use javax.annotation.ParametersAreNullableByDefault to set it for an entire class.
+
+<li><a href="http://findbugs.sourceforge.net/manual/annotations.html">edu.umd.cs.findbugs.annotations.OverrideMustInvoke</a> -
+    Used to annotate a method that, if overridden, must (or should) be invoke super in the overriding method. 
+    Examples of such methods include finalize() and clone(). 
+    The argument to the method indicates when the super invocation should occur: at any time (ANYTIME), at the beginning of the overriding method (FIRST), 
+    or at the end of the overriding method (LAST), defaulting to any time.
+
+<li><a href="http://findbugs.sourceforge.net/manual/annotations.html">javax.annotation.CheckForNull</a> -
+    a variable or parameter may have a null value, so all uses should appropriately handle that;
+    generally used on method definitions to say that the return value should be checked for null
+<li><a href="http://findbugs.sourceforge.net/manual/annotations.html">javax.annotation.CheckReturnValue</a> -
     this method has no side-effects, so there's no point in calling it without checking it's return value
+    
 <li><a href="http://jcip.net/annotations/doc/net/jcip/annotations/Immutable.html">net.jcip.annotations.Immutable</a> -
     An object of this class can't be changed after it's created.  This allows both better checking
     of logic, and also simplifies use by your colleagues, so it's good to tag classes with this 

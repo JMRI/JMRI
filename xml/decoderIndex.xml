@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <?xml-stylesheet href="/xml/XSLT/DecoderID.xsl" type="text/xsl"?>
 <decoderIndex-config xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="http://jmri.org/xml/schema/decoder.xsd">
-  <!--Written by JMRI version 4.3.4ish-201603062022-Alain Le Marchand on Sun Mar 06 21:22:15 CET 2016 $Id$-->
-  <decoderIndex version="696">
+  <!--Written by JMRI version 4.3.4ish-201603110326-jake-Rbc23cd7 on Thu Mar 10 19:27:26 PST 2016 $Id$-->
+  <decoderIndex version="700">
     <mfgList nmraListDate="2015-03-06" updated="2015-03-25" lastadd="107,124,126,128,134">
       <manufacturer mfg="NMRA" mfgID="999" />
       <manufacturer mfg="A-Train Electronics" mfgID="137" />
@@ -8002,6 +8002,9 @@
       </family>
       <family name="PpP Decoders" mfg="PpP" lowVersionID="42" highVersionID="42" comment="PpP-Sem4 decoder." file="PpP_Sem4.xml">
         <model model="PpP-Sem4" />
+      </family>
+      <family name="FREDi" mfg="Public-domain and DIY" file="Public_Domain_FREDi_LNSV2.xml">
+        <model model="FREDi using LNSV2" productID="11" developerID="1" />
       </family>
       <family name="Hans De Loof LocoIO" mfg="Public-domain and DIY" file="Public_Domain_HDL_LocoIO.xml">
         <model model="Basic LocoIO" />
