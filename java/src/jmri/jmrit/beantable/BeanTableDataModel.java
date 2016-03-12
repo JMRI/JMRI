@@ -257,8 +257,7 @@ abstract public class BeanTableDataModel extends javax.swing.table.AbstractTable
                 NamedBean nB = getByUserName((String) value);
                 if (nB != null) {
                     log.error("User name is not unique " + value);
-                    String msg;
-                    msg = Bundle.getMessage("WarningUserName", new Object[]{("" + value)});
+                    String msg = Bundle.getMessage("WarningUserName", new Object[]{("" + value)});
                     JOptionPane.showMessageDialog(null, msg,
                             Bundle.getMessage("WarningTitle"),
                             JOptionPane.ERROR_MESSAGE);
@@ -335,14 +334,12 @@ abstract public class BeanTableDataModel extends javax.swing.table.AbstractTable
                 doDelete(t);
             } else {
                 final JDialog dialog = new JDialog();
-                String msg;
                 dialog.setTitle(Bundle.getMessage("WarningTitle"));
                 dialog.setDefaultCloseOperation(javax.swing.JFrame.DISPOSE_ON_CLOSE);
                 JPanel container = new JPanel();
                 container.setBorder(BorderFactory.createEmptyBorder(10, 10, 10, 10));
                 container.setLayout(new BoxLayout(container, BoxLayout.Y_AXIS));
                 if (count > 0) { // warn of listeners attached before delete
-                    msg = java.text.MessageFormat.format(Bundle.getMessage("DeletePrompt"), new Object[]{t.getSystemName()});
 
                     JLabel question = new JLabel(Bundle.getMessage("DeletePrompt", t.getFullyFormattedDisplayName()));
                     question.setAlignmentX(Component.CENTER_ALIGNMENT);
@@ -375,7 +372,7 @@ abstract public class BeanTableDataModel extends javax.swing.table.AbstractTable
                         container.add(jScrollPane);
                     }
                 } else {
-                    msg = java.text.MessageFormat.format(
+                    String msg = java.text.MessageFormat.format(
                             Bundle.getMessage("DeletePrompt"),
                             new Object[]{t.getSystemName()});
                     JLabel question = new JLabel(msg);
@@ -787,8 +784,7 @@ abstract public class BeanTableDataModel extends javax.swing.table.AbstractTable
             NamedBean nB = getByUserName(value);
             if (nB != null) {
                 log.error("User name is not unique " + value);
-                String msg;
-                msg = Bundle.getMessage("WarningUserName", new Object[]{("" + value)});
+                String msg = Bundle.getMessage("WarningUserName", new Object[]{("" + value)});
                 JOptionPane.showMessageDialog(null, msg,
                         Bundle.getMessage("WarningTitle"),
                         JOptionPane.ERROR_MESSAGE);
