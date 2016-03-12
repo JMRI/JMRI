@@ -20,7 +20,7 @@ public class LayoutEventData {
         mLayoutAddress = new LayoutAddress(pLayoutName, pType, pOffset);
     }
 
-    @edu.umd.cs.findbugs.annotations.SuppressWarnings(value = "EI_EXPOSE_REP") // OK in hibernating code
+    @edu.umd.cs.findbugs.annotations.SuppressFBWarnings(value = "EI_EXPOSE_REP") // OK in hibernating code
     public Date getTimeStamp() {
         return mTimeStamp;
     }

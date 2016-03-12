@@ -6,7 +6,7 @@ package jmri.jmrit.display.configurexml;
  * @deprecated 2.9.4
  */
 @Deprecated
-@edu.umd.cs.findbugs.annotations.SuppressWarnings(value = "NM_SAME_SIMPLE_NAME_AS_SUPERCLASS")
+@edu.umd.cs.findbugs.annotations.SuppressFBWarnings(value = "NM_SAME_SIMPLE_NAME_AS_SUPERCLASS")
 public class LayoutEditorXml extends
         jmri.jmrit.display.layoutEditor.configurexml.LayoutEditorXml {
 }

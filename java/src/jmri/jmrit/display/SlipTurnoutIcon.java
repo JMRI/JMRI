@@ -1282,7 +1282,7 @@ public class SlipTurnoutIcon extends PositionableLabel implements java.beans.Pro
         }
 
         //This is used to set the two turnouts, with a delay of 250ms between each one.
-        @edu.umd.cs.findbugs.annotations.SuppressWarnings(value = "WMI_WRONG_MAP_ITERATOR", justification = "iterator really short, efficiency not as important as clarity here")
+        @edu.umd.cs.findbugs.annotations.SuppressFBWarnings(value = "WMI_WRONG_MAP_ITERATOR", justification = "iterator really short, efficiency not as important as clarity here")
         public void run() {
 
             HashMap<Turnout, Integer> _turnoutSetting = s.getTurnoutSettings();

@@ -12,7 +12,7 @@ import java.io.File;
 public class GetClassPath {
 
     // static provide the class path
-    @edu.umd.cs.findbugs.annotations.SuppressWarnings("SBSC_USE_STRINGBUFFER_CONCATENATION") // not a performance issue
+    @edu.umd.cs.findbugs.annotations.SuppressFBWarnings("SBSC_USE_STRINGBUFFER_CONCATENATION") // not a performance issue
     static public String getClassPath() {
         File programdir = new File(".");
         File libdir = new File("lib");

@@ -1,4 +1,3 @@
-// BlockTableAction.java
 package jmri.jmrit.beantable;
 
 import java.awt.GridLayout;
@@ -35,14 +34,8 @@ import org.slf4j.LoggerFactory;
  * Swing action to create and register a BlockTable GUI.
  *
  * @author	Bob Jacobsen Copyright (C) 2003, 2008
- * @version $Revision$
  */
 public class BlockTableAction extends AbstractTableAction {
-
-    /**
-     *
-     */
-    private static final long serialVersionUID = 6207247759586108823L;
 
     /**
      * Create an action with a specific title.
@@ -285,7 +278,7 @@ public class BlockTableAction extends AbstractTableAction {
                     fireTableRowsUpdated(row, row);
                 } else if (col == REPORTERCOL) {
                     Reporter r = null;
-                    if (value != "" || value != null) {
+                    if (value != null && !value.equals("") ) {
                         r = jmri.InstanceManager.reporterManagerInstance().provideReporter((String) value);
                     }
                     b.setReporter(r);
@@ -855,5 +848,3 @@ public class BlockTableAction extends AbstractTableAction {
 
     private final static Logger log = LoggerFactory.getLogger(BlockTableAction.class.getName());
 }
-
-/* @(#)BlockTableAction.java */

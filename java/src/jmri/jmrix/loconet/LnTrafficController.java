@@ -29,7 +29,7 @@ public abstract class LnTrafficController implements LocoNetInterface {
         return self;
     }
 
-    @edu.umd.cs.findbugs.annotations.SuppressWarnings(value = "MS_PKGPROTECT")
+    @edu.umd.cs.findbugs.annotations.SuppressFBWarnings(value = "MS_PKGPROTECT")
     // FindBugs wants this package protected, but we're removing it when multi-connection
     // migration is complete
     static protected LnTrafficController self = null;

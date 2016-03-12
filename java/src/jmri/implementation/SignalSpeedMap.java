@@ -21,7 +21,6 @@ import org.slf4j.LoggerFactory;
  * A singleton class for use by all SignalHeads and SignalMasts
  *
  * @author  Pete Cressman Copyright (C) 2010
- * @version     $Revision$
  */
 public class SignalSpeedMap {
 
@@ -194,7 +193,7 @@ public class SignalSpeedMap {
         java.util.Enumeration<String> e = _table.keys();
         while (e.hasMoreElements()) {
             String key = e.nextElement();
-            if(_table.get(key)==Float.valueOf(speed)) {
+            if(_table.get(key) == speed) {
                 return key;
             }
         }

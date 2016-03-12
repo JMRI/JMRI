@@ -316,7 +316,7 @@ public class MergSD2SignalHead extends DefaultSignalHead {
         Bundle.getMessage("SignalHeadStateGreen")
     };
 
-    @edu.umd.cs.findbugs.annotations.SuppressWarnings(value = "EI_EXPOSE_REP") // OK until Java 1.6 allows return of cheap array copy
+    @edu.umd.cs.findbugs.annotations.SuppressFBWarnings(value = "EI_EXPOSE_REP") // OK until Java 1.6 allows return of cheap array copy
     public int[] getValidStates() {
         if (!mHome) {
             return validStates2AspectDistant;
@@ -336,7 +336,7 @@ public class MergSD2SignalHead extends DefaultSignalHead {
 
     }
 
-    @edu.umd.cs.findbugs.annotations.SuppressWarnings(value = "EI_EXPOSE_REP") // OK until Java 1.6 allows return of cheap array copy
+    @edu.umd.cs.findbugs.annotations.SuppressFBWarnings(value = "EI_EXPOSE_REP") // OK until Java 1.6 allows return of cheap array copy
     public String[] getValidStateNames() {
         if (!mHome) {
             return validStateNames2AspectDistant;
