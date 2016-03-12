@@ -1,6 +1,3 @@
-/**
- *
- */
 package jmri;
 
 import java.util.Iterator;
@@ -126,7 +123,7 @@ public abstract class TurnoutOperation implements Comparable<Object> {
     }
 
     /**
-     * ordering so operations can be sorted, using their name
+     * Ordering by name so operations can be sorted on name
      *
      * @param other	other TurnoutOperation object
      * @return usual compareTo return values
@@ -135,6 +132,17 @@ public abstract class TurnoutOperation implements Comparable<Object> {
         return name.compareTo(((TurnoutOperation) other).name);
     }
 
+    /**
+     * The identify of an operation is its name
+     */
+    public boolean equals(Object ro) {
+        if (ro == null) return false;
+        if (ro instanceof TurnoutOperation)
+            return name.equals(((TurnoutOperation)ro).name);
+        else 
+            return false;
+    }
+    
     /**
      *
      * @param other another TurnoutOperation
