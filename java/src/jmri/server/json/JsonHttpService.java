@@ -57,6 +57,9 @@ public abstract class JsonHttpService {
     /**
      * Respond to an HTTP PUT request for the requested name.
      *
+     * Throw an HTTP 405 Method Not Allowed exception if new objects of the type
+     * are not intendended to be addable.
+     *
      * @param type   the type of the requested object.
      * @param name   the name of the requested object.
      * @param data   JSON data set of attributes of the requested object to be
@@ -74,7 +77,7 @@ public abstract class JsonHttpService {
      *
      * Throw an HTTP 405 Method Not Allowed exception if the object is not
      * intendended to be removable.
-     * 
+     *
      * Do not throw an error if the requested object does not exist.
      *
      * @param type   the type of the deleted object.
