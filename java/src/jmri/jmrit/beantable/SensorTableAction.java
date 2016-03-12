@@ -1,9 +1,12 @@
-// SensorTableAction.java
 package jmri.jmrit.beantable;
 
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.util.List;
+
+import edu.umd.cs.findbugs.annotations.SuppressFBWarnings;
+import javax.annotation.Nonnull;
+
 import javax.swing.BoxLayout;
 import javax.swing.JCheckBox;
 import javax.swing.JComboBox;
@@ -27,14 +30,8 @@ import org.slf4j.LoggerFactory;
  * Swing action to create and register a SensorTable GUI.
  *
  * @author	Bob Jacobsen Copyright (C) 2003, 2009
- * @version $Revision$
  */
 public class SensorTableAction extends AbstractTableAction {
-
-    /**
-     *
-     */
-    private static final long serialVersionUID = 1577021703800089406L;
 
     /**
      * Create an action with a specific title.
@@ -59,7 +56,9 @@ public class SensorTableAction extends AbstractTableAction {
 
     protected SensorManager senManager = jmri.InstanceManager.sensorManagerInstance();
 
-    public void setManager(Manager man) {
+    @Override
+    @SuppressFBWarnings("BC_UNCONFIRMED_CAST") // AbstractTableTabAction responsible for getting this right;
+    public void setManager(@Nonnull Manager man) {
         senManager = (SensorManager) man;
         if (m != null) {
             m.setManager(senManager);
@@ -384,6 +383,3 @@ public class SensorTableAction extends AbstractTableAction {
 
     private final static Logger log = LoggerFactory.getLogger(SensorTableAction.class.getName());
 }
-
-
-/* @(#)SensorTableAction.java */
