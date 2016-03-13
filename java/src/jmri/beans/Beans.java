@@ -10,6 +10,8 @@ import java.util.Set;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+import edu.umd.cs.findbugs.annotations.SuppressFBWarnings;
+
 /**
  * JMRI-specific extensions to the Java Beans utility class.
  * <p>
@@ -18,7 +20,7 @@ import org.slf4j.LoggerFactory;
  *
  * @author rhwood
  */
-@SuppressWarnings("NM_SAME_SIMPLE_NAME_AS_SUPERCLASS", justification="Intentional pattern")
+@SuppressFBWarnings(value="NM_SAME_SIMPLE_NAME_AS_SUPERCLASS", justification="Intentional pattern")
 public class Beans extends java.beans.Beans {
 
     private final static Logger log = LoggerFactory.getLogger(Beans.class.getName());
