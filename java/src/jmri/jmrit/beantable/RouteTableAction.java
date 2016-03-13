@@ -75,14 +75,6 @@ public class RouteTableAction extends AbstractTableAction {
         if (jmri.InstanceManager.routeManagerInstance() == null) {
             setEnabled(false);
         }
-
-        // check a constraint required by this implementation,
-        // because we assume that the codes are the same as the index
-        // in a JComboBox
-        if (Route.ONACTIVE != 0 || Route.ONINACTIVE != 1
-                || Route.VETOACTIVE != 2 || Route.VETOINACTIVE != 3) {
-            log.error("assumption invalid in RouteTable implementation");
-        }
     }
 
     public RouteTableAction() {
