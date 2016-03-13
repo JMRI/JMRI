@@ -1,4 +1,3 @@
-// PaneProgFrame.java
 package jmri.jmrit.symbolicprog.tabbedframe;
 
 import javax.annotation.Nonnull;
@@ -78,7 +77,6 @@ import org.slf4j.LoggerFactory;
  * @author Bob Jacobsen Copyright (C) 2001, 2004, 2005, 2008, 2014
  * @author D Miller Copyright 2003, 2005
  * @author Howard G. Penny Copyright (C) 2005
- * @version $Revision$
  */
 abstract public class PaneProgFrame extends JmriJFrame
         implements java.beans.PropertyChangeListener, PaneContainer {
@@ -789,7 +787,11 @@ abstract public class PaneProgFrame extends JmriJFrame
             // load programmer config from programmer tree
             readConfig(programmerRoot, r);
 
-        } catch (Exception e) {
+        } catch (org.jdom2.JDOMException e) {
+            log.error("exception parsing programmer file: " + filename, e);
+            // provide traceback too
+            e.printStackTrace();
+        } catch (java.io.IOException e) {
             log.error("exception reading programmer file: " + filename, e);
             // provide traceback too
             e.printStackTrace();
