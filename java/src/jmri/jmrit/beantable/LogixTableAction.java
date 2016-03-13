@@ -4826,7 +4826,7 @@ public class LogixTableAction extends AbstractTableAction {
         try {
             if (index > 0) { // : after start
                 hour = s.substring(0, index);
-                if (index < s.length()) { // check for : at end ?
+                if (index+1 < s.length()) { // check for : at end
                     minute = s.substring(index + 1);
                 } else {
                     minute = "0";
