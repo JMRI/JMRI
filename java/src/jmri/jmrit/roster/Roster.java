@@ -435,7 +435,7 @@ public class Roster extends XmlFile implements RosterGroupSelector, PropertyChan
     }
 
     public List<RosterEntry> getEntriesInGroup(String group) {
-        if (group == null || group.equals(Roster.ALLENTRIES)) {
+        if (group == null || group.equals(Roster.ALLENTRIES) || group.isEmpty()) {
             return this.matchingList(null, null, null, null, null, null, null);
         } else {
             return this.getEntriesWithAttributeKeyValue(Roster.getRosterGroupProperty(group), "yes"); // NOI18N
