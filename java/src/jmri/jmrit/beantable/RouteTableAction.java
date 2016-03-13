@@ -1900,6 +1900,8 @@ public class RouteTableAction extends AbstractTableAction {
                 case STATE_COLUMN:
                     turnoutList.get(r).setSetToState((String) type);
                     break;
+                default:
+                    log.error("RouteTurnoutModel.setValueAt should not be called on column {}", c);
             }
         }
     }
