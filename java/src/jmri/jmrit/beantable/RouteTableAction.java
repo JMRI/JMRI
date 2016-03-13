@@ -1,4 +1,3 @@
-// RouteTableAction.java
 package jmri.jmrit.beantable;
 
 import java.awt.BorderLayout;
@@ -57,7 +56,6 @@ import org.slf4j.LoggerFactory;
  * @author Simon Reader Copyright (C) 2008
  * @author Pete Cressman Copyright (C) 2009
  *
- * @version $Revision$
  */
 public class RouteTableAction extends AbstractTableAction {
 
@@ -1460,8 +1458,8 @@ public class RouteTableAction extends AbstractTableAction {
              }*/
             //if (s != null) {
             String sensorSystemName = turnoutsAlignedSensor.getSelectedDisplayName();
-            cSystemName = logixSystemName + "1A";
-            cUserName = turnoutsAlignedSensor.getSelectedDisplayName() + "A " + uName;
+            cSystemName = logixSystemName + "1A"; // NOI18N
+            cUserName = turnoutsAlignedSensor.getSelectedDisplayName() + "A " + uName; // NOI18N
 
             ArrayList<ConditionalVariable> variableList = new ArrayList<ConditionalVariable>();
             for (int i = 0; i < _includedTurnoutList.size(); i++) {
@@ -1480,6 +1478,8 @@ public class RouteTableAction extends AbstractTableAction {
                         variableList.add(new ConditionalVariable(false, Conditional.OPERATOR_AND,
                                 Conditional.TYPE_TURNOUT_THROWN, name, true));
                         break;
+                    default:
+                        log.warn("Turnout {} was {}, neither CLOSED nor THROWN; not handled", name, rTurnout.getState()); // NOI18N
                 }
             }
             actionList = new ArrayList<ConditionalAction>();
@@ -1501,8 +1501,8 @@ public class RouteTableAction extends AbstractTableAction {
         if (cLockTurnout.getSelectedBean() != null) {
             String turnoutLockSystemName = cLockTurnout.getSelectedDisplayName();
             // verify name (logix doesn't use "provideXXX") 
-            cSystemName = logixSystemName + "1L";
-            cUserName = turnoutLockSystemName + "L " + uName;
+            cSystemName = logixSystemName + "1L"; // NOI18N
+            cUserName = turnoutLockSystemName + "L " + uName; // NOI18N
             ArrayList<ConditionalVariable> variableList = new ArrayList<ConditionalVariable>();
             //String devName = cTurnout.getText();
             int mode = turnoutModeFromBox(cTurnoutStateBox);
@@ -2157,4 +2157,3 @@ public class RouteTableAction extends AbstractTableAction {
 
     private final static Logger log = LoggerFactory.getLogger(RouteTableAction.class.getName());
 }
-/* @(#)RouteTableAction.java */
