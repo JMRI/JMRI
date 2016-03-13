@@ -3417,7 +3417,7 @@ public class LogixTableAction extends AbstractTableAction {
                     } else if (actionType == Conditional.ACTION_SET_TRAIN_NAME) {
                         _shortTextPanel.setToolTipText(rbx.getString("DataHintTrainName"));
                         l.setText(rbx.getString("LabelTrainName"));
-                    } else if (actionType == Conditional.ACTION_THROTTLE_FACTOR) {
+                    } else { // must be Conditional.ACTION_THROTTLE_FACTOR, so treat as such
                         _shortTextPanel.setToolTipText(rbx.getString("DataHintThrottleFactor"));
                         l.setText(rbx.getString("LabelThrottleFactor"));
                     }
