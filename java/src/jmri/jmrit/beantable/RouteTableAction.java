@@ -69,7 +69,6 @@ public class RouteTableAction extends AbstractTableAction {
      *
      * @param s
      */
-    @SuppressWarnings("all")
     public RouteTableAction(String s) {
         super(s);
         // disable ourself if there is no primary Route manager available
@@ -297,8 +296,6 @@ public class RouteTableAction extends AbstractTableAction {
                 return jmri.InstanceManager.routeManagerInstance().getByUserName(name);
             }
 
-            /*public int getDisplayDeleteMsg() { return InstanceManager.getDefault(jmri.UserPreferencesManager.class).getMultipleChoiceOption(getClassName(),"deleteInUse"); }
-             public void setDisplayDeleteMsg(int boo) { InstanceManager.getDefault(jmri.UserPreferencesManager.class).setMultipleChoiceOption(getClassName(), "deleteInUse", boo); }*/
             protected String getMasterClassName() {
                 return getClassName();
             }
@@ -651,10 +648,6 @@ public class RouteTableAction extends AbstractTableAction {
             });
             p25.add(ss);
             p25.add(soundFile);
-//            contentPanel.add(p25);
-
-//            JPanel p26 = new JPanel();
-//            p26.setLayout(new FlowLayout());
             p25.add(new JLabel("Run script:"));
             ss = new JButton("Set");
             ss.addActionListener(new ActionListener() {
