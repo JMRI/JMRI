@@ -1,4 +1,3 @@
-// LogixTableAction.java
 package jmri.jmrit.beantable;
 
 import java.awt.Component;
@@ -104,8 +103,6 @@ import org.slf4j.LoggerFactory;
  */
 public class LogixTableAction extends AbstractTableAction {
 
-    private static final long serialVersionUID = -6328536222461751495L;
-
     /**
      * Create an action with a specific title.
      * <P>
@@ -143,10 +140,6 @@ public class LogixTableAction extends AbstractTableAction {
      */
     protected void createModel() {
         m = new BeanTableDataModel() {
-            /**
-             *
-             */
-            private static final long serialVersionUID = 4656524306247345738L;
             // overlay the state column with the edit column
             static public final int ENABLECOL = VALUECOL;
             static public final int EDITCOL = DELETECOL;
@@ -412,7 +405,6 @@ public class LogixTableAction extends AbstractTableAction {
 
     class RefDialog extends JDialog {
 
-        private static final long serialVersionUID = -8265381404736283286L;
         JTextField _devNameField;
         java.awt.Frame _parent;
 
@@ -4832,14 +4824,14 @@ public class LogixTableAction extends AbstractTableAction {
         String hour = null;
         String minute = null;
         try {
-            if (index > 0) {
+            if (index > 0) { // : after start
                 hour = s.substring(0, index);
-                if (index >= 1) {
+                if (index < s.length()) { // check for : at end ?
                     minute = s.substring(index + 1);
                 } else {
                     minute = "0";
                 }
-            } else if (index == 0) {
+            } else if (index == 0) { // : at start
                 hour = "0";
                 minute = s.substring(index + 1);
             } else {
@@ -4932,11 +4924,6 @@ public class LogixTableAction extends AbstractTableAction {
      */
     public class ConditionalTableModel extends AbstractTableModel implements
             PropertyChangeListener {
-
-        /**
-         *
-         */
-        private static final long serialVersionUID = 5961791138611174353L;
 
         public static final int SNAME_COLUMN = 0;
 
@@ -5155,11 +5142,6 @@ public class LogixTableAction extends AbstractTableAction {
      */
     public class VariableTableModel extends AbstractTableModel {
 
-        /**
-         *
-         */
-        private static final long serialVersionUID = 5440254470481292065L;
-
         public static final int ROWNUM_COLUMN = 0;
 
         public static final int AND_COLUMN = 1;
@@ -5361,11 +5343,6 @@ public class LogixTableAction extends AbstractTableAction {
      */
     public class ActionTableModel extends AbstractTableModel {
 
-        /**
-         *
-         */
-        private static final long serialVersionUID = 6959722170203666817L;
-
         public static final int DESCRIPTION_COLUMN = 0;
 
         public static final int EDIT_COLUMN = 1;
@@ -5471,4 +5448,3 @@ public class LogixTableAction extends AbstractTableAction {
 
     private final static Logger log = LoggerFactory.getLogger(LogixTableAction.class.getName());
 }
-/* @(#)LogixTableAction.java */
