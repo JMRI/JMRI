@@ -184,12 +184,11 @@ abstract public class PaneProgFrame extends JmriJFrame
         menuBar.add(fileMenu);
 
         // add a "Factory Reset" menu
-        if (!_opsMode || true) {
-            resetMenu = new JMenu(SymbolicProgBundle.getMessage("MenuReset"));
-            menuBar.add(resetMenu);
-            resetMenu.add(new FactoryResetAction(SymbolicProgBundle.getMessage("MenuFactoryReset"), resetModel, this));
-            resetMenu.setEnabled(false);
-        }
+        resetMenu = new JMenu(SymbolicProgBundle.getMessage("MenuReset"));
+        menuBar.add(resetMenu);
+        resetMenu.add(new FactoryResetAction(SymbolicProgBundle.getMessage("MenuFactoryReset"), resetModel, this));
+        resetMenu.setEnabled(false);
+
         // Add a save item
         fileMenu.add(new AbstractAction(SymbolicProgBundle.getMessage("MenuSave")) {
             /**
