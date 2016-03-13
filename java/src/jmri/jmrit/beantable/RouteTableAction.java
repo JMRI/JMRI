@@ -1961,6 +1961,8 @@ public class RouteTableAction extends AbstractTableAction {
                 case STATE_COLUMN:
                     sensorList.get(r).setSetToState((String) type);
                     break;
+                default:
+                    log.error("RouteSensorModel.setValueAt should not be called on column {}", c);
             }
         }
     }
