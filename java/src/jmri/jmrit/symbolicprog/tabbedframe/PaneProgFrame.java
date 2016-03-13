@@ -670,14 +670,11 @@ abstract public class PaneProgFrame extends JmriJFrame
         // get a DecoderFile from the locomotive xml
         String decoderModel = r.getDecoderModel();
         String decoderFamily = r.getDecoderFamily();
-        if (log.isDebugEnabled()) {
-            log.debug("selected loco uses decoder " + decoderFamily + " " + decoderModel);
-        }
+        log.debug("selected loco uses decoder {} {}",decoderFamily, decoderModel);
+
         // locate a decoder like that.
         List<DecoderFile> l = DecoderIndexFile.instance().matchingDecoderList(null, decoderFamily, null, null, null, decoderModel);
-        if (log.isDebugEnabled()) {
-            log.debug("found " + l.size() + " matches");
-        }
+        log.debug("found {} matches", l.size());
         if (l.size() == 0) {
             log.debug("Loco uses " + decoderFamily + " " + decoderModel + " decoder, but no such decoder defined");
             // fall back to use just the decoder name, not family
@@ -709,18 +706,22 @@ abstract public class PaneProgFrame extends JmriJFrame
 
         try {
             decoderRoot = df.rootFromName(DecoderFile.fileLocation + df.getFilename());
-        } catch (Exception e) {
-            log.error("Exception while loading decoder XML file: " + df.getFilename(), e);
+        } catch (org.jdom2.JDOMException e) {
+            log.error("Exception while parsing decoder XML file: " + df.getFilename(), e);
+            return;
+        } catch (java.io.IOException  e) {
+            log.error("Exception while reading decoder XML file: " + df.getFilename(), e);
+            return;
         }
         // load variables from decoder tree
         df.getProductID();
         df.loadVariableModel(decoderRoot.getChild("decoder"), variableModel);
 
         // load reset from decoder tree
-        if (variableModel.piCv() != "") {
+        if (!variableModel.piCv().equals("")) {
             resetModel.setPiCv(variableModel.piCv());
         }
-        if (variableModel.siCv() != "") {
+        if (!variableModel.siCv().equals("")) {
             resetModel.setSiCv(variableModel.siCv());
         }
         df.loadResetModel(decoderRoot.getChild("decoder"), resetModel);
@@ -740,9 +741,7 @@ abstract public class PaneProgFrame extends JmriJFrame
         } else {
             decoderShowEmptyPanes = "";
         }
-        if (log.isDebugEnabled()) {
-            log.debug("decoderShowEmptyPanes=" + decoderShowEmptyPanes);
-        }
+        log.debug("decoderShowEmptyPanes={}", decoderShowEmptyPanes);
 
         // save the pointer to the model element
         modelElem = df.getModelElement();
