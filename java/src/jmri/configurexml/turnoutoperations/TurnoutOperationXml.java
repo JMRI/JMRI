@@ -1,6 +1,3 @@
-/**
- *
- */
 package jmri.configurexml.turnoutoperations;
 
 import jmri.TurnoutOperation;
@@ -99,8 +96,9 @@ public abstract class TurnoutOperationXml extends jmri.configurexml.AbstractXmlA
         try {
             Class<?> configClass = Class.forName(fullConfigName);
             adapter = (TurnoutOperationXml) configClass.newInstance();
-        } catch (Throwable e) {
-        }		// too many to list!
+        } catch (Throwable e) { // too many possible to list them all
+            log.error("exception in getAdapter", e);
+        }
         if (adapter == null) {
             log.warn("could not create adapter class " + fullConfigName);
         }
