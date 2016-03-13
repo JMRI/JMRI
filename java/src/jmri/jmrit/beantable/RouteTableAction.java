@@ -1420,7 +1420,7 @@ public class RouteTableAction extends AbstractTableAction {
 
         ///////////////// Make Trigger Conditionals //////////////////////
         //ArrayList <ConditionalVariable> onChangeList = new ArrayList<ConditionalVariable>();
-        int numConds = 1;
+        int numConds = 1; // passed through all these, with new value returned each time
         numConds = makeSensorConditional(sensor1, sensor1mode, numConds, false,
                 actionList, vetoList, logix, logixSystemName, uName);
         numConds = makeSensorConditional(sensor2, sensor2mode, numConds, false,
@@ -1439,6 +1439,7 @@ public class RouteTableAction extends AbstractTableAction {
                 logix, logixSystemName, uName);
         numConds = makeTurnoutConditional(cTurnout, cTurnoutStateBox, numConds, true, actionList,
                 vetoList, logix, logixSystemName, uName);
+        log.debug("Final number of conditionals: {}", numConds);
 
         ///////////////// Set up Alignment Sensor, if there is one //////////////////////////
         //String sensorSystemName = turnoutsAlignedSensor.getText();
