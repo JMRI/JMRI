@@ -1,4 +1,3 @@
-//AbstractMonPane.java
 package jmri.jmrix;
 
 import java.awt.Dimension;
@@ -36,7 +35,6 @@ import org.slf4j.LoggerFactory;
  * Abstract base class for JPanels displaying communications monitor information
  *
  * @author	Bob Jacobsen Copyright (C) 2001, 2003, 2010
- * @version	$Revision$
  */
 public abstract class AbstractMonPane extends JmriPanel {
 
@@ -212,7 +210,7 @@ public abstract class AbstractMonPane extends JmriPanel {
         }
         //automatically uppercase input in filterField, and only accept spaces and valid hex characters
         ((AbstractDocument) filterField.getDocument()).setDocumentFilter(new DocumentFilter() {
-            final String pattern = "[0-9a-fA-F ]*+"; // typing inserts individual characters
+            final static String pattern = "[0-9a-fA-F ]*+"; // typing inserts individual characters
             public void insertString(DocumentFilter.FilterBypass fb, int offset, String text,
                     AttributeSet attrs) throws BadLocationException {
                 if (text.matches(pattern)) { // NOI18N
