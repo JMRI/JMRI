@@ -759,7 +759,9 @@ public class JsonUtil {
      * @param locale
      * @param id     The id of an entry in the roster.
      * @return a roster entry in JSON notation
+     * @deprcated since 4.3.5
      */
+    @Deprecated
     static public JsonNode getRosterEntry(Locale locale, String id) {
         return JsonUtil.getRosterEntry(locale, Roster.instance().getEntryForId(id));
     }
@@ -774,7 +776,9 @@ public class JsonUtil {
      * @param locale
      * @param re     A RosterEntry that may or may not be in the roster.
      * @return a roster entry in JSON notation
+     * @deprecated since 4.3.5
      */
+    @Deprecated
     static public JsonNode getRosterEntry(Locale locale, RosterEntry re) {
         ObjectNode root = mapper.createObjectNode();
         root.put(TYPE, ROSTER_ENTRY);
@@ -810,6 +814,15 @@ public class JsonUtil {
         return root;
     }
 
+    /**
+     *
+     * @param locale The locale of the requesting client
+     * @param data   A JsonNode optionally containing a group name in the
+     *               "group" node
+     * @return the Roster as a Json Array
+     * @deprecated since 4.3.5
+     */
+    @Deprecated
     static public JsonNode getRoster(Locale locale, JsonNode data) {
         String group = (!data.path(GROUP).isMissingNode()) ? data.path(GROUP).asText() : null;
         if (Roster.ALLENTRIES.equals(group)) {
@@ -829,6 +842,13 @@ public class JsonUtil {
         return root;
     }
 
+    /**
+     * 
+     * @param locale The locale of the requesting client
+     * @return the list of Roster groups
+     * @deprecated since 4.3.5
+     */
+    @Deprecated
     static public JsonNode getRosterGroups(Locale locale) {
         ArrayNode root = mapper.createArrayNode();
         root.add(getRosterGroup(locale, Roster.ALLENTRIES));
@@ -838,6 +858,14 @@ public class JsonUtil {
         return root;
     }
 
+    /**
+     * 
+     * @param locale The locale of the requesting client
+     * @param name The name of the group
+     * @return A description of the group including its name and size
+     * @deprecated since 4.3.5
+     */
+    @Deprecated
     static public JsonNode getRosterGroup(Locale locale, String name) {
         ObjectNode root = mapper.createObjectNode();
         root.put(TYPE, ROSTER_GROUP);

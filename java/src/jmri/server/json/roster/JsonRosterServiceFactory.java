@@ -1,4 +1,4 @@
-package jmri.server.json.turnout;
+package jmri.server.json.roster;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 import jmri.server.json.JsonConnection;
@@ -10,24 +10,38 @@ import jmri.spi.JsonServiceFactory;
  *
  * @author Randall Wood
  */
-public class JsonTurnoutServiceFactory implements JsonServiceFactory {
+public class JsonRosterServiceFactory implements JsonServiceFactory {
 
-    public static final String TURNOUT = "turnout"; // NOI18N
-    public static final String TURNOUTS = "turnouts"; // NOI18N
+    /**
+     * {@value #ROSTER}
+     */
+    public static final String ROSTER = "roster"; // NOI18N
+    /**
+     * {@value #ROSTER_ENTRY}
+     */
+    public static final String ROSTER_ENTRY = "rosterEntry"; // NOI18N
+    /**
+     * {@value #ROSTER_GROUP}
+     */
+    public static final String ROSTER_GROUP = "rosterGroup"; // NOI18N
+    /**
+     * {@value #ROSTER_GROUPS}
+     */
+    public static final String ROSTER_GROUPS = "rosterGroups"; // NOI18N
 
     @Override
     public String[] getTypes() {
-        return new String[]{TURNOUT, TURNOUTS};
+        return new String[]{ROSTER, ROSTER_ENTRY, ROSTER_GROUPS, ROSTER_GROUP};
     }
 
     @Override
     public JsonSocketService getSocketService(JsonConnection connection) {
-        return new JsonTurnoutSocketService(connection);
+        return new JsonRosterSocketService(connection);
     }
 
     @Override
     public JsonHttpService getHttpService(ObjectMapper mapper) {
-        return new JsonTurnoutHttpService(mapper);
+        return new JsonRosterHttpService(mapper);
     }
 
 }
