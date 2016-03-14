@@ -74,7 +74,7 @@ public class SetPhysicalLocationAction extends AbstractAction {
      * @author Mark Underwood Copyright (C) 2011
      * @version $Revision: 20246 $
      */
-    class SetPhysicalLocationFrame extends OperationsFrame {
+    private static class SetPhysicalLocationFrame extends OperationsFrame {
 
         /**
          *
