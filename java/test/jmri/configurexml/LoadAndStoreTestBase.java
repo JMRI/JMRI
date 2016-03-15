@@ -1,4 +1,3 @@
-// LoadAndStoreTestBase.java
 package jmri.configurexml;
 
 import java.io.BufferedReader;
@@ -26,7 +25,6 @@ import org.slf4j.LoggerFactory;
  *
  * @author Bob Jacobsen Copyright 2009, 2014
  * @since 2.5.5 (renamed & reworked in 3.9 series)
- * @version $Revision$
  */
 public class LoadAndStoreTestBase extends TestCase {
 
@@ -56,6 +54,7 @@ public class LoadAndStoreTestBase extends TestCase {
     static void loadInit() {
         JUnitUtil.resetInstanceManager();
         JUnitUtil.initConfigureManager();
+        JUnitUtil.resetTurnoutOperationManager();
         JUnitUtil.initInternalTurnoutManager();
         JUnitUtil.initInternalLightManager();
         JUnitUtil.initInternalSensorManager();
