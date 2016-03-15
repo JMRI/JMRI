@@ -33,6 +33,7 @@ public abstract class TurnoutOperationXml extends jmri.configurexml.AbstractXmlA
         if (className == null) {
             log.error("class name missing in turnout operation \"" + e + "\"");
         } else {
+            log.debug("loadOperation for class {}", className);
             try {
                 Class<?> adapterClass = Class.forName(className);
                 if (adapterClass != null) {
@@ -88,11 +89,13 @@ public abstract class TurnoutOperationXml extends jmri.configurexml.AbstractXmlA
     static public TurnoutOperationXml getAdapter(TurnoutOperation op) {
         TurnoutOperationXml adapter = null;
         String[] fullOpNameComponents = jmri.util.StringUtil.split(op.getClass().getName(), ".");
+        log.debug("getAdapter found class name {}", op.getClass().getName());
         String[] myNameComponents
                 = new String[]{"jmri", "configurexml", "turnoutoperations", "TurnoutOperationXml"};
         myNameComponents[myNameComponents.length - 1]
                 = fullOpNameComponents[fullOpNameComponents.length - 1];
         String fullConfigName = StringUtil.join(myNameComponents, ".") + "Xml";
+        log.debug("getAdapter looks for {}", fullConfigName);
         try {
             Class<?> configClass = Class.forName(fullConfigName);
             adapter = (TurnoutOperationXml) configClass.newInstance();
