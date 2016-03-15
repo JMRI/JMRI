@@ -166,7 +166,7 @@ public class LoadAndStoreTestBase extends TestCase {
         File file;
 
         public CheckOneFilePasses(File file) {
-            super("Test schema valid: " + file);
+            super("Test load&store&compare matches: " + file);
             this.file = file;
         }
 
