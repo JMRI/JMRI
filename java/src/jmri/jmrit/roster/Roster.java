@@ -1132,7 +1132,7 @@ public class Roster extends XmlFile implements RosterGroupSelector, PropertyChan
      * Add a roster group, notifying all listeners of the change.
      *
      * This method fires the property change notification
-     * "{@value #ROSTER_GROUP_ADDED}".
+     * {@value #ROSTER_GROUP_ADDED}.
      *
      * @param rg The group to be added
      */
@@ -1150,7 +1150,7 @@ public class Roster extends XmlFile implements RosterGroupSelector, PropertyChan
      * This method creates a {@link jmri.jmrit.roster.rostergroup.RosterGroup}.
      * Use {@link #addRosterGroup(jmri.jmrit.roster.rostergroup.RosterGroup) }
      * if you need to add a subclass of RosterGroup. This method fires the
-     * property change notification "{@value #ROSTER_GROUP_ADDED}".
+     * property change notification {@value #ROSTER_GROUP_ADDED}.
      *
      * @param rg The group to be added
      */
