@@ -1,13 +1,5 @@
-// BlockManagerXmlTest.java
 package jmri.configurexml;
 
-/*
- import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
- import java.util.logging.Level;
- import java.util.logging.Logger;
- import jmri.JmriException;
- */
 import java.util.List;
 import jmri.BeanSetting;
 import jmri.Block;
@@ -31,8 +23,7 @@ import junit.framework.TestSuite;
  * Copyright 2008
  * <P>
  * @author Bob Coleman Copyright 2012
- * @version $Revision$
- */
+  */
 public class BlockManagerXmlTest extends TestCase {
 
     public void testLoadCurrent() throws Exception {
@@ -451,12 +442,4 @@ public class BlockManagerXmlTest extends TestCase {
         TestSuite suite = new TestSuite(BlockManagerXmlTest.class);
         return suite;
     }
-
-    /*    
-    private final static Logger log = LoggerFactory.getLogger(BlockManagerXmlTest.class.getName());
-
-     // The minimal setup for log4J
-     protected void setUp() { apps.tests.Log4JFixture.setUp(); }
-     protected void tearDown() { apps.tests.Log4JFixture.tearDown(); }
-     */
 }
