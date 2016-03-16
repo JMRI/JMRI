@@ -53,8 +53,8 @@ public class LoadAndStoreTestBase extends TestCase {
 
     static void loadInit() {
         JUnitUtil.resetInstanceManager();
-        JUnitUtil.initConfigureManager();
         JUnitUtil.resetTurnoutOperationManager();
+        JUnitUtil.initConfigureManager();
         JUnitUtil.initInternalTurnoutManager();
         JUnitUtil.initInternalLightManager();
         JUnitUtil.initInternalSensorManager();
