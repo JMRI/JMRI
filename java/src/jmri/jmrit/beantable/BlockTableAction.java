@@ -644,7 +644,7 @@ public class BlockTableAction extends AbstractTableAction {
     JCheckBox checkPerm = new JCheckBox(Bundle.getMessage("BlockPermColName"));
 
     JTextField numberToAdd = new JTextField(10);
-    JCheckBox range = new JCheckBox(Bundle.getMessage("LabelNumberToAdd"));
+    JCheckBox range = new JCheckBox(Bundle.getMessage("AddRange"));
     JCheckBox _autoSystemName = new JCheckBox(Bundle.getMessage("LabelAutoSysName"));
     jmri.UserPreferencesManager pref;
 

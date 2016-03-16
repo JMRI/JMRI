@@ -90,7 +90,7 @@ abstract class BeanEditAction extends AbstractAction {
     BeanItemPanel basicDetails() {
         BeanItemPanel basic = new BeanItemPanel();
 
-        basic.setName("Basic");
+        basic.setName(Bundle.getMessage("Basic"));
         basic.setLayout(new BoxLayout(basic, BoxLayout.Y_AXIS));
 
         basic.addItem(new BeanEditItem(new JLabel(bean.getSystemName()), Bundle.getMessage("ColumnSystemName"), null));
@@ -126,7 +126,7 @@ abstract class BeanEditAction extends AbstractAction {
     BeanItemPanel usageDetails() {
         BeanItemPanel usage = new BeanItemPanel();
 
-        usage.setName("Usage");
+        usage.setName(Bundle.getMessage("Usage"));
         usage.setLayout(new BoxLayout(usage, BoxLayout.Y_AXIS));
 
         usage.addItem(new BeanEditItem(null, null, Bundle.getMessage("UsageText", bean.getDisplayName())));
