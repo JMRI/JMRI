@@ -13,7 +13,6 @@ public class OtherConnectionTypeList implements jmri.jmrix.ConnectionTypeList {
 
     public String[] getAvailableProtocolClasses() {
         return new String[]{
-            "jmri.jmrix.mrc.serialdriver.ConnectionConfig",
             "jmri.jmrix.direct.serial.ConnectionConfig"
         };
     }
