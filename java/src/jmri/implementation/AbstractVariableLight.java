@@ -252,6 +252,7 @@ public abstract class AbstractVariableLight extends AbstractLight
         internalClock = InstanceManager.timebaseInstance();
         if (internalClock == null) {
             log.error("No Timebase Instance");
+            return;
         }
         minuteChangeListener = new java.beans.PropertyChangeListener() {
             public void propertyChange(java.beans.PropertyChangeEvent e) {

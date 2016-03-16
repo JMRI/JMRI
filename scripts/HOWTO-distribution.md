@@ -313,6 +313,8 @@ If anybody wants to add a change from here on in, they should
     ssh user,jmri@shell.sf.net create
     ssh user,jmri@shell.sf.net
     curl -o release.zip "http://builds.jmri.org/jenkins/job/Test%20Releases/job/4.3.3/ws/dist/release/*zip*/release.zip"
+        (use the following instead if building on second Jenkins server)
+    curl -o release.zip "http://jmri.tagadab.com/jenkins/job/TestReleases/job/4.3.4/ws/dist/release/*zip*/release.zip"
     rm release/JMRI*
     unzip release.zip
     cd release

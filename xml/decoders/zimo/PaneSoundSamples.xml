@@ -1,0 +1,739 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- version 1 - for Unified Software -->
+<!-- Mark Waters, 11 Mar 2016 -->
+<!-- From Version 32 firmware -->
+<!-- see Zimo German manual for small decoders, -->
+<pane xmlns:xi="http://www.w3.org/2001/XInclude" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="http://jmri.org/xml/schema/decoder.xsd">
+    <name>Sound Samples</name>
+    <row>
+        <column>
+            <row>
+                <column>
+                    <label>
+                        <text> </text>
+                    </label>
+                    <label>
+                        <text>Function Key Samples</text>
+                    </label>
+                    <label>
+                        <text> </text>
+                    </label>
+                    <label>
+                        <text>             Loop  Short                          Loop  Short</text>
+                    </label>
+                </column>
+            </row>
+            <row>
+                <label>
+                    <text> </text>
+                </label>
+                <display item="F0 Sound Sample"/>
+                <label>
+                    <text> </text>
+                </label>
+                <display item="F0 Sound Loop" format="checkbox"/>
+                <label>
+                    <text>     </text>
+                </label>
+                <display item="F0 Sound Short" format="checkbox"/>
+                <label>
+                    <text>         </text>
+                </label>
+                <display item="F15 Sound Sample"/>
+                <label>
+                    <text> </text>
+                </label>
+                <display item="F15 Sound Loop" format="checkbox"/>
+                <label>
+                    <text>     </text>
+                </label>
+                <display item="F15 Sound Short" format="checkbox"/>
+                <label>
+                    <text>         </text>
+                </label>
+            </row>
+            <row>
+                <label>
+                    <text> </text>
+                </label>
+            </row>
+            <row>
+                <label>
+                    <text> </text>
+                </label>
+                <display item="F1 Sound Sample"/>
+                <label>
+                    <text> </text>
+                </label>
+                <display item="F1 Sound Loop" format="checkbox"/>
+                <label>
+                    <text>     </text>
+                </label>
+                <display item="F1 Sound Short" format="checkbox"/>
+                <label>
+                    <text>         </text>
+                </label>
+                <display item="F16 Sound Sample"/>
+                <label>
+                    <text> </text>
+                </label>
+                <display item="F16 Sound Loop" format="checkbox"/>
+                <label>
+                    <text>     </text>
+                </label>
+                <display item="F16 Sound Short" format="checkbox"/>
+                <label>
+                    <text>         </text>
+                </label>
+            </row>
+            <row>
+                <label>
+                    <text> </text>
+                </label>
+            </row>
+            <row>
+                <label>
+                    <text> </text>
+                </label>
+                <display item="F2 Sound Sample"/>
+                <label>
+                    <text> </text>
+                </label>
+                <display item="F2 Sound Loop" format="checkbox"/>
+                <label>
+                    <text>     </text>
+                </label>
+                <display item="F2 Sound Short" format="checkbox"/>
+                <label>
+                    <text>         </text>
+                </label>
+                <display item="F17 Sound Sample"/>
+                <label>
+                    <text> </text>
+                </label>
+                <display item="F17 Sound Loop" format="checkbox"/>
+                <label>
+                    <text>     </text>
+                </label>
+                <display item="F17 Sound Short" format="checkbox"/>
+                <label>
+                    <text>         </text>
+                </label>
+            </row>
+            <row>
+                <label>
+                    <text> </text>
+                </label>
+            </row>
+            <row>
+                <label>
+                    <text> </text>
+                </label>
+                <display item="F3 Sound Sample"/>
+                <label>
+                    <text> </text>
+                </label>
+                <display item="F3 Sound Loop" format="checkbox"/>
+                <label>
+                    <text>     </text>
+                </label>
+                <display item="F3 Sound Short" format="checkbox"/>
+                <label>
+                    <text>         </text>
+                </label>
+                <display item="F18 Sound Sample"/>
+                <label>
+                    <text> </text>
+                </label>
+                <display item="F18 Sound Loop" format="checkbox"/>
+                <label>
+                    <text>     </text>
+                </label>
+                <display item="F18 Sound Short" format="checkbox"/>
+                <label>
+                    <text>         </text>
+                </label>
+            </row>
+            <row>
+                <label>
+                    <text> </text>
+                </label>
+            </row>
+            <row>
+                <label>
+                    <text> </text>
+                </label>
+                <display item="F4 Sound Sample"/>
+                <label>
+                    <text> </text>
+                </label>
+                <display item="F4 Sound Loop" format="checkbox"/>
+                <label>
+                    <text>     </text>
+                </label>
+                <display item="F4 Sound Short" format="checkbox"/>
+                <label>
+                    <text>         </text>
+                </label>
+                <display item="F19 Sound Sample"/>
+                <label>
+                    <text> </text>
+                </label>
+                <display item="F19 Sound Loop" format="checkbox"/>
+                <label>
+                    <text>     </text>
+                </label>
+                <display item="F19 Sound Short" format="checkbox"/>
+                <label>
+                    <text>         </text>
+                </label>
+            </row>
+            <row>
+                <label>
+                    <text> </text>
+                </label>
+            </row>
+            <row>
+                <label>
+                    <text> </text>
+                </label>
+                <display item="F5 Sound Sample"/>
+                <label>
+                    <text> </text>
+                </label>
+                <display item="F5 Sound Loop" format="checkbox"/>
+                <label>
+                    <text>     </text>
+                </label>
+                <display item="F5 Sound Short" format="checkbox"/>
+                <label>
+                    <text>         </text>
+                </label>
+                <display item="F20 Sound Sample"/>
+                <label>
+                    <text> </text>
+                </label>
+                <display item="F20 Sound Loop" format="checkbox"/>
+                <label>
+                    <text>     </text>
+                </label>
+                <display item="F20 Sound Short" format="checkbox"/>
+                <label>
+                    <text>         </text>
+                </label>
+            </row>
+            <row>
+                <label>
+                    <text> </text>
+                </label>
+            </row>
+            <row>
+                <label>
+                    <text> </text>
+                </label>
+                <display item="F6 Sound Sample"/>
+                <label>
+                    <text> </text>
+                </label>
+                <display item="F6 Sound Loop" format="checkbox"/>
+                <label>
+                    <text>     </text>
+                </label>
+                <display item="F6 Sound Short" format="checkbox"/>
+                <label>
+                    <text>         </text>
+                </label>
+                <display item="F21 Sound Sample"/>
+                <label>
+                    <text> </text>
+                </label>
+                <display item="F21 Sound Loop" format="checkbox"/>
+                <label>
+                    <text>     </text>
+                </label>
+                <display item="F21 Sound Short" format="checkbox"/>
+                <label>
+                    <text>         </text>
+                </label>
+            </row>
+            <row>
+                <label>
+                    <text> </text>
+                </label>
+            </row>
+            <row>
+                <label>
+                    <text> </text>
+                </label>
+                <display item="F7 Sound Sample"/>
+                <label>
+                    <text> </text>
+                </label>
+                <display item="F7 Sound Loop" format="checkbox"/>
+                <label>
+                    <text>     </text>
+                </label>
+                <display item="F7 Sound Short" format="checkbox"/>
+                <label>
+                    <text>         </text>
+                </label>
+                <display item="F22 Sound Sample"/>
+                <label>
+                    <text> </text>
+                </label>
+                <display item="F22 Sound Loop" format="checkbox"/>
+                <label>
+                    <text>     </text>
+                </label>
+                <display item="F22 Sound Short" format="checkbox"/>
+                <label>
+                    <text>         </text>
+                </label>
+            </row>
+            <row>
+                <label>
+                    <text> </text>
+                </label>
+            </row>
+            <row>
+                <label>
+                    <text> </text>
+                </label>
+                <display item="F8 Sound Sample"/>
+                <label>
+                    <text> </text>
+                </label>
+                <display item="F8 Sound Loop" format="checkbox"/>
+                <label>
+                    <text>     </text>
+                </label>
+                <display item="F8 Sound Short" format="checkbox"/>
+                <label>
+                    <text>         </text>
+                </label>
+                <display item="F23 Sound Sample"/>
+                <label>
+                    <text> </text>
+                </label>
+                <display item="F23 Sound Loop" format="checkbox"/>
+                <label>
+                    <text>     </text>
+                </label>
+                <display item="F23 Sound Short" format="checkbox"/>
+                <label>
+                    <text>         </text>
+                </label>
+            </row>
+            <row>
+                <label>
+                    <text> </text>
+                </label>
+            </row>
+            <row>
+                <label>
+                    <text> </text>
+                </label>
+                <display item="F9 Sound Sample"/>
+                <label>
+                    <text> </text>
+                </label>
+                <display item="F9 Sound Loop" format="checkbox"/>
+                <label>
+                    <text>     </text>
+                </label>
+                <display item="F9 Sound Short" format="checkbox"/>
+                <label>
+                    <text>         </text>
+                </label>
+                <display item="F24 Sound Sample"/>
+                <label>
+                    <text> </text>
+                </label>
+                <display item="F24 Sound Loop" format="checkbox"/>
+                <label>
+                    <text>     </text>
+                </label>
+                <display item="F24 Sound Short" format="checkbox"/>
+                <label>
+                    <text>         </text>
+                </label>
+            </row>
+            <row>
+                <label>
+                    <text> </text>
+                </label>
+            </row>
+            <row>
+                <label>
+                    <text> </text>
+                </label>
+                <display item="F10 Sound Sample"/>
+                <label>
+                    <text> </text>
+                </label>
+                <display item="F10 Sound Loop" format="checkbox"/>
+                <label>
+                    <text>     </text>
+                </label>
+                <display item="F10 Sound Short" format="checkbox"/>
+                <label>
+                    <text>         </text>
+                </label>
+                <display item="F25 Sound Sample"/>
+                <label>
+                    <text> </text>
+                </label>
+                <display item="F25 Sound Loop" format="checkbox"/>
+                <label>
+                    <text>     </text>
+                </label>
+                <display item="F25 Sound Short" format="checkbox"/>
+                <label>
+                    <text>         </text>
+                </label>
+            </row>
+            <row>
+                <label>
+                    <text> </text>
+                </label>
+            </row>
+            <row>
+                <label>
+                    <text> </text>
+                </label>
+                <display item="F11 Sound Sample"/>
+                <label>
+                    <text> </text>
+                </label>
+                <display item="F11 Sound Loop" format="checkbox"/>
+                <label>
+                    <text>     </text>
+                </label>
+                <display item="F11 Sound Short" format="checkbox"/>
+                <label>
+                    <text>         </text>
+                </label>
+                <display item="F26 Sound Sample"/>
+                <label>
+                    <text> </text>
+                </label>
+                <display item="F26 Sound Loop" format="checkbox"/>
+                <label>
+                    <text>     </text>
+                </label>
+                <display item="F26 Sound Short" format="checkbox"/>
+                <label>
+                    <text>         </text>
+                </label>
+            </row>
+            <row>
+                <label>
+                    <text> </text>
+                </label>
+            </row>
+            <row>
+                <label>
+                    <text> </text>
+                </label>
+                <display item="F12 Sound Sample"/>
+                <label>
+                    <text> </text>
+                </label>
+                <display item="F12 Sound Loop" format="checkbox"/>
+                <label>
+                    <text>     </text>
+                </label>
+                <display item="F12 Sound Short" format="checkbox"/>
+                <label>
+                    <text>         </text>
+                </label>
+                <display item="F27 Sound Sample"/>
+                <label>
+                    <text> </text>
+                </label>
+                <display item="F27 Sound Loop" format="checkbox"/>
+                <label>
+                    <text>     </text>
+                </label>
+                <display item="F27 Sound Short" format="checkbox"/>
+                <label>
+                    <text>         </text>
+                </label>
+            </row>
+            <row>
+                <label>
+                    <text> </text>
+                </label>
+            </row>
+            <row>
+                <label>
+                    <text> </text>
+                </label>
+                <display item="F13 Sound Sample"/>
+                <label>
+                    <text> </text>
+                </label>
+                <display item="F13 Sound Loop" format="checkbox"/>
+                <label>
+                    <text>     </text>
+                </label>
+                <display item="F13 Sound Short" format="checkbox"/>
+                <label>
+                    <text>         </text>
+                </label>
+                <display item="F28 Sound Sample"/>
+                <label>
+                    <text> </text>
+                </label>
+                <display item="F28 Sound Loop" format="checkbox"/>
+                <label>
+                    <text>     </text>
+                </label>
+                <display item="F28 Sound Short" format="checkbox"/>
+                <label>
+                    <text>         </text>
+                </label>
+            </row>
+            <row>
+                <label>
+                    <text> </text>
+                </label>
+            </row>
+            <row>
+                <label>
+                    <text> </text>
+                </label>
+                <display item="F14 Sound Sample"/>
+                <label>
+                    <text> </text>
+                </label>
+                <display item="F14 Sound Loop" format="checkbox"/>
+                <label>
+                    <text>     </text>
+                </label>
+                <display item="F14 Sound Short" format="checkbox"/>
+                <label>
+                    <text>                                                          </text>
+                </label>
+            </row>
+            <label>
+                <text> </text>
+            </label>
+        </column>
+        <column>
+            <label>
+                <text>  </text>
+            </label>
+        </column>
+        <column>
+            <label>
+                <text>                      </text>
+            </label>
+        </column>
+        <column>
+            <label>
+                <text>Automatic Sound Samples </text>
+            </label>
+            <label>
+                <text> </text>
+            </label>
+            <display item="Boiling Sample"/>
+            <label>
+                <text> </text>
+            </label>
+            <display item="Change of Direction Sample"/>
+            <label>
+                <text> </text>
+            </label>
+            <display item="Brake Squeal Sample"/>
+            <label>
+                <text> </text>
+            </label>
+            <display item="Thyristor Sample"/>
+            <label>
+                <text> </text>
+            </label>
+            <display item="Starting Whistle or Horn Sample"/>
+            <label>
+                <text> </text>
+            </label>
+            <display item="Drain Valves Sample"/>
+            <label>
+                <text> </text>
+            </label>
+            <display item="Electric Motor Sample"/>
+            <label>
+                <text> </text>
+            </label>
+            <display item="Rolling Noise Sample"/>
+            <label>
+                <text> </text>
+            </label>
+            <display item="Switchgear Sample"/>
+            <label>
+                <text> </text>
+            </label>
+            <display item="Second Thyristor Sample"/>
+            <label>
+                <text> </text>
+            </label>
+            <display item="Turbocharger Sample"/>
+            <label>
+                <text> </text>
+            </label>
+            <display item="Dynamic Brake Sample"/>
+            <label>
+                <text> </text>
+            </label>
+        </column>
+        <column>
+            <label>
+                <text>                 </text>
+            </label>
+        </column>
+        <column>
+            <label>
+                <text>Switch triggered sounds </text>
+                <text xml:lang="it">Livello Suoni regolato da Ingresso</text>
+            </label>
+            <label>
+                <text> </text>
+            </label>
+            <display item="Switch input 1 Sound Sample"/>
+            <label>
+                <text> </text>
+            </label>
+            <display item="Switch input 2 Sound Sample"/>
+            <label>
+                <text> </text>
+            </label>
+            <display item="Switch input 3 Sound Sample"/>
+            <label>
+                <text> </text>
+            </label>
+            <label>
+                <text>Randomly generated sound Samples</text>
+                <text xml:lang="it">Suoni Casuali</text>
+            </label>
+            <label>
+                <text> </text>
+            </label>
+            <label>
+                <text>                   Drive   Stand</text>
+            </label>
+            <row>
+                <display item="Z1 Sound Sample"/>
+                <label>
+                    <text>   </text>
+                </label>
+                <display item="Z1 Stand" format="checkbox"/>
+                <label>
+                    <text>     </text>
+                </label>
+                <display item="Z1 Drive" format="checkbox"/>
+            </row>
+            <label>
+                <text> </text>
+            </label>
+            <row>
+                <display item="Z2 Sound Sample"/>
+                <label>
+                    <text>   </text>
+                </label>
+                <display item="Z2 Stand" format="checkbox"/>
+                <label>
+                    <text>     </text>
+                </label>
+                <display item="Z2 Drive" format="checkbox"/>
+            </row>
+            <label>
+                <text> </text>
+            </label>
+            <row>
+                <display item="Z3 Sound Sample"/>
+                <label>
+                    <text>   </text>
+                </label>
+                <display item="Z3 Stand" format="checkbox"/>
+                <label>
+                    <text>     </text>
+                </label>
+                <display item="Z3 Drive" format="checkbox"/>
+            </row>
+            <label>
+                <text> </text>
+            </label>
+            <row>
+                <display item="Z4 Sound Sample"/>
+                <label>
+                    <text>   </text>
+                </label>
+                <display item="Z4 Stand" format="checkbox"/>
+                <label>
+                    <text>     </text>
+                </label>
+                <display item="Z4 Drive" format="checkbox"/>
+            </row>
+            <label>
+                <text> </text>
+            </label>
+            <row>
+                <display item="Z5 Sound Sample"/>
+                <label>
+                    <text>   </text>
+                </label>
+                <display item="Z5 Stand" format="checkbox"/>
+                <label>
+                    <text>     </text>
+                </label>
+                <display item="Z5 Drive" format="checkbox"/>
+            </row>
+            <label>
+                <text> </text>
+            </label>
+            <row>
+                <display item="Z6 Sound Sample"/>
+                <label>
+                    <text>   </text>
+                </label>
+                <display item="Z6 Stand" format="checkbox"/>
+                <label>
+                    <text>     </text>
+                </label>
+                <display item="Z6 Drive" format="checkbox"/>
+            </row>
+            <label>
+                <text> </text>
+            </label>
+            <row>
+                <display item="Z7 Sound Sample"/>
+                <label>
+                    <text>   </text>
+                </label>
+                <display item="Z7 Stand" format="checkbox"/>
+                <label>
+                    <text>     </text>
+                </label>
+                <display item="Z7 Drive" format="checkbox"/>
+            </row>
+            <label>
+                <text> </text>
+            </label>
+            <row>
+                <display item="Z8 Sound Sample"/>
+                <label>
+                    <text>   </text>
+                </label>
+                <display item="Z8 Stand" format="checkbox"/>
+                <label>
+                    <text>     </text>
+                </label>
+                <display item="Z8 Drive" format="checkbox"/>
+            </row>
+            <label>
+                <text> </text>
+            </label>
+        </column>
+    </row>
+    <name xml:lang="it">Livelli Suono</name>
+</pane>
