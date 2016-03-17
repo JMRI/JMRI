@@ -185,39 +185,31 @@ public class TransitManagerXml extends jmri.managers.configurexml.AbstractNamedB
                         alt = true;
                     }
                     TransitSection ts = new TransitSection(sectionName, seq, dir, alt);
-                    if (ts == null) {
-                        log.error("Trouble creation TransitSection for Transit - " + sysName);
-                    } else {
-                        x.addTransitSection(ts);
-                        // load transitsectionaction children, if any
-                        List<Element> transitTransitSectionActionList = transitTransitSectionList.get(n).
-                                getChildren("transitsectionaction");
-                        for (int m = 0; m < transitTransitSectionActionList.size(); m++) {
-                            Element elemx = transitTransitSectionActionList.get(m);
-                            int tWhen = 1;
-                            int tWhat = 1;
-                            int tWhenData = 0;
-                            String tWhenString = elemx.getAttribute("whenstring").getValue();
-                            int tWhatData1 = 0;
-                            int tWhatData2 = 0;
-                            String tWhatString = elemx.getAttribute("whatstring").getValue();
-                            try {
-                                tWhen = elemx.getAttribute("whencode").getIntValue();
-                                tWhat = elemx.getAttribute("whatcode").getIntValue();
-                                tWhenData = elemx.getAttribute("whendata").getIntValue();
-                                tWhatData1 = elemx.getAttribute("whatdata1").getIntValue();
-                                tWhatData2 = elemx.getAttribute("whatdata2").getIntValue();
-                            } catch (Exception e) {
-                                log.error("Data Conversion Exception when loading transit section action - " + e);
-                            }
-                            TransitSectionAction tsa = new TransitSectionAction(tWhen, tWhat, tWhenData,
-                                    tWhatData1, tWhatData2, tWhenString, tWhatString);
-                            if (tsa == null) {
-                                log.error("Trouble creating TransitSectionAction for Transit - " + sysName);
-                            } else {
-                                ts.addAction(tsa);
-                            }
+                    x.addTransitSection(ts);
+                    // load transitsectionaction children, if any
+                    List<Element> transitTransitSectionActionList = transitTransitSectionList.get(n).
+                            getChildren("transitsectionaction");
+                    for (int m = 0; m < transitTransitSectionActionList.size(); m++) {
+                        Element elemx = transitTransitSectionActionList.get(m);
+                        int tWhen = 1;
+                        int tWhat = 1;
+                        int tWhenData = 0;
+                        String tWhenString = elemx.getAttribute("whenstring").getValue();
+                        int tWhatData1 = 0;
+                        int tWhatData2 = 0;
+                        String tWhatString = elemx.getAttribute("whatstring").getValue();
+                        try {
+                            tWhen = elemx.getAttribute("whencode").getIntValue();
+                            tWhat = elemx.getAttribute("whatcode").getIntValue();
+                            tWhenData = elemx.getAttribute("whendata").getIntValue();
+                            tWhatData1 = elemx.getAttribute("whatdata1").getIntValue();
+                            tWhatData2 = elemx.getAttribute("whatdata2").getIntValue();
+                        } catch (Exception e) {
+                            log.error("Data Conversion Exception when loading transit section action - " + e);
                         }
+                        TransitSectionAction tsa = new TransitSectionAction(tWhen, tWhat, tWhenData,
+                                tWhatData1, tWhatData2, tWhenString, tWhatString);
+                        ts.addAction(tsa);
                     }
                 }
             }
