@@ -321,6 +321,21 @@ public class Roster extends XmlFile implements RosterGroupSelector, PropertyChan
         return null;
     }
 
+     /**
+     * Return RosterEntry from a DCC address.
+     *
+     * @param a 
+     * @return The matching RosterEntry or null
+     */
+    public RosterEntry getEntryByDccAddress(String a) {
+        for (RosterEntry re : _list) {
+            if (re.getDccAddress().equals(a)) {
+                return re;
+            }
+        }
+        return null;
+    }
+
     /**
      * Return a specific entry by index
      *
