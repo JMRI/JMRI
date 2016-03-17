@@ -135,7 +135,7 @@ public abstract class TurnoutOperation implements Comparable<Object> {
     }
 
     /**
-     * The identify of an operation is its name
+     * The identity of an operation is its name
      */
     public boolean equals(Object ro) {
         if (ro == null) return false;
