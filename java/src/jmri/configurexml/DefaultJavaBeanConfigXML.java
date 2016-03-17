@@ -38,43 +38,38 @@ public class DefaultJavaBeanConfigXML extends jmri.configurexml.AbstractXmlAdapt
 
         Object o = ctor.newInstance(new Object[]{});
 
-        try {
-            // reflect through and add parameters
-            BeanInfo b = Introspector.getBeanInfo(o.getClass());
-            PropertyDescriptor[] properties = b.getPropertyDescriptors();
+        // reflect through and add parameters
+        BeanInfo b = Introspector.getBeanInfo(o.getClass());
+        PropertyDescriptor[] properties = b.getPropertyDescriptors();
 
-            // add properties
-            List<Element> children = e.getChildren("property");
-            for (int i = 0; i < children.size(); i++) {
-                // unpack XML
-                Element property = children.get(i);
-                Element eName = property.getChild("name");
-                Element eValue = property.getChild("value");
-                String name = eName.getText();
-                String value = eValue.getText();
-                String type = eName.getAttributeValue("type");
+        // add properties
+        List<Element> children = e.getChildren("property");
+        for (int i = 0; i < children.size(); i++) {
+            // unpack XML
+            Element property = children.get(i);
+            Element eName = property.getChild("name");
+            Element eValue = property.getChild("value");
+            String name = eName.getText();
+            String value = eValue.getText();
+            String type = eName.getAttributeValue("type");
 
-                // find matching method
-                for (int j = 0; j < properties.length; j++) {
-                    if (properties[j].getName().equals(name)) {
-                        // match, set this one by first finding method
-                        Method m = properties[j].getWriteMethod();
+            // find matching method
+            for (int j = 0; j < properties.length; j++) {
+                if (properties[j].getName().equals(name)) {
+                    // match, set this one by first finding method
+                    Method m = properties[j].getWriteMethod();
 
-                        // sort by type
-                        if (type.equals("class java.lang.String")) {
-                            m.invoke(o, new Object[]{value});
-                        } else if (type.equals("int")) {
-                            m.invoke(o, new Object[]{Integer.valueOf(value)});
-                        } else {
-                            log.error("Can't handle type: " + type);
-                        }
-                        break;
+                    // sort by type
+                    if (type.equals("class java.lang.String")) {
+                        m.invoke(o, new Object[]{value});
+                    } else if (type.equals("int")) {
+                        m.invoke(o, new Object[]{Integer.valueOf(value)});
+                    } else {
+                        log.error("Can't handle type: " + type);
                     }
+                    break;
                 }
             }
-        } catch (Exception ex) {
-            log.error("Partial load due to exception: " + ex);
-            ex.printStackTrace();
         }
 
         return o;
