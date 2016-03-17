@@ -529,25 +529,6 @@ public class ConfigXmlManager extends jmri.jmrit.XmlFile
         );
     }
 
-//     private void loadVersion(Element root, XmlAdapter adapter) {
-//         int majorRelease = 0;
-//         int minorRelease = 0;
-//         int testRelease = 0;
-//         Element v = root.getChild("jmriversion");
-//         if (v!=null) {
-//             try {
-//                 majorRelease = Integer.parseInt(v.getChild("major").getText());
-//                 minorRelease = Integer.parseInt(v.getChild("minor").getText());
-//                 testRelease = Integer.parseInt(v.getChild("test").getText());
-//             } catch (NullPointerException npe) {
-//             } catch ( NumberFormatException nfe) {
-//             }
-//         }
-//         adapter.setConfigXmlManager(this);
-//         adapter.setMajorRelease(majorRelease);
-//         adapter.setMinorRelease(minorRelease);
-//         adapter.setTestRelease(testRelease);
-//     }
     /**
      * Load a file.
      * <p>
