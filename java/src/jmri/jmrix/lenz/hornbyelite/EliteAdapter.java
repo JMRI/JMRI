@@ -34,7 +34,7 @@ public class EliteAdapter extends XNetSerialPortController implements jmri.jmrix
         option2Name = "Buffer";
         options.put(option2Name, new Option("Check Buffer : ", validOption2));
         setCheckBuffer(true); // default to true for elite
-        this.manufacturerName = jmri.jmrix.DCCManufacturerList.HORNBY;
+        this.manufacturerName = EliteConnectionTypeList.HORNBY;
     }
 
     Vector<String> portNameVector = null;

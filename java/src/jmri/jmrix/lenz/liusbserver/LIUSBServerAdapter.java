@@ -57,7 +57,7 @@ public class LIUSBServerAdapter extends XNetNetworkPortController {
         super();
         option1Name = "BroadcastPort";
         options.put(option1Name, new Option("Broadcast Port", new String[]{String.valueOf(LIUSBServerAdapter.BROADCAST_TCP_PORT), ""}));
-        this.manufacturerName = jmri.jmrix.DCCManufacturerList.LENZ;
+        this.manufacturerName = jmri.jmrix.lenz.LenzConnectionTypeList.LENZ;
     }
 
     @Override

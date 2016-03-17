@@ -29,7 +29,7 @@ public class SerialDriverAdapter extends SerialPortController implements jmri.jm
 
     public SerialDriverAdapter() {
         super(new MapleSystemConnectionMemo());
-        this.manufacturerName = jmri.jmrix.DCCManufacturerList.MAPLE;
+        this.manufacturerName = jmri.jmrix.maple.SerialConnectionTypeList.MAPLE;
     }
 
     public String openPort(String portName, String appName) {

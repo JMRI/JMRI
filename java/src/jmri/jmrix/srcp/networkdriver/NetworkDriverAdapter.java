@@ -66,7 +66,7 @@ public class NetworkDriverAdapter extends SRCPPortController implements jmri.jmr
         if (mInstance == null) {
             // create a new one
             NetworkDriverAdapter m = new NetworkDriverAdapter();
-            m.setManufacturer(jmri.jmrix.DCCManufacturerList.ESU);
+            m.setManufacturer(jmri.jmrix.srcp.SRCPConnectionTypeList.SRCP);
 
             // and make instance
             mInstance = m;

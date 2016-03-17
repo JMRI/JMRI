@@ -13,4 +13,5 @@ public interface ConnectionTypeList {
 
     public String[] getAvailableProtocolClasses();
 
+    public String[] getManufacturers();
 }

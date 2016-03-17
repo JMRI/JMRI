@@ -1,6 +1,45 @@
 // DCCManufacturerList.java
 package jmri.jmrix;
 
+import static jmri.jmrix.OtherConnectionTypeList.OTHER;
+import static jmri.jmrix.acela.AcelaConnectionTypeList.CTI;
+import static jmri.jmrix.bachrus.SpeedoConnectionTypeList.BACHRUS;
+import static jmri.jmrix.cmri.CMRIConnectionTypeList.CMRI;
+import static jmri.jmrix.dcc4pc.Dcc4PcConnectionTypeList.DCC4PC;
+import static jmri.jmrix.dccpp.DCCppConnectionTypeList.DCCPP;
+import static jmri.jmrix.easydcc.EasyDccConnectionTypeList.EASYDCC;
+import static jmri.jmrix.ecos.EcosConnectionTypeList.ESU;
+import static jmri.jmrix.grapevine.SerialConnectionTypeList.PROTRAK;
+import static jmri.jmrix.ieee802154.SerialConnectionTypeList.IEEE802154;
+import static jmri.jmrix.internal.InternalConnectionTypeList.NONE;
+import static jmri.jmrix.jmriclient.JMRIClientConnectionTypeList.JMRI;
+import static jmri.jmrix.lenz.LenzConnectionTypeList.ATLAS;
+import static jmri.jmrix.lenz.LenzConnectionTypeList.LENZ;
+import static jmri.jmrix.lenz.hornbyelite.EliteConnectionTypeList.HORNBY;
+import static jmri.jmrix.lenz.ztc640.ZTC640ConnectionTypeList.ZTC;
+import static jmri.jmrix.loconet.LnConnectionTypeList.DIGITRAX;
+import static jmri.jmrix.loconet.uhlenbrock.UhlenbrockConnectionTypeList.UHLEN;
+import static jmri.jmrix.maple.SerialConnectionTypeList.MAPLE;
+import static jmri.jmrix.marklin.MarklinConnectionTypeList.MARKLIN;
+import static jmri.jmrix.merg.MergConnectionTypeList.MERG;
+import static jmri.jmrix.mrc.MrcConnectionTypeList.MRC;
+import static jmri.jmrix.nce.NceConnectionTypeList.NCE;
+import static jmri.jmrix.oaktree.SerialConnectionTypeList.OAK;
+import static jmri.jmrix.openlcb.OlcbConnectionTypeList.OPENLCB;
+import static jmri.jmrix.pi.RaspberryPiConnectionTypeList.PI;
+import static jmri.jmrix.powerline.SerialConnectionTypeList.POWERLINE;
+import static jmri.jmrix.qsi.QSIConnectionTypeList.QSI;
+import static jmri.jmrix.rfid.RfidConnectionTypeList.RFID;
+import static jmri.jmrix.roco.RocoConnectionTypeList.ROCO;
+import static jmri.jmrix.rps.RpsConnectionTypeList.NAC;
+import static jmri.jmrix.secsi.SerialConnectionTypeList.TRACTRONICS;
+import static jmri.jmrix.sprog.SprogConnectionTypeList.SPROG;
+import static jmri.jmrix.srcp.SRCPConnectionTypeList.SRCP;
+import static jmri.jmrix.tams.TamsConnectionTypeList.TAMS;
+import static jmri.jmrix.tmcc.SerialConnectionTypeList.LIONEL;
+import static jmri.jmrix.wangrow.WangrowConnectionTypeList.WANGROW;
+import static jmri.jmrix.zimo.Mx1ConnectionTypeList.ZIMO;
+
 /**
  * Maintains lists equipment manufacturers that JMRI Supports.
  * <P>
@@ -9,52 +48,17 @@ package jmri.jmrix;
  * @author Bob Jacobsen Copyright (C) 2010
  * @author Kevin Dickerson Copyright (C) 2010
  * @version	$Revision$
- *
+ * @deprecated Since 3.4.5
  */
+@Deprecated
 public class DCCManufacturerList {
 
-    public static final String NONE = "None";  // internal only
-    public static final String LENZ = "Lenz";
-    public static final String HORNBY = "Hornby";
-    public static final String BACHRUS = "Bachrus";
-    public static final String ESU = "ESU";
-    public static final String DCCPP = "DCC++";
-    public static final String DIGITRAX = "Digitrax";
-    public static final String ATLAS = "Atlas";
-    public static final String NCE = "NCE";
-    public static final String CMRI = "C/MRI";
-    public static final String CTI = "CTI Electronics";
-    public static final String EASYDCC = "Easy DCC";
-    public static final String DCC4PC = "DCC4PC";
-    public static final String DCCSPEC = "DCC Specialties";
-    public static final String IEEE802154 = "IEEE 802.15.4";
-    public static final String XBee = "XBee (API Mode)";
-    public static final String JMRI = "JMRI (Network)";
-    public static final String LIONEL = "Lionel TMCC";
-    public static final String MAPLE = "Maple Systems";
-    public static final String MERG = "MERG";
-    public static final String MRC = "MRC";
-    public static final String MARKLIN = "Marklin";
-    public static final String NAC = "NAC Services";
-    public static final String OAK = "Oak Tree Systems";
-    public static final String OPENLCB = "OpenLCB";
-    public static final String OTHER = "Others";
-    public static final String POWERLINE = "Powerline";
-    public static final String PROTRAK = "Protrak";
-    public static final String QSI = "QSI Solutions";
-    public static final String RAIL = "RailDriver";
-    public static final String RFID = "RFID";
-    public static final String PI = "Raspberry Pi Foundation";
-    public static final String ROCO = "Roco";
-    public static final String SPROG = "SPROG DCC";
-    public static final String SRCP = "SRCP";
-    public static final String TAMS = "Tams";
-    public static final String TRACTRONICS = "TracTronics";
-    public static final String UHLEN = "Uhlenbrock";
-    public static final String WANGROW = "Wangrow";
-    public static final String XBEE = "Digi XBee";
-    public static final String ZIMO = "Zimo";
-    public static final String ZTC = "ZTC";
+    //public static final String DCCSPEC = "DCC Specialties"; // phantom? There is no ConnectionTypeList for this name
+    // Manufacturers for with no associated ConnectionTypeList and not listed in
+    // the Connection Preferences
+    //public static final String XBee = "XBee (API Mode)"; // unused
+    //public static final String RAIL = "RailDriver"; // unused
+    //public static final String XBEE = "Digi XBee"; // unused
 
     final static private String[] systemNames = new String[]{
         NONE,
@@ -64,7 +68,7 @@ public class DCCManufacturerList {
         CTI,
 	DCCPP,
         DIGITRAX,
-        DCCSPEC,
+        // DCCSPEC, // only use
         DCC4PC,
         EASYDCC,
         ESU,
