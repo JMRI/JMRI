@@ -25,7 +25,7 @@ import org.slf4j.LoggerFactory;
 @net.jcip.annotations.Immutable
 public class Region {
 
-    @edu.umd.cs.findbugs.annotations.SuppressWarnings(value = "EI_EXPOSE_REP2") // OK until Java 1.6 allows cheap array copy
+    @edu.umd.cs.findbugs.annotations.SuppressFBWarnings(value = "EI_EXPOSE_REP2") // OK until Java 1.6 allows cheap array copy
     public Region(Point3d[] points) {
         super();
 
@@ -38,7 +38,7 @@ public class Region {
         this.points = points;
     }
 
-    @edu.umd.cs.findbugs.annotations.SuppressWarnings(value = "JCIP_FIELD_ISNT_FINAL_IN_IMMUTABLE_CLASS", justification = "internal state, not changeable from outside")
+    @edu.umd.cs.findbugs.annotations.SuppressFBWarnings(value = "JCIP_FIELD_ISNT_FINAL_IN_IMMUTABLE_CLASS", justification = "internal state, not changeable from outside")
     GeneralPath path;
 
     /**
@@ -89,7 +89,7 @@ public class Region {
         initPath(points);
     }
 
-    @edu.umd.cs.findbugs.annotations.SuppressWarnings(value = "SBSC_USE_STRINGBUFFER_CONCATENATION")
+    @edu.umd.cs.findbugs.annotations.SuppressFBWarnings(value = "SBSC_USE_STRINGBUFFER_CONCATENATION")
     // Only used occasionally, so inefficient String processing not really a problem
     // though it would be good to fix it if you're working in this area
     public String toString() {

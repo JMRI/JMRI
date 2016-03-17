@@ -14,10 +14,6 @@ import javax.swing.AbstractAction;
  */
 public class TrainConductorAction extends AbstractAction {
 
-    /**
-     *
-     */
-    private static final long serialVersionUID = -6897376422747877387L;
     Train train;
     TrainConductorFrame f = null;
 

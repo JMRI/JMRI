@@ -96,7 +96,7 @@ public class ConnectionConfigXml extends AbstractSerialConnectionConfigXml {
             String option4Setting = shared.getAttribute("option4").getValue();
             adapter.configureOption4(option4Setting);
         }
-        loadOptions(shared.getChild("options"), adapter);
+        loadOptions(shared.getChild("options"), perNode.getChild("options"), adapter);
         String manufacturer;
         try {
             manufacturer = shared.getAttribute("manufacturer").getValue();

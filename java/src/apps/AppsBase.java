@@ -48,7 +48,7 @@ import org.slf4j.LoggerFactory;
  */
 public abstract class AppsBase {
 
-    @edu.umd.cs.findbugs.annotations.SuppressWarnings(value = "MS_PKGPROTECT",
+    @edu.umd.cs.findbugs.annotations.SuppressFBWarnings(value = "MS_PKGPROTECT",
             justification = "not a library pattern")
     private final static String configFilename = "/JmriConfig3.xml";
     protected boolean configOK;
@@ -80,7 +80,7 @@ public abstract class AppsBase {
     /**
      * Create and initialize the application object.
      */
-    @edu.umd.cs.findbugs.annotations.SuppressWarnings(value = "SC_START_IN_CTOR",
+    @edu.umd.cs.findbugs.annotations.SuppressFBWarnings(value = "SC_START_IN_CTOR",
             justification = "The thread is only called to help improve user experiance when opening the preferences, it is not critical for it to be run at this stage")
     public AppsBase(String applicationName, String configFileDef, String[] args) {
 

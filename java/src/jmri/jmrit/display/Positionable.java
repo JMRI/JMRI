@@ -30,7 +30,6 @@ import javax.swing.JPopupMenu;
  * @see PositionableLabel
  * @author Bob Jacobsen Copyright (c) 2002
  * @author Pete Cressman Copyright (c) 2010
- * @version $Revision$
  */
 public interface Positionable extends Cloneable {
 
@@ -81,20 +80,17 @@ public interface Positionable extends Cloneable {
     /**
      * Make a deep copy of Positional object. Implementation should create a new
      * object and immediately pass the object to finishClone() returning the
-     * result of finishClone(). i.e. implementation must be: public Positionable
-     * deepClone() { Subtype t = new Subtype(); return finishClone(t); }
-     */
-    public Positionable deepClone();
-
-    /**
-     * Finsh the deep Copy of a Positional object. Implementation should make
+     * result of finishClone(). i.e. implementation must be: <br/>
+     * public Positionable deepClone() { Subtype t = new Subtype(); return finishClone(t); } <br/>
+     * <p>
+     * Then finishClone() finishes the deep Copy of a Positional object. Implementation should make
      * deep copies of the additional members of this sub class and then pass
      * Positionable p to super.finishClone(). i.e. implementation must terminate
      * with statement return super.finishClone(p); See IndicatorTurnoutIcon
      * extends TurnoutIcon extends PositionableLabel for an example of how to
      * continue deep cloning a chain of subclasses.
      */
-    public Positionable finishClone(Positionable p);
+    public Positionable deepClone();
 
     /**
      * Methods to add popup menu items return true if a popup item is set

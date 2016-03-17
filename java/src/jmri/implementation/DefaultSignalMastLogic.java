@@ -27,6 +27,7 @@ import jmri.jmrit.display.layoutEditor.LayoutTurnout;
 import jmri.jmrit.display.layoutEditor.LevelXing;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import javax.annotation.Nonnull;
 
 /**
  *
@@ -43,7 +44,6 @@ import org.slf4j.LoggerFactory;
  * <P>
  *
  * @author	Kevin Dickerson Copyright (C) 2011
- * @version	$Revision$
  */
 public class DefaultSignalMastLogic implements jmri.SignalMastLogic, java.beans.VetoableChangeListener {
 
@@ -66,7 +66,7 @@ public class DefaultSignalMastLogic implements jmri.SignalMastLogic, java.beans.
      *
      * @param source - The signalmast we are configuring
      */
-    public DefaultSignalMastLogic(SignalMast source) {
+    public DefaultSignalMastLogic(@Nonnull SignalMast source) {
         this.source = source;
         try {
             this.stopAspect = source.getAppearanceMap().getSpecificAppearance(jmri.SignalAppearanceMap.DANGER);
@@ -87,7 +87,7 @@ public class DefaultSignalMastLogic implements jmri.SignalMastLogic, java.beans.
         return facingBlock;
     }
 
-    public LayoutBlock getProtectingBlock(SignalMast dest) {
+    public LayoutBlock getProtectingBlock(@Nonnull SignalMast dest) {
         if (!destList.containsKey(dest)) {
             return null;
         }
@@ -752,7 +752,7 @@ public class DefaultSignalMastLogic implements jmri.SignalMastLogic, java.beans.
                 if (included) {
                     return true;
                 }
-                destList.get(dm).isAutoBlockIncluded(blks.get(i));
+                included = destList.get(dm).isAutoBlockIncluded(blks.get(i));
                 if (included) {
                     return true;
                 }
@@ -1001,12 +1001,14 @@ public class DefaultSignalMastLogic implements jmri.SignalMastLogic, java.beans.
                                 if ((strSpeed != null) && (!strSpeed.equals(""))) {
                                     float speed = 0.0f;
                                     try {
-                                        speed = new Float(strSpeed);
+                                        speed = Float.valueOf(strSpeed);
                                     } catch (NumberFormatException nx) {
+                                        // not a number, perhaps a name?
                                         try {
                                             speed = jmri.implementation.SignalSpeedMap.getMap().getSpeed(strSpeed);
                                         } catch (Exception ex) {
-                                            //Considered Normal if the speed does not appear in the map
+                                            // not a name either
+                                            log.warn("Using speed = 0.0 because could not understand \"{}\"", strSpeed);
                                         }
                                     }
                                     //Integer state = Integer.parseInt(strSpeed);
@@ -1114,7 +1116,7 @@ public class DefaultSignalMastLogic implements jmri.SignalMastLogic, java.beans.
         }
     }
 
-    class DestinationMast {
+    private class DestinationMast {
 
         LayoutBlock destinationBlock = null;
         LayoutBlock protectingBlock = null; //this is the block that the source signal is protecting
@@ -2253,7 +2255,7 @@ public class DefaultSignalMastLogic implements jmri.SignalMastLogic, java.beans.
             ArrayList<LayoutBlock> lblks = new ArrayList<LayoutBlock>();
             if (protectingBlock == null) {
                 String pBlkNames = "";
-                String lBlksNames = "";
+                StringBuffer lBlksNamesBuf = new StringBuffer();
                 for (LayoutBlock pBlk : protectingBlocks) {
                     pBlkNames = pBlkNames + " " + pBlk.blockName + " " + lbm.getLayoutBlockConnectivityTools().checkValidDest(facingBlock, pBlk, destinationBlock, remoteProtectingBlock, LayoutBlockConnectivityTools.MASTTOMAST) + ", ";
                     if (lbm.getLayoutBlockConnectivityTools().checkValidDest(facingBlock, pBlk, destinationBlock, remoteProtectingBlock, LayoutBlockConnectivityTools.MASTTOMAST)) {
@@ -2261,7 +2263,8 @@ public class DefaultSignalMastLogic implements jmri.SignalMastLogic, java.beans.
                             lblks = lbm.getLayoutBlockConnectivityTools().getLayoutBlocks(facingBlock, destinationBlock, pBlk, true, jmri.jmrit.display.layoutEditor.LayoutBlockConnectivityTools.MASTTOMAST);
                             protectingBlock = pBlk;
                             for (LayoutBlock lBlk : lblks) {
-                                lBlksNames = lBlksNames + " " + lBlk.blockName;
+                                lBlksNamesBuf.append(" ");
+                                lBlksNamesBuf.append(lBlk.blockName);
                             }
                             break;
                         } catch (jmri.JmriException ee) {
@@ -2269,6 +2272,8 @@ public class DefaultSignalMastLogic implements jmri.SignalMastLogic, java.beans.
                         }
                     }
                 }
+                String lBlksNames = new String(lBlksNamesBuf);
+                
                 if (protectingBlock == null) {
                     throw new jmri.JmriException("Path not valid, protecting block null. Protecting block: " + pBlkNames + " not connected to " + facingBlock.blockName + " layout block names: " + lBlksNames);
                 }
@@ -2802,22 +2807,7 @@ public class DefaultSignalMastLogic implements jmri.SignalMastLogic, java.beans.
             }
         };
 
-        /* Code currently not used commented out to remove unused error
-         protected PropertyChangeListener propertySignalMastLogicManagerListener = new PropertyChangeListener() {
-         public void propertyChange(PropertyChangeEvent e) {
-         if(log.isDebugEnabled())
-         log.debug(destination.getDisplayName() + " Signal Mast Manager Listener");
-         //   log.debug(destination.getDisplayName() + " destination sensor "+ sen.getDisplayName() + "trigger");
-         if (e.getPropertyName().equals("DestinationAdded")) {
-         SignalMast dest = ((SignalMast) e.getNewValue());
-         if(dest==destination){
-         jmri.SignalMastLogic sml = ((jmri.SignalMastLogic) e.getOldValue());
-         setupAutoSignalMast(sml, false);
-         }
-         }
-         }
-         };*/
-        class NamedBeanSetting {
+        private class NamedBeanSetting {
 
             NamedBeanHandle<?> namedBean;
             int setting = 0;
@@ -2958,7 +2948,8 @@ public class DefaultSignalMastLogic implements jmri.SignalMastLogic, java.beans.
                 }
                 for (SignalMast sm : getDestinationList()) {
                     if (isSignalMastIncluded((SignalMast) nb, sm)) {
-                        //@todo need to deal with this situation this one out.
+                        log.warn("Unhandled condition: signal mast included during DoDelete");
+                        // @todo need to deal with this situation
                     }
                 }
             }

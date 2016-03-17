@@ -67,7 +67,7 @@ public class CbusEventTablePane extends jmri.jmrix.can.swing.CanPanel {
 
     }
 
-    @edu.umd.cs.findbugs.annotations.SuppressWarnings(value = "ST_WRITE_TO_STATIC_FROM_INSTANCE_METHOD")
+    @edu.umd.cs.findbugs.annotations.SuppressFBWarnings(value = "ST_WRITE_TO_STATIC_FROM_INSTANCE_METHOD")
     // There can only be one instance
     public void init() {
 

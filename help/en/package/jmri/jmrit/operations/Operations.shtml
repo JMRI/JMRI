@@ -3910,26 +3910,26 @@
     name of the train from the "Train" menu, and then finally the location in the train's route from
     the "Route Location" menu.</p>
 
-   <p>In addition to the four pull down menus, there's a button called "Add" under the column
-    called "Messages". This allows you to enter a message that will pop up when the action is
-    completed. Some actions have two messages, one will show when the action succeeds and another
-    when it fails. Once you enter text into the message areas and press "Okay", the "Add" button for
-    that action becomes "Edit". If it's possible for an action to fail, in addition to the extra
-    failure message text area, there's a checkbox labeled "Halt if action fails". When selected the
-    automation will halt in the event that the action fails to complete. The "Create Default
-    Messages" button will automatically create a success and failure message for you if the text
-    window is empty.</p>
-    
-    <p>The messages can be useful when debugging your automation, or if you need to pause the automation
-    as it will wait until you press either the "Halt" or "OK" button.  If you press the "Halt" button,
-    you can continue from where you were in the automation by pressing the "Resume Automation" button.</p>
+   <p>In addition to the four pull down menus, there's a checkbox under the column called "HIAF" (Halt If Action
+    Fails) and a button labeled "Add" under the column called "Messages". The "Add" button allows you to enter a message
+    that will pop up when the action is completed. Some actions have two messages, one will show when the action
+    succeeds and another when it fails. Once you enter text into the message areas and press "Okay", the "Add" button
+    for that action becomes "Edit". If it's possible for an action to fail, in addition to the extra failure message
+    text area, there's a checkbox labeled "Halt if action fails". When selected the automation will halt in the event
+    that the action fails to complete. The "Create Default Messages" button will automatically create a success and
+    failure message for you if the text window is empty.</p>
 
-   <p>If you want more than one action for your automation, press the "Add" button in the "Add
-    Item" area for each action you want to perform. The automation action sequence is from top to
-    bottom. You can if you wish add actions to the middle or end of your sequence by selecting the
-    "Middle or Before Selected Row" or "End" radio buttons respectively. If you select the "Middle
-    or Before Selected Row" radio button you can add an action to the middle of the table, or above
-    a row you've selected in the automation table.</p>
+   <p>The messages can be useful when debugging your automation, or if you need to pause the automation as it will
+    wait until you press either the "Halt" or "OK" button. If you press the "Halt" button, you can continue from where
+    you were in the automation by pressing the "Resume Automation" button.</p>
+
+   <p>If you want more than one action for your automation, press the "Add" button in the "Add Item" area for each
+    action you want to perform. The automation action sequence is from top to bottom. You can if you wish add actions to
+    the middle or end of your sequence by selecting the "Middle or Before Selected Row" or "End" radio buttons
+    respectively. If you select the "Middle or Before Selected Row" radio button you can add an action to the middle of
+    the table, or above a row you've selected in the automation table. You can adjust the order the actions run by using
+    the "Up" or "Down" buttons available for each action. The "Delete" button will remove that action from the
+    automation.</p>
 
    <p>Once you've entered all of the actions you want, you can either step through your actions
     one at a time using the "Step Automation" button, or run through the entire action sequence

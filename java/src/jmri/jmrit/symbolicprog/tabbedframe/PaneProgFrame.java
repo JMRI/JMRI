@@ -1,7 +1,6 @@
-// PaneProgFrame.java
 package jmri.jmrit.symbolicprog.tabbedframe;
 
-import edu.umd.cs.findbugs.annotations.NonNull;
+import javax.annotation.Nonnull;
 import java.awt.BorderLayout;
 import java.awt.Cursor;
 import java.awt.Dimension;
@@ -78,7 +77,6 @@ import org.slf4j.LoggerFactory;
  * @author Bob Jacobsen Copyright (C) 2001, 2004, 2005, 2008, 2014
  * @author D Miller Copyright 2003, 2005
  * @author Howard G. Penny Copyright (C) 2005
- * @version $Revision$
  */
 abstract public class PaneProgFrame extends JmriJFrame
         implements java.beans.PropertyChangeListener, PaneContainer {
@@ -186,12 +184,11 @@ abstract public class PaneProgFrame extends JmriJFrame
         menuBar.add(fileMenu);
 
         // add a "Factory Reset" menu
-        if (!_opsMode || true) {
-            resetMenu = new JMenu(SymbolicProgBundle.getMessage("MenuReset"));
-            menuBar.add(resetMenu);
-            resetMenu.add(new FactoryResetAction(SymbolicProgBundle.getMessage("MenuFactoryReset"), resetModel, this));
-            resetMenu.setEnabled(false);
-        }
+        resetMenu = new JMenu(SymbolicProgBundle.getMessage("MenuReset"));
+        menuBar.add(resetMenu);
+        resetMenu.add(new FactoryResetAction(SymbolicProgBundle.getMessage("MenuFactoryReset"), resetModel, this));
+        resetMenu.setEnabled(false);
+
         // Add a save item
         fileMenu.add(new AbstractAction(SymbolicProgBundle.getMessage("MenuSave")) {
             /**
@@ -413,7 +410,7 @@ abstract public class PaneProgFrame extends JmriJFrame
      * @param pProgrammerFile Name of the programmer file to use
      * @param pProg           Programmer object to be used to access CVs
      */
-    public PaneProgFrame(DecoderFile pDecoderFile, @NonNull RosterEntry pRosterEntry,
+    public PaneProgFrame(DecoderFile pDecoderFile, @Nonnull RosterEntry pRosterEntry,
             String pFrameTitle, String pProgrammerFile, Programmer pProg, boolean opsMode) {
         super(pFrameTitle);
 
@@ -577,7 +574,7 @@ abstract public class PaneProgFrame extends JmriJFrame
         return DecoderFile.isIncluded(e, pID, modelName, familyName, extraIncludes, extraExcludes);
     }
 
-    protected void pickProgrammerMode(@NonNull Element programming) {
+    protected void pickProgrammerMode(@Nonnull Element programming) {
         log.debug("pickProgrammerMode starts");
         boolean paged = true;
         boolean directbit = true;
@@ -672,14 +669,11 @@ abstract public class PaneProgFrame extends JmriJFrame
         // get a DecoderFile from the locomotive xml
         String decoderModel = r.getDecoderModel();
         String decoderFamily = r.getDecoderFamily();
-        if (log.isDebugEnabled()) {
-            log.debug("selected loco uses decoder " + decoderFamily + " " + decoderModel);
-        }
+        log.debug("selected loco uses decoder {} {}",decoderFamily, decoderModel);
+
         // locate a decoder like that.
         List<DecoderFile> l = DecoderIndexFile.instance().matchingDecoderList(null, decoderFamily, null, null, null, decoderModel);
-        if (log.isDebugEnabled()) {
-            log.debug("found " + l.size() + " matches");
-        }
+        log.debug("found {} matches", l.size());
         if (l.size() == 0) {
             log.debug("Loco uses " + decoderFamily + " " + decoderModel + " decoder, but no such decoder defined");
             // fall back to use just the decoder name, not family
@@ -700,7 +694,7 @@ abstract public class PaneProgFrame extends JmriJFrame
         }
     }
 
-    protected void loadDecoderFile(@NonNull DecoderFile df, @NonNull RosterEntry re) {
+    protected void loadDecoderFile(@Nonnull DecoderFile df, @Nonnull RosterEntry re) {
         if (df == null) {
             throw new IllegalArgumentException("loadDecoder file invoked with null object");
         }
@@ -711,18 +705,22 @@ abstract public class PaneProgFrame extends JmriJFrame
 
         try {
             decoderRoot = df.rootFromName(DecoderFile.fileLocation + df.getFilename());
-        } catch (Exception e) {
-            log.error("Exception while loading decoder XML file: " + df.getFilename(), e);
+        } catch (org.jdom2.JDOMException e) {
+            log.error("Exception while parsing decoder XML file: " + df.getFilename(), e);
+            return;
+        } catch (java.io.IOException  e) {
+            log.error("Exception while reading decoder XML file: " + df.getFilename(), e);
+            return;
         }
         // load variables from decoder tree
         df.getProductID();
         df.loadVariableModel(decoderRoot.getChild("decoder"), variableModel);
 
         // load reset from decoder tree
-        if (variableModel.piCv() != "") {
+        if (!variableModel.piCv().equals("")) {
             resetModel.setPiCv(variableModel.piCv());
         }
-        if (variableModel.siCv() != "") {
+        if (!variableModel.siCv().equals("")) {
             resetModel.setSiCv(variableModel.siCv());
         }
         df.loadResetModel(decoderRoot.getChild("decoder"), resetModel);
@@ -742,9 +740,7 @@ abstract public class PaneProgFrame extends JmriJFrame
         } else {
             decoderShowEmptyPanes = "";
         }
-        if (log.isDebugEnabled()) {
-            log.debug("decoderShowEmptyPanes=" + decoderShowEmptyPanes);
-        }
+        log.debug("decoderShowEmptyPanes={}", decoderShowEmptyPanes);
 
         // save the pointer to the model element
         modelElem = df.getModelElement();
@@ -789,7 +785,11 @@ abstract public class PaneProgFrame extends JmriJFrame
             // load programmer config from programmer tree
             readConfig(programmerRoot, r);
 
-        } catch (Exception e) {
+        } catch (org.jdom2.JDOMException e) {
+            log.error("exception parsing programmer file: " + filename, e);
+            // provide traceback too
+            e.printStackTrace();
+        } catch (java.io.IOException e) {
             log.error("exception reading programmer file: " + filename, e);
             // provide traceback too
             e.printStackTrace();

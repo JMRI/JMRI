@@ -282,7 +282,7 @@ abstract public class AbstractNetworkPortController extends AbstractPortControll
      * This is called when a connection is initially lost. It closes the client
      * side socket connection, resets the open flag and attempts a reconnection.
      */
-    @edu.umd.cs.findbugs.annotations.SuppressWarnings(value = "DE_MIGHT_IGNORE",
+    @edu.umd.cs.findbugs.annotations.SuppressFBWarnings(value = "DE_MIGHT_IGNORE",
             justification = "we are trying to close a failed connection, it doesn't matter if it generates an error")
     @Override
     public void recover() {
@@ -344,7 +344,7 @@ abstract public class AbstractNetworkPortController extends AbstractPortControll
             _status = THREADFAIL;
         }
 
-        @edu.umd.cs.findbugs.annotations.SuppressWarnings(value = "DE_MIGHT_IGNORE",
+        @edu.umd.cs.findbugs.annotations.SuppressFBWarnings(value = "DE_MIGHT_IGNORE",
                 justification = "we are testing for a the ability to re-connect and this is likely to generate an error which can be ignored")
         @Override
         public void run() {

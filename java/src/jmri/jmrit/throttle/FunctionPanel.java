@@ -53,7 +53,7 @@ public class FunctionPanel extends JInternalFrame implements FunctionListener, j
         }
     }
 
-    @edu.umd.cs.findbugs.annotations.SuppressWarnings(value = "EI_EXPOSE_REP") // OK until Java 1.6 allows return of cheap array copy
+    @edu.umd.cs.findbugs.annotations.SuppressFBWarnings(value = "EI_EXPOSE_REP") // OK until Java 1.6 allows return of cheap array copy
     public FunctionButton[] getFunctionButtons() {
         return functionButton;
     }

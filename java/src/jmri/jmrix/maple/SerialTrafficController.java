@@ -30,7 +30,7 @@ import org.slf4j.LoggerFactory;
  * @version	$Revision$
  * @since 2.3.7
  */
-@edu.umd.cs.findbugs.annotations.SuppressWarnings(value = "IS2_INCONSISTENT_SYNC", justification = "multiple variables accessed outside synchronized core, which is quite suspicious, but code seems to interlock properly")
+@edu.umd.cs.findbugs.annotations.SuppressFBWarnings(value = "IS2_INCONSISTENT_SYNC", justification = "multiple variables accessed outside synchronized core, which is quite suspicious, but code seems to interlock properly")
 public class SerialTrafficController extends AbstractMRNodeTrafficController implements SerialInterface {
 
     public SerialTrafficController() {
@@ -250,7 +250,7 @@ public class SerialTrafficController extends AbstractMRNodeTrafficController imp
 
     static volatile protected SerialTrafficController self = null;
 
-    @edu.umd.cs.findbugs.annotations.SuppressWarnings(value = "ST_WRITE_TO_STATIC_FROM_INSTANCE_METHOD",
+    @edu.umd.cs.findbugs.annotations.SuppressFBWarnings(value = "ST_WRITE_TO_STATIC_FROM_INSTANCE_METHOD",
             justification = "temporary until mult-system; only set at startup")
     protected void setInstance() {
         self = this;

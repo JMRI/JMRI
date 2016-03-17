@@ -114,6 +114,7 @@ public class Train implements java.beans.PropertyChangeListener {
     protected String _statusTerminatedDate = NONE;
     protected int _statusCarsRequested = 0;
     protected String _tableRowColorName = NONE; //color of row in Trains table
+    protected String _tableRowColorResetName = NONE; //color of row in Trains table when reset
 
     // Engine change and helper engines
     protected int _leg2Options = 0; // options
@@ -157,6 +158,7 @@ public class Train implements java.beans.PropertyChangeListener {
     public static final String TRAIN_REQUIREMENTS_CHANGED_PROPERTY = "TrainRequirements"; // NOI18N
     public static final String TRAIN_MOVE_COMPLETE_CHANGED_PROPERTY = "TrainMoveComplete"; // NOI18N
     public static final String TRAIN_ROW_COLOR_CHANGED_PROPERTY = "TrianRowColor"; // NOI18N
+    public static final String TRAIN_ROW_COLOR_RESET_CHANGED_PROPERTY = "TrianRowColorReset"; // NOI18N
     public static final String TRAIN_MODIFIED_CHANGED_PROPERTY = "TrainModified"; // NOI18N
 
     // Train status
@@ -269,6 +271,22 @@ public class Train implements java.beans.PropertyChangeListener {
         _tableRowColorName = colorName;
         if (!old.equals(colorName)) {
             setDirtyAndFirePropertyChange(TRAIN_ROW_COLOR_CHANGED_PROPERTY, old, colorName);
+        }
+    }
+
+    /**
+     *
+     * @return The name of the train row color when the train is reset
+     */
+    public String getRowColorNameReset() {
+        return _tableRowColorResetName;
+    }
+
+    public void setRowColorNameReset(String colorName) {
+        String old = _tableRowColorResetName;
+        _tableRowColorResetName = colorName;
+        if (!old.equals(colorName)) {
+            setDirtyAndFirePropertyChange(TRAIN_ROW_COLOR_RESET_CHANGED_PROPERTY, old, colorName);
         }
     }
 
@@ -777,7 +795,7 @@ public class Train implements java.beans.PropertyChangeListener {
         if (!TrainManager.instance().isRowColorManual()) {
             switch (getStatusCode()) {
                 case CODE_TRAIN_RESET:
-                    setTableRowColorName(NONE);
+                    setTableRowColorName(getRowColorNameReset());
                     break;
                 case CODE_BUILT:
                 case CODE_PARTIAL_BUILT:
@@ -3525,6 +3543,9 @@ public class Train implements java.beans.PropertyChangeListener {
         if (eRowColor != null && (a = eRowColor.getAttribute(Xml.NAME)) != null) {
             _tableRowColorName = a.getValue();
         }
+        if (eRowColor != null && (a = eRowColor.getAttribute(Xml.RESET_ROW_COLOR)) != null) {
+            _tableRowColorResetName = a.getValue();
+        }
 
         // new format for train's route added in 2.99.7
         Element eRoute = e.getChild(Xml.ROUTE);
@@ -3934,6 +3955,7 @@ public class Train implements java.beans.PropertyChangeListener {
 
         Element eRowColor = new Element(Xml.ROW_COLOR);
         eRowColor.setAttribute(Xml.NAME, getTableRowColorName());
+        eRowColor.setAttribute(Xml.RESET_ROW_COLOR, getRowColorNameReset());
         e.addContent(eRowColor);
 
         Element eRoute = new Element(Xml.ROUTE);

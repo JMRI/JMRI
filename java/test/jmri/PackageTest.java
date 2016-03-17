@@ -43,6 +43,7 @@ public class PackageTest extends TestCase {
         suite.addTest(jmri.PathLengthTest.suite());
         suite.addTest(jmri.PushbuttonPacketTest.suite());
         suite.addTest(jmri.TurnoutTest.suite());
+        suite.addTest(jmri.TurnoutOperationTest.suite());
         suite.addTest(jmri.ApplicationTest.suite());
         suite.addTest(jmri.AudioTest.suite());
         suite.addTest(jmri.IdTagTest.suite());
@@ -61,6 +62,7 @@ public class PackageTest extends TestCase {
         suite.addTest(jmri.web.PackageTest.suite());
         suite.addTest(jmri.jmris.PackageTest.suite());
         suite.addTest(jmri.profile.PackageTest.suite());
+        suite.addTest(jmri.server.json.PackageTest.suite());
         return suite;
     }
 

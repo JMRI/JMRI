@@ -252,6 +252,7 @@ public abstract class AbstractVariableLight extends AbstractLight
         internalClock = InstanceManager.timebaseInstance();
         if (internalClock == null) {
             log.error("No Timebase Instance");
+            return;
         }
         minuteChangeListener = new java.beans.PropertyChangeListener() {
             public void propertyChange(java.beans.PropertyChangeEvent e) {
@@ -267,7 +268,7 @@ public abstract class AbstractVariableLight extends AbstractLight
      * having on intensity. Currently, this implementation assumes there's a
      * fixed number of steps between min and max brightness.
      */
-    @edu.umd.cs.findbugs.annotations.SuppressWarnings(value = "FE_FLOATING_POINT_EQUALITY") // OK to compare floating point
+    @edu.umd.cs.findbugs.annotations.SuppressFBWarnings(value = "FE_FLOATING_POINT_EQUALITY") // OK to compare floating point
     protected void newInternalMinute() {
         double origCurrent = mCurrentIntensity;
         int origState = mState;
@@ -338,7 +339,7 @@ public abstract class AbstractVariableLight extends AbstractLight
      * Change the stored target intensity value and do notification, but don't
      * change anything in the hardware
      */
-    @edu.umd.cs.findbugs.annotations.SuppressWarnings(value = "FE_FLOATING_POINT_EQUALITY") // OK to compare floating point
+    @edu.umd.cs.findbugs.annotations.SuppressFBWarnings(value = "FE_FLOATING_POINT_EQUALITY") // OK to compare floating point
     protected void notifyTargetIntensityChange(double intensity) {
         double oldValue = mCurrentIntensity;
         mCurrentIntensity = intensity;
@@ -401,7 +402,7 @@ public abstract class AbstractVariableLight extends AbstractLight
      * Bound property so that listeners can conveniently learn when the
      * transition is over.
      */
-    @edu.umd.cs.findbugs.annotations.SuppressWarnings(value = "FE_FLOATING_POINT_EQUALITY") // OK to compare floating point
+    @edu.umd.cs.findbugs.annotations.SuppressFBWarnings(value = "FE_FLOATING_POINT_EQUALITY") // OK to compare floating point
     public boolean isTransitioning() {
         if (mTransitionTargetIntensity != mCurrentIntensity) {
             return true;

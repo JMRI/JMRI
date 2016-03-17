@@ -54,7 +54,7 @@ public class IdTagTableAction extends AbstractTableAction {
     }
 
     public IdTagTableAction() {
-        this("Id Tag Table");
+        this(Bundle.getMessage("TitleIdTagTable"));
     }
 
     /**

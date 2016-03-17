@@ -82,7 +82,7 @@ public class SRCPThrottleManager extends AbstractThrottleManager {
                     + "\n";
 
             // and send it
-            ((SRCPSystemConnectionMemo) adapterMemo).getTrafficController().sendSRCPMessage(new SRCPMessage(msg), null);
+            ((SRCPBusConnectionMemo) adapterMemo).getTrafficController().sendSRCPMessage(new SRCPMessage(msg), null);
             return true;
         }
         return false;
