@@ -16,6 +16,10 @@ public class JmriConfigureXmlException extends jmri.JmriException {
         super(s);
     }
 
+    public JmriConfigureXmlException(Exception s) {
+        super(s);
+    }
+
     public JmriConfigureXmlException() {
         super();
     }
