@@ -1,4 +1,3 @@
-// DefaultJavaBeanConfigXML.java
 package jmri.configurexml;
 
 import java.beans.BeanInfo;
@@ -16,7 +15,6 @@ import org.slf4j.LoggerFactory;
  * Provides services for storing Java Beans to XML using reflection.
  *
  * @author Bob Jacobsen Copyright: Copyright (c) 2009
- * @version $Revision$
  * @since 2.3.1
  */
 public class DefaultJavaBeanConfigXML extends jmri.configurexml.AbstractXmlAdapter {
