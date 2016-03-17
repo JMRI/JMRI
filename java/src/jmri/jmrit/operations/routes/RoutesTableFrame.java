@@ -28,12 +28,8 @@ import org.slf4j.LoggerFactory;
  */
 public class RoutesTableFrame extends OperationsFrame {
 
-    /**
-     *
-     */
-    private static final long serialVersionUID = -5308632111456022575L;
-
     RoutesTableModel routesModel = new RoutesTableModel();
+    JTable routesTable;
 
     // labels
     JLabel textSort = new JLabel(Bundle.getMessage("SortBy"));
@@ -54,11 +50,11 @@ public class RoutesTableFrame extends OperationsFrame {
 
         // Set up the jtable in a Scroll Pane..
         TableSorter sorter = new TableSorter(routesModel);
-        JTable routesTable = new JTable(sorter);
+        routesTable = new JTable(sorter);
         sorter.setTableHeader(routesTable.getTableHeader());
         JScrollPane routesPane = new JScrollPane(routesTable);
         routesPane.setVerticalScrollBarPolicy(ScrollPaneConstants.VERTICAL_SCROLLBAR_AS_NEEDED);
-        routesModel.initTable(routesTable);
+        routesModel.initTable(this, routesTable);
         getContentPane().add(routesPane);
 
         // Set up the control panel
@@ -100,7 +96,7 @@ public class RoutesTableFrame extends OperationsFrame {
         initMinimumSize();
         // make panel a bit wider than minimum if the very first time opened
         if (getWidth() == Control.panelWidth500) {
-            setSize(730, getHeight());
+            setSize(Control.panelWidth700, getHeight());
         }
 
         // create ShutDownTasks
@@ -132,10 +128,10 @@ public class RoutesTableFrame extends OperationsFrame {
     }
 
     public void dispose() {
+        saveTableDetails(routesTable);
         routesModel.dispose();
         super.dispose();
     }
 
-    private final static Logger log = LoggerFactory.getLogger(RoutesTableFrame.class
-            .getName());
+    private final static Logger log = LoggerFactory.getLogger(RoutesTableFrame.class.getName());
 }
