@@ -16,6 +16,10 @@ public class JmriException extends Exception {
         super(s);
     }
 
+    public JmriException(Exception s) {
+        super(s);
+    }
+
     public JmriException() {
     }
 
