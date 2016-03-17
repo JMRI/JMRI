@@ -1,4 +1,3 @@
-// JmriConfigureXmlException.java
 package jmri.configurexml;
 
 /**
@@ -6,14 +5,8 @@ package jmri.configurexml;
  * to confirm type-safety.
  *
  * @author	Bob Jacobsen Copyright (C) 2009, 2010
- * @version	$Revision$
  */
 public class JmriConfigureXmlException extends jmri.JmriException {
-
-    /**
-     *
-     */
-    private static final long serialVersionUID = -1321961285382362044L;
 
     public JmriConfigureXmlException(String s, Throwable t) {
         super(s, t);
@@ -28,4 +21,3 @@ public class JmriConfigureXmlException extends jmri.JmriException {
     }
 }
 
-/* @(#)JmriConfigureXmlException.java */
