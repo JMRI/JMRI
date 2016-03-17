@@ -1195,7 +1195,7 @@ public class LayoutEditorAuxTools {
                                 p.addSetting(bs);
                             } else {
                                 InstanceManager.getDefault(LayoutBlockManager.class).addBadBeanError();
-                                log.error("BadBeanError (S): " + lt.getName() + " " + lt.getLayoutBlock().getDisplayName());
+                                log.error("BadBeanError (S) LayoutTurnout " + lt.getName() + " has Turnout: " + lt.getTurnout() + " turnoutName: " + lt.getTurnoutName());
                             }
                             if (lt.getLayoutBlock() != layoutBlock) {
                                 curConnection = null;
@@ -1222,7 +1222,7 @@ public class LayoutEditorAuxTools {
                             p.addSetting(bs);
                         } else {
                             InstanceManager.getDefault(LayoutBlockManager.class).addBadBeanError();
-                            log.error("BadBeanError (T): " + lt.getName() + " " + lt.getLayoutBlock().getDisplayName());
+                            log.error("BadBeanError (T) LayoutTurnout " + lt.getName() + " has Turnout: " + lt.getTurnout() + " turnoutName: " + lt.getTurnoutName());
                         }
                         if (lt.getLayoutBlock() != layoutBlock) {
                             // left current block 
@@ -1239,7 +1239,7 @@ public class LayoutEditorAuxTools {
                             p.addSetting(bs);
                         } else {
                             InstanceManager.getDefault(LayoutBlockManager.class).addBadBeanError();
-                            log.error("BadBeanError (U): " + lt.getName() + " " + lt.getLayoutBlock().getSystemName());
+                            log.error("BadBeanError (U) LayoutTurnout " + lt.getName() + " has Turnout: " + lt.getTurnout() + " turnoutName: " + lt.getTurnoutName());
                         }
                         if (lt.getLayoutBlockC() != layoutBlock) {
                             // left current block 
@@ -1263,7 +1263,7 @@ public class LayoutEditorAuxTools {
                             p.addSetting(bs);
                         } else {
                             InstanceManager.getDefault(LayoutBlockManager.class).addBadBeanError();
-                            log.error("BadBeanError (V): " + lt.getName() + " " + lt.getLayoutBlock().getDisplayName());
+                            log.error("BadBeanError (V) LayoutTurnout " + lt.getName() + " has Turnout: " + lt.getTurnout() + " turnoutName: " + lt.getTurnoutName());
                         }
                         if (lt.getLayoutBlockB() != layoutBlock) {
                             // left current block 
@@ -1280,7 +1280,7 @@ public class LayoutEditorAuxTools {
                             p.addSetting(bs);
                         } else {
                             InstanceManager.getDefault(LayoutBlockManager.class).addBadBeanError();
-                            log.error("BadBeanError (W): " + lt.getName() + " " + lt.getLayoutBlock().getDisplayName());
+                            log.error("BadBeanError (W) LayoutTurnout " + lt.getName() + " has Turnout: " + lt.getTurnout() + " turnoutName: " + lt.getTurnoutName());
                         }
                         if (lt.getLayoutBlockD() != layoutBlock) {
                             // left current block
