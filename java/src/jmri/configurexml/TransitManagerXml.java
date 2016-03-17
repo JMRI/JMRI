@@ -1,4 +1,3 @@
-// TransitManagerXML.java
 package jmri.configurexml;
 
 import java.util.ArrayList;
@@ -18,7 +17,6 @@ import org.slf4j.LoggerFactory;
  * <P>
  *
  * @author Dave Duchamp Copyright (c) 2008
- * @version $Revision$
  */
 public class TransitManagerXml extends jmri.managers.configurexml.AbstractNamedBeanManagerConfigXML {
 
