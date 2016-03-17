@@ -617,7 +617,7 @@ public class RosterFrame extends TwoPaneTBWindow implements RosterEntrySelector,
         });
         if (Roster.instance().numEntries() == 0) {
             try {
-                BufferedImage myPicture = ImageIO.read(FileUtil.findURL("resources/dp3first.gif", FileUtil.Location.INSTALLED));
+                BufferedImage myPicture = ImageIO.read(FileUtil.findURL(("resources/" + Bundle.getMessage("ThrottleFirstUseImage")), FileUtil.Location.INSTALLED));
                 //rosters.add(new JLabel(new ImageIcon( myPicture )), BorderLayout.CENTER);
                 firstHelpLabel = new JLabel(new ImageIcon(myPicture));
                 rtable.setVisible(false);
