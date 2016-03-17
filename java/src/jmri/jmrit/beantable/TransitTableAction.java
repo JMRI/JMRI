@@ -80,7 +80,7 @@ public class TransitTableAction extends AbstractTableAction {
     }
 
     public TransitTableAction() {
-        this("Transit Table");
+        this(Bundle.getMessage("TitleTransitTable"));
     }
 
     static final ResourceBundle rbx = ResourceBundle.getBundle("jmri.jmrit.beantable.SectionTransitTableBundle");

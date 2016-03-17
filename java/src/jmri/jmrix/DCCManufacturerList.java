@@ -1,4 +1,3 @@
-// DCCManufacturerList.java
 package jmri.jmrix;
 
 /**
@@ -8,7 +7,6 @@ package jmri.jmrix;
  * <P>
  * @author Bob Jacobsen Copyright (C) 2010
  * @author Kevin Dickerson Copyright (C) 2010
- * @version	$Revision$
  *
  */
 public class DCCManufacturerList {
@@ -98,7 +96,7 @@ public class DCCManufacturerList {
         ZTC
     };
 
-    @edu.umd.cs.findbugs.annotations.SuppressWarnings({"EI_EXPOSE_REP", "MS_EXPOSE_REP"}) // OK until Java 1.6 allows return of cheap array copy
+    @edu.umd.cs.findbugs.annotations.SuppressFBWarnings({"EI_EXPOSE_REP", "MS_EXPOSE_REP"}) // OK until Java 1.6 allows return of cheap array copy
     public static String[] getSystemNames() {
         return systemNames;
     }
@@ -252,10 +250,10 @@ public class DCCManufacturerList {
             return "NCE";
         } else if (a == 'O') {
             return "Oak Tree";
-        } else if (a == 'M') {
+         } else if (a == 'M') {
             return "OpenLCB";  // duplicates MERG?
-        } else if (a == 'M') {
-            return "MERG";
+        //} else if (a == 'M') {
+        //    return "MERG";
         } else if (a == 'P') {
             return "PowerLine";
         } else if (a == 'Q') {

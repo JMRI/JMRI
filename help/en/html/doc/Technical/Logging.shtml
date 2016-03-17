@@ -133,13 +133,21 @@ The columns are:
 To log messages
 from a class named MyClass, add this to the bottom of the class's .java file:</p>
 <pre><code>
-	private static final Logger log = LoggerFactory.getLogger(MyClass.class());
+	private static final Logger log = LoggerFactory.getLogger(MyClass.class);
 </code></pre>
 <p>and add imports for org.slf4j.Logger and org.slf4j.LoggerFactory in your imports section:</p>
 <pre><code>
         import org.slf4j.Logger;<br/>
         import org.slf4j.LoggerFactory;
 </code></pre>
+It's also OK to combine those into the fully-qualified form:
+<pre><code>
+    private static final org.slf4j.Logger log = org.slf4j.LoggerFactory.getLogger(MyClass.class);
+</code></pre>
+<p>
+(If logging is removed (e.g. commented out), it's OK to comment out the log definition
+so that it can be easily added back later on.)
+
 <p>Then for each message to log insert a line like:</p>
 <pre><code>
 	log.debug("message");

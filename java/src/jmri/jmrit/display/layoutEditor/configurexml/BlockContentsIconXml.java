@@ -6,7 +6,7 @@ package jmri.jmrit.display.layoutEditor.configurexml;
  *
  * @author Pete Cressman Copyright: Copyright (c) 2010
  */
-@edu.umd.cs.findbugs.annotations.SuppressWarnings(value = "NM_SAME_SIMPLE_NAME_AS_SUPERCLASS")
+@edu.umd.cs.findbugs.annotations.SuppressFBWarnings(value = "NM_SAME_SIMPLE_NAME_AS_SUPERCLASS")
 // For explanation of annotation, see layoutEditor.MemoryIcon
 public class BlockContentsIconXml extends jmri.jmrit.display.configurexml.BlockContentsIconXml {
 

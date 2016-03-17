@@ -408,7 +408,7 @@ public class DataSource extends jmri.util.JmriJFrame {
 
     DataInputStream serialStream = null;
 
-    @edu.umd.cs.findbugs.annotations.SuppressWarnings(value = "IS2_INCONSISTENT_SYNC",
+    @edu.umd.cs.findbugs.annotations.SuppressFBWarnings(value = "IS2_INCONSISTENT_SYNC",
             justification = "Class is no longer active, no hardware with which to test fix")
     OutputStream ostream = null;
 

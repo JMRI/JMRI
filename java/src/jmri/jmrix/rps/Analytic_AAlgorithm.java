@@ -26,7 +26,7 @@ public class Analytic_AAlgorithm extends AbstractCalculator {
         this.offset = offset;
     }
 
-    @edu.umd.cs.findbugs.annotations.SuppressWarnings(value = "EI_EXPOSE_REP2")
+    @edu.umd.cs.findbugs.annotations.SuppressFBWarnings(value = "EI_EXPOSE_REP2")
     public Analytic_AAlgorithm(Point3d[] sensors, double vsound) {
         this.sensors = sensors;
         this.Vs = vsound;
@@ -331,9 +331,9 @@ public class Analytic_AAlgorithm extends AbstractCalculator {
             this.z = z;
             this.vs = vs;
         }
-        @edu.umd.cs.findbugs.annotations.SuppressWarnings(value = "URF_UNREAD_FIELD")
+        @edu.umd.cs.findbugs.annotations.SuppressFBWarnings(value = "URF_UNREAD_FIELD")
         int code;
-        @edu.umd.cs.findbugs.annotations.SuppressWarnings(value = "URF_UNREAD_FIELD")
+        @edu.umd.cs.findbugs.annotations.SuppressFBWarnings(value = "URF_UNREAD_FIELD")
         double x, y, z, vs;
     }
 

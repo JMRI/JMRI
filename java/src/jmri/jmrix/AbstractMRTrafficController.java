@@ -520,7 +520,7 @@ abstract public class AbstractMRTrafficController {
     /**
      * Actually transmits the next message to the port
      */
-    @edu.umd.cs.findbugs.annotations.SuppressWarnings(value = {"TLW_TWO_LOCK_WAIT"},
+    @edu.umd.cs.findbugs.annotations.SuppressFBWarnings(value = {"TLW_TWO_LOCK_WAIT"},
             justification = "Two locks needed for synchronization here, this is OK")
     synchronized protected void forwardToPort(AbstractMRMessage m, AbstractMRListener reply) {
         log.debug("forwardToPort message: [{}]", m);

@@ -1,7 +1,15 @@
 // Bundle.java
 package jmri.jmrit.operations.trains.excel;
 
+import javax.annotation.CheckReturnValue;
+import javax.annotation.ParametersAreNonnullByDefault;
+import javax.annotation.Nullable;
+import edu.umd.cs.findbugs.annotations.SuppressFBWarnings;
 import java.util.Locale;
+
+@ParametersAreNonnullByDefault
+@CheckReturnValue
+@SuppressFBWarnings(value = "NM_SAME_SIMPLE_NAME_AS_SUPERCLASS", justification = "Desired pattern is repeated class names with package-level access to members")
 
 @net.jcip.annotations.Immutable
 
@@ -87,6 +95,7 @@ public class Bundle extends jmri.jmrit.operations.Bundle {
     private final static Bundle b = new Bundle();
 
     @Override
+    @Nullable
     protected String bundleName() {
         return name;
     }

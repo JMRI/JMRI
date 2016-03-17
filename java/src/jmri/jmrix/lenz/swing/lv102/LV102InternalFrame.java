@@ -46,7 +46,7 @@ public class LV102InternalFrame extends javax.swing.JInternalFrame {
     // programming operation.  This 
     // should not be more than 15.
 
-    @edu.umd.cs.findbugs.annotations.SuppressWarnings(value = "SC_START_IN_CTOR",
+    @edu.umd.cs.findbugs.annotations.SuppressFBWarnings(value = "SC_START_IN_CTOR",
             justification = "with existing code structure, we do not expect this to ever be subclassed.")
 
     public LV102InternalFrame() {

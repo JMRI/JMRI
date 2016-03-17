@@ -1,7 +1,7 @@
 // PaneOpsProgFrame.java
 package jmri.jmrit.symbolicprog.tabbedframe;
 
-import edu.umd.cs.findbugs.annotations.NonNull;
+import javax.annotation.Nonnull;
 import javax.swing.JPanel;
 import java.util.List;
 
@@ -66,7 +66,7 @@ public class PaneOpsProgFrame extends PaneProgFrame
         addHelpMenu("package.jmri.jmrit.symbolicprog.tabbedframe.PaneOpsProgFrame", true);
     }
 
-    protected void pickProgrammerMode(@NonNull Element programming) {
+    protected void pickProgrammerMode(@Nonnull Element programming) {
         // find an accepted mode to set it to
         List<ProgrammingMode> modes = mProgrammer.getSupportedModes();
 
