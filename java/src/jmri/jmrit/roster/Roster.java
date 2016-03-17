@@ -1258,11 +1258,11 @@ public class Roster extends XmlFile implements RosterGroupSelector, PropertyChan
         this.getRosterGroups().get(oldName).setName(newName);
     }
 
-    // What does this do? Should this return the group at i? It's not used as fas as I can tell
-    @Deprecated
-    public void getRosterGroupList(int i) {
-        this.getRosterGroupList().get(i);
-    }
+// What does this do? Should this return the group at i? It's not used as fas as I can tell
+//     @Deprecated
+//     public void getRosterGroupList(int i) {
+//         this.getRosterGroupList().get(i);
+//     }
 
     /**
      * Get a list of the user defined roster group names.
@@ -1333,10 +1333,14 @@ public class Roster extends XmlFile implements RosterGroupSelector, PropertyChan
         File fp = new File(LocoFile.getFileLocation());
         if (fp.exists()) {
             sp = fp.list();
-            for (i = 0; i < sp.length; i++) {
-                if (sp[i].endsWith(".xml") || sp[i].endsWith(".XML")) {
-                    np++;
+            if (sp != null) {
+                for (i = 0; i < sp.length; i++) {
+                    if (sp[i].endsWith(".xml") || sp[i].endsWith(".XML")) {
+                        np++;
+                    }
                 }
+            } else {
+                log.warn("expected directory, but {} was a file", LocoFile.getFileLocation());
             }
         } else {
             log.warn(FileUtil.getUserFilesPath() + "roster directory was missing, though tried to create it");
