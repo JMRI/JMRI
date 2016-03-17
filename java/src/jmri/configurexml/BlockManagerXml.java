@@ -1,4 +1,3 @@
-// BlockManagerXml.java
 package jmri.configurexml;
 
 import java.util.List;
@@ -24,7 +23,6 @@ import org.slf4j.LoggerFactory;
  * elements.
  *
  * @author Bob Jacobsen Copyright: Copyright (c) 2008
- * @version $Revision$
  * @since 2.1.2
  *
  */
