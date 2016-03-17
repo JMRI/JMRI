@@ -109,10 +109,13 @@ public class DefaultJavaBeanConfigXML extends jmri.configurexml.AbstractXmlAdapt
                 p.addContent(v);
                 e.addContent(p);
             }
-        } catch (Exception ex) {
-            log.error("Partial store due to exception: " + ex);
-            ex.printStackTrace();
-        }
+         } catch (java.beans.IntrospectionException ex) {
+             log.error("Partial store due to IntrospectionException: " + ex);
+         } catch (java.lang.reflect.InvocationTargetException ex) {
+             log.error("Partial store due to InvocationTargetException: " + ex);
+         } catch (IllegalAccessException ex) {
+             log.error("Partial store due to IllegalAccessException: " + ex);
+         }
 
         return e;
     }
