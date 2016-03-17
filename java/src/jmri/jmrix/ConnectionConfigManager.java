@@ -35,7 +35,7 @@ public class ConnectionConfigManager extends AbstractPreferencesProvider impleme
 
     @Override
     public void initialize(Profile profile) {
-        if (!this.isInitialized(profile)) {
+        if (!isInitialized(profile)) {
             log.debug("Initializing...");
             Element sharedConnections = null;
             Element perNodeConnections = null;
@@ -83,7 +83,7 @@ public class ConnectionConfigManager extends AbstractPreferencesProvider impleme
                     }
                 }
             }
-            this.setIsInitialized(profile, true);
+            setIsInitialized(profile, true);
             log.debug("Initialized...");
         }
     }
@@ -97,15 +97,14 @@ public class ConnectionConfigManager extends AbstractPreferencesProvider impleme
     public void savePreferences(Profile profile) {
         log.debug("Saving connections preferences...");
         // store shared Connection preferences
-        this.savePreferences(profile, true);
+        savePreferences(profile, true);
         // store private or perNode Connection preferences
-        this.savePreferences(profile, false);
+        savePreferences(profile, false);
         log.debug("Saved connections preferences...");
     }
 
     private synchronized void savePreferences(Profile profile, boolean shared) {
         Element element = new Element(CONNECTIONS, NAMESPACE);
-        log.debug("connections is {}null", (connections != null) ? "not " : "");
         for (ConnectionConfig o : connections) {
             log.debug("Saving connection {} ({})...", o.getConnectionName(), shared);
             Element e = ConfigXmlManager.elementFromObject(o, shared);
@@ -122,29 +121,29 @@ public class ConnectionConfigManager extends AbstractPreferencesProvider impleme
     }
 
     public boolean add(ConnectionConfig c) {
-        boolean result = this.connections.add(c);
-        int i = this.connections.indexOf(c);
-        this.propertyChangeSupport.fireIndexedPropertyChange(CONNECTIONS, i, null, c);
+        boolean result = connections.add(c);
+        int i = connections.indexOf(c);
+        propertyChangeSupport.fireIndexedPropertyChange(CONNECTIONS, i, null, c);
         return result;
     }
 
     public boolean remove(ConnectionConfig c) {
-        int i = this.connections.indexOf(c);
-        boolean result = this.connections.remove(c);
-        this.propertyChangeSupport.fireIndexedPropertyChange(CONNECTIONS, i, c, null);
+        int i = connections.indexOf(c);
+        boolean result = connections.remove(c);
+        propertyChangeSupport.fireIndexedPropertyChange(CONNECTIONS, i, c, null);
         return result;
     }
 
     public ConnectionConfig[] getConnections() {
-        return this.connections.toArray(new ConnectionConfig[this.connections.size()]);
+        return connections.toArray(new ConnectionConfig[connections.size()]);
     }
 
     public ConnectionConfig getConnections(int index) {
-        return this.connections.get(index);
+        return connections.get(index);
     }
 
     @Override
     public Iterator<ConnectionConfig> iterator() {
-        return this.connections.iterator();
+        return connections.iterator();
     }
 }
