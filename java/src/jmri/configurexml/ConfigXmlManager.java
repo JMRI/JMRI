@@ -568,6 +568,8 @@ public class ConfigXmlManager extends jmri.jmrit.XmlFile
      * <p>
      * Handles problems locally to the extent that it can, by routing them to
      * the creationErrorEncountered method.
+     * <p>
+     * Always processes on Swing thread
      *
      * @param url              URL of file to load
      * @param registerDeferred true to register objects to defer
@@ -578,6 +580,34 @@ public class ConfigXmlManager extends jmri.jmrit.XmlFile
      */
     @Override
     public boolean load(URL url, boolean registerDeferred) throws JmriConfigureXmlException {
+        // must not use invokeAndWait on Swing thread
+        if (javax.swing.SwingUtilities.isEventDispatchThread()) {
+            // direct exec
+            return loadOnSwingThread(url, registerDeferred);
+        } else {
+            // push to swing
+            final java.util.concurrent.atomic.AtomicReference<Boolean> result = new java.util.concurrent.atomic.AtomicReference<>();
+
+            try {
+                javax.swing.SwingUtilities.invokeAndWait(() -> {
+                    try {
+                        boolean temp = loadOnSwingThread(url, registerDeferred);
+                        result.set(temp);
+                    } catch (JmriConfigureXmlException e) {
+                        throw new RuntimeException(e);
+                    }
+                });
+            } catch (InterruptedException e) {
+                throw new JmriConfigureXmlException(e);
+            } catch (java.lang.reflect.InvocationTargetException e) {
+                throw new JmriConfigureXmlException(e);
+            }
+            
+            return result.get(); 
+        }
+    }
+    
+    private boolean loadOnSwingThread(URL url, boolean registerDeferred) throws JmriConfigureXmlException {
         boolean result = true;
         Element root = null;
         /* We will put all the elements into a load list, along with the load order
