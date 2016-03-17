@@ -38,11 +38,6 @@ import org.slf4j.LoggerFactory;
  */
 public abstract class AbstractMonPane extends JmriPanel {
 
-    /**
-     *
-     */
-    private static final long serialVersionUID = 7081617855075498357L;
-
     // template functions to fill in
     @Override
     public abstract String getTitle();    // provide the title for the frame
