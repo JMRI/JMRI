@@ -576,7 +576,7 @@ public abstract class AbstractMonPane extends JmriPanel {
         return monTextPane.getText();
     }
 
-    public String getFilterText() {
+    public synchronized String getFilterText() {
         return filterField.getText();
     }
 
