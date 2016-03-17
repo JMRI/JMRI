@@ -25,11 +25,6 @@ import org.slf4j.LoggerFactory;
  */
 public class LocationsTableModel extends javax.swing.table.AbstractTableModel implements PropertyChangeListener {
 
-    /**
-     *
-     */
-    private static final long serialVersionUID = 8385333181895879131L;
-
     LocationManager locationManager; // There is only one manager
 
     // Defines the columns
@@ -83,7 +78,7 @@ public class LocationsTableModel extends javax.swing.table.AbstractTableModel im
 
     List<Location> locationsList = null;
 
-    void initTable(JTable table) {
+    void initTable(LocationsTableFrame frame, JTable table) {
         // Install the button handlers
         TableColumnModel tcm = table.getColumnModel();
         ButtonRenderer buttonRenderer = new ButtonRenderer();
@@ -92,6 +87,18 @@ public class LocationsTableModel extends javax.swing.table.AbstractTableModel im
         tcm.getColumn(ACTIONCOLUMN).setCellEditor(buttonEditor);
         tcm.getColumn(EDITCOLUMN).setCellRenderer(buttonRenderer);
         tcm.getColumn(EDITCOLUMN).setCellEditor(buttonEditor);
+        
+        setPreferredWidths(frame, table);
+        
+        // have to shut off autoResizeMode to get horizontal scroll to work (JavaSwing p 541)
+        table.setAutoResizeMode(JTable.AUTO_RESIZE_OFF);
+    }
+    
+    private void setPreferredWidths(LocationsTableFrame frame, JTable table) {
+        if (frame.loadTableDetails(table)) {
+            return; // done
+        }
+        log.debug("Setting preferred widths");
         // set column preferred widths
         table.getColumnModel().getColumn(IDCOLUMN).setPreferredWidth(40);
         table.getColumnModel().getColumn(NAMECOLUMN).setPreferredWidth(200);
@@ -110,8 +117,6 @@ public class LocationsTableModel extends javax.swing.table.AbstractTableModel im
         table.getColumnModel().getColumn(ACTIONCOLUMN).setPreferredWidth(
                 Math.max(80, new JLabel(Bundle.getMessage("Yardmaster")).getPreferredSize().width + 40));
         table.getColumnModel().getColumn(EDITCOLUMN).setPreferredWidth(80);
-        // have to shut off autoResizeMode to get horizontal scroll to work (JavaSwing p 541)
-        table.setAutoResizeMode(JTable.AUTO_RESIZE_OFF);
     }
 
     public synchronized int getRowCount() {
@@ -190,27 +195,27 @@ public class LocationsTableModel extends javax.swing.table.AbstractTableModel im
         if (row >= getRowCount()) {
             return "ERROR row " + row; // NOI18N
         }
-        Location l = locationsList.get(row);
-        if (l == null) {
+        Location location = locationsList.get(row);
+        if (location == null) {
             return "ERROR location unknown " + row; // NOI18N
         }
         switch (col) {
             case IDCOLUMN:
-                return l.getId();
+                return location.getId();
             case NAMECOLUMN:
-                return l.getName();
+                return location.getName();
             case TRACKCOLUMN:
-                return getTrackTypes(l);
+                return getTrackTypes(location);
             case LENGTHCOLUMN:
-                return Integer.toString(l.getLength());
+                return Integer.toString(location.getLength());
             case USEDLENGTHCOLUMN:
-                return Integer.toString(l.getUsedLength());
+                return Integer.toString(location.getUsedLength());
             case ROLLINGSTOCK:
-                return Integer.toString(l.getNumberRS());
+                return Integer.toString(location.getNumberRS());
             case PICKUPS:
-                return Integer.toString(l.getPickupRS());
+                return Integer.toString(location.getPickupRS());
             case DROPS:
-                return Integer.toString(l.getDropRS());
+                return Integer.toString(location.getDropRS());
             case ACTIONCOLUMN:
                 return Bundle.getMessage("Yardmaster");
             case EDITCOLUMN:
