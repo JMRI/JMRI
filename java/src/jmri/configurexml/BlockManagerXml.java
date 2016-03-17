@@ -1,4 +1,3 @@
-// BlockManagerXml.java
 package jmri.configurexml;
 
 import java.util.List;
@@ -24,7 +23,6 @@ import org.slf4j.LoggerFactory;
  * elements.
  *
  * @author Bob Jacobsen Copyright: Copyright (c) 2008
- * @version $Revision$
  * @since 2.1.2
  *
  */
@@ -97,75 +95,71 @@ public class BlockManagerXml extends jmri.managers.configurexml.AbstractMemoryMa
             // write out again with contents
             iter = tm.getSystemNameList().iterator();
             while (iter.hasNext()) {
-                try {
-                    String sname = iter.next();
-                    if (sname == null) {
-                        log.error("System name null during store skipped for this block");
+                String sname = iter.next();
+                if (sname == null) {
+                    log.error("System name null during store skipped for this block");
+                } else {
+                    Block b = tm.getBySystemName(sname);
+                    // the following null check is to catch a null pointer exception that sometimes was found to happen
+                    if (b == null) {
+                        log.error("Null Block during store - second store skipped for this block - " + sname);
                     } else {
-                        Block b = tm.getBySystemName(sname);
-                        // the following null check is to catch a null pointer exception that sometimes was found to happen
-                        if (b == null) {
-                            log.error("Null Block during store - second store skipped for this block - " + sname);
-                        } else {
-                            String uname = b.getUserName();
-                            if (uname == null) {
-                                uname = "";
-                            }
-                            Element elem = new Element("block")
-                                    .setAttribute("systemName", sname);
-                            elem.addContent(new Element("systemName").addContent(sname));
-                            if (log.isDebugEnabled()) {
-                                log.debug("second store Block " + sname + ":" + uname);
-                            }
-                            // store length and curvature attributes
-                            elem.setAttribute("length", Float.toString(b.getLengthMm()));
-                            elem.setAttribute("curve", Integer.toString(b.getCurvature()));
-                            // store common parts
-                            storeCommon(b, elem);
-
-                            if ((b.getBlockSpeed() != null) && (!b.getBlockSpeed().equals("")) && !b.getBlockSpeed().contains("Global")) {
-                                elem.addContent(new Element("speed").addContent(b.getBlockSpeed()));
-                            }
-                            String perm = "no";
-                            if (b.getPermissiveWorking()) {
-                                perm = "yes";
-                            }
-                            elem.addContent(new Element("permissive").addContent(perm));
-                            // Add content. First, the sensor.
-                            if (b.getNamedSensor() != null) {
-                                elem.addContent(new Element("occupancysensor").addContent(b.getNamedSensor().getName()));
-                            }
-
-                            if (b.getDeniedBlocks().size() > 0) {
-                                Element denied = new Element("deniedBlocks");
-                                for (String deniedBlock : b.getDeniedBlocks()) {
-                                    denied.addContent(new Element("block").addContent(deniedBlock));
-                                }
-                                elem.addContent(denied);
-                            }
-
-                            // Now the Reporter
-                            Reporter r = b.getReporter();
-                            if (r != null) {
-                                Element re = new Element("reporter");
-                                re.setAttribute("systemName", r.getSystemName());
-                                re.setAttribute("useCurrent", b.isReportingCurrent() ? "yes" : "no");
-                                elem.addContent(re);
-                            }
-
-                            if (tm.savePathInfo()) {
-                                // then the paths
-                                List<Path> paths = b.getPaths();
-                                for (int i = 0; i < paths.size(); i++) {
-                                    addPath(elem, paths.get(i));
-                                }
-                                // and put this element out
-                            }
-                            blocks.addContent(elem);
+                        String uname = b.getUserName();
+                        if (uname == null) {
+                            uname = "";
                         }
+                        Element elem = new Element("block")
+                                .setAttribute("systemName", sname);
+                        elem.addContent(new Element("systemName").addContent(sname));
+                        if (log.isDebugEnabled()) {
+                            log.debug("second store Block " + sname + ":" + uname);
+                        }
+                        // store length and curvature attributes
+                        elem.setAttribute("length", Float.toString(b.getLengthMm()));
+                        elem.setAttribute("curve", Integer.toString(b.getCurvature()));
+                        // store common parts
+                        storeCommon(b, elem);
+
+                        if ((b.getBlockSpeed() != null) && (!b.getBlockSpeed().equals("")) && !b.getBlockSpeed().contains("Global")) {
+                            elem.addContent(new Element("speed").addContent(b.getBlockSpeed()));
+                        }
+                        String perm = "no";
+                        if (b.getPermissiveWorking()) {
+                            perm = "yes";
+                        }
+                        elem.addContent(new Element("permissive").addContent(perm));
+                        // Add content. First, the sensor.
+                        if (b.getNamedSensor() != null) {
+                            elem.addContent(new Element("occupancysensor").addContent(b.getNamedSensor().getName()));
+                        }
+
+                        if (b.getDeniedBlocks().size() > 0) {
+                            Element denied = new Element("deniedBlocks");
+                            for (String deniedBlock : b.getDeniedBlocks()) {
+                                denied.addContent(new Element("block").addContent(deniedBlock));
+                            }
+                            elem.addContent(denied);
+                        }
+
+                        // Now the Reporter
+                        Reporter r = b.getReporter();
+                        if (r != null) {
+                            Element re = new Element("reporter");
+                            re.setAttribute("systemName", r.getSystemName());
+                            re.setAttribute("useCurrent", b.isReportingCurrent() ? "yes" : "no");
+                            elem.addContent(re);
+                        }
+
+                        if (tm.savePathInfo()) {
+                            // then the paths
+                            List<Path> paths = b.getPaths();
+                            for (int i = 0; i < paths.size(); i++) {
+                                addPath(elem, paths.get(i));
+                            }
+                            // and put this element out
+                        }
+                        blocks.addContent(elem);
                     }
-                } catch (Exception e) {
-                    log.error(e.toString());
                 }
             }
         }
