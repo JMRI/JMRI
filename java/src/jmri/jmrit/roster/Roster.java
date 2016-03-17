@@ -1,4 +1,3 @@
-// Roster.java
 package jmri.jmrit.roster;
 
 import java.awt.HeadlessException;
@@ -61,7 +60,6 @@ import org.slf4j.LoggerFactory;
  *
  * @author	Bob Jacobsen Copyright (C) 2001, 2008, 2010
  * @author Dennis Miller Copyright 2004
- * @version	$Revision$
  * @see jmri.jmrit.roster.RosterEntry
  */
 public class Roster extends XmlFile implements RosterGroupSelector, PropertyChangeListener {
