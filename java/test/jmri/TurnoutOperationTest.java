@@ -5,6 +5,7 @@ import junit.framework.Test;
 import junit.framework.TestCase;
 import junit.framework.TestSuite;
 
+import jmri.util.JUnitUtil;
 import jmri.implementation.AbstractTurnout;
 
 /**
@@ -56,6 +57,24 @@ public class TurnoutOperationTest extends TestCase {
     public static Test suite() {
         TestSuite suite = new TestSuite(TurnoutOperationTest.class);
         return suite;
+    }
+
+    // The minimal setup for log4J
+
+    protected void setUp() throws Exception { 
+        apps.tests.Log4JFixture.setUp(); 
+        super.setUp();
+        jmri.util.JUnitUtil.resetInstanceManager();
+        JUnitUtil.initConfigureManager();
+        JUnitUtil.initInternalTurnoutManager();
+    }
+
+    protected void tearDown() throws Exception { 
+        super.tearDown();
+        apps.tests.Log4JFixture.tearDown(); 
+        JUnitUtil.resetTurnoutOperationManager();
+        JUnitUtil.initConfigureManager();
+        JUnitUtil.resetInstanceManager();
     }
 
 }

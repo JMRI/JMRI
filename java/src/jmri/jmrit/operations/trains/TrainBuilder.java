@@ -1623,34 +1623,31 @@ public class TrainBuilder extends TrainCommon {
         }
         // adjust car list to only have cars from one staging track
         if (_departStageTrack != null) {
-            // Make sure that all cars in staging are moved
-            _train.getTrainDepartsRouteLocation().setCarMoves(
-                    _train.getTrainDepartsRouteLocation().getMaxCarMoves() - _departStageTrack.getNumberCars());
             int numCarsFromStaging = 0;
             _numOfBlocks = new Hashtable<String, Integer>();
             addLine(_buildReport, SEVEN, BLANK_LINE); // add line when in very detailed report mode
             addLine(_buildReport, SEVEN, Bundle.getMessage("buildRemoveCarsStaging"));
             for (_carIndex = 0; _carIndex < _carList.size(); _carIndex++) {
-                Car c = _carList.get(_carIndex);
-                if (c.getLocationName().equals(_departLocation.getName())) {
-                    if (c.getTrackName().equals(_departStageTrack.getName())) {
+                Car car = _carList.get(_carIndex);
+                if (car.getLocationName().equals(_departLocation.getName())) {
+                    if (car.getTrackName().equals(_departStageTrack.getName())) {
                         numCarsFromStaging++;
                         // populate car blocking hashtable
                         // don't block cabooses, cars with FRED, or passenger. Only block lead cars in kernel
-                        if (!c.isCaboose() && !c.hasFred() && !c.isPassenger()
-                                && (c.getKernel() == null || c.getKernel().isLead(c))) {
-                            log.debug("Car {} last location id: {}", c.toString(), c.getLastLocationId());
+                        if (!car.isCaboose() && !car.hasFred() && !car.isPassenger()
+                                && (car.getKernel() == null || car.getKernel().isLead(car))) {
+                            log.debug("Car {} last location id: {}", car.toString(), car.getLastLocationId());
                             Integer number = 1;
-                            if (_numOfBlocks.containsKey(c.getLastLocationId())) {
-                                number = _numOfBlocks.get(c.getLastLocationId()) + 1;
-                                _numOfBlocks.remove(c.getLastLocationId());
+                            if (_numOfBlocks.containsKey(car.getLastLocationId())) {
+                                number = _numOfBlocks.get(car.getLastLocationId()) + 1;
+                                _numOfBlocks.remove(car.getLastLocationId());
                             }
-                            _numOfBlocks.put(c.getLastLocationId(), number);
+                            _numOfBlocks.put(car.getLastLocationId(), number);
                         }
                     } else {
                         addLine(_buildReport, SEVEN, MessageFormat.format(Bundle.getMessage("buildExcludeCarAtLoc"),
-                                new Object[]{c.toString(), (c.getLocationName() + ", " + c.getTrackName())}));
-                        _carList.remove(c);
+                                new Object[]{car.toString(), (car.getLocationName() + ", " + car.getTrackName())}));
+                        _carList.remove(car);
                         _carIndex--;
                     }
                 }
@@ -1661,10 +1658,10 @@ public class TrainBuilder extends TrainCommon {
                     new Object[]{_departStageTrack.getLocation().getName(), _departStageTrack.getName(),
                             numCarsFromStaging}));
             // and list them
-            for (Car c : _carList) {
-                if (c.getTrack() == _departStageTrack) {
+            for (Car car : _carList) {
+                if (car.getTrack() == _departStageTrack) {
                     addLine(_buildReport, SEVEN, MessageFormat.format(Bundle.getMessage("buildStagingCarAtLoc"),
-                            new Object[]{c.toString(), c.getTypeName(), c.getLoadName()}));
+                            new Object[]{car.toString(), car.getTypeName(), car.getLoadName()}));
                 }
             }
             // error if all of the cars from staging aren't available
