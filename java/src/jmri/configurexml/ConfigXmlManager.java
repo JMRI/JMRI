@@ -693,9 +693,21 @@ public class ConfigXmlManager extends jmri.jmrit.XmlFile
             creationErrorEncountered(null, "parsing file " + url.getFile(),
                     "Parse error", null, null, e);
             result = false;
-        } catch (java.lang.Exception e) {
+        } catch (java.io.IOException e) {
             creationErrorEncountered(null, "loading from file " + url.getFile(),
-                    "Unknown error (Exception)", null, null, e);
+                    "IOException", null, null, e);
+            result = false;
+        } catch (java.lang.ClassNotFoundException e) {
+            creationErrorEncountered(null, "loading from file " + url.getFile(),
+                    "ClassNotFoundException", null, null, e);
+            result = false;
+        } catch (java.lang.InstantiationException e) {
+            creationErrorEncountered(null, "loading from file " + url.getFile(),
+                    "InstantiationException", null, null, e);
+            result = false;
+        } catch (java.lang.IllegalAccessException e) {
+            creationErrorEncountered(null, "loading from file " + url.getFile(),
+                    "IllegalAccessException", null, null, e);
             result = false;
         } finally {
             // no matter what, close error reporting
