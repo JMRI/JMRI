@@ -1258,12 +1258,6 @@ public class Roster extends XmlFile implements RosterGroupSelector, PropertyChan
         this.getRosterGroups().get(oldName).setName(newName);
     }
 
-// What does this do? Should this return the group at i? It's not used as fas as I can tell
-//     @Deprecated
-//     public void getRosterGroupList(int i) {
-//         this.getRosterGroupList().get(i);
-//     }
-
     /**
      * Get a list of the user defined roster group names.
      *
