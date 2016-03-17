@@ -38,9 +38,9 @@ public class TurnoutOperationFrame extends JDialog {
     JTabbedPane tabPane;
 
     public TurnoutOperationFrame(Frame parent) {
-        super(parent, "Turnout Operation Editor");
+        super(parent, Bundle.getMessage("TurnoutOperationEditorTitle"));
         Container contentPane = getContentPane();
-        setSize(400, 150);
+        setSize(400, 165);
         Box outerBox = Box.createVerticalBox();
         contentPane.add(outerBox);
         tabPane = new JTabbedPane();
@@ -52,7 +52,7 @@ public class TurnoutOperationFrame extends JDialog {
         outerBox.add(tabPane);
         Box bottomBox = Box.createHorizontalBox();
         bottomBox.add(Box.createHorizontalGlue());
-        JButton okButton = new JButton("OK");
+        JButton okButton = new JButton(Bundle.getMessage("OK"));
         okButton.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent a) {
                 self.doOK();
@@ -60,7 +60,7 @@ public class TurnoutOperationFrame extends JDialog {
         }
         );
         bottomBox.add(okButton);
-        JButton cancelButton = new JButton("Cancel");
+        JButton cancelButton = new JButton(Bundle.getMessage("Cancel"));
         cancelButton.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent a) {
                 setVisible(false);
@@ -68,7 +68,7 @@ public class TurnoutOperationFrame extends JDialog {
         }
         );
         bottomBox.add(cancelButton);
-        JButton deleteButton = new JButton("Delete");
+        JButton deleteButton = new JButton(Bundle.getMessage("Delete"));
         deleteButton.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent a) {
                 self.doDelete();
@@ -101,8 +101,8 @@ public class TurnoutOperationFrame extends JDialog {
         String query = "";
         if (currentOperation != null && !currentOperation.isDefinitive()) {
             if (currentOperation.isInUse()) {
-                query = "Operation " + currentOperation.getName() + " is in use\n"
-                        + "Turnouts using it will revert to the global default\n";
+                query = Bundle.getMessage("DeleteOperation") + " " + currentOperation.getName() + " " + Bundle.getMessage("DeleteIsInUse")
+                        + Bundle.getMessage("DeleteRevert");
             }
             if (JOptionPane.showConfirmDialog(this, query + "Delete operation " + currentOperation.getName() + "?",
                     "Confirm delete", JOptionPane.YES_NO_OPTION) == JOptionPane.YES_OPTION) {
