@@ -1,4 +1,3 @@
-// DCCManufacturerList.java
 package jmri.jmrix;
 
 import static jmri.jmrix.OtherConnectionTypeList.OTHER;
@@ -47,7 +46,6 @@ import static jmri.jmrix.zimo.Mx1ConnectionTypeList.ZIMO;
  * <P>
  * @author Bob Jacobsen Copyright (C) 2010
  * @author Kevin Dickerson Copyright (C) 2010
- * @version	$Revision$
  * @deprecated Since 3.4.5
  */
 @Deprecated
@@ -256,10 +254,10 @@ public class DCCManufacturerList {
             return "NCE";
         } else if (a == 'O') {
             return "Oak Tree";
-        } else if (a == 'M') {
+         } else if (a == 'M') {
             return "OpenLCB";  // duplicates MERG?
-        } else if (a == 'M') {
-            return "MERG";
+        //} else if (a == 'M') {
+        //    return "MERG";
         } else if (a == 'P') {
             return "PowerLine";
         } else if (a == 'Q') {
