@@ -72,6 +72,7 @@ public class TurnoutOperationTest extends TestCase {
     protected void tearDown() throws Exception { 
         super.tearDown();
         apps.tests.Log4JFixture.tearDown(); 
+        JUnitUtil.resetTurnoutOperationManager();
         JUnitUtil.initConfigureManager();
         JUnitUtil.resetInstanceManager();
     }
