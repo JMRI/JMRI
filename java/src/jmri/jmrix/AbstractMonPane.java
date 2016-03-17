@@ -86,16 +86,11 @@ public abstract class AbstractMonPane extends JmriPanel {
     String filterFieldCheck = this.getClass().getName() + ".FilterField"; // NOI18N
     jmri.UserPreferencesManager p;
 
-    // for locking
-    AbstractMonPane self;
-
     // to find and remember the log file
     final javax.swing.JFileChooser logFileChooser = new JFileChooser(FileUtil.getUserFilesPath());
 
-    @SuppressWarnings("LeakingThisInConstructor") // NOI18N
     public AbstractMonPane() {
         super();
-        self = this;
     }
 
     /**
@@ -423,7 +418,7 @@ public abstract class AbstractMonPane extends JmriPanel {
 
         // display parsed data
         sb.append(line);
-        synchronized (self) {
+        synchronized (this) {
             linesBuffer.append(sb.toString());
         }
 
@@ -463,7 +458,7 @@ public abstract class AbstractMonPane extends JmriPanel {
         Runnable r = new Runnable() {
             @Override
             public void run() {
-                synchronized (self) {
+                synchronized (AbstractMonPane.this) {
                     monTextPane.append(linesBuffer.toString());
                     int LineCount = monTextPane.getLineCount();
                     if (LineCount > MAX_LINES) {
