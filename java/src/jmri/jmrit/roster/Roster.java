@@ -457,10 +457,18 @@ public class Roster extends XmlFile implements RosterGroupSelector, PropertyChan
         }
     }
     
+    /** 
+     * Internal interface works with #findMatchingEntries
+     * to provide a common search-match-return capability.
+     */
     private interface RosterComparator {
         public boolean check(RosterEntry r);
     }
     
+    /** 
+     * Internal method works with #RosterComparator
+     * to provide a common search-match-return capability.
+     */
     private List<RosterEntry> findMatchingEntries(RosterComparator c) {
         List<RosterEntry> l = new ArrayList<>();
         for (RosterEntry r : _list) {
@@ -473,7 +481,7 @@ public class Roster extends XmlFile implements RosterGroupSelector, PropertyChan
     
     /**
      * Get a List of {@link RosterEntry} objects in Roster matching some
-     * information. The list may have null contents if there are no matches.
+     * information. The list will be empty if there are no matches.
      *
      * @param roadName
      * @param roadNumber
@@ -485,7 +493,7 @@ public class Roster extends XmlFile implements RosterGroupSelector, PropertyChan
      * @param id
      * @return List or matching RosterEntries or an empty List
      */
-    public List<RosterEntry> getEntriesMatchingCriteria(String roadName, String roadNumber, String dccAddress,
+    public @Nonnull List<RosterEntry> getEntriesMatchingCriteria(String roadName, String roadNumber, String dccAddress,
             String mfg, String decoderMfgID, String decoderVersionID, String id, String group) {
         return findMatchingEntries(
             (RosterEntry r) -> { 
@@ -498,7 +506,7 @@ public class Roster extends XmlFile implements RosterGroupSelector, PropertyChan
 
     /**
      * Get a List of {@link RosterEntry} objects in Roster matching some
-     * information. The list may have null contents if there are no matches.
+     * information. The list will be empty if there are no matches.
      *
      * This method calls {@link #getEntriesMatchingCriteria(java.lang.String, java.lang.String, java.lang.String, java.lang.String, java.lang.String, java.lang.String, java.lang.String, java.lang.String)
      * }
@@ -516,7 +524,7 @@ public class Roster extends XmlFile implements RosterGroupSelector, PropertyChan
      * java.lang.String, java.lang.String, java.lang.String, java.lang.String,
      * java.lang.String, java.lang.String)
      */
-    public List<RosterEntry> matchingList(String roadName, String roadNumber, String dccAddress,
+    public @Nonnull List<RosterEntry> matchingList(String roadName, String roadNumber, String dccAddress,
             String mfg, String decoderMfgID, String decoderVersionID, String id) {
         return this.getEntriesMatchingCriteria(roadName, roadNumber, dccAddress, mfg, decoderMfgID, decoderVersionID, id, null);
     }
@@ -524,7 +532,7 @@ public class Roster extends XmlFile implements RosterGroupSelector, PropertyChan
     /**
      * Check if an entry is consistent with specific properties.
      * <P>
-     * A null String entry always matches. Strings are used for convenience in
+     * A null String argument always matches. Strings are used for convenience in
      * GUI building.
      *
      * @param i
@@ -547,7 +555,7 @@ public class Roster extends XmlFile implements RosterGroupSelector, PropertyChan
     /**
      * Check if an entry is consistent with specific properties.
      * <P>
-     * A null String entry always matches. Strings are used for convenience in
+     * A null String argument always matches. Strings are used for convenience in
      * GUI building.
      *
      * @param list
@@ -574,7 +582,7 @@ public class Roster extends XmlFile implements RosterGroupSelector, PropertyChan
     /**
      * Check if an entry is consistent with specific properties.
      * <P>
-     * A null String entry always matches. Strings are used for convenience in
+     * A null String argument always matches. Strings are used for convenience in
      * GUI building.
      *
      * @param r
