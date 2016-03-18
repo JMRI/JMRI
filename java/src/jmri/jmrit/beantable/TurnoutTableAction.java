@@ -744,7 +744,7 @@ public class TurnoutTableAction extends AbstractTableAction {
     JTextField userName = new JTextField(40);
     JComboBox<String> prefixBox = new JComboBox<String>();
     JTextField numberToAdd = new JTextField(5);
-    JCheckBox range = new JCheckBox("Add a range");
+    JCheckBox range = new JCheckBox(Bundle.getMessage("AddRangeBox"));
     JLabel sysNameLabel = new JLabel("Hardware Address");
     JLabel userNameLabel = new JLabel(Bundle.getMessage("LabelUserName"));
     String systemSelectionCombo = this.getClass().getName() + ".SystemSelected";
@@ -1200,9 +1200,9 @@ public class TurnoutTableAction extends AbstractTableAction {
     public void setMenuBar(BeanTableFrame f) {
         final jmri.util.JmriJFrame finalF = f;			// needed for anonymous ActionListener class
         JMenuBar menuBar = f.getJMenuBar();
-        JMenu opsMenu = new JMenu("Automation");
+        JMenu opsMenu = new JMenu(Bundle.getMessage("TurnoutAutomationMenu"));
         menuBar.add(opsMenu);
-        JMenuItem item = new JMenuItem("Edit...");
+        JMenuItem item = new JMenuItem(Bundle.getMessage("TurnoutAutomationMenuItemEdit"));
         opsMenu.add(item);
         item.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
@@ -1212,8 +1212,8 @@ public class TurnoutTableAction extends AbstractTableAction {
 
         menuBar.add(opsMenu);
 
-        JMenu speedMenu = new JMenu("Speeds");
-        item = new JMenuItem("Defaults...");
+        JMenu speedMenu = new JMenu(Bundle.getMessage("TurnoutSpeedsMenu"));
+        item = new JMenuItem(Bundle.getMessage("TurnoutSpeedsMenuItemDefaults"));
         speedMenu.add(item);
         item.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
