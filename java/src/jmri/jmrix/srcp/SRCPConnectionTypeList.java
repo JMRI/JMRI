@@ -11,10 +11,18 @@ package jmri.jmrix.srcp;
  */
 public class SRCPConnectionTypeList implements jmri.jmrix.ConnectionTypeList {
 
+    public static final String SRCP = "SRCP";
+
+    @Override
     public String[] getAvailableProtocolClasses() {
         return new String[]{
             "jmri.jmrix.srcp.networkdriver.ConnectionConfig"
         };
+    }
+
+    @Override
+    public String[] getManufacturers() {
+        return new String[]{SRCP};
     }
 
 }

@@ -11,10 +11,18 @@ package jmri.jmrix.secsi;
  */
 public class SerialConnectionTypeList implements jmri.jmrix.ConnectionTypeList {
 
+    public static final String TRACTRONICS = "TracTronics";
+
+    @Override
     public String[] getAvailableProtocolClasses() {
         return new String[]{
             "jmri.jmrix.secsi.serialdriver.ConnectionConfig"
         };
+    }
+
+    @Override
+    public String[] getManufacturers() {
+        return new String[]{TRACTRONICS};
     }
 
 }

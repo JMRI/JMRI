@@ -30,7 +30,7 @@ public class SerialDriverAdapter extends TamsPortController implements jmri.jmri
 
     public SerialDriverAdapter() {
         super(new TamsSystemConnectionMemo());
-        setManufacturer(jmri.jmrix.DCCManufacturerList.TAMS);
+        setManufacturer(jmri.jmrix.tams.TamsConnectionTypeList.TAMS);
     }
 
     public String openPort(String portName, String appName) {

@@ -11,10 +11,18 @@ package jmri.jmrix.internal;
  */
 public class InternalConnectionTypeList implements jmri.jmrix.ConnectionTypeList {
 
+    public static final String NONE = "None";
+
+    @Override
     public String[] getAvailableProtocolClasses() {
         return new String[]{
             "jmri.jmrix.internal.ConnectionConfig"
         };
+    }
+
+    @Override
+    public String[] getManufacturers() {
+        return new String[]{NONE};
     }
 
 }
