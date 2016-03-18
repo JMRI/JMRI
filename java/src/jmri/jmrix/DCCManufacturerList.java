@@ -7,11 +7,10 @@ import org.slf4j.LoggerFactory;
 /**
  * Maintains lists equipment manufacturers that JMRI Supports.
  * <P>
- * If you add to this, please add your new one in all sections if possible.
- * <P>
  * @author Bob Jacobsen Copyright (C) 2010
  * @author Kevin Dickerson Copyright (C) 2010
- * @deprecated Since 3.4.5
+ * @deprecated Since 3.4.5 ensure the {@link jmri.jmrix.ConnectionTypeList} is
+ * complete and registered as a service provider.
  */
 @Deprecated
 public class DCCManufacturerList {
