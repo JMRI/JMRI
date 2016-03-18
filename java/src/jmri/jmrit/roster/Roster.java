@@ -326,16 +326,14 @@ public class Roster extends XmlFile implements RosterGroupSelector, PropertyChan
      * particular DCC address.
      *
      * @param a 
-     * @return an ArrayList of matching entries
+     * @return an ArrayList of matching entries, perhaps empty
      */
-    public List<RosterEntry> getEntriesByDccAddress(String a) {
-        List<RosterEntry> list = new ArrayList<>(); 
-        for (RosterEntry re : _list) {
-            if (re.getDccAddress().equals(a)) {
-                list.add(re);
-            }
-        }
-        return list;
+    public @Nonnull  List<RosterEntry> getEntriesByDccAddress(String a) {
+        return findMatchingEntries(
+            (RosterEntry r) -> { 
+                return r.getDccAddress().equals(a);
+                } 
+            );
     }
 
     /**
@@ -344,7 +342,7 @@ public class Roster extends XmlFile implements RosterGroupSelector, PropertyChan
      * @param i
      * @return The matching RosterEntry
      */
-    public RosterEntry getEntry(int i) {
+    public @Nonnull  RosterEntry getEntry(int i) {
         return _list.get(i);
     }
 
@@ -458,7 +456,21 @@ public class Roster extends XmlFile implements RosterGroupSelector, PropertyChan
             return this.getEntriesWithAttributeKeyValue(Roster.getRosterGroupProperty(group), "yes"); // NOI18N
         }
     }
-
+    
+    private interface RosterComparator {
+        public boolean check(RosterEntry r);
+    }
+    
+    private List<RosterEntry> findMatchingEntries(RosterComparator c) {
+        List<RosterEntry> l = new ArrayList<>();
+        for (RosterEntry r : _list) {
+            if (c.check(r)) {
+                l.add(r);
+            }
+        }
+        return l;
+    }
+    
     /**
      * Get a List of {@link RosterEntry} objects in Roster matching some
      * information. The list may have null contents if there are no matches.
@@ -475,13 +487,13 @@ public class Roster extends XmlFile implements RosterGroupSelector, PropertyChan
      */
     public List<RosterEntry> getEntriesMatchingCriteria(String roadName, String roadNumber, String dccAddress,
             String mfg, String decoderMfgID, String decoderVersionID, String id, String group) {
-        List<RosterEntry> l = new ArrayList<>();
-        for (int i = 0; i < this.numEntries(); i++) {
-            if (this.checkEntry(i, roadName, roadNumber, dccAddress, mfg, decoderMfgID, decoderMfgID, id, group)) {
-                l.add(this.getEntry(i));
-            }
-        }
-        return l;
+        return findMatchingEntries(
+            (RosterEntry r) -> { 
+                return checkEntry(r, roadName, roadNumber, dccAddress,
+                mfg, decoderMfgID, decoderVersionID,
+                id, group);
+                } 
+            );
     }
 
     /**
@@ -526,11 +538,11 @@ public class Roster extends XmlFile implements RosterGroupSelector, PropertyChan
      * @param group
      * @return true if the entry matches
      */
-    public boolean checkEntry(int i, String roadName, String roadNumber, String dccAddress,
-            String mfg, String decoderModel, String decoderFamily,
-            String id, String group) {
-        return this.checkEntry(_list, i, roadName, roadNumber, dccAddress, mfg, decoderModel, decoderFamily, id, group);
-    }
+     public boolean checkEntry(int i, String roadName, String roadNumber, String dccAddress,
+             String mfg, String decoderModel, String decoderFamily,
+             String id, String group) {
+         return this.checkEntry(_list, i, roadName, roadNumber, dccAddress, mfg, decoderModel, decoderFamily, id, group);
+     }
 
     /**
      * Check if an entry is consistent with specific properties.
@@ -554,6 +566,32 @@ public class Roster extends XmlFile implements RosterGroupSelector, PropertyChan
             String mfg, String decoderModel, String decoderFamily,
             String id, String group) {
         RosterEntry r = list.get(i);
+        return checkEntry(r, roadName, roadNumber, dccAddress,
+            mfg, decoderModel, decoderFamily,
+            id, group);
+    }
+
+    /**
+     * Check if an entry is consistent with specific properties.
+     * <P>
+     * A null String entry always matches. Strings are used for convenience in
+     * GUI building.
+     *
+     * @param r
+     * @param roadName
+     * @param roadNumber
+     * @param dccAddress
+     * @param mfg
+     * @param decoderModel
+     * @param decoderFamily
+     * @param id
+     * @param group
+     * @return True if the entry matches
+     */
+    public boolean checkEntry(RosterEntry r, String roadName, String roadNumber, String dccAddress,
+            String mfg, String decoderModel, String decoderFamily,
+            String id, String group) {
+
         if (id != null && !id.equals(r.getId())) {
             return false;
         }
