@@ -1,4 +1,3 @@
-//JmriServerTest.java
 package jmri.jmris;
 
 import junit.framework.Assert;
@@ -10,7 +9,6 @@ import junit.framework.TestSuite;
  * Tests for the jmri.jmris.JmriServer class 
  *
  * @author Paul Bender
- * @version $Revision$
  */
 public class JmriServerTest extends TestCase {
 
@@ -27,6 +25,7 @@ public class JmriServerTest extends TestCase {
     public void testCtorPortAndTimeout() {
         JmriServer a = new JmriServer(25520,100);
         Assert.assertNotNull(a);
+        jmri.util.JUnitAppender.assertErrorMessage("Failed to connect to port 25520");
     }
 
     // from here down is testing infrastructure
