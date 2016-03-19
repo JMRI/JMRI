@@ -15,8 +15,6 @@ import javax.swing.JTextField;
 import jmri.jmrit.operations.OperationsFrame;
 import jmri.jmrit.operations.OperationsManager;
 import jmri.jmrit.operations.setup.Control;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 
 /**
  * Frame for user edit of the file name and setup of an Excel program.
@@ -92,23 +90,19 @@ public class SetupExcelProgramFrame extends OperationsFrame {
      */
     protected File selectFile(String directoryName) {
         JFileChooser fc = jmri.jmrit.XmlFile.userFileChooser(Bundle.getMessage("ExcelProgramFiles"), "xls", "xlsm"); // NOI18N
-        if (fc == null) {
-            log.error("Could not find user directory");
-        } else {
-            fc.setCurrentDirectory(OperationsManager.getInstance().getFile(directoryName));
-            fc.setDialogTitle(Bundle.getMessage("FindDesiredExcelFile"));
-            // when reusing the chooser, make sure new files are included
-            fc.rescanCurrentDirectory();
-            int retVal = fc.showOpenDialog(null);
-            // handle selection or cancel
-            if (retVal == JFileChooser.APPROVE_OPTION) {
-                File file = fc.getSelectedFile();
-                // Run the script from it's filename
-                return file;
-            }
+        fc.setCurrentDirectory(OperationsManager.getInstance().getFile(directoryName));
+        fc.setDialogTitle(Bundle.getMessage("FindDesiredExcelFile"));
+        // when reusing the chooser, make sure new files are included
+        fc.rescanCurrentDirectory();
+        int retVal = fc.showOpenDialog(null);
+        // handle selection or cancel
+        if (retVal == JFileChooser.APPROVE_OPTION) {
+            File file = fc.getSelectedFile();
+            // Run the script from it's filename
+            return file;
         }
         return null;
     }
 
-    private final static Logger log = LoggerFactory.getLogger(SetupExcelProgramFrame.class.getName());
+//    private final static Logger log = LoggerFactory.getLogger(SetupExcelProgramFrame.class.getName());
 }

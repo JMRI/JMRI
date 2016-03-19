@@ -117,6 +117,7 @@ public class EngineManagerXml extends OperationsXml {
 
     private String operationsFileName = "OperationsEngineRoster.xml"; // NOI18N
 
+    @edu.umd.cs.findbugs.annotations.SuppressFBWarnings(value = "ST_WRITE_TO_STATIC_FROM_INSTANCE_METHOD")
     public void dispose(){
         _instance = null;
     }

@@ -136,10 +136,10 @@ public class SetTrainIconPositionFrame extends OperationsFrame {
         addItem(pControl, saveButton, 2, 0);
 
         // only show valid directions
-        pEast.setVisible((Setup.getTrainDirection() & Setup.EAST) > 0);
-        pWest.setVisible((Setup.getTrainDirection() & Setup.WEST) > 0);
-        pNorth.setVisible((Setup.getTrainDirection() & Setup.NORTH) > 0);
-        pSouth.setVisible((Setup.getTrainDirection() & Setup.SOUTH) > 0);
+        pEast.setVisible((Setup.getTrainDirection() & Setup.EAST) == Setup.EAST);
+        pWest.setVisible((Setup.getTrainDirection() & Setup.WEST) == Setup.WEST);
+        pNorth.setVisible((Setup.getTrainDirection() & Setup.NORTH) == Setup.NORTH);
+        pSouth.setVisible((Setup.getTrainDirection() & Setup.SOUTH) == Setup.SOUTH);
 
         getContentPane().add(pLocation);
         getContentPane().add(pNorth);
@@ -309,7 +309,7 @@ public class SetTrainIconPositionFrame extends OperationsFrame {
         Location l = (Location) locationBox.getSelectedItem();
         if (l != null) {
             // East icon
-            if ((Setup.getTrainDirection() & Setup.EAST) > 0) {
+            if ((Setup.getTrainDirection() & Setup.EAST) == Setup.EAST) {
                 _tIonEast = editor.addTrainIcon(Bundle.getMessage("East"));
                 _tIonEast.getTooltip().setText(l.getName());
                 _tIonEast.getTooltip().setBackgroundColor(Color.white);
@@ -318,7 +318,7 @@ public class SetTrainIconPositionFrame extends OperationsFrame {
                 addIconListener(_tIonEast);
             }
             // West icon
-            if ((Setup.getTrainDirection() & Setup.WEST) > 0) {
+            if ((Setup.getTrainDirection() & Setup.WEST) == Setup.WEST) {
                 _tIonWest = editor.addTrainIcon(Bundle.getMessage("West"));
                 _tIonWest.getTooltip().setText(l.getName());
                 _tIonWest.getTooltip().setBackgroundColor(Color.white);
@@ -327,7 +327,7 @@ public class SetTrainIconPositionFrame extends OperationsFrame {
                 addIconListener(_tIonWest);
             }
             // North icon
-            if ((Setup.getTrainDirection() & Setup.NORTH) > 0) {
+            if ((Setup.getTrainDirection() & Setup.NORTH) == Setup.NORTH) {
                 _tIonNorth = editor.addTrainIcon(Bundle.getMessage("North"));
                 _tIonNorth.getTooltip().setText(l.getName());
                 _tIonNorth.getTooltip().setBackgroundColor(Color.white);
@@ -336,7 +336,7 @@ public class SetTrainIconPositionFrame extends OperationsFrame {
                 addIconListener(_tIonNorth);
             }
             // South icon
-            if ((Setup.getTrainDirection() & Setup.SOUTH) > 0) {
+            if ((Setup.getTrainDirection() & Setup.SOUTH) == Setup.SOUTH) {
                 _tIonSouth = editor.addTrainIcon(Bundle.getMessage("South"));
                 _tIonSouth.getTooltip().setText(l.getName());
                 _tIonSouth.getTooltip().setBackgroundColor(Color.white);
