@@ -75,12 +75,6 @@ public class ThrottlesPreferencesPane extends JPanel implements PropertyChangeLi
         gridBagConstraints12.anchor = GridBagConstraints.WEST;
         gridBagConstraints12.gridy = 9;
 
-        GridBagConstraints gridBagConstraints15 = new GridBagConstraints();
-        gridBagConstraints15.gridx = 0;
-        gridBagConstraints15.insets = new Insets(2, 23, 2, 2);
-        gridBagConstraints15.anchor = GridBagConstraints.WEST;
-        gridBagConstraints15.gridy = 8;
-
         GridBagConstraints gridBagConstraints11 = new GridBagConstraints();
         gridBagConstraints11.gridx = 0;
         gridBagConstraints11.insets = new Insets(2, 23, 2, 2);
