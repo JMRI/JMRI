@@ -12,9 +12,9 @@ import jmri.configurexml.XmlAdapter;
 import jmri.jmrix.internal.InternalConnectionTypeList;
 import jmri.profile.Profile;
 import jmri.profile.ProfileUtils;
-import jmri.util.prefs.AbstractPreferencesProvider;
 import jmri.spi.PreferencesProvider;
 import jmri.util.jdom.JDOMUtil;
+import jmri.util.prefs.AbstractPreferencesProvider;
 import org.jdom2.Element;
 import org.jdom2.JDOMException;
 import org.slf4j.Logger;
@@ -43,9 +43,6 @@ public class ConnectionConfigManager extends AbstractPreferencesProvider impleme
             log.debug("Initializing...");
             Element sharedConnections = null;
             Element perNodeConnections = null;
-            if (InstanceManager.getDefault(ConnectionTypeManager.class) == null) {
-                InstanceManager.setDefault(ConnectionTypeManager.class, new ConnectionTypeManager());
-            }
             try {
                 sharedConnections = JDOMUtil.toJDOMElement(ProfileUtils.getAuxiliaryConfiguration(profile).getConfigurationFragment(CONNECTIONS, NAMESPACE, true));
             } catch (NullPointerException ex) {
@@ -155,10 +152,16 @@ public class ConnectionConfigManager extends AbstractPreferencesProvider impleme
     }
 
     public String[] getConnectionTypes(String manufacturer) {
+        if (InstanceManager.getDefault(ConnectionTypeManager.class) == null) {
+            InstanceManager.setDefault(ConnectionTypeManager.class, new ConnectionTypeManager());
+        }
         return InstanceManager.getDefault(ConnectionTypeManager.class).getConnectionTypes(manufacturer);
     }
 
     public String[] getConnectionManufacturers() {
+        if (InstanceManager.getDefault(ConnectionTypeManager.class) == null) {
+            InstanceManager.setDefault(ConnectionTypeManager.class, new ConnectionTypeManager());
+        }
         return InstanceManager.getDefault(ConnectionTypeManager.class).getConnectionManufacturers();
     }
 
