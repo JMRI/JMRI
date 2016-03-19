@@ -228,7 +228,7 @@ public class AcelaSensorManager extends jmri.managers.AbstractSensorManager
         return _instance;
     }
 
-    static AcelaSensorManager _instance = null;
+    static volatile AcelaSensorManager _instance = null;
 
     private final static Logger log = LoggerFactory.getLogger(AcelaSensorManager.class.getName());
 }
