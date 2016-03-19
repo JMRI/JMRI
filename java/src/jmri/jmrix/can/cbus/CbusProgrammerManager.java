@@ -1,4 +1,3 @@
-/* CbusProgrammerManager.java */
 package jmri.jmrix.can.cbus;
 
 import jmri.AddressedProgrammer;
@@ -10,7 +9,6 @@ import jmri.managers.DefaultProgrammerManager;
  *
  * @see jmri.ProgrammerManager
  * @author	Bob Jacobsen Copyright (C) 2008
- * @version	$Revision$
  */
 public class CbusProgrammerManager extends DefaultProgrammerManager {
 
@@ -46,6 +44,3 @@ public class CbusProgrammerManager extends DefaultProgrammerManager {
         return null;
     }
 }
-
-
-/* @(#)CbusProgrammerManager.java */
