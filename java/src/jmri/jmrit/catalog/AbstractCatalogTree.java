@@ -139,8 +139,8 @@ public abstract class AbstractCatalogTree extends DefaultTreeModel implements Ca
         return pcs.getPropertyChangeListeners().length;
     }
 
-    Hashtable<java.beans.PropertyChangeListener, String> register = new Hashtable<java.beans.PropertyChangeListener, String>();
-    Hashtable<java.beans.PropertyChangeListener, String> listenerRefs = new Hashtable<java.beans.PropertyChangeListener, String>();
+    Hashtable<java.beans.PropertyChangeListener, String> register = new Hashtable<>();
+    Hashtable<java.beans.PropertyChangeListener, String> listenerRefs = new Hashtable<>();
 
     public synchronized void addPropertyChangeListener(java.beans.PropertyChangeListener l, String beanRef, String listenerRef) {
         pcs.addPropertyChangeListener(l);
@@ -153,7 +153,7 @@ public abstract class AbstractCatalogTree extends DefaultTreeModel implements Ca
     }
 
     public synchronized ArrayList<java.beans.PropertyChangeListener> getPropertyChangeListeners(String name) {
-        ArrayList<java.beans.PropertyChangeListener> list = new ArrayList<java.beans.PropertyChangeListener>();
+        ArrayList<java.beans.PropertyChangeListener> list = new ArrayList<>();
         Enumeration<java.beans.PropertyChangeListener> en = register.keys();
         while (en.hasMoreElements()) {
             java.beans.PropertyChangeListener l = en.nextElement();
@@ -166,7 +166,7 @@ public abstract class AbstractCatalogTree extends DefaultTreeModel implements Ca
 
     /* This allows a meaning full list of places where the bean is in use!*/
     public synchronized ArrayList<String> getListenerRefs() {
-        ArrayList<String> list = new ArrayList<String>();
+        ArrayList<String> list = new ArrayList<>();
         Enumeration<java.beans.PropertyChangeListener> en = listenerRefs.keys();
         while (en.hasMoreElements()) {
             java.beans.PropertyChangeListener l = en.nextElement();
