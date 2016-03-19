@@ -19,6 +19,7 @@ public class CbusProgrammerManager extends DefaultProgrammerManager {
 
     TrafficController tc;
 
+    @Override
     public String getUserName() {
         return "MERG";
     }
@@ -28,18 +29,22 @@ public class CbusProgrammerManager extends DefaultProgrammerManager {
      *
      * @return false
      */
+    @Override
     public boolean isGlobalModePossible() {
         return false;
     }
 
+    @Override
     public boolean isAddressedModePossible() {
         return true;
     }
 
+    @Override
     public AddressedProgrammer getAddressedProgrammer(boolean pLongAddress, int pAddress) {
         return new CbusProgrammer(pAddress, tc);
     }
 
+    @Override
     public AddressedProgrammer reserveAddressedProgrammer(boolean pLongAddress, int pAddress) {
         return null;
     }
