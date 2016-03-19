@@ -15,7 +15,7 @@ import junit.framework.Test;
 import junit.framework.TestCase;
 import junit.framework.TestSuite;
 
-public abstract class ConnectionConfigManagerTest extends TestCase {
+public class ConnectionConfigManagerTest extends TestCase {
 
     public void testGetConnectionManufacturers() {
         ConnectionConfigManager manager = new ConnectionConfigManager();
