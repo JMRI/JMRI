@@ -692,6 +692,12 @@
             if="debugger"
             depends="runtime-library-selection">
         <echo>Launch with debugger support</echo>
+        <!-- this value of 5432 conflicts with PostgreSQL -->
+        <property name="jpda.address" value="5432"/>
+        <!-- this is the JMRI, not the JDWP default, must be "n" for IDEs -->
+        <property name="jdpa.server" value="y"/>
+        <!-- this is the JDWP default -->
+        <property name="jdpa.suspend" value="y"/>
         <java classname="${application.classname}" dir="${basedir}" fork="yes" resultproperty="application.returncode">
             <classpath refid="project.class.path"/>
             <sysproperty key="java.security.policy"
@@ -704,7 +710,7 @@
                          path="net.bobis.jinput.hidraw.HidRawEnvironmentPlugin"/>
 
             <jvmarg value="-Xdebug"/>
-            <jvmarg value="-Xrunjdwp:transport=dt_socket,server=y,suspend=y,address=5432"/>
+            <jvmarg value="-Xrunjdwp:transport=dt_socket,server=${jdpa.server},suspend=${jdpa.suspend},address=${jpda.address}"/>
             <!-- <jvmarg value="-verbose"/> -->
             <!-- <jvmarg value="-verbosegc"/> -->
             <!-- <jvmarg value="-Xloggc:memory.vgc"/> -->

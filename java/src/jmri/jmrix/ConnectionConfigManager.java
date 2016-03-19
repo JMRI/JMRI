@@ -12,7 +12,7 @@ import jmri.configurexml.XmlAdapter;
 import jmri.jmrix.internal.InternalConnectionTypeList;
 import jmri.profile.Profile;
 import jmri.profile.ProfileUtils;
-import jmri.spi.AbstractPreferencesProvider;
+import jmri.util.prefs.AbstractPreferencesProvider;
 import jmri.spi.PreferencesProvider;
 import jmri.util.jdom.JDOMUtil;
 import org.jdom2.Element;
