@@ -23,8 +23,6 @@ import jmri.swing.PreferencesPanel;
  */
 public class ThrottlesPreferencesPane extends JPanel implements PropertyChangeListener, PreferencesPanel {
 
-    private static final long serialVersionUID = -5473594799045080011L;
-
     private JCheckBox cbUseToolBar;
     private JCheckBox cbUseFunctionIcon;
     private JCheckBox cbResizeWinImg;
