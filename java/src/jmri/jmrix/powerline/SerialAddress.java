@@ -74,24 +74,23 @@ public class SerialAddress {
             }
             return (true);
         }
-        if (aTest) {
-            // This is a PLaa.bb.cc address - validate the Insteon address fields
-            if (!iTest) {
+        
+        assert aTest;
+        
+        // This is a PLaa.bb.cc address - validate the Insteon address fields
+        if (!iTest) {
+            // here if an illegal format
+            log.error("address did not match any valid forms: " + systemName);
+            return (false);
+        } else {
+            if (iCodes.groupCount() != 5) {
                 // here if an illegal format
-                log.error("address did not match any valid forms: " + systemName);
+                log.error("invalid format - " + systemName);
                 return (false);
             } else {
-                if (iCodes.groupCount() != 5) {
-                    // here if an illegal format
-                    log.error("invalid format - " + systemName);
-                    return (false);
-                } else {
-                    return (true);
-                }
+                return (true);
             }
         }
-        log.error("address did not match any valid forms: " + systemName);
-        return false;
     }
 
     /**
