@@ -1,4 +1,3 @@
-// AcelaSensorManager.java
 package jmri.jmrix.acela;
 
 import jmri.Sensor;
@@ -18,7 +17,6 @@ import org.slf4j.LoggerFactory;
  * <P>
  * @author Bob Jacobsen Copyright (C) 2003, 2007
  * @author Dave Duchamp, multi node extensions, 2004
- * @version $Revision$
  *
  * @author Bob Coleman Copyright (C) 2007, 2008 Based on CMRI serial example,
  * modified to establish Acela support.
@@ -45,7 +43,7 @@ public class AcelaSensorManager extends jmri.managers.AbstractSensorManager
         Sensor s;
         // validate the system name, and normalize it
         String sName = AcelaAddress.normalizeSystemName(systemName);
-        if (sName == "") {
+        if (sName.equals("")) {
             // system name is not valid
             log.error("Invalid Acela Sensor system name: " + systemName);
             return null;
@@ -234,5 +232,3 @@ public class AcelaSensorManager extends jmri.managers.AbstractSensorManager
 
     private final static Logger log = LoggerFactory.getLogger(AcelaSensorManager.class.getName());
 }
-
-/* @(#)AcelaSensorManager.java */
