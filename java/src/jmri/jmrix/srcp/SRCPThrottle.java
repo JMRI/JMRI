@@ -12,7 +12,6 @@ import jmri.jmrix.AbstractThrottle;
  * as an expedient here.
  *
  * @author	Bob Jacobsen Copyright (C) 2001,2008
- * @version $Revision$
  */
 public class SRCPThrottle extends AbstractThrottle {
 
@@ -27,7 +26,7 @@ public class SRCPThrottle extends AbstractThrottle {
     public SRCPThrottle(SRCPBusConnectionMemo memo, DccLocoAddress address,
             String protocol,int mode,int functions){
         super(memo);
-        if(protocol!="N") 
+        if(!protocol.equals("N")) 
            throw new IllegalArgumentException("Protocol " + protocol + " not supported");
         setSpeedStepMode(mode);
 

@@ -105,11 +105,14 @@ public class LocationManagerXml extends OperationsXml {
 
     private String operationsFileName = "OperationsLocationRoster.xml"; // NOI18N
 
+    /**
+     * For testing.
+     */
+    @edu.umd.cs.findbugs.annotations.SuppressFBWarnings(value = "ST_WRITE_TO_STATIC_FROM_INSTANCE_METHOD")
     public void dispose(){
         _instance = null;
     }
 
-    private final static Logger log = LoggerFactory.getLogger(LocationManagerXml.class
-            .getName());
+    private final static Logger log = LoggerFactory.getLogger(LocationManagerXml.class.getName());
 
 }

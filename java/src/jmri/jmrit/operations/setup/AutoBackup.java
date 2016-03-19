@@ -33,6 +33,6 @@ public class AutoBackup extends BackupBase {
         // Get a name for this backup set that does not already exist.
         String setName = suggestBackupSetName();
 
-        copyBackupSet(_operationsRoot, new File(_backupRoot, setName));
+        copyBackupSet(getOperationsRoot(), new File(getBackupRoot(), setName));
     }
 }

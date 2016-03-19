@@ -1688,16 +1688,16 @@ public class Setup {
      */
     public static List<String> getTrainDirectionList() {
         List<String> directions = new ArrayList<String>();
-        if ((traindir & EAST) > 0) {
+        if ((traindir & EAST) == EAST) {
             directions.add(EAST_DIR);
         }
-        if ((traindir & WEST) > 0) {
+        if ((traindir & WEST) == WEST) {
             directions.add(WEST_DIR);
         }
-        if ((traindir & NORTH) > 0) {
+        if ((traindir & NORTH) == NORTH) {
             directions.add(NORTH_DIR);
         }
-        if ((traindir & SOUTH) > 0) {
+        if ((traindir & SOUTH) == SOUTH) {
             directions.add(SOUTH_DIR);
         }
         return directions;
@@ -1733,16 +1733,16 @@ public class Setup {
     public static String[] getDirectionStrings(int directions) {
         String[] dir = new String[4];
         int i = 0;
-        if ((directions & EAST) > 0) {
+        if ((directions & EAST) == EAST) {
             dir[i++] = EAST_DIR;
         }
-        if ((directions & WEST) > 0) {
+        if ((directions & WEST) == WEST) {
             dir[i++] = WEST_DIR;
         }
-        if ((directions & NORTH) > 0) {
+        if ((directions & NORTH) == NORTH) {
             dir[i++] = NORTH_DIR;
         }
-        if ((directions & SOUTH) > 0) {
+        if ((directions & SOUTH) == SOUTH) {
             dir[i++] = SOUTH_DIR;
         }
         return dir;
