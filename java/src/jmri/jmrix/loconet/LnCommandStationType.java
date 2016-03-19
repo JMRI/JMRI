@@ -56,11 +56,11 @@ public enum LnCommandStationType {
         this.slotManagerClassName = slotManagerClassName;
     }
 
-    String name;
-    boolean canRead;
-    boolean progEndOp;
-    String throttleClassName;
-    String slotManagerClassName;
+    final String name;
+    final boolean canRead;
+    final boolean progEndOp;
+    final String throttleClassName;
+    final String slotManagerClassName;
 
     public String getName() {
         return name;
