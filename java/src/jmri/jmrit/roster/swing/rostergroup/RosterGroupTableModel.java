@@ -1,4 +1,3 @@
-// RosterGroupTableModel.java
 package jmri.jmrit.roster.swing.rostergroup;
 
 import javax.swing.JTable;
@@ -19,7 +18,6 @@ import org.slf4j.LoggerFactory;
  *
  * @author Bob Jacobsen Copyright (C) 2009
  * @author Kevin Dickerson Copyright (C) 2009
- * @version $Revision$
  * @since 2.7.5
  */
 public class RosterGroupTableModel extends javax.swing.table.AbstractTableModel {
@@ -112,10 +110,7 @@ public class RosterGroupTableModel extends javax.swing.table.AbstractTableModel 
     public Object getValueAt(int row, int col) {
         // get roster entry for row
         RosterEntry re = Roster.instance().getEntry(row);
-        if (re == null) {
-            log.debug("roster entry is null!");
-            return "Error";
-        }
+
         switch (col) {
             case IDCOL:
                 return re.getId();

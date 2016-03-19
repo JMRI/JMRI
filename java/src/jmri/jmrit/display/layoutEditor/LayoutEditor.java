@@ -1,4 +1,3 @@
-// jmri.jmrit.display.LayoutEditor.java
 package jmri.jmrit.display.layoutEditor;
 
 import java.awt.BasicStroke;
@@ -102,14 +101,9 @@ import org.slf4j.LoggerFactory;
  * as some of the control design.
  *
  * @author Dave Duchamp Copyright: (c) 2004-2007
- * @version $Revision$
  */
 public class LayoutEditor extends jmri.jmrit.display.panelEditor.PanelEditor implements java.beans.VetoableChangeListener {
 
-    /**
-     *
-     */
-    private static final long serialVersionUID = 3228600678758422754L;
     // Defined text resource
     static final ResourceBundle rb = ResourceBundle.getBundle("jmri.jmrit.display.layoutEditor.LayoutEditorBundle");
     static final ResourceBundle rbx = ResourceBundle.getBundle("jmri.jmrit.display.DisplayBundle");
@@ -772,9 +766,11 @@ public class LayoutEditor extends jmri.jmrit.display.panelEditor.PanelEditor imp
         }
     }
 
+    @Override
     protected void init(String name) {
     }
 
+    @Override
     public void initView() {
         editModeItem.setSelected(isEditable());
         positionableItem.setSelected(allPositionable());
@@ -802,6 +798,7 @@ public class LayoutEditor extends jmri.jmrit.display.panelEditor.PanelEditor imp
         }
     }
 
+    @Override
     public void setSize(int w, int h) {
         log.debug("Frame size now w=" + width + ", h=" + height);
         super.setSize(w, h);
@@ -1686,8 +1683,7 @@ public class LayoutEditor extends jmri.jmrit.display.panelEditor.PanelEditor imp
             newScale = minZoom;
         }
         
-        if (newScale != _paintScale)
-            setZoom(newScale);
+        setZoom(newScale);
         return newScale;
     }
    
@@ -1707,9 +1703,7 @@ public class LayoutEditor extends jmri.jmrit.display.panelEditor.PanelEditor imp
             newScale = minZoom;
         }
         
-        if (newScale != _paintScale)
-            setZoom(newScale);
-
+        setZoom(newScale);
         return newScale;
     }
    
@@ -1734,31 +1728,16 @@ public class LayoutEditor extends jmri.jmrit.display.panelEditor.PanelEditor imp
         markerMenu.setMnemonic(stringsToVTCodes.get(rbx.getString("MenuMarkerMnemonic")));
         menuBar.add(markerMenu);
         markerMenu.add(new AbstractAction(rbx.getString("AddLoco") + "...") {
-            /**
-             *
-             */
-            private static final long serialVersionUID = -7759328538138927410L;
-
             public void actionPerformed(ActionEvent e) {
                 locoMarkerFromInput();
             }
         });
         markerMenu.add(new AbstractAction(rbx.getString("AddLocoRoster") + "...") {
-            /**
-             *
-             */
-            private static final long serialVersionUID = -8879389496257856672L;
-
             public void actionPerformed(ActionEvent e) {
                 locoMarkerFromRoster();
             }
         });
         markerMenu.add(new AbstractAction(rbx.getString("RemoveMarkers")) {
-            /**
-             *
-             */
-            private static final long serialVersionUID = -3673017468200997943L;
-
             public void actionPerformed(ActionEvent e) {
                 removeMarkers();
             }
@@ -4117,11 +4096,6 @@ public class LayoutEditor extends jmri.jmrit.display.panelEditor.PanelEditor imp
             if (showAlignPopup()) {
                 setShowAlignmentMenu(popup);
                 popup.add(new AbstractAction(rb.getString("Remove")) {
-                    /**
-                     *
-                     */
-                    private static final long serialVersionUID = 8665204205409832217L;
-
                     public void actionPerformed(ActionEvent e) {
                         deleteSelectedItems();
                     }
@@ -5329,21 +5303,11 @@ public class LayoutEditor extends jmri.jmrit.display.panelEditor.PanelEditor imp
         if (showAlignPopup()) {
             JMenu edit = new JMenu(rb.getString("EditAlignment"));
             edit.add(new AbstractAction(rb.getString("AlignX")) {
-                /**
-                 *
-                 */
-                private static final long serialVersionUID = 3802627760002559496L;
-
                 public void actionPerformed(ActionEvent e) {
                     alignSelection(true);
                 }
             });
             edit.add(new AbstractAction(rb.getString("AlignY")) {
-                /**
-                 *
-                 */
-                private static final long serialVersionUID = 2591755542663220942L;
-
                 public void actionPerformed(ActionEvent e) {
                     alignSelection(false);
                 }

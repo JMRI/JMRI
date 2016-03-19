@@ -1,6 +1,3 @@
-/**
- *
- */
 package jmri;
 
 import java.util.Collection;
@@ -141,6 +138,10 @@ public class TurnoutOperationManager {
         return theInstance;
     }
 
+    protected void resetTheInstance() {
+        theInstance = null;
+    }
+    
     /**
      * Load the operation types given by the current TurnoutManager instance, in
      * the order given.

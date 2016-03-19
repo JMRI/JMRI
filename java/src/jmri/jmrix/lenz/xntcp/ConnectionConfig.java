@@ -127,7 +127,7 @@ public class ConnectionConfig extends jmri.jmrix.AbstractNetworkConnectionConfig
         adapter.setPort(portField.getText());
     }
 
-    String manufacturerName = jmri.jmrix.DCCManufacturerList.LENZ;
+    String manufacturerName = jmri.jmrix.lenz.LenzConnectionTypeList.LENZ;
 
     @Override
     public String getManufacturer() {

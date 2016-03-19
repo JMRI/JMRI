@@ -11,11 +11,19 @@ package jmri.jmrix.sprog;
  */
 public class SprogConnectionTypeList implements jmri.jmrix.ConnectionTypeList {
 
+    public static final String SPROG = "SPROG DCC";
+
+    @Override
     public String[] getAvailableProtocolClasses() {
         return new String[]{
             "jmri.jmrix.sprog.sprog.ConnectionConfig",
             "jmri.jmrix.sprog.sprogCS.ConnectionConfig"
         };
+    }
+
+    @Override
+    public String[] getManufacturers() {
+        return new String[]{SPROG};
     }
 
 }

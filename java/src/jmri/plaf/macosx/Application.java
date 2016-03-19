@@ -1,4 +1,3 @@
-// Application.java
 package jmri.plaf.macosx;
 
 import com.apple.eawt.AppEvent.AboutEvent;
@@ -30,7 +29,7 @@ import jmri.util.SystemType;
  */
 public class Application {
 
-    private static Application sharedApplication = null;
+    private static volatile Application sharedApplication = null;
     private com.apple.eawt.Application application = null;
 
     public static Application getApplication() {
@@ -44,9 +43,7 @@ public class Application {
     }
 
     private Application() {
-        if (application == null) {
-            application = com.apple.eawt.Application.getApplication();
-        }
+        application = com.apple.eawt.Application.getApplication();
     }
 
     public void setAboutHandler(final AboutHandler handler) {

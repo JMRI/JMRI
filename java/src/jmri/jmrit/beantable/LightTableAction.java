@@ -320,10 +320,10 @@ public class LightTableAction extends AbstractTableAction {
     // items of add frame
     JLabel systemLabel = new JLabel(Bundle.getMessage("LightSystem"));
     JComboBox<String> prefixBox = new JComboBox<String>();
-    JCheckBox addRangeBox = new JCheckBox(Bundle.getMessage("LightAddRangeBox"));
+    JCheckBox addRangeBox = new JCheckBox(Bundle.getMessage("AddRangeBox"));
     JTextField fieldHardwareAddress = new JTextField(10);
     JTextField fieldNumToAdd = new JTextField(5);
-    JLabel labelNumToAdd = new JLabel("   " + Bundle.getMessage("LabelNumberToAdd") + ":");
+    JLabel labelNumToAdd = new JLabel("   " + Bundle.getMessage("LabelNumberToAdd"));
     String systemSelectionCombo = this.getClass().getName() + ".SystemSelected";
     JPanel panel1a = null;
     JPanel varPanel = null;

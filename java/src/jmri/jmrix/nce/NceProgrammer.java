@@ -1,4 +1,3 @@
-// NceProgrammer.java
 package jmri.jmrix.nce;
 
 import java.util.ArrayList;
@@ -270,6 +269,3 @@ public class NceProgrammer extends AbstractProgrammer implements NceListener {
     private final static Logger log = LoggerFactory.getLogger(NceProgrammer.class.getName());
 
 }
-
-
-/* @(#)NceProgrammer.java */

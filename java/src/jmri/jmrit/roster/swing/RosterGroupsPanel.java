@@ -71,11 +71,6 @@ public class RosterGroupsPanel extends JPanel implements RosterGroupSelector {
      *
      */
     private static final long serialVersionUID = 4617322485702894536L;
-    /**
-     * Property change listeners can listen for property changes with this name
-     * from this object to take action when a user selects a roster group.
-     */
-    public final static String SELECTED_ROSTER_GROUP = "selectedRosterGroup";
     private static int GROUPS_MENU = 1;
     private static int ALL_ENTRIES_MENU = 2;
     private JScrollPane scrollPane;

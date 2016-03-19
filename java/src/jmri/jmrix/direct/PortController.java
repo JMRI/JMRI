@@ -21,7 +21,7 @@ public abstract class PortController extends jmri.jmrix.AbstractSerialPortContro
                 return null;
             }
         });
-        this.manufacturerName = jmri.jmrix.DCCManufacturerList.OTHER;
+        this.manufacturerName = jmri.jmrix.OtherConnectionTypeList.OTHER;
     }
 
 }

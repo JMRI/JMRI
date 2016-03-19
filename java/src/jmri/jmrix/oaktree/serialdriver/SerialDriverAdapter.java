@@ -29,7 +29,7 @@ public class SerialDriverAdapter extends SerialPortController implements jmri.jm
 
     public SerialDriverAdapter() {
         super(new OakTreeSystemConnectionMemo());
-        this.manufacturerName = jmri.jmrix.DCCManufacturerList.OAK;
+        this.manufacturerName = jmri.jmrix.oaktree.SerialConnectionTypeList.OAK;
     }
 
     public String openPort(String portName, String appName) {

@@ -1,4 +1,3 @@
-// SingleTurnoutSignalHead.java
 package jmri.implementation;
 
 import java.beans.PropertyChangeEvent;
@@ -23,7 +22,6 @@ import org.slf4j.LoggerFactory;
  * Based Upon DoubleTurnoutSignalHead by Bob Jacobsen
  *
  * @author	Kevin Dickerson Copyright (C) 2010
- * @version	$Revision$
  */
 public class SingleTurnoutSignalHead extends DefaultSignalHead implements PropertyChangeListener {
 
@@ -265,11 +263,10 @@ public class SingleTurnoutSignalHead extends DefaultSignalHead implements Proper
                     // Updates last commanded state.
                     mTurnoutCommandedState = newTurnoutValue;
                     // notify listeners, if any
-                    firePropertyChange("Appearance", new Integer(oldAppearance), new Integer(newAppearance));
+                    firePropertyChange("Appearance", Integer.valueOf(oldAppearance), Integer.valueOf(newAppearance));
                 }
             }
         }
     }
 }
 
-/* @(#)SingleTurnoutSignalHead.java */
