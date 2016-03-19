@@ -9,7 +9,7 @@ import java.util.prefs.Preferences;
 import jmri.beans.Bean;
 import jmri.profile.Profile;
 import jmri.profile.ProfileUtils;
-import jmri.spi.InitializationException;
+import jmri.util.prefs.InitializationException;
 import jmri.spi.PreferencesProvider;
 import jmri.util.swing.FontComboUtil;
 import org.slf4j.Logger;

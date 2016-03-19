@@ -1,4 +1,4 @@
-package jmri.spi;
+package jmri.util.prefs;
 
 /**
  * This exception represents an exception thrown while attempting to initialize
