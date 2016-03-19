@@ -3,7 +3,11 @@
  * behavior in JMRI.
  *
  * Implementing classes need to be included in the containing JAR's
- * META-INF.services directory per the Java Service Provider standards.
+ * META-INF.services directory per the Java Service Provider Interface (SPI)
+ * standards.
+ *
+ * The {@link JmriServiceProviderInterface} interface serves to identify the
+ * semantics of being a JMRI-specific SPI.
  *
  * @see java.util.ServiceLoader
  */

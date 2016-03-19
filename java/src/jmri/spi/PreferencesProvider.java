@@ -20,7 +20,7 @@ import jmri.util.prefs.InitializationException;
  * implementation that is ready to extend.
  * @author Randall Wood 2015
  */
-public interface PreferencesProvider {
+public interface PreferencesProvider extends JmriServiceProviderInterface {
 
     /**
      * Initialize the PreferencesProvider with preferences associated with the

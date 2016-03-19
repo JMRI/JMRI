@@ -15,7 +15,7 @@ import jmri.server.json.JsonSocketService;
  *
  * @author Randall Wood
  */
-public interface JsonServiceFactory {
+public interface JsonServiceFactory extends JmriServiceProviderInterface {
 
     /**
      * Get the service type(s) for services created by this factory respond to.
