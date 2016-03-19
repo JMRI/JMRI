@@ -55,6 +55,20 @@ public class JUnitAppender extends org.apache.log4j.ConsoleAppender {
     static boolean hold = false;
 
     static private JUnitAppender instance = null;
+    
+    // package-level access for testing
+    static boolean unexpectedFatalSeen = false;
+    static boolean unexpectedErrorSeen = false;
+    static boolean unexpectedWarnSeen  = false;
+    static boolean unexpectedInfoSeen  = false;
+    
+    public static boolean unexpectedMessageSeen(Level l) {
+        if (l == Level.FATAL) return unexpectedFatalSeen;
+        if (l == Level.ERROR) return unexpectedFatalSeen || unexpectedErrorSeen;
+        if (l == Level.WARN) return unexpectedFatalSeen || unexpectedErrorSeen || unexpectedWarnSeen;
+        if (l == Level.INFO) return unexpectedFatalSeen || unexpectedErrorSeen || unexpectedWarnSeen || unexpectedInfoSeen;
+        throw new java.lang.IllegalArgumentException("Did not expect "+l);
+    }
 
     /**
      * Tell appender that a JUnit test is starting.
@@ -74,12 +88,17 @@ public class JUnitAppender extends org.apache.log4j.ConsoleAppender {
     public static void end() {
         hold = false;
         while (!list.isEmpty()) {
-            instance().superappend(list.remove(0));
+            LoggingEvent evt = list.remove(0);
+            instance().superappend(evt);
         }
     }
 
     void superappend(LoggingEvent l) {
         super.append(l);
+        if (l.getLevel() == Level.FATAL) unexpectedFatalSeen = true;
+        if (l.getLevel() == Level.ERROR) unexpectedErrorSeen = true;
+        if (l.getLevel() == Level.WARN) unexpectedWarnSeen = true;
+        if (l.getLevel() == Level.INFO) unexpectedInfoSeen = true;
     }
 
     /**
@@ -107,7 +126,8 @@ public class JUnitAppender extends org.apache.log4j.ConsoleAppender {
             return true;
         }
         while (!list.isEmpty()) {
-            instance().superappend(list.remove(0));
+            LoggingEvent evt = list.remove(0);
+            instance().superappend(evt);
         }
         return false;
     }
