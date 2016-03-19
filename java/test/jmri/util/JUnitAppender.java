@@ -8,12 +8,16 @@ import org.apache.log4j.spi.LoggingEvent;
  * Log4J Appender that works with JUnit tests
  * to check for expected vs unexpected log messages
  *
+ * Much of the state is static; not sure why, but this is not
+ * a problem as there should be only one of these while tests are running
+ *
  * @author	Bob Jacobsen - Copyright 2007
  */
 public class JUnitAppender extends org.apache.log4j.ConsoleAppender {
 
-    static java.util.ArrayList<LoggingEvent> list = new java.util.ArrayList<LoggingEvent>();
+    static java.util.ArrayList<LoggingEvent> list = new java.util.ArrayList<>();
 
+    
     /**
      * Called for each logging event.
      */
