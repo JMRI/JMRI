@@ -176,7 +176,7 @@ public abstract class AbstractCatalogTree extends DefaultTreeModel implements Ca
     }
 
     public synchronized void updateListenerRef(java.beans.PropertyChangeListener l, String newName) {
-        if (listenerRefs.contains(l)) {
+        if (listenerRefs.containsKey(l)) {
             listenerRefs.put(l, newName);
         }
     }
