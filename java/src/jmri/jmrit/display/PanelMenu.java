@@ -78,6 +78,13 @@ public class PanelMenu extends JMenu {
     }
 
     /**
+     * Provide method to delete the refence to this menu
+     */
+    static public void dispose() {
+        thisMenu = null;
+    }
+
+    /**
      * Utility routine for getting the number of panels in the Panels sub menu
      */
     public int getNumberOfPanels() {
