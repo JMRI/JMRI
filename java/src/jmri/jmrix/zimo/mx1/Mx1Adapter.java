@@ -33,7 +33,7 @@ public class Mx1Adapter extends Mx1PortController implements jmri.jmrix.SerialPo
         super(new Mx1SystemConnectionMemo());
         option1Name = "FlowControl";
         options.put(option1Name, new Option("MX-1 connection uses : ", validOption1));
-        this.manufacturerName = jmri.jmrix.DCCManufacturerList.ZIMO;
+        this.manufacturerName = jmri.jmrix.zimo.Mx1ConnectionTypeList.ZIMO;
     }
 
     SerialPort activeSerialPort = null;

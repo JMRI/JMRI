@@ -11,12 +11,20 @@ package jmri.jmrix.cmri;
  */
 public class CMRIConnectionTypeList implements jmri.jmrix.ConnectionTypeList {
 
+    public static final String CMRI = "C/MRI";
+
+    @Override
     public String[] getAvailableProtocolClasses() {
         return new String[]{
             "jmri.jmrix.cmri.serial.serialdriver.ConnectionConfig",
             "jmri.jmrix.cmri.serial.networkdriver.ConnectionConfig",
             "jmri.jmrix.cmri.serial.sim.ConnectionConfig"
         };
+    }
+
+    @Override
+    public String[] getManufacturers() {
+        return new String[]{CMRI};
     }
 
 }

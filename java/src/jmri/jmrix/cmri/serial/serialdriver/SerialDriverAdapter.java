@@ -27,7 +27,7 @@ public class SerialDriverAdapter extends SerialPortController implements jmri.jm
 
     public SerialDriverAdapter() {
         super(new CMRISystemConnectionMemo());
-        this.manufacturerName = jmri.jmrix.DCCManufacturerList.CMRI;
+        this.manufacturerName = jmri.jmrix.cmri.CMRIConnectionTypeList.CMRI;
     }
 
     SerialPort activeSerialPort = null;

@@ -204,11 +204,11 @@ public class RosterTable extends JmriPanel implements RosterEntrySelector, Roste
      */
     public void setRosterGroupSource(RosterGroupSelector rosterGroupSource) {
         if (this.rosterGroupSource != null) {
-            this.rosterGroupSource.removePropertyChangeListener(RosterGroupSelector.selectedRosterGroupProperty, dataModel);
+            this.rosterGroupSource.removePropertyChangeListener(SELECTED_ROSTER_GROUP, dataModel);
         }
         this.rosterGroupSource = rosterGroupSource;
         if (this.rosterGroupSource != null) {
-            this.rosterGroupSource.addPropertyChangeListener(RosterGroupSelector.selectedRosterGroupProperty, dataModel);
+            this.rosterGroupSource.addPropertyChangeListener(SELECTED_ROSTER_GROUP, dataModel);
         }
     }
 

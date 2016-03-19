@@ -1,4 +1,3 @@
-// SerialAddress.java
 package jmri.jmrix.grapevine;
 
 import java.util.regex.Matcher;
@@ -27,7 +26,6 @@ import org.slf4j.LoggerFactory;
  * <P>
  * @author	Dave Duchamp, Copyright (C) 2004
  * @author Bob Jacobsen, Copyright (C) 2006, 2007, 2008
- * @version $Revision$
  */
 public class SerialAddress {
 
@@ -49,9 +47,10 @@ public class SerialAddress {
      * </ul>
      */
     static final String turnoutRegex = "^(G)(T)(?:((\\d++)(B)(\\d++))|(\\d++))$";
-    static Pattern turnoutPattern = null;
+    static volatile Pattern turnoutPattern = null;
 
     static Pattern getTurnoutPattern() {
+        // defer compiling pattern until used, instead of at loading time
         if (turnoutPattern == null) {
             turnoutPattern = Pattern.compile(turnoutRegex);
         }
@@ -73,9 +72,10 @@ public class SerialAddress {
      * </ul>
      */
     static final String lightRegex = "^(G)(L)(?:((\\d++)(B)(\\d++))|(\\d++))$";
-    static Pattern lightPattern = null;
+    static volatile Pattern lightPattern = null;
 
     static Pattern getLightPattern() {
+        // defer compiling pattern until used, instead of at loading time
         if (lightPattern == null) {
             lightPattern = Pattern.compile(lightRegex);
         }
@@ -97,9 +97,10 @@ public class SerialAddress {
      * </ul>
      */
     static final String headRegex = "^(G)(H)(?:((\\d++)(B)(\\d++))|(\\d++))$";
-    static Pattern headPattern = null;
+    static volatile Pattern headPattern = null;
 
     static Pattern getHeadPattern() {
+        // defer compiling pattern until used, instead of at loading time
         if (headPattern == null) {
             headPattern = Pattern.compile(headRegex);
         }
@@ -121,9 +122,10 @@ public class SerialAddress {
      * </ul>
      */
     static final String sensorRegex = "^(G)(S)(?:((\\d++)([BbAaMmPpSs])(\\d++))|(\\d++))$";
-    static Pattern sensorPattern = null;
+    static volatile Pattern sensorPattern = null;
 
     static Pattern getSensorPattern() {
+        // defer compiling pattern until used, instead of at loading time
         if (sensorPattern == null) {
             sensorPattern = Pattern.compile(sensorRegex);
         }
@@ -145,9 +147,10 @@ public class SerialAddress {
      * </ul>
      */
     static final String allRegex = "^(G)([SHLT])(?:((\\d++)([BbAaMmPpSs])(\\d++))|(\\d++))$";
-    static Pattern allPattern = null;
+    static volatile Pattern allPattern = null;
 
     static Pattern getAllPattern() {
+        // defer compiling pattern until used, instead of at loading time
         if (allPattern == null) {
             allPattern = Pattern.compile(allRegex);
         }
@@ -344,7 +347,8 @@ public class SerialAddress {
                 log.error("invalid bit number " + bit + " in " + systemName);
                 return false;
             }
-        } else if (type == 'S') {
+        } else { 
+            assert type == 'S'; // see earlier decoding
             // sort on subtype
             String subtype = matcher.group(5);
             if (subtype == null) { // no subtype, just look at total
@@ -487,5 +491,3 @@ public class SerialAddress {
 
     private final static Logger log = LoggerFactory.getLogger(SerialAddress.class.getName());
 }
-
-/* @(#)SerialAddress.java */

@@ -766,9 +766,11 @@ public class LayoutEditor extends jmri.jmrit.display.panelEditor.PanelEditor imp
         }
     }
 
+    @Override
     protected void init(String name) {
     }
 
+    @Override
     public void initView() {
         editModeItem.setSelected(isEditable());
         positionableItem.setSelected(allPositionable());
@@ -796,6 +798,7 @@ public class LayoutEditor extends jmri.jmrit.display.panelEditor.PanelEditor imp
         }
     }
 
+    @Override
     public void setSize(int w, int h) {
         log.debug("Frame size now w=" + width + ", h=" + height);
         super.setSize(w, h);
@@ -1680,8 +1683,7 @@ public class LayoutEditor extends jmri.jmrit.display.panelEditor.PanelEditor imp
             newScale = minZoom;
         }
         
-        if (newScale != _paintScale)
-            setZoom(newScale);
+        setZoom(newScale);
         return newScale;
     }
    
@@ -1701,9 +1703,7 @@ public class LayoutEditor extends jmri.jmrit.display.panelEditor.PanelEditor imp
             newScale = minZoom;
         }
         
-        if (newScale != _paintScale)
-            setZoom(newScale);
-
+        setZoom(newScale);
         return newScale;
     }
    

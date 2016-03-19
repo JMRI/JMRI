@@ -13,13 +13,21 @@ package jmri.jmrix.dccpp;
  */
 public class DCCppConnectionTypeList implements jmri.jmrix.ConnectionTypeList {
 
+    public static final String DCCPP = "DCC++";
+
+    @Override
     public String[] getAvailableProtocolClasses() {
         return new String[]{
             "jmri.jmrix.dccpp.serial.ConnectionConfig",
-	    "jmri.jmrix.dccpp.simulator.ConnectionConfig",
+            "jmri.jmrix.dccpp.simulator.ConnectionConfig",
             "jmri.jmrix.dccpp.network.ConnectionConfig",
-	    "jmri.jmrix.dccpp.dccppovertcp.ConnectionConfig"
+            "jmri.jmrix.dccpp.dccppovertcp.ConnectionConfig"
         };
+    }
+
+    @Override
+    public String[] getManufacturers() {
+        return new String[]{DCCPP};
     }
 
 }
