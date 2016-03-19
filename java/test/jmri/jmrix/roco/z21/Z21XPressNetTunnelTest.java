@@ -9,11 +9,11 @@ import junit.framework.TestSuite;
  *
  * @author	Paul Bender
  */
-public class z21XPressNetTunnelTest extends TestCase {
+public class Z21XPressNetTunnelTest extends TestCase {
 
     public void testCtor() {
-        z21SystemConnectionMemo memo = new z21SystemConnectionMemo();
-        z21TrafficController tc = new z21TrafficController() {
+        Z21SystemConnectionMemo memo = new Z21SystemConnectionMemo();
+        Z21TrafficController tc = new Z21TrafficController() {
             @Override
             public void sendMessage(jmri.jmrix.AbstractMRMessage m,
                     jmri.jmrix.AbstractMRListener l) {
@@ -28,8 +28,8 @@ public class z21XPressNetTunnelTest extends TestCase {
     }
 
     public void testGetStreamPortController() {
-        z21SystemConnectionMemo memo = new z21SystemConnectionMemo();
-        z21TrafficController tc = new z21TrafficController() {
+        Z21SystemConnectionMemo memo = new Z21SystemConnectionMemo();
+        Z21TrafficController tc = new Z21TrafficController() {
             @Override
             public void sendMessage(jmri.jmrix.AbstractMRMessage m,
                     jmri.jmrix.AbstractMRListener l) {
@@ -44,19 +44,19 @@ public class z21XPressNetTunnelTest extends TestCase {
     }
 
     // from here down is testing infrastructure
-    public z21XPressNetTunnelTest(String s) {
+    public Z21XPressNetTunnelTest(String s) {
         super(s);
     }
 
     // Main entry point
     static public void main(String[] args) {
-        String[] testCaseName = {"-noloading", z21XPressNetTunnelTest.class.getName()};
+        String[] testCaseName = {"-noloading", Z21XPressNetTunnelTest.class.getName()};
         junit.swingui.TestRunner.main(testCaseName);
     }
 
     // test suite from all defined tests
     public static Test suite() {
-        TestSuite suite = new TestSuite(z21XPressNetTunnelTest.class);
+        TestSuite suite = new TestSuite(Z21XPressNetTunnelTest.class);
         return suite;
     }
 
