@@ -264,13 +264,13 @@ public class SprogIIUpdateFrame
     }
 
     synchronized protected void sendWrite() {
-        if (hexFile.getAddressU() >= 0xF0) {
+        if ((hexFile.getAddressU()&0xFF) >= 0xF0) {
             // Write to EEPROM
             if (log.isDebugEnabled()) {
                 log.debug("Send write EE " + hexFile.getAddress());
             }
             msg = SprogMessage.getWriteEE(hexFile.getAddress(), hexFile.getData());
-        } else if (hexFile.getAddressU() >= 0x20) {
+        } else if ((hexFile.getAddressU()&0xFF) >= 0x20) {
             // Write to user data or config data not supported
             if (log.isDebugEnabled()) {
                 log.debug("null write " + hexFile.getAddress());
