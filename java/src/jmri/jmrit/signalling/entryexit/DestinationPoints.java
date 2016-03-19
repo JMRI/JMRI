@@ -54,8 +54,6 @@ public class DestinationPoints extends jmri.implementation.AbstractNamedBean {
 
     transient EntryExitPairs manager = jmri.InstanceManager.getDefault(jmri.jmrit.signalling.EntryExitPairs.class);
 
-    private static final long serialVersionUID = 1209131245L;
-
     transient jmri.SignalMastLogic sml;
 
     final static int NXMESSAGEBOXCLEARTIMEOUT = 30;
