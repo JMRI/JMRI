@@ -5,10 +5,10 @@ import org.apache.log4j.Level;
 import org.apache.log4j.spi.LoggingEvent;
 
 /**
- * Log4J Appender that just publishes what it sees
+ * Log4J Appender that works with JUnit tests
+ * to check for expected vs unexpected log messages
  *
  * @author	Bob Jacobsen - Copyright 2007
- * @version	$Revision$
  */
 public class JUnitAppender extends org.apache.log4j.ConsoleAppender {
 
