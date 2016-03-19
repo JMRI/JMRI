@@ -1683,8 +1683,7 @@ public class LayoutEditor extends jmri.jmrit.display.panelEditor.PanelEditor imp
             newScale = minZoom;
         }
         
-        if (newScale != _paintScale)
-            setZoom(newScale);
+        setZoom(newScale);
         return newScale;
     }
    
@@ -1704,9 +1703,7 @@ public class LayoutEditor extends jmri.jmrit.display.panelEditor.PanelEditor imp
             newScale = minZoom;
         }
         
-        if (newScale != _paintScale)
-            setZoom(newScale);
-
+        setZoom(newScale);
         return newScale;
     }
    
