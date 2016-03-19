@@ -26,7 +26,7 @@ public class LongAddrVariableValue extends VariableValue
     public LongAddrVariableValue(String name, String comment, String cvName,
             boolean readOnly, boolean infoOnly, boolean writeOnly, boolean opsOnly,
             String cvNum, String mask, int minVal, int maxVal,
-            HashMap<String, CvValue> v, JLabel status, String stdname, CvValue mHighCV) {
+            HashMap<String, CvValue> v, JLabel status, String stdname, @Nonnull CvValue mHighCV) {
         super(name, comment, cvName, readOnly, infoOnly, writeOnly, opsOnly, cvNum, mask, v, status, stdname);
         _maxVal = maxVal;
         _minVal = minVal;
@@ -42,9 +42,6 @@ public class LongAddrVariableValue extends VariableValue
         cv.setState(CvValue.FROMFILE);
 
         highCV = mHighCV;
-        if (highCV == null) {
-            log.error("High CV not found in LongAddrVariableValue ctor");
-        }
         highCV.addPropertyChangeListener(this);
         highCV.setState(CvValue.FROMFILE);
     }
