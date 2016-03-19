@@ -1,4 +1,3 @@
-// jmri.jmrit.display.ConnectivityUtil.java
 package jmri.jmrit.display.layoutEditor;
 
 import java.util.ArrayList;
@@ -37,7 +36,6 @@ import org.slf4j.LoggerFactory;
  * method.
  * <P>
  * @author Dave Duchamp Copyright (c) 2009
- * @version $Revision$
  */
 public class ConnectivityUtil {
 
@@ -426,9 +424,9 @@ public class ConnectivityUtil {
                 if (!suppress) {
                     log.error("Could not find connection between Blocks " + block.getUserName() + " and "
                             + prevBlock.getUserName());
-                } else if (!suppress) {
-                    log.error("Could not find connection between Blocks " + block.getUserName() + ", prevBock is null!");
                 }
+            } else if (!suppress) {
+                    log.error("Could not find connection between Blocks " + block.getUserName() + ", prevBock is null!");
             }
             return list;
         }

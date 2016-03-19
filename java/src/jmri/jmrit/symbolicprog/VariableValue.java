@@ -1,4 +1,3 @@
-// VariableValue.java
 package jmri.jmrit.symbolicprog;
 
 import java.awt.Component;
@@ -17,7 +16,6 @@ import org.slf4j.LoggerFactory;
  *
  * @author Bob Jacobsen Copyright (C) 2001, 2002, 2003, 2004, 2005, 2013
  * @author Howard G. Penny Copyright (C) 2005
- * @version $Revision$
  */
 public abstract class VariableValue extends AbstractValue implements java.beans.PropertyChangeListener {
 

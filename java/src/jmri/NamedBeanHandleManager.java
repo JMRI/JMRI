@@ -39,11 +39,6 @@ import org.slf4j.LoggerFactory;
  */
 public class NamedBeanHandleManager extends jmri.managers.AbstractManager implements java.io.Serializable {
 
-    /**
-     *
-     */
-    private static final long serialVersionUID = 2201166159004504615L;
-
     public NamedBeanHandleManager() {
         super();
     }
@@ -53,7 +48,7 @@ public class NamedBeanHandleManager extends jmri.managers.AbstractManager implem
         if (bean == null || name == null || name.equals("")) {
             return null;
         }
-        NamedBeanHandle<T> temp = new NamedBeanHandle<T>(name, bean);
+        NamedBeanHandle<T> temp = new NamedBeanHandle<>(name, bean);
 
         for (NamedBeanHandle<T> h : namedBeanHandles) {
             if (temp.equals(h)) {
@@ -78,7 +73,7 @@ public class NamedBeanHandleManager extends jmri.managers.AbstractManager implem
          it simply updates the name to the new one. So hence you can end up with
          multiple named bean entries for one name.
          */
-        NamedBeanHandle<T> oldBean = new NamedBeanHandle<T>(oldName, bean);
+        NamedBeanHandle<T> oldBean = new NamedBeanHandle<>(oldName, bean);
         for (NamedBeanHandle<T> h : namedBeanHandles) {
             if (oldBean.equals(h)) {
                 h.setName(newName);
@@ -102,7 +97,7 @@ public class NamedBeanHandleManager extends jmri.managers.AbstractManager implem
          multiple bean entries with the same name.
          */
 
-        NamedBeanHandle<T> oldNamedBean = new NamedBeanHandle<T>(name, oldBean);
+        NamedBeanHandle<T> oldNamedBean = new NamedBeanHandle<>(name, oldBean);
         for (NamedBeanHandle<T> h : namedBeanHandles) {
             if (oldNamedBean.equals(h)) {
                 h.setBean(newBean);
@@ -130,7 +125,7 @@ public class NamedBeanHandleManager extends jmri.managers.AbstractManager implem
 
     @SuppressWarnings("unchecked") // namedBeanHandles contains multiple types of NameBeanHandles<T>
     public <T> boolean inUse(String name, T bean) {
-        NamedBeanHandle<T> temp = new NamedBeanHandle<T>(name, bean);
+        NamedBeanHandle<T> temp = new NamedBeanHandle<>(name, bean);
         for (NamedBeanHandle<T> h : namedBeanHandles) {
             if (temp.equals(h)) {
                 return true;
@@ -174,7 +169,7 @@ public class NamedBeanHandleManager extends jmri.managers.AbstractManager implem
     }
 
     @SuppressWarnings("rawtypes") // namedBeanHandles contains multiple types of NameBeanHandles<T>
-    ArrayList<NamedBeanHandle> namedBeanHandles = new ArrayList<NamedBeanHandle>();
+    ArrayList<NamedBeanHandle> namedBeanHandles = new ArrayList<>();
 
     /**
      * Don't want to store this information

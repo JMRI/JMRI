@@ -2358,8 +2358,6 @@ public class DefaultSignalMastLogic implements jmri.SignalMastLogic, java.beans.
                     int preBlk = i - 1;
                     if (i == lblks.size() - 1) {
                         nxtBlk = i;
-                    } else if (i == 0) {
-                        preBlk = i;
                     }
                     //We use the best connectivity for the current block;
                     connection = new ConnectivityUtil(lblks.get(i).getMaxConnectedPanel());
