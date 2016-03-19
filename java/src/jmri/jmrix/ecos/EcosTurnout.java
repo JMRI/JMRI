@@ -1,7 +1,6 @@
 // EcosTurnout.java
 package jmri.jmrix.ecos;
 
-import jmri.NmraPacket;
 import jmri.Turnout;
 import jmri.implementation.AbstractTurnout;
 import org.slf4j.Logger;
@@ -67,7 +66,7 @@ public class EcosTurnout extends AbstractTurnout
         _validFeedbackModes = modeValues;
     }
 
-    @edu.umd.cs.findbugs.annotations.SuppressWarnings(value = "ST_WRITE_TO_STATIC_FROM_INSTANCE_METHOD",
+    @edu.umd.cs.findbugs.annotations.SuppressFBWarnings(value = "ST_WRITE_TO_STATIC_FROM_INSTANCE_METHOD",
             justification = "Only used during creation of 1st turnout")
     private void initFeedbackModes() {
         if (_validFeedbackNames.length != _validFeedbackModes.length) {
@@ -397,7 +396,7 @@ public class EcosTurnout extends AbstractTurnout
         // messages are ignored
     }
 
-    static Logger log = LoggerFactory.getLogger(EcosTurnout.class.getName());
+    private final static Logger log = LoggerFactory.getLogger(EcosTurnout.class.getName());
 }
 
 /* @(#)EcosTurnout.java */

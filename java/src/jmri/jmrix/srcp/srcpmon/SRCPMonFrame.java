@@ -45,7 +45,7 @@ public class SRCPMonFrame extends jmri.jmrix.AbstractMonFrame implements SRCPLis
     }
 
     public synchronized void reply(SRCPReply l) {  // receive a reply message and log it
-        nextLine("cmd: " + l.toString(), "");
+        nextLine("reply: " + l.toString() + "\n", "");
     }
 
     public synchronized void reply(jmri.jmrix.srcp.parser.SimpleNode n) {  // receive a reply message and log it
@@ -55,6 +55,6 @@ public class SRCPMonFrame extends jmri.jmrix.AbstractMonFrame implements SRCPLis
         reply(new SRCPReply(n));
     }
 
-    static Logger log = LoggerFactory.getLogger(SRCPMonFrame.class.getName());
+    private final static Logger log = LoggerFactory.getLogger(SRCPMonFrame.class.getName());
 
 }

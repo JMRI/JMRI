@@ -207,5 +207,5 @@ public class DefaultSignalMastManagerXml
         return InstanceManager.signalMastManagerInstance().getXMLOrder();
     }
 
-    static Logger log = LoggerFactory.getLogger(DefaultSignalMastManagerXml.class.getName());
+    private final static Logger log = LoggerFactory.getLogger(DefaultSignalMastManagerXml.class.getName());
 }

@@ -176,6 +176,6 @@ public class EnumVariableValueTest extends VariableValueTest {
         return suite;
     }
 
-    static Logger log = LoggerFactory.getLogger(EnumVariableValueTest.class.getName());
+    private final static Logger log = LoggerFactory.getLogger(EnumVariableValueTest.class.getName());
 
 }

@@ -61,5 +61,5 @@ public class LocoBufferUsbAdapter extends LocoBufferAdapter {
         return new int[]{57600};
     }
 
-    static Logger log = LoggerFactory.getLogger(LocoBufferUsbAdapter.class.getName());
+    private final static Logger log = LoggerFactory.getLogger(LocoBufferUsbAdapter.class.getName());
 }

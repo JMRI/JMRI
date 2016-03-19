@@ -379,5 +379,5 @@ public class RollingStockLogger extends XmlFile implements java.beans.PropertyCh
         }
     }
 
-    static Logger log = LoggerFactory.getLogger(RollingStockLogger.class.getName());
+    private final static Logger log = LoggerFactory.getLogger(RollingStockLogger.class.getName());
 }

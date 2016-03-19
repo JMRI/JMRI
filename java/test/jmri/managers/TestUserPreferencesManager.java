@@ -1,13 +1,6 @@
 // TestUserPreferencesManager.java
 package jmri.managers;
 
-import java.awt.Dimension;
-import java.awt.Point;
-import java.beans.PropertyChangeListener;
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-
 /**
  * Mock Implementation for the User Preferences Manager.
  * <P>

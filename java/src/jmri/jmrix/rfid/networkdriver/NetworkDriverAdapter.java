@@ -12,7 +12,6 @@ import jmri.jmrix.rfid.protocol.coreid.CoreIdRfidProtocol;
 import jmri.jmrix.rfid.protocol.olimex.OlimexRfidProtocol;
 import jmri.jmrix.rfid.protocol.parallax.ParallaxRfidProtocol;
 import jmri.jmrix.rfid.protocol.seeedstudio.SeeedStudioRfidProtocol;
-
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -35,7 +34,7 @@ public class NetworkDriverAdapter extends RfidNetworkPortController {
         options.put(option1Name, new Option("Adapter:", new String[]{"Generic Stand-alone", "MERG Concentrator"}, false));
         options.put(option2Name, new Option("Concentrator range:", new String[]{"A-H", "I-P"}, false));
         options.put(option3Name, new Option("Protocol:", new String[]{"CORE-ID", "Olimex", "Parallax", "SeeedStudio"}, false));
-        setManufacturer(jmri.jmrix.DCCManufacturerList.RFID);
+        setManufacturer(jmri.jmrix.rfid.RfidConnectionTypeList.RFID);
     }
 
     /**
@@ -125,6 +124,6 @@ public class NetworkDriverAdapter extends RfidNetworkPortController {
     }
 
 
-    static Logger log = LoggerFactory.getLogger(NetworkDriverAdapter.class.getName());
+    private final static Logger log = LoggerFactory.getLogger(NetworkDriverAdapter.class.getName());
 
 }

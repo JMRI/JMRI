@@ -6,14 +6,11 @@ import java.awt.geom.Rectangle2D;
 import javax.swing.JPopupMenu;
 import jmri.jmrit.display.Editor;
 import jmri.jmrit.display.Positionable;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 
 /**
  * PositionableRoundRect.
  * <P>
  * @author Pete cresman Copyright (c) 2012
- * @version $Revision: 1 $
  */
 public class PositionableRectangle extends PositionableShape {
 
@@ -42,8 +39,7 @@ public class PositionableRectangle extends PositionableShape {
         return finishClone(pos);
     }
 
-    public Positionable finishClone(Positionable p) {
-        PositionableRectangle pos = (PositionableRectangle) p;
+    protected Positionable finishClone(PositionableRectangle pos) {
         pos._width = _width;
         pos._height = _height;
         return super.finishClone(pos);
@@ -66,6 +62,4 @@ public class PositionableRectangle extends PositionableShape {
         });
         return true;
     }
-
-    static Logger log = LoggerFactory.getLogger(PositionableRectangle.class.getName());
 }

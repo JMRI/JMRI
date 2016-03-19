@@ -265,29 +265,15 @@ public class InputWindow extends JPanel {
     }
 
     void buttonPressed() {
-        String cmd = area.getText() + "\n";
-
-        // The command must end with exactly one \n
-        while ((cmd.length() > 1) && cmd.charAt(cmd.length() - 2) == '\n') {
-            cmd = cmd.substring(0, cmd.length() - 1);
-        }
-
-        // add the text to the output frame
-        String echo = ">>> " + cmd;
-        // intermediate \n characters need to be prefixed
-        echo = echo.replaceAll("\n", "\n... ");
-        echo = echo.substring(0, echo.length() - 4);
-        ScriptOutput.getDefault().getOutputArea().append(echo);
-
-        // and execute
+        ScriptOutput.writeScript(area.getText());
         try {
-            JmriScriptEngineManager.getDefault().eval(cmd, JmriScriptEngineManager.getDefault().getEngineByName((String) languages.getSelectedItem()));
+            JmriScriptEngineManager.getDefault().eval(area.getText(), JmriScriptEngineManager.getDefault().getEngineByName((String) languages.getSelectedItem()));
         } catch (ScriptException ex) {
             log.error("Error executing script", ex);
         }
     }
     // initialize logging
-    static Logger log = LoggerFactory.getLogger(InputWindow.class.getName());
+    private final static Logger log = LoggerFactory.getLogger(InputWindow.class.getName());
 }
 
 /* @(#)InputWindow.java */

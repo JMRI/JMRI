@@ -47,10 +47,23 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 /**
- * Provide a manager for {@link javax.script.ScriptEngine}s. This manager
- * creates a default
+ * Provide a manager for {@link javax.script.ScriptEngine}s.
  *
- * @author rhwood
+ * The following methods are the only mechanisms for evaluating a Python script
+ * that respect the <code>jython.exec</code> property in the
+ * <em>python.properties</em> file:
+ * <ul>
+ * <li>{@link #eval(java.io.File)}</li>
+ * <li>{@link #eval(java.io.File, javax.script.Bindings)}</li>
+ * <li>{@link #eval(java.io.File, javax.script.ScriptContext)}</li>
+ * <li>{@link #eval(java.lang.String, javax.script.ScriptEngine)}</li>
+ * <li>{@link #runScript(java.io.File)</li>
+ * </ul>
+ * Evaluating a script using <code>getEngine*(java.lang.String).eval(...)</code>
+ * methods will not respect the <code>jython.exec</code> property, although all
+ * methods will respect all other properties of that file.
+ *
+ * @author Randall Wood
  */
 public final class JmriScriptEngineManager {
 
@@ -68,8 +81,9 @@ public final class JmriScriptEngineManager {
     private PythonInterpreter jython = null;
 
     /**
-     * Create a JmriScriptEngineManager. In most cases, it is preferable to use {@link #getDefault()
-     * } to get existing {@link javax.script.ScriptEngine} instances.
+     * Create a JmriScriptEngineManager. In most cases, it is preferable to use
+     * {@link #getDefault()} to get existing {@link javax.script.ScriptEngine}
+     * instances.
      */
     public JmriScriptEngineManager() {
         this.manager.getEngineFactories().stream().forEach((factory) -> {

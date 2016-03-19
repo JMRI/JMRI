@@ -55,7 +55,7 @@ public class PowerlineNamedPaneAction extends jmri.util.swing.JmriNamedPaneActio
         return p;
     }
 
-    static Logger log = LoggerFactory.getLogger(PowerlineNamedPaneAction.class.getName());
+    private final static Logger log = LoggerFactory.getLogger(PowerlineNamedPaneAction.class.getName());
 }
 
 /* @(#)PowerlineNamedPaneAction.java */

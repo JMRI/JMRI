@@ -16,7 +16,7 @@ import org.slf4j.LoggerFactory;
  * @author Bob Jacobsen Copyright: Copyright (c) 2003
  * @author Ken Cameron Copyright: 2014(c)
  * @version $Revision$
- * @see apps.PerformFilePanel
+ * @see apps.startup.PerformFileModelFactory
  */
 public class PerformFileModelXml extends jmri.configurexml.AbstractXmlAdapter {
 
@@ -78,6 +78,6 @@ public class PerformFileModelXml extends jmri.configurexml.AbstractXmlAdapter {
         log.error("Unexpected call of load(Element, Object)");
     }
     // initialize logging
-    static Logger log = LoggerFactory.getLogger(PerformFileModelXml.class.getName());
+    private final static Logger log = LoggerFactory.getLogger(PerformFileModelXml.class.getName());
 
 }

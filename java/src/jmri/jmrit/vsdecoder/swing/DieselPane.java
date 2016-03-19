@@ -34,8 +34,6 @@ import javax.swing.JToggleButton;
 import javax.swing.SpinnerNumberModel;
 import javax.swing.event.ChangeEvent;
 import jmri.jmrit.vsdecoder.EnginePane;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 
 @SuppressWarnings("serial")
 public class DieselPane extends EnginePane {
@@ -144,7 +142,5 @@ public class DieselPane extends EnginePane {
     public void setThrottle(int t) {
         throttle_spinner.setValue(t);
     }
-
-    static Logger log = LoggerFactory.getLogger(DieselPane.class.getName());
 
 }

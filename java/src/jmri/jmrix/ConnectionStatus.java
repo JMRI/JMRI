@@ -132,5 +132,5 @@ public class ConnectionStatus {
         pcs.removePropertyChangeListener(l);
     }
 
-    static Logger log = LoggerFactory.getLogger(ConnectionStatus.class.getName());
+    private final static Logger log = LoggerFactory.getLogger(ConnectionStatus.class.getName());
 }

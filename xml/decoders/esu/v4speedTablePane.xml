@@ -13,7 +13,7 @@
                 <display item="Speed Table Definition" format="onradiobutton" layout="above" label="Select this button to use a Speed Table for Speed Control">
                   <label xml:lang="it">Seleziona questo Pulsante per usare la Tabella Velocità per il controllo Velocità</label>
                   <label xml:lang="ca">Selecciona aquest botÛ per fer servir taula de velocitats</label>
-                  <label xml:lang="de">Um die eine Geschwindikeitskennlinie zu benutzen, diesen Button markieren</label>
+                  <label xml:lang="de">Um diese Geschwindigkeitskennlinie zu benutzen, diesen Knopf markieren</label>
                 </display>
                 <label>
                   <text>            To turn off, use Basic Speed Control pane</text>
@@ -95,7 +95,7 @@
               <display item="Forward Trim" tooltip="Fine tune the forward voltage levels">
                 <tooltip xml:lang="it">Impostazione Fine della tensione motore in Avanti</tooltip>
                 <tooltip xml:lang="ca">Ajustament fi de voltatge marxa enreda</tooltip>
-                <tooltip xml:lang="de">Feineinstellung der Geschwindikeitskennlinie "Vorwärts"</tooltip>
+                <tooltip xml:lang="de">Feineinstellung der Geschwindigkeitskennlinie "Vorwärts"</tooltip>
               </display>
               <label>
                 <text> </text>
@@ -113,7 +113,7 @@
               <display item="Reverse Trim" tooltip="Fine tune the reverse voltage levels">
                 <tooltip xml:lang="it">Impostazione Fine della tensione motore in Indietro</tooltip>
                 <tooltip xml:lang="ca">Ajustament fi de voltatge marxa enreda</tooltip>
-                <tooltip xml:lang="de">Feineinstellung der Geschwindikeitskennlinie "Rückwärts"</tooltip>
+                <tooltip xml:lang="de">Feineinstellung der Geschwindigkeitskennlinie "Rückwärts"</tooltip>
               </display>
               <label>
                 <text> </text>

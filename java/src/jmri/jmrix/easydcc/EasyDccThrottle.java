@@ -3,8 +3,6 @@ package jmri.jmrix.easydcc;
 import jmri.DccLocoAddress;
 import jmri.LocoAddress;
 import jmri.jmrix.AbstractThrottle;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 
 /**
  * An implementation of DccThrottle with code specific to an NCE connection.
@@ -132,7 +130,7 @@ public class EasyDccThrottle extends AbstractThrottle {
      *
      * @param speed Number from 0 to 1; less than zero is emergency stop
      */
-    @edu.umd.cs.findbugs.annotations.SuppressWarnings(value = "FE_FLOATING_POINT_EQUALITY") // OK to compare floating point, notify on any change
+    @edu.umd.cs.findbugs.annotations.SuppressFBWarnings(value = "FE_FLOATING_POINT_EQUALITY") // OK to compare floating point, notify on any change
     public void setSpeedSetting(float speed) {
         float oldSpeed = this.speedSetting;
         this.speedSetting = speed;
@@ -229,8 +227,5 @@ public class EasyDccThrottle extends AbstractThrottle {
         active = false;
         finishRecord();
     }
-
-    // initialize logging
-    static Logger log = LoggerFactory.getLogger(EasyDccThrottle.class.getName());
 
 }

@@ -1,4 +1,3 @@
-// SerialAddress.java
 package jmri.jmrix.powerline;
 
 import java.util.regex.Matcher;
@@ -19,7 +18,6 @@ import org.slf4j.LoggerFactory;
  * @author	Dave Duchamp, Copyright (C) 2004
  * @author Bob Jacobsen, Copyright (C) 2006, 2007, 2008, 2009
  * @author	Ken Cameron, Copyright (C) 2008, 2009, 2010
- * @version $Revision$
  */
 public class SerialAddress {
 
@@ -76,24 +74,23 @@ public class SerialAddress {
             }
             return (true);
         }
-        if (aTest) {
-            // This is a PLaa.bb.cc address - validate the Insteon address fields
-            if (!iTest) {
+        
+        assert aTest;
+        
+        // This is a PLaa.bb.cc address - validate the Insteon address fields
+        if (!iTest) {
+            // here if an illegal format
+            log.error("address did not match any valid forms: " + systemName);
+            return (false);
+        } else {
+            if (iCodes.groupCount() != 5) {
                 // here if an illegal format
-                log.error("address did not match any valid forms: " + systemName);
+                log.error("invalid format - " + systemName);
                 return (false);
             } else {
-                if (iCodes.groupCount() != 5) {
-                    // here if an illegal format
-                    log.error("invalid format - " + systemName);
-                    return (false);
-                } else {
-                    return (true);
-                }
+                return (true);
             }
         }
-        log.error("address did not match any valid forms: " + systemName);
-        return false;
     }
 
     /**
@@ -362,7 +359,5 @@ public class SerialAddress {
         return dCode;
     }
 
-    static Logger log = LoggerFactory.getLogger(SerialAddress.class.getName());
+    private final static Logger log = LoggerFactory.getLogger(SerialAddress.class.getName());
 }
-
-/* @(#)SerialAddress.java */

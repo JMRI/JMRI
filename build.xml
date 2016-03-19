@@ -692,6 +692,12 @@
             if="debugger"
             depends="runtime-library-selection">
         <echo>Launch with debugger support</echo>
+        <!-- this value of 5432 conflicts with PostgreSQL -->
+        <property name="jpda.address" value="5432"/>
+        <!-- this is the JMRI, not the JDWP default, must be "n" for IDEs -->
+        <property name="jdpa.server" value="y"/>
+        <!-- this is the JDWP default -->
+        <property name="jdpa.suspend" value="y"/>
         <java classname="${application.classname}" dir="${basedir}" fork="yes" resultproperty="application.returncode">
             <classpath refid="project.class.path"/>
             <sysproperty key="java.security.policy"
@@ -704,7 +710,7 @@
                          path="net.bobis.jinput.hidraw.HidRawEnvironmentPlugin"/>
 
             <jvmarg value="-Xdebug"/>
-            <jvmarg value="-Xrunjdwp:transport=dt_socket,server=y,suspend=y,address=5432"/>
+            <jvmarg value="-Xrunjdwp:transport=dt_socket,server=${jdpa.server},suspend=${jdpa.suspend},address=${jpda.address}"/>
             <!-- <jvmarg value="-verbose"/> -->
             <!-- <jvmarg value="-verbosegc"/> -->
             <!-- <jvmarg value="-Xloggc:memory.vgc"/> -->
@@ -1186,9 +1192,9 @@
         <jar jarfile="${jartarget}/jmri.jar"
              basedir="${target}"
              compress="true"
-             index="true">  <!--  java -jar jmri.jar doesn't start when apps.PanelPro.PanelPro is specified & index="true" -->
+             index="true">
           <manifest>
-            <attribute name="Main-Class" value="jmri.Version"/>  
+            <attribute name="Main-Class" value="jmri.Version"/>
             <attribute name="Class-Path" value="${jar.classpath}"/>
             <section name="jmri">
               <attribute name="Specification-Title" value="Java Model Railroad Interface Classes"/>
@@ -1444,13 +1450,12 @@
         <move file="${decoderindex.file}" todir="xml" />
     </target>
 
-    <!-- dist target forces the jar file to be built without test classes -->
     <target name="dist"
-            description="create a distribution jar file"
+            description="create a distribution jar file without tests"
             depends="clean, init, debug, rmic, jar"/>
 
     <target name="dist-debug"
-            description="create a distribution jar file"
+            description="create a distribution jar file including tests"
             depends="clean, init, debug, rmic, jar"/>
 
     <taskdef name="findbugs"
@@ -1458,25 +1463,37 @@
              onerror="ignore"
              classpath="${findbugs.home}/lib/findbugs.jar"/>
 
-    <target name="findbugs" depends="dist-debug" description="generate FindBugs report. Include &quot;-Dfindbugs.home=YourFindBugsInstallDirectory&quot; in command line." >
+    <target name="findbugs" depends="dist" description="generate FindBugs report. Specify FindBugs install with local.properties file or &quot;-Dfindbugs.home=YourFindBugsInstallDirectory&quot; on command line." >
         <findbugs home="${findbugs.home}"
                   output="html"
                   outputFile="${jartarget}/jmri-fb.html"
-                  jvmargs="-Xmx1024m"
-                  timeout="12000000">
+                  jvmargs="-Xmx1536m"
+                  timeout="12000000"
+                  excludeFilter=".findbugs.xml"
+
+                  effort="max"
+                  reportLevel="low"
+                  >
             <sourcePath path="${source}/"/>
             <class location="${jartarget}/jmri.jar"/>
+            <auxClasspath refid="compile.class.path" />
         </findbugs>
     </target>
 
-    <target name="findbugs-ci" depends="dist-debug" description="generate FindBugs report. Include &quot;-Dfindbugs.home=YourFindBugsInstallDirectory&quot; in command line." >
+    <target name="findbugs-ci" depends="dist" description="generate FindBugs report. Include &quot;-Dfindbugs.home=YourFindBugsInstallDirectory&quot; in command line." >
         <findbugs home="${findbugs.home}"
                   output="xml:withMessages"
                   outputFile="findbugs.xml"
-                  jvmargs="-Xmx1024m"
-                  timeout="12000000">
+                  jvmargs="-Xmx1536m"
+                  timeout="12000000"
+                  excludeFilter=".findbugs.xml"
+                  
+                  effort="max"
+                  reportLevel="low"                  
+                  >
             <sourcePath path="${source}/"/>
             <class location="${jartarget}/jmri.jar"/>
+            <auxClasspath refid="compile.class.path" />
         </findbugs>
     </target>
 

@@ -5,8 +5,6 @@ import jmri.jmrix.configurexml.AbstractSerialConnectionConfigXml;
 import jmri.jmrix.loconet.hexfile.ConnectionConfig;
 import jmri.jmrix.loconet.hexfile.LnHexFilePort;
 import org.jdom2.Element;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 
 /**
  * Handle XML persistance of layout connections by persistening the HexFIle
@@ -98,7 +96,7 @@ public class ConnectionConfigXml extends AbstractSerialConnectionConfigXml {
             String option4Setting = shared.getAttribute("option4").getValue();
             adapter.configureOption4(option4Setting);
         }
-        loadOptions(shared.getChild("options"), adapter);
+        loadOptions(shared.getChild("options"), perNode.getChild("options"), adapter);
         String manufacturer;
         try {
             manufacturer = shared.getAttribute("manufacturer").getValue();
@@ -154,8 +152,5 @@ public class ConnectionConfigXml extends AbstractSerialConnectionConfigXml {
     protected void register() {
         this.register(new ConnectionConfig(adapter));
     }
-
-    // initialize logging
-    static Logger log = LoggerFactory.getLogger(ConnectionConfigXml.class.getName());
 
 }

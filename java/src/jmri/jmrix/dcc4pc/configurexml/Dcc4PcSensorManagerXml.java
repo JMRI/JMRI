@@ -37,5 +37,5 @@ public class Dcc4PcSensorManagerXml extends jmri.managers.configurexml.AbstractS
         return loadSensors(shared);
     }
 
-    static Logger log = LoggerFactory.getLogger(Dcc4PcSensorManagerXml.class.getName());
+    private final static Logger log = LoggerFactory.getLogger(Dcc4PcSensorManagerXml.class.getName());
 }

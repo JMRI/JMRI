@@ -4,6 +4,8 @@ package jmri.jmrix.loconet.locormi;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.JTextField;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 /**
  * Definition of objects to handle configuring the layout connection via LocoNet
@@ -15,6 +17,8 @@ import javax.swing.JTextField;
  //@todo This class could ideally do with refactoring to the NetworkConnectionConfig and also multi-connection
 public class ConnectionConfig extends jmri.jmrix.AbstractSerialConnectionConfig {
 
+    private final static Logger log = LoggerFactory.getLogger(ConnectionConfig.class);
+    
     /**
      * Ctor for an object being created during load process; Swing init is
      * deferred.
@@ -79,7 +83,7 @@ public class ConnectionConfig extends jmri.jmrix.AbstractSerialConnectionConfig 
         new Exception().printStackTrace();
     }
 
-    String manufacturerName = jmri.jmrix.DCCManufacturerList.DIGITRAX;
+    String manufacturerName = jmri.jmrix.loconet.LnConnectionTypeList.DIGITRAX;
 
     public String getManufacturer() {
         return manufacturerName;

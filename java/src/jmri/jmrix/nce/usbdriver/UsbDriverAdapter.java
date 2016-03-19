@@ -237,7 +237,7 @@ public class UsbDriverAdapter extends NcePortController {
     /**
      * Get an array of valid baud rates.
      */
-    @edu.umd.cs.findbugs.annotations.SuppressWarnings(value = "EI_EXPOSE_REP") // OK to expose array instead of copy until Java 1.6
+    @edu.umd.cs.findbugs.annotations.SuppressFBWarnings(value = "EI_EXPOSE_REP") // OK to expose array instead of copy until Java 1.6
     public String[] validBaudRates() {
         return validSpeeds;
     }
@@ -249,6 +249,6 @@ public class UsbDriverAdapter extends NcePortController {
     private boolean opened = false;
     InputStream serialStream = null;
 
-    static Logger log = LoggerFactory.getLogger(UsbDriverAdapter.class.getName());
+    private final static Logger log = LoggerFactory.getLogger(UsbDriverAdapter.class.getName());
 
 }

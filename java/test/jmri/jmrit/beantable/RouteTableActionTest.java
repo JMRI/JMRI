@@ -1,4 +1,3 @@
-// RouteTableActionTest.java
 package jmri.jmrit.beantable;
 
 import javax.swing.JFrame;
@@ -6,14 +5,13 @@ import junit.framework.Assert;
 import junit.framework.Test;
 import junit.framework.TestCase;
 import junit.framework.TestSuite;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
+
+import jmri.Route;
 
 /**
  * Tests for the jmri.jmrit.beantable.RouteTableAction class
  *
  * @author	Bob Jacobsen Copyright 2004, 2007
- * @version	$Revision$
  */
 public class RouteTableActionTest extends TestCase {
 
@@ -30,6 +28,17 @@ public class RouteTableActionTest extends TestCase {
         Assert.assertTrue("found frame", f != null);
         f.dispose();
     }
+    
+    public void testConstants() {
+        // check constraints required by implementation,
+        // because we assume that the codes are the same as the index
+        // in a JComboBox
+        Assert.assertEquals("Route.ONACTIVE", 0, Route.ONACTIVE);
+        Assert.assertEquals("Route.ONINACTIVE", 1, Route.ONINACTIVE);
+        Assert.assertEquals("Route.VETOACTIVE", 2, Route.VETOACTIVE);
+        Assert.assertEquals("Route.VETOINACTIVE", 3, Route.VETOINACTIVE);
+    }
+    
 
     // from here down is testing infrastructure
     public RouteTableActionTest(String s) {
@@ -58,6 +67,4 @@ public class RouteTableActionTest extends TestCase {
     protected void tearDown() {
         apps.tests.Log4JFixture.tearDown();
     }
-
-    static Logger log = LoggerFactory.getLogger(RouteTableActionTest.class.getName());
 }

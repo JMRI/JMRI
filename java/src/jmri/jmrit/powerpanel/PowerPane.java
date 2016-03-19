@@ -171,6 +171,6 @@ public class PowerPane extends jmri.util.swing.JmriPanel
         }
     }
 
-    static Logger log = LoggerFactory.getLogger(PowerPane.class.getName());
+    private final static Logger log = LoggerFactory.getLogger(PowerPane.class.getName());
 
 }

@@ -29,7 +29,7 @@ public abstract class LnTrafficController implements LocoNetInterface {
         return self;
     }
 
-    @edu.umd.cs.findbugs.annotations.SuppressWarnings(value = "MS_PKGPROTECT")
+    @edu.umd.cs.findbugs.annotations.SuppressFBWarnings(value = "MS_PKGPROTECT")
     // FindBugs wants this package protected, but we're removing it when multi-connection
     // migration is complete
     static protected LnTrafficController self = null;
@@ -142,7 +142,7 @@ public abstract class LnTrafficController implements LocoNetInterface {
     }
     protected int transmittedMsgCount = 0;
 
-    static Logger log = LoggerFactory.getLogger(LnTrafficController.class.getName());
+    private final static Logger log = LoggerFactory.getLogger(LnTrafficController.class.getName());
 }
 
 

@@ -2,8 +2,6 @@ package jmri.managers.configurexml;
 
 import jmri.InstanceManager;
 import org.jdom2.Element;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 
 /**
  * Persistency implementation for the default MemoryManager persistance.
@@ -43,6 +41,4 @@ public class DefaultMemoryManagerXml extends AbstractMemoryManagerConfigXML {
         loadMemories(sharedMemories);
         return true;
     }
-
-    static Logger log = LoggerFactory.getLogger(DefaultMemoryManagerXml.class.getName());
 }

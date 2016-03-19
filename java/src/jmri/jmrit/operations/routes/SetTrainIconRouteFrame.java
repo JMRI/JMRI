@@ -326,5 +326,5 @@ public class SetTrainIconRouteFrame extends OperationsFrame implements PropertyC
         }
     }
 
-    static Logger log = LoggerFactory.getLogger(SetTrainIconRouteFrame.class.getName());
+    private final static Logger log = LoggerFactory.getLogger(SetTrainIconRouteFrame.class.getName());
 }

@@ -128,6 +128,6 @@ public class CarManagerXml extends OperationsXml {
     }
 
 
-    static Logger log = LoggerFactory.getLogger(CarManagerXml.class.getName());
+    private final static Logger log = LoggerFactory.getLogger(CarManagerXml.class.getName());
 
 }

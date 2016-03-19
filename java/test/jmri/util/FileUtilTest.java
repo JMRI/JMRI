@@ -381,5 +381,5 @@ public class FileUtilTest extends TestCase {
         return suite;
     }
 
-    static Logger log = LoggerFactory.getLogger(FileUtilTest.class.getName());
+    private final static Logger log = LoggerFactory.getLogger(FileUtilTest.class.getName());
 }

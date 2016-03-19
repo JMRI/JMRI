@@ -82,13 +82,13 @@ public class SRCPThrottleManager extends AbstractThrottleManager {
                     + "\n";
 
             // and send it
-            ((SRCPSystemConnectionMemo) adapterMemo).getTrafficController().sendSRCPMessage(new SRCPMessage(msg), null);
+            ((SRCPBusConnectionMemo) adapterMemo).getTrafficController().sendSRCPMessage(new SRCPMessage(msg), null);
             return true;
         }
         return false;
         //LocoNetSlot tSlot = lnt.getLocoNetSlot();
     }
 
-    static Logger log = LoggerFactory.getLogger(SRCPThrottleManager.class.getName());
+    private final static Logger log = LoggerFactory.getLogger(SRCPThrottleManager.class.getName());
 
 }

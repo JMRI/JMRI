@@ -58,7 +58,7 @@ public class ReporterTableAction extends AbstractTableAction {
     }
 
     public ReporterTableAction() {
-        this("Reporter Table");
+        this(Bundle.getMessage("TitleReporterTable"));
     }
 
     /**
@@ -171,7 +171,7 @@ public class ReporterTableAction extends AbstractTableAction {
             }
 
             public JButton configureButton() {
-                BeanTableDataModel.log.error("configureButton should not have been called");
+                log.error("configureButton should not have been called");
                 return null;
             }
 
@@ -194,7 +194,7 @@ public class ReporterTableAction extends AbstractTableAction {
     JTextField userName = new JTextField(20);
     JComboBox<String> prefixBox = new JComboBox<String>();
     JTextField numberToAdd = new JTextField(10);
-    JCheckBox range = new JCheckBox("Add a range");
+    JCheckBox range = new JCheckBox(Bundle.getMessage("AddRangeBox"));
     JLabel sysNameLabel = new JLabel("Hardware Address");
     JLabel userNameLabel = new JLabel(Bundle.getMessage("LabelUserName"));
     String systemSelectionCombo = this.getClass().getName() + ".SystemSelected";
@@ -331,7 +331,7 @@ public class ReporterTableAction extends AbstractTableAction {
         return Bundle.getMessage("TitleReporterTable");
     }
 
-    static final Logger log = LoggerFactory.getLogger(ReporterTableAction.class.getName());
+    private final static Logger log = LoggerFactory.getLogger(ReporterTableAction.class.getName());
 }
 
 /* @(#)ReporterTableAction.java */

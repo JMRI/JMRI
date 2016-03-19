@@ -319,6 +319,6 @@ public class MS100Adapter extends LnPortController implements jmri.jmrix.SerialP
     InputStream serialInStream = null;
     OutputStream serialOutStream = null;
 
-    static Logger log = LoggerFactory.getLogger(MS100Adapter.class.getName());
+    private final static Logger log = LoggerFactory.getLogger(MS100Adapter.class.getName());
 
 }

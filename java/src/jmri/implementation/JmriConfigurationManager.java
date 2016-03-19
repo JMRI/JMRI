@@ -204,7 +204,7 @@ public class JmriConfigurationManager implements ConfigureManager {
                         JOptionPane.showMessageDialog(null,
                                 new Object[]{
                                     list,
-                                    "<html><br></html>", // NOI18N // Add a visual break between list of errors and notes
+                                    "<html><br></html>", // Add a visual break between list of errors and notes // NOI18N
                                     Bundle.getMessage("InitExMessageLogs"), // NOI18N
                                     Bundle.getMessage("InitExMessagePrefs"), // NOI18N
                                 },

@@ -1,4 +1,3 @@
-// BlockTableAction.java
 package jmri.jmrit.beantable;
 
 import java.awt.GridLayout;
@@ -17,6 +16,7 @@ import javax.swing.JMenu;
 import javax.swing.JMenuBar;
 import javax.swing.JMenuItem;
 import javax.swing.JOptionPane;
+import javax.swing.JRadioButton;
 import javax.swing.JPanel;
 import javax.swing.JTable;
 import javax.swing.JTextField;
@@ -34,14 +34,8 @@ import org.slf4j.LoggerFactory;
  * Swing action to create and register a BlockTable GUI.
  *
  * @author	Bob Jacobsen Copyright (C) 2003, 2008
- * @version $Revision$
  */
 public class BlockTableAction extends AbstractTableAction {
-
-    /**
-     *
-     */
-    private static final long serialVersionUID = 6207247759586108823L;
 
     /**
      * Create an action with a specific title.
@@ -78,7 +72,7 @@ public class BlockTableAction extends AbstractTableAction {
     }
 
     public BlockTableAction() {
-        this("Block Table");
+        this(Bundle.getMessage("TitleBlockTable"));
     }
 
     private String noneText = Bundle.getMessage("BlockNone");
@@ -114,12 +108,12 @@ public class BlockTableAction extends AbstractTableAction {
 
             public String getValue(String name) {
                 if (name == null) {
-                    BeanTableDataModel.log.warn("requested getValue(null)");
+                    log.warn("requested getValue(null)");
                     return "(no name)";
                 }
                 Block b = InstanceManager.blockManagerInstance().getBySystemName(name);
                 if (b == null) {
-                    BeanTableDataModel.log.debug("requested getValue(\"" + name + "\"), Block doesn't exist");
+                    log.debug("requested getValue(\"" + name + "\"), Block doesn't exist");
                     return "(no Block)";
                 }
                 Object m = b.getValue();
@@ -159,12 +153,12 @@ public class BlockTableAction extends AbstractTableAction {
             public Object getValueAt(int row, int col) {
                 // some error checking
                 if (row >= sysNameList.size()) {
-                    BeanTableDataModel.log.debug("requested getValueAt(\"" + row + "\"), row outside of range");
+                    log.debug("requested getValueAt(\"" + row + "\"), row outside of range");
                     return "Error table size";
                 }
                 Block b = (Block) getBySystemName(sysNameList.get(row));
                 if (b == null) {
-                    BeanTableDataModel.log.debug("requested getValueAt(\"" + row + "\"), Block doesn't exist");
+                    log.debug("requested getValueAt(\"" + row + "\"), Block doesn't exist");
                     return "(no Block)";
                 }
                 if (col == DIRECTIONCOL) {
@@ -284,7 +278,7 @@ public class BlockTableAction extends AbstractTableAction {
                     fireTableRowsUpdated(row, row);
                 } else if (col == REPORTERCOL) {
                     Reporter r = null;
-                    if (value != "" || value != null) {
+                    if (value != null && !value.equals("") ) {
                         r = jmri.InstanceManager.reporterManagerInstance().provideReporter((String) value);
                     }
                     b.setReporter(r);
@@ -321,10 +315,10 @@ public class BlockTableAction extends AbstractTableAction {
 
             public String getColumnName(int col) {
                 if (col == DIRECTIONCOL) {
-                    return "Direction";
+                    return Bundle.getMessage("BlockDirection");
                 }
                 if (col == VALUECOL) {
-                    return "Value";
+                    return Bundle.getMessage("BlockValue");
                 }
                 if (col == CURVECOL) {
                     return Bundle.getMessage("BlockCurveColName");
@@ -471,7 +465,7 @@ public class BlockTableAction extends AbstractTableAction {
             }
 
             public JButton configureButton() {
-                BeanTableDataModel.log.error("configureButton should not have been called");
+                log.error("configureButton should not have been called");
                 return null;
             }
 
@@ -535,11 +529,14 @@ public class BlockTableAction extends AbstractTableAction {
         f.setTitle(Bundle.getMessage("TitleBlockTable"));
     }
 
-    JCheckBox inchBox = new JCheckBox(Bundle.getMessage("LengthInches"));
-    JCheckBox centimeterBox = new JCheckBox(Bundle.getMessage("LengthCentimeters"));
+    JRadioButton inchBox = new JRadioButton(Bundle.getMessage("LengthInches"));
+    JRadioButton centimeterBox = new JRadioButton(Bundle.getMessage("LengthCentimeters"));
 
     /**
-     * Add the checkboxes
+     * Add the radiobuttons (only 1 may be selected)
+     * TODO change names from -box to radio-
+     * add radio buttons to a ButtongGroup
+     * delete extra inchBoxChanged() and centimeterBoxChanged() methods
      */
     public void addToFrame(BeanTableFrame f) {
         //final BeanTableFrame finalF = f;	// needed for anonymous ActionListener class
@@ -640,7 +637,7 @@ public class BlockTableAction extends AbstractTableAction {
     JCheckBox checkPerm = new JCheckBox(Bundle.getMessage("BlockPermColName"));
 
     JTextField numberToAdd = new JTextField(10);
-    JCheckBox range = new JCheckBox(Bundle.getMessage("LabelNumberToAdd"));
+    JCheckBox range = new JCheckBox(Bundle.getMessage("AddRangeBox"));
     JCheckBox _autoSystemName = new JCheckBox(Bundle.getMessage("LabelAutoSysName"));
     jmri.UserPreferencesManager pref;
 
@@ -849,7 +846,5 @@ public class BlockTableAction extends AbstractTableAction {
         return BlockTableAction.class.getName();
     }
 
-    static final Logger log = LoggerFactory.getLogger(BlockTableAction.class.getName());
+    private final static Logger log = LoggerFactory.getLogger(BlockTableAction.class.getName());
 }
-
-/* @(#)BlockTableAction.java */

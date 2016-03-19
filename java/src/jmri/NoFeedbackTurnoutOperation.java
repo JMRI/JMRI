@@ -5,8 +5,6 @@ package jmri;
 
 import jmri.implementation.AbstractTurnout;
 import jmri.implementation.NoFeedbackTurnoutOperator;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 
 /**
  * NoFeedBackTurnoutOperation class - specialization of TurnoutOperation to
@@ -36,9 +34,7 @@ public class NoFeedbackTurnoutOperation extends CommonTurnoutOperation {
      * constructor with default values - this creates the "defining instance" of
      * the operation type hence it cannot be deleted
      */
-    public NoFeedbackTurnoutOperation() {
-        this("NoFeedback", defaultInterval, defaultMaxTries);
-    }
+    public NoFeedbackTurnoutOperation() { this("NoFeedback", defaultInterval, defaultMaxTries); }
 
     /**
      * return clone with different name
@@ -71,6 +67,4 @@ public class NoFeedbackTurnoutOperation extends CommonTurnoutOperation {
     public TurnoutOperator getOperator(AbstractTurnout t) {
         return new NoFeedbackTurnoutOperator(t, interval, maxTries);
     }
-
-    static Logger log = LoggerFactory.getLogger(NoFeedbackTurnoutOperation.class.getName());
 }

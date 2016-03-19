@@ -2,8 +2,6 @@
 package jmri.jmrix.srcp;
 
 import jmri.Turnout;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 
 /**
  * Implement turnout manager for SRCP systems
@@ -48,8 +46,6 @@ public class SRCPTurnoutManager extends jmri.managers.AbstractTurnoutManager {
         return _instance;
     }
     static SRCPTurnoutManager _instance = null;
-
-    static Logger log = LoggerFactory.getLogger(SRCPTurnoutManager.class.getName());
 
 }
 

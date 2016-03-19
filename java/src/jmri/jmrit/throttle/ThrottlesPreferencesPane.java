@@ -1,13 +1,3 @@
-/*
- * To change this template, choose Tools | Templates
- * and open the template in the editor.
- */
-
-/*
- * ThrottlesPreferencesPane.java
- *
- * Created on 17 juil. 2009, 15:05:26
- */
 package jmri.jmrit.throttle;
 
 import java.awt.GridBagConstraints;
@@ -26,16 +16,12 @@ import javax.swing.JLabel;
 import javax.swing.JPanel;
 import jmri.InstanceManager;
 import jmri.swing.PreferencesPanel;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 
 /**
  *
  * @author lionel
  */
 public class ThrottlesPreferencesPane extends JPanel implements PropertyChangeListener, PreferencesPanel {
-
-    private static final long serialVersionUID = -5473594799045080011L;
 
     private JCheckBox cbUseToolBar;
     private JCheckBox cbUseFunctionIcon;
@@ -88,12 +74,6 @@ public class ThrottlesPreferencesPane extends JPanel implements PropertyChangeLi
         gridBagConstraints12.insets = new Insets(2, 23, 2, 2);
         gridBagConstraints12.anchor = GridBagConstraints.WEST;
         gridBagConstraints12.gridy = 9;
-
-        GridBagConstraints gridBagConstraints15 = new GridBagConstraints();
-        gridBagConstraints15.gridx = 0;
-        gridBagConstraints15.insets = new Insets(2, 23, 2, 2);
-        gridBagConstraints15.anchor = GridBagConstraints.WEST;
-        gridBagConstraints15.gridy = 8;
 
         GridBagConstraints gridBagConstraints11 = new GridBagConstraints();
         gridBagConstraints11.gridx = 0;
@@ -296,8 +276,6 @@ public class ThrottlesPreferencesPane extends JPanel implements PropertyChangeLi
         jbSave.setVisible(true);
         jbCancel.setText(Bundle.getMessage("ThrottlesPrefsCancel"));
     }
-
-    static Logger log = LoggerFactory.getLogger(ThrottlesPreferencesPane.class.getName());
 
     @Override
     public void propertyChange(PropertyChangeEvent evt) {

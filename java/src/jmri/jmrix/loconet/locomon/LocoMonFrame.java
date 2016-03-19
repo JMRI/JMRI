@@ -4,8 +4,6 @@ package jmri.jmrix.loconet.locomon;
 import jmri.jmrix.loconet.LnTrafficController;
 import jmri.jmrix.loconet.LocoNetListener;
 import jmri.jmrix.loconet.LocoNetMessage;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 
 /**
  * LocoNet Monitor Frame displaying (and logging) LocoNet messages
@@ -63,6 +61,4 @@ public class LocoMonFrame extends jmri.jmrix.AbstractMonFrame implements LocoNet
     }
 
     jmri.jmrix.loconet.locomon.Llnmon llnmon = new jmri.jmrix.loconet.locomon.Llnmon();
-
-    static Logger log = LoggerFactory.getLogger(LocoMonFrame.class.getName());
 }

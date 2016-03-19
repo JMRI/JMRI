@@ -190,6 +190,7 @@ public class JmrixConfigPane extends JPanel implements PreferencesPanel {
      */
     private JmrixConfigPane(ConnectionConfig original) {
 
+        ConnectionConfigManager manager = InstanceManager.getDefault(ConnectionConfigManager.class);
         ccCurrent = original;
 
         setLayout(new BorderLayout());
@@ -197,7 +198,7 @@ public class JmrixConfigPane extends JPanel implements PreferencesPanel {
 
         manuBox.addItem(NONE_SELECTED);
 
-        manufactureNameList = jmri.jmrix.DCCManufacturerList.getSystemNames();
+        manufactureNameList = manager.getConnectionManufacturers();
         for (String manuName : manufactureNameList) {
             if (original != null && original.getManufacturer() != null
                     && original.getManufacturer().equals(manuName)) {
@@ -212,7 +213,7 @@ public class JmrixConfigPane extends JPanel implements PreferencesPanel {
         });
 
         // get the list of ConnectionConfig items into a selection box
-        classConnectionNameList = jmri.jmrix.DCCManufacturerList.getConnectionList((String) manuBox.getSelectedItem());
+        classConnectionNameList = manager.getConnectionTypes((String) manuBox.getSelectedItem());
         classConnectionList = new jmri.jmrix.ConnectionConfig[classConnectionNameList.length + 1];
         modeBox.addItem(NONE_SELECTED);
         if (manuBox.getSelectedIndex() != 0) {
@@ -281,7 +282,7 @@ public class JmrixConfigPane extends JPanel implements PreferencesPanel {
     public void updateComboConnection() {
         modeBox.removeAllItems();
         modeBox.addItem(NONE_SELECTED);
-        classConnectionNameList = jmri.jmrix.DCCManufacturerList.getConnectionList((String) manuBox.getSelectedItem());
+        classConnectionNameList = InstanceManager.getDefault(ConnectionConfigManager.class).getConnectionTypes((String) manuBox.getSelectedItem());
         classConnectionList = new jmri.jmrix.ConnectionConfig[classConnectionNameList.length + 1];
 
         if (manuBox.getSelectedIndex() != 0) {
@@ -400,7 +401,7 @@ public class JmrixConfigPane extends JPanel implements PreferencesPanel {
     }
 
     // initialize logging
-    static Logger log = LoggerFactory.getLogger(JmrixConfigPane.class);
+    private final static Logger log = LoggerFactory.getLogger(JmrixConfigPane.class);
 
     @Override
     public String getPreferencesItem() {

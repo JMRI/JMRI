@@ -30,7 +30,7 @@ public class NetworkDriverAdapter extends MarklinPortController implements jmri.
     public NetworkDriverAdapter() {
         super(new MarklinSystemConnectionMemo());
         allowConnectionRecovery = true;
-        manufacturerName = jmri.jmrix.DCCManufacturerList.MARKLIN;
+        manufacturerName = jmri.jmrix.marklin.MarklinConnectionTypeList.MARKLIN;
         m_port = 15731;
     }
 
@@ -130,6 +130,6 @@ public class NetworkDriverAdapter extends MarklinPortController implements jmri.
         return opened;
     }
 
-    static Logger log = LoggerFactory.getLogger(NetworkDriverAdapter.class.getName());
+    private final static Logger log = LoggerFactory.getLogger(NetworkDriverAdapter.class.getName());
 
 }

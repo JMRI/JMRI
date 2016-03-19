@@ -257,8 +257,7 @@ abstract public class BeanTableDataModel extends javax.swing.table.AbstractTable
                 NamedBean nB = getByUserName((String) value);
                 if (nB != null) {
                     log.error("User name is not unique " + value);
-                    String msg;
-                    msg = Bundle.getMessage("WarningUserName", new Object[]{("" + value)});
+                    String msg = Bundle.getMessage("WarningUserName", new Object[]{("" + value)});
                     JOptionPane.showMessageDialog(null, msg,
                             Bundle.getMessage("WarningTitle"),
                             JOptionPane.ERROR_MESSAGE);
@@ -335,14 +334,12 @@ abstract public class BeanTableDataModel extends javax.swing.table.AbstractTable
                 doDelete(t);
             } else {
                 final JDialog dialog = new JDialog();
-                String msg;
                 dialog.setTitle(Bundle.getMessage("WarningTitle"));
                 dialog.setDefaultCloseOperation(javax.swing.JFrame.DISPOSE_ON_CLOSE);
                 JPanel container = new JPanel();
                 container.setBorder(BorderFactory.createEmptyBorder(10, 10, 10, 10));
                 container.setLayout(new BoxLayout(container, BoxLayout.Y_AXIS));
                 if (count > 0) { // warn of listeners attached before delete
-                    msg = java.text.MessageFormat.format(Bundle.getMessage("DeletePrompt"), new Object[]{t.getSystemName()});
 
                     JLabel question = new JLabel(Bundle.getMessage("DeletePrompt", t.getFullyFormattedDisplayName()));
                     question.setAlignmentX(Component.CENTER_ALIGNMENT);
@@ -375,7 +372,7 @@ abstract public class BeanTableDataModel extends javax.swing.table.AbstractTable
                         container.add(jScrollPane);
                     }
                 } else {
-                    msg = java.text.MessageFormat.format(
+                    String msg = java.text.MessageFormat.format(
                             Bundle.getMessage("DeletePrompt"),
                             new Object[]{t.getSystemName()});
                     JLabel question = new JLabel(msg);
@@ -383,12 +380,12 @@ abstract public class BeanTableDataModel extends javax.swing.table.AbstractTable
                     container.add(question);
                 }
 
-                final JCheckBox remember = new JCheckBox("Remember this setting for next time?");
+                final JCheckBox remember = new JCheckBox(Bundle.getMessage("MessageRememberSetting"));
                 remember.setFont(remember.getFont().deriveFont(10f));
                 remember.setAlignmentX(Component.CENTER_ALIGNMENT);
 
-                JButton yesButton = new JButton("Yes");
-                JButton noButton = new JButton("No");
+                JButton yesButton = new JButton(Bundle.getMessage("ButtonYes"));
+                JButton noButton = new JButton(Bundle.getMessage("ButtonNo"));
                 JPanel button = new JPanel();
                 button.setAlignmentX(Component.CENTER_ALIGNMENT);
                 button.add(yesButton);
@@ -533,7 +530,7 @@ abstract public class BeanTableDataModel extends javax.swing.table.AbstractTable
      * comboboxes or booleans
      */
     @SuppressWarnings("unchecked")
-    @edu.umd.cs.findbugs.annotations.SuppressWarnings(value = "SBSC_USE_STRINGBUFFER_CONCATENATION")
+    @edu.umd.cs.findbugs.annotations.SuppressFBWarnings(value = "SBSC_USE_STRINGBUFFER_CONCATENATION")
     // Only used occasionally, so inefficient String processing not really a problem
     // though it would be good to fix it if you're working in this area
     public void printTable(HardcopyWriter w) {
@@ -582,7 +579,7 @@ abstract public class BeanTableDataModel extends javax.swing.table.AbstractTable
         w.close();
     }
 
-    @edu.umd.cs.findbugs.annotations.SuppressWarnings(value = "SBSC_USE_STRINGBUFFER_CONCATENATION")
+    @edu.umd.cs.findbugs.annotations.SuppressFBWarnings(value = "SBSC_USE_STRINGBUFFER_CONCATENATION")
     // Only used occasionally, so inefficient String processing not really a problem
     // though it would be good to fix it if you're working in this area
     protected void printColumns(HardcopyWriter w, String columnStrings[], int columnSize) {
@@ -787,8 +784,7 @@ abstract public class BeanTableDataModel extends javax.swing.table.AbstractTable
             NamedBean nB = getByUserName(value);
             if (nB != null) {
                 log.error("User name is not unique " + value);
-                String msg;
-                msg = Bundle.getMessage("WarningUserName", new Object[]{("" + value)});
+                String msg = Bundle.getMessage("WarningUserName", new Object[]{("" + value)});
                 JOptionPane.showMessageDialog(null, msg,
                         Bundle.getMessage("WarningTitle"),
                         JOptionPane.ERROR_MESSAGE);
@@ -1040,6 +1036,6 @@ abstract public class BeanTableDataModel extends javax.swing.table.AbstractTable
             }
         }
     }
-    static final Logger log = LoggerFactory.getLogger(BeanTableDataModel.class.getName());
+    private final static Logger log = LoggerFactory.getLogger(BeanTableDataModel.class.getName());
 
 }

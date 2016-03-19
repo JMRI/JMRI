@@ -308,7 +308,7 @@ public class AutoTrainAction {
     // this method is called to execute the action, when the "When" event has happened.
     // it is "public" because it may be called from a TransitSectionAction.
 // djd debugging - need to check this out - probably useless, but harmless
-    @edu.umd.cs.findbugs.annotations.SuppressWarnings(value = "SWL_SLEEP_WITH_LOCK_HELD",
+    @edu.umd.cs.findbugs.annotations.SuppressFBWarnings(value = "SWL_SLEEP_WITH_LOCK_HELD",
             justification = "used only by thread that can be stopped, no conflict with other threads expected")
     public synchronized void executeAction(TransitSectionAction tsa) {
         if (tsa == null) {
@@ -661,7 +661,7 @@ public class AutoTrainAction {
         private TransitSectionAction _tsa = null;
     }
 
-    static Logger log = LoggerFactory.getLogger(AutoTrainAction.class.getName());
+    private final static Logger log = LoggerFactory.getLogger(AutoTrainAction.class.getName());
 }
 
 /* @(#)AutoTrainAction.java */

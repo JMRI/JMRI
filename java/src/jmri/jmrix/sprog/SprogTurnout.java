@@ -118,7 +118,7 @@ public class SprogTurnout extends AbstractTurnout {
         return true;
     }
 
-    static Logger log = LoggerFactory.getLogger(SprogTurnout.class.getName());
+    private final static Logger log = LoggerFactory.getLogger(SprogTurnout.class.getName());
 
 }
 

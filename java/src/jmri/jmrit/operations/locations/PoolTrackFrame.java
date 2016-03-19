@@ -285,5 +285,5 @@ class PoolTrackFrame extends OperationsFrame implements java.beans.PropertyChang
         }
     }
 
-    static Logger log = LoggerFactory.getLogger(PoolTrackFrame.class.getName());
+    private final static Logger log = LoggerFactory.getLogger(PoolTrackFrame.class.getName());
 }

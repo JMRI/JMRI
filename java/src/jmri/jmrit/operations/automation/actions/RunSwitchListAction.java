@@ -1,5 +1,7 @@
 package jmri.jmrit.operations.automation.actions;
 
+import jmri.jmrit.operations.trains.excel.TrainCustomSwitchList;
+
 import java.io.File;
 import jmri.jmrit.operations.locations.Location;
 import jmri.jmrit.operations.locations.LocationManager;
@@ -7,7 +9,6 @@ import jmri.jmrit.operations.setup.Control;
 import jmri.jmrit.operations.setup.Setup;
 import jmri.jmrit.operations.trains.Train;
 import jmri.jmrit.operations.trains.TrainCsvSwitchLists;
-import jmri.jmrit.operations.trains.TrainCustomSwitchList;
 import jmri.jmrit.operations.trains.TrainManager;
 import jmri.jmrit.operations.trains.TrainSwitchLists;
 import org.slf4j.Logger;
@@ -46,6 +47,7 @@ public class RunSwitchListAction extends Action {
             setRunning(true);
             TrainSwitchLists trainSwitchLists = new TrainSwitchLists();
             TrainCsvSwitchLists trainCsvSwitchLists = new TrainCsvSwitchLists();
+            new TrainCustomSwitchList().checkProcessComplete(); // this can wait thread
             for (Location location : LocationManager.instance().getLocationsByNameList()) {
                 if (location.isSwitchListEnabled()
                         && (!isChanged || isChanged && location.getStatus().equals(Location.MODIFIED))) {
@@ -84,6 +86,6 @@ public class RunSwitchListAction extends Action {
         // no cancel for this action     
     }
 
-    static Logger log = LoggerFactory.getLogger(RunSwitchListAction.class.getName());
+    private final static Logger log = LoggerFactory.getLogger(RunSwitchListAction.class.getName());
 
 }

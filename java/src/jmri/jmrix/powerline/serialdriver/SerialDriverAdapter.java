@@ -33,7 +33,7 @@ public class SerialDriverAdapter extends SerialPortController implements jmri.jm
         super(new SerialSystemConnectionMemo());
         option1Name = "Adapter";
         options.put(option1Name, new Option("Adapter", stdOption1Values));
-        this.manufacturerName = jmri.jmrix.DCCManufacturerList.POWERLINE;
+        this.manufacturerName = jmri.jmrix.powerline.SerialConnectionTypeList.POWERLINE;
     }
 
     public String openPort(String portName, String appName) {
@@ -287,7 +287,7 @@ public class SerialDriverAdapter extends SerialPortController implements jmri.jm
     /**
      * Get an array of valid baud rates.
      */
-    @edu.umd.cs.findbugs.annotations.SuppressWarnings(value = "EI_EXPOSE_REP")
+    @edu.umd.cs.findbugs.annotations.SuppressFBWarnings(value = "EI_EXPOSE_REP")
     public String[] validBaudRates() {
         return validSpeeds;
     }
@@ -314,6 +314,6 @@ public class SerialDriverAdapter extends SerialPortController implements jmri.jm
 //        return mInstance;
 //    }
 //    static SerialDriverAdapter mInstance = null;
-    static Logger log = LoggerFactory.getLogger(SerialDriverAdapter.class.getName());
+    private final static Logger log = LoggerFactory.getLogger(SerialDriverAdapter.class.getName());
 
 }

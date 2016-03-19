@@ -30,7 +30,7 @@ public class SerialDriverAdapter extends MrcPortController implements jmri.jmrix
 
     public SerialDriverAdapter() {
         super(new MrcSystemConnectionMemo());
-        setManufacturer(jmri.jmrix.DCCManufacturerList.MRC);
+        setManufacturer(jmri.jmrix.mrc.MrcConnectionTypeList.MRC);
         options.put("CabAddress", new Option("Cab Address:", validOption1, false)); //IN18N
     }
 
@@ -172,6 +172,6 @@ public class SerialDriverAdapter extends MrcPortController implements jmri.jmrix
 
     protected String[] validOption1 = new String[]{"01", "02", "03", "04", "05", "06", "07", "08", "09", "10", "11", "12", "13", "14", "15", "16", "17", "18", "19", "20", "21", "22", "23", "24", "25", "26", "27", "28", "29", "30", "31"};//IN18N
 
-    static Logger log = LoggerFactory.getLogger(SerialDriverAdapter.class.getName());
+    private final static Logger log = LoggerFactory.getLogger(SerialDriverAdapter.class.getName());
 
 }

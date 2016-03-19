@@ -18,7 +18,7 @@ public abstract class LnPortController extends jmri.jmrix.AbstractSerialPortCont
 
     protected LnPortController(LocoNetSystemConnectionMemo connectionMemo) {
         super(connectionMemo);
-        setManufacturer(jmri.jmrix.DCCManufacturerList.DIGITRAX);
+        setManufacturer(LnConnectionTypeList.DIGITRAX);
     }
 
     // returns the InputStream from the port
@@ -105,7 +105,7 @@ public abstract class LnPortController extends jmri.jmrix.AbstractSerialPortCont
     public LocoNetSystemConnectionMemo getSystemConnectionMemo() {
         return (LocoNetSystemConnectionMemo) super.getSystemConnectionMemo();
     }
-    static Logger log = LoggerFactory.getLogger(LnPortController.class.getName());
+    private final static Logger log = LoggerFactory.getLogger(LnPortController.class.getName());
 }
 
 

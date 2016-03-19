@@ -40,7 +40,7 @@ public class LIUSBEthernetAdapter extends XNetNetworkPortController {
         }
         setHostName(DEFAULT_IP_ADDRESS);
         setPort(COMMUNICATION_TCP_PORT);
-        this.manufacturerName = jmri.jmrix.DCCManufacturerList.LENZ;
+        this.manufacturerName = jmri.jmrix.lenz.LenzConnectionTypeList.LENZ;
     }
 
     @Override
@@ -213,6 +213,6 @@ public class LIUSBEthernetAdapter extends XNetNetworkPortController {
         return rb.getString("defaultMDNSServiceType");
     }
 
-    static Logger log = LoggerFactory.getLogger(LIUSBEthernetAdapter.class.getName());
+    private final static Logger log = LoggerFactory.getLogger(LIUSBEthernetAdapter.class.getName());
 
 }

@@ -1,8 +1,9 @@
 package jmri.jmrit.operations.automation.actions;
 
+import jmri.jmrit.operations.trains.excel.TrainCustomManifest;
+
 import jmri.jmrit.operations.setup.Setup;
 import jmri.jmrit.operations.trains.Train;
-import jmri.jmrit.operations.trains.TrainCustomManifest;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -59,5 +60,5 @@ public class RunTrainAction extends Action {
     public void cancelAction() {
         // no cancel for this action     
     }
-    static Logger log = LoggerFactory.getLogger(RunTrainAction.class.getName());
+    private final static Logger log = LoggerFactory.getLogger(RunTrainAction.class.getName());
 }

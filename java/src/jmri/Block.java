@@ -426,7 +426,7 @@ public class Block extends jmri.implementation.AbstractNamedBean implements Phys
         }
 
         try {
-            return new Float(speed);
+            return Float.valueOf(speed);
         } catch (NumberFormatException nx) {
             //considered normal if the speed is not a number.
         }
@@ -546,9 +546,9 @@ public class Block extends jmri.implementation.AbstractNamedBean implements Phys
     }
 
     @Override
+    // This can't change, so can't include mutable values
     public int hashCode() {
-        int hash = 100*_direction+1000*_curvature+10000*_current+(int)_length+CntOfPossibleEntrancePaths;
-        return hash;
+        return this.getSystemName().hashCode();
     }
 
     // internal data members
@@ -863,7 +863,7 @@ public class Block extends jmri.implementation.AbstractNamedBean implements Phys
             // NOTE: This pattern is based on the one defined in jmri.jmrix.loconet.LnReporter
             Pattern ln_p = Pattern.compile("(\\d+) (enter|exits|seen)\\s*(northbound|southbound)?");  // Match a number followed by the word "enter".  This is the LocoNet pattern.
             Matcher m = ln_p.matcher(rep);
-            if ((m != null) && m.find()) {
+            if (m.find()) {
                 log.debug("Parsed address: " + m.group(1));
                 return (new DccLocoAddress(Integer.parseInt(m.group(1)), LocoAddress.Protocol.DCC));
             } else {
@@ -968,5 +968,5 @@ public class Block extends jmri.implementation.AbstractNamedBean implements Phys
         return Bundle.getMessage("BeanNameBlock");
     }
 
-    static Logger log = LoggerFactory.getLogger(Block.class.getName());
+    private final static Logger log = LoggerFactory.getLogger(Block.class.getName());
 }

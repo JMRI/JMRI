@@ -14,8 +14,6 @@ import javax.swing.JMenuBar;
 import javax.swing.JPanel;
 import javax.swing.JSplitPane;
 import javax.swing.border.Border;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 
 /**
  * Frame for running assignment list.
@@ -86,8 +84,6 @@ public class TieToolFrame extends jmri.util.JmriJFrame {
         // pack for display
         pack();
     }
-
-    static Logger log = LoggerFactory.getLogger(TieToolFrame.class.getName());
 
 }
 

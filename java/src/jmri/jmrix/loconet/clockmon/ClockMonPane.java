@@ -157,6 +157,6 @@ public class ClockMonPane extends LnPanel implements SlotListener {
         }
     }
 
-    static Logger log = LoggerFactory.getLogger(ClockMonPane.class.getName());
+    private final static Logger log = LoggerFactory.getLogger(ClockMonPane.class.getName());
 
 }

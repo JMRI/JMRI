@@ -1300,6 +1300,6 @@ public class LayoutSlip extends LayoutTurnout {
 
     }
 
-    static Logger log = LoggerFactory.getLogger(LayoutSlip.class.getName());
+    private final static Logger log = LoggerFactory.getLogger(LayoutSlip.class.getName());
 
 }

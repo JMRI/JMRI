@@ -4,6 +4,8 @@ package jmri.implementation.swing;
 import junit.framework.Test;
 import junit.framework.TestCase;
 import junit.framework.TestSuite;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 /**
  * Tests for the SwingShutDownTask class.
@@ -20,6 +22,7 @@ import junit.framework.TestSuite;
 public class SwingShutDownTaskTest extends TestCase {
 
     static boolean modalDialogStopsTest = false;
+    private final static Logger log = LoggerFactory.getLogger(SwingShutDownTaskTest.class);
 
     public void testCreate1() {
 

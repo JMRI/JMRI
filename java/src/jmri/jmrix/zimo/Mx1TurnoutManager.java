@@ -2,8 +2,6 @@
 package jmri.jmrix.zimo;
 
 import jmri.Turnout;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 
 /**
  * New Mx1 Turnout Manager
@@ -34,8 +32,6 @@ public class Mx1TurnoutManager extends jmri.managers.AbstractTurnoutManager {
         t.setUserName(userName);
         return t;
     }
-
-    static Logger log = LoggerFactory.getLogger(Mx1TurnoutManager.class.getName());
 
 }
 

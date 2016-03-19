@@ -222,7 +222,7 @@ public class XBeeSensor extends AbstractSensor implements XBeeListener {
         tc.removeXBeeListener(this);
     }
 
-    static Logger log = LoggerFactory.getLogger(XBeeSensor.class.getName());
+    private final static Logger log = LoggerFactory.getLogger(XBeeSensor.class.getName());
 
 }
 

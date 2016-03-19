@@ -1,9 +1,5 @@
 package jmri.jmrit.logix;
 
-/**
- * @author Pete Cressman Copyright (C) 2015
- * @version $Revision: 28030 $
- */
 import java.awt.Dimension;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
@@ -34,6 +30,9 @@ import jmri.swing.PreferencesPanel;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+/**
+ * @author Pete Cressman Copyright (C) 2015
+ */
 public class WarrantPreferencesPanel extends JPanel implements PreferencesPanel, ItemListener {
     
     private static final long serialVersionUID = 7088050123933847146L;
@@ -492,7 +491,8 @@ public class WarrantPreferencesPanel extends JPanel implements PreferencesPanel,
             for (int i=0; i<_speedNameMap.size(); i++) {
                 DataPair<String, Float> dp = _speedNameMap.get(i);
                 String name = dp.getKey();
-                if (_preferences.getSpeedNameValue(name)==null || _preferences.getSpeedNameValue(name)!= dp.getValue()) {
+                if (_preferences.getSpeedNameValue(name)==null 
+                        || _preferences.getSpeedNameValue(name).floatValue() != dp.getValue().floatValue()) {
                     different = true;
                     break;
                 }
@@ -862,5 +862,5 @@ public class WarrantPreferencesPanel extends JPanel implements PreferencesPanel,
         }
     }
     
-    private static Logger log = LoggerFactory.getLogger(WarrantPreferencesPanel.class.getName());
+    private final static Logger log = LoggerFactory.getLogger(WarrantPreferencesPanel.class.getName());
 }

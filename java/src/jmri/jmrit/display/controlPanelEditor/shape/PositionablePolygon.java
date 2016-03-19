@@ -21,7 +21,6 @@ import org.slf4j.LoggerFactory;
  * PositionableRoundRect.
  * <P>
  * @author Pete cresman Copyright (c) 2013
- * @version $Revision: 1 $
  */
 public class PositionablePolygon extends PositionableShape {
 
@@ -46,9 +45,7 @@ public class PositionablePolygon extends PositionableShape {
         return finishClone(pos);
     }
 
-    @Override
-    public Positionable finishClone(Positionable pg) {
-        PositionablePolygon pos = (PositionablePolygon) pg;
+    protected Positionable finishClone(PositionablePolygon pos) {
         GeneralPath path = new GeneralPath(GeneralPath.WIND_EVEN_ODD);
         path.append(getPathIterator(null), false);
         /*
@@ -321,5 +318,5 @@ public class PositionablePolygon extends PositionableShape {
         }
     }
 
-    static Logger log = LoggerFactory.getLogger(PositionablePolygon.class.getName());
+    private final static Logger log = LoggerFactory.getLogger(PositionablePolygon.class.getName());
 }

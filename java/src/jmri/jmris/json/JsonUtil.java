@@ -642,6 +642,7 @@ public class JsonUtil {
         return root;
     }
 
+    @Deprecated
     static public JsonNode getPower(Locale locale) throws JsonException {
         ObjectNode root = mapper.createObjectNode();
         root.put(TYPE, POWER);
@@ -668,6 +669,7 @@ public class JsonUtil {
         return root;
     }
 
+    @Deprecated
     static public void setPower(Locale locale, JsonNode data) throws JsonException {
         int state = data.path(STATE).asInt(UNKNOWN);
         try {
@@ -1178,6 +1180,7 @@ public class JsonUtil {
         return root;
     }
 
+    @Deprecated
     static public JsonNode getTime(Locale locale) throws JsonException {
         ObjectNode root = mapper.createObjectNode();
         root.put(TYPE, TIME);
@@ -1188,6 +1191,7 @@ public class JsonUtil {
         return root;
     }
 
+    @Deprecated
     static public void setTime(Locale locale, JsonNode data) throws JsonException {
         try {
             if (data.path(TIME).isTextual()) {
@@ -1283,6 +1287,7 @@ public class JsonUtil {
         }
     }
 
+    @Deprecated
     static public JsonNode getTurnout(Locale locale, String name) throws JsonException {
         ObjectNode root = mapper.createObjectNode();
         root.put(TYPE, TURNOUT);
@@ -1315,6 +1320,7 @@ public class JsonUtil {
         return root;
     }
 
+    @Deprecated
     static public JsonNode getTurnouts(Locale locale) throws JsonException {
         ArrayNode root = mapper.createArrayNode();
         for (String name : InstanceManager.turnoutManagerInstance().getSystemNameList()) {
@@ -1323,6 +1329,7 @@ public class JsonUtil {
         return root;
     }
 
+    @Deprecated
     static public void putTurnout(Locale locale, String name, JsonNode data) throws JsonException {
         try {
             InstanceManager.turnoutManagerInstance().provideTurnout(name);
@@ -1332,6 +1339,7 @@ public class JsonUtil {
         setTurnout(locale, name, data);
     }
 
+    @Deprecated
     static public void setTurnout(Locale locale, String name, JsonNode data) throws JsonException {
         try {
             Turnout turnout = InstanceManager.turnoutManagerInstance().getTurnout(name);
@@ -1451,6 +1459,16 @@ public class JsonUtil {
         return root;
     }
 
+    /**
+     * JSON errors should be handled by throwing a
+     * {@link jmri.server.json.JsonException}.
+     *
+     * @param code
+     * @param message
+     * @return
+     * @deprecated
+     */
+    @Deprecated
     static public ObjectNode handleError(int code, String message) {
         ObjectNode root = mapper.createObjectNode();
         root.put(TYPE, ERROR);

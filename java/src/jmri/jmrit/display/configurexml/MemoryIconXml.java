@@ -161,5 +161,5 @@ public class MemoryIconXml extends PositionableLabelXml {
         l.displayState();
     }
 
-    static Logger log = LoggerFactory.getLogger(MemoryIconXml.class.getName());
+    private final static Logger log = LoggerFactory.getLogger(MemoryIconXml.class.getName());
 }

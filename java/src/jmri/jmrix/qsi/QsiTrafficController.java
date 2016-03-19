@@ -25,7 +25,7 @@ import org.slf4j.LoggerFactory;
  */
 public class QsiTrafficController implements QsiInterface, Runnable {
 
-    @edu.umd.cs.findbugs.annotations.SuppressWarnings(value = "ST_WRITE_TO_STATIC_FROM_INSTANCE_METHOD",
+    @edu.umd.cs.findbugs.annotations.SuppressFBWarnings(value = "ST_WRITE_TO_STATIC_FROM_INSTANCE_METHOD",
             justification = "temporary until mult-system; only set at startup")
     public QsiTrafficController() {
         if (log.isDebugEnabled()) {
@@ -348,7 +348,7 @@ public class QsiTrafficController implements QsiInterface, Runnable {
         }
     }
 
-    static Logger log = LoggerFactory.getLogger(QsiTrafficController.class.getName());
+    private final static Logger log = LoggerFactory.getLogger(QsiTrafficController.class.getName());
 }
 
 

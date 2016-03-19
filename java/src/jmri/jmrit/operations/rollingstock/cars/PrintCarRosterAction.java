@@ -467,5 +467,5 @@ public class PrintCarRosterAction extends AbstractAction {
         }
     }
 
-    static Logger log = LoggerFactory.getLogger(PrintCarRosterAction.class.getName());
+    private final static Logger log = LoggerFactory.getLogger(PrintCarRosterAction.class.getName());
 }

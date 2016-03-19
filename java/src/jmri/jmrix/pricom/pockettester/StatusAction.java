@@ -44,7 +44,7 @@ public abstract class StatusAction extends AbstractAction {
 
     abstract void connect(StatusFrame l);
 
-    static Logger log = LoggerFactory.getLogger(StatusAction.class.getName());
+    private final static Logger log = LoggerFactory.getLogger(StatusAction.class.getName());
 
 }
 

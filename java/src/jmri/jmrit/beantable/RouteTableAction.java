@@ -1,4 +1,3 @@
-// RouteTableAction.java
 package jmri.jmrit.beantable;
 
 import java.awt.BorderLayout;
@@ -57,14 +56,9 @@ import org.slf4j.LoggerFactory;
  * @author Simon Reader Copyright (C) 2008
  * @author Pete Cressman Copyright (C) 2009
  *
- * @version $Revision$
  */
 public class RouteTableAction extends AbstractTableAction {
 
-    /**
-     *
-     */
-    private static final long serialVersionUID = 8319726020695754089L;
     static final ResourceBundle rbx = ResourceBundle.getBundle("jmri.jmrit.beantable.LogixTableBundle");
 
     /**
@@ -75,20 +69,11 @@ public class RouteTableAction extends AbstractTableAction {
      *
      * @param s
      */
-    @SuppressWarnings("all")
     public RouteTableAction(String s) {
         super(s);
         // disable ourself if there is no primary Route manager available
         if (jmri.InstanceManager.routeManagerInstance() == null) {
             setEnabled(false);
-        }
-
-        // check a constraint required by this implementation,
-        // because we assume that the codes are the same as the index
-        // in a JComboBox
-        if (Route.ONACTIVE != 0 || Route.ONINACTIVE != 1
-                || Route.VETOACTIVE != 2 || Route.VETOINACTIVE != 3) {
-            log.error("assumption invalid in RouteTable implementation");
         }
     }
 
@@ -117,10 +102,6 @@ public class RouteTableAction extends AbstractTableAction {
 
 
         m = new BeanTableDataModel() {
-            /**
-             *
-             */
-            private static final long serialVersionUID = -3860139623368533849L;
             static public final int ENABLECOL = NUMCOLUMN;
             static public final int LOCKCOL = ENABLECOL + 1;
             static public final int SETCOL = ENABLECOL + 2;
@@ -307,8 +288,6 @@ public class RouteTableAction extends AbstractTableAction {
                 return jmri.InstanceManager.routeManagerInstance().getByUserName(name);
             }
 
-            /*public int getDisplayDeleteMsg() { return InstanceManager.getDefault(jmri.UserPreferencesManager.class).getMultipleChoiceOption(getClassName(),"deleteInUse"); }
-             public void setDisplayDeleteMsg(int boo) { InstanceManager.getDefault(jmri.UserPreferencesManager.class).setMultipleChoiceOption(getClassName(), "deleteInUse", boo); }*/
             protected String getMasterClassName() {
                 return getClassName();
             }
@@ -661,10 +640,6 @@ public class RouteTableAction extends AbstractTableAction {
             });
             p25.add(ss);
             p25.add(soundFile);
-//            contentPanel.add(p25);
-
-//            JPanel p26 = new JPanel();
-//            p26.setLayout(new FlowLayout());
             p25.add(new JLabel("Run script:"));
             ss = new JButton("Set");
             ss.addActionListener(new ActionListener() {
@@ -1430,7 +1405,7 @@ public class RouteTableAction extends AbstractTableAction {
 
         ///////////////// Make Trigger Conditionals //////////////////////
         //ArrayList <ConditionalVariable> onChangeList = new ArrayList<ConditionalVariable>();
-        int numConds = 1;
+        int numConds = 1; // passed through all these, with new value returned each time
         numConds = makeSensorConditional(sensor1, sensor1mode, numConds, false,
                 actionList, vetoList, logix, logixSystemName, uName);
         numConds = makeSensorConditional(sensor2, sensor2mode, numConds, false,
@@ -1449,6 +1424,7 @@ public class RouteTableAction extends AbstractTableAction {
                 logix, logixSystemName, uName);
         numConds = makeTurnoutConditional(cTurnout, cTurnoutStateBox, numConds, true, actionList,
                 vetoList, logix, logixSystemName, uName);
+        log.debug("Final number of conditionals: {}", numConds);
 
         ///////////////// Set up Alignment Sensor, if there is one //////////////////////////
         //String sensorSystemName = turnoutsAlignedSensor.getText();
@@ -1460,8 +1436,8 @@ public class RouteTableAction extends AbstractTableAction {
              }*/
             //if (s != null) {
             String sensorSystemName = turnoutsAlignedSensor.getSelectedDisplayName();
-            cSystemName = logixSystemName + "1A";
-            cUserName = turnoutsAlignedSensor.getSelectedDisplayName() + "A " + uName;
+            cSystemName = logixSystemName + "1A"; // NOI18N
+            cUserName = turnoutsAlignedSensor.getSelectedDisplayName() + "A " + uName; // NOI18N
 
             ArrayList<ConditionalVariable> variableList = new ArrayList<ConditionalVariable>();
             for (int i = 0; i < _includedTurnoutList.size(); i++) {
@@ -1480,6 +1456,8 @@ public class RouteTableAction extends AbstractTableAction {
                         variableList.add(new ConditionalVariable(false, Conditional.OPERATOR_AND,
                                 Conditional.TYPE_TURNOUT_THROWN, name, true));
                         break;
+                    default:
+                        log.warn("Turnout {} was {}, neither CLOSED nor THROWN; not handled", name, rTurnout.getState()); // NOI18N
                 }
             }
             actionList = new ArrayList<ConditionalAction>();
@@ -1501,8 +1479,8 @@ public class RouteTableAction extends AbstractTableAction {
         if (cLockTurnout.getSelectedBean() != null) {
             String turnoutLockSystemName = cLockTurnout.getSelectedDisplayName();
             // verify name (logix doesn't use "provideXXX") 
-            cSystemName = logixSystemName + "1L";
-            cUserName = turnoutLockSystemName + "L " + uName;
+            cSystemName = logixSystemName + "1L"; // NOI18N
+            cUserName = turnoutLockSystemName + "L " + uName; // NOI18N
             ArrayList<ConditionalVariable> variableList = new ArrayList<ConditionalVariable>();
             //String devName = cTurnout.getText();
             int mode = turnoutModeFromBox(cTurnoutStateBox);
@@ -1814,11 +1792,6 @@ public class RouteTableAction extends AbstractTableAction {
      */
     public abstract class RouteOutputModel extends AbstractTableModel implements PropertyChangeListener {
 
-        /**
-         *
-         */
-        private static final long serialVersionUID = -780231512435242770L;
-
         public Class<?> getColumnClass(int c) {
             if (c == INCLUDE_COLUMN) {
                 return Boolean.class;
@@ -1860,11 +1833,6 @@ public class RouteTableAction extends AbstractTableAction {
      * Table model for selecting Turnouts and Turnout State
      */
     class RouteTurnoutModel extends RouteOutputModel {
-
-        /**
-         *
-         */
-        private static final long serialVersionUID = 7052824030929111881L;
 
         RouteTurnoutModel() {
             InstanceManager.turnoutManagerInstance().addPropertyChangeListener(this);
@@ -1918,6 +1886,8 @@ public class RouteTableAction extends AbstractTableAction {
                 case STATE_COLUMN:
                     turnoutList.get(r).setSetToState((String) type);
                     break;
+                default:
+                    log.error("RouteTurnoutModel.setValueAt should not be called on column {}", c);
             }
         }
     }
@@ -1926,11 +1896,6 @@ public class RouteTableAction extends AbstractTableAction {
      * Set up table for selecting Sensors and Sensor State
      */
     class RouteSensorModel extends RouteOutputModel {
-
-        /**
-         *
-         */
-        private static final long serialVersionUID = -3324256506333915127L;
 
         RouteSensorModel() {
             InstanceManager.sensorManagerInstance().addPropertyChangeListener(this);
@@ -1984,6 +1949,8 @@ public class RouteTableAction extends AbstractTableAction {
                 case STATE_COLUMN:
                     sensorList.get(r).setSetToState((String) type);
                     break;
+                default:
+                    log.error("RouteSensorModel.setValueAt should not be called on column {}", c);
             }
         }
     }
@@ -2155,6 +2122,5 @@ public class RouteTableAction extends AbstractTableAction {
         return Bundle.getMessage("TitleRouteTable");
     }
 
-    static final Logger log = LoggerFactory.getLogger(RouteTableAction.class.getName());
+    private final static Logger log = LoggerFactory.getLogger(RouteTableAction.class.getName());
 }
-/* @(#)RouteTableAction.java */

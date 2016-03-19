@@ -2,10 +2,10 @@
 
 package jmri.jmrix.pi;
 
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 import com.pi4j.io.gpio.GpioController;
 import com.pi4j.io.gpio.GpioFactory;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 /**
  * Provides an Adapter to allow the system connection memo and multiple
@@ -23,8 +23,9 @@ public class RaspberryPiAdapter extends jmri.jmrix.AbstractPortController
     
     public RaspberryPiAdapter (){
         super(new RaspberryPiSystemConnectionMemo());
+        log.debug("RaspberryPi GPIO Adapter Constructor called");
         opened = true;
-        this.manufacturerName = jmri.jmrix.DCCManufacturerList.PI;
+        this.manufacturerName = RaspberryPiConnectionTypeList.PI;
         if(gpio==null){
            gpio = GpioFactory.getInstance();
         }
@@ -73,7 +74,7 @@ public class RaspberryPiAdapter extends jmri.jmrix.AbstractPortController
    }
 
    public GpioController getGPIOController(){ return gpio; }
-    
-   static Logger log = LoggerFactory
-		.getLogger(RaspberryPiAdapter.class.getName());
+
+   private final static Logger log = LoggerFactory.getLogger(RaspberryPiAdapter.class.getName());
+
 }

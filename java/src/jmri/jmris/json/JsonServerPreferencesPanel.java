@@ -12,8 +12,6 @@ import javax.swing.SpinnerNumberModel;
 import javax.swing.event.ChangeEvent;
 import jmri.swing.JTitledSeparator;
 import jmri.swing.PreferencesPanel;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 
 /**
  * @author Randall Wood Copyright (C) 2012, 2015
@@ -29,8 +27,6 @@ public class JsonServerPreferencesPanel extends JPanel implements PreferencesPan
     private JsonServerPreferences preferences;
     private JFrame parentFrame = null;
     private static final long serialVersionUID = 5452568391598728906L;
-    private static final Logger log = LoggerFactory.getLogger(JsonServerPreferencesPanel.class.getName());
-
     public JsonServerPreferencesPanel() {
         this.preferences = new JsonServerPreferences();
         this.preferences.apply(JsonServerPreferences.getDefault());
@@ -111,6 +107,7 @@ public class JsonServerPreferencesPanel extends JPanel implements PreferencesPan
         JPanel panel = new JPanel();
         port = new JSpinner(new SpinnerNumberModel(JsonServerPreferences.DEFAULT_PORT, 1, 65535, 1));
         ((JSpinner.DefaultEditor) port.getEditor()).getTextField().setEditable(true);
+        port.setEditor(new JSpinner.NumberEditor(port, "#"));
         this.port.addChangeListener((ChangeEvent e) -> {
             this.setValues();
         });

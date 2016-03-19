@@ -14,8 +14,6 @@ import javax.swing.JSeparator;
 import javax.swing.JTextField;
 import jmri.jmrit.display.MultiSensorIcon;
 import jmri.util.JmriJFrame;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 
 /**
  * Provides a simple editor for creating a MultiSensorIcon object
@@ -213,7 +211,4 @@ public class MultiSensorIconFrame extends JmriJFrame {
             edf.dispose();
         }
     }
-
-    // initialize logging
-    static Logger log = LoggerFactory.getLogger(MultiSensorIconFrame.class.getName());
 }

@@ -412,7 +412,7 @@ public class AcelaTrafficController extends AbstractMRNodeTrafficController impl
 
     static volatile protected AcelaTrafficController self = null;
 
-    @edu.umd.cs.findbugs.annotations.SuppressWarnings(value = "ST_WRITE_TO_STATIC_FROM_INSTANCE_METHOD",
+    @edu.umd.cs.findbugs.annotations.SuppressFBWarnings(value = "ST_WRITE_TO_STATIC_FROM_INSTANCE_METHOD",
             justification = "temporary until mult-system; only set at startup")
     protected void setInstance() {
         self = this;
@@ -484,7 +484,7 @@ public class AcelaTrafficController extends AbstractMRNodeTrafficController impl
         }
     }
 
-    static Logger log = LoggerFactory.getLogger(AcelaTrafficController.class.getName());
+    private final static Logger log = LoggerFactory.getLogger(AcelaTrafficController.class.getName());
 }
 
 /* @(#)AcelaTrafficController.java */

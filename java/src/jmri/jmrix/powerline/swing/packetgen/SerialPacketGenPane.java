@@ -10,8 +10,6 @@ import jmri.jmrix.powerline.SerialReply;
 import jmri.jmrix.powerline.SerialSystemConnectionMemo;
 import jmri.jmrix.powerline.SerialTrafficController;
 import jmri.util.StringUtil;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 
 /**
  * Frame for user input of Powerline messages
@@ -129,7 +127,5 @@ public class SerialPacketGenPane extends jmri.jmrix.powerline.swing.PowerlinePan
 
     public void reply(SerialReply r) {
     } // ignore replies
-
-    static Logger log = LoggerFactory.getLogger(SerialPacketGenPane.class.getName());
 
 }

@@ -6,7 +6,6 @@ import jmri.jmrix.dccpp.DCCppCommandStation;
 import jmri.jmrix.dccpp.DCCppInitializationManager;
 import jmri.jmrix.dccpp.DCCppNetworkPortController;
 import jmri.jmrix.dccpp.DCCppTrafficController;
-import jmri.jmrix.dccpp.DCCppSystemConnectionMemo;
 import jmri.util.zeroconf.ZeroConfClient;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -44,7 +43,7 @@ public class DCCppEthernetAdapter extends DCCppNetworkPortController {
         }
         setHostName(DEFAULT_IP_ADDRESS);
         setPort(COMMUNICATION_TCP_PORT);
-        this.manufacturerName = jmri.jmrix.DCCManufacturerList.DCCPP;
+        this.manufacturerName = jmri.jmrix.dccpp.DCCppConnectionTypeList.DCCPP;
     }
 
     @Override
@@ -216,6 +215,6 @@ public class DCCppEthernetAdapter extends DCCppNetworkPortController {
         return rb.getString("defaultMDNSServiceType");
     }
 
-    static Logger log = LoggerFactory.getLogger(DCCppEthernetAdapter.class.getName());
+    private final static Logger log = LoggerFactory.getLogger(DCCppEthernetAdapter.class.getName());
 
 }

@@ -5,8 +5,6 @@ import jmri.jmrix.qsi.QsiListener;
 import jmri.jmrix.qsi.QsiMessage;
 import jmri.jmrix.qsi.QsiReply;
 import jmri.jmrix.qsi.QsiTrafficController;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 
 /**
  * Frame displaying (and logging) QSI command messages
@@ -87,7 +85,5 @@ public class QsiMonFrame extends jmri.jmrix.AbstractMonFrame implements QsiListe
         }
         nextLine(text + "\n", l.toString());
     }
-
-    static Logger log = LoggerFactory.getLogger(QsiMonFrame.class.getName());
 
 }

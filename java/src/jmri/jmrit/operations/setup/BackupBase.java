@@ -7,7 +7,9 @@ import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.OutputStream;
+import java.text.SimpleDateFormat;
 import java.util.Calendar;
+import java.util.Date;
 import jmri.jmrit.XmlFile;
 import jmri.jmrit.operations.OperationsXml;
 import org.slf4j.Logger;
@@ -22,7 +24,7 @@ import org.slf4j.LoggerFactory;
  */
 public abstract class BackupBase {
 
-    static Logger log = LoggerFactory
+    private final static Logger log = LoggerFactory
             .getLogger(BackupBase.class.getName());
 
     // Just for testing......
@@ -397,20 +399,9 @@ public abstract class BackupBase {
      * Returns the current date formatted for use as part of a Backup Set name.
      */
     private String getDate() {
-        // This could use some clean-up.... but works OK for now
-        Calendar now = Calendar.getInstance();
-        int month = now.get(Calendar.MONTH) + 1;
-        String m = Integer.toString(month);
-        if (month < 10) {
-            m = "0" + Integer.toString(month);
-        }
-        int day = now.get(Calendar.DATE);
-        String d = Integer.toString(day);
-        if (day < 10) {
-            d = "0" + Integer.toString(day);
-        }
-        String date = "" + now.get(Calendar.YEAR) + "_" + m + "_" + d;
-        return date;
+        Date date = Calendar.getInstance().getTime();
+        SimpleDateFormat simpleDateFormat = new SimpleDateFormat("yyyy_MM_dd");
+        return simpleDateFormat.format(date);
     }
 
     /**

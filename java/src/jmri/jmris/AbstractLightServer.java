@@ -22,7 +22,7 @@ import org.slf4j.LoggerFactory;
 abstract public class AbstractLightServer {
 
     private final HashMap<String, LightListener> lights;
-    static Logger log = LoggerFactory.getLogger(AbstractLightServer.class.getName());
+    private final static Logger log = LoggerFactory.getLogger(AbstractLightServer.class.getName());
 
     public AbstractLightServer() {
         lights = new HashMap<String, LightListener>();

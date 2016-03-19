@@ -41,14 +41,6 @@ public class XNetSimulatorAdapter extends XNetSimulatorPortController implements
     private int csStatus;
     // status flags from the XPressNet Documentation.
     private final static int csEmergencyStop = 0x01; // bit 0
-    private final static int csTrackVoltageOff = 0x02; // bit 1
-    private final static int csAutomaticMode = 0x04; // bit 2 
-    private final static int csServiceMode = 0x08; // bit 3
-    // bit 4 is reserved
-    // bit 5 is reserved
-    private final static int csPowerUpMode = 0x40; // bit 6
-    private final static int csRamCheckError = 0x80; // bit 7
-    
     // 0x00 means normal mode.
     private final static int csNormalMode = 0x00;
 
@@ -482,6 +474,6 @@ public class XNetSimulatorAdapter extends XNetSimulatorPortController implements
     private DataInputStream inpipe = null; // feed pout
     private Thread sourceThread;
 
-    static Logger log = LoggerFactory.getLogger(XNetSimulatorAdapter.class.getName());
+    private final static Logger log = LoggerFactory.getLogger(XNetSimulatorAdapter.class.getName());
 
 }

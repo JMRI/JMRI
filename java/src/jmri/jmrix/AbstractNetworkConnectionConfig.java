@@ -564,6 +564,6 @@ abstract public class AbstractNetworkConnectionConfig extends AbstractConnection
         }
     }
 
-    static Logger log = LoggerFactory.getLogger(AbstractNetworkConnectionConfig.class.getName());
+    private final static Logger log = LoggerFactory.getLogger(AbstractNetworkConnectionConfig.class.getName());
 
 }

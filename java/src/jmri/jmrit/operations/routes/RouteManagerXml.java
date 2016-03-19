@@ -109,6 +109,6 @@ public class RouteManagerXml extends OperationsXml {
     }
 
 
-    static Logger log = LoggerFactory.getLogger(RouteManagerXml.class.getName());
+    private final static Logger log = LoggerFactory.getLogger(RouteManagerXml.class.getName());
 
 }

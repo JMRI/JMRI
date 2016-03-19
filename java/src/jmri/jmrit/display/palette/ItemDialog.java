@@ -2,8 +2,6 @@
 package jmri.jmrit.display.palette;
 
 import jmri.util.JmriJFrame;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 
 /**
  * Container for dialogs that modify the user's changes to his/her icon catalog.
@@ -53,14 +51,11 @@ public class ItemDialog extends JmriJFrame {
     protected void closeDialogs() {
     }
 
-    @edu.umd.cs.findbugs.annotations.SuppressWarnings(value = "ST_WRITE_TO_STATIC_FROM_INSTANCE_METHOD", justification = "Null reference to singular version to allow gc earlier")
+    @edu.umd.cs.findbugs.annotations.SuppressFBWarnings(value = "ST_WRITE_TO_STATIC_FROM_INSTANCE_METHOD", justification = "Null reference to singular version to allow gc earlier")
     public void dispose() {
         closeDialogs();
         super.dispose();
         _instance = null;	// remove reference to allow gc
 
     }
-
-    // initialize logging
-    static Logger log = LoggerFactory.getLogger(ItemDialog.class.getName());
 }

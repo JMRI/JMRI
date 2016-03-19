@@ -117,6 +117,6 @@ public class MarklinThrottleManager extends AbstractThrottleManager implements M
         return false;
     }
 
-    static Logger log = LoggerFactory.getLogger(MarklinThrottleManager.class.getName());
+    private final static Logger log = LoggerFactory.getLogger(MarklinThrottleManager.class.getName());
 
 }

@@ -50,10 +50,6 @@
                     <script>${ant.script}</script>
                     <target>profile-nb</target>
                 </action>
-                <action name="test">
-                    <script>nbproject/ide-targets.xml</script>
-                    <target>alltest-nb</target>
-                </action>
                 <action name="rebuild">
                     <script>${ant.script}</script>
                     <target>clean</target>
@@ -115,6 +111,10 @@
                         </arity>
                     </context>
                 </action>
+                <action name="test">
+                    <script>${ant.script}</script>
+                    <target>ci-test</target>
+                </action>
             </ide-actions>
             <export>
                 <type>folder</type>
@@ -148,12 +148,12 @@
                 </items>
                 <context-menu>
                     <ide-action name="build"/>
+                    <ide-action name="rebuild"/>
                     <ide-action name="clean"/>
                     <ide-action name="javadoc"/>
                     <ide-action name="run"/>
-                    <ide-action name="profile"/>
                     <ide-action name="test"/>
-                    <ide-action name="rebuild"/>
+                    <ide-action name="profile"/>
                     <ide-action name="debug"/>
                     <action>
                         <script>${ant.script}</script>
@@ -175,7 +175,7 @@
             <compilation-unit>
                 <package-root>java/test</package-root>
                 <unit-tests/>
-                <classpath mode="compile">java/tmp:java/classes:lib/junit.jar:lib/ch.ntb.usb.jar:lib/comm-rxtx.jar:lib/xercesImpl.jar:lib/gluegen-rt.jar:lib/jakarta-regexp-1.5.jar:lib/javacsv.jar:lib/jdom-2.0.5.jar:lib/jdom.jar:lib/jfcunit.jar:lib/jhall.jar:lib/jinput.jar:lib/jmdns.jar:lib/joal.jar:lib/openlcb.jar:lib/jlfgr-1_0.jar:lib/junit.jar:lib/jython.jar:lib/log4j-1.2.17.jar:lib/mailapi.jar:lib/jython.jar:lib/RXTXcomm.jar:lib/Serialio.jar:lib/servlet.jar:lib/vecmath.jar:lib/annotations.jar:lib/jsr305.jar:lib/i18nchecker.jar:lib/slf4j-api-1.7.13.jar:lib/slf4j-log4j12-1.7.13.jar:lib/jul-to-slf4j-1.7.13.jar:lib/pi4j-core.jar:lib/pi4j-device.jar:lib/pi4j-gpio-extension.jar:lib/pi4j-service.jar:lib/commons-lang3-3.2.1.jar</classpath>
+                <classpath mode="compile">java/tmp:java/classes:lib/junit.jar:lib/ch.ntb.usb.jar:lib/comm-rxtx.jar:lib/xercesImpl.jar:lib/gluegen-rt.jar:lib/jakarta-regexp-1.5.jar:lib/javacsv.jar:lib/jdom-2.0.5.jar:lib/jdom.jar:lib/jfcunit.jar:lib/jhall.jar:lib/jinput.jar:lib/jmdns.jar:lib/joal.jar:lib/openlcb.jar:lib/jlfgr-1_0.jar:lib/junit.jar:lib/jython.jar:lib/log4j-1.2.17.jar:lib/mailapi.jar:lib/jython.jar:lib/RXTXcomm.jar:lib/Serialio.jar:lib/servlet.jar:lib/vecmath.jar:lib/annotations.jar:lib/jsr305.jar:lib/i18nchecker.jar:lib/slf4j-api-1.7.13.jar:lib/slf4j-log4j12-1.7.13.jar:lib/jul-to-slf4j-1.7.13.jar:lib/pi4j-core.jar:lib/pi4j-device.jar:lib/pi4j-gpio-extension.jar:lib/pi4j-service.jar:lib/commons-lang3-3.2.1.jar:lib/jackson-databind-2.0.6.jar:lib/websocket-api-9.3.6.v20151106.jar:lib/javax.servlet-api-3.1.0.jar</classpath>
                 <built-to>java/classes</built-to>
                 <source-level>1.8</source-level>
             </compilation-unit>

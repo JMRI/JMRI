@@ -197,7 +197,7 @@ public class MrcThrottle extends AbstractThrottle implements MrcTrafficListener 
      *
      * @param speed Number from 0 to 1; less than zero is emergency stop
      */
-    @edu.umd.cs.findbugs.annotations.SuppressWarnings(value = "FE_FLOATING_POINT_EQUALITY") // OK to compare floating point, notify on any change
+    @edu.umd.cs.findbugs.annotations.SuppressFBWarnings(value = "FE_FLOATING_POINT_EQUALITY") // OK to compare floating point, notify on any change
     public void setSpeedSetting(float speed) {
         float oldSpeed = this.speedSetting;
         this.speedSetting = speed;
@@ -610,6 +610,6 @@ public class MrcThrottle extends AbstractThrottle implements MrcTrafficListener 
     public void notifyFailedXmit(Date timestamp, MrcMessage m) { /*message(m);*/ }
 
     // initialize logging
-    static Logger log = LoggerFactory.getLogger(MrcThrottle.class.getName());
+    private final static Logger log = LoggerFactory.getLogger(MrcThrottle.class.getName());
 
 }

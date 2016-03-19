@@ -15,8 +15,6 @@ import junit.extensions.jfcunit.TestHelper;
 import junit.framework.Assert;
 import junit.framework.Test;
 import junit.framework.TestSuite;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 
 /**
  * Tests for the jmri.jmrit.beantable.LogixTableAction class
@@ -163,6 +161,16 @@ public class LogixTableActionTest extends jmri.util.SwingTestCase {
         }
     }
 
+    public void testParseTime() {
+        Assert.assertEquals("12:34", 12*60+34, _logixTable.parseTime("12:34"));
+        Assert.assertEquals("12:3", 12*60+3, _logixTable.parseTime("12:3"));
+        Assert.assertEquals("1:3", 1*60+3, _logixTable.parseTime("1:3"));
+        Assert.assertEquals(":3", 3, _logixTable.parseTime(":3"));
+        Assert.assertEquals("2", 2*60, _logixTable.parseTime("2"));
+        Assert.assertEquals("2:", 2*60, _logixTable.parseTime("2:"));
+        Assert.assertEquals("2:0", 2*60, _logixTable.parseTime("2:0"));
+    }
+    
     // from here down is testing infrastructure
     public LogixTableActionTest(String s) {
         super(s);
@@ -239,6 +247,4 @@ public class LogixTableActionTest extends jmri.util.SwingTestCase {
         super.tearDown();
         apps.tests.Log4JFixture.tearDown();
     }
-
-    static Logger log = LoggerFactory.getLogger(LogixTableActionTest.class.getName());
 }

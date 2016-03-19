@@ -8,8 +8,6 @@ import junit.framework.Assert;
 import junit.framework.Test;
 import junit.framework.TestCase;
 import junit.framework.TestSuite;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 
 /**
  * Tests for the LocoStatsFrame class
@@ -106,6 +104,4 @@ public class LocoStatsFrameTest extends TestCase {
         TestSuite suite = new TestSuite(LocoStatsFrameTest.class);
         return suite;
     }
-
-    static Logger log = LoggerFactory.getLogger(LocoStatsFrameTest.class.getName());
 }

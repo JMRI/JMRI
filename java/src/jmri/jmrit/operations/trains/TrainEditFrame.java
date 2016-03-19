@@ -41,6 +41,13 @@ import jmri.jmrit.operations.routes.RouteLocation;
 import jmri.jmrit.operations.routes.RouteManager;
 import jmri.jmrit.operations.setup.Control;
 import jmri.jmrit.operations.setup.Setup;
+import jmri.jmrit.operations.trains.tools.PrintTrainAction;
+import jmri.jmrit.operations.trains.tools.PrintTrainBuildReportAction;
+import jmri.jmrit.operations.trains.tools.PrintTrainManifestAction;
+import jmri.jmrit.operations.trains.tools.TrainByCarTypeAction;
+import jmri.jmrit.operations.trains.tools.TrainCopyAction;
+import jmri.jmrit.operations.trains.tools.TrainManifestOptionAction;
+import jmri.jmrit.operations.trains.tools.TrainScriptAction;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -52,14 +59,10 @@ import org.slf4j.LoggerFactory;
  */
 public class TrainEditFrame extends OperationsFrame implements java.beans.PropertyChangeListener {
 
-    /**
-     *
-     */
-    private static final long serialVersionUID = 5151081816323580604L;
     TrainManager trainManager;
     RouteManager routeManager;
 
-    Train _train = null;
+    public Train _train = null;
     List<JCheckBox> typeCarCheckBoxes = new ArrayList<JCheckBox>();
     List<JCheckBox> typeEngineCheckBoxes = new ArrayList<JCheckBox>();
     List<JCheckBox> locationCheckBoxes = new ArrayList<JCheckBox>();
@@ -338,7 +341,9 @@ public class TrainEditFrame extends OperationsFrame implements java.beans.Proper
             Route route = _train.getRoute();
             if (route != null) {
                 route.addPropertyChangeListener(this);
-                if (_train.getTrainDepartsRouteLocation() != null && !_train.getTrainDepartsRouteLocation().getLocation().isStaging())
+                if (_train.getTrainDepartsRouteLocation() != null
+                        && _train.getTrainDepartsRouteLocation().getLocation() != null
+                        && !_train.getTrainDepartsRouteLocation().getLocation().isStaging())
                     numEnginesBox.addItem(Train.AUTO_HPT);
             }
            numEnginesBox.setSelectedItem(_train.getNumberEngines());
@@ -1064,5 +1069,5 @@ public class TrainEditFrame extends OperationsFrame implements java.beans.Proper
         }
     }
 
-    static Logger log = LoggerFactory.getLogger(TrainEditFrame.class.getName());
+    private final static Logger log = LoggerFactory.getLogger(TrainEditFrame.class.getName());
 }

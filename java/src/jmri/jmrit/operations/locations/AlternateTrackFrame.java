@@ -97,5 +97,5 @@ class AlternateTrackFrame extends OperationsFrame implements java.beans.Property
         }
     }
 
-    static Logger log = LoggerFactory.getLogger(AlternateTrackFrame.class.getName());
+    private final static Logger log = LoggerFactory.getLogger(AlternateTrackFrame.class.getName());
 }

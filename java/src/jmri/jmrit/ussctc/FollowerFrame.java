@@ -2,8 +2,6 @@
 package jmri.jmrit.ussctc;
 
 import javax.swing.BoxLayout;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 
 /**
  * User interface frame for creating and editing "Follower" logic on USS CTC
@@ -34,7 +32,5 @@ public class FollowerFrame extends jmri.util.JmriJFrame {
         // pack to cause display
         pack();
     }
-
-    static Logger log = LoggerFactory.getLogger(FollowerFrame.class.getName());
 
 }

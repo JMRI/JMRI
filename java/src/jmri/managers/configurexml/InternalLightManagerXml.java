@@ -34,5 +34,5 @@ public class InternalLightManagerXml extends jmri.managers.configurexml.Abstract
         return true;
     }
 
-    static Logger log = LoggerFactory.getLogger(InternalLightManagerXml.class.getName());
+    private final static Logger log = LoggerFactory.getLogger(InternalLightManagerXml.class.getName());
 }

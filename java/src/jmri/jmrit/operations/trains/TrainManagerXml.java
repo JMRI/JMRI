@@ -1,6 +1,8 @@
 // TrainManagerXml.java
 package jmri.jmrit.operations.trains;
 
+import jmri.jmrit.operations.trains.timetable.TrainScheduleManager;
+
 import java.io.File;
 import java.text.SimpleDateFormat;
 import jmri.jmrit.operations.OperationsManager;
@@ -304,6 +306,6 @@ public class TrainManagerXml extends OperationsXml {
         _instance = null;
     }
 
-    static Logger log = LoggerFactory.getLogger(TrainManagerXml.class.getName());
+    private final static Logger log = LoggerFactory.getLogger(TrainManagerXml.class.getName());
 
 }

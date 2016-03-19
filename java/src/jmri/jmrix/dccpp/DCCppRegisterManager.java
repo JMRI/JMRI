@@ -4,8 +4,6 @@
 
 package jmri.jmrix.dccpp;
 
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 
 /**
  * Defines and Manages the Registers (~ slots) for DCC++ Base Station
@@ -76,11 +74,6 @@ public class DCCppRegisterManager {
     public int getRegisterAddress(int num) {
 	return(registers[num-1].getAddress());
     }
-
-    /*
-     * We need to register for logging
-     */
-    static Logger log = LoggerFactory.getLogger(DCCppRegisterManager.class.getName());
 
 }
 

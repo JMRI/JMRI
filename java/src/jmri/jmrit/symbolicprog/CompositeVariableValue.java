@@ -211,7 +211,7 @@ public class CompositeVariableValue extends EnumVariableValue implements ActionL
      * Do end of initialization processing.
      */
     @SuppressWarnings("null")
-    @edu.umd.cs.findbugs.annotations.SuppressWarnings(value = "NP_NULL_ON_SOME_PATH",
+    @edu.umd.cs.findbugs.annotations.SuppressFBWarnings(value = "NP_NULL_ON_SOME_PATH",
             justification = "we want to force an exception")
     public void lastItem() {
         // configure the representation object
@@ -555,6 +555,6 @@ public class CompositeVariableValue extends EnumVariableValue implements ActionL
     }
 
     // initialize logging
-    static Logger log = LoggerFactory.getLogger(CompositeVariableValue.class.getName());
+    private final static Logger log = LoggerFactory.getLogger(CompositeVariableValue.class.getName());
 
 }

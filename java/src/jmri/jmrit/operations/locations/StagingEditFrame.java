@@ -6,8 +6,8 @@ import javax.swing.BorderFactory;
 import javax.swing.BoxLayout;
 import javax.swing.JCheckBox;
 import javax.swing.JPanel;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
+import jmri.jmrit.operations.routes.Route;
+import jmri.jmrit.operations.trains.Train;
 
 /**
  * Frame for user edit of a staging track
@@ -17,10 +17,6 @@ import org.slf4j.LoggerFactory;
  */
 public class StagingEditFrame extends TrackEditFrame implements java.beans.PropertyChangeListener {
 
-    /**
-     *
-     */
-    private static final long serialVersionUID = 1540001164578122992L;
     // check boxes
     JCheckBox swapLoadsCheckBox = new JCheckBox(Bundle.getMessage("SwapCarLoads"));
     JCheckBox emptyCheckBox = new JCheckBox(Bundle.getMessage("EmptyDefaultCarLoads"));
@@ -146,6 +142,50 @@ public class StagingEditFrame extends TrackEditFrame implements java.beans.Prope
         }
         super.enableButtons(enabled);
     }
+    
+    protected void updateTrainComboBox() {
+        super.updateTrainComboBox();
+        // only show trains that depart from this staging location
+        if (autoPickupCheckBox.isSelected()) {
+            for (int i = 1; i < comboBoxPickupTrains.getItemCount(); i++) {
+                Train train = comboBoxPickupTrains.getItemAt(i);
+                if (!train.getTrainDepartsName().equals(_location.getName())) {
+                    comboBoxPickupTrains.removeItemAt(i--);
+                }
+            }
+        }
+        // only show trains that terminate into this staging location
+        if (autoDropCheckBox.isSelected()) {
+            for (int i = 1; i < comboBoxDropTrains.getItemCount(); i++) {
+                Train train = comboBoxDropTrains.getItemAt(i);
+                if (!train.getTrainTerminatesName().equals(_location.getName())) {
+                    comboBoxDropTrains.removeItemAt(i--);
+                }
+            }
+        }
+    }
+    
+    protected void updateRouteComboBox() {
+        super.updateRouteComboBox();
+        // only show routes that depart from this staging location
+        if (autoPickupCheckBox.isSelected()) {
+            for (int i = 1; i < comboBoxPickupRoutes.getItemCount(); i++) {
+                Route route = comboBoxPickupRoutes.getItemAt(i);
+                if (route.getLocationsBySequenceList().get(0).getLocation() != _location) {
+                    comboBoxPickupRoutes.removeItemAt(i--);
+                }
+            }
+        }
+        // only show routes that terminate into this staging location
+        if (autoDropCheckBox.isSelected()) {
+            for (int i = 1; i < comboBoxDropRoutes.getItemCount(); i++) {
+                Route route = comboBoxDropRoutes.getItemAt(i);
+                if (route.getLocationsBySequenceList().get(route.getLocationsBySequenceList().size()-1).getLocation() != _location) {
+                    comboBoxDropRoutes.removeItemAt(i--);
+                }
+            }
+        }
+    }
 
     public void checkBoxActionPerformed(java.awt.event.ActionEvent ae) {
         if (ae.getSource() == swapLoadsCheckBox) {
@@ -183,6 +223,5 @@ public class StagingEditFrame extends TrackEditFrame implements java.beans.Prope
         }
     }
 
-    static Logger log = LoggerFactory.getLogger(StagingEditFrame.class
-            .getName());
+//    private final static Logger log = LoggerFactory.getLogger(StagingEditFrame.class.getName());
 }

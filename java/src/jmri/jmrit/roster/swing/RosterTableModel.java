@@ -72,7 +72,7 @@ public class RosterTableModel extends DefaultTableModel implements PropertyChang
             } else {
                 fireTableDataChanged();
             }
-        } else if (e.getPropertyName().equals(RosterGroupSelector.selectedRosterGroupProperty)) {
+        } else if (e.getPropertyName().equals(RosterGroupSelector.SELECTED_ROSTER_GROUP)) {
             setRosterGroup((e.getNewValue() != null) ? e.getNewValue().toString() : null);
         } else if (e.getPropertyName().startsWith("attribute") && e.getSource() instanceof RosterEntry) { // NOI18N
             int row = Roster.instance().getGroupIndex(rosterGroup, (RosterEntry) e.getSource());
@@ -334,5 +334,5 @@ public class RosterTableModel extends DefaultTableModel implements PropertyChang
     // drop listeners
     public void dispose() {
     }
-    static final Logger log = LoggerFactory.getLogger(RosterTableModel.class.getName());
+    private final static Logger log = LoggerFactory.getLogger(RosterTableModel.class.getName());
 }

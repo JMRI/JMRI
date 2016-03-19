@@ -53,5 +53,5 @@ public class Consist extends RollingStockGroup {
         super.dispose();
     }
 
-    static Logger log = LoggerFactory.getLogger(Consist.class.getName());
+    private final static Logger log = LoggerFactory.getLogger(Consist.class.getName());
 }

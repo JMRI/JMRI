@@ -1,9 +1,6 @@
 // DefaultConditionalManagerTest.java
 package jmri.managers;
 
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
-
 import junit.framework.Test;
 import junit.framework.TestCase;
 import junit.framework.TestSuite;
@@ -54,7 +51,5 @@ public class DefaultConditionalManagerTest extends TestCase {
         TestSuite suite = new TestSuite(DefaultConditionalManagerTest.class);
         return suite;
     }
-
-    static Logger log = LoggerFactory.getLogger(DefaultConditionalManagerTest.class.getName());
 
 }

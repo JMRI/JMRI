@@ -1,0 +1,304 @@
+<?xml version="1.0" encoding="utf-8"?>
+<?xml-stylesheet type="text/xsl" href="../XSLT/decoder.xsl"?>
+<!-- Copyright (C) JMRI 2002, 2005, 2006, 2007, 2013 All rights reserved -->
+<!-- $Id$ -->
+<!--                                                                        -->
+<!-- JMRI is free software; you can redistribute it and/or modify it under  -->
+<!-- the terms of version 2 of the GNU General Public License as published  -->
+<!-- by the Free Software Foundation. See the "COPYING" file for a copy     -->
+<!-- of this license.                                                       -->
+<!--                                                                        -->
+<!-- JMRI is distributed in the hope that it will be useful, but WITHOUT    -->
+<!-- ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or  -->
+<!-- FITNESS FOR A PARTICULAR PURPOSE.  See the GNU General Public License  -->
+<!-- for more details.                                                      -->
+<!-- version 1 - for Unified Software -->
+<pane xmlns:xi="http://www.w3.org/2001/XInclude" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="http://jmri.org/xml/schema/decoder.xsd">
+  <name>Individual Volume 4</name>
+  <name xml:lang="it">Volume Livello 4</name>
+  <column>
+    <row>
+      <column>
+        <label>
+          <text>   </text>
+        </label>
+        <label>
+          <text>Must have JMRI 3.9.5 or later.</text>
+          <text xml:lang="it">Dovete avere JMRI 3.9.5 o successivo.</text>
+        </label>
+        <label>
+          <text>Recommend to change volume groups, if available, rather than these</text>
+        </label>
+        <label>
+          <text>   </text>
+        </label>
+		</column>
+    </row>
+    <row>
+      <column>
+        <display item="Volume 4-0"/>
+        <display item="Volume 4-1"/>
+        <display item="Volume 4-2"/>
+        <display item="Volume 4-3"/>
+        <display item="Volume 4-4"/>
+        <display item="Volume 4-5"/>
+        <display item="Volume 4-6"/>
+        <display item="Volume 4-7"/>
+        <display item="Volume 4-8"/>
+        <display item="Volume 4-9"/>
+        <display item="Volume 4-10"/>
+        <display item="Volume 4-11"/>
+        <display item="Volume 4-12"/>
+        <display item="Volume 4-13"/>
+        <display item="Volume 4-14"/>
+        <display item="Volume 4-15"/>
+        <display item="Volume 4-16"/>
+        <display item="Volume 4-17"/>
+        <display item="Volume 4-18"/>
+        <display item="Volume 4-19"/>
+        <display item="Volume 4-20"/>
+        <display item="Volume 4-21"/>
+        <display item="Volume 4-22"/>
+        <display item="Volume 4-23"/>
+        <display item="Volume 4-24"/>
+        <display item="Volume 4-25"/>
+        <display item="Volume 4-26"/>
+        <display item="Volume 4-27"/>
+        <display item="Volume 4-28"/>
+        <display item="Volume 4-29"/>
+        <display item="Volume 4-30"/>
+        <display item="Volume 4-31"/>
+        <display item="Volume 4-32"/>
+        <display item="Volume 4-33"/>
+        <display item="Volume 4-34"/>
+        <display item="Volume 4-35"/>
+        <display item="Volume 4-36"/>
+        <display item="Volume 4-37"/>
+        <display item="Volume 4-38"/>
+        <display item="Volume 4-39"/>
+        <display item="Volume 4-40"/>
+        <display item="Volume 4-41"/>
+        <display item="Volume 4-42"/>
+        <display item="Volume 4-43"/>
+        <display item="Volume 4-44"/>
+        <display item="Volume 4-45"/>
+        <display item="Volume 4-46"/>
+        <display item="Volume 4-47"/>
+        <display item="Volume 4-48"/>
+        <display item="Volume 4-49"/>
+        <display item="Volume 4-50"/>
+        <display item="Volume 4-51"/>
+        <display item="Volume 4-52"/>
+        <display item="Volume 4-53"/>
+        <display item="Volume 4-54"/>
+        <display item="Volume 4-55"/>
+        <display item="Volume 4-56"/>
+        <display item="Volume 4-57"/>
+        <display item="Volume 4-58"/>
+        <display item="Volume 4-59"/>
+        <display item="Volume 4-60"/>
+        <display item="Volume 4-61"/>
+        <display item="Volume 4-62"/>
+        <display item="Volume 4-63"/>
+      </column>               
+      <column>                
+        <display item="Volume 4-64"/>
+        <display item="Volume 4-65"/>
+        <display item="Volume 4-66"/>
+        <display item="Volume 4-67"/>
+        <display item="Volume 4-68"/>
+        <display item="Volume 4-69"/>
+        <display item="Volume 4-70"/>
+        <display item="Volume 4-71"/>
+        <display item="Volume 4-72"/>
+        <display item="Volume 4-73"/>
+        <display item="Volume 4-74"/>
+        <display item="Volume 4-75"/>
+        <display item="Volume 4-76"/>
+        <display item="Volume 4-77"/>
+        <display item="Volume 4-78"/>
+        <display item="Volume 4-79"/>
+        <display item="Volume 4-80"/>
+        <display item="Volume 4-81"/>
+        <display item="Volume 4-82"/>
+        <display item="Volume 4-83"/>
+        <display item="Volume 4-84"/>
+        <display item="Volume 4-85"/>
+        <display item="Volume 4-86"/>
+        <display item="Volume 4-87"/>
+        <display item="Volume 4-88"/>
+        <display item="Volume 4-89"/>
+        <display item="Volume 4-90"/>
+        <display item="Volume 4-91"/>
+        <display item="Volume 4-92"/>
+        <display item="Volume 4-93"/>
+        <display item="Volume 4-94"/>
+        <display item="Volume 4-95"/>
+        <display item="Volume 4-96"/>
+        <display item="Volume 4-97"/>
+        <display item="Volume 4-98"/>
+        <display item="Volume 4-99"/>
+        <display item="Volume 4-100"/>
+        <display item="Volume 4-101"/>
+        <display item="Volume 4-102"/>
+        <display item="Volume 4-103"/>
+        <display item="Volume 4-104"/>
+        <display item="Volume 4-105"/>
+        <display item="Volume 4-106"/>
+        <display item="Volume 4-107"/>
+        <display item="Volume 4-108"/>
+        <display item="Volume 4-109"/>
+        <display item="Volume 4-110"/>
+        <display item="Volume 4-111"/>
+        <display item="Volume 4-112"/>
+        <display item="Volume 4-113"/>
+        <display item="Volume 4-114"/>
+        <display item="Volume 4-115"/>
+        <display item="Volume 4-116"/>
+        <display item="Volume 4-117"/>
+        <display item="Volume 4-118"/>
+        <display item="Volume 4-119"/>
+        <display item="Volume 4-120"/>
+        <display item="Volume 4-121"/>
+        <display item="Volume 4-122"/>
+        <display item="Volume 4-123"/>
+        <display item="Volume 4-124"/>
+        <display item="Volume 4-125"/>
+        <display item="Volume 4-126"/>
+        <display item="Volume 4-127"/>
+      </column>               
+      <column>                
+        <display item="Volume 4-128"/>
+        <display item="Volume 4-129"/>
+        <display item="Volume 4-130"/>
+        <display item="Volume 4-131"/>
+        <display item="Volume 4-132"/>
+        <display item="Volume 4-133"/>
+        <display item="Volume 4-134"/>
+        <display item="Volume 4-135"/>
+        <display item="Volume 4-136"/>
+        <display item="Volume 4-137"/>
+        <display item="Volume 4-138"/>
+        <display item="Volume 4-139"/>
+        <display item="Volume 4-140"/>
+        <display item="Volume 4-141"/>
+        <display item="Volume 4-142"/>
+        <display item="Volume 4-143"/>
+        <display item="Volume 4-144"/>
+        <display item="Volume 4-145"/>
+        <display item="Volume 4-146"/>
+        <display item="Volume 4-147"/>
+        <display item="Volume 4-148"/>
+        <display item="Volume 4-149"/>
+        <display item="Volume 4-150"/>
+        <display item="Volume 4-151"/>
+        <display item="Volume 4-152"/>
+        <display item="Volume 4-153"/>
+        <display item="Volume 4-154"/>
+        <display item="Volume 4-155"/>
+        <display item="Volume 4-156"/>
+        <display item="Volume 4-157"/>
+        <display item="Volume 4-158"/>
+        <display item="Volume 4-159"/>
+        <display item="Volume 4-160"/>
+        <display item="Volume 4-161"/>
+        <display item="Volume 4-162"/>
+        <display item="Volume 4-163"/>
+        <display item="Volume 4-164"/>
+        <display item="Volume 4-165"/>
+        <display item="Volume 4-166"/>
+        <display item="Volume 4-167"/>
+        <display item="Volume 4-168"/>
+        <display item="Volume 4-169"/>
+        <display item="Volume 4-170"/>
+        <display item="Volume 4-171"/>
+        <display item="Volume 4-172"/>
+        <display item="Volume 4-173"/>
+        <display item="Volume 4-174"/>
+        <display item="Volume 4-175"/>
+        <display item="Volume 4-176"/>
+        <display item="Volume 4-177"/>
+        <display item="Volume 4-178"/>
+        <display item="Volume 4-179"/>
+        <display item="Volume 4-180"/>
+        <display item="Volume 4-181"/>
+        <display item="Volume 4-182"/>
+        <display item="Volume 4-183"/>
+        <display item="Volume 4-184"/>
+        <display item="Volume 4-185"/>
+        <display item="Volume 4-186"/>
+        <display item="Volume 4-187"/>
+        <display item="Volume 4-188"/>
+        <display item="Volume 4-189"/>
+        <display item="Volume 4-190"/>
+        <display item="Volume 4-191"/>
+      </column>               
+      <column>                
+        <display item="Volume 4-192"/>
+        <display item="Volume 4-193"/>
+        <display item="Volume 4-194"/>
+        <display item="Volume 4-195"/>
+        <display item="Volume 4-196"/>
+        <display item="Volume 4-197"/>
+        <display item="Volume 4-198"/>
+        <display item="Volume 4-199"/>
+        <display item="Volume 4-200"/>
+        <display item="Volume 4-201"/>
+        <display item="Volume 4-202"/>
+        <display item="Volume 4-203"/>
+        <display item="Volume 4-204"/>
+        <display item="Volume 4-205"/>
+        <display item="Volume 4-206"/>
+        <display item="Volume 4-207"/>
+        <display item="Volume 4-208"/>
+        <display item="Volume 4-209"/>
+        <display item="Volume 4-210"/>
+        <display item="Volume 4-211"/>
+        <display item="Volume 4-212"/>
+        <display item="Volume 4-213"/>
+        <display item="Volume 4-214"/>
+        <display item="Volume 4-215"/>
+        <display item="Volume 4-216"/>
+        <display item="Volume 4-217"/>
+        <display item="Volume 4-218"/>
+        <display item="Volume 4-219"/>
+        <display item="Volume 4-220"/>
+        <display item="Volume 4-221"/>
+        <display item="Volume 4-222"/>
+        <display item="Volume 4-223"/>
+        <display item="Volume 4-224"/>
+        <display item="Volume 4-225"/>
+        <display item="Volume 4-226"/>
+        <display item="Volume 4-227"/>
+        <display item="Volume 4-228"/>
+        <display item="Volume 4-229"/>
+        <display item="Volume 4-230"/>
+        <display item="Volume 4-231"/>
+        <display item="Volume 4-232"/>
+        <display item="Volume 4-233"/>
+        <display item="Volume 4-234"/>
+        <display item="Volume 4-235"/>
+        <display item="Volume 4-236"/>
+        <display item="Volume 4-237"/>
+        <display item="Volume 4-238"/>
+        <display item="Volume 4-239"/>
+        <display item="Volume 4-240"/>
+        <display item="Volume 4-241"/>
+        <display item="Volume 4-242"/>
+        <display item="Volume 4-243"/>
+        <display item="Volume 4-244"/>
+        <display item="Volume 4-245"/>
+        <display item="Volume 4-246"/>
+        <display item="Volume 4-247"/>
+        <display item="Volume 4-248"/>
+        <display item="Volume 4-249"/>
+        <display item="Volume 4-250"/>
+        <display item="Volume 4-251"/>
+        <display item="Volume 4-252"/>
+        <display item="Volume 4-253"/>
+        <display item="Volume 4-254"/>
+        <display item="Volume 4-255"/>
+      </column>
+    </row>
+  </column>
+</pane>

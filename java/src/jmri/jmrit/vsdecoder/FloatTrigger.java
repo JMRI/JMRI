@@ -131,6 +131,6 @@ class FloatTrigger extends Trigger implements PropertyChangeListener {
         }
     }
 
-    static Logger log = LoggerFactory.getLogger(FloatTrigger.class.getName());
+    private final static Logger log = LoggerFactory.getLogger(FloatTrigger.class.getName());
 
 }

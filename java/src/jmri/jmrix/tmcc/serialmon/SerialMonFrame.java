@@ -5,8 +5,6 @@ import jmri.jmrix.tmcc.SerialListener;
 import jmri.jmrix.tmcc.SerialMessage;
 import jmri.jmrix.tmcc.SerialReply;
 import jmri.jmrix.tmcc.SerialTrafficController;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 
 /**
  * Frame displaying (and logging) TMCC serial command messages
@@ -170,7 +168,5 @@ public class SerialMonFrame extends jmri.jmrix.AbstractMonFrame implements Seria
             return "unexpected command " + Integer.toHexString(val & 0xFF);
         }
     }
-
-    static Logger log = LoggerFactory.getLogger(SerialMonFrame.class.getName());
 
 }

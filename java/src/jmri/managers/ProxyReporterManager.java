@@ -4,8 +4,6 @@ package jmri.managers;
 import jmri.NamedBean;
 import jmri.Reporter;
 import jmri.ReporterManager;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 
 /**
  * Implementation of a ReporterManager that can serves as a proxy for multiple
@@ -131,9 +129,6 @@ public class ProxyReporterManager extends AbstractProxyManager implements Report
     public String getBeanTypeHandled() {
         return Bundle.getMessage("BeanNameReporter");
     }
-
-    // initialize logging
-    static Logger log = LoggerFactory.getLogger(ProxyReporterManager.class.getName());
 }
 
 /* @(#)ProxyReporterManager.java */

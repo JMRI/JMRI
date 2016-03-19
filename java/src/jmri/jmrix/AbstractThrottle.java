@@ -1430,6 +1430,6 @@ abstract public class AbstractThrottle implements DccThrottle {
     }
 
     // initialize logging
-    static Logger log = LoggerFactory.getLogger(AbstractThrottle.class.getName());
+    private final static Logger log = LoggerFactory.getLogger(AbstractThrottle.class.getName());
 
 }

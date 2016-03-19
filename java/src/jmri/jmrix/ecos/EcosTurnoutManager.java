@@ -667,7 +667,7 @@ public class EcosTurnoutManager extends jmri.managers.AbstractTurnoutManager
         }
     }
 
-    static Logger log = LoggerFactory.getLogger(EcosTurnoutManager.class.getName());
+    private final static Logger log = LoggerFactory.getLogger(EcosTurnoutManager.class.getName());
 }
 
 /* @(#)EcosTurnoutManager.java */

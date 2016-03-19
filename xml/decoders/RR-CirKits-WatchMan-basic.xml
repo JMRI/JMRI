@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <?xml-stylesheet type="text/xsl" href="../XSLT/decoder.xsl"?>
-<!-- Copyright (C) JMRI 2006, 2007, 2008, 2013, 2014 All rights reserved -->
+<!-- Copyright (C) JMRI 2006, 2007, 2008, 2013, 2014, 2016 All rights reserved -->
 <!-- $Id$ -->
 <!--                                                                        -->
 <!-- JMRI is free software; you can redistribute it and/or modify it under  -->
@@ -13,7 +13,7 @@
 <!-- FITNESS FOR A PARTICULAR PURPOSE.  See the GNU General Public License  -->
 <!-- for more details.                                                      -->
 <decoder-config xmlns:xi="http://www.w3.org/2001/XInclude" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="http://jmri.org/xml/schema/decoder.xsd" showEmptyPanes="no">
-  <version author="dick@rr-cirkits.com" version="0.13" lastUpdated="20140313"/>
+  <version author="dick@rr-cirkits.com" version="0.13" lastUpdated="20160310"/>
   <!-- Version 0.01  Working version modified from SignalMan -->
   <!-- Version 0.10  TowerMan version -->
   <!-- Version 0.11  WatchMan version -->
@@ -213,13 +213,13 @@
         <splitVal highCV="130" upperMask="XXXXVVVV" offset="1"/>
         <label>PA1 Base Address</label>
       </variable>
-      <variable item="PA1 Output-Input" CV="131" mask="XVXXXXXX" default="1">
-        <xi:include href="http://jmri.org/xml/decoders/rr-cirkits/ChoiceOutputInput.xml"/>
-        <label>PA1 Output-Input</label>
-      </variable>
       <variable item="PA1 Mode" CV="130" mask="XXVVXXXX" default="2">
         <xi:include href="http://jmri.org/xml/decoders/rr-cirkits/ChoiceMode.xml"/>
         <label>PA1 Mode</label>
+      </variable>
+      <variable item="PA1 Output-Input" CV="131" mask="XVXXXXXX" default="1">
+        <xi:include href="http://jmri.org/xml/decoders/rr-cirkits/ChoiceOutputInput.xml"/>
+        <label>PA1 Output-Input</label>
       </variable>
       <variable item="PA1 Input Direction" CV="131" mask="VXXXXXXX">
         <qualifier>
@@ -693,13 +693,13 @@
         <splitVal highCV="162" upperMask="XXXXVVVV" offset="1"/>
         <label>PA5 Base Address</label>
       </variable>
-      <variable item="PA5 Output-Input" CV="163" mask="XVXXXXXX" default="1">
-        <xi:include href="http://jmri.org/xml/decoders/rr-cirkits/ChoiceOutputInput.xml"/>
-        <label>PA5 Output-Input</label>
-      </variable>
       <variable item="PA5 Mode" CV="162" mask="XXVVXXXX" default="2">
         <xi:include href="http://jmri.org/xml/decoders/rr-cirkits/ChoiceMode.xml"/>
         <label>PA5 Mode</label>
+      </variable>
+      <variable item="PA5 Output-Input" CV="163" mask="XVXXXXXX" default="1">
+        <xi:include href="http://jmri.org/xml/decoders/rr-cirkits/ChoiceOutputInput.xml"/>
+        <label>PA5 Output-Input</label>
       </variable>
       <variable item="PA5 Input Direction" CV="163" mask="VXXXXXXX">
         <qualifier>
@@ -1173,13 +1173,13 @@
         <splitVal highCV="194" upperMask="XXXXVVVV" offset="1"/>
         <label>PB1 Base Address</label>
       </variable>
-      <variable item="PB1 Output-Input" CV="195" mask="XVXXXXXX">
-        <xi:include href="http://jmri.org/xml/decoders/rr-cirkits/ChoiceOutputInput.xml"/>
-        <label>PB1 Output-Input</label>
-      </variable>
       <variable item="PB1 Mode" CV="194" mask="XXVVXXXX" default="2">
         <xi:include href="http://jmri.org/xml/decoders/rr-cirkits/ChoiceMode.xml"/>
         <label>PB1 Mode</label>
+      </variable>
+      <variable item="PB1 Output-Input" CV="195" mask="XVXXXXXX">
+        <xi:include href="http://jmri.org/xml/decoders/rr-cirkits/ChoiceOutputInput.xml"/>
+        <label>PB1 Output-Input</label>
       </variable>
       <variable item="PB1 Input Direction" CV="195" mask="VXXXXXXX">
         <qualifier>
@@ -1653,13 +1653,13 @@
         <splitVal highCV="226" upperMask="XXXXVVVV" offset="1"/>
         <label>PB5 Base Address</label>
       </variable>
-      <variable item="PB5 Output-Input" CV="227" mask="XVXXXXXX">
-        <xi:include href="http://jmri.org/xml/decoders/rr-cirkits/ChoiceOutputInput.xml"/>
-        <label>PB5 Output-Input</label>
-      </variable>
       <variable item="PB5 Mode" CV="226" mask="XXVVXXXX" default="2">
         <xi:include href="http://jmri.org/xml/decoders/rr-cirkits/ChoiceMode.xml"/>
         <label>PB5 Mode</label>
+      </variable>
+      <variable item="PB5 Output-Input" CV="227" mask="XVXXXXXX">
+        <xi:include href="http://jmri.org/xml/decoders/rr-cirkits/ChoiceOutputInput.xml"/>
+        <label>PB5 Output-Input</label>
       </variable>
       <variable item="PB5 Input Direction" CV="227" mask="VXXXXXXX">
         <qualifier>
@@ -9763,7 +9763,7 @@
             <text> </text>
           </label>
           <label>
-            <text>&lt;html&gt;&lt;span style="color: red;"&gt;&lt;strong&gt;JMRI 3.7.2 or later is required to use this definition.&lt;/span&gt;&lt;/strong&gt;&lt;/html&gt;</text>
+            <text>&lt;html&gt;&lt;span style="color: red;"&gt;&lt;strong&gt;JMRI 4.2.1 or later is required to use this definition.&lt;/span&gt;&lt;/strong&gt;&lt;/html&gt;</text>
             <qualifier>
               <variableref>Hardware ID</variableref>
               <relation>ne</relation>
@@ -9884,11 +9884,19 @@
             </qualifier>
           </label>
           <label>
-            <text>&lt;html&gt;&lt;span style="color: red;"&gt;&lt;strong&gt;Warning! This unit may require a firmware upgrade!&lt;/span&gt;&lt;/strong&gt;&lt;/html&gt;</text>
+            <text>&lt;html&gt;&lt;span style="color: red;"&gt;&lt;strong&gt;Warning!&lt;/span&gt; This unit may require a firmware upgrade. Firmware Version 13 is now available.&lt;/strong&gt;&lt;/html&gt;</text>
             <qualifier>
               <variableref>Firmware Version</variableref>
               <relation>lt</relation>
-              <value>10</value>
+              <value>13</value>
+            </qualifier>
+          </label>
+          <label>
+            <text>  Do a 'Read full sheet' to update values.</text>
+            <qualifier>
+              <variableref>Firmware Version</variableref>
+              <relation>lt</relation>
+              <value>13</value>
             </qualifier>
           </label>
         </column>
@@ -9899,10 +9907,10 @@
             <text> </text>
           </label>
           <label>
-            <text>Use DecoderPro Version 3.7.2 or later.</text>
+            <text>Use DecoderPro Version 4.2.1 or later.</text>
           </label>
           <label>
-            <text>Decoder File Version: 0.12</text>
+            <text>Decoder File Version: 0.13</text>
           </label>
         </column>
       </row>
