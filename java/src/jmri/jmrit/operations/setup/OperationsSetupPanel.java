@@ -722,16 +722,16 @@ public class OperationsSetupPanel extends OperationsPreferencesPanel implements 
     }
 
     private void setDirectionCheckBox(int direction) {
-        eastCheckBox.setSelected((direction & Setup.EAST) > 0);
-        textIconEast.setVisible((direction & Setup.EAST) > 0);
-        eastComboBox.setVisible((direction & Setup.EAST) > 0);
-        textIconWest.setVisible((direction & Setup.EAST) > 0);
-        westComboBox.setVisible((direction & Setup.EAST) > 0);
-        northCheckBox.setSelected((direction & Setup.NORTH) > 0);
-        textIconNorth.setVisible((direction & Setup.NORTH) > 0);
-        northComboBox.setVisible((direction & Setup.NORTH) > 0);
-        textIconSouth.setVisible((direction & Setup.NORTH) > 0);
-        southComboBox.setVisible((direction & Setup.NORTH) > 0);
+        eastCheckBox.setSelected((direction & Setup.EAST) == Setup.EAST);
+        textIconEast.setVisible((direction & Setup.EAST) == Setup.EAST);
+        eastComboBox.setVisible((direction & Setup.EAST) == Setup.EAST);
+        textIconWest.setVisible((direction & Setup.EAST) == Setup.EAST);
+        westComboBox.setVisible((direction & Setup.EAST) == Setup.EAST);
+        northCheckBox.setSelected((direction & Setup.NORTH) == Setup.NORTH);
+        textIconNorth.setVisible((direction & Setup.NORTH) == Setup.NORTH);
+        northComboBox.setVisible((direction & Setup.NORTH) == Setup.NORTH);
+        textIconSouth.setVisible((direction & Setup.NORTH) == Setup.NORTH);
+        southComboBox.setVisible((direction & Setup.NORTH) == Setup.NORTH);
     }
 
     private void setLengthUnit() {
