@@ -22,14 +22,6 @@ public abstract class AbstractCatalogTree extends DefaultTreeModel implements Ca
     private String mUserName;
     private String mSystemName;
 
-    // private AbstractCatalogTree() {
-    //      super(new CatalogTreeNode("BAD Ctor!"));
-    //      mSystemName = null;
-    //      mUserName = null;
-    //      log.warn("Unexpected use of null ctor");
-    //      Exception e = new Exception();
-    //      e.printStackTrace();
-    //  }
     public AbstractCatalogTree(String sysname, String username) {
         super(new CatalogTreeNode(username));
         mUserName = username;
