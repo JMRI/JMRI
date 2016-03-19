@@ -9,7 +9,6 @@
 package jmri.jmrix;
 
 import apps.tests.Log4JFixture;
-import jmri.InstanceManager;
 import jmri.jmrix.internal.InternalConnectionTypeList;
 import jmri.util.JUnitUtil;
 import junit.framework.Test;
@@ -18,29 +17,17 @@ import junit.framework.TestSuite;
 
 public abstract class ConnectionConfigManagerTest extends TestCase {
 
-    public ConnectionConfigManagerTest(String s) {
-        super(s);
-    }
-
-    public void testGetConnectionManufacturers() throws ClassNotFoundException {
+    public void testGetConnectionManufacturers() {
         ConnectionConfigManager manager = new ConnectionConfigManager();
-        // ConnectionTypeManager is private within ConnectionConfigManager
-        Class<?> typeManager = Class.forName(ConnectionConfigManager.class.getCanonicalName() + "$ConnectionTypeManager");
-        assertNull(InstanceManager.getDefault(typeManager));
         String[] result = manager.getConnectionManufacturers();
-        assertNotNull(InstanceManager.getDefault(typeManager));
         assertTrue(result.length > 1);
         assertEquals(result[0], InternalConnectionTypeList.NONE);
         JUnitUtil.resetInstanceManager();
     }
 
-    public void testGetConnectionTypes() throws ClassNotFoundException {
+    public void testGetConnectionTypes() {
         ConnectionConfigManager manager = new ConnectionConfigManager();
-        // ConnectionTypeManager is private within ConnectionConfigManager
-        Class<?> typeManager = Class.forName(ConnectionConfigManager.class.getCanonicalName() + "$ConnectionTypeManager");
-        assertNull(InstanceManager.getDefault(typeManager));
         String[] result = manager.getConnectionTypes(InternalConnectionTypeList.NONE);
-        assertNotNull(InstanceManager.getDefault(typeManager));
         assertEquals(1, result.length);
         assertEquals(result[0], "jmri.jmrix.internal.ConnectionConfig");
         JUnitUtil.resetInstanceManager();
@@ -48,8 +35,7 @@ public abstract class ConnectionConfigManagerTest extends TestCase {
 
     // test suite from all defined tests
     public static Test suite() {
-        TestSuite suite = new TestSuite(ConnectionConfigManagerTest.class);
-        return suite;
+        return new TestSuite(ConnectionConfigManagerTest.class);
     }
 
     @Override
