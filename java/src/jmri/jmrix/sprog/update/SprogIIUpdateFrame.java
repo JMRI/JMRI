@@ -1,4 +1,3 @@
-// SprogIIUpdateFrame.java
 package jmri.jmrix.sprog.update;
 
 import javax.swing.JOptionPane;
@@ -13,7 +12,6 @@ import org.slf4j.LoggerFactory;
  * Extended to cover SPROG 3 which uses the same bootloader protocol Refactored
  *
  * @author	Andrew Crosland Copyright (C) 2004
- * @version	$Revision$
  */
 public class SprogIIUpdateFrame
         extends SprogUpdateFrame
