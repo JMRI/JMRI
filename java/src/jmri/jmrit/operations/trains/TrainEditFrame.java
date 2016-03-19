@@ -331,8 +331,8 @@ public class TrainEditFrame extends OperationsFrame implements java.beans.Proper
             routeBox.setSelectedItem(_train.getRoute());
             modelEngineBox.setSelectedItem(_train.getEngineModel());
             commentTextArea.setText(_train.getComment());
-            cabooseRadioButton.setSelected((_train.getRequirements() & Train.CABOOSE) > 0);
-            fredRadioButton.setSelected((_train.getRequirements() & Train.FRED) > 0);
+            cabooseRadioButton.setSelected((_train.getRequirements() & Train.CABOOSE) == Train.CABOOSE);
+            fredRadioButton.setSelected((_train.getRequirements() & Train.FRED) == Train.FRED);
             updateDepartureTime();
             enableButtons(true);
             // listen for train changes
@@ -894,7 +894,7 @@ public class TrainEditFrame extends OperationsFrame implements java.beans.Proper
                     loc.addPropertyChangeListener(this);
                     boolean services = false;
                     // does train direction service location?
-                    if ((rl.getTrainDirection() & loc.getTrainDirections()) > 0) {
+                    if ((rl.getTrainDirection() & loc.getTrainDirections()) != 0) {
                         services = true;
                     } // train must service last location or single location
                     else if (i == routeList.size() - 1) {
