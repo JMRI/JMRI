@@ -1,6 +1,8 @@
 // ConnectionTypeList.java
 package jmri.jmrix;
 
+import jmri.spi.JmriServiceProviderInterface;
+
 /**
  * Definition of objects to handle configuring a layout connection.
  *
@@ -13,7 +15,7 @@ package jmri.jmrix;
  * @see AbstractPortController
  * @see java.util.ServiceLoader
  */
-public interface ConnectionTypeList {
+public interface ConnectionTypeList extends JmriServiceProviderInterface {
 
     public String[] getAvailableProtocolClasses();
 

@@ -7,8 +7,8 @@ import java.util.Set;
 import java.util.prefs.Preferences;
 import jmri.profile.Profile;
 import jmri.profile.ProfileUtils;
-import jmri.spi.AbstractPreferencesProvider;
-import jmri.spi.InitializationException;
+import jmri.util.prefs.AbstractPreferencesProvider;
+import jmri.util.prefs.InitializationException;
 import jmri.spi.PreferencesProvider;
 import jmri.util.FileUtil;
 
