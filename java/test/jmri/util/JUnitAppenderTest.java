@@ -1,4 +1,3 @@
-// JUnitAppenderTest.java
 package jmri.util;
 
 import junit.framework.Assert;
@@ -12,7 +11,6 @@ import org.slf4j.LoggerFactory;
  * Tests for the jmri.util.JUnitAppender class.
  *
  * @author	Bob Jacobsen Copyright 2007
- * @version	$Revision$
  */
 public class JUnitAppenderTest extends TestCase {
 
