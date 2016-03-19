@@ -1,4 +1,3 @@
-// LongAddrVariableValue.java
 package jmri.jmrit.symbolicprog;
 
 import java.awt.Color;
@@ -18,8 +17,7 @@ import org.slf4j.LoggerFactory;
 /**
  * Extends VariableValue to represent a NMRA long address
  *
- * @author	Bob Jacobsen Copyright (C) 2001, 2002
- * @version	$Revision$
+ * @author	Bob Jacobsen Copyright (C) 2001, 2002, 2016
  *
  */
 public class LongAddrVariableValue extends VariableValue
