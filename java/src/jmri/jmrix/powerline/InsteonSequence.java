@@ -1,4 +1,3 @@
-// InsteonSequence.java
 package jmri.jmrix.powerline;
 
 /**
@@ -268,5 +267,3 @@ public class InsteonSequence {
     }
 
 }
-
-/* @(#)InsteonSequence.java */
