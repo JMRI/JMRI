@@ -29,7 +29,6 @@ public class CbusProgrammerManager extends DefaultProgrammerManager {
      *
      * @return false
      */
-    @Override
     public boolean isGlobalModePossible() {
         return false;
     }
