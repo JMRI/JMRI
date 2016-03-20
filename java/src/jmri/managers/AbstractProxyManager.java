@@ -70,6 +70,7 @@ abstract public class AbstractProxyManager implements Manager {
 
     private AbstractManager getInternal() {
         if (internalManager == null) {
+            log.debug("create internal manager when first requested");
             internalManager = makeInternalManager();
         }
         return internalManager;
@@ -78,6 +79,9 @@ abstract public class AbstractProxyManager implements Manager {
     private java.util.ArrayList<AbstractManager> mgrs = new java.util.ArrayList<>();
     private AbstractManager internalManager = null;
 
+    /**
+     * Create specific internal manager as needed for concrete type.
+     */
     abstract protected AbstractManager makeInternalManager();
 
     /**
