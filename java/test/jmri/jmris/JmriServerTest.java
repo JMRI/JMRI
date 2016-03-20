@@ -25,7 +25,7 @@ public class JmriServerTest extends TestCase {
     public void testCtorPortAndTimeout() {
         JmriServer a = new JmriServer(25520,100);
         Assert.assertNotNull(a);
-        jmri.util.JUnitAppender.assertErrorMessage("Failed to connect to port 25520");
+        jmri.util.JUnitAppender.suppressErrorMessage("Failed to connect to port 25520");
     }
 
     // from here down is testing infrastructure
