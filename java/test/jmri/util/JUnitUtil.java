@@ -197,14 +197,17 @@ public class JUnitUtil {
 
     public static void initInternalTurnoutManager() {
         // now done automatically by InstanceManager's autoinit
+        jmri.InstanceManager.turnoutManagerInstance();
     }
 
     public static void initInternalLightManager() {
         // now done automatically by InstanceManager's autoinit
-    }
+         jmri.InstanceManager.lightManagerInstance();
+   }
 
     public static void initInternalSensorManager() {
         // now done automatically by InstanceManager's autoinit
+        jmri.InstanceManager.sensorManagerInstance();
     }
 
     public static void initMemoryManager() {
