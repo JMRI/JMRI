@@ -28,10 +28,6 @@ import org.slf4j.LoggerFactory;
  */
 public class PrintEngineRosterAction extends AbstractAction {
 
-    /**
-     *
-     */
-    private static final long serialVersionUID = -5500987959098367364L;
     private int numberCharPerLine = 90;
     final int ownerMaxLen = 5; // Only show the first 5 characters of the owner's name
 
@@ -136,12 +132,11 @@ public class PrintEngineRosterAction extends AbstractAction {
                 }
                 writer.write(s + NEW_LINE);
             }
-
-            // and force completion of the printing
-            writer.close();
         } catch (IOException we) {
             log.error("Error printing ConsistRosterEntry: " + e);
         }
+        // and force completion of the printing
+        writer.close();
     }
 
     private String padAttribute(String attribute, int length) {

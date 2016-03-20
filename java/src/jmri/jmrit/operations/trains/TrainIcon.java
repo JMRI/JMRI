@@ -224,9 +224,9 @@ public class TrainIcon extends LocoIcon {
     public void doMouseDragged(MouseEvent event) {
         log.debug("Mouse dragged, X=" + getX() + " Y=" + getY());
         if (_train != null) {
-            RouteLocation next = _train.getNextLocation(_train.getCurrentLocation());
-            Point nextPoint = null;
-            if (next != null && ((nextPoint = next.getTrainIconCoordinates()) != null)) {
+            RouteLocation next = _train.getNextLocation(_train.getCurrentLocation());         
+            if (next != null) {
+                Point nextPoint = next.getTrainIconCoordinates();
                 log.debug("Next location (" + next.getName() + "), X=" + nextPoint.x + " Y=" + nextPoint.y);
                 if (Math.abs(getX() - nextPoint.x) < range && Math.abs(getY() - nextPoint.y) < range) {
                     log.debug("Train icon (" + _train.getName() + ") within range of (" + next.getName() + ")");

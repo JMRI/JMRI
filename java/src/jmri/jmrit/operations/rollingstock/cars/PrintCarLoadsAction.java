@@ -26,10 +26,6 @@ import org.slf4j.LoggerFactory;
  */
 public class PrintCarLoadsAction extends AbstractAction {
 
-    /**
-     *
-     */
-    private static final long serialVersionUID = -7822254186432763396L;
     CarManager manager = CarManager.instance();
 
     public PrintCarLoadsAction(String actionName, boolean preview, Component pWho) {
@@ -111,11 +107,11 @@ public class PrintCarLoadsAction extends AbstractAction {
                         writer.write(buf.toString() + NEW_LINE);
                     }
                 }
-                // and force completion of the printing
-                writer.close();
             } catch (IOException we) {
                 log.error("Error printing car roster");
             }
+            // and force completion of the printing
+            writer.close();
         }
     }
 
