@@ -1,4 +1,3 @@
-// AbstractProxyManager.java
 package jmri.managers;
 
 import java.util.ArrayList;
@@ -24,7 +23,6 @@ import org.slf4j.LoggerFactory;
  * separate reference to the internal manager.
  *
  * @author	Bob Jacobsen Copyright (C) 2003, 2010
- * @version	$Revision$
  */
 abstract public class AbstractProxyManager implements Manager {
 
@@ -77,7 +75,7 @@ abstract public class AbstractProxyManager implements Manager {
         return internalManager;
     }
 
-    private java.util.ArrayList<AbstractManager> mgrs = new java.util.ArrayList<AbstractManager>();
+    private java.util.ArrayList<AbstractManager> mgrs = new java.util.ArrayList<>();
     private AbstractManager internalManager = null;
 
     abstract protected AbstractManager makeInternalManager();
@@ -284,8 +282,8 @@ abstract public class AbstractProxyManager implements Manager {
         }
     }
 
-    ArrayList<java.beans.PropertyChangeListener> propertyListenerList = new ArrayList<java.beans.PropertyChangeListener>(5);
-    ArrayList<java.beans.VetoableChangeListener> propertyVetoListenerList = new ArrayList<java.beans.VetoableChangeListener>(5);
+    ArrayList<java.beans.PropertyChangeListener> propertyListenerList = new ArrayList<>(5);
+    ArrayList<java.beans.VetoableChangeListener> propertyVetoListenerList = new ArrayList<>(5);
 
     /**
      * @return The system-specific prefix letter for the primary implementation
@@ -324,7 +322,7 @@ abstract public class AbstractProxyManager implements Manager {
     }
 
     public String[] getSystemNameArray() {
-        TreeSet<String> ts = new TreeSet<String>(new SystemNameComparator());
+        TreeSet<String> ts = new TreeSet<>(new SystemNameComparator());
         for (int i = 0; i < nMgrs(); i++) {
             ts.addAll(getMgr(i).getSystemNameList());
         }
@@ -341,23 +339,21 @@ abstract public class AbstractProxyManager implements Manager {
      * Get a list of all system names.
      */
     public List<String> getSystemNameList() {
-        TreeSet<String> ts = new TreeSet<String>(new SystemNameComparator());
+        TreeSet<String> ts = new TreeSet<>(new SystemNameComparator());
         for (int i = 0; i < nMgrs(); i++) {
             ts.addAll(getMgr(i).getSystemNameList());
         }
-        return new ArrayList<String>(ts);
+        return new ArrayList<>(ts);
     }
 
     public List<NamedBean> getNamedBeanList() {
-        TreeSet<NamedBean> ts = new TreeSet<NamedBean>(new SystemNameComparator());
+        TreeSet<NamedBean> ts = new TreeSet<>(new SystemNameComparator());
         for (AbstractManager m : mgrs) {
             ts.addAll(m.getNamedBeanList());
         }
-        return new ArrayList<NamedBean>(ts);
+        return new ArrayList<>(ts);
     }
 
     // initialize logging
     private final static Logger log = LoggerFactory.getLogger(AbstractProxyManager.class.getName());
 }
-
-/* @(#)AbstractProxyManager.java */
