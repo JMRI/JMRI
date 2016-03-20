@@ -9,7 +9,7 @@ import jmri.implementation.AbstractReporter;
  * @author	Bob Jacobsen Copyright (C) 2010
  * @since 2.9.4
  */
-public class InternalReporterManager extends AbstractReporterManager {
+public class InternalReporterManager extends jmri.managers.AbstractReporterManager {
 
     /**
      * Create an internal (dummy) reporter object
