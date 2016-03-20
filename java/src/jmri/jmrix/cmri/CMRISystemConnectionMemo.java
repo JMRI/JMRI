@@ -1,6 +1,7 @@
 package jmri.jmrix.cmri;
 
 import java.util.ResourceBundle;
+import jmri.InstanceManager;
 import jmri.jmrix.SystemConnectionMemo;
 
 /**
@@ -12,6 +13,8 @@ public class CMRISystemConnectionMemo extends SystemConnectionMemo {
 
     public CMRISystemConnectionMemo() {
         super("C", CMRIConnectionTypeList.CMRI);
+        this.register();
+        InstanceManager.store(this, CMRISystemConnectionMemo.class);
     }
 
     @Override
