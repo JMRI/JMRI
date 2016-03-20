@@ -20,6 +20,8 @@ public class InternalSystemConnectionMemo extends jmri.jmrix.SystemConnectionMem
         register();
     }
 
+    boolean configured = false;
+    
     /**
      * Configure the common managers for Internal connections. This puts the
      * common manager config in one place. This method is static so that it can
@@ -28,6 +30,9 @@ public class InternalSystemConnectionMemo extends jmri.jmrix.SystemConnectionMem
      */
     public void configureManagers() {
 
+        log.debug("Do configureManagers");
+        if (configured) log.warn("configureManagers called for a second time", new Exception("traceback"));
+        
         turnoutManager = new InternalTurnoutManager(getSystemPrefix());
         InstanceManager.setTurnoutManager(turnoutManager);
 
@@ -46,6 +51,7 @@ public class InternalSystemConnectionMemo extends jmri.jmrix.SystemConnectionMem
         jmri.InstanceManager.setThrottleManager(throttleManager
         );
 
+        configured = true;
     }
 
     private InternalSensorManager sensorManager;
@@ -55,22 +61,27 @@ public class InternalSystemConnectionMemo extends jmri.jmrix.SystemConnectionMem
     private jmri.progdebugger.DebugProgrammerManager programManager;
 
     public InternalTurnoutManager getTurnoutManager() {
+        if (!configured) configureManagers();
         return turnoutManager;
     }
 
     public InternalSensorManager getSensorManager() {
+        if (!configured) configureManagers();
         return sensorManager;
     }
 
     public jmri.jmrix.debugthrottle.DebugThrottleManager getThrottleManager() {
+        if (!configured) configureManagers();
         return throttleManager;
     }
 
     public jmri.managers.DefaultPowerManager getPowerManager() {
+        if (!configured) configureManagers();
         return powerManager;
     }
 
     public jmri.progdebugger.DebugProgrammerManager getProgrammerManager() {
+        if (!configured) configureManagers();
         return programManager;
     }
 
@@ -78,6 +89,9 @@ public class InternalSystemConnectionMemo extends jmri.jmrix.SystemConnectionMem
         if (getDisabled()) {
             return false;
         }
+
+        if (!configured) configureManagers();
+
         if (type.equals(jmri.ProgrammerManager.class)) {
             return true;
         }
@@ -109,6 +123,9 @@ public class InternalSystemConnectionMemo extends jmri.jmrix.SystemConnectionMem
         if (getDisabled()) {
             return null;
         }
+
+        if (!configured) configureManagers();
+
         if (T.equals(jmri.ProgrammerManager.class)) {
             return (T) getProgrammerManager();
         }
@@ -150,5 +167,7 @@ public class InternalSystemConnectionMemo extends jmri.jmrix.SystemConnectionMem
         }
         super.dispose();
     }
+
+    private final static org.slf4j.Logger log = org.slf4j.LoggerFactory.getLogger(InternalSystemConnectionMemo.class.getName());
 }
 
