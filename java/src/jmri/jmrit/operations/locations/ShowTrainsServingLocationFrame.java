@@ -30,10 +30,6 @@ import org.slf4j.LoggerFactory;
  */
 public class ShowTrainsServingLocationFrame extends OperationsFrame implements java.beans.PropertyChangeListener {
 
-    /**
-     *
-     */
-    private static final long serialVersionUID = 2234885033768829476L;
     // location
     Location _location = null;
     Track _track = null;
@@ -142,9 +138,9 @@ public class ShowTrainsServingLocationFrame extends OperationsFrame implements j
                             && !train.skipsLocation(rl.getId())
                             && (typeComboBox.getSelectedItem() == null || typeComboBox.getSelectedItem().equals(NONE) || train
                             .acceptsTypeName((String) typeComboBox.getSelectedItem()))
-                            && (train.isLocalSwitcher() || (rl.getTrainDirection() & _location.getTrainDirections()) > 0)
+                            && (train.isLocalSwitcher() || (rl.getTrainDirection() & _location.getTrainDirections()) != 0)
                             && (train.isLocalSwitcher() || _track == null || ((rl.getTrainDirection() & _track
-                            .getTrainDirections()) > 0))
+                            .getTrainDirections()) != 0))
                             && (_track == null || _track.acceptsPickupTrain(train))) {
                         pickup = true;
                     }
@@ -153,9 +149,9 @@ public class ShowTrainsServingLocationFrame extends OperationsFrame implements j
                             && !train.skipsLocation(rl.getId())
                             && (typeComboBox.getSelectedItem() == null || typeComboBox.getSelectedItem().equals(NONE) || train
                             .acceptsTypeName((String) typeComboBox.getSelectedItem()))
-                            && (train.isLocalSwitcher() || (rl.getTrainDirection() & _location.getTrainDirections()) > 0)
+                            && (train.isLocalSwitcher() || (rl.getTrainDirection() & _location.getTrainDirections()) != 0)
                             && (train.isLocalSwitcher() || _track == null || ((rl.getTrainDirection() & _track
-                            .getTrainDirections()) > 0)) && (_track == null || _track.acceptsDropTrain(train))) {
+                            .getTrainDirections()) != 0)) && (_track == null || _track.acceptsDropTrain(train))) {
                         setout = true;
                     }
                     // now display results

@@ -1617,7 +1617,7 @@ public class Train implements java.beans.PropertyChangeListener {
                         &&
                         !skipsLocation(rLoc.getId())
                         &&
-                        ((car.getLocation().getTrainDirections() & rLoc.getTrainDirection()) > 0 || isLocalSwitcher())) {
+                        ((car.getLocation().getTrainDirections() & rLoc.getTrainDirection()) != 0 || isLocalSwitcher())) {
                     if (car.getTrack() != null) {
                         if (((car.getTrack().getTrainDirections() & rLoc.getTrainDirection()) == 0 && !isLocalSwitcher())
                                 ||
@@ -1664,7 +1664,7 @@ public class Train implements java.beans.PropertyChangeListener {
                                 &&
                                 !skipsLocation(rldest.getId())
                                 &&
-                                ((car.getDestination().getTrainDirections() & rldest.getTrainDirection()) > 0 || isLocalSwitcher())
+                                ((car.getDestination().getTrainDirections() & rldest.getTrainDirection()) != 0 || isLocalSwitcher())
                                 &&
                                 (!Setup.isCheckCarDestinationEnabled() || car.getTrack() == null || car.getTrack()
                                         .acceptsDestination(car.getDestination()))) {

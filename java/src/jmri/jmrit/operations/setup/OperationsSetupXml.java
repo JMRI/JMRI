@@ -115,6 +115,7 @@ public class OperationsSetupXml extends OperationsXml {
 
     private final static Logger log = LoggerFactory.getLogger(OperationsSetupXml.class.getName());
 
+    @edu.umd.cs.findbugs.annotations.SuppressFBWarnings(value = "ST_WRITE_TO_STATIC_FROM_INSTANCE_METHOD")
     public void dispose(){
         _instance = null;
     }
