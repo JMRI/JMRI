@@ -45,7 +45,7 @@ public class SE8Panel extends jmri.jmrix.loconet.AbstractBoardProgPanel {
     public SE8Panel(int boardNum) {
         super(boardNum);
 
-        appendLine(provideAddressing("SE8"));  // add read/write buttons, address
+        appendLine(provideAddressing("SE8C"));  // add read/write buttons, address
 
         JPanel panel2;
         appendLine(fullmode);
@@ -77,7 +77,7 @@ public class SE8Panel extends jmri.jmrix.loconet.AbstractBoardProgPanel {
         appendLine(exercise);
 
         appendLine(provideStatusLine());
-        setStatus("The SE8 should be in normal mode (Don't push the buttons on the SE8!)");
+        setStatus("The SE8C should be in normal mode (Don't push the buttons on the SE8C!)");
 
         setTypeWord(0x72);  // configure SE8 message type
     }
