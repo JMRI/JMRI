@@ -62,14 +62,25 @@ abstract public class SystemConnectionMemo {
      */
     private static void initialise() {
         if (!initialised) {
-            addUserName("Internal");
-            addSystemPrefix("I");
-            initialised = true;
+//             addUserName("Internal");
+//             addSystemPrefix("I");
+//             initialised = true;
         }
     }
 
-    final protected static ArrayList<String> userNames = new ArrayList<>();
-    final protected static ArrayList<String> sysPrefixes = new ArrayList<>();
+    /**
+     * For use in testing, undo any initialization that's been done.
+     */
+    public static void reset() {
+        userNames = new ArrayList<>();
+        sysPrefixes = new ArrayList<>();
+        listeners = new HashSet<>();
+        
+        initialised = false;
+    }
+    
+    protected static ArrayList<String> userNames = new ArrayList<>();
+    protected static ArrayList<String> sysPrefixes = new ArrayList<>();
 
     private synchronized static boolean addUserName(String userName) {
         if (userNames.contains(userName)) {
@@ -322,7 +333,7 @@ abstract public class SystemConnectionMemo {
     }
 
     // data members to hold contact with the property listeners
-    final private static Set<PropertyChangeListener> listeners = new HashSet<>();
+    private static Set<PropertyChangeListener> listeners = new HashSet<>();
 
     private final static Logger log = LoggerFactory.getLogger(SystemConnectionMemo.class.getName());
 }
