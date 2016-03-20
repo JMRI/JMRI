@@ -14,7 +14,7 @@ import jmri.InstanceManager;
  * @author	Bob Jacobsen Copyright (C) 2010
  * @version $Revision$
  */
-public class InternalSystemConnectionMemo extends jmri.jmrix.SystemConnectionMemo {
+public class InternalSystemConnectionMemo extends jmri.jmrix.SystemConnectionMemo implements jmri.InstanceManagerAutoDefault {
 
     public InternalSystemConnectionMemo() {
         super("I", "Internal");
