@@ -1,6 +1,7 @@
 // PrintTrainManifestAction.java
 package jmri.jmrit.operations.trains.tools;
 
+import java.awt.Frame;
 import java.awt.event.ActionEvent;
 import java.text.MessageFormat;
 import javax.swing.AbstractAction;
@@ -16,20 +17,21 @@ import jmri.jmrit.operations.trains.TrainEditFrame;
  */
 public class PrintTrainManifestAction extends AbstractAction {
 
-    public PrintTrainManifestAction(String actionName, boolean preview, TrainEditFrame frame) {
+    public PrintTrainManifestAction(String actionName, boolean preview, Frame frame) {
         super(actionName);
         isPreview = preview;
-        trainEditFrame = frame;
+        this.frame = frame;
     }
 
     /**
      * Variable to set whether this is to be printed or previewed
      */
     boolean isPreview;
-    TrainEditFrame trainEditFrame;
+    Frame frame;
 
     public void actionPerformed(ActionEvent e) {
-        Train train = trainEditFrame._train;
+        TrainEditFrame f = (TrainEditFrame) frame;
+        Train train = f._train;
         if (train == null) {
             return;
         }

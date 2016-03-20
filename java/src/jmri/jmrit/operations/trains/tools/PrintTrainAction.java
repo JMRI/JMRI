@@ -31,31 +31,26 @@ public class PrintTrainAction extends AbstractAction {
     static final String NEW_LINE = "\n"; // NOI18N
     static final String TAB = "\t"; // NOI18N
 
-    public PrintTrainAction(String actionName, Frame mFrame, boolean isPreview, TrainEditFrame frame) {
+    public PrintTrainAction(String actionName, Frame mFrame, boolean isPreview, Frame frame) {
         super(actionName);
         this.mFrame = mFrame;
         this.isPreview = isPreview;
-        this.trainEditFrame = frame;
-    }
-    
-    public PrintTrainAction(String actionName, Frame mFrame, boolean isPreview) {
-        super(actionName);
-        this.mFrame = mFrame;
-        this.isPreview = isPreview;
+        this.frame = frame;
     }
 
     /**
      * Frame hosting the printing
      */
     Frame mFrame;
-    TrainEditFrame trainEditFrame;
+    Frame frame; // TrainEditFrame
     /**
      * Variable to set whether this is to be printed or previewed
      */
     boolean isPreview;
 
     public void actionPerformed(ActionEvent e) {
-        Train train = trainEditFrame._train;
+        TrainEditFrame f = (TrainEditFrame) frame;
+        Train train = f._train;
         if (train == null) {
             return;
         }
@@ -112,5 +107,6 @@ public class PrintTrainAction extends AbstractAction {
         }
     }
 
-    private final static Logger log = LoggerFactory.getLogger(PrintTrainAction.class.getName());
+    private final static Logger log = LoggerFactory.getLogger(PrintTrainAction.class
+            .getName());
 }

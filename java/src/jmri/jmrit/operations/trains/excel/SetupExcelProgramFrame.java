@@ -25,7 +25,8 @@ import jmri.jmrit.operations.setup.Control;
 public class SetupExcelProgramFrame extends OperationsFrame {
 
     // checkboxes
-    protected static final ResourceBundle rb = ResourceBundle.getBundle("jmri.jmrit.operations.setup.JmritOperationsSetupBundle");
+    protected static final ResourceBundle rb = ResourceBundle
+            .getBundle("jmri.jmrit.operations.setup.JmritOperationsSetupBundle");
     JCheckBox generateCheckBox = new JCheckBox();
 
     // text windows
@@ -37,7 +38,7 @@ public class SetupExcelProgramFrame extends OperationsFrame {
     JButton saveButton = new JButton(Bundle.getMessage("Save"));
 
     // directory
-    JPanel pDirectoryName = new JPanel();
+    JPanel pDirectoryName;
 
     public void initComponents() {
 
@@ -50,6 +51,7 @@ public class SetupExcelProgramFrame extends OperationsFrame {
         pOptions.add(generateCheckBox);
 
         // row 2
+        pDirectoryName = new JPanel();
         pDirectoryName.setBorder(BorderFactory.createTitledBorder(Bundle.getMessage("Directory")));
 
         JPanel pFileName = new JPanel();
