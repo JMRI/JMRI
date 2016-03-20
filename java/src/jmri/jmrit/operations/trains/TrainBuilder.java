@@ -3543,7 +3543,7 @@ public class TrainBuilder extends TrainCommon {
                             new Object[]{track.getName(), track.getScheduleName(), si.getId(), value, random}));
                     return null;
                 }
-            } catch (Exception NumberFormatException) {
+            } catch (NumberFormatException e) {
                 log.error("Random value {} isn't a number", si.getRandom());
             }
         }

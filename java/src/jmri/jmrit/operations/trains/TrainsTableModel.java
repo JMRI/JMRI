@@ -35,11 +35,6 @@ import org.slf4j.LoggerFactory;
  */
 public class TrainsTableModel extends javax.swing.table.AbstractTableModel implements PropertyChangeListener {
 
-    /**
-     *
-     */
-    private static final long serialVersionUID = 4245878111843075492L;
-
     TrainManager trainManager = TrainManager.instance(); // There is only one manager
 
     // Defines the columns
@@ -349,7 +344,7 @@ public class TrainsTableModel extends javax.swing.table.AbstractTableModel imple
         }
     }
 
-    public Color getRowColor(int row) {
+    public synchronized Color getRowColor(int row) {
         Train train = sysList.get(row);
 //		log.debug("Row: {} train: {} color: {}", row, train.getName(), train.getTableRowColorName());
         return train.getTableRowColor();
