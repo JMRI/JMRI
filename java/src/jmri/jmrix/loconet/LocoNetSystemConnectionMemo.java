@@ -1,4 +1,3 @@
-// LocoNetSystemConnectionMemo.java
 package jmri.jmrix.loconet;
 
 import java.util.ResourceBundle;
@@ -16,7 +15,6 @@ import org.slf4j.LoggerFactory;
  * activate their particular system.
  *
  * @author	Bob Jacobsen Copyright (C) 2010
- * @version $Revision$
  */
 public class LocoNetSystemConnectionMemo extends jmri.jmrix.SystemConnectionMemo {
 
@@ -417,6 +415,3 @@ public class LocoNetSystemConnectionMemo extends jmri.jmrix.SystemConnectionMemo
 
     private final static Logger log = LoggerFactory.getLogger(LocoNetSystemConnectionMemo.class.getName());
 }
-
-
-/* @(#)LocoNetSystemConnectionMemo.java */
