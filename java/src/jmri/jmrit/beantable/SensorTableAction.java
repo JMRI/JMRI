@@ -317,23 +317,27 @@ public class SensorTableAction extends AbstractTableAction {
     public void setMenuBar(BeanTableFrame f) {
         final jmri.util.JmriJFrame finalF = f;			// needed for anonymous ActionListener class
         JMenuBar menuBar = f.getJMenuBar();
+        // check for menu
+        int menus = menuBar.getMenuCount();
+        if (menus < 3) {
 
-        JMenu optionsMenu = new JMenu(Bundle.getMessage("MenuDefaults"));
-        JMenuItem item = new JMenuItem(Bundle.getMessage("GlobalDebounce"));
-        optionsMenu.add(item);
-        item.addActionListener(new ActionListener() {
-            public void actionPerformed(ActionEvent e) {
-                setDefaultDebounce(finalF);
-            }
-        });
-        item = new JMenuItem(Bundle.getMessage("InitialSensorState"));
-        optionsMenu.add(item);
-        item.addActionListener(new ActionListener() {
-            public void actionPerformed(ActionEvent e) {
-                setDefaultState(finalF);
-            }
-        });
-        menuBar.add(optionsMenu);
+            JMenu optionsMenu = new JMenu(Bundle.getMessage("MenuDefaults"));
+            JMenuItem item = new JMenuItem(Bundle.getMessage("GlobalDebounce"));
+            optionsMenu.add(item);
+            item.addActionListener(new ActionListener() {
+                public void actionPerformed(ActionEvent e) {
+                    setDefaultDebounce(finalF);
+                }
+            });
+            item = new JMenuItem(Bundle.getMessage("InitialSensorState"));
+            optionsMenu.add(item);
+            item.addActionListener(new ActionListener() {
+                public void actionPerformed(ActionEvent e) {
+                    setDefaultState(finalF);
+                }
+            });
+            menuBar.add(optionsMenu);
+        }
     }
 
     void showDebounceChanged() {

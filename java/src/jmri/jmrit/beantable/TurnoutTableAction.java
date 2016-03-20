@@ -1204,7 +1204,7 @@ public class TurnoutTableAction extends AbstractTableAction {
         JMenuBar menuBar = f.getJMenuBar();
         // check for menu
         int menus = menuBar.getMenuCount();
-        if (menus < 4) {
+        if (menus < 3) {
 
             JMenu opsMenu = new JMenu(Bundle.getMessage("TurnoutAutomationMenu"));
             JMenuItem item = new JMenuItem(Bundle.getMessage("TurnoutAutomationMenuItemEdit"));
@@ -1224,9 +1224,7 @@ public class TurnoutTableAction extends AbstractTableAction {
                     setDefaultSpeeds(finalF);
                 }
             });
-            if (menus < 5) {
-                menuBar.add(speedMenu);
-            }
+            menuBar.add(speedMenu);
         }
     }
 
