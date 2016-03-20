@@ -7,7 +7,7 @@
     <test>2</test>
     <modifier>.2</modifier>
   </jmriversion>
-  <sensors class="jmri.managers.configurexml.InternalSensorManagerXml">
+  <sensors class="jmri.jmrix.internal.configurexml.InternalSensorManagerXml">
     <defaultInitialState>unknown</defaultInitialState>
     <sensor systemName="IS1" inverted="false" userName="User 1">
       <systemName>IS1</systemName>
@@ -25,7 +25,7 @@
       <systemName>ISCLOCKRUNNING</systemName>
     </sensor>
   </sensors>
-  <turnouts class="jmri.managers.configurexml.InternalTurnoutManagerXml">
+  <turnouts class="jmri.jmrix.internal.configurexml.InternalTurnoutManagerXml">
     <operations automate="false">
       <operation name="NoFeedback" class="jmri.configurexml.turnoutoperations.NoFeedbackTurnoutOperationXml" interval="300" maxtries="2" />
       <operation name="Raw" class="jmri.configurexml.turnoutoperations.RawTurnoutOperationXml" interval="300" maxtries="1" />
@@ -71,7 +71,7 @@
       <systemName>IT4</systemName>
     </turnout>
   </turnouts>
-  <lights class="jmri.managers.configurexml.InternalLightManagerXml">
+  <lights class="jmri.jmrix.internal.configurexml.InternalLightManagerXml">
     <light systemName="IL1" userName="User 1" minIntensity="0.0" maxIntensity="1.0" transitionTime="0.0">
       <systemName>IL1</systemName>
       <userName>User 1</userName>
