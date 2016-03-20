@@ -1,7 +1,6 @@
 // PrintCarRosterAction.java
 package jmri.jmrit.operations.rollingstock.cars;
 
-import java.awt.Component;
 import java.awt.Dimension;
 import java.awt.Frame;
 import java.awt.GridBagLayout;
@@ -39,16 +38,11 @@ import org.slf4j.LoggerFactory;
  */
 public class PrintCarRosterAction extends AbstractAction {
 
-    /**
-     *
-     */
-    private static final long serialVersionUID = 6012807784689139181L;
-
-    public PrintCarRosterAction(String actionName, Frame frame, boolean preview, Component pWho) {
+    public PrintCarRosterAction(String actionName, Frame frame, boolean preview, CarsTableFrame pWho) {
         super(actionName);
         mFrame = frame;
         isPreview = preview;
-        panel = (CarsTableFrame) pWho;
+        panel = pWho;
     }
 
     /**

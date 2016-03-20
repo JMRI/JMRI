@@ -1,4 +1,3 @@
-// SprogIIUpdateFrame.java
 package jmri.jmrix.sprog.update;
 
 import javax.swing.JOptionPane;
@@ -13,7 +12,6 @@ import org.slf4j.LoggerFactory;
  * Extended to cover SPROG 3 which uses the same bootloader protocol Refactored
  *
  * @author	Andrew Crosland Copyright (C) 2004
- * @version	$Revision$
  */
 public class SprogIIUpdateFrame
         extends SprogUpdateFrame
@@ -264,13 +262,13 @@ public class SprogIIUpdateFrame
     }
 
     synchronized protected void sendWrite() {
-        if (hexFile.getAddressU() >= 0xF0) {
+        if ((hexFile.getAddressU()&0xFF) >= 0xF0) {
             // Write to EEPROM
             if (log.isDebugEnabled()) {
                 log.debug("Send write EE " + hexFile.getAddress());
             }
             msg = SprogMessage.getWriteEE(hexFile.getAddress(), hexFile.getData());
-        } else if (hexFile.getAddressU() >= 0x20) {
+        } else if ((hexFile.getAddressU()&0xFF) >= 0x20) {
             // Write to user data or config data not supported
             if (log.isDebugEnabled()) {
                 log.debug("null write " + hexFile.getAddress());

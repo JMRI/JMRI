@@ -28,7 +28,7 @@ public class SerialDriverAdapter extends SerialPortController implements jmri.jm
 
     public SerialDriverAdapter() {
         super(null);
-        this.manufacturerName = jmri.jmrix.DCCManufacturerList.PROTRAK;
+        this.manufacturerName = jmri.jmrix.grapevine.SerialConnectionTypeList.PROTRAK;
     }
 
     public String openPort(String portName, String appName) {

@@ -33,7 +33,7 @@ public class SerialDriverAdapter extends SerialPortController implements jmri.jm
         super(new SerialSystemConnectionMemo());
         option1Name = "Adapter";
         options.put(option1Name, new Option("Adapter", stdOption1Values));
-        this.manufacturerName = jmri.jmrix.DCCManufacturerList.POWERLINE;
+        this.manufacturerName = jmri.jmrix.powerline.SerialConnectionTypeList.POWERLINE;
     }
 
     public String openPort(String portName, String appName) {

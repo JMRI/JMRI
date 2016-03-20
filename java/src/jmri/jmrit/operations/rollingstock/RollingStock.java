@@ -867,8 +867,9 @@ public class RollingStock implements java.beans.PropertyChangeListener {
      * @param date MM/dd/yyyy HH:mm:ss
      */
     private void setLastDate(String date) {
-        if (date == NONE)
+        if (date.equals(NONE)) {
             return; // there was no date specified.
+        }
         Date oldDate = _lastDate;
         // create a date object from the value.
         try {

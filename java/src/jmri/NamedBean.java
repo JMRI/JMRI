@@ -174,24 +174,27 @@ public interface NamedBean {
      * Attach a key/value pair to the NamedBean, which can be retrieved later.
      * These are not bound properties as yet, and don't throw events on
      * modification. Key must not be null.
+     *<p>
+     * Prior to JMRI 4.3, the key was of Object type.  It was 
+     * constrained to String to make these more like normal Java Beans.
      */
-    public void setProperty(Object key, Object value);
+    public void setProperty(String key, Object value);
 
     /**
      * Retrieve the value associated with a key. If no value has been set for
      * that key, returns null.
      */
-    public Object getProperty(Object key);
+    public Object getProperty(String key);
 
     /**
      * Remove the key/value pair against the NamedBean.
      */
-    public void removeProperty(Object key);
+    public void removeProperty(String key);
 
     /**
      * Retrieve the complete current set of keys.
      */
-    public java.util.Set<Object> getPropertyKeys();
+    public java.util.Set<String> getPropertyKeys();
 
     /**
      * For instances in the code where we are dealing with just a bean and a

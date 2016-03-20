@@ -40,8 +40,8 @@ public class StoreXmlUserAction extends StoreXmlConfigAction {
     public void actionPerformed(ActionEvent e) {
         JFileChooser userFileChooser = getUserFileChooser();
         userFileChooser.setDialogType(javax.swing.JFileChooser.SAVE_DIALOG);
-        userFileChooser.setApproveButtonText(rb.getString("MenuItemStore"));
-        userFileChooser.setDialogTitle(rb.getString("MenuItemStore"));
+        userFileChooser.setApproveButtonText(rb.getString("StorePanelTitle"));
+        userFileChooser.setDialogTitle(rb.getString("StorePanelTitle"));
         java.io.File file = getFileCustom(userFileChooser);
 
         if (file == null) {

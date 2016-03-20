@@ -19,7 +19,7 @@ import jmri.configurexml.ConfigXmlManager;
 import jmri.configurexml.swing.DialogErrorHandler;
 import jmri.profile.Profile;
 import jmri.profile.ProfileManager;
-import jmri.spi.InitializationException;
+import jmri.util.prefs.InitializationException;
 import jmri.spi.PreferencesProvider;
 import jmri.util.FileUtil;
 import org.slf4j.Logger;

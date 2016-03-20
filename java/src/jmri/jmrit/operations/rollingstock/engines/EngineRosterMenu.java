@@ -21,11 +21,6 @@ import org.slf4j.LoggerFactory;
 public class EngineRosterMenu extends JMenu {
 
     /**
-     *
-     */
-    private static final long serialVersionUID = -2345195873048319343L;
-
-    /**
      * Ctor argument defining that the menu object will be used as part of the
      * main menu of the program, away from any GUI that can select or use a
      * RosterEntry.
@@ -101,9 +96,6 @@ public class EngineRosterMenu extends JMenu {
                 previewAction.setEnabled(true);
                 break;
             case SELECTMENU:
-                printAction.setEnabled(true);
-                previewAction.setEnabled(true);
-                break;
             case ENTRYMENU:
                 printAction.setEnabled(true);
                 previewAction.setEnabled(true);

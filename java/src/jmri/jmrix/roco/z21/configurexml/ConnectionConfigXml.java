@@ -2,7 +2,7 @@ package jmri.jmrix.roco.z21.configurexml;
 
 import jmri.jmrix.configurexml.AbstractNetworkConnectionConfigXml;
 import jmri.jmrix.roco.z21.ConnectionConfig;
-import jmri.jmrix.roco.z21.z21Adapter;
+import jmri.jmrix.roco.z21.Z21Adapter;
 
 /**
  * Handle XML persistance of layout connections by persistening the Z21 (and
@@ -13,7 +13,6 @@ import jmri.jmrix.roco.z21.z21Adapter;
  * attribute in the XML.
  *
  * @author Paul Bender Copyright (C) 2014
- * @version $Revision$
  */
 public class ConnectionConfigXml extends AbstractNetworkConnectionConfigXml {
 
@@ -24,7 +23,7 @@ public class ConnectionConfigXml extends AbstractNetworkConnectionConfigXml {
     @Override
     protected void getInstance() {
         if (adapter == null) {
-            adapter = new z21Adapter();
+            adapter = new Z21Adapter();
         }
     }
 

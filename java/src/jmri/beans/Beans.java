@@ -1,4 +1,3 @@
-// Beans.java
 package jmri.beans;
 
 import java.beans.IndexedPropertyDescriptor;
@@ -11,6 +10,8 @@ import java.util.Set;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+import edu.umd.cs.findbugs.annotations.SuppressFBWarnings;
+
 /**
  * JMRI-specific extensions to the Java Beans utility class.
  * <p>
@@ -19,7 +20,7 @@ import org.slf4j.LoggerFactory;
  *
  * @author rhwood
  */
-@SuppressWarnings("NM_SAME_SIMPLE_NAME_AS_SUPERCLASS")
+@SuppressFBWarnings(value="NM_SAME_SIMPLE_NAME_AS_SUPERCLASS", justification="Intentional pattern")
 public class Beans extends java.beans.Beans {
 
     private final static Logger log = LoggerFactory.getLogger(Beans.class.getName());
@@ -135,8 +136,9 @@ public class Beans extends java.beans.Beans {
                 }
                 // catch only introspection-related exceptions, and allow all other to pass through
             } catch (InvocationTargetException ex) {
-                if (ex.getCause() instanceof IndexOutOfBoundsException) {
-                    throw (IndexOutOfBoundsException) ex.getCause();
+                Throwable tex = ex.getCause();
+                if (tex instanceof IndexOutOfBoundsException) {
+                    throw (IndexOutOfBoundsException) tex;
                 } else {
                     log.warn(ex.toString(), ex);
                 }

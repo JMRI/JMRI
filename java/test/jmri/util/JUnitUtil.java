@@ -176,6 +176,12 @@ public class JUnitUtil {
         InstanceManager.store(new jmri.NamedBeanHandleManager(), jmri.NamedBeanHandleManager.class);
     }
 
+    public static void resetTurnoutOperationManager() {
+        new jmri.TurnoutOperationManager(){
+            { resetTheInstance();}
+        };
+    }
+    
     public static void initConfigureManager() {
         InstanceManager.setDefault(ConfigureManager.class, new JmriConfigurationManager());
     }

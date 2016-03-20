@@ -19,7 +19,9 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 /**
- * Exports the car roster into a comma delimited file (CSV).
+ * Exports the train roster into a comma delimited file (CSV). Only trains that
+ * have the "Build" checkbox selected are exported. If a train is built, a
+ * summary of the train's route and work is provided.
  *
  * @author Daniel Boudreau Copyright (C) 2010, 2011
  * @version $Revision: 29118 $
@@ -78,7 +80,7 @@ public class ExportTrains extends XmlFile {
 
         try {
             fileOut = new PrintWriter(new BufferedWriter(new OutputStreamWriter(new FileOutputStream(file), "UTF-8")), // NOI18N
-            true); // NOI18N
+                    true); // NOI18N
         } catch (IOException e) {
             log.error("Can not open export cars CSV file: " + file.getName());
             return;
@@ -86,13 +88,20 @@ public class ExportTrains extends XmlFile {
 
         // create header
         String header = Bundle.getMessage("Name") +
-                del + Bundle.getMessage("Description") +
-                del + Bundle.getMessage("Time") +
-                del + Bundle.getMessage("Route") +
-                del + Bundle.getMessage("Departs") +
-                del + Bundle.getMessage("Terminates") +
-                del + Bundle.getMessage("Status") +
-                del + Bundle.getMessage("Comment");
+                del +
+                Bundle.getMessage("Description") +
+                del +
+                Bundle.getMessage("Time") +
+                del +
+                Bundle.getMessage("Route") +
+                del +
+                Bundle.getMessage("Departs") +
+                del +
+                Bundle.getMessage("Terminates") +
+                del +
+                Bundle.getMessage("Status") +
+                del +
+                Bundle.getMessage("Comment");
         fileOut.println(header);
 
         int count = 0;
@@ -104,74 +113,99 @@ public class ExportTrains extends XmlFile {
             String routeName = "";
             if (train.getRoute() != null)
                 routeName = train.getRoute().getName();
-            String line = ESC + train.getName() + ESC +
-                    del + ESC + train.getDescription() + ESC +
-                    del + ESC + train.getDepartureTime() + ESC +
-                    del + ESC + routeName + ESC +
-                    del + ESC + train.getTrainDepartsName() + ESC +
-                    del + ESC + train.getTrainTerminatesName() + ESC +
-                    del + ESC + train.getStatus() + ESC +
-                    del + ESC + train.getComment() + ESC;
+            String line = ESC +
+                    train.getName() +
+                    ESC +
+                    del +
+                    ESC +
+                    train.getDescription() +
+                    ESC +
+                    del +
+                    ESC +
+                    train.getDepartureTime() +
+                    ESC +
+                    del +
+                    ESC +
+                    routeName +
+                    ESC +
+                    del +
+                    ESC +
+                    train.getTrainDepartsName() +
+                    ESC +
+                    del +
+                    ESC +
+                    train.getTrainTerminatesName() +
+                    ESC +
+                    del +
+                    ESC +
+                    train.getStatus() +
+                    ESC +
+                    del +
+                    ESC +
+                    train.getComment() +
+                    ESC;
             fileOut.println(line);
         }
-        
+
         fileOut.println();
         // second create header for built trains
         header = Bundle.getMessage("Name") +
-                del + Bundle.getMessage("csvParameters") +
-                del + Bundle.getMessage("Attributes");
+                del +
+                Bundle.getMessage("csvParameters") +
+                del +
+                Bundle.getMessage("Attributes");
         fileOut.println(header);
-        
+
         for (Train train : TrainManager.instance().getTrainsByTimeList()) {
             if (!train.isBuildEnabled())
                 continue;
 
             if (train.isBuilt() && train.getRoute() != null) {
-                String line = ESC + train.getName() + ESC + del + Bundle.getMessage("Route");
+                StringBuffer line = new StringBuffer (ESC + train.getName() + ESC + del + Bundle.getMessage("Route"));
                 for (RouteLocation rl : train.getRoute().getLocationsBySequenceList()) {
-                    line = line + del + ESC +rl.getName() + ESC;
+                    line.append(del + ESC + rl.getName() + ESC);
                 }
                 fileOut.println(line);
-                
-                line = ESC + train.getName() + ESC + del + Bundle.getMessage("csvArrivalTime");
+
+                line = new StringBuffer (ESC + train.getName() + ESC + del + Bundle.getMessage("csvArrivalTime"));
                 for (RouteLocation rl : train.getRoute().getLocationsBySequenceList()) {
-                    line = line + del + ESC + train.getExpectedArrivalTime(rl) + ESC;
+                    line.append(del + ESC + train.getExpectedArrivalTime(rl) + ESC);
                 }
                 fileOut.println(line);
-                
-                line = ESC + train.getName() + ESC + del + Bundle.getMessage("csvDepartureTime");
+
+                line = new StringBuffer(ESC + train.getName() + ESC + del + Bundle.getMessage("csvDepartureTime"));
                 for (RouteLocation rl : train.getRoute().getLocationsBySequenceList()) {
-                    line = line + del + ESC + train.getExpectedDepartureTime(rl) + ESC;
+                    line.append(del + ESC + train.getExpectedDepartureTime(rl) + ESC);
                 }
                 fileOut.println(line);
-                
-                line = ESC + train.getName() + ESC + del + Bundle.getMessage("csvTrainDirection");
+
+                line = new StringBuffer(ESC + train.getName() + ESC + del + Bundle.getMessage("csvTrainDirection"));
                 for (RouteLocation rl : train.getRoute().getLocationsBySequenceList()) {
-                    line = line + del + ESC +rl.getTrainDirectionString() + ESC;
+                    line.append(del + ESC + rl.getTrainDirectionString() + ESC);
                 }
                 fileOut.println(line);
-                
-                line = ESC + train.getName() + ESC + del + Bundle.getMessage("csvTrainWeight");
+
+                line = new StringBuffer(ESC + train.getName() + ESC + del + Bundle.getMessage("csvTrainWeight"));
                 for (RouteLocation rl : train.getRoute().getLocationsBySequenceList()) {
-                    line = line + del + ESC + train.getTrainWeight(rl) + ESC;
+                    line.append(del + ESC + train.getTrainWeight(rl) + ESC);
                 }
                 fileOut.println(line);
-                
-                line = ESC + train.getName() + ESC + del + Bundle.getMessage("csvTrainLength");
+
+                line = new StringBuffer(ESC + train.getName() + ESC + del + Bundle.getMessage("csvTrainLength"));
                 for (RouteLocation rl : train.getRoute().getLocationsBySequenceList()) {
-                    line = line + del + ESC + train.getTrainLength(rl) + ESC;
+                    line.append(del + ESC + train.getTrainLength(rl) + ESC);
                 }
                 fileOut.println(line);
-                
-                line = ESC + train.getName() + ESC + del + Bundle.getMessage("Cars");
+
+                line = new StringBuffer(ESC + train.getName() + ESC + del + Bundle.getMessage("Cars"));
                 for (RouteLocation rl : train.getRoute().getLocationsBySequenceList()) {
-                    line = line + del + ESC + train.getNumberCarsInTrain(rl) + ESC;
+                    line.append(del + ESC + train.getNumberCarsInTrain(rl) + ESC);
                 }
                 fileOut.println(line);
-                
-                line = ESC + train.getName() + ESC + del + Bundle.getMessage("csvEmpties");
+
+                line = new StringBuffer(ESC + train.getName() + ESC + del + Bundle.getMessage("csvEmpties"));
                 for (RouteLocation rl : train.getRoute().getLocationsBySequenceList()) {
-                    line = line + del + ESC + train.getNumberEmptyCarsInTrain(rl) + ESC;
+                    line.append(del + ESC + train.getNumberEmptyCarsInTrain(rl) + ESC);
                 }
                 fileOut.println(line);
                 fileOut.println();
@@ -181,15 +215,19 @@ public class ExportTrains extends XmlFile {
         fileOut.flush();
         fileOut.close();
         log.info("Exported {} trains to file {}", count, defaultOperationsFilename());
-        JOptionPane.showMessageDialog(null, MessageFormat.format(Bundle.getMessage("ExportedTrainsToFile"), new Object[]{
-                count, defaultOperationsFilename()}), Bundle.getMessage("ExportComplete"),
+        JOptionPane.showMessageDialog(null,
+                MessageFormat.format(Bundle.getMessage("ExportedTrainsToFile"), new Object[]{
+                        count, defaultOperationsFilename()}),
+                Bundle.getMessage("ExportComplete"),
                 JOptionPane.INFORMATION_MESSAGE);
     }
 
     // Operation files always use the same directory
     public static String defaultOperationsFilename() {
-        return OperationsSetupXml.getFileLocation() + OperationsSetupXml.getOperationsDirectoryName() + File.separator
-                + getOperationsFileName();
+        return OperationsSetupXml.getFileLocation() +
+                OperationsSetupXml.getOperationsDirectoryName() +
+                File.separator +
+                getOperationsFileName();
     }
 
     public static void setOperationsFileName(String name) {

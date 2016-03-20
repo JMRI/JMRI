@@ -1,4 +1,3 @@
-// jmri.jmrit.display.LayoutEditor.java
 package jmri.jmrit.display.layoutEditor;
 
 import java.awt.BasicStroke;
@@ -102,14 +101,9 @@ import org.slf4j.LoggerFactory;
  * as some of the control design.
  *
  * @author Dave Duchamp Copyright: (c) 2004-2007
- * @version $Revision$
  */
 public class LayoutEditor extends jmri.jmrit.display.panelEditor.PanelEditor implements java.beans.VetoableChangeListener {
 
-    /**
-     *
-     */
-    private static final long serialVersionUID = 3228600678758422754L;
     // Defined text resource
     static final ResourceBundle rb = ResourceBundle.getBundle("jmri.jmrit.display.layoutEditor.LayoutEditorBundle");
     static final ResourceBundle rbx = ResourceBundle.getBundle("jmri.jmrit.display.DisplayBundle");
@@ -772,9 +766,11 @@ public class LayoutEditor extends jmri.jmrit.display.panelEditor.PanelEditor imp
         }
     }
 
+    @Override
     protected void init(String name) {
     }
 
+    @Override
     public void initView() {
         editModeItem.setSelected(isEditable());
         positionableItem.setSelected(allPositionable());
@@ -802,6 +798,7 @@ public class LayoutEditor extends jmri.jmrit.display.panelEditor.PanelEditor imp
         }
     }
 
+    @Override
     public void setSize(int w, int h) {
         log.debug("Frame size now w=" + width + ", h=" + height);
         super.setSize(w, h);
@@ -1686,8 +1683,7 @@ public class LayoutEditor extends jmri.jmrit.display.panelEditor.PanelEditor imp
             newScale = minZoom;
         }
         
-        if (newScale != _paintScale)
-            setZoom(newScale);
+        setZoom(newScale);
         return newScale;
     }
    
@@ -1707,9 +1703,7 @@ public class LayoutEditor extends jmri.jmrit.display.panelEditor.PanelEditor imp
             newScale = minZoom;
         }
         
-        if (newScale != _paintScale)
-            setZoom(newScale);
-
+        setZoom(newScale);
         return newScale;
     }
    
@@ -1734,31 +1728,16 @@ public class LayoutEditor extends jmri.jmrit.display.panelEditor.PanelEditor imp
         markerMenu.setMnemonic(stringsToVTCodes.get(rbx.getString("MenuMarkerMnemonic")));
         menuBar.add(markerMenu);
         markerMenu.add(new AbstractAction(rbx.getString("AddLoco") + "...") {
-            /**
-             *
-             */
-            private static final long serialVersionUID = -7759328538138927410L;
-
             public void actionPerformed(ActionEvent e) {
                 locoMarkerFromInput();
             }
         });
         markerMenu.add(new AbstractAction(rbx.getString("AddLocoRoster") + "...") {
-            /**
-             *
-             */
-            private static final long serialVersionUID = -8879389496257856672L;
-
             public void actionPerformed(ActionEvent e) {
                 locoMarkerFromRoster();
             }
         });
         markerMenu.add(new AbstractAction(rbx.getString("RemoveMarkers")) {
-            /**
-             *
-             */
-            private static final long serialVersionUID = -3673017468200997943L;
-
             public void actionPerformed(ActionEvent e) {
                 removeMarkers();
             }
@@ -2357,18 +2336,13 @@ public class LayoutEditor extends jmri.jmrit.display.panelEditor.PanelEditor imp
         for (int i = 0; i < pointList.size(); i++) {
             PositionablePoint p = pointList.get(i);
             Point2D coord = p.getCoords();
-            p.setCoords(new Point2D.Double(round(coord.getX() * xFactor),
-                    round(coord.getY() * yFactor)));
+            p.setCoords(new Point2D.Double(Math.round(coord.getX() * xFactor),
+                    Math.round(coord.getY() * yFactor)));
         }
         // update the overall scale factors
         xScale = xScale * xFactor;
         yScale = yScale * yFactor;
         return true;
-    }
-
-    double round(double x) {
-        int i = (int) (x + 0.5);
-        return (i);
     }
 
     // operational variables for move selection pane
@@ -3037,6 +3011,7 @@ public class LayoutEditor extends jmri.jmrit.display.panelEditor.PanelEditor imp
     /**
      * Handle a mouse pressed event
      */
+    @Override
     public void mousePressed(MouseEvent event) {
         // initialize cursor position
         _anchorX = xLoc;
@@ -3823,6 +3798,7 @@ public class LayoutEditor extends jmri.jmrit.display.panelEditor.PanelEditor imp
         return (new Point2D.Double(0.0, 0.0));
     }
 
+    @Override
     public void mouseReleased(MouseEvent event) {
         super.setToolTip(null);
         // initialize mouse position
@@ -4107,6 +4083,7 @@ public class LayoutEditor extends jmri.jmrit.display.panelEditor.PanelEditor imp
     /**
      * Select the menu items to display for the Positionable's popup
      */
+    @Override
     protected void showPopUp(Positionable p, MouseEvent event) {
         if (!((JComponent) p).isVisible()) {
             return;     // component must be showing on the screen to determine its location
@@ -4117,11 +4094,6 @@ public class LayoutEditor extends jmri.jmrit.display.panelEditor.PanelEditor imp
             if (showAlignPopup()) {
                 setShowAlignmentMenu(popup);
                 popup.add(new AbstractAction(rb.getString("Remove")) {
-                    /**
-                     *
-                     */
-                    private static final long serialVersionUID = 8665204205409832217L;
-
                     public void actionPerformed(ActionEvent e) {
                         deleteSelectedItems();
                     }
@@ -5329,21 +5301,11 @@ public class LayoutEditor extends jmri.jmrit.display.panelEditor.PanelEditor imp
         if (showAlignPopup()) {
             JMenu edit = new JMenu(rb.getString("EditAlignment"));
             edit.add(new AbstractAction(rb.getString("AlignX")) {
-                /**
-                 *
-                 */
-                private static final long serialVersionUID = 3802627760002559496L;
-
                 public void actionPerformed(ActionEvent e) {
                     alignSelection(true);
                 }
             });
             edit.add(new AbstractAction(rb.getString("AlignY")) {
-                /**
-                 *
-                 */
-                private static final long serialVersionUID = 2591755542663220942L;
-
                 public void actionPerformed(ActionEvent e) {
                     alignSelection(false);
                 }
@@ -5354,6 +5316,7 @@ public class LayoutEditor extends jmri.jmrit.display.panelEditor.PanelEditor imp
         return false;
     }
 
+    @Override
     public void keyPressed(KeyEvent e) {
         if (e.getKeyCode() == KeyEvent.VK_DELETE) {
             deleteSelectedItems();
@@ -5511,6 +5474,7 @@ public class LayoutEditor extends jmri.jmrit.display.panelEditor.PanelEditor imp
 
     int _prevNumSel = 0;
 
+    @Override
     public void mouseMoved(MouseEvent event) {
         calcLocation(event, 0, 0);
         if (isEditable()) {
@@ -5536,6 +5500,7 @@ public class LayoutEditor extends jmri.jmrit.display.panelEditor.PanelEditor imp
 
     private boolean isDragging = false;
 
+    @Override
     public void mouseDragged(MouseEvent event) {
         // initialize mouse position
         calcLocation(event, 0, 0);
@@ -5944,6 +5909,11 @@ public class LayoutEditor extends jmri.jmrit.display.panelEditor.PanelEditor imp
         setDirty(true);
     }
 
+    /*
+     * this function appears to be unused internally.
+     * @deprecated since 4.3.5
+     */
+    @Deprecated
     public void setLoc(int x, int y) {
         if (isEditable()) {
             xLoc = x;
@@ -8136,230 +8106,6 @@ public class LayoutEditor extends jmri.jmrit.display.panelEditor.PanelEditor imp
     }
 
     /**
-     * @deprecated As of 3.9.2, ... use getFinder().find...
-     */
-    @Deprecated
-    public TrackSegment findTrackSegmentByName(String name) {
-        return finder.findTrackSegmentByName(name);
-    }
-
-    /**
-     * @deprecated As of 3.9.2, ... use getFinder().find...
-     */
-    @Deprecated
-    public PositionablePoint findPositionablePointByName(String name) {
-        return finder.findPositionablePointByName(name);
-    }
-
-    /**
-     * @deprecated As of 3.9.2, ... use getFinder().find...
-     */
-    @Deprecated
-    public PositionablePoint findPositionablePointAtTrackSegments(TrackSegment tr1, TrackSegment tr2) {
-        return finder.findPositionablePointAtTrackSegments(tr1, tr2);
-    }
-
-    /**
-     * @deprecated As of 3.9.2, ... use getFinder().find...
-     */
-    @Deprecated
-    public PositionablePoint findPositionableLinkPoint(LayoutBlock blk1) {
-        return finder.findPositionableLinkPoint(blk1);
-    }
-
-    /**
-     * @deprecated As of 3.9.2, ... use getFinder().find...
-     */
-    @Deprecated
-    public ArrayList<TrackSegment> findTrackSegmentByBlock(String name) {
-        return finder.findTrackSegmentByBlock(name);
-    }
-
-    /**
-     * @deprecated As of 3.9.2, ... use getFinder().find...
-     */
-    @Deprecated
-    public PositionablePoint findPositionablePointByEastBoundSignal(String signalName) {
-        return finder.findPositionablePointByEastBoundSignal(signalName);
-    }
-
-    /**
-     * @deprecated As of 3.9.2, ... use getFinder().find...
-     */
-    @Deprecated
-    public PositionablePoint findPositionablePointByWestBoundSignal(String signalName) {
-        return finder.findPositionablePointByWestBoundSignal(signalName);
-    }
-
-    /**
-     * @deprecated As of 3.9.2, ... use getFinder().find...
-     */
-    @Deprecated
-    public PositionablePoint findPositionablePointByWestBoundBean(NamedBean bean) {
-        return finder.findPositionablePointByWestBoundBean(bean);
-    }
-
-    /**
-     * @deprecated As of 3.9.2, ... use getFinder().find...
-     */
-    @Deprecated
-    public PositionablePoint findPositionablePointByEastBoundBean(NamedBean bean) {
-        return finder.findPositionablePointByEastBoundBean(bean);
-    }
-
-    /**
-     * @deprecated As of 3.9.2, ... use getFinder().find...
-     */
-    @Deprecated
-    public PositionablePoint findPositionablePointByWestBoundSignalMast(String signalMastName) {
-        return finder.findPositionablePointByWestBoundSignalMast(signalMastName);
-    }
-
-    /**
-     * @deprecated As of 3.9.2, ... use getFinder().find...
-     */
-    @Deprecated
-    public PositionablePoint findPositionablePointByBean(NamedBean bean) {
-        return finder.findPositionablePointByBean(bean);
-    }
-
-    /**
-     * @deprecated As of 3.9.2, ... use getFinder().find...
-     */
-    @Deprecated
-    public LayoutTurnout findLayoutTurnoutBySignalMast(String signalMastName) {
-        return findLayoutTurnoutByBean(InstanceManager.signalMastManagerInstance().provideSignalMast(signalMastName));
-    }
-
-    /**
-     * @deprecated As of 3.9.2, ... use getFinder().find...
-     */
-    @Deprecated
-    public LayoutTurnout findLayoutTurnoutByBean(NamedBean bean) {
-        return finder.findLayoutTurnoutByBean(bean);
-    }
-
-    /**
-     * @deprecated As of 3.9.2, ... use getFinder().find...
-     */
-    @Deprecated
-    public LayoutTurnout findLayoutTurnoutBySensor(String sensorName) {
-        return findLayoutTurnoutByBean(InstanceManager.sensorManagerInstance().provideSensor(sensorName));
-    }
-
-    /**
-     * @deprecated As of 3.9.2, ... use getFinder().find...
-     */
-    @Deprecated
-    public LevelXing findLevelXingBySignalMast(String signalMastName) {
-        return findLevelXingByBean(InstanceManager.signalMastManagerInstance().provideSignalMast(signalMastName));
-    }
-
-    /**
-     * @deprecated As of 3.9.2, ... use getFinder().find...
-     */
-    @Deprecated
-    public LevelXing findLevelXingBySensor(String sensorName) {
-        return findLevelXingByBean(InstanceManager.sensorManagerInstance().provideSensor(sensorName));
-    }
-
-    /**
-     * @deprecated As of 3.9.2, ... use getFinder().find...
-     */
-    @Deprecated
-    public LevelXing findLevelXingByBean(NamedBean bean) {
-        return finder.findLevelXingByBean(bean);
-    }
-
-    /**
-     * @deprecated As of 3.9.2, ... use getFinder().find...
-     */
-    @Deprecated
-    public LayoutSlip findLayoutSlipByBean(NamedBean bean) {
-        return finder.findLayoutSlipByBean(bean);
-    }
-
-    /**
-     * @deprecated As of 3.9.2, ... use getFinder().find...
-     */
-    @Deprecated
-    public LayoutSlip findLayoutSlipBySignalMast(String signalMastName) {
-        return findLayoutSlipByBean(InstanceManager.signalMastManagerInstance().provideSignalMast(signalMastName));
-    }
-
-    /**
-     * @deprecated As of 3.9.2, ... use getFinder().find...
-     */
-    @Deprecated
-    public LayoutSlip findLayoutSlipBySensor(String sensorName) {
-        return findLayoutSlipByBean(InstanceManager.sensorManagerInstance().provideSensor(sensorName));
-    }
-
-    /**
-     * @deprecated As of 3.9.2, ... use getFinder().find...
-     */
-    @Deprecated
-    public PositionablePoint findPositionablePointByEastBoundSensor(String sensorName) {
-        return finder.findPositionablePointByEastBoundSensor(sensorName);
-    }
-
-    /**
-     * @deprecated As of 3.9.2, ... use getFinder().find...
-     */
-    @Deprecated
-    public PositionablePoint findPositionablePointByWestBoundSensor(String sensorName) {
-        return finder.findPositionablePointByWestBoundSensor(sensorName);
-    }
-
-    /**
-     * @deprecated As of 3.9.2, ... use getFinder().find...
-     */
-    @Deprecated
-    public LayoutTurnout findLayoutTurnoutByName(String name) {
-        return finder.findLayoutTurnoutByName(name);
-    }
-
-    /**
-     * @deprecated As of 3.9.2, ... use getFinder().find...
-     */
-    @Deprecated
-    public LayoutTurnout findLayoutTurnoutByTurnoutName(String name) {
-        return finder.findLayoutTurnoutByTurnoutName(name);
-    }
-
-    /**
-     * @deprecated As of 3.9.2, ... use getFinder().find...
-     */
-    @Deprecated
-    public LevelXing findLevelXingByName(String name) {
-        return finder.findLevelXingByName(name);
-    }
-
-    /**
-     * @deprecated As of 3.9.2, ... use getFinder().find...
-     */
-    @Deprecated
-    public LayoutSlip findLayoutSlipByName(String name) {
-        return finder.findLayoutSlipByName(name);
-    }
-
-    /**
-     * @deprecated As of 3.9.2, ... use getFinder().find...
-     */
-    @Deprecated
-    public LayoutTurntable findLayoutTurntableByName(String name) {
-        return finder.findLayoutTurntableByName(name);
-    }
-
-    /**
-     * @deprecated As of 3.9.2, ... use getFinder().find...
-     */
-    @Deprecated
-    public Object findObjectByTypeAndName(int type, String name) {
-        return finder.findObjectByTypeAndName(type, name);
-    }
-
-    /**
      * Special internal class to allow drawing of layout to a JLayeredPane This
      * is the 'target' pane where the layout is displayed
      */
@@ -9736,6 +9482,7 @@ public class LayoutEditor extends jmri.jmrit.display.panelEditor.PanelEditor imp
         return false;
     }
 
+    @Override
     public void showToolTip(Positionable selection, MouseEvent event) {
         ToolTip tip = selection.getTooltip();
         tip.setLocation(selection.getX() + selection.getWidth() / 2, selection.getY() + selection.getHeight());

@@ -11,10 +11,18 @@ package jmri.jmrix.wangrow;
  */
 public class WangrowConnectionTypeList implements jmri.jmrix.ConnectionTypeList {
 
+    public static final String WANGROW = "Wangrow";
+
+    @Override
     public String[] getAvailableProtocolClasses() {
         return new String[]{
             "jmri.jmrix.wangrow.serialdriver.ConnectionConfig"
         };
+    }
+
+    @Override
+    public String[] getManufacturers() {
+        return new String[]{WANGROW};
     }
 
 }

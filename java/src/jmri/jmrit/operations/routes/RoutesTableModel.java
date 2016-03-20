@@ -24,11 +24,6 @@ import org.slf4j.LoggerFactory;
  */
 public class RoutesTableModel extends javax.swing.table.AbstractTableModel implements PropertyChangeListener {
 
-    /**
-     *
-     */
-    private static final long serialVersionUID = -6951642152186049680L;
-
     RouteManager routemanager; // There is only one manager
 
     // Defines the columns
@@ -79,13 +74,25 @@ public class RoutesTableModel extends javax.swing.table.AbstractTableModel imple
 
     List<Route> sysList = null;
 
-    void initTable(JTable table) {
+    void initTable(RoutesTableFrame frame, JTable table) {
         // Install the button handlers
         TableColumnModel tcm = table.getColumnModel();
         ButtonRenderer buttonRenderer = new ButtonRenderer();
         TableCellEditor buttonEditor = new ButtonEditor(new javax.swing.JButton());
         tcm.getColumn(EDIT_COLUMN).setCellRenderer(buttonRenderer);
         tcm.getColumn(EDIT_COLUMN).setCellEditor(buttonEditor);
+        
+        setPreferredWidths(frame, table);
+
+        // have to shut off autoResizeMode to get horizontal scroll to work (JavaSwing p 541)
+        table.setAutoResizeMode(JTable.AUTO_RESIZE_OFF);
+    }
+    
+    private void setPreferredWidths(RoutesTableFrame frame, JTable table) {
+        if (frame.loadTableDetails(table)) {
+            return; // done
+        }
+        log.debug("Setting preferred widths");
         // set column preferred widths
         table.getColumnModel().getColumn(ID_COLUMN).setPreferredWidth(30);
         table.getColumnModel().getColumn(NAME_COLUMN).setPreferredWidth(220);
@@ -93,8 +100,6 @@ public class RoutesTableModel extends javax.swing.table.AbstractTableModel imple
         table.getColumnModel().getColumn(STATUS_COLUMN).setPreferredWidth(70);
         table.getColumnModel().getColumn(MAX_LENGTH_COLUMN).setPreferredWidth(75);
         table.getColumnModel().getColumn(EDIT_COLUMN).setPreferredWidth(80);
-        // have to shut off autoResizeMode to get horizontal scroll to work (JavaSwing p 541)
-        table.setAutoResizeMode(JTable.AUTO_RESIZE_OFF);
     }
 
     public synchronized int getRowCount() {
@@ -118,7 +123,7 @@ public class RoutesTableModel extends javax.swing.table.AbstractTableModel imple
             case STATUS_COLUMN:
                 return Bundle.getMessage("Status");
             case EDIT_COLUMN:
-                return ""; // edit column
+                return Bundle.getMessage("Edit");
             default:
                 return "unknown"; // NOI18N
         }
@@ -205,7 +210,7 @@ public class RoutesTableModel extends javax.swing.table.AbstractTableModel imple
         });
     }
 
-    public void propertyChange(PropertyChangeEvent e) {
+    public synchronized void propertyChange(PropertyChangeEvent e) {
         if (Control.showProperty) {
             log.debug("Property change: ({}) old: ({}) new: ({})", e.getPropertyName(), e.getOldValue(), e
                     .getNewValue());
