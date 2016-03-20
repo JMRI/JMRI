@@ -24,33 +24,42 @@ public class InternalSystemConnectionMemo extends jmri.jmrix.SystemConnectionMem
     
     /**
      * Configure the common managers for Internal connections. This puts the
-     * common manager config in one place. This method is static so that it can
-     * be referenced from classes that don't inherit, including
-     * hexfile.HexFileFrame and locormi.LnMessageClient
+     * common manager config in one place. 
+     * <p> Note: The Proxy system can cause some managers to be created early.
+     * We don't call configureManagers in that case, as it causes an infinite loop.
      */
     public void configureManagers() {
 
         log.debug("Do configureManagers");
         if (configured) log.warn("configureManagers called for a second time", new Exception("traceback"));
         
-        turnoutManager = new InternalTurnoutManager(getSystemPrefix());
-        InstanceManager.setTurnoutManager(turnoutManager);
-
-        sensorManager = new InternalSensorManager(getSystemPrefix());
-        InstanceManager.setSensorManager(sensorManager);
-
-        powerManager = new jmri.managers.DefaultPowerManager();
-        jmri.InstanceManager.setPowerManager(powerManager);
-
-        // Install a debug programmer
-        programManager = new jmri.progdebugger.DebugProgrammerManager();
-        jmri.InstanceManager.setProgrammerManager(programManager);
-
-        // Install a debug throttle manager
-        throttleManager = new jmri.jmrix.debugthrottle.DebugThrottleManager(this);
-        jmri.InstanceManager.setThrottleManager(throttleManager
-        );
-
+        if (sensorManager == null) {
+            sensorManager = new InternalSensorManager(getSystemPrefix());
+            InstanceManager.setSensorManager(sensorManager);
+        }
+        
+        if (turnoutManager == null) {
+            turnoutManager = new InternalTurnoutManager(getSystemPrefix());
+            InstanceManager.setTurnoutManager(turnoutManager);
+        }
+        
+        if (powerManager == null) {
+            powerManager = new jmri.managers.DefaultPowerManager();
+            jmri.InstanceManager.setPowerManager(powerManager);
+        }
+        
+        if (programManager == null) {
+            // Install a debug programmer
+            programManager = new jmri.progdebugger.DebugProgrammerManager();
+            jmri.InstanceManager.setProgrammerManager(programManager);
+        }
+        
+        if (throttleManager == null) {
+            // Install a debug throttle manager
+            throttleManager = new jmri.jmrix.debugthrottle.DebugThrottleManager(this);
+            jmri.InstanceManager.setThrottleManager(throttleManager);
+        }
+        
         configured = true;
     }
 
@@ -61,27 +70,49 @@ public class InternalSystemConnectionMemo extends jmri.jmrix.SystemConnectionMem
     private jmri.progdebugger.DebugProgrammerManager programManager;
 
     public InternalTurnoutManager getTurnoutManager() {
-        if (!configured) configureManagers();
+        if (turnoutManager == null) {
+            log.debug("Create InternalTurnoutManager \"{}\" by request", getSystemPrefix(), new Exception("traceback"));
+            turnoutManager = new InternalTurnoutManager(getSystemPrefix());
+            InstanceManager.setTurnoutManager(turnoutManager);
+        }
         return turnoutManager;
     }
 
     public InternalSensorManager getSensorManager() {
-        if (!configured) configureManagers();
+        if (sensorManager == null) {
+            log.debug("Create InternalSensorManager \"{}\" by request", getSystemPrefix());
+            sensorManager = new InternalSensorManager(getSystemPrefix());
+            InstanceManager.setSensorManager(sensorManager);
+        }
         return sensorManager;
     }
 
     public jmri.jmrix.debugthrottle.DebugThrottleManager getThrottleManager() {
-        if (!configured) configureManagers();
+        if (throttleManager == null) {
+            log.debug("Create DebugThrottleManager by request");
+            // Install a debug throttle manager
+            throttleManager = new jmri.jmrix.debugthrottle.DebugThrottleManager(this);
+            jmri.InstanceManager.setThrottleManager(throttleManager);
+        }
         return throttleManager;
     }
 
     public jmri.managers.DefaultPowerManager getPowerManager() {
-        if (!configured) configureManagers();
+        if (powerManager == null) {
+            log.debug("Create DefaultPowerManager by request");
+            powerManager = new jmri.managers.DefaultPowerManager();
+            jmri.InstanceManager.setPowerManager(powerManager);
+        }
         return powerManager;
     }
 
     public jmri.progdebugger.DebugProgrammerManager getProgrammerManager() {
-        if (!configured) configureManagers();
+        if (programManager == null) {
+            log.debug("Create DebugProgrammerManager by request");
+            // Install a debug programmer
+            programManager = new jmri.progdebugger.DebugProgrammerManager();
+            jmri.InstanceManager.setProgrammerManager(programManager);
+        }
         return programManager;
     }
 
