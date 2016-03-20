@@ -119,7 +119,7 @@ public class ZeroConfClient {
                 hostlist.add(info.getServer());
             }
         }
-        return ((String[]) hostlist.toArray(new String[hostlist.size()]));
+        return hostlist.toArray(new String[hostlist.size()]);
     }
 
     public static class NetworkServiceListener implements ServiceListener, NetworkTopologyListener {
