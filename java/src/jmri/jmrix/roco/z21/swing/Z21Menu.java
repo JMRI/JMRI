@@ -10,11 +10,6 @@ import javax.swing.JMenu;
  */
 public class Z21Menu extends JMenu {
 
-    /**
-     *
-     */
-    private static final long serialVersionUID = -3323808897274636375L;
-
     public Z21Menu(String name, jmri.jmrix.roco.z21.Z21SystemConnectionMemo memo) {
         this(memo);
         setText(name);
@@ -32,7 +27,7 @@ public class Z21Menu extends JMenu {
             setText(rb.getString("Menuz21"));
         }
 
-        add(new jmri.jmrix.roco.z21.swing.mon.Z21MonAction(rb.getString("jmri.jmrix.roco.z21.swing.mon.z21MonAction"), memo));
+        add(new jmri.jmrix.roco.z21.swing.mon.Z21MonAction(rb.getString("jmri.jmrix.roco.z21.swing.mon.Z21MonAction"), memo));
         add(new jmri.jmrix.roco.z21.swing.packetgen.PacketGenAction(rb.getString("jmri.jmrix.roco.z21.swing.packetgen.PacketGenAction"), memo));
     }
 

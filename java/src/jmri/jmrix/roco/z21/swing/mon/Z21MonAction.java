@@ -13,10 +13,6 @@ import org.slf4j.LoggerFactory;
  */
 public class Z21MonAction extends AbstractAction {
 
-    /**
-     *
-     */
-    private static final long serialVersionUID = -5378782642878718080L;
     private jmri.jmrix.roco.z21.Z21SystemConnectionMemo _memo;
 
     public Z21MonAction(String s, jmri.jmrix.roco.z21.Z21SystemConnectionMemo memo) {
@@ -46,7 +42,7 @@ public class Z21MonAction extends AbstractAction {
         try {
             f.initComponents();
         } catch (Exception ex) {
-            log.warn("z21MonAction starting z21MonFrame: Exception: " + ex.toString());
+            log.warn("Z21MonAction starting Z21MonFrame: Exception: " + ex.toString());
         }
         f.setVisible(true);
 
