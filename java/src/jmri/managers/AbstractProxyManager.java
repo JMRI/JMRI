@@ -31,14 +31,15 @@ abstract public class AbstractProxyManager implements Manager {
      * including the Internal manager
      */
     protected int nMgrs() {
-        return mgrs.size() + 1;
+        return mgrs.size();
     }
 
     protected AbstractManager getMgr(int index) {
+        // make sure internal present
+        initInternal();
+
         if (index < mgrs.size()) {
             return mgrs.get(index);
-        } else if (index == mgrs.size()) {
-            return getInternal();
         } else {
             throw new IllegalArgumentException("illegal index " + index);
         }
@@ -49,9 +50,11 @@ abstract public class AbstractProxyManager implements Manager {
      * not a live list.
      */
     public List<Manager> getManagerList() {
+        // make sure internal present
+        initInternal();
+        
         @SuppressWarnings("unchecked")
         List<Manager> retval = (List<Manager>) mgrs.clone();
-        retval.add(getInternal());
         return retval;
     }
 
@@ -68,7 +71,7 @@ abstract public class AbstractProxyManager implements Manager {
         }
     }
 
-    private AbstractManager getInternal() {
+    private AbstractManager initInternal() {
         if (internalManager == null) {
             log.debug("create internal manager when first requested");
             internalManager = makeInternalManager();
