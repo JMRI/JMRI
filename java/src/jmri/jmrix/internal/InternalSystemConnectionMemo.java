@@ -33,6 +33,11 @@ public class InternalSystemConnectionMemo extends jmri.jmrix.SystemConnectionMem
         log.debug("Do configureManagers");
         if (configured) log.warn("configureManagers called for a second time", new Exception("traceback"));
         
+        if (lightManager == null) {
+            lightManager = new InternalLightManager();
+            InstanceManager.setLightManager(lightManager);
+        }
+        
         if (sensorManager == null) {
             sensorManager = new InternalSensorManager(getSystemPrefix());
             InstanceManager.setSensorManager(sensorManager);
@@ -54,6 +59,11 @@ public class InternalSystemConnectionMemo extends jmri.jmrix.SystemConnectionMem
             jmri.InstanceManager.setProgrammerManager(programManager);
         }
         
+        if (reporterManager == null) {
+            reporterManager = new InternalReporterManager();
+            InstanceManager.setReporterManager(reporterManager);
+        }
+        
         if (throttleManager == null) {
             // Install a debug throttle manager
             throttleManager = new jmri.jmrix.debugthrottle.DebugThrottleManager(this);
@@ -63,19 +73,21 @@ public class InternalSystemConnectionMemo extends jmri.jmrix.SystemConnectionMem
         configured = true;
     }
 
+    private InternalLightManager lightManager;
     private InternalSensorManager sensorManager;
+    private InternalReporterManager reporterManager;
     private InternalTurnoutManager turnoutManager;
     private jmri.jmrix.debugthrottle.DebugThrottleManager throttleManager;
     private jmri.managers.DefaultPowerManager powerManager;
     private jmri.progdebugger.DebugProgrammerManager programManager;
 
-    public InternalTurnoutManager getTurnoutManager() {
-        if (turnoutManager == null) {
-            log.debug("Create InternalTurnoutManager \"{}\" by request", getSystemPrefix());
-            turnoutManager = new InternalTurnoutManager(getSystemPrefix());
-            InstanceManager.setTurnoutManager(turnoutManager);
+    public InternalLightManager getLightManager() {
+        if (lightManager == null) {
+            log.debug("Create InternalLightManager by request");
+            lightManager = new InternalLightManager();
+            InstanceManager.setLightManager(lightManager);
         }
-        return turnoutManager;
+        return lightManager;
     }
 
     public InternalSensorManager getSensorManager() {
@@ -85,6 +97,24 @@ public class InternalSystemConnectionMemo extends jmri.jmrix.SystemConnectionMem
             InstanceManager.setSensorManager(sensorManager);
         }
         return sensorManager;
+    }
+
+    public InternalReporterManager getReporterManager() {
+        if (reporterManager == null) {
+            log.debug("Create InternalReporterManager by request");
+            reporterManager = new InternalReporterManager();
+            InstanceManager.setReporterManager(reporterManager);
+        }
+        return reporterManager;
+    }
+
+    public InternalTurnoutManager getTurnoutManager() {
+        if (turnoutManager == null) {
+            log.debug("Create InternalTurnoutManager \"{}\" by request", getSystemPrefix());
+            turnoutManager = new InternalTurnoutManager(getSystemPrefix());
+            InstanceManager.setTurnoutManager(turnoutManager);
+        }
+        return turnoutManager;
     }
 
     public jmri.jmrix.debugthrottle.DebugThrottleManager getThrottleManager() {
@@ -142,6 +172,12 @@ public class InternalSystemConnectionMemo extends jmri.jmrix.SystemConnectionMem
         if (type.equals(jmri.SensorManager.class)) {
             return true;
         }
+        if (type.equals(jmri.LightManager.class)) {
+            return true;
+        }
+        if (type.equals(jmri.ReporterManager.class)) {
+            return true;
+        }
         if (type.equals(jmri.TurnoutManager.class)) {
             return true;
         }
@@ -173,8 +209,14 @@ public class InternalSystemConnectionMemo extends jmri.jmrix.SystemConnectionMem
         if (T.equals(jmri.PowerManager.class)) {
             return (T) getPowerManager();
         }
+        if (T.equals(jmri.LightManager.class)) {
+            return (T) getLightManager();
+        }
         if (T.equals(jmri.SensorManager.class)) {
             return (T) getSensorManager();
+        }
+        if (T.equals(jmri.ReporterManager.class)) {
+            return (T) getReporterManager();
         }
         if (T.equals(jmri.TurnoutManager.class)) {
             return (T) getTurnoutManager();
