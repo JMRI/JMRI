@@ -141,6 +141,35 @@ public class JUnitAppender extends org.apache.log4j.ConsoleAppender {
     }
 
     /**
+     * If there's a next matching message of Error severity, just ignore it.
+     * Not an error if not present; mismatch is an error
+     */
+    public static void suppressErrorMessage(String msg) {
+        if (list.isEmpty()) {
+            return;
+        }
+
+        LoggingEvent evt = list.remove(0);
+
+        while ((evt.getLevel() == Level.INFO) || (evt.getLevel() == Level.DEBUG)) {
+            if (list.isEmpty()) {
+                Assert.fail("Only debug/info messages present: " + msg);
+                return;
+            }
+            evt = list.remove(0);
+        }
+
+        // check the remaining message, if any
+        if (evt.getLevel() != Level.ERROR) {
+            Assert.fail("Level mismatch when looking for ERROR message: \"" + msg + "\" found \"" + (String) evt.getMessage() + "\"");
+        }
+
+        if (!compare((String) evt.getMessage(), msg)) {
+            Assert.fail("Looking for ERROR message \"" + msg + "\" got \"" + evt.getMessage() + "\"");
+        }
+    }
+
+    /**
      * Check that the next queued message was of Warn severity, and has a
      * specific message.
      * <P>
