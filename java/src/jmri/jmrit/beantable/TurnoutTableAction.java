@@ -157,7 +157,7 @@ public class TurnoutTableAction extends AbstractTableAction {
             @Override
             public String getColumnName(int col) {
                 if (col == INVERTCOL) {
-                    return "Inverted";
+                    return Bundle.getMessage("Inverted");
                 } else if (col == LOCKCOL) {
                     return "Locked";
                 } else if (col == KNOWNCOL) {
@@ -745,7 +745,7 @@ public class TurnoutTableAction extends AbstractTableAction {
     JComboBox<String> prefixBox = new JComboBox<String>();
     JTextField numberToAdd = new JTextField(5);
     JCheckBox range = new JCheckBox(Bundle.getMessage("AddRangeBox"));
-    JLabel sysNameLabel = new JLabel("Hardware Address"); // I18N TODO
+    JLabel sysNameLabel = new JLabel(Bundle.getMessage("LightHardwareAddress"));
     JLabel userNameLabel = new JLabel(Bundle.getMessage("LabelUserName"));
     String systemSelectionCombo = this.getClass().getName() + ".SystemSelected";
     String userNameError = this.getClass().getName() + ".DuplicateUserName";
@@ -1066,7 +1066,7 @@ public class TurnoutTableAction extends AbstractTableAction {
         int retval = JOptionPane.showOptionDialog(_who,
                 Bundle.getMessage("TurnoutGlobalSpeedMessage"), Bundle.getMessage("TurnoutGlobalSpeedMessageTitle"),
                 0, JOptionPane.INFORMATION_MESSAGE, null,
-                new Object[]{"Cancel", "OK", thrown, closed}, null); // I18N TODO
+                new Object[]{Bundle.getMessage("ButtonCancel"), Bundle.getMessage("ButtonOK"), thrown, closed}, null);
         if (retval != 1) {
             return;
         }
