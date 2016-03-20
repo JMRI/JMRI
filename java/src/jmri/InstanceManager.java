@@ -74,6 +74,7 @@ public class InstanceManager {
      */
     static public <T> void store(T item, Class<T> type) {
         log.debug("Store item of type {}", type.getName());
+        if (item == null) log.error("Should not store null value of type {}", type.getName(), new Exception("Traceback"));
         ArrayList<Object> l = managerLists.get(type);
         if (l == null) {
             l = new ArrayList<>();
