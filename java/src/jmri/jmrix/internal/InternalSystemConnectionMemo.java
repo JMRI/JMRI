@@ -1,4 +1,3 @@
-// InternalSystemConnectionMemo.java
 package jmri.jmrix.internal;
 
 import java.util.ResourceBundle;
@@ -12,7 +11,6 @@ import jmri.InstanceManager;
  * activate their particular system.
  *
  * @author	Bob Jacobsen Copyright (C) 2010
- * @version $Revision$
  */
 public class InternalSystemConnectionMemo extends jmri.jmrix.SystemConnectionMemo implements jmri.InstanceManagerAutoDefault {
 
@@ -154,5 +152,3 @@ public class InternalSystemConnectionMemo extends jmri.jmrix.SystemConnectionMem
     }
 }
 
-
-/* @(#)InternalSystemConnectionMemo.java */
