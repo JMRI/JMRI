@@ -2339,18 +2339,13 @@ public class LayoutEditor extends jmri.jmrit.display.panelEditor.PanelEditor imp
         for (int i = 0; i < pointList.size(); i++) {
             PositionablePoint p = pointList.get(i);
             Point2D coord = p.getCoords();
-            p.setCoords(new Point2D.Double(round(coord.getX() * xFactor),
-                    round(coord.getY() * yFactor)));
+            p.setCoords(new Point2D.Double(Math.round(coord.getX() * xFactor),
+                    Math.round(coord.getY() * yFactor)));
         }
         // update the overall scale factors
         xScale = xScale * xFactor;
         yScale = yScale * yFactor;
         return true;
-    }
-
-    double round(double x) {
-        int i = (int) (x + 0.5);
-        return (i);
     }
 
     // operational variables for move selection pane
