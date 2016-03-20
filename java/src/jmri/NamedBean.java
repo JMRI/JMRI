@@ -174,6 +174,9 @@ public interface NamedBean {
      * Attach a key/value pair to the NamedBean, which can be retrieved later.
      * These are not bound properties as yet, and don't throw events on
      * modification. Key must not be null.
+     *<p>
+     * Prior to JMRI 4.3, the key was of Object type.  It was 
+     * constrained to String to make these more like normal Java Beans.
      */
     public void setProperty(String key, Object value);
 
