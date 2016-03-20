@@ -31,6 +31,7 @@ abstract public class SystemConnectionMemo {
     private String userNameAsLoaded;
 
     protected SystemConnectionMemo(String prefix, String userName) {
+        log.debug("SystemConnectionMemo created for prefix \"{}\" user name \"{}\"", prefix, userName);
         initialise();
         if (!setSystemPrefix(prefix)) {
             for (int x = 2; x < 50; x++) {
@@ -152,6 +153,7 @@ abstract public class SystemConnectionMemo {
             notifyPropertyChangeListener("ConnectionPrefixChanged", oldPrefix, systemPrefix);
             return true;
         }
+        log.debug("setSystemPrefix false for \"{}\"", systemPrefix);
         return false;
     }
 
