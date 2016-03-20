@@ -43,7 +43,7 @@
       <comment>Input for IR1, don't change</comment>
       <properties>
         <property>
-          <key class="java.lang.String">test</key>
+          <key>test</key>
           <value class="java.lang.Integer">12</value>
         </property>
       </properties>
