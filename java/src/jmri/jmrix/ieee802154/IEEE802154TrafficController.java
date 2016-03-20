@@ -49,7 +49,7 @@ abstract public class IEEE802154TrafficController extends AbstractMRNodeTrafficC
      */
     @Deprecated
     public void setInstance() {
-        log.error("Deprecated Method setInstance called");
+        log.warn("Deprecated Method setInstance called");
     }
 
     /**
