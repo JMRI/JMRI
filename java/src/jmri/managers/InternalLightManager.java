@@ -1,4 +1,3 @@
-// InternalLightManager.java
 package jmri.managers;
 
 import jmri.Light;
@@ -8,25 +7,15 @@ import jmri.implementation.AbstractVariableLight;
  * Implement a light manager for "Internal" (virtual) lights.
  *
  * @author	Bob Jacobsen Copyright (C) 2009
- * @version	$Revision$
  */
 public class InternalLightManager extends AbstractLightManager {
-
-    /**
-     *
-     */
-    private static final long serialVersionUID = 2678277271494071178L;
 
     /**
      * Create and return an internal (no layout connection) Light
      */
     protected Light createNewLight(String systemName, String userName) {
         return new AbstractVariableLight(systemName, userName) {
-            /**
-             *
-             */
-            private static final long serialVersionUID = -5913007273311395912L;
-
+ 
             //protected void forwardCommandChangeToLayout(int s) {}
             protected void sendIntensity(double intensity) {
             }
@@ -61,5 +50,3 @@ public class InternalLightManager extends AbstractLightManager {
     }
 
 }
-
-/* @(#)InternalLightManager.java */
