@@ -1,4 +1,3 @@
-// ProxySensorManager.java
 package jmri.managers;
 
 import jmri.Sensor;
@@ -11,7 +10,6 @@ import org.slf4j.LoggerFactory;
  * system-specific implementations.
  *
  * @author	Bob Jacobsen Copyright (C) 2003, 2010
- * @version	$Revision$
  */
 public class ProxySensorManager extends AbstractProxyManager
         implements SensorManager {
@@ -166,5 +164,3 @@ public class ProxySensorManager extends AbstractProxyManager
     // initialize logging
     private final static Logger log = LoggerFactory.getLogger(ProxySensorManager.class.getName());
 }
-
-/* @(#)ProxySensorManager.java */

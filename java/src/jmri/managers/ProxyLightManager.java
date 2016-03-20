@@ -1,4 +1,3 @@
-// ProxyLightManager.java
 package jmri.managers;
 
 import jmri.Light;
@@ -11,7 +10,6 @@ import jmri.NamedBean;
  *
  * @author	Bob Jacobsen Copyright (C) 2010
  * @author	Dave Duchamp Copyright (C) 2004
- * @version	$Revision$
  */
 public class ProxyLightManager extends AbstractProxyManager
         implements LightManager {
@@ -201,5 +199,3 @@ public class ProxyLightManager extends AbstractProxyManager
         return Bundle.getMessage("BeanNameLight");
     }
 }
-
-/* @(#)ProxyLightManager.java */
