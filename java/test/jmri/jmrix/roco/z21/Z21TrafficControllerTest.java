@@ -1,4 +1,4 @@
-package jmri.jmrix.roco;
+package jmri.jmrix.roco.z21;
 
 import junit.framework.Assert;
 import junit.framework.Test;
@@ -6,32 +6,31 @@ import junit.framework.TestCase;
 import junit.framework.TestSuite;
 
 /**
- * Tests for the jmri.jmrix.roco.RocoConnectionTypeList class
+ * Tests for the jmri.jmrix.roco.z21.z21TrafficController class
  *
  * @author	Paul Bender
  */
-public class RocoConnectionTypeListTest extends TestCase {
+public class Z21TrafficControllerTest extends TestCase {
 
     public void testCtor() {
-
-        RocoConnectionTypeList c = new RocoConnectionTypeList();
-        Assert.assertNotNull(c);
+        Z21TrafficController a = new Z21TrafficController();
+        Assert.assertNotNull(a);
     }
 
     // from here down is testing infrastructure
-    public RocoConnectionTypeListTest(String s) {
+    public Z21TrafficControllerTest(String s) {
         super(s);
     }
 
     // Main entry point
     static public void main(String[] args) {
-        String[] testCaseName = {"-noloading", RocoConnectionTypeListTest.class.getName()};
+        String[] testCaseName = {"-noloading", Z21TrafficControllerTest.class.getName()};
         junit.swingui.TestRunner.main(testCaseName);
     }
 
     // test suite from all defined tests
     public static Test suite() {
-        TestSuite suite = new TestSuite(RocoConnectionTypeListTest.class);
+        TestSuite suite = new TestSuite(Z21TrafficControllerTest.class);
         return suite;
     }
 
