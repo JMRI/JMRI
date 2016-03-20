@@ -1,4 +1,3 @@
-// SystemConnectionMemo.java
 package jmri.jmrix;
 
 import apps.startup.StartupActionModelUtil;
@@ -21,7 +20,6 @@ import org.slf4j.LoggerFactory;
  * activate their particular system.
  *
  * @author	Bob Jacobsen Copyright (C) 2010
- * @version $Revision$
  */
 abstract public class SystemConnectionMemo {
 
@@ -326,6 +324,3 @@ abstract public class SystemConnectionMemo {
 
     private final static Logger log = LoggerFactory.getLogger(SystemConnectionMemo.class.getName());
 }
-
-
-/* @(#)SystemConnectionMemo.java */
