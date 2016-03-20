@@ -1,4 +1,3 @@
-// RocoConnectionTypeList.java
 package jmri.jmrix.roco;
 
 /**
@@ -7,7 +6,6 @@ package jmri.jmrix.roco;
  * <P>
  * @author Bob Jacobsen Copyright (C) 2010
  * @author Kevin Dickerson Copyright (C) 2010
- * @version	$Revision$
  *
  */
 public class RocoConnectionTypeList implements jmri.jmrix.ConnectionTypeList {

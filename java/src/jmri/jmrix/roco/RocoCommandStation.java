@@ -1,6 +1,3 @@
-/*
- * LenzCommandStation.java
- */
 package jmri.jmrix.roco;
 
 import org.slf4j.Logger;
@@ -29,6 +26,3 @@ public class RocoCommandStation extends jmri.jmrix.lenz.LenzCommandStation imple
     private final static Logger log = LoggerFactory.getLogger(RocoCommandStation.class.getName());
 
 }
-
-
-/* @(#)RocoCommandStation.java */

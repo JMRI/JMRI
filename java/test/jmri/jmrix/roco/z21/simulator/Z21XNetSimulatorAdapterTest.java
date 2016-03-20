@@ -1,4 +1,4 @@
-package jmri.jmrix.roco;
+package jmri.jmrix.roco.z21.simulator;
 
 import junit.framework.Assert;
 import junit.framework.Test;
@@ -6,32 +6,37 @@ import junit.framework.TestCase;
 import junit.framework.TestSuite;
 
 /**
- * Tests for the jmri.jmrix.roco.RocoConnectionTypeList class
+ * Z21XNetSimulatorAdapterTest.java
+
+ Description:	tests for the jmri.jmrix.roco.z21.simulator.Z21XNetSimulatorAdapter
+ class
+
+ Description:	tests for the jmri.jmrix.roco.z21.simulator.z21XNetSimulatorAdapter
+ class
  *
- * @author	Paul Bender
+ * @author	Paul Bender Copyright (C) 2016
  */
-public class RocoConnectionTypeListTest extends TestCase {
+public class Z21XNetSimulatorAdapterTest extends TestCase {
 
     public void testCtor() {
-
-        RocoConnectionTypeList c = new RocoConnectionTypeList();
-        Assert.assertNotNull(c);
+        Z21XNetSimulatorAdapter a = new Z21XNetSimulatorAdapter();
+        Assert.assertNotNull(a);
     }
 
     // from here down is testing infrastructure
-    public RocoConnectionTypeListTest(String s) {
+    public Z21XNetSimulatorAdapterTest(String s) {
         super(s);
     }
 
     // Main entry point
     static public void main(String[] args) {
-        String[] testCaseName = {"-noloading", RocoConnectionTypeListTest.class.getName()};
+        String[] testCaseName = {"-noloading", Z21XNetSimulatorAdapterTest.class.getName()};
         junit.swingui.TestRunner.main(testCaseName);
     }
 
     // test suite from all defined tests
     public static Test suite() {
-        TestSuite suite = new TestSuite(RocoConnectionTypeListTest.class);
+        TestSuite suite = new TestSuite(Z21XNetSimulatorAdapterTest.class);
         return suite;
     }
 
