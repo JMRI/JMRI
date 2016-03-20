@@ -3798,6 +3798,7 @@ public class LayoutEditor extends jmri.jmrit.display.panelEditor.PanelEditor imp
         return (new Point2D.Double(0.0, 0.0));
     }
 
+    @Override
     public void mouseReleased(MouseEvent event) {
         super.setToolTip(null);
         // initialize mouse position
@@ -4082,6 +4083,7 @@ public class LayoutEditor extends jmri.jmrit.display.panelEditor.PanelEditor imp
     /**
      * Select the menu items to display for the Positionable's popup
      */
+    @Override
     protected void showPopUp(Positionable p, MouseEvent event) {
         if (!((JComponent) p).isVisible()) {
             return;     // component must be showing on the screen to determine its location
@@ -5907,6 +5909,11 @@ public class LayoutEditor extends jmri.jmrit.display.panelEditor.PanelEditor imp
         setDirty(true);
     }
 
+    /*
+     * this function appears to be unused internally.
+     * @deprecated since 4.3.5
+     */
+    @Deprecated
     public void setLoc(int x, int y) {
         if (isEditable()) {
             xLoc = x;
