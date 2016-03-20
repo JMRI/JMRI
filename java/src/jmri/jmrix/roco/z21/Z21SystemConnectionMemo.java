@@ -86,13 +86,13 @@ public class Z21SystemConnectionMemo extends jmri.jmrix.SystemConnectionMemo {
     /**
      * Provide manager by class
      */
-    @SuppressWarnings("unchecked")
+    @SuppressWarnings("unchecked")  // xpressnet code managed type for cast
     public <T> T get(Class<?> T) {
         if (getDisabled()) {
             return null;
         }
         if (_xnettunnel!=null) {
-            // deligate to the XPressnet tunnel.
+            // delegate to the XPressnet tunnel.
             return _xnettunnel.getStreamPortController().getSystemConnectionMemo().get(T);        
         }
         return null; // nothing, by default

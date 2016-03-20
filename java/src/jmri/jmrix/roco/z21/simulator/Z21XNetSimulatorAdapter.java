@@ -29,7 +29,7 @@ public class Z21XNetSimulatorAdapter {
 
     // generateReply is the heart of the simulation.  It translates an 
     // incoming XNetMessage into an outgoing XNetReply.
-    @SuppressWarnings("fallthrough")
+    @SuppressWarnings("fallthrough") // document specific case same as default
     XNetReply generateReply(XNetMessage m) {
         log.debug("Generating Reply");
         XNetReply reply;
