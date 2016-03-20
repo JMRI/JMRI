@@ -1,4 +1,3 @@
-// LnCommandStationType.java
 package jmri.jmrix.loconet;
 
 import jmri.ThrottleManager;
@@ -28,7 +27,6 @@ import org.slf4j.LoggerFactory;
  * A PARTICULAR PURPOSE. See the GNU General Public License for more details.
  * <P>
  * @author	Bob Jacobsen Copyright (C) 2014
- * @version	$Revision$
  */
 @net.jcip.annotations.Immutable
 public enum LnCommandStationType {
@@ -58,11 +56,11 @@ public enum LnCommandStationType {
         this.slotManagerClassName = slotManagerClassName;
     }
 
-    String name;
-    boolean canRead;
-    boolean progEndOp;
-    String throttleClassName;
-    String slotManagerClassName;
+    final String name;
+    final boolean canRead;
+    final boolean progEndOp;
+    final String throttleClassName;
+    final String slotManagerClassName;
 
     public String getName() {
         return name;
@@ -157,6 +155,3 @@ public enum LnCommandStationType {
 
     private final static Logger log = LoggerFactory.getLogger(LnCommandStationType.class.getName());
 }
-
-
-/* @(#)LnCommandStationType.java */

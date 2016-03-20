@@ -26,7 +26,6 @@ import org.slf4j.LoggerFactory;
  *
  * @author	Bob Jacobsen Copyright (C) 2003
  * @author Bob Jacobsen, Dave Duchamp, multiNode extensions, 2004
- * @version	$Revision$
  *
  * @author	Bob Coleman Copyright (C) 2007. 2008 Based on CMRI serial example,
  * modified to establish Acela support.
@@ -428,7 +427,7 @@ public class AcelaTrafficController extends AbstractMRNodeTrafficController impl
     }
 
     protected void loadChars(AbstractMRReply msg, DataInputStream istream) throws java.io.IOException {
-        byte char1 = readByteProtected(istream);
+        int char1 = readByteProtected(istream)&0xFF;
         if (char1 == 0x00) {  // 0x00 means command processed OK.
             msg.setElement(0, char1);
             //  0x01 means that the Acela network is offline
@@ -486,5 +485,3 @@ public class AcelaTrafficController extends AbstractMRNodeTrafficController impl
 
     private final static Logger log = LoggerFactory.getLogger(AcelaTrafficController.class.getName());
 }
-
-/* @(#)AcelaTrafficController.java */

@@ -12,11 +12,19 @@ package jmri.jmrix.rfid;
  */
 public class RfidConnectionTypeList implements jmri.jmrix.ConnectionTypeList {
 
+    public static final String RFID = "RFID";
+
+    @Override
     public String[] getAvailableProtocolClasses() {
         return new String[]{
             "jmri.jmrix.rfid.serialdriver.ConnectionConfig",
             "jmri.jmrix.rfid.networkdriver.ConnectionConfig"
         };
+    }
+
+    @Override
+    public String[] getManufacturers() {
+        return new String[]{RFID};
     }
 
 }

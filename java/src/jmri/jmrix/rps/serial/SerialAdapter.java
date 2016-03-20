@@ -35,7 +35,7 @@ public class SerialAdapter extends jmri.jmrix.AbstractSerialPortController imple
         super(new RpsSystemConnectionMemo());
         option1Name = "Protocol";
         options.put(option1Name, new Option("Protocol", validOptions1));
-        this.manufacturerName = jmri.jmrix.DCCManufacturerList.NAC;
+        this.manufacturerName = jmri.jmrix.rps.RpsConnectionTypeList.NAC;
     }
 
     transient SerialPort activeSerialPort = null;

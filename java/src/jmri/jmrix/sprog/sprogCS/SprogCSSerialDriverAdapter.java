@@ -55,7 +55,7 @@ public class SprogCSSerialDriverAdapter
     static public SprogCSSerialDriverAdapter instance() {
         if (mInstance == null) {
             SprogCSSerialDriverAdapter m = new SprogCSSerialDriverAdapter();
-            m.setManufacturer(jmri.jmrix.DCCManufacturerList.SPROG);
+            m.setManufacturer(jmri.jmrix.sprog.SprogConnectionTypeList.SPROG);
             mInstance = m;
         }
         return mInstance;

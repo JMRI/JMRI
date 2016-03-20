@@ -69,9 +69,8 @@
                     </context>
                 </action>
                 <action name="debug">
-                    <script>${ant.script}</script>
-                    <target>decoderpro</target>
-                    <property name="debugger">true</property>
+                    <script>nbproject/ide-targets.xml</script>
+                    <target>debug-nb</target>
                 </action>
                 <action name="compile.single">
                     <script>nbproject/ide-file-targets.xml</script>

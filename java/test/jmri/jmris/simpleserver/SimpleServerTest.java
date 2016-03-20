@@ -17,12 +17,13 @@ public class SimpleServerTest extends TestCase {
     public void testCtor() {
         SimpleServer a = new SimpleServer();
         Assert.assertNotNull(a);
+        jmri.util.JUnitAppender.suppressErrorMessage("Failed to connect to port 2048");
     }
 
     public void testCtorwithParameter() {
         SimpleServer a = new SimpleServer(2048);
-        jmri.util.JUnitAppender.assertErrorMessage("Failed to connect to port 2048");
         Assert.assertNotNull(a);
+        jmri.util.JUnitAppender.suppressErrorMessage("Failed to connect to port 2048");
     }
 
     // from here down is testing infrastructure

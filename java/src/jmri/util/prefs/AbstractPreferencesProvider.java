@@ -1,4 +1,4 @@
-package jmri.spi;
+package jmri.util.prefs;
 
 import java.util.HashMap;
 import java.util.HashSet;
@@ -6,6 +6,7 @@ import java.util.Set;
 import jmri.beans.Bean;
 import jmri.jmrix.ConnectionConfigManager;
 import jmri.profile.Profile;
+import jmri.spi.PreferencesProvider;
 
 /**
  * An abstract PreferencesProvider that implements some of the boilerplate that

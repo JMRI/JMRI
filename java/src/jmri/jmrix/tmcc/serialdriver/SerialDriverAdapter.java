@@ -28,7 +28,7 @@ public class SerialDriverAdapter extends SerialPortController implements jmri.jm
 
     public SerialDriverAdapter() {
         super(new TMCCSystemConnectionMemo());
-        this.manufacturerName = jmri.jmrix.DCCManufacturerList.LIONEL;
+        this.manufacturerName = jmri.jmrix.tmcc.SerialConnectionTypeList.LIONEL;
     }
 
     public String openPort(String portName, String appName) {

@@ -6,20 +6,15 @@ import gnu.io.PortInUseException;
 import gnu.io.SerialPort;
 import gnu.io.SerialPortEvent;
 import gnu.io.SerialPortEventListener;
-import java.io.DataInputStream;
 import java.io.BufferedReader;
-import java.io.InputStreamReader;
+import java.io.DataInputStream;
 import java.io.DataOutputStream;
 import java.io.InputStream;
+import java.io.InputStreamReader;
 import jmri.jmrix.dccpp.DCCppCommandStation;
+import jmri.jmrix.dccpp.DCCppInitializationManager;
 import jmri.jmrix.dccpp.DCCppSerialPortController;
 import jmri.jmrix.dccpp.DCCppTrafficController;
-import jmri.jmrix.dccpp.DCCppInitializationManager;
-/*
- * TODO: Replace these with DCC++ equivalents
- *
-import jmri.jmrix.lenz.XNetInitializationManager;
-*/
 import jmri.util.SerialUtil;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -39,7 +34,7 @@ public class DCCppAdapter extends DCCppSerialPortController implements jmri.jmri
         super();
         //option1Name = "FlowControl";
         //options.put(option1Name, new Option("DCC++ connection uses : ", validOption1));
-        this.manufacturerName = jmri.jmrix.DCCManufacturerList.DCCPP;
+        this.manufacturerName = jmri.jmrix.dccpp.DCCppConnectionTypeList.DCCPP;
     }
 
     public String openPort(String portName, String appName) {

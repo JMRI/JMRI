@@ -11,12 +11,20 @@ package jmri.jmrix.marklin;
  */
 public class MarklinConnectionTypeList implements jmri.jmrix.ConnectionTypeList {
 
+    public static final String MARKLIN = "Marklin";
+
+    @Override
     public String[] getAvailableProtocolClasses() {
         return new String[]{
             "jmri.jmrix.marklin.networkdriver.ConnectionConfig"/*,
          "jmri.jmrix.ecos.csreloaded.ConnectionConfig",*/
 
         };
+    }
+
+    @Override
+    public String[] getManufacturers() {
+        return new String[]{MARKLIN};
     }
 
 }

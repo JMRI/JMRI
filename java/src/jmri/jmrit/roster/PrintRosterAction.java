@@ -8,6 +8,7 @@ import java.util.List;
 import javax.swing.ImageIcon;
 import javax.swing.JLabel;
 import jmri.beans.Beans;
+import jmri.jmrit.roster.rostergroup.RosterGroupSelector;
 import jmri.util.FileUtil;
 import jmri.util.davidflanagan.HardcopyWriter;
 import org.slf4j.Logger;
@@ -67,8 +68,8 @@ public class PrintRosterAction extends jmri.util.swing.JmriAbstractAction {
         // rosterGroup may legitimately be null
         // but getProperty returns null if the property cannot be found, so
         // we test that the property exists before attempting to get its value
-        if (Beans.hasProperty(wi, "selectedRosterGroup")) {
-            rosterGroup = (String) Beans.getProperty(wi, "selectedRosterGroup");
+        if (Beans.hasProperty(wi, RosterGroupSelector.SELECTED_ROSTER_GROUP)) {
+            rosterGroup = (String) Beans.getProperty(wi, RosterGroupSelector.SELECTED_ROSTER_GROUP);
         }
         if (rosterGroup == null) {
             title = title + " All Entries";

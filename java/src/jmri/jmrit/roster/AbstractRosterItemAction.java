@@ -9,6 +9,7 @@ import javax.swing.JComboBox;
 import javax.swing.JFileChooser;
 import javax.swing.JOptionPane;
 import jmri.beans.Beans;
+import jmri.jmrit.roster.rostergroup.RosterGroupSelector;
 import jmri.jmrit.roster.swing.RosterEntryComboBox;
 import jmri.util.swing.WindowInterface;
 import org.slf4j.Logger;
@@ -97,8 +98,8 @@ abstract public class AbstractRosterItemAction extends jmri.util.swing.JmriAbstr
     boolean selectExistingFromEntry() {
         // create a dialog to select the roster entry to copy
         String group = null;
-        if (Beans.hasProperty(wi, "selectedRosterGroup")) {
-            group = (String) Beans.getProperty(wi, "selectedRosterGroup");
+        if (Beans.hasProperty(wi, RosterGroupSelector.SELECTED_ROSTER_GROUP)) {
+            group = (String) Beans.getProperty(wi, RosterGroupSelector.SELECTED_ROSTER_GROUP);
         }
         JComboBox<?> selections = new RosterEntryComboBox(group);
         int retval = JOptionPane.showOptionDialog(mParent,
