@@ -53,12 +53,12 @@ import org.slf4j.LoggerFactory;
  * WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS FOR
  * A PARTICULAR PURPOSE. See the GNU General Public License for more details.
  * <P>
- * @author	Bob Jacobsen Copyright (C) 2001, 2008, 2013
+ * @author	Bob Jacobsen Copyright (C) 2001, 2008, 2013, 2016
  * @author Matthew Harris copyright (c) 2009
  */
 public class InstanceManager {
 
-    static final private HashMap<Class<?>, ArrayList<Object>> managerLists = new HashMap<Class<?>, ArrayList<Object>>();
+    static final private HashMap<Class<?>, ArrayList<Object>> managerLists = new HashMap<>();
 
     /* properties */
     public static String CONSIST_MANAGER = "consistmanager"; // NOI18N
@@ -75,7 +75,7 @@ public class InstanceManager {
     static public <T> void store(T item, Class<T> type) {
         ArrayList<Object> l = managerLists.get(type);
         if (l == null) {
-            l = new ArrayList<Object>();
+            l = new ArrayList<>();
             managerLists.put(type, l);
         }
         l.add(item);
@@ -132,7 +132,7 @@ public class InstanceManager {
             if (InstanceManagerAutoDefault.class.isAssignableFrom(type)) {
                 // yes, make sure list is present before creating object
                 if (l == null) {
-                    l = new ArrayList<Object>();
+                    l = new ArrayList<>();
                     managerLists.put(type, l);
                 }
                 try {
@@ -150,7 +150,7 @@ public class InstanceManager {
             if (obj != null) {
                 log.debug("      initializer created default of {}", type.getName());
                 if (l == null) {
-                    l = new ArrayList<Object>();
+                    l = new ArrayList<>();
                     managerLists.put(type, l);
                 }
                 l.add(obj);
@@ -252,7 +252,7 @@ public class InstanceManager {
         // make a copy of the listener vector to synchronized not needed for transmit
         Vector<PropertyChangeListener> v;
         synchronized (InstanceManager.class) {
-            v = new Vector<PropertyChangeListener>(listeners);
+            v = new Vector<>(listeners);
         }
         // forward to all listeners
         int cnt = v.size();
@@ -263,7 +263,7 @@ public class InstanceManager {
     }
 
     // data members to hold contact with the property listeners
-    final private static Vector<PropertyChangeListener> listeners = new Vector<PropertyChangeListener>();
+    final private static Vector<PropertyChangeListener> listeners = new Vector<>();
 
     // Simplification order - for each type, starting with those not in the jmri package:
     //   1) Remove it from jmri.managers.DefaultInstanceInitializer, get tests to build & run
