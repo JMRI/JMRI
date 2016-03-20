@@ -73,6 +73,7 @@ public class InstanceManager {
      *             the key to retrieve the object later.
      */
     static public <T> void store(T item, Class<T> type) {
+        log.debug("Store item of type {}", type.getName());
         ArrayList<Object> l = managerLists.get(type);
         if (l == null) {
             l = new ArrayList<>();
@@ -89,6 +90,7 @@ public class InstanceManager {
      */
     @SuppressWarnings("unchecked") // the cast here is protected by the structure of the managerLists
     static public <T> List<T> getList(Class<T> type) {
+        log.debug("Get list of type {}", type.getName());
         return (List<T>) managerLists.get(type);
     }
 
@@ -98,6 +100,7 @@ public class InstanceManager {
      * @param type The class Object for the items to be removed.
      */
     static public <T> void reset(Class<T> type) {
+        log.debug("Reset type {}", type.getName());
         managerLists.put(type, null);
     }
 
@@ -109,6 +112,7 @@ public class InstanceManager {
      * @param type The class Object for the item's type.
      */
     static public <T> void deregister(T item, Class<T> type) {
+        log.debug("Remove item type {}", type.getName());
         ArrayList<Object> l = managerLists.get(type);
         if (l != null) {
             l.remove(item);
@@ -124,7 +128,7 @@ public class InstanceManager {
      */
     @SuppressWarnings("unchecked")   // checked by construction
     static public <T> T getDefault(Class<T> type) {
-        log.trace("getDefault {}", type.getName());
+        log.trace("getDefault of type {}", type.getName());
         ArrayList<Object> l = managerLists.get(type);
         if (l == null || l.size() < 1) {
             // see if can autocreate
@@ -138,7 +142,16 @@ public class InstanceManager {
                 try {
                     l.add(type.getConstructor((Class[]) null).newInstance((Object[]) null));
                     log.debug("      auto-created default of {}", type.getName());
-                } catch (Exception e) {
+                } catch (NoSuchMethodException e) {
+                    log.error("Exception creating auto-default object", e); // unexpected
+                    return null;
+                } catch (InstantiationException e) {
+                    log.error("Exception creating auto-default object", e); // unexpected
+                    return null;
+                } catch (IllegalAccessException e) {
+                    log.error("Exception creating auto-default object", e); // unexpected
+                    return null;
+                } catch (java.lang.reflect.InvocationTargetException e) {
                     log.error("Exception creating auto-default object", e); // unexpected
                     return null;
                 }
@@ -172,6 +185,7 @@ public class InstanceManager {
      * {@link #getDefault} method
      */
     static public <T> void setDefault(Class<T> type, T val) {
+        log.trace("setDefault for type {}", type.getName());
         List<T> l = getList(type);
         if (l == null || (l.size() < 1)) {
             store(val, type);
