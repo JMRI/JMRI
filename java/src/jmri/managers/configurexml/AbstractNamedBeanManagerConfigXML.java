@@ -1,4 +1,3 @@
-// AbstractNamedBeanManagerConfigXML.java
 package jmri.managers.configurexml;
 
 import java.lang.reflect.Constructor;
@@ -16,7 +15,6 @@ import org.slf4j.LoggerFactory;
  * various common service routines to eventual type-specific subclasses.
  *
  * @author Bob Jacobsen Copyright: Copyright (c) 2009
- * @version $Revision$
  * @since 2.3.1
  */
 public abstract class AbstractNamedBeanManagerConfigXML extends jmri.configurexml.AbstractXmlAdapter {
