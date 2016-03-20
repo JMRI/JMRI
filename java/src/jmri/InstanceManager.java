@@ -1,4 +1,3 @@
-// InstanceManager.java
 package jmri;
 
 import apps.gui3.TabbedPreferences;
@@ -56,7 +55,6 @@ import org.slf4j.LoggerFactory;
  * <P>
  * @author	Bob Jacobsen Copyright (C) 2001, 2008, 2013
  * @author Matthew Harris copyright (c) 2009
- * @version	$Revision$
  */
 public class InstanceManager {
 
@@ -692,5 +690,3 @@ public class InstanceManager {
     /* *************************************************************************** */
     private final static Logger log = LoggerFactory.getLogger(InstanceManager.class.getName());
 }
-
-/* @(#)InstanceManager.java */
