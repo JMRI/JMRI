@@ -31,6 +31,9 @@ abstract public class AbstractProxyManager implements Manager {
      * including the Internal manager
      */
     protected int nMgrs() {
+        // make sure internal present
+        initInternal();
+
         return mgrs.size();
     }
 
@@ -113,6 +116,9 @@ abstract public class AbstractProxyManager implements Manager {
      * @return Never null under normal circumstances
      */
     protected NamedBean provideNamedBean(String name) {
+        // make sure internal present
+        initInternal();
+
         NamedBean t = getNamedBean(name);
         if (t != null) {
             return t;
@@ -184,6 +190,9 @@ abstract public class AbstractProxyManager implements Manager {
      * @return requested NamedBean object (never null)
      */
     public NamedBean newNamedBean(String systemName, String userName) {
+        // make sure internal present
+        initInternal();
+
         // if the systemName is specified, find that system
         int i = matchTentative(systemName);
         if (i >= 0) {
@@ -223,6 +232,9 @@ abstract public class AbstractProxyManager implements Manager {
      * there is no match, here considered to be an error that must be reported.
      */
     protected int match(String systemname) {
+        // make sure internal present
+        initInternal();
+
         int index = matchTentative(systemname);
         if (index < 0) {
             throw new IllegalArgumentException("System name " + systemname + " failed to match");
