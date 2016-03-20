@@ -33,18 +33,20 @@ public class WebServerAction extends JmriAbstractAction {
 
     @Override
     public void actionPerformed(ActionEvent ev) {
-        if (serverThread == null) {
-            serverThread = new ServerThread();
-            serverThread.start();
-        } else {
-            log.info("Web Server already running");
+        synchronized (this) {
+            if (serverThread == null) {
+                serverThread = new ServerThread();
+                serverThread.start();
+            } else {
+                log.info("Web Server already running");
+            }
         }
     }
 
     @Override
     public jmri.util.swing.JmriPanel makePanel() { return null; } // not used by this classes actionPerformed, as it doesn't show anything
     
-    static class ServerThread extends Thread {
+    private static class ServerThread extends Thread {
 
         @Override
         public void run() {

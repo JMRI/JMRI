@@ -20,7 +20,6 @@ import org.slf4j.LoggerFactory;
  */
 public class WebServerManager {
 
-    static private WebServerManager instance = null;
     private WebServerPreferences preferences;
     private WebServer server;
     private final static Logger log = LoggerFactory.getLogger(WebServer.class.getName());
@@ -42,10 +41,10 @@ public class WebServerManager {
     }
 
     public static WebServerManager getInstance() {
-        if (instance == null) {
-            instance = new WebServerManager();
+        if (InstanceManager.getDefault(WebServerManager.class) == null) {
+            InstanceManager.setDefault(WebServerManager.class, new WebServerManager());
         }
-        return instance;
+        return InstanceManager.getDefault(WebServerManager.class);
     }
 
     public WebServerPreferences getPreferences() {
