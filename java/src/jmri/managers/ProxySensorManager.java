@@ -19,7 +19,7 @@ public class ProxySensorManager extends AbstractProxyManager
     }
 
     protected AbstractManager makeInternalManager() {
-        return new InternalSensorManager();
+        return jmri.InstanceManager.getDefault(jmri.jmrix.internal.InternalSystemConnectionMemo.class).getSensorManager();
     }
 
     /**

@@ -24,7 +24,7 @@ public class ProxyTurnoutManager extends AbstractProxyManager implements Turnout
     }
 
     protected AbstractManager makeInternalManager() {
-        return new InternalTurnoutManager();
+        return jmri.InstanceManager.getDefault(jmri.jmrix.internal.InternalSystemConnectionMemo.class).getTurnoutManager();
     }
 
     /**

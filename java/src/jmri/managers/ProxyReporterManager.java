@@ -17,7 +17,7 @@ public class ProxyReporterManager extends AbstractProxyManager implements Report
     }
 
     protected AbstractManager makeInternalManager() {
-        return new InternalReporterManager();
+        return jmri.InstanceManager.getDefault(jmri.jmrix.internal.InternalSystemConnectionMemo.class).getReporterManager();
     }
 
     public int getXMLOrder() {
