@@ -3,6 +3,7 @@ package jmri.util.zeroconf;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
+import javax.annotation.Nonnull;
 import javax.jmdns.JmDNS;
 import javax.jmdns.NetworkTopologyEvent;
 import javax.jmdns.NetworkTopologyListener;
@@ -18,7 +19,7 @@ public class ZeroConfClient {
     private final static Logger log = LoggerFactory.getLogger(ZeroConfClient.class.getName());
 
     // mdns related routines.
-    public void startServiceListener(String service) {
+    public void startServiceListener(@Nonnull String service) {
         log.debug("StartServiceListener called for service: {}", service);
         if (mdnsServiceListener == null) {
             mdnsServiceListener = new NetworkServiceListener(service, this);
@@ -28,7 +29,7 @@ public class ZeroConfClient {
         }
     }
 
-    public void stopServiceListener(String service) {
+    public void stopServiceListener(@Nonnull String service) {
         for (JmDNS server : ZeroConfService.netServices().values()) {
             server.removeServiceListener(service, mdnsServiceListener);
         }
@@ -41,7 +42,7 @@ public class ZeroConfClient {
      * @return JmDNS service entry for the first service of a particular
      *         service.
      */
-    public ServiceInfo getService(String service) {
+    public ServiceInfo getService(@Nonnull String service) {
         for (JmDNS server : ZeroConfService.netServices().values()) {
             ServiceInfo[] infos = server.list(service);
             if (infos != null) {
@@ -58,7 +59,7 @@ public class ZeroConfClient {
      * @return A list of servers or an empty list.
      */
     @SuppressWarnings("unchecked")
-    public List<ServiceInfo> getServices(String service) {
+    @Nonnull public List<ServiceInfo> getServices(@Nonnull String service) {
         ArrayList<ServiceInfo> services = new ArrayList();
         for (JmDNS server : ZeroConfService.netServices().values()) {
             if (server.list(service) != null) {
@@ -76,7 +77,7 @@ public class ZeroConfClient {
      * @return JmDNS service entry for the first service of a particular service
      *         on the specified host..
      */
-    public ServiceInfo getServiceOnHost(String service, String hostname) {
+    public ServiceInfo getServiceOnHost(@Nonnull String service, @Nonnull String hostname) {
         for (JmDNS server : ZeroConfService.netServices().values()) {
             ServiceInfo[] infos = server.list(service);
             for (ServiceInfo info : infos) {
@@ -97,7 +98,7 @@ public class ZeroConfClient {
      * @return JmDNS service entry for the first service of a particular service
      *         on the specified host..
      */
-    public ServiceInfo getServicebyAdName(String service, String adName) {
+    public ServiceInfo getServicebyAdName(@Nonnull String service, @Nonnull String adName) {
         for (JmDNS server : ZeroConfService.netServices().values()) {
             ServiceInfo[] infos = server.list(service);
             for (ServiceInfo info : infos) {
@@ -110,7 +111,7 @@ public class ZeroConfClient {
         return null;
     }
 
-    public String[] getHostList(String service) {
+    @Nonnull public String[] getHostList(@Nonnull String service) {
         ArrayList<String> hostlist = new ArrayList<String>();
         for (JmDNS server : ZeroConfService.netServices().values()) {
             ServiceInfo[] infos = server.list(service);
@@ -118,7 +119,7 @@ public class ZeroConfClient {
                 hostlist.add(info.getServer());
             }
         }
-        return ((String[]) hostlist.toArray());
+        return hostlist.toArray(new String[hostlist.size()]);
     }
 
     public static class NetworkServiceListener implements ServiceListener, NetworkTopologyListener {
@@ -146,11 +147,7 @@ public class ZeroConfClient {
             log.debug("Service added: {}", se.getInfo().toString());
             // notify the client when a service is added.
             synchronized (client) {
-                try {
-                    client.notifyAll();
-                } catch (java.lang.IllegalMonitorStateException imse) {
-                    log.error("Error notifying waiting listeners: {}", imse.getCause());
-                }
+                client.notifyAll();
             }
         }
 

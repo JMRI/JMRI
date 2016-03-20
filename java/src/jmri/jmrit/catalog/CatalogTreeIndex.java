@@ -55,35 +55,35 @@ public class CatalogTreeIndex extends AbstractCatalogTree {
      }
      */
 
-    public void setProperty(Object key, Object value) {
+    public void setProperty(String key, Object value) {
         if (parameters == null) {
-            parameters = new HashMap<Object, Object>();
+            parameters = new HashMap<String, Object>();
         }
         parameters.put(key, value);
     }
 
-    public Object getProperty(Object key) {
+    public Object getProperty(String key) {
         if (parameters == null) {
             return null;
         }
         return parameters.get(key);
     }
 
-    public java.util.Set<Object> getPropertyKeys() {
+    public java.util.Set<String> getPropertyKeys() {
         if (parameters == null) {
             return null;
         }
         return parameters.keySet();
     }
 
-    public void removeProperty(Object key) {
+    public void removeProperty(String key) {
         if (parameters == null || key == null) {
             return;
         }
         parameters.remove(key);
     }
 
-    HashMap<Object, Object> parameters = null;
+    HashMap<String, Object> parameters = null;
 
     private final static Logger log = LoggerFactory.getLogger(CatalogTreeIndex.class.getName());
 }

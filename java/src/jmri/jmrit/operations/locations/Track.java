@@ -1841,7 +1841,7 @@ public class Track {
                     return MessageFormat.format(Bundle.getMessage("scheduleRandom"), new Object[]{SCHEDULE,
                         getScheduleName(), si.getId(), value, random});
                 }
-            } catch (Exception NumberFormatException) {
+            } catch (NumberFormatException e) {
                 log.error("Random value {} isn't a number", si.getRandom());
             }
         }

@@ -1,13 +1,12 @@
 package jmri.jmrit.operations.rollingstock.cars;
 
-import jmri.jmrit.operations.trains.timetable.TrainScheduleManager;
-
-import jmri.jmrit.operations.trains.timetable.TrainSchedule;
 import java.beans.PropertyChangeEvent;
 import jmri.jmrit.operations.locations.Location;
 import jmri.jmrit.operations.locations.LocationManager;
 import jmri.jmrit.operations.locations.Track;
 import jmri.jmrit.operations.rollingstock.RollingStock;
+import jmri.jmrit.operations.trains.timetable.TrainSchedule;
+import jmri.jmrit.operations.trains.timetable.TrainScheduleManager;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -262,7 +261,7 @@ public class Car extends RollingStock {
             if (!isCaboose() && !isPassenger() && getLoadType().equals(CarLoad.LOAD_TYPE_EMPTY)) {
                 weightTons = weightTons / 3;
             }
-        } catch (Exception e) {
+        } catch (NumberFormatException e) {
             log.debug("Car ({}) weight not set", toString());
         }
         return weightTons;

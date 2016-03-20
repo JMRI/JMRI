@@ -33,12 +33,9 @@ import org.slf4j.LoggerFactory;
  * @author Dan Boudreau Copyright (C) 2008, 2012
  * @version $Revision$
  */
+@edu.umd.cs.findbugs.annotations.SuppressFBWarnings(value = "BC_UNCONFIRMED_CAST_OF_RETURN_VALUE")
 public class OperationsFrame extends JmriJFrame implements AncestorListener {
 
-    /**
-     *
-     */
-    private static final long serialVersionUID = -8263240370517832287L;
     public static final String NEW_LINE = "\n"; // NOI18N
     public static final String NONE = ""; // NOI18N
 

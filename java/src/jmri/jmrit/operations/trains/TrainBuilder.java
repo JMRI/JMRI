@@ -595,14 +595,14 @@ public class TrainBuilder extends TrainCommon {
 
         // Do caboose changes in reverse order in case there isn't enough track space
         // second caboose change?
-        if ((_train.getThirdLegOptions() & Train.ADD_CABOOSE) > 0 && _train.getThirdLegStartLocation() != null
+        if ((_train.getThirdLegOptions() & Train.ADD_CABOOSE) == Train.ADD_CABOOSE && _train.getThirdLegStartLocation() != null
                 && _train.getTrainTerminatesRouteLocation() != null) {
             getCaboose(_train.getThirdLegCabooseRoad(), thirdLeadEngine, _train.getThirdLegStartLocation(), _train
                     .getTrainTerminatesRouteLocation(), true);
         }
 
         // first caboose change?
-        if ((_train.getSecondLegOptions() & Train.ADD_CABOOSE) > 0 && _train.getSecondLegStartLocation() != null
+        if ((_train.getSecondLegOptions() & Train.ADD_CABOOSE) == Train.ADD_CABOOSE && _train.getSecondLegStartLocation() != null
                 && cabooseOrFredTerminatesSecondLeg != null) {
             getCaboose(_train.getSecondLegCabooseRoad(), secondLeadEngine, _train.getSecondLegStartLocation(),
                     cabooseOrFredTerminatesSecondLeg, true);
@@ -610,7 +610,7 @@ public class TrainBuilder extends TrainCommon {
 
         // get caboose or car with FRED if needed for train
         getCaboose(_train.getCabooseRoad(), _train.getLeadEngine(), _train.getTrainDepartsRouteLocation(),
-                cabooseOrFredTerminatesFirstLeg, (_train.getRequirements() & Train.CABOOSE) > 0);
+                cabooseOrFredTerminatesFirstLeg, (_train.getRequirements() & Train.CABOOSE) == Train.CABOOSE);
         getCarWithFred(_train.getCabooseRoad(), _train.getTrainDepartsRouteLocation(), cabooseOrFredTerminatesFirstLeg);
 
         // done assigning cabooses and cars with FRED, remove the rest, and save final destination
@@ -727,7 +727,7 @@ public class TrainBuilder extends TrainCommon {
                     _train.getThirdLegEngineRoad()}));
         }
         // show caboose or FRED requirements
-        if ((_train.getRequirements() & Train.CABOOSE) > 0) {
+        if ((_train.getRequirements() & Train.CABOOSE) == Train.CABOOSE) {
             addLine(_buildReport, ONE, MessageFormat.format(Bundle.getMessage("buildTrainRequiresCaboose"),
                     new Object[]{_train.getTrainDepartsName(), _train.getCabooseRoad()}));
         }
@@ -742,7 +742,7 @@ public class TrainBuilder extends TrainCommon {
             addLine(_buildReport, ONE, MessageFormat.format(Bundle.getMessage("buildCabooseChange"),
                     new Object[]{_train.getThirdLegStartLocation()}));
         }
-        if ((_train.getRequirements() & Train.FRED) > 0) {
+        if ((_train.getRequirements() & Train.FRED) == Train.FRED) {
             addLine(_buildReport, ONE, MessageFormat.format(Bundle.getMessage("buildTrainRequiresFRED"), new Object[]{
                     _train.getTrainDepartsName(), _train.getCabooseRoad()}));
         }
@@ -2494,7 +2494,7 @@ public class TrainBuilder extends TrainCommon {
         if (_train.isLocalSwitcher()) {
             return true;
         }
-        if ((rl.getTrainDirection() & rs.getLocation().getTrainDirections() & rs.getTrack().getTrainDirections()) > 0) {
+        if ((rl.getTrainDirection() & rs.getLocation().getTrainDirections() & rs.getTrack().getTrainDirections()) != 0) {
             return true;
         }
 
@@ -2511,7 +2511,7 @@ public class TrainBuilder extends TrainCommon {
         if (_train.isLocalSwitcher()) {
             return true;
         }
-        if ((rl.getTrainDirection() & rl.getLocation().getTrainDirections()) > 0) {
+        if ((rl.getTrainDirection() & rl.getLocation().getTrainDirections()) != 0) {
             return true;
         }
 
@@ -2574,8 +2574,8 @@ public class TrainBuilder extends TrainCommon {
         }
 
         // is this a car going to alternate track? Check to see if direct move from alternate to FD track is possible
-        if ((rld.getTrainDirection() & serviceTrainDir) > 0 && rs != null && track != null
-                && (track.getTrainDirections() & serviceTrainDir) > 0 && Car.class.isInstance(rs)) {
+        if ((rld.getTrainDirection() & serviceTrainDir) != 0 && rs != null && track != null
+                && (track.getTrainDirections() & serviceTrainDir) != 0 && Car.class.isInstance(rs)) {
             Car car = (Car) rs;
             if (car.getFinalDestinationTrack() != null && track == car.getFinalDestinationTrack().getAlternateTrack()
                     && (track.getTrainDirections() & car.getFinalDestinationTrack().getTrainDirections()) == 0) {
@@ -2593,7 +2593,7 @@ public class TrainBuilder extends TrainCommon {
             }
         }
 
-        if ((rld.getTrainDirection() & serviceTrainDir) > 0) {
+        if ((rld.getTrainDirection() & serviceTrainDir) != 0) {
             return true;
         }
         if (rs == null) {
@@ -3543,7 +3543,7 @@ public class TrainBuilder extends TrainCommon {
                             new Object[]{track.getName(), track.getScheduleName(), si.getId(), value, random}));
                     return null;
                 }
-            } catch (Exception NumberFormatException) {
+            } catch (NumberFormatException e) {
                 log.error("Random value {} isn't a number", si.getRandom());
             }
         }
