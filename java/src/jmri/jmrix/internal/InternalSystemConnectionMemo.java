@@ -71,7 +71,7 @@ public class InternalSystemConnectionMemo extends jmri.jmrix.SystemConnectionMem
 
     public InternalTurnoutManager getTurnoutManager() {
         if (turnoutManager == null) {
-            log.debug("Create InternalTurnoutManager \"{}\" by request", getSystemPrefix(), new Exception("traceback"));
+            log.debug("Create InternalTurnoutManager \"{}\" by request", getSystemPrefix());
             turnoutManager = new InternalTurnoutManager(getSystemPrefix());
             InstanceManager.setTurnoutManager(turnoutManager);
         }
