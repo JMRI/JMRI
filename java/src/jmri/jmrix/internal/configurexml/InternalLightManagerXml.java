@@ -1,4 +1,4 @@
-package jmri.managers.configurexml;
+package jmri.jmrix.internal.configurexml;
 
 import org.jdom2.Element;
 import org.slf4j.Logger;
@@ -10,10 +10,9 @@ import org.slf4j.LoggerFactory;
  * Uses the store method from the abstract base class, but provides a load
  * method here.
  *
- * @author Bob Jacobsen Copyright: Copyright (c) 2009
- * @deprecated As of 4.3.5, see jmri.jmrix.internal.configurexml classes
+ * @author Bob Jacobsen Copyright: Copyright (c) 2016
+ * @since 4.3.5
  */
-@Deprecated
 public class InternalLightManagerXml extends jmri.managers.configurexml.AbstractLightManagerConfigXML {
 
     public InternalLightManagerXml() {

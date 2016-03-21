@@ -1,4 +1,4 @@
-package jmri.managers;
+package jmri.jmrix.internal;
 
 import jmri.Reporter;
 import jmri.implementation.AbstractReporter;
@@ -8,10 +8,8 @@ import jmri.implementation.AbstractReporter;
  *
  * @author	Bob Jacobsen Copyright (C) 2010
  * @since 2.9.4
- * @deprecated As of 4.3.5, use jmri.jmrix.internal classes
  */
-@Deprecated
-public class InternalReporterManager extends AbstractReporterManager {
+public class InternalReporterManager extends jmri.managers.AbstractReporterManager {
 
     /**
      * Create an internal (dummy) reporter object
@@ -20,7 +18,6 @@ public class InternalReporterManager extends AbstractReporterManager {
      */
     protected Reporter createNewReporter(String systemName, String userName) {
         return new AbstractReporter(systemName, userName) {
-
             public int getState() {
                 return state;
             }
@@ -41,4 +38,3 @@ public class InternalReporterManager extends AbstractReporterManager {
         return "I";
     }
 }
-
