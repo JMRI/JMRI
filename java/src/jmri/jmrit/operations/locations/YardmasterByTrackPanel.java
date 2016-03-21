@@ -41,11 +41,6 @@ import org.slf4j.LoggerFactory;
  */
 public class YardmasterByTrackPanel extends CommonConductorYardmasterPanel {
 
-    /**
-     *
-     */
-    private static final long serialVersionUID = -88218348551032298L;
-
     protected static final boolean IS_MANIFEST = false;
 
     protected Track _track = null;
@@ -183,6 +178,7 @@ public class YardmasterByTrackPanel extends CommonConductorYardmasterPanel {
         });
     }
 
+    @edu.umd.cs.findbugs.annotations.SuppressFBWarnings(value = "BC_UNCONFIRMED_CAST_OF_RETURN_VALUE")
     private void runUpdate() {
         log.debug("run update");
         removePropertyChangeListerners();

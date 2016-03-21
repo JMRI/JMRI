@@ -51,6 +51,7 @@ import org.slf4j.LoggerFactory;
  * @author Rodney Black Copyright (C) 2011
  * @version $Revision$
  */
+@edu.umd.cs.findbugs.annotations.SuppressFBWarnings(value = "ST_WRITE_TO_STATIC_FROM_INSTANCE_METHOD")
 public class Train implements java.beans.PropertyChangeListener {
     /*
      * WARNING DO NOT LOAD CAR OR ENGINE MANAGERS WHEN Train.java IS CREATED IT
@@ -1961,11 +1962,10 @@ public class Train implements java.beans.PropertyChangeListener {
         if (route != null) {
             for (RouteLocation rl : route.getLocationsBySequenceList()) {
                 for (RollingStock rs : CarManager.instance().getList(this)) {
-                    Car car = (Car) rs;
-                    if (car.getRouteLocation() == rl) {
+                    if (rs.getRouteLocation() == rl) {
                         number++;
                     }
-                    if (car.getRouteDestination() == rl) {
+                    if (rs.getRouteDestination() == rl) {
                         number--;
                     }
                 }
@@ -2031,21 +2031,19 @@ public class Train implements java.beans.PropertyChangeListener {
         if (route != null) {
             for (RouteLocation rl : route.getLocationsBySequenceList()) {
                 for (RollingStock rs : EngineManager.instance().getList(this)) {
-                    Engine eng = (Engine) rs;
-                    if (eng.getRouteLocation() == rl) {
-                        length += eng.getTotalLength();
+                    if (rs.getRouteLocation() == rl) {
+                        length += rs.getTotalLength();
                     }
-                    if (eng.getRouteDestination() == rl) {
-                        length += -eng.getTotalLength();
+                    if (rs.getRouteDestination() == rl) {
+                        length += -rs.getTotalLength();
                     }
                 }
                 for (RollingStock rs : CarManager.instance().getList(this)) {
-                    Car car = (Car) rs;
-                    if (car.getRouteLocation() == rl) {
-                        length += car.getTotalLength();
+                    if (rs.getRouteLocation() == rl) {
+                        length += rs.getTotalLength();
                     }
-                    if (car.getRouteDestination() == rl) {
-                        length += -car.getTotalLength();
+                    if (rs.getRouteDestination() == rl) {
+                        length += -rs.getTotalLength();
                     }
                 }
                 if (rl == routeLocation) {
@@ -2071,18 +2069,17 @@ public class Train implements java.beans.PropertyChangeListener {
         if (route != null) {
             for (RouteLocation rl : route.getLocationsBySequenceList()) {
                 for (RollingStock rs : EngineManager.instance().getList(this)) {
-                    Engine eng = (Engine) rs;
-                    if (eng.getRouteLocation() == rl) {
-                        weight += eng.getAdjustedWeightTons();
+                    if (rs.getRouteLocation() == rl) {
+                        weight += rs.getAdjustedWeightTons();
                     }
-                    if (eng.getRouteDestination() == rl) {
-                        weight += -eng.getAdjustedWeightTons();
+                    if (rs.getRouteDestination() == rl) {
+                        weight += -rs.getAdjustedWeightTons();
                     }
                 }
                 for (RollingStock rs : CarManager.instance().getList(this)) {
                     Car car = (Car) rs;
                     if (car.getRouteLocation() == rl) {
-                        weight += car.getAdjustedWeightTons();
+                        weight += car.getAdjustedWeightTons(); // weight depends on car load
                     }
                     if (car.getRouteDestination() == rl) {
                         weight += -car.getAdjustedWeightTons();
