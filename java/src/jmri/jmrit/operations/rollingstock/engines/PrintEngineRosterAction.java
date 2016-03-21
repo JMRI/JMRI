@@ -1,7 +1,6 @@
 // PrintEngineRosterAction.java
 package jmri.jmrit.operations.rollingstock.engines;
 
-import java.awt.Component;
 import java.awt.Frame;
 import java.awt.event.ActionEvent;
 import java.io.IOException;
@@ -33,11 +32,11 @@ public class PrintEngineRosterAction extends AbstractAction {
 
     EngineManager manager = EngineManager.instance();
 
-    public PrintEngineRosterAction(String actionName, Frame frame, boolean preview, Component pWho) {
+    public PrintEngineRosterAction(String actionName, Frame frame, boolean preview, EnginesTableFrame pWho) {
         super(actionName);
         mFrame = frame;
         isPreview = preview;
-        panel = (EnginesTableFrame) pWho;
+        panel = pWho;
     }
 
     /**
@@ -53,6 +52,7 @@ public class PrintEngineRosterAction extends AbstractAction {
     static final String NEW_LINE = "\n"; // NOI18N
     static final String TAB = "\t"; // NOI18N
 
+    @edu.umd.cs.findbugs.annotations.SuppressFBWarnings(value = " BC_UNCONFIRMED_CAST_OF_RETURN_VALUE")
     public void actionPerformed(ActionEvent e) {
 
         // obtain a HardcopyWriter to do this
