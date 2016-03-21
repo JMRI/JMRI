@@ -10,6 +10,7 @@ import jmri.configurexml.AbstractXmlAdapter;
 import jmri.configurexml.XmlAdapter;
 import jmri.jmrit.display.Positionable;
 import jmri.jmrit.display.layoutEditor.LayoutEditor;
+import jmri.util.ColorUtil;
 import org.jdom2.Attribute;
 import org.jdom2.DataConversionException;
 import org.jdom2.Element;
@@ -533,7 +534,7 @@ public class LayoutEditorXml extends AbstractXmlAdapter {
             int red = shared.getAttribute("redBackground").getIntValue();
             int blue = shared.getAttribute("blueBackground").getIntValue();
             int green = shared.getAttribute("greenBackground").getIntValue();
-            panel.setDefaultBackgroundColor(LayoutEditor.colorToString(new Color(red, green, blue)));
+            panel.setDefaultBackgroundColor(ColorUtil.colorToString(new Color(red, green, blue)));
             panel.setBackgroundColor(new Color(red, green, blue));
         } catch (org.jdom2.DataConversionException e) {
             log.warn("Could not parse color attributes!");
