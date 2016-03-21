@@ -34,13 +34,6 @@ public class PackageTest extends TestCase {
         suite.addTest(BlockValueFileTest.suite());
         suite.addTest(LayoutBlockConnectivityToolsTest.suite());
         suite.addTest(LayoutTurnoutTest.suite());
-        suite.addTest(LayoutSlipTest.suite());
-        suite.addTest(LayoutTurntableTest.suite());
-        suite.addTest(LevelXingTest.suite());
-        suite.addTest(MemoryIconTest.suite());
-        suite.addTest(PositionablePointTest.suite());
-        suite.addTest(TrackNodeTest.suite());
-        suite.addTest(TrackSegmentTest.suite());
         suite.addTest(LayoutConnectivityTest.suite());
 
         if (!System.getProperty("jmri.headlesstest", "false").equals("true")) {
@@ -52,6 +45,13 @@ public class PackageTest extends TestCase {
             suite.addTest(BlockContentsIconTest.suite());
             suite.addTest(MultiIconEditorTest.suite());
             suite.addTest(MultiSensorIconFrameTest.suite());
+            suite.addTest(LayoutTurntableTest.suite());
+            suite.addTest(LevelXingTest.suite());
+            suite.addTest(LayoutSlipTest.suite());
+            suite.addTest(MemoryIconTest.suite());
+            suite.addTest(PositionablePointTest.suite());
+            suite.addTest(TrackNodeTest.suite());
+            suite.addTest(TrackSegmentTest.suite());
             suite.addTest(LayoutEditorWindowTest.suite());
             suite.addTest(LEConnectivityTest.suite());
         }
