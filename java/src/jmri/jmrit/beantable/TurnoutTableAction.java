@@ -159,7 +159,7 @@ public class TurnoutTableAction extends AbstractTableAction {
                 if (col == INVERTCOL) {
                     return Bundle.getMessage("Inverted");
                 } else if (col == LOCKCOL) {
-                    return "Locked";
+                    return "Locked"; // I18N TODO this list
                 } else if (col == KNOWNCOL) {
                     return "Feedback";
                 } else if (col == MODECOL) {

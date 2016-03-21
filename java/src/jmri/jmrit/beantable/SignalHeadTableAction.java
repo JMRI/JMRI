@@ -103,7 +103,9 @@ public class SignalHeadTableAction extends AbstractTableAction {
             }
 
             public String getColumnName(int col) {
-                if (col == LITCOL) {
+               if (col == VALUECOL) {
+                   return Bundle.getMessage("SignalMastAppearance");  // override default title
+               } else if (col == LITCOL) {
                     return Bundle.getMessage("ColumnHeadLit");
                 } else if (col == HELDCOL) {
                     return Bundle.getMessage("ColumnHeadHeld");
