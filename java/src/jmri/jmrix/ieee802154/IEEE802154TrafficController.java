@@ -1,4 +1,3 @@
-// IEEE802154TrafficController.java
 package jmri.jmrix.ieee802154;
 
 import jmri.jmrix.AbstractMRListener;
@@ -26,7 +25,6 @@ import org.slf4j.LoggerFactory;
  * multiple connection
  * @author kcameron Copyright (C) 2011
  * @author Paul Bender Copyright (C) 2013
- * @version	$Revision$
  */
 abstract public class IEEE802154TrafficController extends AbstractMRNodeTrafficController implements IEEE802154Interface {
 
@@ -49,7 +47,7 @@ abstract public class IEEE802154TrafficController extends AbstractMRNodeTrafficC
      */
     @Deprecated
     public void setInstance() {
-        log.warn("Deprecated Method setInstance called");
+        log.error("Deprecated Method setInstance called");
     }
 
     /**
@@ -289,6 +287,3 @@ abstract public class IEEE802154TrafficController extends AbstractMRNodeTrafficC
     private final static Logger log = LoggerFactory.getLogger(IEEE802154TrafficController.class);
 
 }
-
-
-/* @(#)IEEE802154TrafficController.java */
