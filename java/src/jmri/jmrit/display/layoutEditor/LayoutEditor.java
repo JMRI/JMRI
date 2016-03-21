@@ -440,7 +440,7 @@ public class LayoutEditor extends jmri.jmrit.display.panelEditor.PanelEditor imp
         jmri.configurexml.StoreXmlUserAction store = new jmri.configurexml.StoreXmlUserAction(rbx.getString("MenuItemStore"));
         if (SystemType.isMacOSX())
             store.putValue(store.ACCELERATOR_KEY, KeyStroke.getKeyStroke(
-                    stringsToVTCodes.get(rbx.getString("MenuItemStoreAccelerator")), ActionEvent.CTRL_MASK));
+                    stringsToVTCodes.get(rbx.getString("MenuItemStoreAccelerator")), ActionEvent.META_MASK));
         else
             store.putValue(store.ACCELERATOR_KEY, KeyStroke.getKeyStroke(
                     stringsToVTCodes.get(rbx.getString("MenuItemStoreAccelerator")), ActionEvent.CTRL_MASK));
