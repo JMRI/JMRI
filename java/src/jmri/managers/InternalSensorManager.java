@@ -9,7 +9,9 @@ import org.slf4j.LoggerFactory;
  * Implementation of the InternalSensorManager interface.
  *
  * @author	Bob Jacobsen Copyright (C) 2001, 2003, 2006
+ * @deprecated As of 4.3.5, use jmri.jmrix.internal classes
  */
+@Deprecated
 public class InternalSensorManager extends AbstractSensorManager {
 
     public InternalSensorManager() {

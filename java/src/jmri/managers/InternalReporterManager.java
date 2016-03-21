@@ -8,7 +8,9 @@ import jmri.implementation.AbstractReporter;
  *
  * @author	Bob Jacobsen Copyright (C) 2010
  * @since 2.9.4
+ * @deprecated As of 4.3.5, use jmri.jmrix.internal classes
  */
+@Deprecated
 public class InternalReporterManager extends AbstractReporterManager {
 
     /**

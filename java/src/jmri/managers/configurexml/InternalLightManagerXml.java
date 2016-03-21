@@ -11,7 +11,9 @@ import org.slf4j.LoggerFactory;
  * method here.
  *
  * @author Bob Jacobsen Copyright: Copyright (c) 2009
+ * @deprecated As of 4.3.5, see jmri.jmrix.internal.configurexml classes
  */
+@Deprecated
 public class InternalLightManagerXml extends jmri.managers.configurexml.AbstractLightManagerConfigXML {
 
     public InternalLightManagerXml() {
