@@ -1,4 +1,4 @@
-// LayoutBlockTest.java
+// LayoutBlockManagerTest.java
 package jmri.jmrit.display.layoutEditor;
 
 import junit.framework.Assert;
@@ -8,14 +8,14 @@ import junit.framework.TestSuite;
 import jmri.util.JUnitUtil;
 
 /**
- * Test simple functioning of LayoutBlock
+ * Test simple functioning of LayoutBlockManager
  *
  * @author	Paul Bender Copyright (C) 2016
  */
-public class LayoutBlockTest extends TestCase {
+public class LayoutBlockManagerTest extends TestCase {
 
     public void testCtor() {
-        LayoutBlock  b = new LayoutBlock("test","test");
+        LayoutBlockManager  b = new LayoutBlockManager();
         Assert.assertNotNull("exists", b );
     }
 
@@ -41,19 +41,19 @@ public class LayoutBlockTest extends TestCase {
 
 
 
-    public LayoutBlockTest(String s) {
+    public LayoutBlockManagerTest(String s) {
         super(s);
     }
 
     // Main entry point
     static public void main(String[] args) {
-        String[] testCaseName = {"-noloading", LayoutBlockTest.class.getName()};
+        String[] testCaseName = {"-noloading", LayoutBlockManagerTest.class.getName()};
         junit.swingui.TestRunner.main(testCaseName);
     }
 
     // test suite from all defined tests
     public static Test suite() {
-        TestSuite suite = new TestSuite(LayoutBlockTest.class);
+        TestSuite suite = new TestSuite(LayoutBlockManagerTest.class);
         return suite;
     }
 
