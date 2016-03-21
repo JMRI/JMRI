@@ -29,6 +29,7 @@ import jmri.Turnout;
 import jmri.implementation.AbstractNamedBean;
 import jmri.jmrit.beantable.beanedit.BeanEditItem;
 import jmri.jmrit.beantable.beanedit.BeanItemPanel;
+import jmri.util.ColorUtil;
 import jmri.util.JmriJFrame;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -1258,74 +1259,6 @@ public class LayoutBlock extends AbstractNamedBean implements java.beans.Propert
 
     private Color getSelectedColor(JComboBox<String> colorCombo) {
         return (colorCode[colorCombo.getSelectedIndex()]);
-    }
-
-    /**
-     * Utility methods for converting between string and color Note: These names
-     * are only used internally, so don't need a resource bundle
-     */
-    public static String colorToString(Color color) {
-        if (color == Color.black) {
-            return "black";
-        } else if (color == Color.darkGray) {
-            return "darkGray";
-        } else if (color == Color.gray) {
-            return "gray";
-        } else if (color == Color.lightGray) {
-            return "lightGray";
-        } else if (color == Color.white) {
-            return "white";
-        } else if (color == Color.red) {
-            return "red";
-        } else if (color == Color.pink) {
-            return "pink";
-        } else if (color == Color.orange) {
-            return "orange";
-        } else if (color == Color.yellow) {
-            return "yellow";
-        } else if (color == Color.green) {
-            return "green";
-        } else if (color == Color.blue) {
-            return "blue";
-        } else if (color == Color.magenta) {
-            return "magenta";
-        } else if (color == Color.cyan) {
-            return "cyan";
-        }
-        log.error("unknown color sent to colorToString");
-        return "black";
-    }
-
-    public static Color stringToColor(String string) {
-        if (string.equals("black")) {
-            return Color.black;
-        } else if (string.equals("darkGray")) {
-            return Color.darkGray;
-        } else if (string.equals("gray")) {
-            return Color.gray;
-        } else if (string.equals("lightGray")) {
-            return Color.lightGray;
-        } else if (string.equals("white")) {
-            return Color.white;
-        } else if (string.equals("red")) {
-            return Color.red;
-        } else if (string.equals("pink")) {
-            return Color.pink;
-        } else if (string.equals("orange")) {
-            return Color.orange;
-        } else if (string.equals("yellow")) {
-            return Color.yellow;
-        } else if (string.equals("green")) {
-            return Color.green;
-        } else if (string.equals("blue")) {
-            return Color.blue;
-        } else if (string.equals("magenta")) {
-            return Color.magenta;
-        } else if (string.equals("cyan")) {
-            return Color.cyan;
-        }
-        log.error("unknown color text '" + string + "' sent to stringToColor");
-        return Color.black;
     }
 
     /**

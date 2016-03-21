@@ -13,8 +13,8 @@ public class CMRISystemConnectionMemo extends SystemConnectionMemo {
 
     public CMRISystemConnectionMemo() {
         super("C", CMRIConnectionTypeList.CMRI);
-        this.register();
-        InstanceManager.store(this, CMRISystemConnectionMemo.class);
+        register(); // registers general type
+        jmri.InstanceManager.store(this, CMRISystemConnectionMemo.class); // also register as specific type
     }
 
     @Override

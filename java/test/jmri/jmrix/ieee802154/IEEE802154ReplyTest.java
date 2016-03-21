@@ -11,7 +11,6 @@ import junit.framework.TestSuite;
  * Description:	tests for the jmri.jmrix.ieee802154.IEEE802154Reply class
  *
  * @author	Paul Bender
- * @version $Revision$
  */
 public class IEEE802154ReplyTest extends TestCase {
 
@@ -27,6 +26,8 @@ public class IEEE802154ReplyTest extends TestCase {
         };
         IEEE802154Reply m = new IEEE802154Reply(tc);
         Assert.assertNotNull(m);
+        
+        jmri.util.JUnitAppender.assertErrorMessage("Deprecated Method setInstance called");
     }
 
     // from here down is testing infrastructure

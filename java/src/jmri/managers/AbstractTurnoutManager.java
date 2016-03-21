@@ -1,4 +1,3 @@
-// AbstractTurnoutManager.java
 package jmri.managers;
 
 import jmri.JmriException;
@@ -13,7 +12,6 @@ import org.slf4j.LoggerFactory;
  * Abstract partial implementation of a TurnoutManager.
  *
  * @author	Bob Jacobsen Copyright (C) 2001
- * @version	$Revision$
  */
 public abstract class AbstractTurnoutManager extends AbstractManager
         implements TurnoutManager, java.beans.VetoableChangeListener {
@@ -27,7 +25,6 @@ public abstract class AbstractTurnoutManager extends AbstractManager
     public int getXMLOrder() {
         return Manager.TURNOUTS;
     }
-    //protected int xmlorder = 20;
 
     public char typeLetter() {
         return 'T';
@@ -343,5 +340,3 @@ public abstract class AbstractTurnoutManager extends AbstractManager
 
     private final static Logger log = LoggerFactory.getLogger(AbstractTurnoutManager.class.getName());
 }
-
-/* @(#)AbstractTurnoutManager.java */

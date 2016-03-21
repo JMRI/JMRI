@@ -1,4 +1,4 @@
-package jmri.managers.configurexml;
+package jmri.jmrix.internal.configurexml;
 
 import org.jdom2.Element;
 import org.slf4j.Logger;
@@ -12,9 +12,8 @@ import org.slf4j.LoggerFactory;
  * method here.
  *
  * @author Bob Jacobsen Copyright: Copyright (c) 2010
- * @deprecated As of 4.3.5, see jmri.jmrix.internal.configurexml classes
+ * @since 4.3.5
  */
-@Deprecated
 public class InternalReporterManagerXml extends jmri.managers.configurexml.AbstractReporterManagerConfigXML {
 
     public InternalReporterManagerXml() {
