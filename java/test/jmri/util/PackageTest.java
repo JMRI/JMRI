@@ -38,6 +38,7 @@ public class PackageTest extends TestCase {
         suite.addTest(PreferNumericComparatorTest.suite());
         suite.addTest(StringUtilTest.suite());
         suite.addTest(I18NTest.suite());
+        suite.addTest(ColorUtilTest.suite());
 
         if (!System.getProperty("jmri.headlesstest", "false").equals("true")) {
             suite.addTest(SwingTestCaseTest.suite());

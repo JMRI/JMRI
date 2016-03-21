@@ -110,6 +110,7 @@ public class TrainIcon extends LocoIcon {
         _tf.toFront();
     }
 
+    @edu.umd.cs.findbugs.annotations.SuppressFBWarnings(value = "BC_UNCONFIRMED_CAST_OF_RETURN_VALUE")
     private JMenu makeTrainRouteMenu() {
         JMenu routeMenu = new JMenu(Bundle.getMessage("Route"));
         Route route = _train.getRoute();
