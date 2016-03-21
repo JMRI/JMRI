@@ -209,11 +209,23 @@ public class DefaultSignalSystemManager extends AbstractManager
                 try {
                     Class<?> cl;
                     Constructor<?> ctor;
-                    // create key object
-                    cl = Class.forName(e.getChild("key").getAttributeValue("class"));
-                    ctor = cl.getConstructor(new Class<?>[]{String.class});
-                    Object key = ctor.newInstance(new Object[]{e.getChild("key").getText()});
-
+                    
+                    // create key string
+                    String key = e.getChild("key").getText();
+                    
+                    // check for non-String key.  Warn&proceed if found.
+                    // Pre-JMRI 4.3, keys in NamedBean parameters could be Objects
+                    // constructed from Strings, similar to the value code below.
+                    if (! (
+                        e.getChild("key").getAttributeValue("class") == null
+                        || e.getChild("key").getAttributeValue("class").equals("")
+                        || e.getChild("key").getAttributeValue("class").equals("java.lang.String")
+                        )) {
+                        
+                        log.warn("SignalSystem {} property key of invalid non-String type {} not supported", 
+                            s.getSystemName(), e.getChild("key").getAttributeValue("class"));
+                    }
+                    
                     // create value object
                     Object value = null;
                     if (e.getChild("value") != null) {

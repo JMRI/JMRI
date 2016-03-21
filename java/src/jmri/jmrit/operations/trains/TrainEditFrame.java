@@ -495,9 +495,8 @@ public class TrainEditFrame extends OperationsFrame implements java.beans.Proper
         }
         Train train = trainManager.newTrain(trainNameTextField.getText());
         _train = train;
-        if (_train != null) {
-            _train.addPropertyChangeListener(this);
-        }
+        _train.addPropertyChangeListener(this);
+
         // update check boxes
         updateCarTypeCheckboxes();
         updateEngineTypeCheckboxes();
@@ -513,10 +512,6 @@ public class TrainEditFrame extends OperationsFrame implements java.beans.Proper
         if (!checkModel() || !checkEngineRoad()) {
             return;
         }
-//        if (numEnginesBox.getSelectedItem().equals(Train.AUTO) && !_train.getNumberEngines().equals(Train.AUTO)) {
-//            JOptionPane.showMessageDialog(this, Bundle.getMessage("AutoEngines"), Bundle
-//                    .getMessage("FeatureUnderDevelopment"), JOptionPane.INFORMATION_MESSAGE);
-//        }
         _train.setDepartureTime((String) hourBox.getSelectedItem(), (String) minuteBox.getSelectedItem());
         _train.setNumberEngines((String) numEnginesBox.getSelectedItem());
         if (_train.getNumberEngines().equals("0")) {

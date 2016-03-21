@@ -121,6 +121,7 @@ public class XNetTurnoutTest extends jmri.implementation.AbstractTurnoutTest {
         // prepare an interface
         jmri.util.JUnitUtil.resetInstanceManager();
         jmri.util.JUnitUtil.initInternalSensorManager();
+        jmri.util.JUnitUtil.initInternalTurnoutManager();
         t = new XNetTurnout("XT", 21, lnis);
 
         // set thrown
@@ -145,7 +146,7 @@ public class XNetTurnoutTest extends jmri.implementation.AbstractTurnoutTest {
             log.error("TO exception: " + x);
         }
         // check to see if the turnout state changes.
-        Assert.assertTrue(t.getKnownState() == jmri.Turnout.THROWN);
+        jmri.util.JUnitUtil.waitFor(()->{return t.getKnownState() == jmri.Turnout.THROWN;}, "Turnout goes THROWN");
     }
 
     @Override
@@ -177,6 +178,7 @@ public class XNetTurnoutTest extends jmri.implementation.AbstractTurnoutTest {
     // The minimal setup for log4J
     protected void setUp() {
         apps.tests.Log4JFixture.setUp();
+        
         // prepare an interface
         lnis = new XNetInterfaceScaffold(new LenzCommandStation());
 

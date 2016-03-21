@@ -1,4 +1,3 @@
-// AbstractSensorManager.java
 package jmri.managers;
 
 import java.util.Enumeration;
@@ -13,7 +12,6 @@ import org.slf4j.LoggerFactory;
  * Abstract base implementation of the SensorManager interface.
  *
  * @author	Bob Jacobsen Copyright (C) 2001, 2003
- * @version	$Revision$
  */
 public abstract class AbstractSensorManager extends AbstractManager implements SensorManager {
 
@@ -258,5 +256,3 @@ public abstract class AbstractSensorManager extends AbstractManager implements S
 
     private final static Logger log = LoggerFactory.getLogger(AbstractSensorManager.class.getName());
 }
-
-/* @(#)AbstractSensorManager.java */

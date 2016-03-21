@@ -21,7 +21,7 @@ import org.slf4j.LoggerFactory;
  */
 public class CarLoads extends RollingStockAttribute {
 
-    protected Hashtable<String, List<CarLoad>> list = new Hashtable<String, List<CarLoad>>();
+    protected Hashtable<String, List<CarLoad>> listCarLoads = new Hashtable<String, List<CarLoad>>();
     protected String _emptyName = Bundle.getMessage("EmptyCar");
     protected String _loadName = Bundle.getMessage("LoadedCar");
 
@@ -62,7 +62,7 @@ public class CarLoads extends RollingStockAttribute {
      * @param type car type
      */
     public void addType(String type) {
-        list.put(type, new ArrayList<CarLoad>());
+        listCarLoads.put(type, new ArrayList<CarLoad>());
     }
 
     /**
@@ -80,7 +80,7 @@ public class CarLoads extends RollingStockAttribute {
             setDropComment(newType, name, getDropComment(oldType, name));
             setPickupComment(newType, name, getPickupComment(oldType, name));
         }
-        list.remove(oldType);
+        listCarLoads.remove(oldType);
     }
 
     /**
@@ -150,10 +150,10 @@ public class CarLoads extends RollingStockAttribute {
             names.add(getDefaultLoadName());
             return names;
         }
-        List<CarLoad> loads = list.get(type);
+        List<CarLoad> loads = listCarLoads.get(type);
         if (loads == null) {
             addType(type);
-            loads = list.get(type);
+            loads = listCarLoads.get(type);
         }
         if (loads.size() == 0) {
             loads.add(new CarLoad(getDefaultEmptyName()));
@@ -176,7 +176,7 @@ public class CarLoads extends RollingStockAttribute {
         if (containsName(type, name)) {
             return;
         }
-        List<CarLoad> loads = list.get(type);
+        List<CarLoad> loads = listCarLoads.get(type);
         if (loads == null) {
             log.debug("car type ({}) does not exist", type);
             return;
@@ -187,7 +187,7 @@ public class CarLoads extends RollingStockAttribute {
     }
 
     public void deleteName(String type, String name) {
-        List<CarLoad> loads = list.get(type);
+        List<CarLoad> loads = listCarLoads.get(type);
         if (loads == null) {
             log.debug("car type ({}) does not exist", type);
             return;
@@ -289,7 +289,7 @@ public class CarLoads extends RollingStockAttribute {
      * @param loadType load type: LOAD_TYPE_EMPTY or LOAD_TYPE_LOAD.
      */
     public void setLoadType(String type, String name, String loadType) {
-        List<CarLoad> loads = list.get(type);
+        List<CarLoad> loads = listCarLoads.get(type);
         for (CarLoad cl : loads) {
             if (cl.getName().equals(name)) {
                 String oldType = cl.getLoadType();
@@ -315,7 +315,7 @@ public class CarLoads extends RollingStockAttribute {
             }
             return CarLoad.LOAD_TYPE_LOAD;
         }
-        List<CarLoad> loads = list.get(type);
+        List<CarLoad> loads = listCarLoads.get(type);
         for (CarLoad cl : loads) {
             if (cl.getName().equals(name)) {
                 return cl.getLoadType();
@@ -332,7 +332,7 @@ public class CarLoads extends RollingStockAttribute {
      * @param priority load priority, PRIORITY_LOW or PRIORITY_HIGH.
      */
     public void setPriority(String type, String name, String priority) {
-        List<CarLoad> loads = list.get(type);
+        List<CarLoad> loads = listCarLoads.get(type);
         for (CarLoad cl : loads) {
             if (cl.getName().equals(name)) {
                 String oldPriority = cl.getPriority();
@@ -355,7 +355,7 @@ public class CarLoads extends RollingStockAttribute {
         if (!containsName(type, name)) {
             return CarLoad.PRIORITY_LOW;
         }
-        List<CarLoad> loads = list.get(type);
+        List<CarLoad> loads = listCarLoads.get(type);
         for (CarLoad cl : loads) {
             if (cl.getName().equals(name)) {
                 return cl.getPriority();
@@ -368,7 +368,7 @@ public class CarLoads extends RollingStockAttribute {
         if (!containsName(type, name)) {
             return;
         }
-        List<CarLoad> loads = list.get(type);
+        List<CarLoad> loads = listCarLoads.get(type);
         for (CarLoad cl : loads) {
             if (cl.getName().equals(name)) {
                 String oldComment = cl.getPickupComment();
@@ -384,7 +384,7 @@ public class CarLoads extends RollingStockAttribute {
         if (!containsName(type, name)) {
             return NONE;
         }
-        List<CarLoad> loads = list.get(type);
+        List<CarLoad> loads = listCarLoads.get(type);
         for (CarLoad cl : loads) {
             if (cl.getName().equals(name)) {
                 return cl.getPickupComment();
@@ -397,7 +397,7 @@ public class CarLoads extends RollingStockAttribute {
         if (!containsName(type, name)) {
             return;
         }
-        List<CarLoad> loads = list.get(type);
+        List<CarLoad> loads = listCarLoads.get(type);
         for (CarLoad cl : loads) {
             if (cl.getName().equals(name)) {
                 String oldComment = cl.getDropComment();
@@ -413,7 +413,7 @@ public class CarLoads extends RollingStockAttribute {
         if (!containsName(type, name)) {
             return NONE;
         }
-        List<CarLoad> loads = list.get(type);
+        List<CarLoad> loads = listCarLoads.get(type);
         for (CarLoad cl : loads) {
             if (cl.getName().equals(name)) {
                 return cl.getDropComment();
@@ -425,10 +425,10 @@ public class CarLoads extends RollingStockAttribute {
     public int getMaxNameLength() {
         if (maxNameLength == 0) {
             maxNameLength = MIN_NAME_LENGTH;
-            Enumeration<String> en = list.keys();
+            Enumeration<String> en = listCarLoads.keys();
             while (en.hasMoreElements()) {
                 String key = en.nextElement();
-                List<CarLoad> loads = list.get(key);
+                List<CarLoad> loads = listCarLoads.get(key);
                 for (CarLoad load : loads) {
                     if (load.getName().length() > maxNameLength) {
                         maxNameLength = load.getName().length();
@@ -440,7 +440,7 @@ public class CarLoads extends RollingStockAttribute {
     }
 
     private List<CarLoad> getSortedList(String type) {
-        List<CarLoad> loads = list.get(type);
+        List<CarLoad> loads = listCarLoads.get(type);
         List<CarLoad> out = new ArrayList<CarLoad>();
 
         // Sort load names
@@ -463,7 +463,7 @@ public class CarLoads extends RollingStockAttribute {
 
     @SuppressWarnings("unchecked")
     public Hashtable<String, List<CarLoad>> getList() {
-        return (Hashtable<String, List<CarLoad>>) list.clone();
+        return (Hashtable<String, List<CarLoad>>) listCarLoads.clone();
     }
 
     /**
@@ -479,7 +479,7 @@ public class CarLoads extends RollingStockAttribute {
         defaults.setAttribute(Xml.LOAD, getDefaultLoadName());
         values.addContent(defaults);
         // store loads based on car types
-        Enumeration<String> en = list.keys();
+        Enumeration<String> en = listCarLoads.keys();
         while (en.hasMoreElements()) {
             String carType = en.nextElement();
             // check to see if car type still exists
