@@ -30,9 +30,13 @@ public class PackageTest extends TestCase {
 
         suite.addTest(SchemaTest.suite());
         suite.addTest(LayoutBlockTest.suite());
+        suite.addTest(LayoutBlockManagerTest.suite());
+        suite.addTest(LayoutTurnoutTest.suite());
 
         if (!System.getProperty("jmri.headlesstest", "false").equals("true")) {
             suite.addTest(LayoutEditorTest.suite());
+            suite.addTest(LayoutEditorToolsTest.suite());
+            suite.addTest(ConnectivityUtilTest.suite());
             suite.addTest(LayoutEditorWindowTest.suite());
             suite.addTest(LEConnectivityTest.suite());
         }
