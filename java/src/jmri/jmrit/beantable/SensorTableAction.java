@@ -318,9 +318,16 @@ public class SensorTableAction extends AbstractTableAction {
         final jmri.util.JmriJFrame finalF = f;			// needed for anonymous ActionListener class
         JMenuBar menuBar = f.getJMenuBar();
         // check for menu
-        int menus = menuBar.getMenuCount();
-        if (menus < 3) {
-
+        boolean menuAbsent = true;
+        for(int m = 0; m < menuBar.getMenuCount(); ++m) {
+            String name = menuBar.getMenu(m).getAccessibleContext().getAccessibleName();
+            if(name.equals(Bundle.getMessage("MenuDefaults"))) {
+                // using first menu for check, should be identical to next JMenu Bundle
+                menuAbsent = false;
+                break;
+            }
+        }
+        if(menuAbsent) { // create it
             JMenu optionsMenu = new JMenu(Bundle.getMessage("MenuDefaults"));
             JMenuItem item = new JMenuItem(Bundle.getMessage("GlobalDebounce"));
             optionsMenu.add(item);

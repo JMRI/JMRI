@@ -1203,9 +1203,17 @@ public class TurnoutTableAction extends AbstractTableAction {
         final jmri.util.JmriJFrame finalF = f;			// needed for anonymous ActionListener class
         JMenuBar menuBar = f.getJMenuBar();
         // check for menu
-        int menus = menuBar.getMenuCount();
-        if (menus < 3) {
-
+        // check for menu
+        boolean menuAbsent = true;
+        for(int m = 0; m < menuBar.getMenuCount(); ++m) {
+            String name = menuBar.getMenu(m).getAccessibleContext().getAccessibleName();
+            if(name.equals(Bundle.getMessage("TurnoutAutomationMenu"))) {
+                // using first menu for check, should be identical to next JMenu Bundle
+                menuAbsent = false;
+                break;
+            }
+        }
+        if(menuAbsent) { // create it
             JMenu opsMenu = new JMenu(Bundle.getMessage("TurnoutAutomationMenu"));
             JMenuItem item = new JMenuItem(Bundle.getMessage("TurnoutAutomationMenuItemEdit"));
             opsMenu.add(item);
