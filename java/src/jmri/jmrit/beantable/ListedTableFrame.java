@@ -187,7 +187,7 @@ public class ListedTableFrame extends BeanTableFrame {
                     return;
                 }
             } catch (Exception ex) {
-                log.error("An error occured in the goto list for " + selection);
+                log.error("An error occurred in the goto list for " + selection);
             }
         }
     }
@@ -253,7 +253,7 @@ public class ListedTableFrame extends BeanTableFrame {
             }
         });
 
-        JMenu viewMenu = new JMenu("View");
+        JMenu viewMenu = new JMenu(rb.getString("MenuView"));
         menuBar.add(viewMenu);
         for (int i = 0; i < TabbedTableItemListArrayArray.size(); i++) {
             final TabbedTableItemListArray itemList = TabbedTableItemListArrayArray.get(i);
