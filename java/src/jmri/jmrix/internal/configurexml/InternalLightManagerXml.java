@@ -10,7 +10,8 @@ import org.slf4j.LoggerFactory;
  * Uses the store method from the abstract base class, but provides a load
  * method here.
  *
- * @author Bob Jacobsen Copyright: Copyright (c) 2009
+ * @author Bob Jacobsen Copyright: Copyright (c) 2016
+ * @since 4.3.5
  */
 public class InternalLightManagerXml extends jmri.managers.configurexml.AbstractLightManagerConfigXML {
 

@@ -12,6 +12,7 @@ import org.slf4j.LoggerFactory;
  * method here.
  *
  * @author Bob Jacobsen Copyright: Copyright (c) 2010
+ * @since 4.3.5
  */
 public class InternalReporterManagerXml extends jmri.managers.configurexml.AbstractReporterManagerConfigXML {
 
