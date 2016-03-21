@@ -580,6 +580,7 @@ public class Automation implements java.beans.PropertyChangeListener {
         return e;
     }
 
+    @edu.umd.cs.findbugs.annotations.SuppressFBWarnings(value = {"UW_UNCOND_WAIT", "WA_NOT_IN_LOOP"})
     private void CheckForActionPropertyChange(PropertyChangeEvent evt) {
         if (evt.getPropertyName().equals(Action.ACTION_COMPLETE_CHANGED_PROPERTY) ||
                 evt.getPropertyName().equals(Action.ACTION_HALT_CHANGED_PROPERTY)) {
