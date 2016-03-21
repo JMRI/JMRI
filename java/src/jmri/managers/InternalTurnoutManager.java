@@ -1,4 +1,3 @@
-// InternalTurnoutManager.java
 package jmri.managers;
 
 import jmri.Turnout;
@@ -8,7 +7,6 @@ import jmri.implementation.AbstractTurnout;
  * Implement a turnout manager for "Internal" (virtual) turnouts.
  *
  * @author	Bob Jacobsen Copyright (C) 2006
- * @version	$Revision$
  */
 public class InternalTurnoutManager extends AbstractTurnoutManager {
 
@@ -17,10 +15,6 @@ public class InternalTurnoutManager extends AbstractTurnoutManager {
      */
     protected Turnout createNewTurnout(String systemName, String userName) {
         return new AbstractTurnout(systemName, userName) {
-            /**
-             *
-             */
-            private static final long serialVersionUID = -7745266016274027809L;
 
             protected void forwardCommandChangeToLayout(int s) {
             }
@@ -47,5 +41,3 @@ public class InternalTurnoutManager extends AbstractTurnoutManager {
         return new String[]{"NoFeedback"};
     }
 }
-
-/* @(#)InternalTurnoutManager.java */
