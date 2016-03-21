@@ -22,11 +22,6 @@ import org.slf4j.LoggerFactory;
 
 abstract public class AbstractTableTabAction extends AbstractTableAction {
 
-    /**
-     *
-     */
-    private static final long serialVersionUID = -7423371299023131468L;
-
     protected JPanel dataPanel;
     protected JTabbedPane dataTabs;
 

@@ -1,4 +1,3 @@
-// SystemConnectionMemo.java
 package jmri.jmrix;
 
 import apps.startup.StartupActionModelUtil;
@@ -21,7 +20,6 @@ import org.slf4j.LoggerFactory;
  * activate their particular system.
  *
  * @author	Bob Jacobsen Copyright (C) 2010
- * @version $Revision$
  */
 abstract public class SystemConnectionMemo {
 
@@ -33,6 +31,7 @@ abstract public class SystemConnectionMemo {
     private String userNameAsLoaded;
 
     protected SystemConnectionMemo(String prefix, String userName) {
+        log.debug("SystemConnectionMemo created for prefix \"{}\" user name \"{}\"", prefix, userName);
         initialise();
         if (!setSystemPrefix(prefix)) {
             for (int x = 2; x < 50; x++) {
@@ -63,14 +62,25 @@ abstract public class SystemConnectionMemo {
      */
     private static void initialise() {
         if (!initialised) {
-            addUserName("Internal");
-            addSystemPrefix("I");
-            initialised = true;
+//             addUserName("Internal");
+//             addSystemPrefix("I");
+//             initialised = true;
         }
     }
 
-    final protected static ArrayList<String> userNames = new ArrayList<>();
-    final protected static ArrayList<String> sysPrefixes = new ArrayList<>();
+    /**
+     * For use in testing, undo any initialization that's been done.
+     */
+    public static void reset() {
+        userNames = new ArrayList<>();
+        sysPrefixes = new ArrayList<>();
+        listeners = new HashSet<>();
+        
+        initialised = false;
+    }
+    
+    protected static ArrayList<String> userNames = new ArrayList<>();
+    protected static ArrayList<String> sysPrefixes = new ArrayList<>();
 
     private synchronized static boolean addUserName(String userName) {
         if (userNames.contains(userName)) {
@@ -154,6 +164,7 @@ abstract public class SystemConnectionMemo {
             notifyPropertyChangeListener("ConnectionPrefixChanged", oldPrefix, systemPrefix);
             return true;
         }
+        log.debug("setSystemPrefix false for \"{}\"", systemPrefix);
         return false;
     }
 
@@ -322,10 +333,7 @@ abstract public class SystemConnectionMemo {
     }
 
     // data members to hold contact with the property listeners
-    final private static Set<PropertyChangeListener> listeners = new HashSet<>();
+    private static Set<PropertyChangeListener> listeners = new HashSet<>();
 
     private final static Logger log = LoggerFactory.getLogger(SystemConnectionMemo.class.getName());
 }
-
-
-/* @(#)SystemConnectionMemo.java */

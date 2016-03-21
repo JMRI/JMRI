@@ -1,4 +1,4 @@
-// LayoutBlockTest.java
+// LayoutEditorToolsTest.java
 package jmri.jmrit.display.layoutEditor;
 
 import junit.framework.Assert;
@@ -8,15 +8,15 @@ import junit.framework.TestSuite;
 import jmri.util.JUnitUtil;
 
 /**
- * Test simple functioning of LayoutBlock
+ * Test simple functioning of LayoutEditorTools
  *
  * @author	Paul Bender Copyright (C) 2016
  */
-public class LayoutBlockTest extends TestCase {
+public class LayoutEditorToolsTest extends TestCase {
 
     public void testCtor() {
-        LayoutBlock  b = new LayoutBlock("test","test");
-        Assert.assertNotNull("exists", b );
+        LayoutEditorTools  t = new LayoutEditorTools(new LayoutEditor());
+        Assert.assertNotNull("exists", t );
     }
 
     // from here down is testing infrastructure
@@ -39,21 +39,19 @@ public class LayoutBlockTest extends TestCase {
         apps.tests.Log4JFixture.tearDown();
     }
 
-
-
-    public LayoutBlockTest(String s) {
+    public LayoutEditorToolsTest(String s) {
         super(s);
     }
 
     // Main entry point
     static public void main(String[] args) {
-        String[] testCaseName = {"-noloading", LayoutBlockTest.class.getName()};
+        String[] testCaseName = {"-noloading", LayoutEditorToolsTest.class.getName()};
         junit.swingui.TestRunner.main(testCaseName);
     }
 
     // test suite from all defined tests
     public static Test suite() {
-        TestSuite suite = new TestSuite(LayoutBlockTest.class);
+        TestSuite suite = new TestSuite(LayoutEditorToolsTest.class);
         return suite;
     }
 

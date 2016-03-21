@@ -93,6 +93,7 @@ public class LoadAndStoreTestBase extends TestCase {
                     log.error("match failed in testLoadStoreCurrent line " + count);
                     log.error("   inLine = \"" + inLine + "\"");
                     log.error("  outLine = \"" + outLine + "\"");
+                    log.error("     comparing \"" + inFile.getName() + "\" and \"" + outFile.getName() + "\"");
                 }
                 Assert.assertEquals(inLine, outLine);
             }

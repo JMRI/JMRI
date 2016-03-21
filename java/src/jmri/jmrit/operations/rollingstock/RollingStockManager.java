@@ -191,6 +191,8 @@ public class RollingStockManager {
         return getByList(getByIdList(), BY_ROAD);
     }
 
+    private static final int PAGE_SIZE = 64;
+    private static final int NOT_INTEGER = -999999999; // flag when RS number isn't an Integer
     /**
      * Sort by rolling stock number, number can be alphanumeric.
      * RollingStock number can also be in the format of nnnn-N, where
@@ -204,27 +206,23 @@ public class RollingStockManager {
         // now re-sort
         List<RollingStock> out = new ArrayList<RollingStock>();
         int rsNumber = 0;
-        int outRsNumber = 0;
-        int notInteger = -999999999; // flag when rolling stock number isn't an
-        // integer
-        String[] number;
-        boolean rsAdded = false;
+        int outRsNumber = 0;  
 
         for (RollingStock rs : sortIn) {
-            rsAdded = false;
+            boolean rsAdded = false;
             try {
                 rsNumber = Integer.parseInt(rs.getNumber());
                 rs.number = rsNumber;
             } catch (NumberFormatException e) {
                 // maybe rolling stock number in the format nnnn-N
                 try {
-                    number = rs.getNumber().split("-");
+                    String[] number = rs.getNumber().split("-");
                     rsNumber = Integer.parseInt(number[0]);
                     rs.number = rsNumber;
                     // two possible exceptions, ArrayIndexOutOfBoundsException on split, and NumberFormatException on
                     // parseInt
                 } catch (Exception e2) {
-                    rs.number = notInteger;
+                    rs.number = NOT_INTEGER;
                     // sort alphanumeric numbers at the end of the out list
                     String numberIn = rs.getNumber();
                     // log.debug("rolling stock in road number ("+numberIn+") isn't a number");
@@ -254,10 +252,10 @@ public class RollingStockManager {
 
             int start = 0;
             // page to improve sort performance.
-            int divisor = out.size() / pageSize;
+            int divisor = out.size() / PAGE_SIZE;
             for (int k = divisor; k > 0; k--) {
                 outRsNumber = out.get((out.size() - 1) * k / divisor).number;
-                if (outRsNumber == notInteger) {
+                if (outRsNumber == NOT_INTEGER) {
                     continue;
                 }
                 if (rsNumber >= outRsNumber) {
@@ -267,12 +265,12 @@ public class RollingStockManager {
             }
             for (int j = start; j < out.size(); j++) {
                 outRsNumber = out.get(j).number;
-                if (outRsNumber == notInteger) {
+                if (outRsNumber == NOT_INTEGER) {
                     try {
                         outRsNumber = Integer.parseInt(out.get(j).getNumber());
                     } catch (NumberFormatException e) {
                         try {
-                            number = out.get(j).getNumber().split("-");
+                            String[] number = out.get(j).getNumber().split("-");
                             outRsNumber = Integer.parseInt(number[0]);
                         } catch (Exception e2) {
                             // force add
@@ -422,8 +420,6 @@ public class RollingStockManager {
         return getByList(inList, BY_LAST);
     }
 
-    private static final int pageSize = 64;
-
     protected List<RollingStock> getByList(List<RollingStock> sortIn, int attribute) {
         List<RollingStock> out = new ArrayList<RollingStock>();
         sortIn.forEach(n -> out.add(n));
@@ -541,14 +537,11 @@ public class RollingStockManager {
      * @return list of RollingStock
      */
     public List<RollingStock> getList(Train train) {
-        Enumeration<RollingStock> en = _hashTable.elements();
         List<RollingStock> out = new ArrayList<RollingStock>();
-        while (en.hasMoreElements()) {
-            RollingStock rs = en.nextElement();
-            if (rs.getTrain() == train) {
+        _hashTable.forEach((key, rs) -> {
+            if (rs.getTrain() == train)
                 out.add(rs);
-            }
-        }
+        });
         return out;
     }
 
@@ -568,7 +561,7 @@ public class RollingStockManager {
     }
 
     /**
-     * Returns a list (no order) of RollingStock at a location.
+     * Returns a list (no order) of RollingStock on a track.
      * 
      * @param track Track to search for.
      * @return list of RollingStock

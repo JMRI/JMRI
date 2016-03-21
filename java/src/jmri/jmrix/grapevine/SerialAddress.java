@@ -360,27 +360,24 @@ public class SerialAddress {
                 }
             }
             subtype = subtype.toUpperCase();
-            if (subtype.equals("A")) // advanced serial occ
-            {
+            if (subtype.equals("A")) {
+                // advanced serial occ
                 if ((bit < 1) || (bit > 24)) {
                     log.error("invalid bit number " + bit + " in " + systemName);
                     return false;
-                } else if (subtype.equals("M")) // advanced serial motion
-                {
-                    if ((bit < 1) || (bit > 24)) {
-                        log.error("invalid bit number " + bit + " in " + systemName);
-                        return false;
-                    } else if (subtype.equals("S")) // old serial
-                    {
-                        if ((bit < 1) || (bit > 24)) {
-                            log.error("invalid bit number " + bit + " in " + systemName);
-                            return false;
-                        }
-                    }
                 }
-            }
-            if (subtype.equals("P")) // parallel
-            {
+            } else if (subtype.equals("M")) { 
+                // advanced serial motion 
+                if ((bit < 1) || (bit > 24)) {
+                    log.error("invalid bit number " + bit + " in " + systemName);
+                    return false;
+                }
+            } else if (subtype.equals("S")) {// old serial
+                if ((bit < 1) || (bit > 24)) {
+                    log.error("invalid bit number " + bit + " in " + systemName);
+                    return false;
+                }
+            } else if (subtype.equals("P")) { // parallel
                 if ((bit < 1) || (bit > 96)) {
                     log.error("invalid bit number " + bit + " in " + systemName);
                     return false;
