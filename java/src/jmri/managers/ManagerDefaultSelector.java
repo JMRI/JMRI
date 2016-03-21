@@ -19,7 +19,7 @@ import jmri.ThrottleManager;
 import jmri.jmrix.SystemConnectionMemo;
 import jmri.profile.Profile;
 import jmri.profile.ProfileUtils;
-import jmri.spi.AbstractPreferencesProvider;
+import jmri.util.prefs.AbstractPreferencesProvider;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 

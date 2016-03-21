@@ -109,11 +109,10 @@ public class AddNewHardwareDevicePanel extends jmri.util.swing.JmriPanel {
 
     JTextField _endRange;
     JCheckBox _range;
-    JLabel sysNameLabel = new JLabel("System");
-    JLabel sysAddressLabel = new JLabel("Hardware Address");
+    JLabel sysNameLabel = new JLabel(Bundle.getMessage("LightSystem")); // reuse existing key for turnout here
+    JLabel sysAddressLabel = new JLabel(Bundle.getMessage("LightHardwareAddress")); // reuse existing key for turnout here
     JLabel userNameLabel = new JLabel(Bundle.getMessage("LabelUserName"));
-    JLabel finishLabel = new JLabel("Number to Add");
+    JLabel finishLabel = new JLabel(Bundle.getMessage("LabelNumberToAdd"));
 }
-
 
 /* @(#)AddNewHardwareDevicePanel.java */

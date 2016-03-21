@@ -11,11 +11,19 @@ package jmri.jmrix.zimo;
  */
 public class Mx1ConnectionTypeList implements jmri.jmrix.ConnectionTypeList {
 
+    public static final String ZIMO = "Zimo";
+
+    @Override
     public String[] getAvailableProtocolClasses() {
         return new String[]{
             "jmri.jmrix.zimo.mx1.ConnectionConfig",
             "jmri.jmrix.zimo.mxulf.ConnectionConfig"
         };
+    }
+
+    @Override
+    public String[] getManufacturers() {
+        return new String[]{ZIMO};
     }
 
 }

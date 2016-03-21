@@ -17,10 +17,8 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import javax.swing.BorderFactory;
 import javax.swing.BoxLayout;
-import javax.swing.event.ChangeEvent;
 import javax.swing.JCheckBox;
 import javax.swing.JComponent;
-import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
@@ -28,7 +26,7 @@ import javax.swing.JScrollPane;
 import javax.swing.JSpinner;
 import javax.swing.JTextField;
 import javax.swing.SpinnerNumberModel;
-import javax.swing.border.Border;
+import javax.swing.event.ChangeEvent;
 import javax.swing.event.ListDataEvent;
 import javax.swing.event.ListDataListener;
 import jmri.InstanceManager;
@@ -41,18 +39,17 @@ import jmri.swing.PreferencesPanel;
 public class WebServerPreferencesPanel extends JPanel implements ListDataListener, PreferencesPanel {
 
     private static final long serialVersionUID = 6907436730813458420L;
-    Border lineBorder;
-    JSpinner clickDelaySpinner;
-    JSpinner refreshDelaySpinner;
-    EditableList<String> disallowedFrames;
-    JCheckBox useAjaxCB;
-    JSpinner port;
-    JCheckBox readonlyPower;
-    WebServerPreferences preferences;
+    private JSpinner clickDelaySpinner;
+    private JSpinner refreshDelaySpinner;
+    private EditableList<String> disallowedFrames;
+    private JCheckBox useAjaxCB;
+    private JSpinner port;
+    private JCheckBox readonlyPower;
+    private final WebServerPreferences preferences;
     private boolean restartRequired = false;
     private JCheckBox startup;
     private ItemListener startupItemListener;
-    int startupActionPosition = -1;
+    private int startupActionPosition = -1;
 
     public WebServerPreferencesPanel() {
         preferences = WebServerManager.getWebServerPreferences();
@@ -84,10 +81,10 @@ public class WebServerPreferencesPanel extends JPanel implements ListDataListene
     private void setGUI() {
         clickDelaySpinner.setValue(preferences.getClickDelay());
         refreshDelaySpinner.setValue(preferences.getRefreshDelay());
-        DefaultEditableListModel<String> model = new DefaultEditableListModel<String>();
-        for (String frame : preferences.getDisallowedFrames()) {
+        DefaultEditableListModel<String> model = new DefaultEditableListModel<>();
+        preferences.getDisallowedFrames().stream().forEach((frame) -> {
             model.addElement(frame);
-        }
+        });
         model.addElement(" ");
         disallowedFrames.setModel(model);
         disallowedFrames.getModel().addListDataListener(this);
@@ -109,10 +106,10 @@ public class WebServerPreferencesPanel extends JPanel implements ListDataListene
         boolean didSet = true;
         preferences.setClickDelay((Integer) clickDelaySpinner.getValue());
         preferences.setRefreshDelay((Integer) refreshDelaySpinner.getValue());
-        ArrayList<String> frames = new ArrayList<String>();
+        ArrayList<String> frames = new ArrayList<>();
         for (int i = 0; i < disallowedFrames.getModel().getSize(); i++) {
-            String frame = disallowedFrames.getModel().getElementAt(i).toString().trim();
-            if (!frame.equals("")) {
+            String frame = disallowedFrames.getModel().getElementAt(i).trim();
+            if (!frame.isEmpty()) {
                 frames.add(frame);
             }
         }
@@ -156,7 +153,7 @@ public class WebServerPreferencesPanel extends JPanel implements ListDataListene
 
     protected void cancelValues() {
         if (getTopLevelAncestor() != null) {
-            ((JFrame) getTopLevelAncestor()).setVisible(false);
+            getTopLevelAncestor().setVisible(false);
         }
     }
 
@@ -182,10 +179,10 @@ public class WebServerPreferencesPanel extends JPanel implements ListDataListene
         panel.add(useAjaxCB);
 
         JPanel dfPanel = new JPanel();
-        disallowedFrames = new EditableList<String>();
+        disallowedFrames = new EditableList<>();
         JTextField tf = new JTextField();
         tf.setBorder(BorderFactory.createLineBorder(Color.black));
-        disallowedFrames.setListCellEditor(new DefaultListCellEditor<String>(tf));
+        disallowedFrames.setListCellEditor(new DefaultListCellEditor<>(tf));
         dfPanel.add(new JScrollPane(disallowedFrames));
         dfPanel.add(new JLabel(Bundle.getMessage("LabelDisallowedFrames")));
         dfPanel.setToolTipText(Bundle.getMessage("ToolTipDisallowedFrames"));
@@ -213,12 +210,8 @@ public class WebServerPreferencesPanel extends JPanel implements ListDataListene
         JPanel panel = new JPanel();
         readonlyPower = new JCheckBox(Bundle.getMessage("LabelReadonlyPower"), preferences.isReadonlyPower());
         panel.add(readonlyPower);
-        ActionListener listener = new ActionListener() {
-
-            @Override
-            public void actionPerformed(ActionEvent e) {
-                readonlyPower.setToolTipText(Bundle.getMessage(readonlyPower.isSelected() ? "ToolTipReadonlyPowerTrue" : "ToolTipReadonlyPowerFalse"));
-            }
+        ActionListener listener = (ActionEvent e) -> {
+            readonlyPower.setToolTipText(Bundle.getMessage(readonlyPower.isSelected() ? "ToolTipReadonlyPowerTrue" : "ToolTipReadonlyPowerFalse"));
         };
         readonlyPower.addActionListener(listener);
         listener.actionPerformed(null);

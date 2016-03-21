@@ -7,6 +7,7 @@ import javax.swing.Icon;
 import javax.swing.JOptionPane;
 import jmri.beans.Beans;
 import jmri.jmrit.roster.Roster;
+import jmri.jmrit.roster.rostergroup.RosterGroupSelector;
 import jmri.util.swing.JmriAbstractAction;
 import jmri.util.swing.WindowInterface;
 
@@ -73,8 +74,8 @@ public class CopyRosterGroupAction extends JmriAbstractAction {
         String group = null;
         // only query wi for group if group was not set using setParameter
         // prior to call
-        if (Beans.hasProperty(wi, "selectedRosterGroup")) {
-            group = (String) Beans.getProperty(wi, "selectedRosterGroup");
+        if (Beans.hasProperty(wi, RosterGroupSelector.SELECTED_ROSTER_GROUP)) {
+            group = (String) Beans.getProperty(wi, RosterGroupSelector.SELECTED_ROSTER_GROUP);
         }
         // null might be valid output from getting the selectedRosterGroup,
         // so we have to check for null again.

@@ -99,6 +99,8 @@ public class CarsTest extends OperationsTestCase {
         } catch(java.lang.NullPointerException npe) {
            Assert.fail("Null Pointer Exception while executing Xml Element Constructor");
         }
+
+        jmri.util.JUnitAppender.assertErrorMessage("Kernel TESTKERNEL does not exist");
     }
 
     

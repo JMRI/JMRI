@@ -54,8 +54,6 @@ public class DestinationPoints extends jmri.implementation.AbstractNamedBean {
 
     transient EntryExitPairs manager = jmri.InstanceManager.getDefault(jmri.jmrit.signalling.EntryExitPairs.class);
 
-    private static final long serialVersionUID = 1209131245L;
-
     transient jmri.SignalMastLogic sml;
 
     final static int NXMESSAGEBOXCLEARTIMEOUT = 30;
@@ -348,9 +346,6 @@ public class DestinationPoints extends jmri.implementation.AbstractNamedBean {
                                 ArrayList<LayoutTurnout> turnoutlist;
                                 int nxtBlk = i + 1;
                                 int preBlk = i - 1;
-                                if (i == 0) {
-                                    preBlk = i;
-                                }
                                 if (i < routeDetails.size() - 1) {
                                     turnoutlist = connection.getTurnoutList(routeDetails.get(i).getBlock(), routeDetails.get(preBlk).getBlock(), routeDetails.get(nxtBlk).getBlock());
                                     ArrayList<Integer> throwlist = connection.getTurnoutSettingList();

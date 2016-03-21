@@ -58,9 +58,9 @@ import javax.swing.event.ListSelectionEvent;
 import javax.swing.table.TableColumn;
 import jmri.AddressedProgrammerManager;
 import jmri.GlobalProgrammerManager;
-import jmri.ProgrammerManager;
 import jmri.InstanceManager;
 import jmri.Programmer;
+import jmri.ProgrammerManager;
 import jmri.UserPreferencesManager;
 import jmri.jmrit.decoderdefn.DecoderFile;
 import jmri.jmrit.decoderdefn.DecoderIndexFile;
@@ -460,7 +460,7 @@ public class RosterFrame extends TwoPaneTBWindow implements RosterEntrySelector,
     }
 
     JComponent createTop() {
-        Object selectedRosterGroup = prefsMgr.getProperty(getWindowFrameRef(), "selectedRosterGroup");
+        Object selectedRosterGroup = prefsMgr.getProperty(getWindowFrameRef(), SELECTED_ROSTER_GROUP);
         groups = new RosterGroupsPanel((selectedRosterGroup != null) ? selectedRosterGroup.toString() : null);
         groups.setNewWindowMenuAction(this.getNewWindowAction());
         setTitle(groups.getSelectedRosterGroup());
@@ -594,10 +594,10 @@ public class RosterFrame extends TwoPaneTBWindow implements RosterEntrySelector,
                 }
             }
         };
-        groups.addPropertyChangeListener("selectedRosterGroup", new PropertyChangeListener() {
+        groups.addPropertyChangeListener(SELECTED_ROSTER_GROUP, new PropertyChangeListener() {
             @Override
             public void propertyChange(PropertyChangeEvent pce) {
-                prefsMgr.setProperty(this.getClass().getName(), "selectedRosterGroup", pce.getNewValue());
+                prefsMgr.setProperty(this.getClass().getName(), SELECTED_ROSTER_GROUP, pce.getNewValue());
                 setTitle((String) pce.getNewValue());
             }
         });
@@ -617,7 +617,7 @@ public class RosterFrame extends TwoPaneTBWindow implements RosterEntrySelector,
         });
         if (Roster.instance().numEntries() == 0) {
             try {
-                BufferedImage myPicture = ImageIO.read(FileUtil.findURL("resources/dp3first.gif", FileUtil.Location.INSTALLED));
+                BufferedImage myPicture = ImageIO.read(FileUtil.findURL(("resources/" + Bundle.getMessage("ThrottleFirstUseImage")), FileUtil.Location.INSTALLED));
                 //rosters.add(new JLabel(new ImageIcon( myPicture )), BorderLayout.CENTER);
                 firstHelpLabel = new JLabel(new ImageIcon(myPicture));
                 rtable.setVisible(false);
@@ -733,7 +733,7 @@ public class RosterFrame extends TwoPaneTBWindow implements RosterEntrySelector,
 
     @Override
     public Object getProperty(String key) {
-        if (key.equalsIgnoreCase("selectedRosterGroup")) {
+        if (key.equalsIgnoreCase(SELECTED_ROSTER_GROUP)) {
             return getSelectedRosterGroup();
         } else if (key.equalsIgnoreCase("hideSummary")) {
             return hideBottomPane;
@@ -1120,7 +1120,7 @@ public class RosterFrame extends TwoPaneTBWindow implements RosterEntrySelector,
         prefsMgr.setSimplePreferenceState(this.getClass().getName() + ".hideSummary", hideBottomPane);
         prefsMgr.setSimplePreferenceState(this.getClass().getName() + ".hideGroups", hideGroups);
         prefsMgr.setSimplePreferenceState(this.getClass().getName() + ".hideRosterImage", hideRosterImage);
-        prefsMgr.setProperty(getWindowFrameRef(), "selectedRosterGroup", groups.getSelectedRosterGroup());
+        prefsMgr.setProperty(getWindowFrameRef(), SELECTED_ROSTER_GROUP, groups.getSelectedRosterGroup());
         String selectedProgMode = "edit";
         if (service.isSelected()) {
             selectedProgMode = "service";

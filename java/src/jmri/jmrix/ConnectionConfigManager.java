@@ -1,16 +1,20 @@
 package jmri.jmrix;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.HashSet;
 import java.util.Iterator;
+import java.util.ServiceLoader;
 import java.util.Set;
+import jmri.InstanceManager;
 import jmri.configurexml.ConfigXmlManager;
 import jmri.configurexml.XmlAdapter;
+import jmri.jmrix.internal.InternalConnectionTypeList;
 import jmri.profile.Profile;
 import jmri.profile.ProfileUtils;
-import jmri.spi.AbstractPreferencesProvider;
 import jmri.spi.PreferencesProvider;
 import jmri.util.jdom.JDOMUtil;
+import jmri.util.prefs.AbstractPreferencesProvider;
 import org.jdom2.Element;
 import org.jdom2.JDOMException;
 import org.slf4j.Logger;
@@ -145,5 +149,56 @@ public class ConnectionConfigManager extends AbstractPreferencesProvider impleme
     @Override
     public Iterator<ConnectionConfig> iterator() {
         return connections.iterator();
+    }
+
+    public String[] getConnectionTypes(String manufacturer) {
+        if (InstanceManager.getDefault(ConnectionTypeManager.class) == null) {
+            InstanceManager.setDefault(ConnectionTypeManager.class, new ConnectionTypeManager());
+        }
+        return InstanceManager.getDefault(ConnectionTypeManager.class).getConnectionTypes(manufacturer);
+    }
+
+    public String[] getConnectionManufacturers() {
+        if (InstanceManager.getDefault(ConnectionTypeManager.class) == null) {
+            InstanceManager.setDefault(ConnectionTypeManager.class, new ConnectionTypeManager());
+        }
+        return InstanceManager.getDefault(ConnectionTypeManager.class).getConnectionManufacturers();
+    }
+
+    private static class ConnectionTypeManager {
+
+        private final HashMap<String, ConnectionTypeList> connectionTypeLists = new HashMap<>();
+
+        public ConnectionTypeManager() {
+            for (ConnectionTypeList ctl : ServiceLoader.load(ConnectionTypeList.class)) {
+                for (String manufacturer : ctl.getManufacturers()) {
+                    if (!connectionTypeLists.containsKey(manufacturer)) {
+                        connectionTypeLists.put(manufacturer, ctl);
+                    } else {
+                        log.error("Refusing to add ConnectionListType \"{}\" for manufacturer \"{}\"; existing class is \"{}\"",
+                                ctl.getClass().getName(),
+                                manufacturer,
+                                connectionTypeLists.get(manufacturer).getClass().getName());
+                    }
+                }
+            }
+        }
+
+        public String[] getConnectionTypes(String manufacturer) {
+            ConnectionTypeList ctl = this.connectionTypeLists.get(manufacturer);
+            if (ctl != null) {
+                return ctl.getAvailableProtocolClasses();
+            }
+            return this.connectionTypeLists.get(InternalConnectionTypeList.NONE).getAvailableProtocolClasses();
+        }
+
+        public String[] getConnectionManufacturers() {
+            ArrayList<String> a = new ArrayList<>(this.connectionTypeLists.keySet());
+            a.remove(InternalConnectionTypeList.NONE);
+            a.sort(null);
+            a.add(0, InternalConnectionTypeList.NONE);
+            return a.toArray(new String[a.size()]);
+        }
+
     }
 }

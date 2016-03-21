@@ -33,10 +33,6 @@ import org.slf4j.LoggerFactory;
  */
 public class PrintOptionPanel extends OperationsPreferencesPanel {
 
-    /**
-     *
-     */
-    private static final long serialVersionUID = 2753161901627545371L;
     private static final Logger log = LoggerFactory.getLogger(PrintOptionPanel.class);
 
     // labels
@@ -565,8 +561,8 @@ public class PrintOptionPanel extends OperationsPreferencesPanel {
 
     private void removeComboBox(JPanel panel, List<JComboBox<String>> list) {
         for (int i = 0; i < list.size(); i++) {
-            JComboBox<?> cb = list.get(i);
-            if (cb.getSelectedItem() == Setup.BLANK) {
+            JComboBox<String> cb = list.get(i);
+            if (cb.getSelectedItem().equals(Setup.BLANK)) {
                 list.remove(i);
                 panel.remove(cb);
                 panel.revalidate();

@@ -43,8 +43,8 @@ public class LoadXmlUserAction extends LoadXmlConfigAction {
     public void actionPerformed(ActionEvent e) {
         JFileChooser userFileChooser = getUserFileChooser();
         userFileChooser.setDialogType(javax.swing.JFileChooser.OPEN_DIALOG);
-        userFileChooser.setApproveButtonText(rb.getString("MenuItemLoad"));
-        userFileChooser.setDialogTitle(rb.getString("MenuItemLoad"));
+        userFileChooser.setApproveButtonText(rb.getString("LoadPanelTitle"));
+        userFileChooser.setDialogTitle(rb.getString("LoadPanelTitle"));
 
         boolean results = loadFile(userFileChooser);
         if (results) {

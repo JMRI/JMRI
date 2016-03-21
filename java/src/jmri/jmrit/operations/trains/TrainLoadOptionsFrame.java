@@ -32,11 +32,6 @@ import org.slf4j.LoggerFactory;
  */
 public class TrainLoadOptionsFrame extends OperationsFrame implements java.beans.PropertyChangeListener {
 
-    /**
-     *
-     */
-    private static final long serialVersionUID = 3409582934081412947L;
-
     private static boolean loadAndType = false;
 
     Train _train = null;
@@ -301,6 +296,7 @@ public class TrainLoadOptionsFrame extends OperationsFrame implements java.beans
         updateLoadNames();
     }
 
+    @edu.umd.cs.findbugs.annotations.SuppressFBWarnings(value = "ST_WRITE_TO_STATIC_FROM_INSTANCE_METHOD")
     private void saveTrain() {
         // save the last state of the "Use car type and load" checkbox
         loadAndType = loadAndTypeCheckBox.isSelected();

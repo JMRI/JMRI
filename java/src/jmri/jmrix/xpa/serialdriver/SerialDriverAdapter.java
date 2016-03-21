@@ -31,7 +31,7 @@ public class SerialDriverAdapter extends XpaPortController implements jmri.jmrix
         super(new XpaSystemConnectionMemo());
         option1Name = "ModemInitString";
         options.put(option1Name, new Option("Modem Initilization String : ", new String[]{"ATX0E0"}));
-        this.manufacturerName = jmri.jmrix.DCCManufacturerList.LENZ;
+        this.manufacturerName = jmri.jmrix.lenz.LenzConnectionTypeList.LENZ;
     }
 
     SerialPort activeSerialPort = null;

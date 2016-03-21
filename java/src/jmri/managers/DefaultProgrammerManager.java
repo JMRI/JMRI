@@ -106,6 +106,13 @@ public class DefaultProgrammerManager implements ProgrammerManager {
     
     @Nonnull private Programmer mProgrammer;
 
+    /**
+     * For case where no global programmer is available
+     */
+    public DefaultProgrammerManager() {
+        mProgrammer = null;  // indicates not present
+    }
+     
     public DefaultProgrammerManager(@Nonnull Programmer pProgrammer) {
         mProgrammer = pProgrammer;
     }

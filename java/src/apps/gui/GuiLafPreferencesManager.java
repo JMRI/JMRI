@@ -14,7 +14,7 @@ import javax.swing.UnsupportedLookAndFeelException;
 import jmri.beans.Bean;
 import jmri.profile.Profile;
 import jmri.profile.ProfileUtils;
-import jmri.spi.InitializationException;
+import jmri.util.prefs.InitializationException;
 import jmri.spi.PreferencesProvider;
 import jmri.util.swing.SwingSettings;
 import org.slf4j.Logger;

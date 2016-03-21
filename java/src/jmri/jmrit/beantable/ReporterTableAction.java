@@ -194,7 +194,7 @@ public class ReporterTableAction extends AbstractTableAction {
     JTextField userName = new JTextField(20);
     JComboBox<String> prefixBox = new JComboBox<String>();
     JTextField numberToAdd = new JTextField(10);
-    JCheckBox range = new JCheckBox("Add a range");
+    JCheckBox range = new JCheckBox(Bundle.getMessage("AddRangeBox"));
     JLabel sysNameLabel = new JLabel("Hardware Address");
     JLabel userNameLabel = new JLabel(Bundle.getMessage("LabelUserName"));
     String systemSelectionCombo = this.getClass().getName() + ".SystemSelected";

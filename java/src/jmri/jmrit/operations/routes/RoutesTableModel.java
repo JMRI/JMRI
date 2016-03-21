@@ -210,7 +210,7 @@ public class RoutesTableModel extends javax.swing.table.AbstractTableModel imple
         });
     }
 
-    public void propertyChange(PropertyChangeEvent e) {
+    public synchronized void propertyChange(PropertyChangeEvent e) {
         if (Control.showProperty) {
             log.debug("Property change: ({}) old: ({}) new: ({})", e.getPropertyName(), e.getOldValue(), e
                     .getNewValue());

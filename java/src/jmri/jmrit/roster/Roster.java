@@ -319,13 +319,28 @@ public class Roster extends XmlFile implements RosterGroupSelector, PropertyChan
         return null;
     }
 
+     /**
+     * Return a list of RosterEntry which have a 
+     * particular DCC address.
+     *
+     * @param a 
+     * @return an ArrayList of matching entries, perhaps empty
+     */
+    public @Nonnull  List<RosterEntry> getEntriesByDccAddress(String a) {
+        return findMatchingEntries(
+            (RosterEntry r) -> { 
+                return r.getDccAddress().equals(a);
+                } 
+            );
+    }
+
     /**
      * Return a specific entry by index
      *
      * @param i
      * @return The matching RosterEntry
      */
-    public RosterEntry getEntry(int i) {
+    public @Nonnull  RosterEntry getEntry(int i) {
         return _list.get(i);
     }
 
@@ -439,10 +454,32 @@ public class Roster extends XmlFile implements RosterGroupSelector, PropertyChan
             return this.getEntriesWithAttributeKeyValue(Roster.getRosterGroupProperty(group), "yes"); // NOI18N
         }
     }
-
+    
+    /** 
+     * Internal interface works with #findMatchingEntries
+     * to provide a common search-match-return capability.
+     */
+    private interface RosterComparator {
+        public boolean check(RosterEntry r);
+    }
+    
+    /** 
+     * Internal method works with #RosterComparator
+     * to provide a common search-match-return capability.
+     */
+    private List<RosterEntry> findMatchingEntries(RosterComparator c) {
+        List<RosterEntry> l = new ArrayList<>();
+        for (RosterEntry r : _list) {
+            if (c.check(r)) {
+                l.add(r);
+            }
+        }
+        return l;
+    }
+    
     /**
      * Get a List of {@link RosterEntry} objects in Roster matching some
-     * information. The list may have null contents if there are no matches.
+     * information. The list will be empty if there are no matches.
      *
      * @param roadName
      * @param roadNumber
@@ -454,20 +491,20 @@ public class Roster extends XmlFile implements RosterGroupSelector, PropertyChan
      * @param id
      * @return List or matching RosterEntries or an empty List
      */
-    public List<RosterEntry> getEntriesMatchingCriteria(String roadName, String roadNumber, String dccAddress,
+    public @Nonnull List<RosterEntry> getEntriesMatchingCriteria(String roadName, String roadNumber, String dccAddress,
             String mfg, String decoderMfgID, String decoderVersionID, String id, String group) {
-        List<RosterEntry> l = new ArrayList<>();
-        for (int i = 0; i < this.numEntries(); i++) {
-            if (this.checkEntry(i, roadName, roadNumber, dccAddress, mfg, decoderMfgID, decoderMfgID, id, group)) {
-                l.add(this.getEntry(i));
-            }
-        }
-        return l;
+        return findMatchingEntries(
+            (RosterEntry r) -> { 
+                return checkEntry(r, roadName, roadNumber, dccAddress,
+                mfg, decoderMfgID, decoderVersionID,
+                id, group);
+                } 
+            );
     }
 
     /**
      * Get a List of {@link RosterEntry} objects in Roster matching some
-     * information. The list may have null contents if there are no matches.
+     * information. The list will be empty if there are no matches.
      *
      * This method calls {@link #getEntriesMatchingCriteria(java.lang.String, java.lang.String, java.lang.String, java.lang.String, java.lang.String, java.lang.String, java.lang.String, java.lang.String)
      * }
@@ -485,7 +522,7 @@ public class Roster extends XmlFile implements RosterGroupSelector, PropertyChan
      * java.lang.String, java.lang.String, java.lang.String, java.lang.String,
      * java.lang.String, java.lang.String)
      */
-    public List<RosterEntry> matchingList(String roadName, String roadNumber, String dccAddress,
+    public @Nonnull List<RosterEntry> matchingList(String roadName, String roadNumber, String dccAddress,
             String mfg, String decoderMfgID, String decoderVersionID, String id) {
         return this.getEntriesMatchingCriteria(roadName, roadNumber, dccAddress, mfg, decoderMfgID, decoderVersionID, id, null);
     }
@@ -493,7 +530,7 @@ public class Roster extends XmlFile implements RosterGroupSelector, PropertyChan
     /**
      * Check if an entry is consistent with specific properties.
      * <P>
-     * A null String entry always matches. Strings are used for convenience in
+     * A null String argument always matches. Strings are used for convenience in
      * GUI building.
      *
      * @param i
@@ -507,16 +544,16 @@ public class Roster extends XmlFile implements RosterGroupSelector, PropertyChan
      * @param group
      * @return true if the entry matches
      */
-    public boolean checkEntry(int i, String roadName, String roadNumber, String dccAddress,
-            String mfg, String decoderModel, String decoderFamily,
-            String id, String group) {
-        return this.checkEntry(_list, i, roadName, roadNumber, dccAddress, mfg, decoderModel, decoderFamily, id, group);
-    }
+     public boolean checkEntry(int i, String roadName, String roadNumber, String dccAddress,
+             String mfg, String decoderModel, String decoderFamily,
+             String id, String group) {
+         return this.checkEntry(_list, i, roadName, roadNumber, dccAddress, mfg, decoderModel, decoderFamily, id, group);
+     }
 
     /**
      * Check if an entry is consistent with specific properties.
      * <P>
-     * A null String entry always matches. Strings are used for convenience in
+     * A null String argument always matches. Strings are used for convenience in
      * GUI building.
      *
      * @param list
@@ -535,6 +572,32 @@ public class Roster extends XmlFile implements RosterGroupSelector, PropertyChan
             String mfg, String decoderModel, String decoderFamily,
             String id, String group) {
         RosterEntry r = list.get(i);
+        return checkEntry(r, roadName, roadNumber, dccAddress,
+            mfg, decoderModel, decoderFamily,
+            id, group);
+    }
+
+    /**
+     * Check if an entry is consistent with specific properties.
+     * <P>
+     * A null String argument always matches. Strings are used for convenience in
+     * GUI building.
+     *
+     * @param r
+     * @param roadName
+     * @param roadNumber
+     * @param dccAddress
+     * @param mfg
+     * @param decoderModel
+     * @param decoderFamily
+     * @param id
+     * @param group
+     * @return True if the entry matches
+     */
+    public boolean checkEntry(RosterEntry r, String roadName, String roadNumber, String dccAddress,
+            String mfg, String decoderModel, String decoderFamily,
+            String id, String group) {
+
         if (id != null && !id.equals(r.getId())) {
             return false;
         }

@@ -331,8 +331,8 @@ public class TrainEditFrame extends OperationsFrame implements java.beans.Proper
             routeBox.setSelectedItem(_train.getRoute());
             modelEngineBox.setSelectedItem(_train.getEngineModel());
             commentTextArea.setText(_train.getComment());
-            cabooseRadioButton.setSelected((_train.getRequirements() & Train.CABOOSE) > 0);
-            fredRadioButton.setSelected((_train.getRequirements() & Train.FRED) > 0);
+            cabooseRadioButton.setSelected((_train.getRequirements() & Train.CABOOSE) == Train.CABOOSE);
+            fredRadioButton.setSelected((_train.getRequirements() & Train.FRED) == Train.FRED);
             updateDepartureTime();
             enableButtons(true);
             // listen for train changes
@@ -495,9 +495,8 @@ public class TrainEditFrame extends OperationsFrame implements java.beans.Proper
         }
         Train train = trainManager.newTrain(trainNameTextField.getText());
         _train = train;
-        if (_train != null) {
-            _train.addPropertyChangeListener(this);
-        }
+        _train.addPropertyChangeListener(this);
+
         // update check boxes
         updateCarTypeCheckboxes();
         updateEngineTypeCheckboxes();
@@ -513,10 +512,6 @@ public class TrainEditFrame extends OperationsFrame implements java.beans.Proper
         if (!checkModel() || !checkEngineRoad()) {
             return;
         }
-//        if (numEnginesBox.getSelectedItem().equals(Train.AUTO) && !_train.getNumberEngines().equals(Train.AUTO)) {
-//            JOptionPane.showMessageDialog(this, Bundle.getMessage("AutoEngines"), Bundle
-//                    .getMessage("FeatureUnderDevelopment"), JOptionPane.INFORMATION_MESSAGE);
-//        }
         _train.setDepartureTime((String) hourBox.getSelectedItem(), (String) minuteBox.getSelectedItem());
         _train.setNumberEngines((String) numEnginesBox.getSelectedItem());
         if (_train.getNumberEngines().equals("0")) {
@@ -894,7 +889,7 @@ public class TrainEditFrame extends OperationsFrame implements java.beans.Proper
                     loc.addPropertyChangeListener(this);
                     boolean services = false;
                     // does train direction service location?
-                    if ((rl.getTrainDirection() & loc.getTrainDirections()) > 0) {
+                    if ((rl.getTrainDirection() & loc.getTrainDirections()) != 0) {
                         services = true;
                     } // train must service last location or single location
                     else if (i == routeList.size() - 1) {

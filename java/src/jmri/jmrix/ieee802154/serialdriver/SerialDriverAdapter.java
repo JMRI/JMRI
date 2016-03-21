@@ -35,7 +35,7 @@ public class SerialDriverAdapter extends IEEE802154PortController implements jmr
 
     protected SerialDriverAdapter(IEEE802154SystemConnectionMemo connectionMemo) {
         super(connectionMemo);
-        this.manufacturerName = jmri.jmrix.DCCManufacturerList.IEEE802154;
+        this.manufacturerName = jmri.jmrix.ieee802154.SerialConnectionTypeList.IEEE802154;
     }
 
     public String openPort(String portName, String appName) {
