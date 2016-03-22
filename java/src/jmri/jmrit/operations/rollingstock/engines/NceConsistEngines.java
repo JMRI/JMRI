@@ -76,7 +76,7 @@ public class NceConsistEngines extends Thread implements jmri.jmrix.nce.NceListe
         this.tc = tc;
     }
 
-    @edu.umd.cs.findbugs.annotations.SuppressFBWarnings(value = " BC_UNCONFIRMED_CAST_OF_RETURN_VALUE")
+    @edu.umd.cs.findbugs.annotations.SuppressFBWarnings(value = "BC_UNCONFIRMED_CAST_OF_RETURN_VALUE")
     // we use a thread so the status frame will work!
     public void run() {
         if (tc == null) {
@@ -170,7 +170,7 @@ public class NceConsistEngines extends Thread implements jmri.jmrix.nce.NceListe
         }
     }
 
-    @edu.umd.cs.findbugs.annotations.SuppressFBWarnings(value = " BC_UNCONFIRMED_CAST_OF_RETURN_VALUE")
+    @edu.umd.cs.findbugs.annotations.SuppressFBWarnings(value = "BC_UNCONFIRMED_CAST_OF_RETURN_VALUE")
     private void syncEngines(int offset, int step) {
         for (int consistNum = 1; consistNum < 128; consistNum++) {
             int engNum = getEngineNumberFromArray(consistNum, offset, step);
