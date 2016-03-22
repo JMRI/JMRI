@@ -94,11 +94,17 @@ public class JUnitAppender extends org.apache.log4j.ConsoleAppender {
     }
 
     void superappend(LoggingEvent l) {
-        super.append(l);
         if (l.getLevel() == Level.FATAL) unexpectedFatalSeen = true;
-        if (l.getLevel() == Level.ERROR) unexpectedErrorSeen = true;
+        if (l.getLevel() == Level.ERROR) {
+            if (compare((String) l.getMessage(),"Uncaught Exception caught by jmri.util.exceptionhandler.UncaughtExceptionHandler")) {
+                // still an error, just suppressed
+            } else {
+                unexpectedErrorSeen = true;
+            }
+        }
         if (l.getLevel() == Level.WARN) unexpectedWarnSeen = true;
         if (l.getLevel() == Level.INFO) unexpectedInfoSeen = true;
+        super.append(l);
     }
 
     /**
