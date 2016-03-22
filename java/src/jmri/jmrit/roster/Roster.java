@@ -1412,6 +1412,21 @@ public class Roster extends XmlFile implements RosterGroupSelector, PropertyChan
         return new HashMap<>(rosterGroups);
     }
 
+    /**
+     * Changes the key used to lookup a RosterGroup by name. This is a helper
+     * method that does not fire a notification to any propertyChangeListeners.
+     *
+     * To rename a RosterGroup, use
+     * {@link jmri.jmrit.roster.rostergroup.RosterGroup#setName(java.lang.String)}.
+     *
+     * @param group
+     * @param newKey
+     */
+    public void remapRosterGroup(RosterGroup group, String newKey) {
+        this.rosterGroups.remove(group.getName());
+        this.rosterGroups.put(newKey, group);
+    }
+
     @Override
     public void propertyChange(PropertyChangeEvent evt) {
         if (evt.getSource() instanceof RosterEntry) {
