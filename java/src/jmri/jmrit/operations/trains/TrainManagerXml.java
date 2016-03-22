@@ -59,7 +59,7 @@ public class TrainManagerXml extends OperationsXml {
             _instance = new TrainManagerXml();
             _instance.load();
         }
-        if (Control.showInstance) {
+        if (Control.SHOW_INSTANCE) {
             log.debug("TrainManagerXml returns instance " + _instance);
         }
         return _instance;
@@ -301,7 +301,7 @@ public class TrainManagerXml extends OperationsXml {
         }
     }
 
-    @edu.umd.cs.findbugs.annotations.SuppressFBWarnings(value = "ST_WRITE_TO_STATIC_FROM_INSTANCE_METHOD")
+    @edu.umd.cs.findbugs.annotations.SuppressFBWarnings(value = "ST_WRITE_TO_STATIC_FROM_INSTANCE_METHOD", justification = "for testing")
     public void dispose(){
         _instance = null;
     }

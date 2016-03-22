@@ -193,10 +193,11 @@ public class RollingStockManager {
 
     private static final int PAGE_SIZE = 64;
     private static final int NOT_INTEGER = -999999999; // flag when RS number isn't an Integer
+
     /**
-     * Sort by rolling stock number, number can be alphanumeric.
-     * RollingStock number can also be in the format of nnnn-N, where
-     * the "-N" allows the user to enter RollingStock with similar numbers.
+     * Sort by rolling stock number, number can be alphanumeric. RollingStock
+     * number can also be in the format of nnnn-N, where the "-N" allows the
+     * user to enter RollingStock with similar numbers.
      *
      * @return list of RollingStock ordered by number
      */
@@ -206,7 +207,7 @@ public class RollingStockManager {
         // now re-sort
         List<RollingStock> out = new ArrayList<RollingStock>();
         int rsNumber = 0;
-        int outRsNumber = 0;  
+        int outRsNumber = 0;
 
         for (RollingStock rs : sortIn) {
             boolean rsAdded = false;
@@ -219,6 +220,8 @@ public class RollingStockManager {
                     String[] number = rs.getNumber().split("-");
                     rsNumber = Integer.parseInt(number[0]);
                     rs.number = rsNumber;
+                } catch (RuntimeException re) {
+                    throw re;
                     // two possible exceptions, ArrayIndexOutOfBoundsException on split, and NumberFormatException on
                     // parseInt
                 } catch (Exception e2) {
@@ -272,6 +275,10 @@ public class RollingStockManager {
                         try {
                             String[] number = out.get(j).getNumber().split("-");
                             outRsNumber = Integer.parseInt(number[0]);
+                        } catch (RuntimeException re) {
+                            throw re;
+                            // two possible exceptions, ArrayIndexOutOfBoundsException on split, and NumberFormatException on
+                            // parseInt
                         } catch (Exception e2) {
                             // force add
                             outRsNumber = rsNumber + 1;
@@ -465,18 +472,21 @@ public class RollingStockManager {
             case BY_COLOR:
                 return (r1, r2) -> (r1.getColor().compareToIgnoreCase(r2.getColor()));
             case BY_LOCATION:
-                return (r1, r2) -> (r1.getStatus() + r1.getLocationName() + r1.getTrackName()).compareToIgnoreCase(r2.getStatus() +
-                        r2.getLocationName() +
-                        r2.getTrackName());
+                return (r1, r2) -> (r1.getStatus() + r1.getLocationName() + r1.getTrackName())
+                        .compareToIgnoreCase(r2.getStatus() +
+                                r2.getLocationName() +
+                                r2.getTrackName());
             case BY_DESTINATION:
-                return (r1, r2) -> (r1.getDestinationName() + r1.getDestinationTrackName()).compareToIgnoreCase(r2.getDestinationName() +
-                        r2.getDestinationTrackName());
+                return (r1, r2) -> (r1.getDestinationName() + r1.getDestinationTrackName())
+                        .compareToIgnoreCase(r2.getDestinationName() +
+                                r2.getDestinationTrackName());
             case BY_TRAIN:
                 return (r1, r2) -> (r1.getTrainName().compareToIgnoreCase(r2.getTrainName()));
             case BY_MOVES:
                 return (r1, r2) -> (r1.getMoves() - r2.getMoves());
             case BY_BUILT:
-                return (r1, r2) -> (convertBuildDate(r1.getBuilt()).compareToIgnoreCase(convertBuildDate(r2.getBuilt())));
+                return (r1,
+                        r2) -> (convertBuildDate(r1.getBuilt()).compareToIgnoreCase(convertBuildDate(r2.getBuilt())));
             case BY_OWNER:
                 return (r1, r2) -> (r1.getOwner().compareToIgnoreCase(r2.getOwner()));
             case BY_RFID:
@@ -574,7 +584,7 @@ public class RollingStockManager {
         });
         return out;
     }
-    
+
     java.beans.PropertyChangeSupport pcs = new java.beans.PropertyChangeSupport(this);
 
     public synchronized void addPropertyChangeListener(java.beans.PropertyChangeListener l) {

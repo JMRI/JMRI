@@ -396,7 +396,7 @@ public class AutoAllocate {
             }
         }
 // djd debugging 
-        log.info("auto allocating Section " + ar.getSection().getUserName());
+        log.info("{}: auto allocating Section {}", ar.getActiveTrain().getTrainName(), ar.getSection().getUserName());
         _dispatcher.allocateSection(ar, null);
         return true;
     }

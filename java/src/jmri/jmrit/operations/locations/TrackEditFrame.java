@@ -551,7 +551,6 @@ public class TrackEditFrame extends OperationsFrame implements java.beans.Proper
         return true;
     }
 
-    @edu.umd.cs.findbugs.annotations.SuppressFBWarnings(value = "ST_WRITE_TO_STATIC_FROM_INSTANCE_METHOD")
     protected void saveTrack(Track track) {
         // save train directions serviced by this location
         int direction = 0;
@@ -572,8 +571,6 @@ public class TrackEditFrame extends OperationsFrame implements java.beans.Proper
 
         track.setComment(commentTextArea.getText());
 
-        // save the last state of the "Use car type and load" checkbox
-        // loadAndType = loadAndTypeCheckBox.isSelected();
         // save current window size so it doesn't change during updates
         setPreferredSize(getSize());
 
@@ -1197,7 +1194,7 @@ public class TrackEditFrame extends OperationsFrame implements java.beans.Proper
     }
 
     public void propertyChange(java.beans.PropertyChangeEvent e) {
-        if (Control.showProperty) {
+        if (Control.SHOW_PROPERTY) {
             log.debug("Property change: ({}) old: ({}) new: ({})", e.getPropertyName(), e.getOldValue(), e
                     .getNewValue());
         }
