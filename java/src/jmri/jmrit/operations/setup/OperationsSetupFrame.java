@@ -14,11 +14,6 @@ import jmri.jmrit.operations.OperationsFrame;
  */
 public class OperationsSetupFrame extends OperationsFrame {
 
-    /**
-     *
-     */
-    private static final long serialVersionUID = 852682446088800323L;
-
     public OperationsSetupFrame() {
         super(Bundle.getMessage("TitleOperationsSetup"), new OperationsSetupPanel());
     }

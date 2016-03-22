@@ -346,6 +346,7 @@ public class RouteLocation implements java.beans.PropertyChangeListener {
         return time[0] + ":" + time[1] + AM_PM;
     }
 
+    @edu.umd.cs.findbugs.annotations.SuppressFBWarnings(value = "FE_FLOATING_POINT_EQUALITY")
     public void setGrade(double grade) {
         double old = _grade;
         _grade = grade;

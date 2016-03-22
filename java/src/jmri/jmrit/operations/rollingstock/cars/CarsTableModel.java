@@ -259,6 +259,7 @@ public class CarsTableModel extends javax.swing.table.AbstractTableModel impleme
         return getCarList(_sort);
     }
 
+    @edu.umd.cs.findbugs.annotations.SuppressFBWarnings(value = "DB_DUPLICATE_SWITCH_CLAUSES")
     public List<RollingStock> getCarList(int sort) {
         List<RollingStock> list;
         switch (sort) {
