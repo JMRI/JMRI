@@ -1404,7 +1404,8 @@ public class Roster extends XmlFile implements RosterGroupSelector, PropertyChan
     }
 
     /**
-     * Get the groups known to the roster itself.
+     * Get the groups known to the roster itself. Note that changes to the
+     * returned Map will not be reflected in the Roster.
      *
      * @return the rosterGroups
      */
