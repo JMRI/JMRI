@@ -25,10 +25,10 @@ public class UncaughtExceptionHandler implements Thread.UncaughtExceptionHandler
             return;
         }
 
-        log.error("Uncaught Exception: {}", generateStackTrace(e));
+        log.error("Uncaught Exception caught by jmri.util.exceptionhandler.UncaughtExceptionHandler", e);
     }
 
-    private String generateStackTrace(Throwable e) {
+    static protected String generateStackTrace(Throwable e) {
         StringWriter writer = new StringWriter();
         PrintWriter pw = new PrintWriter(writer);
         e.printStackTrace(pw);
