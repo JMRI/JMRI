@@ -395,7 +395,7 @@ public class LightTableAction extends AbstractTableAction {
             contentPane.add(panel1);
             panel1a = new JPanel();
             panel1a.setLayout(new FlowLayout());
-            panel1a.add(new JLabel(Bundle.getMessage("LightHardwareAddress")));
+            panel1a.add(new JLabel(Bundle.getMessage("LabelHardwareAddress")));
             panel1a.add(fieldHardwareAddress);
             fieldHardwareAddress.setToolTipText(Bundle.getMessage("LightHardwareAddressHint"));
             panel1a.add(labelNumToAdd);

@@ -51,9 +51,9 @@ public class SignalMastTableDataModel extends BeanTableDataModel {
         if (col == VALUECOL) {
             return Bundle.getMessage("LabelAspectType");
         } else if (col == EDITMASTCOL) {
-            return Bundle.getMessage("ButtonEdit");
+            return ""; // override default, no title for Edit column
         } else if (col == EDITLOGICCOL) {
-            return "Edit Logic";
+            return ""; // override default, no title for Edit Logic column
         } else if (col == LITCOL) {
             return Bundle.getMessage("ColumnHeadLit");
         } else if (col == HELDCOL) {

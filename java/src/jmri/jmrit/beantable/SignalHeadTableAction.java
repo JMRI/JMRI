@@ -757,7 +757,7 @@ public class SignalHeadTableAction extends AbstractTableAction {
             v1Border.setTitle(Bundle.getMessage("LabelSignalheadNumber"));
             v1Panel.setVisible(true);
             ato1.setVisible(true);
-            vtLabel.setText(Bundle.getMessage("LabelAspectType"));
+            vtLabel.setText(Bundle.getMessage("LabelAspectType") + ":");
             vtLabel.setVisible(true);
             stBox.setVisible(true);
         } else if (quadOutput.equals(typeBox.getSelectedItem())) {
@@ -1918,7 +1918,7 @@ public class SignalHeadTableAction extends AbstractTableAction {
              ev1Panel.setVisible(true);
              eto1.setVisible(true);
              eto1.setText(curS.getUserName());*/
-            evtLabel.setText(Bundle.getMessage("LabelAspectType"));
+            evtLabel.setText(Bundle.getMessage("LabelAspectType") + ":");
             etot.setVisible(false);
             AcelaNode tNode = AcelaAddress.getNodeFromSystemName(curS.getSystemName());
             if (tNode == null) {
