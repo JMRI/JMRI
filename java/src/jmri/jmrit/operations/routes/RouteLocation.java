@@ -346,7 +346,7 @@ public class RouteLocation implements java.beans.PropertyChangeListener {
         return time[0] + ":" + time[1] + AM_PM;
     }
 
-    @edu.umd.cs.findbugs.annotations.SuppressFBWarnings(value = "FE_FLOATING_POINT_EQUALITY")
+    @edu.umd.cs.findbugs.annotations.SuppressFBWarnings(value = "FE_FLOATING_POINT_EQUALITY", justification = "firing property change doesn't matter")
     public void setGrade(double grade) {
         double old = _grade;
         _grade = grade;
@@ -555,7 +555,7 @@ public class RouteLocation implements java.beans.PropertyChangeListener {
     }
 
     public void propertyChange(java.beans.PropertyChangeEvent e) {
-        if (Control.showProperty) {
+        if (Control.SHOW_PROPERTY) {
             log.debug("Property change: ({}) old: ({}) new: ({})", e.getPropertyName(), e.getOldValue(), e
                     .getNewValue());
         }

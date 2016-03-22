@@ -325,7 +325,7 @@ public class AutomationsTableModel extends javax.swing.table.AbstractTableModel 
 
     // check for change in number of automations, or a change in a automation
     public void propertyChange(PropertyChangeEvent e) {
-        if (Control.showProperty) {
+        if (Control.SHOW_PROPERTY) {
             log.debug("Property change: ({}) old: ({}) new: ({})", e.getPropertyName(), e.getOldValue(), e
                     .getNewValue());
         }
@@ -335,7 +335,7 @@ public class AutomationsTableModel extends javax.swing.table.AbstractTableModel 
         } else if (e.getSource().getClass().equals(Automation.class)) {
             Automation automation = (Automation) e.getSource();
             int row = _sysList.indexOf(automation);
-            if (Control.showProperty) {
+            if (Control.SHOW_PROPERTY) {
                 log.debug("Update automation table row: {} name: {}", row, automation.getName());
             }
             if (row >= 0) {

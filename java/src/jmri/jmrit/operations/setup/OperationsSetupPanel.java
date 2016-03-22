@@ -406,7 +406,7 @@ public class OperationsSetupPanel extends OperationsPreferencesPanel implements 
         }
     }
 
-    @edu.umd.cs.findbugs.annotations.SuppressFBWarnings(value = "BC_UNCONFIRMED_CAST_OF_RETURN_VALUE")
+    @edu.umd.cs.findbugs.annotations.SuppressFBWarnings(value = "BC_UNCONFIRMED_CAST_OF_RETURN_VALUE", justification = "checks for instance of OperationsSetupFrame")
     private void save() {
         // check input fields
         int maxTrainLength;
