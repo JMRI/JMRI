@@ -3,6 +3,7 @@ package jmri.jmrit.operations.setup;
 
 import apps.Apps;
 import java.awt.event.ActionEvent;
+import java.io.IOException;
 import javax.swing.AbstractAction;
 import javax.swing.JOptionPane;
 import jmri.jmrit.operations.ExceptionDisplayFrame;
@@ -62,7 +63,7 @@ public class ResetAction extends AbstractAction {
 
             Apps.handleRestart();
 
-        } catch (Exception ex) {
+        } catch (IOException ex) {
             UnexpectedExceptionContext context = new UnexpectedExceptionContext(ex,
                     "Deleting Operations files"); // NOI18N
             new ExceptionDisplayFrame(context);
