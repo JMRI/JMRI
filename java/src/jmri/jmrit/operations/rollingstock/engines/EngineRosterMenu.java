@@ -1,7 +1,6 @@
 // EngineRosterMenu.java
 package jmri.jmrit.operations.rollingstock.engines;
 
-import java.awt.Component;
 import java.awt.Frame;
 import javax.swing.AbstractAction;
 import javax.swing.JMenu;
@@ -40,7 +39,7 @@ public class EngineRosterMenu extends JMenu {
     static public final int ENTRYMENU = 3;
 
     /**
-     * Create a
+     * Creates a roster menu for locomotives.
      *
      * @param pMenuName Name for the menu
      * @param pMenuType Select where the menu will be used, hence the right set
@@ -48,7 +47,7 @@ public class EngineRosterMenu extends JMenu {
      * @param pWho      The Component using this menu, used to ensure that
      *                  dialog boxes will pop in the right place.
      */
-    public EngineRosterMenu(String pMenuName, int pMenuType, Component pWho) {
+    public EngineRosterMenu(String pMenuName, int pMenuType, EnginesTableFrame pWho) {
         super(pMenuName);
 
         // create the menu

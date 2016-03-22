@@ -10,8 +10,7 @@ import jmri.util.JUnitUtil;
 /**
  * Test simple functioning of LayoutBlock
  *
- * @author	Paul Bender Copyright (C) 2015
- * @version	$Revision$
+ * @author	Paul Bender Copyright (C) 2016
  */
 public class LayoutBlockTest extends TestCase {
 

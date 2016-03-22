@@ -77,7 +77,7 @@ public class StoreXmlConfigAction extends LoadStoreBaseAction {
             int selectedValue = JOptionPane.showConfirmDialog(null,
                     "File " + file.getName() + " already exists, overwrite it?",
                     "Overwrite file?",
-                    JOptionPane.OK_CANCEL_OPTION);
+                    JOptionPane.OK_CANCEL_OPTION); // I18N TODO
             if (selectedValue != JOptionPane.OK_OPTION) {
                 return null;
             }

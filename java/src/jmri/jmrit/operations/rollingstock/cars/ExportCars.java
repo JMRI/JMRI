@@ -65,6 +65,7 @@ public class ExportCars extends XmlFile {
         }
     }
 
+    @edu.umd.cs.findbugs.annotations.SuppressFBWarnings(value = "BC_UNCONFIRMED_CAST_OF_RETURN_VALUE")
     public void writeFile(String name) {
         if (log.isDebugEnabled()) {
             log.debug("writeFile {}", name);

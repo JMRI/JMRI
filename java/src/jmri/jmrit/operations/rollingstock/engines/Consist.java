@@ -23,6 +23,7 @@ public class Consist extends RollingStockGroup {
         log.debug("New Consist ({})", name);
     }
 
+    @edu.umd.cs.findbugs.annotations.SuppressFBWarnings(value = "BC_UNCONFIRMED_CAST_OF_RETURN_VALUE")
     public List<Engine> getEngines() {
         List<Engine> engines = new ArrayList<Engine>();
         for (RollingStock rs : getGroup()) {

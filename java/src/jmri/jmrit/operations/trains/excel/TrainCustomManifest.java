@@ -128,6 +128,7 @@ public class TrainCustomManifest {
         return file.exists();
     }
     
+    @edu.umd.cs.findbugs.annotations.SuppressFBWarnings(value = "UW_UNCOND_WAIT")
     public void checkProcessComplete() {
         if (alive) {
             int loopCount = Control.excelWaitTime; // number of seconds to wait
