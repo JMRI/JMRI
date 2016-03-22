@@ -1,4 +1,40 @@
-// NceShowCabPanel.java
+package jmri.jmrix.nce.cab;
+
+import java.awt.Dimension;
+import java.awt.GridBagConstraints;
+import java.awt.GridBagLayout;
+import java.awt.event.ActionEvent;
+import java.text.MessageFormat;
+import java.util.Calendar;
+import java.util.ResourceBundle;
+import javax.swing.BoxLayout;
+import javax.swing.JButton;
+import javax.swing.JCheckBox;
+import javax.swing.JComponent;
+import javax.swing.JLabel;
+import javax.swing.JPanel;
+import javax.swing.JScrollPane;
+import javax.swing.JTable;
+import javax.swing.JTextField;
+import javax.swing.ListSelectionModel;
+import javax.swing.ScrollPaneConstants;
+import javax.swing.table.AbstractTableModel;
+import javax.swing.table.TableCellEditor;
+import javax.swing.table.TableColumn;
+import javax.swing.table.TableColumnModel;
+import jmri.jmrix.nce.NceBinaryCommand;
+import jmri.jmrix.nce.NceCmdStationMemory;
+import jmri.jmrix.nce.NceCmdStationMemory.CabMemorySerial;
+import jmri.jmrix.nce.NceCmdStationMemory.CabMemoryUsb;
+import jmri.jmrix.nce.NceMessage;
+import jmri.jmrix.nce.NceReply;
+import jmri.jmrix.nce.NceSystemConnectionMemo;
+import jmri.jmrix.nce.NceTrafficController;
+import jmri.util.table.ButtonEditor;
+import jmri.util.table.ButtonRenderer;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
 /**
  * Frame to display NCE cabs
  *
@@ -73,48 +109,8 @@
  *
  * @author Dan Boudreau Copyright (C) 2009, 2010
  * @author Ken Cameron Copyright (C) 2012, 2013
- * @version $Revision$
  */
-package jmri.jmrix.nce.cab;
-
-import java.awt.Dimension;
-import java.awt.GridBagConstraints;
-import java.awt.GridBagLayout;
-import java.awt.event.ActionEvent;
-import java.text.MessageFormat;
-import java.util.Calendar;
-import java.util.ResourceBundle;
-import javax.swing.BoxLayout;
-import javax.swing.JButton;
-import javax.swing.JCheckBox;
-import javax.swing.JComponent;
-import javax.swing.JLabel;
-import javax.swing.JPanel;
-import javax.swing.JScrollPane;
-import javax.swing.JTable;
-import javax.swing.JTextField;
-import javax.swing.ListSelectionModel;
-import javax.swing.ScrollPaneConstants;
-import javax.swing.table.AbstractTableModel;
-import javax.swing.table.TableCellEditor;
-import javax.swing.table.TableColumn;
-import javax.swing.table.TableColumnModel;
-import jmri.jmrix.nce.NceBinaryCommand;
-import jmri.jmrix.nce.NceCmdStationMemory;
-import jmri.jmrix.nce.NceCmdStationMemory.CabMemorySerial;
-import jmri.jmrix.nce.NceCmdStationMemory.CabMemoryUsb;
-import jmri.jmrix.nce.NceMessage;
-import jmri.jmrix.nce.NceReply;
-import jmri.jmrix.nce.NceSystemConnectionMemo;
-import jmri.jmrix.nce.NceTrafficController;
-import jmri.util.table.ButtonEditor;
-import jmri.util.table.ButtonRenderer;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
-
 public class NceShowCabPanel extends jmri.jmrix.nce.swing.NcePanel implements jmri.jmrix.nce.NceListener {
-
-    private static final long serialVersionUID = -6257111644383267721L;
 
     static final ResourceBundle rb = ResourceBundle.getBundle("jmri.jmrix.nce.cab.NceShowCabBundle");
 
@@ -1739,8 +1735,6 @@ public class NceShowCabPanel extends jmri.jmrix.nce.swing.NcePanel implements jm
 
     class nceCabTableModel extends AbstractTableModel {
 
-        private static final long serialVersionUID = 4054769784378853752L;
-
         dataRow[] cabData;
 
         nceCabTableModel(dataRow[] cabDataPtr) {
@@ -2031,8 +2025,6 @@ public class NceShowCabPanel extends jmri.jmrix.nce.swing.NcePanel implements jm
      * Nested class to create one of these using old-style defaults
      */
     static public class Default extends jmri.jmrix.nce.swing.NceNamedPaneAction {
-
-        private static final long serialVersionUID = 1846279950671843214L;
 
         public Default() {
             super("Open NCE Cabs Monitor",
