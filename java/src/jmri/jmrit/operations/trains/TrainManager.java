@@ -1,9 +1,6 @@
 // TrainManager.java
 package jmri.jmrit.operations.trains;
 
-import jmri.jmrit.operations.trains.excel.TrainCustomSwitchList;
-
-import jmri.jmrit.operations.trains.excel.TrainCustomManifest;
 import java.io.File;
 import java.io.PrintWriter;
 import java.text.MessageFormat;
@@ -21,6 +18,8 @@ import jmri.jmrit.operations.routes.RouteLocation;
 import jmri.jmrit.operations.setup.Control;
 import jmri.jmrit.operations.setup.OperationsSetupXml;
 import jmri.jmrit.operations.setup.Setup;
+import jmri.jmrit.operations.trains.excel.TrainCustomManifest;
+import jmri.jmrit.operations.trains.excel.TrainCustomSwitchList;
 import jmri.script.JmriScriptEngineManager;
 import org.jdom2.Attribute;
 import org.jdom2.Element;
@@ -93,7 +92,7 @@ public class TrainManager implements java.beans.PropertyChangeListener {
             OperationsSetupXml.instance(); // load setup
             TrainManagerXml.instance(); // load trains
         }
-        if (Control.showInstance) {
+        if (Control.SHOW_INSTANCE) {
             log.debug("TrainManager returns instance " + _instance);
         }
         return _instance;
@@ -290,7 +289,7 @@ public class TrainManager implements java.beans.PropertyChangeListener {
         }
     }
 
-    @edu.umd.cs.findbugs.annotations.SuppressFBWarnings(value = "ST_WRITE_TO_STATIC_FROM_INSTANCE_METHOD")
+    @edu.umd.cs.findbugs.annotations.SuppressFBWarnings(value = "ST_WRITE_TO_STATIC_FROM_INSTANCE_METHOD", justification = "for testing")
     public void dispose() {
         _trainHashTable.clear();
         _id = 0;

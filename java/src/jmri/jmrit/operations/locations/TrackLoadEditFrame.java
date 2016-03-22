@@ -343,7 +343,7 @@ public class TrackLoadEditFrame extends OperationsFrame implements java.beans.Pr
         }
     }
 
-    @edu.umd.cs.findbugs.annotations.SuppressFBWarnings(value = "ST_WRITE_TO_STATIC_FROM_INSTANCE_METHOD")
+    @edu.umd.cs.findbugs.annotations.SuppressFBWarnings(value = "ST_WRITE_TO_STATIC_FROM_INSTANCE_METHOD", justification = "GUI ease of use")
     protected void save() {
         checkForErrors();
         _track.setHoldCarsWithCustomLoadsEnabled(holdCars.isSelected());
@@ -538,7 +538,7 @@ public class TrackLoadEditFrame extends OperationsFrame implements java.beans.Pr
     }
 
     public void propertyChange(java.beans.PropertyChangeEvent e) {
-        if (Control.showProperty) {
+        if (Control.SHOW_PROPERTY) {
             log.debug("Property change ({}) old: ({}) new: ({})", e.getPropertyName(), e.getOldValue(), e.getNewValue()); // NOI18N
         }
         if (e.getPropertyName().equals(Location.TYPES_CHANGED_PROPERTY)

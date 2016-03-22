@@ -39,7 +39,7 @@ public class CarManagerXml extends OperationsXml {
             _instance = new CarManagerXml();
             _instance.load();
         }
-        if (Control.showInstance) {
+        if (Control.SHOW_INSTANCE) {
             log.debug("CarManagerXml returns instance {}", _instance);
         }
         return _instance;
@@ -123,7 +123,7 @@ public class CarManagerXml extends OperationsXml {
     }
     private String operationsFileName = "OperationsCarRoster.xml"; // NOI18N
 
-    @edu.umd.cs.findbugs.annotations.SuppressFBWarnings(value = "ST_WRITE_TO_STATIC_FROM_INSTANCE_METHOD")
+    @edu.umd.cs.findbugs.annotations.SuppressFBWarnings(value = "ST_WRITE_TO_STATIC_FROM_INSTANCE_METHOD", justification = "for testing")
     public void dispose(){
         _instance = null;
     }

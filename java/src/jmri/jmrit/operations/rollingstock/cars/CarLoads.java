@@ -50,7 +50,7 @@ public class CarLoads extends RollingStockAttribute {
             // create and load
             _instance = new CarLoads();
         }
-        if (Control.showInstance) {
+        if (Control.SHOW_INSTANCE) {
             log.debug("CarLoads returns instance {}", _instance);
         }
         return _instance;

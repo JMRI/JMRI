@@ -116,7 +116,7 @@ public class CarAttributeEditFrame extends OperationsFrame implements java.beans
     }
 
     // add, delete, or replace button
-    @edu.umd.cs.findbugs.annotations.SuppressFBWarnings(value = "ST_WRITE_TO_STATIC_FROM_INSTANCE_METHOD")
+    @edu.umd.cs.findbugs.annotations.SuppressFBWarnings(value = "ST_WRITE_TO_STATIC_FROM_INSTANCE_METHOD", justification = "GUI ease of use")
     public void buttonActionPerformed(java.awt.event.ActionEvent ae) {
         log.debug("edit frame button activated");
         if (ae.getSource() == addButton) {
@@ -212,7 +212,7 @@ public class CarAttributeEditFrame extends OperationsFrame implements java.beans
 
     static boolean showDialogBox = true;
 
-    @edu.umd.cs.findbugs.annotations.SuppressFBWarnings(value = "ST_WRITE_TO_STATIC_FROM_INSTANCE_METHOD")
+    @edu.umd.cs.findbugs.annotations.SuppressFBWarnings(value = "ST_WRITE_TO_STATIC_FROM_INSTANCE_METHOD", justification = "GUI ease of use")
     private void addItemToCombobox(String addItem) {
         if (_comboboxName.equals(CarEditFrame.ROAD)) {
             CarRoads.instance().addName(addItem);
@@ -464,7 +464,7 @@ public class CarAttributeEditFrame extends OperationsFrame implements java.beans
     }
 
     public void propertyChange(java.beans.PropertyChangeEvent e) {
-        if (Control.showProperty) {
+        if (Control.SHOW_PROPERTY) {
             log.debug("Property change: ({}) old: ({}) new: ({})", e.getPropertyName(), e.getOldValue(), e
                     .getNewValue());
         }

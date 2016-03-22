@@ -545,7 +545,7 @@ public class TrainSwitchListEditFrame extends OperationsFrame implements java.be
     }
 
     public void propertyChange(PropertyChangeEvent e) {
-        if (Control.showProperty) {
+        if (Control.SHOW_PROPERTY) {
             log.debug("Property change: ({}) old: ({}) new: ({})", e.getPropertyName(), e.getOldValue(), e
                     .getNewValue());
         }
