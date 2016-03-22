@@ -28,7 +28,6 @@ import org.slf4j.LoggerFactory;
  *
  * @author	Bob Jacobsen Copyright (C) 2004, 2006
  * @author Dave Duchamp Copyright (C) 2011 - add streaming play of large files
- * @version	$Revision$
  */
 public class Sound {
 

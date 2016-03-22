@@ -22,7 +22,6 @@ import org.slf4j.LoggerFactory;
  *
  *
  * @author	Bob Jacobsen Copyright (C) 2004, 2006
- * @version	$Revision$
  */
 public class SoundUtil {
 
