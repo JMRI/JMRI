@@ -39,7 +39,7 @@ public class TrainCsvManifest extends TrainCsvCommon {
 
     private final static Logger log = LoggerFactory.getLogger(TrainCsvManifest.class);
 
-    @edu.umd.cs.findbugs.annotations.SuppressFBWarnings(value = "BC_UNCONFIRMED_CAST_OF_RETURN_VALUE")
+    @edu.umd.cs.findbugs.annotations.SuppressFBWarnings(value = "BC_UNCONFIRMED_CAST_OF_RETURN_VALUE", justification = "CarManager only provides Car Objects")
     public TrainCsvManifest(Train train) {
         // create comma separated value manifest file
         File file = TrainManagerXml.instance().createTrainCsvManifestFile(train.getName());

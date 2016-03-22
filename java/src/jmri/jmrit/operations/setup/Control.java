@@ -17,8 +17,8 @@ import org.slf4j.LoggerFactory;
 public class Control {
 
     // debug flags
-    public static final boolean showProperty = false;
-    public static final boolean showInstance = false;
+    public static final boolean SHOW_PROPERTY = false;
+    public static final boolean SHOW_INSTANCE = false;
 
     // Default panel width
     public static final int panelWidth1025 = 1025;

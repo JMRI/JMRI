@@ -124,7 +124,7 @@ public abstract class BackupBase {
      * Returns a sorted list of the Backup Sets under the backup root.
      *
      */
-    @edu.umd.cs.findbugs.annotations.SuppressFBWarnings(value = "NP_NULL_ON_SOME_PATH_FROM_RETURN_VALUE")
+    @edu.umd.cs.findbugs.annotations.SuppressFBWarnings(value = "NP_NULL_ON_SOME_PATH_FROM_RETURN_VALUE", justification = "not possible")
     public String[] getBackupSetList() {
         String[] setList = getBackupRoot().list();
         // no guarantee of order, so we need to sort
@@ -142,7 +142,7 @@ public abstract class BackupBase {
         return dirs;
     }
 
-    @edu.umd.cs.findbugs.annotations.SuppressFBWarnings(value = "NP_NULL_ON_SOME_PATH_FROM_RETURN_VALUE")
+    @edu.umd.cs.findbugs.annotations.SuppressFBWarnings(value = "NP_NULL_ON_SOME_PATH_FROM_RETURN_VALUE", justification = "not possible")
     public BackupSet[] getBackupSets() {
         // This is a bit of a kludge for now, until I learn more about dynamic
         // sets
@@ -373,7 +373,7 @@ public abstract class BackupBase {
      * Reset Operations by deleting XML files, leaves directories and backup
      * files in place.
      */
-    @edu.umd.cs.findbugs.annotations.SuppressFBWarnings(value = "NP_NULL_ON_SOME_PATH_FROM_RETURN_VALUE")
+    @edu.umd.cs.findbugs.annotations.SuppressFBWarnings(value = "NP_NULL_ON_SOME_PATH_FROM_RETURN_VALUE", justification = "not possible")
     public void deleteOperationsFiles() {
         // TODO Maybe this should also only delete specific files used by Operations,
         // and not just all XML files.

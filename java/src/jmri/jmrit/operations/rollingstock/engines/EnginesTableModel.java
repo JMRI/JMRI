@@ -496,7 +496,7 @@ public class EnginesTableModel extends javax.swing.table.AbstractTableModel impl
     }
 
     public void propertyChange(PropertyChangeEvent e) {
-        if (Control.showProperty) {
+        if (Control.SHOW_PROPERTY) {
             log.debug("Property change: ({}) old: ({}) new: ({})", e.getPropertyName(), e.getOldValue(), e
                     .getNewValue());
         }
@@ -512,7 +512,7 @@ public class EnginesTableModel extends javax.swing.table.AbstractTableModel impl
         else if (e.getSource().getClass().equals(Engine.class)) {
             Engine engine = (Engine) e.getSource();
             int row = sysList.indexOf(engine);
-            if (Control.showProperty) {
+            if (Control.SHOW_PROPERTY) {
                 log.debug("Update engine table row: {}", row);
             }
             if (row >= 0) {

@@ -48,10 +48,6 @@ import org.slf4j.LoggerFactory;
  */
 public class CommonConductorYardmasterPanel extends OperationsPanel implements PropertyChangeListener {
 
-    /**
-     *
-     */
-    private static final long serialVersionUID = 4524775039808820663L;
     protected static final String Tab = "     "; // used to space out headers
     protected static final String Space = " "; // used to pad out panels
 
