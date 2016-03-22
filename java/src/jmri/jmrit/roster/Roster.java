@@ -704,8 +704,8 @@ public class Roster extends XmlFile implements RosterGroupSelector, PropertyChan
         //All Comments and Decoder Comment line feeds have been changed to processor directives
 
         // add top-level elements
-        Element values = new Element("roster");
-        root.addContent(values); // NOI18N
+        Element values = new Element("roster"); // NOI18N
+        root.addContent(values);
         // add entries
         for (int i = 0; i < numEntries(); i++) {
             if (!_list.get(i).getId().equals(newLocoString)) {
@@ -717,7 +717,7 @@ public class Roster extends XmlFile implements RosterGroupSelector, PropertyChan
 
         if (!this.rosterGroups.isEmpty()) {
             Element rosterGroup = new Element("rosterGroup"); // NOI18N
-            getRosterGroups().keySet().stream().forEach((name) -> {
+            rosterGroups.keySet().stream().forEach((name) -> {
                 Element group = new Element("group"); // NOI18N
                 if (!name.equals(Roster.ALLENTRIES)) {
                     group.addContent(name);
@@ -1178,7 +1178,7 @@ public class Roster extends XmlFile implements RosterGroupSelector, PropertyChan
         if (this.rosterGroups.containsKey(rg.getName())) {
             return;
         }
-        this.getRosterGroups().put(rg.getName(), rg);
+        this.rosterGroups.put(rg.getName(), rg);
         firePropertyChange(ROSTER_GROUP_ADDED, null, rg.getName());
     }
 
@@ -1240,7 +1240,7 @@ public class Roster extends XmlFile implements RosterGroupSelector, PropertyChan
      * @param rg The group to be deleted
      */
     public void delRosterGroupList(String rg) {
-        RosterGroup group = this.getRosterGroups().remove(rg);
+        RosterGroup group = this.rosterGroups.remove(rg);
         String str = Roster.getRosterGroupProperty(rg);
         group.getEntries().stream().forEach((re) -> {
             re.deleteAttribute(str);
@@ -1263,12 +1263,12 @@ public class Roster extends XmlFile implements RosterGroupSelector, PropertyChan
      * @see jmri.jmrit.roster.swing.RenameRosterGroupAction
      */
     public void copyRosterGroupList(String oldName, String newName) {
-        if (this.getRosterGroups().containsKey(newName)) {
+        if (this.rosterGroups.containsKey(newName)) {
             return;
         }
-        this.getRosterGroups().put(newName, new RosterGroup(newName));
+        this.rosterGroups.put(newName, new RosterGroup(newName));
         String newGroup = Roster.getRosterGroupProperty(newName);
-        this.getRosterGroups().get(oldName).getEntries().stream().forEach((re) -> {
+        this.rosterGroups.get(oldName).getEntries().stream().forEach((re) -> {
             re.putAttribute(newGroup, "yes"); // NOI18N
         });
         this.addRosterGroup(new RosterGroup(newName));
@@ -1292,10 +1292,10 @@ public class Roster extends XmlFile implements RosterGroupSelector, PropertyChan
      * @see jmri.jmrit.roster.swing.RenameRosterGroupAction
      */
     public void renameRosterGroupList(String oldName, String newName) {
-        if (this.getRosterGroups().containsKey(newName)) {
+        if (this.rosterGroups.containsKey(newName)) {
             return;
         }
-        this.getRosterGroups().get(oldName).setName(newName);
+        this.rosterGroups.get(oldName).setName(newName);
     }
 
     /**
@@ -1307,7 +1307,7 @@ public class Roster extends XmlFile implements RosterGroupSelector, PropertyChan
      * @return A list of the roster group names.
      */
     public ArrayList<String> getRosterGroupList() {
-        ArrayList<String> list = new ArrayList<>(this.getRosterGroups().keySet());
+        ArrayList<String> list = new ArrayList<>(this.rosterGroups.keySet());
         Collections.sort(list);
         return list;
     }
