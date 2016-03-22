@@ -30,7 +30,7 @@ public class JmriSRCPServer extends JmriServer {
 
     static ResourceBundle rb = ResourceBundle.getBundle("jmri.jmris.srcp.JmriSRCPServerBundle");
 
-    public static JmriServer instance() {
+    synchronized public static JmriServer instance() {
         if (_instance == null) {
             int port = java.lang.Integer.parseInt(rb.getString("JMRISRCPServerPort"));
             _instance = new JmriSRCPServer(port);
