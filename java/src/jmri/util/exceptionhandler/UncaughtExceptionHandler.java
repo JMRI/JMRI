@@ -1,4 +1,3 @@
-// UncaughtExceptionHandler.java
 package jmri.util.exceptionhandler;
 
 import org.slf4j.Logger;
@@ -16,7 +15,6 @@ import java.io.*;
  * </pre>
  *
  * @author Bob Jacobsen Copyright 2003, 2010
- * @version $Revision$
  */
 public class UncaughtExceptionHandler implements Thread.UncaughtExceptionHandler {
 
