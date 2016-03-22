@@ -67,7 +67,7 @@ public class PrintCarRosterAction extends AbstractAction {
 
     int numberCharPerLine;
 
-    @edu.umd.cs.findbugs.annotations.SuppressFBWarnings(value = " BC_UNCONFIRMED_CAST_OF_RETURN_VALUE")
+    @edu.umd.cs.findbugs.annotations.SuppressFBWarnings(value = "BC_UNCONFIRMED_CAST_OF_RETURN_VALUE")
     private void printCars() {
 
         boolean landscape = false;
