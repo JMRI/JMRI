@@ -20,6 +20,7 @@ public class JmriServerTest extends TestCase {
     public void testCtorPort() {
         JmriServer a = new JmriServer(25520);
         Assert.assertNotNull(a);
+        jmri.util.JUnitAppender.suppressErrorMessage("Failed to connect to port 25520");
     }
 
     public void testCtorPortAndTimeout() {
