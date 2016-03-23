@@ -1018,7 +1018,7 @@ public class TrainEditFrame extends OperationsFrame implements java.beans.Proper
     }
 
     public void propertyChange(java.beans.PropertyChangeEvent e) {
-        if (Control.showProperty) {
+        if (Control.SHOW_PROPERTY) {
             log.debug("Property change ({}) old: ({}) new: ({})", e.getPropertyName(), e.getOldValue(), e.getNewValue()); // NOI18N
         }
         if (e.getPropertyName().equals(CarTypes.CARTYPES_CHANGED_PROPERTY)

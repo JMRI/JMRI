@@ -178,7 +178,7 @@ public class YardmasterByTrackPanel extends CommonConductorYardmasterPanel {
         });
     }
 
-    @edu.umd.cs.findbugs.annotations.SuppressFBWarnings(value = "BC_UNCONFIRMED_CAST_OF_RETURN_VALUE")
+    @edu.umd.cs.findbugs.annotations.SuppressFBWarnings(value = "BC_UNCONFIRMED_CAST_OF_RETURN_VALUE", justification = "CarManager only provides Car Objects")
     private void runUpdate() {
         log.debug("run update");
         removePropertyChangeListerners();

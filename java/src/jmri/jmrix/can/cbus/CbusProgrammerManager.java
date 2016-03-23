@@ -13,7 +13,7 @@ import jmri.managers.DefaultProgrammerManager;
 public class CbusProgrammerManager extends DefaultProgrammerManager {
 
     public CbusProgrammerManager(TrafficController tc) {
-        super(null);  // no service mode programmer available
+        super();  // no service mode programmer available
         this.tc = tc;
     }
 

@@ -639,7 +639,7 @@ public class RouteEditTableModel extends javax.swing.table.AbstractTableModel im
 
     // this table listens for changes to a route and it's locations
     public void propertyChange(PropertyChangeEvent e) {
-        if (Control.showProperty) {
+        if (Control.SHOW_PROPERTY) {
             log.debug("Property change: ({}) old: ({}) new: ({})", e.getPropertyName(), e.getOldValue(), e
                     .getNewValue());
         }
@@ -651,7 +651,7 @@ public class RouteEditTableModel extends javax.swing.table.AbstractTableModel im
         if (e.getSource().getClass().equals(RouteLocation.class)) {
             RouteLocation rl = (RouteLocation) e.getSource();
             int row = routeList.indexOf(rl);
-            if (Control.showProperty) {
+            if (Control.SHOW_PROPERTY) {
                 log.debug("Update route table row: {} id: {}", row, rl.getId());
             }
             if (row >= 0) {

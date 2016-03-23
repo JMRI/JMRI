@@ -1,4 +1,3 @@
-// NceLightManager.java
 package jmri.jmrix.nce;
 
 import jmri.Light;
@@ -14,14 +13,8 @@ import org.slf4j.LoggerFactory;
  * Based in part on SerialLightManager.java
  *
  * @author	Dave Duchamp Copyright (C) 2010
- * @version	$Revision$
  */
 public class NceLightManager extends AbstractLightManager {
-
-    /**
-     *
-     */
-    private static final long serialVersionUID = 3173397373353668311L;
 
     public NceLightManager(NceTrafficController tc, String prefix) {
         super();
@@ -119,5 +112,3 @@ public class NceLightManager extends AbstractLightManager {
     private final static Logger log = LoggerFactory.getLogger(NceLightManager.class.getName());
 
 }
-
-/* @(#)NceLightManager.java */

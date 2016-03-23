@@ -219,7 +219,7 @@ public class TrainsScheduleTableModel extends javax.swing.table.AbstractTableMod
     }
 
     public void propertyChange(PropertyChangeEvent e) {
-        if (Control.showProperty) {
+        if (Control.SHOW_PROPERTY) {
             log.debug("Property change: ({}) old: ({}) new: ({})", e.getPropertyName(), e.getOldValue(), e
                     .getNewValue());
         }
@@ -240,7 +240,7 @@ public class TrainsScheduleTableModel extends javax.swing.table.AbstractTableMod
             Train train = (Train) e.getSource();
             synchronized (this) {
                 int row = sysList.indexOf(train);
-                if (Control.showProperty) {
+                if (Control.SHOW_PROPERTY) {
                     log.debug("Update train table row: " + row + " name: " + train.getName());
                 }
                 if (row >= 0) {

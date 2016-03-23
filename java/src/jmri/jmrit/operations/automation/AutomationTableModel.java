@@ -481,7 +481,7 @@ public class AutomationTableModel extends javax.swing.table.AbstractTableModel i
 
     // this table listens for changes to a automation and it's car types
     public void propertyChange(PropertyChangeEvent e) {
-        if (Control.showProperty)
+        if (Control.SHOW_PROPERTY)
             log.debug("Property change: ({}) old: ({}) new: ({})", e.getPropertyName(), e.getOldValue(), e
                     .getNewValue());
 
@@ -498,7 +498,7 @@ public class AutomationTableModel extends javax.swing.table.AbstractTableModel i
         if (e.getSource().getClass().equals(AutomationItem.class)) {
             AutomationItem item = (AutomationItem) e.getSource();
             int row = _list.indexOf(item);
-            if (Control.showProperty)
+            if (Control.SHOW_PROPERTY)
                 log.debug("Update automation item table row: {}", row);
             if (row >= 0) {
                 fireTableRowsUpdated(row, row);

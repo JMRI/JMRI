@@ -1,4 +1,4 @@
-// OperationsSetupFrame.java
+// OperationsSetupPanel.java
 package jmri.jmrit.operations.setup;
 
 import java.awt.Dimension;
@@ -40,11 +40,7 @@ import org.slf4j.LoggerFactory;
  */
 public class OperationsSetupPanel extends OperationsPreferencesPanel implements PropertyChangeListener {
 
-    /**
-     *
-     */
-    private static final long serialVersionUID = 7662835134616666932L;
-    private final static Logger log = LoggerFactory.getLogger(OperationsSetupFrame.class.getName());
+    private final static Logger log = LoggerFactory.getLogger(OperationsSetupPanel.class.getName());
 
     // labels
     JLabel textIconNorth = new JLabel(Bundle.getMessage("IconNorth"));
@@ -410,6 +406,7 @@ public class OperationsSetupPanel extends OperationsPreferencesPanel implements 
         }
     }
 
+    @edu.umd.cs.findbugs.annotations.SuppressFBWarnings(value = "BC_UNCONFIRMED_CAST_OF_RETURN_VALUE", justification = "checks for instance of OperationsSetupFrame")
     private void save() {
         // check input fields
         int maxTrainLength;
