@@ -63,11 +63,23 @@ mechanism fires.</p>
 
 <h2>How to setup Lights</h2>
 
-<h3>Light Properties</h3>
-<p>Lights are created and edited in the <a href="../../package/jmri/jmrit/beantable/LightTable.shtml">Light Table</a>.</p>
+<h3>The Light Table</h3>
+<p>Lights are created and edited in the <a href="../../package/jmri/jmrit/beantable/LightTable.shtml">Light Table</a>.<br>
+It contains the following columns:</p>
+	<ul>
+	<li>System Name</li>
+	<li>User Name (optional)</li>
+	<li>State</li>
+	<li>Comment (optional, double click to edit)</li>
+	<li>Enabled</li>
+	<li>Intensity</li>
+	</ul>
+
+<h3>Light Table Controls</h3>
+<p>Below the Light Table there's an <a href="../../package/jmri/jmrit/beantable/LightAddEdit.shtml">Add...</a> button.</p>
+<p>In each line of the table is an Edit and a Delete button.</p>
 
 <h3>Switching a Light On or Off</h3>
-
 <p>Lights may be turned on or off by clicking the button in the State
 column of the Light Table. A Light may be set up to follow the state of 
 a track switch (Turnout), On when the Turnout is Closed, and Off when it is

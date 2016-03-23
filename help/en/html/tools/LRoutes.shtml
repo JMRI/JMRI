@@ -25,19 +25,20 @@
 
 <h1>JMRI: LRoute Documentation</h1>
 
-<h2>How LRoutes Differ from Routes</h2>
-
-<p>LRoutes extend the capabilities of Routes.  Lights and SignalHeads
+<h2>What are LRoutes?</h2>
+<p>LRoutes extend the capabilities of Routes. Lights and Signal Heads
 are included in the collection of Turnouts and/or Sensors whose states may be 
-set all at once and used for control of the route. As with Routes, when 
-a LRoute is triggered a sound may be played, 
-or a script may be run. LRoutes are capabable of performing all of the tasks
+set all at once and used for control of the LRoute. As with Routes, when 
+an LRoute is triggered a sound may be played, or a script may be run.
+LRoutes are capable of performing all of the tasks
 that Routes can do.  For further discussion and examples consult the 
 <a href="Routes.shtml">main Route documentation</a>.
 </p>
+
+<h2>How LRoutes differ from Routes?</h2>
 <p>Whereas a Route may be controlled by up to three sensors and/or by
 a control turnout, an LRoute may use any number or combination of 
-Sensors, Turnouts, Lights, and/or SignalHeads to control the "route".
+Sensors, Turnouts, Lights, and/or Signal Heads to control the "route".
 </p>
 <p>LRoutes are implemented as a group of Conditionals in a Logix.  This
 provides another extension of capabilities in that, this Logix may be
@@ -51,7 +52,7 @@ in the user-specified way, the LRoute is 'set' ('triggered') and the
 actions selected by the user are taken -  And if 
 specified, a sound is played or a script is run.
 </p>
-<p>The LRoute Table contains an 'Enabled' column. For a LRoute to be 
+<p>The LRoute Table contains an 'Enabled' column. For an LRoute to be 
 triggered by its control entities,
 it must be "enabled".  That is, its check box in the 'Enabled' column
 must be checked.  This check box enables/disables the Logix implementing
@@ -59,21 +60,21 @@ the LRoute.</p>
 
 <h2>How to setup for adding or editing LRoutes</h2>
 
-<p>First make sure the Tables for Sensors, Turnouts, Lights, and/or
+<p>First make sure the Tables for Sensors, Turnouts, Lights and/or
 SignalHeads contain all the entities
 involved in the LRoutes to be defined.  Next select <b>LRoute Table</b>
-from <b>Tools</b> menu 
-and click the <b>Add...</b> button at the bottom of the table to 
+from the <b>Tools</b> menu 
+and click the <b>Add...</b> button at the bottom of the pane to 
 bring up the Add/Edit LRoute window.</p>
 
-<a name="addroute"><H3>To add a new LRoute:</H3></a>
+<a name="addroute"><h3>To add a new LRoute:</h3></a>
 
 <ol>
 	<li><p>Enter a system name, such as 'RTX100'.  Any 
         short name can be used provided it is different from the system 
         name of other LRoutes.</p>
 	<p>By convention, system names usually start with "RTX" for an 
-        LRoute. </p>
+        LRoute.</p>
 	</li>
 	<li><p>Enter a user name. Any string of characters that is different 
         from the user name of other LRoutes will be accepted, but it's 
@@ -84,7 +85,7 @@ bring up the Add/Edit LRoute window.</p>
         Sensors, Turnouts, Lights, and/or SignalHeads that the user has defined
         in their respective tables.
 	</li>
-	<li><p>Select the entites to be included for actions to be taken in the 
+	<li><p>Select the entities to be included for actions to be taken in the 
         LRoute from the list by clicking on the 
         checkbox in the <b>Include</b> column. For each included item, 
         use the combo box in the <b>Set Action</b> column to select the
@@ -109,7 +110,7 @@ bring up the Add/Edit LRoute window.</p>
         <b>Triggers/Controls (input)</b>.  This also displays a table with all the 
         Sensors, Turnouts, Lights and/or SignalHeads that the user has defined
         in their respective tables.  
-	<li><p>Select the entites to be included to control (i.e. trigger) the 
+	<li><p>Select the entities to be included to control (i.e. trigger) the 
         LRoute from the list by clicking on the 
         checkbox in the <b>Include</b> column. For each included item, 
         use the combo box in the <b>Trigger State</b> column to select the
@@ -187,7 +188,7 @@ bring up the Add/Edit LRoute window.</p>
 	<li> Make whatever changes or additions you need to the information in
 	the dialog. Note that the system name of the edited LRoute may not be 
 	changed, but the user name may be changed. Other items are as described 
-	<A HREF="#addroute">above</a>.</li>
+	<a href="#addroute">above</a>.</li>
 	<li>After making changes to the LRoute information, click <b>Update 
 	LRoute</b> to change the selected LRoute.  If everything is fine, a 
 	message stating "LRoute updated ... " will be displayed in the notes 
@@ -219,102 +220,102 @@ sensors connected to occupancy detectors or
 switches on the layout, or lights in the case of C/MRI. Even
 SignalHead appearances can control the route.  The sensors and turnouts
 can be real or internal entities.
-<P>
+<p>
 For example, by default when any one of the 
 included sensors goes to the active state, the LRoute will be set. 
 This could be used to set a LRoute when a block became occupied, 
 or when a button was pushed.
-<P>
+<p>
 Each control Sensor has a "mode" 
 associated with it, which can be:
-<DL>
-<DT>"On Active"</DT><DD>The default method, the LRoute is triggered when 
+<dl>
+<dt>"On Active"</dt><dd>The default method, the LRoute is triggered when 
 the sensor goes active, e.g. "Throw turnout 12 when sensor 12 goes 
-active"</DD>
+active"</dd>
 
-<DT>"On Inactive"</DT><DD>The LRoute is triggered when the sensor goes 
+<dt>"On Inactive"</dt><dd>The LRoute is triggered when the sensor goes 
 inactive.   For example, using the LRoute above, plus a second LRoute 
 "Close turnout 12 when sensor 12 goes inactive" will have turnout 12 
 follow a panel switch connected to sensor 12 as it is flipped back and 
-forth.</DD>
+forth.</dd>
 
-<DT>"On Change"</DT><DD>The LRoute is triggered when the sensor state
-changes, either from active to inactive or from inactive to active.</DD>
+<dt>"On Change"</dt><dd>The LRoute is triggered when the sensor state
+changes, either from active to inactive or from inactive to active.</dd>
 
-<DT>"Veto When Active"</DT><DD>If this sensor is active, 
+<dt>"Veto When Active"</dt><dd>If this sensor is active, 
 the LRoute will not trigger, no matter what states the other control 
 entities change to. This has several uses, e.g. to prevent throwing a 
-turnout under a train when the block shows occupied.</DD>
+turnout under a train when the block shows occupied.</dd>
 
-<DT>"Veto When Inactive"</DT><DD>Like veto active, but the other polarity 
-logic.</DD>
+<dt>"Veto When Inactive"</dt><dd>Like veto active, but the other polarity 
+logic.</dd>
 
-</DL>
+</dl>
 <p>Similar to the control sensors discussed above, a control turnout 
 has a "mode" associated with it, which can be:
-<DL>
-<DT>"On Closed"</DT><DD>The default method, the LRoute is triggered when 
-the turnout changes to the closed state.</DD>
-<DT>"On Thrown"</DT><DD>The LRoute is triggered when the turnout
-changes to the thrown state.</DD>
-<DT>"On Change"</DT><DD>The LRoute is triggered when the turnout state
-changes, either from closed to thrown or from thrown to closed.</DD>
-<DT>"Veto When Closed"</DT><DD>If this turnout is closed, the
-LRoute is prevented from triggering.</DD>
-<DT>"Veto When Thrown"</DT><DD>If this turnout is thrown, the
-LRoute is prevented from triggering.</DD>
-</DL>
+<dl>
+<dt>"On Closed"</dt><dd>The default method, the LRoute is triggered when 
+the turnout changes to the closed state.</dd>
+<dt>"On Thrown"</dt><dd>The LRoute is triggered when the turnout
+changes to the thrown state.</dd>
+<dt>"On Change"</dt><dd>The LRoute is triggered when the turnout state
+changes, either from closed to thrown or from thrown to closed.</dd>
+<dt>"Veto When Closed"</dt><dd>If this turnout is closed, the
+LRoute is prevented from triggering.</dd>
+<dt>"Veto When Thrown"</dt><dd>If this turnout is thrown, the
+LRoute is prevented from triggering.</dd>
+</dl>
 
 <p>Likewise, Light controls have "modes" which can be:
-<DL>
-<DT>"On Lit"</DT><DD>The default method, the LRoute is triggered when 
-the light changes to the lit state.</DD>
-<DT>"On Not Lit"</DT><DD>The LRoute is triggered when the light
-changes to the unlit state.</DD>
-<DT>"On Change"</DT><DD>The LRoute is triggered when the light state
-changes, either from lit to unlit or from unlit to lit.</DD>
-<DT>"Veto When Lit"</DT><DD>If this light is lit, the
-LRoute is prevented from triggering.</DD>
-<DT>"Veto When Unlit"</DT><DD>If this light is not lit, the
-LRoute is prevented from triggering.</DD>
-</DL>
+<dl>
+<dt>"On Lit"</dt><dd>The default method, the LRoute is triggered when 
+the light changes to the lit state.</dd>
+<dt>"On Not Lit"</dt><dd>The LRoute is triggered when the light
+changes to the unlit state.</dd>
+<dt>"On Change"</dt><dd>The LRoute is triggered when the light state
+changes, either from lit to unlit or from unlit to lit.</dd>
+<dt>"Veto When Lit"</dt><dd>If this light is lit, the
+LRoute is prevented from triggering.</dd>
+<dt>"Veto When Unlit"</dt><dd>If this light is not lit, the
+LRoute is prevented from triggering.</dd>
+</dl>
 
 <p>The SignalHead control "modes" differ somewhat from the above.
 They are:
-<DL>
-<DT>"On Red"</DT><DD>The LRoute is triggered when 
-the signal changes to the Red appearance.</DD>
-<DT>"On Red Flashing"</DT><DD>The LRoute is triggered when the signal
-changes to the Red Flashing appearance.</DD>
-<DT>"On Yellow "</DT><DD>The LRoute is triggered when the signal
-changes to the Yellow appearance.</DD>
-<DT>"On Yellow Flashing"</DT><DD>The LRoute is triggered when the signal
-changes to the Yellow Flashing appearance.</DD>
-<DT>"On Green "</DT><DD>The LRoute is triggered when the signal
-changes to the Green appearance.</DD>
-<DT>"On Green Flashing"</DT><DD>The LRoute is triggered when the signal
-changes to the Green Flashing appearance.</DD>
-<DT>"On Lit "</DT><DD>The LRoute is triggered when the signal
-changes from dark to lit.</DD>
-<DT>"On Held "</DT><DD>The LRoute is triggered when the signal
-set to Held.</DD>
-<DT>"Veto When Red"</DT><DD>The LRoute is prevented from triggering when 
-the signal changes to the Red appearance.</DD>
-<DT>"Veto When Red Flashing"</DT><DD>The LRoute is prevented from triggering when the signal
-changes to the Red Flashing appearance.</DD>
-<DT>"Veto When Yellow "</DT><DD>The LRoute is triggered when the signal
-changes to the Yellow appearance.</DD>
-<DT>"Veto When Yellow Flashing"</DT><DD>The LRoute is prevented from triggering when the signal
-changes to the Yellow Flashing appearance.</DD>
-<DT>"Veto When Green "</DT><DD>The LRoute is prevented from triggering when the signal
-changes to the Green appearance.</DD>
-<DT>"Veto When Green Flashing"</DT><DD>The LRoute is prevented from triggering when the signal
-changes to the Green Flashing appearance.</DD>
-<DT>"Veto When Lit "</DT><DD>The LRoute is prevented from triggering when the signal
-changes from dark to lit.</DD>
-<DT>"Veto When Held "</DT><DD>The LRoute is prevented from triggering when the signal
-set to Held.</DD>
-</DL>
+<dl>
+<dt>"On Red"</dt><dd>The LRoute is triggered when 
+the signal changes to the Red appearance.</dd>
+<dt>"On Red Flashing"</dt><dd>The LRoute is triggered when the signal
+changes to the Red Flashing appearance.</dd>
+<dt>"On Yellow "</dt><dd>The LRoute is triggered when the signal
+changes to the Yellow appearance.</dd>
+<dt>"On Yellow Flashing"</dt><dd>The LRoute is triggered when the signal
+changes to the Yellow Flashing appearance.</dd>
+<dt>"On Green "</dt><dd>The LRoute is triggered when the signal
+changes to the Green appearance.</dd>
+<dt>"On Green Flashing"</dt><dd>The LRoute is triggered when the signal
+changes to the Green Flashing appearance.</dd>
+<dt>"On Lit "</dt><dd>The LRoute is triggered when the signal
+changes from dark to lit.</dd>
+<dt>"On Held "</dt><dd>The LRoute is triggered when the signal
+set to Held.</dd>
+<dt>"Veto When Red"</dt><dd>The LRoute is prevented from triggering when 
+the signal changes to the Red appearance.</dd>
+<dt>"Veto When Red Flashing"</dt><dd>The LRoute is prevented from triggering when the signal
+changes to the Red Flashing appearance.</dd>
+<dt>"Veto When Yellow "</dt><dd>The LRoute is triggered when the signal
+changes to the Yellow appearance.</dd>
+<dt>"Veto When Yellow Flashing"</dt><dd>The LRoute is prevented from triggering when the signal
+changes to the Yellow Flashing appearance.</dd>
+<dt>"Veto When Green "</dt><dd>The LRoute is prevented from triggering when the signal
+changes to the Green appearance.</dd>
+<dt>"Veto When Green Flashing"</dt><dd>The LRoute is prevented from triggering when the signal
+changes to the Green Flashing appearance.</dd>
+<dt>"Veto When Lit "</dt><dd>The LRoute is prevented from triggering when the signal
+changes from dark to lit.</dd>
+<dt>"Veto When Held "</dt><dd>The LRoute is prevented from triggering when the signal
+set to Held.</dd>
+</dl>
 
 <p>Note that there is an implied "and/or" here.  All of the 'veto' 
 sensors, the 'veto' turnouts, 'veto' lights and 'veto' signals

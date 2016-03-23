@@ -20,7 +20,7 @@
 Panel. From this table you can change the state of a Turnout, change the
 feedback mode, enter Sensors for feedback, invert, lock, and delete it.
 
-<h2>Turnout Table Columns</h2>
+<a name="columns"><h2>Turnout Table Columns</h2></a>
 
 <dl>
 	<dt>System Name</dt>
@@ -95,7 +95,7 @@ feedback mode, enter Sensors for feedback, invert, lock, and delete it.
 	feedback for a Turnout. You can also directly enter or change the
 	System Name of Sensor 2 for a Turnout.</dd>
 
-	<dt>Automate</dt>
+	<dt>Automation</dt>
 	<dd>Shows what specific retry method has been configured
 	for this Turnout.  See the section on 
 	<a href="#automation">Turnout Automation</a> below.</dd>
@@ -150,7 +150,7 @@ feedback mode, enter Sensors for feedback, invert, lock, and delete it.
 	</dd>
 </dl>
 
-<h3>Turnout Table Controls</h3>
+<a name="controls"><h2>Turnout Table Controls</h2></a>
 
 There are some buttons and checkboxes along the bottom of the 
 Turnout Table pane that control its operation.

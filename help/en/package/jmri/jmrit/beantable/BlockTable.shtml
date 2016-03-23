@@ -18,8 +18,6 @@
 
 <h1>The Block Table</h1>
 
-<p>Back to the <a href="../../../../html/tools/Blocks.shtml">Blocks Help page</a>
-
 <p>Blocks may be set up manually in the Block Table, using a script, or automatically in a Layout Editor Panel. When a 
 Block is defined in a Layout Editor Panel, a new Block is created if one does not already
 exist. In Layout Editor, Blocks are identified by their User Name, so if a Block shown 
@@ -38,7 +36,7 @@ may optionally be assigned to a Block. These optional attributes are entered man
 in this Table. If Trains will not be run automatically through 
 a Block, there is no need to add these attributes.</p>
 
-<h2>Columns in the Block Table:</h2>
+<h2>Columns in the Block Table</h2>
 <ul>
 <li><p><b>System Name</b> - The System Name of the Block. There is no functional 
 requirement for a type letter in the System Name of a Block, but by convention we use 
@@ -133,10 +131,10 @@ have been predefined in the <code>signalSpeed.xml</code> file, in addition to a 
 <p>The global value is set via the <b>Speeds</b> menu.</p></li>
 </ul>
 
-<a name="addBlock"><h3>Adding a new Block</h3></a>
+<a name="addBlock"><h2>Adding a new Block</h2></a>
 <p>To add a new Block, see <a href="BlockAddEdit.shtml">Add/Edit Block Entries</a></p>
 
-<h3>Editing an existing Block</h3>
+<h2>Editing an existing Block</h2>
 <p>To check or change the properties of a Block, click the <strong><a href="BlockEdit.shtml">Edit</a></strong> button to the right of a Block entry in the Block Table, see <a href="BlockEdit.shtml">Edit Block</a>.</p>
 
 <p><a href="../../../../html/tools/tracker/index.shtml">More on Block Tracking</a></p>

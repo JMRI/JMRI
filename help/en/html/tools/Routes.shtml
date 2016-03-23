@@ -53,6 +53,20 @@ must be checked.  You can uncheck this box to temporarily disable a
 Route from being triggered, i.e. prevent it from setting its turnouts, 
 sensors, etc. when a control sensor or control turnout changes.</p>
 
+<h3>The Route Table</h3>
+Routes can be viewed and configured using the <a href="../../package/jmri/jmrit/beantable/RouteTable.shtml">Route Table</a>.
+It contains the following columns:</p>
+	<ul>
+	<li>System Name</li>
+	<li>User Name (optional)</li>
+	<li>Comment (optional, double click to edit)</li>
+	<li>Enabled (checkbox)</li>
+	<li>Locked (checkbox)</li>
+	</ul>
+	
+<h3>Route Table Controls</h3>
+<p>Below the table is the <b>Add...</b> button.
+	
 <h2>How to setup Routes</h2>
 
 <p>First make sure the
@@ -288,7 +302,7 @@ an 'internal' turnout.</p>
 	    receive the original activation command, and then the
 	    Route will set whatever Turnout positions and/or Sensor
 	    states were specified. This can be used to set multiple 
-	    Surnouts to match the original real turnout, or to set 
+	    Turnouts to match the original real turnout, or to set 
 	    the turnout back to its original position (if you don't 
 	    want anybody changing it), etc. The Route will fire when 
 	    the Turnout is set from JMRI, and/or with some DCC 

@@ -40,8 +40,10 @@ are also referenced via the "Turnout" name.
 <h2>How to setup Turnouts</h2>
 
 <h3>Turnout Properties</h3>
-<p>Turnouts are created and edited in the <a href="../../package/jmri/jmrit/beantable/TurnoutTable.shtml">Turnout Table</a>.</p>
-
+<p>Turnouts are created and edited in the <a href="../../package/jmri/jmrit/beantable/TurnoutTable.shtml">Turnout Table</a>.<br>
+A range of <a href="../../package/jmri/jmrit/beantable/TurnoutTable.shtml#columns">columns</a> shows the settings for each Turnout.<br>
+Along the bottom are <a href="../../package/jmri/jmrit/beantable/TurnoutTable.shtml#controls">checkboxes</a>
+to display additional columns.</p>
 
 <h3>Controlling a Turnout</h3>
 <p>
