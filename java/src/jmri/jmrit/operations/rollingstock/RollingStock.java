@@ -262,7 +262,7 @@ public class RollingStock implements java.beans.PropertyChangeListener {
         }
     }
 
-    @edu.umd.cs.findbugs.annotations.SuppressFBWarnings(value = "DE_MIGHT_IGNORE")
+    @edu.umd.cs.findbugs.annotations.SuppressFBWarnings(value = "DE_MIGHT_IGNORE", justification = "returns a weight of zero tons")
     public String getWeightTons() {
         if (!_weightTons.equals(DEFAULT_WEIGHT)) {
             return _weightTons;

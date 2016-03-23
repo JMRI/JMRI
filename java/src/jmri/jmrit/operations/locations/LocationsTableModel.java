@@ -289,7 +289,7 @@ public class LocationsTableModel extends javax.swing.table.AbstractTableModel im
     }
 
     public synchronized void propertyChange(PropertyChangeEvent e) {
-        if (Control.showProperty) {
+        if (Control.SHOW_PROPERTY) {
             log.debug("Property change: ({}) old: ({}) new: ({})", e.getPropertyName(), e.getOldValue(), e
                     .getNewValue());
         }
@@ -299,7 +299,7 @@ public class LocationsTableModel extends javax.swing.table.AbstractTableModel im
         } else if (e.getSource().getClass().equals(Location.class)) {
             Location loc = (Location) e.getSource();
             int row = locationsList.indexOf(loc);
-            if (Control.showProperty) {
+            if (Control.SHOW_PROPERTY) {
                 log.debug("Update location table row: {} name: {}", row, loc.getName());
             }
             if (row >= 0) {

@@ -491,6 +491,7 @@ public class PrintOptionPanel extends OperationsPreferencesPanel {
     }
 
     @Override
+    @edu.umd.cs.findbugs.annotations.SuppressFBWarnings(value = "BC_UNCONFIRMED_CAST_OF_RETURN_VALUE", justification = "checks for instance of PrintOptionFrame")
     public void checkBoxActionPerformed(ActionEvent ae) {
         if (ae.getSource() == tabFormatCheckBox) {
             loadFontComboBox();
@@ -542,6 +543,7 @@ public class PrintOptionPanel extends OperationsPreferencesPanel {
         return null;
     }
 
+    @edu.umd.cs.findbugs.annotations.SuppressFBWarnings(value = "BC_UNCONFIRMED_CAST_OF_RETURN_VALUE", justification = "checks for instance of PrintOptionFrame")
     private void updateLogoButtons() {
         boolean flag = Setup.getManifestLogoURL().equals(Setup.NONE);
         addLogoButton.setVisible(flag);

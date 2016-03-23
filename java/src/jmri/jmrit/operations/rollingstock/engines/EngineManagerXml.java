@@ -39,7 +39,7 @@ public class EngineManagerXml extends OperationsXml {
             _instance = new EngineManagerXml();
             _instance.load();
         }
-        if (Control.showInstance) {
+        if (Control.SHOW_INSTANCE) {
             log.debug("EngineManagerXml returns instance {}", _instance);
         }
         return _instance;
@@ -117,7 +117,7 @@ public class EngineManagerXml extends OperationsXml {
 
     private String operationsFileName = "OperationsEngineRoster.xml"; // NOI18N
 
-    @edu.umd.cs.findbugs.annotations.SuppressFBWarnings(value = "ST_WRITE_TO_STATIC_FROM_INSTANCE_METHOD")
+    @edu.umd.cs.findbugs.annotations.SuppressFBWarnings(value = "ST_WRITE_TO_STATIC_FROM_INSTANCE_METHOD", justification = "for testing")
     public void dispose(){
         _instance = null;
     }

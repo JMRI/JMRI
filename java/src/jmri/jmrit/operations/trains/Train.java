@@ -51,7 +51,7 @@ import org.slf4j.LoggerFactory;
  * @author Rodney Black Copyright (C) 2011
  * @version $Revision$
  */
-@edu.umd.cs.findbugs.annotations.SuppressFBWarnings(value = "BC_UNCONFIRMED_CAST_OF_RETURN_VALUE")
+@edu.umd.cs.findbugs.annotations.SuppressFBWarnings(value = "BC_UNCONFIRMED_CAST_OF_RETURN_VALUE", justification = "CarManager only provides Car Objects")
 public class Train implements java.beans.PropertyChangeListener {
     /*
      * WARNING DO NOT LOAD CAR OR ENGINE MANAGERS WHEN Train.java IS CREATED IT
@@ -4203,7 +4203,7 @@ public class Train implements java.beans.PropertyChangeListener {
     }
 
     public void propertyChange(java.beans.PropertyChangeEvent e) {
-        if (Control.showProperty) {
+        if (Control.SHOW_PROPERTY) {
             log.debug("Train ({}) sees property change: ({}) old: ({}) new: ({})",
                     getName(), e.getPropertyName(), e.getOldValue(), e.getNewValue());
         }
