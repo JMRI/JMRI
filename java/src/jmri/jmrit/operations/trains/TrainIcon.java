@@ -110,6 +110,7 @@ public class TrainIcon extends LocoIcon {
         _tf.toFront();
     }
 
+    @edu.umd.cs.findbugs.annotations.SuppressFBWarnings(value = "BC_UNCONFIRMED_CAST_OF_RETURN_VALUE", justification = "CarManager only provides Car Objects")
     private JMenu makeTrainRouteMenu() {
         JMenu routeMenu = new JMenu(Bundle.getMessage("Route"));
         Route route = _train.getRoute();
@@ -224,9 +225,9 @@ public class TrainIcon extends LocoIcon {
     public void doMouseDragged(MouseEvent event) {
         log.debug("Mouse dragged, X=" + getX() + " Y=" + getY());
         if (_train != null) {
-            RouteLocation next = _train.getNextLocation(_train.getCurrentLocation());
-            Point nextPoint = null;
-            if (next != null && ((nextPoint = next.getTrainIconCoordinates()) != null)) {
+            RouteLocation next = _train.getNextLocation(_train.getCurrentLocation());         
+            if (next != null) {
+                Point nextPoint = next.getTrainIconCoordinates();
                 log.debug("Next location (" + next.getName() + "), X=" + nextPoint.x + " Y=" + nextPoint.y);
                 if (Math.abs(getX() - nextPoint.x) < range && Math.abs(getY() - nextPoint.y) < range) {
                     log.debug("Train icon (" + _train.getName() + ") within range of (" + next.getName() + ")");

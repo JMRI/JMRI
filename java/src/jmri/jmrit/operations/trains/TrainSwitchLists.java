@@ -1,9 +1,6 @@
 // TrainSwitchLists.java
 package jmri.jmrit.operations.trains;
 
-import jmri.jmrit.operations.trains.timetable.TrainScheduleManager;
-
-import jmri.jmrit.operations.trains.timetable.TrainSchedule;
 import java.io.BufferedWriter;
 import java.io.File;
 import java.io.FileOutputStream;
@@ -26,6 +23,8 @@ import jmri.jmrit.operations.routes.Route;
 import jmri.jmrit.operations.routes.RouteLocation;
 import jmri.jmrit.operations.setup.Control;
 import jmri.jmrit.operations.setup.Setup;
+import jmri.jmrit.operations.trains.timetable.TrainSchedule;
+import jmri.jmrit.operations.trains.timetable.TrainScheduleManager;
 import jmri.util.FileUtil;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -51,6 +50,7 @@ public class TrainSwitchLists extends TrainCommon {
      *
      * @param location The Location needing a switch list
      */
+    @edu.umd.cs.findbugs.annotations.SuppressFBWarnings(value = "BC_UNCONFIRMED_CAST_OF_RETURN_VALUE", justification = "CarManager only provides Car Objects")
     public void buildSwitchList(Location location) {
         // Append switch list data if not operating in real time
         boolean newTrainsOnly = !Setup.isSwitchListRealTime();
@@ -368,7 +368,7 @@ public class TrainSwitchLists extends TrainCommon {
                             if (splitString(car.getDestinationTrackName()).equals(trackName)) {
                                 if (car.getRouteDestination() != null &&
                                         splitString(car.getRouteDestination().getLocation().getName()).equals(splitString(location.getName()))) {
-                                    if (trainName != car.getTrainName()) {
+                                    if (!trainName.equals(car.getTrainName())) {
                                         trainName = car.getTrainName();
                                         newLine(fileOut, MessageFormat.format(messageFormatText = TrainSwitchListText
                                                 .getStringScheduledWork(), new Object[]{car.getTrainName(), car.getTrain().getDescription()}));

@@ -168,7 +168,7 @@ public class SerialDriverAdapter extends SprogPortController implements jmri.jmr
     static public SerialDriverAdapter instance() {
         if (mInstance == null) {
             SerialDriverAdapter m = new SerialDriverAdapter();
-            m.setManufacturer(jmri.jmrix.DCCManufacturerList.SPROG);
+            m.setManufacturer(jmri.jmrix.sprog.SprogConnectionTypeList.SPROG);
             mInstance = m;
         }
         return mInstance;

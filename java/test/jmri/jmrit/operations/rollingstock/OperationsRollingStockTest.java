@@ -81,6 +81,8 @@ public class OperationsRollingStockTest extends OperationsTestCase {
         } catch(java.lang.NullPointerException npe) {
            Assert.fail("Null Pointer Exception while executing Xml Element Constructor");
         }
+        
+        jmri.util.JUnitAppender.assertErrorMessage("Tag 12345 Not Found");
     }
 
 
@@ -231,11 +233,16 @@ public class OperationsRollingStockTest extends OperationsTestCase {
         testtrack1.deleteRoadName("TESTROAD");
         testresult = rs1.setLocation(testlocation1, testtrack1);
         Assert.assertEquals("RollingStock Set null excluderoads", "okay", testresult);
+        
+        // Normally logged message
+        jmri.util.JUnitAppender.assertErrorMessage("Rolling stock (TESTROAD TESTNUMBER1) length () is not valid");
+        
     }
 
     // Ensure minimal setup for log4J
     @Override
     protected void setUp() throws Exception {
+        apps.tests.Log4JFixture.setUp();
         super.setUp();
     }
 
@@ -258,6 +265,7 @@ public class OperationsRollingStockTest extends OperationsTestCase {
     // The minimal setup for log4J
     @Override
     protected void tearDown() throws Exception {
-       super.tearDown();
+        super.tearDown();
+        apps.tests.Log4JFixture.tearDown();
     }
 }

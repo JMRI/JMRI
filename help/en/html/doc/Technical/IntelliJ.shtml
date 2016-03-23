@@ -3,7 +3,7 @@
 <head>
 <title>JMRI: Building with IntelliJ IDEA</title>
 <meta name="author" content="Egbert Broerse">
-<meta name="keywords" content="JMRI technical code IntelliJ IDEA 15 IDE">
+<meta name="keywords" content="JMRI technical code IntelliJ IDEA 15 2016 IDE">
 
 <!--#include virtual="/Style" -->
 </head>
@@ -34,11 +34,11 @@
 
 	<p>
 		JMRI developers use Git for source control. Source control using Git
-		is including as part of the IntelliJ IDEA 15 download. For more
+		is including as part of the IntelliJ IDEA download. For more
 		information for getting the JMRI source, see <a
 			href="getgitcode.shtml">JMRI: Getting the Code</a>.
 	</p>
-	<p>These instructions were developed and tested using IntelliJ IDEA 15 Community Edition (free).</p>
+	<p>These instructions were developed and tested using IntelliJ IDEA 15 and 16 Community Edition (free).</p>
 
 	<a name="install"></a>
 <h2>Installing IntelliJ IDEA</h2>
@@ -59,47 +59,48 @@
 	
 <h3>Set vmoptions</h3>
 	<h4>On OS X</h4>
-	<ul>
-	<li>Open IntelliJ
-	<li>From the Help menu, select "Edit Custom VM Options":<br>
-	<a href="images/IntelliJ/IjVMOptionsMenu.png">
-	<img src="images/IntelliJ/IjVMOptionsMenu.png" width="251" height="170" alt="IntelliJ Edit vmoptions menu"></a>
-	<li>In the dialog, answer "Yes" to create a copy of the application's vmoptions file:<br>
-	<a href="images/IntelliJ/IjVMOptionsDialog.png">
-	<img src="images/IntelliJ/IjVMOptionsDialog.png" width="248" height="98" alt="IntelliJ Edit vmoptions dialog"></a>
-	<li>Add the line "-Didea.native2ascii.lowercase=true" to the contents of this file and select Save All from the File menu:<br>
-	<a href="images/IntelliJ/IjVMOptions.png">
-	<img src="images/IntelliJ/IjVMOptions.png" width="240" height="114" alt="IntelliJ Edit vmoptions"></a>
-	<li>As of version 15, IntelliJ on OS X does not correctly name this vmoptions file ( <a href="https://youtrack.jetbrains.com/issue/IDEA-150830#tab=Linked%20Issues">read more</a>).<br>
-	To correct this, close IntelliJ and in the Finder go to the <code>&tilde;/Library/Preferences/IdeaIC15/</code> folder.<br>
-	Rename the newly created file <code>idea64.vmoptions</code> to <code>idea.vmoptions</code> (effectively removing the "64" part).
-  </ul>
+		<ul>
+		<li>Open IntelliJ
+		<li>From the Help menu, select "Edit Custom VM Options":<br>
+		<a href="images/IntelliJ/IjVMOptionsMenu.png">
+		<img src="images/IntelliJ/IjVMOptionsMenu.png" width="251" height="170" alt="IntelliJ Edit vmoptions menu"></a></li>
+		<li>In the dialog, answer "Yes" to create a copy of the application's vmoptions file:<br>
+		<a href="images/IntelliJ/IjVMOptionsDialog.png">
+		<img src="images/IntelliJ/IjVMOptionsDialog.png" width="248" height="97" alt="IntelliJ Edit vmoptions dialog"></a></li>
+		<li>Add the line "-Didea.native2ascii.lowercase=true" to the contents of this file and select Save All from the File menu:<br>
+		<a href="images/IntelliJ/IjVMOptions.png">
+		<img src="images/IntelliJ/IjVMOptions.png" width="240" height="114" alt="IntelliJ Edit vmoptions"></a></li>
+		<li>IntelliJ 2016 is now ready to use for development with JMRI. The vmoptions file is store in <code>&tilde;/Users/Preferences/IdeaIC2016.1/</code><br>
+		But in version 15, IntelliJ on OS X did not correctly name this vmoptions file ( <a href="https://youtrack.jetbrains.com/issue/IDEA-150830#tab=Linked%20Issues">read more</a>).<br>
+		To correct this, close IntelliJ 15 and in the Finder go to the <code>&tilde;/Library/Preferences/IdeaIC15/</code> folder.<br>
+		Rename the newly created file <code>idea64.vmoptions</code> to <code>idea.vmoptions</code> (effectively removing the "64" part).</li>
+	  </ul>
   
 	<h4>On Windows and *nix</h4>
-	<ul>
-	<li>From the Help menu, select "Edit Custom VM Options".
-	<li>Add the line "-Didea.native2ascii.lowercase=true" to the contents of this file and select Save All from the File menu.<br>
-	It will be saved into the location under user home.	That's <code>$HOME/.IdeaICXX/idea$BITS.vmoptions</code> for *nix and <code>%USERPROFILE%\.IdeaICXX\idea%BITS%.exe.vmoptions</code> for Windows (XX = the version number, BITS = the chip version installed).
-	<ul>
-	<p>If IDEA_VM_OPTIONS environment variable is defined, or the *.vmoptions file exists, then this file is used instead of the file located in the IntelliJ IDEA installation folder.
+		<ul>
+		<li>From the Help menu, select "Edit Custom VM Options".</li>
+		<li>Add the line "-Didea.native2ascii.lowercase=true" to the contents of this file and select Save All from the File menu.<br>
+		It will be saved into the location under user home.	That's <code>$HOME/.IdeaICXX/idea$BITS.vmoptions</code> for *nix and <code>%USERPROFILE%\.IdeaICXX\idea%BITS%.exe.vmoptions</code> for Windows (XX = the version number, BITS = the chip version installed).</li>
+		</ul>
+	<p>If the IDEA_VM_OPTIONS environment variable is defined, or a *.vmoptions file exists, then this file is used instead of the file located in the IntelliJ IDEA installation folder.</p>
 	
-	<p>More info on setting these important vmoptions <a href="https://www.jetbrains.com/idea/help/tuning-intellij-idea.html">here</a>.<br>
-	Note: If you have a hint how to set this at the Project level instead of tinkering with the application files, please tell the <a href="https://groups.yahoo.com/neo/groups/jmriusers/info">JMRI users</a> Yahoo group.</p>
+	<p>More info on setting these important vmoptions is available on the <a href="https://www.jetbrains.com/idea/help/tuning-intellij-idea.html">Idea web site</a>.<br>
+	Note: If you have a hint how to set this at the Project level instead of tinkering with local application settings, please tell the <a href="https://groups.yahoo.com/neo/groups/jmriusers/info">JMRI users</a> Yahoo group.</p>
 	
 <h3>Set Preferences</h3>
 <p>Start IntelliJ and choose "Preferences" from the application menu (OS X) or Edit menu (Win).</p>
-<ol>
-<li>From the Editor -&gt; File Encodings tab, check "Transparent native-to-ascii conversion":<br>
-		<a href="images/IntelliJ/IjPrefsFileEncodings.png">
-	  <img src="images/IntelliJ/IjPrefsFileEncodings.png" width="516" height="263" alt="IntelliJ encoding prefs"></a></li>
-<li>From the Version Control -&gt; GitHub tab, enter "github.com" as the Host and enter your Login credentials:<br>
-		<a href="images/IntelliJ/IjPrefsGitLogin.png">
-	  <img src="images/IntelliJ/IjPrefsGitLogin.png" width="375" height="243" alt="IntelliJ build Git Login prefs"></a></li>
-<li>From the Build, Execution, Deployment -&gt; Java Compiler tab, select "1.8" as the Project bytecode version:<br>
-		<a href="images/IntelliJ/IjPrefsJava18.png">
-	  <img src="images/IntelliJ/IjPrefsJava18.png" width="408" height="263" alt="IntelliJ build java SDK prefs"></a></li>
-<li>Click OK to close the Preferences.</li>
-</ol>
+	<ol>
+	<li>From the Editor -&gt; File Encodings tab, check "Transparent native-to-ascii conversion":<br>
+			<a href="images/IntelliJ/IjPrefsFileEncodings.png">
+		  <img src="images/IntelliJ/IjPrefsFileEncodings.png" width="516" height="263" alt="IntelliJ encoding prefs"></a></li>
+	<li>From the Version Control -&gt; GitHub tab, enter "github.com" as the Host and enter your Login credentials:<br>
+			<a href="images/IntelliJ/IjPrefsGitLogin.png">
+		  <img src="images/IntelliJ/IjPrefsGitLogin.png" width="375" height="243" alt="IntelliJ build Git Login prefs"></a></li>
+	<li>From the Build, Execution, Deployment -&gt; Java Compiler tab, select "1.8" as the Project bytecode version:<br>
+			<a href="images/IntelliJ/IjPrefsJava18.png">
+		  <img src="images/IntelliJ/IjPrefsJava18.png" width="408" height="263" alt="IntelliJ build java SDK prefs"></a></li>
+	<li>Click OK to close the Preferences.</li>
+	</ol>
 
 <a name="getgit"></a>
 	<h2>Getting the JMRI Source using Git</h2>

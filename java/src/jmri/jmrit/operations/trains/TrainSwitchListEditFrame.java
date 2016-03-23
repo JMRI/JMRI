@@ -313,11 +313,11 @@ public class TrainSwitchListEditFrame extends OperationsFrame implements java.be
                     // update switch list
                     trainSwitchLists.buildSwitchList(location);
                     // print or only print changes
-                    if (!isUpdate && (!isChanged || isChanged && location.getStatus().equals(Location.MODIFIED))) {
+                    if (!isUpdate && (!isChanged || (isChanged && location.getStatus().equals(Location.MODIFIED)))) {
                         trainSwitchLists.printSwitchList(location, isPreview);
                     }
                 } else if (Setup.isGenerateCsvSwitchListEnabled()
-                        && (!isChanged || isChanged && location.getStatus().equals(Location.MODIFIED))) {
+                        && (!isChanged || (isChanged && location.getStatus().equals(Location.MODIFIED)))) {
                     TrainCsvSwitchLists trainCsvSwitchLists = new TrainCsvSwitchLists();
                     trainCsvSwitchLists.buildSwitchList(location);
                 }
@@ -545,7 +545,7 @@ public class TrainSwitchListEditFrame extends OperationsFrame implements java.be
     }
 
     public void propertyChange(PropertyChangeEvent e) {
-        if (Control.showProperty) {
+        if (Control.SHOW_PROPERTY) {
             log.debug("Property change: ({}) old: ({}) new: ({})", e.getPropertyName(), e.getOldValue(), e
                     .getNewValue());
         }

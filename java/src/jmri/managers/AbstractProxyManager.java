@@ -1,4 +1,3 @@
-// AbstractProxyManager.java
 package jmri.managers;
 
 import java.util.ArrayList;
@@ -24,7 +23,6 @@ import org.slf4j.LoggerFactory;
  * separate reference to the internal manager.
  *
  * @author	Bob Jacobsen Copyright (C) 2003, 2010
- * @version	$Revision$
  */
 abstract public class AbstractProxyManager implements Manager {
 
@@ -33,14 +31,18 @@ abstract public class AbstractProxyManager implements Manager {
      * including the Internal manager
      */
     protected int nMgrs() {
-        return mgrs.size() + 1;
+        // make sure internal present
+        initInternal();
+
+        return mgrs.size();
     }
 
     protected AbstractManager getMgr(int index) {
+        // make sure internal present
+        initInternal();
+
         if (index < mgrs.size()) {
             return mgrs.get(index);
-        } else if (index == mgrs.size()) {
-            return getInternal();
         } else {
             throw new IllegalArgumentException("illegal index " + index);
         }
@@ -51,9 +53,11 @@ abstract public class AbstractProxyManager implements Manager {
      * not a live list.
      */
     public List<Manager> getManagerList() {
+        // make sure internal present
+        initInternal();
+        
         @SuppressWarnings("unchecked")
         List<Manager> retval = (List<Manager>) mgrs.clone();
-        retval.add(getInternal());
         return retval;
     }
 
@@ -70,16 +74,20 @@ abstract public class AbstractProxyManager implements Manager {
         }
     }
 
-    private AbstractManager getInternal() {
+    private AbstractManager initInternal() {
         if (internalManager == null) {
+            log.debug("create internal manager when first requested");
             internalManager = makeInternalManager();
         }
         return internalManager;
     }
 
-    private java.util.ArrayList<AbstractManager> mgrs = new java.util.ArrayList<AbstractManager>();
+    private java.util.ArrayList<AbstractManager> mgrs = new java.util.ArrayList<>();
     private AbstractManager internalManager = null;
 
+    /**
+     * Create specific internal manager as needed for concrete type.
+     */
     abstract protected AbstractManager makeInternalManager();
 
     /**
@@ -108,6 +116,9 @@ abstract public class AbstractProxyManager implements Manager {
      * @return Never null under normal circumstances
      */
     protected NamedBean provideNamedBean(String name) {
+        // make sure internal present
+        initInternal();
+
         NamedBean t = getNamedBean(name);
         if (t != null) {
             return t;
@@ -179,6 +190,9 @@ abstract public class AbstractProxyManager implements Manager {
      * @return requested NamedBean object (never null)
      */
     public NamedBean newNamedBean(String systemName, String userName) {
+        // make sure internal present
+        initInternal();
+
         // if the systemName is specified, find that system
         int i = matchTentative(systemName);
         if (i >= 0) {
@@ -218,6 +232,9 @@ abstract public class AbstractProxyManager implements Manager {
      * there is no match, here considered to be an error that must be reported.
      */
     protected int match(String systemname) {
+        // make sure internal present
+        initInternal();
+
         int index = matchTentative(systemname);
         if (index < 0) {
             throw new IllegalArgumentException("System name " + systemname + " failed to match");
@@ -284,8 +301,8 @@ abstract public class AbstractProxyManager implements Manager {
         }
     }
 
-    ArrayList<java.beans.PropertyChangeListener> propertyListenerList = new ArrayList<java.beans.PropertyChangeListener>(5);
-    ArrayList<java.beans.VetoableChangeListener> propertyVetoListenerList = new ArrayList<java.beans.VetoableChangeListener>(5);
+    ArrayList<java.beans.PropertyChangeListener> propertyListenerList = new ArrayList<>(5);
+    ArrayList<java.beans.VetoableChangeListener> propertyVetoListenerList = new ArrayList<>(5);
 
     /**
      * @return The system-specific prefix letter for the primary implementation
@@ -324,7 +341,7 @@ abstract public class AbstractProxyManager implements Manager {
     }
 
     public String[] getSystemNameArray() {
-        TreeSet<String> ts = new TreeSet<String>(new SystemNameComparator());
+        TreeSet<String> ts = new TreeSet<>(new SystemNameComparator());
         for (int i = 0; i < nMgrs(); i++) {
             ts.addAll(getMgr(i).getSystemNameList());
         }
@@ -341,23 +358,21 @@ abstract public class AbstractProxyManager implements Manager {
      * Get a list of all system names.
      */
     public List<String> getSystemNameList() {
-        TreeSet<String> ts = new TreeSet<String>(new SystemNameComparator());
+        TreeSet<String> ts = new TreeSet<>(new SystemNameComparator());
         for (int i = 0; i < nMgrs(); i++) {
             ts.addAll(getMgr(i).getSystemNameList());
         }
-        return new ArrayList<String>(ts);
+        return new ArrayList<>(ts);
     }
 
     public List<NamedBean> getNamedBeanList() {
-        TreeSet<NamedBean> ts = new TreeSet<NamedBean>(new SystemNameComparator());
+        TreeSet<NamedBean> ts = new TreeSet<>(new SystemNameComparator());
         for (AbstractManager m : mgrs) {
             ts.addAll(m.getNamedBeanList());
         }
-        return new ArrayList<NamedBean>(ts);
+        return new ArrayList<>(ts);
     }
 
     // initialize logging
     private final static Logger log = LoggerFactory.getLogger(AbstractProxyManager.class.getName());
 }
-
-/* @(#)AbstractProxyManager.java */

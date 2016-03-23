@@ -29,7 +29,7 @@ public class SerialDriverAdapter extends SerialPortController implements jmri.jm
 
     public SerialDriverAdapter() {
         super(new SecsiSystemConnectionMemo());
-        this.manufacturerName = jmri.jmrix.DCCManufacturerList.TRACTRONICS;
+        this.manufacturerName = jmri.jmrix.secsi.SerialConnectionTypeList.TRACTRONICS;
     }
 
     public String openPort(String portName, String appName) {

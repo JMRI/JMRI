@@ -21,7 +21,7 @@ public class NetworkDriverAdapter extends NceNetworkPortController {
         option2Name = "Eprom";
         // the default is 2006 or later
         options.put(option2Name, new Option("Command Station EPROM", new String[]{"2006 or later", "2004 or earlier"}));
-        setManufacturer(jmri.jmrix.DCCManufacturerList.NCE);
+        setManufacturer(jmri.jmrix.nce.NceConnectionTypeList.NCE);
     }
 
     /**

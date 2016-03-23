@@ -1,4 +1,3 @@
-// NceMacroEditPanel.java
 package jmri.jmrix.nce.macro;
 
 import java.awt.Dimension;
@@ -71,14 +70,8 @@ import org.slf4j.LoggerFactory;
  *
  * @author Dan Boudreau Copyright (C) 2007
  * @author Ken Cameron Copyright (C) 2013
- * @version $Revision$
  */
 public class NceMacroEditPanel extends jmri.jmrix.nce.swing.NcePanel implements NcePanelInterface, jmri.jmrix.nce.NceListener {
-
-    /**
-     *
-     */
-    private static final long serialVersionUID = 3192077168997079793L;
 
     static ResourceBundle rb = ResourceBundle.getBundle("jmri.jmrix.nce.macro.NceMacroBundle");
 
@@ -1639,11 +1632,6 @@ public class NceMacroEditPanel extends jmri.jmrix.nce.swing.NcePanel implements 
      * Nested class to create one of these using old-style defaults
      */
     static public class Default extends jmri.jmrix.nce.swing.NceNamedPaneAction {
-
-        /**
-         *
-         */
-        private static final long serialVersionUID = 8301047661947770441L;
 
         public Default() {
             super("Open NCE Macro Editor",

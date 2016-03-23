@@ -2,6 +2,7 @@ package jmri.spi;
 
 import javax.annotation.Nonnull;
 import jmri.profile.Profile;
+import jmri.util.prefs.InitializationException;
 
 /**
  * An API for Java Service Providers that manage preferences within JMRI. It is
@@ -12,12 +13,14 @@ import jmri.profile.Profile;
  * PreferencesProviders must provide a default public constructor, but must also
  * not perform any initialization until
  * {@link #initialize(jmri.profile.Profile)} is called as the
- * PreferencesProvider may be constructed before the
+ * PreferencesProvider will be constructed before the
  * {@link jmri.profile.Profile} is known.
  *
+ * @see jmri.util.prefs.AbstractPreferencesProvider for an abstract
+ * implementation that is ready to extend.
  * @author Randall Wood 2015
  */
-public interface PreferencesProvider {
+public interface PreferencesProvider extends JmriServiceProviderInterface {
 
     /**
      * Initialize the PreferencesProvider with preferences associated with the
@@ -30,7 +33,7 @@ public interface PreferencesProvider {
      * provider is not repeatedly initialized.
      *
      * @param profile
-     * @throws jmri.spi.InitializationException
+     * @throws jmri.util.prefs.InitializationException
      */
     public void initialize(Profile profile) throws InitializationException;
 

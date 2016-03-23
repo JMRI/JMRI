@@ -1,4 +1,3 @@
-// KernelTest.java
 package jmri.jmrit.operations.rollingstock.cars;
 
 import jmri.jmrit.operations.OperationsTestCase;
@@ -13,7 +12,6 @@ import junit.framework.TestSuite;
  * Still to do: Everything
  *
  * @author	Bob Coleman Copyright (C) 2008, 2009
- * @version $Revision$
  */
 public class KernelTest extends OperationsTestCase {
 

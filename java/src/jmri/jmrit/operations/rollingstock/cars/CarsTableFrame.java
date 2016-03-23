@@ -398,7 +398,7 @@ public class CarsTableFrame extends OperationsFrame implements TableModelListene
     }
 
     public void tableChanged(TableModelEvent e) {
-        if (Control.showProperty) {
+        if (Control.SHOW_PROPERTY) {
             log.debug("Table changed");
         }
         updateNumCars();

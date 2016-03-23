@@ -1,7 +1,5 @@
 package jmri.jmrit.operations.automation.actions;
 
-import jmri.jmrit.operations.trains.excel.TrainCustomSwitchList;
-
 import java.io.File;
 import jmri.jmrit.operations.locations.Location;
 import jmri.jmrit.operations.locations.LocationManager;
@@ -11,12 +9,14 @@ import jmri.jmrit.operations.trains.Train;
 import jmri.jmrit.operations.trains.TrainCsvSwitchLists;
 import jmri.jmrit.operations.trains.TrainManager;
 import jmri.jmrit.operations.trains.TrainSwitchLists;
+import jmri.jmrit.operations.trains.excel.TrainCustomSwitchList;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 public class RunSwitchListChangesAction extends Action {
 
     private static final int _code = ActionCodes.RUN_SWITCHLIST_CHANGES;
+    protected static final boolean IS_CHANGED = true;
 
     @Override
     public int getCode() {
@@ -30,8 +30,12 @@ public class RunSwitchListChangesAction extends Action {
 
     @Override
     public void doAction() {
+        doAction(IS_CHANGED);
+    }
+
+    // common code see RunSwitchListAction.java
+    protected void doAction(boolean isChanged) {
         if (getAutomationItem() != null) {
-            boolean isChanged = true;
             if (!Setup.isGenerateCsvSwitchListEnabled()) {
                 log.warn("Generate CSV Switch List isn't enabled!");
                 finishAction(false);
@@ -49,8 +53,8 @@ public class RunSwitchListChangesAction extends Action {
             TrainCsvSwitchLists trainCsvSwitchLists = new TrainCsvSwitchLists();
             new TrainCustomSwitchList().checkProcessComplete(); // this can wait thread
             for (Location location : LocationManager.instance().getLocationsByNameList()) {
-                if (location.isSwitchListEnabled()
-                        && (!isChanged || isChanged && location.getStatus().equals(Location.MODIFIED))) {
+                if (location.isSwitchListEnabled() &&
+                        (!isChanged || (isChanged && location.getStatus().equals(Location.MODIFIED)))) {
                     // also build the regular switch lists so they can be used
                     if (!Setup.isSwitchListRealTime()) {
                         trainSwitchLists.buildSwitchList(location);

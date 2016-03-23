@@ -34,9 +34,7 @@ public class NoFeedbackTurnoutOperation extends CommonTurnoutOperation {
      * constructor with default values - this creates the "defining instance" of
      * the operation type hence it cannot be deleted
      */
-    public NoFeedbackTurnoutOperation() {
-        this("NoFeedback", defaultInterval, defaultMaxTries);
-    }
+    public NoFeedbackTurnoutOperation() { this("NoFeedback", defaultInterval, defaultMaxTries); }
 
     /**
      * return clone with different name

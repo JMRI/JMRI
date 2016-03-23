@@ -11,11 +11,18 @@ package jmri.jmrix;
  */
 public class OtherConnectionTypeList implements jmri.jmrix.ConnectionTypeList {
 
+    public static final String OTHER = "Others";
+
+    @Override
     public String[] getAvailableProtocolClasses() {
         return new String[]{
-            "jmri.jmrix.mrc.serialdriver.ConnectionConfig",
             "jmri.jmrix.direct.serial.ConnectionConfig"
         };
+    }
+
+    @Override
+    public String[] getManufacturers() {
+        return new String[]{OTHER};
     }
 
 }

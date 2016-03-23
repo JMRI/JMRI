@@ -10,6 +10,7 @@ import java.io.InputStream;
 import java.util.ArrayList;
 import java.util.List;
 import jmri.jmrix.SystemConnectionMemo;
+import jmri.jmrix.dcc4pc.Dcc4PcConnectionTypeList;
 import jmri.jmrix.dcc4pc.Dcc4PcPortController;
 import jmri.jmrix.dcc4pc.Dcc4PcSystemConnectionMemo;
 import jmri.jmrix.dcc4pc.Dcc4PcTrafficController;
@@ -31,7 +32,7 @@ public class SerialDriverAdapter extends Dcc4PcPortController implements jmri.jm
         super(new Dcc4PcSystemConnectionMemo());
         option1Name = "Programmer";
         options.put(option1Name, new Option("Programmer : ", validOption1()));
-        setManufacturer(jmri.jmrix.DCCManufacturerList.DCC4PC);
+        setManufacturer(Dcc4PcConnectionTypeList.DCC4PC);
     }
 
     SerialPort activeSerialPort = null;
@@ -182,7 +183,7 @@ public class SerialDriverAdapter extends Dcc4PcPortController implements jmri.jm
     static public SerialDriverAdapter instance() {
         if (mInstance == null) {
             SerialDriverAdapter m = new SerialDriverAdapter();
-            m.setManufacturer(jmri.jmrix.DCCManufacturerList.DCC4PC);
+            m.setManufacturer(Dcc4PcConnectionTypeList.DCC4PC);
             mInstance = m;
         }
         return mInstance;

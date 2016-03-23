@@ -33,10 +33,6 @@ import org.slf4j.LoggerFactory;
  */
 public class PrintOptionPanel extends OperationsPreferencesPanel {
 
-    /**
-     *
-     */
-    private static final long serialVersionUID = 2753161901627545371L;
     private static final Logger log = LoggerFactory.getLogger(PrintOptionPanel.class);
 
     // labels
@@ -495,6 +491,7 @@ public class PrintOptionPanel extends OperationsPreferencesPanel {
     }
 
     @Override
+    @edu.umd.cs.findbugs.annotations.SuppressFBWarnings(value = "BC_UNCONFIRMED_CAST_OF_RETURN_VALUE", justification = "checks for instance of PrintOptionFrame")
     public void checkBoxActionPerformed(ActionEvent ae) {
         if (ae.getSource() == tabFormatCheckBox) {
             loadFontComboBox();
@@ -546,6 +543,7 @@ public class PrintOptionPanel extends OperationsPreferencesPanel {
         return null;
     }
 
+    @edu.umd.cs.findbugs.annotations.SuppressFBWarnings(value = "BC_UNCONFIRMED_CAST_OF_RETURN_VALUE", justification = "checks for instance of PrintOptionFrame")
     private void updateLogoButtons() {
         boolean flag = Setup.getManifestLogoURL().equals(Setup.NONE);
         addLogoButton.setVisible(flag);
@@ -565,8 +563,8 @@ public class PrintOptionPanel extends OperationsPreferencesPanel {
 
     private void removeComboBox(JPanel panel, List<JComboBox<String>> list) {
         for (int i = 0; i < list.size(); i++) {
-            JComboBox<?> cb = list.get(i);
-            if (cb.getSelectedItem() == Setup.BLANK) {
+            JComboBox<String> cb = list.get(i);
+            if (cb.getSelectedItem().equals(Setup.BLANK)) {
                 list.remove(i);
                 panel.remove(cb);
                 panel.revalidate();

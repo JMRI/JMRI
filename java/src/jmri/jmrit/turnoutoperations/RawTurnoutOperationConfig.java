@@ -7,7 +7,7 @@ import jmri.TurnoutOperation;
 
 /**
  * Configuration for RawTurnoutOperation class All the work is done by the
- * Common... class Based on NoFeedbackTurountOperationConfig.java
+ * Common... class Based on NoFeedbackTurnountOperationConfig.java
  *
  * @author Paul Bender Copyright 2008
  *

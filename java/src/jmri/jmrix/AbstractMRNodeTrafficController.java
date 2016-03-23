@@ -1,4 +1,3 @@
-// AbstractMRNodeTrafficController.java
 package jmri.jmrix;
 
 import org.slf4j.Logger;
@@ -12,7 +11,6 @@ import org.slf4j.LoggerFactory;
  * management services, but no additional protocol.
  *
  * @author jake Copyright 2008
- * @version $Revision$
  */
 public abstract class AbstractMRNodeTrafficController extends AbstractMRTrafficController {
 

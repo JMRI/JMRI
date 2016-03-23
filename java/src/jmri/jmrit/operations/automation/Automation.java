@@ -580,6 +580,7 @@ public class Automation implements java.beans.PropertyChangeListener {
         return e;
     }
 
+    @edu.umd.cs.findbugs.annotations.SuppressFBWarnings(value = {"UW_UNCOND_WAIT", "WA_NOT_IN_LOOP"}, justification = "Need to plause for user action")
     private void CheckForActionPropertyChange(PropertyChangeEvent evt) {
         if (evt.getPropertyName().equals(Action.ACTION_COMPLETE_CHANGED_PROPERTY) ||
                 evt.getPropertyName().equals(Action.ACTION_HALT_CHANGED_PROPERTY)) {
@@ -622,7 +623,7 @@ public class Automation implements java.beans.PropertyChangeListener {
                 // if old = false, branch if failure
                 if (evt.getOldValue() == null || (boolean) evt.getOldValue() == isLastActionSuccessful()) {
                     _gotoAutomationItem = (AutomationItem) evt.getNewValue();
-                    // pause thread in case goto is a loop
+                    // pause thread in case goto is a tight loop
                     // this gives the user a chance to "Stop" the automation
                     synchronized (this) {
                         try {
@@ -638,7 +639,7 @@ public class Automation implements java.beans.PropertyChangeListener {
     }
 
     public void propertyChange(PropertyChangeEvent e) {
-        if (Control.showProperty)
+        if (Control.SHOW_PROPERTY)
             log.debug("Property change: ({}) old: ({}) new: ({})", e.getPropertyName(), e.getOldValue(), e
                     .getNewValue());
         CheckForActionPropertyChange(e);

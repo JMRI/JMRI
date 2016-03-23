@@ -70,7 +70,7 @@ public class NamedBeanTest extends TestCase {
         n.setProperty("foo", "bar");
         n.setProperty("biff", "bar");
 
-        java.util.Set<Object> s = n.getPropertyKeys();
+        java.util.Set<String> s = n.getPropertyKeys();
         Assert.assertEquals("size", 2, s.size());
         Assert.assertEquals("contains foo", true, s.contains("foo"));
         Assert.assertEquals("contains biff", true, s.contains("biff"));

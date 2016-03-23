@@ -6,12 +6,9 @@ import junit.framework.TestCase;
 import junit.framework.TestSuite;
 
 /**
- * RocoConnectionTypeListTest.java
- *
- * Description:	tests for the jmri.jmrix.roco.RocoConnectionTypeList class
+ * Tests for the jmri.jmrix.roco.RocoConnectionTypeList class
  *
  * @author	Paul Bender
- * @version $Revision$
  */
 public class RocoConnectionTypeListTest extends TestCase {
 

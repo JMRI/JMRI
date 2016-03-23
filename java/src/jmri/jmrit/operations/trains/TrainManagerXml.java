@@ -1,8 +1,6 @@
 // TrainManagerXml.java
 package jmri.jmrit.operations.trains;
 
-import jmri.jmrit.operations.trains.timetable.TrainScheduleManager;
-
 import java.io.File;
 import java.text.SimpleDateFormat;
 import jmri.jmrit.operations.OperationsManager;
@@ -10,6 +8,7 @@ import jmri.jmrit.operations.OperationsXml;
 import jmri.jmrit.operations.automation.AutomationManager;
 import jmri.jmrit.operations.setup.Control;
 import jmri.jmrit.operations.setup.Setup;
+import jmri.jmrit.operations.trains.timetable.TrainScheduleManager;
 import org.jdom2.Document;
 import org.jdom2.Element;
 import org.jdom2.ProcessingInstruction;
@@ -60,7 +59,7 @@ public class TrainManagerXml extends OperationsXml {
             _instance = new TrainManagerXml();
             _instance.load();
         }
-        if (Control.showInstance) {
+        if (Control.SHOW_INSTANCE) {
             log.debug("TrainManagerXml returns instance " + _instance);
         }
         return _instance;
@@ -302,6 +301,7 @@ public class TrainManagerXml extends OperationsXml {
         }
     }
 
+    @edu.umd.cs.findbugs.annotations.SuppressFBWarnings(value = "ST_WRITE_TO_STATIC_FROM_INSTANCE_METHOD", justification = "for testing")
     public void dispose(){
         _instance = null;
     }

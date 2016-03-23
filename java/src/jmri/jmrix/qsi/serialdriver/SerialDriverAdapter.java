@@ -30,7 +30,7 @@ public class SerialDriverAdapter extends QsiPortController implements jmri.jmrix
 
     public SerialDriverAdapter() {
         super(new QsiSystemConnectionMemo());
-        this.manufacturerName = jmri.jmrix.DCCManufacturerList.QSI;
+        this.manufacturerName = jmri.jmrix.qsi.QSIConnectionTypeList.QSI;
     }
 
     SerialPort activeSerialPort = null;

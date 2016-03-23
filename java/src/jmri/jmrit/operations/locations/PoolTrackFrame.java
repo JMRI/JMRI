@@ -269,7 +269,7 @@ class PoolTrackFrame extends OperationsFrame implements java.beans.PropertyChang
         // This should move to the base class
         // Just call LogEvent(e); instead. It will figure out if logging is
         // enabled, etc.
-        if (Control.showProperty) {
+        if (Control.SHOW_PROPERTY) {
             log.debug("Property change: ({}) old: ({}) new: ({})", e.getPropertyName(), e.getOldValue(), e
                     .getNewValue());
         }

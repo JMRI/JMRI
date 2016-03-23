@@ -2021,7 +2021,7 @@ public class Llnmon {
                                     : ((d[0] == 2) ? "Report" : "Write");
 
                             return src_dev + "=> " + dst_dev + " "
-                                    + ((dst_h == 0x01) ? (operation + " SV" + d[1]) : "")
+                                    + operation + " SV" + d[1]
                                     + ((src == 0x50) ? (d[0] != 2 ? ("=0x" + Integer.toHexString(d[3])) : "")
                                             : " = " + ((d[0] == 2) ? ((d[2] != 0) ? (d[5] < 10) ? "" + d[5]
                                                                     : d[5] + " (0x" + Integer.toHexString(d[5]) + ")"

@@ -8,6 +8,7 @@ import java.io.DataInputStream;
 import java.io.DataOutputStream;
 import java.io.InputStream;
 import java.util.TooManyListenersException;
+import jmri.jmrix.bachrus.SpeedoConnectionTypeList;
 import jmri.jmrix.bachrus.SpeedoPortController;
 import jmri.jmrix.bachrus.SpeedoSystemConnectionMemo;
 import jmri.jmrix.bachrus.SpeedoTrafficController;
@@ -36,7 +37,7 @@ public class SerialDriverAdapter extends SpeedoPortController implements jmri.jm
     // There can only be one instance
     public SerialDriverAdapter() {
         super(new SpeedoSystemConnectionMemo());
-        setManufacturer(jmri.jmrix.DCCManufacturerList.BACHRUS);
+        setManufacturer(SpeedoConnectionTypeList.BACHRUS);
         mInstance = this;
     }
 
@@ -103,7 +104,7 @@ public class SerialDriverAdapter extends SpeedoPortController implements jmri.jm
                 activeSerialPort.addEventListener(SpeedoTrafficController.instance());
             } catch (TooManyListenersException e) {
             }
-            setManufacturer(jmri.jmrix.DCCManufacturerList.BACHRUS);
+            setManufacturer(SpeedoConnectionTypeList.BACHRUS);
 
             // AJB - activate the DATA_AVAILABLE notifier
             activeSerialPort.notifyOnDataAvailable(true);
@@ -185,7 +186,7 @@ public class SerialDriverAdapter extends SpeedoPortController implements jmri.jm
     static public synchronized SerialDriverAdapter instance() {
         if (mInstance == null) {
             mInstance = new SerialDriverAdapter();
-            mInstance.setManufacturer(jmri.jmrix.DCCManufacturerList.BACHRUS);
+            mInstance.setManufacturer(SpeedoConnectionTypeList.BACHRUS);
         }
         return mInstance;
     }
