@@ -63,7 +63,6 @@ public class ConnectionConfigXml extends AbstractNetworkConnectionConfigXml {
     @Override
     protected void getInstance() {
         if (adapter == null) {
-            new Exception().printStackTrace();
             adapter = new LIUSBServerAdapter();
             try { 
                 adapter.connect();
