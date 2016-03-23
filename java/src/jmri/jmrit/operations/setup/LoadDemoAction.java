@@ -3,6 +3,7 @@ package jmri.jmrit.operations.setup;
 
 import apps.Apps;
 import java.awt.event.ActionEvent;
+import java.io.IOException;
 import javax.swing.AbstractAction;
 import javax.swing.JOptionPane;
 import jmri.jmrit.operations.ExceptionContext;
@@ -20,10 +21,6 @@ import jmri.jmrit.operations.OperationsXml;
  */
 public class LoadDemoAction extends AbstractAction {
 
-    /**
-     *
-     */
-    private static final long serialVersionUID = 8904435442712923065L;
 //    private final static Logger log = LoggerFactory.getLogger(LoadDemoAction.class.getName());
 
     public LoadDemoAction(String s) {
@@ -63,7 +60,7 @@ public class LoadDemoAction extends AbstractAction {
 
             Apps.handleRestart();
 
-        } catch (Exception ex) {
+        } catch (IOException ex) {
             ExceptionContext context = new ExceptionContext(ex, Bundle.getMessage("LoadingDemoFiles"),
                     Bundle.getMessage("LoadingDemoMakeSure"));
             new ExceptionDisplayFrame(context);

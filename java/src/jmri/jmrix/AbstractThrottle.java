@@ -22,7 +22,6 @@ import org.slf4j.LoggerFactory;
  * DCC-specific content.
  *
  * @author Bob Jacobsen Copyright (C) 2001, 2005
- * @version $Revision$
  */
 abstract public class AbstractThrottle implements DccThrottle {
 
@@ -30,7 +29,7 @@ abstract public class AbstractThrottle implements DccThrottle {
     public final static float SPEED_STEP_27_INCREMENT = 1.0f / 27.0f;
     public final static float SPEED_STEP_28_INCREMENT = 1.0f / 28.0f;
     public final static float SPEED_STEP_128_INCREMENT = 1.0f / 126.0f; // remember there are only 126 
-    // non-stop values in 128 speed 
+                                                                        // non-stop values in 128 speed 
 
     protected float speedSetting;
     protected float speedIncrement;
@@ -77,7 +76,7 @@ abstract public class AbstractThrottle implements DccThrottle {
     /**
      * setSpeedSetting - Implementing functions should override this function,
      * but should either make a call to super.setSpeedSetting() to notify the
-     * listeners, or should notify the listeners themselves.
+     * listeners at the end of their work, or should notify the listeners themselves.
      *
      * @param speed
      */
@@ -1321,6 +1320,10 @@ abstract public class AbstractThrottle implements DccThrottle {
     long durationRunning = 0;
     long start;
 
+    /**
+     * Processes updated speed from subclasses.
+     * Used to keep track of total operating time.
+     */
     protected void record(float speed) {
         if (re == null) {
             return;

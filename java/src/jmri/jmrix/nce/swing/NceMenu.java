@@ -1,4 +1,3 @@
-// NceMenu.java
 package jmri.jmrix.nce.swing;
 
 import java.util.ResourceBundle;
@@ -11,14 +10,8 @@ import jmri.jmrix.nce.NceTrafficController;
  *
  * @author	Bob Jacobsen Copyright 2003, 2010 converted to multiple connection
  * @author	kcameron	Copyright 2010, 2013
- * @version $Revision$
  */
 public class NceMenu extends JMenu {
-
-    /**
-     *
-     */
-    private static final long serialVersionUID = 7065069034402845776L;
 
     /**
      * Create a NCE menu. And loads the NceSystemConnectionMemo to the various
@@ -85,5 +78,3 @@ public class NceMenu extends JMenu {
         long enable;
     }
 }
-
-/* @(#)NceMenu.java */

@@ -321,7 +321,7 @@ public class EnginesTableFrame extends OperationsFrame implements PropertyChange
     }
 
     public void propertyChange(PropertyChangeEvent e) {
-        if (Control.showProperty) {
+        if (Control.SHOW_PROPERTY) {
             log.debug("Property change: ({}) old: ({}) new: ({})", e.getPropertyName(), e.getOldValue(), e
                     .getNewValue());
         }

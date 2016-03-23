@@ -52,7 +52,7 @@ public class RollingStockLogger extends XmlFile implements java.beans.PropertyCh
             // create and load
             _instance = new RollingStockLogger();
         }
-        if (Control.showInstance) {
+        if (Control.SHOW_INSTANCE) {
             log.debug("RollingStockLogger returns instance {}", _instance);
         }
         return _instance;
@@ -360,7 +360,7 @@ public class RollingStockLogger extends XmlFile implements java.beans.PropertyCh
 
     public void propertyChange(PropertyChangeEvent e) {
         if (e.getPropertyName().equals(RollingStock.TRACK_CHANGED_PROPERTY)) {
-            if (Control.showProperty) {
+            if (Control.SHOW_PROPERTY) {
                 log.debug("Logger sees property change for car {}", e.getSource());
             }
             store((RollingStock) e.getSource());

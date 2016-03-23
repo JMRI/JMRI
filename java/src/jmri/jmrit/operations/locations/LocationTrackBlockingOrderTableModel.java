@@ -205,7 +205,7 @@ public class LocationTrackBlockingOrderTableModel extends AbstractTableModel imp
 
     // this table listens for changes to a location and it's tracks
     public void propertyChange(PropertyChangeEvent e) {
-        if (Control.showProperty)
+        if (Control.SHOW_PROPERTY)
             log.debug("Property change: ({}) old: ({}) new: ({})", e.getPropertyName(), e.getOldValue(), e
                     .getNewValue());
         if (e.getPropertyName().equals(Location.TRACK_LISTLENGTH_CHANGED_PROPERTY)
