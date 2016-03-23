@@ -66,7 +66,7 @@ extending the kit with the additional concentrator components should the
 <p>The 
 <a href="../../package/jmri/jmrit/beantable/IdTagTable.shtml">ID Tag Table</a>
 provides easy access to the contents of all ID Tags that JMRI knows about.
-There's also an 
+Below the table there's an 
 <a href="../../package/jmri/jmrit/beantable/IdTagAddEdit.shtml">"Add..." button</a>
 for creating your own ID Tags; JMRI automatically creates
 ID Tag objects for tags detected on the layout.</p>

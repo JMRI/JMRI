@@ -122,7 +122,7 @@ Block is occupied. This is used with certain automation tools and logic, to help
 determine if a train can enter an occupied Block and what Aspect should be displayed
 on a Signal Mast.</li>
 
-<li><p><b>Block Speed</b>
+<li><p><a name="BlockSpeed"></a><b>Block Speed</b>
 The Block Speed is used with certain automation tools and logic, to help
 determine the speed at which a train can be set through the Block.
 It is also used by the Signal Mast Logic for determining which Aspect should
@@ -130,7 +130,7 @@ be displayed in a signal path.
 <p>In the drop down list, you are presented a set of named fixed speeds that
 have been predefined in the <code>signalSpeed.xml</code> file, in addition to a global option.  
 <br>It is also possible to enter in a numerical value to represent a speed.
-<p>The global value is set via the <b>Speeds</b> menu option.</p></li>
+<p>The global value is set via the <b>Speeds</b> menu.</p></li>
 </ul>
 
 <a name="addBlock"><h3>Adding a new Block</h3></a>

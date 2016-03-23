@@ -145,8 +145,8 @@ feedback mode, enter Sensors for feedback, invert, lock, and delete it.
 	numerical value to represent a speed.
 	<p>The global value is set via the <b>Speeds</b> menu option.
 	<p>When "Use Block Speed" is selected this in effect tells any automation
-	tool to ignore the speed setting through this Turnout, the tool should then
-	only consider speeds that are set on Blocks.
+	tool to ignore the speed setting through this Turnout; the tool should then
+	only consider speeds that are set on <a href="BlockTable.shtml#BlockSpeed">Blocks</a>.
 	</dd>
 </dl>
 
@@ -167,10 +167,10 @@ Turnout Table pane that control its operation.
 	i.e. to set Automate properties for an individual Turnout.</dd>
 	
 	<dt>Show feedback information</dt>
-	<dd>When checked, the optional Feedback columns are shown.</dd>
+	<dd>When checked, the optional <a href="#Turnout Feedback">Feedback</a> columns are shown.</dd>
 
 	<dt>Show Lock information</dt>
-	<dd>When checked, the optional Lock columns are shown.</dd>
+	<dd>When checked, the optional <a href="#Turnout lock feature">Lock</a> columns are shown.</dd>
 
 	<dt>Show Turnout Speed information</dt>
 	<dd>When checked, lets you set the Thrown and Closed speeds for each Turnout.
@@ -181,7 +181,8 @@ Turnout Table pane that control its operation.
 	Change the number of retries and the interval between them.</dd>
 
 	<dt>Speeds menu</dt>
-	<dd>To read or set global (system wide) turnout <a href="#speeds">speeds</a>, choose the Speeds -&gt; Defaults... menu.</dd>
+	<dd>To read or set global (system wide) turnout <a href="#speeds">speeds</a>,
+	choose the Speeds -&gt; Defaults... menu.</dd>
 </dl>
 
 <h2><a name="Turnout Feedback"></a>Turnout Feedback</h2>
@@ -236,7 +237,7 @@ with feedback:</p>
 	program will change it to the System Name that it needs.</dd>
 </dl>
 
-<p>Available feedback modes are:</p>
+<p>Available Feedback modes are:</p>
 <dl>
 	<dt>DIRECT</dt>
 	<dd>The default in many cases.
@@ -311,15 +312,15 @@ The three forms are:
 
 <p>
 Normally, turnouts are only thrown once, which is the "Off" setting
-under "Automate". You can set a Turnout to 
-use "No Feedback" automation by selecting it in the Automate
+under "Automation". You can set a Turnout to 
+use "No Feedback" automation by selecting it in the Automation
 column for the individual Turnout.  If there are feedback Sensors
 defined, you can also select the "Sensor" method there.
 <p>
 You can customize the automation by clicking "Edit Auto"
 for an individual Turnout.
 <p>
-It's also possible to set global Automate defaults, and some Turnouts use
+It's also possible to set global Automation defaults, and some Turnouts use
 those. Use the Automation -&gt; Edit... menu to access those defaults.
 
 <h2><a name="Turnout lock feature"></a>Turnout Lock feature</h2>
