@@ -35,13 +35,11 @@ public class ConnectionConfigXml extends AbstractNetworkConnectionConfigXml {
      * @param o
      * @return Formatted element containing no attributes except the class name
      */
+    @Override
     public Element store(Object o) {
-        getInstance();
-
+        getInstance(o);
         Element e = new Element("connection");
-
         e.setAttribute("class", this.getClass().getName());
-
         return e;
     }
 
@@ -49,14 +47,22 @@ public class ConnectionConfigXml extends AbstractNetworkConnectionConfigXml {
     public boolean load(Element shared, Element perNode) {
         boolean result = true;
         getInstance();
+
+        loadCommon(shared,perNode,adapter);
+
         // register, so can be picked up
         register();
+     
+        if(adapter.getDisabled()){
+            unpackElement(shared,perNode);
+            return result;
+        }
         return result;
     }
 
     @Override
     protected void getInstance() {
-        if (adapter == null) { //adapter=new LIUSBServerAdapter();
+        if (adapter == null) {
             adapter = new LIUSBServerAdapter();
             try { 
                 adapter.connect();
