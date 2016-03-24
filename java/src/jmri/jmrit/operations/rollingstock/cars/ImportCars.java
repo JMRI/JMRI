@@ -11,6 +11,7 @@ import jmri.jmrit.operations.locations.Location;
 import jmri.jmrit.operations.locations.LocationManager;
 import jmri.jmrit.operations.locations.Track;
 import jmri.jmrit.operations.rollingstock.ImportRollingStock;
+import jmri.jmrit.operations.rollingstock.RollingStock;
 import jmri.jmrit.operations.setup.Control;
 import jmri.jmrit.operations.setup.Setup;
 import org.slf4j.Logger;
@@ -652,7 +653,7 @@ public class ImportCars extends ImportRollingStock {
                             }
                             if (!status.equals(Track.OKAY)) {
                                 if (autoForceCar) {
-                                    car.setLocation(location, track, true); // force car
+                                    car.setLocation(location, track, RollingStock.FORCE); // force car
                                 } else {
                                     JOptionPane.showMessageDialog(null, MessageFormat.format(Bundle
                                             .getMessage("CanNotSetCarAtLocation"), new Object[]{
