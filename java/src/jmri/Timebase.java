@@ -1,4 +1,3 @@
-// Timebase.java
 package jmri;
 
 import java.beans.PropertyChangeListener;
@@ -28,7 +27,6 @@ import java.time.Instant;
  * A PARTICULAR PURPOSE. See the GNU General Public License for more details.
  * <P>
  * @author	Bob Jacobsen Copyright (C) 2004, 2007, 2008
- * @version	$Revision$
  */
 public interface Timebase extends NamedBean {
 
@@ -187,5 +185,3 @@ public interface Timebase extends NamedBean {
     public void dispose();
 
 }
-
-/* @(#)Timebase.java */
