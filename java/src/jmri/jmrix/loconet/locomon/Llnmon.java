@@ -2031,7 +2031,7 @@ public class Llnmon {
                         }
                         // check for a specific type - SV Programming messages format 2
                         // (New Designs)
-                        String svReply = new String("");
+                        String svReply = "";
                         jmri.jmrix.loconet.lnsvf2.LnSv2MessageContents svmc = null;
                         try {
                             svmc =
