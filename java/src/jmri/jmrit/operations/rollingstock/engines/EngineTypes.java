@@ -37,7 +37,7 @@ public class EngineTypes extends RollingStockAttribute {
             // create and load
             _instance = new EngineTypes();
         }
-        if (Control.showInstance) {
+        if (Control.SHOW_INSTANCE) {
             log.debug("EngineTypes returns instance {}", _instance);
         }
         return _instance;

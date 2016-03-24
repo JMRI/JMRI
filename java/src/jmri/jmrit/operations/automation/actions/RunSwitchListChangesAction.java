@@ -54,7 +54,7 @@ public class RunSwitchListChangesAction extends Action {
             new TrainCustomSwitchList().checkProcessComplete(); // this can wait thread
             for (Location location : LocationManager.instance().getLocationsByNameList()) {
                 if (location.isSwitchListEnabled() &&
-                        (!isChanged || isChanged && location.getStatus().equals(Location.MODIFIED))) {
+                        (!isChanged || (isChanged && location.getStatus().equals(Location.MODIFIED)))) {
                     // also build the regular switch lists so they can be used
                     if (!Setup.isSwitchListRealTime()) {
                         trainSwitchLists.buildSwitchList(location);

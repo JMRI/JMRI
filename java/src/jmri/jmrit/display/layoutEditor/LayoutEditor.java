@@ -78,6 +78,7 @@ import jmri.jmrit.display.SignalMastIcon;
 import jmri.jmrit.display.ToolTip;
 import jmri.util.JmriJFrame;
 import jmri.util.SystemType;
+import jmri.util.ColorUtil;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -439,7 +440,7 @@ public class LayoutEditor extends jmri.jmrit.display.panelEditor.PanelEditor imp
         jmri.configurexml.StoreXmlUserAction store = new jmri.configurexml.StoreXmlUserAction(rbx.getString("MenuItemStore"));
         if (SystemType.isMacOSX())
             store.putValue(store.ACCELERATOR_KEY, KeyStroke.getKeyStroke(
-                    stringsToVTCodes.get(rbx.getString("MenuItemStoreAccelerator")), ActionEvent.CTRL_MASK));
+                    stringsToVTCodes.get(rbx.getString("MenuItemStoreAccelerator")), ActionEvent.META_MASK));
         else
             store.putValue(store.ACCELERATOR_KEY, KeyStroke.getKeyStroke(
                     stringsToVTCodes.get(rbx.getString("MenuItemStoreAccelerator")), ActionEvent.CTRL_MASK));
@@ -1000,12 +1001,13 @@ public class LayoutEditor extends jmri.jmrit.display.panelEditor.PanelEditor imp
         editModeItem = new JCheckBoxMenuItem(rb.getString("EditMode"));
         optionMenu.add(editModeItem);
         editModeItem.setMnemonic(stringsToVTCodes.get(rb.getString("EditModeMnemonic")));
-        if (SystemType.isMacOSX())
+        if (SystemType.isMacOSX()) {
             editModeItem.setAccelerator(KeyStroke.getKeyStroke(
                     stringsToVTCodes.get(rb.getString("EditModeAccelerator")), ActionEvent.META_MASK));
-        else
+        } else {
             editModeItem.setAccelerator(KeyStroke.getKeyStroke(
                     stringsToVTCodes.get(rb.getString("EditModeAccelerator")), ActionEvent.CTRL_MASK));
+        }
         editModeItem.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent event) {
                 setAllEditable(editModeItem.isSelected());
@@ -1062,12 +1064,13 @@ public class LayoutEditor extends jmri.jmrit.display.panelEditor.PanelEditor imp
         showHelpItem.setSelected(showHelpBar);
         // show grid item
         showGridItem = new JCheckBoxMenuItem(rb.getString("ShowEditGrid"));
-        if (SystemType.isMacOSX())
+        if (SystemType.isMacOSX()) {
             showGridItem.setAccelerator(KeyStroke.getKeyStroke(stringsToVTCodes.get(
-                        rb.getString("ShowEditGridAccelerator")), ActionEvent.META_MASK)); 
-        else
+                        rb.getString("ShowEditGridAccelerator")), ActionEvent.META_MASK));
+        } else {
             showGridItem.setAccelerator(KeyStroke.getKeyStroke(stringsToVTCodes.get(
-                        rb.getString("ShowEditGridAccelerator")), ActionEvent.CTRL_MASK)); 
+                        rb.getString("ShowEditGridAccelerator")), ActionEvent.CTRL_MASK));
+        }
         optionMenu.add(showGridItem);
         showGridItem.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent event) {
@@ -1078,12 +1081,13 @@ public class LayoutEditor extends jmri.jmrit.display.panelEditor.PanelEditor imp
         showGridItem.setSelected(drawGrid);
         // snap to grid on add item
         snapToGridOnAddItem = new JCheckBoxMenuItem(rb.getString("SnapToGridOnAdd"));
-        if (SystemType.isMacOSX())
+        if (SystemType.isMacOSX()) {
             snapToGridOnAddItem.setAccelerator(KeyStroke.getKeyStroke(stringsToVTCodes.get(
-                        rb.getString("SnapToGridOnAddAccelerator")), ActionEvent.META_MASK | ActionEvent.SHIFT_MASK)); 
-        else
+                        rb.getString("SnapToGridOnAddAccelerator")), ActionEvent.META_MASK | ActionEvent.SHIFT_MASK));
+        } else {
             snapToGridOnAddItem.setAccelerator(KeyStroke.getKeyStroke(stringsToVTCodes.get(
-                        rb.getString("SnapToGridOnAddAccelerator")), ActionEvent.CTRL_MASK | ActionEvent.SHIFT_MASK)); 
+                        rb.getString("SnapToGridOnAddAccelerator")), ActionEvent.CTRL_MASK | ActionEvent.SHIFT_MASK));
+        }
         optionMenu.add(snapToGridOnAddItem);
         snapToGridOnAddItem.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent event) {
@@ -1094,12 +1098,13 @@ public class LayoutEditor extends jmri.jmrit.display.panelEditor.PanelEditor imp
         snapToGridOnAddItem.setSelected(snapToGridOnAdd);
         // snap to grid on move item
         snapToGridOnMoveItem = new JCheckBoxMenuItem(rb.getString("SnapToGridOnMove"));
-        if (SystemType.isMacOSX())
+        if (SystemType.isMacOSX()) {
             snapToGridOnMoveItem.setAccelerator(KeyStroke.getKeyStroke(stringsToVTCodes.get(
-                        rb.getString("SnapToGridOnMoveAccelerator")), ActionEvent.META_MASK | ActionEvent.SHIFT_MASK)); 
-        else
+                        rb.getString("SnapToGridOnMoveAccelerator")), ActionEvent.META_MASK | ActionEvent.SHIFT_MASK));
+        } else {
             snapToGridOnMoveItem.setAccelerator(KeyStroke.getKeyStroke(stringsToVTCodes.get(
-                        rb.getString("SnapToGridOnMoveAccelerator")), ActionEvent.CTRL_MASK | ActionEvent.SHIFT_MASK)); 
+                        rb.getString("SnapToGridOnMoveAccelerator")), ActionEvent.CTRL_MASK | ActionEvent.SHIFT_MASK));
+        }
         optionMenu.add(snapToGridOnMoveItem);
         snapToGridOnMoveItem.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent event) {
@@ -1534,12 +1539,13 @@ public class LayoutEditor extends jmri.jmrit.display.panelEditor.PanelEditor imp
         
         JMenuItem zoomInItem = new JMenuItem(rb.getString("ZoomIn"));
         zoomInItem.setMnemonic(stringsToVTCodes.get(rb.getString("zoomOutMnemonic")));
-        if (SystemType.isMacOSX())
+        if (SystemType.isMacOSX()) {
             zoomInItem.setAccelerator(KeyStroke.getKeyStroke(stringsToVTCodes.get(
                     rb.getString("zoomInAccelerator")), ActionEvent.META_MASK));
-        else
+        } else {
             zoomInItem.setAccelerator(KeyStroke.getKeyStroke(stringsToVTCodes.get(
-                    rb.getString("zoomInAccelerator")), ActionEvent.CTRL_MASK));       
+                    rb.getString("zoomInAccelerator")), ActionEvent.CTRL_MASK));
+        }
         zoomMenu.add(zoomInItem);
         zoomInItem.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent event) {
@@ -1566,12 +1572,13 @@ public class LayoutEditor extends jmri.jmrit.display.panelEditor.PanelEditor imp
         });
         JMenuItem zoomOutItem = new JMenuItem(rb.getString("ZoomOut"));
         zoomOutItem.setMnemonic(stringsToVTCodes.get(rb.getString("zoomOutMnemonic")));
-        if (SystemType.isMacOSX())
+        if (SystemType.isMacOSX()) {
             zoomOutItem.setAccelerator(KeyStroke.getKeyStroke(stringsToVTCodes.get(
                     rb.getString("zoomOutAccelerator")), ActionEvent.META_MASK));
-        else
+        } else {
             zoomOutItem.setAccelerator(KeyStroke.getKeyStroke(stringsToVTCodes.get(
-                    rb.getString("zoomOutAccelerator")), ActionEvent.CTRL_MASK));       
+                    rb.getString("zoomOutAccelerator")), ActionEvent.CTRL_MASK));
+        }
         zoomMenu.add(zoomOutItem);
         zoomOutItem.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent event) {
@@ -7702,23 +7709,23 @@ public class LayoutEditor extends jmri.jmrit.display.panelEditor.PanelEditor imp
     }
 
     public String getDefaultTrackColor() {
-        return colorToString(defaultTrackColor);
+        return ColorUtil.colorToString(defaultTrackColor);
     }
 
     public String getDefaultOccupiedTrackColor() {
-        return colorToString(defaultOccupiedTrackColor);
+        return ColorUtil.colorToString(defaultOccupiedTrackColor);
     }
 
     public String getDefaultAlternativeTrackColor() {
-        return colorToString(defaultAlternativeTrackColor);
+        return ColorUtil.colorToString(defaultAlternativeTrackColor);
     }
 
     public String getDefaultTextColor() {
-        return colorToString(defaultTextColor);
+        return ColorUtil.colorToString(defaultTextColor);
     }
 
     public String getTurnoutCircleColor() {
-        return colorToString(turnoutCircleColor);
+        return ColorUtil.colorToString(turnoutCircleColor);
     }
 
     public int getTurnoutCircleSize() {
@@ -7791,22 +7798,22 @@ public class LayoutEditor extends jmri.jmrit.display.panelEditor.PanelEditor imp
     }
 
     public void setDefaultTrackColor(String color) {
-        defaultTrackColor = stringToColor(color);
+        defaultTrackColor = ColorUtil.stringToColor(color);
         setOptionMenuTrackColor();
     }
 
     public void setDefaultOccupiedTrackColor(String color) {
-        defaultOccupiedTrackColor = stringToColor(color);
+        defaultOccupiedTrackColor = ColorUtil.stringToColor(color);
         setOptionMenuTrackColor();
     }
 
     public void setDefaultAlternativeTrackColor(String color) {
-        defaultAlternativeTrackColor = stringToColor(color);
+        defaultAlternativeTrackColor = ColorUtil.stringToColor(color);
         setOptionMenuTrackColor();
     }
 
     public void setTurnoutCircleColor(String color) {
-        turnoutCircleColor = stringToColor(color);
+        turnoutCircleColor = ColorUtil.stringToColor(color);
         setOptionMenuTurnoutCircleColor();
     }
 
@@ -7823,12 +7830,12 @@ public class LayoutEditor extends jmri.jmrit.display.panelEditor.PanelEditor imp
     }
 
     public void setDefaultTextColor(String color) {
-        defaultTextColor = stringToColor(color);
+        defaultTextColor = ColorUtil.stringToColor(color);
         setOptionMenuTextColor();
     }
 
     public void setDefaultBackgroundColor(String color) {
-        defaultBackgroundColor = stringToColor(color);
+        defaultBackgroundColor = ColorUtil.stringToColor(color);
         setOptionMenuBackgroundColor();
     }
 
@@ -8034,75 +8041,6 @@ public class LayoutEditor extends jmri.jmrit.display.panelEditor.PanelEditor imp
         log.debug("Initializing Block Connectivity for " + layoutName);
         // reset the panel changed bit
         resetDirty();
-    }
-
-    // utility routines
-    public static String colorToString(Color color) {
-        if (color == null) {
-            return "track";
-        } else if (color.equals(Color.black)) {
-            return "black";
-        } else if (color.equals(Color.darkGray)) {
-            return "darkGray";
-        } else if (color.equals(Color.gray)) {
-            return "gray";
-        } else if (color.equals(Color.lightGray)) {
-            return "lightGray";
-        } else if (color.equals(Color.white)) {
-            return "white";
-        } else if (color.equals(Color.red)) {
-            return "red";
-        } else if (color.equals(Color.pink)) {
-            return "pink";
-        } else if (color.equals(Color.orange)) {
-            return "orange";
-        } else if (color.equals(Color.yellow)) {
-            return "yellow";
-        } else if (color.equals(Color.green)) {
-            return "green";
-        } else if (color.equals(Color.blue)) {
-            return "blue";
-        } else if (color.equals(Color.magenta)) {
-            return "magenta";
-        } else if (color.equals(Color.cyan)) {
-            return "cyan";
-        }
-        log.error("unknown color sent to colorToString");
-        return "black";
-    }
-
-    public static Color stringToColor(String string) {
-        if (string.equals("black")) {
-            return Color.black;
-        } else if (string.equals("darkGray")) {
-            return Color.darkGray;
-        } else if (string.equals("gray")) {
-            return Color.gray;
-        } else if (string.equals("lightGray")) {
-            return Color.lightGray;
-        } else if (string.equals("white")) {
-            return Color.white;
-        } else if (string.equals("red")) {
-            return Color.red;
-        } else if (string.equals("pink")) {
-            return Color.pink;
-        } else if (string.equals("orange")) {
-            return Color.orange;
-        } else if (string.equals("yellow")) {
-            return Color.yellow;
-        } else if (string.equals("green")) {
-            return Color.green;
-        } else if (string.equals("blue")) {
-            return Color.blue;
-        } else if (string.equals("magenta")) {
-            return Color.magenta;
-        } else if (string.equals("cyan")) {
-            return Color.cyan;
-        } else if (string.equals("track")) {
-            return null;
-        }
-        log.error("unknown color text '" + string + "' sent to stringToColor");
-        return Color.black;
     }
 
     /**

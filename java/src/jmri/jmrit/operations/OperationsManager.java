@@ -62,7 +62,7 @@ public final class OperationsManager {
      *
      * @return The OperationsManager default instance.
      */
-    public static OperationsManager getInstance() {
+    public synchronized static OperationsManager getInstance() {
         if (instance == null) {
             instance = new OperationsManager();
         }

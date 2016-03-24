@@ -33,7 +33,7 @@ import org.slf4j.LoggerFactory;
  * @author Dan Boudreau Copyright (C) 2008, 2012
  * @version $Revision$
  */
-@edu.umd.cs.findbugs.annotations.SuppressFBWarnings(value = "BC_UNCONFIRMED_CAST_OF_RETURN_VALUE")
+@edu.umd.cs.findbugs.annotations.SuppressFBWarnings(value = "BC_UNCONFIRMED_CAST_OF_RETURN_VALUE", justification = "cast is consistent OperationsPanel")
 public class OperationsFrame extends JmriJFrame implements AncestorListener {
 
     public static final String NEW_LINE = "\n"; // NOI18N

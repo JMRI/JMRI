@@ -47,7 +47,7 @@ public class EngineManager extends RollingStockManager {
             // create manager to load engines and their attributes
             EngineManagerXml.instance();
         }
-        if (Control.showInstance) {
+        if (Control.SHOW_INSTANCE) {
             log.debug("EngineManager returns instance {}", _instance);
         }
         return _instance;
