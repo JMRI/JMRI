@@ -25,33 +25,41 @@
 	turnouts are closed or thrown, or whether a block is occupied. The "action" 
 	part of the Conditional specifies what action is to be taken if the state of 
 	the logical expression changes.</p>
-	<p> The Logix Table lists all currently defined Logix by their system name 
-	and user name. The last column of the table provides three things you can do 
-        with a Logix; Edit it, Duplicate it, or Delete it.  Simply clicking <b>Select</b>
-        will drop down a menu with the choices: <b>Edit</b>, <b>Copy</b>, <b>Delete</b>
-        Selecting <b>Edit</b> will bring up the Edit Logix window which provides away 
-        to edit a Logix and its Conditionals.  See <a href="LogixAddEdit.shtml">the 
-        help page on adding Logix</a> for more information
-        on creating and editing Logix Conditionals.  Selecting <b>Copy</b>
-        will bring up windows that allow you to make a new copy of Logix and its 
-        Conditionals or to copy its Conditionals into an existing Logix.  Selecting 
-        <b>Delete</b> will delete the Logix and its Conditionals.</p>
+	<p> The Logix Table lists all currently defined Logix by their System Name 
+	and User Name.</p>
+	
+	<h2>Columns in the Logix Table</h2>
+	<p>The last column of the table provides three things you can do 
+	with a Logix; Edit it, Duplicate it, or Delete it.  Simply clicking <b>Select</b>
+	will drop down a menu with the choices: <b>Edit</b>, <b>Copy</b>, <b>Delete</b>.
+	Selecting <b>Edit</b> will bring up the Edit Logix window which provides away 
+	to edit a Logix and its Conditionals.  See <a href="LogixAddEdit.shtml">the 
+	help page on adding Logix</a> for more information
+	on creating and editing Logix Conditionals.<br>
+	Selecting <b>Copy</b>
+	will bring up windows that allow you to make a new copy of Logix and its 
+	Conditionals or to copy its Conditionals into an existing Logix.<br>
+	Selecting 
+	<b>Delete</b> will delete the Logix and its Conditionals.</p>
 	<p>The <b>Enabled</b> column allows you to enable (checked) or disable 
 	(unchecked) a Logix. A Logix does not have a state as many JMRI entities do.  
 	A Logix does have the capability of being "enabled" or "disabled". When a Logix 
 	is not enabled, the logical expressions of its Conditionals are still evaluated,
 	but the actions specified in the Conditionals are not taken. When a Logix is 
 	enabled after having been disabled, its Conditionals are recalculated and 
-	appropriate actions taken.</p>  
-	<p>To create a new Logix, click the <b>Add</b> button at the bottom of the Logix 
-	Table. This will bring up a Create Logix window.  Entering a system name
-	and a user name, then clicking <b>Create Logix</b>, will create the Logix, and 
-	bring up the Edit Logix window. Once a Logix is created, its system name cannot 
-	be changed. Its user name, however, may be changed in either the Logix Table or 
-	the Edit Logix window. A new user name may be any useful text, provided the new 
-	user name was not previously assigned to another Logix.
+	appropriate actions taken.</p>
+	
+	<h2>Creating a Logix</h2>
+	<p>To create a new Logix, click the <b>Add...</b> button at the bottom of the Logix 
+	Table. This will bring up a "Create Logix" pane.  Entering a System Name
+	and optionally a User Name, then clicking <b>Create Logix</b>, will create the Logix, and 
+	bring up the Edit Logix window. Once a Logix is created, its System Name cannot 
+	be changed. Its User Name, however, may be changed in either the Logix Table or 
+	the Edit Logix window. A new User Name may be any useful text, provided the new 
+	User Name was not already assigned to another Logix.
 	(See also the 
-	<a href="LogixAddEdit.shtml">separate help page on adding Logix</a>)</p>
+	<a href="LogixAddEdit.shtml">separate help page on adding Logix</a> and a 
+	<a href="../../../../html/tools/Logix.shtml#start">step-by-step guide</a>.)</p>
 	<p>The <b>File</b> menu at the top of the Logix Table provides for printing this 
 	table and for storing the Logixs and their Conditionals in a layout 
 	configuration file.  Selecting either store option will bring up a dialog for
