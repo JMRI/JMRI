@@ -1,4 +1,3 @@
-// Llnmon.java
 package jmri.jmrix.loconet.locomon;
 
 import java.util.Locale;
@@ -42,7 +41,6 @@ import jmri.util.StringUtil;
  * <P>
  * @author Bob Jacobsen Copyright 2001, 2002, 2003
  * @author B. Milhaupt  Copyright 2015
- * @version $Revision$
  */
 public class Llnmon {
 
@@ -3454,5 +3452,3 @@ public class Llnmon {
     }
 
 }  // end of public class Llnmon
-
-/* @(#)Llnmon.java */
