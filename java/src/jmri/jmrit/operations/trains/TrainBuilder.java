@@ -2016,13 +2016,21 @@ public class TrainBuilder extends TrainCommon {
                 if (routeIndex == 0 && _departStageTrack != null) {
                     _reqNumOfMoves = 0; // Move cars out of staging after working other locations
                     // if leaving and returning to staging on the same track temporary pull cars off the track
-                    if (_departStageTrack == _terminateStageTrack && !_train.isAllowReturnToStagingEnabled()
-                            && !Setup.isAllowReturnToStagingEnabled()) {
-                        for (RollingStock rs : carManager.getList()) {
-                            // don't remove caboose or car with FRED already assigned to train
-                            if (rs.getTrack() == _departStageTrack && rs.getRouteDestination() == null) {
-                                rs.setLocation(rs.getLocation(), null); // takes care of cars in a kernel
+                    if (_departStageTrack == _terminateStageTrack) {
+                        if (!_train.isAllowReturnToStagingEnabled() && !Setup.isAllowReturnToStagingEnabled()) {
+                            for (RollingStock rs : carManager.getList()) {
+                                // don't remove caboose or car with FRED already assigned to train
+                                if (rs.getTrack() == _departStageTrack && rs.getRouteDestination() == null) {
+                                    rs.setLocation(rs.getLocation(), null); // takes care of cars in a kernel
+                                }
                             }
+                        } else {
+                            // since all cars can return to staging, the track space is consumed for now
+                            addLine(_buildReport, THREE, BLANK_LINE);
+                            addLine(_buildReport, THREE, MessageFormat
+                                    .format(Bundle.getMessage("buildWarnDepartStaging"), new Object[]{_departStageTrack
+                                            .getLocation().getName(), _departStageTrack.getName()}));
+                            addLine(_buildReport, THREE, BLANK_LINE);
                         }
                     }
                     addLine(_buildReport, THREE, MessageFormat.format(
