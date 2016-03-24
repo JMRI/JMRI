@@ -159,27 +159,27 @@ public class TurnoutTableAction extends AbstractTableAction {
                 if (col == INVERTCOL) {
                     return Bundle.getMessage("Inverted");
                 } else if (col == LOCKCOL) {
-                    return "Locked";
+                    return Bundle.getMessage("Locked");
                 } else if (col == KNOWNCOL) {
-                    return "Feedback";
+                    return Bundle.getMessage("Feedback");
                 } else if (col == MODECOL) {
-                    return "Mode";
+                    return Bundle.getMessage("ModeLabel");
                 } else if (col == SENSOR1COL) {
-                    return "Sensor 1";
+                    return Bundle.getMessage("BlockSensor") + "1";
                 } else if (col == SENSOR2COL) {
-                    return "Sensor 2";
+                    return Bundle.getMessage("BlockSensor") + "2";
                 } else if (col == OPSONOFFCOL) {
-                    return "Automate";
+                    return Bundle.getMessage("TurnoutAutomationMenu");
                 } else if (col == OPSEDITCOL) {
                     return "";
                 } else if (col == LOCKOPRCOL) {
-                    return "Lock Mode";
+                    return Bundle.getMessage("LockMode");
                 } else if (col == LOCKDECCOL) {
-                    return "Decoder";
+                    return Bundle.getMessage("Decoder");
                 } else if (col == DIVERGCOL) {
-                    return "Thrown Speed";
+                    return Bundle.getMessage("ThrownSpeed");
                 } else if (col == STRAIGHTCOL) {
-                    return "Closed Speed";
+                    return Bundle.getMessage("ClosedSpeed");
                 } else if (col == VALUECOL) {
                     return "Cmd";  // override default title
                 } else if (col == EDITCOL) {
@@ -745,7 +745,7 @@ public class TurnoutTableAction extends AbstractTableAction {
     JComboBox<String> prefixBox = new JComboBox<String>();
     JTextField numberToAdd = new JTextField(5);
     JCheckBox range = new JCheckBox(Bundle.getMessage("AddRangeBox"));
-    JLabel sysNameLabel = new JLabel(Bundle.getMessage("LightHardwareAddress"));
+    JLabel sysNameLabel = new JLabel(Bundle.getMessage("LabelHardwareAddress"));
     JLabel userNameLabel = new JLabel(Bundle.getMessage("LabelUserName"));
     String systemSelectionCombo = this.getClass().getName() + ".SystemSelected";
     String userNameError = this.getClass().getName() + ".DuplicateUserName";
@@ -984,10 +984,10 @@ public class TurnoutTableAction extends AbstractTableAction {
                 Box outerBox = Box.createVerticalBox();
                 outerBox.add(config);
                 Box buttonBox = Box.createHorizontalBox();
-                JButton nameButton = new JButton("Give name to this setting"); // I18N TODO
+                JButton nameButton = new JButton(Bundle.getMessage("NameSetting"));
                 nameButton.addActionListener(new ActionListener() {
                     public void actionPerformed(ActionEvent e) {
-                        String newName = JOptionPane.showInputDialog("New name for this parameter setting:"); // I18N TODO
+                        String newName = JOptionPane.showInputDialog(Bundle.getMessage("NameParameterSetting"));
                         if (newName != null && !newName.equals("")) {
                             if (!myOp.rename(newName)) {
                                 JOptionPane.showMessageDialog(self, "This name is already in use",
@@ -1030,18 +1030,18 @@ public class TurnoutTableAction extends AbstractTableAction {
         }
 
         private void setTitle() {
-            String title = "Turnout Operation \"" + myOp.getName() + "\""; // I18N TODO
+            String title = Bundle.getMessage("TurnoutOperationTitle") + " \"" + myOp.getName() + "\"";
             if (myOp.isNonce()) {
-                title = "Turnout operation for turnout " + myTurnout.getSystemName();
+                title = Bundle.getMessage("TurnoutOperationForTurnout") + " " + myTurnout.getSystemName();
             }
             setTitle(title);
         }
     }
 
-    JCheckBox showFeedbackBox = new JCheckBox("Show Feedback information"); //I18N TODO
-    JCheckBox showLockBox = new JCheckBox("Show Lock information");
-    JCheckBox showTurnoutSpeedBox = new JCheckBox("Show Turnout Speed details");
-    JCheckBox doAutomationBox = new JCheckBox("Automatic retry");
+    JCheckBox showFeedbackBox = new JCheckBox(Bundle.getMessage("ShowFeedbackInfo"));
+    JCheckBox showLockBox = new JCheckBox(Bundle.getMessage("ShowLockInfo"));
+    JCheckBox showTurnoutSpeedBox = new JCheckBox(Bundle.getMessage("ShowTurnoutSpeedDetails"));
+    JCheckBox doAutomationBox = new JCheckBox(Bundle.getMessage("AutomaticRetry"));
 
     protected void setDefaultSpeeds(JFrame _who) {
         JComboBox<String> thrownCombo = new JComboBox<String>(speedListThrown);
@@ -1050,11 +1050,11 @@ public class TurnoutTableAction extends AbstractTableAction {
         closedCombo.setEditable(true);
 
         JPanel thrown = new JPanel();
-        thrown.add(new JLabel("Thrown Speed")); // I18N TODO
+        thrown.add(new JLabel(Bundle.getMessage("ThrownSpeed")));
         thrown.add(thrownCombo);
 
         JPanel closed = new JPanel();
-        closed.add(new JLabel("Closed Speed")); // I18N TODO
+        closed.add(new JLabel(Bundle.getMessage("ClosedSpeed")));
         closed.add(closedCombo);
 
         thrownCombo.removeItem(defaultThrownSpeedText);
@@ -1247,7 +1247,7 @@ public class TurnoutTableAction extends AbstractTableAction {
             } catch (NumberFormatException ex) {
                 log.error("Unable to convert " + numberToAdd.getText() + " to a number");
                 jmri.InstanceManager.getDefault(jmri.UserPreferencesManager.class).
-                        showErrorMessage("Error", "Number to turnouts to Add must be a number!", "" + ex, "", true, false); // I18N TODO
+                        showErrorMessage("Error", "Number of turnouts to Add must be a number!", "" + ex, "", true, false); // I18N TODO
                 return;
             }
         }

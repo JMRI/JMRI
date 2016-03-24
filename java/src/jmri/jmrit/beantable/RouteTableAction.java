@@ -118,10 +118,10 @@ public class RouteTableAction extends AbstractTableAction {
                     return "";    // no heading on "Edit"
                 }
                 if (col == ENABLECOL) {
-                    return "Enabled";
+                    return Bundle.getMessage("ColumnHeadEnabled");
                 }
                 if (col == LOCKCOL) {
-                    return "Locked";
+                    return Bundle.getMessage("Locked");
                 } else {
                     return super.getColumnName(col);
                 }
@@ -176,7 +176,7 @@ public class RouteTableAction extends AbstractTableAction {
 
             public Object getValueAt(int row, int col) {
                 if (col == SETCOL) {
-                    return "Edit";
+                    return Bundle.getMessage("ButtonEdit");
                 } else if (col == ENABLECOL) {
                     return Boolean.valueOf(((Route) getBySystemName((String) getValueAt(row, SYSNAMECOL))).getEnabled());
                 } else if (col == LOCKCOL) {
