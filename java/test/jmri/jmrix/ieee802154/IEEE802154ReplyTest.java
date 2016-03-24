@@ -15,19 +15,8 @@ import junit.framework.TestSuite;
 public class IEEE802154ReplyTest extends TestCase {
 
     public void testCtor() {
-        IEEE802154TrafficController tc = new IEEE802154TrafficController(){
-           public IEEE802154Node newNode(){
-             return null;
-           }
-
-           public jmri.jmrix.AbstractMRReply newReply(){
-             return null;
-           }
-        };
-        IEEE802154Reply m = new IEEE802154Reply(tc);
+        IEEE802154Reply m = new IEEE802154Reply();
         Assert.assertNotNull(m);
-        
-        jmri.util.JUnitAppender.assertErrorMessage("Deprecated Method setInstance called");
     }
 
     // from here down is testing infrastructure

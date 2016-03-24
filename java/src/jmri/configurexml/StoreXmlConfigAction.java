@@ -75,8 +75,8 @@ public class StoreXmlConfigAction extends LoadStoreBaseAction {
         // check for possible overwrite
         if (file.exists()) {
             int selectedValue = JOptionPane.showConfirmDialog(null,
-                    "File " + file.getName() + " already exists, overwrite it?",
-                    "Overwrite file?",
+                    rb.getString("FileOverwriteWarning1") + " " + file.getName() + " " + rb.getString("FileOverwriteWarning2"),
+                    rb.getString("OverwriteFile"),
                     JOptionPane.OK_CANCEL_OPTION); // I18N TODO
             if (selectedValue != JOptionPane.OK_OPTION) {
                 return null;

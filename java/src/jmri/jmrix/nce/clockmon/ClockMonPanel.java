@@ -494,16 +494,14 @@ public class ClockMonPanel extends jmri.jmrix.nce.swing.NcePanel implements NceP
         // Create a Timebase listener for the Minute change events
         internalClock = InstanceManager.timebaseInstance();
         if (internalClock == null) {
-            log.error("No Timebase Instance");
+            log.error("No Timebase Instance; clock will not run");
+            return;
         }
         minuteChangeListener = new java.beans.PropertyChangeListener() {
             public void propertyChange(java.beans.PropertyChangeEvent e) {
                 newInternalMinute();
             }
         };
-        if (minuteChangeListener == null) {
-            log.error("No minuteChangeListener");
-        }
         internalClock.addMinuteChangeListener(minuteChangeListener);
 
         // start display alarm timer

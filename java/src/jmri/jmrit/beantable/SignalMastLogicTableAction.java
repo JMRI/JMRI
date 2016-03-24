@@ -270,9 +270,9 @@ public class SignalMastLogicTableAction extends AbstractTableAction {
                     case COMCOL:
                         return Bundle.getMessage("Comment");
                     case DELCOL:
-                        return Bundle.getMessage("ButtonDelete");
+                        return ""; // override default, no title for Delete column
                     case EDITLOGICCOL:
-                        return Bundle.getMessage("ButtonEdit");
+                        return ""; // override default, no title for Edit column
                     case ENABLECOL:
                         return Bundle.getMessage("ColumnHeadEnabled");
                     default:

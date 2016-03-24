@@ -112,7 +112,7 @@ public class MemoryTableAction extends AbstractTableAction {
 
             public String getColumnName(int col) {
                 if (col == VALUECOL) {
-                    return "Value";
+                    return Bundle.getMessage("BlockValue");
                 }
                 return super.getColumnName(col);
             }
