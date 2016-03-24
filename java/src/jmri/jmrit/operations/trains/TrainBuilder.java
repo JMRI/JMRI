@@ -2026,10 +2026,11 @@ public class TrainBuilder extends TrainCommon {
                     // if leaving and returning to staging on the same track temporary pull cars off the track
                     if (_departStageTrack == _terminateStageTrack) {
                         if (!_train.isAllowReturnToStagingEnabled() && !Setup.isAllowReturnToStagingEnabled()) {
+                            // takes care of cars in a kernel by getting all cars
                             for (RollingStock rs : carManager.getList()) {
                                 // don't remove caboose or car with FRED already assigned to train
                                 if (rs.getTrack() == _departStageTrack && rs.getRouteDestination() == null) {
-                                    rs.setLocation(rs.getLocation(), null); // takes care of cars in a kernel
+                                    rs.setLocation(rs.getLocation(), null);
                                 }
                             }
                         } else {
@@ -2050,10 +2051,10 @@ public class TrainBuilder extends TrainCommon {
                 // restore departure track for cars departing staging
                 for (Car car : _carList) {
                     if (car.getLocation() == _departStageTrack.getLocation() && car.getTrack() == null) {
-                        car.setLocation(_departStageTrack.getLocation(), _departStageTrack, true); // force
+                        car.setLocation(_departStageTrack.getLocation(), _departStageTrack, RollingStock.FORCE); // force
                         if (car.getKernel() != null) {
                             for (Car k : car.getKernel().getCars()) {
-                                k.setLocation(_departStageTrack.getLocation(), _departStageTrack, true); // force
+                                k.setLocation(_departStageTrack.getLocation(), _departStageTrack, RollingStock.FORCE); // force
                             }
                         }
                     }
