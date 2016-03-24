@@ -2011,7 +2011,7 @@ public class Llnmon {
                             String dst_subaddrx = (dst_h != 0x01 ? "" : ((d[4] != 0) ? "/" + Integer.toHexString(d[4]) : ""));
 
                             String src_dev = ((src == 0x50) ? "Locobuffer" : "LocoIO@" + "0x" + Integer.toHexString(src) + src_subaddrx);
-                            String dst_dev = (((dst_h == 0x01) && (dst_l == 0x50)) ? "LocoBuffer "
+                            String dst_dev = ((dst_l == 0x50) ? "LocoBuffer "   // dst_h == 1 known to be true
                                     : (((dst_h == 0x01) && (dst_l == 0x0)) ? "broadcast"
                                             : "LocoIO@0x" + Integer.toHexString(dst_l) + dst_subaddrx));
                             String operation = (src == 0x50)
