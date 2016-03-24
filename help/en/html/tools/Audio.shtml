@@ -33,7 +33,7 @@ they currently contain.<br>
 
 <h4>Audio Table controls</h4>
 <p>Below the Audio Table are two buttons, named "Add Source..." and "Add Buffer..." to 
-<a href="../../package/jmri/jmrit/beantable/AudioAddEdit.shtml">create new Audio object</a>.
+<a href="../../package/jmri/jmrit/beantable/AudioAddEdit.shtml">create new Audio objects</a>.
 
 <h2>Audio Objects</h2>
 The JMRI audio framework consists of three distinct types of object:
@@ -70,7 +70,7 @@ Positive 'z' values would be measured from layout level upwards.
 Unless modified by changing 'Meters per unit', 
 all distance and velocity units are measured in real-world meters.
 <p>
-Only one Audio Listener can exist.
+Only one Audio Listener can exist, and it is already present in the Audio Table where it may be configured by clicking its <b>Edit</b> button.
 
 <h4>Audio Buffers</h4>
 
