@@ -2027,7 +2027,9 @@ public class TrainBuilder extends TrainCommon {
                         } else {
                             // since all cars can return to staging, the track space is consumed for now
                             addLine(_buildReport, THREE, BLANK_LINE);
-                            addLine(_buildReport, THREE, Bundle.getMessage("buildWarnDepartStaging"));
+                            addLine(_buildReport, THREE, MessageFormat
+                                    .format(Bundle.getMessage("buildWarnDepartStaging"), new Object[]{_departStageTrack
+                                            .getLocation().getName(), _departStageTrack.getName()}));
                             addLine(_buildReport, THREE, BLANK_LINE);
                         }
                     }
