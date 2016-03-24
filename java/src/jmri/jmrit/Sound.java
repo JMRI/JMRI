@@ -28,7 +28,6 @@ import org.slf4j.LoggerFactory;
  *
  * @author	Bob Jacobsen Copyright (C) 2004, 2006
  * @author Dave Duchamp Copyright (C) 2011 - add streaming play of large files
- * @version	$Revision$
  */
 public class Sound {
 
@@ -131,7 +130,7 @@ public class Sound {
         DataLine.Info info = new DataLine.Info(SourceDataLine.class, format); // format is an AudioFormat object
         if (!AudioSystem.isLineSupported(info)) {
             // Handle the error.
-            log.error("line not supported: " + info);
+            log.warn("line not supported: " + info);
             return;
         }
         // Obtain and open the line.

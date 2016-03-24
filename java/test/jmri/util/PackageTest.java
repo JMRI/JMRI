@@ -57,6 +57,9 @@ public class PackageTest extends TestCase {
         suite.addTest(jmri.util.DateUtilTest.suite());
         suite.addTest(jmri.util.prefs.PackageTest.suite());
 
+        // deliberately at end
+        suite.addTest(jmri.util.Log4JErrorIsErrorTest.suite());
+        
         return suite;
     }
 
