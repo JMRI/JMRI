@@ -457,7 +457,7 @@ public abstract class BackupBase {
                 while ((len = source.read(buffer)) > 0) {
                     dest.write(buffer, 0, len);
                 }
-            } catch (Exception ex) {
+            } catch (IOException ex) {
                 if (source != null) {
                     source.close();
                 }
