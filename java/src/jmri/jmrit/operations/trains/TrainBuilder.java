@@ -87,7 +87,7 @@ public class TrainBuilder extends TrainCommon {
      * <ul>
      * <li>1. Need at least one location in route to build train
      * <li>2. Select only locos and cars the that train can service
-     * <li>3. Optional, train must depart with the required number of moves
+     * <li>3. Optional TODO, train must depart with the required number of moves
      * (cars)
      * <li>4. If required, add caboose or car with FRED to train
      * <li>5. When departing staging find a track matching train requirements
@@ -178,8 +178,14 @@ public class TrainBuilder extends TrainCommon {
             addLine(_buildReport, FIVE, Bundle.getMessage("BuildModeAggressive"));
             addLine(_buildReport, FIVE, MessageFormat.format(Bundle.getMessage("BuildNumberPasses"),
                     new Object[]{Setup.getNumberPasses()}));
+            if (Setup.isStagingTrackImmediatelyAvail() && _departLocation.isStaging()) {
+                addLine(_buildReport, FIVE, Bundle.getMessage("BuildStagingTrackAvail"));
+            }
         } else {
             addLine(_buildReport, FIVE, Bundle.getMessage("BuildModeNormal"));
+        }
+        if (Setup.isTrainIntoStagingCheckEnabled() && _terminateLocation.isStaging()) {
+            addLine(_buildReport, FIVE, Bundle.getMessage("buildOptionRestrictStaging"));
         }
         // warn if car routing is disabled
         if (!Setup.isCarRoutingEnabled()) {
@@ -1249,7 +1255,7 @@ public class TrainBuilder extends TrainCommon {
 
     /**
      * Find a caboose if needed at the correct location and add it to the train.
-     * If departing staging, any caboose found is added to the train. If there
+     * If departing staging, all cabooses are added to the train. If there
      * isn't a road name required for the caboose, tries to find a caboose with
      * the same road name as the lead engine.
      *
@@ -1962,7 +1968,9 @@ public class TrainBuilder extends TrainCommon {
 
     /**
      * Main routine to place cars into the train. Can be called multiple times,
-     * percent controls how many cars are placed in any given pass.
+     * percent controls how many cars are placed in any given pass. When departing
+     * staging, ignore those cars on the first pass unless the option to build normal
+     * was selected by user.
      * 
      * @param percent How much of the available moves should be used in this pass.
      * @param firstPass True if first pass, ignore cars in staging.
@@ -2009,20 +2017,28 @@ public class TrainBuilder extends TrainCommon {
             if (percent < 51 && remainder > 0) {
                 _reqNumOfMoves++;
             }
-            int saveReqMoves = _reqNumOfMoves; // save a copy for status message
+
             // multiple pass build?
             if (firstPass) {
                 // Departing staging?
                 if (routeIndex == 0 && _departStageTrack != null) {
                     _reqNumOfMoves = 0; // Move cars out of staging after working other locations
                     // if leaving and returning to staging on the same track temporary pull cars off the track
-                    if (_departStageTrack == _terminateStageTrack && !_train.isAllowReturnToStagingEnabled()
-                            && !Setup.isAllowReturnToStagingEnabled()) {
-                        for (RollingStock rs : carManager.getList()) {
-                            // don't remove caboose or car with FRED already assigned to train
-                            if (rs.getTrack() == _departStageTrack && rs.getRouteDestination() == null) {
-                                rs.setLocation(rs.getLocation(), null); // takes care of cars in a kernel
+                    if (_departStageTrack == _terminateStageTrack) {
+                        if (!_train.isAllowReturnToStagingEnabled() && !Setup.isAllowReturnToStagingEnabled()) {
+                            for (RollingStock rs : carManager.getList()) {
+                                // don't remove caboose or car with FRED already assigned to train
+                                if (rs.getTrack() == _departStageTrack && rs.getRouteDestination() == null) {
+                                    rs.setLocation(rs.getLocation(), null); // takes care of cars in a kernel
+                                }
                             }
+                        } else {
+                            // since all cars can return to staging, the track space is consumed for now
+                            addLine(_buildReport, THREE, BLANK_LINE);
+                            addLine(_buildReport, THREE, MessageFormat
+                                    .format(Bundle.getMessage("buildWarnDepartStaging"), new Object[]{_departStageTrack
+                                            .getLocation().getName(), _departStageTrack.getName()}));
+                            addLine(_buildReport, THREE, BLANK_LINE);
                         }
                     }
                     addLine(_buildReport, THREE, MessageFormat.format(
@@ -2043,6 +2059,8 @@ public class TrainBuilder extends TrainCommon {
                     }
                 }
             }
+            
+            int saveReqMoves = _reqNumOfMoves; // save a copy for status message
             addLine(_buildReport, ONE, MessageFormat.format(Bundle.getMessage("buildLocReqMoves"), new Object[]{
                     rl.getName(), rl.getId(), _reqNumOfMoves, rl.getMaxCarMoves() - rl.getCarMoves(),
                     rl.getMaxCarMoves()}));

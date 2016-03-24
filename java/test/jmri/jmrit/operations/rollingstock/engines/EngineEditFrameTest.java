@@ -26,8 +26,8 @@ public class EngineEditFrameTest  extends OperationsSwingTestCase {
     public void testEngineEditFrame() {
 
         EngineEditFrame f = new EngineEditFrame();
-        f.setTitle("Test Add Engine Frame");
         f.initComponents();
+        f.setTitle("Test Add Engine Frame");
 
         // add a new Engine
         f.roadComboBox.setSelectedItem("SP");
@@ -36,7 +36,7 @@ public class EngineEditFrameTest  extends OperationsSwingTestCase {
         f.builtTextField.setText("1999");
         f.ownerComboBox.setSelectedItem("Owner1");
         f.commentTextField.setText("test Engine comment field");
-        getHelper().enterClickAndLeave(new MouseEventData(this, f.saveButton));
+        getHelper().enterClickAndLeave(new MouseEventData(this, f.addButton));
 
         EngineManager cManager = EngineManager.instance();
         // should have 6 Engines
@@ -64,8 +64,8 @@ public class EngineEditFrameTest  extends OperationsSwingTestCase {
         Engine e1 = cManager.getByRoadAndNumber("NH", "1");
         EngineEditFrame f = new EngineEditFrame();
         f.initComponents();
-        f.setTitle("Test Edit Engine Frame");
         f.loadEngine(e1);
+        f.setTitle("Test Edit Engine Frame");
 
         Assert.assertEquals("Engine road", "NH", f.roadComboBox.getSelectedItem());
         Assert.assertEquals("Engine number", "1", f.roadNumberTextField.getText());

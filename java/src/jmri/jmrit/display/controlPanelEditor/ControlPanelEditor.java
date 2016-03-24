@@ -70,6 +70,7 @@ import jmri.jmrit.display.controlPanelEditor.shape.ShapeDrawer;
 import jmri.jmrit.display.palette.ItemPalette;
 import jmri.jmrit.logix.WarrantTableAction;
 import jmri.util.HelpUtil;
+import jmri.util.SystemType;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -209,14 +210,26 @@ public class ControlPanelEditor extends Editor implements DropTargetListener, Cl
                 _itemPalette.setVisible(true);
             }
         }.init(this));
-        mi.setAccelerator(KeyStroke.getKeyStroke(KeyEvent.VK_P, ActionEvent.CTRL_MASK));
+        if (SystemType.isMacOSX()) {
+            mi.setAccelerator(KeyStroke.getKeyStroke(KeyEvent.VK_P, ActionEvent.META_MASK));
+        } else {
+            mi.setAccelerator(KeyStroke.getKeyStroke(KeyEvent.VK_P, ActionEvent.CTRL_MASK));
+        }
         _iconMenu.add(mi);
         _iconMenu.add(new jmri.jmrit.beantable.OBlockTableAction(Bundle.getMessage("MenuItemOBlockTable")));
         mi = (JMenuItem) _iconMenu.getMenuComponent(1);
-        mi.setAccelerator(KeyStroke.getKeyStroke(KeyEvent.VK_B, ActionEvent.CTRL_MASK));
+        if (SystemType.isMacOSX()) {
+            mi.setAccelerator(KeyStroke.getKeyStroke(KeyEvent.VK_B, ActionEvent.META_MASK));
+        } else {
+            mi.setAccelerator(KeyStroke.getKeyStroke(KeyEvent.VK_B, ActionEvent.CTRL_MASK));
+        }
         _iconMenu.add(new jmri.jmrit.beantable.ListedTableAction(Bundle.getMessage("MenuItemTableList")));
         mi = (JMenuItem) _iconMenu.getMenuComponent(2);
-        mi.setAccelerator(KeyStroke.getKeyStroke(KeyEvent.VK_T, ActionEvent.CTRL_MASK));
+        if (SystemType.isMacOSX()) {
+            mi.setAccelerator(KeyStroke.getKeyStroke(KeyEvent.VK_T, ActionEvent.META_MASK));
+        } else {
+            mi.setAccelerator(KeyStroke.getKeyStroke(KeyEvent.VK_T, ActionEvent.CTRL_MASK));
+        }
     }
 
     protected void makeCircuitMenu(boolean edit) {
@@ -564,8 +577,13 @@ public class ControlPanelEditor extends Editor implements DropTargetListener, Cl
                 removeSelections(null);
             }
         });
-        menuItem.setAccelerator(
-                KeyStroke.getKeyStroke(KeyEvent.VK_X, ActionEvent.CTRL_MASK));
+        if (SystemType.isMacOSX()) {
+            menuItem.setAccelerator(
+                    KeyStroke.getKeyStroke(KeyEvent.VK_X, ActionEvent.META_MASK));
+        } else {
+            menuItem.setAccelerator(
+                    KeyStroke.getKeyStroke(KeyEvent.VK_X, ActionEvent.CTRL_MASK));
+        }
         menuItem.setMnemonic(KeyEvent.VK_T);
         _editMenu.add(menuItem);
 
@@ -576,8 +594,13 @@ public class ControlPanelEditor extends Editor implements DropTargetListener, Cl
                 copyToClipboard();
             }
         });
-        menuItem.setAccelerator(
-                KeyStroke.getKeyStroke(KeyEvent.VK_C, ActionEvent.CTRL_MASK));
+        if (SystemType.isMacOSX()) {
+            menuItem.setAccelerator(
+                    KeyStroke.getKeyStroke(KeyEvent.VK_C, ActionEvent.META_MASK));
+        } else {
+            menuItem.setAccelerator(
+                    KeyStroke.getKeyStroke(KeyEvent.VK_C, ActionEvent.CTRL_MASK));
+        }
         menuItem.setMnemonic(KeyEvent.VK_C);
         _editMenu.add(menuItem);
 
@@ -588,8 +611,13 @@ public class ControlPanelEditor extends Editor implements DropTargetListener, Cl
                 pasteFromClipboard();
             }
         });
-        menuItem.setAccelerator(
-                KeyStroke.getKeyStroke(KeyEvent.VK_V, ActionEvent.CTRL_MASK));
+        if (SystemType.isMacOSX()) {
+            menuItem.setAccelerator(
+                    KeyStroke.getKeyStroke(KeyEvent.VK_V, ActionEvent.META_MASK));
+        } else {
+            menuItem.setAccelerator(
+                    KeyStroke.getKeyStroke(KeyEvent.VK_V, ActionEvent.CTRL_MASK));
+        }
         menuItem.setMnemonic(KeyEvent.VK_P);
         _editMenu.add(menuItem);
 
@@ -604,8 +632,13 @@ public class ControlPanelEditor extends Editor implements DropTargetListener, Cl
                 _targetPanel.repaint();
             }
         });
-        menuItem.setAccelerator(
-                KeyStroke.getKeyStroke(KeyEvent.VK_A, ActionEvent.CTRL_MASK));
+        if (SystemType.isMacOSX()) {
+            menuItem.setAccelerator(
+                    KeyStroke.getKeyStroke(KeyEvent.VK_A, ActionEvent.META_MASK));
+        } else {
+            menuItem.setAccelerator(
+                    KeyStroke.getKeyStroke(KeyEvent.VK_A, ActionEvent.CTRL_MASK));
+        }
         _editMenu.add(menuItem);
     }
 
