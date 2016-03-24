@@ -280,6 +280,8 @@ public class Llnmon {
                     } else {
                         turnoutUserName = "()";
                     }
+                } catch (RuntimeException e) {
+                    throw e;
                 } catch (Exception e) {
                     turnoutUserName = "()";
                 }
