@@ -218,7 +218,7 @@ abstract public class IEEE802154TrafficController extends AbstractMRNodeTrafficC
         if(logDebug) {
            String s="";
            for( int i=0;i<ia.length;i++) {
-               jmri.util.StringUtil.appendTwoHexFromInt(ia[i],s);
+               s=jmri.util.StringUtil.appendTwoHexFromInt(ia[i],s);
            }
            log.debug("int array getNodeFromAddress called with " + s);
         }
