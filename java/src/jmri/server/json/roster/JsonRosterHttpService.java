@@ -7,8 +7,6 @@ import com.fasterxml.jackson.databind.node.ObjectNode;
 import java.util.Locale;
 import javax.annotation.Nonnull;
 import javax.servlet.http.HttpServletResponse;
-import static jmri.jmris.json.JSON.ROSTER_GROUP;
-import static jmri.jmris.json.JSON.ROSTER_GROUPS;
 import jmri.jmrit.roster.Roster;
 import jmri.jmrit.roster.RosterEntry;
 import static jmri.server.json.JSON.ADDRESS;
@@ -36,8 +34,6 @@ import static jmri.server.json.JSON.SHUNTING_FUNCTION;
 import static jmri.server.json.JSON.TYPE;
 import jmri.server.json.JsonException;
 import jmri.server.json.JsonHttpService;
-import static jmri.server.json.roster.JsonRosterServiceFactory.ROSTER;
-import static jmri.server.json.roster.JsonRosterServiceFactory.ROSTER_ENTRY;
 
 /**
  *
@@ -52,17 +48,17 @@ class JsonRosterHttpService extends JsonHttpService {
     @Override
     public JsonNode doGet(String type, String name, Locale locale) throws JsonException {
         switch (type) {
-            case ROSTER:
+            case JsonRoster.ROSTER:
                 ObjectNode node = this.mapper.createObjectNode();
                 if (name != null) {
                     node.put(GROUP, name);
                 }
                 return this.getRoster(locale, node);
-            case ROSTER_ENTRY:
+            case JsonRoster.ROSTER_ENTRY:
                 return this.getRosterEntry(locale, name);
-            case ROSTER_GROUP:
+            case JsonRoster.ROSTER_GROUP:
                 return this.getRosterGroup(locale, name);
-            case ROSTER_GROUPS:
+            case JsonRoster.ROSTER_GROUPS:
                 return this.getRosterGroups(locale);
             default:
                 throw new JsonException(HttpServletResponse.SC_INTERNAL_SERVER_ERROR, Bundle.getMessage(locale, "ErrorUnknownType", type));
@@ -72,13 +68,13 @@ class JsonRosterHttpService extends JsonHttpService {
     @Override
     public JsonNode doPost(String type, String name, JsonNode data, Locale locale) throws JsonException {
         switch (type) {
-            case ROSTER:
+            case JsonRoster.ROSTER:
                 break;
-            case ROSTER_ENTRY:
+            case JsonRoster.ROSTER_ENTRY:
                 break;
-            case ROSTER_GROUP:
+            case JsonRoster.ROSTER_GROUP:
                 break;
-            case ROSTER_GROUPS:
+            case JsonRoster.ROSTER_GROUPS:
                 break;
             default:
                 throw new JsonException(HttpServletResponse.SC_INTERNAL_SERVER_ERROR, Bundle.getMessage(locale, "ErrorUnknownType", type));
@@ -89,11 +85,11 @@ class JsonRosterHttpService extends JsonHttpService {
     @Override
     public JsonNode doGetList(String type, Locale locale) throws JsonException {
         switch (type) {
-            case ROSTER:
-            case ROSTER_ENTRY:
+            case JsonRoster.ROSTER:
+            case JsonRoster.ROSTER_ENTRY:
                 return this.getRoster(locale, this.mapper.createObjectNode());
-            case ROSTER_GROUP:
-            case ROSTER_GROUPS:
+            case JsonRoster.ROSTER_GROUP:
+            case JsonRoster.ROSTER_GROUPS:
                 return this.getRosterGroups(locale);
             default:
                 throw new JsonException(HttpServletResponse.SC_INTERNAL_SERVER_ERROR, Bundle.getMessage(locale, "ErrorUnknownType", type));
@@ -134,7 +130,7 @@ class JsonRosterHttpService extends JsonHttpService {
         try {
             return this.getRosterEntry(locale, Roster.getDefault().getEntryForId(id));
         } catch (NullPointerException ex) {
-            throw new JsonException(HttpServletResponse.SC_NOT_FOUND, Bundle.getMessage(locale, "ErrorNotFound", ROSTER_ENTRY, id));
+            throw new JsonException(HttpServletResponse.SC_NOT_FOUND, Bundle.getMessage(locale, "ErrorNotFound", JsonRoster.ROSTER_ENTRY, id));
         }
     }
 
@@ -151,7 +147,7 @@ class JsonRosterHttpService extends JsonHttpService {
      */
     public JsonNode getRosterEntry(Locale locale, @Nonnull RosterEntry entry) {
         ObjectNode root = this.mapper.createObjectNode();
-        root.put(TYPE, ROSTER_ENTRY);
+        root.put(TYPE, JsonRoster.ROSTER_ENTRY);
         ObjectNode data = root.putObject(DATA);
         data.put(NAME, entry.getId());
         data.put(ADDRESS, entry.getDccAddress());
@@ -164,8 +160,8 @@ class JsonRosterHttpService extends JsonHttpService {
         data.put(MODEL, entry.getModel());
         data.put(COMMENT, entry.getComment());
         data.put(MAX_SPD_PCT, Integer.toString(entry.getMaxSpeedPCT()));
-        data.put(IMAGE, (entry.getImagePath() != null) ? "/" + ROSTER + "/" + entry.getId() + "/" + IMAGE : null);
-        data.put(ICON, (entry.getIconPath() != null) ? "/" + ROSTER + "/" + entry.getId() + "/" + ICON : null);
+        data.put(IMAGE, (entry.getImagePath() != null) ? "/" + JsonRoster.ROSTER + "/" + entry.getId() + "/" + IMAGE : null);
+        data.put(ICON, (entry.getIconPath() != null) ? "/" + JsonRoster.ROSTER + "/" + entry.getId() + "/" + ICON : null);
         data.put(SHUNTING_FUNCTION, entry.getShuntingFunction());
         ArrayNode labels = data.putArray(FUNCTION_KEYS);
         for (int i = 0; i <= entry.getMAXFNNUM(); i++) {
@@ -173,11 +169,11 @@ class JsonRosterHttpService extends JsonHttpService {
             label.put(NAME, F + i);
             label.put(LABEL, entry.getFunctionLabel(i));
             label.put(LOCKABLE, entry.getFunctionLockable(i));
-            label.put(ICON, (entry.getFunctionImage(i) != null) ? "/" + ROSTER + "/" + entry.getId() + "/" + F + i + "/" + ICON : null);
-            label.put(SELECTED_ICON, (entry.getFunctionSelectedImage(i) != null) ? "/" + ROSTER + "/" + entry.getId() + "/" + F + i + "/" + SELECTED_ICON : null);
+            label.put(ICON, (entry.getFunctionImage(i) != null) ? "/" + JsonRoster.ROSTER + "/" + entry.getId() + "/" + F + i + "/" + ICON : null);
+            label.put(SELECTED_ICON, (entry.getFunctionSelectedImage(i) != null) ? "/" + JsonRoster.ROSTER + "/" + entry.getId() + "/" + F + i + "/" + SELECTED_ICON : null);
             labels.add(label);
         }
-        ArrayNode rga = data.putArray(ROSTER_GROUPS);
+        ArrayNode rga = data.putArray(JsonRoster.ROSTER_GROUPS);
         entry.getGroups().stream().forEach((group) -> {
             rga.add(group.getName());
         });
@@ -197,13 +193,13 @@ class JsonRosterHttpService extends JsonHttpService {
         int size = Roster.getDefault().getEntriesInGroup(name).size();
         if (size != 0) {
             ObjectNode root = mapper.createObjectNode();
-            root.put(TYPE, ROSTER_GROUP);
+            root.put(TYPE, JsonRoster.ROSTER_GROUP);
             ObjectNode data = root.putObject(DATA);
             data.put(NAME, (name.isEmpty()) ? Roster.AllEntries(locale) : name);
             data.put(LENGTH, size);
             return root;
         } else {
-            throw new JsonException(HttpServletResponse.SC_NOT_FOUND, Bundle.getMessage(locale, "ErrorNotFound", ROSTER_GROUP, name));
+            throw new JsonException(HttpServletResponse.SC_NOT_FOUND, Bundle.getMessage(locale, "ErrorNotFound", JsonRoster.ROSTER_GROUP, name));
         }
     }
 

@@ -12,26 +12,9 @@ import jmri.spi.JsonServiceFactory;
  */
 public class JsonRosterServiceFactory implements JsonServiceFactory {
 
-    /**
-     * {@value #ROSTER}
-     */
-    public static final String ROSTER = "roster"; // NOI18N
-    /**
-     * {@value #ROSTER_ENTRY}
-     */
-    public static final String ROSTER_ENTRY = "rosterEntry"; // NOI18N
-    /**
-     * {@value #ROSTER_GROUP}
-     */
-    public static final String ROSTER_GROUP = "rosterGroup"; // NOI18N
-    /**
-     * {@value #ROSTER_GROUPS}
-     */
-    public static final String ROSTER_GROUPS = "rosterGroups"; // NOI18N
-
     @Override
     public String[] getTypes() {
-        return new String[]{ROSTER, ROSTER_ENTRY, ROSTER_GROUPS, ROSTER_GROUP};
+        return new String[]{JsonRoster.ROSTER, JsonRoster.ROSTER_ENTRY, JsonRoster.ROSTER_GROUPS, JsonRoster.ROSTER_GROUP};
     }
 
     @Override

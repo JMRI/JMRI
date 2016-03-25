@@ -24,10 +24,6 @@ import static jmri.server.json.JSON.TYPE;
 import jmri.server.json.JsonConnection;
 import jmri.server.json.JsonException;
 import jmri.server.json.JsonSocketService;
-import static jmri.server.json.roster.JsonRosterServiceFactory.ROSTER;
-import static jmri.server.json.roster.JsonRosterServiceFactory.ROSTER_ENTRY;
-import static jmri.server.json.roster.JsonRosterServiceFactory.ROSTER_GROUP;
-import static jmri.server.json.roster.JsonRosterServiceFactory.ROSTER_GROUPS;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -71,16 +67,16 @@ public class JsonRosterSocketService extends JsonSocketService {
             case GET:
             default:
                 switch (type) {
-                    case ROSTER:
+                    case JsonRoster.ROSTER:
                         this.connection.sendMessage(this.service.getRoster(locale, data));
                         break;
-                    case ROSTER_ENTRY:
+                    case JsonRoster.ROSTER_ENTRY:
                         this.connection.sendMessage(this.service.getRosterEntry(locale, data.path(NAME).asText()));
                         break;
-                    case ROSTER_GROUP:
+                    case JsonRoster.ROSTER_GROUP:
                         this.connection.sendMessage(this.service.getRosterGroup(locale, data.path(NAME).asText()));
                         break;
-                    case ROSTER_GROUPS:
+                    case JsonRoster.ROSTER_GROUPS:
                         this.connection.sendMessage(this.service.getRosterGroups(locale));
                         break;
                     default:
@@ -113,7 +109,7 @@ public class JsonRosterSocketService extends JsonSocketService {
             try {
                 if (evt.getPropertyName().equals(RosterEntry.ID)) {
                     // send old roster entry and new roster entry to client as roster changes
-                    ObjectNode root = connection.getObjectMapper().createObjectNode().put(TYPE, ROSTER);
+                    ObjectNode root = connection.getObjectMapper().createObjectNode().put(TYPE, JsonRoster.ROSTER);
                     ObjectNode data = root.putObject(DATA);
                     RosterEntry old = new RosterEntry((RosterEntry) evt.getSource(), (String) evt.getOldValue());
                     data.put(ADD, service.getRosterEntry(connection.getLocale(), (RosterEntry) evt.getSource()));
@@ -134,7 +130,7 @@ public class JsonRosterSocketService extends JsonSocketService {
 
         @Override
         public void propertyChange(PropertyChangeEvent evt) {
-            ObjectNode root = connection.getObjectMapper().createObjectNode().put(TYPE, ROSTER);
+            ObjectNode root = connection.getObjectMapper().createObjectNode().put(TYPE, JsonRoster.ROSTER);
             try {
                 if (evt.getPropertyName().equals(Roster.ROSTER_GROUP_ADDED)
                         || evt.getPropertyName().equals(Roster.ROSTER_GROUP_REMOVED)

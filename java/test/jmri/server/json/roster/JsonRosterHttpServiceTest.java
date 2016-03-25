@@ -65,8 +65,8 @@ public class JsonRosterHttpServiceTest extends TestCase {
     public void testDoGet() throws Exception {
         JsonRosterHttpService instance = new JsonRosterHttpService(this.objectMapper);
         // call with valid first argument
-        assertEquals(Roster.getDefault().numEntries(), instance.doGet(JsonRosterServiceFactory.ROSTER, null, locale).size());
-        assertEquals(2, instance.doGet(JsonRosterServiceFactory.ROSTER, null, locale).size());
+        assertEquals(Roster.getDefault().numEntries(), instance.doGet(JsonRoster.ROSTER, null, locale).size());
+        assertEquals(2, instance.doGet(JsonRoster.ROSTER, null, locale).size());
         // call with invalid first argument
         JsonException exception = null;
         try {
@@ -87,7 +87,7 @@ public class JsonRosterHttpServiceTest extends TestCase {
         JsonRosterHttpService instance = new JsonRosterHttpService(this.objectMapper);
         JsonException exception = null;
         try {
-            instance.doPost(JsonRosterServiceFactory.ROSTER, null, null, locale);
+            instance.doPost(JsonRoster.ROSTER, null, null, locale);
         } catch (JsonException ex) {
             exception = ex;
         }
@@ -113,7 +113,7 @@ public class JsonRosterHttpServiceTest extends TestCase {
     public void testDoGetList() throws Exception {
         JsonRosterHttpService instance = new JsonRosterHttpService(this.objectMapper);
         // call with valid first argument
-        assertEquals(Roster.getDefault().numEntries(), instance.doGet(JsonRosterServiceFactory.ROSTER, null, locale).size());
+        assertEquals(Roster.getDefault().numEntries(), instance.doGet(JsonRoster.ROSTER, null, locale).size());
         // call with invalid first argument
         JsonException exception = null;
         try {

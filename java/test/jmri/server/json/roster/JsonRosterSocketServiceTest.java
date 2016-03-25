@@ -12,7 +12,6 @@ import jmri.jmrit.roster.Roster;
 import jmri.server.json.JSON;
 import jmri.server.json.JsonException;
 import jmri.server.json.JsonMockConnection;
-import static jmri.server.json.roster.JsonRosterServiceFactory.ROSTER;
 import jmri.util.JUnitUtil;
 import junit.framework.Test;
 import junit.framework.TestCase;
@@ -89,7 +88,7 @@ public class JsonRosterSocketServiceTest extends TestCase {
         JsonException exception = null;
         JsonRosterSocketService instance = new JsonRosterSocketService(this.connection);
         try {
-            instance.onMessage(ROSTER, data, locale);
+            instance.onMessage(JsonRoster.ROSTER, data, locale);
         } catch (JsonException ex) {
             exception = ex;
         }
@@ -109,7 +108,7 @@ public class JsonRosterSocketServiceTest extends TestCase {
         JsonException exception = null;
         JsonRosterSocketService instance = new JsonRosterSocketService(this.connection);
         try {
-            instance.onMessage(ROSTER, data, locale);
+            instance.onMessage(JsonRoster.ROSTER, data, locale);
         } catch (JsonException ex) {
             exception = ex;
         }
@@ -129,7 +128,7 @@ public class JsonRosterSocketServiceTest extends TestCase {
         JsonException exception = null;
         JsonRosterSocketService instance = new JsonRosterSocketService(this.connection);
         try {
-            instance.onMessage(ROSTER, data, locale);
+            instance.onMessage(JsonRoster.ROSTER, data, locale);
         } catch (JsonException ex) {
             exception = ex;
         }
@@ -157,7 +156,7 @@ public class JsonRosterSocketServiceTest extends TestCase {
             assertEquals(1, entry.getPropertyChangeListeners().length);
         });
         // onMessage should cause listening to start if it hasn't already
-        instance.onMessage(ROSTER, data, locale);
+        instance.onMessage(JsonRoster.ROSTER, data, locale);
         assertEquals(Roster.getDefault().numEntries(), this.connection.getMessage().size());
         // assert we are listening
         assertEquals(1, Roster.getDefault().getPropertyChangeListeners().length);
@@ -180,7 +179,7 @@ public class JsonRosterSocketServiceTest extends TestCase {
         JsonNode data = this.connection.getObjectMapper().createObjectNode().put(JSON.METHOD, "Invalid");
         Locale locale = Locale.ENGLISH;
         JsonRosterSocketService instance = new JsonRosterSocketService(this.connection);
-        instance.onMessage(ROSTER, data, locale);
+        instance.onMessage(JsonRoster.ROSTER, data, locale);
         assertNotNull(this.connection.getMessage());
         assertEquals(Roster.getDefault().numEntries(), this.connection.getMessage().size());
     }
@@ -205,7 +204,7 @@ public class JsonRosterSocketServiceTest extends TestCase {
             assertEquals(1, entry.getPropertyChangeListeners().length);
         });
         // onList should cause listening to start if it hasn't already
-        instance.onList(ROSTER, data, locale);
+        instance.onList(JsonRoster.ROSTER, data, locale);
         assertNotNull(this.connection.getMessage());
         assertEquals(Roster.getDefault().numEntries(), this.connection.getMessage().size());
         // assert we are listening
