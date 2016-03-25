@@ -104,5 +104,5 @@ public class ThreadingUtil {
         return javax.swing.SwingUtilities.isEventDispatchThread();
     }
 
-    private final static org.slf4j.Logger log = org.slf4j.LoggerFactory.getLogger(JUnitUtil.class.getName());
+    private final static org.slf4j.Logger log = org.slf4j.LoggerFactory.getLogger(ThreadingUtil.class.getName());
 }
