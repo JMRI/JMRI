@@ -176,7 +176,7 @@ public class ResetTableModel extends AbstractTableModel implements ActionListene
 
     public void setIndxRow(int row, Element e, Element p, String model) {
         decoderModel = model; // Save for use elsewhere
-        if (_piCv != "" && _siCv != "") {
+        if (!_piCv.equals("") && !_siCv.equals("")) {
             // get the values for the VariableValue ctor
             String label = LocaleSelector.getAttribute(e, "label"); // Note the name variable is actually the label attribute
             if (log.isDebugEnabled()) {
@@ -310,7 +310,7 @@ public class ResetTableModel extends AbstractTableModel implements ActionListene
         if (log.isDebugEnabled()) {
             log.debug("performReset: " + cv + " with piCv \"" + cv.piCv() + "\"");
         }
-        if (cv.piCv() != null && cv.piCv() != "" && cv.iCv() != null && cv.iCv() != "") {
+        if (cv.piCv() != null && !cv.piCv().equals("") && cv.iCv() != null && !cv.iCv().equals("")) {
             _iCv = cv;
             indexedWrite();
         } else {
