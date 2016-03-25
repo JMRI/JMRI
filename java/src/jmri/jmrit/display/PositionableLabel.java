@@ -33,8 +33,6 @@ import org.slf4j.LoggerFactory;
  */
 public class PositionableLabel extends JLabel implements Positionable {
 
-    private static final long serialVersionUID = 2620446240151660560L;
-
     public static final ResourceBundle rbean = ResourceBundle.getBundle("jmri.NamedBeanBundle");
 
     protected Editor _editor;
@@ -469,10 +467,6 @@ public class PositionableLabel extends JLabel implements Positionable {
 
         if (isIcon() && _displayLevel > Editor.BKG) {
             popup.add(new AbstractAction(Bundle.getMessage("Rotate")) {
-                /**
-                 *
-                 */
-                private static final long serialVersionUID = -3965855672806759644L;
 
                 public void actionPerformed(ActionEvent e) {
                     rotateOrthogonal();
@@ -505,10 +499,6 @@ public class PositionableLabel extends JLabel implements Positionable {
         if (_icon && !_text) {
             String txt = java.text.MessageFormat.format(Bundle.getMessage("EditItem"), Bundle.getMessage("Icon"));
             popup.add(new AbstractAction(txt) {
-                /**
-                 *
-                 */
-                private static final long serialVersionUID = 1481028540455022L;
 
                 public void actionPerformed(ActionEvent e) {
                     edit();
@@ -704,9 +694,6 @@ public class PositionableLabel extends JLabel implements Positionable {
             if (_popupUtil!=null) {
                 _popupUtil.setBorder(false);
             }
-            _namedIcon.rotate(deg, this);
-            super.setIcon(_namedIcon);
-        } else if (_namedIcon != null) {
             _namedIcon.rotate(deg, this);
             super.setIcon(_namedIcon);
         }

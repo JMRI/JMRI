@@ -833,11 +833,6 @@ public class PositionablePropertiesUtil {
     class ColorComboBoxRenderer<E> extends JLabel
             implements ListCellRenderer<E> {
 
-        /**
-         *
-         */
-        private static final long serialVersionUID = 9122150940130201673L;
-
         public ColorComboBoxRenderer() {
             setOpaque(true);
             setHorizontalAlignment(LEFT);
