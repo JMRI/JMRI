@@ -1,4 +1,3 @@
-// MergReplyTest.java
 package jmri.jmrix.can.adapters.gridconnect.canrs;
 
 import jmri.jmrix.can.CanReply;
@@ -11,7 +10,6 @@ import junit.framework.TestSuite;
  * Tests for the jmri.jmrix.can.adapters.gridconnect.canrs.MergReply class
  *
  * @author Bob Jacobsen Copyright 2008, 2009
- * @version $Revision$
  */
 public class MergReplyTest extends TestCase {
 

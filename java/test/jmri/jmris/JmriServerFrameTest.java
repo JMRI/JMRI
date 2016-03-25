@@ -10,7 +10,6 @@ import junit.framework.TestSuite;
  * Tests for the jmri.jmris.JmriServerFrame class 
  *
  * @author Paul Bender
- * @version $Revision$
  */
 public class JmriServerFrameTest extends TestCase {
 

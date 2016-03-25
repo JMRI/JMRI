@@ -104,7 +104,7 @@ public class DefaultProgrammerManager implements ProgrammerManager {
     //     public static final ProgrammingMode OPSACCEXTBYTEMODE = new ProgrammingMode("OPSACCEXTBYTEMODE", 121);
     //     public static final ProgrammingMode OPSACCEXTBITMODE  = new ProgrammingMode("OPSACCEXTBITMODE", 122);
     
-    @Nonnull private Programmer mProgrammer;
+    private Programmer mProgrammer;
 
     /**
      * For case where no global programmer is available
@@ -117,7 +117,7 @@ public class DefaultProgrammerManager implements ProgrammerManager {
         mProgrammer = pProgrammer;
     }
 
-    public DefaultProgrammerManager(@Nonnull Programmer pProgrammer, jmri.jmrix.SystemConnectionMemo memo) {
+    public DefaultProgrammerManager(@Nonnull Programmer pProgrammer, @Nonnull jmri.jmrix.SystemConnectionMemo memo) {
         this(pProgrammer);
         this.userName = memo.getUserName();
     }
@@ -155,14 +155,14 @@ public class DefaultProgrammerManager implements ProgrammerManager {
         return mProgrammer;
     }
 
-    public void releaseGlobalProgrammer(Programmer p) {
+    public void releaseGlobalProgrammer(@Nonnull  Programmer p) {
     }
 
     public AddressedProgrammer reserveAddressedProgrammer(boolean pLongAddress, int pAddress) {
         return null;
     }
 
-    public void releaseAddressedProgrammer(AddressedProgrammer p) {
+    public void releaseAddressedProgrammer(@Nonnull AddressedProgrammer p) {
     }
 
     /**
@@ -179,7 +179,7 @@ public class DefaultProgrammerManager implements ProgrammerManager {
      *
      * @return false since there's no chance of getting one
      */
-    public boolean isAddressedModePossible(jmri.LocoAddress l) {
+    public boolean isAddressedModePossible(@Nonnull jmri.LocoAddress l) {
         return isAddressedModePossible();
     }
 

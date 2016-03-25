@@ -1,4 +1,3 @@
-// PackageTest.java
 package jmri.jmrit.symbolicprog.tabbedframe;
 
 import junit.framework.Test;

@@ -1,4 +1,3 @@
-// HeadLessTest.java
 package jmri;
 
 import junit.framework.Test;
@@ -20,7 +19,6 @@ import junit.framework.TestSuite;
  * A PARTICULAR PURPOSE. See the GNU General Public License for more details.
  * <P>
  * @author	Bob Jacobsen, Copyright (C) 2001, 2002, 2007
- * @version $Revision$
  */
 public class HeadLessTest extends TestCase {
 

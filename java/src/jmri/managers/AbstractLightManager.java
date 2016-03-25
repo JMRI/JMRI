@@ -1,4 +1,3 @@
-// AbstractLightManager.java
 package jmri.managers;
 
 import jmri.Light;
@@ -13,7 +12,6 @@ import org.slf4j.LoggerFactory;
  * Based on AbstractSignalHeadManager.java and AbstractSensorManager.java
  *
  * @author Dave Duchamp Copyright (C) 2004
- * @version	$Revision$
  */
 public abstract class AbstractLightManager extends AbstractManager
         implements LightManager, java.beans.PropertyChangeListener, java.io.Serializable {
@@ -244,5 +242,3 @@ public abstract class AbstractLightManager extends AbstractManager
 
     private final static Logger log = LoggerFactory.getLogger(AbstractLightManager.class.getName());
 }
-
-/* @(#)AbstractLightManager.java */

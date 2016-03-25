@@ -1,4 +1,3 @@
-// SerialAdapterTest.java
 package jmri.jmrix.rps.serial;
 
 import jmri.jmrix.rps.Engine;

@@ -1,4 +1,3 @@
-// SRCPParserTest.java
 package jmri.jmris.srcp.parser;
 
 import java.io.StringReader;
@@ -10,7 +9,6 @@ import junit.framework.TestSuite;
  * Tests for the {@link jmri.jmris.srcp.parser.SRCPParser} class.
  *
  * @author Paul Bender
- * @version $Revision$
  */
 public class SRCPParserTest extends TestCase {
 

@@ -11,7 +11,6 @@ import junit.framework.TestSuite;
  * Tests for the TrainManager class Last manually cross-checked on 20090131
  *
  * @author Bob Coleman Copyright (C) 2008, 2009
- * @version $Revision$
  */
 public class TrainManagerTest extends OperationsTestCase {
 

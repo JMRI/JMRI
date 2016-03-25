@@ -11,7 +11,6 @@ import junit.framework.TestSuite;
  * Tests for the jmri.jmris.json.JsonReporterServer class
  *
  * @author Paul Bender
- * @version $Revision$
  */
 public class JsonReporterServerTest extends TestCase {
 

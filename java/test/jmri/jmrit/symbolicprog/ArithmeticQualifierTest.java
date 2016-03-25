@@ -1,4 +1,3 @@
-// ArithmeticQualifierTest.java
 package jmri.jmrit.symbolicprog;
 
 import java.util.HashMap;
@@ -12,7 +11,6 @@ import junit.framework.TestSuite;
 /**
  *
  * @author	Bob Jacobsen, Copyright 2014
- * @version $Revision$
  */
 public class ArithmeticQualifierTest extends TestCase {
 

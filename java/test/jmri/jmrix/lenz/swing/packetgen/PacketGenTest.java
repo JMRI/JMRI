@@ -1,4 +1,3 @@
-// PacketGenTest.java
 package jmri.jmrix.lenz.swing.packetgen;
 
 import junit.framework.Test;
@@ -9,7 +8,6 @@ import junit.framework.TestSuite;
  * Tests for the jmri.jmrix.lenz.swing.packetgen.package
  *
  * @author Paul Bender
- * @version $Revision$
  */
 public class PacketGenTest extends TestCase {
 

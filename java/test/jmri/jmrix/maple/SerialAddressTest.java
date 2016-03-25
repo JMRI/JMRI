@@ -1,4 +1,3 @@
-// SerialAddressTest.java
 package jmri.jmrix.maple;
 
 import jmri.util.JUnitAppender;
@@ -33,11 +32,6 @@ public class SerialAddressTest extends TestCase {
         jmri.InstanceManager.setTurnoutManager(l);
 
         jmri.LightManager lgt = new SerialLightManager() {
-            /**
-             *
-             */
-            private static final long serialVersionUID = -2625025480408831496L;
-
             @Override
             public void notifyLightCreationError(String conflict, int bitNum) {
             }

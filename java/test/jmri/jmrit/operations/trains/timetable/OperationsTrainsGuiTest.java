@@ -1,4 +1,3 @@
-// OperationsTrainsGuiTest.java
 package jmri.jmrit.operations.trains.timetable;
 
 import java.awt.Component;
@@ -19,7 +18,6 @@ import junit.framework.TestSuite;
  * Tests for the Operations Trains GUI class
  *
  * @author Dan Boudreau Copyright (C) 2009
- * @version $Revision$
  */
 public class OperationsTrainsGuiTest extends OperationsSwingTestCase {
 

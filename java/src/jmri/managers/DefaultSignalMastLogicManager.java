@@ -36,7 +36,6 @@ import org.slf4j.LoggerFactory;
  * <P>
  *
  * @author	Kevin Dickerson Copyright (C) 2011
- * @version	$Revision$
  */
 public class DefaultSignalMastLogicManager implements jmri.SignalMastLogicManager, java.beans.VetoableChangeListener {
 

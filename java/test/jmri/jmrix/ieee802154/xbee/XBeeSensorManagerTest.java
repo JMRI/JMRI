@@ -11,7 +11,6 @@ import junit.framework.TestSuite;
  * Description:	tests for the jmri.jmrix.ieee802154.xbee.XBeeSensorManager class
  *
  * @author	Paul Bender
- * @version $Revision$
  */
 public class XBeeSensorManagerTest extends TestCase {
 

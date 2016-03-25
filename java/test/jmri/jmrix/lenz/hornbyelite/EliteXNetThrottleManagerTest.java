@@ -13,7 +13,6 @@ import junit.framework.TestSuite;
  * Description:	tests for the jmri.jmrix.lenz.EliteXNetThrottleManager class
  *
  * @author	Paul Bender
- * @version $Revision$
  */
 public class EliteXNetThrottleManagerTest extends TestCase {
 

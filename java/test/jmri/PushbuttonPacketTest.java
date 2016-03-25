@@ -1,4 +1,3 @@
-// PushbuttonPacketTest.java
 package jmri;
 
 import junit.framework.Assert;
@@ -10,7 +9,6 @@ import junit.framework.TestSuite;
  * Tests for the PushbuttonPacket class
  *
  * @author	Bob Jacobsen Copyright (C) 2010
- * @version $Revision$
  */
 public class PushbuttonPacketTest extends TestCase {
 

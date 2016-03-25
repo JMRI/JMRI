@@ -1,4 +1,3 @@
-// PowerPaneTest.java
 package jmri.jmrit.powerpanel;
 
 import jmri.util.JUnitUtil;
@@ -11,7 +10,6 @@ import junit.framework.TestSuite;
  * Tests for the Jmri package
  *
  * @author	Bob Jacobsen
- * @version $Revision$
  */
 public class PowerPaneTest extends TestCase {
 

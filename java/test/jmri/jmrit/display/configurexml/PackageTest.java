@@ -10,7 +10,6 @@ import junit.framework.TestSuite;
  * Description:	Tests for the jmrit.display.configurexml package
  *
  * @author	Bob Jacobsen Copyright 2009, 2014
- * @version $Revision$
  */
 public class PackageTest extends TestCase {
 

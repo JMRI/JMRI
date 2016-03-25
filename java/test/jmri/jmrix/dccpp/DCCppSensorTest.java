@@ -12,7 +12,6 @@ import junit.framework.TestSuite;
  *
  * @author	Bob Jacobsen
  * @author	Mark Underwood
- * @version $Revision$
  */
 public class DCCppSensorTest extends TestCase {
 

@@ -1,4 +1,3 @@
-// OPathTest.java
 package jmri.jmrit.logix;
 
 import jmri.Block;
@@ -11,7 +10,6 @@ import junit.framework.TestSuite;
  * Tests for the OPath class
  *
  * @author	Bob Jacobsen Copyright 2010
- * @version $Revision$
  */
 public class OPathTest extends TestCase {
 

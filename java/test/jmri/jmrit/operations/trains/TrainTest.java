@@ -69,7 +69,6 @@ import junit.framework.TestSuite;
  * TrainBuilder: Everything. TrainSwitchLists: Everything.
  *
  * @author Bob Coleman Copyright (C) 2008, 2009
- * @version $Revision$
  */
 public class TrainTest extends OperationsTestCase {
 

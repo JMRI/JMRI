@@ -11,7 +11,6 @@ import junit.framework.TestSuite;
  * Description:	tests for the jmri.jmrix.lenz.swing.li101.LI101Frame class
  *
  * @author	Paul Bender
- * @version $Revision$
  */
 public class LI101FrameTest extends TestCase {
 

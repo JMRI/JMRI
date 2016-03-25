@@ -1,4 +1,3 @@
-// DownloaderTest.java
 package jmri.jmrix.pricom.downloader;
 
 import junit.framework.Test;
@@ -9,7 +8,6 @@ import junit.framework.TestSuite;
  * Tests for the jmri.jmrix.pricom.downloader package.
  *
  * @author Bob Jacobsen Copyright 2005
- * @version $Revision$
  */
 public class DownloaderTest extends TestCase {
 

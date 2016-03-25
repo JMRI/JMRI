@@ -1,4 +1,3 @@
-// SwingTestCaseTest.java
 package jmri.util;
 
 import java.awt.Dimension;

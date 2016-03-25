@@ -1,4 +1,3 @@
-// AbstractPortControllerTest.java
 package jmri.jmrix;
 
 import java.io.DataInputStream;

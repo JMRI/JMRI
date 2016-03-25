@@ -1,4 +1,3 @@
-// BundleTest.java
 package jmri;
 
 import java.util.Locale;
