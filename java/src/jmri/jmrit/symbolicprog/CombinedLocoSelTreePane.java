@@ -1,4 +1,3 @@
-// CombinedLocoSelTreePane.java
 package jmri.jmrit.symbolicprog;
 
 import java.awt.BorderLayout;
@@ -52,7 +51,6 @@ import org.slf4j.LoggerFactory;
  * The decoder definition "Showable" attribute also interacts with those.
  *
  * @author	Bob Jacobsen Copyright (C) 2001, 2002, 2013
- * @version	$Revision$
  */
 public class CombinedLocoSelTreePane extends CombinedLocoSelPane {
 
