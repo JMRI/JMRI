@@ -1982,8 +1982,10 @@ public class Warrant extends jmri.implementation.AbstractNamedBean
                     }
                 }
                 if(_debug) log.debug("CommandDelay: after wait of "+_startWait+" ms, did Ramp to "+nextSpeedType);
-                _engineer.rampSpeedTo(nextSpeedType);                      
-                _engineer.setCurrentCommandIndex(_cmdIndex);
+                jmri.util.ThreadingUtil.runOnLayout(() ->{ // move to layout-handling thread
+                    _engineer.rampSpeedTo(nextSpeedType);                      
+                    _engineer.setCurrentCommandIndex(_cmdIndex);
+                });
             }
         }
     }
