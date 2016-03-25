@@ -67,6 +67,7 @@ public class ConnectionConfigXml extends AbstractConnectionConfigXml {
         return result;
     }
 
+    @Override
     protected void getInstance() {
         if (adapter == null) {
             adapter = new XNetSimulatorAdapter();

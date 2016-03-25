@@ -341,7 +341,7 @@ public class AudioTableAction extends AbstractTableAction {
         public String getColumnName(int col) {
             switch (col) {
                 case VALUECOL:
-                    return "Description";
+                    return Bundle.getMessage("LightControlDescription");
                 case EDITCOL:
                     return "";
                 default:

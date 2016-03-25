@@ -470,7 +470,7 @@ public class RollingStockSetFrame extends OperationsFrame implements java.beans.
                         if (results == JOptionPane.YES_OPTION) {
                             log.debug("Force rolling stock to track");
                             rs.setLocation((Location) locationBox.getSelectedItem(), (Track) trackLocationBox
-                                    .getSelectedItem(), true);
+                                    .getSelectedItem(), RollingStock.FORCE);
                         } else {
                             return false;
                         }
