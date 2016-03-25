@@ -1436,6 +1436,9 @@ public class Warrant extends jmri.implementation.AbstractNamedBean
             return;
         }
 
+        // error if not on Layout thread
+        if (!ThreadingUtil.isLayoutThread()) log.error("invoked on wrong thread", new Exception("traceback"));
+
         int idx = getIndexOfBlock(block, _idxLastOrder);  // if idx >= 0, it is in this warrant
         if (_debug) {
             log.debug("Block \"" + block.getDisplayName() + "\" goingInactive. idx= "
