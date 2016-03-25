@@ -486,9 +486,6 @@ public class CombinedLocoSelTreePane extends CombinedLocoSelPane {
         String familyString = locoEntry.getDecoderFamily();
         String titleString = DecoderFile.titleString(modelString, familyString);
 
-        // find the decoder mfg
-        DecoderIndexFile.instance().fileFromTitle(titleString).getMfg();
-
         // close the entire GUI (not currently done, users want left open)
         //collapseAll();
         // find this one to select it
