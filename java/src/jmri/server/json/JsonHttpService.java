@@ -29,6 +29,9 @@ public abstract class JsonHttpService {
      * If name is null, return a list of all objects for the given type, if
      * appropriate.
      *
+     * This method should throw a 500 Internal Server Error if type is not
+     * recognized.
+     *
      * @param type   the type of the requested object.
      * @param name   the name of the requested object.
      * @param locale the requesting client's Locale.
