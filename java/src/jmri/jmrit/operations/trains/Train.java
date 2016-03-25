@@ -2775,12 +2775,17 @@ public class Train implements java.beans.PropertyChangeListener {
     /**
      * Set true whenever the train's manifest has been modified. For example
      * adding or removing a car from a train, or changing the manifest format.
+     * Once the manifest has been regenerated (modified == false), the old
+     * status for the train is restored.
      * 
      * @param modified
      */
     public void setModified(boolean modified) {
-        if (!isBuilt())
+        log.debug("Set modified {}", modified);
+        if (!isBuilt()) {
+            _modified = false;
             return; // there isn't a manifest to modify
+        }
         boolean old = _modified;
         _modified = modified;
         if (modified) {
@@ -2796,8 +2801,7 @@ public class Train implements java.beans.PropertyChangeListener {
             } else {
                 setStatusCode(getOldStatusCode()); // restore previous train status
             }
-            setDirtyAndFirePropertyChange(TRAIN_MODIFIED_CHANGED_PROPERTY, old ? "true" : "false", modified ? "true" // NOI18N
-            : "false"); // NOI18N
+            setDirtyAndFirePropertyChange(TRAIN_MODIFIED_CHANGED_PROPERTY, old, modified); // NOI18N
         }
     }
 
@@ -2876,6 +2880,17 @@ public class Train implements java.beans.PropertyChangeListener {
      */
     public boolean build() {
         reset();
+        // check to see if any other trains are building
+        while (TrainManager.instance().isAnyTrainBuilding()) {
+            synchronized (this) {
+                try {
+                    wait(100); // 100 msec
+                } catch (InterruptedException e) {
+                    // TODO Auto-generated catch block
+                    e.printStackTrace();
+                }
+            }
+        }
         // run before build scripts
         runScripts(getBuildScripts());
         TrainBuilder tb = new TrainBuilder();
@@ -3483,6 +3498,7 @@ public class Train implements java.beans.PropertyChangeListener {
         setBuildFailed(false);
         setBuildFailedMessage(NONE);
         setPrinted(false);
+        setModified(false);
         // remove cars and engines from this train via property change
         setStatusCode(CODE_TRAIN_RESET);
         // remove train icon
