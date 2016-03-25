@@ -12,6 +12,7 @@ import jmri.NamedBeanHandle;
 import jmri.Path;
 import jmri.Sensor;
 import jmri.Turnout;
+import jmri.util.ThreadingUtil;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -843,7 +844,9 @@ public class OBlock extends jmri.Block implements java.beans.PropertyChangeListe
         setState((getState() & ~(OCCUPIED | RUNNING)) | UNOCCUPIED);
         setValue(null);
         if (_warrant != null) {
-            _warrant.goingInactive(this);
+            ThreadingUtil.runOnLayout(()->{
+                _warrant.goingInactive(this);
+            });
         }
     }
 
@@ -857,7 +860,9 @@ public class OBlock extends jmri.Block implements java.beans.PropertyChangeListe
 //        if (log.isDebugEnabled()) log.debug("Allocated OBlock \""+getSystemName()+
 //                                            "\" goes OCCUPIED. state= "+getState());
         if (_warrant != null) {
-            _warrant.goingActive(this);
+            ThreadingUtil.runOnLayout(()->{
+                _warrant.goingActive(this);
+            });
         }
         if (log.isDebugEnabled()) {
             log.debug("Block \"" + getSystemName() + " went active, path= "
