@@ -19,31 +19,31 @@ public class LlnmonTest extends TestCase {
         LocoNetMessage l;
         
         l = new LocoNetMessage(new int[]{0xD0, 0x01, 0x20, 0x08, 0x20, 0x26});
-        assertEquals("out A", "Transponder address 1056 (long) absent at 161 () (BDL16x Board 11 RX4 zone A).\n", f.displayMessage(l));
+        assertEquals("out A", "Transponder address 1056 (long) absent at LR161 () (BDL16x Board 11 RX4 zone A).\n", f.displayMessage(l));
 
         l = new LocoNetMessage(new int[]{0xD0, 0x21, 0x20, 0x08, 0x20, 0x04});
-        assertEquals(" in A", "Transponder address 1056 (long) present at 161 () (BDL16x Board 11 RX4 zone A).\n", f.displayMessage(l));
+        assertEquals(" in A", "Transponder address 1056 (long) present at LR161 () (BDL16x Board 11 RX4 zone A).\n", f.displayMessage(l));
 
         l = new LocoNetMessage(new int[]{0xD0, 0x21, 0x22, 0x08, 0x20, 0x24});
-        assertEquals(" in B", "Transponder address 1056 (long) present at 163 () (BDL16x Board 11 RX4 zone B).\n", f.displayMessage(l));
+        assertEquals(" in B", "Transponder address 1056 (long) present at LR163 () (BDL16x Board 11 RX4 zone B).\n", f.displayMessage(l));
 
         l = new LocoNetMessage(new int[]{0xD0, 0x21, 0x24, 0x08, 0x20, 0x04});
-        assertEquals(" in C", "Transponder address 1056 (long) present at 165 () (BDL16x Board 11 RX4 zone C).\n", f.displayMessage(l));
+        assertEquals(" in C", "Transponder address 1056 (long) present at LR165 () (BDL16x Board 11 RX4 zone C).\n", f.displayMessage(l));
 
         l = new LocoNetMessage(new int[]{0xD0, 0x21, 0x26, 0x08, 0x20, 0x04});
-        assertEquals(" in D", "Transponder address 1056 (long) present at 167 () (BDL16x Board 11 RX4 zone D).\n", f.displayMessage(l));
+        assertEquals(" in D", "Transponder address 1056 (long) present at LR167 () (BDL16x Board 11 RX4 zone D).\n", f.displayMessage(l));
 
         l = new LocoNetMessage(new int[]{0xD0, 0x21, 0x28, 0x08, 0x20, 0x04});
-        assertEquals(" in E", "Transponder address 1056 (long) present at 169 () (BDL16x Board 11 RX4 zone E).\n", f.displayMessage(l));
+        assertEquals(" in E", "Transponder address 1056 (long) present at LR169 () (BDL16x Board 11 RX4 zone E).\n", f.displayMessage(l));
 
         l = new LocoNetMessage(new int[]{0xD0, 0x21, 0x2A, 0x08, 0x20, 0x04});
-        assertEquals(" in F", "Transponder address 1056 (long) present at 171 () (BDL16x Board 11 RX4 zone F).\n", f.displayMessage(l));
+        assertEquals(" in F", "Transponder address 1056 (long) present at LR171 () (BDL16x Board 11 RX4 zone F).\n", f.displayMessage(l));
 
         l = new LocoNetMessage(new int[]{0xD0, 0x21, 0x2C, 0x08, 0x20, 0x04});
-        assertEquals(" in G", "Transponder address 1056 (long) present at 173 () (BDL16x Board 11 RX4 zone G).\n", f.displayMessage(l));
+        assertEquals(" in G", "Transponder address 1056 (long) present at LR173 () (BDL16x Board 11 RX4 zone G).\n", f.displayMessage(l));
 
         l = new LocoNetMessage(new int[]{0xD0, 0x21, 0x2E, 0x08, 0x20, 0x04});
-        assertEquals(" in H", "Transponder address 1056 (long) present at 175 () (BDL16x Board 11 RX4 zone H).\n", f.displayMessage(l));
+        assertEquals(" in H", "Transponder address 1056 (long) present at LR175 () (BDL16x Board 11 RX4 zone H).\n", f.displayMessage(l));
     }
 
     public void testSVProgrammingProtocolV1() {
@@ -296,7 +296,8 @@ public class LlnmonTest extends TestCase {
         jmri.util.JUnitUtil.initReporterManager();
         
         f = new Llnmon();
-        f.setLocoNetReporterManager(jmri.InstanceManager.getDefault(jmri.ReporterManager.class));
+        jmri.jmrix.loconet.LocoNetInterfaceScaffold lnis = new jmri.jmrix.loconet.LocoNetInterfaceScaffold();
+        f.setLocoNetReporterManager(new jmri.jmrix.loconet.LnReporterManager(lnis, "L"));
     }
 
     protected void tearDown() {
