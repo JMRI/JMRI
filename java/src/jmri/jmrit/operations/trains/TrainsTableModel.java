@@ -522,7 +522,14 @@ public class TrainsTableModel extends javax.swing.table.AbstractTableModel imple
                 log.debug("Update train table row: {} name: {}", row, train.getName());
             }
             if (row >= 0) {
-                _table.scrollRectToVisible(_table.getCellRect(row, 0, true));
+                // The line "_table.scrollRectToVisible(_table.getCellRect(row, 0, true));"
+                // can cause a thread lock if the table sorter is active. That's the reason
+                // the code is wrapped in the invokeLater.
+                SwingUtilities.invokeLater(new Runnable() {
+                    public void run() {
+                        _table.scrollRectToVisible(_table.getCellRect(row, 0, true));
+                    }
+                });
                 fireTableRowsUpdated(row, row);
             }
         }
@@ -553,11 +560,6 @@ public class TrainsTableModel extends javax.swing.table.AbstractTableModel imple
     }
 
     class MyTableCellRenderer extends DefaultTableCellRenderer {
-
-        /**
-         *
-         */
-        private static final long serialVersionUID = 6030024446880261924L;
 
         @Override
         public Component getTableCellRendererComponent(JTable table, Object value, boolean isSelected,
