@@ -147,12 +147,14 @@ public class XNetThrottleManager extends AbstractThrottleManager implements Thro
     @Override
     public boolean disposeThrottle(jmri.DccThrottle t, jmri.ThrottleListener l) {
         if (super.disposeThrottle(t, l)) {
+            if(!(t instanceof XNetThrottle)) {
+               throw new IllegalArgumentException("Attempt to dispose non-XPressNet Throttle");
+            }
             XNetThrottle lnt = (XNetThrottle) t;
             lnt.throttleDispose();
             return true;
         }
         return false;
-        //LocoNetSlot tSlot = lnt.getLocoNetSlot();
     }
 
     private final static Logger log = LoggerFactory.getLogger(XNetThrottleManager.class.getName());
