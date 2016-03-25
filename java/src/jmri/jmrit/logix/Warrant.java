@@ -39,7 +39,6 @@ import org.slf4j.LoggerFactory;
  * </p><P>
  * Version 1.11 - remove setting of SignalHeads
  *
- * @version $Revision$
  * @author  Pete Cressman Copyright (C) 2009, 2010
  */
 public class Warrant extends jmri.implementation.AbstractNamedBean
