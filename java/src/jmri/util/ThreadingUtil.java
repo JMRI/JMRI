@@ -3,10 +3,10 @@ package jmri.util;
 /**
  * Utilities for handling JMRI's threading conventions
  * <p>
- * For background, see http://localhost/help/en/html/doc/Technical/Threads.shtml
+ * For background, see <a href="http://localhost/help/en/html/doc/Technical/Threads.shtml">http://localhost/help/en/html/doc/Technical/Threads.shtml</a>
  * <p>
- * Note this distinguished "on layout", e.g. setting a sensor, from
- * "on GUI", e.g. manipulating the GUI. That may or may not be an important
+ * Note this distinguishes "on layout", e.g. Setting a sensor, from
+ * "on GUI", e.g. manipulating the Swing GUI. That may not be an important
  * distinction now, but it might be later, so we build it into the calls.
  *
  * @author Bob Jacobsen   Copyright 2015
@@ -15,7 +15,7 @@ public class ThreadingUtil {
 
     static public interface ThreadAction extends Runnable {
         /**
-         * Must handle it's own exceptions
+         * Must handle its own exceptions
          */
         public void run();
     }
@@ -26,7 +26,7 @@ public class ThreadingUtil {
      * Typical uses:
      * <p><code>ThreadUtil.runOnLayout( ()->{ sensor.setState(value); } );</code>
      * 
-     * @param condition name of condition being waited for; will appear in Assert.fail if condition not true fast enough
+     * @param ta What to run, usually as a lambda expression
      */
     static public void runOnLayout(ThreadAction ta) {
         runOnGUI(ta);
@@ -40,7 +40,7 @@ public class ThreadingUtil {
      * Typical uses:
      * <p><code>ThreadUtil.runOnLayoutEventually( ()->{ sensor.setState(value); } );</code>
      * 
-     * @param condition name of condition being waited for; will appear in Assert.fail if condition not true fast enough
+     * @param ta What to run, usually as a lambda expression
      */
     static public void runOnLayoutEventually(ThreadAction ta) {
         runOnGUIEventually(ta);
@@ -59,7 +59,7 @@ public class ThreadingUtil {
      * Typical uses:
      * <p><code>ThreadUtil.runOnGUI( ()->{ mine.setVisible(); } );</code>
      * 
-     * @param condition name of condition being waited for; will appear in Assert.fail if condition not true fast enough
+     * @param ta What to run, usually as a lambda expression
      */
     static public void runOnGUI(ThreadAction ta) {
         if (isGUIThread()) {
@@ -87,11 +87,11 @@ public class ThreadingUtil {
      * Typical uses:
      * <p><code>ThreadUtil.runOnGUIEventually( ()->{ mine.setVisible(); } );</code>
      * 
-     * @param condition name of condition being waited for; will appear in Assert.fail if condition not true fast enough
+     * @param ta What to run, usually as a lambda expression
      */
     static public void runOnGUIEventually(ThreadAction ta) {
         if (isGUIThread()) {
-            // run now
+            // run now, despite the "eventually" in the name; just a simplification
             ta.run();
         } else {
             // dispatch to Swing
