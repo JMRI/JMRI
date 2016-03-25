@@ -569,6 +569,7 @@ public class OBlock extends jmri.Block implements java.beans.PropertyChangeListe
                 removePropertyChangeListener(_warrant);
             } catch (Exception ex) {
                 // disposed warrant may throw null pointer - continue deallocation
+                log.warn("Perhaps normal? Code not clear.", e);
             }
         }
         if (_pathName != null) {
