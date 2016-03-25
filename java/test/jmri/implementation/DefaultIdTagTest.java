@@ -14,7 +14,6 @@ import junit.framework.TestSuite;
  * Tests for the DefaultIdTag class
  *
  * @author Matthew Harris Copyright (C) 2011
- * @version $Revision$
  */
 public class DefaultIdTagTest extends TestCase {
 

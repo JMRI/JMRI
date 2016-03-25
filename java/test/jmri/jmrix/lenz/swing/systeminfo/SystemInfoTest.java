@@ -9,7 +9,6 @@ import junit.framework.TestSuite;
  * Tests for the jmri.jmrix.lenz.swing.systeminfo package
  *
  * @author Paul Bender
- * @version $Revision$
  */
 public class SystemInfoTest extends TestCase {
 

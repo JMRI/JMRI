@@ -16,7 +16,6 @@ import junit.framework.TestSuite;
  * Description:	tests for the jmri.jmrix.lenz.li100.LI100XNetProgrammer class
  *
  * @author	Paul Bender
- * @version $Revision$
  */
 public class LI100XNetProgrammerTest extends TestCase {
 

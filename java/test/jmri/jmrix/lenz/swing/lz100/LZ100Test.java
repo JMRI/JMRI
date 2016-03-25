@@ -9,7 +9,6 @@ import junit.framework.TestSuite;
  * Tests for the jmri.jmrix.lenz.swing.lz100 package
  *
  * @author Paul Bender
- * @version $Revision$
  */
 public class LZ100Test extends TestCase {
 

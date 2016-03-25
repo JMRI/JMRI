@@ -18,7 +18,6 @@ import junit.framework.TestSuite;
  * Tests for the jmrit.roster.Roster class.
  *
  * @author	Bob Jacobsen Copyright (C) 2001, 2002, 2012
- * @version $Revision$
  */
 public class RosterTest extends TestCase {
 

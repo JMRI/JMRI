@@ -15,7 +15,6 @@ import jmri.util.JUnitUtil;
  * Test CvValue class
  *
  * @author	Bob Jacobsen Copyright 2004, 2006, 2015
- * @version $Revision$
  */
 public class CvValueTest extends TestCase {
 

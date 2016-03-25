@@ -22,7 +22,6 @@ import junit.framework.TestSuite;
  * Swing jfcUnit tests for the TurnoutIcon
  *
  * @author	Bob Jacobsen Copyright 2009, 2010
- * @version $Revision$
  */
 public class TurnoutIconWindowTest extends jmri.util.SwingTestCase {
 

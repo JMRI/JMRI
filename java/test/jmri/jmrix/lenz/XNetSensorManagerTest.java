@@ -14,7 +14,6 @@ import org.slf4j.LoggerFactory;
  * Tests for the jmri.jmrix.lenz.XNetSensorManager class.
  *
  * @author	Paul Bender Copyright (c) 2003
- * @version $Revision$
  */
 public class XNetSensorManagerTest extends TestCase {
 

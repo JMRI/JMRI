@@ -14,7 +14,6 @@ import org.slf4j.LoggerFactory;
  * Test the DebugProgrammer class.
  *
  * @author	Bob Jacobsen Copyright 2013
- * @version $Revision$
  */
 public class DebugProgrammerTest extends TestCase {
 

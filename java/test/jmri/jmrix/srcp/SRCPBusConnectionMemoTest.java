@@ -11,7 +11,6 @@ import junit.framework.TestSuite;
  * Description:	tests for the jmri.jmrix.srcp.SRCPBusConnectionMemo class
  *
  * @author	Bob Jacobsen
- * @version $Revision$
  */
 public class SRCPBusConnectionMemoTest extends TestCase {
 

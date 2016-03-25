@@ -11,7 +11,6 @@ import org.jdom2.Element;
  * Tests for the SoundBite class
  *
  * @author Mark Underwood Copyright (C) 2011
- * @version $Revision$
  */
 public class SoundBiteTest extends TestCase {
 

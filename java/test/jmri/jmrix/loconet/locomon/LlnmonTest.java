@@ -11,7 +11,6 @@ import junit.framework.TestSuite;
  *
  * @author	Bob Jacobsen Copyright (C) 2002, 2007
  * @author      B. Milhaupt  Copyright (C) 2015
- * @version $Revision$
  */
 public class LlnmonTest extends TestCase {
 

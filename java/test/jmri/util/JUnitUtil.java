@@ -59,7 +59,6 @@ import org.slf4j.LoggerFactory;
  * be reset when you reset the instance manager.
  *
  * @author Bob Jacobsen Copyright 2009, 2015
- * @version $Revision$
  * @since 2.5.3
  */
 public class JUnitUtil {

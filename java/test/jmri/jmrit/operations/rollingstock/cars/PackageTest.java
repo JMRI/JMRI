@@ -9,7 +9,6 @@ import junit.framework.TestSuite;
  * Tests for the jmrit.operations.rollingstock.cars package
  *
  * @author	Bob Coleman
- * @version $Revision$
  */
 public class PackageTest extends TestCase {
 

@@ -9,7 +9,6 @@ import junit.framework.TestSuite;
 /**
  *
  * @author	Bob Jacobsen Copyright 2010
- * @version $Revision$
  */
 public class JmriAbstractActionTest extends TestCase {
 

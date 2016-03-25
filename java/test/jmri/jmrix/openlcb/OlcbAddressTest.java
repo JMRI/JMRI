@@ -11,7 +11,6 @@ import junit.framework.TestSuite;
  * Tests for the jmri.jmrix.openlcb.OlcbAddress class.
  *
  * @author	Bob Jacobsen Copyright 2008, 2010
- * @version $Revision$
  */
 public class OlcbAddressTest extends TestCase {
 

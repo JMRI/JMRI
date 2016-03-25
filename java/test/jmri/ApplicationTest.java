@@ -12,7 +12,6 @@ import org.slf4j.LoggerFactory;
  * Tests for the Application class
  *
  * @author Matthew Harris Copyright (C) 2011
- * @version $Revision$
  */
 public class ApplicationTest extends TestCase {
 

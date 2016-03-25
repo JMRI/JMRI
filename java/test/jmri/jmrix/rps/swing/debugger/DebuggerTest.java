@@ -14,7 +14,6 @@ import junit.framework.TestSuite;
  * Tests for the jmri.jmrix.rps.swing.debugger package
  *
  * @author Bob Jacobsen Copyright 2008
- * @version $Revision$
  */
 public class DebuggerTest extends TestCase {
 

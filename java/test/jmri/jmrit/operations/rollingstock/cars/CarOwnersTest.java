@@ -12,7 +12,6 @@ import junit.framework.TestSuite;
  * on 20090131
  *
  * @author	Bob Coleman Copyright (C) 2008, 2009
- * @version $Revision$
  */
 public class CarOwnersTest extends OperationsTestCase {
 

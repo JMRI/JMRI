@@ -22,7 +22,6 @@ import junit.framework.TestSuite;
  * <P>
  *
  * @author Matthew Harris Copyright (C) 2011
- * @version $Revision$
  */
 public class ReporterTest extends TestCase {
 

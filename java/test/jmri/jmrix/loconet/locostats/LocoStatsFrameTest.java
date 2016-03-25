@@ -13,7 +13,6 @@ import junit.framework.TestSuite;
  * Tests for the LocoStatsFrame class
  *
  * @author	Bob Jacobsen Copyright (C) 2006, 2008, 2010
- * @version $Revision$
  */
 public class LocoStatsFrameTest extends TestCase {
 

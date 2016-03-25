@@ -11,7 +11,6 @@ import junit.framework.TestSuite;
  * Tests for the jmri.jmrix.grapevine.serialmon package.
  *
  * @author Bob Jacobsen Copyright 2003, 2007, 2008
- * @version $Revision$
  */
 public class SerialMonTest extends TestCase {
 

@@ -10,7 +10,6 @@ import junit.framework.TestSuite;
  * Tests for the Light class
  *
  * @author	Bob Jacobsen Copyright (C) 2008, 2010
- * @version $Revision$
  */
 public class LightTest extends TestCase {
 

@@ -11,7 +11,6 @@ import junit.framework.TestSuite;
  * Tests for the jmri.jmrix.loconet.locogen.LocoGenPanel class
  *
  * @author Bob Jacobsen Copyright 2001, 2003
- * @version $Revision$
  */
 public class PackageTest extends TestCase {
 

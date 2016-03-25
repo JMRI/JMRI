@@ -10,7 +10,6 @@ import junit.framework.TestSuite;
  * Tests for the {@link jmri.jmris.simpleserver.parser.JmriServerParser} class.
  *
  * @author Paul Bender
- * @version $Revision$
  */
 public class JmriServerParserTest extends TestCase {
 

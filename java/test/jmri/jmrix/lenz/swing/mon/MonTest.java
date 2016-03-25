@@ -9,7 +9,6 @@ import junit.framework.TestSuite;
  * Tests for the jmri.jmrix.lenz.swing.mon package
  *
  * @author Paul Bender
- * @version $Revision$
  */
 public class MonTest extends TestCase {
 

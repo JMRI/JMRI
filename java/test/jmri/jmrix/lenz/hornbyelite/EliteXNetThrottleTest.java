@@ -12,7 +12,6 @@ import junit.framework.TestSuite;
  * Description:	tests for the jmri.jmrix.lenz.EliteXNetThrottle class
  *
  * @author	Paul Bender
- * @version $Revision$
  */
 public class EliteXNetThrottleTest extends TestCase {
 

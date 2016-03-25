@@ -11,7 +11,6 @@ import junit.framework.*;
  *
  * @author Bob Jacobsen Copyright 2009, 2014
  * @since 3.9.2
- * @version $Revision$
  */
 public class SchemaTestBase extends TestCase {
 

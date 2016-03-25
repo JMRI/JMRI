@@ -15,7 +15,6 @@ import junit.framework.TestSuite;
  * Tests for the ProgServiceModePane
  *
  * @author	Bob Jacobsen 2008
- * @version $Revision$
  */
 public class ProgServiceModePaneTest extends TestCase {
 

@@ -15,7 +15,6 @@ import org.jdom2.Element;
 /**
  *
  * @author	Bob Jacobsen, Copyright 2014
- * @version $Revision$
  */
 public class QualifierAdderTest extends TestCase {
 

@@ -9,7 +9,6 @@ import junit.framework.TestSuite;
  * Tests for the jmri.jmrix.lenz.li101 package
  *
  * @author Paul Bender
- * @version $Revision$
  */
 public class LI101Test extends TestCase {
 

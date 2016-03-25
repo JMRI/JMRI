@@ -9,7 +9,6 @@ import junit.framework.TestSuite;
  * Tests for the jmri.jmrix.lenz.xnetsimulator package
  *
  * @author Paul Bender
- * @version $Revision$
  */
 public class XNetSimulatorTest extends TestCase {
 

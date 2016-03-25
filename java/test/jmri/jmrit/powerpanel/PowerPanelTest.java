@@ -10,7 +10,6 @@ import junit.framework.TestSuite;
  * Tests for the jmrit.PowerPanel package
  *
  * @author	Bob Jacobsen
- * @version $Revision$
  */
 public class PowerPanelTest extends TestCase {
 

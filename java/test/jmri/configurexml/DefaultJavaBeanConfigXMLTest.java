@@ -10,7 +10,6 @@ import junit.framework.TestSuite;
  * Checks of java bean storage.
  *
  * @author Bob Jacobsen Copyright 2009
- * @version $Revision$
  */
 public class DefaultJavaBeanConfigXMLTest extends TestCase {
 

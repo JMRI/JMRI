@@ -9,7 +9,6 @@ import junit.framework.TestSuite;
  * Tests for the jmri.jmrix.can.adapters.lawicell package.
  *
  * @author Bob Jacobsen Copyright 2009
- * @version $Revision$
  */
 public class LawicellTest extends TestCase {
 

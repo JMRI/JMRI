@@ -23,7 +23,6 @@ import junit.framework.TestSuite;
  * Just tests Elements, not actual files.
  *
  * @author Bob Coleman Copyright 2012
- * @version $Revision$
  */
 public class SectionManagerXmlTest extends TestCase {
 

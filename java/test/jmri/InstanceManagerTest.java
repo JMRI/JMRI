@@ -14,7 +14,6 @@ import junit.framework.TestSuite;
  * Test InstanceManager
  *
  * @author	Bob Jacobsen
- * @version $Revision$
  */
 public class InstanceManagerTest extends TestCase implements InstanceManagerAutoDefault {
 

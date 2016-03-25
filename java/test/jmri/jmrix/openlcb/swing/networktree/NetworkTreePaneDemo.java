@@ -30,7 +30,6 @@ import org.openlcb.swing.networktree.TreePane;
  * </ul>
  *
  * @author Bob Jacobsen Copyright 2009
- * @version $Revision$
  */
 public class NetworkTreePaneDemo extends TestCase {
 

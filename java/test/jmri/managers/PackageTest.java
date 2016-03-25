@@ -9,7 +9,6 @@ import junit.framework.TestSuite;
  * Invoke complete set of tests for the jmri.managers
  *
  * @author	Bob Jacobsen, Copyright (C) 2009
- * @version $Revision$
  */
 public class PackageTest extends TestCase {
 

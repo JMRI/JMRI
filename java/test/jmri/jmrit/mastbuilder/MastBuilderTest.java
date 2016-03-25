@@ -11,7 +11,6 @@ import junit.framework.TestSuite;
  * class.
  *
  * @author	Bob Jacobsen Copyright (C) 2010
- * @version $Revision$
  */
 public class MastBuilderTest extends TestCase {
 

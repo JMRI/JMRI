@@ -12,7 +12,6 @@ import org.openlcb.can.OpenLcbCanFrame;
  * Tests for making CAN frames into OpenLCB messages.
  *
  * @author Bob Jacobsen Copyright 2010
- * @version $Revision$
  */
 public class CanConverterTest extends TestCase {
 

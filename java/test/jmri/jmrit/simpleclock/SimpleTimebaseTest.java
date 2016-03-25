@@ -12,7 +12,6 @@ import junit.framework.TestSuite;
  * Tests for the SimpleTimebase class
  *
  * @author	Bob Jacobsen
- * @version $Revision$
  */
 public class SimpleTimebaseTest extends TestCase {
 

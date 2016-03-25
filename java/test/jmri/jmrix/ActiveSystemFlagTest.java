@@ -12,7 +12,6 @@ import org.slf4j.LoggerFactory;
  * Tests for the XmlFile class.
  *
  * @author	Bob Jacobsen Copyright 2008
- * @version $Revision$
  */
 public class ActiveSystemFlagTest extends TestCase {
 

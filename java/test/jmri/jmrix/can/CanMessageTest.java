@@ -9,7 +9,6 @@ import junit.framework.TestSuite;
  * Tests for the jmri.jmrix.can.CanMessage class
  *
  * @author Bob Jacobsen Copyright 2008, 2009
- * @version $Revision$
  */
 public class CanMessageTest extends CanMRCommonTest {
 

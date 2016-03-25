@@ -9,7 +9,6 @@ import junit.framework.TestSuite;
  * Tests for the jmri.jmrix.powerline.insteon2412s package.
  *
  * @author Bob Jacobsen Copyright 2003, 2007, 2008, 2009
- * @version $Revision$
  */
 public class Insteon2412sTest extends TestCase {
 

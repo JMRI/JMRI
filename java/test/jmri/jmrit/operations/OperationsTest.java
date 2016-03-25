@@ -9,7 +9,6 @@ import junit.framework.TestSuite;
  * Tests for the jmrit.operations package
  *
  * @author	Bob Coleman
- * @version $Revision$
  */
 public class OperationsTest extends TestCase {
 

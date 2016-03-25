@@ -10,7 +10,6 @@ import junit.framework.TestSuite;
  * Tests for the Turnout class
  *
  * @author	Bob Jacobsen Copyright (C) 2010
- * @version $Revision$
  */
 public class TurnoutTest extends TestCase {
 

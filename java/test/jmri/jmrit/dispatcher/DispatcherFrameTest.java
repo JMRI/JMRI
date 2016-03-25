@@ -12,7 +12,6 @@ import junit.framework.TestSuite;
  * Swing jfcUnit tests for dispatcher options
  *
  * @author	Dave Duchamp
- * @version $Revision$
  */
 public class DispatcherFrameTest extends jmri.util.SwingTestCase {
 

@@ -16,7 +16,6 @@ import junit.framework.TestSuite;
  * Swing jfcUnit tests for the SDI GUI
  *
  * @author	Bob Jacobsen Copyright 2010, 2015
- * @version $Revision$
  */
 public class SdiJfcUnitTests extends jmri.util.SwingTestCase {
 

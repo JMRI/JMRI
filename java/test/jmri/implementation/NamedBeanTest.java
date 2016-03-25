@@ -14,7 +14,6 @@ import junit.framework.TestSuite;
  * tests in a test class for your own NamedBean class
  *
  * @author	Bob Jacobsen Copyright (C) 2009, 2015
- * @version $Revision$
  */
 public class NamedBeanTest extends TestCase {
 

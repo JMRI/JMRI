@@ -11,7 +11,6 @@ import junit.framework.TestSuite;
  *
  * @author	Bob Jacobsen Copyright 2006, 2007
  *
- * @version $Revision$
  */
 public class QsiReplyTest extends TestCase {
 

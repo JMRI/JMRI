@@ -11,7 +11,6 @@ import junit.framework.TestSuite;
  * Tests for the CatalogTreeFS class
  *
  * @author	Bob Jacobsen Copyright (C) 2009
- * @version $Revision$
  */
 public class CatalogTreeFSTest extends TestCase {
 

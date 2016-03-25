@@ -9,7 +9,6 @@ import junit.framework.TestSuite;
  * Tests for the jmri.jmrix.lenz.xntcp package
  *
  * @author Paul Bender
- * @version $Revision$
  */
 public class XnTcpTest extends TestCase {
 

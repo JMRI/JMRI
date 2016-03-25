@@ -8,7 +8,6 @@ import junit.framework.Assert;
  *
  * @author	Paul Bender
  * @author	Mark Underwood (C) 2015
- * @version $Revision$
  */
 public class DCCppLightTest extends jmri.implementation.AbstractLightTest {
 

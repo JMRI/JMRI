@@ -9,7 +9,6 @@ import junit.framework.TestSuite;
  * tests for the jmri.jmrix.sprog package
  *
  * @author	Bob Jacobsen
- * @version $Revision$
  */
 public class PackageTest extends TestCase {
 

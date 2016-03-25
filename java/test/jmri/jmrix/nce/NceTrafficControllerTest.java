@@ -16,7 +16,6 @@ import org.slf4j.LoggerFactory;
  * JUnit tests for the NceTrafficController class
  *
  * @author	Bob Jacobsen Copyright 2003, 2007
- * @version $Revision$
  */
 public class NceTrafficControllerTest extends TestCase {
 

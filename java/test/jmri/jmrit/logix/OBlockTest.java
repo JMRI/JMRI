@@ -10,7 +10,6 @@ import junit.framework.TestSuite;
 /**
  *
  * @author	Bob Jacobsen Copyright 2010, 2014
- * @version $Revision$
  */
 public class OBlockTest extends TestCase {
 

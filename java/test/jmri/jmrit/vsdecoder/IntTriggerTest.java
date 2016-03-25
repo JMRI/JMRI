@@ -12,7 +12,6 @@ import org.jdom2.Element;
  * Tests for the IntTrigger class
  *
  * @author Mark Underwood Copyright (C) 2011
- * @version $Revision$
  */
 public class IntTriggerTest extends TestCase {
 

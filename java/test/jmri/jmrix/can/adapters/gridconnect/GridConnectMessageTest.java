@@ -11,7 +11,6 @@ import junit.framework.TestSuite;
  * Tests for the jmri.jmrix.can.adapters.gridconnect.GridConnectMessage class
  *
  * @author Bob Jacobsen Copyright 2008, 2009
- * @version $Revision$
  */
 public class GridConnectMessageTest extends TestCase {
 

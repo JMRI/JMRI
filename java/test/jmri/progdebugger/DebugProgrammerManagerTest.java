@@ -12,7 +12,6 @@ import junit.framework.TestSuite;
  * Test the DebugProgrammerManager class.
  *
  * @author	Bob Jacobsen Copyright 2002
- * @version $Revision$
  */
 public class DebugProgrammerManagerTest extends TestCase {
 

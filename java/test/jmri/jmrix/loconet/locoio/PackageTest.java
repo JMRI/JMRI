@@ -9,7 +9,6 @@ import junit.framework.TestSuite;
  * Tests for the jmri.jmrix.loconet.locoio package
  *
  * @author	Bob Jacobsen Copyright (C) 2002, 2010
- * @version $Revision$
  */
 public class PackageTest extends TestCase {
 

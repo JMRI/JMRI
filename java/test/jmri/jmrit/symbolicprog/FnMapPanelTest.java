@@ -13,7 +13,6 @@ import org.jdom2.Element;
  * Base for tests of classes inheriting from FnMapPanel abstract class
  *
  * @author	Bob Jacobsen, Copyright 2009
- * @version $Revision$
  */
 public class FnMapPanelTest extends TestCase {
 

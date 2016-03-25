@@ -12,7 +12,6 @@ import junit.framework.TestSuite;
  * Tests for the jmri.jmrix.can.cbus.swing.configtool package.
  *
  * @author Bob Jacobsen Copyright 2008
- * @version $Revision$
  */
 public class ConfigToolActionTest extends TestCase {
 

@@ -12,7 +12,6 @@ import junit.framework.TestSuite;
  * Tests for the MemoryTracker class
  *
  * @author	Bob Jacobsen Copyright (C) 2006
- * @version $Revision$
  */
 public class MemoryTrackerTest extends TestCase {
 

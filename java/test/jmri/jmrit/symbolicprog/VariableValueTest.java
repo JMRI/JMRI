@@ -19,7 +19,6 @@ import jmri.util.JUnitUtil;
  * Base for tests of classes inheriting from VariableValue abstract class
  *
  * @author	Bob Jacobsen, Copyright 2002
- * @version $Revision$
  */
 public abstract class VariableValueTest extends TestCase {
 

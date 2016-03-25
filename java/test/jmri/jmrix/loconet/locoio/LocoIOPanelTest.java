@@ -13,7 +13,6 @@ import junit.framework.TestSuite;
  * Tests for the jmri.jmrix.loconet.locoio.LocoIOFrame class
  *
  * @author	Bob Jacobsen Copyright (C) 2002
- * @version $Revision$
  */
 public class LocoIOPanelTest extends TestCase {
 

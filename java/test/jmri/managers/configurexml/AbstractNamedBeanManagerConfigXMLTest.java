@@ -13,7 +13,6 @@ import org.jdom2.Element;
  * Checks of basic NamedBean storage
  *
  * @author Bob Jacobsen Copyright 2009
- * @version $Revision$
  */
 public class AbstractNamedBeanManagerConfigXMLTest extends TestCase {
 

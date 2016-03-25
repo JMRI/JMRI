@@ -9,7 +9,6 @@ import junit.framework.TestSuite;
  * Invokes complete set of tests in the jmri.swing tree
  *
  * @author	Bob Jacobsen Copyright 2014
- * @version $Revision$
  */
 public class PackageTest extends TestCase {
 

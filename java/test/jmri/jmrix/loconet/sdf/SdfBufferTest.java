@@ -15,7 +15,6 @@ import org.slf4j.LoggerFactory;
  * Tests for the jmri.jmrix.loconet.sdf.SdfBuffer class.
  *
  * @author Bob Jacobsen Copyright 2007
- * @version $Revision$
  */
 public class SdfBufferTest extends TestCase {
 

@@ -18,7 +18,6 @@ import org.slf4j.LoggerFactory;
  * Description:	JUnit tests for the SerialTrafficController class
  *
  * @author	Bob Jacobsen Copyright 2006
- * @version $Revision$
  */
 public class SerialTrafficControllerTest extends TestCase {
 

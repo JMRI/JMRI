@@ -10,7 +10,6 @@ import junit.framework.TestSuite;
  * Tests for the jmri.jmris.srcp.JmriSRCPPowerServer class
  *
  * @author Paul Bender
- * @version $Revision$
  */
 public class JmriSRCPPowerServerTest extends TestCase {
 

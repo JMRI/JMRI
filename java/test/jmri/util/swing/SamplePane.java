@@ -11,7 +11,6 @@ import javax.swing.JMenu;
  * Sample Pane class for tests
  *
  * @author	Bob Jacobsen Copyright 2010
- * @version $Revision$
  */
 // sample class
 public class SamplePane extends jmri.util.swing.JmriPanel {

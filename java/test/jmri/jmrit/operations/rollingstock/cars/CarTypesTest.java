@@ -14,7 +14,6 @@ import junit.framework.TestSuite;
  * Derived from prevous "OperationsCarTest" to include only the tests related to * CarTypes.
  *
  * @author	Bob Coleman Copyright (C) 2008, 2009
- * @version $Revision$
  */
 public class CarTypesTest extends OperationsTestCase {
 

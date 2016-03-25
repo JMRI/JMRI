@@ -10,7 +10,6 @@ import org.slf4j.LoggerFactory;
  * Invokes complete set of tests in the jmri.jmrit.log tree
  *
  * @author	Bob Jacobsen Copyright 2003, 2010
- * @version $Revision$
  */
 public class PackageTest extends TestCase {
 

@@ -13,7 +13,6 @@ import junit.framework.TestSuite;
  * Tests for the DccSignalMast implementation
  *
  * @author	Bob Jacobsen Copyright (C) 2013
- * @version $Revision$
  */
 public class DccSignalMastTest extends TestCase {
 

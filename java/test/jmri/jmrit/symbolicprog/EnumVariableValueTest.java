@@ -15,7 +15,6 @@ import org.slf4j.LoggerFactory;
  * Test EnumVariableValue
  *
  * @author	Bob Jacobsen Copyright 2003
- * @version $Revision$
  */
 public class EnumVariableValueTest extends VariableValueTest {
 

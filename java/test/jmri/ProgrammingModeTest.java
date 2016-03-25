@@ -11,7 +11,6 @@ import junit.framework.TestSuite;
  * Tests for the ProgrammingMode class
  *
  * @author Bob Jacobsen Copyright (C) 2014
- * @version $Revision$
  */
 public class ProgrammingModeTest extends TestCase {
 

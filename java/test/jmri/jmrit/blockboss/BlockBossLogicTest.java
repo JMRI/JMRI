@@ -15,7 +15,6 @@ import junit.framework.TestSuite;
  * Tests for the BlockBossLogic class
  *
  * @author	Bob Jacobsen
- * @version $Revision$
  */
 public class BlockBossLogicTest extends TestCase {
 

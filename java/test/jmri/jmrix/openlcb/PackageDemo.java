@@ -9,7 +9,6 @@ import junit.framework.TestSuite;
  * Demos for the jmri.jmrix.openlcb.swing package.
  *
  * @author Bob Jacobsen Copyright 2012
- * @version $Revision$
  */
 public class PackageDemo extends TestCase {
 

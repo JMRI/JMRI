@@ -10,7 +10,6 @@ import junit.framework.TestSuite;
  * Tests for the StoppingBlock class
  *
  * @author	Bob Jacobsen Copyright (C) 2006
- * @version $Revision$
  */
 public class StoppingBlockTest extends TestCase {
 

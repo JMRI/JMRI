@@ -11,7 +11,6 @@ import junit.framework.TestSuite;
  * Tests for the jmri.jmrix.can.cbus.CbusProgrammerManager class.
  *
  * @author	Bob Jacobsen Copyright 2008
- * @version $Revision$
  */
 public class CbusProgrammerManagerTest extends TestCase {
 

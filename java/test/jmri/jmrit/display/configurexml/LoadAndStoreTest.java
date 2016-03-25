@@ -17,7 +17,6 @@ import junit.framework.Test;
  *
  * @author Bob Jacobsen Copyright 2009, 2014
  * @since 2.5.5 (renamed & reworked in 3.9 series)
- * @version $Revision$
  */
 public class LoadAndStoreTest extends jmri.configurexml.LoadAndStoreTestBase {
 

@@ -9,7 +9,6 @@ import junit.framework.TestSuite;
  * Tests for the jmri.jmrix.openlcb.OlcbTurnoutManager class.
  *
  * @author	Bob Jacobsen Copyright 2008, 2010, 2011
- * @version $Revision$
  */
 public class OlcbTurnoutManagerTest extends TestCase {
 

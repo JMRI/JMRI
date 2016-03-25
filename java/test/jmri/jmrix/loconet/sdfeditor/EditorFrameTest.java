@@ -10,7 +10,6 @@ import junit.framework.TestSuite;
  * Tests for the jmri.jmrix.loconet.sdfeditor.EditorPane class.
  *
  * @author	Bob Jacobsen Copyright 2007
- * @version $Revision$
  */
 public class EditorFrameTest extends TestCase {
 

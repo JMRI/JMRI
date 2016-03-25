@@ -9,7 +9,6 @@ import junit.framework.TestSuite;
  * Tests for the jmrit.simpleclock package
  *
  * @author	Bob Jacobsen
- * @version $Revision$
  */
 public class SimpleClockTest extends TestCase {
 

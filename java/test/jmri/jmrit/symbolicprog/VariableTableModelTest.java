@@ -17,7 +17,6 @@ import org.jdom2.Element;
  * Description:
  *
  * @author	Bob Jacobsen Copyright 2005
- * @version $Revision$
  */
 public class VariableTableModelTest extends TestCase {
 

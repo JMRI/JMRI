@@ -12,7 +12,6 @@ import junit.framework.TestSuite;
  * Test the HexVariableValue class
  *
  * @author	Bob Jacobsen Copyright 2001
- * @version $Revision$
  */
 public class HexVariableValueTest extends VariableValueTest {
 

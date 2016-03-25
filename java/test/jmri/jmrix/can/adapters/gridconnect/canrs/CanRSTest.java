@@ -9,7 +9,6 @@ import junit.framework.TestSuite;
  * Tests for the jmri.jmrix.can.adapters.gridconnect.canrs package.
  *
  * @author Bob Jacobsen Copyright 2009
- * @version $Revision$
  */
 public class CanRSTest extends TestCase {
 

@@ -13,7 +13,6 @@ import junit.framework.TestSuite;
  * Some of these tests are here, as they're cross-class functions
  *
  * @author	Bob Jacobsen Copyright 2009
- * @version $Revision$
  */
 public class JythonTest extends TestCase {
 

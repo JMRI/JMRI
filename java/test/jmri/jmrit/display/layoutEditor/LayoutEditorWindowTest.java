@@ -17,7 +17,6 @@ import jmri.util.JUnitUtil;
  * Swing jfcUnit tests for the LayoutEditor
  *
  * @author	Bob Jacobsen Copyright 2009, 2010
- * @version $Revision$
  */
 public class LayoutEditorWindowTest extends jmri.util.SwingTestCase {
 

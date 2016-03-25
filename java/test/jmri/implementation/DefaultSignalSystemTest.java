@@ -13,7 +13,6 @@ import org.slf4j.LoggerFactory;
  * Tests for the DefaultSignalSystem interface implementation
  *
  * @author	Bob Jacobsen Copyright (C) 2009
- * @version $Revision$
  */
 public class DefaultSignalSystemTest extends TestCase {
 

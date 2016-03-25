@@ -15,7 +15,6 @@ import junit.framework.TestSuite;
  * Still to do: Everything
  *
  * @author	Bob Coleman Copyright (C) 2008, 2009
- * @version $Revision$
  */
 public class CarsTest extends OperationsTestCase {
 

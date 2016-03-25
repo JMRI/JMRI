@@ -9,7 +9,6 @@ import junit.framework.TestSuite;
  * Tests for the jmri.jmrix.can.swing.tie.TieToolFrame class
  *
  * @author Bob Jacobsen Copyright 2008
- * @version $Revision$
  */
 public class TieToolFrameTest extends TestCase {
 

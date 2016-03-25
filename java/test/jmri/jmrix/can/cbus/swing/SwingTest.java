@@ -9,7 +9,6 @@ import junit.framework.TestSuite;
  * Tests for the jmri.jmrix.can.cbus.swing package.
  *
  * @author Bob Jacobsen Copyright 2008
- * @version $Revision$
  */
 public class SwingTest extends TestCase {
 

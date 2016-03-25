@@ -15,7 +15,6 @@ import junit.framework.TestSuite;
  * Swing jfcUnit tests for the Multipane (IDE) GUI
  *
  * @author	Bob Jacobsen Copyright 2010
- * @version $Revision$
  */
 public class MultiJfcUnitTest extends jmri.util.SwingTestCase {
 

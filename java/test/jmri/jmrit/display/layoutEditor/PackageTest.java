@@ -7,7 +7,6 @@ import junit.framework.*;
  * Tests for the jmrit.display.layoutEditor package
  *
  * @author	Bob Jacobsen Copyright 2008, 2009, 2010
- * @version $Revision$
  */
 public class PackageTest extends TestCase {
 

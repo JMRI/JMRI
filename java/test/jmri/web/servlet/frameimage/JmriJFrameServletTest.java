@@ -11,7 +11,6 @@ import junit.framework.TestSuite;
  * Invokes complete set of tests for the jmri.web.xmlio.JmriJFrameServlet class
  *
  * @author	Bob Jacobsen Copyright 2013
- * @version $Revision$
  */
 public class JmriJFrameServletTest extends TestCase {
 

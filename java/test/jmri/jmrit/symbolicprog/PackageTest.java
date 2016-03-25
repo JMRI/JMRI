@@ -13,7 +13,6 @@ import junit.framework.TestSuite;
  * Test the jmri.jmrix.symbolicprog package.
  *
  * @author	Bob Jacobsen Copyright 2006
- * @version $Revision$
  */
 public class PackageTest extends TestCase {
 

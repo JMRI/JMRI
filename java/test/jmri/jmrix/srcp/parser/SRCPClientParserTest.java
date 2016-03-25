@@ -10,7 +10,6 @@ import junit.framework.TestSuite;
  * Tests for the {@link jmri.jmrix.srcp.parser.SRCPClientParser} class.
  *
  * @author Paul Bender
- * @version $Revision$
  */
 public class SRCPClientParserTest extends TestCase {
 

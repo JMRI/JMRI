@@ -16,7 +16,6 @@ import org.slf4j.LoggerFactory;
  * Tests for the jmri.jmrix.lenz.XNetTurnoutManager class.
  *
  * @author	Bob Jacobsen Copyright 2004
- * @version $Revision$
  */
 public class XNetTurnoutManagerTest extends jmri.managers.AbstractTurnoutMgrTest {
 

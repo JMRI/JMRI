@@ -13,7 +13,6 @@ import org.slf4j.LoggerFactory;
  * checking whether data was forwarded or not
  * 
  * @author	Bob Jacobsen Copyright (C) 2006, 2015
- * @version $Revision$
  */
 class XNetPortControllerScaffold extends XNetSimulatorPortController {
 

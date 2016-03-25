@@ -9,7 +9,6 @@ import junit.framework.TestSuite;
  * Tests for the jmrit.blockboss package
  *
  * @author	Bob Jacobsen
- * @version $Revision$
  */
 public class PackageTest extends TestCase {
 

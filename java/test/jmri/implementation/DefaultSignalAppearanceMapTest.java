@@ -18,7 +18,6 @@ import org.slf4j.LoggerFactory;
  * Tests for the SignalAppearanceMap interface
  *
  * @author	Bob Jacobsen Copyright (C) 2009
- * @version $Revision$
  */
 public class DefaultSignalAppearanceMapTest extends TestCase {
 

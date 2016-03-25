@@ -12,7 +12,6 @@ import junit.framework.TestSuite;
  * Tests for the jmri.jmrix.loconet.LocoNetThrottledTransmitter class.
  *
  * @author Bob Jacobsen Copyright 2001, 2002, 2009, 2015
- * @version $Revision$
  */
 public class LocoNetThrottledTransmitterTest extends TestCase {
 

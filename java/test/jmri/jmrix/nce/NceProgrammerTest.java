@@ -22,7 +22,6 @@ import org.slf4j.LoggerFactory;
  * was done would have been good!
  *
  * @author	Bob Jacobsen
- * @version $Revision$
  */
 public class NceProgrammerTest extends TestCase {
 

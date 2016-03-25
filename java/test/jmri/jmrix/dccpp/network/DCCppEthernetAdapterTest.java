@@ -13,7 +13,6 @@ import junit.framework.TestSuite;
  *
  * @author	Paul Bender
  * @author      Mark Underwood Copyright (C) 2015
- * @version $Revision$
  */
 public class DCCppEthernetAdapterTest extends TestCase {
 

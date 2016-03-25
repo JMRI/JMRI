@@ -16,7 +16,6 @@ import junit.framework.TestSuite;
  * Tests for the jmri.jmrix.can.swing.monitor.MonitorFrame class
  *
  * @author Bob Jacobsen Copyright 2010
- * @version $Revision$
  */
 public class MonitorFrameDemo extends TestCase {
 
