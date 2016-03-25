@@ -1,5 +1,6 @@
 package jmri.jmrit.roster;
 
+import jmri.InstanceManager;
 import junit.framework.Assert;
 import junit.framework.Test;
 import junit.framework.TestCase;
@@ -151,14 +152,16 @@ public class RosterEntryPaneTest extends TestCase {
     public void testNotDuplicate() {
         RosterEntryPane p = new RosterEntryPane(rNew);
         // reset Roster
-        Roster.resetInstance();
+        InstanceManager.reset(Roster.class);
+        InstanceManager.setDefault(Roster.class, new Roster(null));
         Assert.assertTrue(!p.checkDuplicate());
     }
 
     public void testIsDuplicate() {
         RosterEntryPane p = new RosterEntryPane(rNew);
         // reset Roster
-        Roster.resetInstance();
+        InstanceManager.reset(Roster.class);
+        InstanceManager.setDefault(Roster.class, new Roster(null));
         Roster.instance().addEntry(rNew);
 
         Assert.assertTrue(!p.checkDuplicate());
@@ -167,7 +170,8 @@ public class RosterEntryPaneTest extends TestCase {
     public void testRenamedDuplicate() {
         RosterEntryPane p = new RosterEntryPane(rOld);
         // reset Roster
-        Roster.resetInstance();
+        InstanceManager.reset(Roster.class);
+        InstanceManager.setDefault(Roster.class, new Roster(null));
         Roster.instance().addEntry(rNew);
 
         // reset entry

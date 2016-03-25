@@ -1,5 +1,6 @@
 package jmri.jmrit.roster;
 
+import jmri.InstanceManager;
 import junit.framework.Test;
 import junit.framework.TestCase;
 import junit.framework.TestSuite;
@@ -22,8 +23,8 @@ public class CopyRosterItemActionTest extends TestCase {
         // create a special roster
         //Roster r = RosterTest.createTestRoster();
         // make that the default; not that test roster uses special name
-        Roster.resetInstance();
-        Roster.instance();
+        InstanceManager.reset(Roster.class);
+        InstanceManager.setDefault(Roster.class, new Roster(null));
 
         // copy the item
         CopyRosterItemAction a = new CopyRosterItemAction("copy", new javax.swing.JFrame()) {

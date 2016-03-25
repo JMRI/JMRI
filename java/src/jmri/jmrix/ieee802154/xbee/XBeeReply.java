@@ -57,7 +57,7 @@ public class XBeeReply extends jmri.jmrix.ieee802154.IEEE802154Reply {
         String s = "";
         int packet[] = xbresponse.getProcessedPacketBytes();
         for(int i=0;i<packet.length;i++) {
-            jmri.util.StringUtil.appendTwoHexFromInt(packet[i],s);
+            s=jmri.util.StringUtil.appendTwoHexFromInt(packet[i],s);
         }
         return s;
     }

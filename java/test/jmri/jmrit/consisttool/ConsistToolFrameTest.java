@@ -1,6 +1,7 @@
 // ConsistToolFrameTest.java
 package jmri.jmrit.consisttool;
 
+import jmri.util.JUnitUtil;
 import junit.framework.Assert;
 import junit.framework.Test;
 import junit.framework.TestCase;
@@ -37,4 +38,14 @@ public class ConsistToolFrameTest extends TestCase {
         return suite;
     }
 
+    @Override
+    public void setUp() throws Exception {
+        super.setUp();
+        JUnitUtil.initConfigureManager();
+    }
+    
+    @Override
+    public void tearDown() throws Exception {
+        super.tearDown();
+    }
 }

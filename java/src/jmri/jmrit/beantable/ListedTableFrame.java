@@ -223,7 +223,7 @@ public class ListedTableFrame extends BeanTableFrame {
         JMenu fileMenu = new JMenu(rb.getString("MenuFile"));
         menuBar.add(fileMenu);
 
-        JMenuItem newItem = new JMenuItem(rb.getString("MenuNewWindow"));
+        JMenuItem newItem = new JMenuItem(Bundle.getMessage("MenuNewWindow"));
         fileMenu.add(newItem);
         newItem.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
@@ -253,7 +253,7 @@ public class ListedTableFrame extends BeanTableFrame {
             }
         });
 
-        JMenu viewMenu = new JMenu(rb.getString("MenuView"));
+        JMenu viewMenu = new JMenu(Bundle.getMessage("MenuView"));
         menuBar.add(viewMenu);
         for (int i = 0; i < TabbedTableItemListArrayArray.size(); i++) {
             final TabbedTableItemListArray itemList = TabbedTableItemListArrayArray.get(i);

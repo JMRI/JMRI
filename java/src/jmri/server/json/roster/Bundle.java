@@ -1,11 +1,13 @@
 // Bundle.java
-package jmri.server.json;
+package jmri.server.json.roster;
 
+import jmri.server.json.turnout.*;
+import jmri.server.json.power.*;
+import javax.annotation.CheckReturnValue;
+import javax.annotation.ParametersAreNonnullByDefault;
+import javax.annotation.Nullable;
 import edu.umd.cs.findbugs.annotations.SuppressFBWarnings;
 import java.util.Locale;
-import javax.annotation.CheckReturnValue;
-import javax.annotation.Nullable;
-import javax.annotation.ParametersAreNonnullByDefault;
 
 @ParametersAreNonnullByDefault
 @CheckReturnValue
@@ -23,9 +25,9 @@ import javax.annotation.ParametersAreNonnullByDefault;
  * @version $Revision: 17977 $
  * @since 3.3.1
  */
-public class Bundle extends jmri.server.Bundle {
+public class Bundle extends jmri.server.json.Bundle {
 
-    private final static String name = "jmri.server.json.Bundle"; // no local resources
+    private final static String name = null; // no local resources
 
     //
     // below here is boilerplate to be copied exactly
