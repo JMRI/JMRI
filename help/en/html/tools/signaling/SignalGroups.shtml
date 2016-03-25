@@ -23,14 +23,12 @@
 </head>
 
 <body>
-  <div id="container">
 
 <!--#include virtual="/Header" -->
 <!--#include virtual="Sidebar" -->
 
       <div id="mainContent">
       <!-- Page Body -->
-
 
 <h1>JMRI: Signal Groups</h1>
 
@@ -88,9 +86,7 @@ file (recommended), select <b>File > Store > Store Configuration and Panels To F
 	
 <!--#include virtual="/Footer" -->
 
-      </div><!-- closes #mainContent-->
-  </div> <!-- closes #container -->
+    </div><!-- closes #mainContent-->
+  </div> <!-- closes #mBody-->
 </body>
 </html>
-
-

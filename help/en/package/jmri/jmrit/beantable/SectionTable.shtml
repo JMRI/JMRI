@@ -178,7 +178,7 @@ The menu items and their use are described below:</p>
 	</li>
 	</ul>
 
-<h2>Support for Optional Direction and Stopping Sensors</h2>
+<h2>Direction and Stopping Sensors</h2>
 <p>Optionally each Section may have two <i>direction sensors</i>, one for the forward 
 direction and one for the reverse direction. These are normally internal Sensors, 
 bearing system names that begin with IS. They automatically follow the state of their 
@@ -204,7 +204,7 @@ has reached the end of its allocation. For automatic running, these sensors may
 be used to stop a train before it reaches the end of its allocated Section, and 
 before it overruns a red signal, if signals are present.
 
-<h2><a name='SignalMast'>Using Signal Mast Logic With Sections</a></h2>
+<h2><a name='SignalMast'>Using Signal Mast Logic with Sections</a></h2>
 <p>If your signaling is based using <a href="signaling/SignalMasts.shtml">Signal Masts</a>, with the associated logic that has been generated 
 using the Layout Editor, then it is possible to also have Sections automatically generated based 
 upon the logic.

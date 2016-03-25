@@ -220,11 +220,7 @@ public class RollingStockManager {
                     String[] number = rs.getNumber().split("-");
                     rsNumber = Integer.parseInt(number[0]);
                     rs.number = rsNumber;
-                } catch (RuntimeException re) {
-                    throw re;
-                    // two possible exceptions, ArrayIndexOutOfBoundsException on split, and NumberFormatException on
-                    // parseInt
-                } catch (Exception e2) {
+                } catch (NumberFormatException e2) {
                     rs.number = NOT_INTEGER;
                     // sort alphanumeric numbers at the end of the out list
                     String numberIn = rs.getNumber();
@@ -275,11 +271,7 @@ public class RollingStockManager {
                         try {
                             String[] number = out.get(j).getNumber().split("-");
                             outRsNumber = Integer.parseInt(number[0]);
-                        } catch (RuntimeException re) {
-                            throw re;
-                            // two possible exceptions, ArrayIndexOutOfBoundsException on split, and NumberFormatException on
-                            // parseInt
-                        } catch (Exception e2) {
+                        } catch (NumberFormatException e2) {
                             // force add
                             outRsNumber = rsNumber + 1;
                         }
