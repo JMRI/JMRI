@@ -64,6 +64,7 @@ public class ThreadingUtil {
     static public void runOnGUI(ThreadAction ta) {
         if (isGUIThread()) {
             // run now
+            ta.run();
         } else {
             // dispatch to Swing
             try {
@@ -91,6 +92,7 @@ public class ThreadingUtil {
     static public void runOnGUIEventually(ThreadAction ta) {
         if (isGUIThread()) {
             // run now
+            ta.run();
         } else {
             // dispatch to Swing
             javax.swing.SwingUtilities.invokeLater(ta);
