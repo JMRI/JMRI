@@ -1,4 +1,3 @@
-// ResetTableModel.java
 package jmri.jmrit.symbolicprog;
 
 import java.awt.event.ActionEvent;
@@ -25,7 +24,6 @@ import org.slf4j.LoggerFactory;
  * decoder.
  *
  * @author Howard G. Penny Copyright (C) 2005
- * @version $Revision$
  */
 public class ResetTableModel extends AbstractTableModel implements ActionListener, PropertyChangeListener {
 
