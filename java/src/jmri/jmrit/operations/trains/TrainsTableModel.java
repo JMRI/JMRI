@@ -522,12 +522,14 @@ public class TrainsTableModel extends javax.swing.table.AbstractTableModel imple
                 log.debug("Update train table row: {} name: {}", row, train.getName());
             }
             if (row >= 0) {
-                // The following commented out line of code can sometimes cause a thread lock if the table sorter is active.
-                // It never seems to lock when the sorter is inactive.
-                // TODO Figure out a way to prevent the thread lock. Note this code was added recently to
-                // scroll the trains window to the line (train) where a change in the line was being made.
-                //                
-//                _table.scrollRectToVisible(_table.getCellRect(row, 0, true));
+                // The line "_table.scrollRectToVisible(_table.getCellRect(row, 0, true));"
+                // can cause a thread lock if the table sorter is active. That's the reason
+                // the code is wrapped in the invokeLater.
+                SwingUtilities.invokeLater(new Runnable() {
+                    public void run() {
+                        _table.scrollRectToVisible(_table.getCellRect(row, 0, true));
+                    }
+                });
                 fireTableRowsUpdated(row, row);
             }
         }
