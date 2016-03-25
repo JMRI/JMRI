@@ -13,7 +13,6 @@ import org.slf4j.LoggerFactory;
  * Handle XML persistance of SimpleTimebase objects
  *
  * @author Bob Jacobsen Copyright: Copyright (c) 2003, 2008
- * @version $Revision$
  */
 public class SimpleTimebaseXml extends jmri.configurexml.AbstractXmlAdapter {
 
