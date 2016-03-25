@@ -11,6 +11,7 @@ import jmri.NamedBean;
 import jmri.MemoryManager;
 import jmri.PowerManager;
 import jmri.PowerManagerScaffold;
+import jmri.ReporterManager;
 import jmri.SignalHeadManager;
 import jmri.SignalMastLogicManager;
 import jmri.implementation.JmriConfigurationManager;
@@ -24,6 +25,7 @@ import jmri.managers.DefaultIdTagManager;
 import jmri.managers.DefaultLogixManager;
 import jmri.managers.DefaultMemoryManager;
 import jmri.managers.DefaultSignalMastLogicManager;
+import jmri.managers.InternalReporterManager;
 import jmri.managers.InternalLightManager;
 import jmri.managers.InternalSensorManager;
 import jmri.managers.InternalTurnoutManager;
@@ -213,6 +215,13 @@ public class JUnitUtil {
         MemoryManager m = new DefaultMemoryManager();
         if (InstanceManager.configureManagerInstance() != null) {
             InstanceManager.configureManagerInstance().registerConfig(m, jmri.Manager.MEMORIES);
+        }
+    }
+
+    public static void initReporterManager() {
+        ReporterManager m = new InternalReporterManager();
+        if (InstanceManager.configureManagerInstance() != null) {
+            InstanceManager.configureManagerInstance().registerConfig(m, jmri.Manager.REPORTERS);
         }
     }
 
