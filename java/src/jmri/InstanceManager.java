@@ -1,4 +1,3 @@
-// InstanceManager.java
 package jmri;
 
 import apps.gui3.TabbedPreferences;
@@ -54,13 +53,12 @@ import org.slf4j.LoggerFactory;
  * WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS FOR
  * A PARTICULAR PURPOSE. See the GNU General Public License for more details.
  * <P>
- * @author	Bob Jacobsen Copyright (C) 2001, 2008, 2013
+ * @author	Bob Jacobsen Copyright (C) 2001, 2008, 2013, 2016
  * @author Matthew Harris copyright (c) 2009
- * @version	$Revision$
  */
 public class InstanceManager {
 
-    static final private HashMap<Class<?>, ArrayList<Object>> managerLists = new HashMap<Class<?>, ArrayList<Object>>();
+    static final private HashMap<Class<?>, ArrayList<Object>> managerLists = new HashMap<>();
 
     /* properties */
     public static String CONSIST_MANAGER = "consistmanager"; // NOI18N
@@ -75,9 +73,11 @@ public class InstanceManager {
      *             the key to retrieve the object later.
      */
     static public <T> void store(T item, Class<T> type) {
+        log.debug("Store item of type {}", type.getName());
+        if (item == null) log.error("Should not store null value of type {}", type.getName(), new Exception("Traceback"));
         ArrayList<Object> l = managerLists.get(type);
         if (l == null) {
-            l = new ArrayList<Object>();
+            l = new ArrayList<>();
             managerLists.put(type, l);
         }
         l.add(item);
@@ -91,6 +91,7 @@ public class InstanceManager {
      */
     @SuppressWarnings("unchecked") // the cast here is protected by the structure of the managerLists
     static public <T> List<T> getList(Class<T> type) {
+        log.debug("Get list of type {}", type.getName());
         return (List<T>) managerLists.get(type);
     }
 
@@ -100,6 +101,7 @@ public class InstanceManager {
      * @param type The class Object for the items to be removed.
      */
     static public <T> void reset(Class<T> type) {
+        log.debug("Reset type {}", type.getName());
         managerLists.put(type, null);
     }
 
@@ -111,6 +113,7 @@ public class InstanceManager {
      * @param type The class Object for the item's type.
      */
     static public <T> void deregister(T item, Class<T> type) {
+        log.debug("Remove item type {}", type.getName());
         ArrayList<Object> l = managerLists.get(type);
         if (l != null) {
             l.remove(item);
@@ -126,7 +129,7 @@ public class InstanceManager {
      */
     @SuppressWarnings("unchecked")   // checked by construction
     static public <T> T getDefault(Class<T> type) {
-        log.trace("getDefault {}", type.getName());
+        log.trace("getDefault of type {}", type.getName());
         ArrayList<Object> l = managerLists.get(type);
         if (l == null || l.size() < 1) {
             // see if can autocreate
@@ -134,13 +137,22 @@ public class InstanceManager {
             if (InstanceManagerAutoDefault.class.isAssignableFrom(type)) {
                 // yes, make sure list is present before creating object
                 if (l == null) {
-                    l = new ArrayList<Object>();
+                    l = new ArrayList<>();
                     managerLists.put(type, l);
                 }
                 try {
                     l.add(type.getConstructor((Class[]) null).newInstance((Object[]) null));
                     log.debug("      auto-created default of {}", type.getName());
-                } catch (Exception e) {
+                } catch (NoSuchMethodException e) {
+                    log.error("Exception creating auto-default object", e); // unexpected
+                    return null;
+                } catch (InstantiationException e) {
+                    log.error("Exception creating auto-default object", e); // unexpected
+                    return null;
+                } catch (IllegalAccessException e) {
+                    log.error("Exception creating auto-default object", e); // unexpected
+                    return null;
+                } catch (java.lang.reflect.InvocationTargetException e) {
                     log.error("Exception creating auto-default object", e); // unexpected
                     return null;
                 }
@@ -152,7 +164,7 @@ public class InstanceManager {
             if (obj != null) {
                 log.debug("      initializer created default of {}", type.getName());
                 if (l == null) {
-                    l = new ArrayList<Object>();
+                    l = new ArrayList<>();
                     managerLists.put(type, l);
                 }
                 l.add(obj);
@@ -174,6 +186,7 @@ public class InstanceManager {
      * {@link #getDefault} method
      */
     static public <T> void setDefault(Class<T> type, T val) {
+        log.trace("setDefault for type {}", type.getName());
         List<T> l = getList(type);
         if (l == null || (l.size() < 1)) {
             store(val, type);
@@ -254,7 +267,7 @@ public class InstanceManager {
         // make a copy of the listener vector to synchronized not needed for transmit
         Vector<PropertyChangeListener> v;
         synchronized (InstanceManager.class) {
-            v = new Vector<PropertyChangeListener>(listeners);
+            v = new Vector<>(listeners);
         }
         // forward to all listeners
         int cnt = v.size();
@@ -265,7 +278,7 @@ public class InstanceManager {
     }
 
     // data members to hold contact with the property listeners
-    final private static Vector<PropertyChangeListener> listeners = new Vector<PropertyChangeListener>();
+    final private static Vector<PropertyChangeListener> listeners = new Vector<>();
 
     // Simplification order - for each type, starting with those not in the jmri package:
     //   1) Remove it from jmri.managers.DefaultInstanceInitializer, get tests to build & run
@@ -692,5 +705,3 @@ public class InstanceManager {
     /* *************************************************************************** */
     private final static Logger log = LoggerFactory.getLogger(InstanceManager.class.getName());
 }
-
-/* @(#)InstanceManager.java */

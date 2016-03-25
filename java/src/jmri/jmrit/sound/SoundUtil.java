@@ -22,7 +22,6 @@ import org.slf4j.LoggerFactory;
  *
  *
  * @author	Bob Jacobsen Copyright (C) 2004, 2006
- * @version	$Revision$
  */
 public class SoundUtil {
 
@@ -45,7 +44,7 @@ public class SoundUtil {
         DataLine.Info info = new DataLine.Info(SourceDataLine.class, format); // format is an AudioFormat object
         if (!AudioSystem.isLineSupported(info)) {
             // Handle the error.
-            log.error("line not supported: " + info);
+            log.warn("line not supported: " + info);
             return;
         }
         // Obtain and open the line.

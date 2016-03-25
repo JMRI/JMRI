@@ -14,11 +14,6 @@ import javax.swing.AbstractAction;
  */
 public class OperationsSetupAction extends AbstractAction {
 
-    /**
-     *
-     */
-    private static final long serialVersionUID = 1935343860582396704L;
-
     public OperationsSetupAction(String s) {
         super(s);
     }
@@ -27,17 +22,17 @@ public class OperationsSetupAction extends AbstractAction {
         this(Bundle.getMessage("MenuSetup"));	// NOI18N
     }
 
-    static OperationsSetupFrame f = null;
+    static OperationsSetupFrame operationsSetupFrame = null;
 
-    @edu.umd.cs.findbugs.annotations.SuppressFBWarnings(value = "ST_WRITE_TO_STATIC_FROM_INSTANCE_METHOD")
+    @edu.umd.cs.findbugs.annotations.SuppressFBWarnings(value = "ST_WRITE_TO_STATIC_FROM_INSTANCE_METHOD", justification = "Only one OperationsSetupFrame")
     public void actionPerformed(ActionEvent e) {
         // create a settings frame
-        if (f == null || !f.isVisible()) {
-            f = new OperationsSetupFrame();
-            f.initComponents();
+        if (operationsSetupFrame == null || !operationsSetupFrame.isVisible()) {
+            operationsSetupFrame = new OperationsSetupFrame();
+            operationsSetupFrame.initComponents();
         }
-        f.setExtendedState(Frame.NORMAL);
-        f.setVisible(true);	// this also brings the frame into focus
+        operationsSetupFrame.setExtendedState(Frame.NORMAL);
+        operationsSetupFrame.setVisible(true);	// this also brings the frame into focus
     }
 }
 

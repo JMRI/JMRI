@@ -174,9 +174,10 @@ public class CarsTableModel extends javax.swing.table.AbstractTableModel impleme
         }
     }
 
+    // keep show checkboxes consistent during a session
     private static boolean isSelectVisible = false;
 
-    @edu.umd.cs.findbugs.annotations.SuppressFBWarnings(value = "ST_WRITE_TO_STATIC_FROM_INSTANCE_METHOD")
+    @edu.umd.cs.findbugs.annotations.SuppressFBWarnings(value = "ST_WRITE_TO_STATIC_FROM_INSTANCE_METHOD", justification = "GUI ease of use")
     public void toggleSelectVisible() {
         XTableColumnModel tcm = (XTableColumnModel) _table.getColumnModel();
         isSelectVisible = !tcm.isColumnVisible(tcm.getColumnByModelIndex(SELECT_COLUMN));
@@ -259,6 +260,7 @@ public class CarsTableModel extends javax.swing.table.AbstractTableModel impleme
         return getCarList(_sort);
     }
 
+    @edu.umd.cs.findbugs.annotations.SuppressFBWarnings(value = "DB_DUPLICATE_SWITCH_CLAUSES", justification = "default case is sort by number")
     public List<RollingStock> getCarList(int sort) {
         List<RollingStock> list;
         switch (sort) {
@@ -679,7 +681,7 @@ public class CarsTableModel extends javax.swing.table.AbstractTableModel impleme
     }
 
     public void propertyChange(PropertyChangeEvent e) {
-        if (Control.showProperty) {
+        if (Control.SHOW_PROPERTY) {
             log.debug("Property change: ({}) old: ({}) new: ({})", e.getPropertyName(), e.getOldValue(), e
                     .getNewValue());
         }
@@ -690,7 +692,7 @@ public class CarsTableModel extends javax.swing.table.AbstractTableModel impleme
         else if (e.getSource().getClass().equals(Car.class)) {
             Car car = (Car) e.getSource();
             int row = sysList.indexOf(car);
-            if (Control.showProperty) {
+            if (Control.SHOW_PROPERTY) {
                 log.debug("Update car table row: {}", row);
             }
             if (row >= 0) {

@@ -3,13 +3,13 @@ package jmri.jmrix.roco.z21;
 /**
  * Handle configuring the XPressNet tunnel for the z21 Connection.
  * <P>
- * This uses the {@link z21XNetStreamPortController} class to do the actual 
+ * This uses the {@link Z21XNetStreamPortController} class to do the actual 
  * connection.
  *
  * @author Bob Jacobsen Copyright (C) 2001, 2003
  * @author Paul Bender Copyright (C) 2015
  *
- * @see z21XNetStreamPortController
+ * @see Z21XNetStreamPortController
  */
 public class Z21XNetConnectionConfig extends jmri.jmrix.AbstractStreamConnectionConfig {
 

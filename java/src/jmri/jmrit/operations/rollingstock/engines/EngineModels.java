@@ -62,7 +62,7 @@ public class EngineModels extends RollingStockAttribute {
             _instance = new EngineModels();
             _instance.loadDefaults();
         }
-        if (Control.showInstance) {
+        if (Control.SHOW_INSTANCE) {
             log.debug("EngineModels returns instance {}", _instance);
         }
         return _instance;

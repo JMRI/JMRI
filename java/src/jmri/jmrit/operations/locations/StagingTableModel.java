@@ -55,7 +55,7 @@ public class StagingTableModel extends TrackTableModel {
 
     // this table listens for changes to a location and it's staging tracks
     public void propertyChange(PropertyChangeEvent e) {
-        if (Control.showProperty) {
+        if (Control.SHOW_PROPERTY) {
             log.debug("Property change: ({}) old: ({}) new: ({})", e.getPropertyName(), e.getOldValue(), e
                     .getNewValue());
         }
@@ -64,7 +64,7 @@ public class StagingTableModel extends TrackTableModel {
             Track track = ((Track) e.getSource());
             if (track.getTrackType().equals(Track.STAGING)) {
                 int row = tracksList.indexOf(track);
-                if (Control.showProperty) {
+                if (Control.SHOW_PROPERTY) {
                     log.debug("Update staging table row: {} track: {}", row, track.getName());
                 }
                 if (row >= 0) {

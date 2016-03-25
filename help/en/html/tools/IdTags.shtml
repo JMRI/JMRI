@@ -65,11 +65,19 @@ extending the kit with the additional concentrator components should the
 <h3>ID Tag Table</h3>
 <p>The 
 <a href="../../package/jmri/jmrit/beantable/IdTagTable.shtml">ID Tag Table</a>
-provides easy access to the contents of all ID Tags that JMRI knows about.
-There's also an 
+provides easy access to the contents of all ID Tags that JMRI knows about.</p>
+
+<h3>ID Tag Table Controls</h3>
+<p>
+Below the table there's an 
 <a href="../../package/jmri/jmrit/beantable/IdTagAddEdit.shtml">"Add..." button</a>
 for creating your own ID Tags; JMRI automatically creates
 ID Tag objects for tags detected on the layout.</p>
+<p>Next to it, two check boxes let you activate:
+	<ul>
+	<li>Save when and where last seen</li>
+	<li>Use Fast Clock Time</li>
+	</ul>
 
 <h3>Displaying ID Tags on Panels</h3>
 <p>An ID Tag can be displayed on a Panel via the use of the Reporter Icon

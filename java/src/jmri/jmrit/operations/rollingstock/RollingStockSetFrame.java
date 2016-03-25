@@ -304,7 +304,7 @@ public class RollingStockSetFrame extends OperationsFrame implements java.beans.
     RouteLocation rl;
     RouteLocation rd;
 
-    @edu.umd.cs.findbugs.annotations.SuppressFBWarnings(value = "ST_WRITE_TO_STATIC_FROM_INSTANCE_METHOD")
+    @edu.umd.cs.findbugs.annotations.SuppressFBWarnings(value = "ST_WRITE_TO_STATIC_FROM_INSTANCE_METHOD", justification = "GUI ease of use")
     protected boolean change(RollingStock rs) {
         log.debug("Change button action for rs ({})", rs.toString());
         // save the auto buttons
@@ -470,7 +470,7 @@ public class RollingStockSetFrame extends OperationsFrame implements java.beans.
                         if (results == JOptionPane.YES_OPTION) {
                             log.debug("Force rolling stock to track");
                             rs.setLocation((Location) locationBox.getSelectedItem(), (Track) trackLocationBox
-                                    .getSelectedItem(), true);
+                                    .getSelectedItem(), RollingStock.FORCE);
                         } else {
                             return false;
                         }

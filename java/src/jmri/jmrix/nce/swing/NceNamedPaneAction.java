@@ -1,4 +1,3 @@
-// NceNamedPaneAction.java
 package jmri.jmrix.nce.swing;
 
 import javax.swing.Icon;
@@ -13,14 +12,8 @@ import org.slf4j.LoggerFactory;
  *
  * @author	Bob Jacobsen Copyright (C) 2010 Copied from LocoNet
  * @author kcameron
- * @version	$Revision$
  */
 public class NceNamedPaneAction extends jmri.util.swing.JmriNamedPaneAction {
-
-    /**
-     *
-     */
-    private static final long serialVersionUID = -7955184289782860199L;
 
     /**
      * Enhanced constructor for placing the pane in various GUIs
@@ -56,5 +49,3 @@ public class NceNamedPaneAction extends jmri.util.swing.JmriNamedPaneAction {
 
     private final static Logger log = LoggerFactory.getLogger(NceNamedPaneAction.class.getName());
 }
-
-/* @(#)NceNamedPaneAction.java */

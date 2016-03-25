@@ -88,7 +88,7 @@ public class SensorTableAction extends AbstractTableAction {
     JComboBox<String> prefixBox = new JComboBox<String>();
     JTextField numberToAdd = new JTextField(5);
     JCheckBox range = new JCheckBox(Bundle.getMessage("AddRangeBox"));
-    JLabel sysNameLabel = new JLabel("Hardware Address");
+    JLabel sysNameLabel = new JLabel(Bundle.getMessage("LabelHardwareAddress"));
     JLabel userNameLabel = new JLabel(Bundle.getMessage("LabelUserName"));
     String systemSelectionCombo = this.getClass().getName() + ".SystemSelected";
     String userNameError = this.getClass().getName() + ".DuplicateUserName";
@@ -205,7 +205,7 @@ public class SensorTableAction extends AbstractTableAction {
                     s.setUserName(user);
                 } else if (jmri.InstanceManager.sensorManagerInstance().getByUserName(user) != null && !p.getPreferenceState(getClassName(), "duplicateUserName")) {
                     jmri.InstanceManager.getDefault(jmri.UserPreferencesManager.class).
-                            showErrorMessage("Duplicate UserName", "The username " + user + " specified is already in use and therefore will not be set", getClassName(), "duplicateUserName", false, true);
+                            showErrorMessage("Duplicate UserName", "The username " + user + " specified is already in use and therefore will not be set", getClassName(), "duplicateUserName", false, true); // I18N TODO
                 }
             }
         }
@@ -255,7 +255,7 @@ public class SensorTableAction extends AbstractTableAction {
         int retval = JOptionPane.showOptionDialog(_who,
                 Bundle.getMessage("SensorGlobalDebounceMessageBox"), Bundle.getMessage("SensorGlobalDebounceMessageTitle"),
                 0, JOptionPane.INFORMATION_MESSAGE, null,
-                new Object[]{"Cancel", "OK", active, inActive}, null);
+                new Object[]{Bundle.getMessage("ButtonCancel"), Bundle.getMessage("ButtonOK"), active, inActive}, null);
         if (retval != 1) {
             return;
         }
@@ -317,23 +317,34 @@ public class SensorTableAction extends AbstractTableAction {
     public void setMenuBar(BeanTableFrame f) {
         final jmri.util.JmriJFrame finalF = f;			// needed for anonymous ActionListener class
         JMenuBar menuBar = f.getJMenuBar();
-
-        JMenu optionsMenu = new JMenu(Bundle.getMessage("MenuDefaults"));
-        JMenuItem item = new JMenuItem(Bundle.getMessage("GlobalDebounce"));
-        optionsMenu.add(item);
-        item.addActionListener(new ActionListener() {
-            public void actionPerformed(ActionEvent e) {
-                setDefaultDebounce(finalF);
+        // check for menu
+        boolean menuAbsent = true;
+        for(int m = 0; m < menuBar.getMenuCount(); ++m) {
+            String name = menuBar.getMenu(m).getAccessibleContext().getAccessibleName();
+            if(name.equals(Bundle.getMessage("MenuDefaults"))) {
+                // using first menu for check, should be identical to next JMenu Bundle
+                menuAbsent = false;
+                break;
             }
-        });
-        item = new JMenuItem(Bundle.getMessage("InitialSensorState"));
-        optionsMenu.add(item);
-        item.addActionListener(new ActionListener() {
-            public void actionPerformed(ActionEvent e) {
-                setDefaultState(finalF);
-            }
-        });
-        menuBar.add(optionsMenu);
+        }
+        if(menuAbsent) { // create it
+            JMenu optionsMenu = new JMenu(Bundle.getMessage("MenuDefaults"));
+            JMenuItem item = new JMenuItem(Bundle.getMessage("GlobalDebounce"));
+            optionsMenu.add(item);
+            item.addActionListener(new ActionListener() {
+                public void actionPerformed(ActionEvent e) {
+                    setDefaultDebounce(finalF);
+                }
+            });
+            item = new JMenuItem(Bundle.getMessage("InitialSensorState"));
+            optionsMenu.add(item);
+            item.addActionListener(new ActionListener() {
+                public void actionPerformed(ActionEvent e) {
+                    setDefaultState(finalF);
+                }
+            });
+            menuBar.add(optionsMenu);
+        }
     }
 
     void showDebounceChanged() {

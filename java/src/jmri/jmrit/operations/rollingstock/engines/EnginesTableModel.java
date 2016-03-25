@@ -417,37 +417,37 @@ public class EnginesTableModel extends javax.swing.table.AbstractTableModel impl
         }
     }
 
-    EngineEditFrame eef = null;
-    EngineSetFrame esf = null;
+    EngineEditFrame engineEditFrame = null;
+    EngineSetFrame engineSetFrame = null;
 
     public void setValueAt(Object value, int row, int col) {
         Engine engine = (Engine) sysList.get(row);
         switch (col) {
             case SET_COLUMN:
                 log.debug("Set engine location");
-                if (esf != null) {
-                    esf.dispose();
+                if (engineSetFrame != null) {
+                    engineSetFrame.dispose();
                 }
                 // use invokeLater so new window appears on top
                 SwingUtilities.invokeLater(new Runnable() {
                     public void run() {
-                        esf = new EngineSetFrame();
-                        esf.initComponents();
-                        esf.loadEngine(engine);
+                        engineSetFrame = new EngineSetFrame();
+                        engineSetFrame.initComponents();
+                        engineSetFrame.loadEngine(engine);
                     }
                 });
                 break;
             case EDIT_COLUMN:
                 log.debug("Edit engine");
-                if (eef != null) {
-                    eef.dispose();
+                if (engineEditFrame != null) {
+                    engineEditFrame.dispose();
                 }
                 // use invokeLater so new window appears on top
                 SwingUtilities.invokeLater(new Runnable() {
                     public void run() {
-                        eef = new EngineEditFrame();
-                        eef.initComponents();
-                        eef.loadEngine(engine);
+                        engineEditFrame = new EngineEditFrame();
+                        engineEditFrame.initComponents();
+                        engineEditFrame.loadEngine(engine);
                     }
                 });
                 break;
@@ -479,11 +479,11 @@ public class EnginesTableModel extends javax.swing.table.AbstractTableModel impl
         }
         manager.removePropertyChangeListener(this);
         removePropertyChangeEngines();
-        if (esf != null) {
-            esf.dispose();
+        if (engineSetFrame != null) {
+            engineSetFrame.dispose();
         }
-        if (eef != null) {
-            eef.dispose();
+        if (engineEditFrame != null) {
+            engineEditFrame.dispose();
         }
     }
 
@@ -496,7 +496,7 @@ public class EnginesTableModel extends javax.swing.table.AbstractTableModel impl
     }
 
     public void propertyChange(PropertyChangeEvent e) {
-        if (Control.showProperty) {
+        if (Control.SHOW_PROPERTY) {
             log.debug("Property change: ({}) old: ({}) new: ({})", e.getPropertyName(), e.getOldValue(), e
                     .getNewValue());
         }
@@ -512,7 +512,7 @@ public class EnginesTableModel extends javax.swing.table.AbstractTableModel impl
         else if (e.getSource().getClass().equals(Engine.class)) {
             Engine engine = (Engine) e.getSource();
             int row = sysList.indexOf(engine);
-            if (Control.showProperty) {
+            if (Control.SHOW_PROPERTY) {
                 log.debug("Update engine table row: {}", row);
             }
             if (row >= 0) {

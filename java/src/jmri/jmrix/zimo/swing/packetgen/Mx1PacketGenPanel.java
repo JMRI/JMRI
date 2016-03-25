@@ -1,4 +1,3 @@
-// MrcPacketGenPanel.java
 package jmri.jmrix.zimo.swing.packetgen;
 
 import java.awt.Dimension;
@@ -14,15 +13,11 @@ import jmri.util.StringUtil;
  * @author	Ken Cameron	Copyright (C) 2010 derived from:
  * @author	Bob Jacobsen Copyright (C) 2001
  * @author Dan Boudreau Copyright (C) 2007
- * @version $Revision: 25018 $
  */
 public class Mx1PacketGenPanel extends jmri.jmrix.zimo.swing.Mx1Panel {
 
     //ResourceBundle rb = ResourceBundle.getBundle("jmri.jmrix.mrc.packetgen.MrcPacketGenBundle");
-    /**
-     *
-     */
-    private static final long serialVersionUID = 7867055984973628076L;
+
     // member declarations
     javax.swing.JLabel jLabel1 = new javax.swing.JLabel();
     javax.swing.JButton sendButton = new javax.swing.JButton();
@@ -121,11 +116,6 @@ public class Mx1PacketGenPanel extends jmri.jmrix.zimo.swing.Mx1Panel {
      * Nested class to create one of these using old-style defaults
      */
     static public class Default extends jmri.jmrix.zimo.swing.Mx1NamedPaneAction {
-
-        /**
-         *
-         */
-        private static final long serialVersionUID = -5895919905704623321L;
 
         public Default() {
             super("Open MRC Send Binary Command",

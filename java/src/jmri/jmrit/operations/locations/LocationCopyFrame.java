@@ -117,7 +117,7 @@ public class LocationCopyFrame extends OperationsFrame implements java.beans.Pro
         setTitle(Bundle.getMessage("MenuItemCopyLocation"));
     }
 
-    @edu.umd.cs.findbugs.annotations.SuppressFBWarnings(value = "ST_WRITE_TO_STATIC_FROM_INSTANCE_METHOD")
+    @edu.umd.cs.findbugs.annotations.SuppressFBWarnings(value = "ST_WRITE_TO_STATIC_FROM_INSTANCE_METHOD", justification = "GUI ease of use")
     protected void buttonActionPerformed(java.awt.event.ActionEvent ae) {
         if (ae.getSource() == copyButton) {
             log.debug("copy location button activated");
@@ -222,7 +222,7 @@ public class LocationCopyFrame extends OperationsFrame implements java.beans.Pro
     private void moveRollingStock(Track fromTrack, Track toTrack, RollingStockManager manager) {
         for (RollingStock rs : manager.getByIdList()) {
             if (rs.getTrack() == fromTrack) {
-                rs.setLocation(toTrack.getLocation(), toTrack, true);
+                rs.setLocation(toTrack.getLocation(), toTrack, RollingStock.FORCE);
             }
         }
     }

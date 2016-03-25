@@ -4,6 +4,7 @@ package jmri.jmrit.operations.setup;
 import apps.Apps;
 import java.awt.event.ActionEvent;
 import java.io.File;
+import java.io.IOException;
 import javax.swing.AbstractAction;
 import javax.swing.JFileChooser;
 import javax.swing.JOptionPane;
@@ -90,7 +91,7 @@ public class RestoreFilesAction extends AbstractAction {
 
             Apps.handleRestart();
 
-        } catch (Exception ex) {
+        } catch (IOException ex) {
             ExceptionContext context = new ExceptionContext(ex,
                     Bundle.getMessage("RestoreDialog.restore.files"),
                     Bundle.getMessage("RestoreDialog.makeSure"));

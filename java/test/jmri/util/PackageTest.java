@@ -38,6 +38,7 @@ public class PackageTest extends TestCase {
         suite.addTest(PreferNumericComparatorTest.suite());
         suite.addTest(StringUtilTest.suite());
         suite.addTest(I18NTest.suite());
+        suite.addTest(ColorUtilTest.suite());
 
         if (!System.getProperty("jmri.headlesstest", "false").equals("true")) {
             suite.addTest(SwingTestCaseTest.suite());
@@ -56,6 +57,9 @@ public class PackageTest extends TestCase {
         suite.addTest(jmri.util.DateUtilTest.suite());
         suite.addTest(jmri.util.prefs.PackageTest.suite());
 
+        // deliberately at end
+        suite.addTest(jmri.util.Log4JErrorIsErrorTest.suite());
+        
         return suite;
     }
 

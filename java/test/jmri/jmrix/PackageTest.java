@@ -1,4 +1,3 @@
-//JmrixTest.java
 package jmri.jmrix;
 
 import junit.framework.Test;
@@ -9,7 +8,6 @@ import junit.framework.TestSuite;
  * Set of tests for the jmri.jmrix package
  *
  * @author	Bob Jacobsen Copyright 2003, 2007
- * @version $Revision$
  */
 public class PackageTest extends TestCase {
 
@@ -20,7 +18,7 @@ public class PackageTest extends TestCase {
 
     // Main entry point
     static public void main(String[] args) {
-        String[] testCaseName = {PackageTest.class.getName()};
+        String[] testCaseName = {"-noloading", PackageTest.class.getName()};
         junit.swingui.TestRunner.main(testCaseName);
     }
 
