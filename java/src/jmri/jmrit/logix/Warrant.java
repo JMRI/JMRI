@@ -808,7 +808,7 @@ public class Warrant extends jmri.implementation.AbstractNamedBean
                         ret = false;
                         if (bo != null) {
                             OBlock b = bo.getBlock();
-                            if (b.allocate(this) == null && (b.getState() & OBlock.OCCUPIED) > 0) {
+                            if (b.allocate(this) == null && (b.getState() & OBlock.OCCUPIED) != 0) {
                                 _idxCurrentOrder++;
                                 if (b.equals(_stoppingBlock)) {
                                     _stoppingBlock.removePropertyChangeListener(this);
@@ -952,7 +952,7 @@ public class Warrant extends jmri.implementation.AbstractNamedBean
         for (int i = index; i < _orders.size(); i++) {
             BlockOrder bo = _orders.get(i);
             OBlock block = bo.getBlock();
-             if ((block.getState() & OBlock.OCCUPIED) > 0 && !stoppingBlockSet) {
+             if ((block.getState() & OBlock.OCCUPIED) != 0 && !stoppingBlockSet) {
                 setStoppingBlock(block);
                 stoppingBlockSet = true;
                 log.info(block.getDisplayName() + " not allocated, but Occupied.");
@@ -1024,7 +1024,7 @@ public class Warrant extends jmri.implementation.AbstractNamedBean
         for (int i = 1; i < _orders.size(); i++) {
             bo = _orders.get(i);
             OBlock block = bo.getBlock();
-            if ((block.getState() & OBlock.OCCUPIED) > 0) {
+            if ((block.getState() & OBlock.OCCUPIED) != 0) {
                 _message = Bundle.getMessage("BlockRougeOccupied", block.getDisplayName());
                 _routeSet = false;
                 return null;
@@ -1083,7 +1083,7 @@ public class Warrant extends jmri.implementation.AbstractNamedBean
         OBlock startBlock = _orders.get(0).getBlock();
         for (BlockOrder bo : _orders) {
             OBlock block = bo.getBlock();
-            if ((block.getState() & OBlock.OCCUPIED) > 0 && !startBlock.equals(block)) {
+            if ((block.getState() & OBlock.OCCUPIED) != 0 && !startBlock.equals(block)) {
                 msg = Bundle.getMessage("BlockRougeOccupied", block.getDisplayName());
                 _totalAllocated = false;
             }
@@ -1381,7 +1381,7 @@ public class Warrant extends jmri.implementation.AbstractNamedBean
                 if (b.allocate(this) != null) {
                     break;
                 }
-                if ((b.getState() & OBlock.OCCUPIED) > 0) {
+                if ((b.getState() & OBlock.OCCUPIED) != 0) {
                     break;
                 }
             }
@@ -1897,7 +1897,7 @@ public class Warrant extends jmri.implementation.AbstractNamedBean
         }
         OBlock block = bo.getBlock();
         String blockMsg = block.allocate(this);
-        if (blockMsg != null || (block.getState() & OBlock.OCCUPIED) > 0) {
+        if (blockMsg != null || (block.getState() & OBlock.OCCUPIED) != 0) {
             setStoppingBlock(block);
             log.info("allocateNextBlock "+(blockMsg != null ? blockMsg : (block.getDisplayName() + " allocated, but Occupied.")));
             return false;
