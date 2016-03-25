@@ -12,7 +12,6 @@ import org.slf4j.LoggerFactory;
 /**
  * Execute a throttle command script for a warrant
  *
- * @version $Revision$
  * @author  Pete Cressman  Copyright (C) 2009, 2010, 2011
  */
  
