@@ -8,6 +8,7 @@ import jmri.DccThrottle;
 import jmri.InstanceManager;
 import jmri.NamedBean;
 import jmri.ThrottleListener;
+import jmri.util.ThreadingUtil;
 import jmri.jmrit.roster.Roster;
 import jmri.jmrit.roster.RosterEntry;
 import org.slf4j.Logger;
@@ -434,6 +435,9 @@ public class Warrant extends jmri.implementation.AbstractNamedBean
      * Engineer reports its status
      */
     protected void fireRunStatus(String property, Object old, Object status) {
+        // error if not on Layout thread
+        if (!ThreadingUtil.isLayoutThread()) log.error("invoked on wrong thread", new Exception("traceback"));
+        
         firePropertyChange(property, old, status);
     }
 
@@ -605,6 +609,9 @@ public class Warrant extends jmri.implementation.AbstractNamedBean
     }
 
     protected void startTracker() {
+        // error if not on Layout thread
+        if (!ThreadingUtil.isLayoutThread()) log.error("invoked on wrong thread", new Exception("traceback"));
+        
         TrackerTableAction.markNewTracker(getCurrentBlockOrder().getBlock(), _trainName);
     }
 
@@ -1267,11 +1274,16 @@ public class Warrant extends jmri.implementation.AbstractNamedBean
     }
 
     /**
-     * Block in the route is going active. check if this is the next block of
+     * Block in the route is going active. Check if this is the next block of
      * the train moving under the warrant Learn mode assumes route is set and
-     * clear
+     * clear.
+     *<p>
+     * Must be called on GUI thread.
      */
     protected void goingActive(OBlock block) {
+        // error if not on Layout thread
+        if (!ThreadingUtil.isLayoutThread()) log.error("invoked on wrong thread", new Exception("traceback"));
+
         if (_runMode == MODE_NONE) {
             return;
         }
