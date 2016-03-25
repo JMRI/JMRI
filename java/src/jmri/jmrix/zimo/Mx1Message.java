@@ -1,4 +1,3 @@
-// Mx1Message.java
 package jmri.jmrix.zimo;
 
 import java.io.Serializable;
@@ -13,17 +12,11 @@ import org.slf4j.LoggerFactory;
  * bytes in Unicode.
  *
  * @author	Kevin Dickerson Copyright (C) 2014
- * @version	$Revision$
  *
  * Adapted by Sip Bosch for use with zimo MX-1
  *
  */
 public class Mx1Message extends jmri.jmrix.NetMessage implements Serializable {
-
-    /**
-     *
-     */
-    private static final long serialVersionUID = -6404655263624067289L;
 
     public Mx1Message(int len) {
         this(len, Mx1Packetizer.ASCII);
@@ -80,17 +73,21 @@ public class Mx1Message extends jmri.jmrix.NetMessage implements Serializable {
     final static int ACK2 = 0x60;
 
     /**
-     * Indicates where the message is to/from in the header byte
+     * Indicates where the message is to/from in the header byte.
+     *<p>
+     * Up to JMRI 4.3.5, this was doing ((mod & MX1) == MX1) for the 
+     * first test, which is really 0 == 0 and always true.
+     * At that point it was changed to just check the bottom two bits.
      */
     public int getModule() {
         int mod = getElement(1) & 0x0F;
-        if ((mod & MX1) == MX1) {
+        if ((mod & 0x03) == MX1) {
             return MX1;
         }
-        if ((mod & MX8) == MX8) {
+        if ((mod & 0x03) == MX8) {
             return MX8;
         }
-        if ((mod & MX9) == MX9) {
+        if ((mod & 0x03) == MX9) {
             return MX9;
         }
         return mod;
@@ -119,9 +116,6 @@ public class Mx1Message extends jmri.jmrix.NetMessage implements Serializable {
      */
     static final int MX9 = 0x02;
 
-    /*public int messageUser(){
-     return getElement(1)&0x0F;
-     }*/
     final static boolean CS = true;
     final static boolean PC = false;
 
@@ -197,7 +191,7 @@ public class Mx1Message extends jmri.jmrix.NetMessage implements Serializable {
         int len = getNumDataElements();
         return (getElement(len - 1) == (0x0D | 0x0A));
     }
-// programma komt hier volgens mij nooit
+    // programma komt hier volgens mij nooit
     // in fact set CR as end of message
 
     public void setParity() {
@@ -605,5 +599,3 @@ public class Mx1Message extends jmri.jmrix.NetMessage implements Serializable {
     private final static Logger log = LoggerFactory.getLogger(Mx1Message.class.getName());
 
 }
-
-/* @(#)Mx1Message.java */

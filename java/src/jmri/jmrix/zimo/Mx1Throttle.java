@@ -12,7 +12,6 @@ import org.slf4j.LoggerFactory;
  * Based on Glen Oberhauser's original LnThrottleManager implementation
  *
  * @author	Bob Jacobsen Copyright (C) 2001
- * @version $Revision: 25048 $
  */
 public class Mx1Throttle extends AbstractThrottle implements Mx1Listener {
 
@@ -126,30 +125,31 @@ public class Mx1Throttle extends AbstractThrottle implements Mx1Listener {
     }
 
     /**
-     * Send the message to set the state of functions F13 to F20. MRC Group 4 &
+     * Send the message to set the state of functions F13 to F20 in function Group 4 &
      * 5
      */
     @Override
     protected void sendFunctionGroup4() {
         // The NCE USB doesn't support the NMRA packet format
         // Always need speed command before function group command to reset consist pointer
-        int data = 0x00
-                | (f16 ? 0x08 : 0)
-                | (f15 ? 0x04 : 0)
-                | (f14 ? 0x02 : 0)
-                | (f13 ? 0x01 : 0);
-
-        data = data + 0xD0;
+//         int data = 0x00
+//                 | (f16 ? 0x08 : 0)
+//                 | (f15 ? 0x04 : 0)
+//                 | (f14 ? 0x02 : 0)
+//                 | (f13 ? 0x01 : 0);
+// 
+//         data = data + 0xD0;
 
         /*Mx1Message m = Mx1Message.getSendFunction(4, addressLo, addressHi, data);
          if(m!=null)
          tc.sendMx1Message(m);*/
-        data = 0x00
-                | (f20 ? 0x08 : 0)
-                | (f19 ? 0x04 : 0)
-                | (f18 ? 0x02 : 0)
-                | (f17 ? 0x01 : 0);
-        data = data + 0xC0;
+
+//         data = 0x00
+//                 | (f20 ? 0x08 : 0)
+//                 | (f19 ? 0x04 : 0)
+//                 | (f18 ? 0x02 : 0)
+//                 | (f17 ? 0x01 : 0);
+//         data = data + 0xC0;
 
         /*m = Mx1Message.getSendFunction(5, addressLo, addressHi, data);
          if(m!=null)

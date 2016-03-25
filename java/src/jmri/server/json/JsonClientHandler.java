@@ -15,7 +15,6 @@ import jmri.jmris.json.JsonMemoryServer;
 import jmri.jmris.json.JsonOperationsServer;
 import jmri.jmris.json.JsonProgrammerServer;
 import jmri.jmris.json.JsonReporterServer;
-import jmri.jmris.json.JsonRosterServer;
 import jmri.jmris.json.JsonRouteServer;
 import jmri.jmris.json.JsonSensorServer;
 import jmri.jmris.json.JsonServerPreferences;
@@ -48,10 +47,6 @@ import static jmri.server.json.JSON.PONG;
 import static jmri.server.json.JSON.PROGRAMMER;
 import static jmri.server.json.JSON.REPORTER;
 import static jmri.server.json.JSON.REPORTERS;
-import static jmri.server.json.JSON.ROSTER;
-import static jmri.server.json.JSON.ROSTER_ENTRY;
-import static jmri.server.json.JSON.ROSTER_GROUP;
-import static jmri.server.json.JSON.ROSTER_GROUPS;
 import static jmri.server.json.JSON.ROUTE;
 import static jmri.server.json.JSON.ROUTES;
 import static jmri.server.json.JSON.SENSOR;
@@ -78,7 +73,6 @@ public class JsonClientHandler {
     private final JsonOperationsServer operationsServer;
     private final JsonProgrammerServer programmerServer;
     private final JsonReporterServer reporterServer;
-    private final JsonRosterServer rosterServer;
     private final JsonRouteServer routeServer;
     private final JsonSensorServer sensorServer;
     private final JsonSignalHeadServer signalHeadServer;
@@ -96,7 +90,6 @@ public class JsonClientHandler {
         this.operationsServer = new JsonOperationsServer(this.connection);
         this.programmerServer = new JsonProgrammerServer(this.connection);
         this.reporterServer = new JsonReporterServer(this.connection);
-        this.rosterServer = new JsonRosterServer(this.connection);
         this.routeServer = new JsonRouteServer(this.connection);
         this.sensorServer = new JsonSensorServer(this.connection);
         this.signalHeadServer = new JsonSignalHeadServer(this.connection);
@@ -125,7 +118,6 @@ public class JsonClientHandler {
         this.operationsServer.dispose();
         this.programmerServer.dispose();
         this.reporterServer.dispose();
-        this.rosterServer.dispose();
         this.routeServer.dispose();
         this.sensorServer.dispose();
         this.signalHeadServer.dispose();
@@ -237,14 +229,14 @@ public class JsonClientHandler {
                     case REPORTERS:
                         reply = JsonUtil.getReporters(this.connection.getLocale());
                         break;
-                    case ROSTER:
-                        reply = JsonUtil.getRoster(this.connection.getLocale(), data);
-                        this.rosterServer.listen();
-                        break;
-                    case ROSTER_GROUPS:
-                        reply = JsonUtil.getRosterGroups(this.connection.getLocale());
-                        this.rosterServer.listen();
-                        break;
+//                    case ROSTER:
+//                        reply = JsonUtil.getRoster(this.connection.getLocale(), data);
+//                        this.rosterServer.listen();
+//                        break;
+//                    case ROSTER_GROUPS:
+//                        reply = JsonUtil.getRosterGroups(this.connection.getLocale());
+//                        this.rosterServer.listen();
+//                        break;
                     case ROUTES:
                         reply = JsonUtil.getRoutes(this.connection.getLocale());
                         break;
@@ -308,12 +300,12 @@ public class JsonClientHandler {
                     case REPORTER:
                         this.reporterServer.parseRequest(this.connection.getLocale(), data);
                         break;
-                    case ROSTER_ENTRY:
-                        this.rosterServer.parseRosterEntryRequest(this.connection.getLocale(), data);
-                        break;
-                    case ROSTER_GROUP:
-                        this.rosterServer.parseRosterGroupRequest(this.connection.getLocale(), data);
-                        break;
+//                    case ROSTER_ENTRY:
+//                        this.rosterServer.parseRosterEntryRequest(this.connection.getLocale(), data);
+//                        break;
+//                    case ROSTER_GROUP:
+//                        this.rosterServer.parseRosterGroupRequest(this.connection.getLocale(), data);
+//                        break;
                     case ROUTE:
                         this.routeServer.parseRequest(this.connection.getLocale(), data);
                         break;

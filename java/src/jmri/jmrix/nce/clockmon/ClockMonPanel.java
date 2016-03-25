@@ -1,4 +1,3 @@
-// ClockMonFrame.java
 package jmri.jmrix.nce.clockmon;
 
 import java.awt.GridBagConstraints;
@@ -41,7 +40,6 @@ import org.slf4j.LoggerFactory;
  * for separate permission.
  *
  * @author	Ken Cameron Copyright (C) 2007
- * @version	$Revision$
  *
  * derived from loconet.clockmonframe by Bob Jacobson Copyright (C) 2003
  *
@@ -67,11 +65,6 @@ import org.slf4j.LoggerFactory;
  *
  */
 public class ClockMonPanel extends jmri.jmrix.nce.swing.NcePanel implements NcePanelInterface, NceListener {
-
-    /**
-     *
-     */
-    private static final long serialVersionUID = -388876083150227345L;
 
     ResourceBundle rb = ResourceBundle.getBundle("jmri.jmrix.nce.clockmon.ClockMonBundle");
 
@@ -501,16 +494,14 @@ public class ClockMonPanel extends jmri.jmrix.nce.swing.NcePanel implements NceP
         // Create a Timebase listener for the Minute change events
         internalClock = InstanceManager.timebaseInstance();
         if (internalClock == null) {
-            log.error("No Timebase Instance");
+            log.error("No Timebase Instance; clock will not run");
+            return;
         }
         minuteChangeListener = new java.beans.PropertyChangeListener() {
             public void propertyChange(java.beans.PropertyChangeEvent e) {
                 newInternalMinute();
             }
         };
-        if (minuteChangeListener == null) {
-            log.error("No minuteChangeListener");
-        }
         internalClock.addMinuteChangeListener(minuteChangeListener);
 
         // start display alarm timer

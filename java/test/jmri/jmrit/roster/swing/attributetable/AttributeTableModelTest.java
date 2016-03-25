@@ -1,6 +1,7 @@
 // AttributeTableModelTest.java
 package jmri.jmrit.roster.swing.attributetable;
 
+import jmri.InstanceManager;
 import jmri.jmrit.roster.Roster;
 import jmri.jmrit.roster.RosterEntry;
 import junit.framework.Assert;
@@ -60,7 +61,8 @@ public class AttributeTableModelTest extends TestCase {
         apps.tests.Log4JFixture.setUp();
 
         // Create empty test instance
-        Roster.installNullInstance();
+        InstanceManager.reset(Roster.class);
+        InstanceManager.setDefault(Roster.class, new Roster());
 
         // first entry
         Element e;

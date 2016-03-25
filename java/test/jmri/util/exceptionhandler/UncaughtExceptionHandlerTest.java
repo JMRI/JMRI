@@ -1,4 +1,3 @@
-// UncaughtExceptionHandlerTest.java
 package jmri.util.exceptionhandler;
 
 import jmri.util.JUnitAppender;
@@ -11,7 +10,6 @@ import junit.framework.TestSuite;
  * Tests for the jmri.util.UncaughtExceptionHandler class.
  *
  * @author	Bob Jacobsen Copyright 2010
- * @version	$Revision$
  */
 public class UncaughtExceptionHandlerTest extends SwingTestCase {
 
@@ -30,7 +28,7 @@ public class UncaughtExceptionHandlerTest extends SwingTestCase {
 
         t.start();
         jmri.util.JUnitUtil.releaseThread(this);
-        JUnitAppender.assertErrorMessage("Uncaught Exception: java.lang.NullPointerException\n	at jmri.util.exceptionhandler.UncaughtExceptionHandlerTest$1.deref(UncaughtExceptionHandlerTest.java:27)\n	at jmri.util.exceptionhandler.UncaughtExceptionHandlerTest$1.run(UncaughtExceptionHandlerTest.java:22)\n");
+        JUnitAppender.assertErrorMessage("Uncaught Exception caught by jmri.util.exceptionhandler.UncaughtExceptionHandler");
     }
 
     boolean caught = false;

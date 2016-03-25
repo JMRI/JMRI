@@ -63,6 +63,7 @@ public class ExportEngines extends XmlFile {
         }
     }
 
+    @edu.umd.cs.findbugs.annotations.SuppressFBWarnings(value = "BC_UNCONFIRMED_CAST_OF_RETURN_VALUE", justification = "EngineManager only provides Engine Objects")
     public void writeFile(String name) {
         if (log.isDebugEnabled()) {
             log.debug("writeFile {}", name);

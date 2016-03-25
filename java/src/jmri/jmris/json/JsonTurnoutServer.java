@@ -1,11 +1,6 @@
 //JsonTurnoutServer.java
 package jmri.jmris.json;
 
-import static jmri.jmris.json.JSON.METHOD;
-import static jmri.jmris.json.JSON.NAME;
-import static jmri.jmris.json.JSON.PUT;
-import static jmri.jmris.json.JSON.TURNOUT;
-
 import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import java.io.IOException;
@@ -13,6 +8,10 @@ import java.util.Locale;
 import jmri.JmriException;
 import jmri.jmris.AbstractTurnoutServer;
 import jmri.jmris.JmriConnection;
+import static jmri.jmris.json.JSON.METHOD;
+import static jmri.jmris.json.JSON.NAME;
+import static jmri.jmris.json.JSON.PUT;
+import static jmri.jmris.json.JSON.TURNOUT;
 
 /**
  * JSON Server interface between the JMRI turnout manager and a network
@@ -26,7 +25,9 @@ import jmri.jmris.JmriConnection;
  * @author Paul Bender Copyright (C) 2010
  * @author Randall Wood Copyright (C) 2012, 2013
  * @version $Revision: 21327 $
+ * @deprecated 4.3.4
  */
+@Deprecated
 public class JsonTurnoutServer extends AbstractTurnoutServer {
 
     private final JmriConnection connection;

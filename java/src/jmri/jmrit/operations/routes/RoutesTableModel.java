@@ -211,7 +211,7 @@ public class RoutesTableModel extends javax.swing.table.AbstractTableModel imple
     }
 
     public synchronized void propertyChange(PropertyChangeEvent e) {
-        if (Control.showProperty) {
+        if (Control.SHOW_PROPERTY) {
             log.debug("Property change: ({}) old: ({}) new: ({})", e.getPropertyName(), e.getOldValue(), e
                     .getNewValue());
         }
@@ -223,7 +223,7 @@ public class RoutesTableModel extends javax.swing.table.AbstractTableModel imple
         } else if (e.getSource().getClass().equals(Route.class)) {
             Route route = (Route) e.getSource();
             int row = sysList.indexOf(route);
-            if (Control.showProperty) {
+            if (Control.SHOW_PROPERTY) {
                 log.debug("Update route table row: {} id: {}", row, route.getId());
             }
             if (row >= 0) {

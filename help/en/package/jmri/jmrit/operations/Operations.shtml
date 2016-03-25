@@ -771,8 +771,10 @@
    staging when destinations are not available on the layout.
 
    <p>
-    This options is also available on a per train basis. See <a href="#TrainBuildOptions">Train
-     Build Options</a>.
+    It is recommended that you leave this option disabled, as it's also available on a per train
+    basis. See <a href="#TrainBuildOptions">Train Build Options</a>. Note that when this option is
+    enabled, the program may have difficulties swapping cars from staging and the layout as the program
+    must assume that all cars in staging could return to staging.
    </p>
 
    <a name="PromptDepartureTrack"></a>
@@ -3487,10 +3489,19 @@
    and returns to staging with those cars. Normally the program doesn't allow the same cars to
    depart and return to staging. However, it may be desirable to allow the train carry the cars
    rather than having the program report that cars in staging couldn't be delivered to destinations
-   on the layout. Selecting this option allows a turn to transport cars to and from the same staging
+   on the layout. Selecting this option allows a turn to transport cars from and to the same staging
    location. Note that when this options is selected, that the program will only return cars to
-   staging when destinations are not available on the layout. You can also set this option for all
-   turns, see <a href="#SettingsOptions"> Options</a>.
+   staging when destinations are not available on the layout. Although not recommended, you can
+   also set this option for all turns, see
+   <a href="#SettingsOptions"> Options</a>.
+
+   <p>Note that when this option is enabled, the program may have difficulties swapping cars
+    from staging and the layout as the program must assume that all cars in staging could return to
+    staging. When this option is disabled (recommended), the program can ignore the cars in staging
+    and can send cars from the layout to staging without regard to the cars sitting there since the
+    expectation is that all cars in staging will be sent to the layout. The recommendation is to
+    leave this option disabled unless you need your train to carry cars from and to the
+    same staging track.</p>
 
    <h4>Allow local moves when a car has a custom load</h4>
 

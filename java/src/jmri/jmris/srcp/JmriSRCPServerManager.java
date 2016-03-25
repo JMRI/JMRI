@@ -17,7 +17,7 @@ public class JmriSRCPServerManager {
         preferences = InstanceManager.getDefault(JmriSRCPServerPreferences.class);
     }
 
-    public static JmriSRCPServerManager getInstance() {
+    synchronized public static JmriSRCPServerManager getInstance() {
         if (instance == null) {
             instance = new JmriSRCPServerManager();
         }
