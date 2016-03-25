@@ -689,28 +689,26 @@ public class PositionableLabel extends JLabel implements Positionable {
                 super.setIcon(_namedIcon);
                 setOpaque(false);   // rotations cannot be opaque
             }
-        } else {
-            if (deg != 0) { // first time text or icon is rotated from horizontal
-                if (_text && _icon) {   // text overlays icon  e.g. LocoIcon
-                    _namedIcon = makeTextOverlaidIcon(_unRotatedText, _namedIcon);
-                    super.setText(null);
-                    _rotateText = true;
-                    setOpaque(false);
-                } else if (_text) {
-                    _namedIcon = makeTextIcon(_unRotatedText);
-                    super.setText(null);
-                    _rotateText = true;
-                    setOpaque(false);
-                }
-                if (_popupUtil!=null) {
-                    _popupUtil.setBorder(false);
-                }
-                _namedIcon.rotate(deg, this);
-                super.setIcon(_namedIcon);
-            } else if (_namedIcon != null) {
-                _namedIcon.rotate(deg, this);
-                super.setIcon(_namedIcon);
+        } else {  // first time text or icon is rotated from horizontal
+            if (_text && _icon) {   // text overlays icon  e.g. LocoIcon
+                _namedIcon = makeTextOverlaidIcon(_unRotatedText, _namedIcon);
+                super.setText(null);
+                _rotateText = true;
+                setOpaque(false);
+            } else if (_text) {
+                _namedIcon = makeTextIcon(_unRotatedText);
+                super.setText(null);
+                _rotateText = true;
+                setOpaque(false);
             }
+            if (_popupUtil!=null) {
+                _popupUtil.setBorder(false);
+            }
+            _namedIcon.rotate(deg, this);
+            super.setIcon(_namedIcon);
+        } else if (_namedIcon != null) {
+            _namedIcon.rotate(deg, this);
+            super.setIcon(_namedIcon);
         }
         updateSize();
     }
