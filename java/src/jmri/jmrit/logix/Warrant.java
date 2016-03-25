@@ -1929,7 +1929,7 @@ public class Warrant extends jmri.implementation.AbstractNamedBean
             }
         } else {    //  if signal is configured, ignore block
             nextSpeed = nextBlock.getBlockSpeed();
-            if (nextSpeed=="") {
+            if (nextSpeed.equals("")) {
                 nextSpeed = null;
             }                
          }
