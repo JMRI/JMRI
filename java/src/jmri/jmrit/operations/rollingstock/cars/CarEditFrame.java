@@ -863,7 +863,7 @@ public class CarEditFrame extends OperationsFrame implements java.beans.Property
                 if (results == JOptionPane.YES_OPTION) {
                     log.debug("Force rolling stock to track");
                     car.setLocation((Location) locationBox.getSelectedItem(), (Track) trackLocationBox
-                            .getSelectedItem(), true);
+                            .getSelectedItem(), RollingStock.FORCE);
                 }
             }
         }

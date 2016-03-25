@@ -263,7 +263,7 @@ public class TrackCopyFrame extends OperationsFrame implements java.beans.Proper
     private void moveRollingStock(Track fromTrack, Track toTrack, RollingStockManager manager) {
         for (RollingStock rs : manager.getByIdList()) {
             if (rs.getTrack() == fromTrack) {
-                rs.setLocation(toTrack.getLocation(), toTrack, true);
+                rs.setLocation(toTrack.getLocation(), toTrack, RollingStock.FORCE);
             }
         }
     }
