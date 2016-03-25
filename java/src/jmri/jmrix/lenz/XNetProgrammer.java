@@ -240,7 +240,7 @@ public class XNetProgrammer extends AbstractProgrammer implements XNetListener {
                 // message can trigger a request for service mode 
                 // results if progrstate is REQUESTSENT.
                 _service_mode = true;
-            } else if (_service_mode == true) {
+            } else {  // _ service_mode == true
                 // Since we get this message as both a broadcast and
                 // a directed message, ignore the message if we're
                 //already in the indicated mode
@@ -254,7 +254,7 @@ public class XNetProgrammer extends AbstractProgrammer implements XNetListener {
                 // "OK" message can not trigger a request for service 
                 // mode results if progrstate is REQUESTSENT.
                 _service_mode = false;
-            } else if (_service_mode == false) {
+            } else { // _service_mode == false 
                 // Since we get this message as both a broadcast and
                 // a directed message, ignore the message if we're
                 //already in the indicated mode
@@ -464,7 +464,7 @@ public class XNetProgrammer extends AbstractProgrammer implements XNetListener {
      * currently programming before allowing the Traffic Controller 
      * to send a request to exit service mode
      */
-    public boolean programmerBusy() {
+    synchronized public boolean programmerBusy() {
         return (progState != NOTPROGRAMMING);
     }
 
