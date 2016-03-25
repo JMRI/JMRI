@@ -42,6 +42,27 @@ public class ThreadingUtilTest extends TestCase {
         JUnitUtil.waitFor( ()->{ return done; }, "Separate thread complete");
     }
 
+    public void testThreadingNestingToSwing() {
+        done = false;
+        
+        javax.swing.SwingUtilities.invokeLater(
+            new Runnable() {
+                public void run() {
+                    // now on Swing thread
+                    // switch back to Layout thread
+                    ThreadingUtil.runOnLayout( ()-> { 
+                        // on layout thread, confirm
+                        Assert.assertTrue("on Layout thread", ThreadingUtil.isLayoutThread());
+                        // mark done so we known
+                        done = true; 
+                    } );
+                }
+            }
+        );
+
+        JUnitUtil.waitFor( ()->{ return done; }, "Separate thread complete");
+    }
+
 
     // from here down is testing infrastructure
     public ThreadingUtilTest(String s) {
