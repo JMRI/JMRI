@@ -1224,8 +1224,8 @@ public class TurnoutTableAction extends AbstractTableAction {
             });
             menuBar.add(opsMenu);
 
-            JMenu speedMenu = new JMenu(Bundle.getMessage("TurnoutSpeedsMenu"));
-            item = new JMenuItem(Bundle.getMessage("TurnoutSpeedsMenuItemDefaults"));
+            JMenu speedMenu = new JMenu(Bundle.getMessage("SpeedsMenu"));
+            item = new JMenuItem(Bundle.getMessage("SpeedsMenuItemDefaults"));
             speedMenu.add(item);
             item.addActionListener(new ActionListener() {
                 public void actionPerformed(ActionEvent e) {
