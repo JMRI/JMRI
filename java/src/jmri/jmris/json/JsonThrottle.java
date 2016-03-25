@@ -36,6 +36,12 @@ import jmri.jmrit.roster.Roster;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+/**
+ * 
+ * @author Randall Wood
+ * @deprecated since 4.3.4
+ */
+@Deprecated
 public class JsonThrottle implements ThrottleListener, PropertyChangeListener {
 
     private final ArrayList<JsonThrottleServer> servers = new ArrayList<>();
