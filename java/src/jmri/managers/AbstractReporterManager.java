@@ -1,4 +1,3 @@
-// AbstractReporterManager.java
 package jmri.managers;
 
 import jmri.Manager;
@@ -11,7 +10,6 @@ import org.slf4j.LoggerFactory;
  * Abstract partial implementation of a ReporterManager.
  *
  * @author	Bob Jacobsen Copyright (C) 2004
- * @version	$Revision$
  */
 public abstract class AbstractReporterManager extends AbstractManager
         implements ReporterManager {
@@ -167,4 +165,3 @@ public abstract class AbstractReporterManager extends AbstractManager
     private final static Logger log = LoggerFactory.getLogger(AbstractReporterManager.class.getName());
 }
 
-/* @(#)AbstractReporterManager.java */

@@ -1,4 +1,3 @@
-// DefaultShutDownManager.java
 package jmri.managers;
 
 import java.util.ArrayList;
@@ -27,7 +26,6 @@ import org.slf4j.LoggerFactory;
  * in a ShutDownTask is treated as permission to continue after logging.
  *
  * @author Bob Jacobsen Copyright (C) 2008
- * @version	$Revision$
  */
 public class DefaultShutDownManager implements ShutDownManager {
 
@@ -148,5 +146,3 @@ public class DefaultShutDownManager implements ShutDownManager {
 
     private final static Logger log = LoggerFactory.getLogger(DefaultShutDownManager.class);
 }
-
-/* @(#)DefaultShutDownManager.java */

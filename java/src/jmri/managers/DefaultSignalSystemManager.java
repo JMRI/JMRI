@@ -1,4 +1,3 @@
-// DefaultSignalSystemManager.java
 package jmri.managers;
 
 import java.io.File;
@@ -27,7 +26,6 @@ import org.slf4j.LoggerFactory;
  *
  *
  * @author Bob Jacobsen Copyright (C) 2009
- * @version	$Revision$
  */
 public class DefaultSignalSystemManager extends AbstractManager
         implements SignalSystemManager, java.beans.PropertyChangeListener {
@@ -263,5 +261,3 @@ public class DefaultSignalSystemManager extends AbstractManager
 
     private final static Logger log = LoggerFactory.getLogger(DefaultSignalSystemManager.class.getName());
 }
-
-/* @(#)DefaultSignalSystemManager.java */
