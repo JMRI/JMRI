@@ -5,6 +5,7 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.node.ArrayNode;
 import com.fasterxml.jackson.databind.node.ObjectNode;
 import java.util.Locale;
+import javax.annotation.Nonnull;
 import javax.servlet.http.HttpServletResponse;
 import static jmri.jmris.json.JSON.ROSTER_GROUP;
 import static jmri.jmris.json.JSON.ROSTER_GROUPS;
@@ -99,7 +100,7 @@ class JsonRosterHttpService extends JsonHttpService {
         }
     }
 
-    public JsonNode getRoster(Locale locale, JsonNode data) {
+    public JsonNode getRoster(@Nonnull Locale locale, @Nonnull JsonNode data) {
         String group = (!data.path(GROUP).isMissingNode()) ? data.path(GROUP).asText() : null;
         if (Roster.ALLENTRIES.equals(group) || Roster.AllEntries(locale).equals(group)) {
             group = null;
@@ -112,7 +113,7 @@ class JsonRosterHttpService extends JsonHttpService {
         String decoderFamily = (!data.path(DECODER_FAMILY).isMissingNode()) ? data.path(DECODER_FAMILY).asText() : null;
         String id = (!data.path(NAME).isMissingNode()) ? data.path(NAME).asText() : null;
         ArrayNode root = this.mapper.createArrayNode();
-        for (RosterEntry entry : Roster.instance().getEntriesMatchingCriteria(roadName, roadNumber, dccAddress, mfg, decoderModel, decoderFamily, id, group)) {
+        for (RosterEntry entry : Roster.getDefault().getEntriesMatchingCriteria(roadName, roadNumber, dccAddress, mfg, decoderModel, decoderFamily, id, group)) {
             root.add(getRosterEntry(locale, entry));
         }
         return root;
@@ -131,7 +132,7 @@ class JsonRosterHttpService extends JsonHttpService {
      */
     public JsonNode getRosterEntry(Locale locale, String id) throws JsonException {
         try {
-            return this.getRosterEntry(locale, Roster.instance().getEntryForId(id));
+            return this.getRosterEntry(locale, Roster.getDefault().getEntryForId(id));
         } catch (NullPointerException ex) {
             throw new JsonException(HttpServletResponse.SC_NOT_FOUND, Bundle.getMessage(locale, "ErrorNotFound", ROSTER_ENTRY, id));
         }
@@ -148,7 +149,7 @@ class JsonRosterHttpService extends JsonHttpService {
      * @param entry  A RosterEntry that may or may not be in the roster.
      * @return a roster entry in JSON notation
      */
-    public JsonNode getRosterEntry(Locale locale, RosterEntry entry) {
+    public JsonNode getRosterEntry(Locale locale, @Nonnull RosterEntry entry) {
         ObjectNode root = this.mapper.createObjectNode();
         root.put(TYPE, ROSTER_ENTRY);
         ObjectNode data = root.putObject(DATA);
@@ -186,14 +187,14 @@ class JsonRosterHttpService extends JsonHttpService {
     public JsonNode getRosterGroups(Locale locale) throws JsonException {
         ArrayNode root = mapper.createArrayNode();
         root.add(getRosterGroup(locale, Roster.ALLENTRIES));
-        for (String name : Roster.instance().getRosterGroupList()) {
+        for (String name : Roster.getDefault().getRosterGroupList()) {
             root.add(getRosterGroup(locale, name));
         }
         return root;
     }
 
     public JsonNode getRosterGroup(Locale locale, String name) throws JsonException {
-        int size = Roster.instance().getEntriesInGroup(name).size();
+        int size = Roster.getDefault().getEntriesInGroup(name).size();
         if (size != 0) {
             ObjectNode root = mapper.createObjectNode();
             root.put(TYPE, ROSTER_GROUP);

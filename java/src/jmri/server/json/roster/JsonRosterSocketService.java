@@ -51,8 +51,8 @@ public class JsonRosterSocketService extends JsonSocketService {
 
     public void listen() {
         if (!this.listening) {
-            Roster.instance().addPropertyChangeListener(this.rosterListener);
-            Roster.instance().getEntriesInGroup(Roster.ALLENTRIES).stream().forEach((re) -> {
+            Roster.getDefault().addPropertyChangeListener(this.rosterListener);
+            Roster.getDefault().getEntriesInGroup(Roster.ALLENTRIES).stream().forEach((re) -> {
                 re.addPropertyChangeListener(this.rosterEntryListener);
             });
             this.listening = true;
@@ -84,7 +84,7 @@ public class JsonRosterSocketService extends JsonSocketService {
                         this.connection.sendMessage(this.service.getRosterGroups(locale));
                         break;
                     default:
-                        throw new JsonException(HttpServletResponse.SC_BAD_REQUEST, Bundle.getMessage("ErrorUnknownType", type));
+                        throw new JsonException(HttpServletResponse.SC_INTERNAL_SERVER_ERROR, Bundle.getMessage("ErrorUnknownType", type));
                 }
                 break;
         }
@@ -99,8 +99,8 @@ public class JsonRosterSocketService extends JsonSocketService {
 
     @Override
     public void onClose() {
-        Roster.instance().removePropertyChangeListener(this.rosterListener);
-        Roster.instance().getEntriesInGroup(Roster.ALLENTRIES).stream().forEach((re) -> {
+        Roster.getDefault().removePropertyChangeListener(this.rosterListener);
+        Roster.getDefault().getEntriesInGroup(Roster.ALLENTRIES).stream().forEach((re) -> {
             re.removePropertyChangeListener(this.rosterEntryListener);
         });
         this.listening = false;

@@ -1,4 +1,4 @@
-package jmri.server.json;
+package jmri.server.json.roster;
 
 import junit.framework.Test;
 import junit.framework.TestCase;
@@ -24,10 +24,9 @@ public class PackageTest extends TestCase {
 
     // test suite from all defined tests
     public static Test suite() {
-        TestSuite suite = new TestSuite("jmri.server.JsonTest");
-        suite.addTest(jmri.server.json.power.PackageTest.suite());
-        suite.addTest(jmri.server.json.roster.PackageTest.suite());
-        suite.addTest(jmri.server.json.turnout.PackageTest.suite());
+        TestSuite suite = new TestSuite("jmri.server.json.turnout.TurnoutTest");
+        suite.addTestSuite(JsonRosterHttpServiceTest.class);
+        suite.addTestSuite(JsonRosterSocketServiceTest.class);
 
         if (!System.getProperty("jmri.headlesstest", "false").equals("true")) {
             // put any tests that require a UI here.
