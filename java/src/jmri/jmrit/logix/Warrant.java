@@ -568,11 +568,9 @@ public class Warrant extends jmri.implementation.AbstractNamedBean
                         msg = Bundle.getMessage("reRetry", blockName, cmdIdx, speed);
                         break;
                     case Warrant.ABORT:
-                        if (_engineer != null) {
-                            if (cmdIdx == _commands.size() - 1) {
-                                _engineer = null;
-                                return Bundle.getMessage("endOfScript", _trainName);
-                            }
+                        if (cmdIdx == _commands.size() - 1) {
+                            _engineer = null;
+                            return Bundle.getMessage("endOfScript", _trainName);
                         }
                         msg = Bundle.getMessage("Aborted", blockName, cmdIdx);
                         break;
