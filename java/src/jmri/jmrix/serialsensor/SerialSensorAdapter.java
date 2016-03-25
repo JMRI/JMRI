@@ -1,4 +1,3 @@
-// SerialSensorAdapter.java
 package jmri.jmrix.serialsensor;
 
 import gnu.io.CommPortIdentifier;
@@ -23,7 +22,6 @@ import org.slf4j.LoggerFactory;
  * port. Sensor "1" will be via DCD, and sensor "2" via DSR
  *
  * @author	Bob Jacobsen Copyright (C) 2003
- * @version	$Revision$
  */
 public class SerialSensorAdapter extends AbstractSerialPortController
         implements jmri.jmrix.SerialPortAdapter {
