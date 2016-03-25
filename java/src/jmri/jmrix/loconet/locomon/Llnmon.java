@@ -314,6 +314,8 @@ public class Llnmon {
                     } else {
                         turnoutUserName = "()";
                     }
+                } catch (RuntimeException e) {
+                    throw e;
                 } catch (Exception e) {
                     turnoutUserName = "()";
                 }
@@ -610,6 +612,8 @@ public class Llnmon {
                     } else {
                         sensorUserName = "()";
                     }
+                } catch (RuntimeException e) {
+                    throw e;
                 } catch (Exception e) {
                     sensorUserName = "()";
                 }
@@ -688,6 +692,8 @@ public class Llnmon {
                     } else {
                         turnoutUserName = "()";
                     }
+                } catch (RuntimeException e) {
+                    throw e;
                 } catch (Exception e) {
                     turnoutUserName = "()";
                 }
@@ -806,6 +812,8 @@ public class Llnmon {
                         } else {
                             turnoutUserName = "()";
                         }
+                    } catch (RuntimeException e) {
+                        throw e;
                     } catch (Exception e) {
                         turnoutUserName = "()";
                     }
@@ -1175,6 +1183,8 @@ public class Llnmon {
                             } else {
                                 reporterUserName = "()";
                             }
+                        } catch (RuntimeException e) {
+                            throw e;
                         } catch (Exception e) {
                             reporterUserName = "()";
                         }
@@ -2867,6 +2877,8 @@ public class Llnmon {
                                     } else {
                                         reporterUserName = "()";
                                     }
+                                } catch (RuntimeException e) {
+                                    throw e;
                                 } catch (Exception e) {
                                     reporterUserName = "()";
                                 }
