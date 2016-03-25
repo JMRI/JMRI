@@ -29,30 +29,15 @@
 
 	<div id="mainContent">
 	    <H1>JMRI: Threading</H1>
-The initial threading model for JMRI is quite simple: Everything interesting
-happens in 
-the GUI thread.  For example, once a 'message', e.g. a LocoNet packet, 
-is accumulated in a separate thread, the message is processed in the 
-GUI thread via:
-<PRE>
-	// message is complete, dispatch it !!<br/>
-	{ <br/>
-	final LocoNetMessage thisMsg = msg;<br/>
-	final LnTrafficController thisTC = this;<br/>
-	// return a notification via the queue to ensure end<br/>
-	Runnable r = new Runnable() {<br/>
-		LocoNetMessage msgForLater = thisMsg;<br/>
-		LnTrafficController myTC = thisTC;<br/>
-		public void run() { <br/>
-				log.debug("Delayed notify starts");<br/>
-           		myTC.notify(msgForLater);<br/>
-			}<br/>
-		};
-		javax.swing.SwingUtilities.invokeLater(r);<br/>
-	}<br/>
-</PRE>
 
-This does a nice job of serializing the activity from the layout.
+The vast majority of JMRI code (and programmers) don't have to 
+worry about threading.  Their code gets invoked, and invokes other code,
+and threading takes care of itself.  This is particularly true of event-based code,
+which responds to events from e.g. the GUI or a layout object changing, and 
+calls methods on other objects, which may in turn create more events.
+
+<p>
+This simplicity comes from using a single thread for processing most of JMRI's activity: The Java Swing event thread.
 <p>
 Note that this does <em>not</em> mean that other things can't be happening. For example, this script fragment:
 
@@ -63,6 +48,38 @@ Note that this does <em>not</em> mean that other things can't be happening. For 
 </code></pre>
 
 can print either true or false, because changing that turnout <em>can</em> change associated sensors instantaneously.
+
+<p>
+There are times when you might want to do something a bit more complex using an additional thread:
+<ul>
+<li>You might want to put long-running processing in a separate thread to keep the rest of JMRI responsive.
+<li>The easiest way to code a state machine that talks to layout hardware might be to use a separate thread.
+<li>You might be interfacing to some other existing code that uses threads.
+</ul>
+
+We would prefer that you handle the threading issues that arise in that case via the 
+<a href="http://jmri.org/JavaDoc/doc/jmri/util/ThreadingUtil.html">jmri.util.ThreadingUtil<a/> class.  
+ThreadingUtil provides utilities that make it easy
+to invoke needed functions on the right thread.
+<p>
+For example, if you want to read a bunch of data from a file, spend some time munging it, 
+and then create a window to present it all, you might want to do all that work on a 
+separate thread.  At the end, when it's time to set your new frame visible, you have to
+to that on the Swing (GUI) thread.  Here's the code to do that:
+<pre>
+    frame = new JmriJFrame();  // frame declared as instance variable<br/>
+    // spend a long time reading data and configuring the frame<br/>
+    ThreadingUtil.runOnGUI( ()-&gt;{  frame.setVisible(); });<br/>
+</pre>
+ThreadingUtil separates operations on the GUI (e.g. Java Swing) thread, and operations
+on the Layout (e.g. Sensors, Turnouts, etc) thread.  There's no real difference now, 
+but in the interest of perhaps someday needing to separate those, we've introduced the 
+two versions now.  Please try to pick the mostly-likely-right one when coding.
+<p>
+(N.B.: You'll find lots of older cases that use explicitly use javax.swing.SwingUtilities.invokeLater(r)
+or javax.swing.SwingUtilities.invokeAndWait(r); these should be migrated to the newer JMRI-specific methods
+as time is available to keep our code just a tiny bit cleaner and more flexible.)
+
 
 <!--#include virtual="/Footer" -->
 

@@ -37,6 +37,7 @@ public class PackageTest extends TestCase {
         suite.addTest(OrderedHashtableTest.suite());
         suite.addTest(PreferNumericComparatorTest.suite());
         suite.addTest(StringUtilTest.suite());
+        suite.addTest(ThreadingUtilTest.suite());
         suite.addTest(I18NTest.suite());
         suite.addTest(ColorUtilTest.suite());
 
