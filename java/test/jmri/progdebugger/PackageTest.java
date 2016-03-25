@@ -1,4 +1,3 @@
-// PackageTest.java
 package jmri.progdebugger;
 
 import junit.framework.Test;

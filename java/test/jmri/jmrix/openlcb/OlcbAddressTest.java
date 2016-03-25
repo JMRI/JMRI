@@ -1,4 +1,3 @@
-// OlcbAddressTest.java
 package jmri.jmrix.openlcb;
 
 import jmri.jmrix.can.CanMessage;

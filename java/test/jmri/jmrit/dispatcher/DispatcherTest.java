@@ -1,4 +1,3 @@
-// DispatcherTest.java
 package jmri.jmrit.dispatcher;
 
 import junit.framework.Test;

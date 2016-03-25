@@ -1,4 +1,3 @@
-// PackageTest.java
 package jmri.jmrit.roster.swing;
 
 import junit.framework.Test;

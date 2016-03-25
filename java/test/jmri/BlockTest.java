@@ -1,4 +1,3 @@
-// BlockTest.java
 package jmri;
 
 import jmri.util.JUnitUtil;

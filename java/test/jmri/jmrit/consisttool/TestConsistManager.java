@@ -1,4 +1,3 @@
-// TestConsistManager.java
 package jmri.jmrit.consisttool;
 
 import jmri.Consist;

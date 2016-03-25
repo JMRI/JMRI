@@ -1,4 +1,3 @@
-// PackageTest.java
 package jmri.jmrit.operations.setup;
 
 import junit.framework.Test;

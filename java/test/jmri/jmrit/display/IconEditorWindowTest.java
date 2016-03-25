@@ -1,4 +1,3 @@
-// IconEditorWindowTest.java
 package jmri.jmrit.display;
 
 import java.util.List;

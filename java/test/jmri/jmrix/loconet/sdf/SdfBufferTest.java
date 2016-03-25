@@ -1,4 +1,3 @@
-// SdfBufferTest.java
 package jmri.jmrix.loconet.sdf;
 
 import java.io.BufferedReader;

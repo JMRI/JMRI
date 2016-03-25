@@ -1,4 +1,3 @@
-// PackageTest.java
 package jmri.managers.configurexml;
 
 import junit.framework.Test;

@@ -1,4 +1,3 @@
-// Pr1ImporterTest.java
 package jmri.jmrit.symbolicprog;
 
 import java.io.File;

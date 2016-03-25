@@ -1,4 +1,3 @@
-// LRouteTableActionTest.java
 package jmri.jmrit.beantable;
 
 import java.util.ResourceBundle;

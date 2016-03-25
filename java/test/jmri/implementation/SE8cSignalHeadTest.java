@@ -1,4 +1,3 @@
-// SE8cSignalHeadTest.java
 package jmri.implementation;
 
 import jmri.InstanceManager;

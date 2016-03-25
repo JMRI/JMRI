@@ -1,4 +1,3 @@
-// LoadAndStoreTest.java
 package jmri.jmrit.display.configurexml;
 
 import jmri.configurexml.LoadAndStoreTestBase;

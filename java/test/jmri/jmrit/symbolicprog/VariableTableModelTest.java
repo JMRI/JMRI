@@ -1,4 +1,3 @@
-// VariableTableModelTest.java
 package jmri.jmrit.symbolicprog;
 
 import javax.swing.JLabel;

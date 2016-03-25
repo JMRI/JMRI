@@ -1,4 +1,3 @@
-// OrderedHashtableTest.java
 package jmri.util;
 
 import java.util.Enumeration;

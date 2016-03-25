@@ -1,4 +1,3 @@
-// LoaderEngineTest.java
 package jmri.jmrix.loconet.soundloader;
 
 import jmri.jmrix.loconet.LocoNetMessage;

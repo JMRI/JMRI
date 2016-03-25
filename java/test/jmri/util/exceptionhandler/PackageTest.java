@@ -1,4 +1,3 @@
-// PackageTest.java
 package jmri.util.exceptionhandler;
 
 import junit.framework.Test;

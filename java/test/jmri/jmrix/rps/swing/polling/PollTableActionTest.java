@@ -1,4 +1,3 @@
-// PollTableActionTest.java
 package jmri.jmrix.rps.swing.polling;
 
 import javax.swing.JFrame;

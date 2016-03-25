@@ -1,4 +1,3 @@
-// LogixActionTest.java
 package jmri.jmrit.logix;
 
 import jmri.InstanceManager;

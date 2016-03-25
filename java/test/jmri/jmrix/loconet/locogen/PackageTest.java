@@ -1,4 +1,3 @@
-// PackageTest.java
 package jmri.jmrix.loconet.locogen;
 
 import jmri.jmrix.loconet.LocoNetMessage;

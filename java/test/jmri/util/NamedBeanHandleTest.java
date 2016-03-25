@@ -1,4 +1,3 @@
-// NamedBeanHandleTest.java
 package jmri.util;
 
 import jmri.Turnout;

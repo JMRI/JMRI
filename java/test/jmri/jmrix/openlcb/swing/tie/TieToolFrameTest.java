@@ -1,4 +1,3 @@
-// TieToolFrameTest.java
 package jmri.jmrix.openlcb.swing.tie;
 
 import junit.framework.Test;

@@ -1,4 +1,3 @@
-// EditorPaneTest.java
 package jmri.jmrix.loconet.sdfeditor;
 
 import jmri.jmrix.loconet.sdf.SdfBuffer;

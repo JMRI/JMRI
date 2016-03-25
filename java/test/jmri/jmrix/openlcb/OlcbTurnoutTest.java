@@ -1,4 +1,3 @@
-// OlcbTurnoutTest.java
 package jmri.jmrix.openlcb;
 
 import jmri.Turnout;

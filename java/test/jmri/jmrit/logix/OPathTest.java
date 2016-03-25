@@ -1,4 +1,3 @@
-// OPathTest.java
 package jmri.jmrit.logix;
 
 import jmri.Block;

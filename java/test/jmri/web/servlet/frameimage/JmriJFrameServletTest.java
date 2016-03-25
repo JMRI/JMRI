@@ -1,4 +1,3 @@
-// JmriJFrameServletTest.java
 package jmri.web.servlet.frameimage;
 
 import java.util.Map;

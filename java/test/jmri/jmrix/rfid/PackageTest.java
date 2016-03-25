@@ -1,4 +1,3 @@
-// PackageTest.java
 package jmri.jmrix.rfid;
 
 import junit.framework.Test;

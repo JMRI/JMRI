@@ -1,4 +1,3 @@
-// SecurityElementTest.java
 package jmri.jmrix.loconet;
 
 import jmri.Sensor;

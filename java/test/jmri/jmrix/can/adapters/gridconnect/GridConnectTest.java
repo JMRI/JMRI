@@ -1,4 +1,3 @@
-// GridConnectTest.java
 package jmri.jmrix.can.adapters.gridconnect;
 
 import junit.framework.Test;

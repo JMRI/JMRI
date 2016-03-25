@@ -1,4 +1,3 @@
-// LoadAndCheckTest.java
 package jmri.configurexml;
 
 import jmri.InstanceManager;

@@ -1,4 +1,3 @@
-// LnSensorTest.java
 package jmri.jmrix.loconet;
 
 import junit.framework.Assert;

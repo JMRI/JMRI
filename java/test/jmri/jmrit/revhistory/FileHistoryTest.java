@@ -1,4 +1,3 @@
-// FileHistoryTest.java
 package jmri.jmrit.revhistory;
 
 import junit.framework.Assert;

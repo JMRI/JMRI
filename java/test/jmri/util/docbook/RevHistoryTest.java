@@ -1,4 +1,3 @@
-// RevHistoryTest.java
 package jmri.util.docbook;
 
 import junit.framework.Assert;

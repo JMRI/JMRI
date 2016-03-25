@@ -1,4 +1,3 @@
-// SRCPClientParserTokenizerTest.java
 package jmri.jmrix.srcp.parser;
 
 import java.io.StringReader;

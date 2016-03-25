@@ -1,4 +1,3 @@
-// PackageTest.java
 package jmri.jmrit.operations.routes;
 
 import junit.framework.Test;

@@ -1,4 +1,3 @@
-// SerialMonTest.java
 package jmri.jmrix.grapevine.serialmon;
 
 import jmri.jmrix.grapevine.SerialMessage;

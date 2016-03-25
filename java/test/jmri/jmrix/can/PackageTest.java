@@ -1,4 +1,3 @@
-// PackageTest.java
 package jmri.jmrix.can;
 
 import junit.framework.Test;

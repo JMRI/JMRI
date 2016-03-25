@@ -1,4 +1,3 @@
-// DCCppTurnoutTest.java
 package jmri.jmrix.dccpp;
 
 import junit.framework.Assert;

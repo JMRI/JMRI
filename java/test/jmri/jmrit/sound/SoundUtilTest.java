@@ -1,4 +1,3 @@
-// SoundUtilTest.java
 package jmri.jmrit.sound;
 
 import junit.framework.Assert;

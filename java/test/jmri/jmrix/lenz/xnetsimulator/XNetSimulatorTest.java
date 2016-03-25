@@ -1,4 +1,3 @@
-// XNetSimulatorTest.java
 package jmri.jmrix.lenz.xnetsimulator;
 
 import junit.framework.Test;

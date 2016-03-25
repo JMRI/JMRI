@@ -1,4 +1,3 @@
-// SpecificTrafficControllerTest.java
 package jmri.jmrix.powerline.cm11;
 
 import java.io.DataInputStream;

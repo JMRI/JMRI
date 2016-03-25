@@ -1,4 +1,3 @@
-// SerialTrafficControllerTest.java
 package jmri.jmrix.secsi;
 
 import java.io.DataInputStream;

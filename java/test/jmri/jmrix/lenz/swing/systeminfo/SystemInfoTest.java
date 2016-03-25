@@ -1,4 +1,3 @@
-// SystemInfoTest.java
 package jmri.jmrix.lenz.swing.systeminfo;
 
 import junit.framework.Test;

@@ -1,4 +1,3 @@
-// LnReporterTest.java
 package jmri.jmrix.loconet;
 
 import jmri.LocoAddress;

@@ -1,4 +1,3 @@
-// TestBean1.java
 package jmri.configurexml;
 
 /**

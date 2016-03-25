@@ -1,4 +1,3 @@
-// DebugProgrammerTest.java
 package jmri.progdebugger;
 
 import jmri.ProgListener;

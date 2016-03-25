@@ -1,4 +1,3 @@
-// QualifierAdderTest.java
 package jmri.jmrit.symbolicprog;
 
 import java.util.HashMap;

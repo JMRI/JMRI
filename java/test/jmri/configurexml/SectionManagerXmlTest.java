@@ -1,4 +1,3 @@
-// SectionManagerXmlTest.java
 package jmri.configurexml;
 
 import java.util.ArrayList;

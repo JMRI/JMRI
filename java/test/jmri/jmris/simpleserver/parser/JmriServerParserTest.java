@@ -1,4 +1,3 @@
-// JmriServerParserTest.java
 package jmri.jmris.simpleserver.parser;
 
 import java.io.StringReader;

@@ -1,4 +1,3 @@
-// PackageTest.java
 package jmri.jmrix.can.cbus;
 
 import junit.framework.Test;

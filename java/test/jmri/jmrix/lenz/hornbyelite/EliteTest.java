@@ -1,4 +1,3 @@
-// EliteTest.java
 package jmri.jmrix.lenz.hornbyelite;
 
 import junit.framework.Test;

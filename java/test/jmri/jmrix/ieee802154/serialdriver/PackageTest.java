@@ -1,4 +1,3 @@
-// PackageTest.java
 package jmri.jmrix.ieee802154.serialdriver;
 
 import junit.framework.Test;

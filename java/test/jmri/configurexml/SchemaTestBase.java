@@ -1,4 +1,3 @@
-// SchemaTestBase.java
 package jmri.configurexml;
 
 import jmri.jmrit.XmlFile;

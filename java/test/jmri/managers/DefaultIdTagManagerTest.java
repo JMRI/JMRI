@@ -1,4 +1,3 @@
-// DefaultIdTagManagerTest.java
 package jmri.managers;
 
 import jmri.IdTag;

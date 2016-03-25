@@ -1,4 +1,3 @@
-// XNetTurnoutManagerTest.java
 package jmri.jmrix.lenz;
 
 import java.util.ArrayList;

@@ -1,4 +1,3 @@
-// BundleTest.java
 package jmri.jmrit.symbolicprog;
 
 import junit.framework.Assert;

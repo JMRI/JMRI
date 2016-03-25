@@ -1,4 +1,3 @@
-// DccLocoAddressSelectorTest.java
 package jmri.jmrit;
 
 import javax.swing.JComboBox;

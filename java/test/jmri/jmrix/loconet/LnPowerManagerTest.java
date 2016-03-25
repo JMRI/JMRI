@@ -1,4 +1,3 @@
-// LnPowerManagerTest.java
 package jmri.jmrix.loconet;
 
 import jmri.jmrix.AbstractPowerManagerTest;

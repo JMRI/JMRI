@@ -1,4 +1,3 @@
-// OperationsTrainsGuiTest.java
 package jmri.jmrit.operations.trains;
 
 import java.awt.Component;

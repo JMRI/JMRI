@@ -1,4 +1,3 @@
-// OperationsTrainsGuiTest.java
 package jmri.jmrit.operations.trains.tools;
 
 import jmri.jmrit.operations.trains.timetable.TrainsScheduleTableFrame;

@@ -1,4 +1,3 @@
-// NamedBeanTest.java
 package jmri.implementation;
 
 import jmri.NamedBean;

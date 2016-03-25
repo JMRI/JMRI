@@ -1,4 +1,3 @@
-// PackageTest.java
 package jmri.jmrit.operations.rollingstock.cars;
 
 import junit.framework.Test;

@@ -1,4 +1,3 @@
-// RouteTest.java
 package jmri.implementation;
 
 import jmri.Route;

@@ -1,4 +1,3 @@
-// MonitorFrameDemo.java
 package jmri.jmrix.openlcb.swing.monitor;
 
 import javax.swing.JFrame;

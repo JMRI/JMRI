@@ -1,4 +1,3 @@
-// AbstractNamedBeanManagerConfigXMLTest.java
 package jmri.managers.configurexml;
 
 import jmri.NamedBean;

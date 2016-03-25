@@ -1,4 +1,3 @@
-// XmlLoadTests.java
 package jmri.jmrit.operations;
 
 import jmri.jmrit.operations.locations.LocationManagerXml;

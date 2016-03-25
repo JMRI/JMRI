@@ -1,4 +1,3 @@
-// PackageTest.java
 package jmri.jmrix.openlcb;
 
 import junit.framework.Test;

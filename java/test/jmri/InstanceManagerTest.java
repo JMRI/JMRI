@@ -1,4 +1,3 @@
-// InstanceManagerTest.java
 package jmri;
 
 import jmri.jmrit.display.layoutEditor.LayoutBlockManager;

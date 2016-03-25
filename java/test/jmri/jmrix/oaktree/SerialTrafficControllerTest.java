@@ -1,4 +1,3 @@
-// SerialTrafficControllerTest.java
 package jmri.jmrix.oaktree;
 
 import java.io.DataInputStream;

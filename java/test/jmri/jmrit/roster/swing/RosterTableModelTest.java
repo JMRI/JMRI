@@ -1,4 +1,3 @@
-// RosterTableModelTest.java
 package jmri.jmrit.roster.swing;
 
 import jmri.InstanceManager;

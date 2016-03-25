@@ -1,4 +1,3 @@
-// PackageTest.java
 package jmri.jmrix.loconet.soundloader;
 
 import junit.framework.Test;

@@ -1,4 +1,3 @@
-// MastBuilderTest.java
 package jmri.jmrit.mastbuilder;
 
 import javax.swing.JFrame;

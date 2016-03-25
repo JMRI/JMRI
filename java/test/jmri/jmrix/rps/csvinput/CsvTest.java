@@ -1,4 +1,3 @@
-// CsvTest.java
 package jmri.jmrix.rps.csvinput;
 
 import junit.framework.Assert;

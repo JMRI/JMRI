@@ -1,4 +1,3 @@
-// LZV100Test.java
 package jmri.jmrix.lenz.swing.lzv100;
 
 import junit.framework.Test;

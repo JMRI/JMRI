@@ -1,4 +1,3 @@
-// DefaultIdTagTest.java
 package jmri.implementation;
 
 import java.util.Calendar;

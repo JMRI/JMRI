@@ -1,4 +1,3 @@
-// XNetSensorManagerTest.java
 package jmri.jmrix.lenz;
 
 import jmri.Sensor;

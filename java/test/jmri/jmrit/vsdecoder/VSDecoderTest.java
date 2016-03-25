@@ -1,4 +1,3 @@
-// RosterTest.java
 package jmri.jmrit.vsdecoder;
 
 import junit.framework.Test;

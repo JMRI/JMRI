@@ -1,4 +1,3 @@
-// SchemaTest.java
 package jmri.jmrit.decoderdefn;
 
 import junit.framework.Test;

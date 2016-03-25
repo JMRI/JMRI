@@ -1,4 +1,3 @@
-// PackageTest.java
 package jmri.jmrix.can.nmranet;
 
 import junit.framework.Test;

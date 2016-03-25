@@ -1,4 +1,3 @@
-// TrackerTest.java
 package jmri.jmrit.tracker;
 
 import junit.framework.Test;

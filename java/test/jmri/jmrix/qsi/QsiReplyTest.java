@@ -1,4 +1,3 @@
-// QsiReplyTest.java
 package jmri.jmrix.qsi;
 
 import junit.framework.Assert;

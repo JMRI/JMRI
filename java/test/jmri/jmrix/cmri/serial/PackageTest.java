@@ -1,4 +1,3 @@
-// PackageTest.java
 package jmri.jmrix.cmri.serial;
 
 import junit.framework.Assert;

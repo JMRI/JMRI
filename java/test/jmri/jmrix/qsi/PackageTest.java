@@ -1,4 +1,3 @@
-// PackageTest.java
 package jmri.jmrix.qsi;
 
 import junit.framework.Test;

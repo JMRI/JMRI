@@ -1,4 +1,3 @@
-// AffineEntryPanelTest.java
 package jmri.jmrix.rps.swing;
 
 import java.awt.geom.AffineTransform;

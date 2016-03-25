@@ -1,4 +1,3 @@
-// SimpleClockTest.java
 package jmri.jmrit.simpleclock;
 
 import junit.framework.Test;

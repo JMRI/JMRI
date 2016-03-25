@@ -1,4 +1,3 @@
-// PackageTest.java
 package jmri.jmrix.can.adapters;
 
 import junit.framework.Test;

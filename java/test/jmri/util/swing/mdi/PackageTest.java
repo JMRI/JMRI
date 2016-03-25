@@ -1,4 +1,3 @@
-// PackageTest.java
 package jmri.util.swing.mdi;
 
 import junit.framework.Test;

@@ -1,4 +1,3 @@
-// PackageTest.java
 package jmri.jmrit.blockboss;
 
 import junit.framework.Test;

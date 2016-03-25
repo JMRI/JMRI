@@ -1,4 +1,3 @@
-// PathLengthTest.java
 package jmri;
 
 import junit.framework.Assert;

@@ -1,4 +1,3 @@
-// XNetTurnoutTest.java
 package jmri.jmrix.lenz;
 
 import junit.framework.Assert;

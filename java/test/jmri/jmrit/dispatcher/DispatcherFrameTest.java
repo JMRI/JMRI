@@ -1,4 +1,3 @@
-// DispatcherFrameTest.java
 package jmri.jmrit.dispatcher;
 
 import jmri.Scale;

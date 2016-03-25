@@ -1,4 +1,3 @@
-// DecoderFileTest.java
 package jmri.jmrit.decoderdefn;
 
 import javax.swing.JLabel;

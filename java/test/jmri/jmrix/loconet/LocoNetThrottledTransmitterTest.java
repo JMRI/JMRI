@@ -1,4 +1,3 @@
-// LocoNetThrottledTransmitterTest.java
 package jmri.jmrix.loconet;
 
 import java.util.concurrent.TimeUnit;

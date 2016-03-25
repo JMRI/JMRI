@@ -1,4 +1,3 @@
-// SwingTest.java
 package jmri.jmrix.rps.swing;
 
 import junit.framework.Test;

@@ -1,4 +1,3 @@
-// PackageTest.java
 package jmri.jmrit.beantable.signalmast;
 
 import junit.framework.Test;

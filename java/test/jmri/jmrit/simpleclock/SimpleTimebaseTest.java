@@ -1,4 +1,3 @@
-// SimpleTimebaseTest.java
 package jmri.jmrit.simpleclock;
 
 import java.util.Date;

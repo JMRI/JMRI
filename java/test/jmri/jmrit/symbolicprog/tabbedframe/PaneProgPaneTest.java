@@ -1,4 +1,3 @@
-// PaneProgPaneTest.java
 package jmri.jmrit.symbolicprog.tabbedframe;
 
 import java.awt.GridBagConstraints;

@@ -1,4 +1,3 @@
-// LightTest.java
 package jmri;
 
 import junit.framework.Assert;

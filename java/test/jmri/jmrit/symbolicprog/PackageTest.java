@@ -1,4 +1,3 @@
-// PackageTest.java
 package jmri.jmrit.symbolicprog;
 
 import jmri.InstanceManager;

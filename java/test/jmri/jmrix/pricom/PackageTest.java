@@ -1,4 +1,3 @@
-// PackageTest.java
 package jmri.jmrix.pricom;
 
 import junit.framework.Test;

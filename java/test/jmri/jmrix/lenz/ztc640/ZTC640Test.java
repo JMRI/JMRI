@@ -1,4 +1,3 @@
-// ZTC640Test.java
 package jmri.jmrix.lenz.ztc640;
 
 import junit.framework.Test;

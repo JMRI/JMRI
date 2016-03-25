@@ -1,4 +1,3 @@
-// PackageTest.java
 package jmri.jmrix.oaktree;
 
 import junit.framework.Assert;

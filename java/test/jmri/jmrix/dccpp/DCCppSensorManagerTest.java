@@ -1,4 +1,3 @@
-// DCCppSensorManagerTest.java
 package jmri.jmrix.dccpp;
 
 import jmri.Sensor;

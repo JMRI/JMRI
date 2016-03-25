@@ -1,4 +1,3 @@
-// DownloaderTest.java
 package jmri.jmrix.pricom.downloader;
 
 import junit.framework.Test;

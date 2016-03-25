@@ -1,4 +1,3 @@
-// DccSignalMastTest.java
 package jmri.implementation;
 
 import jmri.CommandStation;

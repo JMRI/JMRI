@@ -1,4 +1,3 @@
-// EngineTest.java
 package jmri.jmrit.operations.rollingstock.engines;
 
 import jmri.jmrit.operations.OperationsTestCase;

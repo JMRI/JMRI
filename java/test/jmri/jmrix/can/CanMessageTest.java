@@ -1,4 +1,3 @@
-// CanMessageTest.java
 package jmri.jmrix.can;
 
 import junit.framework.Assert;

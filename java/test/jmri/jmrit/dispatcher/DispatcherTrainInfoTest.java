@@ -1,4 +1,3 @@
-// DispatcherTrainInfoTest.java
 package jmri.jmrit.dispatcher;
 
 import junit.framework.Assert;

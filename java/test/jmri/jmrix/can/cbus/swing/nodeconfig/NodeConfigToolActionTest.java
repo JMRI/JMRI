@@ -1,4 +1,3 @@
-// NodeConfigToolActionTest.java
 package jmri.jmrix.can.cbus.swing.nodeconfig;
 
 import jmri.jmrix.can.TestTrafficController;

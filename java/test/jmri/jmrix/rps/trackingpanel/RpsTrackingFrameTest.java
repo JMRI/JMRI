@@ -1,4 +1,3 @@
-// RpsTrackingFrameTest.java
 package jmri.jmrix.rps.trackingpanel;
 
 import apps.tests.Log4JFixture;

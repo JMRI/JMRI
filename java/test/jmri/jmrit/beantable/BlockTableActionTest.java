@@ -1,4 +1,3 @@
-// BlockTableActionTest.java
 package jmri.jmrit.beantable;
 
 import jmri.Block;

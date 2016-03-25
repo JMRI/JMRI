@@ -1,4 +1,3 @@
-// CM11Test.java
 package jmri.jmrix.powerline.cm11;
 
 import junit.framework.Test;

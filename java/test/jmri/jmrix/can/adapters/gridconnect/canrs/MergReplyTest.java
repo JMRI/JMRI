@@ -1,4 +1,3 @@
-// MergReplyTest.java
 package jmri.jmrix.can.adapters.gridconnect.canrs;
 
 import jmri.jmrix.can.CanReply;

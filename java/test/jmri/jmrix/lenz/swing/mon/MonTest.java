@@ -1,4 +1,3 @@
-// MonTest.java
 package jmri.jmrix.lenz.swing.mon;
 
 import junit.framework.Test;

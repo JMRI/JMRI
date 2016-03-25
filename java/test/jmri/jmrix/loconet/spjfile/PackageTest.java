@@ -1,4 +1,3 @@
-// PackageTest.java
 package jmri.jmrix.loconet.spjfile;
 
 import jmri.jmrit.Sound;

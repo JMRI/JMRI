@@ -1,4 +1,3 @@
-// ApplicationTest.java
 package jmri;
 
 import junit.framework.Assert;

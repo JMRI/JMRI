@@ -1,4 +1,3 @@
-// PackageTest.java
 package jmri.jmrit.consisttool;
 
 import junit.framework.Test;

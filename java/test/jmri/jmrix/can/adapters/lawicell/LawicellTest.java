@@ -1,4 +1,3 @@
-// LawicellTest.java
 package jmri.jmrix.can.adapters.lawicell;
 
 import junit.framework.Test;

@@ -1,4 +1,3 @@
-// PackageTest.java
 package jmri.jmrix.easydcc;
 
 import junit.framework.Test;

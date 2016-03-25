@@ -1,4 +1,3 @@
-// StackMonTest.java
 package jmri.jmrix.lenz.swing.stackmon;
 
 import junit.framework.Test;

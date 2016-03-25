@@ -1,4 +1,3 @@
-// NotchTriggerTest.java
 package jmri.jmrit.vsdecoder;
 
 import java.beans.PropertyChangeEvent;

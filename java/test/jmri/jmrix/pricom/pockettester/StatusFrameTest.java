@@ -1,4 +1,3 @@
-// StatusFrameTest.java
 package jmri.jmrix.pricom.pockettester;
 
 import junit.framework.Test;

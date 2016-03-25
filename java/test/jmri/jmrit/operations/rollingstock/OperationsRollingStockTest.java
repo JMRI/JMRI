@@ -1,4 +1,3 @@
-// OperationsRollingStockTest.java
 package jmri.jmrit.operations.rollingstock;
 
 import jmri.jmrit.operations.OperationsTestCase;

@@ -1,4 +1,3 @@
-// TurnoutTableWindowTest.java
 package jmri.jmrit.beantable;
 
 import javax.swing.JButton;

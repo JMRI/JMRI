@@ -1,4 +1,3 @@
-// SamplePane.java
 package jmri.util.swing;
 
 import java.util.ArrayList;

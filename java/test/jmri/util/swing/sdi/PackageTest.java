@@ -1,4 +1,3 @@
-// PackageTest.java
 package jmri.util.swing.sdi;
 
 import javax.swing.JButton;

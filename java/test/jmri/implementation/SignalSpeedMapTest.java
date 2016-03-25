@@ -1,4 +1,3 @@
-// SignalSpeedMapTest.java
 package jmri.implementation;
 
 import junit.framework.Assert;

@@ -1,4 +1,3 @@
-// DCCppTCPTest.java
 package jmri.jmrix.dccpp.network;
 
 import junit.framework.Test;

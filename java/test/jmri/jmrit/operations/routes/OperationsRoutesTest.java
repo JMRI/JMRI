@@ -1,4 +1,3 @@
-// OperationsRoutesTest.java
 package jmri.jmrit.operations.routes;
 
 import java.io.IOException;

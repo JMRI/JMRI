@@ -1,4 +1,3 @@
-// ConfigXmlManagerTest.java
 package jmri.configurexml;
 
 import java.io.File;

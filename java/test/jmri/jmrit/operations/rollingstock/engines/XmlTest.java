@@ -1,4 +1,3 @@
-// XmlTest.java
 package jmri.jmrit.operations.rollingstock.engines;
 
 import java.io.IOException;

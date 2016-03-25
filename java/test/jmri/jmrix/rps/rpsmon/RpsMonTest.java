@@ -1,4 +1,3 @@
-// RpsMonTest.java
 package jmri.jmrix.rps.rpsmon;
 
 import javax.swing.JFrame;

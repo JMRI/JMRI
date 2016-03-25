@@ -1,4 +1,3 @@
-// ProgServiceModePaneTest.java
 package jmri.jmrit.progsupport;
 
 import javax.swing.BoxLayout;

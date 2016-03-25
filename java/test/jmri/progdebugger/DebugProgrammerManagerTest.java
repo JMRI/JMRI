@@ -1,4 +1,3 @@
-// DebugProgrammerManagerTest.java
 package jmri.progdebugger;
 
 import jmri.InstanceManager;

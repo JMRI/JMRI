@@ -1,4 +1,3 @@
-// ProgrammingModeTest.java
 package jmri;
 
 import jmri.managers.DefaultProgrammerManager;

@@ -1,4 +1,3 @@
-// SerialTurnoutManagerTest.java
 package jmri.jmrix.grapevine;
 
 import jmri.Turnout;

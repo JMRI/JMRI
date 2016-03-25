@@ -1,4 +1,3 @@
-// CbusProgrammerManagerTest.java
 package jmri.jmrix.can.cbus;
 
 import jmri.jmrix.can.TestTrafficController;

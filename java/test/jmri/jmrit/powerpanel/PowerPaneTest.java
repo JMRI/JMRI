@@ -1,4 +1,3 @@
-// PowerPaneTest.java
 package jmri.jmrit.powerpanel;
 
 import jmri.util.JUnitUtil;

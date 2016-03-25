@@ -1,4 +1,3 @@
-// OlcbSensorTest.java
 package jmri.jmrix.openlcb;
 
 import jmri.Sensor;

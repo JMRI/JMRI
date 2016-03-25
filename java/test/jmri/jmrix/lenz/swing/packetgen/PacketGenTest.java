@@ -1,4 +1,3 @@
-// PacketGenTest.java
 package jmri.jmrix.lenz.swing.packetgen;
 
 import junit.framework.Test;

@@ -1,4 +1,3 @@
-// PaneProgFrameTest.java
 package jmri.jmrit.symbolicprog.tabbedframe;
 
 import javax.swing.JFrame;

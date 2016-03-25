@@ -1,4 +1,3 @@
-// LocoIOPanelTest.java
 package jmri.jmrix.loconet.locoio;
 
 import jmri.jmrix.loconet.LocoNetInterfaceScaffold;

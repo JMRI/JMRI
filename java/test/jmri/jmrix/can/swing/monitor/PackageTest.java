@@ -1,4 +1,3 @@
-// PackageTest.java
 package jmri.jmrix.can.swing.monitor;
 
 import jmri.jmrix.can.CanMessage;

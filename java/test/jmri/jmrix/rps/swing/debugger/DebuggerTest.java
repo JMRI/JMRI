@@ -1,4 +1,3 @@
-// DebuggerTest.java
 package jmri.jmrix.rps.swing.debugger;
 
 import javax.vecmath.Point3d;

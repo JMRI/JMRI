@@ -1,4 +1,3 @@
-// PackageDemo.java
 package jmri.jmrix.openlcb.swing.networktree;
 
 import junit.framework.Test;

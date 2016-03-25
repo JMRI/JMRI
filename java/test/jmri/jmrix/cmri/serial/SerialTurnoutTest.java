@@ -1,4 +1,3 @@
-// SerialTurnoutTest.java
 package jmri.jmrix.cmri.serial;
 
 import jmri.implementation.AbstractTurnoutTest;

@@ -1,4 +1,3 @@
-// DefaultSignalSystemTest.java
 package jmri.implementation;
 
 import jmri.SignalSystem;

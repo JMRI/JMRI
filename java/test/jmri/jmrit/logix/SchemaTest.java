@@ -1,4 +1,3 @@
-// SchemaTest.java
 package jmri.jmrit.logix;
 
 import junit.framework.Test;

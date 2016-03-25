@@ -1,4 +1,3 @@
-// PackageTest.java
 package jmri.jmrit.display.layoutEditor;
 
 import junit.framework.*;

@@ -1,4 +1,3 @@
-// DuplicateTest.java
 package jmri.jmrit.decoderdefn;
 
 import java.io.File;

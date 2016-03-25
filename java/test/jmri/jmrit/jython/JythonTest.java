@@ -1,4 +1,3 @@
-// JythonTest.java
 package jmri.jmrit.jython;
 
 import javax.swing.JFrame;

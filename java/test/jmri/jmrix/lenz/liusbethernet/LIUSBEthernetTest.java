@@ -1,4 +1,3 @@
-// XNTCPTest.java
 package jmri.jmrix.lenz.liusbethernet;
 
 import junit.framework.Test;

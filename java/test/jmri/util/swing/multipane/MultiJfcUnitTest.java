@@ -1,4 +1,3 @@
-// MultiJfcUnitTest.java
 package jmri.util.swing.multipane;
 
 import javax.swing.JButton;

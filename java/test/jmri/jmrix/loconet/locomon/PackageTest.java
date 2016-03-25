@@ -1,4 +1,3 @@
-// PackageTest.java
 package jmri.jmrix.loconet.locomon;
 
 import junit.framework.Test;

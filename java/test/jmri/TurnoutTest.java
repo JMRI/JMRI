@@ -1,4 +1,3 @@
-// TurnoutTest.java
 package jmri;
 
 import junit.framework.Assert;

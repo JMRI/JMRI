@@ -1,4 +1,3 @@
-// DefaultJavaBeanConfigXMLTest.java
 package jmri.configurexml;
 
 import junit.framework.Assert;

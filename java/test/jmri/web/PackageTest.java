@@ -1,4 +1,3 @@
-// PackageTest.java
 package jmri.web;
 
 import junit.framework.Test;

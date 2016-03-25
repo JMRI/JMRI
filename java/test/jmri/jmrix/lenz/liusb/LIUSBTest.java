@@ -1,4 +1,3 @@
-// LIUSBTest.java
 package jmri.jmrix.lenz.liusb;
 
 import junit.framework.Test;

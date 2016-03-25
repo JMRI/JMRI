@@ -1,4 +1,3 @@
-// ConfigToolActionTest.java
 package jmri.jmrix.can.cbus.swing.configtool;
 
 import jmri.jmrix.can.CanSystemConnectionMemo;

@@ -1,4 +1,3 @@
-// SerialTrafficControllerTest.java
 package jmri.jmrix.grapevine;
 
 import java.io.ByteArrayInputStream;

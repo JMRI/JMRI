@@ -1,4 +1,3 @@
-// FontComboUtilTest.java
 package jmri.util.swing;
 
 import java.util.List;

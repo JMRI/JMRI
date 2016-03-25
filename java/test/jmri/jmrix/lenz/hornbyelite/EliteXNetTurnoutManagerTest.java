@@ -1,4 +1,3 @@
-// EliteXNetTurnoutManagerTest.java
 package jmri.jmrix.lenz.hornbyelite;
 
 import java.util.ArrayList;

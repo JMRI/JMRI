@@ -1,4 +1,3 @@
-// RosterTest.java
 package jmri.jmrit.roster;
 
 import java.io.File;

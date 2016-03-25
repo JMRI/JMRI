@@ -1,4 +1,3 @@
-// PowerPanelTest.java
 package jmri.jmrit.powerpanel;
 
 import java.util.ResourceBundle;

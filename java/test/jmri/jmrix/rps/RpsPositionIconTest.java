@@ -1,4 +1,3 @@
-// RpsPositionIconTest.java
 package jmri.jmrix.rps;
 
 import javax.swing.JFrame;

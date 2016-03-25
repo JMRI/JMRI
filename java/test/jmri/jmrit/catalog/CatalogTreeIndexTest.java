@@ -1,4 +1,3 @@
-// CatalogTreeIndexTest.java
 package jmri.jmrit.catalog;
 
 import jmri.NamedBean;

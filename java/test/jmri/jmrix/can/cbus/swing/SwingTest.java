@@ -1,4 +1,3 @@
-// SwingTest.java
 package jmri.jmrix.can.cbus.swing;
 
 import junit.framework.Test;

@@ -1,4 +1,3 @@
-// BlockBossLogicTest.java
 package jmri.jmrit.blockboss;
 
 import jmri.InstanceManager;

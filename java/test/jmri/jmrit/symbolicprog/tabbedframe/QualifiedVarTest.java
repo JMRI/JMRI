@@ -1,4 +1,3 @@
-// QualifiedVarTest.java
 package jmri.jmrit.symbolicprog.tabbedframe;
 
 import javax.swing.JPanel;

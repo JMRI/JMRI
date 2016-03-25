@@ -1,4 +1,3 @@
-// MonitoringPaneTest.java
 package jmri.jmrix.loconet.sdfeditor;
 
 import javax.swing.JFrame;

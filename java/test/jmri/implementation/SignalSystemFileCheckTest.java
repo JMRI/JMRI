@@ -1,4 +1,3 @@
-// SignalSystemFileCheckTest.java
 package jmri.implementation;
 
 import junit.framework.Test;

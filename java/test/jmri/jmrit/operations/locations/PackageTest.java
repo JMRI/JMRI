@@ -1,4 +1,3 @@
-// PackageTest.java
 package jmri.jmrit.operations.locations;
 
 import junit.framework.Test;

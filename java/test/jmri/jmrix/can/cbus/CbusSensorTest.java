@@ -1,4 +1,3 @@
-// CbusSensorTest.java
 package jmri.jmrix.can.cbus;
 
 import jmri.Sensor;

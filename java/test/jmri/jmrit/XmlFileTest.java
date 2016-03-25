@@ -1,4 +1,3 @@
-// XmlFileTest.java
 package jmri.jmrit;
 
 import java.io.BufferedInputStream;

@@ -1,4 +1,3 @@
-// CanRSTest.java
 package jmri.jmrix.can.adapters.gridconnect.canrs;
 
 import junit.framework.Test;

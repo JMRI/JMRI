@@ -1,4 +1,3 @@
-// SchemaTest.java
 package jmri.jmrit.display.configurexml;
 
 import junit.framework.Test;

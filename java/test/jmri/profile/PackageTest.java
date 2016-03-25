@@ -1,4 +1,3 @@
-// PackageTest.java
 package jmri.profile;
 
 import junit.framework.Test;

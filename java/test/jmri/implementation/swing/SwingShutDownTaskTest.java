@@ -1,4 +1,3 @@
-// SwingShutDownTaskTest.java
 package jmri.implementation.swing;
 
 import junit.framework.Test;

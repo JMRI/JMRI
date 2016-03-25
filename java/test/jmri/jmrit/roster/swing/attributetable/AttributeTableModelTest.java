@@ -1,4 +1,3 @@
-// AttributeTableModelTest.java
 package jmri.jmrit.roster.swing.attributetable;
 
 import jmri.InstanceManager;

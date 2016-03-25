@@ -1,4 +1,3 @@
-// NcePacketGenPanelTest.java
 package jmri.jmrix.nce.packetgen;
 
 import jmri.jmrix.nce.NceMessage;

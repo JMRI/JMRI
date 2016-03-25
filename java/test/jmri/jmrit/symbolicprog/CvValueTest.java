@@ -1,4 +1,3 @@
-// CvValueTest.java
 package jmri.jmrit.symbolicprog;
 
 import jmri.progdebugger.ProgDebugger;

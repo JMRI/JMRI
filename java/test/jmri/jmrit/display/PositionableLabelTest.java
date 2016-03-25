@@ -1,4 +1,3 @@
-// PositionableLabelTest.java
 
 package jmri.jmrit.display;
 

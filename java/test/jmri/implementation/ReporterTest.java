@@ -1,4 +1,3 @@
-// ReporterTest.java
 package jmri.implementation;
 
 import jmri.Reporter;

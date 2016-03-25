@@ -1,4 +1,3 @@
-// ButtonTestAction.java
 package jmri.util.swing;
 
 import javax.swing.JLabel;

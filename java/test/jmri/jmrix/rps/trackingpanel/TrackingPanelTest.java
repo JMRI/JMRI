@@ -1,4 +1,3 @@
-// TrackingPanelTest.java
 package jmri.jmrix.rps.trackingpanel;
 
 import junit.framework.Test;

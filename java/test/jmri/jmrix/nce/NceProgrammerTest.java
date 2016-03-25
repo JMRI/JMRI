@@ -1,4 +1,3 @@
-// NceProgrammerTest.java
 package jmri.jmrix.nce;
 
 import java.io.DataInputStream;

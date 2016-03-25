@@ -1,4 +1,3 @@
-// MonitorFrameTest.java
 package jmri.jmrix.openlcb.swing.monitor;
 
 import jmri.jmrix.can.CanSystemConnectionMemo;
