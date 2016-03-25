@@ -60,11 +60,6 @@ public class JmriJFrameServletTest extends TestCase {
     // local varient class to make access to private members
     class JmriJFrameServlet_ut extends JmriJFrameServlet {
 
-        /**
-         *
-         */
-        private static final long serialVersionUID = -4957073887916405378L;
-
         void populateParameterMap(Map<String, String[]> map) {
             super.populateParameterMap(map);
         }

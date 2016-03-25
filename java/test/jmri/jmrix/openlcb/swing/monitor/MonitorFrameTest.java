@@ -28,10 +28,6 @@ public class MonitorFrameTest extends TestCase {
         TrafficControllerScaffold tcs = new TrafficControllerScaffold();
 
         MonitorPane f = new MonitorPane() {
-            /**
-             *
-             */
-            private static final long serialVersionUID = 6881297538444164698L;
 
             public void nextLine(String s1, String s2) {
                 testFormatted = s1;
@@ -63,11 +59,6 @@ public class MonitorFrameTest extends TestCase {
         TrafficControllerScaffold tcs = new TrafficControllerScaffold();
 
         MonitorPane f = new MonitorPane() {
-            /**
-             *
-             */
-            private static final long serialVersionUID = -1435581726641297034L;
-
             public void nextLine(String s1, String s2) {
                 testFormatted = s1;
                 testRaw = s2;

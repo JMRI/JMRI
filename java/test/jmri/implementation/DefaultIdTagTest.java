@@ -56,11 +56,6 @@ public class DefaultIdTagTest extends TestCase {
     public void testHasBeenSeen() throws InterruptedException {
         IdTag r = new DefaultIdTag("ID0413276BC1");
         Reporter rep = new AbstractReporter("IR1") {
-            /**
-             *
-             */
-            private static final long serialVersionUID = 1544664087163881750L;
-
             public int getState() {
                 return state;
             }

@@ -23,11 +23,6 @@ public class SerialMonTest extends TestCase {
     public void testDisplay() throws Exception {
         // create a SerialMonFrame
         SerialMonFrame f = new SerialMonFrame() {
-            /**
-             *
-             */
-            private static final long serialVersionUID = -947606339366566391L;
-
             {
                 rawCheckBox.setSelected(true);
             }

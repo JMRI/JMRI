@@ -260,11 +260,6 @@ public class VariableTableModelTest extends TestCase {
     public void testVarTableLoadBogus() {
         String[] args = {"CV", "Name"};
         VariableTableModel t = new VariableTableModel(null, args, new CvTableModel(null, p), null) {
-            /**
-             *
-             */
-            private static final long serialVersionUID = 396374590706462256L;
-
             void reportBogus() {
             }
         };

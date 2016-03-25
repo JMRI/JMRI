@@ -119,11 +119,6 @@ public class LRouteTableActionTest extends jmri.util.SwingTestCase //TestCase //
         _lRouteTable = new LRouteTableAction("LRoute");
         assertNotNull("LRouteTableAction is null!", _lRouteTable);        // test has begun
         _logixTable = new LogixTableAction() {
-            /**
-             *
-             */
-            private static final long serialVersionUID = -8564598557067632416L;
-
             // skip dialog box if in edit mode, just assume OK pressed
             boolean checkEditConditional() {
                 if (inEditConditionalMode) {

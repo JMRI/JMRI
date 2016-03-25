@@ -36,11 +36,6 @@ public class PaneProgPaneTest extends TestCase {
         PaneProgFrame pFrame = new PaneProgFrame(null, new RosterEntry(),
                 "test frame", "programmers/Basic.xml",
                 p, false) {
-                    /**
-                     *
-                     */
-                    private static final long serialVersionUID = 4282192984429206254L;
-
                     // dummy implementations
                     protected JPanel getModePane() {
                         return null;
@@ -60,11 +55,6 @@ public class PaneProgPaneTest extends TestCase {
         // create test object with special implementation of the newColumn(String) operation
         colCount = 0;
         PaneProgPane p = new PaneProgPane(pFrame, "name", pane1, cvModel, icvModel, varModel, null, null) {
-            /**
-             *
-             */
-            private static final long serialVersionUID = 7358324141533141966L;
-
             public JPanel newColumn(Element e, boolean a, Element el) {
                 colCount++;
                 return new JPanel();
@@ -80,11 +70,6 @@ public class PaneProgPaneTest extends TestCase {
         PaneProgFrame pFrame = new PaneProgFrame(null, new RosterEntry(),
                 "test frame", "programmers/Basic.xml",
                 p, false) {
-                    /**
-                     *
-                     */
-                    private static final long serialVersionUID = -4284222445404792610L;
-
                     // dummy implementations
                     protected JPanel getModePane() {
                         return null;
@@ -101,11 +86,6 @@ public class PaneProgPaneTest extends TestCase {
         // create test object with special implementation of the newVariable(String) operation
         varCount = 0;
         PaneProgPane p = new PaneProgPane(pFrame, "name", pane1, cvModel, icvModel, varModel, null, null) {
-            /**
-             *
-             */
-            private static final long serialVersionUID = 4810838962908126464L;
-
             public void newVariable(Element e, JComponent p, GridBagLayout g, GridBagConstraints c, boolean a) {
                 varCount++;
             }
@@ -120,11 +100,6 @@ public class PaneProgPaneTest extends TestCase {
         PaneProgFrame pFrame = new PaneProgFrame(null, new RosterEntry(),
                 "test frame", "programmers/Basic.xml",
                 p, false) {
-                    /**
-                     *
-                     */
-                    private static final long serialVersionUID = 5421457356996971001L;
-
                     // dummy implementations
                     protected JPanel getModePane() {
                         return null;
@@ -183,11 +158,6 @@ public class PaneProgPaneTest extends TestCase {
         PaneProgFrame pFrame = new PaneProgFrame(null, new RosterEntry(),
                 "test frame", "programmers/Basic.xml",
                 p, false) {
-                    /**
-                     *
-                     */
-                    private static final long serialVersionUID = 3718742250875057900L;
-
                     // dummy implementations
                     protected JPanel getModePane() {
                         return null;
@@ -246,11 +216,6 @@ public class PaneProgPaneTest extends TestCase {
         PaneProgFrame pFrame = new PaneProgFrame(null, new RosterEntry(),
                 "test frame", "programmers/Basic.xml",
                 p, false) {
-                    /**
-                     *
-                     */
-                    private static final long serialVersionUID = -1592842528954612678L;
-
                     // dummy implementations
                     protected JPanel getModePane() {
                         return null;
@@ -315,11 +280,6 @@ public class PaneProgPaneTest extends TestCase {
         PaneProgFrame pFrame = new PaneProgFrame(null, new RosterEntry(),
                 "test frame", "programmers/Basic.xml",
                 p, false) {
-                    /**
-                     *
-                     */
-                    private static final long serialVersionUID = -6820598809604324879L;
-
                     // dummy implementations
                     protected JPanel getModePane() {
                         return null;

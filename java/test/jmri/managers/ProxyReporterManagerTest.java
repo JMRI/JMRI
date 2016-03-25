@@ -137,10 +137,6 @@ public class ProxyReporterManagerTest extends TestCase {
         Assert.assertNotNull(InstanceManager.getDefault(LightManager.class).provideLight("IL1"));
 
         InternalLightManager m = new InternalLightManager() {
-            /**
-             *
-             */
-            private static final long serialVersionUID = 2721638034147721142L;
 
             public String getSystemPrefix() {
                 return "J";

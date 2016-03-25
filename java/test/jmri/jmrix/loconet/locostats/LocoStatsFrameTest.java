@@ -20,11 +20,6 @@ public class LocoStatsFrameTest extends TestCase {
     LocoStatsPanel getFrame(String title, int offset) throws Exception {
         JmriJFrame f = new JmriJFrame();
         LocoStatsPanel p = new LocoStatsPanel() {
-            /**
-             *
-             */
-            private static final long serialVersionUID = 1454939858436681834L;
-
             public void requestUpdate() {  // replace actual transmit
                 updatePending = true;
             }

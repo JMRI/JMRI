@@ -23,10 +23,6 @@ public class StatusFrameTest extends TestCase {
         f.initComponents();
         f.setVisible(true);
         f.setSource(new DataSource() {
-            /**
-             *
-             */
-            private static final long serialVersionUID = 8224674918425447491L;
 
             void sendBytes(byte[] bytes) {
             }
@@ -49,11 +45,6 @@ public class StatusFrameTest extends TestCase {
         f.initComponents();
         f.setVisible(true);
         f.setSource(new DataSource() {
-            /**
-             *
-             */
-            private static final long serialVersionUID = 5500463612432095595L;
-
             void sendBytes(byte[] bytes) {
             }
         });

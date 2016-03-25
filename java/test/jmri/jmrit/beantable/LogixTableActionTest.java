@@ -201,11 +201,6 @@ public class LogixTableActionTest extends jmri.util.SwingTestCase {
         JUnitUtil.initInternalSignalHeadManager();
 
         _logixTable = new LogixTableAction() {
-            /**
-             *
-             */
-            private static final long serialVersionUID = 6004896064187980424L;
-
             // skip dialog box if in edit mode, just assume OK pressed
             boolean checkEditConditional() {
                 if (inEditConditionalMode) {

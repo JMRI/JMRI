@@ -80,11 +80,6 @@ public class LocoIOPanelTest extends TestCase {
 
         // skip the warning dialog box
         LocoIOPanel f = new LocoIOPanel() {
-            /**
-             *
-             */
-            private static final long serialVersionUID = 4431060598846920555L;
-
             protected int cautionAddrSet() {
                 return 1;
             }

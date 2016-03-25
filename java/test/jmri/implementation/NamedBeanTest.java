@@ -24,11 +24,6 @@ public class NamedBeanTest extends TestCase {
      */
     protected NamedBean createInstance() {
         return new AbstractNamedBean("sys", "usr") {
-            /**
-             *
-             */
-            private static final long serialVersionUID = 1840715699707517615L;
-
             public int getState() {
                 return 0;
             }

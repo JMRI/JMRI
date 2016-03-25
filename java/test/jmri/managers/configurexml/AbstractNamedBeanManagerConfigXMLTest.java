@@ -23,10 +23,6 @@ public class AbstractNamedBeanManagerConfigXMLTest extends TestCase {
 
         // create a NamedBean with two properties to store
         NamedBean from = new AbstractNamedBean("sys", "usr") {
-            /**
-             *
-             */
-            private static final long serialVersionUID = 8103890609137268240L;
 
             public int getState() {
                 return 0;
@@ -50,11 +46,6 @@ public class AbstractNamedBeanManagerConfigXMLTest extends TestCase {
 
         // create NamedBean to load
         NamedBean to = new AbstractNamedBean("sys", "usr") {
-            /**
-             *
-             */
-            private static final long serialVersionUID = -5772255040585062885L;
-
             public int getState() {
                 return 0;
             }
@@ -81,11 +72,6 @@ public class AbstractNamedBeanManagerConfigXMLTest extends TestCase {
 
         // create a NamedBean with two properties to store
         NamedBean from = new AbstractNamedBean("sys", "usr") {
-            /**
-             *
-             */
-            private static final long serialVersionUID = -6948669321294943243L;
-
             public int getState() {
                 return 0;
             }
@@ -105,11 +91,6 @@ public class AbstractNamedBeanManagerConfigXMLTest extends TestCase {
 
         // create NamedBean to load
         NamedBean to = new AbstractNamedBean("sys", "usr") {
-            /**
-             *
-             */
-            private static final long serialVersionUID = 8693438303061601658L;
-
             public int getState() {
                 return 0;
             }
@@ -136,11 +117,6 @@ public class AbstractNamedBeanManagerConfigXMLTest extends TestCase {
 
         // create a NamedBean with two properties to store
         NamedBean from = new AbstractNamedBean("sys", "usr") {
-            /**
-             *
-             */
-            private static final long serialVersionUID = 2830149244800009676L;
-
             public int getState() {
                 return 0;
             }
@@ -163,11 +139,6 @@ public class AbstractNamedBeanManagerConfigXMLTest extends TestCase {
 
         // create NamedBean to load
         NamedBean to = new AbstractNamedBean("sys", "usr") {
-            /**
-             *
-             */
-            private static final long serialVersionUID = 7324369333872804221L;
-
             public int getState() {
                 return 0;
             }

@@ -68,11 +68,6 @@ public class BlockTest extends TestCase {
         SensorManager sm = new jmri.managers.InternalSensorManager();
         count = 0;
         Block b = new Block("SystemName") {
-            /**
-             *
-             */
-            private static final long serialVersionUID = 5139018101378690325L;
-
             void handleSensorChange(java.beans.PropertyChangeEvent e) {
                 count++;
             }
@@ -234,11 +229,6 @@ public class BlockTest extends TestCase {
         ReporterManager rm = new jmri.managers.InternalReporterManager();
         count = 0;
         Block b = new Block("SystemName") {
-            /**
-             *
-             */
-            private static final long serialVersionUID = 3547154109447369497L;
-
             @Override
             void handleReporterChange(java.beans.PropertyChangeEvent e) {
                 count++;
@@ -255,11 +245,6 @@ public class BlockTest extends TestCase {
         ReporterManager rm = new jmri.managers.InternalReporterManager();
         count = 0;
         Block b = new Block("SystemName") {
-            /**
-             *
-             */
-            private static final long serialVersionUID = 5571669574284994013L;
-
             @Override
             void handleReporterChange(java.beans.PropertyChangeEvent e) {
                 if (e.getPropertyName().equals("currentReport")) {
@@ -281,11 +266,6 @@ public class BlockTest extends TestCase {
         ReporterManager rm = new jmri.managers.InternalReporterManager();
         count = 0;
         Block b = new Block("SystemName") {
-            /**
-             *
-             */
-            private static final long serialVersionUID = -2814760455640517297L;
-
             @Override
             void handleReporterChange(java.beans.PropertyChangeEvent e) {
                 if (e.getPropertyName().equals("lastReport")) {
