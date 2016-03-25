@@ -17,6 +17,7 @@ import javax.annotation.Nonnull;
 import javax.swing.JOptionPane;
 import jmri.InstanceManager;
 import jmri.UserPreferencesManager;
+import jmri.beans.PropertyChangeProvider;
 import jmri.jmrit.XmlFile;
 import jmri.jmrit.roster.rostergroup.RosterGroup;
 import jmri.jmrit.roster.rostergroup.RosterGroupSelector;
@@ -62,7 +63,7 @@ import org.slf4j.LoggerFactory;
  * @author Dennis Miller Copyright 2004
  * @see jmri.jmrit.roster.RosterEntry
  */
-public class Roster extends XmlFile implements RosterGroupSelector, PropertyChangeListener {
+public class Roster extends XmlFile implements RosterGroupSelector, PropertyChangeProvider, PropertyChangeListener {
 
     /**
      * List of contained {@link RosterEntry} elements.
@@ -1113,6 +1114,16 @@ public class Roster extends XmlFile implements RosterGroupSelector, PropertyChan
     @Override
     public synchronized void removePropertyChangeListener(String propertyName, PropertyChangeListener listener) {
         pcs.removePropertyChangeListener(propertyName, listener);
+    }
+
+    @Override
+    public PropertyChangeListener[] getPropertyChangeListeners() {
+        return pcs.getPropertyChangeListeners();
+    }
+
+    @Override
+    public PropertyChangeListener[] getPropertyChangeListeners(String propertyName) {
+        return pcs.getPropertyChangeListeners(propertyName);
     }
 
     /**
