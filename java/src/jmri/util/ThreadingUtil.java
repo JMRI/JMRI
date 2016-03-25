@@ -3,7 +3,7 @@ package jmri.util;
 /**
  * Utilities for handling JMRI's threading conventions
  * <p>
- * For background, see <a href="http://localhost/help/en/html/doc/Technical/Threads.shtml">http://localhost/help/en/html/doc/Technical/Threads.shtml</a>
+ * For background, see <a href="http://jmri.org/help/en/html/doc/Technical/Threads.shtml">http://jmri.org/help/en/html/doc/Technical/Threads.shtml</a>
  * <p>
  * Note this distinguishes "on layout", e.g. Setting a sensor, from
  * "on GUI", e.g. manipulating the Swing GUI. That may not be an important
