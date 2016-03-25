@@ -29,7 +29,7 @@ public class SerialSensorAdapter extends AbstractSerialPortController
     SerialPort activeSerialPort = null;
 
     public SerialSensorAdapter() {
-        super(new SystemConnectionMemo(null, null) {
+        super(new SystemConnectionMemo("S", "Serial") {
 
             @Override
             protected ResourceBundle getActionModelResourceBundle() {
