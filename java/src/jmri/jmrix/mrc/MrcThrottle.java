@@ -22,7 +22,6 @@ import org.slf4j.LoggerFactory;
 public class MrcThrottle extends AbstractThrottle implements MrcTrafficListener {
 
     private MrcTrafficController tc = null;
-    //private MrcInterface network;
 
     /**
      * Constructor.
