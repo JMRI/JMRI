@@ -1,4 +1,3 @@
-// SerialTrafficControllerTest.java
 package jmri.jmrix.grapevine;
 
 import java.io.ByteArrayInputStream;
@@ -19,7 +18,6 @@ import org.slf4j.LoggerFactory;
  * JUnit tests for the SerialTrafficController class
  *
  * @author	Bob Jacobsen Copyright 2005, 2007, 2008
- * @version $Revision$
  */
 public class SerialTrafficControllerTest extends TestCase {
 

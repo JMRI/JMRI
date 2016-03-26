@@ -1,4 +1,3 @@
-// EliteTest.java
 package jmri.jmrix.lenz.hornbyelite;
 
 import junit.framework.Test;
@@ -9,7 +8,6 @@ import junit.framework.TestSuite;
  * Tests for the jmri.jmrix.lenz.hornbyelite package
  *
  * @author Paul Bender
- * @version $Revision$
  */
 public class EliteTest extends TestCase {
 

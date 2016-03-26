@@ -1,4 +1,3 @@
-// PlayTest.java
 package jmri.jmrix.loconet.sdf;
 
 import junit.framework.Assert;

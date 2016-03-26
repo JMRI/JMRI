@@ -33,8 +33,6 @@ import org.slf4j.LoggerFactory;
  */
 public class PositionableLabel extends JLabel implements Positionable {
 
-    private static final long serialVersionUID = 2620446240151660560L;
-
     public static final ResourceBundle rbean = ResourceBundle.getBundle("jmri.NamedBeanBundle");
 
     protected Editor _editor;
@@ -469,10 +467,6 @@ public class PositionableLabel extends JLabel implements Positionable {
 
         if (isIcon() && _displayLevel > Editor.BKG) {
             popup.add(new AbstractAction(Bundle.getMessage("Rotate")) {
-                /**
-                 *
-                 */
-                private static final long serialVersionUID = -3965855672806759644L;
 
                 public void actionPerformed(ActionEvent e) {
                     rotateOrthogonal();
@@ -505,10 +499,6 @@ public class PositionableLabel extends JLabel implements Positionable {
         if (_icon && !_text) {
             String txt = java.text.MessageFormat.format(Bundle.getMessage("EditItem"), Bundle.getMessage("Icon"));
             popup.add(new AbstractAction(txt) {
-                /**
-                 *
-                 */
-                private static final long serialVersionUID = 1481028540455022L;
 
                 public void actionPerformed(ActionEvent e) {
                     edit();
@@ -689,28 +679,23 @@ public class PositionableLabel extends JLabel implements Positionable {
                 super.setIcon(_namedIcon);
                 setOpaque(false);   // rotations cannot be opaque
             }
-        } else {
-            if (deg != 0) { // first time text or icon is rotated from horizontal
-                if (_text && _icon) {   // text overlays icon  e.g. LocoIcon
-                    _namedIcon = makeTextOverlaidIcon(_unRotatedText, _namedIcon);
-                    super.setText(null);
-                    _rotateText = true;
-                    setOpaque(false);
-                } else if (_text) {
-                    _namedIcon = makeTextIcon(_unRotatedText);
-                    super.setText(null);
-                    _rotateText = true;
-                    setOpaque(false);
-                }
-                if (_popupUtil!=null) {
-                    _popupUtil.setBorder(false);
-                }
-                _namedIcon.rotate(deg, this);
-                super.setIcon(_namedIcon);
-            } else if (_namedIcon != null) {
-                _namedIcon.rotate(deg, this);
-                super.setIcon(_namedIcon);
+        } else {  // first time text or icon is rotated from horizontal
+            if (_text && _icon) {   // text overlays icon  e.g. LocoIcon
+                _namedIcon = makeTextOverlaidIcon(_unRotatedText, _namedIcon);
+                super.setText(null);
+                _rotateText = true;
+                setOpaque(false);
+            } else if (_text) {
+                _namedIcon = makeTextIcon(_unRotatedText);
+                super.setText(null);
+                _rotateText = true;
+                setOpaque(false);
             }
+            if (_popupUtil!=null) {
+                _popupUtil.setBorder(false);
+            }
+            _namedIcon.rotate(deg, this);
+            super.setIcon(_namedIcon);
         }
         updateSize();
     }

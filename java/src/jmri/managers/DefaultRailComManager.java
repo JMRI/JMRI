@@ -1,4 +1,3 @@
-// RailCommTagManager.java
 package jmri.managers;
 
 import java.util.ArrayList;
@@ -19,7 +18,6 @@ import org.slf4j.LoggerFactory;
  * interface.
  *
  * @author Kevin Dickerson Copyright (C) 2012
- * @version $Revision: 18102 $
  * @since 2.99.4
  */
 public class DefaultRailComManager extends AbstractManager
@@ -202,5 +200,3 @@ public class DefaultRailComManager extends AbstractManager
     private static final Logger log = LoggerFactory.getLogger(DefaultRailComManager.class.getName());
 
 }
-
-/* @(#)DefaultRailComManager.java */

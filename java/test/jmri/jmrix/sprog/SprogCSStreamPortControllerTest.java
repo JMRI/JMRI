@@ -15,7 +15,6 @@ import junit.framework.TestSuite;
  * Description:	tests for the jmri.jmrix.sprog.SprogCSStreamPortController class
  *
  * @author	Paul Bender
- * @version $Revision$
  */
 public class SprogCSStreamPortControllerTest extends TestCase {
 

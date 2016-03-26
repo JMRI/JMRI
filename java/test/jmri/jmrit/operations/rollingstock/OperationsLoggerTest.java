@@ -1,4 +1,3 @@
-// OperationsLoggerTest.java
 package jmri.jmrit.operations.rollingstock;
 
 import java.io.File;

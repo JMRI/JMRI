@@ -1,4 +1,3 @@
-// AlignmentPanelTest.java
 package jmri.jmrix.rps.reversealign;
 
 import apps.tests.Log4JFixture;

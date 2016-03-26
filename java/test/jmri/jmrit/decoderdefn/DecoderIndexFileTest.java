@@ -1,4 +1,3 @@
-// DecoderIndexFileTest.java
 package jmri.jmrit.decoderdefn;
 
 import java.util.List;

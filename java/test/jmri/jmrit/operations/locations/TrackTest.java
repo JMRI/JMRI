@@ -19,7 +19,6 @@ import junit.framework.TestSuite;
  * read/write Location: Track support <-- I am here Location: XML read/write
  *
  * @author Bob Coleman Copyright (C) 2008, 2009
- * @version $Revision$
  */
 public class TrackTest extends OperationsTestCase {
 

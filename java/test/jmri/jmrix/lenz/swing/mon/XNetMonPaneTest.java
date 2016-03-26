@@ -11,7 +11,6 @@ import junit.framework.TestSuite;
  * Description:	tests for the jmri.jmrix.lenz.swing.mon.XNetMonPane class
  *
  * @author	Paul Bender Copyright (C) 2014
- * @version $Revision$
  */
 public class XNetMonPaneTest extends TestCase {
 

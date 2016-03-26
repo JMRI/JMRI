@@ -15,7 +15,6 @@ import junit.framework.TestSuite;
  * class
  *
  * @author	Paul Bender
- * @version $Revision$
  */
 public class EliteXNetInitializationManagerTest extends TestCase {
 

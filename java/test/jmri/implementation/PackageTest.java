@@ -4,7 +4,6 @@
  * Description:	tests for the jmri.implementation package
  *
  * @author	Bob Jacobsen 2009
- * @version $Revision$
  */
 package jmri.implementation;
 

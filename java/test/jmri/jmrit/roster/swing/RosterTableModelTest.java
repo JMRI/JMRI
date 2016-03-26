@@ -1,4 +1,3 @@
-// RosterTableModelTest.java
 package jmri.jmrit.roster.swing;
 
 import jmri.InstanceManager;
@@ -14,7 +13,6 @@ import org.jdom2.Element;
  * Tests for the roster.swing.RosterTableModel class.
  *
  * @author	Bob Jacobsen Copyright (C) 2009
- * @version $Revision$
  */
 public class RosterTableModelTest extends TestCase {
 

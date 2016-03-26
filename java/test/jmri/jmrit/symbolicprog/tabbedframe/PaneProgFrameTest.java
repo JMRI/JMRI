@@ -1,4 +1,3 @@
-// PaneProgFrameTest.java
 package jmri.jmrit.symbolicprog.tabbedframe;
 
 import javax.swing.JFrame;
@@ -34,11 +33,6 @@ public class PaneProgFrameTest extends TestCase {
         PaneProgFrame p = new PaneProgFrame(null, new RosterEntry(),
                 "test frame", "programmers/Basic.xml",
                 new jmri.progdebugger.ProgDebugger(), false) {
-                    /**
-                     *
-                     */
-                    private static final long serialVersionUID = 4374088194550590113L;
-
                     // dummy implementations
                     protected JPanel getModePane() {
                         return new JPanel();
@@ -65,11 +59,6 @@ public class PaneProgFrameTest extends TestCase {
         PaneProgFrame p = new PaneProgFrame(null, new RosterEntry(),
                 "test frame", "programmers/Basic.xml",
                 new jmri.progdebugger.ProgDebugger(), false) {
-                    /**
-                     *
-                     */
-                    private static final long serialVersionUID = 8480123043386522138L;
-
                     // dummy implementations
                     protected JPanel getModePane() {
                         return null;

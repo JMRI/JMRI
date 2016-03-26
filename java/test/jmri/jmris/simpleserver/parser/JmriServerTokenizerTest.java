@@ -1,4 +1,3 @@
-// JmriServerTokenizerTest.java
 package jmri.jmris.simpleserver.parser;
 
 import java.io.StringReader;
@@ -10,7 +9,6 @@ import junit.framework.TestSuite;
  * Tests for the {@link jmri.jmris.simpleserver.parser.JmriServerTokenizer} class.
  *
  * @author Paul Bender
- * @version $Revision$
  */
 public class JmriServerTokenizerTest extends TestCase {
 

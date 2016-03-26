@@ -8,7 +8,6 @@ import junit.framework.TestSuite;
  * Tests for the jmri.jmrix.loconet.locostats package.
  *
  * @author	Bob Jacobsen Copyright 2001, 2003, 2006, 2008
- * @version $Revision$
  */
 public class PackageTest extends TestCase {
 

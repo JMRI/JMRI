@@ -1,4 +1,3 @@
-// PackageTest.java
 package jmri.jmrix.grapevine;
 
 import junit.framework.Assert;
@@ -10,7 +9,6 @@ import junit.framework.TestSuite;
  * Tests for the jmri.jmrix.grapevine package.
  *
  * @author Bob Jacobsen Copyright 2003, 2007
- * @version $Revision$
  */
 public class PackageTest extends TestCase {
 

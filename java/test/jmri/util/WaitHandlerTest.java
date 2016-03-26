@@ -1,4 +1,3 @@
-// WaitHandlerTest.java
 package jmri.util;
 
 import java.util.Calendar;

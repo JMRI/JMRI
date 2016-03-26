@@ -453,23 +453,18 @@ public class NodeConfigFrame extends jmri.util.JmriJFrame {
     }
 
     /**
-     * Read node address and check for legal range If successful, a node address
-     * is returned. If not successful, -1 is returned and an appropriate error
-     * message is placed in statusText1.
+     * Read node address from the nodeAddressField or nodeAddr64Field 
+     * as appropriate and return as a string.  
+     *
+     * @return String containing the short (two byte) address of the node.
+     *         if the two byte node address is either "FF FF" or "FF FE",
+     *         returns the long (64 bit) address.
      */
     private String readNodeAddress() {
         String addr = "";
-        try {
-            addr = (String) nodeAddrField.getSelectedItem();
-            if (addr.equals("FF FF ") || addr.equals("FF FE ")) {
-                addr = (String) nodeAddr64Field.getSelectedItem();
-            }
-        } catch (Exception e) {
-            statusText1.setText(rb.getString("Error5"));
-            statusText1.setVisible(true);
-            errorInStatus1 = true;
-            resetNotes2();
-            return "";
+        addr = (String) nodeAddrField.getSelectedItem();
+        if (addr.equals("FF FF ") || addr.equals("FF FE ")) {
+            addr = (String) nodeAddr64Field.getSelectedItem();
         }
         return (addr);
     }

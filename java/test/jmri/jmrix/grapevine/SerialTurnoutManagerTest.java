@@ -1,4 +1,3 @@
-// SerialTurnoutManagerTest.java
 package jmri.jmrix.grapevine;
 
 import jmri.Turnout;
@@ -13,7 +12,6 @@ import org.slf4j.LoggerFactory;
  * Description:	tests for the SerialTurnoutManager class
  *
  * @author	Bob Jacobsen Copyright 2004, 2007, 2008
- * @version $Revision$
  */
 public class SerialTurnoutManagerTest extends jmri.managers.AbstractTurnoutMgrTest {
 

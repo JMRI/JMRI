@@ -1,4 +1,3 @@
-// LocoIOTableModelTest.java
 package jmri.jmrix.loconet.locoio;
 
 import junit.framework.Test;
@@ -9,7 +8,6 @@ import junit.framework.TestSuite;
  * Tests for the jmri.jmrix.loconet.locoio.LocoIOTableModel class.
  *
  * @author	Bob Jacobsen Copyright (C) 2002
- * @version $Revision$
  */
 public class LocoIOTableModelTest extends TestCase {
 

@@ -155,7 +155,6 @@ public class WarrantManagerXml //extends XmlFile
         Element elem = new Element(type);
 
         String time = String.valueOf(command.getTime());
-        if (time==null) time = "";
         elem.setAttribute("time", time);
 
         String str = command.getCommand();

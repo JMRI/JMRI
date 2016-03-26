@@ -1,4 +1,3 @@
-// LearnWarrantTest.java
 package jmri.jmrit.logix;
 
 import java.io.File;

@@ -10,7 +10,6 @@ import junit.framework.TestSuite;
  * Tests for the jmri.jmris.srcp.JmriSRCPProgrammerServer class
  *
  * @author Paul Bender
- * @version $Revision$
  */
 public class JmriSRCPProgrammerServerTest extends TestCase {
 

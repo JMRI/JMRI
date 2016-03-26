@@ -1,4 +1,3 @@
-//  XNetInterfaceScaffold.java
 package jmri.jmrix.lenz;
 
 import java.util.Vector;
