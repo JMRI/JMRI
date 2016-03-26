@@ -18,7 +18,6 @@ import org.slf4j.LoggerFactory;
  * Based on Glen Oberhauser's original LnThrottleManager implementation
  *
  * @author	Bob Jacobsen Copyright (C) 2001
- * @version $Revision: 25048 $
  */
 public class MrcThrottle extends AbstractThrottle implements MrcTrafficListener {
 
