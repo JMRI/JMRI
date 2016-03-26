@@ -1,4 +1,3 @@
-// DCCppOverTcpPacketizer.java
 package jmri.jmrix.dccpp.dccppovertcp;
 
 import java.util.NoSuchElementException;
@@ -41,7 +40,6 @@ import org.slf4j.LoggerFactory;
  * @author Bob Jacobsen Copyright (C) 2001
  * @author Alex Shepherd Copyright (C) 2003, 2006
  * @author Mark Underwood Copyright (C) 2015
- * @version $Revision$
  *
  * Based on LnOverTcpPacketizer
  *
@@ -220,20 +218,23 @@ public class DCCppOverTcpPacketizer extends DCCppPacketizer {
                 try {
                     // start by looking for a complete line
 		    
-		    if (istreamReader == null) { log.error("ERROR:istreamReader not initialized!"); }
-                    rxLine = istreamReader.readLine(); // Note: This uses BufferedReader for safer data handling
-                    if (rxLine == null) {
-                        log.warn("run: input stream returned null, exiting loop");
-                        return;
-                    }
+		    if (istreamReader == null) { 
+		        log.error("ERROR:istreamReader not initialized!"); 
+		    }
+            rxLine = istreamReader.readLine(); // Note: This uses BufferedReader for safer data handling
+            if (rxLine == null) {
+                log.warn("run: input stream returned null, exiting loop");
+                return;
+            }
 
-                    if (debug) {
-                        log.debug("Received: " + rxLine);
-                    }
+            if (debug) {
+                log.debug("Received: " + rxLine);
+            }
+
 		    if (!rxLine.startsWith(RECEIVE_PREFIX)) {
-			// Not a valid Tcp packet
-			log.debug("Wrong Prefix: {}", rxLine);
-			continue;
+                // Not a valid Tcp packet
+                log.debug("Wrong Prefix: {}", rxLine);
+                continue;
 		    }
 
 		    //Strip the prefix off.
@@ -248,12 +249,12 @@ public class DCCppOverTcpPacketizer extends DCCppPacketizer {
 							    rxLine.lastIndexOf(">")));
 		    
 		    if (!msg.isValidReplyFormat()) {
-			log.warn("Invalid Reply Format: {}", msg.toString());
-			continue;
+                log.warn("Invalid Reply Format: {}", msg.toString());
+                continue;
 		    }
 		    // message is complete, dispatch it !!
 		    if (log.isDebugEnabled()) {
-			log.debug("queue reply for notification");
+                log.debug("queue reply for notification");
 		    }
 
 		    final DCCppReply thisMsg = msg;
@@ -360,5 +361,3 @@ public class DCCppOverTcpPacketizer extends DCCppPacketizer {
 
     private final static Logger log = LoggerFactory.getLogger(DCCppOverTcpPacketizer.class.getName());
 }
-
-/* @(#)LnOverTcpPacketizer.java */
