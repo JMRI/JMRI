@@ -601,7 +601,7 @@ public class WarrantPreferencesPanel extends JPanel implements PreferencesPanel,
         return true; // no validity checking performed
     }
 
-    class DataPair<K, V> {
+    static class DataPair<K, V> {
         K key;
         V value;
         
