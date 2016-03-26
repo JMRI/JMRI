@@ -292,7 +292,7 @@ public abstract class AbstractTurnoutManager extends AbstractManager
                 Float.parseFloat(speed);
             } catch (NumberFormatException nx) {
                 try {
-                    SignalSpeedMap.getMap().getSpeed(speed);
+                    jmri.InstanceManager.getDefault(SignalSpeedMap.class).getSpeed(speed);
                 } catch (Exception ex) {
                     throw new JmriException("Value of requested turnout default closed speed is not valid");
                 }
@@ -321,7 +321,7 @@ public abstract class AbstractTurnoutManager extends AbstractManager
                 Float.parseFloat(speed);
             } catch (NumberFormatException nx) {
                 try {
-                    SignalSpeedMap.getMap().getSpeed(speed);
+                    jmri.InstanceManager.getDefault(SignalSpeedMap.class).getSpeed(speed);
                 } catch (Exception ex) {
                     throw new JmriException("Value of requested turnout default thrown speed is not valid");
                 }

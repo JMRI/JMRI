@@ -756,7 +756,7 @@ public class AutoActiveTrain implements ThrottleListener {
                         speed = new Float(strSpeed);
                     } catch (NumberFormatException nx) {
                         try {
-                            speed = SignalSpeedMap.getMap().getSpeed(strSpeed);
+                            speed = jmri.InstanceManager.getDefault(SignalSpeedMap.class).getSpeed(strSpeed);
                             log.debug("{}: Signal {} speed from map is {}", _activeTrain.getTrainName(), _controllingSignalMast.getDisplayName(), speed);
                         } catch (Exception ex) {
                             //Considered Normal if the speed does not appear in the map

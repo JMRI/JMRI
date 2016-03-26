@@ -769,7 +769,7 @@ public abstract class AbstractTurnout extends AbstractNamedBean implements
             //considered normal if the speed is not a number.
         }
         try {
-            return SignalSpeedMap.getMap().getSpeed(speed);
+            return jmri.InstanceManager.getDefault(SignalSpeedMap.class).getSpeed(speed);
         } catch (Exception ex) {
             return -1;
         }
@@ -801,7 +801,7 @@ public abstract class AbstractTurnout extends AbstractNamedBean implements
                 Float.parseFloat(s);
             } catch (NumberFormatException nx) {
                 try {
-                    SignalSpeedMap.getMap().getSpeed(s);
+                    jmri.InstanceManager.getDefault(SignalSpeedMap.class).getSpeed(s);
                 } catch (Exception ex) {
                     throw new JmriException("Value of requested block speed is not valid");
                 }
@@ -828,7 +828,7 @@ public abstract class AbstractTurnout extends AbstractNamedBean implements
             //considered normal if the speed is not a number.
         }
         try {
-            return SignalSpeedMap.getMap().getSpeed(speed);
+            return jmri.InstanceManager.getDefault(SignalSpeedMap.class).getSpeed(speed);
         } catch (Exception ex) {
             return -1;
         }
@@ -860,7 +860,7 @@ public abstract class AbstractTurnout extends AbstractNamedBean implements
                 Float.parseFloat(s);
             } catch (NumberFormatException nx) {
                 try {
-                    SignalSpeedMap.getMap().getSpeed(s);
+                    jmri.InstanceManager.getDefault(SignalSpeedMap.class).getSpeed(s);
                 } catch (Exception ex) {
                     throw new JmriException("Value of requested turnout straight speed is not valid");
                 }

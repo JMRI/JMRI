@@ -124,8 +124,8 @@ public class InstanceManager {
      * Retrieve the last object of type T that was registered with
      * {@link #store}.
      * <p>
-     * Someday, we may provide another way to set the default but for now it's
-     * the last one stored, see the {@link #setDefault} method.
+     * Unless specifically set, the default is 
+     * the last object stored, see the {@link #setDefault} method.
      */
     @SuppressWarnings("unchecked")   // checked by construction
     static public <T> T getDefault(Class<T> type) {

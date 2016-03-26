@@ -130,7 +130,7 @@ public class DefaultSignalSystem extends AbstractNamedBean implements SignalSyst
                         aspectSpeed = new Float(speed);
                     } catch (NumberFormatException nx) {
                         try {
-                            aspectSpeed = SignalSpeedMap.getMap().getSpeed(speed);
+                            aspectSpeed = jmri.InstanceManager.getDefault(SignalSpeedMap.class).getSpeed(speed);
                         } catch (Exception ex) {
                             //Considered Normal if the speed does not appear in the map
                         }
@@ -144,7 +144,7 @@ public class DefaultSignalSystem extends AbstractNamedBean implements SignalSyst
         }
         if (maximumLineSpeed == 0.0f) {
             //no speeds configured so will use the default.
-            maximumLineSpeed = SignalSpeedMap.getMap().getSpeed("Maximum");
+            maximumLineSpeed = jmri.InstanceManager.getDefault(SignalSpeedMap.class).getSpeed("Maximum");
         }
         return maximumLineSpeed;
     }

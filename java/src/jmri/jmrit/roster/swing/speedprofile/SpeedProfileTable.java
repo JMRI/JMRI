@@ -30,8 +30,8 @@ public class SpeedProfileTable extends jmri.util.JmriJFrame {
         setTitle(Bundle.getMessage("SpeedTable"));
         getContentPane().setLayout(new BorderLayout(15,15));
         
-        interp = SignalSpeedMap.getMap().getInterpretation();
-        scale = SignalSpeedMap.getMap().getLayoutScale();
+        interp = jmri.InstanceManager.getDefault(SignalSpeedMap.class).getInterpretation();
+        scale = jmri.InstanceManager.getDefault(SignalSpeedMap.class).getLayoutScale();
         SpeedTableModel model = new SpeedTableModel(sp);
         JTable table = new JTable(model);
 //        table.setAutoResizeMode(JTable.AUTO_RESIZE_OFF);

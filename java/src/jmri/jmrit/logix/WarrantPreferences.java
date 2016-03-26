@@ -104,7 +104,7 @@ public class WarrantPreferences  {
     }
     
     private void loadSpeedMapFromOldXml() {
-        SignalSpeedMap map = SignalSpeedMap.getMap();
+        SignalSpeedMap map = jmri.InstanceManager.getDefault(SignalSpeedMap.class);
         if (map==null) {
             log.error("Cannot find signalSpeeds.xml file.");
             return;
@@ -326,7 +326,7 @@ public class WarrantPreferences  {
         map.setRampParams(_throttleIncr, _msIncrTime);
         map.setDefaultThrottleFactor(_throttleScale);
         map.setLayoutScale(_scale);
-        map.setMap(map);        
+        jmri.InstanceManager.setDefault(SignalSpeedMap.class, map);        
     }
 
     float getScale() {

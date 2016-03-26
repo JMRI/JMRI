@@ -111,7 +111,7 @@ public class SignallingPanel extends jmri.util.swing.JmriPanel {
             if (pathSpeed == 0.0f) {
                 mastSpeed.setText(rb.getString("PathSpeed") + " : None Set");
             } else {
-                String speed = SignalSpeedMap.getMap().getNamedSpeed(pathSpeed);
+                String speed = jmri.InstanceManager.getDefault(SignalSpeedMap.class).getNamedSpeed(pathSpeed);
                 if (speed != null) {
                     mastSpeed.setText(rb.getString("PathSpeed") + " : " + speed);
                 } else {
