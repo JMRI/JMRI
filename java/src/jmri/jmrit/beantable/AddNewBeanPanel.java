@@ -29,7 +29,7 @@ public class AddNewBeanPanel extends jmri.util.swing.JmriPanel {
     private static final long serialVersionUID = -7238135491102630527L;
 
     public AddNewBeanPanel(JTextField sys, JTextField userName, JTextField endRange, JCheckBox addRange, JCheckBox autoSystem,
-            String addButtonLabel, ActionListener listener) {
+            String addButtonLabel, ActionListener oklistener, ActionListener cancellistener) {
         sysName = sys;
         setLayout(new BoxLayout(this, BoxLayout.Y_AXIS));
         _endRange = endRange;
@@ -75,8 +75,11 @@ public class AddNewBeanPanel extends jmri.util.swing.JmriPanel {
         finishLabel.setEnabled(false);
         _endRange.setEnabled(false);
 
+        add(cancel = new JButton(Bundle.getMessage("ButtonCancel")));
+        cancel.addActionListener(cancellistener);
+
         add(ok = new JButton(Bundle.getMessage(addButtonLabel)));
-        ok.addActionListener(listener);
+        ok.addActionListener(oklistener);
 
         addRange.addItemListener(
                 new ItemListener() {
@@ -131,6 +134,7 @@ public class AddNewBeanPanel extends jmri.util.swing.JmriPanel {
         }
     }
 
+    JButton cancel;
     JButton ok;
     JTextField sysName;
     JLabel sysNameLabel = new JLabel(Bundle.getMessage("LabelSystemName"));

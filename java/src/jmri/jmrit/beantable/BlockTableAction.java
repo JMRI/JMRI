@@ -647,12 +647,15 @@ public class BlockTableAction extends AbstractTableAction {
             addFrame = new JmriJFrame(Bundle.getMessage("TitleAddBlock"), false, true);
             addFrame.addHelpMenu("package.jmri.jmrit.beantable.BlockAddEdit", true); //IN18N
             addFrame.getContentPane().setLayout(new BoxLayout(addFrame.getContentPane(), BoxLayout.Y_AXIS));
-            ActionListener listener = new ActionListener() {
+            ActionListener oklistener = new ActionListener() {
                 public void actionPerformed(ActionEvent e) {
                     okPressed(e);
                 }
             };
-            addFrame.add(new AddNewBeanPanel(sysName, userName, numberToAdd, range, _autoSystemName, "ButtonOK", listener));
+            ActionListener cancellistener = new ActionListener() {
+                public void actionPerformed(ActionEvent e) { cancelPressed(e); }
+            };
+            addFrame.add(new AddNewBeanPanel(sysName, userName, numberToAdd, range, _autoSystemName, "ButtonOK", oklistener, cancellistener));
         }
         if (pref.getSimplePreferenceState(systemNameAuto)) {
             _autoSystemName.setSelected(true);
@@ -717,6 +720,12 @@ public class BlockTableAction extends AbstractTableAction {
             }
         }
         return true;
+    }
+
+    void cancelPressed(ActionEvent e) {
+                addFrame.setVisible(false);
+                addFrame.dispose();
+                addFrame = null;
     }
 
     void okPressed(ActionEvent e) {

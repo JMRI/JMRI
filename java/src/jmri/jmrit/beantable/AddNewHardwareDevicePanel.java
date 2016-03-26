@@ -68,9 +68,14 @@ public class AddNewHardwareDevicePanel extends jmri.util.swing.JmriPanel {
         c.gridy = 2;
         p.add(userName, c);
         add(p);
+
+        finishLabel.setEnabled(false);
+        _endRange.setEnabled(false);
+
         JButton ok;
         add(ok = new JButton(Bundle.getMessage(addButtonLabel)));
         ok.addActionListener(listener);
+
         addRange.addItemListener(
                 new ItemListener() {
                     public void itemStateChanged(ItemEvent e) {
@@ -79,8 +84,6 @@ public class AddNewHardwareDevicePanel extends jmri.util.swing.JmriPanel {
                 });
         prefixBox.addActionListener(rangeListener);
 
-        finishLabel.setEnabled(false);
-        _endRange.setEnabled(false);
         /* System.out.println(jmri.InstanceManager.getList(jmri.jmrix.SystemConnectionMemo.class));
          java.util.List<jmri.jmrix.SystemConnectionMemo> list 
          = jmri.InstanceManager.getList(jmri.jmrix.SystemConnectionMemo.class);
