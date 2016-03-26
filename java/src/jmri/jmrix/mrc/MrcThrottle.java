@@ -254,6 +254,7 @@ public class MrcThrottle extends AbstractThrottle implements MrcTrafficListener 
     }
 
     //Might need to look at other packets from handsets to see if they also have control of our loco and adjust from that.
+    @edu.umd.cs.findbugs.annotations.SuppressFBWarnings(value = "FE_FLOATING_POINT_EQUALITY", justification = "fixed number of possible values")
     public void notifyRcv(Date timestamp, MrcMessage m) {
         if (m.getMessageClass() != MrcInterface.THROTTLEINFO
                 || (m.getMessageClass() == MrcInterface.THROTTLEINFO && (m.getElement(0) == MrcPackets.LOCOSOLECONTROLCODE
@@ -284,6 +285,8 @@ public class MrcThrottle extends AbstractThrottle implements MrcTrafficListener 
                         speed = 0;
                     }
                     float val = speed / 126.0f;
+                    
+                    // next line is the FE_FLOATING_POINT_EQUALITY annotated above
                     if (val != this.speedSetting) {
                         notifyPropertyChangeListener("SpeedSetting", this.speedSetting, val); //IN18N
                         this.speedSetting = val;
