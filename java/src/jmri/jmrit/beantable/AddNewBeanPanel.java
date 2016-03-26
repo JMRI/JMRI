@@ -74,12 +74,17 @@ public class AddNewBeanPanel extends jmri.util.swing.JmriPanel {
 
         finishLabel.setEnabled(false);
         _endRange.setEnabled(false);
+        // buttons at bottom of window
+        JPanel panel2 = new JPanel();
+        panel2.setLayout(new FlowLayout());
 
-        add(cancel = new JButton(Bundle.getMessage("ButtonCancel")));
+        panel2.add(cancel = new JButton(Bundle.getMessage("ButtonCancel")));
         cancel.addActionListener(cancellistener);
 
-        add(ok = new JButton(Bundle.getMessage(addButtonLabel)));
+        panel2.add(ok = new JButton(Bundle.getMessage(addButtonLabel)));
         ok.addActionListener(oklistener);
+
+        add(panel2);
 
         addRange.addItemListener(
                 new ItemListener() {
