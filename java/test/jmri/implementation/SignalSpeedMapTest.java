@@ -13,7 +13,7 @@ import junit.framework.TestSuite;
 public class SignalSpeedMapTest extends TestCase {
 
     public void testLoadMap() {
-        Assert.assertNotNull(SignalSpeedMap.getMap());
+        Assert.assertNotNull(new SignalSpeedMap().getMap());
     }
     
     static final String[] speeds = new String[]{
@@ -30,7 +30,7 @@ public class SignalSpeedMapTest extends TestCase {
         "Stop"
     };
 
-    SignalSpeedMap map = SignalSpeedMap.getMap();
+    SignalSpeedMap map = new SignalSpeedMap();
     
     /**
      * To avoid breaking signal systems, speed definitions should
