@@ -171,15 +171,15 @@ public class MemoryTableAction extends AbstractTableAction {
             addFrame.addHelpMenu("package.jmri.jmrit.beantable.MemoryAddEdit", true);
             addFrame.getContentPane().setLayout(new BoxLayout(addFrame.getContentPane(), BoxLayout.Y_AXIS));
 
-            ActionListener oklistener = new ActionListener() {
+            ActionListener okListener = new ActionListener() {
                 public void actionPerformed(ActionEvent e) {
                     okPressed(e);
                 }
             };
-            ActionListener cancellistener = new ActionListener() {
+            ActionListener cancelListener = new ActionListener() {
                 public void actionPerformed(ActionEvent e) { cancelPressed(e); }
             };
-            addFrame.add(new AddNewBeanPanel(sysName, userName, numberToAdd, range, autoSystemName, "ButtonOK", oklistener, cancellistener));
+            addFrame.add(new AddNewBeanPanel(sysName, userName, numberToAdd, range, autoSystemName, "ButtonOK", okListener, cancelListener));
         }
         if (p.getSimplePreferenceState(systemNameAuto)) {
             autoSystemName.setSelected(true);

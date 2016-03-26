@@ -62,13 +62,18 @@ public class PickPanel extends JPanel implements ListSelectionListener, ChangeLi
     private JPanel makeAddToTablePanel() {
         _sysNametext = new JTextField();
         _userNametext = new JTextField();
-        ActionListener listener = new ActionListener() {
+
+        ActionListener cancelListener = new ActionListener() {
+            public void actionPerformed(ActionEvent e) { cancelPressed(e); }
+        };
+        ActionListener okListener = new ActionListener() {
             public void actionPerformed(ActionEvent a) {
                 addToTable();
             }
         };
         _addPanel = new jmri.jmrit.beantable.AddNewDevicePanel(
-                _sysNametext, _userNametext, "addToTable", listener);
+                _sysNametext, _userNametext, "addToTable", okListener, cancelListener);
+
         _cantAddPanel = new JPanel();
         _cantAddPanel.setLayout(new BorderLayout(5, 5));
         _cantAddPanel.add(new JLabel("Cannot add new items to this pick panel", SwingConstants.CENTER), BorderLayout.NORTH);
@@ -80,6 +85,12 @@ public class PickPanel extends JPanel implements ListSelectionListener, ChangeLi
         int width = Math.max(100, this.getPreferredSize().width);
         _sysNametext.setPreferredSize(new java.awt.Dimension(width, _sysNametext.getPreferredSize().height));
         return p;
+    }
+
+    void cancelPressed(ActionEvent e) {
+        p.setVisible(false);
+        p.dispose();
+        p = null;
     }
 
     void addToTable() {

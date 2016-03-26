@@ -28,7 +28,7 @@ public class AddNewHardwareDevicePanel extends jmri.util.swing.JmriPanel {
     private static final long serialVersionUID = -958394838638929630L;
 
     public AddNewHardwareDevicePanel(JTextField sysAddress, JTextField userName, JComboBox<String> prefixBox, JTextField endRange, JCheckBox addRange,
-            String addButtonLabel, ActionListener listener, ActionListener rangeListener) {
+            String addButtonLabel, ActionListener okListener, ActionListener cancelListener, ActionListener rangeListener) {
         setLayout(new BoxLayout(this, BoxLayout.Y_AXIS));
         _endRange = endRange;
         _range = addRange;
@@ -72,9 +72,17 @@ public class AddNewHardwareDevicePanel extends jmri.util.swing.JmriPanel {
         finishLabel.setEnabled(false);
         _endRange.setEnabled(false);
 
-        JButton ok;
-        add(ok = new JButton(Bundle.getMessage(addButtonLabel)));
-        ok.addActionListener(listener);
+        // cancel + add buttons at bottom of window
+        JPanel panelBottom = new JPanel();
+        panelBottom.setLayout(new FlowLayout());
+
+        panelBottom.add(cancel = new JButton(Bundle.getMessage("ButtonCancel")));
+        cancel.addActionListener(cancelListener);
+
+        panelBottom.add(ok = new JButton(Bundle.getMessage(addButtonLabel)));
+        ok.addActionListener(okListener);
+
+        add(panelBottom);
 
         addRange.addItemListener(
                 new ItemListener() {

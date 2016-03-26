@@ -206,10 +206,13 @@ public class ReporterTableAction extends AbstractTableAction {
         if (addFrame == null) {
             addFrame = new JmriJFrame(Bundle.getMessage("TitleAddReporter"), false, true);
             addFrame.addHelpMenu("package.jmri.jmrit.beantable.ReporterAddEdit", true);
-            ActionListener listener = new ActionListener() {
+            ActionListener okListener = new ActionListener() {
                 public void actionPerformed(ActionEvent e) {
                     okPressed(e);
                 }
+            };
+            ActionListener cancelListener = new ActionListener() {
+                public void actionPerformed(ActionEvent e) { cancelPressed(e); }
             };
             ActionListener rangeListener = new ActionListener() {
                 public void actionPerformed(ActionEvent e) {
@@ -232,11 +235,17 @@ public class ReporterTableAction extends AbstractTableAction {
             sysName.setName("sysName");
             userName.setName("userName");
             prefixBox.setName("prefixBox");
-            addFrame.add(new AddNewHardwareDevicePanel(sysName, userName, prefixBox, numberToAdd, range, "ButtonOK", listener, rangeListener));
+            addFrame.add(new AddNewHardwareDevicePanel(sysName, userName, prefixBox, numberToAdd, range, "ButtonOK", okListener, cancelListener, rangeListener));
             canAddRange(null);
         }
         addFrame.pack();
         addFrame.setVisible(true);
+    }
+
+    void cancelPressed(ActionEvent e) {
+        addFrame.setVisible(false);
+        addFrame.dispose();
+        addFrame = null;
     }
 
     void okPressed(ActionEvent e) {

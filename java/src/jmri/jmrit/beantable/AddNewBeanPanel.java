@@ -29,7 +29,7 @@ public class AddNewBeanPanel extends jmri.util.swing.JmriPanel {
     private static final long serialVersionUID = -7238135491102630527L;
 
     public AddNewBeanPanel(JTextField sys, JTextField userName, JTextField endRange, JCheckBox addRange, JCheckBox autoSystem,
-            String addButtonLabel, ActionListener oklistener, ActionListener cancellistener) {
+            String addButtonLabel, ActionListener okListener, ActionListener cancelListener) {
         sysName = sys;
         setLayout(new BoxLayout(this, BoxLayout.Y_AXIS));
         _endRange = endRange;
@@ -74,17 +74,18 @@ public class AddNewBeanPanel extends jmri.util.swing.JmriPanel {
 
         finishLabel.setEnabled(false);
         _endRange.setEnabled(false);
-        // buttons at bottom of window
-        JPanel panel2 = new JPanel();
-        panel2.setLayout(new FlowLayout());
 
-        panel2.add(cancel = new JButton(Bundle.getMessage("ButtonCancel")));
-        cancel.addActionListener(cancellistener);
+        // cancel + add buttons at bottom of window
+        JPanel panelBottom = new JPanel();
+        panelBottom.setLayout(new FlowLayout());
 
-        panel2.add(ok = new JButton(Bundle.getMessage(addButtonLabel)));
-        ok.addActionListener(oklistener);
+        panelBottom.add(cancel = new JButton(Bundle.getMessage("ButtonCancel")));
+        cancel.addActionListener(cancelListener);
 
-        add(panel2);
+        panelBottom.add(ok = new JButton(Bundle.getMessage(addButtonLabel)));
+        ok.addActionListener(okListener);
+
+        add(panelBottom);
 
         addRange.addItemListener(
                 new ItemListener() {
