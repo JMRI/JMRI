@@ -15,6 +15,7 @@ import jmri.SectionManager;
 import jmri.Sensor;
 import jmri.SignalMast;
 import jmri.SignalMastLogic;
+import jmri.implementation.SignalSpeedMap;
 import jmri.implementation.DefaultSignalMastLogic;
 import jmri.jmrit.display.layoutEditor.LayoutBlockConnectivityTools;
 import jmri.jmrit.display.layoutEditor.LayoutEditor;
@@ -44,14 +45,14 @@ public class DefaultSignalMastLogicManager implements jmri.SignalMastLogicManage
         InstanceManager.getDefault(jmri.jmrit.display.layoutEditor.LayoutBlockManager.class).addPropertyChangeListener(propertyBlockManagerListener);
         jmri.InstanceManager.signalMastManagerInstance().addVetoableChangeListener(this);
         jmri.InstanceManager.turnoutManagerInstance().addVetoableChangeListener(this);
-        //_speedMap = jmri.implementation.SignalSpeedMap.getMap();
+        //_speedMap = jmri.InstanceManager.getDefault(SignalSpeedMap.class);
     }
 
     public int getXMLOrder() {
         return Manager.SIGNALMASTLOGICS;
     }
 
-    private static jmri.implementation.SignalSpeedMap _speedMap = jmri.implementation.SignalSpeedMap.getMap();
+    private static SignalSpeedMap _speedMap = jmri.InstanceManager.getDefault(SignalSpeedMap.class);
 
     public final static jmri.implementation.SignalSpeedMap getSpeedMap() {
         return _speedMap;
