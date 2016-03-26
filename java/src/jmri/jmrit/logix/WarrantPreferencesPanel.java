@@ -513,7 +513,7 @@ public class WarrantPreferencesPanel extends JPanel implements PreferencesPanel,
             for (int i=0; i<_appearanceMap.size(); i++) {
                 DataPair<String, String> dp = _appearanceMap.get(i);
                 String name = dp.getKey();
-                if (_preferences.getAppearanceValue(name)==null || _preferences.getAppearanceValue(name)!= dp.getValue()) {
+                if (_preferences.getAppearanceValue(name)==null || !_preferences.getAppearanceValue(name).equals(dp.getValue())) {
                     different = true;
                     break;
                 }
