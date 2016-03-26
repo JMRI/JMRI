@@ -66,8 +66,8 @@ public class NceProgrammer extends AbstractProgrammer implements NceListener {
         if ((Integer.parseInt(cv) > 256)
                 && (getMode() != DefaultProgrammerManager.OPSBYTEMODE) // allow all Ops mode writes
                 && ((tc != null) && ((tc.getCommandOptions() == NceTrafficController.OPTION_1999)
-                | (tc.getCommandOptions() == NceTrafficController.OPTION_2004)
-                | (tc.getCommandOptions() == NceTrafficController.OPTION_2006)))) {
+                || (tc.getCommandOptions() == NceTrafficController.OPTION_2004)
+                || (tc.getCommandOptions() == NceTrafficController.OPTION_2006)))) {
             return false;
         } else {
             return true;
@@ -94,8 +94,8 @@ public class NceProgrammer extends AbstractProgrammer implements NceListener {
                 && ((getMode() == DefaultProgrammerManager.PAGEMODE)
                 || (getMode() == DefaultProgrammerManager.DIRECTMODE)
                 || (getMode() == DefaultProgrammerManager.REGISTERMODE)) && ((tc != null) && ((tc.getCommandOptions() == NceTrafficController.OPTION_1999)
-                | (tc.getCommandOptions() == NceTrafficController.OPTION_2004)
-                | (tc.getCommandOptions() == NceTrafficController.OPTION_2006)))) {
+                || (tc.getCommandOptions() == NceTrafficController.OPTION_2004)
+                || (tc.getCommandOptions() == NceTrafficController.OPTION_2006)))) {
             throw new jmri.ProgrammerException("CV number not supported");
         }
         _progRead = false;
