@@ -205,8 +205,9 @@ public class MrcPackets {
 
     static public String toString(MrcMessage m) {
         StringBuilder txt = new StringBuilder();
-        if ((m.getNumDataElements() < 4) || (m.getNumDataElements() >= 4 && m.getElement(0) != m.getElement(2) && m.getElement(1) != 0x01)) {
-            //byte 0 and byte 2 should always be the same except for a clock update packet.
+        if ((m.getNumDataElements() < 4) || 
+                (m.getNumDataElements() >= 4 && m.getElement(0) != m.getElement(2) && m.getElement(1) != 0x01)) {  // is && right there?
+            // byte 0 and byte 2 should always be the same except for a clock update packet.
             if (m.getNumDataElements() < 4) {
                 txt.append(MrcPacketBundle.getMessage("MrcPacketsShort")); //IN18N
             } else {
