@@ -189,15 +189,23 @@ public class WarrantTest extends TestCase {
         
         msg = warrant.setRunMode(Warrant.MODE_RUN, null, null, null, false);
         Assert.assertNull("setRunMode - "+msg, msg);
-        try {
-            jmri.util.JUnitUtil.releaseThread(this); // nothing specific to wait for...
-            sWest.setState(Sensor.ACTIVE);
-            jmri.util.JUnitUtil.releaseThread(this);             
-            sSouth.setState(Sensor.ACTIVE);
-            jmri.util.JUnitUtil.releaseThread(this);             
-        } catch (Exception e) {
-            System.out.println(e);            
-        }
+
+        // run the train
+        jmri.util.JUnitUtil.releaseThread(this); // nothing specific to wait for...
+
+        jmri.util.ThreadingUtil.runOnLayout( ()->{
+            try {
+                sWest.setState(Sensor.ACTIVE);
+            } catch (jmri.JmriException e) { Assert.fail("Unexpected Exception: "+e); }
+        });
+        jmri.util.JUnitUtil.releaseThread(this);
+
+        jmri.util.ThreadingUtil.runOnLayout( ()->{
+            try {
+                sSouth.setState(Sensor.ACTIVE);
+            } catch (jmri.JmriException e) { Assert.fail("Unexpected Exception: "+e); }
+        });
+        jmri.util.JUnitUtil.releaseThread(this);
 
         // confirm one message logged
         jmri.util.JUnitAppender.assertWarnMessage("RosterSpeedProfile not found. Using default ThrottleFactor 0.75");
