@@ -525,11 +525,17 @@ public class TrainsTableModel extends javax.swing.table.AbstractTableModel imple
                 // The line "_table.scrollRectToVisible(_table.getCellRect(row, 0, true));"
                 // can cause a thread lock if the table sorter is active. That's the reason
                 // the code is wrapped in the invokeLater.
-                SwingUtilities.invokeLater(new Runnable() {
-                    public void run() {
-                        _table.scrollRectToVisible(_table.getCellRect(row, 0, true));
-                    }
-                });
+                // However scrolling only works correctly if table sort isn't active since "row"
+                // isn't correctly mapped to the proper row showing.  This also allows user to
+                // stop the scrolling to the active train if desired.
+                TableSorter sorter = (TableSorter) _table.getModel();
+                if (!sorter.isSorting()) {
+                    SwingUtilities.invokeLater(new Runnable() {
+                        public void run() {
+                            _table.scrollRectToVisible(_table.getCellRect(row, 0, true));
+                        }
+                    });
+                }
                 fireTableRowsUpdated(row, row);
             }
         }
@@ -564,16 +570,16 @@ public class TrainsTableModel extends javax.swing.table.AbstractTableModel imple
         @Override
         public Component getTableCellRendererComponent(JTable table, Object value, boolean isSelected,
                 boolean hasFocus, int row, int column) {
-            Component c = super.getTableCellRendererComponent(table, value, isSelected, hasFocus, row, column);
+            Component component = super.getTableCellRendererComponent(table, value, isSelected, hasFocus, row, column);
             if (!isSelected) {
                 TableSorter sorter = (TableSorter) table.getModel();
                 int modelRow = sorter.modelIndex(row);
 //				log.debug("View row: {} Column: {} Model row: {}", row, column, modelRow);
                 Color background = getRowColor(modelRow);
-                c.setBackground(background);
-                c.setForeground(getForegroundColor(background));
+                component.setBackground(background);
+                component.setForeground(getForegroundColor(background));
             }
-            return c;
+            return component;
         }
 
         Color[] darkColors = {Color.BLACK, Color.BLUE, Color.GRAY, Color.RED, Color.MAGENTA};
