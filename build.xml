@@ -1107,7 +1107,7 @@
 
             <classpath refid="test.class.path"/>
 
-            <jvmarg value="-Xmx128m"/>
+            <jvmarg value="-Xmx640m"/>
 
             <test name="apps.tests.AllTest">
                 <formatter usefile="no" type="brief"/>
