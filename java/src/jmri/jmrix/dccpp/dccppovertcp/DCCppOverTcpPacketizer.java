@@ -83,8 +83,7 @@ public class DCCppOverTcpPacketizer extends DCCppPacketizer {
     
     
     
-    @edu.umd.cs.findbugs.annotations.SuppressFBWarnings(value = "ST_WRITE_TO_STATIC_FROM_INSTANCE_METHOD",
-    justification = "Only used during system initialization")
+    @edu.umd.cs.findbugs.annotations.SuppressFBWarnings(value = "ST_WRITE_TO_STATIC_FROM_INSTANCE_METHOD", justification = "Only used during system initialization")
     public DCCppOverTcpPacketizer(DCCppCommandStation cs) {
         super(cs); // Don't need the command station (?)
     
@@ -219,7 +218,8 @@ public class DCCppOverTcpPacketizer extends DCCppPacketizer {
                     // start by looking for a complete line
         
                     if (istreamReader == null) { 
-                        log.error("ERROR:istreamReader not initialized!"); 
+                        log.error("istreamReader not initialized!"); 
+                        return;
                     }
                     rxLine = istreamReader.readLine(); // Note: This uses BufferedReader for safer data handling
                     if (rxLine == null) {
@@ -237,7 +237,7 @@ public class DCCppOverTcpPacketizer extends DCCppPacketizer {
                         continue;
                     }
                 
-                    //Strip the prefix off.
+                    // Strip the prefix off.
                     final int trim = RECEIVE_PREFIX.length();
                     rxLine = rxLine.substring(trim);
                 
@@ -269,13 +269,13 @@ public class DCCppOverTcpPacketizer extends DCCppPacketizer {
                         };
                     javax.swing.SwingUtilities.invokeLater(r);
                     // done with this one
-                    //} catch (DCCppMessageException e) {
-                    // just let it ride for now
-                    //log.warn("run: unexpected DCCppMessageException: " + e);
+                //} catch (DCCppMessageException e) {
+                // just let it ride for now
+                //  log.warn("run: unexpected DCCppMessageException: ", );
                 } catch (java.io.EOFException e) {
                     // posted from idle port when enableReceiveTimeout used
                     if (debug) {
-                        log.debug("EOFException, is LocoNet serial I/O using timeouts?");
+                        log.debug("EOFException, is DC++ serial I/O using timeouts?");
                     }
                 } catch (java.io.IOException e) {
                     // fired when write-end of HexFile reaches end
