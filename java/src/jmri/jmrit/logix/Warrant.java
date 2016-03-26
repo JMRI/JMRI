@@ -554,7 +554,7 @@ public class Warrant extends jmri.implementation.AbstractNamedBean
                     blkIdx = _orders.size()-1;
                 }
                 OBlock block = getCurrentBlockOrder().getBlock();
-                if ((block.getState() | OBlock.OCCUPIED)==0) {
+                if ((block.getState() & OBlock.OCCUPIED)==0) {
                     return Bundle.getMessage("LostTrain", _trainName, getCurrentBlockOrder().getBlock().getDisplayName());
                 }
                 String blockName = block.getDisplayName();
