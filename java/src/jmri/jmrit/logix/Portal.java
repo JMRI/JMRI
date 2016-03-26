@@ -28,7 +28,6 @@ import org.slf4j.LoggerFactory;
  */
 public class Portal extends jmri.implementation.AbstractNamedBean {
 
-    private static final long serialVersionUID = -2045960605389125651L;
     private ArrayList<OPath> _fromPaths = new ArrayList<OPath>();
     private OBlock _fromBlock;
     private NamedBean _fromSignal;          // may be either SignalHead or SignalMast

@@ -18,11 +18,9 @@ import jmri.jmrit.roster.RosterSpeedProfile.SpeedStep;
  * Display Speed Profile
  *
  * @author  Pete Cressman Copyright (C) 2015
- * @version $Revision: 1.5 $
  */
 public class SpeedProfileTable extends jmri.util.JmriJFrame {
 
-    private static final long serialVersionUID = 765383251598012193L;
     java.text.DecimalFormat threeDigit = new java.text.DecimalFormat("0.000");
     int interp;
     float scale;

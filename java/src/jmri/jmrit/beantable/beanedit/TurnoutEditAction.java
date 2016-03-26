@@ -1,4 +1,3 @@
-// StatusPanel.java
 package jmri.jmrit.beantable.beanedit;
 
 import java.awt.Component;
@@ -15,6 +14,7 @@ import jmri.NamedBean;
 import jmri.Turnout;
 import jmri.TurnoutOperation;
 import jmri.TurnoutOperationManager;
+import jmri.implementation.SignalSpeedMap;
 import jmri.jmrit.turnoutoperations.TurnoutOperationConfig;
 import jmri.util.swing.JmriBeanComboBox;
 
@@ -22,7 +22,6 @@ import jmri.util.swing.JmriBeanComboBox;
  * Provides an edit panel for a block object
  *
  * @author	Kevin Dickerson Copyright (C) 2011
- * @version	$Revision: 19923 $
  */
 public class TurnoutEditAction extends BeanEditAction {
 
@@ -405,7 +404,7 @@ public class TurnoutEditAction extends BeanEditAction {
         speedListClosed.add(useBlockSpeed);
         speedListThrown.add(useBlockSpeed);
 
-        java.util.Vector<String> _speedMap = jmri.implementation.SignalSpeedMap.getMap().getValidSpeedNames();
+        java.util.Vector<String> _speedMap = SignalSpeedMap.getMap().getValidSpeedNames();
         for (int i = 0; i < _speedMap.size(); i++) {
             if (!speedListClosed.contains(_speedMap.get(i))) {
                 speedListClosed.add(_speedMap.get(i));

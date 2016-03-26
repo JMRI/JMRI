@@ -1,23 +1,5 @@
 package jmri.jmrit.beantable.oblock;
 
-/**
- * GUI to define OBlocks
- * <P>
- * <hr>
- * This file is part of JMRI.
- * <P>
- * JMRI is free software; you can redistribute it and/or modify it under the
- * terms of version 2 of the GNU General Public License as published by the Free
- * Software Foundation. See the "COPYING" file for a copy of this license.
- * <P>
- * JMRI is distributed in the hope that it will be useful, but WITHOUT ANY
- * WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS FOR
- * A PARTICULAR PURPOSE. See the GNU General Public License for more details.
- * <P>
- *
- * @author  Pete Cressman (C) 2010
- * @version $Revision$
- */
 import java.awt.BorderLayout;
 import java.awt.Dimension;
 import java.awt.Point;
@@ -52,6 +34,7 @@ import javax.swing.event.InternalFrameListener;
 import jmri.InstanceManager;
 import jmri.Path;
 import jmri.jmrit.logix.OBlock;
+import jmri.implementation.SignalSpeedMap;
 import jmri.jmrit.logix.OBlockManager;
 import jmri.jmrit.logix.OPath;
 import jmri.jmrit.logix.WarrantTableAction;
@@ -64,12 +47,25 @@ import jmri.util.table.ButtonRenderer;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+/**
+ * GUI to define OBlocks
+ * <P>
+ * <hr>
+ * This file is part of JMRI.
+ * <P>
+ * JMRI is free software; you can redistribute it and/or modify it under the
+ * terms of version 2 of the GNU General Public License as published by the Free
+ * Software Foundation. See the "COPYING" file for a copy of this license.
+ * <P>
+ * JMRI is distributed in the hope that it will be useful, but WITHOUT ANY
+ * WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS FOR
+ * A PARTICULAR PURPOSE. See the GNU General Public License for more details.
+ * <P>
+ *
+ * @author  Pete Cressman (C) 2010
+ */
 public class TableFrames extends jmri.util.JmriJFrame implements InternalFrameListener {
 
-    /**
-     *
-     */
-    private static final long serialVersionUID = 5328547694482485128L;
     static int ROW_HEIGHT;
     public static final int STRUT_SIZE = 10;
 
@@ -464,7 +460,7 @@ public class TableFrames extends jmri.util.JmriJFrame implements InternalFrameLi
         _oBlockTable.getColumnModel().getColumn(OBlockTableModel.CURVECOL).setCellEditor(new DefaultCellEditor(box));
         _oBlockTable.getColumnModel().getColumn(OBlockTableModel.REPORT_CURRENTCOL).setCellRenderer(
                 new MyBooleanRenderer(Bundle.getMessage("Current"), Bundle.getMessage("Last")));
-        box = new JComboBox<String>(jmri.implementation.SignalSpeedMap.getMap().getValidSpeedNames());
+        box = new JComboBox<String>(SignalSpeedMap.getMap().getValidSpeedNames());
         box.addItem("");
         _oBlockTable.getColumnModel().getColumn(OBlockTableModel.SPEEDCOL).setCellEditor(new DefaultCellEditor(box));
         _oBlockTable.getColumnModel().getColumn(OBlockTableModel.PERMISSIONCOL).setCellRenderer(

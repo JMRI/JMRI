@@ -1,5 +1,3 @@
-// AutoActiveTrain.java
-// AutoActiveTrain.java
 package jmri.jmrit.dispatcher;
 
 import java.beans.PropertyChangeEvent;
@@ -16,13 +14,14 @@ import jmri.SignalHead;
 import jmri.SignalMast;
 import jmri.ThrottleListener;
 import jmri.Timebase;
+import jmri.implementation.SignalSpeedMap;
 import jmri.jmrit.roster.RosterEntry;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 /**
  * This class holds information and options for an ActiveTrain when it is
- * running in AUTOMATIC mode. It ia an extension to Active Train for automatic
+ * running in AUTOMATIC mode. It is an extension to Active Train for automatic
  * running.
  * <P>
  * This class implements logic that follows a train around a layout. Train
@@ -45,7 +44,6 @@ import org.slf4j.LoggerFactory;
  * contained in Warrants.java
  *
  * @author	Dave Duchamp Copyright (C) 2010-2011
- * @version	$Revision$
  */
 public class AutoActiveTrain implements ThrottleListener {
 
@@ -758,7 +756,7 @@ public class AutoActiveTrain implements ThrottleListener {
                         speed = new Float(strSpeed);
                     } catch (NumberFormatException nx) {
                         try {
-                            speed = jmri.implementation.SignalSpeedMap.getMap().getSpeed(strSpeed);
+                            speed = SignalSpeedMap.getMap().getSpeed(strSpeed);
                             log.debug("{}: Signal {} speed from map is {}", _activeTrain.getTrainName(), _controllingSignalMast.getDisplayName(), speed);
                         } catch (Exception ex) {
                             //Considered Normal if the speed does not appear in the map

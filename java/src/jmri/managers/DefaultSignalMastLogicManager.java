@@ -15,6 +15,7 @@ import jmri.SectionManager;
 import jmri.Sensor;
 import jmri.SignalMast;
 import jmri.SignalMastLogic;
+import jmri.implementation.SignalSpeedMap;
 import jmri.implementation.DefaultSignalMastLogic;
 import jmri.jmrit.display.layoutEditor.LayoutBlockConnectivityTools;
 import jmri.jmrit.display.layoutEditor.LayoutEditor;

@@ -1,8 +1,9 @@
-// BlockManager.java
 package jmri;
 
 import java.text.DecimalFormat;
 import jmri.managers.AbstractManager;
+import jmri.implementation.SignalSpeedMap;
+
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -186,7 +187,7 @@ public class BlockManager extends AbstractManager
             Float.parseFloat(speed);
         } catch (NumberFormatException nx) {
             try {
-                jmri.implementation.SignalSpeedMap.getMap().getSpeed(speed);
+                SignalSpeedMap.getMap().getSpeed(speed);
             } catch (Exception ex) {
                 throw new JmriException("Value of requested default block speed is not valid");
             }
@@ -207,4 +208,3 @@ public class BlockManager extends AbstractManager
     private final static Logger log = LoggerFactory.getLogger(BlockManager.class.getName());
 }
 
-/* @(#)BlockManager.java */
