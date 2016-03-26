@@ -492,8 +492,7 @@ public abstract class FamilyItemPanel extends ItemPanel {
                         panel.add(label);
                     }
                 } catch (java.lang.ClassNotFoundException cnfe) {
-                    cnfe.printStackTrace();
-                    label = new JLabel();
+                    log.warn("no DndIconPanel {} created", borderName, cnfe);
                 }
                 int width = Math.max(100, panel.getPreferredSize().width);
                 panel.setPreferredSize(new java.awt.Dimension(width, panel.getPreferredSize().height));
