@@ -34,10 +34,6 @@ import org.slf4j.LoggerFactory;
  */
 public abstract class FamilyItemPanel extends ItemPanel {
 
-    /**
-     *
-     */
-    private static final long serialVersionUID = 9107650071783695584L;
     protected String _family;
     protected JPanel _iconFamilyPanel;
     protected JPanel _iconPanel;     // panel contained in _iconFamilyPanel - all icons in family
