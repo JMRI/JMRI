@@ -1,4 +1,3 @@
-// TestUserPreferencesManager.java
 package jmri.managers;
 
 /**

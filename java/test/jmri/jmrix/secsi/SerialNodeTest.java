@@ -1,4 +1,3 @@
-// SerialNodeTest.java
 package jmri.jmrix.secsi;
 
 import jmri.Sensor;

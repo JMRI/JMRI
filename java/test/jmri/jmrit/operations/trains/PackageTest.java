@@ -1,4 +1,3 @@
-// PackageTest.java
 package jmri.jmrit.operations.trains;
 
 import junit.framework.Test;
@@ -9,7 +8,6 @@ import junit.framework.TestSuite;
  * Tests for the jmrit.operations.trains package
  *
  * @author	Bob Coleman
- * @version $Revision$
  */
 public class PackageTest extends TestCase {
 

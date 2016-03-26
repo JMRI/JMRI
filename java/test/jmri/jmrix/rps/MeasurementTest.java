@@ -1,4 +1,3 @@
-// MeasurementTest.java
 package jmri.jmrix.rps;
 
 import junit.framework.Assert;

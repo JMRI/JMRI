@@ -15,7 +15,6 @@ import junit.framework.TestSuite;
  *
  * @author Bob Jacobsen
  * @author Mark Underwood
- * @version $Revision$
  */
 public class DCCppTrafficControllerTest extends TestCase {
 

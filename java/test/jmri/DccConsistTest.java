@@ -1,4 +1,3 @@
-// DccConsistTest.java
 package jmri;
 
 import jmri.implementation.DccConsist;

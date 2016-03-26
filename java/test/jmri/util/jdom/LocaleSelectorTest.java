@@ -1,4 +1,3 @@
-// LocaleSelectorTest.java
 package jmri.util.jdom;
 
 import junit.framework.Assert;

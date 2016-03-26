@@ -1,4 +1,3 @@
-// EditableListTest.java
 package jmri.swing;
 
 import junit.framework.Test;

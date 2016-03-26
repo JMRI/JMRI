@@ -12,7 +12,6 @@ import junit.framework.TestSuite;
  * Tests for the jmri.jmris.ServiceHandler class 
  *
  * @author Paul Bender
- * @version $Revision$
  */
 public class ServiceHandlerTest extends TestCase {
 

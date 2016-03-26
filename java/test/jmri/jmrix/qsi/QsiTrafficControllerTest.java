@@ -1,4 +1,3 @@
-// QsiTrafficControllerTest.java
 package jmri.jmrix.qsi;
 
 import java.io.DataInputStream;

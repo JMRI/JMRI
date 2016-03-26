@@ -1,4 +1,3 @@
-// DccSignalHeadTest.java
 package jmri.implementation;
 
 import jmri.CommandStation;
@@ -14,7 +13,6 @@ import junit.framework.TestSuite;
  * Tests for the DccSignalHead implementation
  *
  * @author	Bob Jacobsen Copyright (C) 2013
- * @version $Revision$
  */
 public class DccSignalHeadTest extends TestCase {
 

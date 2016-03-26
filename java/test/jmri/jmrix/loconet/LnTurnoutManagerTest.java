@@ -1,4 +1,3 @@
-// LnTurnoutManagerTest.java
 package jmri.jmrix.loconet;
 
 import java.util.ArrayList;

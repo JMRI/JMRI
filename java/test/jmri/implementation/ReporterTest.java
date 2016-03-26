@@ -1,4 +1,3 @@
-// ReporterTest.java
 package jmri.implementation;
 
 import jmri.Reporter;
@@ -22,7 +21,6 @@ import junit.framework.TestSuite;
  * <P>
  *
  * @author Matthew Harris Copyright (C) 2011
- * @version $Revision$
  */
 public class ReporterTest extends TestCase {
 
@@ -95,11 +93,6 @@ public class ReporterTest extends TestCase {
     // Utility method to create a concrete AbstractReporter
     private Reporter createNewReporter(String systemName, String userName) {
         return new AbstractReporter(systemName, userName) {
-            /**
-             *
-             */
-            private static final long serialVersionUID = -7115796893268006682L;
-
             public int getState() {
                 return state;
             }

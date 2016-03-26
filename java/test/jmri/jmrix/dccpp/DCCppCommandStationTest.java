@@ -14,7 +14,6 @@ import org.slf4j.LoggerFactory;
  *
  * @author	Paul Bender
  * @author      Mark Underwood
- * @version $Revision$
  *
  * Based on LenzCommandStationTest
  */

@@ -1,4 +1,3 @@
-// AffineEntryPanelTest.java
 package jmri.jmrix.rps.swing;
 
 import java.awt.geom.AffineTransform;
@@ -13,7 +12,6 @@ import junit.framework.TestSuite;
  * Tests for the jmri.jmrix.rps.swing.AffineEntryPanel class
  *
  * @author Bob Jacobsen Copyright 2008
- * @version $Revision$
  */
 public class AffineEntryPanelTest extends TestCase {
 

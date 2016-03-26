@@ -12,7 +12,6 @@ import junit.framework.TestSuite;
  * jmri.jmrix.ieee802154.IEEE802154SystemConnectionMemo class
  *
  * @author	Paul Bender
- * @version $Revision$
  */
 public class IEEE802154SystemConnectionMemoTest extends TestCase {
 

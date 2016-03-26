@@ -15,7 +15,6 @@ import junit.framework.TestSuite;
  * Copyright: Copyright (c) 2002</p>
  *
  * @author Bob Jacobsen
- * @version $Revision$
  */
 public class LnTrafficRouterTest extends TestCase {
 

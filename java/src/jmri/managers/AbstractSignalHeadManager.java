@@ -1,4 +1,3 @@
-// AbstractSignalHeadManager.java
 package jmri.managers;
 
 import jmri.Manager;
@@ -16,7 +15,6 @@ import jmri.SignalHeadManager;
  * the present time. They're just names...
  *
  * @author Bob Jacobsen Copyright (C) 2003
- * @version	$Revision$
  */
 public class AbstractSignalHeadManager extends AbstractManager
         implements SignalHeadManager, java.beans.PropertyChangeListener {
@@ -62,5 +60,3 @@ public class AbstractSignalHeadManager extends AbstractManager
         return Bundle.getMessage("BeanNameSignalHead");
     }
 }
-
-/* @(#)AbstractSignalHeadManager.java */

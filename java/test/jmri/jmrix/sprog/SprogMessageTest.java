@@ -1,4 +1,3 @@
-// SprogMessageTest.java
 package jmri.jmrix.sprog;
 
 import jmri.managers.DefaultProgrammerManager;

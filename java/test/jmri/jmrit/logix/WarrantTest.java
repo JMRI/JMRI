@@ -1,4 +1,3 @@
-// WarrantTest.java
 package jmri.jmrit.logix;
 
 import java.beans.PropertyChangeEvent;

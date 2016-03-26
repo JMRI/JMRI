@@ -1,4 +1,3 @@
-// UssCtcTest.java
 package jmri.jmrit.ussctc;
 
 import junit.framework.Test;

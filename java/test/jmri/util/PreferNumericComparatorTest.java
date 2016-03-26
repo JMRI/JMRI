@@ -1,4 +1,3 @@
-// PreferNumericComparatorTest.java
 package jmri.util;
 
 import java.util.Comparator;

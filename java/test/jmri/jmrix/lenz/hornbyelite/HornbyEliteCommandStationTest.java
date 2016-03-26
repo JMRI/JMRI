@@ -12,7 +12,6 @@ import junit.framework.TestSuite;
  * jmri.jmrix.lenz.hornbyelite.HornbyEliteCommandStation class
  *
  * @author	Paul Bender
- * @version $Revision$
  */
 public class HornbyEliteCommandStationTest extends TestCase {
 

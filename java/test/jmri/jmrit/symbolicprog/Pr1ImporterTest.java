@@ -1,4 +1,3 @@
-// Pr1ImporterTest.java
 package jmri.jmrit.symbolicprog;
 
 import java.io.File;
@@ -15,7 +14,6 @@ import junit.framework.TestSuite;
  * Tests for Pr1Importer class.
  *
  * @author	Bob Jacobsen Copyright 2003
- * @version $Revision$
  */
 public class Pr1ImporterTest extends TestCase {
 

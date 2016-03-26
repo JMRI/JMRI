@@ -1,4 +1,3 @@
-// PackageTest.java
 package jmri.jmrit.consisttool;
 
 import junit.framework.Test;
@@ -9,7 +8,6 @@ import junit.framework.TestSuite;
  * Invokes complete set of tests in the jmri.jmrit.consisttool tree
  *
  * @author	Paul Bender Copyright (C) 2015
- * @version $Revision$
  */
 public class PackageTest extends TestCase {
 

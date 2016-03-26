@@ -1,4 +1,3 @@
-// NamedBeanTest.java
 package jmri.implementation;
 
 import jmri.NamedBean;
@@ -14,7 +13,6 @@ import junit.framework.TestSuite;
  * tests in a test class for your own NamedBean class
  *
  * @author	Bob Jacobsen Copyright (C) 2009, 2015
- * @version $Revision$
  */
 public class NamedBeanTest extends TestCase {
 
@@ -24,11 +22,6 @@ public class NamedBeanTest extends TestCase {
      */
     protected NamedBean createInstance() {
         return new AbstractNamedBean("sys", "usr") {
-            /**
-             *
-             */
-            private static final long serialVersionUID = 1840715699707517615L;
-
             public int getState() {
                 return 0;
             }

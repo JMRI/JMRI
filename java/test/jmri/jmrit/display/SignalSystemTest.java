@@ -1,4 +1,3 @@
-// SignalSystemTest.java
 package jmri.jmrit.display;
 
 import junit.framework.Test;

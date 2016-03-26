@@ -272,7 +272,19 @@ public class OPath extends jmri.Path {
      * Override to indicate logical equality for use as paths in OBlocks.
      *
      */
-    public boolean equals(OPath path) {
+    public boolean equals(Object obj) {
+        if (obj == this) {
+            return true;
+        }
+        if (obj == null) {
+            return false;
+        }
+    
+        if (!(getClass() == obj.getClass())) {
+            return false;
+        }
+        
+        OPath path = (OPath) obj;
         if (_fromPortal != null && !_fromPortal.equals(path.getFromPortal())) {
             return false;
         }

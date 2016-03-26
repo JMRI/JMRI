@@ -1,4 +1,3 @@
-// Ash2_1AlgorithmTest.java
 package jmri.jmrix.rps;
 
 import javax.vecmath.Point3d;

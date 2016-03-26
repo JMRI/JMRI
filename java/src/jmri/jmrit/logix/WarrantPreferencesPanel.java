@@ -128,6 +128,8 @@ public class WarrantPreferencesPanel extends JPanel implements PreferencesPanel,
         panel.add(p);
         return panel;
     }
+
+    @edu.umd.cs.findbugs.annotations.SuppressFBWarnings(value = "FE_FLOATING_POINT_EQUALITY", justification = "fixed number of possible values")
     private ScaleData makeCustomItem(float scale) {
         int cnt = 0;
         while (cnt <_layoutScales.getItemCount()) {
@@ -421,9 +423,10 @@ public class WarrantPreferencesPanel extends JPanel implements PreferencesPanel,
     }*/
 
     /**
-     * Compare GUI vaules with Preferences.  When different, update Preferences
+     * Compare GUI values with Preferences.  When different, update Preferences
      * and set _isDirty flag.
      */
+    @edu.umd.cs.findbugs.annotations.SuppressFBWarnings(value = "FE_FLOATING_POINT_EQUALITY", justification = "fixed number of possible values")
     private void setValues() {
         int depth = _preferences.getSearchDepth();
         try {
@@ -513,7 +516,7 @@ public class WarrantPreferencesPanel extends JPanel implements PreferencesPanel,
             for (int i=0; i<_appearanceMap.size(); i++) {
                 DataPair<String, String> dp = _appearanceMap.get(i);
                 String name = dp.getKey();
-                if (_preferences.getAppearanceValue(name)==null || _preferences.getAppearanceValue(name)!= dp.getValue()) {
+                if (_preferences.getAppearanceValue(name)==null || !_preferences.getAppearanceValue(name).equals(dp.getValue())) {
                     different = true;
                     break;
                 }
@@ -601,7 +604,7 @@ public class WarrantPreferencesPanel extends JPanel implements PreferencesPanel,
         return true; // no validity checking performed
     }
 
-    class DataPair<K, V> {
+    static class DataPair<K, V> {
         K key;
         V value;
         

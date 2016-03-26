@@ -1,4 +1,3 @@
-// EngineModelsTest.java
 package jmri.jmrit.operations.rollingstock.engines;
 
 import jmri.jmrit.operations.OperationsTestCase;
@@ -16,7 +15,6 @@ import junit.framework.TestSuite;
  * register/deregister EngineManager: Consists
  *
  * @author	Bob Coleman Copyright (C) 2008, 2009
- * @version $Revision$
  */
 public class EngineModelsTest extends OperationsTestCase {
 

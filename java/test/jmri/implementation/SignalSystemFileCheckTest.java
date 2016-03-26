@@ -1,4 +1,3 @@
-// SignalSystemFileCheckTest.java
 package jmri.implementation;
 
 import junit.framework.Test;
@@ -12,7 +11,6 @@ import org.slf4j.LoggerFactory;
  * Checks all files in the distribution directory
  *
  * @author	Bob Jacobsen Copyright (C) 2009
- * @version $Revision$
  */
 public class SignalSystemFileCheckTest extends jmri.configurexml.SchemaTestBase {
 
