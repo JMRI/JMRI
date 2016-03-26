@@ -15,7 +15,6 @@ import junit.framework.TestSuite;
  * Tests for the OPath class
  *
  * @author	Pete Cressman Copyright 2014
- * @version $Revision: 17977 $
  */
 public class LogixActionTest extends TestCase {
 

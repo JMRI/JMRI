@@ -1280,7 +1280,9 @@ public class SlipTurnoutIcon extends PositionableLabel implements java.beans.Pro
             while (itr.hasNext()) {
                 Turnout t = itr.next();
                 int state = _turnoutSetting.get(t);
-                t.setCommandedState(state);
+                jmri.util.ThreadingUtil.runOnLayout(()->{ // run on layout thread
+                    t.setCommandedState(state);
+                });
                 try {
                     Thread.sleep(250);
                 } catch (InterruptedException e) {
