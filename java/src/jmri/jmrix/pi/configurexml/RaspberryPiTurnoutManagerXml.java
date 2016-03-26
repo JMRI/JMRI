@@ -1,8 +1,8 @@
 package jmri.jmrix.pi.configurexml;
 
+import org.jdom2.Element;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import org.jdom2.Element;
 
 /**
  * Provides load and store functionality for
@@ -28,11 +28,12 @@ public class RaspberryPiTurnoutManagerXml extends jmri.managers.configurexml.Abs
         log.error("Invalid method called");
     }
 
-    public boolean load(Element turnouts) {
+    @Override
+    public boolean load(Element shared, Element perNode) {
         // load individual turnouts
-        return loadTurnouts(turnouts);
+        return loadTurnouts(shared, perNode);
     }
 
-    static Logger log = LoggerFactory.getLogger(RaspberryPiTurnoutManagerXml.class.getName());
+    private final static Logger log = LoggerFactory.getLogger(RaspberryPiTurnoutManagerXml.class.getName());
 
 }

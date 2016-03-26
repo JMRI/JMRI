@@ -32,7 +32,7 @@ public class LI100Adapter extends XNetSerialPortController implements jmri.jmrix
         super();
         option1Name = "FlowControl";
         options.put(option1Name, new Option("LI100F connection uses : ", validOption1));
-        this.manufacturerName = jmri.jmrix.DCCManufacturerList.LENZ;
+        this.manufacturerName = jmri.jmrix.lenz.LenzConnectionTypeList.LENZ;
     }
 
     public String openPort(String portName, String appName) {
@@ -285,7 +285,7 @@ public class LI100Adapter extends XNetSerialPortController implements jmri.jmrix
      * Get an array of valid baud rates. This is currently just a message saying
      * its fixed
      */
-    @edu.umd.cs.findbugs.annotations.SuppressWarnings(value = "EI_EXPOSE_REP") // OK to expose array instead of copy until Java 1.6
+    @edu.umd.cs.findbugs.annotations.SuppressFBWarnings(value = "EI_EXPOSE_REP") // OK to expose array instead of copy until Java 1.6
     public String[] validBaudRates() {
         return validSpeeds;
     }
@@ -297,7 +297,7 @@ public class LI100Adapter extends XNetSerialPortController implements jmri.jmrix
         return "LI100F connection uses ";
     }
 
-    @edu.umd.cs.findbugs.annotations.SuppressWarnings(value = "EI_EXPOSE_REP") // OK to expose array instead of copy until Java 1.6
+    @edu.umd.cs.findbugs.annotations.SuppressFBWarnings(value = "EI_EXPOSE_REP") // OK to expose array instead of copy until Java 1.6
     public String[] validOption1() {
         return validOption1;
     }
@@ -320,6 +320,6 @@ public class LI100Adapter extends XNetSerialPortController implements jmri.jmrix
     }
     volatile static LI100Adapter mInstance = null;
 
-    static Logger log = LoggerFactory.getLogger(LI100Adapter.class.getName());
+    private final static Logger log = LoggerFactory.getLogger(LI100Adapter.class.getName());
 
 }

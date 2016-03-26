@@ -1,4 +1,3 @@
-// HexVariableValueTest.java
 package jmri.jmrit.symbolicprog;
 
 import java.util.HashMap;
@@ -7,14 +6,11 @@ import javax.swing.JTextField;
 import junit.framework.Assert;
 import junit.framework.Test;
 import junit.framework.TestSuite;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 
 /**
  * Test the HexVariableValue class
  *
  * @author	Bob Jacobsen Copyright 2001
- * @version $Revision$
  */
 public class HexVariableValueTest extends VariableValueTest {
 
@@ -63,7 +59,5 @@ public class HexVariableValueTest extends VariableValueTest {
         TestSuite suite = new TestSuite(HexVariableValueTest.class);
         return suite;
     }
-
-    static Logger log = LoggerFactory.getLogger(HexVariableValueTest.class.getName());
 
 }

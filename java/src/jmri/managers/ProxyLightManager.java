@@ -1,11 +1,8 @@
-// ProxyLightManager.java
 package jmri.managers;
 
 import jmri.Light;
 import jmri.LightManager;
 import jmri.NamedBean;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 
 /**
  * Implementation of a LightManager that can serves as a proxy for multiple
@@ -13,7 +10,6 @@ import org.slf4j.LoggerFactory;
  *
  * @author	Bob Jacobsen Copyright (C) 2010
  * @author	Dave Duchamp Copyright (C) 2004
- * @version	$Revision$
  */
 public class ProxyLightManager extends AbstractProxyManager
         implements LightManager {
@@ -27,7 +23,7 @@ public class ProxyLightManager extends AbstractProxyManager
     }
 
     protected AbstractManager makeInternalManager() {
-        return new InternalLightManager();
+        return jmri.InstanceManager.getDefault(jmri.jmrix.internal.InternalSystemConnectionMemo.class).getLightManager();
     }
 
     /**
@@ -202,9 +198,4 @@ public class ProxyLightManager extends AbstractProxyManager
     public String getBeanTypeHandled() {
         return Bundle.getMessage("BeanNameLight");
     }
-
-    // initialize logging
-    static Logger log = LoggerFactory.getLogger(ProxyLightManager.class.getName());
 }
-
-/* @(#)ProxyLightManager.java */

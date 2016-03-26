@@ -1,48 +1,48 @@
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
-<!-- $Id$ -->
-<HTML LANG="en">
-<HEAD>
-<TITLE>JMRI: Adding/Editing Sensors</TITLE>
-<META HTTP-EQUIV="Content-Type" CONTENT="text/html; charset=iso-8859-1">
-<META CONTENT="Bob Jacobsen" NAME="Author">
-<META NAME="keywords" CONTENT="JMRI help Sensor Add Edit">
+<html lang="en">
+<head>
+<title>JMRI: Adding/Editing Sensors</title>
+<meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
+<meta content="Bob Jacobsen" name="Author">
+<meta name="keywords" content="JMRI help Sensor Add Edit">
 
 <!--#include virtual="/Style" -->
-</HEAD>
+</head>
 
-<BODY>
+<body>
 <!--#include virtual="/Header" -->
   <div class="nomenu" id="mBody">
     <div id="mainContent">
 
-<H1>Adding/Editing Sensors</H1>
+<h1>Adding/Editing Sensors</h1>
 <p>When adding a Sensor, you select from the drop down list the system to which the
-sensor is attached to.</p>
+Sensor is attached to.</p>
 <img src="AddSensor.png" >
-<p>Enter in a valid address for that sensor and if desired enter in a user name which can be anything you wish to describe the sensor.</p>
+<p>Enter a valid address for that Sensor and if desired enter a User Name which can be anything you wish to describe the Sensor.<br>
+Finish by clicking the "OK" button.</p>
 
-<H2>Creating A Number of Sensors</H2>
-<p>It is also possible to create a number of sensors in go.<br>
-Where supported the "Add Range" check box will be enabled.</p>
+<h2>Creating A Number of Sensors</h2>
+<p>It is also possible to create a number of Sensors in one go.<br>
+Where supported the "Add a range" check box will be enabled.</p>
 <img src="AddTurnoutNumber.png">
 <p>When checking the "Add Range" box, this will then enable the "Number To Add" field.  
-Here enter in the number of sensors that you wish to add, this will then create that 
-number of sequential sensors.</p>
-If a username has been entered a number will be added to the end of the name to keep 
-each username unique.<p>
+Here enter the number of Sensors that you wish to add. Clicking "OK" will then create that 
+ number of sequential Sensors.</p>
+If a User Name has been entered, a number will be added to the end of the name to keep 
+each Sensor User Name unique.<p>
 
-<H2>Hardware Specific Information</H2>
+<h2>Hardware Specific Information</h2>
 
-<H3>NCE AIU Number to JMRI Sensor Mapping</H3>
-The NCE Axiliary Input Unit or AIU allows the NCE command station to check the status of
-inputs from the layout. These are referenced in JMRI as sensors with
-names like "NS785". "NS" means "NCE Sensor", and 785 is the number of a
-specific sensor input.
-<p>The hardware address can be entered in two different ways</p>
-<dl><dd><p>Enter in the AIU Cab Address followed by the Pin Number seperated by a ":"<br>
+<h3>NCE AIU Number to JMRI Sensor Mapping</h3>
+The NCE Auxiliary Input Unit (or AIU) allows the NCE command station to check the status of
+inputs from the layout. These are referenced in JMRI as Sensors with
+names like "NS785". "NS" means "NCE Sensor", and "785" is the number of a
+specific Sensor input.
+<p>The hardware address can be entered in two different ways:</p>
+<dl><dd><p>Enter in the AIU Cab Address followed by the Pin Number separated by a ":"<br>
 So for a sensor on AIU Cab Address 50, pin 2 you would enter into the Hardware Address field :<br>
 50:2</p>
-<P>The sensor number can also be found and entered into the hardware address field by using the following formula:</P>
+<P>The Sensor number can also be found and entered into the hardware address field by using the following formula:</P>
 <P>Sensor ID = (AIU Cab Address - 1) * 16 + (Pin Number On AIU) -1</P>
 <P>For example: The AIU cab address is set to 50 and one of the
 BD20s is connected to pin 2. Therefore the Sensor ID would be:</P>
@@ -50,18 +50,18 @@ BD20s is connected to pin 2. Therefore the Sensor ID would be:</P>
 <P>Sensor ID = 785 </dd></dl>
 <!--#include virtual="/Footer" --></P></P>
 
-<H3>LocoNet Sensor to JMRI Sensor Mapping</H3>
-<p>LocoNet sensor addresses are made up from two different parts the board number and channel number.<br>
-Sensors can also be configured from the turnout addresses for the Aux & switch input.</p>
-<p>The hardware address can be entered in a number of different ways</p>
-<dl><dd>Enter in the board number, followed by the channel number seperated by a ":"<br>
-So for a sensor on board 11, channel 1 you would enter into the Hardware Address field :<br>
+<h3>LocoNet Sensor to JMRI Sensor Mapping</h3>
+<p>LocoNet Sensor addresses are made up from two different parts: the Board number and Channel number.<br>
+Sensors can also be configured from the Turnout addresses for the Aux &amp; Switch input.</p>
+<p>The hardware address can be entered in a number of different ways:</p>
+<dl><dd>Enter the board number, followed by the channel number separated by a ":"<br>
+So for a Sensor on board 11, channel 1 you would enter into the Hardware Address field:<br>
 11:1</p>
-<p>For Sensors attached to turnouts, you enter into the hardware address field "T:" followed by the turnout number. 
-This will add the aux input associated with the turnout, to add both the Aux and the switch input, click on add range and set the number to add to 2.<br>
-So for sensor attached to Turnout 81 you would enter the following:<br>
+<p>For Sensors attached to Turnouts, you enter into the hardware address field "T:" followed by the Turnout number. 
+This will add the Aux input associated with the Turnout. To add both the Aux and the Switch input, check "Add a range" and set the number to add to 2.<br>
+So for a Sensor attached to Turnout 81 you would enter the following:<br>
 T:81</p>
-<p> The Other method is to calculate the address of the sensor and add it manually into the hardware address field using the following method</p>
+<p> The Other method is to calculate the address of the Sensor and add it manually into the hardware address field using the following method:</p>
 <p>If you want to calculate the address of a BDL168 input, you can use<br>
    number = 16 * (board number) + (channel number) - 16</p>
    
@@ -73,73 +73,75 @@ as we saw in the example above.
 <p>If you want to calculate the address of a DS54 aux input, use:<br>
    number = 2 * (turnout number - 1) + 1</p>
 
-<p>For example, the aux input associated with turnout 81 has number:<br>
+<p>For example, the aux input associated with Turnout 81 has number:<br>
    number = 2 * (81 - 1) + 1 = 161</p>
 
 <p>If it's the switch input, you add one more to that:<br>
    number = 2 * (turnout number - 1) + 2</p>
 
-<p>For example, the switch input associated with turnout 12 has number:<br>
+<p>For example, the switch input associated with Turnout 12 has number:<br>
    number = 2 * ( 12 - 1 ) + 2 = 24</p>
 </dl>
 
-<H3>Lenz XpressNet Sensor to JMRI Sensor Mapping</H3>
-<p>XpressNet sensor addresses are made up from two different parts the feedback encoder address and contact.</p>
+<h3>Lenz XpressNet Sensor to JMRI Sensor Mapping</h3>
+<p>XpressNet Sensor addresses are made up from two different parts: the Feedback Encoder address and Contact.</p>
 <p>The hardware address can be entered in a number of different ways</p>
-<dl><dd>Enter in the encoder address, followed by the contact seperated by a ":"<br>
-So for a sensor on feedback encoder address 99, contact 3 you would enter into the Hardware Address field :<br>
+<dl><dd>Enter in the encoder address, followed by the contact separated by a ":"<br>
+So for a Sensor on Feedback Encoder address 99, Contact 3 you would enter into the Hardware Address field:<br>
 99:3</p>
-<p>If you wish to calculate the address of the sensor, subtract 1 from the Feedback Encoder's address, multiply that result by 8, and then add the input number you are using.<br>
-For Example, if you are using contact 3 on a Feedback Encoder with address 99, 99 - 1 = 98. 98*8=784. 784+3=787.<br>
+<p>If you wish to calculate the address of the Sensor, subtract 1 from the Feedback Encoder's address, multiply that result by 8, and then add the input number you are using.<br>
+For Example, if you are using Contact 3 on a Feedback Encoder with address 99, 99 - 1 = 98. 98*8=784. 784+3=787.<br>
 The feedback address you will use is 787.</p>
 </dl></dd>
 
-<H3>Maple and C/MRI sensor to JMRI Sensor Mapping</H3>
-<p>Maple and C/MRI sensor addresses are made up from two different parts a Node Id and pin/Sensor Id.</p>
-<p>The hardware address can be entered in a number of different ways</p>
-<dl><dd>Enter in the Node Id, followed by the Sensor Id, seperated by a ":".  This method can also be used for the alternative/extended addressing.<br>
-So for a sensor on Node 2, pin 3 you would enter the following into the hardware address field :<br>
+<h3>Maple and C/MRI Sensor to JMRI Sensor Mapping</h3>
+<p>Maple and C/MRI sensor addresses are made up from two different parts: a Node Id and Pin/Sensor Id.</p>
+<p>The hardware address can be entered in a number of different ways:</p>
+<dl><dd>Enter the Node Id, followed by the Sensor Id, separated by a ":". This method can also be used for the alternative/extended addressing.<br>
+So for a Sensor on Node 2, pin 3 you would enter the following into the hardware address field:<br>
 2:3</p>
 
-<p>Another method of adding the sensor address in, is to use the following formula</p>
+<p>Another method of adding the Sensor address is to use the following formula:</p>
 Node Id x 1000 + pin.<br>
-So for a sensor on Node 2, pin 3<br>
+So for a Sensor on Node 2, pin 3<br>
 (2x1000)+3 = 2003</p>
-<p>To use the alternative/extended addressing scheme, refer to the hardware connection guide.</p>
+<p>To use the alternative/extended addressing scheme, refer to your C/MRI hardware connection guide.</p>
 </dd></dl>
-<H3>Grapevine Sensor to JMRI Sensor Mapping</H3>
 
-There are three separate types of Grapevine sensors:
+<h3>Grapevine Sensor to JMRI Sensor Mapping</h3>
+
+There are three separate types of Grapevine Sensors:
 <dl>
 <dt>Advanced Serial Detectors</dt>
 <dd>
 Up to three Advanced Serial Detector boards can be attached to
-a Grapevine node.  Each provides eight occupancy detectors, and
+a Grapevine Node.  Each provides eight occupancy detectors, and
 associates a motion detector with each of those.
-<table>
-<tr><th>Board</th><th>Occupancy</th><th>Motion</th></tr>
-<tr><td>Master</td> <td>1-8</td>  <td>9-16</td></tr>
-<tr><td>Slave 1</td><td>17-24</td><td>25-32</td></tr>
-<tr><td>Slave 2</td><td>33-40</td><td>41-48</td></tr>
-</table>
+	<table>
+	<tr><th>Board</th><th>Occupancy</th><th>Motion</th></tr>
+	<tr><td>Master</td> <td>1-8</td>  <td>9-16</td></tr>
+	<tr><td>Slave 1</td><td>17-24</td><td>25-32</td></tr>
+	<tr><td>Slave 2</td><td>33-40</td><td>41-48</td></tr>
+	</table>
 </dd>
 <dt>Original Serial Sensors</dt>
 <dd>
-Occupancy sensors on the original serial boards replace 
-sensors attached through advanced boards at addresses 1 to 8.
+Occupancy Sensors on the original serial boards replace 
+Sensors attached through advanced boards at addresses 1 to 8.
 There are no motion sensors in this case.
 </dd>
 <dt>Parallel Sensors</dt>
 <dd>The parallel sensors, connectors on the Grapevine node 
-itself, appear as JMRI sensors 101 to 108 on the node.
+itself appear as JMRI sensors 101 to 108 on the node.
 If the optional second bank of serial sensors are present,
 they appear as sensors 109 to 116 on the node.
 </dd>
 </dl>
+
+<p>Back to the <a href="SensorTable.shtml">Sensor Table help page<a>.</p>
 <!--#include virtual="/Footer" -->
 
-
-
-</BODY>
-</HTML>
-
+      </div><!-- closes #mainContent-->
+    </div> <!-- closes #mBody-->
+</body>
+</html>

@@ -5,14 +5,11 @@ import junit.framework.Assert;
 import junit.framework.Test;
 import junit.framework.TestCase;
 import junit.framework.TestSuite;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 
 /**
  * Tests for the jmri.jmrix.loconet.LocoNetMessage class.
  *
  * @author	Bob Jacobsen
- * @version $Revision$
  */
 public class LocoNetMessageTest extends TestCase {
 
@@ -194,7 +191,5 @@ public class LocoNetMessageTest extends TestCase {
         TestSuite suite = new TestSuite(LocoNetMessageTest.class);
         return suite;
     }
-
-    static Logger log = LoggerFactory.getLogger(LocoNetMessageTest.class.getName());
 
 }

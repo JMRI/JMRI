@@ -48,7 +48,7 @@
 <!ATTLIST location comment			CDATA #IMPLIED>
 <!ATTLIST location switchListComment CDATA #IMPLIED>
 <!ATTLIST location physicalLocation CDATA #IMPLIED>
-<!ATTLIST location idReader CDATA #IMPLIED>
+<!ATTLIST location idReader 		CDATA #IMPLIED>
 
 <!ATTLIST track id				CDATA #IMPLIED>          
 <!ATTLIST track name			CDATA #IMPLIED>
@@ -83,6 +83,9 @@
 <!ATTLIST track ignoreUsedPercentage	CDATA #IMPLIED>
 <!ATTLIST track trackDestinationOption	CDATA #IMPLIED>
 <!ATTLIST track blockingOrder	CDATA #IMPLIED>
+<!ATTLIST track holdCustomLoads	(true | false) "false">
+<!ATTLIST track onlyCarWithFD	(true | false) "false">
+
 
 <!ATTLIST destination id			CDATA #REQUIRED>          
 <!ATTLIST destination name			CDATA #IMPLIED>

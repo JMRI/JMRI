@@ -1,4 +1,3 @@
-// MultiIndexProgrammerFacadeTest.java
 package jmri.implementation;
 
 import jmri.ProgListener;
@@ -198,6 +197,6 @@ public class MultiIndexProgrammerFacadeTest extends TestCase {
         return suite;
     }
 
-    static Logger log = LoggerFactory.getLogger(MultiIndexProgrammerFacadeTest.class.getName());
+    private final static Logger log = LoggerFactory.getLogger(MultiIndexProgrammerFacadeTest.class.getName());
 
 }

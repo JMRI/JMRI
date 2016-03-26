@@ -22,7 +22,6 @@ import org.slf4j.LoggerFactory;
  * what it finds.
  * <P>
  * @author Bob Jacobsen Copyright (c) 2009
- * @version $Revision$
  * @since 2.7.2
  */
 public class MemorySpinnerIcon extends PositionableJPanel implements ChangeListener, PropertyChangeListener {
@@ -51,19 +50,19 @@ public class MemorySpinnerIcon extends PositionableJPanel implements ChangeListe
         setPopupUtility(new PositionablePopupUtil(this, textBox));
     }
 
+    @Override
     public Positionable deepClone() {
         MemorySpinnerIcon pos = new MemorySpinnerIcon(_editor);
         return finishClone(pos);
     }
 
-    public Positionable finishClone(Positionable p) {
-        MemorySpinnerIcon pos = (MemorySpinnerIcon) p;
+    protected Positionable finishClone(MemorySpinnerIcon pos) {
         pos.setMemory(namedMemory.getName());
         return super.finishClone(pos);
     }
-    /*    public JComponent getTextComponent() {
-     return ((JSpinner.DefaultEditor)spinner.getEditor()).getTextField();
-     }*/
+    public javax.swing.JComponent getTextComponent() {
+        return ((JSpinner.DefaultEditor)spinner.getEditor()).getTextField();
+    }
 
     public Dimension getSize() {
         if (debug) {
@@ -280,5 +279,5 @@ public class MemorySpinnerIcon extends PositionableJPanel implements ChangeListe
         namedMemory = null;
     }
 
-    static Logger log = LoggerFactory.getLogger(MemorySpinnerIcon.class.getName());
+    private final static Logger log = LoggerFactory.getLogger(MemorySpinnerIcon.class.getName());
 }

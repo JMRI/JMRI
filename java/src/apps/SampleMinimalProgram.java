@@ -1,7 +1,9 @@
 // SampleMinimalProgram.java
 package apps;
 
+import jmri.ConfigureManager;
 import jmri.InstanceManager;
+import jmri.implementation.JmriConfigurationManager;
 import jmri.util.Log4JUtil;
 import jmri.web.server.WebServerManager;
 import org.slf4j.Logger;
@@ -54,6 +56,7 @@ public class SampleMinimalProgram {
 
     /**
      * Static method to get Log4J working before the rest of JMRI starts up.
+     * In a non-minimal program, invoke jmri.util.Log4JUtil.initLogging
      */
     static protected void initLog4J() {
         // initialize log4j - from logging control file (lcf) only
@@ -69,8 +72,7 @@ public class SampleMinimalProgram {
         } catch (java.lang.NoSuchMethodError e) {
             log.error("Exception starting logging: " + e);
         }
-        // install default exception handlers
-        System.setProperty("sun.awt.exception.handler", jmri.util.exceptionhandler.AwtHandler.class.getName());
+        // install default exception handler
         Thread.setDefaultUncaughtExceptionHandler(new jmri.util.exceptionhandler.UncaughtExceptionHandler());
     }
 
@@ -106,7 +108,7 @@ public class SampleMinimalProgram {
         adapter.openPort(portName, "JMRI app");
         adapter.configure();
 
-        jmri.configurexml.ConfigXmlManager cm = new jmri.configurexml.ConfigXmlManager();
+        ConfigureManager cm = new JmriConfigurationManager();
 
         // not setting preference file location!
         InstanceManager.setConfigureManager(cm);
@@ -120,5 +122,5 @@ public class SampleMinimalProgram {
         log.info("Up!");
     }
 
-    static Logger log = LoggerFactory.getLogger(SampleMinimalProgram.class.getName());
+    private final static Logger log = LoggerFactory.getLogger(SampleMinimalProgram.class.getName());
 }

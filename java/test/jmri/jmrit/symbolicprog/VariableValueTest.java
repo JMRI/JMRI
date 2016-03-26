@@ -1,4 +1,3 @@
-// VariableValueTest.java
 package jmri.jmrit.symbolicprog;
 
 import java.awt.Component;
@@ -13,11 +12,12 @@ import junit.framework.TestCase;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+import jmri.util.JUnitUtil;
+
 /**
  * Base for tests of classes inheriting from VariableValue abstract class
  *
  * @author	Bob Jacobsen, Copyright 2002
- * @version $Revision$
  */
 public abstract class VariableValueTest extends TestCase {
 
@@ -197,18 +197,8 @@ public abstract class VariableValueTest extends TestCase {
 
         variable.readAll();
         // wait for reply (normally, done by callback; will check that later)
-        int i = 0;
-        while (variable.isBusy() && i++ < 100) {
-            try {
-                Thread.sleep(50);
-            } catch (Exception e) {
-            }
-        }
-        if (log.isDebugEnabled()) {
-            log.debug("past loop, i=" + i + " value=" + variable.getCommonRep() + " state=" + variable.getState());
-        }
-
-        Assert.assertTrue("wait time for message", i < 100);
+        JUnitUtil.waitFor(()->{return !variable.isBusy();}, "variable.isBusy");
+        
         checkValue(variable, "text var value ", "14");
         Assert.assertEquals("var state ", AbstractValue.READ, variable.getState());
         Assert.assertEquals("cv value", 123, cv.getValue());
@@ -230,18 +220,8 @@ public abstract class VariableValueTest extends TestCase {
 
         variable.writeAll();
         // wait for reply (normally, done by callback; will check that later)
-        int i = 0;
-        while (variable.isBusy() && i++ < 100) {
-            try {
-                Thread.sleep(50);
-            } catch (Exception e) {
-            }
-        }
-        if (log.isDebugEnabled()) {
-            log.debug("past loop, i=" + i + " value=" + variable.getCommonRep() + " state=" + variable.getState());
-        }
-
-        Assert.assertTrue("iterations ", i < 100);
+        JUnitUtil.waitFor(()->{return !variable.isBusy();}, "variable.isBusy");
+        
         checkValue(variable, "value ", "5");
         Assert.assertEquals("var state ", AbstractValue.STORED, variable.getState());
         Assert.assertEquals("cv state ", AbstractValue.STORED, cv.getState());
@@ -265,18 +245,8 @@ public abstract class VariableValueTest extends TestCase {
         JLabel statusLabel = new JLabel("nothing");
         cv.write(statusLabel);  // JLabel is for reporting status, ignored here
         // wait for reply (normally, done by callback; will check that later)
-        int i = 0;
-        while (cv.isBusy() && i++ < 100) {
-            try {
-                Thread.sleep(50);
-            } catch (Exception e) {
-            }
-        }
-        if (log.isDebugEnabled()) {
-            log.debug("past loop, i=" + i + " value=" + cv.getValue() + " state=" + cv.getState());
-        }
-
-        Assert.assertTrue("iterations needed ", i < 100);
+        JUnitUtil.waitFor(()->{return !cv.isBusy();}, "cv.isBusy");
+        
         checkValue(variable, "value ", "5");
         Assert.assertEquals("variable state ", AbstractValue.STORED, variable.getState());
         Assert.assertEquals("cv state ", AbstractValue.STORED, cv.getState());
@@ -431,18 +401,8 @@ public abstract class VariableValueTest extends TestCase {
 
         var1.writeAll();
         // wait for reply (normally, done by callback; will check that later)
-        int i = 0;
-        while (var1.isBusy() && i++ < 100) {
-            try {
-                Thread.sleep(50);
-            } catch (Exception e) {
-            }
-        }
-        if (log.isDebugEnabled()) {
-            log.debug("past loop, i=" + i + " value=" + var1.getCommonRep() + " state=" + var1.getState());
-        }
+        JUnitUtil.waitFor(()->{return !var1.isBusy();}, "var1.isBusy");
 
-        Assert.assertTrue("Number of iterations ", i < 100);
         checkValue(var1, "var 1 value", "5");
         checkValue(var2, "var 2 value", "5");
         Assert.assertEquals("1st variable state ", AbstractValue.STORED, var1.getState());
@@ -503,7 +463,7 @@ public abstract class VariableValueTest extends TestCase {
     }
 
     // abstract class has no main entry point, test suite
-    static Logger log = LoggerFactory.getLogger(VariableValueTest.class.getName());
+    private final static Logger log = LoggerFactory.getLogger(VariableValueTest.class.getName());
 
     // The minimal setup for log4J
     protected void setUp() {

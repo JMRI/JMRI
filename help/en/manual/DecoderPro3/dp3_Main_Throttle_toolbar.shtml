@@ -1,8 +1,6 @@
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
 <html lang="en">
 <head>
-<!-- Copyright ($Author$) 2009 -->
-<!-- $Id$ -->
 <title>DecoderPro Throttle</title>
 
 <!-- Style -->
@@ -20,23 +18,21 @@
 <!--#include virtual="Sidebar" -->
 <div id="mainContent">
 
-<a NAME="Top"></a>
+<a name="Top"></a>
 <h1>DecoderPro&reg; Main Window</h1>
-<h1>JMRI&reg; Throttle Window - Toolbar</h1>
+<h2>JMRI&reg; Throttle Window - Toolbar</h2>
 
-<div align=right>
+<div align="right">
 <p><a href="dp3_Main_Throttle.shtml">Back </a></p>
 </div>
 
 <hr>
-<br>
 <img src="images/Main_Throttle_toolbar.png" width="515" height="118" alt="throttle toolbar">
 <p>The Throttle toolbar is enabled from the <a href="Start_Preferences.shtml" target="_blank">Throttles Preferences Pane</a></p>
 <ul>
   <p>Use Throttles preferences window to set the desired preferences.</p>
   <p align="center"><img src="images/Main_Tool01.png" width="700" height="427" alt="Throttle pref"></p>
 </ul>
-<p>&nbsp;</p>
 <p>When it is enabled, a Throttle Window can host a set of Throttles. You can browse through these throttles: Add a new Throttle in that Throttle Window. Once the number of Throttles in a Throttle Window is greater than one, Next and Previous Icons are enabled. </p>
 <ul>
   <li> <img src="images/Main_Throttle_toolbar_new.png" width="51" height="45" alt="new"> Open a new Throttle Window</li>
@@ -50,17 +46,13 @@
   <li><img src="images/Main_Throttle_toolbar_edit.png" width="50" height="49" alt="edit">Switch to or revert from Edit Throttle mode.</li>
   <li><img src="images/Main_Throttle_toolbar_list.png" width="48" height="51" alt="listr"> Opens the <a href="dp3_Main_Throttle_List.shtml">Local JMRI Window</a></li>
 </ul>
-<p>&nbsp;</p>
-<div>
-  <div align="right"></div>
-</div>
-<div> </div>
-<hr>
 
-<div align=right>
-<p><a href="dp3_Main_Throttle.shtml">Back </a></p>
+<div align="right">
+<a href="dp3_Main_Throttle.shtml">Back </a>
 </div>
 
 <!--#include virtual="/Footer" -->
-</body>
+  </div><!-- closes #mainContent-->
+ </div> <!-- closes #mBody-->
+ </body>
 </html>

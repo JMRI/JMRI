@@ -1,15 +1,13 @@
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
 <html lang="en">
 <head>
-<!-- Copyright Bob Jacobsen 2008 -->
-<!-- $Id$ -->
 <title>JMRI: Getting Started with Scripting</title>
 
 <!-- Style -->
 <meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
 <link rel="stylesheet" type="text/css" href="/css/default.css" media="screen">
 <link rel="stylesheet" type="text/css" href="/css/print.css" media="print">
-<link rel="icon" href="/images/jmri.ico" TYPE="image/png">
+<link rel="icon" href="/images/jmri.ico" type="image/png">
 <link rel="home" title="Home" href="/">
 <!-- /Style -->
 </head>
@@ -21,47 +19,49 @@
 <div id="mainContent">
 
 <!-- Page Body -->
-<H2>
+<h1>
 JMRI: Getting Started with Scripting
-</H2>
+</h1>
 
-<h3>Running "Hello World"</h3>
+<h2>Running "Hello World"</h2>
 There are several ways to use Python scripts with JMRI.
 The easiest is to use the built-in support in the standard JMRI
-applications: PanelPro, DecoderPro, etc.  To do that:
-<UL>
-<LI>From the "Panels" menu, select "Script Entry". This will give
-you a window where you can type one or more commands to execute.  
-(Note that it might take a little while the first time you do this
-as the program finds it's libraries; it will be faster the next time)
-The commands stay
-in the window, so you can edit them and rerun them until you like them.
-<LI>From the "Panels" menu, select "Script Output".  This creates a
-window that shows the output from the script commands you issue.
-<LI>To see this in operation, type
-<PRE>
-print "Hello World"
-</PRE>
-in the input window, and click "Execute". You should see the output in the Script Output
-window immediately:
-<pre>
->>> print "Hello World"
-Hello World
-</pre>
-<LI>Python also evaluates expressions, etc. Remove the 
-contents of the input window (select it and hit delete), and enter
-<pre>
-print 1+2
-</pre>
-then click execute.  
-The output window should then show something like:
-<pre>
->>> print 1+2
-3
-</pre>
-</ul>
+applications: PanelPro, DecoderPro, etc.<br>
+To do that:
+	<ul>
+	<li><a href="../../../package/jmri/jmrit/beantable/jmriScriptWindow.png"><img src="../../../package/jmri/jmrit/beantable/jmriScriptWindow.png" 
+	width="250" height="136" align="right"></a>From the "Panels" menu, select "Script Entry". This will give
+	you a window where you can type one or more commands to execute.  
+	(Note that it might take a little while the first time you do this
+	as the program finds its libraries; it will be faster the next time)
+	The commands stay
+	in the window, so you can edit them and rerun them until you like them.
+	<li>From the "Panels" menu, select "Script Output". This creates a
+	window that shows the output from the script commands you issue.
+	<li>To see this in operation, type
+	<pre>
+	print "Hello World"
+	</pre>
+	in the input window, and click "Execute". You should see the output in the Script Output
+	window immediately:
+	<pre>
+	>>> print "Hello World"
+	Hello World
+	</pre>
+	<li>Python also evaluates expressions, etc. Remove the 
+	contents of the input window (select it and hit delete), and enter
+	<pre>
+	print 1+2
+	</pre>
+	then click execute.  
+	The output window should then show something like:
+	<pre>
+	>>> print 1+2
+	3
+	</pre>
+	</ul>
 
-<h3>Sample layout commands</h3>
+<h2>Sample layout commands</h2>
 
 <pre>
 
@@ -80,105 +80,105 @@ The output window should then show something like:
 >>> turnouts.provideTurnout("1").getCommandedState()
 1
 
-</PRE>
+</pre>
 
 Note that this is running a complete version of the JMRI application;
 all of the windows and menus are presented the same way, configuration is
 done by the preferences panel, etc. What the Jython connection adds is a 
 command line from which you can directly manipulate things.
 
-<BR/>This also shows some of the simplifications that
+<p>This also shows some of the simplifications that
 Jython and the Python language brings to using JMRI code.  The
 Java member function:
-<PRE>
+<pre>
 	turnout.SetCommandedState(jmri.Turnout.CLOSED);
-</PRE>
+</pre>
 can also be expressed in Jython as:
-<PRE>
+<pre>
 	turnout.commandedState = CLOSED
-</PRE>
-<BR/>
+</pre>
+<p>
 This results in much easier-to-read code.
-<P>
+<p>
 There are a lot of useful Python books and 
 online tutorials.
 For more information on the Jython language and it's 
 relations with Java, the best reference is the
-<A HREF="http://www.oreilly.com/catalog/jythoness/">Jython Essentials</a>
+<a href="http://www.oreilly.com/catalog/jythoness/">Jython Essentials</a>
 book published by O'Reilly.  The 
-<A HREF="http://www.jython.org/">jython.org web site</a> is also very useful.
+<a href="http://www.jython.org/">jython.org web site</a> is also very useful.
 
 
 <h3>Access to JMRI</h3>
 
 JMRI uses the factory-pattern extensively to get access to 
 objects.  In Java this results in verbose code like
-<PRE>
+<pre>
    Turnout t2 = InstanceManager.turnoutManagerInstance().newTurnout("LT2", "turnout 2");
    t2.SetCommandedState(Turnout.THROWN)
-</PRE>
+</pre>
 Jython simplifies that by allowing us to provide useful variables,
 and by shortening certain method calls.
-<P>
+<p>
 To get access to the SignalHead, Sensor and Turnout managers and
 the CommandStation object,
 several shortcut variables are defined:
-<UL>
-<LI>sensors
-<LI>turnouts
-<LI>lights
-<LI>signals (SignalHeads)
-<li>masts (SignalMasts)
-<LI>routes
-<li>blocks
-<LI>reporters
-<LI>memories
-<LI>powermanager
-<LI>programmers
-<LI>dcc   (current command station)
-<li>shutdown (current shutdown manager)
-<li>audio
-</UL>
+	<ul>
+	<li>sensors
+	<li>turnouts
+	<li>lights
+	<li>signals (SignalHeads)
+	<li>masts (SignalMasts)
+	<li>routes
+	<li>blocks
+	<li>reporters
+	<li>memories
+	<li>powermanager
+	<li>programmers
+	<li>dcc (current command station)
+	<li>shutdown (current shutdown manager)
+	<li>audio
+	</ul>
 These can then be referenced directly in Jython as
-<PRE>
+<pre>
    t2 = turnouts.provideTurnout("12");
    
    dcc.sendPacket(new byte[]{0x12, 0x32, 0x4E}, 5)
-</PRE>
+</pre>
 Note that the variable t2 did not need to be declared.
-<P>
+<p>
 Jython provides a shortcut for parameters that have 
 been defined with Java-Bean-like get and set methods:
-<PRE>
+<pre>
    t2.SetCommandedState(Turnout.THROWN)
-</PRE>
+</pre>
 can be written as
-<PRE>
+<pre>
    t2.commandedState = THROWN
-</PRE>
+</pre>
 where the assignment is actually invoking the set method.
 Also note that THROWN was defined when running the Python script
 at startup; CLOSED, ACTIVE, INACTIVE, RED, YELLOW and GREEN are
 also defined.  (The shortcuts are all defined in a 
 file called "jmri_defaults.py" that you can find in the "jython"
 directory of the distribution)
-<P>
+<p>
 A similar mechanism can be used to check the state of something:
-<PRE>
+<pre>
 >>> print sensors.provideSensor("3").knownState == ACTIVE 
 1
 >>> print sensors.provideSensor("3").knownState == INACTIVE
 0
-</PRE>
+</pre>
 Note that Jython uses "1" to indicate true, and "0" to indicate
 false, so sensor 3 is currently active in this example. You can also
 use the symbols "True" and "False" respectively.
-<P>
+<p>
 You can directly invoke more complicated methods, e.g. to send a DCC
 packet to the rails you type:
-<PRE>   
+<pre>   
    dcc.sendPacket([0x01, 0x03, 0xbb], 4) 
-</PRE>
+</pre>
 This sends that three-byte packet four times, and then returns to the
 command line.
 
@@ -189,7 +189,7 @@ to type the commands each time.  So you can put scripts in a
 text file and execute them by selecting the "Run Script..." menu item,
 or by using the "Advanced Preferences" to run the script file when 
 the program starts.
-<P>
+<p>
 Although the statements we showed above were so fast you couldn't
 see it, the rest of the program was waiting while you run these samples.
 This is not a problem for a couple statements, or for a script file that 
@@ -198,7 +198,7 @@ quits.  But you might want things to happen over a longer period,
 or perhaps even wait until something happens on the layout before some
 part of your script runs.  For example, you might want to reverse a 
 locomotive when some sensor indicates it's reached the end of the track.
-<P>
+<p>
 There are a couple of ways to do this.  First, your script could
 define a "listener", and attach it to a particular sensor, turnout, etc.
 A listener is a small subroutine which gets called when whatever it's attached to
@@ -208,7 +208,7 @@ from closed to thrown.  The subroutine can then look around, decide what to
 do, and execute the necessary commands.  When the subroutine returns,
 the rest of the program then continues until the listened-to object
 has it's state change again, when the process repeats.
-<P>
+<p>
 For more complicated things, where you really want your script code
 to be free-running within the program, you define a "class" that does
 what you want.  In short form, this gives you a way to have independent
@@ -216,5 +216,7 @@ code to run inside the program.  But don't worry about this until you've
 got some more experience with scripting.
 
 <!--#include virtual="/Footer" -->
+    </div><!-- closes #mainContent-->
+  </div> <!-- closes #mBody-->
 </body>
 </html>

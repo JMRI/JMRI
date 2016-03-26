@@ -1,17 +1,13 @@
-// OlcbThrottleManagerTest.java
 package jmri.jmrix.openlcb;
 
 import junit.framework.Test;
 import junit.framework.TestCase;
 import junit.framework.TestSuite;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 
 /**
  * Tests for the jmri.jmrix.openlcb.OlcbThrottleManager class.
  *
  * @author	Bob Jacobsen Copyright 2008, 2010, 2011
- * @version $Revision$
  */
 public class OlcbThrottleManagerTest extends TestCase {
 
@@ -34,8 +30,6 @@ public class OlcbThrottleManagerTest extends TestCase {
         TestSuite suite = new TestSuite(OlcbThrottleManagerTest.class);
         return suite;
     }
-
-    static Logger log = LoggerFactory.getLogger(OlcbThrottleManagerTest.class.getName());
 
     // The minimal setup for log4J
     protected void setUp() {

@@ -1,15 +1,16 @@
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
-<html lang="en"><head><!-- Copyright ($Author$) 2009 --><!-- $Id$ -->
+<html lang="en">
+<head>
+<title>DecoderPro Throttle</title>
 
-
-
-
-
-<title>DecoderPro Throttle</title><!-- Style --><meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
+<!-- Style -->
+<meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
 <link rel="stylesheet" type="text/css" href="/css/default.css" media="screen">
 <link rel="stylesheet" type="text/css" href="/css/print.css" media="print">
 <link rel="icon" href="/images/jmri.ico" type="image/png">
-<link rel="home" title="Home" href="/"><!-- /Style --></head>
+<link rel="home" title="Home" href="/">
+<!-- /Style -->
+</head>
 
 <body>
 <!--#include virtual="/Header" -->
@@ -19,7 +20,7 @@
 
 <a name="Top"></a>
 <h1>DecoderPro&reg; Main Window</h1>
-<h1>JMRI&reg; Throttle Window - Local JMRI&reg; Throttles</h1>
+<h2>JMRI&reg; Throttle Window - Local JMRI&reg; Throttles</h2>
 
 <div align="right">
 <p><a href="dp3_Main_Throttle.shtml">Back </a></p>
@@ -49,18 +50,16 @@
     <td><div align="center"><img src="images/Main_Tool_Throttle04.png" alt="icon4" height="43" width="42"></div></td>
     <td>Opens the Throttles preferences window</td>
   </tr>
-</tbody></table>
+</tbody>
+</table>
 
-<p>&nbsp;</p>
-<div>
-  <div align="right"></div>
-</div>
-<div> </div>
 <hr>
-
 <div align="right">
 <p><a href="dp3_Main_Throttle.shtml">Back </a></p>
 </div>
 
 <!--#include virtual="/Footer" -->
-</div></body></html>
+  </div><!-- closes #mainContent-->
+  </div> <!-- closes #mBody-->
+  </body>
+ </html>

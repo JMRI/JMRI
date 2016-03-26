@@ -2,8 +2,6 @@
 package jmri.jmrit.automat;
 
 import java.util.ArrayList;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 
 /**
  * A singlet providing access to information about existing Automat instances.
@@ -151,9 +149,6 @@ public class AutomatSummary {
         }
 
     }
-
-    // initialize logging
-    static Logger log = LoggerFactory.getLogger(AutomatSummary.class.getName());
 }
 
 /* @(#)AutomatSummary.java */

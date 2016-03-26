@@ -1,4 +1,3 @@
-// Llnmon.java
 package jmri.jmrix.loconet.locomon;
 
 import java.util.Locale;
@@ -42,7 +41,6 @@ import jmri.util.StringUtil;
  * <P>
  * @author Bob Jacobsen Copyright 2001, 2002, 2003
  * @author B. Milhaupt  Copyright 2015
- * @version $Revision$
  */
 public class Llnmon {
 
@@ -282,6 +280,8 @@ public class Llnmon {
                     } else {
                         turnoutUserName = "()";
                     }
+                } catch (RuntimeException e) {
+                    throw e;
                 } catch (Exception e) {
                     turnoutUserName = "()";
                 }
@@ -314,6 +314,8 @@ public class Llnmon {
                     } else {
                         turnoutUserName = "()";
                     }
+                } catch (RuntimeException e) {
+                    throw e;
                 } catch (Exception e) {
                     turnoutUserName = "()";
                 }
@@ -610,6 +612,8 @@ public class Llnmon {
                     } else {
                         sensorUserName = "()";
                     }
+                } catch (RuntimeException e) {
+                    throw e;
                 } catch (Exception e) {
                     sensorUserName = "()";
                 }
@@ -688,6 +692,8 @@ public class Llnmon {
                     } else {
                         turnoutUserName = "()";
                     }
+                } catch (RuntimeException e) {
+                    throw e;
                 } catch (Exception e) {
                     turnoutUserName = "()";
                 }
@@ -767,7 +773,7 @@ public class Llnmon {
                     int lval = (topbits << 6) + (midbits << 3) + 1;
                     int hval = lval + 7;
 
-                    if ((count % 8) > 0) {
+                    if ((count % 8) != 0) {
                         addrListB.append(", ");
                     } else {
                         if (count == 0) {
@@ -806,6 +812,8 @@ public class Llnmon {
                         } else {
                             turnoutUserName = "()";
                         }
+                    } catch (RuntimeException e) {
+                        throw e;
                     } catch (Exception e) {
                         turnoutUserName = "()";
                     }
@@ -1175,6 +1183,8 @@ public class Llnmon {
                             } else {
                                 reporterUserName = "()";
                             }
+                        } catch (RuntimeException e) {
+                            throw e;
                         } catch (Exception e) {
                             reporterUserName = "()";
                         }
@@ -1683,70 +1693,70 @@ public class Llnmon {
                      */
                     logString = mode
                             + " Comand Station OpSw that are Closed (non-default):\n"
-                            + ((l.getElement(3) & 0x01) > 0 ? "\tOpSw1=c, reserved.\n" : "")
-                            + ((l.getElement(3) & 0x02) > 0 ? "\tOpSw2=c, DCS100 booster only.\n" : "")
-                            + ((l.getElement(3) & 0x04) > 0 ? "\tOpSw3=c, Booster Autoreversing.\n" : "")
-                            + ((l.getElement(3) & 0x08) > 0 ? "\tOpSw4=c, reserved.\n" : "")
-                            + ((l.getElement(3) & 0x10) > 0 ? "\tOpSw5=c, Master Mode.\n" : "")
-                            + ((l.getElement(3) & 0x20) > 0 ? "\tOpSw6=c, reserved.\n" : "")
-                            + ((l.getElement(3) & 0x40) > 0 ? "\tOpSw7=c, reserved.\n" : "")
-                            // this bit implies an OpCode, so ignore it!                            + ((l.getElement(3) & 0x80) > 0 ? "\tOpSw8=c, reserved.\n" : "")
-                            + ((l.getElement(4) & 0x01) > 0 ? "\tOpSw9=c, Allow Motorola trinary echo 1-256.\n" : "")
-                            + ((l.getElement(4) & 0x02) > 0 ? "\tOpSw10=c, Expand trinary switch echo.\n" : "")
-                            + ((l.getElement(4) & 0x04) > 0 ? "\tOpSw11=c, Make certian trinary switches long duration.\n" : "")
-                            + ((l.getElement(4) & 0x08) > 0 ? "\tOpSw12=c, Trinary addresses 1-80 allowed.\n" : "")
-                            + ((l.getElement(4) & 0x10) > 0 ? "\tOpSw13=c, Raise loco address purge time to 600 seconds.\n" : "")
-                            + ((l.getElement(4) & 0x20) > 0 ? "\tOpSw14=c, Disable loco address purging.\n" : "")
-                            + ((l.getElement(4) & 0x40) > 0 ? "\tOpSw15=c, Purge will force loco to zero speed.\n" : "")
-                            // this bit implies an OpCode, so ignore it!                            + ((l.getElement(4) & 0x80) > 0 ? "\tOpSw16=c, reserved.\n" : "")
-                            + ((l.getElement(5) & 0x01) > 0 ? "\tOpSw17=c, Automatic advanced consists are disabled.\n" : "")
-                            + ((l.getElement(5) & 0x02) > 0 ? "\tOpSw18=c, Extend booster short shutdown to 1/2 second.\n" : "")
-                            + ((l.getElement(5) & 0x04) > 0 ? "\tOpSw19=c, reserved.\n" : "")
-                            + ((l.getElement(5) & 0x08) > 0 ? "\tOpSw20=c, Disable address 00 analog operation.\n" : "")
-                            + ((l.getElement(5) & 0x10) > 0 ? "\tOpSw21=c, Global default for new loco is FX.\n" : "")
-                            + ((l.getElement(5) & 0x20) > 0 ? "\tOpSw22=c, Global default for new loco is 28 step.\n" : "")
-                            + ((l.getElement(5) & 0x40) > 0 ? "\tOpSw23=c, Global default for new loco is 14 step.\n" : "")
-                            // this bit implies an OpCode, so ignore it!                            + ((l.getElement(5) & 0x80) > 0 ? "\tOpSw24=c, reserved.\n" : "")
-                            + ((l.getElement(6) & 0x01) > 0 ? "\tOpSw25=c, Disable aliasing.\n" : "")
-                            + ((l.getElement(6) & 0x02) > 0 ? "\tOpSw26=c, Enable routes.\n" : "")
-                            + ((l.getElement(6) & 0x04) > 0 ? "\tOpSw27=c, Disable normal switch commands (Bushby bit).\n" : "")
-                            + ((l.getElement(6) & 0x08) > 0 ? "\tOpSw28=c, Disable DS54/64/SE8C interrogate at power on.\n" : "")
-                            + ((l.getElement(6) & 0x10) > 0 ? "\tOpSw29=c, reserved.\n" : "")
-                            + ((l.getElement(6) & 0x20) > 0 ? "\tOpSw30=c, reserved.\n" : "")
-                            + ((l.getElement(6) & 0x40) > 0 ? "\tOpSw31=c, Meter route/switch output when not in trinary.\n" : "")
-                            // this bit implies an OpCode, so ignore it!                            + ((l.getElement(6) & 0x80) > 0 ? "\tOpSw32=c, reserved.\n" : "")
+                            + ((l.getElement(3) & 0x01) != 0 ? "\tOpSw1=c, reserved.\n" : "")
+                            + ((l.getElement(3) & 0x02) != 0 ? "\tOpSw2=c, DCS100 booster only.\n" : "")
+                            + ((l.getElement(3) & 0x04) != 0 ? "\tOpSw3=c, Booster Autoreversing.\n" : "")
+                            + ((l.getElement(3) & 0x08) != 0 ? "\tOpSw4=c, reserved.\n" : "")
+                            + ((l.getElement(3) & 0x10) != 0 ? "\tOpSw5=c, Master Mode.\n" : "")
+                            + ((l.getElement(3) & 0x20) != 0 ? "\tOpSw6=c, reserved.\n" : "")
+                            + ((l.getElement(3) & 0x40) != 0 ? "\tOpSw7=c, reserved.\n" : "")
+                            // this bit implies an OpCode, so ignore it!                            + ((l.getElement(3) & 0x80) != 0 ? "\tOpSw8=c, reserved.\n" : "")
+                            + ((l.getElement(4) & 0x01) != 0 ? "\tOpSw9=c, Allow Motorola trinary echo 1-256.\n" : "")
+                            + ((l.getElement(4) & 0x02) != 0 ? "\tOpSw10=c, Expand trinary switch echo.\n" : "")
+                            + ((l.getElement(4) & 0x04) != 0 ? "\tOpSw11=c, Make certian trinary switches long duration.\n" : "")
+                            + ((l.getElement(4) & 0x08) != 0 ? "\tOpSw12=c, Trinary addresses 1-80 allowed.\n" : "")
+                            + ((l.getElement(4) & 0x10) != 0 ? "\tOpSw13=c, Raise loco address purge time to 600 seconds.\n" : "")
+                            + ((l.getElement(4) & 0x20) != 0 ? "\tOpSw14=c, Disable loco address purging.\n" : "")
+                            + ((l.getElement(4) & 0x40) != 0 ? "\tOpSw15=c, Purge will force loco to zero speed.\n" : "")
+                            // this bit implies an OpCode, so ignore it!                            + ((l.getElement(4) & 0x80) != 0 ? "\tOpSw16=c, reserved.\n" : "")
+                            + ((l.getElement(5) & 0x01) != 0 ? "\tOpSw17=c, Automatic advanced consists are disabled.\n" : "")
+                            + ((l.getElement(5) & 0x02) != 0 ? "\tOpSw18=c, Extend booster short shutdown to 1/2 second.\n" : "")
+                            + ((l.getElement(5) & 0x04) != 0 ? "\tOpSw19=c, reserved.\n" : "")
+                            + ((l.getElement(5) & 0x08) != 0 ? "\tOpSw20=c, Disable address 00 analog operation.\n" : "")
+                            + ((l.getElement(5) & 0x10) != 0 ? "\tOpSw21=c, Global default for new loco is FX.\n" : "")
+                            + ((l.getElement(5) & 0x20) != 0 ? "\tOpSw22=c, Global default for new loco is 28 step.\n" : "")
+                            + ((l.getElement(5) & 0x40) != 0 ? "\tOpSw23=c, Global default for new loco is 14 step.\n" : "")
+                            // this bit implies an OpCode, so ignore it!                            + ((l.getElement(5) & 0x80) != 0 ? "\tOpSw24=c, reserved.\n" : "")
+                            + ((l.getElement(6) & 0x01) != 0 ? "\tOpSw25=c, Disable aliasing.\n" : "")
+                            + ((l.getElement(6) & 0x02) != 0 ? "\tOpSw26=c, Enable routes.\n" : "")
+                            + ((l.getElement(6) & 0x04) != 0 ? "\tOpSw27=c, Disable normal switch commands (Bushby bit).\n" : "")
+                            + ((l.getElement(6) & 0x08) != 0 ? "\tOpSw28=c, Disable DS54/64/SE8C interrogate at power on.\n" : "")
+                            + ((l.getElement(6) & 0x10) != 0 ? "\tOpSw29=c, reserved.\n" : "")
+                            + ((l.getElement(6) & 0x20) != 0 ? "\tOpSw30=c, reserved.\n" : "")
+                            + ((l.getElement(6) & 0x40) != 0 ? "\tOpSw31=c, Meter route/switch output when not in trinary.\n" : "")
+                            // this bit implies an OpCode, so ignore it!                            + ((l.getElement(6) & 0x80) != 0 ? "\tOpSw32=c, reserved.\n" : "")
                             // element 7 is skipped intentionally - it contains the "Track Status" byte
-                            + ((l.getElement(8) & 0x01) > 0 ? "\tOpSw33=c, Restore track power to previous state at power on.\n" : "")
-                            + ((l.getElement(8) & 0x02) > 0 ? "\tOpSw34=c, Allow track to power up to run state.\n" : "")
-                            + ((l.getElement(8) & 0x04) > 0 ? "\tOpSw35=c, reserved.\n" : "")
-                            + ((l.getElement(8) & 0x08) > 0 ? "\tOpSw36=c, Clear all moble decoder information and consists.\n" : "")
-                            + ((l.getElement(8) & 0x10) > 0 ? "\tOpSw37=c, Clear all routes.\n" : "")
-                            + ((l.getElement(8) & 0x20) > 0 ? "\tOpSw38=c, Clear loco roster.\n" : "")
-                            + ((l.getElement(8) & 0x40) > 0 ? "\tOpSw39=c, Clear internal memory.\n" : "")
-                            // this bit implies an OpCode, so ignore it!                            + ((l.getElement(8) & 0x80) > 0 ? "\tOpSw40=c, reserved.\n" : "")
-                            + ((l.getElement(9) & 0x01) > 0 ? "\tOpSw41=c, Diagnostic click when LocoNet command is received.\n" : "")
-                            + ((l.getElement(9) & 0x02) > 0 ? "\tOpSw42=c, Disable 3 beeps when loco address is purged.\n" : "")
-                            + ((l.getElement(9) & 0x04) > 0 ? "\tOpSw43=c, Disable LocoNet update of track status.\n" : "")
-                            + ((l.getElement(9) & 0x08) > 0 ? "\tOpSw44=c, Expand slots to 120.\n" : "")
-                            + ((l.getElement(9) & 0x10) > 0 ? "\tOpSw45=c, Disable replay for switch state request.\n" : "")
-                            + ((l.getElement(9) & 0x20) > 0 ? "\tOpSw46=c, reserved.\n" : "")
-                            + ((l.getElement(9) & 0x40) > 0 ? "\tOpSw47=c, Programming track is break generator.\n" : "")
-                            // this bit implies an OpCode, so ignore it!                            + ((l.getElement(9) & 0x80) > 0 ? "\tOpSw48=c, reserved.\n" : "")
-                            + ((l.getElement(10) & 0x01) > 0 ? "\tOpSw49=c, reserved.\n" : "")
-                            + ((l.getElement(10) & 0x02) > 0 ? "\tOpSw50=c, reserved.\n" : "")
-                            + ((l.getElement(10) & 0x04) > 0 ? "\tOpSw51=c, reserved.\n" : "")
-                            + ((l.getElement(10) & 0x08) > 0 ? "\tOpSw52=c, reserved.\n" : "")
-                            + ((l.getElement(10) & 0x10) > 0 ? "\tOpSw53=c, reserved.\n" : "")
-                            + ((l.getElement(10) & 0x20) > 0 ? "\tOpSw54=c, reserved.\n" : "")
-                            + ((l.getElement(10) & 0x40) > 0 ? "\tOpSw55=c, reserved.\n" : "")
-                            // this bit implies an OpCode, so ignore it!                            + ((l.getElement(10) & 0x80) > 0 ? "\tOpSw56=c, reserved.\n" : "")
-                            + ((l.getElement(11) & 0x01) > 0 ? "\tOpSw57=c, reserved.\n" : "")
-                            + ((l.getElement(11) & 0x02) > 0 ? "\tOpSw58=c, reserved.\n" : "")
-                            + ((l.getElement(11) & 0x04) > 0 ? "\tOpSw59=c, reserved.\n" : "")
-                            + ((l.getElement(11) & 0x08) > 0 ? "\tOpSw60=c, reserved.\n" : "")
-                            + ((l.getElement(11) & 0x10) > 0 ? "\tOpSw61=c, reserved.\n" : "")
-                            + ((l.getElement(11) & 0x20) > 0 ? "\tOpSw62=c, reserved.\n" : "")
-                            + ((l.getElement(11) & 0x40) > 0 ? "\tOpSw63=c, reserved.\n" : "") // this bit implies an OpCode, so ignore it!                            + ((l.getElement(11) & 0x80) > 0 ? "\tOpSw64=c, reserved.\n" : "")
+                            + ((l.getElement(8) & 0x01) != 0 ? "\tOpSw33=c, Restore track power to previous state at power on.\n" : "")
+                            + ((l.getElement(8) & 0x02) != 0 ? "\tOpSw34=c, Allow track to power up to run state.\n" : "")
+                            + ((l.getElement(8) & 0x04) != 0 ? "\tOpSw35=c, reserved.\n" : "")
+                            + ((l.getElement(8) & 0x08) != 0 ? "\tOpSw36=c, Clear all moble decoder information and consists.\n" : "")
+                            + ((l.getElement(8) & 0x10) != 0 ? "\tOpSw37=c, Clear all routes.\n" : "")
+                            + ((l.getElement(8) & 0x20) != 0 ? "\tOpSw38=c, Clear loco roster.\n" : "")
+                            + ((l.getElement(8) & 0x40) != 0 ? "\tOpSw39=c, Clear internal memory.\n" : "")
+                            // this bit implies an OpCode, so ignore it!                            + ((l.getElement(8) & 0x80) != 0 ? "\tOpSw40=c, reserved.\n" : "")
+                            + ((l.getElement(9) & 0x01) != 0 ? "\tOpSw41=c, Diagnostic click when LocoNet command is received.\n" : "")
+                            + ((l.getElement(9) & 0x02) != 0 ? "\tOpSw42=c, Disable 3 beeps when loco address is purged.\n" : "")
+                            + ((l.getElement(9) & 0x04) != 0 ? "\tOpSw43=c, Disable LocoNet update of track status.\n" : "")
+                            + ((l.getElement(9) & 0x08) != 0 ? "\tOpSw44=c, Expand slots to 120.\n" : "")
+                            + ((l.getElement(9) & 0x10) != 0 ? "\tOpSw45=c, Disable replay for switch state request.\n" : "")
+                            + ((l.getElement(9) & 0x20) != 0 ? "\tOpSw46=c, reserved.\n" : "")
+                            + ((l.getElement(9) & 0x40) != 0 ? "\tOpSw47=c, Programming track is break generator.\n" : "")
+                            // this bit implies an OpCode, so ignore it!                            + ((l.getElement(9) & 0x80) != 0 ? "\tOpSw48=c, reserved.\n" : "")
+                            + ((l.getElement(10) & 0x01) != 0 ? "\tOpSw49=c, reserved.\n" : "")
+                            + ((l.getElement(10) & 0x02) != 0 ? "\tOpSw50=c, reserved.\n" : "")
+                            + ((l.getElement(10) & 0x04) != 0 ? "\tOpSw51=c, reserved.\n" : "")
+                            + ((l.getElement(10) & 0x08) != 0 ? "\tOpSw52=c, reserved.\n" : "")
+                            + ((l.getElement(10) & 0x10) != 0 ? "\tOpSw53=c, reserved.\n" : "")
+                            + ((l.getElement(10) & 0x20) != 0 ? "\tOpSw54=c, reserved.\n" : "")
+                            + ((l.getElement(10) & 0x40) != 0 ? "\tOpSw55=c, reserved.\n" : "")
+                            // this bit implies an OpCode, so ignore it!                            + ((l.getElement(10) & 0x80) != 0 ? "\tOpSw56=c, reserved.\n" : "")
+                            + ((l.getElement(11) & 0x01) != 0 ? "\tOpSw57=c, reserved.\n" : "")
+                            + ((l.getElement(11) & 0x02) != 0 ? "\tOpSw58=c, reserved.\n" : "")
+                            + ((l.getElement(11) & 0x04) != 0 ? "\tOpSw59=c, reserved.\n" : "")
+                            + ((l.getElement(11) & 0x08) != 0 ? "\tOpSw60=c, reserved.\n" : "")
+                            + ((l.getElement(11) & 0x10) != 0 ? "\tOpSw61=c, reserved.\n" : "")
+                            + ((l.getElement(11) & 0x20) != 0 ? "\tOpSw62=c, reserved.\n" : "")
+                            + ((l.getElement(11) & 0x40) != 0 ? "\tOpSw63=c, reserved.\n" : "") // this bit implies an OpCode, so ignore it!                            + ((l.getElement(11) & 0x80) != 0 ? "\tOpSw64=c, reserved.\n" : "")
                             ;
                 } else {
                     /**
@@ -2009,11 +2019,11 @@ public class Llnmon {
                         if (dst_h == 0x01 && ((pxct1 & 0xF0) == 0x00)
                                 && ((pxct2 & 0xF0) == 0x00)) {
                             // (Jabour/Deloof LocoIO), SV Programming messages format 1
-                            String src_subaddrx = ((d[4] != 0) ? "/" + Integer.toHexString(d[4]) : "");
-                            String dst_subaddrx = (dst_h != 0x01 ? "" : ((d[4] != 0) ? "/" + Integer.toHexString(d[4]) : ""));
+                            String src_subaddrx = ((d[4] != 0) ? "/" + Integer.toHexString(d[4]) : ""); // should this be same as next line?
+                            String dst_subaddrx = ((d[4] != 0) ? "/" + Integer.toHexString(d[4]) : "");
 
                             String src_dev = ((src == 0x50) ? "Locobuffer" : "LocoIO@" + "0x" + Integer.toHexString(src) + src_subaddrx);
-                            String dst_dev = (((dst_h == 0x01) && (dst_l == 0x50)) ? "LocoBuffer "
+                            String dst_dev = ((dst_l == 0x50) ? "LocoBuffer "   // dst_h == 1 known to be true
                                     : (((dst_h == 0x01) && (dst_l == 0x0)) ? "broadcast"
                                             : "LocoIO@0x" + Integer.toHexString(dst_l) + dst_subaddrx));
                             String operation = (src == 0x50)
@@ -2021,7 +2031,7 @@ public class Llnmon {
                                     : ((d[0] == 2) ? "Report" : "Write");
 
                             return src_dev + "=> " + dst_dev + " "
-                                    + ((dst_h == 0x01) ? (operation + " SV" + d[1]) : "")
+                                    + operation + " SV" + d[1]
                                     + ((src == 0x50) ? (d[0] != 2 ? ("=0x" + Integer.toHexString(d[3])) : "")
                                             : " = " + ((d[0] == 2) ? ((d[2] != 0) ? (d[5] < 10) ? "" + d[5]
                                                                     : d[5] + " (0x" + Integer.toHexString(d[5]) + ")"
@@ -2033,7 +2043,7 @@ public class Llnmon {
                         }
                         // check for a specific type - SV Programming messages format 2
                         // (New Designs)
-                        String svReply = new String("");
+                        String svReply = "";
                         jmri.jmrix.loconet.lnsvf2.LnSv2MessageContents svmc = null;
                         try {
                             svmc =
@@ -2703,7 +2713,7 @@ public class Llnmon {
                                         String SlaveType = getSlaveNameFromIPLInfo(l.getElement(4), l.getElement(6));
                                         String SlaveVer = "";
                                         String SlaveSN = "";
-                                        if (l.getElement(6) > 0) {
+                                        if (l.getElement(6) != 0) {
                                             SlaveVer = (((l.getElement(10) & 0x78) >> 3) + ((l.getElement(9) & 1) << 4)) + "." + ((l.getElement(10) & 0x7));
                                             int slaveSnInt
                                                     = ((l.getElement(15) + (((l.getElement(14) & 0x1) == 1) ? 128 : 0)))
@@ -2867,6 +2877,8 @@ public class Llnmon {
                                     } else {
                                         reporterUserName = "()";
                                     }
+                                } catch (RuntimeException e) {
+                                    throw e;
                                 } catch (Exception e) {
                                     reporterUserName = "()";
                                 }
@@ -3113,51 +3125,51 @@ public class Llnmon {
                             // Functions 21-28
                             return "Send packet immediate: Locomotive " + address
                                     + " set" + " F21="
-                                    + ((packetInt[3] & 0x01) > 0 ? "On" : "Off")
+                                    + ((packetInt[3] & 0x01) != 0 ? "On" : "Off")
                                     + ", F22="
-                                    + ((packetInt[3] & 0x02) > 0 ? "On" : "Off")
+                                    + ((packetInt[3] & 0x02) != 0 ? "On" : "Off")
                                     + ", F23="
-                                    + ((packetInt[3] & 0x04) > 0 ? "On" : "Off")
+                                    + ((packetInt[3] & 0x04) != 0 ? "On" : "Off")
                                     + ", F24="
-                                    + ((packetInt[3] & 0x08) > 0 ? "On" : "Off")
+                                    + ((packetInt[3] & 0x08) != 0 ? "On" : "Off")
                                     + ", F25="
-                                    + ((packetInt[3] & 0x10) > 0 ? "On" : "Off")
+                                    + ((packetInt[3] & 0x10) != 0 ? "On" : "Off")
                                     + ", F26="
-                                    + ((packetInt[3] & 0x20) > 0 ? "On" : "Off")
+                                    + ((packetInt[3] & 0x20) != 0 ? "On" : "Off")
                                     + ", F27="
-                                    + ((packetInt[3] & 0x40) > 0 ? "On" : "Off")
+                                    + ((packetInt[3] & 0x40) != 0 ? "On" : "Off")
                                     + ", F28="
-                                    + ((packetInt[3] & 0x80) > 0 ? "On" : "Off") + "\n";
+                                    + ((packetInt[3] & 0x80) != 0 ? "On" : "Off") + "\n";
                         } else if ((packetInt[2] & 0xFF) == 0xDE) {
                             // Functions 13-20
                             return "Send packet immediate: Locomotive " + address
                                     + " set" + " F13="
-                                    + ((packetInt[3] & 0x01) > 0 ? "On" : "Off")
+                                    + ((packetInt[3] & 0x01) != 0 ? "On" : "Off")
                                     + ", F14="
-                                    + ((packetInt[3] & 0x02) > 0 ? "On" : "Off")
+                                    + ((packetInt[3] & 0x02) != 0 ? "On" : "Off")
                                     + ", F15="
-                                    + ((packetInt[3] & 0x04) > 0 ? "On" : "Off")
+                                    + ((packetInt[3] & 0x04) != 0 ? "On" : "Off")
                                     + ", F16="
-                                    + ((packetInt[3] & 0x08) > 0 ? "On" : "Off")
+                                    + ((packetInt[3] & 0x08) != 0 ? "On" : "Off")
                                     + ", F17="
-                                    + ((packetInt[3] & 0x10) > 0 ? "On" : "Off")
+                                    + ((packetInt[3] & 0x10) != 0 ? "On" : "Off")
                                     + ", F18="
-                                    + ((packetInt[3] & 0x20) > 0 ? "On" : "Off")
+                                    + ((packetInt[3] & 0x20) != 0 ? "On" : "Off")
                                     + ", F19="
-                                    + ((packetInt[3] & 0x40) > 0 ? "On" : "Off")
+                                    + ((packetInt[3] & 0x40) != 0 ? "On" : "Off")
                                     + ", F20="
-                                    + ((packetInt[3] & 0x80) > 0 ? "On" : "Off") + "\n";
+                                    + ((packetInt[3] & 0x80) != 0 ? "On" : "Off") + "\n";
                         } else if ((packetInt[2] & 0xF0) == 0xA0) {
                             // Functions 8-12
                             return "Send packet immediate: Locomotive " + address
                                     + " set" + ", F09="
-                                    + ((packetInt[2] & 0x01) > 0 ? "On" : "Off")
+                                    + ((packetInt[2] & 0x01) != 0 ? "On" : "Off")
                                     + ", F10="
-                                    + ((packetInt[2] & 0x02) > 0 ? "On" : "Off")
+                                    + ((packetInt[2] & 0x02) != 0 ? "On" : "Off")
                                     + ", F11="
-                                    + ((packetInt[2] & 0x04) > 0 ? "On" : "Off")
+                                    + ((packetInt[2] & 0x04) != 0 ? "On" : "Off")
                                     + ", F12="
-                                    + ((packetInt[2] & 0x08) > 0 ? "On" : "Off") + "\n";
+                                    + ((packetInt[2] & 0x08) != 0 ? "On" : "Off") + "\n";
                         } else {
                             // Unknown
                             return generic + jmri.NmraPacket.format(packet) + "\n";
@@ -3168,51 +3180,51 @@ public class Llnmon {
                             // Functions 21-28
                             return "Send packet immediate: Locomotive " + address
                                     + " set" + " F21="
-                                    + ((packetInt[2] & 0x01) > 0 ? "On" : "Off")
+                                    + ((packetInt[2] & 0x01) != 0 ? "On" : "Off")
                                     + ", F22="
-                                    + ((packetInt[2] & 0x02) > 0 ? "On" : "Off")
+                                    + ((packetInt[2] & 0x02) != 0 ? "On" : "Off")
                                     + ", F23="
-                                    + ((packetInt[2] & 0x04) > 0 ? "On" : "Off")
+                                    + ((packetInt[2] & 0x04) != 0 ? "On" : "Off")
                                     + ", F24="
-                                    + ((packetInt[2] & 0x08) > 0 ? "On" : "Off")
+                                    + ((packetInt[2] & 0x08) != 0 ? "On" : "Off")
                                     + ", F25="
-                                    + ((packetInt[2] & 0x10) > 0 ? "On" : "Off")
+                                    + ((packetInt[2] & 0x10) != 0 ? "On" : "Off")
                                     + ", F26="
-                                    + ((packetInt[2] & 0x20) > 0 ? "On" : "Off")
+                                    + ((packetInt[2] & 0x20) != 0 ? "On" : "Off")
                                     + ", F27="
-                                    + ((packetInt[2] & 0x40) > 0 ? "On" : "Off")
+                                    + ((packetInt[2] & 0x40) != 0 ? "On" : "Off")
                                     + ", F28="
-                                    + ((packetInt[2] & 0x80) > 0 ? "On" : "Off") + "\n";
+                                    + ((packetInt[2] & 0x80) != 0 ? "On" : "Off") + "\n";
                         } else if ((packetInt[1] & 0xFF) == 0xDE) {
                             // Functions 13-20
                             return "Send packet immediate: Locomotive " + address
                                     + " set" + " F13="
-                                    + ((packetInt[2] & 0x01) > 0 ? "On" : "Off")
+                                    + ((packetInt[2] & 0x01) != 0 ? "On" : "Off")
                                     + ", F14="
-                                    + ((packetInt[2] & 0x02) > 0 ? "On" : "Off")
+                                    + ((packetInt[2] & 0x02) != 0 ? "On" : "Off")
                                     + ", F15="
-                                    + ((packetInt[2] & 0x04) > 0 ? "On" : "Off")
+                                    + ((packetInt[2] & 0x04) != 0 ? "On" : "Off")
                                     + ", F16="
-                                    + ((packetInt[2] & 0x08) > 0 ? "On" : "Off")
+                                    + ((packetInt[2] & 0x08) != 0 ? "On" : "Off")
                                     + ", F17="
-                                    + ((packetInt[2] & 0x10) > 0 ? "On" : "Off")
+                                    + ((packetInt[2] & 0x10) != 0 ? "On" : "Off")
                                     + ", F18="
-                                    + ((packetInt[2] & 0x20) > 0 ? "On" : "Off")
+                                    + ((packetInt[2] & 0x20) != 0 ? "On" : "Off")
                                     + ", F19="
-                                    + ((packetInt[2] & 0x40) > 0 ? "On" : "Off")
+                                    + ((packetInt[2] & 0x40) != 0 ? "On" : "Off")
                                     + ", F20="
-                                    + ((packetInt[2] & 0x80) > 0 ? "On" : "Off") + "\n";
+                                    + ((packetInt[2] & 0x80) != 0 ? "On" : "Off") + "\n";
                         } else if ((packetInt[1] & 0xF0) == 0xA0) {
                             // Functions 8-12
                             return "Send packet immediate: Locomotive " + address
                                     + " set" + " F09="
-                                    + ((packetInt[1] & 0x01) > 0 ? "On" : "Off")
+                                    + ((packetInt[1] & 0x01) != 0 ? "On" : "Off")
                                     + ", F10="
-                                    + ((packetInt[1] & 0x02) > 0 ? "On" : "Off")
+                                    + ((packetInt[1] & 0x02) != 0 ? "On" : "Off")
                                     + ", F11="
-                                    + ((packetInt[1] & 0x04) > 0 ? "On" : "Off")
+                                    + ((packetInt[1] & 0x04) != 0 ? "On" : "Off")
                                     + ", F12="
-                                    + ((packetInt[1] & 0x08) > 0 ? "On" : "Off") + "\n";
+                                    + ((packetInt[1] & 0x08) != 0 ? "On" : "Off") + "\n";
                         } else {
                             // Unknown
                             return generic + jmri.NmraPacket.format(packet) + "\n";
@@ -3334,7 +3346,7 @@ public class Llnmon {
                         s.append(" F");
                         s.append(funcOffset + i);
                         s.append("=");
-                        s.append(((l.getElement(4) & mask) > 0) ? "On" : "Off");
+                        s.append(((l.getElement(4) & mask) != 0) ? "On" : "Off");
                         mask *= 2;
                     }
                     s.append("\n");
@@ -3363,7 +3375,7 @@ public class Llnmon {
                         s.append(" F");
                         s.append(1 + i);
                         s.append("=");
-                        s.append(((l.getElement(4) & mask) > 0) ? "On" : "Off");
+                        s.append(((l.getElement(4) & mask) != 0) ? "On" : "Off");
                         mask *= 2;
                     }
                     s.append("\n");
@@ -3453,6 +3465,4 @@ public class Llnmon {
         locoNetReporterPrefix = reporterManager.getSystemPrefix() + "R";
     }
 
-}  // end of public class Llnmon
-
-/* @(#)Llnmon.java */
+}

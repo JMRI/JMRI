@@ -34,11 +34,4 @@ public class ConnectionConfig extends jmri.jmrix.AbstractSimulatorConnectionConf
             adapter = new LnHexFilePort();
         }
     }
-
-    public void dispose() {
-        if (adapter != null) {
-            adapter.dispose();
-        }
-        super.dispose();
-    }
 }

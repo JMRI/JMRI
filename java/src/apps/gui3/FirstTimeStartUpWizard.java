@@ -1,5 +1,6 @@
 package apps.gui3;
 
+import apps.gui.GuiLafPreferencesManager;
 import java.awt.BorderLayout;
 import java.awt.Component;
 import java.awt.Cursor;
@@ -24,8 +25,12 @@ import javax.swing.JTextArea;
 import javax.swing.JTextField;
 import javax.swing.border.BevelBorder;
 import jmri.Application;
-import jmri.jmrit.roster.RosterEntry;
+import jmri.InstanceManager;
+import jmri.jmrit.roster.RosterConfigManager;
+import jmri.jmrix.AbstractConnectionConfig;
+import jmri.jmrix.ConnectionConfig;
 import jmri.jmrix.JmrixConfigPane;
+import jmri.jmrix.PortAdapter;
 import jmri.util.FileUtil;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -125,7 +130,7 @@ public class FirstTimeStartUpWizard {
         p2.setLayout(new FlowLayout());
         p2.add(new JLabel(/*rb.getString("LabelDefaultOwner")*/"Default Owner"));
 
-        owner.setText(RosterEntry.getDefaultOwner());
+        owner.setText(InstanceManager.getDefault(RosterConfigManager.class).getDefaultOwner());
         if (owner.getText().equals("")) {
             owner.setText(System.getProperty("user.name"));
         }
@@ -262,11 +267,11 @@ public class FirstTimeStartUpWizard {
         public void run() {
             Cursor hourglassCursor = new Cursor(Cursor.WAIT_CURSOR);
             parent.setCursor(hourglassCursor);
-            Object connect = JmrixConfigPane.instance(0).getCurrentObject();
-            jmri.InstanceManager.configureManagerInstance().registerPref(connect);
+            ConnectionConfig connect = JmrixConfigPane.instance(0).getCurrentObject();
+            InstanceManager.configureManagerInstance().registerPref(connect);
             if (connect instanceof jmri.jmrix.AbstractConnectionConfig) {
-                ((jmri.jmrix.AbstractConnectionConfig) connect).updateAdapter();
-                jmri.jmrix.PortAdapter adp = ((jmri.jmrix.AbstractConnectionConfig) connect).getAdapter();
+                ((AbstractConnectionConfig) connect).updateAdapter();
+                PortAdapter adp = connect.getAdapter();
                 try {
                     adp.connect();
                     adp.configure();
@@ -274,16 +279,17 @@ public class FirstTimeStartUpWizard {
                     log.error(ex.getLocalizedMessage(), ex);
                     Cursor normalCursor = new Cursor(Cursor.DEFAULT_CURSOR);
                     parent.setCursor(normalCursor);
-                    JOptionPane.showMessageDialog(null, "An error occured while trying to connect to " + ((jmri.jmrix.AbstractConnectionConfig) connect).getConnectionName() + ", press the back button and check the connection details", "Error Opening Connection", JOptionPane.ERROR_MESSAGE);
+                    JOptionPane.showMessageDialog(null,
+                            "An error occured while trying to connect to " + connect.getConnectionName() + ", press the back button and check the connection details",
+                            "Error Opening Connection",
+                            JOptionPane.ERROR_MESSAGE);
                     return;
                 }
             }
-            RosterEntry.setDefaultOwner(owner.getText());
-            jmri.InstanceManager.tabbedPreferencesInstance().init();
-            jmri.InstanceManager.tabbedPreferencesInstance().saveContents();
-            /*We have to double register the connection as when the saveContents is called is removes the original pref and 
-             replaces it with the jmrixconfigpane, which is not picked up by the DP3 window*/
-            jmri.InstanceManager.configureManagerInstance().registerPref(connect);
+            InstanceManager.getDefault(RosterConfigManager.class).setDefaultOwner(owner.getText());
+            InstanceManager.getDefault(GuiLafPreferencesManager.class).setLocale(Locale.getDefault());
+            InstanceManager.tabbedPreferencesInstance().init();
+            InstanceManager.tabbedPreferencesInstance().saveContents();
             dispose();
         }
     }
@@ -388,6 +394,6 @@ public class FirstTimeStartUpWizard {
 
     }
 
-    static Logger log = LoggerFactory.getLogger(FirstTimeStartUpWizard.class.getName());
+    private final static Logger log = LoggerFactory.getLogger(FirstTimeStartUpWizard.class.getName());
 
 }

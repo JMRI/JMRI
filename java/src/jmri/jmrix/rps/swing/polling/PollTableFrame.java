@@ -1,10 +1,8 @@
 // PollTableFrame.java
 package jmri.jmrix.rps.swing.polling;
 
-import java.util.ResourceBundle;
 import javax.swing.JDialog;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
+import jmri.util.JmriJFrame;
 
 /**
  * Frame for control of RPS polling
@@ -12,23 +10,13 @@ import org.slf4j.LoggerFactory;
  * @author	Bob Jacobsen Copyright (C) 2008
  * @version $Revision$
  */
-public class PollTableFrame extends jmri.util.JmriJFrame {
+public class PollTableFrame extends JmriJFrame {
 
-    /**
-     *
-     */
-    private static final long serialVersionUID = 5780499097528063540L;
-    static final ResourceBundle rb = ResourceBundle.getBundle("jmri.jmrix.rps.swing.polling.PollingBundle");
     PollTablePane pane;
 
     public PollTableFrame() {
-        super();
-        setTitle(title());
+        super(Bundle.getMessage("TitlePolling"));
     }
-
-    protected String title() {
-        return rb.getString("TitlePolling");
-    }  // product name, not translated
 
     public void dispose() {
         pane.dispose(); // drop table
@@ -57,6 +45,4 @@ public class PollTableFrame extends jmri.util.JmriJFrame {
         pane.setDefaults();
         setModifiedFlag(false);
     }
-
-    static Logger log = LoggerFactory.getLogger(PollTableFrame.class.getName());
 }

@@ -11,10 +11,12 @@
  *============================================================================*/
 package jmri.profile;
 
+import java.awt.Cursor;
 import java.awt.Frame;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.MouseEvent;
+import java.beans.PropertyChangeListener;
 import java.io.File;
 import java.io.IOException;
 import java.util.ArrayList;
@@ -67,10 +69,10 @@ public final class ProfilePreferencesPanel extends JPanel implements Preferences
      */
     public ProfilePreferencesPanel() {
         initComponents();
-        this.spinnerTimeout.setValue(ProfileManager.defaultManager().getAutoStartActiveProfileTimeout());
+        this.spinnerTimeout.setValue(ProfileManager.getDefault().getAutoStartActiveProfileTimeout());
         this.profilesTblValueChanged(null);
         this.searchPathsTblValueChanged(null);
-        int index = ProfileManager.defaultManager().getAllProfiles().indexOf(ProfileManager.defaultManager().getActiveProfile());
+        int index = ProfileManager.getDefault().getAllProfiles().indexOf(ProfileManager.getDefault().getActiveProfile());
         if (index != -1) {
             this.profilesTbl.setRowSelectionInterval(index, index);
         }
@@ -155,7 +157,7 @@ public final class ProfilePreferencesPanel extends JPanel implements Preferences
                 deleteMI.setText(bundle.getString("ProfilePreferencesPanel.deleteMI.text")); // NOI18N
                 profilesPopupMenu.add(deleteMI);
 
-                if (ProfileManager.defaultManager().isAutoStartActiveProfile()) {
+                if (ProfileManager.getDefault().isAutoStartActiveProfile()) {
                     this.rdoStartWithActiveProfile.setSelected(true);
                 } else {
                     this.rdoStartWithProfileSelector.setSelected(true);
@@ -322,9 +324,8 @@ public final class ProfilePreferencesPanel extends JPanel implements Preferences
                             .addComponent(jScrollPane3, GroupLayout.DEFAULT_SIZE, 667, Short.MAX_VALUE)
                             .addGroup(searchPathsPanelLayout.createSequentialGroup()
                                 .addComponent(btnAddSearchPath)
-                                .addPreferredGap(LayoutStyle.ComponentPlacement.RELATED)
-                                .addComponent(btnRemoveSearchPath)
-                                .addGap(0, 0, Short.MAX_VALUE)))
+                                .addPreferredGap(LayoutStyle.ComponentPlacement.RELATED, GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                .addComponent(btnRemoveSearchPath)))
                         .addContainerGap())
                 );
                 searchPathsPanelLayout.setVerticalGroup(searchPathsPanelLayout.createParallelGroup(GroupLayout.Alignment.LEADING)
@@ -370,8 +371,8 @@ public final class ProfilePreferencesPanel extends JPanel implements Preferences
         // TODO: Use NetBeans OpenDialog if its availble
         if (chooser.showOpenDialog(this) == JFileChooser.APPROVE_OPTION) {
             try {
-                ProfileManager.defaultManager().addSearchPath(chooser.getSelectedFile());
-                int index = ProfileManager.defaultManager().getAllSearchPaths().indexOf(chooser.getSelectedFile());
+                ProfileManager.getDefault().addSearchPath(chooser.getSelectedFile());
+                int index = ProfileManager.getDefault().getAllSearchPaths().indexOf(chooser.getSelectedFile());
                 this.searchPathsTbl.setRowSelectionInterval(index, index);
             } catch (IOException ex) {
                 log.warn("Unable to write profiles while adding search path {}", chooser.getSelectedFile().getPath(), ex);
@@ -388,11 +389,11 @@ public final class ProfilePreferencesPanel extends JPanel implements Preferences
     private void btnRemoveSearchPathActionPerformed(ActionEvent evt) {//GEN-FIRST:event_btnRemoveSearchPathActionPerformed
         ArrayList<File> paths = new ArrayList<>(this.searchPathsTbl.getSelectedRowCount());
         for (int row : this.searchPathsTbl.getSelectedRows()) {
-            paths.add(ProfileManager.defaultManager().getSearchPaths(row));
+            paths.add(ProfileManager.getDefault().getSearchPaths(row));
         }
         for (File path : paths) {
             try {
-                ProfileManager.defaultManager().removeSearchPath(path);
+                ProfileManager.getDefault().removeSearchPath(path);
             } catch (IOException ex) {
                 log.warn("Unable to write profiles while removing search path {}", path.getPath(), ex);
                 JOptionPane.showMessageDialog(this,
@@ -404,7 +405,7 @@ public final class ProfilePreferencesPanel extends JPanel implements Preferences
     }//GEN-LAST:event_btnRemoveSearchPathActionPerformed
 
     private void btnExportProfileActionPerformed(ActionEvent evt) {//GEN-FIRST:event_btnExportProfileActionPerformed
-        Profile p = ProfileManager.defaultManager().getProfiles(profilesTbl.getSelectedRow());
+        Profile p = ProfileManager.getDefault().getProfiles(profilesTbl.getSelectedRow());
         JFileChooser chooser = new JFileChooser();
         chooser.setFileFilter(new FileNameExtensionFilter("ZIP Archives", "zip"));
         chooser.setFileView(new ProfileFileView());
@@ -450,10 +451,10 @@ public final class ProfilePreferencesPanel extends JPanel implements Preferences
                         exportExternalRoster = true;
                     }
                 }
-                if (ProfileManager.defaultManager().getActiveProfile() == p) {
+                if (ProfileManager.getDefault().getActiveProfile() == p) {
                     // TODO: save roster, panels, operations if needed and safe to do so
                 }
-                ProfileManager.defaultManager().export(p, chooser.getSelectedFile(), exportExternalUserFiles, exportExternalRoster);
+                ProfileManager.getDefault().export(p, chooser.getSelectedFile(), exportExternalUserFiles, exportExternalRoster);
                 log.info("Profile \"{}\" exported to \"{}\"", p.getName(), chooser.getSelectedFile().getName());
                 JOptionPane.showMessageDialog(this,
                         Bundle.getMessage("ProfilePreferencesPanel.btnExportProfile.successMessage",
@@ -475,9 +476,9 @@ public final class ProfilePreferencesPanel extends JPanel implements Preferences
 
     private void btnActivateProfileActionPerformed(ActionEvent evt) {//GEN-FIRST:event_btnActivateProfileActionPerformed
         try {
-            Profile p = ProfileManager.defaultManager().getProfiles(profilesTbl.getSelectedRow());
-            ProfileManager.defaultManager().setNextActiveProfile(p);
-            ProfileManager.defaultManager().saveActiveProfile(p, ProfileManager.defaultManager().isAutoStartActiveProfile());
+            Profile p = ProfileManager.getDefault().getProfiles(profilesTbl.getSelectedRow());
+            ProfileManager.getDefault().setNextActiveProfile(p);
+            ProfileManager.getDefault().saveActiveProfile(p, ProfileManager.getDefault().isAutoStartActiveProfile());
         } catch (IOException ex) {
             log.error("Unable to save profile preferences", ex);
             JOptionPane.showMessageDialog(this, "Usable to save profile preferences.\n" + ex.getLocalizedMessage(), "Error", JOptionPane.ERROR_MESSAGE);
@@ -493,7 +494,7 @@ public final class ProfilePreferencesPanel extends JPanel implements Preferences
     private void btnDeleteProfileActionPerformed(ActionEvent evt) {//GEN-FIRST:event_btnDeleteProfileActionPerformed
         ArrayList<Profile> profiles = new ArrayList<>(this.profilesTbl.getSelectedRowCount());
         for (int row : this.profilesTbl.getSelectedRows()) {
-            profiles.add(ProfileManager.defaultManager().getAllProfiles().get(row));
+            profiles.add(ProfileManager.getDefault().getAllProfiles().get(row));
         }
         for (Profile deletedProfile : profiles) {
             int result = JOptionPane.showOptionDialog(this,
@@ -509,15 +510,19 @@ public final class ProfilePreferencesPanel extends JPanel implements Preferences
                     JOptionPane.CANCEL_OPTION
             );
             if (result == JOptionPane.OK_OPTION) {
+                this.setCursor(Cursor.getPredefinedCursor(Cursor.WAIT_CURSOR));
                 if (!FileUtil.delete(deletedProfile.getPath())) {
                     log.warn("Unable to delete profile directory {}", deletedProfile.getPath());
+                    this.setCursor(Cursor.getDefaultCursor());
                     JOptionPane.showMessageDialog(this,
                             Bundle.getMessage("ProfilePreferencesPanel.btnDeleteProfile.errorMessage", deletedProfile.getPath()),
                             Bundle.getMessage("ProfilePreferencesPanel.btnDeleteProfile.errorMessage"),
                             JOptionPane.ERROR_MESSAGE);
+                    this.setCursor(Cursor.getPredefinedCursor(Cursor.WAIT_CURSOR));
                 }
-                ProfileManager.defaultManager().removeProfile(deletedProfile);
+                ProfileManager.getDefault().removeProfile(deletedProfile);
                 log.info("Removed profile \"{}\" from {}", deletedProfile.getName(), deletedProfile.getPath());
+                this.setCursor(Cursor.getDefaultCursor());
                 profilesTbl.repaint();
             }
         }
@@ -532,8 +537,8 @@ public final class ProfilePreferencesPanel extends JPanel implements Preferences
         if (chooser.showOpenDialog(this) == JFileChooser.APPROVE_OPTION) {
             try {
                 Profile p = new Profile(chooser.getSelectedFile());
-                ProfileManager.defaultManager().addProfile(p);
-                int index = ProfileManager.defaultManager().getAllProfiles().indexOf(p);
+                ProfileManager.getDefault().addProfile(p);
+                int index = ProfileManager.getDefault().getAllProfiles().indexOf(p);
                 profilesTbl.setRowSelectionInterval(index, index);
             } catch (IOException ex) {
                 log.warn("{} is not a profile directory", chooser.getSelectedFile());
@@ -547,15 +552,15 @@ public final class ProfilePreferencesPanel extends JPanel implements Preferences
 
     private void btnCopyProfileActionPerformed(ActionEvent evt) {//GEN-FIRST:event_btnCopyProfileActionPerformed
         AddProfileDialog apd = new AddProfileDialog((Frame) SwingUtilities.getWindowAncestor(this), true, true);
-        apd.setSourceProfile(ProfileManager.defaultManager().getAllProfiles().get(profilesTbl.getSelectedRow()));
+        apd.setSourceProfile(ProfileManager.getDefault().getAllProfiles().get(profilesTbl.getSelectedRow()));
         apd.setLocationRelativeTo(this);
         apd.setVisible(true);
     }//GEN-LAST:event_btnCopyProfileActionPerformed
 
     private void spinnerTimeoutStateChanged(ChangeEvent evt) {//GEN-FIRST:event_spinnerTimeoutStateChanged
-        ProfileManager.defaultManager().setAutoStartActiveProfileTimeout((Integer) this.spinnerTimeout.getValue());
+        ProfileManager.getDefault().setAutoStartActiveProfileTimeout((Integer) this.spinnerTimeout.getValue());
         try {
-            ProfileManager.defaultManager().saveActiveProfile();
+            ProfileManager.getDefault().saveActiveProfile();
         } catch (IOException ex) {
             log.error("Unable to save active profile.", ex);
         }
@@ -572,9 +577,9 @@ public final class ProfilePreferencesPanel extends JPanel implements Preferences
     }//GEN-LAST:event_rdoStartWithProfileSelectorActionPerformed
 
     private void setAutoStartActiveProfile(boolean automatic) {
-        ProfileManager.defaultManager().setAutoStartActiveProfile(automatic);
+        ProfileManager.getDefault().setAutoStartActiveProfile(automatic);
         try {
-            ProfileManager.defaultManager().saveActiveProfile();
+            ProfileManager.getDefault().saveActiveProfile();
         } catch (IOException ex) {
             log.error("Unable to save active profile.", ex);
         }
@@ -649,25 +654,25 @@ public final class ProfilePreferencesPanel extends JPanel implements Preferences
     }
 
     public void dispose() {
-        ProfileManager.defaultManager().removePropertyChangeListener((ProfileTableModel) profilesTbl.getModel());
+        ProfileManager.getDefault().removePropertyChangeListener((PropertyChangeListener) profilesTbl.getModel());
     }
 
     private void profilesTblValueChanged(ListSelectionEvent e) {
-        if (profilesTbl.getSelectedRowCount() == 1 && profilesTbl.getSelectedRow() < ProfileManager.defaultManager().getAllProfiles().size()) {
-            Profile p = ProfileManager.defaultManager().getAllProfiles().get(profilesTbl.getSelectedRow());
-            this.btnDeleteProfile.setEnabled(!p.equals(ProfileManager.defaultManager().getActiveProfile()));
-            if (ProfileManager.defaultManager().getNextActiveProfile() != null) {
-                this.btnActivateProfile.setEnabled(!p.equals(ProfileManager.defaultManager().getNextActiveProfile()));
+        if (profilesTbl.getSelectedRowCount() == 1 && profilesTbl.getSelectedRow() < ProfileManager.getDefault().getAllProfiles().size()) {
+            Profile p = ProfileManager.getDefault().getAllProfiles().get(profilesTbl.getSelectedRow());
+            this.btnDeleteProfile.setEnabled(!p.equals(ProfileManager.getDefault().getActiveProfile()));
+            if (ProfileManager.getDefault().getNextActiveProfile() != null) {
+                this.btnActivateProfile.setEnabled(!p.equals(ProfileManager.getDefault().getNextActiveProfile()));
             } else {
-                this.btnActivateProfile.setEnabled(!p.equals(ProfileManager.defaultManager().getActiveProfile()));
+                this.btnActivateProfile.setEnabled(!p.equals(ProfileManager.getDefault().getActiveProfile()));
             }
             this.btnCopyProfile.setEnabled(true);
             this.btnExportProfile.setEnabled(true);
         } else if (this.profilesTbl.getSelectedRowCount() > 1) {
             this.btnDeleteProfile.setEnabled(true);
             for (int row : this.profilesTbl.getSelectedRows()) {
-                Profile p = ProfileManager.defaultManager().getAllProfiles().get(row);
-                if (p.equals(ProfileManager.defaultManager().getActiveProfile())) {
+                Profile p = ProfileManager.getDefault().getAllProfiles().get(row);
+                if (p.equals(ProfileManager.getDefault().getActiveProfile())) {
                     this.btnDeleteProfile.setEnabled(false);
                     break;
                 }
@@ -684,8 +689,8 @@ public final class ProfilePreferencesPanel extends JPanel implements Preferences
     }
 
     private void searchPathsTblValueChanged(ListSelectionEvent e) {
-        if (this.searchPathsTbl.getSelectedRowCount() == 1 && this.searchPathsTbl.getSelectedRow() < ProfileManager.defaultManager().getAllSearchPaths().size()) {
-            if (ProfileManager.defaultManager().getSearchPaths(this.searchPathsTbl.getSelectedRow()).equals(new File(FileUtil.getPreferencesPath()))) {
+        if (this.searchPathsTbl.getSelectedRowCount() == 1 && this.searchPathsTbl.getSelectedRow() < ProfileManager.getDefault().getAllSearchPaths().size()) {
+            if (ProfileManager.getDefault().getSearchPaths(this.searchPathsTbl.getSelectedRow()).equals(new File(FileUtil.getPreferencesPath()))) {
                 this.btnRemoveSearchPath.setEnabled(false);
             } else {
                 this.btnRemoveSearchPath.setEnabled(true);
@@ -708,8 +713,8 @@ public final class ProfilePreferencesPanel extends JPanel implements Preferences
         // Since next profile defaults to null when application starts, restart
         // is required only if next profile is not null and is not the same
         // profile as the current profile
-        return ProfileManager.defaultManager().getNextActiveProfile() != null
-                && !ProfileManager.defaultManager().getActiveProfile().equals(ProfileManager.defaultManager().getNextActiveProfile()
+        return ProfileManager.getDefault().getNextActiveProfile() != null
+                && !ProfileManager.getDefault().getActiveProfile().equals(ProfileManager.getDefault().getNextActiveProfile()
                 );
     }
 

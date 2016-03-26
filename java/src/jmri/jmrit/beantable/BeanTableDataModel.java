@@ -140,13 +140,13 @@ abstract public class BeanTableDataModel extends javax.swing.table.AbstractTable
     public String getColumnName(int col) {
         switch (col) {
             case SYSNAMECOL:
-                return AbstractTableAction.rb.getString("ColumnSystemName"); //"System Name";
+                return Bundle.getMessage("ColumnSystemName"); //"System Name";
             case USERNAMECOL:
-                return AbstractTableAction.rb.getString("ColumnUserName"); //"User Name";
+                return Bundle.getMessage("ColumnUserName"); //"User Name";
             case VALUECOL:
-                return AbstractTableAction.rb.getString("ColumnState"); //"State";
+                return Bundle.getMessage("ColumnState"); //"State";
             case COMMENTCOL:
-                return AbstractTableAction.rb.getString("ColumnComment"); //"Comment";
+                return Bundle.getMessage("ColumnComment"); //"Comment";
             case DELETECOL:
                 return "";
 
@@ -201,7 +201,7 @@ abstract public class BeanTableDataModel extends javax.swing.table.AbstractTable
                 b = getBySystemName(sysNameList.get(row));
                 return (b != null) ? b.getComment() : null;
             case DELETECOL:  //
-                return AbstractTableAction.rb.getString("ButtonDelete");
+                return Bundle.getMessage("ButtonDelete");
             default:
                 log.error("internal state inconsistent with table requst for " + row + " " + col);
                 return null;
@@ -257,12 +257,9 @@ abstract public class BeanTableDataModel extends javax.swing.table.AbstractTable
                 NamedBean nB = getByUserName((String) value);
                 if (nB != null) {
                     log.error("User name is not unique " + value);
-                    String msg;
-                    msg = java.text.MessageFormat.format(AbstractTableAction.rb
-                            .getString("WarningUserName"),
-                            new Object[]{("" + value)});
+                    String msg = Bundle.getMessage("WarningUserName", new Object[]{("" + value)});
                     JOptionPane.showMessageDialog(null, msg,
-                            AbstractTableAction.rb.getString("WarningTitle"),
+                            Bundle.getMessage("WarningTitle"),
                             JOptionPane.ERROR_MESSAGE);
                     return;
                 }
@@ -270,11 +267,9 @@ abstract public class BeanTableDataModel extends javax.swing.table.AbstractTable
             NamedBean nBean = getBySystemName(sysNameList.get(row));
             nBean.setUserName((String) value);
             if (nbMan.inUse(sysNameList.get(row), nBean)) {
-                String msg = java.text.MessageFormat.format(AbstractTableAction.rb
-                        .getString("UpdateToUserName"),
-                        new Object[]{getBeanType(), value, sysNameList.get(row)});
+                String msg = Bundle.getMessage("UpdateToUserName", new Object[]{getBeanType(), value, sysNameList.get(row)});
                 int optionPane = JOptionPane.showConfirmDialog(null,
-                        msg, AbstractTableAction.rb.getString("UpdateToUserNameTitle"),
+                        msg, Bundle.getMessage("UpdateToUserNameTitle"),
                         JOptionPane.YES_NO_OPTION);
                 if (optionPane == JOptionPane.YES_OPTION) {
                     //This will update the bean reference from the systemName to the userName
@@ -325,7 +320,7 @@ abstract public class BeanTableDataModel extends javax.swing.table.AbstractTable
                     log.warn(e.getMessage());
                     message.append(Bundle.getMessage("VetoDeleteBean", t.getBeanType(), t.getFullyFormattedDisplayName(), e.getMessage()));
                     JOptionPane.showMessageDialog(null, message.toString(),
-                            AbstractTableAction.rb.getString("WarningTitle"),
+                            Bundle.getMessage("WarningTitle"),
                             JOptionPane.ERROR_MESSAGE);
                     return null;
                 }
@@ -339,14 +334,12 @@ abstract public class BeanTableDataModel extends javax.swing.table.AbstractTable
                 doDelete(t);
             } else {
                 final JDialog dialog = new JDialog();
-                String msg;
-                dialog.setTitle(AbstractTableAction.rb.getString("WarningTitle"));
+                dialog.setTitle(Bundle.getMessage("WarningTitle"));
                 dialog.setDefaultCloseOperation(javax.swing.JFrame.DISPOSE_ON_CLOSE);
                 JPanel container = new JPanel();
                 container.setBorder(BorderFactory.createEmptyBorder(10, 10, 10, 10));
                 container.setLayout(new BoxLayout(container, BoxLayout.Y_AXIS));
                 if (count > 0) { // warn of listeners attached before delete
-                    msg = java.text.MessageFormat.format(AbstractTableAction.rb.getString("DeletePrompt"), new Object[]{t.getSystemName()});
 
                     JLabel question = new JLabel(Bundle.getMessage("DeletePrompt", t.getFullyFormattedDisplayName()));
                     question.setAlignmentX(Component.CENTER_ALIGNMENT);
@@ -379,20 +372,20 @@ abstract public class BeanTableDataModel extends javax.swing.table.AbstractTable
                         container.add(jScrollPane);
                     }
                 } else {
-                    msg = java.text.MessageFormat.format(
-                            AbstractTableAction.rb.getString("DeletePrompt"),
+                    String msg = java.text.MessageFormat.format(
+                            Bundle.getMessage("DeletePrompt"),
                             new Object[]{t.getSystemName()});
                     JLabel question = new JLabel(msg);
                     question.setAlignmentX(Component.CENTER_ALIGNMENT);
                     container.add(question);
                 }
 
-                final JCheckBox remember = new JCheckBox("Remember this setting for next time?");
+                final JCheckBox remember = new JCheckBox(Bundle.getMessage("MessageRememberSetting"));
                 remember.setFont(remember.getFont().deriveFont(10f));
                 remember.setAlignmentX(Component.CENTER_ALIGNMENT);
 
-                JButton yesButton = new JButton("Yes");
-                JButton noButton = new JButton("No");
+                JButton yesButton = new JButton(Bundle.getMessage("ButtonYes"));
+                JButton noButton = new JButton(Bundle.getMessage("ButtonNo"));
                 JPanel button = new JPanel();
                 button.setAlignmentX(Component.CENTER_ALIGNMENT);
                 button.add(yesButton);
@@ -486,7 +479,7 @@ abstract public class BeanTableDataModel extends javax.swing.table.AbstractTable
 
     public JButton configureButton() {
         // pick a large size
-        JButton b = new JButton(AbstractTableAction.rbean.getString("BeanStateInconsistent"));
+        JButton b = new JButton(Bundle.getMessage("BeanStateInconsistent"));
         b.putClientProperty("JComponent.sizeVariant", "small");
         b.putClientProperty("JButton.buttonType", "square");
         return b;
@@ -495,7 +488,7 @@ abstract public class BeanTableDataModel extends javax.swing.table.AbstractTable
     protected void configDeleteColumn(JTable table) {
         // have the delete column hold a button
         setColumnToHoldButton(table, DELETECOL,
-                new JButton(AbstractTableAction.rb.getString("ButtonDelete")));
+                new JButton(Bundle.getMessage("ButtonDelete")));
     }
 
     /**
@@ -537,7 +530,7 @@ abstract public class BeanTableDataModel extends javax.swing.table.AbstractTable
      * comboboxes or booleans
      */
     @SuppressWarnings("unchecked")
-    @edu.umd.cs.findbugs.annotations.SuppressWarnings(value = "SBSC_USE_STRINGBUFFER_CONCATENATION")
+    @edu.umd.cs.findbugs.annotations.SuppressFBWarnings(value = "SBSC_USE_STRINGBUFFER_CONCATENATION")
     // Only used occasionally, so inefficient String processing not really a problem
     // though it would be good to fix it if you're working in this area
     public void printTable(HardcopyWriter w) {
@@ -586,7 +579,7 @@ abstract public class BeanTableDataModel extends javax.swing.table.AbstractTable
         w.close();
     }
 
-    @edu.umd.cs.findbugs.annotations.SuppressWarnings(value = "SBSC_USE_STRINGBUFFER_CONCATENATION")
+    @edu.umd.cs.findbugs.annotations.SuppressFBWarnings(value = "SBSC_USE_STRINGBUFFER_CONCATENATION")
     // Only used occasionally, so inefficient String processing not really a problem
     // though it would be good to fix it if you're working in this area
     protected void printColumns(HardcopyWriter w, String columnStrings[], int columnSize) {
@@ -702,7 +695,7 @@ abstract public class BeanTableDataModel extends javax.swing.table.AbstractTable
         final int rowindex = tmodel.modelIndex(row);
 
         JPopupMenu popupMenu = new JPopupMenu();
-        JMenuItem menuItem = new JMenuItem(AbstractTableAction.rb.getString("CopyName"));
+        JMenuItem menuItem = new JMenuItem(Bundle.getMessage("CopyName"));
         menuItem.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
                 copyName(rowindex, 0);
@@ -710,7 +703,7 @@ abstract public class BeanTableDataModel extends javax.swing.table.AbstractTable
         });
         popupMenu.add(menuItem);
 
-        menuItem = new JMenuItem(AbstractTableAction.rb.getString("Rename"));
+        menuItem = new JMenuItem(Bundle.getMessage("Rename"));
         menuItem.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
                 renameBean(rowindex, 0);
@@ -718,7 +711,7 @@ abstract public class BeanTableDataModel extends javax.swing.table.AbstractTable
         });
         popupMenu.add(menuItem);
 
-        menuItem = new JMenuItem(AbstractTableAction.rb.getString("Clear"));
+        menuItem = new JMenuItem(Bundle.getMessage("Clear"));
         menuItem.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
                 removeName(rowindex, 0);
@@ -726,7 +719,7 @@ abstract public class BeanTableDataModel extends javax.swing.table.AbstractTable
         });
         popupMenu.add(menuItem);
 
-        menuItem = new JMenuItem(AbstractTableAction.rb.getString("Move"));
+        menuItem = new JMenuItem(Bundle.getMessage("Move"));
         menuItem.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
                 moveBean(rowindex, 0);
@@ -734,7 +727,7 @@ abstract public class BeanTableDataModel extends javax.swing.table.AbstractTable
         });
         popupMenu.add(menuItem);
 
-        menuItem = new JMenuItem(AbstractTableAction.rb.getString("Delete"));
+        menuItem = new JMenuItem(Bundle.getMessage("Delete"));
         menuItem.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
                 deleteBean(rowindex, 0);
@@ -791,12 +784,9 @@ abstract public class BeanTableDataModel extends javax.swing.table.AbstractTable
             NamedBean nB = getByUserName(value);
             if (nB != null) {
                 log.error("User name is not unique " + value);
-                String msg;
-                msg = java.text.MessageFormat.format(AbstractTableAction.rb
-                        .getString("WarningUserName"),
-                        new Object[]{("" + value)});
+                String msg = Bundle.getMessage("WarningUserName", new Object[]{("" + value)});
                 JOptionPane.showMessageDialog(null, msg,
-                        AbstractTableAction.rb.getString("WarningTitle"),
+                        Bundle.getMessage("WarningTitle"),
                         JOptionPane.ERROR_MESSAGE);
                 return;
             }
@@ -809,11 +799,9 @@ abstract public class BeanTableDataModel extends javax.swing.table.AbstractTable
                 if (!nbMan.inUse(sysNameList.get(row), nBean)) {
                     return;
                 }
-                String msg = java.text.MessageFormat.format(AbstractTableAction.rb
-                        .getString("UpdateToUserName"),
-                        new Object[]{getBeanType(), value, sysNameList.get(row)});
+                String msg = Bundle.getMessage("UpdateToUserName", new Object[]{getBeanType(), value, sysNameList.get(row)});
                 int optionPane = JOptionPane.showConfirmDialog(null,
-                        msg, AbstractTableAction.rb.getString("UpdateToUserNameTitle"),
+                        msg, Bundle.getMessage("UpdateToUserNameTitle"),
                         JOptionPane.YES_NO_OPTION);
                 if (optionPane == JOptionPane.YES_OPTION) {
                     //This will update the bean reference from the systemName to the userName
@@ -836,11 +824,9 @@ abstract public class BeanTableDataModel extends javax.swing.table.AbstractTable
 
     public void removeName(int row, int column) {
         NamedBean nBean = getBySystemName(sysNameList.get(row));
-        String msg = java.text.MessageFormat.format(AbstractTableAction.rb
-                .getString("UpdateToSystemName"),
-                new Object[]{getBeanType()});
+        String msg = Bundle.getMessage("UpdateToSystemName", new Object[]{getBeanType()});
         int optionPane = JOptionPane.showConfirmDialog(null,
-                msg, AbstractTableAction.rb.getString("UpdateToSystemNameTitle"),
+                msg, Bundle.getMessage("UpdateToSystemNameTitle"),
                 JOptionPane.YES_NO_OPTION);
         if (optionPane == JOptionPane.YES_OPTION) {
             nbMan.updateBeanFromUserToSystem(nBean);
@@ -885,10 +871,8 @@ abstract public class BeanTableDataModel extends javax.swing.table.AbstractTable
             newNameBean.setUserName(currentName);
             jmri.InstanceManager.getDefault(jmri.NamedBeanHandleManager.class).moveBean(oldNameBean, newNameBean, currentName);
             if (nbMan.inUse(newNameBean.getSystemName(), newNameBean)) {
-                String msg = java.text.MessageFormat.format(AbstractTableAction.rb
-                        .getString("UpdateToUserName"),
-                        new Object[]{getBeanType(), currentName, sysNameList.get(row)});
-                int optionPane = JOptionPane.showConfirmDialog(null, msg, AbstractTableAction.rb.getString("UpdateToUserNameTitle"), JOptionPane.YES_NO_OPTION);
+                String msg = Bundle.getMessage("UpdateToUserName", new Object[]{getBeanType(), currentName, sysNameList.get(row)});
+                int optionPane = JOptionPane.showConfirmDialog(null, msg, Bundle.getMessage("UpdateToUserNameTitle"), JOptionPane.YES_NO_OPTION);
                 if (optionPane == JOptionPane.YES_OPTION) {
                     try {
                         nbMan.updateBeanFromSystemToUser(newNameBean);
@@ -899,8 +883,8 @@ abstract public class BeanTableDataModel extends javax.swing.table.AbstractTable
             }
             fireTableRowsUpdated(row, row);
             jmri.InstanceManager.getDefault(jmri.UserPreferencesManager.class).
-                    showInfoMessage("Reminder", getBeanType() + " " + AbstractTableAction.rb.getString("UpdateComplete"), getMasterClassName(), "remindSaveReLoad");
-            //JOptionPane.showMessageDialog(null, getBeanType() + " " + AbstractTableAction.rb.getString("UpdateComplete"));
+                    showInfoMessage("Reminder", getBeanType() + " " + Bundle.getMessage("UpdateComplete"), getMasterClassName(), "remindSaveReLoad");
+            //JOptionPane.showMessageDialog(null, getBeanType() + " " + Bundle.getMessage("UpdateComplete"));
         }
 
     }
@@ -1052,6 +1036,6 @@ abstract public class BeanTableDataModel extends javax.swing.table.AbstractTable
             }
         }
     }
-    static final Logger log = LoggerFactory.getLogger(BeanTableDataModel.class.getName());
+    private final static Logger log = LoggerFactory.getLogger(BeanTableDataModel.class.getName());
 
 }

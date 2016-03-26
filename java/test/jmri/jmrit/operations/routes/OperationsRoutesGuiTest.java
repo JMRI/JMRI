@@ -15,7 +15,6 @@ import junit.framework.TestSuite;
  * Tests for the Operations Routes GUI class
  *
  * @author	Dan Boudreau Copyright (C) 2009
- * @version $Revision$
  */
 public class OperationsRoutesGuiTest extends OperationsSwingTestCase {
 
@@ -27,11 +26,11 @@ public class OperationsRoutesGuiTest extends OperationsSwingTestCase {
         // should be 5 rows
         Assert.assertEquals("number of rows", 5, f.routesModel.getRowCount());
         // default is sort by name
-        Assert.assertEquals("1st route", "Test Route A", f.routesModel.getValueAt(0, RoutesTableModel.NAMECOLUMN));
-        Assert.assertEquals("2nd route", "Test Route B", f.routesModel.getValueAt(1, RoutesTableModel.NAMECOLUMN));
-        Assert.assertEquals("3rd route", "Test Route C", f.routesModel.getValueAt(2, RoutesTableModel.NAMECOLUMN));
-        Assert.assertEquals("4th route", "Test Route D", f.routesModel.getValueAt(3, RoutesTableModel.NAMECOLUMN));
-        Assert.assertEquals("5th route", "Test Route E", f.routesModel.getValueAt(4, RoutesTableModel.NAMECOLUMN));
+        Assert.assertEquals("1st route", "Test Route A", f.routesModel.getValueAt(0, RoutesTableModel.NAME_COLUMN));
+        Assert.assertEquals("2nd route", "Test Route B", f.routesModel.getValueAt(1, RoutesTableModel.NAME_COLUMN));
+        Assert.assertEquals("3rd route", "Test Route C", f.routesModel.getValueAt(2, RoutesTableModel.NAME_COLUMN));
+        Assert.assertEquals("4th route", "Test Route D", f.routesModel.getValueAt(3, RoutesTableModel.NAME_COLUMN));
+        Assert.assertEquals("5th route", "Test Route E", f.routesModel.getValueAt(4, RoutesTableModel.NAME_COLUMN));
 
         // create add route frame
         //f.addButton.doClick();
@@ -41,7 +40,7 @@ public class OperationsRoutesGuiTest extends OperationsSwingTestCase {
         Assert.assertNotNull("route edit frame", ref);
 
         // create edit route frame
-        f.routesModel.setValueAt(null, 2, RoutesTableModel.EDITCOLUMN);
+        f.routesModel.setValueAt(null, 2, RoutesTableModel.EDIT_COLUMN);
 
         ref.dispose();
         f.dispose();

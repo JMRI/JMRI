@@ -1,8 +1,6 @@
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
 <html lang="en">
 <head>
-<!-- Copyright ($Author$) 2009, 2010 -->
-<!-- $Id$ -->
 <title>Comprehensive Programmer - Advanced Features Pane</title>
 
 <!-- Style -->
@@ -21,9 +19,9 @@
 
 <a NAME="Top"></a>
 <h1>DecoderPro&reg; Advanced Programmer</h1>
-<h1>Roster Media Pane</h1>
+<h2>Roster Media Pane</h2>
 
-<div align=right>
+<div align="right">
 <p><a href="Adv_FunctionLabel.shtml">Previous | </a><a href="Comp_Basic.shtml">Next </a></p>
 <p><a href="index.shtml">Back to Index</a></p>
 </div>
@@ -102,14 +100,15 @@ After adding images to the image boxes for main image and icon, click on this bu
 <p><a href="http://www.djcooley.com/info/gifs/loco/gifloco.htm" target="_blank">Train GIF Railyard</a>
 <p><a href="http://www.kls2.com/~karl/rr/consists/" target="_blank">Karl's RR Pages</a>
 <p><a href="http://www.bluarcher.com/traingifs/edtraingifsSD40.htm" target="_blank">ED Bindler Train GIF.s</a>
-<p>
 <hr>
 
-<div align=right>
+<div align="right">
 <p><a href="Comp_LightFX.shtml"></a><a href="Adv_FunctionLabel.shtml">Previous | </a><a href="Comp_Basic.shtml">Next </a></p>
 <p><a href="index.shtml">Back to Index</a></p>
 </div>
 
 <!--#include virtual="/Footer" -->
-</body>
+  </div><!-- closes #mainContent-->
+ </div> <!-- closes #mBody-->
+ </body>
 </html>

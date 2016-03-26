@@ -1,38 +1,23 @@
 // PerformScriptModel.java
 package apps;
 
-import java.util.ArrayList;
-import java.util.List;
+import apps.startup.AbstractStartupModel;
 
 /**
  * A PerformScriptModel object runs a script when the program is started.
  * <P>
  * @author	Bob Jacobsen Copyright 2003
+ * @author Randall Wood (c) 2016
  * @version $Revision$
- * @see PerformScriptPanel
+ * @see apps.startup.PerformScriptModelFactory
  */
-public class PerformScriptModel {
-
-    public PerformScriptModel() {
-        fileName = null;
-    }
-
-    String fileName;
+public class PerformScriptModel extends AbstractStartupModel {
 
     public String getFileName() {
-        return fileName;
+        return this.getName();
     }
 
     public void setFileName(String n) {
-        fileName = n;
+        this.setName(n);
     }
-
-    static public void rememberObject(PerformScriptModel m) {
-        l.add(m);
-    }
-
-    static public List<PerformScriptModel> rememberedObjects() {
-        return l;
-    }
-    static List<PerformScriptModel> l = new ArrayList<PerformScriptModel>();
 }

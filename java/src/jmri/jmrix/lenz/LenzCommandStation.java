@@ -241,7 +241,7 @@ public class LenzCommandStation implements jmri.jmrix.DccCommandStation, jmri.Co
     /*
      * We need to register for logging
      */
-    static Logger log = LoggerFactory.getLogger(LenzCommandStation.class.getName());
+    private final static Logger log = LoggerFactory.getLogger(LenzCommandStation.class.getName());
 
 }
 

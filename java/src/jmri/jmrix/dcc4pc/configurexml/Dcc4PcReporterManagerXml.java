@@ -28,12 +28,13 @@ public class Dcc4PcReporterManagerXml extends jmri.managers.configurexml.Abstrac
         log.error("Invalid method called");
     }
 
-    public boolean load(Element reporter) {
+    @Override
+    public boolean load(Element shared, Element perNode) {
         // create the master object
         //Dcc4PcReporterManager.instance();
         // load individual sensors
-        return loadReporters(reporter);
+        return loadReporters(shared);
     }
 
-    static Logger log = LoggerFactory.getLogger(Dcc4PcReporterManagerXml.class.getName());
+    private final static Logger log = LoggerFactory.getLogger(Dcc4PcReporterManagerXml.class.getName());
 }

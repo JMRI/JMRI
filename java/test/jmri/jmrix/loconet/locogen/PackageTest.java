@@ -1,4 +1,3 @@
-// PackageTest.java
 package jmri.jmrix.loconet.locogen;
 
 import jmri.jmrix.loconet.LocoNetMessage;
@@ -6,14 +5,11 @@ import junit.framework.Assert;
 import junit.framework.Test;
 import junit.framework.TestCase;
 import junit.framework.TestSuite;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 
 /**
  * Tests for the jmri.jmrix.loconet.locogen.LocoGenPanel class
  *
  * @author Bob Jacobsen Copyright 2001, 2003
- * @version $Revision$
  */
 public class PackageTest extends TestCase {
 
@@ -53,7 +49,5 @@ public class PackageTest extends TestCase {
         TestSuite suite = new TestSuite(PackageTest.class);
         return suite;
     }
-
-    static Logger log = LoggerFactory.getLogger(PackageTest.class.getName());
 
 }

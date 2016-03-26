@@ -32,14 +32,15 @@ public class AcelaLightManagerXml extends jmri.managers.configurexml.AbstractLig
         log.error("Invalid method called");
     }
 
-    public boolean load(Element lights) {
+    @Override
+    public boolean load(Element shared, Element perNode) {
         // create the master object
         AcelaLightManager.instance();
         // load individual lights
-        return loadLights(lights);
+        return loadLights(shared);
     }
 
-    static Logger log = LoggerFactory.getLogger(AcelaLightManagerXml.class.getName());
+    private final static Logger log = LoggerFactory.getLogger(AcelaLightManagerXml.class.getName());
 }
 
 /* @(#)AcelaLightManagerXml.java */

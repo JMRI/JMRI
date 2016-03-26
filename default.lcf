@@ -1,4 +1,11 @@
-# Default log4j configuration file for JMRI project development.
+# Default logging configuration file for JMRI project development.
+#
+# If making changes here that should be included in the distribution
+# please also update the file for distribution at 'scripts/default.lcf'
+
+# #############################################################
+#  Log4J configuration
+# #############################################################
 
 # Output is sent to system.err, generally a console window.
 # The output info consists of relative time, priority, thread name,
@@ -77,6 +84,13 @@ log4j.appender.T.MaxBackupIndex=2
 log4j.category.org.eclipse.jetty=WARN
 log4j.category.org.eclipse.jetty.server.handler=WARN
 
+# Turning off logging for Java Xerces; emits WARNING messages during routine use
+log4j.category.org.jdom2.transform=SEVERE
+
+# Turning off logging for Java JMDNS; logs SEVERE and WARNING to j.u.l routinely
+log4j.category.com.strangeberry=OFF
+log4j.category.javax.jmdns=OFF
+
 # Examples of changing priority of specific categories (classes, packages):
 #
 # log4j.category.jmri=DEBUG
@@ -84,7 +98,6 @@ log4j.category.org.eclipse.jetty.server.handler=WARN
 # log4j.category.jmri.jmrit.display=DEBUG
 # log4j.category.jmri.jmrit.display.IndicatorTrackPaths=DEBUG
 # log4j.category.jmri.jmrit.logix=DEBUG
-# log4j.category.jmri.jmrit.logix.Warrant=DEBUG
 # log4j.category.jmri.jmrit.progsupport=TRACE
 # log4j.category.jmri.jmrit.symbolicprog.tabbedframe=DEBUG
 # log4j.category.jmri.jmrit.symbolicprog.DecVariableValue=DEBUG

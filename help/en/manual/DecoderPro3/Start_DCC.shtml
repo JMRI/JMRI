@@ -1,8 +1,6 @@
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
 <html lang="en">
 <head>
-<!-- Copyright ($Author$) 2009 -->
-<!-- $Id$ -->
 <title>Decoder Pro Manual: Getting Started</title>
 
 <!-- Style -->
@@ -20,21 +18,18 @@
 <!--#include virtual="Sidebar" -->
 <div id="mainContent">
 
-<a NAME="Top"></a>
-<h1><img src="images/Logo.gif" alt="JMRI DecoderPro Logo" width=163 height=117 vspace="15" border=10 class="BOXIT"></h1>
+<a name="Top"></a>
+<img src="images/Logo.gif" alt="JMRI DecoderPro Logo" width=163 height=117 vspace="15" border=10 class="BOXIT">
 
 <h1>Getting Started with DecoderPro&reg;</h1>
-<h1>What is DCC?</h1>
+<h2>What is DCC?</h2>
 
-<div align=right>
+<div align="right">
 <p><a href="Start_DCC_Systems.shtml">Next</a>
 <p><a href="index.shtml#Getting Started">Back to Index</a>
 </div>
 
 <hr>
-
-<h3>&nbsp;</h3>
-
 <p>
 In short, DCC is Digital Command Control, a system for operating model
 railroads in a more prototypical manner. Each locomotive contains a tiny,
@@ -55,12 +50,15 @@ source</span> software solution for programming these on-board decoders.
 Programming panel designs are written in <b>XML</b>, (a close relative
 of HTML) and can be modified or even created from scratch by users with
 even a passing familiarity with the format without previous XML experience. 
+
 <hr>
-<div align=right>
+<div align="right">
 <p><a href="Start_DCC_Systems.shtml">Next</a><a href="Basic_Programming.shtml"></a>
 <p><a href="index.shtml#Getting Started">Back to Index</a>
 </div>
 
 <!--#include virtual="/Footer" -->
+  </div><!-- closes #mainContent-->
+ </div> <!-- closes #mBody-->
 </body>
 </html>

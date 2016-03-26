@@ -91,6 +91,9 @@ public class RosterSpeedProfile {
      */
     public float getForwardSpeed(float speedStep) {
         int iSpeedStep = Math.round(speedStep * 1000);
+        if (iSpeedStep<=0) {
+            return 0.0f;
+        }
         if (speeds.containsKey(iSpeedStep)) {
             float speed = speeds.get(iSpeedStep).getForwardSpeed();
             if (speed>0.0f) {
@@ -98,8 +101,8 @@ public class RosterSpeedProfile {
             }
         }
         log.debug("no exact match forward for " + iSpeedStep);
-        float lower = 0;
-        float higher = 0;
+        float lower = 0.0f;
+        float higher = 0.0f;
         int highStep = iSpeedStep;
         int lowStep = iSpeedStep;
         
@@ -115,6 +118,7 @@ public class RosterSpeedProfile {
         }
         if (lower<=0.0f) {      // nothing lower
             if (nothingHigher) {
+                log.error("Nothing in speed Profile");
                 return -1.0f;       // no forward speeds at all                
             }
             return higher*iSpeedStep/highStep;
@@ -135,6 +139,9 @@ public class RosterSpeedProfile {
      */
     public float getReverseSpeed(float speedStep) {
         int iSpeedStep = Math.round(speedStep * 1000);
+        if (iSpeedStep<=0) {
+            return 0.0f;
+        }
         if (speeds.containsKey(iSpeedStep)) {
             float speed = speeds.get(iSpeedStep).getReverseSpeed();
             if (speed>0.0f) {
@@ -142,8 +149,8 @@ public class RosterSpeedProfile {
             }
         }
         log.debug("no exact match reverse for " + iSpeedStep);
-        float lower = 0;
-        float higher = 0;
+        float lower = 0.0f;
+        float higher = 0.0f;
         int highStep = iSpeedStep;
         int lowStep = iSpeedStep;
         
@@ -159,6 +166,7 @@ public class RosterSpeedProfile {
         }
         if (lower<=0.0f) {      // nothing lower
             if (nothingHigher) {
+                log.error("Nothing in speed Profile");
                 return -1.0f;       // no reverse speeds at all                
             }
             return higher*iSpeedStep/highStep;
@@ -694,6 +702,9 @@ public class RosterSpeedProfile {
         return speeds;
     }
     public float getSpeed(float speedStep, boolean isForward) {
+        if (speedStep<0.00001f) {
+            return 0.0f;
+        }
         float speed;
         if (isForward) {
             speed = getForwardSpeed(speedStep);
@@ -710,5 +721,5 @@ public class RosterSpeedProfile {
         return speed;
     }
 
-    static Logger log = LoggerFactory.getLogger(RosterSpeedProfile.class);
+    private final static Logger log = LoggerFactory.getLogger(RosterSpeedProfile.class);
 }

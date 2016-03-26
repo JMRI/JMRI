@@ -16,8 +16,6 @@ import jmri.jmrix.powerline.SerialMessage;
 import jmri.jmrix.powerline.SerialReply;
 import jmri.jmrix.powerline.SerialSystemConnectionMemo;
 import jmri.jmrix.powerline.swing.PowerlinePanelInterface;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 
 public class SerialMonPane extends jmri.jmrix.AbstractMonPane implements SerialListener, PowerlinePanelInterface {
 
@@ -99,8 +97,6 @@ public class SerialMonPane extends jmri.jmrix.AbstractMonPane implements SerialL
         }
 
     }
-
-    static Logger log = LoggerFactory.getLogger(SerialMonPane.class.getName());
 
 }
 

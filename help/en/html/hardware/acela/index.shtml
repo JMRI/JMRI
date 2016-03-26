@@ -1,33 +1,59 @@
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
 <html lang="en">
 <head>
-<!-- $Id$ -->
-<title>JMRI: Connecting the CTI Acela System</title>
+<title>JMRI Hardware Support - CTI Acela System</title>
 
 <!-- Style -->
-<META HTTP-EQUIV="Content-Type" CONTENT="text/html; charset=iso-8859-1">
-<LINK REL="stylesheet" TYPE="text/css" HREF="/css/default.css"
-	MEDIA="screen">
-<LINK REL="stylesheet" TYPE="text/css" HREF="/css/print.css"
-	MEDIA="print">
-<LINK REL="icon" HREF="/images/jmri.ico" TYPE="image/png">
-<LINK REL="home" TITLE="Home" HREF="/">
+<meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
+<link rel="stylesheet" type="text/css" href="/css/default.css" media="screen">
+<link rel="stylesheet" type="text/css" href="/css/print.css" media="print">
+<link rel="icon" href="/images/jmri.ico" type="image/png">
+<link rel="home" title="Home" href="/">
 <!-- /Style -->
-</HEAD>
+</head>
 
-<BODY>
+<body>
 <!--#include virtual="/Header" -->
   <div class="nomenu" id="mBody">
     <div id="mainContent">
 
-<h1> 
-JMRI: Connecting the Acela System
-</h1>
+<h1>Hardware Support: CTI Acela System</h1>
+<ul class="snav"><!-- TOC -->
+<li><a href="#hardware">Hardware</a>
+<li><a href="#limitations">Limitations</a>
+<li><a href="#connecting">Connecting</a>
+<li><a href="#tools">Tools</a>
+<li><a href="#documentation">Documentation</a>
+</ul>
 
+<a name="hardware"></a><h2>Supported Hardware</h2>
+<h3>CTI Modules</h3>
 
-Naming of CTI Acela inputs and outputs are described on a 
-<a href="Names.shtml">separate page</a>.
+As described in the Acela documentation on the 
+<a href="http://www.cti-electronics.com/app_sw.htm">CTI web site</a>, several CTI modules are available:
+<ul>
+	<li>A CTI Acela module (currently only released with a serial interface) that performs most of the low-level CTI network management.
+	<li>A CTI SmartCAB module which when used on a non-DCC model railroad, controls the trains in a traditional CAB system.  The CTI SmartCAB module is not supported by JMRI.
+	<li>A CTI TrainBrain (4 output relays and 4 input circuits).
+	<li>A CTI Dash-8 (8 output relays, no input circuits).
+	<li>A CTI Watchman (8 input circuits, no output circuits).
+	<li>A CTI SignalMan (16 output circuits, no input circuits).
+	<li>A CTI SwitchMan (16 output circuits, no input circuits).
+	<li>A CTI YardMaster (16 output circuits, no input circuits).
+	<li>A CTI Sentry (no output circuits, 16 input circuits).
+</ul>
+ 
+<a name="limitations"></a><h2>Limitations</h2>
 
+<ul>
+	<li>A CTI network is usually connected to a computer via a CTI to serial (or CTI to USB) interface.  In this configuration all of the CTI network management must be performed by the computer.  CTI also offers an Acela module (currently only released with a serial interface) that performs most of the low-level CTI network management.  JMRI only supports the CTI Acela interface (it does not support the direct serial -- nor USB interface).
+	<li>A CTI network can be used on either a non-DCC or a DCC model railroad.  When used on a non-DCC model railroad, CTI uses SmartCAB modules to control the trains in a traditional CAB system.  JMRI only supports the CTI system when used on a DCC railroad and does not support SmartCAB modules.
+	<li>CTI input sensor modules (Train-Brain, Watchman, Sentry) support five different types of input sensors: Infrared, Current Detection, Push-Button, Magnetic Reed Switches, and Photocell.  JMRI now supports all of these sensors.
+	<li>CTI input sensor modules support unique configuration of each sensor (inverted, debounce, threshold).  JMRI now allows you to <a href="../../../package/jmri/jmrix/acela/nodeconfig/NodeConfigFrame.shtml">configure</a> this.
+</ul>
+
+<a name="connecting"></a><h2>Connecting</h2>
+<h3>Creating Nodes</h3>
 <p>
 If the hardware is connected, nodes (CTI modules) are found automatically at startup.  Nodes can also be 
 defined manually with the 
@@ -37,38 +63,9 @@ tool. Either way, don't forget to save them with the
 <a href="../../../package/apps/AppConfigPanel.shtml">Preferences window</a>
 (under Edit in the main menu).
 
-<H2>CTI Modules</h2>
-
-
-As described in the Acela documentation on the 
-<a href="http://www.cti-electronics.com/app_sw.htm">CTI web site</a>, 
-there are several CTI modules available:
-<UL>
-<LI>A CTI Acela module (currently only released with a serial interface) that performs most of the low-level CTI network management.
-<LI>A CTI SmartCAB module which when used on a non-DCC model railroad, controls the trains in a traditional CAB system.  The CTI SmartCAB module is not supported by JMRI.
-<LI>A CTI TrainBrain (4 output relays and 4 input circuits).
-<LI>A CTI Dash-8 (8 output relays, no input circuits).
-<LI>A CTI Watchman (8 input circuits, no output circuits).
-<LI>A CTI SignalMan (16 output circuits, no input circuits).
-<LI>A CTI SwitchMan (16 output circuits, no input circuits).
-<LI>A CTI YardMaster (16 output circuits, no input circuits).
-<LI>A CTI Sentry (no output circuits, 16 input circuits).
-</UL>
- 
-<H2>Limitations</h2>
-
-<UL>
-<LI>A CTI network is usually connected to a computer via a CTI to serial (or CTI to USB) interface.  In this configuration all of the CTI network management must be performed by the computer.  CTI also offers an Acela module (currently only released with a serial interface) that performs most of the low-level CTI network management.  JMRI only supports the CTI Acela interface (it does not support the direct serial -- nor USB interface).
-<LI>A CTI network can be used on either a non-DCC or a DCC model railroad.  When used on a non-DCC model railroad, CTI uses SmartCAB modules to control the trains in a traditional CAB system.  JMRI only supports the CTI system when used on a DCC railroad and does not support SmartCAB modules.
-<LI>CTI input sensor modules (Train-Brain, Watchman, Sentry) support five different types of input sensors: Infrared, Current Detection, Push-Button, Magnetic Reed Switches, and Photocell.  JMRI now supports all of these sensors.
-<LI>CTI input sensor modules support unique configuration of each sensor (inverted, debounce, threshold).  JMRI now allows you to <a href="../../../package/jmri/jmrix/acela/nodeconfig/NodeConfigFrame.shtml">configure</a> this.
-</UL>
-
-<h2>Background Information</h2>
-
-The CTI Acela network is a true token passing ring network.
+<h3>Wiring</h3>
 <p>
-Each module has two "four wire phone jacks".  One labelled with a RED circle and the other labelled with a GREEN circle.  To complete the ring, you should connect a straight through four wire cable from the GREEN jack in one module to the RED jack in the next module.  The last cable should connect the GREEN jack in the last module back to the RED jack in the first module. 
+The CTI Acela network is a true token passing ring network. Each module has two "four wire phone jacks".  One labelled with a RED circle and the other labelled with a GREEN circle.  To complete the ring, you should connect a straight through four wire cable from the GREEN jack in one module to the RED jack in the next module.  The last cable should connect the GREEN jack in the last module back to the RED jack in the first module. 
 <p>
 The CTI Acela module has the same RED and GREEN jacks as well as a third YELLOW jack.  The CTI Acela module should be placed somewhere in the ring just as any other CTI module.
 <p>
@@ -76,7 +73,7 @@ For the CTI Acela module a special four wire cable should be connected from the 
 <p>
 Once powered on and started, if the red LEDs on each module are not 
 flashing then the ring is broken (either no power to one or more modules or a 
-bad cable or the cables are dasiy chained wrong or a cable has become loose).
+bad cable or the cables are daisy chained wrong or a cable has become loose).
 <p>
 For completeness, on power up, each CTI module has a solid RED led lighted. 
 <p>
@@ -87,12 +84,26 @@ The Acela module itself is different in that it always flashes a
 green LED to indicate that it is happy (whether the ring is happy or 
 not).
 
+<a name="tools"></a><h2>JMRI Acela Tools</h2>
+<ul>
+<li>Inputs and Outputs can be configured with 
+<a href="../../../package/jmri/jmrix/acela/serialmon/SerialMonFrame.shtml">Acela Monitor</a></li>
+<li>Inputs and Outputs can be configured with 
+<a href="../../../package/jmri/jmrix/acela/packetgen/SerialPacketGenFrame.shtml">Send Acela Packets</a></li>
+<li>Inputs and Outputs can be configured with the 
+<a href="../../../package/jmri/jmrix/acela/nodeconfig/NodeConfigFrame.shtml">Configure Nodes</a> tool</li>
+</ul>
 
-<h2>More Information</h2>
-
-More information on the Acela hardware can be found on the
+<a name="documentation"></a><h2>Documentation</h2>
+<h3>JMRI Help</h3>
+<p>Naming of CTI Acela inputs and outputs are described on a 
+<a href="Names.shtml">separate page</a>.
+<h3>Third Party info</h3>
+<p>More information on the Acela hardware can be found on the
 <a href="http://www.cti-electronics.com/app_sw.htm">CTI web site</a>.
 
 <!--#include virtual="/Footer" -->
+ </div><!-- closes #mainContent-->
+</div> <!-- closes #mBody-->
 </body>
 </html>

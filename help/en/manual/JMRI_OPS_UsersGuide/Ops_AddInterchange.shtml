@@ -1,24 +1,25 @@
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
-<html lang="en"><head>
-<!-- Copyright ($Author$) 2009 --><!-- $Id$ --><title>Operations-Add Interchange</title><!-- Style -->
+<html lang="en">
+<head>
+<title>JMRI OperationsPro - Add Interchange</title>
 
-
-
-
-
+<!-- Style -->
 <meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
 <link rel="stylesheet" type="text/css" href="/css/default.css" media="screen">
 <link rel="stylesheet" type="text/css" href="/css/print.css" media="print">
 <link rel="icon" href="/images/jmri.ico" type="image/png">
-<link rel="home" title="Home" href="/"><!-- /Style --></head><body>
-<!--#include virtual="/Header" -->
+<link rel="home" title="Home" href="/">
+<!-- /Style -->
+</head>
 
+<body>
+<!--#include virtual="/Header" -->
 <!--#include virtual="Sidebar" -->
 <div id="mainContent">
 
 <a name="Top"></a>
 <h1>Using JMRI&reg; to Operate Trains</h1>
-<h1>Operations Add Classification/Interchange</h1>
+<h2>OperationsPro: Add Classification/Interchange</h2>
 
 <div align="right">
 <p><a href="Ops_AddLocations.shtml">Back</a></p>
@@ -26,71 +27,71 @@
 </div>
 
 <hr>
-<p align="left">Add<a href="Ops_Locations.shtml"> Location as Classification/Interchange</a> and the <strong>Add Location </strong>window is used to add and Classification/Interchange.</p>
+<p align="left">Add <a href="Ops_Locations.shtml">Location as Classification/Interchange</a> and the <strong>Add Location</strong> window is used to add a Classification/Interchange.</p>
 <p><img src="images/Ops_addInterchangeTrack01.png" alt="add interchange" height="640" width="772"></p>
 <p><br>
-  To add a location as an Classification/Interchange: in the <strong>Add Location</strong> window, type the<strong> Name</strong>
+  To add a Location as a Classification/Interchange: in the <strong>Add Location</strong> window, type the <strong>Name</strong>
   <input name="textfield" id="textfield" value="SP interchange" type="text">
-of the Classification/Interchange location, note most of the window is
-greyed out until the location is added. The location name must be
-unique; the program will not allow two locations with identical names.
-However, if you want more than one location to have the same name for
-your manifests and switch lists, add a hyphen and a number to the
-locations name. For example, "Boston-1" and "Boston-2" will print as
+of the Classification/Interchange Location. Note that most fields in the window are
+greyed out until a Location is added. The Location Name must be
+unique; the program will not allow two Locations with identical names.
+However, if you want more than one Location to have the same name for
+your Manifests and Switch Lists, add a hyphen and a number to the end of the
+Locations Name. For example, "Boston-1" and "Boston-2" will both print as
 "Boston". The program will remove the hyphen and number when printing
-manifests and switch lists.</p>
+Manifests and Switch Lists.</p>
 <p>Select <strong>Operations at this location</strong>
   <input name="radio" id="radio" value="radio" checked="checked" type="radio">
-  <strong>  Classifcation/
+    <strong>Classification/
   Interchange</strong>, then press 
   <input name="button" id="button" value="Add Location" type="submit">
-  at the bottom of the window.</p>
-<p>This opens the <strong>Add Location</strong> window with all the options enabled. Now you will want to add the tracks to the Classification/interchange.</p>
+  at the bottom of the pane.</p>
+<p>This opens the <strong>Add Location</strong> window with all the options enabled. Now you can add Tracks to the Classification/Interchange.</p>
 <p><img src="images/Ops_addInterchangeTrack02.png" alt="interchange" height="640" width="772"></p>
-<p>You may select <strong>This location is serviced by trains traveling</strong>, select at least one or any number of the directions depending on access to your interchaznge. We have selected
+<p>You may select <strong>This location is serviced by trains traveling</strong>, select at least one or any number of the directions depending on access to your interchange. We have selected
   
   <input name="checkbox" id="checkbox" checked="checked" type="checkbox">
   <strong>
   East 
   <input name="checkbox2" id="checkbox2" checked="checked" type="checkbox">
-  West</strong> for this interchange.</p>
-<p>For example, if only south bound trains can access the location
+  West</strong> for this Interchange.</p>
+<p>For example, if only south bound trains can access the Location
 select "South" and deselect the other directions. This can be useful if
-you want to support only trailing point switching for a given location.
+you want to support only trailing point switching for a given Location.
 </p>
-<p>Next <strong>Select the rolling stock serviced by this location</strong>, you can control the rolling stock a location can service. Push
+<p>Next <strong>Select the rolling stock serviced by this location</strong>, you can control the rolling stock a Location can service. Push
   <input name="button7" id="button7" value="Clear All" type="submit">
-  the   to deselect all types, or
+  the to deselect all Types, or
   <input name="button8" id="button8" value="Select All" type="submit">
-to select all types,  then select or deselect the rolling stock you wish the location to  accept.</p>
-<p>Since the <strong>Operations at this location </strong>is a
+to select all types,  then select or deselect the rolling stock you wish the Location to accept.</p>
+<p>Since the <strong>Operations at this location </strong>is of type
   <input name="radio2" id="radio2" value="radio2" checked="checked" type="radio">
-  <strong>Interchange</strong> the
-  <input name="button4" id="button4" value="Add Cflassificatio/Interchange Track" type="submit">
-is now enabled near the bottom of the window. </p>
-<p>We also have the option to
+  <strong>Classification/Interchange</strong> the
+  <input name="button4" id="button4" value="Add Classification/Interchange Track" type="submit">
+is now enabled near the bottom of the pane.</p>
+<p>You also have the option to
   <input name="button5" id="button5" value="Delete Location" type="submit">
   or
   <input name="button6" id="button6" value="Save Location" type="submit">
 </p>
 <p>Press
-  <input name="button9" id="button9" value="Add Classificaation/Interchange Track" type="submit">
-then the <strong>Add Classification/Interchange Track</strong> window is displayed, so  you can detail the siding. </p>
+  <input name="button9" id="button9" value="Add Classification/Interchange Track" type="submit">
+to display the <strong>Add Classification/Interchange Track</strong> pane, where you can detail the Siding:</p>
 <p>&nbsp;</p>
 <table border="0" cellpadding="2" cellspacing="1" width="90%">
   <tbody><tr>
     <td align="left" valign="top" width="48%"><img src="images/Ops_AddInterchangeTrack03.png" alt="add interchange " height="878" width="750"></td>
     <td align="left" valign="top" width="52%"><p>In <strong>Name</strong>
       <input name="textfield2" id="textfield2" value="Track1" type="text">
-      type the specific  track to be serviced at this location.</p>
+      fill in the new name of a specific Track to be serviced at this Location.</p>
       <p><strong>Length</strong>
         <input name="textfield3" id="textfield3" value="1500" size="10" type="text">
         of the Yard track in scale feet. You may enter the measurement in actual inches as
         <input name="textfield4" id="textfield4" value="6&quot;" size="5" type="text">
-        and the program will convert to the scale feet that you select during setup. </p>
+        and the program will convert to the scale feet that you select in your Preferences.</p>
       <p>Press
         <input name="button10" id="button10" value="Add Classification/Interchange Track" type="submit">
-    the siding track is added and the greyed out features are activated.</p></td>
+    so the siding track is added to the Location and the greyed out features are activated.</p></td>
   </tr>
 </tbody></table>
 <table border="0" cellpadding="2" cellspacing="1" width="90%">
@@ -105,27 +106,27 @@ then the <strong>Add Classification/Interchange Track</strong> window is display
         <input name="radio4" id="radio4" value="radio4" type="radio">
         <strong>Accept only<br>
         </strong><img src="images/Ops_AddInterchangeTrack04-01.png" height="119" width="408"><br>
-      Allows you to list the railroads whose rolling stock you will accept.</p>
+      Allows you to list the railroads whose rolling stock you will accept here.</p>
       <p>
         <input name="radio5" id="radio5" value="radio5" type="radio">
         <strong>Exclude </strong><br>
       Accept all rolling stock except from those railroads that are excluded.</p>
       <p><img src="images/Ops_AddInterchangeTrack04-02.png" height="104" width="414"></p>
-<p>We will use the default. If you want to edit the roads accepted go to <a href="Ops_AddCars.shtml">Add Cars </a>then Edit Roads to add a road that is not in the drop-down list.</p>
-      <p><strong>Select the loads serviced by this track</strong></p>
+<p>We will use the default. If you want to edit the Roads accepted go to <a href="Ops_AddCars.shtml">Add Cars </a>then Edit Roads to add a Road that is not in the drop-down list.</p>
+      <p><strong>Select the Loads serviced by this Track</strong></p>
       <p>
         <input name="radio3" id="radio12" value="radio3" checked="checked" type="radio">
         <strong>Accept all</strong></p>
-      <p>Default accepts any load.</p>
+      <p>Default accepts any Load.</p>
       <p>
         <input name="radio4" id="radio13" value="radio4" type="radio">
         <strong>Accept only<br>
         <img src="images/Ops_AddInterchangeTrack04-03.png" alt="interchange" height="87" width="510"></strong>      </p>
-      <p>Allows you to list the loads you will accept.</p>
+      <p>Allows you to list the Loads you will accept at this Track.</p>
       <p>
         <input name="radio5" id="radio14" value="radio5" type="radio">
         Exclude<br>
-        <img src="images/Ops_AddInterchangeTrack04-04.png" alt="interchange" height="89" width="513">Accept all loads except from those  that are excluded.</p>
+        <img src="images/Ops_AddInterchangeTrack04-04.png" alt="interchange" height="89" width="513">Accept all Loads except those types that are excluded.</p>
 <p><strong>Select pick up car order</strong></p>
       <p>
         <input name="radio3" id="radio18" value="radio3" checked="checked" type="radio">
@@ -137,7 +138,7 @@ then the <strong>Add Classification/Interchange Track</strong> window is display
       <p>
         <input name="radio5" id="radio20" value="radio5" type="radio">
       <strong>Last In First Out (LIFO)</strong></p>
-<p><strong>Select trains or routes for car set outs</strong></p>
+<p><strong>Select Trains or Routes for Car set outs</strong></p>
       <p>
         <input name="radio6" id="radio6" value="radio6" checked="checked" type="radio">
       <strong>Any </strong>-- default</p>
@@ -182,19 +183,20 @@ then the <strong>Add Classification/Interchange Track</strong> window is display
       Exclude Routes</strong></p>
       <p><img src="images/Ops_AddInterchangeTrack04-08.png" height="123" width="442"><br>
       </p>
-      <p>We will use the default go to links to setup Trains or Routes. The Trains and Routes must be created prior to selecting.</p>
+      <p>We will use the default <input name="radio6" id="radio6" value="radio6" checked="checked" type="radio">
+      <strong>Any </strong> to setup Trains or Routes. The Trains and Routes must be created prior to selecting.</p>
       <p>You may enter a <strong>Comment</strong>
         <input name="textfield5" id="textfield5" type="text">
-        for the track.</p>
+        for the Track.</p>
       <p>You may now press
         <input name="button11" id="button11" value="Add Classification/Interchange Track" type="submit">
-        to add to the location or press
+        to add to the Location or press
         <input name="button12" id="button12" value="Delete Track" type="submit">
-      if you do not want to store the track.</p>
-      <p>If you want to add another track to this interchange location, then enter new data and Press
+      if you do not want to store the Track.</p>
+      <p>If you want to add another Track to this Interchange Location, then enter new data and press
         <input name="button13" id="button13" value="Save Classification/Interchange Track" type="submit">
-to add the track.</p>
-      <p>Close the window when done with this location.</p></td>
+to add the next Track.</p>
+      <p>Close the window when done with this Location.</p></td>
   </tr>
 </tbody></table>
 <p>The <strong>Add Location</strong> window shows one Interchange track at the SP interchange</p>
@@ -213,16 +215,15 @@ and the <strong>Edit Interchange Track</strong> window will open.</p>
         to save the changes.</p>
       <p>You may also
         <input name="button16" id="button16" value="Delete Track" type="submit">
-        from your data base.</p>
-      <p>When done with editing close the window. </p></td>
+        from your database.</p>
+      <p>When done with editing close the <strong>Add Classification/Interchange Track</strong> window. </p></td>
   </tr>
 </tbody></table>
-<p>The Locations window shows all the locations in your database.</p>
-<p>You may Edit any one of them, which opens the<strong> Edit Location</strong> window, which is the same as the <a href="Ops_Locations.shtml"><strong>Add Location</strong></a> window except it contains the info for the location you are editing.</p>
+<p>The Locations window shows all the Locations in your OperationsPro database.</p>
+<p>You may edit any one of them by clicking on <input name="button16" id="button16" value="Edit" type="submit">, which opens the <strong>Edit Location</strong> window, which is the same as the <a href="Ops_Locations.shtml"><strong>Add Location</strong></a> window except it already contains the info for the Location you are editing.</p>
 <p><img style="width: 808px; height: 283px;" alt="locations" src="images/Ops_Location02.png"><br>
 </p>
-<p>You may add as many locations and track as you need to complete the description of your layout.</p>
-<p>&nbsp;</p>
+<p>You may add as many Locations and Tracks as you need to complete the description of your layout.</p>
 
 <hr>
 
@@ -232,4 +233,7 @@ and the <strong>Edit Interchange Track</strong> window will open.</p>
 </div>
 
 <!--#include virtual="/Footer" -->
-</div></body></html>
+</div>
+</div>
+</body>
+</html>

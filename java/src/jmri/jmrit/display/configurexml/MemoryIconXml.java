@@ -75,11 +75,6 @@ public class MemoryIconXml extends PositionableLabelXml {
         return element;
     }
 
-    public boolean load(Element element) {
-        log.error("Invalid method called");
-        return false;
-    }
-
     /**
      * Load, starting with the memoryicon element, then all the value-icon pairs
      *
@@ -166,5 +161,5 @@ public class MemoryIconXml extends PositionableLabelXml {
         l.displayState();
     }
 
-    static Logger log = LoggerFactory.getLogger(MemoryIconXml.class.getName());
+    private final static Logger log = LoggerFactory.getLogger(MemoryIconXml.class.getName());
 }

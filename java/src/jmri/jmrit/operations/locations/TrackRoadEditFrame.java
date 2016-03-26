@@ -169,14 +169,11 @@ public class TrackRoadEditFrame extends OperationsFrame implements java.beans.Pr
             enableButtons(false);
         }
 
-        // build menu
-        // JMenuBar menuBar = new JMenuBar();
-        // _toolMenu = new JMenu(Bundle.getMessage("Tools"));
-        // menuBar.add(_toolMenu);
-        // setJMenuBar(menuBar);
-        // load
         updateRoadComboBox();
         updateRoadNames();
+        
+        // add help menu to window
+        addHelpMenu("package.jmri.jmrit.operations.Operations_RoadOptions", true); // NOI18N
 
         initMinimumSize(new Dimension(Control.panelWidth500, Control.panelHeight400));
     }
@@ -303,7 +300,7 @@ public class TrackRoadEditFrame extends OperationsFrame implements java.beans.Pr
     }
 
     public void propertyChange(java.beans.PropertyChangeEvent e) {
-        if (Control.showProperty) {
+        if (Control.SHOW_PROPERTY) {
             log.debug("Property change: ({}) old: ({}) new: ({})", e.getPropertyName(), e.getOldValue(), e
                     .getNewValue());
         }
@@ -316,5 +313,5 @@ public class TrackRoadEditFrame extends OperationsFrame implements java.beans.Pr
         }
     }
 
-    static Logger log = LoggerFactory.getLogger(TrackRoadEditFrame.class.getName());
+    private final static Logger log = LoggerFactory.getLogger(TrackRoadEditFrame.class.getName());
 }

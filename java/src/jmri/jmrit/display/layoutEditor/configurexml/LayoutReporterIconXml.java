@@ -3,8 +3,6 @@ package jmri.jmrit.display.layoutEditor.configurexml;
 import jmri.jmrit.display.configurexml.PositionableLabelXml;
 import jmri.jmrit.display.configurexml.ReporterIconXml;
 import org.jdom2.Element;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 
 /**
  * Dummy class, just present so files that refer to this class (e.g. pre JMRI
@@ -35,11 +33,6 @@ public class LayoutReporterIconXml extends PositionableLabelXml {
         return tmp.store(o);
     }
 
-    public boolean load(Element element) {
-        log.error("Invalid method called");
-        return false;
-    }
-
     /**
      * Create a LayoutPositionableLabel, then add to a target JLayeredPane
      *
@@ -52,6 +45,4 @@ public class LayoutReporterIconXml extends PositionableLabelXml {
         tmp.load(element, o);
         // create the object
     }
-
-    static Logger log = LoggerFactory.getLogger(LayoutReporterIconXml.class.getName());
 }

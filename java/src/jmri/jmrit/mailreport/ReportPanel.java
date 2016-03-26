@@ -2,6 +2,7 @@
 package jmri.jmrit.mailreport;
 
 import apps.PerformFileModel;
+import apps.StartupActionsManager;
 import java.awt.FlowLayout;
 import java.io.File;
 import java.io.FileInputStream;
@@ -22,6 +23,7 @@ import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JTextArea;
 import javax.swing.JTextField;
+import jmri.InstanceManager;
 import jmri.profile.Profile;
 import jmri.profile.ProfileManager;
 import jmri.util.MultipartMessage;
@@ -192,14 +194,11 @@ public class ReportPanel extends JPanel {
             if (checkPanel.isSelected()) {
                 log.debug("prepare panel attachment");
                 // Check that some startup panel files have been loaded
-                List <PerformFileModel>pfmList = PerformFileModel.rememberedObjects();
-                if (pfmList != null) {
-                    for (int i = 0; i < pfmList.size(); i++) {
-                        String fn = pfmList.get(i).getFileName();
-                        File f = new File(fn);
-                        log.debug("add startup panel file: {}", f);
-                        msg.addFilePart("logfileupload[]", f);
-                    }
+                for (PerformFileModel m : InstanceManager.getDefault(StartupActionsManager.class).getActions(PerformFileModel.class)) {
+                    String fn = m.getFileName();
+                    File f = new File(fn);
+                    log.debug("add startup panel file: {}", f);
+                    msg.addFilePart("logfileupload[]", f);
                 }
                 // Check that a manual panel file has been loaded
                 File file = jmri.configurexml.LoadXmlUserAction.getCurrentFile();

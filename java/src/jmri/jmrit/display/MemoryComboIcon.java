@@ -27,15 +27,11 @@ import org.slf4j.LoggerFactory;
  * what it finds.
  * <P>
  * @author Pete Cressman Copyright (c) 2012
- * @version $Revision: 18229 $
  * @since 2.7.2
  */
 public class MemoryComboIcon extends PositionableJPanel
         implements java.beans.PropertyChangeListener, ActionListener {
 
-    /**
-     *
-     */
     private static final long serialVersionUID = 5312988172386396581L;
     JComboBox<String> _comboBox;
     ComboModel _model;
@@ -68,12 +64,12 @@ public class MemoryComboIcon extends PositionableJPanel
         }
         setPopupUtility(new PositionablePopupUtil(this, _comboBox));
     }
+    
+    public JComboBox<String> getTextComponent() {
+        return _comboBox;
+    }
 
     class ComboModel extends DefaultComboBoxModel<String> {
-
-        /**
-         *
-         */
         private static final long serialVersionUID = 2915042785923780735L;
 
         ComboModel() {
@@ -101,6 +97,7 @@ public class MemoryComboIcon extends PositionableJPanel
         }
     }
 
+    @Override
     public Positionable deepClone() {
         String[] list = new String[_model.getSize()];
         for (int i = 0; i < _model.getSize(); i++) {
@@ -110,8 +107,7 @@ public class MemoryComboIcon extends PositionableJPanel
         return finishClone(pos);
     }
 
-    public Positionable finishClone(Positionable p) {
-        MemoryComboIcon pos = (MemoryComboIcon) p;
+    protected Positionable finishClone(MemoryComboIcon pos) {
         pos.setMemory(namedMemory.getName());
         return super.finishClone(pos);
     }
@@ -340,5 +336,5 @@ public class MemoryComboIcon extends PositionableJPanel
         namedMemory = null;
     }
 
-    static Logger log = LoggerFactory.getLogger(MemoryComboIcon.class.getName());
+    private final static Logger log = LoggerFactory.getLogger(MemoryComboIcon.class.getName());
 }

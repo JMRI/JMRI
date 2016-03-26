@@ -1,15 +1,16 @@
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
-<html lang="en"><head><!-- Copyright ($Author$) 2009 --><!-- $Id$ -->
+<html lang="en">
+<head><title>DecoderPro Throttle</title>
 
-
-
-
-
-<title>DecoderPro Throttle</title><!-- Style --><meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
+<!-- Style -->
+<meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
 <link rel="stylesheet" type="text/css" href="/css/default.css" media="screen">
 <link rel="stylesheet" type="text/css" href="/css/print.css" media="print">
 <link rel="icon" href="/images/jmri.ico" type="image/png">
-<link rel="home" title="Home" href="/"><!-- /Style --></head>
+<link rel="home" title="Home" href="/">
+<!-- /Style -->
+</head>
+
 <body>
 <!--#include virtual="/Header" -->
 
@@ -18,21 +19,20 @@
 
 <a name="Top"></a>
 <h1>DecoderPro&reg; Main Window</h1>
-<h1>JMRI&reg; Throttle Window - Toolbar</h1>
+<h2>JMRI&reg; Throttle Window - Toolbar</h2>
 
 <div align="right">
 <p><a href="Main_Throttle.shtml">Back </a></p>
 </div>
 
 <hr>
-<br>
 <img src="images/Main_Throttle_toolbar.png" alt="throttle toolbar" height="118" width="515">
 <p>The Throttle toolbar is enabled from the <a href="Start_Preferences.shtml" target="_blank">Throttles Preferences Pane</a></p>
 <ul>
   <p>Use Throttles preferences window to set the desired preferences.</p>
   <p align="center"><img src="images/Main_Tool01.png" alt="Throttle pref" height="427" width="700"></p>
 </ul>
-<p>&nbsp;</p>
+
 <p>When it is enabled, a Throttle Window can host a set of Throttles.
 You can browse through these throttles: Add a new Throttle in that
 Throttle Window. Once the number of Throttles in a Throttle Window is
@@ -49,16 +49,15 @@ greater than one, Next and Previous Icons are enabled. </p>
   <li><img src="images/Main_Throttle_toolbar_edit.png" alt="edit" height="49" width="50">Switch to or revert from Edit Throttle mode.</li>
   <li><img src="images/Main_Throttle_toolbar_list.png" alt="listr" height="51" width="48"> Opens the <a href="Main_Throttle_List.shtml">Local JMRI Window</a></li>
 </ul>
-<p>&nbsp;</p>
-<div>
-  <div align="right"></div>
-</div>
-<div> </div>
-<hr>
 
+  <div align="right"></div>
+<hr>
 <div align="right">
 <p><a href="Main_Throttle.shtml">Back </a></p>
 </div>
 
 <!--#include virtual="/Footer" -->
-</div></body></html>
+  </div><!-- closes #mainContent-->
+ </div> <!-- closes #mBody-->
+</body>
+</html>

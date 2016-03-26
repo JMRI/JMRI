@@ -1,502 +1,218 @@
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
-<html lang="en"><head>
+<html lang="en">
+<head>
+<title>JMRI DP3 Manual: Index</title>
 
-<!-- Copyright ($Author$) 2009 --><!-- $Id$ --><title>Decoder Pro Manual: Index</title><!-- Style -->
+<meta name="Author" content="Dale A. Tripp">
+<meta name="Author" content="Bruce Shanks">
+<meta name="Author" content="Egbert Broerse">
 
-
-
-
-
-
-
-<meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
-
+<!-- Style -->
+<meta http-equiv="content-type" content="text/html; charset=iso-8859-1">
 <link rel="stylesheet" type="text/css" href="/css/default.css" media="screen">
-
 <link rel="stylesheet" type="text/css" href="/css/print.css" media="print">
-
 <link rel="icon" href="/images/jmri.ico" type="image/png">
+<link rel="home" title="Home" href="/"><!-- /Style -->
+<!-- /Style -->
+</head>
 
-<link rel="home" title="Home" href="/"><!-- /Style --></head><body>
-
+<body>
 <!--#include virtual="/Header" -->
-
 <!--#include virtual="Sidebar" -->
 
 <div id="mainContent"><a name="Top"></a>
 
-<h1>DecoderPro&reg;</h1>
+<h1>JMRI&reg;: DecoderPro3&reg; Manual</h1>
+<p class="important">This Manual deals with DP3 up to version 3.6.<br>
+Online Help for the current version of JMRI&reg; DecoderPro&reg; is <a href="../../html/apps/DecoderPro/index.shtml">here</a>.</p>
 
-<p>&nbsp;
+<p><strong>DecoderPro3&reg;</strong> is a Java-based cross-platform application for model railroaders.</p>
 
+<p>DecoderPro3&reg; can run on any computer system that will run Java 1.6.0 or later,
+whether it is Macintosh, Windows, or Linux based. It does require that Java be installed on the computer.<br>
+You can get Java as a free (but large) download at: <a href="http://java.com/download/" target="_blank">java.com/download/</a>
 </p>
 
-<p><strong>DecoderPro is a Java-based cross-platform
-
-application for model railroaders. </strong></p>
-
-<hr> DecoderPro
-
-&reg; can run on any computer system that will run Java 1.6.0 or later,
-
-whether it is Macintosh, Windows, or Linux based. It does require that
-
-Java be installed on the computer. You can get Java as a free (but very
-
-large...) download at:
-
-<p><a href="http://java.sun.com/getjava/" target="_blank">http://java.sun.com/getjava/</a>
-
-</p>
-
-<p>Note: All screen shots in this manual are from a Windows
-
-machine using the "Metal" User Interface option . While your screens
-
+Notes:
+<ol>
+<li>All screen shots in this manual are from a Windows
+machine using the "Metal" User Interface option. While your screens
 will probably differ in some layout details, they will be essentially
-
-the same. All programming examples shown are with Digitrax PR3(MS100
-
+the same. All programming examples shown are with Digitrax PR3 (MS100
 mode) connected to Digitrax Super Chief Radio Command Station. Most of
-
 the decoders in locomotive samples will be Digitrax, except for sound
-
 examples.
-
-</p>
-
-<p>Note: This entire manual has been updated to correspond to
-
-JMRI&reg; 3.6 DecoderPro 3 only, and the SHTML verified using HTML4 and
-
+</li>
+<li>This entire manual has been updated to correspond to
+JMRI&reg; 3.6 DecoderPro only, and the SHTML verified using HTML4 and
 Cascading Style Sheets. If the formatting looks odd, you probably need
+to update your browser.</li>
+<li>DecoderPro&reg; v3.x was at one time known as DecoderPro3&reg; v3.x, however since JMRI version 4 we leave out the 3 in the name.</li>
+</ol>
 
-to update your browser. </p>
-
-<p> <a name="index"></a>
-
-</p>
-
-<div align="right"></div>
-
-<h1>Table of Contents</h1>
+<h2 name="index" id="index">Table of Contents</h2>
 
 <h4><a name="Installing"></a>Installing JMRI</h4>
-
 <ul>
-
-<li><a href="Installing_JMRI.shtml"><strong>Preparing
-
-to Install JMRI</strong></a></li>
-
-<li><strong><a href="Installing_JMRI.shtml#InstallJMRI">Installing
-
-JMRI Software</a>
-
-</strong></li>
-
+<li><a href="Installing_JMRI.shtml"><strong>Preparing to Install JMRI</strong></a></li>
+<li><strong><a href="Installing_JMRI.shtml#InstallJMRI">Installing JMRI Software</a></strong></li>
 </ul>
 
-<h4> <a name="GettingStarted" id="GettingStarted"></a>Getting
-
-started</h4>
-
+<h4 name="GettingStarted" id="GettingStarted">Getting started</h4>
 <ul>
-
-<li>
-
-<a href="Start_DCC.shtml"><strong>What is DCC?</strong></a></li>
-
-<li> <strong><a href="Start_DCC_Systems.shtml">What
-
-DCC systems will DecoderPro&reg; work with?</a></strong></li>
-
-<li> <strong><a href="Start_DCC_Hardware.shtml">What
-
-hardware do I need?</a></strong></li>
-
-<li> <strong><a href="Start_DecoderPro.shtml">How
-
-do I start the program?</a></strong></li>
-
-<li><strong><a href="Start_DecoderPro_New.shtml">How
-
-do I start DecoderPro program for First Time User?</a></strong></li>
-
-<li> <strong><a href="Start_Preferences.shtml">How
-
-do I set up my preferences?</a></strong></li>
-
+<li><a href="Start_DCC.shtml"><strong>What is DCC?</strong></a></li>
+<li> <strong><a href="Start_DCC_Systems.shtml">What DCC systems will DecoderPro3&reg; work with?</a></strong></li>
+<li> <strong><a href="Start_DCC_Hardware.shtml">What hardware do I need?</a></strong></li>
+<li> <strong><a href="Start_DecoderPro.shtml">How do I start the program?</a></strong></li>
+<li><strong><a href="Start_DecoderPro_New.shtml">How do I start DecoderPro3 program for First Time User?</a></strong></li>
+<li> <strong><a href="Start_Preferences.shtml">How do I set up my Preferences?</a></strong></li>
 </ul>
 
-<h4>
-
-<a name="Setting up"></a>Using DecoderPro</h4>
-
+<h4 name="Setting up" id="Setting up">Using DecoderPro3</h4>
 <ul>
-
-<li><a href="Programmer_Setup.shtml"><strong>How
-
-do I set up to program a decoder?</strong></a></li>
-
+<li><a href="Programmer_Setup.shtml"><strong>How do I set up to program a decoder?</strong></a></li>
 </ul>
 
 <h4>DecoderPro Programming Modes</h4>
-
 <ul>
-
-<li><a href="Programmer_SingleCV.shtml"><strong>Single
-
-CV Programmer</strong></a></li>
-
-<li><strong><a href="Programmer_ServiceMode.shtml">Service
-
-Mode Programmer</a></strong></li>
-
-<li><strong><a href="Programmer_OpsMode.shtml">Ops
-
-Mode Programming</a></strong></li>
-
+<li><a href="Programmer_SingleCV.shtml"><strong>Single CV Programmer</strong></a></li>
+<li><strong><a href="Programmer_ServiceMode.shtml">Service Mode Programmer</a></strong></li>
+<li><strong><a href="Programmer_OpsMode.shtml">Ops Mode Programming</a></strong></li>
 </ul>
 
-<h4> <a name="Basic Programmer"></a>
-
-The Basic Programmer</h4>
-
+<h4 name="Basic Programmer"id="Basic Programmer">The Basic Programmer</h4>
 <ul>
-
-<li><a href="Basic_Start.shtml"><strong>Entering
-
-locomotives in the "Roster"</strong></a></li>
-
-<li><strong><a href="Basic_BasicPane.shtml">The
-
-basic programmer</a></strong></li>
-
-<li><strong><a href="Basic_BasicPane.shtml#ReadData">Reading
-
-the data from the decoder</a></strong></li>
-
-<li><strong><a href="Basic_BasicPane.shtml#EnterEditData">Entering and
-
-editing new data</a></strong></li>
-
-<li><strong><a href="Basic_BasicPane.shtml#WriteData">Writing
-
-the new data to the decoder</a></strong></li>
-
-<li><strong><a href="Basic_BasicPane.shtml#SaveData">Saving
-
-the new data to a file</a></strong></li>
-
-<li><strong><a href="Basic_BasicPane.shtml#DoMore">What
-
-if I need to do more?</a></strong></li>
-
+<li><a href="Basic_Start.shtml"><strong>Entering Locomotives in the "Roster"</strong></a></li>
+<li><strong><a href="Basic_BasicPane.shtml">The Basic Programmer</a></strong></li>
+<li><strong><a href="Basic_BasicPane.shtml#ReadData">Reading the data from the decoder</a></strong></li>
+<li><strong><a href="Basic_BasicPane.shtml#EnterEditData">Entering and editing new data</a></strong></li>
+<li><strong><a href="Basic_BasicPane.shtml#WriteData">Writing the new data to the decoder</a></strong></li>
+<li><strong><a href="Basic_BasicPane.shtml#SaveData">Saving the new data to a file</a></strong></li>
+<li><strong><a href="Basic_BasicPane.shtml#DoMore">What if I need to do more?</a></strong></li>
 </ul>
 
-<h4>
-
-<a name="Advanced Programmer"></a>The Comprehensive
-
-Programmer</h4>
-
+<h4 name="Advanced Programmer" id="Advanced Programmer">The Comprehensive Programmer</h4>
 <ul>
-
-<li><a href="Comp_Setup_Roster.shtml"><strong>Set-up
-
-and Roster Panes</strong></a></li>
-
-<li><strong><a href="Adv_FunctionLabel.shtml">Function
-
-Labels Pane</a></strong></li>
-
-<li><strong><a href="RosterMedia.shtml">Roster
-
-Media</a></strong></li>
-
-<li><strong><a href="Comp_Basic.shtml">Expanded
-
-Basic Pane</a></strong></li>
-
-<li><strong><a href="Comp_Motor.shtml">Motor
-
-Control Pane</a></strong></li>
-
-<li><strong><a href="Comp_Speed.shtml">Basic Speed
-
-Control Pane</a></strong></li>
-
-<li><strong><a href="Comp_Speed_Talble.shtml" target="_parent">Speed Table Pane</a></strong></li>
-
-<li><strong><a href="Comp_FMap.shtml">Function
-
-Mapping Pane</a></strong></li>
-
-<li><strong><a href="Comp_LightFX.shtml">Lights
-
-Pane</a></strong></li>
-
-<li><strong><a href="Comp_Consist.shtml">Consisting
-
-Pane</a></strong></li>
-
-<li><strong><a href="Comp_Advanced.shtml">Advanced
-
-Features Pane</a></strong></li>
-
-<li><strong><a href="Comp_Analog.shtml">Analog
-
-Controls Pane</a></strong></li>
-
-<li><strong><a href="Comp_SoundFX.shtml">Sound
-
-Pane</a></strong></li>
-
-<li><strong><a href="Comp_SoundLevels.shtml">
-
-Sound Levels Pane</a></strong></li>
-
-<li><strong><a href="Comp_GlobalCVs.shtml">Global
-
-CV Pane</a></strong></li>
-
-<li><strong><a href="Comp_ManfSpecific.shtml">Manufacturer-Specific
-
-Pane</a></strong></li>
-
-<li><strong><a href="Comp_PrintData.shtml">Printing
-
-the Decoder Data</a></strong></li>
-
+<li><a href="Comp_Setup_Roster.shtml"><strong>Set-up and Roster Panes</strong></a></li>
+<li><strong><a href="Adv_FunctionLabel.shtml">Function Labels Pane</a></strong></li>
+<li><strong><a href="RosterMedia.shtml">Roster Media</a></strong></li>
+<li><strong><a href="Comp_Basic.shtml">Expanded Basic Pane</a></strong></li>
+<li><strong><a href="Comp_Motor.shtml">Motor Control Pane</a></strong></li>
+<li><strong><a href="Comp_Speed.shtml">Basic Speed Control Pane</a></strong></li>
+<li><strong><a href="Comp_Speed_Talble.shtml">Speed Table Pane</a></strong></li>
+<li><strong><a href="Comp_FMap.shtml">Function Mapping Pane</a></strong></li>
+<li><strong><a href="Comp_LightFX.shtml">Lights Pane</a></strong></li>
+<li><strong><a href="Comp_Consist.shtml">Consisting Pane</a></strong></li>
+<li><strong><a href="Comp_Advanced.shtml">Advanced Features Pane</a></strong></li>
+<li><strong><a href="Comp_Analog.shtml">Analog Controls Pane</a></strong></li>
+<li><strong><a href="Comp_SoundFX.shtml">Sound Pane</a></strong></li>
+<li><strong><a href="Comp_SoundLevels.shtml">Sound Levels Pane</a></strong></li>
+<li><strong><a href="Comp_GlobalCVs.shtml">Global CV Pane</a></strong></li>
+<li><strong><a href="Comp_ManfSpecific.shtml">Manufacturer-Specific Pane</a></strong></li>
+<li><strong><a href="Comp_PrintData.shtml">Printing the Decoder Data</a></strong></li>
 </ul>
 
-<h4><a name="Main"></a>DecoderPro&reg; Main
-
-Window</h4>
-
+<h4 name="Main" id="Main">DecoderPro3&reg; Main Window</h4>
 <ul>
-
-<li><a href="dp3_Main_Main.shtml"><strong>Main
-
-Window</strong></a>
-
-<ul>
-
-<li><strong><a href="dp3_menubar.shtml">Menubar</a></strong></li>
-
-<li><strong><a href="dp3_toobar.shtml">Toolbar</a></strong></li>
-
-<li><strong><a href="dp3_rosterTable.shtml">Roster
-
-Table</a></strong></li>
-
-<li><strong><a href="dp3_decoderInfo.shtml">Decoder
-
-Information</a></strong></li>
-
-<li><strong><a href="dp3_Main_Main.shtml#status">Status
-
-Bar</a></strong></li>
-
-</ul>
-
+<li><a href="dp3_Main_Main.shtml"><strong>Main Window</strong></a>
+  <ul>
+  <li><strong><a href="dp3_menubar.shtml">Menubar</a></strong></li>
+  <li><strong><a href="dp3_toobar.shtml">Toolbar</a></strong></li>
+  <li><strong><a href="dp3_rosterTable.shtml">Roster Table</a></strong></li>
+  <li><strong><a href="dp3_decoderInfo.shtml">Decoder Information</a></strong></li>
+  <li><strong><a href="dp3_Main_Main.shtml#status">Status Bar</a></strong></li>
+  </ul>
 </li>
 
-<li><strong>System dependent menu </strong>
-
-<br><ul>
-
-<li><a href="Main_acela.shtml"><strong>Acela</strong></a></li>
-
-<li><strong><a href="Main_CMRI.shtml">CMRI</a></strong></li>
-
-<li><strong><a href="Main_EasyDCC.shtml">EasyDCC</a></strong></li>
-
-<li><strong><a href="Main_GrapeVine.shtml">Grapevine</a></strong></li>
-
-<li><strong><a href="Main_LocoNet.shtml">LocoNet
-
-</a>&nbsp;&nbsp;&nbsp;</strong></li>
-
-<li><strong><a href="Main_NCE.shtml">NCE</a></strong></li>
-
-<li><strong><a href="Main_OakTreeSystems.shtml">OakTreeSystems</a></strong></li>
-
-<li><strong><a href="Main_Powerline.shtml">Powerline</a></strong></li>
-
-<li><strong><a href="Main_QSI.shtml">QSI</a></strong></li>
-
-<li><strong><a href="Main_RPS.shtml">RPS</a></strong></li>
-
-<li><strong><a href="Main_SECSI.shtml">SECSI</a></strong></li>
-
-<li><strong><a href="Main_SPROG.shtml">SPROG</a></strong></li>
-
-<li><strong><a href="Main_TMCC.shtml">TMCC</a></strong></li>
-
-<li><strong><a href="Main_wangrow.shtml">wangrow</a></strong></li>
-
-<li><strong><a href="Main_XpressNet.shtml">XpressNet</a></strong></li>
-
-<li><strong><a href="Main_Zimo.shtml">Zimo</a>
-
-</strong></li>
-
-</ul>
-
+<li><strong>System dependent menu</strong>
+  <ul>
+  <li><a href="Main_acela.shtml"><strong>Acela</strong></a></li>
+  <li><strong><a href="Main_CMRI.shtml">CMRI</a></strong></li>
+  <li><strong><a href="Main_EasyDCC.shtml">EasyDCC</a></strong></li>
+  <li><strong><a href="Main_GrapeVine.shtml">Grapevine</a></strong></li>
+  <li><strong><a href="Main_LocoNet.shtml">LocoNet</a></strong></li>
+  <li><strong><a href="Main_NCE.shtml">NCE</a></strong></li>
+  <li><strong><a href="Main_OakTreeSystems.shtml">OakTreeSystems</a></strong></li>
+  <li><strong><a href="Main_Powerline.shtml">Powerline</a></strong></li>
+  <li><strong><a href="Main_QSI.shtml">QSI</a></strong></li>
+  <li><strong><a href="Main_RPS.shtml">RPS</a></strong></li>
+  <li><strong><a href="Main_SECSI.shtml">SECSI</a></strong></li>
+  <li><strong><a href="Main_SPROG.shtml">SPROG</a></strong></li>
+  <li><strong><a href="Main_TMCC.shtml">TMCC</a></strong></li>
+  <li><strong><a href="Main_wangrow.shtml">Wangrow</a></strong></li>
+  <li><strong><a href="Main_XpressNet.shtml">XpressNet</a></strong></li>
+  <li><strong><a href="Main_Zimo.shtml">Zimo</a></strong></li>
+  </ul>
 </li>
-
 </ul>
 
-<h4><a name="Error"></a>Error Messages</h4>
-
+<h4 name="Error" id="Error">Error Messages</h4>
 <ul>
-
-<li><a href="Error.shtml"><strong>Decoder
-
-Programmer Error Messages</strong></a></li>
-
+<li><a href="Error.shtml"><strong>Decoder Programmer Error Messages</strong></a></li>
 </ul>
 
 <hr>
 
-<p>The <a href="http://jmri.org/Download/index.html">JMRI
-
-download page</a>
-
-is hosted by <a href="http://sourceforge.net">
-
-<img src="images/sflogo.png" alt="SourceForge Logo" align="middle" border="0" height="31" hspace="10" width="88">sourceforge.net</a>.</p>
-
-<p>
-
-To give feedback on this On Line manual, ask questions about things not
-
-covered, or make suggestions for improvements to the manual or the
-
-software,
-
-join us on the JMRI Users mailing list at <a href="http://groups.yahoo.com/group/jmriusers/">
-
-http://groups.yahoo.com/group/jmriusers/</a>
-
-</p>
-
-<p>Suggestions for revisions
-
-are best submitted to the <a href="http://groups.yahoo.com/group/jmriusers/">JMRI E-mail
-
-list</a> in plain text format. This will make it easier to copy
-
-into the files, and help prevent "Microsoft Bloat" in the HTML.
-
-</p>
-
 <p>Thanks for reading, and Let's Run Trains!
-
 </p>
 
+<h3><a name="revisions">Revisions</a></h3>
 <table align="center" border="1" cellpadding="2" cellspacing="1" width="90%">
 
-<caption> Revisions </caption> <tbody>
+<tbody>
 
 <tr>
-
 <th scope="col" width="9%">Version</th>
-
 <th scope="col" width="10%">Revision Date</th>
-
 <th scope="col" width="20%">Editors</th>
-
 <th scope="col" width="61%">Major Revisions</th>
-
 </tr>
 
 <tr>
-
 <td align="left" valign="top">2.14.1</td>
-
 <td align="left" valign="top">2/26/2012</td>
-
 <td align="left" valign="top">Dale A. Tripp<br>
-
-Bruce Shanks<br>
-
-<br>
-
-</td>
-
+Bruce Shanks</td>
 <td align="left" valign="top">
-
-<p>Create DecoderPro&reg; User's Guide</p>
-
-</td>
-
+Create DecoderPro&reg; User's Guide</td>
 </tr>
 
 <tr>
-
 <td align="left" valign="top">3.0</td>
-
 <td align="left" valign="top">8/4/2012</td>
-
-<td align="left" valign="top">
-
-<p>Dale A. Tripp<br>
-
-Bruce Shanks </p>
-
-</td>
-
-<td align="left" valign="top">Update to
-
-version 3.0</td>
-
+<td align="left" valign="top">Dale A. Tripp<br>
+Bruce Shanks </td>
+<td align="left" valign="top">Update to version 3.0</td>
 </tr>
 
 <tr>
-
 <td align="left" valign="top">3.2</td>
-
 <td align="left" valign="top">1/12/2013</td>
-
 <td align="left" valign="top">Dale A.Tripp</td>
-
-<td align="left" valign="top">Update to
-
-version 3.2</td>
-
+<td align="left" valign="top">Update to version 3.2</td>
 </tr>
 
 <tr>
-
 <td align="left" valign="top">3.4</td>
-
 <td align="left" valign="top">8/21/2013</td>
-
 <td align="left" valign="top">Dale A.Tripp</td>
+<td align="left" valign="top">Update to version 3.4</td>
+</tr>
 
-<td align="left" valign="top">Update to
-
-version 3.4</td>
-
-</tr><tr><td>3.6</td><td>2/17/2014</td><td>Dale A. Tripp</td><td>Update to version 3.6</td></tr>
+<tr>
+<td>3.6</td>
+<td>2/17/2014</td>
+<td>Dale A. Tripp</td>
+<td>Update to version 3.6</td>
+</tr>
 
 </tbody>
-
 </table>
 
 <hr>
 
-<div align="right">Go to the
-
-<a href="http://groups.yahoo.com/group/jmriusers/">JMRI
-
-Users home page on Yahoo Groups</a></div>
-
 <!--#include virtual="/Footer" -->
-
-</div>
-
-</body></html>
+  </div><!-- closes #mainContent-->
+ </div> <!-- closes #mBody-->
+</body>
+</html>

@@ -67,7 +67,8 @@ public class LayoutTurntableXml extends AbstractXmlAdapter {
         return element;
     }
 
-    public boolean load(Element element) {
+    @Override
+    public boolean load(Element shared, Element perNode) {
         log.error("Invalid method called");
         return false;
     }
@@ -138,5 +139,5 @@ public class LayoutTurntableXml extends AbstractXmlAdapter {
         p.turntableList.add(l);
     }
 
-    static Logger log = LoggerFactory.getLogger(LayoutTurntableXml.class.getName());
+    private final static Logger log = LoggerFactory.getLogger(LayoutTurntableXml.class.getName());
 }

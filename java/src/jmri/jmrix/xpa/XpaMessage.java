@@ -10,7 +10,7 @@ import org.slf4j.LoggerFactory;
  * @author	Paul Bender Copyright (C) 2004
  * @version	$Revision$
  */
-public class XpaMessage {
+public class XpaMessage implements jmri.jmrix.Message {
 
     public final static int maxSize = 64;
 
@@ -54,16 +54,20 @@ public class XpaMessage {
         }
     }
 
-    public void setOpCode(int i) {
-        _dataChars[0] = (byte) i;
-    }
-
-    public int getOpCode() {
-        return _dataChars[0];
-    }
-
-    public String getOpCodeHex() {
-        return "0x" + Integer.toHexString(getOpCode());
+    // compare two XpaMessages.
+    boolean Equals(XpaMessage m){
+       if (m == null) {
+          return false;
+       } else if (m.getNumDataElements() != this.getNumDataElements() ) {
+          return false;
+       } else {
+         for(int i=0;i<this.getNumDataElements();i++){
+             if(m.getElement(i)!=this.getElement(i)) {
+                return false;
+             }
+         }
+       }
+       return true;
     }
 
     // accessors to the bulk data
@@ -203,7 +207,7 @@ public class XpaMessage {
         return m;
     }
 
-    static Logger log = LoggerFactory.getLogger(XpaMessage.class.getName());
+    private final static Logger log = LoggerFactory.getLogger(XpaMessage.class.getName());
 
 }
 

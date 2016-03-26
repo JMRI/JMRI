@@ -1,8 +1,6 @@
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
 <html lang="en">
 <head>
-<!-- Copyright ($Author$) 2009 -->
-<!-- $Id$ -->
 <title>Using DecoderPro</title>
 
 <!-- Style -->
@@ -21,12 +19,11 @@
 <div id="mainContent">
 
 <h1>DecoderPro&reg; Programming Modes</h1>
-<h1>Service Mode Programmer</h1>
+<h2>Service Mode Programmer</h2>
 
 <div align=right>
 <p><a href="index.shtml">Back to Index</a></p>
 </div>
-
 
 <hr>
 <p>The <strong>Service Mode Programmer</strong> is opened using the <strong>New Loco</strong> icon in the DecoderPro&reg; <strong>Tool Bar</strong> or by selecting locomotive from your roster and selecting 
@@ -70,5 +67,7 @@ The CV  data is written to ANY and ALL decoders on the programming track. When t
 </div>
 
 <!--#include virtual="/Footer" -->
-</body>
+  </div><!-- closes #mainContent-->
+ </div> <!-- closes #mBody-->
+ </body>
 </html>

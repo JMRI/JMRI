@@ -77,15 +77,6 @@ public abstract class AbstractReporterManagerConfigXML extends AbstractNamedBean
     abstract public void setStoreElementClass(Element reporters);
 
     /**
-     * Create a ReporterManager object of the correct class, then register and
-     * fill it.
-     *
-     * @param reporters Top level Element to unpack.
-     * @return true if successful
-     */
-    abstract public boolean load(Element reporters);
-
-    /**
      * Utility method to load the individual Reporter objects. If there's no
      * additional info needed for a specific Reporter type, invoke this with the
      * parent of the set of Reporter elements.
@@ -126,5 +117,5 @@ public abstract class AbstractReporterManagerConfigXML extends AbstractNamedBean
         return InstanceManager.reporterManagerInstance().getXMLOrder();
     }
 
-    static Logger log = LoggerFactory.getLogger(AbstractReporterManagerConfigXML.class.getName());
+    private final static Logger log = LoggerFactory.getLogger(AbstractReporterManagerConfigXML.class.getName());
 }

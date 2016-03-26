@@ -1,3 +1,3 @@
-REM Windows batch file to launch JHelpDev with the current 
+REM Windows batch file to launch JHelpDev with the current directory set
 
-java -DHOMEDIR=${PWD} -classpath ".;jhelpdev.jar;lib/jhall.jar;lib/xmlenc.jar" net.sourceforge.jhelpdev.JHelpDevFrame
+java -DHOMEDIR=${PWD} -classpath ".;jhelpdev.jar;jars/jhall.jar;jars/xmlenc.jar" net.sourceforge.jhelpdev.JHelpDevFrame

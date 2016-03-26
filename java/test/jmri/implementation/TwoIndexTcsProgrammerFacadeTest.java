@@ -1,4 +1,3 @@
-// TwoIndexTcsProgrammerFacadeTest.java
 package jmri.implementation;
 
 import jmri.ProgListener;
@@ -155,6 +154,6 @@ public class TwoIndexTcsProgrammerFacadeTest extends TestCase {
         return suite;
     }
 
-    static Logger log = LoggerFactory.getLogger(TwoIndexTcsProgrammerFacadeTest.class.getName());
+    private final static Logger log = LoggerFactory.getLogger(TwoIndexTcsProgrammerFacadeTest.class.getName());
 
 }

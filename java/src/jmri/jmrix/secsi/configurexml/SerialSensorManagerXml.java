@@ -1,5 +1,6 @@
 package jmri.jmrix.secsi.configurexml;
 
+import jmri.configurexml.JmriConfigureXmlException;
 import jmri.jmrix.secsi.SerialSensorManager;
 import org.jdom2.Element;
 import org.slf4j.Logger;
@@ -28,12 +29,13 @@ public class SerialSensorManagerXml extends jmri.managers.configurexml.AbstractS
         log.error("Invalid method called");
     }
 
-    public boolean load(Element sensors) throws jmri.configurexml.JmriConfigureXmlException {
+    @Override
+    public boolean load(Element shared, Element perNode) throws JmriConfigureXmlException {
         // create the master object
         SerialSensorManager.instance();
         // load individual sensors
-        return loadSensors(sensors);
+        return loadSensors(shared);
     }
 
-    static Logger log = LoggerFactory.getLogger(SerialSensorManagerXml.class.getName());
+    private final static Logger log = LoggerFactory.getLogger(SerialSensorManagerXml.class.getName());
 }

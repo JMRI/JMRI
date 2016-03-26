@@ -1,6 +1,7 @@
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
-<html lang="en"><head>
-<!-- Copyright ($Author$) 2009 --><!-- $Id$ --><title>Operations Set Locomotive Location</title>
+<html lang="en">
+<head>
+<title>Operations Set Locomotive Location</title>
 
 <!-- Style -->
 <meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
@@ -10,21 +11,26 @@
 <link rel="home" title="Home" href="/">
 <!-- /Style -->
 </head>
+
 <body>
-<!--#include virtual="/Header" -->BackB
+<!--#include virtual="/Header" -->
 <!--#include virtual="Sidebar" -->
+
 <div id="mainContent"><a name="Top"></a>
+
 <h1>Using JMRI&reg; to Operate Trains</h1>
-<h1>Set Locomotive Location </h1>
+<h2>Set Locomotive Location </h2>
+
 <div align="right">
 <p><a href="Ops_Engines_menu.shtml">Back </a></p>
 <p><a href="index.shtml#Operations">Back to Index</a></p>
 </div>
-<hr>The Set
-Locomotive Location window and allows you to override the program and
-set an locomotive at a location that is defined in your Operations data
-base. Dialog preceeds the Set Locomotive window
+<hr>
+
+<p>The Set Locomotive Location window allows you to override the program and
+set a Locomotive at a Location that is defined in your Operations database. This dialog superceeds the Set Locomotive window
 <p><img src="images/Ops_Engine_Release.png" alt="release" height="122" width="449"></p>
+
 <table border="0" cellpadding="2" cellspacing="1" width="90%">
 <tbody>
 <tr>
@@ -38,19 +44,18 @@ selected engine.</p>
 <p>Status<br>
 <input name="checkbox" id="checkbox" type="checkbox"> Out of Service<br>
 Takes the Locomotive out of service and will not be assigned by the
-build program<br>
-</p>
+Build program</p>
 <p><strong>Location</strong><br>
 <strong>Name
 <select name="select16" id="select16"><option>Susanville</option></select>
 </strong> and <strong>Track
 <select name="select16" id="select17"><option>#83 Yard Track</option></select>
-</strong>you can set the locomotive at any defined location
+</strong>you can set the Locomotive at any defined Location
 on your layout.<br>
 <input name="checkbox2" id="checkbox2" type="checkbox"> <strong> Auto </strong>limits
 selections to valid locations<br>
 </p>
-<p><strong>Optional--Normally Set by Program--</strong></p>
+<p><strong>Optional - Normally Set by Program--</strong></p>
 <p><strong>Destination </strong>optionally set
 the <strong>Name</strong><strong>
 <select name="select16" id="select18"><option>Lakeview</option></select>
@@ -59,19 +64,23 @@ the <strong>Name</strong><strong>
 </strong>.</p>
 <p><strong>Train</strong>
 <select name="select16" id="select20"><option>SL</option></select>
-optionally set the train.</p>
+optionally set the Train.</p>
 <p> <input name="button17" id="button17" value="Save" type="submit"> press to save the
-locomotive locations that you have set.</p>
+Locomotive Locations that you have set.</p>
 <p>Close the window when completed.</p>
 </td>
 </tr>
 </tbody>
 </table>
+
 <hr>
 <div align="right">
 <p><a href="Ops_Engines_menu.shtml">Back </a></p>
 <p><a href="index.shtml#Operations">Back to Index</a></p>
 </div>
+
 <!--#include virtual="/Footer" -->
 </div>
-</body></html>
+</div>
+</body>
+</html>

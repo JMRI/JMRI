@@ -1,21 +1,15 @@
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
-<!-- $Id$ -->
 <!-- UpDated by Blorec Herv&#233; 2013-10-02-->
 <html lang="fr">
 <head>
   <title>Throttle: Advanced Configuration</title>
   <meta name="keywords" content="JMRI decoderpro dcc nmra throttlepro">
   <meta name="Description" content="Throttle documentation for JMRI project">
-  <meta name="Keywords" content="JMRI">
   <meta name="Author" content="Paul Fraker (paul@frakers.com)">
   <meta name="Language" content="fr">
   <meta name="Robots" content="Index, Follow">
   <meta name="Revisit-After" content="7 Days">
-  <!-- The combination of "Define" and {Header,Style, Logo and Footer} comments -->
-  <!-- are an arbitrary design pattern used by the update.pl script to -->
-  <!-- easily replace the common header/footer code for all the web pages -->
-  <!-- delete the following 2 Defines if you want to use the default JMRI logo -->
-  <!-- or change them to reflect your alternative logo -->
+
   <!-- Style -->
   <meta http-equiv="content-type" content="text/html; charset=iso-8859-1">
   <link rel="stylesheet" type="text/css" href="/css/default.css" media="screen">
@@ -33,16 +27,15 @@
 <h1 style="color:#ff0000">Mise &#224; jour de la Version documentation du R&#233;gulateur
 </span></h1>
 <p>S'il vous pla&#238;t noter que cette documentation a &#233;t&#233; mise &#224; jour, reportez-vous aux liens ci-dessous:</p>
-<ul>
+  <ul>
   <li>Le <a href="ToolsMenuThrottleEntry.shtml">Menu R&#233;gulateur dans JMRI</a></li>
   <li>La <a href="BasicThrottleWindow.shtml">Fen&#234;tre R&#233;gulateur elle-m&#234;me</a></li>
   <li>Les <a href="ThrottleWindowMenus.shtml">Menus Fen&#234;tre R&#233;gulateur</a></li>
   <li>La <a href="ThrottleToolBar.shtml">Fen&#234;tre barre d'outils R&#233;gulateur</a></li>
   <li>La <a href="AdvancedThrottleControl.shtml">Fen&#234;tre Commandes R&#233;gulateur</a></li>
   <li>La <a href="ThrottlesListWindow.shtml">Fen&#234;tres Liste des R&#233;gulateurs</a></li>
-    <li>Le <a href="ThrottlesPreferencesPane.shtml">Volet pr&#233;f&#233;rences R&#233;gulateurs</a></li>
-
-</ul>
+  <li>Le <a href="ThrottlesPreferencesPane.shtml">Volet pr&#233;f&#233;rences R&#233;gulateurs</a></li>
+  </ul>
 
 <h1>Configuration Avanc&#233;e du Panneau Fonction</h1>
 Quand une fen&#234;tre d'un nouveau r&#233;gulateur est
@@ -59,7 +52,6 @@ Quand une fen&#234;tre d'un nouveau r&#233;gulateur est
      </td>     <td><img width="20" height="20" src="images/spacer.gif"></td>
       <td align="center" valign="top"><br>
   <td></td>
-
 
 </ul>
   <td></td>
@@ -87,17 +79,16 @@ Quand une fen&#234;tre d'un nouveau r&#233;gulateur est
       <td align="left" valign="top"><p>Quand l'option "<b>Propri&#233;t&#233;s</b>" est
          cliqu&#233;e sur le <b>"bouton Modifier Fonction</b>" la fen&#234;tre s'ouvre (voir 
          l'image par exemple du c&#244;t&#233; gauche).</p>
-         <ul>
-           
+          <ul>
           <li><strong>Num&#233;ro de Fonction</strong> &#8212; associe le bouton avec un
              num&#233;ro de fonction</li>
            <li><strong>Texte</strong> &#8212; Un texte de l'&#233;tiquette du bouton personnalisable</li>
            <li><strong>Taille de la police</strong> &#8212; taille du texte affich&#233; sur le bouton</li>
            <li><strong>verrouillable</strong> &#8212; indique si le bouton agit comme
              un interrupteur &#224; bascule "marche/arr&#234;t", ou comme un bouton momentan&#233;</li>
-            <li><strong>visible</strong> &#8212; indique si le bouton est
+           <li><strong>visible</strong> &#8212; indique si le bouton est
              visible dans la fen&#234;tre du Panneau de Fonction</li>
-                 </ul>
+           </ul>
      </td>
    </tr>
  </tbody>
@@ -128,9 +119,9 @@ n&#233;cessaire ici pour d&#233;terminer ce qui vous semblera bon .</p>
 
 <p>La case &#224; cocher<strong>Verrouillable</strong> peut &#234;tre un peu d&#233;routante au premier abord.
 Lorsqu'elle est activ&#233;e  &#8212; comme elle l'est par d&#233;faut &#8212; cela signifie simplement que lorsque l'on clique sur le bouton
-, il va se "verrouiller" lui-m&#234;me soit dans un &#233;tat "On" ou un &#233;tat "Off».
+, il va se "verrouiller" lui-m&#234;me soit dans un &#233;tat "On" ou un &#233;tat "Off".
 Autrement dit, le bouton agira comme un interrupteur &#224; bascule &#8212; cliquez une fois pour la
-fonction "On»; cliquez &#224; nouveau pour activer la fonction "Off". Le contraire de ce qui se produit
+fonction "On" cliquez &#224; nouveau pour activer la fonction "Off". Le contraire de ce qui se produit
  lorsque la case est <b>d&#233;sactiv&#233;e</b>. L'appui sur le bouton agit 
 comme un commutateur momentan&#233; #8212; fournissant une commande "On" passag&#232;re  aussi longtemps
 que le bouton de la souris est cliqu&#233; <i>et tenu</i> sur le bouton. Quand 
@@ -143,7 +134,7 @@ coup de sifflet. Maintenez la touche un peu plus long donnerait un coup de siffl
 
 
 <p>La  case &#224; cocher <strong>Visible</strong> permet la "suppression" des boutons ind&#233;sirables
-. Par d&#233;faut, tous les boutons de fonction sont activ&#233;s comme "visible» de sorte qu'ils
+. Par d&#233;faut, tous les boutons de fonction sont activ&#233;s comme "visible" de sorte qu'ils
 peuvent &#233;videmment &#234;tre vus. Mais s'il n'y a qu'une seule fonction d'utilis&#233;e &#8212; pour 
 par exemple les "lumi&#232;res" (F0) &#8212; Alors cette option fournit la capacit&#233; de "cacher"
 tous les autres boutons.</p>
@@ -170,7 +161,7 @@ avec un clic droit avec la souris. Pour rendre tous les boutons visibles s&#233;
          <p>Ces boutons de fonction ont tous &#233;t&#233; mis en place en utilisant les proc&#233;dures &#233;nonc&#233;es ci-dessus.
          </p>
       </td>
-       <td><img width="20" height="20" src="images/spacer.gif"></ d>
+       <td><img width="20" height="20" src="images/spacer.gif"></td>
        <td align="center" valign="top"><br>
 
 	<p style="text-align: center; font-size: xx-small"><img width="200"
@@ -181,11 +172,9 @@ avec un clic droit avec la souris. Pour rendre tous les boutons visibles s&#233;
     </tr>
   </tbody>
 </table>
-<br>
-<br>
+
 <br>
 <a name="WinMenuOptions"></a>
-
 
 <h1>Fen&#234;tre R&#233;gulateur Options de menu</h1>
 
@@ -246,7 +235,7 @@ situ&#233; juste sous la barre de titre principal de la fen&#234;tre.</p>
          <td align="left" valign="top"><p>Cliquer sur l'option "<big>Modifier</big>" du menu
             affiche un menu unique optionnel sous des Cadres "<strong>
            Propri&#233;t&#233;s</strong>". Cette fonctionnalit&#233; vous permet de nommer l'ensemble des
-           fen&#234;tre du r&#233;gulateur.</ p>
+           fen&#234;tre du r&#233;gulateur.</p>
 
            <p>Par d&#233;faut, le titre de la fen&#234;tre globale r&#233;gulateur est intitul&#233;
            "<b>R&#233;gulateur</b>" et est affich&#233;e dans la bordure de fen&#234;tre (voir la
@@ -254,7 +243,6 @@ situ&#233; juste sous la barre de titre principal de la fen&#234;tre.</p>
 	</td>
         <td><img width="20" height="20" src="images/spacer.gif"></td>
         <td align="center" valign="top"><br>
-
 
           <p style="text-align: center; font-size: xx-small"><img width="308"
           height="147" src="images/jmri019.jpg"
@@ -270,7 +258,7 @@ situ&#233; juste sous la barre de titre principal de la fen&#234;tre.</p>
       <tr>
         <td colspan="3" align="left" valign="top"><p>Quand "<b>Propri&#233;t&#233;s du Cadre</b>" est cliqu&#233;, une bo&#238;te unique avec un champ de dialogue appara&#238;tra.
            Tapez le titre de votre fen&#234;tre de R&#233;gulateur dans ce domaine. 
-           Par exemple, "Santa Fe # 8259 EMD SD60-» peut &#234;tre suffisamment descriptif pour une
+           Par exemple, "Santa Fe # 8259 EMD SD60-" peut &#234;tre suffisamment descriptif pour une
            seule locomotive. Si le R&#233;gulateur est pour un couplage, vous pouvez
            l'identifier comme quelque chose du genre  "couplage # 221". Votre seule limitation est
            le nombre de caract&#232;res que vous pouvez entrer dans la largeur de la fen&#234;tre de titre
@@ -281,10 +269,6 @@ situ&#233; juste sous la barre de titre principal de la fen&#234;tre.</p>
  </table>
 </dir>
 <br>
-<br>
-<br>
-<br>
-
 
 <p>Ce chapitre termine les options avanc&#233;es du r&#233;gulateur qui sont actuellement
 disponibles. Le chapitre suivant montre comment enregistrer toutes ces r&#233;gulateurs personnalis&#233;s
@@ -310,10 +294,9 @@ Vous pouvez utiliser la fl&#232;che de droite ci-dessous pour aller &#224; ce ch
    </tr>
  </tbody>
 </table>
+
 <br>
-<br>
-<br>
-<br>
-<!--#include virtual="/Footer" --></div>
+<!--#include virtual="/Footer" -->
+ </div>
 </body>
 </html>

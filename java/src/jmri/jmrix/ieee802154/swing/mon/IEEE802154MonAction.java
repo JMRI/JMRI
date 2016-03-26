@@ -55,7 +55,7 @@ public class IEEE802154MonAction extends AbstractAction {
 
     }
 
-    static Logger log = LoggerFactory.getLogger(IEEE802154MonAction.class);
+    private final static Logger log = LoggerFactory.getLogger(IEEE802154MonAction.class);
 
 }
 

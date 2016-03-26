@@ -1,4 +1,3 @@
-/* DeferringProgrammerManager.java */
 package jmri.managers;
 
 import jmri.AddressedProgrammer;
@@ -20,7 +19,6 @@ import org.slf4j.LoggerFactory;
  *
  * @see jmri.ProgrammerManager
  * @author	Bob Jacobsen Copyright (C) 2014
- * @version	$Revision$
  */
 public class DeferringProgrammerManager implements ProgrammerManager {
 
@@ -138,6 +136,6 @@ public class DeferringProgrammerManager implements ProgrammerManager {
         return InstanceManager.getDefault(AddressedProgrammerManager.class).getDefaultModes();
     }
 
-    static Logger log = LoggerFactory.getLogger(DeferringProgrammerManager.class.getName());
+    private final static Logger log = LoggerFactory.getLogger(DeferringProgrammerManager.class.getName());
 }
-/* @(#)DeferringProgrammerManager.java */
+

@@ -5,14 +5,11 @@ import java.awt.Font;
 import java.awt.Graphics2D;
 import java.awt.font.TextLayout;
 import java.awt.geom.Rectangle2D;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 
 /**
  * Implements Tooltips for Positionable objects.
  *
  * @author Pete Cressman Copyright (c) 2010
- * @version $Revision 1.0 $
  */
 public class ToolTip {
 
@@ -138,6 +135,4 @@ public class ToolTip {
         g2d.setColor(color);
         g2d.setFont(font);
     }
-
-    static Logger log = LoggerFactory.getLogger(ToolTip.class.getName());
 }

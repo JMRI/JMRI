@@ -4,7 +4,28 @@ import java.util.ResourceBundle;
 
 /**
  * Defines a simple place to get the JMRI version string.
- *
+ * <p>
+ * JMRI's version string comes in two forms, depending on whether it was built by an "official"
+ * process or not, which in turn is determined by the "release.official" property:
+ *<dl>
+ *<dt>Official<dd>
+ *<ul>
+ *<li>If the revision number e.g. 123abc (git hash) is available in release.revision_id, then 
+ * "4.1.1-R123abc". Note the "R".
+ *<li>Else "4.1.1-(date)", where the date comes from the release.build_date property.
+ *</ul>
+ *<dt>Unofficial<dd>
+ * Unofficial releases are marked by "ish" after the version number, and inclusion of the building user's ID.
+ *<ul>
+ *<li>If the revision number e.g. 123abc (git hash) is available in release.revision_id, then 
+ * "4.1.1ish-(user)-(date)-R123abc". Note the "R".
+ *<li>Else "4.1.1-(user)-(date)", where the date comes from the release.build_date property.
+ *</ul>
+ *</dl>
+ * The release.revision_id, release.build_user and release.build_date properties are set at build time by Ant.
+ * <p>
+ * Generally, JMRI updates its version string in the code repository right <b>after</b> a release. 
+ * Between formal release 1.2.3 and 1.2.4, the string will be 1.2.4ish. 
  * <hr>
  * This file is part of JMRI.
  * <P>
@@ -16,8 +37,7 @@ import java.util.ResourceBundle;
  * WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS FOR
  * A PARTICULAR PURPOSE. See the GNU General Public License for more details.
  * <P>
- * @author Bob Jacobsen Copyright 1997-2014
- * @version $Revision: 17977 $
+ * @author Bob Jacobsen Copyright 1997-2016
  */
 public class Version {
 
@@ -52,14 +72,11 @@ public class Version {
     /* Has this build been created as a possible "official" versionBundle? */
     static final public boolean official = Boolean.parseBoolean(versionBundle.getString("release.official")); // NOI18N
 
-    /* Has this build been created from a branch in Subversion? */
-    static final public boolean branched = Boolean.parseBoolean(versionBundle.getString("release.is_branched")); // NOI18N;
-
     /**
      * The Modifier is the third term in the
      * 1.2.3 version name.  It's not present in production
      * versions that set it to zero.
-     * Non-official branched versions get an "ish"
+     * Non-official versions get an "ish"
      */
     public static String getModifier() {
         StringBuilder modifier = new StringBuilder("");
@@ -68,7 +85,7 @@ public class Version {
             modifier.append(".").append(test);
         }
 
-        if (! (branched && official) ) {
+        if (! official) {
             modifier.append("ish");
         }
 
@@ -80,26 +97,26 @@ public class Version {
      * <P>
      * This string is built using various known build parameters, including the
      * versionBundle.{major,minor,build} values, the Git revision ID (if known)
-     * and the branched & official properties
+     * and the official property
      *
      * @return The current version string
      */
     static public String name() {
         String releaseName;
-        if (branched) {
+        if (official) {
             String addOn;
             if ("unknown".equals(revisionId)) {
-                addOn = buildDate + "-" + buildUser;
+                addOn = buildDate;
             } else {
                 addOn = "R" + revisionId;
             }
             releaseName = major + "." + minor + getModifier() + "-" + addOn;
-        } else { // not branched, so a local build that gets a user name
+        } else { // not official, so a development build that gets a user name
             String addOn;
             if ("unknown".equals(revisionId)) {
                 addOn = buildDate + "-" + buildUser;
             } else {
-                addOn = buildDate + (!official ? "-"+buildUser :"") + "-R" + revisionId;
+                addOn = buildDate + "-" + buildUser + "-R" + revisionId;
             }
             releaseName = major + "." + minor + getModifier() + "-" + addOn;
         }
@@ -123,7 +140,7 @@ public class Version {
             return false;
         }
         for (String part : parts) {
-            if (Integer.valueOf(part) == null || Integer.valueOf(part) < 0) {
+            if (Integer.parseInt(part) < 0) {
                 return false;
             }
         }

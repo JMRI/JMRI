@@ -19,8 +19,7 @@ import junit.framework.TestSuite;
 public class SignalMastIconTest extends jmri.util.SwingTestCase {
 
     SignalMastIcon to = null;
-    jmri.jmrit.display.panelEditor.PanelEditor panel
-            = new jmri.jmrit.display.panelEditor.PanelEditor("Test SignalMastIcon Panel");
+    jmri.jmrit.display.panelEditor.PanelEditor panel;
 
     public void testShowText() {
         // this one is for Layout editor, which for now
@@ -38,33 +37,18 @@ public class SignalMastIconTest extends jmri.util.SwingTestCase {
         jmri.util.JUnitUtil.resetInstanceManager();
         InstanceManager.signalHeadManagerInstance().register(
                 new DefaultSignalHead("IH1") {
-                    /**
-                     *
-                     */
-                    private static final long serialVersionUID = -183285703527320024L;
-
                     protected void updateOutput() {
                     }
                 }
         );
         InstanceManager.signalHeadManagerInstance().register(
                 new DefaultSignalHead("IH2") {
-                    /**
-                     *
-                     */
-                    private static final long serialVersionUID = -7406765405866446309L;
-
                     protected void updateOutput() {
                     }
                 }
         );
         InstanceManager.signalHeadManagerInstance().register(
                 new DefaultSignalHead("IH3") {
-                    /**
-                     *
-                     */
-                    private static final long serialVersionUID = 5252087327996710968L;
-
                     protected void updateOutput() {
                     }
                 }
@@ -100,33 +84,18 @@ public class SignalMastIconTest extends jmri.util.SwingTestCase {
         jmri.util.JUnitUtil.resetInstanceManager();
         InstanceManager.signalHeadManagerInstance().register(
                 new DefaultSignalHead("IH1") {
-                    /**
-                     *
-                     */
-                    private static final long serialVersionUID = 790075319304422152L;
-
                     protected void updateOutput() {
                     }
                 }
         );
         InstanceManager.signalHeadManagerInstance().register(
                 new DefaultSignalHead("IH2") {
-                    /**
-                     *
-                     */
-                    private static final long serialVersionUID = -1129562077221922315L;
-
                     protected void updateOutput() {
                     }
                 }
         );
         InstanceManager.signalHeadManagerInstance().register(
                 new DefaultSignalHead("IH3") {
-                    /**
-                     *
-                     */
-                    private static final long serialVersionUID = 6702020027184748479L;
-
                     protected void updateOutput() {
                     }
                 }
@@ -169,6 +138,7 @@ public class SignalMastIconTest extends jmri.util.SwingTestCase {
     // The minimal setup for log4J
     protected void setUp() {
         apps.tests.Log4JFixture.setUp();
+        panel = new jmri.jmrit.display.panelEditor.PanelEditor("Test SignalMastIcon Panel");
     }
 
     protected void tearDown() {

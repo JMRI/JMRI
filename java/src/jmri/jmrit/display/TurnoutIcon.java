@@ -32,7 +32,6 @@ import org.slf4j.LoggerFactory;
  *
  * @author Bob Jacobsen Copyright (c) 2002
  * @author PeteCressman Copyright (C) 2010, 2011
- * @version $Revision$
  */
 public class TurnoutIcon extends PositionableIcon implements java.beans.PropertyChangeListener {
 
@@ -52,13 +51,13 @@ public class TurnoutIcon extends PositionableIcon implements java.beans.Property
         setPopupUtility(null);
     }
 
+    @Override
     public Positionable deepClone() {
         TurnoutIcon pos = new TurnoutIcon(_editor);
         return finishClone(pos);
     }
 
-    public Positionable finishClone(Positionable p) {
-        TurnoutIcon pos = (TurnoutIcon) p;
+    protected Positionable finishClone(TurnoutIcon pos) {
         pos.setTurnout(getNamedTurnout().getName());
         pos._iconStateMap = cloneMap(_iconStateMap, pos);
         pos.setTristate(getTristate());
@@ -568,5 +567,5 @@ public class TurnoutIcon extends PositionableIcon implements java.beans.Property
         return clone;
     }
 
-    static Logger log = LoggerFactory.getLogger(TurnoutIcon.class.getName());
+    private final static Logger log = LoggerFactory.getLogger(TurnoutIcon.class.getName());
 }

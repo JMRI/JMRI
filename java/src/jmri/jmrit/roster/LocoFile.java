@@ -8,7 +8,6 @@ import jmri.jmrit.symbolicprog.CvTableModel;
 import jmri.jmrit.symbolicprog.CvValue;
 import jmri.jmrit.symbolicprog.IndexedCvTableModel;
 import jmri.jmrit.symbolicprog.VariableTableModel;
-import jmri.util.FileUtil;
 import org.jdom2.Document;
 import org.jdom2.Element;
 import org.jdom2.ProcessingInstruction;
@@ -354,24 +353,11 @@ class LocoFile extends XmlFile {
         }
     }
 
-    /**
-     * Defines the preferences subdirectory in which LocoFiles are kept by
-     * default.
-     */
-    static private String fileLocation = FileUtil.getUserFilesPath() + "roster" + File.separator;
-
     static public String getFileLocation() {
-        return fileLocation;
-    }
-
-    static public void setFileLocation(String loc) {
-        fileLocation = loc;
-        if (!fileLocation.endsWith(File.separator)) {
-            fileLocation = fileLocation + File.separator;
-        }
+        return Roster.getDefault().getRosterLocation() + "roster" + File.separator;
     }
 
     // initialize logging
-    static Logger log = LoggerFactory.getLogger(LocoFile.class.getName());
+    private final static Logger log = LoggerFactory.getLogger(LocoFile.class.getName());
 
 }

@@ -1,4 +1,3 @@
-// DefaultRouteManager.java
 package jmri.managers;
 
 import java.text.DecimalFormat;
@@ -15,7 +14,6 @@ import org.slf4j.LoggerFactory;
  * Note that this does not enforce any particular system naming convention
  *
  * @author Dave Duchamp Copyright (C) 2004
- * @version	$Revision$
  */
 public class DefaultRouteManager extends AbstractManager
         implements RouteManager, java.beans.PropertyChangeListener, java.beans.VetoableChangeListener {
@@ -125,7 +123,5 @@ public class DefaultRouteManager extends AbstractManager
         return Bundle.getMessage("BeanNameRoute");
     }
 
-    static Logger log = LoggerFactory.getLogger(DefaultRouteManager.class.getName());
+    private final static Logger log = LoggerFactory.getLogger(DefaultRouteManager.class.getName());
 }
-
-/* @(#)DefaultRouteManager.java */

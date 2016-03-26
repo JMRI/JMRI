@@ -400,12 +400,14 @@ public class TrainEditBuildOptionsFrame extends OperationsFrame implements java.
             enableButtons(true);
             // does this train depart staging?
             if (_train.getTrainDepartsRouteLocation() != null
+                    && _train.getTrainDepartsRouteLocation().getLocation() != null
                     && _train.getTrainDepartsRouteLocation().getLocation().isStaging()) {
                 buildConsistCheckBox.setEnabled(false);	// can't build a consist out of staging
             }
             // does train depart and return to same staging location?
             if (_train.getTrainDepartsRouteLocation() != null
                     && _train.getTrainTerminatesRouteLocation() != null
+                    && _train.getTrainTerminatesRouteLocation().getLocation() != null
                     && _train.getTrainTerminatesRouteLocation().getLocation().isStaging()
                     && _train.getTrainDepartsRouteLocation().getName().equals(
                             _train.getTrainTerminatesRouteLocation().getName())) {
@@ -644,11 +646,11 @@ public class TrainEditBuildOptionsFrame extends OperationsFrame implements java.
                 _train.getRoute().updateComboBox(routeDrop1Box);
             }
 
-            change1Engine.setSelected((_train.getSecondLegOptions() & Train.CHANGE_ENGINES) > 0);
-            helper1Service.setSelected((_train.getSecondLegOptions() & Train.HELPER_ENGINES) > 0);
+            change1Engine.setSelected((_train.getSecondLegOptions() & Train.CHANGE_ENGINES) == Train.CHANGE_ENGINES);
+            helper1Service.setSelected((_train.getSecondLegOptions() & Train.HELPER_ENGINES) == Train.HELPER_ENGINES);
             if (!change1Engine.isSelected() && !helper1Service.isSelected()) {
-                modify1Caboose.setSelected((_train.getSecondLegOptions() & Train.ADD_CABOOSE) > 0
-                        || (_train.getSecondLegOptions() & Train.REMOVE_CABOOSE) > 0);
+                modify1Caboose.setSelected((_train.getSecondLegOptions() & Train.ADD_CABOOSE) == Train.ADD_CABOOSE
+                        || (_train.getSecondLegOptions() & Train.REMOVE_CABOOSE) == Train.REMOVE_CABOOSE);
             }
             numEngines1Box.setSelectedItem(_train.getSecondLegNumberEngines());
             modelEngine1Box.setSelectedItem(_train.getSecondLegEngineModel());
@@ -656,12 +658,12 @@ public class TrainEditBuildOptionsFrame extends OperationsFrame implements java.
             routeDrop1Box.setSelectedItem(_train.getSecondLegEndLocation());
             roadEngine1Box.setSelectedItem(_train.getSecondLegEngineRoad());
             keep1Caboose.setSelected(true);
-            remove1Caboose.setSelected((_train.getSecondLegOptions() & Train.REMOVE_CABOOSE) > 0);
-            change1Caboose.setSelected((_train.getSecondLegOptions() & Train.ADD_CABOOSE) > 0);
+            remove1Caboose.setSelected((_train.getSecondLegOptions() & Train.REMOVE_CABOOSE) == Train.REMOVE_CABOOSE);
+            change1Caboose.setSelected((_train.getSecondLegOptions() & Train.ADD_CABOOSE) == Train.ADD_CABOOSE);
             roadCaboose1Box.setEnabled(change1Caboose.isSelected());
             roadCaboose1Box.setSelectedItem(_train.getSecondLegCabooseRoad());
             // adjust radio button text
-            if ((_train.getRequirements() & Train.CABOOSE) > 0) {
+            if ((_train.getRequirements() & Train.CABOOSE) == Train.CABOOSE) {
                 change1Caboose.setText(Bundle.getMessage("ChangeCaboose"));
                 remove1Caboose.setEnabled(true);
             } else {
@@ -696,11 +698,11 @@ public class TrainEditBuildOptionsFrame extends OperationsFrame implements java.
                 _train.getRoute().updateComboBox(routeDrop2Box);
             }
 
-            change2Engine.setSelected((_train.getThirdLegOptions() & Train.CHANGE_ENGINES) > 0);
-            helper2Service.setSelected((_train.getThirdLegOptions() & Train.HELPER_ENGINES) > 0);
+            change2Engine.setSelected((_train.getThirdLegOptions() & Train.CHANGE_ENGINES) == Train.CHANGE_ENGINES);
+            helper2Service.setSelected((_train.getThirdLegOptions() & Train.HELPER_ENGINES) == Train.HELPER_ENGINES);
             if (!change2Engine.isSelected() && !helper2Service.isSelected()) {
-                modify2Caboose.setSelected((_train.getThirdLegOptions() & Train.ADD_CABOOSE) > 0
-                        || (_train.getThirdLegOptions() & Train.REMOVE_CABOOSE) > 0);
+                modify2Caboose.setSelected((_train.getThirdLegOptions() & Train.ADD_CABOOSE) == Train.ADD_CABOOSE
+                        || (_train.getThirdLegOptions() & Train.REMOVE_CABOOSE) == Train.REMOVE_CABOOSE);
             }
             numEngines2Box.setSelectedItem(_train.getThirdLegNumberEngines());
             modelEngine2Box.setSelectedItem(_train.getThirdLegEngineModel());
@@ -708,12 +710,12 @@ public class TrainEditBuildOptionsFrame extends OperationsFrame implements java.
             routeDrop2Box.setSelectedItem(_train.getThirdLegEndLocation());
             roadEngine2Box.setSelectedItem(_train.getThirdLegEngineRoad());
             keep2Caboose.setSelected(true);
-            remove2Caboose.setSelected((_train.getThirdLegOptions() & Train.REMOVE_CABOOSE) > 0);
-            change2Caboose.setSelected((_train.getThirdLegOptions() & Train.ADD_CABOOSE) > 0);
+            remove2Caboose.setSelected((_train.getThirdLegOptions() & Train.REMOVE_CABOOSE) == Train.REMOVE_CABOOSE);
+            change2Caboose.setSelected((_train.getThirdLegOptions() & Train.ADD_CABOOSE) == Train.ADD_CABOOSE);
             roadCaboose2Box.setEnabled(change2Caboose.isSelected());
             roadCaboose2Box.setSelectedItem(_train.getThirdLegCabooseRoad());
             // adjust radio button text
-            if (((_train.getRequirements() & Train.CABOOSE) > 0 || change1Caboose.isSelected())
+            if (((_train.getRequirements() & Train.CABOOSE) == Train.CABOOSE || change1Caboose.isSelected())
                     && !remove1Caboose.isSelected()) {
                 change2Caboose.setText(Bundle.getMessage("ChangeCaboose"));
                 remove2Caboose.setEnabled(true);
@@ -974,7 +976,7 @@ public class TrainEditBuildOptionsFrame extends OperationsFrame implements java.
     }
 
     public void propertyChange(java.beans.PropertyChangeEvent e) {
-        if (Control.showProperty) {
+        if (Control.SHOW_PROPERTY) {
             log.debug("Property change: ({}) old: ({}) new: ({})", e.getPropertyName(), e.getOldValue(), e
                     .getNewValue());
         }
@@ -992,5 +994,5 @@ public class TrainEditBuildOptionsFrame extends OperationsFrame implements java.
         }
     }
 
-    static Logger log = LoggerFactory.getLogger(TrainEditBuildOptionsFrame.class.getName());
+    private final static Logger log = LoggerFactory.getLogger(TrainEditBuildOptionsFrame.class.getName());
 }

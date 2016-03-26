@@ -27,11 +27,6 @@ import org.slf4j.LoggerFactory;
  */
 public class TrainConductorPanel extends CommonConductorYardmasterPanel {
 
-    /**
-     *
-     */
-    private static final long serialVersionUID = 7149077790256321679L;
-
     protected static final boolean IS_MANIFEST = true;
 
     // labels
@@ -214,7 +209,7 @@ public class TrainConductorPanel extends CommonConductorYardmasterPanel {
 
     @Override
     public void propertyChange(java.beans.PropertyChangeEvent e) {
-        if (Control.showProperty) {
+        if (Control.SHOW_PROPERTY) {
             log.debug("Property change ({}) for: ({}) old: {} new: {}",
                     e.getPropertyName(), e.getSource().toString(),
                     e.getOldValue(), e.getNewValue());
@@ -239,5 +234,5 @@ public class TrainConductorPanel extends CommonConductorYardmasterPanel {
         }
     }
 
-    static Logger log = LoggerFactory.getLogger(TrainConductorPanel.class.getName());
+    private final static Logger log = LoggerFactory.getLogger(TrainConductorPanel.class.getName());
 }

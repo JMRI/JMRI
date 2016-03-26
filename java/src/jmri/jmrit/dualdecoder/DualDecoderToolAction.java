@@ -13,7 +13,6 @@ import jmri.util.swing.WindowInterface;
  * Swing action to create and register a DualDecoderTool
  *
  * @author Bob Jacobsen Copyright (C) 2001
- * @version $Revision$
  */
 public class DualDecoderToolAction extends JmriAbstractAction {
 
@@ -43,15 +42,16 @@ public class DualDecoderToolAction extends JmriAbstractAction {
     }
 
     public DualDecoderToolAction() {
-
         this(Bundle.getMessage("MenuItemMultiDecoderControl"));
     }
 
+    @Override
     public void actionPerformed(ActionEvent e) {
-
         new DualDecoderSelectFrame().setVisible(true);
-
     }
+
+    @Override
+    public jmri.util.swing.JmriPanel makePanel() { return null; } // not used by this classes actionPerformed, not migrated to new form yet
 
 }
 

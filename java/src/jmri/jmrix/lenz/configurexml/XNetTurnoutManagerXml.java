@@ -27,11 +27,12 @@ public class XNetTurnoutManagerXml extends jmri.managers.configurexml.AbstractTu
         log.error("Invalid method called");
     }
 
-    public boolean load(Element turnouts) {
+    @Override
+    public boolean load(Element shared, Element perNode) {
         // load individual turnouts
-        return loadTurnouts(turnouts);
+        return loadTurnouts(shared, perNode);
     }
 
-    static Logger log = LoggerFactory.getLogger(XNetTurnoutManagerXml.class.getName());
+    private final static Logger log = LoggerFactory.getLogger(XNetTurnoutManagerXml.class.getName());
 
 }

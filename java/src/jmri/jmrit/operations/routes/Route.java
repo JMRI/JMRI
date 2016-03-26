@@ -178,11 +178,10 @@ public class Route implements java.beans.PropertyChangeListener {
      */
     private void resequenceIds() {
         List<RouteLocation> routeList = getLocationsBySequenceList();
-        int i;
-        for (i = 0; i < routeList.size(); i++) {
+        for (int i = 0; i < routeList.size(); i++) {
             routeList.get(i).setSequenceId(i + 1); // start sequence numbers at 1
+            _sequenceNum = i;
         }
-        _sequenceNum = i;
     }
 
     /**
@@ -366,6 +365,15 @@ public class Route implements java.beans.PropertyChangeListener {
         }
         return ORPHAN;
     }
+    
+    public int getRouteMaximumTrainLength() {
+        int max = 0;
+        for (RouteLocation rl : getLocationsByIdList()) {
+            if (rl.getMaxTrainLength() > max)
+                max = rl.getMaxTrainLength();
+        }
+        return max;
+    }
 
     public JComboBox<RouteLocation> getComboBox() {
         JComboBox<RouteLocation> box = new JComboBox<>();
@@ -433,15 +441,16 @@ public class Route implements java.beans.PropertyChangeListener {
     }
 
     public void propertyChange(java.beans.PropertyChangeEvent e) {
-        if (Control.showProperty) {
+        if (Control.SHOW_PROPERTY) {
             log.debug("Property change: ({}) old: ({}) new: ({})", e.getPropertyName(), e.getOldValue(), e
                     .getNewValue());
         }
-        // forward drops, pick ups, train direction, and max moves as a list change
+        // forward drops, pick ups, train direction, max moves, and max length as a list change
         if (e.getPropertyName().equals(RouteLocation.DROP_CHANGED_PROPERTY)
                 || e.getPropertyName().equals(RouteLocation.PICKUP_CHANGED_PROPERTY)
                 || e.getPropertyName().equals(RouteLocation.TRAIN_DIRECTION_CHANGED_PROPERTY)
-                || e.getPropertyName().equals(RouteLocation.MAXMOVES_CHANGED_PROPERTY)) {
+                || e.getPropertyName().equals(RouteLocation.MAX_MOVES_CHANGED_PROPERTY)
+                || e.getPropertyName().equals(RouteLocation.MAX_LENGTH_CHANGED_PROPERTY)) {
             setDirtyAndFirePropertyChange(LISTCHANGE_CHANGED_PROPERTY, null, "RouteLocation"); // NOI18N
         }
     }
@@ -461,6 +470,6 @@ public class Route implements java.beans.PropertyChangeListener {
         pcs.firePropertyChange(p, old, n);
     }
 
-    static Logger log = LoggerFactory.getLogger(Route.class.getName());
+    private final static Logger log = LoggerFactory.getLogger(Route.class.getName());
 
 }

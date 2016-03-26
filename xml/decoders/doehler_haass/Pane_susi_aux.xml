@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="utf-8"?>
+<?xml-stylesheet type="text/xsl" href="../XSLT/decoder.xsl"?>
+<!-- version 1 - 2015-12-29 - PB - SH10A module now supporting AUX outputs with fw 1.07 -->
+<pane xmlns:xi="http://www.w3.org/2001/XInclude" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="http://jmri.org/xml/schema/decoder.xsd">
+  <name>AUX</name>
+  <column>
+    <label>
+      <text> </text>
+    </label>
+    <grid gridy="NEXT" weightx="1" ipadx="10">
+		<griditem gridx="0" gridy="0" gridwidth="2">
+			<column>
+				<label>
+					<text>AUX 1 and 2 are only available starting with firmware 1.07 (Dec. 2015)</text>
+					<text xml:lang="fr">AUX 1 et 2 disponibles à partir du firmware 1.07 (Déc. 2015)</text>
+					<text xml:lang="de">AUX 1 und 2 nur ab Firmware 1.07 (Dez. 2015) verfügbar.</text>
+				</label>
+			</column>
+		</griditem>
+		<griditem gridx="0" gridy="1" gridwidth="2">
+			<column>
+				<label>
+					<text>Those outputs are unamplified! (5V, max 20mA)</text>
+					<text xml:lang="fr">Ces sorties sont non amplifiées! (5V, max 20mA)</text>
+					<text xml:lang="de">Unverstärkte Ausgänge! (5V, max 20mA)</text>
+				</label>
+			</column>
+		</griditem>
+		<griditem gridx="0" gridy="2" gridwidth="2">
+			<label><text> </text></label>
+		</griditem>
+		<griditem gridx="0" gridy="3" gridwidth="1">
+				<display item="AUX1 Mapping"/>
+		</griditem>
+		<griditem gridx="1" gridy="3" gridwidth="1">
+				<display item="AUX2 Mapping"/>
+		</griditem>
+	</grid>
+	<label>
+      <text> </text>
+    </label>
+  </column>
+</pane>

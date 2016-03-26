@@ -3,6 +3,8 @@ package jmri.implementation;
 
 import jmri.Reporter;
 import jmri.Sensor;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 /**
  * Abstract class providing the basic logic of the Sensor interface
@@ -18,6 +20,7 @@ public abstract class AbstractSensor extends AbstractNamedBean implements Sensor
      *
      */
     private static final long serialVersionUID = 6188852412145851127L;
+    private final static Logger log = LoggerFactory.getLogger(AbstractSensor.class);
 
     // ctor takes a system-name string for initialization
     public AbstractSensor(String systemName) {
@@ -108,10 +111,14 @@ public abstract class AbstractSensor extends AbstractNamedBean implements Sensor
                     Thread.sleep(sensorDebounceTimer);
                     restartcount = 0;
                     _knownState = _rawState;
-                    firePropertyChange("KnownState", Integer.valueOf(lastKnownState), Integer.valueOf(_knownState));
-
+                    
+                    javax.swing.SwingUtilities.invokeAndWait(
+                        ()->{firePropertyChange("KnownState", Integer.valueOf(lastKnownState), Integer.valueOf(_knownState));}
+                    );
                 } catch (InterruptedException ex) {
                     restartcount++;
+                } catch (java.lang.reflect.InvocationTargetException ex) {
+                    log.error("failed to start debounced Sensor update for "+getDisplayName() );
                 }
             }
         };

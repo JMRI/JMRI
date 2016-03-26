@@ -6,6 +6,7 @@ import java.util.ArrayList;
 import java.util.Enumeration;
 import java.util.List;
 import java.util.jar.JarEntry;
+import jmri.InstanceManager;
 import jmri.jmrit.XmlFile;
 import jmri.util.FileUtil;
 import jmri.util.XmlFilenameFilter;
@@ -82,24 +83,14 @@ public class ProgDefault {
         }
         return sbox;
     }
-    volatile static String defaultProgFile;
 
     synchronized static public String getDefaultProgFile() {
-        if (log.isDebugEnabled()) {
-            log.debug("get programmer: " + defaultProgFile);
-        }
-        return defaultProgFile;
+        return InstanceManager.getDefault(ProgrammerConfigManager.class).getDefaultFile();
     }
 
     synchronized static public void setDefaultProgFile(String s) {
-        if (log.isDebugEnabled()) {
-            log.debug("set programmer: " + s);
-        }
-        defaultProgFile = s;
+        InstanceManager.getDefault(ProgrammerConfigManager.class).setDefaultFile(s);
     }
 
-    static {
-        defaultProgFile = null;
-    }
-    static Logger log = LoggerFactory.getLogger(ProgDefault.class);
+    private final static Logger log = LoggerFactory.getLogger(ProgDefault.class);
 }

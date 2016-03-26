@@ -1,4 +1,3 @@
-// ProgServiceModePaneTest.java
 package jmri.jmrit.progsupport;
 
 import javax.swing.BoxLayout;
@@ -10,14 +9,11 @@ import junit.framework.Assert;
 import junit.framework.Test;
 import junit.framework.TestCase;
 import junit.framework.TestSuite;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 
 /**
  * Tests for the ProgServiceModePane
  *
  * @author	Bob Jacobsen 2008
- * @version $Revision$
  */
 public class ProgServiceModePaneTest extends TestCase {
 
@@ -72,8 +68,6 @@ public class ProgServiceModePaneTest extends TestCase {
         TestSuite suite = new TestSuite(ProgServiceModePaneTest.class);
         return suite;
     }
-
-    static Logger log = LoggerFactory.getLogger(ProgServiceModePaneTest.class.getName());
 
     // The minimal setup for log4J
     protected void setUp() {

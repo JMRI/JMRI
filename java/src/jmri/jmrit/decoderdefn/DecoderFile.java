@@ -117,7 +117,7 @@ public class DecoderFile extends XmlFile {
      * return array of versions
      *
      */
-    @edu.umd.cs.findbugs.annotations.SuppressWarnings(value = "EI_EXPOSE_REP") // OK until Java 1.6 allows return of cheap array copy
+    @edu.umd.cs.findbugs.annotations.SuppressFBWarnings(value = "EI_EXPOSE_REP") // OK until Java 1.6 allows return of cheap array copy
     public boolean[] getVersions() {
         return (versions);
     }
@@ -475,12 +475,12 @@ public class DecoderFile extends XmlFile {
             List<Element> resetList = decoderElement.getChild("resets").getChildren("factReset");
             for (int i = 0; i < resetList.size(); i++) {
                 Element e = resetList.get(i);
-                resetModel.setRow(i, e);
+                resetModel.setRow(i, e, decoderElement.getChild("resets"), _model);
             }
             List<Element> iresetList = decoderElement.getChild("resets").getChildren("ifactReset");
             for (int i = 0; i < iresetList.size(); i++) {
                 Element e = iresetList.get(i);
-                resetModel.setIndxRow(i, e);
+                resetModel.setIndxRow(i, e, decoderElement.getChild("resets"), _model);
             }
         }
     }
@@ -498,10 +498,10 @@ public class DecoderFile extends XmlFile {
         return model + " (" + family + ")";
     }
 
-    @edu.umd.cs.findbugs.annotations.SuppressWarnings(value = "MS_SHOULD_BE_FINAL") // script access
+    @edu.umd.cs.findbugs.annotations.SuppressFBWarnings(value = "MS_SHOULD_BE_FINAL") // script access
     static public String fileLocation = "decoders" + File.separator;
 
     // initialize logging
-    static Logger log = LoggerFactory.getLogger(DecoderFile.class.getName());
+    private final static Logger log = LoggerFactory.getLogger(DecoderFile.class.getName());
 
 }

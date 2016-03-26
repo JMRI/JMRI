@@ -1,4 +1,3 @@
-// PackageTest.java
 package jmri.jmrit;
 
 import junit.framework.Test;
@@ -9,7 +8,6 @@ import junit.framework.TestSuite;
  * Invokes complete set of tests in the jmri.jmrit tree
  *
  * @author	Bob Jacobsen Copyright 2001, 2003, 2012
- * @version $Revision$
  */
 public class PackageTest extends TestCase {
 
@@ -38,6 +36,7 @@ public class PackageTest extends TestCase {
         suite.addTest(BundleTest.suite());
         suite.addTest(DccLocoAddressSelectorTest.suite());
         suite.addTest(MemoryContentsTest.suite());
+        suite.addTest(SoundTest.suite());
         suite.addTest(XmlFileTest.suite());
 
         suite.addTest(jmri.jmrit.automat.AutomatTest.suite());

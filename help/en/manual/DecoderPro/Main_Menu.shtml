@@ -1,6 +1,7 @@
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
-<html lang="en"><head>
-<!-- Copyright ($Author$) 2009 --><!-- $Id$ --><title>DecoderPro Menus</title>
+<html lang="en">
+<head>
+<title>DecoderPro Menus</title>
 
 <!-- Style -->
 <meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
@@ -14,9 +15,11 @@
 <body>
 <!--#include virtual="/Header" -->
 <!--#include virtual="Sidebar" -->
-<div id="mainContent"><a name="Top"></a>
+<div id="mainContent">
+<a name="Top"></a>
 <h1>DecoderPro&reg; Main Window</h1>
-<h1>Menu Overview</h1>
+<h2>Menu Overview</h2>
+
 <div align="right">
 <p><a href="index.shtml#Main">Back to Index</a></p>
 </div>
@@ -50,7 +53,7 @@ Decoder Definitions...</span> <br>
 <li>Multi-Decoder Control</li>
 </ul>
 </li>
-<li><strong>Tables»</strong>
+<li><strong>Tablesï¿½</strong>
 <ul>
 <li>Various Tables used with Panel Pro and not covered in
 this manual</li>
@@ -103,7 +106,7 @@ this manual</li>
 <p><img src="images/separator.png" alt="" height="4" width="340"></p>
 </blockquote>
 <ul>
-<li><strong>USS CTC Tools»</strong>(not covered in
+<li><strong>USS CTC Toolsï¿½</strong>(not covered in
 this manual)</li>
 </ul>
 <blockquote>
@@ -118,7 +121,6 @@ Operations Program User's Guide)
 </ul>
 <ul>
 </ul>
-
 
 <h4><a href="Main_Roster.shtml">Roster</a></h4>
 <ul>
@@ -225,7 +227,7 @@ We are using Digtrax and LocoNet in this User's Guide.</h4>
 <ul>
 <li><strong>PRICOM <img src="images/arrow.gif" alt="arrow" height="9" width="20"></strong>
 <ul>
-<li><strong>PRICOM Pocket Tester» </strong>
+<li><strong>PRICOM Pocket Testerï¿½ </strong>
 <ul>
 <li><strong>Connect</strong></li>
 </ul>
@@ -278,10 +280,14 @@ We are using Digtrax and LocoNet in this User's Guide.</h4>
 </blockquote><ul>
 <li><strong>About DecoderPro</strong></li>
 </ul>
+
 <hr>
 <div align="right">
 <p><a href="index.shtml#Main">Back to Index</a></p>
 </div>
+
 <!--#include virtual="/Footer" -->
-</div>
-</body></html>
+  </div><!-- closes #mainContent-->
+ </div> <!-- closes #mBody-->
+</body>
+</html>

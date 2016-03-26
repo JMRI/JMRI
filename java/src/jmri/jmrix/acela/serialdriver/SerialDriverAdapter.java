@@ -31,7 +31,7 @@ public class SerialDriverAdapter extends AcelaPortController implements jmri.jmr
 
     public SerialDriverAdapter() {
         super(new AcelaSystemConnectionMemo());
-        setManufacturer(jmri.jmrix.DCCManufacturerList.CTI);
+        setManufacturer(jmri.jmrix.acela.AcelaConnectionTypeList.CTI);
     }
 
     SerialPort activeSerialPort = null;
@@ -191,7 +191,7 @@ public class SerialDriverAdapter extends AcelaPortController implements jmri.jmr
     }
     static SerialDriverAdapter mInstance = null;
 
-    static Logger log = LoggerFactory.getLogger(SerialDriverAdapter.class.getName());
+    private final static Logger log = LoggerFactory.getLogger(SerialDriverAdapter.class.getName());
 }
 
 /* @(#)SerialDriverAdapter.java */

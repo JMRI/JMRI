@@ -355,7 +355,7 @@ public class CarLoadEditFrame extends OperationsFrame implements java.beans.Prop
     }
 
     public void propertyChange(java.beans.PropertyChangeEvent e) {
-        if (Control.showProperty) {
+        if (Control.SHOW_PROPERTY) {
             log.debug("Property change: ({}) old: ({}) new: ({})", e.getPropertyName(), e.getOldValue(), e
                     .getNewValue());
         }
@@ -373,5 +373,5 @@ public class CarLoadEditFrame extends OperationsFrame implements java.beans.Prop
 //	public synchronized void removePropertyChangeListener(java.beans.PropertyChangeListener l) {
 //		pcs.removePropertyChangeListener(l);
 //	}
-    static Logger log = LoggerFactory.getLogger(CarLoadEditFrame.class.getName());
+    private final static Logger log = LoggerFactory.getLogger(CarLoadEditFrame.class.getName());
 }

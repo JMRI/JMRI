@@ -199,7 +199,7 @@ public class ActiveTrain {
         mStatus = RUNNING;
         setStatus(WAITING);
         if (mAutoActiveTrain != null && DispatcherFrame.instance().getSignalType() == DispatcherFrame.SIGNALMAST) {
-            mAutoActiveTrain.setupNewCurrentSignal();
+            mAutoActiveTrain.setupNewCurrentSignal(null);
         }
     }
 
@@ -868,9 +868,10 @@ public class ActiveTrain {
         mNextSectionToAllocate = null;
     }
 
-    protected void reverseAllAllocatedSections() {
+    protected AllocatedSection reverseAllAllocatedSections() {
+        AllocatedSection aSec = null;
         for (int i = 0; i < mAllocatedSections.size(); i++) {
-            AllocatedSection aSec = mAllocatedSections.get(i);
+            aSec = mAllocatedSections.get(i);
             int dir = mTransit.getDirectionFromSectionAndSeq(aSec.getSection(), aSec.getSequence());
             if (dir == jmri.Section.FORWARD) {
                 aSec.getSection().setState(jmri.Section.REVERSE);
@@ -879,6 +880,7 @@ public class ActiveTrain {
             }
             aSec.setStoppingSensors();
         }
+        return aSec;
     }
 
     protected void resetAllAllocatedSections() {
@@ -932,7 +934,7 @@ public class ActiveTrain {
         holdAllocation = false;
         setStatus(WAITING);
         if (mAutoActiveTrain != null) {
-            mAutoActiveTrain.setupNewCurrentSignal();
+            mAutoActiveTrain.setupNewCurrentSignal(null);
         }
     }
 
@@ -966,7 +968,7 @@ public class ActiveTrain {
         pcs.removePropertyChangeListener(l);
     }
 
-    static Logger log = LoggerFactory.getLogger(ActiveTrain.class.getName());
+    private final static Logger log = LoggerFactory.getLogger(ActiveTrain.class.getName());
 }
 
 /* @(#)ActiveTrain.java */

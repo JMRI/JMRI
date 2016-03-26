@@ -1,4 +1,3 @@
-// SectionManagerXmlTest.java
 package jmri.configurexml;
 
 import java.util.ArrayList;
@@ -23,7 +22,6 @@ import junit.framework.TestSuite;
  * Just tests Elements, not actual files.
  *
  * @author Bob Coleman Copyright 2012
- * @version $Revision$
  */
 public class SectionManagerXmlTest extends TestCase {
 
@@ -550,7 +548,7 @@ public class SectionManagerXmlTest extends TestCase {
         return suite;
     }
     /*
-     static Logger log = LoggerFactory.getLogger(SectionManagerXmlTest.class.getName());
+    private final static Logger log = LoggerFactory.getLogger(SectionManagerXmlTest.class.getName());
 
      // The minimal setup for log4J
      protected void setUp() { apps.tests.Log4JFixture.setUp(); }

@@ -1,4 +1,3 @@
-// VSDSoundTest.java
 package jmri.jmrit.vsdecoder;
 
 import junit.framework.Assert;
@@ -11,7 +10,6 @@ import org.jdom2.Element;
  * Tests for the VSDSound class
  *
  * @author Mark Underwood Copyright (C) 2011
- * @version $Revision$
  */
 public class VSDSoundTest extends TestCase {
 

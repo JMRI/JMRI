@@ -47,6 +47,7 @@ abstract public class AbstractSimulatorConnectionConfig extends AbstractConnecti
      * subclass setInstance() will fill the adapter member.
      */
     public AbstractSimulatorConnectionConfig() {
+        log.debug("AbstractSimulatorConnectionConfig null ctor used");
         adapter = null;
     }
 
@@ -263,11 +264,12 @@ abstract public class AbstractSimulatorConnectionConfig extends AbstractConnecti
     }
 
     public void dispose() {
+        super.dispose();
         if (adapter != null) {
             adapter.dispose();
             adapter = null;
         }
     }
 
-    final static protected Logger log = LoggerFactory.getLogger(AbstractSimulatorConnectionConfig.class.getName());
+    private final static Logger log = LoggerFactory.getLogger(AbstractSimulatorConnectionConfig.class.getName());
 }

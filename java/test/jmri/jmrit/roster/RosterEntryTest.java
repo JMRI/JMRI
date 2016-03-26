@@ -3,6 +3,7 @@ package jmri.jmrit.roster;
 import java.io.File;
 import java.io.FileOutputStream;
 import java.io.IOException;
+import jmri.InstanceManager;
 import jmri.util.FileUtil;
 import junit.framework.Assert;
 import junit.framework.Test;
@@ -374,6 +375,7 @@ public class RosterEntryTest extends TestCase {
     // The minimal setup for log4J
     protected void setUp() {
         apps.tests.Log4JFixture.setUp();
+        InstanceManager.setDefault(RosterConfigManager.class, new RosterConfigManager());
     }
 
     protected void tearDown() {

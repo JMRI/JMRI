@@ -1,11 +1,9 @@
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
 <html lang="en">
 <head>
-<!-- Copyright ($Author$) 2009 -->
-<!-- $Id$ -->
-<TITLE>
+<title>
 DecoderPro&reg; Main Window
-</TITLE>
+</title>
 
 <!-- Style -->
 <meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
@@ -23,9 +21,9 @@ DecoderPro&reg; Main Window
 <div id="mainContent">
 
 <h1>DecoderPro&reg; Main Window</h1>
-<h1>Decoder Information Area</h1>
+<h2>Decoder Information Area</h2>
 
-<div align=right>
+<div align="right">
   <p><a href="dp3_Main_Main.shtml">Back </a></p>
 <p><a href="index.shtml#Main">Back to Index</a></p>
 </div>
@@ -67,11 +65,13 @@ DecoderPro&reg; Main Window
 <p>&nbsp;</p>
 <hr>
 
-<div align=right>
+<div align="right">
 <p><a href="dp3_Main_Main.shtml">Back </a></p>
 <p><a href="index.shtml#Main">Back to Index</a></p>
 </div>
 
 <!--#include virtual="/Footer" -->
-</body>
+  </div><!-- closes #mainContent-->
+ </div> <!-- closes #mBody-->
+ </body>
 </html>

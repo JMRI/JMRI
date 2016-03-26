@@ -1,15 +1,15 @@
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
-<html lang="en"><head><!-- Copyright ($Author$) 2009, 2010 --><!-- $Id$ -->
+<html lang="en">
+<head><title>Comprehensive Programmer - Advanced Features Pane</title>
 
-
-
-
-
-<title>Comprehensive Programmer - Advanced Features Pane</title><!-- Style --><meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
+<!-- Style -->
+<meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
 <link rel="stylesheet" type="text/css" href="/css/default.css" media="screen">
 <link rel="stylesheet" type="text/css" href="/css/print.css" media="print">
 <link rel="icon" href="/images/jmri.ico" type="image/png">
-<link rel="home" title="Home" href="/"><!-- /Style --></head>
+<link rel="home" title="Home" href="/">
+<!-- /Style -->
+</head>
 
 <body>
 <!--#include virtual="/Header" -->
@@ -19,7 +19,7 @@
 
 <a name="Top"></a>
 <h1>DecoderPro&reg; Advanced Feature</h1>
-<h1>Function Labels Pane</h1>
+<h2>Function Labels Pane</h2>
 
 <div align="right">
   <p><a href="index.shtml">Back to Index</a></p>
@@ -73,11 +73,15 @@ rather than the "full-range with separate direction key"</td>
 </p><p>You  may also edit the function button text in the <a href="dp3_Main_Throttle.shtml"><strong>JMRI Throttle</strong></a> and save those changes to the selected Roster entry. To use these changed entries in the future, make  sure you click on the
   <input name="button" id="button" value="Save to Roster" type="submit"> 
   to save these values into the Roster entry that is in use.
-</p><hr>
+</p>
 
+<hr>
 <div align="right">
 <p><a href="Comp_LightFX.shtml"></a><a href="index.shtml">Back to Index</a></p>
 </div>
 
 <!--#include virtual="/Footer" -->
-</div></body></html>
+  </div><!-- closes #mainContent-->
+ </div> <!-- closes #mBody-->
+ </body>
+</html>

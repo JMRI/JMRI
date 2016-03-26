@@ -236,5 +236,5 @@ public class Se8AlmImplementation extends AbstractAlmImplementation {
         }
     }
 
-    static Logger log = LoggerFactory.getLogger(Se8AlmImplementation.class.getName());
+    private final static Logger log = LoggerFactory.getLogger(Se8AlmImplementation.class.getName());
 }

@@ -1,13 +1,12 @@
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
-<!-- $Id$ -->
 <html lang="en">
 <head>
- <TITLE>
+ <title>
       JMRI: Block Table Help
- </TITLE>
-    <META http-equiv=Content-Type content="text/html; charset=iso-8859-1">
-    <META content="Bob Jacobsen" name=Author>
-    <META name="keywords" content="JMRI help Memory Table">
+ </title>
+    <meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
+    <meta content="Bob Jacobsen" name="Author">
+    <meta name="keywords" content="JMRI help Block Table">
 
 <!--#include virtual="/Style" -->
 </head>
@@ -17,98 +16,90 @@
   <div class="nomenu" id="mBody">
     <div id="mainContent">
 
-<H1>The Block Table</H1>
+<h1>The Block Table</h1>
 
-<H2>Blocks:</H2>
-<p>Blocks are sections of track whose occupancy may be individually monitored. Dividing 
-track into Blocks is optional. Blocks set up in a track diagram normally correspond 
-to physical blocks on a layout. Block occupancy is indicated by the state of an 
-occupancy sensor. When a layout's track is divided into Blocks, all of the track need 
-not belong to a Block. For example, yard track may not be in a Block, whereas mainline 
-track almost always would be divided into Blocks. The main use of Blocks is to facilitate 
-signaling, but Blocks may be used for other layout control and animation functions.</p>
-<p>Blocks may be set up using a script, or automatically in a Layout Editor panel. When a 
-Block is defined in a Layout Editor panel, a new Block is created if one does not already
-exist.  In Layout Editor, Blocks are identified by their User Name, so if a Block shown 
-in this table is used in a Layout Editor panel, its User Name should not be changed. If 
-you want to change the User Name of a Block used in a Layout Editor panel, make the 
-change in the Layout Editor, not here.</p>
+<p>Blocks may be set up manually in the Block Table, using a script, or automatically in a Layout Editor Panel. When a 
+Block is defined in a Layout Editor Panel, a new Block is created if one does not already
+exist. In Layout Editor, Blocks are identified by their User Name, so if a Block shown 
+in the Block Table is used in a Layout Editor Panel, its User Name should not be changed.<br>
+If you want to change the User Name of a Block used in a Layout Editor Panel, make the 
+change in the Layout Editor, not in the Block Table.</p>
 <p>To complete the definition of a Block, Paths and Bean Settings must be attached to 
 each Block. Paths describe entry points to the Block. Each Block has one or more Paths
-associated with it. Sometimes a turnout must be set a certain way to use a Path; Bean 
+associated with it. Sometimes a Turnout must be set a certain way to use a Path; Bean 
 Settings carry that information. Paths and Bean Settings are set up automatically for 
-Blocks defined in a Layout Editor panel. They can also be set up in a script. There is 
+Blocks defined in a Layout Editor Panel. They can also be set up in a script. There is 
 currently no way to manually enter Paths or Bean Settings. Paths and Bean Settings are 
 not shown in the Block Table, and are described here only for completeness.</p>
-<p>For use in automatically running trains, a length attribute and a curvature attribute 
+<p>For use in automatically running Trains, a Length attribute and a Curvature attribute 
 may optionally be assigned to a Block. These optional attributes are entered manually 
-in this table. If trains will not be run automatically through 
+in this Table. If Trains will not be run automatically through 
 a Block, there is no need to add these attributes.</p>
-<H2>Columns in the Block Table:</H2>
+
+<h2>Columns in the Block Table</h2>
 <ul>
-<li><p><b>System Name</b> - The system name of the Block. There is no functional 
+<li><p><b>System Name</b> - The System Name of the Block. There is no functional 
 requirement for a type letter in the System Name of a Block, but by convention we use 
 'B' for 'Block'. The default implementation is not system-specific, so a system letter 
 of 'I' is appropriate. This leads to system names like "IB201".</p></li> 
 
-<li><p><b>User Name</b> - The user name of the Block. The user name of a Block created
-here may be set to any text.  The user name for a Block created by Layout Editor is 
+<li><p><b>User Name</b> - The User Name of the Block. The User Name of a Block created
+here may be set to any text. The User Name for a Block created by Layout Editor is 
 set by Layout Editor and should not be changed.</p></li>
 
 <li><p><b>Value</b> - This is the string value of whatever object the
-block is carrying.  Usually, this will either be a message
+Block is carrying. Usually, this will either be a message
 or a Throttle object. If you modify this, it's stored in the Block
 as a string. There is currently no way to manually add a Throttle
-object to a block from the table.
-<a href="../../../../html/tools/tracker/index.shtml">More information on block tracking</a></p>
+object to a Block from the table.
+<a href="../../../../html/tools/tracker/index.shtml">More information on Block tracking</a></p>
 
 <li><p><b>Comment</b> - You may enter any text in this field that will help you 
 distinguish this Block from other Blocks, or provide useful notes about its use.</p></li>
 
 <li><p><b>Delete</b> - Click the <b>Delete</b> button in any row to delete the Block in 
-that row from the list of Blocks in the computer. You must save your configuration (and 
-any Panels present) to disk to make the deletion permanent. Deletion may not be undone.
-<b>Caution: Make sure you remove all references to a Block before deleting it.</b>  
+that row from the list of Blocks in the program. You must save your configuration (and 
+any Panels present) to disk to make the deletion permanent. Deletion can not be undone.
+<b>Caution: Make sure you remove all references to a Block before deleting it. JMRI will show a warning if you haven't done so.</b>  
 Blocks are referenced in the Paths of other Blocks, in some scripts, and in Layout 
-Editor panels.<p></li> 
+Editor Panels.<p></li> 
 
-<li><p><b>Direction</b> - The current direction stored in the block.</p></li>
+<li><p><b>Direction</b> - The current direction stored in the Block.</p></li>
 
-<li><p><b>Length</b> (optional) - Displays the length of the Block.  Optionally, you may 
-enter the length of the Block here.  The length is used for automatic running of trains. 
-If '0.0' is displayed, the length has not been entered. The entered length should be the 
+<li><p><b>Length</b> (optional) - Displays the length of the Block. Optionally, you may 
+enter the length of the Block here. The length is used for automatic running of trains. 
+If '0.0' is displayed, the length has not yet been entered. The entered length should be the 
 actual length of the Block on the model railroad layout. Length is entered and displayed 
 in either inches or centimeters, depending on which unit is requested at the bottom of 
-the Block Table.</p></li>
+the Block Table pane.</p></li>
 
-<li><p><b>Curvature</b> (optional) - Displays the curvature selected for the track in 
+<li><p><b>Curvature</b> (optional) - Displays the Curvature selected for the track in 
 the Block. Curvature is used for automatic running of trains, and need not be entered 
 if trains will not be run automatically. Curvature, if present, indicates to the computer 
 that it should slow the train as it runs through the Block. If <b>None</b> or 
-<b>Gradual</b> are selected, an automatic train will proceed at normal speed. <b>Tight</b> 
-should be selected if the train should slow down some; <b>Severe </b>should be selected 
+<b>Gradual</b> is selected, an automatic train will proceed at normal speed. <b>Tight</b> 
+should be selected if the train should slow down somewhat; <b>Severe </b>should be selected 
 if the train should slow by a maximum amount. If the Block has variable curvature, your 
 selection should be made according to the most limiting part of the Block.</p></li>
 
 <li><p><b>State</b>
 Shows the current state of the block, Occupied or UnOccupied
 
-
 <li><p><b>Reporter</b>
-The Reporter assigned to this block. See the Reporter table. Puts the Reporter Value into 
-the Block value
+The Reporter assigned to this Block. See the <a href="ReporterTable.shtml">Reporter Table</a>. Puts the Reporter Value into 
+the Block value.
 
 <li><p><b>Use Current?</b>
-If we consider the scenario whereby we want track a train around the layout, typically this 
+If we consider the scenario whereby we want to track a train around the layout, typically this 
 is achieved via the use of Memory objects associated with Blocks. Until the train is known, we 
-have nothing to track. Typically, we can manually type in the train ID into a panel and then 
-this is tracked around the layout based on block occupancy. If, however, we have an attached 
+have nothing to track. Typically, we can manually type the train ID into a pane and then 
+this is tracked around the layout based on Block occupancy. If, however, we have an attached 
 device that can provide us with the train ID, such as an RFID reader, we no longer need to 
 manually type the train ID in - the reader does this for us. In essence, the reader is little 
 more than an 'intelligent' sensor - not only can it sense that 'something' is there, it can 
-tell us which something it is.
-Now to the implementation.
-A Sensor is purely ACTIVE or INACTIVE - i.e. something is there or it isn't.
+tell us which something it is.</p>
+<p>Now to the implementation. 
+A Sensor is purely ACTIVE or INACTIVE - i.e. something is there or it isn't. 
 A Reporter, however, can tell us one of the following:
 <ol>
 <li>'Hey, I'm seeing something right now - this is it'
@@ -120,36 +111,39 @@ The first two are from the CurrentReport; the last two from LastReport.
 At start-up (assuming there is nothing within the range of the reader), both 2 and 4 are the initial 
 state. Once something is seen, both 1 and 3 return the same result. 
 When the something is 'out-of-range' 2 and 3 are then active.
-With 'Use Current?' selected the Block value will switch between 1 and 2, 
+With 'Use Current?' selected, the Block value will switch between 1 and 2, 
 whereas with 'Use Current?' unselected the Block value will switch between 3 and 4.
 
 <li><p><b>Permissive</b>
-The permissive option is used to identify blocks that can be entered while the 
-block is occupied.  It is used with certain automation tools and logic, to help
-determine if a train can enter an occupied block and what aspect should be displayed
-on a signal mast.</li>
+The Permissive option is used to identify Blocks that can be entered while the 
+Block is occupied. This is used with certain automation tools and logic, to help
+determine if a train can enter an occupied Block and what Aspect should be displayed
+on a Signal Mast.</li>
 
-<li><p><b>Block Speed</b>
-The speed is used with certain automation tools and logic, to help
-determine the speed at which a train can be set through the block.
-It is also used by the signal mast logic for determining which aspect should
+<li><p><a name="BlockSpeed"></a><b>Block Speed</b>
+The Block Speed is used with certain automation tools and logic, to help
+determine the speed at which a train can be set through the Block.
+It is also used by the Signal Mast Logic for determining which Aspect should
 be displayed in a signal path.
-<P>In the drop down list, you are presented a set of named fixed speeds that
-have been predefined in the signalSpeed.xml file, in addition to a global option.  
+<p>In the drop down list, you are presented a set of named fixed speeds that
+have been predefined in the <code>signalSpeed.xml</code> file, in addition to a global option.  
 <br>It is also possible to enter in a numerical value to represent a speed.
-<p>The global value is set via the <b>Speeds</b> menu option.</p></li>
-
+<p>The global value is set via the <b>Speeds</b> menu.</p></li>
 </ul>
 
-<p>
-<a href="../../../../html/tools/tracker/index.shtml">More information on Blocks</a></p>
-<p>
-<a href="../display/LayoutEditor.shtml">More information on using Blocks with Layout Editor</a>
-<br>
+<a name="addBlock"><h2>Adding a new Block</h2></a>
+<p>To add a new Block, see <a href="BlockAddEdit.shtml">Add/Edit Block Entries</a></p>
 
+<h2>Editing an existing Block</h2>
+<p>To check or change the properties of a Block, click the <strong><a href="BlockEdit.shtml">Edit</a></strong> button to the right of a Block entry in the Block Table, see <a href="BlockEdit.shtml">Edit Block</a>.</p>
+
+<p><a href="../../../../html/tools/tracker/index.shtml">More on Block Tracking</a></p>
+<p><a href="../display/LayoutEditor.shtml">Using Blocks with Layout Editor</a></p>
+<p>Back to the <a href="../../../../html/tools/Blocks.shtml">Blocks Help page</a></p>
 
 Located at package/jmri/jmrt/beantable/BlockTable
 <!--#include virtual="/Footer" -->
+ </div><!-- closes #mainContent-->
+</div> <!-- closes #mBody-->
 </body>
 </html>
-

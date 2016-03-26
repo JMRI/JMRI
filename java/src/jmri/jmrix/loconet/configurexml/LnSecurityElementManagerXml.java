@@ -105,14 +105,15 @@ public class LnSecurityElementManagerXml extends jmri.configurexml.AbstractXmlAd
         log.error("Invalid method called");
     }
 
-    public boolean load(Element elements) {
+    @Override
+    public boolean load(Element shared, Element perNode) {
         // create the master object
         LnSecurityElementManager mgr = new LnSecurityElementManager();
 
         // register it for configuration
         InstanceManager.configureManagerInstance().registerConfig(mgr);
         // load individual security elements
-        loadElements(elements);
+        loadElements(shared);
         return true;
     }
 
@@ -272,6 +273,6 @@ public class LnSecurityElementManagerXml extends jmri.configurexml.AbstractXmlAd
         }
     }
 
-    static Logger log = LoggerFactory.getLogger(LnSecurityElementManagerXml.class.getName());
+    private final static Logger log = LoggerFactory.getLogger(LnSecurityElementManagerXml.class.getName());
 
 }

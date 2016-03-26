@@ -1,4 +1,3 @@
-// AbstractTurnoutManager.java
 package jmri.managers;
 
 import jmri.JmriException;
@@ -13,7 +12,6 @@ import org.slf4j.LoggerFactory;
  * Abstract partial implementation of a TurnoutManager.
  *
  * @author	Bob Jacobsen Copyright (C) 2001
- * @version	$Revision$
  */
 public abstract class AbstractTurnoutManager extends AbstractManager
         implements TurnoutManager, java.beans.VetoableChangeListener {
@@ -27,7 +25,6 @@ public abstract class AbstractTurnoutManager extends AbstractManager
     public int getXMLOrder() {
         return Manager.TURNOUTS;
     }
-    //protected int xmlorder = 20;
 
     public char typeLetter() {
         return 'T';
@@ -275,7 +272,7 @@ public abstract class AbstractTurnoutManager extends AbstractManager
     String defaultClosedSpeed = "Normal";
     String defaultThrownSpeed = "Restricted";
 
-    @edu.umd.cs.findbugs.annotations.SuppressWarnings(value = "NP_NULL_PARAM_DEREF", justification = "We are validating user input however the value is stored in its original format")
+    @edu.umd.cs.findbugs.annotations.SuppressFBWarnings(value = "NP_NULL_PARAM_DEREF", justification = "We are validating user input however the value is stored in its original format")
     public void setDefaultClosedSpeed(String speed) throws JmriException {
         if (speed == null) {
             throw new JmriException("Value of requested turnout default closed speed can not be null");
@@ -341,7 +338,5 @@ public abstract class AbstractTurnoutManager extends AbstractManager
         return defaultClosedSpeed;
     }
 
-    static Logger log = LoggerFactory.getLogger(AbstractTurnoutManager.class.getName());
+    private final static Logger log = LoggerFactory.getLogger(AbstractTurnoutManager.class.getName());
 }
-
-/* @(#)AbstractTurnoutManager.java */

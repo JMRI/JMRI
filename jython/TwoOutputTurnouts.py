@@ -19,6 +19,7 @@
 #
 
 import jmri
+import java
 
 # First, define the listener that does everything
 class MainTurnoutListener(java.beans.PropertyChangeListener):

@@ -1,4 +1,3 @@
-// Mx1Turnout.java
 package jmri.jmrix.zimo;
 
 import jmri.Turnout;
@@ -11,14 +10,9 @@ import org.slf4j.LoggerFactory;
  * <P>
  *
  * @author	Kevin Dickerson Copyright (C) 2014
- * @version	$Revision: 22821 $
  */
 public class Mx1Turnout extends AbstractTurnout /*implements Mx1TrafficListener*/ {
 
-    /**
-     *
-     */
-    private static final long serialVersionUID = 8921768041774861293L;
     // Private data member to keep track of what turnout we control.
     int _number;
     Mx1TrafficController tc = null;
@@ -68,8 +62,6 @@ public class Mx1Turnout extends AbstractTurnout /*implements Mx1TrafficListener*
     protected void turnoutPushbuttonLockout(boolean pushButtonLockout) {
     }
 
-    static Logger log = LoggerFactory.getLogger(Mx1Turnout.class.getName());
+    private final static Logger log = LoggerFactory.getLogger(Mx1Turnout.class.getName());
 
 }
-
-/* @(#)Mx1Turnout.java */

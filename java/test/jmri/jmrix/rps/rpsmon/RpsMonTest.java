@@ -1,4 +1,3 @@
-// RpsMonTest.java
 package jmri.jmrix.rps.rpsmon;
 
 import javax.swing.JFrame;
@@ -11,7 +10,6 @@ import junit.framework.TestSuite;
  * Tests for the jmri.jmrix.rps.rpsmon package.
  *
  * @author Bob Jacobsen Copyright 2006
- * @version $Revision$
  */
 public class RpsMonTest extends TestCase {
 
@@ -21,7 +19,6 @@ public class RpsMonTest extends TestCase {
 //    }
 //  test order isn't guaranteed!
 //    public void testFrameCreation() {
-        jmri.InstanceManager.store(jmri.managers.DefaultUserMessagePreferences.getInstance(), jmri.UserPreferencesManager.class);
         JFrame f = jmri.util.JmriJFrame.getFrame("RPS Monitor");
         Assert.assertTrue("found frame", f != null);
         f.dispose();
@@ -45,4 +42,18 @@ public class RpsMonTest extends TestCase {
         return suite;
     }
 
+    // The minimal setup for log4J
+    protected void setUp() throws Exception {
+        apps.tests.Log4JFixture.setUp();
+
+        super.setUp();
+        jmri.util.JUnitUtil.resetInstanceManager();
+        jmri.util.JUnitUtil.initDefaultUserMessagePreferences();
+    }
+
+    protected void tearDown() throws Exception {
+        jmri.util.JUnitUtil.resetInstanceManager();
+        super.tearDown();
+        apps.tests.Log4JFixture.tearDown();
+    }
 }

@@ -35,11 +35,6 @@ import org.slf4j.LoggerFactory;
  */
 public class TrainsTableModel extends javax.swing.table.AbstractTableModel implements PropertyChangeListener {
 
-    /**
-     *
-     */
-    private static final long serialVersionUID = 4245878111843075492L;
-
     TrainManager trainManager = TrainManager.instance(); // There is only one manager
 
     // Defines the columns
@@ -349,7 +344,7 @@ public class TrainsTableModel extends javax.swing.table.AbstractTableModel imple
         }
     }
 
-    public Color getRowColor(int row) {
+    public synchronized Color getRowColor(int row) {
         Train train = sysList.get(row);
 //		log.debug("Row: {} train: {} color: {}", row, train.getName(), train.getTableRowColorName());
         return train.getTableRowColor();
@@ -477,7 +472,7 @@ public class TrainsTableModel extends javax.swing.table.AbstractTableModel imple
      * allocated to another train.
      */
     private boolean checkDepartureTrack(Train train) {
-        return (Setup.isStagingTrackImmediatelyAvail() && !train.isTrainInRoute() && train.getDepartureTrack() != null
+        return (Setup.isStagingTrackImmediatelyAvail() && !train.isTrainEnRoute() && train.getDepartureTrack() != null
                 && train.getDepartureTrack().getTrackType().equals(Track.STAGING)
                 && train.getDepartureTrack() != train.getTerminationTrack() && train.getDepartureTrack().getDropRS() > 0);
     }
@@ -501,8 +496,8 @@ public class TrainsTableModel extends javax.swing.table.AbstractTableModel imple
         });
     }
 
-    public void propertyChange(PropertyChangeEvent e) {
-        if (Control.showProperty) {
+    public synchronized void propertyChange(PropertyChangeEvent e) {
+        if (Control.SHOW_PROPERTY) {
             log.debug("Property change {} old: {} new: {}",
                     e.getPropertyName(), e.getOldValue(), e.getNewValue()); // NOI18N
         }
@@ -521,15 +516,21 @@ public class TrainsTableModel extends javax.swing.table.AbstractTableModel imple
             updateList();
             fireTableDataChanged();
         } else if (e.getSource().getClass().equals(Train.class)) {
-            synchronized (this) {
-                Train train = ((Train) e.getSource());
-                int row = sysList.indexOf(train);
-                if (Control.showProperty) {
-                    log.debug("Update train table row: {} name: {}",  row, train.getName());
-                }
-                if (row >= 0) {
-                    fireTableRowsUpdated(row, row);
-                }
+            Train train = ((Train) e.getSource());
+            int row = sysList.indexOf(train);
+            if (Control.SHOW_PROPERTY) {
+                log.debug("Update train table row: {} name: {}", row, train.getName());
+            }
+            if (row >= 0) {
+                // The line "_table.scrollRectToVisible(_table.getCellRect(row, 0, true));"
+                // can cause a thread lock if the table sorter is active. That's the reason
+                // the code is wrapped in the invokeLater.
+                SwingUtilities.invokeLater(new Runnable() {
+                    public void run() {
+                        _table.scrollRectToVisible(_table.getCellRect(row, 0, true));
+                    }
+                });
+                fireTableRowsUpdated(row, row);
             }
         }
     }
@@ -559,11 +560,6 @@ public class TrainsTableModel extends javax.swing.table.AbstractTableModel imple
     }
 
     class MyTableCellRenderer extends DefaultTableCellRenderer {
-
-        /**
-         *
-         */
-        private static final long serialVersionUID = 6030024446880261924L;
 
         @Override
         public Component getTableCellRendererComponent(JTable table, Object value, boolean isSelected,
@@ -601,5 +597,5 @@ public class TrainsTableModel extends javax.swing.table.AbstractTableModel imple
         }
     }
 
-    static Logger log = LoggerFactory.getLogger(TrainsTableModel.class.getName());
+    private final static Logger log = LoggerFactory.getLogger(TrainsTableModel.class.getName());
 }

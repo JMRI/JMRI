@@ -237,7 +237,7 @@ public class ConsistFile extends XmlFile {
                 do {
                     consist = consistIterator.next();
                     consistFromXml(consist);
-                } while (consist != null);
+                } while ( consistIterator.hasNext() );
             } catch (NoSuchElementException nde) {
                 log.debug("end of consist list");
             }
@@ -328,5 +328,5 @@ public class ConsistFile extends XmlFile {
         return getFileLocation() + "consist.xml";
     }
     // initialize logging
-    static Logger log = LoggerFactory.getLogger(ConsistFile.class.getName());
+    private final static Logger log = LoggerFactory.getLogger(ConsistFile.class.getName());
 }

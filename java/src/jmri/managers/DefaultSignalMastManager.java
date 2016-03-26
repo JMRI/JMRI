@@ -1,4 +1,3 @@
-// DefaultSignalMastManager.java
 package jmri.managers;
 
 import java.util.ArrayList;
@@ -17,7 +16,6 @@ import org.slf4j.LoggerFactory;
  * the present time. They're just names...
  *
  * @author Bob Jacobsen Copyright (C) 2009
- * @version	$Revision$
  */
 public class DefaultSignalMastManager extends AbstractManager
         implements SignalMastManager, java.beans.PropertyChangeListener {
@@ -124,7 +122,5 @@ public class DefaultSignalMastManager extends AbstractManager
         }
     }
 
-    static Logger log = LoggerFactory.getLogger(DefaultSignalMastManager.class.getName());
+    private final static Logger log = LoggerFactory.getLogger(DefaultSignalMastManager.class.getName());
 }
-
-/* @(#)DefaultSignalMastManager.java */

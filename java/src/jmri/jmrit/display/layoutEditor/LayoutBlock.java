@@ -29,6 +29,7 @@ import jmri.Turnout;
 import jmri.implementation.AbstractNamedBean;
 import jmri.jmrit.beantable.beanedit.BeanEditItem;
 import jmri.jmrit.beantable.beanedit.BeanItemPanel;
+import jmri.util.ColorUtil;
 import jmri.util.JmriJFrame;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -75,7 +76,6 @@ import org.slf4j.MDC;
  * configuration is saved.
  * <P>
  * @author Dave Duchamp Copyright (c) 2004-2008
- * @version $Revision$
  */
 public class LayoutBlock extends AbstractNamedBean implements java.beans.PropertyChangeListener {
 
@@ -319,7 +319,10 @@ public class LayoutBlock extends AbstractNamedBean implements java.beans.Propert
     public Sensor validateSensor(String sensorName, Component openFrame) {
         // check if anything entered	
         if (sensorName == null || sensorName.length() < 1) {
-            // no sensor entered
+            // no sensor name entered
+            if (occupancyNamedSensor != null) {
+                setOccupancySensorName(null);
+            }
             return null;
         }
         // get the sensor corresponding to this name
@@ -341,15 +344,27 @@ public class LayoutBlock extends AbstractNamedBean implements java.beans.Propert
         LayoutBlock b = InstanceManager.getDefault(jmri.jmrit.display.layoutEditor.LayoutBlockManager.class).
                 getBlockWithSensorAssigned(s);
         if (b != null) {
-            // new sensor is not unique, return to the old one
-            occupancyNamedSensor = savedNamedSensor;
-            JOptionPane.showMessageDialog(openFrame,
-                    java.text.MessageFormat.format(rb.getString("Error6"),
-                            new Object[]{sensorName, b.getID()}),
-                    rb.getString("Error"), JOptionPane.ERROR_MESSAGE);
-            return null;
+            if (b.getUseCount() > 0) {
+                // new sensor is not unique, return to the old one
+                occupancyNamedSensor = savedNamedSensor;
+                JOptionPane.showMessageDialog(openFrame,
+                        java.text.MessageFormat.format(rb.getString("Error6"),
+                                new Object[]{sensorName, b.getID()}),
+                        rb.getString("Error"), JOptionPane.ERROR_MESSAGE);
+                return null;
+            } else {
+                // the user is assigning a sensor which is already assigned to 
+                // layout block b. Layout block b is no longer in use so this
+                // should be fine but it's technically possible to put
+                // this discarded layout block back into service (possibly
+                // by mistake) by entering its name in any edit layout block window.
+                // That would cause a problem with the sensor being in use in
+                // two active blocks, so as a precaution we remove the sensor 
+                // from the discarded block here.
+                b.setOccupancySensorName(null);
+            }
         }
-        // sensor is unique
+        // sensor is unique, or was only in use on a layout block not in use
         setOccupancySensorName(sensorName);
         return s;
     }
@@ -393,6 +408,7 @@ public class LayoutBlock extends AbstractNamedBean implements java.beans.Propert
                                         "Would you like to update all memory icons on the panel linked to the block to use the new one?",
                                         "Update Memory Icons",
                                         JOptionPane.YES_NO_OPTION);
+                                        //TODO I18N in Bundle.properties
                                 found = true;
                                 if (n == 0) {
                                     updateall = true;
@@ -459,7 +475,7 @@ public class LayoutBlock extends AbstractNamedBean implements java.beans.Propert
     public void setMemoryName(String name) {
         if (name == null || name.equals("")) {
             namedMemory = null;
-            memoryName = name;
+            memoryName = "";
             return;
         }
         memoryName = name;
@@ -473,7 +489,7 @@ public class LayoutBlock extends AbstractNamedBean implements java.beans.Propert
     public void setMemory(Memory m, String name) {
         if (m == null) {
             namedMemory = null;
-            memoryName = name;
+            memoryName = name == null ? "" : name;
             return;
         }
         namedMemory = jmri.InstanceManager.getDefault(jmri.NamedBeanHandleManager.class).getNamedBeanHandle(name, m);
@@ -508,11 +524,13 @@ public class LayoutBlock extends AbstractNamedBean implements java.beans.Propert
                 occupancyNamedSensor.getBean().removePropertyChangeListener(mBlockListener);
             }
             occupancyNamedSensor = null;
+            occupancySensorName = "";
+            if (block != null)
+                block.setNamedSensor(null);
             return;
         }
         occupancySensorName = name;
-        Sensor sensor = jmri.InstanceManager.sensorManagerInstance().
-                getSensor(name);
+        Sensor sensor = jmri.InstanceManager.sensorManagerInstance().getSensor(name);
         if (sensor != null) {
             occupancyNamedSensor = jmri.InstanceManager.getDefault(jmri.NamedBeanHandleManager.class).getNamedBeanHandle(name, sensor);
             if (block != null) {
@@ -845,6 +863,7 @@ public class LayoutBlock extends AbstractNamedBean implements java.beans.Propert
     JTextField metricField = new JTextField(10);
     JComboBox<String> senseBox = new JComboBox<String>();
     JCheckBox permissiveCheck = new JCheckBox("Permissive Working Allowed");
+    //TODO I18N in Bundle.properties
     int senseActiveIndex;
     int senseInactiveIndex;
     JComboBox<String> trackColorBox = new JComboBox<String>();
@@ -870,6 +889,7 @@ public class LayoutBlock extends AbstractNamedBean implements java.beans.Propert
     }
 
     String[] working = {"Bi-Directional", "Recieve Only", "Send Only"};
+    //TODO I18N in ManagersBundle.properties
 
     ArrayList<JComboBox<String>> neighbourDir;
 
@@ -879,7 +899,11 @@ public class LayoutBlock extends AbstractNamedBean implements java.beans.Propert
         if (!(getOccupancySensorName()).equals(sensorNameField.getText().trim())) {
             // sensor has changed
             String newName = sensorNameField.getText().trim();
-            if (validateSensor(newName, editLayoutBlockFrame) == null) {
+            if (newName == null || newName.length() < 1) {
+                setOccupancySensorName(newName);
+                sensorNameField.setText("");
+                needsRedraw = true;
+            } else if (validateSensor(newName, editLayoutBlockFrame) == null) {
                 // invalid sensor entered
                 occupancyNamedSensor = null;
                 occupancySensorName = "";
@@ -1235,74 +1259,6 @@ public class LayoutBlock extends AbstractNamedBean implements java.beans.Propert
 
     private Color getSelectedColor(JComboBox<String> colorCombo) {
         return (colorCode[colorCombo.getSelectedIndex()]);
-    }
-
-    /**
-     * Utility methods for converting between string and color Note: These names
-     * are only used internally, so don't need a resource bundle
-     */
-    public static String colorToString(Color color) {
-        if (color == Color.black) {
-            return "black";
-        } else if (color == Color.darkGray) {
-            return "darkGray";
-        } else if (color == Color.gray) {
-            return "gray";
-        } else if (color == Color.lightGray) {
-            return "lightGray";
-        } else if (color == Color.white) {
-            return "white";
-        } else if (color == Color.red) {
-            return "red";
-        } else if (color == Color.pink) {
-            return "pink";
-        } else if (color == Color.orange) {
-            return "orange";
-        } else if (color == Color.yellow) {
-            return "yellow";
-        } else if (color == Color.green) {
-            return "green";
-        } else if (color == Color.blue) {
-            return "blue";
-        } else if (color == Color.magenta) {
-            return "magenta";
-        } else if (color == Color.cyan) {
-            return "cyan";
-        }
-        log.error("unknown color sent to colorToString");
-        return "black";
-    }
-
-    public static Color stringToColor(String string) {
-        if (string.equals("black")) {
-            return Color.black;
-        } else if (string.equals("darkGray")) {
-            return Color.darkGray;
-        } else if (string.equals("gray")) {
-            return Color.gray;
-        } else if (string.equals("lightGray")) {
-            return Color.lightGray;
-        } else if (string.equals("white")) {
-            return Color.white;
-        } else if (string.equals("red")) {
-            return Color.red;
-        } else if (string.equals("pink")) {
-            return Color.pink;
-        } else if (string.equals("orange")) {
-            return Color.orange;
-        } else if (string.equals("yellow")) {
-            return Color.yellow;
-        } else if (string.equals("green")) {
-            return Color.green;
-        } else if (string.equals("blue")) {
-            return Color.blue;
-        } else if (string.equals("magenta")) {
-            return Color.magenta;
-        } else if (string.equals("cyan")) {
-            return Color.cyan;
-        }
-        log.error("unknown color text '" + string + "' sent to stringToColor");
-        return Color.black;
     }
 
     /**
@@ -1963,19 +1919,18 @@ public class LayoutBlock extends AbstractNamedBean implements java.beans.Propert
         }
 
         final LayoutBlock neighLBlock = neighbour.getLayoutBlock();
-
         Runnable r = new Runnable() {
             public void run() {
                 neighLBlock.updateNeighbourPacketFlow(block, flow);
             }
         };
-        Thread thr = new Thread(r);
 
         Block neighBlock = neighbour.getBlock();
         int oldPacketFlow = neighbour.getPacketFlow();
 
         neighbour.setPacketFlow(flow);
-        thr.start();
+
+        javax.swing.SwingUtilities.invokeLater(r);
 
         if (flow == TXONLY) {
             neighBlock.addBlockDenyList(this.block);
@@ -2083,7 +2038,9 @@ public class LayoutBlock extends AbstractNamedBean implements java.beans.Propert
                         if (enableDeleteRouteLogging) {
                             log.info(msgPrefix + " We only have a single valid route left to " + destBlock.getDisplayName() + " So will tell " + layoutBlock.getDisplayName() + " we no longer have it");
                         }
-                        if (layoutBlock!=null) layoutBlock.removeRouteFromNeighbour(this, newUpdate);
+                        if (layoutBlock != null) {
+                            layoutBlock.removeRouteFromNeighbour(this, newUpdate);
+                        }
                         getAdjacency(nextHop).removeRouteAdvertisedToNeighbour(routesToRemove.get(j));
                     }
 
@@ -2301,7 +2258,7 @@ public class LayoutBlock extends AbstractNamedBean implements java.beans.Propert
      * if the reverse path is required, then this need to be added seperately.
      */
     //Was public
-    @edu.umd.cs.findbugs.annotations.SuppressWarnings(value = "DLS_DEAD_LOCAL_STORE")
+    @edu.umd.cs.findbugs.annotations.SuppressFBWarnings(value = "DLS_DEAD_LOCAL_STORE")
     void addThroughPath(Block srcBlock, Block dstBlock, LayoutEditor panel) {
         //Reset connectivity flag.
         layoutConnectivity = true;
@@ -4318,6 +4275,6 @@ public class LayoutBlock extends AbstractNamedBean implements java.beans.Propert
         return Bundle.getMessage("BeanNameLayoutBlock");
     }
 
-    static Logger log = LoggerFactory.getLogger(LayoutBlock.class.getName());
+    private final static Logger log = LoggerFactory.getLogger(LayoutBlock.class.getName());
 
 }

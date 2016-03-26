@@ -9,6 +9,7 @@
 # configure JMRI to use LocoNet Simulator
 
 import jmri
+import java
 
 name = "LPT1" 
 #name = "/dev/cu.usbmodem3d11" # debug

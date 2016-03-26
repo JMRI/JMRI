@@ -1,4 +1,3 @@
-// ConfigXmlManagerTest.java
 package jmri.configurexml;
 
 import java.io.File;
@@ -12,8 +11,6 @@ import junit.framework.Assert;
 import junit.framework.Test;
 import junit.framework.TestCase;
 import junit.framework.TestSuite;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 
 /**
  * Tests for ConfigXmlManager.
@@ -21,7 +18,6 @@ import org.slf4j.LoggerFactory;
  * Uses the local preferences for test files.
  *
  * @author Bob Jacobsen Copyright 2003
- * @version $Revision$
  */
 public class ConfigXmlManagerTest extends TestCase {
 
@@ -138,8 +134,6 @@ public class ConfigXmlManagerTest extends TestCase {
         TestSuite suite = new TestSuite(ConfigXmlManagerTest.class);
         return suite;
     }
-
-    static Logger log = LoggerFactory.getLogger(ConfigXmlManagerTest.class.getName());
 
     // The minimal setup for log4J
     protected void setUp() {

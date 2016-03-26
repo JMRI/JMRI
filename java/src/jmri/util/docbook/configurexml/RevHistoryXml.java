@@ -18,18 +18,20 @@ import org.jdom2.Namespace;
  */
 public class RevHistoryXml extends jmri.configurexml.AbstractXmlAdapter {
 
+    private static final String NAMESPACE = "http://docbook.org/ns/docbook"; // NOI18N
+    
     /**
      * Usual configurexml method, this one doesn't do anything because the
      * content is explicitly loaded from the file
      */
-    public boolean load(Element e) throws Exception {
+    public boolean load(Element shared, Element perNode) throws Exception {
         return true;
     }
 
     static public RevHistory loadRevHistory(Element e) {
         RevHistory r = new RevHistory();
 
-        java.util.List<Element> list = e.getChildren("revision", Namespace.getNamespace("http://docbook.org/ns/docbook"));
+        java.util.List<Element> list = e.getChildren("revision", Namespace.getNamespace(NAMESPACE));
         for (int i = 0; i < list.size(); i++) {
             loadRevision(r, list.get(i));
         }
@@ -38,7 +40,7 @@ public class RevHistoryXml extends jmri.configurexml.AbstractXmlAdapter {
 
     static void loadRevision(RevHistory r, Element e) {
         Element s;
-        Namespace n = Namespace.getNamespace("http://docbook.org/ns/docbook");
+        Namespace n = Namespace.getNamespace(NAMESPACE);
         int revnumber = 0;
         s = e.getChild("revnumber", n);
         if (s != null) {
@@ -110,7 +112,7 @@ public class RevHistoryXml extends jmri.configurexml.AbstractXmlAdapter {
     static Element historyElement(RevHistory r) {
         ArrayList<Revision> list = r.getList();
 
-        Element e = new Element("revhistory", "http://docbook.org/ns/docbook");
+        Element e = new Element("revhistory", NAMESPACE);
 
         for (int i = 0; i < list.size(); i++) {
             Element revision = revisionElement(list.get(i));
@@ -121,21 +123,21 @@ public class RevHistoryXml extends jmri.configurexml.AbstractXmlAdapter {
     }
 
     static Element revisionElement(Revision r) {
-        Element rev = new Element("revision", "http://docbook.org/ns/docbook");
+        Element rev = new Element("revision", NAMESPACE);
 
-        Element revnumber = new Element("revnumber", "http://docbook.org/ns/docbook");
+        Element revnumber = new Element("revnumber", NAMESPACE);
         revnumber.addContent("" + r.revnumber);
         rev.addContent(revnumber);
 
-        Element date = new Element("date", "http://docbook.org/ns/docbook");
+        Element date = new Element("date", NAMESPACE);
         date.addContent(r.date);
         rev.addContent(date);
 
-        Element authorinitials = new Element("authorinitials", "http://docbook.org/ns/docbook");
+        Element authorinitials = new Element("authorinitials", NAMESPACE);
         authorinitials.addContent(r.authorinitials);
         rev.addContent(authorinitials);
 
-        Element revremark = new Element("revremark", "http://docbook.org/ns/docbook");
+        Element revremark = new Element("revremark", NAMESPACE);
         revremark.addContent(r.revremark);
         rev.addContent(revremark);
 

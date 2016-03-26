@@ -90,15 +90,17 @@ public class AbstractSignalHeadManagerXml extends AbstractNamedBeanManagerConfig
      * Create a SignalHeadManager object of the correct class, then register and
      * fill it.
      *
-     * @param signalheads Top level Element to unpack.
+     * @param shared
+     * @param perNode
      * @return true if successful
      */
-    public boolean load(Element signalheads) {
+    @Override
+    public boolean load(Element shared, Element perNode) {
         // create the master object
         replaceSignalHeadManager();
 
         // load individual turnouts
-        loadSignalHeads(signalheads);
+        loadSignalHeads(shared, perNode);
         return true;
     }
 
@@ -111,13 +113,13 @@ public class AbstractSignalHeadManagerXml extends AbstractNamedBeanManagerConfig
      * additional info needed for a specific signal head type, invoke this with
      * the parent of the set of SignalHead elements.
      *
-     * @param signalheads Element containing the SignalHead elements to load.
+     * @param shared Element containing the SignalHead elements to load.
      */
-    public void loadSignalHeads(Element signalheads) {
+    public void loadSignalHeads(Element shared, Element perNode) {
         InstanceManager.signalHeadManagerInstance();
 
         // load the contents
-        List<Element> items = signalheads.getChildren();
+        List<Element> items = shared.getChildren();
         if (log.isDebugEnabled()) {
             log.debug("Found " + items.size() + " signal heads");
         }
@@ -129,7 +131,7 @@ public class AbstractSignalHeadManagerXml extends AbstractNamedBeanManagerConfig
             try {
                 XmlAdapter adapter = (XmlAdapter) Class.forName(adapterName).newInstance();
                 // and do it
-                adapter.load(item);
+                adapter.load(item, null);
             } catch (Exception e) {
                 log.error("Exception while loading " + item.getName() + ":" + e);
                 e.printStackTrace();
@@ -164,6 +166,6 @@ public class AbstractSignalHeadManagerXml extends AbstractNamedBeanManagerConfig
         return InstanceManager.signalHeadManagerInstance().getXMLOrder();
     }
 
-    static Logger log = LoggerFactory.getLogger(AbstractSignalHeadManagerXml.class.getName());
+    private final static Logger log = LoggerFactory.getLogger(AbstractSignalHeadManagerXml.class.getName());
 
 }

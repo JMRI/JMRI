@@ -2,7 +2,6 @@
 package jmri.jmrit.beantable.signalmast;
 
 import java.util.Hashtable;
-import java.util.ResourceBundle;
 import java.util.Vector;
 import javax.swing.JButton;
 import javax.swing.JComboBox;
@@ -50,15 +49,15 @@ public class SignalMastTableDataModel extends BeanTableDataModel {
 
     public String getColumnName(int col) {
         if (col == VALUECOL) {
-            return "Aspect";
+            return Bundle.getMessage("LabelAspectType");
         } else if (col == EDITMASTCOL) {
-            return "Edit";
+            return ""; // override default, no title for Edit column
         } else if (col == EDITLOGICCOL) {
-            return "Edit Logic";
+            return ""; // override default, no title for Edit Logic column
         } else if (col == LITCOL) {
-            return "Lit";
+            return Bundle.getMessage("ColumnHeadLit");
         } else if (col == HELDCOL) {
-            return "Held";
+            return Bundle.getMessage("ColumnHeadHeld");
         } else {
             return super.getColumnName(col);
         }
@@ -152,12 +151,12 @@ public class SignalMastTableDataModel extends BeanTableDataModel {
             boolean val = s.getHeld();
             return Boolean.valueOf(val);
         } else if (col == EDITLOGICCOL) {
-            return rb.getString("EditSignalLogicButton");
+            return Bundle.getMessage("EditSignalLogicButton");
         } else if (col == EDITMASTCOL) {
             if (s instanceof jmri.implementation.TurnoutSignalMast) {
-                return rb.getString("ButtonEdit");
+                return Bundle.getMessage("ButtonEdit");
             }
-            return rb.getString("ButtonEdit");
+            return Bundle.getMessage("ButtonEdit");
         } else {
             return super.getValueAt(row, col);
         }
@@ -199,7 +198,7 @@ public class SignalMastTableDataModel extends BeanTableDataModel {
             }
 
             public void run() {
-                SignallingSourceAction action = new SignallingSourceAction(rb.getString("TitleSignalMastLogicTable"), (SignalMast) getBySystemName(sysNameList.get(row)));
+                SignallingSourceAction action = new SignallingSourceAction(Bundle.getMessage("TitleSignalMastLogicTable"), (SignalMast) getBySystemName(sysNameList.get(row)));
                 action.actionPerformed(null);
             }
         }
@@ -323,7 +322,7 @@ public class SignalMastTableDataModel extends BeanTableDataModel {
     }
 
     protected String getBeanType() {
-        return rbean.getString("BeanNameSignalMast");
+        return Bundle.getMessage("BeanNameSignalMast");
     }
 
     public void propertyChange(java.beans.PropertyChangeEvent e) {
@@ -356,14 +355,11 @@ public class SignalMastTableDataModel extends BeanTableDataModel {
         return jmri.jmrit.beantable.SignalMastTableAction.class.getName();
     }
 
-    public static final ResourceBundle rb = ResourceBundle.getBundle("jmri.jmrit.beantable.BeanTableBundle");
-
     public String getClassDescription() {
-        return rb.getString("TitleSignalMastTable");
+        return Bundle.getMessage("TitleSignalMastTable");
     }
 
-    static final ResourceBundle rbean = ResourceBundle.getBundle("jmri.NamedBeanBundle");
-    static final Logger log = LoggerFactory.getLogger(SignalMastTableDataModel.class.getName());
+    private final static Logger log = LoggerFactory.getLogger(SignalMastTableDataModel.class.getName());
 
 }
 

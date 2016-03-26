@@ -1,4 +1,3 @@
-// NcePacketGenPanelTest.java
 package jmri.jmrix.nce.packetgen;
 
 import jmri.jmrix.nce.NceMessage;
@@ -6,14 +5,11 @@ import junit.framework.Assert;
 import junit.framework.Test;
 import junit.framework.TestCase;
 import junit.framework.TestSuite;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 
 /**
  * Tests for the jmri.jmrix.nce.packetgen.NcePacketGenPanel class
  *
  * @author	Bob Jacobsen
- * @version $Revision$
  */
 public class NcePacketGenPanelTest extends TestCase {
 
@@ -57,7 +53,5 @@ public class NcePacketGenPanelTest extends TestCase {
         TestSuite suite = new TestSuite(NcePacketGenPanelTest.class);
         return suite;
     }
-
-    static Logger log = LoggerFactory.getLogger(NcePacketGenPanelTest.class.getName());
 
 }

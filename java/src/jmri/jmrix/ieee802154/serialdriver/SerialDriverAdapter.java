@@ -9,6 +9,7 @@ import gnu.io.SerialPortEventListener;
 import java.io.DataInputStream;
 import java.io.DataOutputStream;
 import java.io.InputStream;
+import java.io.IOException;
 import jmri.jmrix.ieee802154.IEEE802154PortController;
 import jmri.jmrix.ieee802154.IEEE802154SystemConnectionMemo;
 import org.slf4j.Logger;
@@ -35,7 +36,7 @@ public class SerialDriverAdapter extends IEEE802154PortController implements jmr
 
     protected SerialDriverAdapter(IEEE802154SystemConnectionMemo connectionMemo) {
         super(connectionMemo);
-        this.manufacturerName = jmri.jmrix.DCCManufacturerList.IEEE802154;
+        this.manufacturerName = jmri.jmrix.ieee802154.SerialConnectionTypeList.IEEE802154;
     }
 
     public String openPort(String portName, String appName) {
@@ -62,7 +63,13 @@ public class SerialDriverAdapter extends IEEE802154PortController implements jmr
             int count = serialStream.available();
             log.debug("input stream shows " + count + " bytes available");
             while (count > 0) {
-                serialStream.skip(count);
+                long read = serialStream.skip(count);
+                if(read<count) {
+                   log.debug("skipped " + read + " bytes when " + count +
+                             "bytes reported available");
+                }
+                // double check to see if the port still reports 
+                // bytes available.
                 count = serialStream.available();
             }
 
@@ -156,10 +163,14 @@ public class SerialDriverAdapter extends IEEE802154PortController implements jmr
 
         } catch (gnu.io.NoSuchPortException p) {
             return handlePortNotFound(p, portName, log);
-        } catch (Exception ex) {
-            log.error("Unexpected exception while opening port " + portName + " trace follows: " + ex);
-            ex.printStackTrace();
-            return "Unexpected error while opening port " + portName + ": " + ex;
+        } catch (IOException ioe) {
+            log.error("IOException exception while opening port " + portName + " trace follows: " + ioe);
+            ioe.printStackTrace();
+            return "IO exception while opening port " + portName + ": " + ioe;
+        } catch (java.util.TooManyListenersException tmle) {
+            log.error("TooManyListenersException while opening port " + portName + " trace follows: " + tmle);
+            tmle.printStackTrace();
+            return "Too Many Listeners exception while opening port " + portName + ": " + tmle;
         }
 
         return null; // normal operation
@@ -207,7 +218,7 @@ public class SerialDriverAdapter extends IEEE802154PortController implements jmr
         }
         try {
             return new DataOutputStream(activeSerialPort.getOutputStream());
-        } catch (java.io.IOException e) {
+        } catch (IOException e) {
             log.error("getOutputStream exception: " + e.getMessage());
         }
         return null;
@@ -239,7 +250,7 @@ public class SerialDriverAdapter extends IEEE802154PortController implements jmr
     /**
      * Get an array of valid baud rates.
      */
-    @edu.umd.cs.findbugs.annotations.SuppressWarnings(value = "EI_EXPOSE_REP")
+    @edu.umd.cs.findbugs.annotations.SuppressFBWarnings(value = "EI_EXPOSE_REP")
     public String[] validBaudRates() {
         return validSpeeds;
     }
@@ -258,7 +269,7 @@ public class SerialDriverAdapter extends IEEE802154PortController implements jmr
     /**
      * Option 1 is not used for anything
      */
-    @edu.umd.cs.findbugs.annotations.SuppressWarnings(value = "EI_EXPOSE_REP")
+    @edu.umd.cs.findbugs.annotations.SuppressFBWarnings(value = "EI_EXPOSE_REP")
     public String[] validOption1() {
         return stdOption1Values;
     }
@@ -291,14 +302,8 @@ public class SerialDriverAdapter extends IEEE802154PortController implements jmr
     }
 
     // private control members
-    protected boolean opened = false;
     protected InputStream serialStream = null;
 
-//    static public SerialDriverAdapter instance() {
-//        if (mInstance == null) mInstance = new SerialDriverAdapter();
-//        return mInstance;
-//    }
-//    static SerialDriverAdapter mInstance = null;
-    static Logger log = LoggerFactory.getLogger(SerialDriverAdapter.class.getName());
+    private final static Logger log = LoggerFactory.getLogger(SerialDriverAdapter.class.getName());
 
 }

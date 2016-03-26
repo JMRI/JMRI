@@ -1,0 +1,234 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
+<html lang="en">
+<head>
+ <title>
+      JMRI: Sections Documentation
+ </title>
+    <meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
+    <meta content="Dave Duchamp" name="Author">
+    <meta name="keywords" content="JMRI help Sections">
+
+<!--#include virtual="/Style" -->
+</head>
+
+<body>
+
+<!--#include virtual="/Header" -->
+<!--#include virtual="Sidebar" -->
+
+    <div id="mainContent">
+<h1>JMRI: Sections Documentation</h1>
+
+<h2>What is a Section?</h2>
+
+<p>A <b>Section</b> is a group of one or more connected <b>Blocks</b> that may be 
+allocated to a train traveling in a given direction. Sections were created to solve 
+the direction problem that can occur when using Blocks directly. A Section has only 
+two directions, "forward" or "reverse". Sections can be traversed by a train in either 
+direction. Section direction is independent of the direction set for the locomotive by 
+a throttle. In addition to solving the direction problem, Sections offer the user 
+other useful features.</p>
+<p>Sections can be considered an extension of Blocks. Many Sections contain only one 
+Block. All Blocks contained in a multi-Block Section must be different. 
+Blocks are kept in order--the first block is connected to the second, the second 
+is connected to the third, etc. That means a Block in a Section must be connected 
+to the Block before it (if there is one) and to the Block after it (if there is 
+one), but may not be connected to any other Block in the Section. A Section may 
+not contain any reverse loops.</p>
+<p>Sections and their associated <b><a href="../../package/jmri/jmrit/beantable/TransitTable.shtml">Transits</a></b> 
+are designed to provide support for dispatching, either manual dispatching (by a 
+dispatcher sitting at a panel), or automatic dispatching by the computer. Dispatching 
+is the temporary allocation of Sections for the exclusive use of trains, either
+run by engineers with a throttle, and/or run automatically by the computer. Support for 
+dispatching is provided by <a href="../../package/jmri/jmrit/dispatcher/Dispatcher.shtml"><b>Dispatcher</b></a>, 
+which also provides for set up and running of trains automatically.</p>
+<p>A Section's <b>direction</b> is defined by the sequence in which Blocks are 
+added to a multi-Block Section. For a single Block Section the direction is chosen
+arbitrarily when the Section is created. A train may run through a Section in either 
+the <b>forward</b> direction (from first block to last block) or <b>reverse</b> 
+direction (from last block to first block). If a Section has only one Block, the 
+<b>direction</b> of that Section is chosen when setting up its <b>Entry Points</b> 
+(see below).</p>
+
+<p>Therefore, when setting up multi-block sections, you should choose blocks in the same 
+order across the layout for sequentially connected sections.  That way, the forward and 
+reverse directions will have consistent meaning for sections on a relative basis</p>
+
+<p>A Section has one or more <b>Entry Points</b>. An Entry Point defines a 
+connection from a Block inside the Section to a Block outside of the Section. Entry 
+Points are set up using Paths of Blocks in the Section--Paths that represent connections 
+to Blocks not contained in the Section. Entry Points are classified in one of two ways:
+	<ol>
+	<li>Whether entering the Section at that Entry Point will result in a train traveling in the "forward" 
+	direction.</li>
+	<li>whether entering at that Entry Point will result in a train 
+	traveling in the "reverse" direction.</li>
+	</ol>
+</p>
+<p> Sections are designed to be allocated to one train at a time. If a portion of 
+connected track is long enough to support multiple trains simultaneously traveling in 
+the same direction, one following the other, that connected track should be divided into 
+two or more Sections, if the user wants to run following trains in that area.</p>
+
+<h2>Requirements</h2>
+
+<p>Sections may be used with a Panel Editor Panel, with a Layout Editor Panel, with 
+a CTC machine, or directly without any Panel. Sections build on JMRI's 
+Blocks and Paths structure. So before attempting to create any Sections, you should 
+have Blocks and Paths fully initialized for your layout. (An easy way to 
+automatically initialize your Blocks and Paths is to sketch out a Layout Editor panel 
+of your layout, with Blocks assigned. By assigning Blocks to all track segments, Turnouts, etc., 
+the paths will be created automatically for you by JMRI.)</p>
+<p>Layout blocking should be carefully planned, to provide "<i>reasonable</i>" 
+Sections--Sections that make sense for a Dispatcher to allocate to a certain Train. For 
+right-handed or left-handed Turnouts switching mainline track, for 
+example, this usually means including the Turnout in the same Block as the track 
+entering at the Turnout throat, and providing separate Blocks for continuing 
+and diverging tracks. Some users prefer to have a Turnout in a separate Block, and that 
+works fine also. From a Dispatching perspective, tracks of mainline Turnouts that 
+branch to industries do not need to be separately blocked, but blocking here is 
+acceptable. A layout blocking scheme that works well for Signals, should work fine 
+for Sections also.</p>
+<p>Signals are not required for using Sections, but Sections will work fine with 
+Signals installed. If Signals are installed, the direction Sensors included in 
+Sections provide an easy way to set up simple APB signaling (see <a href="#SignalMast">below</a>).</p>  
+
+<h3>Support for Optional Direction and Stopping Sensors</h3>
+<p>Optionally each Section may have two <i>direction sensors</i>, one for the forward 
+direction and one for the reverse direction. These are normally internal Sensors, 
+bearing system names that begin with IS. They automatically follow the state of their 
+Section. A Section has three states, <b>FREE</b> (not allocated to a train), <b>FORWARD</b> 
+(allocated for travel in the forward direction), and <b>REVERSE</b> (allocated for travel in 
+the reverse direction. When the state of the Section is <b>FREE</b> both direction 
+sensors are set <b>ACTIVE</b>. When the state of the Section is <b>FORWARD</b>, the 
+forward direction sensor is <b>INACTIVE</b> and the reverse direction sensor is 
+<b>ACTIVE</b>. Similarly, when the state of the Section is <b>REVERSE</b>, the forward 
+direction sensor is <b>ACTIVE</b> and the reverse direction sensor is <b>INACTIVE</b>. 
+These sensors may be used in signal logic to force signals for travel in the direction 
+opposite to the allocated direction to <b>RED</b>. Tools are provided here in the 
+Section Table to automatically add direction sensors to signal logic or to 
+automatically remove all direction sensors from Signal Mast Logic 
+(see the <a href="../../package/jmri/jmrit/beantable/TransitTable.shtml#tools">Transit Table Tools</a>).
+Alternatively, if <a href="../../package/jmri/jmrit/dispatcher/Dispatcher.shtml"><b>Dispatcher</b></a>
+is being used, it can add direction sensors to signal logic as needed.</p>
+<p>Also optionally each Section may have two <i>Stopping Sensors</i> that indicate
+when a Train in the Section has reached the end of the Section by traveling in 
+the forward direction or in the reverse direction. Stopping Sensors should be physical 
+sensors on the layout, for example infrared point detectors. For manual dispatching, 
+these Sensors may be displayed on a Panel to indicate to the Dispatcher when a Train 
+has reached the end of its allocation. For automatic running, these Sensors may 
+be used to stop a Train before it reaches the end of its allocated Section, and 
+before it overruns a Red signal, if Signals are present.
+
+<h3><a name='SignalMast'>Using Signal Mast Logic with Sections</a></h3>
+<p>If your signaling is based using <a href="signaling/SignalMasts.shtml">Signal Masts</a>, with the associated logic that has been generated 
+using the Layout Editor, then it is possible to also have Sections automatically generated based 
+upon the logic.
+<p>The tool can be found in the <b>SignalMast Logic Table</b> | <b>Tools</b> | <b>Generate Sections</b>
+ Running this will immediately create Sections that each contain all of the Blocks between any already-defined Signal Mast Pairs.
+ It will also setup each "Automatically Generated" Section so that they  include those Blocks in  the correct order, 
+ with the direction being set as FORWARD travel, going from the source to destination Signal Mast. 
+ Please note that the Block details are not saved when the Panel is stored, but are re-created when the file is loaded. 
+<p>The tool will also automatically create forward and reverse direction Sensors and places them in the Section, however 
+currently the Signal Mast Logic does not use these and their creation is only there to allow validation of the Section 
+(or use by the user in unrelated Logix if desired).
+<p>Sections generated with the tool will only have a pair of Entry Points and simply follows the path between the two Signals.
+<p>Direction Sensors (Forward and Reverse) are created by the Generate Sections tool, but Stopping Sensors (Forward and Reverse) 
+need to be added manually by the user via the Edit Sections window for each section if desired.
+<p>The details of the Optional Direction and Stopping Sensors are saved when the Panel file is stored.
+<p>To use the Sections that have been built this way you will next need to setup <a href="../../package/jmri/jmrit/beantable/TransitTable.shtml">Transits</a>, Following that, 
+you will also need to set the <a href="../../package/jmri/jmrit/dispatcher/Dispatcher.shtml"><b>Dispatcher</b></a> 
+to use SignalMast Logic via the Dispatcher's <a href="../../package/jmri/jmrit/dispatcher/Options.shtml"><b>Options</b></a> menu.
+
+<h2>How to setup Sections</h2>
+
+<h3>Displaying and creating Sections</h3>
+<p>All the Sections that JMRI knows about can be viewed using the <a href="../../package/jmri/jmrit/beantable/SectionTable.shtml">Section Table</a>. 
+Select <b>Sections</b> in the <b>Tables</b> submenu of the <b>Tools</b> menu 
+of the main JMRI program window. Sections can either be created manually from the Section Table pane, 
+or they can be created automatically if you also plan to use <a href="../../package/jmri/jmrit/beantable/SectionTable.shtml#SignalMast">Signal Mast Logic</a>.
+There are eight columns in the Section Table:</p>
+	<ul>
+	<li><b>System Name</b> - The system name is assigned to the Section when it's created, 
+	and can't be changed.</li>
+	<li><b>User Name</b> - If you're interested in having your Sections carry "human readable"
+	names, you can click in the "User Name" column and change that information
+	to whatever you want.</li>
+	<li><b>State</b> - The state of a Section tells whether a section is "allocated" 
+	or "in use" by one or more trains.  The state of a newly added section is always
+	<b>FREE</b>. When a Section is allocated for travel in the direction from the 
+	"First Block" toward the "Last Block", the state is <b>FORWARD</b>.  When allocated 
+	for travel in the opposite direction, the state is <b>REVERSE</b>.</li>
+	<li><b>Comment</b> - This column is for your use to record any comment you may want
+	to use to keep track of your Sections. It is for information only.</li>
+	<li>Click the <b>Delete</b> button in a specific row to delete the Section in that row. 
+	Remember to remove any Transits using this Section. Any Transit that 
+	uses a deleted Section will be broken! Use this button with caution!</li>
+	<li><b>First Block</b> - This column displays the first block in the Section. 
+	Since a section is a group of one or more connected blocks, there is always an
+	entry.</li> 
+	<li><b>Last Block</b> - This column shows the final block in the Section. 
+	Since a section may contain only one block, the Last Block may be the same as the First 
+	Block.</li>
+	<li>Click the <b>Edit</b> button in a row to view or change entered information
+	for a Section. The System Name cannot be changed but the User Name may be changed, 
+	Blocks may be redefined, entry points may be reconfigured, etc. Only one Section 
+	may be edited at a time. A Section may not be edited if another one is being created. 
+	</li>
+	</ul>
+
+<h3>Section Table Controls</h3>
+<p>Below the Section Table there's an <a href="../../package/jmri/jmrit/beantable/SectionAddEdit.shtml">Add...</a> button.</p>
+<p>The <a href="../../package/jmri/jmrit/beantable/SectionTable.shtml#tools"><b>Tools</b></a> menu gives access to:
+	<ul>
+	<li>Validate All Sections...</li>
+	<li>Set Direction Sensors in Logic...</li>
+	<li>Remove Direction Sensors from Logic...</li>
+	</ul>
+
+<h3>Creating a new Section</h3>
+<p>To Create a new Section, click the 
+"<a href="../../package/jmri/jmrit/beantable/SectionAddEdit.shtml">Add.." button</a>. A window will be brought up 
+that will allow you to define the blocks included in the new Section, and if 
+necessary, designate which entry points to the section result in travel in the 
+FORWARD and REVERSE directions.</p>
+<p>Currently the user must manually select <b>FORWARD</b> or <b>REVERSE</b> for each 
+Entry Point after all Blocks are added to a Section. The program will set some directions
+automatically, but others are left as <b>UNKNOWN</b>. An Entry Point should be set 
+to FORWARD if a train entering the Section at that Entry Point would be traveling 
+in the FORWARD direction. Otherwise it should be set to REVERSE. A possible future 
+addition is to set directions of Entry Points automatically from the connectivity 
+found in a Layout Editor panel.</p>
+<p>For Sections with more than one Block, travel from a lower-numbered block to 
+a higher-numbered block is FORWARD travel. Stated a different way, moving from a 
+block higher in the block list to a block lower in the list is FORWARD travel. 
+Similarly moving from a higher-numbered block to a lower-numbered block is REVERSE 
+travel. For Sections with only one block, it doesn't make any difference which 
+direction through the Section is designated FORWARD, as long as Entry Point travel
+directions are consistent. That is: 
+	<ul>
+	<li>REVERSE and FORWARD directions of travel must be opposite.</li> 
+	<li>Entering at any FORWARD Entry Point must result in travel in the same 
+	direction as entering at all other FORWARD Entry Points.</li>
+	<li>Entering at any REVERSE Entry Point must result in travel 
+	in the same direction as entering at all other REVERSE Entry Points.</li>
+	</ul>
+<p><b>WARNING: If Entry Points are not consistent strange behavior may result 
+when using the Section.</b></p>
+
+<h3> Saving Sections to disk</h3>
+<p> Use the <b>Store</b> item in the <b>File</b> menu of the Section Table (or 
+the <b>Store Panels...</b> item in the <b>Panels</b> menu of the main JMRI 
+window) to save Section information to disk. This information (and any modified 
+signal logic information) is saved with the configuration and panels in an XML 
+file, along with control panel setup and similar stuff. To store your panels in 
+the same file (recommended), select <b>File>Store>Store Configuration and Panels To 
+File...</b> or select <b>Panels>Store Panels...</b> in the main JMRI window.
+</p>
+
+<!--#include virtual="/Footer" -->
+
+      </div><!-- closes #mainContent-->
+    </div> <!-- closes #mBody-->
+</body>
+</html>

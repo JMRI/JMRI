@@ -1,4 +1,3 @@
-// SchemaTestBase.java
 package jmri.configurexml;
 
 import jmri.jmrit.XmlFile;
@@ -11,7 +10,6 @@ import junit.framework.*;
  *
  * @author Bob Jacobsen Copyright 2009, 2014
  * @since 3.9.2
- * @version $Revision$
  */
 public class SchemaTestBase extends TestCase {
 
@@ -23,6 +21,7 @@ public class SchemaTestBase extends TestCase {
      * Does actual validation of a single file
      */
     static public void validate(File file) {
+        if (System.getProperty("jmri.skipschematests", "false").equals("true")) return; // skipping check
         boolean original = XmlFile.getVerify();
         try {
             XmlFile.setVerify(true);
@@ -42,6 +41,7 @@ public class SchemaTestBase extends TestCase {
      * Does actual validation of a single file, insisting on failure.
      */
     static void validateFail(File file) {
+        if (System.getProperty("jmri.skipschematests", "false").equals("true")) return; // skipping check
         boolean original = XmlFile.getVerify();
         try {
             XmlFile.setVerify(true);
@@ -66,6 +66,8 @@ public class SchemaTestBase extends TestCase {
         TestSuite subsuite = new TestSuite("Directory " + name + " validation");
         suite.addTest(subsuite);
 
+        if (System.getProperty("jmri.skipschematests", "false").equals("true")) return; // skipping check
+
         java.io.File dir = new java.io.File(name);
         java.io.File[] files = dir.listFiles();
         if (files == null) {
@@ -87,6 +89,8 @@ public class SchemaTestBase extends TestCase {
         // adds subsuite even if empty
         TestSuite subsuite = new TestSuite("Subdirectories of " + name + " validation");
         suite.addTest(subsuite);
+
+        if (System.getProperty("jmri.skipschematests", "false").equals("true")) return; // skipping check
 
         java.io.File dir = new java.io.File(name);
         java.io.File[] files = dir.listFiles();
@@ -110,13 +114,14 @@ public class SchemaTestBase extends TestCase {
         TestSuite subsuite = new TestSuite("Directory " + name + " validation");
         suite.addTest(subsuite);
 
+        if (System.getProperty("jmri.skipschematests", "false").equals("true")) return; // skipping check
+
         java.io.File dir = new java.io.File(name);
         java.io.File[] files = dir.listFiles();
         if (files == null) {
             return;
         }
 
-        suite.addTest(subsuite);
         for (int i = 0; i < files.length; i++) {
             if (files[i].getName().endsWith(".xml")) {
                 subsuite.addTest(new CheckOneFileFails(files[i]));

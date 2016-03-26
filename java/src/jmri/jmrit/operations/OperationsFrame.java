@@ -33,12 +33,9 @@ import org.slf4j.LoggerFactory;
  * @author Dan Boudreau Copyright (C) 2008, 2012
  * @version $Revision$
  */
+@edu.umd.cs.findbugs.annotations.SuppressFBWarnings(value = "BC_UNCONFIRMED_CAST_OF_RETURN_VALUE", justification = "cast is consistent OperationsPanel")
 public class OperationsFrame extends JmriJFrame implements AncestorListener {
 
-    /**
-     *
-     */
-    private static final long serialVersionUID = -8263240370517832287L;
     public static final String NEW_LINE = "\n"; // NOI18N
     public static final String NONE = ""; // NOI18N
 
@@ -346,5 +343,5 @@ public class OperationsFrame extends JmriJFrame implements AncestorListener {
         ((OperationsPanel) this.getContentPane()).ancestorMoved(event);
     }
 
-    static Logger log = LoggerFactory.getLogger(OperationsFrame.class.getName());
+    private final static Logger log = LoggerFactory.getLogger(OperationsFrame.class.getName());
 }

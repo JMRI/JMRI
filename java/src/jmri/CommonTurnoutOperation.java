@@ -5,8 +5,6 @@ package jmri;
 
 import java.util.ResourceBundle;
 import jmri.implementation.AbstractTurnout;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 
 /**
  * CommonTurnoutOperation class - specialization of TurnoutOperation to contain
@@ -91,6 +89,4 @@ public abstract class CommonTurnoutOperation extends TurnoutOperation {
             maxTries = newMaxTries;
         }
     }
-
-    static Logger log = LoggerFactory.getLogger(CommonTurnoutOperation.class.getName());
 }

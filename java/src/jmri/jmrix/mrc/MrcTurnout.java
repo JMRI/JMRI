@@ -115,7 +115,7 @@ public class MrcTurnout extends AbstractTurnout implements MrcTrafficListener {
     protected void turnoutPushbuttonLockout(boolean pushButtonLockout) {
     }
 
-    static Logger log = LoggerFactory.getLogger(MrcTurnout.class.getName());
+    private final static Logger log = LoggerFactory.getLogger(MrcTurnout.class.getName());
 
 }
 

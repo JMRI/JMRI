@@ -1,20 +1,16 @@
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
-<!-- $Id$ -->
 <html lang="en">
 <head>
-  <TITLE>
+  <title>
  	JMRI: Turnout Documentation
-  </TITLE>
-  <META http-equiv=Content-Type content="text/html; charset=iso-8859-1">
+  </title>
 
-  <META content="Bob Jacobsen" name=Author>
-
-  <meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1">
+  <meta name="Author" content="Bob Jacobsen">
   <meta name="keywords"
         content="turnout model railroad JMRI decoderpro panelpro">
 
 <!-- Style -->
-  <META http-equiv=Content-Type content="text/html; charset=iso-8859-1">
+  <meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
   <link rel="stylesheet" type="text/css" href="/css/default.css" media="screen">
   <link rel="stylesheet" type="text/css" href="/css/print.css" media="print">
   <link rel="icon" href="/images/jmri.ico" type="image/png">
@@ -30,11 +26,9 @@
 
       <div id="mainContent">
       <!-- Page Body -->
-        <H2>
-		JMRI: Turnout Documentation
-        </H2>
+<h1>JMRI: Turnouts Documentation</h1>
 
-<h3>What are Turnouts?</h3>
+<h2>What are Turnouts?</h2>
 
 <p>JMRI calls just about any output to the layout a "Turnout".  
 Originally, JMRI controlled just Turnouts via DCC accessory decoders.
@@ -43,59 +37,70 @@ Now, for example, the individual output pins on a C/MRI system
 are also referenced via the "Turnout" name.
 </p>
 
-<h3>Controlling a Turnout</h3>
+<h2>How to setup Turnouts</h2>
 
+<h3>Turnout Properties</h3>
+<p>Turnouts are created and edited in the <a href="../../package/jmri/jmrit/beantable/TurnoutTable.shtml">Turnout Table</a>.<br>
+A range of <a href="../../package/jmri/jmrit/beantable/TurnoutTable.shtml#columns">columns</a> shows the settings for each Turnout.<br>
+Along the bottom are <a href="../../package/jmri/jmrit/beantable/TurnoutTable.shtml#controls">checkboxes</a>
+to display additional columns.</p>
+
+<h3>Controlling a Turnout</h3>
 <p>
-In most cases, you can just operate a turnout and JMRI will 
-figure out why you mean.  
-For example, you can open the "Turnout Control"
-from the "Tools" menu, enter a Turnout number (DCC or C/MRI address number),
-and click Thrown or Closed.  JMRI will take it from there.
-</P>
-<P>
 The two states of the output are called "Closed" and "Thrown".  
 "Closed" is the off, inactive, not commanded state.
-"Thrown" is the on, active, commanded state. 
+"Thrown" is the on, active, commanded state.</p>
+<p>
+In most cases, you can just operate a Turnout and JMRI will 
+figure out why you mean.  
+For example, you can open the "Turnout Control" tool
+from the "Tools" menu, enter a Turnout number (DCC or C/MRI address number),
+and click Thrown or Closed. JMRI will take it from there.
+</p>
    
 <h3>Saving Turnout configuration to disk</h3>
 
-<p>The turnout definitions are saved in your layout configuration file, along with 
-sensors, signal heads, etc.  To store this information on disk, use <b>Store 
-Configuration...</b> in the <b>File</b> menu at the top of the Light 
+<p>The Turnout definitions are saved in your layout configuration file, along with 
+Sensors, Signal Heads, etc. To store this information on disk, use <b>Store 
+Configuration...</b> in the <b>File</b> menu at the top of the Turnouts 
 Table (or other tables from the Tools menu), or select <b>Store Panel...</b>
 in the <b>Panel</b> menu. 
 
-<a name="add"><H3>Adding a new Turnout</H3></a>
+<a name="add"><h3>Adding a new Turnout</h3></a>
 <p>To fully configure a new Turnout, follow this procedure:</p>
-<ol>
-	<li><p>Click <b>Turnout Table</b> in the <b>Tools</b> menu to bring up
-the Turnout Table, and click the <b>Add...</b> button at the bottom of the 
-table to bring up the Add/Edit Turnout window.</p>
-	<li><p>From the <b>System</b> drop down list select the system to which the 
-    turnout address is connected to.  In the <b>Hardware Address</b> enter in the
-    dcc accessory address of the turnout</p>
-	</li>
-	<li><p>Enter a user name. Any string of characters that is different 
-from the user name of other Turnouts will be accepted, but it's 
-wise to use a string that describes the intended use of the Turnout.
-You can leave this blank if you'd like.</p>
-	</li>
-    <li><p>If you wish to add a number of turnouts at once, click on the 
-    <b>Add a Range</b> checkbox and then in the <b>Number to Add</b> field enter
-    in the number of turnouts that you wish to add.  If you have entered a user
-    name, then this will be appended with a number to ensure that each user name
-    is unique.  If a hardware address already exists in the block that is being
-    added, then the system will skip that address and will carry on.
-    </li>
-	<li><p>Click the <b>OK</b> button at the bottom of the window.  
-If everything is fine, a message stating "New Turnout added ... " will be 
-displayed in the notes area. If there is trouble with anything, an error or 
-warning message will be displayed in the notes area; you should then
-correct the error and click <b>OK</b> again.</p>
-    </li>
-    <LI><P>Back in the main Turnout Table, you can then select
-options for the Turnout and control it by clicking on the state button.
-</ol>
+		<ol>
+		<li><p>Click <b>Tables</b> -&gt; <b>Turnouts</b> in the <b>Tools</b> menu to bring up
+		the <a href="../../package/jmri/jmrit/beantable/TurnoutTable.shtml">Turnout Table</a>,
+		and click the <b>Add...</b> button at the bottom of the pane to bring up the
+		<a href="../../package/jmri/jmrit/beantable/TurnoutAddEdit.shtml">Add/Edit Turnout pane</a>.</p>
+		</li>
+		<li><p>From the <b>System</b> drop down list select the system to which the 
+		Turnout address is connected to. In the <b>Hardware Address</b> field enter the
+		dcc accessory address of the Turnout.</p>
+		</li>
+		<li><p>Enter a User Name. Any string of characters that is different 
+		from the User Name of other Turnouts will be accepted, but it's 
+		wise to use a string that describes the intended use of the Turnout.
+		You can leave this blank if you'd like.</p>
+		</li>
+		<li><p>If you wish to add a number of Turnouts at once, click on the 
+		<b>Add a Range</b> checkbox and then in the <b>Number to Add</b> field enter
+		the number of Turnouts that you wish to add. If you have entered a User
+		Name, then this will be appended with a number to ensure that each User Name
+		is unique. If a hardware address already exists in the range that is being
+		added, then the system will skip that address and carry on.
+		</li>
+		<li><p>Click the <b>OK</b> button at the bottom of the pane.  
+		If everything is fine, a message stating "New Turnout added..." will be 
+		displayed in the notes area. If there is trouble with anything, an error or 
+		warning message will be displayed in the notes area; you should then
+		correct the error and click <b>OK</b> again.</p>
+		</li>
+		<li><p>Back in the main Turnout Table, you can now set
+		<a href="../../package/jmri/jmrit/beantable/TurnoutTable.shtml#Turnout Feedback">options</a>
+		for the Turnout and control it by clicking on its <b>Cmd</b> button.
+		</li>
+		</ol>
 
 <!--#include virtual="/Footer" -->
 
@@ -104,5 +109,4 @@ options for the Turnout and control it by clicking on the state button.
   </div> <!-- closes #container -->
 </body>
 </html>
-
 

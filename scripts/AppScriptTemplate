@@ -15,7 +15,7 @@
 #
 # You can run separate instances of the program with their
 # own preferences and setup if you either
-# *) Provide the name of a configuration file as the 1st argument
+# *) Provide the name of a configuration file as a parameter
 # or
 # *) Copy and rename this script.
 #
@@ -31,6 +31,16 @@
 #
 # $Revision$ (SVN maintains this line, do not edit please)
 #
+
+function usage() {
+cat <<EOM
+Usage: $( basename $0 ) [--help] [OPTIONS]
+  -c CONFIG, --config=CONFIG     Start JMRI with configuration CONFIG
+  -d, --debug                    Add verbose output to this script
+  -JOPTION                       Pass the option OPTION to the JVM
+  -p PROFILE, --profile=PROFILE  Start JMRI with the profile PROFILE
+EOM
+}
 
 # get the script's location as an absolute path
 SCRIPTDIR=$(cd "$( dirname "${0}" )" && pwd)
@@ -52,10 +62,12 @@ CONFIGNAME=""
 while [ $# -gt 0 ] ; do
     case $1 in
         -d|--debug) DEBUG="yes" ;;
-        --profile=*) JMRI_OPTIONS="${JMRI_OPTIONS} -Dorg.jmri.profile=\"${1#*=}\"" ;;
-        -p) JMRI_OPTIONS="${JMRI_OPTIONS} -Dorg.jmri.profile=\"$2\"" ;;
+        --profile=*) JMRI_OPTIONS="${JMRI_OPTIONS} -Dorg.jmri.profile=${1#*=}" ;;
+        -p) JMRI_OPTIONS="${JMRI_OPTIONS} -Dorg.jmri.profile=$2" ; shift ;;
         --config=*) CONFIGNAME="${1#*=}" ;;
-        -c) CONFIGNAME="$2";
+        -c) CONFIGNAME="$2" ; shift ;;
+        -J*) JMRI_OPTIONS="${JMRI_OPTIONS} ${1#-J}" ;;
+        --help) usage ; exit 2 ;;
     esac
     shift
 done
@@ -325,13 +337,16 @@ if [ -n "$JMRI_SERIAL_PORTS" ] ; then
     JMRI_SERIAL_PORTS="$JMRI_SERIAL_PORTS,"
 fi
 
-# locate alternate serial ports
-ALTPORTS=$( echo "$JMRI_SERIAL_PORTS $( ls -fm /dev/cu\.* /dev/tty\.* /dev/ttyS* /dev/ttyUSB* /dev/ttyACM* /dev/ttyAMA* 2>/dev/null )" | tr -d " \n" | tr "," ":" )
-if [ "${ALTPORTS}" ] ; then
-    ALTPORTS=-Dgnu.io.rxtx.SerialPorts=${ALTPORTS}
+if [ "$OS" = "macosx" ] ; then
+    ALTPORTS=
+else
+    # locate alternate serial ports
+    ALTPORTS=$( echo "$JMRI_SERIAL_PORTS $( ls -fm /dev/ttyS* /dev/ttyUSB* /dev/ttyACM* /dev/ttyAMA* 2>/dev/null )" | tr -d " \n" | tr "," ":" )
+    if [ "${ALTPORTS}" ] ; then
+        ALTPORTS=-Dgnu.io.rxtx.SerialPorts=${ALTPORTS}
+    fi
+    [ -n "${DEBUG}" ] && echo "ALTPORTS: '${ALTPORTS}'"
 fi
-[ -n "${DEBUG}" ] && echo "ALTPORTS: '${ALTPORTS}'"
-
 
 declare -a DOCK_OPTIONS
 # Apple dock extensions to java get mangled by bash if included in ${OPTIONS}

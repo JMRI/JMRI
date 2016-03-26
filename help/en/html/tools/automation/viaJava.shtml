@@ -2,7 +2,6 @@
 <html lang="en">
 <head>
 <!-- Copyright Bob Jacobsen, John Plocher 2005, 2006, 2008 -->
-<!-- $Id$ -->
 <title>JMRI: Layout Automation in Java</title>
 
 <!-- Style -->
@@ -22,12 +21,12 @@
 
 
 <!-- Page Body -->
-<H2>JMRI: Layout Automation in Java</h2>
+<h2>JMRI: Layout Automation in Java</h2>
 
 The JMRI library provides a very powerful set of tools for
 automating your layout.  If the tools built into
-<A HREF="../../apps/PanelPro/PanelPro.shtml">PanelPro</a> or the
-<A HREF="../scripting/index.shtml">scripting capability</a>
+<a href="../../apps/PanelPro/PanelPro.shtml">PanelPro</a> or the
+<a href="../scripting/index.shtml">scripting capability</a>
 aren't sufficient to do what you want, writing your own
 control program certainly will be.
 
@@ -52,7 +51,7 @@ writing something that you want to eventually contribute to JMRI itself.
 for your layout using JMRI.</p>
 
 <p> The key class is
-<a HREF="http://jmri.sourceforge.net/JavaDoc/doc/jmri/jmrit/automat/AbstractAutomaton.html">AbstractAutomaton</a>,
+<a href="http://jmri.org/JavaDoc/doc/jmri/jmrit/automat/AbstractAutomaton.html">AbstractAutomaton</a>,
 which provides threading support to simplify custom automation code.</p>
 
 <p>Key aspect: These run in a separate thread, so they can wait for
@@ -190,7 +189,10 @@ and invoke it at startup, via a Logix, or whenever you desire.
 
 
 </dl>
+<p>Back to the <a href="index.shtml">Automation Help page</a>.
 
 <!--#include virtual="/Footer" -->
+    </div><!-- closes #mainContent-->
+  </div> <!-- closes #mBody-->
 </body>
 </html>

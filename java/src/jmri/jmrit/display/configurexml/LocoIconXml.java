@@ -53,11 +53,6 @@ public class LocoIconXml extends PositionableLabelXml {
         return element;
     }
 
-    public boolean load(Element element) {
-        log.error("Invalid method called");
-        return false;
-    }
-
     /**
      * Create a PositionableLabel, then add to a target JLayeredPane
      *
@@ -121,5 +116,5 @@ public class LocoIconXml extends PositionableLabelXml {
         l.init();		// to detect "background" color for use in Tracker, examine icon file 
     }
 
-    static Logger log = LoggerFactory.getLogger(LocoIconXml.class.getName());
+    private final static Logger log = LoggerFactory.getLogger(LocoIconXml.class.getName());
 }

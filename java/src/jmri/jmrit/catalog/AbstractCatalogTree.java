@@ -1,4 +1,3 @@
-// AbstractCatalogTree.java
 package jmri.jmrit.catalog;
 
 import java.beans.PropertyChangeListener;
@@ -20,21 +19,9 @@ import org.slf4j.LoggerFactory;
  */
 public abstract class AbstractCatalogTree extends DefaultTreeModel implements CatalogTree {
 
-    /**
-     *
-     */
-    private static final long serialVersionUID = -6839273293799611575L;
     private String mUserName;
     private String mSystemName;
 
-    // private AbstractCatalogTree() {
-    //      super(new CatalogTreeNode("BAD Ctor!"));
-    //      mSystemName = null;
-    //      mUserName = null;
-    //      log.warn("Unexpected use of null ctor");
-    //      Exception e = new Exception();
-    //      e.printStackTrace();
-    //  }
     public AbstractCatalogTree(String sysname, String username) {
         super(new CatalogTreeNode(username));
         mUserName = username;
@@ -73,6 +60,14 @@ public abstract class AbstractCatalogTree extends DefaultTreeModel implements Ca
                     + ", pathToRoot= " + pathToRoot);
         }
         insertNodes((String) root.getUserObject(), pathToRoot, root);
+    }
+
+    /**
+     * Get the root element of the tree as a jmri.CatalogTreeNode object.
+     * (Instead of Object, as parent swing.TreeModel provides)
+     */
+    public CatalogTreeNode getRoot() {
+        return (CatalogTreeNode) super.getRoot();
     }
 
     /**
@@ -144,8 +139,8 @@ public abstract class AbstractCatalogTree extends DefaultTreeModel implements Ca
         return pcs.getPropertyChangeListeners().length;
     }
 
-    Hashtable<java.beans.PropertyChangeListener, String> register = new Hashtable<java.beans.PropertyChangeListener, String>();
-    Hashtable<java.beans.PropertyChangeListener, String> listenerRefs = new Hashtable<java.beans.PropertyChangeListener, String>();
+    Hashtable<java.beans.PropertyChangeListener, String> register = new Hashtable<>();
+    Hashtable<java.beans.PropertyChangeListener, String> listenerRefs = new Hashtable<>();
 
     public synchronized void addPropertyChangeListener(java.beans.PropertyChangeListener l, String beanRef, String listenerRef) {
         pcs.addPropertyChangeListener(l);
@@ -158,7 +153,7 @@ public abstract class AbstractCatalogTree extends DefaultTreeModel implements Ca
     }
 
     public synchronized ArrayList<java.beans.PropertyChangeListener> getPropertyChangeListeners(String name) {
-        ArrayList<java.beans.PropertyChangeListener> list = new ArrayList<java.beans.PropertyChangeListener>();
+        ArrayList<java.beans.PropertyChangeListener> list = new ArrayList<>();
         Enumeration<java.beans.PropertyChangeListener> en = register.keys();
         while (en.hasMoreElements()) {
             java.beans.PropertyChangeListener l = en.nextElement();
@@ -171,7 +166,7 @@ public abstract class AbstractCatalogTree extends DefaultTreeModel implements Ca
 
     /* This allows a meaning full list of places where the bean is in use!*/
     public synchronized ArrayList<String> getListenerRefs() {
-        ArrayList<String> list = new ArrayList<String>();
+        ArrayList<String> list = new ArrayList<>();
         Enumeration<java.beans.PropertyChangeListener> en = listenerRefs.keys();
         while (en.hasMoreElements()) {
             java.beans.PropertyChangeListener l = en.nextElement();
@@ -181,7 +176,7 @@ public abstract class AbstractCatalogTree extends DefaultTreeModel implements Ca
     }
 
     public synchronized void updateListenerRef(java.beans.PropertyChangeListener l, String newName) {
-        if (listenerRefs.contains(l)) {
+        if (listenerRefs.containsKey(l)) {
             listenerRefs.put(l, newName);
         }
     }
@@ -232,6 +227,6 @@ public abstract class AbstractCatalogTree extends DefaultTreeModel implements Ca
     public void vetoableChange(java.beans.PropertyChangeEvent evt) throws java.beans.PropertyVetoException {
     }
 
-    static Logger log = LoggerFactory.getLogger(AbstractCatalogTree.class.getName());
+    private final static Logger log = LoggerFactory.getLogger(AbstractCatalogTree.class.getName());
 
 }

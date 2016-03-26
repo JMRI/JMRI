@@ -12,8 +12,9 @@ import org.slf4j.LoggerFactory;
  * method here.
  *
  * @author Bob Jacobsen Copyright: Copyright (c) 2010
- * @version $Revision$
+ * @deprecated As of 4.3.5, see jmri.jmrix.internal.configurexml classes
  */
+@Deprecated
 public class InternalReporterManagerXml extends jmri.managers.configurexml.AbstractReporterManagerConfigXML {
 
     public InternalReporterManagerXml() {
@@ -28,10 +29,11 @@ public class InternalReporterManagerXml extends jmri.managers.configurexml.Abstr
         log.error("Invalid method called");
     }
 
-    public boolean load(Element reporters) {
+    @Override
+    public boolean load(Element shared, Element perNode) {
         // load individual reporters
-        return loadReporters(reporters);
+        return loadReporters(shared);
     }
 
-    static Logger log = LoggerFactory.getLogger(InternalReporterManagerXml.class.getName());
+    private final static Logger log = LoggerFactory.getLogger(InternalReporterManagerXml.class.getName());
 }

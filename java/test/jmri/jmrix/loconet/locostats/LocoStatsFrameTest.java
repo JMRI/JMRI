@@ -8,25 +8,17 @@ import junit.framework.Assert;
 import junit.framework.Test;
 import junit.framework.TestCase;
 import junit.framework.TestSuite;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 
 /**
  * Tests for the LocoStatsFrame class
  *
  * @author	Bob Jacobsen Copyright (C) 2006, 2008, 2010
- * @version $Revision$
  */
 public class LocoStatsFrameTest extends TestCase {
 
     LocoStatsPanel getFrame(String title, int offset) throws Exception {
         JmriJFrame f = new JmriJFrame();
         LocoStatsPanel p = new LocoStatsPanel() {
-            /**
-             *
-             */
-            private static final long serialVersionUID = 1454939858436681834L;
-
             public void requestUpdate() {  // replace actual transmit
                 updatePending = true;
             }
@@ -106,6 +98,4 @@ public class LocoStatsFrameTest extends TestCase {
         TestSuite suite = new TestSuite(LocoStatsFrameTest.class);
         return suite;
     }
-
-    static Logger log = LoggerFactory.getLogger(LocoStatsFrameTest.class.getName());
 }

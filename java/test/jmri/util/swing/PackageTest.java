@@ -1,4 +1,3 @@
-// PackageTest.java
 package jmri.util.swing;
 
 import junit.framework.Test;
@@ -9,7 +8,6 @@ import junit.framework.TestSuite;
  * Invokes complete set of tests in the jmri.util.swing tree
  *
  * @author	Bob Jacobsen Copyright 2003
- * @version $Revision$
  */
 public class PackageTest extends TestCase {
 

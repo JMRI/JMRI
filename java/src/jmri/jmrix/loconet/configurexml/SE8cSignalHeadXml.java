@@ -52,17 +52,12 @@ public class SE8cSignalHeadXml extends AbstractNamedBeanManagerConfigXML {
         return el;
     }
 
-    /**
-     * Create a SE8cSignalHead
-     *
-     * @param element Top level Element to unpack.
-     * @return true if successful
-     */
-    public boolean load(Element element) {
-        List<Element> l = element.getChildren("turnout");
+    @Override
+    public boolean load(Element shared, Element perNode) {
+        List<Element> l = shared.getChildren("turnout");
         int turnout = loadTurnout(l.get(0));
         // put it together
-        String uname = getUserName(element);
+        String uname = getUserName(shared);
         SignalHead h;
         if (uname == null) {
             h = new jmri.implementation.SE8cSignalHead(turnout);
@@ -70,7 +65,7 @@ public class SE8cSignalHeadXml extends AbstractNamedBeanManagerConfigXML {
             h = new jmri.implementation.SE8cSignalHead(turnout, uname);
         }
 
-        loadCommon(h, element);
+        loadCommon(h, shared);
 
         InstanceManager.signalHeadManagerInstance().register(h);
         return true;
@@ -92,5 +87,5 @@ public class SE8cSignalHeadXml extends AbstractNamedBeanManagerConfigXML {
         log.error("Invalid method called");
     }
 
-    static Logger log = LoggerFactory.getLogger(SE8cSignalHeadXml.class.getName());
+    private final static Logger log = LoggerFactory.getLogger(SE8cSignalHeadXml.class.getName());
 }

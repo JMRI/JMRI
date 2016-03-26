@@ -7,8 +7,6 @@ import jmri.SignalHead;
 import jmri.Turnout;
 import jmri.implementation.QuadOutputSignalHead;
 import org.jdom2.Element;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 
 /**
  * Handle XML configuration for QuadOutputSignalHead objects.
@@ -47,16 +45,11 @@ public class QuadOutputSignalHeadXml extends TripleTurnoutSignalHeadXml {
         return element;
     }
 
-    /**
-     * Create a QuadOutputSignalHead
-     *
-     * @param element Top level Element to unpack.
-     * @return true if successful
-     */
-    public boolean load(Element element) {
-        List<Element> l = element.getChildren("turnoutname");
+    @Override
+    public boolean load(Element shared, Element perNode) {
+        List<Element> l = shared.getChildren("turnoutname");
         if (l.size() == 0) {
-            l = element.getChildren("turnout");
+            l = shared.getChildren("turnout");
         }
         NamedBeanHandle<Turnout> green = loadTurnout(l.get(0));
         NamedBeanHandle<Turnout> yellow = loadTurnout(l.get(1));
@@ -64,8 +57,8 @@ public class QuadOutputSignalHeadXml extends TripleTurnoutSignalHeadXml {
         NamedBeanHandle<Turnout> lunar = loadTurnout(l.get(3));
 
         // put it together
-        String sys = getSystemName(element);
-        String uname = getUserName(element);
+        String sys = getSystemName(shared);
+        String uname = getUserName(shared);
         SignalHead h;
         if (uname == null) {
             h = new QuadOutputSignalHead(sys, green, yellow, red, lunar);
@@ -73,11 +66,9 @@ public class QuadOutputSignalHeadXml extends TripleTurnoutSignalHeadXml {
             h = new QuadOutputSignalHead(sys, uname, green, yellow, red, lunar);
         }
 
-        loadCommon(h, element);
+        loadCommon(h, shared);
 
         InstanceManager.signalHeadManagerInstance().register(h);
         return true;
     }
-
-    static Logger log = LoggerFactory.getLogger(TripleTurnoutSignalHeadXml.class.getName());
 }

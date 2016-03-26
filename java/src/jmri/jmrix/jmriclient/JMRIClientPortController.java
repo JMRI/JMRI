@@ -15,6 +15,7 @@ public abstract class JMRIClientPortController extends jmri.jmrix.AbstractNetwor
     protected JMRIClientPortController(JMRIClientSystemConnectionMemo connectionMemo) {
         super(connectionMemo);
         allowConnectionRecovery=true;
+        setConnectionTimeout(30000);
     }
 
     @Override
@@ -24,6 +25,8 @@ public abstract class JMRIClientPortController extends jmri.jmrix.AbstractNetwor
 
     @Override
     protected void resetupConnection() {
+       // reconnect the port to the traffic controller.
+       getSystemConnectionMemo().getJMRIClientTrafficController().connectPort(this);
        // notify the memo that we've restarted, so it can ask the associated 
        // managers to refresh status
        getSystemConnectionMemo().requestAllStatus();       

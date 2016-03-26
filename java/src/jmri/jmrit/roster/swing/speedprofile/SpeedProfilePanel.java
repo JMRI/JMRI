@@ -728,5 +728,5 @@ class SpeedProfilePanel extends jmri.util.swing.JmriPanel implements ThrottleLis
         }
     }
 
-    static Logger log = LoggerFactory.getLogger(SpeedProfilePanel.class);
+    private final static Logger log = LoggerFactory.getLogger(SpeedProfilePanel.class);
 }

@@ -259,7 +259,7 @@ public class CarSetFrame extends RollingStockSetFrame implements java.beans.Prop
 
     protected boolean askKernelChange = true;
 
-    @edu.umd.cs.findbugs.annotations.SuppressFBWarnings(value = "ST_WRITE_TO_STATIC_FROM_INSTANCE_METHOD")
+    @edu.umd.cs.findbugs.annotations.SuppressFBWarnings(value = "ST_WRITE_TO_STATIC_FROM_INSTANCE_METHOD", justification = "GUI ease of use")
     protected boolean change(Car car) {
         // save the auto button
         autoReturnWhenEmptyTrackCheckBoxSelected = autoReturnWhenEmptyTrackCheckBox.isSelected();
@@ -571,16 +571,16 @@ public class CarSetFrame extends RollingStockSetFrame implements java.beans.Prop
 
     private Car getTestCar(Car car) {
         Car c = car;
-        // clone car and set the load to default empty and a length of zero
+        // clone car and set the load to RWE and a length of zero
         if (car != null) {
             c = car.copy();
-            c.setLoadName(CarLoads.instance().getDefaultEmptyName());
+            c.setLoadName(car.getReturnWhenEmptyLoadName());
             c.setLength("0"); // ignore car length
         }
         return c;
     }
 
-    @edu.umd.cs.findbugs.annotations.SuppressFBWarnings(value = "ST_WRITE_TO_STATIC_FROM_INSTANCE_METHOD")
+    @edu.umd.cs.findbugs.annotations.SuppressFBWarnings(value = "ST_WRITE_TO_STATIC_FROM_INSTANCE_METHOD", justification = "GUI ease of use")
     public void setDestinationEnabled(boolean enable) {
         enableDestination = !enableDestination;
         enableDestinationFields(!locationUnknownCheckBox.isSelected());
@@ -619,5 +619,5 @@ public class CarSetFrame extends RollingStockSetFrame implements java.beans.Prop
         }
     }
 
-    static Logger log = LoggerFactory.getLogger(CarSetFrame.class.getName());
+    private final static Logger log = LoggerFactory.getLogger(CarSetFrame.class.getName());
 }

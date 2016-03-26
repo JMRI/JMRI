@@ -1,17 +1,18 @@
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
-<html lang="en"><head><!-- Copyright ($Author$) 2009, 2010 --><!-- $Id$ --><title>Comprehensive Programmer - Global CV Listing Pane</title><!-- Style -->
+<html lang="en">
+<head>
+<title>Comprehensive Programmer - Global CV Listing Pane</title>
 
-
-
-
-
-
-
+<!-- Style -->
 <meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
 <link rel="stylesheet" type="text/css" href="/css/default.css" media="screen">
 <link rel="stylesheet" type="text/css" href="/css/print.css" media="print">
 <link rel="icon" href="/images/jmri.ico" type="image/png">
-<link rel="home" title="Home" href="/"><!-- /Style --></head><body>
+<link rel="home" title="Home" href="/">
+<!-- /Style -->
+</head>
+
+<body>
 <!--#include virtual="/Header" -->
 
 <!--#include virtual="Sidebar" -->
@@ -19,7 +20,7 @@
 
 <a name="Top"></a>
 <h1>DecoderPro&reg; Comprehensive Programmer</h1>
-<h1>Global CV Listing Pane</h1>
+<h2>Global CV Listing Pane</h2>
 
 <div align="right">
 <p><a href="Comp_SoundLevels.shtml"> Previous</a> | 
@@ -39,7 +40,7 @@ of the CV listings.</p>
 <h4>Decoder Locking
 </h4>
 <p> You tried to read a CV value and get &#8220;Error 308, No Acknowledgement
-from Decoder&#8221;, well the decoder may be locked.&nbsp; CV 15 and 16 deal
+from Decoder&#8221;, well the decoder may be locked. CV 15 and 16 deal
 with locking, if your manufacturer implements this feature (and
 manufacturers have slight differences as to how they implement
 it).&nbsp; If the decoder is locked, then you will not be able to read
@@ -55,7 +56,7 @@ JMRI responds with the no-ack error, then try the next value.&nbsp; If
 it returns the value in CV16, you&#8217;ve unlocked the decoder and you&#8217;re
 in.&nbsp; If you have unsuccessfully tried all the 8 possibilities,
 then check your layout connection and the loco&#8217;s wheels for poor
-connections and try again.&nbsp; Now you say, &#8220;I&#8217;ve looked thru the
+connections and try again. Now you say, &#8220;I&#8217;ve looked thru the
 list several times and CV 15 doesn&#8217;t appear&#8221;.&nbsp; That&#8217;s on purpose,
 to minimize inadvertent locking by a Write All Sheets.&nbsp; You will
 have to use the<u> </u><a href="Simple_Programmer.shtml">Single CV Programmer </a>to write CV15.&nbsp; It can be found in the Tools menu on the Main  Page, under Programmers.</p>
@@ -78,8 +79,8 @@ how to compile the values to get the desired effect. This pane is meant
 for advanced users of DCC used to crunching the numbers themselves.
 Those new to DCC can safely ignore this panel without losing any
 capability at all.
-</p><p>
-</p><hr>
+</p>
+<hr>
 <div align="right">
 <p><a href="Comp_ManfSpecific.shtml"></a>
   <a href="Comp_SoundLevels.shtml">Previous</a> | <a href="Comp_ManfSpecific.shtml">Next </a>
@@ -87,4 +88,7 @@ capability at all.
 </p></div>
 
 <!--#include virtual="/Footer" -->
-</div></body></html>
+  </div><!-- closes #mainContent-->
+ </div> <!-- closes #mBody-->
+ </body>
+</html>

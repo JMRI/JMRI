@@ -505,21 +505,21 @@ public class PrintLocationsAction extends AbstractAction {
         if ((Setup.getTrainDirection() & dir) == 0) {
             return " " + Bundle.getMessage("LocalOnly") + NEW_LINE;
         }
-        String direction = " " + Bundle.getMessage("ServicedByTrain") + " ";
-        if ((Setup.getTrainDirection() & dir & Location.NORTH) > 0) {
-            direction = direction + Bundle.getMessage("North") + " ";
+        StringBuffer direction = new StringBuffer(" " + Bundle.getMessage("ServicedByTrain") + " ");
+        if ((Setup.getTrainDirection() & dir & Location.NORTH) == Location.NORTH) {
+            direction.append(Bundle.getMessage("North") + " ");
         }
-        if ((Setup.getTrainDirection() & dir & Location.SOUTH) > 0) {
-            direction = direction + Bundle.getMessage("South") + " ";
+        if ((Setup.getTrainDirection() & dir & Location.SOUTH) == Location.SOUTH) {
+            direction.append(Bundle.getMessage("South") + " ");
         }
-        if ((Setup.getTrainDirection() & dir & Location.EAST) > 0) {
-            direction = direction + Bundle.getMessage("East") + " ";
+        if ((Setup.getTrainDirection() & dir & Location.EAST) == Location.EAST) {
+            direction.append(Bundle.getMessage("East") + " ");
         }
-        if ((Setup.getTrainDirection() & dir & Location.WEST) > 0) {
-            direction = direction + Bundle.getMessage("West") + " ";
+        if ((Setup.getTrainDirection() & dir & Location.WEST) == Location.WEST) {
+            direction.append(Bundle.getMessage("West") + " ");
         }
-        direction = direction + NEW_LINE;
-        return direction;
+        direction.append(NEW_LINE);
+        return direction.toString();
     }
 
     private void printTrackInfo(Location location, List<Track> tracks) {
@@ -956,5 +956,5 @@ public class PrintLocationsAction extends AbstractAction {
         }
     }
 
-    static Logger log = LoggerFactory.getLogger(PrintLocationsAction.class.getName());
+    private final static Logger log = LoggerFactory.getLogger(PrintLocationsAction.class.getName());
 }

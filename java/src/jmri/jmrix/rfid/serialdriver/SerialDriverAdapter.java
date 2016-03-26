@@ -52,7 +52,7 @@ public class SerialDriverAdapter extends RfidPortController implements jmri.jmri
         options.put(option1Name, new Option("Adapter:", new String[]{"Generic Stand-alone", "MERG Concentrator"}, false));
         options.put(option2Name, new Option("Concentrator range:", new String[]{"A-H", "I-P"}, false));
         options.put(option3Name, new Option("Protocol:", new String[]{"CORE-ID", "Olimex", "Parallax", "SeeedStudio", "EM-18"}, false));
-        this.manufacturerName = jmri.jmrix.DCCManufacturerList.RFID;
+        this.manufacturerName = jmri.jmrix.rfid.RfidConnectionTypeList.RFID;
     }
 
     @Override
@@ -351,6 +351,11 @@ public class SerialDriverAdapter extends RfidPortController implements jmri.jmri
 
         // find and configure flow control
         int flow = SerialPort.FLOWCONTROL_NONE; // default
+        if (getOptionState(option1Name).equals("MERG Concentrator")) {
+            // Set Hardware Flow Control for Concentrator
+            log.debug("Set hardware flow control for Concentrator");
+            flow = SerialPort.FLOWCONTROL_RTSCTS_OUT;
+        }
         activeSerialPort.setFlowControlMode(flow);
     }
 
@@ -359,7 +364,7 @@ public class SerialDriverAdapter extends RfidPortController implements jmri.jmri
      *
      * @return list of rates
      */
-    @edu.umd.cs.findbugs.annotations.SuppressWarnings(value = "EI_EXPOSE_REP")
+    @edu.umd.cs.findbugs.annotations.SuppressFBWarnings(value = "EI_EXPOSE_REP")
     @Override
     public String[] validBaudRates() {
         return validSpeeds;

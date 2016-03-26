@@ -30,6 +30,7 @@ import jmri.jmrit.operations.rollingstock.cars.CarTypes;
 import jmri.jmrit.operations.rollingstock.engines.EngineTypes;
 import jmri.jmrit.operations.setup.Control;
 import jmri.jmrit.operations.setup.Setup;
+import jmri.jmrit.operations.trains.TrainCommon;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -41,10 +42,6 @@ import org.slf4j.LoggerFactory;
  */
 public class LocationEditFrame extends OperationsFrame implements java.beans.PropertyChangeListener {
 
-    /**
-     *
-     */
-    private static final long serialVersionUID = -820196357214001064L;
     YardTableModel yardModel = new YardTableModel();
     JTable yardTable = new JTable(yardModel);
     JScrollPane yardPane;
@@ -484,7 +481,7 @@ public class LocationEditFrame extends OperationsFrame implements java.beans.Pro
 
     /**
      *
-     * @return true if name is less than 26 characters
+     * @return true if name OK and is less than the maximum allowed length
      */
     private boolean checkName(String s) {
         if (locationNameTextField.getText().trim().equals("")) {
@@ -492,11 +489,18 @@ public class LocationEditFrame extends OperationsFrame implements java.beans.Pro
                     .getMessage("CanNotLocation"), new Object[]{s}), JOptionPane.ERROR_MESSAGE);
             return false;
         }
-        if (locationNameTextField.getText().length() > MAX_NAME_LENGTH) {
+        if (TrainCommon.splitString(locationNameTextField.getText()).length() > MAX_NAME_LENGTH) {
             // log.error("Location name must be less than "+ Integer.toString(MAX_NAME_LENGTH+1) +" characters");
             JOptionPane.showMessageDialog(this, MessageFormat.format(Bundle.getMessage("LocationNameLengthMax"),
                     new Object[]{Integer.toString(MAX_NAME_LENGTH + 1)}), MessageFormat.format(Bundle
                     .getMessage("CanNotLocation"), new Object[]{s}), JOptionPane.ERROR_MESSAGE);
+            return false;
+        }
+        if (!OperationsXml.checkFileName(locationNameTextField.getText())) { // NOI18N
+            log.error("location name must not contain reserved characters");
+            JOptionPane.showMessageDialog(this, Bundle.getMessage("LocationNameResChar") + NEW_LINE
+                    + Bundle.getMessage("ReservedChar"), Bundle.getMessage("CanNotLocation"), 
+                    JOptionPane.ERROR_MESSAGE);
             return false;
         }
         return true;
@@ -720,15 +724,15 @@ public class LocationEditFrame extends OperationsFrame implements java.beans.Pro
     }
 
     private void setTrainDirectionBoxes() {
-        northCheckBox.setVisible((Setup.getTrainDirection() & Setup.NORTH) > 0);
-        southCheckBox.setVisible((Setup.getTrainDirection() & Setup.SOUTH) > 0);
-        eastCheckBox.setVisible((Setup.getTrainDirection() & Setup.EAST) > 0);
-        westCheckBox.setVisible((Setup.getTrainDirection() & Setup.WEST) > 0);
+        northCheckBox.setVisible((Setup.getTrainDirection() & Setup.NORTH) == Setup.NORTH);
+        southCheckBox.setVisible((Setup.getTrainDirection() & Setup.SOUTH) == Setup.SOUTH);
+        eastCheckBox.setVisible((Setup.getTrainDirection() & Setup.EAST) == Setup.EAST);
+        westCheckBox.setVisible((Setup.getTrainDirection() & Setup.WEST) == Setup.WEST);
 
-        northCheckBox.setSelected((_location.getTrainDirections() & Location.NORTH) > 0);
-        southCheckBox.setSelected((_location.getTrainDirections() & Location.SOUTH) > 0);
-        eastCheckBox.setSelected((_location.getTrainDirections() & Location.EAST) > 0);
-        westCheckBox.setSelected((_location.getTrainDirections() & Location.WEST) > 0);
+        northCheckBox.setSelected((_location.getTrainDirections() & Location.NORTH) == Location.NORTH);
+        southCheckBox.setSelected((_location.getTrainDirections() & Location.SOUTH) == Location.SOUTH);
+        eastCheckBox.setSelected((_location.getTrainDirections() & Location.EAST) == Location.EAST);
+        westCheckBox.setSelected((_location.getTrainDirections() & Location.WEST) == Location.WEST);
     }
 
     public void dispose() {
@@ -748,7 +752,7 @@ public class LocationEditFrame extends OperationsFrame implements java.beans.Pro
     }
 
     public void propertyChange(java.beans.PropertyChangeEvent e) {
-        if (Control.showProperty) {
+        if (Control.SHOW_PROPERTY) {
             log.debug("Property change: ({}) old: ({}) new: ({})", e.getPropertyName(), e.getOldValue(), e
                     .getNewValue());
         }
@@ -759,5 +763,5 @@ public class LocationEditFrame extends OperationsFrame implements java.beans.Pro
         }
     }
 
-    static Logger log = LoggerFactory.getLogger(LocationEditFrame.class.getName());
+    private final static Logger log = LoggerFactory.getLogger(LocationEditFrame.class.getName());
 }

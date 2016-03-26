@@ -64,8 +64,8 @@ public class NceConsistEngines extends Thread implements jmri.jmrix.nce.NceListe
     private static final int NUM_CONSIST_READS = CONSIST_LNTH / REPLY_16; // read 16 bytes each time from NCE memory
 
     private static final String NCE = "nce_"; // NOI18N
-    private static final int LEAD_BLOCK_NUMBER = 0; // mid locos blocking 2 through 5
-    private static final int REAR_BLOCK_NUMBER = 8; // rear blocking needs to be greater than 5
+//    private static final int LEAD_BLOCK_NUMBER = 0; // mid locos blocking 2 through 5
+//    private static final int REAR_BLOCK_NUMBER = 8; // rear blocking needs to be greater than 5
 
     private static byte[] nceConsistData = new byte[CONSIST_LNTH];
 
@@ -76,6 +76,7 @@ public class NceConsistEngines extends Thread implements jmri.jmrix.nce.NceListe
         this.tc = tc;
     }
 
+    @edu.umd.cs.findbugs.annotations.SuppressFBWarnings(value = "BC_UNCONFIRMED_CAST_OF_RETURN_VALUE", justification = "EngineManager only provides Engine Objects")
     // we use a thread so the status frame will work!
     public void run() {
         if (tc == null) {
@@ -140,7 +141,7 @@ public class NceConsistEngines extends Thread implements jmri.jmrix.nce.NceListe
                             Consist engConsist = engineManager.newConsist(NCE + consistNum);
                             engConsist.setConsistNumber(consistNum); // load the consist number
                             engine.setConsist(engConsist);
-                            engine.setBlocking(LEAD_BLOCK_NUMBER);
+                            engine.setBlocking(Engine.DEFAULT_BLOCKING_ORDER);
                             engMatch = true;
                             consists.add(Integer.toString(consistNum));
                             break;
@@ -169,6 +170,7 @@ public class NceConsistEngines extends Thread implements jmri.jmrix.nce.NceListe
         }
     }
 
+    @edu.umd.cs.findbugs.annotations.SuppressFBWarnings(value = "BC_UNCONFIRMED_CAST_OF_RETURN_VALUE", justification = "EngineManager only provides Engine Objects")
     private void syncEngines(int offset, int step) {
         for (int consistNum = 1; consistNum < 128; consistNum++) {
             int engNum = getEngineNumberFromArray(consistNum, offset, step);
@@ -184,7 +186,7 @@ public class NceConsistEngines extends Thread implements jmri.jmrix.nce.NceListe
                         if (engConsist != null) {
                             engine.setConsist(engConsist);
                             if (offset == CS_CON_MEM_REAR) {
-                                engine.setBlocking(REAR_BLOCK_NUMBER); // place rear loco at end of consist
+                                engine.setBlocking(Engine.NCE_REAR_BLOCK_NUMBER); // place rear loco at end of consist
                             } else {
                                 engine.setBlocking(engConsist.getSize()); // mid block numbers 2 through 5
                             }
@@ -286,5 +288,5 @@ public class NceConsistEngines extends Thread implements jmri.jmrix.nce.NceListe
         }
     }
 
-    static Logger log = LoggerFactory.getLogger(NceConsistEngines.class.getName());
+    private final static Logger log = LoggerFactory.getLogger(NceConsistEngines.class.getName());
 }

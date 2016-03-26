@@ -24,7 +24,6 @@ import org.slf4j.LoggerFactory;
  * @see <A HREF="package-summary.html">Package summary for details of the
  * overall structure</A>
  * @author Bob Jacobsen Copyright (c) 2002, 2008
- * @version $Revision$
  */
 public class ConfigXmlManager extends jmri.jmrit.XmlFile
         implements jmri.ConfigureManager {
@@ -484,23 +483,37 @@ public class ConfigXmlManager extends jmri.jmrit.XmlFile
 
     String defaultBackupDirectory = FileUtil.getUserFilesPath() + "backupPanels";
 
+    /**
+     *
+     * @param o The object to get an XML representation of
+     * @return An XML element representing o
+     * @deprecated
+     */
+    @Deprecated
     static public Element elementFromObject(Object o) {
-        String aName = adapterName(o);
-        log.debug("store using " + aName);
+        return ConfigXmlManager.elementFromObject(o, true);
+    }
+
+    /**
+     *
+     * @param object The object to get an XML representation of
+     * @param shared true if the XML should be shared, false if the XML should
+     *               be per-node
+     * @return An XML element representing object
+     */
+    static public Element elementFromObject(Object object, boolean shared) {
+        String aName = adapterName(object);
+        log.debug("store using {}", aName);
         XmlAdapter adapter = null;
         try {
-            adapter = (XmlAdapter) Class.forName(adapterName(o)).newInstance();
-        } catch (java.lang.ClassNotFoundException ex1) {
-            log.error("Cannot load configuration adapter for " + o.getClass().getName() + " due to " + ex1);
-        } catch (java.lang.IllegalAccessException ex2) {
-            log.error("Cannot load configuration adapter for " + o.getClass().getName() + " due to " + ex2);
-        } catch (java.lang.InstantiationException ex3) {
-            log.error("Cannot load configuration adapter for " + o.getClass().getName() + " due to " + ex3);
+            adapter = (XmlAdapter) Class.forName(adapterName(object)).newInstance();
+        } catch (java.lang.ClassNotFoundException | java.lang.IllegalAccessException | java.lang.InstantiationException ex) {
+            log.error("Cannot load configuration adapter for {}", object.getClass().getName(), ex);
         }
         if (adapter != null) {
-            return adapter.store(o);
+            return adapter.store(object, shared);
         } else {
-            log.error("Cannot store configuration for " + o.getClass().getName());
+            log.error("Cannot store configuration for {}", object.getClass().getName());
             return null;
         }
     }
@@ -516,25 +529,6 @@ public class ConfigXmlManager extends jmri.jmrit.XmlFile
         );
     }
 
-//     private void loadVersion(Element root, XmlAdapter adapter) {
-//         int majorRelease = 0;
-//         int minorRelease = 0;
-//         int testRelease = 0;
-//         Element v = root.getChild("jmriversion");
-//         if (v!=null) {
-//             try {
-//                 majorRelease = Integer.parseInt(v.getChild("major").getText());
-//                 minorRelease = Integer.parseInt(v.getChild("minor").getText());
-//                 testRelease = Integer.parseInt(v.getChild("test").getText());
-//             } catch (NullPointerException npe) {
-//             } catch ( NumberFormatException nfe) {
-//             }
-//         }
-//         adapter.setConfigXmlManager(this);
-//         adapter.setMajorRelease(majorRelease);
-//         adapter.setMinorRelease(minorRelease);
-//         adapter.setTestRelease(testRelease);
-//     }
     /**
      * Load a file.
      * <p>
@@ -574,6 +568,8 @@ public class ConfigXmlManager extends jmri.jmrit.XmlFile
      * <p>
      * Handles problems locally to the extent that it can, by routing them to
      * the creationErrorEncountered method.
+     * <p>
+     * Always processes on Swing thread
      *
      * @param url              URL of file to load
      * @param registerDeferred true to register objects to defer
@@ -584,6 +580,34 @@ public class ConfigXmlManager extends jmri.jmrit.XmlFile
      */
     @Override
     public boolean load(URL url, boolean registerDeferred) throws JmriConfigureXmlException {
+        // must not use invokeAndWait on Swing thread
+        if (javax.swing.SwingUtilities.isEventDispatchThread()) {
+            // direct exec
+            return loadOnSwingThread(url, registerDeferred);
+        } else {
+            // push to swing
+            final java.util.concurrent.atomic.AtomicReference<Boolean> result = new java.util.concurrent.atomic.AtomicReference<>();
+
+            try {
+                javax.swing.SwingUtilities.invokeAndWait(() -> {
+                    try {
+                        boolean temp = loadOnSwingThread(url, registerDeferred);
+                        result.set(temp);
+                    } catch (JmriConfigureXmlException e) {
+                        throw new RuntimeException(e);
+                    }
+                });
+            } catch (InterruptedException e) {
+                throw new JmriConfigureXmlException(e);
+            } catch (java.lang.reflect.InvocationTargetException e) {
+                throw new JmriConfigureXmlException(e);
+            }
+            
+            return result.get(); 
+        }
+    }
+    
+    private boolean loadOnSwingThread(URL url, boolean registerDeferred) throws JmriConfigureXmlException {
         boolean result = true;
         Element root = null;
         /* We will put all the elements into a load list, along with the load order
@@ -647,7 +671,7 @@ public class ConfigXmlManager extends jmri.jmrit.XmlFile
                             log.debug("deferred load registered for " + item + " " + adapterName);
                         }
                     } else {
-                        boolean loadStatus = adapter.load(item);
+                        boolean loadStatus = adapter.load(item, item);
                         if (log.isDebugEnabled()) {
                             log.debug("load status for " + item + " " + adapterName + " is " + loadStatus);
                         }
@@ -680,9 +704,21 @@ public class ConfigXmlManager extends jmri.jmrit.XmlFile
             creationErrorEncountered(null, "parsing file " + url.getFile(),
                     "Parse error", null, null, e);
             result = false;
-        } catch (java.lang.Exception e) {
+        } catch (java.io.IOException e) {
             creationErrorEncountered(null, "loading from file " + url.getFile(),
-                    "Unknown error (Exception)", null, null, e);
+                    "IOException", null, null, e);
+            result = false;
+        } catch (java.lang.ClassNotFoundException e) {
+            creationErrorEncountered(null, "loading from file " + url.getFile(),
+                    "ClassNotFoundException", null, null, e);
+            result = false;
+        } catch (java.lang.InstantiationException e) {
+            creationErrorEncountered(null, "loading from file " + url.getFile(),
+                    "InstantiationException", null, null, e);
+            result = false;
+        } catch (java.lang.IllegalAccessException e) {
+            creationErrorEncountered(null, "loading from file " + url.getFile(),
+                    "IllegalAccessException", null, null, e);
             result = false;
         } finally {
             // no matter what, close error reporting
@@ -790,7 +826,7 @@ public class ConfigXmlManager extends jmri.jmrit.XmlFile
                 XmlAdapter adapter = null;
                 try {
                     adapter = (XmlAdapter) Class.forName(adapterName).newInstance();
-                    boolean loadStatus = adapter.load(item);
+                    boolean loadStatus = adapter.load(item, item);
                     log.debug("deferred load status for " + adapterName + " is " + loadStatus);
 
                     // if any adaptor load fails, then the entire load has failed
@@ -920,7 +956,7 @@ public class ConfigXmlManager extends jmri.jmrit.XmlFile
     }
 
     // initialize logging
-    static Logger log = LoggerFactory.getLogger(ConfigXmlManager.class.getName());
+    private final static Logger log = LoggerFactory.getLogger(ConfigXmlManager.class.getName());
 
     /**
      * @return the loadDeferredList

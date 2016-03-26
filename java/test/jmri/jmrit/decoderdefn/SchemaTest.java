@@ -1,10 +1,7 @@
-// SchemaTest.java
 package jmri.jmrit.decoderdefn;
 
 import junit.framework.Test;
 import junit.framework.TestSuite;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 
 //import jmri.InstanceManager;
 /**
@@ -12,7 +9,6 @@ import org.slf4j.LoggerFactory;
  *
  * @author Bob Jacobsen Copyright 2010
  * @since 2.9.3
- * @version $Revision$
  */
 public class SchemaTest extends jmri.configurexml.SchemaTestBase {
 
@@ -31,14 +27,15 @@ public class SchemaTest extends jmri.configurexml.SchemaTestBase {
     public static Test suite() {
         TestSuite suite = new TestSuite("jmri.jmrit.decoderdefn.SchemaTest"); // no tests in this class itself
 
-        // Some specific files for early tests
-        validateDirectory(suite, "java/test/jmri/jmrit/decoderdefn/");
+        // check that the schema passes useful constructs
+        validateDirectory(suite, "java/test/jmri/jmrit/decoderdefn/pass");
+        
+        // check that the schema detects errors
+        validateDirectoryFail(suite, "java/test/jmri/jmrit/decoderdefn/fail");
 
         validateSubdirectories(suite, "xml/decoders/");
         validateDirectory(suite, "xml/decoders/");
-
+        
         return suite;
     }
-
-    static Logger log = LoggerFactory.getLogger(SchemaTest.class.getName());
 }

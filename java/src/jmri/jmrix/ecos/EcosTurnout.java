@@ -1,7 +1,6 @@
 // EcosTurnout.java
 package jmri.jmrix.ecos;
 
-import jmri.NmraPacket;
 import jmri.Turnout;
 import jmri.implementation.AbstractTurnout;
 import org.slf4j.Logger;
@@ -42,19 +41,57 @@ public class EcosTurnout extends AbstractTurnout
     public EcosTurnout(int number, String prefix, EcosTrafficController etc, EcosTurnoutManager etm) {
         super(prefix + "T" + number);
         _number = number;
-        if (_number < NmraPacket.accIdLowLimit || _number > NmraPacket.accIdHighLimit) {
+        /*if (_number < NmraPacket.accIdLowLimit || _number > NmraPacket.accIdHighLimit) {
             throw new IllegalArgumentException("Turnout value: " + _number 
                     + " not in the range " + NmraPacket.accIdLowLimit + " to " 
                     + NmraPacket.accIdHighLimit);
-        }
+        }*/
         this.prefix = prefix;
         tc = etc;
         tm = etm;
         /*All messages from the Ecos regarding turnout status updates, 
          are initally handled by the turnout manager, this then forwards the message
          on to the correct Turnout*/
+        
+        // update feedback modes
+        _validFeedbackTypes |= MONITORING | EXACT | INDIRECT;
+        _activeFeedbackType = MONITORING;
+
+        // if needed, create the list of feedback mode
+        // names with additional LocoNet-specific modes
+        if (modeNames == null) {
+            initFeedbackModes();
+        }
+        _validFeedbackNames = modeNames;
+        _validFeedbackModes = modeValues;
     }
 
+    @edu.umd.cs.findbugs.annotations.SuppressFBWarnings(value = "ST_WRITE_TO_STATIC_FROM_INSTANCE_METHOD",
+            justification = "Only used during creation of 1st turnout")
+    private void initFeedbackModes() {
+        if (_validFeedbackNames.length != _validFeedbackModes.length) {
+            log.error("int and string feedback arrays different length");
+        }
+        String[] tempModeNames = new String[_validFeedbackNames.length + 3];
+        int[] tempModeValues = new int[_validFeedbackNames.length + 3];
+        for (int i = 0; i < _validFeedbackNames.length; i++) {
+            tempModeNames[i] = _validFeedbackNames[i];
+            tempModeValues[i] = _validFeedbackModes[i];
+        }
+        tempModeNames[_validFeedbackNames.length] = "MONITORING";
+        tempModeValues[_validFeedbackNames.length] = MONITORING;
+        tempModeNames[_validFeedbackNames.length + 1] = "INDIRECT";
+        tempModeValues[_validFeedbackNames.length + 1] = INDIRECT;
+        tempModeNames[_validFeedbackNames.length + 2] = "EXACT";
+        tempModeValues[_validFeedbackNames.length + 2] = EXACT;
+
+        modeNames = tempModeNames;
+        modeValues = tempModeValues;
+    }
+
+    static String[] modeNames = null;
+    static int[] modeValues = null;    
+    
     EcosTrafficController tc;
     EcosTurnoutManager tm;
     /*Extended is used to indicate that this Ecos accessory has a secondary address assigned to it.
@@ -79,9 +116,6 @@ public class EcosTurnout extends AbstractTurnout
     void setMasterObjectNumber(boolean o) {
         masterObjectNumber = o;
     }
-
-    static String[] modeNames = null;
-    static int[] modeValues = null;
 
     public int getNumber() {
         return _number;
@@ -180,6 +214,7 @@ public class EcosTurnout extends AbstractTurnout
      * @param closed State of the turnout to be sent to the command station
      */
     protected void sendMessage(boolean closed) {
+        newKnownState(Turnout.UNKNOWN);
         if (getInverted()) {
             closed = !closed;
         }
@@ -265,6 +300,8 @@ public class EcosTurnout extends AbstractTurnout
     }
 
     // to listen for status changes from Ecos system
+    int newstate = UNKNOWN;
+    int newstateext = UNKNOWN;
     public void reply(EcosReply m) {
 
         String msg = m.toString();
@@ -274,11 +311,29 @@ public class EcosTurnout extends AbstractTurnout
         if (m.getEcosObjectId() != objectNumber) {
             return; //message is not for our turnout address
         }
-        if ((m.isUnsolicited()) || (m.getReplyType().equals("get"))) {
+        if (msg.contains("switching[0]")) {
+            log.debug("Turnout switched - new state="+newstate);
+            /*log.debug("see new state "+newstate+" for "+_number);*/
+            //newCommandedState(newstate);
+            /*Using newKnownState, as any changes made on the ecos do not show
+              up on the panel. Therefore if an ecos route is fired the panel
+              doesn't change to reflect it.*/
+            if (extended == 0) {
+                newKnownState(newstate);
+            } else {
+                //The masterObjectNumber is used to determine if this the master or slave decoder
+                //address in an extended accessory object on the ecos.
+                if (masterObjectNumber) {
+                    newKnownState(newstate);
+                } else {
+                    newKnownState(newstateext);
+                }
+            }
+        }
+        if ((m.isUnsolicited()) || (m.getReplyType().equals("get")) || (m.getReplyType().equals("set"))) {
             //if (msg.startsWith("<REPLY get("+objectNumber+",") || msg.startsWith("<EVENT "+objectNumber+">")) {
             int start = msg.indexOf("state[");
             int end = msg.indexOf("]");
-            int newstate = UNKNOWN;
             if (start > 0 && end > 0) {
                 String val = msg.substring(start + 6, end);
                 //System.out.println("Extended - " + extended + " " + objectNumber);
@@ -290,15 +345,13 @@ public class EcosTurnout extends AbstractTurnout
                     } else {
                         log.warn("val |" + val + "| from " + msg);
                     }
-                    // now set state
-                    /*log.debug("see new state "+newstate+" for "+_number);*/
-                    //newCommandedState(newstate);
-                    /*Using newKnownState, as any changes made on the ecos do not show
-                     up on the panel. Therefore if an ecos route is fired the panel
-                     doesn't change to reflect it.*/
-                    newKnownState(newstate);
+                    log.debug("newstate found: "+newstate);
+                    if (m.getReplyType().equals("set")) {
+                       // wait to set the state until ECOS tells us to (by an event with the contents "switching[0]")
+                    } else {
+                        newKnownState(newstate);
+                    }
                 } else {
-                    int newstateext = UNKNOWN;
                     if (extended == THREEWAY) { //Three way Point.
                         if (val.equals("0")) {
                             newstate = CLOSED;
@@ -325,12 +378,14 @@ public class EcosTurnout extends AbstractTurnout
                             newstateext = THROWN;
                         }
                     }
-                    //The masterObjectNumber is used to determine if this the master or slave decoder
-                    //address in an extended accessory object on the ecos.
-                    if (masterObjectNumber) {
-                        newKnownState(newstate);
+                    if (m.getReplyType().equals("set")) {
+                       // wait to set the state until ECOS tells us to (by an event with the contents "switching[0]")
                     } else {
-                        newKnownState(newstateext);
+                        if (masterObjectNumber) {
+                            newKnownState(newstate);
+                        } else {
+                            newKnownState(newstateext);
+                        }
                     }
                 }
             }
@@ -341,7 +396,7 @@ public class EcosTurnout extends AbstractTurnout
         // messages are ignored
     }
 
-    static Logger log = LoggerFactory.getLogger(EcosTurnout.class.getName());
+    private final static Logger log = LoggerFactory.getLogger(EcosTurnout.class.getName());
 }
 
 /* @(#)EcosTurnout.java */

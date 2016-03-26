@@ -45,7 +45,7 @@ public class LocationManager implements java.beans.PropertyChangeListener {
             OperationsSetupXml.instance(); // load setup
             LocationManagerXml.instance(); // load locations
         }
-        if (Control.showInstance) {
+        if (Control.SHOW_INSTANCE) {
             log.debug("LocationManager returns instance {}", _instance);
         }
         return _instance;
@@ -435,7 +435,7 @@ public class LocationManager implements java.beans.PropertyChangeListener {
         pcs.firePropertyChange(p, old, n);
     }
 
-    static Logger log = LoggerFactory.getLogger(LocationManager.class.getName());
+    private final static Logger log = LoggerFactory.getLogger(LocationManager.class.getName());
 
 }
 

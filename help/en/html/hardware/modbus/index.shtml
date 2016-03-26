@@ -1,51 +1,31 @@
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
 <html lang="en">
 <head>
-<!-- Copyright ($Author$) 2008 -->
-<!-- $Id$ -->
-<title>JMRI: Modbus Support</title>
+<title>JMRI Hardware Support - Modbus</title>
 
 <!-- Style -->
-<META HTTP-EQUIV="Content-Type" CONTENT="text/html; charset=iso-8859-1">
-<LINK REL="stylesheet" TYPE="text/css" HREF="/css/default.css"
-	MEDIA="screen">
-<LINK REL="stylesheet" TYPE="text/css" HREF="/css/print.css"
-	MEDIA="print">
-<LINK REL="icon" HREF="/images/jmri.ico" TYPE="image/png">
-<LINK REL="home" TITLE="Home" HREF="/">
+<meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
+<link rel="stylesheet" type="text/css" href="/css/default.css" media="screen">
+<link rel="stylesheet" type="text/css" href="/css/print.css" media="print">
+<link rel="icon" href="/images/jmri.ico" type="image/png">
+<link rel="home" title="Home" href="/">
 <!-- /Style -->
-</HEAD>
+</head>
 
-<BODY>
+<body>
 <!--#include virtual="/Header" -->
   <div class="nomenu" id="mBody">
     <div id="mainContent">
 
 <img src="http://www.modbus.org/images/logo_new.jpg" alt="Modbus logo" height="40" width="145" align="right">
-<h1> 
-JMRI: Modbus Support
-</h1>
-
-<p><em>The support on this page is rapidly evolving; the
-actual code might be ahead or behind the documentation
-on any given day. Note that Modbus support is not
-in any JMRI test or production releases yet.</em></p>
-
-<p>JMRI provides support for general JMRI
-<a href="../../tools/Sensors.shtml">Sensors</a>
-and
-<a href="../../tools/Turnouts.shtml">Turnouts</a>
-via Modbus connections.</p>
-
-<p>A Modbus installation has one master node, and one or more slave nodes.
-Generally, the master writes to "coil" objects in the slave nodes, and 
-reads from "discrete input" objects in the slave nodes. 
-The "coil" terminology comes from relay coil, solenoid coil, etc; a
-way to change the node's output signals. The "discrete input" a single bit from 
-some external input.
-By reading and writing these in a node, 
-a Modbus master can sense the condition of the layout (through discrete inputs)
-and control it (through coils).</p>
+<h1>Hardware Support: Modbus</h1>
+<ul class="snav"><!-- TOC -->
+<li><a href="#hardware">Hardware</a>
+<li><a href="#limitations">Limitations</a>
+<li><a href="#connecting">Connecting</a>
+<li><a href="#tools">Tools</a>
+<li><a href="#documentation">Documentation</a>
+</ul>
 
 <p><a href="http://www.modbus.org">Modbus is an industrial control system</a>
 that's usually used with pretty tough, 
@@ -53,52 +33,111 @@ highly-engineering equipment.
 The Modbus nodes are often "programmable logic controllers" (PLCs)
 which can do their own calculations of how to control devices.
 
-<h2>JMRI Modbus connections</h2>
+<a name="hardware"></a><h2>Supported Hardware</h2>
+<h3>Modules</h3>
+<ul>
+	<li>Modbus Nodes</li>
+</ul>
+<p>
+JMRI provides support for general JMRI
+<a href="../../tools/Sensors.shtml">Sensors</a>
+and
+<a href="../../tools/Turnouts.shtml">Turnouts</a>
+via Modbus (Node) connections.</p>
 
-JMRI will eventually support operation as either the master node, or as one of the slave nodes.
+<a name="limitations"></a><h2>Limitations</h2>
+<p><em>Modbus support is rapidly evolving; the
+actual code might be ahead or behind the documentation
+on any given day. Note that Modbus support is not
+in any JMRI test or production releases yet.</em></p>
+<p>JMRI as Master Node is not supported yet. JMRI will eventually support operation as either the Master Node, or as one of the Slave Nodes.
+</p>
 
-<h2>JMRI as Master Node</h2>
+<a name="connecting"></a><h2>Connecting</h2>
+<h3>Software settings</h3>
+<p>A Modbus installation has one Master node, and one or more Slave nodes.
+Generally, the Master writes to "Coil" objects in the Slave nodes, and 
+reads from "Discrete input" objects in the Slave nodes. 
+The "Coil" terminology comes from relay coil, solenoid coil, etc.; a
+way to change the node's output signals. The "Discrete input" is a single bit from 
+some external input.
+By reading and writing these in a Node, 
+a Modbus Master can sense the condition of the layout (through Discrete inputs)
+and control it (through Coils).</p>
 
+<h3>JMRI as Master Node</h3>
+<p>
 <em>(There is no code support for this yet)</em>
 <p>
-When JMRI is the master node driving a selection of remote Modbus nodes, the
-net effect is very similar to the familiar C/MRI system.  There's a master (JMRI)
-that communicates with input (Sensor) and output (Turnout, Light) lines in remote nodes. 
-Each Modbus discrete input in a remote node gets configured as a JMRI Sensor; each Modbus
-coil becomes a Turnout or Light.
+When JMRI is the Master Node driving a selection of remote Modbus Nodes, the
+net effect is very similar to the familiar C/MRI system.  There's a Master (JMRI)
+that communicates with input (Sensors) and output (Turnouts, Lights) lines in remote Nodes. 
+Each Modbus Discrete input in a remote Node gets configured as a JMRI Sensor; each Modbus
+Coil becomes a Turnout or Light.
 
 <p>
-JMRI can handle multiple remote nodes once they've been configured in the JMRI preferences.
+JMRI can handle multiple remote Nodes once they've been configured in the JMRI Preferences.
 
 <p>
 There are multiple ways to configure this connection:  
 TCP/IP vs RS485, ASCII vs RTU protocol, etc.
 Each of these requires separate code.
 
-<h2>JMRI as Slave Node</h2>
+<h3>JMRI as Slave Node</h3>
 
-It's also possible for JMRI to be a slave node.  In that case a PLC
-or other unit is the master node, and reads/writes JMRI when it needs to.
+It's also possible for JMRI to be a Slave Node.  In that case a PLC
+or other unit is the Master Node, and reads/writes JMRI when it needs to.
 At first, this will probably seem odd; JMRI is usually used as the central
 control for the layout.  
 But note that Modbus is an industrial-strength system, and 
 JMRI is not. If you want <em>really</em> robust railroad controls, you 
 can built it using PLCs communicating with each other for operation, and only
-communicating with JMRI to display status on a panel, get operator input, etc.
-
-<p>
+communicating with JMRI to display status on a Panel, get operator input, etc.
+<br>
 In that case, it's quite natural for JMRI to appear as a slave node on the Modbus.
 
 <p>
-When configured as a slave, JMRI appears as coils and discrete inputs to the Modbus master.
+When configured as a Slave, JMRI appears as Coils and Discrete inputs to the Modbus Master.
 Modbus:
 <ul>
-<li>allows the master to read and write coils in the slave, but can only read
-discrete inputs; it can't write to discrete inputs in a slave.
-<li>some popular PLC environments can only write to coils and read from discrete
-inputs
+<li>allows the Master to read and write Coils in the Slave, but can only read
+Discrete inputs; it can't write to Discrete inputs in a Slave.
+<li>some popular PLC environments can only write to Coils and read from Discrete
+inputs.
 </ul>
+<p>
+The Master Node can read from either the Coil or Discrete input for either Turnout or Sensor (see <a href="#naming">Naming</a> below).
+It can write to the Coil number to change the status of the Turnout or Sensor within JMRI.
+A "1" is THROWN or ACTIVE, respectively; a "0" is CLOSED or INACTIVE.
 
+<p>
+Until each Coil is first written or set within JMRI, the state of the associated Turnout or Sensor will be "UNKNOWN"
+and it will be read back as "zero" on Modbus.
+
+<p>
+With this convention, you can put Turnouts and Sensors on your JMRI Panel, and then
+connect them to PLC code that will tell them what to display.  If desired, local changes,
+e.g. clicking on the screen, can be read back and used to control the railroad.
+
+	<h4>Configuring as a Slave Node</h4>
+	
+	In the Preferences pane for Connections, select "Modbus" as the System manufacturer and "RS485 ASCII Slave" as the System Connection.  
+	Under Settings, select the communications (serial) port your interface is connected on, 
+	the baud rate, and 
+	enter the node number your Modbus Master Node will use to refer to JMRI.  
+	Click "Save", quit and restart.
+	
+	<p>
+	Next, use the Turnout Table and Sensor Table to define Turnouts and Sensors, 
+	which will in the process define the Coils and Discrete inputs
+	that Modbus will read and write. Save this configuration to a Panel file
+	so that it can be reloaded when you start JMRI again later.
+
+<a name="naming"></a><h3>Naming</h3>
+<p>
+The default <a href="../../../html/doc/Technical/Names.shtml">system letter</a> 
+for Modbus connections is "M". It can be configured to another letter if desired.
+<p>
 Normally, JMRI provides an interface to the real layout via 
 internal objects such as Turnouts and Sensors that
 are closely mapped to corresponding physical devices.
@@ -118,43 +157,15 @@ We therefore provide the following mapping:
 <dd>This will appear as Modbus coil nnn+1000 and discrete input nnn+1000, e.g. coil 1123 and discrete input 1123
 </dl>
 
-The master node can read from either the coil or discrete input for either Turnout or Sensor.
-It can write to the coil number to change the status of the Turnout or Sensor within JMRI.
-A "1" is THROWN or ACTIVE, respectively; a "0" is CLOSED or INACTIVE.
+<a name="tools"></a><h2>JMRI Tools</h2>
+N/A
 
-<p>
-Until each coil is first written or set within JMRI, the state of the associated Turnout or Sensor will be "UNKNOWN"
-and it will be read back as zero on Modbus.
-
-<p>
-With this convention, you can put Turnouts and Sensors on your JMRI panel, and then
-connect them to PLC code that will tell them what to display.  If desired, local changes,
-e.g. clicking on the screen, can be read back and used to control the railroad.
-
-<h3>Configuring as a Slave Node</h3>
-
-In the Preferences pane for Connections, select "Modbus" and "RS485 ASCII Slave".  
-Then select the communications (serial) port your interface is connected on, 
-the baud rate, and 
-enter the node number your master node will use to refer to JMRI.  
-Click "Save", quit and restart.
-
-<p>
-Next, use the Turnout and Sensor tables to define your sensors, 
-which will in the process define the coils and discrete inputs
-that Modbus will read and write. Save this configuration to a panel file
-so that it can be reloaded when you start JMRI again in the future.
-
-
-
-<h2>Naming</h2>
-
-The default <a href="../../../html/doc/Technical/Names.shtml">system letter</a> 
-for Modbus connections is "M". It can be configured to another letter if desired.
-
-
-
+<a name="documentation"></a><h2>Documentation</h2>
+<h3>Third Party info</h3>
+<p><a href="http://www.modbus.org">Modbus website</a></p>
 
 <!--#include virtual="/Footer" -->
+  </div><!-- closes #mainContent-->
+</div> <!-- closes #mBody-->
 </body>
 </html>

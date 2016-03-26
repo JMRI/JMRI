@@ -80,6 +80,6 @@ public class HexFileServer {
     }
     private LnHexFilePort port = null;
 
-    static Logger log = LoggerFactory.getLogger(HexFileServer.class.getName());
+    private final static Logger log = LoggerFactory.getLogger(HexFileServer.class.getName());
 
 }

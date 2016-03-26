@@ -323,7 +323,7 @@ public class YardmasterPanel extends CommonConductorYardmasterPanel {
 
     @Override
     public void propertyChange(java.beans.PropertyChangeEvent e) {
-        if (Control.showProperty) {
+        if (Control.SHOW_PROPERTY) {
             log.debug("Property change: ({}) old: ({}) new: ({})", e.getPropertyName(), e.getOldValue(), e
                     .getNewValue());
         }
@@ -345,5 +345,5 @@ public class YardmasterPanel extends CommonConductorYardmasterPanel {
         }
     }
 
-    static Logger log = LoggerFactory.getLogger(YardmasterPanel.class.getName());
+    private final static Logger log = LoggerFactory.getLogger(YardmasterPanel.class.getName());
 }

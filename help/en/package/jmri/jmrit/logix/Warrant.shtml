@@ -1,29 +1,26 @@
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
-<!-- $Id$ -->
-<HTML LANG="en">
-<HEAD>
-<TITLE>JMRI: Panel Help</TITLE>
-<META HTTP-EQUIV="Content-Type" CONTENT="text/html; charset=iso-8859-1">
-<META CONTENT="Pete Cressman" NAME="Author">
-<META NAME="keywords" CONTENT="JMRI Warrant Help">
+<html lang="en">
+<head>
+<title>JMRI: Panel Help</title>
+<meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
+<meta name="Author" content="Pete Cressman">
+<meta name="keywords" content="JMRI Warrant Help">
 
 <!-- Style -->
-<META HTTP-EQUIV="Content-Type" CONTENT="text/html; charset=iso-8859-1">
-<LINK REL="stylesheet" TYPE="text/css" HREF="/css/default.css"
-	MEDIA="screen">
-<LINK REL="stylesheet" TYPE="text/css" HREF="/css/print.css"
-	MEDIA="print">
-<LINK REL="icon" HREF="/images/jmri.ico" TYPE="image/png">
-<LINK REL="home" TITLE="Home" HREF="/">
+<meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
+<link rel="stylesheet" type="text/css" href="/css/default.css" media="screen">
+<link rel="stylesheet" type="text/css" href="/css/print.css" media="print">
+<link rel="icon" href="/images/jmri.ico" TYPE="image/png">
+<link rel="home" title="Home" href="/">
 <!-- /Style -->
-</HEAD>
+</head>
 
-<BODY>
+<body>
 <!--#include virtual="/Header" -->
   <div class="nomenu" id="mBody">
     <div id="mainContent">
 
-<H1>Warrants</H1>
+<h1>Warrants</h1>
 
 A Warrant is a collection of information sufficient to run an automated train.
 It will set the turnouts for a specified route and drive the train over the route.  
@@ -49,7 +46,7 @@ generally sufficient without change.  See <a href=
 "../../../apps/TabbedPreferences.shtml#Warrants">Warrant Preferences</a>
 for information about configuration.
 <p>
-<H2>How To Get Started</H2>
+<h2>How To Get Started</h2>
 <ul>
 	<li>Definitions of OBlocks, Portals and OPaths are found at
 	<a href="OBlockTable.shtml">The Occupancy Block Tables</a>.</li>
@@ -68,7 +65,7 @@ for information about configuration.
 	<a href="..\display\CircuitBuilder.shtml">The Circuit Builder</a>.</li>
 </ul>
 <p>
-<H3>More About Circuit Builder</h3>
+<h3>More About Circuit Builder</h3>
 Circuit Builder is an interactive tool that creates OBlocks, Portals and Paths graphically.
 It is necessary to have a track diagram of your layout expressed with track icons 
 (track segments and turnout icons).  OBlocks are created by clicking on track icons.
@@ -79,14 +76,14 @@ occupied or unoccupied, whether a warrant has allocated it or whether a train
 under warrant currently is proceeding over the circuit.  Details are found at
 <a href="..\display\CircuitBuilder.shtml">The Circuit Builder</a>, 
 <p> 
-<H3>Compatibility With Layout Editor</h3>
+<h3>Compatibility With Layout Editor</h3>
 OBlocks, Portals and Paths can be used with Layout Editor.  Compatibility is 
 achieved by using the same occupancy detection sensor(s) for LayoutBlocks as
 for OBlocks.  If there is no corresponding Control Panel layout diagram, Circuit Builder
 cannot be used.  The Occupancy Block Tables will have to be used to 
 define the OBlocks, Portals and Paths.
 <p>
-<H3>More About Getting Started</H3>
+<h3>More About Getting Started</h3>
 In order to create a <b>Warrant</b> you must first have created two or more OBlocks.
 These blocks don't have to be fully defined, but their existence indicates that you 
 are interested in using Warrants, that is, you have a block to start a train and 
@@ -97,19 +94,19 @@ menu items.  The Warrant menu items are:
 <ul>
         <li><b>Warrant List</b>: - Opens a table of warrants from which you
         	can control warrant routes and dispatch trains. See 
-        	<A HREF="WarrantTable.shtml"> The Warrants List</A>.</li>
+        	<a href="WarrantTable.shtml"> The Warrants List</a>.</li>
         <li><b>Edit Warrant...</b>: - Shows the list of existing  warrants.
         	Selecting one will open a Warrant Editing Window.  The
-        	operations of this frame are discussed in <A HREF="CreateEditWarrant.shtml">
-        	Creating and Editing Warrants</A>.</li>  
+        	operations of this frame are discussed in <a href="CreateEditWarrant.shtml">
+        	Creating and Editing Warrants</a>.</li>  
         <li><b>Create New Warrant</b>: - After providing system and user names this
 		opens a blank Warrant Editing Window to create a new warrant. The
-        	operations of this frame are discussed in <A HREF="CreateEditWarrant.shtml">
-        	Creating and Editing Warrants</A>.</li>
+        	operations of this frame are discussed in <a href="CreateEditWarrant.shtml">
+        	Creating and Editing Warrants</a>.</li>
 	  <li><b>Train Trackers</b>: - Opens window where the identity of trains can be
 		displayed as they move from one occupancy block to another.</li>
 	  <li><b>Create NXWarrant</b> - Opens a window to create an eNtry/eXit warrant.
-	  		this is discussed in <A HREF="NXWarrant.shtml"> About NXWarrants</A>.</li>
+	  		this is discussed in <a href="NXWarrant.shtml"> About NXWarrants</a>.</li>
 	  <li><b>Open Session Log</b> - Opens a window to name a file that records the
 	  warrant and train tracking status messages.</li>
 </ul>
@@ -119,30 +116,31 @@ The circuit Builder menu contains menu items to create and edit OBlocks, Portals
 and to position icons that represent them.
 <p>
 
-<H2>Creating a Warrant</H2>
-There are two types of warrants;
+<h2>Creating a Warrant</h2>
+There are three types of warrants;
 <ul>		
 		<li>A recorded script Warrant, where 
 		throttle commands are recorded from a throttle you use to drive a train over
 		preselected route.  The warrant then replicates all the commands when played back.
 		To create a recorded script warrant, select the menu item <b>Create New Warrant</b>
 		from the <b>Warrants</b> menu.</li>
-	and
-		<li>An NXwarrant, that is, an eNtry/eXit warrant. These warrants are created by
-		selecting a start position and an end position and having the warrant 
-		generate the commands to drive the train from start to end.  To create an
-		NXwarrant select the menu item <b>Create NXWarrant</b> from the <b>Warrants</b>
+		<li>An <A HREF="NXWarrant.shtml">NXwarrant</A>, that is, an eNtry/eXit warrant. 
+                These warrants are created by selecting a start position and an end position and 
+                having the warrant generate the commands to drive the train from start to end.  
+                To create an NXwarrant select the menu item <b>Create NXWarrant</b> from the <b>Warrants</b>
 		menu.</li>
+		<li>A <A HREF="SCWarrant.shtml">signal controlled warrant</A>, that is specially suited 
+                    for small layouts fully covered by sensors and preferably also with signals.</li>
 </ul>
 <p>
 In either case, first a route must be chosen on which to run the train. The <b>Creating Routes</b>
 section below describes how this is done.
 
-<H2>Elements of a Warrant</H2>
+<h2>Elements of a Warrant</h2>
 A warrant consists of two parts; The route over which a train will run and the commands
 it will receive when running over the route.
 
-<H3>Creating Routes</H3>
+<h3>Creating Routes</h3>
 A warrant route is a series of block paths linked together so a train
 may travel over it.  A warrant route is created by first choosing an <b>origin
 block</b>, a starting path and a portal to exit the orginating block.  Then, a
@@ -161,10 +159,10 @@ route you want.  Note that the Portal and Paths need to be chosen for the route 
 is found, a dialog is offered where you can examine the routes that were attempted with the current
 Block, Portal and Path selections.
 <p>
-<A HREF="CreateEditWarrant.shtml"> Creating and Editing Warrants</A> has more
+<a href="CreateEditWarrant.shtml"> Creating and Editing Warrants</a> has more
 information about creating routes.
 </p>
-<H3>Scripting the Train Action</H3>
+<h3>Scripting the Train Action</h3>
 The second part of a Warrant are the throttle commands to control the train as it traverses the
 route.  These commands are recorded automatically from running a train over the route in "Learn Mode" 
 or are generated automatically as an "NXWarrant". 
@@ -176,37 +174,37 @@ reaching the next block, the commands for the next block will be delayed until t
 the block.  Conversely, if the train reaches the next block ahead of time, any remaing commands in the
 block just left will issued with no elasped time so that the train can <i>catch up</i> to the script.
 <p>
-Warrant scripts are recorded or generated with a <i>"Clear"/i>, aspect throughout the route even through
+Warrant scripts are recorded or generated with a <i>"Clear"</i>, aspect throughout the route even through
 blocks with restricted speeds.  These speeds
 in the script are the <i>"Normal"</i> speeds.  However, when running, track conditions may not be 
 "Clear" due to a signal's speed restriction, a block's speed restriction or occupancy by a rouge
 train. Warrants are able to deal with these restrictions and will modify their "Normal" speeds
 as needed to comply with the restrictions.
-The section <A HREF="#SpeedMap"> "Warrants and Speed Restrictions"</A> below explains this relationship.
+The section <a href="#SpeedMap"> "Warrants and Speed Restrictions"</a> below explains this relationship.
 </p>
-<H4>Recorded Scripts</H4>
+<h4>Recorded Scripts</h4>
 This is done by putting a screen throttle into <i>Learn Mode</i> that records all the 
 throttle commands you make when driving the train over the route.  This script can then
 be replayed to drive the train automatically. All possible throttle functions can be recorded
 and played back.
 <p>
-With Loconet you may steal the address and use a manual walk around throttle.  For other command systems,
+With LocoNet you may steal the address and use a manual walk around throttle.  For other command systems,
 a WiFi throttle may take the same address and be used to record a walk around script.
 </p>
-<H4>Generated Scripts</H4>
+<h4>Generated Scripts</h4>
 For NXWarrants the script is generated by the warrant itself.  It ramps the train up to a
 specified speed
 and ramps it down at the destination.  It obeys all the traffic occupancy and signals as do the
-recorded warrants. See <A HREF="NXWarrant.shtml">About NXWarrants</A> for how to run them.
+recorded warrants. See <a href="NXWarrant.shtml">About NXWarrants</a> for how to run them.
 </p>
-<H3>Customizing the Script</H3>
+<h3>Customizing the Script</h3>
 A warrant script can be edited to modify the recorded commands.  Additional non-throttle events
 can be added to the script such as triggering or responding to external sensors.
-<A HREF="CreateEditWarrant.shtml"> Creating and Editing Warrants</A>. has more
+<a href="CreateEditWarrant.shtml"> Creating and Editing Warrants</a>. has more
 information about creating and customizing scripts.</p>
 <p>
-<A name=SpeedMap>
-<H2>Warrants and Speed Restrictions</H2>
+<a name="SpeedMap">
+<h2>Warrants and Speed Restrictions</h2>
 A train running under a warrant must be aware of track conditions ahead. Signals
 may indicate reduced speed or permission to return to normal speed.  Blocks may impose
 yard limit speed restrictions.  Rogue trains may show up unexpectedly in the route.
@@ -225,8 +223,8 @@ also.
 <p>
 Several parameters are required to make an automatic speed change.  The default settings
 will probably be satisfactory and the following can be deferred until later.  
-</P>
-<H2>Throttle Setting Speed Factors</H2>
+</p>
+<h2>Throttle Setting Speed Factors</h2>
 To compute how far to look ahead and the time when to modify speed the
 following must be known:
 <ul>
@@ -259,7 +257,7 @@ can be satisfactory for all engines if they do not need to respond to Signal asp
 or block speeds and you do not use scale speeds for the <b>Speed Name Values</b>.
 <i>If this is the case for your layout you do not need to read the following sections</i>.
 <p>
-<H3>Getting Speed Profiles for Your Trains</H3>
+<h3>Getting Speed Profiles for Your Trains</h3>
 Converting a throttle setting to achieve a given track speed is  dependent on the engine
 and its decoder.
 That is, the decoder's speed curve to deliver voltage to the motor, and the motor's
@@ -277,11 +275,11 @@ NXWarrants have a feature whereby running the train over a block of known length
 will compute a speed profile throttle factor for the train. Frequently, calibrating 
 a slow, medium and fast throttle setting for both
 forward and reverse will be sufficient. 
-See <A HREF="NXWarrant.shtml#Calibrate"> About NXWarrants</A>.
+See <a href="NXWarrant.shtml#Calibrate"> About NXWarrants</a>.
 <p>
-<H2>Aspect Speed Map and its Interpretation</H2>
+<h2>Aspect Speed Map and its Interpretation</h2>
 Speeds are named in the aspects.xml files that signal masts use in the Signal 
-Mast System.  These speed names are also used in the block tables.  To control 
+Mast System.  These speed names are also used in the Blocks tables.  To control 
 train speed, values must be assigned to these speed names.
 The Aspect Speed Map found at <i>>Edit->Preferences->Warrants</i> provides a value
 for each named speed.  It is up to the user to assign a value to the name and 
@@ -389,7 +387,7 @@ for each of your engines you can use either of the last two
 speed interpretations which express throttle setting in terms of scale 
 track speed.
 <p>
-<H3>The Signal Head Appearance Table</H3>
+<h3>The Signal Head Appearance Table</h3>
 If signal heads are used on the layout, their appearances can be mapped
 to the speed names of signal masts in this table on the warrant preferences
 panel.
@@ -400,7 +398,7 @@ either by panel icons or Logix.  Since there are 8 possible signal head
 appearances additional speed names can be created so a unique speed
 can be made for each appearance.
 </p>
-<H3>Editing the Speed Map Table</H3>
+<h3>Editing the Speed Map Table</h3>
 Rows can be added or deleted.  The default speed map has the names 
 "Fifty" and "Sixty". These names only appear in signal mast systems for
 UP-2008 and BNSF-1996, so they can safely be deleted if you do use
@@ -411,9 +409,9 @@ your layout.
 If you add a new speed name for a signal head appearance, then add a row
 for that name in the Signal Map Table. 
 <p>
-<H2>Block speed Names</H2>
+<h2>Block speed Names</h2>
 A speed name can be set for each block by selecting a name from the <b>Speed Notch</b>
-column of the OBlock table. One use of this feature could be to enforce a yard limit
+column of the OBlock Table. One use of this feature could be to enforce a yard limit
 speed.  Unlike signal speed names, block speed names are bi-directional.  To
 return a warrant's speed to normal when leaving a yard limit, the speed names of the 
 OBlocks on either side of the yard block should set to "Normal".  Use care when
@@ -423,17 +421,17 @@ To unset an OBlock speed name choose the blank setting from the <b>Speed Limit</
 column.  As with the absence of a signal, 
 when there is no speed name the warrant continues at its current speed.
 <p>
-<H2>Using the Warrant List</H2>
+<h2>Using the Warrant List</h2>
 The <b>Warrant List</b> menu item opens the <b>Warrant Table</b>.  Each row is a
 warrant that has been created and saved or is a running NXWarrant.  The Warrant Table
 reports the current status of each warrant in the list and can issue commands to
 Halt, Resume or Abort. Warrant routes can be allocated, i.e. reserved
 for that warrant, the turnouts for route can be set and when the warrant is run, its status
-is shown and controlled using the columns in the table.  See <A HREF="WarrantTable.shtml"> The
-Warrant List</A> for information about the table.
+is shown and controlled using the columns in the table.  See <a href="WarrantTable.shtml"> The
+Warrant List</a> for information about the table.
 
 </p>
-<H2>Tracking Trains</H2>
+<h2>Tracking Trains</h2>
 Any train running on the layout
 can be tracked.  The layout must be represented with Indicator Track Icons to track trains.
 The fourth Warrants menu item opens the <b>Tracker Table</b>.  Pressing the <b>New Tracker</b>
@@ -456,29 +454,29 @@ Tracking can also be done for a train by dragging and dropping a Loco Icon onto 
 the train occupies.  This is the most simple way of tracking in that both the names and 
 location are done with a single drag and drop.
 <p>
-<H2>Using Warrants in Logix</H2>
+<h2>Using Warrants in Logix</h2>
 Several of the operations that can be done from the Warrant List and Warrant Editing frame
 can be done with Logix Conditionals.  You may design and implement a dispatcher's panel
 using the Warrant state variables and actions found in Logix.
 
-<H3>Warrant State Variables</H3>
+<h3>Warrant State Variables</h3>
 When a warrant has been allocated or is in effect, the following state variables can be tested
 in a Logix conditional.
 <ul>
         <li><b>Route Free</b>: - True when all blocks in the warrant route are not allocated
-        to anyone and are not occipied.  False otherwise.</li>
+        to anyone and are not occupied.  False otherwise.</li>
         <li><b>Route Set</b>: - True when all blocks in the warrant route are allocated and the
         turnouts set for this warrant.  False otherwise.</li>
         <li><b>Route Allocated</b>: - True when all blocks in the warrant route are allocated
         to this warrant.  False otherwise.</li>
         <li><b>Route Occupied</b>: - True when none of the blocks in the warrant route, other
-        than the origin block, are occipied.  (Assumes the train of this warrant is occupying
+        than the origin block, are occupied.  (Assumes the train of this warrant is occupying
         the origin block).  False otherwise. </li>
         <li><b>Train Running</b>: - True when the train specified in the warrant is running 
         either in Learn Mode or Auto Run Mode.  False otherwise.</li>
 </ul>
 
-<H3>Warrant Actions</H3>
+<h3>Warrant Actions</h3>
 <ul>
         <li><b>Allocate Warrant Route</b>: - Allocates the route to this warrant.</li>
         <li><b>Deallocate Warrant</b>: - Deallocates the route of this warrant (only).  This will not
@@ -495,9 +493,10 @@ in a Logix conditional.
         <li><b>Control Train</b>: - Send a control command (<b>Halt</b>, <b>Resume</b> or 
         <b>Abort)</b> to a running train under warrant.</li>
 </ul>        
-<br>
 
 <!--#include virtual="/Footer" -->
-</BODY>
-</HTML>
+ </div><!-- closes #mainContent-->
+</div> <!-- closes #mBody-->
+</body>
+</html>
 

@@ -1,4 +1,3 @@
-// PowerPanelTest.java
 package jmri.jmrit.powerpanel;
 
 import java.util.ResourceBundle;
@@ -10,7 +9,6 @@ import junit.framework.TestSuite;
  * Tests for the jmrit.PowerPanel package
  *
  * @author	Bob Jacobsen
- * @version $Revision$
  */
 public class PowerPanelTest extends TestCase {
 
@@ -23,7 +21,7 @@ public class PowerPanelTest extends TestCase {
 
     // Main entry point
     static public void main(String[] args) {
-        String[] testCaseName = {PowerPanelTest.class.getName()};
+        String[] testCaseName = {"-noloading", PowerPanelTest.class.getName()};
         junit.swingui.TestRunner.main(testCaseName);
     }
 

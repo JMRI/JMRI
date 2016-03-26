@@ -1,6 +1,7 @@
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
-<html lang="en"><head>
-<!-- Copyright ($Author$) 2009 --><!-- $Id$ --><title>Operations-Trains window Menu Bar</title>
+<html lang="en">
+<head>
+<title>JMRI OperationsPro - Trains Window menu bar</title>
 
 <!-- Style -->
 <meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
@@ -10,96 +11,83 @@
 <link rel="home" title="Home" href="/">
 <!-- /Style -->
 </head>
+
 <body>
 <!--#include virtual="/Header" -->
 <!--#include virtual="Sidebar" -->
+
 <div id="mainContent">
 <h1>Using JMRI&reg; to Operate Trains</h1>
-<h1>Operations Trains Window Menu Bar</h1>
+<h2>OperationsPro: Trains Window menu bar</h2>
+
 <div align="right">
 <p><a href="Ops_Trains.shtml">Back</a><a href="Ops_TripThruOperations.shtml"></a></p>
 <p><a href="index.shtml#Operations">Back to Index</a></p>
 </div>
 <hr>
-<table border="0" cellpadding="2" cellspacing="1" width="90%">
+
+<img style="width: 380px; height: 336px;" alt="trains, menu" src="images/Ops_TrainsMenu.png">
+
+<h3>Tools</h3>
+<ul>
+<li><strong><a href="Ops_Trains_BuildOptions.shtml">Options</a></strong>
+<p>Opens the <span style="font-weight: bold;">Options</span> window.</p></li>
+
+<li><strong>Manifest Print Options</strong>
+<p>Opens the <a href="Ops_PrintOptions.shtml"><strong>Manifest Print Options</strong></a> window that lets you set up your Manifest printing options.</p></li>
+
+<li><strong>Build Report Options</strong>
+<p>Opens the <a href="Ops_Settings_menubar.shtml#buildreportoptions"><strong>Build Report Options</strong></a> window to set the report options:</p>
+<p><a href="Ops_Settings_menubar.shtml#buildreportoptions"><img style="width: 436px; height: 400px;" alt="build Report options" src="images/Ops_BuildReportOptions.png"></a></p></li>
+
+<li><strong>Modify Trains by Car Type</strong>
+<p>Opens the <a href="Ops_TrainsModify.shtml"><strong>Modify Trains by Car Type</strong></a> window to allow you to modify a Train.</p></li>
+
+<li><strong>Timetable</strong>
+<p>Opens the <a href="Ops_Trains_Timetable.shtml"><strong>Timetable</strong></a> window.</p></li>
+
+<li><a name="copy" id="copy"><strong>Copy Train</strong></a>
+<p>Opens the Copy Train dialog:</p>
+<p><img src="images/Ops_Trains_copy.png" alt="copy" height="150" width="400"></p></li>
+
+<li><a name="scripts" id="scripts"><strong>Scripts</strong></a>
+<p>Opens the <strong>Scripts</strong> dialog:<br>
+<table border="0" cellpadding="2" cellspacing="1">
 <tbody>
 <tr>
-<td valign="top" width="15%"><img style="width: 380px; height: 336px;" alt="trains ,menu" src="images/Ops_TrainsMenu.png"><br>
-</td>
-<td align="left" valign="top" width="85%">
-<ul>
-<li><strong>Tools</strong>
-<ul>
-<li><strong><a href="Ops_Trains_BuildOptions.shtml">Options</a></strong>-
-Opens the <span style="font-weight: bold;">Options</span>
-window.</li>
-<li><strong><a href="Ops_PrintOptions.shtml">Manifest
-Print Options</a></strong>-- opens<strong> Manifest
-Print Options</strong> window that lets you set up your manifest
-printing.</li>
-<li><span style="font-weight: bold;">Build Report Options</span>
--- opens Build Report Option window to set the report options.</li></ul><div style="margin-left: 80px;"><img style="width: 436px; height: 400px;" alt="build Report options" src="images/Ops_BuildReportOptions.png"></div><ul>
-<li><a href="Ops_TrainsModify.shtml"><strong>Modify
-Trains by Car Type</strong></a>-- opens <strong>Modify
-by Car Type</strong> window to allow you to modify a train.</li>
-<li><strong><a href="Ops_Trains_Timetable.shtml">Timetable </a></strong>-
-opems the <strong>Timetable</strong> window.</li>
-<li><strong>Copy Train</strong> - Copy
-Train dialog opens. </li>
-</ul>
-<blockquote>
-<p><br>
-</p><div style="margin-left: 40px;"><img src="images/Ops_Trains_copy.png" alt="copy" height="150" width="400"><br></div><p>
-</p>
-</blockquote>
-<ul>
-<li><strong>Scripts</strong><strong></strong>-
-Opens the Scripts dialog.<br>
-<table style="margin-left: 40px;" border="0" cellpadding="2" cellspacing="1" width="90%">
-<tbody>
-<tr>
-<td valign="top" width="46%"><img src="images/Ops_Train_Scripts.png" alt="scripts" height="191" width="292"></td>
-<td valign="top" width="54%">
-<p><strong>Run the following scripts at
-startup</strong><br>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-<input name="button2" id="button2" value="Add Script" type="button"> </p>
-<p><strong>Run the following scripts at
-shutdown</strong><br>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-<input name="button3" id="button3" value="Add Script" type="button"> </p>
-<p>Press <input name="button4" id="button4" value="Save" type="button"> to
-save your scripts.<br>
-</p>
-</td>
-</tr>
-</tbody>
-</table>
+<td valign="top" width="40%"><img src="images/Ops_Train_Scripts.png" alt="scripts" height="191" width="292"></td>
+<td valign="top" width="60%"><p><strong>Run the following scripts at startup</strong><br>
+<input name="button2" id="button2" value="Add Script" type="button"></p>
+<p><strong>Run the following scripts at shutdown</strong><br>
+<input name="button3" id="button3" value="Add Script" type="button"></p>
+<p>Press <input name="button4" id="button4" value="Save" type="button"> to save your Scripts Settings.</p>
+</td></tr></tbody></table>
 </li>
-<li style="font-weight: bold;"><div style="margin-left: 40px;"></div>Setup Excel Program(Manifest Creator)</li></ul><div style="margin-left: 40px;"><div style="margin-left: 40px;"><img style="width: 362px; height: 200px;" alt="Excel setup" src="images/Ops_TrainExcellSetup.png"></div></div><ul><li><strong>Print </strong>-- opens
-printer dialog for your default printer and prints the list of Trains<br>
-<img src="images/Ops_Trains_PrintList.png" alt="print" height="247" width="723"><br>
-</li>
-<li><strong>Preview </strong>-- opens
-default printer preview window.<br>
-<img src="images/Ops_Trains_PrintPreview.png" alt="print preview" height="266" width="673"><br>
-</li>
+
+<li><a name="setupexcel" id="setupexcel"><strong>Setup Excel Program (Manifest Creator)</strong></a>
+<p><img style="width: 362px; height: 200px;" alt="Excel setup" src="images/Ops_TrainExcellSetup.png"></p></li>
+
+<li><a name="print" id="print"><strong>Print</strong>
+<p>Opens a printer dialog for your default printer and prints the list of Trains.<br>
+<img src="images/Ops_Trains_PrintList.png" alt="print" height="247" width="723"></li>
+
+<li><a name="preview" id="preview"><strong>Preview</strong>
+<p>Opens a default printer preview window:<br>
+<img src="images/Ops_Trains_PrintPreview.png" alt="print preview" height="266" width="673"></p></li>
 </ul>
 </li>
-<li><strong>Operations</strong> -- (Same as
-Main DecoderPro&reg; menu)</li>
-<li><strong>Windows</strong> -- standard
-JMRI&reg; format.</li>
-<li><strong>Help</strong> -- standard JMRI&reg;
-format.</li>
+
+<li><strong>Operations</strong> - same as the DecoderPro&reg; Main Window <strong>Operations</strong> menu (when shown)</li>
+<li><strong>Windows</strong> - standard JMRI&reg; Windows menu.</li>
+<li><strong>Help</strong> - standard JMRI&reg; Help menu.</li>
 </ul>
-</td>
-</tr>
-</tbody>
-</table>&nbsp;<div align="right">
+
+<div align="right">
 <p><a href="Ops_Trains.shtml">Back</a><a href="Ops_TripThruOperations.shtml"></a></p>
 <p><a href="index.shtml#Operations">Back to Index</a></p>
 </div>
+
 <!--#include virtual="/Footer" -->
+</div>
 </div>
 </body></html>

@@ -7,29 +7,39 @@
 
 		<dt><h3><a href="../scripting/index.shtml">Scripting</a></h3></dt>
 		<dd>Information on writing scripts to control JMRI in more detail:
-		    <UL>
-		    <LI><dfn><a href="../scripting/Start.shtml">Introduction</a></dfn>
-		    <LI><dfn><A HREF="../scripting/Python.shtml">The Language</a></dfn>
-		    <LI><dfn><a href="../scripting/Examples.shtml">Examples</a></dfn>
-		    <LI><dfn><a href="../scripting/FAQ.shtml">Frequently Asked Questions (FAQs)</a></dfn>
-		    <LI><dfn><a href="../scripting/ex_set_turnouts.shtml">Example: Setting Turnouts</a></dfn>
-		    </UL>
+		    <ul>
+		    <li><dfn><a href="../scripting/Start.shtml">Introduction</a></dfn>
+		    <li><dfn><a href="../scripting/Python.shtml">The Language</a></dfn>
+		    <li><dfn><a href="../scripting/Examples.shtml">Examples</a></dfn>
+		    <li><dfn><a href="../scripting/ex_set_turnouts.shtml">Example: Setting Turnouts</a></dfn>
+		    <li><dfn><a href="../scripting/FAQ.shtml">Frequently Asked Questions (FAQs)</a></dfn>
+		    <li><dfn><a href="../scripting/Jynstruments.shtml">Jynstruments to modify the GUI</a></dfn>
+		    </ul>
 		</dd>
 
-		<dt><h3><a href="../index.shtml">General Tools</a></h3></dt>
+		<dt><h3><a href="../index.shtml">Tools</a></h3></dt>
 		<dd>The general objects available to control your layout.
-		    <UL>
-		    <LI><dfn><a href="../Sensors.shtml">Sensors</a></dfn>
-		    <LI><dfn><a href="../Turnouts.shtml">Turnouts</a></dfn>
-		    <LI><dfn><a href="../throttle/ThrottleMain.shtml">Throttles</a></dfn>
-		    <LI><dfn><a href="../consisttool/ConsistTool.shtml">Consisting</a></dfn>
-		    <LI><dfn><a href="../Signals.shtml">Signals</a></dfn>
-		    <LI><dfn><a href="../Lights.shtml">Lights</a></dfn>
-		    <LI><dfn><a href="../Routes.shtml">Routes</a></dfn>
-		    <LI><dfn><a href="../Logix.shtml">Logix</a></dfn>
-		    <LI><dfn><a href="../fastclock/index.shtml">Fast Clocks</a></dfn>
-		    <LI><dfn><a href="../speedometer/index.shtml">Speedometer</a></dfn>
-		    </UL>
+		    <ul>
+				<li><dfn><a href="../Turnouts.shtml">Turnouts</a></dfn>
+				<li><dfn><a href="../Lights.shtml">Lights</a></dfn>
+				<li><dfn><a href="../Sensors.shtml">Sensors</a></dfn>
+				<li><dfn><a href="../throttle/ThrottleMain.shtml">Throttles</a></dfn>
+				<li><dfn><a href="../consisttool/ConsistTool.shtml">Consisting</a></dfn>
+				<li><dfn><a href="../signaling/index.shtml">Signaling</a></dfn>
+				<li><dfn><a href="../Blocks.shtml">Blocks</a></dfn>
+				<li><dfn><a href="../Reporters.shtml">Reporters</a></dfn>
+				<li><dfn><a href="../Memories.shtml">Memory Variables</a></dfn>
+				<li><dfn><a href="../Routes.shtml">Routes</a></dfn>
+				<li><dfn><a href="../LRoutes.shtml">LRoutes</a></dfn>
+		    <li><dfn><a href="../Sections.shtml">Sections</a></dfn>
+				<li><dfn><a href="../Logix.shtml">Logix</a></dfn>
+				<li><dfn><a href="../fastclock/index.shtml">Fast Clocks</a></dfn>
+				<li><dfn><a href="../speedometer/index.shtml">Speedometer</a></dfn>
+				<li><dfn><a href="../Audio.shtml">Audio</a></dfn>
+				<li><dfn><a href="../IdTags.shtml">ID Tags</a></dfn>
+		
+		    <li><dfn><a href="../index.shtml#systemSpecificTools">System-specific...</a></dfn>
+		    </ul>
 		</dd>
 
 	    </dl>

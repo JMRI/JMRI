@@ -1,4 +1,3 @@
-// PathTest.java
 package jmri;
 
 import junit.framework.Assert;
@@ -10,7 +9,6 @@ import junit.framework.TestSuite;
  * Tests for the Path class
  *
  * @author	Bob Jacobsen Copyright (C) 2006
- * @version $Revision$
  */
 public class PathTest extends TestCase {
 
@@ -37,6 +35,42 @@ public class PathTest extends TestCase {
         p.setBlock(b);
     }
 
+    public void testEquals() {
+        TurnoutManager sm = new jmri.managers.InternalTurnoutManager();
+        Turnout s1 = sm.provideTurnout("IT12");
+        Turnout s2 = sm.provideTurnout("IT14");
+        
+        Path p1 = new Path();
+        Path p2 = new Path();
+        Path p3 = new Path();
+        Path p4 = new Path();
+        
+        assertTrue(p1.equals(p2));
+
+        p1.addSetting(new BeanSetting(s1, "IT12", Turnout.CLOSED));
+        assertFalse(p1.equals(p2));
+        
+        p2.addSetting(new BeanSetting(s1, "IT12", Turnout.CLOSED));
+        assertTrue(p1.equals(p2));
+        
+        p3.addSetting(new BeanSetting(s1, "IT12", Turnout.THROWN));
+        assertFalse(p1.equals(p3));
+
+        p4.addSetting(new BeanSetting(s2, "IT14", Turnout.CLOSED));
+        assertFalse(p1.equals(p4));
+
+        Block b1 = new Block("IB1");
+        p1.setBlock(b1);
+        assertFalse(p1.equals(p2));
+
+        p2.setBlock(b1);
+        assertTrue(p1.equals(p2));
+
+        Block b2 = new Block("IB2");
+        p1.setBlock(b2);
+        assertFalse(p1.equals(p2));
+    }
+    
     public void testBlockRetrieve() {
         Path p = new Path();
 

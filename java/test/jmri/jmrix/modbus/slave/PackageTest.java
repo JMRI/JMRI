@@ -3,14 +3,11 @@ package jmri.jmrix.modbus.slave;
 import junit.framework.Test;
 import junit.framework.TestCase;
 import junit.framework.TestSuite;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 
 /**
  * Tests for the jmri.jmrix.modbus.slave package.
  *
  * @author	Bob Jacobsen Copyright 2001, 2003, 2014
- * @version $Revision$
  */
 public class PackageTest extends TestCase {
 
@@ -36,7 +33,5 @@ public class PackageTest extends TestCase {
 
         return suite;
     }
-
-    static Logger log = LoggerFactory.getLogger(PackageTest.class.getName());
 
 }

@@ -250,5 +250,5 @@ public class IconDialog extends ItemDialog {
         pack();
     }
 
-    static Logger log = LoggerFactory.getLogger(IconDialog.class.getName());
+    private final static Logger log = LoggerFactory.getLogger(IconDialog.class.getName());
 }

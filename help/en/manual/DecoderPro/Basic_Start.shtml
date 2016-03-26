@@ -1,33 +1,32 @@
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
-<html lang="en"><head>
-<!-- Copyright ($Author$) 2009, 2010 --><!-- $Id$ --><title>Basic Programming</title><!-- Style -->
+<html lang="en">
+<head>
+<title>Basic Programming</title>
 
-
-
-
-
+<!-- Style -->
 <meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
 <link rel="stylesheet" type="text/css" href="/css/default.css" media="screen">
 <link rel="stylesheet" type="text/css" href="/css/print.css" media="print">
 <link rel="icon" href="/images/jmri.ico" type="image/png">
-<link rel="home" title="Home" href="/"><!-- /Style --></head><body>
+<link rel="home" title="Home" href="/">
+<!-- /Style -->
+</head>
+
+<body>
 <!--#include virtual="/Header" -->
 
 <!--#include virtual="Sidebar" -->
 <div id="mainContent">
 
 <h1>The Basic Programmer</h1>
-<h1>The Roster Entry Pane</h1>
+<h2>The Roster Entry Pane</h2>
 
 <div align="right">
 <p><a href="Programmer_Setup.shtml">Previous | </a><a href="Basic_BasicPane.shtml">Next</a></p>
 <p><a href="index.shtml#Basic%20Programmer">Back to Index</a></p>
 </div>
 
-
 <hr>
-
-<h2>&nbsp;</h2>
 <p>The first action in programming a locomotive with DecoderPro&reg; is to fill out the roster entry screen.</p>
 
 A <b>roster</b> is a  database of all locomotives that your installation
@@ -37,14 +36,14 @@ below:
 <p>Most of these fields are self-explanatory.  However, note that the first field (<strong>ID</strong>)
 becomes the file name in the Roster for the locomotive you are
 programming. Set up a schema to identify your locomotive to its decoder
-program. i.e. Mfr, Loco Type, and &nbsp;Address (Kato_SD40-2_5645).
+program. i.e. Manufacturer, Loco Type, and Address (e.g. Kato_SD40-2_5645).
 Spaces in the ID field will be changed to underscores (_) when the file
-is written.&nbsp; In a club environment, often the ID begins with the
+is written. In a club environment, often the ID begins with the
 owner&#8217;s name, or member number. This way the Roster (which is sorted
 alphabetically) will keep all of an owner's locomotives listed
 together. </p>
 
-<p> The <strong>Decoder</strong> <strong>Comment</strong> field is a good place 
+<p>The <strong>Decoder</strong> <strong>Comment</strong> field is a good place 
   to add the date you purchased the locomotive, price, or  any other information you might 
 feel is important to record. </p>
 
@@ -89,7 +88,7 @@ is the current programming mode that is selected.</p>
 <div align="center"><img src="images/SetProgramMode.png" alt="Set pogram mode dialog" class="BOXIT" border="5">
   
 </div>
-<p>There are severall <a href="Basic_Mode.shtml"><strong>programming modes</strong></a>.
+<p>There are several <a href="Basic_Mode.shtml"><strong>programming modes</strong></a>.
 JMRI now selects the best mode for you. It determines this from the
 command station type you are using and the decoder model you are
 attempting to program. Usually this will be OK. If you find that you
@@ -132,4 +131,7 @@ Details about the <strong><a href="Main_Roster.shtml">Roster Menu</a></strong></
 </div>
 
 <!--#include virtual="/Footer" -->
-</div></body></html>
+  </div><!-- closes #mainContent-->
+ </div> <!-- closes #mBody-->
+ </body>
+</html>

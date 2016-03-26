@@ -17,7 +17,9 @@ public class PR2Adapter extends LocoBufferAdapter {
 
     public PR2Adapter() {
         super(new PR2SystemConnectionMemo());
+
         options.remove(option2Name);
+        options.put(option2Name, new Option("Command station type:", commandStationOptions(), false));
     }
 
     /**
@@ -38,7 +40,7 @@ public class PR2Adapter extends LocoBufferAdapter {
         activeSerialPort.setRTS(true);		// not connected in some serial ports and adapters
         activeSerialPort.setDTR(true);		// pin 1 in Mac DIN8; on main connector, this is DTR
 
-        // configure flow control to always on
+        // configure flow control from option
         int flow = SerialPort.FLOWCONTROL_RTSCTS_OUT;
         if (getOptionState(option1Name).equals(validOption1[1])) {
             flow = SerialPort.FLOWCONTROL_NONE;
@@ -59,6 +61,7 @@ public class PR2Adapter extends LocoBufferAdapter {
 
         setCommandStationType(getOptionState(option2Name));
         setTurnoutHandling(getOptionState(option3Name));
+
         // connect to a packetizing traffic controller
         // that does echoing
         jmri.jmrix.loconet.pr2.LnPr2Packetizer packets = new jmri.jmrix.loconet.pr2.LnPr2Packetizer();
@@ -92,19 +95,14 @@ public class PR2Adapter extends LocoBufferAdapter {
         return new int[]{57600};
     }
 
+    // Option 1 does flow control, inherited from LocoBufferAdapter
+
     /**
-     * Option 1 controls flow control option
+     * The PR2 has one mode
      */
-    /*public String option1Name() { return "PR2 connection uses "; }
-     public String[] validOption1() { return new String[]{"hardware flow control (recommended)", "no flow control"}; }*/
-    // meanings are assigned to these above, so make sure the order is consistent
-    /**
-     * The PR2 is itself a command station, so fix that choice by providing just
-     * the one option
-     */
-    /*public String[] validOption2() { 
-     String[] retval = {"PR2"}; 
-     return retval;
-     }*/
-    static Logger log = LoggerFactory.getLogger(PR2Adapter.class.getName());
+    public String[] commandStationOptions() {
+        return new String[]{jmri.jmrix.loconet.LnCommandStationType.COMMAND_STATION_PR2_ALONE.getName()};
+    }
+
+    private final static Logger log = LoggerFactory.getLogger(PR2Adapter.class.getName());
 }

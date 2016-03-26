@@ -1,4 +1,3 @@
-// MrcNamedPaneAction.java
 package jmri.jmrix.zimo.swing;
 
 import javax.swing.Icon;
@@ -14,14 +13,8 @@ import org.slf4j.LoggerFactory;
  * @author	Bob Jacobsen Copyright (C) 2010 Copied from nce.swing
  * @author Ken Cameron 2014
  * @author Kevin Dickerson 2014
- * @version	$Revision: 22942 $
  */
 public class Mx1NamedPaneAction extends jmri.util.swing.JmriNamedPaneAction {
-
-    /**
-     *
-     */
-    private static final long serialVersionUID = -7955184289782860199L;
 
     /**
      * Enhanced constructor for placing the pane in various GUIs
@@ -55,7 +48,5 @@ public class Mx1NamedPaneAction extends jmri.util.swing.JmriNamedPaneAction {
         return p;
     }
 
-    static Logger log = LoggerFactory.getLogger(Mx1NamedPaneAction.class.getName());
+    private final static Logger log = LoggerFactory.getLogger(Mx1NamedPaneAction.class.getName());
 }
-
-/* @(#)Mx1NamedPaneAction.java */

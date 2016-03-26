@@ -1,11 +1,8 @@
-// jmri.jmrit.display.NewPanelAction.java
 package jmri.jmrit.display;
 
 import java.awt.event.ActionEvent;
 import javax.swing.AbstractAction;
 import javax.swing.JOptionPane;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 
 /**
  * Start a Panel Editor or a Layout Editor for a new Panel.
@@ -15,14 +12,8 @@ import org.slf4j.LoggerFactory;
  *
  * @author	Dave Duchamp Copyright (C) 2007
  * @author	Bob Jacobsen Copyright (C) 2008
- * @version	$Revision$
  */
 public class NewPanelAction extends AbstractAction {
-
-    /**
-     *
-     */
-    private static final long serialVersionUID = -4195350738625521948L;
 
     public NewPanelAction(String s) {
         super(s);
@@ -47,6 +38,5 @@ public class NewPanelAction extends AbstractAction {
             new jmri.jmrit.display.panelEditor.PanelEditorAction().actionPerformed(null);
         }
     }
-    static Logger log = LoggerFactory.getLogger(NewPanelAction.class.getName());
 
 }

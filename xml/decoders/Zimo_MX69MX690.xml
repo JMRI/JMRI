@@ -282,7 +282,6 @@
       <variable item="Analog Mode Function Status - F12" CV="14" mask="XXVXXXXX">
         <xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
         <label>Analog Mode Function Status - F12</label>
-        <label>Analog Mode Function Status - F12</label>
       </variable>
       <variable CV="14" item="Zero-1 Power Conversion" mask="XVXXXXXX" default="1">
         <xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>

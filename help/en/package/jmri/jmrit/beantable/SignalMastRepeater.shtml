@@ -1,13 +1,12 @@
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
-<!-- $Id$ -->
 <html lang="en">
 <head>
- <TITLE>
+ <title>
       JMRI: Signal Masts Repeater
- </TITLE>
-    <META http-equiv=Content-Type content="text/html; charset=iso-8859-1">
-    <META content="Kevin Dickerson" name=Author>
-    <META name="keywords" content="JMRI help Signal Mast Repeater">
+ </title>
+    <meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
+    <meta content="Kevin Dickerson" name="Author">
+    <meta name="keywords" content="JMRI help Signal Mast Repeater">
 
 <!--#include virtual="/Style" -->
 </head>
@@ -17,7 +16,7 @@
   <div class="nomenu" id="mBody">
     <div id="mainContent">
 
-<H1>Signal Mast Repeater</H1>
+<h1>Signal Mast Repeater</h1>
 <p>
 The Signal Mast Repeater tool allows you to configure one Signal Mast to follow the state of another, or for both Signal Masts to update each others state.
 <br>
@@ -26,8 +25,10 @@ When a Master mast is selected from the list at the bottom of the screen the Sla
 If there are no valid masts then the option to select the Slave will remain disabled.
 <p>
 In the main table it is possible to select which direction the updates will take place, either Master to Slave, Slave To Master or Bothway. You can also disable/enable the Repeater along with deleting it from this screen.
-<p>
+
 <!--#include virtual="/Footer" -->
+
+      </div><!-- closes #mainContent-->
+    </div> <!-- closes #mBody-->
 </body>
 </html>
-

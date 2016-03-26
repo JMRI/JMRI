@@ -1,8 +1,11 @@
-// AlignmentPanelTest.java
 package jmri.jmrix.rps.reversealign;
 
+import apps.tests.Log4JFixture;
 import javax.swing.BoxLayout;
 import javax.swing.JFrame;
+import jmri.InstanceManager;
+import jmri.jmrit.roster.RosterConfigManager;
+import jmri.util.JUnitUtil;
 import junit.framework.Assert;
 import junit.framework.Test;
 import junit.framework.TestCase;
@@ -50,4 +53,19 @@ public class AlignmentPanelTest extends TestCase {
         return suite;
     }
 
+    // The minimal setup for log4J
+    @Override
+    protected void setUp() throws Exception {
+        Log4JFixture.setUp();
+        super.setUp();
+        JUnitUtil.resetInstanceManager();
+        InstanceManager.setDefault(RosterConfigManager.class, new RosterConfigManager());
+    }
+
+    @Override
+    protected void tearDown() throws Exception {
+        JUnitUtil.resetInstanceManager();
+        super.tearDown();
+        Log4JFixture.tearDown();
+    }
 }

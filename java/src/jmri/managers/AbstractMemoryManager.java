@@ -1,4 +1,3 @@
-// AbstractMemoryManager.java
 package jmri.managers;
 
 import java.text.DecimalFormat;
@@ -12,7 +11,6 @@ import org.slf4j.LoggerFactory;
  * Abstract partial implementation of a MemoryManager.
  *
  * @author	Bob Jacobsen Copyright (C) 2004
- * @version	$Revision$
  */
 public abstract class AbstractMemoryManager extends AbstractManager
         implements MemoryManager {
@@ -135,7 +133,5 @@ public abstract class AbstractMemoryManager extends AbstractManager
         return Bundle.getMessage("BeanNameMemory");
     }
 
-    static Logger log = LoggerFactory.getLogger(AbstractMemoryManager.class.getName());
+    private final static Logger log = LoggerFactory.getLogger(AbstractMemoryManager.class.getName());
 }
-
-/* @(#)AbstractMemoryManager.java */

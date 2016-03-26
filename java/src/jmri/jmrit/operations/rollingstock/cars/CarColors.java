@@ -35,7 +35,7 @@ public class CarColors extends RollingStockAttribute {
             // create and load
             _instance = new CarColors();
         }
-        if (Control.showInstance) {
+        if (Control.SHOW_INSTANCE) {
             log.debug("CarColors returns instance {}", _instance);
         }
         return _instance;
@@ -81,6 +81,6 @@ public class CarColors extends RollingStockAttribute {
         super.firePropertyChange(p, old, n);
     }
 
-    static Logger log = LoggerFactory.getLogger(CarColors.class.getName());
+    private final static Logger log = LoggerFactory.getLogger(CarColors.class.getName());
 
 }

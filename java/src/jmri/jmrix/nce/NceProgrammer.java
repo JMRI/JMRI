@@ -1,4 +1,3 @@
-// NceProgrammer.java
 package jmri.jmrix.nce;
 
 import java.util.ArrayList;
@@ -15,9 +14,8 @@ import org.slf4j.LoggerFactory;
  * This has two states: NOTPROGRAMMING, and COMMANDSENT. The transitions to and
  * from programming mode are now handled in the TrafficController code.
  *
- * @author	Bob Jacobsen Copyright (C) 2001
+ * @author	Bob Jacobsen Copyright (C) 2001, 2016
  * @author kcameron Copyright (C) 2014
- * @version $Revision$
  */
 public class NceProgrammer extends AbstractProgrammer implements NceListener {
 
@@ -26,6 +24,7 @@ public class NceProgrammer extends AbstractProgrammer implements NceListener {
     public NceProgrammer(NceTrafficController tc) {
         this.tc = tc;
         super.SHORT_TIMEOUT = 4000;
+
         if (getSupportedModes().size() > 0) {
             setMode(getSupportedModes().get(0));
         }
@@ -39,15 +38,17 @@ public class NceProgrammer extends AbstractProgrammer implements NceListener {
         List<ProgrammingMode> ret = new ArrayList<ProgrammingMode>();
         if (tc != null && tc.getUsbSystem() != NceTrafficController.USB_SYSTEM_POWERCAB
                 && tc.getUsbSystem() != NceTrafficController.USB_SYSTEM_NONE) {
-            log.warn("NCE USB-SB3/SB5/TWIN getSupportedModes returns no modes");
-            return ret;
+            log.warn("NCE USB-SB3/SB5/TWIN getSupportedModes returns no modes, should not have been called", new Exception("traceback"));
+            return ret;  // empty list
         }
-        ret.add(DefaultProgrammerManager.PAGEMODE);
-        ret.add(DefaultProgrammerManager.REGISTERMODE);
 
         if (tc != null && tc.getCommandOptions() >= NceTrafficController.OPTION_2006) {
             ret.add(DefaultProgrammerManager.DIRECTMODE);
         }
+
+        ret.add(DefaultProgrammerManager.PAGEMODE);
+        ret.add(DefaultProgrammerManager.REGISTERMODE);
+
         return ret;
     }
 
@@ -265,9 +266,6 @@ public class NceProgrammer extends AbstractProgrammer implements NceListener {
         temp.programmingOpReply(value, status);
     }
 
-    static Logger log = LoggerFactory.getLogger(NceProgrammer.class.getName());
+    private final static Logger log = LoggerFactory.getLogger(NceProgrammer.class.getName());
 
 }
-
-
-/* @(#)NceProgrammer.java */

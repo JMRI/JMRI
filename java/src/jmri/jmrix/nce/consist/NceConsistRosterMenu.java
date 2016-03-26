@@ -1,4 +1,3 @@
-// NceConsistRosterMenu.java
 package jmri.jmrix.nce.consist;
 
 import java.awt.Component;
@@ -16,16 +15,10 @@ import org.slf4j.LoggerFactory;
  * @author	Bob Jacobsen Copyright (C) 2001, 2002
  * @author Dennis Miller Copyright (C) 2005
  * @author Daniel Boudreau Copyright (C) 2007
- * @version	$Revision$
  * @see NceConsistRosterEntry
  * @see NceConsistRoster
  */
 public class NceConsistRosterMenu extends JMenu {
-
-    /**
-     *
-     */
-    private static final long serialVersionUID = 6590991064777811328L;
 
     /**
      * Ctor argument defining that the menu object will be used as part of the
@@ -107,6 +100,6 @@ public class NceConsistRosterMenu extends JMenu {
     }
 
     // initialize logging
-    static Logger log = LoggerFactory.getLogger(NceConsistRosterMenu.class.getName());
+    private final static Logger log = LoggerFactory.getLogger(NceConsistRosterMenu.class.getName());
 
 }

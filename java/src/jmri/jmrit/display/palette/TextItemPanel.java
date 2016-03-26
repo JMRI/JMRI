@@ -19,6 +19,7 @@ import javax.swing.JPanel;
 import jmri.jmrit.display.Editor;
 import jmri.jmrit.display.LinkingLabel;
 import jmri.jmrit.display.PositionableLabel;
+import jmri.jmrit.display.PositionablePopupUtil;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -54,7 +55,7 @@ public class TextItemPanel extends ItemPanel /*implements ActionListener */ {
             p.add(blurb);
             add(p);
             DragDecoratorLabel sample = new DragDecoratorLabel(Bundle.getMessage("sample"), _editor);
-            _decorator = new DecoratorPanel(_editor);
+            _decorator = new DecoratorPanel(_editor, null);
             _decorator.initDecoratorPanel(sample);
             add(_decorator);
             initLinkPanel();
@@ -135,19 +136,21 @@ public class TextItemPanel extends ItemPanel /*implements ActionListener */ {
             String link = _linkName.getText().trim();
             PositionableLabel l;
             if (link.length() == 0) {
-                //return this.deepClone();
                 l = new PositionableLabel(getText(), _editor);
             } else {
                 l = new LinkingLabel(getText(), _editor, link);
             }
             _decorator.getText(l);
-            _decorator.getPositionablePopupUtil();
-            l.setPopupUtility(_decorator.getPositionablePopupUtil().clone(l, l.getTextComponent()));
+            PositionablePopupUtil util = _decorator.getPositionablePopupUtil();
+            l.setPopupUtility(util);
+            l.setFont(util.getFont().deriveFont(util.getFontStyle()));
+            if (util.hasBackground()) {     //unrotated
+                l.setOpaque(true);
+            }
             l.setLevel(this.getDisplayLevel());
             return l;
-//           return this.deepClone();
         }
     }
 
-    static Logger log = LoggerFactory.getLogger(TextItemPanel.class.getName());
+    private final static Logger log = LoggerFactory.getLogger(TextItemPanel.class.getName());
 }

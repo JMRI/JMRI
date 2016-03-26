@@ -231,7 +231,9 @@
          <xi:include href="http://jmri.org/xml/decoders/parts/enum-LocoAddrConsistAddr.xml"/>
         <label>Consist Address Active For F6</label>
         <label xml:lang="it">Indirizzo Consist attivo per F6</label>
-       <xi:include href="http://jmri.org/xml/decoders/parts/enum-LocoAddrConsistAddr.xml"/>
+      </variable>
+      <variable item="Consist Address Active For F7" CV="21" mask="XVXXXXXX">
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-LocoAddrConsistAddr.xml"/>
         <label>Consist Address Active For F7</label>
         <label xml:lang="it">Indirizzo Consist attivo per F7</label>
       </variable>

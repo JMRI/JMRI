@@ -4,8 +4,6 @@ import junit.framework.Assert;
 import junit.framework.Test;
 import junit.framework.TestCase;
 import junit.framework.TestSuite;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 
 /**
  * SRCPThrottleTest.java
@@ -13,7 +11,6 @@ import org.slf4j.LoggerFactory;
  * Description:	tests for the jmri.jmrix.srcp.SRCPThrottle class
  *
  * @author	Bob Jacobsen
- * @version $Revision$
  */
 public class SRCPThrottleTest extends TestCase {
 
@@ -54,5 +51,4 @@ public class SRCPThrottleTest extends TestCase {
     protected void tearDown() {
         apps.tests.Log4JFixture.tearDown();
     }
-    static Logger log = LoggerFactory.getLogger(SRCPThrottleTest.class.getName());
 }

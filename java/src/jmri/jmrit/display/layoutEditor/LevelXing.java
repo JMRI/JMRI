@@ -885,20 +885,15 @@ public class LevelXing {
     }
 
     public void scaleCoords(float xFactor, float yFactor) {
-        Point2D pt = new Point2D.Double(round(center.getX() * xFactor),
-                round(center.getY() * yFactor));
+        Point2D pt = new Point2D.Double(Math.round(center.getX() * xFactor),
+                Math.round(center.getY() * yFactor));
         center = pt;
-        pt = new Point2D.Double(round(dispA.getX() * xFactor),
-                round(dispA.getY() * yFactor));
+        pt = new Point2D.Double(Math.round(dispA.getX() * xFactor),
+                Math.round(dispA.getY() * yFactor));
         dispA = pt;
-        pt = new Point2D.Double(round(dispB.getX() * xFactor),
-                round(dispB.getY() * yFactor));
+        pt = new Point2D.Double(Math.round(dispB.getX() * xFactor),
+                Math.round(dispB.getY() * yFactor));
         dispB = pt;
-    }
-
-    double round(double x) {
-        int i = (int) (x + 0.5);
-        return i;
     }
 
     // initialization instance variables (used when loading a LayoutEditor)
@@ -1513,6 +1508,6 @@ public class LevelXing {
         }
     }
 
-    static Logger log = LoggerFactory.getLogger(LevelXing.class.getName());
+    private final static Logger log = LoggerFactory.getLogger(LevelXing.class.getName());
 
 }

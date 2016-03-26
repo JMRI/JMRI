@@ -1,4 +1,3 @@
-// AbstractIdentifyTest.java
 package jmri.jmrit;
 
 import junit.framework.Assert;
@@ -201,6 +200,15 @@ public class AbstractIdentifyTest extends TestCase {
     public static Test suite() {
         TestSuite suite = new TestSuite(AbstractIdentifyTest.class);
         return suite;
+    }
+
+    // The minimal setup for log4J
+    protected void setUp() {
+        apps.tests.Log4JFixture.setUp();
+    }
+
+    protected void tearDown() {
+        apps.tests.Log4JFixture.tearDown();
     }
 
 	// static private Logger log = LoggerFactory.getLogger(AbstractIdentifyTest.class.getName());

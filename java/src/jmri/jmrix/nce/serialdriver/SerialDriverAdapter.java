@@ -34,7 +34,7 @@ public class SerialDriverAdapter extends NcePortController implements jmri.jmrix
         option1Name = "Eprom";
         // the default is 2006 or later
         options.put(option1Name, new Option("Command Station EPROM", new String[]{"2006 or later", "2004 or earlier"}));
-        setManufacturer(jmri.jmrix.DCCManufacturerList.NCE);
+        setManufacturer(jmri.jmrix.nce.NceConnectionTypeList.NCE);
     }
 
     public String openPort(String portName, String appName) {
@@ -160,7 +160,7 @@ public class SerialDriverAdapter extends NcePortController implements jmri.jmrix
     /**
      * Get an array of valid baud rates.
      */
-    @edu.umd.cs.findbugs.annotations.SuppressWarnings(value = "EI_EXPOSE_REP") // OK to expose array instead of copy until Java 1.6
+    @edu.umd.cs.findbugs.annotations.SuppressFBWarnings(value = "EI_EXPOSE_REP") // OK to expose array instead of copy until Java 1.6
     public String[] validBaudRates() {
         return validSpeeds;
     }
@@ -172,6 +172,6 @@ public class SerialDriverAdapter extends NcePortController implements jmri.jmrix
     private boolean opened = false;
     InputStream serialStream = null;
 
-    static Logger log = LoggerFactory.getLogger(SerialDriverAdapter.class.getName());
+    private final static Logger log = LoggerFactory.getLogger(SerialDriverAdapter.class.getName());
 
 }

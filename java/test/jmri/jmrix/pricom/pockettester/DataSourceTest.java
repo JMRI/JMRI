@@ -1,4 +1,3 @@
-// DataSourceTest.java
 package jmri.jmrix.pricom.pockettester;
 
 import junit.framework.Assert;

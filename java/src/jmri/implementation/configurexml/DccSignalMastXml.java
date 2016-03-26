@@ -68,22 +68,17 @@ public class DccSignalMastXml
         return e;
     }
 
-    /**
-     * Create a DefaultSignalMastManager
-     *
-     * @param element Top level Element to unpack.
-     * @return true if successful
-     */
-    public boolean load(Element element) {
+    @Override
+    public boolean load(Element shared, Element perNode) {
         DccSignalMast m;
-        String sys = getSystemName(element);
+        String sys = getSystemName(shared);
         m = new jmri.implementation.DccSignalMast(sys);
 
-        if (getUserName(element) != null) {
-            m.setUserName(getUserName(element));
+        if (getUserName(shared) != null) {
+            m.setUserName(getUserName(shared));
         }
 
-        return loadCommonDCCMast(m, element);
+        return loadCommonDCCMast(m, shared);
     }
 
     protected boolean loadCommonDCCMast(DccSignalMast m, Element element) {
@@ -131,5 +126,5 @@ public class DccSignalMastXml
         log.error("Invalid method called");
     }
 
-    static Logger log = LoggerFactory.getLogger(DccSignalMastXml.class.getName());
+    private final static Logger log = LoggerFactory.getLogger(DccSignalMastXml.class.getName());
 }

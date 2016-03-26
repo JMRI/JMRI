@@ -1,11 +1,8 @@
 package jmri.jmrix.zimo.mx1.configurexml;
 
-import jmri.InstanceManager;
 import jmri.jmrix.configurexml.AbstractSerialConnectionConfigXml;
 import jmri.jmrix.zimo.mx1.ConnectionConfig;
 import jmri.jmrix.zimo.mx1.Mx1Adapter;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 
 /**
  * Handle XML persistance of layout connections by persistening the Mx1Adapter
@@ -29,11 +26,9 @@ public class ConnectionConfigXml extends AbstractSerialConnectionConfigXml {
         adapter = Mx1Adapter.instance();
     }
 
+    @Override
     protected void register() {
-        InstanceManager.configureManagerInstance().registerPref(new ConnectionConfig(adapter));
+        this.register(new ConnectionConfig(adapter));
     }
-
-    // initialize logging
-    static Logger log = LoggerFactory.getLogger(ConnectionConfigXml.class.getName());
 
 }

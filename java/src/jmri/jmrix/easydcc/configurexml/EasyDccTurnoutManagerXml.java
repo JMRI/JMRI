@@ -28,13 +28,14 @@ public class EasyDccTurnoutManagerXml extends jmri.managers.configurexml.Abstrac
         log.error("Invalid method called");
     }
 
-    public boolean load(Element turnouts) {
+    @Override
+    public boolean load(Element shared, Element perNode) {
         // create the master object
         EasyDccTurnoutManager.instance();
         // load individual turnouts
-        return loadTurnouts(turnouts);
+        return loadTurnouts(shared, perNode);
     }
 
     // initialize logging
-    static Logger log = LoggerFactory.getLogger(EasyDccTurnoutManagerXml.class.getName());
+    private final static Logger log = LoggerFactory.getLogger(EasyDccTurnoutManagerXml.class.getName());
 }

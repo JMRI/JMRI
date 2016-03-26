@@ -1,4 +1,3 @@
-// DateUtilTest.java
 package jmri.util;
 
 import java.util.Calendar;
@@ -7,8 +6,6 @@ import junit.framework.Assert;
 import junit.framework.Test;
 import junit.framework.TestCase;
 import junit.framework.TestSuite;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 
 /**
  * Tests for the jmri.util.DateUtil class.
@@ -60,7 +57,7 @@ public class DateUtilTest extends TestCase {
 
     // Main entry point
     static public void main(String[] args) {
-        String[] testCaseName = {DateUtilTest.class.getName()};
+        String[] testCaseName = {"-noloading", DateUtilTest.class.getName()};
         junit.swingui.TestRunner.main(testCaseName);
     }
 
@@ -80,7 +77,5 @@ public class DateUtilTest extends TestCase {
         apps.tests.Log4JFixture.tearDown();
         super.tearDown();
     }
-
-    static Logger log = LoggerFactory.getLogger(DateUtilTest.class.getName());
 
 }

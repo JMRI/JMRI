@@ -18,8 +18,6 @@ import jmri.jmrix.tams.TamsMessage;
 import jmri.jmrix.tams.TamsReply;
 import jmri.jmrix.tams.TamsSystemConnectionMemo;
 import jmri.jmrix.tams.swing.TamsPanelInterface;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 
 public class TamsMonPane extends jmri.jmrix.AbstractMonPane implements TamsListener, TamsPanelInterface {
 
@@ -126,8 +124,6 @@ public class TamsMonPane extends jmri.jmrix.AbstractMonPane implements TamsListe
                     jmri.InstanceManager.getDefault(TamsSystemConnectionMemo.class));
         }
     }
-
-    static Logger log = LoggerFactory.getLogger(TamsMonPane.class.getName());
 
 }
 

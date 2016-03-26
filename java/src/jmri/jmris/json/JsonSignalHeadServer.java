@@ -1,15 +1,6 @@
 //JsonSignalHeadServer.java
 package jmri.jmris.json;
 
-import com.fasterxml.jackson.databind.JsonNode;
-import com.fasterxml.jackson.databind.ObjectMapper;
-import com.fasterxml.jackson.databind.node.ObjectNode;
-import java.io.IOException;
-import java.util.Locale;
-import jmri.InstanceManager;
-import jmri.JmriException;
-import jmri.jmris.AbstractSignalHeadServer;
-import jmri.jmris.JmriConnection;
 import static jmri.jmris.json.JSON.CODE;
 import static jmri.jmris.json.JSON.DATA;
 import static jmri.jmris.json.JSON.ERROR;
@@ -19,6 +10,16 @@ import static jmri.jmris.json.JSON.SIGNAL_HEAD;
 import static jmri.jmris.json.JSON.STATE;
 import static jmri.jmris.json.JSON.TYPE;
 import static jmri.jmris.json.JSON.UNKNOWN;
+
+import com.fasterxml.jackson.databind.JsonNode;
+import com.fasterxml.jackson.databind.ObjectMapper;
+import com.fasterxml.jackson.databind.node.ObjectNode;
+import java.io.IOException;
+import java.util.Locale;
+import jmri.InstanceManager;
+import jmri.JmriException;
+import jmri.jmris.AbstractSignalHeadServer;
+import jmri.jmris.JmriConnection;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -33,7 +34,7 @@ public class JsonSignalHeadServer extends AbstractSignalHeadServer {
 
     private final JmriConnection connection;
     private final ObjectMapper mapper;
-    static Logger log = LoggerFactory.getLogger(JsonSignalHeadServer.class.getName());
+    private final static Logger log = LoggerFactory.getLogger(JsonSignalHeadServer.class.getName());
 
     public JsonSignalHeadServer(JmriConnection connection) {
         super();
@@ -66,15 +67,20 @@ public class JsonSignalHeadServer extends AbstractSignalHeadServer {
     }
 
     @Override
-    public void parseStatus(String statusString) throws JmriException, IOException {
+    public void parseStatus(String statusString) throws JmriException, IOException, JsonException {
         this.parseRequest(Locale.getDefault(), this.mapper.readTree(statusString).path(DATA));
     }
 
-    public void parseRequest(Locale locale, JsonNode data) throws JmriException, IOException {
+    public void parseRequest(Locale locale, JsonNode data) throws JmriException, IOException, JsonException {
         String name = data.path(NAME).asText();
         int state = data.path(STATE).asInt(UNKNOWN);
         if (state == UNKNOWN) {  //if unknown, retrieve current and respond
-            state = InstanceManager.signalHeadManagerInstance().getSignalHead(name).getAppearance();
+            try {   
+                state = InstanceManager.signalHeadManagerInstance().getSignalHead(name).getAppearance();
+            } catch (NullPointerException e) {
+                log.error("Unable to get signalHead [{}].", name);
+                throw new JsonException(404, Bundle.getMessage(locale, "ErrorObject", SIGNAL_HEAD, name));
+            }
             this.sendStatus(name, state);
         } else { //else set the appearance to the state passed-in
             this.setSignalHeadAppearance(name, state);

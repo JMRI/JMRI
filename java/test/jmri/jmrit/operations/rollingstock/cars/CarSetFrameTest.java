@@ -9,7 +9,6 @@ import junit.framework.TestSuite;
  * Tests for the Operations CarSetFrame class
  *
  * @author	Dan Boudreau Copyright (C) 2009
- * @version $Revision$
  */
 public class CarSetFrameTest extends OperationsSwingTestCase {
 

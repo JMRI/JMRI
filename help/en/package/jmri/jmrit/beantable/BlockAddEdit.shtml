@@ -1,13 +1,12 @@
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
-<!-- $Id$ -->
 <html lang="en">
 <head>
- <TITLE>
+ <title>
       JMRI: Block Add/Edit Help
- </TITLE>
-    <META http-equiv=Content-Type content="text/html; charset=iso-8859-1">
-    <META content="Bob Jacobsen" name=Author>
-    <META name="keywords" content="JMRI help Block Table">
+ </title>
+    <meta http-equiv=Content-Type content="text/html; charset=iso-8859-1">
+    <meta content="Bob Jacobsen" name="Author">
+    <meta name="keywords" content="JMRI help Block Table">
 
 <!--#include virtual="/Style" -->
 </head>
@@ -15,27 +14,38 @@
 <body>
 <!--#include virtual="/Header" -->
   <div class="nomenu" id="mBody">
-    <div id="mainContent">
-    <p>
+  <div id="mainContent">
  
-<H1>Add/Edit Block Table Entries</H1>
+<h1>Adding/Editing Blocks</h1>
 
-<p>
-Enter the system name for the Block you wish to add. For example, a
-valid Block system name for a LocoNet layout could be LB456. Another
-example, a valid internal sensor system name could be IB123. The
-optional user name can be anything you wish to describe the Block. See
-"<A HREF="../../../../html/doc/Technical/Names.shtml">Names</A>" 
-help page for more information.
-<p>
-    
+<p>To add a new Block, click the <strong>Add..</strong> button at the bottom left edge of the Block Table pane.</p>
+<img src="AddBlock.png">
+<p>In the pane that opens, enter a valid Hardware Address for the Block and if desired enter a User Name. For example, a valid System Name for a LocoNet layout could be LB456. Another
+example, a valid Internal Block system name could be IB123. The
+optional User Name can be anything you wish to describe the Block as long as it is unique in your JMRI setup. See the "<a href="../../../../html/doc/Technical/Names.shtml">Names</a>" Help page for more information.</p>
+<p>Complete the definition of the new Block by closing the Add/Edit Block pane and clicking the <strong>Edit</strong> button at the right of the newly created Block entry in the <a href="BlockTable.shtml">Block Table</a>. Fill out all fields as described on the <a href="BlockEdit.shtml">Block Attributes</a> Help page.</p>
+
+<h2>Creating A Number of Blocks</h2>
+<p>It is also possible to create a number of Blocks in one go.<br/>
+Where supported, the "Add Range" check box will be enabled.</p>
+<p>When checking the "Number to Add" box, this will enable the "Number To Add" field.  
+Enter the number of Blocks that you wish to add. This will create a 
+number of sequential Blocks.<br>
+If a User Name has been entered, a number will be added to the end of the name (starting by #2) to keep 
+each Block User Name unique.</p>
+
+<h2>Adding Block Properties</h2>
+<p>To add the details of a new Block, close the Add Block pane by clicking the Close/X button and click <strong><a href="BlockEdit.shtml">Edit</a></strong> to the right of the new entry in the Block Table.</p>
+
+<p>See <a href="../../../../html/doc/Technical/Names.shtml">Names</a>
+under General Help for more information on JMRI object naming.
+
+<p>Back to the <a href="BlockTable.shtml">Block Table help page<a>.</p>
+
 This is the package/jmri/jmrit/beantable/BlockAddEdit help page
 
-<br>
-
 <!--#include virtual="/Footer" -->
-</body>
-</html>
-
-
- 	  	 
+   </div><!-- closes #mainContent-->
+  </div> <!-- closes #mBody-->
+ </body>
+</html>  	 

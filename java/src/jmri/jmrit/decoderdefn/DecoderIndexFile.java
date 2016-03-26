@@ -160,12 +160,12 @@ public class DecoderIndexFile extends XmlFile {
             }
         }
         if (decoderProductID != null && !("," + r.getProductID()+ ",").contains("," + decoderProductID+ ",")) {
-            if (decoderProductID != null && !("," + r.getModelElement().getAttribute("productID") + ",").contains("," + decoderProductID +",") ) {
+            if ( !("," + r.getModelElement().getAttribute("productID") + ",").contains("," + decoderProductID +",") ) {
                 return false;
             }
         }
         if (developerID != null && !developerID.equals(r.getDeveloperID())) {
-            if (developerID != null && !("," + r.getModelElement().getAttribute("developerID").getValue() + ",").contains("," + developerID +",") ) {
+            if ( !("," + r.getModelElement().getAttribute("developerID").getValue() + ",").contains("," + developerID +",") ) {
                 return false;
             }
         }

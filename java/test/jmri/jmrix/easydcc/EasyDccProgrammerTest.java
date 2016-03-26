@@ -4,7 +4,6 @@
  * Description:	JUnit tests for the EasyDccProgrammer class
  *
  * @author	Bob Jacobsen
- * @version $Revision$
  */
 package jmri.jmrix.easydcc;
 
@@ -26,6 +25,7 @@ public class EasyDccProgrammerTest extends TestCase {
         EasyDccListenerScaffold l = new EasyDccListenerScaffold();
 
         EasyDccProgrammer p = new EasyDccProgrammer();
+        p.setMode(DefaultProgrammerManager.PAGEMODE);
 
         // and do the write
         p.writeCV(10, 20, l);
@@ -46,6 +46,7 @@ public class EasyDccProgrammerTest extends TestCase {
         EasyDccListenerScaffold l = new EasyDccListenerScaffold();
 
         EasyDccProgrammer p = new EasyDccProgrammer();
+        p.setMode(DefaultProgrammerManager.PAGEMODE);
 
         // and do the write
         p.writeCV("10", 20, l);
@@ -100,6 +101,7 @@ public class EasyDccProgrammerTest extends TestCase {
         EasyDccListenerScaffold l = new EasyDccListenerScaffold();
 
         EasyDccProgrammer p = new EasyDccProgrammer();
+        p.setMode(DefaultProgrammerManager.PAGEMODE);
 
         // and do the read
         p.readCV(10, l);
@@ -128,6 +130,7 @@ public class EasyDccProgrammerTest extends TestCase {
         EasyDccListenerScaffold l = new EasyDccListenerScaffold();
 
         EasyDccProgrammer p = new EasyDccProgrammer();
+        p.setMode(DefaultProgrammerManager.PAGEMODE);
 
         // and do the read
         p.readCV("10", l);
@@ -220,6 +223,7 @@ public class EasyDccProgrammerTest extends TestCase {
         EasyDccListenerScaffold l = new EasyDccListenerScaffold();
 
         EasyDccProgrammer p = new EasyDccProgrammer();
+        p.setMode(DefaultProgrammerManager.PAGEMODE);
 
         // and do the read
         p.readCV(10, l);
@@ -335,7 +339,7 @@ public class EasyDccProgrammerTest extends TestCase {
         return suite;
     }
 
-    static Logger log = LoggerFactory.getLogger(EasyDccProgrammerTest.class.getName());
+    private final static Logger log = LoggerFactory.getLogger(EasyDccProgrammerTest.class.getName());
 
     // The minimal setup for log4J
     protected void setUp() {

@@ -36,13 +36,13 @@
 <!-- Listing from JMRI Group, March 4, 2014 -->
 <h3>Steps</h3>
 <ol>
-	<li>Launch PanelPro and from the Tools > Tables > Turnouts menu add the turnouts on your layout to the <a href="../Turnouts.shtml">Turnouts Table</a>.</li>
+	<li>Launch PanelPro and from the Tools > Tables > Turnouts menu add the turnouts on your layout to the <a href="../Turnouts.shtml">Turnout Table</a>.</li>
 
-	<li>Next add the physical signals you installed on the layout to the <a href="SignalMasts.shtml">Signal Masts Table</a>: 
+	<li>Next add the physical signals you installed on the layout to the <a href="SignalMasts.shtml">Signal Mast Table</a>: 
 <ol>
 	<li>The easiest way: if you are using an accessory decoder that can drive the Signal Masts natively and supports the NMRA Standard 9.2.1 Extended Accessory Protocol (<a href="http://www.nmra.org/sites/default/files/s-9.2.1_2012_07.pdf">PDF</a>) just add the Signal Mast using the 'DCC Signal Mast Decoder driver' and when prompted, input the Aspect numbers configured in your decoder against each Aspect. Decoders like the <a href="http://signalist.co.uk">Signalist SC1</a> have different Signal Mast types preconfigured and you just select the correct table with a CV and get the Aspect numbers from the manual. 
 	Other decoders will need some setting up to define the Aspects to be displayed to an Aspect number. See your decoder manual for what to do here.</li>
-	<li>If you have more basic signal decoders (the Digitrax SE8c for example) or a command station that does not support the Extended Accessory Protocol (Lenz for example) you will first have to configure the individual Signal Heads that make up each Signal Mast in the Signal Heads Table and then go to the Signal Masts Table, add the appropriate Signal Mast Type (eg. AAR-2 Triple Head Searchlight) and configure it using the Signal Head Controlled Mast driver, adding in the Signal Heads that you have previously defined. </li>
+	<li>If you have more basic signal decoders (the Digitrax SE8c for example) or a command station that does not support the Extended Accessory Protocol (Lenz for example) you will first have to configure the individual Signal Heads that make up each Signal Mast in the Signal Head Table and then go to the Signal Mast Table, add the appropriate Signal Mast Type (eg. AAR-2 Triple Head Searchlight) and configure it using the Signal Head Controlled Mast driver, adding in the Signal Heads that you have previously defined. </li>
 		</ol>
 Pick one of the available 
 <a href="../../../../../xml/signals/">Signaling Systems</a>, such as 
@@ -56,12 +56,12 @@ individual signaling systems distributed with JMRI, see
 
 <li>Go back to the front screen of PanelPro and from the Panel > New... menu create a new panel with <a href="#editor">Layout Editor</a> and draw your track plan.</li>
 
-	<li>Right click on the Turnouts and anchor points on the panel where you want signals and choose 'Set SignalMasts'. You can then choose from the list of Signal Masts that you entered in the Signal Masts Table for each possible location. Not all anchorpoints or turnouts will have a full complement of signals.<br/>
-You will probably have some locations (e.g. in a hidden section) where you do not have a physical signal but in the real prototype there would be one - in these cases just add a Virtual signal of the appropriate type by using a Virtual connection type in the <a href="SignalMasts.shtml">Signal Masts Table</a>.</li>
+	<li>Right click on the Turnouts and anchor points on the panel where you want signals and choose 'Set SignalMasts'. You can then choose from the list of Signal Masts that you entered in the Signal Mast Table for each possible location. Not all anchorpoints or turnouts will have a full complement of signals.<br/>
+You will probably have some locations (e.g. in a hidden section) where you do not have a physical signal but in the real prototype there would be one - in these cases just add a Virtual signal of the appropriate type by using a Virtual connection type in the <a href="SignalMasts.shtml">Signal Mast Table</a>.</li>
 
 <li>Right click on each signal and click 'Signal Mast Logic > Discover'. JMRI will then magically create all the required logic to set the aspect of that signal, based on the turnouts and aspects of the next signals on all possible routes.</li>
 
-<li>Add your sensors to the Sensors Table to any Blocks that have physical block detector feedback on the layout and assign each Sensor to its layout Block. Skip this bit if you are not using block detection and just setting the signals manually to hold behind the train.</li>
+<li>Add your sensors to the Sensor Table to any Blocks that have physical block detector feedback on the layout and assign each Sensor to its layout Block. Skip this bit if you are not using block detection and just setting the signals manually to hold behind the train.</li>
 
 <li>Run the trains and watch the signals change following your chosen rules. Note that there has been no need to refer to the rulebook and no need to create Logix or anything like that. It is just a case of inputting your layout configuration, Signaling System (AAR-2 in our example) and hardware.</li>
 	</ol>
@@ -124,7 +124,8 @@ Hint: It's easier to reprogram the board than it is to change the wiring connect
 	</ul>
 	
 	<p>Back to the <a href="index.shtml">Signaling main help page</a>.</p>
-				<!--#include virtual="/Footer" -->
-</body>
-</html>
+<!--#include virtual="/Footer" -->
 
+    </div><!-- closes #mainContent-->
+  </div> <!-- closes #mBody-->
+</html>

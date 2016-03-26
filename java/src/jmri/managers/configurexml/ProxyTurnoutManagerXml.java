@@ -28,7 +28,8 @@ public class ProxyTurnoutManagerXml extends AbstractXmlAdapter {
         return null;
     }
 
-    public boolean load(Element element) {
+    @Override
+    public boolean load(Element shared, Element perNode) {
         return true;
     }
 

@@ -12,8 +12,6 @@ import static jmri.jmris.json.JSON.METHOD;
 import static jmri.jmris.json.JSON.NAME;
 import static jmri.jmris.json.JSON.PUT;
 import static jmri.jmris.json.JSON.TURNOUT;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 
 /**
  * JSON Server interface between the JMRI turnout manager and a network
@@ -27,13 +25,13 @@ import org.slf4j.LoggerFactory;
  * @author Paul Bender Copyright (C) 2010
  * @author Randall Wood Copyright (C) 2012, 2013
  * @version $Revision: 21327 $
+ * @deprecated 4.3.4
  */
+@Deprecated
 public class JsonTurnoutServer extends AbstractTurnoutServer {
 
     private final JmriConnection connection;
     private final ObjectMapper mapper;
-    static Logger log = LoggerFactory.getLogger(JsonTurnoutServer.class.getName());
-
     public JsonTurnoutServer(JmriConnection connection) {
         this.connection = connection;
         this.mapper = new ObjectMapper();

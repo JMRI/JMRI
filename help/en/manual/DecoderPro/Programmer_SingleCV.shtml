@@ -1,8 +1,6 @@
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
 <html lang="en">
 <head>
-<!-- Copyright ($Author$) 2009 -->
-<!-- $Id$ -->
 <title>DecoderPro Simple Programmer</title>
 
 <!-- Style -->
@@ -20,16 +18,13 @@
 <!--#include virtual="Sidebar" -->
 <div id="mainContent">
 
-<a NAME="Top"></a>
-<h1>
-<img SRC="images/Logo.gif" ALT="JMRI DecoderPro Logo" BORDER=10 height=117 width=163 vspace="15"></h1>
-
-
+<a name="Top"></a>
+<img src="images/Logo.gif" alt="JMRI DecoderPro Logo" border="10" height="117" width="163" vspace="15">
 
 <h1>DecoderPro&reg; Main Window</h1>
-<h1>Simple Programmer</h1>
+<h2>Simple Programmer</h2>
 
-<div align=right>
+<div align="right">
 <p><a href="Main_Tool.shtml">Back</a></p>
 <p><a href="index.shtml#Main">Back to Index</a></p>
 </div>
@@ -41,14 +36,16 @@
 <p>On the left side of the window you can select the Programming Mode. Any mode not supported by your command station will be grayed out.</p>
 <p>If you select the<strong> Ops</strong> mode, which programs on the main track, you need to enter the address of the decoder (locomotive) that you are programming. Your DCC system may require you to check the <strong>Long address </strong>check box if the address is a long address. Most DCC systems do not allow you to read on the main, if so, the <strong>Read CV </strong>button will be disabled.</p>
 <p>Now that you have everything  setup, you may read the current  value in the decoder&rsquo;s memory from the CV by clicking on the<strong> Read CV </strong>button  or write your new value to  the CV by clicking on the <strong>Write CV</strong> button.</p>
-<p>
+
 <hr>
 
-<div align=right>
+<div align="right">
 <p><a href="Main_Tool.shtml">Back</a></p>
 <p><a href="index.shtml#Main">Back to Index</a></p>
 </div>
 
 <!--#include virtual="/Footer" -->
+  </div><!-- closes #mainContent-->
+ </div> <!-- closes #mBody-->
 </body>
 </html>

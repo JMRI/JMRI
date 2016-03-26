@@ -28,7 +28,7 @@ public class SerialDriverAdapter extends EasyDccPortController implements jmri.j
 
     public SerialDriverAdapter() {
         super(new EasyDccSystemConnectionMemo("E", "EasyDCC via Serial"));
-        setManufacturer(jmri.jmrix.DCCManufacturerList.EASYDCC);
+        setManufacturer(jmri.jmrix.easydcc.EasyDccConnectionTypeList.EASYDCC);
     }
 
     SerialPort activeSerialPort = null;
@@ -161,6 +161,6 @@ public class SerialDriverAdapter extends EasyDccPortController implements jmri.j
 
     //The following needs to be enabled once systemconnectionmemo has been correctly implemented
     //public SystemConnectionMemo getSystemConnectionMemo() { return adaptermemo; }
-    static Logger log = LoggerFactory.getLogger(SerialDriverAdapter.class.getName());
+    private final static Logger log = LoggerFactory.getLogger(SerialDriverAdapter.class.getName());
 
 }

@@ -1,4 +1,3 @@
-// LocoNetSystemConnectionMemo.java
 package jmri.jmrix.loconet;
 
 import java.util.ResourceBundle;
@@ -16,7 +15,6 @@ import org.slf4j.LoggerFactory;
  * activate their particular system.
  *
  * @author	Bob Jacobsen Copyright (C) 2010
- * @version $Revision$
  */
 public class LocoNetSystemConnectionMemo extends jmri.jmrix.SystemConnectionMemo {
 
@@ -52,7 +50,7 @@ public class LocoNetSystemConnectionMemo extends jmri.jmrix.SystemConnectionMemo
      */
     public SlotManager getSlotManager() {
         if (sm == null) {
-            log.error("slot manager is null, but there should always be a valid SlotManager", new Exception("Traceback"));
+            log.debug("slot manager is null, but there should always be a valid SlotManager", new Exception("Traceback"));
         }
         return sm;
     }
@@ -415,8 +413,5 @@ public class LocoNetSystemConnectionMemo extends jmri.jmrix.SystemConnectionMemo
         super.dispose();
     }
 
-    static Logger log = LoggerFactory.getLogger(LocoNetSystemConnectionMemo.class.getName());
+    private final static Logger log = LoggerFactory.getLogger(LocoNetSystemConnectionMemo.class.getName());
 }
-
-
-/* @(#)LocoNetSystemConnectionMemo.java */

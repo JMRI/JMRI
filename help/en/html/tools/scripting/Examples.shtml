@@ -28,7 +28,7 @@ the comment in the scripts themselves.</p>
 
 <p>
 To run of these scripts, start DecoderPro or PanelPro 
-(set preferences to "Loconet Simulator to run without connecting to a layout), 
+(set preferences to "LocoNet Simulator to run without connecting to a layout), 
 then under Panels select Run Script. Now find
 and select the desired script file in the "jython" folder of the JMRI program directory.
 
@@ -65,6 +65,14 @@ href="../../../../../jython/AppleScript.py">AppleScript.py</a></p>
 AppleScript from JMRI on Mac OS X.</p>
 
 <p><a
+href="../../../../../jython/AutoLayoutPowerOff.py">AutoLayoutPowerOff.py</a></p>
+
+<p>This script turns off power to the layout automatically after there has been
+no activity on the layout for a specified amount of time. (Activity is detected
+by monitoring block occupancy detectors.) It is intended to be run from the 
+startup preferences.</p>
+
+<p><a
 href="../../../../../jython/AutomatonExample.py">AutomatonExample.py</a></p>
 
 <p>This is an example script for a JMRI "Automat" in
@@ -72,7 +80,7 @@ Python It listens to two sensors, running a locomotive back and forth between
 them by changing its direction when a sensor detects the engine. You need to
 set the speed of the engine using a throttle.</p>
 
-<p><a href="../../../../../jython/BackAndForth.py"">BackAndForth.py </a> </p>
+<p><a href="../../../../../jython/BackAndForth.py">BackAndForth.py </a> </p>
 
 <p>This is an example script for a JMRI "Automat" in
 Python It is based on the AutomatonExample. It listens to two sensors, running
@@ -414,11 +422,11 @@ href="../../../../../jython/javaone">javaone</a></p>
 
 <p>This directory contains scripts that were first
 created for the JavaOne test layout. </p>
-</div>
 
 <!--#include virtual="/Footer" -->
-</div>
-</body>
+    </div><!-- closes #mainContent-->
+  </div> <!-- closes #mBody-->
+ </body>
 </html>
 
  	  	 

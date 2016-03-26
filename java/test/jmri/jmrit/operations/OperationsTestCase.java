@@ -1,4 +1,3 @@
-// OperationsTestCase.java
 package jmri.jmrit.operations;
 
 import java.io.File;
@@ -42,19 +41,21 @@ public class OperationsTestCase extends TestCase {
     // Ensure minimal setup for log4J
     @Override
     protected void setUp() throws Exception {
-        apps.tests.Log4JFixture.setUp();
         super.setUp();
+        apps.tests.Log4JFixture.setUp();
 
         // set the locale to US English
         Locale.setDefault(Locale.ENGLISH);
 
         // Set things up outside of operations
         JUnitUtil.resetInstanceManager();
+        JUnitUtil.initConfigureManager();
         JUnitUtil.initInternalTurnoutManager();
         JUnitUtil.initInternalLightManager();
         JUnitUtil.initInternalSensorManager();
         JUnitUtil.initDebugThrottleManager();
         JUnitUtil.initIdTagManager();
+        
         jmri.InstanceManager.setShutDownManager(new
                 jmri.managers.DefaultShutDownManager() {
                     @Override

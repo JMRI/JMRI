@@ -1,4 +1,3 @@
-// NceInterfaceScaffold.java
 package jmri.jmrix.nce;
 
 import java.util.Vector;
@@ -64,6 +63,6 @@ class NceInterfaceScaffold extends NceTrafficController {
         return cmdListeners.size();
     }
 
-    static Logger log = LoggerFactory.getLogger(NceInterfaceScaffold.class.getName());
+    private final static Logger log = LoggerFactory.getLogger(NceInterfaceScaffold.class.getName());
 
 }

@@ -1,15 +1,17 @@
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
-<html lang="en"><head><!-- Copyright ($Author$) 2009 --><!-- $Id$ -->
+<html lang="en">
+<head>
+<title>Using DecoderPro</title>
 
-
-
-
-
-<title>Using DecoderPro</title><!-- Style --><meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
+<!-- Style -->
+<meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
 <link rel="stylesheet" type="text/css" href="/css/default.css" media="screen">
 <link rel="stylesheet" type="text/css" href="/css/print.css" media="print">
 <link rel="icon" href="/images/jmri.ico" type="image/png">
-<link rel="home" title="Home" href="/"><!-- /Style --></head>
+<link rel="home" title="Home" href="/">
+<!-- /Style -->
+</head>
+
 <body>
 <!--#include virtual="/Header" -->
 
@@ -17,17 +19,15 @@
 <div id="mainContent">
 
 <h1>Using DecoderPro&reg;</h1>
-<h1><a name="Setting Up"></a>How do I set up to program
-a decoder?</h1>
+<h2><a name="Setting Up"></a>How do I set up to program a decoder?</h2>
 
 <div align="right">
 <p><a href="Basic_Start.shtml">Next</a></p>
 <p><a href="index.shtml">Back to Index</a></p>
 </div>
 
-
 <hr>
-<p>Prior to using the programmer you  need to have completed the previous section (<a href="Start_DCC.shtml">Getting Started</a>),
+<p>Prior to using the programmer you need to have completed the previous section (<a href="Start_DCC.shtml">Getting Started</a>),
 have your computer connected to your command station/booster with the
 required interface device for your DCC system, you are now ready to
 actually program a decoder that has been installed in your locomotive.</p>
@@ -43,9 +43,9 @@ layout, then you may start PanelPro and then from the File menu start
 DecoderPro.</p>
 <p>If you already have roster entries and you want to start programming in <strong><a href="Comp_Setup_Roster.shtml">Comprehensive Programmer</a></strong>, double-click on the roster entry.</p>
 <p>DecoderPro by its self may program DCC decoders and also use the
-other JMRI tools to manually operte your trains from the computer
+other JMRI tools to manually operate your trains from the computer
 interface. These include throttle control and power control of your
-layout if your DCC system allows them..</p>
+layout if your DCC system allows them.</p>
 <p>The DecoderPro window is divided into five main section from top to bottom.</p>
 <div align="center"><img style="width: 900px; height: 425px;" alt="Main window" src="images/start_dp_main01.png"><br></div>
 <p>1<a href="dp3_menubar.shtml">. <strong>The Menu Bar</strong>.</a><br>
@@ -95,13 +95,13 @@ of <strong>All Entries</strong> see <strong><a href="dp3_settings_rosterGroups.s
     <td>Deletes roster entry.</td>
   </tr>
 </tbody></table>
-<p>&nbsp;</p>
+
 <p>At this time a new user will have no entries in the Roster list of
 locomotives. If you are updating program and have a Roster installed
 the Roster list will be populated as shown. We can now add a locomotive
 to the list.</p>
-<h4><strong><a name="newloco"></a>Adding New Locomotive</strong></h4>
-<p>On the Tool Bar is an icon labeled<strong> New Loco</strong>, click on the icon and the <strong>Create New Loco </strong>window opens. &nbsp; Place a locomotive (with the decoder installed) on the Programming Track (Service Mode), click on <span style="font-weight: bold;">Read type from decoder</span> button (at the bottom of the window)<br>
+<h4><strong><a name="newloco"></a>Adding a New Locomotive</strong></h4>
+<p>On the Tool Bar is an icon labeled<strong> New Loco</strong>. Click on the icon and the <strong>Create New Loco </strong>pane opens. Place a locomotive (with the decoder installed) on the Programming Track (Service Mode), click on <span style="font-weight: bold;">Read type from decoder</span> button (at the bottom of the window)<br>
 </p><div style="text-align: center;"><img style="width: 521px; height: 594px;" alt="create new loco" src="images/dp3_createnewloco.png"><br></div><p></p>
 <p>As in the screen below several possible decoders will probably be
 highlighted. This happens because the decoders are electrically the
@@ -112,17 +112,21 @@ should select the one with the least letters at the end, since letters
 are often used to denote locomotive specific variations. &nbsp;Note all
 of the Tsunami decoders are using the same hardware in different
 configurations.</p><p><img style="width: 556px; height: 594px;" alt="select decoder type all" src="images/dp3_createNewLoco_typeAll.png"></p>
-<p>I know that this decoder is an Athern N Scale FP-45 facctory
-installed&nbsp;Tsunami Diesel Genesis OEM decoder. So I will select
+<p>I know that this decoder is an Athearn N Scale FP-45 factory
+installed Tsunami Diesel Genesis OEM decoder. So I will select
 that decoder from the list..</p>
 <p><img style="width: 556px; height: 594px;" alt="decoder ltype" src="images/dp3_createnewloco_type.png"><br></p>
-<p>Note that we have selected a decoder, which is highlighted. Also the<strong> Open Comprehensive Programmer</strong> button is activated to allow us to enter the programmer..&nbsp;<strong></strong></p>
+<p>Note that we have selected a decoder, which is highlighted. Also the<strong> Open Comprehensive Programmer</strong> button is activated to allow us to enter the programmer.<strong></strong></p>
 
 <p>Click on the <strong>Open Comprehensive Programmer</strong> button and the<strong> Roster Entry</strong> Pane will open for the Selected Programmer. Go to the next page</p>
+
 <div align="right">
   <p><a href="Basic_Start.shtml">Next</a></p>
   <p><a href="index.shtml">Back to Index</a></p>
 </div>
 
 <!--#include virtual="/Footer" -->
-</div></body></html>
+  </div><!-- closes #mainContent-->
+ </div> <!-- closes #mBody-->
+</body>
+</html>

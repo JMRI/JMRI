@@ -1,4 +1,3 @@
-// PackageDemo.java
 package jmri.jmrix.openlcb.swing;
 
 import junit.framework.Test;
@@ -9,7 +8,6 @@ import junit.framework.TestSuite;
  * Demos for the jmri.jmrix.openlcb package.
  *
  * @author Bob Jacobsen Copyright 2009, 2012
- * @version $Revision$
  */
 public class PackageDemo extends TestCase {
 

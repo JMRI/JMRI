@@ -1,4 +1,3 @@
-// SerialInterfaceScaffold.java
 package jmri.jmrix.grapevine;
 
 import java.util.Vector;
@@ -60,6 +59,6 @@ public class SerialTrafficControlScaffold extends SerialTrafficController {
         return cmdListeners.size();
     }
 
-    static Logger log = LoggerFactory.getLogger(SerialTrafficControlScaffold.class.getName());
+    private final static Logger log = LoggerFactory.getLogger(SerialTrafficControlScaffold.class.getName());
 
 }

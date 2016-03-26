@@ -1,7 +1,6 @@
 // PollDataModel.java
 package jmri.jmrix.rps.swing.polling;
 
-import java.util.ResourceBundle;
 import javax.swing.JComboBox;
 import javax.swing.table.AbstractTableModel;
 import jmri.jmrix.rps.Distributor;
@@ -17,15 +16,7 @@ import org.slf4j.LoggerFactory;
  * @author	Bob Jacobsen Copyright (C) 2008
  * @version	$Revision$
  */
-public class PollDataModel extends AbstractTableModel
-        implements MeasurementListener {
-
-    /**
-     *
-     */
-    private static final long serialVersionUID = -2108635861745609703L;
-
-    ResourceBundle rb = ResourceBundle.getBundle("jmri.jmrix.rps.swing.polling.PollingBundle");
+public class PollDataModel extends AbstractTableModel implements MeasurementListener {
 
     static final int NAMECOL = 0;
     static final int IDCOL = 1;
@@ -60,25 +51,25 @@ public class PollDataModel extends AbstractTableModel
     public String getColumnName(int c) {
         switch (c) {
             case NAMECOL:
-                return rb.getString("TitleName");
+                return Bundle.getMessage("TitleName");
             case IDCOL:
-                return rb.getString("TitleIdCol");
+                return Bundle.getMessage("TitleIdCol");
             case ADDRCOL:
-                return rb.getString("TitleAddrCol");
+                return Bundle.getMessage("TitleAddrCol");
             case LONGCOL:
-                return rb.getString("TitleLongCol");
+                return Bundle.getMessage("TitleLongCol");
             case POLLCOL:
-                return rb.getString("TitlePollCol");
+                return Bundle.getMessage("TitlePollCol");
             case TYPECOL:
-                return rb.getString("TitleTypeCol");
+                return Bundle.getMessage("TitleTypeCol");
             case LASTXCOL:
-                return rb.getString("TitleXCol");
+                return Bundle.getMessage("TitleXCol");
             case LASTYCOL:
-                return rb.getString("TitleYCol");
+                return Bundle.getMessage("TitleYCol");
             case LASTZCOL:
-                return rb.getString("TitleZCol");
+                return Bundle.getMessage("TitleZCol");
             case LASTTIME:
-                return rb.getString("TitleTime");
+                return Bundle.getMessage("TitleTime");
             default:
                 return "";
         }
@@ -192,6 +183,6 @@ public class PollDataModel extends AbstractTableModel
         Distributor.instance().removeMeasurementListener(this);
     }
 
-    static Logger log = LoggerFactory.getLogger(PollDataModel.class.getName());
+    private final static Logger log = LoggerFactory.getLogger(PollDataModel.class.getName());
 
 }

@@ -1,8 +1,6 @@
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
 <html lang="en">
-    <head>
-        <!-- Copyright 2015 -->
-        <!-- $Id$ -->
+  <head>
         <title>JMRI Web Access</title>
 
         <!-- Style -->
@@ -13,98 +11,98 @@
         <link rel="icon" href="/images/jmri.ico" TYPE="image/png">
         <link rel="home" title="Home" href="/">
         <!-- /Style -->
-    </head>
+  </head>
 
-    <body>
+  <body>
         <!--#include virtual="/Header" -->
 
         <!--#include virtual="Sidebar" -->
         <div id="mainContent">
 
-            <h1>JMRI Web Access</h1>
+<h1>JMRI Web Access</h1>
 
-            <p>JMRI can provide web access to your model railroad.</p>
+<p>JMRI can provide web access to your model railroad.</p>
 
-            <h2><a id="Start">Starting Web Access</a></h2>
+    <h2><a id="Start">Starting Web Access</a></h2>
 
-            <p>Before attempting to use web access, please make sure that the 
-                basic configuration of your JMRI application is working. Check
-                that you can properly communicate with and operate your layout.</p>
+    <p>Before attempting to use web access, please make sure that the 
+        basic configuration of your JMRI application is working. Check
+        that you can properly communicate with and operate your layout.</p>
 
-            <p>Start web access by selecting "Start JMRI Web Server" under the "Tools" menu.</p>
+    <p>Start web access by selecting "Start JMRI Web Server" under the "Tools" menu.</p>
 
-            <p>Test the connection:</p>
-            <ul>
-                <li>If you're using a Bonjour/Zeroconf-enabled web browser like
-                    Safari you should see a "My JMRI Railroad" web site in the
-                    "Bonjour" tab.</li>
-                <li>Otherwise, enter the starting URL, which will be something like "http://192.168.1.7:12080"
-                    (or if you're browsing on the same computer right now,
-                    <a href="http://localhost:12080">click here</a>.
-                    The default port is 12080, but this can be changed in Web Server Preferences.
-                    You should see a welcome screen, which serves as the home page for the JMRI web server.
-                    This page (by default) contains a number of useful examples and links.</li>
-            </ul>
+    <p>Test the connection:</p>
+    <ul>
+        <li>If you're using a Bonjour/Zeroconf-enabled web browser like
+            Safari you should see a "My JMRI Railroad" web site in the
+            "Bonjour" tab.</li>
+        <li>Otherwise, enter the starting URL, which will be something like "http://192.168.1.7:12080"
+            (or if you're browsing on the same computer right now,
+            <a href="http://localhost:12080">click here</a>.
+            The default port is 12080, but this can be changed in Web Server Preferences.
+            You should see a welcome screen, which serves as the home page for the JMRI web server.
+            This page (by default) contains a number of useful examples and links.</li>
+    </ul>
 
-            <h2><a id="Configure">Configure Web Access</a></h2>
+    <h2><a id="Configure">Configure Web Access</a></h2>
 
             <h3>Automatically start</h3>
             <p>JMRI can automatically start the web server when launched.</p>
             <p>Open the <a href="../../package/apps/TabbedPreferences.shtml">Preferences Window</a>
                 to configure JMRI to start the server each time you start the program.</p>
-            <p>Select the "Start Up" tab, and click "Add Action". In the new
+            <p>Select the "Start Up" tab, click "Add &#x25BE;", and select "Perform action...". In the new
                 selection box that appears, select "Start Web Server".
                 Don't forget to save your changes!</p>
 
-            <h2>Web Server Preferences</h2>
-            <p>Web Server Preferences are in two categories:</p>
+    <h2>Web Server Preferences</h2>
+    <p>Web Server Preferences are in two categories:</p>
+    <dl>
+        <dt><a href="WebServer.shtml">Web Server</a></dt>
+        <dd>
             <dl>
-                <dt><a href="WebServer.shtml">Web Server</a></dt>
-                <dd>
-                    <dl>
-                        <dt>Port#</dt>
-                        <dd>The port the web server listens for HTTP requests.
-                            This defaults to 12080. You may need to change this
-                            value if another program expects to be listening on
-                            this port as well. Some Anti-Virus services use this
-                            port.</dd>
-                        <dt>Disable power control in menus</dt>
-                        <dd>The menus on many of the JMRI web pages include a
-                            layout power button. You can disable this button to
-                            ensure that users of the web site can see the power
-                            status, but cannot turn off or turn on layout power.</dd>
-                    </dl>
-                </dd>
-                <dt><a href="FrameServlet.shtml">Frame Server</a></dt>
-                <dd><dl>
-                        <dt>Click Delay</dt>
-                        <dd>Wait the specified number of seconds after a click
-                            on the window (frame) image before refreshing the image.</dd>
-                        <dt>Refresh Delay</dt>
-                        <dd>The number of seconds before the window image is
-                            automatically refreshed.</dd>
-                        <dt>Use Ajax?</dt>
-                        <dd>Use features that improve performance on modern
-                            browsers. Turn off to support obsolete browsers.</dd>
-                        <dt>Disallowed Frames</dt>
-                        <dd>A list of windows that will not be displayed
-                            in the browser.</dd>
-                    </dl>
-                </dd>
+                <dt>Port#</dt>
+                <dd>The port the web server listens for HTTP requests.
+                    This defaults to 12080. You may need to change this
+                    value if another program expects to be listening on
+                    this port as well. Some Anti-Virus services use this
+                    port.</dd>
+                <dt>Disable power control in menus</dt>
+                <dd>The menus on many of the JMRI web pages include a
+                    layout power button. You can disable this button to
+                    ensure that users of the web site can see the power
+                    status, but cannot turn off or turn on layout power.</dd>
             </dl>
+        </dd>
+        <dt><a href="FrameServlet.shtml">Frame Server</a></dt>
+        <dd><dl>
+                <dt>Click Delay</dt>
+                <dd>Wait the specified number of seconds after a click
+                    on the window (frame) image before refreshing the image.</dd>
+                <dt>Refresh Delay</dt>
+                <dd>The number of seconds before the window image is
+                    automatically refreshed.</dd>
+                <dt>Use Ajax?</dt>
+                <dd>Use features that improve performance on modern
+                    browsers. Turn off to support obsolete browsers.</dd>
+                <dt>Disallowed Frames</dt>
+                <dd>A list of windows that will not be displayed
+                    in the browser.</dd>
+            </dl>
+        </dd>
+    </dl>
 
-            <h2><a id="services">Services</a></h2>
-            <p>JMRI Web Access provides a number of web services.</p>
-            <p><em>All links below assume you are currently using a web browser
-                    on the same computer you are running JMRI on and that JMRI
-                    is using the default port 12080.</em></p>
-            <p>JMRI Web Access home page at
-                <a href="http://localhost:12080">http://localhost:12080</a> provides
-                direct access to all of the web services. Most JMRI web access
-                pages provide direct access to the <a href="#panels">panels</a>,
-                <a href="#roster">roster</a>, and <a href="#operations">operations</a>
-                services.</p>
-            <!-- don't mention the servlets at all, just mention the services provided by the servlets -->
+    <h2><a id="services">Services</a></h2>
+    <p>JMRI Web Access provides a number of web services.</p>
+    <p><em>All links below assume you are currently using a web browser
+            on the same computer you are running JMRI on and that JMRI
+            is using the default port 12080.</em></p>
+    <p>JMRI Web Access home page at
+        <a href="http://localhost:12080">http://localhost:12080</a> provides
+        direct access to all of the web services. Most JMRI web access
+        pages provide direct access to the <a href="#panels">panels</a>,
+        <a href="#roster">roster</a>, and <a href="#operations">operations</a>
+        services.</p>
+    <!-- don't mention the servlets at all, just mention the services provided by the servlets -->
             
             <h3><a id="panels" href="PanelServlet.shtml">Panels</a></h3>
             <!-- panelServlet intro -->
@@ -120,9 +118,9 @@
             <h3><a id="throttle">Throttles</a></h3>
             <!-- webThrottle intro -->
             <p>JMRI supports using a modern browser on a smart phone, tablet, or
-                other computer as a throttle device with the
-                <a href="http://localhost:12080/web/webThrottle.html">Web
-                    Throttle</a>.</p>
+                other computer as a throttle device at 
+                <a href="http://localhost:12080/web/webThrottle.html">http://localhost:12080/web</a> (see <a href="../../package/jmri/jmrit/webThrottle/webThrottle.shtml">Web
+                    Throttle Help</a>).</p>
                     
             <h3><a id="operations" href="Operations.shtml">Operations</a></h3>
             <!-- operationsServlet intro -->
@@ -165,20 +163,20 @@
                 <a href="JsonServlet.shtml">JMRI JSON Protocol</a> for more
                 information.</p>
 
-            <h2><a id="custom">Customizing Web Access</a></h2>
-            <p>If you create a directory <code>web</code> in your User Files
-                location, any file in that directory that has the same name and
-                directory hierarchy as a file the <code>web</code> directory in
-                the JMRI distribution directory will override the default file
-                used for that purpose. This provides the ability to replace
-                images, scripts, and other content with personal content.</p>
-            <p>The standard web services use templates in the web/servlet
-                directory. Note that these templates are tightly linked with
-                JMRI. While modifying these templates is the recommended way to
-                customize the web access, care must be taken to ensure
-                modifications do not cause the templates to break entirely. If
-                web access does not work as expected after modifying a template,
-                check the JMRI logs for the cause.</p>
+    <h2><a id="custom">Customizing Web Access</a></h2>
+    <p>If you create a directory <code>web</code> in your User Files
+        location, any file in that directory that has the same name and
+        directory hierarchy as a file the <code>web</code> directory in
+        the JMRI distribution directory will override the default file
+        used for that purpose. This provides the ability to replace
+        images, scripts, and other content with personal content.</p>
+    <p>The standard web services use templates in the web/servlet
+        directory. Note that these templates are tightly linked with
+        JMRI. While modifying these templates is the recommended way to
+        customize the web access, care must be taken to ensure
+        modifications do not cause the templates to break entirely. If
+        web access does not work as expected after modifying a template,
+        check the JMRI logs for the cause.</p>
 
 <!--#include virtual="/Footer" -->
   </div><!-- closes #mainContent-->

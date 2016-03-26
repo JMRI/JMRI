@@ -28,12 +28,13 @@ public class SerialTurnoutManagerXml extends jmri.managers.configurexml.Abstract
         log.error("Invalid method called");
     }
 
-    public boolean load(Element turnouts) {
+    @Override
+    public boolean load(Element shared, Element perNode) {
         // create the master object
         SerialTurnoutManager.instance();
         // load individual turnouts
-        return loadTurnouts(turnouts);
+        return loadTurnouts(shared, perNode);
     }
 
-    static Logger log = LoggerFactory.getLogger(SerialTurnoutManagerXml.class.getName());
+    private final static Logger log = LoggerFactory.getLogger(SerialTurnoutManagerXml.class.getName());
 }

@@ -15,12 +15,12 @@
 <enumVal xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="http://jmri.org/xml/schema/decoder.xsd">
   <enumChoice choice="None" value="0"/>
   <enumChoice choice="Horn" value="1" include="1115,1123,1127,1130,1132"/>
-  <enumChoice choice="Whistle" value="1" include="3104"/>
+  <enumChoice choice="Whistle" value="1" include="3104,3109"/>
   <enumChoice choice="Standard/Alt Horn Selection" value="2"/>
   <enumChoice choice="Bell" value="3"/>
   <enumChoice choice="Dynamic Brakes" value="5"/>
   <enumChoice choice="Cooling Fans" value="8" include="1115,1123,1127,1130,1132"/>
-  <enumChoice choice="Blower Hiss" value="8" include="3104"/>
+  <enumChoice choice="Blower Hiss" value="8" include="3104,3109"/>
   <enumChoice choice="Long Air Let-off" value="9"/>
   <enumChoice choice="Short Air Let-off" value="10"/>
   <enumChoice choice="Pop-off" value="12"/>
@@ -73,7 +73,7 @@
   <enumChoice choice="Rear Cab  Lights" value="119"/>
   <enumChoice choice="Engine Room Lights" value="120" include="1115,1123,1127,1130,1132"/>
   <enumChoice choice="Engine Room2 Lights" value="121" include="1115,1123,1127,1130,1132"/>
-  <enumChoice choice="Firebox" value="122" include="3104"/>
+  <enumChoice choice="Firebox" value="122" include="3104,3109"/>
   <enumChoice choice="Multiple Automatic Lights #1" value="136"/>
   <enumChoice choice="Multiple Automatic Lights #2" value="137"/>
   <enumChoice choice="Multiple Automatic Lights #3" value="138"/>

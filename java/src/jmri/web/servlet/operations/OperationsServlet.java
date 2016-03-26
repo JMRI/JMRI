@@ -159,7 +159,6 @@ public class OperationsServlet extends HttpServlet {
                     Setup.isPrintRouteCommentsEnabled() ? train.getRoute().getComment() : "",
                     manifest.getLocations()
             ));
-            train.setModified(false);
         } else if (JSON.JSON.equals(request.getParameter("format"))) {
             log.debug("Getting manifest JSON code for train {}", id);
             JsonNode manifest = this.mapper.readTree(new JsonManifest(train).getFile());

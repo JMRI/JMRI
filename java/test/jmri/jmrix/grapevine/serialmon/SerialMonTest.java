@@ -1,4 +1,3 @@
-// SerialMonTest.java
 package jmri.jmrix.grapevine.serialmon;
 
 import jmri.jmrix.grapevine.SerialMessage;
@@ -11,7 +10,6 @@ import junit.framework.TestSuite;
  * Tests for the jmri.jmrix.grapevine.serialmon package.
  *
  * @author Bob Jacobsen Copyright 2003, 2007, 2008
- * @version $Revision$
  */
 public class SerialMonTest extends TestCase {
 
@@ -21,14 +19,8 @@ public class SerialMonTest extends TestCase {
     }
 
     public void testDisplay() throws Exception {
-        jmri.InstanceManager.store(jmri.managers.DefaultUserMessagePreferences.getInstance(), jmri.UserPreferencesManager.class);
         // create a SerialMonFrame
         SerialMonFrame f = new SerialMonFrame() {
-            /**
-             *
-             */
-            private static final long serialVersionUID = -947606339366566391L;
-
             {
                 rawCheckBox.setSelected(true);
             }
@@ -72,11 +64,17 @@ public class SerialMonTest extends TestCase {
     }
 
     // The minimal setup for log4J
-    protected void setUp() {
+    protected void setUp() throws Exception {
         apps.tests.Log4JFixture.setUp();
+
+        super.setUp();
+        jmri.util.JUnitUtil.resetInstanceManager();
+        jmri.util.JUnitUtil.initDefaultUserMessagePreferences();
     }
 
-    protected void tearDown() {
+    protected void tearDown() throws Exception {
+        jmri.util.JUnitUtil.resetInstanceManager();
+        super.tearDown();
         apps.tests.Log4JFixture.tearDown();
     }
 }

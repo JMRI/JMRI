@@ -4,8 +4,6 @@ import junit.framework.Assert;
 import junit.framework.Test;
 import junit.framework.TestCase;
 import junit.framework.TestSuite;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 
 /**
  * XBeeSensorTest.java
@@ -13,7 +11,6 @@ import org.slf4j.LoggerFactory;
  * Description:	tests for the jmri.jmrix.ieee802154.xbee.XBeeSensor class
  *
  * @author	Paul Bender
- * @version $Revision$
  */
 public class XBeeSensorTest extends TestCase {
 
@@ -25,11 +22,6 @@ public class XBeeSensorTest extends TestCase {
         memo.setSensorManager(new XBeeSensorManager(tc, "ABC"));
         tc.setAdapterMemo(memo);
         XBeeSensor s = new XBeeSensor("ABCS1234", "XBee Sensor Test", tc) {
-            /**
-             *
-             */
-            private static final long serialVersionUID = -2967402890226508680L;
-
             @Override
             public void requestUpdateFromLayout() {
             }
@@ -42,11 +34,6 @@ public class XBeeSensorTest extends TestCase {
         memo.setSensorManager(new XBeeSensorManager(tc, "ABC"));
         tc.setAdapterMemo(memo);
         XBeeSensor s = new XBeeSensor("ABCS123:4", "XBee Sensor Test", tc) {
-            /**
-             *
-             */
-            private static final long serialVersionUID = -4934402912485188869L;
-
             @Override
             public void requestUpdateFromLayout() {
             }
@@ -59,11 +46,6 @@ public class XBeeSensorTest extends TestCase {
         memo.setSensorManager(new XBeeSensorManager(tc, "ABC"));
         tc.setAdapterMemo(memo);
         XBeeSensor s = new XBeeSensor("ABCSABCD:4", "XBee Sensor Test", tc) {
-            /**
-             *
-             */
-            private static final long serialVersionUID = -1923632424973837859L;
-
             @Override
             public void requestUpdateFromLayout() {
             }
@@ -76,11 +58,6 @@ public class XBeeSensorTest extends TestCase {
         memo.setSensorManager(new XBeeSensorManager(tc, "ABC"));
         tc.setAdapterMemo(memo);
         XBeeSensor s = new XBeeSensor("ABCSAB CD:4", "XBee Sensor Test", tc) {
-            /**
-             *
-             */
-            private static final long serialVersionUID = -4200619366651260048L;
-
             @Override
             public void requestUpdateFromLayout() {
             }
@@ -93,11 +70,6 @@ public class XBeeSensorTest extends TestCase {
         memo.setSensorManager(new XBeeSensorManager(tc, "ABC"));
         tc.setAdapterMemo(memo);
         XBeeSensor s = new XBeeSensor("ABCS00 13 A2 00 40 A0 4D 2D:4", "XBee Sensor Test", tc) {
-            /**
-             *
-             */
-            private static final long serialVersionUID = -3310604485155063844L;
-
             @Override
             public void requestUpdateFromLayout() {
             }
@@ -135,7 +107,5 @@ public class XBeeSensorTest extends TestCase {
     protected void tearDown() {
         apps.tests.Log4JFixture.tearDown();
     }
-
-    static Logger log = LoggerFactory.getLogger(XBeeSensorTest.class.getName());
 
 }

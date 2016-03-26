@@ -1,34 +1,32 @@
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
 <html lang="en">
 <head>
-<!-- Copyright Bob Jacobsen 2008 -->
-<!-- $Id$ -->
-<title>JMRI: Using the serial port for block sensors</title>
+<title>JMRI: Speedometer - Using the serial port for block sensors</title>
 
 <!-- Style -->
-<META HTTP-EQUIV="Content-Type" CONTENT="text/html; charset=iso-8859-1">
-<LINK REL="stylesheet" TYPE="text/css" HREF="/css/default.css"
-	MEDIA="screen">
-<LINK REL="stylesheet" TYPE="text/css" HREF="/css/print.css"
-	MEDIA="print">
-<LINK REL="icon" HREF="/images/jmri.ico" TYPE="image/png">
-<LINK REL="home" TITLE="Home" HREF="/">
+<meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
+<link rel="stylesheet" type="text/css" href="/css/default.css" media="screen">
+<link rel="stylesheet" type="text/css" href="/css/print.css" media="print">
+<link rel="icon" href="/images/jmri.ico" type="image/png">
+<link rel="home" title="Home" href="/">
 <!-- /Style -->
-</HEAD>
+</head>
 
-<BODY>
+<body>
 <!--#include virtual="/Header" -->
-  <div class="nomenu" id="mBody">
+<!--#include virtual="Sidebar" -->
     <div id="mainContent">
 
-<h2>Using the serial port for block sensors</h2>
+<h1>Speedometer</h1>
+<h2>Using the serial port for Block Sensors</h2>
 
 Jim Scorse has provided a schematic for connecting an NCE block detector
-to the serial port.  <BR>
-<IMG SRC="images/speed0.jpg" WIDTH="400" HEIGHT="300">
+to the serial port.<br>
+<img src="images/speed0.jpg" width="400" height="300">
+
 <h3>DB9 and DB25 connections</h3>
 
-<PRE>
+<pre>
        DB9 pin      DB25 pin
        -------      --------
 
@@ -42,8 +40,12 @@ RTS      7             4
 CTS      8             5
 RI       9            22
 
-</PRE>
+</pre>
+
+<p>Back to the <a href="index.shtml">Speedometer main Help page</a>
 
 <!--#include virtual="/Footer" -->
+  </div><!-- closes #mainContent-->
+</div> <!-- closes #mBody-->
 </body>
 </html>

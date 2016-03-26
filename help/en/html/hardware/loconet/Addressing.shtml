@@ -1,137 +1,138 @@
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
-<!-- $Id$ -->
 <html lang="en">
 <head>
-    <TITLE>
- 	JMRI: LocoNet&reg; Addressing
-    </TITLE>
-    <META content="Bob Jacobsen" name=Author>
+    <title>JMRI Hardware Support - LocoNet&reg; Addressing</title>
+    
+    <meta content="Bob Jacobsen" name="Author">
     <meta name="keywords" content="JMRI LocoNet Address Addressing Sensors Turnout">
-
     <!-- The combination of "Define" and {Header,Style, Logo and Footer} comments -->
     <!-- are an arbitrary design pattern used by the update.pl script to -->
     <!-- easily replace the common header/footer code for all the web pages -->
 
 <!-- Style -->
-<META HTTP-EQUIV="Content-Type" CONTENT="text/html; charset=iso-8859-1">
-<LINK REL="stylesheet" TYPE="text/css" HREF="/css/default.css"
-	MEDIA="screen">
-<LINK REL="stylesheet" TYPE="text/css" HREF="/css/print.css"
-	MEDIA="print">
-<LINK REL="icon" HREF="/images/jmri.ico" TYPE="image/png">
-<LINK REL="home" TITLE="Home" HREF="/">
+<meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
+<link rel="stylesheet" type="text/css" href="/css/default.css" media="screen">
+<link rel="stylesheet" type="text/css" href="/css/print.css" media="print">
+<link rel="icon" href="/images/jmri.ico" type="image/png">
+<link rel="home" title="Home" href="/">
 <!-- /Style -->
-</HEAD>
+</head>
 
-<BODY>
+<body>
 <!--#include virtual="/Header" -->
 
   <div class="nomenu" id="mBody">
     <div id="mainContent">
 
+<h1>Support: LocoNet&reg; addressing</h1>
 
-<h1>LocoNet&reg; addressing</h1>
+<ul class="snav"><!-- h2 TOC -->
+<li><a href="#turnouts">Turnouts</a>
+<li><a href="#sensor">Sensors</a>
+<li><a href="#transponding">Transponding</a>
+<li><a href="#SVs">SVs</a>
+</ul>
 
-LocoNet&reg; systems address input sensors and output turnouts using numbers.
-This page talks about how those numbers are defined in JMRI, and how they relate
-to the numbers in other systems.
+LocoNet&reg; systems address input Sensors and output Turnouts using numbers.
+This page describes how those numbers are defined in JMRI, and how they relate
+to the numbers in other (hardware) systems.
 
 <a name="turnout" id="turnout"></a>
-<h2>Addressing LocoNet turnouts in JMRI</h2>
-
-Inside packets on the LocoNet, output turnouts are addressed with numbers from 0 to 4095.
+<h2>Addressing LocoNet Turnouts</h2>
+<p>
+Inside packets on the LocoNet, output Turnouts are addressed with numbers from 0 to 4095.
 Throttles, however, address these with numbers from 1 to 4096. To avoid user
-confusion, JMRI uses the same numbering as the throttles:  LT1 to LT4096.
-<P>
-Note that when the LocoNet monitor panel shows the contents of the LocoNet packets
+confusion, JMRI uses the same numbering as the Throttles for Turnout System Names:  LT1 to LT4096.
+<p>
+Note that when the LocoNet Monitor panel shows the contents of the LocoNet packets
 in text, it uses the same addressing, hence 1 to 4096.  This is then different 
 from the raw bytes that are displayed, but at least it's consistent with what 
 users expect to see.  We agree that's confusing, but there has to be some 
 confusion somewhere, given the way this was set up.
 
 <h3>The Turnout Table</h3>
-<p>The JMRI Turnout Table shows a table of turnout which JMRI is aware of. Every 
-    time JMRI sees a LocoNet message which specifies a turnout, JMRI updates an 
-    existing entry in the table or creates a new entry if one does not already 
-    exist.  Each turnout in the table can be assigned a "User name".</p>
-<p>The Turnout table provides a useful snapshot of the current state of all 
-    known turnouts, and allows the user to change the state of those turnouts.</p>
+<p>The JMRI Turnout Table shows a list of all Turnouts JMRI is aware of. Every 
+    time JMRI sees a LocoNet message which specifies a Turnout, JMRI updates an 
+    existing entry in the Turnout Table or creates a new entry if one does not already 
+    exist.  Each Turnout in the table can also be assigned a "User Name".</p>
+<p>The Turnout Table provides a useful snapshot of the current state of all 
+    known Turnouts, and allows the user to change the state of those Turnouts.</p>
 <p>Additional information on Turnouts and the Turnout Table may be found at the
     <a href="../../tools/Turnouts.shtml">main Turnouts page</a>.</p>
 
 <a name="sensor" id="sensor"></a>
-<h2>Addressing LocoNet sensors in JMRI</h2>
+<h2>Addressing LocoNet Sensors</h2>
 
-Inside packets on the LocoNet, sensors are addressed with numbers from 0 to 4095.
+Inside packets on the LocoNet, Sensors are addressed with numbers from 0 to 4095.
 Digitrax documentation refers to these as 1 to 4096, however.  Just like
-turnouts, we use the documentation numbering to define the sensor names: LS1 to LS4096.
-<P>
+Turnouts, we use the documentation numbering to define the Sensor System Names: LS1 to LS4096.
+<p>
 The simplest way to find the 
-right number for a given block is to open a "LocoNet monitor" window, and drop a 
-locomotive onto the block you're interested in.  You'll see the 
+right number for a given Block is to open a "LocoNet monitor" window, and drop a 
+locomotive onto the Block you're interested in.  You'll see the 
 LocoNet message, complete with number, in the window that looks 
 something like this:
-<PRE>
+<pre>
    General sensor input report: contact 161 (DS54 switch 81 Aux input) (BDL16 11,1) is Hi 
-</PRE>
-The contact number, 161 in this case, is the address of the sensor.
-Prefix that with LS that to get the sensor name, e.g. LS161 in this case.
-<P>
+</pre>
+The contact number, 161 in this case, is the address of the Sensor.
+Prefix that with LS to get the Sensor System Name, e.g. LS161 in this case.
+<p>
 If you wish to manually enter in the hardware address to the system you can do it
-by enter in the board number, followed by the channel number seperated by a ":"<br>
-So for a sensor on board 11, channel 1 you would enter into the Hardware Address field : 
+by enter in the board number, followed by the channel number separated by a ":"<br>
+So for a Sensor on board 11, channel 1 you would enter into the Hardware Address field : 
 <b>11:1</b>
-<P>
-If you want to calculate the address of a BDL168 input, you can use
-<CODE>
+<p>
+If you want to calculate the address of a BDL168 input, you can use:
+<code>
 &nbsp;&nbsp;&nbsp;&nbsp;number = 16 * (board number) + (channel number) - 16
-</CODE>
+</code>
 where "channel number" runs from 1 to 16.  For example, the first circuit
 (number 1) on board 11 has number:
-<CODE>
+<code>
 &nbsp;&nbsp;&nbsp;&nbsp;number = 16 * (11) + (1) - 16 = 161
-</CODE>
+</code>
 as we saw in the example above.
-<P>
+<p>
 If you want to calculate the address of a DS54 aux input, use:
-<CODE>
+<code>
 &nbsp;&nbsp;&nbsp;&nbsp;number = 2 * (turnout number - 1) + 1
-</CODE>
+</code>
 For example, the aux input associated with turnout 81 has number:
-<CODE>
+<code>
 &nbsp;&nbsp;&nbsp;&nbsp;number = 2 * (81 - 1) + 1 = 161
 </code>
 If it's the switch input, you add one more to that:
-<CODE>
+<code>
 &nbsp;&nbsp;&nbsp;&nbsp;number = 2 * (turnout number - 1) + 2
-</CODE>
+</code>
 <p>For example, the switch input associated with turnout 12 has number:</p>
-<CODE>
+<code>
 &nbsp;&nbsp;&nbsp;&nbsp;number = 2 * ( 12 - 1 ) + 2 = 24
 </code>
 
 <h3>The Sensor Table</h3>
-<p>The JMRI Sensor Table shows a table of sensors which JMRI is aware of. Every 
-    time JMRI sees a LocoNet message which specifies a sensor, JMRI updates an 
+<p>The JMRI Sensor Table shows a list of all Sensors JMRI is aware of. Every 
+    time JMRI sees a LocoNet message which specifies a Sensor, JMRI updates an 
     existing entry in the table or creates a new entry if one does not already 
-    exist.  Each sensor in the table can be assigned a "User name".</p>
-<p>The Sensor table provides a useful snapshot of the current state of all 
-    known sensors.</p>
+    exist.  Each Sensor in the table can be assigned a "User Name".</p>
+<p>The Sensor Table provides a useful snapshot of the current state of all 
+    known Sensors.</p>
 <p>Additional information on Sensors and the Sensor Table may be found at the
     <a href="../../tools/Sensors.shtml">main Sensors page</a>.</p>
 
-<h2>Addressing Transponding in JMRI</h2>
+<a name="transponding" id="transponding"></a><h2>Addressing Transponding</h2>
 
-<p>Digitrax transponding is handled via the Reporter mechanism
+<p>Digitrax Transponding is handled via the Reporter mechanism
 in JMRI.  Reporters gather information from the layout and make it
-available when it changes.  JMRI refers to reporters using the name
-<i>LRx</i> where <i>x</i> is a number which corresponds to a detection zone</p>
+available when it changes.  JMRI refers to Reporters using the System Name
+<i>LRx</i> where <i>x</i> is a number which corresponds to a detection zone.</p>
 
-<p>The transponding zones are numbered sequentially from 1 to 4096.  Current 
-    BDL16x hardware implements only odd-numbered transponding zones.  The first 
-    transponding zone of a BDL16x board is reported as reporter number 
+<p>The Transponding zones are numbered sequentially from 1 to 4096.  Current 
+    BDL16x hardware implements only odd-numbered Transponding zones.  The first 
+    Transponding zone of a BDL16x board is reported as Reporter number 
     <span style="font-family: monospace">(1 +(board address -1) * 16)</span>. 
-    The second transponding zone of a BDL16x board is reported as reporter number 
+    The second Transponding zone of a BDL16x board is reported as Reporter number 
     <span style="font-family: monospace">(1 +(board address -1) * 16) + 2</span>.</p>
 <p>Reporter numbering is summarized in the table below:</p>
     <table border="2">
@@ -169,32 +170,32 @@ available when it changes.  JMRI refers to reporters using the name
 
 <a name="reporter" id="reporter"></a>
 <h3>The Reporter Table</h3>
-<p>The JMRI Reporter Table shows a table of reporters which JMRI is aware of. JMRI 
-    creates an entry in this table for each new transponding zone for which it sees a 
-    transponding message. Each reporter in the table can be assigned a "User name".</p>
-<p>Once you have the transponding hardware installed and at least one locomotive
-    transponding properly, it is simple to fill in the reporter table for each 
-    transponding zone by running the transponding locomotive through all 
+<p>The JMRI Reporter Table shows a list of all Reporters JMRI is aware of. JMRI 
+    creates an entry in this table for each new Transponding zone for which it sees a 
+    Transponding message. Each Reporter in the table can be assigned a "User Name".</p>
+<p>Once you have the Transponding hardware installed and at least one Locomotive
+    transponding properly, it is simple to fill in the Reporter Table for each 
+    Transponding zone by running the transponding Locomotive through all 
     transponding-capable zones. It may be convenient to fill in a "User Name"
-    in the JMRI Repoter Table at the same time when the locomotive first enters 
-    each transponding zone</p>
+    in the JMRI Reporter Table at the same time when the Locomotive first enters 
+    each Transponding zone.</p>
 <p>Additional information on Reporters and the Reporter Table may be found at the
     <a href="../../tools/Reporters.shtml">main Reporter page</a>.</p>
 
 <a name="SVs" id="SVs"></a>
-<h2>Addressing LocoNet device System Variables (SVs) in JMRI</h2>
+<h2>Addressing LocoNet device System Variables (SVs)</h2>
 (The following was first fully available in
 <a href="http://jmri.org/releasenotes/jmri4.1.2.shtml">JMRI 4.1.2</a>. Versions before
 that may not be complete).
 <p>
-Like decoders can Configuration Variables (CVs) to hold their settings, 
+Like decoders store Configuration Variables (CVs) to hold their settings, 
 some LocoNet-compatible devices have System Variables (SVs).
 <p>
 There are (at least) two variations of the protocol for accessing these.
-JMRI can use version 1 or 2 to access compatible SVs by selecting
+JMRI can use version 1 or version 2 to access compatible SVs by selecting
 "System Variable Type 1" or "System Variable Type 2" as the programming mode, respectively. 
 This option is presented
-when you're using a LocoNet connection that actually connects to a LocoNet, 
+when you're using a LocoNet System Connection that actually connects to a LocoNet, 
 such as a LocoBuffer-USB or PR3 in MS100 mode.
 <p>
 SVs are numbered from 1 to 127 for version 1 hardware and from 1 to 2^16-1 = 65,535
@@ -224,6 +225,7 @@ This is perhaps best used for single bit values via enum variables, where the sp
 choices can have the right bit coding.  Or don't use it at all, and rely on DecoderPro
 to write the combined values of full words properly.
 </ul>
+
 <h3>SV version 1 board addressing</h3>
 In some documentation, the SV version 1 protocol uses a two part address:  83/1, for example.
 (SV version 2 uses a single number with up to 14 bits; 0 is not used)
@@ -232,7 +234,7 @@ JMRI maps A/B to (B-1)*256+A.  Most boards seem to use N/1 addresses, so this
 makes that correspond to just N in JMRI.  To summarize:
 <p>
 <table border="2">
-<tr><th>Old<br/>Style</th><th>JMRI<br/>Number</th><tr>
+<tr><th width="80px">Old<br/>Style</th><th width="80px">JMRI<br/>Number</th>
 <tr><td>10/1</td><td>10</td></tr>
 <tr><td>83/1</td><td>83</td></tr>
 <tr><td>83/2</td><td>339</td></tr>
@@ -260,13 +262,12 @@ decoder definition file, except that to specify the LocoNet SV Version 2 protoco
  Note that the version 1 protocol is no longer recommended.  If you're writing
  a decoder definition for a board that can use both, you should skip version 1 by
  providing just the LOCONETSV2MODE option.
- 
-
 
 <p>LocoNet&reg; is a registered trademark of <a href="http://www.digitrax.com">Digitrax, Inc.</a></p>
     </div>
 
 <!--#include virtual="/Footer" -->
+ </div><!-- closes #mainContent-->
+</div> <!-- closes #mBody-->
 </body>
 </html>
-

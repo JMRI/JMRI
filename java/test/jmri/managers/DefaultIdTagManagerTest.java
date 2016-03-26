@@ -1,4 +1,3 @@
-// DefaultIdTagManagerTest.java
 package jmri.managers;
 
 import jmri.IdTag;
@@ -6,14 +5,11 @@ import junit.framework.Assert;
 import junit.framework.Test;
 import junit.framework.TestCase;
 import junit.framework.TestSuite;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 
 /**
  * Tests for the jmri.managers.DefaultIdTagManager class.
  *
  * @author	Matthew Harris Copyright (C) 2011
- * @version $Revision$
  */
 public class DefaultIdTagManagerTest extends TestCase {
 
@@ -157,7 +153,5 @@ public class DefaultIdTagManagerTest extends TestCase {
             }
         };
     }
-
-    static Logger log = LoggerFactory.getLogger(DefaultIdTagManagerTest.class.getName());
 
 }

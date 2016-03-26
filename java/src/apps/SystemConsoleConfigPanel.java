@@ -2,6 +2,7 @@
 package apps;
 
 import apps.SystemConsole.Scheme;
+import apps.systemconsole.SystemConsolePreferencesManager;
 import java.awt.FlowLayout;
 import java.awt.Font;
 import java.awt.event.ActionEvent;
@@ -14,6 +15,7 @@ import javax.swing.JList;
 import javax.swing.JPanel;
 import javax.swing.JToggleButton;
 import javax.swing.UIManager;
+import jmri.InstanceManager;
 import jmri.swing.PreferencesPanel;
 import jmri.util.swing.FontComboUtil;
 
@@ -21,15 +23,15 @@ import jmri.util.swing.FontComboUtil;
  * Allow certain elements of the System Console to be configured.
  * <hr>
  * This file is part of JMRI.
- * <P>
+ * <p>
  * JMRI is free software; you can redistribute it and/or modify it under the
  * terms of version 2 of the GNU General Public License as published by the Free
  * Software Foundation. See the "COPYING" file for a copy of this license.
- * <P>
+ * <p>
  * JMRI is distributed in the hope that it will be useful, but WITHOUT ANY
  * WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS FOR
  * A PARTICULAR PURPOSE. See the GNU General Public License for more details.
- * <P>
+ * <p>
  *
  * @author Matthew Harris copyright (c) 2010, 2011
  * @version $Revision$
@@ -83,9 +85,9 @@ public class SystemConsoleConfigPanel extends JPanel implements PreferencesPanel
         JPanel p = new JPanel(new FlowLayout());
         p.add(new JLabel(rbc.getString("ConsoleScheme")));
 
-        schemes.setSelectedIndex(SystemConsole.getInstance().getScheme());
+        schemes.setSelectedIndex(this.getPreferencesManager().getScheme());
         schemes.addActionListener((ActionEvent e) -> {
-            SystemConsole.getInstance().setScheme(schemes.getSelectedIndex());
+            this.getPreferencesManager().setScheme(schemes.getSelectedIndex());
         });
 
         schemes.setRenderer((JList<? extends Scheme> list, Scheme scheme, int index, boolean isSelected, boolean hasFocus) -> {
@@ -100,7 +102,7 @@ public class SystemConsoleConfigPanel extends JPanel implements PreferencesPanel
             }
             JLabel l = new JLabel(" " + scheme.description + " ");
             l.setOpaque(true);
-            l.setFont(new Font("Monospaced", SystemConsole.getInstance().getFontStyle(), 12));
+            l.setFont(new Font("Monospaced", this.getPreferencesManager().getFontStyle(), 12));
             l.setForeground(scheme.foreground);
             l.setBackground(scheme.background);
             p1.add(l);
@@ -117,10 +119,10 @@ public class SystemConsoleConfigPanel extends JPanel implements PreferencesPanel
 
         p = new JPanel(new FlowLayout());
         fontFamily.addActionListener((ActionEvent e) -> {
-            SystemConsole.getInstance().setFontFamily((String) fontFamily.getSelectedItem());
+            this.getPreferencesManager().setFontFamily((String) fontFamily.getSelectedItem());
             schemes.repaint();
         });
-        fontFamily.setSelectedItem(SystemConsole.getInstance().getFontFamily());
+        fontFamily.setSelectedItem(this.getPreferencesManager().getFontFamily());
 
         JLabel fontFamilyLabel = new JLabel(rbc.getString("ConsoleFontStyle"));
         fontFamilyLabel.setLabelFor(fontFamily);
@@ -129,10 +131,10 @@ public class SystemConsoleConfigPanel extends JPanel implements PreferencesPanel
         p.add(fontFamily);
 
         fontSize.addActionListener((ActionEvent e) -> {
-            SystemConsole.getInstance().setFontSize((Integer) fontSize.getSelectedItem());
+            this.getPreferencesManager().setFontSize((int) fontSize.getSelectedItem());
         });
         fontSize.setToolTipText(rbc.getString("ConsoleFontSize"));
-        fontSize.setSelectedItem(SystemConsole.getInstance().getFontSize());
+        fontSize.setSelectedItem(this.getPreferencesManager().getFontSize());
         JLabel fontSizeUoM = new JLabel(rbc.getString("ConsoleFontSizeUoM"));
 
         p.add(fontSize);
@@ -143,14 +145,14 @@ public class SystemConsoleConfigPanel extends JPanel implements PreferencesPanel
             doFontStyle();
         });
         fontStyleBold.setToolTipText(rbc.getString("ConsoleFontStyleBold"));
-        fontStyleBold.setSelected((SystemConsole.getInstance().getFontStyle() & Font.BOLD) == Font.BOLD);
+        fontStyleBold.setSelected((this.getPreferencesManager().getFontStyle() & Font.BOLD) == Font.BOLD);
         p.add(fontStyleBold);
 
         fontStyleItalic.setFont(fontStyleItalic.getFont().deriveFont(Font.ITALIC));
         fontStyleItalic.addActionListener((ActionEvent e) -> {
             doFontStyle();
         });
-        fontStyleItalic.setSelected((SystemConsole.getInstance().getFontStyle() & Font.ITALIC) == Font.ITALIC);
+        fontStyleItalic.setSelected((this.getPreferencesManager().getFontStyle() & Font.ITALIC) == Font.ITALIC);
         fontStyleItalic.setToolTipText(rbc.getString("ConsoleFontStyleItalic"));
         p.add(fontStyleItalic);
 
@@ -159,9 +161,9 @@ public class SystemConsoleConfigPanel extends JPanel implements PreferencesPanel
         p = new JPanel(new FlowLayout());
         final JComboBox<String> wrapStyle = new JComboBox<>(wrapStyleNames);
         wrapStyle.addActionListener((ActionEvent e) -> {
-            SystemConsole.getInstance().setWrapStyle(wrapStyles[wrapStyle.getSelectedIndex()]);
+            this.getPreferencesManager().setWrapStyle(wrapStyles[wrapStyle.getSelectedIndex()]);
         });
-        wrapStyle.setSelectedIndex(SystemConsole.getInstance().getWrapStyle());
+        wrapStyle.setSelectedIndex(this.getPreferencesManager().getWrapStyle());
 
         p.add(new JLabel(rbc.getString("ConsoleWrapStyle")));
         p.add(wrapStyle);
@@ -173,9 +175,8 @@ public class SystemConsoleConfigPanel extends JPanel implements PreferencesPanel
 
     }
 
-    private static void doFontStyle() {
-        SystemConsole.getInstance().setFontStyle(
-                (fontStyleBold.isSelected() ? Font.BOLD : Font.PLAIN)
+    private void doFontStyle() {
+        this.getPreferencesManager().setFontStyle((fontStyleBold.isSelected() ? Font.BOLD : Font.PLAIN)
                 | (fontStyleItalic.isSelected() ? Font.ITALIC : Font.PLAIN));
         schemes.repaint();
     }
@@ -238,6 +239,10 @@ public class SystemConsoleConfigPanel extends JPanel implements PreferencesPanel
     @Override
     public boolean isPreferencesValid() {
         return true; // no validity checking performed
+    }
+
+    private SystemConsolePreferencesManager getPreferencesManager() {
+        return InstanceManager.getDefault(SystemConsolePreferencesManager.class);
     }
 }
 /* @(#)SystemConsoleConfigPanel.java */

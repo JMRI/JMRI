@@ -116,6 +116,7 @@ public class PowerPane extends jmri.util.swing.JmriPanel
     private boolean mgrOK() {
         if (listening == null) {
             listening = selectMenu.getManager();
+	        log.debug("Manager = {}", listening);
             if (listening == null) {
                 log.warn("No power manager instance found, panel not active");
                 return false;
@@ -170,6 +171,6 @@ public class PowerPane extends jmri.util.swing.JmriPanel
         }
     }
 
-    static Logger log = LoggerFactory.getLogger(PowerPane.class.getName());
+    private final static Logger log = LoggerFactory.getLogger(PowerPane.class.getName());
 
 }

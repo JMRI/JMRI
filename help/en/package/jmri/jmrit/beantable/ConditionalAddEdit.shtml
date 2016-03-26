@@ -1,24 +1,23 @@
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
-<!-- $Id$ -->
-<HTML LANG="en">
-<HEAD>
-<TITLE>JMRI: Adding/Editing Logix Conditionals</TITLE>
-<META HTTP-EQUIV="Content-Type" CONTENT="text/html; charset=iso-8859-1">
-<META CONTENT="Bob Jacobsen" NAME="Author">
-<META NAME="keywords" CONTENT="JMRI help Logix Conditional Add Edit">
+<html lang="en">
+<head>
+<title>JMRI: Adding/Editing Logix Conditionals</title>
+<meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
+<meta content="Bob Jacobsen" name="Author">
+<meta name="keywords" content="JMRI help Logix Conditional Add Edit">
 
 <!--#include virtual="/Style" -->
-</HEAD>
+</head>
 
-<BODY>
+<body>
 <!--#include virtual="/Header" -->
   <div class="nomenu" id="mBody">
     <div id="mainContent">
 
-<H1>Adding/Editing Logix Conditionals</H1>
-<P>The Edit Conditional window is where logical expressions are set
+<h1>Adding/Editing Logix Conditionals</h1>
+<p>The Edit Conditional window is where logical expressions are set
 up and where actions are specified. The Edit Conditional window is
-displayed when a Conditional is created, or when the <B>Edit</B> button
+displayed when a Conditional is created, or when the <b>Edit</b> button
 of a Conditional is pressed in the 
 <a href="LogixAddEdit.shtml">Edit Logix window</a>. The Edit
 Conditional window displays the system name and user name of the
@@ -27,38 +26,38 @@ program and cannot be changed. The user name may be edited by
 entering/modifying the text in the User Name field. The user name may
 not be the same as the user name of another Conditional in this Logix,
 but may be the same as the user name of a Conditional in a different
-Logix.</P>
-<P>Next are two sections--one for the setup of a logical expression
-and one for set up of actions. Conditionals are statements of the form:</P>
-<UL>
+Logix.</p>
+<p>Next are two sections--one for the setup of a logical expression
+and one for set up of actions. Conditionals are statements of the form:</p>
+<ul>
 	if (logical expression) then (action).
-</UL>
+</ul>
 A Conditional has two distinct parts: its "logical expression" and its
 "action". The window has separate sections for the set up of each.
 </p>
-<P>The logical expression section contains a table of state
+<p>The logical expression section contains a table of state
 variables, with two buttons below.  The first
-column in the state variables table displays the row number of the 
+column in the state variable table displays the row number of the 
 state variable.  This is only of importance when the <b>Logic Operator</b>
 choice is set to 'Mixed'.  The second column contains an automatic AND when
 the <b>Logic Operator</b> choice is set to 'AND' or an automatic OR
 when the choice is 'OR'.  When the choice is 'Mixed' the user may 
 select AND or OR as needed.   The third column contains a choice box that allows the
 user to select the NOT operator as needed. The fourth column is a description
-of the state variable typeand the condition for which it is to be tested. Next
+of the state variable type and the condition for which it is to be tested. Next
 is a column displaying the current state for the test description.
 The state displayed includes the effect
 of the NOT operator, if NOT is selected. 
-<P>The Triggers Calculation column contains checkboxes that normally
+<p>The Triggers Calculation column contains checkboxes that normally
 are checked, so that a change in the state variable will trigger a
 calculation of the Logix. For those rare cases where a change in a
 specific entity (sensor, turnout, etc.) should not trigger a
 calculation result, you should uncheck the checkbox by clicking on it.
 Unchecking the checkbox tells the program to monitor that entity for
-state changes and calculate the stae of the Conditional, but take no
+state changes and calculate the state of the Conditional, but take no
 action on the result of the calculation.
-</P>
-<P>The last two columns of the table (<B>Edit</B> and <B>Delete</B> buttons)
+</p>
+<p>The last two columns of the table (<b>Edit</b> and <b>Delete</b> buttons)
 are used to edit or delete that row in the state variable table.
 delete a state variable if you decide it is no longer needed. The State
 column of the table shows the state (true or false) of each state
@@ -66,18 +65,18 @@ variable when it is evaluated.
 </p>
 <p>For the logical expression, and
 therefore the Conditional, to calculate true, all state variables
-must evaluate to true.</P>
-<P>At any time during the entry of state variable data, <B>Check
-State Variables</B> may be clicked to check entered data and evaluate state
+must evaluate to true.</p>
+<p>At any time during the entry of state variable data, <b>Check
+State Variables</b> may be clicked to check entered data and evaluate state
 variables. When this button is pressed, checking and evaluation proceeds
 until the check completes successfully, or an error is detected. If an
 error is detected, checking stops for you to correct the error and click
-<B>Check State Variables</B> again. <i>Please remember after editing
+<b>Check State Variables</b> again. <i>Please remember after editing
 name and data items to click a different cell in the table before
-clicking <B>Check State Variables</B> (or <B>Update Conditional</B> at
+clicking <b>Check State Variables</b> (or <b>Update Conditional</b> at
 the bottom of the window) so that the program is notified that you have
 finished your entry. Otherwise your entry may not take effect, and an
-error may be reported unnecessarily.</i></P>
+error may be reported unnecessarily.</i></p>
 
 <p>
 The default <b>Logic Operator</b> is 'AND'.  In this case the Conditional 
@@ -98,9 +97,9 @@ Some examples:
    R1 or (R2 and R3)
    (R2 and R3) or (R3 and R1)
 </pre>
-<H2>Adding a New State Variable</H2>
+<h2>Adding a New State Variable</h2>
         <p>Press the <b>Add State Variable</b> to add a state 
-	variable (a row in the state variables table).  This brings up a
+	variable (a row in the state variable table).  This brings up a
         window with a choice box for the user to select a state variable type.
         Available state  variables are documented 
 	<a href="#variable">below</a>.  When a type is choosen the Edit Variable
@@ -129,13 +128,13 @@ Some examples:
 	finished your entry. Otherwise your entry may not take effect, and an error 
 	may be reported unnecessarily.</i></p>
 
-<H2>Adding a New Action</H2>
+<h2>Adding a New Action</h2>
 
-<P>The action section of the Edit Conditional window provides for
+<p>The action section of the Edit Conditional window provides for
 specifying the actions to be taken when a Conditional is
 calculated. 
 
-<P>To add a new action, press the "Add Action" button.
+<p>To add a new action, press the "Add Action" button.
 A new "Edit Action" window will appear.
 Select an action type in the
 type box, and data items needed to completely specify the action will
@@ -145,48 +144,48 @@ will appear. When a name must be entered, the name must correspond to
 the system name or the user name of an existing entity (sensor, turnout,
 signal head, etc.) of the proper type. Opening the Sensor Table when
 entering sensor names, or the Turnout Table to see available turnouts,
-etc., may be useful. Available action types are described in detail <A
-	HREF="#action">below</A>.</P>
-<P>For each action, three options are available for when to trigger
+etc., may be useful. Available action types are described in detail <a
+	href="#action">below</a>.</p>
+<p>For each action, three options are available for when to trigger
 the action: 1) On Change to True, 2) On Change to False, and 3) On
 Change. These refer to the calculated state of the Conditional, which is
 equal to the value of the logical expression as specified in the state
 variable table. One of these options must be selected. When done, click either
 "Update" to install your changes, 
 "Cancel" to close the window without any changes 
-or "Delete" to remove the action entirely.</P>
+or "Delete" to remove the action entirely.</p>
 
 <p>Actions are evaluated in the order listed.  To change that order, 
 click the "Reorder" button on the "Edit Conditional" window. The right-most
 buttons by the actions will then let you select the first one, next one, etc.
 
-<P>When the logical expression and actions have been specified,
-click <B>Update Conditional</B> at the bottom of the window. This
-initiates a check of the logical expression (the same as done by <B>Check
-State Variables</B>) and a check of entered data for actions. If the user
+<p>When the logical expression and actions have been specified,
+click <b>Update Conditional</b> at the bottom of the window. This
+initiates a check of the logical expression (the same as done by <b>Check
+State Variables</b>) and a check of entered data for actions. If the user
 name has been edited, it is also checked. If an error is found, a
 message box opens announcing the error, and the update is stopped to
-allow you to correct the error and click <B>Update Conditional</B>
+allow you to correct the error and click <b>Update Conditional</b>
 again. If no error is found, the action is updated with the entered
 data, the Edit Conditional window is closed, and the user is returned to
-the Edit Logix window.</P>
-<P>Two other buttons are available at the bottom of the Edit
-Conditional window. Clicking <B>Cancel</B> will close the Edit
-Conditional window without updating the Conditional. Clicking <B>Cancel</B>
-results in loss of any data that has been entered. The other button, <B>Delete
-Conditional</B>, provides an easy way to delete an unneeded Conditional.
-Click <B>Delete Conditional</B> to delete the Conditional being edited
-and return to the Edit Logix window.</P>
+the Edit Logix window.</p>
+<p>Two other buttons are available at the bottom of the Edit
+Conditional window. Clicking <b>Cancel</b> will close the Edit
+Conditional window without updating the Conditional. Clicking <b>Cancel</b>
+results in loss of any data that has been entered. The other button, <b>Delete
+Conditional</b>, provides an easy way to delete an unneeded Conditional.
+Click <b>Delete Conditional</b> to delete the Conditional being edited
+and return to the Edit Logix window.</p>
 
-<P>Available state variables and actions are listed below. For more
+<p>Available state variables and actions are listed below. For more
 information, consult the Logix documentation on the JMRI web page
-http://jmri.sourceforge.net/ .</P>
+http://jmri.org/ .</p>
 
-<DT CLASS="left"><A NAME="variable">
-<H2>Available State Variables</H2>
-</A></DT>
+<dt class="left"><a name="variable">
+<h2>Available State Variables</h2>
+</a></dt>
 
-<P>State variables that are currently available for use in
+<p>State variables that are currently available for use in
 Conditionals are listed below, along with information on each. State
 variables must always evaluate to either true or false. The condition
 resulting in true is given for each. If the condition is not met, the
@@ -195,131 +194,131 @@ entities (sensor, turnout, light, etc.) specified in state variables in
 its Conditionals are monitored, unless the Triggers Calculation checkbox
 of the state variable is unchecked. A calculation of all Conditionals in
 the Logix is triggered when any monitored state changes as noted below
-(if not obvious).</P>
-<UL>
-	<LI><B>Sensor Active</B>: Evaluates to true if the state of the
-	specified sensor is active.</LI>
-	<LI><B>Sensor Inactive</B>: Evaluates to true if the state of the
-	specified sensor is inactive.</LI>
-	<LI><B>Turnout Thrown</B>: Evaluates to true if the known state of
-	the specified turnout is thrown.</LI>
-	<LI><B>Turnout Closed</B>: Evaluates to true if the known state of
-	the specified turnout is closed.</LI>
-	<LI><B>Conditional True</B>: Evaluates to true if the state of the
-	specified conditional is true.</LI>
-	<LI><B>Conditional False</B>: Evaluates to true if the state of
-	the specified conditional is false.</LI>
-	<LI><B>Light On</B>: Evaluates to true if the specified light is
-	on.</LI>
-	<LI><B>Light Off</B>: Evaluates to true if the specified light is
-	off.</LI>
-	<LI><B>Memory Equals</B>: Evaluates to true if the value saved in
+(if not obvious).</p>
+<ul>
+	<li><b>Sensor Active</b>: Evaluates to true if the state of the
+	specified sensor is active.</li>
+	<li><b>Sensor Inactive</b>: Evaluates to true if the state of the
+	specified sensor is inactive.</li>
+	<li><b>Turnout Thrown</b>: Evaluates to true if the known state of
+	the specified turnout is thrown.</li>
+	<li><b>Turnout Closed</b>: Evaluates to true if the known state of
+	the specified turnout is closed.</li>
+	<li><b>Conditional True</b>: Evaluates to true if the state of the
+	specified conditional is true.</li>
+	<li><b>Conditional False</b>: Evaluates to true if the state of
+	the specified conditional is false.</li>
+	<li><b>Light On</b>: Evaluates to true if the specified light is
+	on.</li>
+	<li><b>Light Off</b>: Evaluates to true if the specified light is
+	off.</li>
+	<li><b>Memory Equals</b>: Evaluates to true if the value saved in
 	the specified memory is the same as the value specified in the state
 	variable. Calculation is triggered when the monitored memory value
-	changes to or from the specified value.</LI>
-	<LI><B>Fast Clock Range</B>: Evaluates to true if the current fast
+	changes to or from the specified value.</li>
+	<li><b>Fast Clock Range</b>: Evaluates to true if the current fast
 	clock time is between the begin time and end time specified for the
 	range. Times must be specified in hh:mm format, where hh is hours and
 	mm is minutes, relative to a 24-hour clock. Calculation is triggered
 	when the fast clock time enters the range and when the fast clock time
-	exits the range.</LI>
-	<LI><B>Signal Red</B>: Evaluates to true if the appearance of the
+	exits the range.</li>
+	<li><b>Signal Red</b>: Evaluates to true if the appearance of the
 	specified signal head is red. Calculation is triggered when the
-	appearance change to or from red.</LI>
-	<LI><B>Signal Yellow</B>: Evaluates to true if the appearance of
+	appearance change to or from red.</li>
+	<li><b>Signal Yellow</b>: Evaluates to true if the appearance of
 	the specified signal head is yellow. Calculation is triggered when the
-	appearance change to or from yellow.</LI>
-	<LI><B>Signal Green</B>: Evaluates to true if the appearance of
+	appearance change to or from yellow.</li>
+	<li><b>Signal Green</b>: Evaluates to true if the appearance of
 	the specified signal head is green. Calculation is triggered when the
-	appearance change to or from green.</LI>
-	<LI><B>Signal Dark</B>: Evaluates to true if the appearance of the
+	appearance change to or from green.</li>
+	<li><b>Signal Dark</b>: Evaluates to true if the appearance of the
 	specified signal head is dark. Calculation is triggered when the
-	appearance change to or from dark.</LI>
-	<LI><B>Signal Flashing Red</B>: Evaluates to true if the
+	appearance change to or from dark.</li>
+	<li><b>Signal Flashing Red</b>: Evaluates to true if the
 	appearance of the specified signal head is flashing red. Calculation is
-	triggered when the appearance change to or from flashing red.</LI>
-	<LI><B>Signal Flashing Yellow</B>: Evaluates to true if the
+	triggered when the appearance change to or from flashing red.</li>
+	<li><b>Signal Flashing Yellow</b>: Evaluates to true if the
 	appearance of the specified signal head is flashing yellow. Calculation
-	is triggered when the appearance change to or from flashing yellow.</LI>
-	<LI><B>Signal Flashing Green</B>: Evaluates to true if the
+	is triggered when the appearance change to or from flashing yellow.</li>
+	<li><b>Signal Flashing Green</b>: Evaluates to true if the
 	appearance of the specified signal head is flashing green. Calculation
-	is triggered when the appearance change to or from flashing green.</LI>
-	<LI><B>Signal Lit</B>: Evaluates to true if the specified signal
-	head is lit.</LI>
-	<LI><B>Signal Held</B>: Evaluates to true if the specified signal
-	head is being held.</LI>
-</UL>
-<P></P>
+	is triggered when the appearance change to or from flashing green.</li>
+	<li><b>Signal Lit</b>: Evaluates to true if the specified signal
+	head is lit.</li>
+	<li><b>Signal Held</b>: Evaluates to true if the specified signal
+	head is being held.</li>
+</ul>
+<p></p>
 
-<DT CLASS="left"><A NAME="action">
-<H2>Available Actions</H2>
-</A></DT>
+<dt class="left"><a name="action">
+<h2>Available Actions</h2>
+</a></dt>
 
-<P>Actions that are currently available for use in Conditionals are
-listed below along with information on each:</P>
-<UL>
-	<LI><B>Set Turnout</B>: Sets the specified turnout to the chosen
+<p>Actions that are currently available for use in Conditionals are
+listed below along with information on each:</p>
+<ul>
+	<li><b>Set Turnout</b>: Sets the specified turnout to the chosen
 	state. Specify the turnout to set by entering its name. Specify the
-	state to set by choosing Closed or Thrown in the popup menu.</LI>
-	<LI><B>Set Signal Appearance</B>: Sets the specified signal head
+	state to set by choosing Closed or Thrown in the popup menu.</li>
+	<li><b>Set Signal Appearance</b>: Sets the specified signal head
 	to the chosen appearance. Specify the signal head to set by entering
 	its name. Specify the appearance to set by choosing from the popup
-	menu.</LI>
-	<LI><B>Set Signal Held</B>: Sets the specified signal head to
-	hold. Specify the signal head to hold by entering its name.</LI>
-	<LI><B>Clear Signal Held</B>: Clears the hold on the specified
-	signal head. Specify the signal head by entering its name.</LI>
-	<LI><B>Set Signal Dark</B>: Sets the specified signal head to not
-	lit. Specify the signal head by entering its name.</LI>
-	<LI><B>Set Signal Lit</B>: Sets the specified signal head to lit.
-	Specify the signal head by entering its name.</LI>
-	<LI><B>Trigger Route</B>: Triggers the specified route. Specify
-	the route by entering its name.</LI>
-	<LI><B>Set Sensor</B>: Sets the specified sensor to the chosen
+	menu.</li>
+	<li><b>Set Signal Held</b>: Sets the specified signal head to
+	hold. Specify the signal head to hold by entering its name.</li>
+	<li><b>Clear Signal Held</b>: Clears the hold on the specified
+	signal head. Specify the signal head by entering its name.</li>
+	<li><b>Set Signal Dark</b>: Sets the specified signal head to not
+	lit. Specify the signal head by entering its name.</li>
+	<li><b>Set Signal Lit</b>: Sets the specified signal head to lit.
+	Specify the signal head by entering its name.</li>
+	<li><b>Trigger Route</b>: Triggers the specified route. Specify
+	the route by entering its name.</li>
+	<li><b>Set Sensor</b>: Sets the specified sensor to the chosen
 	state. Specify the sensor to set by entering its name. Specify the
-	state to set by choosing Active or Inactive in the popup menu.</LI>
-	<LI><B>Delayed Set Sensor</B>: Sets the specified sensor to the
+	state to set by choosing Active or Inactive in the popup menu.</li>
+	<li><b>Delayed Set Sensor</b>: Sets the specified sensor to the
 	chosen state after waiting for a specified number of seconds. Specify
 	the sensor to set by entering its name. Specify the state to set by
 	choosing Active or Inactive in the popup menu. Specify the number of
 	seconds to delay before setting the sensor by entering a number in the
 	right-most field. If this Conditional is already waiting to set this 
 	sensor, this action is ignored, and the previous action continues as 
-	originally scheduled.(see also <b>Reset Delayed Set Sensor</b> below.)</LI>
-	<LI><B>Set Light</B>: Sets the specified light to the chosen
+	originally scheduled.(see also <b>Reset Delayed Set Sensor</b> below.)</li>
+	<li><b>Set Light</b>: Sets the specified light to the chosen
 	state. Specify the light to set by entering its name. Specify the state
-	to set by choosing On or Off in the popup menu.</LI>
-	<LI><B>Set Memory</B>: Sets the specified memory to the entered
+	to set by choosing On or Off in the popup menu.</li>
+	<li><b>Set Memory</b>: Sets the specified memory to the entered
 	value. Specify the memory to set by entering its name. Specify the
-	value to set in the memory by entering it in the right-most field.</LI>
-	<LI><B>Enable Logix</B>: Enables the specified logix. Specify the
-	logix to enable by entering its name.</LI>
-	<LI><B>Disable Logix</B>: Disables the specified logix. Specify
-	the logix to disable by entering its name.</LI>
-	<LI><B>Play Sound File</B>: Plays the specified sound file.
+	value to set in the memory by entering it in the right-most field.</li>
+	<li><b>Enable Logix</b>: Enables the specified logix. Specify the
+	logix to enable by entering its name.</li>
+	<li><b>Disable Logix</b>: Disables the specified logix. Specify
+	the logix to disable by entering its name.</li>
+	<li><b>Play Sound File</b>: Plays the specified sound file.
 	Specify the sound file to play by entering its name in the field
-	provided. Click <B>Set</B> to bring up a file selection dialog to aid
+	provided. Click <b>Set</b> to bring up a file selection dialog to aid
 	in finding the file. Navigate to your sound file, then click your sound
 	file's name in the dialog to copy it (including its path) to the field.
-	</LI>
-	<LI><B>Run Script</B>: Starts the specified script. Specify the
-	script to start by entering its name in the field provided. Click <B>Set</B>
+	</li>
+	<li><b>Run Script</b>: Starts the specified script. Specify the
+	script to start by entering its name in the field provided. Click <b>Set</b>
 	to bring up a file selection dialog for finding the file. Navigate to
 	your script file, then click your script file's name in the dialog to
-	copy it (including its path) to the field.</LI>
-	<LI><B>Delayed Set Turnout</B>: Sets the specified turnout to the
+	copy it (including its path) to the field.</li>
+	<li><b>Delayed Set Turnout</b>: Sets the specified turnout to the
 	chosen state after waiting for a specified number of seconds. Specify
 	the turnout to set by entering its name. Specify the state to set by
 	choosing Closed or Thrown in the popup menu. Specify the number of
 	seconds to delay before setting the turnout by entering a number in the
 	right-most field. If this Conditional is already waiting to set this 
 	turnout, this action is ignored, and the previous action continues as 
-	originally scheduled.(see also <b>Reset Delayed Set Turnout</b> below.)</LI>
-	<LI><B>Turnout Lock</B>: Locks or unlocks a turnout. Enter the
+	originally scheduled.(see also <b>Reset Delayed Set Turnout</b> below.)</li>
+	<li><b>Turnout Lock</b>: Locks or unlocks a turnout. Enter the
 	name for the turnout, and choose the operation from the popup menu.
-	Note, to control the type of turnout lock go to the <A
-		HREF="TurnoutTable.shtml">Turnout Table</A> and select the Lock Mode.</LI>
-	<LI><B>Reset Delayed Set Sensor</B>: Sets the specified sensor to the
+	Note, to control the type of turnout lock go to the <a
+		href="TurnoutTable.shtml">Turnout Table</a> and select the Lock Mode.</li>
+	<li><b>Reset Delayed Set Sensor</b>: Sets the specified sensor to the
 	chosen state after waiting for a specified number of seconds. Specify
 	the sensor to set by entering its name. Specify the state to set by
 	choosing Active or Inactive in the popup menu. Specify the number of
@@ -328,12 +327,12 @@ listed below along with information on each:</P>
 	except if this Conditional is already actively waiting to set the specified 
 	sensor, the previous wait is cancelled, and a new wait period is started. 
 	In effect, the wait time is restarted. The sensor is not set until the most 
-	recent wait period expires.</LI>
-	<LI><B>Cancel Sensor Timers</B>: Cancels all timers waiting to set the 
+	recent wait period expires.</li>
+	<li><b>Cancel Sensor Timers</b>: Cancels all timers waiting to set the 
 	specified sensor in all Conditionals in all Logixs. Specify the sensor by 
 	entering its name. The sensor is not set; all active delayed actions for 
-	setting the specified sensor are cancelled without setting the sensor.</LI>
-	<LI><B>Reset Delayed Set Turnout</B>: Sets the specified turnout to the
+	setting the specified sensor are cancelled without setting the sensor.</li>
+	<li><b>Reset Delayed Set Turnout</b>: Sets the specified turnout to the
 	chosen state after waiting for a specified number of seconds. Specify
 	the turnout to set by entering its name. Specify the state to set by
 	choosing Closed or Thrown in the popup menu. Specify the number of
@@ -342,41 +341,40 @@ listed below along with information on each:</P>
 	except if this Conditional is already actively waiting to set the specified 
 	turnout, the previous wait is cancelled, and a new wait period is started. 
 	In effect, the wait time is restarted. The turnout is not set until the most 
-	recent wait period expires.</LI>
-	<LI><B>Cancel Turnout Timers</B>: Cancels all timers waiting to set the 
+	recent wait period expires.</li>
+	<li><b>Cancel Turnout Timers</b>: Cancels all timers waiting to set the 
 	specified turnouts in all Conditionals in all Logixs. Specify the turnout by 
 	entering its name. The turnout is not set; all active delayed actions for 
-	setting the specified turnout are cancelled without setting the turnout.</LI>
-	<LI><B>Set Fast Clock Time</B>: Sets the time on the fast clock to the entered 
+	setting the specified turnout are cancelled without setting the turnout.</li>
+	<li><b>Set Fast Clock Time</b>: Sets the time on the fast clock to the entered 
 	time. The time is entered as <i>hh:mm</i> where <i>hh</i> is hours and <i>mm</i> 
 	is minutes on a 24-hour clock. This action sets the fast clock to the specified
-	time regardless of whether the fast clock is running or stopped.</LI>
-	<LI><B>Start Fast Clock</B>: Starts the JMRI fast clock running. If the fast 
-	clock is already running, this action has no effect.</LI>
-	<LI><B>Stop Fast Clock</B>: Pauses the JMRI fast clock. If the fast 
-	clock is not running, this action has no effect.</LI>
-	<LI><B>Copy Memory To Memory</B>: Copies the value of a memory variable to 
+	time regardless of whether the fast clock is running or stopped.</li>
+	<li><b>Start Fast Clock</b>: Starts the JMRI fast clock running. If the fast 
+	clock is already running, this action has no effect.</li>
+	<li><b>Stop Fast Clock</b>: Pauses the JMRI fast clock. If the fast 
+	clock is not running, this action has no effect.</li>
+	<li><b>Copy Memory To Memory</b>: Copies the value of a memory variable to 
 	another memory variable. Specify the memory to be copied from by entering its 
 	name in the leftmost field. Specify the memory to receive the copied value by 
-	entering its name in the rightmost field.</LI>
-	<LI><B>Set Light Intensity</B>: Sets the intensity of a specified variable 
+	entering its name in the rightmost field.</li>
+	<li><b>Set Light Intensity</b>: Sets the intensity of a specified variable 
 	intensity light to the entered intensity value. Specify the light to set by 
 	entering its name. Specify the intensity by entering the percent intensity 
 	as an integer in the range 0 to 100. If the specified light is not a 
 	variable light, or if the intensity value entered is not an integer in the 
-	required range, an error message is displayed.</LI>
-	<LI><B>Set Light Transition Time</B>: Sets the transition time  of a 
+	required range, an error message is displayed.</li>
+	<li><b>Set Light Transition Time</b>: Sets the transition time  of a 
 	specified variable intensity light to the entered time. Specify the light to 
 	set by entering its name. Specify the transition time by entering the 
 	number of fast clock minutes needed to move from 0% intensity to 100% 
 	intensity. If the specified light is not a variable light, or if a positive 
 	integer is not entered for the number of fast clock minutes, an error 
-	message results.</LI>
-
-</UL>
-<P></P>
+	message results.</li>
+</ul>
 
 <!--#include virtual="/Footer" -->
-</BODY>
-</HTML>
-
+ </div><!-- closes #mainContent-->
+</div> <!-- closes #mBody-->
+</body>
+</html>

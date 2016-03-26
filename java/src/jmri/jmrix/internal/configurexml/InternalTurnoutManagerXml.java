@@ -1,8 +1,6 @@
 package jmri.jmrix.internal.configurexml;
 
 import org.jdom2.Element;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 
 /**
  * Provides load and store functionality for configuring
@@ -12,9 +10,8 @@ import org.slf4j.LoggerFactory;
  * method here.
  *
  * @author Bob Jacobsen Copyright: Copyright (c) 2006
- * @version $Revision$
  */
-@edu.umd.cs.findbugs.annotations.SuppressWarnings(value = "NM_SAME_SIMPLE_NAME_AS_SUPERCLASS", justification = "name assigned historically")
+@edu.umd.cs.findbugs.annotations.SuppressFBWarnings(value = "NM_SAME_SIMPLE_NAME_AS_SUPERCLASS", justification = "name assigned historically")
 public class InternalTurnoutManagerXml extends jmri.managers.configurexml.InternalTurnoutManagerXml {
 
     public InternalTurnoutManagerXml() {
@@ -24,7 +21,5 @@ public class InternalTurnoutManagerXml extends jmri.managers.configurexml.Intern
     public void setStoreElementClass(Element turnouts) {
         turnouts.setAttribute("class", this.getClass().getName());
     }
-
-    static Logger log = LoggerFactory.getLogger(InternalTurnoutManagerXml.class.getName());
 
 }

@@ -602,15 +602,9 @@ class WarrantTableModel extends jmri.jmrit.beantable.BeanTableDataModel // Abstr
                 if (bean.equals(_warList.get(i))) {
 
                     if (_warNX.contains(bean)
-                            && ((property.equals("runMode") && e.getNewValue() == Integer
-                                    .valueOf(Warrant.MODE_NONE)) || (property
-                                    .equals("controlChange") && e.getNewValue() == Integer
-                                    .valueOf(Warrant.ABORT)))) {
+                            && ((property.equals("runMode") && ((Integer)e.getNewValue()).intValue() == Warrant.MODE_NONE) 
+                                    || (property.equals("controlChange") && ((Integer)e.getNewValue()).intValue() == Warrant.ABORT))) {
                         fireTableRowsDeleted(i, i);
-/*                        try { // TableSorter needs time to get its row count updated
-                            Thread.sleep(50);
-                        } catch (InterruptedException ie) {
-                        }*/
                         removeNXWarrant(bean);
                     } else {
                         fireTableRowsUpdated(i, i);
@@ -714,6 +708,6 @@ class WarrantTableModel extends jmri.jmrit.beantable.BeanTableDataModel // Abstr
                     + e.getSource().getClass().getName());
     }
 
-    static Logger log = LoggerFactory.getLogger(WarrantTableModel.class
+    private final static Logger log = LoggerFactory.getLogger(WarrantTableModel.class
             .getName());
 }

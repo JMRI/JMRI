@@ -4,7 +4,6 @@
  * Description:	JUnit tests for the XNetProgrammer class
  *
  * @author	Bob Jacobsen
- * @version $Revision$
  */
 package jmri.jmrix.lenz;
 
@@ -14,12 +13,9 @@ import junit.framework.Assert;
 import junit.framework.Test;
 import junit.framework.TestCase;
 import junit.framework.TestSuite;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 
 public class XNetProgrammerTest extends TestCase {
 
-    static final int RELEASE_TIME = 100;
     static final int RESTART_TIME = 20;
 
     public void testWriteCvSequence() throws JmriException {
@@ -63,10 +59,9 @@ public class XNetProgrammerTest extends TestCase {
         // traffic controller to exit from service mode.  We just
         // need to wait a few seconds and see that the listener we
         // registered earlier received the values we expected.
-        jmri.util.JUnitUtil.releaseThread(this, RELEASE_TIME);
 
-        //failure in this test occurs with the next line.
-        Assert.assertFalse("Receive Called by Programmer", l.getRcvdInvoked() == 0);
+        // failure in this test occurs with the next line.
+        jmri.util.JUnitUtil.waitFor(()->{return l.getRcvdInvoked() != 0;}, "Receive Called by Programmer");
         Assert.assertEquals("Direct mode received value", 34, l.getRcvdValue());
     }
 
@@ -115,11 +110,9 @@ public class XNetProgrammerTest extends TestCase {
         // traffic controller to exit from service mode.  We just
         // need to wait a few seconds and see that the listener we
         // registered earlier received the values we expected.
-        jmri.util.JUnitUtil.releaseThread(this, RELEASE_TIME);
 
-        //failure in this test occurs with the next line.
-        Assert.assertFalse("Receive Called by Programmer", l.getRcvdInvoked() == 0);
-
+        // failure in this test occurs with the next line.
+        jmri.util.JUnitUtil.waitFor(()->{return l.getRcvdInvoked() != 0;}, "Receive Called by Programmer");
         Assert.assertEquals("Register mode received value", 12, l.getRcvdValue());
     }
 
@@ -165,11 +158,9 @@ public class XNetProgrammerTest extends TestCase {
         // traffic controller to exit from service mode.  We just
         // need to wait a few seconds and see that the listener we
         // registered earlier received the values we expected.
-        jmri.util.JUnitUtil.releaseThread(this, RELEASE_TIME);
 
-        //failure in this test occurs with the next line.
-        Assert.assertFalse("Receive Called by Programmer", l.getRcvdInvoked() == 0);
-
+        // failure in this test occurs with the next line.
+        jmri.util.JUnitUtil.waitFor(()->{return l.getRcvdInvoked() != 0;}, "Receive Called by Programmer");
         Assert.assertEquals("Register mode received value", 34, l.getRcvdValue());
     }
 
@@ -217,10 +208,9 @@ public class XNetProgrammerTest extends TestCase {
         // traffic controller to exit from service mode.  We just
         // need to wait a few seconds and see that the listener we
         // registered earlier received the values we expected.
-        jmri.util.JUnitUtil.releaseThread(this, RELEASE_TIME);
 
-        //failure in this test occurs with the next line.
-        Assert.assertFalse("Receive Called by Programmer", l.getRcvdInvoked() == 0);
+        // failure in this test occurs with the next line.
+        jmri.util.JUnitUtil.waitFor(()->{return l.getRcvdInvoked() != 0;}, "Receive Called by Programmer");
         Assert.assertEquals("Register mode received value", 34, l.getRcvdValue());
     }
 
@@ -268,10 +258,9 @@ public class XNetProgrammerTest extends TestCase {
         // traffic controller to exit from service mode.  We just
         // need to wait a few seconds and see that the listener we
         // registered earlier received the values we expected.
-        jmri.util.JUnitUtil.releaseThread(this, RELEASE_TIME);
 
         //failure in this test occurs with the next line.
-        Assert.assertFalse("Receive Called by Programmer", l.getRcvdInvoked() == 0);
+        jmri.util.JUnitUtil.waitFor(()->{return l.getRcvdInvoked() != 0;}, "Receive Called by Programmer");
         Assert.assertEquals("Direct mode received value", 34, l.getRcvdValue());
     }
 
@@ -320,11 +309,9 @@ public class XNetProgrammerTest extends TestCase {
         // traffic controller to exit from service mode.  We just
         // need to wait a few seconds and see that the listener we
         // registered earlier received the values we expected.
-        jmri.util.JUnitUtil.releaseThread(this, RELEASE_TIME);
 
         //failure in this test occurs with the next line.
-        Assert.assertFalse("Receive Called by Programmer", l.getRcvdInvoked() == 0);
-
+        jmri.util.JUnitUtil.waitFor(()->{return l.getRcvdInvoked() != 0;}, "Receive Called by Programmer");
         Assert.assertEquals("Direct mode received value", 34, l.getRcvdValue());
     }
 
@@ -668,6 +655,5 @@ public class XNetProgrammerTest extends TestCase {
         super.tearDown();
         apps.tests.Log4JFixture.tearDown();
     }
-    static Logger log = LoggerFactory.getLogger(XNetProgrammerTest.class.getName());
 
 }

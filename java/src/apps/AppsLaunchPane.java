@@ -1,6 +1,7 @@
 // AppsLaunchPane.java
 package apps;
 
+import apps.startup.StartupActionModelUtil;
 import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.FlowLayout;
@@ -8,7 +9,6 @@ import java.beans.PropertyChangeEvent;
 import java.beans.PropertyChangeListener;
 import java.io.File;
 import java.text.MessageFormat;
-import java.util.ArrayList;
 import java.util.Enumeration;
 import java.util.Locale;
 import java.util.ResourceBundle;
@@ -22,6 +22,7 @@ import jmri.InstanceManager;
 import jmri.jmrit.jython.Jynstrument;
 import jmri.jmrit.jython.JynstrumentFactory;
 import jmri.jmrix.ConnectionConfig;
+import jmri.jmrix.ConnectionConfigManager;
 import jmri.jmrix.ConnectionStatus;
 import jmri.jmrix.JmrixConfigPane;
 import jmri.util.FileUtil;
@@ -78,15 +79,15 @@ public abstract class AppsLaunchPane extends JPanel implements PropertyChangeLis
     }
 
     protected final void addToActionModel() {
-        apps.CreateButtonModel bm = InstanceManager.getDefault(apps.CreateButtonModel.class);
+        StartupActionModelUtil util = InstanceManager.getDefault(StartupActionModelUtil.class);
         ResourceBundle actionList = ResourceBundle.getBundle("apps.ActionListBundle");
         Enumeration<String> e = actionList.getKeys();
         while (e.hasMoreElements()) {
             String key = e.nextElement();
             try {
-                bm.addAction(key, actionList.getString(key));
+                util.addAction(key, actionList.getString(key));
             } catch (ClassNotFoundException ex) {
-                log.error("Did not find class {}", key);
+                log.error("Did not find class \"{}\"", key);
             }
         }
     }
@@ -97,7 +98,7 @@ public abstract class AppsLaunchPane extends JPanel implements PropertyChangeLis
      * additional buttons appended to it later. The default implementation here
      * just creates an empty space for these to be added to.
      */
-    @edu.umd.cs.findbugs.annotations.SuppressWarnings(value = "ST_WRITE_TO_STATIC_FROM_INSTANCE_METHOD",
+    @edu.umd.cs.findbugs.annotations.SuppressFBWarnings(value = "ST_WRITE_TO_STATIC_FROM_INSTANCE_METHOD",
             justification = "only one application at a time")
     protected void setButtonSpace() {
         _buttonSpace = new JPanel();
@@ -105,7 +106,7 @@ public abstract class AppsLaunchPane extends JPanel implements PropertyChangeLis
     }
     static JComponent _jynstrumentSpace = null;
 
-    @edu.umd.cs.findbugs.annotations.SuppressWarnings(value = "ST_WRITE_TO_STATIC_FROM_INSTANCE_METHOD",
+    @edu.umd.cs.findbugs.annotations.SuppressFBWarnings(value = "ST_WRITE_TO_STATIC_FROM_INSTANCE_METHOD",
             justification = "only one application at a time")
     protected void setJynstrumentSpace() {
         _jynstrumentSpace = new JPanel();
@@ -245,18 +246,14 @@ public abstract class AppsLaunchPane extends JPanel implements PropertyChangeLis
 
         // add listerner for Com port updates
         ConnectionStatus.instance().addPropertyChangeListener(this);
-        ArrayList<Object> connList = InstanceManager.configureManagerInstance().getInstanceList(ConnectionConfig.class);
         int i = 0;
-        if (connList != null) {
-            for (int x = 0; x < connList.size(); x++) {
-                ConnectionConfig conn = (ConnectionConfig) connList.get(x);
-                if (!conn.getDisabled()) {
-                    connection[i] = conn;
-                    i++;
-                }
-                if (i > 3) {
-                    break;
-                }
+        for (ConnectionConfig conn : InstanceManager.getDefault(ConnectionConfigManager.class)) {
+            if (!conn.getDisabled()) {
+                connection[i] = conn;
+                i++;
+            }
+            if (i > 3) {
+                break;
             }
         }
         buildLine4(pane2);
@@ -289,7 +286,7 @@ public abstract class AppsLaunchPane extends JPanel implements PropertyChangeLis
      * Provide access to a place where applications can expect the configuration
      * code to build run-time buttons.
      *
-     * @see apps.CreateButtonPanel
+     * @see apps.startup.CreateButtonModelFactory
      * @return null if no such space exists
      */
     static public JComponent buttonSpace() {
@@ -412,5 +409,5 @@ public abstract class AppsLaunchPane extends JPanel implements PropertyChangeLis
      */
     protected abstract String windowHelpID();
 
-    static Logger log = LoggerFactory.getLogger(AppsLaunchPane.class.getName());
+    private final static Logger log = LoggerFactory.getLogger(AppsLaunchPane.class.getName());
 }

@@ -18,6 +18,7 @@ import javax.swing.JLabel;
 import javax.swing.JOptionPane;
 import jmri.BasicRosterEntry;
 import jmri.DccLocoAddress;
+import jmri.InstanceManager;
 import jmri.LocoAddress;
 import jmri.beans.ArbitraryBean;
 import jmri.jmrit.roster.rostergroup.RosterGroup;
@@ -99,7 +100,7 @@ public class RosterEntry extends ArbitraryBean implements RosterObject, BasicRos
     protected String _roadName = "";
     protected String _roadNumber = "";
     protected String _mfg = "";
-    protected String _owner = _defaultOwner;
+    protected String _owner = InstanceManager.getDefault(RosterConfigManager.class).getDefaultOwner();
     protected String _model = "";
     protected String _dccAddress = "3";
     //protected boolean _isLongAddress = false;
@@ -111,14 +112,26 @@ public class RosterEntry extends ArbitraryBean implements RosterObject, BasicRos
     protected String _dateUpdated = "";
     protected int _maxSpeedPCT = 100;
 
+    /**
+     *
+     * @return @deprecated since 4.1.4 use {@link jmri.jmrit.roster.RosterConfigManager#getDefaultOwner()
+     * } instead
+     */
+    @Deprecated
     public static String getDefaultOwner() {
-        return _defaultOwner;
+        return InstanceManager.getDefault(RosterConfigManager.class).getDefaultOwner();
     }
 
+    /**
+     *
+     * @param n
+     * @deprecated since 4.1.4 use {@link jmri.jmrit.roster.RosterConfigManager#setDefaultOwner(java.lang.String)
+     * } instead
+     */
+    @Deprecated
     public static void setDefaultOwner(String n) {
-        _defaultOwner = n;
+        InstanceManager.getDefault(RosterConfigManager.class).setDefaultOwner(n);
     }
-    static private String _defaultOwner = "";
 
     public final static int MAXFNNUM = 28;
 
@@ -152,7 +165,6 @@ public class RosterEntry extends ArbitraryBean implements RosterObject, BasicRos
      *
      */
     public RosterEntry() {
-        _owner = _defaultOwner;
     }
 
     public RosterEntry(String fileName) {
@@ -1531,7 +1543,7 @@ public class RosterEntry extends ArbitraryBean implements RosterObject, BasicRos
     }
 
     // initialize logging
-    static Logger log = LoggerFactory.getLogger(RosterEntry.class.getName());
+    private final static Logger log = LoggerFactory.getLogger(RosterEntry.class.getName());
 
     @Override
     public String getDisplayName() {

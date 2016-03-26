@@ -23,6 +23,8 @@ import jmri.jmrit.operations.routes.Route;
 import jmri.jmrit.operations.routes.RouteLocation;
 import jmri.jmrit.operations.setup.Control;
 import jmri.jmrit.operations.setup.Setup;
+import jmri.jmrit.operations.trains.timetable.TrainSchedule;
+import jmri.jmrit.operations.trains.timetable.TrainScheduleManager;
 import jmri.util.FileUtil;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -43,10 +45,12 @@ public class TrainSwitchLists extends TrainCommon {
     String messageFormatText = ""; // the text being formated in case there's an exception
 
     /**
-     * builds a switch list for a location
+     * builds a switch list for a location.  If not running in real time,
+     * new train work is appended to the end of the file.
      *
      * @param location The Location needing a switch list
      */
+    @edu.umd.cs.findbugs.annotations.SuppressFBWarnings(value = "BC_UNCONFIRMED_CAST_OF_RETURN_VALUE", justification = "CarManager only provides Car Objects")
     public void buildSwitchList(Location location) {
         // Append switch list data if not operating in real time
         boolean newTrainsOnly = !Setup.isSwitchListRealTime();
@@ -153,7 +157,7 @@ public class TrainSwitchLists extends TrainCommon {
                         newLine(fileOut);
                         newLine(fileOut, MessageFormat.format(messageFormatText = TrainSwitchListText
                                 .getStringScheduledWork(), new Object[]{train.getName(), train.getDescription()}));
-                        if (train.isTrainInRoute()) {
+                        if (train.isTrainEnRoute()) {
                             if (!trainDone) {
                                 newLine(fileOut, MessageFormat.format(messageFormatText = TrainSwitchListText
                                         .getStringDepartedExpected(), new Object[]{
@@ -180,7 +184,7 @@ public class TrainSwitchLists extends TrainCommon {
                                 fileOut.write(FORM_FEED);
                             }
                             newLine(fileOut);
-                            if (train.isTrainInRoute()) {
+                            if (train.isTrainEnRoute()) {
                                 if (expectedArrivalTime.equals(Train.ALREADY_SERVICED)) {
                                     newLine(fileOut, MessageFormat.format(messageFormatText = TrainSwitchListText
                                             .getStringVisitNumberDone(), new Object[]{stops, train.getName(),
@@ -364,7 +368,7 @@ public class TrainSwitchLists extends TrainCommon {
                             if (splitString(car.getDestinationTrackName()).equals(trackName)) {
                                 if (car.getRouteDestination() != null &&
                                         splitString(car.getRouteDestination().getLocation().getName()).equals(splitString(location.getName()))) {
-                                    if (trainName != car.getTrainName()) {
+                                    if (!trainName.equals(car.getTrainName())) {
                                         trainName = car.getTrainName();
                                         newLine(fileOut, MessageFormat.format(messageFormatText = TrainSwitchListText
                                                 .getStringScheduledWork(), new Object[]{car.getTrainName(), car.getTrain().getDescription()}));
@@ -418,5 +422,5 @@ public class TrainSwitchLists extends TrainCommon {
         newLine(file, string, !IS_MANIFEST);
     }
 
-    static Logger log = LoggerFactory.getLogger(TrainSwitchLists.class.getName());
+    private final static Logger log = LoggerFactory.getLogger(TrainSwitchLists.class.getName());
 }

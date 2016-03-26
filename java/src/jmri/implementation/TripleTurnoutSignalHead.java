@@ -40,7 +40,7 @@ public class TripleTurnoutSignalHead extends DoubleTurnoutSignalHead {
     }
 
     @SuppressWarnings("fallthrough")
-    @edu.umd.cs.findbugs.annotations.SuppressWarnings(value = "SF_SWITCH_FALLTHROUGH")
+    @edu.umd.cs.findbugs.annotations.SuppressFBWarnings(value = "SF_SWITCH_FALLTHROUGH")
     protected void updateOutput() {
         // assumes that writing a turnout to an existing state is cheap!
         if (mLit == false) {
@@ -119,7 +119,7 @@ public class TripleTurnoutSignalHead extends DoubleTurnoutSignalHead {
         return false;
     }
 
-    static Logger log = LoggerFactory.getLogger(TripleTurnoutSignalHead.class.getName());
+    private final static Logger log = LoggerFactory.getLogger(TripleTurnoutSignalHead.class.getName());
 }
 
 /* @(#)TripleTurnoutSignalHead.java */

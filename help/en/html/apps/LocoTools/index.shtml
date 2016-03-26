@@ -5,7 +5,7 @@
     <title>
  	JMRI: LocoNet Tools
     </title>
-    <meta content="Bob Jacobsen, Egbert Broerse" name="Author">
+    <meta name="author" content="Bob Jacobsen, Egbert Broerse">
     <meta name="keywords" content="Digitrax LocoNet Tools JMRI decoderpro dcc nmra">
 
 <!-- Style -->
@@ -20,10 +20,10 @@
 <!--#include virtual="/Header" -->
 <!--#include virtual="Sidebar" -->
 
-	<div id="mainContent">
+<div id="mainContent">
 
 	    <h1>LocoNet&trade; Tools</h1>
-		<p class=subtitle>
+		<p class="subtitle">
 		   LocoNet is a trademark of <a href="http://www.digitrax.com">Digitrax, Inc.</a>
 		</p>
 
@@ -31,13 +31,13 @@
 		page introduces them, describes how to use them, and points you
 		to installation and other information.</p>
 		<dl>
-		    <dt><a HREF="#locomon"><dfn>LocoNet monitor</dfn></a></dt>
+		    <dt><a href="#locomon"><dfn>LocoNet Monitor</dfn></a></dt>
 		    <dd>
 			Display and log the traffic on the LocoNet, in either
 			hex or human readable form.
 		    </dd>
 
-		    <dt><a HREF="#slotmon"><dfn>Slot Monitor</dfn></a> </dt>
+		    <dt><a href="#slotmon"><dfn>Slot Monitor</dfn></a> </dt>
 		    <dd> Watch the contents of the command station's slots as
 		    they're changed.</dd>
                     
@@ -47,10 +47,10 @@
                     <dt><a HREF="#loconetstats"><dfn>LocoNet Interface Statistics monitor</dfn></a></dt>
                     <dd>Monitor the LocoNet interface hardware status.</dd>
                     
-		    <dt><a HREF="#pm4"><dfn>BDL16, SE8c, PM4 and DS64 Programmers</dfn></a> </dt>
+		    <dt><a HREF="#pm4"><dfn>DS64, SE8C, PM4 and BDL16 Programmers</dfn></a> </dt>
 		    <dd> A tool to help you configure these boards.</dd>
 
-		    <dt><a HREF="#locoio"><dfn>LocoIO Programmer</dfn></a> </dt>
+		    <dt><a HREF="#locoio"><dfn>LocoIO Programmer</dfn></a> (deprecated)</dt>
 		    <dd> A tool to help you configure a LocoIO board.</dd>
 
 		    <dt><a HREF="#cmdstn"><dfn>Command Station Configuration Tool</dfn></a> </dt>
@@ -87,28 +87,28 @@
 		</dl>
 
 		<p>
-		These tools also present in the JMRI demo program, and to some
+		These tools are also present in the JMRI demo program, and to some
 		extent in DecoderPro. And, of course, you can build them into a
 		program of your own!  The LocoNet Tools program is simply a
 		convenient platform for finding and accessing these features.</p>
 
 		<p>The libraries also contain utilities for controlling your
 		layout (operating turnouts and signals, responding to inputs
-		and block occupancy, etc), for programming decoders, and
-		others.  These are not LocoNet specific, so are described
+		and block occupancy, etc.), for programming decoders, and
+		others.  Those are not LocoNet specific, so are described
 		elsewhere on this web site.</p>
 
-		<div class=list>
+		<div class="list">
 		    <dl>
-		    <dt class=im100w>
+		    <dt class="im100w">
 			<a name="locomon"></a>
                         <a href="images/LocoMonFrame.gif">
                             <img src="images/LocoMonFrame.gif"
 			         width=100 height=50
 			         alt="LocoNet Monitor"></a>
 		    </dt>
-		    <dd class=first>
-		    <H2>LocoNet Monitor</H2>
+		    <dd class="first">
+		    <h2>LocoNet Monitor</h2>
 			<p>The LocoNet Monitor tool displays LocoNet traffic in a
 			human-readable form. The last 20 messages are available
 			in a scrolling window. Optionally, you can include the
@@ -120,7 +120,7 @@
 		    </dd>
                     <p></p>
 
-                    <dt class=im100w>
+                    <dt class="im100w">
 			<a name="slotmon"></a>
                         <a href="images/SlotMon.gif">
 			    <img src="images/SlotMon.gif"
@@ -128,7 +128,8 @@
 			         alt="Command Station Slot Monitor"></a>
 		    </dt>
 		    <dd>
-			<H2>Slot Monitor</H2>
+		    
+			<h2>Slot Monitor</h2>
 			<p>
 			The Slot Monitor tool displays a table of the command
 			station's "slots" contents. Slots are used to control
@@ -144,7 +145,7 @@
 
                     <p></p>
 		    <dd>
-			<H2><a name="clockmon">Clock Monitor</a></H2>
+			<h2><a name="clockmon">Clock Monitor</a></h2>
 			<p>
 			The Clock Monitor tool allows the user to display and
                         set the LocoNet fast clock.
@@ -155,7 +156,7 @@
 
                     <p></p>
 		    <dd>
-			<H2><a name="loconetstats">LocoNet Interface Statistics Monitor</a></H2>
+			<h2><a name="loconetstats">LocoNet Interface Statistics Monitor</a></h2>
 			<p>
 			This tool provides a mechanism to examine the status of 
                         the LocoNet interface hardware device.<p>
@@ -164,7 +165,7 @@
 		    </dd>
 
                     <p></p>
-		    <dt class=im100w>
+		    <dt class="im100w">
                         <a name="pm4"></a>
                         <a href="images/DS64.png">
 			    <img src="images/DS64.png"
@@ -173,7 +174,7 @@
 		    </dt>
                     
 		    <dd>
-		    <H2>DS64, SE8c, PM4 and BDL16 Programmers</H2>
+		    <h2>DS64, SE8C, PM4 and BDL16 Programmers</h2>
 		    <p>
 			These programmer tools provide
 			a simple graphic interface for configuring Digitrax
@@ -187,15 +188,15 @@
 		    <p>
 		    More on the tool for the
 		    <ul>
-		    <LI><a href="../../../package/jmri/jmrix/loconet/ds64/DS64Frame.shtml">DS64</a>
-		    <LI><a href="../../../package/jmri/jmrix/loconet/se8/SE8Frame.shtml">SE8c</a>
-		    <LI><a href="../../../package/jmri/jmrix/loconet/pm4/PM4Frame.shtml">PM4</a>
-		    <LI><a href="../../../package/jmri/jmrix/loconet/bdl16/BDL16Frame.shtml">BDL16</a>
+		    <li><a href="../../../package/jmri/jmrix/loconet/ds64/DS64Frame.shtml">DS64</a>
+		    <li><a href="../../../package/jmri/jmrix/loconet/se8/SE8Frame.shtml">SE8C</a>
+		    <li><a href="../../../package/jmri/jmrix/loconet/pm4/PM4Frame.shtml">PM4</a>
+		    <li><a href="../../../package/jmri/jmrix/loconet/bdl16/BDL16Frame.shtml">BDL16</a>
 		    </ul>
 		    </dd>
 
                     <p></p>
-		    <dt class=im100w>
+		    <dt class="im100w">
 			<a name="locoio"></a>
                         <a href="images/locoio.gif">
 			    <img src="images/locoio.gif"
@@ -203,13 +204,15 @@
 			         alt="LocoIO Programmer screen"></a>
 		    </dt>
 		    <dd>
-		    <H2>LocoIO Programmer</H2>
+		    <h2>LocoIO Programmer (deprecated)</h2>
+		    <p><strong>The standalone LocoNet tool is no longer supported. The preferred method is via <a href="../../apps/DecoderPro/index.shtml">DecoderPro</a> with a dedicated <a href="../../../../../../../xml/decoders/Public_Domain_HDL_LocoIO.xml">Decoder Definition</a></strong>.<br>
+		    <em>The following entry is only shown as reference for JMRI versions before 3.0.</em></p>
 		    <p>
 		    The LocoIO programmer provides a simple interface for configuring
 		    <a href="http://www.locobuffer.com/LocoIO/LocoIO.htm">John Jabour's LocoIO board</a>, 
 		    a powerful component for building CTC boards and control
-		    panels. (More information on the board is available at
-		    <a href="http://www.locobuffer.com">http://www.locobuffer.com</a>)
+		    panels (More information on the board is available at
+		    <a href="http://www.locobuffer.com">http://www.locobuffer.com</a>).
 		    </p>
 
 		    <p>A LocoIO board has 16 signal pins, each of which can be
@@ -229,9 +232,6 @@
 
 		    </dd>
 
-
-
-
                     <p></p>
 		    <dd>
 			<h2><a name="cmdstn">Digitrax Command Station Configuration Tool</a></h2>
@@ -245,7 +245,7 @@
 
                     <p></p>
 		    <dd>
-			<H2><a name="loconetid">LocoNet ID Configuration Tool</a></H2>
+			<h2><a name="loconetid">LocoNet ID Configuration Tool</a></h2>
 			<p>
 			This tool provides a mechanism to read and write the 
                         LocoNet ID number.  The LocoNet ID number is used by 
@@ -258,7 +258,7 @@
                     
                     <p></p>
 
-		    <dt class=im100w>
+		    <dt class="im100w">
                         <a name="duplexgroup"></a>
                         <a href="../../../package/jmri/jmrix/loconet/duplexgroup/SampleInitialView.png">
 			    <img src="../../../package/jmri/jmrix/loconet/duplexgroup/SampleInitialView.png"
@@ -271,7 +271,7 @@
 		    </dt>
                     
 		    <dd>
-		    <H2>Duplex Group Configuration Tool</H2>
+		    <h2>Duplex Group Configuration Tool</h2>
 		    <p>
 			This tool allows reading and changing the Digitrax Duplex 
                         Network identity information, including Duplex Group 
@@ -286,7 +286,7 @@
                     <p></p>
 
                     <dd>
-		        <H2><a name="throttlemsg">Send Throttle Message Tool</a></H2>
+		        <h2><a name="throttlemsg">Send Throttle Message Tool</a></h2>
 		    	<p>
 			This tool allows the user to send text messages
                         to some models of Digitrax throttle when the throttle is
@@ -299,7 +299,7 @@
 
                     <p></p>
                     
-		    <dt class=im100w>
+		    <dt class="im100w">
                         <a name="sendpkt"></a>
                         <a href="images/Send_LocoNet_Packet_Plain.png">
 			    <img src="images/Send_LocoNet_Packet_Plain.png"
@@ -307,7 +307,7 @@
 			         alt="LocoNet Packet Source image"></a>
 		    </dt>
 		    <dd>
-		        <H2>Packet Source</H2>
+		        <h2>Packet Source</h2>
 		    	<p>
 			The Send Packet tool lets you type in a LocoNet packet
 			and send it to the layout. You type the packet in
@@ -320,7 +320,7 @@
 
                     <p></p>
                     <dd>
-		    <H2><a name="pr3mode">PR3 Mode Tool</a></H2>
+		    <h2><a name="pr3mode">PR3 Mode Tool</a></h2>
 		    <p>
 			This tool provides a way to configure the PR3 operating 
                         mode.  Details may be found <a href="../../../package/jmri/jmrix/loconet/pr3/swing/Pr3Select.shtml">here.</a>
@@ -328,7 +328,7 @@
 
                     <p></p>
                     <dd>
-		    <H2><a name="firmwaredownload">Firmware Download Tool</a></H2>
+		    <h2><a name="firmwaredownload">Firmware Download Tool</a></h2>
 		    <p>
 			This tool provides a way to update the firmware in some
                         Digitrax devices and some 3rd-party LocoNet devices. 
@@ -338,7 +338,7 @@
                     <p></p>
 
                     <dd>
-		    <H2><a name="soundloader">Sound Project Download Tool</a></H2>
+		    <h2><a name="soundloader">Sound Project Download Tool</a></h2>
 		    <p>
 			This tool provides a mechanism to write a Digitrax sound
                         project to a Digitrax mobile sound decoder.  Details may be 
@@ -347,7 +347,7 @@
 
                     <p></p>
                     <dd>
-		    <H2><a name="soundedit">Sound Project Editing Tool</a></H2>
+		    <h2><a name="soundedit">Sound Project Editing Tool</a></h2>
 		    <p>
 			This tool provides a simple way to change sound schemes 
                         for Digitrax mobile sound decoders.  Details may be 
@@ -356,10 +356,10 @@
 
                     <p></p>
                 </dl>
-        </div>
-    </div>
+</div> <!-- Closes #list -->
 
 <!--#include virtual="/Footer" -->
-
-</BODY>
-</HTML>
+  </div><!-- closes #mainContent-->
+</div> <!-- closes #mBody-->
+</body>
+</html>

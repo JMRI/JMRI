@@ -4,8 +4,6 @@ import junit.framework.Assert;
 import junit.framework.Test;
 import junit.framework.TestCase;
 import junit.framework.TestSuite;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 
 /**
  * IEEE802154SystemConnectionMemoTest.java
@@ -14,7 +12,6 @@ import org.slf4j.LoggerFactory;
  * jmri.jmrix.ieee802154.IEEE802154SystemConnectionMemo class
  *
  * @author	Paul Bender
- * @version $Revision$
  */
 public class IEEE802154SystemConnectionMemoTest extends TestCase {
 
@@ -48,7 +45,5 @@ public class IEEE802154SystemConnectionMemoTest extends TestCase {
     protected void tearDown() {
         apps.tests.Log4JFixture.tearDown();
     }
-
-    static Logger log = LoggerFactory.getLogger(IEEE802154SystemConnectionMemoTest.class.getName());
 
 }

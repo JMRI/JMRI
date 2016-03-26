@@ -43,7 +43,8 @@ public class LocoAddressXml extends jmri.configurexml.AbstractXmlAdapter {
         return element;
     }
 
-    public boolean load(Element element) {
+    @Override
+    public boolean load(Element shared, Element perNode) {
         log.error("Invalid method called");
         return false;
     }
@@ -68,5 +69,5 @@ public class LocoAddressXml extends jmri.configurexml.AbstractXmlAdapter {
         log.error("Invalid method called");
     }
 
-    static Logger log = LoggerFactory.getLogger(DccLocoAddressXml.class.getName());
+    private final static Logger log = LoggerFactory.getLogger(DccLocoAddressXml.class.getName());
 }

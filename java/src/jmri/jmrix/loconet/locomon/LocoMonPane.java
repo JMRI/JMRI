@@ -44,7 +44,7 @@ public class LocoMonPane extends jmri.jmrix.AbstractMonPane implements LocoNetLi
     }
 
     public void dispose() {
-        if (memo.getLnTrafficController() != null) {
+        if (memo!= null && memo.getLnTrafficController() != null) {
             // disconnect from the LnTrafficController
             memo.getLnTrafficController().removeLocoNetListener(~0, this);
         }
@@ -93,6 +93,17 @@ public class LocoMonPane extends jmri.jmrix.AbstractMonPane implements LocoNetLi
 
     jmri.jmrix.loconet.locomon.Llnmon llnmon = new jmri.jmrix.loconet.locomon.Llnmon();
 
+    /** 
+     * Get hex opcode for filtering
+     */
+    @Override
+    protected String getOpCodeForFilter(String raw) {
+        //note: Loconet raw is formatted like "BB 01 00 45", so extract the correct bytes from it (BB) for comparison
+        if (raw != null && raw.length() >= 2) {
+            return raw.substring(0,2);
+        } else return null;
+    }
+
     /**
      * Nested class to create one of these using old-style defaults
      */
@@ -111,5 +122,5 @@ public class LocoMonPane extends jmri.jmrix.AbstractMonPane implements LocoNetLi
         }
     }
 
-    static Logger log = LoggerFactory.getLogger(LocoMonPane.class.getName());
+    private final static Logger log = LoggerFactory.getLogger(LocoMonPane.class.getName());
 }

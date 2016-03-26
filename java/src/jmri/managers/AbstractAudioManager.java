@@ -1,4 +1,3 @@
-// AbstractAudioManager.java
 package jmri.managers;
 
 import jmri.Audio;
@@ -23,7 +22,6 @@ import org.slf4j.LoggerFactory;
  * <P>
  *
  * @author Matthew Harris copyright (c) 2009
- * @version $Revision$
  */
 public abstract class AbstractAudioManager extends AbstractManager
         implements AudioManager {
@@ -154,5 +152,3 @@ public abstract class AbstractAudioManager extends AbstractManager
 
     private static final Logger log = LoggerFactory.getLogger(AbstractAudioManager.class.getName());
 }
-
-/* @(#)AbstractAudioManager.java */

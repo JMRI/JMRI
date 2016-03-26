@@ -120,7 +120,7 @@ class ScheduleOptionsFrame extends OperationsFrame implements java.beans.Propert
     }
 
     public void propertyChange(java.beans.PropertyChangeEvent e) {
-        if (Control.showProperty) {
+        if (Control.SHOW_PROPERTY) {
             log.debug("Property change: ({}) old: ({}) new: ({})", e.getPropertyName(), e.getOldValue(), e
                     .getNewValue());
         }
@@ -129,5 +129,5 @@ class ScheduleOptionsFrame extends OperationsFrame implements java.beans.Propert
         }
     }
 
-    static Logger log = LoggerFactory.getLogger(ScheduleOptionsFrame.class.getName());
+    private final static Logger log = LoggerFactory.getLogger(ScheduleOptionsFrame.class.getName());
 }

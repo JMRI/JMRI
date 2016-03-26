@@ -1,8 +1,9 @@
 package jmri.jmrit.symbolicprog;
 
 import javax.swing.JLabel;
-import jmri.jmrit.progsupport.ProgModeSelector;
 import jmri.Programmer;
+import jmri.jmrit.progsupport.ProgModeSelector;
+import jmri.util.JUnitUtil;
 import junit.framework.Assert;
 import junit.framework.Test;
 import junit.framework.TestCase;
@@ -68,7 +69,8 @@ public class CombinedLocoSelListPaneTest extends TestCase {
     protected void setUp() throws Exception {
         super.setUp();
         apps.tests.Log4JFixture.setUp();
-        jmri.util.JUnitUtil.resetInstanceManager();
+        JUnitUtil.resetInstanceManager();
+        JUnitUtil.initConfigureManager();
     }
 
     protected void tearDown() {

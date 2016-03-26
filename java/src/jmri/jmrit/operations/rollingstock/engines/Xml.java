@@ -21,6 +21,7 @@ public class Xml {
     static final String ENGINE = "engine"; // NOI18N
     static final String HP = "hp"; // NOI18N
     static final String TYPE = "type"; // NOI18N
+    static final String B_UNIT = "bUnit"; // NOI18N
 
     static final String WEIGHT_TONS = "weightTons"; // NOI18N
     static final String CONSIST = "consist"; // NOI18N
@@ -29,7 +30,7 @@ public class Xml {
 
     // EngineManager.java
     static final String ENGINES_OPTIONS = "enginesOptions"; // NOI18N
-    static final String COLUMN_WIDTHS = "columnWidths"; // NOI18N backwards compatible TODO remove in 2013 after production release
+    static final String COLUMN_WIDTHS = "columnWidths"; // backwards compatible TODO remove in 2013 after production release // NOI18N
     static final String OPTIONS = "options"; // NOI18N
     static final String CONSISTS = "consists";  // NOI18N
     static final String NEW_CONSISTS = "newConsists";  // NOI18N

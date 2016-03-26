@@ -1,18 +1,14 @@
-// EditorFrameTest.java
 package jmri.jmrix.loconet.sdfeditor;
 
 import jmri.jmrix.loconet.sdf.SdfBuffer;
 import junit.framework.Test;
 import junit.framework.TestCase;
 import junit.framework.TestSuite;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 
 /**
  * Tests for the jmri.jmrix.loconet.sdfeditor.EditorPane class.
  *
  * @author	Bob Jacobsen Copyright 2007
- * @version $Revision$
  */
 public class EditorFrameTest extends TestCase {
 
@@ -37,8 +33,6 @@ public class EditorFrameTest extends TestCase {
         TestSuite suite = new TestSuite(EditorFrameTest.class);
         return suite;
     }
-
-    static Logger log = LoggerFactory.getLogger(EditorFrameTest.class.getName());
 
     // The minimal setup for log4J
     protected void setUp() {

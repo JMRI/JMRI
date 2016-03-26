@@ -44,7 +44,7 @@ public class RouteManager {
             OperationsSetupXml.instance(); // load setup
             RouteManagerXml.instance(); // load routes
         }
-        if (Control.showInstance) {
+        if (Control.SHOW_INSTANCE) {
             log.debug("RouteManager returns instance {}", _instance);
         }
         return _instance;
@@ -318,7 +318,7 @@ public class RouteManager {
         pcs.firePropertyChange(p, old, n);
     }
 
-    static Logger log = LoggerFactory.getLogger(RouteManager.class.getName());
+    private final static Logger log = LoggerFactory.getLogger(RouteManager.class.getName());
 
 }
 

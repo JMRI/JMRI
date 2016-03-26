@@ -1,11 +1,9 @@
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
 <html lang="en">
 <head>
-<!-- Copyright ($Author$) 2009, 2010 -->
-<!-- $Id$ -->
-<TITLE>
+<title>
 DecoderPro&reg; Comprehensive Programmer
-</TITLE>
+</title>
 
 <!-- Style -->
 <meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
@@ -22,12 +20,12 @@ DecoderPro&reg; Comprehensive Programmer
 <!--#include virtual="Sidebar" -->
 <div id="mainContent">
 
-<a NAME="Top"></a>
+<a name="Top"></a>
 
 <h1>DecoderPro&reg; Comprehensive Programmer</h1>
-<h1>Function Labels Pane</h1>
+<h2>Function Labels Pane</h2>
 
-<div align=right>
+<div align="right">
 <p><a href="Comp_FMap.shtml">Previous | </a><a href="Comp_LightFX.shtml">Next </a></p>
 <p><a href="index.shtml">Back to Index</a></p>
 </div>
@@ -35,16 +33,18 @@ DecoderPro&reg; Comprehensive Programmer
 <hr>
 <p>This  pane is more than a scratch pad to keep track of what happens when function  buttons are pushed.&nbsp; It also interacts  with the <a href="Ops_Throttle.shtml">JMRI throttle</a>. </p>
 <p>When you  use the roster pull-down on the JMRI throttle to select a loco from your  roster, the function buttons will be marked with the descriptions you have  entered for those functions in this pane. </p>
-<p>You may also set the text in the Function Labels from the button propertes of an active JMRI throttle when you save them to the Roster. Subsequent uses of the throttle will use the new labels.</p>
+<p>You may also set the text in the Function Labels from the button properties of an active JMRI throttle when you save them to the Roster. Subsequent uses of the throttle will use the new labels.</p>
 <p><img src="images/Function_Labels.png" alt="function labels" width="922" height="627"></p>
 <p>
 <hr>
 
-<div align=right>
+<div align="right">
 <p><a href="Comp_LightFX.shtml"></a><a href="Comp_FMap.shtml">Previous | </a><a href="Comp_LightFX.shtml">Next </a></p>
 <p><a href="index.shtml">Back to Index</a></p>
 </div>
 
 <!--#include virtual="/Footer" -->
-</body>
+  </div><!-- closes #mainContent-->
+ </div> <!-- closes #mBody-->
+ </body>
 </html>

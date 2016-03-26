@@ -33,7 +33,8 @@ public class LayoutPositionableLabelXml extends AbstractXmlAdapter {
         return tmp.store(o);
     }
 
-    public boolean load(Element element) {
+    @Override
+    public boolean load(Element shared, Element perNode) {
         log.error("Invalid method called");
         return false;
     }
@@ -50,6 +51,6 @@ public class LayoutPositionableLabelXml extends AbstractXmlAdapter {
         tmp.load(element, o);
     }
 
-    static Logger log = LoggerFactory.getLogger(LayoutPositionableLabelXml.class.getName());
+    private final static Logger log = LoggerFactory.getLogger(LayoutPositionableLabelXml.class.getName());
 
 }

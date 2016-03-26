@@ -1,8 +1,6 @@
 // XNetReply.java
 package jmri.jmrix.lenz;
 
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 
 /**
  * Represents a single response from the XpressNet.
@@ -57,7 +55,7 @@ public class XNetReply extends jmri.jmrix.AbstractMRReply {
         _nDataChars = b.length;
         _dataChars = new int[_nDataChars];
         for (int i = 0; i < b.length; i++) {
-            setElement(i, b[i]);
+            setElement(i, ( b[i] & 0xff) );
         }
     }
 
@@ -517,6 +515,15 @@ public class XNetReply extends jmri.jmrix.AbstractMRReply {
 
     /* 
      * In the interest of code reuse, The following function checks to see 
+     * if an XPressNet Message is the timeslot restored message (01 07 06)
+     */
+    public boolean isTimeSlotRestored() {
+        return (this.getElement(0) == XNetConstants.LI_MESSAGE_RESPONSE_HEADER
+                && this.getElement(1) == XNetConstants.LIUSB_TIMESLOT_RESTORED);
+    }
+
+    /* 
+     * In the interest of code reuse, The following function checks to see 
      * if an XPressNet Message is the Command Station Busy message (61 81 e3)
      */
     public boolean isCSBusyMessage() {
@@ -542,15 +549,31 @@ public class XNetReply extends jmri.jmrix.AbstractMRReply {
      *		01 01 00  -- Error between interface and the PC
      *		01 02 03  -- Error between interface and the Command Station
      *		01 03 02  -- Unknown Communications Error
-     *		01 05 04  -- Timeslot Error
      *          01 06 07  -- LI10x Buffer Overflow
+     *          01 0A 0B  -- LIUSB only. Request resend of data.
      */
     public boolean isCommErrorMessage() {
         return (this.getElement(0) == XNetConstants.LI_MESSAGE_RESPONSE_HEADER
                 && ((this.getElement(1) == XNetConstants.LI_MESSAGE_RESPONSE_UNKNOWN_DATA_ERROR
                 || this.getElement(1) == XNetConstants.LI_MESSAGE_RESPONSE_CS_DATA_ERROR
                 || this.getElement(1) == XNetConstants.LI_MESSAGE_RESPONSE_PC_DATA_ERROR
-                || this.getElement(1) == XNetConstants.LI_MESSAGE_RESPONSE_BUFFER_OVERFLOW
+                || this.getElement(1) == XNetConstants.LIUSB_RETRANSMIT_REQUEST
+                || this.getElement(1) == XNetConstants.LI_MESSAGE_RESPONSE_BUFFER_OVERFLOW)) 
+               || this.isTimeSlotErrorMessage());
+    }
+
+    /* 
+     * In the interest of code reuse, The following function checks to see 
+     * if an XPressNet Message is a communications error message.
+     * the errors handeled are:
+     *		01 05 04  -- Timeslot Error
+     *          01 07 06  -- Timeslot Restored 
+     *          01 08 09  -- Data sent while there is no Timeslot
+     */
+    public boolean isTimeSlotErrorMessage() {
+        return (this.getElement(0) == XNetConstants.LI_MESSAGE_RESPONSE_HEADER
+                && ((this.getElement(1) == XNetConstants.LIUSB_REQUEST_SENT_WHILE_NO_TIMESLOT 
+                || this.getElement(1) == XNetConstants.LIUSB_TIMESLOT_RESTORED
                 || this.getElement(1) == XNetConstants.LI_MESSAGE_RESPONSE_TIMESLOT_ERROR)));
     }
 
@@ -645,9 +668,6 @@ public class XNetReply extends jmri.jmrix.AbstractMRReply {
     public final void resetUnsolicited() {
         reallyUnsolicited = false;
     }
-
-    // initialize logging
-    static Logger log = LoggerFactory.getLogger(XNetReply.class.getName());
 
 }
 

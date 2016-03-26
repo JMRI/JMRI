@@ -49,7 +49,6 @@ import org.slf4j.LoggerFactory;
  *
  * @author	Kevin Dickerson Copyright (C) 2010
  *
- * @version $Revision$
  */
 public class SignalGroupTableAction extends AbstractTableAction implements PropertyChangeListener {
 
@@ -57,8 +56,7 @@ public class SignalGroupTableAction extends AbstractTableAction implements Prope
      *
      */
     private static final long serialVersionUID = -3907892888059515176L;
-    static final ResourceBundle rbx = ResourceBundle
-            .getBundle("jmri.jmrit.beantable.LogixTableBundle");
+    static final ResourceBundle rbx = ResourceBundle.getBundle("jmri.jmrit.beantable.LogixTableBundle");
 
     /**
      * Create an action with a specific title.
@@ -78,7 +76,7 @@ public class SignalGroupTableAction extends AbstractTableAction implements Prope
     }
 
     public SignalGroupTableAction() {
-        this(rb.getString("TitleSignalGroupTable"));
+        this(Bundle.getMessage("TitleSignalGroupTable"));
     }
 
     public void propertyChange(java.beans.PropertyChangeEvent e) {
@@ -122,10 +120,10 @@ public class SignalGroupTableAction extends AbstractTableAction implements Prope
                     return "";    // no heading on "Edit"
                 }
                 if (col == ENABLECOL) {
-                    return "Enabled";
+                    return Bundle.getMessage("ColumnHeadEnabled");
                 }
                 if (col == COMMENTCOL) {
-                    return "Comment";
+                    return Bundle.getMessage("ColumnComment"); //"Comment";
                 }
                 if (col == DELETECOL) {
                     return "";
@@ -188,7 +186,7 @@ public class SignalGroupTableAction extends AbstractTableAction implements Prope
             public Object getValueAt(int row, int col) {
                 NamedBean b;
                 if (col == SETCOL) {
-                    return "Edit";
+                    return Bundle.getMessage("ButtonEdit");
                 } else if (col == ENABLECOL) {
                     return Boolean.valueOf(((SignalGroup) getBySystemName((String) getValueAt(row, SYSNAMECOL))).getEnabled());
                     //return true;
@@ -197,7 +195,7 @@ public class SignalGroupTableAction extends AbstractTableAction implements Prope
                     return (b != null) ? b.getComment() : null;
                 } else if (col == DELETECOL) //
                 {
-                    return AbstractTableAction.rb.getString("ButtonDelete");
+                    return Bundle.getMessage("ButtonDelete");
                 } else {
                     return super.getValueAt(row, col);
                 }
@@ -205,7 +203,7 @@ public class SignalGroupTableAction extends AbstractTableAction implements Prope
 
             public void setValueAt(Object value, int row, int col) {
                 if (col == SETCOL) {
-                    // set up to edit. Use separate Thread so window is created on top
+                    // set up to edit. Use separate Runnable so window is created on top
                     class WindowMaker implements Runnable {
 
                         int row;
@@ -215,7 +213,6 @@ public class SignalGroupTableAction extends AbstractTableAction implements Prope
                         }
 
                         public void run() {
-                            //Thread.yield();
                             addPressed(null);
                             _systemName.setText((String) getValueAt(row, SYSNAMECOL));
                             editPressed(null); // don't really want to stop SignalGroup w/o user action
@@ -250,7 +247,7 @@ public class SignalGroupTableAction extends AbstractTableAction implements Prope
             protected void configDeleteColumn(JTable table) {
                 // have the delete column hold a button
                 SignalGroupTableAction.this.setColumnToHoldButton(table, DELETECOL,
-                        new JButton(AbstractTableAction.rb.getString("ButtonDelete")));
+                        new JButton(Bundle.getMessage("ButtonDelete")));
             }
 
             /**
@@ -315,7 +312,7 @@ public class SignalGroupTableAction extends AbstractTableAction implements Prope
     }
 
     protected void setTitle() {
-        f.setTitle("SignalGroup Table");
+        f.setTitle(Bundle.getMessage("TitleSignalGroupTable"));
     }
 
     protected String helpTarget() {
@@ -356,12 +353,12 @@ public class SignalGroupTableAction extends AbstractTableAction implements Prope
     JRadioButton allButton = null;
     JRadioButton includedButton = null;
 
-    JLabel nameLabel = new JLabel("SignalGroup System Name:");
-    JLabel userLabel = new JLabel("SignalGroup User Name:");
+    JLabel nameLabel = new JLabel(Bundle.getMessage("LabelSystemName"));
+    JLabel userLabel = new JLabel(Bundle.getMessage("LabelUserName"));
     JLabel fixedSystemName = new JLabel("xxxxxxxxxxx");
 
-    JButton deleteButton = new JButton("Delete SignalGroup");
-    JButton updateButton = new JButton("Done");
+    JButton deleteButton = new JButton(Bundle.getMessage("ButtonDelete") + " " + Bundle.getMessage("BeanNameSignalGroup"));
+    JButton updateButton = new JButton(Bundle.getMessage("ButtonDone"));
 
     JPanel p2xs = null;   // SignalHead list table
     JPanel p2xsi = null;   // SignalHead list table
@@ -581,7 +578,7 @@ public class SignalGroupTableAction extends AbstractTableAction implements Prope
             stateOffColumnSi.setResizable(false);
             stateOffColumnSi.setMinWidth(50);
             stateOffColumnSi.setMaxWidth(100);
-            JButton editButton = new JButton("Edit");
+            JButton editButton = new JButton(Bundle.getMessage("ButtonEdit"));
             TableColumn editColumnSi = SignalGroupSignalColumnModel.
                     getColumn(SignalGroupSignalModel.EDIT_COLUMN);
             editColumnSi.setResizable(false);
@@ -609,7 +606,7 @@ public class SignalGroupTableAction extends AbstractTableAction implements Prope
                     deletePressed(e);
                 }
             });
-            deleteButton.setToolTipText("Delete the SignalGroup in System Name");
+            deleteButton.setToolTipText("Delete the SignalGroup in System Name"); // I18N TODO
             // Update SignalGroup button
             pb.add(updateButton);
             updateButton.addActionListener(new ActionListener() {
@@ -617,7 +614,7 @@ public class SignalGroupTableAction extends AbstractTableAction implements Prope
                     updatePressed(e, false, true);
                 }
             });
-            updateButton.setToolTipText("Change this SignalGroup and leave Edit mode");
+            updateButton.setToolTipText("Change this SignalGroup and leave Edit mode");  // I18N TODO
             updateButton.setVisible(true);
             contentPane.add(pb);
             // pack and release space
@@ -1205,7 +1202,6 @@ public class SignalGroupTableAction extends AbstractTableAction implements Prope
                         }
 
                         public void run() {
-                            //Thread.yield();
                             signalEditPressed(row);
                             //_systemName.setText((String)getValueAt(row, SYSNAMECOL));
                             //editPressed(null); 
@@ -1452,8 +1448,8 @@ public class SignalGroupTableAction extends AbstractTableAction implements Prope
     }
 
     public String getClassDescription() {
-        return rb.getString("TitleSignalGroupTable");
+        return Bundle.getMessage("TitleSignalGroupTable");
     }
 
-    static final Logger log = LoggerFactory.getLogger(SignalGroupTableAction.class.getName());
+    private final static Logger log = LoggerFactory.getLogger(SignalGroupTableAction.class.getName());
 }

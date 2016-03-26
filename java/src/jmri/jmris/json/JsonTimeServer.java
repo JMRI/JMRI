@@ -10,15 +10,12 @@ import jmri.jmris.JmriConnection;
 import static jmri.jmris.json.JSON.METHOD;
 import static jmri.jmris.json.JSON.POST;
 import static jmri.jmris.json.JSON.TIME;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 
+@Deprecated
 public class JsonTimeServer extends AbstractTimeServer {
 
     private final JmriConnection connection;
     private final ObjectMapper mapper;
-    static Logger log = LoggerFactory.getLogger(JsonTimeServer.class);
-
     JsonTimeServer(JmriConnection connection) {
         super();
         this.connection = connection;

@@ -1,9 +1,9 @@
 package jmri.jmrix.lenz.xntcp.configurexml;
 
-import jmri.InstanceManager;
 import jmri.jmrix.configurexml.AbstractNetworkConnectionConfigXml;
 import jmri.jmrix.lenz.xntcp.ConnectionConfig;
 import jmri.jmrix.lenz.xntcp.XnTcpAdapter;
+import org.jdom2.Element;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -39,10 +39,10 @@ public class ConnectionConfigXml extends AbstractNetworkConnectionConfigXml {
     }
 
     @Override
-    public boolean load(org.jdom2.Element e) throws Exception {
+    public boolean load(Element shared, Element perNode) throws Exception {
         boolean result = true;
         try {
-            result = super.load(e);
+            result = super.load(shared, perNode);
             if (log.isDebugEnabled()) {
                 log.debug("result " + result);
             }
@@ -61,7 +61,7 @@ public class ConnectionConfigXml extends AbstractNetworkConnectionConfigXml {
             String hostName = null;
             int portNumber = 0;
             try {
-                manualOption = e.getAttribute("port").getValue();
+                manualOption = shared.getAttribute("port").getValue();
                 adapter.configureOption1(manualOption);
             } catch (NullPointerException e1) {
                 // it is considered normal if this fails when the 
@@ -69,7 +69,7 @@ public class ConnectionConfigXml extends AbstractNetworkConnectionConfigXml {
             }
 
             try {
-                hostName = e.getAttribute("option1").getValue();
+                hostName = shared.getAttribute("option1").getValue();
                 adapter.setHostName(hostName);
             } catch (NullPointerException e1) {
                 // it is considered normal if this fails when the 
@@ -77,7 +77,7 @@ public class ConnectionConfigXml extends AbstractNetworkConnectionConfigXml {
             }
 
             try {
-                portNumber = e.getAttribute("option2").getIntValue();
+                portNumber = shared.getAttribute("option2").getIntValue();
                 adapter.setPort(portNumber);
             } catch (org.jdom2.DataConversionException e2) {
                 log.warn("Could not parse port attribute");
@@ -88,24 +88,24 @@ public class ConnectionConfigXml extends AbstractNetworkConnectionConfigXml {
 
             String manufacturer;
             try {
-                manufacturer = e.getAttribute("manufacturer").getValue();
+                manufacturer = shared.getAttribute("manufacturer").getValue();
                 adapter.setManufacturer(manufacturer);
             } catch (NullPointerException e1) { //Considered normal if not present
 
             }
 
             if (adapter.getSystemConnectionMemo() != null) {
-                if (e.getAttribute("userName") != null) {
-                    adapter.getSystemConnectionMemo().setUserName(e.getAttribute("userName").getValue());
+                if (shared.getAttribute("userName") != null) {
+                    adapter.getSystemConnectionMemo().setUserName(shared.getAttribute("userName").getValue());
                 }
 
-                if (e.getAttribute("systemPrefix") != null) {
-                    adapter.getSystemConnectionMemo().setSystemPrefix(e.getAttribute("systemPrefix").getValue());
+                if (shared.getAttribute("systemPrefix") != null) {
+                    adapter.getSystemConnectionMemo().setSystemPrefix(shared.getAttribute("systemPrefix").getValue());
                 }
             }
 
-            if (e.getAttribute("disabled") != null) {
-                String yesno = e.getAttribute("disabled").getValue();
+            if (shared.getAttribute("disabled") != null) {
+                String yesno = shared.getAttribute("disabled").getValue();
                 if ((yesno != null) && (!yesno.equals(""))) {
                     if (yesno.equals("no")) {
                         adapter.setDisabled(false);
@@ -118,7 +118,7 @@ public class ConnectionConfigXml extends AbstractNetworkConnectionConfigXml {
             register();
 
             if (adapter.getDisabled()) {
-                unpackElement(e);
+                unpackElement(shared, perNode);
                 return result;
             }
             try {
@@ -137,17 +137,18 @@ public class ConnectionConfigXml extends AbstractNetworkConnectionConfigXml {
 
             // once all the configure processing has happened, do any
             // extra config
-            unpackElement(e);
+            unpackElement(shared, perNode);
 
         }
         return result;
     }
 
+    @Override
     protected void register() {
-        InstanceManager.configureManagerInstance().registerPref(new ConnectionConfig(adapter));
+        this.register(new ConnectionConfig(adapter));
     }
 
     // initialize logging
-    static Logger log = LoggerFactory.getLogger(ConnectionConfigXml.class.getName());
+    private final static Logger log = LoggerFactory.getLogger(ConnectionConfigXml.class.getName());
 
 }

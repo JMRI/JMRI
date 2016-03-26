@@ -43,15 +43,15 @@ import org.slf4j.LoggerFactory;
  * allows for easier clipboard operations etc.
  * <hr>
  * This file is part of JMRI.
- * <P>
+ * <p>
  * JMRI is free software; you can redistribute it and/or modify it under the
  * terms of version 2 of the GNU General Public License as published by the Free
  * Software Foundation. See the "COPYING" file for a copy of this license.
- * <P>
+ * <p>
  * JMRI is distributed in the hope that it will be useful, but WITHOUT ANY
  * WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS FOR
  * A PARTICULAR PURPOSE. See the GNU General Public License for more details.
- * <P>
+ * <p>
  *
  * @author Matthew Harris copyright (c) 2010, 2011, 2012
  * @version $Revision$
@@ -121,10 +121,16 @@ public final class SystemConsole extends JTextArea {
     public static void create() {
 
         if (instance == null) {
-            instance = new SystemConsole();
+            try {
+                instance = new SystemConsole();
+            } catch (Exception ex) {
+                log.error("failed to complete Console redirection", ex);
+            }
         }
     }
 
+    @edu.umd.cs.findbugs.annotations.SuppressFBWarnings(value = "DM_DEFAULT_ENCODING",
+            justification = "Can only be called from the same instance so default encoding OK")
     private SystemConsole() {
         // Record current System.out and System.err
         // so that we can still send to them
@@ -402,7 +408,7 @@ public final class SystemConsole extends JTextArea {
             }
 
             @Override
-            @edu.umd.cs.findbugs.annotations.SuppressWarnings(value = "DM_DEFAULT_ENCODING",
+            @edu.umd.cs.findbugs.annotations.SuppressFBWarnings(value = "DM_DEFAULT_ENCODING",
                     justification = "Can only be called from the same instance so default encoding OK")
             public void write(byte[] b, int off, int len) throws IOException {
                 updateTextArea(new String(b, off, len), which);
@@ -418,7 +424,7 @@ public final class SystemConsole extends JTextArea {
     /**
      * Method to redirect the system streams to the console
      */
-    @edu.umd.cs.findbugs.annotations.SuppressWarnings(value = "DM_DEFAULT_ENCODING",
+    @edu.umd.cs.findbugs.annotations.SuppressFBWarnings(value = "DM_DEFAULT_ENCODING",
             justification = "Can only be called from the same instance so default encoding OK")
     private void redirectSystemStreams() {
         System.setOut(this.getOutputStream());

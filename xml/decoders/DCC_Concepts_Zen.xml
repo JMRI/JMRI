@@ -570,7 +570,6 @@
         </variable>
         <!-- End of function map CVs-->
         <variable CV="47" item="Global lighting option 3">
-            <label>Fluorescent Flicker</label>
             <enumVal>
               <enumChoice choice="Disabled">
                 <choice>Disabled</choice>
@@ -582,10 +581,10 @@
                 <choice>All lights</choice>
               </enumChoice>
             </enumVal>
+            <label>Fluorescent Flicker</label>
             <tooltip>&lt;html&gt;- Only Aux 1 and 2: Front and rear lighting normal,&lt;br&gt;Aux 1 (green) and Aux 2 (purple) on,&lt;br&gt;fluorescent flicker is active. All lighting controlled by F0.&lt;br&gt;&lt;br&gt;-All lights: Front and Rear lighting become linked to Aux 1 and Aux 2,&lt;br&gt;and fluorescent flicker is active on all light outputs.&lt;br&gt;All lighting is simultaneously on or off. All are controlled by F0.&lt;/html&gt;</tooltip>
         </variable>
         <variable CV="49" mask="XXXXVVVV" item="Output 1 effect generated">
-            <label>"White Wire" (F0f) Effect</label>
             <enumVal>
               <xi:include href="http://jmri.org/xml/decoders/tcs/Choice_Constantbright.xml"/>
               <xi:include href="http://jmri.org/xml/decoders/tcs/Choice_group2.xml"/>
@@ -638,15 +637,15 @@
               </enumChoice>
             End of full description using manufacturer's labels -->
             </enumVal>
+            <label>"White Wire" (F0f) Effect</label>
             <tooltip>&lt;html&gt;Physical output "White" (default F0f)&lt;br&gt;Not documented, values to be confirmed.&lt;/html&gt;</tooltip>
         </variable>
         <variable CV="49" mask="XXVVXXXX" item="Output 1 behavior">
-          <label>"White Wire" (F0f) Effect Direction</label>
           <xi:include href="http://jmri.org/xml/decoders/parts/enum-frw_rev_both.xml"/>
+          <label>"White Wire" (F0f) Effect Direction</label>
           <tooltip>Physical output "White" (default F0f)</tooltip>
         </variable>
         <variable CV="50" mask="XXXXVVVV" item="Output 2 effect generated">
-          <label>"Yellow Wire" (F0r) Effect</label>
           <enumVal>
             <xi:include href="http://jmri.org/xml/decoders/tcs/Choice_Constantbright.xml"/>
             <xi:include href="http://jmri.org/xml/decoders/tcs/Choice_group2.xml"/>
@@ -655,15 +654,15 @@
             <xi:include href="http://jmri.org/xml/decoders/tcs/Choice_Constdim.xml"/>
             <xi:include href="http://jmri.org/xml/decoders/tcs/Choice_AutoMars.xml"/>
           </enumVal>
+          <label>"Yellow Wire" (F0r) Effect</label>
           <tooltip>&lt;html&gt;Physical output "Yellow" (default F0r)&lt;br&gt;Not documented, values to be confirmed.&lt;/html&gt;</tooltip>
         </variable>
         <variable CV="50" mask="XXVVXXXX" item="Output 2 behavior" default="1">
-          <label>"Yellow Wire" (F0r) Effect Direction</label>
           <xi:include href="http://jmri.org/xml/decoders/parts/enum-frw_rev_both.xml"/>
+          <label>"Yellow Wire" (F0r) Effect Direction</label>
           <tooltip>Physical output "Yellow" (default F0r)</tooltip>
         </variable>
         <variable CV="51" mask="XXXXVVVV" item="Output 3 effect generated" minOut="3">
-          <label>"Green Wire" (F1) Effect</label>
           <enumVal>
             <xi:include href="http://jmri.org/xml/decoders/tcs/Choice_Constantbright.xml"/>
             <xi:include href="http://jmri.org/xml/decoders/tcs/Choice_group2.xml"/>
@@ -672,15 +671,15 @@
             <xi:include href="http://jmri.org/xml/decoders/tcs/Choice_Constdim.xml"/>
             <xi:include href="http://jmri.org/xml/decoders/tcs/Choice_AutoMars.xml"/>
           </enumVal>
+          <label>"Green Wire" (F1) Effect</label>
           <tooltip>&lt;html&gt;Physical output "Green" (default F1)&lt;br&gt;Not documented, values to be confirmed.&lt;/html&gt;</tooltip>
         </variable>
         <variable CV="51" mask="XXVVXXXX" item="Output 3 behavior" default="2" minOut="3">
-          <label>"Green Wire" (F1) Effect Direction</label>
           <xi:include href="http://jmri.org/xml/decoders/parts/enum-frw_rev_both.xml"/>
+          <label>"Green Wire" (F1) Effect Direction</label>
           <tooltip>Physical output "Green" (default F1)</tooltip>
         </variable>
         <variable CV="52" mask="XXXXVVVV" item="Output 4 effect generated" minOut="4">
-          <label>"Purple Wire" (F2) Effect</label>
           <enumVal>
             <xi:include href="http://jmri.org/xml/decoders/tcs/Choice_Constantbright.xml"/>
             <xi:include href="http://jmri.org/xml/decoders/tcs/Choice_group2.xml"/>
@@ -689,16 +688,16 @@
             <xi:include href="http://jmri.org/xml/decoders/tcs/Choice_Constdim.xml"/>
             <xi:include href="http://jmri.org/xml/decoders/tcs/Choice_AutoMars.xml"/>
           </enumVal>
+          <label>"Purple Wire" (F2) Effect</label>
           <tooltip>&lt;html&gt;Physical output "Purple" (default F2)&lt;br&gt;Not documented, values to be confirmed.&lt;/html&gt;</tooltip>
         </variable>
         <variable CV="52" mask="XXVVXXXX" item="Output 4 behavior" default="2" minOut="4">
-          <label>"Purple Wire" (F2) Effect Direction</label>
           <xi:include href="http://jmri.org/xml/decoders/parts/enum-frw_rev_both.xml"/>
+          <label>"Purple Wire" (F2) Effect Direction</label>
           <tooltip>Physical output "Purple" (default F2)</tooltip>
         </variable>
           <!-- Not Documented - guessing - for Buddha -->
         <variable CV="53" mask="XXXXVVVV" item="Output 5 effect generated" minOut="5">
-          <label>"Pink Wire" (F3) Effect</label>
           <enumVal>
             <xi:include href="http://jmri.org/xml/decoders/tcs/Choice_Constantbright.xml"/>
             <xi:include href="http://jmri.org/xml/decoders/tcs/Choice_group2.xml"/>
@@ -707,15 +706,15 @@
             <xi:include href="http://jmri.org/xml/decoders/tcs/Choice_Constdim.xml"/>
             <xi:include href="http://jmri.org/xml/decoders/tcs/Choice_AutoMars.xml"/>
           </enumVal>
+          <label>"Pink Wire" (F3) Effect</label>
           <tooltip>Physical output "Pink" (default F3)</tooltip>
         </variable>
         <variable CV="53" mask="XXVVXXXX" item="Output 5 behavior" default="2" minOut="5">
-          <label>"Pink Wire" (F3) Effect Direction</label>
           <xi:include href="http://jmri.org/xml/decoders/parts/enum-frw_rev_both.xml"/>
+          <label>"Pink Wire" (F3) Effect Direction</label>
           <tooltip>Physical output "Pink" (default F3)</tooltip>
         </variable>
         <variable CV="54" mask="XXXXVVVV" item="Output 6 effect generated" minOut="6">
-          <label>"Brown Wire" (F4) Effect</label>
           <enumVal>
             <xi:include href="http://jmri.org/xml/decoders/tcs/Choice_Constantbright.xml"/>
             <xi:include href="http://jmri.org/xml/decoders/tcs/Choice_group2.xml"/>
@@ -724,11 +723,12 @@
             <xi:include href="http://jmri.org/xml/decoders/tcs/Choice_Constdim.xml"/>
             <xi:include href="http://jmri.org/xml/decoders/tcs/Choice_AutoMars.xml"/>
           </enumVal>
+          <label>"Brown Wire" (F4) Effect</label>
           <tooltip>Physical output "Brown" (default F4)</tooltip>
         </variable>
         <variable CV="54" mask="XXVVXXXX" item="Output 6 behavior" default="2" minOut="6">
-          <label>"Brown Wire" (F4) Effect Direction</label>
           <xi:include href="http://jmri.org/xml/decoders/parts/enum-frw_rev_both.xml"/>
+          <label>"Brown Wire" (F4) Effect Direction</label>
           <tooltip>Physical output "Brown" (default F4)</tooltip>
         </variable>
           <!-- DCCconcepts specifics -->

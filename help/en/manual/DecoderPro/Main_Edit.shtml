@@ -1,8 +1,6 @@
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
 <html lang="en">
 <head>
-<!-- Copyright ($Author$) 2009 -->
-<!-- $Id$ -->
 <title>Edit Menu</title>
 
 <!-- Style -->
@@ -21,9 +19,9 @@
 
 <a NAME="Top"></a>
 <h1>DecoderPro&reg; Main Window</h1>
-<h1>Edit Menu </h1>
+<h2>Edit Menu </h2>
 
-<div align=right>
+<div align="right">
 <p><a href="Main_File.shtml">Previous </a><a href="Main_Tool.shtml">Next </a></p>
 <p><a href="index.shtml#Main">Back to Index</a></p>
 </div>
@@ -38,14 +36,16 @@
 <p><strong>Preferences.</strong>..</p>
 <p>Opens the <a href="Start_Preferences.shtml">Preferences window</a>.</p>
 <p align="center"><img src="images/Preferences.png" width="753" height="432" alt="preferences"></p>
-<p>
+
 <hr>
 
-<div align=right>
+<div align="right">
 <p><a href="Main_Tool.shtml"></a><a href="Main_File.shtml">Previous </a><a href="Main_Tool.shtml">Next </a></p>
 <p><a href="index.shtml#Main">Back to Index</a></p>
 </div>
 
 <!--#include virtual="/Footer" -->
+  </div><!-- closes #mainContent-->
+ </div> <!-- closes #mBody-->
 </body>
 </html>

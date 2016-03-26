@@ -137,25 +137,25 @@ public class RailComTableAction extends AbstractTableAction {
             public String getColumnName(int col) {
                 switch (col) {
                     case VALUECOL:
-                        return rb.getString("ColumnAddress");
+                        return Bundle.getMessage("ColumnAddress");
                     case WHERECOL:
-                        return rb.getString("ColumnIdWhere");
+                        return Bundle.getMessage("ColumnIdWhere");
                     case WHENCOL:
-                        return rb.getString("ColumnIdWhen");
+                        return Bundle.getMessage("ColumnIdWhen");
                     case SPEEDCOL:
-                        return rb.getString("ColumnSpeed");
+                        return Bundle.getMessage("ColumnSpeed");
                     case LOADCOL:
-                        return rb.getString("ColumnLoad");
+                        return Bundle.getMessage("ColumnLoad");
                     case TEMPCOL:
-                        return rb.getString("ColumnTemp");
+                        return Bundle.getMessage("ColumnTemp");
                     case FUELCOL:
-                        return rb.getString("ColumnFuelLevel");
+                        return Bundle.getMessage("ColumnFuelLevel");
                     case WATERCOL:
-                        return rb.getString("ColumnWaterLevel");
+                        return Bundle.getMessage("ColumnWaterLevel");
                     case LOCATIONCOL:
-                        return rb.getString("ColumnLocation");
+                        return Bundle.getMessage("ColumnLocation");
                     case ROUTINGCOL:
-                        return rb.getString("ColumnRouting");
+                        return Bundle.getMessage("ColumnRouting");
                     case DELETECOL:
                         return "";
                     case CLEARCOL:
@@ -204,7 +204,7 @@ public class RailComTableAction extends AbstractTableAction {
                         return (((d = t.getWhenLastSeen()) != null)
                                 ? DateFormat.getDateTimeInstance(DateFormat.SHORT, DateFormat.MEDIUM).format(d) : null);
                     case CLEARCOL:
-                        return rb.getString("ButtonClear");
+                        return Bundle.getMessage("ButtonClear");
                     case SPEEDCOL:
                         if (t.getActualSpeed() == -1) {
                             return null;
@@ -241,7 +241,7 @@ public class RailComTableAction extends AbstractTableAction {
                         }
                         return t.getRoutingNo();
                     case DELETECOL:  //
-                        return AbstractTableAction.rb.getString("ButtonDelete");
+                        return Bundle.getMessage("ButtonDelete");
                 }
                 return null;
             }
@@ -256,7 +256,7 @@ public class RailComTableAction extends AbstractTableAction {
                         return new JTextField(10).getPreferredSize().width;
                     case CLEARCOL:
                     case DELETECOL:
-                        return new JButton(rb.getString("ButtonClear")).getPreferredSize().width + 4;
+                        return new JButton(Bundle.getMessage("ButtonClear")).getPreferredSize().width + 4;
                     default:
                         return new JTextField(5).getPreferredSize().width;
                 }
@@ -275,7 +275,7 @@ public class RailComTableAction extends AbstractTableAction {
 
             @Override
             public JButton configureButton() {
-                BeanTableDataModel.log.error("configureButton should not have been called");
+                log.error("configureButton should not have been called");
                 return null;
             }
 
@@ -291,7 +291,7 @@ public class RailComTableAction extends AbstractTableAction {
     }
 
     protected void setTitle() {
-        f.setTitle(f.rb.getString("TitleRailComTable"));
+        f.setTitle(Bundle.getMessage("TitleRailComTable"));
     }
 
     @Override
@@ -304,7 +304,7 @@ public class RailComTableAction extends AbstractTableAction {
 
     @Override
     public String getClassDescription() {
-        return f.rb.getString("TitleRailComTable");
+        return Bundle.getMessage("TitleRailComTable");
     }
 
     @Override

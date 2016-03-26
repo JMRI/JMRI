@@ -4,8 +4,6 @@ import junit.framework.Assert;
 import junit.framework.Test;
 import junit.framework.TestCase;
 import junit.framework.TestSuite;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 
 /**
  * SRCPSystemConnectionMemoTest.java
@@ -13,7 +11,6 @@ import org.slf4j.LoggerFactory;
  * Description:	tests for the jmri.jmrix.srcp.SRCPSystemConnectionMemo class
  *
  * @author	Bob Jacobsen
- * @version $Revision$
  */
 public class SRCPSystemConnectionMemoTest extends TestCase {
 
@@ -72,5 +69,4 @@ public class SRCPSystemConnectionMemoTest extends TestCase {
     protected void tearDown() {
         apps.tests.Log4JFixture.tearDown();
     }
-    static Logger log = LoggerFactory.getLogger(SRCPSystemConnectionMemoTest.class.getName());
 }

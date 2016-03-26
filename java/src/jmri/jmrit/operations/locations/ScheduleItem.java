@@ -364,7 +364,7 @@ public class ScheduleItem implements java.beans.PropertyChangeListener {
     }
 
     public void propertyChange(java.beans.PropertyChangeEvent e) {
-        if (Control.showProperty) {
+        if (Control.SHOW_PROPERTY) {
             log.debug("ScheduleItem ({}) id ({}) sees property change: ({}) old: ({}) new: ({})", getTypeName(),
                     getId(), e.getPropertyName(), e.getOldValue(), e.getNewValue()); // NOI18N
         }
@@ -384,6 +384,6 @@ public class ScheduleItem implements java.beans.PropertyChangeListener {
         pcs.firePropertyChange(p, old, n);
     }
 
-    static Logger log = LoggerFactory.getLogger(ScheduleItem.class.getName());
+    private final static Logger log = LoggerFactory.getLogger(ScheduleItem.class.getName());
 
 }

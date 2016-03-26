@@ -1,8 +1,7 @@
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//FR" "http://www.w3.org/TR/html4/strict.dtd">
-<html lang="en">
+<html lang="fr">
 <head>
-<!-- Copyright ($Author$) 2009 -->
-<!-- $Id$ -->
+<!-- Copyright ($Author$) 2016 -->
 <!-- Translated by Blorec Hervé le 2011-22-05-->
 <title>JMRI: ???Page Title</title>
 
@@ -10,7 +9,7 @@
 <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
 <link rel="stylesheet" type="text/css" href="/css/default.css" media="screen">
 <link rel="stylesheet" type="text/css" href="/css/print.css" media="print">
-<link rel="icon" href="/images/jmri.ico" TYPE="image/png">
+<link rel="icon" href="/images/jmri.ico" type="image/png">
 <link rel="home" title="Home" href="/">
 <!-- /Style -->
 </head>
@@ -27,8 +26,10 @@ JMRI: Titre Page???
 
 Contenu????
 
-Ce fichier indique la matière haut et en bas d'une page avec une barre de menu sur le côté, qui vient du fichier "Sidebar" dans le même répertoire..
+Ce fichier indique la matière haut et en bas d'une page avec une barre de menu sur le côté, qui vient du fichier "Sidebar" dans le même répertoire.
     
 <!--#include virtual="/Footer" -->
+  </div><!-- ferme #mainContent-->
+ </div> <!-- ferme #mBody-->
 </body>
 </html>

@@ -27,6 +27,8 @@ abstract public class AbstractNetworkPortController extends AbstractPortControll
     protected int m_port = 0;
     // keep the socket provides our connection.
     protected Socket socketConn = null;
+    protected int connTimeout = 0; // connection timeout for read operations. 
+                                   // Default is 0, an infinite timeout.
 
     protected AbstractNetworkPortController(SystemConnectionMemo connectionMemo) {
         super(connectionMemo);
@@ -55,6 +57,7 @@ abstract public class AbstractNetworkPortController extends AbstractPortControll
         try {
             socketConn = new Socket(getHostAddress(), m_port);
             socketConn.setKeepAlive(true);
+            socketConn.setSoTimeout(getConnectionTimeout());
             opened = true;
         } catch (IOException e) {
             log.error("error opening network connection: " + e);
@@ -279,7 +282,7 @@ abstract public class AbstractNetworkPortController extends AbstractPortControll
      * This is called when a connection is initially lost. It closes the client
      * side socket connection, resets the open flag and attempts a reconnection.
      */
-    @edu.umd.cs.findbugs.annotations.SuppressWarnings(value = "DE_MIGHT_IGNORE",
+    @edu.umd.cs.findbugs.annotations.SuppressFBWarnings(value = "DE_MIGHT_IGNORE",
             justification = "we are trying to close a failed connection, it doesn't matter if it generates an error")
     @Override
     public void recover() {
@@ -341,7 +344,7 @@ abstract public class AbstractNetworkPortController extends AbstractPortControll
             _status = THREADFAIL;
         }
 
-        @edu.umd.cs.findbugs.annotations.SuppressWarnings(value = "DE_MIGHT_IGNORE",
+        @edu.umd.cs.findbugs.annotations.SuppressFBWarnings(value = "DE_MIGHT_IGNORE",
                 justification = "we are testing for a the ability to re-connect and this is likely to generate an error which can be ignored")
         @Override
         public void run() {
@@ -377,6 +380,31 @@ abstract public class AbstractNetworkPortController extends AbstractPortControll
         }
     }
 
-    final static protected Logger log = LoggerFactory.getLogger(AbstractNetworkPortController.class.getName());
+    /*
+     * Set the connection timeout to the specified value.
+     * If the socket is not null, set the SO_TIMEOUT option on the 
+     * socket as well.
+     * @param t timeout value in milliseconds.
+     */
+    protected void setConnectionTimeout(int t){ 
+       connTimeout= t;
+       try { 
+          if(socketConn !=null){
+             socketConn.setSoTimeout(getConnectionTimeout());
+          }
+       } catch(java.net.SocketException se){
+           log.debug("Unable to set socket timeout option on socket");
+       }
+    }
+
+    /*
+     * Get the connection timeout value.
+     * @return timeout value in milliseconds.
+     */
+    protected int getConnectionTimeout(){
+        return connTimeout;
+    }
+
+    private final static Logger log = LoggerFactory.getLogger(AbstractNetworkPortController.class.getName());
 
 }

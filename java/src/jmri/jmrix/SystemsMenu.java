@@ -21,11 +21,6 @@ import org.slf4j.LoggerFactory;
  */
 public class SystemsMenu extends JMenu {
 
-    /**
-     *
-     */
-    private static final long serialVersionUID = -4380492272339103766L;
-
     public SystemsMenu(String name) {
         this();
         setText(name);
@@ -62,6 +57,7 @@ public class SystemsMenu extends JMenu {
         add(new jmri.jmrix.can.cbus.swing.CbusMenu(null));
 
         addMenu("jmri.jmrix.cmri.CMRIMenu");
+        add(new jmri.jmrix.dccpp.swing.DCCppMenu(null));
         addMenu("jmri.jmrix.easydcc.EasyDCCMenu");
         addMenu("jmri.jmrix.grapevine.GrapevineMenu");
 
@@ -121,5 +117,5 @@ public class SystemsMenu extends JMenu {
         }
     }
 
-    static Logger log = LoggerFactory.getLogger(SystemsMenu.class.getName());
+    private final static Logger log = LoggerFactory.getLogger(SystemsMenu.class.getName());
 }

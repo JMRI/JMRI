@@ -1,5 +1,6 @@
 package jmri.jmrix.tams.configurexml;
 
+import jmri.configurexml.JmriConfigureXmlException;
 import org.jdom2.Element;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -29,12 +30,13 @@ public class TamsSensorManagerXml extends jmri.managers.configurexml.AbstractSen
         log.error("Invalid method called");
     }
 
-    public boolean load(Element sensors) throws jmri.configurexml.JmriConfigureXmlException {
+    @Override
+    public boolean load(Element shared, Element perNode) throws JmriConfigureXmlException {
         // create the master object
         //TamsSensorManager.instance();
         // load individual sensors
-        return loadSensors(sensors);
+        return loadSensors(shared);
     }
 
-    static Logger log = LoggerFactory.getLogger(TamsSensorManagerXml.class.getName());
+    private final static Logger log = LoggerFactory.getLogger(TamsSensorManagerXml.class.getName());
 }

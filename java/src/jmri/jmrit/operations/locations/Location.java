@@ -430,20 +430,9 @@ public class Location implements java.beans.PropertyChangeListener {
     }
 
     /**
-     * Automatically sets the print status for this location's switch list to
-     * modified if the switch list was printed or CSV generated.
-     *
-     */
-    public void setStatusModified() {
-        if (getStatus().equals(PRINTED) || getStatus().equals(CSV_GENERATED) || !Setup.isSwitchListRealTime()) {
-            setStatus(MODIFIED);
-        }
-    }
-
-    /**
      * Sets the print status for this location's switch list
      *
-     * @param status UNKNOWN PRINTED MODIFIED
+     * @param status UNKNOWN PRINTED MODIFIED UPDATED CSV_GENERATED
      */
     public void setStatus(String status) {
         String old = _status;
@@ -453,6 +442,10 @@ public class Location implements java.beans.PropertyChangeListener {
         }
     }
 
+    /**
+     * The print status for this location's switch list
+     * @return UNKNOWN PRINTED MODIFIED UPDATED CSV_GENERATED
+     */
     public String getStatus() {
         return _status;
     }
@@ -465,7 +458,7 @@ public class Location implements java.beans.PropertyChangeListener {
         int old = _switchListState;
         _switchListState = state;
         if (old != state) {
-            setDirtyAndFirePropertyChange("SwitchListState", old, state); // NOI18N
+            setDirtyAndFirePropertyChange("switchListState", old, state); // NOI18N
         }
     }
 
@@ -913,7 +906,7 @@ public class Location implements java.beans.PropertyChangeListener {
         for (Track track : getTrackList()) {
             track.setBlockingOrder(0);
         }
-        resequnceTracksByBlockingOrder();
+        setDirtyAndFirePropertyChange(TRACK_BLOCKING_ORDER_CHANGED_PROPERTY, true, false);
     }
     
     public void resequnceTracksByBlockingOrder() {
@@ -925,28 +918,34 @@ public class Location implements java.beans.PropertyChangeListener {
     }
     
     public void changeTrackBlockingOrderEarlier(Track track) {
-        //first adjust the track being replaced
-        Track repalceTrack = getTrackByBlockingOrder(track.getBlockingOrder() - 1);
-        if (repalceTrack != null) {
-            repalceTrack.setBlockingOrder(track.getBlockingOrder());
+        // if track blocking order is 0, then the blocking table has never been initialized
+        if (track.getBlockingOrder() != 0) {
+            //first adjust the track being replaced
+            Track repalceTrack = getTrackByBlockingOrder(track.getBlockingOrder() - 1);
+            if (repalceTrack != null) {
+                repalceTrack.setBlockingOrder(track.getBlockingOrder());
+            }
+            track.setBlockingOrder(track.getBlockingOrder() - 1);
+            // move the end of order
+            if (track.getBlockingOrder() <= 0)
+                track.setBlockingOrder(_trackHashTable.size() + 1);
         }
-        track.setBlockingOrder(track.getBlockingOrder() - 1);
-        // move the end of order
-        if (track.getBlockingOrder() <= 0)
-            track.setBlockingOrder(_trackHashTable.size() + 1);
         resequnceTracksByBlockingOrder();
     }
     
     public void changeTrackBlockingOrderLater(Track track) {
-        //first adjust the track being replaced
-        Track repalceTrack = getTrackByBlockingOrder(track.getBlockingOrder() + 1);
-        if (repalceTrack != null) {
-            repalceTrack.setBlockingOrder(track.getBlockingOrder());
+        // if track blocking order is 0, then the blocking table has never been initialized
+        if (track.getBlockingOrder() != 0) {
+            //first adjust the track being replaced
+            Track repalceTrack = getTrackByBlockingOrder(track.getBlockingOrder() + 1);
+            if (repalceTrack != null) {
+                repalceTrack.setBlockingOrder(track.getBlockingOrder());
+            }
+            track.setBlockingOrder(track.getBlockingOrder() + 1);
+            // move the start of order
+            if (track.getBlockingOrder() > _trackHashTable.size())
+                track.setBlockingOrder(0);
         }
-        track.setBlockingOrder(track.getBlockingOrder() + 1);
-        // move the start of order
-        if (track.getBlockingOrder() > _trackHashTable.size())
-            track.setBlockingOrder(0);
         resequnceTracksByBlockingOrder();
     }
     
@@ -1501,7 +1500,7 @@ public class Location implements java.beans.PropertyChangeListener {
     }
 
     public void propertyChange(java.beans.PropertyChangeEvent e) {
-        if (Control.showProperty) {
+        if (Control.SHOW_PROPERTY) {
             log.debug("Property change: ({}) old: ({}) new: ({})", e.getPropertyName(), e.getOldValue(), e
                     .getNewValue());
         }
@@ -1539,6 +1538,6 @@ public class Location implements java.beans.PropertyChangeListener {
         pcs.firePropertyChange(p, old, n);
     }
 
-    static Logger log = LoggerFactory.getLogger(Location.class.getName());
+    private final static Logger log = LoggerFactory.getLogger(Location.class.getName());
 
 }

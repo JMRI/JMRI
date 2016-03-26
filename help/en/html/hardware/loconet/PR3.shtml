@@ -1,22 +1,16 @@
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
-<!-- $Id$ -->
 <html lang="en">
 <head>
- <title>
-      JMRI Hardware Guide: Connecting to a Digitrax PR3 (Xtra)
- </title>
-    <meta http-equiv=Content-Type content="text/html; charset=iso-8859-1">
+ <title>JMRI Hardware Support - Connecting to a Digitrax PR3 (Xtra)</title>
     <meta content="Bob Jacobsen" name="Author">
     <meta name="keywords" content="Digitrax Chief DCS Command Station MS-100 LocoBuffer java model railroad JMRI install windows">
 
 <!-- Style -->
 <meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
-<LINK REL="stylesheet" TYPE="text/css" HREF="/css/default.css"
-	MEDIA="screen">
-<LINK REL="stylesheet" TYPE="text/css" HREF="/css/print.css"
-	MEDIA="print">
-<LINK REL="icon" HREF="/images/jmri.ico" TYPE="image/png">
-<LINK REL="home" TITLE="Home" HREF="/">
+<link rel="stylesheet" type="text/css" href="/css/default.css" media="screen">
+<link rel="stylesheet" type="text/css" href="/css/print.css" media="print">
+<link rel="icon" href="/images/jmri.ico" type="image/png">
+<link rel="home" title="Home" href="/">
 <!-- /Style -->
 </head>
 
@@ -25,10 +19,7 @@
   <div class="nomenu" id="mBody">
     <div id="mainContent">
 
-<h1> 
-JMRI Hardware Guide: Connecting to a Digitrax PR3 (Xtra)
-</h1>
-
+  <h1>Hardware Support: Connecting to a Digitrax PR3 (Xtra)</h1>
 
 <a href="http://www.digitrax.com/products/computer-control/pr3xtra/">
 <img src="http://www.digitrax.com/static/apps/products/computer-control/pr3/images/PR3_jpg_350x900_q85.jpg" 
@@ -105,14 +96,14 @@ Finally, connect a USB cable between the PR3 and your computer.
 includes a LocoNet command station:
 </p>
 
-<UL>
-<LI>
+<ul>
+<li>
 Start the program.
 <li>
 Open the Preferences window from the Edit menu and configure the connection by:
-<UL>
-<LI>Select LocoNet PR3
-<LI>Select the serial port that's connected to the PR3
+<ul>
+<li>Select LocoNet PR3
+<li>Select the serial port that's connected to the PR3
 <li>In the "<strong>Command Station</strong>" option, select the type of command station you've
     got on your LocoNet, e.g. "<code><strong>DCS100 (Chief)</strong></code>", "<code><strong>DCS050 (Zephyr)</strong></code>", etc.  
     <p>The "Stand-alone LocoNet" option should be selected if you don't have a command
@@ -125,9 +116,9 @@ station connected; see the <a href="StandaloneLocoNet.shtml"> "Standalone LocoNe
     can't reliably program decoders using that choice, and only after checking 
     that you're using the right port, should you select "None" for this 
     preference and try again.
-</UL>
+</ul>
 <li>Click Save at the bottom of the preferences window, quit the program and restart.
-</UL>
+</ul>
 
 
 <h2>Using the PR3 Programming Track</h2>
@@ -152,14 +143,14 @@ Finally, connect a USB cable between the PR3 and your computer.</p>
 <p>To set up a JMRI application to use the PR3 as a dedicated decoder 
     programming track:
 
-<UL>
-<LI>
+<ul>
+<li>
 Start DecoderPro.
 <li>
 Open the Preferences window from the Edit menu and configure the connection by:
-<UL>
-<LI>Select LocoNet PR3
-<LI>Select the serial port that's connected to the PR3
+<ul>
+<li>Select LocoNet PR3
+<li>Select the serial port that's connected to the PR3
 <li>In the "<code>Command Station</code>" option, select "<code><strong>PR3 Standalone Programmer</strong></code>".
 <li>In the advanced settings, the speed will be fixed at 57,600 baud.
 <li>In the advanced settings, the "Flow Control" option defaults to 
@@ -168,9 +159,9 @@ Open the Preferences window from the Edit menu and configure the connection by:
     can't reliably program decoders using that choice, and only after checking 
     that you're using the right port, should you select "None" for this 
     preference and try again.
-</UL>
+</ul>
 <li>Click Save at the bottom of the preferences window, quit the program and restart.
-</UL>
+</ul>
 
 <h1>Usage suggestions</h1>
 
@@ -231,8 +222,9 @@ just before removing the locomotive from the track.
     the PR3 firmware update process, it is possible that the PR3 might require 
     factory repair.</p>
 <p>LocoNet&reg; is a registered trademark of <a href="http://www.digitrax.com">Digitrax, Inc.</a></p>
-    </div>
     
 <!--#include virtual="/Footer" -->
+  </div><!-- closes #mainContent-->
+</div> <!-- closes #mBody-->
 </body>
 </html>

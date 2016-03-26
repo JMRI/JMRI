@@ -1,40 +1,35 @@
 package jmri.jmris.json;
 
-/**
- * @author Randall Wood Copyright (C) 2012
- */
-import java.awt.event.ActionEvent;
 import javax.swing.Box;
 import javax.swing.BoxLayout;
 import javax.swing.JButton;
 import javax.swing.JComponent;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
-import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JSpinner;
-import javax.swing.JTextField;
 import javax.swing.SpinnerNumberModel;
 import javax.swing.event.ChangeEvent;
 import jmri.swing.JTitledSeparator;
 import jmri.swing.PreferencesPanel;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 
+/**
+ * @author Randall Wood Copyright (C) 2012, 2015
+ */
 public class JsonServerPreferencesPanel extends JPanel implements PreferencesPanel {
 
-    private static final long serialVersionUID = 5452568391598728906L;
-    static Logger log = LoggerFactory.getLogger(JsonServerPreferencesPanel.class.getName());
+    public static final int MAX_HEARTBEAT_INTERVAL = 3600;
+    public static final int MIN_HEARTBEAT_INTERVAL = 1;
     private JSpinner heartbeatIntervalSpinner;
-    private JTextField port;
+    private JSpinner port;
     private JButton btnSave;
     private JButton btnCancel;
     private JsonServerPreferences preferences;
     private JFrame parentFrame = null;
-
+    private static final long serialVersionUID = 5452568391598728906L;
     public JsonServerPreferencesPanel() {
         this.preferences = new JsonServerPreferences();
-        this.preferences.apply(JsonServerManager.getJsonServerPreferences());
+        this.preferences.apply(JsonServerPreferences.getDefault());
         initGUI();
         setGUI();
     }
@@ -55,7 +50,7 @@ public class JsonServerPreferencesPanel extends JPanel implements PreferencesPan
 
     private void setGUI() {
         heartbeatIntervalSpinner.setValue(preferences.getHeartbeatInterval() / 1000); // convert from milliseconds to seconds
-        port.setText(Integer.toString(preferences.getPort()));
+        port.setValue(preferences.getPort());
     }
 
     /**
@@ -74,22 +69,8 @@ public class JsonServerPreferencesPanel extends JPanel implements PreferencesPan
      */
     private boolean setValues() {
         boolean didSet = true;
-        preferences.setHeartbeatInterval((Integer) heartbeatIntervalSpinner.getValue() * 1000); // convert to milliseconds from seconds
-        int portNum;
-        try {
-            portNum = Integer.parseInt(port.getText());
-        } catch (NumberFormatException NFE) { //  Not a number
-            portNum = 0;
-        }
-        if ((portNum < 1) || (portNum > 65535)) { //  Invalid port value
-            javax.swing.JOptionPane.showMessageDialog(this,
-                    Bundle.getMessage("InvalidPortWarningMessage"),
-                    Bundle.getMessage("InvalidPortWarningTitle"),
-                    JOptionPane.WARNING_MESSAGE);
-            didSet = false;
-        } else {
-            preferences.setPort(portNum);
-        }
+        preferences.setHeartbeatInterval((int) heartbeatIntervalSpinner.getValue() * 1000); // convert to milliseconds from seconds
+        preferences.setPort((int) port.getValue());
         return didSet;
     }
 
@@ -109,27 +90,32 @@ public class JsonServerPreferencesPanel extends JPanel implements PreferencesPan
 
     private JPanel heartbeatPanel() {
         JPanel panel = new JPanel();
-        SpinnerNumberModel spinMod = new SpinnerNumberModel(15, 1, 3600, 1);
-        heartbeatIntervalSpinner = new JSpinner(spinMod);
-        ((JSpinner.DefaultEditor) heartbeatIntervalSpinner.getEditor()).getTextField().setEditable(false);
+        heartbeatIntervalSpinner = new JSpinner(new SpinnerNumberModel(15, MIN_HEARTBEAT_INTERVAL, MAX_HEARTBEAT_INTERVAL, 1));
+        ((JSpinner.DefaultEditor) heartbeatIntervalSpinner.getEditor()).getTextField().setEditable(true);
         this.heartbeatIntervalSpinner.addChangeListener((ChangeEvent e) -> {
             this.setValues();
         });
+        this.heartbeatIntervalSpinner.setToolTipText(Bundle.getMessage("HeartbeatToolTip", MIN_HEARTBEAT_INTERVAL, MAX_HEARTBEAT_INTERVAL));
         panel.add(heartbeatIntervalSpinner);
-        panel.add(new JLabel(Bundle.getMessage("HeartbeatLabel")));
+        JLabel label = new JLabel(Bundle.getMessage("HeartbeatLabel"));
+        label.setToolTipText(this.heartbeatIntervalSpinner.getToolTipText());
+        panel.add(label);
         return panel;
     }
 
     private JPanel portPanel() {
         JPanel panel = new JPanel();
-        port = new JTextField();
-        port.setText(Integer.toString(this.preferences.getPort()));
-        port.setColumns(6);
-        port.addActionListener((ActionEvent e) -> {
+        port = new JSpinner(new SpinnerNumberModel(JsonServerPreferences.DEFAULT_PORT, 1, 65535, 1));
+        ((JSpinner.DefaultEditor) port.getEditor()).getTextField().setEditable(true);
+        port.setEditor(new JSpinner.NumberEditor(port, "#"));
+        this.port.addChangeListener((ChangeEvent e) -> {
             this.setValues();
         });
+        this.port.setToolTipText(Bundle.getMessage("PortToolTip"));
         panel.add(port);
-        panel.add(new JLabel(Bundle.getMessage("LabelPort")));
+        JLabel label = new JLabel(Bundle.getMessage("LabelPort"));
+        label.setToolTipText(this.port.getToolTipText());
+        panel.add(label);
         return panel;
     }
 
@@ -171,8 +157,8 @@ public class JsonServerPreferencesPanel extends JPanel implements PreferencesPan
     @Override
     public void savePreferences() {
         if (this.setValues()) {
-            JsonServerManager.getJsonServerPreferences().apply(this.preferences);
-            JsonServerManager.getJsonServerPreferences().save();
+            JsonServerPreferences.getDefault().apply(this.preferences);
+            JsonServerPreferences.getDefault().save();
             if (this.parentFrame != null) {
                 this.parentFrame.dispose();
             }
@@ -181,13 +167,13 @@ public class JsonServerPreferencesPanel extends JPanel implements PreferencesPan
 
     @Override
     public boolean isDirty() {
-        return this.preferences.compareValuesDifferent(JsonServerManager.getJsonServerPreferences())
-                || JsonServerManager.getJsonServerPreferences().isDirty();
+        return this.preferences.compareValuesDifferent(JsonServerPreferences.getDefault())
+                || JsonServerPreferences.getDefault().isDirty();
     }
 
     @Override
     public boolean isRestartRequired() {
-        return JsonServerManager.getJsonServerPreferences().isRestartRequired();
+        return JsonServerPreferences.getDefault().isRestartRequired();
     }
 
     @Override

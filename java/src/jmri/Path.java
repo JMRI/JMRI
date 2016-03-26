@@ -2,8 +2,6 @@ package jmri;
 
 import java.util.ArrayList;
 import java.util.List;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 
 /**
  * Represents a particular set of NamedBean (usually turnout) settings to put a
@@ -225,30 +223,57 @@ public class Path {
         return b.toString();
     }
 
+    /*
+     * Set path length.  length must be in millimeters.
+     */
     public void setLength(float l) {
         _length = l;
-    }  // l must be in millimeters
+        if (_block!=null) {
+            if (l > _block.getLengthMm()) {
+                _length = _block.getLengthMm();
+            }
+        }
+    }
 
+    /**
+     * Return actual stored length.  default 0.
+     */
+    public float getLength() {
+        return _length;
+    }
+
+    /**
+     * Return length in millimeters. Default length of 0 
+     * will return the block length.
+     */
     public float getLengthMm() {
         if (_length <= 0.0f) {
             return _block.getLengthMm();
         }
         return _length;
-    } // return length in millimeters
+    }
 
+    /**
+     * Return length in centimeters. Default length of 0 
+     * will return the block length.
+     */
     public float getLengthCm() {
         if (_length <= 0.0f) {
             return _block.getLengthCm();
         }
         return (_length / 10.0f);
-    }  // return length in centimeters
+    }
 
+    /**
+     * Return length in inches. Default length of 0 
+     * will return the block length.
+     */
     public float getLengthIn() {
         if (_length <= 0.0f) {
             return _block.getLengthIn();
         }
         return (_length / 25.4f);
-    }  // return length in inches
+    }
 
     static private void appendOne(StringBuffer b, String t) {
         if (b.length() != 0) {
@@ -257,11 +282,45 @@ public class Path {
         b.append(t);
     }
 
+    @Override
+    public boolean equals(Object obj) {
+        if (obj == this) {
+            return true;
+        }
+        if (obj == null) {
+            return false;
+        }
+
+        if (!(getClass() == obj.getClass())) {
+            return false;
+        } else {
+            Path p = (Path)obj;
+            if (p._length != this._length) return false;
+            if (p._toBlockDirection != this._toBlockDirection) return false;
+            if (p._fromBlockDirection != this._fromBlockDirection) return false;
+
+            if (p._block == null &&  this._block != null) return false;
+            if (p._block != null &&  this._block == null) return false;
+            if (p._block != null &&  this._block != null && !p._block.equals(this._block)) return false;
+
+            if (p._beans.size() != this._beans.size()) return false;
+            for (int i = 0; i<p._beans.size(); i++) {
+                if (! p._beans.get(i).equals(this._beans.get(i))) return false;
+            }
+        }
+        return true;
+    }
+
+    // Can't include _toBlockDirection, _fromBlockDirection, or block information as they can change
+    @Override
+    public int hashCode() {
+        int hash = 100;
+        return hash;
+    }
+    
     private ArrayList<BeanSetting> _beans = new ArrayList<BeanSetting>();
     private Block _block;
     private int _toBlockDirection;
     private int _fromBlockDirection;
     private float _length = 0.0f;  // always stored in millimeters
-
-    static Logger log = LoggerFactory.getLogger(Path.class.getName());
 }

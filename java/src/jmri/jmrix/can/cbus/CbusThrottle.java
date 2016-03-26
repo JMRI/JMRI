@@ -564,6 +564,6 @@ public class CbusThrottle extends AbstractThrottle {
     }
 
     // initialize logging
-    static Logger log = LoggerFactory.getLogger(CbusThrottle.class.getName());
+    private final static Logger log = LoggerFactory.getLogger(CbusThrottle.class.getName());
 
 }

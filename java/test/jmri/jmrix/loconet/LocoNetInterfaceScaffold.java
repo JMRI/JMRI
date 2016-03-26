@@ -1,4 +1,3 @@
-// LocoNetInterfaceScaffold.java
 package jmri.jmrix.loconet;
 
 import java.util.Vector;
@@ -71,7 +70,7 @@ public class LocoNetInterfaceScaffold extends LnTrafficController {
         return listeners.size();
     }
 
-    static Logger log = LoggerFactory.getLogger(LocoNetInterfaceScaffold.class.getName());
+    private final static Logger log = LoggerFactory.getLogger(LocoNetInterfaceScaffold.class.getName());
 
 }
 

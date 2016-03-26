@@ -4,11 +4,14 @@ package jmri.jmrit.withrottle;
  * @author Brett Hoffman Copyright (C) 2010
  * @version $Revision$
  */
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
+import apps.PerformActionModel;
+import apps.StartupActionsManager;
+import java.awt.event.ItemEvent;
+import java.awt.event.ItemListener;
+import java.beans.PropertyChangeEvent;
 import java.io.File;
+import java.util.Arrays;
 import java.util.ResourceBundle;
-import javax.swing.BorderFactory;
 import javax.swing.BoxLayout;
 import javax.swing.ButtonGroup;
 import javax.swing.JCheckBox;
@@ -19,9 +22,9 @@ import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JRadioButton;
 import javax.swing.JSpinner;
-import javax.swing.JTextField;
 import javax.swing.SpinnerNumberModel;
 import jmri.InstanceManager;
+import jmri.swing.JTitledSeparator;
 import jmri.swing.PreferencesPanel;
 import jmri.util.FileUtil;
 
@@ -33,13 +36,15 @@ public class WiThrottlePrefsPanel extends JPanel implements PreferencesPanel {
 
     JCheckBox momF2CB;
 
-    JCheckBox portCB;
-    JTextField port;
+    JSpinner port;
 
     JCheckBox powerCB;
     JCheckBox turnoutCB;
     JCheckBox routeCB;
     JCheckBox consistCB;
+    JCheckBox startupCB;
+    ItemListener startupItemListener;
+    int startupActionPosition = -1;
     JRadioButton wifiRB;
     JRadioButton dccRB;
 
@@ -62,9 +67,13 @@ public class WiThrottlePrefsPanel extends JPanel implements PreferencesPanel {
 
     public void initGUI() {
         setLayout(new BoxLayout(this, BoxLayout.PAGE_AXIS));
+        add(new JTitledSeparator(Bundle.getMessage("TitleDelayPanel")));
         add(eStopDelayPanel());
+        add(new JTitledSeparator(Bundle.getMessage("TitleFunctionsPanel")));
         add(functionsPanel());
+        add(new JTitledSeparator(Bundle.getMessage("TitleNetworkPanel")));
         add(socketPortPanel());
+        add(new JTitledSeparator(Bundle.getMessage("TitleControllersPanel")));
         add(allowedControllers());
     }
 
@@ -74,13 +83,14 @@ public class WiThrottlePrefsPanel extends JPanel implements PreferencesPanel {
 
         momF2CB.setSelected(localPrefs.isUseMomF2());
 
-        portCB.setSelected(localPrefs.isUseFixedPort());
-        updatePortField();
-
+        port.setValue(localPrefs.getPort());
         powerCB.setSelected(localPrefs.isAllowTrackPower());
         turnoutCB.setSelected(localPrefs.isAllowTurnout());
         routeCB.setSelected(localPrefs.isAllowRoute());
         consistCB.setSelected(localPrefs.isAllowConsist());
+        InstanceManager.getDefault(StartupActionsManager.class).addPropertyChangeListener((PropertyChangeEvent evt) -> {
+            startupCB.setSelected(isStartUpAction());
+        }); 
         wifiRB.setSelected(localPrefs.isUseWiFiConsist());
         dccRB.setSelected(!localPrefs.isUseWiFiConsist());
     }
@@ -98,23 +108,20 @@ public class WiThrottlePrefsPanel extends JPanel implements PreferencesPanel {
 
         localPrefs.setUseMomF2(momF2CB.isSelected());
 
-        localPrefs.setUseFixedPort(portCB.isSelected());
-        if (portCB.isSelected()) {
-            int portNum;
-            try {
-                portNum = Integer.parseInt(port.getText());
-            } catch (NumberFormatException NFE) { //  Not a number
-                portNum = 0;
-            }
-            if ((portNum < 1024) || (portNum > 65535)) { //  Invalid port value
-                javax.swing.JOptionPane.showMessageDialog(this,
-                        Bundle.getMessage("WarningInvalidPort"),
-                        Bundle.getMessage("TitlePortWarningDialog"),
-                        JOptionPane.WARNING_MESSAGE);
-                didSet = false;
-            } else {
-                localPrefs.setPort(port.getText());
-            }
+        int portNum;
+        try {
+            portNum = (int) port.getValue();
+        } catch (NumberFormatException NFE) { //  Not a number
+            portNum = 0;
+        }
+        if ((portNum < 1) || (portNum > 65535)) { //  Invalid port value
+            javax.swing.JOptionPane.showMessageDialog(this,
+                    Bundle.getMessage("WarningInvalidPort"),
+                    Bundle.getMessage("TitlePortWarningDialog"),
+                    JOptionPane.WARNING_MESSAGE);
+            didSet = false;
+        } else {
+            localPrefs.setPort((int) port.getValue());
         }
 
         localPrefs.setAllowTrackPower(powerCB.isSelected());
@@ -146,9 +153,6 @@ public class WiThrottlePrefsPanel extends JPanel implements PreferencesPanel {
     private JPanel eStopDelayPanel() {
         JPanel panel = new JPanel();
 
-        panel.setBorder(BorderFactory.createCompoundBorder(
-                BorderFactory.createTitledBorder(Bundle.getMessage("TitleDelayPanel")),
-                BorderFactory.createEmptyBorder(5, 5, 5, 5)));
         eStopCB = new JCheckBox(Bundle.getMessage("LabelUseEStop"));
         eStopCB.setToolTipText(Bundle.getMessage("ToolTipUseEStop"));
         SpinnerNumberModel spinMod = new SpinnerNumberModel(10, 4, 60, 2);
@@ -163,9 +167,6 @@ public class WiThrottlePrefsPanel extends JPanel implements PreferencesPanel {
     private JPanel functionsPanel() {
         JPanel panel = new JPanel();
 
-        panel.setBorder(BorderFactory.createCompoundBorder(
-                BorderFactory.createTitledBorder(Bundle.getMessage("TitleFunctionsPanel")),
-                BorderFactory.createEmptyBorder(5, 5, 5, 5)));
         momF2CB = new JCheckBox(Bundle.getMessage("LabelMomF2"));
         momF2CB.setToolTipText(Bundle.getMessage("ToolTipMomF2"));
         panel.add(momF2CB);
@@ -175,31 +176,41 @@ public class WiThrottlePrefsPanel extends JPanel implements PreferencesPanel {
     private JPanel socketPortPanel() {
         JPanel SPPanel = new JPanel();
 
-        SPPanel.setBorder(BorderFactory.createCompoundBorder(
-                BorderFactory.createTitledBorder(Bundle.getMessage("TitleNetworkPanel")),
-                BorderFactory.createEmptyBorder(5, 5, 5, 5)));
-        portCB = new JCheckBox(Bundle.getMessage("LabelUseFixedPortNumber"));
-        portCB.setToolTipText(Bundle.getMessage("ToolTipUseFixedPortNumber"));
-        portCB.addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent event) {
-                updatePortField();
-            }
-        });
-        port = new JTextField();
-        port.setText(Bundle.getMessage("LabelNotFixed"));
-        port.setPreferredSize(port.getPreferredSize());
-        SPPanel.add(portCB);
+        port = new JSpinner(new SpinnerNumberModel(localPrefs.getPort(), 1, 65535, 1));
+        port.setToolTipText(Bundle.getMessage("PortToolTip"));
+        port.setEditor(new JSpinner.NumberEditor(port, "#"));
+        JLabel label = new JLabel(Bundle.getMessage("PortLabel"));
+        label.setToolTipText(port.getToolTipText());
         SPPanel.add(port);
+        SPPanel.add(label);
+        startupCB = new JCheckBox(Bundle.getMessage("LabelStartup"), isStartUpAction());
+        startupItemListener = (ItemEvent e) -> {
+            this.startupCB.removeItemListener(this.startupItemListener);
+            StartupActionsManager manager = InstanceManager.getDefault(StartupActionsManager.class);
+            if (this.startupCB.isSelected()) {
+                PerformActionModel model = new PerformActionModel();
+                model.setClassName(WiThrottleCreationAction.class.getName());
+                if (this.startupActionPosition == -1 || this.startupActionPosition >= manager.getActions().length) {
+                    manager.addAction(model);
+                } else {
+                    manager.setActions(this.startupActionPosition, model);
+                }
+            } else {
+                manager.getActions(PerformActionModel.class).stream().filter((model) -> (model.getClassName().equals(WiThrottleCreationAction.class.getName()))).forEach((model) -> {
+                    this.startupActionPosition = Arrays.asList(manager.getActions()).indexOf(model);
+                    manager.removeAction(model);
+                });
+            }
+            this.startupCB.addItemListener(this.startupItemListener);
+        };
+        this.startupCB.addItemListener(this.startupItemListener);
+        SPPanel.add(startupCB);
         return SPPanel;
     }
 
     private JPanel allowedControllers() {
         JPanel panel = new JPanel();
 
-        panel.setBorder(BorderFactory.createCompoundBorder(
-                BorderFactory.createTitledBorder(Bundle.getMessage("TitleControllersPanel")),
-                BorderFactory.createEmptyBorder(5, 5, 5, 5)));
         powerCB = new JCheckBox(Bundle.getMessage("LabelTrackPower"));
         powerCB.setToolTipText(Bundle.getMessage("ToolTipTrackPower"));
         panel.add(powerCB);
@@ -231,16 +242,6 @@ public class WiThrottlePrefsPanel extends JPanel implements PreferencesPanel {
         panel.add(conPanel);
 
         return panel;
-    }
-
-    private void updatePortField() {
-        if (portCB.isSelected()) {
-            port.setText(localPrefs.getPort());
-
-        } else {
-            port.setText(Bundle.getMessage("LabelNotFixed"));
-        }
-
     }
 
     //private static Logger log = LoggerFactory.getLogger(WiThrottlePrefsPanel.class.getName());
@@ -298,5 +299,16 @@ public class WiThrottlePrefsPanel extends JPanel implements PreferencesPanel {
     @Override
     public boolean isPreferencesValid() {
         return true; // no validity checking performed
+    }
+
+    private boolean isStartUpAction() {
+        return InstanceManager.getDefault(StartupActionsManager.class).getActions(PerformActionModel.class).stream()
+                .anyMatch((model) -> (model.getClassName().equals(WiThrottleCreationAction.class.getName())));
+//        for (PerformActionModel model : InstanceManager.getDefault(StartupActionsManager.class).getActions(PerformActionModel.class)) {
+//            if (model.getClassName().equals(WiThrottleCreationAction.class.getName())) {
+//                return true;
+//            }
+//        }
+//        return false;
     }
 }

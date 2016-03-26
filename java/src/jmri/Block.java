@@ -1,6 +1,7 @@
 package jmri;
 
 import java.util.ArrayList;
+import java.util.Iterator;
 import java.util.List;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
@@ -277,6 +278,13 @@ public class Block extends jmri.implementation.AbstractNamedBean implements Phys
         }
     }
 
+    public boolean hasPath(Path p) { 
+        for (Path t : paths) {
+            if (t.equals(p)) return true;
+        }
+        return false;
+    }
+    
     /**
      * Get a copy of the list of Paths
      */
@@ -418,7 +426,7 @@ public class Block extends jmri.implementation.AbstractNamedBean implements Phys
         }
 
         try {
-            return new Float(speed);
+            return Float.valueOf(speed);
         } catch (NumberFormatException nx) {
             //considered normal if the speed is not a number.
         }
@@ -476,9 +484,24 @@ public class Block extends jmri.implementation.AbstractNamedBean implements Phys
         return _curvature;
     }
 
+    /*
+     * Set length.  length must be in millimeters.
+     * Paths will inherit this length, if their length is not
+     * specifically set.  This length is the maximum length of
+     * any Path in the block. Path lengths will be modified to
+     * not exceed this length.
+     */
     public void setLength(float l) {
         _length = l;
-    }  // l must be in millimeters
+        List<Path> paths = getPaths();
+        Iterator<Path> it = paths.iterator();
+        while (it.hasNext()) {
+            Path p = it.next();
+            if (p.getLength() > l) {
+                p.setLength(0);   // set to default
+            }
+        }
+    }
 
     public float getLengthMm() {
         return _length;
@@ -491,6 +514,42 @@ public class Block extends jmri.implementation.AbstractNamedBean implements Phys
     public float getLengthIn() {
         return (_length / 25.4f);
     }  // return length in inches
+
+
+    /** 
+     * Note: this has to make choices about identity values (always the same)
+     * and operation values (can change as the block works).  Might be missing
+     * some identity values. 
+     */
+    @Override
+    public boolean equals(Object obj) {
+        if (obj == this) {
+            return true;
+        }
+        if (obj == null) {
+            return false;
+        }
+
+        if (!(getClass() == obj.getClass())) {
+            return false;
+        } else {
+            Block b = (Block) obj;
+            
+//            if (b._direction != this._direction) return false;
+//            if (b._curvature != this._curvature) return false;
+//            if (b._length != this._length) return false;
+            
+            if (!b.getSystemName().equals(this.getSystemName())) return false;
+            
+        }
+        return true;
+    }
+
+    @Override
+    // This can't change, so can't include mutable values
+    public int hashCode() {
+        return this.getSystemName().hashCode();
+    }
 
     // internal data members
     private int _current = UNDETECTED; // state until sensor is set
@@ -804,7 +863,7 @@ public class Block extends jmri.implementation.AbstractNamedBean implements Phys
             // NOTE: This pattern is based on the one defined in jmri.jmrix.loconet.LnReporter
             Pattern ln_p = Pattern.compile("(\\d+) (enter|exits|seen)\\s*(northbound|southbound)?");  // Match a number followed by the word "enter".  This is the LocoNet pattern.
             Matcher m = ln_p.matcher(rep);
-            if ((m != null) && m.find()) {
+            if (m.find()) {
                 log.debug("Parsed address: " + m.group(1));
                 return (new DccLocoAddress(Integer.parseInt(m.group(1)), LocoAddress.Protocol.DCC));
             } else {
@@ -909,5 +968,5 @@ public class Block extends jmri.implementation.AbstractNamedBean implements Phys
         return Bundle.getMessage("BeanNameBlock");
     }
 
-    static Logger log = LoggerFactory.getLogger(Block.class.getName());
+    private final static Logger log = LoggerFactory.getLogger(Block.class.getName());
 }

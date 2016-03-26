@@ -7,15 +7,12 @@ import java.awt.event.ItemEvent;
 import java.awt.event.ItemListener;
 import java.awt.event.KeyAdapter;
 import java.awt.event.KeyEvent;
-import java.util.ResourceBundle;
 import javax.swing.BoxLayout;
 import javax.swing.JButton;
 import javax.swing.JCheckBox;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.JTextField;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 
 /**
  * JPanel to create a new JMRI devices HiJacked to serve other beantable tables.
@@ -78,7 +75,7 @@ public class AddNewBeanPanel extends jmri.util.swing.JmriPanel {
         finishLabel.setEnabled(false);
         _endRange.setEnabled(false);
 
-        add(ok = new JButton(rb.getString(addButtonLabel)));
+        add(ok = new JButton(Bundle.getMessage(addButtonLabel)));
         ok.addActionListener(listener);
 
         addRange.addItemListener(
@@ -136,16 +133,13 @@ public class AddNewBeanPanel extends jmri.util.swing.JmriPanel {
 
     JButton ok;
     JTextField sysName;
-    JLabel sysNameLabel = new JLabel(rb.getString("LabelSystemName"));
-    JLabel userNameLabel = new JLabel(rb.getString("LabelUserName"));
+    JLabel sysNameLabel = new JLabel(Bundle.getMessage("LabelSystemName"));
+    JLabel userNameLabel = new JLabel(Bundle.getMessage("LabelUserName"));
 
     JTextField _endRange;
     JCheckBox _range;
     JCheckBox _autoSys;
-    JLabel finishLabel = new JLabel(rb.getString("LabelNumberToAdd"));
-
-    static final ResourceBundle rb = ResourceBundle.getBundle("jmri.jmrit.beantable.BeanTableBundle");
-    static final Logger log = LoggerFactory.getLogger(AddNewBeanPanel.class.getName());
+    JLabel finishLabel = new JLabel(Bundle.getMessage("LabelNumberToAdd"));
 }
 
 

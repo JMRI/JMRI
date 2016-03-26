@@ -1,4 +1,3 @@
-// BlockManagerXml.java
 package jmri.configurexml;
 
 import java.util.List;
@@ -24,7 +23,6 @@ import org.slf4j.LoggerFactory;
  * elements.
  *
  * @author Bob Jacobsen Copyright: Copyright (c) 2008
- * @version $Revision$
  * @since 2.1.2
  *
  */
@@ -97,75 +95,71 @@ public class BlockManagerXml extends jmri.managers.configurexml.AbstractMemoryMa
             // write out again with contents
             iter = tm.getSystemNameList().iterator();
             while (iter.hasNext()) {
-                try {
-                    String sname = iter.next();
-                    if (sname == null) {
-                        log.error("System name null during store skipped for this block");
+                String sname = iter.next();
+                if (sname == null) {
+                    log.error("System name null during store skipped for this block");
+                } else {
+                    Block b = tm.getBySystemName(sname);
+                    // the following null check is to catch a null pointer exception that sometimes was found to happen
+                    if (b == null) {
+                        log.error("Null Block during store - second store skipped for this block - " + sname);
                     } else {
-                        Block b = tm.getBySystemName(sname);
-                        // the following null check is to catch a null pointer exception that sometimes was found to happen
-                        if (b == null) {
-                            log.error("Null Block during store - second store skipped for this block - " + sname);
-                        } else {
-                            String uname = b.getUserName();
-                            if (uname == null) {
-                                uname = "";
-                            }
-                            Element elem = new Element("block")
-                                    .setAttribute("systemName", sname);
-                            elem.addContent(new Element("systemName").addContent(sname));
-                            if (log.isDebugEnabled()) {
-                                log.debug("second store Block " + sname + ":" + uname);
-                            }
-                            // store length and curvature attributes
-                            elem.setAttribute("length", Float.toString(b.getLengthMm()));
-                            elem.setAttribute("curve", Integer.toString(b.getCurvature()));
-                            // store common parts
-                            storeCommon(b, elem);
-
-                            if ((b.getBlockSpeed() != null) && (!b.getBlockSpeed().equals("")) && !b.getBlockSpeed().contains("Global")) {
-                                elem.addContent(new Element("speed").addContent(b.getBlockSpeed()));
-                            }
-                            String perm = "no";
-                            if (b.getPermissiveWorking()) {
-                                perm = "yes";
-                            }
-                            elem.addContent(new Element("permissive").addContent(perm));
-                            // Add content. First, the sensor.
-                            if (b.getNamedSensor() != null) {
-                                elem.addContent(new Element("occupancysensor").addContent(b.getNamedSensor().getName()));
-                            }
-
-                            if (b.getDeniedBlocks().size() > 0) {
-                                Element denied = new Element("deniedBlocks");
-                                for (String deniedBlock : b.getDeniedBlocks()) {
-                                    denied.addContent(new Element("block").addContent(deniedBlock));
-                                }
-                                elem.addContent(denied);
-                            }
-
-                            // Now the Reporter
-                            Reporter r = b.getReporter();
-                            if (r != null) {
-                                Element re = new Element("reporter");
-                                re.setAttribute("systemName", r.getSystemName());
-                                re.setAttribute("useCurrent", b.isReportingCurrent() ? "yes" : "no");
-                                elem.addContent(re);
-                            }
-
-                            if (tm.savePathInfo()) {
-                                // then the paths
-                                List<Path> paths = b.getPaths();
-                                for (int i = 0; i < paths.size(); i++) {
-                                    addPath(elem, paths.get(i));
-                                }
-                                // and put this element out
-                            }
-                            blocks.addContent(elem);
+                        String uname = b.getUserName();
+                        if (uname == null) {
+                            uname = "";
                         }
+                        Element elem = new Element("block")
+                                .setAttribute("systemName", sname);
+                        elem.addContent(new Element("systemName").addContent(sname));
+                        if (log.isDebugEnabled()) {
+                            log.debug("second store Block " + sname + ":" + uname);
+                        }
+                        // store length and curvature attributes
+                        elem.setAttribute("length", Float.toString(b.getLengthMm()));
+                        elem.setAttribute("curve", Integer.toString(b.getCurvature()));
+                        // store common parts
+                        storeCommon(b, elem);
+
+                        if ((b.getBlockSpeed() != null) && (!b.getBlockSpeed().equals("")) && !b.getBlockSpeed().contains("Global")) {
+                            elem.addContent(new Element("speed").addContent(b.getBlockSpeed()));
+                        }
+                        String perm = "no";
+                        if (b.getPermissiveWorking()) {
+                            perm = "yes";
+                        }
+                        elem.addContent(new Element("permissive").addContent(perm));
+                        // Add content. First, the sensor.
+                        if (b.getNamedSensor() != null) {
+                            elem.addContent(new Element("occupancysensor").addContent(b.getNamedSensor().getName()));
+                        }
+
+                        if (b.getDeniedBlocks().size() > 0) {
+                            Element denied = new Element("deniedBlocks");
+                            for (String deniedBlock : b.getDeniedBlocks()) {
+                                denied.addContent(new Element("block").addContent(deniedBlock));
+                            }
+                            elem.addContent(denied);
+                        }
+
+                        // Now the Reporter
+                        Reporter r = b.getReporter();
+                        if (r != null) {
+                            Element re = new Element("reporter");
+                            re.setAttribute("systemName", r.getSystemName());
+                            re.setAttribute("useCurrent", b.isReportingCurrent() ? "yes" : "no");
+                            elem.addContent(re);
+                        }
+
+                        if (tm.savePathInfo()) {
+                            // then the paths
+                            List<Path> paths = b.getPaths();
+                            for (int i = 0; i < paths.size(); i++) {
+                                addPath(elem, paths.get(i));
+                            }
+                            // and put this element out
+                        }
+                        blocks.addContent(elem);
                     }
-                } catch (Exception e) {
-                    log.error(e.toString());
                 }
             }
         }
@@ -209,14 +203,17 @@ public class BlockManagerXml extends jmri.managers.configurexml.AbstractMemoryMa
      * <p>
      * The BlockManager in the InstanceManager is created automatically.
      *
-     * @param blocks Element containing the block elements to load.
+     * @param sharedBlocks Element containing the block elements to load.
+     * @param perNodeBlocks
      * @return true if successful
+     * @throws jmri.configurexml.JmriConfigureXmlException
      */
-    public boolean load(Element blocks) throws jmri.configurexml.JmriConfigureXmlException {
+    @Override
+    public boolean load(Element sharedBlocks, Element perNodeBlocks) throws JmriConfigureXmlException {
         boolean result = true;
         try {
-            if (blocks.getChild("defaultspeed") != null) {
-                String speed = blocks.getChild("defaultspeed").getText();
+            if (sharedBlocks.getChild("defaultspeed") != null) {
+                String speed = sharedBlocks.getChild("defaultspeed").getText();
                 if (speed != null && !speed.equals("")) {
                     InstanceManager.blockManagerInstance().setDefaultSpeed(speed);
                 }
@@ -225,7 +222,7 @@ public class BlockManagerXml extends jmri.managers.configurexml.AbstractMemoryMa
             log.error(ex.toString());
         }
 
-        List<Element> list = blocks.getChildren("block");
+        List<Element> list = sharedBlocks.getChildren("block");
         if (log.isDebugEnabled()) {
             log.debug("Found " + list.size() + " objects");
         }
@@ -338,13 +335,23 @@ public class BlockManagerXml extends jmri.managers.configurexml.AbstractMemoryMa
 
         // load paths if present
         List<Element> paths = element.getChildren("path");
-        if (paths.size() > 0 && block.getPaths().size() > 0) {
-            log.warn("Adding " + paths.size() + " paths to block " + sysName + " that already has " + block.getPaths().size() + " blocks. Please report this as an error.");
-        }
+
+        int startSize = block.getPaths().size();
+        int loadCount = 0;
+        
         for (int i = 0; i < paths.size(); i++) {
             Element path = paths.get(i);
-            loadPath(block, path);
+            if (loadPath(block, path)) loadCount++;
         }
+
+        if (startSize > 0 && loadCount > 0) {
+            log.warn("Added " + loadCount++ + " paths to block " + sysName + " that already had " + startSize + " blocks.");
+        }
+
+        if (startSize + loadCount != block.getPaths().size()) {
+            log.error("Started with " + startSize + " paths in block " + sysName + ", added "+loadCount+" but final count is "+block.getPaths().size()+"; something not right.");
+        }
+                
     }
 
     /**
@@ -353,7 +360,7 @@ public class BlockManagerXml extends jmri.managers.configurexml.AbstractMemoryMa
      * @param block   Block to receive path
      * @param element Element containing path information
      */
-    public void loadPath(Block block, Element element) throws jmri.configurexml.JmriConfigureXmlException {
+    public boolean loadPath(Block block, Element element) throws jmri.configurexml.JmriConfigureXmlException {
         // load individual path
         int toDir = 0;
         int fromDir = 0;
@@ -380,7 +387,14 @@ public class BlockManagerXml extends jmri.managers.configurexml.AbstractMemoryMa
             loadBeanSetting(path, setting);
         }
 
-        block.addPath(path);
+        // check if path already in block
+        if (!block.hasPath(path)) {    
+            block.addPath(path);
+            return true;
+        } else {
+            log.debug("Skipping load of duplicate path {}", path);
+            return false;
+        }
     }
 
     /**
@@ -411,5 +425,5 @@ public class BlockManagerXml extends jmri.managers.configurexml.AbstractMemoryMa
         return InstanceManager.blockManagerInstance().getXMLOrder();
     }
 
-    static Logger log = LoggerFactory.getLogger(BlockManagerXml.class.getName());
+    private final static Logger log = LoggerFactory.getLogger(BlockManagerXml.class.getName());
 }

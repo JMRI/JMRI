@@ -1,15 +1,16 @@
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
-<html lang="en"><head><!-- Copyright ($Author$) 2009 --><!-- $Id$ -->
+<html lang="en">
+<head><title>DecoderPro Throttle</title>
 
-
-
-
-
-<title>DecoderPro Throttle</title><!-- Style --><meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
+<!-- Style -->
+<meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
 <link rel="stylesheet" type="text/css" href="/css/default.css" media="screen">
 <link rel="stylesheet" type="text/css" href="/css/print.css" media="print">
 <link rel="icon" href="/images/jmri.ico" type="image/png">
-<link rel="home" title="Home" href="/"><!-- /Style --></head>
+<link rel="home" title="Home" href="/">
+<!-- /Style -->
+</head>
+
 <body>
 <!--#include virtual="/Header" -->
 
@@ -18,14 +19,14 @@
 
 <a name="Top"></a>
 <h1>DecoderPro&reg; Main Window</h1>
-<h1>JMRI&reg; Throttle Window - Speed Control Panel</h1>
+<h2>JMRI&reg; Throttle Window - Speed Control Panel</h2>
 
 <div align="right">
 <p><a href="Main_Throttle.shtml">Back </a></p>
 </div>
 
 <hr>
-<table style="text-align: left; width: 100%;" border="1" cellpadding="2" cellspacing="2"><tbody><tr><td colspan="2" rowspan="1">Right Click in the &nbsp;Speed Control &nbsp;Panel space and&nbsp; context menu with Properties is displayed.<br><img style="width: 201px; height: 487px;" alt="context menu" src="images/Throttle_SpeedControl_context.png"><br></td></tr><tr><td colspan="2" rowspan="1">Click on Properties and&nbsp; Edit Speed Control Panel window opens.<br><table style="width: 100%; text-align: left; margin-left: auto; margin-right: auto;" border="0" cellpadding="1" cellspacing="1"><tbody><tr><td colspan="3"><p><img src="images/Main_Throttle_Control_edit.png" alt="control edit" height="196" width="383"></p>
+<table style="text-align: left; width: 100%;" border="1" cellpadding="2" cellspacing="2"><tbody><tr><td colspan="2" rowspan="1">Right Click in the Speed Control &nbsp;Panel space and context menu with Properties is displayed.<br><img style="width: 201px; height: 487px;" alt="context menu" src="images/Throttle_SpeedControl_context.png"><br></td></tr><tr><td colspan="2" rowspan="1">Click on Properties and Edit Speed Control Panel window opens.<br><table style="width: 100%; text-align: left; margin-left: auto; margin-right: auto;" border="0" cellpadding="1" cellspacing="1"><tbody><tr><td colspan="3"><p><img src="images/Main_Throttle_Control_edit.png" alt="control edit" height="196" width="383"></p>
     <p><br></p></td><td align="left" valign="top" width="47%">Control Panel Properties may be set by right clicking on the Throttle Control Panel(Speed),  the <strong>Edit Speed Control Panel </strong>dialog is displayed. This allows you to select either of the two slider or step speed control
       <p>
         <input name="radio3" id="radio3" value="radio3" checked="checked" type="radio">
@@ -39,7 +40,7 @@
       <p>
         <input name="checkbox7" id="checkbox7" type="checkbox">
         <strong>Track sider in real time</strong></p>
-      <p><strong>Switch to contiuous speed slider on function:</strong>
+      <p><strong>Switch to continuous speed slider on function:</strong>
         <input name="textfield" id="textfield" value="F5" size="5" type="text">
         Enter the function from the <strong>Function Panel</strong> that you want to use.</p>
       <p>
@@ -81,19 +82,17 @@ the max step indicated.</p>
         <input name="button10" id="button10" value="Idle" type="submit">
       </strong> stops the locomotive smoothly using any momentum setting programmed into the decoder..</p></td>
   </tr>
-  
-</tbody></table>
-<div>
-  <div align="right"><a href="#Top"></a></div>
-</div>
+</tbody>
+</table>
 
-<div> </div>
-<div> </div>
+<div align="right"><a href="#Top"></a></div>
 <hr>
-
 <div align="right">
 <p><a href="Main_Throttle.shtml">Back </a></p>
 </div>
 
 <!--#include virtual="/Footer" -->
-</div></body></html>
+  </div><!-- closes #mainContent-->
+ </div> <!-- closes #mBody-->
+</body>
+</html>

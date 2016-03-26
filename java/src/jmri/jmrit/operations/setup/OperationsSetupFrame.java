@@ -5,8 +5,6 @@ import java.awt.Dimension;
 import javax.swing.JMenu;
 import javax.swing.JMenuBar;
 import jmri.jmrit.operations.OperationsFrame;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 
 /**
  * Frame for user edit of operation parameters
@@ -15,11 +13,6 @@ import org.slf4j.LoggerFactory;
  * @version $Revision$
  */
 public class OperationsSetupFrame extends OperationsFrame {
-
-    /**
-     *
-     */
-    private static final long serialVersionUID = 852682446088800323L;
 
     public OperationsSetupFrame() {
         super(Bundle.getMessage("TitleOperationsSetup"), new OperationsSetupPanel());
@@ -48,5 +41,5 @@ public class OperationsSetupFrame extends OperationsFrame {
         initMinimumSize(new Dimension(Control.panelWidth700, Control.panelHeight500));
     }
 
-    static Logger log = LoggerFactory.getLogger(OperationsSetupFrame.class.getName());
+//    private final static Logger log = LoggerFactory.getLogger(OperationsSetupFrame.class.getName());
 }

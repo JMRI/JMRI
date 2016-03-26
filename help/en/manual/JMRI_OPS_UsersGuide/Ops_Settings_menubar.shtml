@@ -1,111 +1,94 @@
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
-<html lang="en"><head><!-- Copyright ($Author$) 2009 --><!-- $Id$ -->
+<html lang="en">
+<head>
+<title>OperationsPro Settings Menu Bar</title>
 
-
-
-<title>Operations-Settings Menu Bar</title><!-- Style --><meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
+<!-- Style -->
+<meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
 <link rel="stylesheet" type="text/css" href="/css/default.css" media="screen">
 <link rel="stylesheet" type="text/css" href="/css/print.css" media="print">
 <link rel="icon" href="/images/jmri.ico" type="image/png">
-<link rel="home" title="Home" href="/"><!-- /Style --></head>
+<link rel="home" title="Home" href="/">
+<!-- /Style -->
+</head>
+
 <body>
 <!--#include virtual="/Header" -->
 <!--#include virtual="Sidebar" -->
 <div id="mainContent"><a name="Top"></a>
 <h1>Using JMRI&reg; to Operate Trains</h1>
-<h1>Operations Settings Menu Bar</h1>
+<h2>OperationsPro: Settings menu bar</h2>
+
 <div align="right">
 <p><a href="Ops_Settings.shtml"><span style="text-decoration: underline;">Back</span></a></p>
 <p><a href="index.shtml#Main">Back to Index</a></p>
 </div>
 <hr>
-<h3>Menus</h3>
+
 <p><img src="images/Ops_Setting_tool_menu.png" alt="settings menu" height="239" width="791"></p>
+
 <h3>Tools</h3>
 <ul>
-<li><strong name="OptionsMenu"><a href="Ops_Settings_Tools_Options.shtml">Options
-</a></strong> </li>
-</ul>
-<ul>
+<li name="OptionsMenu"><strong ><a href="Ops_Settings_Tools_Options.shtml">Options
+</a></strong><br>&nbsp;</li>
+
 <li><a href="Ops_PrintOptions.shtml"><strong>Manifest
-Print Options </strong></a> </li>
-</ul>
-<ul>
-<li><strong>Build Report Options</strong><br>
-<br>
-<img style="width: 436px; height: 400px;" alt="build report options" src="images/Ops_Setting_BuildReportOptions.png">&nbsp;<br>
+Print Options </strong></a><br>&nbsp;</li>
+
+<li><a name="buildreportoptions" id="buildreportoptions"><strong>Build Report Options</strong></a>
+<p><img style="width: 436px; height: 400px;" alt="build report options" src="images/Ops_Setting_BuildReportOptions.png"><br>
 Let's you select the amount of detail that you want in the build
-report. Very Detailed produces the highest number of pages. </li>
-<li><strong>Backup</strong></li>
-Opens the system <strong>Save backup </strong>dialog to
-backup <strong>folder </strong> <li><strong>Restore</strong></li>
-Opens the system <strong>Open</strong> backup file dialog
-from backup folder <li><strong>Load Demo Files</strong></li>
-</ul>
-<div style="margin-left: 40px;"><img style="width: 387px; height: 122px;" alt="laod demo files" src="images/Ops_Setting_tool_LoadDemoFiles.png"></div>
-<ul>
-<p>Opens the <strong>Demo load successful </strong>dialog
-box</p>
-<p> <img src="images/Ops_Setting03.png" alt="Demo load" align="bottom" height="122" width="409"> </p>
-<li><strong>Reset Databases</strong></li>
+report. Very Detailed produces the highest number of pages.</p></li>
+
+<li><a name="backup" id="backup"><strong>Backup</strong></a>
+<p>Opens the OS <strong>Save backup file</strong> dialog to select a place to store your OperationsPro backup file</p></li>
+
+<li><a name="restore" id="restore"><strong>Restore</strong></a>
+<p>Opens the OS <strong>Open file</strong> dialog to select a OperationsPro backup file from disk.</p></li>
+
+<li><a name="loaddemofiles" id="loaddemofiles"><strong>Load Demo Files</strong></a>
+<p><img style="width: 387px; height: 122px;" alt="laod demo files" src="images/Ops_Setting_tool_LoadDemoFiles.png">
+<p>Opens the <strong>Demo load successful!</strong>dialog box:</p>
+<img src="images/Ops_Setting03.png" alt="Demo load" align="bottom" height="122" width="409"></p></li>
+
+<li><a name="resetdb" id="resetdb"><strong>Reset Databases</strong></li>
 <p>Opens the <strong>Reset Databases </strong>dialog
 box</p>
-<p><img src="images/Ops_Setting04.png" alt="reset database" height="122" width="445"></p>
-<li><strong>Manage Auto Backups</strong><br>
-<img src="images/Ops_Setting_ManageBackupSets.png" alt="auto backup" height="387" width="461"> <br>
-</li>
+<p><img src="images/Ops_Setting04.png" alt="reset database" height="122" width="445"></p></li>
+
+<li><a name="manageautobackups" id="manageautobackups"><strong>Manage Auto Backups</strong></a><br>
+<img src="images/Ops_Setting_ManageBackupSets.png" alt="auto backup" height="387" width="461"></li>
 </ul>
+
 <h3>Operations</h3>
 <ul>
 <li><strong>Settings</strong>
-<blockquote>
-<p>Opens <strong><a href="Ops_Settings.shtml">Operations
-Setting</a></strong> window.</p>
-</blockquote>
-</li>
-<li><strong>Locations</strong> </li>
-<blockquote>
-<p>Opens <strong><a href="Ops_Locations.shtml">Locations</a></strong>
-window.</p>
-</blockquote>
-<li><strong>Cars</strong> </li>
-<blockquote>
-<p>Opens <strong><a href="Ops_Cars.shtml">Cars</a></strong>
-window.</p>
-</blockquote>
-<li><strong>:Locomotives</strong>
-<blockquote>
-<p>Opens <strong><a href="Ops_Engines.shtml">Locomotives</a></strong>
-window.</p>
-</blockquote>
-</li>
+<p>Opens <strong><a href="Ops_Settings.shtml">Operations Setting</a></strong> window.</p></li>
+<li><strong>Locations</strong>
+<p>Opens <strong><a href="Ops_Locations.shtml">Locations</a></strong> window.</p></li>
+<li><strong>Cars</strong>
+<p>Opens <strong><a href="Ops_Cars.shtml">Cars</a></strong> window.</p></li>
+<li><strong>Locomotives</strong>
+<p>Opens <strong><a href="Ops_Engines.shtml">Locomotives</a></strong> window.</p></li>
 <li><strong>Routes</strong>
-<blockquote>
-<p>Opens <strong><a href="Ops_Routes.shtml">Routes</a></strong>
-window.</p>
-</blockquote>
-</li>
+<p>Opens <strong><a href="Ops_Routes.shtml">Routes</a></strong> window.</p></li>
 <li><strong>Trains</strong>
-<blockquote>
-<p>Opens<strong> <a href="Ops_Trains.shtml">Trains</a>
-</strong>window.</p>
-</blockquote>
-</li>
+<p>Opens<strong> <a href="Ops_Trains.shtml">Trains</a></strong> window.</p></li>
 </ul>
-<h3> Windows </h3>
-<blockquote>
-<p>JMRI normal window menu</p>
-</blockquote>
+
+<h3>Windows</h3>
+<p>Opens the JMRI  Window menu</p>
+
 <h3>Help</h3>
-<blockquote>
-<p>JMRI normal help menu</p>
-</blockquote><a href="#OptionsMenu"></a>
-<div align="right">
+<p>Opens the JMRI Help menu</p>
+
 <div align="right">
 <p><a href="Ops_Settings.shtml">Back</a></p>
 <p><a href="index.shtml#Main">Back to Index</a></p>
 </div>
-<p>.</p>
+
+<!--#include virtual="/Footer" -->
 </div>
-<!--#include virtual="/Footer" --></div>
-</body></html>
+</div>
+</body>
+</html>

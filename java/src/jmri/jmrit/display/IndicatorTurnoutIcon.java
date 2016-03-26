@@ -38,11 +38,8 @@ import org.slf4j.LoggerFactory;
  *
  * @author Bob Jacobsen Copyright (c) 2002
  * @author Pete Cressman Copyright (c) 2010 2012
- * @version $Revision$
  */
 public class IndicatorTurnoutIcon extends TurnoutIcon implements IndicatorTrack {
-
-    private static final long serialVersionUID = 7715842501699997420L;
 
     HashMap<String, HashMap<Integer, NamedIcon>> _iconMaps;
 
@@ -94,8 +91,7 @@ public class IndicatorTurnoutIcon extends TurnoutIcon implements IndicatorTrack 
         return finishClone(pos);
     }
 
-    public Positionable finishClone(Positionable p) {
-        IndicatorTurnoutIcon pos = (IndicatorTurnoutIcon) p;
+    protected Positionable finishClone(IndicatorTurnoutIcon pos) {
         pos.setOccBlockHandle(namedOccBlock);
         pos.setOccSensorHandle(namedOccSensor);
         pos._iconMaps = cloneMaps(pos);
@@ -104,8 +100,7 @@ public class IndicatorTurnoutIcon extends TurnoutIcon implements IndicatorTrack 
         return super.finishClone(pos);
     }
 
-    @edu.umd.cs.findbugs.annotations.SuppressWarnings(value = "EI_EXPOSE_REP",
-            justification = "OK until Java 1.6 allows more efficient return of copy")
+    @edu.umd.cs.findbugs.annotations.SuppressFBWarnings(value = "EI_EXPOSE_REP", justification = "OK until Java 1.6 allows more efficient return of copy")
     public HashMap<String, HashMap<Integer, NamedIcon>> getIconMaps() {
         return _iconMaps;
     }
@@ -228,6 +223,10 @@ public class IndicatorTurnoutIcon extends TurnoutIcon implements IndicatorTrack 
     }
 
     public void setStatus(int state) {
+        // this code is almost certainly an error.  _pathUtil.setStatus(int) is a 
+        // method that converts an int argument to a String explanation.
+        // Perhaps _pathUtil.(OBlock block, int state) was intended,
+        // or that setStatus (in IndicatorTrackPaths) is just wrong.
         _pathUtil.setStatus(state);
     }
 
@@ -246,7 +245,7 @@ public class IndicatorTurnoutIcon extends TurnoutIcon implements IndicatorTrack 
 //                                            ") state= "+_name2stateMap.get(stateName)+
 //                                            " icon: w= "+icon.getIconWidth()+" h= "+icon.getIconHeight());
         if (_iconMaps == null) {
-            initMaps();
+            _iconMaps = initMaps();
         }
         _iconMaps.get(status).put(_name2stateMap.get(stateName), icon);
         setIcon(_iconMaps.get("ClearTrack").get(_name2stateMap.get("BeanStateInconsistent")));
@@ -511,9 +510,8 @@ public class IndicatorTurnoutIcon extends TurnoutIcon implements IndicatorTrack 
             getOccBlock().removePropertyChangeListener(this);
         }
         namedOccSensor = null;
-        namedOccSensor = null;
         super.dispose();
     }
 
-    static Logger log = LoggerFactory.getLogger(IndicatorTurnoutIcon.class.getName());
+    private final static Logger log = LoggerFactory.getLogger(IndicatorTurnoutIcon.class.getName());
 }

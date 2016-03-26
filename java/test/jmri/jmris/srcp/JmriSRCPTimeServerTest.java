@@ -5,8 +5,6 @@ import junit.framework.Assert;
 import junit.framework.Test;
 import junit.framework.TestCase;
 import junit.framework.TestSuite;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 
 /**
  * Tests for the jmri.jmris.srcp.JmriSRCPTimeServer class
@@ -46,7 +44,5 @@ public class JmriSRCPTimeServerTest extends TestCase {
 
         return suite;
     }
-
-    static Logger log = LoggerFactory.getLogger(JmriSRCPTimeServerTest.class.getName());
 
 }

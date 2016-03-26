@@ -1,11 +1,9 @@
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
 <html lang="en">
 <head>
-<!-- Copyright ($Author$) 2009, 2010 -->
-<!-- $Id$ -->
-<TITLE>
+<title>
 DecoderPro&reg; Programming Modes
-</TITLE>
+</title>
 
 <!-- Style -->
 <meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
@@ -22,10 +20,10 @@ DecoderPro&reg; Programming Modes
 <!--#include virtual="Sidebar" -->
 <div id="mainContent">
 
-<a NAME="Top"></a>
+<a name="Top"></a>
 
 <h1>Programming Modes</h1>
-<div align=right>
+<div align="right">
 <p><a href="Basic_Start.shtml#ProgramModes">Back</a></p>
 </div>
 
@@ -42,14 +40,14 @@ Address Mode, and is still used by some older and/or  lower end decoders, partic
 <p>  If you experience difficulty programming a decoder in  Paged Mode, try Direct Byte, then <br>
   Register Mode, and finally Address Mode. The EasyDCC AD4  Accessory Decoder can only be <br>
 programmed in Direct Byte.</p>
-<p>
 <hr>
 
-<div align=right>
+<div align="right">
 <p><a href="Basic_Start.shtml#ProgramModes">Back</a></p>
 </div>
 
-
 <!--#include virtual="/Footer" -->
-</body>
+  </div><!-- closes #mainContent-->
+ </div> <!-- closes #mBody-->
+ </body>
 </html>

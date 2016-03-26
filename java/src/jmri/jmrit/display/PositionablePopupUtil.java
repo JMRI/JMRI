@@ -2,9 +2,7 @@
 package jmri.jmrit.display;
 
 import java.awt.Color;
-import java.awt.Container;
 import java.awt.Font;
-import java.awt.Point;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.util.ArrayList;
@@ -32,6 +30,7 @@ import org.slf4j.LoggerFactory;
  * Justification.
  * </p>
  *
+ * moved from PositionableLabel
  * @author Pete Cressman copyright (C) 2010
  * @version $I $
  */
@@ -41,6 +40,7 @@ public class PositionablePopupUtil {
     protected JComponent _textComponent;    // closest ancestor for JLabel and JTextField
     protected int _textType;                // JComponent does not have text, used for casting
     protected Positionable _parent;
+    protected PositionablePopupUtil _self;
     protected PositionablePropertiesUtil _propertiesUtil;
 
     private Color defaultForeground;
@@ -61,9 +61,10 @@ public class PositionablePopupUtil {
             _textType = JCOMPONENT;
         }
         _textComponent = textComp;
+        _self = this;
         debug = log.isDebugEnabled();
         defaultForeground = _textComponent.getForeground();
-        defaultBackground = _textComponent.getBackground();
+//        defaultBackground = _textComponent.getBackground();
         defaultBorderColor = _parent.getBackground();
         _propertiesUtil = new PositionablePropertiesUtil(_parent);
     }
@@ -82,6 +83,7 @@ public class PositionablePopupUtil {
         util.setOrientation(getOrientation());
         util.setBackgroundColor(getBackground());
         util.setForeground(getForeground());
+        util.setHasBackground(hasBackground());     // must do this AFTER setBackgroundColor
         return util;
     }
 
@@ -105,6 +107,7 @@ public class PositionablePopupUtil {
     private Color borderColor = null;
     private Border borderMargin = BorderFactory.createEmptyBorder(0, 0, 0, 0);
     private Border outlineBorder = BorderFactory.createEmptyBorder(0, 0, 0, 0);
+    private boolean _hasBackground;      // Should background be painted or clear
 
     JMenuItem italic = null;
     JMenuItem bold = null;
@@ -181,11 +184,8 @@ public class PositionablePopupUtil {
         margin = m;
         if (_parent.isOpaque()) {
             borderMargin = new LineBorder(getBackground(), m);
-            //_parent.setBorder(new LineBorder(setBackground(), m));
-
         } else {
             borderMargin = BorderFactory.createEmptyBorder(m, m, m, m);
-            //_parent.setBorder(BorderFactory.createEmptyBorder(m, m, m, m));
         }
         if (_showBorder) {
             _parent.setBorder(new CompoundBorder(outlineBorder, borderMargin));
@@ -242,7 +242,7 @@ public class PositionablePopupUtil {
     public void setBorder(boolean set) {
         _showBorder = set;
         if (set) {
-            if (borderColor != null) {
+            if (borderColor != null && _showBorder) {
                 outlineBorder = new LineBorder(borderColor, borderSize);
                 _parent.setBorder(new CompoundBorder(outlineBorder, borderMargin));
             }
@@ -281,23 +281,40 @@ public class PositionablePopupUtil {
 
     public void setBackgroundColor(Color color) {
         if (color == null) {
-            _textComponent.setOpaque(false);
-            _parent.setOpaque(false);
+            _hasBackground = false;
+            _textComponent.setBackground(null);
         } else {
-            _textComponent.setOpaque(true);
+            _hasBackground = true;
             _textComponent.setBackground(color);
-            _parent.setOpaque(true);
             _parent.setBackground(color);
         }
-        setMargin(margin);  //This rebuilds margin and sets it colour.
+        if (_hasBackground) {
+            setMargin(margin);  //This rebuilds margin and sets it colour.            
+        }
         _parent.updateSize();
     }
+    
+    public void setHasBackground(boolean set) {
+        _hasBackground = set;
+        if (_textComponent instanceof PositionableJPanel) {
+            _textComponent.setOpaque(_hasBackground);
+        }
+        if (!_hasBackground) {
+            _parent.setOpaque(false);
+            _textComponent.setOpaque(false);
+        }
+    }
+
+    public boolean hasBackground() {
+        return _hasBackground;
+    }
+
 
     public Color getBackground() {
-        if (_textComponent.isOpaque()) {
-            return _textComponent.getBackground();            
+        if(!_hasBackground) {
+            return null;
         }
-        return null;
+        return _textComponent.getBackground();            
     }
 
     protected JMenu makeFontSizeMenu() {
@@ -347,7 +364,6 @@ public class PositionablePopupUtil {
 
     public void setFontSize(float newSize) {
         _textComponent.setFont(jmri.util.FontUtil.deriveFont(_textComponent.getFont(), newSize));
-        //setSize(getPreferredSize().width, getPreferredSize().height);
         _parent.updateSize();
     }
 
@@ -460,7 +476,7 @@ public class PositionablePopupUtil {
         return c;
     }
 
-    protected void makeColorMenu(JMenu colorMenu, int type) {
+    protected ButtonGroup makeColorMenu(JMenu colorMenu, int type) {
         ButtonGroup buttonGrp = new ButtonGroup();
         addColorMenuEntry(colorMenu, buttonGrp, Bundle.getMessage("Black"), Color.black, type);
         addColorMenuEntry(colorMenu, buttonGrp, Bundle.getMessage("DarkGray"), Color.darkGray, type);
@@ -476,6 +492,7 @@ public class PositionablePopupUtil {
         if (type == BACKGROUND_COLOR) {
             addColorMenuEntry(colorMenu, buttonGrp, Bundle.getMessage("Clear"), null, type);
         }
+        return buttonGrp;
     }
 
     protected void addColorMenuEntry(JMenu menu, ButtonGroup colorButtonGroup,
@@ -490,27 +507,13 @@ public class PositionablePopupUtil {
                         _textComponent.setForeground(desiredColor);
                         break;
                     case BACKGROUND_COLOR:
-                        if (desiredColor == null) {
-                            _textComponent.setOpaque(false);
-                            _parent.setOpaque(false);
-                            //We need to force a redisplay when going to clear as the area
-                            //doesn't always go transparent on the first click.
-                            Point p = _parent.getLocation();
-                            int w = _parent.getWidth();
-                            int h = _parent.getHeight();
-                            Container parent = _parent.getParent();
-                            // force redisplay
-                            setMargin(margin);  //This rebuilds margin and clears it colour.
-                            parent.revalidate();
-                            parent.repaint(p.x, p.y, w, h);
-                        } else {
-                            setBackgroundColor(desiredColor);
-                        }
+                        setBackgroundColor(desiredColor);
                         break;
                     case BORDER_COLOR:
                         setBorderColor(desiredColor);
                         break;
                 }
+                _parent.getEditor().setAttributes(_self, _parent);
             }
 
             ActionListener init(Color c) {
@@ -802,5 +805,5 @@ public class PositionablePopupUtil {
         }
     }
 
-    static Logger log = LoggerFactory.getLogger(PositionablePopupUtil.class.getName());
+    private final static Logger log = LoggerFactory.getLogger(PositionablePopupUtil.class.getName());
 }

@@ -1,15 +1,16 @@
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
-<html lang="en"><head><!-- Copyright ($Author$) 2009 --><!-- $Id$ -->
+<html lang="en">
+<head>
+<title>DecoderPro Tool Menu</title>
 
-
-
-
-
-<title>DecoderPro Tool Menu</title><!-- Style --><meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
+<!-- Style -->
+<meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
 <link rel="stylesheet" type="text/css" href="/css/default.css" media="screen">
 <link rel="stylesheet" type="text/css" href="/css/print.css" media="print">
 <link rel="icon" href="/images/jmri.ico" type="image/png">
-<link rel="home" title="Home" href="/"><!-- /Style --></head>
+<link rel="home" title="Home" href="/">
+<!-- /Style -->
+</head>
 
 <body>
 <!--#include virtual="/Header" -->
@@ -19,7 +20,7 @@
 
 <a name="Top"></a>
 <h1>DecoderPro&reg; Main Window</h1>
-<h1>Tools Menu </h1>
+<h2>Tools Menu</h2>
 
 <div align="right">
 <p><a href="Main_Edit.shtml">Previous | </a><a href="Main_Roster.shtml">Next</a></p>
@@ -73,7 +74,7 @@
         <div align="center"><img src="images/Main_Tool02.png" alt="local JMRI throttles" height="207" width="313"></div>
       </ul></td>
       <td width="6%"><div align="center"><img src="images/Main_Tool_Throttle01.png" alt="icon1" height="44" width="45"></div></td>
-      <td width="65%">Opens a new Thottle</td>
+      <td width="65%">Opens a new Throttle</td>
     </tr>
     <tr>
       <td><div align="center"><img src="images/Main_Tool_Throttle02.png" alt="icon" height="44" width="49"></div></td>
@@ -109,7 +110,7 @@ in the default folder above, or the location of your choice.</p></blockquote><p 
   <li><strong>Save as Default Throttle Layout</strong></li>
 </ul>
 <blockquote>
-  <p style="margin-left: 40px;">Saves your current Thottle as the default layout	</p>
+  <p style="margin-left: 40px;">Saves your current Throttle as the default layout	</p>
 </blockquote>
 <ul>
   <li><strong>Load Default Throttle Layout</strong></li>
@@ -193,4 +194,7 @@ the Web, to get a web connection to JMRI up and running.</p>
 </div>
 
 <!--#include virtual="/Footer" -->
-</div></body></html>
+  </div><!-- closes #mainContent-->
+ </div> <!-- closes #mBody-->
+</body>
+</html>

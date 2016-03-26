@@ -9,6 +9,7 @@ import java.util.Map;
 import jmri.InstanceManager;
 import jmri.JmriException;
 import jmri.SignalHead;
+import jmri.jmris.json.JsonException;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -34,7 +35,7 @@ abstract public class AbstractSignalHeadServer {
 
     abstract public void sendErrorStatus(String signalHead) throws IOException;
 
-    abstract public void parseStatus(String statusString) throws JmriException, IOException;
+    abstract public void parseStatus(String statusString) throws JmriException, IOException, JsonException;
 
     synchronized protected void addSignalHeadToList(String signalHeadName) {
         if (!signalHeads.containsKey(signalHeadName)) {

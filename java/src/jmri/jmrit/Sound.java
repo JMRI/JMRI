@@ -28,7 +28,6 @@ import org.slf4j.LoggerFactory;
  *
  * @author	Bob Jacobsen Copyright (C) 2004, 2006
  * @author Dave Duchamp Copyright (C) 2011 - add streaming play of large files
- * @version	$Revision$
  */
 public class Sound {
 
@@ -131,7 +130,7 @@ public class Sound {
         DataLine.Info info = new DataLine.Info(SourceDataLine.class, format); // format is an AudioFormat object
         if (!AudioSystem.isLineSupported(info)) {
             // Handle the error.
-            log.error("line not supported: " + info);
+            log.warn("line not supported: " + info);
             return;
         }
         // Obtain and open the line.
@@ -156,7 +155,7 @@ public class Sound {
 
     public static class WavBuffer {
 
-        @edu.umd.cs.findbugs.annotations.SuppressWarnings(value = "EI_EXPOSE_REP2") // OK until Java 1.6 allows cheap array copy
+        @edu.umd.cs.findbugs.annotations.SuppressFBWarnings(value = "EI_EXPOSE_REP2") // OK until Java 1.6 allows cheap array copy
         public WavBuffer(byte[] content) {
             buffer = content;
 
@@ -186,7 +185,7 @@ public class Sound {
         }
 
         // we maintain this, but don't use it for anything yet
-        @edu.umd.cs.findbugs.annotations.SuppressWarnings(value = "URF_UNREAD_FIELD")
+        @edu.umd.cs.findbugs.annotations.SuppressFBWarnings(value = "URF_UNREAD_FIELD")
         int fmtOffset;
 
         byte[] buffer;
@@ -332,5 +331,5 @@ public class Sound {
         }
     }
 
-    static Logger log = LoggerFactory.getLogger(Sound.class.getName());
+    private final static Logger log = LoggerFactory.getLogger(Sound.class.getName());
 }

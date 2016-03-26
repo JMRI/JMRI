@@ -1,4 +1,3 @@
-// DefaultConditionalActionTest.java
 package jmri.implementation;
 
 import jmri.ConditionalAction;
@@ -19,14 +18,26 @@ public class DefaultConditionalActionTest extends TestCase {
     }
 
     public void testBasicBeanOperations() {
-        ConditionalAction ix1 = new DefaultConditionalAction();
+        ConditionalAction ix1 = new DefaultConditionalAction(1,2,"3",4,"5");
+        ConditionalAction ix2 = new DefaultConditionalAction(1,2,"3",4,"5");
 
-        ConditionalAction ix2 = new DefaultConditionalAction();
+        ConditionalAction ix3 = new DefaultConditionalAction(0,2,"3",4,"5");
+        ConditionalAction ix4 = new DefaultConditionalAction(1,0,"3",4,"5");
+        ConditionalAction ix5 = new DefaultConditionalAction(1,2,"0",4,"5");
+        ConditionalAction ix6 = new DefaultConditionalAction(1,2,"3",0,"5");
+        ConditionalAction ix7 = new DefaultConditionalAction(1,2,"3",4,"0");
 
-        Assert.assertTrue("object not equals", !ix1.equals(ix2));
-        Assert.assertTrue("object not equals reverse", !ix2.equals(ix1));
+        Assert.assertTrue(!ix1.equals(null));
+        Assert.assertTrue(ix1.equals(ix1));
+        Assert.assertTrue(ix1.equals(ix2));
 
-        Assert.assertTrue("hash not equals", ix1.hashCode() != ix2.hashCode());
+        Assert.assertTrue(!ix1.equals(ix3));
+        Assert.assertTrue(!ix1.equals(ix4));
+        Assert.assertTrue(!ix1.equals(ix5));
+        Assert.assertTrue(!ix1.equals(ix6));
+        Assert.assertTrue(!ix1.equals(ix7));
+
+        Assert.assertTrue(ix1.hashCode() == ix2.hashCode());
 
     }
 

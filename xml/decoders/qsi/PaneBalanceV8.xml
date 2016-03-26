@@ -218,6 +218,21 @@
         </label>
         <row>
           <column>
+            <display item="CV116.20 Sign" format="onradiobutton" label="" layout="left"/>
+            <display item="CV116.20 Sign" format="offradiobutton" label="" layout="left"/>
+          </column>
+          <column>
+            <row>
+              <display item="CV116.20 Value" layout="above" label=""/>
+              <display item="CV116.20 Value" layout="above" format="hslider-percent"/>
+            </row>
+          </column>
+        </row>
+        <label>
+          <text> </text>
+        </label>
+        <row>
+          <column>
             <display item="CV116.21 Sign" format="onradiobutton" label="" layout="left"/>
             <display item="CV116.21 Sign" format="offradiobutton" label="" layout="left"/>
           </column>
@@ -413,6 +428,21 @@
         </label>
       </column>
       <column>
+        <label>
+          <text> </text>
+        </label>
+        <row>
+          <column>
+            <display item="CV116.41 Sign" format="onradiobutton" label="" layout="left"/>
+            <display item="CV116.41 Sign" format="offradiobutton" label="" layout="left"/>
+          </column>
+          <column>
+            <row>
+              <display item="CV116.41 Value" layout="above" label=""/>
+              <display item="CV116.41 Value" layout="above" format="hslider-percent"/>
+            </row>
+          </column>
+        </row>
         <label>
           <text> </text>
         </label>

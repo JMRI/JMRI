@@ -1,4 +1,3 @@
-// SdfBufferTest.java
 package jmri.jmrix.loconet.sdf;
 
 import java.io.BufferedReader;
@@ -15,7 +14,6 @@ import org.slf4j.LoggerFactory;
  * Tests for the jmri.jmrix.loconet.sdf.SdfBuffer class.
  *
  * @author Bob Jacobsen Copyright 2007
- * @version $Revision$
  */
 public class SdfBufferTest extends TestCase {
 
@@ -120,6 +118,6 @@ public class SdfBufferTest extends TestCase {
         apps.tests.Log4JFixture.tearDown();
     }
 
-    static Logger log = LoggerFactory.getLogger(SdfBufferTest.class.getName());
+    private final static Logger log = LoggerFactory.getLogger(SdfBufferTest.class.getName());
 
 }

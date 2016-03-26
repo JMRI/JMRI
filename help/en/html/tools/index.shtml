@@ -1,20 +1,15 @@
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
-<!-- $Id$ -->
 <html lang="en">
 <head>
-  <TITLE>
+  <title>
  	JMRI: Tools
-  </TITLE>
-  <META http-equiv=Content-Type content="text/html; charset=iso-8859-1">
+  </title>
 
-  <META name="Author" content="Bob Jacobsen">
-
-  <meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1">
-  <meta name="keywords"
-        content="hardware layout java model railroad JMRI CMRI decoderpro panelpro tools loconet lenz nce easydcc dcc nmra">
+  <meta name="Author" content="Bob Jacobsen">
+  <meta name="keywords" content="hardware layout java model railroad JMRI CMRI decoderpro panelpro tools loconet lenz nce easydcc dcc nmra">
 
 <!-- Style -->
-  <META http-equiv=Content-Type content="text/html; charset=iso-8859-1">
+  <meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
   <link rel="stylesheet" type="text/css" href="/css/default.css" media="screen">
   <link rel="stylesheet" type="text/css" href="/css/print.css" media="print">
   <link rel="icon" href="/images/jmri.ico" type="image/png">
@@ -30,35 +25,22 @@
 
       <div id="mainContent">
       <!-- Page Body -->
-        <h1>
-		JMRI: Tools
-        </h1>
+<h1>JMRI: Tools</h1>
 
-<p>	JMRI provides several tools that are optimized for specific purposes.
+<p>JMRI provides a range of tools that are optimized for specific purposes:
+<ul><!-- TOC -->
+	<li><a href="#commontools">Common Tools</a></li>
+	<li><a href="#systemSpecificTools">System-specific Tools</a></li>
+	<li><a href="#scripting">Create your own by Scripting JMRI</a></li>
+</ul>
 				
-<h2>General tools</h2>
+<a name="commontools"></a><h2>Common tools</h2>
 		  <p>The following tools in the Tools menu work with most DCC hardware connections:		  
 	    <dl>
 
 		<dt><h3><a href="Turnouts.shtml">Turnouts</a></h3></dt>
 		<dd>
 			JMRI calls just about any output to the layout a "Turnout". The Turnout object has 2 states: Closed (On) and Thrown (Off). <br/>For outputs such as <a href="#lights">Lights</a> and <a href="#signals">Signals</a> JMRI provides special objects (see below).
-		</dd>
-
-		<dt><h3><a href="Sensors.shtml">Sensors</a></h3></dt>
-		<dd>
-		    A Sensor is JMRI's way of representing an input from the layout.
-		</dd>
-
-			<dt><h3><a href="throttle/ThrottleMain.shtml">Throttles</a></h3></dt>
-		<dd>
-		    You can open multiple software throttles to run
-		    your DCC locomotives.
-		</dd>
-
-		<dt><h3><a href="consisttool/ConsistTool.shtml">Consisting</a></h3></dt>
-		<dd>
-		    JMRI provides tools for managing locomotive consists.
 		</dd>
 
 		<dt><h3><a name="lights" href="Lights.shtml">Lights</a></h3></dt>
@@ -72,12 +54,33 @@
 		    response to a fascia panel button.
 		</dd>
 
+		<dt><h3><a href="Sensors.shtml">Sensors</a></h3></dt>
+		<dd>
+		    A Sensor is JMRI's way of representing an input from the layout.
+		</dd>
+
+			<dt><h3><a href="throttle/ThrottleMain.shtml">Throttles</a></h3></dt>
+		<dd>
+		    You can open multiple software Throttles to run
+		    your DCC locomotives.
+		</dd>
+
+		<dt><h3><a href="consisttool/ConsistTool.shtml">Consisting</a></h3></dt>
+		<dd>
+		    JMRI provides tools for managing locomotive consists.
+		</dd>
+
 			<dt><h3><a name="signals" href="signaling/index.shtml">Signals</a></h3></dt>
 		<dd>
-		    Signal Heads and Masts are how JMRI represents
+		    Signal Heads and Signal Masts are how JMRI represents
 		    and controls signals on a layout. 
 		    They are a specific kind of output device that can be set to various 
 		    Appearances (Red, Yellow, Green, Flashing Yellow, etc.) or Aspects (Stop, Clear, Approach limited etc.) following prototype rules.
+		</dd>
+
+			<dt><h3><a name="blocks" href="Blocks.shtml">Blocks</a></h3></dt>
+		<dd>
+		    Blocks are sections of track whose occupancy may be individually monitored in JMRI. Dividing your track into Blocks is optional. Block occupancy is indicated by the state of an occupancy Sensor.
 		</dd>
 
 		<dt><h3><a href="Reporters.shtml">Reporters</a></h3></dt>
@@ -94,11 +97,11 @@
 		<dd>
 		    Routes are a tool for driving multiple turnouts when
 		    something happens on the layout.  You can have a
-		    panel switch through all the turnouts in your yard throat, 
+		    panel switch through all the Turnouts in your yard throat, 
 		    etc. They can also change the status of Sensors, 
-		    play sound files, and invoke scripts.  They
+		    play sound files, and invoke scripts. They
 		    have some simple logic capabilities for deciding when
-		    to set the route's outputs.
+		    to set the Route's outputs.
 		</dd>
 
 		<dt><h3><a href="LRoutes.shtml">LRoutes</a></h3></dt>
@@ -108,10 +111,17 @@
                     with an unlimited number of Sensors, Turnouts, Lights, 
                     and/or SignalHeads for actions or controls.  LRoutes
                     provide an easy starting point for creating new Logix
-                    since thay may be extended to include any of the 
+                    since they may be extended to include any of the 
                     Logix capabilities.
 		</dd>
 
+		<dt><h3><a href="Sections.shtml">Sections</a></h3></dt>
+		<dd>
+		    A <b>Section</b> is a group of one or more connected <a href="Blocks.shtml">Blocks</a> that may be 
+		    allocated to a Train traveling in a given direction. Sections were created to solve 
+		    the direction problem that can occur when using Blocks directly. 
+		</dd>
+		
 		<dt><h3><a href="Logix.shtml">Logix</a></h3></dt>
 		<dd>
 		    A Logix is a tool for entering powerful logical
@@ -126,7 +136,7 @@
 
         <dt><h3><a href="fastclock/index.shtml">Fast Clocks</a></h3></dt>
         <dd>
-            JMRI can both provide various types of fast clocks
+            JMRI can both provide various types of Fast Clocks
             on the computer screen, and also work with the
             fast clocks already installed on your DCC layout.
         </dd>
@@ -134,66 +144,189 @@
    		<dt><h3><a href="speedometer/index.shtml">Speedometer</a></h3></dt>
 		<dd>
 		    A tool for determining the scale speed of your
-		    locomotives.  You can use this while setting them up,
-		    to catch speeders, or for whatever you'd like.
+		    locomotives. You can use this while setting them up,
+		    to catch speeders, to match the running speeds of two locomotives before running them in a consist or for whatever you'd like.
 		</dd>
 	
 		<dt><h3><a href="Audio.shtml">Audio</a></h3></dt>
 		<dd>
 		    JMRI audio objects hold information about sounds that can be played-back by the computer. 
 		</dd>
-			
 	
-		<dt><h3><a href="../../package/jmri/jmrit/dispatcher/Dispatcher.shtml">Dispatcher</a></h3></dt>
+		<dt><h3><a href="../../package/jmri/jmrit/dispatcher/Dispatcher.shtml">Dispatcher(Pro)</a></h3></dt>
 		<dd>The Dispatcher tool provides functions and organizes information
-		relating to dispatching trains on a model railroad layout. It's main
-		function is the allocation of sections of track to various trains running
-		around the layout.
+		relating to dispatching trains on a model railroad layout. Its main
+		function is the allocation of sections of track to various Trains running
+		around the layout. This set of tools has evolved into a full <a href="../apps/DispatcherPro/index.shtml"> DispatcherPro application</a>.
 		</dd>
 		
-		
-		<dt><h3><a href="../../package/jmri/jmrit/operations/Operations.shtml">Operations</a></h3></dt>
+		<dt><h3><a href="../../package/jmri/jmrit/operations/Operations.shtml">Operations(Pro)</a></h3></dt>
 		<dd>
-		The Operations tool allows you to produce computer generated
-		manifests and switch lists for your railroad from lists of rolling stock, trains and destinations.
+		The Operations tool has evolved to an advanced OperationsPro application, allowing you to generate Trains and produce computer generated
+		Manifests and Switch Lists for your railroad from a roster of rolling stock, schedules and destinations. This set of tools has evolved into a full <a href="../../package/jmri/jmrit/operations/Operations.shtml">OperationsPro application</a>.
 		</dd>
 	  </dl>
 	  
-	<h2><a href="../apps/LocoTools/index.shtml">LocoNet-specific Tools</a></h2>
-		  <p>The following tools are available in the LocoNet menu when JMRI is connected to a (Digitrax) LocoNet DCC layout: <!-- As of version 3.7.3 -->
-		    <ul>
-		    <li><dfn>Monitor LocoNet</dfn>
-		    <li><dfn>Monitor Slots</dfn>
-			<li><dfn>Monitor Clock</dfn>
-		    <li><dfn>Monitor LocoNet Interface Statistics</dfn>
-				<li><dfn>Configuration Tools:</dfn></li>
-					<ul><li><dfn>Configure BDL16x</dfn>
-		    <li><dfn>Configure LocoIO</dfn>
-			<li><dfn>Configure PM4x</dfn>
-		    <li><dfn>Configure SE8c</dfn>
-			<li><dfn>Configure DS64</dfn>
-		    <li><dfn>Configure Command Station</dfn>
-		    <li><dfn>Configure LocoNet ID</dfn>
-		    <li><dfn>Configure Duplex Group</dfn>
-						</ul>
-		    <li><dfn>Send LocoNet Packet</dfn>
-		    <li><dfn>Send Throttle Message</dfn>
-		    <li><dfn>Select PR3 Mode</dfn>
-		    <li><dfn>Download Firmware</dfn>
-		    <li><dfn>Download Sounds</dfn>
-		    <li><dfn>Edit Sound Project (SPJ) File</dfn>
-		    <li><dfn>Start LocoNet Server</dfn>
-		    </ul>
+<h2><a name="systemSpecificTools">System-specific Tools</a></h2>
 
-   	<h2><a href="scripting/index.shtml">Scripting JMRI</a></h2>
+<!-- It would be better to let each system-specific toolset land on its own index page, some tools are not so lucky, yet -->
+<h3><a href="../hardware/acela/index.shtml#tools">Acela Tools</a></h3>
+<p>When JMRI is connected to a layout via this system, a <b>Acela</b> menu is shown:</p>
+<ul>   
+<li><a href="../../package/jmri/jmrix/acela/serialmon/SerialMonFrame.shtml">Acela Monitor</a></li>
+<li><a href="../../package/jmri/jmrix/acela/packetgen/SerialPacketGenFrame.shtml">Send Acela Packets</a></li>
+<li><a href="../../package/jmri/jmrix/acela/nodeconfig/NodeConfigFrame.shtml">Configure Nodes</a></li>
+</ul>
+
+<h3><a href="../hardware/bachrus/index.shtml#tools">Bachrus Tools</a></h3>
+<p>When JMRI is connected to Bachrus MTS-DCC, you can use the:</p>
+<ul>
+<li><a href="../hardware/bachrus/index.shtml#tools">Speedo Console</a>
+</ul>
+
+<h3><a href="../hardware/cmri/CMRI.shtml#tools">C/MRI Tools</a></h3>
+<p>When JMRI is connected to a layout via this system, a <b>CMRI</b> menu is shown:</p>
+<ul>   
+<li>CMRI Monitor
+<li>Send Command
+<li><a href="../../package/jmri/jmrix/cmri/serial/nodeconfig/NodeConfigFrame.shtml">Configure C/MRI Nodes</a></li>
+<li><a href="../../package/jmri/jmrix/cmri/serial/diagnostic/DiagnosticFrame.shtml">Run Diagnostic</a></li>
+<li><a href="../../package/jmri/jmrix/cmri/serial/assignment/ListFrame.shtml">List Assignments</a></li>
+</ul>
+  
+<h3><a href="../hardware/can/index.shtml#tools">CAN Tools</a></h3>
+<p>When JMRI is connected to a layout via CAN, the <b>CAN</b> menu contains:</p>
+<ul>   
+<li><a href="../../package/jmri/jmrix/AbstractMonFrame.shtml">Monitor tool</a></li>
+<li><a href="../../package/jmri/jmrix/can/swing/send/CanSendFrame.shtml">Send Frame tool</a></li>
+</ul>
+
+<h3><a href="../hardware/can/cbus/index.shtml#tools">MERG CBUS Tools</a></h3>
+<p>When JMRI is connected to a layout via CBUS, the <b>MERG</b> menu is shown:</p>
+<ul>   
+<li>Console</li>
+<li><a href="../../package/jmri/jmrix/can/cbus/swing/console/CbusConsoleFrame.shtml#cbusSend">Send Frame</a></li>
+<li><a href="../../package/jmri/jmrix/can/cbus/swing/configtool/ConfigToolFrame.shtml">Event Capture Tool</a></li>
+<li>Event Table</li>
+<li><a href="../../package/jmri/jmrix/can/cbus/swing/console/CbusConsoleFrame.shtml">Node Config Tool</a></li>
+</ul>
+
+<h3><a href="../hardware/dccpp/index.shtml#tools">DCC++ Tools</a></h3>
+<p>When JMRI is connected to a layout via DCC++, the <b>DCC++</b> menu is shown:</p>
+<ul>
+<li>DCC++ Traffic Monitor
+<li>Send DCC++ Command
+<li>Track Current Meter
+<li>Configure Sensors and Turnouts
+<li>Load DCC++ over TCP Server
+</ul>
+
+<h3><a href="../hardware/easydcc/EasyDCC.shtml#tools">EasyDCC Tools</a></h3>
+<p>When JMRI is connected to a layout via EasyDCC, the <b>EasyDCC</b> menu is shown:</p>
+<ul>
+<li>Command Monitor
+<li>Send Command
+</ul>
+
+<h3><a href="../hardware/ecos/index.shtml#tools">ESU ECoS Tools</a></h3>
+<ul>
+<li>Ecos Preferences
+<li>Command Generator
+<li>Ecos Status
+</ul>
+
+<h3><a href="../hardware/grapevine/index.shtml#tools">Grapevine Tools</a></h3>
+<p>When JMRI is connected to a layout via this system, the <strong>Grapevine</strong> menu gives access to:
+<ul>
+<li><a href="../../package/jmri/jmrix/grapevine/nodetable/NodeTableFrame.shtml">Node Table</a></li>
+<li>
+<a href="../../package/jmri/jmrix/grapevine/nodeconfig/NodeConfigFrame.shtml">Configure Nodes</a>
+</ul>
+
+<h3><a href="../apps/LocoTools/index.shtml">LocoNet (Digitrax) Tools</a></h3>
+<p>A full range of tools are available from the <b>LocoNet</b> menu when JMRI is connected to a (Digitrax) LocoNet DCC layout.<br>
+You may also access them by double clicking the <strong>Loco Tools</strong> icon in the JMRI installation folder. To name just a few:</p>
+<!-- No (doubling/outdated) list here, just a link to the page -->
+<ul>   
+<li><a href="../../package/jmri/jmrix/loconet/ds64/DS64Frame.shtml">DS64 Configuration Tool </a></li>
+<li><a href="../../package/jmri/jmrix/loconet/locomon/LocoMonFrame.shtml">LocoNet Monitor </a></li>
+<li><a href="../../package/jmri/jmrix/loconet/soundloader/LoaderFrame.shtml">Sound Loader </a></li>
+<li><a href="../../package/jmri/jmrix/loconet/se8/SE8Frame.shtml">SE8C Configuration Tool </a></li>
+<li><a href="../../package/jmri/jmrix/loconet/slotmon/SlotMonFrame.shtml">Slot Monitor </a></li>
+</ul>
+
+<h3><a href="../hardware/marklin/index.shtml#tools">M&auml;rklin Tools</a></h3>
+<ul>
+<li>Monitor Marklin Commands</li>
+<li>Send Marklin Commands</li>
+</ul>
+  
+<h3><a href="../hardware/nce/NCE.shtml#tools">NCE Tools</a></h3>
+<p>When JMRI is connected to a layout via this system, an <b>NCE</b> menu is shown:</p>
+<ul>   
+<li><a href="../../package/jmri/jmrix/nce/packetgen/NcePacketGenFrame.shtml">Send Command </a></li>
+<li>Send Macro</li>
+<li><a href="../../package/jmri/jmrix/nce/macro/NceMacroEditFrame.shtml">Edit Macro </a></li>
+<li><a href="../../package/jmri/jmrix/nce/consist/NceConsistEditFrame.shtml">Edit Consist </a></li>
+<li><a href="../../package/jmri/jmrix/nce/analyzer/NcePacketMonitorFrame.shtml">DCC Packet Analyzer </a></li>
+<li><a href="../../package/jmri/jmrix/nce/clockmon/ClockMonFrame.shtml">Monitor Clock </a></li>
+</ul>
+  
+<h3><a href="../hardware/openlcb/index.shtml#tools">OpenLCB Tools</a></h3>
+<p>When JMRI is connected to a layout via this system, an <b>OpenLCB</b> menu is shown:</p>
+<ul>   
+	<li>Traffic Monitor</li>
+	<li><a href="../../package/jmri/jmrix/openlcb/swing/send/OpenLcbCanSendFrame.shtml">Send Frame</a></li>
+	<li><a href="../../package/jmri/jmrix/openlcb/swing/networktree/NetworkTreePane.shtml">Configure Nodes</a></li>
+	<li>Start Hub</li>
+	<li><a href="../../package/jmri/jmrix/openlcb/swing/downloader/LoaderFrame.shtml">Firmware Update</a></li>
+</ul>
+
+<h3><a href="../hardware/rps/index.shtml#tools">RPS Tools</a></h3>
+<p>When JMRI is connected to a layout with <a href="../hardware/rps/sensors.shtml">RPS Sensors </a>, an <b>RPS</b> menu is shown:</p>
+<ul>
+<li>RPS Monitor</li>
+<li><a href="../../package/jmri/jmrix/rps/aligntable/AlignTableFrame.shtml">Receiver Control </a></li>
+<li><a href="../../package/jmri/jmrix/rps/swing/polling/PollTableFrame.shtml">Polling Control </a></li>
+<li><a href="../../package/jmri/jmrix/rps/swing/debugger/DebuggerFrame.shtml">Debugger Window </a></li>
+<li><a href="../../package/jmri/jmrix/rps/trackingpanel/RpsTrackingFrame.shtml">Tracking Display </a></li>
+<li><a href="../../package/jmri/jmrix/rps/swing/soundset/SoundSetFrame.shtml">Sound Speed Control </a></li>
+<li><a href="../../package/jmri/jmrix/rps/reversealign/AlignmentPanel.shtml">RPS Alignment</a></li>
+</ul>
+
+<h3><a href="../hardware/sprog/index.shtml#tools">SPROG Tools</a></h3>
+<p>When JMRI is connected to a layout with <a href="../hardware/sprog/index.shtml">SPROG</a>, an <b>SPROG</b> menu is shown:</p>
+<ul>
+	<li><a href="../../package/jmri/jmrix/sprog/sprogslotmon/SprogSlotMonFrame.shtml">SPROG Slots Monitor</a></li>
+	<li><a href="../../package/jmri/jmrix/sprog/packetgen/SprogPacketGenFrame.shtml">SPROG Packet Generator</a></li>
+  <li><a href="../../package/jmri/jmrix/sprog/console/SprogConsoleFrame.shtml">SPROG Console</a></li>
+	<li>Firmware Update</li>
+</ul>
+
+<h3><a href="../hardware/XBee/index.shtml#tools">XBee Tools</a></h3>
+<p>When JMRI is connected to a layout with <a href="../hardware/XBee/index.shtml">XBee</a>, an <b>XBee</b> menu is shown:</p>
+<ul>
+<li><a href="../hardware/XBee/XBeeNodeConfigurationTool.shtml">XBee Node Configuration</a></li>
+</ul>
+
+<h3><a href="../hardware/XPressNet/index.shtml#tools">XPressNet (Lenz) Tools</a></h3>
+<p>When JMRI is connected to a layout with <a href="../hardware/lenz/index.shtml">XPressNet</a>, an <b>XPressNet</b> menu is shown:</p>
+<ul>
+<li>XPressNet Monitor</li>
+<li><a href="../hardware/XPressNet/LZV100Configurationtool.shtml">LZV100 Configuration Tool</a></li>
+<li><a href="../hardware/XPressNet/LI101Configurationtool.shtml">LI101 Configuration Tool</a></li>
+<li><a href="../hardware/XPressNet/XNetSystemInformationtool.shtml">XPressNet System Information</a></li>
+</ul>
+<!-- More system tools go here -->
+
+<a name="scripting"></a><h2><a href="scripting/index.shtml">Scripting JMRI</a></h2>
     If JMRI lacks a preprogrammed tool to do what you want,
     you can write a Script that does exactly what's needed, including user interaction. Instead of defining our own language, 
-    <a HREF="scripting/index.shtml">JMRI Scripting</a>
-    uses the
+    <a href="scripting/index.shtml">JMRI Scripting</a> uses the
     "Python" language that's commonly used in web development. Although it
     will take a little time to get used to it, in the end it provides
     a lot of power to control your layout anyway you'd like.
-		  <p>Run your own scripts or scripts shared by other JMRI user from the Panels > Run Script... menu.
+		<p>Run your own scripts or scripts shared by other JMRI user from the Panels > Run Script... menu.
 
 <!--#include virtual="/Footer" -->
 

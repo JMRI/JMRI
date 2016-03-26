@@ -171,9 +171,10 @@ public class DefaultSignalMastLogicManagerXml extends jmri.managers.configurexml
         log.error("Invalid method called");
     }
 
-    public boolean load(Element signalMastLogic) {
+    @Override
+    public boolean load(Element shared, Element perNode) {
         // load individual Transits
-        return loadSignalMastLogic(signalMastLogic);
+        return loadSignalMastLogic(shared);
     }
 
     public boolean loadSignalMastLogic(Element signalMastLogic) {
@@ -368,5 +369,5 @@ public class DefaultSignalMastLogicManagerXml extends jmri.managers.configurexml
         return InstanceManager.signalMastLogicManagerInstance().getXMLOrder();
     }
 
-    static Logger log = LoggerFactory.getLogger(DefaultSignalMastLogicManagerXml.class.getName());
+    private final static Logger log = LoggerFactory.getLogger(DefaultSignalMastLogicManagerXml.class.getName());
 }

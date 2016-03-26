@@ -1,13 +1,12 @@
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
-<!-- $Id$ -->
 <html lang="en">
 <head>
- <TITLE>
+ <title>
       JMRI: Adding/Editing Audio objects
- </TITLE>
-    <META http-equiv=Content-Type content="text/html; charset=iso-8859-1">
-    <META content="Matt Harris" name=Author>
-    <META name="keywords" content="JMRI help Audio Add Edit">
+ </title>
+    <meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
+    <meta content="Matt Harris" name="Author">
+    <meta name="keywords" content="JMRI help Audio Add Edit">
 
 <!--#include virtual="/Style" -->
 </head>
@@ -17,42 +16,40 @@
   <div class="nomenu" id="mBody">
     <div id="mainContent">
 
-<H1>Adding/Editing Audio objects</H1>
+<h1>Adding/Editing Audio objects</h1>
     
-To create an audio object, click the 
-"Add..." button on the 
-<a href="AudioTable.shtml">Audio Table</a>.
-This will open a small new window with space to enter
-a system name and user name for the new memory, plus
-and "Add" button.
+To create an audio object, click either the 
+"Add Source..." or the "Add Buffer..." button at the bottom of the 
+<a href="AudioTable.shtml">Audio Table</a> pane.
+This will open a new pane with space to enter
+a System Name and User Name for the new Audio object.
 <p>
-You must enter a unique system name.  System names for Audio objects have
-a set pattern.  They start with "IAL" for "Internal Audio Listener", "IAB" for
+You must enter a unique System Name.  System Names for Audio objects have
+a set pattern: they start with "IAL" for "Internal Audio Listener", "IAB" for
 "Internal Audio Buffer", or "IAS" for "Internal Audio Source".
 
 <p>
-There are separate windows for adding each of the 
-different types.
+There are separate panes for adding each of the 
+different types:
+<p>
 <a href="AddEditAudioListener.jpg">
-<img src="AddEditAudioListener.jpg" height="202" width="164" align="right" border="2">
-</a>
-
+<img src="AddEditAudioListener.jpg" height="202" width="164"></a>
+&nbsp;
 <a href="AddEditAudioBuffer.jpg">
-<img src="AddEditAudioBuffer.jpg" height="94" width="272" align="right" border="2">
-</a>
-
+<img src="AddEditAudioBuffer.jpg" height="94" width="272"></a>
+&nbsp;
 <a href="AddEditAudioSource.jpg">
-<img src="AddEditAudioSource.jpg" height="263" width="164" align="right" border="2">
-</a>
+<img src="AddEditAudioSource.jpg" height="263" width="164"></a>
 <p>
-The user name is optional, but if given has to be unique.
+The User Name is optional, but if given has to be unique.
 
+<p>Back to the <a href="AudioTable.shtml">Audio Table help page<a>.</p>
 <p>
-For more information on audio objects, see the 
-<a href="../../../../html/tools/Audio.shtml">audio help page</a>.
-<br>
+For more information on Audio objects, see the 
+<a href="../../../../html/tools/Audio.shtml">Audio help page</a>.
 
 <!--#include virtual="/Footer" -->
+ </div><!-- closes #mainContent-->
+</div> <!-- closes #mBody-->
 </body>
 </html>
-

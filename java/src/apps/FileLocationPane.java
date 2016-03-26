@@ -13,6 +13,9 @@ import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.JTextField;
+import jmri.InstanceManager;
+import jmri.implementation.FileLocationsPreferences;
+import jmri.profile.ProfileManager;
 import jmri.swing.PreferencesPanel;
 import jmri.util.FileUtil;
 
@@ -175,6 +178,7 @@ public class FileLocationPane extends JPanel implements PreferencesPanel {
             FileUtil.setScriptsPath(this.scriptLocation.getText());
             this.restartRequired = true;
         }
+        InstanceManager.getDefault(FileLocationsPreferences.class).savePreferences(ProfileManager.getDefault().getActiveProfile());
     }
 
     @Override

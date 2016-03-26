@@ -5,26 +5,24 @@ import junit.framework.Assert;
 import junit.framework.Test;
 import junit.framework.TestCase;
 import junit.framework.TestSuite;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 
 /**
  * Tests for the jmri.jmris.simpleserver package
  *
  * @author Paul Bender
- * @version $Revision$
  */
 public class SimpleServerTest extends TestCase {
 
     public void testCtor() {
         SimpleServer a = new SimpleServer();
         Assert.assertNotNull(a);
+        jmri.util.JUnitAppender.suppressErrorMessage("Failed to connect to port 2048");
     }
 
     public void testCtorwithParameter() {
         SimpleServer a = new SimpleServer(2048);
-        jmri.util.JUnitAppender.assertErrorMessage("Failed to connect to port 2048");
         Assert.assertNotNull(a);
+        jmri.util.JUnitAppender.suppressErrorMessage("Failed to connect to port 2048");
     }
 
     // from here down is testing infrastructure
@@ -41,6 +39,7 @@ public class SimpleServerTest extends TestCase {
     // test suite from all defined tests
     public static Test suite() {
         TestSuite suite = new TestSuite(jmri.jmris.simpleserver.SimpleServerTest.class);
+        suite.addTest(jmri.jmris.simpleserver.parser.JmriServerParserTests.suite());
         suite.addTest(jmri.jmris.simpleserver.SimpleTurnoutServerTest.suite());
         suite.addTest(jmri.jmris.simpleserver.SimplePowerServerTest.suite());
         suite.addTest(jmri.jmris.simpleserver.SimpleReporterServerTest.suite());
@@ -67,7 +66,5 @@ public class SimpleServerTest extends TestCase {
         super.tearDown();
         apps.tests.Log4JFixture.tearDown();
     }
-
-    static Logger log = LoggerFactory.getLogger(SimpleServerTest.class.getName());
 
 }

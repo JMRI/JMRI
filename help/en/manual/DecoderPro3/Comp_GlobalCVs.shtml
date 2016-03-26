@@ -1,8 +1,6 @@
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
 <html lang="en">
 <head>
-<!-- Copyright ($Author$) 2009, 2010 -->
-<!-- $Id$ -->
 <title>Comprehensive Programmer - Global CV Listing Pane</title>
 
 <!-- Style -->
@@ -20,11 +18,11 @@
 <!--#include virtual="Sidebar" -->
 <div id="mainContent">
 
-<a NAME="Top"></a>
+<a name="Top"></a>
 <h1>DecoderPro&reg; Comprehensive Programmer</h1>
-<h1>Global CV Listing Pane</h1>
+<h2>Global CV Listing Pane</h2>
 
-<div align=right>
+<div align="right">
 <p><a href="Comp_SoundLevels.shtml"> Previous</a> | 
   <a href="Comp_ManfSpecific.shtml">Next </a>
 <p><a href="index.shtml#Advanced Programmer">Back to Index</a>
@@ -50,14 +48,16 @@ is the same as a <b>Read all</b> or <b>Write all</b>. <span class="ACCENT">Again
 <p align="center"><img src="images/Comp_11_CV.png" width="923" height="799" alt="CV pane">
 <p>
   One thing to keep in mind about the <b>CV</b> listing on this pane - anything you can do here you can do from one of the other panes in Decoder Pro, without having to know the <b>CV</b> number or how to compile the values to get the desired effect. This pane is meant for advanced users of DCC used to crunching the numbers themselves. Those new to DCC can safely ignore this panel without losing any capability at all.
-<p>
+
 <hr>
-<div align=right>
+<div align="right">
 <p><a href="Comp_ManfSpecific.shtml"></a>
   <a href="Comp_SoundLevels.shtml">Previous</a> | <a href="Comp_ManfSpecific.shtml">Next </a>
 <p><a href="index.shtml#Advanced Programmer">Back to Index</a>
 </div>
 
 <!--#include virtual="/Footer" -->
-</body>
+  </div><!-- closes #mainContent-->
+ </div> <!-- closes #mBody-->
+ </body>
 </html>

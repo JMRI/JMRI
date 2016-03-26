@@ -151,12 +151,14 @@ public class SectionManagerXml extends jmri.managers.configurexml.AbstractNamedB
      * Create a SectionManager object of the correct class, then register and
      * fill it.
      *
-     * @param sections Top level Element to unpack.
+     * @param sharedSections Top level Element to unpack.
+     * @param perNodeSections
      * @return true if successful
      */
-    public boolean load(Element sections) {
+    @Override
+    public boolean load(Element sharedSections, Element perNodeSections) {
         // load individual Sections
-        loadSections(sections);
+        loadSections(sharedSections, perNodeSections);
         return true;
     }
 
@@ -165,10 +167,11 @@ public class SectionManagerXml extends jmri.managers.configurexml.AbstractNamedB
      * additional info needed for a specific Section type, invoke this with the
      * parent of the set of Section elements.
      *
-     * @param sections Element containing the Section elements to load.
+     * @param sharedSections Element containing the Section elements to load.
+     * @param perNodeSections
      */
-    public void loadSections(Element sections) {
-        List<Element> sectionList = sections.getChildren("section");
+    public void loadSections(Element sharedSections, Element perNodeSections) {
+        List<Element> sectionList = sharedSections.getChildren("section");
         if (log.isDebugEnabled()) {
             log.debug("Found " + sectionList.size() + " sections");
         }
@@ -261,5 +264,5 @@ public class SectionManagerXml extends jmri.managers.configurexml.AbstractNamedB
         return InstanceManager.sectionManagerInstance().getXMLOrder();
     }
 
-    static Logger log = LoggerFactory.getLogger(SectionManagerXml.class.getName());
+    private final static Logger log = LoggerFactory.getLogger(SectionManagerXml.class.getName());
 }

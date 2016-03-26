@@ -1,15 +1,16 @@
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
-<html lang="en"><head><!-- Copyright ($Author$) 2009, 2010 --><!-- $Id$ -->
+<html lang="en">
+<head>
+<title>Basic Programming</title>
 
-
-
-
-
-<title>Basic Programming</title><!-- Style --><meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
+<!-- Style -->
+<meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
 <link rel="stylesheet" type="text/css" href="/css/default.css" media="screen">
 <link rel="stylesheet" type="text/css" href="/css/print.css" media="print">
 <link rel="icon" href="/images/jmri.ico" type="image/png">
-<link rel="home" title="Home" href="/"><!-- /Style --></head>
+<link rel="home" title="Home" href="/">
+<!-- /Style -->
+</head>
 
 <body>
 <!--#include virtual="/Header" -->
@@ -18,13 +19,12 @@
 
 <a name="Top"></a>
 <h1>The Basic Programmer</h1>
-<h1>Basic Pane</h1>
+<h2>Basic Pane</h2>
 
 <div align="right">
   <p><a href="Basic_Start.shtml"> Previous |</a></p>
 <p><a href="index.shtml#Basic%20Programmer">Back to Index</a></p>
 </div>
-
 
 <hr>
 <p>You may have noticed that at the  top of the window are Two tabs: <strong>Roster Entry</strong> and <strong>Basic</strong>.  We have completed the <strong>Roster Entry</strong> pane of the Program window, now,  click on the <strong>Basic</strong> tab to change panes to continue with programming your  decoder. The<strong> Basic</strong>
@@ -38,7 +38,7 @@ those variables that your decoder can implement will be shown. </p>
 <p>You will see three options you can change, highlighted in  yellow: </p>
 <ol> 
 <li>The decoder address (should be unique among your locomotives,
-unless you are operating sevral as a set) often the locomotive number
+unless you are operating several as a set) often the locomotive number
 is used.</li>
   <li>Two radio buttons that let you toggle between 2 digit  (one byte, "Normal") or 4 digit <br>
 (two byte, "Extended") addressing </li>
@@ -47,7 +47,7 @@ is used.</li>
 control) Enable Analog Operation with caution, as some decoders will
 jump to full speed resulting in a &#8220;Runaway locomotive&#8221; if they are
 enabled for Analog Operation and encounter power spikes on a DCC
-digital signal.&nbsp; They seem to get confused, and revert to Analog
+digital signal. They seem to get confused, and revert to Analog
 operation and use the full track voltage DCC power to take off and
 GO!&nbsp; There is no stopping them without removing layout
 power.&nbsp; Very disturbing to your operating mates, but better than
@@ -77,7 +77,7 @@ what DecoderPro is doing, for example, the specific CV being read. </p>
 <p> Again, the
   <input name="button2" id="button2" value="Read full sheet" type="button"><strong> </strong>and <strong>
   <input name="button3" id="button3" value="Read all sheets" type="button">
-  </strong>functions are  dependant on your command station. If 
+  </strong>functions are  dependent on your command station. If 
   your system does not have the capability to read CVs,  then these buttons will not be 
   available. </p>
 <p><a name="EnterEditData" id="EnterEditData"></a>If you wish to change
@@ -97,7 +97,7 @@ trying until the write operation is successful. In some instances the
 system will &#8220;time-out&#8221; after a certain number of tries without an
 acknowledgement from the decoder.&nbsp; This does not necessarily mean
 that the values have not been written, just that the program has not
-received an acknowledgement.&nbsp; This can be due to &nbsp;the
+received an acknowledgement. This can be due to &nbsp;the
 locomotive moving and getting on dirty track so that it can&#8217;t pulse
 back, or possibly because the command station or decoder cannot read
 back.&nbsp; Try moving the loco and try again.&nbsp; If it is a command
@@ -113,7 +113,7 @@ see if the programming was successful. </p>
 Write full sheet button to send the address to the command station to
 program the decoder. Note that the status line keeps you updated as to
 what is writing and should finish with OK, which is good or an error
-message which usually meand the write was not completed. All the
+message which usually meant the write was not completed. All the
 entries are now in white color as they match the decoder.</p>
 <p align="center"><img src="images/Basic_Address.png" alt="basic address" height="556" width="636"><br>
 </p>
@@ -124,7 +124,7 @@ Programming window.</p>
 <p><img style="width: 900px; height: 425px;" alt="main" src="images/Main_01b_main.png"><br></p>
 <p><a name="DoMore"></a>What we&#8217;ve done so far is what is available in
 the Basic mode of programming in DecoderPro. Which is basically put
-Locomotive in the roster and assign an address.&nbsp; A good place to
+Locomotive in the roster and assign an address. A good place to
 start for new folks or at a club.&nbsp; It&#8217;s hard to go wrong, but you
 can change the loco address and add it the roster, which are the two
 most often needed actions with programming. <br>
@@ -137,17 +137,20 @@ along with added features.&nbsp; So now they&#8217;ve been combined in
 DecoderPro. Thus the Comprehensive Programmer with added Advanced
 features is the only other programmer that DecoderPro offers. <br>
   Since we&#8217;ve already covered <strong>Basic</strong>,  let's explore the DecoderPro <a href="Comp_Setup_Roster.shtml">Comprehensive  Programmer</a>! </p>
-<p>Select locomotive that you want to program in Comprehensive Programmer, then double click on selection to open Programmer.</p>
+<p>Select the Locomotive that you want to program in Comprehensive Programmer, then double click on selection to open Programmer.</p>
 <p>At the bottom of the window is the  <a href="RosterMedia.shtml">Labels &amp; Media</a> and<a href="dp3_Main_Throttle.shtml">Throttle</a>
 buttons. Use these buttons to set up the Icon photos for your roster
 entries and to set-up the Function Labels on the software throttle
-included in JMRI.&nbsp; Click the links that we&#8217;ve included and take a
+included in JMRI. Click the links that we&#8217;ve included and take a
 look.</p>
-<p>&nbsp;</p>
+
 <div align="right">
   <p><a href="Basic_Start.shtml">Previous |</a></p>
 <p><a href="index.shtml#Basic%20Programmer">Back to Index</a></p>
 </div>
 
 <!--#include virtual="/Footer" -->
-</div></body></html>
+  </div><!-- closes #mainContent-->
+ </div> <!-- closes #mBody-->
+ </body>
+</html>

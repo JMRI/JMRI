@@ -36,11 +36,9 @@ import org.slf4j.LoggerFactory;
  * @version $Revision: 29493 $
  */
 public class CarEditFrame extends OperationsFrame implements java.beans.PropertyChangeListener {
+    
+    private static final boolean IS_SAVE = true;
 
-    /**
-     *
-     */
-    private static final long serialVersionUID = 4399065932806496248L;
     CarManager carManager = CarManager.instance();
     CarManagerXml managerXml = CarManagerXml.instance();
     LocationManager locationManager = LocationManager.instance();
@@ -99,7 +97,7 @@ public class CarEditFrame extends OperationsFrame implements java.beans.Property
     // panels
     JPanel pBlocking = new JPanel();
 
-    CarLoadEditFrame lef = null;
+    CarLoadEditFrame carLoadEditFrame = null;
 
     public static final String ROAD = Bundle.getMessage("Road");
     public static final String TYPE = Bundle.getMessage("Type");
@@ -109,7 +107,7 @@ public class CarEditFrame extends OperationsFrame implements java.beans.Property
     public static final String KERNEL = Bundle.getMessage("Kernel");
 
     public CarEditFrame() {
-        super();
+        super(Bundle.getMessage("TitleCarAdd"));
     }
 
     public void initComponents() {
@@ -129,6 +127,14 @@ public class CarEditFrame extends OperationsFrame implements java.beans.Property
         fillWeightButton.setToolTipText(Bundle.getMessage("TipCalculateCarWeight"));
         builtTextField.setToolTipText(Bundle.getMessage("TipBuildDate"));
         valueTextField.setToolTipText(Bundle.getMessage("TipValue"));
+        
+        deleteButton.setToolTipText(Bundle.getMessage("TipDeleteButton"));
+        addButton.setToolTipText(Bundle.getMessage("TipAddButton"));
+        saveButton.setToolTipText(Bundle.getMessage("TipSaveButton"));
+        
+        // disable delete and save buttons
+        deleteButton.setEnabled(false);
+        saveButton.setEnabled(false);
 
         editRoadButton.setToolTipText(MessageFormat.format(Bundle.getMessage("TipAddDeleteReplace"),
                 new Object[]{Bundle.getMessage("Road").toLowerCase()}));
@@ -340,7 +346,7 @@ public class CarEditFrame extends OperationsFrame implements java.beans.Property
 
         // build menu
         // JMenuBar menuBar = new JMenuBar();
-        // JMenu toolMenu = new JMenu("Tools");
+        // JMenu toolMenu = new JMenu(Bundle.getMessage("Tools"));
         // menuBar.add(toolMenu);
         // setJMenuBar(menuBar);
         addHelpMenu("package.jmri.jmrit.operations.Operations_CarsEdit", true); // NOI18N
@@ -355,13 +361,15 @@ public class CarEditFrame extends OperationsFrame implements java.beans.Property
         locationManager.addPropertyChangeListener(this);
         carManager.addPropertyChangeListener(this);
 
-        pack();
-        setMinimumSize(new Dimension(Control.panelWidth500, Control.panelHeight500));
-        setVisible(true);
+        initMinimumSize(new Dimension(Control.panelWidth500, Control.panelHeight500));
     }
 
     public void loadCar(Car car) {
         _car = car;
+        
+        // enable delete and save buttons
+        deleteButton.setEnabled(true);
+        saveButton.setEnabled(true);
 
         if (!CarRoads.instance().containsName(car.getRoadName())) {
             if (JOptionPane.showConfirmDialog(this, MessageFormat.format(Bundle.getMessage("roadNameNotExist"),
@@ -507,7 +515,7 @@ public class CarEditFrame extends OperationsFrame implements java.beans.Property
                 _car.setRoadName(road);
                 _car.setNumber(number);
             }
-            saveCar(true);
+            saveCar(IS_SAVE);
             // save car file
             writeFiles();
             if (Setup.isCloseWindowOnSaveEnabled()) {
@@ -536,7 +544,12 @@ public class CarEditFrame extends OperationsFrame implements java.beans.Property
             if (!checkCar(null)) {
                 return;
             }
-            saveCar(false);
+            
+            // enable delete and save buttons
+            deleteButton.setEnabled(true);
+            saveButton.setEnabled(true);
+            
+            saveCar(!IS_SAVE);
             // save car file
             writeFiles();
         }
@@ -549,12 +562,12 @@ public class CarEditFrame extends OperationsFrame implements java.beans.Property
             calculateWeight();
         }
         if (ae.getSource() == editLoadButton) {
-            if (lef != null) {
-                lef.dispose();
+            if (carLoadEditFrame != null) {
+                carLoadEditFrame.dispose();
             }
-            lef = new CarLoadEditFrame();
-            lef.setLocationRelativeTo(this);
-            lef.initComponents((String) typeComboBox.getSelectedItem(), (String) loadComboBox.getSelectedItem());
+            carLoadEditFrame = new CarLoadEditFrame();
+            carLoadEditFrame.setLocationRelativeTo(this);
+            carLoadEditFrame.initComponents((String) typeComboBox.getSelectedItem(), (String) loadComboBox.getSelectedItem());
         }
     }
 
@@ -566,8 +579,15 @@ public class CarEditFrame extends OperationsFrame implements java.beans.Property
         OperationsXml.save();
     }
 
-    private boolean checkCar(Car c) {
+    private boolean checkCar(Car car) {
         String roadNum = roadNumberTextField.getText();
+        if (!OperationsXml.checkFileName(roadNum)) { // NOI18N
+            log.error("Road number must not contain reserved characters");
+            JOptionPane.showMessageDialog(this, Bundle.getMessage("NameResChar") + NEW_LINE
+                    + Bundle.getMessage("ReservedChar"), Bundle.getMessage("roadNumNG"),
+                    JOptionPane.ERROR_MESSAGE);
+            return false;
+        }
         if (roadNum.length() > Control.max_len_string_road_number) {
             JOptionPane.showMessageDialog(this, MessageFormat.format(Bundle.getMessage("carRoadNum"),
                     new Object[]{Control.max_len_string_road_number + 1}), Bundle.getMessage("carRoadLong"),
@@ -575,17 +595,17 @@ public class CarEditFrame extends OperationsFrame implements java.beans.Property
             return false;
         }
         // check to see if car with road and number already exists
-        Car car = carManager.getByRoadAndNumber((String) roadComboBox.getSelectedItem(), roadNumberTextField
+        Car existingCar = carManager.getByRoadAndNumber((String) roadComboBox.getSelectedItem(), roadNumberTextField
                 .getText());
-        if (car != null) {
+        if (existingCar != null) {
             // new car?
-            if (c == null) {
+            if (car == null) {
                 JOptionPane.showMessageDialog(this, Bundle.getMessage("carRoadExists"), Bundle
                         .getMessage("carCanNotAdd"), JOptionPane.ERROR_MESSAGE);
                 return false;
             }
             // old car with new road or number?
-            if (!car.getId().equals(c.getId())) {
+            if (!existingCar.getId().equals(car.getId())) {
                 JOptionPane.showMessageDialog(this, Bundle.getMessage("carRoadExists"), Bundle
                         .getMessage("carCanNotUpdate"), JOptionPane.ERROR_MESSAGE);
                 return false;
@@ -843,12 +863,13 @@ public class CarEditFrame extends OperationsFrame implements java.beans.Property
                 if (results == JOptionPane.YES_OPTION) {
                     log.debug("Force rolling stock to track");
                     car.setLocation((Location) locationBox.getSelectedItem(), (Track) trackLocationBox
-                            .getSelectedItem(), true);
+                            .getSelectedItem(), RollingStock.FORCE);
                 }
             }
         }
     }
 
+    // for the carAttributeEditFrame edit buttons
     private void addEditButtonAction(JButton b) {
         b.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent e) {
@@ -857,36 +878,34 @@ public class CarEditFrame extends OperationsFrame implements java.beans.Property
         });
     }
 
-    private boolean editActive = false;
-    CarAttributeEditFrame f;
+    CarAttributeEditFrame carAttributeEditFrame;
 
     // edit buttons only one frame active at a time
     public void buttonEditActionPerformed(java.awt.event.ActionEvent ae) {
-        if (editActive) {
-            f.dispose();
+        if (carAttributeEditFrame != null) {
+            carAttributeEditFrame.dispose();
         }
-        f = new CarAttributeEditFrame();
-        f.setLocationRelativeTo(this);
-        f.addPropertyChangeListener(this);
-        editActive = true;
+        carAttributeEditFrame = new CarAttributeEditFrame();
+        carAttributeEditFrame.setLocationRelativeTo(this);
+        carAttributeEditFrame.addPropertyChangeListener(this);
 
         if (ae.getSource() == editRoadButton) {
-            f.initComponents(ROAD, (String) roadComboBox.getSelectedItem());
+            carAttributeEditFrame.initComponents(ROAD, (String) roadComboBox.getSelectedItem());
         }
         if (ae.getSource() == editTypeButton) {
-            f.initComponents(TYPE, (String) typeComboBox.getSelectedItem());
+            carAttributeEditFrame.initComponents(TYPE, (String) typeComboBox.getSelectedItem());
         }
         if (ae.getSource() == editColorButton) {
-            f.initComponents(COLOR, (String) colorComboBox.getSelectedItem());
+            carAttributeEditFrame.initComponents(COLOR, (String) colorComboBox.getSelectedItem());
         }
         if (ae.getSource() == editLengthButton) {
-            f.initComponents(LENGTH, (String) lengthComboBox.getSelectedItem());
+            carAttributeEditFrame.initComponents(LENGTH, (String) lengthComboBox.getSelectedItem());
         }
         if (ae.getSource() == editOwnerButton) {
-            f.initComponents(OWNER, (String) ownerComboBox.getSelectedItem());
+            carAttributeEditFrame.initComponents(OWNER, (String) ownerComboBox.getSelectedItem());
         }
         if (ae.getSource() == editKernelButton) {
-            f.initComponents(KERNEL, (String) kernelComboBox.getSelectedItem());
+            carAttributeEditFrame.initComponents(KERNEL, (String) kernelComboBox.getSelectedItem());
         }
     }
 
@@ -910,7 +929,7 @@ public class CarEditFrame extends OperationsFrame implements java.beans.Property
     }
 
     public void propertyChange(java.beans.PropertyChangeEvent e) {
-        if (Control.showProperty) {
+        if (Control.SHOW_PROPERTY) {
             log.debug("Property change: ({}) old: ({}) new: ({})", e.getPropertyName(), e.getOldValue(), e
                     .getNewValue());
         }
@@ -971,9 +990,9 @@ public class CarEditFrame extends OperationsFrame implements java.beans.Property
             }
         }
         if (e.getPropertyName().equals(CarAttributeEditFrame.DISPOSE)) {
-            editActive = false;
+            carAttributeEditFrame = null;
         }
     }
 
-    static Logger log = LoggerFactory.getLogger(CarEditFrame.class.getName());
+    private final static Logger log = LoggerFactory.getLogger(CarEditFrame.class.getName());
 }

@@ -48,10 +48,6 @@ import org.slf4j.LoggerFactory;
  */
 public class CommonConductorYardmasterPanel extends OperationsPanel implements PropertyChangeListener {
 
-    /**
-     *
-     */
-    private static final long serialVersionUID = 4524775039808820663L;
     protected static final String Tab = "     "; // used to space out headers
     protected static final String Space = " "; // used to pad out panels
 
@@ -391,10 +387,13 @@ public class CommonConductorYardmasterPanel extends OperationsPanel implements P
             for (RouteLocation rld : routeList) {
                 for (Car car : carList) {
                     // determine if car is a pick up from the right track
-                    if (car.getTrack() != null
+                    // caboose or FRED is placed at end of the train
+                    // passenger trains are already blocked in the car list
+                    if (car.getTrack() != null && car.getRouteLocation() == rl && car.getRouteDestination() != rl
                             && (!Setup.isSortByTrackEnabled() || car.getTrackName().equals(track.getName()))
-                            && car.getRouteLocation() == rl && (car.getRouteDestination() == rld || car.isPassenger())
-                            && car.getRouteDestination() != rl) {
+                            && ((car.getRouteDestination() == rld && !car.isCaboose() && !car.hasFred()) 
+                                    || (rld == routeList.get(routeList.size() - 1) && (car.isCaboose() || car.hasFred()))
+                                    || car.isPassenger())) {
                         // yes we have a pick up
                         pWorkPanes.setVisible(true);
                         pickupPane.setVisible(true);

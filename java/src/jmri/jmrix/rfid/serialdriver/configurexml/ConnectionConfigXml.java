@@ -1,9 +1,11 @@
 package jmri.jmrix.rfid.serialdriver.configurexml;
 
-import jmri.InstanceManager;
 import jmri.jmrix.configurexml.AbstractSerialConnectionConfigXml;
 import jmri.jmrix.rfid.serialdriver.ConnectionConfig;
 import jmri.jmrix.rfid.serialdriver.SerialDriverAdapter;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
 
 /**
  * Handle XML persistence of layout connections by persisting the
@@ -28,17 +30,20 @@ public class ConnectionConfigXml extends AbstractSerialConnectionConfigXml {
 
     @Override
     protected void getInstance() {
+        log.debug("getInstance without parameter called");
         adapter = new SerialDriverAdapter();
     }
 
     @Override
     protected void getInstance(Object object) {
+        log.debug("getInstance with parameter called");
         adapter = ((ConnectionConfig) object).getAdapter();
     }
 
     @Override
     protected void register() {
-        InstanceManager.configureManagerInstance().registerPref(new ConnectionConfig(adapter));
+        this.register(new ConnectionConfig(adapter));
     }
 
+    private final static Logger log = LoggerFactory.getLogger(ConnectionConfigXml.class.getName());
 }

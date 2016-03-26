@@ -140,34 +140,37 @@ public class EntryExitPairsXml extends AbstractXmlAdapter {
      * Load, starting with the layoutblock element, then all the value-icon
      * pairs
      *
-     * @param element Top level Element to unpack.
+     * @param shared Top level Element to unpack.
+     * @param perNode
+     * @return 
      */
-    public boolean load(Element element) {
+    @Override
+    public boolean load(Element shared, Element perNode) {
         // create the objects
         EntryExitPairs eep = jmri.InstanceManager.getDefault(jmri.jmrit.signalling.EntryExitPairs.class);
 
         try {
-            String clearoption = element.getChild("cleardown").getText();
+            String clearoption = shared.getChild("cleardown").getText();
             eep.setClearDownOption(Integer.parseInt(clearoption));
         } catch (java.lang.NullPointerException e) {
             //Considered normal if it doesn't exists
         }
         // get attributes
         ArrayList<Object> loadedPanel = jmri.InstanceManager.configureManagerInstance().getInstanceList(LayoutEditor.class);
-        if (element.getChild("dispatcherintegration") != null && element.getChild("dispatcherintegration").getText().equals("yes")) {
+        if (shared.getChild("dispatcherintegration") != null && shared.getChild("dispatcherintegration").getText().equals("yes")) {
             eep.setDispatcherIntegration(true);
         }
-        if (element.getChild("colourwhilesetting") != null) {
-            eep.setSettingRouteColor(stringToColor(element.getChild("colourwhilesetting").getText()));
+        if (shared.getChild("colourwhilesetting") != null) {
+            eep.setSettingRouteColor(stringToColor(shared.getChild("colourwhilesetting").getText()));
             int settingTimer = 2000;
             try {
-                settingTimer = Integer.parseInt(element.getChild("settingTimer").getText());
+                settingTimer = Integer.parseInt(shared.getChild("settingTimer").getText());
             } catch (Exception e) {
-                log.error("Error in converting timer to int " + element.getChild("settingTimer"));
+                log.error("Error in converting timer to int " + shared.getChild("settingTimer"));
             }
             eep.setSettingTimer(settingTimer);
         }
-        List<Element> panelList = element.getChildren("layoutPanel");
+        List<Element> panelList = shared.getChildren("layoutPanel");
         for (int k = 0; k < panelList.size(); k++) {
             String panelName = panelList.get(k).getAttribute("name").getValue();
             LayoutEditor panel = null;
@@ -318,5 +321,5 @@ public class EntryExitPairsXml extends AbstractXmlAdapter {
         return jmri.InstanceManager.getDefault(jmri.jmrit.signalling.EntryExitPairs.class).getXMLOrder();
     }
 
-    static Logger log = LoggerFactory.getLogger(EntryExitPairsXml.class.getName());
+    private final static Logger log = LoggerFactory.getLogger(EntryExitPairsXml.class.getName());
 }

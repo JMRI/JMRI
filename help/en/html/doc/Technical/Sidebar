@@ -1,89 +1,94 @@
 <!-- Sidebar -->
-<!-- This is the common sidebar definition for Technical (developer) pages -->
+<!-- This is the common sidebar definition for help/doc/Technical (developer) pages -->
     <hr class="hide">
 
     <div id="mBody">
 
 	<div id="side"> <!-- Block of text on left side of page -->
-	    <div style="text-align: center">Info on JMRI:</div>
+	    <div style="text-align: center">Software documentation</div>
 	    <dl>
 
-		<dt>Development tools</dt>
+		<dt><h3>Development tools</h3></dt>
 		<dd>
 			<ul>
-			<LI><a href="getgitcode.shtml">Getting the code via Git</a>
-			<LI><a href="GitFAQ.shtml">Git FAQs</a>
-			<LI><a href="Ant.shtml">Building with Ant</a>
-			<LI><a href="NetBeans.shtml">Building with NetBeans</a>
-			<LI><a href="XCode.shtml">Building with XCode</a>
-			<LI><a href="Eclipse.shtml">Building with Eclipse</a>
-			<LI><a href="JBuilder.shtml">Building with JBuilder</a>
+			<li><a href="getgitcode.shtml">Getting the code via Git</a>
+			<li><a href="gitdeveloper.shtml">Developing with JMRI Code</a>
+			<li><a href="GitFAQ.shtml">Git FAQs</a>
+			<li>Building with:
+				<ul>
+				<li><a href="Ant.shtml">Ant</a>
+				<li><a href="NetBeans.shtml">NetBeans</a>
+				<li><a href="Eclipse.shtml">Eclipse</a>
+				<li><a href="IntelliJ.shtml">IntelliJ IDEA</a>
+				</ul>
+			</li>
 			</ul>
 		</dd>
 
-		<dt>Structure</dt>
+		<dt><h3>Structure</h3></dt>
 		<dd>
 			<ul>
-			<LI><a href="IntroStructure.shtml">Introduction</a>
-			<LI><a href="AppStructure.shtml">Application Structure</a>
-			<LI><a href="Names.shtml">Names and Naming</a>
+			<li><a href="IntroStructure.shtml">Introduction</a>
+			<li><a href="AppStructure.shtml">Application Structure</a>
+			<li><a href="Names.shtml">Names and Naming</a>
 			<li><a href="Patterns.shtml">Code Structure Patterns</a>
 			<li><a href="Swing.shtml">Swing Structure</a>
 			<li><a href="SystemStructure.shtml">External Connection Structure</a>
-			<LI><a href="Threads.shtml">Threads</a>
-			<LI><a href="XmlUsage.shtml">Use of XML</a>
-			<LI><a href="WebSite.shtml">Web Site</a>
+			<li><a href="Threads.shtml">Threads</a>
+			<li><a href="XmlUsage.shtml">Use of XML</a>
+			<li><a href="WebSite.shtml">Web Site</a>
 			
-			<LI><a href="/JavaDoc/doc">JavaDocs</a><ul>
-				<LI><a href="/JavaDoc/doc/index-all.html">Name Index</a>
-				<LI><A HREF="/JavaDoc/doc/index.html">Packages</A>
-				<LI><A HREF="/JavaDoc/doc/allclasses-frame.html">Class heirarchy</A>
-				</UL>
+			<li><a href="/JavaDoc/doc">JavaDocs</a><ul>
+				<li><a href="/JavaDoc/doc/index-all.html">Name Index</a>
+				<li><A HREF="/JavaDoc/doc/index.html">Packages</A>
+				<li><A HREF="/JavaDoc/doc/allclasses-frame.html">Class hierarchy</A>
+				</ul>
 			</ul>
 		</dd>
 
-		<dt>Techniques and Standards</dt>
+		<dt><h3>Techniques and Standards</h3></dt>
 		<dd>
 			<ul>
-			<LI><a href="RP.shtml">Recommended Practices</a>
-			<LI><a href="ContinuousIntegration.shtml">Continuous Integration</a>
-			<LI><a href="I8N.shtml">Internationalization</a>
-			<LI><a href="Logging.shtml">Logging &amp; Error Handling</a>
-			<LI><a href="JUnit.shtml">Unit testing with JUnit</a>
-			<LI><a href="JavaDoc.shtml">Documentation with JavaDoc and UML</a>
-			<LI><a href="FindBugs.shtml">Run the FindBugs static analysis tool</a>
-			<LI><a href="Help.shtml">Providing help with JavaHelp</a>
-			<LI><a href="FileNames.shtml">Portable Filename Method</a>
-			<LI><a href="XmlPersistance.shtml">XML Persistance</a>
+			<li><a href="RP.shtml">Recommended Practices</a>
+			<li><a href="ContinuousIntegration.shtml">Continuous Integration</a>
+			<li><a href="I8N.shtml">Internationalization</a>
+			<li><a href="Logging.shtml">Logging &amp; Error Handling</a>
+			<li><a href="JUnit.shtml">Unit testing with JUnit</a>
+			<li><a href="JavaDoc.shtml">Documentation with JavaDoc and UML</a>
+			<li><a href="FindBugs.shtml">Run the FindBugs static analysis tool</a>
+			<li><a href="Help.shtml">Providing help with JavaHelp</a>
+			<li><a href="FileNames.shtml">Portable Filename Method</a>
+			<li><a href="XmlPersistance.shtml">XML Persistance</a>
 			</ul>
 		</dd>
 
-		<dt>How To</dt>
+		<dt><h3>How To</h3></dt>
 		<dd>
 			<ul>
-			<LI><a href="plugins.shtml">Extend with Plugins</a>
-			<LI><a href="NewType.shtml">Add a New Type</a>
-			<LI><a href="NewSystem.shtml">Add a New System</a>
+			<li><a href="plugins.shtml">Extend with Plugins</a>
+			<li><a href="NewType.shtml">Add a New Type</a>
+			<li><a href="NewSystem.shtml">Add a New System</a>
 			</ul>
 		</dd>
 
-		<dt>Functional Info</dt>
+		<dt><h3>Functional Info</h3></dt>
 		<dd>
 			<ul>
-			<LI><a href="TurnoutFeedback.shtml">Turnout Feedback</a>
-			<LI><a href="Networking.shtml">Network Connections</a>
-			<LI><a href="StartUpScripts.shtml">How the startup scripts work</a>
+			<li><a href="TurnoutFeedback.shtml">Turnout Feedback</a>
+			<li><a href="Networking.shtml">Network Connections</a>
+			<li><a href="StartUpScripts.shtml">How the startup scripts work</a>
 			</ul>
 		</dd>
 
-		<dt>Background Info</dt>
+		<dt><h3>Background Info</h3></dt>
 		<dd>
 			<ul>
-			<LI><a href="TechRoadMap.shtml">Technology Roadmap</a>
-			<LI><a href="JVMCapabilities.shtml">Survey of JVM Capabilities</a>
-			<LI><a href="Poll2007.shtml">Usage Poll, Spring 2007</a>
+			<li><a href="TechRoadMap.shtml">Technology Roadmap</a>
+			<li><a href="JVMCapabilities.shtml">Survey of JVM Capabilities</a>
+			<li><a href="Poll2007.shtml">Usage Poll, Spring 2007</a>
 			</ul>
 		</dd>
-	    </dl>
-	</div>
+</dl>
+	    
+</div> <!-- closes #side -->
 <!-- /Sidebar -->

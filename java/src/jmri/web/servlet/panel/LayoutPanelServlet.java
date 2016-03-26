@@ -12,10 +12,13 @@ import jmri.jmrit.display.Positionable;
 import jmri.jmrit.display.layoutEditor.LayoutBlock;
 import jmri.jmrit.display.layoutEditor.LayoutBlockManager;
 import jmri.jmrit.display.layoutEditor.LayoutEditor;
+import jmri.util.ColorUtil;
 import org.jdom2.Document;
 import org.jdom2.Element;
 import org.jdom2.output.Format;
 import org.jdom2.output.XMLOutputter;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 /**
  * Return xml (for specified LayoutPanel) suitable for use by external clients
@@ -25,6 +28,7 @@ import org.jdom2.output.XMLOutputter;
 public class LayoutPanelServlet extends AbstractPanelServlet {
 
     private static final long serialVersionUID = 3008424425552738898L;
+    private final static Logger log = LoggerFactory.getLogger(LayoutPanelServlet.class);
 
     @Override
     protected String getPanelType() {
@@ -54,9 +58,9 @@ public class LayoutPanelServlet extends AbstractPanelServlet {
             panel.setAttribute("turnoutcirclesize", Integer.toString(editor.getTurnoutCircleSize()));
             panel.setAttribute("turnoutdrawunselectedleg", (editor.getTurnoutDrawUnselectedLeg()) ? "yes" : "no");
             if (editor.getBackgroundColor() == null) {
-                panel.setAttribute("backgroundcolor", LayoutEditor.colorToString(Color.lightGray));
+                panel.setAttribute("backgroundcolor", ColorUtil.colorToString(Color.lightGray));
             } else {
-                panel.setAttribute("backgroundcolor", LayoutEditor.colorToString(editor.getBackgroundColor()));
+                panel.setAttribute("backgroundcolor", ColorUtil.colorToString(editor.getBackgroundColor()));
             }
             panel.setAttribute("defaulttrackcolor", editor.getDefaultTrackColor());
             panel.setAttribute("defaultoccupiedtrackcolor", editor.getDefaultOccupiedTrackColor());
@@ -135,9 +139,9 @@ public class LayoutPanelServlet extends AbstractPanelServlet {
                         }
                     }
                     elem.setAttribute("occupiedsense", Integer.toString(b.getOccupiedSense()));
-                    elem.setAttribute("trackcolor", LayoutBlock.colorToString(b.getBlockTrackColor()));
-                    elem.setAttribute("occupiedcolor", LayoutBlock.colorToString(b.getBlockOccupiedColor()));
-                    elem.setAttribute("extracolor", LayoutBlock.colorToString(b.getBlockExtraColor()));
+                    elem.setAttribute("trackcolor", ColorUtil.colorToString(b.getBlockTrackColor()));
+                    elem.setAttribute("occupiedcolor", ColorUtil.colorToString(b.getBlockOccupiedColor()));
+                    elem.setAttribute("extracolor", ColorUtil.colorToString(b.getBlockExtraColor()));
                     if (!b.getMemoryName().isEmpty()) {
                         elem.setAttribute("memory", b.getMemoryName());
                     }

@@ -171,6 +171,7 @@ import jmri.jmrit.roster.Roster;
 import jmri.jmrit.roster.RosterEntry;
 import jmri.jmrit.roster.rostergroup.RosterGroup;
 import jmri.jmrix.ConnectionConfig;
+import jmri.jmrix.ConnectionConfigManager;
 import jmri.jmrix.SystemConnectionMemo;
 import jmri.profile.ProfileManager;
 import jmri.util.ConnectionNameFromSystemName;
@@ -641,6 +642,7 @@ public class JsonUtil {
         return root;
     }
 
+    @Deprecated
     static public JsonNode getPower(Locale locale) throws JsonException {
         ObjectNode root = mapper.createObjectNode();
         root.put(TYPE, POWER);
@@ -667,6 +669,7 @@ public class JsonUtil {
         return root;
     }
 
+    @Deprecated
     static public void setPower(Locale locale, JsonNode data) throws JsonException {
         int state = data.path(STATE).asInt(UNKNOWN);
         try {
@@ -756,7 +759,9 @@ public class JsonUtil {
      * @param locale
      * @param id     The id of an entry in the roster.
      * @return a roster entry in JSON notation
+     * @deprcated since 4.3.5
      */
+    @Deprecated
     static public JsonNode getRosterEntry(Locale locale, String id) {
         return JsonUtil.getRosterEntry(locale, Roster.instance().getEntryForId(id));
     }
@@ -771,7 +776,9 @@ public class JsonUtil {
      * @param locale
      * @param re     A RosterEntry that may or may not be in the roster.
      * @return a roster entry in JSON notation
+     * @deprecated since 4.3.5
      */
+    @Deprecated
     static public JsonNode getRosterEntry(Locale locale, RosterEntry re) {
         ObjectNode root = mapper.createObjectNode();
         root.put(TYPE, ROSTER_ENTRY);
@@ -807,6 +814,15 @@ public class JsonUtil {
         return root;
     }
 
+    /**
+     *
+     * @param locale The locale of the requesting client
+     * @param data   A JsonNode optionally containing a group name in the
+     *               "group" node
+     * @return the Roster as a Json Array
+     * @deprecated since 4.3.5
+     */
+    @Deprecated
     static public JsonNode getRoster(Locale locale, JsonNode data) {
         String group = (!data.path(GROUP).isMissingNode()) ? data.path(GROUP).asText() : null;
         if (Roster.ALLENTRIES.equals(group)) {
@@ -826,6 +842,13 @@ public class JsonUtil {
         return root;
     }
 
+    /**
+     * 
+     * @param locale The locale of the requesting client
+     * @return the list of Roster groups
+     * @deprecated since 4.3.5
+     */
+    @Deprecated
     static public JsonNode getRosterGroups(Locale locale) {
         ArrayNode root = mapper.createArrayNode();
         root.add(getRosterGroup(locale, Roster.ALLENTRIES));
@@ -835,6 +858,14 @@ public class JsonUtil {
         return root;
     }
 
+    /**
+     * 
+     * @param locale The locale of the requesting client
+     * @param name The name of the group
+     * @return A description of the group including its name and size
+     * @deprecated since 4.3.5
+     */
+    @Deprecated
     static public JsonNode getRosterGroup(Locale locale, String name) {
         ObjectNode root = mapper.createObjectNode();
         root.put(TYPE, ROSTER_GROUP);
@@ -1139,8 +1170,7 @@ public class JsonUtil {
     static public JsonNode getSystemConnections(Locale locale) {
         ArrayNode root = mapper.createArrayNode();
         ArrayList<String> prefixes = new ArrayList<String>();
-        for (Object instance : InstanceManager.configureManagerInstance().getInstanceList(ConnectionConfig.class)) {
-            ConnectionConfig config = (ConnectionConfig) instance;
+        for (ConnectionConfig config : InstanceManager.getDefault(ConnectionConfigManager.class)) {
             if (!config.getDisabled()) {
                 ObjectNode connection = mapper.createObjectNode().put(TYPE, SYSTEM_CONNECTION);
                 ObjectNode data = connection.putObject(DATA);
@@ -1178,6 +1208,7 @@ public class JsonUtil {
         return root;
     }
 
+    @Deprecated
     static public JsonNode getTime(Locale locale) throws JsonException {
         ObjectNode root = mapper.createObjectNode();
         root.put(TYPE, TIME);
@@ -1188,6 +1219,7 @@ public class JsonUtil {
         return root;
     }
 
+    @Deprecated
     static public void setTime(Locale locale, JsonNode data) throws JsonException {
         try {
             if (data.path(TIME).isTextual()) {
@@ -1283,6 +1315,7 @@ public class JsonUtil {
         }
     }
 
+    @Deprecated
     static public JsonNode getTurnout(Locale locale, String name) throws JsonException {
         ObjectNode root = mapper.createObjectNode();
         root.put(TYPE, TURNOUT);
@@ -1315,6 +1348,7 @@ public class JsonUtil {
         return root;
     }
 
+    @Deprecated
     static public JsonNode getTurnouts(Locale locale) throws JsonException {
         ArrayNode root = mapper.createArrayNode();
         for (String name : InstanceManager.turnoutManagerInstance().getSystemNameList()) {
@@ -1323,6 +1357,7 @@ public class JsonUtil {
         return root;
     }
 
+    @Deprecated
     static public void putTurnout(Locale locale, String name, JsonNode data) throws JsonException {
         try {
             InstanceManager.turnoutManagerInstance().provideTurnout(name);
@@ -1332,6 +1367,7 @@ public class JsonUtil {
         setTurnout(locale, name, data);
     }
 
+    @Deprecated
     static public void setTurnout(Locale locale, String name, JsonNode data) throws JsonException {
         try {
             Turnout turnout = InstanceManager.turnoutManagerInstance().getTurnout(name);
@@ -1451,6 +1487,16 @@ public class JsonUtil {
         return root;
     }
 
+    /**
+     * JSON errors should be handled by throwing a
+     * {@link jmri.server.json.JsonException}.
+     *
+     * @param code
+     * @param message
+     * @return
+     * @deprecated
+     */
+    @Deprecated
     static public ObjectNode handleError(int code, String message) {
         ObjectNode root = mapper.createObjectNode();
         root.put(TYPE, ERROR);

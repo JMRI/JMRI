@@ -1,17 +1,18 @@
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
-<html lang="en"><head><!-- Copyright ($Author$) 2009, 2010 --><!-- $Id$ --><title>Comprehensive Programmer - Speed Control Pane</title><!-- Style -->
+<html lang="en">
+<head>
+<title>Comprehensive Programmer - Speed Control Pane</title>
 
-
-
-
-
-
-
+<!-- Style -->
 <meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
 <link rel="stylesheet" type="text/css" href="/css/default.css" media="screen">
 <link rel="stylesheet" type="text/css" href="/css/print.css" media="print">
 <link rel="icon" href="/images/jmri.ico" type="image/png">
-<link rel="home" title="Home" href="/"><!-- /Style --></head><body>
+<link rel="home" title="Home" href="/">
+<!-- /Style -->
+</head>
+
+<body>
 <!--#include virtual="/Header" -->
 
 <!--#include virtual="Sidebar" -->
@@ -19,7 +20,7 @@
 
 <a name="Top"></a>
 <h1>DecoderPro&reg; Comprehensive Programmer</h1>
-<h1>The Speed Table Pane</h1>
+<h2>The Speed Table Pane</h2>
 
 <div align="right">
 <p><a href="Comp_Speed.shtml">Previous | </a>
@@ -52,7 +53,7 @@ example. </p><p>Not all decoders allow speed table programming and some are limi
 <p>As you can see, you have both numbers and sliders to work with.
 Changing either a number or slider will make the other change to match
 it. If you are CV inquisitive, you can use the tool tip to
-advantage.&nbsp; By hovering over any of the sliders, the tool tip will
+advantage. By hovering over any of the sliders, the tool tip will
 reveal the CV to which you are pointing . </p><p>The <strong>
     <input name="button2" id="button2" value="Match ends" type="button">
 </strong> will also result in a straight-line graph, but you can offset
@@ -125,7 +126,7 @@ been <b>Shifted right</b> three times. </p>
 <p>Of course, you can enter the numbers individually or move the
 sliders one at a time to create your own fully customized speed table.
 To aid you with setting the individual values, the slider value is
-shown at the top of each slider.&nbsp; Also, by hovering the mouse at a
+shown at the top of each slider. Also, by hovering the mouse at a
 slider column the number of the CV being entered will be revealed.
 </p><p>
 One very important thing to remember: <span class="ACCENT"><strong>No matter
@@ -137,8 +138,9 @@ QSI box below.&nbsp; They require that you select the <strong>user defined</stro
 speed table entry in this box or your table will not be written to the
 decoder.&nbsp; Interestingly, Tsunami puts the selection at the bottom
 of the list making it very easy to miss. </p>
-<p align="center"><img src="images/Speed_Table_QSI.png" alt="QSI speed table" height="308" width="799"><br>
-</p><hr>
+<p align="center"><img src="images/Speed_Table_QSI.png" alt="QSI speed table" height="308" width="799"></p>
+
+<hr>
 <div align="right">
 <p><a href="Comp_FMap.shtml"></a>
   <a href="Comp_Speed.shtml">Previous | </a> <a href="Comp_FMap.shtml">Next</a>
@@ -146,4 +148,7 @@ of the list making it very easy to miss. </p>
 </p></div>
 
 <!--#include virtual="/Footer" -->
-</div></body></html>
+  </div><!-- closes #mainContent-->
+ </div> <!-- closes #mBody-->
+ </body>
+</html>

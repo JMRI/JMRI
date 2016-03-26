@@ -1,18 +1,14 @@
-// XNetSensorTest.java
 package jmri.jmrix.lenz;
 
 import junit.framework.Assert;
 import junit.framework.Test;
 import junit.framework.TestCase;
 import junit.framework.TestSuite;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 
 /**
  * Tests for the jmri.jmrix.lenz.XNetSensor class.
  *
  * @author	Paul Bender Copyright 2004
- * @version $Revision$
  */
 public class XNetSensorTest extends TestCase {
 
@@ -112,8 +108,6 @@ public class XNetSensorTest extends TestCase {
         TestSuite suite = new TestSuite(XNetSensorTest.class);
         return suite;
     }
-
-    static Logger log = LoggerFactory.getLogger(XNetSensorTest.class.getName());
 
     // The minimal setup for log4J
     protected void setUp() {

@@ -18,8 +18,8 @@ import jmri.jmrit.operations.setup.Control;
 import jmri.jmrit.operations.setup.Setup;
 import jmri.jmrit.operations.trains.Train;
 import jmri.jmrit.operations.trains.TrainManager;
-import jmri.jmrit.operations.trains.TrainSchedule;
-import jmri.jmrit.operations.trains.TrainScheduleManager;
+import jmri.jmrit.operations.trains.timetable.TrainSchedule;
+import jmri.jmrit.operations.trains.timetable.TrainScheduleManager;
 import org.jdom2.Attribute;
 import org.jdom2.Element;
 import org.slf4j.Logger;
@@ -51,7 +51,7 @@ public class Track {
     protected int _length = 0; // length of track
     protected int _reserved = 0; // length of track reserved by trains
     protected int _reservedLengthDrops = 0; // length of track reserved for drops
-    protected int _numberCarsInRoute = 0; // number of cars in route to this track
+    protected int _numberCarsEnRoute = 0; // number of cars en route to this track
     protected int _usedLength = 0; // length of track filled by cars and engines
     protected int _ignoreUsedLengthPercentage = 0; // value between 0 and 100, 100 = ignore 100%
     protected int _moves = 0; // count of the drops since creation
@@ -72,8 +72,8 @@ public class Track {
     protected String _scheduleId = NONE; // Schedule id if there's one
     protected String _scheduleItemId = NONE; // the current scheduled item id
     protected int _scheduleCount = 0; // the number of times the item has been delivered
-    protected int _reservedInRoute = 0; // length of cars in route to this track
-    protected int _reservationFactor = 100; // percentage of track space for cars in route
+    protected int _reservedEnRoute = 0; // length of cars en route to this track
+    protected int _reservationFactor = 100; // percentage of track space for cars en route
     protected int _mode = MATCH; // default is match mode
     protected boolean _holdCustomLoads = false; // when true hold cars with custom loads
 
@@ -81,10 +81,10 @@ public class Track {
     protected String _dropOption = ANY; // controls which route or train can set out cars
     protected String _pickupOption = ANY; // controls which route or train can pick up cars
     public static final String ANY = "Any"; // track accepts any train or route
-    public static final String TRAINS = "trains"; // NOI18N track only accepts certain trains
-    public static final String ROUTES = "routes"; // NOI18N track only accepts certain routes
-    public static final String EXCLUDE_TRAINS = "excludeTrains"; // NOI18N track excludes certain trains
-    public static final String EXCLUDE_ROUTES = "excludeRoutes"; // NOI18N track excludes certain routes
+    public static final String TRAINS = "trains"; // track only accepts certain trains // NOI18N
+    public static final String ROUTES = "routes"; // track only accepts certain routes // NOI18N
+    public static final String EXCLUDE_TRAINS = "excludeTrains"; // track excludes certain trains // NOI18N
+    public static final String EXCLUDE_ROUTES = "excludeRoutes"; // track excludes certain routes // NOI18N
 
     // load options
     protected int _loadOptions = 0;
@@ -109,7 +109,7 @@ public class Track {
     public static final String STAGING = "Staging";
     public static final String INTERCHANGE = "Interchange";
     public static final String YARD = "Yard";
-    public static final String SPUR = "Siding"; // NOI18N note that early code used Siding as the spur type
+    public static final String SPUR = "Siding"; // note that early code used Siding as the spur type // NOI18N
 
     // train directions serviced by this track
     public static final int EAST = 1;
@@ -131,6 +131,7 @@ public class Track {
     public static final String ALL_DESTINATIONS = Bundle.getMessage("All"); // track services all loads
     public static final String INCLUDE_DESTINATIONS = Bundle.getMessage("Include");
     public static final String EXCLUDE_DESTINATIONS = Bundle.getMessage("Exclude");
+    protected boolean _onlyCarsWithFD = false; // when true only cars with a final destinations are serviced
 
     // schedule modes
     public static final int SEQUENTIAL = 0;
@@ -153,6 +154,7 @@ public class Track {
     public static final String SCHEDULE = Bundle.getMessage("schedule");
     public static final String CUSTOM = Bundle.getMessage("custom");
     public static final String DESTINATION = Bundle.getMessage("carDestination");
+    public static final String NO_FINAL_DESTINATION = Bundle.getMessage("noFinalDestination");
 
     // For property change
     public static final String TYPES_CHANGED_PROPERTY = "trackRollingStockTypes"; // NOI18N
@@ -362,22 +364,22 @@ public class Track {
     }
 
     public void addReservedInRoute(Car car) {
-        int old = _reservedInRoute;
-        _numberCarsInRoute++;
-        _reservedInRoute = old + car.getTotalLength();
-        if (old != _reservedInRoute) {
+        int old = _reservedEnRoute;
+        _numberCarsEnRoute++;
+        _reservedEnRoute = old + car.getTotalLength();
+        if (old != _reservedEnRoute) {
             setDirtyAndFirePropertyChange("reservedInRoute", Integer.toString(old), // NOI18N
-                    Integer.toString(_reservedInRoute)); // NOI18N
+                    Integer.toString(_reservedEnRoute)); // NOI18N
         }
     }
 
     public void deleteReservedInRoute(Car car) {
-        int old = _reservedInRoute;
-        _numberCarsInRoute--;
-        _reservedInRoute = old - car.getTotalLength();
-        if (old != _reservedInRoute) {
+        int old = _reservedEnRoute;
+        _numberCarsEnRoute--;
+        _reservedEnRoute = old - car.getTotalLength();
+        if (old != _reservedEnRoute) {
             setDirtyAndFirePropertyChange("reservedInRoute", Integer.toString(old), // NOI18N
-                    Integer.toString(_reservedInRoute)); // NOI18N
+                    Integer.toString(_reservedEnRoute)); // NOI18N
         }
     }
 
@@ -385,14 +387,14 @@ public class Track {
      * Used to determine how much track space is going to be consumed by cars in
      * route to this track. See isSpaceAvailable().
      *
-     * @return The length of all cars in route to this track including couplers.
+     * @return The length of all cars en route to this track including couplers.
      */
     public int getReservedInRoute() {
-        return _reservedInRoute;
+        return _reservedEnRoute;
     }
 
     public int getNumberOfCarsInRoute() {
-        return _numberCarsInRoute;
+        return _numberCarsEnRoute;
     }
 
     /**
@@ -473,7 +475,7 @@ public class Track {
 
     /**
      * Used to determine if there's space available at this track for the car.
-     * Considers cars in route to this track. Used to prevent overloading the
+     * Considers cars en route to this track. Used to prevent overloading the
      * track with cars from staging or cars with custom loads.
      *
      * @param car The car to be set out.
@@ -1345,6 +1347,10 @@ public class Track {
                 return DESTINATION + " (" + car.getFinalDestinationName() + ") "
                         + MessageFormat.format(Bundle.getMessage("carIsNotAllowed"), new Object[]{getName()}); // no
             }
+            // does this track (interchange) accept cars without a final destination?
+            if (getTrackType().equals(INTERCHANGE) && isOnlyCarsWithFinalDestinationEnabled() && car.getFinalDestination() == null) {
+                return NO_FINAL_DESTINATION;
+            }
             // check for car in kernel
             if (car.getKernel() != null && car.getKernel().isLead(car)) {
                 length = 0;
@@ -1835,7 +1841,7 @@ public class Track {
                     return MessageFormat.format(Bundle.getMessage("scheduleRandom"), new Object[]{SCHEDULE,
                         getScheduleName(), si.getId(), value, random});
                 }
-            } catch (Exception NumberFormatException) {
+            } catch (NumberFormatException e) {
                 log.error("Random value {} isn't a number", si.getRandom());
             }
         }
@@ -2199,6 +2205,22 @@ public class Track {
         }
         return ALL_DESTINATIONS;
     }
+    
+    
+    public void setOnlyCarsWithFinalDestinationEnabled(boolean enable) {
+        boolean old = _onlyCarsWithFD;
+        _onlyCarsWithFD = enable;
+        setDirtyAndFirePropertyChange("onlyCarsWithFinalDestinations", old, enable);
+    }
+    
+    /**
+     * When true the C/I track will only accept cars that have a final destination
+     * that can be serviced by the track. See acceptsDestination(Location).
+     * @return false if any car spotted, true if only cars with a FD.
+     */
+    public boolean isOnlyCarsWithFinalDestinationEnabled() {
+        return _onlyCarsWithFD;
+    }
 
     /**
      * Used to determine if track has been assigned as an alternate
@@ -2454,6 +2476,10 @@ public class Track {
         if ((a = e.getAttribute(Xml.HOLD_CARS_CUSTOM)) != null) {
             setHoldCarsWithCustomLoadsEnabled(a.getValue().equals(Xml.TRUE));
         }
+        if ((a = e.getAttribute(Xml.ONLY_CARS_WITH_FD)) != null) {
+            setOnlyCarsWithFinalDestinationEnabled(a.getValue().equals(Xml.TRUE));
+        }
+        
         if ((a = e.getAttribute(Xml.ALTERNATIVE)) != null) {
             _alternateTrackId = a.getValue();
         }
@@ -2679,6 +2705,9 @@ public class Track {
             e.setAttribute(Xml.SCHEDULE_MODE, Integer.toString(getScheduleMode()));
             e.setAttribute(Xml.HOLD_CARS_CUSTOM, isHoldCarsWithCustomLoadsEnabled() ? Xml.TRUE : Xml.FALSE);
         }
+        if (getTrackType().equals(INTERCHANGE)) {
+            e.setAttribute(Xml.ONLY_CARS_WITH_FD, isOnlyCarsWithFinalDestinationEnabled() ? Xml.TRUE : Xml.FALSE);
+        }
         if (getAlternateTrack() != null) {
             e.setAttribute(Xml.ALTERNATIVE, getAlternateTrack().getId());
         }
@@ -2757,6 +2786,6 @@ public class Track {
         pcs.firePropertyChange(p, old, n);
     }
 
-    static Logger log = LoggerFactory.getLogger(Track.class.getName());
+    private final static Logger log = LoggerFactory.getLogger(Track.class.getName());
 
 }

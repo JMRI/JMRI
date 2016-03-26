@@ -1,13 +1,12 @@
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
-<!-- $Id$ -->
 <html lang="en">
 <head>
- <TITLE>
+ <title>
       JMRI: Audio Table Help
- </TITLE>
-    <META http-equiv=Content-Type content="text/html; charset=iso-8859-1">
-    <META content="Matt Harris" name=Author>
-    <META name="keywords" content="JMRI help Audio Table">
+ </title>
+    <meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
+    <meta content="Matt Harris" name="Author">
+    <meta name="keywords" content="JMRI help Audio Table">
 
 <!--#include virtual="/Style" -->
 </head>
@@ -17,29 +16,26 @@
   <div class="nomenu" id="mBody">
     <div id="mainContent">
 
-<H1>The Audio Table</H1>
-    
+<h1>The Audio Table</h1>
 
-You can use the Audio Table to look at the contents of JMRI audio objects.
+You can use the Audio Table to look at the contents of JMRI Audio objects.
 <p>
-Note that you can sort the table by each of the columns, just click on the
+Note that you can sort the table by each of the columns; just click on a
 column heading.
 </p>
 <a href="AudioTable.jpg">
 <img src="AudioTable.jpg" height="178" width="420">
 </a>
 <p>
-To create a new audio object, click on the 
-"<a href="AudioAddEdit.shtml">Add...</a>" button at the bottom of the window.
+To create a new Audio object, click either the 
+"Add Source..." or the "Add Buffer..." <a href="AudioAddEdit.shtml">button</a> at the bottom left of the pane.
 
 <p>
-For more information on audio objects, see the 
-<a href="../../../../html/tools/Audio.shtml">audio help page</a>.
-<br>
+For more information on Audio objects, see the 
+<a href="../../../../html/tools/Audio.shtml">Audio help page</a>.
 
 <!--#include virtual="/Footer" -->
+ </div><!-- closes #mainContent-->
+</div> <!-- closes #mBody-->
 </body>
-</html>
-
-
- 	  	 
+</html>	  	 

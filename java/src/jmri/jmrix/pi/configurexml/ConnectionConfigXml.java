@@ -1,12 +1,11 @@
 package jmri.jmrix.pi.configurexml;
 
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
-import jmri.InstanceManager;
 import jmri.jmrix.configurexml.AbstractConnectionConfigXml;
 import jmri.jmrix.pi.ConnectionConfig;
 import jmri.jmrix.pi.RaspberryPiAdapter;
 import org.jdom2.Element;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 /**
  * Handle XML persistance of layout connections by persistening
@@ -31,16 +30,18 @@ public class ConnectionConfigXml extends AbstractConnectionConfigXml {
 
     @Override
     protected void getInstance() {
+        log.debug("getInstance without Parameter called");
         if(adapter == null) adapter=new RaspberryPiAdapter();
     }
 
     protected void getInstance(Object object) {
+        log.debug("getInstance with Parameter called");
         adapter=(RaspberryPiAdapter)((ConnectionConfig) object).getAdapter();
     }
 
     @Override
     protected void register() {
-        InstanceManager.configureManagerInstance().registerPref(new ConnectionConfig(adapter));
+        this.register(new ConnectionConfig(adapter));
     }
 
     /**
@@ -59,25 +60,18 @@ public class ConnectionConfigXml extends AbstractConnectionConfigXml {
        return e;
     }
 
-   /**
-     * Update static data from XML file
-     *
-     * @param e Top level Element to unpack.
-     * @return true if successful
-     * @throws java.lang.Exception
-     */
     @Override
-    public boolean load(Element e) throws Exception{
+    public boolean load(Element shared, Element perNode) throws Exception {
        getInstance();
-       loadCommon(e,adapter);
-       InstanceManager.configureManagerInstance().registerPref(new ConnectionConfig(adapter));
+       loadCommon(shared, perNode, adapter);
+
+       // register, so can be picked up next time
+       register();
+
        adapter.configure();
        return true;
     }
 
-
-
-    // initialize logging
-    static Logger log = LoggerFactory.getLogger(ConnectionConfigXml.class.getName());
+    private final static Logger log = LoggerFactory.getLogger(ConnectionConfigXml.class.getName());
 
 }

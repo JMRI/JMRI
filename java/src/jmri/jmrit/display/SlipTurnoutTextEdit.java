@@ -1,4 +1,3 @@
-// LayoutSlipTurnoutTextEdit.java
 package jmri.jmrit.display;
 
 import java.awt.Dimension;
@@ -7,8 +6,6 @@ import java.awt.GridBagLayout;
 import javax.swing.JButton;
 import javax.swing.JComponent;
 import jmri.util.JmriJFrame;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 
 /**
  * Displays and allows user to modify the text display used in a turnout slip
@@ -18,14 +15,9 @@ import org.slf4j.LoggerFactory;
  *
  * @author Dan Boudreau Copyright (C) 2007
  * @author Kevin Dickerson (SlipTurnoutTextEditor version);
- * @version $Revision$
  */
 public class SlipTurnoutTextEdit extends JmriJFrame {
 
-    /**
-     *
-     */
-    private static final long serialVersionUID = 4406026348970757874L;
     SlipTurnoutIcon pl; 	// layout positional label tracked by this frame
     static final String INIT = null;
     String oldLWUE = INIT;
@@ -220,7 +212,4 @@ public class SlipTurnoutTextEdit extends JmriJFrame {
             dispose();
         }
     }
-
-    static Logger log = LoggerFactory
-            .getLogger(SlipTurnoutTextEdit.class.getName());
 }

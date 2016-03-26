@@ -5,6 +5,7 @@ import jmri.jmrit.operations.locations.Location;
 import jmri.jmrit.operations.locations.Track;
 import jmri.jmrit.operations.rollingstock.RollingStock;
 import jmri.jmrit.operations.routes.RouteLocation;
+import jmri.jmrit.operations.trains.Train;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -15,6 +16,9 @@ import org.slf4j.LoggerFactory;
  * @version $Revision$
  */
 public class Engine extends RollingStock {
+    
+    public static final int NCE_REAR_BLOCK_NUMBER = 8;
+    public static final int B_UNIT_BLOCKING = 10;  // block B Units after NCE Consists
 
     private Consist _consist = null;
     private String _model = NONE;
@@ -92,7 +96,7 @@ public class Engine extends RollingStock {
         }
         return hp;
     }
-    
+
     public int getHpInteger() {
         try {
             return Integer.parseInt(getHp());
@@ -110,13 +114,13 @@ public class Engine extends RollingStock {
     public void setLength(String length) {
         super.setLength(length);
         try {
-           if (getModel().equals(NONE)) {
-               return;
-           }
-           engineModels.setModelLength(getModel(), length);
-        } catch(java.lang.NullPointerException npe){
-          // failed, but the model may not have been set.
-          log.debug("NPE setting length for Engine ({})", toString());
+            if (getModel().equals(NONE)) {
+                return;
+            }
+            engineModels.setModelLength(getModel(), length);
+        } catch (java.lang.NullPointerException npe) {
+            // failed, but the model may not have been set.
+            log.debug("NPE setting length for Engine ({})", toString());
         }
         return;
     }
@@ -152,33 +156,53 @@ public class Engine extends RollingStock {
      */
     public void setWeightTons(String weight) {
         try {
-           if (getModel().equals(NONE)) {
-               return;
-           }
-           String old = getWeightTons();
-           super.setWeightTons(weight);
-           engineModels.setModelWeight(getModel(), weight);
-           if (!old.equals(weight)) {
-              setDirtyAndFirePropertyChange("Engine Weight Tons", old, weight); // NOI18N
-           }
-        } catch(java.lang.NullPointerException npe) {
-           // this failed, was the model set?
-           log.debug("NPE setting Weight Tons for Engine ({})", toString());
+            if (getModel().equals(NONE)) {
+                return;
+            }
+            String old = getWeightTons();
+            super.setWeightTons(weight);
+            engineModels.setModelWeight(getModel(), weight);
+            if (!old.equals(weight)) {
+                setDirtyAndFirePropertyChange("Engine Weight Tons", old, weight); // NOI18N
+            }
+        } catch (java.lang.NullPointerException npe) {
+            // this failed, was the model set?
+            log.debug("NPE setting Weight Tons for Engine ({})", toString());
         }
     }
 
     public String getWeightTons() {
         String weight = null;
-        try{
-           weight = engineModels.getModelWeight(getModel());
-           if (weight == null) {
-               weight = NONE;
-           }
-       } catch(java.lang.NullPointerException npe){
-          log.debug("NPE getting Weight Tons for Engine ({})", toString());
-          weight = NONE;
-       }
-       return weight;
+        try {
+            weight = engineModels.getModelWeight(getModel());
+            if (weight == null) {
+                weight = NONE;
+            }
+        } catch (java.lang.NullPointerException npe) {
+            log.debug("NPE getting Weight Tons for Engine ({})", toString());
+            weight = NONE;
+        }
+        return weight;
+    }
+
+    public void setBunit(boolean bUnit) {
+        if (getModel().equals(NONE)) {
+            return;
+        }
+        boolean old = isBunit();
+        engineModels.setModelBunit(getModel(), bUnit);
+        if (old != bUnit) {
+            setDirtyAndFirePropertyChange(TYPE_CHANGED_PROPERTY, old, bUnit);
+        }
+    }
+
+    public boolean isBunit() {
+        try {
+            return engineModels.isModelBunit(getModel());
+        } catch (java.lang.NullPointerException npe) {
+            log.debug("NPE getting is B unit for Engine ({})", toString());
+        }
+        return false;
     }
 
     /**
@@ -232,18 +256,29 @@ public class Engine extends RollingStock {
         return super.testDestination(destination, track);
     }
 
-    protected void moveRollingStock(RouteLocation old, RouteLocation next) {
-        if (old == getRouteLocation()) {
-            if (getConsist() == null || (getConsist() != null && getConsist().isLead(this))) {
-                if (getTrain() != null && getRouteLocation() != getRouteDestination()
-                        && getTrain().getLeadEngine() != this) {
-                    log.debug("New lead locomotive ({}) for train ({})", toString(), getTrain().getName());
-                    getTrain().setLeadEngine(this);
-                    getTrain().createTrainIcon();
+    /**
+     * Determine if there's a change in the lead locomotive. There are two possible
+     * locations in a train's route. TODO this code places the last loco added to the
+     * train as the lead. It would be better if the first one became the lead loco.
+     */
+    protected void moveRollingStock(RouteLocation current, RouteLocation next) {
+        if (current == getRouteLocation()) {
+            if (getConsist() == null || getConsist().isLead(this)) {
+                if (getRouteLocation() != getRouteDestination() && getTrain() != null
+                        && !isBunit() && getTrain().getLeadEngine() != this) {
+                    if (((getTrain().getSecondLegStartLocation() == current
+                            && (getTrain().getSecondLegOptions() & Train.CHANGE_ENGINES) == Train.CHANGE_ENGINES))
+                            ||
+                            ((getTrain().getThirdLegStartLocation() == current
+                            && (getTrain().getThirdLegOptions() & Train.CHANGE_ENGINES) == Train.CHANGE_ENGINES))) {
+                        log.debug("New lead locomotive ({}) for train ({})", toString(), getTrain().getName());
+                        getTrain().setLeadEngine(this);
+                        getTrain().createTrainIcon(current);
+                    }
                 }
             }
         }
-        super.moveRollingStock(old, next);
+        super.moveRollingStock(current, next);
     }
 
     public void dispose() {
@@ -278,6 +313,9 @@ public class Engine extends RollingStock {
         if ((a = e.getAttribute(Xml.WEIGHT_TONS)) != null) {
             setWeightTons(a.getValue());
         }
+        if ((a = e.getAttribute(Xml.B_UNIT)) != null) {
+            setBunit(a.getValue().equals(Xml.TRUE));
+        }
         if ((a = e.getAttribute(Xml.CONSIST)) != null) {
             Consist c = EngineManager.instance().getConsistByName(a.getValue());
             if (c != null) {
@@ -308,6 +346,7 @@ public class Engine extends RollingStock {
         super.store(e);
         e.setAttribute(Xml.MODEL, getModel());
         e.setAttribute(Xml.HP, getHp());
+        e.setAttribute(Xml.B_UNIT, (isBunit() ? Xml.TRUE : Xml.FALSE));
         if (getConsist() != null) {
             e.setAttribute(Xml.CONSIST, getConsistName());
             if (getConsist().isLead(this)) {
@@ -354,6 +393,6 @@ public class Engine extends RollingStock {
         }
     }
 
-    static Logger log = LoggerFactory.getLogger(Engine.class.getName());
+    private final static Logger log = LoggerFactory.getLogger(Engine.class.getName());
 
 }

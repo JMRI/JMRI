@@ -75,9 +75,9 @@ public class StoreXmlConfigAction extends LoadStoreBaseAction {
         // check for possible overwrite
         if (file.exists()) {
             int selectedValue = JOptionPane.showConfirmDialog(null,
-                    "File " + file.getName() + " already exists, overwrite it?",
-                    "Overwrite file?",
-                    JOptionPane.OK_CANCEL_OPTION);
+                    Bundle.getMessage("FileOverwriteWarning", file.getName()),
+                    Bundle.getMessage("OverwriteFile"),
+                    JOptionPane.OK_CANCEL_OPTION); // I18N TODO
             if (selectedValue != JOptionPane.OK_OPTION) {
                 return null;
             }
@@ -105,5 +105,5 @@ public class StoreXmlConfigAction extends LoadStoreBaseAction {
     }
 
     // initialize logging
-    static Logger log = LoggerFactory.getLogger(StoreXmlConfigAction.class.getName());
+    private final static Logger log = LoggerFactory.getLogger(StoreXmlConfigAction.class.getName());
 }

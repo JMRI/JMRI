@@ -22,7 +22,8 @@ public class LocaleSelector {
     static String[] suffixes
             = new String[]{
                 Locale.getDefault().getLanguage() + "_" + Locale.getDefault().getCountry(),
-                Locale.getDefault().getLanguage()
+                Locale.getDefault().getLanguage(),
+                ""
             };
 
     static boolean testLocale = Locale.getDefault().getLanguage().equals("tlh");

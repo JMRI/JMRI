@@ -1,4 +1,3 @@
-// IntlUtilitiesTest.java
 package jmri.util;
 
 import java.util.Locale;
@@ -6,8 +5,6 @@ import junit.framework.Assert;
 import junit.framework.Test;
 import junit.framework.TestCase;
 import junit.framework.TestSuite;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 
 /**
  * Tests for the jmri.util.IntlUtilities class.
@@ -112,7 +109,7 @@ public class IntlUtilitiesTest extends TestCase {
 
     // Main entry point
     static public void main(String[] args) {
-        String[] testCaseName = {IntlUtilitiesTest.class.getName()};
+        String[] testCaseName = {"-noloading", IntlUtilitiesTest.class.getName()};
         junit.swingui.TestRunner.main(testCaseName);
     }
 
@@ -121,7 +118,5 @@ public class IntlUtilitiesTest extends TestCase {
         TestSuite suite = new TestSuite(IntlUtilitiesTest.class);
         return suite;
     }
-
-    static Logger log = LoggerFactory.getLogger(IntlUtilitiesTest.class.getName());
 
 }

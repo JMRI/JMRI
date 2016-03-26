@@ -45,11 +45,6 @@ public class SignalMastIconXml extends PositionableLabelXml {
         return element;
     }
 
-    public boolean load(Element element) {
-        log.error("Invalid method called");
-        return false;
-    }
-
     /**
      * Create a SignalMastIcon, then add
      *
@@ -150,6 +145,6 @@ public class SignalMastIconXml extends PositionableLabelXml {
         loadCommonAttributes(l, Editor.SIGNALS, element);
     }
 
-    static Logger log = LoggerFactory.getLogger(SignalMastIconXml.class.getName());
+    private final static Logger log = LoggerFactory.getLogger(SignalMastIconXml.class.getName());
 
 }

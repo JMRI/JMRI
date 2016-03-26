@@ -57,11 +57,6 @@ public class RpsPositionIconXml extends PositionableLabelXml {
         return element;
     }
 
-    public boolean load(Element element) {
-        log.error("Invalid method called");
-        return false;
-    }
-
     /**
      * Create a PositionableLabel, then add to a target JLayeredPane
      *
@@ -153,6 +148,6 @@ public class RpsPositionIconXml extends PositionableLabelXml {
         loadCommonAttributes(l, Editor.SENSORS, element);
     }
 
-    static Logger log = LoggerFactory.getLogger(RpsPositionIconXml.class.getName());
+    private final static Logger log = LoggerFactory.getLogger(RpsPositionIconXml.class.getName());
 
 }

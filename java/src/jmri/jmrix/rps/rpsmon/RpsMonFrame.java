@@ -13,8 +13,6 @@ import jmri.jmrix.rps.Measurement;
 import jmri.jmrix.rps.MeasurementListener;
 import jmri.jmrix.rps.Reading;
 import jmri.jmrix.rps.ReadingListener;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 
 public class RpsMonFrame extends jmri.jmrix.AbstractMonFrame
         implements ReadingListener, MeasurementListener {
@@ -60,6 +58,4 @@ public class RpsMonFrame extends jmri.jmrix.AbstractMonFrame
         }
         nextLine(m.toString() + "\n", raw);
     }
-
-    static Logger log = LoggerFactory.getLogger(RpsMonFrame.class.getName());
 }

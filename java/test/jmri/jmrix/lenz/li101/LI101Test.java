@@ -1,17 +1,13 @@
-// LI101Test.java
 package jmri.jmrix.lenz.li101;
 
 import junit.framework.Test;
 import junit.framework.TestCase;
 import junit.framework.TestSuite;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 
 /**
  * Tests for the jmri.jmrix.lenz.li101 package
  *
  * @author Paul Bender
- * @version $Revision$
  */
 public class LI101Test extends TestCase {
 
@@ -32,7 +28,5 @@ public class LI101Test extends TestCase {
         suite.addTest(new TestSuite(LI101AdapterTest.class));
         return suite;
     }
-
-    static Logger log = LoggerFactory.getLogger(LI101Test.class.getName());
 
 }

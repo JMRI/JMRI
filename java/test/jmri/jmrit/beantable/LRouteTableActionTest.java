@@ -1,4 +1,3 @@
-// LRouteTableActionTest.java
 package jmri.jmrit.beantable;
 
 import java.util.ResourceBundle;
@@ -29,7 +28,6 @@ public class LRouteTableActionTest extends jmri.util.SwingTestCase //TestCase //
     private LogixTableAction _logixTable;
 
     public void testCreate() {
-        jmri.InstanceManager.store(jmri.managers.DefaultUserMessagePreferences.getInstance(), jmri.UserPreferencesManager.class);
         _lRouteTable.actionPerformed(null);
         _lRouteTable.addPressed(null);
         _lRouteTable._userName.setText("TestLRoute");
@@ -111,6 +109,7 @@ public class LRouteTableActionTest extends jmri.util.SwingTestCase //TestCase //
         super.setUp();
 
         JUnitUtil.resetInstanceManager();
+        jmri.util.JUnitUtil.initDefaultUserMessagePreferences();
         JUnitUtil.initInternalTurnoutManager();
         JUnitUtil.initInternalLightManager();
         JUnitUtil.initInternalSensorManager();
@@ -119,11 +118,6 @@ public class LRouteTableActionTest extends jmri.util.SwingTestCase //TestCase //
         _lRouteTable = new LRouteTableAction("LRoute");
         assertNotNull("LRouteTableAction is null!", _lRouteTable);        // test has begun
         _logixTable = new LogixTableAction() {
-            /**
-             *
-             */
-            private static final long serialVersionUID = -8564598557067632416L;
-
             // skip dialog box if in edit mode, just assume OK pressed
             boolean checkEditConditional() {
                 if (inEditConditionalMode) {

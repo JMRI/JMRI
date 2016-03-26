@@ -4,6 +4,7 @@ package jmri.configurexml;
 import javax.swing.AbstractAction;
 import javax.swing.JFileChooser;
 import jmri.InstanceManager;
+import jmri.implementation.JmriConfigurationManager;
 import jmri.util.FileChooserFilter;
 import jmri.util.FileUtil;
 
@@ -29,7 +30,7 @@ abstract public class LoadStoreBaseAction extends AbstractAction {
         super(s);
         // ensure that an XML config manager exists
         if (InstanceManager.configureManagerInstance() == null) {
-            InstanceManager.setConfigureManager(new ConfigXmlManager());
+            InstanceManager.setConfigureManager(new JmriConfigurationManager());
         }
     }
 

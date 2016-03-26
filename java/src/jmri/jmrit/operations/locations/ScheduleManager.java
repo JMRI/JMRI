@@ -43,7 +43,7 @@ public class ScheduleManager implements java.beans.PropertyChangeListener {
             // create and load
             _instance = new ScheduleManager();
         }
-        if (Control.showInstance) {
+        if (Control.SHOW_INSTANCE) {
             log.debug("ScheduleManager returns instance {}", _instance);
         }
         return _instance;
@@ -291,6 +291,17 @@ public class ScheduleManager implements java.beans.PropertyChangeListener {
             }
         }
     }
+    
+    public void replaceTrack(Track oldTrack, Track newTrack) {
+        for (Schedule sch : getSchedulesByIdList()) {
+            for (ScheduleItem si : sch.getItemsBySequenceList()) {
+                if (si.getDestinationTrack() == oldTrack) {
+                    si.setDestination(newTrack.getLocation());
+                    si.setDestinationTrack(newTrack);
+                }
+            }
+        }
+    }
 
     /**
      * Gets a JComboBox with a list of spurs that use this schedule.
@@ -337,7 +348,7 @@ public class ScheduleManager implements java.beans.PropertyChangeListener {
      *
      */
     public void propertyChange(java.beans.PropertyChangeEvent e) {
-        if (Control.showProperty) {
+        if (Control.SHOW_PROPERTY) {
             log.debug("Property change: ({}) old: ({}) new: ({})", e.getPropertyName(), e.getOldValue(), e
                     .getNewValue());
         }
@@ -365,7 +376,7 @@ public class ScheduleManager implements java.beans.PropertyChangeListener {
         pcs.firePropertyChange(p, old, n);
     }
 
-    static Logger log = LoggerFactory.getLogger(ScheduleManager.class.getName());
+    private final static Logger log = LoggerFactory.getLogger(ScheduleManager.class.getName());
 
 }
 

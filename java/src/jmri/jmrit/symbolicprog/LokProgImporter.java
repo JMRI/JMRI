@@ -30,7 +30,7 @@ import org.slf4j.LoggerFactory;
  */
 public class LokProgImporter {
 
-    static Logger log = LoggerFactory.getLogger(LokProgImporter.class.getName());
+    private final static Logger log = LoggerFactory.getLogger(LokProgImporter.class.getName());
     private static final String INDEX_PREFIX = "Index:";
     private static final String INDEX_1 = "CV31=";
     private static final String INDEX_1_TERMINATOR = ",";

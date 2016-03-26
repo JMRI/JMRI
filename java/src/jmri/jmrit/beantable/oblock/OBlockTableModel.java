@@ -36,7 +36,6 @@ import jmri.Manager;
 import jmri.NamedBean;
 import jmri.Reporter;
 import jmri.Sensor;
-import jmri.jmrit.beantable.AbstractTableAction;
 import jmri.jmrit.logix.OBlock;
 import jmri.jmrit.logix.OBlockManager;
 import jmri.util.IntlUtilities;
@@ -71,10 +70,10 @@ public class OBlockTableModel extends jmri.jmrit.beantable.BeanTableDataModel {
     static public final int CURVECOL = 14;
     static public final int NUMCOLS = 15;
 
-    static public final String noneText = AbstractTableAction.rb.getString("BlockNone");
-    static public final String gradualText = AbstractTableAction.rb.getString("BlockGradual");
-    static public final String tightText = AbstractTableAction.rb.getString("BlockTight");
-    static public final String severeText = AbstractTableAction.rb.getString("BlockSevere");
+    static public final String noneText = Bundle.getMessage("BlockNone");
+    static public final String gradualText = Bundle.getMessage("BlockGradual");
+    static public final String tightText = Bundle.getMessage("BlockTight");
+    static public final String severeText = Bundle.getMessage("BlockSevere");
     static final String[] curveOptions = {noneText, gradualText, tightText, severeText};
 
     static String ZEROS = "00000000";
@@ -627,15 +626,15 @@ public class OBlockTableModel extends jmri.jmrit.beantable.BeanTableDataModel {
     public String getColumnName(int col) {
         switch (col) {
             case COMMENTCOL:
-                return AbstractTableAction.rb.getString("Comment");
+                return Bundle.getMessage("Comment");
             case STATECOL:
-                return AbstractTableAction.rb.getString("ColumnState");
+                return Bundle.getMessage("ColumnState");
             case SENSORCOL:
-                return AbstractTableAction.rbean.getString("BeanNameSensor");
+                return Bundle.getMessage("BeanNameSensor");
             case CURVECOL:
-                return AbstractTableAction.rb.getString("BlockCurveColName");
+                return Bundle.getMessage("BlockCurveColName");
             case LENGTHCOL:
-                return AbstractTableAction.rb.getString("BlockLengthColName");
+                return Bundle.getMessage("BlockLengthColName");
             case UNITSCOL:
                 return "  ";
             case ERR_SENSORCOL:
@@ -651,7 +650,7 @@ public class OBlockTableModel extends jmri.jmrit.beantable.BeanTableDataModel {
             case EDIT_COL:
                 return Bundle.getMessage("ButtonEditPath");
             case DELETE_COL:
-                return AbstractTableAction.rb.getString("ButtonDelete");
+                return Bundle.getMessage("ButtonDelete");
         }
         return super.getColumnName(col);
     }
@@ -672,23 +671,23 @@ public class OBlockTableModel extends jmri.jmrit.beantable.BeanTableDataModel {
             String msg;
             if (count > 0) { // warn of listeners attached before delete
                 msg = java.text.MessageFormat.format(
-                        AbstractTableAction.rb.getString("DeletePrompt"), bean.getSystemName()) + "\n"
-                        + java.text.MessageFormat.format(AbstractTableAction.rb.getString("ReminderInUse"),
+                        Bundle.getMessage("DeletePrompt"), bean.getSystemName()) + "\n"
+                        + java.text.MessageFormat.format(Bundle.getMessage("ReminderInUse"),
                                 count);
             } else {
                 msg = java.text.MessageFormat.format(
-                        AbstractTableAction.rb.getString("DeletePrompt"),
+                        Bundle.getMessage("DeletePrompt"),
                         new Object[]{bean.getSystemName()});
             }
 
             // verify deletion
             int val = JOptionPane.showOptionDialog(null,
-                    msg, AbstractTableAction.rb.getString("WarningTitle"),
+                    msg, Bundle.getMessage("WarningTitle"),
                     JOptionPane.YES_NO_CANCEL_OPTION, JOptionPane.QUESTION_MESSAGE, null,
-                    new Object[]{AbstractTableAction.rb.getString("ButtonYes"),
-                        AbstractTableAction.rb.getString("ButtonYesPlus"),
-                        AbstractTableAction.rb.getString("ButtonNo")},
-                    AbstractTableAction.rb.getString("ButtonNo"));
+                    new Object[]{Bundle.getMessage("ButtonYes"),
+                        Bundle.getMessage("ButtonYesPlus"),
+                        Bundle.getMessage("ButtonNo")},
+                    Bundle.getMessage("ButtonNo"));
             if (val == 2) {
                 return;  // return without deleting
             }
@@ -781,5 +780,5 @@ public class OBlockTableModel extends jmri.jmrit.beantable.BeanTableDataModel {
         }
     }
 
-    static Logger log = LoggerFactory.getLogger(OBlockTableModel.class.getName());
+    private final static Logger log = LoggerFactory.getLogger(OBlockTableModel.class.getName());
 }

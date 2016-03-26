@@ -3,12 +3,12 @@ package jmri.jmrix;
 
 import java.beans.PropertyChangeListener;
 import java.beans.PropertyChangeSupport;
+import javax.annotation.Nonnull;
 import java.util.List;
 import jmri.ProgListener;
 import jmri.Programmer;
 import jmri.ProgrammerException;
 import jmri.ProgrammingMode;
-import jmri.managers.DefaultProgrammerManager;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -125,11 +125,22 @@ public abstract class AbstractProgrammer implements Programmer {
     }
 
     // handle mode
-    protected ProgrammingMode mode = DefaultProgrammerManager.PAGEMODE;
+    private ProgrammingMode mode = null;
 
     @Override
     public final void setMode(ProgrammingMode m) {
-        if (getSupportedModes().contains(m)) {
+        List<ProgrammingMode> validModes = getSupportedModes();
+        
+        if (m == null) {
+            if (validModes.size()>0) {
+                // null can only be set if there are no valid modes
+                throw new IllegalArgumentException("Cannot set null mode when modes are present");
+            } else {
+                mode = null;
+            }
+        }
+        
+        if (validModes.contains(m)) {
             ProgrammingMode oldMode = mode;
             mode = m;
             notifyPropertyChange("Mode", oldMode, m);
@@ -138,12 +149,31 @@ public abstract class AbstractProgrammer implements Programmer {
         }
     }
 
+    /**
+     * Define the "best" programming mode, which provides the initial setting.
+     *
+     * The definition of "best" is up to the specific-system developer.
+     * By default, this is the first of the available methods from getSupportedModes;
+     * override this method to change that.
+     * 
+     * @return The recommended ProgrammingMode or null if none exists or is defined.
+     */ 
+    public ProgrammingMode getBestMode() {
+        if (!getSupportedModes().isEmpty()) {
+            return getSupportedModes().get(0);
+        }
+        return null;
+    }
+
     public final ProgrammingMode getMode() {
+        if (mode == null) {
+            mode = getBestMode();
+        }
         return mode;
     }
 
     @Override
-    abstract public List<ProgrammingMode> getSupportedModes();
+    abstract public @Nonnull List<ProgrammingMode> getSupportedModes();
 
     /**
      * Basic implementation. Override this to turn writing on and off globally.
@@ -236,6 +266,6 @@ public abstract class AbstractProgrammer implements Programmer {
 
     javax.swing.Timer timer = null;
 
-    static Logger log = LoggerFactory.getLogger(AbstractProgrammer.class.getName());
+    private final static Logger log = LoggerFactory.getLogger(AbstractProgrammer.class.getName());
 
 }

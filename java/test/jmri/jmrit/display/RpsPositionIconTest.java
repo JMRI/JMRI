@@ -1,4 +1,3 @@
-// RpsPositionIconTest.java
 package jmri.jmrit.display;
 
 import javax.swing.JButton;
@@ -19,8 +18,7 @@ import junit.framework.TestSuite;
 public class RpsPositionIconTest extends jmri.util.SwingTestCase {
 
     RpsPositionIcon rpsIcon;
-    jmri.jmrit.display.panelEditor.PanelEditor panel
-            = new jmri.jmrit.display.panelEditor.PanelEditor("Test RpsPositionIcon Panel");
+    jmri.jmrit.display.panelEditor.PanelEditor panel;
 
     public void testShow() {
         JmriJFrame jf = new JmriJFrame("RpsPositionIcon Test");
@@ -115,7 +113,7 @@ public class RpsPositionIconTest extends jmri.util.SwingTestCase {
 
     // Main entry point
     static public void main(String[] args) {
-        String[] testCaseName = {RpsPositionIconTest.class.getName()};
+        String[] testCaseName = {"-noloading", RpsPositionIconTest.class.getName()};
         junit.swingui.TestRunner.main(testCaseName);
     }
 
@@ -128,6 +126,8 @@ public class RpsPositionIconTest extends jmri.util.SwingTestCase {
     // The minimal setup for log4J
     protected void setUp() {
         apps.tests.Log4JFixture.setUp();
+        
+        panel = new jmri.jmrit.display.panelEditor.PanelEditor("Test RpsPositionIcon Panel");
     }
 
     protected void tearDown() {

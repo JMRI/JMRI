@@ -1,12 +1,9 @@
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
-<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
 <html lang="en">
 <head>
-<!-- Copyright ($Author$) 2009, 2010 -->
-<!-- $Id$ -->
-<TITLE>
+<title>
 DecoderPro&reg; Comprehensive Programmer
-</TITLE>
+</title>
 
 <!-- Style -->
 <meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
@@ -24,9 +21,9 @@ DecoderPro&reg; Comprehensive Programmer
 <div id="mainContent">
 
 <h1>DecoderPro&reg; Comprehensive Programmer</h1>
-<h1>Printing Decoder Data</h1>
+<h2>Printing Decoder Data</h2>
 
-<div align=right>
+<div align="right">
 <p><a href="Comp_ManfSpecific.shtml"> Previous </a><p><a href="index.shtml#Advanced Programmer">Back to Index</a>
 </div>
 
@@ -54,7 +51,7 @@ DecoderPro&reg; Comprehensive Programmer
 </ul>
 <p>All are two columns, CV#, and Value in Decimal and Hexadecimal
 
-<h1><img src="images/Comp_09_Print_Data.png" width="333" height="206" alt="print data"><img src="images/Comp_09_Print_Data01.png" width="673" height="526" alt="print"></h1>
+<img src="images/Comp_09_Print_Data.png" width="333" height="206" alt="print data"><img src="images/Comp_09_Print_Data01.png" width="673" height="526" alt="print">
 
 <p>
 The three images below are samples of the "<b>All</b>" printout from the SD40-2 that has been used as an example in many places in this manual. Click on the page to see a larger image in a new window.</p>
@@ -65,13 +62,14 @@ The three images below are samples of the "<b>All</b>" printout from the SD40-2 
 <p>
 OK! That's it! You now know how to use DecoderPro to program your decoders, and document the results.. Now let's run trains!</p>
 
-
 <hr>
-<div align=right>
+<div align="right">
 <p><a href="Comp_ManfSpecific.shtml">Previous </a>
 <p><a href="index.shtml#Advanced Programmer">Back to Index</a>
 </div>
 
 <!--#include virtual="/Footer" -->
-</body>
+  </div><!-- closes #mainContent-->
+ </div> <!-- closes #mBody-->
+ </body>
 </html>

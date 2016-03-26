@@ -262,7 +262,7 @@ public class SRCPTrafficController extends AbstractMRTrafficController
 
     static volatile protected SRCPTrafficController self = null;
 
-    @edu.umd.cs.findbugs.annotations.SuppressWarnings(value = "ST_WRITE_TO_STATIC_FROM_INSTANCE_METHOD",
+    @edu.umd.cs.findbugs.annotations.SuppressFBWarnings(value = "ST_WRITE_TO_STATIC_FROM_INSTANCE_METHOD",
             justification = "temporary until mult-system; only set at startup")
     protected void setInstance() {
         self = this;
@@ -370,7 +370,7 @@ public class SRCPTrafficController extends AbstractMRTrafficController
         }
     } // SRCPRcvNotifier
 
-    static Logger log = LoggerFactory.getLogger(SRCPTrafficController.class.getName());
+    private final static Logger log = LoggerFactory.getLogger(SRCPTrafficController.class.getName());
 }
 
 

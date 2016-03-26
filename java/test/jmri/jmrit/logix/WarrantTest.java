@@ -1,4 +1,3 @@
-// WarrantTest.java
 package jmri.jmrit.logix;
 
 import java.beans.PropertyChangeEvent;
@@ -189,28 +188,24 @@ public class WarrantTest extends TestCase {
         Assert.assertNotNull("PropertyChangeListener", listener);
         warrant.addPropertyChangeListener(listener);
         
-        jmri.jmrix.nce.simulator.SimulatorAdapter nceSimulator = new jmri.jmrix.nce.simulator.SimulatorAdapter();
-        Assert.assertNotNull("Nce SimulatorAdapter", nceSimulator);
-        jmri.jmrix.nce.NceSystemConnectionMemo memo = nceSimulator.getSystemConnectionMemo();
-        nceSimulator.openPort("(None Selected)", "JMRI test");
-        nceSimulator.configure();
-        Assert.assertNotNull("NceSystemConnectionMemo", memo);
-
         msg = warrant.setRunMode(Warrant.MODE_RUN, null, null, null, false);
         Assert.assertNull("setRunMode - "+msg, msg);
         try {
-            Thread.sleep(300);            
+            jmri.util.JUnitUtil.releaseThread(this); // nothing specific to wait for...
             sWest.setState(Sensor.ACTIVE);
-            Thread.sleep(300);            
+            jmri.util.JUnitUtil.releaseThread(this);             
             sSouth.setState(Sensor.ACTIVE);
-            Thread.sleep(300);            
+            jmri.util.JUnitUtil.releaseThread(this);             
         } catch (Exception e) {
             System.out.println(e);            
         }
-        while (warrant.getThrottle() != null) {
-            // Sometimes the engineer is blocked
-            Thread.sleep(500);            
-        }        
+
+        // confirm one message logged
+        jmri.util.JUnitAppender.assertWarnMessage("RosterSpeedProfile not found. Using default ThrottleFactor 0.75");
+
+        // wait for done
+        jmri.util.JUnitUtil.waitFor(()->{return warrant.getThrottle()==null;}, "engineer blocked");
+
         msg = warrant.getRunningMessage();
         Assert.assertEquals("getRunningMessage", "Idle", msg);
     }
@@ -269,6 +264,7 @@ public class WarrantTest extends TestCase {
         JUnitUtil.initInternalLightManager();
         JUnitUtil.initInternalSensorManager();
         JUnitUtil.initInternalSignalHeadManager();
+        JUnitUtil.initDebugThrottleManager();
         JUnitUtil.initMemoryManager();
         JUnitUtil.initOBlockManager();
         JUnitUtil.initLogixManager();

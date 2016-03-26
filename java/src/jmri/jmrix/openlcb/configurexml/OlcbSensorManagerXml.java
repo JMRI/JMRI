@@ -1,5 +1,6 @@
 package jmri.jmrix.openlcb.configurexml;
 
+import jmri.configurexml.JmriConfigureXmlException;
 import org.jdom2.Element;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -28,16 +29,17 @@ public class OlcbSensorManagerXml extends jmri.managers.configurexml.AbstractSen
         log.error("Invalid method called");
     }
 
-    public boolean load(Element sensors) throws jmri.configurexml.JmriConfigureXmlException {
+    @Override
+    public boolean load(Element shared, Element perNode) throws JmriConfigureXmlException {
         boolean result = true;
         // create the master object
         //OlcbSensorManager mgr = OlcbSensorManager.instance();
         // load individual sensors
-        result = loadSensors(sensors);
+        result = loadSensors(shared);
         // Request the status of these sensors from the layout, if appropriate.
         //mgr.updateAll();
         return result;
     }
 
-    static Logger log = LoggerFactory.getLogger(OlcbSensorManagerXml.class.getName());
+    private final static Logger log = LoggerFactory.getLogger(OlcbSensorManagerXml.class.getName());
 }

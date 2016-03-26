@@ -31,7 +31,8 @@ public class LayoutMemoryIconXml extends AbstractXmlAdapter {
         return tmp.store(o);
     }
 
-    public boolean load(Element element) {
+    @Override
+    public boolean load(Element shared, Element perNode) {
         log.error("Invalid method called");
         return false;
     }
@@ -47,5 +48,5 @@ public class LayoutMemoryIconXml extends AbstractXmlAdapter {
         tmp.load(element, o);
     }
 
-    static Logger log = LoggerFactory.getLogger(LayoutMemoryIconXml.class.getName());
+    private final static Logger log = LoggerFactory.getLogger(LayoutMemoryIconXml.class.getName());
 }

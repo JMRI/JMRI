@@ -75,7 +75,8 @@ public class PositionablePointXml extends AbstractXmlAdapter {
         return element;
     }
 
-    public boolean load(Element element) {
+    @Override
+    public boolean load(Element shared, Element perNode) {
         log.error("Invalid method called");
         return false;
     }
@@ -159,5 +160,5 @@ public class PositionablePointXml extends AbstractXmlAdapter {
         p.pointList.add(l);
     }
 
-    static Logger log = LoggerFactory.getLogger(PositionablePointXml.class.getName());
+    private final static Logger log = LoggerFactory.getLogger(PositionablePointXml.class.getName());
 }

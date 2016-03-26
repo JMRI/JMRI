@@ -43,6 +43,12 @@ abstract public class AbstractMRTrafficController {
         jmri.util.RuntimeUtil.addShutdownHook(new Thread(new CleanupHook(this)));
     }
 
+    private boolean synchronizeRx = true;
+    
+    protected void setSynchronizeRx(boolean val) {
+        synchronizeRx = val;
+    }
+    
     // set the instance variable
     abstract protected void setInstance();
 
@@ -514,7 +520,7 @@ abstract public class AbstractMRTrafficController {
     /**
      * Actually transmits the next message to the port
      */
-    @edu.umd.cs.findbugs.annotations.SuppressWarnings(value = {"TLW_TWO_LOCK_WAIT"},
+    @edu.umd.cs.findbugs.annotations.SuppressFBWarnings(value = {"TLW_TWO_LOCK_WAIT"},
             justification = "Two locks needed for synchronization here, this is OK")
     synchronized protected void forwardToPort(AbstractMRMessage m, AbstractMRListener reply) {
         log.debug("forwardToPort message: [{}]", m);
@@ -554,7 +560,7 @@ abstract public class AbstractMRTrafficController {
                     if (portReadyToSend(controller)) {
                         ostream.write(msg);
                         ostream.flush();
-                        log.debug("written, msg timeout: " + m.getTimeout() + " mSec");
+                        log.debug("written, msg timeout: {} mSec", m.getTimeout());
                         break;
                     } else if (m.getRetries() >= 0) {
                         if (log.isDebugEnabled()) {
@@ -862,7 +868,11 @@ abstract public class AbstractMRTrafficController {
         // return a notification via the Swing event queue to ensure proper thread
         Runnable r = new RcvNotifier(msg, mLastSender, this);
         try {
-            SwingUtilities.invokeAndWait(r);
+            if (synchronizeRx) {
+                SwingUtilities.invokeAndWait(r);
+            } else {
+                SwingUtilities.invokeLater(r);
+            }
         } catch (Exception e) {
             log.error("Unexpected exception in invokeAndWait: {}" + e.toString(), e);
         }
@@ -1076,7 +1086,7 @@ abstract public class AbstractMRTrafficController {
         }
     } // end cleanUpHook
 
-    static Logger log = LoggerFactory.getLogger(AbstractMRTrafficController.class.getName());
+    private final static Logger log = LoggerFactory.getLogger(AbstractMRTrafficController.class.getName());
 }
 
 

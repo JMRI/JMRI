@@ -1,10 +1,7 @@
-// CanSystemConnectionMemo.java
 package jmri.jmrix.can;
 
 import java.util.ResourceBundle;
 import jmri.InstanceManager;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 
 /**
  * Lightweight class to denote that a system is active, and provide general
@@ -16,7 +13,6 @@ import org.slf4j.LoggerFactory;
  * passed on to the relevant ConfigurationManager to handle.
  * <p>
  * @author	Kevin Dickerson Copyright (C) 2012
- * @version $Revision: 19602 $
  */
 public class CanSystemConnectionMemo extends jmri.jmrix.SystemConnectionMemo {
 
@@ -117,9 +113,4 @@ public class CanSystemConnectionMemo extends jmri.jmrix.SystemConnectionMemo {
         super.dispose();
 
     }
-    // initialize logging
-    static Logger log = LoggerFactory.getLogger(CanSystemConnectionMemo.class.getName());
 }
-
-
-/* @(#)CanSystemConnectionMemo.java */

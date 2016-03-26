@@ -1,15 +1,16 @@
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
-<html lang="en"><head><!-- Copyright ($Author$) 2009 --><!-- $Id$ -->
+<html lang="en">
+<head><title>Tool Menu</title>
 
-
-
-
-
-<title>Tool Menu</title><!-- Style --><meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
+<!-- Style -->
+<meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
 <link rel="stylesheet" type="text/css" href="/css/default.css" media="screen">
 <link rel="stylesheet" type="text/css" href="/css/print.css" media="print">
 <link rel="icon" href="/images/jmri.ico" type="image/png">
-<link rel="home" title="Home" href="/"><!-- /Style --></head>
+<link rel="home" title="Home" href="/">
+<!-- /Style -->
+</head>
+
 <body>
 <!--#include virtual="/Header" -->
 
@@ -17,7 +18,7 @@
 <div id="mainContent">
 
 <h1>DecoderPro&reg; Main Window</h1>
-<h1>Menu Bar - Consisting Control Window</h1>
+<h2>Menu Bar - Consisting Control Window</h2>
 
 <div align="right">
 <p><a href="dp3_menubar.shtml">Back</a></p>
@@ -103,13 +104,16 @@ deletes the entire consist.
 opens a<strong><a href="dp3_Main_Throttle.shtml"> throttle </a></strong>for the consist. &nbsp;Each time that yoiu select throttle the locomotive will be added to the consist.
 </p><p>
 <input name="button7" id="button7" value="Reverse" type="button"> 
-reverses the direction of the consist.
-</p><hr>
+reverses the direction of the consist.</p>
 
+<hr>
 <div align="right">
 <p><a href="dp3_menubar.shtml">Back</a></p>
 <p><a href="index.shtml#Main">Back to Index</a></p>
 </div>
 
 <!--#include virtual="/Footer" -->
-</div></body></html>
+  </div><!-- closes #mainContent-->
+ </div> <!-- closes #mBody-->
+</body>
+</html>

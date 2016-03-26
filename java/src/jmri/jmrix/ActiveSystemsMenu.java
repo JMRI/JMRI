@@ -23,11 +23,6 @@ import org.slf4j.LoggerFactory;
  */
 public class ActiveSystemsMenu extends JMenu {
 
-    /**
-     *
-     */
-    private static final long serialVersionUID = -6929237793054146826L;
-
     public ActiveSystemsMenu(String name) {
         this();
         setText(name);
@@ -213,6 +208,6 @@ public class ActiveSystemsMenu extends JMenu {
             return null;
         }
     }
-    static Logger log = LoggerFactory.getLogger(ActiveSystemsMenu.class.getName());
+    private final static Logger log = LoggerFactory.getLogger(ActiveSystemsMenu.class.getName());
 
 }

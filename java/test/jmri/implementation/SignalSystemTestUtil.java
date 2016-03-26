@@ -1,17 +1,18 @@
-// SignalSystemTestUtil.java
 package jmri.implementation;
 
 import java.io.File;
-import java.io.FileInputStream;
-import java.io.FileOutputStream;
 import java.io.IOException;
-import java.io.InputStream;
-import java.io.OutputStream;
+import java.nio.file.Files;
+import java.nio.file.FileSystems;
+import java.nio.file.Path;
+
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 /**
  * Static utilities for testing signal system code
  *
- * @author	Bob Jacobsen Copyright 2014
+ * @author	Bob Jacobsen Copyright 2014, 2015
  * @version	$Revision$
  */
 public class SignalSystemTestUtil {
@@ -25,40 +26,26 @@ public class SignalSystemTestUtil {
     static public void createMockSystem() throws IOException {
         // creates mock (no appearances) system
         // in the user area.
-        InputStream in = null;
-        OutputStream out = null;
         try {
             new File(path).mkdir(); // might already exist
             new File(path + File.separator + "signals").mkdir();  // already exists if using signals
             new File(path + File.separator + "signals" + File.separator + dummy).mkdir(); // assume doesn't exist, or at least belongs to us
             // copy aspect file
             {
-                in = new FileInputStream(new File("java/test/jmri/implementation/testAspects.xml"));
-                out = new FileOutputStream(new File(path + File.separator + "signals" + File.separator + dummy + File.separator + "aspects.xml"));
-                byte[] buf = new byte[1024];
-                int len;
-                while ((len = in.read(buf)) > 0) {
-                    out.write(buf, 0, len);
-                }
+                Path inPath =  FileSystems.getDefault().getPath("java/test/jmri/implementation", "testAspects.xml");
+                Path outPath = FileSystems.getDefault().getPath(path + File.separator + "signals" + File.separator + dummy, "aspects.xml");
+                Files.copy(inPath, outPath);
             }
             {
-                in = new FileInputStream(new File("java/test/jmri/implementation/test-appearance-one-searchlight.xml"));
-                out = new FileOutputStream(new File(path + File.separator + "signals" + File.separator + dummy + File.separator + "appearance-one-searchlight.xml"));
-                byte[] buf = new byte[1024];
-                int len;
-                while ((len = in.read(buf)) > 0) {
-                    out.write(buf, 0, len);
-                }
+                Path inPath =  FileSystems.getDefault().getPath("java/test/jmri/implementation", "test-appearance-one-searchlight.xml");
+                Path outPath = FileSystems.getDefault().getPath(path + File.separator + "signals" + File.separator + dummy, "appearance-one-searchlight.xml");
+                Files.copy(inPath, outPath);
             }
-
-        } finally {
-            if (in != null) {
-                in.close();
-            }
-            if (out != null) {
-                out.close();
-            }
+        } catch (Exception e) {
+            log.error("Exception during createMockSystem", e);
+            throw e;
         }
+        
     }
 
     static public String getMockUserName() {
@@ -75,4 +62,5 @@ public class SignalSystemTestUtil {
         new File(path + File.separator + "signals" + File.separator + dummy).delete();
     }
 
+    static protected Logger log = LoggerFactory.getLogger(SignalSystemTestUtil.class.getName());
 }

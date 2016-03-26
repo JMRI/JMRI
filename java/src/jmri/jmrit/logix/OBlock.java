@@ -12,6 +12,7 @@ import jmri.NamedBeanHandle;
 import jmri.Path;
 import jmri.Sensor;
 import jmri.Turnout;
+import jmri.util.ThreadingUtil;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -59,7 +60,6 @@ import org.slf4j.LoggerFactory;
  * A PARTICULAR PURPOSE. See the GNU General Public License for more details.
  * <P>
  *
- * @version $Revision$
  * @author	Pete Cressman (C) 2009
  */
 public class OBlock extends jmri.Block implements java.beans.PropertyChangeListener {
@@ -405,6 +405,10 @@ public class OBlock extends jmri.Block implements java.beans.PropertyChangeListe
     protected Warrant getWarrant() {
         return _warrant;
     }
+    
+    public boolean isAllocatedTo(Warrant warrant) {
+        return (warrant == _warrant);
+    }
 
     public String getAllocatedPathName() {
         return _pathName;
@@ -565,6 +569,7 @@ public class OBlock extends jmri.Block implements java.beans.PropertyChangeListe
                 removePropertyChangeListener(_warrant);
             } catch (Exception ex) {
                 // disposed warrant may throw null pointer - continue deallocation
+                log.warn("Perhaps normal? Code not clear.", ex);
             }
         }
         if (_pathName != null) {
@@ -839,7 +844,9 @@ public class OBlock extends jmri.Block implements java.beans.PropertyChangeListe
         setState((getState() & ~(OCCUPIED | RUNNING)) | UNOCCUPIED);
         setValue(null);
         if (_warrant != null) {
-            _warrant.goingInactive(this);
+            ThreadingUtil.runOnLayout(()->{
+                _warrant.goingInactive(this);
+            });
         }
     }
 
@@ -853,7 +860,9 @@ public class OBlock extends jmri.Block implements java.beans.PropertyChangeListe
 //        if (log.isDebugEnabled()) log.debug("Allocated OBlock \""+getSystemName()+
 //                                            "\" goes OCCUPIED. state= "+getState());
         if (_warrant != null) {
-            _warrant.goingActive(this);
+            ThreadingUtil.runOnLayout(()->{
+                _warrant.goingActive(this);
+            });
         }
         if (log.isDebugEnabled()) {
             log.debug("Block \"" + getSystemName() + " went active, path= "
@@ -893,5 +902,5 @@ public class OBlock extends jmri.Block implements java.beans.PropertyChangeListe
         return Bundle.getMessage("BeanNameOBlock");
     }
 
-    static Logger log = LoggerFactory.getLogger(OBlock.class.getName());
+    private final static Logger log = LoggerFactory.getLogger(OBlock.class.getName());
 }

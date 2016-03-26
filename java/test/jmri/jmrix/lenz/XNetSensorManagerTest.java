@@ -1,4 +1,3 @@
-// XNetSensorManagerTest.java
 package jmri.jmrix.lenz;
 
 import jmri.Sensor;
@@ -14,7 +13,6 @@ import org.slf4j.LoggerFactory;
  * Tests for the jmri.jmrix.lenz.XNetSensorManager class.
  *
  * @author	Paul Bender Copyright (c) 2003
- * @version $Revision$
  */
 public class XNetSensorManagerTest extends TestCase {
 
@@ -143,7 +141,7 @@ public class XNetSensorManagerTest extends TestCase {
         return suite;
     }
 
-    static Logger log = LoggerFactory.getLogger(XNetSensorManagerTest.class.getName());
+    private final static Logger log = LoggerFactory.getLogger(XNetSensorManagerTest.class.getName());
 
     // The minimal setup for log4J
     protected void setUp() {

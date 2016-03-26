@@ -44,6 +44,7 @@ public class LocationTrackBlockingOrderFrame extends OperationsFrame implements 
     // major buttons
     JButton saveButton = new JButton(Bundle.getMessage("Save"));
     JButton resetButton = new JButton(Bundle.getMessage("Reset"));
+    JButton reorderButton = new JButton(Bundle.getMessage("Reorder"));
 
     public LocationTrackBlockingOrderFrame() {
         super(Bundle.getMessage("TitleTrackBlockingOrder"));
@@ -53,7 +54,7 @@ public class LocationTrackBlockingOrderFrame extends OperationsFrame implements 
         _location = location;
         
         trackPane.setVerticalScrollBarPolicy(ScrollPaneConstants.VERTICAL_SCROLLBAR_AS_NEEDED);
-        trackPane.setBorder(BorderFactory.createTitledBorder(Bundle.getMessage("ServiceOrderMessage")));
+        trackPane.setBorder(BorderFactory.createTitledBorder(""));
 
         if (_location != null) {
             trackModel.initTable(trackTable, location);
@@ -76,18 +77,27 @@ public class LocationTrackBlockingOrderFrame extends OperationsFrame implements 
         JPanel pB = new JPanel();
         pB.setLayout(new GridBagLayout());
         addItem(pB, resetButton, 0, 0);
-        addItem(pB, saveButton, 1, 0);
+        addItem(pB, reorderButton, 1, 0);
+        addItem(pB, saveButton, 2, 0);
+        
+        // Notes
+        JLabel note1 = new JLabel(Bundle.getMessage("ServiceOrderMessage"));
+        JLabel note2 = new JLabel(Bundle.getMessage("ServiceOrderEastSouth"));
 
         getContentPane().add(pName);
+        getContentPane().add(note1);
+        getContentPane().add(note2);
         getContentPane().add(trackPane);
         getContentPane().add(pB);
 
         // setup buttons
         addButtonAction(resetButton);
+        addButtonAction(reorderButton);
         addButtonAction(saveButton);
 
         // add tool tips
         resetButton.setToolTipText(Bundle.getMessage("TipResetButton"));
+        reorderButton.setToolTipText(Bundle.getMessage("TipReorderButton"));
 
         // build menu
 //        JMenuBar menuBar = new JMenuBar();
@@ -105,12 +115,14 @@ public class LocationTrackBlockingOrderFrame extends OperationsFrame implements 
         if (ae.getSource() == resetButton && _location != null) {
             _location.resetTracksByBlockingOrder();
         }
+        if (ae.getSource() == reorderButton && _location != null) {
+            _location.resequnceTracksByBlockingOrder();
+        }
         if (ae.getSource() == saveButton) {
             if (trackTable.isEditing()) {
                 log.debug("track table edit true");
                 trackTable.getCellEditor().stopCellEditing();
             }
-            _location.resequnceTracksByBlockingOrder();
             // recreate all train manifests
             TrainManager.instance().setTrainsModified();
             // save location file
@@ -136,11 +148,11 @@ public class LocationTrackBlockingOrderFrame extends OperationsFrame implements 
     }
 
     public void propertyChange(java.beans.PropertyChangeEvent e) {
-        if (Control.showProperty) {
+        if (Control.SHOW_PROPERTY) {
             log.debug("Property change: ({}) old: ({}) new: ({})", e.getPropertyName(), e.getOldValue(), e
                     .getNewValue());
         }
     }
 
-    static Logger log = LoggerFactory.getLogger(LocationTrackBlockingOrderFrame.class.getName());
+    private final static Logger log = LoggerFactory.getLogger(LocationTrackBlockingOrderFrame.class.getName());
 }

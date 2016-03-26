@@ -55,15 +55,10 @@ public class SignalHeadSignalMastXml
         return e;
     }
 
-    /**
-     * Create a DefaultSignalMastManager
-     *
-     * @param element Top level Element to unpack.
-     * @return true if successful
-     */
-    public boolean load(Element element) {
+    @Override
+    public boolean load(Element shared, Element perNode) {
         SignalMast m;
-        String sys = getSystemName(element);
+        String sys = getSystemName(shared);
         try {
             m = InstanceManager.signalMastManagerInstance()
                     .provideSignalMast(sys);
@@ -71,13 +66,13 @@ public class SignalHeadSignalMastXml
             log.error("An error occured while trying to create the signal '" + sys + "' " + e.toString());
             return false;
         }
-        if (getUserName(element) != null) {
-            m.setUserName(getUserName(element));
+        if (getUserName(shared) != null) {
+            m.setUserName(getUserName(shared));
         }
 
-        loadCommon(m, element);
-        if (element.getChild("unlit") != null) {
-            Element unlit = element.getChild("unlit");
+        loadCommon(m, shared);
+        if (shared.getChild("unlit") != null) {
+            Element unlit = shared.getChild("unlit");
             if (unlit.getAttribute("allowed") != null) {
                 if (unlit.getAttribute("allowed").getValue().equals("no")) {
                     m.setAllowUnLit(false);
@@ -86,7 +81,7 @@ public class SignalHeadSignalMastXml
                 }
             }
         }
-        Element e = element.getChild("disabledAspects");
+        Element e = shared.getChild("disabledAspects");
         if (e != null) {
             List<Element> list = e.getChildren("disabledAspect");
             for (Element aspect : list) {
@@ -100,5 +95,5 @@ public class SignalHeadSignalMastXml
         log.error("Invalid method called");
     }
 
-    static Logger log = LoggerFactory.getLogger(SignalHeadSignalMastXml.class.getName());
+    private final static Logger log = LoggerFactory.getLogger(SignalHeadSignalMastXml.class.getName());
 }

@@ -34,7 +34,7 @@ public class CarOwners extends RollingStockAttribute {
             // create and load
             _instance = new CarOwners();
         }
-        if (Control.showInstance) {
+        if (Control.SHOW_INSTANCE) {
             log.debug("CarOwners returns instance {}", _instance);
         }
         return _instance;
@@ -79,6 +79,6 @@ public class CarOwners extends RollingStockAttribute {
         super.firePropertyChange(p, old, n);
     }
 
-    static Logger log = LoggerFactory.getLogger(CarOwners.class.getName());
+    private final static Logger log = LoggerFactory.getLogger(CarOwners.class.getName());
 
 }

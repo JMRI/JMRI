@@ -215,14 +215,15 @@ public class DefaultRouteManagerXml extends jmri.managers.configurexml.AbstractN
      * Create a RouteManager object of the correct class, then register and fill
      * it.
      *
-     * @param routes Top level Element to unpack.
+     * @param sharedRoutes Top level Element to unpack.
      * @return true if successful
      */
-    public boolean load(Element routes) {
+    @Override
+    public boolean load(Element sharedRoutes, Element perNodeRoutes) {
         // create the master object
         replaceRouteManager();
-        // load individual routes
-        loadRoutes(routes);
+        // load individual sharedRoutes
+        loadRoutes(sharedRoutes);
         return true;
     }
 
@@ -515,5 +516,5 @@ public class DefaultRouteManagerXml extends jmri.managers.configurexml.AbstractN
         return InstanceManager.routeManagerInstance().getXMLOrder();
     }
 
-    static Logger log = LoggerFactory.getLogger(DefaultRouteManagerXml.class.getName());
+    private final static Logger log = LoggerFactory.getLogger(DefaultRouteManagerXml.class.getName());
 }

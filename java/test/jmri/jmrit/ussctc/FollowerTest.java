@@ -1,11 +1,8 @@
-// FollowerTest.java
 package jmri.jmrit.ussctc;
 
 import junit.framework.Test;
 import junit.framework.TestCase;
 import junit.framework.TestSuite;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 
 /**
  * Tests for Follower classes in the jmri.jmrit.ussctc package
@@ -35,7 +32,5 @@ public class FollowerTest extends TestCase {
         TestSuite suite = new TestSuite(FollowerTest.class);
         return suite;
     }
-
-    static Logger log = LoggerFactory.getLogger(FollowerTest.class.getName());
 
 }

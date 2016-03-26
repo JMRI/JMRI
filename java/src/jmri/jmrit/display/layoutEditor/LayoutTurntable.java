@@ -358,14 +358,9 @@ public class LayoutTurntable {
     }
 
     public void scaleCoords(float xFactor, float yFactor) {
-        Point2D pt = new Point2D.Double(round(center.getX() * xFactor),
-                round(center.getY() * yFactor));
+        Point2D pt = new Point2D.Double(Math.round(center.getX() * xFactor),
+                Math.round(center.getY() * yFactor));
         center = pt;
-    }
-
-    double round(double x) {
-        int i = (int) (x + 0.5);
-        return i;
     }
 
     /**
@@ -1041,6 +1036,6 @@ public class LayoutTurntable {
         }
     }
 
-    static Logger log = LoggerFactory.getLogger(LayoutTurntable.class.getName());
+    private final static Logger log = LoggerFactory.getLogger(LayoutTurntable.class.getName());
 
 }

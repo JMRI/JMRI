@@ -8,12 +8,13 @@
 # The next line is maintained by CVS, please don't change it
 # $Revision$
 
+import java.beans.PropertyChangeListener as PropertyChangeListener
 import jmri
 
 # First, define the listener.  This one just prints some
 # information on the change, but more complicated code is
 # of course possible.
-class MyListener(java.beans.PropertyChangeListener):    
+class MyListener(PropertyChangeListener):    
   def propertyChange(self, event):
     print " "   # add a line between updates to make it easier to read
     print "Train name:",event.source.getName()

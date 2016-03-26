@@ -5,8 +5,6 @@ import java.awt.geom.PathIterator;
 import jmri.jmrit.display.Editor;
 import jmri.jmrit.display.controlPanelEditor.shape.PositionablePolygon;
 import org.jdom2.Element;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 
 /**
  * Handle configuration for display.PositionableShape objects
@@ -60,11 +58,6 @@ public class PositionablePolygonXml extends PositionableShapeXml {
         return elem;
     }
 
-    public boolean load(Element element) {
-        log.error("Invalid method called");
-        return false;
-    }
-
     /**
      * Create a PositionableShape, then add to a target JLayeredPane
      *
@@ -109,6 +102,4 @@ public class PositionablePolygonXml extends PositionableShapeXml {
         // load individual item's option settings after editor has set its global settings
         loadCommonAttributes(ps, Editor.MARKERS, element);
     }
-
-    static Logger log = LoggerFactory.getLogger(PositionablePolygonXml.class.getName());
 }

@@ -1,7 +1,6 @@
 // PrintCarRosterAction.java
 package jmri.jmrit.operations.rollingstock.cars;
 
-import java.awt.Component;
 import java.awt.Dimension;
 import java.awt.Frame;
 import java.awt.GridBagLayout;
@@ -39,16 +38,11 @@ import org.slf4j.LoggerFactory;
  */
 public class PrintCarRosterAction extends AbstractAction {
 
-    /**
-     *
-     */
-    private static final long serialVersionUID = 6012807784689139181L;
-
-    public PrintCarRosterAction(String actionName, Frame frame, boolean preview, Component pWho) {
+    public PrintCarRosterAction(String actionName, Frame frame, boolean preview, CarsTableFrame pWho) {
         super(actionName);
         mFrame = frame;
         isPreview = preview;
-        panel = (CarsTableFrame) pWho;
+        panel = pWho;
     }
 
     /**
@@ -73,6 +67,7 @@ public class PrintCarRosterAction extends AbstractAction {
 
     int numberCharPerLine;
 
+    @edu.umd.cs.findbugs.annotations.SuppressFBWarnings(value = "BC_UNCONFIRMED_CAST_OF_RETURN_VALUE", justification = "CarManager only provides Car Objects")
     private void printCars() {
 
         boolean landscape = false;
@@ -467,5 +462,5 @@ public class PrintCarRosterAction extends AbstractAction {
         }
     }
 
-    static Logger log = LoggerFactory.getLogger(PrintCarRosterAction.class.getName());
+    private final static Logger log = LoggerFactory.getLogger(PrintCarRosterAction.class.getName());
 }

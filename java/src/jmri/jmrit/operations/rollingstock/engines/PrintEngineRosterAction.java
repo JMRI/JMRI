@@ -1,7 +1,6 @@
 // PrintEngineRosterAction.java
 package jmri.jmrit.operations.rollingstock.engines;
 
-import java.awt.Component;
 import java.awt.Frame;
 import java.awt.event.ActionEvent;
 import java.io.IOException;
@@ -28,20 +27,16 @@ import org.slf4j.LoggerFactory;
  */
 public class PrintEngineRosterAction extends AbstractAction {
 
-    /**
-     *
-     */
-    private static final long serialVersionUID = -5500987959098367364L;
     private int numberCharPerLine = 90;
     final int ownerMaxLen = 5; // Only show the first 5 characters of the owner's name
 
     EngineManager manager = EngineManager.instance();
 
-    public PrintEngineRosterAction(String actionName, Frame frame, boolean preview, Component pWho) {
+    public PrintEngineRosterAction(String actionName, Frame frame, boolean preview, EnginesTableFrame pWho) {
         super(actionName);
         mFrame = frame;
         isPreview = preview;
-        panel = (EnginesTableFrame) pWho;
+        panel = pWho;
     }
 
     /**
@@ -57,6 +52,7 @@ public class PrintEngineRosterAction extends AbstractAction {
     static final String NEW_LINE = "\n"; // NOI18N
     static final String TAB = "\t"; // NOI18N
 
+    @edu.umd.cs.findbugs.annotations.SuppressFBWarnings(value = "BC_UNCONFIRMED_CAST_OF_RETURN_VALUE", justification = "EngineManager only provides Engine Objects")
     public void actionPerformed(ActionEvent e) {
 
         // obtain a HardcopyWriter to do this
@@ -136,12 +132,11 @@ public class PrintEngineRosterAction extends AbstractAction {
                 }
                 writer.write(s + NEW_LINE);
             }
-
-            // and force completion of the printing
-            writer.close();
         } catch (IOException we) {
             log.error("Error printing ConsistRosterEntry: " + e);
         }
+        // and force completion of the printing
+        writer.close();
     }
 
     private String padAttribute(String attribute, int length) {
@@ -156,5 +151,5 @@ public class PrintEngineRosterAction extends AbstractAction {
         return buf.toString();
     }
 
-    static Logger log = LoggerFactory.getLogger(PrintEngineRosterAction.class.getName());
+    private final static Logger log = LoggerFactory.getLogger(PrintEngineRosterAction.class.getName());
 }

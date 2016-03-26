@@ -1,86 +1,74 @@
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
 <html lang="en">
 <head>
-<!-- Copyright Bob Jacobsen 2008 -->
-<!-- $Id$ -->
-<title>JMRI: Configuring SRCP Connection</title>
+<title>JMRI Hardware Support - SRCP Protocol</title>
 
 <!-- Style -->
-<META HTTP-EQUIV="Content-Type" CONTENT="text/html; charset=iso-8859-1">
-<LINK REL="stylesheet" TYPE="text/css" HREF="/css/default.css"
-	MEDIA="screen">
-<LINK REL="stylesheet" TYPE="text/css" HREF="/css/print.css"
-	MEDIA="print">
-<LINK REL="icon" HREF="/images/jmri.ico" TYPE="image/png">
-<LINK REL="home" TITLE="Home" HREF="/">
+<meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
+<link rel="stylesheet" type="text/css" href="/css/default.css" media="screen">
+<link rel="stylesheet" type="text/css" href="/css/print.css" media="print">
+<link rel="icon" href="/images/jmri.ico" type="image/png">
+<link rel="home" title="Home" href="/">
 <!-- /Style -->
-</HEAD>
+</head>
 
-<BODY>
+<body>
 <!--#include virtual="/Header" -->
   <div class="nomenu" id="mBody">
     <div id="mainContent">
 
-<h1> 
-JMRI: Configuring SRCP Connection
-</h1>
+<h1>Hardware Support: SRCP Protocol</h1>
 
 <a href="http://www.der-moba.de/index.php/Digitalprojekt">
 <img src="http://www.der-moba.de/images/7/7b/Srcp-clients.png" align="right" height="130" width="159"/></a>
 
-SRCP support will be available in
-<a href="http://jmri.sf.net/releasenotes/jmri2.1.6.shtml">JMRI 2.1.6</a>.
 <p>
-
-The
-<a href="http://srcpd.sourceforge.net/">SRCP protocol</a>
+The <a href="http://srcpd.sourceforge.net/">SRCP protocol</a>
 was created by the 
 <a href="http://www.der-moba.de/index.php/Hauptseite">der Moba</a>
 model railroad group as a standard way of connecting
 "client" user programs to a "server", which in turn connects to the 
 model railroad.  There are a number of model railroad
 SRCP servers available, which in turn can currently connect to the layout via
-Intellibox and Marklin 605x control units and the Lenz interfaces.
-There is also a server available that can directly create DCC signals
-via an RS232 inteface, which DCC booster(s) can then use to power the layout.
+Intellibox and M&auml;rklin 605x control units and the Lenz interfaces.
+Also available is a server that can directly create DCC signals
+via an RS232 interface, which DCC booster(s) can then use to power the layout.
 Other SRCP demons with other connections are being developed all the time.
 
 <p>
 The initial JMRI support allows JMRI to connection to a layout through a
-SRCP server.  JMRI can then operate Turnouts, Lights and SignalHeads that
+SRCP server.  JMRI can then operate Turnouts, Lights and Signal Heads that
 can be reached via SRCP.  There is also initial support for 
 JMRI Throttles via SRCP.
 
-<h2>Configuring JMRI</h2>
-
-To use an SRCP connection, select "SRCP Server" as a protocol under the preferences.
+<a name="limitations"></a><h2>Limitations</h2>
 <p>
-Next fill in the Internet address for the SRCP server.  This can be numbers like 127.0.0.1 or 
-a name like "srcp.sf.net".  A server running on the same computer can usually be referred to as "localhost".
-<p>
-Then fill in the port number.  This can be obtained from the configuration for your SRCP server.
-<p>
-Finally, save the preferences and restart the program.
-
-<h3>Limitations</h3>
-
-SRCP support was introduced in JMRI 2.1.6 during the Spring of 2008.  
-That version has several limitations:
+SRCP support was introduced in <a href="http://jmri.org/releasenotes/jmri2.1.6.shtml">JMRI v2.1.6</a> during the Spring of 2008.  
+That first version had several limitations:
 <ul>
-<li>It does not support "service mode" for configuring decoders, e.g. setting CVs.
-<li>It needs lots more testing, especially with Marklin and other non-DCC systems.
+<li>It did not support "service mode" for configuring decoders, e.g. setting CVs.
+<li>It needed more testing, especially with M&auml;rklin and other non-DCC systems.
 </ul>
 
-<h2>More Information</h2>
+<a name="connecting"></a><h2>Connecting</h2>
+<p>
+To use an SRCP connection, select "SRCP Server" as a protocol under the Preferences.
+<p>
+Next fill in the Internet address for the SRCP server.  This can be numbers like <code>127.0.0.1</code> or 
+a name like "srcp.sf.net". A server running on the same computer can usually be referred to as "localhost".
+<p>
+Then fill in the port number. This can be obtained from the configuration for your SRCP server.
+<p>
+Finally, save the Preferences and restart JMRI.
 
-There's a lot of good information on SRCP and how it fits into an
-overall model-railroad system 
-<a href="http://www.der-moba.de/index.php/Digitalprojekt">in German</a>.
-
-
-
-
+<a name="documentation"></a><h2>Documentation</h2>
+<h3>Third Party info</h3>
+<p>There's a lot of good information on SRCP and how it fits into an
+overall model-railroad system on 
+<a href="http://www.der-moba.de/index.php/Digitalprojekt">der-moba.de (in German)</a>.
     
 <!--#include virtual="/Footer" -->
+ </div><!-- closes #mainContent-->
+</div> <!-- closes #mBody-->
 </body>
 </html>

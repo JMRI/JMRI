@@ -2,7 +2,6 @@
 <html lang="en">
 <head>
 <!-- Copyright Bob Jacobsen 2008 -->
-<!-- $Id$ -->
 <title>JMRI: DecoderPro User Guide - Locomotive Files</title>
 
 <!-- Style -->
@@ -20,15 +19,15 @@
 <!--#include virtual="Sidebar" -->
 <div id="mainContent">
 
-
-<H1>DecoderPro User Guide - Locomotive Files</H1>
+<h1>JMRI: DecoderPro User Guide</h1>
+<h2>Locomotive Files</h2>
 
 <p>DecoderPro maintains the information for each roster entry in a separate file.
 You generally don't have to edit these, or even look at them. This page describes
 their content just in case you're interested.
 <P>
-First, the XML contains some header information that describes the format & history of the file:
-<p class=example>
+First, the XML contains some header information that describes the format &amp; history of the file:
+<p class="example">
 &lt;?xml version="1.0" encoding="UTF-8"?&gt;<br>
 &lt;!DOCTYPE locomotive-config SYSTEM "locomotive-config.dtd"&gt;<br>
 &lt;locomotive-config&gt;<br>
@@ -38,7 +37,7 @@ First, the XML contains some header information that describes the format & hist
 This is followed by the summary information for the entry.  Most of this
 comes from the "Roster Entry" pane in DecoderPro:
 
-<p class=example>
+<p class="example">
 &nbsp;&nbsp;&lt;locomotive id="UP 792" roadNumber="" roadName="" mfg="" model="" dccAddress="792" comment=""&gt;<br>
 &nbsp;&nbsp;&nbsp;&nbsp;&lt;decoder model="DH163" family="Series 3 with FX3, silent, readback" comment="" /&gt;<br>
 </p>
@@ -47,7 +46,7 @@ That's then followed by a section that contains values for all the variables
 defined in the decoder definition file.  Note that these are numeric values; the decoder definition
 file are used to convert these to strings, etc, when this is read back in.
 
-<p class=example>
+<p class="example">
 &nbsp;&nbsp;&nbsp;&nbsp;&lt;values&gt;<br>
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&lt;decoderDef&gt;<br>
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&lt;varValue item="Primary Address" value="24" /&gt;<br>
@@ -70,9 +69,8 @@ future, we can sort out what's actually in the decoder.
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&lt;CVvalue name="4" value="0" /&gt;<br>
 </p>
 
-
-    
 <!--#include virtual="/Footer" -->
-</div>
+</div> <!-- close #mainContent -->
+</div> <!-- close #mBody -->    
 </body>
 </html>

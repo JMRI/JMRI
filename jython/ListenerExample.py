@@ -4,6 +4,7 @@
 # Author: Bob Jacobsen, copyright 2004
 # Part of the JMRI distribution
 
+import java
 import jmri
 
 # First, define the listener.  This one just prints some

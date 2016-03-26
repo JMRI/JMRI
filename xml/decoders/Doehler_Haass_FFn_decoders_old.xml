@@ -160,13 +160,13 @@
           </enumChoice>
         </enumVal>
         <label>Output F0R (yellow) function mapping</label>
-        <label xml:lang="de">Uscita F0 (giallo) in retro mappa funzioni</label>
+        <label xml:lang="it">Uscita F0 (giallo) in retro mappa funzioni</label>
         <label xml:lang="de">Ausgang F0R (gelb) Funktionszuordnung</label>
       </variable>	  
 	  <variable CV="34" mask="XXXVXXXX" item="Function F0R check 1" default="0">
 		    <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
         <label>Running only</label>
-        <label xml:lang="de">Solo in marcia</label>
+        <label xml:lang="it">Solo in marcia</label>
         <label xml:lang="de">Fahrtabhängig</label>
 		    <tooltip>Output is ON only when the vehicle is running (speed different from 0)</tooltip>
 		    <tooltip xml:lang="it">Uscita in On solo se il veicolo è in marcia (velocità diversa da 0)</tooltip>

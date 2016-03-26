@@ -1,102 +1,67 @@
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
-<html xmlns="http://www.w3.org/1999/xhtml"><head>
-
-
-
-
-
-  
-  
-  <meta content="text/html; charset=ISO-8859-1" http-equiv="content-type" ><title>Throttle Tool Bar</title>
-
-
-
-  
-  
-  
-  
-  
-      <meta name="keywords" content="JMRI decoderpro dcc nmra throttle throttlepro" >
+<html lang="en">
+<head>
+  <title>Throttle pane Toolbar</title>
+  <meta name="keywords" content="JMRI decoderpro dcc nmra throttle throttlepro" >
 	<meta name="Description" content="Throttle documentation for JMRI project" >
-	<meta name="Keywords" content="JMRI" >
 	<meta name="Author" content="Lionel Jeanson" >
 	<meta name="Language" content="EN" >
-	<meta name="Robots" content="Index, Follow" >
-	<meta name="Revisit-After" content="7 Days" ><!-- The combination of "Define" and {Header,Style, Logo and Footer} comments --><!-- are an arbitrary design pattern used by the update.pl script to --><!-- easily replace the common header/footer code for all the web pages --><!-- delete the following 2 Defines if you want to use the default JMRI logo --><!-- or change them to reflect your alternative logo --><!-- Style -->
+	
+	<!-- Style -->
+	<meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1" >
+	<link rel="stylesheet" type="text/css" href="/css/default.css" media="screen" >
+	<link rel="stylesheet" type="text/css" href="/css/print.css" media="print" >
+	<link rel="icon" href="/images/jmri.ico" type="image/png" >
+	<link rel="home" title="Home" href="/" >
+	<!-- /Style -->
+</head>
 
-    
-    
-    
-
-    
-    
-
-
-<meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1" >
-<link rel="stylesheet" type="text/css" href="/css/default.css" media="screen" >
-<link rel="stylesheet" type="text/css" href="/css/print.css" media="print" >
-<link rel="icon" href="/images/jmri.ico" type="image/png" >
-<link rel="home" title="Home" href="/" ><!-- /Style --></head><body>
+<body>
 <!--#include virtual="/Header" -->
 
 <!--#include virtual="Sidebar" -->
 <div id="mainContent">
 
-<h1>Throttle Tool Bar</h1>
+<h1>Throttle pane Toolbar</h1>
 
 <img src="images/ThrottleToolBar.png" alt="" ><br >
 
-<br >
-The Throttle toolbar is enablable from the <a href="ThrottlesPreferencesPane.shtml">Throttles Preferences Pane</a>.<br >
-<br >
-When its enabled, a Throttle Window can host a set of Throttles, these Throttles are browsable using the:<br >
+The Throttle toolbar is accessible from the <a href="ThrottlesPreferencesPane.shtml">Throttles Preferences pane</a>.<br >
+When enabled, a Throttle pane can host a set of Throttles. These Throttles are browsable using the:
 
 <h2>Previous Button</h2>
 
-Move to previous Throttle for that Throttle Window.<br >
-
-<br >
+Move to previous Throttle for that Throttle Window.
 
 <h2>Next Button</h2>
 
-Move to next Throttle for that Throttle Window.<br >
-
-<br >
+Move to next Throttle for that Throttle Window.
 
 <h2>New Button</h2>
 
-Add a new Throttle in that Throttle Window.<br ><br >
-Once the number of Throttles in a Throttle Window is greater than one, Next, Previous and Trash buttons are enabled.<br >
-
-<br >
+Add a new Throttle in that Throttle Window.<br >
+Once the number of Throttles in a Throttle Window is greater than one (1) the Next, Previous and Trash buttons are enabled.
 
 <h2>Trash Button</h2>
 
-Remove the curent Throttle from that Throttle Window.<br >
-<br >
-
-
-
-When the number of Throttles in a Throttle Window is equal to one, Next, Previous and Trash buttons are disabled.<br >
-<br >
+Remove the current Throttle from that Throttle Window.<br >
+When the number of Throttles in a Throttle Window is equal to one, Next, Previous and Trash buttons are disabled.
 
 <h2>Stop Button</h2>
 
-Send a stop message to all throttles managed by JMRI.<br >
-
-<br >
+Send a stop message to all throttles managed by JMRI.
 
 <h2>Power Button</h2>
 
-Allows for layout power control if possible (red is off, green is on, yellow is status unknown).<br >
-<br >
+Allows for layout power control if possible (red icon is Off, green is On, yellow is status Unknown).
 
 <h2>List Button</h2>
 
-Show/Hide the <a href="ThrottlesListWindow.shtml">throttles list Window.</a><br >
-
-
-<br >
+Show/Hide the <a href="ThrottlesListWindow.shtml">Throttles List</a>.
 
 <!--#include virtual="/Footer" -->
-</div></body></html>
+
+      </div><!-- closes #mainContent-->
+    </div> <!-- closes #mBody-->
+</body>
+</html>

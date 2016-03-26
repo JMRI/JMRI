@@ -1,4 +1,3 @@
-// DebugProgrammerTest.java
 package jmri.progdebugger;
 
 import jmri.ProgListener;
@@ -14,7 +13,6 @@ import org.slf4j.LoggerFactory;
  * Test the DebugProgrammer class.
  *
  * @author	Bob Jacobsen Copyright 2013
- * @version $Revision$
  */
 public class DebugProgrammerTest extends TestCase {
 
@@ -111,9 +109,7 @@ public class DebugProgrammerTest extends TestCase {
 
     // from here down is testing infrastructure
     synchronized void waitReply() throws InterruptedException {
-        while (!replied) {
-            wait(200);
-        }
+        jmri.util.JUnitUtil.waitFor(()->{return replied;}, "reply received");
         replied = false;
     }
 
@@ -135,6 +131,6 @@ public class DebugProgrammerTest extends TestCase {
         return suite;
     }
 
-    static Logger log = LoggerFactory.getLogger(DebugProgrammerTest.class.getName());
+    private final static Logger log = LoggerFactory.getLogger(DebugProgrammerTest.class.getName());
 
 }

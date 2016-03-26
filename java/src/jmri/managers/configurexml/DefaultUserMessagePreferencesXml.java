@@ -200,26 +200,20 @@ public class DefaultUserMessagePreferencesXml extends jmri.configurexml.Abstract
         log.error("Invalid method called");
     }
 
-    /**
-     * Create a MemoryManager object of the correct class, then register and
-     * fill it.
-     *
-     * @param messages Top level Element to unpack.
-     * @return true if successful
-     */
-    public boolean load(Element messages) {
+    @Override
+    public boolean load(Element shared, Element perNode) {
         // ensure the master object exists
         jmri.UserPreferencesManager p = jmri.InstanceManager.getDefault(jmri.UserPreferencesManager.class);
         p.setLoading();
 
-        List<Element> settingList = messages.getChildren("setting");
+        List<Element> settingList = shared.getChildren("setting");
 
         for (int i = 0; i < settingList.size(); i++) {
             String name = settingList.get(i).getText();
             p.setSimplePreferenceState(name, true);
         }
 
-        List<Element> comboList = messages.getChildren("comboBoxLastValue");
+        List<Element> comboList = shared.getChildren("comboBoxLastValue");
 
         for (int i = 0; i < comboList.size(); i++) {
             List<Element> comboItem = comboList.get(i).getChildren("comboBox");
@@ -230,7 +224,7 @@ public class DefaultUserMessagePreferencesXml extends jmri.configurexml.Abstract
             }
         }
 
-        List<Element> classList = messages.getChildren("classPreferences");
+        List<Element> classList = shared.getChildren("classPreferences");
         for (int k = 0; k < classList.size(); k++) {
             List<Element> multipleList = classList.get(k).getChildren("multipleChoice");
             String strClass = classList.get(k).getAttribute("class").getValue();
@@ -258,7 +252,7 @@ public class DefaultUserMessagePreferencesXml extends jmri.configurexml.Abstract
             }
         }
 
-        List<Element> windowList = messages.getChildren("windowDetails");
+        List<Element> windowList = shared.getChildren("windowDetails");
         for (int k = 0; k < windowList.size(); k++) {
             String strClass = windowList.get(k).getAttribute("class").getValue();
             List<Element> locListX = windowList.get(k).getChildren("locX");
@@ -332,7 +326,7 @@ public class DefaultUserMessagePreferencesXml extends jmri.configurexml.Abstract
 
         }
 
-        List<Element> tablesList = messages.getChildren("tableDetails");
+        List<Element> tablesList = shared.getChildren("tableDetails");
         for (Element tables : tablesList) {
             List<Element> tableList = tables.getChildren("table");
             for (Element table : tableList) {
@@ -366,5 +360,5 @@ public class DefaultUserMessagePreferencesXml extends jmri.configurexml.Abstract
         return true;
     }
 
-    static Logger log = LoggerFactory.getLogger(DefaultUserMessagePreferencesXml.class.getName());
+    private final static Logger log = LoggerFactory.getLogger(DefaultUserMessagePreferencesXml.class.getName());
 }

@@ -8,8 +8,6 @@ import junit.framework.Assert;
 import junit.framework.Test;
 import junit.framework.TestCase;
 import junit.framework.TestSuite;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 
 /**
  * LI100XNetInitializationManagerTest.java
@@ -18,7 +16,6 @@ import org.slf4j.LoggerFactory;
  * jmri.jmrix.lenz.li100.LI100XNetInitializationManager class
  *
  * @author	Paul Bender
- * @version $Revision$
  */
 public class LI100XNetInitializationManagerTest extends TestCase {
 
@@ -69,7 +66,5 @@ public class LI100XNetInitializationManagerTest extends TestCase {
         super.tearDown();
         apps.tests.Log4JFixture.tearDown();
     }
-
-    static Logger log = LoggerFactory.getLogger(LI100XNetInitializationManagerTest.class.getName());
 
 }

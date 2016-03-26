@@ -1,11 +1,8 @@
-// InitiateSoundTest.java
 package jmri.jmrix.loconet.sdf;
 
 import junit.framework.Test;
 import junit.framework.TestCase;
 import junit.framework.TestSuite;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 
 /**
  * Tests for the jmri.jmrix.loconet.sdf.InitiateSound class.
@@ -35,7 +32,5 @@ public class InitiateSoundTest extends TestCase {
         TestSuite suite = new TestSuite(InitiateSoundTest.class);
         return suite;
     }
-
-    static Logger log = LoggerFactory.getLogger(InitiateSoundTest.class.getName());
 
 }

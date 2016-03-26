@@ -22,6 +22,7 @@ import javax.swing.JScrollPane;
 import javax.swing.JTable;
 import jmri.jmrit.operations.OperationsFrame;
 import jmri.jmrit.operations.OperationsXml;
+import jmri.jmrit.operations.automation.AutomationsTableFrameAction;
 import jmri.jmrit.operations.locations.Location;
 import jmri.jmrit.operations.locations.LocationManager;
 import jmri.jmrit.operations.rollingstock.cars.CarManagerXml;
@@ -32,6 +33,20 @@ import jmri.jmrit.operations.setup.Control;
 import jmri.jmrit.operations.setup.OptionAction;
 import jmri.jmrit.operations.setup.PrintOptionAction;
 import jmri.jmrit.operations.setup.Setup;
+import jmri.jmrit.operations.trains.excel.SetupExcelProgramFrameAction;
+import jmri.jmrit.operations.trains.excel.TrainCustomManifest;
+import jmri.jmrit.operations.trains.timetable.TrainSchedule;
+import jmri.jmrit.operations.trains.timetable.TrainScheduleManager;
+import jmri.jmrit.operations.trains.timetable.TrainsScheduleAction;
+import jmri.jmrit.operations.trains.tools.ChangeDepartureTimesAction;
+import jmri.jmrit.operations.trains.tools.ExportTrainRosterAction;
+import jmri.jmrit.operations.trains.tools.PrintSavedTrainManifestAction;
+import jmri.jmrit.operations.trains.tools.PrintTrainsAction;
+import jmri.jmrit.operations.trains.tools.TrainByCarTypeAction;
+import jmri.jmrit.operations.trains.tools.TrainCopyAction;
+import jmri.jmrit.operations.trains.tools.TrainsByCarTypeAction;
+import jmri.jmrit.operations.trains.tools.TrainsScriptAction;
+import jmri.jmrit.operations.trains.tools.TrainsTableSetColorAction;
 import jmri.util.com.sun.TableSorter;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -46,10 +61,6 @@ import org.slf4j.LoggerFactory;
  */
 public class TrainsTableFrame extends OperationsFrame implements java.beans.PropertyChangeListener {
 
-    /**
-     *
-     */
-    private static final long serialVersionUID = 4237149773850338265L;
     public static final String MOVE = Bundle.getMessage("Move");
     public static final String TERMINATE = Bundle.getMessage("Terminate");
     public static final String RESET = Bundle.getMessage("Reset");
@@ -96,7 +107,7 @@ public class TrainsTableFrame extends OperationsFrame implements java.beans.Prop
     JCheckBox printPreviewBox = new JCheckBox(Bundle.getMessage("Preview"));
     JCheckBox openFileBox = new JCheckBox(Bundle.getMessage("OpenFile"));
     JCheckBox runFileBox = new JCheckBox(Bundle.getMessage("RunFile"));
-    JCheckBox showAllBox = new JCheckBox(Bundle.getMessage("ShowAllTrains"));
+    public JCheckBox showAllBox = new JCheckBox(Bundle.getMessage("ShowAllTrains"));
 
     public TrainsTableFrame() {
         super();
@@ -270,8 +281,11 @@ public class TrainsTableFrame extends OperationsFrame implements java.beans.Prop
         toolMenu.add(new ChangeDepartureTimesAction(Bundle.getMessage("TitleChangeDepartureTime")));
         toolMenu.add(new TrainsTableSetColorAction());
         toolMenu.add(new TrainsScheduleAction(Bundle.getMessage("TitleTimeTableTrains")));
+        toolMenu.add(new AutomationsTableFrameAction());
         toolMenu.add(new TrainCopyAction(Bundle.getMessage("TitleTrainCopy")));
         toolMenu.add(new TrainsScriptAction(Bundle.getMessage("MenuItemScripts"), this));
+        toolMenu.add(new PrintSavedTrainManifestAction(Bundle.getMessage("MenuItemPrintSavedManifest"), false));
+        toolMenu.add(new PrintSavedTrainManifestAction(Bundle.getMessage("MenuItemPreviewSavedManifest"), true));
         toolMenu.add(new SetupExcelProgramFrameAction(Bundle.getMessage("MenuItemSetupExcelProgram")));
         toolMenu.add(new ExportTrainRosterAction());
         toolMenu.add(new PrintTrainsAction(Bundle.getMessage("MenuItemPrint"), new Frame(), false, this));
@@ -440,6 +454,8 @@ public class TrainsTableFrame extends OperationsFrame implements java.beans.Prop
             sysList = trainManager.getTrainsByRouteList();
         } else if (sortBy.equals(TrainsTableModel.STATUSCOLUMNNAME)) {
             sysList = trainManager.getTrainsByStatusList();
+        } else if (sortBy.equals(TrainsTableModel.DESCRIPTIONCOLUMNNAME)) {
+            sysList = trainManager.getTrainsByDescriptionList();
         } else {
             sysList = trainManager.getTrainsByNameList();
         }
@@ -550,6 +566,10 @@ public class TrainsTableFrame extends OperationsFrame implements java.beans.Prop
     }
 
     protected void handleModified() {
+        if (Setup.isAutoSaveEnabled()) {
+            storeValues();
+            return;
+        }
         if (OperationsXml.areFilesDirty()) {
             int result = javax.swing.JOptionPane.showOptionDialog(this,
                     Bundle.getMessage("PromptQuitWindowNotWritten"), Bundle.getMessage("PromptSaveQuit"),
@@ -571,7 +591,7 @@ public class TrainsTableFrame extends OperationsFrame implements java.beans.Prop
     }
 
     public void propertyChange(java.beans.PropertyChangeEvent e) {
-        if (Control.showProperty) {
+        if (Control.SHOW_PROPERTY) {
             log.debug("Property change: ({}) old: ({}) new: ({})", e.getPropertyName(), e.getOldValue(), e
                     .getNewValue());
         }
@@ -590,5 +610,5 @@ public class TrainsTableFrame extends OperationsFrame implements java.beans.Prop
         }
     }
 
-    static Logger log = LoggerFactory.getLogger(TrainsTableFrame.class.getName());
+    private final static Logger log = LoggerFactory.getLogger(TrainsTableFrame.class.getName());
 }

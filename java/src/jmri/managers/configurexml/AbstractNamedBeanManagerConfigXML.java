@@ -1,4 +1,3 @@
-// AbstractNamedBeanManagerConfigXML.java
 package jmri.managers.configurexml;
 
 import java.lang.reflect.Constructor;
@@ -16,7 +15,6 @@ import org.slf4j.LoggerFactory;
  * various common service routines to eventual type-specific subclasses.
  *
  * @author Bob Jacobsen Copyright: Copyright (c) 2009
- * @version $Revision$
  * @since 2.3.1
  */
 public abstract class AbstractNamedBeanManagerConfigXML extends jmri.configurexml.AbstractXmlAdapter {
@@ -210,18 +208,17 @@ public abstract class AbstractNamedBeanManagerConfigXML extends jmri.configurexm
      * @param elem The existing Element
      */
     void storeProperties(NamedBean t, Element elem) {
-        java.util.Set<Object> s = t.getPropertyKeys();
+        java.util.Set<String> s = t.getPropertyKeys();
         if (s == null || s.size() == 0) {
             return;
         }
         Element ret = new Element("properties");
         elem.addContent(ret);
-        for (Object key : s) {
+        for (String key : s) {
             Object value = t.getProperty(key);
             Element p = new Element("property");
             ret.addContent(p);
             p.addContent(new Element("key")
-                    .setAttribute("class", key.getClass().getName())
                     .setText(key.toString())
             );
             if (value != null) {
@@ -250,11 +247,23 @@ public abstract class AbstractNamedBeanManagerConfigXML extends jmri.configurexm
             try {
                 Class<?> cl;
                 Constructor<?> ctor;
-                // create key object
-                cl = Class.forName(e.getChild("key").getAttributeValue("class"));
-                ctor = cl.getConstructor(new Class<?>[]{String.class});
-                Object key = ctor.newInstance(new Object[]{e.getChild("key").getText()});
 
+                // create key string
+                String key = e.getChild("key").getText();
+                
+                // check for non-String key.  Warn&proceed if found.
+                // Pre-JMRI 4.3, keys in NamedBean parameters could be Objects
+                // constructed from Strings, similar to the value code below.
+                if (! (
+                    e.getChild("key").getAttributeValue("class") == null
+                    || e.getChild("key").getAttributeValue("class").equals("")
+                    || e.getChild("key").getAttributeValue("class").equals("java.lang.String")
+                    )) {
+                    
+                    log.warn("NamedBean {} property key of invalid non-String type {} not supported", 
+                        t.getSystemName(), e.getChild("key").getAttributeValue("class"));
+                }
+                    
                 // create value object
                 Object value = null;
                 if (e.getChild("value") != null) {
@@ -271,5 +280,5 @@ public abstract class AbstractNamedBeanManagerConfigXML extends jmri.configurexm
         }
     }
 
-    static Logger log = LoggerFactory.getLogger(AbstractNamedBeanManagerConfigXML.class.getName());
+    private final static Logger log = LoggerFactory.getLogger(AbstractNamedBeanManagerConfigXML.class.getName());
 }

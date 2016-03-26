@@ -1,4 +1,3 @@
-// NceConsistEditPanel.java
 package jmri.jmrix.nce.consist;
 
 import java.awt.Dimension;
@@ -57,15 +56,9 @@ import org.slf4j.LoggerFactory;
  * @author Dan Boudreau Copyright (C) 2007 2008 Cloned from NceConsistEditFrame
  * by
  * @author kcameron Copyright (C) 2010
- * @version $Revision$
  */
 public class NceConsistEditPanel extends jmri.jmrix.nce.swing.NcePanel implements
         jmri.jmrix.nce.NceListener {
-
-    /**
-     *
-     */
-    private static final long serialVersionUID = -7857105641140192352L;
 
     ResourceBundle rb = ResourceBundle.getBundle("jmri.jmrix.nce.consist.NceConsistBundle");
 
@@ -2224,11 +2217,6 @@ public class NceConsistEditPanel extends jmri.jmrix.nce.swing.NcePanel implement
      */
     static public class Default extends jmri.jmrix.nce.swing.NceNamedPaneAction {
 
-        /**
-         *
-         */
-        private static final long serialVersionUID = 3301881443857178333L;
-
         public Default() {
             super("Open NCE Consist Editor",
                     new jmri.util.swing.sdi.JmriJFrameInterface(),
@@ -2237,6 +2225,6 @@ public class NceConsistEditPanel extends jmri.jmrix.nce.swing.NcePanel implement
         }
     }
 
-    static Logger log = LoggerFactory
+    private final static Logger log = LoggerFactory
             .getLogger(NceConsistEditPanel.class.getName());
 }

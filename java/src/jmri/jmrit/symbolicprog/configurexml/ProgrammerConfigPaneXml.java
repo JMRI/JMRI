@@ -1,7 +1,8 @@
 package jmri.jmrit.symbolicprog.configurexml;
 
+import jmri.InstanceManager;
+import jmri.jmrit.symbolicprog.ProgrammerConfigManager;
 import jmri.jmrit.symbolicprog.ProgrammerConfigPane;
-import jmri.jmrit.symbolicprog.tabbedframe.PaneProgFrame;
 import org.jdom2.Attribute;
 import org.jdom2.Element;
 import org.slf4j.Logger;
@@ -46,38 +47,25 @@ public class ProgrammerConfigPaneXml extends jmri.configurexml.AbstractXmlAdapte
         return programmer;
     }
 
-    /**
-     * Update static data from XML file
-     *
-     * @param element Top level Element to unpack.
-     * @return true if successful
-     */
-    public boolean load(Element element) {
+    @Override
+    public boolean load(Element shared, Element perNode) {
         boolean result = true;
 
-        if (element.getAttribute("defaultFile") != null) {
+        if (shared.getAttribute("defaultFile") != null) {
             if (log.isDebugEnabled()) {
-                log.debug("set programmer default file: " + element.getAttribute("defaultFile").getValue());
+                log.debug("set programmer default file: " + shared.getAttribute("defaultFile").getValue());
             }
-            jmri.jmrit.symbolicprog.ProgDefault.setDefaultProgFile(element.getAttribute("defaultFile").getValue());
+            InstanceManager.getDefault(ProgrammerConfigManager.class).setDefaultFile(shared.getAttribute("defaultFile").getValue());
         }
 
         Attribute a;
-        if (null != (a = element.getAttribute("showEmptyPanes"))) {
-            if (a.getValue().equals("no")) {
-                PaneProgFrame.setShowEmptyPanes(false);
-            } else {
-                PaneProgFrame.setShowEmptyPanes(true);
-            }
+        if (null != (a = shared.getAttribute("showEmptyPanes"))) {
+            InstanceManager.getDefault(ProgrammerConfigManager.class).setShowEmptyPanes(!a.getValue().equals("no"));
         }
-        if (null != (a = element.getAttribute("showCvNumbers"))) {
-            if (a.getValue().equals("yes")) {
-                PaneProgFrame.setShowCvNumbers(true);
-            } else {
-                PaneProgFrame.setShowCvNumbers(false);
-            }
+        if (null != (a = shared.getAttribute("showCvNumbers"))) {
+            InstanceManager.getDefault(ProgrammerConfigManager.class).setShowCvNumbers(a.getValue().equals("yes"));
         }
-        jmri.InstanceManager.configureManagerInstance().registerPref(new jmri.jmrit.symbolicprog.ProgrammerConfigPane(true));
+        InstanceManager.configureManagerInstance().registerPref(new ProgrammerConfigPane());
         return result;
     }
 
@@ -91,6 +79,6 @@ public class ProgrammerConfigPaneXml extends jmri.configurexml.AbstractXmlAdapte
         log.warn("unexpected call of 2nd load form");
     }
     // initialize logging
-    static Logger log = LoggerFactory.getLogger(ProgrammerConfigPaneXml.class.getName());
+    private final static Logger log = LoggerFactory.getLogger(ProgrammerConfigPaneXml.class.getName());
 
 }

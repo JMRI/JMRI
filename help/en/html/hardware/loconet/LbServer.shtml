@@ -1,84 +1,78 @@
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
-<!-- $Id$ -->
 <html lang="en">
 <head>
- <TITLE>
-      JMRI Hardware Guide: Connecting Multiple Computers to LocoNet&reg; via LbServer
- </TITLE>
-    <META http-equiv=Content-Type content="text/html; charset=iso-8859-1">
-    <META content="Bob Jacobsen" name=Author>
-    <META name="keywords" content="Digitrax Chief DCS Command Station LocoNet Server LocoBuffer java model railroad JMRI install windows">
+ <title>JMRI Hardware Support - Multiple Computers to LocoNet&reg; via LbServer</title>
+    <meta content="Bob Jacobsen" name="Author">
+    <meta name="keywords" content="Digitrax Chief DCS Command Station LocoNet Server LocoBuffer java model railroad JMRI install windows">
 
 <!-- Style -->
-<META HTTP-EQUIV="Content-Type" CONTENT="text/html; charset=iso-8859-1">
-<LINK REL="stylesheet" TYPE="text/css" HREF="/css/default.css"
-	MEDIA="screen">
-<LINK REL="stylesheet" TYPE="text/css" HREF="/css/print.css"
-	MEDIA="print">
-<LINK REL="icon" HREF="/images/jmri.ico" TYPE="image/png">
-<LINK REL="home" TITLE="Home" HREF="/">
+<meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
+<link rel="stylesheet" type="text/css" href="/css/default.css" media="screen">
+<link rel="stylesheet" type="text/css" href="/css/print.css" media="print">
+<link rel="icon" href="/images/jmri.ico" type="image/png">
+<link rel="home" title="Home" href="/">
 <!-- /Style -->
-</HEAD>
+</head>
 
-<BODY>
+<body>
 <!--#include virtual="/Header" -->
   <div class="nomenu" id="mBody">
     <div id="mainContent">
-      <h1> 
-      JMRI Hardware Guide: Connecting Multiple Computers to LocoNet&reg; via LbServer
-      </h1>
-
+    
+  <h1>Hardware Support: Connecting Multiple Computers to LocoNet&reg; via LbServer</h1>
+<p>
 This page describes how to configure multiple JMRI nodes to connect as 
 clients to a single 
 <a href="http://loconetovertcp.sourceforge.net" >LocoNetOverTCP LbServer</a>, 
 which in turn is connected to the layout.
-<P>
+<p>
  
 This connection, called LocoNetOverTCP, uses a separate non-Java 
 server process, LbServer, that communicates using plain ASCII String messages over TCP/IP sockets,
-allowing non-Java nodes to also share the one LocoBufer.
-<P>
+allowing non-Java nodes to also share the one LocoBuffer.
+<p>
 
 <h2>Setup for JMRI LocoNetOverTCP</h2>
 One computer runs the LbServer program that connects to the LocoBuffer 
 and acts as a Server to all the JMRI Client computers. 
 Configure the JMRI Client computers to connect to the LbServer as follows:
-<UL>
-<LI>Make sure the LbServer is configured and running. See LbServer documentations for details.
-<LI>Open the JMRI program on the Client
-<LI>Open the preferences from the Edit menu
-<LI>For layout connection, select "LocoNetOverTCP LbServer"
-<LI>In the "Server hostname" box that appears, type the Internet name
-or address of the computer that's running the LbServer.
-An internet address is something like 127.0.1.12; a name is something
-like jmri.sf.net
-<li>In the "TCP Port Number" box enter the port number that LbServer is using, which by default is 1234. 
-<li>Save the preferences and restart the program.
-</UL>
+<ul>
+	<li>Make sure the LbServer is configured and running. See LbServer documentations for details.
+	<li>Open the JMRI program on the Client
+	<li>Open the preferences from the Edit menu
+	<li>For layout connection, select "LocoNetOverTCP LbServer"
+	<li>In the "Server hostname" box that appears, type the Internet name
+	or address of the computer that's running the LbServer.
+	An internet address is something like 127.0.1.12; a name is something
+	like jmri.org
+	<li>In the "TCP Port Number" box enter the port number that LbServer is using, which by default is 1234. 
+	<li>Save the preferences and restart the program.
+</ul>
 
 <h2>Notes:</h2>
-<UL>
-<LI>It's strongly recommended that you connect the master computer
-to the LocoNet&reg; with a LocoBuffer or LocoBuffer-II.  Although a MS-100
-will basically work for this application, correction of the resulting occasional LocoNet
-errors may cause noticable delays in updating the remote computers.
-<LI>
-If the computers are all close to the LocoNet, e.g. acting as local control
-panels, you don't really need LocoNet Server to do this.  You can instead
-connect each of the computers to the LocoNet via their own LocoBuffer or LocoBuffer-II
-(or MS-100, though this is not recommended) and have them individually take part
-in the LocoNet communications.  This doesn't cause any additional communications load.
-It does cost a little more for the extra adapters, and doesn't permit you to
-put a computer remote from the layout.
-<LI>The computer running LbServer can also run JMRI software, in this
-case the Client and Server just happen to be on the same node. 
-<LI>Some firewall software will detect LbServer's use of port 1234 as a trojan and will want to block access to the port. 
-To get around this you will either have to enable access in your firewall software or change the port to
-another number like 9999 say. The new port number will also need to be passed into LbServer as a command line option.
-</UL>
+<ul>
+	<li>It's strongly recommended that you connect the master computer
+	to the LocoNet&reg; with a LocoBuffer or LocoBuffer-II.  Although a MS-100
+	will basically work for this application, correction of the resulting occasional LocoNet
+	errors may cause noticeable delays in updating the remote computers.
+	<li>
+	If the computers are all close to the LocoNet, e.g. acting as local control
+	panels, you don't really need LocoNet Server to do this.  You can instead
+	connect each of the computers to the LocoNet via their own LocoBuffer or LocoBuffer-II
+	(or MS-100, though this is not recommended) and have them individually take part
+	in the LocoNet communications.  This doesn't cause any additional communications load.
+	It does cost a little more for the extra adapters, and doesn't permit you to
+	put a computer remote from the layout.
+	<li>The computer running LbServer can also run JMRI software, in this
+	case the Client and Server just happen to be on the same node. 
+	<li>Some firewall software will detect LbServer's use of port 1234 as a trojan and will want to block access to the port. 
+	To get around this you will either have to enable access in your firewall software or change the port to
+	another number like 9999 say. The new port number will also need to be passed into LbServer as a command line option.
+</ul>
 <p>LocoNet&reg; is a registered trademark of <a href="http://www.digitrax.com">Digitrax, Inc.</a></p>
-    </div>
 
 <!--#include virtual="/Footer" -->
+  </div><!-- closes #mainContent-->
+</div> <!-- closes #mBody-->
 </body>
 </html>

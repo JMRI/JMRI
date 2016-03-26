@@ -175,7 +175,7 @@ public class SignalHeadItemPanel extends TableItemPanel {//implements ListSelect
         private static final long serialVersionUID = 1379306442765612241L;
         HashMap<String, NamedIcon> iconMap;
 
-        @edu.umd.cs.findbugs.annotations.SuppressWarnings(value = "EI_EXPOSE_REP2") // icon map is within package 
+        @edu.umd.cs.findbugs.annotations.SuppressFBWarnings(value = "EI_EXPOSE_REP2") // icon map is within package 
         public IconDragJLabel(DataFlavor flavor, HashMap<String, NamedIcon> map) {
             super(flavor);
             iconMap = map;
@@ -210,5 +210,5 @@ public class SignalHeadItemPanel extends TableItemPanel {//implements ListSelect
         }
     }
 
-    static Logger log = LoggerFactory.getLogger(SignalHeadItemPanel.class.getName());
+    private final static Logger log = LoggerFactory.getLogger(SignalHeadItemPanel.class.getName());
 }

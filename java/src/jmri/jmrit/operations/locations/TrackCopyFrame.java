@@ -19,6 +19,7 @@ import jmri.jmrit.operations.rollingstock.RollingStockManager;
 import jmri.jmrit.operations.rollingstock.cars.CarManager;
 import jmri.jmrit.operations.rollingstock.engines.EngineManager;
 import jmri.jmrit.operations.setup.Control;
+import jmri.jmrit.operations.trains.TrainCommon;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -30,11 +31,6 @@ import org.slf4j.LoggerFactory;
  * @version $Revision: 17977 $
  */
 public class TrackCopyFrame extends OperationsFrame implements java.beans.PropertyChangeListener {
-
-    /**
-     *
-     */
-    private static final long serialVersionUID = 6643856888682557276L;
 
     // text field
     JTextField trackNameTextField = new javax.swing.JTextField(Control.max_len_string_track_name);
@@ -112,7 +108,7 @@ public class TrackCopyFrame extends OperationsFrame implements java.beans.Proper
         LocationManager.instance().addPropertyChangeListener(this);
 
         // add help menu to window
-        addHelpMenu("package.jmri.jmrit.operations.Operations_Locations", true); // NOI18N
+        addHelpMenu("package.jmri.jmrit.operations.Operations_CopyTrack", true); // NOI18N
 
         pack();
         setMinimumSize(new Dimension(Control.panelWidth400, Control.panelHeight400));
@@ -159,7 +155,7 @@ public class TrackCopyFrame extends OperationsFrame implements java.beans.Proper
         }
     }
 
-    @edu.umd.cs.findbugs.annotations.SuppressFBWarnings(value = "ST_WRITE_TO_STATIC_FROM_INSTANCE_METHOD")
+    @edu.umd.cs.findbugs.annotations.SuppressFBWarnings(value = "ST_WRITE_TO_STATIC_FROM_INSTANCE_METHOD", justification = "GUI ease of use")
     protected void buttonActionPerformed(java.awt.event.ActionEvent ae) {
         if (ae.getSource() == copyButton) {
             log.debug("copy track button activated");
@@ -199,6 +195,7 @@ public class TrackCopyFrame extends OperationsFrame implements java.beans.Proper
                 // move rolling stock
                 moveRollingStock(fromTrack, toTrack);
                 if (deleteTrackCheckBox.isSelected()) {
+                    ScheduleManager.instance().replaceTrack(fromTrack, toTrack);
                     fromTrack.getLocation().deleteTrack(fromTrack);
                 }
             }
@@ -231,7 +228,7 @@ public class TrackCopyFrame extends OperationsFrame implements java.beans.Proper
 
     /**
      *
-     * @return true if name entered and isn't too long
+     * @return true if name entered OK and isn't too long
      */
     protected boolean checkName() {
         if (trackNameTextField.getText().trim().equals("")) {
@@ -239,7 +236,7 @@ public class TrackCopyFrame extends OperationsFrame implements java.beans.Proper
                     .getMessage("CanNotTrack"), new Object[]{Bundle.getMessage("Copy")}), JOptionPane.ERROR_MESSAGE);
             return false;
         }
-        if (trackNameTextField.getText().length() > Control.max_len_string_track_name) {
+        if (TrainCommon.splitString(trackNameTextField.getText()).length() > Control.max_len_string_track_name) {
             JOptionPane.showMessageDialog(this, MessageFormat.format(Bundle.getMessage("TrackNameLengthMax"),
                     new Object[]{Integer.toString(Control.max_len_string_track_name + 1)}), MessageFormat.format(Bundle
                             .getMessage("CanNotTrack"), new Object[]{Bundle.getMessage("Copy")}), JOptionPane.ERROR_MESSAGE);
@@ -266,7 +263,7 @@ public class TrackCopyFrame extends OperationsFrame implements java.beans.Proper
     private void moveRollingStock(Track fromTrack, Track toTrack, RollingStockManager manager) {
         for (RollingStock rs : manager.getByIdList()) {
             if (rs.getTrack() == fromTrack) {
-                rs.setLocation(toTrack.getLocation(), toTrack, true);
+                rs.setLocation(toTrack.getLocation(), toTrack, RollingStock.FORCE);
             }
         }
     }
@@ -289,5 +286,5 @@ public class TrackCopyFrame extends OperationsFrame implements java.beans.Proper
         }
     }
 
-    static Logger log = LoggerFactory.getLogger(TrackCopyFrame.class.getName());
+    private final static Logger log = LoggerFactory.getLogger(TrackCopyFrame.class.getName());
 }

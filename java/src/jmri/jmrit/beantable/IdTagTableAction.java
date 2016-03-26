@@ -54,7 +54,7 @@ public class IdTagTableAction extends AbstractTableAction {
     }
 
     public IdTagTableAction() {
-        this("Id Tag Table");
+        this(Bundle.getMessage("TitleIdTagTable"));
     }
 
     /**
@@ -131,11 +131,11 @@ public class IdTagTableAction extends AbstractTableAction {
             public String getColumnName(int col) {
                 switch (col) {
                     case VALUECOL:
-                        return rb.getString("ColumnIdTagID");
+                        return Bundle.getMessage("ColumnIdTagID");
                     case WHERECOL:
-                        return rb.getString("ColumnIdWhere");
+                        return Bundle.getMessage("ColumnIdWhere");
                     case WHENCOL:
-                        return rb.getString("ColumnIdWhen");
+                        return Bundle.getMessage("ColumnIdWhen");
                     case CLEARCOL:
                         return "";
                     default:
@@ -185,7 +185,7 @@ public class IdTagTableAction extends AbstractTableAction {
                         return (t != null) ? (((d = t.getWhenLastSeen()) != null)
                                 ? DateFormat.getDateTimeInstance(DateFormat.SHORT, DateFormat.MEDIUM).format(d) : null) : null;
                     case CLEARCOL:
-                        return rb.getString("ButtonClear");
+                        return Bundle.getMessage("ButtonClear");
                     default:
                         return super.getValueAt(row, col);
                 }
@@ -201,7 +201,7 @@ public class IdTagTableAction extends AbstractTableAction {
                     case VALUECOL:
                         return new JTextField(10).getPreferredSize().width;
                     case CLEARCOL:
-                        return new JButton(rb.getString("ButtonClear")).getPreferredSize().width + 4;
+                        return new JButton(Bundle.getMessage("ButtonClear")).getPreferredSize().width + 4;
                     default:
                         return super.getPreferredWidth(col);
                 }
@@ -220,7 +220,7 @@ public class IdTagTableAction extends AbstractTableAction {
 
             @Override
             public JButton configureButton() {
-                BeanTableDataModel.log.error("configureButton should not have been called");
+                log.error("configureButton should not have been called");
                 return null;
             }
 
@@ -236,7 +236,7 @@ public class IdTagTableAction extends AbstractTableAction {
     }
 
     protected void setTitle() {
-        f.setTitle(f.rb.getString("TitleIdTagTable"));
+        f.setTitle(Bundle.getMessage("TitleIdTagTable"));
     }
 
     @Override
@@ -246,12 +246,12 @@ public class IdTagTableAction extends AbstractTableAction {
     JmriJFrame addFrame = null;
     JTextField sysName = new JTextField(12);
     JTextField userName = new JTextField(15);
-    JCheckBox isStateStored = new JCheckBox(rb.getString("IdStoreState"));
-    JCheckBox isFastClockUsed = new JCheckBox(rb.getString("IdUseFastClock"));
+    JCheckBox isStateStored = new JCheckBox(Bundle.getMessage("IdStoreState"));
+    JCheckBox isFastClockUsed = new JCheckBox(Bundle.getMessage("IdUseFastClock"));
 
     protected void addPressed(ActionEvent e) {
         if (addFrame == null) {
-            addFrame = new JmriJFrame(rb.getString("TitleAddIdTag"), false, true);
+            addFrame = new JmriJFrame(Bundle.getMessage("TitleAddIdTag"), false, true);
             addFrame.addHelpMenu("package.jmri.jmrit.beantable.IdTagAddEdit", true);
             addFrame.getContentPane().setLayout(new BoxLayout(addFrame.getContentPane(), BoxLayout.Y_AXIS));
 
@@ -289,15 +289,15 @@ public class IdTagTableAction extends AbstractTableAction {
     void handleCreateException(String sysName) {
         javax.swing.JOptionPane.showMessageDialog(addFrame,
                 java.text.MessageFormat.format(
-                        rb.getString("ErrorIdTagAddFailed"),
+                        Bundle.getMessage("ErrorIdTagAddFailed"),
                         new Object[]{sysName}),
-                rb.getString("ErrorTitle"),
+                Bundle.getMessage("ErrorTitle"),
                 javax.swing.JOptionPane.ERROR_MESSAGE);
     }
 
     @Override
     public String getClassDescription() {
-        return f.rb.getString("TitleIdTagTable");
+        return Bundle.getMessage("TitleIdTagTable");
     }
 
     @Override

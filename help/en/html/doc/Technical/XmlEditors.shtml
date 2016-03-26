@@ -1,22 +1,21 @@
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
-<!-- $Id$ -->
 <html lang="en">
 <head>
-    <TITLE>
+    <title>
  	JMRI: XML Editors
-    </TITLE>
-    <META content="Bob Jacobsen" name=Author>
+    </title>
+    <meta name="Author"content="Bob Jacobsen">
     <meta name="keywords" content="JMRI technical code xml editors">
 
     <!--#include virtual="/Style" -->
 </head>
-
+<body>
 <!--#include virtual="/Header" -->
 <!--#include virtual="Sidebar" -->
 
 	<div id="mainContent">
 
-<H1>JMRI: XML Editors</H1>
+<h1>JMRI: XML Editors</h1>
 
 JMRI uses XML for a number of purposes: 
 to hold decoder definitions, for its
@@ -46,6 +45,9 @@ For more information on XML itself, please see our
 <dl>
 <dt>Crimson Editor
 <dd><a href="http://www.crimsoneditor.com/">http://www.crimsoneditor.com/</a>
+
+<dt>CotEditor
+<dd><a href="http://coteditor.com">http://coteditor.com</a> (OS X)
 
 <dt>Editra
 <dd><a href="http://editra.org/">http://editra.org/</a>
@@ -87,7 +89,7 @@ For more information on XML itself, please see our
 
 <h2>Not Recommended</h2>
 
-The following tools have been reported to not work well with JMRI.
+The following tools have been reported to <i>not</i> work well with JMRI.
 
 <dl>
 

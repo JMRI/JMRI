@@ -321,32 +321,32 @@
           </enumChoice>
         </enumVal>
         <label>Rear Headlight (Output B) Dimming</label>
-        <label>Output B Attenuazione Luci di Coda</label>
+        <label xml:lang="it">Output B Attenuazione Luci di Coda</label>
         <label xml:lang="de">Function F0R effect generated</label>
         <tooltip xml:lang="de">Enables rear headlight dimming</tooltip>
       </variable>
       <variable CV="57" mask="XXXVXXXX" item="Function F0R option 1">
         <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
         <label>Output B is a Gyrolight</label>
-        <label>Output B = GyroLight</label>
+        <label xml:lang="it">Output B = GyroLight</label>
         <label xml:lang="de">Function F0R option 1</label>
       </variable>
       <variable CV="57" mask="XXVXXXXX" item="Function F0R option 2">
         <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
         <label>Output B is a Mars light</label>
-        <label>Output B = Mars Light</label>
+        <label xml:lang="it">Output B = Mars Light</label>
         <label xml:lang="de">Function F0R option 2</label>
       </variable>
       <variable CV="57" mask="XVXXXXXX" item="Function F0R option 3">
         <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
         <label>Output B is a single strobe</label>
-        <label>Output B = Strobe singolo</label>
+        <label xml:lang="it">Output B = Strobe singolo</label>
         <label xml:lang="de">Function F0R option 3</label>
       </variable>
       <variable CV="57" mask="VXXXXXXX" item="Function F0R option 4">
         <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
         <label>Output B is a double strobe</label>
-        <label>Output B = Strobe doppio</label>
+        <label xml:lang="it">Output B = Strobe doppio</label>
         <label xml:lang="de">Function F0R option 4</label>
       </variable>
       <variable CV="58" item="Function F0R options" default="64" tooltip="Sets intensity of dimmed headlight (larger number = brighter light)">

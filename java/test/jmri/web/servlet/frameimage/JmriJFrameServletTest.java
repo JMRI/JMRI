@@ -1,4 +1,3 @@
-// JmriJFrameServletTest.java
 package jmri.web.servlet.frameimage;
 
 import java.util.Map;
@@ -11,7 +10,6 @@ import junit.framework.TestSuite;
  * Invokes complete set of tests for the jmri.web.xmlio.JmriJFrameServlet class
  *
  * @author	Bob Jacobsen Copyright 2013
- * @version $Revision$
  */
 public class JmriJFrameServletTest extends TestCase {
 
@@ -59,11 +57,6 @@ public class JmriJFrameServletTest extends TestCase {
 
     // local varient class to make access to private members
     class JmriJFrameServlet_ut extends JmriJFrameServlet {
-
-        /**
-         *
-         */
-        private static final long serialVersionUID = -4957073887916405378L;
 
         void populateParameterMap(Map<String, String[]> map) {
             super.populateParameterMap(map);

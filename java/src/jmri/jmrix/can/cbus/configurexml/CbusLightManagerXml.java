@@ -31,12 +31,12 @@ public class CbusLightManagerXml extends jmri.managers.configurexml.AbstractLigh
     }
 
     @Override
-    public boolean load(Element lights) {
+    public boolean load(Element shared, Element perNode) {
         // load individual lights
-        return loadLights(lights);
+        return loadLights(shared);
     }
 
-    static Logger log = LoggerFactory.getLogger(CbusLightManagerXml.class.getName());
+    private final static Logger log = LoggerFactory.getLogger(CbusLightManagerXml.class.getName());
 }
 
 /* @(#)CbusLightManagerXml.java */

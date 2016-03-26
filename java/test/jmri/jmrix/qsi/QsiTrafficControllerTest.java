@@ -1,4 +1,3 @@
-// QsiTrafficControllerTest.java
 package jmri.jmrix.qsi;
 
 import java.io.DataInputStream;
@@ -240,6 +239,6 @@ public class QsiTrafficControllerTest extends TestCase {
         return suite;
     }
 
-    static Logger log = LoggerFactory.getLogger(QsiTrafficControllerTest.class.getName());
+    private final static Logger log = LoggerFactory.getLogger(QsiTrafficControllerTest.class.getName());
 
 }

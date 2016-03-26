@@ -1,16 +1,18 @@
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
-<html lang="en"><head>
-<!-- Copyright ($Author$) 2009 --><!-- $Id$ --><title>Panels Menu</title><!-- Style -->
+<html lang="en">
+<head>
+<title>Panels Menu</title>
 
-
-
-
-
+<!-- Style -->
 <meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
 <link rel="stylesheet" type="text/css" href="/css/default.css" media="screen">
 <link rel="stylesheet" type="text/css" href="/css/print.css" media="print">
 <link rel="icon" href="/images/jmri.ico" type="image/png">
-<link rel="home" title="Home" href="/"><!-- /Style --></head><body>
+<link rel="home" title="Home" href="/">
+<!-- /Style -->
+</head>
+
+<body>
 <!--#include virtual="/Header" -->
 
 <!--#include virtual="Sidebar" -->
@@ -18,7 +20,7 @@
 
 <a name="Top"></a>
 <h1>DecoderPro&reg; Main Window</h1>
-<h1>Panels Menu </h1>
+<h2>Panels Menu</h2>
 
 <div align="right">
 <p><a href="Main_Roster.shtml">Previous | </a><a href="Main_Debug.shtml">Next</a></p>
@@ -76,7 +78,7 @@ selected file will display on your computer.</p>
 </blockquote>
 <p><strong>Thread Monitor</strong></p>
 <blockquote>
-  <p>Opens the &nbsp;Thread Monitor window</p><p align="center"><img src="images/Main_PanelMenu_04.png" alt="Thread Monitor" border="4" height="477" width="461"></p>
+  <p>Opens the Thread Monitor window</p><p align="center"><img src="images/Main_PanelMenu_04.png" alt="Thread Monitor" border="4" height="477" width="461"></p>
 </blockquote>
 <p><strong>Script Output</strong></p>
 <blockquote>
@@ -85,12 +87,15 @@ selected file will display on your computer.</p>
 <p><strong>Script Entry</strong></p>
 <blockquote>
   <p>Displays the <strong>Script Entry</strong> window, in which you may enter scripted function and click on the <strong>Execute</strong> button to execute the script.</p><p><img style="width: 448px; height: 277px;" alt="script entry" src="images/Main_PanelMenu_SE.png"></p>
-</blockquote><hr>
+</blockquote>
 
-
+<hr>
 <div align="right"><p><a href="Main_Roster.shtml">Previous | </a><a href="Main_Debug.shtml">Next</a></p>
 <p><a href="index.shtml#Main">Back to Index</a></p>
 </div>
 
 <!--#include virtual="/Footer" -->
-</div></body></html>
+  </div><!-- closes #mainContent-->
+ </div> <!-- closes #mBody-->
+</body>
+</html>

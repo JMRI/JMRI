@@ -495,7 +495,7 @@ public class DuplexGroupScanPanel extends jmri.jmrix.loconet.swing.LnPanel
         super.dispose();
     }
 
-    static Logger log = LoggerFactory.getLogger(DuplexGroupScanPanel.class.getName());
+    private final static Logger log = LoggerFactory.getLogger(DuplexGroupScanPanel.class.getName());
 
     public void stateChanged(javax.swing.event.ChangeEvent e) {
         graphicArea.repaint();

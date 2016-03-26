@@ -1,24 +1,25 @@
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
-<html lang="en"><head><!-- Copyright ($Author$) 2009 --><!-- $Id$ -->
+<html lang="en">
+<head>
+<title>LocoNet Menu</title>
 
-
-
-
-
-<title>LocoNet Menu</title><!-- Style --><meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
+<!-- Style -->
+<meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
 <link rel="stylesheet" type="text/css" href="/css/default.css" media="screen">
 <link rel="stylesheet" type="text/css" href="/css/print.css" media="print">
 <link rel="icon" href="/images/jmri.ico" type="image/png">
-<link rel="home" title="Home" href="/"><!-- /Style --></head>
+<link rel="home" title="Home" href="/">
+<!-- /Style -->
+</head>
+
 <body>
 <!--#include virtual="/Header" -->
-
 <!--#include virtual="Sidebar" -->
 <div id="mainContent">
 
 <a name="Top"></a>
-<h1>DecoderPro&reg; Main Window</h1>
-<h1>LocoNet Menu </h1>
+<h1>DecoderPro&reg;3 Main Window</h1>
+<h2>LocoNet Menu</h2>
 
 <div align="right">
 <p><a href="dp3_menubar.shtml">Back to Index</a><a href="index.shtml"></a></p>
@@ -26,7 +27,7 @@
 
 <hr>
 <p><strong>Monitor LocoNet</strong></p>
-<p>Opens the <a href="Main_Monitor_Window.shtml">Monitor LocoNet  Window(Gerneric Communications Monitor Window)</a>
+<p>Opens the <a href="Main_Monitor_Window.shtml">Monitor LocoNet Window (Generic Communications Monitor Window)</a>
 and automatically displays the information that is being sent and
 received on the communications link between your computer and your DCC
 system.</p>
@@ -43,11 +44,11 @@ Technologies. The <a href="#ClockMonitor">  Monitor Clock</a> dialog allows you 
 <p><strong><a name="BDL16"></a>Configure BDL16</strong>/<strong>BDL168</strong></p>
 <p>Opens <a href="#BDL16Programmer">Configure BDL16/BDL162/BDL168</a> window</p>
 <p><strong>Configure LocoIO</strong></p>
-<p>Opens the <a href="#LocoIOProgrammer">Configure LocoIO </a>window.</p>
+<p>Opens the <a href="#LocoIOProgrammer">Configure LocoIO </a>window (no longer supported, see the <a href="../../package/jmri/jmrix/loconet/locoio/LocoIOFrame.shtml">LocoIO page</a>)</p>
 <p><strong><a name="PM4"></a>Configure PM4</strong>/PM42 </p>
 <p>Opens the <a href="#PM4Programmer">Configure PM4/PM42</a> window.</p>
 <p><strong><a name="SE8C"></a>Configure SE8C</strong></p>
-<p>Opens the <a href="#SE8CProgrammer">Configure SE3C</a> window.</p>
+<p>Opens the <a href="#SE8CProgrammer">Configure SE8C</a> window.</p>
 <p><strong><a name="DS64"></a>Configure DS64</strong></p>
 <p>Opens the <a href="#DS64Programmer">Configure DS64 </a>window.</p>
 <p><strong><a name="CommandStation"></a>Configure Command Station</strong></p>
@@ -63,7 +64,7 @@ Technologies. The <a href="#ClockMonitor">  Monitor Clock</a> dialog allows you 
 <p>Provides dialog to configure duplex Radio system</p><table style="text-align: left; width: 100%;" border="1" cellpadding="2" cellspacing="2"><tbody><tr><td><img src="images/Loconet_DuplexGroup.png" alt="duplex group" height="406" width="478"></td><td><img style="width: 478px; height: 406px;" alt="duplex scan" src="images/Loconet_DuplexGroup01.png"></td></tr></tbody></table>
 <p><img src="images/separator.png" alt="sep" height="4" width="340"></p>
 <p><strong>Send Throttle Messages</strong></p>
-<p>Opens <strong>Throttle message</strong> prompt with limited capabiltiy to send messages to handheld throttle.</p>
+<p>Opens <strong>Throttle message</strong> prompt with limited capability to send messages to handheld throttle.</p>
 <p><img src="images/Main_Loconet10.png" alt="send loconet messages" height="100" width="267"></p>
 <p><img src="images/separator.png" alt="sep" height="4" width="340"></p>
 <p><strong><a name="Packet"></a>Send LocoNet Packet</strong></p>
@@ -159,7 +160,7 @@ consisted slots.</td>
     <td>Throttle ID</td>
     <td colspan="2">The
 UT4 throttles have a fixed throttle ID. The DT400 has a fixed common
-leading HEX value and a user programmable second HEX value. . It is
+leading HEX value and a user programmable second HEX value. It is
 displayed as two hexadecimal bytes, see the Digitrax instructions for
 details.</td>
   </tr>
@@ -199,7 +200,8 @@ keeps better time. </p>
   <div align="right"><a href="#BDL16">Back</a></div>
 </div>
 <h4><a name="LocoIOProgrammer"></a>Configure LocoIO window</h4>
-<p style="text-align: center;"><img src="images/Main_Loconet04.png" alt="LocoNet IO programmer" border="4" height="518" width="693"></p>
+<p style="text-align: center;">Note: The LocoNet Configure LocoIO tool is no longer supported; you're advised to use DecoderPro&reg; to program a LocoIO board as a decoder, see the <a href="../../package/jmri/jmrix/loconet/locoio/LocoIOFrame.shtml">LocoIO page</a>.<br><br>
+<img src="images/Main_Loconet04.png" alt="LocoNet IO programmer" border="4" height="518" width="693"></p>
 <div>
   <div align="right"><a href="#BDL16">Back</a></div>
 </div>
@@ -300,9 +302,9 @@ first step is to erase the decoders memory so it can take new data.
 This will take up to about 30 seconds, depending on the specific
 decoder. </dd>
       <dt>"Sending initialization message"</dt>
-      <dd>Set up the decoder to accept data          after being erased.  This should only take a fraction of a second. </dd>
+      <dd>Set up the decoder to accept data after being erased. This should only take a fraction of a second.</dd>
       <dt>"Send SDF data"</dt>
-      <dd>Load the Sound Definition data into the decoder, which          should only take a few seconds </dd>
+      <dd>Load the Sound Definition data into the decoder, which should only take a few seconds</dd>
       <dt>"Send WAV data"</dt>
       <dd>The
 sound data is being downloaded. As each block is sent you'll get an
@@ -316,15 +318,12 @@ was being send, which is listed as "PR2 not ready". If this happens
 repeatedly, make sure that the serial port and cable that the PR2 is
 using as the control lea</li>
 </ol>
-<div>
-  <div align="right"><a href="#Sounds">Back</a></div>
-</div>
-<p>&nbsp; </p>
-<hr>
-
-<div align="right">
+<div align="right"><a href="#Sounds">Back</a>
 <p><a href="dp3_menubar.shtml">Back to Index</a><a href="index.shtml"></a></p>
 </div>
 
 <!--#include virtual="/Footer" -->
-</div></body></html>
+  </div><!-- closes #mainContent-->
+</div> <!-- closes #mBody-->
+</body>
+</html>

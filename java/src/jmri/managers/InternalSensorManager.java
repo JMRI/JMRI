@@ -1,17 +1,25 @@
-// InternalSensorManager.java
 package jmri.managers;
 
 import jmri.Sensor;
 import jmri.implementation.AbstractSensor;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 /**
  * Implementation of the InternalSensorManager interface.
  *
  * @author	Bob Jacobsen Copyright (C) 2001, 2003, 2006
- * @version	$Revision$
+ * @deprecated As of 4.3.5, use jmri.jmrix.internal classes
  */
+@Deprecated
 public class InternalSensorManager extends AbstractSensorManager {
 
+    public InternalSensorManager() {
+        log.debug("InternalSensorManager constructed");
+        defaultState = Sensor.UNKNOWN;
+        log.debug("Default new-Sensor state reset to UNKNOWN");
+    }
+    
     public boolean allowMultipleAdditions(String systemName) {
         return true;
     }
@@ -37,12 +45,14 @@ public class InternalSensorManager extends AbstractSensorManager {
             log.error("An error occured while trying to set initial state for sensor " + sen.getDisplayName());
             log.error(ex.toString());
         }
+        log.debug("Internal Sensor \"{}\", \"{}\" created", systemName, userName);
         return sen;
     }
 
     static int defaultState = Sensor.UNKNOWN;
 
     public static synchronized void setDefaultStateForNewSensors(int defaultSetting) {
+        log.debug("Default new-Sensor state set to {}", defaultSetting);
         defaultState = defaultSetting;
     }
 
@@ -90,6 +100,6 @@ public class InternalSensorManager extends AbstractSensorManager {
     public String getSystemPrefix() {
         return prefix;
     }
-}
 
-/* @(#)InternalSensorManager.java */
+    private final static Logger log = LoggerFactory.getLogger(InternalSensorManager.class);
+}

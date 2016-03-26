@@ -1,13 +1,10 @@
 package jmri.jmrix.internal.configurexml;
 
-import jmri.InstanceManager;
 import jmri.jmrix.SerialPortAdapter;
 import jmri.jmrix.configurexml.AbstractConnectionConfigXml;
 import jmri.jmrix.internal.ConnectionConfig;
 import jmri.jmrix.internal.InternalAdapter;
 import org.jdom2.Element;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 
 /**
  * Handle XML persistance of virtual layout connections
@@ -17,7 +14,6 @@ import org.slf4j.LoggerFactory;
  * attribute in the XML.
  *
  * @author Bob Jacobsen Copyright: Copyright (c) 2003, 2010
- * @version $Revision$
  */
 public class ConnectionConfigXml extends AbstractConnectionConfigXml {
 
@@ -35,12 +31,13 @@ public class ConnectionConfigXml extends AbstractConnectionConfigXml {
         adapter = ((ConnectionConfig) object).getAdapter();
     }
 
-    /*protected void getInstance() {
-     log.error("unexpected call to getInstance");
-     new Exception().printStackTrace();
-     }*/
+
+    @Override
     public Element store(Object o) {
         getInstance(o);
+        
+        if (adapter == null) return null;
+        
         Element e = new Element("connection");
         storeCommon(e, adapter);
 
@@ -49,16 +46,12 @@ public class ConnectionConfigXml extends AbstractConnectionConfigXml {
         return e;
     }
 
-    /**
-     * Port name carries the hostname for the network connection
-     *
-     * @param e Top level Element to unpack.
-     */
-    public boolean load(Element e) {
+    @Override
+    public boolean load(Element shared, Element perNode) {
         boolean result = true;
         getInstance();
 
-        loadCommon(e, adapter);
+        this.loadCommon(shared, perNode, adapter);
         // register, so can be picked up
         register();
 
@@ -70,11 +63,9 @@ public class ConnectionConfigXml extends AbstractConnectionConfigXml {
         return result;
     }
 
+    @Override
     protected void register() {
-        InstanceManager.configureManagerInstance().registerPref(new ConnectionConfig(adapter));
+        this.register(new ConnectionConfig(adapter));
     }
-
-    // initialize logging
-    static Logger log = LoggerFactory.getLogger(ConnectionConfigXml.class.getName());
 
 }

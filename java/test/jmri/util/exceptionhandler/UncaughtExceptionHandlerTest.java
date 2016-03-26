@@ -1,44 +1,38 @@
-// UncaughtExceptionHandlerTest.java
 package jmri.util.exceptionhandler;
 
 import jmri.util.JUnitAppender;
 import jmri.util.SwingTestCase;
-import junit.framework.Assert;
 import junit.framework.Test;
 import junit.framework.TestSuite;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
+
 
 /**
  * Tests for the jmri.util.UncaughtExceptionHandler class.
  *
  * @author	Bob Jacobsen Copyright 2010
- * @version	$Revision$
  */
 public class UncaughtExceptionHandlerTest extends SwingTestCase {
 
     public void testThread() throws Exception {
         Thread t = new Thread() {
             public void run() {
+                // The deref has to be on line 22 or test will fail
                 deref(null);
             }
 
             void deref(Object o) {
+                // The NPE has to be on line 27 or test will fail
                 o.toString();
             }
         };
-        //log.warn("before pauseAWT");
-        pauseAWT();  // can't sleep unless you've paused
-        //log.warn("before t.start");
+
         t.start();
-        //log.warn("before sleep");
-        sleep(100);
-        //log.warn("before assertErrorMessage");
-        JUnitAppender.assertErrorMessage("Unhandled Exception: java.lang.NullPointerException");
+        jmri.util.JUnitUtil.releaseThread(this);
+        JUnitAppender.assertErrorMessage("Uncaught Exception caught by jmri.util.exceptionhandler.UncaughtExceptionHandler");
     }
 
+    boolean caught = false;
     public void testSwing() throws Exception {
-        boolean caught = false;
         Runnable r = new Runnable() {
             public void run() {
                 deref(null);
@@ -53,8 +47,8 @@ public class UncaughtExceptionHandlerTest extends SwingTestCase {
         } catch (java.lang.reflect.InvocationTargetException e) {
             caught = true;
         }
-        flushAWT();
-        Assert.assertTrue("threw exception", caught);
+        jmri.util.JUnitUtil.waitFor(()->{return caught;}, "threw exception");
+        // emits no logging, as the UncaughtExceptionHandlerTest handler isn't invoked
     }
 
     // from here down is testing infrastructure
@@ -84,7 +78,4 @@ public class UncaughtExceptionHandlerTest extends SwingTestCase {
         super.tearDown();
         apps.tests.Log4JFixture.tearDown();
     }
-
-    static Logger log = LoggerFactory.getLogger(UncaughtExceptionHandlerTest.class.getName());
-
 }

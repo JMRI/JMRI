@@ -22,8 +22,7 @@ public class MemorySpinnerIconTest extends jmri.util.SwingTestCase {
     MemorySpinnerIcon toi2 = null;
     MemorySpinnerIcon toi3 = null;
 
-    jmri.jmrit.display.panelEditor.PanelEditor panel
-            = new jmri.jmrit.display.panelEditor.PanelEditor("Test MemorySpinnerIcon Panel");
+    jmri.jmrit.display.panelEditor.PanelEditor panel;
 
     public void testShow() {
         JmriJFrame jf = new JmriJFrame();
@@ -69,6 +68,10 @@ public class MemorySpinnerIconTest extends jmri.util.SwingTestCase {
 
         jf.pack();
         jf.setVisible(true);
+        
+        if (!System.getProperty("jmri.demo", "false").equals("false")) {
+            jf.setVisible(false);
+        }
 
     }
 
@@ -92,6 +95,8 @@ public class MemorySpinnerIconTest extends jmri.util.SwingTestCase {
     // The minimal setup for log4J
     protected void setUp() {
         apps.tests.Log4JFixture.setUp();
+        
+        panel = new jmri.jmrit.display.panelEditor.PanelEditor("Test MemorySpinnerIcon Panel");
     }
 
     protected void tearDown() {

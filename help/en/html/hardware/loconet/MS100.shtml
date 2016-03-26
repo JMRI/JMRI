@@ -1,34 +1,25 @@
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
-<!-- $Id$ -->
 <html lang="en">
 <head>
- <TITLE>
-      JMRI Hardware Guide: Connecting an MS100 to LocoNet&reg;
- </TITLE>
-    <META http-equiv=Content-Type content="text/html; charset=iso-8859-1">
-    <META content="Bob Jacobsen" name=Author>
-    <META name="keywords" content="Digitrax Chief DCS Command Station MS-100 LocoBuffer java model railroad JMRI install windows">
+ <title>JMRI Hardware Support - Connecting an MS100 to LocoNet&reg;</title>
+    <meta content="Bob Jacobsen" name="Author">
+    <meta name="keywords" content="Digitrax Chief DCS Command Station MS-100 LocoBuffer java model railroad JMRI install windows">
 
 <!-- Style -->
-<META HTTP-EQUIV="Content-Type" CONTENT="text/html; charset=iso-8859-1">
-<LINK REL="stylesheet" TYPE="text/css" HREF="/css/default.css"
-	MEDIA="screen">
-<LINK REL="stylesheet" TYPE="text/css" HREF="/css/print.css"
-	MEDIA="print">
-<LINK REL="icon" HREF="/images/jmri.ico" TYPE="image/png">
-<LINK REL="home" TITLE="Home" HREF="/">
+<meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
+<link rel="stylesheet" type="text/css" href="/css/default.css" media="screen">
+<link rel="stylesheet" type="text/css" href="/css/print.css" media="print">
+<link rel="icon" href="/images/jmri.ico" type="image/png">
+<link rel="home" title="Home" href="/">
 <!-- /Style -->
-</HEAD>
+</head>
 
-<BODY>
+<body>
 <!--#include virtual="/Header" -->
   <div class="nomenu" id="mBody">
     <div id="mainContent">
 
-      <h1> 
-      JMRI Hardware Guide: Connecting an MS100 to LocoNet&reg;
-      </h1>
-
+  <h1>Hardware Support: Connecting an MS100 to LocoNet&reg;</h1>
 
 <p>
 The MS100 from Digitrax allows you to connect many types of computers
@@ -47,15 +38,14 @@ We strongly recommend that new setups not use the MS100, and existing users
 plan on converting to a better solution before it becomes necessary. 
 
 <p>The 
-<A HREF="LocoBufferUSB.shtml">LocoBuffer USB</a>
-and the <A HREF="PR3.shtml">Digitrax PR3</a>
+<a href="LocoBufferUSB.shtml">LocoBuffer USB</a>
+and the <a href="PR3.shtml">Digitrax PR3</a>
 are currently the most reliable ways to 
 connect a computer to a LocoNet.  
 The LocoBuffer-USB is produced by Dick Bronson's
-<A HREF="http://www.rr-cirkits.com">RR-CirKits</a> 
+<a href="http://www.rr-cirkits.com">RR-CirKits</a> 
 company, based in part on the original LocoBuffer design.
 </p>
-
 
 <p>In MS100 mode, the program attempts to open the port at 16600
 baud, the LocoNet rate.  If this fails, it attempts to open the
@@ -69,15 +59,15 @@ used with Mac OS X, Windows 7 or most Windows Vista machines</b>.
 Because we can't be sure your computer
 will be able to talk to a MS100 without trying it, you should
 test this before spending money on the MS100. To do that:</p>
-<UL>
-    <LI>Start the program.</li>
-    <LI>Set the preferences for MS100 and your serial port. You
+<ul>
+    <li>Start the program.</li>
+    <li>Set the preferences for MS100 and your serial port. You
     don't need to have anything connected, but do select the port
     you will eventually be using. </li>
-    <LI>Save the preferences.</li>
-    <LI>Quit the program and restart it so that the preferences
+    <li>Save the preferences.</li>
+    <li>Quit the program and restart it so that the preferences
     take effect.</li>
-</UL>
+</ul>
 
 <p>If you get a dialog box saying "Could not set baud rate...",
 then you won't be able to use your computer with a MS100.  You
@@ -87,25 +77,27 @@ should use a LocoBuffer.</p>
 
 Some users have reported success using Linux commands to 
 directly set the baud rate while the program is running.  To do this:
-<UL>
-<LI>Start DecoderPro,
+<ul>
+<li>Start DecoderPro,
 and wait until you see the error message that the baud rate could
 not be set. 
-<LI>Run the following commands from the Linux command line:
-<PRE>
+<li>Run the following commands from the Linux command line:
+<pre>
 setserial /dev/ttyS0 divisor 7
 setserial /dev/ttyS0 spd_cust
 stty speed 38400 &lt; /dev/ttyS0
-</PRE>
-<LI>Then click on "OK" and continue on. 
-</UL>
+</pre>
+<li>Then click on "OK" and continue on. 
+</ul>
 
 This has been reported to work
 with both RH9 and FC3.
 <p>LocoNet&reg; is a registered trademark of <a href="http://www.digitrax.com">Digitrax, Inc.</a></p>
-      <hr class="hide">
-    </div>
+
+<hr class="hide">
 
 <!--#include virtual="/Footer" -->
+  </div><!-- closes #mainContent-->
+</div> <!-- closes #mBody-->
 </body>
 </html>

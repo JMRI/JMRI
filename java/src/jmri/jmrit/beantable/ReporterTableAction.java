@@ -58,7 +58,7 @@ public class ReporterTableAction extends AbstractTableAction {
     }
 
     public ReporterTableAction() {
-        this("Reporter Table");
+        this(Bundle.getMessage("TitleReporterTable"));
     }
 
     /**
@@ -121,10 +121,10 @@ public class ReporterTableAction extends AbstractTableAction {
 
             public String getColumnName(int col) {
                 if (col == VALUECOL) {
-                    return "Report";
+                    return Bundle.getMessage("LabelReport");
                 }
                 if (col == LASTREPORTCOL) {
-                    return "Last Report";
+                    return Bundle.getMessage("LabelLastReport");
                 }
                 return super.getColumnName(col);
             }
@@ -171,18 +171,18 @@ public class ReporterTableAction extends AbstractTableAction {
             }
 
             public JButton configureButton() {
-                BeanTableDataModel.log.error("configureButton should not have been called");
+                log.error("configureButton should not have been called");
                 return null;
             }
 
             protected String getBeanType() {
-                return AbstractTableAction.rbean.getString("BeanNameReporter");
+                return Bundle.getMessage("BeanNameReporter");
             }
         };
     }
 
     protected void setTitle() {
-        f.setTitle(f.rb.getString("TitleReporterTable"));
+        f.setTitle(Bundle.getMessage("TitleReporterTable"));
     }
 
     protected String helpTarget() {
@@ -194,9 +194,9 @@ public class ReporterTableAction extends AbstractTableAction {
     JTextField userName = new JTextField(20);
     JComboBox<String> prefixBox = new JComboBox<String>();
     JTextField numberToAdd = new JTextField(10);
-    JCheckBox range = new JCheckBox("Add a range");
+    JCheckBox range = new JCheckBox(Bundle.getMessage("AddRangeBox"));
     JLabel sysNameLabel = new JLabel("Hardware Address");
-    JLabel userNameLabel = new JLabel(rb.getString("LabelUserName"));
+    JLabel userNameLabel = new JLabel(Bundle.getMessage("LabelUserName"));
     String systemSelectionCombo = this.getClass().getName() + ".SystemSelected";
     String userNameError = this.getClass().getName() + ".DuplicateUserName";
     jmri.UserPreferencesManager pref;
@@ -204,7 +204,7 @@ public class ReporterTableAction extends AbstractTableAction {
     protected void addPressed(ActionEvent e) {
         pref = jmri.InstanceManager.getDefault(jmri.UserPreferencesManager.class);
         if (addFrame == null) {
-            addFrame = new JmriJFrame(rb.getString("TitleAddReporter"), false, true);
+            addFrame = new JmriJFrame(Bundle.getMessage("TitleAddReporter"), false, true);
             addFrame.addHelpMenu("package.jmri.jmrit.beantable.ReporterAddEdit", true);
             ActionListener listener = new ActionListener() {
                 public void actionPerformed(ActionEvent e) {
@@ -317,9 +317,9 @@ public class ReporterTableAction extends AbstractTableAction {
     void handleCreateException(String sysName) {
         javax.swing.JOptionPane.showMessageDialog(addFrame,
                 java.text.MessageFormat.format(
-                        rb.getString("ErrorReporterAddFailed"),
+                        Bundle.getMessage("ErrorReporterAddFailed"),
                         new Object[]{sysName}),
-                rb.getString("ErrorTitle"),
+                Bundle.getMessage("ErrorTitle"),
                 javax.swing.JOptionPane.ERROR_MESSAGE);
     }
 
@@ -328,10 +328,10 @@ public class ReporterTableAction extends AbstractTableAction {
     }
 
     public String getClassDescription() {
-        return rb.getString("TitleReporterTable");
+        return Bundle.getMessage("TitleReporterTable");
     }
 
-    static final Logger log = LoggerFactory.getLogger(ReporterTableAction.class.getName());
+    private final static Logger log = LoggerFactory.getLogger(ReporterTableAction.class.getName());
 }
 
 /* @(#)ReporterTableAction.java */

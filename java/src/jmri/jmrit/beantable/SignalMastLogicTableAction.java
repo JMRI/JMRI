@@ -49,7 +49,7 @@ public class SignalMastLogicTableAction extends AbstractTableAction {
     }
 
     public SignalMastLogicTableAction() {
-        this(AbstractTableAction.rb.getString("TitleSignalMastLogicTable"));
+        this(Bundle.getMessage("TitleSignalMastLogicTable"));
     }
 
     @Override
@@ -237,7 +237,6 @@ public class SignalMastLogicTableAction extends AbstractTableAction {
                         }
 
                         public void run() {
-                            //Thread.yield();
                             editLogic(row, 0);
                         }
                     }
@@ -261,21 +260,21 @@ public class SignalMastLogicTableAction extends AbstractTableAction {
             public String getColumnName(int col) {
                 switch (col) {
                     case SOURCECOL:
-                        return AbstractTableAction.rb.getString("Source");
+                        return Bundle.getMessage("Source");
                     case DESTCOL:
-                        return AbstractTableAction.rb.getString("Destination");
+                        return Bundle.getMessage("Destination");
                     case SOURCEAPPCOL:
-                        return AbstractTableAction.rb.getString("SignalMastAppearance");
+                        return Bundle.getMessage("SignalMastAppearance");
                     case DESTAPPCOL:
-                        return AbstractTableAction.rb.getString("SignalMastAppearance");
+                        return Bundle.getMessage("SignalMastAppearance");
                     case COMCOL:
-                        return AbstractTableAction.rb.getString("Comment");
+                        return Bundle.getMessage("Comment");
                     case DELCOL:
-                        return AbstractTableAction.rb.getString("ButtonDelete");
+                        return ""; // override default, no title for Delete column
                     case EDITLOGICCOL:
-                        return AbstractTableAction.rb.getString("ButtonEdit");
+                        return ""; // override default, no title for Edit column
                     case ENABLECOL:
-                        return AbstractTableAction.rb.getString("ColumnHeadEnabled");
+                        return Bundle.getMessage("ColumnHeadEnabled");
                     default:
                         return "unknown";
                 }
@@ -432,9 +431,9 @@ public class SignalMastLogicTableAction extends AbstractTableAction {
                     case COMCOL:
                         return (b != null) ? b.getComment(getDestMastFromRow(row)) : null;
                     case DELCOL:
-                        return AbstractTableAction.rb.getString("ButtonDelete");
+                        return Bundle.getMessage("ButtonDelete");
                     case EDITLOGICCOL:  //
-                        return AbstractTableAction.rb.getString("ButtonEdit");
+                        return Bundle.getMessage("ButtonEdit");
                     case ENABLECOL:
                         return (b != null) ? b.isEnabled(getDestMastFromRow(row)) : null;
                     default:
@@ -446,7 +445,7 @@ public class SignalMastLogicTableAction extends AbstractTableAction {
             protected void configDeleteColumn(JTable table) {
                 // have the delete column hold a button
                 setColumnToHoldButton(table, DELCOL,
-                        new JButton(AbstractTableAction.rb.getString("ButtonDelete")));
+                        new JButton(Bundle.getMessage("ButtonDelete")));
             }
 
             protected String getBeanType() {
@@ -461,7 +460,7 @@ public class SignalMastLogicTableAction extends AbstractTableAction {
     }
 
     protected void setTitle() {
-        f.setTitle(AbstractTableAction.rb.getString("TitleSignalMastLogicTable"));
+        f.setTitle(Bundle.getMessage("TitleSignalMastLogicTable"));
     }
 
     @Override
@@ -506,7 +505,7 @@ public class SignalMastLogicTableAction extends AbstractTableAction {
 
         if (retval == 0) {
             InstanceManager.signalMastLogicManagerInstance().addPropertyChangeListener(propertyGenerateListener);
-            //This process can take some time, so we do not want to hog the GUI thread
+            // This process can take some time, so we do split it off then return to Swing/AWT
             Runnable r = new Runnable() {
                 public void run() {
                     //While the global discovery is taking place we remove the listener as this can result in a race condition.
@@ -514,15 +513,35 @@ public class SignalMastLogicTableAction extends AbstractTableAction {
                     try {
                         InstanceManager.signalMastLogicManagerInstance().automaticallyDiscoverSignallingPairs();
                     } catch (jmri.JmriException e) {
-                        InstanceManager.signalMastLogicManagerInstance().removePropertyChangeListener(propertyGenerateListener);
-                        JOptionPane.showMessageDialog(null, e.toString());
-                        signalMastLogicFrame.setVisible(false);
+                        // Notify of problem
+                        try {
+                            javax.swing.SwingUtilities.invokeAndWait(()->{
+                                InstanceManager.signalMastLogicManagerInstance().removePropertyChangeListener(propertyGenerateListener);
+                                JOptionPane.showMessageDialog(null, e.toString());
+                                signalMastLogicFrame.setVisible(false);
+                            });
+                        } catch (java.lang.reflect.InvocationTargetException ex) {
+                            log.error("failed to notify of problem with automaticallyDiscoverSignallingPairs", ex );
+                        } catch (InterruptedException ex) {
+                            log.error("interrupted while notifying of problem with automaticallyDiscoverSignallingPairs", ex );
+                        }
                     }
-                    m.updateNameList();
-                    suppressUpdate = false;
-                    m.fireTableDataChanged();
-                    if (genSect.isSelected()) {
-                        ((jmri.managers.DefaultSignalMastLogicManager) InstanceManager.signalMastLogicManagerInstance()).generateSection();
+                    
+                    // process complete, update GUI
+                    try {
+                        javax.swing.SwingUtilities.invokeAndWait(()->{
+                            m.updateNameList();
+                            suppressUpdate = false;
+                            m.fireTableDataChanged();
+                            if (genSect.isSelected()) {
+                                ((jmri.managers.DefaultSignalMastLogicManager) 
+                                    InstanceManager.signalMastLogicManagerInstance()).generateSection();
+                            }
+                        });
+                    } catch (java.lang.reflect.InvocationTargetException ex) {
+                        log.error("failed to update at end of automaticallyDiscoverSignallingPairs", ex );
+                    } catch (InterruptedException ex) {
+                        log.error("interrupted during update at end of automaticallyDiscoverSignallingPairs", ex );
                     }
                 }
             };
@@ -556,5 +575,5 @@ public class SignalMastLogicTableAction extends AbstractTableAction {
         return SignalMastLogicTableAction.class.getName();
     }
 
-    static final Logger log = LoggerFactory.getLogger(SignalMastLogicTableAction.class.getName());
+    private final static Logger log = LoggerFactory.getLogger(SignalMastLogicTableAction.class.getName());
 }

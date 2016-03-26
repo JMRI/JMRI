@@ -5,14 +5,11 @@ import junit.framework.Assert;
 import junit.framework.Test;
 import junit.framework.TestCase;
 import junit.framework.TestSuite;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 
 /**
  * Tests for the jmri.jmris.srcp.JmriSRCPServer class
  *
  * @author Paul Bender
- * @version $Revision$
  */
 public class JmriSRCPServerTest extends TestCase {
 
@@ -43,7 +40,5 @@ public class JmriSRCPServerTest extends TestCase {
 
         return suite;
     }
-
-    static Logger log = LoggerFactory.getLogger(JmriSRCPServerTest.class.getName());
 
 }

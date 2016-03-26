@@ -1,15 +1,15 @@
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
-<html lang="en"><head><!-- Copyright ($Author$) 2009 --><!-- $Id$ -->
+<html lang="en">
+<head><title>DecoderPro&reg; Main Window</title>
 
-
-
-
-
-<title>DecoderPro&reg; Main Window</title><!-- Style --><meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
+<!-- Style -->
+<meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
 <link rel="stylesheet" type="text/css" href="/css/default.css" media="screen">
 <link rel="stylesheet" type="text/css" href="/css/print.css" media="print">
 <link rel="icon" href="/images/jmri.ico" type="image/png">
-<link rel="home" title="Home" href="/"><!-- /Style --></head>
+<link rel="home" title="Home" href="/">
+<!-- /Style -->
+</head>
 
 <body>
 <!--#include virtual="/Header" -->
@@ -18,7 +18,7 @@
 <div id="mainContent">
 
 <h1>DecoderPro&reg; Debug Menu</h1>
-<h1>Virtual Sound Decoder</h1>
+<h2>Virtual Sound Decoder</h2>
 
 <div align="right">
 <p><a href="Main_Debug.shtml#pricom">Back </a></p>
@@ -42,7 +42,7 @@ locomotive would by playing sounds through the computer
 speakers.</span></p>
 <h4>OpenAL Required</h4>
 <p>Virtual Sound Decoder requires that your system have the OpenAL
-audio lbirary installed.  OpenAL is included by default on the Mac, but
+audio library installed.  OpenAL is included by default on the Mac, but
 must be installed on Windows.</p>
 <p>OpenAL is available free from Creative Labs.
 You can <a target="_blank" href="http://jmri.org/help/en/package/jmri/jmrit/vsdecoder/VSDecoderFrame.shtml">download the installer for your operating system</a> from the
@@ -175,7 +175,6 @@ available to any currently running or newly launched VSDecoder.</p>
 <h6>Edit-&gt;VSDecoder Preferences</h6>
 <p>Set preferences for VSDecoder operation.  See below for details.</p>
 
-
 <a name="preferences"></a><h4>VSDecoder Preferences</h4>
 <p>The VSDecoder Preferences pane allows the user to change various
 preferences in how the VSDecoder works.</p>
@@ -197,11 +196,12 @@ or of the room.
 <p> Choose Apply to apply changes to the Preferences</p>
 <p> Choose Save to save changes to the Preferences</p>
 
-
-
 <div align="right">
 <p><a href="Main_Debug.shtml#pricom">Back </a></p>
 </div>
 
 <!--#include virtual="/Footer" -->
-</div></body></html>
+  </div><!-- closes #mainContent-->
+ </div> <!-- closes #mBody-->
+</body>
+</html>

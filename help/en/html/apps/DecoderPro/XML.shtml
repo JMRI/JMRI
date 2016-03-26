@@ -2,8 +2,7 @@
 <html lang="en">
 <head>
 <!-- Copyright Bob Jacobsen 2008 -->
-<!-- $Id$ -->
-<title>JMRI: Decoder Information</title>
+<title>JMRI: Decoder - Decoder Information</title>
 
 <!-- Style -->
 <meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
@@ -21,7 +20,8 @@
 <div id="mainContent">
 
 <!-- Page Body -->
-<H1>JMRI: Decoder Information</H1>
+<h1>JMRI: DecoderPro User Guide</h1>
+<h2>Decoder Information</h2>
 
 The JMRI project has collected a large amount of information about 
 DCC decoders, which it makes publicly available in several ways. These
@@ -31,40 +31,41 @@ are described on this page.
 
 Web pages are automatically created from the DecoderPro configuration
 files as part of each release.  These contain:
-<UL>
-<LI>
-<A HREF="../../xml/XSLT/pages/DecoderId.html">Decoder identification CV values</a>
-used by DecoderPro to identify the manufacturer and 
-type of an unknown decoder.
-<LI>
-<A HREF="../../xml/XSLT/pages/decoderIndex.html">Index to individual decoder pages</a>,
-listed by manufacturer.  This provides a one-page summary of the characteristics
-and CV contents of the decoders.
-<LI>Selection guides listing 
-<A HREF="../../xml/XSLT/pages/SelectionGuide.html#size">decoder size</a>, and by
-<A HREF="../../xml/XSLT/pages/SelectionGuide.html#electrical">decoder electrical characteristics</a>.
-<LI><A HREF="../../xml/XSLT/pages/CVSummary.html">Combined summary of CVs for all decoders</a>. Note that
-this is a <I>very</i> large page!
-</UL>
+	<ul>
+	<li>
+	<a href="../../xml/XSLT/pages/DecoderId.html">Decoder identification CV values</a>
+	used by DecoderPro to identify the manufacturer and 
+	type of an unknown decoder.
+	<li>
+	<a href="../../xml/XSLT/pages/decoderIndex.html">Index to individual decoder pages</a>,
+	listed by manufacturer.  This provides a one-page summary of the characteristics
+	and CV contents of the decoders.
+	<li>Selection guides listing 
+	<a href="../../xml/XSLT/pages/SelectionGuide.html#size">decoder size</a>, and by
+	<a href="../../xml/XSLT/pages/SelectionGuide.html#electrical">decoder electrical characteristics</a>.
+	<li><a href="../../xml/XSLT/pages/CVSummary.html">Combined summary of CVs for all decoders</a>. Note that
+	this is a <I>very</i> large page!
+	</ul>
 
 <h2>Information in Comma-Separated-Variable (CSV) format</h2>
 
 To make it easier to import into a spread-sheet or other program, these 
 are also made available as files in Comma-Separated-Variable (CSV) format.
 
-<UL>
-<LI><A HREF="../../xml/XSLT/pages/decodersizes.csv">decodersizes.csv</a> Physical size for each defined decoder
-<LI><A HREF="../../xml/XSLT/pages/cvsummary.csv">cvsummary.csv</a> CVs present in each decoder
-<LI><A HREF="../../xml/XSLT/pages/decoderpower.csv">decoderpower.csv</a> Power limits and connector by decoder
-</UL>
-
+	<ul>
+	<li><a href="../../xml/XSLT/pages/decodersizes.csv">decodersizes.csv</a> Physical size for each defined decoder
+	<li><a href="../../xml/XSLT/pages/cvsummary.csv">cvsummary.csv</a> CVs present in each decoder
+	<li><a href="../../xml/XSLT/pages/decoderpower.csv">decoderpower.csv</a> Power limits and connector by decoder
+	</ul>
 
 <h2>XML files</h2>
 
 The definitive version of the data is in XML files. These can be obtained from 
-any jmri distribution, or via the web at
-<A HREF="http://jmri.sf.net/xml">http://jmri.sf.net/xml</a>.
+any JMRI distribution, or via the web at
+<a href="http://jmri.org/xml">http://jmri.org/xml</a>.
     
-<!--#include virtual="/Footer" -->
+  <!--#include virtual="/Footer" -->
+  </div> <!-- close #mainContent -->
+</div> <!-- close #mBody -->    
 </body>
 </html>

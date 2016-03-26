@@ -58,7 +58,8 @@ public class TrackSegmentXml extends AbstractXmlAdapter {
         return element;
     }
 
-    public boolean load(Element element) {
+    @Override
+    public boolean load(Element shared, Element perNode) {
         log.error("Invalid method called");
         return false;
     }
@@ -145,5 +146,5 @@ public class TrackSegmentXml extends AbstractXmlAdapter {
         p.trackList.add(l);
     }
 
-    static Logger log = LoggerFactory.getLogger(TrackSegmentXml.class.getName());
+    private final static Logger log = LoggerFactory.getLogger(TrackSegmentXml.class.getName());
 }

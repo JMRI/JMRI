@@ -1,4 +1,3 @@
-// PackageTest.java
 package jmri.util.exceptionhandler;
 
 import junit.framework.Test;
@@ -9,7 +8,6 @@ import junit.framework.TestSuite;
  * Invokes complete set of tests in the jmri.util.swing tree
  *
  * @author	Bob Jacobsen Copyright 2003
- * @version $Revision$
  */
 public class PackageTest extends TestCase {
 
@@ -29,7 +27,6 @@ public class PackageTest extends TestCase {
         TestSuite suite = new TestSuite("jmri.util.exceptionhandler.PackageTest");   // no tests in this class itself
 
         suite.addTest(UncaughtExceptionHandlerTest.suite());
-        suite.addTest(AwtHandlerTest.suite());
 
         return suite;
     }

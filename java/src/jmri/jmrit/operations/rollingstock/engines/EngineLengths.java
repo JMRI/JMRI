@@ -35,7 +35,7 @@ public class EngineLengths extends RollingStockAttribute {
             // create and load
             _instance = new EngineLengths();
         }
-        if (Control.showInstance) {
+        if (Control.SHOW_INSTANCE) {
             log.debug("EngineLengths returns instance {}", _instance);
         }
         return _instance;
@@ -86,6 +86,6 @@ public class EngineLengths extends RollingStockAttribute {
         super.firePropertyChange(p, old, n);
     }
 
-    static Logger log = LoggerFactory.getLogger(EngineLengths.class.getName());
+    private final static Logger log = LoggerFactory.getLogger(EngineLengths.class.getName());
 
 }

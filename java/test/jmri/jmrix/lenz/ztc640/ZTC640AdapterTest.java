@@ -4,8 +4,6 @@ import junit.framework.Assert;
 import junit.framework.Test;
 import junit.framework.TestCase;
 import junit.framework.TestSuite;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 
 /**
  * ZTC640AdapterTest.java
@@ -13,7 +11,6 @@ import org.slf4j.LoggerFactory;
  * Description:	tests for the jmri.jmrix.lenz.ztc640.ZTC640Adapter class
  *
  * @author	Paul Bender
- * @version $Revision$
  */
 public class ZTC640AdapterTest extends TestCase {
 
@@ -47,7 +44,5 @@ public class ZTC640AdapterTest extends TestCase {
     protected void tearDown() {
         apps.tests.Log4JFixture.tearDown();
     }
-
-    static Logger log = LoggerFactory.getLogger(ZTC640AdapterTest.class.getName());
 
 }

@@ -122,6 +122,9 @@ public class CoreIdRfidProtocol extends RfidProtocol {
                 log.debug("Not a correctly formed message");
             }
             return true;
+        } else if (isConcentrator && (msg.getNumDataElements() == 1) && (msg.getElement(0) & 0xFF) == 0x3E) {
+            log.debug("Init message from Concentrator: {}", msg);
+            return true;
         }
         return false;
     }

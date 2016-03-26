@@ -1,4 +1,3 @@
-// PreferNumericComparatorTest.java
 package jmri.util;
 
 import java.util.Comparator;
@@ -6,8 +5,6 @@ import junit.framework.Assert;
 import junit.framework.Test;
 import junit.framework.TestCase;
 import junit.framework.TestSuite;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 
 /**
  * Tests for the jmri.util.StringUtil class.
@@ -52,7 +49,7 @@ public class PreferNumericComparatorTest extends TestCase {
 
     // Main entry point
     static public void main(String[] args) {
-        String[] testCaseName = {PreferNumericComparatorTest.class.getName()};
+        String[] testCaseName = {"-noloading", PreferNumericComparatorTest.class.getName()};
         junit.swingui.TestRunner.main(testCaseName);
     }
 
@@ -61,7 +58,5 @@ public class PreferNumericComparatorTest extends TestCase {
         TestSuite suite = new TestSuite(PreferNumericComparatorTest.class);
         return suite;
     }
-
-    static Logger log = LoggerFactory.getLogger(PreferNumericComparatorTest.class.getName());
 
 }

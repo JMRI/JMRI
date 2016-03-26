@@ -9,6 +9,7 @@ import javax.script.ScriptEngineFactory;
 import javax.swing.JFileChooser;
 import javax.swing.filechooser.FileFilter;
 import javax.swing.filechooser.FileNameExtensionFilter;
+import jmri.util.FileUtil;
 
 /**
  *
@@ -19,7 +20,7 @@ public class ScriptFileChooser extends JFileChooser {
     private static final long serialVersionUID = 7442984045295516630L;
 
     public ScriptFileChooser() {
-        super();
+        super(FileUtil.getScriptsPath());
         this.init();
     }
 
@@ -57,6 +58,9 @@ public class ScriptFileChooser extends JFileChooser {
         try {
             return Bundle.getMessage(language);
         } catch (MissingResourceException ex) {
+            if (!language.endsWith(Bundle.getMessage("files"))) { // NOI18N
+                return language + " " + Bundle.getMessage("files");
+            }
             return language;
         }
     }

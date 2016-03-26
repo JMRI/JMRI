@@ -1,11 +1,10 @@
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
-<!-- $Id$ -->
 <html lang="en">
 <head>
-    <TITLE>
+    <title>
  	JMRI: Use of JavaDoc and UML
-    </TITLE>
-    <META content="Bob Jacobsen" name=Author>
+    </title>
+    <meta name="author" content="Bob Jacobsen">
     <meta name="keywords" content="JMRI technical code ">
 
 <!-- Style -->
@@ -16,14 +15,14 @@
   <link rel="home" title="Home" href="/">
 <!-- /Style -->
 </head>
-
+<body>
 <!--#include virtual="/Header" -->
 <!--#include virtual="Sidebar" -->
 
 <div id="mainContent">
 
-<H1>JMRI: Use of JavaDoc and UML</H1>
-
+<h1>JMRI: Use of JavaDoc and UML</h1>
+<p>
 The JMRI library provides the majority of its
 API documentation via 
 <a href="http://java.sun.com/j2se/javadoc/writingdoccomments/">JavaDoc</a>
@@ -76,7 +75,7 @@ JMRI primarly uses
 UML class diagrams
 for documenting its structure.
 
-Many UML tutorials are available on the web.  In particular, 
+Many UML tutorials are available on the web. In particular, 
 a good starting point is the 
 <a href="http://www.objectmentor.com/resources/articles/umlClassDiagrams.pdf">Object Mentor introduction to class diagrams</a>.
 For more detail, please see 

@@ -1,37 +1,33 @@
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
-<!-- $Id$ -->
-<HTML LANG="en">
-<HEAD>
-<TITLE>JMRI: Icon Editor Help</TITLE>
-<META HTTP-EQUIV="Content-Type" CONTENT="text/html; charset=iso-8859-1">
-<META CONTENT="Pete Cressman" NAME="Author">
-<META NAME="keywords" CONTENT="JMRI help Panel Editor">
+<html lang="en">
+<head>
+<title>jmri: Icon Editor Help</title>
+<meta name="Author" content="Pete Cressman">
+<meta name="keywords" content="JMRI help Panel Editor">
 
 <!-- Style -->
-<META HTTP-EQUIV="Content-Type" CONTENT="text/html; charset=iso-8859-1">
-<LINK REL="stylesheet" TYPE="text/css" HREF="/css/default.css"
-	MEDIA="screen">
-<LINK REL="stylesheet" TYPE="text/css" HREF="/css/print.css"
-	MEDIA="print">
-<LINK REL="icon" HREF="/images/jmri.ico" TYPE="image/png">
-<LINK REL="home" TITLE="Home" HREF="/">
+<meta http-equiv="content-type" content="text/html; charset=iso-8859-1">
+<link rel="stylesheet" type="text/css" href="/css/default.css" media="screen">
+<link rel="stylesheet" type="text/css" href="/css/print.css" media="print">
+<link rel="icon" href="/images/jmri.ico" type="image/png">
+<link rel="home" title="Home" href="/">
 <!-- /Style -->
-</HEAD>
+</head>
 
-<BODY>
+<body>
 <!--#include virtual="/Header" -->
   <div class="nomenu" id="mBody">
     <div id="mainContent">
 
-<H1>The Icon Editors</H1>
+<h1>The Icon Editors</h1>
 
-<H2>Contents of the Icon Editors</H2>
+<h2>Contents of the Icon Editors</h2>
 
-<img src="AddPanel.png" align="RIGHT">
+<img src="AddPanel.png" align="right">
 <p>Five of the Icon Editors: (Right Hand Turnout, Left Hand Turnout, Sensor, Signal, MultiSensor)
 display a group of icons above a table.  The table lists all of the JMRI entities of 
 the given type
-that have been defined.  There is one icon for each state the entitiy can have.  
+that have been defined.  There is one icon for each state the entity can have.  
 The icons shown are the default icons, but you may change them.</p>
 <p>  
 Below the 
@@ -42,7 +38,7 @@ below.</p>
 
 <p>Two other Icon Editors: (Memory Value and Reporter Value) have no icons and no <b>Change Icon</b> 
 button, but do have tables and an <b>Add to Panel</b> button.
-You must select an entity from the tabbe
+You must select an entity from the table
 before the <b>Add to Panel</b> button becomes active.  No icons are displayed for these JMRI entities
 because pressing <b>Add to Panel</b> installs the value maintained by the entity into the Panel.</p>  
 
@@ -53,7 +49,7 @@ button is always active.</p>
 <p>The remaining two choices for icons: (RPS Reporter and Fast Clock) install their icons directly into the 
 Panel.</p>
 
-<H3>Adding JMRI Entities to the Panel</H3>
+<h3>Adding JMRI Entities to the Panel</h3>
 
 <p>As mentioned above selecting an entity from the table makes the <b>Add to Panel</b> button
 active.  Pressing this button installs the icons for the entity into the Panel.</p>
@@ -64,14 +60,14 @@ When a System Name is entered into this text field, the entity is entity is crea
 entered into the table, and the <b>Add to Panel</b> button becomes active.  Pressing the
 button installs the icons for the new entity into the Panel.</p>
 
-<H2>Pressing the Change Icon Button</H2>
+<h2>Pressing the Change Icon Button</h2>
 
-<img src="AddPanel2.png" align="RIGHT">
+<img src="AddPanel2.png" align="right">
 <p>Pressing this button will add a pane labeled <b>Catalog</b> to the window.  It will show
 one or more "trees" in a scrollable panel.  Expanding the tree displays "nodes" or branches
 of the tree that in turn
-can be expanded.  The nodes correspond to things that are file syetem directories or are
-similar to file syetem directories.  Whenever image (icon) files are encountered in a node, 
+can be expanded.  The nodes correspond to things that are file system directories or are
+similar to file system directories.  Whenever image (icon) files are encountered in a node, 
 the images are displayed in a pane below the Catalog tree(s).</p>
 
 <p>This pane is a "Preview" panel of the contents of the node and has a label that states how 
@@ -89,7 +85,7 @@ Other trees that you might see are: "pPreferences Directory", if you have create
 directory within your JMRI preferences directory - or possibly see, "Image Index" if it has 
 been created already (see below for more information).</p>
 
-<H3>Changing the Icon</H3>
+<h3>Changing the Icon</h3>
 
 <p>Most Icon Editor operations are done by "Drag and Drop".   To change an icon, 
 drag any icon from the node display pane at the bottom 
@@ -100,21 +96,21 @@ the dragged icon will replace it.  You may go to other nodes and drag any of ico
 until you are satisfied with the state icons you want to install into the Panel.</p>
 <p>
 The changes you make to the icons of a JMRI entity can be saved and recalled the next time 
-you use PanelPro by using the menu iten <b>Store Image Index</b> in the <b>File</b>
+you use PanelPro by using the menu item <b>Store Image Index</b> in the <b>File</b>
 menu of the Panel Editor.  The <b>Store Image Index</b> menu item also appears in the 
 <b>File</b> menu of the Image Index Editor.
 
-<H2>Icon Editor Menus</H2>
+<h2>Icon Editor Menus</h2>
 
 <p>The <b>Find Icons</b> menu has the following items:
-<UL>
-        <LI><b>Create/Create/Edit Image Index</b>.  This menu item opens a window where
+<ul>
+        <li><b>Create/Create/Edit Image Index</b>.  This menu item opens a window where
         you can organize the icons into a scheme that makes them easy to find when you want to
         use an Icon Editor.  See the 
         <a href="../catalog/ImageIndex.shtml">Image Index Editor page</a>
-        for how this menu item is used.</LI>
+        for how this menu item is used.</li>
         <p></p>
-        <LI><b>Search File System for Icons</b>.  This opens a file chooser dialog where
+        <li><b>Search File System for Icons</b>.  This opens a file chooser dialog where
         you may open any directory that that has image files.  Select any directory seen
         by your computer and a search for icons will begin.  This will visit every directory
         under this directory and when it encounters one with image files, it will open a 
@@ -122,80 +118,82 @@ menu of the Panel Editor.  The <b>Store Image Index</b> menu item also appears i
         some time.</i>
         <p>Depending on how much memory is needed to show all the files, one  of
         the following two sequences of events will occur.</p>
-        <UL>
-        <LI>If there sufficient memory to display the files, the window will show
+        <ul>
+        <li>If there sufficient memory to display the files, the window will show
         them along with the radio buttons to adjust their background.  Also, three
         buttons will be displayed above the images - <b>Add to Catalog</b>, 
         <b>Continue Searching</b> and <b>Cancel</b>. 
-        <UL> 
-        <LI>Pressing <b>Add to Catalog</b> will make this directory one
+        <ul> 
+        <li>Pressing <b>Add to Catalog</b> will make this directory one
         of the trees in the Catalog pane.   In this case, you may then use it to
-        select icons to change icons in any of the Icon Editors.</LI>
-        <LI>Pressing <b>Continue Searching</b> will have the search proceed to the
-        next directory found with image files.</LI>
-        <LI>Pressing<b> Cancel</b> will close the window with no further action.</LI>
-        </UL>
-        </LI>
-        <LI>If there is not enough memory to display all the image files found in the
+        select icons to change icons in any of the Icon Editors.</li>
+        <li>Pressing <b>Continue Searching</b> will have the search proceed to the
+        next directory found with image files.</li>
+        <li>Pressing<b> Cancel</b> will close the window with no further action.</li>
+        </ul>
+        </li>
+        <li>If there is not enough memory to display all the image files found in the
         directory, a message will state how many files can be displayed.  Press 
         <b>OK</b> and most likely another message will be posted explaining
         that if you want to add any of these images to the Catalog you should move
         or copy the ones you want to another directory.  Again press <b>OK</b>
         and the window will display what it can.  In this case, the three buttons 
         are <b>Show More</b>, <b>Continue Searching</b> and <b>Cancel</b>.  
-        <UL>
-        <LI>Pressing <b>Show More</b> will display the next group of image files
-        from the directory that it is able to display.</LI>
-        <LI>Pressing <b>Continue Searching</b> will have the search proceed to the
-        next directory found with image files.</LI>
-        <LI>Pressing <b>Cancel</b> will close the window with no further action.</LI>
-        </UL>
+        <ul>
+        <li>Pressing <b>Show More</b> will display the next group of image files
+        from the directory that it is able to display.</li>
+        <li>Pressing <b>Continue Searching</b> will have the search proceed to the
+        next directory found with image files.</li>
+        <li>Pressing <b>Cancel</b> will close the window with no further action.</li>
+        </ul>
         <p>Note the latter case generally occurs when you open 
-        a sizable photo album directory.</LI>
-        </UL>       
+        a sizable photo album directory.</li>
+        </ul>       
         <p>This is a feature to be used sparingly, but many interesting icons can
         be found, particularly those cached by your browser.  You might 
         have a use for them.
-</UL>        
+</ul>        
       
-<H3>Making New Icons Available to the Panel</H3>
+<h3>Making New Icons Available to the Panel</h3>
 
 <P>You can also create your own icons.  There are two ways you can make these permanently
 available to the Panel Editor.</P>
-<UL>
-        <LI>Create an Image Index Catalog that is saved to disk and will appear automatically
+<ul>
+        <li>Create an Image Index Catalog that is saved to disk and will appear automatically
         in the Catalog pane.  Use the <b>Create/Edit an ImageIndex Catalog</b> menu item to 
         create and edit an ImageIndex. The ImageIndex will be preserved unchanged during an 
         upgrade.  See the 
         <a href="../catalog/ImageIndex.shtml">Image Index Editor page</a>
-        for more detail.</LI>
-        <LI>Create a new folder named "resources" in
+        for more detail.</li>
+        <li>Create a new folder named "resources" in
         your JMRI Preferences directory. Add your new icons to that folder. This will prevent any
         possible conflicts or loss of data during an upgrade. These new items will automatically 
-        appear under "Preferences Directory" in the icon Catalog.</LI>
-</UL>
+        appear under "Preferences Directory" in the icon Catalog.</li>
+</ul>
 
-<H3>Changing the Default Icons</H3>
+<h3>Changing the Default Icons</h3>
 
 <P>The icons displayed when you first open an Icon Editor are the default icons. You may
 change these defaults by storing icons of your choice to be the default icons for each Icon Editor.</P>
 
-<UL>
-        <LI>After you have modified the icons by dragging icons from the "catalog pane" and
+<ul>
+        <li>After you have modified the icons by dragging icons from the "catalog pane" and
          dropping them on the default icons, use the "Store Image Index" menu item under
-         the "File" menu on the Panel Editor window.</LI>
+         the "File" menu on the Panel Editor window.</li>
 
-        <LI>Alternatively, if you close the Icon Editor you will be prompted with a dialog
+        <li>Alternatively, if you close the Icon Editor you will be prompted with a dialog
         asking if you want to Save these icon choices as your defaults.  This dialog is also
         displayed if changes have been made to the Image Index.  The dialog presents three 
         options:
-        <UL>
-                <LI><b>Yes</b> - Save any changes that have been made to the default icons or Image Index.</LI>
-                <LI><b>No</b> - And don't show any more prompts about changes.</LI>
-                <LI><b>Cancel</b> - Not right now, but prompt me later.</LI>
-        </UL></LI>
-</UL>
+        <ul>
+                <li><b>Yes</b> - Save any changes that have been made to the default icons or Image Index.</li>
+                <li><b>No</b> - And don't show any more prompts about changes.</li>
+                <li><b>Cancel</b> - Not right now, but prompt me later.</li>
+        </ul></li>
+</ul>
 
 <!--#include virtual="/Footer" -->
-</BODY>
-</HTML>
+   </div><!-- closes #mainContent-->
+  </div> <!-- closes #mBody-->
+ </body>
+</html>

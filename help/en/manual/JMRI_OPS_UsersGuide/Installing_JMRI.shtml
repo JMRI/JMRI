@@ -1,7 +1,7 @@
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
-<html lang="en"><head><!-- Copyright ($Author$) 2009 --><!-- $Id$ -->
-
-<title>Installing JMRI</title>
+<html lang="en">
+<head>
+<title>JMRI OperationsPro - Install the software</title>
 
 <!-- Style -->
 <meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
@@ -10,34 +10,33 @@
 <link rel="icon" href="/images/jmri.ico" type="image/png">
 <link rel="home" title="Home" href="/">
 <!-- /Style -->
+</head>
+
+<body>
 
 <!--#include virtual="/Header" -->
 <!--#include virtual="Sidebar" -->
-</head>
 
-
-<body><div id="mainContent">
+<div id="mainContent">
 
 <a name="Top"></a>
-<h1>
-<img src="images/logo.gif" alt="JMRI DecoderPro Logo" border="0" height="135" vspace="15" width="160"></h1>
 
+<h1>JMRI&reg; OperationsPro Manual</h1>
+<h2>Installing JMRI&reg;</h2>
 
-
-<h1>Installing JMRI&reg;</h1>
 <div align="right">
   <p><a href="index.shtml#Installing">Back to Index</a></p>
 </div>
 
 <hr>
-<h1>Preparing to Install JMRI&reg;</h1>
+<h3>Preparing to Install JMRI&reg;</h3>
 <p>The JMRI software package includes:</p>
 <ul>
   <li>DecoderPro&reg;</li>
   <li>PanelPro&trade;</li>
   <li>SoundPro&trade;</li>
 </ul>
-<p>There are always two versions of the software availabe:</p>
+<p>Two versions of the software are available:</p>
 <ul>
   <li>Production Version: The current stable version that is
 fixed in design and for general use. If just starting, this is the
@@ -47,19 +46,27 @@ under development for testing and is used to validate new features and
 changes to existing features. If you are familiar with JMRI and want to
 help in the validation and testing process, then use this version.</li>
 </ul>
-<p>Supported systems(check<a href="http://www.jmri.org/help/en/html/hardware/index.shtml" target="_blank"> supported hardware</a> systems.)</p>
-<p>Prior to installing JMRI, you must <a href="http://www.jmri.org/download/index.shtml" target="_blank">download</a> the correct version for your computer system. </p>
+
+<p>Check the <a href="http://www.jmri.org/help/en/html/hardware/index.shtml" target="_blank">supported hardware</a> systems to verify your computer can run JMRI.</p>
+<p>If it can, <a href="http://www.jmri.org/download/index.shtml" target="_blank">download</a> the correct installer for your computer system:</p>
 <ul>
-  <li>Windows</li>
-  <li>Mac OS X</li>
-  <li>Linux</li>
+  <li><a href="http://www.jmri.org/install/WindowsNew.shtml">Windows</a></li>
+  <li><a href="http://www.jmri.org/install/MacOSX.shtml">Mac OS X</a></li>
+  <li><a href="http://www.jmri.org/install/Linux.shtml">Linux</a></li>
 </ul>
-<h1><a name="InstallJMRI"></a>Installing JMRI software</h1>
-<p>After downloading the JMRI file, now install using the appropriate Installation guide:</p>
+
+<h3>Installing Java</h3>
+<p><a href="Installing_JMRI.shtml#InstallJMRI">Versions of JMRI&reg;</a> can run on any computer system that will run Java 1.6.0
+or later, whether it is Macintosh, Windows, or Linux based. It does
+require that Java be installed on the computer. You can get Java as a
+free (but large) download at: <a href="http://java.com/download/" target="_blank">java.com/download/</a></p>
+
+<h3><a name="InstallJMRI"></a>Installing the JMRI software</h3>
+<p>After downloading the JMRI file, install using the appropriate Installation guide:</p>
 <ul>
   <li><a href="http://www.jmri.org/install/WindowsNew.shtml" target="_blank">Windows Installation Guide</a></li>
-  <li><a href="http://www.jmri.org/install/MacOSX.html" target="_blank">Mac OS X  Installation Guide</a></li>
-  <li><a href="http://www.jmri.org/install/Linux.html" target="_blank">Linux Installation Guide</a>
+  <li><a href="http://www.jmri.org/install/MacOSX.shtml" target="_blank">Mac OS X  Installation Guide</a></li>
+  <li><a href="http://www.jmri.org/install/Linux.shtml" target="_blank">Linux Installation Guide</a>
     <ul>
       <li><a href="http://www.jmri.org/install/Ubuntu.shtml" target="_blank">Ubuntu GNU/Linux</a></li>
       <li><a href="http://www.jmri.org/install/decTop.shtml" target="_blank">Xubuntu</a></li>
@@ -67,24 +74,14 @@ help in the validation and testing process, then use this version.</li>
     </ul>
   </li>
 </ul>
-<p>&nbsp;</p>
 
 <hr>
 
 <div align="right">
 <p><a href="index.shtml#Installing">Back to Index</a></p>
-</div>
-
-
-This site is hosted by
-<br>
-<a href="http://sourceforge.net">
-<img src="images/sflogo.png" alt="SourceForge Logo" align="top" border="0" height="30" hspace="10" vspace="5" width="120"></a>
-<br>
-</div>
 
 <!--#include virtual="/Footer" -->
-
-
-<!--#include virtual="/Footer" -->
-</body></html>
+</div> <!-- closes #mainContent -->
+</div>
+</body>
+</html>

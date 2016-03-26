@@ -2,8 +2,6 @@
 
 package jmri.jmrix.pi;
 
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 import jmri.Turnout;
 
 /**
@@ -36,8 +34,6 @@ public class RaspberryPiTurnoutManager extends jmri.managers.AbstractTurnoutMana
         Turnout t = new RaspberryPiTurnout(systemName,userName);
         return t;
     }
-
-    static Logger log = LoggerFactory.getLogger(RaspberryPiTurnoutManager.class.getName());
 
 }
 

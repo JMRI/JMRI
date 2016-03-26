@@ -1,4 +1,3 @@
-// VariableTableModelTest.java
 package jmri.jmrit.symbolicprog;
 
 import javax.swing.JLabel;
@@ -7,8 +6,6 @@ import junit.framework.Assert;
 import junit.framework.Test;
 import junit.framework.TestCase;
 import junit.framework.TestSuite;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 import org.jdom2.DocType;
 import org.jdom2.Document;
 import org.jdom2.Element;
@@ -19,7 +16,6 @@ import org.jdom2.Element;
  * Description:
  *
  * @author	Bob Jacobsen Copyright 2005
- * @version $Revision$
  */
 public class VariableTableModelTest extends TestCase {
 
@@ -262,11 +258,6 @@ public class VariableTableModelTest extends TestCase {
     public void testVarTableLoadBogus() {
         String[] args = {"CV", "Name"};
         VariableTableModel t = new VariableTableModel(null, args, new CvTableModel(null, p), null) {
-            /**
-             *
-             */
-            private static final long serialVersionUID = 396374590706462256L;
-
             void reportBogus() {
             }
         };
@@ -322,8 +313,6 @@ public class VariableTableModelTest extends TestCase {
         TestSuite suite = new TestSuite(VariableTableModelTest.class);
         return suite;
     }
-
-    static Logger log = LoggerFactory.getLogger(VariableTableModelTest.class.getName());
 
     // The minimal setup for log4J
     protected void setUp() {

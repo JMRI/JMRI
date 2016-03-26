@@ -1,11 +1,6 @@
-// PowerPaneTest.java
 package jmri.jmrit.powerpanel;
 
-import java.beans.PropertyChangeListener;
-import java.util.ResourceBundle;
-import jmri.InstanceManager;
-import jmri.JmriException;
-import jmri.PowerManager;
+import jmri.util.JUnitUtil;
 import junit.framework.Assert;
 import junit.framework.Test;
 import junit.framework.TestCase;
@@ -15,45 +10,13 @@ import junit.framework.TestSuite;
  * Tests for the Jmri package
  *
  * @author	Bob Jacobsen
- * @version $Revision$
  */
 public class PowerPaneTest extends TestCase {
 
     // setup a default PowerManager interface
+    @Override
     public void setUp() {
-        manager = new jmri.PowerManager() {
-            int state = PowerManager.UNKNOWN;
-            PropertyChangeListener prop = null;
-
-            public void setPower(int v) throws JmriException {
-                state = v;
-                tell();
-            }
-
-            public int getPower() throws JmriException {
-                return state;
-            }
-
-            public void dispose() throws JmriException {
-            }
-
-            public void addPropertyChangeListener(PropertyChangeListener p) {
-                prop = p;
-            }
-
-            public void removePropertyChangeListener(PropertyChangeListener p) {
-            }
-
-            void tell() {
-                prop.propertyChange(null);
-            }
-
-            public String getUserName() {
-                return "test";
-            }
-        }; // end of anonymous PowerManager class new()
-        // store dummy power manager object for retrieval
-        InstanceManager.setPowerManager(manager);
+        JUnitUtil.initDebugPowerManager();
     }
 
     // test creation
@@ -90,9 +53,6 @@ public class PowerPaneTest extends TestCase {
         Assert.assertEquals("Testing shown on/off", "Off", p.onOffStatus.getText());
     }
 
-    static ResourceBundle res = ResourceBundle.getBundle("jmri.jmrit.powerpanel.PowerPanelBundle");
-    jmri.PowerManager manager;  // holds dummy for testing
-
     // from here down is testing infrastructure
     public PowerPaneTest(String s) {
         super(s);
@@ -100,7 +60,7 @@ public class PowerPaneTest extends TestCase {
 
     // Main entry point
     static public void main(String[] args) {
-        String[] testCaseName = {PowerPaneTest.class.getName()};
+        String[] testCaseName = {"-noloading", PowerPaneTest.class.getName()};
         junit.swingui.TestRunner.main(testCaseName);
     }
 

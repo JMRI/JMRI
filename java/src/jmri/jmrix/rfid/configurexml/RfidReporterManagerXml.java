@@ -29,9 +29,10 @@ public class RfidReporterManagerXml extends jmri.managers.configurexml.AbstractR
         log.error("Invalid method called");
     }
 
-    public boolean load(Element reporters) {
+    @Override
+    public boolean load(Element shared, Element perNode) {
         // load individual sensors
-        return loadReporters(reporters);
+        return loadReporters(shared);
     }
 
     private static final Logger log = LoggerFactory.getLogger(RfidReporterManagerXml.class.getName());

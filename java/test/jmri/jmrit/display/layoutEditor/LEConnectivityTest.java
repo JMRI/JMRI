@@ -1,4 +1,3 @@
-// LEConnectivityTest.java
 package jmri.jmrit.display.layoutEditor;
 
 import java.util.ArrayList;
@@ -15,12 +14,12 @@ import junit.extensions.jfcunit.finder.DialogFinder;
 import junit.framework.Assert;
 import junit.framework.Test;
 import junit.framework.TestSuite;
+import jmri.util.JUnitUtil;
 
 /**
  * Swing jfcUnit tests for the LayoutEditor
  *
  * @author	Dave Duchamp Copyright 2011
- * @version $Revision$
  */
 public class LEConnectivityTest extends jmri.util.SwingTestCase {
 
@@ -344,12 +343,18 @@ public class LEConnectivityTest extends jmri.util.SwingTestCase {
     protected void setUp() throws Exception {
         super.setUp();
         apps.tests.Log4JFixture.setUp();
-        jmri.util.JUnitUtil.resetInstanceManager();
-        jmri.util.JUnitUtil.initInternalTurnoutManager();
-        jmri.util.JUnitUtil.initInternalSensorManager();
+        JUnitUtil.resetInstanceManager();
+        JUnitUtil.initInternalTurnoutManager();
+        JUnitUtil.initInternalSensorManager();
+        // dispose of the single PanelMenu instance
+        jmri.jmrit.display.PanelMenu.instance().dispose();
+
     }
 
     protected void tearDown() throws Exception {
+        // dispose of the single PanelMenu instance
+        jmri.jmrit.display.PanelMenu.instance().dispose();
+        JUnitUtil.resetInstanceManager();
         apps.tests.Log4JFixture.tearDown();
         super.tearDown();
     }

@@ -1,49 +1,47 @@
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
 <html lang="en">
 <head>
-<!-- Copyright Me 2008 -->
-<!-- $Id$ -->
 <title>JMRI: Audio</title>
 
 <!-- Style -->
-<META HTTP-EQUIV="Content-Type" CONTENT="text/html; charset=iso-8859-1">
-<LINK REL="stylesheet" TYPE="text/css" HREF="/css/default.css"
-	MEDIA="screen">
-<LINK REL="stylesheet" TYPE="text/css" HREF="/css/print.css"
-	MEDIA="print">
-<LINK REL="icon" HREF="/images/jmri.ico" TYPE="image/png">
-<LINK REL="home" TITLE="Home" HREF="/">
+<meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
+<link rel="stylesheet" type="text/css" href="/css/default.css" media="screen">
+<link rel="stylesheet" type="text/css" href="/css/print.css" media="print">
+<link rel="icon" href="/images/jmri.ico" type="image/png">
+<link rel="home" title="Home" href="/">
 <!-- /Style -->
-</HEAD>
+</head>
 
-<BODY>
+<body>
 <!--#include virtual="/Header" -->
-  <div class="nomenu" id="mBody">
-    <div id="mainContent">
+<!--#include virtual="Sidebar" -->
+<div id="mainContent">
 
+<h1>JMRI: Audio Documentation</h1>
 
-<h2>JMRI: Audio</h2>
-
-JMRI audio objects hold information about sounds that can be played-back by the
+JMRI Audio objects hold information about sounds that can be played-back by the
 computer.
 
-<h3>The Audio Table</h3>
+<h2>The Audio Table</h2>
 The 
 <a href="../../package/jmri/jmrit/beantable/AudioTable.shtml">Audio Table</a>
-lets you see what audio objects have been defined, and what information
-they currently contain. From the table, you can 
-<a href="../../package/jmri/jmrit/beantable/AudioAddEdit.shtml">create a new audio object</a>.
+lets you see what Audio objects have been defined, and what information
+they currently contain.<br> 
 <a href="../../package/jmri/jmrit/beantable/AudioTable.jpg">
 <img src="../../package/jmri/jmrit/beantable/AudioTable.jpg" height="178" width="420">
 </a>
 
-<h3>Audio Objects</h3>
+<h4>Audio Table controls</h4>
+<p>Below the Audio Table are two buttons, named "Add Source..." and "Add Buffer..." to 
+<a href="../../package/jmri/jmrit/beantable/AudioAddEdit.shtml">create new Audio objects</a>.
+
+<h2>Audio Objects</h2>
 The JMRI audio framework consists of three distinct types of object:
-<ul>
-<li>Audio Listeners
-<li>Audio Buffers
-<li>Audio Sources
-</ul>
+	<ul>
+	<li>Audio Listeners
+	<li>Audio Buffers
+	<li>Audio Sources
+	</ul>
 
 <h4>Audio Listener</h4>
 
@@ -69,10 +67,10 @@ measured from the front-edge of the layout and
 and positive to the right of the layout centre-line. 
 Positive 'z' values would be measured from layout level upwards.
 <p>
-Unless modifed by changing 'Meters per unit', 
+Unless modified by changing 'Meters per unit', 
 all distance and velocity units are measured in real-world meters.
 <p>
-Only one Audio Listener can exist.
+Only one Audio Listener can exist, and it is already present in the Audio Table where it may be configured by clicking its <b>Edit</b> button.
 
 <h4>Audio Buffers</h4>
 
@@ -114,9 +112,9 @@ by changes in position and played as-is.
 If it is necessary to turn-down the volume of a specific Audio Source, this can be achieved by changing the 'Gain' setting.
 Similarly, the pitch can be modified by changing the 'Pitch' parameter.
 <p>
-Normal behaviour is for the volume of an Audio Source to be altered by the distance from the Audio Listener. This behaviour can be modified by altering the Reference Distance and Maximum Distance settings. The Reference Distance determines the distance at which the volume will start to decrease - at distances smaller than the reference distance, the volume of the Audio Source will be as defined by the gain setting. The Maximum Distance determines the distance at which the volume is zero. Roll-off Factor determines the rate-of-change of the gain with respect to distance - larger values denote a faster rate-of-change.
+Normal behavior is for the volume of an Audio Source to be altered by the distance from the Audio Listener. This behavior can be modified by altering the Reference Distance and Maximum Distance settings. The Reference Distance determines the distance at which the volume will start to decrease - at distances smaller than the reference distance, the volume of the Audio Source will be as defined by the gain setting. The Maximum Distance determines the distance at which the volume is zero. Roll-off Factor determines the rate-of-change of the gain with respect to distance - larger values denote a faster rate-of-change.
 <p>
-Finally, the fade-in and fade-out times of the Audio Source can be defined - these are specified in milli-seconds. Fading-in and out of an Audio Source is achieved by using the fadeIn and fadeOut methods of the Audio Source; play, stop and pause methods do not utilise fade times.
+Finally, the fade-in and fade-out times of the Audio Source can be defined - these are specified in milli-seconds. Fading-in and out of an Audio Source is achieved by using the fadeIn and fadeOut methods of the Audio Source; play, stop and pause methods do not utilize fade times.
 <p>
 Unless modified by changing the 'Meters per unit' parameter of the Audio Listener, all distance and velocity units are measured in real-world meters.
 
@@ -134,22 +132,28 @@ in the distribution, along with documentation for the
 <a href="http://jmri.org/JavaDoc/doc/jmri/jmrit/audio/AudioSource.html">AudioSource</a> and
 <a href="http://jmri.org/JavaDoc/doc/jmri/jmrit/audio/AudioListener.html">AudioListener</a>
 classes that control the audio processing.
-<h3>Technical details</h3>
+
+<h2>Playing Audio</h2>
 The JMRI audio framework makes use of either of the following audio libraries:
-<ul>
-<li><a href="http://www.oracle.com/technetwork/java/index-139508.html">JavaSound</a> - for basic audio functions (limited to stereo)
-<p>JavaSound is normally available with a Sun Microsystems Java Runtime Environment; other vendors, such as OpenJDK, do not include JavaSound.
-<li><a href="http://www.openal.org/">OpenAL</a> - for full-featured audio functions (including support for up-to 7.1 surround)
-<p>OpenAL may already be included with your system.
-</ul>
+	<ul>
+	<li><a href="http://www.oracle.com/technetwork/java/index-139508.html">JavaSound</a> - for basic audio functions (limited to stereo)
+	<br>JavaSound is normally available with a Sun Microsystems Java Runtime Environment; other vendors, such as OpenJDK, do not include JavaSound.
+	<li><a href="http://www.openal.org/">OpenAL</a> - for full-featured audio functions (including support for up-to 7.1 surround)
+	<br>OpenAL may already be included with your operating system:
+	</ul>
+
 <h4>Mac OS X</h4>
-Those versions of Mac OS X that are suitable for JMRI already have a suitable version installed.
+Those versions of Mac OS X that are suitable for JMRI already have a suitable version of OpenAL installed.
+
 <h4>MS Windows</h4>
 By default, OpenAL will require installing on your system. Certain sound cards, notably those manufactured by Creative Labs and NVidia, will normally already come with suitable OpenAL drivers. If OpenAL is not installed, <a href="http://www.openal.org/downloads/">it should be downloaded</a> from OpenAL.org and then installed on your system.
 <h4>Linux</h4>
 Depending on the provider of your Linux distribution, OpenAL might already be included in the default package. If not, the 'libopenal-dev' package should be installed using the package manager on your system. For Debian-based distributions, this will typically be achieved by the command:
 <pre>$ sudo apt-get install libopenal-dev</pre>
 <p>For Ubuntu, the 'Universe' repository should be enabled.
+
 <!--#include virtual="/Footer" -->
+    </div><!-- closes #mainContent-->
+  </div> <!-- closes #mBody-->
 </body>
 </html>

@@ -1,15 +1,15 @@
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
-<html lang="en"><head><!-- Copyright ($Author$) 2009, 2010 --><!-- $Id$ -->
+<html lang="en">
+<head><title>Formating the Decoder Definition</title>
 
-
-
-
-
-<title>Formating the Decoder Definition</title><!-- Style --><meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
+<!-- Style -->
+<meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
 <link rel="stylesheet" type="text/css" href="/css/default.css" media="screen">
 <link rel="stylesheet" type="text/css" href="/css/print.css" media="print">
 <link rel="icon" href="/images/jmri.ico" type="image/png">
-<link rel="home" title="Home" href="/"><!-- /Style --></head>
+<link rel="home" title="Home" href="/">
+<!-- /Style -->
+</head>
 
 <body>
 <!--#include virtual="/Header" -->
@@ -19,7 +19,7 @@
 
 <a name="Top"></a>
 <h1>Decoder Definition</h1>
-<h1>Format</h1>
+<h2>Format</h2>
 
 <div align="right">
 <p><a href="Dcode_Start.shtml">Previous</a> | <a href="Dcode_Testing.shtml">Next</a></p>
@@ -35,10 +35,10 @@ so you should be able to find one that is similar as a starting
 point.&nbsp; Don&#8217;t feel bad about standing on someone else&#8217;s shoulders,
 that&#8217;s the spirit of JMRI and open source software in general.&nbsp;
 Although you can call this new file anything you like, it will work
-best if you use the same convention as the provided files. That is "<strong>manufacturer  name</strong>"_"<strong>decoder family</strong>".xml, for example: <strong>Digitrax_1x2.xml</strong>  and <strong>Atlas_DualMode.xml</strong>.&nbsp; </p>
+best if you use the same convention as the provided files. That is "<strong>manufacturer  name</strong>"_"<strong>decoder family</strong>".xml, for example: <strong>Digitrax_1x2.xml</strong>  and <strong>Atlas_DualMode.xml</strong>. </p>
 <p>Now that you have located a Decoder Definition file as a starting point  open the file with an XML editor 
-(editors recommended by jmri are discussed on a  
-<a target="_blank" href="http://jmri.sourceforge.net/help/en/html/doc/Technical/XmlDtdUsage.shtml">separate page)</a>  or your favorite text editor.
+(editors recommended by JMRI are discussed on a  
+<a target="_blank" href="http://jmri.org/help/en/html/doc/Technical/XmlDtdUsage.shtml">separate page)</a>  or your favorite text editor.
 <strong>DO NOT</strong> try an advanced word processor like  Word.
 Use a basic text file editor like  Notepad, or an XML editor, XML Marker is a good one and it&#8217;s free.</p>
 <p>The beginning XML lines deal with the Header:</p>
@@ -60,12 +60,15 @@ element from the <span class="ACCENT">&lt;variable&gt;</span> to the matching <s
 <p><img src="images/Dcode04.png" alt="variable" border="2" height="81" width="522"></p>
 <p><img src="images/Dcode05.png" alt="variable sample" border="2" height="398" width="594"><br>
   Once you get your variables all in order, it&#8217;s time to test the definition.</p>
-<hr>
 
+<hr>
 <div align="right">
 <p><a href="Dcode_Testing.shtml"></a><a href="Dcode_Start.shtml">Previous</a> | <a href="Dcode_Testing.shtml">Next</a></p>
 <p><a href="index.shtml#DecoderDefinition">Back to Index</a><a href="index.shtml#Main"></a></p>
 </div>
 
 <!--#include virtual="/Footer" -->
-</div></body></html>
+  </div><!-- closes #mainContent-->
+ </div> <!-- closes #mBody-->
+ </body>
+</html>

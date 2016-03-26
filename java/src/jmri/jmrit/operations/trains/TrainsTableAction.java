@@ -14,11 +14,6 @@ import javax.swing.AbstractAction;
  */
 public class TrainsTableAction extends AbstractAction {
 
-    /**
-     *
-     */
-    private static final long serialVersionUID = -7608766876884479719L;
-
     public TrainsTableAction(String s) {
         super(s);
     }
@@ -27,16 +22,16 @@ public class TrainsTableAction extends AbstractAction {
         this(Bundle.getMessage("MenuTrains"));	// NOI18N
     }
 
-    static TrainsTableFrame f = null;
+    static TrainsTableFrame trainsTableFrame = null;
 
-    @edu.umd.cs.findbugs.annotations.SuppressFBWarnings(value = "ST_WRITE_TO_STATIC_FROM_INSTANCE_METHOD")
+    @edu.umd.cs.findbugs.annotations.SuppressFBWarnings(value = "ST_WRITE_TO_STATIC_FROM_INSTANCE_METHOD", justification = "Show only one TrainsTableFrame")
     public void actionPerformed(ActionEvent e) {
         // create a train table frame
-        if (f == null || !f.isVisible()) {
-            f = new TrainsTableFrame();
+        if (trainsTableFrame == null || !trainsTableFrame.isVisible()) {
+            trainsTableFrame = new TrainsTableFrame();
         }
-        f.setExtendedState(Frame.NORMAL);
-        f.setVisible(true);	// this also brings the frame into focus
+        trainsTableFrame.setExtendedState(Frame.NORMAL);
+        trainsTableFrame.setVisible(true);	// this also brings the frame into focus
     }
 }
 

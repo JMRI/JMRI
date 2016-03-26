@@ -24,8 +24,10 @@ import javax.swing.event.ChangeEvent;
 import javax.swing.event.ChangeListener;
 import jmri.InstanceManager;
 import jmri.jmrix.ConnectionConfig;
+import jmri.jmrix.ConnectionConfigManager;
 import jmri.jmrix.ConnectionStatus;
 import jmri.jmrix.JmrixConfigPane;
+import jmri.profile.ProfileManager;
 import jmri.swing.ManagingPreferencesPanel;
 import jmri.swing.PreferencesPanel;
 import jmri.util.FileUtil;
@@ -38,7 +40,7 @@ import org.slf4j.LoggerFactory;
  */
 public class ConnectionsPreferencesPanel extends JTabbedPane implements ManagingPreferencesPanel {
 
-    private static final ResourceBundle rb = ResourceBundle.getBundle("apps.AppsConfigBundle"); // NOI18N
+    private static final ResourceBundle rb = ResourceBundle.getBundle("apps.AppsConfigBundle"); // for some items // NOI18N
     private static final Logger log = LoggerFactory.getLogger(ConnectionsPreferencesPanel.class);
     private static final long serialVersionUID = 3007932795460089101L;
 
@@ -64,10 +66,9 @@ public class ConnectionsPreferencesPanel extends JTabbedPane implements Managing
         addIcon = new ImageIcon(
                 FileUtil.findURL("program:resources/icons/misc/gui3/Add16x16.png"));
         if (this.preferences != null) {
-            ArrayList<Object> connList = InstanceManager.configureManagerInstance()
-                    .getInstanceList(ConnectionConfig.class);
-            if (connList != null) {
-                for (int x = 0; x < connList.size(); x++) {
+            ConnectionConfig[] connections = InstanceManager.getDefault(ConnectionConfigManager.class).getConnections();
+            if (connections.length != 0) {
+                for (int x = 0; x < connections.length; x++) {
                     JmrixConfigPane configPane = JmrixConfigPane.instance(x);
                     addConnection(x, configPane);
                 }
@@ -131,7 +132,7 @@ public class ConnectionsPreferencesPanel extends JTabbedPane implements Managing
 
         JPanel c = new JPanel();
         c.setLayout(new FlowLayout(FlowLayout.LEFT, 0, 0));
-        final JCheckBox disable = new JCheckBox("Disable Connection");
+        final JCheckBox disable = new JCheckBox(rb.getString("ButtonDisableConnection"));
         disable.setSelected(configPane.getDisabled());
         disable.addActionListener((ActionEvent e) -> {
             configPane.setDisabled(disable.isSelected());
@@ -279,8 +280,7 @@ public class ConnectionsPreferencesPanel extends JTabbedPane implements Managing
 
     @Override
     public void savePreferences() {
-        // do nothing - this is a container for other preferences that maintain
-        // thier own state
+        InstanceManager.getDefault(ConnectionConfigManager.class).savePreferences(ProfileManager.getDefault().getActiveProfile());
     }
 
     @Override

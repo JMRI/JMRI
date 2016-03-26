@@ -1,6 +1,7 @@
 // BeanTableFrame.java
 package jmri.jmrit.roster.swing;
 
+import apps.gui.GuiLafPreferencesManager;
 import java.awt.Rectangle;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
@@ -21,6 +22,7 @@ import javax.swing.event.ListSelectionEvent;
 import javax.swing.event.ListSelectionListener;
 import javax.swing.table.TableCellEditor;
 import javax.swing.table.TableColumn;
+import jmri.InstanceManager;
 import jmri.jmrit.roster.Roster;
 import jmri.jmrit.roster.RosterEntry;
 import jmri.jmrit.roster.RosterEntrySelector;
@@ -68,6 +70,7 @@ public class RosterTable extends JmriPanel implements RosterEntrySelector, Roste
         dataTable = new JTable(sorter);
         sorter.setTableHeader(dataTable.getTableHeader());
         dataScroll = new JScrollPane(dataTable);
+        dataTable.setRowHeight(InstanceManager.getDefault(GuiLafPreferencesManager.class).getFontSize() + 4);
 
         // set initial sort
         TableSorter tmodel = ((TableSorter) dataTable.getModel());
@@ -201,11 +204,11 @@ public class RosterTable extends JmriPanel implements RosterEntrySelector, Roste
      */
     public void setRosterGroupSource(RosterGroupSelector rosterGroupSource) {
         if (this.rosterGroupSource != null) {
-            this.rosterGroupSource.removePropertyChangeListener(RosterGroupSelector.selectedRosterGroupProperty, dataModel);
+            this.rosterGroupSource.removePropertyChangeListener(SELECTED_ROSTER_GROUP, dataModel);
         }
         this.rosterGroupSource = rosterGroupSource;
         if (this.rosterGroupSource != null) {
-            this.rosterGroupSource.addPropertyChangeListener(RosterGroupSelector.selectedRosterGroupProperty, dataModel);
+            this.rosterGroupSource.addPropertyChangeListener(SELECTED_ROSTER_GROUP, dataModel);
         }
     }
 
@@ -250,7 +253,7 @@ public class RosterTable extends JmriPanel implements RosterEntrySelector, Roste
     // cache selectedRosterEntries so that multiple calls to this
     // between selection changes will not require the creation of a new array
     @Override
-    @edu.umd.cs.findbugs.annotations.SuppressWarnings(value = "EI_EXPOSE_REP",
+    @edu.umd.cs.findbugs.annotations.SuppressFBWarnings(value = "EI_EXPOSE_REP",
             justification = "Want to give access to mutable, original roster objects")
     public RosterEntry[] getSelectedRosterEntries() {
         if (selectedRosterEntries == null) {

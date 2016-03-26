@@ -1,6 +1,3 @@
-/**
- *
- */
 package jmri;
 
 import java.util.Collection;
@@ -9,6 +6,7 @@ import java.util.LinkedList;
 import java.util.List;
 import java.util.SortedMap;
 import java.util.TreeMap;
+import javax.annotation.Nonnull;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -31,11 +29,19 @@ public class TurnoutOperationManager {
     public TurnoutOperationManager() {
     }
 
+    private boolean initialized = false;
+    private void initialize() {
+        initialized = true;
+        // create the default instances of each of the known operation types
+        loadOperationTypes();
+    }
+    
     public void dispose() {
     }
 
     public TurnoutOperation[] getTurnoutOperations() {
         synchronized (this) {
+            if (!initialized) initialize();
             Collection<TurnoutOperation> entries = turnoutOperations.values();
             return entries.toArray(new TurnoutOperation[0]);
         }
@@ -47,12 +53,13 @@ public class TurnoutOperationManager {
      *
      * @param op
      */
-    protected void addOperation(TurnoutOperation op) {
+    protected void addOperation(@Nonnull TurnoutOperation op) {
         TurnoutOperation previous;
         if (op == null || op.getName() == null) {
             log.warn("null operation or name in addOperation");
         } else {
             synchronized (this) {
+                if (!initialized) initialize();
                 previous = turnoutOperations.put(op.getName(), op);
                 if (op.isDefinitive()) {
                     updateTypes(op);
@@ -65,11 +72,12 @@ public class TurnoutOperationManager {
         firePropertyChange("Content", null, null);
     }
 
-    protected void removeOperation(TurnoutOperation op) {
+    protected void removeOperation(@Nonnull TurnoutOperation op) {
         if (op == null || op.getName() == null) {
             log.warn("null operation or name in removeOperation");
         } else {
             synchronized (this) {
+                if (!initialized) initialize();
                 turnoutOperations.remove(op.getName());
             }
         }
@@ -82,8 +90,9 @@ public class TurnoutOperationManager {
      * @param name
      * @return	the operation
      */
-    public TurnoutOperation getOperation(String name) {
+    public TurnoutOperation getOperation(@Nonnull String name) {
         synchronized (this) {
+            if (!initialized) initialize();
             return turnoutOperations.get(name);
         }
     }
@@ -95,7 +104,8 @@ public class TurnoutOperationManager {
      *
      * @param op	new or updated operation
      */
-    private void updateTypes(TurnoutOperation op) {
+    private void updateTypes(@Nonnull TurnoutOperation op) {
+        if (!initialized) initialize();
         LinkedList<TurnoutOperation> newTypes = new LinkedList<TurnoutOperation>();
         Iterator<TurnoutOperation> iter = operationTypes.iterator();
         boolean found = false;
@@ -128,19 +138,19 @@ public class TurnoutOperationManager {
      *
      * @return	the TurnoutOperationManager
      */
-    public synchronized static TurnoutOperationManager getInstance() {
+    public synchronized static @Nonnull TurnoutOperationManager getInstance() {
         if (theInstance == null) {
 
             // and make available
             theInstance = new TurnoutOperationManager();
-
-            // create the default instances of each of the known operation types
-            theInstance.loadOperationTypes();
-
         }
         return theInstance;
     }
 
+    protected void resetTheInstance() {
+        theInstance = null;
+    }
+    
     /**
      * Load the operation types given by the current TurnoutManager instance, in
      * the order given.
@@ -164,6 +174,9 @@ public class TurnoutOperationManager {
             } else if (getOperation(validTypes[i]) == null) {
                 try {
                     Class<?> thisClass = Class.forName(thisClassName);
+                    // creating the instance invokes the TurnoutOperation ctor,
+                    // which calls addOperation here, which adds it to the 
+                    // turnoutOperations map.
                     thisClass.newInstance();
                     if (log.isDebugEnabled()) {
                         log.debug("loaded TurnoutOperation class " + thisClassName);
@@ -186,7 +199,8 @@ public class TurnoutOperationManager {
      * @param t	           turnout
      * @param apparentMode	mode(s) to be used when finding a matching operation
      */
-    public TurnoutOperation getMatchingOperationAlways(Turnout t, int apparentMode) {
+    public TurnoutOperation getMatchingOperationAlways(@Nonnull Turnout t, int apparentMode) {
+        if (!initialized) initialize();
         Iterator<TurnoutOperation> iter = operationTypes.iterator();
         TurnoutOperation currentMatch = null;
         /* The loop below always returns the LAST operation 
@@ -215,14 +229,15 @@ public class TurnoutOperationManager {
      * @param apparentMode	mode(s) to be used when finding a matching operation
      * @return operation
      */
-    public TurnoutOperation getMatchingOperation(Turnout t, int apparentMode) {
+    public TurnoutOperation getMatchingOperation(@Nonnull Turnout t, int apparentMode) {
+        if (!initialized) initialize();
         if (doOperations) {
             return getMatchingOperationAlways(t, apparentMode);
         }
         return null;
     }
 
-    public TurnoutOperation getMatchingOperationAlways(Turnout t) {
+    public TurnoutOperation getMatchingOperationAlways(@Nonnull Turnout t) {
         return getMatchingOperationAlways(t, t.getFeedbackMode());
     }
 
@@ -230,10 +245,12 @@ public class TurnoutOperationManager {
      * get/change status of whether operations are in use
      */
     public boolean getDoOperations() {
+        if (!initialized) initialize();
         return doOperations;
     }
 
     public void setDoOperations(boolean b) {
+        if (!initialized) initialize();
         boolean oldValue = doOperations;
         doOperations = b;
         firePropertyChange("doOperations", Boolean.valueOf(oldValue), Boolean.valueOf(b));
@@ -248,7 +265,7 @@ public class TurnoutOperationManager {
      * @param types	list of types possibly containing dupliactes
      * @return list reduced as described above
      */
-    static public String[] concatenateTypeLists(String[] types) {
+    static public String[] concatenateTypeLists(@Nonnull String[] types) {
         List<String> outTypes = new LinkedList<String>();
         boolean noFeedbackWanted = false;
         for (int i = 0; i < types.length; ++i) {
@@ -271,17 +288,17 @@ public class TurnoutOperationManager {
      */
     java.beans.PropertyChangeSupport pcs = new java.beans.PropertyChangeSupport(this);
 
-    public synchronized void addPropertyChangeListener(java.beans.PropertyChangeListener l) {
+    public synchronized void addPropertyChangeListener(@Nonnull java.beans.PropertyChangeListener l) {
         pcs.addPropertyChangeListener(l);
     }
 
-    public synchronized void removePropertyChangeListener(java.beans.PropertyChangeListener l) {
+    public synchronized void removePropertyChangeListener(@Nonnull java.beans.PropertyChangeListener l) {
         pcs.removePropertyChangeListener(l);
     }
 
-    protected void firePropertyChange(String p, Object old, Object n) {
+    protected void firePropertyChange(@Nonnull String p, Object old, Object n) {
         pcs.firePropertyChange(p, old, n);
     }
 
-    static Logger log = LoggerFactory.getLogger(TurnoutOperationManager.class.getName());
+    private final static Logger log = LoggerFactory.getLogger(TurnoutOperationManager.class.getName());
 }

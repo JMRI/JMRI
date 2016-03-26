@@ -1,36 +1,31 @@
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
 <html lang="en">
 <head>
-<!-- Copyright Bob Jacobsen 2008 -->
-<!-- $Id$ -->
-<title>JMRI: Speed Matching</title>
+<title>JMRI: Speedometer - Speed Matching</title>
 
 <!-- Style -->
-<META HTTP-EQUIV="Content-Type" CONTENT="text/html; charset=iso-8859-1">
-<LINK REL="stylesheet" TYPE="text/css" HREF="/css/default.css"
-	MEDIA="screen">
-<LINK REL="stylesheet" TYPE="text/css" HREF="/css/print.css"
-	MEDIA="print">
-<LINK REL="icon" HREF="/images/jmri.ico" TYPE="image/png">
-<LINK REL="home" TITLE="Home" HREF="/">
+<meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
+<link rel="stylesheet" type="text/css" href="/css/default.css" media="screen">
+<link rel="stylesheet" type="text/css" href="/css/print.css" media="print">
+<link rel="icon" href="/images/jmri.ico" type="image/png">
+<link rel="home" title="Home" href="/">
 <!-- /Style -->
-</HEAD>
+</head>
 
-<BODY>
+<body>
 <!--#include virtual="/Header" -->
-  <div class="nomenu" id="mBody">
+<!--#include virtual="Sidebar" -->
     <div id="mainContent">
 
-
+<h1>Speedometer</h1>
 <h2>Speed Matching</h2>
-
 
 <h3>Consisting Engines of Different Manufacturers Using DCC/DecoderPro</h3>
 
 (Provided by Keith Keith Albright of the
 Four County Society of Model Engineers)
 
-<P>
+<p>
 In most cases, DCC has made it easy to consist engines that could not be run 
 together in analog mode. The following are tips and procedures that I use to 
 allow engines to run together. I make it a habit of setting up all of my 
@@ -38,21 +33,21 @@ freight engines to run at the same speed. I do likewise with my passenger
 engines. If you use the same type of engine for both, you might want to make them 
 all the same speed. 
 
-<P>
+<p>
 What Speed? - Which engine do you select as your constant. Three possible 
 choices are: 
-<OL>
-<LI>The slowest engine (top Speed) 
-<LI>Your Favorite engine 
-<LI>A sound equipped engine 
-</OL>
+	<ol>
+	<li>The slowest engine (top Speed) 
+	<li>Your Favorite engine 
+	<li>A sound equipped engine 
+	</ol>
 All three can be used and each has advantages and disadvantages. The 
 slowest engine has the advantage of guaranteeing that all other can be consisted. 
 Specialized engines such as shays are usually ignored. If you are partial to 
 a certain manufacturer (ex Stewart), you may want to make that your 
 standard. 
 
-<P>
+<p>
 A word on engine motors and decoders. Engine motors can be divided into 2 
 categories; Open frame and can motors. Open frame motors tend to be faster and 
 more subject to speed variation than Can motors. They draw more amperage than 
@@ -63,50 +58,53 @@ Can motors tend to be much smoother in operation throughout their speed range.
 They have low current draw and little maintenance. They are found on newer 
 and better quality engines. 
 
-<P>
+<p>
 If you plan on consisting open frame and can motor engines together, I would 
 recommend using TCS decoders for the open frame motors. Dither, a feature of 
 TCS decoders, does a great job of overcoming the slow speed hang up of open 
 frame motors. I would also select a can motored engine as your constant. 
 Once you have decided on your constant engine, the following steps should 
 allow you to run engines at the same speed. 
-<OL>
-<LI>If the engine is new, it should be run in for an hour or two before 
-setting the speed 
-<LI>Warm up both engines and make sure their wheels are clean. 3-5 
-minutes usually suffices. This will also give you an idea on how close the speeds 
-are for the 2 engines. 
-<LI>Make sure CV19 is set to 0 for both engines. Also, make sure your 
-engine is not set for alternate speed steps. If you want to increase the 
-starting voltage on your engine, do it before proceeding to step 4. 
-<LI>Make sure the engine you want to match is in your decoder pro 
-roster. Crank up decoder pro and use programming on the main. Call up the engine 
-you wish to speed match from your roster. 
-<LI>Make up a normal consist with your constant engine as the lead 
-engine. Do not lash the engines together. 8-10 inches between them is a good 
-start. 
-<LI>If you are using a decoder with BEMF, it should be turned off for 
-consisting. 
-<LI>Select the speed table screen for the engine called up in decoder 
-pro. 
-<LI>Select user defined speed table on the screen 
-<LI>Set step 1 of your speed to the starting voltage from the top of the 
-page. Set step 28 to 255 
-<LI>Click on match ends on the speed table. Then write this to the loco. 
-<LI>Run the locos. If you have made a good choice on your base engine, the 
-following engine will probably be faster. Reduce the speed step 28 setting; 
-Match ends and write to the engine. Some systems/decoders will allow you to do 
-this on the fly, other will make you stop the engines. Repeat this procedure 
-until the engines speed match. After you do a few you will be able to match 
-an engine faster than you can read this procedure. We have found that this 
-method gives us great speed control and is actually faster to do than using the 
-Vmid and Vmax settings. It also eliminates fooling with forward and reverse 
-trim if you decoder requires it. 
-<LI>If your decoder does not support 28 speed step settings you will need 
-to use the method outlined in the other clinic.
-</OL>
+	<ol>
+	<li>If the engine is new, it should be run in for an hour or two before 
+	setting the speed 
+	<li>Warm up both engines and make sure their wheels are clean. 3-5 
+	minutes usually suffices. This will also give you an idea on how close the speeds 
+	are for the 2 engines. 
+	<li>Make sure CV19 is set to 0 for both engines. Also, make sure your 
+	engine is not set for alternate speed steps. If you want to increase the 
+	starting voltage on your engine, do it before proceeding to step 4. 
+	<li>Make sure the engine you want to match is in your decoder pro 
+	roster. Crank up decoder pro and use programming on the main. Call up the engine 
+	you wish to speed match from your roster. 
+	<li>Make up a normal consist with your constant engine as the lead 
+	engine. Do not lash the engines together. 8-10 inches between them is a good 
+	start. 
+	<li>If you are using a decoder with BEMF, it should be turned off for 
+	consisting. 
+	<li>Select the speed table screen for the engine called up in decoder 
+	pro. 
+	<li>Select user defined speed table on the screen 
+	<li>Set step 1 of your speed to the starting voltage from the top of the 
+	page. Set step 28 to 255 
+	<li>Click on match ends on the speed table. Then write this to the loco. 
+	<li>Run the locos. If you have made a good choice on your base engine, the 
+	following engine will probably be faster. Reduce the speed step 28 setting; 
+	Match ends and write to the engine. Some systems/decoders will allow you to do 
+	this on the fly, other will make you stop the engines. Repeat this procedure 
+	until the engines speed match. After you do a few you will be able to match 
+	an engine faster than you can read this procedure. We have found that this 
+	method gives us great speed control and is actually faster to do than using the 
+	Vmid and Vmax settings. It also eliminates fooling with forward and reverse 
+	trim if you decoder requires it. 
+	<li>If your decoder does not support 28 speed step settings you will need 
+	to use the method outlined in the other clinic.
+	</ol>
+
+<p>Back to the <a href="index.shtml">Speedometer main Help page</a>
 
 <!--#include virtual="/Footer" -->
+  </div><!-- closes #mainContent-->
+</div> <!-- closes #mBody-->
 </body>
 </html>
-

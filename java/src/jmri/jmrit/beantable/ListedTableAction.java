@@ -1,7 +1,6 @@
 package jmri.jmrit.beantable;
 
 import java.awt.event.ActionEvent;
-import java.util.ResourceBundle;
 import javax.swing.AbstractAction;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -21,8 +20,7 @@ public class ListedTableAction extends AbstractAction {
      */
     private static final long serialVersionUID = 6097143838837199839L;
     String gotoListItem = null;
-    String title = rbean.getString("TitleListedTable");
-    public static final ResourceBundle rbean = ResourceBundle.getBundle("jmri.jmrit.beantable.BeanTableBundle");
+    String title = Bundle.getMessage("TitleListedTable");
 
     /**
      * Create an action with a specific title.
@@ -57,7 +55,7 @@ public class ListedTableAction extends AbstractAction {
     }
 
     public ListedTableAction() {
-        this(rbean.getString("TitleListedTable"));
+        this(Bundle.getMessage("TitleListedTable"));
     }
 
     ListedTableFrame f;
@@ -65,8 +63,8 @@ public class ListedTableAction extends AbstractAction {
 
     public void actionPerformed() {
         // create the JTable model, with changes for specific NamedBean
-        /* create the frame in a seperate thread outside of swing so that we do not 
-         hog the swing thread which is also used for connection traffic */
+        /* create the frame outside of swing so that we do not 
+         hog Swing/AWT execution, then finally display on Swing */
         Runnable r = new Runnable() {
             public void run() {
                 f = new ListedTableFrame(title) {
@@ -79,11 +77,19 @@ public class ListedTableAction extends AbstractAction {
                 f.initComponents();
                 addToFrame(f);
 
-                f.gotoListItem(gotoListItem);
-                f.pack();
-
-                f.setDividerLocation(dividerLocation);
-                f.setVisible(true);
+                try {
+                    javax.swing.SwingUtilities.invokeAndWait(()->{
+                        f.gotoListItem(gotoListItem);
+                        f.pack();
+                        f.setDividerLocation(dividerLocation);
+                        f.setVisible(true);
+                    });
+                } catch (java.lang.reflect.InvocationTargetException ex) {
+                    log.error("failed to set ListedTable visible", ex );
+                } catch (InterruptedException ex) {
+                    log.error("interrupted while setting ListedTable visible", ex );
+                }
+                
             }
         };
         Thread thr = new Thread(r, "Listed Table Generation");
@@ -101,6 +107,6 @@ public class ListedTableAction extends AbstractAction {
         return "package.jmri.jmrit.beantable.ListedTableAction";
     }
 
-    static Logger log = LoggerFactory.getLogger(ListedTableAction.class.getName());
+    private final static Logger log = LoggerFactory.getLogger(ListedTableAction.class.getName());
 
 }

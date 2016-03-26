@@ -1,17 +1,13 @@
-// MonTest.java
 package jmri.jmrix.lenz.swing.mon;
 
 import junit.framework.Test;
 import junit.framework.TestCase;
 import junit.framework.TestSuite;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 
 /**
  * Tests for the jmri.jmrix.lenz.swing.mon package
  *
  * @author Paul Bender
- * @version $Revision$
  */
 public class MonTest extends TestCase {
 
@@ -32,7 +28,5 @@ public class MonTest extends TestCase {
         suite.addTest(new TestSuite(XNetMonPaneTest.class));
         return suite;
     }
-
-    static Logger log = LoggerFactory.getLogger(MonTest.class.getName());
 
 }

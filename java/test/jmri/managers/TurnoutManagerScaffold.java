@@ -1,4 +1,3 @@
-// TurnoutManagerScaffold.java
 package jmri.managers;
 
 import jmri.JmriException;

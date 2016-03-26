@@ -3,7 +3,7 @@
 
 <!-- Stylesheet to convert JavaHelp index and TOC pages into HTML -->
 
-<!-- This file is part of JMRI.  Copyright 2007.                            -->
+<!-- This file is part of JMRI.  Copyright 2007, 2015.                            -->
 <!--                                                                        -->
 <!-- JMRI is free software; you can redistribute it and/or modify it under  -->
 <!-- the terms of version 2 of the GNU General Public License as published  -->
@@ -33,16 +33,12 @@
     <HTML LANG="fr">
     <HEAD>
     <TITLE>JMRI Help System: Index</TITLE>
-    <META HTTP-EQUIV="Content-Type" CONTENT="text/html; charset=iso-8859-1" />
-    <META CONTENT="Bob Jacobsen" NAME="Author" />
-    <META NAME="keywords" CONTENT="JMRI help Route Add Edit" />
+    <META NAME="Author" CONTENT="Bob Jacobsen" />
+    <META NAME="keywords" CONTENT="JMRI Help Index" />
     
     <!-- Style -->
-    <META HTTP-EQUIV="Content-Type" CONTENT="text/html; charset=iso-8859-1" />
-    <LINK REL="stylesheet" TYPE="text/css" HREF="/css/default.css"
-        MEDIA="screen" />
-    <LINK REL="stylesheet" TYPE="text/css" HREF="/css/print.css"
-        MEDIA="print" />
+    <LINK REL="stylesheet" TYPE="text/css" HREF="/css/default.css" MEDIA="screen" />
+    <LINK REL="stylesheet" TYPE="text/css" HREF="/css/print.css" MEDIA="print" />
     <LINK REL="icon" HREF="/images/jmri.ico" TYPE="image/png" />
     <LINK REL="home" TITLE="Home" HREF="/" />
     <!-- /Style -->
@@ -92,16 +88,12 @@
     <HTML LANG="fr">
     <HEAD>
     <TITLE>JMRI Help System: Table of Contents</TITLE>
-    <META HTTP-EQUIV="Content-Type" CONTENT="text/html; charset=iso-8859-1" />
-    <META CONTENT="Bob Jacobsen" NAME="Author" />
-    <META NAME="keywords" CONTENT="JMRI help Route Add Edit" />
+    <META NAME="Author" CONTENT="Bob Jacobsen" />
+    <META NAME="keywords" CONTENT="JMRI Help Table of Contents TOC" />
     
     <!-- Style -->
-    <META HTTP-EQUIV="Content-Type" CONTENT="text/html; charset=iso-8859-1" />
-    <LINK REL="stylesheet" TYPE="text/css" HREF="/css/default.css"
-        MEDIA="screen" />
-    <LINK REL="stylesheet" TYPE="text/css" HREF="/css/print.css"
-        MEDIA="print" />
+    <LINK REL="stylesheet" TYPE="text/css" HREF="/css/default.css" MEDIA="screen" />
+    <LINK REL="stylesheet" TYPE="text/css" HREF="/css/print.css" MEDIA="print" />
     <LINK REL="icon" HREF="/images/jmri.ico" TYPE="image/png" />
     <LINK REL="home" TITLE="Home" HREF="/" />
     <!-- /Style -->

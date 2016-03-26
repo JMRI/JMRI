@@ -35,7 +35,7 @@ public class CarLengths extends RollingStockAttribute {
             // create and load
             _instance = new CarLengths();
         }
-        if (Control.showInstance) {
+        if (Control.SHOW_INSTANCE) {
             log.debug("CarLengths returns instance {}", _instance);
         }
         return _instance;
@@ -86,6 +86,6 @@ public class CarLengths extends RollingStockAttribute {
         super.firePropertyChange(p, old, n);
     }
 
-    static Logger log = LoggerFactory.getLogger(CarLengths.class.getName());
+    private final static Logger log = LoggerFactory.getLogger(CarLengths.class.getName());
 
 }

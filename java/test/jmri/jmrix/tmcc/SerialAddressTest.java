@@ -1,4 +1,3 @@
-// SerialAddressTest.java
 package jmri.jmrix.tmcc;
 
 import jmri.util.JUnitAppender;

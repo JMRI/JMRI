@@ -13,7 +13,7 @@ import org.slf4j.LoggerFactory;
  * @author Paul Bender Copyright (C) 2004-2010
  * @version $Revision$
  */
-public final class XNetConsistManager extends AbstractConsistManager {
+public class XNetConsistManager extends AbstractConsistManager {
 
     private Thread initThread = null;
     protected XNetTrafficController tc = null;
@@ -311,5 +311,5 @@ public final class XNetConsistManager extends AbstractConsistManager {
             }
         }
     }
-    static Logger log = LoggerFactory.getLogger(XNetConsistManager.class.getName());
+    private final static Logger log = LoggerFactory.getLogger(XNetConsistManager.class.getName());
 }

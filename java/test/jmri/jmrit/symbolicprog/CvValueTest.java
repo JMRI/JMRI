@@ -1,4 +1,3 @@
-// CvValueTest.java
 package jmri.jmrit.symbolicprog;
 
 import jmri.progdebugger.ProgDebugger;
@@ -9,11 +8,12 @@ import junit.framework.TestSuite;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+import jmri.util.JUnitUtil;
+
 /**
  * Test CvValue class
  *
- * @author	Bob Jacobsen Copyright 2004, 2006
- * @version $Revision$
+ * @author	Bob Jacobsen Copyright 2004, 2006, 2015
  */
 public class CvValueTest extends TestCase {
 
@@ -38,18 +38,8 @@ public class CvValueTest extends TestCase {
         CvValue cv = new CvValue("91", p);
         cv.read(null);
         // wait for reply (normally, done by callback; will check that later)
-        int i = 0;
-        while (cv.isBusy() && i++ < 100) {
-            try {
-                Thread.sleep(10);
-            } catch (Exception e) {
-            }
-        }
-        if (log.isDebugEnabled()) {
-            log.debug("past loop, i=" + i + " value=" + cv.getValue() + " state=" + cv.getState());
-        }
-
-        Assert.assertTrue(i < 100);
+        JUnitUtil.waitFor(()->{return !cv.isBusy();}, "cv.isBusy");
+        
         Assert.assertTrue(cv.getValue() == 123);
         Assert.assertTrue(cv.getState() == CvValue.READ);
     }
@@ -63,21 +53,8 @@ public class CvValueTest extends TestCase {
 
         cv.confirm(null);
         // wait for reply (normally, done by callback; will check that later)
-        int i = 0;
-        while (cv.isBusy() && i++ < 100) {
-            try {
-                Thread.sleep(20);
-            } catch (Exception e) {
-            }
-        }
-        if (log.isDebugEnabled()) {
-            log.debug("past loop, i=" + i + " value=" + cv.getValue() + " state=" + cv.getState());
-        }
-        if (i == 0) {
-            log.warn("textCvValRead saw an immediate return from isBusy");
-        }
+        JUnitUtil.waitFor(()->{return !cv.isBusy();}, "cv.isBusy");
 
-        Assert.assertTrue("loop passes before 1 sec", i < 100);
         Assert.assertEquals("CV value ", 91, cv.getValue());
         Assert.assertEquals("CV state ", CvValue.UNKNOWN, cv.getState());
     }
@@ -90,29 +67,12 @@ public class CvValueTest extends TestCase {
         cv.setValue(123);
         cv.write(null); // force out, so dummy read works
         // release, to ensure
-        int i = 0;
-        while (cv.isBusy() && i++ < 100) {
-            try {
-                Thread.sleep(10);
-            } catch (Exception e) {
-            }
-        }
+        JUnitUtil.waitFor(()->{return !cv.isBusy();}, "cv.isBusy");
 
         cv.confirm(null);
         // wait for reply (normally, done by callback; will check that later)
-        i = 0;
-        while (cv.isBusy() && i++ < 500) {
-            try {
-                jmri.util.JUnitUtil.releaseThread(this);
-            } catch (Exception e) {
-            }
-        }
-        jmri.util.JUnitUtil.releaseThread(this);
-        if (log.isDebugEnabled()) {
-            log.debug("past loop, i=" + i + " value=" + cv.getValue() + " state=" + cv.getState());
-        }
+        JUnitUtil.waitFor(()->{return !cv.isBusy();}, "cv.isBusy");
 
-        Assert.assertTrue("loop passes before 5 sec", i < 500);
         Assert.assertEquals("CV value ", 123, cv.getValue());
         Assert.assertEquals("CV state ", CvValue.SAME, cv.getState());
     }
@@ -127,18 +87,8 @@ public class CvValueTest extends TestCase {
         cv.setValue(12);
         cv.write(null);
         // wait for reply (normally, done by callback; will check that later)
-        int i = 0;
-        while (cv.isBusy() && i++ < 100) {
-            try {
-                Thread.sleep(10);
-            } catch (Exception e) {
-            }
-        }
-        if (log.isDebugEnabled()) {
-            log.debug("past loop, i=" + i + " value=" + cv.getValue() + " state=" + cv.getState());
-        }
+        JUnitUtil.waitFor(()->{return !cv.isBusy();}, "cv.isBusy");
 
-        Assert.assertTrue("iterations ", i < 100);
         Assert.assertEquals("cv value ", 12, cv.getValue());
         Assert.assertEquals("cv state ", CvValue.STORED, cv.getState());
         Assert.assertEquals("last value written ", 12, p.lastWrite());
@@ -182,7 +132,7 @@ public class CvValueTest extends TestCase {
         return suite;
     }
 
-    static Logger log = LoggerFactory.getLogger(CvValueTest.class.getName());
+    private final static Logger log = LoggerFactory.getLogger(CvValueTest.class.getName());
 
     // The minimal setup for log4J
     protected void setUp() {

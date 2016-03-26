@@ -10,7 +10,6 @@ import junit.framework.TestSuite;
  * Description:	Tests for the jmrit.display.configurexml package
  *
  * @author	Bob Jacobsen Copyright 2009, 2014
- * @version $Revision$
  */
 public class PackageTest extends TestCase {
 
@@ -21,7 +20,7 @@ public class PackageTest extends TestCase {
 
     // Main entry point
     static public void main(String[] args) {
-        String[] testCaseName = {PackageTest.class.getName()};
+        String[] testCaseName = {"-noloading", PackageTest.class.getName()};
         junit.swingui.TestRunner.main(testCaseName);
     }
 

@@ -1,13 +1,12 @@
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
-<!-- $Id$ -->
 <html lang="en">
 <head>
- <TITLE>
+ <title>
       JMRI: Add/Edit Transits
- </TITLE>
-    <META http-equiv=Content-Type content="text/html; charset=iso-8859-1">
-    <META content="Bob Jacobsen" name=Author>
-    <META name="keywords" content="JMRI help Transit Add Edit">
+ </title>
+    <meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
+    <meta content="Bob Jacobsen" name="Author">
+    <meta name="keywords" content="JMRI help Transit Add Edit">
 
 <!--#include virtual="/Style" -->
 </head>
@@ -17,104 +16,104 @@
   <div class="nomenu" id="mBody">
     <div id="mainContent">
 
-<H1>Adding/Editing Transits</H1>
+<h1>Adding/Editing Transits</h1>
     
 <a name="addTransit">
-<H2>Adding a new Transit</H2></a>
+<h2>Adding a new Transit</h2></a>
 To add a new Transit, follow this procedure:
-<ol>
-<li><p>Click <b><a href="TransitTable.shtml">Transits</a></b> in the 
-<b>Tables</b> submenu of the <b>Tools</b> menu to bring up
-the Transit Table, and click the <b>Add...</b> button at the bottom of the 
-table to bring up the Add/Edit Transit window.</p>
-<img src="TransitAddFrame.jpg" height="550" width="770">
-<li><p>Do either:</p>
-<ul>
-	<li>Allow the program to automatically generate a <b>System Name</b> for you.
-	The created name will be IZnn, where nn is the next available number.</li>
-	<li>Uncheck <b>Automatically Generate System Name</b>, and enter a <b>System Name</b>,
-	according to the JMRI convention. Since Transits are internal objects, the first 
-	letter should be "I" (for internal). The second letter should be "Z" to indicate a 
-	Transit. This is usually followed by a number, but the program will accept any 
-	numeric or alphabetic characters. The system name must be different from the System 
-	Name of other Transits.  If the name you enter does not begin with "IZ", the program
-	will insert an "IZ" ahead of whatever you enter, so you can simply enter a number if 
-	you prefer. </li>
-</ul>
-<li><p>Enter a <b>User Name</b>. Any string of characters that is different 
-from the User Name of other Transits will be accepted, but it's 
-wise to use a string that describes the intended use of the Transit.</p>
-</li>
-<li><p>Next add <b>Sections</b> to the Transit.  Every Transit must have at least 
-two Sections, but most will have many more. Two "Primary" Sections are needed to 
-define the direction of the Transit. Sections must be connected, and must 
-be entered in order. Select the Section you would like to begin the Transit 
-in the upper popup menu. At any point during Section addition, this popup menu lists 
-only those Sections that are eligible for addition. Click <b>Add Next Section</b> 
-to add the first Section of the Transit.</p>
-</li>
-<li><p>Add more primary Sections in the same manner. Select the 
-Section to be added in the popup menu, and click <b>Add Next Section</b>.
-</li>
-<li><p>Immediately after entering a Section using <b>Add Next Section</b>, if 
-you would like to add an <b>Alternate Section</b> to the one just entered, select 
-an alternate Section from the popup menu to the left of the <b>Add Alternate 
-Section</b> button. If there are no possibly valid alternate Sections, the popup 
-menu will be empty. Often the popup menu will contain possible alternate 
-Sections that are not really alternates to the primary Section. For a listed 
-alternate Section to be a <i>valid</i> alternate Section, it must connect to 
-the next primary Section. <b>It is your responsibility to determine whether a 
-Section listed in the popup menu is a valid alternate Section</b>, i.e. 
-will connect to the next primary Section. For more information on alternate 
-Sections and their use, refer to the 
-<a href="TransitTable.shtml">Transit Table help file</a>.
-</li>
-<li><p>If you decide you need to add a Section at the beginning of the Transit, 
-select a Section in the popup menu to the left of the <b>Insert As First Section</b>
-button, then press the <b>Insert As First Section</b> button. The selected Section 
-will become the first Section in the Transit, with order number "1", and the order 
-numbers of all other Sections will be incremented. The popup menu will be empty if 
-there are no possible Sections to add at the beginning of the Transit.</p>
-</li>
-<li> <p>The next set of buttons provide options to aid in setting up or editting a 
-Transit.</p>
-<ol>
-<p>If at any time you decide you want to start over, click <b>Delete All 
-Sections</b> to clear the table of Sections, and return to step 4 above.</p>
-<p>The <b>Remove Last Section</b> and <b>Remove First Section</b> buttons delete 
-a Section at the end or beginning of the Transit, and adjust order numbers of 
-the remaining Sections. Primary Sections in the middle of the Transit may not be 
-deleted because doing so would break the connectivity of Sections within the 
-Transit.</p>
-<p> The remaining three editting buttons provide for replacing a primary Section and 
-deleting or adding an alternate Section in the middle of the Transit. To use 
-these buttons, enter the order number of the Section to be editted, then press 
-one of the buttons--<b>Replace Primary for Order</b>, <b>Delete Alternate For Order</b>, 
-or <b>Add Alternate For Order</b>. If no Sections are available that meet the 
-requirements, a message will appear, and no changes will be made. If only one 
-Section satisfies the requirements, the edit is immediately performed. If more 
-than one Section satisfies the requirements, a dialog is presented so a choice 
-of Section may be made. When a primary Section is replaced, its Actions (see 
-below) are preserved.</p>
-</ol>
-<li><p>If you will be using this Transit to run an automatic train, click the 
-<b>View/Add/Edit Actions</b> button to set up any <b>Action</b> needed 
-when a train is in the specified Section. You can add Actions now, or 
-you can edit this Transit at a later time to set up Actions.
-More information is provided in the <a href="ViewSpecialActions.shtml">
-View Actions help file</a>. It is usually better to set up all Sections before 
-adding Actions, because when a Section is deleted from the Transit, its Actions 
-are also deleted.</p>
-</li>
-</li><li><p>Click the <b>Create</b> button at the bottom of the window.  
-If everything is fine, the window will close and a new Transit will appear in 
-the Transit Table. If there is trouble with anything, a message will be 
-displayed indicating the error and what you should do to fix it. 
-Correct the error and click <b>Create</b> again.</p></li>
-</ol>
+	<ol>
+	<li><p>Click <b><a href="TransitTable.shtml">Transits</a></b> in the 
+	<b>Tables</b> submenu of the <b>Tools</b> menu to bring up
+	the Transit Table, and click the <b>Add...</b> button at the bottom of the 
+	table to bring up the Add/Edit Transit window.</p>
+	<img src="TransitAddFrame.jpg" height="550" width="770">
+	<li><p>Do either:</p>
+		<ul>
+			<li>Allow the program to automatically generate a <b>System Name</b> for you.
+			The created name will be IZnn, where nn is the next available number.</li>
+			<li>Uncheck <b>Automatically Generate System Name</b>, and enter a <b>System Name</b>,
+			according to the JMRI convention. Since Transits are internal objects, the first 
+			letter should be "I" (for Internal). The second letter should be "Z" to indicate a 
+			Transit. This is usually followed by a number, but the program will accept any 
+			numeric or alphabetic characters. The system name must be different from the System 
+			Name of other Transits.  If the name you enter does not begin with "IZ", the program
+			will insert an "IZ" ahead of whatever you enter, so you can simply enter a number if 
+			you prefer. </li>
+		</ul>
+	<li><p>Enter a <b>User Name</b>. Any string of characters that is different 
+	from the User Name of other Transits will be accepted, but it's 
+	wise to use a string that describes the intended use of the Transit.</p>
+	</li>
+	<li><p>Next add <b>Sections</b> to the Transit.  Every Transit must have at least 
+	two Sections, but most will have many more. Two "Primary" Sections are needed to 
+	define the direction of the Transit. Sections must be connected, and must 
+	be entered in order. Select the Section you would like to begin the Transit 
+	in the upper popup menu. At any point during Section addition, this popup menu lists 
+	only those Sections that are eligible for addition. Click <b>Add Next Section</b> 
+	to add the first Section of the Transit.</p>
+	</li>
+	<li><p>Add more primary Sections in the same manner. Select the 
+	Section to be added in the popup menu, and click <b>Add Next Section</b>.
+	</li>
+	<li><p>Immediately after entering a Section using <b>Add Next Section</b>, if 
+	you would like to add an <b>Alternate Section</b> to the one just entered, select 
+	an alternate Section from the popup menu to the left of the <b>Add Alternate 
+	Section</b> button. If there are no possibly valid alternate Sections, the popup 
+	menu will be empty. Often the popup menu will contain possible alternate 
+	Sections that are not really alternates to the primary Section. For a listed 
+	alternate Section to be a <i>valid</i> alternate Section, it must connect to 
+	the next primary Section. <b>It is your responsibility to determine whether a 
+	Section listed in the popup menu is a valid alternate Section</b>, i.e. 
+	will connect to the next primary Section. For more information on alternate 
+	Sections and their use, refer to the 
+	<a href="TransitTable.shtml">Transit Table help file</a>.
+	</li>
+	<li><p>If you decide you need to add a Section at the beginning of the Transit, 
+	select a Section in the popup menu to the left of the <b>Insert As First Section</b>
+	button, then press the <b>Insert As First Section</b> button. The selected Section 
+	will become the first Section in the Transit, with order number "1", and the order 
+	numbers of all other Sections will be incremented. The popup menu will be empty if 
+	there are no possible Sections to add at the beginning of the Transit.</p>
+	</li>
+	<li> <p>The next set of buttons provide options to aid in setting up or editing a 
+	Transit.</p>
+		<ol>
+		<p>If at any time you decide you want to start over, click <b>Delete All 
+		Sections</b> to clear the table of Sections, and return to step 4 above.</p>
+		<p>The <b>Remove Last Section</b> and <b>Remove First Section</b> buttons delete 
+		a Section at the end or beginning of the Transit, and adjust order numbers of 
+		the remaining Sections. Primary Sections in the middle of the Transit may not be 
+		deleted because doing so would break the connectivity of Sections within the 
+		Transit.</p>
+		<p> The remaining three editing buttons provide for replacing a primary Section and 
+		deleting or adding an alternate Section in the middle of the Transit. To use 
+		these buttons, enter the order number of the Section to be edited, then press 
+		one of the buttons--<b>Replace Primary for Order</b>, <b>Delete Alternate For Order</b>, 
+		or <b>Add Alternate For Order</b>. If no Sections are available that meet the 
+		requirements, a message will appear, and no changes will be made. If only one 
+		Section satisfies the requirements, the edit is immediately performed. If more 
+		than one Section satisfies the requirements, a dialog is presented so a choice 
+		of Section may be made. When a primary Section is replaced, its Actions (see 
+		below) are preserved.</p>
+		</ol>
+	<li><p>If you will be using this Transit to run an automatic train, click the 
+	<b>View/Add/Edit Actions</b> button to set up any <b>Action</b> needed 
+	when a train is in the specified Section. You can add Actions now, or 
+	you can edit this Transit at a later time to set up Actions.
+	More information is provided in the <a href="ViewSpecialActions.shtml">
+	View Actions help file</a>. It is usually better to set up all Sections before 
+	adding Actions, because when a Section is deleted from the Transit, its Actions 
+	are also deleted.</p></li>
+	</li>
+	<li><p>Click the <b>Create</b> button at the bottom of the window.  
+	If everything is fine, the window will close and a new Transit will appear in 
+	the Transit Table. If there is trouble with anything, a message will be 
+	displayed indicating the error and what you should do to fix it. 
+	Correct the error and click <b>Create</b> again.</p></li>
+	</ol>
 
 <p>Note: The <b>Direction</b> and <b>Alternate</b> columns in the Add/Edit 
-Transit table are for information only. They are set automatically as you 
+Transit Table are for information only. They are set automatically as you 
 build the Transit. The Direction column indicates the direction of travel 
 through the Section, and the Alternate column indicates whether the Section 
 is the <i>primary</i> Section for this order number or an <i>alternate</i> 
@@ -122,29 +121,33 @@ Section.</p>
 
 <h2>Editing an existing Transit</h2>
 To edit an existing Transit, follow  this procedure:
-<ol>
-<li><p>Click a Transit's <b>Edit</b> button in the <a href="TransitTable.shtml">
-Transit Table</a> to bring up the Add/Edit Transit window. The window will 
-be the same as that shown above, except the System Name will be fixed, and 
-the <b>Create</b> button will be replaced with an <b>Update</b> Button.</p>
-<img src="TransitEditFrame.jpg" height="550" width="770"></li>
-<li><p>Make whatever changes or additions you need to the information in
-the window. Note that the System Name of the edited Transit may not be 
-changed, but the User Name may be changed. Items that may be edited are described 
-<A HREF="#addTransit">above</a> in steps 3 through 9 in the procedure for adding 
-a new Transit.</p></li>
-<li><p>After making changes to the Transit information, click <b>Update</b> 
-to change the selected Transit.  If everything is fine, the window will close.
-If there is any trouble, a message will be displayed indicating the error and 
-what you should do to fix it. Correct the error and click <b>Update</b> again.</p>
-</li>
-<li>Click <b>Cancel</b> to exit without changing the selected Transit. 
-If the Add/Edit Transit window is dismissed (closed) while editing, <b>Cancel</b> 
-is automatically selected, and no changes are made to the selected Transit.
-</li>
-</ol>
+	<ol>
+	<li><p>Click a Transit's <b>Edit</b> button in the <a href="TransitTable.shtml">
+	Transit Table</a> to bring up the Add/Edit Transit window. The window will 
+	be the same as that shown above, except the System Name will be fixed, and 
+	the <b>Create</b> button will be replaced with an <b>Update</b> Button.</p>
+	<img src="TransitEditFrame.jpg" height="550" width="770"></li>
+	<li><p>Make whatever changes or additions you need to the information in
+	the window. Note that the System Name of the edited Transit may not be 
+	changed, but the User Name may be changed. Items that may be edited are described 
+	<A HREF="#addTransit">above</a> in steps 3 through 9 in the procedure for adding 
+	a new Transit.</p></li>
+	<li><p>After making changes to the Transit information, click <b>Update</b> 
+	to change the selected Transit.  If everything is fine, the window will close.
+	If there is any trouble, a message will be displayed indicating the error and 
+	what you should do to fix it. Correct the error and click <b>Update</b> again.</p>
+	</li>
+	<li>Click <b>Cancel</b> to exit without changing the selected Transit. 
+	If the Add/Edit Transit window is dismissed (closed) while editing, <b>Cancel</b> 
+	is automatically selected, and no changes are made to the selected Transit.
+	</li>
+	</ol>
+
+<p>Back to the <a href="TransitTable.shtml">Transit Table help page<a>.</p>
 
 <!--#include virtual="/Footer" -->
+
+      </div><!-- closes #mainContent-->
+    </div> <!-- closes #mBody-->
 </body>
 </html>
-

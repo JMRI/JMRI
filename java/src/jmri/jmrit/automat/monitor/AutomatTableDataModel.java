@@ -194,6 +194,6 @@ public class AutomatTableDataModel extends javax.swing.table.AbstractTableModel
         AutomatSummary.instance().removePropertyChangeListener(this);
     }
 
-    static final Logger log = LoggerFactory.getLogger(AutomatTableDataModel.class.getName());
+    private final static Logger log = LoggerFactory.getLogger(AutomatTableDataModel.class.getName());
 
 }

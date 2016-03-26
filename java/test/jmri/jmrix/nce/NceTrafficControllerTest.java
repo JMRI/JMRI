@@ -1,4 +1,3 @@
-// NceTrafficControllerTest.java
 package jmri.jmrix.nce;
 
 import java.io.DataInputStream;
@@ -16,7 +15,6 @@ import org.slf4j.LoggerFactory;
  * JUnit tests for the NceTrafficController class
  *
  * @author	Bob Jacobsen Copyright 2003, 2007
- * @version $Revision$
  */
 public class NceTrafficControllerTest extends TestCase {
 
@@ -288,6 +286,6 @@ public class NceTrafficControllerTest extends TestCase {
         return suite;
     }
 
-    static Logger log = LoggerFactory.getLogger(NceTrafficControllerTest.class.getName());
+    private final static Logger log = LoggerFactory.getLogger(NceTrafficControllerTest.class.getName());
 
 }

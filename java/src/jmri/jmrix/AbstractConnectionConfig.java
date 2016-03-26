@@ -13,8 +13,6 @@ import javax.swing.JPanel;
 import javax.swing.JTextField;
 import jmri.InstanceManager;
 import jmri.UserPreferencesManager;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 
 /**
  * Abstract base class for common implementation of the ConnectionConfig
@@ -39,10 +37,10 @@ abstract public class AbstractConnectionConfig implements ConnectionConfig {
 
     protected int NUMOPTIONS = 2;
 
-    protected JCheckBox showAdvanced = new JCheckBox("Additional Connection Settings");
-
-    protected JLabel systemPrefixLabel = new JLabel("Connection Prefix");
-    protected JLabel connectionNameLabel = new JLabel("Connection Name");
+    // Load localized field names
+    protected JCheckBox showAdvanced = new JCheckBox(Bundle.getMessage("AdditionalConnectionSettings"));
+    protected JLabel systemPrefixLabel = new JLabel(Bundle.getMessage("ConnectionPrefix"));
+    protected JLabel connectionNameLabel = new JLabel(Bundle.getMessage("ConnectionName"));
     protected JTextField systemPrefixField = new JTextField(10);
     protected JTextField connectionNameField = new JTextField(15);
     protected String systemPrefix;
@@ -205,6 +203,28 @@ abstract public class AbstractConnectionConfig implements ConnectionConfig {
     @Override
     abstract public void setDisabled(boolean disable);
 
-    static protected Logger log = LoggerFactory.getLogger(AbstractConnectionConfig.class.getName());
+    /**
+     * Register the ConnectionConfig with the running JMRI process. It is
+     * strongly recommended that overriding implementations call
+     * super.register() since this implementation performs all required
+     * registration tasks.
+     */
+    @Override
+    public void register() {
+        this.setInstance();
+        InstanceManager.configureManagerInstance().registerPref(this);
+        ConnectionConfigManager ccm = InstanceManager.getDefault(ConnectionConfigManager.class);
+        if (ccm != null) {
+            ccm.add(this);
+        }
+    }
+
+    @Override
+    public void dispose() {
+        ConnectionConfigManager ccm = InstanceManager.getDefault(ConnectionConfigManager.class);
+        if (ccm != null) {
+            ccm.remove(this);
+        }
+    }
 
 }

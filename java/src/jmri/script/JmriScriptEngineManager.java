@@ -47,10 +47,23 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 /**
- * Provide a manager for {@link javax.script.ScriptEngine}s. This manager
- * creates a default
+ * Provide a manager for {@link javax.script.ScriptEngine}s.
  *
- * @author rhwood
+ * The following methods are the only mechanisms for evaluating a Python script
+ * that respect the <code>jython.exec</code> property in the
+ * <em>python.properties</em> file:
+ * <ul>
+ * <li>{@link #eval(java.io.File)}</li>
+ * <li>{@link #eval(java.io.File, javax.script.Bindings)}</li>
+ * <li>{@link #eval(java.io.File, javax.script.ScriptContext)}</li>
+ * <li>{@link #eval(java.lang.String, javax.script.ScriptEngine)}</li>
+ * <li>{@link #runScript(java.io.File)</li>
+ * </ul>
+ * Evaluating a script using <code>getEngine*(java.lang.String).eval(...)</code>
+ * methods will not respect the <code>jython.exec</code> property, although all
+ * methods will respect all other properties of that file.
+ *
+ * @author Randall Wood
  */
 public final class JmriScriptEngineManager {
 
@@ -68,8 +81,9 @@ public final class JmriScriptEngineManager {
     private PythonInterpreter jython = null;
 
     /**
-     * Create a JmriScriptEngineManager. In most cases, it is preferable to use {@link #getDefault()
-     * } to get existing {@link javax.script.ScriptEngine} instances.
+     * Create a JmriScriptEngineManager. In most cases, it is preferable to use
+     * {@link #getDefault()} to get existing {@link javax.script.ScriptEngine}
+     * instances.
      */
     public JmriScriptEngineManager() {
         this.manager.getEngineFactories().stream().forEach((factory) -> {
@@ -90,6 +104,7 @@ public final class JmriScriptEngineManager {
                 names.put(name, factory.getEngineName());
                 log.debug("\tNames: {}", name);
             });
+            this.names.put(factory.getLanguageName(), factory.getEngineName());
             this.factories.put(factory.getEngineName(), factory);
         });
         Bindings bindings = new SimpleBindings();
@@ -164,7 +179,9 @@ public final class JmriScriptEngineManager {
      */
     public ScriptEngine getEngineByExtension(String extension) {
         String name = this.names.get(extension);
-        if (name==null) log.error("Could not find script engine name for extension \""+extension+"\"");
+        if (name == null) {
+            log.error("Could not find script engine name for extension \"{}\"", extension);
+        }
         return this.getEngine(name);
     }
 
@@ -177,7 +194,9 @@ public final class JmriScriptEngineManager {
      */
     public ScriptEngine getEngineByMimeType(String mimeType) {
         String name = this.names.get(mimeType);
-        if (name==null) log.error("Could not find script engine name for mime type \""+mimeType+"\"");
+        if (name == null) {
+            log.error("Could not find script engine name for mime type \"{}\"", mimeType);
+        }
         return this.getEngine(name);
     }
 
@@ -189,7 +208,9 @@ public final class JmriScriptEngineManager {
      */
     public ScriptEngine getEngineByName(String shortName) {
         String name = this.names.get(shortName);
-        if (name==null) log.error("Could not find script engine name for short name \""+shortName+"\"");
+        if (name == null) {
+            log.error("Could not find script engine name for short name \"{}\"", shortName);
+        }
         return this.getEngine(name);
     }
 
@@ -205,7 +226,7 @@ public final class JmriScriptEngineManager {
                 // Setup the default python engine to use the JMRI python properties
                 this.initializePython();
             } else {
-                System.out.println("Create engine for "+engineName);
+                log.debug("Create engine for {}", engineName);
                 ScriptEngine engine = this.factories.get(engineName).getScriptEngine();
                 engine.setContext(this.context);
                 this.engines.put(engineName, engine);
@@ -328,6 +349,70 @@ public final class JmriScriptEngineManager {
     }
 
     /**
+     * Get the default {@link javax.script.ScriptContext} for all
+     * {@link javax.script.ScriptEngine}s.
+     *
+     * @return the default ScriptContext;
+     */
+    public ScriptContext getDefaultContext() {
+        return this.context;
+    }
+
+    /**
+     * Given a file extension, get the ScriptEngineFactory registered to handle
+     * that extension.
+     *
+     * @param extension
+     * @return a ScriptEngineFactory or null
+     */
+    public ScriptEngineFactory getFactoryByExtension(String extension) {
+        String name = this.names.get(extension);
+        if (name == null) {
+            log.error("Could not find script engine factory name for extension \"{}\"", extension);
+        }
+        return this.getFactory(name);
+    }
+
+    /**
+     * Given a mime type, get the ScriptEngineFactory registered to handle that
+     * mime type.
+     *
+     * @param mimeType
+     * @return a ScriptEngineFactory or null
+     */
+    public ScriptEngineFactory getFactoryByMimeType(String mimeType) {
+        String name = this.names.get(mimeType);
+        if (name == null) {
+            log.error("Could not find script engine factory name for mime type \"{}\"", mimeType);
+        }
+        return this.getFactory(name);
+    }
+
+    /**
+     * Given a short name, get the ScriptEngineFactory registered by that name.
+     *
+     * @param shortName
+     * @return a ScriptEngineFactory or null
+     */
+    public ScriptEngineFactory getFactoryByName(String shortName) {
+        String name = this.names.get(shortName);
+        if (name == null) {
+            log.error("Could not find script engine factory name for short name \"{}\"", shortName);
+        }
+        return this.getFactory(name);
+    }
+
+    /**
+     * Get a ScriptEngineFactory by it's name.
+     *
+     * @param factoryName
+     * @return a ScriptEngineFactory or null
+     */
+    public ScriptEngineFactory getFactory(String factoryName) {
+        return this.factories.get(factoryName);
+    }
+
+    /**
      * The Python ScriptEngine can be configured using a custom
      * python.properties file and will run jmri_defaults.py if found in the
      * user's configuration profile or settings directory. See python.properties
@@ -348,6 +433,8 @@ public final class JmriScriptEngineManager {
                 Properties properties;
                 try {
                     properties = new Properties(System.getProperties());
+                    properties.setProperty("python.console.encoding", "UTF-8"); // NOI18N
+                    properties.setProperty("python.cachedir", FileUtil.getAbsoluteFilename(properties.getProperty("python.cachedir", "settings:jython/cache"))); // NOI18N
                     properties.load(is);
                     String path = properties.getProperty("python.path", "");
                     if (path.length() != 0) {

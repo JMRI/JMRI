@@ -17,7 +17,6 @@ import junit.framework.TestSuite;
  * Tests for the Operations CarsTableFrame class
  *
  * @author	Dan Boudreau Copyright (C) 2009
- * @version $Revision$
  */
 public class CarsTableFrameTest extends OperationsSwingTestCase {
 
@@ -175,9 +174,11 @@ public class CarsTableFrameTest extends OperationsSwingTestCase {
         Assert.assertEquals("3rd car in sort by owner list", c2, cars.get(2));
         Assert.assertEquals("4th car in sort by owner list", c5, cars.get(3));
         Assert.assertEquals("5th car in sort by owner list", c1, cars.get(4));
-
+        
         // test sort by rfid
-        getHelper().enterClickAndLeave(new MouseEventData(this, ctf.sortByRfid));
+//        getHelper().enterClickAndLeave(new MouseEventData(this, ctf.sortByRfid));
+        // use doClick() in case the radio button isn't visible due to scrollbars
+        ctf.sortByRfid.doClick();
         cars = ctf.carsTableModel.getSelectedCarList();
         Assert.assertEquals("1st car in sort by rfid list", c5, cars.get(0));
         Assert.assertEquals("2nd car in sort by rfid list", c2, cars.get(1));

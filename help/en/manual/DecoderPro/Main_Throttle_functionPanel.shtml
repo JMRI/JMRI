@@ -68,18 +68,15 @@ use up to 28 functions.. use the <input name="button11" id="button11" value="*" 
       <p>You can use the <strong>Save</strong> button on the <a href="Main_Throttle_addressPanel.shtml"><strong>Address Panel</strong></a>to save the edited functions to your locomotives Roster entry.</p></td>
   </tr>
 </tbody></table>
-<h3>&nbsp;</h3>
-<div>
+
   <div align="right"><a href="#Top"></a></div>
-</div>
-
-<div> </div>
-<div> </div>
 <hr>
-
 <div align="right">
 <p><a href="Main_Throttle.shtml">Back </a></p>
 </div>
 
 <!--#include virtual="/Footer" -->
-</div></body></html>
+  </div><!-- closes #mainContent-->
+ </div> <!-- closes #mBody-->
+</body>
+</html>

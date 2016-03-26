@@ -4,14 +4,11 @@ package jmri.jmrix.srcp.parser;
 import junit.framework.Test;
 import junit.framework.TestCase;
 import junit.framework.TestSuite;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 
 /**
  * Tests for the jmri.jmris.srcp.parser package
  *
  * @author Paul Bender
- * @version $Revision$
  */
 public class SRCPClientParserTests extends TestCase {
 
@@ -38,7 +35,5 @@ public class SRCPClientParserTests extends TestCase {
 
         return suite;
     }
-
-    static Logger log = LoggerFactory.getLogger(SRCPClientParserTests.class.getName());
 
 }

@@ -3,7 +3,7 @@
 # ATTENTION: Special version for HidRawEnvironmentPlugin of JInput
 # ATTENTION: Currently works in Windows only
 #
-# See <http://jmri.sf.net/help/en/html/hardware/raildriver/index.shtml>
+# See <http://jmri.org/help/en/html/hardware/raildriver/index.shtml>
 #
 # Author: Joan Carranc, 2010
 # - Based on the original RailDriver.py, Bob Jacobsen, copyright 2008
@@ -38,6 +38,7 @@
 # Calibration window! If you don't there will be too many events triggered 
 # and everything will slow right down....
 
+import java
 import jmri
 
 #

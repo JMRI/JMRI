@@ -1,8 +1,10 @@
 package apps.configurexml;
 
 import apps.PerformActionModel;
+import apps.StartupActionsManager;
 import java.awt.event.ActionEvent;
 import javax.swing.Action;
+import jmri.InstanceManager;
 import org.jdom2.Element;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -12,7 +14,7 @@ import org.slf4j.LoggerFactory;
  *
  * @author Bob Jacobsen Copyright: Copyright (c) 2003
  * @version $Revision$
- * @see apps.PerformActionPanel
+ * @see apps.startup.PerformActionModelFactory
  */
 public class PerformActionModelXml extends jmri.configurexml.AbstractXmlAdapter {
 
@@ -47,15 +49,10 @@ public class PerformActionModelXml extends jmri.configurexml.AbstractXmlAdapter 
         return true;
     }
 
-    /**
-     * Create object from XML file
-     *
-     * @param e Top level Element to unpack.
-     * @return true if successful
-     */
-    public boolean load(Element e) {
+    @Override
+    public boolean load(Element shared, Element perNode) {
         boolean result = true;
-        String className = e.getAttribute("name").getValue();
+        String className = shared.getAttribute("name").getValue();
         // rename MiniServerAction to WebServerAction
         if (className.equals("jmri.web.miniserver.MiniServerAction")) {
             className = "jmri.web.server.WebServerAction";
@@ -81,8 +78,7 @@ public class PerformActionModelXml extends jmri.configurexml.AbstractXmlAdapter 
         }
         PerformActionModel m = new PerformActionModel();
         m.setClassName(className);
-        PerformActionModel.rememberObject(m);
-        jmri.InstanceManager.configureManagerInstance().registerPref(new apps.PerformActionPanel());
+        InstanceManager.getDefault(StartupActionsManager.class).addAction(m);
         return result;
     }
 
@@ -96,6 +92,6 @@ public class PerformActionModelXml extends jmri.configurexml.AbstractXmlAdapter 
         log.error("Unexpected call of load(Element, Object)");
     }
     // initialize logging
-    static Logger log = LoggerFactory.getLogger(PerformActionModelXml.class.getName());
+    private final static Logger log = LoggerFactory.getLogger(PerformActionModelXml.class.getName());
 
 }

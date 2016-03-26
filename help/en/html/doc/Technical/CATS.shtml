@@ -35,7 +35,7 @@
 The Crandic Automated Traffic System (CATS) is a JMRI-based application by 
 Rodney Black for controlling and operating a model railroad. 
 There's more information on the 
-<a href="http://home.comcast.net/~kb0oys/">CATS web site</a>.
+<a href="http://cats4ctc.org/">CATS web site</a>.
 
 <p>
 JMRI is a library, and CATS is a large, separately maintained application
@@ -52,15 +52,15 @@ corresponding to the two CATS applications.
 <p>
 CATS development does not use a public code repository, and the code is not generally
 available while it's being developed.  
-Rodney Black periodoically mades releases
+Rodney Black periodically makes releases
 available, including source code, as zip-file archives at the
-<a href="http://home.comcast.net/%7Ekb0oys/">CATS web site</a>,
+<a href="http://cats4ctc.wikidot.com">CATS web site</a>,
 see the download links at the bottom of the 
-<a href="http://home.comcast.net/%7Ekb0oys/license.htm">CATS license page</a>.
+<a href="http://cats4ctc.wikidot.com/main:downloads">CATS license page</a>.
 
 <p>
-As of early 2014, the current CATS distribution (2037) works
-with JMRI 3.6 and current (3.7.3) test versions.  
+As of early 2016, the current CATS distribution (2038) works
+with JMRI 4.0.1 through to the current (4.3) test versions.  
 From this baseline, we want to keep CATS compiling during
 ongoing JMRI development. Changes that break CATS should be
 handled through deprecation, at least for one JMRI production release.
@@ -72,7 +72,11 @@ directory.  (Designer is meant to be independent of JMRI, but we
 compile it together just in case)  Depending on how you unpacked, 
 you might find those duplicated:  cats/cats.  Take the lowest level
 "cats" and "designer" directory and move them directly under
-JMRI's java/src directory, i.e. alongside the existing apps and jmri directories.
+JMRI's java/src directory, i.e. alongside the existing apps and jmri directories:
+<pre><code>
+% ls java/src/<br/>
+META-INF   apps   cats   designer   jmri
+</code></pre>
 
 <p>
 CATS doesn't have any unit tests, so there's nothing to go in the 
@@ -96,19 +100,19 @@ JMRI itself has lots of deprecation warnings, so if you want to see just
 the CATS ones:
 <ul>
 <li>ant clean compile
-<li>rm -r java/classes/cats java/classes/designer
+<li>rm -rf java/classes/cats java/classes/designer
 <li>ant -Ddeprecation="on" compile
 </ul>
 The first compilation will compile everything.  The second one will only compile the
 CATS source, so will only give you warnings from those classes.
 
-<h3>From CATS from a local JMRI build</h3>
+<h3>Running CATS from a local JMRI build</h3>
 
 Download the most recent CATS release from the bottom of the 
-<a href="http://home.comcast.net/%7Ekb0oys/license.htm">CATS license page</a>.
-As of this writing (2.2014), that was the 
-&quot;<a href="http://home.comcast.net/%7Ekb0oys/release2037.zip">Executables compatible with JMRI 3.3.1</a>&quot; 
-link which gives version 2037 of CATS.
+<a href="http://cats4ctc.wikidot.com/main:downloads">CATS license page</a>.
+As of this writing (Feb 2016), that was the 
+&quot;<a href="http://cats4ctc.wikidot.com/local--files/main:downloads/release2038.zip">CATS and designer package (compatible with JMRI 4.0.1 to latest - 2.53 MB)</a>&quot; 
+link which gives version 2038 of CATS.
 
 <p>
 Move the contents, including the startup scripts "cats.csh" (Linux, Mac OS X) and "cats.bat" (Windows)

@@ -411,6 +411,6 @@ public class AlignTablePane extends javax.swing.JPanel {
         }
     }
 
-    static Logger log = LoggerFactory.getLogger(AlignTablePane.class.getName());
+    private final static Logger log = LoggerFactory.getLogger(AlignTablePane.class.getName());
 
 }

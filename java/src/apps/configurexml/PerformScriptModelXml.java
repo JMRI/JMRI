@@ -1,7 +1,9 @@
 package apps.configurexml;
 
 import apps.PerformScriptModel;
+import apps.StartupActionsManager;
 import java.io.File;
+import jmri.InstanceManager;
 import jmri.script.JmriScriptEngineManager;
 import jmri.util.FileUtil;
 import org.jdom2.Element;
@@ -14,7 +16,7 @@ import org.slf4j.LoggerFactory;
  * @author Bob Jacobsen Copyright: Copyright (c) 2003
  * @author Ken Cameron Copyright: Copyright (c) 2014
  * @version $Revision$
- * @see apps.PerformScriptPanel
+ * @see apps.startup.PerformScriptModelFactory
  */
 public class PerformScriptModelXml extends jmri.configurexml.AbstractXmlAdapter {
 
@@ -49,15 +51,10 @@ public class PerformScriptModelXml extends jmri.configurexml.AbstractXmlAdapter 
         return true;
     }
 
-    /**
-     * Create object from XML file
-     *
-     * @param e Top level Element to unpack.
-     * @return true if successful
-     */
-    public boolean load(Element e) {
+    @Override
+    public boolean load(Element shared, Element perNode) throws Exception {
         boolean result = true;
-        String fileName = e.getAttribute("name").getValue();
+        String fileName = shared.getAttribute("name").getValue();
         fileName = FileUtil.getAbsoluteFilename(fileName);
         log.info("Run file " + fileName);
 
@@ -67,8 +64,7 @@ public class PerformScriptModelXml extends jmri.configurexml.AbstractXmlAdapter 
         // leave an updated object around
         PerformScriptModel m = new PerformScriptModel();
         m.setFileName(fileName);
-        PerformScriptModel.rememberObject(m);
-        jmri.InstanceManager.configureManagerInstance().registerPref(new apps.PerformScriptPanel());
+        InstanceManager.getDefault(StartupActionsManager.class).addAction(m);
         return result;
     }
 
@@ -82,6 +78,6 @@ public class PerformScriptModelXml extends jmri.configurexml.AbstractXmlAdapter 
         log.error("Unexpected call of load(Element, Object)");
     }
     // initialize logging
-    static Logger log = LoggerFactory.getLogger(PerformScriptModelXml.class.getName());
+    private final static Logger log = LoggerFactory.getLogger(PerformScriptModelXml.class.getName());
 
 }

@@ -474,20 +474,15 @@ public class LayoutSlip extends LayoutTurnout {
     }
 
     public void scaleCoords(float xFactor, float yFactor) {
-        Point2D pt = new Point2D.Double(round(center.getX() * xFactor),
-                round(center.getY() * yFactor));
+        Point2D pt = new Point2D.Double(Math.round(center.getX() * xFactor),
+                Math.round(center.getY() * yFactor));
         center = pt;
-        pt = new Point2D.Double(round(dispC.getX() * xFactor),
-                round(dispC.getY() * yFactor));
+        pt = new Point2D.Double(Math.round(dispC.getX() * xFactor),
+                Math.round(dispC.getY() * yFactor));
         dispC = pt;
-        pt = new Point2D.Double(round(dispB.getX() * xFactor),
-                round(dispB.getY() * yFactor));
+        pt = new Point2D.Double(Math.round(dispB.getX() * xFactor),
+                Math.round(dispB.getY() * yFactor));
         dispB = pt;
-    }
-
-    double round(double x) {
-        int i = (int) (x + 0.5);
-        return i;
     }
 
     /**
@@ -1300,6 +1295,6 @@ public class LayoutSlip extends LayoutTurnout {
 
     }
 
-    static Logger log = LoggerFactory.getLogger(LayoutSlip.class.getName());
+    private final static Logger log = LoggerFactory.getLogger(LayoutSlip.class.getName());
 
 }

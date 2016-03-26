@@ -1,4 +1,3 @@
-// LogixTableAction.java
 package jmri.jmrit.beantable;
 
 import java.awt.Component;
@@ -101,11 +100,8 @@ import org.slf4j.LoggerFactory;
  * @author Dave Duchamp Copyright (C) 2007
  * @author Pete Cressman Copyright (C) 2009, 2010, 2011
  * @author Matthew Harris copyright (c) 2009
- * @version $Revision$
  */
 public class LogixTableAction extends AbstractTableAction {
-
-    private static final long serialVersionUID = -6328536222461751495L;
 
     /**
      * Create an action with a specific title.
@@ -129,11 +125,10 @@ public class LogixTableAction extends AbstractTableAction {
     }
 
     public LogixTableAction() {
-        this("Logix Table");
+        this(Bundle.getMessage("TitleLogixTable"));
     }
 
-    static final ResourceBundle rbx = ResourceBundle
-            .getBundle("jmri.jmrit.beantable.LogixTableBundle");
+    static final ResourceBundle rbx = ResourceBundle.getBundle("jmri.jmrit.beantable.LogixTableBundle");
 
     // *********** Methods for Logix Table Window ********************
     /**
@@ -145,14 +140,10 @@ public class LogixTableAction extends AbstractTableAction {
      */
     protected void createModel() {
         m = new BeanTableDataModel() {
-            /**
-             *
-             */
-            private static final long serialVersionUID = 4656524306247345738L;
             // overlay the state column with the edit column
             static public final int ENABLECOL = VALUECOL;
             static public final int EDITCOL = DELETECOL;
-            protected String enabledString = rb.getString("ColumnHeadEnabled");
+            protected String enabledString = Bundle.getMessage("ColumnHeadEnabled");
 
             public String getColumnName(int col) {
                 if (col == EDITCOL) {
@@ -307,14 +298,14 @@ public class LogixTableAction extends AbstractTableAction {
             }
 
             protected String getBeanType() {
-                return AbstractTableAction.rbean.getString("BeanNameLogix");
+                return Bundle.getMessage("BeanNameLogix");
             }
         };
     }
 
     // set title for Logix table
     protected void setTitle() {
-        f.setTitle(f.rb.getString("TitleLogixTable"));
+        f.setTitle(Bundle.getMessage("TitleLogixTable"));
     }
     /*    
      public void addToFrame(BeanTableFrame f) {
@@ -414,7 +405,6 @@ public class LogixTableAction extends AbstractTableAction {
 
     class RefDialog extends JDialog {
 
-        private static final long serialVersionUID = -8265381404736283286L;
         JTextField _devNameField;
         java.awt.Frame _parent;
 
@@ -478,7 +468,7 @@ public class LogixTableAction extends AbstractTableAction {
     JmriJFrame addLogixFrame = null;
     JTextField _systemName = new JTextField(10);
     JTextField _addUserName = new JTextField(10);
-    JCheckBox _autoSystemName = new JCheckBox(rb.getString("LabelAutoSysName"));
+    JCheckBox _autoSystemName = new JCheckBox(Bundle.getMessage("LabelAutoSysName"));
     JLabel _sysNameLabel = new JLabel(rbx.getString("LogixSystemName"));
     JLabel _userNameLabel = new JLabel(rbx.getString("LogixUserName"));
     jmri.UserPreferencesManager prefMgr = jmri.InstanceManager.getDefault(jmri.UserPreferencesManager.class);
@@ -749,9 +739,8 @@ public class LogixTableAction extends AbstractTableAction {
         if (!checkFlags(sName)) {
             return;
         }
-        Thread t = new Thread() {
+        Runnable t = new Runnable() {
             public void run() {
-                //Thread.yield();
                 JPanel panel5 = makeAddLogixFrame("TitleCopyLogix", "CopyLogixMessage");
                 // Create Logix
                 JButton create = new JButton(rbx.getString("ButtonCopy"));
@@ -770,10 +759,9 @@ public class LogixTableAction extends AbstractTableAction {
             }
         };
         if (log.isDebugEnabled()) {
-            log.debug("copyPressed Thread started for " + sName);
+            log.debug("copyPressed started for " + sName);
         }
         javax.swing.SwingUtilities.invokeLater(t);
-        //t.start();
         inCopyMode = true;
         _logixSysName = sName;
     }
@@ -1012,9 +1000,9 @@ public class LogixTableAction extends AbstractTableAction {
     void handleCreateException(String sysName) {
         javax.swing.JOptionPane.showMessageDialog(addLogixFrame,
                 java.text.MessageFormat.format(
-                        rb.getString("ErrorLogixAddFailed"),
+                        Bundle.getMessage("ErrorLogixAddFailed"),
                         new Object[]{sysName}),
-                rb.getString("ErrorTitle"),
+                Bundle.getMessage("ErrorTitle"),
                 javax.swing.JOptionPane.ERROR_MESSAGE);
     }
     // *********** Methods for Edit Logix Window ********************
@@ -1029,15 +1017,14 @@ public class LogixTableAction extends AbstractTableAction {
         _curLogix = _logixManager.getBySystemName(sName);
         numConditionals = _curLogix.getNumConditionals();
         // create the Edit Logix Window
-        // Use separate Thread so window is created on top
-        Thread t = new Thread() {
+        // Use separate operation so window is created on top
+        Runnable t = new Runnable() {
             public void run() {
-                //Thread.yield();
                 makeEditLogixWindow();
             }
         };
         if (log.isDebugEnabled()) {
-            log.debug("editPressed Thread started for " + sName);
+            log.debug("editPressed Runnable started for " + sName);
         }
         javax.swing.SwingUtilities.invokeLater(t);
     }
@@ -1340,9 +1327,9 @@ public class LogixTableAction extends AbstractTableAction {
 
     public void setMessagePreferencesDetails() {
         HashMap<Integer, String> options = new HashMap< Integer, String>(3);
-        options.put(0x00, rb.getString("DeleteAsk"));
-        options.put(0x01, rb.getString("DeleteNever"));
-        options.put(0x02, rb.getString("DeleteAlways"));
+        options.put(0x00, Bundle.getMessage("DeleteAsk"));
+        options.put(0x01, Bundle.getMessage("DeleteNever"));
+        options.put(0x02, Bundle.getMessage("DeleteAlways"));
         jmri.InstanceManager.getDefault(jmri.UserPreferencesManager.class).messageItemDetails(getClassName(), "delete", rbx.getString("DeleteLogix"), options, 0x00);
         jmri.InstanceManager.getDefault(jmri.UserPreferencesManager.class).preferenceItemDetails(getClassName(), "remindSaveLogix", rbx.getString("SuppressWithDisable"));
         super.setMessagePreferencesDetails();
@@ -1377,12 +1364,12 @@ public class LogixTableAction extends AbstractTableAction {
             question.setAlignmentX(Component.CENTER_ALIGNMENT);
             container.add(question);
 
-            final JCheckBox remember = new JCheckBox("Remember this setting for next time?");
+            final JCheckBox remember = new JCheckBox(Bundle.getMessage("MessageRememberSetting"));
             remember.setFont(remember.getFont().deriveFont(10f));
             remember.setAlignmentX(Component.CENTER_ALIGNMENT);
 
-            JButton yesButton = new JButton("Yes");
-            JButton noButton = new JButton("No");
+            JButton yesButton = new JButton(Bundle.getMessage("ButtonYes"));
+            JButton noButton = new JButton(Bundle.getMessage("ButtonNo"));
             JPanel button = new JPanel();
             button.setAlignmentX(Component.CENTER_ALIGNMENT);
             button.add(yesButton);
@@ -2180,7 +2167,7 @@ public class LogixTableAction extends AbstractTableAction {
     }
 
     @SuppressWarnings("fallthrough")
-    @edu.umd.cs.findbugs.annotations.SuppressWarnings(value = "SF_SWITCH_FALLTHROUGH")
+    @edu.umd.cs.findbugs.annotations.SuppressFBWarnings(value = "SF_SWITCH_FALLTHROUGH")
     boolean logicTypeChanged(ActionEvent e) {
         int type = _operatorBox.getSelectedIndex() + 1;
         if (type == _logicType) {
@@ -3161,8 +3148,7 @@ public class LogixTableAction extends AbstractTableAction {
             currentChooser = sndFileChooser;
         } else if (actionType == Conditional.ACTION_RUN_SCRIPT) {
             if (scriptFileChooser == null) {
-                scriptFileChooser = new JFileChooser(System.getProperty("user.dir")
-                        + java.io.File.separator + "jython");
+                scriptFileChooser = new JFileChooser(FileUtil.getScriptsPath());
                 jmri.util.FileChooserFilter filt = new jmri.util.FileChooserFilter("Python script files");
                 filt.addExtension("py");
                 scriptFileChooser.setFileFilter(filt);
@@ -3431,7 +3417,7 @@ public class LogixTableAction extends AbstractTableAction {
                     } else if (actionType == Conditional.ACTION_SET_TRAIN_NAME) {
                         _shortTextPanel.setToolTipText(rbx.getString("DataHintTrainName"));
                         l.setText(rbx.getString("LabelTrainName"));
-                    } else if (actionType == Conditional.ACTION_THROTTLE_FACTOR) {
+                    } else { // must be Conditional.ACTION_THROTTLE_FACTOR, so treat as such
                         _shortTextPanel.setToolTipText(rbx.getString("DataHintThrottleFactor"));
                         l.setText(rbx.getString("LabelThrottleFactor"));
                     }
@@ -4838,14 +4824,14 @@ public class LogixTableAction extends AbstractTableAction {
         String hour = null;
         String minute = null;
         try {
-            if (index > 0) {
+            if (index > 0) { // : after start
                 hour = s.substring(0, index);
-                if (index >= 1) {
+                if (index+1 < s.length()) { // check for : at end
                     minute = s.substring(index + 1);
                 } else {
                     minute = "0";
                 }
-            } else if (index == 0) {
+            } else if (index == 0) { // : at start
                 hour = "0";
                 minute = s.substring(index + 1);
             } else {
@@ -4938,11 +4924,6 @@ public class LogixTableAction extends AbstractTableAction {
      */
     public class ConditionalTableModel extends AbstractTableModel implements
             PropertyChangeListener {
-
-        /**
-         *
-         */
-        private static final long serialVersionUID = 5961791138611174353L;
 
         public static final int SNAME_COLUMN = 0;
 
@@ -5067,7 +5048,7 @@ public class LogixTableAction extends AbstractTableAction {
             switch (col) {
                 case BUTTON_COLUMN:
                     if (!_inReorderMode) {
-                        return rb.getString("ButtonEdit");
+                        return Bundle.getMessage("ButtonEdit");
                     } else if (_nextInOrder == 0) {
                         return rbx.getString("ButtonFirst");
                     } else if (_nextInOrder <= r) {
@@ -5118,7 +5099,7 @@ public class LogixTableAction extends AbstractTableAction {
                                     new Object[]{SensorGroupFrame.logixUserName, SensorGroupFrame.logixSysName}),
                             rbx.getString("WarnTitle"), javax.swing.JOptionPane.WARNING_MESSAGE);
                 } else {
-                    // Use separate Thread so window is created on top
+                    // Use separate Runnable so window is created on top
                     class WindowMaker implements Runnable {
 
                         int row;
@@ -5128,7 +5109,6 @@ public class LogixTableAction extends AbstractTableAction {
                         }
 
                         public void run() {
-                            //Thread.yield();
                             editConditionalPressed(row);
                         }
                     }
@@ -5161,11 +5141,6 @@ public class LogixTableAction extends AbstractTableAction {
      * Table model for State Variables in Edit Conditional window
      */
     public class VariableTableModel extends AbstractTableModel {
-
-        /**
-         *
-         */
-        private static final long serialVersionUID = 5440254470481292065L;
 
         public static final int ROWNUM_COLUMN = 0;
 
@@ -5338,7 +5313,7 @@ public class LogixTableAction extends AbstractTableAction {
                                 javax.swing.JOptionPane.ERROR_MESSAGE);
                         break;
                     }
-                    // Use separate Thread so window is created on top
+                    // Use separate Runnable so window is created on top
                     class WindowMaker implements Runnable {
 
                         int row;
@@ -5348,7 +5323,6 @@ public class LogixTableAction extends AbstractTableAction {
                         }
 
                         public void run() {
-                            //Thread.yield();
                             makeEditVariableWindow(row);
                         }
                     }
@@ -5368,11 +5342,6 @@ public class LogixTableAction extends AbstractTableAction {
      * Table model for Actions in Edit Conditional window
      */
     public class ActionTableModel extends AbstractTableModel {
-
-        /**
-         *
-         */
-        private static final long serialVersionUID = 6959722170203666817L;
 
         public static final int DESCRIPTION_COLUMN = 0;
 
@@ -5431,7 +5400,7 @@ public class LogixTableAction extends AbstractTableAction {
                     return rbx.getString("ButtonEdit");
                 case DELETE_COLUMN:
                     if (!_inReorderMode) {
-                        return rb.getString("ButtonDelete");
+                        return Bundle.getMessage("ButtonDelete");
                     } else if (_nextInOrder == 0) {
                         return rbx.getString("ButtonFirst");
                     } else if (_nextInOrder <= row) {
@@ -5444,7 +5413,7 @@ public class LogixTableAction extends AbstractTableAction {
 
         public void setValueAt(Object value, int row, int col) {
             if (col == EDIT_COLUMN) {
-                // Use separate Thread so window is created on top
+                // Use separate Runnable so window is created on top
                 class WindowMaker implements Runnable {
 
                     int row;
@@ -5454,7 +5423,6 @@ public class LogixTableAction extends AbstractTableAction {
                     }
 
                     public void run() {
-                        //Thread.yield();
                         makeEditActionWindow(row);
                     }
                 }
@@ -5471,13 +5439,12 @@ public class LogixTableAction extends AbstractTableAction {
     }
 
     public String getClassDescription() {
-        return rb.getString("TitleLogixTable");
+        return Bundle.getMessage("TitleLogixTable");
     }
 
     protected String getClassName() {
         return LogixTableAction.class.getName();
     }
 
-    static final Logger log = LoggerFactory.getLogger(LogixTableAction.class.getName());
+    private final static Logger log = LoggerFactory.getLogger(LogixTableAction.class.getName());
 }
-/* @(#)LogixTableAction.java */

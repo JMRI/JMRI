@@ -1,35 +1,40 @@
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
-<html lang="en"><head><!-- Copyright ($Author$) 2009 --><!-- $Id$ -->
+<html lang="en">
+<head>
+<title>JMRI Operations - Edit Train</title>
 
-
-
-<title>Operations-Edit Train</title><!-- Style --><meta content="text/html; charset=iso-8859-1" http-equiv="Content-Type">
+<!-- Style -->
+<meta content="text/html; charset=iso-8859-1" http-equiv="Content-Type">
 <link media="screen" href="/css/default.css" type="text/css" rel="stylesheet">
 <link media="print" href="/css/print.css" type="text/css" rel="stylesheet">
 <link type="image/png" href="/images/jmri.ico" rel="icon">
-<link href="/" title="Home" rel="home"><!-- /Style --></head>
+<link href="/" title="Home" rel="home">
+<!-- /Style -->
+</head>
+
 <body>
 <!--#include virtual="/Header" -->
 <!--#include virtual="Sidebar" -->
-<div id="mainContent"><a name="Top"></a>
+<div id="mainContent">
+
+<a name="Top"></a>
 <h1>Using JMRI&reg; to Operate Trains</h1>
-<h1>Edit Train<br>
-</h1>
+<h2>OperationsPro: Edit Train</h2>
+
 <div align="right">
 <p><a href="Ops_Trains.shtml">Back</a></p>
 <p><a href="index.shtml#Operations">Back to Index</a></p>
 </div>
+
 <hr>
-<p>The Edit Train window is opened from the Trains Window using
-Edit button for any train in the list.</p>
-<blockquote>
+<p>The Edit Train window is opened from the Trains Window using the 
+<input name="button" id="button" value="Edit" type="submit"> button for any train in the list.</p>
 <p><img src="images/Ops_EditTrain.png" alt="edit" height="869" width="675"></p>
-<p>Menu bar<br>
-</p>
+
+<h3>Menu bar</h3>
 <p><img src="images/Ops_EditTrainMenu.png" height="140" width="255"></p>
-<p><strong>Tools</strong><br>
-</p>
-</blockquote>
+
+<h4>Tools</h4>
 <table border="0" cellpadding="2" cellspacing="1" width="90%">
 <tbody>
 <tr>
@@ -58,11 +63,11 @@ Serviced</strong><br>
 </tr>
 <tr>
 <td><strong>Print <br>
-<img style="width: 607px; height: 282px;" alt="print" src="images/Ops_TrainPrint.png"><br> </strong></td>
+<img style="width: 607px; height: 282px;" alt="print" src="images/Ops_TrainPrint.png"></strong></td>
 </tr>
 <tr>
 <td><strong>Preview</strong><br>
-<img style="width: 674px; height: 369px;" alt="preview" src="images/Ops_TrainPreview.png"><br></td>
+<img style="width: 674px; height: 369px;" alt="preview" src="images/Ops_TrainPreview.png"></td>
 </tr>
 <tr>
 <td><strong><a href="Ops_ManifestPrint.shtml">Print
@@ -74,7 +79,7 @@ Manifest</a></strong></td>
 </tr>
 <tr>
 <td><strong><a href="Ops_BuildReportPrint.shtml">Print
-Build Report</a><br></strong><strong></strong><strong><a href="Ops_BuildReportPreveiw.shtml">Preview
+Build Report</a><br></strong> <strong><a href="Ops_BuildReportPreveiw.shtml">Preview
 Build Report</a></strong></td>
 </tr>
 <tr>
@@ -82,20 +87,24 @@ Build Report</a></strong></td>
 </tr>
 </tbody>
 </table><input name="button7" id="button7" value="Reset Train" type="submit">
-allows you to remove locomotives and cars that have been assigned to a
-train. Useful when you want to try various build options and don't want
-to physically move locomotive and cars on the railroad. 
+allows you to remove Locomotives and Cars that have been assigned to a
+Train. Useful when you want to try various build options and don't want
+to physically move Locomotive and Cars on the railroad. 
 <p> Press <input name="button8" id="button8" value="Save Train" type="submit"> to save your train.
 The program will create a file (OperationsTrainRoster.xml) in your JMRI
 directory in a folder called "operations". A backup file with the last
-settings for all of your trains is also created each time the <input name="button9" id="button9" value="Save Train" type="submit">
+settings for all of your Trains is also created each time the <input name="button9" id="button9" value="Save Train" type="submit">
 is pressed. </p>
-<p>Note that the edited&nbsp; train is now shown in the<a href="Ops_Trains.shtml">Trains</a> window.</p>
+<p>Note that the edited Train is now shown in the <a href="Ops_Trains.shtml">Trains</a> window.</p>
 <hr>
+
 <div align="right">
 <p><a href="Ops_Trains.shtml">Back</a></p>
 <p><a href="index.shtml#Operations">Back to Index</a></p>
 </div>
+
 <!--#include virtual="/Footer" -->
 </div>
-</body></html>
+</div>
+</body>
+</html>

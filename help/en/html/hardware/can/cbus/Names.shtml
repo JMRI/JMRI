@@ -1,18 +1,14 @@
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
 <html lang="en">
 <head>
-<!-- Copyright ($Author$) 2008 -->
-<!-- $Id$ -->
-<title>JMRI: CBUS Naming</title>
+<title>JMRI Hardware Support - CBUS - Naming</title>
 
 <!-- Style -->
-<META HTTP-EQUIV="Content-Type" CONTENT="text/html; charset=iso-8859-1">
-<LINK REL="stylesheet" TYPE="text/css" HREF="/css/default.css"
-	MEDIA="screen">
-<LINK REL="stylesheet" TYPE="text/css" HREF="/css/print.css"
-	MEDIA="print">
-<LINK REL="icon" HREF="/images/jmri.ico" TYPE="image/png">
-<LINK REL="home" TITLE="Home" HREF="/">
+<meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
+<link rel="stylesheet" type="text/css" href="/css/default.css" media="screen">
+<link rel="stylesheet" type="text/css" href="/css/print.css" media="print">
+<link rel="icon" href="/images/jmri.ico" type="image/png">
+<link rel="home" title="Home" href="/">
 <!-- /Style -->
 </head>
 
@@ -21,34 +17,33 @@
   <div class="nomenu" id="mBody">
     <div id="mainContent">
 
-<h1> 
-JMRI: CBUS Naming
-</h1>
-
+<h1>Hardware Support: CBUS - Naming</h1>
+<p>
 This page describes how JMRI uses System Names to access CBUS-attached resources.
 
-<p>
-For more on JMRI's CBUS support, see the
-<a href="index.shtml">main CBUS page</a>.
-
-<h2>JMRI's Use of Names</h2>
-JMRI provides an interface to the real layout via 
+<h2>System Names</h2>
+<p>JMRI provides an interface to the real layout via 
 internal objects such as Turnouts, Sensors, etc. that
 are closely mapped to corresponding physical devices.
 This mapping is done via "System Names", which both 
 identify the how to access a particular device, and
-are the key to looking up the corresponding object in JMRI.
+are the key to looking up the corresponding object in JMRI.</p>
 
 <h2>CBUS Events</h2>
-
-<a href="http://www.merg.org.uk/">MERG</a>
+The <a href="http://www.merg.org.uk/">MERG</a>
 <a href="http://www.merg.org.uk/merg_resources/cbus.php">CBUS</a>
 communicates via messages with a fixed format:  
 One byte of command and length information, followed optionally
 by additional data bytes.  
 In it's most simple form, this is used to send identifiable
-"events". In turn, events come in two types: "ON" and "OFF".
+"events". In turn, events come in two types: "ON" and "OFF".</p>
+
+<a name="documentation"></a><h2>Documentation</h2>
+<h3>JMRI Help</h3>
+<p>Back to the <a href="index.shtml">Main CBUS Help page</a>.
     
 <!--#include virtual="/Footer" -->
+ </div><!-- closes #mainContent-->
+</div> <!-- closes #mBody-->
 </body>
 </html>

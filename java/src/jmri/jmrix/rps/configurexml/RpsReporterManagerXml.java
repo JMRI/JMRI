@@ -29,12 +29,13 @@ public class RpsReporterManagerXml extends jmri.managers.configurexml.AbstractRe
         log.error("Invalid method called");
     }
 
-    public boolean load(Element reporters) {
+    @Override
+    public boolean load(Element shared, Element perNode) {
         // create the master object
         RpsReporterManager.instance();
         // load individual sensors
-        return loadReporters(reporters);
+        return loadReporters(shared);
     }
 
-    static Logger log = LoggerFactory.getLogger(RpsReporterManagerXml.class.getName());
+    private final static Logger log = LoggerFactory.getLogger(RpsReporterManagerXml.class.getName());
 }

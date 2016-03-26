@@ -1,51 +1,35 @@
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
 <html lang="en">
 <head>
-<!-- Copyright ($Author$) 2009 -->
-<!-- $Id$ -->
-<title>JMRI: xAP Support</title>
+<title>JMRI Hardware Support - xAP</title>
 
 <!-- Style -->
-<META HTTP-EQUIV="Content-Type" CONTENT="text/html; charset=iso-8859-1">
-<LINK REL="stylesheet" TYPE="text/css" HREF="/css/default.css"
-	MEDIA="screen">
-<LINK REL="stylesheet" TYPE="text/css" HREF="/css/print.css"
-	MEDIA="print">
-<LINK REL="icon" HREF="/images/jmri.ico" TYPE="image/png">
-<LINK REL="home" TITLE="Home" HREF="/">
+<meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
+<link rel="stylesheet" type="text/css" href="/css/default.css" media="screen">
+<link rel="stylesheet" type="text/css" href="/css/print.css" media="print">
+<link rel="icon" href="/images/jmri.ico" type="image/png">
+<link rel="home" title="Home" href="/">
 <!-- /Style -->
-</HEAD>
+</head>
 
-<BODY>
+<body>
 <!--#include virtual="/Header" -->
   <div class="nomenu" id="mBody">
     <div id="mainContent">
 
-<h1> 
-JMRI: xAP Support
-</h1>
-
-xAP is a home-automation protocol 
-popular used by do-it-yourself hobbyists
-through large professional installations.
-
+<h1>Hardware Support: xAP</h1>
 <p>
-For more information on the protocol
-and available equipment, please
-see the 
-<a href="http://www.xapautomation.org">xAP home page</a>.
+xAP is a popular home-automation protocol 
+ used by do-it-yourself hobbyists
+through large professional installations.
 
 <p>
 xAP should not be confused with the Lenz XPA, which is 
 a device for using a portable phone as a throttle for a
 Lenz DCC system.
 
-<p>
-JMRI's support for xAP started with a simple
-<a href="http://jmri.org/jython/jython/xAPadapter.py ">script</a>
-available in JMRI 2.9.5 and later releases.
-Eventually, a full set of JMRI xAP tools will be
-available directly within the JMRI tool set.
+<a name="connecting"></a><h2>Connecting</h2>
+<h3>Software settings</h3>
 
 <p>
 xAP devices that provide either the "input" or "output"
@@ -57,19 +41,33 @@ form of the
 <p>
 When JMRI sees a new BSC device, it creates the necessary Sensor or Turnout.
 The full source name is used to create the system name, for example:
-<code><pre>
+<code>
  IS:xPA:xAPBSC:mi4.homeseer.scafell.91:VIOMBoard.Input14GJDRFXEnable
-</pre></code>
-The xPA-defined 
-user defined name
-fills in the JMRI user name, for example:
-<code><pre>
+</code>
+The xPA-defined user defined name fills in the JMRI User Name, for example:
+<pre>
  Input 14 GJD RFX Enable
-</pre></code>
-You can later change the JMRI user name 
-to anything you'd like via the 
+</pre>
+You can later change the JMRI User Name to anything you'd like via the 
 usual tables if desired.
+
+<a name="tools"></a><h2>JMRI Tools</h2>
+<p>
+JMRI's support for xAP started with a simple
+<a href="http://jmri.org/jython/jython/xAPadapter.py ">xAPadapter.py script</a>
+available in JMRI 2.9.5 and later releases.
+Eventually, a full set of JMRI xAP tools will be
+available directly within the JMRI tool set.
+
+<a name="documentation"></a><h2>Documentation</h2>
+<h3>Third Party info</h3>
+<p>For more information on the protocol
+and available equipment, please
+see the 
+<a href="http://www.xapautomation.org">xAP home page</a>.
     
 <!--#include virtual="/Footer" -->
+ </div><!-- closes #mainContent-->
+</div> <!-- closes #mBody-->
 </body>
 </html>

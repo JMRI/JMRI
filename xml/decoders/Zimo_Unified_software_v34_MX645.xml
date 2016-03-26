@@ -30,9 +30,10 @@
   <!-- v1.2,  "version 32 firmware" inclusion of sound control CV's and "coast" function for diesels  Nigel Cliffe. 17th Nov 2012 -->
   <!-- v1.3,  Extended Sound Volume controls to cover FnKeys F20-F28.   Nigel Cliffe, 7 March 2014 -->
   <!-- v1.4,  added version 34 firmware capabilities,  Nigel Cliffe, 23 Jan 2015 -->
+  <!-- v1.5,  updated to hide V34 as v34 updates are included in v32 files   Mark Waters, 03 Jan 2016 -->
   <decoder>
     <family name="Zimo Unified software (version 34+)" mfg="Zimo">
-      <model model="MX645 version 34+" lowVersionID="34" highVersionID="35" maxInputVolts="35V" maxMotorCurrent="1.2A, peak=2.5A" maxTotalCurrent="1.2A" formFactor="HO" numOuts="10" numFns="14" productID="221">
+      <model show="no" model="MX645 version 34+" replacementModel="MX645 version 32+" replacementFamily="Zimo Unified software (version 32+)" lowVersionID="34" highVersionID="35" maxInputVolts="35V" maxMotorCurrent="1.2A, peak=2.5A" maxTotalCurrent="1.2A" formFactor="HO" numOuts="10" numFns="14" productID="221">
         <output name="1" label="Front Light"/>
         <output name="2" label="Rear Light"/>
         <output name="3" label="FO 1"/>
@@ -45,7 +46,7 @@
         <output name="10" label="FO 8 (+5v)"/>
         <size length="30" width="15" height="4" units="mm"/>
       </model>
-      <model model="MX645R version 34+" lowVersionID="34" highVersionID="35" maxInputVolts="35V" maxMotorCurrent="1.2A, peak=2.5A" maxTotalCurrent="1.2A" formFactor="HO" connector="NMRAmedium" numOuts="10" numFns="14" productID="221">
+      <model show="no" model="MX645R version 34+" replacementModel="MX645R version 32+" replacementFamily="Zimo Unified software (version 32+)" lowVersionID="34" highVersionID="35" maxInputVolts="35V" maxMotorCurrent="1.2A, peak=2.5A" maxTotalCurrent="1.2A" formFactor="HO" connector="NMRAmedium" numOuts="10" numFns="14" productID="221">
         <output name="1" label="Front Light"/>
         <output name="2" label="Rear Light"/>
         <output name="3" label="FO 1"/>
@@ -58,7 +59,7 @@
         <output name="10" label="FO 8 (+5v)"/>
         <size length="30" width="15" height="4" units="mm"/>
       </model>
-      <model model="MX645F version 34+" lowVersionID="34" highVersionID="35" maxInputVolts="35V" maxMotorCurrent="1.2A, peak=2.5A" maxTotalCurrent="1.2A" formFactor="HO" connector="NMRAsmall" numOuts="10" numFns="14" productID="221">
+      <model show="no" model="MX645F version 34+" replacementModel="MX645F version 32+" replacementFamily="Zimo Unified software (version 32+)" lowVersionID="34" highVersionID="35" maxInputVolts="35V" maxMotorCurrent="1.2A, peak=2.5A" maxTotalCurrent="1.2A" formFactor="HO" connector="NMRAsmall" numOuts="10" numFns="14" productID="221">
         <output name="1" label="Front Light"/>
         <output name="2" label="Rear Light"/>
         <output name="3" label="FO 1"/>
@@ -71,7 +72,7 @@
         <output name="10" label="FO 8 (+5v)"/>
         <size length="30" width="15" height="4" units="mm"/>
       </model>
-      <model model="MX645P22 version 34+" lowVersionID="34" highVersionID="35" maxInputVolts="35V" maxMotorCurrent="1.2A, peak=2.5A" maxTotalCurrent="1.2A" formFactor="HO" connector="PluX22" numOuts="10" numFns="14" productID="221">
+      <model show="no" model="MX645P22 version 34+" replacementModel="MX645P22 version 32+" replacementFamily="Zimo Unified software (version 32+)" lowVersionID="34" highVersionID="35" maxInputVolts="35V" maxMotorCurrent="1.2A, peak=2.5A" maxTotalCurrent="1.2A" formFactor="HO" connector="PluX22" numOuts="10" numFns="14" productID="221">
         <output name="1" label="Front Light"/>
         <output name="2" label="Rear Light"/>
         <output name="3" label="FO 1"/>
@@ -114,17 +115,17 @@
         <label xml:lang="it">ID 4 Decoder: </label>
       </variable>
       <!-- Begin sound-only variables -->
-      <xi:include href="http://jmri.org/xml/decoders/zimo/CV260-CV355sound_version34.xml"/>
+      <xi:include href="http://jmri.org/xml/decoders/zimo/CV260-CV355sound_version30.xml"/>
       <xi:include href="http://jmri.org/xml/decoders/zimo/CV357-CV365sound_version28.xml"/>
       <xi:include href="http://jmri.org/xml/decoders/zimo/CV366-CV371sound.xml"/>
-      <xi:include href="http://jmri.org/xml/decoders/zimo/CV372-CV399sound_version34.xml"/>
+      <xi:include href="http://jmri.org/xml/decoders/zimo/CV372-CV399sound.xml"/>
       <!-- End sound-only variables -->
       <xi:include href="http://jmri.org/xml/decoders/zimo/CV400-CV428.xml"/>
       <xi:include href="http://jmri.org/xml/decoders/zimo/CV430-CV489.xml"/>
       <!-- more sound variables -->
       <xi:include href="http://jmri.org/xml/decoders/zimo/CV500-CV603.xml"/>
       <xi:include href="http://jmri.org/xml/decoders/zimo/CV604-CV699.xml"/>
-      <xi:include href="http://jmri.org/xml/decoders/zimo/CV739-CV744oneSwitchIP.xml"/>
+      <xi:include href="http://jmri.org/xml/decoders/zimo/CV739-CV744.xml"/>
       <xi:include href="http://jmri.org/xml/decoders/zimo/CV745-CV768.xml"/>
       <!-- end of more sound variables -->
     </variables>

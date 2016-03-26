@@ -49,8 +49,7 @@ import org.slf4j.LoggerFactory;
  */
 public class SignalGroupSubTableAction {
 
-    static final ResourceBundle rbx = ResourceBundle
-            .getBundle("jmri.jmrit.beantable.LogixTableBundle");
+    static final ResourceBundle rbx = ResourceBundle.getBundle("jmri.jmrit.beantable.LogixTableBundle");
 
     /**
      * Create an action with a specific title.
@@ -916,6 +915,6 @@ public class SignalGroupSubTableAction {
         }
     }
 
-    static final Logger log = LoggerFactory.getLogger(SignalGroupSubTableAction.class.getName());
+    private final static Logger log = LoggerFactory.getLogger(SignalGroupSubTableAction.class.getName());
 }
 /* @(#)SignalGroupSubTableAction.java */

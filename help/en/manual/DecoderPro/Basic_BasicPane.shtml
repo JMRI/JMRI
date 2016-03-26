@@ -1,17 +1,18 @@
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
-<html lang="en"><head><!-- Copyright ($Author$) 2009, 2010 --><!-- $Id$ --><title>Basic Programming</title><!-- Style -->
+<html lang="en">
+<head>
+<title>Basic Programming</title>
 
-
-
-
-
-
-
+<!-- Style -->
 <meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
 <link rel="stylesheet" type="text/css" href="/css/default.css" media="screen">
 <link rel="stylesheet" type="text/css" href="/css/print.css" media="print">
 <link rel="icon" href="/images/jmri.ico" type="image/png">
-<link rel="home" title="Home" href="/"><!-- /Style --></head><body>
+<link rel="home" title="Home" href="/">
+<!-- /Style -->
+</head>
+
+<body>
 <!--#include virtual="/Header" -->
 
 <!--#include virtual="Sidebar" -->
@@ -19,13 +20,12 @@
 
 <a name="Top"></a>
 <h1>The Basic Programmer</h1>
-<h1>Basic Pane</h1>
+<h2>Basic Pane</h2>
 
 <div align="right">
   <p><a href="Basic_Start.shtml"> Previous | </a><a href="Comp_Setup_Roster.shtml">Next</a></p>
 <p><a href="index.shtml#Basic%20Programmer">Back to Index</a></p>
 </div>
-
 
 <hr>
 <p>You may have noticed that at the  top of the window are Two tabs: <strong>Roster Entry</strong> and <strong>Basic</strong>.  We have completed the <strong>Roster Entry</strong> pane of the Program window, now,  click on the <strong>Basic</strong>
@@ -87,7 +87,7 @@ what DecoderPro is doing, for example, the specific CV being read. </p>
 <p> Again, the
   <input name="button2" id="button2" value="Read full sheet" type="button"><strong> </strong>and <strong>
   <input name="button3" id="button3" value="Read all sheets" type="button">
-  </strong>functions are  dependant on your command station. If 
+  </strong>functions are dependent on your Command Station. If 
   your system does not have the capability to read CVs,  then these buttons will not be 
   available. </p>
 <p><a name="Enter/Edit data"></a>If you wish to change the address of
@@ -131,7 +131,7 @@ windows.&nbsp; Don&#8217;t panic&#8230;.Most are of no use to the average user.
 </p>
 <p><strong>Comprehensive </strong>and Advanced are the only other programmers "<strong><em>Normal Users</em>" </strong>will ever need, because it  is, well&#8230;<strong>Comprehensive</strong> and the <strong>Advanced</strong> adds features that are optional..&nbsp; So why all the  others?</p>
 <p>First of all eliminate the Manufacturer  specific programmers (unless of course you have a <strong>Zimo</strong> or <strong>ESU</strong> system).&nbsp; </p>
-<p>We can also eliminate the <strong>Tutorial</strong> and <strong>Custom</strong> programmers. They were put in to show folks that want to <strong>write their own</strong>&nbsp; programmer (not you right?) 
+<p>We can also eliminate the <strong>Tutorial</strong> and <strong>Custom</strong> programmers. They were put in to show folks that want to <strong>write their own</strong> programmer (not you right?) 
 all the possible ways to gather input and to have a common  starting point in the roster pane. 
 Now if you wish to pursue writing a custom programmer go to the JMRI&reg; website.</p>
 <p>If you have need for a special situation programmer  you might want to look at <strong>Sample Club</strong> or <strong>TrainShowBasic</strong>
@@ -143,10 +143,14 @@ to do this is a subject for another manual.</p>
 programmer?&nbsp; If you have an old or bargain basement decoder that
 only programs using registers, then of course you&#8217;ll be interested in <strong>Registers.</strong><br>
 So now we&#8217;ve narrowed our &#8220;real&#8221; choices down to&nbsp;<strong>Advanced</strong>, <strong>Basic</strong> and <strong>Comprehensive</strong>. Since we&#8217;ve already  covered <strong>Basic</strong>, let's explore the <a href="Comp_Setup_Roster.shtml">Comprehensive Programmer</a>! </p>
+
 <div align="right">
   <p><a href="Basic_Start.shtml">Previous | </a><a href="Comp_Setup_Roster.shtml">Next</a><a href="Comp_Setup_Roster.shtml"></a></p>
 <p><a href="index.shtml#Basic%20Programmer">Back to Index</a></p>
 </div>
 
 <!--#include virtual="/Footer" -->
-</div></body></html>
+  </div><!-- closes #mainContent-->
+ </div> <!-- closes #mBody-->
+ </body>
+</html>

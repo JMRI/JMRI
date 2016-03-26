@@ -2,8 +2,7 @@
 <html lang="en">
 <head>
 <!-- Copyright Bob Jacobsen 2008 -->
-<!-- $Id$ -->
-<title>JMRI: Sharing DecoderPro Rosters Across A Network</title>
+<title>JMRI: DecoderPro - Sharing DecoderPro Rosters across a Network</title>
 
 <!-- Style -->
 <meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
@@ -20,48 +19,45 @@
 <!--#include virtual="Sidebar" -->
 <div id="mainContent">
 
-
 <!-- Page Body -->
-<H2>
-Sharing DecoderPro Rosters Across A Network
-</H2>
+<h1>JMRI: DecoderPro User Guide</h1>
+<h2>Sharing DecoderPro Rosters across a Network</h2>
 
 <strong>
 Note:
 <p>
-  The information on this page is somewhat dated in terms of file locations, preferences settings and a recommended solution.
-  For more up-to-date information see <a href="/help/en/html/Dropbox.shtml">this link</a>.
+  The information on this page is somewhat dated in terms of file locations, Preferences settings and a recommended solution.
+  For more up-to-date information see <a href="../../setup/Dropbox.shtml">Using DropBox</a>.
 </p>
 </strong>
 
 A common question:
-
 <blockquote>
 I have a computer at both my workbench, where I program my engines, and one at my layout location. They are not portable, but all the PC's at my house are networked together (Windows XP clients and a Windows 2000 Server). I would like to store the roster and all else that is needed on the Windows 2000 server and be able to run copies of Decoder Pro on at lease two of the Windows XP PC's. Is that possible?
 </blockquote>
 
 Yes!
-<P>
+<p>
 Configure the Windows machines so there's a shared directory, and then you can set the JMRI "advanced preferences" to put the roster information inside that.
+	<ol>
+	<li>Set-up a shared directory.
+	
+	<li>Select which roster you want to start with (since there might be separate ones on different machines already). On that machine, find the "roster.xml" file and "roster" directory in the preferences directory.
+	
+	<p>
+	For more information, please see the DecoderPro pages on 
+	the 
+	<a href="RosterFile.shtml">roster files</a>
+	and
+	<a href="Files.shtml#location">file locations</a>.
+	<p>
+	Copy, _do not move_, the roster.xml file and roster folder to the shared folder. You must copy the _entire_ contents of the roster directory!
+	
+	<li>On each machine that is to use the shared roster, start DecoderPro, select Preferences from the Edit menu, and click "Show Advanced Preferences". The window will get bigger. Press "Set" under "Roster:" and follow directions.
+	</ol>
 
-<OL>
-<LI>Set-up a shared directory.
-
-<LI>Select which roster you want to start with (since there might be separate ones on different machines already). On that machine, find the "roster.xml" file and "roster" directory in the preferences directory.
-
-<P>
-For more information, please see the DecoderPro pages on 
-the 
-<A HREF="RosterFile.shtml">roster files</a>
-and
-<A HREF="Files.shtml#location">file locations</a>.
-<P>
-Copy, _do not move_, the roster.xml file and roster folder to the shared folder. You must copy the _entire_ contents of the roster directory!
-
-
-<LI>On each machine that is to use the shared roster, start DecoderPro, select Preferences from the Edit menu, and click "Show Advanced Preferences". The window will get bigger. Press "Set" under "Roster:" and follow directions.
-</OL>
-
-<!--#include virtual="/Footer" -->
+  <!--#include virtual="/Footer" -->
+ </div> <!-- close #mainContent -->
+</div> <!-- close #mBody -->    
 </body>
 </html>

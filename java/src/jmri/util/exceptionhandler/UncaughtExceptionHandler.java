@@ -1,8 +1,9 @@
-// UncaughtExceptionHandler.java
 package jmri.util.exceptionhandler;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+
+import java.io.*;
 
 /**
  * Class to log exceptions that rise to the top of threads, including to the top
@@ -14,7 +15,6 @@ import org.slf4j.LoggerFactory;
  * </pre>
  *
  * @author Bob Jacobsen Copyright 2003, 2010
- * @version $Revision$
  */
 public class UncaughtExceptionHandler implements Thread.UncaughtExceptionHandler {
 
@@ -25,8 +25,16 @@ public class UncaughtExceptionHandler implements Thread.UncaughtExceptionHandler
             return;
         }
 
-        log.error("Unhandled Exception: " + e, e);
+        log.error("Uncaught Exception caught by jmri.util.exceptionhandler.UncaughtExceptionHandler", e);
     }
 
-    static Logger log = LoggerFactory.getLogger(UncaughtExceptionHandler.class.getName());
+    static protected String generateStackTrace(Throwable e) {
+        StringWriter writer = new StringWriter();
+        PrintWriter pw = new PrintWriter(writer);
+        e.printStackTrace(pw);
+        pw.close();
+        return writer.toString();
+    }
+
+    private final static Logger log = LoggerFactory.getLogger(UncaughtExceptionHandler.class.getName());
 }

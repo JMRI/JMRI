@@ -1,4 +1,3 @@
-// SerialTurnoutManagerTest.java
 package jmri.jmrix.cmri.serial;
 
 import jmri.Turnout;
@@ -13,10 +12,10 @@ import org.slf4j.LoggerFactory;
  * Description:	tests for the jmri.jmrix.cmri.SerialTurnoutManager class
  *
  * @author	Bob Jacobsen
- * @version $Revision$
  */
 public class SerialTurnoutManagerTest extends jmri.managers.AbstractTurnoutMgrTest {
 
+    @Override
     public void setUp() {
         // replace the SerialTrafficController
         SerialTrafficController t = new SerialTrafficController() {
@@ -78,6 +77,6 @@ public class SerialTurnoutManagerTest extends jmri.managers.AbstractTurnoutMgrTe
         return suite;
     }
 
-    static Logger log = LoggerFactory.getLogger(SerialTurnoutManagerTest.class.getName());
+    private final static Logger log = LoggerFactory.getLogger(SerialTurnoutManagerTest.class.getName());
 
 }

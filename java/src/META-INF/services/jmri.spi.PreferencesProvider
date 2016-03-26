@@ -1,0 +1,10 @@
+# Providers of PreferencesProvider instances
+# Order is insignificant
+apps.StartupActionsManager
+apps.gui.GuiLafPreferencesManager
+apps.systemconsole.SystemConsolePreferencesManager
+jmri.implementation.FileLocationsPreferences
+jmri.managers.ManagerDefaultSelector
+jmri.jmrit.roster.RosterConfigManager
+jmri.jmrit.symbolicprog.ProgrammerConfigManager
+jmri.jmrix.ConnectionConfigManager

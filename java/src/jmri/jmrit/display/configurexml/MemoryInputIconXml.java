@@ -41,11 +41,6 @@ public class MemoryInputIconXml extends PositionableLabelXml {
         return element;
     }
 
-    public boolean load(Element element) {
-        log.error("Invalid method called");
-        return false;
-    }
-
     /**
      * Load, starting with the memoryInputIcon element, then all the value-icon
      * pairs
@@ -90,7 +85,16 @@ public class MemoryInputIconXml extends PositionableLabelXml {
         p.putItem(l);
         // load individual item's option settings after editor has set its global settings
         loadCommonAttributes(l, Editor.MEMORIES, element);
+        
+        javax.swing.JComponent textField = l.getTextComponent();
+        jmri.jmrit.display.PositionablePopupUtil util = l.getPopupUtility();
+        if (util.hasBackground()) {
+            textField.setBackground(util.getBackground());            
+        } else {
+            textField.setBackground(null);
+            textField.setOpaque(false);
+        }
     }
 
-    static Logger log = LoggerFactory.getLogger(MemoryInputIconXml.class.getName());
+    private final static Logger log = LoggerFactory.getLogger(MemoryInputIconXml.class.getName());
 }

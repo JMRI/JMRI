@@ -1,4 +1,3 @@
-// DefaultSignalAppearanceMapTest.java
 package jmri.implementation;
 
 import java.util.ArrayList;
@@ -18,7 +17,6 @@ import org.slf4j.LoggerFactory;
  * Tests for the SignalAppearanceMap interface
  *
  * @author	Bob Jacobsen Copyright (C) 2009
- * @version $Revision$
  */
 public class DefaultSignalAppearanceMapTest extends TestCase {
 
@@ -76,11 +74,6 @@ public class DefaultSignalAppearanceMapTest extends TestCase {
     public void testTwoHead() {
 
         SignalMast s = new SignalHeadSignalMast("IF$shsm:basic:two-searchlight:h1:h2") {
-            /**
-             *
-             */
-            private static final long serialVersionUID = -9219184718621705160L;
-
             void configureAspectTable(String signalSystemName, String aspectMapName) {
                 map = new DefaultSignalAppearanceMap("sys", "user");
             }
@@ -130,23 +123,15 @@ public class DefaultSignalAppearanceMapTest extends TestCase {
     }
 
     // The minimal setup for log4J
-    protected void setUp() {
+    protected void setUp() throws Exception {
         apps.tests.Log4JFixture.setUp();
+        super.setUp(); 
+        jmri.util.JUnitUtil.resetInstanceManager();
         h1 = new DefaultSignalHead("h1", "head1") {
-            /**
-             *
-             */
-            private static final long serialVersionUID = -9030944412578523332L;
-
             protected void updateOutput() {
             }
         };
         h2 = new DefaultSignalHead("h2", "head2") {
-            /**
-             *
-             */
-            private static final long serialVersionUID = -445310567297205496L;
-
             protected void updateOutput() {
             }
         };

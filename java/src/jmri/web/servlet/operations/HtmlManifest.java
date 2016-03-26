@@ -1,5 +1,7 @@
 package jmri.web.servlet.operations;
 
+import jmri.jmrit.operations.trains.timetable.TrainScheduleManager;
+
 import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.node.ArrayNode;
@@ -14,7 +16,6 @@ import jmri.jmrit.operations.routes.RouteLocation;
 import jmri.jmrit.operations.setup.Setup;
 import jmri.jmrit.operations.trains.JsonManifest;
 import jmri.jmrit.operations.trains.Train;
-import jmri.jmrit.operations.trains.TrainScheduleManager;
 import org.apache.commons.lang3.StringEscapeUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -39,6 +40,9 @@ public class HtmlManifest extends HtmlTrainCommon {
     // newer than the Html manifest, the cached copy is returned instead.
     public String getLocations() throws IOException {
         // build manifest from JSON manifest
+        if (this.getJsonManifest() == null) {
+            return "Error manifest file not found for this train";
+        }
         StringBuilder builder = new StringBuilder();
         ArrayNode locations = (ArrayNode) this.getJsonManifest().path(JSON.LOCATIONS);
         String previousLocationName = null;
@@ -226,7 +230,7 @@ public class HtmlManifest extends HtmlTrainCommon {
                     // if (this.isUtilityCar(car)) {
                     // builder.append(setoutUtilityCars(cars, car, location, isManifest));
                     // } else
-                    if (isManifest && Setup.isTruncateManifestEnabled() && location.getLocation().isSwitchListEnabled()) {
+                    if (isManifest && Setup.isTruncateManifestEnabled() && location.getLocation().isSwitchListEnabled() && !train.isLocalSwitcher()) {
                         // use truncated format if there's a switch list
                         builder.append(dropCar(car, Setup.getDropTruncatedManifestMessageFormat(), local));
                     } else {
@@ -501,7 +505,11 @@ public class HtmlManifest extends HtmlTrainCommon {
 
     protected JsonNode getJsonManifest() throws IOException {
         if (this.jsonManifest == null) {
-            this.jsonManifest = this.mapper.readTree((new JsonManifest(this.train)).getFile());
+            try {
+                this.jsonManifest = this.mapper.readTree((new JsonManifest(this.train)).getFile());
+            } catch (IOException e) {
+                log.error("Json manifest file not found for train ({})", this.train.getName());
+            }
         }
         return this.jsonManifest;
     }

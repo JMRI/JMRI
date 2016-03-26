@@ -1,4 +1,3 @@
-// RosterTest.java
 package jmri.jmrit.roster;
 
 import java.io.File;
@@ -18,7 +17,6 @@ import junit.framework.TestSuite;
  * Tests for the jmrit.roster.Roster class.
  *
  * @author	Bob Jacobsen Copyright (C) 2001, 2002, 2012
- * @version $Revision$
  */
 public class RosterTest extends TestCase {
 
@@ -71,6 +69,29 @@ public class RosterTest extends TestCase {
         r.addEntry(e);
         Assert.assertEquals("search not OK ", false, r.checkEntry(0, null, "321", null, null, null, null, null, null));
         Assert.assertEquals("search OK ", true, r.checkEntry(0, null, "123", null, null, null, null, null, null));
+    }
+
+    public void testGetByDccAddress() {
+        Roster r = new Roster();
+        RosterEntry e = new RosterEntry("file name Bob");
+        e.setDccAddress("456");
+        r.addEntry(e);
+        Assert.assertEquals("search not OK ", false, r.checkEntry(0, null, null, "123", null, null, null, null, null));
+        Assert.assertEquals("search OK ", true, r.checkEntry(0, null, null, "456", null, null, null, null, null));
+        
+        List<RosterEntry> l;
+
+        l = r.matchingList(null, null, "123", null, null, null, null);
+        Assert.assertEquals("match 123", 0, l.size());
+
+        l = r.matchingList(null, null, "456", null, null, null, null);
+        Assert.assertEquals("match 456", 1, l.size());
+        
+        l = r.getEntriesByDccAddress("123");
+        Assert.assertEquals("address 123", 0, l.size());
+
+        l = r.getEntriesByDccAddress("456");
+        Assert.assertEquals("address 456", 1, l.size());
     }
 
     public void testSearchList() {
@@ -155,9 +176,11 @@ public class RosterTest extends TestCase {
         // the resulting files go into the test tree area.
 
         // create a file in "temp"
+        String rosterDir = FileUtil.getUserFilesPath() + "temp" + File.separator;
+        FileUtil.createDirectory(rosterDir);
+        Roster.getDefault().setRosterLocation(rosterDir);
         FileUtil.createDirectory(FileUtil.getUserFilesPath() + "temp");
-        Roster.setFileLocation("temp");
-        File f = new File(FileUtil.getUserFilesPath() + "temp" + File.separator + "roster.xml");
+        File f = new File(rosterDir + "roster.xml");
         // remove it if its there
         f.delete();
         // load a new one
@@ -166,19 +189,20 @@ public class RosterTest extends TestCase {
         p.println(contents);
         p.close();
         // delete previous backup file if there's one
-        File bf = new File(FileUtil.getUserFilesPath() + "temp" + File.separator + "rosterBackupTest");
+        File bf = new File(rosterDir + "rosterBackupTest");
         bf.delete();
 
         // now do the backup
         Roster r = new Roster() {
+            @Override
             public String backupFileName(String name) {
-                return FileUtil.getUserFilesPath() + "temp" + File.separator + "rosterBackupTest";
+                return rosterDir + "rosterBackupTest";
             }
         };
-        r.makeBackupFile("temp" + File.separator + "roster.xml");
+        r.makeBackupFile(rosterDir + "roster.xml");
 
         // and check
-        InputStream in = new FileInputStream(new File(FileUtil.getUserFilesPath() + "temp" + File.separator + "rosterBackupTest"));
+        InputStream in = new FileInputStream(new File(rosterDir + "rosterBackupTest"));
         Assert.assertEquals("read 0 ", contents.charAt(0), in.read());
         Assert.assertEquals("read 1 ", contents.charAt(1), in.read());
         Assert.assertEquals("read 2 ", contents.charAt(2), in.read());
@@ -192,10 +216,10 @@ public class RosterTest extends TestCase {
         p.close();
 
         // now do the backup
-        r.makeBackupFile("temp" + File.separator + "roster.xml");
+        r.makeBackupFile(rosterDir + "roster.xml");
 
         // and check
-        in = new FileInputStream(new File(FileUtil.getUserFilesPath() + "temp" + File.separator + "rosterBackupTest"));
+        in = new FileInputStream(new File(rosterDir + "rosterBackupTest"));
         Assert.assertEquals("read 4 ", contents.charAt(0), in.read());
         Assert.assertEquals("read 5 ", contents.charAt(1), in.read());
         Assert.assertEquals("read 6 ", contents.charAt(2), in.read());
@@ -210,7 +234,7 @@ public class RosterTest extends TestCase {
 
         // create new roster & read
         Roster t = new Roster();
-        t.readFile(Roster.defaultRosterFilename());
+        t.readFile(Roster.getDefault().getRosterIndexPath());
 
         // check contents
         Assert.assertEquals("search for 0 ", 0, t.matchingList(null, "321", null, null, null, null, null).size());
@@ -271,11 +295,12 @@ public class RosterTest extends TestCase {
         // the resulting files go into the test tree area.
 
         // store files in "temp"
-        FileUtil.createDirectory(FileUtil.getUserFilesPath() + "temp");
-        Roster.setFileLocation("temp" + File.separator);
-        Roster.setRosterFileName("rosterTest.xml");
+        String rosterDir = FileUtil.getUserFilesPath() + "temp" + File.separator;
+        FileUtil.createDirectory(rosterDir);
+        Roster.getDefault().setRosterLocation(rosterDir);
+        Roster.getDefault().setRosterIndexFileName("rosterTest.xml");
 
-        File f = new File(FileUtil.getUserFilesPath() + "temp" + File.separator + "rosterTest.xml");
+        File f = new File(rosterDir + "rosterTest.xml");
         // remove existing roster if its there
         f.delete();
 
@@ -310,7 +335,7 @@ public class RosterTest extends TestCase {
         r.addEntry(e);
 
         // write it
-        r.writeFile(Roster.defaultRosterFilename());
+        r.writeFile(Roster.getDefault().getRosterIndexPath());
 
         return r;
     }
@@ -333,10 +358,12 @@ public class RosterTest extends TestCase {
     }
 
     // The minimal setup for log4J
+    @Override
     protected void setUp() {
         apps.tests.Log4JFixture.setUp();
     }
 
+    @Override
     protected void tearDown() {
         apps.tests.Log4JFixture.tearDown();
     }

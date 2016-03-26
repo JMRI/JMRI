@@ -87,25 +87,20 @@ public class SingleTurnoutSignalHeadXml extends jmri.managers.configurexml.Abstr
         }
     }
 
-    /**
-     * Create a SingleTurnoutSignalHead
-     *
-     * @param element Top level Element to unpack.
-     * @return true if successful
-     */
-    public boolean load(Element element) {
-        List<Element> l = element.getChildren("turnoutname");
+    @Override
+    public boolean load(Element shared, Element perNode) {
+        List<Element> l = shared.getChildren("turnoutname");
         if (l.size() == 0) {
-            l = element.getChildren("turnout");
+            l = shared.getChildren("turnout");
         }
         NamedBeanHandle<Turnout> lit = loadTurnout(l.get(0));
 
-        int off = loadAppearance(element.getChildren("appearance"), "closed");
-        int on = loadAppearance(element.getChildren("appearance"), "thrown");
+        int off = loadAppearance(shared.getChildren("appearance"), "closed");
+        int on = loadAppearance(shared.getChildren("appearance"), "thrown");
 
         // put it together
-        String sys = getSystemName(element);
-        String uname = getUserName(element);
+        String sys = getSystemName(shared);
+        String uname = getUserName(shared);
 
         SignalHead h;
         if (uname == null) {
@@ -114,7 +109,7 @@ public class SingleTurnoutSignalHeadXml extends jmri.managers.configurexml.Abstr
             h = new SingleTurnoutSignalHead(sys, uname, lit, on, off);
         }
 
-        loadCommon(h, element);
+        loadCommon(h, shared);
 
         InstanceManager.signalHeadManagerInstance().register(h);
         return true;
@@ -172,5 +167,5 @@ public class SingleTurnoutSignalHeadXml extends jmri.managers.configurexml.Abstr
 
     }
 
-    static Logger log = LoggerFactory.getLogger(SingleTurnoutSignalHeadXml.class.getName());
+    private final static Logger log = LoggerFactory.getLogger(SingleTurnoutSignalHeadXml.class.getName());
 }

@@ -1,23 +1,24 @@
 <!DOCTYPE html PUBLIC "-//w3c//dtd html 4.0 transitional//en">
 <html lang="en"><head>
-<!-- Copyright ($Author$) 2009 --><!-- $Id$ --><title>Help Menu</title><!-- Style -->
+<title>Help Menu</title>
 
-
-
-
-
+<!-- Style -->
 <meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
 <link rel="stylesheet" type="text/css" href="/css/default.css" media="screen">
 <link rel="stylesheet" type="text/css" href="/css/print.css" media="print">
 <link rel="icon" href="/images/jmri.ico" type="image/png">
-<link rel="home" title="Home" href="/"><!-- /Style --></head><body>
+<link rel="home" title="Home" href="/">
+<!-- /Style -->
+</head>
+
+<body>
 <!--#include virtual="/Header" -->
 <!--#include virtual="Sidebar" -->
 <div id="mainContent">
 
 <a name="Top"></a>
 <h1>DecoderPro&reg; Main Window</h1>
-<h1>Help Menu </h1>
+<h2>Help Menu </h2>
 
 <div align="right">
 <p><a href="Main_Window.shtml"> Previous</a></p>
@@ -58,12 +59,15 @@ scheme.</p>
 <p><strong>About Decoder Pro</strong></p>
 <p style="margin-left: 40px;">Opens the Credits and Version Window.</p>
 <p style="margin-left: 40px; text-align: center;"><img style="width: 255px; height: 315px;" alt="about" src="images/Main_Help_05.png"><br></p>
+
 <hr>
-<p>&nbsp;</p>
 <div align="right">
   <p><a href="Main_Window.shtml">Previous</a></p>
 <p><a href="index.shtml#Main">Back to Index</a></p>
 </div>
 
 <!--#include virtual="/Footer" -->
-</div></body></html>
+  </div><!-- closes #mainContent-->
+ </div> <!-- closes #mBody-->
+</body>
+</html>

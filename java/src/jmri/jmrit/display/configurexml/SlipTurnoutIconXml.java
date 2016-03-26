@@ -5,8 +5,6 @@ import jmri.jmrit.display.Editor;
 import jmri.jmrit.display.SlipTurnoutIcon;
 import org.jdom2.Attribute;
 import org.jdom2.Element;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 
 /**
  * Handle configuration for display.TurnoutIcon objects.
@@ -86,11 +84,6 @@ public class SlipTurnoutIconXml extends PositionableLabelXml {
         Element element = super.storeIcon(elemName, icon);
         element.addContent(new Element("text").addContent(text));
         return element;
-    }
-
-    public boolean load(Element element) {
-        log.error("Invalid method called");
-        return false;
     }
 
     /**
@@ -242,6 +235,4 @@ public class SlipTurnoutIconXml extends PositionableLabelXml {
             }
         }
     }
-
-    static Logger log = LoggerFactory.getLogger(SlipTurnoutIconXml.class.getName());
 }

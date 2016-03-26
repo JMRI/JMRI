@@ -93,7 +93,9 @@ public class WarrantTableAction extends AbstractAction {
             CreateWarrantFrame f = new CreateWarrantFrame();
             try {
                 f.initComponents();
-            } catch (Exception ex ) {/*bogus*/ }
+            } catch (Exception ex ) {
+                log.error("During initComponents", ex);
+            }
             f.setVisible(true);
         }
         initPathPortalCheck();
@@ -682,5 +684,5 @@ public class WarrantTableAction extends AbstractAction {
         }
     }
 
-    static Logger log = LoggerFactory.getLogger(WarrantTableAction.class.getName());
+    private final static Logger log = LoggerFactory.getLogger(WarrantTableAction.class.getName());
 }

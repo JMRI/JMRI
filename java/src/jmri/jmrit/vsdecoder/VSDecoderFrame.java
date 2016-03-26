@@ -95,5 +95,5 @@ class VSDecoderFrame extends JmriJFrame {
         return menuList;
     }
 
-    static Logger log = LoggerFactory.getLogger(VSDecoderFrame.class.getName());
+    private final static Logger log = LoggerFactory.getLogger(VSDecoderFrame.class.getName());
 }

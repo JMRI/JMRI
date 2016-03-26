@@ -37,14 +37,21 @@ that, assuming that you've gotten a copy of the code
 following the 
 <a href="getgitcode.shtml">previously described procedures</a>.  
 
-<p>See also the <a href="GitFAQ.shtml">JMRI Git FAQ page</a>.</p>
+<p>See the <a href="GitFAQ.shtml">JMRI Git FAQ page</a>
+for more details on these processes.</p>
 
-<p>The basic process is to make your changes, compile/run/test until
-you've finished your intended change, and then to send that 
+<p>The links to the left provide more information on building with specific tools. 
+You should read the page for your particular setup.
+
+<p>The rest of this page provides an overview of the process of developing JMRI code
+with Git.  Basically, you create a new branch, 
+make your changes, compile/run/test until
+you've finished your intended change, and then send that 
 change back for inclusion into the main repository.
 <p>
-That's done with a three-step process:
+That's done with a four-step process:
 <ol>
+<li>You create a Git branch to hold your work.
 <li>You periodically &quot;commit&quot; your changes to your local
     repository.
 <li>You periodically &quot;push&quot; those changes to a
@@ -54,7 +61,32 @@ repository of your own on GitHub.
 that allows JMRI to get your change from your GitHub repository
 and merge it into JMRI's main repository.
 </ol>
-  
+
+<h3>Create a Branch for Development</h3>
+Git is very good at keeping development on parallel "branches" separate.
+Although the primary development is on the "master" branch, we strongly 
+recommend that you don't directly make changes to that.  There are a lot of JMRI developers,
+and having them all work on a single branch can get confusing.  Instead, you should create a separate
+branch for each of your projects, work on it until it's ready to be merged back into the main JMRI
+source, and then contribute the entire branch contents back to our main repository.
+<p>
+To create a new branch:
+
+  <pre><code>
+  git checkout master<br/>
+  git pull<br/>
+  git checkout -b my-new-feature-or-fix<br/>
+  </code></pre>
+<p>
+The first two "git checkout master" & "git pull" lines makes sure that you are starting
+from the most recent "master" branch contents.  The master branch is where we
+do development between test releases.
+<p>
+The -b option in the last line creates a new branch which will contain your new work. 
+This lets you work on it without interference from other people's changes until you're ready
+to merge with those. The "checkout" means that you're now working on that new branch, which
+will hold whatever you commit in later steps.
+
 <h3>Commit Changes to Your Local Repository</h3>
 You should commit your changes into your local repository often.
 
@@ -66,8 +98,14 @@ When you commit, you're saving a copy of your changes into your local
 repository where they're safe, and can eventually be moved onward.
 
   <pre><code>
-  git commit -m&quot;useful comment&quot;
+  git commit
   </code></pre>
+
+When you do this, Git will open an editor window for your commit note. The top line becomes the summary, 
+which should be clear by itself as this will appear in lists of changes.  
+You should keep that summary to 50 characters or less, so it can be displayed compactly.
+Please add more detail in additional lines after the summary, 
+because that helps your friends and colleagues understand what you've done.
 
 <a name="repo" id="repo"></a><h3>Get Your Own GitHub Repository</h3>
 
@@ -119,10 +157,12 @@ repository where they're safe, and can eventually be moved onward.
   git push
   </code></pre>
 
+Sometimes, git will tell you that you need a more complicated push comment, with some options that start with - or --.
+Just copy and paste that line to execute it.
 
  <a name="pull" id="pull"></a><h3>Submit a Pull Request</h3>
 
-The last step is to make your changes, visible in your GitHub repository,
+The last step is to make your changes, already visible in your GitHub repository,
 known to the JMRI maintainers so that one of them can pull it into the main 
 JMRI repository.  To do that, you create and submit a "pull request" that
 automatically has all the needed info.
@@ -132,13 +172,13 @@ automatically has all the needed info.
     the main JMRI one)
 <li>There's a "Pull Request" button at the upper right of the file listing.
     Click it.
-<li>On the next page, click the "Create pull request" button.
+<li>On the next page, select the branch you've been working on and click the "Create pull request" button.
 <li>Fill out the forms.  A short title that describes the feature you've written
     helps other people find it.  A few lines in the comment about what it does, how 
     you added it, etc is also very helpful.
 <li>Click "Create pull request".  That submits all the info and notifies
     the JMRI maintainers.  One of them will check it over and either contact you for
-    more info (occasionally), or merge it into the main repository (more often).
+    more info (occasionally), or merge it into the master branch in the the main repository (more often).
     You can sign up for a notification when that happens.
 </ul>
 

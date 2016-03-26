@@ -17,10 +17,12 @@ import junit.framework.TestSuite;
 public class LinkingLabelTest extends jmri.util.SwingTestCase {
 
     LinkingLabel to = null;
-    jmri.jmrit.display.panelEditor.PanelEditor panel
-            = new jmri.jmrit.display.panelEditor.PanelEditor("LinkingLabel Test Panel");
+    jmri.jmrit.display.panelEditor.PanelEditor panel;
 
     public void testShow() {
+        panel
+            = new jmri.jmrit.display.panelEditor.PanelEditor("LinkingLabel Test Panel");
+            
         JFrame jf = new jmri.util.JmriJFrame("LinkingLabel Target Panel");
         JPanel p = new JPanel();
         jf.getContentPane().add(p);
@@ -77,13 +79,17 @@ public class LinkingLabelTest extends jmri.util.SwingTestCase {
     }
 
     protected void tearDown() {
-        // now close panel window
-        java.awt.event.WindowListener[] listeners = panel.getTargetFrame().getWindowListeners();
-        for (int i = 0; i < listeners.length; i++) {
-            panel.getTargetFrame().removeWindowListener(listeners[i]);
+        if (panel != null) {
+            // now close panel window
+            java.awt.event.WindowListener[] listeners = panel.getTargetFrame().getWindowListeners();
+            for (int i = 0; i < listeners.length; i++) {
+                panel.getTargetFrame().removeWindowListener(listeners[i]);
+            }
+            junit.extensions.jfcunit.TestHelper.disposeWindow(panel.getTargetFrame(), this);
+            apps.tests.Log4JFixture.tearDown();
+            
+            panel = null;
         }
-        junit.extensions.jfcunit.TestHelper.disposeWindow(panel.getTargetFrame(), this);
-        apps.tests.Log4JFixture.tearDown();
     }
 
 	// static private Logger log = LoggerFactory.getLogger(TurnoutIconTest.class.getName());

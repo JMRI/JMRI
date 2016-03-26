@@ -6,8 +6,6 @@ import java.awt.event.ActionListener;
 import javax.swing.BoxLayout;
 import javax.swing.JPanel;
 import javax.swing.JToggleButton;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 
 /**
  * Frame displaying the LV102 configuration utility
@@ -65,7 +63,5 @@ public class LV102Frame extends jmri.util.JmriJFrame {
         // take apart the JFrame
         super.dispose();
     }
-
-    static Logger log = LoggerFactory.getLogger(LV102Frame.class.getName());
 
 }

@@ -19,32 +19,31 @@ import org.slf4j.LoggerFactory;
 
 /**
  * Provide a JPanel to configure the service mode programmer.
- * <P>
+ * <p>
  * The using code should get a configured programmer with getProgrammer. Since
  * there's only one service mode programmer, maybe this isn't critical, but it's
  * a good idea for the future.
- * <P>
+ * <p>
  * A ProgModePane may "share" between one of these and a ProgOpsModePane, which
  * means that there might be _none_ of these buttons selected. When that
  * happens, the mode of the underlying programmer is left unchanged and no
  * message is propagated.
- * <P>
+ * <p>
  * Note that you should call the dispose() method when you're really done, so
  * that a ProgModePane object can disconnect its listeners.
  *
  * <hr>
  * This file is part of JMRI.
- * <P>
+ * <p>
  * JMRI is free software; you can redistribute it and/or modify it under the
  * terms of version 2 of the GNU General Public License as published by the Free
  * Software Foundation. See the "COPYING" file for a copy of this license.
- * <P>
+ * <p>
  * JMRI is distributed in the hope that it will be useful, but WITHOUT ANY
  * WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS FOR
  * A PARTICULAR PURPOSE. See the GNU General Public License for more details.
- * <P>
+ * <p>
  * @author	Bob Jacobsen Copyright (C) 2001, 2014
- * @version	$Revision$
  */
 public class ProgServiceModePane extends ProgModeSelector implements PropertyChangeListener, ActionListener {
 
@@ -58,6 +57,7 @@ public class ProgServiceModePane extends ProgModeSelector implements PropertyCha
      * Get the selected programmer
      */
     public Programmer getProgrammer() {
+        if (progBox.getSelectedItem() == null) return null;
         return ((GlobalProgrammerManager) progBox.getSelectedItem()).getGlobalProgrammer();
     }
 
@@ -83,8 +83,16 @@ public class ProgServiceModePane extends ProgModeSelector implements PropertyCha
         this(direction, new javax.swing.ButtonGroup());
     }
 
+    /**
+     * Get the list of global managers
+     * @return empty list if none
+     */
     protected List<GlobalProgrammerManager> getMgrList() {
-        return InstanceManager.getList(jmri.GlobalProgrammerManager.class);
+        List<GlobalProgrammerManager> retval;
+        
+        retval = InstanceManager.getList(jmri.GlobalProgrammerManager.class);
+        if (retval!=null) return retval;
+        return new ArrayList<>();
     }
 
     /**
@@ -98,17 +106,16 @@ public class ProgServiceModePane extends ProgModeSelector implements PropertyCha
         setLayout(new BoxLayout(this, direction));
 
         // create the programmer display combo box
-        java.util.Vector<GlobalProgrammerManager> v = new java.util.Vector<GlobalProgrammerManager>();
+        java.util.Vector<GlobalProgrammerManager> v = new java.util.Vector<>();
         for (GlobalProgrammerManager pm : getMgrList()) {
-            v.add(pm);
-            // listen for changes
-            if (pm.getGlobalProgrammer() != null) {
+            if (pm != null && pm.getGlobalProgrammer() != null) {
+                v.add(pm);
+                // listen for changes
                 pm.getGlobalProgrammer().addPropertyChangeListener(this);
-            } else {
-                log.warn("No GlobalProgrammer present in GlobalProgrammerManager, is there a problem with layout connection?");
             }
         }
-        add(progBox = new JComboBox<GlobalProgrammerManager>(v));
+
+        add(progBox = new JComboBox<>(v));
         // if only one, don't show
         if (progBox.getItemCount() < 2) {
             // no choice, so don't display, don't monitor for changes
@@ -216,5 +223,5 @@ public class ProgServiceModePane extends ProgModeSelector implements PropertyCha
         }
     }
 
-    static Logger log = LoggerFactory.getLogger(ProgServiceModePane.class.getName());
+    private final static Logger log = LoggerFactory.getLogger(ProgServiceModePane.class.getName());
 }

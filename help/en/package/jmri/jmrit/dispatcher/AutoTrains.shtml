@@ -1,11 +1,9 @@
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
-<!-- $Id$ -->
 <html lang="en">
 <head>
  <TITLE>
       JMRI: AutoTrains Window Help
  </TITLE>
-    <META http-equiv=Content-Type content="text/html; charset=iso-8859-1">
     <META content="Dave Duchamp" name=Author>
     <META name="keywords" content="JMRI help Dispatcher Auto Active Trains">
 
@@ -80,15 +78,8 @@ human engineer should run the train in the same position it was in when manual
 mode operation was initiated. This insures smooth resumption of automatic 
 operation.</p>
 
-
-
-
-
-
-
-
-
-
 <!--#include virtual="/Footer" -->
-</body>
+  </div><!-- closes #mainContent-->
+ </div> <!-- closes #mBody-->
+ </body>
 </html>

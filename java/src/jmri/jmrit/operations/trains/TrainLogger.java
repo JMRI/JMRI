@@ -30,7 +30,7 @@ public class TrainLogger extends XmlFile implements java.beans.PropertyChangeLis
     File _fileLogger;
     private boolean _trainLog = false; // when true logging train movements
     static final String DEL = ","; // delimiter
-    static final String ESC = "\""; // NOI18N escape
+    static final String ESC = "\""; // escape // NOI18N
 
     public TrainLogger() {
     }
@@ -48,7 +48,7 @@ public class TrainLogger extends XmlFile implements java.beans.PropertyChangeLis
             // create and load
             _instance = new TrainLogger();
         }
-        if (Control.showInstance) {
+        if (Control.SHOW_INSTANCE) {
             log.debug("TrainLogger returns instance " + _instance);
         }
         return _instance;
@@ -170,7 +170,7 @@ public class TrainLogger extends XmlFile implements java.beans.PropertyChangeLis
     public void propertyChange(PropertyChangeEvent e) {
         if (e.getPropertyName().equals(Train.STATUS_CHANGED_PROPERTY)
                 || e.getPropertyName().equals(Train.TRAIN_LOCATION_CHANGED_PROPERTY)) {
-            if (Control.showProperty) {
+            if (Control.SHOW_PROPERTY) {
                 log.debug("Train logger sees property change for train " + e.getSource());
             }
             store((Train) e.getSource());
@@ -241,5 +241,5 @@ public class TrainLogger extends XmlFile implements java.beans.PropertyChangeLis
         }
     }
 
-    static Logger log = LoggerFactory.getLogger(TrainLogger.class.getName());
+    private final static Logger log = LoggerFactory.getLogger(TrainLogger.class.getName());
 }

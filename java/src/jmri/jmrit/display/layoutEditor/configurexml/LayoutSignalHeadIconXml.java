@@ -36,7 +36,8 @@ public class LayoutSignalHeadIconXml extends AbstractXmlAdapter {
 
     }
 
-    public boolean load(Element element) {
+    @Override
+    public boolean load(Element shared, Element perNode) {
         log.error("Invalid method called");
         return false;
     }
@@ -54,6 +55,6 @@ public class LayoutSignalHeadIconXml extends AbstractXmlAdapter {
         // create the objects
     }
 
-    static Logger log = LoggerFactory.getLogger(LayoutSignalHeadIconXml.class.getName());
+    private final static Logger log = LoggerFactory.getLogger(LayoutSignalHeadIconXml.class.getName());
 
 }

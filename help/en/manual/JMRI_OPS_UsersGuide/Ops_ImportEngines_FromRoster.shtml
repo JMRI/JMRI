@@ -1,43 +1,53 @@
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
-<html lang="en"><head><!-- Copyright ($Author$) 2009 --><!-- $Id$ -->
+<html lang="en">
+<head>
+<title>JMRI OperationsPro - Importing Engines from Roster</title>
 
-
-
-<title>Operations Importing Engines from Roster</title><!-- Style --><meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
+<!-- Style -->
+<meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
 <link rel="stylesheet" type="text/css" href="/css/default.css" media="screen">
 <link rel="stylesheet" type="text/css" href="/css/print.css" media="print">
 <link rel="icon" href="/images/jmri.ico" type="image/png">
-<link rel="home" title="Home" href="/"><!-- /Style --></head>
+<link rel="home" title="Home" href="/">
+<!-- /Style -->
+</head>
+
 <body>
 <!--#include virtual="/Header" -->
 <!--#include virtual="Sidebar" -->
 <div id="mainContent"><a name="Top"></a>
+
 <h1>Using JMRI&reg; to Operate Trains</h1>
-<h1>Importing Locomotives from Roster </h1>
+<h2>OperationsPro: Importing Locomotives from Roster</h2>
+
 <div align="right">
 <p><a href="Ops_Engines_menu.shtml">Back </a></p>
 <p><a href="index.shtml#Operations">Back to Index</a></p>
 </div>
 <hr>
-<h4>Import locomotives from roster &nbsp;</h4><h4 style="margin-left: 40px; font-weight: normal;">Opens the import dialog box&nbsp;</h4><div style="margin-left: 40px;"><img style="width: 313px; height: 122px;" alt="import dialog" src="images/Ops_Successful_Import.png"></div>If you already have a <span style="font-weight: bold;">DecoderPro&reg;
+
+<h3>Import locomotives from roster</h3>
+<p>This menu opens a system Import dialog box. If you already have a <span style="font-weight: bold;">DecoderPro&reg; locomotive
 roster</span>
-created when programming decoders, you may import them into the
-Operations program. All locomotives that are not already in your
-Operations roster will be imported and a message will be displayed
-informing you of how many locomotives were imported. This way you can
-use this tool any time you add locomotives to your DecoderPro&reg;
+created eg. when programming decoders, you may import this roster into the
+OperationsPro Roster. All Locomotives that are not already in your
+OperationsPro Roster will be imported and a message will be displayed
+informing you of how many locomotives were imported:</p>
+<div style="margin-left: 40px;"><img style="width: 313px; height: 122px;" alt="import dialog" src="images/Ops_Successful_Import.png"></div>
+
+<p>This way you can
+use this tool any time you add Locomotives to your DecoderPro&reg;
 locomotive roster. The DecoderPro&reg; locomotive roster doesn't have the
-locomotives length, so a default length is entered for you. You should
-correct the locomotive length if you want the program to correctly
-calculate your train lengths.
-<p>Now we should have imported yoiur programming locomotive roster
-into the
-Operations Locomotives roster you will need to edit the entries to add the
-attributes that are required for operations but were not needed in the Locomotive Roster file when you programmed the decorders.</p>
+locomotive's length, so a default length is entered for you. You should manually 
+correct the Locomotive Length in OperationsPro if you want the program to correctly
+calculate your Train lengths.</p>
+<p>Now that we have imported your DecoderPro locomotive roster into the
+OperationsPro Roster you will need to edit the entries to add the
+attributes that are required for OperationsPro but were not needed in the DecoderPro locomotive roster file when you programmed the decoders.</p>
 <p><img src="images/Ops_EngineRoster.png" alt="Engine Roster" height="301" width="922"></p>
-<p>These engines were imported from JMRI Roster, so we will need
-to
-edit them to set the correct length, Consist, Location as required.<br>&nbsp;<a href="Ops_EditEngines.shtml"><strong>Edit button</strong></a> in the Edit column will open the Edit Locomotives window &nbsp;and allow you to edit locomotive attributes..</p><p><a style="font-weight: bold;" href="Ops_SetEngines.shtml">Set button</a> in the Set&nbsp;column for each locomotive in the &nbsp;roster will allow you to set the location.</p><hr>
+<p>These engines were imported from JMRI Roster, so we will need to
+edit them to set the correct length, Consist, Location as required. The <a href="Ops_EditEngines.shtml"><strong>Edit</strong></a> button in the <strong>Edit</strong> column will open the <strong>Edit Locomotives</strong> window and allow you to edit Locomotive attributes..</p>
+<p>The <a style="font-weight: bold;" href="Ops_SetEngines.shtml">Set</a> button in the <strong>Set</strong> column for each locomotive in the roster will allow you to set the current Locomotive Location.</p><hr>
 <div align="right">
 <p><a href="Ops_Engines_menu.shtml">Back </a></p>
 <p><a href="index.shtml#Operations">Back to Index</a></p>

@@ -111,7 +111,7 @@ public class EasyDccConsistManagerTest extends TestCase {
 
     // Main entry point
     static public void main(String[] args) {
-        String[] testCaseName = {EasyDccConsistManagerTest.class.getName()};
+        String[] testCaseName = {"-noloading", EasyDccConsistManagerTest.class.getName()};
         junit.swingui.TestRunner.main(testCaseName);
     }
 
@@ -188,6 +188,6 @@ public class EasyDccConsistManagerTest extends TestCase {
 
     }
 
-    static Logger log = LoggerFactory.getLogger(EasyDccConsistManagerTest.class.getName());
+    private final static Logger log = LoggerFactory.getLogger(EasyDccConsistManagerTest.class.getName());
 
 }

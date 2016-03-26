@@ -1,4 +1,3 @@
-// EasyDccPowerManagerTest.java
 package jmri.jmrix.easydcc;
 
 import java.util.Vector;
@@ -6,8 +5,6 @@ import jmri.JmriException;
 import jmri.jmrix.AbstractPowerManagerTest;
 import junit.framework.Test;
 import junit.framework.TestSuite;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 
 /**
  * Description:	JUnit tests for the EasyDccPowerManager class
@@ -125,7 +122,7 @@ public class EasyDccPowerManagerTest extends AbstractPowerManagerTest {
 
     // Main entry point
     static public void main(String[] args) {
-        String[] testCaseName = {EasyDccPowerManagerTest.class.getName()};
+        String[] testCaseName = {"-noloading", EasyDccPowerManagerTest.class.getName()};
         junit.swingui.TestRunner.main(testCaseName);
     }
 
@@ -139,7 +136,5 @@ public class EasyDccPowerManagerTest extends AbstractPowerManagerTest {
     protected void tearDown() {
         apps.tests.Log4JFixture.tearDown();
     }
-
-    static Logger log = LoggerFactory.getLogger(EasyDccPowerManagerTest.class.getName());
 
 }

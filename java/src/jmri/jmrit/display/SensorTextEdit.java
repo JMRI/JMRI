@@ -1,4 +1,3 @@
-// LayoutSensorTextEdit.java
 package jmri.jmrit.display;
 
 import java.awt.Dimension;
@@ -8,8 +7,6 @@ import java.util.ResourceBundle;
 import javax.swing.JButton;
 import javax.swing.JComponent;
 import jmri.util.JmriJFrame;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 
 /**
  * Displays and allows user to modify the text display used in a sensor
@@ -19,14 +16,8 @@ import org.slf4j.LoggerFactory;
  *
  * @author Dan Boudreau Copyright (C) 2007
  * @author Kevin Dickerson (SensorTextEditor version);
- * @version $Revision$
  */
 public class SensorTextEdit extends JmriJFrame {
-
-    /**
-     *
-     */
-    private static final long serialVersionUID = -5713312554502509613L;
 
     static final ResourceBundle rb = ResourceBundle.getBundle("jmri.jmrit.display.layoutEditor.LayoutEditorBundle");
 
@@ -193,7 +184,4 @@ public class SensorTextEdit extends JmriJFrame {
             dispose();
         }
     }
-
-    static Logger log = LoggerFactory
-            .getLogger(SensorTextEdit.class.getName());
 }

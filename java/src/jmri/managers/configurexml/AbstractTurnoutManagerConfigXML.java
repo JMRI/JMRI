@@ -167,43 +167,39 @@ public abstract class AbstractTurnoutManagerConfigXML extends AbstractNamedBeanM
      */
     abstract public void setStoreElementClass(Element turnouts);
 
-    /**
-     * Create a TurnoutManager object of the correct class, then register and
-     * fill it.
-     *
-     * @param turnouts Top level Element to unpack.
-     */
-    abstract public boolean load(Element turnouts);
+    @Override
+    public abstract boolean load(Element shared, Element perNode);
 
     /**
      * Utility method to load the individual Turnout objects. If there's no
      * additional info needed for a specific turnout type, invoke this with the
      * parent of the set of Turnout elements.
      *
-     * @param turnouts Element containing the Turnout elements to load.
+     * @param shared Element containing the Turnout elements to load.
+     * @param perNode Element containing per-node Turnout data.
      * @return true if succeeded
      */
     @SuppressWarnings("unchecked")
-    public boolean loadTurnouts(Element turnouts) {
+    public boolean loadTurnouts(Element shared, Element perNode) {
         boolean result = true;
-        List<Element> operationList = turnouts.getChildren("operations");
+        List<Element> operationList = shared.getChildren("operations");
         if (operationList.size() > 1) {
             log.warn("unexpected extra elements found in turnout operations list");
             result = false;
         }
         if (operationList.size() > 0) {
             TurnoutOperationManagerXml tomx = new TurnoutOperationManagerXml();
-            tomx.load(operationList.get(0));
+            tomx.load(operationList.get(0), null);
         }
-        List<Element> turnoutList = turnouts.getChildren("turnout");
+        List<Element> turnoutList = shared.getChildren("turnout");
         if (log.isDebugEnabled()) {
             log.debug("Found " + turnoutList.size() + " turnouts");
         }
         TurnoutManager tm = InstanceManager.turnoutManagerInstance();
 
         try {
-            if (turnouts.getChild("defaultclosedspeed") != null) {
-                String closedSpeed = turnouts.getChild("defaultclosedspeed").getText();
+            if (shared.getChild("defaultclosedspeed") != null) {
+                String closedSpeed = shared.getChild("defaultclosedspeed").getText();
                 if (closedSpeed != null && !closedSpeed.equals("")) {
                     tm.setDefaultClosedSpeed(closedSpeed);
                 }
@@ -213,8 +209,8 @@ public abstract class AbstractTurnoutManagerConfigXML extends AbstractNamedBeanM
         }
 
         try {
-            if (turnouts.getChild("defaultthrownspeed") != null) {
-                String thrownSpeed = turnouts.getChild("defaultthrownspeed").getText();
+            if (shared.getChild("defaultthrownspeed") != null) {
+                String thrownSpeed = shared.getChild("defaultthrownspeed").getText();
                 if (thrownSpeed != null && !thrownSpeed.equals("")) {
                     tm.setDefaultThrownSpeed(thrownSpeed);
                 }
@@ -401,5 +397,5 @@ public abstract class AbstractTurnoutManagerConfigXML extends AbstractNamedBeanM
         return InstanceManager.turnoutManagerInstance().getXMLOrder();
     }
 
-    static Logger log = LoggerFactory.getLogger(AbstractTurnoutManagerConfigXML.class.getName());
+    private final static Logger log = LoggerFactory.getLogger(AbstractTurnoutManagerConfigXML.class.getName());
 }

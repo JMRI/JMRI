@@ -52,15 +52,10 @@ public class AcelaSignalHeadXml extends jmri.managers.configurexml.AbstractNamed
         return element;
     }
 
-    /**
-     * Create an AcelaSignalHead
-     *
-     * @param element Top level Element to unpack.
-     * @return true if successful
-     */
-    public boolean load(Element element) {
-        String sys = element.getAttribute("systemName").getValue();
-        Attribute a = element.getAttribute("userName");
+    @Override
+    public boolean load(Element shared, Element perNode) {
+        String sys = shared.getAttribute("systemName").getValue();
+        Attribute a = shared.getAttribute("userName");
         SignalHead h;
         if (a == null) {
             h = new AcelaSignalHead(sys);
@@ -68,7 +63,7 @@ public class AcelaSignalHeadXml extends jmri.managers.configurexml.AbstractNamed
             h = new AcelaSignalHead(sys, a.getValue());
         }
 
-        Attribute t = element.getAttribute("signalheadType");
+        Attribute t = shared.getAttribute("signalheadType");
         String shtype;
         if (t == null) {
             shtype = "UKNOWN";
@@ -76,7 +71,7 @@ public class AcelaSignalHeadXml extends jmri.managers.configurexml.AbstractNamed
             shtype = t.getValue();
         }
 
-        loadCommon(h, element);
+        loadCommon(h, shared);
 
         InstanceManager.signalHeadManagerInstance().register(h);
 
@@ -91,5 +86,5 @@ public class AcelaSignalHeadXml extends jmri.managers.configurexml.AbstractNamed
         log.error("Invalid method called");
     }
 
-    static Logger log = LoggerFactory.getLogger(AcelaSignalHeadXml.class.getName());
+    private final static Logger log = LoggerFactory.getLogger(AcelaSignalHeadXml.class.getName());
 }

@@ -4,6 +4,7 @@ import java.util.List;
 import jmri.InstanceManager;
 import jmri.Memory;
 import jmri.MemoryManager;
+import jmri.configurexml.JmriConfigureXmlException;
 import jmri.jmrit.roster.RosterEntry;
 import org.jdom2.Element;
 import org.slf4j.Logger;
@@ -99,10 +100,13 @@ public abstract class AbstractMemoryManagerConfigXML extends AbstractNamedBeanMa
      * Create a MemoryManager object of the correct class, then register and
      * fill it.
      *
-     * @param memories Top level Element to unpack.
+     * @param sharedMemories Shared top level Element to unpack.
+     * @param perNodeMemories Per-node top level Element to unpack.
      * @return true if successful
+     * @throws jmri.configurexml.JmriConfigureXmlException
      */
-    abstract public boolean load(Element memories) throws jmri.configurexml.JmriConfigureXmlException;
+    @Override
+    abstract public boolean load(Element sharedMemories, Element perNodeMemories) throws JmriConfigureXmlException;
 
     /**
      * Utility method to load the individual Memory objects. If there's no
@@ -158,5 +162,5 @@ public abstract class AbstractMemoryManagerConfigXML extends AbstractNamedBeanMa
         m.setValue(value);
     }
 
-    static Logger log = LoggerFactory.getLogger(AbstractMemoryManagerConfigXML.class.getName());
+    private final static Logger log = LoggerFactory.getLogger(AbstractMemoryManagerConfigXML.class.getName());
 }

@@ -1,22 +1,17 @@
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
-<!-- $Id$ -->
 <html lang="en">
 <head>
-<title>
-JMRI: XBee Network
-</title>
+<title>JMRI Hardware Support - Digi XBee Network</title>
 
-<META content="Paul Bender" name="Author">
-<META name="keywords" content="XBee Configuration Information for JMRI">
+<meta content="Paul Bender" name="Author">
+<meta name="keywords" content="XBee Configuration Information for JMRI">
 
 <!-- Style -->
-<META http-equiv=Content-Type content="text/html; charset=iso-8859-1">
-<LINK REL="stylesheet" TYPE="text/css" HREF="/css/default.css"
-        MEDIA="screen">
-<LINK REL="stylesheet" TYPE="text/css" HREF="/css/print.css"
-        MEDIA="print">
-<LINK REL="icon" HREF="/images/jmri.ico" TYPE="image/png">
-<LINK REL="home" TITLE="Home" HREF="/">
+<meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
+<link rel="stylesheet" type="text/css" href="/css/default.css" media="screen">
+<link rel="stylesheet" type="text/css" href="/css/print.css" media="print">
+<link rel="icon" href="/images/jmri.ico" type="image/png">
+<link rel="home" title="Home" href="/">
 <!-- /Style -->
 </head>
 
@@ -26,27 +21,43 @@ JMRI: XBee Network
   <div class="nomenu" id="mBody">
     <div id="mainContent">
 
-<h1>
-JMRI Hardware Guide: XBee Network
-</h1>
-
-<h2>Overview</h2>
+<h1>Hardware Support: Digi XBee Network</h1>
+	<ul class="snav"><!-- TOC -->
+	<li><a href="#hardware">Hardware</a>
+	<li><a href="#connecting">Connecting</a>
+	<li><a href="#tools">Tools</a>
+	<li><a href="#documentation">Documentation</a>
+	</ul>
 
 <p>The <a href="http://www.digi.com/xbee">Digi International XBee Modules</a> are family of wireless communication devices that have their own microcontroller and IO pins that make them useful for many distributed control networks, including on model railroads.</p>
 
+<a name="hardware"></a><h2>Supported Hardware</h2>
+<h3>Command Station</h3>
+<p>JMRI can communicate with XBee Series 1 and XBee Series 2 modules.
+
+<h3>Computer Interfaces</h3>
+<p>JMRI support for XBee devices includes serial interfaces to XBee Networks. The connection to the computer may be made by any USB or RS232 XBee adapter.  Tested adapters include:
+<ul>
+<li>The Sparkfun Electronics <a href="https://www.sparkfun.com/products/8687">XBee Explorer USB</a>
+<li>The Sparkfun Electronics <a href="https://www.sparkfun.com/products/9111">XBee Explorer Serial</a>
+<li>The CISECO <a href="http://shop.ciseco.co.uk/slice-of-pi-add-on-for-raspberry-pi/">Slice of Pi</a> (in conjunction with a Raspberry Pi)
+</ul>
+
+<a name="connecting"></a><h2>Connecting</h2>
+<h3>Wiring</h3>
 <p>JMRI can communicate with XBee Series 1 and XBee Series 2 modules.  Underlying support for communication is provided by <a href="https://code.google.com/p/xbee-api/">Andrew Rapp's xbee-api library for Java</a>.  This library requires that the XBee module connected to the PC be configured for <a href=https://code.google.com/p/xbee-api/wiki/WhyApiMode>API mode</a>.<p>
 
 <p>JMRI support for the Digi XBee Modules currently includes the ability to passively read digital sensor inputs, as JMRI Sensors, and triggering digital outputs, through the JMRI Lights and Turnouts.</p>
 
-<h2>XBee Module Addressing</h2>
+<h3>XBee Module Addressing</h3>
 
 <p>Each XBee module has 5 addresses we need to be aware of:
 <ul>
-<li>a Channel Number</li>
-<li>a 16 bit PAN address</li>
-<li>a 16 bit User address</li>
-<li>a 64 bit Globally Unique ID</li>
-<li>a free-form Node Identifier string</li>
+	<li>a Channel Number</li>
+	<li>a 16 bit PAN address</li>
+	<li>a 16 bit User address</li>
+	<li>a 64 bit Globally Unique ID</li>
+	<li>a free-form Node Identifier string</li>
 </ul></p>
 
 <p>The IEEE 802.15.4 Channel Number is set by configuring the XBee's CH parameter.  The value of the CH parameter can be any (hex) value from 0x0B to 0x1A.  This corresponds to decimal values 11 to 26.  All XBee modules in the network must be set to the same channel number.</p>
@@ -61,82 +72,87 @@ JMRI Hardware Guide: XBee Network
 
 <p>Note: You need to be aware of other devices using IEEE 802.15.4 radio networks that may be operating in the same area.  Digitrax Duplex throttles and Roco MultiMaus Pro radio throttles both use IEEE 802.15.4 as the underlying network layer protocol.  If these devices share a PAN and channel with your XBee modules, the devices are all a part of the same network, and the 16 bit user address must be unique.</p>
 
-<h2>Input/Output pin addressing</h2>
+<h3>Input/Output pin addressing</h3>
 <p>
 When creating inputs (Sensors) and outputs (either Lights or Turnouts) in JMRI, the XBee's IO pins can be individually addressed.  To access a single bit, you can use the form:
 <p>
 <code>ModuleAddress:Pin</code>
 </p>
-<p>Where ModuleAddress is one of the 16 bit node address, the 64 bit node address, or the Node Identifier string and Pin is an XBee IO pin number.
-</p>
+<p>Where ModuleAddress is one of the 16 bit node address, the 64 bit node address, or the Node Identifier string and Pin is an XBee IO pin number.</p>
 <p>
-Turnouts may be created using two bits. To specify a turnout created with two bits, you use the following format: 
-</p>
+Turnouts may be created using two bits. To specify a turnout created with two bits, you use the following format:</p>
 <p>
 <code>ModuleAddress:Pin1:Pin2</code>
 </p>
-<p>Where ModuleAddress is one of the 16 bit node address, the 64 bit node address, or the Node Identifier string and Pin1 and Pin2 are XBee IO pin numbers.  The Pin numbers do not need to be consecutive.
-</p>
+<p>Where ModuleAddress is one of the 16 bit node address, the 64 bit node address, or the Node Identifier string and Pin1 and Pin2 are XBee IO pin numbers.  The Pin numbers do not need to be consecutive.</p>
 
 <h3>Automatic Creation of Sensors</h3>
 <p>
 When an XBee input status message is received indicating one ( or more ) of the XBee IO Pins is used as an input, JMRI will automatically create a sensor for each input pin if it does not already exist.
 </p>
-<p>When sensors are created automatically, the Node Identifier will be used for the ModuleAddress if it is not blank.  If the Node Identifier is blank, the 16 bit MY address field will be used for the ModuleAddress unless the MY address field contains a broadcast address.  If neither the Node Identifier or the 16 bit MY Address are used for the ModuleAddress, the 64 bit GUID will be used for the ModuleAddress.
-</p>
+<p>When sensors are created automatically, the Node Identifier will be used for the ModuleAddress if it is not blank.  If the Node Identifier is blank, the 16 bit MY address field will be used for the ModuleAddress unless the MY address field contains a broadcast address.  If neither the Node Identifier or the 16 bit MY Address are used for the ModuleAddress, the 64 bit GUID will be used for the ModuleAddress.</p>
 
-<H2>Supported Hardware</H2>
-<p>The JMRI support for XBee devices supports serial interfaces to XBee Networks.  The connection to the computer may be made by any USB or RS232 XBee adapter.  Tested adapters include The Sparkfun Electronics <a href="https://www.sparkfun.com/products/8687">XBee Explorer USB</a>, the Sparkfun Electronics <a href="https://www.sparkfun.com/products/9111">XBee Explorer Serial</a>, and the CISECO <a href="http://shop.ciseco.co.uk/slice-of-pi-add-on-for-raspberry-pi/">Slice of Pi</a> (in conjunction with a Raspberry Pi).
-</p>
-
-<h3>Setup</h3>
+<h3>Software settings</h3>
 
 <ol>
-          <li> Connect your XBee adapter using the appropriate cable.
-          <li>USB-connected XBee adapters may need to have a driver installed. 
-          See the documentation provided by the manufacturer of your XBee Adapter.
-          <li> Make sure you have the latest version of JMRI, then go to the 
-          preferences panel of a JMRI-based program.  This opens automatically 
-          the first time a program is run, or you can select it from the "Edit"
-          menu
-          <li>Select "IEEE 802.15.4 Network" from the System Manufacturer 
-          selection box.
-          <li>Select "XBee Network" from the System Connection selection box.
-          <li>You can then select the proper serial port in the Serial port 
-          selection box under Settings.
-
-          Note that the USB XBee adapters will appear as a serial port.
-
-          <li> The "Connection Prefix" is used to help JMRI communicate 
-          separately with multiple "connections" to layout hardware. Each 
-          "connection" must have a unique identifier, which is specified as
-          the "Connection Prefix". By default, the first XBee connection is 
-          given a prefix of "Z", and additional XBee networks are given 
-          prefixes like "Z1", "Z2", ... Most users should be able to use the 
-          default "Connection Prefix" value provided by the JMRI tools. 
-
-          <li>When a JMRI tool is configured for more than one connection, 
-          each connection gets a menu item on the main JMRI tool window. To 
-          help users differentiate between their different connections, each 
-          connection has a "Connection Name", which is used as the name of 
-          the associated menu item on the main JMRI tool window. Users may 
-          change the "Connection Name" for any connection to suit their needs.
-
-          <li>The XBee adapter "Additional Connection Settings" provides 
-          access to the Baud rate for the connection.  Make sure the 
-          selected Baud rate matches the port speed setting of your XBee. 
-
-          <li>The "Configure XBee Nodes" button opens the 
-          <a href="XBeeNodeConfigurationTool.shtml">XBee Node Configuration tool</a>.  
-          If you save preferences after nodes are created, node address 
-          information will be stored with the preferences.
-
-          <li> Click "Save".  You'll be asked if it's OK for the program to
-          quit, click "Yes".</li>
-          <li> Restart the program. You should be up and running.
+	  <li>Connect your XBee adapter using the appropriate cable.
+	  <li>USB-connected XBee adapters may need to have a driver installed. 
+	  See the documentation provided by the manufacturer of your XBee Adapter.
+	  <li> Make sure you have the latest version of JMRI, then go to the 
+	  preferences panel of a JMRI-based program.  This opens automatically 
+	  the first time a program is run, or you can select it from the "Edit"
+	  menu
+	  <li>Select "IEEE 802.15.4 Network" from the System Manufacturer 
+	  selection box.
+	  <li>Select "XBee Network" from the System Connection selection box.
+	  <li>You can then select the proper serial port in the Serial port 
+	  selection box under Settings.<br>
+	  Note that USB XBee adapters will appear as a serial port.
+	
+	  <li> The "Connection Prefix" is used to help JMRI communicate 
+	  separately with multiple "connections" to layout hardware. Each 
+	  "connection" must have a unique identifier, which is specified as
+	  the "Connection Prefix". By default, the first XBee connection is 
+	  given a prefix of "Z", and additional XBee networks are given 
+	  prefixes like "Z1", "Z2", ... Most users should be able to use the 
+	  default "Connection Prefix" value provided by the JMRI tools. 
+	
+	  <li>When a JMRI tool is configured for more than one connection, 
+	  each connection gets a menu item on the main JMRI tool window. To 
+	  help users differentiate between their different connections, each 
+	  connection has a "Connection Name", which is used as the name of 
+	  the associated menu item on the main JMRI tool window. Users may 
+	  change the "Connection Name" for any connection to suit their needs.
+	
+	  <li>The XBee adapter "Additional Connection Settings" provides 
+	  access to the Baud rate for the connection.  Make sure the 
+	  selected Baud rate matches the port speed setting of your XBee. 
+	
+	  <li>The "Configure XBee Nodes" button opens the 
+	  <a href="XBeeNodeConfigurationTool.shtml">XBee Node Configuration tool</a>.  
+	  If you save Preferences after Nodes are created, node address 
+	  information will be stored with the JMRI Preferences.
+	
+	  <li> Click "Save".  You'll be asked if it's OK for the program to
+	  quit; click "Yes".</li>
+	  <li> Restart the program. You should be up and running.</li>
 </ol>
 
+<a name="tools"></a><h2>JMRI XBee Tools</h2>
+<h4><a href="XBeeNodeConfigurationTool.shtml">XBee Node Configuration</a></h4>
+<p>
+The XBee Node Configuration tool can be used to add XBee Nodes to a JMRI configuration. You can access the tool from the <strong>Xbee</strong> menu when an <a href="index.shtml">XBee connection</a> is active.
+The "Configure XBee Nodes" button at the bottom of the JMRI Preferences Connections tab also opens the 
+<a href="XBeeNodeConfigurationTool.shtml">XBee Node Configuration tool</a>. 
+If you save Preferences after Nodes are created, node address 
+information will be stored with the JMRI Preferences.
+
+<a name="documentation"></a><h2>Documentation</h2>
+<h3>Third Party info</h3>
+<p><a href="http://www.digi.com/xbee">Digi Intl. XBee</a> web site
+
 <!--#include virtual="/Footer" -->
+ </div><!-- closes #mainContent-->
+</div> <!-- closes #mBody-->
 </body>
 </html>
-

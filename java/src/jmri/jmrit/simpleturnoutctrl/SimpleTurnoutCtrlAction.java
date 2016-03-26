@@ -13,8 +13,6 @@ import java.awt.event.ActionEvent;
 import javax.swing.Icon;
 import jmri.util.swing.JmriAbstractAction;
 import jmri.util.swing.WindowInterface;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 
 public class SimpleTurnoutCtrlAction extends JmriAbstractAction {
 
@@ -56,8 +54,6 @@ public class SimpleTurnoutCtrlAction extends JmriAbstractAction {
     public jmri.util.swing.JmriPanel makePanel() {
         throw new IllegalArgumentException("Should not be invoked");
     }
-
-    static Logger log = LoggerFactory.getLogger(SimpleTurnoutCtrlAction.class.getName());
 }
 
 

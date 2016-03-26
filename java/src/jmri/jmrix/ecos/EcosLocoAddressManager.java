@@ -610,7 +610,7 @@ public class EcosLocoAddressManager extends jmri.managers.AbstractManager implem
                                 if ((1000 <= object) && (object < 2000)) {
                                     tmploco = provideByEcosObject(strde);
                                 }
-                                decodeLocoDetails(tmploco, line);
+                                decodeLocoDetails(tmploco, line, true);
                             }
                             locoToRoster.processQueue();
                             processLocoToRosterQueue = true;
@@ -619,21 +619,22 @@ public class EcosLocoAddressManager extends jmri.managers.AbstractManager implem
                 } else if (replyType.equals("get")) {
                     EcosLocoAddress tmploco = provideByEcosObject(Integer.toString(ecosObjectId));
                     for (String line : msgDetails) {
-                        decodeLocoDetails(tmploco, line);
+                        decodeLocoDetails(tmploco, line, false);
                     }
                 }
             }
         }
     }
 
-    void decodeLocoDetails(EcosLocoAddress tmploco, String line) {
+    void decodeLocoDetails(EcosLocoAddress tmploco, String line, boolean addToRoster) {
         if (tmploco == null) {
             return;
         }
         if (line.contains("cv")) {
             String cv = EcosReply.getContentDetails(line, "cv");
+            cv = cv.replaceAll("\\s","");  //remove all white spaces, as 4.1.0 version removed the space after the ,
             int cvnum = Integer.parseInt(cv.substring(0, cv.indexOf(",")));
-            int cvval = Integer.parseInt(cv.substring(cv.indexOf(", ") + 2, cv.length()));
+            int cvval = Integer.parseInt(cv.substring(cv.indexOf(",") + 1, cv.length()));
             tmploco.setCV(cvnum, cvval);
             if (cvnum == 8 && processLocoToRosterQueue) {
                 locoToRoster.processQueue();
@@ -666,7 +667,7 @@ public class EcosLocoAddressManager extends jmri.managers.AbstractManager implem
             tmploco.setDirection(newDirection);
         }
         register(tmploco);
-        if (p.getAddLocoToJMRI() != EcosPreferences.NO) {
+        if (p.getAddLocoToJMRI() != EcosPreferences.NO && addToRoster) {
             locoToRoster.addToQueue(tmploco);
         }
     }
@@ -865,5 +866,5 @@ public class EcosLocoAddressManager extends jmri.managers.AbstractManager implem
         return "Ecos Loco Addresses";
     }
 
-    static Logger log = LoggerFactory.getLogger(EcosLocoAddressManager.class.getName());
+    private final static Logger log = LoggerFactory.getLogger(EcosLocoAddressManager.class.getName());
 }

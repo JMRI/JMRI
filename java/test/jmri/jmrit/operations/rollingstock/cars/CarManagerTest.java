@@ -1,4 +1,3 @@
-// CarManagerTest.java
 package jmri.jmrit.operations.rollingstock.cars;
 
 import java.util.List;
@@ -20,7 +19,6 @@ import junit.framework.TestSuite;
  * Still to do: Everything
  *
  * @author	Bob Coleman Copyright (C) 2008, 2009
- * @version $Revision$
  */
 public class CarManagerTest extends OperationsTestCase {
         
@@ -80,20 +78,20 @@ public class CarManagerTest extends OperationsTestCase {
         CarManager manager = CarManager.instance();
         List<RollingStock> carList;
  
-        c1.setBuilt("2800");
-        c2.setBuilt("1212");
-        c3.setBuilt("100");
-        c4.setBuilt("10");
+        c1.setBuilt("06-66"); // this becomes 1966
+        c2.setBuilt("01-09"); // this becomes 1909
+        c3.setBuilt("100"); // this stays at 100
+        c4.setBuilt("10"); // this becomes 1910
         c5.setBuilt("1000");
         c6.setBuilt("1956");
  
        // now get cars by built
         carList = manager.getByBuiltList();
         Assert.assertEquals("Number of Cars by built", 6, carList.size());
-        Assert.assertEquals("1st car in list by built", c4, carList.get(0));
-        Assert.assertEquals("2nd car in list by built", c3, carList.get(1));
-        Assert.assertEquals("3rd car in list by built", c5, carList.get(2));
-        Assert.assertEquals("4th car in list by built", c2, carList.get(3));
+        Assert.assertEquals("1st car in list by built", c3, carList.get(0));
+        Assert.assertEquals("2nd car in list by built", c5, carList.get(1));
+        Assert.assertEquals("3rd car in list by built", c2, carList.get(2));
+        Assert.assertEquals("4th car in list by built", c4, carList.get(3));
         Assert.assertEquals("5th car in list by built", c6, carList.get(4));
         Assert.assertEquals("6th car in list by built", c1, carList.get(5));
     }

@@ -1,16 +1,14 @@
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
-<!-- $Id$ -->
 <html lang="en">
 <head>
- <TITLE>
-      JMRI: Configure Digitax Command Station
- </TITLE>
-    <META http-equiv=Content-Type content="text/html; charset=iso-8859-1">
-    <META content="Bob Jacobsen" name=Author>
-    <META name="keywords" content="JMRI help configure Digitrax command station">
+ <title>
+      JMRI: Configure Digitrax Command Station
+ </title>
+    <meta name="Author" content="Bob Jacobsen">
+    <meta name="keywords" content="JMRI help configure Digitrax command station">
 
 <!-- Style -->
-  <META http-equiv=Content-Type content="text/html; charset=iso-8859-1">
+  <meta http-equiv=Content-Type content="text/html; charset=iso-8859-1">
   <link rel="stylesheet" type="text/css" href="/css/default.css" media="screen">
   <link rel="stylesheet" type="text/css" href="/css/print.css" media="print">
   <link rel="icon" href="/images/jmri.ico" type="image/png">
@@ -23,26 +21,23 @@
   <div class="nomenu" id="mBody">
     <div id="mainContent">
 
-<H1>Configure Digitax Command Station</H1>
+<h1>Configure a Digitrax Command Station</h1>
 
 <p>
-This tool Configures the Digitax MASTER DCS OpSw's. You do not 
+This tool Configures the Digitrax MASTER DCS OpSw's. You do not 
 need to set any of the switches on the DCS to use this tool. 
 <p>
-To configure DBs and DCSs set as Boosters you need to follow Digitax instructions.<p>
-
-OpSw2 being set to Thrown allows this tool to access Slot 127 which contains the OpSw settings.
+OpSw2 being set to Thrown allows this tool to access Slot 127, which contains the OpSw settings.
 DB do not have OpSw and can not be set with this tool, DCS's that have OpSw2 set to Closed 
-are not prograned by this tool.
+are not programmed by this tool.
 <p>
-To configure DB and DCS's set as Boosters you need to follow Digitax instructions.
+To configure DB's and DCS's set as Boosters, you need to follow the original Digitrax instructions.
 
 <p> 
 This is the help/en/package/jmri/jmrix/loconet/cmdstnconfig/CmdStnConfigFrame.shtml
 
 <!--#include virtual="/Footer" -->
+  </div><!-- closes #mainContent-->
+ </div> <!-- closes #mBody-->
 </body>
 </html>
-
-
- 	  	 

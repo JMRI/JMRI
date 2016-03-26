@@ -2,19 +2,14 @@ package jmri.jmris.srcp;
 
 import java.io.File;
 import jmri.InstanceManager;
-import jmri.util.FileUtil;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
-
 import jmri.jmris.srcp.configurexml.JmriSRCPServerPreferences;
+import jmri.util.FileUtil;
 
 public class JmriSRCPServerManager {
 
     static private JmriSRCPServerManager instance = null;
     private JmriSRCPServerPreferences preferences;
     private JmriSRCPServer server;
-    static Logger log = LoggerFactory.getLogger(JmriSRCPServer.class.getName());
-
     private JmriSRCPServerManager() {
         if (InstanceManager.getDefault(JmriSRCPServerPreferences.class) == null) {
             InstanceManager.store(new JmriSRCPServerPreferences(FileUtil.getUserFilesPath() + "networkServices" + File.separator + "JmriSRCPServerPreferences.xml"), JmriSRCPServerPreferences.class); // NOI18N
@@ -22,7 +17,7 @@ public class JmriSRCPServerManager {
         preferences = InstanceManager.getDefault(JmriSRCPServerPreferences.class);
     }
 
-    public static JmriSRCPServerManager getInstance() {
+    synchronized public static JmriSRCPServerManager getInstance() {
         if (instance == null) {
             instance = new JmriSRCPServerManager();
         }

@@ -3,14 +3,13 @@ package jmri.jmrit.operations.setup;
 
 import apps.Apps;
 import java.awt.event.ActionEvent;
+import java.io.IOException;
 import javax.swing.AbstractAction;
 import javax.swing.JOptionPane;
 import jmri.jmrit.operations.ExceptionDisplayFrame;
 import jmri.jmrit.operations.OperationsManager;
 import jmri.jmrit.operations.OperationsXml;
 import jmri.jmrit.operations.UnexpectedExceptionContext;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 
 /**
  * Swing action to load the operation demo files.
@@ -64,15 +63,14 @@ public class ResetAction extends AbstractAction {
 
             Apps.handleRestart();
 
-        } catch (Exception ex) {
+        } catch (IOException ex) {
             UnexpectedExceptionContext context = new UnexpectedExceptionContext(ex,
                     "Deleting Operations files"); // NOI18N
             new ExceptionDisplayFrame(context);
         }
     }
 
-    static Logger log = LoggerFactory.getLogger(ResetAction.class
-            .getName());
+//    private final static Logger log = LoggerFactory.getLogger(ResetAction.class.getName());
 }
 
 /* @(#)ResetAction.java */

@@ -1,4 +1,3 @@
-// PackageTest.java
 package jmri.util.swing.mdi;
 
 import junit.framework.Test;
@@ -8,7 +7,6 @@ import junit.framework.TestSuite;
 /**
  *
  * @author	Bob Jacobsen Copyright 2003, 2010
- * @version $Revision$
  */
 public class PackageTest extends TestCase {
 
@@ -49,12 +47,7 @@ public class PackageTest extends TestCase {
         super.setUp();
         apps.tests.Log4JFixture.setUp();
         jmri.util.JUnitUtil.resetInstanceManager();
-        jmri.InstanceManager.setConfigureManager(new jmri.configurexml.ConfigXmlManager());
-        jmri.InstanceManager.setShutDownManager(
-                new jmri.managers.DefaultShutDownManager());
-        jmri.InstanceManager.store(
-                jmri.managers.DefaultUserMessagePreferences.getInstance(),
-                jmri.UserPreferencesManager.class);
+        jmri.util.JUnitUtil.initDefaultUserMessagePreferences();
     }
 
     protected void tearDown() {

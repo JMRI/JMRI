@@ -1,0 +1,110 @@
+<?xml version="1.0" encoding="utf-8"?>
+<?xml-stylesheet type="text/xsl" href="../XSLT/decoder.xsl"?>
+<!-- Copyright (C) JMRI 2001, 2005, 2007, 2-009, 2010 All rights reserved -->
+<!-- $Id: BLI_Blueline_Paragon2_Steam.xml 29062 2015-04-11 03:53:07Z jacobsen $ -->
+<!--                                                                        -->
+<!-- JMRI is free software; you can redistribute it and/or modify it under  -->
+<!-- the terms of version 2 of the GNU General Public License as published  -->
+<!-- by the Free Software Foundation. See the "COPYING" file for a copy     -->
+<!-- of this license.                                                       -->
+<!--                                                                        -->
+<!-- JMRI is distributed in the hope that it will be useful, but WITHOUT    -->
+<!-- ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or  -->
+<!-- FITNESS FOR A PARTICULAR PURPOSE.  See the GNU General Public License  -->
+<!-- for more details.                                                      -->
+<decoder-config xmlns:xi="http://www.w3.org/2001/XInclude" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="http://jmri.org/xml/schema/decoder.xsd">
+  <version author="Michael Mosher" version="1" lastUpdated="20151016"/>
+  <!-- Version 1 New file from 0.3 manual -->
+  <decoder>
+    <family name="Paragon 3" mfg="Broadway Limited Imports, LLC">
+      <model model="Rolling Thunder" >
+        <versionCV lowVersionID="0" highVersionID="31"/>
+      </model>
+    </family>
+    <programming direct="yes" paged="no" register="yes" ops="yes"/>
+    <variables>
+		<xi:include href="http://jmri.org/xml/decoders/nmra/shortAndLongAddress.xml"/>
+		<xi:include href="http://jmri.org/xml/decoders/nmra/mfgVersionId.xml"/>
+		<variable item="Packet Time-out Value" CV="11" default="2">
+			<decVal/>
+			<label>Packet Time-out Value</label>
+		</variable>
+		<variable CV="130" item="Sound Group 3 Option 1" default="2">
+			<decVal/>
+			<label>Receivers Volume Rate of Change</label>
+		</variable>
+		<variable CV="131" item="Sound Group 3 Option 2" default="128">
+			<decVal/>
+			<label>Receivers Maximum Volume</label>
+		</variable>
+		<variable CV="132" item="Sound Group 3 Option 3" default="0">
+			<decVal/>
+			<label>Receivers Minimum Volume</label>
+		</variable>
+		<variable CV="133" item="Sound Group 3 Option 4" default="4">
+			<decVal max="16"/>
+			<label>RSS Digital Filter Coefficient</label>
+		</variable>
+		<variable CV="135" item="Sound Group 3 Option 5" default="135">
+			<decVal/>
+			<label>Signal Strength Volume Increase</label>
+			<tooltip>This value must be greater than CV136</tooltip>
+		</variable>
+		<variable CV="136" item="Sound Group 3 Option 6" default="111">
+			<decVal/>
+			<label>Signal Strength Volume Decrease</label>
+			<tooltip>This value must be less than CV135</tooltip>
+		</variable>
+		<variable CV="140" item="Sound Group 3 Option 7" default="80">
+			<decVal/>
+			<label>Signal Search Dwell Time</label>
+		</variable>
+		<variable CV="141" item="Sound Group 3 Option 8" default="100">
+			<decVal/>
+			<label>Lock Signal Strength</label>
+		</variable>
+		<variable CV="142" item="Sound Group 4 Option 1" default="1">
+			<decVal max="29"/>
+			<label>Start Scan Channel</label>
+			<tooltip>This value must be less than or equal to CV143</tooltip>
+		</variable>
+		<variable CV="143" item="Sound Group 4 Option 2" default="1">
+			<decVal max="29"/>
+			<label>End Scan Channel</label>
+			<tooltip>This value must be greater than or equal to CV142</tooltip>
+		</variable>
+		<variable CV="213" default="1" mask="VXXXXXXX" item="Sound Group 1 Option 1">
+			<enumVal>
+				<enumChoice>
+					<choice>868mhz</choice>
+				</enumChoice>
+				<enumChoice>
+					<choice>915mhz</choice>
+				</enumChoice>
+			</enumVal>
+			<label>Frequency</label>
+		</variable>
+		<variable CV="213" default="0" mask="XXVVXXXX" item="Sound Group 1 Option 2">
+			<enumVal>
+				<enumChoice>
+					<choice>-20db</choice>
+				</enumChoice>
+				<enumChoice>
+					<choice>-14db</choice>
+				</enumChoice>
+				<enumChoice>
+					<choice>-6db</choice>
+				</enumChoice>
+				<enumChoice>
+					<choice>0db</choice>
+				</enumChoice>
+			</enumVal>
+		<label>Sensitivity.</label>
+		</variable>
+		
+    </variables>
+    <resets>
+      <factReset label="Reset All CVs" CV="8" default="8"/>
+    </resets>
+  </decoder>
+</decoder-config>

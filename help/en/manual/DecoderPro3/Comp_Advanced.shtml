@@ -1,8 +1,6 @@
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
 <html lang="en">
 <head>
-<!-- Copyright ($Author$) 2009, 2010 -->
-<!-- $Id$ -->
 <title>Comprehensive Programmer - Advanced Features Pane</title>
 
 <!-- Style -->
@@ -20,11 +18,11 @@
 <!--#include virtual="Sidebar" -->
 <div id="mainContent">
 
-<a NAME="Top"></a>
+<a name="Top"></a>
 <h1>DecoderPro&reg; Comprehensive Programmer</h1>
-<h1>Advanced Features Pane</h1>
+<h2>Advanced Features Pane</h2>
 
-<div align=right>
+<div align="right">
 <p><a href="Comp_Consist.shtml">Previous | </a>
   <a href="Comp_SoundFX.shtml">Next </a>
 <p><a href="index.shtml#Advanced Programmer">Back to Index</a>
@@ -47,12 +45,14 @@ Loconet.
 <p><img src="images/Comp_08b_Advanced.png" width="1000" height="348" alt="advanced pane">
 <hr>
 
-<div align=right>
+<div align="right">
 <p><a href="Comp_SoundFX.shtml"></a>
   <a href="Comp_Consist.shtml">Previous | </a> <a href="Comp_SoundFX.shtml">Next </a>
 <p><a href="index.shtml#Advanced Programmer">Back to Index</a>
 </div>
 
 <!--#include virtual="/Footer" -->
-</body>
+  </div><!-- closes #mainContent-->
+ </div> <!-- closes #mBody-->
+ </body>
 </html>

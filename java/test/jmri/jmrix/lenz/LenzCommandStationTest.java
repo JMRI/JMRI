@@ -4,8 +4,6 @@ import junit.framework.Assert;
 import junit.framework.Test;
 import junit.framework.TestCase;
 import junit.framework.TestSuite;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 
 /**
  * LenzCommandStationTest.java
@@ -13,7 +11,6 @@ import org.slf4j.LoggerFactory;
  * Description:	tests for the jmri.jmrix.lenz.LenzCommandStation class
  *
  * @author	Paul Bender
- * @version $Revision$
  */
 public class LenzCommandStationTest extends TestCase {
 
@@ -121,7 +118,5 @@ public class LenzCommandStationTest extends TestCase {
     protected void tearDown() {
         apps.tests.Log4JFixture.tearDown();
     }
-
-    static Logger log = LoggerFactory.getLogger(LenzCommandStationTest.class.getName());
 
 }

@@ -1,13 +1,10 @@
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
 <html lang="en">
 <head>
-<!-- Copyright ($Author$) 2009 -->
-<!-- $Id$ -->
-<title>JMRI: Signal Groups Table Help</title>
+<title>JMRI: Signal Group Table Help</title>
 
-<meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
 <meta name="Author" content="Bob Jacobsen, Egbert Broerse">
-<meta name="Date.Modified" content="20150125"/>
+<meta name="Date.Modified" content="20151230"/>
 <meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1">
 <meta name="keywords" content="model railroad JMRI decoderpro panelpro signal">
 <!--#include virtual="/Style" -->
@@ -19,13 +16,13 @@
     <div id="mainContent">
 
 <h1> 
-The Signal Groups Table
+The Signal Group Table
 </h1>
-		<p>The Signal Groups Table displays a list of your Signal Groups.</p>
+		<p>The Signal Group Table displays a list of your Signal Groups.</p>
 <a href="SignalGroupsTable.png">
    <img src="SignalGroupsTable.png" align="right" width="386" height="165">
 </a>
-		<p>There are six columns in the Signal Groups Table:</p>
+		<p>There are six columns in the Signal Group Table:</p>
 			<ol>
 				<li>Each line starts with the System Name and User Name of each Signal Group</li>
 				<li>You may add a <b>Comment</b> by double clicking on that field</li>
@@ -35,12 +32,12 @@ The Signal Groups Table
 		</ol>
 	
 		<a name="add"><h3>Creating a Signal Group</h3></a>
-<p>To define a new Signal Group, click on the <a href="SignalGroupAddEdit.shtml">Add...</a> button at the bottom of the Signal Groups Table. This will prompt you for a Signal Group name and whatever further information is needed.
-<p>You can delete a Signal Group from the Signal Groups Table by clicking one of the <b>Delete</b> buttons. Save
+<p>To define a new Signal Group, click on the <a href="SignalGroupAddEdit.shtml">Add...</a> button at the bottom of the Signal Group Table. This will prompt you for a Signal Group name and whatever further information is needed.
+<p>You can delete a Signal Group from the Signal Group Table by clicking one of the <b>Delete</b> buttons. Save
 a copy of your JMRI Configuration file as a backup first!
 
 <a name="edit"><h3>Editing an existing Signal Group</h3>
-	<p> Click on one of the <b>Edit</b> buttons at the right of the Signal Groups Table to open the <a href="SignalGroupAddEdit.shtml">Edit Signal Group</a> window for the corresponding Signal Group. 
+	<p> Click on one of the <b>Edit</b> buttons at the right of the Signal Group Table to open the <a href="SignalGroupAddEdit.shtml">Edit Signal Group</a> window for the corresponding Signal Group. 
 
 		<a href="SignalGroup.png">
    <img src="SignalGroup.png" align="right" height="274" width="306">
@@ -110,5 +107,8 @@ a copy of your JMRI Configuration file as a backup first!
 	<p>Back to the <a href="../../../../html/tools/signaling/SignalGroups.shtml">Signal Groups help page</a>.
 
 <!--#include virtual="/Footer" -->
+
+      </div><!-- closes #mainContent-->
+    </div> <!-- closes #mBody-->
 </body>
 </html>

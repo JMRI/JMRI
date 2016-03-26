@@ -1,13 +1,10 @@
 package jmri.jmrix.loconet.hexfile.configurexml;
 
 import java.awt.GraphicsEnvironment;
-import jmri.InstanceManager;
 import jmri.jmrix.configurexml.AbstractSerialConnectionConfigXml;
 import jmri.jmrix.loconet.hexfile.ConnectionConfig;
 import jmri.jmrix.loconet.hexfile.LnHexFilePort;
 import org.jdom2.Element;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 
 /**
  * Handle XML persistance of layout connections by persistening the HexFIle
@@ -58,13 +55,8 @@ public class ConnectionConfigXml extends AbstractSerialConnectionConfigXml {
         return e;
     }
 
-    /**
-     * Update instance data from XML file
-     *
-     * @param e Top level Element to unpack.
-     * @return true if successful
-     */
-    public boolean load(Element e) {
+    @Override
+    public boolean load(Element shared, Element perNode) {
         jmri.jmrix.loconet.hexfile.HexFileFrame f = null;
         jmri.jmrix.loconet.hexfile.HexFileServer hfs = null;
 
@@ -88,41 +80,41 @@ public class ConnectionConfigXml extends AbstractSerialConnectionConfigXml {
             hfs.setAdapter((LnHexFilePort) adapter);
         }
 
-        if (e.getAttribute("option1") != null) {
-            String option1Setting = e.getAttribute("option1").getValue();
+        if (shared.getAttribute("option1") != null) {
+            String option1Setting = shared.getAttribute("option1").getValue();
             adapter.configureOption1(option1Setting);
         }
-        if (e.getAttribute("option2") != null) {
-            String option2Setting = e.getAttribute("option2").getValue();
+        if (shared.getAttribute("option2") != null) {
+            String option2Setting = shared.getAttribute("option2").getValue();
             adapter.configureOption2(option2Setting);
         }
-        if (e.getAttribute("option3") != null) {
-            String option3Setting = e.getAttribute("option3").getValue();
+        if (shared.getAttribute("option3") != null) {
+            String option3Setting = shared.getAttribute("option3").getValue();
             adapter.configureOption3(option3Setting);
         }
-        if (e.getAttribute("option4") != null) {
-            String option4Setting = e.getAttribute("option4").getValue();
+        if (shared.getAttribute("option4") != null) {
+            String option4Setting = shared.getAttribute("option4").getValue();
             adapter.configureOption4(option4Setting);
         }
-        loadOptions(e.getChild("options"), adapter);
+        loadOptions(shared.getChild("options"), perNode.getChild("options"), adapter);
         String manufacturer;
         try {
-            manufacturer = e.getAttribute("manufacturer").getValue();
+            manufacturer = shared.getAttribute("manufacturer").getValue();
             adapter.setManufacturer(manufacturer);
         } catch (NullPointerException ex) { //Considered normal if not present
 
         }
         if (adapter.getSystemConnectionMemo() != null) {
-            if (e.getAttribute("userName") != null) {
-                adapter.getSystemConnectionMemo().setUserName(e.getAttribute("userName").getValue());
+            if (shared.getAttribute("userName") != null) {
+                adapter.getSystemConnectionMemo().setUserName(shared.getAttribute("userName").getValue());
             }
 
-            if (e.getAttribute("systemPrefix") != null) {
-                adapter.getSystemConnectionMemo().setSystemPrefix(e.getAttribute("systemPrefix").getValue());
+            if (shared.getAttribute("systemPrefix") != null) {
+                adapter.getSystemConnectionMemo().setSystemPrefix(shared.getAttribute("systemPrefix").getValue());
             }
         }
-        if (e.getAttribute("disabled") != null) {
-            String yesno = e.getAttribute("disabled").getValue();
+        if (shared.getAttribute("disabled") != null) {
+            String yesno = shared.getAttribute("disabled").getValue();
             if ((yesno != null) && (!yesno.equals(""))) {
                 if (yesno.equals("no")) {
                     adapter.setDisabled(false);
@@ -156,11 +148,9 @@ public class ConnectionConfigXml extends AbstractSerialConnectionConfigXml {
         adapter = new LnHexFilePort();
     }
 
+    @Override
     protected void register() {
-        InstanceManager.configureManagerInstance().registerPref(new ConnectionConfig(adapter));
+        this.register(new ConnectionConfig(adapter));
     }
-
-    // initialize logging
-    static Logger log = LoggerFactory.getLogger(ConnectionConfigXml.class.getName());
 
 }

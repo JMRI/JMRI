@@ -23,12 +23,13 @@ public class EcosLocoAddressManagerXml extends jmri.managers.configurexml.Abstra
         log.error("Invalid method called");
     }
 
-    public boolean load(Element locoaddress) {
+    @Override
+    public boolean load(Element shared, Element perNode) {
         return true;
     }
 
     public Element store(Object o) {
         return null;
     }
-    static Logger log = LoggerFactory.getLogger(EcosLocoAddressManagerXml.class.getName());
+    private final static Logger log = LoggerFactory.getLogger(EcosLocoAddressManagerXml.class.getName());
 }

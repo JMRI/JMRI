@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!-- Ant build.xml file for JMRI development                                -->
-<!-- Bob Jacobsen, Copyright 2002-2014                                      -->
+<!-- Bob Jacobsen, Copyright 2002-2016                                      -->
 
 <!-- This file is part of JMRI.                                             -->
 <!--                                                                        -->
@@ -24,25 +24,42 @@
     Provides build services for JMRI libraries and applications
     </description>
 
-    <property name="jmri.copyright.year" value="1997-2015"/>
+    <property name="jmri.copyright.year" value="1997-2016"/>
 
     <property environment="env"/>
 
-    <!-- allow for persistent local values, shouldn't be an error if this doesn't exists      -->
-    <!-- this file should NEVER be checked-in to Git, it is in the  .gitignore file           -->
-    <!-- this file should NEVER be checked-in to SVN, it is in the svn:ignore properties list -->
+    <!-- local.properties file      (not an error if doesn't exist)                      -->
+    <!--                                                                                 -->
+    <!-- Things you might want to set:                                                   -->
+    <!--    # Your SourceForge ID (used for JavaDocs, distribution) if different         -->
+    <!--    sourceforge.userid=                                                          -->               
+    <!--    # The directory where Findbugs is installed                                  -->
+    <!--    findbugs.home=                                                               -->
+    <!--    # You can specify a DecoderPro/PanelPro config file at runtime               -->
+    <!--    # with e.g. "ant -Dantargline=DecoderProFile.xml decoderpro"                 -->
+    <!--    antargline=DecoderProFile.xml                                                -->
+    <!--    # If building releases, define directory where nsis is found                 -->
+    <!--    # Make sure the trailing / is present,                                       -->
+    <!--    # since the usage is ${nsis.home}makensis,                                   -->
+    <!--    # Ant will do a $PATH search if nsis.home is not set.                        -->
+    <!--    nsis.home=/opt/nsis/nsis-2.46/                                               -->
+    <!--    # or                                                                         -->
+    <!--    nsis.home=C:/Program Files/NSIS/                                             -->
+    <!--                                                                                 -->
+    <!-- This file should NEVER be checked-in to Git, it is in the .gitignore file       -->
+    <!--                                                                                 -->
     <property file="local.properties"/>
 
-    <!-- set any propertise not overridden by local.properties -->
+
+    <!-- set any properties not overridden by local.properties -->
     <property file="${basedir}/release.properties"/>
 
     <!-- The Jenkins official release builds force: -->
     <!--    release.official=true                   -->
-    <!--    release.is_branched=true                -->
     <!--    nsis.home=/opt/nsis/nsis-2.46/          -->
     <!-- in their "invoke ant" step                 -->
     <!-- The Packages build (dev downloads) forces: -->
-    <!--    release.official=true                   -->
+    <!--    release.official=false                  -->
     <!--    nsis.home=/opt/nsis/nsis-2.46/          -->
     <!-- in its "invoke ant" step                   -->
     
@@ -72,9 +89,6 @@
       <isset property="RELEASED"/>
     </condition>
 
-    <!-- release.is_branched defaults to false unless release.properties file already set -->
-    <property name="release.is_branched" value="false"/>
-
     <!-- should compiler warn of use of deprecated APIs? (on/off) -->
     <property name="deprecation" value="off"/> <!-- off at start of 3.11 series, as we work through changes -->
 
@@ -87,30 +101,6 @@
         <not><isset property="nsis.home"/></not>
     </condition>
 
-    <!-- options you might want to change to match your environment -->
-    <!-- but set them in the local.properties file, instead of here -->
-    <!-- that you don't accidentally commit them                    -->
-
-    <!--
-    # Set this to the directory where Findbugs is installed
-    findbugs.home=
-
-    # Set this to the directory where nsis is found (if it's not in $PATH).
-    # Make sure the trailing / is present, since the usage is ${nsis.home}makensis,
-    # which will do a $PATH search if nsis.home is not set.
-    nsis.home=/opt/nsis/nsis-2.46/
-    # or
-    nsis.home=C:/Program Files/NSIS/
-
-    # You can specify a DecoderPro/PanelPro config file at runtime
-    # with e.g. "ant -Dantargline=DecoderProFile.xml decoderpro"
-    antargline=DecoderProFile.xml
-
-    -->
-
-    <!-- end of local.properties list -->
-
-
     <!-- set global properties for this build -->
     <property name="dist"         value="${basedir}/dist"/>
     <property name="jartarget"    value="${basedir}"/>
@@ -118,13 +108,13 @@
     <property name="resourcedir"  value="${basedir}/resources"/>
     <property name="scriptdir"    value="${basedir}/scripts"/>
     <property name="javadir"      value="${basedir}/java"/>
-    <property name="svnantdir"    value="${libdir}/svnant"/>
     <property name="doctarget"    value="${javadir}/doc"/>
     <property name="source"       value="${javadir}/src"/>
     <property name="target"       value="${javadir}/classes"/>
     <property name="test"         value="${javadir}/test"/>
     <property name="templatedir"  value="${javadir}/template"/>
     <property name="tmptarget"    value="${javadir}/tmp"/>
+    <property name="lineendtmp"   value="${tmptarget}/lineend"/>
     <property name="tempdir"      value="${basedir}/tempdir"/>    <!-- actual tmp files -->
     <property name="java.debugging" value="yes" />
 
@@ -134,7 +124,7 @@
     <!-- this is the list of jar files and class path elements that are not
          a part of the JMRI codebase itself but which are needed at runtime
          for the various apps.  These will all be copied into the release
-         packages
+         packages. Does not include JMRI itself.
     -->
     <path id="runtime.class.path">
         <pathelement location="${libdir}/RXTXcomm.jar"/>
@@ -158,27 +148,26 @@
         <pathelement location="${libdir}/mailapi.jar"/>
         <pathelement location="${libdir}/smtp.jar"/>
         <pathelement location="${libdir}/xAPlib.jar"/>
-        <pathelement location="${libdir}/junit.jar"/>
-        <pathelement location="${libdir}/jfcunit.jar"/>
         <pathelement location="${libdir}/WinRegistry-4.4.jar"/>
         <pathelement location="${libdir}/commons-lang3-3.2.1.jar"/>
         <pathelement location="${libdir}/jakarta-regexp-1.5.jar"/>
         <pathelement location="${libdir}/jackson-core-2.0.6.jar"/>
         <pathelement location="${libdir}/jackson-annotations-2.0.6.jar"/>
         <pathelement location="${libdir}/jackson-databind-2.0.6.jar"/>
-        <pathelement location="${libdir}/jetty-http-9.2.7.v20150116.jar"/>
-        <pathelement location="${libdir}/jetty-security-9.2.7.v20150116.jar"/>
-        <pathelement location="${libdir}/jetty-server-9.2.7.v20150116.jar"/>
-        <pathelement location="${libdir}/jetty-servlet-9.2.7.v20150116.jar"/>
-        <pathelement location="${libdir}/jetty-util-9.2.7.v20150116.jar"/>
-        <pathelement location="${libdir}/jetty-io-9.2.7.v20150116.jar"/>
-        <pathelement location="${libdir}/websocket-api-9.2.7.v20150116.jar"/>
-        <pathelement location="${libdir}/websocket-client-9.2.7.v20150116.jar"/>
-        <pathelement location="${libdir}/websocket-common-9.2.7.v20150116.jar"/>
-        <pathelement location="${libdir}/websocket-server-9.2.7.v20150116.jar"/>
-        <pathelement location="${libdir}/websocket-servlet-9.2.7.v20150116.jar"/>
-        <pathelement location="${libdir}/slf4j-api-1.7.6.jar"/>
-        <pathelement location="${libdir}/slf4j-log4j12-1.7.6.jar"/>
+        <pathelement location="${libdir}/jetty-http-9.3.6.v20151106.jar"/>
+        <pathelement location="${libdir}/jetty-security-9.3.6.v20151106.jar"/>
+        <pathelement location="${libdir}/jetty-server-9.3.6.v20151106.jar"/>
+        <pathelement location="${libdir}/jetty-servlet-9.3.6.v20151106.jar"/>
+        <pathelement location="${libdir}/jetty-util-9.3.6.v20151106.jar"/>
+        <pathelement location="${libdir}/jetty-io-9.3.6.v20151106.jar"/>
+        <pathelement location="${libdir}/websocket-api-9.3.6.v20151106.jar"/>
+        <pathelement location="${libdir}/websocket-client-9.3.6.v20151106.jar"/>
+        <pathelement location="${libdir}/websocket-common-9.3.6.v20151106.jar"/>
+        <pathelement location="${libdir}/websocket-server-9.3.6.v20151106.jar"/>
+        <pathelement location="${libdir}/websocket-servlet-9.3.6.v20151106.jar"/>
+        <pathelement location="${libdir}/slf4j-api-1.7.13.jar"/>
+        <pathelement location="${libdir}/slf4j-log4j12-1.7.13.jar"/>
+        <pathelement location="${libdir}/jul-to-slf4j-1.7.13.jar"/>
         <pathelement location="${libdir}/xbee-api-0.9.jar"/>
         <pathelement location="${libdir}/pi4j-core.jar"/>
         <pathelement location="${libdir}/pi4j-device.jar"/>
@@ -188,8 +177,8 @@
         <pathelement location="${libdir}/bluecove-2.1.1-SNAPSHOT.jar"/>
         <pathelement location="${libdir}/bluecove-bluez-2.1.1-SNAPSHOT.jar"/>
         <pathelement location="${libdir}/bluecove-gpl-2.1.1-SNAPSHOT.jar"/>
+        <pathelement location="${libdir}/jhidrawplugin.jar"/>
     </path>
-
     <pathconvert property="runtime.class.jars" refid="runtime.class.path"/>
    
     <!-- jars needed for i18n testing only -->
@@ -198,36 +187,33 @@
         <pathelement location="${libdir}/antlr-3.4-complete.jar"/>
         <pathelement location="${libdir}/i18nchecker.jar"/>
     </path>
-
     <pathconvert property="i18n.class.jars" refid="i18n.class.path"/>
 
-    <!-- jars that are needed at build time -->
+    <!-- jars that are needed at build and/or test time -->
     <path id="compile.class.path">
         <pathelement path="${runtime.class.jars}"/>
         <pathelement location="${libdir}/AppleJavaExtensions.jar"/> <!-- build with Mac OS X-specific support -->
         <pathelement location="${libdir}/annotations.jar"/> <!-- findbugs build-time only-->
         <pathelement location="${libdir}/jsr305.jar"/>      <!-- findbugs build-time only-->
+        <pathelement location="${libdir}/junit.jar"/>
+        <pathelement location="${libdir}/jfcunit.jar"/>
         <pathelement path="${i18n.class.jars}"/>            <!-- i18n test -->
     </path>
 
+    <!-- path to run regular executables -->
     <path id="project.class.path">
         <pathelement location="${jartarget}"/>
         <path        refid="runtime.class.path"/>
         <pathelement location="${target}/"/>  <!-- last to check for name collisions -->
     </path>
 
+    <!-- path to run tests -->
     <path id="test.class.path">
-        <path   refid="i18n.class.path"/>
-        <path   refid="project.class.path"/>
+        <pathelement location="${jartarget}"/>
+        <path   refid="compile.class.path"/>
+        <pathelement location="${target}/"/>  <!-- last to check for name collisions -->
     </path>
     
-    <path id="path.svnant">
-      <pathelement location="${svnantdir}/svnant.jar"/>
-      <pathelement location="${svnantdir}/svnClientAdapter.jar"/>
-      <pathelement location="${svnantdir}/svnjavahl.jar"/>
-      <pathelement location="${svnantdir}/svnkit.jar"/>
-    </path>
-
     <macrodef name="quiet">
         <element name="body" implicit="yes"/>
         <sequential>
@@ -253,45 +239,15 @@
         </sequential>
     </macrodef>
 
-    <typedef
-        resource="org/tigris/subversion/svnant/svnantlib.xml"
-        classpathref="path.svnant"/>
-    
-    <!-- to use default command link authentification -->
-    <svnSetting
-        id="svn.settings"
-        javahl="false"
-        svnkit="false"/>
+    <!-- end of definitions -->
 
-    <!-- to use authentification credentials from local.properties file -->
-<!-- 
-    <svnSetting
-        id="svn.settings"
-        username="${sourceforge.userid}"
-        password="${sourceforge.password}"
-        javahl="true"
-        svnkit="true"/>
- -->
+    <!-- target definitions start here -->
 
-    <target name="check-ant-requirements"
-            description="check build system requirements">
-      <antversion property="ant-version-ok" atleast="1.8.0"/>
-      <antversion property="ant-version-actual"/>
-      <fail unless="ant-version-ok" message="Minimum ant version required is 1.8.0, this is ${ant-version-actual}"/>
-    </target>
+    <!-- ============================================================================= -->
+    <!-- Utility targets                                                               -->
+    <!-- ============================================================================= -->
 
-    <target name="i18n-consistency-check"  description="Verification of localized strings in source code" depends="jar">
-        <property name="i18n.modulefilter" value=""/>
-        <property name="i18n.logger" value="log" /> <!-- name of logging token to match with logging methods -->
-        <property name="i18n.loggerMethods" value="info,debug,error,warn" /> <!-- logging methods that should not be checked for i18n consistency -->
-        <echo>I18N Consistency Check - use modulefilter property if you want to see errors only from one module</echo>
-        <taskdef classname="org.i18nchecker.I18nChecker" name="i18nConsistencyCheck" classpath="${ant.home}/lib/ant.jar:lib/antlr-3.4-complete.jar:lib/i18nchecker.jar"/>
-        <!-- check includes all .properties files including ones we use for non-translatable files -->
-        <i18nConsistencyCheck srcdir="${basedir}" topdirs="." allProperties="true" logger="${i18n.logger}" loggerMethods="${i18n.loggerMethods}" modulefilter="${i18n.modulefilter}"/>
-    </target>
-    
-    <target name="init"
-            description="create needed directories">
+    <target name="init"> <!-- create timestamp and needed directories, not for user use -->
         <!-- Create the time stamp properties -->
         <tstamp>
             <format property="TODAY" pattern="yyyyMMdd" timezone="GMT"/>
@@ -316,15 +272,18 @@
             <filter token="release.build_user"     value="${release.build_user}"/>
             <filter token="release.official"       value="${release.official}"/>
             <filter token="release.build_date"     value="${release.build_date}"/>
-            <filter token="release.is_branched"    value="${release.is_branched}"/>
             <filter token="jmri.copyright.year"    value="${jmri.copyright.year}"/>
         </filterset>
     </target>
 
+    <target name="check-ant-requirements"> <!-- check build system requirements, not for user use -->
+      <antversion property="ant-version-ok" atleast="1.8.0"/>
+      <antversion property="ant-version-actual"/>
+      <fail unless="ant-version-ok" message="Minimum ant version required is 1.8.0, this is ${ant-version-actual}"/>
+    </target>
 
-    <target name="get-version-string"
-            description="Gets the current version string"
-            depends="compile">
+
+    <target name="get-version-string" depends="compile"><!-- compute the version string, not for user use -->
         <java classname="jmri.Version"
               dir="${basedir}"
               fork="yes"
@@ -346,7 +305,7 @@
     </target>
 
     <target name="realclean"
-            description="remove more files from a build"
+            description="remove all non-respository files from a build"
             depends="clean">
         <delete quiet="true">
             <fileset file="findbugs.xml"/>
@@ -369,18 +328,23 @@
             <fileset file="${javadir}/manifest"/>
             <fileset dir="${tempdir}"/>
         </delete>
+        <ant dir="xml/XSLT" target="clean" inheritAll="false"  />
     </target>
 
+    <!-- end of utility targets -->
 
-    <target name="copyfiles"
-            description="copy resource files"
-            depends="init">
+    <!-- ============================================================================= -->
+    <!-- Program build targets                                                         -->
+    <!-- ============================================================================= -->
+
+    <target name="copyfiles" depends="init"><!-- copy resource files, not for user use -->
         <!-- Copy top level resources to include in jar file -->
         <copy todir="${target}/resources/">
             <fileset dir="${resourcedir}" includes="*.gif"/>
         </copy>
         <copy todir="${target}">
             <fileset dir="${source}" includes="**/*.properties"/>
+            <fileset dir="${source}" includes="META-INF/**"/>
         </copy>
     </target>
 
@@ -390,9 +354,7 @@
     <!-- file from java/templates/jmri and copy it, expanded, to -->
     <!-- java/classes where the jmri.Version class can reference -->
     <!-- the values at run time -->
-    <target name="update-template-code"
-            description="create the substituted template java code"
-            depends="init">
+    <target name="update-template-code" depends="init"><!-- create the substituted template java code, not for user use -->
         <copy todir="${genjavasrcdir}" overwrite="true" >
             <filterset refid="release-information"/>
             <fileset dir="${templatedir}"/>
@@ -419,6 +381,11 @@
             target="${source}/jmri/jmrix/srcp/SRCPClientParser.jjt"
             outputdirectory="${genjavasrcdir}/jmri/jmrix/srcp/parser"
             javacchome="${libdir}"/>
+        <mkdir dir="${genjavasrcdir}/jmri/jmris/simpleserver/parser"/>
+        <jjtree
+            target="${source}/jmri/jmris/simpleserver/JmriServerParser.jjt"
+            outputdirectory="${genjavasrcdir}/jmri/jmris/simpleserver/parser"
+            javacchome="${libdir}"/>
         </quiet>
     </target>
 
@@ -430,6 +397,14 @@
         <jjdoc target="${genjavasrcdir}/jmri/jmris/srcp/parser/SRCPParser.jj"
                javacchome="${libdir}"
                outputfile="${doctarget}/jmri/jmris/srcp/SRCPParser.html"/>
+        <mkdir dir="${doctarget}/jmri/jmrix/srcp/"/>
+        <jjdoc target="${genjavasrcdir}/jmri/jmrix/srcp/parser/SRCPClientParser.jj"
+               javacchome="${libdir}"
+               outputfile="${doctarget}/jmri/jmrix/srcp/SRCPClientParser.html"/>
+        <mkdir dir="${doctarget}/jmri/jmris/simpleserver/"/>
+        <jjdoc target="${genjavasrcdir}/jmri/jmris/simpleserver/parser/JmriServerParser.jj"
+               javacchome="${libdir}"
+               outputfile="${doctarget}/jmri/jmris/simpleserver/JmriServerParser.html"/>
     </target>
 
 
@@ -446,6 +421,10 @@
             target="${genjavasrcdir}/jmri/jmrix/srcp/parser/SRCPClientParser.jj"
             outputdirectory="${genjavasrcdir}/jmri/jmrix/srcp/parser"
             javacchome="${libdir}"/>
+        <javacc
+            target="${genjavasrcdir}/jmri/jmris/simpleserver/parser/JmriServerParser.jj"
+            outputdirectory="${genjavasrcdir}/jmri/jmris/simpleserver/parser"
+            javacchome="${libdir}"/>
         </quiet>
     </target>
 
@@ -453,8 +432,7 @@
     <!-- this one target handles the compiler processing for all of the JDK based
          compilation - normal code, generated code and tests -->
 
-    <target name="-java-compile-internal"
-            description="internal target for compiling Java source from a specified directory">
+    <target name="-java-compile-internal"> <!-- Internal target for compiling Java source from a specified directory -->
         <javac compiler="modern"
                srcdir="${java.source.directory}"
                destdir="${target}"
@@ -471,8 +449,7 @@
 
 
     <target name="compile-generated-source"
-            description="compile all generated Java source"
-            depends="javacc, update-template-code">
+            depends="javacc, update-template-code"><!-- compile all generated Java source; internal target -->
         <!-- Compile the java code from ${genjavasrcdir} into ${target} -->
         <antcall target="-java-compile-internal">
             <param name="java.source.directory" value="${genjavasrcdir}"/>
@@ -525,8 +502,7 @@
     <!-- By default, we set them explicitly, so that new ones will show up -->
     <!-- See http://help.eclipse.org/galileo/index.jsp?topic=/org.eclipse.jdt.doc.isv/guide/jdt_api_compile.htm -->
     <!--                                        -->
-    <target name="-ecj-compile-internal"
-            description="internal target for compiling Java source from a specified directory using ECJ">
+    <target name="-ecj-compile-internal"> <!-- internal target for compiling Java source from a specified directory using ECJ -->
         <!-- Compile the java code from ${source} into ${target} -->
         <property name="build.compiler" value="org.eclipse.jdt.core.JDTCompilerAdapter"/>
         <javac srcdir="${java.source.directory}"
@@ -570,6 +546,11 @@
         </rmic>
     </target>
 
+    <!-- end of program build targets -->
+
+    <!-- ============================================================================= -->
+    <!-- Application startup targets                                                   -->
+    <!-- ============================================================================= -->
 
 
     <target name="runtime-library-selection">
@@ -640,18 +621,22 @@
             </and>
         </condition>
      
+        <condition property="baseArch" value="armv6l">
+            <and>
+                <os family="unix" />
+                <equals arg1="${os.arch}" arg2='arm' />
+            </and>
+        </condition>
+     
         <property name="arch.lib.path" value="${libdir}/${baseOS}/${baseArch}:${libdir}/${baseOS}"/>
         <echo message="arch.lib.path ${arch.lib.path}"/>
     </target>
 
 
-
-
-
     <!-- the two targets in the depends are correct: only one will run, depending upon ${debugger} -->
-    <target name="-run-jmri-application"
-            description="run a given JMRI application, under the debugger if the debugger property is set"
-            depends="-normal-jmri-application,-debug-jmri-application">
+    
+    <!-- Internal target to run a given JMRI application, under the debugger if the debugger property is set -->
+    <target name="-run-jmri-application" depends="-normal-jmri-application,-debug-jmri-application">
         <echo>${application.classname} finished with return code ${application.returncode}</echo>
         <condition property="application.relaunch" value="yes">
             <equals arg1="${application.returncode}" arg2="100"/>
@@ -678,8 +663,7 @@
     -->
     <target name="-normal-jmri-application"
             unless="debugger"
-            depends="runtime-library-selection"
-            description="build and run a JMRI Java application">
+            depends="runtime-library-selection">
         <echo>Launch normally (no debugger support)</echo>
         <java classname="${application.classname}" dir="${basedir}" fork="yes" resultproperty="application.returncode">
             <classpath refid="project.class.path"/>
@@ -703,11 +687,17 @@
         </java>
     </target>
 
+	<!-- see comment just above -->
     <target name="-debug-jmri-application"
             if="debugger"
-            depends="runtime-library-selection"
-            description="build and run a JMRI Java application">
+            depends="runtime-library-selection">
         <echo>Launch with debugger support</echo>
+        <!-- this value of 5432 conflicts with PostgreSQL -->
+        <property name="jpda.address" value="5432"/>
+        <!-- this is the JMRI, not the JDWP default, must be "n" for IDEs -->
+        <property name="jdpa.server" value="y"/>
+        <!-- this is the JDWP default -->
+        <property name="jdpa.suspend" value="y"/>
         <java classname="${application.classname}" dir="${basedir}" fork="yes" resultproperty="application.returncode">
             <classpath refid="project.class.path"/>
             <sysproperty key="java.security.policy"
@@ -720,7 +710,7 @@
                          path="net.bobis.jinput.hidraw.HidRawEnvironmentPlugin"/>
 
             <jvmarg value="-Xdebug"/>
-            <jvmarg value="-Xrunjdwp:transport=dt_socket,server=y,suspend=y,address=5432"/>
+            <jvmarg value="-Xrunjdwp:transport=dt_socket,server=${jdpa.server},suspend=${jdpa.suspend},address=${jpda.address}"/>
             <!-- <jvmarg value="-verbose"/> -->
             <!-- <jvmarg value="-verbosegc"/> -->
             <!-- <jvmarg value="-Xloggc:memory.vgc"/> -->
@@ -733,6 +723,7 @@
                They all use the same back-end target run-jmri-application to do the work,
                with the only differences among them being the value of the initial classname
                to run and the startup configfile as specified in the antargline -->
+
     <target name="decoderpro-old"
             description="build and run the old DecoderPro app"
             depends="debug, copyfiles">
@@ -831,6 +822,10 @@
 
     <!-- end of application startup targets -->
 
+    <!-- ============================================================================= -->
+    <!-- I18N testing section                                                          -->
+    <!-- ============================================================================= -->
+    
 
     <!-- Force false language/country to check I8N -->
     <target name="locale"
@@ -864,15 +859,29 @@
         </java>
     </target>
 
+    <target name="i18n-consistency-check"  description="Verification of localized strings in source code" depends="jar">
+        <property name="i18n.modulefilter" value=""/>
+        <property name="i18n.logger" value="log" /> <!-- name of logging token to match with logging methods -->
+        <property name="i18n.loggerMethods" value="info,debug,error,warn" /> <!-- logging methods that should not be checked for i18n consistency -->
+        <echo>I18N Consistency Check - use modulefilter property if you want to see errors only from one module</echo>
+        <taskdef classname="org.i18nchecker.I18nChecker" name="i18nConsistencyCheck" classpathref="i18n.class.path"/>
+        <!-- check includes all .properties files including ones we use for non-translatable files -->
+        <i18nConsistencyCheck srcdir="${basedir}" topdirs="." allProperties="true" logger="${i18n.logger}" loggerMethods="${i18n.loggerMethods}" modulefilter="${i18n.modulefilter}"/>
+    </target>
 
+    <!-- end of I18N test targets -->
 
+    <!-- ============================================================================= -->
+    <!-- NetBeans targets: profiling et al                                             -->
+    <!-- ============================================================================= -->
+    
 
     <!-- Note if modifying the profile target, please be sure to up date the -->
     <!-- NetBeans IDE profile target in this file -->
     <target name="profile"
-            description="build and run JmriDemo app with profiling"
+            description="build and run PanelPro app with profiling"
             depends="debug, runtime-library-selection">
-        <java classname="apps.JmriDemo.JMRIdemo"
+        <java classname="apps.PanelPro.PanelPro"
               dir="."
               fork="yes" >
             <classpath refid="project.class.path"/>
@@ -885,7 +894,153 @@
         </java>
     </target>
 
-    <target name="quicktest" depends="tests, runtime-library-selection" description="build and run test suite">
+    <!-- The next target is NetBeans-specific, but is here so it -->
+    <!-- can use other info defined in this file -->
+    <!-- The profiler is not so well integrated into the IDE and requires -->
+    <!-- the build target to be specified in the ANT build script -->
+    <target name="profile-nb" depends="debug, runtime-library-selection" description="build and run PanelPro app with NetBeans profiling">
+        <property name="antargline" value="PanelProConfig2.xml"/>
+        <fail unless="netbeans.home">This target can only run inside the NetBeans IDE.</fail>
+        <nbprofiledirect>
+            <classpath refid="project.class.path"/>
+        </nbprofiledirect>
+        <java classname="apps.PanelPro.PanelPro"
+            dir="."
+                fork="yes" >
+            <classpath refid="project.class.path"/>
+            <sysproperty key="java.security.policy" value="${libdir}/security.policy"/>
+            <sysproperty key="apple.laf.useScreenMenuBar" value="true"/>
+            <sysproperty key="log4j.ignoreTCL" path="true/"/>
+            <sysproperty key="java.library.path" path=".:${libdir}:${arch.lib.path}"/>
+            <sysproperty key="jinput.plugins" path="net.bobis.jinput.hidraw.HidRawEnvironmentPlugin"/>
+            <jvmarg value="${profiler.info.jvmargs.agent}"/>
+       <!-- <jvmarg value="-verbose"/> -->
+       <!-- <jvmarg value="-verbosegc"/> -->
+       <!-- <jvmarg value="-Xloggc:memory.vgc"/> --> <!-- for JTune -->
+            <arg value="${antargline}"/>
+        </java>
+    </target>
+
+    <!-- end of NetBeans targets -->
+
+    <!-- ============================================================================= -->
+    <!-- File-checking (e.g. XML tests) targets                                        -->
+    <!-- ============================================================================= -->
+
+    <target name="decodercheck" depends="debug, tests, runtime-library-selection" description="run decoder XML checks">
+        <java classname="jmri.jmrit.decoderdefn.SchemaTest"
+          dir="."
+          fork="yes" >
+            <classpath refid="test.class.path"/>
+            <sysproperty key="java.security.policy" value="${libdir}/security.policy"/>
+            <sysproperty key="apple.laf.useScreenMenuBar" value="true"/>
+            <sysproperty key="log4j.ignoreTCL" path="true/"/>
+            <sysproperty key="java.library.path" path=".:${libdir}:${arch.lib.path}"/>
+            <sysproperty key="jinput.plugins" path="net.bobis.jinput.hidraw.HidRawEnvironmentPlugin"/>
+            <arg value="${antargline}"/>
+        </java>
+    </target>
+
+    <!-- See http://rscbundlecheck.sourceforge.net/ -->
+    <target name="checkPropertiesFiles" description="check all JMRI properties files for duplicate properties in same file" >
+        <taskdef classpath="${libdir}/rscbundlecheck.jar" resource="task.properties"/>
+        <resourceCheck failonerror="true">
+            <fileset dir="${source}">
+                <include name="**/*.properties"/>
+            </fileset>
+            <checks>
+                <include name="duplicate key check"/>
+                <exclude name="unicode check"/>
+                <exclude name="upper lower check"/>
+                <exclude name="line end check"/>
+                <exclude name="empty key check"/>
+                <exclude name="placeholder check"/>
+                <exclude name="empty value check"/>
+                <exclude name="invalid char check"/>
+                <exclude name="messageformat check"/>
+                <exclude name="cross bundle check"/>
+            </checks>
+        </resourceCheck>
+    </target>
+
+    <!-- check for non-ASCII characters in properties files -->
+
+    <target name="checknonascii" description="check for non-ASCII characters in properties files (Linux only)">
+        <exec executable="sh" outputproperty="checknonascii.files">
+            <arg value="-c" />
+            <arg value="grep -rIn -P '[^\x00-\x7f]' --include=*.properties java/src" />
+        </exec>
+
+        <fail message="${checknonascii.files}">
+            <condition>
+                <length string="${checknonascii.files}" when="greater" length="0" />
+            </condition>
+        </fail>
+    </target>
+
+    <!-- check for bad line ends, e.g. not ready to go into Git -->
+    <!-- May not (probably will not) work on Windows -->
+
+    <target name="checklineends" description="check text files for proper LF line ends (Linux, Mac only)">
+      <exec executable="sh" outputproperty="checklineeds.files">
+        <arg value="-c" />
+        <arg value="find xml help java/src java/test jython -not -type d -exec file '{}' ';' | grep CRLF" />
+      </exec>      
+      
+      <fail message="${checklineeds.files}">
+        <condition>
+          <length string="${checklineeds.files}" when="greater" length="0" />
+        </condition>     
+      </fail> 
+    </target>
+
+    <!-- end of file-checking targets -->
+
+    <target name="fixlineends" description="convert specific files to LF line ends">
+        <fixcrlf eol="unix" srcdir="." includes="
+            **/*.csh
+            **/*.css
+            **/*.df
+            **/*.dtd
+            **/*htm
+            **/*html
+            **/*.java
+            **/*.js
+            **/*.json
+            **/*.jsp
+            **/*.jspf
+            **/*.lcf
+            **/*.md
+            **/*.php
+            **/*.pl
+            **/*.plist
+            **/*.policy
+            **/*.prefs
+            **/*.properties
+            **/*.project
+            **/*.py
+            **/*.sh
+            **/*.svg
+            **/*.tld
+            **/*.txt
+            **/*.xml
+            **/*.xsd
+            **/*.xsl
+            **/COPYING
+            **/Footer
+            **/Header
+            **/README*
+            **/Sidebar
+            **/TODO
+            **/.classpath
+        " />
+    </target>
+
+    <!-- ============================================================================= -->
+    <!-- Test execution targets                                                        -->
+    <!-- ============================================================================= -->
+
+   <target name="quicktest" depends="tests, runtime-library-selection" description="build and run test suite">
         <java classname="apps.tests.AllTest"
           dir="."
           fork="yes" >
@@ -921,7 +1076,7 @@
     </target>
 
 
-    <target name="ci-test" depends="tests, runtime-library-selection" description="run headless test suite using Travis-CI default target">
+    <target name="ci-test" depends="tests, runtime-library-selection" description="run AllTest CI tests">
         <junit haltonerror="false" haltonfailure="false" printsummary="yes" fork="yes" dir="." errorProperty="test.failed" failureProperty="test.failed">
             <sysproperty key="java.security.policy" value="${libdir}/security.policy"/>
             <sysproperty key="apple.laf.useScreenMenuBar" value="true"/>
@@ -929,12 +1084,9 @@
             <sysproperty key="java.library.path" path=".:${libdir}:${arch.lib.path}"/>
             <sysproperty key="jinput.plugins" path="net.bobis.jinput.hidraw.HidRawEnvironmentPlugin"/>
 
-            <sysproperty key="java.awt.headless" value="true"/>
-            <sysproperty key="jmri.headlesstest" value="true"/>
-
             <classpath refid="test.class.path"/>
 
-            <test name="jmri.HeadLessTest">
+            <test name="apps.tests.AllTest">
                 <formatter usefile="no" type="brief"/>
             </test>
         </junit>
@@ -945,18 +1097,50 @@
         </fail>
     </target>
 
-    <target name="decodercheck" depends="debug, tests, runtime-library-selection" description="run decoder XML checks">
-        <java classname="jmri.jmrit.decoderdefn.SchemaTest"
-          dir="."
-          fork="yes" >
-            <classpath refid="test.class.path"/>
+    <target name="ci-test-travis" depends="tests, runtime-library-selection" description="run ci-test using Travis-CI">
+        <junit haltonerror="false" haltonfailure="false" printsummary="yes" fork="yes" dir="." errorProperty="test.failed" failureProperty="test.failed">
             <sysproperty key="java.security.policy" value="${libdir}/security.policy"/>
             <sysproperty key="apple.laf.useScreenMenuBar" value="true"/>
             <sysproperty key="log4j.ignoreTCL" path="true/"/>
             <sysproperty key="java.library.path" path=".:${libdir}:${arch.lib.path}"/>
             <sysproperty key="jinput.plugins" path="net.bobis.jinput.hidraw.HidRawEnvironmentPlugin"/>
-            <arg value="${antargline}"/>
-        </java>
+
+            <classpath refid="test.class.path"/>
+
+            <test name="apps.tests.AllTest">
+                <formatter usefile="no" type="brief"/>
+            </test>
+        </junit>
+        <fail>
+            <condition>
+                <istrue value="${test.failed}" />
+            </condition>
+        </fail>
+    </target>
+
+    <target name="ci-test-appveyor" depends="tests, runtime-library-selection" description="run ci-test using Appveyor">
+        <!-- identical to ci-test target except test output is different -->
+        <junit haltonerror="false" haltonfailure="false" printsummary="yes" fork="yes" dir="." errorProperty="test.failed" failureProperty="test.failed">
+            <sysproperty key="java.security.policy" value="${libdir}/security.policy"/>
+            <sysproperty key="apple.laf.useScreenMenuBar" value="true"/>
+            <sysproperty key="log4j.ignoreTCL" path="true/"/>
+            <sysproperty key="java.library.path" path=".:${libdir}:${arch.lib.path}"/>
+            <sysproperty key="jinput.plugins" path="net.bobis.jinput.hidraw.HidRawEnvironmentPlugin"/>
+
+            <classpath refid="test.class.path"/>
+
+            <sysproperty key="jmri.skipschematests" value="true"/>  <!-- skip schema checks to improve speed -->
+
+            <test name="apps.tests.AllTest" outfile="junit-results">
+                <formatter type="xml"/>
+                <formatter usefile="no" type="brief"/>
+            </test>
+        </junit>
+        <fail>
+            <condition>
+                <istrue value="${test.failed}" />
+            </condition>
+        </fail>
     </target>
 
     <!-- Note if modifying the alltest target, please be sure to up date the -->
@@ -993,32 +1177,11 @@
         </junit>
     </target>
 
-    <!-- The next target is NetBeans-specific, but is here so it -->
-    <!-- can use other info defined in this file -->
-    <!-- The profiler is not so well integrated into the IDE and requires -->
-    <!-- the build target to be specified in the ANT build script -->
-    <target name="profile-nb" depends="debug, runtime-library-selection" description="build and run DecoderPro app with NetBeans profiling">
-        <property name="antargline" value="DecoderProConfig2.xml"/>
-        <fail unless="netbeans.home">This target can only run inside the NetBeans IDE.</fail>
-        <nbprofiledirect>
-            <classpath refid="project.class.path"/>
-        </nbprofiledirect>
-        <java classname="apps.DecoderPro.DecoderPro"
-            dir="."
-                fork="yes" >
-            <classpath refid="project.class.path"/>
-            <sysproperty key="java.security.policy" value="${libdir}/security.policy"/>
-            <sysproperty key="apple.laf.useScreenMenuBar" value="true"/>
-            <sysproperty key="log4j.ignoreTCL" path="true/"/>
-            <sysproperty key="java.library.path" path=".:${libdir}:${arch.lib.path}"/>
-            <sysproperty key="jinput.plugins" path="net.bobis.jinput.hidraw.HidRawEnvironmentPlugin"/>
-            <jvmarg value="${profiler.info.jvmargs.agent}"/>
-       <!-- <jvmarg value="-verbose"/> -->
-       <!-- <jvmarg value="-verbosegc"/> -->
-       <!-- <jvmarg value="-Xloggc:memory.vgc"/> --> <!-- for JTune -->
-            <arg value="${antargline}"/>
-        </java>
-    </target>
+    <!-- end of test execution targets -->
+
+    <!-- ============================================================================= -->
+    <!-- Distribution build targets                                                    -->
+    <!-- ============================================================================= -->
 
     <target name="jar"
             description="create working jar file with current contents"
@@ -1029,9 +1192,9 @@
         <jar jarfile="${jartarget}/jmri.jar"
              basedir="${target}"
              compress="true"
-             index="true">  <!--  java -jar jmri.jar doesn't start when apps.PanelPro.PanelPro is specified & index="true" -->
+             index="true">
           <manifest>
-            <attribute name="Main-Class" value="jmri.Version"/>  
+            <attribute name="Main-Class" value="jmri.Version"/>
             <attribute name="Class-Path" value="${jar.classpath}"/>
             <section name="jmri">
               <attribute name="Specification-Title" value="Java Model Railroad Interface Classes"/>
@@ -1287,13 +1450,12 @@
         <move file="${decoderindex.file}" todir="xml" />
     </target>
 
-    <!-- dist target forces the jar file to be built without test classes -->
     <target name="dist"
-            description="create a distribution jar file"
+            description="create a distribution jar file without tests"
             depends="clean, init, debug, rmic, jar"/>
 
     <target name="dist-debug"
-            description="create a distribution jar file"
+            description="create a distribution jar file including tests"
             depends="clean, init, debug, rmic, jar"/>
 
     <taskdef name="findbugs"
@@ -1301,49 +1463,40 @@
              onerror="ignore"
              classpath="${findbugs.home}/lib/findbugs.jar"/>
 
-    <target name="findbugs" depends="dist-debug" description="generate FindBugs report. Include &quot;-Dfindbugs.home=YourFindBugsInstallDirectory&quot; in command line." >
+    <target name="findbugs" depends="dist" description="generate FindBugs report. Specify FindBugs install with local.properties file or &quot;-Dfindbugs.home=YourFindBugsInstallDirectory&quot; on command line." >
         <findbugs home="${findbugs.home}"
-                output="html"
-                                                outputFile="${jartarget}/jmri-fb.html"
-                                                jvmargs="-Xmx1024m"
-                                                timeout="12000000">
+                  output="html"
+                  outputFile="${jartarget}/jmri-fb.html"
+                  jvmargs="-Xmx1536m"
+                  timeout="12000000"
+                  excludeFilter=".findbugs.xml"
+
+                  effort="max"
+                  reportLevel="low"
+                  >
             <sourcePath path="${source}/"/>
             <class location="${jartarget}/jmri.jar"/>
+            <auxClasspath refid="compile.class.path" />
         </findbugs>
     </target>
 
-    <target name="findbugs-ci" depends="dist-debug" description="generate FindBugs report. Include &quot;-Dfindbugs.home=YourFindBugsInstallDirectory&quot; in command line." >
+    <target name="findbugs-ci" depends="dist" description="generate FindBugs report. Include &quot;-Dfindbugs.home=YourFindBugsInstallDirectory&quot; in command line." >
         <findbugs home="${findbugs.home}"
-                output="xml:withMessages"
-                outputFile="findbugs.xml"
-                jvmargs="-Xmx1024m"
-                timeout="12000000">
+                  output="xml:withMessages"
+                  outputFile="findbugs.xml"
+                  jvmargs="-Xmx1536m"
+                  timeout="12000000"
+                  excludeFilter=".findbugs.xml"
+                  
+                  effort="max"
+                  reportLevel="low"                  
+                  >
             <sourcePath path="${source}/"/>
             <class location="${jartarget}/jmri.jar"/>
+            <auxClasspath refid="compile.class.path" />
         </findbugs>
     </target>
 
-    <!-- See http://rscbundlecheck.sourceforge.net/ -->
-    <target name="checkPropertiesFiles" description="check all JMRI properties files for duplicate properties in same file" >
-        <taskdef classpath="${libdir}/rscbundlecheck.jar" resource="task.properties"/>
-        <resourceCheck failonerror="true">
-            <fileset dir="${source}">
-                <include name="**/*.properties"/>
-            </fileset>
-            <checks>
-                <include name="duplicate key check"/>
-                <exclude name="unicode check"/>
-                <exclude name="upper lower check"/>
-                <exclude name="line end check"/>
-                <exclude name="empty key check"/>
-                <exclude name="placeholder check"/>
-                <exclude name="empty value check"/>
-                <exclude name="invalid char check"/>
-                <exclude name="messageformat check"/>
-                <exclude name="cross bundle check"/>
-            </checks>
-        </resourceCheck>
-    </target>
 
 
 <!-- targets to support the creation & packaging of the distributions -->
@@ -1395,6 +1548,7 @@
                 <pathelement path="${runtime.class.jars}"/>
             </path>
             <fileset file="${libdir}/security.policy"/>
+            <fileset file="${libdir}/README.md"/>
         </copy>
         <mkdir dir="${dist.windows}/JMRI/lib/windows"/>
         <copy todir="${dist.windows}/JMRI/lib/windows">
@@ -1434,6 +1588,7 @@
                 <pathelement path="${runtime.class.jars}"/>
             </path>
             <fileset file="${libdir}/security.policy"/>
+            <fileset file="${libdir}/README.md"/>
         </copy>
         <mkdir dir="${dist.macosx}/JMRI/lib/macosx"/>
         <copy todir="${dist.macosx}/JMRI/lib/macosx">
@@ -1489,6 +1644,7 @@
                 <pathelement path="${runtime.class.jars}"/>
             </path>
             <fileset file="${libdir}/security.policy"/>
+            <fileset file="${libdir}/README.md"/>
         </copy>
         <mkdir dir="${dist.linux}/JMRI/lib/linux"/>
         <copy todir="${dist.linux}/JMRI/lib/linux">
@@ -1503,7 +1659,6 @@
                 <exclude name="JMRI/PanelPro"/>
                 <exclude name="JMRI/SoundPro"/>
                 <exclude name="JMRI/LocoTools"/>
-                <exclude name="JMRI/JmriDemo"/>
                 <exclude name="JMRI/InstallTest"/>
                 <exclude name="JMRI/RXTXuninstall.sh"/>
                 <exclude name="JMRI/JmriFaceless"/>
@@ -1512,10 +1667,7 @@
                 <include name="JMRI/DecoderPro"/>
                 <include name="JMRI/PanelPro"/>
                 <include name="JMRI/SoundPro"/>
-                <include name="JMRI/SignalPro"/>
-                <include name="JMRI/DispatcherPro"/>
                 <include name="JMRI/LocoTools"/>
-                <include name="JMRI/JmriDemo"/>
                 <include name="JMRI/InstallTest"/>
                 <include name="JMRI/RXTXuninstall.sh"/>
                 <include name="JMRI/JmriFaceless"/>
@@ -1583,114 +1735,85 @@
 
     <!-- I dislike how much of these startup-scripts targets are shared.  Maybe they should be combined? -->
 
-    <target name="startup-scripts-linux"
-            description="Create all of the app specific startup scripts for Linux">
+    <target name="startup-scripts-linux"> <!-- Internal target to create all of the app specific startup scripts for Linux -->
         <make-startup-script script.name="DecoderPro"   script.class="apps.gui3.dp3.DecoderPro3"/>
         <make-startup-script script.name="PanelPro"      script.class="apps.PanelPro.PanelPro"/>
-        <make-startup-script script.name="DispatcherPro" script.class="apps.DispatcherPro.DispatcherPro"/>
-        <make-startup-script script.name="JMRIdemo"      script.class="apps.JmriDemo.JMRIdemo"/>
         <make-startup-script script.name="LocoTools"     script.class="apps.LocoTools.LocoTools"/>
-        <make-startup-script script.name="SignalPro"     script.class="apps.SignalPro"/>
         <make-startup-script script.name="SoundPro"      script.class="apps.SoundPro.SoundPro"/>
         <make-startup-script script.name="InstallTest"   script.class="apps.InstallTest.InstallTest"/>
         <make-startup-script script.name="JmriFaceless"   script.class="apps.JmriFaceless"/>
     </target>
 
-    <target name="startup-scripts-macosx"
-            description="Create all of the app specific startup scripts for Mac OS X">
+    <target name="startup-scripts-macosx"> <!-- Internal target to create all of the app specific startup scripts for Mac OS X -->
         <create-macosx-application-directory script.name="DecoderPro"  script.class="apps.gui3.dp3.DecoderPro3"
                                              script.icon="DecoderPro"/>
         <create-macosx-application-directory script.name="PanelPro"      script.class="apps.PanelPro.PanelPro"/>
-        <create-macosx-application-directory script.name="DispatcherPro" script.class="apps.DispatcherPro.DispatcherPro"/>
-        <create-macosx-application-directory script.name="JMRI Demo"     script.class="apps.JmriDemo.JMRIdemo"/>
         <create-macosx-application-directory script.name="Loco Tools"    script.class="apps.LocoTools.LocoTools"/>
-        <create-macosx-application-directory script.name="SignalPro"     script.class="apps.SignalPro"/>
         <create-macosx-application-directory script.name="SoundPro"      script.class="apps.SoundPro.SoundPro"/>
         <create-macosx-application-directory script.name="InstallTest"   script.class="apps.InstallTest.InstallTest"/>
     </target>
 
 
+    <!-- set this next to a standard remote, e.g. "origin", if you don't want to
+    go directly back to the main repo; direct JMRI/JMRI require write access -->
+    <property name="jmri.repository.url" value="https://github.com/JMRI/JMRI.git"/>
 
-    <!-- targets to support revision control repository management -->
-
-    <!-- where is the SVN repository -->
-    <property name="repository.base-url" value="svn+ssh://${sourceforge.userid}@svn.code.sf.net/p/jmri/code/"/>
-
-    <!-- you can set these to alternate values in local.properties
-    when you need to test.  Please do not change them here! -->
-    <property name="svndir.trunk" value="/trunk/jmri"/>
-    <property name="svndir.releases" value="/branches/jmri/releases"/>
-
-
-    <property name="repository.jmri-trunk" value="${repository.base-url}${svndir.trunk}"/>
-    <property name="repository.release-dir" value="${repository.base-url}${svndir.releases}"/>
-
-    <property name="head-dir" value="${tempdir}/HEAD"/>
-    <property name="branch-dir" value="${tempdir}/BRANCH"/>
-
-
+    <property name="branch-name" value="release-${release}" />
+    
     <!-- several steps are involved in creating a new test release
-    branch from trunk/HEAD.  This target intends to manage as
+    branch from the head of the master branch.  This target intends to manage as
     many of them as possible -->
     <target name="make-test-release-branch"
-            description="Make a new test release branch in SVN, copying the head of the trunk to the new release dir">
+            description="Make a new test release branch in Git from the head of the master branch">
 
-        <!-- copy the trunk/HEAD to the new release directory.  Since
-        the trunk's release.properties always points to the NEXT
-        release (aka, the one we're making), release.properties and
-        ${release} will be correct for this new branch -->
+        <!-- Create a new branch test release branch from the front of the master
+        branch in our main repository, and push back to main repo -->
 
-        <svn refid="svn.settings">
-            <copy srcUrl="${repository.jmri-trunk}"
-                  destUrl="${repository.release-dir}/${release}"
-                  message="make branch for ${release} release"/>
-        </svn>
+        <exec executable="git" failifexecutionfails="true">
+            <arg value="checkout"/>
+            <arg value="master"/>
+        </exec>
+        <exec executable="git" failifexecutionfails="true">
+            <arg value="pull"/>
+        </exec>
+        <exec executable="git" failifexecutionfails="true">
+            <arg value="checkout"/>
+            <arg value="-b"/>
+            <arg value="${branch-name}"/>
+        </exec>
+        <exec executable="git" failifexecutionfails="true">
+            <arg value="push"/>
+            <arg value="${jmri.repository.url}"/>
+            <arg value="${branch-name}"/>
+        </exec>
 
-        <!-- now we check out JUST the very top level of the trunk and
-        the new release branch (that what depth="files" does).
-        This working copy might not be the trunk HEAD, so we
-        don't want to modify the file right here -->
-        <delete dir="${tempdir}"/>
-        <mkdir dir="${tempdir}"/>
-        <svn refid="svn.settings">
-            <checkout url="${repository.jmri-trunk}"
-                      depth="files"
-                      destPath="${head-dir}"/>
-            <checkout url="${repository.release-dir}/${release}"
-                      depth="files"
-                      destPath="${branch-dir}"/>
-        </svn>
-
-        <!-- in the trunk release.properties file, we now increment
+        <!-- return to master -->
+        <exec executable="git" failifexecutionfails="true">
+            <arg value="checkout"/>
+            <arg value="master"/>
+        </exec>
+        
+        <!-- in the master release.properties file, increment
         the release.build value in order to point to the NEW next
-        release (the one after we're branching to create) -->
-        <propertyfile file="${head-dir}/release.properties">
+        release (the one after the one we're creating now) -->
+        <propertyfile file="release.properties">
             <entry key="release.build" type="int" operation="+" value="1"/>
         </propertyfile>
+        <!-- commit and push -->
+        <exec executable="git" failifexecutionfails="true">
+            <arg value="commit"/>
+            <arg value="-m'update release.build to value for next release'"/>
+            <arg value="release.properties"/>
+        </exec>
+        <exec executable="git" failifexecutionfails="true">
+            <arg value="push"/>
+            <arg value="${jmri.repository.url}"/>
+        </exec>
+        <exec executable="git" failifexecutionfails="true">
+            <arg value="pull"/>
+        </exec>
 
-        <!-- and in the newly created release branch, we modify
-        release.properties to show that we have indeed branched -->
-        <propertyfile file="${branch-dir}/release.properties">
-            <entry key="release.is_branched" type="string" operation="=" value="true"/>
-        </propertyfile>
-
-        <!-- now we check in the now modified files from trunk/HEAD
-        and the new branch -->
-        <svn refid="svn.settings">
-            <commit file="${branch-dir}/release.properties"
-                    message="set release.is-branched to true"/>
-            <commit file="${head-dir}/release.properties"
-                    message="set new revision number due to ${release} release branch creation"/>
-        </svn>
-
-        <!-- lastly, since we're probably in a HEAD tree, we're going
-        to try to update the release.properties file in this directory
-        to help keep things in sync -->
-        <svn refid="svn.settings">
-            <update file="release.properties"/>
-        </svn>
-        <echo message="new release branch URL is ${repository.release-dir}/${release}"/>
+        <echo message="new release branch ${branch-name} created"/>
     </target>
-
 
 </project>

@@ -12,7 +12,6 @@ import org.slf4j.LoggerFactory;
  * Tests for the jmri.jmrix.acela.AcelaTurnoutManager class.
  *
  * @author Paul Bender Copyright (C) 2010
- * @version $Revision$
  */
 public class XNetLightManagerTest extends jmri.managers.AbstractLightMgrTest {
 
@@ -82,6 +81,6 @@ public class XNetLightManagerTest extends jmri.managers.AbstractLightMgrTest {
         apps.tests.Log4JFixture.tearDown();
     }
 
-    static Logger log = LoggerFactory.getLogger(XNetLightManagerTest.class.getName());
+    private final static Logger log = LoggerFactory.getLogger(XNetLightManagerTest.class.getName());
 
 }

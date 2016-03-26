@@ -1,15 +1,15 @@
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
-<html lang="en"><head><!-- Copyright ($Author$) 2009, 2010 --><!-- $Id$ -->
+<html lang="en">
+<head><title>Comprehensive Programmer - Speed Control Pane</title>
 
-
-
-
-
-<title>Comprehensive Programmer - Speed Control Pane</title><!-- Style --><meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
+<!-- Style -->
+<meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
 <link rel="stylesheet" type="text/css" href="/css/default.css" media="screen">
 <link rel="stylesheet" type="text/css" href="/css/print.css" media="print">
 <link rel="icon" href="/images/jmri.ico" type="image/png">
-<link rel="home" title="Home" href="/"><!-- /Style --></head>
+<link rel="home" title="Home" href="/">
+<!-- /Style -->
+</head>
 
 <body>
 <!--#include virtual="/Header" -->
@@ -19,10 +19,10 @@
 
 <a name="Top"></a>
 <h1>DecoderPro&reg; Comprehensive Programmer</h1>
-<h1>Basic Speed Control Pane</h1>
+<h2>Basic Speed Control Pane</h2>
 
 <div align="right">
-<p><a href="Comp_Motor.shtml">Previous &nbsp;| </a>
+<p><a href="Comp_Motor.shtml">Previous | </a>
   <a href="Comp_Speed_Talble.shtml">Next </a>
 </p><p><a href="index.shtml#Advanced%20Programmer">Back to Index</a>
 </p></div>
@@ -110,12 +110,17 @@ Pro for the specific decoder.
 <hr>
 <p>If you select <a href="Comp_Speed_Talble.shtml"><strong>Speed Table </strong></a>all of the settings in this pane are ignored. 
    <br>
-</p><hr>
+</p>
+
+<hr>
 <div align="right">
 <p><a href="Comp_Speed_Talble.shtml"></a>
-  <a href="Comp_Motor.shtml">Previous &nbsp;| </a> <a href="Comp_Speed_Talble.shtml">Next </a>
+  <a href="Comp_Motor.shtml">Previous | </a> <a href="Comp_Speed_Talble.shtml">Next </a>
 </p><p><a href="index.shtml#Advanced%20Programmer">Back to Index</a>
 </p></div>
 
 <!--#include virtual="/Footer" -->
-</div></body></html>
+  </div><!-- closes #mainContent-->
+ </div> <!-- closes #mBody-->
+ </body>
+</html>

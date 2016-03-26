@@ -1,15 +1,17 @@
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
-<html lang="en"><head><!-- Copyright ($Author$) 2009 --><!-- $Id$ -->
+<html lang="en">
+<head>
+<title>Decoder Pro Manual: Getting Started</title>
 
-
-
-
-
-<title>Decoder Pro Manual: Getting Started</title><!-- Style --><meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
+<!-- Style -->
+<meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
 <link rel="stylesheet" type="text/css" href="/css/default.css" media="screen">
 <link rel="stylesheet" type="text/css" href="/css/print.css" media="print">
 <link rel="icon" href="/images/jmri.ico" type="image/png">
-<link rel="home" title="Home" href="/"><!-- /Style --></head>
+<link rel="home" title="Home" href="/">
+<!-- /Style -->
+</head>
+
 <body>
 <!--#include virtual="/Header" -->
 
@@ -18,7 +20,7 @@
 
 <a name="Top"></a>
 <h1>Getting Started with DecoderPro&reg;</h1>
-<h1>How do I start the DecoderPro program?</h1>
+<h2>How do I start the DecoderPro program?</h2>
 
 <div align="right">
 <p><a href="Start_DCC_Hardware.shtml">Previous</a> <a href="Start_Preferences.shtml">| Next</a>
@@ -35,7 +37,7 @@ open the program in the usual manner for your operating system. An icon for Deco
 and the DecoderPro initial screen as shown below will be displayed on
 completion of startup with no roster entries.
 </p><p><img src="images/start_dp3_main.png" alt="DP3 start" height="232" width="900">
-</p><p>DecoderPro will open showing your roster entries if you already have established a roster of locomotives.</p><h1><img src="images/Splash_Screen_dp3.png" alt="DP3 splash" height="387" width="800"></h1>
+</p><p>DecoderPro will open showing your roster entries if you already have established a Roster of locomotives.</p><h1><img src="images/Splash_Screen_dp3.png" alt="DP3 splash" height="387" width="800"></h1>
 
 <p>It may take a while for this screen to come up, especially on older
 and slower computers. Remember that you are essentially running the
@@ -51,7 +53,7 @@ screen will come up automatically to allow you to set up the system for
 your particular configuration.&nbsp; Also if you change your system
 configuration, or if you have your laptop away from the railroad, but
 you want to play with JMRI there is a simulator mode you may want to
-try.&nbsp; &nbsp;So click next, and we&#8217;ll have a look at preferences.
+try.So click next, and we&#8217;ll have a look at preferences.
 </p><blockquote>
   <blockquote>
     <blockquote>
@@ -61,10 +63,14 @@ try.&nbsp; &nbsp;So click next, and we&#8217;ll have a look at preferences.
     </blockquote>
   </blockquote>
 </blockquote>
+
 <hr>
 <div align="right">
 <p><a href="Start_DCC_Hardware.shtml">Previous</a> <a href="Start_Preferences.shtml">| Next</a>
 </p><p><a href="index.shtml#Getting%20Started">Back to Index</a> </p></div>
 
 <!--#include virtual="/Footer" -->
-</div></body></html>
+  </div><!-- closes #mainContent-->
+ </div> <!-- closes #mBody-->
+ </body>
+</html>

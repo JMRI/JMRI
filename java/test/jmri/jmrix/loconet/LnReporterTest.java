@@ -1,4 +1,3 @@
-// LnReporterTest.java
 package jmri.jmrix.loconet;
 
 import jmri.LocoAddress;
@@ -6,14 +5,11 @@ import junit.framework.Assert;
 import junit.framework.Test;
 import junit.framework.TestCase;
 import junit.framework.TestSuite;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 
 /**
  * Tests for the jmri.jmrix.loconet.LnReporter class.
  *
  * @author	Bob Jacobsen Copyright 2001, 2002
- * @version $Revision$
  */
 public class LnReporterTest extends TestCase {
 
@@ -94,8 +90,6 @@ public class LnReporterTest extends TestCase {
         TestSuite suite = new TestSuite(LnReporterTest.class);
         return suite;
     }
-
-    static Logger log = LoggerFactory.getLogger(LnReporterTest.class.getName());
 
     jmri.jmrix.loconet.LocoNetInterfaceScaffold tc;
 

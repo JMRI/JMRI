@@ -1,4 +1,3 @@
-// InstanceManagerTest.java
 package jmri;
 
 import jmri.jmrit.display.layoutEditor.LayoutBlockManager;
@@ -9,14 +8,11 @@ import junit.framework.Assert;
 import junit.framework.Test;
 import junit.framework.TestCase;
 import junit.framework.TestSuite;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 
 /**
  * Test InstanceManager
  *
  * @author	Bob Jacobsen
- * @version $Revision$
  */
 public class InstanceManagerTest extends TestCase implements InstanceManagerAutoDefault {
 
@@ -231,7 +227,5 @@ public class InstanceManagerTest extends TestCase implements InstanceManagerAuto
             }
         };
     }
-
-    static Logger log = LoggerFactory.getLogger(InstanceManagerTest.class.getName());
 
 }

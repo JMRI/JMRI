@@ -1,4 +1,3 @@
-// PackageTest.java
 package jmri.jmrix.openlcb.swing.hub;
 
 import junit.framework.Test;
@@ -9,7 +8,6 @@ import junit.framework.TestSuite;
  * Tests for the jmri.jmrix.openlcb.swing.hub package.
  *
  * @author Bob Jacobsen Copyright 2009, 2012, 2013
- * @version $Revision$
  */
 public class PackageTest extends TestCase {
 

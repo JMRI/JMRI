@@ -196,15 +196,20 @@
           <display item="CV120.9.0" layout="above" format="hslider-percent"/>
         </row>
         <display item="CV120.9.0 hoot" format="checkbox"/>
-      </column>
-    </row>
-    <row>
-      <column>
-		</column>
-      <column>
+        <label>
+          <text>        </text>
+        </label>
         <label>
           <text>Rear headlight turns on</text>
         </label>
+        <label>
+          <text>        </text>
+        </label>
+        <row>
+          <display item="CV120.10.0" layout="above" label=""/>
+          <display item="CV120.10.0" layout="above" format="hslider-percent"/>
+        </row>
+        <display item="CV120.10.0 hoot" format="checkbox"/>
       </column>
     </row>
     <label>

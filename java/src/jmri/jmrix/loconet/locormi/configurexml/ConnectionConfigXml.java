@@ -2,7 +2,6 @@ package jmri.jmrix.loconet.locormi.configurexml;
 
 import javax.swing.JFrame;
 import javax.swing.JLabel;
-import jmri.InstanceManager;
 import jmri.jmrix.configurexml.AbstractSerialConnectionConfigXml;
 import jmri.jmrix.loconet.locormi.ConnectionConfig;
 import org.jdom2.Element;
@@ -58,17 +57,19 @@ public class ConnectionConfigXml extends AbstractSerialConnectionConfigXml {
     /**
      * Port name carries the hostname for the RMI connection
      *
-     * @param e Top level Element to unpack.
+     * @param shared Top level Element to unpack.
+     * @param perNode
      * @return true if successful
      */
-    public boolean load(Element e) {
+    @Override
+    public boolean load(Element shared, Element perNode) {
         boolean result = true;
         // configure port name
-        String hostName = e.getAttribute("port").getValue();
+        String hostName = shared.getAttribute("port").getValue();
         String manufacturer = null;
 
         try {
-            manufacturer = e.getAttribute("manufacturer").getValue();
+            manufacturer = shared.getAttribute("manufacturer").getValue();
         } catch (NullPointerException ex) { //Considered normal if not present
         }
 
@@ -76,8 +77,8 @@ public class ConnectionConfigXml extends AbstractSerialConnectionConfigXml {
         jmri.jmrix.loconet.locormi.LnMessageClient client = new jmri.jmrix.loconet.locormi.LnMessageClient();
         cc.setLnMessageClient(client);
 
-        if (e.getAttribute("disabled") != null) {
-            String yesno = e.getAttribute("disabled").getValue();
+        if (shared.getAttribute("disabled") != null) {
+            String yesno = shared.getAttribute("disabled").getValue();
             if ((yesno != null) && (!yesno.equals(""))) {
                 if (yesno.equals("no")) {
                     cc.setDisabled(false);
@@ -88,12 +89,12 @@ public class ConnectionConfigXml extends AbstractSerialConnectionConfigXml {
         }
 
         if (client.getAdapterMemo() != null) {
-            if (e.getAttribute("userName") != null) {
-                client.getAdapterMemo().setUserName(e.getAttribute("userName").getValue());
+            if (shared.getAttribute("userName") != null) {
+                client.getAdapterMemo().setUserName(shared.getAttribute("userName").getValue());
             }
 
-            if (e.getAttribute("systemPrefix") != null) {
-                client.getAdapterMemo().setSystemPrefix(e.getAttribute("systemPrefix").getValue());
+            if (shared.getAttribute("systemPrefix") != null) {
+                client.getAdapterMemo().setSystemPrefix(shared.getAttribute("systemPrefix").getValue());
             }
         }
 
@@ -143,10 +144,10 @@ public class ConnectionConfigXml extends AbstractSerialConnectionConfigXml {
     }
 
     protected void register(ConnectionConfig cc) {
-        InstanceManager.configureManagerInstance().registerPref(cc);
+        super.register(cc);
     }
 
     // initialize logging
-    static Logger log = LoggerFactory.getLogger(ConnectionConfigXml.class.getName());
+    private final static Logger log = LoggerFactory.getLogger(ConnectionConfigXml.class.getName());
 
 }

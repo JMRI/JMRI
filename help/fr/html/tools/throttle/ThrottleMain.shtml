@@ -1,12 +1,10 @@
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
-<!-- $Id$ -->
 <!-- UpDated by Blorec Herv&#233; 2013-10-04-->
 <html lang="fr">
 <head>
   <title>Throttle: Introduction</title>
   <meta name="keywords" content="JMRI decoderpro dcc nmlaissezra throttle throttlepro">
   <meta name="Description" content="Throttle documentation for JMRI project">
-  <meta name="Keywords" content="JMRI">
   <meta name="Author" content="Paul Fraker (paul@frakers.com)">
   <meta name="Language" content="fr">
   <meta name="Robots" content="Index, Follow">
@@ -82,7 +80,7 @@ plus d'informations sur eux, alors j'esp&#232;re qu'il y a une section ou deux q
  colonnes de gauche de toutes les pages tout en regardant ce guide. Il y a aussi un couple
 de boutons de navigation en bas de chaque page. Ceux-ci vous am&#232;nent au
 chapitres suivant ou pr&#233;c&#233;dent, ou &#224; la table principale de la page du contenu (voir la prochaine
-paragraphe).</ p>
+paragraphe).</p>
 
 <p> Dans la liste des liens fournis sur la gauche, et situ&#233;e &#224; la conclusion de
 chaque page chapitre, il y a un lien identifi&#233; comme <a href= "ThrottleTOC.shtml"
@@ -90,7 +88,7 @@ title= "Allez &#224; la table des mati&#232;res"><i><strong> TOC</strong></i></a
 href= "ThrottleTOC.shtml"
 title= "Allez &#224; la table des mati&#232;res"><i><strong> Table des Mati&#232;res
 </strong></i></a>. Ce lien m&#232;ne &#224; une table d&#233;di&#233;e decontenus des pages
-. Certains peuvent trouver plus facile de naviguer en utilisant cette page . Cependant, le
+. Certains peuvent trouver plus facile de naviguer en utilisant cette page. Cependant, le
 colonne de gauche contient tous les liens disponibles contenus dans la page TOC .</p>
 
 <p class="important"><b style="color: #FF0000"> Note importante</b>:De multiple
@@ -100,32 +98,20 @@ sur le "front end" du code (qui est l'interface que vous voyez sur votre
 chaque besoin particulier de chaque syst&#232;me DCC . Bien que le "front end" doit rester
 constant &#224; travers tous les syst&#232;mes, il peut y avoir de l&#233;g&#232;res diff&#233;rences exp&#233;riment&#233;es sur
 votre syst&#232;me informatique et de DCC notamment en comparaison &#224; ce qui est d&#233;crit et
-pr&#233;sent&#233; dans ce guide utilisateur. <br>
+pr&#233;sent&#233; dans ce guide utilisateur.<br>
 
 <br>
 <b>Les exemples et les r&#233;f&#233;rences indiqu&#233;s dans ce guide sont bas&#233;es sur la version 1.5.3
 du logiciel, fonctionnant sous Microsoft Windows 2000 Professionnel avec un
 Syst&#232;me Digitrax.</b></p>
 
-<p><a href= "http://www.adobe.com/products/acrobat/readstep2.html"
-title= "Click to get Acrobat Reader"><img width= "88" height = "31"
-src= "images/get_adobe_reader.gif"></a> Ce guide de l'utilisateur est &#233;galement disponible pour
-t&#233;l&#233;chargement dans le populaire logiciel Adobe Reader (PDF). Vous devez avoir la version 5.0 ou
-sup&#232;rieure install&#233;e sur votre machine afin d'afficher ce document. Si vous ne l'avez pas
-, vous pouvez cliquer sur l'ic&#244;ne repr&#233;sent&#233;e ici pour aller au site Web d'Adobe.</p>
-
-<p> Quand/si vous avez le lecteur correctement install&#233; sur votre syst&#232;me, vous pouvez <a
-href= "http://downloads.sourceforge.net/sourceforge/jmri/ThrottleDocs.1.5.3.pdf?download"
-title= "Click to view this user guide in PDF format"> cliquez ici</a> pour
-T&#233;l&#233;charger/voir le guide utilisateur au format PDF.</p>
-<br>
 <p> Utilisez ces liens pour avancer soit au chapitre suivant pour une introduction &#224;
 l'outil r&#233;gulateur, ou pour afficher le tableau complet de la table des mati&#232;res</p>
 
 <table border="0" width="100%" cellpadding="0" cellspacing="0">
   <tbody>
     <tr>
-      <td align="right"> </td>
+      <td align="right">&nbsp;</td>
       <td><img src="images/spacer.gif" width="30" height="10"></td>
       <td align="center"><b><a href="ThrottleTOC.shtml"
         title="Jump to the Table Of Contents page">TOC</a></b></td>
@@ -137,9 +123,8 @@ l'outil r&#233;gulateur, ou pour afficher le tableau complet de la table des mat
  </tbody>
 </table>
 <br>
-<br>
-<br>
-<br>
-<!--#include virtual="/Footer" --></div>
+
+<!--#include virtual="/Footer" -->
+ </div>
 </body>
 </html>

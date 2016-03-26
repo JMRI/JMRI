@@ -1,12 +1,10 @@
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
-<!--  $Id$ -->
 <!-- UpDated by Blorec Herv&#233; le 2013-10-01-->
 <html lang="fr">
 <head>
  <title>Throttle: Getting Started</title>
  <meta name="keywords" content="JMRI decoderpro dcc nmra throttlepro">
  <meta name="Description" content="Throttle documentation for JMRI project">
- <meta name="Keywords" content="JMRI">
  <meta name="Author" content="Paul Fraker (paul@frakers.com)">
  <meta name="Language" content="fr">
  <meta name="Robots" content="Index, Follow">
@@ -34,8 +32,7 @@
 Mise &#224; jour de la Version de documentation du R&#233;gulateur
 </span></h1>
 
-<p>S'il vous pla√&reg;t noter que cette documentation a &#233;t&#233; mise &#224; jour, reportez-vous aux liens ci-dessous:</
-p>
+<p>S'il vous pla&#238;t noter que cette documentation a &#233;t&#233; mise &#224; jour, reportez-vous aux liens ci-dessous:</p>
 <ul>
  <li>Le<a href="ToolsMenuThrottleEntry.shtml">menu R&#233;gulateur dans JMRI</a></li>
  <li>La<a href="BasicThrottleWindow.shtml">Fen&#232;tre R&#233;gulateur elle-m&#234;me</a></li>
@@ -142,8 +139,6 @@ title="JMRI Throttles sub-menu structure"><br>
 Figure 1-2: JMRI Throttles sub-menu structure</p><br>
 <br>
 
-
-
 <p> Utilisez les liens ci-dessous pour acc&#233;der au chapitre suivant pour vous d&#233;placer &#224; travers le
 processus d'ouverture d'une  nouvelle fen&#234;tre de r&#233;gulateur et la mise en place de certaines des
 options disponibles, et n'oublions pas ... de faire circuler une locomotive.</p>
@@ -170,9 +165,8 @@ options disponibles, et n'oublions pas ... de faire circuler une locomotive.</p>
 </tbody>
 </table>
 <br>
-<br>
-<br>
-<br>
-<!--#include virtual="/Footer" --></div>
+
+<!--#include virtual="/Footer" -->
+ </div>
 </body>
 </html>

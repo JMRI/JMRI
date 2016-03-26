@@ -4,7 +4,6 @@
  * Description:	JUnit tests for the EasyDccMessage class
  *
  * @author	Bob Jacobsen
- * @version $Revision$
  */
 package jmri.jmrix.easydcc;
 
@@ -69,7 +68,7 @@ public class EasyDccMessageTest extends TestCase {
 
     // Main entry point
     static public void main(String[] args) {
-        String[] testCaseName = {EasyDccMessageTest.class.getName()};
+        String[] testCaseName = {"-noloading", EasyDccMessageTest.class.getName()};
         junit.swingui.TestRunner.main(testCaseName);
     }
 

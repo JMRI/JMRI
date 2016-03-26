@@ -43,7 +43,7 @@ public class Sprogv4UpdateAction extends SprogUpdateAction {
         }
     }
 
-    static Logger log = LoggerFactory.getLogger(Sprogv4UpdateAction.class.getName());
+    private final static Logger log = LoggerFactory.getLogger(Sprogv4UpdateAction.class.getName());
 
 }
 

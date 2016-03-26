@@ -58,7 +58,7 @@ public class WaitHandler {
      *
      * @param self waiting Object
      */
-    @edu.umd.cs.findbugs.annotations.SuppressWarnings(value = "UW_UNCOND_WAIT", justification = "unguarded wait() used intentionally here as part of utility class")
+    @edu.umd.cs.findbugs.annotations.SuppressFBWarnings(value = "UW_UNCOND_WAIT", justification = "unguarded wait() used intentionally here as part of utility class")
     public WaitHandler(Object self) {
         // loop until interrupted, or non-spurious wake
         while (true) {

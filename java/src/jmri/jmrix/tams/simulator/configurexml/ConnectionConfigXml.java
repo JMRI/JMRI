@@ -1,11 +1,8 @@
 package jmri.jmrix.tams.simulator.configurexml;
 
-import jmri.InstanceManager;
 import jmri.jmrix.configurexml.AbstractSerialConnectionConfigXml;
 import jmri.jmrix.tams.simulator.ConnectionConfig;
 import jmri.jmrix.tams.simulator.SimulatorAdapter;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 
 /**
  * Handle XML persistence of layout connections by persisting the
@@ -35,11 +32,9 @@ public class ConnectionConfigXml extends AbstractSerialConnectionConfigXml {
         adapter = new SimulatorAdapter();
     }
 
+    @Override
     protected void register() {
-        InstanceManager.configureManagerInstance().registerPref(new ConnectionConfig(adapter));
+        this.register(new ConnectionConfig(adapter));
     }
-
-    // initialize logging
-    static Logger log = LoggerFactory.getLogger(ConnectionConfigXml.class.getName());
 
 }

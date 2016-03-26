@@ -6,8 +6,6 @@ import jmri.jmrit.display.controlPanelEditor.shape.LocoLabel;
 import jmri.jmrit.logix.OBlock;
 import jmri.jmrit.logix.OBlockManager;
 import org.jdom2.Element;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 
 /**
  * Handle configuration for display.PositionableShape objects
@@ -51,12 +49,6 @@ public class LocoLabelXml extends PositionableRectangleXml {
         return element;
     }
 
-    @Override
-    public boolean load(Element element) {
-        log.error("Invalid method called");
-        return false;
-    }
-
     /**
      * Create a PositionableShape, then add to a target JLayeredPane
      *
@@ -89,6 +81,4 @@ public class LocoLabelXml extends PositionableRectangleXml {
         // load individual item's option settings after editor has set its global settings
         loadCommonAttributes(ll, Editor.MARKERS, element);
     }
-
-    static Logger log = LoggerFactory.getLogger(LocoLabelXml.class.getName());
 }

@@ -1,14 +1,13 @@
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
-<!-- $Id$ -->
 <html lang="en">
 <head>
- <TITLE>
+ <title>
       JMRI: Adding Signal Masts
- </TITLE>
-    <META http-equiv=Content-Type content="text/html; charset=iso-8859-1">
-<meta name="Author" content="Bob Jacobsen, Egbert Broerse">
-<meta name="Date.Modified" content="20150125"/>
-    <META name="keywords" content="JMRI help Signal Mast Add">
+ </title>
+    <meta http-equiv=Content-Type content="text/html; charset=iso-8859-1">
+    <meta name="Author" content="Bob Jacobsen, Egbert Broerse">
+    <meta name="Date.Modified" content="20150125"/>
+    <meta name="keywords" content="JMRI help Signal Mast Add">
 
 <!--#include virtual="/Style" -->
 </head>
@@ -29,22 +28,25 @@ Signal Masts are built based one of the available Signaling Systems, and the Sig
 	<h2>Signal Mast Driver</h2>
 		<p>
 The fourth pop-up menu on the Add Signal Mast panel lets you select one of five different Signal Mast Driver types depending upon the hardware being used:
-<ul>
-	<li>Signal Head Controlled<br/>
-Individual Signal Head objects are used to represent each Signal Head on the Signal Mast. Each Signal Head object will then deal with handling the changing of its Appearance depending upon the state of the Signal Mast and the position of this Signal Head relative to other Heads.
+		<ul>
+		<li>Signal Head Controlled<br/>
+		Individual Signal Head objects are used to represent each Signal Head on the Signal Mast. Each Signal Head object will then deal with handling the changing of its Appearance depending upon the state of the Signal Mast and the position of this Signal Head relative to other Heads.
 		For each Signal Head that has been defined in the Signaling System for the selected Signal Mast type, a drop down box will appear for you to select the Signal Head ID that will control the Signal Head on this Signal Mast.</li>
-	<li>Turnout Controlled<br/>
+		<li>Turnout Controlled<br/>
 		This Driver type is for specific hardware that can control the whole Appearance of a Signal Mast based upon the setting of one or more Turnouts. Depending on the hardware used the appropriate options will appear in the setup panel.</li>
 		<li>Virtual<br/>
-This mast does not directly control any hardware relating to a Signal Mast. It is ideal for locations where a physical mast would not be present on the railroad, such as an End Bumper/Buffer Stop, or to 
-			mark the end of a signaling section of track and the beginning of Dark Territory.</li>
-	<li><a name="dccsmd">DCC Signal Mast Decoder</a><br/>
-			This Driver type is for an accessory decoder that can drive the Signal Masts natively and supports the <a href="http://www.nmra.org/standards/DCC/standards_rps/rp921.html#Extended%20Accessory%20Decoder%20Control%20Packet%20Format">NMRA Extended Accessory Protocol</a>. When prompted input the Aspect numbers configured in your decoder against each Aspect. The default values for the ID of each Aspect as defined in the Signaling System definition can be over-written. Decoders like the <a href="http://signalist.co.uk">Signalist SC1</a> have Signal Mast types preconfigured and you just select the correct table with a CV and get the Aspect numbers from the manual.
-			<li>LNCP Signal Mast Decoder<br/>
-				Like the previous option, the LocoNet Control Point (LNCP) Driver type needs only a decoder ID and optionally Aspect ID's to drive a <a href="http://www.rr-cirkits.com/manuals/LNCP-manual.pdf">RR_Cirkits LNCP</a> module.
-	</ul>
-		<p>Back to the <a href="SignalMastTable.shtml">Signal Masts Table help page</a>.
-<!--#include virtual="/Footer" -->
+		This mast does not directly control any hardware relating to a Signal Mast. It is ideal for locations where a physical mast would not be present on the railroad, such as an End Bumper/Buffer Stop, or to 
+		mark the end of a signaling section of track and the beginning of Dark Territory.</li>
+		<li><a name="dccsmd">DCC Signal Mast Decoder</a><br/>
+		This Driver type is for an accessory decoder that can drive the Signal Masts natively and supports the <a href="http://www.nmra.org/standards/DCC/standards_rps/rp921.html#Extended%20Accessory%20Decoder%20Control%20Packet%20Format">NMRA Extended Accessory Protocol</a>. When prompted input the Aspect numbers configured in your decoder against each Aspect. The default values for the ID of each Aspect as defined in the Signaling System definition can be over-written. Decoders like the <a href="http://signalist.co.uk">Signalist SC1</a> have Signal Mast types preconfigured and you just select the correct table with a CV and get the Aspect numbers from the manual.
+		<li>LNCP Signal Mast Decoder<br/>
+		Like the previous option, the LocoNet Control Point (LNCP) Driver type needs only a decoder ID and optionally Aspect ID's to drive a <a href="http://www.rr-cirkits.com/manuals/LNCP-manual.pdf">RR_Cirkits LNCP</a> module.
+		</ul>
+	<p>Back to the <a href="SignalMastTable.shtml">Signal Mast Table help page</a>.
+		
+		<!--#include virtual="/Footer" -->
+
+      </div><!-- closes #mainContent-->
+    </div> <!-- closes #mBody-->
 </body>
 </html>
-

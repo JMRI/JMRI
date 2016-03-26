@@ -1,4 +1,3 @@
-// SerialAddressTest.java
 package jmri.jmrix.powerline;
 
 import jmri.util.JUnitAppender;

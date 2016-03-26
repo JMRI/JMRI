@@ -1,240 +1,225 @@
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
-<html lang="en"><head>
+<html lang="en">
+<head>
+<title>JMRI Manual: Index</title>
 
-<!-- Copyright ($Author$) 2009 --><!-- $Id$ --><title>Decoder Pro Manual: Index</title><!-- Style -->
+<!-- Style -->
 <meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
-
 <link rel="stylesheet" type="text/css" href="/css/default.css" media="screen">
-
 <link rel="stylesheet" type="text/css" href="/css/print.css" media="print">
-
 <link rel="icon" href="/images/jmri.ico" type="image/png">
+<link rel="home" title="Home" href="/">
+<!-- /Style -->
+</head>
 
-<link rel="home" title="Home" href="/"><!-- /Style --></head><body>
-
+<body>
 <!--#include virtual="/Header" -->
-
 <!--#include virtual="Sidebar" -->
 
 <div id="mainContent"><a name="Top"></a>
 
-<h1>JMRI&reg; User's Guides</h1>
+<h1>JMRI&reg; Manuals</h1>
 
 <table border="0">
-
 <tbody>
 
+<tr>
+<td>Version:<br>&nbsp;</td>
+<td>Applications with Online Manual:<br>&nbsp;</td>
+<td>&nbsp;<br>&nbsp;</td>
+</tr>
 
 <tr>
-<td><span style="font-weight: bold;">JMRI&reg; Development Version</span></td><td><br></td>
+<td><span style="font-weight: bold;">JMRI&reg; current</span></td>
+<td style="font-weight: bold;"><a href="../html/apps/DecoderPro/index.shtml">DecoderPro v4.x</a></td>
+<td></td>
+</tr>
+
+<tr>
+<td></td>
+<td style="font-weight: bold;"><a href="../html/apps/PanelPro/PanelPro.shtml">PanelPro&trade; v4.x</a></td>
+<td></td>
+</tr>
+
+<tr>
+<td></td>
+<td style="font-weight: bold;"><a href="../package/jmri/jmrit/operations/Operations.shtml">OperationsPro&trade; v4.x</a></td>
+<td></td>
+</tr>
+
+<tr>
+<td></td>
+<td style="font-weight: bold;"><a href="../package/jmri/jmrit/dispatcher/Dispatcher.shtml">DispatcherPro&trade; v4.x</a></td>
+<td></td>
+</tr>
+
+<tr>
+<td></td>
+<td style="font-weight: bold;"><a href="../html/setup/index.shtml">General Set Up v4.x</a><br>&nbsp;</td>
+<td></td>
+</tr>
+
+<tr>
+<td><span style="font-weight: bold;">JMRI&reg; v3.10</span></td>
+<td style="font-weight: bold;"><a href="DecoderPro3/index.shtml">DecoderPro3 v3.6 </a></td>
 <td><br></td>
 </tr>
 
 <tr>
-<td><br></td>
-<td style="font-weight: bold;"><a href="DecoderPro3/index.shtml">DecoderPro&reg;</a></td><td><br></td>
+<td></td>
+<td style="font-weight: bold;"><a href="DecoderPro/index.shtml">DecoderPro&reg; v3.6</a></td>
+<td></td>
 </tr>
 
 <tr>
-<td><span style="font-weight: bold;">JMRI&reg; Version 3.6</span></td><td><br></td>
-<td><br></td>
+<td></td>
+<td style="font-weight: bold;"><a href="JMRI_OPS_UsersGuide/index.shtml">OperationsPro&trade; v3.6-3.10</a></td>
+<td></td>
+</tr>
+
+<!-- 2015/12: hide old intermediate version manuals, very confusing to new users
+<tr>
+<td><span style="font-weight: bold;">JMRI&reg; v3.4</span></td>
+<td></td>
+<td></td>
 </tr>
 
 <tr>
-<td><br></td>
-<td style="font-weight: bold;"><a href="http://jmri.org/manual/3-6_DecoderPro3/index.shtml">DecoderPro 3 &nbsp;3.6 </a></td><td><br></td>
+<td></td>
+<td style="font-weight: bold;"><a href="http://jmri.org/manual/3-4_DecoderPro3/index.shtml">DecoderPro3 v3.4</a></td>
+<td style="font-weight: bold;"><a href="http://jmri.org/manual/pdf/DP3_Man_3-4.pdf">Printable Guide (pdf 3.9MB)</a></td>
 </tr>
 
 <tr>
-<td><br>
-</td><td style="font-weight: bold;"><a target="_blank" href="http://jmri.org/manual/3-6_DecoderPro/index.shtml">DecoderPro&reg; 3.6</a></td>
-<td>in work 2/262014<br></td>
-</tr>
-
-<tr><td><br></td>
-<td style="font-weight: bold;">JMRI&reg; Operations Program 3.6</td><td>scheduled for update</td>
+<td></td>
+<td><a href="http://jmri.org/manual/3-4_DecoderPro/index.shtml"></a><a style="font-weight: bold;" href="http://jmri.org/manual/3-4_DecoderPro/index.shtml">DecoderPro&reg; v3.4 </a></td>
+<td> <a style="font-weight: bold;" href="http://jmri.org/manual/pdf/DP_man_3-4.pdf">Printable Guide (pdf 6.5MB)</a><br></td>
 </tr>
 
 <tr>
-<td>&nbsp;<span style="font-weight: bold;">JMRI&reg; Version 3.4</span></td>
-<td>&nbsp;</td>
-<td>&nbsp;</td>
-</tr>
-
-<tr>
-<td>&nbsp;</td>
-<td><a href="http://jmri.org/manual/3-4_DecoderPro/index.shtml">&nbsp;</a><a style="font-weight: bold;" href="http://jmri.org/manual/3-4_DecoderPro/index.shtml">DecoderPro&reg; 3.4 </a></td>
-<td> <a style="font-weight: bold;" href="http://jmri.org/manual/pdf/DP_man_3-4.pdf" target="_blank">Download Printable Guide (pdf 6.5MB)</a><br></td>
-</tr>
-
-<tr>
-<td>&nbsp;</td>
-<td style="font-weight: bold;"><a href="http://jmri.org/manual/3-4_DecoderPro3/index.shtml">&nbsp;DecoderPro 3 3.4 </a>&nbsp;</td>
-<td style="font-weight: bold;"><a href="http://jmri.org/manual/pdf/DP3_Man_3-4.pdf" target="_blank">Download Printable Guide (pdf 3.9MB)</a><br></td>
-</tr>
-
-<tr>
-<td>&nbsp;</td>
-<td><a style="font-weight: bold;" href="http://jmri.org/manual/3-4_JMRI_OPS_UsersGuide/index.shtml" target="_blank">JMRI&reg; Operations Program 3.4 </a>&nbsp;</td>
+<td></td>
+<td><a style="font-weight: bold;" href="http://jmri.org/manual/3-4_JMRI_OPS_UsersGuide/index.shtml">JMRI&reg; Operations Program v3.4 </a></td>
 <td> <br></td>
 </tr>
 
 <tr>
-<td><strong>JMRI&reg; Version 3.2</strong></td>
-<td>&nbsp;</td>
-<td>&nbsp;</td>
+<td><strong>JMRI&reg; v3.2</strong></td>
+<td></td>
+<td></td>
 </tr>
 
 <tr>
-<td>&nbsp;</td>
-<td><strong><a href="http://jmri.org/manual/3-2_DecoderPro3/index.shtml">DecoderPro 3 3.2</a></strong></td>
-<td><strong><a href="http://jmri.org/manual/pdf/DP3_Man_3-2.pdf">Download Printable Guide (pdf 3.95MB)</a></strong></td>
+<td></td>
+<td><strong><a href="http://jmri.org/manual/3-2_DecoderPro3/index.shtml">DecoderPro3 v3.2</a></strong></td>
+<td><strong><a href="http://jmri.org/manual/pdf/DP3_Man_3-2.pdf">Printable Guide (pdf 4.0MB)</a></strong></td>
 </tr>
 
 <tr>
-<td>&nbsp;</td>
-<td><strong><a href="http://jmri.org/manual/3-2_DecoderPro/index.shtml">DecoderPro&reg; 3.2 &nbsp;&nbsp;</a></strong></td>
-<td><strong><a href="http://jmri.org/manual/pdf/DP_man_3-2.pdf">Download Printable Guide (pdf 3.5MB)</a></strong></td>
+<td></td>
+<td><strong><a href="http://jmri.org/manual/3-2_DecoderPro/index.shtml">DecoderPro&reg; v3.2</a></strong></td>
+<td><strong><a href="http://jmri.org/manual/pdf/DP_man_3-2.pdf">Printable Guide (pdf 3.5MB)</a></strong></td>
 </tr>
 
 <tr>
-<td>&nbsp;</td>
-<td><strong><a href="http://jmri.org/manual/3-2_JMRI_OPS_UsersGuide/index.shtml">JMRI&reg; Operations Program 3.2</a></strong></td>
+<td></td>
+<td><strong><a href="http://jmri.org/manual/3-2_JMRI_OPS_UsersGuide/index.shtml">JMRI&reg; Operations Program v3.2</a></strong></td>
 <td><br></td>
 </tr>
 
 <tr>
-<td><strong>JMRI&reg; Version 3.0</strong></td>
-<td><strong>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</strong></td>
+<td><strong>JMRI&reg; v3.0</strong></td>
+<td><strong>&nbsp;</strong></td>
+<td></td>
+</tr>
+
+<tr>
+<td>&nbsp;</td>
+<td><strong><a href="http://jmri.org/manual/3-0_DecoderPro3/index.shtml">DecoderPro 3 v3.0</a></strong></td>
+<td><strong><a href="http://jmri.org/manual/pdf/DP3_Man_3-0.pdf" target="_blank">Printable Guide (pdf 3.8MB)</a></strong></td>
+</tr>
+
+<tr>
+<td>&nbsp;</td>
+<td><strong><a href="http://jmri.org/manual/3-0_DecoderPro/index.shtml">DecoderPro&reg; v3.0</a></strong></td>
+<td><strong><a href="http://jmri.org/manual/pdf/DP_man_3-0.pdf" target="_blank">Printable Guide (pdf 3.5MB)</a></strong></td>
+</tr>
+
+<tr>
+<td>&nbsp;</td>
+<td><strong><a href="http://jmri.org/manual/3-0_JMRI_OPS_UsersGuide/index.shtml">JMRI&reg; Operations Program v3.0</a></strong></td>
+<td><strong><a href="pdf/JMRI_3-0%20Operations_Users%20Guide.pdf" target="_blank">Printable Guide (pdf 4.0MB)</a></strong></td>
+</tr>
+end of old list, to be deleted -->
+
+<tr>
+<td><strong>JMRI&reg; v2.14</strong></td>
+<td>&nbsp;</td>
 <td>&nbsp;</td>
 </tr>
 
 <tr>
 <td>&nbsp;</td>
-<td><strong><a href="http://jmri.org/manual/3-0_DecoderPro3/index.shtml">DecoderPro 3 3.0</a>&nbsp;&nbsp;</strong></td>
-<td><strong><a href="http://jmri.org/manual/pdf/DP3_Man_3-0.pdf" target="_blank">Download Printable Guide (pdf 3.8MB)</a></strong></td>
-</tr>
-
-<tr>
-<td>&nbsp;</td>
-<td><strong><a href="http://jmri.org/manual/3-0_DecoderPro/index.shtml">DecoderPro&reg; 3.0</a></strong></td>
-<td><strong><a href="http://jmri.org/manual/pdf/DP_man_3-0.pdf" target="_blank">Download Printable Guide (pdf 3.5MB)</a></strong></td>
-</tr>
-
-<tr>
-<td>&nbsp;</td>
-<td><strong><a href="http://jmri.org/manual/3-0_JMRI_OPS_UsersGuide/index.shtml">JMRI&reg; Operations Program 3.0</a>&nbsp;&nbsp;&nbsp;&nbsp;</strong></td>
-<td><strong><a href="pdf/JMRI_3-0%20Operations_Users%20Guide.pdf">Download Printable Guide (pdf 4.0MB)</a></strong></td>
-</tr>
-
-<tr>
-<td><strong>JMRI&reg; Version 2.14</strong></td>
-<td>&nbsp;</td>
+<td><strong><a href="http://jmri.org/manual/JMRI_2-14_manual/index.shtml">JMRI&reg; v2.14.1</a></strong></td>
 <td>&nbsp;</td>
 </tr>
 
 <tr>
 <td>&nbsp;</td>
-<td><strong><a href="http://jmri.org/manual/JMRI_2-14_manual/index.shtml" target="_blank">JMRI&reg; v2.14.1</a> &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</strong></td>
-<td><strong>&nbsp;<a href="http://jmri.org/manual/pdf/DP3_Man_2_14.pdf" target="_blank">Download Printable Guide (pdf 6.7MB)</a></strong></td>
+<td><strong><a href="http://jmri.org/manual/DP3_2-14_manual/index.shtml">DecoderPro 3 v2.14</a></strong></td>
+<td><strong><a href="http://jmri.org/manual/pdf/DP3_Man_2_14.pdf" target="_blank">Printable PDF (6.7MB)</a></strong></td>
+</tr>
+
+<!-- <tr>
+<td width="200"><strong>JMRI&reg; v2.12</strong></td>
+<td width="300"></td>
+<td width="400"></td>
 </tr>
 
 <tr>
-<td width="200"><strong>JMRI&reg; Version 2.12 </strong></td>
-<td width="300">&nbsp;</td>
-<td width="400">&nbsp;</td>
-</tr>
-
-<tr>
-<td>&nbsp;</td>
+<td></td>
 <td><strong><a href="http://jmri.org/manual/JMRI_2-12_Manual/index.shtml">JMRI&reg; v2.12 Archive</a></strong></td>
-<td><strong>&nbsp;&nbsp;<a href="http://jmri.org/manual/pdf/jmri_Man_2_12.pdf" target="_blank">Download Printable Guide (pdf 9.4MB)</a></strong></td>
-</tr>
+<td><strong><a href="http://jmri.org/manual/pdf/jmri_Man_2_12.pdf" target="_blank">Printable Guide (pdf 9.4MB)</a></strong></td>
+</tr> -->
 
 </tbody>
-
 </table>
 
-<h4>Updated 2/26/2014</h4>
+<p>Updated 12/30/2015</p>
 
-=======&nbsp;
+<h2>JMRI&reg; Applications</h2>
 
+<p><strong>JMRI is a Java-based cross-platform program suite
+for model railroaders.</strong><br>
+It contains <a href="../html/apps/index.shtml">modular applications</a> for:</p>
 
-
-<p><strong>JMRI is a Java-based cross-platform application
-
-for model railroaders. JMRi contains applications for:</strong></p>
-
-<p><strong>The programming of Digital Command Control (DCC)
-
-decoders, (DecoderPro&reg;).<br>
-
-Drawing computer based panels for depicting a model railroad&nbsp;
-
-layout , (PanelPro&trade; ).<br>
-
-Controlling the layout , (Layout Editor).<br>
-
-Creating train manifests for duplicating railroad operations, Operations<br>
-
-Controlling the signals on the layout<br>
-
-Controlling&nbsp; lighting and sound in the room, and so forth.
-
-(SoundPro&trade;)</strong></p>
-
-<p>All this capability is contained in one program (JMRI) which
-
-has several &#8220;start-up&#8221; screens for the various applications. </p>
-
-<p>&nbsp;</p>
-
-<hr>
-
-&nbsp;JMRI&reg; version 2.12 can run on any computer system that will
-
-run Java 1.5.0 or later, whether it is Macintosh, Windows, or Linux
-
-based. It does require that Java be installed on the computer. JMRI&reg;
-
-version 2.14 and later requires Java 1.6.0 or later. You can get Java
-
-as a free (but very large...) download at:
-
-<p><a href="http://java.sun.com/getjava/" target="_blank">http://java.sun.com/getjava/</a>
-
+	<ul>
+	<li>Programming of Digital Command Control (DCC) decoders (<a href="../html/apps/DecoderPro/index.shtml">DecoderPro&reg;</a>)</li>
+	<li>Drawing computer based panels for depicting a model railroad layout (<a href="../html/apps/PanelPro/PanelPro.shtml">PanelPro&trade;</a> and <a href="../html/apps/PanelPro/PanelPro.shtml#layouteditor">Layout Editor</a>)</li>
+	<li>Controlling the layout (All modules)</li>
+	<li>Creating train manifests for duplicating railroad operations (<a href="../html/package/jmri/jmrit/operations/Operations.shtml">OperationsPro&trade;</a>)</li>
+	<li>Controlling the signals on the layout (All modules)</li>
+	<li>Controlling lighting and sound in the room, and so forth (<a href="../html/tools/Audio.shtml">SoundPro&trade;</a>)</li>
+	</ul>
+<p>If this is your first visit to our manual, we suggest that you
+take the Decoder Pro&reg; tour at <a href="http://jmri.org/help/en/html/apps/DecoderPro/Tour.shtml">http://jmri.org/help/en/html/apps/DecoderPro/Tour.shtml</a><br>
+to get an overview of what we're about to cover.
 </p>
+<p>All this capability is contained in one <a href="http://jmri.org/download/index.shtml">install</a>.</p>
 
-<p>If this is your first visit to our manual we suggest that you
+<h2>System Requirements</h2>
 
-take the Decoder Pro&reg; tour at <a href="http://jmri.sourceforge.net/help/en/html/apps/DecoderPro/Tour.shtml">http://jmri.sourceforge.net/help/en/html/apps/DecoderPro/Tour.shtml</a><br>
-
-to get an overview of what we&#8217;re about to cover..
-
-</p>
-
-<p></p>
-
-<p>&nbsp;</p>
-
-<p>
-
-</p>
-
-<h2>&nbsp;</h2>
-
-<h4>&nbsp;</h4>
-
-<hr>
-
-<div align="right">Go to the
-
-<a href="http://groups.yahoo.com/group/jmriusers/">JMRI
-
-Users home page on Yahoo Groups</a></div>
+<p>JMRI&reg; requires that Java be installed, whether your computer is <a href="http://jmri.org/install/MacOSX.shtml">Mac</a>, <a href="http://jmri.org/install/WindowsNew.shtml">Windows</a>, or <a href="http://jmri.org/install/Linux.shtml">Linux</a> based.</p>
+<p>Version 2.12 can run on any computer system that will
+run Java 1.5 or later.<br>
+Version 2.14.1 requires Java 1.5 (or 1.6 if you wish for drag &amp; drop)<br>
+Version 3.10.1 requires Java 1.7 or later.<br>
+Version 4.2 requires Java 1.8.</p>
+<p>More on <a href="https://www.java.com/en/download/help/sysreq.xml">Java versions and hardware requirements</a>.<br>
+Get the latest Java as a free download at: 
+<a href="http://java.com/download/" target="_blank">java.com/download</a>.
 
 <!--#include virtual="/Footer" -->
-
-</div>
-
-</body></html>
+  </div><!-- closes #mainContent-->
+ </div> <!-- closes #mBody-->
+</body>
+</html>

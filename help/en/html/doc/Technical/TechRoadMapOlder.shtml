@@ -3,7 +3,7 @@
 <html lang="en">
 <head>
     <TITLE>
- 	JMRI: Technology Road Map - Older Releases
+ 	JMRI: Technology Road Map History
     </TITLE>
     <META content="Bob Jacobsen" name=Author>
     <meta name="keywords" content="JMRI technical code road map">
@@ -30,14 +30,20 @@
 
 	<div id="mainContent">
 
-<H1>JMRI: Technology Road Map</H1>
+<H1>JMRI: Technology Road Map History</H1>
 
 This page is the historical version of the road map for JMRI's future development.
 It contains notes on older releases.
 For more recent work, see the 
 <a href="TechRoadMap.shtml">main Technology Road Map page</a>. 
 
-<h2>JMRI Releases</h2>
+<h3>Java Release and Operating System Support</h3>
+
+More information on Java releases and the operating systems
+that support them is on a 
+<a href="JVMCapabilities.shtml">separate page</a>.
+
+<h2>JMRI Release and Development Plan History</h2>
 
 This section describes the (notional)
 plans for JMRI releases.
@@ -51,15 +57,20 @@ plans for JMRI releases.
 <tr><td>2.1.*</td><td>Development series </td><td></td>                           <td>1.4</td><td>1.5</td></tr>
 <tr><td>2.2</td><td>Production version, culmination of 2.1.* series </td><td>June 2008 <b>(done)</b></td><td>1.4</td><td>1.5</td></tr>
 <tr><td>2.3.*</td><td>Development series </td><td></td>                           <td>1.5</td><td>1.5</td></tr>
-<tr><td>2.4</td><td>Production version, culmination of 2.3.* series </td><td>December 2008 (done)</td>       <td>1.5</td><td>1.5</td></tr>
+<tr><td>2.4</td><td>Production version, culmination of 2.3.* series </td><td>December 2008 <b>(done)</b></td>       <td>1.5</td><td>1.5</td></tr>
 <tr><td>2.5.*</td><td>Development series</td><td></td>                                              <td>1.5</td><td>1.5</td></tr>
-<tr><td>2.6</td><td>Production version, culmination of 2.5.* series </td><td>June 2009 (done)</td><td>1.5</td><td>1.5</td></tr>
+<tr><td>2.6</td><td>Production version, culmination of 2.5.* series </td><td>June 2009 <b>(done)</b></td><td>1.5</td><td>1.5</td></tr>
 <tr><td>2.7.*</td><td>Development series</td><td></td>                                              <td>1.5</td><td>1.5</td></tr>
-<tr><td>2.8</td><td>Production version, culmination of 2.7.* series </td><td>December 2009 (tentative)</td><td>1.5</td><td>1.5</td></tr>
+<tr><td>2.8</td><td>Production version, culmination of 2.7.* series </td><td>December 2009 <b>(done)</b></td><td>1.5</td><td>1.5</td></tr>
 <tr><td>2.9.*</td><td>Development series</td><td></td>                                              <td>1.5</td><td>1.5</td></tr>
-<tr><td>2.10/3.0</td><td>Production version, culmination of 2.9.* series </td><td>June 2010 (tentative)</td><td>1.5</td><td>1.5</td></tr>
+<tr><td>2.10/3.0</td><td>Production version, culmination of 2.9.* series </td><td>June 2010 <b>(done)</b></td><td>1.5</td><td>1.5</td></tr>
 <tr><td>?.?.*</td><td>Development series</td><td></td>                                              <td>?</td><td>?</td></tr>
-<tr><td>?.?</td><td>Production version, culmination of ?.?.* series </td><td>December 2010 (tentative)</td><td>?</td><td>?</td></tr>
+<tr><td>?.?</td><td>Production version, culmination of ?.?.* series </td><td>                       </td><td>?</td><td>?</td></tr>
+<tr><td>3.8</td><td>Production version, culmination of 3.7.* series </td>   <td>July 2014 <b>(done)</b></td>
+                                                                                            <td>1.6</td>    <td>1.6</td></tr>
+<tr><td>3.9.*</td><td>Development series </td>                              <td></td>       <td>1.6</td>    <td>1.6</td></tr>
+<tr><td>3.10</td><td>Production version, culmination of 3.9.* series </td>  <td>December 2014 <b>(done)</b></td>
+                                                                                            <td>1.6</td>    <td>1.6</td></tr>
 
 </table>
 
@@ -163,11 +174,44 @@ After JMRI 2.10/3.0 in early summer 2010, development will continue.
 It's likely that soon after that, if not before, we'll have to 
 move to using Java 1.6. 
 
-<h3>Java Release and Operating System Support</h3>
+<!-- following added from TechRoadMap.shtml December 2015 -->
 
-More information on Java releases and the operating systems
-that support them is on a 
-<a href="JVMCapabilities.shtml">separate page</a>.
+<h4>JMRI 3.9, 3.10 (End of 2014)</h4>
+
+The JMRI 3.9 development series will stay with Java 1.6 for JRE and SDK. 
+
+<h4>JMRI 3.11, 4.0 (Summer 2015)</h4>
+
+For multiple reasons including
+<ul>
+<li>Improved performance, particularly of web I/O and XML file loading, and
+<li>Language and library improvements that made the developer's work easier,
+</ul>
+the Spring 2015 series of test releases (JMRI 3.11.*) required
+Java 1.8 for both building and running. 
+Java 1.8 is also required for the Summer 2015 production release and those that follow.
+
+<p>Planned JMRI changes that affect backwards-compatibility:
+<ul>
+<li>Planned removal of XmlIO web service.
+<li>Removal of deprecated InstanceManager methods
+<li>Removal of some deprecated pass-through classes
+</ul>
+
+<p>
+New library features
+(subject to verification):
+<ul>
+<li>Update to JDOM 2 for efficiency and coding convenience
+<li>Update Jython to at least 2.5.4 (bug fixes), 
+    and depending on compatibility testing, perhaps 2.7.* (for modern Python)
+<li>Start using <a href="https://jcp.org/en/jsr/detail?id=305">JSR 305 annotations</a> 
+    <a href="https://code.google.com/p/findbugs/">via Findbugs</a>
+    to strengthen the code checking (see 
+        <a href="https://today.java.net/pub/a/today/2008/09/11/jsr-305-annotations.html">this</a> and
+        <a href="http://findbugs.sourceforge.net/api/edu/umd/cs/findbugs/annotations/package-summary.html">this</a>).
+</ul>
+
 
 
 <!--#include virtual="/Footer" -->

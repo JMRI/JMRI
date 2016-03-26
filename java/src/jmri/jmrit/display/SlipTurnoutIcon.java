@@ -40,14 +40,8 @@ import org.slf4j.LoggerFactory;
  * Based upon the TurnoutIcon by Bob Jacobsen
  *
  * @author Kevin Dickerson Copyright (c) 2010
- * @version $Revision$
  */
 public class SlipTurnoutIcon extends PositionableLabel implements java.beans.PropertyChangeListener {
-
-    /**
-     *
-     */
-    private static final long serialVersionUID = -4644712323861322600L;
 
     public SlipTurnoutIcon(Editor editor) {
         // super ctor call to make sure this is an icon label
@@ -1178,11 +1172,6 @@ public class SlipTurnoutIcon extends PositionableLabel implements java.beans.Pro
             popuptext = Bundle.getMessage("SetScissorText");
         }
         popup.add(new AbstractAction(popuptext) {
-            /**
-             *
-             */
-            private static final long serialVersionUID = 1458395650486759302L;
-
             public void actionPerformed(ActionEvent e) {
                 String name = getNameString();
                 slipTurnoutTextEdit(name);
@@ -1270,7 +1259,7 @@ public class SlipTurnoutIcon extends PositionableLabel implements java.beans.Pro
             thread.start();
         }
     }
-    static Logger log = LoggerFactory.getLogger(SlipTurnoutIcon.class.getName());
+    private final static Logger log = LoggerFactory.getLogger(SlipTurnoutIcon.class.getName());
 
     static class SetSlipThread extends Thread {
 
@@ -1282,7 +1271,7 @@ public class SlipTurnoutIcon extends PositionableLabel implements java.beans.Pro
         }
 
         //This is used to set the two turnouts, with a delay of 250ms between each one.
-        @edu.umd.cs.findbugs.annotations.SuppressWarnings(value = "WMI_WRONG_MAP_ITERATOR", justification = "iterator really short, efficiency not as important as clarity here")
+        @edu.umd.cs.findbugs.annotations.SuppressFBWarnings(value = "WMI_WRONG_MAP_ITERATOR", justification = "iterator really short, efficiency not as important as clarity here")
         public void run() {
 
             HashMap<Turnout, Integer> _turnoutSetting = s.getTurnoutSettings();
@@ -1304,7 +1293,6 @@ public class SlipTurnoutIcon extends PositionableLabel implements java.beans.Pro
         }
 
         private SlipTurnoutIcon s;
-        static final Logger log = LoggerFactory.getLogger(SetSlipThread.class.getName());
 
     }
 }

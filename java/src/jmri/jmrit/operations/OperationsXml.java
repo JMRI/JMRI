@@ -123,7 +123,7 @@ public abstract class OperationsXml extends XmlFile {
         return operationsFileName;
     }
 
-    private String operationsFileName = "DefaultOperations.xml"; // NOI18N should be overridden
+    private String operationsFileName = "DefaultOperations.xml"; // should be overridden // NOI18N
 
     /**
      * Absolute path to location of Operations files.
@@ -190,6 +190,21 @@ public abstract class OperationsXml extends XmlFile {
         }
         return buf.toString();
     }
+    
+    /**
+     * Checks name for the file control characters: 
+     * @param name
+     * @return true if name is okay, false if name contains a control character.
+     */
+    public static boolean checkFileName(String name) {
+        if (name.contains(".") || name.contains("<") || name.contains(">") // NOI18N
+                || name.contains(":") || name.contains("\"") || name.contains("\\") // NOI18N
+                || name.contains("/") || name.contains("|") || name.contains("?") // NOI18N
+                || name.contains("*")) { // NOI18N
+            return false;
+        }
+        return true;
+    }
 
     /**
      * Saves operation files that have been modified.
@@ -217,6 +232,6 @@ public abstract class OperationsXml extends XmlFile {
         return false;
     }
 
-    static Logger log = LoggerFactory.getLogger(OperationsXml.class.getName());
+    private final static Logger log = LoggerFactory.getLogger(OperationsXml.class.getName());
 
 }

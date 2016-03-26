@@ -1,12 +1,9 @@
-// StringUtilTest.java
 package jmri.util;
 
 import junit.framework.Assert;
 import junit.framework.Test;
 import junit.framework.TestCase;
 import junit.framework.TestSuite;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 
 /**
  * Tests for the jmri.util.StringUtil class.
@@ -385,7 +382,7 @@ public class StringUtilTest extends TestCase {
 
     // Main entry point
     static public void main(String[] args) {
-        String[] testCaseName = {StringUtilTest.class.getName()};
+        String[] testCaseName = {"-noloading", StringUtilTest.class.getName()};
         junit.swingui.TestRunner.main(testCaseName);
     }
 
@@ -394,7 +391,5 @@ public class StringUtilTest extends TestCase {
         TestSuite suite = new TestSuite(StringUtilTest.class);
         return suite;
     }
-
-    static Logger log = LoggerFactory.getLogger(StringUtilTest.class.getName());
 
 }

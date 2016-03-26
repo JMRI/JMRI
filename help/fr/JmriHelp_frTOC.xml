@@ -61,7 +61,7 @@
    <tocitem text="Tour rapide " target="html.apps.DecoderPro.Tour"/>
 
   </tocitem>
-  <tocitem text="DecoderPro Manuel " target="manual.index">
+  <tocitem text="DecoderPro Manuel " target="DecoderProManual.index">
    <tocitem text="D&#233;marrer " target="manual.Getting_Started">
     <tocitem text="Qu'est ce que DCC? " target="manual.Getting_Started_What is DCC"/>
 
@@ -198,7 +198,7 @@
   <tocitem text="M&#233;moires " target="html.tools.Memories">
    <tocitem text="Ajouter/&#201;diter M&#233;moires " target="package.jmri.jmrit.beantable.MemoryAddEdit"/>
 
-   <tocitem text="Tableau M&#233;moires " target="package.jmri.jmrit.beantable.MemoryTable"/>
+   <tocitem text="Tableau des Variables de M&#233;moire " target="package.jmri.jmrit.beantable.MemoryTable"/>
 
   </tocitem>
   <tocitem text="Exploitations " target="package.jmri.jmrit.operations.Operations">
@@ -216,7 +216,7 @@
    </tocitem>
    <tocitem text="Wagons " target="package.jmri.jmrit.operations.Operations_Cars"/>
 
-   <tocitem text="Machines " target="package.jmri.jmrit.operations.Operations_Engines"/>
+   <tocitem text="Machines " target="package.jmri.jmrit.operations.Operations_Locomotives"/>
 
    <tocitem text="Itin&#233;raires " target="package.jmri.jmrit.operations.Operations_Routes"/>
 
@@ -234,7 +234,7 @@
   <tocitem text="Rapports " target="html.tools.Reporters">
    <tocitem text="Ajout/&#201;dition Rapport " target="package.jmri.jmrit.beantable.ReporterAddEdit"/>
 
-   <tocitem text="Tableau de Rapports " target="package.jmri.jmrit.beantable.ReporterTable"/>
+   <tocitem text="Tableau des Rapports " target="package.jmri.jmrit.beantable.ReporterTable"/>
 
   </tocitem>
   <tocitem text="Itin&#233;raires " target="html.tools.Routes">
@@ -258,7 +258,7 @@
   <tocitem text="Sections ">
    <tocitem text="Ajouter/&#201;diter Section " target="package.jmri.jmrit.beantable.SectionAddEdit"/>
 
-   <tocitem text="Tableau de Section " target="package.jmri.jmrit.beantable.SectionTable"/>
+   <tocitem text="Tableau des Sections " target="package.jmri.jmrit.beantable.SectionTable"/>
 
   </tocitem>
   <tocitem text="Outil Envoi Paquet DCC " target="package.jmri.jmrit.sendpacket.SendPacketFrame"/>
@@ -266,7 +266,7 @@
   <tocitem text="Capteurs " target="html.tools.Sensors">
    <tocitem text="Ajouter/&#201;diter Capteurs " target="package.jmri.jmrit.beantable.SensorAddEdit"/>
 
-   <tocitem text="Tableau de Capteurs " target="package.jmri.jmrit.beantable.SensorTable"/>
+   <tocitem text="Tableau des Capteurs " target="package.jmri.jmrit.beantable.SensorTable"/>
 
   </tocitem>
   <tocitem text="Groupes de Capteurs " target="package.jmri.jmrit.sensorgroup.SensorGroupFrame"/>
@@ -294,30 +294,30 @@
   <tocitem text="Tachym&#232;tre " target="html.tools.speedometer.index"/>
 
   <tocitem text="Tableaux ">
-   <tocitem text="Tableau Aiguillage " target="package.jmri.jmrit.beantable.TurnoutTable"/>
+   <tocitem text="Tableau des Aiguillages " target="package.jmri.jmrit.beantable.TurnoutTable"/>
 
-   <tocitem text="Tableau Lumi&#232;re " target="package.jmri.jmrit.beantable.LightTable"/>
+   <tocitem text="Tableau des Lumi&#232;res " target="package.jmri.jmrit.beantable.LightTable"/>
 
-   <tocitem text="Tableau Capteur " target="package.jmri.jmrit.beantable.SensorTable"/>
+   <tocitem text="Tableau des Capteurs " target="package.jmri.jmrit.beantable.SensorTable"/>
 
    <tocitem text="Tableau T&#234;te de Signal " target="package.jmri.jmrit.beantable.SignalHeadTable"/>
 
-   <tocitem text="Tableau Itin&#233;raire " target="package.jmri.jmrit.beantable.RouteTable"/>
+   <tocitem text="Tableau des Itin&#233;raires " target="package.jmri.jmrit.beantable.RouteTable"/>
 
-   <tocitem text="Tableau LItin&#233;raire " target="package.jmri.jmrit.beantable.LRouteTable"/>
+   <tocitem text="Tableau des LItin&#233;raires " target="package.jmri.jmrit.beantable.LRouteTable"/>
 
    <tocitem text="Tableau Logix " target="package.jmri.jmrit.beantable.LogixTable"/>
 
-   <tocitem text="Tableau M&#233;moire " target="package.jmri.jmrit.beantable.MemoryTable"/>
+   <tocitem text="Tableau des Variables de M&#233;moire " target="package.jmri.jmrit.beantable.MemoryTable"/>
 
-   <tocitem text="Tableau Rapport " target="package.jmri.jmrit.beantable.ReporterTable"/>
+   <tocitem text="Tableau des Rapports " target="package.jmri.jmrit.beantable.ReporterTable"/>
 
-   <tocitem text="Tableau Canton " target="package.jmri.jmrit.beantable.BlockTable"/>
+   <tocitem text="Tableau des Cantons " target="package.jmri.jmrit.beantable.BlockTable"/>
 
   </tocitem>
   <tocitem text="Traqueur(Cantons) " target="html.tools.tracker.index"/>
 
-  <tocitem text="Ajouter/&#201;diter Transits ">
+  <tocitem text="Transits ">
    <tocitem text="Ajouter Transit " target="package.jmri.jmrit.beantable.TransitAddEdit"/>
 
    <tocitem text="Table Transit " target="package.jmri.jmrit.beantable.TransitTable"/>
@@ -328,7 +328,7 @@
   <tocitem text="Aiguillages " target="html.tools.Turnouts">
    <tocitem text="Ajouter&#201;diter Aiguillage " target="package.jmri.jmrit.beantable.TurnoutAddEdit"/>
 
-   <tocitem text="Tableau Aiguillage " target="package.jmri.jmrit.beantable.TurnoutTable"/>
+   <tocitem text="Tableau des Aiguillages " target="package.jmri.jmrit.beantable.TurnoutTable"/>
 
   </tocitem>
   <tocitem text="Mandat " target="package.jmri.jmrit.logix.Warrant"/>
@@ -361,7 +361,7 @@
   </tocitem>
   <tocitem text="Wagons " target="package.jmri.jmrit.operations.Operations_Cars"/>
 
-  <tocitem text="Machines " target="package.jmri.jmrit.operations.Operations_Engines"/>
+  <tocitem text="Machines " target="package.jmri.jmrit.operations.Operations_Locomotives"/>
 
   <tocitem text="Itin&#233;raires " target="package.jmri.jmrit.operations.Operations_Routes"/>
 
@@ -385,7 +385,7 @@
   </tocitem>
   <tocitem text="Menu Options " target="package.jmri.jmrit.dispatcher.Options"/>
 
-  <tocitem text="Section de Fen&#234;tre Allou&#233;e " target="package.jmri.jmrit.dispatcher.AllocatedSections"/>
+  <tocitem text="Section de Fen&#234;tre Allou&#233;e " target="package.jmri.jmrit.dispatcher.Dispatcher_allocated"/>
 
   <tocitem text="Allocation Suppl&#233;mentaire " target="package.jmri.jmrit.dispatcher.AllocateExtra"/>
 
@@ -494,7 +494,7 @@
 
    <tocitem text="Editeurs  XML " target="html.doc.Technical.XmlEditors"/>
 
-   <tocitem text="visualisation des Fchiers Panneau " target="html.apps.PanelPro.ShowPanel"/>
+   <tocitem text="visualisation des Fichiers Panneau " target="html.apps.PanelPro.ShowPanel"/>
 
   </tocitem>
  </tocitem>

@@ -27,12 +27,12 @@ public class LnTurnoutManagerXml extends jmri.managers.configurexml.AbstractTurn
         log.error("Invalid method called");
     }
 
-    public boolean load(Element turnouts) {
-
+    @Override
+    public boolean load(Element shared, Element perNode) {
         // load individual turnouts
-        return loadTurnouts(turnouts);
+        return loadTurnouts(shared, perNode);
     }
 
-    static Logger log = LoggerFactory.getLogger(LnTurnoutManagerXml.class.getName());
+    private final static Logger log = LoggerFactory.getLogger(LnTurnoutManagerXml.class.getName());
 
 }

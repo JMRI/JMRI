@@ -72,11 +72,6 @@ public class BlockContentsIconXml extends PositionableLabelXml {
         return element;
     }
 
-    public boolean load(Element element) {
-        log.error("Invalid method called");
-        return false;
-    }
-
     /**
      * Load, starting with the BlockContentsIcon element, then all the
      * value-icon pairs
@@ -159,5 +154,5 @@ public class BlockContentsIconXml extends PositionableLabelXml {
         l.displayState();
     }
 
-    static Logger log = LoggerFactory.getLogger(BlockContentsIconXml.class.getName());
+    private final static Logger log = LoggerFactory.getLogger(BlockContentsIconXml.class.getName());
 }

@@ -1,4 +1,3 @@
-// CoordinateEdit.java
 package jmri.jmrit.display;
 
 import java.awt.Dimension;
@@ -8,8 +7,6 @@ import javax.swing.AbstractAction;
 import javax.swing.SpinnerNumberModel;
 import javax.swing.event.ChangeEvent;
 import javax.swing.event.ChangeListener;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 
 /**
  * Displays and allows user to modify x & y coordinates of positionable labels
@@ -29,14 +26,9 @@ import org.slf4j.LoggerFactory;
  *
  * @author Dan Boudreau Copyright (C) 2007
  * @author Pete Cressman Copyright (C) 2010
- * @version $Revision$
  */
 public class MemoryIconCoordinateEdit extends CoordinateEdit {
 
-    /**
-     *
-     */
-    private static final long serialVersionUID = 2891580354099086691L;
     MemoryIcon pl; 			// positional label tracked by this frame
     int oldX;
     int oldY;
@@ -50,11 +42,6 @@ public class MemoryIconCoordinateEdit extends CoordinateEdit {
 
     public static AbstractAction getCoordinateEditAction(final MemoryIcon pos) {
         return new AbstractAction(Bundle.getMessage("SetXY")) {
-            /**
-             *
-             */
-            private static final long serialVersionUID = -7073550829531445326L;
-
             public void actionPerformed(ActionEvent e) {
                 MemoryIconCoordinateEdit f = new MemoryIconCoordinateEdit();
                 f.addHelpMenu("package.jmri.jmrit.display.CoordinateEdit", true);
@@ -123,6 +110,4 @@ public class MemoryIconCoordinateEdit extends CoordinateEdit {
         });
         pack();
     }
-
-    static Logger log = LoggerFactory.getLogger(MemoryIconCoordinateEdit.class.getName());
 }

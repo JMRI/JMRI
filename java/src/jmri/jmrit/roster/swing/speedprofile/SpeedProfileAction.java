@@ -12,7 +12,6 @@ import org.slf4j.LoggerFactory;
  * Swing action to create and register the Add Entry Exit Pair
  *
  * @author	Kevin Dickerson Copyright (C) 2011
- * @version	$Revision: 1.4 $
  */
 public class SpeedProfileAction extends JmriAbstractAction {
 
@@ -33,6 +32,7 @@ public class SpeedProfileAction extends JmriAbstractAction {
         super(s);
     }
 
+    @Override
     public void actionPerformed(ActionEvent e) {
         SpeedProfileFrame f = new SpeedProfileFrame();
         try {
@@ -43,7 +43,11 @@ public class SpeedProfileAction extends JmriAbstractAction {
         }
         f.setVisible(true);
     }
-    static Logger log = LoggerFactory.getLogger(SpeedProfileAction.class);
+
+    @Override
+    public jmri.util.swing.JmriPanel makePanel() { return null; } // not used by this classes actionPerformed, not migrated to new form yet
+
+    private final static Logger log = LoggerFactory.getLogger(SpeedProfileAction.class);
 }
 
 

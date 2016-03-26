@@ -3,8 +3,6 @@ package jmri.jmrit.display.controlPanelEditor.shape.configurexml;
 import jmri.jmrit.display.Editor;
 import jmri.jmrit.display.controlPanelEditor.shape.PositionableRectangle;
 import org.jdom2.Element;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 
 /**
  * Handle configuration for display.PositionableShape objects
@@ -41,11 +39,6 @@ public class PositionableRectangleXml extends PositionableShapeXml {
         return element;
     }
 
-    public boolean load(Element element) {
-        log.error("Invalid method called");
-        return false;
-    }
-
     /**
      * Create a PositionableShape, then add to a target JLayeredPane
      *
@@ -65,6 +58,4 @@ public class PositionableRectangleXml extends PositionableShapeXml {
         // load individual item's option settings after editor has set its global settings
         loadCommonAttributes(ps, Editor.MARKERS, element);
     }
-
-    static Logger log = LoggerFactory.getLogger(PositionableRectangleXml.class.getName());
 }

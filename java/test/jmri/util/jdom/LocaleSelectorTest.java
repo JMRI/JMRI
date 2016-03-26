@@ -1,12 +1,9 @@
-// LocaleSelectorTest.java
 package jmri.util.jdom;
 
 import junit.framework.Assert;
 import junit.framework.Test;
 import junit.framework.TestCase;
 import junit.framework.TestSuite;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 import org.jdom2.Element;
 import org.jdom2.Namespace;
 
@@ -207,6 +204,4 @@ public class LocaleSelectorTest extends TestCase {
     protected void tearDown() {
         apps.tests.Log4JFixture.tearDown();
     }
-
-    static Logger log = LoggerFactory.getLogger(LocaleSelectorTest.class.getName());
 }

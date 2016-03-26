@@ -173,10 +173,10 @@ diff&#233;rent de celui des noms de variables dans un fichier de script.
              quelque part)
              <P>
              Certains exemples utilisent la classe
-             <A HREF="http://jmri.sourceforge.net/JavaDoc/doc/jmri/jmrit/automat/AbstractAutomaton.html"> AbstractAutomaton </a>
+             <A HREF="http://jmri.org/JavaDoc/doc/jmri/jmrit/automat/AbstractAutomaton.html"> AbstractAutomaton </a>
              comme une base, tandis que
              d'autres utilisent la classe
-             <A HREF="http://jmri.sourceforge.net/JavaDoc/doc/jmri/jmrit/automat/Siglet.html"> Siglet </a>.
+             <A HREF="http://jmri.org/JavaDoc/doc/jmri/jmrit/automat/Siglet.html"> Siglet </a>.
              C'est parce que ceux-ci sont destin&#233;s &#224; des fins diff&#233;rentes
              .
              <P>
@@ -218,7 +218,7 @@ et puissantes que la classe Siglet, parce les Siglets sont limit&#233;s &#224; f
  (ils n'ont pas pour objectif de faire des s&#233;quences d'op&#233;rations).
             <P>
             Pour plus d'infos sur le changement de routines que fournit AbstractAutomaton
-            pour vous aider, consultez les            <A HREF="http://jmri.sourceforge.net/JavaDoc/doc/jmri/jmrit/automat/AbstractAutomaton.html#method_summary"> JavaDocs </a>
+            pour vous aider, consultez les            <A HREF="http://jmri.org/JavaDoc/doc/jmri/jmrit/automat/AbstractAutomaton.html#method_summary"> JavaDocs </a>
             pour la classe. (Faites d&#233;filer jusqu'&#224; la section intitul&#233;e "R&#233;sum&#233; de la m&#233;thode")
              
 		     <h2> Comment puis-je limiter la priorit&#233; d'un script? </h2>

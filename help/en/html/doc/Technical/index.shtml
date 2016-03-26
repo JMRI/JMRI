@@ -1,33 +1,22 @@
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
-<!-- $Id$ -->
 <html lang="en">
 <head>
-    <TITLE>
+    <title>
  	JMRI: Technical Info
-    </TITLE>
-    <META content="Bob Jacobsen" name="Author">
+    </title>
+    <meta name="author" content="Bob Jacobsen">
     <meta name="keywords" content="JMRI technical code ">
-
-    <!-- The combination of "Define" and {Header,Style, Logo and Footer} comments -->
-    <!-- are an arbitrary design pattern used by the update.pl script to -->
-    <!-- easily replace the common header/footer code for all the web pages -->
-
-    <!-- delete the following 2 Defines if you want to use the default JMRI logo -->
-    <!-- or change them to reflect your alternative logo -->
 
     <!--#include virtual="/Style" -->
 </head>
-
+<body>
 <!--#include virtual="/Header" -->
 <!--#include virtual="Sidebar" -->
 
 	<div id="mainContent">
-	    <!-- -------- -->
-	    <!--  Teaser  --> <!-- Optional -->
-	    <!-- -------- -->
 
 	    <h1>JMRI: Technical Info</h1>
-
+<p>
 You don't need to work with your own copy of the JMRI source code, compilers,
 etc if you just want to run the programs.  You can download completely 
 built copies via the 
@@ -87,14 +76,14 @@ type. Both the programming screens and decoder information are
 stored in text files, so you can make up new ones as
 desired.</p>
 
-<h2>How can you change how JMRI does things?</h2></a>
+<a name="writecode"><h2>How can you change how JMRI does things?</h2></a>
 
 There are several different ways to modify JMRI:
 <ol>
     <li>You can use the JMRI interfaces to write programs for
     your own layouts.  Making this easy is an important goal.
     This can be done via our
-    <A HREF="../../tools/scripting/index.shtml">scripting language</a>.
+    <a href="../../tools/scripting/index.shtml">scripting language</a>.
    
     <li> You can add new Java code to the program or modify the existing
 	code.  Fixing things that annoy you (aka bugs) is an easy place to jump
@@ -145,21 +134,21 @@ and
 <a href="https://github.com/JMRI/website">web site source code</a> 
 over the web.
 
-<h2>Building Your Own Copy</h2>
-
+<a name="buildyourcopy"><h2>Building Your Own Copy</h2></a>
+<p>
 In addition to getting a copy of the JMRI source code and reading it,
 you can also compile your own version of the program to run. You can
 even include your own modifications if you'd like.
 
 <p>
-There several different ways to do this. If you're already familiar
+There are several different ways to do this. If you're already familiar
 with one of the popular "Integrated Development Environments" (IDEs),
 look at the navigation bar to the left for instructions on how to 
 build JMRI using
 <a href="NetBeans.shtml">NetBeans</a>,
 <a href="Eclipse.shtml">Eclipse</a>,
-<a href="XCode.shtml">XCode</a>, or
-<a href="JBuilder.shtml">JBuilder</a>.
+or
+<a href="IntelliJ.shtml">IntelliJ</a>.
 <p>
 NetBeans provides a very convenient system for building, running,
 and if need be debugging the program.  If you're not
@@ -171,16 +160,16 @@ and compile it from a command line, please see the page of instructions for
 <a href="Ant.shtml">building with Ant</a>.
 
 <h2><a name="contributing">Contributing</h2></a>
-
+<p>
 We encourage contributions of code, decoder definitions, improvements to 
 web pages, etc, to the JMRI project so that 
 we can distribute them to the rest of the community.
 <p>
-For your first small contributions, e.g. a new decoder file or small bug fix,
-please fill out a new "Patches" entry on SourceForge using 
+For initial and/or small contributions, e.g. a new decoder file or small bug fix,
+you can fill out a new "Patches" entry on SourceForge using 
 <a href="http://sourceforge.net/tracker/?group_id=26788&atid=388315">our patches page</a>
 (click new on the middle-left, then fill out the resulting form).
-You can attach the entire file there.  If it's multiple files,
+You can attach the entire file there.  If it's more than one files,
 and you're using an IDE like
 <a href="NetBeans.shtml">NetBeans</a>, it's very easy to create a "diff patch file"
 to carry your changes, and that will save us a significant amount of
@@ -192,9 +181,14 @@ It saves us a lot of work if, before you create and send the patch file,
 you make sure that your copy of the code is up to date, and that the
 <a href="JUnit.shtml#run">unit tests<a/>
 all work.
+
 <p>
-If you are doing a significant amount of development, please
-see the page on 
+If you're contributing multiple changes, or working on a larger project,
+JMRI has tools and procedures that make it easy and reliable to 
+connect your work to the rest of the JMRI community.  Basically, you
+work in a local copy of the JMRI code repository, and you're changes
+can be "pulled" in when you're ready to contribute them.
+See our page on
 "<a href="gitdeveloper.shtml">Being A JMRI Developer</a>"
 for instructions on how to more effectively contribute code changes.
 
@@ -207,7 +201,7 @@ unlimited-duration license to
 redistribute it consistent with the 
 <a href="#use">JMRI licensing</a>. 
 (We regret this paperwork, but
-<a href="http://jmri.sourceforge.net/k/copycomparison.html">Matt Katzer's misuse of copyright</a>
+<a href="http://jmri.org/k/copycomparison.html">Matt Katzer's misuse of copyright</a>
 makes it necessary).
 If other people also
 helped with the contribution, please let us know so
@@ -215,9 +209,8 @@ we can add them to the
 <a href="../../../Acknowledgements.shtml">acknowledgements page</a>.
 
 <h2><a name="use">Licensing</h2></a>
-
-We encourage people to build their own projects on top of JMRI.  That's the original reason
-that the project was started!
+We encourage people to build their own projects on top of JMRI. That's the original reason
+that the JMRI&reg; project was started!
 
 <p>
 JMRI is licensed only under the "GNU General Public License", sometimes called the "GPL".  
@@ -277,4 +270,3 @@ the <a href="/community/codeswarm.shtml">Code Swarm</a> page.</p>
 	</div> <!-- closes #mBody-->
 </body>
 </html>
-

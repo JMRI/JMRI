@@ -13,7 +13,9 @@ import org.slf4j.LoggerFactory;
  * type, horsepower rating and length that is kept here. The program provides
  * some default models for the user. These values can be overridden by the user.
  *
- * Model Horsepower Length Type E8 2250 70 Diesel FT 1350 50 Diesel F3 1500 50
+ * Model Horsepower Length Type 
+ * 
+ * E8 2250 70 Diesel FT 1350 50 Diesel F3 1500 50
  * Diesel F7 1500 50 Diesel F9 1750 50 Diesel GP20 2000 56 Diesel GP30 2250 56
  * Diesel GP35 2500 56 Diesel GP38 2000 59 Diesel GP40 3000 59 Diesel RS1 1000
  * 51 Diesel RS2 1500 52 Diesel RS3 1600 51 Diesel RS11 1800 53 Diesel RS18 1800
@@ -41,6 +43,7 @@ public class EngineModels extends RollingStockAttribute {
     protected Hashtable<String, String> _engineLengthHashTable = new Hashtable<String, String>();
     protected Hashtable<String, String> _engineTypeHashTable = new Hashtable<String, String>();
     protected Hashtable<String, String> _engineWeightHashTable = new Hashtable<String, String>();
+    protected Hashtable<String, Boolean> _engineBunitHashTable = new Hashtable<String, Boolean>();
 
     public EngineModels() {
     }
@@ -59,7 +62,7 @@ public class EngineModels extends RollingStockAttribute {
             _instance = new EngineModels();
             _instance.loadDefaults();
         }
-        if (Control.showInstance) {
+        if (Control.SHOW_INSTANCE) {
             log.debug("EngineModels returns instance {}", _instance);
         }
         return _instance;
@@ -74,6 +77,7 @@ public class EngineModels extends RollingStockAttribute {
         _engineLengthHashTable.clear();
         _engineTypeHashTable.clear();
         _engineWeightHashTable.clear();
+        _engineBunitHashTable.clear();
         super.dispose();
         loadDefaults();
     }
@@ -117,6 +121,16 @@ public class EngineModels extends RollingStockAttribute {
     public String getModelType(String model) {
         return _engineTypeHashTable.get(model);
     }
+    
+    public void setModelBunit(String model, boolean bUnit) {
+        _engineBunitHashTable.put(model, bUnit);
+    }
+    
+    public boolean isModelBunit(String model) {
+        if (_engineBunitHashTable.containsKey(model))
+            return _engineBunitHashTable.get(model);
+        return false;
+    }
 
     public void setModelWeight(String model, String type) {
         _engineWeightHashTable.put(model, type);
@@ -150,6 +164,7 @@ public class EngineModels extends RollingStockAttribute {
             setModelLength(models[i], lengths[i]);
             setModelType(models[i], types[i]);
             setModelWeight(models[i], weights[i]);
+            setModelBunit(models[i], false); // there are no B units in the default files
         }
     }
 
@@ -172,6 +187,6 @@ public class EngineModels extends RollingStockAttribute {
         super.firePropertyChange(p, old, n);
     }
 
-    static Logger log = LoggerFactory.getLogger(EngineModels.class.getName());
+    private final static Logger log = LoggerFactory.getLogger(EngineModels.class.getName());
 
 }

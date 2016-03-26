@@ -1,17 +1,13 @@
-// PackageTest.java
 package jmri.jmrix.roco;
 
 import junit.framework.Test;
 import junit.framework.TestCase;
 import junit.framework.TestSuite;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 
 /**
  * Tests for the jmri.jmrix.roco package
  *
  * @author	Bob Jacobsen
- * @version	$Revision$
  */
 public class PackageTest extends TestCase {
 
@@ -22,7 +18,8 @@ public class PackageTest extends TestCase {
 
     // Main entry point
     static public void main(String[] args) {
-        String[] testCaseName = {PackageTest.class.getName()};
+        apps.tests.Log4JFixture.initLogging();
+        String[] testCaseName = {"-noloading", PackageTest.class.getName()};
         junit.swingui.TestRunner.main(testCaseName);
     }
 
@@ -30,15 +27,9 @@ public class PackageTest extends TestCase {
     public static Test suite() {
         TestSuite suite = new TestSuite("jmri.jmrix.roco.RocoTest");  // no tests in this class itself
         suite.addTest(new TestSuite(RocoConnectionTypeListTest.class));
-        suite.addTest(jmri.jmrix.roco.z21.z21Test.suite());
-
-        if (!System.getProperty("jmri.headlesstest", "false").equals("true")) {
-            suite.addTest(jmri.jmrix.lenz.swing.SwingTest.suite());
-        }
+        suite.addTest(jmri.jmrix.roco.z21.Z21Test.suite());
 
         return suite;
     }
-
-    static Logger log = LoggerFactory.getLogger(PackageTest.class.getName());
 
 }

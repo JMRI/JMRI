@@ -1,12 +1,9 @@
-// SerialLightTest.java
 package jmri.jmrix.grapevine;
 
 import jmri.implementation.AbstractLightTest;
 import junit.framework.Assert;
 import junit.framework.Test;
 import junit.framework.TestSuite;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 
 /**
  * Tests for the jmri.jmrix.grapevine.SerialLight class, low address.
@@ -56,7 +53,5 @@ public class SerialLightTest extends AbstractLightTest {
         TestSuite suite = new TestSuite(SerialLightTest.class);
         return suite;
     }
-
-    static Logger log = LoggerFactory.getLogger(SerialLightTest.class.getName());
 
 }

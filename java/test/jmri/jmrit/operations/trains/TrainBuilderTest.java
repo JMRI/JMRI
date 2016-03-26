@@ -41,7 +41,6 @@ import junit.framework.TestSuite;
  * directly.
  *
  * @author Bob Coleman Copyright (C) 2008, 2009
- * @version $Revision$
  */
 public class TrainBuilderTest extends OperationsTestCase {
 
@@ -1898,7 +1897,7 @@ public class TrainBuilderTest extends OperationsTestCase {
                 .getNextLocationName());
 
         // Is the train in route?
-        Assert.assertEquals("Train 1 in route after 1st", true, train1.isTrainInRoute());
+        Assert.assertEquals("Train 1 in route after 1st", true, train1.isTrainEnRoute());
 
         // Try and reset the train
         Assert.assertEquals("Train 1 Reset should be false", false, train1.reset());
@@ -1937,7 +1936,7 @@ public class TrainBuilderTest extends OperationsTestCase {
                 .getCurrentLocationName());
         Assert.assertEquals("Train 1 After 2nd Move Next Location Name", "", train1.getNextLocationName());
         // Is the train in route?
-        Assert.assertEquals("Train 1 in route after 2nd", true, train1.isTrainInRoute());
+        Assert.assertEquals("Train 1 in route after 2nd", true, train1.isTrainEnRoute());
 
         // Are the engine and car locations correct?
         Assert.assertEquals("Engine e1 After After 2nd Move", "South End", e1.getLocationName());
@@ -1980,7 +1979,7 @@ public class TrainBuilderTest extends OperationsTestCase {
         Assert.assertEquals("Train 1 After 3rd Move Next Location Name", "", train1.getNextLocationName());
         Assert.assertEquals("Train 1 After 3rd Move Status", Train.TERMINATED, getTrainStatus(train1));
         // Is the train in route?
-        Assert.assertEquals("Train 1 in route after 3rd", false, train1.isTrainInRoute());
+        Assert.assertEquals("Train 1 in route after 3rd", false, train1.isTrainEnRoute());
 
         // Are the engine and car destinations correct?
         Assert.assertEquals("Engine e1 After 3rd Move", "", e1.getDestinationTrackName());
@@ -2036,7 +2035,7 @@ public class TrainBuilderTest extends OperationsTestCase {
         Assert.assertEquals("Train 1 After 4th Move Next Location Name", "", train1.getNextLocationName());
         Assert.assertEquals("Train 1 After 4th Move Status", Train.TERMINATED, getTrainStatus(train1));
         // Is the train in route?
-        Assert.assertEquals("Train 1 sould not be in route", false, train1.isTrainInRoute());
+        Assert.assertEquals("Train 1 sould not be in route", false, train1.isTrainEnRoute());
 
         // Are the engines and cars released from train 1?
         Assert.assertEquals("Engine e1 After Terminate should NOT be assigned to Train 1", null, e1
@@ -2207,13 +2206,13 @@ public class TrainBuilderTest extends OperationsTestCase {
         // move the train #1
         train2.move();
         // Is the train in route?
-        Assert.assertEquals("Train 2 in route after 1st", true, train2.isTrainInRoute());
+        Assert.assertEquals("Train 2 in route after 1st", true, train2.isTrainEnRoute());
         train2.move(); // #2
         // Is the train in route?
-        Assert.assertEquals("Train 2 in route after 2nd", true, train2.isTrainInRoute());
+        Assert.assertEquals("Train 2 in route after 2nd", true, train2.isTrainEnRoute());
         train2.move(); // #3
         // Is the train in route?
-        Assert.assertEquals("Train 2 in route after 3rd", false, train2.isTrainInRoute());
+        Assert.assertEquals("Train 2 in route after 3rd", false, train2.isTrainEnRoute());
 
         // Are the engine and car final tracks correct?
         Assert.assertEquals("Engine e1 After Terminate track", "South End 2", e1.getTrackName());
@@ -3066,7 +3065,7 @@ public class TrainBuilderTest extends OperationsTestCase {
 
         train1.move();
         // Train should not be in route since there's only one location
-        Assert.assertEquals("Train 1 not in route", false, train1.isTrainInRoute());
+        Assert.assertEquals("Train 1 not in route", false, train1.isTrainEnRoute());
         // check train status
         Assert.assertEquals("Train 1 not en route", Train.TERMINATED, getTrainStatus(train1));
         Assert.assertEquals("Train 1 not en route", Train.CODE_TERMINATED, train1.getStatusCode());
@@ -3275,7 +3274,7 @@ public class TrainBuilderTest extends OperationsTestCase {
 
         train1.move();
         // Train in route since there's two locations
-        Assert.assertEquals("Train 1 in route to Chelmsford", true, train1.isTrainInRoute());
+        Assert.assertEquals("Train 1 in route to Chelmsford", true, train1.isTrainEnRoute());
         Assert.assertEquals("Train 1 in route to Chelmsford", Train.CODE_TRAIN_EN_ROUTE, train1.getStatusCode());
         train1.move();
         // 7 cars should in Chelmsford, the other 2 in Westford

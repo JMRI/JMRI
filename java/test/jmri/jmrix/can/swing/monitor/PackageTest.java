@@ -1,4 +1,3 @@
-// PackageTest.java
 package jmri.jmrix.can.swing.monitor;
 
 import jmri.jmrix.can.CanMessage;
@@ -13,7 +12,6 @@ import junit.framework.TestSuite;
  * Tests for the jmri.jmrix.can.swing.monitor package.
  *
  * @author Bob Jacobsen Copyright 2003, 2007, 2008, 2009
- * @version $Revision$
  */
 public class PackageTest extends TestCase {
 
@@ -85,7 +83,8 @@ public class PackageTest extends TestCase {
     // The minimal setup for log4J
     protected void setUp() {
         apps.tests.Log4JFixture.setUp();
-        jmri.InstanceManager.store(jmri.managers.DefaultUserMessagePreferences.getInstance(), jmri.UserPreferencesManager.class);
+        jmri.util.JUnitUtil.resetInstanceManager();
+        jmri.util.JUnitUtil.initDefaultUserMessagePreferences();
     }
 
     protected void tearDown() {

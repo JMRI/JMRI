@@ -2,8 +2,6 @@
 package jmri.jmrix.ieee802154.xbee;
 
 import com.rapplogic.xbee.api.XBeeResponse;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 
 /**
  * Contains the data payload of a serial reply packet. Note that its _only_ the
@@ -17,20 +15,16 @@ import org.slf4j.LoggerFactory;
  */
 public class XBeeReply extends jmri.jmrix.ieee802154.IEEE802154Reply {
 
-    XBeeTrafficController tc = null;
-
     XBeeResponse xbresponse = null;
 
     // create a new one
-    public XBeeReply(XBeeTrafficController tc) {
-        super(tc);
-        this.tc = tc;
+    public XBeeReply() {
+        super();
         setBinary(true);
     }
 
-    public XBeeReply(XBeeTrafficController tc, String s) {
-        super(tc, s);
-        this.tc = tc;
+    public XBeeReply(String s) {
+        super(s);
         setBinary(true);
         xbresponse = new com.rapplogic.xbee.api.GenericResponse();
         byte ba[] = jmri.util.StringUtil.bytesFromHexString(s);
@@ -41,17 +35,15 @@ public class XBeeReply extends jmri.jmrix.ieee802154.IEEE802154Reply {
         xbresponse.setRawPacketBytes(ia);
     }
 
-    public XBeeReply(XBeeTrafficController tc, XBeeReply l) {
-        super(tc, l);
-        this.tc = tc;
+    public XBeeReply(XBeeReply l) {
+        super(l);
         xbresponse = l.xbresponse;
         _dataChars = xbresponse.getRawPacketBytes();
         setBinary(true);
     }
 
-    public XBeeReply(XBeeTrafficController tc, XBeeResponse xbr) {
-        super(tc);
-        this.tc = tc;
+    public XBeeReply(XBeeResponse xbr) {
+        super();
         xbresponse = xbr;
         _dataChars = xbr.getRawPacketBytes();
         setBinary(true);
@@ -64,8 +56,8 @@ public class XBeeReply extends jmri.jmrix.ieee802154.IEEE802154Reply {
     public String toString() {
         String s = "";
         int packet[] = xbresponse.getProcessedPacketBytes();
-        for (int i = 0; i < packet.length; i++) {
-            s = s + jmri.util.StringUtil.twoHexFromInt(packet[i]);
+        for(int i=0;i<packet.length;i++) {
+            s=jmri.util.StringUtil.appendTwoHexFromInt(packet[i],s);
         }
         return s;
     }
@@ -77,8 +69,6 @@ public class XBeeReply extends jmri.jmrix.ieee802154.IEEE802154Reply {
     public void setXBeeResponse(XBeeResponse xbr) {
         xbresponse = xbr;
     }
-
-    final static Logger log = LoggerFactory.getLogger(XBeeReply.class);
 
 }
 

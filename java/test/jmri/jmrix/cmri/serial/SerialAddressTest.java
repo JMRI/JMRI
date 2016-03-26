@@ -1,4 +1,3 @@
-// SerialAddressTest.java
 package jmri.jmrix.cmri.serial;
 
 import jmri.util.JUnitAppender;
@@ -15,24 +14,36 @@ import junit.framework.TestSuite;
  */
 public class SerialAddressTest extends TestCase {
 
-    public void setUp() {
+    SerialNode n10;
+    SerialNode n18;
+
+    @Override
+    public void setUp() throws Exception {
         // log4j
         apps.tests.Log4JFixture.setUp();
-        // create and register the manager objects
-        jmri.TurnoutManager l = new SerialTurnoutManager() {
-            public void notifyTurnoutCreationError(String conflict, int bitNum) {
+        super.setUp();
+
+        // replace the SerialTrafficController
+        new SerialTrafficController() {
+            SerialTrafficController test() {
+                setInstance();
+                return this;
             }
+        }.test();
+
+        n10 = new SerialNode(10, SerialNode.SMINI);
+        n18 = new SerialNode(18, SerialNode.SMINI);
+
+        // create and register the manager objects
+        jmri.util.JUnitUtil.resetInstanceManager();
+        
+        jmri.TurnoutManager l = new SerialTurnoutManager() {
+            public void notifyTurnoutCreationError(String conflict, int bitNum) {}
         };
         jmri.InstanceManager.setTurnoutManager(l);
 
         jmri.LightManager lgt = new SerialLightManager() {
-            /**
-             *
-             */
-            private static final long serialVersionUID = 8424854866070434550L;
-
-            public void notifyLightCreationError(String conflict, int bitNum) {
-            }
+            public void notifyLightCreationError(String conflict, int bitNum) {}
         };
         jmri.InstanceManager.setLightManager(lgt);
 
@@ -42,7 +53,9 @@ public class SerialAddressTest extends TestCase {
     }
 
     // The minimal setup for log4J
-    protected void tearDown() {
+    @Override
+    protected void tearDown() throws Exception {
+        super.tearDown();
         apps.tests.Log4JFixture.tearDown();
     }
 
@@ -123,9 +136,6 @@ public class SerialAddressTest extends TestCase {
         Assert.assertEquals("CL11B2048", 2048, SerialAddress.getBitFromSystemName("CL11B2048"));
     }
 
-    SerialNode d = new SerialNode(4, SerialNode.USIC_SUSIC);
-    SerialNode c = new SerialNode(10, SerialNode.SMINI);
-    SerialNode b = new SerialNode(127, SerialNode.SMINI);
 
     public void testGetNodeFromSystemName() {
         SerialNode d = new SerialNode(14, SerialNode.USIC_SUSIC);
@@ -165,6 +175,7 @@ public class SerialAddressTest extends TestCase {
         d.setCardTypeByAddress(3, SerialNode.OUTPUT_CARD);
         d.setCardTypeByAddress(4, SerialNode.INPUT_CARD);
         d.setCardTypeByAddress(5, SerialNode.OUTPUT_CARD);
+        
         SerialNode c = new SerialNode(10, SerialNode.SMINI);
         Assert.assertNotNull("exists", c);
         Assert.assertTrue("valid config CL4007", SerialAddress.validSystemNameConfig("CL4007", 'L'));
@@ -235,8 +246,6 @@ public class SerialAddressTest extends TestCase {
         Assert.assertEquals("make CS14B1000", "CS14B1000", SerialAddress.makeSystemName("S", 14, 1000));
     }
 
-    SerialNode n = new SerialNode(18, SerialNode.SMINI);
-
     public void testIsOutputBitFree() {
         // create a new turnout, controlled by two output bits
         jmri.TurnoutManager tMgr = jmri.InstanceManager.turnoutManagerInstance();
@@ -269,10 +278,6 @@ public class SerialAddressTest extends TestCase {
         Assert.assertEquals("test bit 2000", "", SerialAddress.isOutputBitFree(18, 2000));
 
         Assert.assertEquals("test bit bad bit", "", SerialAddress.isOutputBitFree(18, 0));
-        JUnitAppender.assertWarnMessage("Turnout 'CT18034' refers to an undefined Serial Node.");
-        JUnitAppender.assertWarnMessage("Turnout 'CT18032' refers to an undefined Serial Node.");
-        JUnitAppender.assertWarnMessage("Light system Name does not refer to configured hardware: CL18036");
-        JUnitAppender.assertWarnMessage("Light system Name does not refer to configured hardware: CL18037");
         JUnitAppender.assertErrorMessage("illegal bit number in free bit test");
 
         Assert.assertEquals("test bit bad node address", "", SerialAddress.isOutputBitFree(129, 34));
@@ -303,10 +308,6 @@ public class SerialAddressTest extends TestCase {
         Assert.assertEquals("test bit 18", "", SerialAddress.isInputBitFree(18, 18));
 
         Assert.assertEquals("test bit bad bit", "", SerialAddress.isInputBitFree(18, 0));
-        JUnitAppender.assertWarnMessage("Sensor CS18016 refers to an undefined Serial Node.");
-        JUnitAppender.assertWarnMessage("Sensor CS18014 refers to an undefined Serial Node.");
-        JUnitAppender.assertWarnMessage("Sensor CS18017 refers to an undefined Serial Node.");
-        JUnitAppender.assertWarnMessage("Sensor CS18012 refers to an undefined Serial Node.");
         JUnitAppender.assertErrorMessage("illegal bit number in free bit test");
 
         Assert.assertEquals("test bit bad node address", "", SerialAddress.isInputBitFree(129, 34));
@@ -354,6 +355,7 @@ public class SerialAddressTest extends TestCase {
 
     // test suite from all defined tests
     public static Test suite() {
+        apps.tests.AllTest.initLogging();
         TestSuite suite = new TestSuite(SerialAddressTest.class);
         return suite;
     }

@@ -1,85 +1,79 @@
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
-<!-- $Id$ -->
-<HTML LANG="en">
-<HEAD>
-<TITLE>JMRI: Panel Editor Help</TITLE>
-<META HTTP-EQUIV="Content-Type" CONTENT="text/html; charset=iso-8859-1">
-<META CONTENT="Pete Cressman" NAME="Author">
-<META NAME="keywords" CONTENT="JMRI help Panel Editor">
+<html lang="en">
+<head>
+<title>JMRI: Panel Editor Help</title>
+<meta name="author" content="Pete Cressman">
+<meta name="keywords" content="JMRI help Panel Editor">
 
 <!-- Style -->
-<META HTTP-EQUIV="Content-Type" CONTENT="text/html; charset=iso-8859-1">
-<LINK REL="stylesheet" TYPE="text/css" HREF="/css/default.css"
-	MEDIA="screen">
-<LINK REL="stylesheet" TYPE="text/css" HREF="/css/print.css"
-	MEDIA="print">
-<LINK REL="icon" HREF="/images/jmri.ico" TYPE="image/png">
-<LINK REL="home" TITLE="Home" HREF="/">
+<meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
+<link rel="stylesheet" type="text/css" href="/css/default.css" media="screen">
+<link rel="stylesheet" type="text/css" href="/css/print.css" media="print">
+<link rel="icon" href="/images/jmri.ico" type="image/png">
+<link rel="home" title="Home" href="/">
 <!-- /Style -->
-</HEAD>
+</head>
 
-<BODY>
+<body>
 <!--#include virtual="/Header" -->
   <div class="nomenu" id="mBody">
     <div id="mainContent">
 
-<H1>The Panel Editor</H1>
+<h1>The Panel Editor</h1>
 
-<img src="PanelEditor.png" align="RIGHT">
-
-A panel is a set of icons representing various components of a layout.
-Some of the icons available in JMRI include turnouts, signals, and
-sensors. You can include a background icon for your panel and add the
-contents of memory and/or reporter variables.
-
-<p>
-The controls on the panel itself as 
-described on a 
-<a href="PanelTarget.shtml">separate help page</a>.
+<p><img src="PanelEditor.png" align="right">
+<br>
+A Panel is a set of Icons representing various components of a layout.
+Some of the Icons available in JMRI include Turnouts, Signals Masts and
+Sensors. You can include a background icon to display your layout on your Panel and add the
+contents of Memory and/or Reporter Variables.
 
 <p>
-Panels are created with the Panel Editor, which allows you to place images
-to represent turnouts, signal heads, sensors, signal masts, trackwork, etc.
+The controls on the Panel itself are described on a 
+<a href="PanelTarget.shtml">separate Panel Help page</a>.
 
-<P>If you'd like to see animated clinics that show how each of these
+<p>
+Panels created with the Panel Editor allow you to place images
+to represent Turnouts, Sensors, Signal Heads, Signal Masts, trackwork, etc.
+
+<p>If you'd like to see animated clinics that show how each of these
 things are actually done on the computer screen, please see <A
-	HREF="http://www.rr-cirkits.com/Clinics/Clinics.html">Dick
-Bronson's clinics page</A>.</P>
+	href="http://www.rr-cirkits.com/Clinics/Clinics.html">Dick
+Bronson's clinics page</A>.</p>
 
+<h2>Contents of the Panel Editor</h2>
 
-<H2>Contents of the Panel Editor</H2>
-
-The Panel Editor consists of the following items:</P>
-<UL>
-	<LI>Two text fields, <b>x:</b> and <b>y:</b>, specifying where (in pixels) new components
+<p>The Panel Editor consists of the following items:</p>
+<ul>
+	<li>Two text fields, <b>x:</b> and <b>y:</b>, specifying where (in pixels) new components
 	will be inserted on the panel. You can generally ignore these, as once
 	the components has been inserted you can drag it around by holding the
-	meta (Apple, command; Linux & Windows, right button) key down.</LI>
-	<LI>A button to set the title of the Panel you are editing.  Press the 
-        button and you will be prompted to enter the text.</LI>
-	<LI>A button to add a text label. Put the desired text in the
+	meta (Apple, command; Linux &amp; Windows, right button) key down.</li>
+	<li>A button to set the title of the Panel you are editing.  Press the 
+        button and you will be prompted to enter the text.</li>
+	<li>A button to add a text label. Put the desired text in the
 	field and click the button. You can slide the label around after
-	inserting it, but you currently can't edit the text later.</LI>
+	inserting it, but you currently can't edit the text later.</li>
     
     <img src="PanelEditor2.png" align="RIGHT">
-	<LI>A dropdown menu where you may choose the type of icon or
+	<li>A dropdown menu where you may choose the type of icon or
         data you may put into the panel.
-        <UL>
-        <LI>Add Right Hand Turnout Icon</LI>
-        <LI>Add Left Hand Turnout Icon</LI>
-        <LI>Add Sensor Icon</LI>
-        <LI>Add Signal Head Icon</LI>
-        <LI>Add Signal Mast Icon</LI>
-        <LI>Add Memory Value</LI>
-        <LI>Add Reporter Value</LI>
-        <LI>Add Background Image</LI>
-        <LI>Add MultiSensor (i.e levers and switches) Icons</LI>
-        <LI>Add RPS Reporter Icon</LI>
-        <LI>Add Fast Clock</LI>
-        <LI>Add Icon (unassociated to any JMRI device)</LI> 
-        </UL>
+        <ul>
+        <li>Add Right Hand Turnout Icon</li>
+        <li>Add Left Hand Turnout Icon</li>
+        <li>Add Sensor Icon</li>
+        <li>Add Signal Head Icon</li>
+        <li>Add Signal Mast Icon</li>
+        <li>Add Memory Value</li>
+        <li>Add Reporter Value</li>
+        <li>Add Background Image</li>
+        <li>Add MultiSensor (i.e levers and switches) Icons</li>
+        <li>Add RPS Reporter Icon</li>
+        <li>Add Fast Clock</li>
+        <li>Add Icon (unassociated to any JMRI device)</li> 
+        </ul>
         In most cases, selecting one of these items will open a window from 
-        which icons or values can be choosen.
+        which icons or values can be chosen.
         For the items referring to a JMRI device (e.g. turnout, sensor, etc.) a
         pick list of the available devices is displayed.  From there you select
         the device and the icon to represent it in the panel.  Exceptions to 
@@ -90,15 +84,14 @@ The Panel Editor consists of the following items:</P>
         </p>
         <p>The two choices for icons that do not open windows are RPS Reporter 
         and Fast Clock.  These items install their icons directly into the
-        panel.</p></LI>
+        panel.</p></li>
 
-	<LI>A checkbox for making popup menus active. When checked a small popup menu
+	<li>A checkbox for making popup menus active. When checked a small popup menu
 	will appear when you right click an icon. Most icons allow you to
 	rotate and remove the icon. There are other options depending on the
 	type of icon, for example, you can disable a turnout so it doesn't
 	actually control anything.
-
-	<P>The popup menu may also change if the configuration of an item
+	<p>The popup menu may also change if the configuration of an item
 	is changed. For example, if you add feedback to a turnout, the popup
 	menu includes a new item choice called "Tristate". Tristate allows you
 	to use the inconsistent icon, which is one of the four possible icons
@@ -113,156 +106,156 @@ The Panel Editor consists of the following items:</P>
 	the actual or "known state" of the turnout, the icon will change to
 	that state. If you don't use Tristate, when you click on the icon, it
 	may take some time (milliseconds to seconds depending on the system)
-	before the icon responds with the known state of the turnout.</P>
-	</LI>
+	before the icon responds with the known state of the turnout.</p>
+	</li>
 
-	<LI>All panel items can be repositioned. When checked you can move
+	<li>All panel items can be repositioned. When checked you can move
 	items in your panel by selecting and dragging them with the meta key.
 	Linux and Windows users can hold the right click down and drag.  By default new
-	items can be repositoned even if this box isn't checked.</LI>
+	items can be repositioned even if this box isn't checked.</li>
 
-	<LI>Show item's coordinates in popup menu. When checked, the
+	<li>Show item's coordinates in popup menu. When checked, the
 	item's popup menu will include the item's X and Y coordinates. This can
-	help you better position your icons in the panel.</LI>
+	help you better position your icons in the panel.</li>
 
-	<LI>Panel items control layout. Normally you want to control your
+	<li>Panel items control layout. Normally you want to control your
 	layout, so leave this box checked. Otherwise, uncheck the box if you
-	don't want your panel to send commands to your layout.</LI>
+	don't want your panel to send commands to your layout.</li>
 
-	<LI>Panel has menu. Once you don't need to change or edit your
+	<li>Panel has menu. Once you don't need to change or edit your
 	layout, you can disable the ability to use the panel editor. The only
 	way to re-enable the editor is to edit the panel file. Using a simple
 	editor (Notepad for Window users will work) or XML editor, open your
 	panel and find panelmenu="no" and change "no" to "yes" and save the
 	file. The panel will now show the menu the next time you load the panel
-	in PanelPro.</LI>
+	in PanelPro.</li>
 	
-	<LI>Panel scrollbars. (JMRI 2.5.2 and later). Allows you to choose which
-	scrollbars to display.</LI>
-</UL>
+	<li>Panel scrollbars. (JMRI 2.5.2 and later). Allows you to choose which
+	scrollbars to display.</li>
+</ul>
 
-<H2>After Creating A Panel</H2>
+<h2>After Creating A Panel</h2>
+<p>After getting the panel the way you want, you need to use the "Store
+panels..." entry in the "Panels" menu to write it to an XML file.</p>
 
-<P>After getting the panel the way you want, you need to use the "Store
-panels..." entry in the "Panels" menu to write it to an XML file.</P>
-<H3>Available Icons</H3>
+<h3>Available Icons</h3>
 The JMRI library contains lots of contributed icons for representing CTC
 panels, LEDs, etc. You can browse through them using the file tree in
 the Change Icon frame.
-<P>Each of the Icon Editor windows has a <b>Find Icons</b> Menu that provides
+<p>Each of the Icon Editor windows has a <b>Find Icons</b> Menu that provides
 several ways to find and acquire additional icons to place into your panel.  See
 the <a href="IconAdder.shtml">Icon Editors page</a> for more details.
 
-
-<H2>Other types of panels</H2>
-
+<h2>Other types of panels</h2>
+<p>
 Because this is icon-based, you can create panels that look any way you
 want. For example, instead of using track-schematic icons for turnouts,
 you could use small images of the levers and plates on CTC machine. This
 would give you "mechanical" levers you can flip back and forth with a
 click.
 
-<P>It's also possible to create a panel where the "track" lines
+<p>It's also possible to create a panel where the "track" lines
 change color to indicate whether the track is occupied. The procedure
-for doing that is described on a <A
-	HREF="http://jmri.sourceforge.net/apps/PanelPro/ColorTrack.html">separate
-page</A>.</P>
+for doing that is described on a <a
+	href="http://jmri.org/apps/PanelPro/ColorTrack.html">separate
+page</a>.</p>
 
-<H2>Manipulating Icons</H2>
-
+<h2>Manipulating Icons</h2>
+<p>
 To move an icon around on the panel, you "meta-drag" it. On a Mac,
 that's "hold the cmd key and drag with the cursor"; on Linux or Windows, "hold the
 right mouse click and drag with the cursor".
-<P>There's also a pop-up menu (ctrl-click on a Mac; right-click on Linux or
+<p>There's also a pop-up menu (ctrl-click on a Mac; right-click on Linux or
 Windows) that will provide various ways to manipulate the icon. It will let
 you rotate the icon so that it points in whatever direction you want.
 Text labels can have their font, size and color changed. You can also
-remove icons from the panel with the popup menu.</P>
+remove icons from the panel with the popup menu.</p>
 
-<H3>Rotating and Scaling</H3>
-<P>When the checkbox for showing an icon's coordinates is checked, the icon can be scaled or
-rotated an arbitrary mumber of degrees.  When this checkbox is checked, two additional items
+<h3>Rotating and Scaling</h3>
+<p>When the checkbox for showing an icon's coordinates is checked, the icon can be scaled or
+rotated an arbitrary number of degrees.  When this checkbox is checked, two additional items
 appear in the icon's popup menu - <b>Rotate (degrees)...</b> and <b>Scale (percentage)...</b>.
 When these item are selected, a text box will appear near the icon and ask for a number.  
 In the case of 'Rotate (degrees)', a positive or negative integer will rotate the icon that 
 number of degrees.  In the case of 'Scale (percentage)', a positive number is the percentage 
-to increase or decrease the size of the icon.</P>  
+to increase or decrease the size of the icon.</p>  
 
-<P>The <b>Rotate (Orthogonal)</b> item rotates the icon 90 degrees each time it is selected. 
-Choosing an alternative rotation item resets the former rotationm to the default icon image. 
+<p>The <b>Rotate (Orthogonal)</b> item rotates the icon 90 degrees each time it is selected. 
+Choosing an alternative rotation item resets the former rotation to the default icon image. 
 For example, if the icon has been scaled to 75% and set to 30 degrees and then 
 'Rotate (Orthogonal)' is selected, the icon will return to its original size and orientation.
 
-<H3>Group Moving and Aligning</H3>
-<P>When the checkbox for repositioning icons is checked, groups of icons can be selected.
+<h3>Group Moving and Aligning</h3>
+<p>When the checkbox for repositioning icons is checked, groups of icons can be selected.
 Pressing the mouse button down in an open area and dragging will draw a dotted red
 rectangle.  All the icons that lie within this "fence" are items that are selected.  Those
 icons within the "fence" that do <b>not</b> have the <b>fixed</b> or <b>Lock Position</b> 
-checkbox marked in their popup memus can be moved as a group.  Dragging any one of the 
+checkbox marked in their popup menus can be moved as a group.  Dragging any one of the 
 repositionable icons within the fence will move the entire group.  Clicking in an open
-area will remove the "fence" and ungroup the icons.</P>
+area will remove the "fence" and ungroup the icons.</p>
 
-<P>In addition, grouped icons can be aligned horizonally and vertically.   When grouped,
-the icons have two addtional menu items in their popup memus: <b>Align Vertically</b>
+<p>In addition, grouped icons can be aligned horizontally and vertically.   When grouped,
+the icons have two additional menu items in their popup menus: <b>Align Vertically</b>
 and <b>Align Horizontally</b>.  Once again, the grouped icons that are not fixed or
 locked can be aligned with either their left edges (x coordinate) equal, or top edges 
-(y coordinate) equal.  These menu items disappear when the icons are ungrouped.</P>
+(y coordinate) equal.  These menu items disappear when the icons are ungrouped.</p>
 
-<P>Another feature of grouped icons is they can be locked (fixed) and unlocked (unfixed)
+<p>Another feature of grouped icons is they can be locked (fixed) and unlocked (unfixed)
 as a group when any one of the group's popup menu item for lock or fix is checked.
 
-<P> When placing icons on top of one another, the upper icon may prevent moving
-the icon uderneath.  For example when labeling a turnout, you may not be able to 
-reposition the label without dragging the turnout above it.  However, if you press the Shuft key
+<p> When placing icons on top of one another, the upper icon may prevent moving
+the icon underneath.  For example when labeling a turnout, you may not be able to 
+reposition the label without dragging the turnout above it.  However, if you press the Shift key
 before dragging the label the turnout will remain in place while you reposition the label.
 That is a "Shift-Drag" leaves the top icon in place and only moves the icons beneath it.</P>
   
-<H3>Multi Slice Backgrounds</H3>
-For users that need to build a classic US&S panel there are several options. The first is to
+<h3>Multi Slice Backgrounds</h3>
+<p>For users that need to build a classic US&amp;S panel there are several options. The first is to
 simply select the 15 position panel background from icons/USS/background/uss-15.gif. Another
 option is to use a pixel based image editor to create your own background image. Save the 
 image as a .gif or similar file. (see info above on where to store new images)
 Yet another option is to create the background image from multiple 
 slices of the whole panel. JMRI supports using multiple background images so, by simply 
-positioning each image properly, a complete panel of any reasonable size may be created.</P> 
-<P>Currently there are two sets of image 'slices' available.  One set is 718 pixels high, and the second set is 
-900 pixles high. Choose the set that best fits your display. These 'slices' are located 
-at icons/USS/background/. The 900 pixel high images include a "-9" in their names. The left and right
+positioning each image properly, a complete panel of any reasonable size may be created.</p> 
+<p>Currently there are two sets of image 'slices' available.  One set is 718 pixels high, and the second set is 
+900 pixels high. Choose the set that best fits your display. These 'slices' are located 
+at icons/USS/background/. The 900 pixel high images include a &quot;-9&quot; in their names. The left and right
 edge images are each 12 pixels wide. The main panel 'slices' are 65 pixels wide. This allows you to 
 precisely position each slice simply by changing the x: and y: coordinates in the Panel Editor. 
 The advantages of building backgrounds with slices are that you can make virtually any length
-of panel that is required, and the plates will be precisely located automatically. </P>
-<P>First set the coordinates to x:0, y:0 and select icons/USS/background/Panel-left.gif. 
+of panel that is required, and the plates will be precisely located automatically. </p>
+<p>First set the coordinates to x:0, y:0 and select icons/USS/background/Panel-left.gif. 
 (or icons/USS/background/Panel-left-9.gif) This gives you the left edge of the panel. Change 
 the coordinates to x:12 y:0 and choose the next slice. It may be blank, include a switch
 plate, include a signal plate, or include both plates. Only the "x:" coordinate needs to be changed
-as you continue to add additional panel sections. The 'slices' are each 65 pixles wide, 
+as you continue to add additional panel sections. The 'slices' are each 65 pixels wide, 
 so simply add 65 to the x: value for each 
 additional slice. For example; to build up a 15 position panel from slices, use x:0 for the left side, then 
 x:12, x:77, x:142, x:207, x:272, x:337, x:402, x:467, x:532, x:597, x:662, x:727, x:792, 
 x:857, and x:922  for the individual slices. Finally set x:987
-and complete the panel with icons/USS/background/Panel-right.gif. </P>
-<P>To change the style of any individual slice (e.g. to add a new plate to your panel) 
-first check the "Show item's 
-coordinates in popup menu" check box in the editor window. Next, right click in a blank area of
+and complete the panel with icons/USS/background/Panel-right.gif. </p>
+<p>To change the style of any individual slice (e.g. to add a new plate to your panel) 
+first check the &quot;Show item's 
+coordinates in popup menu&quot; check box in the editor window. Next, right click in a blank area of
 the old slice to raise the pop up information including the coordinates of that slice. Put those numbers 
 in the editor's coordinates, then remove the slice. Finally, choose a new slice and it will 
-appear where the old one was.</P>
+appear where the old one was.</p>
 
-<H2>Communicating with Multiple Systems</H2>
-
-PanelPro can communicate with more than one layout control system. 
-To configure the program to talk to multiple systems, select them
-in the preferences panel. (Edit->Preferences) Check the "Show Advanced
-Preferences" and under "Aux layout connection:" enter the system
-information for your second connection.</P>
-<P>If you add a turnout, sensor or signal to a panel using just a
-number, e.g. "23", it will be assigned to the first system on the
-preference panel. To access the second system, you have to use JMRI <A
-	HREF="../../../../html/doc/Technical/Names.shtml">system names</A>. For
+<h2>Communicating with Multiple Systems</h2>
+<p>
+PanelPro can communicate with more than one layout hardware system. 
+To configure JMRI&reg; to talk to multiple systems, select them
+in the Preferences panel (Edit -&gt; Preferences &gt; Connections (tab at left) -&gt; click on the + tab to add the system
+information for your second System Connection.</p>
+<p>If you add a Turnout, Sensor or Signal Mast to a Panel using just a
+number, e.g. "23", it will be assigned to the Default System as defined on the
+Preferences panel -&gt; Defaults tab. To access the second system, you have to use JMRI <a
+	href="../../../../html/doc/Technical/Names.shtml">System Names</a>. For
 example, if the second attachment is to a LocoNet system, you'd refer to
-a LocoNet Turnout as LT13; a LocoNet sensor as LS21, etc.</P>
+a LocoNet Turnout as LT13; a LocoNet Sensor as LS21, etc.</p>
 
 <!--#include virtual="/Footer" -->
-</BODY>
-</HTML>
+   </div><!-- closes #mainContent-->
+  </div> <!-- closes #mBody-->
+ </body>
+</html>

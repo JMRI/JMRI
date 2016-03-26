@@ -2,7 +2,6 @@
 <html lang="en">
 <head>
 <!-- Copyright Bob Jacobsen 2008 -->
-<!-- $Id$ -->
 <title>JMRI: DecoderPro User Guide - Updating Decoder Definitions</title>
 
 <!-- Style -->
@@ -20,16 +19,16 @@
 <!--#include virtual="Sidebar" -->
 <div id="mainContent">
 
-
-<h1>DecoderPro User Guide - Updating Decoder Definitions</h1>
+<h1>JMRI: DecoderPro User Guide</h1>
+<h2>Updating Decoder Definitions</h2>
 
 Many people have contributed decoder definition
 files to DecoderPro.  Between new releases, new files may 
 be created that you might want to use.  These can usually be
 found either on
-<a href="http://jmri.sf.net/xml/decoders/">the JMRI web site</a>
+<a href="http://jmri.org/xml/decoders/">the JMRI web site</a>
 or in the 
-<a href="https://groups.yahoo.com/neo/groups/jmriusers/files/">files area of the jmriusers Yahoo group</a> (log in to access).
+<a href="https://groups.yahoo.com/neo/groups/jmriusers/files/">files area of the JMRI users Yahoo group</a> (log in to access).
 <p>
 To use these xml files you need to download and install them.
 
@@ -39,7 +38,7 @@ The installation process was simplified in JMRI 2.3.6, where
 menu items were added to the Debug menu.
 
 <a name="after236">
-<h2>JMRI Version 2.3.6 And After</h2>
+<h2>JMRI v 2.3.6 and later</h2>
 
 This section describes adding a new decoder definition when you are using JMRI
 version 2.3.6 or later.
@@ -49,105 +48,109 @@ If you have a URL for a decoder definition, perhaps copied from
 a web page or email, and your computer has an active Internet connection, 
 you can directly install the definition.
 
-<ul>
-<li>Select the "Import Decoder URL" item from the "Debug" menu.
-<li>Copy the URL address.
-<li>Select the "Import Decoder URL" item from the "Debug" menu.
-<li>You'll be prompted for the URL. Enter it, or paste it in and click OK.
-</ul>
+	<ul>
+	<li>Copy the URL address from your mail etc.
+	<li>Select the "Import Decoder URL" item from the "Debug" menu.
+	<li>You'll be prompted for the URL. Enter it, or paste it in and click OK.
+	</ul>
 
 Unless there are errors, the file will be copied onto your local computer
-and installed in your JMRI preferences directory.
+and installed in your JMRI Preferences directory.<br>
+Learn about <a href="../../setup/Files.shtml">JMRI Configuration Files</a> 
 
 <h3>Loading a definition from a file</h3>
 If you have local file containing a decoder definition, perhaps downloaded from
 a web page or received via email, 
 you can install that definition in JMRI.
 
-<ul>
-<li>Select the "Import Decoder File" item from the "Debug" menu.
-<li>You'll be shown a file selection dialog. 
-<li>If the file doesn't have a ".xml" extension, you may have to select the "show all files"
-filter at the bottom of the dialog.
-<li>Navigate to your file, and click OK.
-</ul>
+	<ul>
+	<li>Select the "Import Decoder File" item from the "Debug" menu.
+	<li>You'll be shown a file selection dialog. 
+	<li>If the file doesn't have a ".xml" extension, you may have to select the "show all files"
+	filter at the bottom of the dialog.
+	<li>Navigate to your file, and click OK.
+	</ul>
 
-Unless there are errors, the file will be copied into your JMRI preferences
+Unless there are errors, the file will be copied into your JMRI Preferences
 directory and installed.
 
 <h3>How This Works</h3>
 
 Both of these tools take the decoder definition information
-from the source you indicate and copy it to your local JMRI preferences
+from the source you indicate and copy it to your local JMRI Preferences
 directory so that it will be available from now on.  For this to 
 work, you can't already have a decoder definition file there by the same name.
 If such a file does exist, the program will indicate an error and not 
 replace the file.
 
 <p>
-The definition is stored in your preferences directory, instead of the JMRI 
+The definition is stored in your Preferences directory, instead of the JMRI 
 distribution directory, so that installing a new version of JMRI doesn't 
 delete it.  Note, however, that if a newer version of JMRI comes along with
 a copy of this decoder definition installed, the program will give priority to the
 specific version that you imported.  JMRI thinks you knew what you were doing
 when you specifically imported that specific version.  If you'd prefer to use 
-the one in the new JMRI version, just delete yours from your preferences directory
+the one in the new JMRI version, you should delete yours from your Preferences directory
 and select "Rebuild Decoder Index" in the debug menu.
 
 <a name="before236">
-<h2>JMRI Version 2.3.5 And Before</h2>
+<h2>JMRI v 2.3.5 and earlier</h2>
 
 This section describes adding a new decoder definition when you are using JMRI
 version 2.3.5 or before.
 
 <h3>On Windows Systems</h3>
-<ul>
-<li>Go to the files menu where the decoder.XML file is located and 
-  right click on the file.
- <P>
-  (Don't double click or you will open the file rather than saving 
-it.)
- 
-<li>Choose the menu selection "Save as" or "Save target as".  After 
-you 
-  choose this menu item a window will pop up and ask you for a 
-location 
-  that you want to save the file.
- 
-<p> You can either type in a directory name or click the browse 
-button.  
-  To save a step I suggest that you choose browse and then select 
-  the "program files/JMRI/XML/Decoders" directory. 
- 
-<p>If you save the file to any other directory, or the desktop you 
-will 
-  have to copy the file over to the correct directory using the copy 
-  and paste in Windows Explorer.  It's easier to just save it in the 
-  correct directory in the first place.
- 
-<li>Once the file is in the decoders directory you need to open 
-Decoder 
-  Pro and choose the Debug menu item.  It's one of the menu items on 
-  the top horizontal menu on the opening screen. 
- 
-<li>From the drop down debug menu choose the item that says "rebuild 
-(or 
-  recreate) decoder index".  After you have rebuilt the decoder 
-index 
-  the decoder should show up.
- 
-<p>The key to make this work is that the downloaded XML file needs to 
-be 
-  in the JMRI/XML/decoders directory, otherwise Decoder Pro doesn't 
-  know that it is there, and won't see it when you rebuild the 
-decoder 
-  index.
+	<ul>
+	<li>In Windows Explorer, go to the location where the decoder.xml file is located and 
+	  right click on the file.
+	 <br>
+	  (Don't double click or you will open the file rather than saving it.)
+	 
+	<li>Choose the menu selection "Save as..." or "Save target as...".  After 
+	you 
+	  choose this menu item a window will pop up and ask you for a 
+	location 
+	  that you want to save the file.
+	 
+	<p> You can either type in a directory name or click the browse 
+	button.  
+	  To save a step I suggest that you choose "Browse..." and then select 
+	  the "Program files\JMRI\xml\decoders\" directory. 
+	 
+	<p>If you save the file to any other directory, or to the desktop, you 
+	will 
+	  have to copy the file over to the correct directory using the copy 
+	  and paste in Windows Explorer.  It's easier to just save it in the 
+	  correct directory in the first place.
+	 
+	<li>Once the file is in the decoders directory you need to open 
+	DecoderPro and choose the <strong>Debug</strong> menu item.  It's one of the menu items on 
+	  the main menu on the opening screen. 
+	 
+	<li>From the drop down Debug menu, choose the item that says "Rebuild 
+	decoder index". After you have rebuilt the decoder 
+	index the new decoder should show up in the drop down list of the Programmer.
+	 
+	<p>The key to make this work is that the downloaded .xml file needs to 
+	be 
+	  in the JMRI/xml/decoders directory, otherwise DecoderPro doesn't 
+	  know that it is there, and won't see it when you rebuild the 
+	decoder index.<br>
+	Note that a new JMRI install may overwrite your customized decoder definition.</p>
+	</li>
+	</ul>
+	
+<h3>On Mac OS X Systems</h3>
+	<ul>
+	<li>Create a new folder inside your JMRI Preferences folder /Users/me/Library/JMRI/ and name it "decoders"
+	<li>Copy or drag the new decoder.xml file into this new "decoders" folder.
+	<li>From the drop down Debug menu, choose the item that says "Rebuild 
+	decoder index". After you have rebuilt the decoder 
+	index, the new decoder should show up in the drop down list of the Programmer.
+	</ul>
 
-</ul>
-
-
-    
 <!--#include virtual="/Footer" -->
-</div>
+ </div><!-- closes #mainContent-->
+</div> <!-- closes #mBody-->
 </body>
 </html>

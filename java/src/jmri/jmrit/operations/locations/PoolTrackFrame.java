@@ -160,10 +160,11 @@ class PoolTrackFrame extends OperationsFrame implements java.beans.PropertyChang
         // buttonActionPerformed.
         addButtonAction(addButton);
         addButtonAction(saveButton);
-
-        setMinimumSize(new Dimension(Control.panelWidth300, Control.panelHeight250));
-        setVisible(true);
-
+        
+        // add help menu to window
+        addHelpMenu("package.jmri.jmrit.operations.Operations_Pools", true); // NOI18N
+        
+        initMinimumSize(new Dimension(Control.panelWidth300, Control.panelHeight250));
     }
 
     private void updatePoolsComboBox() {
@@ -268,7 +269,7 @@ class PoolTrackFrame extends OperationsFrame implements java.beans.PropertyChang
         // This should move to the base class
         // Just call LogEvent(e); instead. It will figure out if logging is
         // enabled, etc.
-        if (Control.showProperty) {
+        if (Control.SHOW_PROPERTY) {
             log.debug("Property change: ({}) old: ({}) new: ({})", e.getPropertyName(), e.getOldValue(), e
                     .getNewValue());
         }
@@ -284,5 +285,5 @@ class PoolTrackFrame extends OperationsFrame implements java.beans.PropertyChang
         }
     }
 
-    static Logger log = LoggerFactory.getLogger(PoolTrackFrame.class.getName());
+    private final static Logger log = LoggerFactory.getLogger(PoolTrackFrame.class.getName());
 }

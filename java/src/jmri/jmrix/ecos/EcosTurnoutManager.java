@@ -75,11 +75,13 @@ public class EcosTurnoutManager extends jmri.managers.AbstractTurnoutManager
         }
         Turnout t = new EcosTurnout(addr, getSystemPrefix(), tc, this);
         t.setUserName(userName);
+        t.setFeedbackMode("MONITORING");
         return t;
     }
 
     // to listen for status changes from Ecos system
     public void reply(EcosReply m) {
+        log.debug("reply "+m);
         // is this a list of turnouts?
         EcosTurnout et;
 
@@ -121,13 +123,13 @@ public class EcosTurnoutManager extends jmri.managers.AbstractTurnoutManager
                 if (replyType.equals("queryObjects")) {
                     if (ecosObjectId == 11 && headerDetails.size() == 0) {
                         //if (lines[0].startsWith("<REPLY queryObjects(11)>")) {
-                        log.info("No sub details");
+                        log.debug("No sub details");
                         checkTurnoutList(msgContents);
                     } else if (headerDetails.contains("addr")) {
                         // yes, make sure TOs exist
                         //log.debug("found "+(lines.length-2)+" turnout objects");
                         for (String item : m.getContents()) {
-                            log.info("header " + item);
+                            log.debug("header " + item);
                             //for (int i = 1; i<lines.length-1; i++) {
                             if (item.contains("addr")) { // skip odd lines
                                 int object = GetEcosObjectNumber.getEcosObjectNumber(item, null, " ");
@@ -227,6 +229,19 @@ public class EcosTurnoutManager extends jmri.managers.AbstractTurnoutManager
                         }
                         if (name != null) {
                             et.setUserName(name);
+                        }
+                    }
+                } else if (ecosObjectId >= 20000 && ecosObjectId <= 30000) {
+                    log.debug("Reply for specific turnout");
+                    et = _tecos.get(ecosObjectId);
+                    if (et != null) {
+                        et.reply(m);
+                        //As the event will come from one object, we shall check to see if it is an extended address,
+                        // if it is we also forward the message onto the slaved address.
+                        if (et.getExtended() != 0) {
+                            log.debug("This is also an extended turnout so forwarding on change to " + et.getSlaveAddress());
+                            EcosTurnout etx = (EcosTurnout) provideTurnout(et.getSlaveAddress());
+                            etx.reply(m);
                         }
                     }
                 }
@@ -652,7 +667,7 @@ public class EcosTurnoutManager extends jmri.managers.AbstractTurnoutManager
         }
     }
 
-    static Logger log = LoggerFactory.getLogger(EcosTurnoutManager.class.getName());
+    private final static Logger log = LoggerFactory.getLogger(EcosTurnoutManager.class.getName());
 }
 
 /* @(#)EcosTurnoutManager.java */

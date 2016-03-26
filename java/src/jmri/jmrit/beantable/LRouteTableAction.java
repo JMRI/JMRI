@@ -67,8 +67,7 @@ public class LRouteTableAction extends AbstractTableAction {
      *
      */
     private static final long serialVersionUID = 9004336444814249851L;
-    static final ResourceBundle rbx = ResourceBundle
-            .getBundle("jmri.jmrit.beantable.LRouteTableBundle");
+    static final ResourceBundle rbx = ResourceBundle.getBundle("jmri.jmrit.beantable.LRouteTableBundle");
 
     /**
      * Create an action with a specific title.
@@ -110,7 +109,7 @@ public class LRouteTableAction extends AbstractTableAction {
         // overlay the state column with the edit column
         static public final int ENABLECOL = VALUECOL;
         static public final int EDITCOL = DELETECOL;
-        protected String enabledString = rb.getString("ColumnHeadEnabled");
+        protected String enabledString = Bundle.getMessage("ColumnHeadEnabled");
 
         /**
          * Overide to filter out the LRoutes from the rest of Logix
@@ -472,10 +471,9 @@ public class LRouteTableAction extends AbstractTableAction {
         // deactivate this Logix
         _systemName.setText(sName);
         // create the Edit Logix Window
-        // Use separate Thread so window is created on top
+        // Use separate Runnable so window is created on top
         Runnable t = new Runnable() {
             public void run() {
-                //Thread.yield();
                 setupEdit(null);
                 _addFrame.setVisible(true);
             }
@@ -1791,7 +1789,10 @@ public class LRouteTableAction extends AbstractTableAction {
         return false;
     }
 
-    @SuppressWarnings("null")
+    /**
+     * @throw IllegalArgumentException if "user input no good"
+     * @return The number of conditionals after the creation.
+     */
     int makeRouteConditional(int numConds, /*boolean onChange,*/ ArrayList<ConditionalAction> actionList,
             ArrayList<ConditionalVariable> triggerList, ArrayList<ConditionalVariable> vetoList,
             Logix logix, String sName, String uName, String type) {
@@ -1850,7 +1851,8 @@ public class LRouteTableAction extends AbstractTableAction {
         } catch (Exception ex) {
             // user input no good
             handleCreateException(sName);
-            return (Integer)null;
+            // throw without creating any 
+            throw new IllegalArgumentException("user input no good");
         }
         c.setStateVariables(varList);
         //int option = onChange ? Conditional.ACTION_OPTION_ON_CHANGE : Conditional.ACTION_OPTION_ON_CHANGE_TO_TRUE;
@@ -1869,12 +1871,16 @@ public class LRouteTableAction extends AbstractTableAction {
     void handleCreateException(String sysName) {
         javax.swing.JOptionPane.showMessageDialog(_addFrame,
                 java.text.MessageFormat.format(
-                        rb.getString("ErrorLRouteAddFailed"),
+                        Bundle.getMessage("ErrorLRouteAddFailed"),
                         new Object[]{sysName}),
-                rb.getString("ErrorTitle"),
+                Bundle.getMessage("ErrorTitle"),
                 javax.swing.JOptionPane.ERROR_MESSAGE);
     }
-    @SuppressWarnings("null")
+
+    /**
+     * @throw IllegalArgumentException if "user input no good"
+     * @return The number of conditionals after the creation.
+     */
     int makeAlignConditional(int numConds, ArrayList<ConditionalAction> actionList,
             ArrayList<ConditionalVariable> triggerList,
             Logix logix, String sName, String uName) {
@@ -1889,7 +1895,8 @@ public class LRouteTableAction extends AbstractTableAction {
         } catch (Exception ex) {
             // user input no good
             handleCreateException(sName);
-            return (Integer) null;
+            // throw without creating any 
+            throw new IllegalArgumentException("user input no good");
         }
         c.setStateVariables(triggerList);
         //c.setAction(cloneActionList(actionList, Conditional.ACTION_OPTION_ON_CHANGE_TO_TRUE));
@@ -2922,7 +2929,7 @@ public class LRouteTableAction extends AbstractTableAction {
     }
 
     public void setMessagePreferencesDetails() {
-        jmri.InstanceManager.getDefault(jmri.UserPreferencesManager.class).preferenceItemDetails(getClassName(), "remindSaveRoute", rb.getString("HideSaveReminder"));
+        jmri.InstanceManager.getDefault(jmri.UserPreferencesManager.class).preferenceItemDetails(getClassName(), "remindSaveRoute", Bundle.getMessage("HideSaveReminder"));
         super.setMessagePreferencesDetails();
     }
 
@@ -2934,7 +2941,7 @@ public class LRouteTableAction extends AbstractTableAction {
         return rbx.getString("Title");
     }
 
-    static final Logger log = LoggerFactory
+    private final static Logger log = LoggerFactory
             .getLogger(LRouteTableAction.class.getName());
 }
 /* @(#)RouteTableAction.java */

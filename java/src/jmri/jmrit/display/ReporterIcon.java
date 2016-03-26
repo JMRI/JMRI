@@ -13,7 +13,6 @@ import org.slf4j.LoggerFactory;
  * An icon to display info from a Reporter, e.g. transponder or RFID reader.<P>
  *
  * @author Bob Jacobsen Copyright (c) 2004
- * @version $Revision$
  */
 public class ReporterIcon extends PositionableLabel implements java.beans.PropertyChangeListener {
 
@@ -51,13 +50,13 @@ public class ReporterIcon extends PositionableLabel implements java.beans.Proper
     // the associated Reporter object
     Reporter reporter = null;
 
+    @Override
     public Positionable deepClone() {
         ReporterIcon pos = new ReporterIcon(_editor);
         return finishClone(pos);
     }
 
-    public Positionable finishClone(Positionable p) {
-        ReporterIcon pos = (ReporterIcon) p;
+    protected Positionable finishClone(ReporterIcon pos) {
         pos.setReporter(reporter.getSystemName());
         return super.finishClone(pos);
     }
@@ -172,5 +171,5 @@ public class ReporterIcon extends PositionableLabel implements java.beans.Proper
         return ((javax.swing.JLabel) this).getMaximumSize().width;  // defer to superclass
     }
 
-    static Logger log = LoggerFactory.getLogger(ReporterIcon.class.getName());
+    private final static Logger log = LoggerFactory.getLogger(ReporterIcon.class.getName());
 }

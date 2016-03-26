@@ -1,4 +1,3 @@
-// SdiJfcUnitTests.java
 package jmri.util.swing.sdi;
 
 import javax.swing.JButton;
@@ -15,8 +14,7 @@ import junit.framework.TestSuite;
 /**
  * Swing jfcUnit tests for the SDI GUI
  *
- * @author	Bob Jacobsen Copyright 2010
- * @version $Revision$
+ * @author	Bob Jacobsen Copyright 2010, 2015
  */
 public class SdiJfcUnitTests extends jmri.util.SwingTestCase {
 
@@ -43,26 +41,20 @@ public class SdiJfcUnitTests extends jmri.util.SwingTestCase {
 
         // Close 2 directly
         TestHelper.disposeWindow(f2, this);
+        flushAWT();
         Assert.assertEquals("one pane disposed", 1, SamplePane.disposed.size());
         Assert.assertEquals("pane 2 disposed", Integer.valueOf(2), SamplePane.disposed.get(0));
         f2 = jmri.util.JmriJFrame.getFrame("SamplePane 2");
-        Assert.assertTrue("frame 2 has been disposed", f2 == null);
+        Assert.assertTrue("frame 2 is no longer visible", f2 == null);
 
         // Close 1 directly
         TestHelper.disposeWindow(f1, this);
+        flushAWT();
         Assert.assertEquals("one pane disposed", 2, SamplePane.disposed.size());
         Assert.assertEquals("pane 1 disposed", Integer.valueOf(1), SamplePane.disposed.get(1));
         f1 = jmri.util.JmriJFrame.getFrame("SamplePane 1");
-        Assert.assertTrue("frame 1 has been disposed", f1 == null);
+        Assert.assertTrue("frame 1 is no longer visible", f1 == null);
 
-    }
-
-    public void testMenu() throws Exception {
-        JmriNamedPaneAction a = new JmriNamedPaneAction("Action",
-                new JmriJFrameInterface(),
-                jmri.util.swing.SamplePane.class.getName());
-
-        a.actionPerformed(null);
     }
 
     // from here down is testing infrastructure

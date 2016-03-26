@@ -36,11 +36,16 @@ public class Xml {
     static final String MAX_LEN_STRING_BUILT_NAME = "max_len_string_built_name"; // NOI18N
     static final String MAX_LEN_STRING_TRAIN_NAME = "max_len_string_train_name"; // NOI18N
     static final String MAX_LEN_STRING_ROUTE_NAME = "max_len_string_route_name"; // NOI18N
+    static final String MAX_LEN_STRING_AUTOMATION_NAME = "max_len_string_automation_name"; // NOI18N
     static final String REPORTS = "reports"; // NOI18N
+    
+    static final String ACTIONS = "actions"; // NOI18N
+    static final String EXCEL_WAIT_TIME = "excelWaitTime"; // NOI18N
 
     // Setup.java
     static final String OPERATIONS = "operations"; // NOI18N
     static final String RAIL_ROAD = "railRoad"; // NOI18N
+    static final String USE_JMRI_RAILROAD_NAME = "useJmriRailroadName"; // NOI18N
     static final String SETTINGS = "settings"; // NOI18N
     static final String MAIN_MENU = "mainMenu"; // NOI18N
     static final String CLOSE_ON_SAVE = "closeOnSave"; // NOI18N	
@@ -72,6 +77,9 @@ public class Xml {
     static final String CAR_LOGGER = "carLogger"; // NOI18N
     static final String ENGINE_LOGGER = "engineLogger"; // NOI18N
     static final String TRAIN_LOGGER = "trainLogger"; // NOI18N
+    
+    static final String MANIFEST_FILE_OPTIONS = "manifestFileOptions"; // NOI18N
+    static final String MANIFEST_SAVE = "manifestSave"; // NOI18N
 
     static final String PRINT_LOC_COMMENTS = "printLocComments"; // NOI18N
     static final String PRINT_ROUTE_COMMENTS = "printRouteComments"; // NOI18N

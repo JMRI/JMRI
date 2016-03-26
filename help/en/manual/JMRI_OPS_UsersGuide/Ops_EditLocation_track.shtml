@@ -1,42 +1,67 @@
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
-<html lang="en"><head><!-- Copyright ($Author$) 2009 --><!-- $Id$ --><title>Operations-Edit Locations Track</title><!-- Style -->
+<html lang="en">
+<head>
+<title>JMRI OperationsPro - Edit Location Track</title>
 
-
-
-
+<!-- Style -->
 <meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
 <link rel="stylesheet" type="text/css" href="/css/default.css" media="screen">
 <link rel="stylesheet" type="text/css" href="/css/print.css" media="print">
 <link rel="icon" href="/images/jmri.ico" type="image/png">
-<link rel="home" title="Home" href="/"><!-- /Style --></head><body>
+<link rel="home" title="Home" href="/">
+<!-- /Style -->
+</head>
+
+<body>
 <!--#include virtual="/Header" -->
 <!--#include virtual="Sidebar" -->
 <div id="mainContent"><a name="Top"></a>
+
 <h1>Using JMRI&reg; to Operate Trains</h1>
-<h1>Operations Edit Location Track Window</h1>
+<h2>OperationsPro: Edit Location Track window</h2>
+
 <div align="right">
 <p><a href="Ops_EditLocation.shtml">Back</a></p>
 <p><a href="index.shtml#Main">Back to Index</a></p>
 </div>
 <hr>
-<p>The <span style="font-weight: bold;">Edit
-Track&nbsp;</span> window as shown is opened from the <span style="font-weight: bold;">Edit button &nbsp;column in
-the&nbsp;</span> <span style="font-weight: bold;">Edit Location</span> window
-for the selected&nbsp;location&nbsp;</p>
-<p>It will open a window with the title for the type of track in
-use.</p>
+
+<p>The <span style="font-weight: bold;">Edit [Type] Track</span> window as shown is opened by clicking on one of the buttons in the <strong>Edit</strong> column in
+the <a href="Ops_EditLocation.shtml"><strong>Edit Location</strong></a> window for the selected Location.</p>
+<p>A window will open with the title for the type of track in use:</p>
 <p style="margin-left: 40px;"><img style="width: 800px; height: 108px;" alt="edit spur" src="images/Ops_EditSpur.png"></p>
 <p style="margin-left: 40px;"><img style="width: 795px; height: 77px;" alt="edit yard" src="images/Ops_EditYardTrack02.png"></p>
 <p style="margin-left: 40px;"><img style="width: 798px; height: 78px;" alt="edit interchange" src="images/Ops_EditInterchange01.png"></p>
 
-<a href="Ops_EditLocation_menu.shtml"><span style="font-weight: bold;"></span></a><a href="Ops_EditLocation_trackMenu.shtml"><span style="font-weight: bold;">Menu Bar</span></a><br>
-<br><div style="margin-left: 40px;"><img style="width: 750px; height: 615px;" alt="edit track" src="images/Ops_EditTrack.png"><br>
-</div>
+<p>The window offers the same options and menus as the <a href="Ops_AddSiding.shtml#editspur">Add [Type] Track</a> window.</p>
+
+<div style="margin-left: 40px;"><img style="width: 750px; height: 615px;" alt="edit track" src="images/Ops_EditTrack.png"></div>
+
+<h3><a href="Ops_EditLocation_trackMenu.shtml">Edit Location Track window menu</a></h3>
+
+<p><img src="images/Ops_AddSidingMenu.png" alt="menu" height="213" width="758"></p>
+
+<h4>Tools <img src="images/arrow.gif"></h4>
+<ul>
+  <li><strong><a href="Ops_Cars.shtml">Show Cars</a></strong><br>&nbsp;</li>
+  <li><strong>Track Pools</strong>
+  <p>Spurs may be combined and the their lengths combined.</p></li>
+  <li><strong>Alternate Track</strong>
+  <p><img src="images/Ops_AddSidingTrack05.png" height="100" width="300"></p></li>
+  <li><strong>Change Track Type</strong>
+  <p><img src="images/Ops_AddSidingTrack06.png" height="107" width="305"></p></li>
+  <li><strong>Planned Pick Ups</strong>
+  <p><img src="images/Ops_AddSidingTrack07.png" height="117" width="321"></p></li>
+</ul>
+
 <div align="right">
 <p><a href="Ops_EditLocation.shtml">Back<br>
 </a></p>
 <p><a href="index.shtml#Main">Back to Index</a></p>
 </div>
+
 <!--#include virtual="/Footer" -->
 </div>
-</body></html>
+</div>
+</body>
+</html>

@@ -1,10 +1,7 @@
-// CatalogTreeFS.java
 package jmri.jmrit.catalog;
 
 import java.io.File;
 import java.util.HashMap;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 
 /**
  * TreeModel used by CatalogPanel to create a tree of resources.
@@ -88,7 +85,7 @@ public class CatalogTreeFS extends AbstractCatalogTree {
             insertNodeInto(newElement, pParent, pParent.getChildCount());
             String[] sp = fp.list();
             for (int i = 0; i < sp.length; i++) {
-                //if (log.isDebugEnabled()) log.debug("Descend into resource: "+sp[i]);
+                log.debug("Descend into resource: {}",sp[i]);
                 insertNodes(sp[i], pPath + "/" + sp[i], newElement);
             }
         } else /* leaf */ {
@@ -104,35 +101,35 @@ public class CatalogTreeFS extends AbstractCatalogTree {
         }
     }
 
-    public void setProperty(Object key, Object value) {
+    public void setProperty(String key, Object value) {
         if (parameters == null) {
-            parameters = new HashMap<Object, Object>();
+            parameters = new HashMap<String, Object>();
         }
         parameters.put(key, value);
     }
 
-    public Object getProperty(Object key) {
+    public Object getProperty(String key) {
         if (parameters == null) {
             return null;
         }
         return parameters.get(key);
     }
 
-    public java.util.Set<Object> getPropertyKeys() {
+    public java.util.Set<String> getPropertyKeys() {
         if (parameters == null) {
             return null;
         }
         return parameters.keySet();
     }
 
-    public void removeProperty(Object key) {
+    public void removeProperty(String key) {
         if (parameters == null || key == null) {
             return;
         }
         parameters.remove(key);
     }
 
-    HashMap<Object, Object> parameters = null;
+    HashMap<String, Object> parameters = null;
 
-    static Logger log = LoggerFactory.getLogger(CatalogTreeFS.class.getName());
+    static org.slf4j.Logger log = org.slf4j.LoggerFactory.getLogger(CatalogTreeFS.class.getName());
 }

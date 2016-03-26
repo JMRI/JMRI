@@ -1,112 +1,114 @@
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
-<!-- $Id$ -->
-<HTML LANG="en">
-<HEAD>
-<TITLE>JMRI: Adding/Editing LRoutes</TITLE>
-<META HTTP-EQUIV="Content-Type" CONTENT="text/html; charset=iso-8859-1">
-<META CONTENT="Bob Jacobsen" NAME="Author">
-<META NAME="keywords" CONTENT="JMRI help LRoute Add Edit">
+<html lang="en">
+<head>
+<title>JMRI: Adding/Editing LRoutes</title>
+<meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
+<meta content="Bob Jacobsen" name="Author">
+<meta name="keywords" content="JMRI help LRoute Add Edit">
 
 <!--#include virtual="/Style" -->
-</HEAD>
+</head>
 
-<BODY>
+<body>
 <!--#include virtual="/Header" -->
   <div class="nomenu" id="mBody">
     <div id="mainContent">
 
-<H1><A NAME="Adding/Editing LRoutes"></A>Adding/Editing LRoutes</H1>
+<h1><a name="Adding/Editing LRoutes"></a>Adding/Editing LRoutes</h1>
 
-<p>There are four tabs for adding and editing lroutes:
+<p>There are four tabs for adding and editing LRoutes:
 
-<H3>Tab 1. Basic LRoute</H3>
+<h3>Tab 1: Basic LRoute</h3>
 
-<P>The first thing you must do when creating a route is name it. In
-the box labeled "System Name" enter a unique name for your lroute.
-The prefix "RTX" will be added to the system name, 
+<p>The first thing you must do when creating an LRoute is to name it. In
+the box labeled "System Name" enter a unique name for your LRoute.
+The prefix "RTX" will be added to the System Name. 
 You can optionally enter a more descriptive name in the "User
-Name" box.</P>
+Name" box.</p>
 
 <dl>
 <dt>Logix Route Type</dt>
         <dd>The radio buttons below the tab descriptions set the triggering mode 
-        for the "veto" control variables (see below for an explanation of veto).
+        for the "Veto" control variables (see below for an explanation of Veto).
         To emulate the behavior of Routes (as opposed to LRoutes) select the 
-        <b>Old</b> option.  (Standard Routes do not not trigger when the veto condition is
-        removed.)  If you want the l-route to trigger when the veto condition is 
+        <b>Old</b> option.  (Standard Routes do not not trigger when the Veto condition is
+        removed.)  If you want the LRoute to trigger when the Veto condition is 
         removed, select the <b>New</b> option.</dd>
 </dl>
 
-The buttons at the bottom of the LRoute Table
+The buttons at the bottom of the LRoute Table:
 
-<DL>	
-<DT>Add Route</DT>
-	<DD>Push this button to add a new logix route. </DD>
+<dl>	
+<dt>Add Route</dt>
+	<dd>Push this button to add a new Logix Route. </dd>
         
-<DT>Cancel</DT>
-	<DD>Push this button to cancel editing. </DD>
-</DL>
+<dt>Cancel</dt>
+	<dd>Push this button to cancel editing. </dd>
+</dl>
 
-<H3>Tab 2. Actions (output)</H3>
+<h3>Tab 2: Actions (output)</h3>
 
-<p>This tab contains a pick list of all the Sensors, Turnouts, Lights and SignalHeads 
+<p>This tab contains a pick list of all the Sensors, Turnouts, Lights and Signal Heads 
 that have been created.  Click the checkbox in the <b>Include</b> column to select the 
-device you want to include in the l-route.  Then choose the action you want the
-device to take when the l-route is triggered from the drop down menu in the <b>Set 
+device you want to include in the LRoute.  Then choose the action you want the
+device to take when the LRoute is triggered from the drop down menu in the <b>Set 
 Action</b> column.</p>
 
 <p>The radio buttons allow you to limit the display of devices to only those you
-have selected.</p>
+have already selected.</p>
 
-<H3>Tab 3. Triggers/Controls (intput)</H3>
+<h3>Tab 3: Triggers/Controls (input)</h3>
 
-<p>This tab contains a pick list of all the Sensors, Turnouts, Lights and SignalHeads 
+<p>This tab contains a pick list of all the Sensors, Turnouts, Lights and Signal Heads 
 that have been created.  Click the checkbox in the <b>Include</b> column to select the 
-device you want to use to control in the l-route.  Then choose the state you want the
-device to use for triggering the l-route from the drop down menu in the <b>Trigger 
+device you want to use to control in the LRoute.  Then choose the state you want the
+device to use for triggering the LRoute from the drop down menu in the <b>Trigger 
 State</b> column.</p>
 
 <p>Devices selected with "non-veto" states are grouped as an "OR" clause.  Triggers
-selected with a "veto" state are grouped as an "AND" clause.  That is, when any 
-"non-veto" state becomes true, the l-route is able to trigger.  However, if any of the
-"veto" states is true, the l-route will not trigger.</p>
+selected with a "veto" state are grouped as an "AND" clause.  That is, when <i>any</i> 
+"non-veto" state becomes True, the LRoute is able to trigger.  However, if <i>any</i> of the
+"veto" states is True, the LRoute will not trigger.</p>
 
 <p>On Tab 1, the Logix Route Type <b>New</b> will put the above logic into a single
 Logix Conditional.  If the <b>Old</b> option is selected, each trigger with a
 "non-veto" state is put into a separate Conditional.  The behavior for this
-option is the 
-l-route will trigger whenever one of these device states becomes true - even when
-the logical expression as a whole is already true.  Another difference when
+option is: the 
+LRoute will trigger whenever one of these device states becomes True - even when
+the logical expression as a whole is already True.  Another difference when
 the <b>Old</b> option is specified, is that the "veto" variables are not enabled for triggering.
-This means the actions are not triggered when the vetoes are removed.  Use the <b>new</b>
+This means the actions are not triggered when the vetoes are removed.  Use the <b>New</b>
 option if you want actions to be triggered when the vetoes are removed.  
 In summary, the <b>Old</b> option emulates a standard Route and the <b>New</b> 
 option has the behavior of a standard Logix Conditional.  Variations on these behaviors  
 can be tuned with further editing in the Logix Table.
 
 <p>Note that control variables selected with "On Change" states need a separate
-Logix Conditional in order for the l-route actions to trigger on every change of state
+Logix Conditional in order for the LRoute actions to trigger on every change of state
 of these variables.  
 
 <p>The radio buttons allow you to limit the display of devices to only those you
 have selected.</p>
 
-<H3>Tab 4. Alignment/Locks/Etc.</H3>
+<h3>Tab 4: Alignment/Locks/Etc.</h3>
 
 <p>This tab contains a pick list of the Sensors 
 that have been created.  Click the checkbox in the <b>Include</b> column to select a 
-sensor you want to use for indicating completion of the l-route actions.  Then choose
-the type of action you want the sensor to monitor from the drop down menu in the  
-<b>Alignment</b> column.  You may choose to have the sensor indicate a particular type 
-(sensor, turnout, light, signal, or all)</p>
+Sensor you want to use for indicating completion of the LRoute actions.  Then choose
+the type of action you want the Sensor to monitor from the drop down menu in the  
+<b>Alignment</b> column.  You may choose to have the Sensor indicate a particular type 
+(Sensor, Turnout, Light, Signal Head or "All")</p>
 
 <p>The radio buttons allow you to limit the display of devices to only those you
 have selected.</p>
 
-<p>A sound file may be entered to play when the l-route is triggered.  Likewise a script
-file may be run when the l-route is triggered. 
+<p>A sound file may be entered to play when the LRoute is triggered.  Likewise a script
+file may be run when the LRoute is triggered. 
+
+<p>Back to the <a href="LRouteTable.shtml">LRoute Table help page<a>.</p>
 
 <!--#include virtual="/Footer" -->
-</BODY>
-</HTML>
-
+ </div><!-- closes #mainContent-->
+</div> <!-- closes #mBody-->
+</body>
+</html>

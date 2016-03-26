@@ -1,18 +1,14 @@
-// ProxyReporterManager.java
 package jmri.managers;
 
 import jmri.NamedBean;
 import jmri.Reporter;
 import jmri.ReporterManager;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 
 /**
  * Implementation of a ReporterManager that can serves as a proxy for multiple
  * system-specific implementations.
  *
  * @author	Bob Jacobsen Copyright (C) 2003, 2010
- * @version	$Revision$
  */
 public class ProxyReporterManager extends AbstractProxyManager implements ReporterManager {
 
@@ -21,7 +17,7 @@ public class ProxyReporterManager extends AbstractProxyManager implements Report
     }
 
     protected AbstractManager makeInternalManager() {
-        return new InternalReporterManager();
+        return jmri.InstanceManager.getDefault(jmri.jmrix.internal.InternalSystemConnectionMemo.class).getReporterManager();
     }
 
     public int getXMLOrder() {
@@ -131,9 +127,4 @@ public class ProxyReporterManager extends AbstractProxyManager implements Report
     public String getBeanTypeHandled() {
         return Bundle.getMessage("BeanNameReporter");
     }
-
-    // initialize logging
-    static Logger log = LoggerFactory.getLogger(ProxyReporterManager.class.getName());
 }
-
-/* @(#)ProxyReporterManager.java */

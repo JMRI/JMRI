@@ -91,10 +91,12 @@ public class PanelEditorXml extends AbstractXmlAdapter {
      * Create a PanelEditor object, then register and fill it, then pop it in a
      * JFrame
      *
-     * @param element Top level Element to unpack.
+     * @param shared Top level Element to unpack.
+     * @param perNode
      * @return true if successful
      */
-    public boolean load(Element element) {
+    @Override
+    public boolean load(Element shared, Element perNode) {
         boolean result = true;
         // find coordinates
         int x = 0;
@@ -102,18 +104,18 @@ public class PanelEditorXml extends AbstractXmlAdapter {
         int height = 400;
         int width = 300;
         try {
-            x = element.getAttribute("x").getIntValue();
-            y = element.getAttribute("y").getIntValue();
-            height = element.getAttribute("height").getIntValue();
-            width = element.getAttribute("width").getIntValue();
+            x = shared.getAttribute("x").getIntValue();
+            y = shared.getAttribute("y").getIntValue();
+            height = shared.getAttribute("height").getIntValue();
+            width = shared.getAttribute("width").getIntValue();
         } catch (org.jdom2.DataConversionException e) {
             log.error("failed to convert PanelEditor's attribute");
             result = false;
         }
         // find the name
         String name = "Panel";
-        if (element.getAttribute("name") != null) {
-            name = element.getAttribute("name").getValue();
+        if (shared.getAttribute("name") != null) {
+            name = shared.getAttribute("name").getValue();
         }
         // confirm that panel hasn't already been loaded
         if (jmri.jmrit.display.PanelMenu.instance().isPanelNameUsed(name)) {
@@ -132,13 +134,13 @@ public class PanelEditorXml extends AbstractXmlAdapter {
         // items are loaded, to preserve the individual item settings
         Attribute a;
         boolean value = true;
-        if ((a = element.getAttribute("editable")) != null && a.getValue().equals("no")) {
+        if ((a = shared.getAttribute("editable")) != null && a.getValue().equals("no")) {
             value = false;
         }
         panel.setAllEditable(value);
 
         value = true;
-        if ((a = element.getAttribute("positionable")) != null && a.getValue().equals("no")) {
+        if ((a = shared.getAttribute("positionable")) != null && a.getValue().equals("no")) {
             value = false;
         }
         panel.setAllPositionable(value);
@@ -150,40 +152,40 @@ public class PanelEditorXml extends AbstractXmlAdapter {
          panel.setShowCoordinates(value);
          */
         value = true;
-        if ((a = element.getAttribute("showtooltips")) != null && a.getValue().equals("no")) {
+        if ((a = shared.getAttribute("showtooltips")) != null && a.getValue().equals("no")) {
             value = false;
         }
         panel.setAllShowTooltip(value);
 
         value = true;
-        if ((a = element.getAttribute("controlling")) != null && a.getValue().equals("no")) {
+        if ((a = shared.getAttribute("controlling")) != null && a.getValue().equals("no")) {
             value = false;
         }
         panel.setAllControlling(value);
 
         value = false;
-        if ((a = element.getAttribute("hide")) != null && a.getValue().equals("yes")) {
+        if ((a = shared.getAttribute("hide")) != null && a.getValue().equals("yes")) {
             value = true;
         }
         panel.setShowHidden(value);
 
         value = true;
-        if ((a = element.getAttribute("panelmenu")) != null && a.getValue().equals("no")) {
+        if ((a = shared.getAttribute("panelmenu")) != null && a.getValue().equals("no")) {
             value = false;
         }
         panel.setPanelMenuVisible(value);
 
         String state = "both";
-        if ((a = element.getAttribute("scrollable")) != null) {
+        if ((a = shared.getAttribute("scrollable")) != null) {
             state = a.getValue();
         }
         panel.setScroll(state);
 
         // set color if needed
         try {
-            int red = element.getAttribute("redBackground").getIntValue();
-            int blue = element.getAttribute("blueBackground").getIntValue();
-            int green = element.getAttribute("greenBackground").getIntValue();
+            int red = shared.getAttribute("redBackground").getIntValue();
+            int blue = shared.getAttribute("blueBackground").getIntValue();
+            int green = shared.getAttribute("greenBackground").getIntValue();
             panel.setBackgroundColor(new Color(red, green, blue));
         } catch (org.jdom2.DataConversionException e) {
             log.warn("Could not parse color attributes!");
@@ -193,7 +195,7 @@ public class PanelEditorXml extends AbstractXmlAdapter {
         panel.initView();
 
         // load the contents with their individual option settings
-        List<Element> items = element.getChildren();
+        List<Element> items = shared.getChildren();
         for (int i = 0; i < items.size(); i++) {
             // get the class, hence the adapter object to do loading
             Element item = items.get(i);
@@ -236,6 +238,6 @@ public class PanelEditorXml extends AbstractXmlAdapter {
         return jmri.Manager.PANELFILES;
     }
 
-    static Logger log = LoggerFactory.getLogger(PanelEditorXml.class.getName());
+    private final static Logger log = LoggerFactory.getLogger(PanelEditorXml.class.getName());
 
 }

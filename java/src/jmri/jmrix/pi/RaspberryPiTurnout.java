@@ -2,18 +2,16 @@
 
 package jmri.jmrix.pi;
 
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
-
 import com.pi4j.io.gpio.GpioController;
 import com.pi4j.io.gpio.GpioFactory;
 import com.pi4j.io.gpio.GpioPinDigitalOutput;
-import com.pi4j.io.gpio.PinState;
 import com.pi4j.io.gpio.PinPullResistance;
+import com.pi4j.io.gpio.PinState;
 import com.pi4j.io.gpio.RaspiPin;
-
+import jmri.Turnout;
 import jmri.implementation.AbstractTurnout;
-import jmri.*;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 /**
  * Turnout interface to RaspberryPi GPIO pins.
@@ -34,7 +32,8 @@ public class RaspberryPiTurnout extends AbstractTurnout implements Turnout, java
    private int address;
 
    public RaspberryPiTurnout(String systemName) {
-	super(systemName.toUpperCase());
+        super(systemName.toUpperCase());
+	    log.debug("Provisioning turnout {}",systemName);
         if(gpio==null) gpio=GpioFactory.getInstance();
         address=Integer.parseInt(getSystemName().substring(getSystemName().lastIndexOf("T")+1));
         pin = gpio.provisionDigitalOutputPin(RaspiPin.getPinByName("GPIO "+address),getSystemName());
@@ -43,12 +42,18 @@ public class RaspberryPiTurnout extends AbstractTurnout implements Turnout, java
 
    public RaspberryPiTurnout(String systemName, String userName) {
         super(systemName.toUpperCase(), userName);
+        log.debug("Provisioning turnout {} with username '{}'",systemName, userName);
         if(gpio==null) gpio=GpioFactory.getInstance();
         address=Integer.parseInt(getSystemName().substring(getSystemName().lastIndexOf("T")+1));
         pin = gpio.provisionDigitalOutputPin(RaspiPin.getPinByName("GPIO "+address),getUserName());
         pin.setShutdownOptions(true, PinState.LOW,PinPullResistance.OFF);
    }
     
+   //support inversion for RPi turnouts
+   public boolean canInvert() {
+       return true;
+   }
+   
    /**
     * Handle a request to change state, typically by sending a message to the
     * layout in some child class. Public version (used by TurnoutOperator)
@@ -59,9 +64,13 @@ public class RaspberryPiTurnout extends AbstractTurnout implements Turnout, java
    @Override
    protected void forwardCommandChangeToLayout(int s){
       if(s==CLOSED){
-         pin.high();
+         log.debug("Setting turnout {} to CLOSED", getSystemName());
+         if (!getInverted()) pin.high();
+         else pin.low();
       } else if(s==THROWN) {
-         pin.low();
+         log.debug("Setting turnout {} to THROWN", getSystemName());
+         if (!getInverted()) pin.low();
+         else pin.high();
       }
    }
 
@@ -69,7 +78,7 @@ public class RaspberryPiTurnout extends AbstractTurnout implements Turnout, java
    protected void turnoutPushbuttonLockout(boolean locked){
    }
 
-   static Logger log = LoggerFactory.getLogger(RaspberryPiTurnout.class.getName());
+    private final static Logger log = LoggerFactory.getLogger(RaspberryPiTurnout.class.getName());
 }
 
 /* @(#)RaspberryPiTurnout.java */

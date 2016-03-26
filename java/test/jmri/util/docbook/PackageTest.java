@@ -9,7 +9,6 @@ import junit.framework.TestSuite;
  * Tests for the jmri.util.docbook package
  *
  * @author	Bob Jacobsen Copyright (C) 2010
- * @version $Revision$
  */
 public class PackageTest extends TestCase {
 

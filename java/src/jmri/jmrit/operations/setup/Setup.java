@@ -287,6 +287,7 @@ public class Setup {
     private static boolean carLogger = false; // when true car logger is enabled
     private static boolean engineLogger = false; // when true engine logger is enabled
     private static boolean trainLogger = false; // when true train logger is enabled
+    private static boolean saveTrainManifests = false; // when true save previous train manifest
 
     private static boolean aggressiveBuild = false; // when true subtract car length from track reserve length
     private static int numberPasses = 2; // the number of passes in train builder
@@ -572,7 +573,8 @@ public class Setup {
     public static void setRailroadName(String name) {
         String old = railroadName;
         railroadName = name;
-        setDirtyAndFirePropertyChange("Railroad Name Change", old, name); // NOI18N
+        if (old == null || !old.equals(name))
+            setDirtyAndFirePropertyChange("Railroad Name Change", old, name); // NOI18N
     }
 
     public static String getHazardousMsg() {
@@ -775,6 +777,13 @@ public class Setup {
         setDirtyAndFirePropertyChange("Switch List All Trains", old, b); // NOI18N
     }
 
+    /**
+     * When true switch list shows all trains visiting a location, even if the
+     * train doesn't have any work at that location. When false, switch lists
+     * only report a train if it has work at the location.
+     * 
+     * @return When true show all trains visiting a location.
+     */
     public static boolean isSwitchListAllTrainsEnabled() {
         return switchListAllTrains;
     }
@@ -1056,6 +1065,14 @@ public class Setup {
     public static void setTrainLoggerEnabled(boolean enable) {
         trainLogger = enable;
         TrainLogger.instance().enableTrainLogging(enable);
+    }
+    
+    public static boolean isSaveTrainManifestsEnabled() {
+        return saveTrainManifests;
+    }
+    
+    public static void setSaveTrainManifestsEnabled(boolean enable) {
+        saveTrainManifests = enable;
     }
 
     public static String getPickupEnginePrefix() {
@@ -1671,16 +1688,16 @@ public class Setup {
      */
     public static List<String> getTrainDirectionList() {
         List<String> directions = new ArrayList<String>();
-        if ((traindir & EAST) > 0) {
+        if ((traindir & EAST) == EAST) {
             directions.add(EAST_DIR);
         }
-        if ((traindir & WEST) > 0) {
+        if ((traindir & WEST) == WEST) {
             directions.add(WEST_DIR);
         }
-        if ((traindir & NORTH) > 0) {
+        if ((traindir & NORTH) == NORTH) {
             directions.add(NORTH_DIR);
         }
-        if ((traindir & SOUTH) > 0) {
+        if ((traindir & SOUTH) == SOUTH) {
             directions.add(SOUTH_DIR);
         }
         return directions;
@@ -1716,16 +1733,16 @@ public class Setup {
     public static String[] getDirectionStrings(int directions) {
         String[] dir = new String[4];
         int i = 0;
-        if ((directions & EAST) > 0) {
+        if ((directions & EAST) == EAST) {
             dir[i++] = EAST_DIR;
         }
-        if ((directions & WEST) > 0) {
+        if ((directions & WEST) == WEST) {
             dir[i++] = WEST_DIR;
         }
-        if ((directions & NORTH) > 0) {
+        if ((directions & NORTH) == NORTH) {
             dir[i++] = NORTH_DIR;
         }
-        if ((directions & SOUTH) > 0) {
+        if ((directions & SOUTH) == SOUTH) {
             dir[i++] = SOUTH_DIR;
         }
         return dir;
@@ -1756,7 +1773,10 @@ public class Setup {
         Element values;
         Element e = new Element(Xml.OPERATIONS);
         e.addContent(values = new Element(Xml.RAIL_ROAD));
-        values.setAttribute(Xml.NAME, getRailroadName());
+        if (Setup.getRailroadName().equals(WebServerManager.getWebServerPreferences().getRailRoadName()))
+            values.setAttribute(Xml.NAME, Xml.USE_JMRI_RAILROAD_NAME);
+        else
+            values.setAttribute(Xml.NAME, getRailroadName());
 
         e.addContent(values = new Element(Xml.SETUP));
         values.setAttribute(Xml.COMMENT, getComment());
@@ -1902,6 +1922,10 @@ public class Setup {
             values.setAttribute(Xml.NAME, getManifestLogoURL());
             e.addContent(values);
         }
+        
+        // manifest save file options
+        e.addContent(values = new Element(Xml.MANIFEST_FILE_OPTIONS));
+        values.setAttribute(Xml.MANIFEST_SAVE, isSaveTrainManifestsEnabled() ? Xml.TRUE : Xml.FALSE);
 
         e.addContent(values = new Element(Xml.BUILD_OPTIONS));
         values.setAttribute(Xml.AGGRESSIVE, isBuildAggressive() ? Xml.TRUE : Xml.FALSE);
@@ -1993,7 +2017,10 @@ public class Setup {
             if (log.isDebugEnabled()) {
                 log.debug("railroadName: {}", name);
             }
-            railroadName = name; // don't set the dirty bit
+            if (name.equals(Xml.USE_JMRI_RAILROAD_NAME))
+                railroadName = null;
+            else
+                railroadName = name; // don't set the dirty bit
         }
 
         if ((operations.getChild(Xml.SETUP) != null)
@@ -2651,6 +2678,16 @@ public class Setup {
                 setManifestLogoURL(a.getValue());
             }
         }
+        // manifest file options
+        if ((operations.getChild(Xml.MANIFEST_FILE_OPTIONS) != null)) {
+            if ((a = operations.getChild(Xml.MANIFEST_FILE_OPTIONS).getAttribute(Xml.MANIFEST_SAVE)) != null) {
+                String enable = a.getValue();
+                if (log.isDebugEnabled()) {
+                    log.debug("manifest file save option: " + enable);
+                }
+                setSaveTrainManifestsEnabled(enable.equals(Xml.TRUE));
+            }
+        }
         if ((operations.getChild(Xml.BUILD_OPTIONS) != null)) {
             if ((a = operations.getChild(Xml.BUILD_OPTIONS).getAttribute(Xml.AGGRESSIVE)) != null) {
                 String enable = a.getValue();
@@ -3091,6 +3128,6 @@ public class Setup {
         pcs.firePropertyChange(p, old, n);
     }
 
-    static Logger log = LoggerFactory.getLogger(Setup.class.getName());
+    private final static Logger log = LoggerFactory.getLogger(Setup.class.getName());
 
 }

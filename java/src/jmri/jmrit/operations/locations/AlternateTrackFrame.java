@@ -88,7 +88,7 @@ class AlternateTrackFrame extends OperationsFrame implements java.beans.Property
     }
     
     public void propertyChange(java.beans.PropertyChangeEvent e) {
-        if (Control.showProperty) {
+        if (Control.SHOW_PROPERTY) {
             log.debug("Property change: ({}) old: ({}) new: ({})", e.getPropertyName(), e.getOldValue(), e
                     .getNewValue());
         }
@@ -97,5 +97,5 @@ class AlternateTrackFrame extends OperationsFrame implements java.beans.Property
         }
     }
 
-    static Logger log = LoggerFactory.getLogger(AlternateTrackFrame.class.getName());
+    private final static Logger log = LoggerFactory.getLogger(AlternateTrackFrame.class.getName());
 }

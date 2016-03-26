@@ -60,6 +60,7 @@ import jmri.AddressedProgrammerManager;
 import jmri.GlobalProgrammerManager;
 import jmri.InstanceManager;
 import jmri.Programmer;
+import jmri.ProgrammerManager;
 import jmri.UserPreferencesManager;
 import jmri.jmrit.decoderdefn.DecoderFile;
 import jmri.jmrit.decoderdefn.DecoderIndexFile;
@@ -74,7 +75,7 @@ import jmri.jmrit.roster.Roster;
 import jmri.jmrit.roster.RosterEntry;
 import jmri.jmrit.roster.RosterEntrySelector;
 import jmri.jmrit.roster.rostergroup.RosterGroupSelector;
-import jmri.jmrit.symbolicprog.ProgDefault;
+import jmri.jmrit.symbolicprog.ProgrammerConfigManager;
 import jmri.jmrit.symbolicprog.tabbedframe.PaneOpsProgFrame;
 import jmri.jmrit.symbolicprog.tabbedframe.PaneProgFrame;
 import jmri.jmrit.symbolicprog.tabbedframe.PaneServiceProgFrame;
@@ -83,6 +84,7 @@ import jmri.jmrit.throttle.ThrottleFrame;
 import jmri.jmrit.throttle.ThrottleFrameManager;
 import jmri.jmrix.ActiveSystemsMenu;
 import jmri.jmrix.ConnectionConfig;
+import jmri.jmrix.ConnectionConfigManager;
 import jmri.jmrix.ConnectionStatus;
 import jmri.profile.ProfileManager;
 import jmri.progdebugger.ProgDebugger;
@@ -110,10 +112,9 @@ import org.slf4j.LoggerFactory;
  *
  * @see jmri.jmrit.symbolicprog.tabbedframe.PaneSet
  *
- * @author Bob Jacobsen Copyright (C) 2010
+ * @author Bob Jacobsen Copyright (C) 2010, 2016
  * @author Kevin Dickerson Copyright (C) 2011
  * @author Randall Wood Copyright (C) 2012
- * @version $Revision: 20027 $
  */
 public class RosterFrame extends TwoPaneTBWindow implements RosterEntrySelector, RosterGroupSelector {
 
@@ -121,7 +122,7 @@ public class RosterFrame extends TwoPaneTBWindow implements RosterEntrySelector,
      *
      */
     private static final long serialVersionUID = 6820971027038275933L;
-    static Logger log = LoggerFactory.getLogger(RosterFrame.class.getName());
+    private final static Logger log = LoggerFactory.getLogger(RosterFrame.class.getName());
     static ArrayList<RosterFrame> frameInstances = new ArrayList<>();
     protected boolean allowQuit = true;
     protected String baseTitle = "Roster";
@@ -175,8 +176,11 @@ public class RosterFrame extends TwoPaneTBWindow implements RosterEntrySelector,
     JButton prog2Button = new JButton(Bundle.getMessage("BasicProgrammer"));
     ActionListener programModeListener;
     ProgDebugger progDebugger = new ProgDebugger();
-    String programmer1 = Bundle.getMessage("Comprehensive");
-    String programmer2 = Bundle.getMessage("Basic");
+    
+    // These are the names of the programmer _files_, not what should be displayed to the user
+    String programmer1 = "Comprehensive"; // NOI18N
+    String programmer2 = "Basic"; // NOI18N
+    
     java.util.ResourceBundle rb = java.util.ResourceBundle.getBundle("apps.AppsBundle");
     //current selected loco
     RosterEntry re;
@@ -371,9 +375,14 @@ public class RosterFrame extends TwoPaneTBWindow implements RosterEntrySelector,
             }
         });
         getSplitPane().addPropertyChangeListener(propertyChangeListener);
-        if (ProgDefault.getDefaultProgFile() != null) {
-            programmer1 = ProgDefault.getDefaultProgFile();
+        if (this.getProgrammerConfigManager().getDefaultFile() != null) {
+            programmer1 = this.getProgrammerConfigManager().getDefaultFile();
         }
+        this.getProgrammerConfigManager().addPropertyChangeListener(ProgrammerConfigManager.DEFAULT_FILE, (PropertyChangeEvent evt) -> {
+            if (this.getProgrammerConfigManager().getDefaultFile() != null) {
+                programmer1 = this.getProgrammerConfigManager().getDefaultFile();
+            }
+        });
 
         String lastProg = (String) prefsMgr.getProperty(getWindowFrameRef(), "selectedProgrammer");
         if (lastProg != null) {
@@ -451,7 +460,7 @@ public class RosterFrame extends TwoPaneTBWindow implements RosterEntrySelector,
     }
 
     JComponent createTop() {
-        Object selectedRosterGroup = prefsMgr.getProperty(getWindowFrameRef(), "selectedRosterGroup");
+        Object selectedRosterGroup = prefsMgr.getProperty(getWindowFrameRef(), SELECTED_ROSTER_GROUP);
         groups = new RosterGroupsPanel((selectedRosterGroup != null) ? selectedRosterGroup.toString() : null);
         groups.setNewWindowMenuAction(this.getNewWindowAction());
         setTitle(groups.getSelectedRosterGroup());
@@ -585,10 +594,10 @@ public class RosterFrame extends TwoPaneTBWindow implements RosterEntrySelector,
                 }
             }
         };
-        groups.addPropertyChangeListener("selectedRosterGroup", new PropertyChangeListener() {
+        groups.addPropertyChangeListener(SELECTED_ROSTER_GROUP, new PropertyChangeListener() {
             @Override
             public void propertyChange(PropertyChangeEvent pce) {
-                prefsMgr.setProperty(this.getClass().getName(), "selectedRosterGroup", pce.getNewValue());
+                prefsMgr.setProperty(this.getClass().getName(), SELECTED_ROSTER_GROUP, pce.getNewValue());
                 setTitle((String) pce.getNewValue());
             }
         });
@@ -608,7 +617,7 @@ public class RosterFrame extends TwoPaneTBWindow implements RosterEntrySelector,
         });
         if (Roster.instance().numEntries() == 0) {
             try {
-                BufferedImage myPicture = ImageIO.read(FileUtil.findURL("resources/dp3first.gif", FileUtil.Location.INSTALLED));
+                BufferedImage myPicture = ImageIO.read(FileUtil.findURL(("resources/" + Bundle.getMessage("ThrottleFirstUseImage")), FileUtil.Location.INSTALLED));
                 //rosters.add(new JLabel(new ImageIcon( myPicture )), BorderLayout.CENTER);
                 firstHelpLabel = new JLabel(new ImageIcon(myPicture));
                 rtable.setVisible(false);
@@ -724,7 +733,7 @@ public class RosterFrame extends TwoPaneTBWindow implements RosterEntrySelector,
 
     @Override
     public Object getProperty(String key) {
-        if (key.equalsIgnoreCase("selectedRosterGroup")) {
+        if (key.equalsIgnoreCase(SELECTED_ROSTER_GROUP)) {
             return getSelectedRosterGroup();
         } else if (key.equalsIgnoreCase("hideSummary")) {
             return hideBottomPane;
@@ -741,7 +750,7 @@ public class RosterFrame extends TwoPaneTBWindow implements RosterEntrySelector,
     // cache selectedRosterEntries so that multiple calls to this
     // between selection changes will not require the creation of a new array
     @Override
-    @edu.umd.cs.findbugs.annotations.SuppressWarnings(value = "EI_EXPOSE_REP",
+    @edu.umd.cs.findbugs.annotations.SuppressFBWarnings(value = "EI_EXPOSE_REP",
             justification = "Want to give access to mutable, original roster objects")
     public RosterEntry[] getSelectedRosterEntries() {
         return rtable.getSelectedRosterEntries();
@@ -752,6 +761,10 @@ public class RosterFrame extends TwoPaneTBWindow implements RosterEntrySelector,
         return groups.getSelectedRosterGroup();
     }
 
+    protected ProgrammerConfigManager getProgrammerConfigManager() {
+        return InstanceManager.getDefault(ProgrammerConfigManager.class);
+    }
+    
     void handleQuit(WindowEvent e) {
         if (e != null && frameInstances.size() == 1) {
             final String rememberWindowClose = this.getClass().getName() + ".closeDP3prompt";
@@ -896,7 +909,7 @@ public class RosterFrame extends TwoPaneTBWindow implements RosterEntrySelector,
         pre.printPanes(boo);
     }
 
-    //Matches the first argument in the array against a locally know method
+    //Matches the first argument in the array against a locally-known method
     @Override
     public void remoteCalls(String[] args) {
         args[0] = args[0].toLowerCase();
@@ -1107,7 +1120,7 @@ public class RosterFrame extends TwoPaneTBWindow implements RosterEntrySelector,
         prefsMgr.setSimplePreferenceState(this.getClass().getName() + ".hideSummary", hideBottomPane);
         prefsMgr.setSimplePreferenceState(this.getClass().getName() + ".hideGroups", hideGroups);
         prefsMgr.setSimplePreferenceState(this.getClass().getName() + ".hideRosterImage", hideRosterImage);
-        prefsMgr.setProperty(getWindowFrameRef(), "selectedRosterGroup", groups.getSelectedRosterGroup());
+        prefsMgr.setProperty(getWindowFrameRef(), SELECTED_ROSTER_GROUP, groups.getSelectedRosterGroup());
         String selectedProgMode = "edit";
         if (service.isSelected()) {
             selectedProgMode = "service";
@@ -1321,21 +1334,35 @@ public class RosterFrame extends TwoPaneTBWindow implements RosterEntrySelector,
      */
     //taken out of CombinedLocoSelPane
     protected void startIdentifyLoco() {
-        if (InstanceManager.getDefault(GlobalProgrammerManager.class) == null) {
-            log.error("Identify loco called when no service mode programmer is available");
-            JOptionPane.showMessageDialog(null, Bundle.getMessage("IdentifyError"));
-            return;
-        }
-        // start identifying a loco
         final RosterFrame me = this;
         Programmer programmer = null;
         if (modePanel.isSelected()) {
             programmer = modePanel.getProgrammer();
         }
         if (programmer == null) {
-            log.warn("Selector did not provide a programmer, use default");
-            programmer = InstanceManager.programmerManagerInstance().getGlobalProgrammer();
+            GlobalProgrammerManager gpm = InstanceManager.getDefault(GlobalProgrammerManager.class);
+            if (gpm!=null) {
+                programmer = gpm.getGlobalProgrammer();
+                log.warn("Selector did not provide a programmer, attempt to use GlobalProgrammerManager default: {}", programmer);
+            } else {
+                ProgrammerManager dpm = InstanceManager.programmerManagerInstance();
+                if (dpm!=null) {
+                    programmer = dpm.getGlobalProgrammer();
+                    log.warn("Selector did not provide a programmer, attempt to use InstanceManager default: {}", programmer);
+                } else {
+                    log.warn("Selector did not provide a programmer, and no ProgramManager found in InstanceManager");
+                }
+            }
         }
+
+        // if failed to get programmer, tell user and stop
+        if (programmer == null) {
+            log.error("Identify loco called when no service mode programmer is available; button should have been disabled");
+            JOptionPane.showMessageDialog(null, Bundle.getMessage("IdentifyError"));
+            return;
+        }
+        
+        // and now do the work
         IdentifyLoco ident = new IdentifyLoco(programmer) {
             private final RosterFrame who = me;
 
@@ -1418,7 +1445,7 @@ public class RosterFrame extends TwoPaneTBWindow implements RosterEntrySelector,
         JLabel programmerStatusLabel = new JLabel(Bundle.getMessage("ProgrammerStatus"));
         statusField.setText(Bundle.getMessage("Idle"));
         addToStatusBox(programmerStatusLabel, statusField);
-        addToStatusBox(new JLabel(Bundle.getMessage("ActiveProfile", ProfileManager.getDefault().getActiveProfile().getName())));
+        addToStatusBox(new JLabel(Bundle.getMessage("ActiveProfile", ProfileManager.getDefault().getActiveProfile().getName())), null);
     }
 
     protected void systemsMenu() {
@@ -1488,36 +1515,29 @@ public class RosterFrame extends TwoPaneTBWindow implements RosterEntrySelector,
         ConnectionConfig oldServMode = serModeProCon;
         ConnectionConfig oldOpsMode = opsModeProCon;
 
+        // Find the connection that goes with the global programmer
         GlobalProgrammerManager gpm = InstanceManager.getDefault(GlobalProgrammerManager.class);
         if (gpm != null) {
-            String serviceModeProgrammer = gpm.getUserName();
-            ArrayList<Object> connList = InstanceManager.configureManagerInstance().getInstanceList(ConnectionConfig.class);
-            if (connList != null) {
-                for (Object connection : connList) {
-                    ConnectionConfig conn = (ConnectionConfig) connection;
-                    if (conn.getConnectionName() != null && conn.getConnectionName().equals(serviceModeProgrammer)) {
-                        serModeProCon = conn;
-                    }
-                }
-            }
-        }
-        AddressedProgrammerManager apm = InstanceManager.getDefault(AddressedProgrammerManager.class);
-        if (apm != null) {
-            //Ideally we should probably have the progDebugger manager reference the username configured in the system connection memo.
-            //but as DP3 (jmri can not use mutliple programmers!) isn't designed for multi-connection enviroments this should be sufficient*/
-            String opsModeProgrammer = apm.getUserName();
-            ArrayList<Object> connList = InstanceManager.configureManagerInstance().getInstanceList(ConnectionConfig.class);
-            if (connList != null) {
-                for (Object connection : connList) {
-                    ConnectionConfig conn = (ConnectionConfig) connection;
-                    if (conn.getConnectionName() != null && conn.getConnectionName().equals(opsModeProgrammer)) {
-                        opsModeProCon = conn;
-                    }
+            String serviceModeProgrammerName = gpm.getUserName();
+            for (ConnectionConfig connection : InstanceManager.getDefault(ConnectionConfigManager.class)) {
+                if (connection.getConnectionName() != null && connection.getConnectionName().equals(serviceModeProgrammerName)) {
+                    serModeProCon = connection;
                 }
             }
         }
 
-        if (serModeProCon != null) {
+        // Find the connection that goes with the addressed programmer
+        AddressedProgrammerManager apm = InstanceManager.getDefault(AddressedProgrammerManager.class);
+        if (apm != null) {
+            String opsModeProgrammerName = apm.getUserName();
+            for (ConnectionConfig connection : InstanceManager.getDefault(ConnectionConfigManager.class)) {
+                if (connection.getConnectionName() != null && connection.getConnectionName().equals(opsModeProgrammerName)) {
+                    opsModeProCon = connection;
+                }
+            }
+        }
+
+        if (serModeProCon != null && gpm.isGlobalProgrammerAvailable()) {
             if (ConnectionStatus.instance().isConnectionOk(serModeProCon.getInfo())
                     && gpm != null) {
                 serviceModeProgrammerLabel.setText(
@@ -1536,6 +1556,7 @@ public class RosterFrame extends TwoPaneTBWindow implements RosterEntrySelector,
                 firePropertyChange("setprogservice", "setEnabled", true);
             }
         } else {
+            // No service programmer available, disable interface sections not available
             serviceModeProgrammerLabel.setText(Bundle.getMessage("NoServiceProgrammerAvailable"));
             serviceModeProgrammerLabel.setForeground(Color.red);
             if (oldServMode != null) {
@@ -1545,9 +1566,13 @@ public class RosterFrame extends TwoPaneTBWindow implements RosterEntrySelector,
                 service.setVisible(false);
                 firePropertyChange("setprogservice", "setEnabled", false);
             }
+            // Disable Identify in toolBar
+            // This relies on it being the 2nd item in the tool bar, as defined in xml//config/parts/jmri/jmrit/roster/swing/RosterFrameToolBar.xml
+            // Because of I18N, we don't look for a particular Action name here
+            getToolBar().getComponents()[1].setEnabled(false);
         }
 
-        if (opsModeProCon != null) {
+        if (opsModeProCon != null && apm.isAddressedModePossible()) {
             if (ConnectionStatus.instance().isConnectionOk(opsModeProCon.getInfo()) && apm != null) {
                 operationsModeProgrammerLabel.setText(
                         Bundle.getMessage("OpsModeProgOnline", opsModeProCon.getConnectionName()));

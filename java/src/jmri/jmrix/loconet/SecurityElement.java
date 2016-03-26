@@ -920,7 +920,7 @@ public class SecurityElement implements LocoNetListener {
         pcs.removePropertyChangeListener(l);
     }
 
-    static Logger log = LoggerFactory.getLogger(SecurityElement.class.getName());
+    private final static Logger log = LoggerFactory.getLogger(SecurityElement.class.getName());
 
 }
 

@@ -99,7 +99,7 @@ public class TrainPrintUtilities {
         }
         String line;
 
-        if (!isBuildReport && logoURL != null && !logoURL.equals("")) {
+        if (!isBuildReport && logoURL != null && !logoURL.equals(Setup.NONE)) {
             ImageIcon icon = new ImageIcon(logoURL);
             if (icon.getIconWidth() == -1) {
                 log.error("Logo not found: " + logoURL);
@@ -116,6 +116,13 @@ public class TrainPrintUtilities {
                 break;
             }
             if (line == null) {
+                if (isPreview) {
+                    try {
+                        writer.write(" "); // need to do this in case the input file was empty to create preview
+                    } catch (IOException e) {
+                        log.debug("Print write failed for null line");
+                    }
+                }
                 break;
             }
             //			log.debug("Line: {}", line.toString());
@@ -376,5 +383,5 @@ public class TrainPrintUtilities {
         return ""; // no default printer specified
     }
 
-    static Logger log = LoggerFactory.getLogger(TrainPrintUtilities.class.getName());
+    private final static Logger log = LoggerFactory.getLogger(TrainPrintUtilities.class.getName());
 }

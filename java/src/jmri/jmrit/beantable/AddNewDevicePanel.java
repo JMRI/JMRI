@@ -6,14 +6,11 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.KeyAdapter;
 import java.awt.event.KeyEvent;
-import java.util.ResourceBundle;
 import javax.swing.BoxLayout;
 import javax.swing.JButton;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.JTextField;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 
 /**
  * JPanel to create a new JMRI devices HiJacked to serve other beantable tables.
@@ -56,7 +53,7 @@ public class AddNewDevicePanel extends jmri.util.swing.JmriPanel {
         p.add(userName, c);
         add(p);
 
-        add(ok = new JButton(rb.getString(addButtonLabel)));
+        add(ok = new JButton(Bundle.getMessage(addButtonLabel)));
         ok.addActionListener(listener);
         ok.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent a) {
@@ -77,7 +74,7 @@ public class AddNewDevicePanel extends jmri.util.swing.JmriPanel {
 
     void reset() {
         ok.setEnabled(false);
-        ok.setToolTipText(rb.getString("ToolTipWillActivate"));
+        ok.setToolTipText(Bundle.getMessage("ToolTipWillActivate"));
     }
 
     public void addLabels(String labelSystemName, String labelUserName) {
@@ -87,11 +84,8 @@ public class AddNewDevicePanel extends jmri.util.swing.JmriPanel {
 
     JButton ok;
     JTextField sysName;
-    JLabel sysNameLabel = new JLabel(rb.getString("LabelSystemName"));
-    JLabel userNameLabel = new JLabel(rb.getString("LabelUserName"));
-
-    static final ResourceBundle rb = ResourceBundle.getBundle("jmri.jmrit.beantable.BeanTableBundle");
-    static final Logger log = LoggerFactory.getLogger(AddNewDevicePanel.class.getName());
+    JLabel sysNameLabel = new JLabel(Bundle.getMessage("LabelSystemName"));
+    JLabel userNameLabel = new JLabel(Bundle.getMessage("LabelUserName"));
 }
 
 

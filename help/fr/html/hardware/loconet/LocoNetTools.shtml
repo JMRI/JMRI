@@ -1,29 +1,26 @@
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
 <!-- $Id$ -->
-<!-- Translated by Herv&#233; Blorec 201.-09-14
+<!-- Translated by Herv&#233; Blorec le 2014-09-14; Egbert Broerse (html markup); le 2015-10-18 -->
 <html lang="fr">
 <head>
- <TITLE>
+ <title>
       JMRI Support Tools for LocoNet&reg; Devices
- </TITLE>
-
-<!-- Style -->
-<META HTTP-EQUIV="Content-Type" CONTENT="text/html; charset=iso-8859-1">
-<META content="B. Milhaupt" name=Author>
-<META name="keywords" content="Digitrax LocoNet BDL16 BDL162 BDL168 PM4 PM42 
+ </title>
+<meta name="Author" content="B. Milhaupt">
+<meta name="keywords" content="Digitrax LocoNet BDL16 BDL162 BDL168 PM4 PM42 
       SE8C DS64 DS54 DT400 DT402 DCS100 DB150 JMRI UR90 UR91 UR92 Duplex 
       Simplex Infrared Monitor Slot FastClock Firmware 'Sound Project'">
-<LINK REL="stylesheet" TYPE="text/css" HREF="/css/default.css"
-	MEDIA="screen">
 
-<LINK REL="stylesheet" TYPE="text/css" HREF="/css/print.css"
-	MEDIA="print">
-<LINK REL="icon" HREF="/images/jmri.ico" TYPE="image/png">
-<LINK REL="home" TITLE="Home" HREF="/">
+<!-- Style -->
+<meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
+<link rel="stylesheet" type="text/css" href="/css/default.css" media="screen">
+<link rel="stylesheet" type="text/css" href="/css/print.css" media="print">
+<link rel="icon" href="/images/jmri.ico" type="image/png">
+<link rel="home" title="Home" href="/">
 <!-- /Style -->
-</HEAD>
+</head>
 
-<BODY>
+<body>
 <!--#include virtual="/Header" -->
   <div class="nomenu" id="mBody">
     <div id="mainContent">
@@ -32,9 +29,8 @@
       Outils JMRI qui prennent en charge les &#233;quipements LocoNet&reg;
       </h1>
 
-
-<p>Le logisiel JMRI peut fournir une vari&#233;t&#233; d'outils pour prendre en charge le mat&#233;riel connect&#233; au bus LocoNet&reg;. Ces outils fournissent une vari&#233;t&#233; de fonctionnlit&#233;s, Tel que la surveillance  des statut, la lecture et l'&#233;criture de la configuration. Chacun de ces outils fournit un ensemnble de fonctionnalit&#233;s qui est appropri&#233; &#224; ce genre d'&#233;quipement qu'il prend en charge, comme r&#233;sum&#233; dans le tableau ci-dessous.</p>
-<p>Dans le tableau chaque nom d'outil est un lien vers une page d'aide sp&#233;cifque &#224; l'outil.</p>
+<p>Le logiciel JMRI peut fournir une vari&#233;t&#233; d'outils pour prendre en charge le mat&#233;riel connect&#233; au bus LocoNet&reg;. Ces outils fournissent une vari&#233;t&#233; de fonctionnalit&#233;s, tel que la surveillance  des statut, la lecture et l'&#233;criture de la configuration. Chacun de ces outils fournit un ensemble de fonctionnalit&#233;s qui est appropri&#233; &#224; ce genre d'&#233;quipement qu'il prend en charge, comme r&#233;sum&#233; dans le tableau ci-dessous.</p>
+<p>Dans le tableau chaque nom d'outil est un lien vers une page d'aide sp&#233;cifique &#224; l'outil.</p>
 <table border="2">
     <tr align="center"><td><b>Tool</b></td>
         <td><b>Moniteur Status</b></td>
@@ -125,14 +121,14 @@
         <td></td>
         <td>SE8C</td>
     </tr>
-    <tr align="center"><td><a href="../../../package/jmri/jmrix/loconet/locoio/LocoIOFrame.shtml">Configurer LocoIO</a></td>
+    <tr align="center"><td><a href="../../../package/jmri/jmrix/loconet/locoio/LocoIOFrame.shtml">Configurer LocoIO</a> (d&#233;sapprouv&#233;)</td>
         <td></td>
         <td></td>
 
         <td>&bull;</td>
         <td></td>
         <td></td>
-        <td>LocoIo, LocoServo, LocoBooster</td>
+        <td>LocoIO, LocoServo, LocoBooster</td>
     </tr>
     <tr align="center"><td><a href="../../../package/jmri/jmrix/loconet/cmdstnconfig/CmdStnConfigFrame.shtml">Configurer Centrale de Commande</td>
         <td></td>
@@ -208,10 +204,10 @@
     </tr>    
 </table>
 <p>LocoNet&reg; est une marque d&#233;pos&#233;e de <a href="http://www.digitrax.com">Digitrax, Inc.</a></p>
-    </div>
-  </div>
 
 <!--#include virtual="/Footer" -->
+  </div><!-- closes #mainContent-->
+</div> <!-- closes #mBody-->
 </body>
 </html>
     

@@ -1,6 +1,7 @@
 package jmri.managers.configurexml;
 
 import java.util.List;
+import jmri.InstanceManager;
 import jmri.configurexml.AbstractXmlAdapter;
 import jmri.managers.ManagerDefaultSelector;
 import org.jdom2.Element;
@@ -31,8 +32,8 @@ public class ManagerDefaultSelectorXml extends AbstractXmlAdapter {
     public Element store(Object o) {
         Element e = new Element("managerdefaults");
         e.setAttribute("class", getClass().getName());
-        for (Class<?> c : ManagerDefaultSelector.instance.defaults.keySet()) {
-            String n = ManagerDefaultSelector.instance.defaults.get(c);
+        for (Class<?> c : InstanceManager.getDefault(ManagerDefaultSelector.class).defaults.keySet()) {
+            String n = InstanceManager.getDefault(ManagerDefaultSelector.class).defaults.get(c);
             Element p = new Element("setting");
             Element key = new Element("key");
             key.addContent(c.getName());
@@ -45,8 +46,9 @@ public class ManagerDefaultSelectorXml extends AbstractXmlAdapter {
         return e;
     }
 
-    public boolean load(Element e) {
-        List<Element> list = e.getChildren("setting");
+    @Override
+    public boolean load(Element shared, Element perNode) {
+        List<Element> list = shared.getChildren("setting");
 
         for (Element s : list) {
             String name = s.getChild("value").getText();
@@ -59,12 +61,12 @@ public class ManagerDefaultSelectorXml extends AbstractXmlAdapter {
             } catch (java.lang.NoClassDefFoundError ex) {
                 continue;
             }
-            jmri.managers.ManagerDefaultSelector.instance.setDefault(c, name);
+            InstanceManager.getDefault(ManagerDefaultSelector.class).setDefault(c, name);
 
         }
         // put into effect
-        jmri.managers.ManagerDefaultSelector.instance.configure();
-        jmri.InstanceManager.configureManagerInstance().registerPref(jmri.managers.ManagerDefaultSelector.instance);
+        InstanceManager.getDefault(ManagerDefaultSelector.class).configure();
+        InstanceManager.configureManagerInstance().registerPref(InstanceManager.getDefault(ManagerDefaultSelector.class));
         return true;
     }
 

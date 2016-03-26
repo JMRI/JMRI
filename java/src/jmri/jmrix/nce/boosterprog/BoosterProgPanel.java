@@ -1,4 +1,3 @@
-// BoosterProgPanel.java
 package jmri.jmrix.nce.boosterprog;
 
 import java.util.ResourceBundle;
@@ -11,22 +10,15 @@ import jmri.AddressedProgrammer;
 import jmri.ProgListener;
 import jmri.ProgrammerException;
 import jmri.jmrix.nce.NceSystemConnectionMemo;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 
 /**
  * Panel for configuring a NCE booster
  *
  * @author	ken cameron Copyright (C) 2010 Derived from BoosterProgFrame by
  * @author	Bob Jacobsen Copyright (C) 2004
- * @version $Revision$
  */
 public class BoosterProgPanel extends jmri.jmrix.nce.swing.NcePanel {
 
-    /**
-     *
-     */
-    private static final long serialVersionUID = 418634505989298386L;
     JTextField start = new JTextField(6);
     JTextField length = new JTextField(12);
 
@@ -225,7 +217,4 @@ public class BoosterProgPanel extends jmri.jmrix.nce.swing.NcePanel {
             releaseProgrammer();
         }
     }
-
-    static Logger log = LoggerFactory
-            .getLogger(BoosterProgPanel.class.getName());
 }

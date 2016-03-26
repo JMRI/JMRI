@@ -28,11 +28,12 @@ public class JMRIClientLightManagerXml extends jmri.managers.configurexml.Abstra
         log.error("Invalid method called");
     }
 
-    public boolean load(Element lights) {
+    @Override
+    public boolean load(Element shared, Element perNode) {
         // load individual lights
-        return loadLights(lights);
+        return loadLights(shared);
     }
 
     // initialize logging
-    static Logger log = LoggerFactory.getLogger(JMRIClientLightManagerXml.class.getName());
+    private final static Logger log = LoggerFactory.getLogger(JMRIClientLightManagerXml.class.getName());
 }

@@ -1,4 +1,3 @@
-// MonitorFrameDemo.java
 package jmri.jmrix.openlcb.swing.monitor;
 
 import javax.swing.JFrame;
@@ -16,7 +15,6 @@ import junit.framework.TestSuite;
  * Tests for the jmri.jmrix.can.swing.monitor.MonitorFrame class
  *
  * @author Bob Jacobsen Copyright 2010
- * @version $Revision$
  */
 public class MonitorFrameDemo extends TestCase {
 
@@ -47,7 +45,6 @@ public class MonitorFrameDemo extends TestCase {
             return;
         }
 
-        jmri.InstanceManager.store(jmri.managers.DefaultUserMessagePreferences.getInstance(), jmri.UserPreferencesManager.class);
         OurScaffold tcs = new OurScaffold();
 
         CanSystemConnectionMemo memo = new CanSystemConnectionMemo();
@@ -81,11 +78,6 @@ public class MonitorFrameDemo extends TestCase {
         TrafficControllerScaffold tcs = new TrafficControllerScaffold();
 
         MonitorPane f = new MonitorPane() {
-            /**
-             *
-             */
-            private static final long serialVersionUID = 8483019737626946712L;
-
             public void nextLine(String s1, String s2) {
                 testFormatted = s1;
                 testRaw = s2;
@@ -122,11 +114,6 @@ public class MonitorFrameDemo extends TestCase {
         TrafficControllerScaffold tcs = new TrafficControllerScaffold();
 
         MonitorPane f = new MonitorPane() {
-            /**
-             *
-             */
-            private static final long serialVersionUID = -788466066228422637L;
-
             public void nextLine(String s1, String s2) {
                 testFormatted = s1;
                 testRaw = s2;
@@ -177,12 +164,17 @@ public class MonitorFrameDemo extends TestCase {
     }
 
     // The minimal setup for log4J
-    protected void setUp() {
-        jmri.util.JUnitUtil.resetInstanceManager();
+    protected void setUp() throws Exception {
         apps.tests.Log4JFixture.setUp();
+
+        super.setUp();
+        jmri.util.JUnitUtil.resetInstanceManager();
+        jmri.util.JUnitUtil.initDefaultUserMessagePreferences();
     }
 
-    protected void tearDown() {
+    protected void tearDown() throws Exception {
+        jmri.util.JUnitUtil.resetInstanceManager();
+        super.tearDown();
         apps.tests.Log4JFixture.tearDown();
     }
 }

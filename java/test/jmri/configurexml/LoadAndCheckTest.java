@@ -1,4 +1,3 @@
-// LoadAndCheckTest.java
 package jmri.configurexml;
 
 import jmri.InstanceManager;
@@ -6,8 +5,6 @@ import jmri.util.JUnitUtil;
 import junit.framework.Assert;
 import junit.framework.Test;
 import junit.framework.TestSuite;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 
 /**
  * Functional checks of loading basic configuration files. When done across
@@ -18,7 +15,6 @@ import org.slf4j.LoggerFactory;
  *
  * @author Bob Jacobsen Copyright 2009
  * @since 3.9.2 (from earlier form)
- * @version $Revision$
  */
 public class LoadAndCheckTest extends LoadAndStoreTestBase {
 
@@ -129,6 +125,4 @@ public class LoadAndCheckTest extends LoadAndStoreTestBase {
         super.tearDown();
         apps.tests.Log4JFixture.tearDown();
     }
-
-    static Logger log = LoggerFactory.getLogger(LoadAndCheckTest.class.getName());
 }

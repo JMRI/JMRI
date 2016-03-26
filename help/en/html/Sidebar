@@ -1,53 +1,45 @@
 <!-- Sidebar -->
+<!-- This is the common sidebar definition for help/en/html/ pages -->
 	  <hr class="hide">
 	  <div id="mBody">
 	  <div id="side"> <!-- Block of text on left side of page -->
 	    <div style="text-align: center">JMRI is...</div>
 	    <dl>
 
-		<dt><h3><a href="index.shtml">General Tools</a></h3></dt>
+		<dt><h3><a href="tools/index.shtml">Tools</a></h3></dt>
 		<dd>JMRI provides powerful tools for working with your
 		layout.
 		    <ul>
-		    <li><dfn><a href="Sensors.shtml">Sensors</a></dfn>
-		    <li><dfn><a href="Turnouts.shtml">Turnouts</a></dfn>
-		    <li><dfn><a href="throttle/ThrottleMain.shtml">Throttles</a></dfn>
-		    <li><dfn><a href="consisttool/ConsistTool.shtml">Consisting</a></dfn>
-		    <li><dfn><a href="signaling/index.shtml">Signals</a></dfn>
-		    <li><dfn><a href="Lights.shtml">Lights</a></dfn>
-		    <li><dfn><a href="Routes.shtml">Routes</a></dfn>
-		    <li><dfn><a href="LRoutes.shtml">LRoutes</a></dfn>
-		    <li><dfn><a href="Logix.shtml">Logix</a></dfn>
-		    <li><dfn><a href="fastclock/index.shtml">Fast Clocks</a></dfn>
-		    <li><dfn><a href="speedometer/index.shtml">Speedometer</a></dfn>
-		    <li><dfn><a href="scripting/index.shtml">Scripting</a></dfn>
-		    <li><dfn><a href="Audio.shtml">Audio</a></dfn>
-		    <li><dfn><a href="IdTags.shtml">Id Tags</a></dfn>
-		    </ul>
+		    <li><dfn><a href="tools/Turnouts.shtml">Turnouts</a></dfn>
+        <li><dfn><a href="tools/Lights.shtml">Lights</a></dfn>
+		    <li><dfn><a href="tools/Sensors.shtml">Sensors</a></dfn>
+		    <li><dfn><a href="tools/throttle/ThrottleMain.shtml">Throttles</a></dfn>
+		    <li><dfn><a href="tools/consisttool/ConsistTool.shtml">Consisting</a></dfn>
+        <li><dfn><a href="tools/Blocks.shtml">Blocks</a></dfn>
+        <li><dfn><a href="tools/Reporters.shtml">Reporters</a></dfn>
+        <li><dfn><a href="tools/Memories.shtml">Memory Variables</a></dfn>
+		    <li><dfn><a href="tools/Routes.shtml">Routes</a></dfn>
+		    <li><dfn><a href="tools/LRoutes.shtml">LRoutes</a></dfn>
+        <li><dfn><a href="tools/Sections.shtml">Sections</a></dfn>
+		    <li><dfn><a href="tools/Logix.shtml">Logix</a></dfn>
+		    <li><dfn><a href="tools/fastclock/index.shtml">Fast Clocks</a></dfn>
+		    <li><dfn><a href="tools/speedometer/index.shtml">Speedometer</a></dfn>
+		    <li><dfn><a href="tools/Audio.shtml">Audio</a></dfn>
+		    <li><dfn><a href="tools/IdTags.shtml">ID Tags</a></dfn>
+		    
+        <li><dfn><a href="tools/index.shtml#systemSpecificTools">System-specific...</a></dfn>
+   	    </ul>
 		</dd>
 
-		<dt><h3><a href="../apps/LocoTools/index.shtml">LocoNet Tools</a></h3></dt>
-		<dd>A set of Digitrax LocoNet specific tools
-		    <ul>
-		    <li><dfn>LocoNet monitor</dfn>
-		    <li><dfn>Slot monitor</dfn>
-		    <li><dfn>Packet source</dfn>
-		    <li><dfn>PM4 programmer</dfn>
-		    <li><dfn>BDL16 programmer</dfn>
-		    <li><dfn>LocoIO programmer</dfn>
-		    </ul>
-		</dd>
-
-		<dt><h3><a href="automation">Layout Automation</a></h3></dt>
-		<dd>JMRI can be used to automate parts 
-		of your layout, from simply controlling a crossing gate
+  	<dt><h3><a href="automation">Layout Automation</a></h3></dt>
+		<dd>Use JMRI to automate parts of your layout, from simply controlling a crossing gate
 		to running trains in the background.
 		    <ul>
-		    <li><dfn><a href="signaling/index.shtml">Signaling</a></dfn>
-            <li><dfn><a href="EntryExit.shtml">Entry Exit (NX)</a></dfn>
-		    <li><dfn><a href="Routes.shtml">Routes</a></dfn>
-		    <li><dfn><a href="fastclock/index.shtml">Fast Clocks</a></dfn>
-		    <li><dfn><a href="scripting/index.shtml">Scripting</a></dfn>
+		    <li><dfn><a href="tools/signaling/index.shtml">Signaling</a></dfn>
+        <li><dfn><a href="tools/EntryExit.shtml">Entry Exit (NX)</a></dfn>
+		    <li><dfn><a href="tools/Routes.shtml">Routes</a></dfn>
+		    <li><dfn><a href="tools/fastclock/index.shtml">Fast Clocks</a></dfn>
+		    <li><dfn><a href="tools/scripting/index.shtml">Scripting</a></dfn>
 		    </ul>
 		</dd>
 

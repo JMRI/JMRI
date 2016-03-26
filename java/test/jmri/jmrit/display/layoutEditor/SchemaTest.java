@@ -1,10 +1,7 @@
-// SchemaTest.java
 package jmri.jmrit.display.layoutEditor;
 
 import junit.framework.Test;
 import junit.framework.TestSuite;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 
 //import jmri.InstanceManager;
 /**
@@ -12,7 +9,6 @@ import org.slf4j.LoggerFactory;
  *
  * @author Bob Jacobsen Copyright 2009
  * @since 2.5.5
- * @version $Revision$
  */
 public class SchemaTest extends jmri.configurexml.SchemaTestBase {
 
@@ -32,9 +28,8 @@ public class SchemaTest extends jmri.configurexml.SchemaTestBase {
         TestSuite suite = new TestSuite("jmri.jmrit.display.layoutEditor.SchemaTest");
 
         validateDirectory(suite, "java/test/jmri/jmrit/display/layoutEditor/valid");
+        validateDirectoryFail(suite, "java/test/jmri/jmrit/display/layoutEditor/invalid");
 
         return suite;
     }
-
-    static Logger log = LoggerFactory.getLogger(SchemaTest.class.getName());
 }

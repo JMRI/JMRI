@@ -41,6 +41,13 @@ import jmri.jmrit.operations.routes.RouteLocation;
 import jmri.jmrit.operations.routes.RouteManager;
 import jmri.jmrit.operations.setup.Control;
 import jmri.jmrit.operations.setup.Setup;
+import jmri.jmrit.operations.trains.tools.PrintTrainAction;
+import jmri.jmrit.operations.trains.tools.PrintTrainBuildReportAction;
+import jmri.jmrit.operations.trains.tools.PrintTrainManifestAction;
+import jmri.jmrit.operations.trains.tools.TrainByCarTypeAction;
+import jmri.jmrit.operations.trains.tools.TrainCopyAction;
+import jmri.jmrit.operations.trains.tools.TrainManifestOptionAction;
+import jmri.jmrit.operations.trains.tools.TrainScriptAction;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -52,14 +59,10 @@ import org.slf4j.LoggerFactory;
  */
 public class TrainEditFrame extends OperationsFrame implements java.beans.PropertyChangeListener {
 
-    /**
-     *
-     */
-    private static final long serialVersionUID = 5151081816323580604L;
     TrainManager trainManager;
     RouteManager routeManager;
 
-    Train _train = null;
+    public Train _train = null;
     List<JCheckBox> typeCarCheckBoxes = new ArrayList<JCheckBox>();
     List<JCheckBox> typeEngineCheckBoxes = new ArrayList<JCheckBox>();
     List<JCheckBox> locationCheckBoxes = new ArrayList<JCheckBox>();
@@ -328,8 +331,8 @@ public class TrainEditFrame extends OperationsFrame implements java.beans.Proper
             routeBox.setSelectedItem(_train.getRoute());
             modelEngineBox.setSelectedItem(_train.getEngineModel());
             commentTextArea.setText(_train.getComment());
-            cabooseRadioButton.setSelected((_train.getRequirements() & Train.CABOOSE) > 0);
-            fredRadioButton.setSelected((_train.getRequirements() & Train.FRED) > 0);
+            cabooseRadioButton.setSelected((_train.getRequirements() & Train.CABOOSE) == Train.CABOOSE);
+            fredRadioButton.setSelected((_train.getRequirements() & Train.FRED) == Train.FRED);
             updateDepartureTime();
             enableButtons(true);
             // listen for train changes
@@ -338,7 +341,9 @@ public class TrainEditFrame extends OperationsFrame implements java.beans.Proper
             Route route = _train.getRoute();
             if (route != null) {
                 route.addPropertyChangeListener(this);
-                if (_train.getTrainDepartsRouteLocation() != null && !_train.getTrainDepartsRouteLocation().getLocation().isStaging())
+                if (_train.getTrainDepartsRouteLocation() != null
+                        && _train.getTrainDepartsRouteLocation().getLocation() != null
+                        && !_train.getTrainDepartsRouteLocation().getLocation().isStaging())
                     numEnginesBox.addItem(Train.AUTO_HPT);
             }
            numEnginesBox.setSelectedItem(_train.getNumberEngines());
@@ -490,9 +495,8 @@ public class TrainEditFrame extends OperationsFrame implements java.beans.Proper
         }
         Train train = trainManager.newTrain(trainNameTextField.getText());
         _train = train;
-        if (_train != null) {
-            _train.addPropertyChangeListener(this);
-        }
+        _train.addPropertyChangeListener(this);
+
         // update check boxes
         updateCarTypeCheckboxes();
         updateEngineTypeCheckboxes();
@@ -508,10 +512,6 @@ public class TrainEditFrame extends OperationsFrame implements java.beans.Proper
         if (!checkModel() || !checkEngineRoad()) {
             return;
         }
-//        if (numEnginesBox.getSelectedItem().equals(Train.AUTO) && !_train.getNumberEngines().equals(Train.AUTO)) {
-//            JOptionPane.showMessageDialog(this, Bundle.getMessage("AutoEngines"), Bundle
-//                    .getMessage("FeatureUnderDevelopment"), JOptionPane.INFORMATION_MESSAGE);
-//        }
         _train.setDepartureTime((String) hourBox.getSelectedItem(), (String) minuteBox.getSelectedItem());
         _train.setNumberEngines((String) numEnginesBox.getSelectedItem());
         if (_train.getNumberEngines().equals("0")) {
@@ -555,10 +555,7 @@ public class TrainEditFrame extends OperationsFrame implements java.beans.Proper
                             .getMessage("CanNot"), new Object[]{s}), JOptionPane.ERROR_MESSAGE);
             return false;
         }
-        if (trainName.contains(".") || trainName.contains("<") || trainName.contains(">") // NOI18N
-                || trainName.contains(":") || trainName.contains("\"") || trainName.contains("\\") // NOI18N
-                || trainName.contains("/") || trainName.contains("|") || trainName.contains("?") // NOI18N
-                || trainName.contains("*")) { // NOI18N
+        if (!OperationsXml.checkFileName(trainName)) { // NOI18N
             log.error("Train name must not contain reserved characters");
             JOptionPane.showMessageDialog(this, Bundle.getMessage("TrainNameResChar") + NEW_LINE
                     + Bundle.getMessage("ReservedChar"), MessageFormat.format(Bundle.getMessage("CanNot"),
@@ -892,7 +889,7 @@ public class TrainEditFrame extends OperationsFrame implements java.beans.Proper
                     loc.addPropertyChangeListener(this);
                     boolean services = false;
                     // does train direction service location?
-                    if ((rl.getTrainDirection() & loc.getTrainDirections()) > 0) {
+                    if ((rl.getTrainDirection() & loc.getTrainDirections()) != 0) {
                         services = true;
                     } // train must service last location or single location
                     else if (i == routeList.size() - 1) {
@@ -1009,9 +1006,8 @@ public class TrainEditFrame extends OperationsFrame implements java.beans.Proper
             Route route = _train.getRoute();
             if (route != null) {
                 route.removePropertyChangeListener(this);
-                List<RouteLocation> routeList = route.getLocationsBySequenceList();
-                for (int i = 0; i < routeList.size(); i++) {
-                    Location loc = LocationManager.instance().getLocationByName(routeList.get(i).getName());
+                for (RouteLocation rl : route.getLocationsBySequenceList()) {
+                    Location loc = rl.getLocation();
                     if (loc != null) {
                         loc.removePropertyChangeListener(this);
                     }
@@ -1022,7 +1018,7 @@ public class TrainEditFrame extends OperationsFrame implements java.beans.Proper
     }
 
     public void propertyChange(java.beans.PropertyChangeEvent e) {
-        if (Control.showProperty) {
+        if (Control.SHOW_PROPERTY) {
             log.debug("Property change ({}) old: ({}) new: ({})", e.getPropertyName(), e.getOldValue(), e.getNewValue()); // NOI18N
         }
         if (e.getPropertyName().equals(CarTypes.CARTYPES_CHANGED_PROPERTY)
@@ -1068,5 +1064,5 @@ public class TrainEditFrame extends OperationsFrame implements java.beans.Proper
         }
     }
 
-    static Logger log = LoggerFactory.getLogger(TrainEditFrame.class.getName());
+    private final static Logger log = LoggerFactory.getLogger(TrainEditFrame.class.getName());
 }

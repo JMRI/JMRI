@@ -55,6 +55,7 @@ import jmri.jmrit.logix.OBlock;
 import jmri.jmrit.logix.OBlockManager;
 import jmri.jmrit.logix.OPath;
 import jmri.jmrit.logix.WarrantTableAction;
+import jmri.util.SystemType;
 import jmri.util.com.sun.TableSorter;
 import jmri.util.com.sun.TransferActionListener;
 import jmri.util.swing.XTableColumnModel;
@@ -175,24 +176,39 @@ public class TableFrames extends jmri.util.JmriJFrame implements InternalFrameLi
         JMenuItem menuItem = new JMenuItem(rb.getString("MenuItemCut"));
         menuItem.setActionCommand((String) TransferHandler.getCutAction().getValue(Action.NAME));
         menuItem.addActionListener(actionListener);
-        menuItem.setAccelerator(
-                KeyStroke.getKeyStroke(KeyEvent.VK_X, ActionEvent.CTRL_MASK));
+        if (SystemType.isMacOSX()) {
+            menuItem.setAccelerator(
+                    KeyStroke.getKeyStroke(KeyEvent.VK_X, ActionEvent.META_MASK));
+        } else {
+            menuItem.setAccelerator(
+                    KeyStroke.getKeyStroke(KeyEvent.VK_X, ActionEvent.CTRL_MASK));
+        }
         menuItem.setMnemonic(KeyEvent.VK_T);
         editMenu.add(menuItem);
 
         menuItem = new JMenuItem(rb.getString("MenuItemCopy"));
         menuItem.setActionCommand((String) TransferHandler.getCopyAction().getValue(Action.NAME));
         menuItem.addActionListener(actionListener);
-        menuItem.setAccelerator(
-                KeyStroke.getKeyStroke(KeyEvent.VK_C, ActionEvent.CTRL_MASK));
+        if (SystemType.isMacOSX()) {
+            menuItem.setAccelerator(
+                    KeyStroke.getKeyStroke(KeyEvent.VK_C, ActionEvent.META_MASK));
+        } else {
+            menuItem.setAccelerator(
+                    KeyStroke.getKeyStroke(KeyEvent.VK_C, ActionEvent.CTRL_MASK));
+        }
         menuItem.setMnemonic(KeyEvent.VK_C);
         editMenu.add(menuItem);
 
         menuItem = new JMenuItem(rb.getString("MenuItemPaste"));
         menuItem.setActionCommand((String) TransferHandler.getPasteAction().getValue(Action.NAME));
         menuItem.addActionListener(actionListener);
-        menuItem.setAccelerator(
-                KeyStroke.getKeyStroke(KeyEvent.VK_V, ActionEvent.CTRL_MASK));
+        if (SystemType.isMacOSX()) {
+            menuItem.setAccelerator(
+                    KeyStroke.getKeyStroke(KeyEvent.VK_V, ActionEvent.META_MASK));
+        } else {
+            menuItem.setAccelerator(
+                    KeyStroke.getKeyStroke(KeyEvent.VK_V, ActionEvent.CTRL_MASK));
+        }
         menuItem.setMnemonic(KeyEvent.VK_P);
         editMenu.add(menuItem);
         menuBar.add(editMenu);
@@ -910,5 +926,5 @@ public class TableFrames extends jmri.util.JmriJFrame implements InternalFrameLi
         //log.debug("Internal frame deactivated: "+frame.getTitle());
     }
 
-    static Logger log = LoggerFactory.getLogger(TableFrames.class.getName());
+    private final static Logger log = LoggerFactory.getLogger(TableFrames.class.getName());
 }

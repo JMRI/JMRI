@@ -25,6 +25,7 @@ import jmri.UserPreferencesManager;
 import jmri.implementation.swing.SwingShutDownTask;
 import jmri.jmrit.operations.rollingstock.cars.CarTypes;
 import jmri.jmrit.operations.setup.Control;
+import jmri.jmrit.operations.setup.Setup;
 import jmri.util.JmriJFrame;
 import jmri.util.com.sun.TableSorter;
 import jmri.util.swing.XTableColumnModel;
@@ -39,10 +40,6 @@ import org.slf4j.LoggerFactory;
  */
 public class OperationsPanel extends JPanel implements AncestorListener {
 
-    /**
-     *
-     */
-    private static final long serialVersionUID = 4203296733948891651L;
     public static final String NEW_LINE = "\n"; // NOI18N
     public static final String NONE = ""; // NOI18N
 
@@ -385,6 +382,10 @@ public class OperationsPanel extends JPanel implements AncestorListener {
                 Bundle.getMessage("PromptQuitWindowNotWritten"), Bundle.getMessage("PromptSaveQuit"), this) {
                     @Override
                     public boolean checkPromptNeeded() {
+                        if (Setup.isAutoSaveEnabled()) {
+                            storeValues();
+                            return true;
+                        }
                         return !OperationsXml.areFilesDirty();
                     }
 
@@ -472,6 +473,7 @@ public class OperationsPanel extends JPanel implements AncestorListener {
         }
     }
 
+    @edu.umd.cs.findbugs.annotations.SuppressFBWarnings(value = "BC_UNCONFIRMED_CAST_OF_RETURN_VALUE", justification = "Checks for instance")
     protected String getWindowFrameRef() {
         if (this.getTopLevelAncestor() instanceof JmriJFrame) {
             return ((JmriJFrame) this.getTopLevelAncestor()).getWindowFrameRef();
@@ -479,5 +481,5 @@ public class OperationsPanel extends JPanel implements AncestorListener {
         return null;
     }
 
-    static Logger log = LoggerFactory.getLogger(OperationsPanel.class.getName());
+    private final static Logger log = LoggerFactory.getLogger(OperationsPanel.class.getName());
 }

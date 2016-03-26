@@ -15,6 +15,7 @@ import java.util.prefs.AbstractPreferences;
 import java.util.prefs.BackingStoreException;
 import java.util.prefs.Preferences;
 import javax.annotation.Nonnull;
+import jmri.Version;
 import jmri.profile.Profile;
 import jmri.util.FileUtil;
 import jmri.util.OrderedProperties;
@@ -150,7 +151,7 @@ public final class JmriPreferencesProvider {
                 result.append(c);
             } else {
                 result.append("_");
-                result.append(Integer.toHexString((int) c));
+                result.append(Integer.toHexString(c));
                 result.append("_");
             }
         }
@@ -282,7 +283,9 @@ public final class JmriPreferencesProvider {
             synchronized (file) {
                 Properties p = new OrderedProperties();
                 try {
-                    p.load(new FileInputStream(file));
+                    try (FileInputStream fis = new FileInputStream(file)) {
+                        p.load(fis);
+                    }
 
                     StringBuilder sb = new StringBuilder();
                     getPath(sb);
@@ -328,7 +331,9 @@ public final class JmriPreferencesProvider {
                     String path = sb.toString();
 
                     if (file.exists()) {
-                        p.load(new FileInputStream(file));
+                        try (FileInputStream fis = new FileInputStream(file)) {
+                            p.load(fis);
+                        }
 
                         List<String> toRemove = new ArrayList<>();
 
@@ -363,7 +368,9 @@ public final class JmriPreferencesProvider {
                         FileUtil.backup(file);
                         JmriPreferencesProvider.this.backedUp = true;
                     }
-                    p.store(new FileOutputStream(file), "JMRI Preferences");
+                    try (FileOutputStream fos = new FileOutputStream(file)) {
+                        p.store(fos, "JMRI Preferences version " + Version.name());
+                    }
                 } catch (IOException e) {
                     throw new BackingStoreException(e);
                 }

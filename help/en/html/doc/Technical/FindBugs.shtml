@@ -1,12 +1,11 @@
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
-<!-- $Id$ -->
 <html lang="en">
 <head>
-    <TITLE>
+    <title>
  	JMRI: Static Analysis with FindBugs
-    </TITLE>
-    <META content="Bob Jacobsen" name=Author>
-    <meta name="keywords" content="JMRI technical code ">
+    </title>
+    <meta content="Bob Jacobsen" name="Author">
+    <meta name="keywords" content="JMRI technical code bugs">
 
     <!-- The combination of "Define" and {Header,Style, Logo and Footer} comments -->
     <!-- are an arbitrary design pattern used by the update.pl script to -->
@@ -16,7 +15,7 @@
     <!-- or change them to reflect your alternative logo -->
 
 <!-- Style -->
-  <META http-equiv=Content-Type content="text/html; charset=iso-8859-1">
+  <meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
   <link rel="stylesheet" type="text/css" href="/css/default.css" media="screen">
   <link rel="stylesheet" type="text/css" href="/css/print.css" media="print">
   <link rel="icon" href="/images/jmri.ico" type="image/png">
@@ -29,7 +28,7 @@
 
 <div id="mainContent">
 
-<H1>JMRI: Static Analysis with FindBugs</H1>
+<h1>JMRI: Static Analysis with FindBugs</h1>
 
 FindBugs is a tool that can examine code to find possible
 problems.  It does a "static analysis", looking through the
@@ -42,9 +41,9 @@ Having a tool that can do those inspections automatically,
 so that they can be done every time something is changed, 
 keeps the code from slowly getting worse and worse without 
 anybody noticing until it's too late.
-<P>
+<p>
 For more information on FindBugs, see
-<A HREF="http://findbugs.sourceforge.net/">the FindBugs home page</A>.
+<a href="http://findbugs.sourceforge.net/">the FindBugs home page</a>.
 
 <p>
 We routinely run FindBugs as part of our 
@@ -57,35 +56,70 @@ recent build online
 If FindBugs is finding a false positive, a bug that's not really a 
 bug, you can turn it off with an annotation such as:
 <pre><code>
-@edu.umd.cs.findbugs.annotations.SuppressWarnings("FE_FLOATING_POINT_EQUALITY","OK to compare floats, as even tiny differences should trigger update")
+@edu.umd.cs.findbugs.annotations.SuppressFBWarnings("FE_FLOATING_POINT_EQUALITY","OK to compare floats, as even tiny differences should trigger update")
 </code></pre>
-The second "justification" argument is optional, but highly recommended.  
+Note that this should be all on one line.
+Although Java itself considers it optional, we require the second "justification" argument. 
 Explaining why you've added this annotation to suppress a message will help
 whoever comes after you and is trying to understand the code.
 It will also help make sure you properly understand the cause of the underlying
 bug report:  Sometimes what seems a false positive really isn't.
+Annotations without a justification clause will 
+periodically be removed. 
 
+<p>
+For clarity, this annotation also supports the form:
+<pre><code>
+@edu.umd.cs.findbugs.annotations.SuppressFBWarnings(value = "FE_FLOATING_POINT_EQUALITY", justification = "OK to compare floats, as even tiny differences should trigger update")
+</code></pre>
+This can make it easier to see what is what when quickly scanning through the code.
 <p>
 If you need to put more than one message type in an annotation, use array syntax:
 <pre><code>
-@edu.umd.cs.findbugs.annotations.SuppressWarnings("{type1},{type2}","why both are needed")
+@edu.umd.cs.findbugs.annotations.SuppressFBWarnings("{type1},{type2}","why both are needed")
 </code></pre>
 
 <p>
-There are also FindBugs annotations that can help it 
+There are also Java and FindBugs annotations that can help it 
 better understand your code. Sometimes they'll give it enough understanding of
 e.g. when a variable can be null, that it'll no longer make false-positive mistakes.
 For more on this, see the
-<a href="http://findbugs.sourceforge.net/manual/annotations.html">Findbugs annotation page</a>.
+<a href="https://docs.oracle.com/javase/tutorial/java/annotations/">Java annotations</a> and 
+<a href="http://findbugs.sourceforge.net/manual/annotations.html">Findbugs annotation pages</a>.
 
 <p>
-It can be useful to mark classes with one of the following annotations
+The basics of annotations are covered in a <a href="https://docs.oracle.com/javase/tutorial/java/annotations/">Java annotations tutorial</a>.
+
+<p>
+It can be useful to mark code with one of the following annotations
 so that FindBugs does a good job of reasoning about it:
 <ul>
-<li><a href="http://findbugs.sourceforge.net/manual/annotations.html">edu.umd.cs.findbugs.annotations.CheckForNull</a> -
-    a variable or parameter may have a null value, so all uses should appropriately handle that.
-<li><a href="http://findbugs.sourceforge.net/manual/annotations.html">edu.umd.cs.findbugs.annotations.CheckReturnValue</a> -
+<li><a href="http://findbugs.sourceforge.net/manual/annotations.html">javax.annotation.Nonnull</a> -
+    The annotated element must not be null. 
+    Annotated fields must not be null after construction has completed. 
+    Annotated methods must have non-null return values.
+    Use javax.annotation.ParametersAreNonnullByDefault to set it for an entire class.
+
+<li><a href="http://findbugs.sourceforge.net/manual/annotations.html">javax.annotation.Nullable</a> -
+    The annotated element could be null under some circumstances. 
+    In general, this means developers will have to read the documentation to determine when a null value is acceptable 
+    and whether it is neccessary to check for a null value. 
+    FindBugs will treat the annotated items as though they had no annotation.
+    In practice this annotation is useful only for overriding an overarching NonNull annotation.
+    Use javax.annotation.ParametersAreNullableByDefault to set it for an entire class.
+
+<li><a href="http://findbugs.sourceforge.net/manual/annotations.html">edu.umd.cs.findbugs.annotations.OverrideMustInvoke</a> -
+    Used to annotate a method that, if overridden, must (or should) be invoke super in the overriding method. 
+    Examples of such methods include finalize() and clone(). 
+    The argument to the method indicates when the super invocation should occur: at any time (ANYTIME), at the beginning of the overriding method (FIRST), 
+    or at the end of the overriding method (LAST), defaulting to any time.
+
+<li><a href="http://findbugs.sourceforge.net/manual/annotations.html">javax.annotation.CheckForNull</a> -
+    a variable or parameter may have a null value, so all uses should appropriately handle that;
+    generally used on method definitions to say that the return value should be checked for null
+<li><a href="http://findbugs.sourceforge.net/manual/annotations.html">javax.annotation.CheckReturnValue</a> -
     this method has no side-effects, so there's no point in calling it without checking it's return value
+    
 <li><a href="http://jcip.net/annotations/doc/net/jcip/annotations/Immutable.html">net.jcip.annotations.Immutable</a> -
     An object of this class can't be changed after it's created.  This allows both better checking
     of logic, and also simplifies use by your colleagues, so it's good to tag classes with this 
@@ -102,6 +136,40 @@ so that FindBugs does a good job of reasoning about it:
 For more information about these annotations, please see the 
 <a href="http://jcip.net/annotations/doc/index.html">page in the Concurrency API</a>.
 
+<h3>Suppressed Warnings</h3>
+
+We have turned off the routine FindBugs checking of certain kinds of conditions:
+<dl>
+<dt><a href="http://findbugs.sourceforge.net/bugDescriptions.html#RI_REDUNDANT_INTERFACES">RI_REDUNDANT_INTERFACES</a>
+    <dd>This flags cases where a class implements an interface, and also inherits from 
+    a superclass that already implements that interface.  This is redundant and untidy, but it can't cause the code to malfunction.
+    We have enough of them that we've turned off the warning, and will come back to it some later time.
+<dt><a href="http://findbugs.sourceforge.net/bugDescriptions.html#SIC_INNER_SHOULD_BE_STATIC_ANON">SIC_INNER_SHOULD_BE_STATIC_ANON</a>, 
+    <a href="http://findbugs.sourceforge.net/bugDescriptions.html#SIC_INNER_SHOULD_BE_STATIC_NEEDS_THIS">SIC_INNER_SHOULD_BE_STATIC_NEEDS_THIS</a>
+    <dd>Static, as opposed to non-static, 
+    inner classes (classes defined within another class) take less space
+    because they don't maintain references to the containing object.  This warning suggests moving an 
+    anonymous (defined in-line to the code) inner class to a regular (defined not in-line) class so it can
+    be made static.  Although probably a small improvement, it's a bit of work for a small improvement.
+    We have enough of them that we've turned off the warning, and will come back to it some later time.
+<dt><a href="http://findbugs.sourceforge.net/bugDescriptions.html#PZLA_PREFER_ZERO_LENGTH_ARRAYS">PZLA_PREFER_ZERO_LENGTH_ARRAYS</a>
+    <dd>What should a method that returns an array of values do when there aren't any?
+    Returning "null", as opposed to an empty array, requires all the calling code to handle a special case.
+    In many cases, returning an empty array makes the code simpler.  But for existing code, that 
+    simplification is marginal. As this is a design issue, but it crops up a lot, we've suppressed these 
+    for now just to focus on more pressing problems.
+<dt>Malicious Code
+    <dd>This is a class of warnings centered around the idea that data and code methods shouldn't be too
+        visible, especially when static.  This is true, but JMRI isn't a hardened library that's being
+        released into a world of people trying to break it, as these changes are a lower priority. 
+<dt>Nm<dd>The convention is that class names start with a capital letter, and method names (data and code)
+    with a small letter.  
+<dt>Se,SvVI<dd>This is a large class of warnings associated with Java serialization.  JMRI
+    doesn't used serialization, and is unlikely to do so in the future, so we suppress these to raise the 
+    average quality of the issued warnings.
+</dl>
+
+<h3>Background</h3>
 <p>
 Simon White added FindBugs support to our Ant-based build
 chain during the development of JMRI 2.5.5.
@@ -142,20 +210,20 @@ If your system has more memory, boosting this may speed things up.
 <p>
 Running this on JMRI 2.5.4 produced the following:
 <p>
-<table border="1">
-<tr><td>Bad practice Warnings</td><td>164</td></tr>
-<tr><td>Correctness Warnings</td><td>77</td></tr>
-<tr><td>Experimental Warnings</td><td>7</td></tr>
-<tr><td>Malicious code vulnerability Warnings</td><td>221</td></tr>
-<tr><td>Multithreaded correctness Warnings</td><td>90</td></tr>
-<tr><td>Performance Warnings</td><td>459</td></tr>
-<tr><td>Dodgy Warnings</td><td>304</td></tr>
-<tr><th>Total</th><th>1322</th></tr>
-</table>
+	<table border="1">
+	<tr><td>Bad practice Warnings</td><td>164</td></tr>
+	<tr><td>Correctness Warnings</td><td>77</td></tr>
+	<tr><td>Experimental Warnings</td><td>7</td></tr>
+	<tr><td>Malicious code vulnerability Warnings</td><td>221</td></tr>
+	<tr><td>Multithreaded correctness Warnings</td><td>90</td></tr>
+	<tr><td>Performance Warnings</td><td>459</td></tr>
+	<tr><td>Dodgy Warnings</td><td>304</td></tr>
+	<tr><th>Total</th><th>1322</th></tr>
+	</table>
 
 <p>A lot of work has gone into JMRI during the 2.12 release cycle to
 bring the bug count down to zero.  The <a
- href="ContinuousIntegration.shtml">Continous Integration server</a>
+ href="ContinuousIntegration.shtml">Continuous Integration server</a>
 runs FindBugs twice a day, which helps developers see the results of
 their coding without having to set up to run findbugs themselves.</p>
 
@@ -163,11 +231,9 @@ their coding without having to set up to run findbugs themselves.</p>
 please check the CI server and make sure that your changes do not
 introduce new errors.</p>
 
-
 <!--#include virtual="/Footer" -->
 
 	  </div><!-- closes #mainContent-->
 	</div> <!-- closes #mBody-->
 </body>
 </html>
-

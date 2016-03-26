@@ -23,10 +23,6 @@ abstract public class AbstractSerialConnectionConfigXml extends AbstractConnecti
 
     protected SerialPortAdapter adapter;
 
-    abstract protected void getInstance();
-
-    abstract protected void register();
-
     protected void getInstance(Object object) {
         getInstance(); // over-ridden during migration
     }
@@ -41,6 +37,11 @@ abstract public class AbstractSerialConnectionConfigXml extends AbstractConnecti
     public Element store(Object object) {
         getInstance(object);
         Element e = new Element("connection");
+
+        if (adapter == null) {
+            log.warn("No adapter found while saving serial port configuration {}", object.toString());
+            return null;
+        }
 
         // many of the following are required by the DTD; failing to include
         // them makes the XML file unreadable, but at least the next
@@ -74,27 +75,22 @@ abstract public class AbstractSerialConnectionConfigXml extends AbstractConnecti
     protected void extendElement(Element e) {
     }
 
-    /**
-     * Update static data from XML file
-     *
-     * @param e Top level Element to unpack.
-     * @return true if successful
-     */
-    public boolean load(Element e) throws Exception {
+    @Override
+    public boolean load(Element shared, Element perNode) throws Exception {
         boolean result = true;
         getInstance();
         // configure port name
-        String portName = e.getAttribute("port").getValue();
+        String portName = perNode.getAttribute("port").getValue();
         adapter.setPort(portName);
-        String baudRate = e.getAttribute("speed").getValue();
+        String baudRate = perNode.getAttribute("speed").getValue();
         adapter.configureBaudRate(baudRate);
 
-        loadCommon(e, adapter);
+        loadCommon(shared, perNode, adapter);
         // register, so can be picked up next time
         register();
         // try to open the port
         if (adapter.getDisabled()) {
-            unpackElement(e);
+            unpackElement(shared, perNode);
             return result;
         }
 
@@ -115,16 +111,8 @@ abstract public class AbstractSerialConnectionConfigXml extends AbstractConnecti
 
         // once all the configure processing has happened, do any
         // extra config
-        unpackElement(e);
+        unpackElement(shared, perNode);
         return result;
-    }
-
-    /**
-     * Customizable method if you need to add anything more
-     *
-     * @param e Element being created, update as needed
-     */
-    protected void unpackElement(Element e) {
     }
 
     /**
@@ -137,6 +125,6 @@ abstract public class AbstractSerialConnectionConfigXml extends AbstractConnecti
     }
 
     // initialize logging
-    static Logger log = LoggerFactory.getLogger(AbstractSerialConnectionConfigXml.class.getName());
+    private final static Logger log = LoggerFactory.getLogger(AbstractSerialConnectionConfigXml.class.getName());
 
 }

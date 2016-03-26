@@ -1,78 +1,75 @@
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
-<!-- $Id$ -->
-<HTML LANG="en">
-<HEAD>
-<TITLE>JMRI: Coordinate Edit Help</TITLE>
-<META HTTP-EQUIV="Content-Type" CONTENT="text/html; charset=iso-8859-1">
-<META CONTENT="Dan Boudreau" NAME="Author">
-<META NAME="keywords" CONTENT="JMRI Coordinate Edit Help">
+<html lang="en">
+<head>
+<title>JMRI: Coordinate Edit Help</title>
+<meta name="author" content="Dan Boudreau">
+<meta name="keywords" content="JMRI Coordinate Edit Help">
 
 <!-- Style -->
-<META HTTP-EQUIV="Content-Type" CONTENT="text/html; charset=iso-8859-1">
-<LINK REL="stylesheet" TYPE="text/css" HREF="/css/default.css"
-	MEDIA="screen">
-<LINK REL="stylesheet" TYPE="text/css" HREF="/css/print.css"
-	MEDIA="print">
-<LINK REL="icon" HREF="/images/jmri.ico" TYPE="image/png">
-<LINK REL="home" TITLE="Home" HREF="/">
+<meta http-equiv="content-type" content="text/html; charset=iso-8859-1">
+<link rel="stylesheet" type="text/css" href="/css/default.css" media="screen">
+<link rel="stylesheet" type="text/css" href="/css/print.css" media="print">
+<link rel="icon" href="/images/jmri.ico" type="image/png">
+<link rel="home" title="Home" href="/">
 <!-- /Style -->
-</HEAD>
+</head>
 
-<BODY>
+<body>
 <!--#include virtual="/Header" -->
   <div class="nomenu" id="mBody">
     <div id="mainContent">
 
-<H1>The Label and Icon Property Editor</H1>
+<h1>The Label and Icon Property Editor</h1>
 
-This editor allows you modify the properties of the elements on your panel.
+<p>A contextual menu in the Panel Editor allows you modify the properties of elements on your Panel:</p>
 
-<H2>Setting x and y Coordinates</H2>
-There are two text boxes where you can optionally enter the
-x and y coordinates that you desire and by pressing the "Set" button the
+<h2>Edit Location</h2>
+<p>Right click an Icon or Label and select <strong>Edit Location... &gt; Set x &amp; y...</strong> to set the icon location on your Panel using two text boxes where you can change the
+x and y coordinates for this icon/label. By pressing the "Set" button, the
 icon will move to that location. If you wish to return the icon to its
-original location when the editor was opened, press the "Cancel" button
-and the editor will move the icon back to its original position and
-close the editor window.
+original location before the editor was opened, press the "Cancel" button to keep the icon at its original position and close the editor window.<br>
+Use the spinner (up/down arrows to the right of both fields) to change the value one pixel.</p>
 
-<P>Use the spinner if you want to move the icon
-one pixel.</P>
+<h2>Edit Level</h2>
+<p>Right click an Icon or Label and select <strong>Edit Level... &gt; Set Level...</strong> to set the desired display level using a text box.
+Levels range from 1 to 10, with 10 being the top layer.<br>
+Use the Level value to place one icon above another to get the view
+you want on your Panel.<br>
+Use the spinner (up/down arrow to the right of the text field) to change the value one level.</p>
 
-<H2>Changing the display Level</H2>
-Enter the desired display level in the text box.
-The levels range from 1 to 10, with 10 being the top layer.
-Use the level setting to place one icon above another to get the view
-you want on your panel.</P>
+<h2>Rotating an Icon</h2>
+<p>Right click an Icon or Label and select <strong>Rotate (Orthogonal)</strong> to flip it 90 degrees counterclockwise (Icons only) or select <strong>Rotate (degrees)...</strong> and enter the angle in degrees to rotate the item clockwise.<br>
+To restore an Icon or Label to its original angle, enter the value "0".</p>
 
-<H2>Changing the Tooltip Text</H2>
-Enter the text you want to display as a tooltip for the panel item.</P>
+<h2>Scaling an Icon</h2>
+<p>Right click an icon and select <strong>Scale (percentage)...</strong> to increase or decrease the size of the icon relative to its
+original size. To restore the icon to its original size, enter the value 100 (%).</p>
 
-<H2>Setting the Size of the Border</H2>
-Enter the size in pixels for the border width.</P>
+<h2>Text Label Editor</h2>
 
-<H2>Setting the Size of the Margin</H2>
-Enter the width and height for the Margin.</P>
+<h3>Label Text</h3>
+<p>Right click an icon and select <strong>Edit Text...</strong> to edit the desired Label Text in the text box.<br>
+Close this pane by clicking on <strong>Set</strong> to use the value you entered, or click <strong>Cancel</strong> to keep the old value.</p>
 
-<H2>Setting the Fixed Size</H2>
-Enter the width and height for a fixed region to contain the item.</P>
+<h3>Fixed Size</h3>
+<p>Right click an icon and select <strong>Edit Fixed Size...</strong> to edit the width and height for a fixed space to contain the Labels (Note: a small size could obscure the Label). Enter "0" to release the Fixed Size property.</p>
 
-<H2>Rotating an Icon</H2>
-Enter the angle in degrees to rotate the icon an additional amount 
-from its present position.  To restore the icon to its original angle,
-enter the value 0.  To restore the original angle, size and 
-position, click on the Rotate (Orthogonal) item.</P>
+<h3>Label Margin</h3>
+<p>Right click an icon and select <strong>Edit Margin... &gt; Set Margin Size</strong> to edit the size in pixels for the Label Margin (the space between the text and a Border).</p>
 
-<H2>Scaling an Icon</H2>
-Enter the percentage to increase or decrease the size of the icon an 
-additional amount from its
-present size. To restore the icon to its original size, enter the value 100.
-To restore the original angle, size and 
-position, click on the Rotate (Orthogonal) item.</P>
+<h3>Label Border</h3>
+<p>Right click an icon and select <strong>Edit Border... &gt; Set Border Size</strong> to edit the size in pixels for the Label Border width.<br>
+Select <strong>Edit Border... &gt; Border Color</strong> to pick a Label Border Color from the list.</p>
 
-<H2>Changing the Text</H2>
-Enter the desired text in the text box.</P>
+<h3>More options</h3>
+<p>The contextual menu provides more options to set the Font, Font Size, Background Color, Justification and Orientation of Labels.</p>
+
+<h3>Label Properties</h3>
+<p>Selecting <strong>Properties</strong> from the contextual menu opens the Text Label pane. Using four tabs, you can control the Font, Contents, Border and Size &amp; Position respectively.<br>
+Close this pane by clicking on "Okay" to update the Panel with your changes, "Cancel" to abort or click "Apply" to update the Panel using your edits but keep the Properties pane open.</p>
 
 <!--#include virtual="/Footer" -->
-</BODY>
-</HTML>
-
+   </div><!-- closes #mainContent-->
+  </div> <!-- closes #mBody-->
+ </body>
+</html>

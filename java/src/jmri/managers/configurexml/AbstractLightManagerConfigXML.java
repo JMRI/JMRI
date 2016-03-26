@@ -119,15 +119,6 @@ public abstract class AbstractLightManagerConfigXML extends AbstractNamedBeanMan
     abstract public void setStoreElementClass(Element lights);
 
     /**
-     * Create a LightManager object of the correct class, then register and fill
-     * it.
-     *
-     * @param lights Top level Element to unpack.
-     * @return true if successful
-     */
-    abstract public boolean load(Element lights);
-
-    /**
      * Utility method to load the individual Light objects. If there's no
      * additional info needed for a specific light type, invoke this with the
      * parent of the set of Light elements.
@@ -331,5 +322,5 @@ public abstract class AbstractLightManagerConfigXML extends AbstractNamedBeanMan
         return InstanceManager.lightManagerInstance().getXMLOrder();
     }
 
-    static Logger log = LoggerFactory.getLogger(AbstractLightManagerConfigXML.class.getName());
+    private final static Logger log = LoggerFactory.getLogger(AbstractLightManagerConfigXML.class.getName());
 }

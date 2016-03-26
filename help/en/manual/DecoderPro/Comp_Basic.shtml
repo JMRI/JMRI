@@ -1,16 +1,18 @@
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
-<html lang="en"><head>
-<!-- Copyright ($Author$) 2009, 2010 --><!-- $Id$ --><title>Comprehensive Programmer - Basic Pane</title><!-- Style -->
+<html lang="en">
+<head>
+<title>Comprehensive Programmer - Basic Pane</title>
 
-
-
-
-
+<!-- Style -->
 <meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
 <link rel="stylesheet" type="text/css" href="/css/default.css" media="screen">
 <link rel="stylesheet" type="text/css" href="/css/print.css" media="print">
 <link rel="icon" href="/images/jmri.ico" type="image/png">
-<link rel="home" title="Home" href="/"><!-- /Style --></head><body>
+<link rel="home" title="Home" href="/">
+<!-- /Style -->
+</head>
+
+<body>
 <!--#include virtual="/Header" -->
 <!--#include virtual="Sidebar" -->
 <div id="mainContent">
@@ -18,10 +20,10 @@
 <a name="Top"></a>
 
 <h1>DecoderPro&reg; Comprehensive Programmer</h1>
-<h1>Expanded Basic Pane</h1>
+<h2>Expanded Basic Pane</h2>
 
 <div align="right">
-  <p align="right">Comprehensive Programmer  
+  <p>Comprehensive Programmer  
     <a href="Comp_Setup_Roster.shtml">Previous</a> | <a href="Comp_Motor.shtml">Next <br>
   </a>Advanced Programmer 
   <a href="Adv_RosterMedia.shtml">Previous | </a><a href="Comp_Motor.shtml">Next </a></p>
@@ -85,14 +87,15 @@ At the bottom of all the programmer panes you will find three rows of buttons, a
 </p><p>
 The top row operates <span class="ACCENT"><strong>ONLY</strong></span> on the currently visible pane. These buttons are:</p>
 
-<ol>
-     <li><b>Read changes on sheet</b> - an "Oops!" button that
-lets you recover data from the decoder if you've changed it
-accidentally on the computer (and don't remember what the values
-were!), but only if you haven&#8217;t written it yet. </li><li><b>Write changes on sheet</b> - faster than writing all the data on the sheet, and ideal for tweaking changes in <b>Ops mode</b>, programming on the main track.
-  </li><li><b>Read full sheet</b> - read all data in this pane from the decoder.
-     </li><li><b>Write full sheet</b> - writes all data in this pane to the decoder.
-</li></ol>
+	<ol>
+	<li><b>Read changes on sheet</b> - an "Oops!" button that
+	lets you recover data from the decoder if you've changed it
+	accidentally on the computer (and don't remember what the values
+	were!), but only if you haven&#8217;t written it yet.</li>
+	<li><b>Write changes on sheet</b> - faster than writing all the data on the sheet, and ideal for tweaking changes in <b>Ops mode</b>, programming on the main track.</li>
+	<li><b>Read full sheet</b> - read all data in this pane from the decoder.</li>
+	<li><b>Write full sheet</b> - writes all data in this pane to the decoder.</li>
+	</ol>
 
 <p>The second row of buttons  performs essentially the same functions, but on the <strong>entire range </strong>of
 CVs for the decoder. This allows you to read all CVs, for example, or
@@ -102,7 +105,8 @@ reading/writing only the changed data, or all data. </p>
 <p>
 Below the two rows of buttons is a text line that shows what the current <b>programming mode</b> is, and a <b>drop-down list </b> that allows you to change it without exiting the programmer. <a href="Basic_Mode.shtml"><strong>click here</strong></a> for further information on Programming Modes.</p>
 <p>
-Finally, the bottom line of the pane is a status bar that tells you exactly what the system is doing. It shows <strong>idle</strong> in these screen shots  because the system was  not actively programming decoders when they were made. </p>
+Finally, the bottom line of the pane is a status bar that tells you exactly what the system is doing. It shows <strong>idle</strong> in these screen shots  because the system was  not actively programming decoders when they were made.</p>
+
 <hr>
 <div align="right">
   <p><a href="Comp_Motor.shtml"></a><a href="Comp_Setup_Roster.shtml">Previous | </a><a href="Comp_Motor.shtml">Next <br>
@@ -111,4 +115,7 @@ Finally, the bottom line of the pane is a status bar that tells you exactly what
 </div>
 
 <!--#include virtual="/Footer" -->
-</div></body></html>
+  </div><!-- closes #mainContent-->
+ </div> <!-- closes #mBody-->
+ </body>
+</html>

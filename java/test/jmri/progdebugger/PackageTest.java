@@ -1,11 +1,8 @@
-// PackageTest.java
 package jmri.progdebugger;
 
 import junit.framework.Test;
 import junit.framework.TestCase;
 import junit.framework.TestSuite;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 
 /**
  * Invoke complete set of tests for the Jmri.progdebugger package.
@@ -14,7 +11,6 @@ import org.slf4j.LoggerFactory;
  * package, but also contains some tests for the ProgDebugger class.
  *
  * @author	Bob Jacobsen, Copyright (C) 2001, 2002
- * @version $Revision$
  */
 public class PackageTest extends TestCase {
 
@@ -53,6 +49,4 @@ public class PackageTest extends TestCase {
         super.tearDown();
         apps.tests.Log4JFixture.tearDown();
     }
-
-    static Logger log = LoggerFactory.getLogger(PackageTest.class.getName());
 }

@@ -1,13 +1,12 @@
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
-<!-- $Id$ -->
 <html lang="en">
 <head>
- <TITLE>
+ <title>
       JMRI: Add/Edit Actions
- </TITLE>
-    <META http-equiv=Content-Type content="text/html; charset=iso-8859-1">
-    <META content="Bob Jacobsen" name=Author>
-    <META name="keywords" content="JMRI help Transit Special Actions">
+ </title>
+    <meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
+    <meta content="Bob Jacobsen" name=Author>
+    <meta name="keywords" content="JMRI help Transit Special Actions">
 
 <!--#include virtual="/Style" -->
 </head>
@@ -17,8 +16,8 @@
   <div class="nomenu" id="mBody">
     <div id="mainContent">
 
-<H1>Add/Edit Action</H1>
-<H2>The Add/Edit Action Window</H2>
+<h1>Add/Edit Action</h1>
+<h2>The Add/Edit Action Window</h2>
 
 <p><b><a href="ViewSpecialActions.shtml">Actions</a></b> are tasks that 
 can be initiated automatically as a train running in automatic mode traverses 
@@ -63,6 +62,8 @@ Action. Closing the Add/Edit Action window is equivalent to clicking the
 <b>Cancel</b> button.</p>
 
 <!--#include virtual="/Footer" -->
+<!--#include virtual="/Footer" -->
+ </div><!-- closes #mainContent-->
+</div> <!-- closes #mBody-->
 </body>
 </html>
-

@@ -76,5 +76,5 @@ public class RawTurnoutOperator extends TurnoutOperator {
         }
     }
 
-    static Logger log = LoggerFactory.getLogger(RawTurnoutOperator.class.getName());
+    private final static Logger log = LoggerFactory.getLogger(RawTurnoutOperator.class.getName());
 }

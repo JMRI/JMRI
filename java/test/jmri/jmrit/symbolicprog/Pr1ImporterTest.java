@@ -1,4 +1,3 @@
-// Pr1ImporterTest.java
 package jmri.jmrit.symbolicprog;
 
 import java.io.File;
@@ -10,14 +9,11 @@ import junit.framework.Assert;
 import junit.framework.Test;
 import junit.framework.TestCase;
 import junit.framework.TestSuite;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 
 /**
  * Tests for Pr1Importer class.
  *
  * @author	Bob Jacobsen Copyright 2003
- * @version $Revision$
  */
 public class Pr1ImporterTest extends TestCase {
 
@@ -112,8 +108,6 @@ public class Pr1ImporterTest extends TestCase {
         TestSuite suite = new TestSuite(Pr1ImporterTest.class);
         return suite;
     }
-
-    static Logger log = LoggerFactory.getLogger(Pr1ImporterTest.class.getName());
 
     // The minimal setup for log4J
     protected void setUp() {

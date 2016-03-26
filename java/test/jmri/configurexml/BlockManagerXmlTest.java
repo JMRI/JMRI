@@ -1,13 +1,5 @@
-// BlockManagerXmlTest.java
 package jmri.configurexml;
 
-/*
- import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
- import java.util.logging.Level;
- import java.util.logging.Logger;
- import jmri.JmriException;
- */
 import java.util.List;
 import jmri.BeanSetting;
 import jmri.Block;
@@ -31,8 +23,7 @@ import junit.framework.TestSuite;
  * Copyright 2008
  * <P>
  * @author Bob Coleman Copyright 2012
- * @version $Revision$
- */
+  */
 public class BlockManagerXmlTest extends TestCase {
 
     public void testLoadCurrent() throws Exception {
@@ -345,11 +336,6 @@ public class BlockManagerXmlTest extends TestCase {
         Block b2 = InstanceManager.blockManagerInstance().createNewBlock("SystemNameb2", "");
 
         Sensor s2 = new AbstractSensor("IS2") {
-            /**
-             *
-             */
-            private static final long serialVersionUID = 7980486999549232479L;
-
             public void requestUpdateFromLayout() {
             }
         };
@@ -362,11 +348,6 @@ public class BlockManagerXmlTest extends TestCase {
         p21.setFromBlockDirection(Path.RIGHT);
         p21.setToBlockDirection(Path.LEFT);
         p21.addSetting(new BeanSetting(new jmri.implementation.AbstractTurnout("IT1") {
-            /**
-             *
-             */
-            private static final long serialVersionUID = 4168056209727170205L;
-
             public void turnoutPushbuttonLockout(boolean b) {
             }
 
@@ -411,29 +392,27 @@ public class BlockManagerXmlTest extends TestCase {
 
         // allow listeners to process, but keep it quick by looking for desired result
         for (int i = 0; i < 25; i++) {
-            JUnitUtil.releaseThread(this, 20);
+            JUnitUtil.releaseThread(this);
             if (m1.getAspect().equals("Advance Approach")
                     && m2.getAspect().equals("Clear")
                     && m3.getAspect().equals("Clear")
                     && m4.getAspect().equals("Clear")
                     && m5.getAspect().equals("Approach")
                     && m6.getAspect().equals("Stop")
-                    && m7.getAspect().equals("Stops")) {
+                    && m7.getAspect().equals("Stop")) {
                 break;
             }
         }
-        JUnitUtil.releaseThread(this, 20);
-        JUnitUtil.releaseThread(this, 20);
-        JUnitUtil.releaseThread(this, 20);
+        JUnitUtil.releaseThread(this);
 
         // check for expected mast state 
         Assert.assertEquals("Signal 1", "Advance Approach", InstanceManager.signalMastManagerInstance().getSignalMast("IF$vsm:AAR-1946:SL-2-high-abs($0001)").getAspect());
-        Assert.assertEquals("Signal 2", "Clear", InstanceManager.signalMastManagerInstance().getSignalMast("IF$vsm:AAR-1946:SL-2-high-abs($0002)").getAspect());
-        Assert.assertEquals("Signal 3", "Clear", InstanceManager.signalMastManagerInstance().getSignalMast("IF$vsm:AAR-1946:SL-2-high-abs($0003)").getAspect());
-        Assert.assertEquals("Signal 4", "Clear", InstanceManager.signalMastManagerInstance().getSignalMast("IF$vsm:AAR-1946:SL-2-high-abs($0004)").getAspect());
-        Assert.assertEquals("Signal 5", "Approach", InstanceManager.signalMastManagerInstance().getSignalMast("IF$vsm:AAR-1946:SL-2-high-abs($0005)").getAspect());
-        Assert.assertEquals("Signal 6", "Stop", InstanceManager.signalMastManagerInstance().getSignalMast("IF$vsm:AAR-1946:SL-2-high-abs($0006)").getAspect());
-        Assert.assertEquals("Signal 7", "Stop", InstanceManager.signalMastManagerInstance().getSignalMast("IF$vsm:AAR-1946:SL-2-high-abs($0007)").getAspect());
+        Assert.assertEquals("Signal 2", "Clear",            InstanceManager.signalMastManagerInstance().getSignalMast("IF$vsm:AAR-1946:SL-2-high-abs($0002)").getAspect());
+        Assert.assertEquals("Signal 3", "Clear",            InstanceManager.signalMastManagerInstance().getSignalMast("IF$vsm:AAR-1946:SL-2-high-abs($0003)").getAspect());
+        Assert.assertEquals("Signal 4", "Clear",            InstanceManager.signalMastManagerInstance().getSignalMast("IF$vsm:AAR-1946:SL-2-high-abs($0004)").getAspect());
+        Assert.assertEquals("Signal 5", "Approach",         InstanceManager.signalMastManagerInstance().getSignalMast("IF$vsm:AAR-1946:SL-2-high-abs($0005)").getAspect());
+        Assert.assertEquals("Signal 6", "Stop",             InstanceManager.signalMastManagerInstance().getSignalMast("IF$vsm:AAR-1946:SL-2-high-abs($0006)").getAspect());
+        Assert.assertEquals("Signal 7", "Stop",             InstanceManager.signalMastManagerInstance().getSignalMast("IF$vsm:AAR-1946:SL-2-high-abs($0007)").getAspect());
 
     }
 
@@ -453,12 +432,4 @@ public class BlockManagerXmlTest extends TestCase {
         TestSuite suite = new TestSuite(BlockManagerXmlTest.class);
         return suite;
     }
-
-    /*    
-     static Logger log = LoggerFactory.getLogger(BlockManagerXmlTest.class.getName());
-
-     // The minimal setup for log4J
-     protected void setUp() { apps.tests.Log4JFixture.setUp(); }
-     protected void tearDown() { apps.tests.Log4JFixture.tearDown(); }
-     */
 }

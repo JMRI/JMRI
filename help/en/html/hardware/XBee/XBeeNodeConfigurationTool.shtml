@@ -1,17 +1,14 @@
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
 <html lang="en">
 <head>
-<!-- $Id$ -->
-<title>The XBee Node Configuration Tool</title>
+<title>JMRI Hardware Support - XBee Node Configuration Tool</title>
 
 <!-- Style -->
-<META HTTP-EQUIV="Content-Type" CONTENT="text/html; charset=iso-8859-1">
-<LINK REL="stylesheet" TYPE="text/css" HREF="/css/default.css"
-	MEDIA="screen">
-<LINK REL="stylesheet" TYPE="text/css" HREF="/css/print.css"
-	MEDIA="print">
-<LINK REL="icon" HREF="/images/jmri.ico" TYPE="image/png">
-<LINK REL="home" TITLE="Home" HREF="/">
+<meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
+<link rel="stylesheet" type="text/css" href="/css/default.css" media="screen">
+<link rel="stylesheet" type="text/css" href="/css/print.css" media="print">
+<link rel="icon" href="/images/jmri.ico" type="image/png">
+<link rel="home" title="Home" href="/">
 <!-- /Style -->
 </head>
 
@@ -21,23 +18,45 @@
   <div class="nomenu" id="mBody">
   <div id="mainContent">
 
-<h1>XBee Node Configuration Tool</h1>
+<h1>Hardware Support: XBee Node Configuration Tool</h1>
 
+<a name="tools"></a><h2>JMRI Tools</h2>
+<h4>XBee Node Configuration</h4>
 <p>
-The XBee Node Configuration tool can be used to add XBee nodes to the JMRI configuration. You can access the tool from the Xbee menu when an <a href="index.shtml">XBee connection</a> is active.</p>
+The XBee Node Configuration tool can be used to add XBee nodes to the JMRI configuration.<br>
+You can access the tool from the Xbee menu when an <a href="index.shtml">XBee connection</a> is active.</p>
 
-<img src="images/XBeeConfiguration.png" alt="XBee node Configuration Tool Image" height="437" width="400">
+<img src="images/XBeeConfiguration.png" alt="XBee node Configuration Tool Image" height="437" width="400" align="right">
 <p>
-Starting at the top, we have drop down boxes for the 16 bit node address, the 64 bit GUID, and the Node Identification (NI) field of the node. Selecting one of the addresses will bring up the information for the selected node.
-<p>
-Next, we have a table listing the current configuration of the node's I/O pins.  The first column lists the DIO pin numbers.  The second column lists the system name associated with the pin or free if the pin is not currently assigned to a device.  The last column lists the user names associated with the system name.
+At the top are three drop down boxes for:
+	<ul>
+	<li>the 16 bit Node Address
+	<li>the 64 bit GUID
+	<li>the Node Identification (NI) field of the node.
+	</ul>
+<p>Selecting an address in the first drop-down will bring up the information for the selected node in the bottom half of the tool pane.
+
+<h4>Table</h4>
+<p>There's a 3 column listing of the current configuration of the Node's I/O pins:
+	<ul>
+	<li>The first column lists the DIO pin numbers.
+	<li>The second column lists the system name associated with the pin or <code>- free -</code> if the pin is not currently assigned to a device.
+	<li>The last column lists the User Names associated with the System Names.
+	</ul>
+
+<h4>Buttons</h4>
 <p>The button labeled "Add Node" will add the node associated with the 16 bit address to the list of nodes.
 <p>The button labeled "Discover Nodes" will cause the XBee to perform a node discovery routine and search for new nodes on the network.
 <p>The button labeled "Edit Node" will allow you to edit node information for the selected node.
 <p>The button labeled "Delete Node" will remove the currently selected node.
 <p>The button labeled "Done" will close the XBee Node Configuration tool.
 
+<a name="documentation"></a><h2>Documentation</h2>
+<h3>JMRI Help</h3>
+<p>Back to the <a href="index.shtml">XBee Help</a> page
+
 <!--#include virtual="/Footer" -->
+ </div><!-- closes #mainContent-->
+</div> <!-- closes #mBody-->
 </body>
 </html>
-

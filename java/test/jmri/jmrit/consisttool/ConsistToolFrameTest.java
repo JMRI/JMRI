@@ -1,12 +1,10 @@
-// ConsistToolFrameTest.java
 package jmri.jmrit.consisttool;
 
+import jmri.util.JUnitUtil;
 import junit.framework.Assert;
 import junit.framework.Test;
 import junit.framework.TestCase;
 import junit.framework.TestSuite;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 
 /**
  * Test simple functioning of ConsistToolFrame
@@ -39,6 +37,14 @@ public class ConsistToolFrameTest extends TestCase {
         return suite;
     }
 
-    static Logger log = LoggerFactory.getLogger(ConsistToolFrameTest.class.getName());
-
+    @Override
+    public void setUp() throws Exception {
+        super.setUp();
+        JUnitUtil.initConfigureManager();
+    }
+    
+    @Override
+    public void tearDown() throws Exception {
+        super.tearDown();
+    }
 }

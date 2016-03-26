@@ -154,7 +154,7 @@ public class EnginesTableFrame extends OperationsFrame implements PropertyChange
         controlPanel.add(cp2);
 
         // some tool tips
-        sortByLast.setToolTipText(Bundle.getMessage("LastMoved"));
+        sortByLast.setToolTipText(Bundle.getMessage("TipLastMoved"));
 
         JScrollPane controlPane = new JScrollPane(controlPanel);
 
@@ -262,7 +262,7 @@ public class EnginesTableFrame extends OperationsFrame implements PropertyChange
         return enginesModel.getSelectedEngineList();
     }
 
-    EngineEditFrame f = null;
+    EngineEditFrame engineEditFrame = null;
 
     // add, save or find button
     public void buttonActionPerformed(java.awt.event.ActionEvent ae) {
@@ -282,12 +282,11 @@ public class EnginesTableFrame extends OperationsFrame implements PropertyChange
             return;
         }
         if (ae.getSource() == addButton) {
-            if (f != null) {
-                f.dispose();
+            if (engineEditFrame != null) {
+                engineEditFrame.dispose();
             }
-            f = new EngineEditFrame();
-            f.initComponents();
-            f.setTitle(Bundle.getMessage("TitleEngineAdd"));
+            engineEditFrame = new EngineEditFrame();
+            engineEditFrame.initComponents();
         }
         if (ae.getSource() == saveButton) {
             if (enginesTable.isEditing()) {
@@ -314,14 +313,14 @@ public class EnginesTableFrame extends OperationsFrame implements PropertyChange
     public void dispose() {
         engineManager.removePropertyChangeListener(this);
         enginesModel.dispose();
-        if (f != null) {
-            f.dispose();
+        if (engineEditFrame != null) {
+            engineEditFrame.dispose();
         }
         super.dispose();
     }
 
     public void propertyChange(PropertyChangeEvent e) {
-        if (Control.showProperty) {
+        if (Control.SHOW_PROPERTY) {
             log.debug("Property change: ({}) old: ({}) new: ({})", e.getPropertyName(), e.getOldValue(), e
                     .getNewValue());
         }
@@ -330,5 +329,5 @@ public class EnginesTableFrame extends OperationsFrame implements PropertyChange
         }
     }
 
-    static Logger log = LoggerFactory.getLogger(EnginesTableFrame.class.getName());
+    private final static Logger log = LoggerFactory.getLogger(EnginesTableFrame.class.getName());
 }

@@ -1,4 +1,3 @@
-// BlockTableActionTest.java
 package jmri.jmrit.beantable;
 
 import jmri.Block;
@@ -7,8 +6,6 @@ import jmri.util.JUnitUtil;
 import junit.extensions.jfcunit.TestHelper;
 import junit.framework.Test;
 import junit.framework.TestSuite;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 
 /**
  * Tests for the jmri.jmrit.beantable.BlockTableAction class
@@ -19,14 +16,12 @@ import org.slf4j.LoggerFactory;
 public class BlockTableActionTest extends jmri.util.SwingTestCase {
 
     public void testCreate() {
-        jmri.InstanceManager.store(jmri.managers.DefaultUserMessagePreferences.getInstance(), jmri.UserPreferencesManager.class);
         BlockTableAction ba = new BlockTableAction();
         assertNotNull("BlockTableAction is null!", ba);
         TestHelper.disposeWindow(ba.f, this);
     }
 
     public void testInvoke() {
-        jmri.InstanceManager.store(jmri.managers.DefaultUserMessagePreferences.getInstance(), jmri.UserPreferencesManager.class);
         BlockTableAction ba = new BlockTableAction();
         ba.actionPerformed(null);
 
@@ -56,12 +51,12 @@ public class BlockTableActionTest extends jmri.util.SwingTestCase {
     }
 
     // The minimal setup for log4J
-    // The minimal setup for log4J
     protected void setUp() throws Exception {
         apps.tests.Log4JFixture.setUp();
 
         super.setUp();
         JUnitUtil.resetInstanceManager();
+        jmri.util.JUnitUtil.initDefaultUserMessagePreferences();
         JUnitUtil.initInternalTurnoutManager();
         JUnitUtil.initInternalLightManager();
         JUnitUtil.initInternalSensorManager();
@@ -73,6 +68,4 @@ public class BlockTableActionTest extends jmri.util.SwingTestCase {
         super.tearDown();
         apps.tests.Log4JFixture.tearDown();
     }
-
-    static Logger log = LoggerFactory.getLogger(BlockTableActionTest.class.getName());
 }

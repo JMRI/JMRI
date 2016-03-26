@@ -23,14 +23,12 @@
 </head>
 
 <body>
-  <div id="container">
 
 <!--#include virtual="/Header" -->
 <!--#include virtual="Sidebar" -->
 
       <div id="mainContent">
       <!-- Page Body -->
-
 
 <h1>JMRI: Signal Groups</h1>
 
@@ -61,22 +59,22 @@ Therefore, the Route Indicator can only display one destination at time. The dis
 	<a href="https://mysite.du.edu/~jcalvert/railway/belgian.htm"><img src="../../../package/jmri/jmrit/beantable/speedindicbelg40.gif" ALIGN=RIGHT WIDTH="60" HEIGHT="119" HSPACE="0" VSPACE="0" ALT="Speed Indicator figure by J. Calvert"></a>
 		  <p>A Speed Indicator as used in Dutch (Prorail) and Belgian (NMBS/SNCB) railways will display an illuminated digit below the main Signal Head, e.g. a "4" restricts the maximum speed to 40 km/h.</p>
 
-<a name="table"><h3>The Signal Groups Table</h3></a>
-  <a href="../../../package/jmri/jmrit/beantable/SignalGroupsTable.png"><img src="../../../package/jmri/jmrit/beantable/SignalGroupsTable.png" ALIGN=RIGHT WIDTH="386" HEIGHT="165" HSPACE="0" VSPACE="0" ALT="Signal Groups Table figure"></a>
+<a name="table"><h3>The Signal Group Table</h3></a>
+  <a href="../../../package/jmri/jmrit/beantable/SignalGroupsTable.png"><img src="../../../package/jmri/jmrit/beantable/SignalGroupsTable.png" ALIGN=RIGHT WIDTH="386" HEIGHT="165" HSPACE="0" VSPACE="0" ALT="Signal Group Table figure"></a>
 		  
-<p>JMRI Signal Groups can be created and edited using the <a href="../../../package/jmri/jmrit/beantable/SignalGroupTable.shtml">Signal Groups Table</a>. You access this tool from the Tools > Tables > Signal Groups menu of most JMRI programs.
+<p>JMRI Signal Groups can be created and edited using the <a href="../../../package/jmri/jmrit/beantable/SignalGroupTable.shtml">Signal Group Table</a>. You access this tool from the Tools > Tables > Signal Groups menu of most JMRI programs.
 	<br/>		  
-In the Signal Groups Table you can create, change and delete individual Signal Groups. You change the settings of a Signal Group by clicking on the "Edit" button in the corresponding line.</br>
+In the Signal Group Table you can create, change and delete individual Signal Groups. You change the settings of a Signal Group by clicking on the "Edit" button in the corresponding line.</br>
 	More information on configuring Signal Groups and an <a href="../../../package/jmri/jmrit/beantable/SignalGroupTable.shtml#example">Example</a> can be found on the 
-	<a href="../../../package/jmri/jmrit/beantable/SignalGroupTable.shtml">Signal Groups Table help page</a>.</p>
+	<a href="../../../package/jmri/jmrit/beantable/SignalGroupTable.shtml">Signal Group Table help page</a>.</p>
 
 		  <a name="add"><h3>Creating a Signal Group</h3></a>
 	<p>You add a new Signal Group by clicking on the "Add..."  button
-at the bottom of the Signal Groups Table, which takes you to the
+at the bottom of the Signal Group Table, which takes you to the
 	<a href="../../../package/jmri/jmrit/beantable/SignalGroupAddEdit.shtml">"Add Signal Group" panel</a>.</p>
 		  
 <h3>Controlling a Signal Group</h3>
-		  <p>The information from the Signal Groups Table is used by the Signal Mast Logic to calculate the specified behavior of a Signal Group. You can test this by manually changing one of the Indicator Signal Heads in de <a href="../../../package/jmri/jmrit/beantable/SignalHeadTable.shtml">Signal Heads Table</a>.
+		  <p>The information from the Signal Group Table is used by the Signal Mast Logic to calculate the specified behavior of a Signal Group. You can test this by manually changing one of the Indicator Signal Heads in de <a href="../../../package/jmri/jmrit/beantable/SignalHeadTable.shtml">Signal Head Table</a>.
 
 <h2>Saving and Reloading Configuration</h2>
 
@@ -88,9 +86,7 @@ file (recommended), select <b>File > Store > Store Configuration and Panels To F
 	
 <!--#include virtual="/Footer" -->
 
-      </div><!-- closes #mainContent-->
-  </div> <!-- closes #container -->
+    </div><!-- closes #mainContent-->
+  </div> <!-- closes #mBody-->
 </body>
 </html>
-
-

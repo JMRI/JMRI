@@ -34,7 +34,7 @@ public class SprogVersionQuery implements SprogListener {
     static final protected int LONG_TIMEOUT = 2000;
     static javax.swing.Timer timer = null;
 
-    @edu.umd.cs.findbugs.annotations.SuppressWarnings(value = "ST_WRITE_TO_STATIC_FROM_INSTANCE_METHOD")
+    @edu.umd.cs.findbugs.annotations.SuppressFBWarnings(value = "ST_WRITE_TO_STATIC_FROM_INSTANCE_METHOD")
     // Ignore FindBugs warnings as there can only be one instance at present
     public SprogVersionQuery() {
         if (log.isDebugEnabled()) {
@@ -309,5 +309,5 @@ public class SprogVersionQuery implements SprogListener {
         timer.start();
     }
 
-    static Logger log = LoggerFactory.getLogger(SprogVersionQuery.class.getName());
+    private final static Logger log = LoggerFactory.getLogger(SprogVersionQuery.class.getName());
 }

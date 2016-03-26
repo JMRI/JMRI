@@ -28,13 +28,14 @@ public class XpaTurnoutManagerXml extends jmri.managers.configurexml.AbstractTur
         log.error("Invalid method called");
     }
 
-    public boolean load(Element turnouts) {
+    @Override
+    public boolean load(Element shared, Element perNode) {
         // create the master object
         XpaTurnoutManager.instance();
         // load individual turnouts
-        return loadTurnouts(turnouts);
+        return loadTurnouts(shared, perNode);
     }
 
     // initialize logging
-    static Logger log = LoggerFactory.getLogger(XpaTurnoutManagerXml.class.getName());
+    private final static Logger log = LoggerFactory.getLogger(XpaTurnoutManagerXml.class.getName());
 }

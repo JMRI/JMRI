@@ -1,12 +1,9 @@
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
 <html lang="en">
 <head>
-<!-- Copyright ($Author$) 2009 -->
-<!-- $Id$ -->
-<head>
-<TITLE>
+<title>
 CMRI Menu
-</TITLE>
+</title>
 
 <!-- Style -->
 <meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
@@ -24,9 +21,9 @@ CMRI Menu
 <div id="mainContent">
 
 <h1>DecoderPro&reg; Main Window</h1>
-<h1>CMRI Menu</h1>
+<h2>CMRI Menu</h2>
 
-<div align=right>
+<div align="right">
 <p><a href="Main_Menu.shtml#System">Back to Index</a></p>
 </div>
 
@@ -64,12 +61,14 @@ CMRI Menu
 <div>
   <div align="right"><a href="#Nodes">Back</a></div>
 </div>
-<p align="center">&nbsp;</p>
+
 <hr>
 <div align=right>
 <p><a href="Main_Menu.shtml#System">Back to Index</a></p>
 </div>
 
 <!--#include virtual="/Footer" -->
+  </div><!-- closes #mainContent-->
+ </div> <!-- closes #mBody-->
 </body>
 </html>

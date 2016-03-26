@@ -49,14 +49,10 @@ import jmri.ProgListener;
  * @since 4.1.1
  */
 public class OlcbProgrammer extends jmri.jmrix.AbstractProgrammer implements jmri.AddressedProgrammer  {
-
-    public OlcbProgrammer() {
-        mode = OlcbProgrammerManager.OPENLCBMODE;
-    }
     
     @Override
     public List<ProgrammingMode> getSupportedModes() {
-        List<ProgrammingMode> retval = new ArrayList();
+        List<ProgrammingMode> retval = new ArrayList<ProgrammingMode>();
         retval.add(OlcbProgrammerManager.OPENLCBMODE);
         return retval;
     }

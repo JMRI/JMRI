@@ -46,11 +46,6 @@ public class LightIconXml extends PositionableLabelXml {
         return element;
     }
 
-    public boolean load(Element element) {
-        log.error("Invalid method called");
-        return false;
-    }
-
     /**
      * Create a PositionableLabel, then add to a target JLayeredPane
      *
@@ -114,5 +109,5 @@ public class LightIconXml extends PositionableLabelXml {
         loadCommonAttributes(l, Editor.LIGHTS, element);
     }
 
-    static Logger log = LoggerFactory.getLogger(LightIconXml.class.getName());
+    private final static Logger log = LoggerFactory.getLogger(LightIconXml.class.getName());
 }

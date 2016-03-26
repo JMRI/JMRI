@@ -42,11 +42,4 @@ public class ConnectionConfig extends jmri.jmrix.AbstractSimulatorConnectionConf
             adapter = new SimulatorAdapter();
         }
     }
-
-    public void dispose() {
-        if (adapter != null) {
-            adapter.dispose();
-        }
-        super.dispose();
-    }
 }

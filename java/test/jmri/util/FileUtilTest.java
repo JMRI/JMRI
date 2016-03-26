@@ -1,4 +1,3 @@
-// FileUtilTest.java
 package jmri.util;
 
 import java.io.File;
@@ -39,7 +38,7 @@ public class FileUtilTest extends TestCase {
     // relative file with no prefix: Leave relative in system-specific form
     public void testGEFRel() {
         String name = FileUtil.getExternalFilename("resources/non-existant-file-foo");
-        Assert.assertEquals("resources" + File.separator + "non-existant-file-foo", name);
+        Assert.assertEquals("resources" + File.separator + "non-existant-file-foo", name); 
     }
 
     // relative file with no prefix: Leave relative in system-specific form
@@ -371,7 +370,7 @@ public class FileUtilTest extends TestCase {
 
     // Main entry point
     static public void main(String[] args) {
-        String[] testCaseName = {FileUtilTest.class.getName()};
+        String[] testCaseName = {"-noloading", FileUtilTest.class.getName()};
         junit.swingui.TestRunner.main(testCaseName);
     }
 
@@ -381,5 +380,5 @@ public class FileUtilTest extends TestCase {
         return suite;
     }
 
-    static Logger log = LoggerFactory.getLogger(FileUtilTest.class.getName());
+    private final static Logger log = LoggerFactory.getLogger(FileUtilTest.class.getName());
 }

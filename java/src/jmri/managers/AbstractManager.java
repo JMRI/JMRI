@@ -1,4 +1,3 @@
-// AbstractManager.java
 package jmri.managers;
 
 import java.util.ArrayList;
@@ -18,7 +17,6 @@ import org.slf4j.LoggerFactory;
  * the present time. They're just names...
  *
  * @author Bob Jacobsen Copyright (C) 2003
- * @version	$Revision$
  */
 abstract public class AbstractManager
         implements Manager, java.beans.PropertyChangeListener, java.beans.VetoableChangeListener {
@@ -38,9 +36,10 @@ abstract public class AbstractManager
      *
      */
     protected void registerSelf() {
+        log.debug("registerSelf for config of type {}", getClass());
         if (InstanceManager.configureManagerInstance() != null) {
             InstanceManager.configureManagerInstance().registerConfig(this, getXMLOrder());
-            log.debug("register for config");
+            log.debug("registering for config of type {}", getClass());
         }
     }
 
@@ -352,8 +351,6 @@ abstract public class AbstractManager
         }
     }
 
-    static Logger log = LoggerFactory.getLogger(AbstractManager.class.getName());
+    private final static Logger log = LoggerFactory.getLogger(AbstractManager.class.getName());
 
 }
-
-/* @(#)AbstractManager.java */

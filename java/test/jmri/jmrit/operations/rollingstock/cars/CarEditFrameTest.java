@@ -12,7 +12,6 @@ import junit.framework.TestSuite;
  * Tests for the Operations Cars GUI class
  *
  * @author	Dan Boudreau Copyright (C) 2009
- * @version $Revision$
  */
 public class CarEditFrameTest extends OperationsSwingTestCase {
 
@@ -24,8 +23,8 @@ public class CarEditFrameTest extends OperationsSwingTestCase {
         Assert.assertEquals("number of cars", 5, cManager.getNumEntries());
 
         CarEditFrame f = new CarEditFrame();
-        f.setTitle("Test Add Car Frame");
         f.initComponents();
+        f.setTitle("Test Add Car Frame");
 
         // add a new car
         f.roadNumberTextField.setText("6");
@@ -37,10 +36,17 @@ public class CarEditFrameTest extends OperationsSwingTestCase {
         f.builtTextField.setText("1999");
         f.ownerComboBox.setSelectedItem("Owner1");
         f.commentTextField.setText("test car comment field");
+        
+        // Save button should be disabled
         getHelper().enterClickAndLeave(new MouseEventData(this, f.saveButton));
 
         Car c6 = cManager.getByRoadAndNumber("SP", "6");
+        Assert.assertNull("Car should not exist", c6);
+        
+        // use add button
+        getHelper().enterClickAndLeave(new MouseEventData(this, f.addButton));
 
+        c6 = cManager.getByRoadAndNumber("SP", "6");
         Assert.assertNotNull("Car did not create", c6);
         Assert.assertEquals("car type", "Caboose", c6.getTypeName());
         Assert.assertEquals("car length", "38", c6.getLength());
@@ -109,8 +115,8 @@ public class CarEditFrameTest extends OperationsSwingTestCase {
 
         CarEditFrame f = new CarEditFrame();
         f.initComponents();
-        f.setTitle("Test Edit Car Frame");
         f.loadCar(c1);
+        f.setTitle("Test Edit Car Frame");
 
         Assert.assertEquals("car road", "NH", f.roadComboBox.getSelectedItem());
         Assert.assertEquals("car number", "1", f.roadNumberTextField.getText());

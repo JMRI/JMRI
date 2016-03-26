@@ -28,12 +28,13 @@ public class AcelaTurnoutManagerXml extends jmri.managers.configurexml.AbstractT
         log.error("Invalid method called");
     }
 
-    public boolean load(Element turnouts) {
+    @Override
+    public boolean load(Element shared, Element perNode) {
         // create the master object
         AcelaTurnoutManager.instance();
         // load individual turnouts
-        return loadTurnouts(turnouts);
+        return loadTurnouts(shared, perNode);
     }
 
-    static Logger log = LoggerFactory.getLogger(AcelaTurnoutManagerXml.class.getName());
+    private final static Logger log = LoggerFactory.getLogger(AcelaTurnoutManagerXml.class.getName());
 }

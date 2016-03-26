@@ -3,8 +3,6 @@ package jmri.jmrix.ecos;
 
 import java.util.ResourceBundle;
 import jmri.InstanceManager;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 
 /**
  * Lightweight class to denote that a system is active, and provide general
@@ -76,6 +74,8 @@ public class EcosSystemConnectionMemo extends jmri.jmrix.SystemConnectionMemo {
 
         reporterManager = new jmri.jmrix.ecos.EcosReporterManager(this);
         jmri.InstanceManager.setReporterManager(reporterManager);
+        
+        jmri.InstanceManager.setProgrammerManager(getProgrammerManager());
 
     }
 
@@ -90,6 +90,7 @@ public class EcosSystemConnectionMemo extends jmri.jmrix.SystemConnectionMemo {
     private EcosDccThrottleManager throttleManager;
     private EcosPowerManager powerManager;
     private EcosReporterManager reporterManager;
+    private EcosProgrammerManager programmerManager;
 
     public EcosLocoAddressManager getLocoAddressManager() {
         return locoManager;
@@ -119,6 +120,13 @@ public class EcosSystemConnectionMemo extends jmri.jmrix.SystemConnectionMemo {
         return reporterManager;
     }
 
+    public EcosProgrammerManager getProgrammerManager() {
+        if (programmerManager == null) {
+            programmerManager = new EcosProgrammerManager(new EcosProgrammer(getTrafficController()), this);
+        }
+        return programmerManager;
+    }
+
     /**
      * Tells which managers this provides by class
      */
@@ -139,6 +147,12 @@ public class EcosSystemConnectionMemo extends jmri.jmrix.SystemConnectionMemo {
             return true;
         }
         if (type.equals(jmri.ReporterManager.class)) {
+            return true;
+        }
+        if (type.equals(jmri.ProgrammerManager.class)) {
+            return true;
+        }
+        if (type.equals(jmri.GlobalProgrammerManager.class)) {
             return true;
         }
         return false; // nothing, by default
@@ -164,6 +178,12 @@ public class EcosSystemConnectionMemo extends jmri.jmrix.SystemConnectionMemo {
         if (T.equals(jmri.ReporterManager.class)) {
             return (T) getReporterManager();
         }
+        if (T.equals(jmri.ProgrammerManager.class)) {
+            return (T) getProgrammerManager();
+        }
+        if (T.equals(jmri.GlobalProgrammerManager.class)) {
+            return (T) getProgrammerManager();
+        }
         return null; // nothing, by default
     }
 
@@ -180,6 +200,9 @@ public class EcosSystemConnectionMemo extends jmri.jmrix.SystemConnectionMemo {
         if (reporterManager != null) {
             reporterManager.dispose();
             reporterManager = null;
+        }
+        if (programmerManager != null) {
+            InstanceManager.deregister(programmerManager, jmri.jmrix.ecos.EcosProgrammerManager.class);
         }
 
         if (powerManager != null) {
@@ -198,8 +221,6 @@ public class EcosSystemConnectionMemo extends jmri.jmrix.SystemConnectionMemo {
 
         super.dispose();
     }
-
-    static Logger log = LoggerFactory.getLogger(EcosSystemConnectionMemo.class.getName());
 }
 
 

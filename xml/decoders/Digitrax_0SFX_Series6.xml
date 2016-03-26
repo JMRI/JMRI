@@ -195,7 +195,7 @@
     <variables>
       <xi:include href="http://jmri.org/xml/decoders/nmra/shortAndLongAddress.xml"/>
       <xi:include href="http://jmri.org/xml/decoders/digitrax/vStartHighMid.xml"/>
-      <xi:include href="http://jmri.org/xml/decoders/nmra/accelDecel.xml"/>
+      <xi:include href="http://jmri.org/xml/decoders/nmra/accelDecel_31.xml"/>
       <variable CV="7" readOnly="yes" item="Decoder Version" default="16">
         <decVal/>
         <label>Version ID</label>
@@ -649,6 +649,11 @@
       </variable>
       <!-- Horn Selector for Diesel -->
       <variable CV="150" item="Sound Option 2" exclude="SDXH166DExtS,SDXH166DExtD">
+        <qualifier>
+          <variableref>Sound Option 1</variableref>
+          <relation>le</relation>
+          <value>5</value>
+        </qualifier>
         <enumVal>
           <enumChoice choice="Default Horn">
             <choice>Horn GP38</choice>
@@ -714,18 +719,14 @@
             <choice>Playable Horn 7</choice>
             <choice xml:lang="it">Tromba alternativa 135</choice>
           </enumChoice>
-        </enumVal>
-        <!-- Diesel only -->
-        <qualifier>
-          <variableref>Sound Option 1</variableref>
-          <relation>le</relation>
-          <value>5</value>
-        </qualifier>
-        <label>Horn Selector</label>
-        <label xml:lang="it">Selettore Tromba</label>
-      </variable>
+        </enumVal><label>Horn Selector</label><label xml:lang="it">Selettore Tromba</label></variable>
       <!-- Whistle Selector for Steam -->
       <variable CV="150" item="Sound Option 3" exclude="SDXH166DExtS,SDXH166DExtD">
+        <qualifier>
+          <variableref>Sound Option 1</variableref>
+          <relation>gt</relation>
+          <value>5</value>
+        </qualifier>
         <enumVal>
           <enumChoice choice="Default Whistle">
             <choice>Whistle UP3985</choice>
@@ -751,16 +752,7 @@
             <choice>Playable Whistle 2</choice>
             <choice xml:lang="it">Fischietto alternativa 130</choice>
           </enumChoice>
-        </enumVal>
-        <!-- Steam only -->
-        <qualifier>
-          <variableref>Sound Option 1</variableref>
-          <relation>gt</relation>
-          <value>5</value>
-        </qualifier>
-        <label>Whistle Selector</label>
-        <label xml:lang="it">Selettore Fischietto</label>
-      </variable>
+        </enumVal><label>Whistle Selector</label><label xml:lang="it">Selettore Fischietto</label></variable>
       <variable CV="151" item="Sound Option 5" default="48">
         <decVal max="64"/>
         <label>Peak Speed for Auto coupler/brake on dir change</label>

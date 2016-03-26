@@ -5,6 +5,7 @@
 # Part of the JMRI distribution
 
 import jmri
+import java
 
 # The sensor number used to indicate the power status is hardcoded
 # below as "100". Change this if you want to use some other sensor.

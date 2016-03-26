@@ -1,4 +1,3 @@
-// EasyDccInterfaceScaffold.java
 package jmri.jmrix.easydcc;
 
 import java.util.Vector;
@@ -60,6 +59,6 @@ public class EasyDccTrafficControlScaffold extends EasyDccTrafficController {
         return cmdListeners.size();
     }
 
-    static Logger log = LoggerFactory.getLogger(EasyDccTrafficControlScaffold.class.getName());
+    private final static Logger log = LoggerFactory.getLogger(EasyDccTrafficControlScaffold.class.getName());
 
 }

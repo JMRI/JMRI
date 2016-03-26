@@ -1,4 +1,5 @@
 <!-- Sidebar -->
+<!-- This is the common sidebar definition for tools/Signaling/interlock pages -->
 	  <hr class="hide">
 	  <div id="mBody">
 	  <div id="side"> <!-- Block of text on left side of page -->
@@ -7,45 +8,54 @@
 
 		<dt><h3><a href="../index.shtml">Signaling</a></h3></dt>
 		<dd>Adding signals to your layout with JMRI.
-		    <UL>
-		    <LI><dfn><a href="../SignalingSetup.shtml">Signaling Quick Start</a></dfn>
-		    <LI><dfn><a href="../AspectSignaling.shtml">Aspect Signaling</a></dfn>
-		    <LI><dfn><a href="../SignalHeads.shtml">Signal Heads</a></dfn>
-		    <LI><dfn><a href="../SignalMasts.shtml">Signal Masts</a></dfn>
-		    <LI><dfn><a href="../SignalGroups.shtml">Signal Groups</a></dfn>
-		    <LI><dfn><a href="../SignalMastLogic.shtml">Signal Mast Logic</a></dfn>
-		    <LI><dfn><a href="../interlock/index.shtml">Entry Exit &amp; Interlocking</a></dfn>
-		    </UL>
+		    <ul>
+		    <li><dfn><a href="../SignalingSetup.shtml">Signaling Quick Start</a></dfn>
+		    <li><dfn><a href="../AspectSignaling.shtml">Aspect Signaling</a></dfn>
+		    <li><dfn><a href="../SignalHeads.shtml">Signal Heads</a></dfn>
+		    <li><dfn><a href="../SignalMasts.shtml">Signal Masts</a></dfn>
+		    <li><dfn><a href="../SignalGroups.shtml">Signal Groups</a></dfn>
+		    <li><dfn><a href="../SignalMastLogic.shtml">Signal Mast Logic</a></dfn>
+		    <li><dfn><strong>Entry Exit &amp; Interlocking</strong></dfn> <!-- you're here now -->
+		    </ul>
 		</dd>
 
-		<dt><h3><a href="index.shtml">General Tools</a></h3></dt>
+		<dt><h3><a href="index.shtml">Tools</a></h3></dt>
 		<dd>JMRI provides powerful tools for working with your
 		layout.
-		    <UL>
-		    <LI><dfn><a href="../../Sensors.shtml">Sensors</a></dfn>
-		    <LI><dfn><a href="../../Turnouts.shtml">Turnouts</a></dfn>
-		    <LI><dfn><a href="../../throttle/ThrottleMain.shtml">Throttles</a></dfn>
-		    <LI><dfn><a href="../../consisttool/ConsistTool.shtml">Consisting</a></dfn>
-		    <LI><dfn><a href="../../signaling/index.shtml">Signaling</a></dfn>
-		    <LI><dfn><a href="../../Lights.shtml">Lights</a></dfn>
-		    <LI><dfn><a href="../../Routes.shtml">Routes</a></dfn>
-		    <LI><dfn><a href="../../Logix.shtml">Logix</a></dfn>
-		    <LI><dfn><a href="../../fastclock/index.shtml">Fast Clocks</a></dfn>
-		    <LI><dfn><a href="../../speedometer/index.shtml">Speedometer</a></dfn>
-		    <LI><dfn><a href="../../scripting/index.shtml">Scripting</a></dfn>
-		    </UL>
+		    <ul>
+				<li><dfn><a href="../../Turnouts.shtml">Turnouts</a></dfn>
+				<li><dfn><a href="../../Lights.shtml">Lights</a></dfn>
+				<li><dfn><a href="../../Sensors.shtml">Sensors</a></dfn>
+				<li><dfn><a href="../../throttle/ThrottleMain.shtml">Throttles</a></dfn>
+				<li><dfn><a href="../../consisttool/ConsistTool.shtml">Consisting</a></dfn>
+				<li><dfn><a href="../../signaling/index.shtml">Signaling</a></dfn>
+				<li><dfn><a href="../../Blocks.shtml">Blocks</a></dfn>
+				<li><dfn><a href="../../Reporters.shtml">Reporters</a></dfn>
+				<li><dfn><a href="../../Memories.shtml">Memory Variables</a></dfn>
+				<li><dfn><a href="../../Routes.shtml">Routes</a></dfn>
+				<li><dfn><a href="../../LRoutes.shtml">LRoutes</a></dfn>
+		    <li><dfn><a href="../../Sections.shtml">Sections</a></dfn>
+				<li><dfn><a href="../../Logix.shtml">Logix</a></dfn>
+				<li><dfn><a href="../../fastclock/index.shtml">Fast Clocks</a></dfn>
+				<li><dfn><a href="../../speedometer/index.shtml">Speedometer</a></dfn>
+				<li><dfn><a href="../../Audio.shtml">Audio</a></dfn>
+				<li><dfn><a href="../../IdTags.shtml">ID Tags</a></dfn>
+		
+		    <li><dfn><a href="../../index.shtml#systemSpecificTools">System-specific...</a></dfn>
+		   </ul>
 		</dd>
 
 		<dt><h3><a href="../../automation/index.shtml">Layout Automation</a></h3></dt>
 		<dd>JMRI can be used to automate parts 
 		of your layout, from simply controlling a crossing gate
 		to running trains in the background.
-		    <UL>
-		    <LI><dfn><a href="../index.shtml">Signaling</a></dfn>
-		    <LI><dfn><a href="../../Routes.shtml">Routes</a></dfn>
-		    <LI><dfn><a href="../../fastclock/">Fast Clocks</a></dfn>
-		    <LI><dfn><a href="../../scripting/index.shtml">Scripting</a></dfn>
-		    </UL>
+		    <ul>
+		    <li><dfn><a href="../index.shtml">Signaling</a></dfn>
+  			<li><dfn><a href="../../signaling/EntryExit.shtml">Entry Exit (NX)</a></dfn>
+		    <li><dfn><a href="../../Routes.shtml">Routes</a></dfn>
+		    <li><dfn><a href="../../fastclock/">Fast Clocks</a></dfn>
+		    <li><dfn><a href="../../scripting/index.shtml">Scripting</a></dfn>
+		    </ul>
 		</dd>
 
 	    </dl>

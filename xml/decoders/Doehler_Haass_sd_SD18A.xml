@@ -132,20 +132,20 @@
 			<xi:include href="http://jmri.org/xml/decoders/doehler_haass/SD_cv12_motorola.xml"/>
 		<!-- END Common D&H variable files -->
 		<!-- START combo sound variable files -->
-			<xi:include href="http://jmri.org/xml/decoders/doehler_haass/SD_cv311-348.xml"/>
-			<xi:include href="http://jmri.org/xml/decoders/doehler_haass/SD_cv350.xml"/>
-			<xi:include href="http://jmri.org/xml/decoders/doehler_haass/SD_cv353-359.xml"/>
-			<xi:include href="http://jmri.org/xml/decoders/doehler_haass/SD_cv360-362.xml"/>
-			<xi:include href="http://jmri.org/xml/decoders/doehler_haass/SD_cv364-373.xml"/>
+			<xi:include href="http://jmri.org/xml/decoders/doehler_haass/SD_cv311-348_911-948.xml"/>
+			<xi:include href="http://jmri.org/xml/decoders/doehler_haass/SD_cv350_950.xml"/>
+			<xi:include href="http://jmri.org/xml/decoders/doehler_haass/SD_cv351-359_951-959.xml"/>
+			<xi:include href="http://jmri.org/xml/decoders/doehler_haass/SD_cv360-362_960-962.xml"/>
+			<xi:include href="http://jmri.org/xml/decoders/doehler_haass/SD_cv364-373_964-973.xml"/>
 			<!-- 2014-10 fw1.03+ -->
-			<xi:include href="http://jmri.org/xml/decoders/doehler_haass/SD_cv349.xml"/>
+			<xi:include href="http://jmri.org/xml/decoders/doehler_haass/SD_cv349_949.xml"/>
 			<xi:include href="http://jmri.org/xml/decoders/doehler_haass/SD_cv137_bits0.xml"/>
 			<xi:include href="http://jmri.org/xml/decoders/doehler_haass/SD_cv137_bits1-2.xml"/>
 			<!-- 2015-05 fw1.04+ -->
 			<xi:include href="http://jmri.org/xml/decoders/doehler_haass/SD_cv137_bits4-5.xml"/>
 			<xi:include href="http://jmri.org/xml/decoders/doehler_haass/SD_cv138-143.xml"/>
 			<xi:include href="http://jmri.org/xml/decoders/doehler_haass/SD_cv125-133.xml"/>
-			<xi:include href="http://jmri.org/xml/decoders/doehler_haass/SD_cv374-377.xml"/>
+			<xi:include href="http://jmri.org/xml/decoders/doehler_haass/SD_cv374-377_974-977.xml"/>
 		<!-- END combo sound variable files -->
     </variables>
 	<resets>

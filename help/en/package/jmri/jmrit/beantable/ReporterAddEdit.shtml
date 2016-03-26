@@ -1,13 +1,12 @@
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
-<!-- $Id$ -->
 <html lang="en">
 <head>
- <TITLE>
+ <title>
       JMRI: Adding/Editing Reporters
- </TITLE>
-    <META http-equiv=Content-Type content="text/html; charset=iso-8859-1">
-    <META content="Bob Jacobsen" name=Author>
-    <META name="keywords" content="JMRI help Reporter Add Edit">
+ </title>
+    <meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
+    <meta content="Bob Jacobsen" name="Author">
+    <meta name="keywords" content="JMRI help Reporter Add Edit">
 
 <!--#include virtual="/Style" -->
 </head>
@@ -17,11 +16,14 @@
   <div class="nomenu" id="mBody">
     <div id="mainContent">
 
-<H1>Adding/Editing Reporters</H1>
+<h1>Adding/Editing Reporters</h1>
     
-This is the package/jmri/jmrit/beantable/ReporterAddEdit help page
+This is the package/jmri/jmrit/beantable/ReporterAddEdit Help page
 
+  <p>Back to the <a href="ReporterTable.shtml">Reporter Table help page<a>.</p>
+  
 <!--#include virtual="/Footer" -->
+ </div><!-- closes #mainContent-->
+</div> <!-- closes #mBody-->
 </body>
 </html>
-

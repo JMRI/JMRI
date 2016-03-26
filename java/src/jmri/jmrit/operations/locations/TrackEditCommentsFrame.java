@@ -106,6 +106,6 @@ public class TrackEditCommentsFrame extends OperationsFrame {
         }
     }
 
-    static Logger log = LoggerFactory.getLogger(TrainSwitchListEditFrame.class
+    private final static Logger log = LoggerFactory.getLogger(TrainSwitchListEditFrame.class
             .getName());
 }

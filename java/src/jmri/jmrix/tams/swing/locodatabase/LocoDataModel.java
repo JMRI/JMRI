@@ -261,6 +261,6 @@ public class LocoDataModel extends javax.swing.table.AbstractTableModel implemen
         memo.getTrafficController().sendTamsMessage(m, this);
     }
 
-    static Logger log = LoggerFactory.getLogger(LocoDataModel.class.getName());
+    private final static Logger log = LoggerFactory.getLogger(LocoDataModel.class.getName());
 
 }

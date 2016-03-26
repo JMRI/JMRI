@@ -26,6 +26,7 @@ public class SRCPPowerManager implements PowerManager, SRCPListener {
 
     public SRCPPowerManager(SRCPBusConnectionMemo memo, int bus) {
         // connect to the TrafficManager
+        _memo = memo;
         tc = memo.getTrafficController();
         tc.addSRCPListener(this);
         _bus = bus;
@@ -124,7 +125,7 @@ public class SRCPPowerManager implements PowerManager, SRCPListener {
         }
     }
 
-    static Logger log = LoggerFactory.getLogger(SRCPPowerManager.class.getName());
+    private final static Logger log = LoggerFactory.getLogger(SRCPPowerManager.class.getName());
 
 }
 

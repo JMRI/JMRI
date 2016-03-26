@@ -1,52 +1,81 @@
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
 <html lang="en">
 <head>
-<!-- $Id$ -->
-<title>JMRI: Connecting the Grapevine System</title>
+<title>JMRI Hardware Support - Protrak Grapevine System</title>
 
 <!-- Style -->
-<META HTTP-EQUIV="Content-Type" CONTENT="text/html; charset=iso-8859-1">
-<LINK REL="stylesheet" TYPE="text/css" HREF="/css/default.css"
-	MEDIA="screen">
-<LINK REL="stylesheet" TYPE="text/css" HREF="/css/print.css"
-	MEDIA="print">
-<LINK REL="icon" HREF="/images/jmri.ico" TYPE="image/png">
-<LINK REL="home" TITLE="Home" HREF="/">
+<meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
+<link rel="stylesheet" type="text/css" href="/css/default.css" media="screen">
+<link rel="stylesheet" type="text/css" href="/css/print.css" media="print">
+<link rel="icon" href="/images/jmri.ico" type="image/png">
+<link rel="home" title="Home" href="/">
 <!-- /Style -->
-</HEAD>
+</head>
 
-<BODY>
+<body>
 <!--#include virtual="/Header" -->
   <div class="nomenu" id="mBody">
     <div id="mainContent">
 
-<h1> 
-JMRI: Connecting the Grapevine System
-</h1>
+<h1>Hardware Support: Protrak Grapevine System</h1>
 
+<a name="hardware"></a><h2>Supported Hardware</h2>
+<h3>Modules</h3>
+<ul>
+	<li>Protrak Grapevine Nodes</li>
+</ul>
 
+<a name="limitations"></a><h2>Limitations</h2>
+<ul>
+<li>Fast Clocks are not yet supported. If you have one and want to test
+it with JMRI, let us know.
+</ul>
+
+<a name="connecting"></a><h2>Connecting</h2>
+
+<h3>Settings</h3>
+<p>To configure the connection:
+<ul>
+<li>Open the JMRI "Preferences" under the "Edit" menu
+<li>On the Connections tab, select "Protrak" as the System Manufacturer
+<li>Select "Grapevine (ProTrak) Layout Bus" as the System Connection (the only option)
+<li>Click "Save" &amp; restart
+</ul>
+<p>
+Before you can access a Grapevine Node in JMRI, you have to define it to 
+the program.  You can do this either from the 
+<a href="../../../package/apps/TabbedPreferences.shtml">Preferences window</a>
+(under Edit in the main menu)
+or using the 
+<a href="../../../package/jmri/jmrix/grapevine/nodeconfig/NodeConfigFrame.shtml">Configure Nodes</a>
+tool in the <strong>Grapevine</strong> menu.
+
+<p>Grapevine Systems Names start with a system letter of "G".
+After that, there's a 
+<a href="../../doc/Technical/Names.shtml#type">type letter</a>,
+then a node number and a pin number.<br>
 Naming and input/output connectors are described on a 
 <a href="Names.shtml">separate page</a>.
 
-<H2>Tools</h2>
+<a name="tools"></a><h2>JMRI Grapevine Tools</h2>
+<p>The <strong>Grapevine</strong> menu gives access to:
+<ul>
+<li>The
+<a href="../../../package/jmri/jmrix/grapevine/nodetable/NodeTableFrame.shtml">Node Table</a> tool to check whether your Grapevine is working and configure the connected Nodes.
+<li>The 
+<a href="../../../package/jmri/jmrix/grapevine/nodeconfig/NodeConfigFrame.shtml">Configure Nodes</a> tool.
+</ul>
 
-You can check whether your Grapevine is working and configure
-the connected nodes using the
-<a href="../../../package/jmri/jmrix/grapevine/nodetable/NodeTableFrame.shtml">Node Table</a> tool.
-It also lets you change the number of a node.
-
-<H2>Limitations</h2>
-
-<UL>
-<LI>Fast clocks not yet supported. If you have one and want to test
-it with JMRI, let us know.
-</UL>
-
-<h2>More Information</h2>
-
-More information on the Grapevine hardware can be found on the
-<a href="http://www.protrak.cc">ProTrak web site</a>.
+<a name="documentation"></a><h2>Documentation</h2>
+<h3>Third Party info</h3>
+<ul>
+<li>More information on the Grapevine hardware can be found on the
+<a href="http://www.protrak.cc">ProTrak web site</a>, including the
+<li><a href="http://protrak.cc/wpt/support/the-manual/">Protrak Manual</a>
+</ul>
 
 <!--#include virtual="/Footer" -->
+ </div><!-- closes #mainContent-->
+</div> <!-- closes #mBody-->
 </body>
 </html>

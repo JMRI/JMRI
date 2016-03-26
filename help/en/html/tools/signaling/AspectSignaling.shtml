@@ -2,7 +2,6 @@
 <html lang="en">
 <head>
 <!-- Copyright Bob Jacobsen 2008 -->
-<!-- $Id$ -->
 <title>JMRI: Aspect Signaling</title>
 <meta name="Author" content="Bob Jacobsen, Egbert Broerse">
 <meta name="Date.Modified" content="20151002"/>
@@ -53,7 +52,7 @@ can operate all its Heads, as required to do full prototypical signaling based o
    <img src="../../../package/jmri/jmrit/beantable/SignalMasts.png" 
         width="338" height="86" align="right"></a>
 Signal Masts are configured through the
-<a href="../../../package/jmri/jmrit/beantable/SignalMastTable.shtml">Signal Masts Table</a>. You add new ones with the "Add..."  button
+<a href="../../../package/jmri/jmrit/beantable/SignalMastTable.shtml">Signal Mast Table</a>. You add new ones with the "Add..."  button
 below the table, which takes you to the <a href="../../../package/jmri/jmrit/beantable/SignalMastAddEdit.shtml">"Add Signal Mast" window</a>.
 There you specify what kind of signaling system is to be used (see <a href="#systems">the list below</a>),
 the specific signal type eg. "double searchlight" or "double head dwarf" and which Signal Heads this Mast is going to drive.
@@ -70,7 +69,7 @@ The Signal Mast Logic will use the states of Blocks, Turnouts, Sensors and adjac
 		<br/>
 If the layout has been drawn up using the Layout Editor and Signal Masts have been placed on the panel using the various tools, then it is possible for all the Signal Mast Logic to be dynamically built, with little user intervention. For panels created with Control Panel Editor some of this information has to be entered manually.</li>
 	</ul>
-	<p><b><a href="SignalHeads.shtml">Signal Head</a></b> objects in JMRI are not aware of their position on a mast and the Signaling System they are part of, so as individual objects they can't show Signal Aspects. Individually they can only be set to specific <a href="index.shtml#appearance">Appearances</a> (colors), either from the Signal Heads Table or via <a href="#logix">Logix</a>.</p>
+	<p><b><a href="SignalHeads.shtml">Signal Head</a></b> objects in JMRI are not aware of their position on a mast and the Signaling System they are part of, so as individual objects they can't show Signal Aspects. Individually they can only be set to specific <a href="index.shtml#appearance">Appearances</a> (colors), either from the Signal Head Table or via <a href="#logix">Logix</a>.</p>
 
 	<h3>How does it work?</h3>
 <p>In short, a set of files for the selected Signaling System contains the basic code to determine which combinations are available in the Signal Mast Logic tool.</br>

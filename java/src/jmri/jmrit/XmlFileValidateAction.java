@@ -8,6 +8,7 @@ import java.io.FileInputStream;
 import java.io.InputStream;
 import java.io.StringReader;
 import java.io.StringWriter;
+import java.util.ResourceBundle;
 import javax.swing.AbstractAction;
 import javax.swing.JFileChooser;
 import javax.swing.JOptionPane;
@@ -39,10 +40,15 @@ public class XmlFileValidateAction extends AbstractAction {
         _who = who;
     }
 
+    public XmlFileValidateAction() {
+        super(ResourceBundle.getBundle("apps.ActionListBundle").getString("jmri.jmrit.XmlFileValidateAction"));
+    }
+
     JFileChooser fci;
 
     JPanel _who;
 
+    @Override
     public void actionPerformed(ActionEvent e) {
         if (fci == null) {
             fci = jmri.jmrit.XmlFile.userFileChooser("XML files", "xml");
@@ -140,5 +146,5 @@ public class XmlFileValidateAction extends AbstractAction {
     }
 
     // initialize logging
-    static Logger log = LoggerFactory.getLogger(XmlFileValidateAction.class.getName());
+    private final static Logger log = LoggerFactory.getLogger(XmlFileValidateAction.class.getName());
 }

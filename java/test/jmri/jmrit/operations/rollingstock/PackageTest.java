@@ -1,4 +1,3 @@
-// PackageTest.java
 package jmri.jmrit.operations.rollingstock;
 
 import junit.framework.Test;
@@ -9,7 +8,6 @@ import junit.framework.TestSuite;
  * Tests for the jmrit.operations.rollingstock package
  *
  * @author	Bob Coleman
- * @version $Revision$
  */
 public class PackageTest extends TestCase {
 
@@ -20,7 +18,7 @@ public class PackageTest extends TestCase {
 
     // Main entry point
     static public void main(String[] args) {
-        String[] testCaseName = {PackageTest.class.getName()};
+        String[] testCaseName = {"-noloading", PackageTest.class.getName()};
         junit.swingui.TestRunner.main(testCaseName);
     }
 

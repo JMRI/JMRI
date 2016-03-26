@@ -61,6 +61,9 @@ public class TrackDestinationEditFrame extends OperationsFrame implements java.b
     JRadioButton destinationsAll = new JRadioButton(Bundle.getMessage("AcceptAll"));
     JRadioButton destinationsInclude = new JRadioButton(Bundle.getMessage("AcceptOnly"));
     JRadioButton destinationsExclude = new JRadioButton(Bundle.getMessage("Exclude"));
+    
+    // checkboxes
+    JCheckBox onlyCarsWithFD = new JCheckBox(Bundle.getMessage("OnlyCarsWithFD"));
 
     // labels
     JLabel trackName = new JLabel();
@@ -115,8 +118,14 @@ public class TrackDestinationEditFrame extends OperationsFrame implements java.b
         pRadioButtons.add(destinationsExclude);
 
         p3.add(pRadioButtons);
+        
+        // row 4 only for interchange / classification tracks
+        JPanel pFD = new JPanel();
+        pFD.setBorder(BorderFactory.createTitledBorder(Bundle.getMessage("Options")));
+        pFD.add(onlyCarsWithFD);
+        pFD.setMaximumSize(new Dimension(2000, 200));
 
-        // row 4
+        // row 5
         panelDestinations.setLayout(new GridBagLayout());
         paneDestinations.setBorder(BorderFactory.createTitledBorder(Bundle.getMessage("Destinations")));
 
@@ -137,6 +146,7 @@ public class TrackDestinationEditFrame extends OperationsFrame implements java.b
 
         getContentPane().add(p1);
         getContentPane().add(pane3);
+        getContentPane().add(pFD);
         getContentPane().add(paneDestinations);
         getContentPane().add(panelButtons);
 
@@ -152,6 +162,8 @@ public class TrackDestinationEditFrame extends OperationsFrame implements java.b
         if (_track != null) {
             _track.addPropertyChangeListener(this);
             trackName.setText(_track.getName());
+            onlyCarsWithFD.setSelected(_track.isOnlyCarsWithFinalDestinationEnabled());
+            pFD.setVisible(_track.getTrackType().equals(Track.INTERCHANGE));
             enableButtons(true);
         } else {
             enableButtons(false);
@@ -176,6 +188,7 @@ public class TrackDestinationEditFrame extends OperationsFrame implements java.b
         }
         if (ae.getSource() == saveTrackButton) {
             log.debug("track save button activated");
+            _track.setOnlyCarsWithFinalDestinationEnabled(onlyCarsWithFD.isSelected());
             OperationsXml.save();
             if (Setup.isCloseWindowOnSaveEnabled()) {
                 dispose();
@@ -478,7 +491,7 @@ public class TrackDestinationEditFrame extends OperationsFrame implements java.b
     }
 
     public void propertyChange(java.beans.PropertyChangeEvent e) {
-        if (Control.showProperty) {
+        if (Control.SHOW_PROPERTY) {
             log.debug("Property change: ({}) old: ({}) new: ({})", e.getPropertyName(), e.getOldValue(), e
                     .getNewValue());
         }
@@ -487,5 +500,5 @@ public class TrackDestinationEditFrame extends OperationsFrame implements java.b
         }
     }
 
-    static Logger log = LoggerFactory.getLogger(TrackDestinationEditFrame.class.getName());
+    private final static Logger log = LoggerFactory.getLogger(TrackDestinationEditFrame.class.getName());
 }

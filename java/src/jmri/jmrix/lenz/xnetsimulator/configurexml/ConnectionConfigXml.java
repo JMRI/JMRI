@@ -1,13 +1,10 @@
 package jmri.jmrix.lenz.xnetsimulator.configurexml;
 
-import jmri.InstanceManager;
 import jmri.jmrix.SerialPortAdapter;
 import jmri.jmrix.configurexml.AbstractConnectionConfigXml;
 import jmri.jmrix.lenz.xnetsimulator.ConnectionConfig;
 import jmri.jmrix.lenz.xnetsimulator.XNetSimulatorAdapter;
 import org.jdom2.Element;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 
 /**
  * Handle XML persistance of layout connections by persistening the
@@ -49,24 +46,19 @@ public class ConnectionConfigXml extends AbstractConnectionConfigXml {
         return e;
     }
 
-    /**
-     * Update static data from XML file
-     *
-     * @param e Top level Element to unpack.
-     * @return true if successful
-     */
-    public boolean load(Element e) {
+    @Override
+    public boolean load(Element shared, Element perNode) {
         boolean result = true;
         // start the "connection"
         getInstance();
 
-        loadCommon(e, adapter);
+        loadCommon(shared, perNode, adapter);
 
         // register, so can be picked up next time
         register();
 
         if (adapter.getDisabled()) {
-            unpackElement(e);
+            unpackElement(shared, perNode);
             return result;
         }
 
@@ -75,6 +67,7 @@ public class ConnectionConfigXml extends AbstractConnectionConfigXml {
         return result;
     }
 
+    @Override
     protected void getInstance() {
         if (adapter == null) {
             adapter = new XNetSimulatorAdapter();
@@ -85,11 +78,9 @@ public class ConnectionConfigXml extends AbstractConnectionConfigXml {
         adapter = ((ConnectionConfig) object).getAdapter();
     }
 
+    @Override
     protected void register() {
-        InstanceManager.configureManagerInstance().registerPref(new ConnectionConfig(adapter));
+        this.register(new ConnectionConfig(adapter));
     }
-
-    // initialize logging
-    static Logger log = LoggerFactory.getLogger(ConnectionConfigXml.class.getName());
 
 }

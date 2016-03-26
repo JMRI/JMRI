@@ -1,4 +1,3 @@
-// ArithmeticQualifierTest.java
 package jmri.jmrit.symbolicprog;
 
 import java.util.HashMap;
@@ -8,13 +7,10 @@ import junit.framework.Assert;
 import junit.framework.Test;
 import junit.framework.TestCase;
 import junit.framework.TestSuite;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 
 /**
  *
  * @author	Bob Jacobsen, Copyright 2014
- * @version $Revision$
  */
 public class ArithmeticQualifierTest extends TestCase {
 
@@ -146,8 +142,6 @@ public class ArithmeticQualifierTest extends TestCase {
         TestSuite suite = new TestSuite(ArithmeticQualifierTest.class);
         return suite;
     }
-
-    static Logger log = LoggerFactory.getLogger(ArithmeticQualifierTest.class.getName());
 
     // The minimal setup for log4J
     protected void setUp() {

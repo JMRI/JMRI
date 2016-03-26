@@ -1,4 +1,3 @@
-// NamedBeanHandleTest.java
 package jmri.util;
 
 import jmri.Turnout;
@@ -7,8 +6,6 @@ import junit.framework.Assert;
 import junit.framework.Test;
 import junit.framework.TestCase;
 import junit.framework.TestSuite;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 
 /**
  * Tests for the jmri.util.NamedBeanUtil class.
@@ -24,10 +21,6 @@ public class NamedBeanHandleTest extends TestCase {
 
     public void testHoldsTurnout() {
         Turnout t = new AbstractTurnout("name") {
-            /**
-             *
-             */
-            private static final long serialVersionUID = -449495740652645244L;
 
             protected void forwardCommandChangeToLayout(int s) {
             }
@@ -47,7 +40,7 @@ public class NamedBeanHandleTest extends TestCase {
 
     // Main entry point
     static public void main(String[] args) {
-        String[] testCaseName = {NamedBeanHandleTest.class.getName()};
+        String[] testCaseName = {"-noloading", NamedBeanHandleTest.class.getName()};
         junit.swingui.TestRunner.main(testCaseName);
     }
 
@@ -56,7 +49,5 @@ public class NamedBeanHandleTest extends TestCase {
         TestSuite suite = new TestSuite(NamedBeanHandleTest.class);
         return suite;
     }
-
-    static Logger log = LoggerFactory.getLogger(NamedBeanHandleTest.class.getName());
 
 }

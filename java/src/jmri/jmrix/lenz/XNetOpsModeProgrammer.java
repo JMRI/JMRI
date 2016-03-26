@@ -170,7 +170,7 @@ public class XNetOpsModeProgrammer extends jmri.jmrix.AbstractProgrammer impleme
     }
 
     // initialize logging
-    static Logger log = LoggerFactory.getLogger(XNetOpsModeProgrammer.class.getName());
+    private final static Logger log = LoggerFactory.getLogger(XNetOpsModeProgrammer.class.getName());
 
 }
 

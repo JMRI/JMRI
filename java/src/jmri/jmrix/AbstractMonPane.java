@@ -1,4 +1,3 @@
-//AbstractMonPane.java
 package jmri.jmrix;
 
 import java.awt.Dimension;
@@ -36,14 +35,8 @@ import org.slf4j.LoggerFactory;
  * Abstract base class for JPanels displaying communications monitor information
  *
  * @author	Bob Jacobsen Copyright (C) 2001, 2003, 2010
- * @version	$Revision$
  */
 public abstract class AbstractMonPane extends JmriPanel {
-
-    /**
-     *
-     */
-    private static final long serialVersionUID = 7081617855075498357L;
 
     // template functions to fill in
     @Override
@@ -93,16 +86,11 @@ public abstract class AbstractMonPane extends JmriPanel {
     String filterFieldCheck = this.getClass().getName() + ".FilterField"; // NOI18N
     jmri.UserPreferencesManager p;
 
-    // for locking
-    AbstractMonPane self;
-
     // to find and remember the log file
     final javax.swing.JFileChooser logFileChooser = new JFileChooser(FileUtil.getUserFilesPath());
 
-    @SuppressWarnings("LeakingThisInConstructor") // NOI18N
     public AbstractMonPane() {
         super();
-        self = this;
     }
 
     /**
@@ -212,17 +200,22 @@ public abstract class AbstractMonPane extends JmriPanel {
         }
         //automatically uppercase input in filterField, and only accept spaces and valid hex characters
         ((AbstractDocument) filterField.getDocument()).setDocumentFilter(new DocumentFilter() {
+            final static String pattern = "[0-9a-fA-F ]*+"; // typing inserts individual characters
             public void insertString(DocumentFilter.FilterBypass fb, int offset, String text,
-                    AttributeSet attr) throws BadLocationException {
-                if (text.matches("[[0-9a-fA-F]{0,7}| ]")) { // NOI18N
-                    fb.insertString(offset, text.toUpperCase(), attr);
+                    AttributeSet attrs) throws BadLocationException {
+                if (text.matches(pattern)) { // NOI18N
+                    fb.insertString(offset, text.toUpperCase(), attrs);
+                } else {
+                    fb.insertString(offset, "", attrs);
                 }
             }
 
             public void replace(DocumentFilter.FilterBypass fb, int offset, int length, String text,
                     AttributeSet attrs) throws BadLocationException {
-                if (text.matches("[[0-9a-fA-F]{0,7}| ]")) { // NOI18N
+                if (text.matches(pattern)) { // NOI18N
                     fb.replace(offset, length, text.toUpperCase(), attrs);
+                } else {
+                    fb.replace(offset, length, "", attrs);
                 }
             }
         });
@@ -251,6 +244,29 @@ public abstract class AbstractMonPane extends JmriPanel {
         if (p!=null) alwaysOnTopCheckBox.setSelected(p.getSimplePreferenceState(alwaysOnTopCheck));
         if (getTopLevelAncestor() != null) {
             ((jmri.util.JmriJFrame) getTopLevelAncestor()).setAlwaysOnTop(alwaysOnTopCheckBox.isSelected());
+        } else {
+            // this pane isn't yet part of a frame,
+            // which can be normal, but 
+            if (alwaysOnTopCheckBox.isSelected()) {
+                // in this case we want to access the enclosing frame to setAlwaysOnTop.  So defer for a bit....
+                log.debug("Cannot set Always On Top from preferences due to no Top Level Ancestor");
+                timerCount = 0;
+                timer = new javax.swing.Timer(20, (java.awt.event.ActionEvent evt)->{
+                    if (getTopLevelAncestor() != null && timerCount> 3) {
+                        timer.stop();
+                        ((jmri.util.JmriJFrame) getTopLevelAncestor()).setAlwaysOnTop(alwaysOnTopCheckBox.isSelected());
+                        log.debug("set Always On Top");
+                    } else {
+                        log.debug("Have to repeat attempt to set Always on Top");
+                        timerCount++;
+                        if (timerCount > 50) {
+                            log.debug("Set Always on Top failed");
+                            timer.stop();
+                        }
+                    }      
+                });
+                timer.start();
+            }
         }
 
         autoScrollCheckBox.setText(Bundle.getMessage("ButtonAutoScroll")); // NOI18N
@@ -354,6 +370,8 @@ public abstract class AbstractMonPane extends JmriPanel {
 
     }
 
+    private int timerCount = 0;
+    private javax.swing.Timer timer;
     /**
      * Sets the display window to fixed width font, so that e.g. columns line up
      */
@@ -400,7 +418,7 @@ public abstract class AbstractMonPane extends JmriPanel {
 
         // display parsed data
         sb.append(line);
-        synchronized (self) {
+        synchronized (this) {
             linesBuffer.append(sb.toString());
         }
 
@@ -431,25 +449,16 @@ public abstract class AbstractMonPane extends JmriPanel {
         if (freezeButton.isSelected()) {
             return;
         }
-        //note: raw is now formatted like "Tx - BB 01 00 45", so extract the correct bytes from it (BB) for comparison
-        //don't bother to check filter if no raw value passed
-        if (raw != null && raw.length() >= 7) {
-            // if first bytes are in the skip list,  exit without adding to the Swing thread
-            String[] filters = filterField.getText().toUpperCase().split(" ");
-            String checkRaw = raw.substring(5, 7);
-
-            for (String s : filters) {
-                if (s.equals(checkRaw)) {
-                    linesBuffer.setLength(0);
-                    return;
-                }
-            }
+        
+        // if this message is filtered out, end
+        if (isFiltered(raw)) {
+            return;
         }
-
+        
         Runnable r = new Runnable() {
             @Override
             public void run() {
-                synchronized (self) {
+                synchronized (AbstractMonPane.this) {
                     monTextPane.append(linesBuffer.toString());
                     int LineCount = monTextPane.getLineCount();
                     if (LineCount > MAX_LINES) {
@@ -467,6 +476,39 @@ public abstract class AbstractMonPane extends JmriPanel {
         javax.swing.SwingUtilities.invokeLater(r);
     }
 
+    /**
+     * Default filtering implementation, more of an example
+     * than anything else, not clear it really works
+     * for any system.  Override this in system-specific subclasses to do something 
+     * useful.
+     */
+    protected boolean isFiltered(String raw) {
+        String checkRaw = getOpCodeForFilter(raw);
+        //don't bother to check filter if no raw value passed
+        if (raw != null) {
+            // if first bytes are in the skip list,  exit without adding to the Swing thread
+            String[] filters = filterField.getText().toUpperCase().split(" ");
+
+            for (String s : filters) {
+                if (s.equals(checkRaw)) {
+                    linesBuffer.setLength(0);
+                    return true;
+                }
+            }
+        }
+        return false;
+    }
+    
+    /** 
+     * Get hex opcode for filtering
+     */
+    protected String getOpCodeForFilter(String raw) {
+        //note: Generic raw is formatted like "Tx - BB 01 00 45", so extract the correct bytes from it (BB) for comparison
+        if (raw != null && raw.length() >= 7) {
+            return raw.substring(5, 7);
+        } else return null;
+    }
+    
     String newline = System.getProperty("line.separator"); // NOI18N
 
     public synchronized void clearButtonActionPerformed(java.awt.event.ActionEvent e) {
@@ -524,6 +566,14 @@ public abstract class AbstractMonPane extends JmriPanel {
         return monTextPane.getText();
     }
 
+    public synchronized String getFilterText() {
+        return filterField.getText();
+    }
+
+    public synchronized void setFilterText(String text) {
+        filterField.setText(text);
+    }
+
     /**
      * Method to position caret at end of JTextArea ta when scroll true.
      *
@@ -549,7 +599,7 @@ public abstract class AbstractMonPane extends JmriPanel {
     // to get a time string
     DateFormat df = new SimpleDateFormat("HH:mm:ss.SSS");
 
-    StringBuffer linesBuffer = new StringBuffer();
+    protected StringBuffer linesBuffer = new StringBuffer();
     static private int MAX_LINES = 500;
 
     private static final Logger log = LoggerFactory.getLogger(AbstractMonFrame.class.getName());

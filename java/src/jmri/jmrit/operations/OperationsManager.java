@@ -12,7 +12,7 @@ import jmri.jmrit.operations.routes.RouteManager;
 import jmri.jmrit.operations.setup.AutoBackup;
 import jmri.jmrit.operations.setup.Setup;
 import jmri.jmrit.operations.trains.TrainManager;
-import jmri.jmrit.operations.trains.TrainScheduleManager;
+import jmri.jmrit.operations.trains.timetable.TrainScheduleManager;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -24,7 +24,7 @@ import org.slf4j.LoggerFactory;
 public final class OperationsManager {
 
     private ShutDownTask shutDownTask = null;
-    protected final String operationsFolderName;
+    private final String operationsFolderName;
 
     static private OperationsManager instance = null;
     static private final Logger log = LoggerFactory.getLogger(OperationsManager.class);
@@ -62,7 +62,7 @@ public final class OperationsManager {
      *
      * @return The OperationsManager default instance.
      */
-    public static OperationsManager getInstance() {
+    public synchronized static OperationsManager getInstance() {
         if (instance == null) {
             instance = new OperationsManager();
         }

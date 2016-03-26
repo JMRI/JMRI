@@ -200,7 +200,7 @@ public class SpecificDriverAdapter extends SerialPortController implements jmri.
     /**
      * Get an array of valid baud rates.
      */
-    @edu.umd.cs.findbugs.annotations.SuppressWarnings(value = "EI_EXPOSE_REP")
+    @edu.umd.cs.findbugs.annotations.SuppressFBWarnings(value = "EI_EXPOSE_REP")
     public String[] validBaudRates() {
         return validSpeeds;
     }
@@ -256,6 +256,6 @@ public class SpecificDriverAdapter extends SerialPortController implements jmri.
     protected int[] validSpeedValues = new int[]{4800};
     protected String selectedSpeed = validSpeeds[0];
 
-    static Logger log = LoggerFactory.getLogger(SpecificDriverAdapter.class.getName());
+    private final static Logger log = LoggerFactory.getLogger(SpecificDriverAdapter.class.getName());
 
 }

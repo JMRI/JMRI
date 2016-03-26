@@ -1,8 +1,6 @@
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
 <html lang="en">
 <head>
-<!-- Copyright Bob Jacobsen 2008 -->
-<!-- $Id$ -->
 <title>JMRI: Scripting FAQ</title>
 
 <!-- Style -->
@@ -21,9 +19,9 @@
 <div id="mainContent">
 
       <!-- Page Body -->
-        <H1>
+        <h1>
 		JMRI: Scripting FAQ
-        </H1>
+        </h1>
 
 		<p class=subtitle>
 		    Frequently asked questions about scripting JMRI
@@ -191,10 +189,10 @@
             to go somewhere)
             <P>
             Some examples use the 
-            <A HREF="http://jmri.sourceforge.net/JavaDoc/doc/jmri/jmrit/automat/AbstractAutomaton.html">AbstractAutomaton</a>
+            <A HREF="http://jmri.org/JavaDoc/doc/jmri/jmrit/automat/AbstractAutomaton.html">AbstractAutomaton</a>
             class as a base, while
             others use the 
-            <A HREF="http://jmri.sourceforge.net/JavaDoc/doc/jmri/jmrit/automat/Siglet.html">Siglet</a>
+            <A HREF="http://jmri.org/JavaDoc/doc/jmri/jmrit/automat/Siglet.html">Siglet</a>
             class. This is because those are intended for two different 
             purposes.
             <P>
@@ -237,7 +235,7 @@
             <P>
             For more info on the routines that AbstractAutomaton provides
             to help you, see the 
-            <A HREF="http://jmri.sourceforge.net/JavaDoc/doc/jmri/jmrit/automat/AbstractAutomaton.html#method_summary">JavaDocs</a>
+            <A HREF="http://jmri.org/JavaDoc/doc/jmri/jmrit/automat/AbstractAutomaton.html#method_summary">JavaDocs</a>
             for the class. (Scroll down to the section called "Method Summary")
             </div>
 
@@ -297,7 +295,7 @@ JMRI provides a routine to convert "portable" names to names your
 computer will recognize:
 
 <div class="para"><code>
-<pre>fullname = decodeJmriFilename("preference:filename.xml")</pre>
+<pre>fullname = FileUtil.getExternalFilename("preference:filename.xml")</pre>
 </code></div>
 
 The "<code>preference:</code>" means to look for that file starting in the preferences
@@ -316,10 +314,10 @@ default scripts directory (which you can set in preferences), use the slightly
 more complex form:
 
 <div class="para">
-<pre>execfile(decodeJmriFilename("scripts:filename.py"))</pre>
+<pre>execfile(FileUtil.getExternalFilename("scripts:filename.py"))</pre>
 </div>
 
-The call to decodeJmriFilename(..) translates the string using JMRI's standard
+The call to FileUtil.getExternalFilename(..) translates the string using JMRI's standard
 prefixes. The "scripts:" tells JMRI to search in the default scripts directory.
 You can also use other prefixes, see the 
 <a href="http://jmri.org/JavaDoc/doc/jmri/util/FileUtil.html#getExternalFilename(java.lang.String)">documentation</a>.
@@ -327,7 +325,7 @@ You can also use other prefixes, see the
 <h2>Can I communicate between scripts?</h2>
 
 <div class="para">
-All scripts share a single address space, which means that a variable like "x"
+All scripts run in the same default namespace, which means that a variable like "x"
 refers to the same location in all scripts. This allows you to define a
 procedure, for example, in one script, and use it elsewhere. For example, if a
 "definitions.py" file contained: 
@@ -341,7 +339,7 @@ x = 0
 y = 0
 z = 0</pre>
 Once that file has been executed, any later script can invoke the
-<code>printStatus()</code> routine whenever needed. </div>
+<code>printStatus()</code> routine in the global namespace whenever needed.</div>
 
 <div class="para">
 You can also share variables, which allows two routines to share information.
@@ -351,11 +349,26 @@ different routines are using a variable of the same name, without realizing
 that they are sharing data with each other. Putting your code into "classes" is
 a way to avoid that. </div>
 
-<h2>Can a script wait for more than one thing to change?</h2>
+<p>
+    Note that scripts imported into another script using <code>import</code>
+    statements are not in the same namespace as other scripts and do not share
+    variables or routines. To share variables from the default namespace with an
+    imported script, you need to explicitly add the shared variable:
+</p>
+<pre>
+import myImport
+myImport.x = x # make x available to myImport
+</pre>
+
+<h2><a id="several" name="several"></a>Can a script wait for more than one thing to change?</h2>
 
 <div class="para">
-If your script is based on a Siglet or AbstractAutomaton class (e.g. if you're
-writing a "handle" routine", there's a general "waitChange" routine which waits
+If your script is based on a Siglet or 
+<a href="http://jmri.org/JavaDoc/doc/jmri/jmrit/automat/AbstractAutomaton.html">AbstractAutomaton</a>
+class (e.g. if you're
+writing a "handle" routine"), there's a general
+"<a href="http://jmri.org/JavaDoc/doc/jmri/jmrit/automat/AbstractAutomaton.html#waitChange-jmri.NamedBean:A-">waitChange</a>"
+routine which waits
 for any of several sensors to change before returning to you. Note that more
 than one may change at the same time, so you can't assume that just one has a
 different value! And you'll then have to check whether they've become some
@@ -371,8 +384,14 @@ You can then check for various combinations like:
         print "Would you believe a really fast bird?"
    else
         print "Nothing to see here, move along..."</pre>
-(I haven't actually typed these into a script &amp; run it, so there might be
-typos, sorry) </div>
+You can also wait for any changes in objects of multiple types:
+<pre>    self.waitChange([self.sensorA, self.turnoutB, self.signalC])</pre>
+Finally, you can specify the maximum time to wait before continuing
+even though nothing has changed:
+<pre>    self.waitChange([self.sensorA, self.sensorB, self.sensorC], 5000)</pre>
+will wait a maximum of 5000 milliseconds, e.g. 5 seconds. If nothing has 
+changed, the script will continue anyway.
+</div>
 
 <h2>Can a script listen to more than one Turnout?</h2>
 
@@ -483,5 +502,7 @@ python.startup =
 </pre></code>
 
 <!--#include virtual="/Footer" -->
+    </div><!-- closes #mainContent-->
+  </div> <!-- closes #mBody-->
 </body>
 </html>

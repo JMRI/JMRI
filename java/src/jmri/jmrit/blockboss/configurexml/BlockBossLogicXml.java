@@ -131,20 +131,15 @@ public class BlockBossLogicXml extends jmri.configurexml.AbstractXmlAdapter {
         return e;
     }
 
-    /**
-     * Update static data from XML file
-     *
-     * @param element Top level blocks Element to unpack.
-     * @return true if successful
-     */
-    public boolean load(Element element) {
+    @Override
+    public boolean load(Element shared, Element perNode) {
         boolean result = true;
-        List<Element> l = element.getChildren("signalelement");
+        List<Element> l = shared.getChildren("signalelement");
 
         // try old format if there are no new entries
         // this is for backward compatibility only
         if (l.size() == 0) {
-            l = element.getChildren("block");
+            l = shared.getChildren("block");
         }
 
         // process each item
@@ -374,6 +369,6 @@ public class BlockBossLogicXml extends jmri.configurexml.AbstractXmlAdapter {
         return jmri.Manager.BLOCKBOSS;
     }
 
-    static Logger log = LoggerFactory.getLogger(BlockBossLogicXml.class.getName());
+    private final static Logger log = LoggerFactory.getLogger(BlockBossLogicXml.class.getName());
 
 }

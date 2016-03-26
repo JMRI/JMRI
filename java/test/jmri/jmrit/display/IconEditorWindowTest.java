@@ -1,4 +1,3 @@
-// IconEditorWindowTest.java
 package jmri.jmrit.display;
 
 import java.util.List;
@@ -26,7 +25,6 @@ import junit.framework.TestSuite;
  * Swing jfcUnit tests for the SensorIcon
  *
  * @author	Bob Jacobsen Copyright 2009, 2010
- * @version $Revision$
  */
 public class IconEditorWindowTest extends jmri.util.SwingTestCase {
 
@@ -385,7 +383,7 @@ public class IconEditorWindowTest extends jmri.util.SwingTestCase {
 
     // Main entry point
     static public void main(String[] args) {
-        String[] testCaseName = {IconEditorWindowTest.class.getName()};
+        String[] testCaseName = {"-noloading", IconEditorWindowTest.class.getName()};
         junit.swingui.TestRunner.main(testCaseName);
     }
 

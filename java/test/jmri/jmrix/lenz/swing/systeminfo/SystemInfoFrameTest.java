@@ -4,8 +4,6 @@ import junit.framework.Assert;
 import junit.framework.Test;
 import junit.framework.TestCase;
 import junit.framework.TestSuite;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 
 /**
  * SystemInfoFrameTest.java
@@ -14,7 +12,6 @@ import org.slf4j.LoggerFactory;
  * class
  *
  * @author	Paul Bender
- * @version $Revision$
  */
 public class SystemInfoFrameTest extends TestCase {
 
@@ -51,7 +48,5 @@ public class SystemInfoFrameTest extends TestCase {
     protected void tearDown() {
         apps.tests.Log4JFixture.tearDown();
     }
-
-    static Logger log = LoggerFactory.getLogger(SystemInfoFrameTest.class.getName());
 
 }

@@ -1,9 +1,7 @@
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
 <html lang="en">
 <head>
-<!-- Copyright ($Author$) 2009 -->
-<!-- $Id$ -->
-<TITLE>DecoderPro&reg; Tool Menu</TITLE>
+<title>DecoderPro&reg; Tool Menu</title>
 
 <!-- Style -->
 <meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
@@ -21,9 +19,9 @@
 <div id="mainContent">
 
 <h1>Tool Menu</h1>
-<h1>Light Control</h1>
+<h2>Light Control</h2>
 
-<div align=right>
+<div align="right">
 <p><a href="Main_Tool.shtml#Light">Back </a></p>
 <p><a href="index.shtml#Main">Back to Index</a></p>
 </div>
@@ -54,13 +52,15 @@
   <strong>Transitional:</strong> Changes the intensity will use the transition time to step between current and target intensity.</p>
 <p><strong>On </strong>button turns on the light.</p>
 <p><strong>Off</strong> button turns off the light.</p>
-<hr>
 
-<div align=right>
+<hr>
+<div align="right">
 <p><a href="Main_Tool.shtml#Light">Back </a></p>
 <p><a href="index.shtml#Main">Back to Index</a></p>
 </div>
 
 <!--#include virtual="/Footer" -->
+  </div><!-- closes #mainContent-->
+ </div> <!-- closes #mBody-->
 </body>
 </html>

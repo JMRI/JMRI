@@ -27,12 +27,12 @@ public class LnReporterManagerXml extends jmri.managers.configurexml.AbstractRep
         log.error("Invalid method called");
     }
 
-    public boolean load(Element reporters) {
-
+    @Override
+    public boolean load(Element shared, Element perNode) {
         // load individual Reporters
-        return loadReporters(reporters);
+        return loadReporters(shared);
     }
 
-    static Logger log = LoggerFactory.getLogger(LnReporterManagerXml.class.getName());
+    private final static Logger log = LoggerFactory.getLogger(LnReporterManagerXml.class.getName());
 
 }

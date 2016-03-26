@@ -35,7 +35,7 @@ public class SerialAdapter extends jmri.jmrix.AbstractSerialPortController imple
         super(new RpsSystemConnectionMemo());
         option1Name = "Protocol";
         options.put(option1Name, new Option("Protocol", validOptions1));
-        this.manufacturerName = jmri.jmrix.DCCManufacturerList.NAC;
+        this.manufacturerName = jmri.jmrix.rps.RpsConnectionTypeList.NAC;
     }
 
     transient SerialPort activeSerialPort = null;
@@ -184,7 +184,7 @@ public class SerialAdapter extends jmri.jmrix.AbstractSerialPortController imple
     /**
      * Get an array of valid baud rates.
      */
-    @edu.umd.cs.findbugs.annotations.SuppressWarnings(value = "EI_EXPOSE_REP") // OK to expose array instead of copy until Java 1.6
+    @edu.umd.cs.findbugs.annotations.SuppressFBWarnings(value = "EI_EXPOSE_REP") // OK to expose array instead of copy until Java 1.6
     public String[] validBaudRates() {
         return validSpeeds;
     }
@@ -473,6 +473,6 @@ public class SerialAdapter extends jmri.jmrix.AbstractSerialPortController imple
         }
     }
 
-    static Logger log = LoggerFactory.getLogger(SerialAdapter.class.getName());
+    private final static Logger log = LoggerFactory.getLogger(SerialAdapter.class.getName());
 
 }

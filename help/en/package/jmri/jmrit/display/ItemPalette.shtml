@@ -1,29 +1,25 @@
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
-<!-- $Id$ -->
-<HTML LANG="en">
-<HEAD>
-<TITLE>JMRI: Item Palette Help</TITLE>
-<META HTTP-EQUIV="Content-Type" CONTENT="text/html; charset=iso-8859-1">
-<META CONTENT="Pete Cressman" NAME="Author">
-<META NAME="keywords" CONTENT="JMRI help Item Palette">
+<html lang="en">
+<head>
+<title>JMRI: Item Palette Help</title>
+<meta name="author" content="Pete Cressman">
+<meta name="keywords" content="JMRI help Item Palette">
 
 <!-- Style -->
-<META HTTP-EQUIV="Content-Type" CONTENT="text/html; charset=iso-8859-1">
-<LINK REL="stylesheet" TYPE="text/css" HREF="/css/default.css"
-	MEDIA="screen">
-<LINK REL="stylesheet" TYPE="text/css" HREF="/css/print.css"
-	MEDIA="print">
-<LINK REL="icon" HREF="/images/jmri.ico" TYPE="image/png">
-<LINK REL="home" TITLE="Home" HREF="/">
+<meta http-equiv="content-type" content="text/html; charset=iso-8859-1">
+<link rel="stylesheet" type="text/css" href="/css/default.css" media="screen">
+<link rel="stylesheet" type="text/css" href="/css/print.css" media="print">
+<link rel="icon" href="/images/jmri.ico" type="image/png">
+<link rel="home" title="Home" href="/">
 <!-- /Style -->
-</HEAD>
+</head>
 
-<BODY>
+<body>
 <!--#include virtual="/Header" -->
   <div class="nomenu" id="mBody">
     <div id="mainContent">
 
-<H1>The Item Palette</H1>
+<h1>The Item Palette</h1>
 
 <b>The Item Palette</b> is used to place icons and text onto <b>Control Panel Editor</b>  
 panels.  The palette is a tabbed window with tabs for each item type.  The common method 
@@ -33,7 +29,7 @@ cases where the icon represents a layout device (e.g. a turnout, a sensor, etc.)
 must select a row from a table to associate that particular device with the icon - and then
 drag the icon to the panel.</p>
 
-<H2>Iconic Items</H2>
+<h2>Iconic Items</h2>
 For those items using icons, multiple sets of icons are offered by the Item Palette.
 In each of these cases several different icon sets are provided by default.  Radio buttons
 are used to select an icon set.</p>  For example, under the sensor tab you may have sets of
@@ -42,7 +38,7 @@ inactive - e.g. red-green, yellow-dark, etc.
 <p>
 The <b>Show Icons</b> button displays all the icons in the selected set.
    
-<H3>Editing and Creating New Icon Sets</H3>
+<h3>Editing and Creating New Icon Sets</h3>
 The <b>Edit Icons</b> button opens a dialog
 where the icons may be changed by dragging new icons from the icon catalog.</p>
 <p>
@@ -52,7 +48,7 @@ Replace the red X icons with icons you drag from the catalogs. There is no limit
 on the number of additional icon sets that can be added to an item tab.
 <p>
 The <b>Delete Icon Set</b> button deletes the selected icon set.   
-<p.
+<p>
 When the Item Palette is customized with other icon
 sets, closing the Palette with the close button of in the title bar will open a
 dialog box asking whether you want to save your changes. 
@@ -70,19 +66,19 @@ dialog.  Finally, press the <b>Create Icon Set</b> button and the dialog is clos
 the new icon set added to radio button list.</p>
 
 
-<H3>Table Items</H3>
+<h3>Table Items</h3>
 The items associated with a table have an <b>Add New Table Item</b> button.  This button opens
 a dialog where a new device item can be added to its table.  Tabs with tables require a device
 to be selected (a row in the table) before the an icon can be dragged to a control panel to
 represent it.
    
-<H2>Item Palette Tabs</H2>
+<h2>Item Palette Tabs</h2>
 
 <ul>
         <li> <b>Turnout</b> Both left and right turnout icon sets are contained in this tab.  
                         Select a turnout from the table and an icon set, then drag to the panel.</li>
         <li> <b>Sensor</b> Select a sensor from the table and an icon set, then drag to the panel.</li>
-        <li> <b>SignalHead</b> When a signal head is slected in the table, the [Show Icons] button 
+        <li> <b>SignalHead</b> When a signal head is selected in the table, the [Show Icons] button 
                         will only display the icons for
                         the valid appearances of the signal.  When no row is selected
                         all possible appearance icons are shown.  When adding a new icon set,
@@ -99,7 +95,7 @@ represent it.
         <li> <b>Light</b> Select a light (as a CMRI object) from the table and drag to the panel.</li>
         <li> <b>Multisensor</b> The table displays
                         the Sensor Table and the default icon set has three lever positions.  For the
-                        default case, three rows must be slected from the table to place
+                        default case, three rows must be selected from the table to place
                         the multisensor icon in a panel.  The table selections are labeled "first",
                         "second", etc. and these labels correspond to the labels shown when 
                         the full icon set is displayed.  When editing or creating a Multisensor icon set, 
@@ -123,21 +119,21 @@ represent it.
                         display the text with its attributes in the Preview Panel.</i>  Drag the
                         item in the Preview Panel to the panel.</li>
         <li> <b>RPSReporter</b> Drag the "Drag to Panel" icon to the panel and setup the 
-                        RPSReporter from its popop menu.</li>
+                        RPSReporter from its pop up menu.</li>
         <li> <b>FastClock</b> Drag the clock to the panel.</li>
         <li> <b>Indicator Track</b> Indicator track is intended for use when track circuits are configured with
                         OBlocks.  Most of the items in this tab pertain to their use as presentations
                         of OBlocks and their use with warrants.  However, if OBlocks are not defined,
-                        but occupancy senors are installed on the layout as track circuits, the
+                        but occupancy sensors are installed on the layout as track circuits, the
                         <b>Occupancy Circuit</b> field will accept a sensor name.  When this is the case
                         only the "Occupied" and "Clear" colors can be displayed.</li>
         <li> <b>Indicator Turnout</b> The above comment applies to Indicator Turnouts also.</li>
         <li> <b>Portal</b>Portal icons are used in CircuitBuilder to define Portals and Paths.  They also
-        				will display direction arrows along a rouye when Warrants are allocated.</li>
+        				will display direction arrows along a route when Warrants are allocated.</li>
 </ul>
 
 
-<H2>More About Indicator Track</H2>
+<h2>More About Indicator Track</h2>
 
 Indicator track (i.e. both track segments and turnouts) have colors to display status of the track
 circuit they represent.  When the track circuit is configured by an OBlock, and the Portals and Paths
@@ -164,7 +160,7 @@ Track icon individually is picking the icon that will show the train name marker
 represents is occupied under a warrant. (Frequently, several icons display an OBlock and you only want 
 one of them to show the marker.)</p>
 
-<H3>Indicator Track Tab</H3>
+<h3>Indicator Track Tab</h3>
 
 Enter the name of the track circuit (OBlock) this track icon represents into the <b>Occupancy Circuit</b> 
 field. The <b>Open Detector Picklist</b> button opens a picklist showing the defined OBlock track circuits.
@@ -187,7 +183,7 @@ track circuit to display the train id.</p>
 The <b>Icon Sets</b> radio buttons, the <b>Drag to Panel</b> area the <b>Show Icons</b>, <b>Edit Icons</b>
 <b>New Icon Set</b>, <b>Delete Icon Set</b> buttons function as described before.</p>
 
-<H3>Indicator Turnout Tab</H3>
+<h3>Indicator Turnout Tab</h3>
 
 This tab has the same functions as the Indicator Track tab with the addition of a turnout table.
 A turnout must be selected from the Turnout Table to be able to drag an icon to a control panel.</p>
@@ -208,5 +204,7 @@ button.</p>
 <p>
 
 <!--#include virtual="/Footer" -->
-</BODY>
+   </div><!-- closes #mainContent-->
+  </div> <!-- closes #mBody-->
+ </BODY>
 </HTML>

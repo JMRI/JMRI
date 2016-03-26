@@ -1,7 +1,5 @@
 package jmri.jmrix.srcp;
 
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 import junit.framework.Assert;
 import junit.framework.Test;
 import junit.framework.TestCase;
@@ -13,7 +11,6 @@ import junit.framework.TestSuite;
  * Description:	tests for the jmri.jmrix.srcp.SRCPMessage class
  *
  * @author	Bob Jacobsen
- * @version $Revision$
  */
 public class SRCPMessageTest extends TestCase {
 
@@ -57,5 +54,4 @@ public class SRCPMessageTest extends TestCase {
     protected void tearDown() {
         apps.tests.Log4JFixture.tearDown();
     }
-    static Logger log = LoggerFactory.getLogger(SRCPMessageTest.class.getName());
 }

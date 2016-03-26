@@ -1,4 +1,3 @@
-// NceTurnout.java
 package jmri.jmrix.nce;
 
 import jmri.NmraPacket;
@@ -17,14 +16,9 @@ import org.slf4j.LoggerFactory;
  *
  * @author	Bob Jacobsen Copyright (C) 2001
  * @author Daniel Boudreau (C) 2007
- * @version	$Revision$
  */
 public class NceTurnout extends AbstractTurnout {
 
-    /**
-     *
-     */
-    private static final long serialVersionUID = 9202074475490527883L;
     NceTrafficController tc = null;
     String prefix = "";
 
@@ -261,7 +255,5 @@ public class NceTurnout extends AbstractTurnout {
         }
     }
 
-    static Logger log = LoggerFactory.getLogger(NceTurnout.class.getName());
+    private final static Logger log = LoggerFactory.getLogger(NceTurnout.class.getName());
 }
-
-/* @(#)NceTurnout.java */

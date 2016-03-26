@@ -1,9 +1,8 @@
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
-<!-- UpDated by Herv&#233; Blorec 2013/10/01-->
+<!-- UpDated by Herv&#233; Blorec 2013/10/01 et Egbert Broerse 2015/10/27 -->
 <html lang="fr">
 <head>
 <!-- Copyright Bob Jacobsen 2008 -->
-<!-- $Id$ -->
 <title>JMRI: Simple Signal Logic Example</title>
 
 <!-- Style -->
@@ -23,59 +22,56 @@
 
 
 <!-- Page Body -->
-<H2>
+<h2>
 JMRI: Exemple Logique Simple de Signal 
-</H2>
+</h2>
 
 Cette page donne un exemple d'utilisation de JMRI "Logique Simple du Signal "
 pour les signaux de commande sur un SE8c Digitrax. Ceci fonctionne &#233;galement pour
-d'autres types de signaux, y compris les LEDs connect&#233;es aux d&#233;codeurs stationnaires, syst&#232;mes C/MRI
-, etc
-<P>
+d'autres types de signaux, y compris les LEDs connect&#233;es aux d&#233;codeurs stationnaires, syst&#232;mes C/MRI etc.
+<p>
 La mod&#233;lisation de signalisation ferroviaire sur un mod&#232;le peut &#234;tre fait de diff&#233;rentes fa&#231;ons,
 allant de "feux rouges" pour terminer par l'&#233;mulation d'un prototype de Logique de signalisation particuli&#232;re. Pour plus d'informations sur les diverses possibilit&#233;s,
 S'il vous pla&#238;t voir la
-<A HREF="index.shtml"> page de signalisation JMRI </A>.
-<P>
+<a href="index.shtml"> page de Signalisation JMRI </a>.
 
 <h2> Exemple Pr&#233;d&#233;finis </H2>
 
 Un exemple de configuration pr&#233;d&#233;finie de signalisation est fournie dans les t&#233;l&#233;chargements JMRI; voir la
-<A HREF="http://jmri.sourceforge.net/download"> page de t&#233;l&#233;chargement </a>) pour plus d'informations sur le t&#233;l&#233;chargement.
+<a href="http://jmri.org/download"> page de t&#233;l&#233;chargement </a>) pour plus d'informations sur le t&#233;l&#233;chargement.
 Pour l'utiliser:
-<UL>
-<LI> D&#233;marrez le programme PanelPro, et s&#233;lectionnez Pr&#233;f dans le menu Edition.
+<ul>
+<li> D&#233;marrez le programme PanelPro, et s&#233;lectionnez Pr&#233;f dans le menu Edition.
 Sur le panneau qui s'ouvre, s&#233;lectionnez "Simulateur LocoNet" comme protocole.
 Enregistrer et quitter le programme. Cela vous permettra de reprendre l'exemple (qui
 utilise des adresses LocoNet pour les signaux, aiguillages et des capteurs), m&#234;me lorsque
 votre ordinateur n'est pas connect&#233; &#224; un r&#233;seau .
-<LI> Red&#233;marrez le programme.
-<LI> Du menu "Panneaux", s&#233;lectionnez "Charger" et naviguez jusqu'au
+<li> Red&#233;marrez le programme.
+<li> Du menu "Panneaux", s&#233;lectionnez "Charger" et naviguez jusqu'au
  fichier "SE8cSignalExample.xml" dans le r&#233;pertoire xml/layout directory..
 Notez que vous pouvez avoir &#224; regarder autour de ce dossier, c'est dans le
-m&#234;me endroit que l&#224; o&#249; vous avez install&#233; le programme.
-<LI>
-<IMG SRC="images/StartPanel.png" ALIGN=RIGHT WIDTH="323" HEIGHT="137" HSPACE="0" VSPACE="0" ALT="Demo screen at startup">
+m&#234;me endroit que l&#224; o&#249; vous avez install&#233; le programme.<a href="images/StartPanel.png"><img src="images/StartPanel.png" align="right" width="317" height="173" hspace="0" vspace="2" alt="Demo screen at startup"></a>
+<li>
 Vous devriez maintenant voir un panneau sch&#233;matique simple pour un r&#233;seau compos&#233; d'une boucle
 de voie et une voie d'&#233;vitement.
-<P>
+<p>
 Parce qu'il n'y a pas de connexion &#224; un r&#233;seau r&#233;el, l'&#233;tat des capteurs et des
 aiguillages n'est pas initialement connus. Cet exemple montre que, en affichant les
 capteurs comme  Rouge, et l'aiguillage comme "non connect&#233; de toute fa&#231;on",
 alors la logique du signal n'est pas s&#251;r de savoir si les cantons sont occup&#233;s ni comment sont les aiguillages
 , il montre rouge sur tous les signaux.
-<P>
+<p>
 Vous pouvez cliquer sur les ic&#244;nes pour changer l'occupation et le
 statut de l'aiguillage, ou utiliser un autre outil (par exemple le "tableau aiguillage") pour faire cela.
-<P> Cliquez sur chacun des aiguillages pour les mettre en position direct. Cliquez sur les
+<p> Cliquez sur chacun des aiguillages pour les mettre en position direct. Cliquez sur les
 capteurs pour les r&#233;gler "inoccup&#233;s", ce qui est montr&#233; comme en
 Gris, occup&#233;e est indiqu&#233;e par Jaune)
-<LI>
-<IMG SRC="images/SensorsCleared.png" ALIGN=RIGHT width="320" HEIGHT="128" HSPACE="0" VSPACE="0" ALT="Demo screen in clear state">
+<li>
+<a href="images/SensorsCleared.png"><img src="images/SensorsCleared.png" align="right" width="317" height="173" hspace="0" vspace="2" alt="Demo screen in clear state"></a>
 L'&#233;cran devrait maintenant ressembler &#224; l'image vers la droite.
 Les signaux sur la voie d'&#233;vitement sont rouges, comme les aiguillage sont mis en droit 
 . Tous les signaux sur la ligne principale sont verts.
-<P>
+<p>
 Si vous "survolez" avec le curseur sur un &#233;l&#233;ment, une info-bulle s'affiche avec des informations
 sur l'&#233;l&#233;ment. Par exemple, un  des aiguillage pourrait voir " Aiguillage 1 (LT1)".
 LT1 est le "nom syst&#232;me" pour cet aiguillage. Dans ce cas, il
@@ -83,21 +79,20 @@ signifie "L'aiguillage LocoNet avec l'adresse 1". "L'aiguillage 1" est un "nom u
 qui peut &#234;tre tout ce que vous voulez qu'il soit. Vous pouvez modifier ceux-ci avec le
 " Tableau Aiguillage" dans le menu Outils. Les T&#234;tes de signal et les capteurs
 fonctionnent de mani&#232;re similaire. Il y a plus d'informations &#224; ce sujet sur la
-Page du programme <A HREF="../../doc/Technical/Names.shtml"> sur la d&#233;signation </a>.
+Page du programme <a href="../../doc/Technical/Names.shtml"> sur la D&#233;signation </a>.
 
-<LI>
-<IMG SRC="images/SensorTuroutsSet.png" ALIGN=RIGHT WIDTH="327" HEIGHT="138" HSPACE="0" VSPACE="0" ALT="Demo screen with two trains">
+<li>
 Vous pouvez maintenant cliquer sur les capteurs pour montrer comment les signaux r&#233;agiraient
 en pr&#233;sence d'un train. Par exemple, l'image vers la droite
 montre un train entrant en voie d'&#233;vitement par la gauche. Il s'agit de
 de rencontrer un signal jaune &#224; l'entr&#233;e de l'&#233;vitement, qui lui demande d'
-&#234;tre pr&#234;t &#224; s'arr&#234;ter &#224; un signal rouge &#224; l'extr&#233;mit&#233; de l'&#233;vitement.
+&#234;tre pr&#234;t &#224; s'arr&#234;ter &#224; un signal rouge &#224; l'extr&#233;mit&#233; de l'&#233;vitement.<br><a href="images/SensorTuroutsSet.png"><img src="images/SensorTuroutsSet.png" align=right width="317" height="173" hspace="0" vspace="2" alt="Demo screen with two trains"></a>
 Notez que l'arri&#232;re de ce train est prot&#233;g&#233; par un signal rouge,  qui a
 son tour, est prot&#233;g&#233; par un signal jaune dans le canton pr&#233;c&#233;dent.
 Un autre train est juste en train de quitter
 sur la voie principale en allant vers la droite.
 
-<LI>
+<li>
 Si vous &#234;tes int&#233;ress&#233; &#224; la fa&#231;on dont le programme communique avec une carte de signalisation
 Digitrax SE8c, vous pouvez ouvrir l'outil Moniteur LocoNet
 dans le menu Digitrax. Cliquer sur un des aiguillages qui envoie un message
@@ -115,8 +110,8 @@ canton sur le c&#244;t&#233; droit (canton 1), les messages sont les suivants:
    Commutateur 281 requis pour D&#233;vi&#233; (sortie Off)
 </PRE>
 Les trois messages de commutation fixent les signaux  5B, D et 4C au rouge, rouge et jaune, respectivement.
-<LI>
-<A HREF="../../../images/SE8cExampleLogic.gif"><IMG SRC="../../../images/SE8cExampleLogic.gif"ALIGN = RIGHT WIDTH =" 345" HEIGHT = "225" hspace = "0" vspace = "0" alt = "Demo screen with two  trains"></a>
+<li>
+<a href="../../../images/SE8cExampleLogic.png"><img src="../../../images/SE8cExampleLogic.png" align="right" width="291" height="272" hspace="0" vspace="0" alt="Simple Signal Logic Window"></a>
 Pour voir comment les signaux sont configur&#233;s, ouvrez l'&#233;l&#233;ment
 "La Logique Simple du Signal" dans le menu Outils.
 Entrez un nom de signal, par exemple "Section 5A" en haut du
@@ -124,76 +119,74 @@ champ de texte et frapp&#233; retour. Vous devriez obtenir quelque chose
 comme l'image vers la droite (cliquez pour l'agrandir en taille r&#233;elle).
 Section 5A est le signal de protection de
 l'aiguillage 2, l'entr&#233;e droite de la voie d'&#233;vitement.
-<UL>
-<LI> Elle est d&#233;finie ici comme un Signal "face &#224; la pointe".
-<LI>Il prot&#232;ge le capteur LS7 en virant au rouge lorsque le capteur
+<ul>
+<li> Elle est d&#233;finie ici comme un Signal "face &#224; la pointe".
+<li>Il prot&#232;ge le capteur LS7 en virant au rouge lorsque le capteur
 d&#233;tecte un train dans le canton.
-<LI> Il regarde l'&#233;tat de l'aiguillage LT2. Lorsque l'aiguillage est d&#233;vi&#233;,
+<li> Il regarde l'&#233;tat de l'aiguillage LT2. Lorsque l'aiguillage est d&#233;vi&#233;,
 le signal sera jaune lorsque le signal LH263 &#224; l'entr&#233;e de la
 voie d'&#233;vitement est rouge. Lorsque l'aiguillage est droit, un signal jaune
 permettra de prot&#233;ger un rouge sur le signal LH261 sur la ligne principale entre les aiguillages.
-<LI>
+<li>
 La case jaune clignotant n'est pas s&#233;lectionn&#233;e ici, mais si elle &#233;tait, ce signal
 permettrait de prot&#233;ger un signal jaune plus loin avec un jaune clignotant.
-</UL>
+</ul>
 Vous pouvez modifier tous ces param&#232;tres et cliquez sur "OK" pour les mettre en
 &#339;uvre, puis cliquez sur le panneau par exemple pour voir comment les nouveaux param&#232;tres travaillent.
-</UL>
+</ul>
 
 <a name="setup"/>
 <h2> Mise en place votre propre exemple </h2>
 L'ensemble complet des &#233;tapes de cr&#233;ation de cet exemple sont:
-<OL>
-<LI> Lancer et configurer l'application PanelPro. Red&#233;marrez pour que 
+<ol>
+<li> Lancer et configurer l'application PanelPro. Red&#233;marrez pour que 
 vos pr&#233;f&#233;rences prennent effet.
-<P>
+<p>
 Pour plus d'informations sur le lancement et la configuration
 PanelPro, s'il vous pla&#238;t voir la
-<A HREF="../../apps/PanelPro/PanelPro.shtml"> page web PanelPro </a>.
+<a href="../../apps/PanelPro/PanelPro.shtml"> page web PanelPro </a>.
 
-<LI> Parlez lui de vos capteurs.
-  <UL>
-  <LI> Dans le menu Outils, ouvrez l'outil "Tableau Capteur"
-  .
-  <LI> Si vous avez un syst&#232;me DCC Digitrax avec votre
+<li>Parlez lui de vos capteurs.
+  <ul>
+  <li> Dans le menu Outils, ouvrez l'outil "Tableau Capteur".
+  <li>Si vous avez un syst&#232;me DCC Digitrax avec votre
       d&#233;tecteur d'occupation connect&#233; &#224; LocoNet, avec juste
       l'alimentation des voies coup&#233;e et en utilisant soit un r&#233;gulateur s&#233;rie-DT
       ou  " Commande Alimentation" dans le menu Outils.
       Le programme permettra de saisir les adresses des capteurs depuis le trafic
       LocoNet r&#233;sultant.
-   <LI> Pour d'autres configurations, utilisez le bouton "Ajouter" pour
+   <li> Pour d'autres configurations, utilisez le bouton "Ajouter" pour
    cr&#233;er les capteurs n&#233;cessaires.
-   </UL>
+   </ul>
 
-<LI> Enregistrez votre travail en s&#233;lectionnant "Sauvegarder Panneaux  ..." du menu "Panneaux" ,
+<li>Enregistrez votre travail en s&#233;lectionnant "Sauvegarder Panneaux..." du menu "Panneaux" ,
 taper un nom de fichier, et frapper "Enregistrer". (Vous voudrez peut-&#234;tre le faire souvent!)
 
-<LI> Parlez lui de votre ordinateur pilotant les aiguillages.
- <UL>
-  <LI> Dans le menu Outils, ouvrez l'outil "Tableau Aiguillage".
+<li>Parlez lui de votre ordinateur pilotant les aiguillages.
+ <ul>
+  <li>Dans le menu Outils, ouvrez l'outil "Tableau Aiguillage".
  
-  <LI> Si vous avez un syst&#232;me Digitrax DCC, mettre
+  <li>Si vous avez un syst&#232;me Digitrax DCC, mettre
       d&#233;vi&#233; ou droit chaque aiguillage depuis un r&#233;gulateur.
       Le programme permettra de saisir les adresses du r&#233;gulateur &#224; partir 
 du trafic LocoNet r&#233;sultant.
-   <LI> Vous pouvez &#233;galement utiliser le bouton "Ajouter" sur la fen&#234;tre du tableau aiguillage pour ouvrir 
+   <li> Vous pouvez &#233;galement utiliser le bouton "Ajouter" sur la fen&#234;tre du tableau aiguillage pour ouvrir 
     un Panneau et entrer de nouveaux aiguillages.
-   <LI> La "Commande Aiguillage" dans le menu Outils cr&#233;e &#233;galement une nouvelle
+   <li> La "Commande Aiguillage" dans le menu Outils cr&#233;e &#233;galement une nouvelle
      entr&#233;e d'aiguillage pour chaque aiguillage que vous manipulez.
-   </UL>
+   </ul>
 
-<LI> Si vous avez des t&#234;tes de signaux connect&#233;es aux sorties "aiguillage-type" 
+<li>Si vous avez des t&#234;tes de signaux connect&#233;es aux sorties "aiguillage-type" 
 signalez au programme l'existence de ces aiguillages i. (Utilisateurs de SE8c sauter cette &#233;tape)
 
 <a name="definesignals"/>
-<LI> Dites comment vos signaux sont adress&#233;s.
-<A Href="../../../images/SigTable.gif"><IMG SRC="../../../images/SigTable.gif "ALIGN = RIGHT WIDTH =" 170 " height= "314" hspace = "0" vspace = "0" alt = "Signal Head Table Figure "></A>
+<li> Dites comment vos signaux sont adress&#233;s.
+<a href="../../../images/SigTable.gif"><img src="../../../images/SigTable.gif" ALIGN="RIGHT" WIDTH="314" height="140" hspace="0" vspace="0" alt = "Signal Head Table Figure "></a>
 
-  <UL>
-  <LI> Dans le menu Outils, ouvrez l'outil "Tableau T&#234;te Signal"
-  .
- <LI> Cliquez sur le bouton
-      "<a Href="../../../package/jmri/jmrit/beantable/SignalAddEdit.shtml"> Ajouter ...</a>"
+  <ul>
+  <li>Dans le menu Outils, ouvrez l'outil "Tableau T&#234;te Signal".
+  <li>Cliquez sur le bouton
+      "<a href="../../../package/jmri/jmrit/beantable/SignalAddEdit.shtml"> Ajouter ...</a>"
       pour faire appara&#238;tre un cadre
       avec plusieurs choix pour le type de pilote de signal:
       <DL>
@@ -202,7 +195,7 @@ signalez au programme l'existence de ces aiguillages i. (Utilisateurs de SE8c sa
       sont pilot&#233;s par trois sorties s&#233;par&#233;es.
       Les sorties sont entra&#238;n&#233;es par l'aiguillage logique JMRI et
       apparaissent dans le tableau Aiguillage.
-      <P> Pour configurer l'un d'eux,
+      <p> Pour configurer l'un d'eux,
       entrez le nom que vous voulez lui donner (g&#233;n&#233;ralement quelque chose comme IH2, etc), et
       les noms des trois sorties qui alimentent les lampes.
       <DT> Sortie double
@@ -212,88 +205,90 @@ signalez au programme l'existence de ces aiguillages i. (Utilisateurs de SE8c sa
       va les combiner &#224; la fois  pour rendre le jaune.
       Les sorties sont entra&#238;n&#233;s par l'aiguillage JMRI logique et
       apparaissent dans le tableau Aiguillage.
-      <P>
+      <p>
       Pour configurer l'un d'eux,
       entrez le nom que vous voulez lui donner (g&#233;n&#233;ralement quelque chose comme IH2, etc), et
       les noms des deux aiguillages qui pilotent les lampes.
-      <DT> SE8c 4 aspects
-      <DD> Il s'agit d'une t&#234;te de signal pilot&#233;e par une SE8c Digitrax.
-      <P>
+      <DT>SE8c 4 Aspects
+      <DD>Il s'agit d'une t&#234;te de signal pilot&#233;e par une SE8c Digitrax.
+      <p>
       Entrez
       la partie inf&#233;rieure des deux "adresses d'aiguillage" auxquelles cette t&#234;te
       r&#233;pond. Par exemple, si c'est la premiere t&#234;te sur la premi&#232;re
       carte, vous pouvez la contr&#244;ler en r&#233;glant les aiguillages 257 et 258 avec
       votre r&#233;gulateur. Entrez 257 dans la bo&#238;te de commande de l'aiguillage.
-      <P>
+      <p>
       Le SE8c doit &#234;tre configur&#233; de sorte que le "4&#232;me aspect"  soit "&#233;teint";
       le programme va g&#233;rer tout ce qui est n&#233;cessaire pour les clignotants.
+      <dt>Beaucoup d'autres options
+      <dd>Consultez le <a href="../../../../en/html/tools/signaling/SignalHeads.shtml">page Signal Heads </a> (en anglais) pour chaq'un.
       </DL>
       Une fois que vous avez d&#233;fini les options, cliquez sur "OK". Vous pouvez
       utiliser ce formulaire &#224; plusieurs reprises pour entrer autant que vous le souhaitez.
-  </UL>
+  </ul>
 
-<LI> Configurer votre logique signal en utilisant l'outil "logique simple signal" 
-<UL>
-<LI> Ouvrez l'outil du menu "Outils". Vous devriez obtenir un cadre
+<li>Configurer votre logique signal en utilisant l'outil "logique simple signal" 
+<ul>
+<li>Ouvrez l'outil du menu "Outils". Vous devriez obtenir un cadre
 avec un certain nombre de champ:
-<A HREF="../../../images/SE8cExampleLogic.gif"><IMG SRC="../../../images/SE8cExampleLogic.gif"ALIGN = RIGHT WIDTH =" 345 "height = "225" hspace = "0" vspace = "0" alt = "Signal Logic Window"></a>
-<LI> Dans la case du haut, entrez le nom du signal que vous souhaitez contr&#244;ler.
-<LI> Les boutons radio que l'on choisit ci-dessous, ont quatre utilisations possibles
+<a href="../../../images/SE8cExampleLogic.png"><img src="../../../images/SE8cExampleLogic.png" align=right width="291" height="272" hspace="2" vspace="0" alt="Simple Signal Logic Window"></a>
+<li>Dans la case du haut, entrez le nom du signal que vous souhaitez contr&#244;ler.
+<li>Les boutons radio que l'on choisit ci-dessous, ont quatre utilisations possibles
 pour ce signal:
-<UL>
-<LI> "Sur le canton unique" - ce signal prot&#232;ge l'extr&#233;mit&#233; d'une droite &#224;
+<ul>
+<li>"Sur le canton unique" - ce signal prot&#232;ge l'extr&#233;mit&#233; d'une droite &#224;
 travers le canton, sans aiguillage signal&#233;
-<LI> "Sur la branche principale du Talon de l'aiguillage" - ce signal est le long de
+<li>"Sur la branche principale du Talon de l'aiguillage" - ce signal est le long de
 l'itin&#233;raire principal pour traverser un aiguillage, qui est d&#233;fini comme la direction
 prise par les trains lorsque l'aiguillage est droit. C'est la protection de la partie 
 mobile de l'aiguillage de sorte que les trains s'arr&#234;tent avant de traverser
 un aiguillage mal orient&#233;.
-<LI> "Sur la voie divergente du Talon de l'aiguillage" - ce signal est le long
+<li>"Sur la voie divergente du Talon de l'aiguillage" - ce signal est le long
 la voie d&#233;vi&#233;e d'un aiguillage, qui est d&#233;finie comme la direction
 prises par les trains lorsque l'aiguillage est fix&#233; &#224; "d&#233;vi&#233;".  C'est la protection de l'&#233;quipement 
 mobile de l'aiguillage de sorte que les trains s'arr&#234;tent avant de traverser
 un aiguillage mal orient&#233;.
-<LI> " Aiguillage en Pointe" - ce signal est pour prot&#233;ger les
+<li>"Aiguillage en Pointe" - ce signal est pour prot&#233;ger les
  points de sortie du Talon d'un aiguillage. Selon que l'aiguillage est
 d&#233;vi&#233; ou direct, le train va prendre deux voies diff&#233;rentes, et le
 signal doit prot&#233;ger les diff&#233;rents cantons suivants.
-</UL>
-<LI> Si vous voulez que le signal passe au rouge quand un capteur se montre
+</ul>
+<li>Si vous voulez que le signal passe au rouge quand un capteur se montre
 occup&#233; (capteur actif), entrez le nom du capteur dans la bo&#238;te suivante.
-<LI> Si ce signal est pour prot&#233;ger le trajet, en direction de la pointe de 
+<li> Si ce signal est pour prot&#233;ger le trajet, en direction de la pointe de 
 l'aiguillage, vous pouvez avoir le signal au rouge si
 l'aiguillage est mal orient&#233;. Pour ce faire, entrez
 le num&#233;ro de l'aiguillage &#224; surveiller dans la 3&#232;me bo&#238;te , et choisissez si
 le signal doit &#234;tre en rouge lorsque l'aiguillage est d&#233;vi&#233; ou droit.
-<LI> Si vous voulez une logique multi-cantons , par exemple Signalisation de Canton Absolue,
+<li> Si vous voulez une logique multi-cantons , par exemple Signalisation de Canton Absolue,
 entrez le nom du signal suivant dans la derni&#232;re case. Quand ce
 signal est rouge, celui-ci sera mis au jaune pour avertir le m&#233;canicien
 que le train doit &#234;tre capable de s'arr&#234;ter au signal suivant.
-<P>
+<p>
 Si vous souhaitez donner un avertissement suppl&#233;mentaire, cliquez sur la case "avec clignotant
 jaune ". Dans ce cas, le signal avant un rouge appara&#238;tra
 clignotant jaune, et le signal avant le jaune clignotant
 montrent un jaune soutenu.
-    <li> Une fois que vous avez d&#233;fini les options, cliquez sur "OK". Vous pouvez
+    <li>Une fois que vous avez d&#233;fini les options, cliquez sur "OK". Vous pouvez
       utiliser ce formulaire &#224; plusieurs reprises pour entrer autant que vous le souhaitez.
-</UL>
-<LI> Vous enregistrez votre travail, vous avez fini!
-</OL>
+</ul>
+<li> Vous enregistrez votre travail, vous avez fini!
+</ol>
 
 Vous pouvez essayer votre logique signal en faisant fonctionner votre r&#233;seau
-<P>
+<p>
 Bien qu'il soit beaucoup moins amusant que r&#233;ellement l'ex&#233;cution du r&#233;seau,
 vous pouvez &#233;galement tester la logique du signal en changeant l'aiguillage
 l'&#233;tat des capteurs et l'ordinateur lui-m&#234;me. Il suffit de cliquer sur le statut des
 informations dans les tables pour le changer. Par exemple, l'aiguillage
 LT23 montre "d&#233;vi&#233;", cliquez sur dessus pour le changer en "droit". L'
 l'&#233;tat du signal sera mis &#224; jour avec la nouvelle apparence.
-<P>
+<p>
 Vous pouvez cr&#233;er un petit panneau de contr&#244;le pour le faire graphiquement. Pour de plus amples
 infos sur comment faire, consultez la
-<A HREF="../../apps/PanelPro/Panels.shtml">page Panneaux </a>.
-<P>
-Situ&#233; &#224; html\tools\Signaling
+<a href="../../apps/PanelPro/Panels.shtml">page Panneaux </a>.
+<p>
+Situ&#233; &#224; fr\html\tools\signaling\
 
 <!--#include virtual="/Footer" -->
 </body>

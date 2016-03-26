@@ -19,6 +19,7 @@ import jmri.jmrit.operations.rollingstock.RollingStockManager;
 import jmri.jmrit.operations.rollingstock.cars.CarManager;
 import jmri.jmrit.operations.rollingstock.engines.EngineManager;
 import jmri.jmrit.operations.setup.Control;
+import jmri.jmrit.operations.trains.TrainCommon;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -102,7 +103,7 @@ public class LocationCopyFrame extends OperationsFrame implements java.beans.Pro
         locationManager.addPropertyChangeListener(this);
 
         // add help menu to window
-        addHelpMenu("package.jmri.jmrit.operations.Operations_Locations", true); // NOI18N
+        addHelpMenu("package.jmri.jmrit.operations.Operations_CopyLocation", true); // NOI18N
 
         pack();
         setMinimumSize(new Dimension(Control.panelWidth400, Control.panelHeight400));
@@ -116,7 +117,7 @@ public class LocationCopyFrame extends OperationsFrame implements java.beans.Pro
         setTitle(Bundle.getMessage("MenuItemCopyLocation"));
     }
 
-    @edu.umd.cs.findbugs.annotations.SuppressFBWarnings(value = "ST_WRITE_TO_STATIC_FROM_INSTANCE_METHOD")
+    @edu.umd.cs.findbugs.annotations.SuppressFBWarnings(value = "ST_WRITE_TO_STATIC_FROM_INSTANCE_METHOD", justification = "GUI ease of use")
     protected void buttonActionPerformed(java.awt.event.ActionEvent ae) {
         if (ae.getSource() == copyButton) {
             log.debug("copy location button activated");
@@ -190,7 +191,7 @@ public class LocationCopyFrame extends OperationsFrame implements java.beans.Pro
 
     /**
      *
-     * @return true if name entered and isn't too long
+     * @return true if name entered OK and isn't too long
      */
     protected boolean checkName() {
         if (loctionNameTextField.getText().trim().equals("")) {
@@ -198,7 +199,7 @@ public class LocationCopyFrame extends OperationsFrame implements java.beans.Pro
                     .getMessage("CanNotLocation"), new Object[]{Bundle.getMessage("Copy")}), JOptionPane.ERROR_MESSAGE);
             return false;
         }
-        if (loctionNameTextField.getText().length() > Control.max_len_string_location_name) {
+        if (TrainCommon.splitString(loctionNameTextField.getText()).length() > Control.max_len_string_location_name) {
             JOptionPane.showMessageDialog(this, MessageFormat.format(Bundle.getMessage("LocationNameLengthMax"),
                     new Object[]{Integer.toString(Control.max_len_string_location_name + 1)}), MessageFormat.format(Bundle
                             .getMessage("CanNotLocation"), new Object[]{Bundle.getMessage("Copy")}), JOptionPane.ERROR_MESSAGE);
@@ -221,7 +222,7 @@ public class LocationCopyFrame extends OperationsFrame implements java.beans.Pro
     private void moveRollingStock(Track fromTrack, Track toTrack, RollingStockManager manager) {
         for (RollingStock rs : manager.getByIdList()) {
             if (rs.getTrack() == fromTrack) {
-                rs.setLocation(toTrack.getLocation(), toTrack, true);
+                rs.setLocation(toTrack.getLocation(), toTrack, RollingStock.FORCE);
             }
         }
     }
@@ -238,5 +239,5 @@ public class LocationCopyFrame extends OperationsFrame implements java.beans.Pro
         }
     }
 
-    static Logger log = LoggerFactory.getLogger(LocationCopyFrame.class.getName());
+    private final static Logger log = LoggerFactory.getLogger(LocationCopyFrame.class.getName());
 }

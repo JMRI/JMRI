@@ -1,4 +1,3 @@
-// LongAddrVariableValueTest.java
 package jmri.jmrit.symbolicprog;
 
 import java.util.ArrayList;
@@ -13,12 +12,13 @@ import junit.framework.TestSuite;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+import jmri.util.JUnitUtil;
+
 /**
  * Test LongAddrVariableValue class.
  *
  * @todo need a check of the MIXED state model for long address
  * @author	Bob Jacobsen Copyright 2001, 2002
- * @version $Revision$
  */
 public class LongAddrVariableValueTest extends VariableValueTest {
 
@@ -161,17 +161,7 @@ public class LongAddrVariableValueTest extends VariableValueTest {
 
         var.readAll();
         // wait for reply (normally, done by callback; will check that later)
-        int i = 0;
-        while (var.isBusy() && i++ < 100) {
-            try {
-                Thread.sleep(100);
-            } catch (Exception e) {
-            }
-        }
-        if (log.isDebugEnabled()) {
-            log.debug("past loop, i=" + i + " value=" + ((JTextField) var.getCommonRep()).getText() + " state=" + var.getState());
-        }
-        Assert.assertTrue("wait satisfied ", i < 100);
+        JUnitUtil.waitFor(()->{return !var.isBusy();}, "var.isBusy");
 
         int nBusyFalse = 0;
         for (int k = 0; k < evtList.size(); k++) {
@@ -204,19 +194,7 @@ public class LongAddrVariableValueTest extends VariableValueTest {
 
         var.writeAll();
         // wait for reply (normally, done by callback; will check that later)
-        int i = 0;
-        while (var.isBusy() && i++ < 100) {
-            try {
-                Thread.sleep(10);
-            } catch (Exception e) {
-            }
-        }
-        if (log.isDebugEnabled()) {
-            log.debug("past loop, i=" + i + " value=" + ((JTextField) var.getCommonRep()).getText()
-                    + " state=" + var.getState()
-                    + " last write: " + p.lastWrite());
-        }
-        Assert.assertTrue("wait satisfied ", i < 100);
+        JUnitUtil.waitFor(()->{return !var.isBusy();}, "var.isBusy");
 
         Assert.assertEquals("CV 17 value ", 210, cv17.getValue());
         Assert.assertEquals("CV 18 value ", 189, cv18.getValue());
@@ -243,7 +221,7 @@ public class LongAddrVariableValueTest extends VariableValueTest {
         return suite;
     }
 
-    static Logger log = LoggerFactory.getLogger(LongAddrVariableValueTest.class.getName());
+    private final static Logger log = LoggerFactory.getLogger(LongAddrVariableValueTest.class.getName());
 
     // The minimal setup for log4J
     protected void setUp() {

@@ -40,7 +40,7 @@ public class XNetPacketizer extends XNetTrafficController {
 
 // The methods to implement the XNetInterface
     public boolean status() {
-        return (ostream != null & istream != null);
+        return (ostream != null && istream != null);
     }
 
     /**
@@ -80,6 +80,9 @@ public class XNetPacketizer extends XNetTrafficController {
      */
     @Override
     public boolean portReadyToSend(jmri.jmrix.AbstractPortController p) throws Exception {
+        if( !(p instanceof XNetPortController)) {
+            return false;
+        }
         if (((XNetPortController) p).okToSend()) {
             ((XNetPortController) p).setOutputBufferEmpty(false);
             return true;
@@ -91,7 +94,7 @@ public class XNetPacketizer extends XNetTrafficController {
         }
     }
 
-    static Logger log = LoggerFactory.getLogger(XNetPacketizer.class.getName());
+    private final static Logger log = LoggerFactory.getLogger(XNetPacketizer.class.getName());
 }
 
 /* @(#)XNetPacketizer.java */

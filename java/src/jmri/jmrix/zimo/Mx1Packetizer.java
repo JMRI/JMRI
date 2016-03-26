@@ -487,7 +487,7 @@ public class Mx1Packetizer extends Mx1TrafficController {
     /**
      * Captive class to handle transmission
      */
-    @edu.umd.cs.findbugs.annotations.SuppressWarnings(value = "UW_UNCOND_WAIT",
+    @edu.umd.cs.findbugs.annotations.SuppressFBWarnings(value = "UW_UNCOND_WAIT",
             justification = "while loop controls access")
     class XmtHandler implements Runnable {
 
@@ -710,7 +710,7 @@ public class Mx1Packetizer extends Mx1TrafficController {
         0x74, 0x2a, 0xc8, 0x96, 0x15, 0x4b, 0xa9, 0xf7, 0xb6, 0xe8, 0x0a, 0x54, 0xd7, 0x89, 0x6b, 0x35
     };
 
-    static Logger log = LoggerFactory.getLogger(Mx1Packetizer.class.getName());
+    private final static Logger log = LoggerFactory.getLogger(Mx1Packetizer.class.getName());
 }
 
 

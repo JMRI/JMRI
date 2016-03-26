@@ -1,39 +1,38 @@
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
-<!-- $Id$ -->
-<HTML LANG="en">
-<HEAD>
-<TITLE>JMRI: SlipTurnout Icon Editor Help</TITLE>
-<META HTTP-EQUIV="Content-Type" CONTENT="text/html; charset=iso-8859-1">
-<META CONTENT="Kevin Dickerson" NAME="Author">
-<META NAME="keywords" CONTENT="JMRI help Panel Editor">
+<html lang="en">
+<head>
+<title>JMRI: SlipTurnout Icon Editor Help</title>
+
+<meta name="author" content="Kevin Dickerson">
+<meta name="keywords" content="JMRI help Panel Editor">
 
 <!-- Style -->
-<META HTTP-EQUIV="Content-Type" CONTENT="text/html; charset=iso-8859-1">
-<LINK REL="stylesheet" TYPE="text/css" HREF="/css/default.css"
-	MEDIA="screen">
-<LINK REL="stylesheet" TYPE="text/css" HREF="/css/print.css"
-	MEDIA="print">
-<LINK REL="icon" HREF="/images/jmri.ico" TYPE="image/png">
-<LINK REL="home" TITLE="Home" HREF="/">
+<meta http-equiv="content-type" content="text/html; charset=iso-8859-1">
+<link rel="stylesheet" type="text/css" href="/css/default.css"
+	media="screen">
+<link rel="stylesheet" type="text/css" href="/css/print.css"
+	media="print">
+<link rel="icon" href="/images/jmri.ico" type="image/png">
+<link rel="home" title="Home" href="/">
 <!-- /Style -->
-</HEAD>
+</head>
 
-<BODY>
+<body>
 <!--#include virtual="/Header" -->
   <div class="nomenu" id="mBody">
     <div id="mainContent">
 
-<H1>The Slip Turnout Editor</H1>
+<h1>The Slip Turnout Editor</h1>
 
 <p>The slip turnout editor handles turnouts that require more than one accessory
 (turnout) address and have more than two routes through the turnout.
 <p>This includes ..
-<ul>
-<li>Double Slips
-<li>Single Slips
-<li>Three way turnouts
-<li>Scissor or Double Crossings
-</ul>
+	<ul>
+	<li>Double Slips
+	<li>Single Slips
+	<li>Three way turnouts
+	<li>Scissor or Double Crossings
+	</ul>
 <p>The way icons are changed in the SlipTurnout Icon Editor is the same as they 
 are changed in the other Icon Editors.  The <b>Change Icon...</b>button and the 
 Catalog function identically with other Icon Editors. The <b>Find Icons</b> 
@@ -42,7 +41,7 @@ also identical.<p>  See the <a href="IconAdder.shtml">Icon Editors page</a>
 and the <a href="../catalog/ImageIndex.shtml">Image Index Editor page</a>
 for details on their use.
 
-<H2>Contents of the SlipTurnout Icon Editor</H2>
+<h2>Contents of the SlipTurnout Icon Editor</h2>
 <p>Each type of "Slip" uses a fixed number of turnouts and routes.  
 Typically each "Slip" uses two turnouts and has between three and four different 
 routes.
@@ -56,14 +55,14 @@ at the top of the window.<p>
 <p>Details about how each type of slip should be configured and operate can be
 found below.
 
-<H3>Double Slip</H3>
+<h3>Double Slip</h3>
 <img src="images/DoubleSlip.png" align="right">
 <p>The Double Slip, uses a pair of turnouts to set the four possible routes that 
 are available.  Simply drag a row from the Turnout table to place into the 
-corresponding West or East undefined posistion on the slip.  When the turnout is
-dropped on to the lebel, it will display the turnout name.
+corresponding West or East undefined position on the slip.  When the turnout is
+dropped on to the label, it will display the turnout name.
 
-<H3>Single Slip</H3>
+<h3>Single Slip</h3>
 <img src="images/SingleSlip.png" align="right">
 <p>The Single Slip works in very much the same way as the Double Slip in that it 
 requires a pair of turnouts to be selected for the West and East side of the Slip.
@@ -72,14 +71,14 @@ However it has a further option, which is to select which way the slip routes.</
 <p>Use the radio button to select if the slip takes the upper or lower route, making 
 the change will automatically change the icon in the slip position to suit.
 
-<H3>Three Way Turnout</H3>
+<h3>Three Way Turnout</h3>
 <img src="images/ThreeWay.png" align="right">
 <p>With the Three Way Turnout, you require a pair of turnouts, one for the first 
 throat, then another for the second.</p>
 <img src="images/ThreeWayOptions.png"> 
 <p>You also need to determine which exit the first throat turnout relates to.
 
-<H3>Scissor (Double) Crossing</H3>
+<h3>Scissor (Double) Crossing</h3>
 <p>The Scissor crossing can use either a pair of turnout address with diagonally 
 opposite turnouts being wired together as one.  Or it can use four turnout 
 addresses, one for each corner of the scissor.
@@ -94,6 +93,9 @@ Crossing Panel.
 <img src="images/ScissorBy4.png" align="right">
 <p>When four turnouts are used, you need to place the four turnouts from the 
 turnout table to the corresponding locations in the panel.
+
 <!--#include virtual="/Footer" -->
-</BODY>
-</HTML>
+  </div><!-- closes #mainContent-->
+ </div> <!-- closes #mBody-->
+</body>
+</html>

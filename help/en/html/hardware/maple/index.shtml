@@ -1,18 +1,14 @@
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
 <html lang="en">
 <head>
-<!-- Copyright ($Author$) 2008 -->
-<!-- $Id$ -->
-<title>JMRI: Maple Systems</title>
+<title>JMRI Hardware Support - Maple Systems</title>
 
 <!-- Style -->
-<META HTTP-EQUIV="Content-Type" CONTENT="text/html; charset=iso-8859-1">
-<LINK REL="stylesheet" TYPE="text/css" HREF="/css/default.css"
-	MEDIA="screen">
-<LINK REL="stylesheet" TYPE="text/css" HREF="/css/print.css"
-	MEDIA="print">
-<LINK REL="icon" HREF="/images/jmri.ico" TYPE="image/png">
-<LINK REL="home" TITLE="Home" HREF="/">
+<meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
+<link rel="stylesheet" type="text/css" href="/css/default.css" media="screen">
+<link rel="stylesheet" type="text/css" href="/css/print.css" media="print">
+<link rel="icon" href="/images/jmri.ico" type="image/png">
+<link rel="home" title="Home" href="/">
 <!-- /Style -->
 </head>
 
@@ -21,9 +17,7 @@
   <div class="nomenu" id="mBody">
     <div id="mainContent">
 
-<h1> 
-JMRI: Maple Systems
-</h1>
+<h1>Hardware Support: Maple Systems</h1>
 
 <a href="http://www.maplesystems.com/images/silverseries/SilverSeries_7-16-07.jpg"><img src="http://www.maplesystems.com/images/silverseries/SilverSeries_7-16-07.jpg" align="right" height="93" width="173"></a><br>
 
@@ -38,8 +32,15 @@ Each panel is really a standalone (Windows) computer. It's configured and loaded
 provided by Maple Systems. 
 That configuration defines the displays, button labels and locations, etc.
 
+<a name="limitations"></a><h2>Limitations</h2>
 <p>
-JMRI interacts with the panel through input and output bits 
+This is still in the very early stages, so details are changing rapidly.
+If you want to use these devices, please contact the JMRI developers.
+
+<a name="connecting"></a><h2>Connecting</h2>
+<h3>Settings</h3>
+<p>
+JMRI interacts with the Maple panel through input and output bits 
 (called "coils", as in relay coils) within the panel.
 The panel configuration can set these in response to various events.
 JMRI provides Sensor objects that make them available for triggering actions
@@ -48,19 +49,22 @@ JMRI can defines Turnout objects which can set them, in which case the
 panel configuration can change what's being displayed.
 
 <p>
-This is still in the very early stages, so details are changing rapidly.
-If you want to use these devices, please contact the JMRI developers.
+You have to configure a Maple Systems Node into JMRI with the "Configure Nodes" button on
+the JMRI Preferences pane. On the pane that opens, enter the Node number 
+(e.g. 1 or 2, etc) into the "UA" field, and click "Add". Leave all the rest alone;
+the Maple Support was created from the JMRI C/MRI support, and as of 
+JMRI version 2.3.7 the migration is not complete.
 
+<h4>Naming</h4>
 <p>
 The system letter for Maple connections in JMRI is "K".
-
 <p>
 You configure the Maple Systems device to use one of the supported speeds
-(see the JMRI preferences pane for Maple connections),
+(set on the JMRI Preferences pane for Maple connections),
 and to use the "Simple ASCII Protocol". More information on the
 protocol and how to configure the Maple Systems device is
-on the 
-<a href="http://www.maplesystems.com/1033/10330073.PDF">data sheet</a>.
+on Maple 
+<a href="http://www.maplesystems.com/1033/10330073.PDF">PDF data sheet</a>.
 
 <p>
 JMRI communicates with the Maple Systems device by reading and writing 
@@ -70,24 +74,25 @@ JMRI communicates with the Maple Systems device by reading and writing
 
 <p>LB registers 1001 through 1048 are available to JMRI as output "Turnouts" 1 through 48.
 
-<P>
+<p>
 The Maple Systems node number (programmed into "Parameter 5", the "HMI station ID #")
-can be 1 through 99.  It appears as the thousands digit of JMRI Sensor and Turnouts names.
+can be 1 through 99.  It appears as the thousands digit of JMRI Sensors and Turnouts System Names.
 For example, KS3001 is the 1st sensor on node 3, and would therefore be LB 1 in that Maple
 Systems unit. KT3001 is the 1st turnout on that node, and would therefore be
 LB 101 in that unit.
 
 <p>
-It is very likely that we will rework and improve the addressing soon.
+<strong>It is very likely that we will rework and improve the addressing soon.</strong>
 
-<p>
-You have to configure a node into JMRI with the "Configure Nodes" button on
-the preferences window. On the new window that appears, enter the node number 
-(e.g. 1 or 2, etc) into the "UA" field, and click "Add". Leave all the rest alone;
-the Maple Support was created from the JMRI C/MRI support, and in 
-JMRI 2.3.7 the migration is not complete.
+<a name="tools"></a><h2>JMRI Maple Systems Tools</h2>
+N/A
 
+<a name="documentation"></a><h2>Documentation</h2>
+<h3>Third Party info</h3>
+<p><a href="http://www.maplesystems.com">Maple Systems website</a>
 
 <!--#include virtual="/Footer" -->
+  </div><!-- closes #mainContent-->
+</div> <!-- closes #mBody-->
 </body>
 </html>

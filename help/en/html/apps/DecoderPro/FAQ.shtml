@@ -1,8 +1,6 @@
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
 <html lang="en">
 <head>
-<!-- Copyright Bob Jacobsen 2008 -->
-<!-- $Id$ -->
 <title>JMRI: DecoderPro Frequently Asked Questions</title>
 
 <!-- Style -->
@@ -21,7 +19,8 @@
 <div id="mainContent">
 
 
-<H1>JMRI: DecoderPro Frequently Asked Questions</H1>
+<h1>JMRI: DecoderPro User Guide</h1>
+<h2>Frequently Asked Questions</h2>
 
 <p>This page is the JMRI Decoder Pro "frequently asked questions"
 list. Items get listed here if they're asked a lot, even if
@@ -29,89 +28,86 @@ they're also available somewhere else.
 </p>
 
 <dl>
-
-<dt class=left><a name="newdecoder"/>How can I get a new decoder type defined?</dt></a>
-<dd class=first>
-<p>
-A completely new decoder needs a new or
-updated configuration file.  You can 
-<a href="CreateDecoder.shtml">create your own</a>
-or ask on the 
-<a href="https://groups.yahoo.com/neo/groups/jmriusers/info">JMRI users Yahoo group</a>
-for somebody to create one for you.
-</p>
-<p>
-In many cases, you can use an existing decoder that's 
-"close enough".  For example, a decoder from the same
-manufacturer that has a different size or current rating might
-have the same configuration CVs, so it's decoder definition
-would work fine.
-</dd>
-
-<dt class=left><a name="newfile"/>What do I do with this new decoder file?</dt></a>
-<dd class=first>
-<p>
-For DecoderPro to use the definition of a decoder type in a 
-new decoder file, the new file has to be included in DecoderPro's
-index of decoder types. To do this:
-<UL>
-<LI>In your JMRI install directory, you should find a directory named "xml".
-Under that directory, there should be one named "decoders". You should put your new file in there.
-
-<LI>Now start up DecoderPro, and open the "Debug" menu.  Select the
-"Rebuild Decoder Index" option.
-
-<LI>The computer will run for a minute or two with the selection highlighted.  
-As soon as that goes away, the new definition should be available to you.
-
-</UL>
-
-<p>
-Please make sure that the new configuration file has been contributed
-to the project so it will be included in future releases, and so you
-won't have to remake the index each time you update.
-
-</dd>
-
-<dt class=left><a name="update"/>How can I get the latest decoder
-definitions?</dt></a>
-<dd class=first>
-<p>
-The easiest way to update really is to download a new version of the program.
-This is unlikely to cause problems, and automatically installs the 
-latest versions of that have been contributed to DecoderPro.
-<p>
-Updates occur continuously between versions of the program.
-As files are contributed, we make them available on our
-<a HREF-"http://jmri.sourceforge.net/xml/decoders">collected decoder definitions</a>
-web page. You can download them from there, but note that most
-web browsers will not let you directly view them; you really
-do have to download them.
-<p>
-While people are working on decoder definitions, they often put 
-their draft definitions in the <a href="https://groups.yahoo.com/neo/groups/jmriusers/files">"Files" area of the JMRI users Yahoo group</a> (log in to access).
-You can 
-<a href="https://groups.yahoo.com/neo/groups/jmriusers/files/Decoder%20files">download them from the Decoder Files folder</a>.<br />
-Note that as an anti-spam measure, you will have to 
-<a href="https://groups.yahoo.com/neo/groups/jmriusers/info?showJoinPopup=true">join the group</a>
-to be able to download the files; that will require that you have a (free) Yahoo account.
-
-<dt class=left><a name="lb-xp"/>Why does my LocoBuffer-II not work in Windows XP?</dt></a>
-<dd class=first>
-<p>
-With Windows XP, your serial port parameters might not be properly set for 
-hardware flow control. To fix this, right-click on 
-My Computer and select Properties. Go to the Hardware tab and click on 
-Device Manager. Open up the section that says Ports (COM &amp; LPT). 
-Right-click on the serial port you have the LocoBuffer hooked to and 
-select Properties. Go to the Port Settings tab and set the options 
-to: <em>19200, 8, None, 1, Hardware</em>. Click <em>OK</em>. Close the Properties panel. Restart JMRI and verify your connection settings.
-
-</dd>
-
+	
+	<dt class=left><a name="newdecoder"/>How can I get a new decoder type defined?</dt></a>
+	<dd class=first>
+	<p>
+	A completely new decoder needs a new or
+	updated configuration file.  You can 
+	<a href="CreateDecoder.shtml">create your own</a>
+	or ask on the 
+	<a href="https://groups.yahoo.com/neo/groups/jmriusers/info">JMRI users Yahoo group</a>
+	for somebody to create one for you.
+	</p>
+	<p>
+	In many cases, you can use an existing decoder that's 
+	"close enough".  For example, a decoder from the same
+	manufacturer that has a different size or current rating might
+	have the same configuration CVs, so it's decoder definition
+	would work fine.
+	</dd>
+	
+	<dt class="left"><a name="newfile">What do I do with this new decoder file?</a></dt>
+	<dd class="first">
+	<p>
+	For DecoderPro to use the definition of a decoder type in a 
+	new decoder file, the new file has to be included in DecoderPro's
+	index of decoder types. To do this:
+		<ul>
+		<li>In your JMRI install directory, you should find a directory named "xml".
+		Under that directory, there should be one named "decoders". You should put your new file in there.
+		
+		<li>Now start up DecoderPro, and open the "Debug" menu.  Select the
+		"Rebuild Decoder Index" option.
+		
+		<li>The computer will run for a minute or two with the selection highlighted.  
+		As soon as that goes away, the new definition should be available to you.
+		</ul>
+	
+	<p>
+	Please make sure that the new configuration file has been contributed
+	to the project so it will be included in future releases, and so you
+	won't have to remake the index each time you update.
+	</dd>
+	
+	<dt class="left"><a name="update">How can I get the latest decoder
+	definitions?</a></dt>
+	<dd class="first">
+	<p>
+	The easiest way to update really is to download a new version of the program.
+	This is unlikely to cause problems, and automatically installs the 
+	latest versions of that have been contributed to DecoderPro.
+	<p>
+	Updates occur continuously between versions of the program.
+	As files are contributed, we make them available on our
+	<a href="http://jmri.org/xml/decoders">collected decoder definitions</a>
+	web page. You can download them from there, but note that most
+	web browsers will not let you directly view them; you really
+	do have to download them.
+	<p>
+	While people are working on decoder definitions, they often put 
+	their draft definitions in the <a href="https://groups.yahoo.com/neo/groups/jmriusers/files">"Files" area of the JMRI users Yahoo group</a> (log in to access).
+	You can 
+	<a href="https://groups.yahoo.com/neo/groups/jmriusers/files/Decoder%20files">download them from the Decoder Files folder</a>.<br />
+	Note that as an anti-spam measure, you will have to 
+	<a href="https://groups.yahoo.com/neo/groups/jmriusers/info?showJoinPopup=true">join the group</a>
+	to be able to download the files; that will require that you have a (free) Yahoo account.
+	
+	<dt class="left"><a name="lb-xp">Why does my LocoBuffer-II not work in Windows XP?</a></dt>
+	<dd class="first">
+	<p>
+	With Windows XP, your serial port parameters might not be properly set for 
+	hardware flow control. To fix this, right-click on 
+	My Computer and select Properties. Go to the Hardware tab and click on 
+	Device Manager. Open up the section that says Ports (COM &amp; LPT). 
+	Right-click on the serial port you have the LocoBuffer hooked to and 
+	select Properties. Go to the Port Settings tab and set the options 
+	to: <em>19200, 8, None, 1, Hardware</em>. Click <em>OK</em>. Close the Properties panel. Restart JMRI and verify your connection settings.
+	</dd>
 </dl>
     
 <!--#include virtual="/Footer" -->
-</div>
+ </div><!-- closes #mainContent-->
+</div> <!-- closes #mBody-->
 </body>
 </html>

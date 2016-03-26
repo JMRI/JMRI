@@ -48,24 +48,19 @@ public class TripleOutputSignalHeadXml extends DoubleTurnoutSignalHeadXml {
         return element;
     }
 
-    /**
-     * Create a TripleOutputSignalHead
-     *
-     * @param element Top level Element to unpack.
-     * @return true if successful
-     */
-    public boolean load(Element element) {
-        List<Element> l = element.getChildren("turnoutname");
+    @Override
+    public boolean load(Element shared, Element perNode) {
+        List<Element> l = shared.getChildren("turnoutname");
         if (l.size() == 0) {
-            l = element.getChildren("turnout");
+            l = shared.getChildren("turnout");
         }
         NamedBeanHandle<Turnout> green = loadTurnout(l.get(0));
         NamedBeanHandle<Turnout> blue = loadTurnout(l.get(1));
         NamedBeanHandle<Turnout> red = loadTurnout(l.get(2));
 
         // put it together
-        String sys = getSystemName(element);
-        String uname = getUserName(element);
+        String sys = getSystemName(shared);
+        String uname = getUserName(shared);
         SignalHead h;
         if (uname == null) {
             h = new TripleOutputSignalHead(sys, green, blue, red);
@@ -73,7 +68,7 @@ public class TripleOutputSignalHeadXml extends DoubleTurnoutSignalHeadXml {
             h = new TripleOutputSignalHead(sys, uname, green, blue, red);
         }
 
-        loadCommon(h, element);
+        loadCommon(h, shared);
 
         InstanceManager.signalHeadManagerInstance().register(h);
         return true;
@@ -83,5 +78,5 @@ public class TripleOutputSignalHeadXml extends DoubleTurnoutSignalHeadXml {
         log.error("Invalid method called");
     }
 
-    static Logger log = LoggerFactory.getLogger(TripleOutputSignalHeadXml.class.getName());
+    private final static Logger log = LoggerFactory.getLogger(TripleOutputSignalHeadXml.class.getName());
 }

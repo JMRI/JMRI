@@ -4,8 +4,6 @@ import junit.framework.Assert;
 import junit.framework.Test;
 import junit.framework.TestCase;
 import junit.framework.TestSuite;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 
 /**
  * RfidSystemConnectionMemoTest.java
@@ -13,7 +11,6 @@ import org.slf4j.LoggerFactory;
  * Description:	tests for the jmri.jmrix.rfid.RfidSystemConnectionMemo class
  *
  * @author	Paul Bender
- * @version $Revision$
  */
 public class RfidSystemConnectionMemoTest extends TestCase {
 
@@ -49,7 +46,5 @@ public class RfidSystemConnectionMemoTest extends TestCase {
         super.tearDown();
         apps.tests.Log4JFixture.tearDown();
     }
-
-    static Logger log = LoggerFactory.getLogger(RfidSystemConnectionMemoTest.class.getName());
 
 }

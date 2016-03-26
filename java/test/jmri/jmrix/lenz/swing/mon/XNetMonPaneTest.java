@@ -4,8 +4,6 @@ import junit.framework.Assert;
 import junit.framework.Test;
 import junit.framework.TestCase;
 import junit.framework.TestSuite;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 
 /**
  * XNetMonPaneTest.java
@@ -13,7 +11,6 @@ import org.slf4j.LoggerFactory;
  * Description:	tests for the jmri.jmrix.lenz.swing.mon.XNetMonPane class
  *
  * @author	Paul Bender Copyright (C) 2014
- * @version $Revision$
  */
 public class XNetMonPaneTest extends TestCase {
 
@@ -58,7 +55,5 @@ public class XNetMonPaneTest extends TestCase {
     protected void tearDown() {
         apps.tests.Log4JFixture.tearDown();
     }
-
-    static Logger log = LoggerFactory.getLogger(XNetMonPaneTest.class.getName());
 
 }

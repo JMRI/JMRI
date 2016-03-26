@@ -71,7 +71,7 @@ public class LightTableAction extends AbstractTableAction {
     }
 
     public LightTableAction() {
-        this("Light Table");
+        this(Bundle.getMessage("TitleLightTable"));
     }
 
     protected LightManager lightManager = InstanceManager.lightManagerInstance();
@@ -93,8 +93,8 @@ public class LightTableAction extends AbstractTableAction {
             static public final int ENABLECOL = NUMCOLUMN;
             static public final int INTENSITYCOL = ENABLECOL + 1;
             static public final int EDITCOL = INTENSITYCOL + 1;
-            protected String enabledString = rb.getString("ColumnHeadEnabled");
-            protected String intensityString = rb.getString("ColumnHeadIntensity");
+            protected String enabledString = Bundle.getMessage("ColumnHeadEnabled");
+            protected String intensityString = Bundle.getMessage("ColumnHeadIntensity");
 
             public int getColumnCount() {
                 return NUMCOLUMN + 3;
@@ -164,19 +164,19 @@ public class LightTableAction extends AbstractTableAction {
                 int val = lightManager.getBySystemName(name).getState();
                 switch (val) {
                     case Light.ON:
-                        return rbean.getString("LightStateOn");
+                        return Bundle.getMessage("LightStateOn");
                     case Light.INTERMEDIATE:
-                        return rbean.getString("LightStateIntermediate");
+                        return Bundle.getMessage("LightStateIntermediate");
                     case Light.OFF:
-                        return rbean.getString("LightStateOff");
+                        return Bundle.getMessage("LightStateOff");
                     case Light.TRANSITIONINGTOFULLON:
-                        return rbean.getString("LightStateTransitioningToFullOn");
+                        return Bundle.getMessage("LightStateTransitioningToFullOn");
                     case Light.TRANSITIONINGHIGHER:
-                        return rbean.getString("LightStateTransitioningHigher");
+                        return Bundle.getMessage("LightStateTransitioningHigher");
                     case Light.TRANSITIONINGLOWER:
-                        return rbean.getString("LightStateTransitioningLower");
+                        return Bundle.getMessage("LightStateTransitioningLower");
                     case Light.TRANSITIONINGTOFULLOFF:
-                        return rbean.getString("LightStateTransitioningToFullOff");
+                        return Bundle.getMessage("LightStateTransitioningToFullOff");
                     default:
                         return "Unexpected value: " + val;
                 }
@@ -184,7 +184,7 @@ public class LightTableAction extends AbstractTableAction {
 
             public Object getValueAt(int row, int col) {
                 if (col == EDITCOL) {
-                    return rb.getString("ButtonEdit");
+                    return Bundle.getMessage("ButtonEdit");
                 } else if (col == INTENSITYCOL) {
                     return new Double(((Light) getBySystemName((String) getValueAt(row, SYSNAMECOL))).getTargetIntensity());
                 } else if (col == ENABLECOL) {
@@ -196,7 +196,7 @@ public class LightTableAction extends AbstractTableAction {
 
             public void setValueAt(Object value, int row, int col) {
                 if (col == EDITCOL) {
-                    // Use separate Thread so window is created on top
+                    // Use separate Runnable so window is created on top
                     class WindowMaker implements Runnable {
 
                         int row;
@@ -206,7 +206,6 @@ public class LightTableAction extends AbstractTableAction {
                         }
 
                         public void run() {
-                            //Thread.yield();
                             // set up to edit
                             addPressed(null);
                             fixedSystemName.setText((String) getValueAt(row, SYSNAMECOL));
@@ -228,7 +227,7 @@ public class LightTableAction extends AbstractTableAction {
                         }
                         l.setTargetIntensity(intensity);
                     } catch (IllegalArgumentException e1) {
-                        status1.setText(rb.getString("LightError16"));
+                        status1.setText(Bundle.getMessage("LightError16"));
                     }
                 } else if (col == ENABLECOL) {
                     // alternate
@@ -285,24 +284,24 @@ public class LightTableAction extends AbstractTableAction {
                         break;
                     default:
                         newState = Light.OFF;
-                        BeanTableDataModel.log.warn("Unexpected Light state " + oldState + " becomes OFF");
+                        log.warn("Unexpected Light state " + oldState + " becomes OFF");
                         break;
                 }
                 ((Light) t).setState(newState);
             }
 
             public JButton configureButton() {
-                return new JButton(" " + rbean.getString("LightStateOff") + " ");
+                return new JButton(" " + Bundle.getMessage("LightStateOff") + " ");
             }
 
             protected String getBeanType() {
-                return AbstractTableAction.rbean.getString("BeanNameLight");
+                return Bundle.getMessage("BeanNameLight");
             }
         };
     }
 
     protected void setTitle() {
-        f.setTitle(f.rb.getString("TitleLightTable"));
+        f.setTitle(Bundle.getMessage("TitleLightTable"));
     }
 
     protected String helpTarget() {
@@ -319,19 +318,19 @@ public class LightTableAction extends AbstractTableAction {
     private boolean lightControlChanged = false;
 
     // items of add frame
-    JLabel systemLabel = new JLabel(rb.getString("LightSystem"));
+    JLabel systemLabel = new JLabel(Bundle.getMessage("LightSystem"));
     JComboBox<String> prefixBox = new JComboBox<String>();
-    JCheckBox addRangeBox = new JCheckBox(rb.getString("LightAddRangeBox"));
+    JCheckBox addRangeBox = new JCheckBox(Bundle.getMessage("AddRangeBox"));
     JTextField fieldHardwareAddress = new JTextField(10);
     JTextField fieldNumToAdd = new JTextField(5);
-    JLabel labelNumToAdd = new JLabel("   " + rb.getString("LabelNumberToAdd") + ":");
+    JLabel labelNumToAdd = new JLabel("   " + Bundle.getMessage("LabelNumberToAdd"));
     String systemSelectionCombo = this.getClass().getName() + ".SystemSelected";
     JPanel panel1a = null;
     JPanel varPanel = null;
-    JLabel systemNameLabel = new JLabel(rb.getString("LightSystemName") + " ");
+    JLabel systemNameLabel = new JLabel(Bundle.getMessage("LightSystemName") + " ");
     JLabel fixedSystemName = new JLabel("xxxxxxxxxxx");
     JTextField userName = new JTextField(10);
-    JLabel userNameLabel = new JLabel(rb.getString("LightUserName") + " ");
+    JLabel userNameLabel = new JLabel(Bundle.getMessage("LightUserName") + " ");
     LightControlTableModel lightControlTableModel = null;
     JButton create;
     JButton update;
@@ -339,24 +338,24 @@ public class LightTableAction extends AbstractTableAction {
     JButton addControl;
 
     ArrayList<LightControl> controlList = new ArrayList<LightControl>();
-    String sensorControl = rb.getString("LightSensorControl");
-    String fastClockControl = rb.getString("LightFastClockControl");
-    String turnoutStatusControl = rb.getString("LightTurnoutStatusControl");
-    String timedOnControl = rb.getString("LightTimedOnControl");
-    String twoSensorControl = rb.getString("LightTwoSensorControl");
-    String noControl = rb.getString("LightNoControl");
+    String sensorControl = Bundle.getMessage("LightSensorControl");
+    String fastClockControl = Bundle.getMessage("LightFastClockControl");
+    String turnoutStatusControl = Bundle.getMessage("LightTurnoutStatusControl");
+    String timedOnControl = Bundle.getMessage("LightTimedOnControl");
+    String twoSensorControl = Bundle.getMessage("LightTwoSensorControl");
+    String noControl = Bundle.getMessage("LightNoControl");
 
-    JLabel status1 = new JLabel(rb.getString("LightCreateInst"));
+    JLabel status1 = new JLabel(Bundle.getMessage("LightCreateInst"));
     JLabel status2 = new JLabel("");
 
     // parts for supporting variable intensity, transition
-    JLabel labelMinIntensity = new JLabel(rb.getString("LightMinIntensity") + "  ");
+    JLabel labelMinIntensity = new JLabel(Bundle.getMessage("LightMinIntensity") + "  ");
     JTextField fieldMinIntensity = new JTextField(3);
     JLabel labelMinIntensityTail = new JLabel(" %   ");
-    JLabel labelMaxIntensity = new JLabel(rb.getString("LightMaxIntensity") + "  ");
+    JLabel labelMaxIntensity = new JLabel(Bundle.getMessage("LightMaxIntensity") + "  ");
     JTextField fieldMaxIntensity = new JTextField(3);
     JLabel labelMaxIntensityTail = new JLabel(" %   ");
-    JLabel labelTransitionTime = new JLabel(rb.getString("LightTransitionTime") + "  ");
+    JLabel labelTransitionTime = new JLabel(Bundle.getMessage("LightTransitionTime") + "  ");
     JTextField fieldTransitionTime = new JTextField(5);
 
     protected void addPressed(ActionEvent e) {
@@ -365,7 +364,7 @@ public class LightTableAction extends AbstractTableAction {
             cancelPressed(null);
         }
         if (addFrame == null) {
-            addFrame = new JmriJFrame(rb.getString("TitleAddLight"), false, true);
+            addFrame = new JmriJFrame(Bundle.getMessage("TitleAddLight"), false, true);
             addFrame.addHelpMenu("package.jmri.jmrit.beantable.LightAddEdit", true);
             addFrame.setLocation(100, 30);
             Container contentPane = addFrame.getContentPane();
@@ -377,7 +376,7 @@ public class LightTableAction extends AbstractTableAction {
             panel1.add(prefixBox);
             panel1.add(new JLabel("   "));
             panel1.add(addRangeBox);
-            addRangeBox.setToolTipText(rb.getString("LightAddRangeHint"));
+            addRangeBox.setToolTipText(Bundle.getMessage("LightAddRangeHint"));
             addRangeBox.addActionListener(new ActionListener() {
                 public void actionPerformed(ActionEvent e) {
                     addRangeChanged();
@@ -387,7 +386,7 @@ public class LightTableAction extends AbstractTableAction {
             systemNameLabel.setVisible(false);
             panel1.add(fixedSystemName);
             fixedSystemName.setVisible(false);
-            prefixBox.setToolTipText(rb.getString("LightSystemHint"));
+            prefixBox.setToolTipText(Bundle.getMessage("LightSystemHint"));
             prefixBox.addActionListener(new ActionListener() {
                 public void actionPerformed(ActionEvent e) {
                     prefixChanged();
@@ -396,44 +395,44 @@ public class LightTableAction extends AbstractTableAction {
             contentPane.add(panel1);
             panel1a = new JPanel();
             panel1a.setLayout(new FlowLayout());
-            panel1a.add(new JLabel(rb.getString("LightHardwareAddress")));
+            panel1a.add(new JLabel(Bundle.getMessage("LabelHardwareAddress")));
             panel1a.add(fieldHardwareAddress);
-            fieldHardwareAddress.setToolTipText(rb.getString("LightHardwareAddressHint"));
+            fieldHardwareAddress.setToolTipText(Bundle.getMessage("LightHardwareAddressHint"));
             panel1a.add(labelNumToAdd);
             panel1a.add(fieldNumToAdd);
-            fieldNumToAdd.setToolTipText(rb.getString("LightNumberToAddHint"));
+            fieldNumToAdd.setToolTipText(Bundle.getMessage("LightNumberToAddHint"));
             contentPane.add(panel1a);
             JPanel panel2 = new JPanel();
             panel2.setLayout(new FlowLayout());
             panel2.add(userNameLabel);
             panel2.add(userName);
-            userName.setToolTipText(rb.getString("LightUserNameHint"));
+            userName.setToolTipText(Bundle.getMessage("LightUserNameHint"));
             contentPane.add(panel2);
             // items for variable intensity lights
             varPanel = new JPanel();
             varPanel.setLayout(new BoxLayout(varPanel, BoxLayout.X_AXIS));
             varPanel.add(new JLabel(" "));
             varPanel.add(labelMinIntensity);
-            fieldMinIntensity.setToolTipText(rb.getString("LightMinIntensityHint"));
+            fieldMinIntensity.setToolTipText(Bundle.getMessage("LightMinIntensityHint"));
             fieldMinIntensity.setHorizontalAlignment(JTextField.RIGHT);
             fieldMinIntensity.setText("  0");
             varPanel.add(fieldMinIntensity);
             varPanel.add(labelMinIntensityTail);
             varPanel.add(labelMaxIntensity);
-            fieldMaxIntensity.setToolTipText(rb.getString("LightMaxIntensityHint"));
+            fieldMaxIntensity.setToolTipText(Bundle.getMessage("LightMaxIntensityHint"));
             fieldMaxIntensity.setHorizontalAlignment(JTextField.RIGHT);
             fieldMaxIntensity.setText("100");
             varPanel.add(fieldMaxIntensity);
             varPanel.add(labelMaxIntensityTail);
             varPanel.add(labelTransitionTime);
-            fieldTransitionTime.setToolTipText(rb.getString("LightTransitionTimeHint"));
+            fieldTransitionTime.setToolTipText(Bundle.getMessage("LightTransitionTimeHint"));
             fieldTransitionTime.setHorizontalAlignment(JTextField.RIGHT);
             fieldTransitionTime.setText("0");
             varPanel.add(fieldTransitionTime);
             varPanel.add(new JLabel(" "));
             Border varPanelBorder = BorderFactory.createEtchedBorder();
             Border varPanelTitled = BorderFactory.createTitledBorder(varPanelBorder,
-                    rb.getString("LightVariableBorder"));
+                    Bundle.getMessage("LightVariableBorder"));
             varPanel.setBorder(varPanelTitled);
             contentPane.add(varPanel);
             // light control table            
@@ -458,7 +457,7 @@ public class LightTableAction extends AbstractTableAction {
             lightControlTable.setDefaultRenderer(JButton.class, buttonRenderer);
             TableCellEditor buttonEditor = new ButtonEditor(new JButton());
             lightControlTable.setDefaultEditor(JButton.class, buttonEditor);
-            JButton testButton = new JButton(rb.getString("ButtonDelete"));
+            JButton testButton = new JButton(Bundle.getMessage("ButtonDelete"));
             lightControlTable.setRowHeight(testButton.getPreferredSize().height);
             TableColumn editColumn = lightControlColumnModel.getColumn(LightControlTableModel.EDIT_COLUMN);
             editColumn.setResizable(false);
@@ -471,17 +470,17 @@ public class LightTableAction extends AbstractTableAction {
             panel3.add(panel31);
             JPanel panel35 = new JPanel();
             panel35.setLayout(new FlowLayout());
-            panel35.add(addControl = new JButton(rb.getString("LightAddControlButton")));
+            panel35.add(addControl = new JButton(Bundle.getMessage("LightAddControlButton")));
             addControl.addActionListener(new ActionListener() {
                 public void actionPerformed(ActionEvent e) {
                     addControlPressed(e);
                 }
             });
-            addControl.setToolTipText(rb.getString("LightAddControlButtonHint"));
+            addControl.setToolTipText(Bundle.getMessage("LightAddControlButtonHint"));
             panel3.add(panel35);
             Border panel3Border = BorderFactory.createEtchedBorder();
             Border panel3Titled = BorderFactory.createTitledBorder(panel3Border,
-                    rb.getString("LightControlBorder"));
+                    Bundle.getMessage("LightControlBorder"));
             panel3.setBorder(panel3Titled);
             contentPane.add(panel3);
             // message items
@@ -490,7 +489,7 @@ public class LightTableAction extends AbstractTableAction {
             JPanel panel41 = new JPanel();
             panel41.setLayout(new FlowLayout());
             panel41.add(status1);
-            status1.setText(rb.getString("LightCreateInst"));
+            status1.setText(Bundle.getMessage("LightCreateInst"));
             JPanel panel42 = new JPanel();
             panel42.setLayout(new FlowLayout());
             panel42.add(status2);
@@ -504,27 +503,27 @@ public class LightTableAction extends AbstractTableAction {
             // buttons at bottom of window
             JPanel panel5 = new JPanel();
             panel5.setLayout(new FlowLayout());
-            panel5.add(create = new JButton(rb.getString("ButtonCreate")));
+            panel5.add(create = new JButton(Bundle.getMessage("ButtonCreate")));
             create.addActionListener(new ActionListener() {
                 public void actionPerformed(ActionEvent e) {
                     createPressed(e);
                 }
             });
-            create.setToolTipText(rb.getString("LightCreateButtonHint"));
-            panel5.add(update = new JButton(rb.getString("ButtonUpdate")));
+            create.setToolTipText(Bundle.getMessage("LightCreateButtonHint"));
+            panel5.add(update = new JButton(Bundle.getMessage("ButtonUpdate")));
             update.addActionListener(new ActionListener() {
                 public void actionPerformed(ActionEvent e) {
                     updatePressed(e);
                 }
             });
-            update.setToolTipText(rb.getString("LightUpdateButtonHint"));
-            panel5.add(cancel = new JButton(rb.getString("ButtonCancel")));
+            update.setToolTipText(Bundle.getMessage("LightUpdateButtonHint"));
+            panel5.add(cancel = new JButton(Bundle.getMessage("ButtonCancel")));
             cancel.addActionListener(new ActionListener() {
                 public void actionPerformed(ActionEvent e) {
                     cancelPressed(e);
                 }
             });
-            cancel.setToolTipText(rb.getString("LightCancelButtonHint"));
+            cancel.setToolTipText(Bundle.getMessage("LightCancelButtonHint"));
             cancel.setVisible(true);
             update.setVisible(false);
             create.setVisible(true);
@@ -633,7 +632,7 @@ public class LightTableAction extends AbstractTableAction {
         String curAddress = fieldHardwareAddress.getText();
         if (curAddress.length() < 1) {
             log.warn("Hardware Address was not entered");
-            status1.setText(rb.getString("LightError17"));
+            status1.setText(Bundle.getMessage("LightError17"));
             status2.setVisible(false);
             addFrame.pack();
             addFrame.setVisible(true);
@@ -648,8 +647,8 @@ public class LightTableAction extends AbstractTableAction {
         if (!InstanceManager.lightManagerInstance().validSystemNameFormat(suName)) {
             // Invalid System Name format
             log.warn("Invalid Light system name format entered: " + suName);
-            status1.setText(rb.getString("LightError3"));
-            status2.setText(rb.getString("LightError6"));
+            status1.setText(Bundle.getMessage("LightError3"));
+            status2.setText(Bundle.getMessage("LightError6"));
             status2.setVisible(true);
             addFrame.pack();
             addFrame.setVisible(true);
@@ -661,8 +660,8 @@ public class LightTableAction extends AbstractTableAction {
         Light g = InstanceManager.lightManagerInstance().getBySystemName(sName);
         if (g != null) {
             // Light already exists
-            status1.setText(rb.getString("LightError1"));
-            status2.setText(rb.getString("LightError2"));
+            status1.setText(Bundle.getMessage("LightError1"));
+            status2.setText(Bundle.getMessage("LightError2"));
             status2.setVisible(true);
             addFrame.pack();
             addFrame.setVisible(true);
@@ -674,8 +673,8 @@ public class LightTableAction extends AbstractTableAction {
             g = InstanceManager.lightManagerInstance().getBySystemName(altName);
             if (g != null) {
                 // Light already exists
-                status1.setText(rb.getString("LightError10") + " '" + altName + "' "
-                        + rb.getString("LightError11"));
+                status1.setText(Bundle.getMessage("LightError10") + " '" + altName + "' "
+                        + Bundle.getMessage("LightError11"));
                 status2.setVisible(false);
                 addFrame.pack();
                 addFrame.setVisible(true);
@@ -687,8 +686,8 @@ public class LightTableAction extends AbstractTableAction {
             g = InstanceManager.lightManagerInstance().getByUserName(uName);
             if (g != null) {
                 // Light with this user name already exists
-                status1.setText(rb.getString("LightError8"));
-                status2.setText(rb.getString("LightError9"));
+                status1.setText(Bundle.getMessage("LightError8"));
+                status2.setText(Bundle.getMessage("LightError9"));
                 status2.setVisible(true);
                 addFrame.pack();
                 addFrame.setVisible(true);
@@ -698,8 +697,8 @@ public class LightTableAction extends AbstractTableAction {
         // Does System Name correspond to configured hardware
         if (!InstanceManager.lightManagerInstance().validSystemNameConfig(sName)) {
             // System Name not in configured hardware
-            status1.setText(rb.getString("LightError5"));
-            status2.setText(rb.getString("LightError6"));
+            status1.setText(Bundle.getMessage("LightError5"));
+            status2.setText(Bundle.getMessage("LightError6"));
             status2.setVisible(true);
             addFrame.pack();
             addFrame.setVisible(true);
@@ -714,11 +713,11 @@ public class LightTableAction extends AbstractTableAction {
             log.warn("Requested Light " + sName + " uses same address as Turnout " + testT);
             if (!noWarn) {
                 int selectedValue = JOptionPane.showOptionDialog(addFrame,
-                        rb.getString("LightWarn5") + " " + sName + " " + rb.getString("LightWarn6") + " "
-                        + testSN + ".\n   " + rb.getString("LightWarn7"), rb.getString("WarningTitle"),
+                        Bundle.getMessage("LightWarn5") + " " + sName + " " + Bundle.getMessage("LightWarn6") + " "
+                        + testSN + ".\n   " + Bundle.getMessage("LightWarn7"), Bundle.getMessage("WarningTitle"),
                         JOptionPane.YES_NO_CANCEL_OPTION, JOptionPane.QUESTION_MESSAGE, null,
-                        new Object[]{rb.getString("ButtonYes"), rb.getString("ButtonNo"),
-                            rb.getString("ButtonYesPlus")}, rb.getString("ButtonNo"));
+                        new Object[]{Bundle.getMessage("ButtonYes"), Bundle.getMessage("ButtonNo"),
+                            Bundle.getMessage("ButtonYesPlus")}, Bundle.getMessage("ButtonNo"));
                 if (selectedValue == 1) {
                     return;   // return without creating if "No" response
                 }
@@ -728,7 +727,7 @@ public class LightTableAction extends AbstractTableAction {
                 }
             }
             // Light with this system name already exists as a turnout
-            status2.setText(rb.getString("LightWarn4") + " " + testSN + ".");
+            status2.setText(Bundle.getMessage("LightWarn4") + " " + testSN + ".");
             status2.setVisible(true);
         }
         // Check multiple Light creation request, if supported
@@ -740,7 +739,7 @@ public class LightTableAction extends AbstractTableAction {
             try {
                 numberOfLights = Integer.parseInt(fieldNumToAdd.getText());
             } catch (NumberFormatException ex) {
-                status1.setText(rb.getString("LightError4"));
+                status1.setText(Bundle.getMessage("LightError4"));
                 status2.setVisible(false);
                 addFrame.pack();
                 addFrame.setVisible(true);
@@ -751,7 +750,7 @@ public class LightTableAction extends AbstractTableAction {
             try {
                 startingAddress = Integer.parseInt(fieldHardwareAddress.getText());
             } catch (NumberFormatException ex) {
-                status1.setText(rb.getString("LightError18"));
+                status1.setText(Bundle.getMessage("LightError18"));
                 status2.setVisible(false);
                 addFrame.pack();
                 addFrame.setVisible(true);
@@ -764,7 +763,7 @@ public class LightTableAction extends AbstractTableAction {
             for (int i = 0; i < numberOfLights; i++) {
                 testAdd = lightPrefix + add;
                 if (InstanceManager.lightManagerInstance().getBySystemName(testAdd) != null) {
-                    status1.setText(rb.getString("LightError19"));
+                    status1.setText(Bundle.getMessage("LightError19"));
                     status2.setVisible(true);
                     addFrame.pack();
                     addFrame.setVisible(true);
@@ -773,7 +772,7 @@ public class LightTableAction extends AbstractTableAction {
                 }
                 testAdd = turnoutPrefix + add;
                 if (InstanceManager.turnoutManagerInstance().getBySystemName(testAdd) != null) {
-                    status1.setText(rb.getString("LightError19"));
+                    status1.setText(Bundle.getMessage("LightError19"));
                     status2.setVisible(true);
                     addFrame.pack();
                     addFrame.setVisible(true);
@@ -821,7 +820,7 @@ public class LightTableAction extends AbstractTableAction {
             g.setTransitionTime(0.0);
         }
         // provide feedback to user
-        String feedback = rb.getString("LightCreateFeedback") + " " + sName + ", " + uName;
+        String feedback = Bundle.getMessage("LightCreateFeedback") + " " + sName + ", " + uName;
         // create additional lights if requested
         if (numberOfLights > 1) {
             String sxName = "";
@@ -861,8 +860,8 @@ public class LightTableAction extends AbstractTableAction {
         String sName = InstanceManager.lightManagerInstance().normalizeSystemName(suName);
         if (sName.equals("")) {
             // Entered system name has invalid format
-            status1.setText(rb.getString("LightError3"));
-            status2.setText(rb.getString("LightError6"));
+            status1.setText(Bundle.getMessage("LightError3"));
+            status2.setText(Bundle.getMessage("LightError6"));
             status2.setVisible(true);
             addFrame.pack();
             addFrame.setVisible(true);
@@ -880,8 +879,8 @@ public class LightTableAction extends AbstractTableAction {
             }
             if (g == null) {
                 // Light does not exist, so cannot be edited
-                status1.setText(rb.getString("LightError7"));
-                status2.setText(rb.getString("LightError6"));
+                status1.setText(Bundle.getMessage("LightError7"));
+                status2.setText(Bundle.getMessage("LightError6"));
                 status2.setVisible(true);
                 addFrame.pack();
                 addFrame.setVisible(true);
@@ -916,7 +915,7 @@ public class LightTableAction extends AbstractTableAction {
 
         update.setVisible(true);
         create.setVisible(false);
-        status1.setText(rb.getString("LightUpdateInst"));
+        status1.setText(Bundle.getMessage("LightUpdateInst"));
         status2.setText("");
         status2.setVisible(false);
         addFrame.pack();
@@ -927,9 +926,9 @@ public class LightTableAction extends AbstractTableAction {
     void handleCreateException(Exception ex, String sysName) {
         javax.swing.JOptionPane.showMessageDialog(addFrame,
                 java.text.MessageFormat.format(
-                        rb.getString("ErrorLightAddFailed"),
+                        Bundle.getMessage("ErrorLightAddFailed"),
                         new Object[]{sysName}),
-                rb.getString("ErrorTitle"),
+                Bundle.getMessage("ErrorTitle"),
                 javax.swing.JOptionPane.ERROR_MESSAGE);
     }
 
@@ -949,8 +948,8 @@ public class LightTableAction extends AbstractTableAction {
             Light p = InstanceManager.lightManagerInstance().getByUserName(uName);
             if (p != null) {
                 // Light with this user name already exists
-                status1.setText(rb.getString("LightError8"));
-                status2.setText(rb.getString("LightError9"));
+                status1.setText(Bundle.getMessage("LightError8"));
+                status2.setText(Bundle.getMessage("LightError9"));
                 status2.setVisible(true);
                 return;
             }
@@ -992,7 +991,7 @@ public class LightTableAction extends AbstractTableAction {
     void cancelPressed(ActionEvent e) {
         if (inEditMode) {
             // if in Edit mode, cancel the Edit and reactivate the Light
-            status1.setText(rb.getString("LightCreateInst"));
+            status1.setText(Bundle.getMessage("LightCreateInst"));
             update.setVisible(false);
             create.setVisible(true);
             fixedSystemName.setVisible(false);
@@ -1028,7 +1027,7 @@ public class LightTableAction extends AbstractTableAction {
     // items for add/edit Light Control window
     private JmriJFrame addControlFrame = null;
     private JComboBox<String> typeBox;
-    private JLabel typeBoxLabel = new JLabel(rb.getString("LightControlType"));
+    private JLabel typeBoxLabel = new JLabel(Bundle.getMessage("LightControlType"));
     private int sensorControlIndex;
     private int fastClockControlIndex;
     private int turnoutStatusControlIndex;
@@ -1043,10 +1042,10 @@ public class LightTableAction extends AbstractTableAction {
     private JTextField field1b = new JTextField(8);  // Fast Clock
     private JTextField field1c = new JTextField(10);  // Turnout
     private JTextField field1d = new JTextField(10);  // Timed ON
-    private JLabel f1Label = new JLabel(rb.getString("LightSensor"));
+    private JLabel f1Label = new JLabel(Bundle.getMessage("LightSensor"));
     private JTextField field2a = new JTextField(8);  // Fast Clock
     private JTextField field2b = new JTextField(8); // Timed ON
-    private JLabel f2Label = new JLabel(rb.getString("LightSensorSense"));
+    private JLabel f2Label = new JLabel(Bundle.getMessage("LightSensorSense"));
     private JComboBox<String> stateBox;
     private int sensorActiveIndex;
     private int sensorInactiveIndex;
@@ -1064,7 +1063,7 @@ public class LightTableAction extends AbstractTableAction {
             // cancel Edit and reactivate the edited light
             cancelControlPressed(null);
         }
-        // set up to edit. Use separate Thread so window is created on top
+        // set up to edit. Use separate Runnable so window is created on top
         class WindowMaker implements Runnable {
 
             WindowMaker() {
@@ -1083,7 +1082,7 @@ public class LightTableAction extends AbstractTableAction {
      */
     private void addEditControlWindow() {
         if (addControlFrame == null) {
-            addControlFrame = new JmriJFrame(rb.getString("TitleAddLightControl"), false, true);
+            addControlFrame = new JmriJFrame(Bundle.getMessage("TitleAddLightControl"), false, true);
             addControlFrame.addHelpMenu("package.jmri.jmrit.beantable.LightAddEdit", true);
             addControlFrame.setLocation(120, 40);
             Container contentPane = addControlFrame.getContentPane();
@@ -1107,7 +1106,7 @@ public class LightTableAction extends AbstractTableAction {
                     controlTypeChanged();
                 }
             });
-            typeBox.setToolTipText(rb.getString("LightControlTypeHint"));
+            typeBox.setToolTipText(Bundle.getMessage("LightControlTypeHint"));
             JPanel panel32 = new JPanel();
             panel32.setLayout(new FlowLayout());
             panel32.add(f1Label);
@@ -1124,14 +1123,14 @@ public class LightTableAction extends AbstractTableAction {
             field1b.setVisible(false);
             field1c.setVisible(false);
             field1d.setVisible(false);
-            field1a.setToolTipText(rb.getString("LightSensorHint"));
-            field1a2.setToolTipText(rb.getString("LightTwoSensorHint"));
+            field1a.setToolTipText(Bundle.getMessage("LightSensorHint"));
+            field1a2.setToolTipText(Bundle.getMessage("LightTwoSensorHint"));
             JPanel panel33 = new JPanel();
             panel33.setLayout(new FlowLayout());
             panel33.add(f2Label);
             panel33.add(stateBox = new JComboBox<String>(new String[]{
-                rbean.getString("SensorStateActive"), rbean.getString("SensorStateInactive"),}));
-            stateBox.setToolTipText(rb.getString("LightSensorSenseHint"));
+                Bundle.getMessage("SensorStateActive"), Bundle.getMessage("SensorStateInactive"),}));
+            stateBox.setToolTipText(Bundle.getMessage("LightSensorSenseHint"));
             panel33.add(field2a);
             panel33.add(field2b);
             field2a.setText("00:00");
@@ -1146,27 +1145,27 @@ public class LightTableAction extends AbstractTableAction {
             contentPane.add(panel3);
             JPanel panel5 = new JPanel();
             panel5.setLayout(new FlowLayout());
-            panel5.add(createControl = new JButton(rb.getString("ButtonCreate")));
+            panel5.add(createControl = new JButton(Bundle.getMessage("ButtonCreate")));
             createControl.addActionListener(new ActionListener() {
                 public void actionPerformed(ActionEvent e) {
                     createControlPressed(e);
                 }
             });
-            createControl.setToolTipText(rb.getString("LightCreateControlButtonHint"));
-            panel5.add(updateControl = new JButton(rb.getString("ButtonUpdate")));
+            createControl.setToolTipText(Bundle.getMessage("LightCreateControlButtonHint"));
+            panel5.add(updateControl = new JButton(Bundle.getMessage("ButtonUpdate")));
             updateControl.addActionListener(new ActionListener() {
                 public void actionPerformed(ActionEvent e) {
                     updateControlPressed(e);
                 }
             });
-            updateControl.setToolTipText(rb.getString("LightUpdateControlButtonHint"));
-            panel5.add(cancelControl = new JButton(rb.getString("ButtonCancel")));
+            updateControl.setToolTipText(Bundle.getMessage("LightUpdateControlButtonHint"));
+            panel5.add(cancelControl = new JButton(Bundle.getMessage("ButtonCancel")));
             cancelControl.addActionListener(new ActionListener() {
                 public void actionPerformed(ActionEvent e) {
                     cancelControlPressed(e);
                 }
             });
-            cancelControl.setToolTipText(rb.getString("LightCancelButtonHint"));
+            cancelControl.setToolTipText(Bundle.getMessage("LightCancelButtonHint"));
             cancelControl.setVisible(true);
             updateControl.setVisible(false);
             createControl.setVisible(true);
@@ -1195,19 +1194,19 @@ public class LightTableAction extends AbstractTableAction {
     void setUpControlType(String ctype) {
         if (sensorControl.equals(ctype)) {
             // set up window for sensor control
-            f1Label.setText(rb.getString("LightSensor"));
-            field1a.setToolTipText(rb.getString("LightSensorHint"));
-            f2Label.setText(rb.getString("LightSensorSense"));
+            f1Label.setText(Bundle.getMessage("LightSensor"));
+            field1a.setToolTipText(Bundle.getMessage("LightSensorHint"));
+            f2Label.setText(Bundle.getMessage("LightSensorSense"));
             stateBox.removeAllItems();
-            stateBox.addItem(rbean.getString("SensorStateActive"));
+            stateBox.addItem(Bundle.getMessage("SensorStateActive"));
             sensorActiveIndex = 0;
-            stateBox.addItem(rbean.getString("SensorStateInactive"));
+            stateBox.addItem(Bundle.getMessage("SensorStateInactive"));
             sensorInactiveIndex = 1;
-            stateBox.setToolTipText(rb.getString("LightSensorSenseHint"));
+            stateBox.setToolTipText(Bundle.getMessage("LightSensorSenseHint"));
             f2Label.setVisible(true);
             field1a.setVisible(true);
             field1a2.setVisible(false);
-            field1a.setToolTipText(rb.getString("LightSensorHint"));
+            field1a.setToolTipText(Bundle.getMessage("LightSensorHint"));
             field1b.setVisible(false);
             field1c.setVisible(false);
             field1d.setVisible(false);
@@ -1217,10 +1216,10 @@ public class LightTableAction extends AbstractTableAction {
             defaultControlIndex = sensorControlIndex;
         } else if (fastClockControl.equals(ctype)) {
             // set up window for fast clock control
-            f1Label.setText(rb.getString("LightScheduleOn"));
-            field1b.setToolTipText(rb.getString("LightScheduleHint"));
-            f2Label.setText(rb.getString("LightScheduleOff"));
-            field2a.setToolTipText(rb.getString("LightScheduleHint"));
+            f1Label.setText(Bundle.getMessage("LightScheduleOn"));
+            field1b.setToolTipText(Bundle.getMessage("LightScheduleHint"));
+            f2Label.setText(Bundle.getMessage("LightScheduleOff"));
+            field2a.setToolTipText(Bundle.getMessage("LightScheduleHint"));
             f2Label.setVisible(true);
             field1a.setVisible(false);
             field1a2.setVisible(false);
@@ -1233,15 +1232,15 @@ public class LightTableAction extends AbstractTableAction {
             defaultControlIndex = fastClockControlIndex;
         } else if (turnoutStatusControl.equals(ctype)) {
             // set up window for turnout status control
-            f1Label.setText(rb.getString("LightTurnout"));
-            field1c.setToolTipText(rb.getString("LightTurnoutHint"));
-            f2Label.setText(rb.getString("LightTurnoutSense"));
+            f1Label.setText(Bundle.getMessage("LightTurnout"));
+            field1c.setToolTipText(Bundle.getMessage("LightTurnoutHint"));
+            f2Label.setText(Bundle.getMessage("LightTurnoutSense"));
             stateBox.removeAllItems();
             stateBox.addItem(InstanceManager.turnoutManagerInstance().getClosedText());
             turnoutClosedIndex = 0;
             stateBox.addItem(InstanceManager.turnoutManagerInstance().getThrownText());
             turnoutThrownIndex = 1;
-            stateBox.setToolTipText(rb.getString("LightTurnoutSenseHint"));
+            stateBox.setToolTipText(Bundle.getMessage("LightTurnoutSenseHint"));
             f2Label.setVisible(true);
             field1a.setVisible(false);
             field1a2.setVisible(false);
@@ -1254,10 +1253,10 @@ public class LightTableAction extends AbstractTableAction {
             defaultControlIndex = turnoutStatusControlIndex;
         } else if (timedOnControl.equals(ctype)) {
             // set up window for sensor control
-            f1Label.setText(rb.getString("LightTimedSensor"));
-            field1d.setToolTipText(rb.getString("LightTimedSensorHint"));
-            f2Label.setText(rb.getString("LightTimedDurationOn"));
-            field2b.setToolTipText(rb.getString("LightTimedDurationOnHint"));
+            f1Label.setText(Bundle.getMessage("LightTimedSensor"));
+            field1d.setToolTipText(Bundle.getMessage("LightTimedSensorHint"));
+            f2Label.setText(Bundle.getMessage("LightTimedDurationOn"));
+            field2b.setToolTipText(Bundle.getMessage("LightTimedDurationOnHint"));
             f2Label.setVisible(true);
             field1a.setVisible(false);
             field1a2.setVisible(false);
@@ -1270,19 +1269,19 @@ public class LightTableAction extends AbstractTableAction {
             defaultControlIndex = timedOnControlIndex;
         } else if (twoSensorControl.equals(ctype)) {
             // set up window for two sensor control
-            f1Label.setText(rb.getString("LightSensor"));
-            field1a.setToolTipText(rb.getString("LightSensorHint"));
-            f2Label.setText(rb.getString("LightSensorSense"));
+            f1Label.setText(Bundle.getMessage("LightSensor"));
+            field1a.setToolTipText(Bundle.getMessage("LightSensorHint"));
+            f2Label.setText(Bundle.getMessage("LightSensorSense"));
             stateBox.removeAllItems();
-            stateBox.addItem(rbean.getString("SensorStateActive"));
+            stateBox.addItem(Bundle.getMessage("SensorStateActive"));
             sensorActiveIndex = 0;
-            stateBox.addItem(rbean.getString("SensorStateInactive"));
+            stateBox.addItem(Bundle.getMessage("SensorStateInactive"));
             sensorInactiveIndex = 1;
-            stateBox.setToolTipText(rb.getString("LightSensorSenseHint"));
+            stateBox.setToolTipText(Bundle.getMessage("LightSensorSenseHint"));
             f2Label.setVisible(true);
             field1a.setVisible(true);
             field1a2.setVisible(true);
-            field1a.setToolTipText(rb.getString("LightTwoSensorHint"));
+            field1a.setToolTipText(Bundle.getMessage("LightTwoSensorHint"));
             field1b.setVisible(false);
             field1c.setVisible(false);
             field1d.setVisible(false);
@@ -1292,7 +1291,7 @@ public class LightTableAction extends AbstractTableAction {
             defaultControlIndex = twoSensorControlIndex;
         } else if (noControl.equals(ctype)) {
             // set up window for no control 
-            f1Label.setText(rb.getString("LightNoneSelected"));
+            f1Label.setText(Bundle.getMessage("LightNoneSelected"));
             f2Label.setVisible(false);
             field1a.setVisible(false);
             field1a2.setVisible(false);
@@ -1342,9 +1341,9 @@ public class LightTableAction extends AbstractTableAction {
             inEditControlMode = false;
         }
         if (inEditMode) {
-            status1.setText(rb.getString("LightUpdateInst"));
+            status1.setText(Bundle.getMessage("LightUpdateInst"));
         } else {
-            status1.setText(rb.getString("LightCreateInst"));
+            status1.setText(Bundle.getMessage("LightCreateInst"));
         }
         status2.setText("");
         status2.setVisible(false);
@@ -1386,13 +1385,13 @@ public class LightTableAction extends AbstractTableAction {
                 }
             }
             int sState = Sensor.ACTIVE;
-            if (stateBox.getSelectedItem().equals(rbean.getString("SensorStateInactive"))) {
+            if (stateBox.getSelectedItem().equals(Bundle.getMessage("SensorStateInactive"))) {
                 sState = Sensor.INACTIVE;
             }
             g.setControlSensorName(sensorName);
             g.setControlSensorSense(sState);
             if (s == null) {
-                status1.setText(rb.getString("LightWarn1"));
+                status1.setText(Bundle.getMessage("LightWarn1"));
                 return (false);
             }
         } else if (fastClockControl.equals(typeBox.getSelectedItem())) {
@@ -1406,18 +1405,18 @@ public class LightTableAction extends AbstractTableAction {
             int offMin = 0;
             String s = field1b.getText();
             if ((s.length() != 5) || (s.charAt(2) != ':')) {
-                status1.setText(rb.getString("LightError12"));
+                status1.setText(Bundle.getMessage("LightError12"));
                 error = true;
             }
             if (!error) {
                 try {
                     onHour = Integer.valueOf(s.substring(0, 2)).intValue();
                     if ((onHour < 0) || (onHour > 24)) {
-                        status1.setText(rb.getString("LightError13"));
+                        status1.setText(Bundle.getMessage("LightError13"));
                         error = true;
                     }
                 } catch (Exception e) {
-                    status1.setText(rb.getString("LightError14"));
+                    status1.setText(Bundle.getMessage("LightError14"));
                     error = true;
                 }
             }
@@ -1425,28 +1424,28 @@ public class LightTableAction extends AbstractTableAction {
                 try {
                     onMin = Integer.valueOf(s.substring(3, 5)).intValue();
                     if ((onMin < 0) || (onMin > 59)) {
-                        status1.setText(rb.getString("LightError13"));
+                        status1.setText(Bundle.getMessage("LightError13"));
                         error = true;
                     }
                 } catch (Exception e) {
-                    status1.setText(rb.getString("LightError14"));
+                    status1.setText(Bundle.getMessage("LightError14"));
                     error = true;
                 }
             }
             s = field2a.getText();
             if ((s.length() != 5) || (s.charAt(2) != ':')) {
-                status1.setText(rb.getString("LightError12"));
+                status1.setText(Bundle.getMessage("LightError12"));
                 error = true;
             }
             if (!error) {
                 try {
                     offHour = Integer.valueOf(s.substring(0, 2)).intValue();
                     if ((offHour < 0) || (offHour > 24)) {
-                        status1.setText(rb.getString("LightError13"));
+                        status1.setText(Bundle.getMessage("LightError13"));
                         error = true;
                     }
                 } catch (Exception e) {
-                    status1.setText(rb.getString("LightError14"));
+                    status1.setText(Bundle.getMessage("LightError14"));
                     error = true;
                 }
             }
@@ -1454,11 +1453,11 @@ public class LightTableAction extends AbstractTableAction {
                 try {
                     offMin = Integer.valueOf(s.substring(3, 5)).intValue();
                     if ((offMin < 0) || (offMin > 59)) {
-                        status1.setText(rb.getString("LightError13"));
+                        status1.setText(Bundle.getMessage("LightError13"));
                         error = true;
                     }
                 } catch (Exception e) {
-                    status1.setText(rb.getString("LightError14"));
+                    status1.setText(Bundle.getMessage("LightError14"));
                     error = true;
                 }
             }
@@ -1487,7 +1486,7 @@ public class LightTableAction extends AbstractTableAction {
                             getBySystemName(testSN);
                     if (testLight != null) {
                         // Requested turnout bit is already assigned to a Light
-                        status2.setText(rb.getString("LightWarn3") + " " + testSN + ".");
+                        status2.setText(Bundle.getMessage("LightWarn3") + " " + testSN + ".");
                         status2.setVisible(true);
                         error = true;
                     }
@@ -1517,7 +1516,7 @@ public class LightTableAction extends AbstractTableAction {
             g.setControlTurnout(turnoutName);
             g.setControlTurnoutState(tState);
             if (t == null) {
-                status1.setText(rb.getString("LightWarn2"));
+                status1.setText(Bundle.getMessage("LightWarn2"));
                 return (false);
             }
         } else if (timedOnControl.equals(typeBox.getSelectedItem())) {
@@ -1550,13 +1549,13 @@ public class LightTableAction extends AbstractTableAction {
                 dur = Integer.parseInt(field2b.getText());
             } catch (Exception e) {
                 if (s != null) {
-                    status1.setText(rb.getString("LightWarn9"));
+                    status1.setText(Bundle.getMessage("LightWarn9"));
                     return (false);
                 }
             }
             g.setTimedOnDuration(dur);
             if (s == null) {
-                status1.setText(rb.getString("LightWarn8"));
+                status1.setText(Bundle.getMessage("LightWarn8"));
                 return (false);
             }
         } else if (twoSensorControl.equals(typeBox.getSelectedItem())) {
@@ -1598,14 +1597,14 @@ public class LightTableAction extends AbstractTableAction {
                 }
             }
             int sState = Sensor.ACTIVE;
-            if (stateBox.getSelectedItem().equals(rbean.getString("SensorStateInactive"))) {
+            if (stateBox.getSelectedItem().equals(Bundle.getMessage("SensorStateInactive"))) {
                 sState = Sensor.INACTIVE;
             }
             g.setControlSensorName(sensorName);
             g.setControlSensor2Name(sensor2Name);
             g.setControlSensorSense(sState);
             if (s == null) {
-                status1.setText(rb.getString("LightWarn1"));
+                status1.setText(Bundle.getMessage("LightWarn1"));
                 return (false);
             }
         } else if (noControl.equals(typeBox.getSelectedItem())) {
@@ -1669,21 +1668,21 @@ public class LightTableAction extends AbstractTableAction {
     public String getDescriptionText(LightControl lc, int type) {
         switch (type) {
             case Light.SENSOR_CONTROL:
-                return java.text.MessageFormat.format(rb.getString("LightSensorControlDes"),
+                return java.text.MessageFormat.format(Bundle.getMessage("LightSensorControlDes"),
                         new Object[]{lc.getControlSensorName(), getControlSensorSenseText(lc)});
             case Light.FAST_CLOCK_CONTROL:
-                return java.text.MessageFormat.format(rb.getString("LightFastClockDes"),
+                return java.text.MessageFormat.format(Bundle.getMessage("LightFastClockDes"),
                         new Object[]{formatTime(lc.getFastClockOnHour(), lc.getFastClockOnMin()),
                             formatTime(lc.getFastClockOffHour(), lc.getFastClockOffMin())});
             case Light.TURNOUT_STATUS_CONTROL:
-                return java.text.MessageFormat.format(rb.getString("LightTurnoutControlDes"),
+                return java.text.MessageFormat.format(Bundle.getMessage("LightTurnoutControlDes"),
                         new Object[]{lc.getControlTurnoutName(), getControlTurnoutStateText(lc)});
             case Light.TIMED_ON_CONTROL:
-                return java.text.MessageFormat.format(rb.getString("LightTimedOnControlDes"),
+                return java.text.MessageFormat.format(Bundle.getMessage("LightTimedOnControlDes"),
                         new Object[]{"" + lc.getTimedOnDuration(), lc.getControlTimedOnSensorName(),
                             getControlSensorSenseText(lc)});
             case Light.TWO_SENSOR_CONTROL:
-                return java.text.MessageFormat.format(rb.getString("LightTwoSensorControlDes"),
+                return java.text.MessageFormat.format(Bundle.getMessage("LightTwoSensorControlDes"),
                         new Object[]{lc.getControlSensorName(), lc.getControlSensor2Name(),
                             getControlSensorSenseText(lc)});
             default:
@@ -1694,9 +1693,9 @@ public class LightTableAction extends AbstractTableAction {
     private String getControlSensorSenseText(LightControl lc) {
         int s = lc.getControlSensorSense();
         if (s == Sensor.ACTIVE) {
-            return rbean.getString("SensorStateActive");
+            return Bundle.getMessage("SensorStateActive");
         }
-        return rbean.getString("SensorStateInactive");
+        return Bundle.getMessage("SensorStateInactive");
     }
 
     private String getControlTurnoutStateText(LightControl lc) {
@@ -1856,9 +1855,9 @@ public class LightTableAction extends AbstractTableAction {
 
         public String getColumnName(int col) {
             if (col == TYPE_COLUMN) {
-                return rb.getString("LightControlType");
+                return Bundle.getMessage("LightControlType");
             } else if (col == DESCRIPTION_COLUMN) {
-                return rb.getString("LightControlDescription");
+                return Bundle.getMessage("LightControlDescription");
             }
             return "";
         }
@@ -1889,9 +1888,9 @@ public class LightTableAction extends AbstractTableAction {
                 case DESCRIPTION_COLUMN:
                     return (getDescriptionText(lc, lc.getControlType()));
                 case EDIT_COLUMN:
-                    return rb.getString("ButtonEdit");
+                    return Bundle.getMessage("ButtonEdit");
                 case REMOVE_COLUMN:
-                    return rb.getString("ButtonDelete");
+                    return Bundle.getMessage("ButtonDelete");
                 default:
                     return "";
             }
@@ -1899,7 +1898,7 @@ public class LightTableAction extends AbstractTableAction {
 
         public void setValueAt(Object value, int row, int col) {
             if (col == EDIT_COLUMN) {
-                // set up to edit. Use separate Thread so window is created on top
+                // set up to edit. Use separate Runnable so window is created on top
                 class WindowMaker implements Runnable {
 
                     WindowMaker(int _row) {
@@ -1922,13 +1921,13 @@ public class LightTableAction extends AbstractTableAction {
     }
 
     public String getClassDescription() {
-        return rb.getString("TitleLightTable");
+        return Bundle.getMessage("TitleLightTable");
     }
 
     protected String getClassName() {
         return LightTableAction.class.getName();
     }
 
-    static final Logger log = LoggerFactory.getLogger(LightTableAction.class.getName());
+    private final static Logger log = LoggerFactory.getLogger(LightTableAction.class.getName());
 }
 /* @(#)LightTableAction.java */

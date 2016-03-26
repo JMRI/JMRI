@@ -1,5 +1,6 @@
 package jmri.jmrix.dcc4pc.configurexml;
 
+import jmri.configurexml.JmriConfigureXmlException;
 import org.jdom2.Element;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -28,12 +29,13 @@ public class Dcc4PcSensorManagerXml extends jmri.managers.configurexml.AbstractS
         log.error("Invalid method called");
     }
 
-    public boolean load(Element sensors) throws jmri.configurexml.JmriConfigureXmlException {
+    @Override
+    public boolean load(Element shared, Element perNode) throws JmriConfigureXmlException {
         // create the master object
         //Dcc4PcSensorManager.instance();
         // load individual sensors
-        return loadSensors(sensors);
+        return loadSensors(shared);
     }
 
-    static Logger log = LoggerFactory.getLogger(Dcc4PcSensorManagerXml.class.getName());
+    private final static Logger log = LoggerFactory.getLogger(Dcc4PcSensorManagerXml.class.getName());
 }

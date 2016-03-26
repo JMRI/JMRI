@@ -1,13 +1,3 @@
-/**
- * Mx1MonPane.java
- *
- * Description:	Swing action to create and register a MonFrame object
- *
- * @author	Bob Jacobsen Copyright (C) 2001, 2008
- * @version	$Revision: 22942 $
- * @author	kcameron Copyright (C) 2011 copied from SerialMonPane.java
- * @author	Daniel Boudreau Copyright (C) 2012 added human readable format
- */
 package jmri.jmrix.zimo.swing.monitor;
 
 import java.util.Date;
@@ -19,9 +9,14 @@ import jmri.jmrix.zimo.swing.Mx1PanelInterface;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+/**
+ * Swing action to create and register a MonFrame object
+ *
+ * @author	Bob Jacobsen Copyright (C) 2001, 2008
+ * @author	kcameron Copyright (C) 2011 copied from SerialMonPane.java
+ * @author	Daniel Boudreau Copyright (C) 2012 added human readable format
+ */
 public class Mx1MonPanel extends jmri.jmrix.AbstractMonPane implements Mx1Listener, Mx1PanelInterface {
-
-    private static final long serialVersionUID = 6106790197336170372L;
 
     public Mx1MonPanel() {
         super();
@@ -128,8 +123,6 @@ public class Mx1MonPanel extends jmri.jmrix.AbstractMonPane implements Mx1Listen
      */
     static public class Default extends jmri.jmrix.zimo.swing.Mx1NamedPaneAction {
 
-        private static final long serialVersionUID = -7644336249246783644L;
-
         public Default() {
             super("Mx1 Command Monitor",
                     new jmri.util.swing.sdi.JmriJFrameInterface(),
@@ -138,9 +131,6 @@ public class Mx1MonPanel extends jmri.jmrix.AbstractMonPane implements Mx1Listen
         }
     }
 
-    static Logger log = LoggerFactory.getLogger(Mx1MonPanel.class.getName());
+    private final static Logger log = LoggerFactory.getLogger(Mx1MonPanel.class.getName());
 
 }
-
-
-/* @(#)MonAction.java */

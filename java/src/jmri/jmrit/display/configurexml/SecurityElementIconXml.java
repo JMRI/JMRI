@@ -46,7 +46,7 @@ public class SecurityElementIconXml extends AbstractXmlAdapter {
         return element;
     }
 
-    public boolean load(Element element) {
+    public boolean load(Element shared, Element perNode) {
         log.error("Invalid method called");
         return false;
     }
@@ -84,6 +84,6 @@ public class SecurityElementIconXml extends AbstractXmlAdapter {
         ed.putItem(l);
     }
 
-    static Logger log = LoggerFactory.getLogger(TurnoutIconXml.class.getName());
+    private final static Logger log = LoggerFactory.getLogger(TurnoutIconXml.class.getName());
 
 }

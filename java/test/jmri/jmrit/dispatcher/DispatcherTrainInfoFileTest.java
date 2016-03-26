@@ -1,4 +1,3 @@
-// DispatcherTrainInfoFileTest.java
 package jmri.jmrit.dispatcher;
 
 import junit.framework.Assert;
@@ -10,7 +9,6 @@ import junit.framework.TestSuite;
  * Swing jfcUnit tests for dispatcher train info
  *
  * @author	Dave Duchamp
- * @version $Revision$
  */
 public class DispatcherTrainInfoFileTest extends TestCase {
 

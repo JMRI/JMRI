@@ -1,13 +1,12 @@
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
-<!-- $Id$ -->
 <html lang="en">
 <head>
- <TITLE>
+ <title>
       JMRI: Reporter Table Help
- </TITLE>
-    <META http-equiv=Content-Type content="text/html; charset=iso-8859-1">
-    <META content="Bob Jacobsen" name=Author>
-    <META name="keywords" content="JMRI help Reporter Table">
+ </title>
+    <meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
+    <meta content="Bob Jacobsen" name="Author">
+    <meta name="keywords" content="JMRI Help Reporter Table">
 
 <!--#include virtual="/Style" -->
 </head>
@@ -17,23 +16,23 @@
   <div class="nomenu" id="mBody">
     <div id="mainContent">
 
-<H1>The Reporter Table</H1>
+<h1>The Reporter Table</h1>
 <p>
 JMRI "Reporters" show status information received from your layout.
 For example, 
 <a href="http://www.digitrax.com/menu_transponding.php">Digitrax transponding</a>
-provides information via JMRI reporter objects.
-The Reporter Table shows all the existing reporters and their most recent
-information.
+provides information via JMRI Reporter objects.
+The Reporter Table shows all the existing Reporters and their most recent
+status information.
+
 <p>
 For more information on Reporters and their use, see the
-<a href="../../../../html/tools/Reporters.shtml">main Reporter page</a>.
+<a href="../../../../html/tools/Reporters.shtml">main Reporter Help page</a>.
 <p>
-This is the package/jmri/jmrit/beantable/ReporterTable help page
+This is the package/jmri/jmrit/beantable/ReporterTable Help page
 
 <!--#include virtual="/Footer" -->
+ </div><!-- closes #mainContent-->
+</div> <!-- closes #mBody-->
 </body>
-</html>
-
-
- 	  	 
+</html>  	 

@@ -1,73 +1,70 @@
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
-<!-- $Id$ -->
 <html lang="en">
 <head>
- <TITLE>
-      JMRI Hardware Guide: Oak Tree Systems Railroad Control Interface (RCI)
- </TITLE>
-    <META http-equiv=Content-Type content="text/html; charset=iso-8859-1">
-    <META content="Bob Jacobsen" name=Author>
-    <META name="keywords" content="Oak Tree Systems Railroad Control Interface RCI java model railroad JMRI install windows">
+ <title>JMRI Hardware Support - Oak Tree Systems Railroad Control Interface (RCI)</title>
+
+    <meta content="Bob Jacobsen" name="Author">
+    <meta name="keywords" content="Oak Tree Systems Railroad Control Interface RCI java model railroad JMRI install windows">
 
 <!-- Style -->
-<META HTTP-EQUIV="Content-Type" CONTENT="text/html; charset=iso-8859-1">
-<LINK REL="stylesheet" TYPE="text/css" HREF="/css/default.css"
-	MEDIA="screen">
-<LINK REL="stylesheet" TYPE="text/css" HREF="/css/print.css"
-	MEDIA="print">
-<LINK REL="icon" HREF="/images/jmri.ico" TYPE="image/png">
-<LINK REL="home" TITLE="Home" HREF="/">
+<meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
+<link rel="stylesheet" type="text/css" href="/css/default.css" media="screen">
+<link rel="stylesheet" type="text/css" href="/css/print.css" media="print">
+<link rel="icon" href="/images/jmri.ico" type="image/png">
+<link rel="home" title="Home" href="/">
 <!-- /Style -->
-</HEAD>
+</head>
 
-<BODY>
+<body>
 <!--#include virtual="/Header" -->
 
   <div class="nomenu" id="mBody">
     <div id="mainContent">
 
-      <H1> 
-      JMRI Hardware Guide: Oak Tree Systems Railroad Control Interface (RCI)
-      </H1>
+  <h1>Hardware Support: Oak Tree Systems Railroad Control Interface (RCI)</h1>
+<ul class="snav"><!-- TOC -->
+	<li><a href="#hardware">Hardware</a></li>
+	<li><a href="#limitations">Limitations</a></li>
+	<li><a href="#connecting">Connecting</a></li>
+	<li><a href="#documentation">Documentation</a></li>
+</ul>
       
-	<H3>Supported Hardware</H3>
-
-	<UL>
+<a name="hardware"></a><h2>Supported Hardware</h2>
+<h3>Computer Interfaces</h3>
+<ul>
 	<li>IO-24
 	<li>IO-48
 	<li>O-48
-	</UL>
+</ul>
 
-	<H3>Limitations</H3>
-
+<a name="limitations"></a><h2>Limitations</h2>
 	<p>The JMRI libraries have built-in support for Oak Tree Systems serial hardware
 	using the "RSC" bus protocol.
 	inputs can be used as sensors, and outputs can be driven as
 	turnouts.</p>
-
 	<p>At this time, the RSI serial bus protocol for the HH-2 throttle is not
 	yet supported.</p>
 
+<a name="connecting"></a><h2>Connecting</h2>
+<h3>Settings</h3>
 	<dl>
 	<dt class=left>Configuration</dt>
 	<dd class=top>
 	    <ol>
 		<li>Start the program (usually PanelPro)
-		<li>From the edit menu, select preferences and configure:
-	        <ul>
-		    <li>Protocol as "Oak Tree Systems"
-		    <li>For serial port, select the one your hardware is attached to.
+		<li>From the Edit menu, select Preferences and configure the Connections tab:
+	      <ul>
+		    <li>System Manufacturer: "Oak Tree Systems"
+		    <li>System Connection: For serial port, select the one your hardware is attached to.
 		    <li>Select the baud rate configured into your boards
-		    <li>Click the "Configure nodes" button. On the
-		        new panel that opens:
-		        <UL>
-		        <LI>Enter a node address (0 is typically used for the first card)
+		    <li>Click the "Configure nodes" button. On the new panel that opens:
+		        <ul>
+		        <li>Enter a node address (0 is typically used for the first card)
     		    <li>Select the board type from the initialization box
     		    <li>Click "Add Node"
-    		    <LI>Click "Done"
+    		    <li>Click "Done"
     		    </ul>
 		    <li>Back on the "Preferences..." panel, click "Save", and say yes when it asks if you want to quit.
-	        </ul>
 		<li>Restart the program. Your board's
 		LEDs should now be flashing, indicating that the computer and
 		board are talking.
@@ -99,33 +96,30 @@
 	on the first node are numbered from 1 to 999; sensors and turnouts on
 	the second node are numbered 1001 to 1999; etc. </p>
 	
-	<P>For example:
-	<UL>
-	<LI>Say you have a IO-48 with it's address switches set to "2". All of the
+	<p>For example:
+	<ul>
+	<li>Say you have a IO-48 with it's address switches set to "2". All of the
 	inputs and outputs on that node will be numbered starting with 2001.  
-	    <UL>
-	    <LI>CT2001 is the first output pin
-	    <LI>CT2048 is the last output pin
-	    <LI>CS2001 is the first input pin
-	    <LI>CS2012 is the last input pin.
-	    </UL>
-	
-	</UL>
-
-    <P>To summarize, input and output pins are labelled sequentially
-    within each node.  The numbers go up by 1000 from node to 
-    node.  Node numbers can go as high as the hardware allows.
-    	
-    </dd>
-
-
+	    <ul>
+	    <li>CT2001 is the first output pin
+	    <li>CT2048 is the last output pin
+	    <li>CS2001 is the first input pin
+	    <li>CS2012 is the last input pin.
+	    </ul>
+	</ul>
+	<p>To summarize, input and output pins are labelled sequentially
+	within each node.  The numbers go up by 1000 from node to 
+	node.  Node numbers can go as high as the hardware allows.   	
+   </dd>
 	</dl>
 
-	<H3> More info </H3>
+<a name="documentation"></a><h2>Documentation</h2>
+<h3>Third Party info</h3>
     	<p>For more information on Oak Tree Systems hardware, please see their
-    	<a HREF="http://www.oaktreesystems.com">web site</a>.
-	</p>
+    	<a href="http://www.oaktreesystems.com">web site</a>.</p>
 
 <!--#include virtual="/Footer" -->
+  </div><!-- closes #mainContent-->
+</div> <!-- closes #mBody-->
 </body>
 </html>

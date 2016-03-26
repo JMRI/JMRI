@@ -1,4 +1,3 @@
-// BundleTest.java
 package jmri.util;
 
 import junit.framework.Assert;
@@ -50,7 +49,7 @@ public class BundleTest extends TestCase {
 
     // Main entry point
     static public void main(String[] args) {
-        String[] testCaseName = {BundleTest.class.getName()};
+        String[] testCaseName = {"-noloading", BundleTest.class.getName()};
         junit.swingui.TestRunner.main(testCaseName);
     }
 
@@ -58,6 +57,15 @@ public class BundleTest extends TestCase {
     public static Test suite() {
         TestSuite suite = new TestSuite(BundleTest.class);
         return suite;
+    }
+
+    // The minimal setup for log4J
+    protected void setUp() {
+        apps.tests.Log4JFixture.setUp();
+    }
+
+    protected void tearDown() {
+        apps.tests.Log4JFixture.tearDown();
     }
 
 }

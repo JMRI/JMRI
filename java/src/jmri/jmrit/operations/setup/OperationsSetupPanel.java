@@ -1,4 +1,4 @@
-// OperationsSetupFrame.java
+// OperationsSetupPanel.java
 package jmri.jmrit.operations.setup;
 
 import java.awt.Dimension;
@@ -40,11 +40,7 @@ import org.slf4j.LoggerFactory;
  */
 public class OperationsSetupPanel extends OperationsPreferencesPanel implements PropertyChangeListener {
 
-    /**
-     *
-     */
-    private static final long serialVersionUID = 7662835134616666932L;
-    static Logger log = LoggerFactory.getLogger(OperationsSetupFrame.class.getName());
+    private final static Logger log = LoggerFactory.getLogger(OperationsSetupPanel.class.getName());
 
     // labels
     JLabel textIconNorth = new JLabel(Bundle.getMessage("IconNorth"));
@@ -382,7 +378,7 @@ public class OperationsSetupPanel extends OperationsPreferencesPanel implements 
         initMinimumSize(new Dimension(Control.panelWidth700, Control.panelHeight500));
 
         // now provide the railroad name
-        railroadNameTextField.setText(Setup.getRailroadName()); // default
+        railroadNameTextField.setText(Setup.getRailroadName());
         if (Setup.getRailroadName().equals(WebServerManager.getWebServerPreferences().getRailRoadName())) {
             railroadNameTextField.setEnabled(false);
         }
@@ -410,6 +406,7 @@ public class OperationsSetupPanel extends OperationsPreferencesPanel implements 
         }
     }
 
+    @edu.umd.cs.findbugs.annotations.SuppressFBWarnings(value = "BC_UNCONFIRMED_CAST_OF_RETURN_VALUE", justification = "checks for instance of OperationsSetupFrame")
     private void save() {
         // check input fields
         int maxTrainLength;
@@ -560,11 +557,11 @@ public class OperationsSetupPanel extends OperationsPreferencesPanel implements 
         if (scaleG.isSelected()) {
             Setup.setScale(Setup.G_SCALE);
         }
-        Setup.setRailroadName(railroadNameTextField.getText());
         if (!Setup.getRailroadName().equals(WebServerManager.getWebServerPreferences().getRailRoadName())) {
+            Setup.setRailroadName(railroadNameTextField.getText());
             int results = JOptionPane.showConfirmDialog(this, MessageFormat.format(Bundle
                     .getMessage("ChangeRailroadName"), new Object[]{
-                        WebServerManager.getWebServerPreferences().getRailRoadName(), Setup.getRailroadName()}), Bundle
+                    WebServerManager.getWebServerPreferences().getRailRoadName(), Setup.getRailroadName()}), Bundle
                     .getMessage("ChangeJMRIRailroadName"), JOptionPane.YES_NO_OPTION);
             if (results == JOptionPane.OK_OPTION) {
                 WebServerManager.getWebServerPreferences().setRailRoadName(Setup.getRailroadName());
@@ -722,16 +719,16 @@ public class OperationsSetupPanel extends OperationsPreferencesPanel implements 
     }
 
     private void setDirectionCheckBox(int direction) {
-        eastCheckBox.setSelected((direction & Setup.EAST) > 0);
-        textIconEast.setVisible((direction & Setup.EAST) > 0);
-        eastComboBox.setVisible((direction & Setup.EAST) > 0);
-        textIconWest.setVisible((direction & Setup.EAST) > 0);
-        westComboBox.setVisible((direction & Setup.EAST) > 0);
-        northCheckBox.setSelected((direction & Setup.NORTH) > 0);
-        textIconNorth.setVisible((direction & Setup.NORTH) > 0);
-        northComboBox.setVisible((direction & Setup.NORTH) > 0);
-        textIconSouth.setVisible((direction & Setup.NORTH) > 0);
-        southComboBox.setVisible((direction & Setup.NORTH) > 0);
+        eastCheckBox.setSelected((direction & Setup.EAST) == Setup.EAST);
+        textIconEast.setVisible((direction & Setup.EAST) == Setup.EAST);
+        eastComboBox.setVisible((direction & Setup.EAST) == Setup.EAST);
+        textIconWest.setVisible((direction & Setup.EAST) == Setup.EAST);
+        westComboBox.setVisible((direction & Setup.EAST) == Setup.EAST);
+        northCheckBox.setSelected((direction & Setup.NORTH) == Setup.NORTH);
+        textIconNorth.setVisible((direction & Setup.NORTH) == Setup.NORTH);
+        northComboBox.setVisible((direction & Setup.NORTH) == Setup.NORTH);
+        textIconSouth.setVisible((direction & Setup.NORTH) == Setup.NORTH);
+        southComboBox.setVisible((direction & Setup.NORTH) == Setup.NORTH);
     }
 
     private void setLengthUnit() {

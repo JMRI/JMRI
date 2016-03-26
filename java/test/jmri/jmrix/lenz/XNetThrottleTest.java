@@ -4,8 +4,6 @@ import junit.framework.Assert;
 import junit.framework.Test;
 import junit.framework.TestCase;
 import junit.framework.TestSuite;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 
 /**
  * XNetThrottleTest.java
@@ -13,11 +11,8 @@ import org.slf4j.LoggerFactory;
  * Description:	tests for the jmri.jmrix.lenz.XNetThrottle class
  *
  * @author	Paul Bender
- * @version $Revision$
  */
 public class XNetThrottleTest extends TestCase {
-
-    static final int RELEASE_TIME = 100;
 
     public void testCtor() {
         // infrastructure objects
@@ -78,7 +73,7 @@ public class XNetThrottleTest extends TestCase {
         // now we're going to wait and verify the throttle eventually has 
         // its status set to idle.
         jmri.util.JUnitAppender.assertErrorMessage("Unsupported Command Sent to command station");
-        jmri.util.JUnitUtil.releaseThread(this, RELEASE_TIME);  // give the messages
+        jmri.util.JUnitUtil.releaseThread(this);  // give the messages
         // some time to process;
 
         Assert.assertEquals("Throttle in THROTTLEIDLE state", XNetThrottle.THROTTLEIDLE, t.requestState);
@@ -114,7 +109,5 @@ public class XNetThrottleTest extends TestCase {
         super.tearDown();
         apps.tests.Log4JFixture.tearDown();
     }
-
-    static Logger log = LoggerFactory.getLogger(XNetThrottleTest.class.getName());
 
 }

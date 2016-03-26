@@ -1,4 +1,3 @@
-// CbusSensorTest.java
 package jmri.jmrix.can.cbus;
 
 import jmri.Sensor;
@@ -8,14 +7,11 @@ import junit.framework.Assert;
 import junit.framework.Test;
 import junit.framework.TestCase;
 import junit.framework.TestSuite;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 
 /**
  * Tests for the jmri.jmrix.can.cbus.CbusSensor class.
  *
  * @author	Bob Jacobsen Copyright 2008
- * @version $Revision$
  */
 public class CbusSensorTest extends TestCase {
 
@@ -81,8 +77,6 @@ public class CbusSensorTest extends TestCase {
         TestSuite suite = new TestSuite(CbusSensorTest.class);
         return suite;
     }
-
-    static Logger log = LoggerFactory.getLogger(CbusSensorTest.class.getName());
 
     // The minimal setup for log4J
     protected void setUp() {

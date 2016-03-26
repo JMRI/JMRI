@@ -10,7 +10,7 @@ import org.jdom2.output.DOMOutputter;
  * Note that JMRI makes extensive use of org.jdom2 packages for XML DOM
  * processing, while the JRE includes the org.w3c.dom package.
  *
- * @author rhwood
+ * @author Randall Wood 2015
  */
 public class JDOMUtil {
 
@@ -44,11 +44,11 @@ public class JDOMUtil {
         return this.builder;
     }
 
-    public static final org.jdom2.Element toJDOM(org.w3c.dom.Element element) {
+    public static final org.jdom2.Element toJDOMElement(org.w3c.dom.Element element) {
         return getDefault().getDOMBuilder().build(element);
     }
 
-    public static final org.w3c.dom.Element toW3C(org.jdom2.Element element) throws JDOMException {
+    public static final org.w3c.dom.Element toW3CElement(org.jdom2.Element element) throws JDOMException {
         return getDefault().getDOMOutputter().output(element);
     }
 }

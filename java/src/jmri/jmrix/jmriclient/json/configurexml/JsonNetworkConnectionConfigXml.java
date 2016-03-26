@@ -1,6 +1,5 @@
 package jmri.jmrix.jmriclient.json.configurexml;
 
-import jmri.InstanceManager;
 import jmri.jmrix.configurexml.AbstractNetworkConnectionConfigXml;
 import jmri.jmrix.jmriclient.json.JsonClientSystemConnectionMemo;
 import jmri.jmrix.jmriclient.json.JsonNetworkConnectionConfig;
@@ -35,7 +34,7 @@ public class JsonNetworkConnectionConfigXml extends AbstractNetworkConnectionCon
 
     @Override
     protected void register() {
-        InstanceManager.configureManagerInstance().registerPref(new JsonNetworkConnectionConfig(this.adapter));
+        this.register(new JsonNetworkConnectionConfig(this.adapter));
     }
 
     @Override
@@ -49,18 +48,13 @@ public class JsonNetworkConnectionConfigXml extends AbstractNetworkConnectionCon
         }
     }
 
-    /**
-     * Customizable method if you need to add anything more
-     *
-     * @param e Element being created, update as needed
-     */
     @Override
-    protected void unpackElement(Element e) {
-        if (e.getAttribute(TRANSMIT_PREFIX) != null) {
-            ((JsonClientSystemConnectionMemo) this.adapter.getSystemConnectionMemo()).setTransmitPrefix(e.getAttribute(TRANSMIT_PREFIX).getValue());
+    protected void unpackElement(Element shared, Element perNode) {
+        if (shared.getAttribute(TRANSMIT_PREFIX) != null) {
+            ((JsonClientSystemConnectionMemo) this.adapter.getSystemConnectionMemo()).setTransmitPrefix(shared.getAttribute(TRANSMIT_PREFIX).getValue());
         }
-        if (e.getAttribute(NODE_IDENTITY) != null) {
-            ((JsonClientSystemConnectionMemo) this.adapter.getSystemConnectionMemo()).setNodeIdentity(e.getAttribute(NODE_IDENTITY).getValue());
+        if (shared.getAttribute(NODE_IDENTITY) != null) {
+            ((JsonClientSystemConnectionMemo) this.adapter.getSystemConnectionMemo()).setNodeIdentity(shared.getAttribute(NODE_IDENTITY).getValue());
         }
     }
 }

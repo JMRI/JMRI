@@ -1,9 +1,7 @@
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
 <html lang="en">
 <head>
-<!-- Copyright ($Author$) 2009 -->
-<!-- $Id$ -->
-<title>Operations -- Start</title>
+<title>OperationsPro - Start</title>
 
 <!-- Style -->
 <meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
@@ -20,47 +18,52 @@
 <!--#include virtual="Sidebar" -->
 <div id="mainContent">
 
-<a NAME="Top"></a>
+<a name="Top"></a>
 
 <h1>Using JMRI&reg; to Operate Trains</h1>
-<h1>What does Operations do?</h1>
+<h2>What does OperationsPro do?</h2>
 
-<div align=right>
+<div align="right">
 <p><a href="index.shtml#startOps">Back to Index</a></p>
 </div>
 
 <hr>
-<p>Using JMRI to operate trains allows you to build computer generated car  manifests for your railroad. A manifest or switch list details the work that a train will perform during an operations session. The Manifest provides a list of car pick up and set out and shows where the car's are located and where they should be eventally positioned on the railroad. The program allows you to build a roster of cars, define locations on the railroad, and route for trains to travel. The Car roster includes information about the car, including road name, number, type of car, color, length, weight, date built, and owner. Trains are assigned routes that define locations where cars can be picked up or set out. Features include the ability to control what car types, road names, and car loads a location can service, the available track space for a location, and the maximum length of the train can be between any two locations on the train's route.</p>
-<p> Locations can have spurs, yards, staging and  interchange tracks. Spurs are used to service industries, and can optionally have custom schedules assigned to them. Trains can be configured to require a  caboose.  Optionally, trains can be configured to require a  caboose or car with Flashing Rear End Device (FRED). The program generates car manifests for each  train and switch lists for any location. A switch list for a location shows the work for all the trains that visit tha location.  The program can also place icons  representing trains on a JMRI panel. The icon can be taught to move in  the panel along with the train from location to location.</p>
-<p>The operations program is included in the JMRI/DecoderPro&reg; suite of tools and can be found under the main menu heading <strong>Tools--&gt;Operations </strong>or<strong> Operations </strong>menu, if enabled in program<strong>.</strong></p>
-<p><em><strong>Operations Demo Files </strong></em></p>
-<p>The operations program provides a set of demo files to help introduce  you to the some of the features and capabilities of this program. </p>
-<table width="80%" border="1" cellspacing="1" cellpadding="2">
+<p>Using JMRI&reg; to operate trains allows you to build computer generated car Manifests for your railroad. A Manifest or Switch List details the work that a train will perform during an operations session. The Manifest provides a list of car pick up and set out and shows where the cars are located and where they should be eventually positioned on the railroad. The program allows you to build a Roster of cars, define Locations on the railroad, and Routes for Trains to travel. The Car Roster includes information about every car, including road name, number, type of car, color, length, weight, date built, and owner. Trains are assigned Routes that define Locations where cars can be picked up or set out. Features include the ability to control what car types, road names, and car loads a Location can service, the available track space for a Location, and the maximum length a the train can be between any two Locations on the train's Route.</p>
+<p>Locations can have Spurs, Yards, Staging tracks and Interchange tracks. Spurs are used to service industries, and can optionally have custom schedules assigned to them. Trains can be configured to require a caboose. Optionally, Trains can be configured to require a caboose or car with Flashing Rear End Device (FRED). The program generates car Manifests for each train and switch lists for any Location. A Switch List for a particular Location shows the work for all the Trains that visit that Location. The program can also place icons representing Trains on a JMRI Panel. The icon can be taught to move across the panel along with the train from Location to Location.</p>
+<p>The OperationsPro program is included in the JMRI&reg; suite of tools, so when you install and start up either DecoderPro&reg; or PanelPro you will find OperationsPro menus in the main menu bar under <strong>Tools &gt; Operations</strong> or as an <strong>Operations</strong> menu, if enabled in your <a href="Ops_Settings.shtml">OperationsPro Settings</a>.</p>
+
+<h3>OperationsPro Demo Files</h3>
+<p>The OperationsPro program provides a set of demo files to help introduce you to the some of the features and capabilities of this program.</p>
+<table width="80%" border="0" cellspacing="1" cellpadding="2">
   <tr>
-    <td><img src="images/Ops_Start01.png" width="487" height="483" alt="start"></td>
-    <td valign="top"> <p><img src="images/Ops_Start02.png" width="496" height="282" alt="start"></p>
-    <p>Load the demo files from the <strong>Tools</strong> menu in the Operations Settings window, select Load Demo Files, the demo files will load after you restart DecoderPro.</p></td>
+    <td><a href="images/Ops_Start01.png">
+    <img src="images/Ops_Start01.png" width="243" height="241" alt="Operations in Tools Menu"></a></td>
+    <td valign="top"><a href=="images/Ops_Start02.png">
+    <img src="images/Ops_Start02.png" width="248" height="141" alt="Operations in Main Menubar"></a>
+    <p>Load the demo files from the <strong>Tools</strong> menu in the Operations &gt; Settings window, select <strong>Load Demo Files</strong>; the demo files will load after you restart DecoderPro.</p></td>
   </tr>
 </table>
 <p><img src="images/Ops_Demo01.png" width="788" height="253" alt="Demo"></p>
 <p>Selecting Load Demo Files closes DecoderPro&reg; and it must be restarted to open the Demo Railroad.</p>
 <p><img src="images/Ops_Demo02.png" width="796" height="151" alt="Demo"></p>
-<p> The program  will create a backup of your current configuration if you have one, and  then load the demo files. Restart JMRI to complete the demo load  process.&nbsp;&nbsp;To get rid of the demo files, use the <strong>Restore </strong>function in the <strong>Tools</strong> menu of the <strong>Operations Settings </strong>to reload the  first backup date, which is the blank entry form.</p>
-<p>The program also supplies a simple panel to show how the train  icons work. Load the panel before building the trains by selecting in  the main JMRI menu, "Panels-&gt;Open Panels .." a window should appear and  open the "operations" directory and then open the "Operations Demo  Panel" xml file.</p>
-<p><img src="images/Ops_DemoPanel.png" width="800" height="220" alt="Demo panel"> </p>
-<em><strong>Quick Start</strong></em>
-<p align="left">In the Main DecoderPro menu Select<strong> Tools </strong>menu.</p>
-<p align="left"><img src="images/Ops_menu.png" width="283" height="184" alt="ops menu"></p>
-<p align="left">There  are six items in this menu. It is recommended that you start with <strong>Settings</strong> and work your way down to <strong>Trains.</strong> We also recommend that when defining  your locations that you first use yard spur tracks, and try  staging and interchange tracks when you're more comfortable with how the  program operates. </p>
-<strong><em>British Railways </em></strong>
-<p>The program supports an alternate set of railway terminology for our  British modelers. To use British terminologies, go to the JMRI Advanced  Preferences (Edit-&gt;Preferences.. select the Show Advanced Preferences  checkbox) and select English (United Kingdom) in the "Locale:" menu  box. The program will also convert from centimeters to meters when  entering wagon, locomotive, or location lengths, just append "cm" to any  length.
-</p>
-<hr>
+<p> The program  will create a backup of your current configuration if you have one, and  then load the demo files. Restart JMRI to complete the demo load  process.&nbsp;&nbsp;To get rid of the demo files, use the <strong>Restore</strong> function in the <strong>Tools</strong> menu of the <strong>Operations Settings</strong> to reload the first backup date, which is the blank entry form.</p>
+<p>The program also supplies a simple Panel to show how the Train icons work. Load the Panel before building any Trains by selecting in the main JMRI menu, "Panels-&gt;Open Panels ...". A window should appear; open the "Operations" directory and then open the "Operations Demo Panel" xml file.</p>
+<p><img src="images/Ops_DemoPanel.png" width="800" height="220" alt="Demo panel"></p>
 
-<div align=right>
+<h3>Quick Start</h3>
+<p align="left">In the Main DecoderPro menu bar select the <strong>Tools</strong> menu. Near the bottom you will find "Operations".</p>
+<p align="left"><img src="images/Ops_menu.png" width="283" height="184" alt="ops menu"></p>
+<p align="left">There are six items in the submenu. It is recommended that you start with <strong>Settings</strong> and work your way down to <strong>Trains</strong>. We also recommend that when defining your Locations that you at first only use Yard spur tracks; try Staging and Interchange tracks when you're more comfortable with how OperationPro operates.</p>
+
+<h3>British Railways</h3>
+<p>The program supports an alternate set of railway terminology for our  British modelers. To use British terminologies, go to the JMRI Advanced  Preferences (Edit -&gt; Preferences...), select the <strong>Show Advanced Preferences</strong> checkbox and select <em>English (United Kingdom)</em> in the "Locale:" menu box. The program will also convert from centimeters to meters when entering wagon, locomotive, or location lengths; just append "cm" to any length.</p>
+
+<div align="right">
 <p><a href="index.shtml#startOps">Back to Index</a></p>
 </div>
 
 <!--#include virtual="/Footer" -->
+</div><!-- close #mainContent -->
+</div><!-- close #mBody -->
 </body>
 </html>

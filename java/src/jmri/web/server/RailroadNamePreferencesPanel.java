@@ -6,33 +6,20 @@ package jmri.web.server;
  * @version $Revision$
  */
 import javax.swing.BoxLayout;
-import javax.swing.JButton;
 import javax.swing.JComponent;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.JTextField;
-import javax.swing.border.Border;
-import jmri.jmrit.operations.setup.Setup;
 import jmri.swing.JTitledSeparator;
 import jmri.swing.PreferencesPanel;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 
 public class RailroadNamePreferencesPanel extends JPanel implements PreferencesPanel {
 
-    /**
-     *
-     */
     private static final long serialVersionUID = -2483121076473347952L;
-    static Logger log = LoggerFactory.getLogger(RailroadNamePreferencesPanel.class);
-    Border lineBorder;
-    JTextField railroadName;
-    JButton saveB;
-    JButton cancelB;
-    WebServerPreferences preferences;
-    JFrame parentFrame = null;
-    boolean enableSave;
+    private JTextField railroadName;
+    private WebServerPreferences preferences;
+    private JFrame parentFrame = null;
 
     public RailroadNamePreferencesPanel() {
         preferences = WebServerManager.getWebServerPreferences();
@@ -45,44 +32,13 @@ public class RailroadNamePreferencesPanel extends JPanel implements PreferencesP
         parentFrame = f;
     }
 
-    /*
-     private void initComponents() {
-     GroupLayout layout = new GroupLayout(this);
-     this.setLayout(layout);
-     layout.setAutoCreateGaps(true);
-     layout.setAutoCreateContainerGaps(true);
-     SequentialGroup group = layout.createSequentialGroup();
-     group.addComponent(new JTitledSeparator(Bundle.getMessage("TitleWebServerPreferences")));
-     group.addGroup(webServerPreferences(layout));
-     layout.setVerticalGroup(group);
-     }
-     */
     private void initGUI() {
         this.setLayout(new BoxLayout(this, BoxLayout.PAGE_AXIS));
         add(new JTitledSeparator(Bundle.getMessage("TitleRailroadNamePreferences")));
         add(rrNamePanel());
     }
 
-    /*
-     private Group webServerPreferences(GroupLayout layout) {
-     railroadName = new JTextField(preferences.getRailRoadName());
-     railroadName.setToolTipText(Bundle.getMessage("ToolTipRailRoadName"));
-     railroadName.setColumns(30);
-     ParallelGroup group = layout.createParallelGroup(GroupLayout.Alignment.CENTER);
-     group.addComponent(new JLabel(Bundle.getMessage("LabelRailRoadName")), GroupLayout.Alignment.TRAILING);
-     group.addComponent(this.railroadName, GroupLayout.Alignment.LEADING);
-     return group;
-     }
-     */
     private void setGUI() {
-    }
-
-    /**
-     * Show the save and cancel buttons if displayed in its own frame.
-     */
-    public void enableSave() {
-        saveB.setVisible(true);
-        cancelB.setVisible(true);
     }
 
     /**
@@ -94,7 +50,6 @@ public class RailroadNamePreferencesPanel extends JPanel implements PreferencesP
     private boolean setValues() {
         boolean didSet = true;
         preferences.setRailRoadName(railroadName.getText());
-        Setup.setRailroadName(railroadName.getText()); // Also change the railroad name in operations
         return didSet;
     }
 
@@ -121,7 +76,7 @@ public class RailroadNamePreferencesPanel extends JPanel implements PreferencesP
 
     protected void cancelValues() {
         if (getTopLevelAncestor() != null) {
-            ((JFrame) getTopLevelAncestor()).setVisible(false);
+            getTopLevelAncestor().setVisible(false);
         }
     }
 

@@ -1,18 +1,14 @@
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
 <html lang="en">
 <head>
-<!-- Copyright ($Author$) 2008 -->
-<!-- $Id$ -->
-<title>JMRI: ESU ECoS Support</title>
+<title>JMRI Hardware Support - ESU ECoS</title>
 
 <!-- Style -->
-<META HTTP-EQUIV="Content-Type" CONTENT="text/html; charset=iso-8859-1">
-<LINK REL="stylesheet" TYPE="text/css" HREF="/css/default.css"
-	MEDIA="screen">
-<LINK REL="stylesheet" TYPE="text/css" HREF="/css/print.css"
-	MEDIA="print">
-<LINK REL="icon" HREF="/images/jmri.ico" TYPE="image/png">
-<LINK REL="home" TITLE="Home" HREF="/">
+<meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
+<link rel="stylesheet" type="text/css" href="/css/default.css" media="screen">
+<link rel="stylesheet" type="text/css" href="/css/print.css" media="print">
+<link rel="icon" href="/images/jmri.ico" type="image/png">
+<link rel="home" title="Home" href="/">
 <!-- /Style -->
 </head>
 
@@ -21,74 +17,82 @@
   <div class="nomenu" id="mBody">
     <div id="mainContent">
 
-<h1> 
-JMRI: ESU ECoS Support
-</h1>
+<h1>Hardware Support: ESU ECoS</h1>
 
+<a name="hardware"></a><h2>Supported Hardware</h2>
+<h3>Command Station</h3>
 <p>JMRI can connect to an ESU ECoS command station 
-via an Internet connection.
+via an Internet connection.</p>
+Support for ECoS was first available in <a href="http://jmri.org/releasenotes/jmri2.3.3.shtml">JMRI 2.3.3</a>.<br>
+Support for the ECoS Throttle was first available in <a href="http://jmri.org/releasenotes/jmri2.7.4.shtml">JMRI 2.7.4</a>.<br>
+Support for the ECoS s88 Feedback Sensors was first available in <a href="http://jmri.org/releasenotes/jmri2.7.9.shtml">JMRI 2.7.9</a>.<br />
+Support for the ECoS RailCom Feedback was first available in <a href="http://jmri.org/releasenotes/jmri2.99.7.shtml">JMRI 2.99.7</a>.    
 
-<p>
-To configure the connection:
+<a name="limitations"></a><h2>Limitations</h2>
+<p>Programming is supported by the Ecos from firmware version 4.1. However this goes only for the programming track. Programming on main is only available directly on the ECOS. Additional information on the ECoS can be found
+on the <a href="http://www.esu.eu/us/index.php?showId=205">ESU web site</a>.
+<p>Consisting is not yet supported.</p>
+
+<a name="connecting"></a><h2>Connecting</h2>
+<h3>Settings</h3>
+<p>To configure the connection:
 <ul>
 <li>Open the JMRI "Preferences" under the "Edit" menu,
-<li>Select "ESU ECoS" as the connection type,
-<li>Enter the IP address for your ECoS unit,
-<li>Leave the port number at 15471,
-<li>Click "Save".
+<li>Select "ESU" as the System Manufacturer 
+<li>Select "ECoS" as the System Connection (the only option)
+<li>Enter the IP address for your ECoS unit
+<li>Leave the port number at 15471
+<li>Click "Save" &amp; restart
 </ul>
 
 <p>
-Turnout, Sensor and a basic throttle and power support is available for 
+Turnout, Sensor and a basic Throttle and power support is available for 
 a JMRI-connected ECoS unit.
 <p>
 
-<h2>Throttles</h2>
-Only basic support for throttles via the ECoS is supported. When an entry from the roster, or a DCC address is directly
-entered into the address field, JMRI will check the existing list of ECoS locos for a match on the first DCC address it comes across. 
-If there is no match, the throttle will create an entry in the ECoS which will be listed as "Created By JMRI" with a default of 128 speed steps.<br />
+<h3>Throttles</h3>
+Only basic support for Throttles via the ECoS is supported. When an entry from the Roster, or a DCC address is directly
+entered into the address field, JMRI will check the existing list of ECoS Locos for a match on the first DCC address it comes across. 
+If there is no match, the Throttle will create an entry in the ECoS database which will be listed as "Created By JMRI" with a default of 128 speed steps.<br />
 From version 2.9.4 when you close down JMRI, you will be prompted to either delete or keep the entries in the ECoS.<br>
-<b>Consisting is NOT supported</b>
+<p>Consisting is <strong>NOT</strong> supported.</p>
 
-<h2>Sensors</h2>
-ECoS-connected sensors on the s88 bus have names like "US100:01", where "U" is the system name for esU ECoS,
+<h3>Sensors</h3>
+ECoS-connected Sensors on the s88 bus have names like "US100:01", where "U" is the system name for esU ECoS,
 "S" means sensor, "100" is the s88 board address registered in the ECoS, and "01" is the port on that board.
 <p>
 
-<h2>Turnouts</h2>
-ECoS-connected turnouts have names like "UT123", where "U"
+<h3>Turnouts</h3>
+ECoS-connected Turnouts have names like "UT123", where "U"
 is the system name for esU ECoS, "T" means turnout, and
 "123" is the address.
 <p>
 
-<h2>Ecos initialisation</h2>
-When JMRI first starts up, it reads the turnout, sensor and loco information from the ECoS, which might take a couple seconds. Turnouts and 
-Sensors are automatically added to the JMRI Sensors Table. This is necessary so that a link can be made between the sensors and turnouts configured in the Ecos and the accessory address that JMRI uses.<br>
-While gathering the loco information from the Ecos, JMRI will check to see if there is already a Roster entry assoicated with the loco. If the check fails, the system will ask if you wish to add import the Loco to the roster.
+<h3>ECoS initialisation</h3>
+When JMRI first starts up, it reads the Turnout, Sensor and Locomotive information from the ECoS, which might take a couple of seconds. Turnouts and 
+Sensors are both automatically added to the JMRI Sensor Table. This is necessary so that a link can be made between the Sensors and Turnouts configured in the Ecos and the accessory address that JMRI uses.<br>
+While gathering the Locomotive information from the Ecos, JMRI will check to see if there is already a Roster entry associated with each Loco. If the check fails, the system will ask if you wish to add/import the Loco to the Roster.
 <p>
 
-<h2>Ecos Loco Database</h2>
-The Ecos Loco Database allows you to view all the locos that are configured on the Ecos, Assign them to a JMRI roster entry to the loco or import it in to the JMRI Roster.
+<a name="tools"></a><h2>JMRI ECoS Tools</h2>
+<ul>
+<li>Ecos Preferences
+<li>Command Generator
+<li>Ecos Status
+</ul>
 
-<h2>Importing Locos from the Ecos</h2>
-When importing the loco to JMRI, it currently only creates a skeleton record, that contains the loco Name along with the 
-decoder type if selected and the loco address. This process does not currently import any CV values stored on the Ecos into JMRI.
+<h3>Ecos Loco Database</h3>
+The Ecos Loco Database tool allows you to view all the Locos that are configured on the Ecos, assign them to a JMRI Roster entry or Import it in to the JMRI Roster.
 
-<h2>Exporting Locos into the Ecos</h2>
-When a new roster entry is created in JMRI, you will be asked if you wish to add the roster entry in to the Ecos Database.  The ecos entry will use the roster id as the loco name, set the speed steps 128, and set the loco address.  The number of speeds change be changed in the Ecos Preferences Menu.
+<h4>Importing Locos from the Ecos</h4>
+When importing a Loco into JMRI, it currently only creates a skeleton record that contains the Loco Name along with the 
+decoder type, if selected, and the Loco DCC Address. This process does not currently import into JMRI any CV values stored on the Ecos.
 
-<h2>Programming</h2>
-<p>Programming is currently not supported by the Ecos. Additional information on the ECoS can be found
-on the <a href="http://www.esu.eu/us/index.php?showId=205">ESU web site</a>.
-<p>
-Support for ECoS was first available in <a href="http://jmri.sf.net/releasenotes/jmri2.3.3.shtml">JMRI 2.3.3</a>.<br />
-
-Support for the ECoS Throttle was first available in <a href="http://jmri.sf.net/releasenotes/jmri2.7.4.shtml">JMRI 2.7.4</a>.<br />
-
-Support for the ECoS s88 Feedback Sensors was first available in <a href="http://jmri.sf.net/releasenotes/jmri2.7.9.shtml">JMRI 2.7.9</a>.<br />
-
-Support for the ECoS RailCom Feedback was first available in <a href="http://jmri.sf.net/releasenotes/jmri2.99.7.shtml">JMRI 2.99.7</a>.    
+<h4>Exporting Locos to the Ecos</h4>
+When a new Roster entry is created in JMRI, you will be asked if you wish to add the Roster entry into the Ecos Database.  The Ecos entry will use the Roster ID as the Loco Name, set the speed steps 128, and set the Loco Address. The number of speeds steps may later be changed in the Ecos Preferences menu.
 
 <!--#include virtual="/Footer" -->
+ </div><!-- closes #mainContent-->
+</div> <!-- closes #mBody-->
 </body>
 </html>

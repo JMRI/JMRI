@@ -23,10 +23,6 @@ abstract public class AbstractNetworkConnectionConfigXml extends AbstractConnect
 
     protected NetworkPortAdapter adapter;
 
-    abstract protected void getInstance();
-
-    abstract protected void register();
-
     protected void getInstance(Object object) {
         getInstance(); // over-ridden during migration
     }
@@ -96,19 +92,14 @@ abstract public class AbstractNetworkConnectionConfigXml extends AbstractConnect
     protected void extendElement(Element e) {
     }
 
-    /**
-     * Update static data from XML file
-     *
-     * @param e Top level Element to unpack.
-     * @return true if successful
-     */
-    public boolean load(Element e) throws Exception {
+    @Override
+    public boolean load(Element shared, Element perNode) throws Exception {
         boolean result = true;
         getInstance();
 
         boolean mdnsConfig = false;
         try {
-            mdnsConfig = (e.getAttribute("mdnsConfigure").getValue().equals("true"));
+            mdnsConfig = (shared.getAttribute("mdnsConfigure").getValue().equals("true"));
         } catch (NullPointerException ex) {  // considered normal if the attributes are not present
         }
         adapter.setMdnsConfigure(mdnsConfig);
@@ -118,7 +109,7 @@ abstract public class AbstractNetworkConnectionConfigXml extends AbstractConnect
             // configure host name
             String hostName = null;
             try {
-                hostName = e.getAttribute("address").getValue();
+                hostName = shared.getAttribute("address").getValue();
                 // the hostname is optional when mDNS is being used.
                 adapter.setHostName(hostName);
             } catch (NullPointerException ex) {  // considered normal if the attributes are not present
@@ -127,7 +118,7 @@ abstract public class AbstractNetworkConnectionConfigXml extends AbstractConnect
             // configure the Service Type
             String serviceType = null;
             try {
-                serviceType = e.getAttribute("serviceType").getValue();
+                serviceType = shared.getAttribute("serviceType").getValue();
                 // the Service Type is optional when mDNS is being used.
                 adapter.setServiceType(serviceType);
             } catch (NullPointerException ex) {  // considered normal if the attributes are not present
@@ -136,7 +127,7 @@ abstract public class AbstractNetworkConnectionConfigXml extends AbstractConnect
             // configure the advertisement name
             String advertisementName = null;
             try {
-                advertisementName = e.getAttribute("advertisementName").getValue();
+                advertisementName = shared.getAttribute("advertisementName").getValue();
                 // the Advertisement Name is optional when mDNS is being used.
                 adapter.setAdvertisementName(advertisementName);
             } catch (NullPointerException ex) {  // considered normal if the attributes are not present
@@ -152,13 +143,13 @@ abstract public class AbstractNetworkConnectionConfigXml extends AbstractConnect
             // configure host name
             String hostName = null;
             try {
-                hostName = e.getAttribute("address").getValue();
+                hostName = shared.getAttribute("address").getValue();
             } catch (NullPointerException ex) {  // considered normal if the attributes are not present
             }
             adapter.setHostName(hostName);
 
             try {
-                int port = e.getAttribute("port").getIntValue();
+                int port = shared.getAttribute("port").getIntValue();
                 adapter.setPort(port);
             } catch (org.jdom2.DataConversionException ex) {
                 log.warn("Could not parse port attribute");
@@ -166,12 +157,12 @@ abstract public class AbstractNetworkConnectionConfigXml extends AbstractConnect
             }
         }
 
-        loadCommon(e, adapter);
+        loadCommon(shared, perNode, adapter);
         // register, so can be picked up next time
         register();
 
         if (adapter.getDisabled()) {
-            unpackElement(e);
+            unpackElement(shared, perNode);
             return result;
         }
         try {
@@ -190,16 +181,8 @@ abstract public class AbstractNetworkConnectionConfigXml extends AbstractConnect
 
         // once all the configure processing has happened, do any
         // extra config
-        unpackElement(e);
+        unpackElement(shared, perNode);
         return result;
-    }
-
-    /**
-     * Customizable method if you need to add anything more
-     *
-     * @param e Element being created, update as needed
-     */
-    protected void unpackElement(Element e) {
     }
 
     /**
@@ -212,6 +195,6 @@ abstract public class AbstractNetworkConnectionConfigXml extends AbstractConnect
     }
 
     // initialize logging
-    static Logger log = LoggerFactory.getLogger(AbstractNetworkConnectionConfigXml.class.getName());
+    private final static Logger log = LoggerFactory.getLogger(AbstractNetworkConnectionConfigXml.class.getName());
 
 }

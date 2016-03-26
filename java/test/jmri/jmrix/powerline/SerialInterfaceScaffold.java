@@ -1,4 +1,3 @@
-// SerialInterfaceScaffold.java
 package jmri.jmrix.powerline;
 
 import java.util.Vector;
@@ -65,6 +64,6 @@ class SerialInterfaceScaffold extends SerialTrafficController {
         return cmdListeners.size();
     }
 
-    static Logger log = LoggerFactory.getLogger(SerialInterfaceScaffold.class.getName());
+    private final static Logger log = LoggerFactory.getLogger(SerialInterfaceScaffold.class.getName());
 
 }

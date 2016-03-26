@@ -3,8 +3,6 @@ package jmri.util.swing;
 
 import javax.swing.tree.DefaultMutableTreeNode;
 import org.jdom2.Element;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 
 /**
  * Common utility methods for working with JTrees.
@@ -49,6 +47,4 @@ public class JTreeUtil extends GuiUtilBase {
         }
         return node;
     }
-
-    static Logger log = LoggerFactory.getLogger(JTreeUtil.class.getName());
 }

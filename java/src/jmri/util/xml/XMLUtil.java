@@ -165,7 +165,7 @@ public final class XMLUtil extends Object {
         try {
             return factory.newSAXParser().getXMLReader();
         } catch (ParserConfigurationException ex) {
-            throw new SAXException("Cannot create parser satisfying configuration parameters", ex); //NOI18N                        
+            throw new SAXException("Cannot create parser satisfying configuration parameters", ex); // NOI18N
         }
     }
 
@@ -260,7 +260,7 @@ public final class XMLUtil extends Object {
      * </pre>
      *
      * <p>If you parse this with a null entity resolver, or you use the
-     * default resolver ({@link EntityCatalog#getDefault}) but do not do
+     * default resolver (EntityCatalog.getDefault) but do not do
      * anything special with this DTD, you will probably find the parse
      * blocking to make a network connection <em>even when you are not
      * validating</em>. That is because DTDs can be used to define
@@ -272,7 +272,7 @@ public final class XMLUtil extends Object {
      * <ol>
      *
      * <li><p>Register the DTD. This is generally the best thing to do. See
-     * {@link EntityCatalog}'s documentation for details, but for example
+     * EntityCatalog's documentation for details, but for example
      * in your layer use:</p>
      *
      * <pre>
@@ -331,7 +331,7 @@ public final class XMLUtil extends Object {
      * @param validate if true validating parser is used
      * @param namespaceAware if true DOM is created by namespace aware parser
      * @param errorHandler a error handler to notify about exception (such as {@link #defaultErrorHandler}) or <code>null</code>
-     * @param entityResolver SAX entity resolver (such as {@link EntityCatalog#getDefault}) or <code>null</code>
+     * @param entityResolver SAX entity resolver (such as EntityCatalog#getDefault) or <code>null</code>
      *
      * @throws IOException if an I/O problem during parsing occurs
      * @throws SAXException is thrown if a parser error occurs
@@ -727,7 +727,7 @@ public final class XMLUtil extends Object {
         for (int i = 0; i < chars.length(); i++) {
             char ch = chars.charAt(i);
 
-            if (((int) ch) <= 93) { // we are UNICODE ']'
+            if (ch <= 93) { // we are UNICODE ']'
 
                 switch (ch) {
                 case 0x9:
@@ -746,7 +746,7 @@ public final class XMLUtil extends Object {
 
                 default:
 
-                    if (((int) ch) < 0x20) {
+                    if (ch < 0x20) {
                         throw new CharConversionException("Invalid XML character &#" + ((int) ch) + ";.");
                     }
                 }
@@ -768,7 +768,7 @@ public final class XMLUtil extends Object {
         for (int i = 0; i < chars.length(); i++) {
             char ch = chars.charAt(i);
 
-            if (((int) ch) <= 93) { // we are UNICODE ']'
+            if (ch <= 93) { // we are UNICODE ']'
 
                 switch (ch) {
                 case 0x9:
@@ -795,7 +795,7 @@ public final class XMLUtil extends Object {
 
                 default:
 
-                    if (((int) ch) < 0x20) {
+                    if (ch < 0x20) {
                         throw new CharConversionException("Invalid XML character &#" + ((int) ch) + ";.");
                     }
                 }

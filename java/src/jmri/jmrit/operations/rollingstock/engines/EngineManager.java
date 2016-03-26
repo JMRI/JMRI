@@ -47,7 +47,7 @@ public class EngineManager extends RollingStockManager {
             // create manager to load engines and their attributes
             EngineManagerXml.instance();
         }
-        if (Control.showInstance) {
+        if (Control.SHOW_INSTANCE) {
             log.debug("EngineManager returns instance {}", _instance);
         }
         return _instance;
@@ -359,5 +359,5 @@ public class EngineManager extends RollingStockManager {
         super.firePropertyChange(p, old, n);
     }
 
-    static Logger log = LoggerFactory.getLogger(EngineManager.class.getName());
+    private final static Logger log = LoggerFactory.getLogger(EngineManager.class.getName());
 }

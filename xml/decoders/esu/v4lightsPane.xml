@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="utf-8"?>
+<pane xmlns:xi="http://www.w3.org/2001/XInclude" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="http://jmri.org/xml/schema/decoder.xsd">
+  <name>Lights</name>
+  <column>
+    <label>
+      <text>&lt;html&gt;
+        &lt;strong&gt;This tab is empty because Lights are set up on the following tabs:&lt;/strong&gt;
+        &lt;ul&gt;
+          &lt;li&gt;Function Map (map Fn keys and/or direction and/or movement to outputs)&lt;/li&gt;
+          &lt;li&gt;Function Outputs (specify light type, brightness, etc.)&lt;/li&gt;
+          &lt;li&gt;Function Settings (blink rate and grade crossing hold time)&lt;/li&gt;
+        &lt;/ul&gt;
+        &lt;br&gt;
+        &lt;strong&gt;To hide empty tabs, uncheck Preferences -> Roster -> Programmer -> Show empty tabs.&lt;/strong&gt;
+      &lt;/html&gt;</text>
+      <text xml:lang="de">&lt;html&gt;
+        &lt;strong&gt;Diese Reiter ist leer weil Lichter auf dem folgenden Reiter konfiguriert werden:&lt;/strong&gt;
+        &lt;ul&gt;
+        &lt;li&gt;Funktionszuordnung (weise Funktionsknöpfe, Richtung u. Geschwindigkeitsstufen an Ausgänge zu)&lt;/li&gt;
+        &lt;li&gt;Function Outputs = Funktionsausgänge (wähle Lichttyp, Helligkeit usw.)&lt;/li&gt;
+        &lt;li&gt;Function Settings = Funktionseinstellungen (Blinkfrequenz u. Bahnübergangswartezeit)&lt;/li&gt;
+        &lt;/ul&gt;
+        &lt;br&gt;
+        &lt;strong&gt;Um leere Reiter zu verbirgen, deselektiere Voreinstellungen -> Lokpark -> Programmierer -> Zeige leere Reiter.&lt;/strong&gt;
+        &lt;/html&gt;</text>
+    </label>
+  </column>
+</pane>

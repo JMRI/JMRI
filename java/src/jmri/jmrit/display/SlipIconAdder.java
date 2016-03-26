@@ -111,7 +111,6 @@ public class SlipIconAdder extends IconAdder {
      * Override. First look for a table selection to set the sensor. If not,
      * then look to change the icon image (super).
      */
-    @SuppressWarnings("null")
     public void makeIconPanel(boolean useDefaults) {
         if (_iconPanel != null) {
             this.remove(_iconPanel);
@@ -686,5 +685,5 @@ public class SlipIconAdder extends IconAdder {
     }
 
     // initialize logging
-    static Logger log = LoggerFactory.getLogger(SlipIconAdder.class.getName());
+    private final static Logger log = LoggerFactory.getLogger(SlipIconAdder.class.getName());
 }

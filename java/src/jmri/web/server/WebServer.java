@@ -35,11 +35,11 @@ import org.slf4j.LoggerFactory;
  */
 public final class WebServer implements LifeCycle.Listener {
 
-    protected Server server;
-    protected ZeroConfService zeroConfService = null;
+    private Server server;
+    private ZeroConfService zeroConfService = null;
     private WebServerPreferences preferences = null;
-    protected ShutDownTask shutDownTask = null;
-    static Logger log = LoggerFactory.getLogger(WebServer.class.getName());
+    private ShutDownTask shutDownTask = null;
+    private final static Logger log = LoggerFactory.getLogger(WebServer.class.getName());
 
     protected WebServer() {
         preferences = WebServerManager.getWebServerPreferences();
@@ -74,16 +74,17 @@ public final class WebServer implements LifeCycle.Listener {
             ContextHandlerCollection contexts = new ContextHandlerCollection();
             Properties services = new Properties();
             Properties filePaths = new Properties();
-            try {
-                InputStream in;
-                in = this.getClass().getResourceAsStream("Services.properties"); // NOI18N
+            try (InputStream in = this.getClass().getResourceAsStream("Services.properties")) { // NOI18N
                 services.load(in);
                 in.close();
-                in = this.getClass().getResourceAsStream("FilePaths.properties"); // NOI18N
+            } catch (IOException ex) {
+                log.error(ex.getMessage());
+            }
+            try (InputStream in = this.getClass().getResourceAsStream("FilePaths.properties")) { // NOI18N
                 filePaths.load(in);
                 in.close();
-            } catch (IOException e) {
-                log.error(e.getMessage());
+            } catch (IOException ex) {
+                log.error(ex.getMessage());
             }
             for (String path : services.stringPropertyNames()) {
                 ServletContextHandler servletContext = new ServletContextHandler(ServletContextHandler.NO_SECURITY);

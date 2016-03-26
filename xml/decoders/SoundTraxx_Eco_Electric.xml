@@ -50,15 +50,29 @@
       <authorinitials>DGH</authorinitials>
       <revremark>Promoted Extended Function Map to the default</revremark>
     </revision>
+    <revision>
+      <revnumber>1.4</revnumber>
+      <date>2016-01-04</date>
+      <authorinitials>MJM</authorinitials>
+      <revremark>Revise for Soundtraxx doc ver 1.30</revremark>
+    </revision>
+    <revision>
+      <revnumber>1.5</revnumber>
+      <date>2016-02-02</date>
+      <authorinitials>MJM</authorinitials>
+      <revremark>Add ECO-200 and ECO-PNP</revremark>
+    </revision>
   </revhistory>
   <version author="Michael Mosher" version="1" lastUpdated="20150725"/>
   <version author="Alain Le Marchand" version="1.1" lastUpdated="20150726"/>
   <version author="Alain Le Marchand" version="1.2" lastUpdated="20150726"/>
-  <version author="Dave Heap" version="1.2" lastUpdated="20150813"/>
+  <version author="Dave Heap" version="1.3" lastUpdated="20150813"/>
+  <version author="Michael Mosher" version="1.4" lastUpdated="20160104"/>
+  <version author="Michael Mosher" version="1.5" lastUpdated="20160202"/>
 <!-- Decoder Model information follows -->
   <decoder>
     <family name="Econami Electric" mfg="SoundTraxx (Throttle-Up)" comment="These are the -retail- version Econami Electric decoders">
-      <model model="ECO-100 Electric" numOuts="4" numFns="20" maxMotorCurrent="1A" connector="9pin" productID="883001" comment="Model 883001">
+      <model model="ECO-100 Electric" numOuts="4" numFns="20" maxMotorCurrent="1A" connector="other" productID="883001" comment="Model 883001">
         <versionCV lowVersionID="70"/>
         <output name="3" label="  FX3  "/>
         <output name="4" label="  FX4  "/>
@@ -92,6 +106,41 @@
             <label xml:lang="it">Accoppiatore| </label>
         </output>
         <size length="27" width="10.5" height="5" units="mm"/>
+      </model>
+      <model model="ECO-200 Electric" numOuts="4" numFns="30" maxMotorCurrent="2A" connector="9pin" productID="883002" comment="Model 883002">
+        <versionCV lowVersionID="70"/>
+        <output name="3" label="  FX3  "/>
+        <output name="4" label="  FX4  "/>
+        <output name="5" label="Air Horn| ">
+            <label xml:lang="it">Tromba| </label>
+        </output>
+        <output name="6" label="Bell| ">
+            <label xml:lang="it">Campana| </label>
+        </output>
+        <output name="7" label="Pneum|Doors">
+            <label xml:lang="it">Porte|Pneum</label>
+        </output>
+        <output name="8" label="Short|Horn">
+            <label xml:lang="it">Breve|Tromba</label>
+        </output>
+        <output name="9" label="Pantograph| ">
+            <label xml:lang="it">Pantografo| </label>
+        </output>
+        <output name="10" label="|"/>	<!-- Not used for for this decoder -->
+        <output name="11" label="Dimming| ">
+            <label xml:lang="it">Smorzam| </label>
+        </output>
+        <output name="12" label="Mute| ">
+            <label xml:lang="it">Silenzio| </label>
+        </output>
+        <output name="13" label="Stop|Bell">
+            <label xml:lang="it">Fermare|Campana</label>
+        </output>
+        <output name="14" label="|"/>	<!-- Not used for for this decoder -->
+        <output name="15" label="Coupler| ">
+            <label xml:lang="it">Accoppiatore| </label>
+        </output>
+        <size length="35" width="18" height="6" units="mm"/>
       </model>
       <model model="ECO-21P Electric" numOuts="4" numFns="30" maxMotorCurrent="1A" connector="21pin" productID="883003" comment="Model 883003">
         <versionCV lowVersionID="70"/>
@@ -162,6 +211,41 @@
             <label xml:lang="it">Accoppiatore| </label>
         </output>
         <size length="69" width="30.5" height="14" units="mm"/>
+      </model>
+      <model model="ECO-PNP Electric" numOuts="4" numFns="30" maxMotorCurrent="2A" connector="DropIn" productID="883004" comment="Model 883004">
+        <versionCV lowVersionID="70"/>
+        <output name="3" label="  FX3  "/>
+        <output name="4" label="  FX4  "/>
+        <output name="5" label="Air Horn| ">
+            <label xml:lang="it">Tromba| </label>
+        </output>
+        <output name="6" label="Bell| ">
+            <label xml:lang="it">Campana| </label>
+        </output>
+        <output name="7" label="Pneum|Doors">
+            <label xml:lang="it">Porte|Pneum</label>
+        </output>
+        <output name="8" label="Short|Horn">
+            <label xml:lang="it">Breve|Tromba</label>
+        </output>
+        <output name="9" label="Pantograph| ">
+            <label xml:lang="it">Pantografo| </label>
+        </output>
+        <output name="10" label="|"/>	<!-- Not used for for this decoder -->
+        <output name="11" label="Dimming| ">
+            <label xml:lang="it">Smorzam| </label>
+        </output>
+        <output name="12" label="Mute| ">
+            <label xml:lang="it">Silenzio| </label>
+        </output>
+        <output name="13" label="Stop|Bell">
+            <label xml:lang="it">Fermare|Campana</label>
+        </output>
+        <output name="14" label="|"/>	<!-- Not used for for this decoder -->
+        <output name="15" label="Coupler| ">
+            <label xml:lang="it">Accoppiatore| </label>
+        </output>
+        <size length="73.7" width="16.8" height="4.8" units="mm"/>
       </model>
       <functionlabels>
         <functionlabel num="0" lockable="true">Headlight</functionlabel>
@@ -1022,7 +1106,7 @@
       <!-- "Sound Group 1 Option (none yet)" -->
       <!-- "Sound Group 2 Option (none yet)" -->
       <!-- "Sound Group 3 Option 2" -->
-      <!-- "Sound Setting 25" -->
+      <!-- "Sound Setting 30" -->
     </variables>
     <resets>
       <factReset label="Reset all CVs to factory defaults" CV="8" default="8"/>

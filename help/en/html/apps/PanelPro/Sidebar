@@ -1,33 +1,77 @@
 <!-- Sidebar -->
+<!-- This is the common sidebar definition for apps/PanelPro pages -->
 <hr class="hide">
 <div id="mBody">
 <div id="side"> <!-- Block of text on left side of page -->
 
-<dl class=toc>
+<dl class="toc">
 
-<dt><h3>PanelPro Info</h3></dt><DD><UL>
-<LI><a href="../../../package/jmri/jmrit/display/PanelEditor.shtml">Panel Editor</A>
-<LI><a href="../../../package/jmri/jmrit/display/LayoutEditor.shtml">Layout Editor</A>
-<LI><a href="FAQ.shtml">FAQ</A>
-<LI><A HREF="http://jmri.sf.net/community/examples/Gallery.shtml">User's Layouts</a>
-<LI><A HREF="http://jmri.sf.net/community/examples/Modules.shtml">Modular Layout Example</a>
-<LI><A HREF="ShowPanel.shtml">Display Panel File</a>
-<LI><A HREF="AdvIcons.shtml">Advanced Icons</a>
-</UL>
+<dt><h3>PanelPro&trade;</h3></dt>
+<dd>
+<ul>
+<li><a href="../../../package/jmri/jmrit/display/PanelEditor.shtml">Panel Editor</a>
+<li><a href="../../../package/jmri/jmrit/display/LayoutEditor.shtml">Layout Editor</a>
+<li><a href="FAQ.shtml">FAQ</a>
+<li><a href="http://jmri.org/community/examples/Gallery.shtml">User's Layouts</a>
+<li><a href="http://jmri.org/community/examples/Modules.shtml">Modular Layout Example</a>
+<li><a href="ShowPanel.shtml">Display a Panel File</a>
+<li><a href="AdvIcons.shtml">Advanced Icons</a>
+<li><a href="../../setup/index.shtml">JMRI Setup</a></li>
+</ul>
+</dd>
 
+<dt><h3>Other Apps</h3></dt>
+<dd>
+		<ul>
+		<li><a href="../DecoderPro/index.shtml">DecoderPro&reg;</a></li>
+		<!-- <li><a href="../PanelPro/PanelPro.shtml">PanelPro&trade;</a></li> -->
+		<li><a href="../DispatcherPro/index.shtml">DispatcherPro&trade;</a></li>
+    <li><a href="../../../package/jmri/jmrit/operations/Operations.shtml">OperationsPro&trade;</a></li>
+		<li><a href="../SoundPro/SoundPro.shtml">SoundPro</a></li>
+		</ul>
+</dd>
 
-<dt><h3>Other Useful Info</h3></dt><DD><UL>
+<dt><h3><a href="../../tools/index.shtml">Tools</a></h3></dt>
+<dd>JMRI provides powerful tools for working with your
+layout.
+	<ul>
+		<li><dfn><a href="../../tools/Turnouts.shtml">Turnouts</a></dfn>
+		<li><dfn><a href="../../tools/Lights.shtml">Lights</a></dfn>
+		<li><dfn><a href="../../tools/Sensors.shtml">Sensors</a></dfn>
+		<li><dfn><a href="../../tools/throttle/ThrottleMain.shtml">Throttles</a></dfn>
+		<li><dfn><a href="../../tools/consisttool/ConsistTool.shtml">Consisting</a></dfn>
+		<li><dfn><a href="../../tools/Blocks.shtml">Blocks</a></dfn>
+		<li><dfn><a href="../../tools/Reporters.shtml">Reporters</a></dfn>
+		<li><dfn><a href="../../tools/Memories.shtml">Memory Variables</a></dfn>
+		<li><dfn><a href="../../tools/Routes.shtml">Routes</a></dfn>
+		<li><dfn><a href="../../tools/LRoutes.shtml">LRoutes</a></dfn>
+    <li><dfn><a href="../../tools/Sections.shtml">Sections</a></dfn>
+		<li><dfn><a href="../../tools/Logix.shtml">Logix</a></dfn>
+		<li><dfn><a href="../../tools/fastclock/index.shtml">Fast Clocks</a></dfn>
+		<li><dfn><a href="../../tools/speedometer/index.shtml">Speedometer</a></dfn>
+		<li><dfn><a href="../../tools/Audio.shtml">Audio</a></dfn>
+		<li><dfn><a href="../../tools/IdTags.shtml">ID Tags</a></dfn>
+		
+		<li><dfn><a href="../../tools/index.shtml#systemSpecificTools">System-specific...</a></dfn>
+	</ul>
+</dd>
 
-<LI><a HREF="../../tools/Sensors.shtml">Sensors</a>
-<LI><A HREF="../../tools/signaling/index.shtml">Signals</a>
-<LI><A HREF="../../tools/Routes.shtml">Routes</a>
-<LI><A HREF="../../tools/fastclock/index.shtml">Fast Clocks</a>
-<LI><A HREF="../../doc/Technical/TurnoutFeedback.shtml">Turnout Feedback</a>
-</UL>
+<dt><h3>Layout Automation</h3></dt>
+<dd>
+  <ul>
+    <li><dfn><a href="../../tools/signaling/index.shtml">Signaling</a></dfn>
+    <li><dfn><a href="../../tools/EntryExit.shtml">Entry Exit (NX)</a></dfn>
+    <li><dfn><a href="../../tools/Routes.shtml">Routes</a></dfn>
+    <li><dfn><a href="../../tools/fastclock/index.shtml">Fast Clocks</a></dfn>
+    <li><dfn><a href="../../tools/scripting/index.shtml">Scripting</a></dfn>
+    <li><a href="../../doc/Technical/TurnoutFeedback.shtml">Turnout Feedback</a>
+  </ul>
+</dd>
 
 </dl>
+
 <a href="/donations.shtml">
- <img src="http://sourceforge.net/images/project-support.jpg" width="88" height="32" border="0" ALIGN="RIGHT" alt="Donate to JMRI" />
+ <img src="http://sourceforge.net/images/project-support.jpg" width="88" height="32" border="0" align="right" alt="Donate to JMRI" />
 </a> 
 
 </div> <!-- End of block of text on left side of page -->

@@ -1,0 +1,299 @@
+<?xml version="1.0" encoding="utf-8"?>
+<pane xmlns:xi="http://www.w3.org/2001/XInclude" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="http://jmri.org/xml/schema/decoder.xsd">
+    <name>Analog Controls</name>
+    <column>
+      <row>
+        <display item="DC (Analog) Brake Control" layout="above" label="">
+          <label/>
+        </display>
+        <label>
+          <text> </text>
+        </label>
+        <display item="DC (Analog) Brake Control" layout="above" format="hslider"/>
+      </row>
+      <label>
+        <text> </text>
+      </label>
+      <row>
+        <display item="Brake Timer" layout="above" label="">
+          <label/>
+        </display>
+        <label>
+          <text> </text>
+        </label>
+        <display item="Brake Timer" layout="above" format="hslider"/>
+      </row>
+      <label>
+        <text> </text>
+      </label>
+      <row>
+        <display item="Analog Brake Set Voltage" layout="above" label="">
+          <label/>
+        </display>
+        <label>
+          <text> </text>
+        </label>
+        <display item="Analog Brake Set Voltage" layout="above" format="hslider"/>
+      </row>
+      <label>
+        <text> </text>
+      </label>
+      <row>
+        <display item="Analog Brake Release Voltage" layout="above" label="">
+          <label/>
+        </display>
+        <label>
+          <text> </text>
+        </label>
+        <display item="Analog Brake Release Voltage" layout="above" format="hslider"/>
+      </row>
+    </column>
+    <column>
+      <row>
+        <display item="DC Chuff Motor Power Scalar" layout="above" label="">
+          <label/>
+        </display>
+        <label>
+          <text> </text>
+        </label>
+        <display item="DC Chuff Motor Power Scalar" layout="above" format="hslider"/>
+      </row>
+      <label>
+        <text> </text>
+      </label>
+      <row>
+        <display item="HO Gauge Rev Level Motor Power Scalar" layout="above" label="">
+          <label/>
+        </display>
+        <label>
+          <text> </text>
+        </label>
+        <display item="HO Gauge Rev Level Motor Power Scalar" layout="above" format="hslider"/>
+      </row>
+      <label>
+        <text> </text>
+      </label>
+      <row>
+        <display item="N Gauge Rev Level Motor Power Scalar" layout="above" label="">
+          <label/>
+        </display>
+        <label>
+          <text> </text>
+        </label>
+        <display item="N Gauge Rev Level Motor Power Scalar" layout="above" format="hslider"/>
+      </row>
+      <label>
+        <text> </text>
+      </label>
+      <row>
+        <display item="Analog Startup Voltage" layout="above" label="">
+          <label/>
+        </display>
+        <label>
+          <text> </text>
+        </label>
+        <display item="Analog Startup Voltage" layout="above" format="hslider"/>
+      </row>
+      <label>
+        <text> </text>
+      </label>
+      <row>
+        <display item="Analog Shutdown Voltage" layout="above" label="">
+          <label/>
+        </display>
+        <label>
+          <text> </text>
+        </label>
+        <display item="Analog Shutdown Voltage" layout="above" format="hslider"/>
+      </row>
+      <label>
+        <text> </text>
+      </label>
+      <row>
+        <display item="DC Motor Control Off Voltage" layout="above" label="">
+          <label/>
+        </display>
+        <label>
+          <text> </text>
+        </label>
+        <display item="DC Motor Control Off Voltage" layout="above" format="hslider"/>
+      </row>
+      <label>
+        <text> </text>
+      </label>
+      <row>
+        <display item="DC Track Voltage Read Delay" layout="above" label="">
+          <label/>
+        </display>
+        <label>
+          <text> </text>
+        </label>
+        <display item="DC Track Voltage Read Delay" layout="above" format="hslider"/>
+      </row>
+      <label>
+        <text> </text>
+      </label>
+      <row>
+        <display item="DC Motor Control Vmax" layout="above" label="">
+          <label/>
+        </display>
+        <label>
+          <text> </text>
+        </label>
+        <display item="DC Motor Control Vmax" layout="above" format="hslider"/>
+      </row>
+      <label>
+        <text> </text>
+      </label>
+      <row>
+        <display item="DC Motor Control Vmin" layout="above" label="">
+          <label/>
+        </display>
+        <label>
+          <text> </text>
+        </label>
+        <display item="DC Motor Control Vmin" layout="above" format="hslider"/>
+      </row>
+      <label>
+        <text> </text>
+      </label>
+      <row>
+        <display item="DC Track Change Magnitude Increase" layout="above" label="">
+          <label/>
+        </display>
+        <label>
+          <text> </text>
+        </label>
+        <display item="DC Track Change Magnitude Increase" layout="above" format="hslider"/>
+      </row>
+      <label>
+        <text> </text>
+      </label>
+      <row>
+        <display item="DC Track Change Magnitude Decrease" layout="above" label="">
+          <label/>
+        </display>
+        <label>
+          <text> </text>
+        </label>
+        <display item="DC Track Change Magnitude Decrease" layout="above" format="hslider"/>
+      </row>
+    </column>
+    <column>
+      <row>
+        <display item="Analog Rev Level 1 Voltage" layout="above" label="">
+          <label/>
+        </display>
+        <label>
+          <text> </text>
+        </label>
+        <display item="Analog Rev Level 1 Voltage" layout="above" format="hslider"/>
+      </row>
+      <label>
+        <text> </text>
+      </label>
+      <row>
+        <display item="Analog Rev Level 2 Voltage" layout="above" label="">
+          <label/>
+        </display>
+        <label>
+          <text> </text>
+        </label>
+        <display item="Analog Rev Level 2 Voltage" layout="above" format="hslider"/>
+      </row>
+      <label>
+        <text> </text>
+      </label>
+      <row>
+        <display item="Analog Rev Level 3 Voltage" layout="above" label="">
+          <label/>
+        </display>
+        <label>
+          <text> </text>
+        </label>
+        <display item="Analog Rev Level 3 Voltage" layout="above" format="hslider"/>
+      </row>
+      <label>
+        <text> </text>
+      </label>
+      <row>
+        <display item="Analog Rev Level 4 Voltage" layout="above" label="">
+          <label/>
+        </display>
+        <label>
+          <text> </text>
+        </label>
+        <display item="Analog Rev Level 4 Voltage" layout="above" format="hslider"/>
+      </row>
+      <label>
+        <text> </text>
+      </label>
+      <row>
+        <display item="Analog Rev Level 5 Voltage" layout="above" label="">
+          <label/>
+        </display>
+        <label>
+          <text> </text>
+        </label>
+        <display item="Analog Rev Level 5 Voltage" layout="above" format="hslider"/>
+      </row>
+      <label>
+        <text> </text>
+      </label>
+      <row>
+        <display item="Analog Rev Level 6 Voltage" layout="above" label="">
+          <label/>
+        </display>
+        <label>
+          <text> </text>
+        </label>
+        <display item="Analog Rev Level 6 Voltage" layout="above" format="hslider"/>
+      </row>
+      <label>
+        <text> </text>
+      </label>
+      <row>
+        <display item="Analog Rev Level 7 Voltage" layout="above" label="">
+          <label/>
+        </display>
+        <label>
+          <text> </text>
+        </label>
+        <display item="Analog Rev Level 7 Voltage" layout="above" format="hslider"/>
+      </row>
+      <label>
+        <text> </text>
+      </label>
+      <row>
+        <display item="DC Rev Level Motor Power Scalar" layout="above" label="">
+          <label/>
+        </display>
+        <label>
+          <text> </text>
+        </label>
+        <display item="DC Rev Level Motor Power Scalar" layout="above" format="hslider"/>
+      </row>
+    </column>
+    <column>
+    <display item="Analog (DC) Operation" tooltip="Determines whether loco can operate on conventional DC current (enables Power Source Conversion)">
+      <tooltip xml:lang="ca">Determina si una locomotora pot funcionar en CC</tooltip>
+      <tooltip xml:lang="it">Determina se una locomotiva può funzionare in DC</tooltip>
+      <tooltip xml:lang="de">Legt fest, ob die Lok mit konventionellem Gleichstrom betrieben werden kann</tooltip>
+    </display>
+      <label>
+        <text> </text>
+      </label>
+      <display item="Aux Select for DCMaster"/>
+      <display item="DC Rule 17 Lighting"/>
+      <display item="Activates L1 on DC"/>
+      <label>
+        <text> </text>
+      </label>
+      <display item="DC Easy Consist"/>
+      <label>
+        <text> </text>
+      </label>
+      <display item="Analog Sound Setup"/>
+      <display item="Rev Level Power Threshold"/>
+    </column>
+</pane>

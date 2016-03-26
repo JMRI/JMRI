@@ -156,7 +156,7 @@ public class ListedTableFrame extends BeanTableFrame {
             cardHolder.setDividerLocation(listScroller.getPreferredSize().width);
         }
         cardHolder.addPropertyChangeListener(new PropertyChangeListener() {
-            @edu.umd.cs.findbugs.annotations.SuppressWarnings(value = "ST_WRITE_TO_STATIC_FROM_INSTANCE_METHOD",
+            @edu.umd.cs.findbugs.annotations.SuppressFBWarnings(value = "ST_WRITE_TO_STATIC_FROM_INSTANCE_METHOD",
                     justification = "We only intend to use/save the last position of the Split frame")
             public void propertyChange(PropertyChangeEvent e) {
                 if (e.getPropertyName().equals("dividerLocation")) {
@@ -187,7 +187,7 @@ public class ListedTableFrame extends BeanTableFrame {
                     return;
                 }
             } catch (Exception ex) {
-                log.error("An error occured in the goto list for " + selection);
+                log.error("An error occurred in the goto list for " + selection);
             }
         }
     }
@@ -223,7 +223,7 @@ public class ListedTableFrame extends BeanTableFrame {
         JMenu fileMenu = new JMenu(rb.getString("MenuFile"));
         menuBar.add(fileMenu);
 
-        JMenuItem newItem = new JMenuItem("New Window");
+        JMenuItem newItem = new JMenuItem(Bundle.getMessage("MenuNewWindow"));
         fileMenu.add(newItem);
         newItem.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
@@ -253,7 +253,7 @@ public class ListedTableFrame extends BeanTableFrame {
             }
         });
 
-        JMenu viewMenu = new JMenu("View");
+        JMenu viewMenu = new JMenu(Bundle.getMessage("MenuView"));
         menuBar.add(viewMenu);
         for (int i = 0; i < TabbedTableItemListArrayArray.size(); i++) {
             final TabbedTableItemListArray itemList = TabbedTableItemListArrayArray.get(i);
@@ -300,7 +300,7 @@ public class ListedTableFrame extends BeanTableFrame {
         return choices;
     }
 
-    @edu.umd.cs.findbugs.annotations.SuppressWarnings(value = "ST_WRITE_TO_STATIC_FROM_INSTANCE_METHOD",
+    @edu.umd.cs.findbugs.annotations.SuppressFBWarnings(value = "ST_WRITE_TO_STATIC_FROM_INSTANCE_METHOD",
             justification = "We only intend to use/save the last position of the Split frame")
     public void setDividerLocation(int loc) {
         if (loc == 0) {
@@ -625,5 +625,5 @@ public class ListedTableFrame extends BeanTableFrame {
         }
     }
 
-    static Logger log = LoggerFactory.getLogger(ListedTableFrame.class.getName());
+    private final static Logger log = LoggerFactory.getLogger(ListedTableFrame.class.getName());
 }

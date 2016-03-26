@@ -58,11 +58,6 @@ public class PortalIconXml extends PositionableLabelXml {
         return element;
     }
 
-    public boolean load(Element element) {
-        log.error("Invalid method called");
-        return false;
-    }
-
     /**
      * Create a PositionableLabel, then add to a target JLayeredPane
      *
@@ -133,5 +128,5 @@ public class PortalIconXml extends PositionableLabelXml {
         l.setHideArrows(value);
     }
 
-    static Logger log = LoggerFactory.getLogger(PortalIconXml.class.getName());
+    private final static Logger log = LoggerFactory.getLogger(PortalIconXml.class.getName());
 }

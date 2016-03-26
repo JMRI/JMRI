@@ -163,7 +163,7 @@ public class LnPowerManager
             tc.sendLocoNetMessage(msg);
         }
     }
-    static Logger log = LoggerFactory.getLogger(LnPowerManager.class.getName());
+    private final static Logger log = LoggerFactory.getLogger(LnPowerManager.class.getName());
 }
 
 /* @(#)LnPowerManager.java */

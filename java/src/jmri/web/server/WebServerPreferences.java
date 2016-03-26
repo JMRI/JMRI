@@ -5,14 +5,15 @@ import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.Collections;
 import java.util.List;
 import java.util.prefs.BackingStoreException;
 import java.util.prefs.Preferences;
 import jmri.beans.Bean;
 import jmri.jmrit.XmlFile;
 import jmri.profile.ProfileManager;
+import jmri.profile.ProfileUtils;
 import jmri.util.FileUtil;
-import jmri.util.prefs.JmriPreferencesProvider;
 import org.jdom2.Attribute;
 import org.jdom2.DataConversionException;
 import org.jdom2.Element;
@@ -46,7 +47,7 @@ public class WebServerPreferences extends Bean {
     private int refreshDelay = 5;
     private boolean useAjax = true;
     private boolean plain = false;
-    private ArrayList<String> disallowedFrames = new ArrayList<>(Arrays.asList(Bundle.getMessage("DefaultDisallowedFrames").split(";")));
+    private final ArrayList<String> disallowedFrames = new ArrayList<>(Arrays.asList(Bundle.getMessage("DefaultDisallowedFrames").split(";")));
     private String railRoadName = Bundle.getMessage("DefaultRailroadName");
     private boolean allowRemoteConfig = false;
     protected boolean readonlyPower = true;
@@ -55,7 +56,7 @@ public class WebServerPreferences extends Bean {
 
     public WebServerPreferences(String fileName) {
         boolean migrate = false;
-        Preferences sharedPreferences = JmriPreferencesProvider.getPreferences(ProfileManager.getDefault().getActiveProfile(), this.getClass(), true);
+        Preferences sharedPreferences = ProfileUtils.getPreferences(ProfileManager.getDefault().getActiveProfile(), this.getClass(), true);
         try {
             if (sharedPreferences.keys().length == 0) {
                 log.info("No Webserver preferences exist.");
@@ -88,7 +89,7 @@ public class WebServerPreferences extends Bean {
     }
 
     public WebServerPreferences() {
-        Preferences sharedPreferences = JmriPreferencesProvider.getPreferences(ProfileManager.getDefault().getActiveProfile(), this.getClass(), true);
+        Preferences sharedPreferences = ProfileUtils.getPreferences(ProfileManager.getDefault().getActiveProfile(), this.getClass(), true);
         this.readPreferences(sharedPreferences);
     }
 
@@ -194,7 +195,7 @@ public class WebServerPreferences extends Bean {
         setUseAjax(prefs.useAjax());
         this.setAllowRemoteConfig(prefs.allowRemoteConfig());
         this.setReadonlyPower(prefs.isReadonlyPower());
-        setDisallowedFrames((ArrayList<String>) prefs.getDisallowedFrames());
+        setDisallowedFrames(prefs.getDisallowedFrames());
         setPort(prefs.getPort());
         setRailRoadName(prefs.getRailRoadName());
     }
@@ -207,7 +208,6 @@ public class WebServerPreferences extends Bean {
             root = prefsXml.rootFromFile(file);
         } catch (FileNotFoundException ex) {
             log.debug("Could not find Web Server preferences file. Normal if preferences have not been saved before.");
-            root = null;
             throw ex;
         } catch (IOException | JDOMException ex) {
             log.error("Exception while loading web server preferences: " + ex);
@@ -219,7 +219,7 @@ public class WebServerPreferences extends Bean {
     }
 
     public void save() {
-        Preferences sharedPreferences = JmriPreferencesProvider.getPreferences(ProfileManager.getDefault().getActiveProfile(), this.getClass(), true);
+        Preferences sharedPreferences = ProfileUtils.getPreferences(ProfileManager.getDefault().getActiveProfile(), this.getClass(), true);
         sharedPreferences.putInt(ClickDelay, this.getClickDelay());
         sharedPreferences.putInt(RefreshDelay, this.getRefreshDelay());
         sharedPreferences.putBoolean(UseAjax, this.useAjax());
@@ -265,7 +265,7 @@ public class WebServerPreferences extends Bean {
     }
 
     public List<String> getDisallowedFrames() {
-        return disallowedFrames;
+        return Collections.unmodifiableList(disallowedFrames);
     }
 
     public boolean useAjax() {
@@ -306,8 +306,9 @@ public class WebServerPreferences extends Bean {
         this.readonlyPower = readonlyPower;
     }
 
-    public void setDisallowedFrames(ArrayList<String> value) {
-        disallowedFrames = value;
+    public void setDisallowedFrames(List<String> value) {
+        this.disallowedFrames.clear();
+        this.disallowedFrames.addAll(value);
     }
 
     public void addDisallowedFrame(String frame) {

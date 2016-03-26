@@ -283,9 +283,11 @@ public class AddProfileDialog extends javax.swing.JDialog {
             Profile p = new Profile(this.profileName.getText(), this.profileId, new File(this.profileFolder.getText()));
             ProfileManager.getDefault().addProfile(p);
             if (this.source != null) {
-                // TODO: if source is active profile, save source first
-                FileUtil.copy(source.getPath(), p.getPath());
-                p.save();
+                if (this.source.equals(ProfileManager.getDefault().getActiveProfile())) {
+                    // TODO: if source is active profile, prompt user to save source
+                    //InstanceManager.getDefault(ConfigureManager.class).storePrefs();
+                }
+                ProfileUtils.copy(source, p);
             }
             if (this.setNextProfile) {
                 ProfileManager.getDefault().setNextActiveProfile(p);
@@ -293,9 +295,13 @@ public class AddProfileDialog extends javax.swing.JDialog {
                 ProfileManager.getDefault().setActiveProfile(p);
             }
             ProfileManager.getDefault().saveActiveProfile(p, ProfileManager.getDefault().isAutoStartActiveProfile());
+            if (this.source != null) {
+                log.info("Created profile \"{}\" by copying profile \"{}\"", p.getName(), this.source.getName());
+            } else {
+                log.info("Created new profile \"{}\"", p.getName());
+            }
             this.setCursor(Cursor.getDefaultCursor());
             this.dispose();
-            log.info("Created profile \"{}\" by copying profile \"{}\"", p.getName(), this.source.getName());
         } catch (IOException | IllegalArgumentException ex) {
             this.setCursor(Cursor.getDefaultCursor());
             JOptionPane.showMessageDialog(this, ex.getLocalizedMessage(), "Error Creating Profile", JOptionPane.ERROR_MESSAGE);

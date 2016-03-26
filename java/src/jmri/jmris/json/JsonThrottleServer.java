@@ -14,17 +14,19 @@ import static jmri.jmris.json.JSON.ERROR;
 import static jmri.jmris.json.JSON.MESSAGE;
 import static jmri.jmris.json.JSON.THROTTLE;
 import static jmri.jmris.json.JSON.TYPE;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 
+/**
+ * 
+ * @author Randall Wood
+ * @deprecated since 4.3.4
+ */
+@Deprecated
 public class JsonThrottleServer {
 
     private final ObjectMapper mapper;
     protected final JmriConnection connection;
     private final HashMap<String, JsonThrottle> throttles;
     private final HashMap<JsonThrottle, String> throttleIds;
-    static final Logger log = LoggerFactory.getLogger(JsonThrottleServer.class.getName());
-
     public JsonThrottleServer(JmriConnection connection) {
         this.connection = connection;
         this.mapper = new ObjectMapper();

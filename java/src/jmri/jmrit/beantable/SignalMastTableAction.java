@@ -14,8 +14,6 @@ import javax.swing.JMenuItem;
 import javax.swing.JTable;
 import javax.swing.table.TableCellRenderer;
 import jmri.util.com.sun.TableSorter;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 
 /**
  * Swing action to create and register a SignalMastTable GUI.
@@ -43,7 +41,7 @@ public class SignalMastTableAction extends AbstractTableAction {
     }
 
     public SignalMastTableAction() {
-        this("Signal Mast Table");
+        this(Bundle.getMessage("TitleSignalMastTable"));
     }
 
     /**
@@ -55,7 +53,7 @@ public class SignalMastTableAction extends AbstractTableAction {
     }
 
     protected void setTitle() {
-        f.setTitle(f.rb.getString("TitleSignalMastTable"));
+        f.setTitle(Bundle.getMessage("TitleSignalMastTable"));
     }
 
     protected String helpTarget() {
@@ -86,7 +84,7 @@ public class SignalMastTableAction extends AbstractTableAction {
              * Include an "add" button
              */
             void extras() {
-                JButton addButton = new JButton(this.rb.getString("ButtonAdd"));
+                JButton addButton = new JButton(Bundle.getMessage("ButtonAdd"));
                 addToBottomBox(addButton, this.getClass().getName());
                 addButton.addActionListener(new ActionListener() {
                     public void actionPerformed(ActionEvent e) {
@@ -113,9 +111,9 @@ public class SignalMastTableAction extends AbstractTableAction {
 
     public void setMenuBar(BeanTableFrame f) {
         JMenuBar menuBar = f.getJMenuBar();
-        JMenu pathMenu = new JMenu(rb.getString("Tools"));
+        JMenu pathMenu = new JMenu(Bundle.getMessage("Tools"));
         menuBar.add(pathMenu);
-        JMenuItem item = new JMenuItem(rb.getString("MenuItemRepeaters"));
+        JMenuItem item = new JMenuItem(Bundle.getMessage("MenuItemRepeaters"));
         pathMenu.add(item);
         item.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
@@ -124,8 +122,6 @@ public class SignalMastTableAction extends AbstractTableAction {
             }
         });
     }
-
-    static final Logger log = LoggerFactory.getLogger(SignalMastTableAction.class.getName());
 
     public static class MyComboBoxRenderer extends JComboBox<String> implements TableCellRenderer {
 
@@ -171,7 +167,7 @@ public class SignalMastTableAction extends AbstractTableAction {
     }
 
     public String getClassDescription() {
-        return rb.getString("TitleSignalGroupTable");
+        return Bundle.getMessage("TitleSignalGroupTable");
     }
 }
 

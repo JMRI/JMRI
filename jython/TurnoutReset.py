@@ -12,6 +12,7 @@
 #
 
 import jmri
+import java
 
 # First, define the listener.  
 class MyListener(java.beans.PropertyChangeListener):

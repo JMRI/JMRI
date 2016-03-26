@@ -42,7 +42,7 @@ class ChangeTrackFrame extends OperationsFrame {
     String _trackType = "";
 
     public ChangeTrackFrame(TrackEditFrame tef) {
-        super();
+        super(Bundle.getMessage("MenuItemChangeTrackType"));
 
         // the following code sets the frame's initial state
         getContentPane().setLayout(new BoxLayout(getContentPane(), BoxLayout.Y_AXIS));
@@ -62,7 +62,9 @@ class ChangeTrackFrame extends OperationsFrame {
         addItem(p1, spurRadioButton, 0, 0);
         addItem(p1, yardRadioButton, 1, 0);
         addItem(p1, interchangeRadioButton, 2, 0);
-        addItem(p1, saveButton, 1, 1);
+        
+        JPanel p2 = new JPanel();
+        p2.add(saveButton);
 
         // group and set current track type
         _trackType = tef._track.getTrackType();
@@ -81,10 +83,12 @@ class ChangeTrackFrame extends OperationsFrame {
         addButtonAction(saveButton);
 
         getContentPane().add(p1);
-        setTitle(Bundle.getMessage("MenuItemChangeTrackType"));
-        pack();
-        setMinimumSize(new Dimension(Control.panelWidth300, Control.panelHeight100));
-        setVisible(true);
+        getContentPane().add(p2);
+        
+        // add help menu to window
+        addHelpMenu("package.jmri.jmrit.operations.Operations_ChangeTrackType", true); // NOI18N
+        
+        initMinimumSize(new Dimension(Control.panelWidth400, Control.panelHeight200));
     }
 
     public void buttonActionPerformed(java.awt.event.ActionEvent ae) {
@@ -108,5 +112,5 @@ class ChangeTrackFrame extends OperationsFrame {
         dispose();
     }
 
-    static Logger log = LoggerFactory.getLogger(ChangeTrackFrame.class.getName());
+    private final static Logger log = LoggerFactory.getLogger(ChangeTrackFrame.class.getName());
 }

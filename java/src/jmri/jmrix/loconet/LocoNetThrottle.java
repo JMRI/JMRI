@@ -232,7 +232,7 @@ public class LocoNetThrottle extends AbstractThrottle implements SlotListener {
      *
      * @param speed Number from 0 to 1; less than zero is emergency stop
      */
-    @edu.umd.cs.findbugs.annotations.SuppressWarnings(value = "FE_FLOATING_POINT_EQUALITY") // OK to compare floating point, notify on any change
+    @edu.umd.cs.findbugs.annotations.SuppressFBWarnings(value = "FE_FLOATING_POINT_EQUALITY") // OK to compare floating point, notify on any change
     public void setSpeedSetting(float speed) {
         if (LnConstants.CONSIST_MID == slot.consistStatus()
                 || LnConstants.CONSIST_SUB == slot.consistStatus()) {
@@ -299,6 +299,9 @@ public class LocoNetThrottle extends AbstractThrottle implements SlotListener {
      * Throttle object will result in a JmriException.
      */
     protected void throttleDispose() {
+        
+        log.debug("disposing of throttle (and setting slot = null)");
+        
         // stop timeout
         if (mRefreshTimer != null) {
             mRefreshTimer.stop();
@@ -341,7 +344,7 @@ public class LocoNetThrottle extends AbstractThrottle implements SlotListener {
     /**
      * Get notified when underlying slot information changes
      */
-    @edu.umd.cs.findbugs.annotations.SuppressWarnings(value = "FE_FLOATING_POINT_EQUALITY") // OK to compare floating point, notify on any change
+    @edu.umd.cs.findbugs.annotations.SuppressFBWarnings(value = "FE_FLOATING_POINT_EQUALITY") // OK to compare floating point, notify on any change
     public void notifyChangedSlot(LocoNetSlot pSlot) {
         if (slot != pSlot) {
             log.error("notified of change in different slot");
@@ -380,7 +383,14 @@ public class LocoNetThrottle extends AbstractThrottle implements SlotListener {
                     !((slotStatus & LnConstants.LOCOSTAT_MASK) == LnConstants.LOCO_IN_USE));
             slotStatus = newStat;
         }
-
+        
+        // It is possible that the slot status change we are being notified of
+        // is the slot being set to status COMMON. In which case the slot just
+        // got set to null. No point in continuing. In fact to do so causes a NPE.
+        if (slot == null) {
+            return;
+        }
+        
         // Functions
         if (this.f0 != slot.isF0()) {
             temp = this.f0;
@@ -597,6 +607,6 @@ public class LocoNetThrottle extends AbstractThrottle implements SlotListener {
     }
 
     // initialize logging
-    static Logger log = LoggerFactory.getLogger(LocoNetThrottle.class.getName());
+    private final static Logger log = LoggerFactory.getLogger(LocoNetThrottle.class.getName());
 
 }

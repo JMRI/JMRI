@@ -1,4 +1,3 @@
-// SerialTurnoutManagerTest.java
 package jmri.jmrix.secsi;
 
 import jmri.Turnout;
@@ -13,7 +12,6 @@ import org.slf4j.LoggerFactory;
  * Description:	tests for the SerialTurnoutManager class
  *
  * @author	Bob Jacobsen Copyright 2004, 2008
- * @version $Revision$
  */
 public class SerialTurnoutManagerTest extends jmri.managers.AbstractTurnoutMgrTest {
 
@@ -82,6 +80,6 @@ public class SerialTurnoutManagerTest extends jmri.managers.AbstractTurnoutMgrTe
         apps.tests.Log4JFixture.tearDown();
     }
 
-    static Logger log = LoggerFactory.getLogger(SerialTurnoutManagerTest.class.getName());
+    private final static Logger log = LoggerFactory.getLogger(SerialTurnoutManagerTest.class.getName());
 
 }

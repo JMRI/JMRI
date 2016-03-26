@@ -4,6 +4,7 @@ import java.util.List;
 import jmri.InstanceManager;
 import jmri.Sensor;
 import jmri.SensorManager;
+import jmri.configurexml.JmriConfigureXmlException;
 import org.jdom2.Element;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -101,9 +102,13 @@ public abstract class AbstractSensorManagerConfigXML extends AbstractNamedBeanMa
      * Create a SensorManager object of the correct class, then register and
      * fill it.
      *
-     * @param sensors Top level Element to unpack.
+     * @param sharedSensors
+     * @param perNodeSensors
+     * @return true if successful
+     * @throws jmri.configurexml.JmriConfigureXmlException
      */
-    abstract public boolean load(Element sensors) throws jmri.configurexml.JmriConfigureXmlException;
+    @Override
+    abstract public boolean load(Element sharedSensors, Element perNodeSensors) throws JmriConfigureXmlException;
 
     /**
      * Utility method to load the individual Sensor objects. If there's no
@@ -215,5 +220,5 @@ public abstract class AbstractSensorManagerConfigXML extends AbstractNamedBeanMa
         return InstanceManager.sensorManagerInstance().getXMLOrder();
     }
 
-    static Logger log = LoggerFactory.getLogger(AbstractSensorManagerConfigXML.class.getName());
+    private final static Logger log = LoggerFactory.getLogger(AbstractSensorManagerConfigXML.class.getName());
 }

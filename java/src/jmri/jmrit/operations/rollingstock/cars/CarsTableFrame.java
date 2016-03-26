@@ -27,7 +27,7 @@ import jmri.jmrit.operations.locations.ScheduleManager;
 import jmri.jmrit.operations.rollingstock.RollingStock;
 import jmri.jmrit.operations.setup.Control;
 import jmri.jmrit.operations.setup.Setup;
-import jmri.jmrit.operations.trains.TrainsByCarTypeAction;
+import jmri.jmrit.operations.trains.tools.TrainsByCarTypeAction;
 import jmri.util.com.sun.TableSorter;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -184,7 +184,8 @@ public class CarsTableFrame extends OperationsFrame implements TableModelListene
         // some tool tips
         sortByFinalDestination.setToolTipText(Bundle.getMessage("FinalDestination"));
         sortByRwe.setToolTipText(Bundle.getMessage("ReturnWhenEmpty"));
-        sortByLast.setToolTipText(Bundle.getMessage("LastMoved"));
+        sortByPickup.setToolTipText(Bundle.getMessage("TipPickup"));
+        sortByLast.setToolTipText(Bundle.getMessage("TipLastMoved"));
 
         JScrollPane controlPane = new JScrollPane(controlPanel);
 
@@ -361,8 +362,7 @@ public class CarsTableFrame extends OperationsFrame implements TableModelListene
                 f.dispose();
             }
             f = new CarEditFrame();
-            f.initComponents();
-            f.setTitle(Bundle.getMessage("TitleCarAdd"));
+            f.initComponents(); // default is add car
         }
         if (ae.getSource() == saveButton) {
             if (carsTable.isEditing()) {
@@ -396,7 +396,7 @@ public class CarsTableFrame extends OperationsFrame implements TableModelListene
     }
 
     public void tableChanged(TableModelEvent e) {
-        if (Control.showProperty) {
+        if (Control.SHOW_PROPERTY) {
             log.debug("Table changed");
         }
         updateNumCars();
@@ -412,6 +412,6 @@ public class CarsTableFrame extends OperationsFrame implements TableModelListene
         numCars.setText(showNumber + "/" + totalNumber);
     }
 
-    static Logger log = LoggerFactory.getLogger(CarsTableFrame.class.getName());
+    private final static Logger log = LoggerFactory.getLogger(CarsTableFrame.class.getName());
 
 }

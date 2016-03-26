@@ -1,4 +1,3 @@
-// CompositeVariableValueTest.java
 package jmri.jmrit.symbolicprog;
 
 import java.util.ArrayList;
@@ -14,11 +13,12 @@ import junit.framework.TestSuite;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+import jmri.util.JUnitUtil;
+
 /**
  * Test CompositeVariableValue class.
  *
- * @author	Bob Jacobsen Copyright 2006
- * @version $Revision$
+ * @author	Bob Jacobsen Copyright 2006, 2015
  */
 public class CompositeVariableValueTest extends VariableValueTest {
 
@@ -170,16 +170,7 @@ public class CompositeVariableValueTest extends VariableValueTest {
         log.debug("============ end test read ===============");
 
         // wait for reply (normally, done by callback; will check that later)
-        int i = 0;
-        log.debug("============== enter loop  =================");
-        while (testVar.isBusy() && i++ < 10) {
-            try {
-                Thread.sleep(100);
-            } catch (Exception e) {
-            }
-        }
-        log.debug("============== out of loop  ===================");
-        Assert.assertTrue("wait satisfied ", i < 10);
+        JUnitUtil.waitFor(()->{return !testVar.isBusy();}, "testVar.isBusy");
 
         int nBusyFalse = 0;
         for (int k = 0; k < evtList.size(); k++) {
@@ -221,14 +212,7 @@ public class CompositeVariableValueTest extends VariableValueTest {
         testVar.setToWrite(true);
         testVar.writeAll();
         // wait for reply (normally, done by callback; will check that later)
-        int i = 0;
-        while (testVar.isBusy() && i++ < 100) {
-            try {
-                Thread.sleep(100);
-            } catch (Exception e) {
-            }
-        }
-        Assert.assertTrue("wait satisfied ", i < 100);
+        JUnitUtil.waitFor(()->{return !testVar.isBusy();}, "testVar.isBusy");
 
         int nBusyFalse = 0;
         for (int k = 0; k < evtList.size(); k++) {
@@ -336,7 +320,7 @@ public class CompositeVariableValueTest extends VariableValueTest {
         return suite;
     }
 
-    static Logger log = LoggerFactory.getLogger(CompositeVariableValueTest.class.getName());
+    private final static Logger log = LoggerFactory.getLogger(CompositeVariableValueTest.class.getName());
 
     // The minimal setup for log4J
     protected void setUp() {

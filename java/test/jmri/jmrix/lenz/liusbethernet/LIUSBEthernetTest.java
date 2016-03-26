@@ -1,17 +1,13 @@
-// XNTCPTest.java
 package jmri.jmrix.lenz.liusbethernet;
 
 import junit.framework.Test;
 import junit.framework.TestCase;
 import junit.framework.TestSuite;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 
 /**
  * Tests for the jmri.jmrix.lenz.liusbethernet package
  *
  * @author Paul Bender
- * @version $Revision$
  */
 public class LIUSBEthernetTest extends TestCase {
 
@@ -33,7 +29,5 @@ public class LIUSBEthernetTest extends TestCase {
         suite.addTest(new TestSuite(LIUSBEthernetXNetPacketizerTest.class));
         return suite;
     }
-
-    static Logger log = LoggerFactory.getLogger(LIUSBEthernetTest.class.getName());
 
 }

@@ -54,7 +54,7 @@ public class NetworkDriverAdapter extends JMRIClientPortController {
         if (mInstance == null) {
             // create a new one and initialize
             NetworkDriverAdapter m = new NetworkDriverAdapter();
-            m.setManufacturer(jmri.jmrix.DCCManufacturerList.JMRI);
+            m.setManufacturer(jmri.jmrix.jmriclient.JMRIClientConnectionTypeList.JMRI);
 
             // and set as instance
             mInstance = m;
@@ -142,6 +142,6 @@ public class NetworkDriverAdapter extends JMRIClientPortController {
         return rb.getString("defaultMDNSServiceType");
     }
 
-    static Logger log = LoggerFactory.getLogger(NetworkDriverAdapter.class.getName());
+    private final static Logger log = LoggerFactory.getLogger(NetworkDriverAdapter.class.getName());
 
 }

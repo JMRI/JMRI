@@ -1,6 +1,8 @@
 // ProgrammerConfigPane.java
 package jmri.jmrit.symbolicprog;
 
+import java.awt.event.ActionEvent;
+import java.awt.event.ItemEvent;
 import java.util.ResourceBundle;
 import javax.annotation.CheckForNull;
 import javax.swing.Box;
@@ -10,7 +12,9 @@ import javax.swing.JComboBox;
 import javax.swing.JComponent;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
+import jmri.InstanceManager;
 import jmri.jmrit.symbolicprog.tabbedframe.PaneProgFrame;
+import jmri.profile.ProfileManager;
 import jmri.swing.PreferencesPanel;
 
 /**
@@ -32,15 +36,24 @@ public class ProgrammerConfigPane extends JPanel implements PreferencesPanel {
         p.add(new JLabel("Format:"));
         p.add(programmerBox = new JComboBox<>(ProgDefault.findListOfProgFiles()));
         programmerBox.setSelectedItem(ProgDefault.getDefaultProgFile());
+        programmerBox.addActionListener((ActionEvent e) -> {
+            InstanceManager.getDefault(ProgrammerConfigManager.class).setDefaultFile(programmerBox.getSelectedItem().toString());
+        });
         add(p);
 
         // also create the advanced panel
         advancedPanel = new JPanel();
         advancedPanel.setLayout(new BoxLayout(advancedPanel, BoxLayout.Y_AXIS));
-        advancedPanel.add(showEmptyTabs = new JCheckBox("Show empty tabs"));
+        advancedPanel.add(showEmptyTabs = new JCheckBox(this.apb.getString("ProgShowEmptyTabs")));
         showEmptyTabs.setSelected(PaneProgFrame.getShowEmptyPanes());
-        advancedPanel.add(ShowCvNums = new JCheckBox("Show CV numbers in tool tips"));
+        showEmptyTabs.addItemListener((ItemEvent e) -> {
+            InstanceManager.getDefault(ProgrammerConfigManager.class).setShowEmptyPanes(showEmptyTabs.isSelected());
+        });
+        advancedPanel.add(ShowCvNums = new JCheckBox(this.apb.getString("ProgShowCVInTips")));
         ShowCvNums.setSelected(PaneProgFrame.getShowCvNumbers());
+        ShowCvNums.addItemListener((ItemEvent e) -> {
+            InstanceManager.getDefault(ProgrammerConfigManager.class).setShowCvNumbers(ShowCvNums.isSelected());
+        });
         this.add(advancedPanel);
         this.add(Box.createVerticalGlue());
     }
@@ -115,7 +128,7 @@ public class ProgrammerConfigPane extends JPanel implements PreferencesPanel {
 
     @Override
     public void savePreferences() {
-        // do nothing - the persistant manager will take care of this
+        InstanceManager.getDefault(ProgrammerConfigManager.class).savePreferences(ProfileManager.getDefault().getActiveProfile());
     }
 
     @Override

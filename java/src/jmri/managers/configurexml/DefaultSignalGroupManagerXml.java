@@ -124,15 +124,10 @@ public class DefaultSignalGroupManagerXml
         }
     }
 
-    /**
-     * Create a DefaultSignalGroupManager
-     *
-     * @param element Top level Element to unpack.
-     * @return true if successful
-     */
-    public boolean load(Element element) {
+    @Override
+    public boolean load(Element shared, Element perNode) {
         // loop over contained signalgroup elements
-        List<Element> list = element.getChildren("signalgroup");
+        List<Element> list = shared.getChildren("signalgroup");
 
         SignalGroupManager sgm = InstanceManager.signalGroupManagerInstance();
 
@@ -256,5 +251,5 @@ public class DefaultSignalGroupManagerXml
         return InstanceManager.signalGroupManagerInstance().getXMLOrder();
     }
 
-    static Logger log = LoggerFactory.getLogger(DefaultSignalGroupManagerXml.class.getName());
+    private final static Logger log = LoggerFactory.getLogger(DefaultSignalGroupManagerXml.class.getName());
 }

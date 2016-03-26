@@ -2,6 +2,7 @@
 package jmri.jmrit.symbolicprog;
 
 import java.awt.event.ActionEvent;
+import java.util.ResourceBundle;
 import javax.swing.AbstractAction;
 import javax.swing.JFrame;
 import javax.swing.JOptionPane;
@@ -41,7 +42,7 @@ public class FactoryResetAction extends AbstractAction {
         String s = (String) JOptionPane.showInputDialog(
                 mParent,
                 "Factory Reset" + (options.length > 1 ? "s" : ""),
-                "Caution: Factory Reset",
+                ResourceBundle.getBundle("jmri.jmrit.symbolicprog.SymbolicProgBundle").getString("FactoryResetTitle"),
                 JOptionPane.WARNING_MESSAGE,
                 null,
                 options,
@@ -58,5 +59,5 @@ public class FactoryResetAction extends AbstractAction {
         }
 
     }
-    static Logger log = LoggerFactory.getLogger(FactoryResetAction.class.getName());
+    private final static Logger log = LoggerFactory.getLogger(FactoryResetAction.class.getName());
 }

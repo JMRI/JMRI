@@ -115,45 +115,45 @@
     <xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
     <label>Analog Mode Function Status - F15</label>
   </variable>
-  <variable CV="15" mask="XXXXVVVV" item="Advanced Group 1 Option 9" default="0" tooltip="Set this to match value below and decoder will unlock">
+  <variable CV="15" mask="XXXXVVVV" item="ESU V4 Advanced Decoder Lock Option 2" default="0" tooltip="Set this to match value below and decoder will unlock">
     <decVal max="16"/>
     <label>Decoder Lock ID number</label>
   </variable>
-  <variable CV="16" mask="XXXXVVVV" item="Advanced Group 1 Option 10" default="0" tooltip="Set this to decoder type: 1=motor, 2=sound, 3=function, etc.">
+  <variable CV="16" mask="XXXXVVVV" item="ESU V4 Advanced Decoder Lock Option 3" default="0" tooltip="Set this to decoder type: 1=motor, 2=sound, 3=function, etc.">
     <decVal max="16"/>
     <label>Preset Lock ID number</label>
   </variable>
   <xi:include href="http://jmri.org/xml/decoders/nmra/consistAddrDirection.xml"/>
   <xi:include href="http://jmri.org/xml/decoders/esu/v4cv21.22.xml"/>
-  <variable CV="27" mask="XXXXXXXV" item="Advanced Group 2 Option 1">
+  <variable CV="27" mask="XXXXXXXV" item="ESU V4 Advanced Brake Sections Option 1">
     <xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
-    <label>Brake on Asymmetrical DCC - higher voltage on right rail</label>
+    <label>ABC brake on Asymmetrical DCC - higher voltage on right rail</label>
   </variable>
-  <variable CV="27" mask="XXXXXXVX" item="Advanced Group 2 Option 2">
+  <variable CV="27" mask="XXXXXXVX" item="ESU V4 Advanced Brake Sections Option 2">
     <xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
-    <label>Brake on Asymmetrical DCC - higher voltage on left rail</label>
+    <label>ABC brake on Asymmetrical DCC - higher voltage on left rail</label>
   </variable>
-  <variable CV="27" mask="XXXXXVXX" item="Advanced Group 2 Option 3">
+  <variable CV="27" mask="XXXXXVXX" item="ESU V4 Advanced Brake Sections Option 11">
     <xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
     <label>Brake on Zimo HLU commands</label>
   </variable>
-  <variable CV="27" mask="XXXXVXXX" item="Advanced Group 2 Option 4" default="1">
+  <variable CV="27" mask="XXXXVXXX" item="ESU V4 Advanced Brake Sections Option 13" default="1">
     <xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
     <label>Brake on DC, polarity against direction</label>
   </variable>
-  <variable CV="27" mask="XXXVXXXX" item="Advanced Group 2 Option 5" default="1">
+  <variable CV="27" mask="XXXVXXXX" item="ESU V4 Advanced Brake Sections Option 12" default="1">
     <xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
     <label>Brake on DC, polarity same direction</label>
   </variable>
-  <variable CV="28" mask="XXXXXXXV" exclude="LokPilot Fx V4.0" item="ESU V4 Extra RailCom Option 3" default="1">
+  <variable CV="28" mask="XXXXXXXV" exclude="LokPilot Fx V4.0" item="ESU V4 Advanced RailCom Option 3" default="1">
     <xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
     <label>RailCom Channel 1 Address Broadcast</label>
   </variable>
-  <variable CV="28" mask="XXXXXXVX" exclude="LokPilot Fx V4.0" item="ESU V4 Extra RailCom Option 4" default="1">
+  <variable CV="28" mask="XXXXXXVX" exclude="LokPilot Fx V4.0" item="ESU V4 Advanced RailCom Option 4" default="1">
     <xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
     <label>RailCom Channel 2 Data Transmission</label>
   </variable>
-  <variable CV="28" mask="VXXXXXXX" exclude="LokPilot Fx V4.0" item="ESU V4 Extra RailCom Option 2" default="1">
+  <variable CV="28" mask="VXXXXXXX" exclude="LokPilot Fx V4.0" item="ESU V4 Advanced RailCom Option 2" default="1">
     <xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
     <label>RailCom Plus Auto Loco Recognition</label>
   </variable>
@@ -183,7 +183,7 @@
     <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
     <label>Analog Conversion Mode</label>
   </variable>
-  <variable CV="29" mask="XXXXVXXX" default="1" exclude="LokPilot Fx V4.0" item="ESU V4 Extra RailCom Option 1">
+  <variable CV="29" mask="XXXXVXXX" default="1" exclude="LokPilot Fx V4.0" item="ESU V4 Advanced RailCom Option 1">
     <xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
     <label>RailCom Enable</label>
   </variable>
@@ -206,19 +206,19 @@
     <decVal/>
     <label>Index register L</label>
   </variable>
-  <variable CV="47" mask="XXXXXXXV" default="1" item="ESU V4 Extra Protocols Option 1">
+  <variable CV="47" mask="XXXXXXXV" default="1" item="ESU V4 Advanced Protocols Option 1">
     <xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
     <label>DCC Protocol</label>
   </variable>
-  <variable CV="47" mask="XXXXXXVX" default="0" include="LokPilot XL V4.0,LokSound XL V4.0" item="ESU V4 Extra Protocols Option 4">
+  <variable CV="47" mask="XXXXXXVX" default="0" include="LokPilot XL V4.0,LokSound XL V4.0" item="ESU V4 Advanced Protocols Option 4">
     <xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
     <label>M4 Protocol</label>
   </variable>
-  <variable CV="47" mask="XXXXXVXX" default="1" exclude="ESU LokSound Select,LokPilot V4.0 DCC,LokPilot Micro V4.0 DCC" item="ESU V4 Extra Protocols Option 2">
+  <variable CV="47" mask="XXXXXVXX" default="1" exclude="ESU LokSound Select,LokPilot V4.0 DCC,LokPilot Micro V4.0 DCC" item="ESU V4 Advanced Protocols Option 2">
     <xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
     <label>Marklin Motorola Protocol</label>
   </variable>
-  <variable CV="47" mask="XXXXVXXX" default="1" exclude="ESU LokSound Select,LokPilot V4.0 DCC,LokPilot Micro V4.0 DCC" item="ESU V4 Extra Protocols Option 3">
+  <variable CV="47" mask="XXXXVXXX" default="1" exclude="ESU LokSound Select,LokPilot V4.0 DCC,LokPilot Micro V4.0 DCC" item="ESU V4 Advanced Protocols Option 3">
     <xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
     <label>Selectrix Protocol</label>
   </variable>
@@ -237,11 +237,11 @@
     </enumVal>
     <label>Motor PWM Frequency</label>
   </variable>
-  <variable CV="49" mask="XXXXXVXX" default="0" include="ESU LokSound V4.0,LokPilot V4.0,LokPilot Micro V4.0" item="ESU V4 Extra Compatibility Option 2">
+  <variable CV="49" mask="XXXXXVXX" default="0" include="ESU LokSound V4.0,LokPilot V4.0,LokPilot Micro V4.0" item="ESU V4 Advanced Compatibility Option 2">
     <xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
     <label>Marklin Delta Mode</label>
   </variable>
-  <variable CV="49" mask="VXXXVXXX" default="0" include="ESU LokSound V4.0,LokPilot V4.0,LokPilot Micro V4.0" item="ESU V4 Extra Miscellaneous Option 3">
+  <variable CV="49" mask="VXXXVXXX" default="0" include="ESU LokSound V4.0,LokPilot V4.0,LokPilot Micro V4.0" item="ESU V4 Advanced Protocols Option 11">
     <enumVal>
       <enumChoice choice="No additional addresses" value="0"/>
       <enumChoice choice="Use 2 addresses" value="1"/>
@@ -250,15 +250,15 @@
     </enumVal>
     <label>Marklin Additional Addresses</label>
   </variable>
-  <variable CV="49" mask="XXXVXXXX" default="1" item="ESU V4 Extra Miscellaneous Option 1">
+  <variable CV="49" mask="XXXVXXXX" default="1" item="ESU V4 Adavanced Speed Step Option 1">
     <xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
     <label>Automatic Speed Step Detection</label>
   </variable>
-  <variable CV="49" mask="XXVXXXXX" default="0" exclude="LokPilot Micro V4.0,LokPilot Micro V4.0 DCC" item="ESU V4 Extra Compatibility Option 1">
+  <variable CV="49" mask="XXVXXXXX" default="0" exclude="LokPilot Micro V4.0,LokPilot Micro V4.0 DCC" item="ESU V4 Advanced Compatibility Option 1">
     <xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
     <label>LGB Function Button Mode</label>
   </variable>
-  <variable CV="49" mask="XVXXXXXX" default="0" item="ESU V4 Extra Compatibility Option 3">
+  <variable CV="49" mask="XVXXXXXX" default="0" item="ESU V4 Advanced Compatibility Option 3">
     <xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
     <label>ZIMO Manual Function Mode</label>
   </variable>
@@ -316,37 +316,37 @@
     </variable>
   </variables>
   <xi:include href="http://jmri.org/xml/decoders/nmra/userId.xml"/>
-  <variable CV="112" default="20" tooltip="Unit is 0.05 seconds" item="ESU V4 Extra Function Output Settings Slider 1">
+  <variable CV="112" default="20" tooltip="Unit is 0.05 seconds" item="ESU V4 Function Settings General Slider 1">
     <decVal/>
     <label>Rate for Blinking Effects</label>
   </variable>
-  <variable CV="113" default="50" tooltip="Unit is 0.016384 seconds" item="ESU V4 Extra Power Handling Slider 1" exclude="LokPilot Fx V4.0">
+  <variable CV="113" default="50" tooltip="Unit is 0.016384 seconds" item="ESU V4 Advanced Power Pack Slider 1" exclude="LokPilot Fx V4.0">
     <decVal/>
     <label>Power Pack Maintain Time</label>
   </variable>
-  <variable CV="122" mask="XXXXXXXV" default="1" item="ESU V4 Extra Power Handling Option 1">
+  <variable CV="122" mask="XXXXXXXV" default="1" item="ESU V4 Advanced Memory Settings Option 1)">
     <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
     <label>Remember Current Function States</label>
     <label xml:lang="fr">Sauvegarde fonction</label>
   </variable>
-  <variable CV="122" mask="XXXXXXVX" default="1" item="ESU V4 Extra Power Handling Option 2">
+  <variable CV="122" mask="XXXXXXVX" default="1" item="ESU V4 Advanced Memory Settings Option 2)">
     <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
     <label>Remember Current Speed</label>
     <label xml:lang="fr">Sauvegarde vitesse actuelle</label>
   </variable>
-  <variable CV="123" default="100" item="Advanced Group 1 Option 5">
+  <variable CV="123" default="100" item="ESU V4 Advanced Brake Sections Slider 2">
     <decVal/>
-    <label>ABC Mode slow speed</label>
+    <label>ABC mode reduced speed</label>
   </variable>
-  <variable CV="124" mask="XXXXXXXV" default="0" item="ESU V4 Extra Miscellaneous Option 2">
+  <variable CV="124" mask="XXXXXXXV" default="0" item="ESU V4 Adavanced Preserve Direction Option 1">
     <xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
     <label>Preserve Driving Direction when Changing from Analog to Digital</label>
   </variable>
-  <variable CV="124" mask="XXXXXXVX" default="0" item="Advanced Group 1 Option 8">
+  <variable CV="124" mask="XXXXXXVX" default="0" item="ESU V4 Advanced Decoder Lock Option 1">
     <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
-    <label>Decoder Lock</label>
+    <label>Decoder Lock Enable</label>
   </variable>
-  <variable CV="124" mask="XXXXVXXX" default="0" include="ESU LokSound V4.0,LokPilot V4.0,LokPilot V4.0 DCC" item="ESU V4 Extra Compatibility Option 4">
+  <variable CV="124" mask="XXXXVXXX" default="0" include="ESU LokSound V4.0,LokPilot V4.0,LokPilot V4.0 DCC" item="ESU V4 Advanced Compatibility Option 4">
     <xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
     <label>Serial User Standard Interface</label>
   </variable>
@@ -357,6 +357,10 @@
   <variable CV="124" mask="XXVXXXXX" default="0" include="ESU LokSound V4.0" item="Motor Option 2" exclude="LokSound Micro V4.0,LokSound XL V4.0">
     <xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
     <label>Motor Overload Protection</label>
+  </variable>
+  <variable CV="124" mask="XVXXXXXX" default="0" item="ESU V4 Advanced Stop Behaviour Option 1" exclude="LokSound Micro V4.0,LokSound XL V4.0">
+    <xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
+    <label>Stop immediately on speed step 0</label>
   </variable>
   <variable CV="125" default="90" item="Analog Vstart">
     <decVal/>
@@ -382,57 +386,61 @@
     <decVal/>
     <label>Analog Mode Motor Hysteresis</label>
   </variable>
-  <variable CV="132" default="80" tooltip="Unit is 0.0625 seconds" item="ESU V4 Extra Function Output Settings Slider 2">
+  <variable CV="132" default="80" tooltip="Unit is 0.0625 seconds" item="ESU V4 Function Settings General Slider 2">
     <decVal/>
     <label>Grade Crossing Hold Time</label>
   </variable>
-  <variable CV="134" mask="XXVVVVVV" default="12" item="Advanced Group 1 Option 6">
+  <variable CV="134" mask="XXVVVVVV" default="12" item="ESU V4 Advanced Brake Sections Slider 1">
     <decVal min="4" max="32"/>
-    <label>ABC detection threshold</label>
+    <label>ABC voltage detection threshold</label>
   </variable>
-  <variable CV="138" default="128" include="ESU LokSound V4.0" item="ESU V4 Extra Smoke Unit Slider 2" exclude="LokPilot Fx V4.0">
+  <variable CV="138" default="128" item="ESU V4 Function Settings Smoke Unit Slider 2" exclude="LokPilot Fx V4.0" include="ESU LokSound V4.0">
     <decVal/>
-    <label>Smoke Unit Minimum Steam Chuff Duration</label>
+    <label>Fan Speed Trim</label>
   </variable>
-  <variable CV="139" default="128" include="ESU LokSound V4.0" item="ESU V4 Extra Smoke Unit Slider 3" exclude="LokPilot Fx V4.0">
+  <variable CV="139" default="128" item="ESU V4 Function Settings Smoke Unit Slider 3" include="ESU LokSound V4.0">
     <decVal/>
-    <label>Smoke Unit Maximum Steam Chuff Duration</label>
+    <label>Temperature Trim</label>
   </variable>
-  <variable CV="140" default="0" tooltip="Unit is 5 seconds" include="ESU LokSound V4.0" item="ESU V4 Extra Smoke Unit Slider 1" exclude="LokPilot Fx V4.0">
+  <variable CV="140" default="120" tooltip="Unit is 5 seconds" item="ESU V4 Function Settings Smoke Unit Slider 1" include="ESU LokSound V4.0">
     <decVal/>
-    <label>Smoke Unit Chuff Duration rel. to trig. dist.</label>
+    <label>Smoke Unit Automatic Power Off Time</label>
   </variable>
-  <variable CV="246" default="0" item="ESU V4 Extra Auto Uncoupling Slider 1" exclude="LokPilot Fx V4.0">
+  <variable CV="144" default="150" tooltip="Unit is degrees Celsius" item="ESU V4 Function Settings Smoke Unit Slider 4" include="ESU LokSound V4.0">
+    <decVal/>
+    <label>Preheating Temperature for Secondary Smoke Unit</label>
+  </variable>
+  <variable CV="246" default="0" item="ESU V4 Function Settings Auto Uncoupling Slider 1" exclude="LokPilot Fx V4.0">
     <decVal/>
     <label>Auto Uncoupling Speed</label>
   </variable>
-  <variable CV="247" default="0" tooltip="Unit is 0.016384 seconds" item="ESU V4 Extra Auto Uncoupling Slider 3" exclude="LokPilot Fx V4.0">
+  <variable CV="247" default="0" tooltip="Unit is 0.016384 seconds" item="ESU V4 Function Settings Auto Uncoupling Slider 3" exclude="LokPilot Fx V4.0">
     <decVal/>
     <label>Auto Uncoupling Remove Time</label>
   </variable>
-  <variable CV="248" default="0" tooltip="Unit is 0.016384 seconds" item="ESU V4 Extra Auto Uncoupling Slider 2" exclude="LokPilot Fx V4.0">
+  <variable CV="248" default="0" tooltip="Unit is 0.016384 seconds" item="ESU V4 Function Settings Auto Uncoupling Slider 2" exclude="LokPilot Fx V4.0">
     <decVal/>
     <label>Auto Uncoupling Push Time</label>
   </variable>
-  <variable CV="252" include="ESU LokPilot V4.0" default="0" tooltip="Unit is 0.06535 seconds" item="ESU V4 Extra Miscellaneous Slider 1">
+  <variable CV="252" include="ESU LokPilot V4.0" default="0" tooltip="Unit is 0.06535 seconds" item="ESU V4 Advanced Starting Delay Slider 1">
     <decVal/>
-    <label>Prime Mover Startup Delay if Virtual Drive Sound Enabled</label>
+    <label>&lt;html&gt;Prime Mover Startup Delay&lt;br&gt;if Virtual Drive Sound Enabled&lt;/html&gt;</label>
   </variable>
-  <variable CV="253" default="0" item="Advanced Group 1 Option 1" exclude="LokPilot Fx V4.0">
+  <variable CV="253" default="0" tooltip="Unit is 0.25 seconds" item="ESU V4 Advanced Constant Brake Option 1" exclude="LokPilot Fx V4.0">
     <decVal/>
-    <label>Constant Brake Mode - Brake Rate</label>
+    <label>Constant Brake Time</label>
   </variable>
-  <variable CV="254" default="0" item="Advanced Group 1 Option 2" exclude="LokPilot Fx V4.0">
+  <variable CV="254" default="0" item="ESU V4 Advanced Constant Brake Option 2" exclude="LokPilot Fx V4.0">
     <decVal/>
-    <label>Constant Brake Mode - Brake Distance Forward</label>
+    <label>Constant Brake Distance Forward</label>
   </variable>
-  <variable CV="255" default="0" item="Advanced Group 1 Option 3" exclude="LokPilot Fx V4.0">
+  <variable CV="255" default="0" item="ESU V4 Advanced Constant Brake Option 3" exclude="LokPilot Fx V4.0">
     <decVal/>
-    <label>Constant Brake Mode - Brake Distance Backward</label>
+    <label>Constant Brake Distance Backward</label>
   </variable>
-  <variable CV="27" mask="VXXXXXXX" default="0" item="Advanced Group 1 Option 4">
+  <variable CV="27" mask="VXXXXXXX" default="0" item="ESU V4 Advanced Constant Brake Option 4">
     <xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
-    <label>Constant Brake Mode - Constant Brake Distance on speed step 0</label>
+    <label>Constant Brake Distance on speed step 0</label>
   </variable>
   <!-- Indexed variables -->
   <constant item="PICV" default="31" comment="CV used for Primary Index"/>

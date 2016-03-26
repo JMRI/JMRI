@@ -55,7 +55,7 @@ public class InterchangeTableModel extends TrackTableModel {
 
     // this table listens for changes to a location and it's interchanges
     public void propertyChange(PropertyChangeEvent e) {
-        if (Control.showProperty) {
+        if (Control.SHOW_PROPERTY) {
             log.debug("Property change: ({}) old: ({}) new: ({})", e.getPropertyName(), e.getOldValue(), e
                     .getNewValue());
         }
@@ -64,7 +64,7 @@ public class InterchangeTableModel extends TrackTableModel {
             Track track = ((Track) e.getSource());
             if (track.getTrackType().equals(Track.INTERCHANGE)) {
                 int row = tracksList.indexOf(track);
-                if (Control.showProperty) {
+                if (Control.SHOW_PROPERTY) {
                     log.debug("Update interchange table row: {} track: {}", row, track.getName());
                 }
                 if (row >= 0) {
@@ -74,5 +74,5 @@ public class InterchangeTableModel extends TrackTableModel {
         }
     }
 
-    static Logger log = LoggerFactory.getLogger(InterchangeTableModel.class.getName());
+    private final static Logger log = LoggerFactory.getLogger(InterchangeTableModel.class.getName());
 }

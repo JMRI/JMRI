@@ -1,17 +1,13 @@
-// LZ100Test.java
 package jmri.jmrix.lenz.swing.lz100;
 
 import junit.framework.Test;
 import junit.framework.TestCase;
 import junit.framework.TestSuite;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 
 /**
  * Tests for the jmri.jmrix.lenz.swing.lz100 package
  *
  * @author Paul Bender
- * @version $Revision$
  */
 public class LZ100Test extends TestCase {
 
@@ -32,7 +28,5 @@ public class LZ100Test extends TestCase {
         suite.addTest(new TestSuite(LZ100FrameTest.class));
         return suite;
     }
-
-    static Logger log = LoggerFactory.getLogger(LZ100Test.class.getName());
 
 }
