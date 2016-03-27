@@ -1,4 +1,3 @@
-// DispatcherTest.java
 package jmri.jmrit.dispatcher;
 
 import junit.framework.Test;
@@ -9,7 +8,6 @@ import junit.framework.TestSuite;
  * Tests for the jmrit.dispatcher package
  *
  * @author	Dave Duchamp
- * @version $Revision$
  */
 public class DispatcherTest extends TestCase {
 

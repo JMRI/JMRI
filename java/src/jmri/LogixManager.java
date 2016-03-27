@@ -1,4 +1,3 @@
-// LogixManager.java
 package jmri;
 
 import java.util.List;
@@ -22,7 +21,6 @@ import java.util.List;
  * A PARTICULAR PURPOSE. See the GNU General Public License for more details.
  * <P>
  * @author Dave Duchamp Copyright (C) 2007
- * @version	$Revision$
  */
 public interface LogixManager extends Manager {
 
@@ -80,6 +78,3 @@ public interface LogixManager extends Manager {
     public void setLoadDisabled(boolean s);
 
 }
-
-
-/* @(#)LogixManager.java */

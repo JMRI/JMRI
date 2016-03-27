@@ -1,4 +1,3 @@
-// BlockManagerTest.java
 package jmri;
 
 import junit.framework.Assert;
@@ -13,7 +12,6 @@ import junit.framework.TestSuite;
  * <P>
  * @author Bob Coleman Copyright 2012
  * @author Bob Jacobsen Copyright 2014
- * @version $Revision$
  */
 public class BlockManagerTest extends TestCase {
 

@@ -1,4 +1,3 @@
-// XNetSensorTest.java
 package jmri.jmrix.lenz;
 
 import junit.framework.Assert;
@@ -10,7 +9,6 @@ import junit.framework.TestSuite;
  * Tests for the jmri.jmrix.lenz.XNetSensor class.
  *
  * @author	Paul Bender Copyright 2004
- * @version $Revision$
  */
 public class XNetSensorTest extends TestCase {
 

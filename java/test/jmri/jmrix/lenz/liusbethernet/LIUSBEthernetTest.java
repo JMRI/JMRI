@@ -1,4 +1,3 @@
-// XNTCPTest.java
 package jmri.jmrix.lenz.liusbethernet;
 
 import junit.framework.Test;
@@ -9,7 +8,6 @@ import junit.framework.TestSuite;
  * Tests for the jmri.jmrix.lenz.liusbethernet package
  *
  * @author Paul Bender
- * @version $Revision$
  */
 public class LIUSBEthernetTest extends TestCase {
 

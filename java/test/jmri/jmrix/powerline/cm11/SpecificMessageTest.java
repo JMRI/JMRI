@@ -1,4 +1,3 @@
-// SpecificMessageTest.java
 package jmri.jmrix.powerline.cm11;
 
 import jmri.jmrix.powerline.SerialMessage;

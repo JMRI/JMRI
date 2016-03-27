@@ -1,4 +1,3 @@
-// DefaultSignalGroupManager.java
 package jmri.managers;
 
 import java.io.File;
@@ -17,11 +16,8 @@ import org.slf4j.LoggerFactory;
  * Default implementation of a SignalGroupManager.
  * <P>
  * This loads automatically the first time used.
- * <p>
- *
  *
  * @author Bob Jacobsen Copyright (C) 2009
- * @version	$Revision$
  */
 public class DefaultSignalGroupManager extends AbstractManager
         implements SignalGroupManager, java.beans.PropertyChangeListener {
@@ -132,5 +128,3 @@ public class DefaultSignalGroupManager extends AbstractManager
 
     private final static Logger log = LoggerFactory.getLogger(DefaultSignalGroupManager.class.getName());
 }
-
-/* @(#)DefaultSignalGroupManager.java */

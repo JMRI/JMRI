@@ -1,4 +1,3 @@
-// DefaultInstanceInitializer.java
 package jmri.managers;
 
 import jmri.AudioManager;
@@ -49,7 +48,6 @@ import jmri.jmrit.vsdecoder.VSDecoderManager;
  * A PARTICULAR PURPOSE. See the GNU General Public License for more details.
  * <P>
  * @author	Bob Jacobsen Copyright (C) 2001, 2008, 2014
- * @version	$Revision$
  * @since 2.9.4
  */
 public class DefaultInstanceInitializer implements jmri.InstanceInitializer {
@@ -168,5 +166,3 @@ public class DefaultInstanceInitializer implements jmri.InstanceInitializer {
     }
 
 }
-
-/* @(#)DefaultInstanceInitializer.java */

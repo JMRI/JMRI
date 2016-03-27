@@ -1,4 +1,3 @@
-// AbstractPowerManager.java
 package jmri.managers;
 
 import jmri.PowerManager;
@@ -9,7 +8,6 @@ import jmri.PowerManager;
  * These are registered when they are added to the InstanceManager
  * <P>
  * @author	Bob Jacobsen Copyright (C) 2001, 2003, 2010
- * @version $Revision$
  */
 abstract public class AbstractPowerManager implements PowerManager {
 
@@ -39,6 +37,3 @@ abstract public class AbstractPowerManager implements PowerManager {
     }
 
 }
-
-
-/* @(#)AbstractPowerManager.java */

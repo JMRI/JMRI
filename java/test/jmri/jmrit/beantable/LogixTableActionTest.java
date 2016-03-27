@@ -1,4 +1,3 @@
-// LogixTableActionTest.java
 package jmri.jmrit.beantable;
 
 import java.util.ResourceBundle;
@@ -11,6 +10,8 @@ import jmri.Sensor;
 import jmri.SignalHead;
 import jmri.Turnout;
 import jmri.util.JUnitUtil;
+import jmri.util.ThreadingUtil;
+
 import junit.extensions.jfcunit.TestHelper;
 import junit.framework.Assert;
 import junit.framework.Test;
@@ -42,75 +43,71 @@ public class LogixTableActionTest extends jmri.util.SwingTestCase {
 
         try {
             _logixTable.prefMgr = jmri.InstanceManager.getDefault(jmri.UserPreferencesManager.class);
-            _logixTable.actionPerformed(null);
-            _logixTable.addPressed(null);
+            
+            ThreadingUtil.runOnGUI(()->{ _logixTable.actionPerformed(null); });
+            
+            ThreadingUtil.runOnGUI(()->{ _logixTable.addPressed(null); });
+            
             _logixTable._addUserName.setText("TestLogix");
             _logixTable._systemName.setText("TX");
             _logixTable._autoSystemName.setSelected(false);
-            _logixTable.createPressed(null);
-            _logixTable.donePressed(null);
+            ThreadingUtil.runOnGUI(()->{ _logixTable.createPressed(null); });
+            
+            ThreadingUtil.runOnGUI(()->{ _logixTable.donePressed(null); });
+            
             // note: _logixTable.m.EDITCOL = BeanTableDataModel.DELETECOL
             _logixTable.m.setValueAt(rbx.getString("ButtonEdit"), 0, BeanTableDataModel.DELETECOL);
-            _logixTable.newConditionalPressed(null);
+            ThreadingUtil.runOnGUI(()->{ _logixTable.newConditionalPressed(null); });
+            
             //_logixTable.helpPressed(null);
             _logixTable.conditionalUserName.setText("TestConditional");
-            _logixTable.updateConditionalPressed(null);
+            ThreadingUtil.runOnGUI(()->{ _logixTable.updateConditionalPressed(null); });
 
             // now close window
             //TestHelper.disposeWindow(_logixTable.editConditionalFrame,this);
-            _logixTable.newConditionalPressed(null);
+            ThreadingUtil.runOnGUI(()->{ _logixTable.newConditionalPressed(null); });
+            
             _logixTable.conditionalTableModel.setValueAt(null, 0, LogixTableAction.ConditionalTableModel.BUTTON_COLUMN);
             for (int i = 0; i < 2; i++) {
                 _logixTable.addVariablePressed(null);
                 _logixTable._variableTypeBox.setSelectedIndex(Conditional.ITEM_TYPE_SENSOR);
                 _logixTable._variableStateBox.setSelectedIndex(i);
                 _logixTable._variableNameField.setText("IS" + i);
-                _logixTable.updateVariablePressed();
+                ThreadingUtil.runOnGUI(()->{ _logixTable.updateVariablePressed(); });
             }
             for (int i = 0; i < 2; i++) {
                 _logixTable.addVariablePressed(null);
                 _logixTable._variableTypeBox.setSelectedIndex(Conditional.ITEM_TYPE_TURNOUT);
                 _logixTable._variableStateBox.setSelectedIndex(i);
                 _logixTable._variableNameField.setText("Turnout" + i);
-                _logixTable.updateVariablePressed();
+                ThreadingUtil.runOnGUI(()->{ _logixTable.updateVariablePressed(); });
             }
             for (int i = 0; i < 2; i++) {
                 _logixTable.addVariablePressed(null);
                 _logixTable._variableTypeBox.setSelectedIndex(Conditional.ITEM_TYPE_LIGHT);
                 _logixTable._variableStateBox.setSelectedIndex(i);
                 _logixTable._variableNameField.setText("IL" + i);
-                _logixTable.updateVariablePressed();
+                ThreadingUtil.runOnGUI(()->{ _logixTable.updateVariablePressed(); });
             }
             for (int i = 0; i < 2; i++) {
                 _logixTable.addVariablePressed(null);
                 _logixTable._variableTypeBox.setSelectedIndex(Conditional.ITEM_TYPE_CONDITIONAL);
                 _logixTable._variableStateBox.setSelectedIndex(i);
                 _logixTable._variableNameField.setText("C" + i);
-                _logixTable.updateVariablePressed();
+                ThreadingUtil.runOnGUI(()->{ _logixTable.updateVariablePressed(); });
             }
-            /* SignalHead code changed - test cannot be done this way 
-             Must implement from UI dialogs to get the right info to updateVariablePressed()
-             for (int i=0; i<9; i++){
-             if (i==3 || i==7) {        // lunar aspects
-             continue;
-             }
-             _logixTable.addVariablePressed(null);
-             _logixTable._variableTypeBox.setSelectedIndex(Conditional.ITEM_TYPE_SIGNALHEAD);
-             _logixTable._variableStateBox.setSelectedIndex(i);
-             _logixTable._variableNameField.setText("Signal"+i);
-             _logixTable.updateVariablePressed();
-             }
-             */
-            _logixTable.addActionPressed(null);
-            _logixTable.cancelEditActionPressed();
 
-            _logixTable.addActionPressed(null);
+            ThreadingUtil.runOnGUI(()->{ _logixTable.addActionPressed(null); });
+            ThreadingUtil.runOnGUI(()->{ _logixTable.cancelEditActionPressed(); });
+
+            ThreadingUtil.runOnGUI(()->{ _logixTable.addActionPressed(null); });
             _logixTable._actionItemTypeBox.setSelectedIndex(Conditional.ITEM_TYPE_TURNOUT);
             _logixTable._actionTypeBox.setSelectedIndex(1);         // ACTION_SET_TURNOUT
             _logixTable._actionOptionBox.setSelectedIndex(2);       // on false
             _logixTable._actionNameField.setText("Turnout3");
             _logixTable._actionBox.setSelectedIndex(0);             // Turnout.CLOSED
-            _logixTable.updateActionPressed();
+            ThreadingUtil.runOnGUI(()->{ _logixTable.updateActionPressed(); });
+            
             /*
              // Test is done and turnoutManagerInstance gone by the time the timer goes off
              _logixTable.addActionPressed(null);
@@ -122,35 +119,36 @@ public class LogixTableActionTest extends jmri.util.SwingTestCase {
              _logixTable._shortActionString.setText("1");           // delay 1 sec
              _logixTable.updateActionPressed();
              */
-            _logixTable.addActionPressed(null);
+             
+            ThreadingUtil.runOnGUI(()->{ _logixTable.addActionPressed(null); });
             _logixTable._actionItemTypeBox.setSelectedIndex(Conditional.ITEM_TYPE_TURNOUT);
             _logixTable._actionTypeBox.setSelectedIndex(3);         // ACTION_LOCK_TURNOUT
             _logixTable._actionOptionBox.setSelectedIndex(0);       // on false
             _logixTable._actionNameField.setText("Turnout5");
             _logixTable._actionBox.setSelectedIndex(2);
-            _logixTable.updateActionPressed();
+            ThreadingUtil.runOnGUI(()->{ _logixTable.updateActionPressed(); });
 
-            _logixTable.updateConditionalPressed(null);
+            ThreadingUtil.runOnGUI(()->{ _logixTable.updateConditionalPressed(null); });
 
             // move on to another
             assertEquals("State Variable count", 8, _logixTable._curConditional.getCopyOfStateVariables().size());
             assertEquals("Action count", 2, _logixTable._curConditional.getCopyOfActions().size());
-            _logixTable.newConditionalPressed(null);
+            ThreadingUtil.runOnGUI(()->{ _logixTable.newConditionalPressed(null); });
             //_logixTable.helpPressed(null);
             _logixTable.conditionalUserName.setText("SecondConditional");
-            _logixTable.updateConditionalPressed(null);
+            ThreadingUtil.runOnGUI(()->{ _logixTable.updateConditionalPressed(null); });
 
             Assert.assertEquals("Conditional count", 1, _logixTable._curLogix.getNumConditionals());
-        //_logixTable.donePressed(null);
+            //_logixTable.donePressed(null);
 
             // note: _logixTable.m.EDITCOL = BeanTableDataModel.DELETECOL
             //_logixTable.m.setValueAt(rbx.getString("ButtonEdit"), 0, BeanTableDataModel.DELETECOL);
             _logixTable.conditionalTableModel.setValueAt(null, 0, LogixTableAction.ConditionalTableModel.BUTTON_COLUMN);
             _logixTable.conditionalUserName.setText("FirstConditional");
-            _logixTable.updateConditionalPressed(null);
+            ThreadingUtil.runOnGUI(()->{ _logixTable.updateConditionalPressed(null); });
 
-            _logixTable.calculatePressed(null);
-            _logixTable.donePressed(null);
+            ThreadingUtil.runOnGUI(()->{ _logixTable.calculatePressed(null); });
+            ThreadingUtil.runOnGUI(()->{ _logixTable.donePressed(null); });
 
             // now close window
             TestHelper.disposeWindow(_logixTable.editConditionalFrame, this);
@@ -201,11 +199,6 @@ public class LogixTableActionTest extends jmri.util.SwingTestCase {
         JUnitUtil.initInternalSignalHeadManager();
 
         _logixTable = new LogixTableAction() {
-            /**
-             *
-             */
-            private static final long serialVersionUID = 6004896064187980424L;
-
             // skip dialog box if in edit mode, just assume OK pressed
             boolean checkEditConditional() {
                 if (inEditConditionalMode) {

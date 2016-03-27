@@ -1,4 +1,3 @@
-// DecoderFileTest.java
 package jmri.jmrit.decoderdefn;
 
 import javax.swing.JLabel;
@@ -18,7 +17,6 @@ import org.jdom2.Element;
  * DecoderFileTest.java
  *
  * @author	Bob Jacobsen, Copyright (C) 2001, 2002
- * @version $Revision$
  */
 public class DecoderFileTest extends TestCase {
 

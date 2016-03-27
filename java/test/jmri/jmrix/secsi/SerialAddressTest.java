@@ -1,4 +1,3 @@
-// SerialAddressTest.java
 package jmri.jmrix.secsi;
 
 import jmri.util.JUnitAppender;

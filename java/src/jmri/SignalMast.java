@@ -1,4 +1,3 @@
-// SignalMast.java
 package jmri;
 
 import java.util.Vector;
@@ -49,7 +48,6 @@ import java.util.Vector;
  *
  * @author	Bob Jacobsen Copyright (C) 2002, 2008
  * @author	Pete Cressman Copyright (C) 2009
- * @version	$Revision$
  */
 public interface SignalMast extends NamedBean {
 
@@ -103,4 +101,3 @@ public interface SignalMast extends NamedBean {
 
     public boolean allowUnLit();
 }
-/* @(#)SignalMast.java */

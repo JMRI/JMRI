@@ -1,4 +1,3 @@
-//SRCPVisitor.java
 package jmri.jmris.srcp.parser;
 
 import jmri.InstanceManager;
@@ -9,7 +8,6 @@ import org.slf4j.LoggerFactory;
 /* This class provides an interface between the JavaTree/JavaCC 
  * parser for the SRCP protocol and the JMRI back end.
  * @author Paul Bender Copyright (C) 2010
- * @version $Revision$
  */
 public class SRCPVisitor implements SRCPParserVisitor {
 
@@ -431,7 +429,7 @@ public class SRCPVisitor implements SRCPParserVisitor {
             for(int i = 0; i < numFunctions;i++){
                 // the functions start at the 7th child (index 6) of the node.
                 String functionMode = (String) ((SimpleNode) node.jjtGetChild(i+6)).jjtGetValue(); 
-                functionList.add(new Boolean(functionMode.equals("1")));
+                functionList.add(Boolean.valueOf(functionMode.equals("1")));
             }
             ((jmri.jmris.srcp.JmriSRCPThrottleServer) ((jmri.jmris.ServiceHandler) data).getThrottleServer()).setThrottleFunctions(bus,address,functionList);
 

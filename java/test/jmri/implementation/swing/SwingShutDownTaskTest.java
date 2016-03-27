@@ -1,4 +1,3 @@
-// SwingShutDownTaskTest.java
 package jmri.implementation.swing;
 
 import junit.framework.Test;
@@ -17,7 +16,6 @@ import org.slf4j.LoggerFactory;
  * Careful - tests are loaded via a separate class loader!
  *
  * @author	Bob Jacobsen Copyright (C) 2008
- * @version $Revision$
  */
 public class SwingShutDownTaskTest extends TestCase {
 

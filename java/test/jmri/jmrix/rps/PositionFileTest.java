@@ -1,4 +1,3 @@
-// PositionFileTest.java
 package jmri.jmrix.rps;
 
 import java.io.File;

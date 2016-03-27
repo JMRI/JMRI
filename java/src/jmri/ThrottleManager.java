@@ -23,7 +23,6 @@ package jmri;
  * <P>
  * @author	Glen Oberhauser
  * @author	Bob Jacobsen Copyright 2006
- * @version	$Revision$
  */
 public interface ThrottleManager {
 

@@ -1,4 +1,3 @@
-// NamedBeanHandleManagerTest.java
 package jmri;
 
 import jmri.util.JUnitUtil;

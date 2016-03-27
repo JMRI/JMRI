@@ -1,4 +1,3 @@
-// PackageTest.java
 package jmri.jmrix.pricom;
 
 import junit.framework.Test;
@@ -9,7 +8,6 @@ import junit.framework.TestSuite;
  * Tests for the jmri.jmrix.pricom package.
  *
  * @author Bob Jacobsen Copyright 2005
- * @version $Revision$
  */
 public class PackageTest extends TestCase {
 

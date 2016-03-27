@@ -1,4 +1,3 @@
-// LevelXingTest.java
 package jmri.jmrit.display.layoutEditor;
 
 import java.awt.geom.Point2D;

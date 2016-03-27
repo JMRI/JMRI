@@ -1,4 +1,3 @@
-// LnPowerManagerTest.java
 package jmri.jmrix.loconet;
 
 import jmri.jmrix.AbstractPowerManagerTest;
@@ -9,7 +8,6 @@ import junit.framework.TestSuite;
  * tests for the Jmri package LnPowerManager
  *
  * @author	Bob Jacobsen Copyright 2001
- * @version $Revision$
  */
 public class LnPowerManagerTest extends AbstractPowerManagerTest {
 

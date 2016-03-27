@@ -1,4 +1,3 @@
-// LEConnectivityTest.java
 package jmri.jmrit.display.layoutEditor;
 
 import java.util.ArrayList;
@@ -21,7 +20,6 @@ import jmri.util.JUnitUtil;
  * Swing jfcUnit tests for the LayoutEditor
  *
  * @author	Dave Duchamp Copyright 2011
- * @version $Revision$
  */
 public class LEConnectivityTest extends jmri.util.SwingTestCase {
 

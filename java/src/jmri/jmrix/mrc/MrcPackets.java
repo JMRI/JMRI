@@ -205,8 +205,9 @@ public class MrcPackets {
 
     static public String toString(MrcMessage m) {
         StringBuilder txt = new StringBuilder();
-        if ((m.getNumDataElements() < 4) || (m.getNumDataElements() >= 4 && m.getElement(0) != m.getElement(2) && m.getElement(1) != 0x01)) {
-            //byte 0 and byte 2 should always be the same except for a clock update packet.
+        if ((m.getNumDataElements() < 4) || 
+                (m.getNumDataElements() >= 4 && m.getElement(0) != m.getElement(2) && m.getElement(1) != 0x01)) {  // is && right there?
+            // byte 0 and byte 2 should always be the same except for a clock update packet.
             if (m.getNumDataElements() < 4) {
                 txt.append(MrcPacketBundle.getMessage("MrcPacketsShort")); //IN18N
             } else {
@@ -417,33 +418,9 @@ public class MrcPackets {
                             txt.append(m.getElement(0));
                         } else if (m.getElement(0) == 0 && m.getElement(1) == 0x01) {
                             txt.append(MrcPacketBundle.getMessage("MrcPacketsClockUpdate") + " "); //IN18N
-                            int clockModeBits = m.getElement(2) & 0xC0;
-                            switch (clockModeBits) {
-                                case 0x00:	// AM format
-                                    txt.append((m.getElement(2) & 0x1F)
-                                            + MrcPacketBundle.getMessage("MrcPacketsClockTimeSep")
-                                            + twoDigits.format(m.getElement(4))
-                                            + MrcPacketBundle.getMessage("MrcPacketsClockModeAm")); //IN18N
-                                    break;
-                                case 0x40:	// PM format
-                                    txt.append((m.getElement(2) & 0x1F)
-                                            + MrcPacketBundle.getMessage("MrcPacketsClockTimeSep")
-                                            + twoDigits.format(m.getElement(4))
-                                            + MrcPacketBundle.getMessage("MrcPacketsClockModePm")); //IN18N
-                                    break;
-                                case 0x80:	// 24 hour format
-                                    txt.append(twoDigits.format(m.getElement(2) & 0x1F)
-                                            + MrcPacketBundle.getMessage("MrcPacketsClockTimeSep")
-                                            + twoDigits.format(m.getElement(4))
-                                            + MrcPacketBundle.getMessage("MrcPacketsClockMode24"));//IN18N
-                                    break;
-                                case 0xC0:	// Unk format
-                                    txt.append(twoDigits.format(m.getElement(2) & 0x1F)
-                                            + MrcPacketBundle.getMessage("MrcPacketsClockTimeSep")
-                                            + twoDigits.format(m.getElement(4))
-                                            + MrcPacketBundle.getMessage("MrcPacketsClockModeUnk")); //IN18N
-                                    break;
-                            }
+
+                            appendClockMessage(m, txt);
+
                             txt.append(" ");
                         }
                     } else if (m.getNumDataElements() == 4 && m.getElement(0) == 0x00 && m.getElement(1) == 0x00) {
@@ -461,7 +438,41 @@ public class MrcPackets {
         return txt.toString();
     }
 
-    //Principle last two ar ehte checksum, the first four indicate the packet type and ignored.
+    /**
+     * Adds the description of the clock's mode to a message being built
+     */
+    @edu.umd.cs.findbugs.annotations.SuppressFBWarnings(value = "SF_SWITCH_NO_DEFAULT", justification = "covers all possible values")
+    static void appendClockMessage(MrcMessage m, StringBuilder txt) {
+        int clockModeBits = m.getElement(2) & 0xC0;
+        switch (clockModeBits) {
+            case 0x00:	// AM format
+                txt.append((m.getElement(2) & 0x1F)
+                        + MrcPacketBundle.getMessage("MrcPacketsClockTimeSep")
+                        + twoDigits.format(m.getElement(4))
+                        + MrcPacketBundle.getMessage("MrcPacketsClockModeAm")); //IN18N
+                break;
+            case 0x40:	// PM format
+                txt.append((m.getElement(2) & 0x1F)
+                        + MrcPacketBundle.getMessage("MrcPacketsClockTimeSep")
+                        + twoDigits.format(m.getElement(4))
+                        + MrcPacketBundle.getMessage("MrcPacketsClockModePm")); //IN18N
+                break;
+            case 0x80:	// 24 hour format
+                txt.append(twoDigits.format(m.getElement(2) & 0x1F)
+                        + MrcPacketBundle.getMessage("MrcPacketsClockTimeSep")
+                        + twoDigits.format(m.getElement(4))
+                        + MrcPacketBundle.getMessage("MrcPacketsClockMode24"));//IN18N
+                break;
+            case 0xC0:	// Unk format
+                txt.append(twoDigits.format(m.getElement(2) & 0x1F)
+                        + MrcPacketBundle.getMessage("MrcPacketsClockTimeSep")
+                        + twoDigits.format(m.getElement(4))
+                        + MrcPacketBundle.getMessage("MrcPacketsClockModeUnk")); //IN18N
+                break;
+        }
+    }
+
+    //In principle last two are the checksum, the first four indicate the packet type and ignored.
     //the rest should be XOR'd.
     static public boolean validCheckSum(MrcMessage m) {
         if (m.getNumDataElements() > 6) {

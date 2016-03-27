@@ -1,4 +1,3 @@
-// PathTest.java
 package jmri;
 
 import junit.framework.Assert;
@@ -10,7 +9,6 @@ import junit.framework.TestSuite;
  * Tests for the Path class
  *
  * @author	Bob Jacobsen Copyright (C) 2006
- * @version $Revision$
  */
 public class PathTest extends TestCase {
 

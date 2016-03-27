@@ -1,4 +1,3 @@
-// BlockValueFileTest.java
 package jmri.jmrit.display.layoutEditor;
 
 import junit.framework.Assert;

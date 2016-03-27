@@ -97,7 +97,8 @@ public class SimpleServerPreferencesPanel extends JPanel implements PreferencesP
     }
 
     protected void cancelValues() {
-        if (getTopLevelAncestor() != null) {
+        java.awt.Container ancestor = getTopLevelAncestor();
+        if (ancestor != null && ancestor instanceof JFrame) {
             ((JFrame) getTopLevelAncestor()).setVisible(false);
         }
     }

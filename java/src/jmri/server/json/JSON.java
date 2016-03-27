@@ -599,7 +599,7 @@ public final class JSON {
     /**
      * {@value #ADD}
      *
-     * As an attribute of a {@link #ROSTER}, this is an entry that has been
+     * As an attribute of a {@link jmri.server.json.roster.JsonRoster#ROSTER}, this is an entry that has been
      * added to the roster.
      *
      * @since 1.1
@@ -611,7 +611,7 @@ public final class JSON {
      * In operations, this indicates the dropping or setting out of a car or
      * engine.
      *
-     * As an attribute of a {@link #ROSTER}, this is an entry that has been
+     * As an attribute of a {@link jmri.server.json.roster.JsonRoster#ROSTER}, this is an entry that has been
      * removed from the roster.
      *
      * @since 1.1

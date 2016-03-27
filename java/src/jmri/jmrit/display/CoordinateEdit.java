@@ -1,4 +1,3 @@
-// CoordinateEdit.java
 package jmri.jmrit.display;
 
 import java.awt.Component;
@@ -34,14 +33,9 @@ import org.slf4j.LoggerFactory;
  *
  * @author Dan Boudreau Copyright (C) 2007
  * @author Pete Cressman Copyright (C) 2010
- * @version $Revision$
  */
 public class CoordinateEdit extends JmriJFrame {
 
-    /**
-     *
-     */
-    private static final long serialVersionUID = 794340836457949878L;
     Positionable pl; 			// positional label tracked by this frame
     int oldX;
     int oldY;
@@ -67,11 +61,6 @@ public class CoordinateEdit extends JmriJFrame {
 
     public static AbstractAction getCoordinateEditAction(final Positionable pos) {
         return new AbstractAction(Bundle.getMessage("SetXY")) {
-            /**
-             *
-             */
-            private static final long serialVersionUID = 8082567724516174435L;
-
             public void actionPerformed(ActionEvent e) {
                 CoordinateEdit f = new CoordinateEdit();
                 f.addHelpMenu("package.jmri.jmrit.display.CoordinateEdit", true);
@@ -86,10 +75,6 @@ public class CoordinateEdit extends JmriJFrame {
 
     public static AbstractAction getLevelEditAction(final Positionable pos) {
         return new AbstractAction(Bundle.getMessage("SetLevel")) {
-            /**
-             *
-             */
-            private static final long serialVersionUID = 694306246976433012L;
 
             public void actionPerformed(ActionEvent e) {
                 CoordinateEdit f = new CoordinateEdit();
@@ -105,10 +90,6 @@ public class CoordinateEdit extends JmriJFrame {
 
     public static AbstractAction getTooltipEditAction(final Positionable pos) {
         return new AbstractAction(Bundle.getMessage("SetTooltip")) {
-            /**
-             *
-             */
-            private static final long serialVersionUID = 6183543089358807842L;
 
             public void actionPerformed(ActionEvent e) {
                 CoordinateEdit f = new CoordinateEdit();
@@ -124,10 +105,6 @@ public class CoordinateEdit extends JmriJFrame {
 
     public static AbstractAction getBorderEditAction(final Positionable pos) {
         return new AbstractAction(Bundle.getMessage("SetBorderSize")) {
-            /**
-             *
-             */
-            private static final long serialVersionUID = -4357203067214330581L;
 
             public void actionPerformed(ActionEvent e) {
                 CoordinateEdit f = new CoordinateEdit();
@@ -143,10 +120,6 @@ public class CoordinateEdit extends JmriJFrame {
 
     public static AbstractAction getMarginEditAction(final Positionable pos) {
         return new AbstractAction(Bundle.getMessage("SetMarginSize")) {
-            /**
-             *
-             */
-            private static final long serialVersionUID = 496532246034508657L;
 
             public void actionPerformed(ActionEvent e) {
                 CoordinateEdit f = new CoordinateEdit();
@@ -162,10 +135,6 @@ public class CoordinateEdit extends JmriJFrame {
 
     public static AbstractAction getFixedSizeEditAction(final Positionable pos) {
         return new AbstractAction(Bundle.getMessage("SetFixedSize")) {
-            /**
-             *
-             */
-            private static final long serialVersionUID = 1542223839677468872L;
 
             public void actionPerformed(ActionEvent e) {
                 CoordinateEdit f = new CoordinateEdit();
@@ -181,10 +150,6 @@ public class CoordinateEdit extends JmriJFrame {
 
     public static AbstractAction getRotateEditAction(final Positionable pos) {
         return new AbstractAction(Bundle.getMessage("rotate")) {
-            /**
-             *
-             */
-            private static final long serialVersionUID = -8782499521626157784L;
 
             public void actionPerformed(ActionEvent e) {
                 CoordinateEdit f = new CoordinateEdit();
@@ -200,10 +165,6 @@ public class CoordinateEdit extends JmriJFrame {
 
     public static AbstractAction getScaleEditAction(final Positionable pos) {
         return new AbstractAction(Bundle.getMessage("scale")) {
-            /**
-             *
-             */
-            private static final long serialVersionUID = -6953904289508294962L;
 
             public void actionPerformed(ActionEvent e) {
                 CoordinateEdit f = new CoordinateEdit();
@@ -219,11 +180,6 @@ public class CoordinateEdit extends JmriJFrame {
 
     public static AbstractAction getTextEditAction(final Positionable pos, final String title) {
         return new AbstractAction(Bundle.getMessage(title)) {
-            /**
-             *
-             */
-            private static final long serialVersionUID = 8967681558497753837L;
-
             public void actionPerformed(ActionEvent e) {
                 CoordinateEdit f = new CoordinateEdit();
                 f.addHelpMenu("package.jmri.jmrit.display.CoordinateEdit", true);
@@ -238,10 +194,6 @@ public class CoordinateEdit extends JmriJFrame {
 
     public static AbstractAction getLinkEditAction(final Positionable pos, final String title) {
         return new AbstractAction(Bundle.getMessage(title)) {
-            /**
-             *
-             */
-            private static final long serialVersionUID = 2643377077898153846L;
 
             public void actionPerformed(ActionEvent e) {
                 CoordinateEdit f = new CoordinateEdit();
@@ -257,10 +209,6 @@ public class CoordinateEdit extends JmriJFrame {
 
     public static AbstractAction getZoomEditAction(final Positionable pos) {
         return new AbstractAction(Bundle.getMessage("Zoom")) {
-            /**
-             *
-             */
-            private static final long serialVersionUID = -7926499945995568109L;
 
             public void actionPerformed(ActionEvent e) {
                 CoordinateEdit f = new CoordinateEdit();
@@ -277,10 +225,6 @@ public class CoordinateEdit extends JmriJFrame {
 
     public static AbstractAction getNameEditAction(final Positionable pos) {
         return new AbstractAction(Bundle.getMessage("renamePanelMenu")) {
-            /**
-             *
-             */
-            private static final long serialVersionUID = -6191436368112266725L;
 
             public void actionPerformed(ActionEvent e) {
                 CoordinateEdit f = new CoordinateEdit();

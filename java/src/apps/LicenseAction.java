@@ -22,11 +22,6 @@ import jmri.util.swing.WindowInterface;
  */
 public class LicenseAction extends jmri.util.swing.JmriAbstractAction {
 
-    /**
-     *
-     */
-    private static final long serialVersionUID = 9049030313953910292L;
-
     public LicenseAction() {
         super("License");
     }

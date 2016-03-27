@@ -1,4 +1,3 @@
-// IconEditorWindowTest.java
 package jmri.jmrit.display;
 
 import java.util.List;
@@ -26,7 +25,6 @@ import junit.framework.TestSuite;
  * Swing jfcUnit tests for the SensorIcon
  *
  * @author	Bob Jacobsen Copyright 2009, 2010
- * @version $Revision$
  */
 public class IconEditorWindowTest extends jmri.util.SwingTestCase {
 
@@ -51,8 +49,11 @@ public class IconEditorWindowTest extends jmri.util.SwingTestCase {
 
         int x = 50;
         int y = 20;
-        icon.setLocation(x, y);
-        _panel.repaint();
+
+        jmri.util.ThreadingUtil.runOnGUI(()->{
+            icon.setLocation(x, y);
+            _panel.repaint();
+        });
 
         java.awt.Point location = new java.awt.Point(x + icon.getSize().width / 2,
                 y + icon.getSize().height / 2);
@@ -94,8 +95,11 @@ public class IconEditorWindowTest extends jmri.util.SwingTestCase {
 
         int x = 30;
         int y = 10;
-        icon.setLocation(x, y);
-        _panel.repaint();
+
+        jmri.util.ThreadingUtil.runOnGUI(()->{
+            icon.setLocation(x, y);
+            _panel.repaint();
+        });
 
         java.awt.Point location = new java.awt.Point(x + icon.getSize().width / 2,
                 y + icon.getSize().height / 2);
@@ -137,8 +141,11 @@ public class IconEditorWindowTest extends jmri.util.SwingTestCase {
 
         int x = 30;
         int y = 10;
-        icon.setLocation(x, y);
-        _panel.repaint();
+
+        jmri.util.ThreadingUtil.runOnGUI(()->{
+            icon.setLocation(x, y);
+            _panel.repaint();
+        });
 
         java.awt.Point location = new java.awt.Point(x + icon.getSize().width / 2,
                 y + icon.getSize().height / 2);
@@ -406,10 +413,12 @@ public class IconEditorWindowTest extends jmri.util.SwingTestCase {
         jmri.util.JUnitUtil.initMemoryManager();
         jmri.util.JUnitUtil.initInternalSignalHeadManager();
 
-        _editor = new PanelEditor("IconEditorTestPanel");
-        Assert.assertNotNull(_editor);
-        _panel = _editor.getTargetPanel();
-        Assert.assertNotNull(_panel);
+        jmri.util.ThreadingUtil.runOnGUI(()->{
+            _editor = new PanelEditor("IconEditorTestPanel");
+            Assert.assertNotNull(_editor);
+            _panel = _editor.getTargetPanel();
+            Assert.assertNotNull(_panel);
+        });
     }
 
     @SuppressWarnings("unchecked")  // OK in test classes
