@@ -1,4 +1,3 @@
-// SprogCSStreamPortController.java
 package jmri.jmrix.sprog;
 
 import java.io.DataInputStream;
@@ -15,7 +14,6 @@ import org.slf4j.LoggerFactory;
  * <p>
  *
  * @author	Paul Bender Copyright (C) 2014
- * @version	$Revision$
  */
 public class SprogCSStreamPortController extends AbstractStreamPortController implements SprogInterface {
 
@@ -87,7 +85,7 @@ public class SprogCSStreamPortController extends AbstractStreamPortController im
 
     // internal thread to check to see if the stream has data and
     // notify the Traffic Controller.
-    protected class rcvCheck implements Runnable {
+    static protected class rcvCheck implements Runnable {
 
         private SprogTrafficController control;
         private DataInputStream in;
@@ -114,6 +112,3 @@ public class SprogCSStreamPortController extends AbstractStreamPortController im
     private final static Logger log = LoggerFactory.getLogger(SprogCSStreamPortController.class.getName());
 
 }
-
-
-/* @(#)SprogCSStreamPortController.java */

@@ -104,5 +104,5 @@ public class OlcbProgrammerManager extends jmri.managers.DefaultProgrammerManage
      * ProgrammerManagers directly in e.g. JComboBoxes, so it should return a
      * user-provided name for this particular one.
      */
-    public String toString() { return null; }
+    public String toString() { return "OlcbProgrammerManager"; }
 }

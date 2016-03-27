@@ -182,17 +182,25 @@ public class CatalogPanel extends JPanel implements MouseListener {
     }
 
     /**
-     * Create a new model and add it to the main root
+     * Create a new model and add it to the main root.
+     * <p>
+     * Can be called from off the GUI thread.
      */
     public void createNewBranch(String systemName, String userName, String path) {
 
         CatalogTreeManager manager = InstanceManager.catalogTreeManagerInstance();
         CatalogTree tree = manager.getBySystemName(systemName);
-        if (tree == null) {
-            tree = manager.newCatalogTree(systemName, userName);
-            tree.insertNodes(path);
+        if (tree != null) {
+            jmri.util.ThreadingUtil.runOnGUI(()->{
+                addTree(tree);
+            });
+        } else {
+            final CatalogTree t = manager.newCatalogTree(systemName, userName);
+            jmri.util.ThreadingUtil.runOnGUI(()->{
+                t.insertNodes(path);
+                addTree(t);
+            });
         }
-        addTree(tree);
     }
 
     /**

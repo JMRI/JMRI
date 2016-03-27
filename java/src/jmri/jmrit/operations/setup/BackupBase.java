@@ -34,7 +34,7 @@ public abstract class BackupBase {
     // The root directory for all Operations files, usually
     // "user / name / JMRI / operations"
     protected File _operationsRoot = null;
-    
+
     public File getOperationsRoot() {
         return _operationsRoot;
     }
@@ -50,9 +50,9 @@ public abstract class BackupBase {
 
     // These constitute the set of files for a complete backup set.
     private String[] _backupSetFileNames = new String[]{"Operations.xml", // NOI18N
-        "OperationsCarRoster.xml", "OperationsEngineRoster.xml", // NOI18N
-        "OperationsLocationRoster.xml", "OperationsRouteRoster.xml", // NOI18N
-        "OperationsTrainRoster.xml"}; // NOI18N
+            "OperationsCarRoster.xml", "OperationsEngineRoster.xml", // NOI18N
+            "OperationsLocationRoster.xml", "OperationsRouteRoster.xml", // NOI18N
+            "OperationsTrainRoster.xml"}; // NOI18N
 
     private String _demoPanelFileName = "Operations Demo Panel.xml"; // NOI18N
 
@@ -124,7 +124,8 @@ public abstract class BackupBase {
      * Returns a sorted list of the Backup Sets under the backup root.
      *
      */
-    @edu.umd.cs.findbugs.annotations.SuppressFBWarnings(value = "NP_NULL_ON_SOME_PATH_FROM_RETURN_VALUE", justification = "not possible")
+    @edu.umd.cs.findbugs.annotations.SuppressFBWarnings(value = "NP_NULL_ON_SOME_PATH_FROM_RETURN_VALUE",
+            justification = "not possible")
     public String[] getBackupSetList() {
         String[] setList = getBackupRoot().list();
         // no guarantee of order, so we need to sort
@@ -142,7 +143,8 @@ public abstract class BackupBase {
         return dirs;
     }
 
-    @edu.umd.cs.findbugs.annotations.SuppressFBWarnings(value = "NP_NULL_ON_SOME_PATH_FROM_RETURN_VALUE", justification = "not possible")
+    @edu.umd.cs.findbugs.annotations.SuppressFBWarnings(value = "NP_NULL_ON_SOME_PATH_FROM_RETURN_VALUE",
+            justification = "not possible")
     public BackupSet[] getBackupSets() {
         // This is a bit of a kludge for now, until I learn more about dynamic
         // sets
@@ -251,8 +253,7 @@ public abstract class BackupBase {
             if (!result) {
                 // This needs to use a better Exception class.....
                 throw new IOException(
-                        destDir.getAbsolutePath()
-                        + " (Could not create all or part of the Backup Set path)"); // NOI18N
+                        destDir.getAbsolutePath() + " (Could not create all or part of the Backup Set path)"); // NOI18N
             }
         }
 
@@ -352,13 +353,13 @@ public abstract class BackupBase {
                 return fullName;
             }
 
-//			This should also work, commented out by D. Boudreau
-//			The Linux problem turned out to be related to the order
-//			files names are returned by list().
-//			File testPath = new File(_backupRoot, fullName);
-//
-//			if (!testPath.exists()) {
-//				return fullName; // Found an unused name
+            //			This should also work, commented out by D. Boudreau
+            //			The Linux problem turned out to be related to the order
+            //			files names are returned by list().
+            //			File testPath = new File(_backupRoot, fullName);
+            //
+            //			if (!testPath.exists()) {
+            //				return fullName; // Found an unused name
             // Otherwise complain and keep trying...
             log.debug("Operations backup directory: {} already exists", fullName); // NOI18N
         }
@@ -373,7 +374,8 @@ public abstract class BackupBase {
      * Reset Operations by deleting XML files, leaves directories and backup
      * files in place.
      */
-    @edu.umd.cs.findbugs.annotations.SuppressFBWarnings(value = "NP_NULL_ON_SOME_PATH_FROM_RETURN_VALUE", justification = "not possible")
+    @edu.umd.cs.findbugs.annotations.SuppressFBWarnings(value = "NP_NULL_ON_SOME_PATH_FROM_RETURN_VALUE",
+            justification = "not possible")
     public void deleteOperationsFiles() {
         // TODO Maybe this should also only delete specific files used by Operations,
         // and not just all XML files.
@@ -443,12 +445,8 @@ public abstract class BackupBase {
                 }
             }
 
-            InputStream source = null;
-            OutputStream dest = null;
-
-            try {
-                source = new FileInputStream(sourceFileName);
-                dest = new FileOutputStream(destFileName);
+            try (InputStream source = new FileInputStream(sourceFileName);
+                    OutputStream dest = new FileOutputStream(destFileName)) {
 
                 byte[] buffer = new byte[1024];
 
@@ -458,22 +456,9 @@ public abstract class BackupBase {
                     dest.write(buffer, 0, len);
                 }
             } catch (IOException ex) {
-                if (source != null) {
-                    source.close();
-                }
-                if (dest != null) {
-                    dest.close();
-                }
                 String msg = String.format("Error copying file: %s to: %s", // NOI18N
                         sourceFileName, destFileName);
                 throw new IOException(msg, ex);
-            } finally {
-                if (source != null) {
-                    source.close();
-                }
-                if (dest != null) {
-                    dest.close();
-                }
             }
 
             // Now update the last modified time to equal the source file.
@@ -484,7 +469,7 @@ public abstract class BackupBase {
             if (!ok) {
                 throw new RuntimeException(
                         "Failed to set modified time on file: " // NOI18N
-                        + dst.getAbsolutePath());
+                                + dst.getAbsolutePath());
             }
         }
     }
