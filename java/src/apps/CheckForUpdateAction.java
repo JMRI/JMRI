@@ -33,11 +33,6 @@ import org.slf4j.LoggerFactory;
  */
 public class CheckForUpdateAction extends jmri.util.swing.JmriAbstractAction {
 
-    /**
-     *
-     */
-    private static final long serialVersionUID = -6718445705950604552L;
-
     public CheckForUpdateAction(String s, WindowInterface wi) {
         super(s, wi);
     }
