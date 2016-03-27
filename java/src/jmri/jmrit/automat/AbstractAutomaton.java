@@ -958,6 +958,11 @@ public class AbstractAutomaton implements Runnable {
         Programmer programmer = InstanceManager.programmerManagerInstance()
                 .getGlobalProgrammer();
 
+        if (programmer == null) {
+            log.error("No programmer available as JMRI is currently configured");
+            return false;
+        }
+        
         // do the write, response will wake the thread
         try {
             programmer.writeCV(CV, value, new ProgListener() {
@@ -990,7 +995,12 @@ public class AbstractAutomaton implements Runnable {
         Programmer programmer = InstanceManager.programmerManagerInstance()
                 .getGlobalProgrammer();
 
-        // do the write, response will wake the thread
+        if (programmer == null) {
+            log.error("No programmer available as JMRI is currently configured");
+            return -1;
+        }
+        
+        // do the read, response will wake the thread
         cvReturnValue = -1;
         try {
             programmer.readCV(CV, new ProgListener() {
@@ -1024,6 +1034,11 @@ public class AbstractAutomaton implements Runnable {
         Programmer programmer = InstanceManager.programmerManagerInstance()
                 .getAddressedProgrammer(longAddress, loco);
 
+        if (programmer == null) {
+            log.error("No programmer available as JMRI is currently configured");
+            return false;
+        }
+        
         // do the write, response will wake the thread
         try {
             programmer.writeCV(CV, value, new ProgListener() {
