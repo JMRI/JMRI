@@ -1098,7 +1098,7 @@ public class ConfigSensorsAndTurnoutsFrame extends JmriJFrame implements DCCppLi
                 }
             }
             isPushed = false;
-            return new String(label);
+            return label;
         }
         
         public boolean stopCellEditing() {
