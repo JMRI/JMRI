@@ -6,7 +6,6 @@ import java.beans.PropertyChangeListener;
  * Interface for displaying (and controlling where appropriate)
  * Current, Voltage, and other status data from the layout.
  *
- * @version: $Revision$
  */
 
 public interface MultiMeter {

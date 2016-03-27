@@ -5,7 +5,6 @@ package jmri;
  * TurnoutManager is primary consumer of these
  *
  * @author	Bob Jacobsen Copyright (C) 2001
- * @version
  */
 public class TurnoutAddress extends Address {
 

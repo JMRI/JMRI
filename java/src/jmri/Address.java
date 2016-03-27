@@ -6,7 +6,6 @@ package jmri;
  * are primary consumer of these
  *
  * @author	Bob Jacobsen Copyright (C) 2001
- * @version
  */
 public class Address {
 

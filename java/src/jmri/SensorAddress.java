@@ -5,7 +5,6 @@ package jmri;
  * SensorManager is primary consumer of these
  *
  * @author	Bob Jacobsen Copyright (C) 2001
- * @version
  */
 public class SensorAddress extends Address {
 
