@@ -303,6 +303,9 @@ public class TrainSwitchListEditFrame extends OperationsFrame implements java.be
      * @param isUpdate true if only updating switch lists (no printing or
      *            preview)
      */
+    @edu.umd.cs.findbugs.annotations.SuppressFBWarnings(
+            value = {"UC_USELESS_CONDITION", "RpC_REPEATED_CONDITIONAL_TEST"},
+            justification = "isChanged value is dependent on which user button is activated")
     private void buildSwitchList(boolean isPreview, boolean isChanged, boolean isCsv, boolean isUpdate) {
         TrainSwitchLists trainSwitchLists = new TrainSwitchLists();
         // this for loop prevents ConcurrentModificationException when printing and status changes
@@ -449,7 +452,7 @@ public class TrainSwitchListEditFrame extends OperationsFrame implements java.be
             String locationName = locationCheckBoxes.get(i).getName();
             Location location = locationManager.getLocationByName(locationName);
             if (location.isSwitchListEnabled() &&
-                    (!isChanged || isChanged && location.getStatus().equals(Location.MODIFIED))) {
+                    (!isChanged || (isChanged && location.getStatus().equals(Location.MODIFIED)))) {
                 // also build the regular switch lists so they can be used
                 if (!switchListRealTimeCheckBox.isSelected()) {
                     trainSwitchLists.buildSwitchList(location);
