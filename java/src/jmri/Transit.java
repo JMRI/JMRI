@@ -54,11 +54,6 @@ import org.slf4j.LoggerFactory;
 public class Transit extends AbstractNamedBean
         implements java.io.Serializable {
 
-    /**
-     *
-     */
-    private static final long serialVersionUID = -1416985602957797317L;
-
     public Transit(String systemName, String userName) {
         super(systemName.toUpperCase(), userName);
     }

@@ -15,8 +15,6 @@ import jmri.util.JmriJFrame;
  */
 public class TabbedPreferencesFrame extends JmriJFrame {
 
-    private static final long serialVersionUID = 4861869203791661041L;
-
     @Override
     public String getTitle() {
         return InstanceManager.tabbedPreferencesInstance().getTitle();

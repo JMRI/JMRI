@@ -20,11 +20,6 @@ package jmri;
 public class AudioException extends JmriException {
 
     /**
-     *
-     */
-    private static final long serialVersionUID = 3840261154738009186L;
-
-    /**
      * Create new AudioException with a message
      *
      * @param s message for this exception

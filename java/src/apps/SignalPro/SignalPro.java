@@ -39,11 +39,6 @@ import org.slf4j.LoggerFactory;
  */
 public class SignalPro extends Apps {
 
-    /**
-     *
-     */
-    private static final long serialVersionUID = 1052727691037666599L;
-
     SignalPro(JFrame p) {
         super(p);
     }
@@ -72,11 +67,6 @@ public class SignalPro extends Apps {
 
         // Buttons
         Action quit = new AbstractAction(Bundle.getMessage("MenuItemQuit")) {
-            /**
-             *
-             */
-            private static final long serialVersionUID = 715520430782060134L;
-
             public void actionPerformed(ActionEvent e) {
                 Apps.handleQuit();
             }

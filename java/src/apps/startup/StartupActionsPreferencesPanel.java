@@ -34,7 +34,6 @@ import jmri.swing.PreferencesPanel;
  */
 public class StartupActionsPreferencesPanel extends JPanel implements PreferencesPanel {
 
-    private static final long serialVersionUID = 1L;
     private boolean isRestartRequired = false;
 
     /**
@@ -274,7 +273,6 @@ public class StartupActionsPreferencesPanel extends JPanel implements Preference
 
     class TableModel extends AbstractTableModel implements PropertyChangeListener {
 
-        private static final long serialVersionUID = 1L;
         private final StartupActionsManager manager;
 
         @SuppressWarnings("LeakingThisInConstructor")

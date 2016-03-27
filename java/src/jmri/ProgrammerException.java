@@ -7,11 +7,6 @@ package jmri;
  */
 public class ProgrammerException extends JmriException {
 
-    /**
-     *
-     */
-    private static final long serialVersionUID = 2951255959332461998L;
-
     public ProgrammerException(String s) {
         super(s);
     }

@@ -31,11 +31,6 @@ import org.slf4j.LoggerFactory;
  */
 public class CornwallRR extends Apps {
 
-    /**
-     *
-     */
-    private static final long serialVersionUID = 3079694445928122025L;
-
     protected String line1() {
         return MessageFormat.format("Cornwall RR, based on JMRI {0}",
                 new Object[]{jmri.Version.name()});

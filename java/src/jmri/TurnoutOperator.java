@@ -29,10 +29,5 @@ public abstract class TurnoutOperator extends Thread {
      * and that this one should just quietly stop doing its thing.
      */
     static public class TurnoutOperatorException extends java.lang.Exception {
-
-        /**
-         *
-         */
-        private static final long serialVersionUID = -9039683362922025389L;
     }
 }
