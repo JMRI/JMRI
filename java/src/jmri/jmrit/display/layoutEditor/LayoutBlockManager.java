@@ -15,6 +15,8 @@ import jmri.SignalHead;
 import jmri.SignalMast;
 import jmri.Turnout;
 import jmri.managers.AbstractManager;
+import jmri.BlockManager;
+import jmri.jmrit.roster.RosterEntry;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -2237,6 +2239,32 @@ public class LayoutBlockManager extends AbstractManager implements jmri.Instance
     public String getBeanTypeHandled() {
         return Bundle.getMessage("BeanNameLayoutBlock");
     }
+
+    /**
+     * Returns a list of layout blocks which this roster entry appears to
+     * be occupying. A layout block is assumed to contain this roster entry if the value
+     * of the underlying block is the RosterEntry itself, or a string with the entry's 
+     * id or dcc address.
+     * 
+     * @param re the roster entry
+     * @return list of layout block user names
+     */
+    public List<LayoutBlock> getLayoutBlocksOccupiedByRosterEntry(RosterEntry re) {
+        BlockManager bm = jmri.InstanceManager.blockManagerInstance();
+        List<Block> blockList = bm.getBlocksOccupiedByRosterEntry(re);
+        List<LayoutBlock> layoutBlockList = new ArrayList<>();
+        
+        for (Block block : blockList) {
+            if (block.getUserName() != null) {
+                LayoutBlock lb = getByUserName(block.getUserName());
+                if (lb != null) {
+                    layoutBlockList.add(lb);
+                }
+            }
+        }
+        
+        return layoutBlockList;
+    } 
 
     private final static Logger log = LoggerFactory.getLogger(LayoutBlockManager.class.getName());
 }
