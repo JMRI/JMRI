@@ -1,11 +1,5 @@
 package jmri.jmrit.logix;
 
-/**
- * @author Pete Cressman Copyright (C) 2015
- * @version $Revision: 28030 $
- * 
- * Hold configuration data for Warrants, includes Speed Map
- */
 import java.io.File;
 import java.util.ArrayList;
 import java.util.Enumeration;
@@ -20,10 +14,15 @@ import org.jdom2.Attribute;
 import org.jdom2.DataConversionException;
 import org.jdom2.Document;
 import org.jdom2.Element;
-//import org.jdom2.JDOMException;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+/**
+ * Hold configuration data for Warrants, includes Speed Map
+ * 
+ * @author Pete Cressman Copyright (C) 2015
+ * @version $Revision: 28030 $
+ */
 public class WarrantPreferences  {
 
     public static final String layoutParams = "layoutParams";   // NOI18N
@@ -105,7 +104,7 @@ public class WarrantPreferences  {
     }
     
     private void loadSpeedMapFromOldXml() {
-        SignalSpeedMap map = SignalSpeedMap.getMap();
+        SignalSpeedMap map = jmri.InstanceManager.getDefault(SignalSpeedMap.class);
         if (map==null) {
             log.error("Cannot find signalSpeeds.xml file.");
             return;
@@ -327,7 +326,7 @@ public class WarrantPreferences  {
         map.setRampParams(_throttleIncr, _msIncrTime);
         map.setDefaultThrottleFactor(_throttleScale);
         map.setLayoutScale(_scale);
-        map.setMap(map);        
+        jmri.InstanceManager.setDefault(SignalSpeedMap.class, map);        
     }
 
     float getScale() {

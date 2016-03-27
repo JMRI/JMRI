@@ -220,15 +220,5 @@ public class MemoryIcon extends jmri.jmrit.display.MemoryIcon {
         }
     }
 
-    protected boolean updateBlockValue = false;
-
-    public void updateBlockValueOnChange(boolean boo) {
-        updateBlockValue = boo;
-    }
-
-    public boolean updateBlockValueOnChange() {
-        return updateBlockValue;
-    }
-
     private final static Logger log = LoggerFactory.getLogger(MemoryIcon.class.getName());
 }
