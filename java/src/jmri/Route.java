@@ -35,8 +35,6 @@ package jmri;
  * @author	Dave Duchamp Copyright (C) 2004
  * @author	Bob Jacobsen Copyright (C) 2007
  * @author Simon Reader Copyright (C) 2008
- *
- * @version	$Revision$
  */
 public interface Route extends NamedBean {
 

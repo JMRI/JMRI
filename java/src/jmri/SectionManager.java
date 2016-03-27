@@ -32,7 +32,6 @@ import org.slf4j.LoggerFactory;
  * A PARTICULAR PURPOSE. See the GNU General Public License for more details.
  * <P>
  * @author Dave Duchamp Copyright (C) 2008
- * @version	$Revision$
  */
 public class SectionManager extends AbstractManager
         implements java.beans.PropertyChangeListener {

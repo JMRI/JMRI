@@ -19,7 +19,6 @@ package jmri;
  * <P>
  *
  * @author	Bob Jacobsen Copyright (C) 2004
- * @version	$Revision$
  */
 public interface TimeDisplay {
 

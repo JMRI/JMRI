@@ -32,7 +32,6 @@ import java.util.List;
  * <P>
  *
  * @author	Bob Jacobsen Copyright (C) 2001
- * @version	$Revision$
  * @see jmri.Reporter
  * @see jmri.InstanceManager
  */

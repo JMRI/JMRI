@@ -44,7 +44,6 @@ import javax.annotation.ParametersAreNonnullByDefault;
  * <p>
  *
  * @author Bob Jacobsen Copyright (C) 2012
- * @version $Revision: 17977 $
  * @since 3.3.1
  */
 

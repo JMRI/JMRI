@@ -18,7 +18,6 @@ import org.slf4j.LoggerFactory;
  * Entry Point is loaded from a configuration file.
  *
  * @author	Dave Duchamp Copyright (C) 2008
- * @version	$Revision$
  */
 public class EntryPoint {
 

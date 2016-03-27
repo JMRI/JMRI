@@ -17,7 +17,6 @@ package jmri;
  * <P>
  *
  * @author	Bob Jacobsen Copyright (C) 2001
- * @version	$Revision$
  */
 public interface Sensor extends NamedBean {
 

@@ -24,7 +24,6 @@ import java.util.ArrayList;
  * <P>
  *
  * @author	Bob Jacobsen Copyright (C) 2001, 2002, 2003, 2004
- * @version	$Revision$
  * @see jmri.Manager
  */
 public interface NamedBean {

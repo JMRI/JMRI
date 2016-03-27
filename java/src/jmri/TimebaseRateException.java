@@ -5,7 +5,6 @@ package jmri;
  * that's been requested.
  *
  * @author	Bob Jacobsen Copyright (C) 2004
- * @version	$Revision$
  */
 public class TimebaseRateException extends JmriException {
 

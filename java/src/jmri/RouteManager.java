@@ -21,7 +21,6 @@ import java.util.List;
  * <P>
  *
  * @author Dave Duchamp Copyright (C) 2004
- * @version	$Revision$
  */
 public interface RouteManager extends Manager {
 

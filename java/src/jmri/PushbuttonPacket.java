@@ -32,7 +32,6 @@ import org.slf4j.LoggerFactory;
  * programming.
  *
  * @author Daniel Boudreau Copyright (C) 2007
- * @version $Revision$
  *
  */
 public class PushbuttonPacket {

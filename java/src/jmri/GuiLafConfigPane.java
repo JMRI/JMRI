@@ -4,7 +4,6 @@ package jmri;
  * Migration stand-in for {@link apps.GuiLafConfigPane}
  *
  * @author Bob Jacobsen Copyright (C) 2010
- * @version	$Revision$
  * @deprecated 2.9.5
  */
 @Deprecated

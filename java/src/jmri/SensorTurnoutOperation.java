@@ -8,7 +8,6 @@ import jmri.implementation.SensorTurnoutOperator;
  * automatic retry for a turnout with explicit feedback from sensor(s)
  *
  * @author John Harper	Copyright 2005
- * @version $Revision$
  */
 public class SensorTurnoutOperation extends CommonTurnoutOperation {
 

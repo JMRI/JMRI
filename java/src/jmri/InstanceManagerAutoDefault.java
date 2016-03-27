@@ -1,7 +1,6 @@
 package jmri;
 
 /**
- *
  * Interface indicating that the InstanceManager can create an object of this
  * type when needed by a request.
  * <p>
@@ -14,7 +13,6 @@ package jmri;
  * implementation in {@link jmri.managers.DefaultInstanceInitializer}.
  *
  * @author	Bob Jacobsen Copyright (C) 2012
- * @version	$Revision: $
  */
 public interface InstanceManagerAutoDefault {
 }

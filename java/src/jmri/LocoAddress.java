@@ -18,7 +18,6 @@ package jmri;
  * A PARTICULAR PURPOSE. See the GNU General Public License for more details.
  * <P>
  * @author	Bob Jacobsen Copyright (C) 2005
- * @version	$Revision$
  */
 public interface LocoAddress {
 

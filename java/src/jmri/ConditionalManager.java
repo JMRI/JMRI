@@ -20,7 +20,6 @@ import java.util.List;
  * A PARTICULAR PURPOSE. See the GNU General Public License for more details.
  * <P>
  * @author Dave Duchamp Copyright (C) 2007
- * @version	$Revision$
  */
 public interface ConditionalManager extends Manager {
 

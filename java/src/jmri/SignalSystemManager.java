@@ -21,7 +21,6 @@ package jmri;
  * <P>
  *
  * @author Bob Jacobsen Copyright (C) 2009
- * @version	$Revision$
  */
 public interface SignalSystemManager extends Manager {
 

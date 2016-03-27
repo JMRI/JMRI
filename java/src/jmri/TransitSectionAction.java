@@ -31,7 +31,6 @@ package jmri;
  * <P>
  *
  * @author	Dave Duchamp Copyright (C) 2009, 2010
- * @version	$Revision$
  */
 public class TransitSectionAction {
 

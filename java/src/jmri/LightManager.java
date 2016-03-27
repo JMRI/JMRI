@@ -22,7 +22,6 @@ import java.util.List;
  * A PARTICULAR PURPOSE. See the GNU General Public License for more details.
  * <P>
  * @author Dave Duchamp Copyright (C) 2004
- * @version	$Revision$
  */
 public interface LightManager extends Manager {
 

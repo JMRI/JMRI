@@ -40,7 +40,6 @@ import java.util.List;
  * <P>
  * @see jmri.ProgrammerManager
  * @author	Bob Jacobsen Copyright (C) 2001, 2008, 2013
- * @version	$Revision$
  */
 public interface Programmer {
 

@@ -10,7 +10,6 @@ import javax.swing.JMenuBar;
  * implemention, the user can update configuration, etc at startup time.
  *
  * @author	Bob Jacobsen Copyright (C) 2003, 2012
- * @version	$Revision$
  */
 public class JmriPlugin {
 

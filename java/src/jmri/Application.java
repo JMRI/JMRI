@@ -18,7 +18,6 @@ package jmri;
  * <P>
  *
  * @author Matthew Harris Copyright (C) 2011
- * @version $Revision$
  */
 public class Application {
 

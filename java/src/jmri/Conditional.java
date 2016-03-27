@@ -34,7 +34,6 @@ import java.util.ArrayList;
  * @author	Dave Duchamp Copyright (C) 2007, 2008
  * @author	Pete Cressman Copyright (C) 2009, 2010, 2011
  * @author Matthew Harris copyright (c) 2009
- * @version	$Revision 1.0 $
  */
 public interface Conditional extends NamedBean {
 

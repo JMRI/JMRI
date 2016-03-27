@@ -30,7 +30,6 @@ package jmri;
  * <P>
  *
  * @author Matthew Harris copyright (c) 2009
- * @version $Revision$
  */
 public interface Audio extends NamedBean {
 

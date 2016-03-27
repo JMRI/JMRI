@@ -8,7 +8,6 @@ import jmri.implementation.AbstractTurnout;
  * common properties and methods for concrete subclasses
  *
  * @author John Harper
- * @version $Revision$
  */
 public abstract class CommonTurnoutOperation extends TurnoutOperation {
 

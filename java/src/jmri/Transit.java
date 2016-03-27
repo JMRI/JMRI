@@ -50,8 +50,6 @@ import org.slf4j.LoggerFactory;
  * <P>
  *
  * @author	Dave Duchamp Copyright (C) 2008-2011
- *
- * @version	$Revision$
  */
 public class Transit extends AbstractNamedBean
         implements java.io.Serializable {

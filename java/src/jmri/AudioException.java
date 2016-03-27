@@ -16,7 +16,6 @@ package jmri;
  * <P>
  *
  * @author Matthew Harris copyright (c) 2009
- * @version $Revision$
  */
 public class AudioException extends JmriException {
 

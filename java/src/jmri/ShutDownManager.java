@@ -28,7 +28,6 @@ package jmri;
  * a null manager and skip operations if needed.
  *
  * @author Bob Jacobsen Copyright (C) 2008
- * @version	$Revision$
  */
 public interface ShutDownManager {
 

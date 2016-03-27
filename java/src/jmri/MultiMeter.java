@@ -6,7 +6,6 @@ import java.beans.PropertyChangeListener;
  * Interface for displaying (and controlling where appropriate)
  * Current, Voltage, and other status data from the layout.
  *
- * @author: Mark Underwood (C) 2015
  * @version: $Revision$
  */
 
