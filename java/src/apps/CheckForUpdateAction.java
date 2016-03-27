@@ -1,4 +1,3 @@
-// CheckForUpdateAction.java
 package apps;
 
 import java.awt.Desktop;
@@ -31,7 +30,6 @@ import org.slf4j.LoggerFactory;
  * @author	Bob Jacobsen Copyright (C) 2007, 2014
  * @author Matt Harris Copyright (C) 2008
  *
- * @version $Revision$
  */
 public class CheckForUpdateAction extends jmri.util.swing.JmriAbstractAction {
 
@@ -152,4 +150,3 @@ public class CheckForUpdateAction extends jmri.util.swing.JmriAbstractAction {
 
 }
 
-/* @(#)CheckForUpdateAction.java */
