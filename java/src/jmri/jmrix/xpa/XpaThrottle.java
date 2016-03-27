@@ -22,7 +22,7 @@ public class XpaThrottle extends AbstractThrottle {
      */
     public XpaThrottle(LocoAddress address) {
         super(null);
-        this.address = ((DccLocoAddress) address).getNumber();
+        this.address = address.getNumber();
         this.speedIncrement = 1;
         this.isForward = true;
         this.speedSetting = 0;
