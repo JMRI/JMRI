@@ -11,6 +11,7 @@ import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.net.URI;
 import java.net.URL;
+import javax.annotation.Nonnull;
 import javax.swing.BoxLayout;
 import javax.swing.Icon;
 import javax.swing.JButton;
@@ -133,6 +134,7 @@ public class CheckForUpdateAction extends jmri.util.swing.JmriAbstractAction {
     String getNumber(BufferedReader reader) throws java.io.IOException {
         String line = reader.readLine();
         line = reader.readLine();
+        if (line == null) return "";
         return line.substring(0, line.length() - 1);  // drop trailing :
     }
 
