@@ -29,6 +29,9 @@ public abstract class JsonHttpService {
      * If name is null, return a list of all objects for the given type, if
      * appropriate.
      *
+     * This method should throw a 500 Internal Server Error if type is not
+     * recognized.
+     *
      * @param type   the type of the requested object.
      * @param name   the name of the requested object.
      * @param locale the requesting client's Locale.
@@ -57,6 +60,9 @@ public abstract class JsonHttpService {
     /**
      * Respond to an HTTP PUT request for the requested name.
      *
+     * Throw an HTTP 405 Method Not Allowed exception if new objects of the type
+     * are not intendended to be addable.
+     *
      * @param type   the type of the requested object.
      * @param name   the name of the requested object.
      * @param data   JSON data set of attributes of the requested object to be
@@ -74,7 +80,7 @@ public abstract class JsonHttpService {
      *
      * Throw an HTTP 405 Method Not Allowed exception if the object is not
      * intendended to be removable.
-     * 
+     *
      * Do not throw an error if the requested object does not exist.
      *
      * @param type   the type of the deleted object.

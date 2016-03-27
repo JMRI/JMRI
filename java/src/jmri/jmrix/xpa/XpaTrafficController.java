@@ -47,7 +47,7 @@ public final class XpaTrafficController implements XpaInterface, Runnable {
     protected Vector<XpaListener> cmdListeners = new Vector<XpaListener>();
 
     public boolean status() {
-        return (ostream != null & istream != null);
+        return (ostream != null && istream != null);
     }
 
     public synchronized void addXpaListener(XpaListener l) {
@@ -206,7 +206,7 @@ public final class XpaTrafficController implements XpaInterface, Runnable {
         return self;
     }
 
-    static volatile protected XpaTrafficController self = null;
+    static volatile private XpaTrafficController self = null;
 
     // data members to hold the streams
     DataInputStream istream = null;
@@ -297,7 +297,7 @@ public final class XpaTrafficController implements XpaInterface, Runnable {
                             // no stream connected
                             log.warn("sendMessage: no connection established");
                         }
-                    } catch (Exception e) {
+                    } catch (java.io.IOException e) {
                         log.warn("sendMessage: Exception: " + e.toString());
                     }
                 } catch (NoSuchElementException e) {

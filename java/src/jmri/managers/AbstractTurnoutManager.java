@@ -1,4 +1,3 @@
-// AbstractTurnoutManager.java
 package jmri.managers;
 
 import jmri.JmriException;
@@ -6,6 +5,8 @@ import jmri.Manager;
 import jmri.Turnout;
 import jmri.TurnoutManager;
 import jmri.TurnoutOperationManager;
+import jmri.implementation.SignalSpeedMap;
+
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -13,7 +14,6 @@ import org.slf4j.LoggerFactory;
  * Abstract partial implementation of a TurnoutManager.
  *
  * @author	Bob Jacobsen Copyright (C) 2001
- * @version	$Revision$
  */
 public abstract class AbstractTurnoutManager extends AbstractManager
         implements TurnoutManager, java.beans.VetoableChangeListener {
@@ -27,7 +27,6 @@ public abstract class AbstractTurnoutManager extends AbstractManager
     public int getXMLOrder() {
         return Manager.TURNOUTS;
     }
-    //protected int xmlorder = 20;
 
     public char typeLetter() {
         return 'T';
@@ -293,7 +292,7 @@ public abstract class AbstractTurnoutManager extends AbstractManager
                 Float.parseFloat(speed);
             } catch (NumberFormatException nx) {
                 try {
-                    jmri.implementation.SignalSpeedMap.getMap().getSpeed(speed);
+                    jmri.InstanceManager.getDefault(SignalSpeedMap.class).getSpeed(speed);
                 } catch (Exception ex) {
                     throw new JmriException("Value of requested turnout default closed speed is not valid");
                 }
@@ -322,7 +321,7 @@ public abstract class AbstractTurnoutManager extends AbstractManager
                 Float.parseFloat(speed);
             } catch (NumberFormatException nx) {
                 try {
-                    jmri.implementation.SignalSpeedMap.getMap().getSpeed(speed);
+                    jmri.InstanceManager.getDefault(SignalSpeedMap.class).getSpeed(speed);
                 } catch (Exception ex) {
                     throw new JmriException("Value of requested turnout default thrown speed is not valid");
                 }
@@ -343,5 +342,3 @@ public abstract class AbstractTurnoutManager extends AbstractManager
 
     private final static Logger log = LoggerFactory.getLogger(AbstractTurnoutManager.class.getName());
 }
-
-/* @(#)AbstractTurnoutManager.java */

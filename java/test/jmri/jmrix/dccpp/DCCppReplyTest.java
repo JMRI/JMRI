@@ -12,7 +12,6 @@ import junit.framework.TestSuite;
  *
  * @author	Bob Jacobsen
  * @author	Mark Underwood (C) 2015
- * @version $Revision$
  */
 public class DCCppReplyTest extends TestCase {
 

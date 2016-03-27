@@ -40,14 +40,8 @@ import org.slf4j.LoggerFactory;
  * Based upon the TurnoutIcon by Bob Jacobsen
  *
  * @author Kevin Dickerson Copyright (c) 2010
- * @version $Revision$
  */
 public class SlipTurnoutIcon extends PositionableLabel implements java.beans.PropertyChangeListener {
-
-    /**
-     *
-     */
-    private static final long serialVersionUID = -4644712323861322600L;
 
     public SlipTurnoutIcon(Editor editor) {
         // super ctor call to make sure this is an icon label
@@ -1178,11 +1172,6 @@ public class SlipTurnoutIcon extends PositionableLabel implements java.beans.Pro
             popuptext = Bundle.getMessage("SetScissorText");
         }
         popup.add(new AbstractAction(popuptext) {
-            /**
-             *
-             */
-            private static final long serialVersionUID = 1458395650486759302L;
-
             public void actionPerformed(ActionEvent e) {
                 String name = getNameString();
                 slipTurnoutTextEdit(name);
@@ -1291,7 +1280,9 @@ public class SlipTurnoutIcon extends PositionableLabel implements java.beans.Pro
             while (itr.hasNext()) {
                 Turnout t = itr.next();
                 int state = _turnoutSetting.get(t);
-                t.setCommandedState(state);
+                jmri.util.ThreadingUtil.runOnLayout(()->{ // run on layout thread
+                    t.setCommandedState(state);
+                });
                 try {
                     Thread.sleep(250);
                 } catch (InterruptedException e) {

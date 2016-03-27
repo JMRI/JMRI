@@ -13,7 +13,6 @@ import org.slf4j.LoggerFactory;
  * Handle XML persistance of SimpleTimebase objects
  *
  * @author Bob Jacobsen Copyright: Copyright (c) 2003, 2008
- * @version $Revision$
  */
 public class SimpleTimebaseXml extends jmri.configurexml.AbstractXmlAdapter {
 
@@ -34,9 +33,7 @@ public class SimpleTimebaseXml extends jmri.configurexml.AbstractXmlAdapter {
         Element elem = new Element("timebase");
         elem.setAttribute("class", this.getClass().getName());
 
-        if (clock.getStartTime() != null) {
-            elem.setAttribute("time", clock.getStartTime().toString());
-        }
+        elem.setAttribute("time", clock.getStartTime().toString());
         elem.setAttribute("rate", "" + clock.userGetRate());
         elem.setAttribute("run", (!clock.getStartStopped() ? "yes" : "no"));
         elem.setAttribute("master", (clock.getInternalMaster() ? "yes" : "no"));

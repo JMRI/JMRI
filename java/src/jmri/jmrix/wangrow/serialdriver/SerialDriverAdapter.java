@@ -36,7 +36,7 @@ public class SerialDriverAdapter extends NcePortController implements jmri.jmrix
 
     public SerialDriverAdapter() {
         super(new NceSystemConnectionMemo());
-        setManufacturer(jmri.jmrix.DCCManufacturerList.WANGROW);
+        setManufacturer(jmri.jmrix.wangrow.WangrowConnectionTypeList.WANGROW);
     }
 
     public String openPort(String portName, String appName) {

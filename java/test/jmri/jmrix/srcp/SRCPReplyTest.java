@@ -14,7 +14,6 @@ import junit.framework.TestSuite;
  * Description:	tests for the jmri.jmrix.srcp.SRCPReply class
  *
  * @author	Bob Jacobsen
- * @version $Revision$
  */
 public class SRCPReplyTest extends TestCase {
 

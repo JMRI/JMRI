@@ -25,10 +25,6 @@ import org.slf4j.LoggerFactory;
  */
 public class TrackTableModel extends AbstractTableModel implements PropertyChangeListener {
 
-    /**
-     *
-     */
-    private static final long serialVersionUID = -7318273766197527079L;
     public static final int SORTBYNAME = 1;
     public static final int SORTBYID = 2;
 
@@ -357,7 +353,7 @@ public class TrackTableModel extends AbstractTableModel implements PropertyChang
 
     // this table listens for changes to a location and it's tracks
     public void propertyChange(PropertyChangeEvent e) {
-        if (Control.showProperty) {
+        if (Control.SHOW_PROPERTY) {
             log.debug("Property change: ({}) old: ({}) new: ({})", e.getPropertyName(), e.getOldValue(), e
                     .getNewValue());
         }

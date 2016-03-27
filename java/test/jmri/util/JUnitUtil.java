@@ -11,6 +11,7 @@ import jmri.NamedBean;
 import jmri.MemoryManager;
 import jmri.PowerManager;
 import jmri.PowerManagerScaffold;
+import jmri.ReporterManager;
 import jmri.SignalHeadManager;
 import jmri.SignalMastLogicManager;
 import jmri.implementation.JmriConfigurationManager;
@@ -24,6 +25,7 @@ import jmri.managers.DefaultIdTagManager;
 import jmri.managers.DefaultLogixManager;
 import jmri.managers.DefaultMemoryManager;
 import jmri.managers.DefaultSignalMastLogicManager;
+import jmri.managers.InternalReporterManager;
 import jmri.managers.InternalLightManager;
 import jmri.managers.InternalSensorManager;
 import jmri.managers.InternalTurnoutManager;
@@ -59,7 +61,6 @@ import org.slf4j.LoggerFactory;
  * be reset when you reset the instance manager.
  *
  * @author Bob Jacobsen Copyright 2009, 2015
- * @version $Revision$
  * @since 2.5.3
  */
 public class JUnitUtil {
@@ -164,6 +165,9 @@ public class JUnitUtil {
     }
     
     public static void resetInstanceManager() {
+        // clear system connections
+        jmri.jmrix.SystemConnectionMemo.reset();
+
         // create a new instance manager
         new InstanceManager() {
             @Override
@@ -176,6 +180,12 @@ public class JUnitUtil {
         InstanceManager.store(new jmri.NamedBeanHandleManager(), jmri.NamedBeanHandleManager.class);
     }
 
+    public static void resetTurnoutOperationManager() {
+        new jmri.TurnoutOperationManager(){
+            { resetTheInstance();}
+        };
+    }
+    
     public static void initConfigureManager() {
         InstanceManager.setDefault(ConfigureManager.class, new JmriConfigurationManager());
     }
@@ -187,33 +197,31 @@ public class JUnitUtil {
     }
 
     public static void initInternalTurnoutManager() {
-        InstanceManager.setTurnoutManager(new InternalTurnoutManager());
-        if (InstanceManager.configureManagerInstance() != null) {
-            InstanceManager.configureManagerInstance().registerConfig(
-                    InstanceManager.turnoutManagerInstance(), jmri.Manager.TURNOUTS);
-        }
+        // now done automatically by InstanceManager's autoinit
+        jmri.InstanceManager.turnoutManagerInstance();
     }
 
     public static void initInternalLightManager() {
-        InternalLightManager m = new InternalLightManager();
-        InstanceManager.setLightManager(m);
-        if (InstanceManager.configureManagerInstance() != null) {
-            InstanceManager.configureManagerInstance().registerConfig(m, jmri.Manager.LIGHTS);
-        }
-    }
+        // now done automatically by InstanceManager's autoinit
+         jmri.InstanceManager.lightManagerInstance();
+   }
 
     public static void initInternalSensorManager() {
-        InternalSensorManager m = new InternalSensorManager();
-        InstanceManager.setSensorManager(m);
-        if (InstanceManager.configureManagerInstance() != null) {
-            InstanceManager.configureManagerInstance().registerConfig(m, jmri.Manager.SENSORS);
-        }
+        // now done automatically by InstanceManager's autoinit
+        jmri.InstanceManager.sensorManagerInstance();
     }
 
     public static void initMemoryManager() {
         MemoryManager m = new DefaultMemoryManager();
         if (InstanceManager.configureManagerInstance() != null) {
             InstanceManager.configureManagerInstance().registerConfig(m, jmri.Manager.MEMORIES);
+        }
+    }
+
+    public static void initReporterManager() {
+        ReporterManager m = new InternalReporterManager();
+        if (InstanceManager.configureManagerInstance() != null) {
+            InstanceManager.configureManagerInstance().registerConfig(m, jmri.Manager.REPORTERS);
         }
     }
 

@@ -24,11 +24,6 @@ import jmri.util.JmriJFrame;
 public class BackgroundItemPanel extends IconItemPanel {
 
     /**
-     *
-     */
-    private static final long serialVersionUID = -3723444307245775612L;
-
-    /**
      * Constructor for plain icons and backgrounds
      */
     public BackgroundItemPanel(JmriJFrame parentFrame, String type, Editor editor) {
@@ -38,6 +33,7 @@ public class BackgroundItemPanel extends IconItemPanel {
 
     public void init() {
         if (!_initialized) {
+            if (!jmri.util.ThreadingUtil.isGUIThread()) log.error("Not on GUI thread", new Exception("traceback"));
             Thread.yield();
             super.init(true);
             add(initBottomPanel(), 2);
@@ -47,6 +43,7 @@ public class BackgroundItemPanel extends IconItemPanel {
     }
 
     protected JPanel instructions(boolean isBackGround) {
+        if (!jmri.util.ThreadingUtil.isGUIThread()) log.error("Not on GUI thread", new Exception("traceback"));
         JPanel panel = super.instructions(isBackGround);
         JPanel blurb = (JPanel) panel.getComponent(0);
         blurb.add(new JLabel(Bundle.getMessage("ToColorBackground", "ButtonBackgroundColor")));
@@ -55,6 +52,7 @@ public class BackgroundItemPanel extends IconItemPanel {
     }
 
     private JPanel initBottomPanel() {
+        if (!jmri.util.ThreadingUtil.isGUIThread()) log.error("Not on GUI thread", new Exception("traceback"));
         JPanel bottomPanel = new JPanel();
         JButton backgroundButton = new JButton(Bundle.getMessage("ButtonBackgroundColor"));
         backgroundButton.addActionListener(new ActionListener() {
@@ -70,10 +68,6 @@ public class BackgroundItemPanel extends IconItemPanel {
 
     class ColorDialog extends JDialog implements ChangeListener {
 
-        /**
-         *
-         */
-        private static final long serialVersionUID = 2436370829951652022L;
         JColorChooser _chooser;
         Editor _editor;
         JPanel _preview;
@@ -100,11 +94,13 @@ public class BackgroundItemPanel extends IconItemPanel {
             _preview.getParent().setBackground(_editor.getBackground());
             setSize(_paletteFrame.getSize().width, this.getPreferredSize().height);
             setLocationRelativeTo(_paletteFrame);
+            if (!jmri.util.ThreadingUtil.isGUIThread()) log.error("Not on GUI thread", new Exception("traceback"));
             pack();
             setVisible(true);
         }
 
         protected JPanel makeDoneButtonPanel() {
+            if (!jmri.util.ThreadingUtil.isGUIThread()) log.error("Not on GUI thread", new Exception("traceback"));
             JPanel panel = new JPanel();
             panel.setLayout(new FlowLayout());
             JButton doneButton = new JButton(Bundle.getMessage("doneButton"));
@@ -142,8 +138,10 @@ public class BackgroundItemPanel extends IconItemPanel {
         }
 
         public void stateChanged(ChangeEvent e) {
+            if (!jmri.util.ThreadingUtil.isGUIThread()) log.error("Not on GUI thread", new Exception("traceback"));
             _preview.setBackground(_chooser.getColor());
             _preview.getParent().setBackground(_chooser.getColor());
         }
     }
+    static org.slf4j.Logger log = org.slf4j.LoggerFactory.getLogger(BackgroundItemPanel.class.getName());
 }

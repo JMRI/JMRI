@@ -20,6 +20,8 @@ package jmri.jmrix.merg;
  */
 public class MergConnectionTypeList implements jmri.jmrix.ConnectionTypeList {
 
+    public static final String MERG = "MERG";
+
     public String[] getAvailableProtocolClasses() {
         // set the connection types to have MERG at the front
         jmri.jmrix.can.ConfigurationManager.setMERG();
@@ -33,6 +35,11 @@ public class MergConnectionTypeList implements jmri.jmrix.ConnectionTypeList {
             "jmri.jmrix.can.adapters.loopback.ConnectionConfig",
             "jmri.jmrix.rfid.serialdriver.ConnectionConfig"
         };
+    }
+
+    @Override
+    public String[] getManufacturers() {
+        return new String[]{MERG};
     }
 }
 

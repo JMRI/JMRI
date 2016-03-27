@@ -1,4 +1,3 @@
-// CanConverterTest.java
 package jmri.jmrix.openlcb;
 
 import jmri.jmrix.can.CanMessage;
@@ -12,7 +11,6 @@ import org.openlcb.can.OpenLcbCanFrame;
  * Tests for making CAN frames into OpenLCB messages.
  *
  * @author Bob Jacobsen Copyright 2010
- * @version $Revision$
  */
 public class CanConverterTest extends TestCase {
 

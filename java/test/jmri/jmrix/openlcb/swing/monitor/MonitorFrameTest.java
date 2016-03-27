@@ -1,4 +1,3 @@
-// MonitorFrameTest.java
 package jmri.jmrix.openlcb.swing.monitor;
 
 import jmri.jmrix.can.CanSystemConnectionMemo;
@@ -12,7 +11,6 @@ import junit.framework.TestSuite;
  * Tests for the jmri.jmrix.can.swing.monitor.MonitorFrame class
  *
  * @author Bob Jacobsen Copyright 2010
- * @version $Revision$
  */
 public class MonitorFrameTest extends TestCase {
 
@@ -28,10 +26,6 @@ public class MonitorFrameTest extends TestCase {
         TrafficControllerScaffold tcs = new TrafficControllerScaffold();
 
         MonitorPane f = new MonitorPane() {
-            /**
-             *
-             */
-            private static final long serialVersionUID = 6881297538444164698L;
 
             public void nextLine(String s1, String s2) {
                 testFormatted = s1;
@@ -63,11 +57,6 @@ public class MonitorFrameTest extends TestCase {
         TrafficControllerScaffold tcs = new TrafficControllerScaffold();
 
         MonitorPane f = new MonitorPane() {
-            /**
-             *
-             */
-            private static final long serialVersionUID = -1435581726641297034L;
-
             public void nextLine(String s1, String s2) {
                 testFormatted = s1;
                 testRaw = s2;

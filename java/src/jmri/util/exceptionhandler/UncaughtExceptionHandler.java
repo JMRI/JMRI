@@ -1,4 +1,3 @@
-// UncaughtExceptionHandler.java
 package jmri.util.exceptionhandler;
 
 import org.slf4j.Logger;
@@ -16,7 +15,6 @@ import java.io.*;
  * </pre>
  *
  * @author Bob Jacobsen Copyright 2003, 2010
- * @version $Revision$
  */
 public class UncaughtExceptionHandler implements Thread.UncaughtExceptionHandler {
 
@@ -27,10 +25,10 @@ public class UncaughtExceptionHandler implements Thread.UncaughtExceptionHandler
             return;
         }
 
-        log.error("Uncaught Exception: {}", generateStackTrace(e));
+        log.error("Uncaught Exception caught by jmri.util.exceptionhandler.UncaughtExceptionHandler", e);
     }
 
-    private String generateStackTrace(Throwable e) {
+    static protected String generateStackTrace(Throwable e) {
         StringWriter writer = new StringWriter();
         PrintWriter pw = new PrintWriter(writer);
         e.printStackTrace(pw);

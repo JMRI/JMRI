@@ -1,8 +1,6 @@
 // CarsTableFrame.java
 package jmri.jmrit.operations.rollingstock.cars;
 
-import jmri.jmrit.operations.trains.tools.TrainsByCarTypeAction;
-
 import java.text.MessageFormat;
 import java.util.List;
 import javax.swing.BorderFactory;
@@ -29,6 +27,7 @@ import jmri.jmrit.operations.locations.ScheduleManager;
 import jmri.jmrit.operations.rollingstock.RollingStock;
 import jmri.jmrit.operations.setup.Control;
 import jmri.jmrit.operations.setup.Setup;
+import jmri.jmrit.operations.trains.tools.TrainsByCarTypeAction;
 import jmri.util.com.sun.TableSorter;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -363,8 +362,7 @@ public class CarsTableFrame extends OperationsFrame implements TableModelListene
                 f.dispose();
             }
             f = new CarEditFrame();
-            f.initComponents();
-            f.setTitle(Bundle.getMessage("TitleCarAdd"));
+            f.initComponents(); // default is add car
         }
         if (ae.getSource() == saveButton) {
             if (carsTable.isEditing()) {
@@ -398,7 +396,7 @@ public class CarsTableFrame extends OperationsFrame implements TableModelListene
     }
 
     public void tableChanged(TableModelEvent e) {
-        if (Control.showProperty) {
+        if (Control.SHOW_PROPERTY) {
             log.debug("Table changed");
         }
         updateNumCars();

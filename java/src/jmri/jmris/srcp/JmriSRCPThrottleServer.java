@@ -1,4 +1,3 @@
-//JmriSRCPThrottleServer.java
 package jmri.jmris.srcp;
 
 import java.beans.PropertyChangeEvent;
@@ -227,7 +226,7 @@ public class JmriSRCPThrottleServer extends AbstractThrottleServer {
            // address, so we need to convert the address to a DccLocoAddress 
            // object first.
            DccLocoAddress addr = new DccLocoAddress(address,isLong);
-           busList.add(new Integer(bus));
+           busList.add(Integer.valueOf(bus));
            addressList.add(addr);
            t.requestThrottle(addr,(ThrottleListener)this);
         }
@@ -377,18 +376,16 @@ public class JmriSRCPThrottleServer extends AbstractThrottleServer {
 
 
 
-   class srcpThrottlePropertyChangeListener implements PropertyChangeListener {
+   static class srcpThrottlePropertyChangeListener implements PropertyChangeListener {
 
       int bus;
       int address;
-      Throttle throttle=null;
       JmriSRCPThrottleServer clientServer=null;
       
       srcpThrottlePropertyChangeListener(JmriSRCPThrottleServer ts,Throttle t,
             int bus ){
             log.debug("property change listener created");
             clientServer=ts;
-            throttle = t;
             this.bus=bus;
             address=t.getLocoAddress().getNumber();
        }

@@ -1,4 +1,3 @@
-// OsIndicatorTest.java
 package jmri.jmrit.ussctc;
 
 import jmri.InstanceManager;

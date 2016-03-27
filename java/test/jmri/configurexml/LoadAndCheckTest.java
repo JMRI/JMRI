@@ -1,4 +1,3 @@
-// LoadAndCheckTest.java
 package jmri.configurexml;
 
 import jmri.InstanceManager;
@@ -16,7 +15,6 @@ import junit.framework.TestSuite;
  *
  * @author Bob Jacobsen Copyright 2009
  * @since 3.9.2 (from earlier form)
- * @version $Revision$
  */
 public class LoadAndCheckTest extends LoadAndStoreTestBase {
 

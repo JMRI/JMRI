@@ -1,4 +1,3 @@
-// DccLocoAddressSelectorTest.java
 package jmri.jmrit;
 
 import javax.swing.JComboBox;
@@ -41,11 +40,6 @@ public class DccLocoAddressSelectorTest extends TestCase {
         setThrottleManager();
         reportedError = null;
         DccLocoAddressSelector sel = new DccLocoAddressSelector() {
-            /**
-             *
-             */
-            private static final long serialVersionUID = -7065357497721821474L;
-
             void reportError(String msg) {
                 reportedError = msg;
             }

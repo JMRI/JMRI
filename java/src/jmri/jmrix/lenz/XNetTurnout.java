@@ -348,7 +348,7 @@ public class XNetTurnout extends AbstractTurnout implements XNetListener {
     }
 
     // Handle a timeout notification
-    public void notifyTimeout(XNetMessage msg) {
+    synchronized public void notifyTimeout(XNetMessage msg) {
         if (log.isDebugEnabled()) {
             log.debug("Notified of timeout on message" + msg.toString());
         }

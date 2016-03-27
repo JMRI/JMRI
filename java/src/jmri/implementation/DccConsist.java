@@ -1,4 +1,3 @@
-// DccConsist.java
 package jmri.implementation;
 
 import java.util.ArrayList;
@@ -20,7 +19,6 @@ import org.slf4j.LoggerFactory;
  * this address to a Command Station that supports it.
  *
  * @author Paul Bender Copyright (C) 2003-2008
- * @version $Revision$
  */
 public class DccConsist implements Consist, ProgListener {
 
@@ -235,17 +233,24 @@ public class DccConsist implements Consist, ProgListener {
         AddressedProgrammer opsProg = InstanceManager.programmerManagerInstance()
                 .getAddressedProgrammer(LocoAddress.isLongAddress(),
                         LocoAddress.getNumber());
+        if (opsProg == null) {
+            log.error("Can't make consisting change because no programmer exists; this is probably a configuration error in the preferences");
+            return;
+        }
+        
         if (directionNormal) {
             try {
                 opsProg.writeCV(19, ConsistAddress.getNumber(), this);
             } catch (ProgrammerException e) {
                 // Don't do anything with this yet
+                log.warn("Exception writing CV19 while adding from consist", e);
             }
         } else {
             try {
                 opsProg.writeCV(19, ConsistAddress.getNumber() + 128, this);
             } catch (ProgrammerException e) {
                 // Don't do anything with this yet
+                log.warn("Exception writing CV19 while adding to consist", e);
             }
         }
 
@@ -261,11 +266,18 @@ public class DccConsist implements Consist, ProgListener {
         AddressedProgrammer opsProg = InstanceManager.programmerManagerInstance()
                 .getAddressedProgrammer(LocoAddress.isLongAddress(),
                         LocoAddress.getNumber());
+        if (opsProg == null) {
+            log.error("Can't make consisting change because no programmer exists; this is probably a configuration error in the preferences");
+            return;
+        }
+
         try {
             opsProg.writeCV(19, 0, this);
         } catch (ProgrammerException e) {
             // Don't do anything with this yet
+            log.warn("Exception writing CV19 while removing from consist", e);
         }
+
         InstanceManager.programmerManagerInstance()
                 .releaseAddressedProgrammer(opsProg);
     }

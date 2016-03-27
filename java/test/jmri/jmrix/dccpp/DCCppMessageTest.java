@@ -14,7 +14,6 @@ import org.slf4j.LoggerFactory;
  *
  * @author	Bob Jacobsen
  * @author	Mark Underwood
- * @version $Revision$
  */
 public class DCCppMessageTest extends TestCase {
 

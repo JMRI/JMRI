@@ -1,4 +1,3 @@
-// SerialMessageTest.java
 package jmri.jmrix.maple;
 
 import junit.framework.Assert;

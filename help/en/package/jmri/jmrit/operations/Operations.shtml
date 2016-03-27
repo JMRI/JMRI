@@ -771,8 +771,10 @@
    staging when destinations are not available on the layout.
 
    <p>
-    This options is also available on a per train basis. See <a href="#TrainBuildOptions">Train
-     Build Options</a>.
+    It is recommended that you leave this option disabled, as it's also available on a per train
+    basis. See <a href="#TrainBuildOptions">Train Build Options</a>. Note that when this option is
+    enabled, the program may have difficulties swapping cars from staging and the layout as the program
+    must assume that all cars in staging could return to staging.
    </p>
 
    <a name="PromptDepartureTrack"></a>
@@ -3487,10 +3489,19 @@
    and returns to staging with those cars. Normally the program doesn't allow the same cars to
    depart and return to staging. However, it may be desirable to allow the train carry the cars
    rather than having the program report that cars in staging couldn't be delivered to destinations
-   on the layout. Selecting this option allows a turn to transport cars to and from the same staging
+   on the layout. Selecting this option allows a turn to transport cars from and to the same staging
    location. Note that when this options is selected, that the program will only return cars to
-   staging when destinations are not available on the layout. You can also set this option for all
-   turns, see <a href="#SettingsOptions"> Options</a>.
+   staging when destinations are not available on the layout. Although not recommended, you can
+   also set this option for all turns, see
+   <a href="#SettingsOptions"> Options</a>.
+
+   <p>Note that when this option is enabled, the program may have difficulties swapping cars
+    from staging and the layout as the program must assume that all cars in staging could return to
+    staging. When this option is disabled (recommended), the program can ignore the cars in staging
+    and can send cars from the layout to staging without regard to the cars sitting there since the
+    expectation is that all cars in staging will be sent to the layout. The recommendation is to
+    leave this option disabled unless you need your train to carry cars from and to the
+    same staging track.</p>
 
    <h4>Allow local moves when a car has a custom load</h4>
 
@@ -3910,26 +3921,26 @@
     name of the train from the "Train" menu, and then finally the location in the train's route from
     the "Route Location" menu.</p>
 
-   <p>In addition to the four pull down menus, there's a button called "Add" under the column
-    called "Messages". This allows you to enter a message that will pop up when the action is
-    completed. Some actions have two messages, one will show when the action succeeds and another
-    when it fails. Once you enter text into the message areas and press "Okay", the "Add" button for
-    that action becomes "Edit". If it's possible for an action to fail, in addition to the extra
-    failure message text area, there's a checkbox labeled "Halt if action fails". When selected the
-    automation will halt in the event that the action fails to complete. The "Create Default
-    Messages" button will automatically create a success and failure message for you if the text
-    window is empty.</p>
-    
-    <p>The messages can be useful when debugging your automation, or if you need to pause the automation
-    as it will wait until you press either the "Halt" or "OK" button.  If you press the "Halt" button,
-    you can continue from where you were in the automation by pressing the "Resume Automation" button.</p>
+   <p>In addition to the four pull down menus, there's a checkbox under the column called "HIAF" (Halt If Action
+    Fails) and a button labeled "Add" under the column called "Messages". The "Add" button allows you to enter a message
+    that will pop up when the action is completed. Some actions have two messages, one will show when the action
+    succeeds and another when it fails. Once you enter text into the message areas and press "Okay", the "Add" button
+    for that action becomes "Edit". If it's possible for an action to fail, in addition to the extra failure message
+    text area, there's a checkbox labeled "Halt if action fails". When selected the automation will halt in the event
+    that the action fails to complete. The "Create Default Messages" button will automatically create a success and
+    failure message for you if the text window is empty.</p>
 
-   <p>If you want more than one action for your automation, press the "Add" button in the "Add
-    Item" area for each action you want to perform. The automation action sequence is from top to
-    bottom. You can if you wish add actions to the middle or end of your sequence by selecting the
-    "Middle or Before Selected Row" or "End" radio buttons respectively. If you select the "Middle
-    or Before Selected Row" radio button you can add an action to the middle of the table, or above
-    a row you've selected in the automation table.</p>
+   <p>The messages can be useful when debugging your automation, or if you need to pause the automation as it will
+    wait until you press either the "Halt" or "OK" button. If you press the "Halt" button, you can continue from where
+    you were in the automation by pressing the "Resume Automation" button.</p>
+
+   <p>If you want more than one action for your automation, press the "Add" button in the "Add Item" area for each
+    action you want to perform. The automation action sequence is from top to bottom. You can if you wish add actions to
+    the middle or end of your sequence by selecting the "Middle or Before Selected Row" or "End" radio buttons
+    respectively. If you select the "Middle or Before Selected Row" radio button you can add an action to the middle of
+    the table, or above a row you've selected in the automation table. You can adjust the order the actions run by using
+    the "Up" or "Down" buttons available for each action. The "Delete" button will remove that action from the
+    automation.</p>
 
    <p>Once you've entered all of the actions you want, you can either step through your actions
     one at a time using the "Step Automation" button, or run through the entire action sequence

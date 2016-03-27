@@ -1,4 +1,3 @@
-// SerialNodeTest.java
 package jmri.jmrix.grapevine;
 
 import jmri.Sensor;

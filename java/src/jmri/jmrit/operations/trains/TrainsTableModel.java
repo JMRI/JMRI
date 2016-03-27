@@ -35,11 +35,6 @@ import org.slf4j.LoggerFactory;
  */
 public class TrainsTableModel extends javax.swing.table.AbstractTableModel implements PropertyChangeListener {
 
-    /**
-     *
-     */
-    private static final long serialVersionUID = 4245878111843075492L;
-
     TrainManager trainManager = TrainManager.instance(); // There is only one manager
 
     // Defines the columns
@@ -349,7 +344,7 @@ public class TrainsTableModel extends javax.swing.table.AbstractTableModel imple
         }
     }
 
-    public Color getRowColor(int row) {
+    public synchronized Color getRowColor(int row) {
         Train train = sysList.get(row);
 //		log.debug("Row: {} train: {} color: {}", row, train.getName(), train.getTableRowColorName());
         return train.getTableRowColor();
@@ -501,8 +496,8 @@ public class TrainsTableModel extends javax.swing.table.AbstractTableModel imple
         });
     }
 
-    public void propertyChange(PropertyChangeEvent e) {
-        if (Control.showProperty) {
+    public synchronized void propertyChange(PropertyChangeEvent e) {
+        if (Control.SHOW_PROPERTY) {
             log.debug("Property change {} old: {} new: {}",
                     e.getPropertyName(), e.getOldValue(), e.getNewValue()); // NOI18N
         }
@@ -523,11 +518,24 @@ public class TrainsTableModel extends javax.swing.table.AbstractTableModel imple
         } else if (e.getSource().getClass().equals(Train.class)) {
             Train train = ((Train) e.getSource());
             int row = sysList.indexOf(train);
-            if (Control.showProperty) {
+            if (Control.SHOW_PROPERTY) {
                 log.debug("Update train table row: {} name: {}", row, train.getName());
             }
             if (row >= 0) {
-                _table.scrollRectToVisible(_table.getCellRect(row, 0, true));
+                // The line "_table.scrollRectToVisible(_table.getCellRect(row, 0, true));"
+                // can cause a thread lock if the table sorter is active. That's the reason
+                // the code is wrapped in the invokeLater.
+                // However scrolling only works correctly if table sort isn't active since "row"
+                // isn't correctly mapped to the proper row showing.  This also allows user to
+                // stop the scrolling to the active train if desired.
+                TableSorter sorter = (TableSorter) _table.getModel();
+                if (!sorter.isSorting()) {
+                    SwingUtilities.invokeLater(new Runnable() {
+                        public void run() {
+                            _table.scrollRectToVisible(_table.getCellRect(row, 0, true));
+                        }
+                    });
+                }
                 fireTableRowsUpdated(row, row);
             }
         }
@@ -559,24 +567,19 @@ public class TrainsTableModel extends javax.swing.table.AbstractTableModel imple
 
     class MyTableCellRenderer extends DefaultTableCellRenderer {
 
-        /**
-         *
-         */
-        private static final long serialVersionUID = 6030024446880261924L;
-
         @Override
         public Component getTableCellRendererComponent(JTable table, Object value, boolean isSelected,
                 boolean hasFocus, int row, int column) {
-            Component c = super.getTableCellRendererComponent(table, value, isSelected, hasFocus, row, column);
+            Component component = super.getTableCellRendererComponent(table, value, isSelected, hasFocus, row, column);
             if (!isSelected) {
                 TableSorter sorter = (TableSorter) table.getModel();
                 int modelRow = sorter.modelIndex(row);
 //				log.debug("View row: {} Column: {} Model row: {}", row, column, modelRow);
                 Color background = getRowColor(modelRow);
-                c.setBackground(background);
-                c.setForeground(getForegroundColor(background));
+                component.setBackground(background);
+                component.setForeground(getForegroundColor(background));
             }
-            return c;
+            return component;
         }
 
         Color[] darkColors = {Color.BLACK, Color.BLUE, Color.GRAY, Color.RED, Color.MAGENTA};

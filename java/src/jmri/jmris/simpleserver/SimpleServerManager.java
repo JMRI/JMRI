@@ -7,7 +7,6 @@ import jmri.util.FileUtil;
 
 public class SimpleServerManager {
 
-    static private SimpleServerManager instance = null;
     private SimpleServerPreferences preferences;
     private SimpleServer server;
     private SimpleServerManager() {
@@ -18,10 +17,10 @@ public class SimpleServerManager {
     }
 
     public static SimpleServerManager getInstance() {
-        if (instance == null) {
-            instance = new SimpleServerManager();
+        if (InstanceManager.getDefault(SimpleServerManager.class) == null) {
+            InstanceManager.store(new SimpleServerManager(), SimpleServerManager.class); // NOI18N
         }
-        return instance;
+        return InstanceManager.getDefault(SimpleServerManager.class);
     }
 
     public SimpleServerPreferences getPreferences() {

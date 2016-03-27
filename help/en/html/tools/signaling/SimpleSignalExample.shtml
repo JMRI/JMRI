@@ -26,7 +26,8 @@
 <h1>
 JMRI: Simple Signal Logic Example
 </h1>
-<b>Don't use the Simple Signal Logic (SSL) Tool when you have already built Signal Masts and the more advanced Signal Mast Logic in the same Panel/Configuration file.</b><br>
+<p class="important">Don't use the Simple Signal Logic (SSL) Tool when you have already built Signal Masts and the more advanced Signal Mast Logic in the same Panel/Configuration file.</p>
+<p>
 This page provides an example of using the JMRI <a href="../../../package/jmri/jmrit/blockboss/BlockBossFrame.shtml">Simple Signal Logic</a> 
  (in short: SSL) to control Signals Heads connected to a Digitrax SE8c board. This also works for 
 other types of <i>single head</i> hardware signals, including LEDs connected to stationary decoders, C/MRI

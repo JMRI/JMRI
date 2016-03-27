@@ -10,7 +10,6 @@ import junit.framework.TestSuite;
  * Tests for the TrainCommon class 
  *
  * @author Paul Bender Copyright (C) 2015
- * @version $Revision$
  */
 public class TrainCommonTest extends OperationsTestCase {
 

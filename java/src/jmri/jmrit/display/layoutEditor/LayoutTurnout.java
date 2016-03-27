@@ -313,17 +313,12 @@ public class LayoutTurnout {
         }
         rotateCoords(rot);
         // adjust size of new turnout
-        Point2D pt = new Point2D.Double(round(dispB.getX() * xFactor),
-                round(dispB.getY() * yFactor));
+        Point2D pt = new Point2D.Double(Math.round(dispB.getX() * xFactor),
+                Math.round(dispB.getY() * yFactor));
         dispB = pt;
-        pt = new Point2D.Double(round(dispC.getX() * xFactor),
-                round(dispC.getY() * yFactor));
+        pt = new Point2D.Double(Math.round(dispC.getX() * xFactor),
+                Math.round(dispC.getY() * yFactor));
         dispC = pt;
-    }
-
-    private double round(double x) {
-        int i = (int) (x + 0.5);
-        return i;
     }
 
     protected void rotateCoords(double rot) {
@@ -1299,15 +1294,15 @@ public class LayoutTurnout {
         double lenC = Math.sqrt((cX * cX) + (cY * cY));
         double distBC = Math.sqrt(((bX - cX) * (bX - cX)) + ((bY - cY) * (bY - cY)));
         if ((type == LH_TURNOUT) || (type == RH_TURNOUT)) {
-            layoutEditor.setTurnoutBX(round(lenB + 0.1));
+            layoutEditor.setTurnoutBX(Math.round(lenB + 0.1));
             double xc = ((bX * cX) + (bY * cY)) / lenB;
-            layoutEditor.setTurnoutCX(round(xc + 0.1));
-            layoutEditor.setTurnoutWid(round(Math.sqrt((lenC * lenC) - (xc * xc)) + 0.1));
+            layoutEditor.setTurnoutCX(Math.round(xc + 0.1));
+            layoutEditor.setTurnoutWid(Math.round(Math.sqrt((lenC * lenC) - (xc * xc)) + 0.1));
         } else if (type == WYE_TURNOUT) {
             double xx = Math.sqrt((lenB * lenB) - (0.25 * (distBC * distBC)));
-            layoutEditor.setTurnoutBX(round(xx + 0.1));
-            layoutEditor.setTurnoutCX(round(xx + 0.1));
-            layoutEditor.setTurnoutWid(round(distBC + 0.1));
+            layoutEditor.setTurnoutBX(Math.round(xx + 0.1));
+            layoutEditor.setTurnoutCX(Math.round(xx + 0.1));
+            layoutEditor.setTurnoutWid(Math.round(distBC + 0.1));
         } else {
             if (version == 2) {
                 double aX = pointA.getX() / layoutEditor.getXScale();
@@ -1319,13 +1314,13 @@ public class LayoutTurnout {
                 double lenAB = Math.sqrt(((bX - aX) * (bX - aX)) + ((bY - aY) * (bY - aY)));
                 if (type == DOUBLE_XOVER) {
                     double lenBC = Math.sqrt(((bX - cX) * (bX - cX)) + ((bY - cY) * (bY - cY)));
-                    layoutEditor.setXOverLong(round(lenAB / 2)); //set to half to be backwardly compatible
-                    layoutEditor.setXOverHWid(round(lenBC / 2));
-                    layoutEditor.setXOverShort(round((0.5 * lenAB) / 2));
+                    layoutEditor.setXOverLong(Math.round(lenAB / 2)); //set to half to be backwardly compatible
+                    layoutEditor.setXOverHWid(Math.round(lenBC / 2));
+                    layoutEditor.setXOverShort(Math.round((0.5 * lenAB) / 2));
                 } else if (type == RH_XOVER) {
                     lenAB = lenAB / 3;
-                    layoutEditor.setXOverShort(round(lenAB));
-                    layoutEditor.setXOverLong(round(lenAB * 2));
+                    layoutEditor.setXOverShort(Math.round(lenAB));
+                    layoutEditor.setXOverLong(Math.round(lenAB * 2));
                     double opp = (aY - bY);
                     double ang = Math.asin(opp / (lenAB * 3));
                     opp = Math.sin(ang) * lenAB;
@@ -1333,13 +1328,13 @@ public class LayoutTurnout {
                     double adj = Math.cos(ang) * lenAB;
                     bX = bX + adj;
                     double lenBC = Math.sqrt(((bX - cX) * (bX - cX)) + ((bY - cY) * (bY - cY)));
-                    layoutEditor.setXOverHWid(round(lenBC / 2));
+                    layoutEditor.setXOverHWid(Math.round(lenBC / 2));
 
                 } else if (type == LH_XOVER) {
                     double dY = pointD.getY() / layoutEditor.getYScale();
                     lenAB = lenAB / 3;
-                    layoutEditor.setXOverShort(round(lenAB));
-                    layoutEditor.setXOverLong(round(lenAB * 2));
+                    layoutEditor.setXOverShort(Math.round(lenAB));
+                    layoutEditor.setXOverLong(Math.round(lenAB * 2));
                     double opp = (dY - cY);
                     double ang = Math.asin(opp / (lenAB * 3)); //Lenght of AB should be the same as CD
                     opp = Math.sin(ang) * lenAB;
@@ -1347,25 +1342,25 @@ public class LayoutTurnout {
                     double adj = Math.cos(ang) * lenAB;
                     cX = cX + adj;
                     double lenBC = Math.sqrt(((bX - cX) * (bX - cX)) + ((bY - cY) * (bY - cY)));
-                    layoutEditor.setXOverHWid(round(lenBC / 2));
+                    layoutEditor.setXOverHWid(Math.round(lenBC / 2));
                 }
             } else if (type == DOUBLE_XOVER) {
                 double lng = Math.sqrt((lenB * lenB) - (0.25 * (distBC * distBC)));
-                layoutEditor.setXOverLong(round(lng + 0.1));
-                layoutEditor.setXOverHWid(round((0.5 * distBC) + 0.1));
-                layoutEditor.setXOverShort(round((0.5 * lng) + 0.1));
+                layoutEditor.setXOverLong(Math.round(lng + 0.1));
+                layoutEditor.setXOverHWid(Math.round((0.5 * distBC) + 0.1));
+                layoutEditor.setXOverShort(Math.round((0.5 * lng) + 0.1));
             } else if (type == RH_XOVER) {
                 double distDC = Math.sqrt(((bX + cX) * (bX + cX)) + ((bY + cY) * (bY + cY)));
-                layoutEditor.setXOverShort(round((0.25 * distDC) + 0.1));
-                layoutEditor.setXOverLong(round((0.75 * distDC) + 0.1));
+                layoutEditor.setXOverShort(Math.round((0.25 * distDC) + 0.1));
+                layoutEditor.setXOverLong(Math.round((0.75 * distDC) + 0.1));
                 double hwid = Math.sqrt((lenC * lenC) - (0.5625 * distDC * distDC));
-                layoutEditor.setXOverHWid(round(hwid + 0.1));
+                layoutEditor.setXOverHWid(Math.round(hwid + 0.1));
             } else if (type == LH_XOVER) {
                 double distDC = Math.sqrt(((bX + cX) * (bX + cX)) + ((bY + cY) * (bY + cY)));
-                layoutEditor.setXOverShort(round((0.25 * distDC) + 0.1));
-                layoutEditor.setXOverLong(round((0.75 * distDC) + 0.1));
+                layoutEditor.setXOverShort(Math.round((0.25 * distDC) + 0.1));
+                layoutEditor.setXOverLong(Math.round((0.75 * distDC) + 0.1));
                 double hwid = Math.sqrt((lenC * lenC) - (0.0625 * distDC * distDC));
-                layoutEditor.setXOverHWid(round(hwid + 0.1));
+                layoutEditor.setXOverHWid(Math.round(hwid + 0.1));
             }
         }
     }
@@ -1737,24 +1732,24 @@ public class LayoutTurnout {
     }
 
     public void scaleCoords(float xFactor, float yFactor) {
-        Point2D pt = new Point2D.Double(round(center.getX() * xFactor),
-                round(center.getY() * yFactor));
+        Point2D pt = new Point2D.Double(Math.round(center.getX() * xFactor),
+                Math.round(center.getY() * yFactor));
         center = pt;
         if (version == 2) {
-            pointA = new Point2D.Double(round(pointA.getX() * xFactor),
-                    round(pointA.getY() * yFactor));
-            pointB = new Point2D.Double(round(pointB.getX() * xFactor),
-                    round(pointB.getY() * yFactor));
-            pointC = new Point2D.Double(round(pointC.getX() * xFactor),
-                    round(pointC.getY() * yFactor));
-            pointD = new Point2D.Double(round(pointD.getX() * xFactor),
-                    round(pointD.getY() * yFactor));
+            pointA = new Point2D.Double(Math.round(pointA.getX() * xFactor),
+                    Math.round(pointA.getY() * yFactor));
+            pointB = new Point2D.Double(Math.round(pointB.getX() * xFactor),
+                    Math.round(pointB.getY() * yFactor));
+            pointC = new Point2D.Double(Math.round(pointC.getX() * xFactor),
+                    Math.round(pointC.getY() * yFactor));
+            pointD = new Point2D.Double(Math.round(pointD.getX() * xFactor),
+                    Math.round(pointD.getY() * yFactor));
         } else {
-            pt = new Point2D.Double(round(dispB.getX() * xFactor),
-                    round(dispB.getY() * yFactor));
+            pt = new Point2D.Double(Math.round(dispB.getX() * xFactor),
+                    Math.round(dispB.getY() * yFactor));
             dispB = pt;
-            pt = new Point2D.Double(round(dispC.getX() * xFactor),
-                    round(dispC.getY() * yFactor));
+            pt = new Point2D.Double(Math.round(dispC.getX() * xFactor),
+                    Math.round(dispC.getY() * yFactor));
             dispC = pt;
         }
     }

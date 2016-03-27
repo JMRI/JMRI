@@ -39,9 +39,9 @@ public class XpaTurnout extends AbstractTurnout {
     protected void forwardCommandChangeToLayout(int s) {
         XpaMessage m = null;
         // sort out states
-        if ((s & Turnout.CLOSED) > 0) {
+        if ((s & Turnout.CLOSED) != 0) {
             // first look for the double case, which we can't handle
-            if ((s & Turnout.THROWN) > 0) {
+            if ((s & Turnout.THROWN) != 0) {
                 // this is the disaster case!
                 log.error("Cannot command both CLOSED and THROWN " + s);
                 return;
@@ -53,10 +53,7 @@ public class XpaTurnout extends AbstractTurnout {
             // send a THROWN command
             m = XpaMessage.getSwitchReverseMsg(_number);
         }
-        if (m != null) {
-            XpaTrafficController.instance().sendXpaMessage(m, null);
-        }
-
+        XpaTrafficController.instance().sendXpaMessage(m, null);
     }
 
     protected void turnoutPushbuttonLockout(boolean _pushButtonLockout) {

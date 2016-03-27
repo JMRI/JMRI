@@ -11,6 +11,7 @@ package jmri.jmrix.loconet.Intellibox;
  */
 public class IbxConnectionTypeList implements jmri.jmrix.ConnectionTypeList {
 
+    @Override
     public String[] getAvailableProtocolClasses() {
         String[] masterList = new jmri.jmrix.loconet.LnConnectionTypeList().getAvailableProtocolClasses();
 
@@ -22,6 +23,12 @@ public class IbxConnectionTypeList implements jmri.jmrix.ConnectionTypeList {
             x++;
         }
         return tempList;
+    }
+
+    @Override
+    public String[] getManufacturers() {
+        // does not appear to be used, so return class name as placeholder
+        return new String[]{IbxConnectionTypeList.class.getCanonicalName()};
     }
 
 }

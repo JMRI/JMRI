@@ -278,7 +278,11 @@ public class NodeConfigFrame extends jmri.jmrix.ieee802154.swing.nodeconfig.Node
     public void discoverButtonActionPerformed() {
         // call the node discovery code in the node manager.
         ((XBeeConnectionMemo) xtc.getAdapterMemo()).getXBeeNodeManager().startNodeDiscovery();
-        initAddressBoxes();
+
+        // provide user feedback
+        statusText1.setText(rb.getString("FeedBackDiscover"));
+        errorInStatus1 = true;
+        resetNotes2();
     }
 
     /**

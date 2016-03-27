@@ -1,4 +1,3 @@
-// EliteXNetTurnoutManagerTest.java
 package jmri.jmrix.lenz.hornbyelite;
 
 import java.util.ArrayList;
@@ -18,7 +17,6 @@ import org.slf4j.LoggerFactory;
  * Tests for the jmri.jmrix.lenz.hornbyelite.EliteXNetTurnoutManager class.
  *
  * @author	Bob Jacobsen Copyright 2004
- * @version $Revision$
  */
 public class EliteXNetTurnoutManagerTest extends jmri.managers.AbstractTurnoutMgrTest {
 

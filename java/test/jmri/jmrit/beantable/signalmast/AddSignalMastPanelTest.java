@@ -1,4 +1,3 @@
-// AddSignalMastPanelTest.java
 package jmri.jmrit.beantable.signalmast;
 
 import jmri.implementation.SignalSystemTestUtil;

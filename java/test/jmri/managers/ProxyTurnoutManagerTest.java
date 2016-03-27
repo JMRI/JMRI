@@ -1,4 +1,3 @@
-// ProxyTurnoutManagerTest.java
 package jmri.managers;
 
 import java.beans.PropertyChangeListener;

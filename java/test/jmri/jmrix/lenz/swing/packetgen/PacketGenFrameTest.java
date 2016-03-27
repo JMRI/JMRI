@@ -1,4 +1,3 @@
-// PacketGenFrameTest.java
 package jmri.jmrix.lenz.swing.packetgen;
 
 import jmri.jmrix.AbstractMRMessage;

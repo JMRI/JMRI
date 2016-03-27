@@ -1,4 +1,3 @@
-// DefaultLogixManager.java
 package jmri.managers;
 
 import java.text.DecimalFormat;
@@ -23,7 +22,6 @@ import org.slf4j.LoggerFactory;
  * system name, then there is a capital C and a number.
  *
  * @author Dave Duchamp Copyright (C) 2007
- * @version	$Revision$
  */
 public class DefaultLogixManager extends AbstractManager
         implements LogixManager, java.beans.PropertyChangeListener {
@@ -216,5 +214,3 @@ public class DefaultLogixManager extends AbstractManager
 
     private final static Logger log = LoggerFactory.getLogger(DefaultLogixManager.class.getName());
 }
-
-/* @(#)DefaultLogixManager.java */

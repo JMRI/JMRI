@@ -1,4 +1,3 @@
-// ManagerDefaultSelector.java
 package jmri.managers;
 
 import java.beans.PropertyChangeEvent;
@@ -19,7 +18,7 @@ import jmri.ThrottleManager;
 import jmri.jmrix.SystemConnectionMemo;
 import jmri.profile.Profile;
 import jmri.profile.ProfileUtils;
-import jmri.spi.AbstractPreferencesProvider;
+import jmri.util.prefs.AbstractPreferencesProvider;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -39,7 +38,6 @@ import org.slf4j.LoggerFactory;
  * <P>
  * @author	Bob Jacobsen Copyright (C) 2010
  * @author Randall Wood Copyright (C) 2015
- * @version	$Revision$
  * @since 2.9.4
  */
 public class ManagerDefaultSelector extends AbstractPreferencesProvider {
@@ -249,4 +247,3 @@ public class ManagerDefaultSelector extends AbstractPreferencesProvider {
     private final static Logger log = LoggerFactory.getLogger(ManagerDefaultSelector.class.getName());
 }
 
-/* @(#)ManagerDefaultSelector.java */

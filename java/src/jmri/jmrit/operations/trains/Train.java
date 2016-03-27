@@ -51,6 +51,7 @@ import org.slf4j.LoggerFactory;
  * @author Rodney Black Copyright (C) 2011
  * @version $Revision$
  */
+@edu.umd.cs.findbugs.annotations.SuppressFBWarnings(value = "BC_UNCONFIRMED_CAST_OF_RETURN_VALUE", justification = "CarManager only provides Car Objects")
 public class Train implements java.beans.PropertyChangeListener {
     /*
      * WARNING DO NOT LOAD CAR OR ENGINE MANAGERS WHEN Train.java IS CREATED IT
@@ -1617,7 +1618,7 @@ public class Train implements java.beans.PropertyChangeListener {
                         &&
                         !skipsLocation(rLoc.getId())
                         &&
-                        ((car.getLocation().getTrainDirections() & rLoc.getTrainDirection()) > 0 || isLocalSwitcher())) {
+                        ((car.getLocation().getTrainDirections() & rLoc.getTrainDirection()) != 0 || isLocalSwitcher())) {
                     if (car.getTrack() != null) {
                         if (((car.getTrack().getTrainDirections() & rLoc.getTrainDirection()) == 0 && !isLocalSwitcher())
                                 ||
@@ -1664,7 +1665,7 @@ public class Train implements java.beans.PropertyChangeListener {
                                 &&
                                 !skipsLocation(rldest.getId())
                                 &&
-                                ((car.getDestination().getTrainDirections() & rldest.getTrainDirection()) > 0 || isLocalSwitcher())
+                                ((car.getDestination().getTrainDirections() & rldest.getTrainDirection()) != 0 || isLocalSwitcher())
                                 &&
                                 (!Setup.isCheckCarDestinationEnabled() || car.getTrack() == null || car.getTrack()
                                         .acceptsDestination(car.getDestination()))) {
@@ -1961,11 +1962,10 @@ public class Train implements java.beans.PropertyChangeListener {
         if (route != null) {
             for (RouteLocation rl : route.getLocationsBySequenceList()) {
                 for (RollingStock rs : CarManager.instance().getList(this)) {
-                    Car car = (Car) rs;
-                    if (car.getRouteLocation() == rl) {
+                    if (rs.getRouteLocation() == rl) {
                         number++;
                     }
-                    if (car.getRouteDestination() == rl) {
+                    if (rs.getRouteDestination() == rl) {
                         number--;
                     }
                 }
@@ -2031,21 +2031,19 @@ public class Train implements java.beans.PropertyChangeListener {
         if (route != null) {
             for (RouteLocation rl : route.getLocationsBySequenceList()) {
                 for (RollingStock rs : EngineManager.instance().getList(this)) {
-                    Engine eng = (Engine) rs;
-                    if (eng.getRouteLocation() == rl) {
-                        length += eng.getTotalLength();
+                    if (rs.getRouteLocation() == rl) {
+                        length += rs.getTotalLength();
                     }
-                    if (eng.getRouteDestination() == rl) {
-                        length += -eng.getTotalLength();
+                    if (rs.getRouteDestination() == rl) {
+                        length += -rs.getTotalLength();
                     }
                 }
                 for (RollingStock rs : CarManager.instance().getList(this)) {
-                    Car car = (Car) rs;
-                    if (car.getRouteLocation() == rl) {
-                        length += car.getTotalLength();
+                    if (rs.getRouteLocation() == rl) {
+                        length += rs.getTotalLength();
                     }
-                    if (car.getRouteDestination() == rl) {
-                        length += -car.getTotalLength();
+                    if (rs.getRouteDestination() == rl) {
+                        length += -rs.getTotalLength();
                     }
                 }
                 if (rl == routeLocation) {
@@ -2071,18 +2069,17 @@ public class Train implements java.beans.PropertyChangeListener {
         if (route != null) {
             for (RouteLocation rl : route.getLocationsBySequenceList()) {
                 for (RollingStock rs : EngineManager.instance().getList(this)) {
-                    Engine eng = (Engine) rs;
-                    if (eng.getRouteLocation() == rl) {
-                        weight += eng.getAdjustedWeightTons();
+                    if (rs.getRouteLocation() == rl) {
+                        weight += rs.getAdjustedWeightTons();
                     }
-                    if (eng.getRouteDestination() == rl) {
-                        weight += -eng.getAdjustedWeightTons();
+                    if (rs.getRouteDestination() == rl) {
+                        weight += -rs.getAdjustedWeightTons();
                     }
                 }
                 for (RollingStock rs : CarManager.instance().getList(this)) {
                     Car car = (Car) rs;
                     if (car.getRouteLocation() == rl) {
-                        weight += car.getAdjustedWeightTons();
+                        weight += car.getAdjustedWeightTons(); // weight depends on car load
                     }
                     if (car.getRouteDestination() == rl) {
                         weight += -car.getAdjustedWeightTons();
@@ -2778,12 +2775,17 @@ public class Train implements java.beans.PropertyChangeListener {
     /**
      * Set true whenever the train's manifest has been modified. For example
      * adding or removing a car from a train, or changing the manifest format.
+     * Once the manifest has been regenerated (modified == false), the old
+     * status for the train is restored.
      * 
      * @param modified
      */
     public void setModified(boolean modified) {
-        if (!isBuilt())
+        log.debug("Set modified {}", modified);
+        if (!isBuilt()) {
+            _modified = false;
             return; // there isn't a manifest to modify
+        }
         boolean old = _modified;
         _modified = modified;
         if (modified) {
@@ -2799,8 +2801,7 @@ public class Train implements java.beans.PropertyChangeListener {
             } else {
                 setStatusCode(getOldStatusCode()); // restore previous train status
             }
-            setDirtyAndFirePropertyChange(TRAIN_MODIFIED_CHANGED_PROPERTY, old ? "true" : "false", modified ? "true" // NOI18N
-            : "false"); // NOI18N
+            setDirtyAndFirePropertyChange(TRAIN_MODIFIED_CHANGED_PROPERTY, old, modified); // NOI18N
         }
     }
 
@@ -2877,8 +2878,17 @@ public class Train implements java.beans.PropertyChangeListener {
     /**
      * Build this train. Creates a train manifest.
      */
-    public boolean build() {
+    public synchronized boolean build() {
         reset();
+        // check to see if any other trains are building
+        while (TrainManager.instance().isAnyTrainBuilding()) {
+            try {
+                wait(100); // 100 msec
+            } catch (InterruptedException e) {
+                // TODO Auto-generated catch block
+                e.printStackTrace();
+            }
+        }
         // run before build scripts
         runScripts(getBuildScripts());
         TrainBuilder tb = new TrainBuilder();
@@ -2910,19 +2920,17 @@ public class Train implements java.beans.PropertyChangeListener {
                     log.error("Problem with script: {}", scriptPathname);
                 }
             }
-            // need to wait for scripts to complete or 2 seconds maximum
+            // need to wait for scripts to complete or 4 seconds maximum
             int count = 0;
             while (root.activeCount() > numberOfThreads) {
-                synchronized (this) {
-                    log.debug("Number of active threads: {}, at start: {}", root.activeCount(), numberOfThreads);
-                    try {
-                        wait(20);
-                    } catch (InterruptedException e) {
-                        Thread.currentThread().interrupt(); // retain if needed later
-                    }
-                    if (count++ > 100) {
-                        break; // 2 seconds maximum 20*100 = 2000
-                    }
+                log.debug("Number of active threads: {}, at start: {}", root.activeCount(), numberOfThreads);
+                try {
+                    wait(40);
+                } catch (InterruptedException e) {
+                    Thread.currentThread().interrupt(); // retain if needed later
+                }
+                if (count++ > 100) {
+                    break; // 4 seconds maximum 40*100 = 4000
                 }
             }
             setStatusCode(getOldStatusCode());
@@ -3486,6 +3494,7 @@ public class Train implements java.beans.PropertyChangeListener {
         setBuildFailed(false);
         setBuildFailedMessage(NONE);
         setPrinted(false);
+        setModified(false);
         // remove cars and engines from this train via property change
         setStatusCode(CODE_TRAIN_RESET);
         // remove train icon
@@ -4206,7 +4215,7 @@ public class Train implements java.beans.PropertyChangeListener {
     }
 
     public void propertyChange(java.beans.PropertyChangeEvent e) {
-        if (Control.showProperty) {
+        if (Control.SHOW_PROPERTY) {
             log.debug("Train ({}) sees property change: ({}) old: ({}) new: ({})",
                     getName(), e.getPropertyName(), e.getOldValue(), e.getNewValue());
         }

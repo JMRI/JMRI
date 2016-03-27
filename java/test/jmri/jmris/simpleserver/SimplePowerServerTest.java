@@ -10,7 +10,6 @@ import junit.framework.TestSuite;
  * Tests for the jmri.jmris.simpleserver.SimplePowerServer class
  *
  * @author Paul Bender
- * @version $Revision$
  */
 public class SimplePowerServerTest extends TestCase {
 

@@ -170,7 +170,7 @@ public class EditableList<E> extends JList<E> implements CellEditorListener {
 
         @Override
         public void propertyChange(PropertyChangeEvent ev) {
-            if (!isEditing() || getClientProperty("terminateEditOnFocusLost") != Boolean.TRUE) {   //NOI18N
+            if (!isEditing() || !getClientProperty("terminateEditOnFocusLost").equals(Boolean.TRUE) ) {   //NOI18N
                 return;
             }
 

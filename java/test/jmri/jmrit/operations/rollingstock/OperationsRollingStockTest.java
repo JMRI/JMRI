@@ -1,4 +1,3 @@
-// OperationsRollingStockTest.java
 package jmri.jmrit.operations.rollingstock;
 
 import jmri.jmrit.operations.OperationsTestCase;
@@ -81,6 +80,8 @@ public class OperationsRollingStockTest extends OperationsTestCase {
         } catch(java.lang.NullPointerException npe) {
            Assert.fail("Null Pointer Exception while executing Xml Element Constructor");
         }
+        
+        jmri.util.JUnitAppender.assertErrorMessage("Tag 12345 Not Found");
     }
 
 
@@ -140,8 +141,7 @@ public class OperationsRollingStockTest extends OperationsTestCase {
         RollingStock rs1 = new RollingStock("TESTROAD", "TESTNUMBER1");
         Assert.assertEquals("RollingStock Road", "TESTROAD", rs1.getRoadName());
         Assert.assertEquals("RollingStock Number", "TESTNUMBER1", rs1.getNumber());
-
-        Assert.assertEquals("RollingStock Constant LOCATION_CHANGED_PROPERTY", "rolling stock location", RollingStock.LOCATION_CHANGED_PROPERTY);
+        
         Assert.assertEquals("RollingStock Constant TRACK_CHANGED_PROPERTY", "rolling stock track location", RollingStock.TRACK_CHANGED_PROPERTY);
         Assert.assertEquals("RollingStock Constant DESTINATION_CHANGED_PROPERTY", "rolling stock destination", RollingStock.DESTINATION_CHANGED_PROPERTY);
         Assert.assertEquals("RollingStock Constant DESTINATIONTRACK_CHANGED_PROPERTY", "rolling stock track destination", RollingStock.DESTINATION_TRACK_CHANGED_PROPERTY);
@@ -231,11 +231,16 @@ public class OperationsRollingStockTest extends OperationsTestCase {
         testtrack1.deleteRoadName("TESTROAD");
         testresult = rs1.setLocation(testlocation1, testtrack1);
         Assert.assertEquals("RollingStock Set null excluderoads", "okay", testresult);
+        
+        // Normally logged message
+        jmri.util.JUnitAppender.assertErrorMessage("Rolling stock (TESTROAD TESTNUMBER1) length () is not valid");
+        
     }
 
     // Ensure minimal setup for log4J
     @Override
     protected void setUp() throws Exception {
+        apps.tests.Log4JFixture.setUp();
         super.setUp();
     }
 
@@ -258,6 +263,7 @@ public class OperationsRollingStockTest extends OperationsTestCase {
     // The minimal setup for log4J
     @Override
     protected void tearDown() throws Exception {
-       super.tearDown();
+        super.tearDown();
+        apps.tests.Log4JFixture.tearDown();
     }
 }

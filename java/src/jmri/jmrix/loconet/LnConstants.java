@@ -1,4 +1,3 @@
-// LnConstants.java
 package jmri.jmrix.loconet;
 
 /**
@@ -90,7 +89,6 @@ package jmri.jmrix.loconet;
  * @author  Ron W. Auld
  * @author  John Kabat
  * @author  Alain Le Marchand
- * @version $Revision$
  *
  */
 public final class LnConstants {
@@ -406,7 +404,7 @@ public final class LnConstants {
                                                                                                                                                                                                                                                 : (opcode == OPC_IMM_PACKET_2) ? "OPC_IMM_PACKET_2"
                                                                                                                                                                                                                                                         : (opcode == OPC_WR_SL_DATA) ? "OPC_WR_SL_DATA"
                                                                                                                                                                                                                                                                 : (opcode == OPC_WR_SL_DATA_EXP) ? "OPC_WR_SL_DATA_EXP"
-                                                                                                                                                                                                                                                                        : (opcode == OPC_ALM_WRITE) ? "OPC_ALM_WRITE"
+                                                                                                                                                                                                                                                                        /* : (opcode == OPC_ALM_WRITE) ? "OPC_ALM_WRITE" */ // duplicated prior line
                                                                                                                                                                                                                                                                                 : "<unknown>";
     }
 
@@ -617,6 +615,3 @@ public final class LnConstants {
     public final static int RE_IB2_SPECIAL_F28_MASK = 0x40;
 
 }
-
-
-/* @(#)LnConstants.java */

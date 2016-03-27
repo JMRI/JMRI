@@ -41,10 +41,10 @@ public class CommonTurnoutOperationConfig extends TurnoutOperationConfig {
         Box vbox = Box.createVerticalBox();
         Box hbox1 = Box.createHorizontalBox();
         Box hbox2 = Box.createHorizontalBox();
-        vbox.add(hbox1);
-        vbox.add(hbox2);
+        vbox.add(hbox2); //Show TimesToTry first, keeping to the order of the help text at right
+        vbox.add(hbox1); //Show Interval next
         vbox.add(Box.createVerticalGlue());
-        hbox1.add(new JLabel("Interval:     "));
+        hbox1.add(new JLabel(Bundle.getMessage("Interval")));
         hbox1.add(Box.createHorizontalGlue());
         intervalSpinner.setMinimumSize(new Dimension(100, 20));
 
@@ -54,7 +54,7 @@ public class CommonTurnoutOperationConfig extends TurnoutOperationConfig {
                         CommonTurnoutOperation.intervalStepSize)); // val, min, max, step
 
         hbox1.add(intervalSpinner);
-        hbox2.add(new JLabel("Times to try:   "));
+        hbox2.add(new JLabel(Bundle.getMessage("TimesToTry")));
         hbox2.add(Box.createHorizontalGlue());
         maxTriesSpinner.setMinimumSize(new Dimension(100, 20));
 

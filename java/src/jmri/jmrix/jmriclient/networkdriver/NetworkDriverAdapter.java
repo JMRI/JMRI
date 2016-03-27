@@ -54,7 +54,7 @@ public class NetworkDriverAdapter extends JMRIClientPortController {
         if (mInstance == null) {
             // create a new one and initialize
             NetworkDriverAdapter m = new NetworkDriverAdapter();
-            m.setManufacturer(jmri.jmrix.DCCManufacturerList.JMRI);
+            m.setManufacturer(jmri.jmrix.jmriclient.JMRIClientConnectionTypeList.JMRI);
 
             // and set as instance
             mInstance = m;

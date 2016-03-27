@@ -11,7 +11,6 @@ import junit.framework.TestSuite;
  * Description:	tests for the jmri.jmrix.rfid.RfidSensor class
  *
  * @author	Paul Bender
- * @version $Revision$
  */
 public class RfidSensorTest extends TestCase {
 

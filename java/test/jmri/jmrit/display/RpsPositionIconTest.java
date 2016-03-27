@@ -1,4 +1,3 @@
-// RpsPositionIconTest.java
 package jmri.jmrit.display;
 
 import javax.swing.JButton;

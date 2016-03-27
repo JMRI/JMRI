@@ -1,4 +1,3 @@
-// PackageTest.java
 package jmri.jmrix.can.adapters;
 
 import junit.framework.Test;
@@ -9,7 +8,6 @@ import junit.framework.TestSuite;
  * Tests for the jmri.jmrix.can.adapters package.
  *
  * @author Bob Jacobsen Copyright 2009
- * @version $Revision$
  */
 public class PackageTest extends TestCase {
 

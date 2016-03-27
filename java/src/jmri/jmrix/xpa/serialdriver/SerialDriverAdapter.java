@@ -31,7 +31,7 @@ public class SerialDriverAdapter extends XpaPortController implements jmri.jmrix
         super(new XpaSystemConnectionMemo());
         option1Name = "ModemInitString";
         options.put(option1Name, new Option("Modem Initilization String : ", new String[]{"ATX0E0"}));
-        this.manufacturerName = jmri.jmrix.DCCManufacturerList.LENZ;
+        this.manufacturerName = jmri.jmrix.lenz.LenzConnectionTypeList.LENZ;
     }
 
     SerialPort activeSerialPort = null;
@@ -74,7 +74,13 @@ public class SerialDriverAdapter extends XpaPortController implements jmri.jmrix
             int count = serialStream.available();
             log.debug("input stream shows " + count + " bytes available");
             while (count > 0) {
-                serialStream.skip(count);
+                long read = serialStream.skip(count);
+                if(read<count) {
+                   log.debug("skipped " + read + " bytes when " + count +
+                             "bytes reported available");
+                }
+                // double check to see if the port still reports
+                // bytes available.
                 count = serialStream.available();
             }
 
@@ -165,14 +171,6 @@ public class SerialDriverAdapter extends XpaPortController implements jmri.jmrix
 
     private boolean opened = false;
     InputStream serialStream = null;
-
-    static public SerialDriverAdapter instance() {
-        if (mInstance == null) {
-            mInstance = new SerialDriverAdapter();
-        }
-        return mInstance;
-    }
-    static SerialDriverAdapter mInstance = null;
 
     private final static Logger log = LoggerFactory.getLogger(SerialDriverAdapter.class.getName());
 

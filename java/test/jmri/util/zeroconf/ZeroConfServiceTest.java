@@ -1,4 +1,3 @@
-// ZeroConfServiceTest.java
 package jmri.util.zeroconf;
 
 import junit.framework.Assert;

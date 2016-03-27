@@ -1,4 +1,3 @@
-// DefaultConditionalManager.java
 package jmri.managers;
 
 import java.util.Iterator;
@@ -29,7 +28,6 @@ import org.slf4j.LoggerFactory;
  *
  * @author Dave Duchamp Copyright (C) 2007
  * @author Pete Cresman Copyright (C) 2009
- * @version	$Revision$
  */
 public class DefaultConditionalManager extends AbstractManager
         implements ConditionalManager, java.beans.PropertyChangeListener {
@@ -229,5 +227,3 @@ public class DefaultConditionalManager extends AbstractManager
 
     private final static Logger log = LoggerFactory.getLogger(DefaultConditionalManager.class.getName());
 }
-
-/* @(#)DefaultConditionalManager.java */

@@ -26,15 +26,14 @@ import org.slf4j.LoggerFactory;
  */
 public class SimpleServer extends JmriServer {
 
-    private static JmriServer _instance = null;
     static ResourceBundle rb = ResourceBundle.getBundle("jmri.jmris.simpleserver.SimpleServerBundle");
 
     public static JmriServer instance() {
-        if (_instance == null) {
+        if (InstanceManager.getDefault(SimpleServer.class) == null) {
             int port = Integer.parseInt(rb.getString("SimpleServerPort"));
-            _instance = new SimpleServer(port);
+            InstanceManager.store(new SimpleServer(),SimpleServer.class);
         }
-        return _instance;
+        return InstanceManager.getDefault(SimpleServer.class);
     }
 
     // Create a new server using the default port
@@ -44,6 +43,7 @@ public class SimpleServer extends JmriServer {
 
     public SimpleServer(int port) {
         super(port);
+        InstanceManager.setDefault(SimpleServer.class,this);
         log.info("JMRI SimpleServer started on port " + port);
     }
 

@@ -1,4 +1,3 @@
-// JCBHandleTest.java
 package jmri.util.swing;
 
 import junit.framework.Assert;
@@ -9,7 +8,6 @@ import junit.framework.TestSuite;
 /**
  *
  * @author	Bob Jacobsen Copyright 2014
- * @version $Revision$
  */
 public class JCBHandleTest extends TestCase {
 

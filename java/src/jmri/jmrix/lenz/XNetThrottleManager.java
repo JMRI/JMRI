@@ -37,6 +37,7 @@ public class XNetThrottleManager extends AbstractThrottleManager implements Thro
      * throttle listeners know about it.
      *
      */
+    @Override
     public void requestThrottleSetup(LocoAddress address, boolean control) {
         XNetThrottle throttle;
         if (log.isDebugEnabled()) {
@@ -54,6 +55,7 @@ public class XNetThrottleManager extends AbstractThrottleManager implements Thro
     /*
      * XPressNet based systems DO NOT use the Dispatch Function
      */
+    @Override
     public boolean hasDispatchFunction() {
         return false;
     }
@@ -62,6 +64,7 @@ public class XNetThrottleManager extends AbstractThrottleManager implements Thro
      * XPressNet based systems can have multiple throttles for the same 
      * device
      */
+    @Override
     protected boolean singleUse() {
         return false;
     }
@@ -70,6 +73,7 @@ public class XNetThrottleManager extends AbstractThrottleManager implements Thro
      * Address 100 and above is a long address
      *
      */
+    @Override
     public boolean canBeLongAddress(int address) {
         return isLongAddress(address);
     }
@@ -78,6 +82,7 @@ public class XNetThrottleManager extends AbstractThrottleManager implements Thro
      * Address 99 and below is a short address
      *
      */
+    @Override
     public boolean canBeShortAddress(int address) {
         return !isLongAddress(address);
     }
@@ -85,6 +90,7 @@ public class XNetThrottleManager extends AbstractThrottleManager implements Thro
     /**
      * Are there any ambiguous addresses (short vs long) on this system?
      */
+    @Override
     public boolean addressTypeUnique() {
         return true;
     }
@@ -101,6 +107,7 @@ public class XNetThrottleManager extends AbstractThrottleManager implements Thro
      * possible modes specifed by the DccThrottle interface XPressNet supports
      * 14,27,28 and 128 speed step modes
      */
+    @Override
     public int supportedSpeedModes() {
         return (jmri.DccThrottle.SpeedStepMode128
                 | jmri.DccThrottle.SpeedStepMode28
@@ -133,17 +140,21 @@ public class XNetThrottleManager extends AbstractThrottleManager implements Thro
     public void notifyTimeout(XNetMessage msg) {
     }
 
+    @Override
     public void releaseThrottle(jmri.DccThrottle t, jmri.ThrottleListener l) {
     }
 
+    @Override
     public boolean disposeThrottle(jmri.DccThrottle t, jmri.ThrottleListener l) {
         if (super.disposeThrottle(t, l)) {
+            if(!(t instanceof XNetThrottle)) {
+               throw new IllegalArgumentException("Attempt to dispose non-XPressNet Throttle");
+            }
             XNetThrottle lnt = (XNetThrottle) t;
             lnt.throttleDispose();
             return true;
         }
         return false;
-        //LocoNetSlot tSlot = lnt.getLocoNetSlot();
     }
 
     private final static Logger log = LoggerFactory.getLogger(XNetThrottleManager.class.getName());

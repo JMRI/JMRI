@@ -31,7 +31,7 @@ public class SerialDriverAdapter extends AcelaPortController implements jmri.jmr
 
     public SerialDriverAdapter() {
         super(new AcelaSystemConnectionMemo());
-        setManufacturer(jmri.jmrix.DCCManufacturerList.CTI);
+        setManufacturer(jmri.jmrix.acela.AcelaConnectionTypeList.CTI);
     }
 
     SerialPort activeSerialPort = null;

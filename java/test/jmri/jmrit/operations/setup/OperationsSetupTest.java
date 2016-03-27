@@ -18,7 +18,6 @@ import junit.framework.TestSuite;
  * Still to do: Backup, Control, Demo
  *
  * @author	Bob Coleman Copyright (C) 2008, 2009
- * @version $Revision$
  */
 public class OperationsSetupTest extends OperationsTestCase {
 

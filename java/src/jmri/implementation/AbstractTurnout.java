@@ -1,4 +1,3 @@
-// AbstractTurnout.java
 package jmri.implementation;
 
 import jmri.InstanceManager;
@@ -10,6 +9,8 @@ import jmri.Turnout;
 import jmri.TurnoutOperation;
 import jmri.TurnoutOperationManager;
 import jmri.TurnoutOperator;
+import jmri.implementation.SignalSpeedMap;
+
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -35,7 +36,6 @@ import org.slf4j.LoggerFactory;
  * <P>
  *
  * @author Bob Jacobsen Copyright (C) 2001, 2009
- * @version $Revision$
  */
 public abstract class AbstractTurnout extends AbstractNamedBean implements
         Turnout, java.io.Serializable, java.beans.PropertyChangeListener {
@@ -769,7 +769,7 @@ public abstract class AbstractTurnout extends AbstractNamedBean implements
             //considered normal if the speed is not a number.
         }
         try {
-            return jmri.implementation.SignalSpeedMap.getMap().getSpeed(speed);
+            return jmri.InstanceManager.getDefault(SignalSpeedMap.class).getSpeed(speed);
         } catch (Exception ex) {
             return -1;
         }
@@ -801,7 +801,7 @@ public abstract class AbstractTurnout extends AbstractNamedBean implements
                 Float.parseFloat(s);
             } catch (NumberFormatException nx) {
                 try {
-                    jmri.implementation.SignalSpeedMap.getMap().getSpeed(s);
+                    jmri.InstanceManager.getDefault(SignalSpeedMap.class).getSpeed(s);
                 } catch (Exception ex) {
                     throw new JmriException("Value of requested block speed is not valid");
                 }
@@ -828,7 +828,7 @@ public abstract class AbstractTurnout extends AbstractNamedBean implements
             //considered normal if the speed is not a number.
         }
         try {
-            return jmri.implementation.SignalSpeedMap.getMap().getSpeed(speed);
+            return jmri.InstanceManager.getDefault(SignalSpeedMap.class).getSpeed(speed);
         } catch (Exception ex) {
             return -1;
         }
@@ -860,7 +860,7 @@ public abstract class AbstractTurnout extends AbstractNamedBean implements
                 Float.parseFloat(s);
             } catch (NumberFormatException nx) {
                 try {
-                    jmri.implementation.SignalSpeedMap.getMap().getSpeed(s);
+                    jmri.InstanceManager.getDefault(SignalSpeedMap.class).getSpeed(s);
                 } catch (Exception ex) {
                     throw new JmriException("Value of requested turnout straight speed is not valid");
                 }
@@ -885,4 +885,3 @@ public abstract class AbstractTurnout extends AbstractNamedBean implements
     private final static Logger log = LoggerFactory.getLogger(AbstractTurnout.class.getName());
 }
 
-/* @(#)AbstractTurnout.java */

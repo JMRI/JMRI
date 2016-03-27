@@ -1,4 +1,3 @@
-// ConfigXmlManagerTest.java
 package jmri.configurexml;
 
 import java.io.File;
@@ -19,7 +18,6 @@ import junit.framework.TestSuite;
  * Uses the local preferences for test files.
  *
  * @author Bob Jacobsen Copyright 2003
- * @version $Revision$
  */
 public class ConfigXmlManagerTest extends TestCase {
 

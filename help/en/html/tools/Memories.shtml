@@ -36,13 +36,11 @@ most other things will show as as string. You can type a new string value
 into a memory, or 
 <a href="../../package/jmri/jmrit/beantable/MemoryAddEdit.shtml">create a new memory variable</a>.
 
-
 <h2>Using Memories With Logix</h2>
 A Logix can test a memory for particular contents, and set the contents of 
 a memory to whatever string is needed.  This lets you use a memory as a status indicator,
 counter or just about anything else you can imagine. Because of their user
 interface, Logix generally only put string values into memory variables.
-
 
 <h2>Displaying a Memory Variable on a Panel</h2>
 The contents of a memory can be displayed on a 

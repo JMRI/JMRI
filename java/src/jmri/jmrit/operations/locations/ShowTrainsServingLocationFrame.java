@@ -30,10 +30,6 @@ import org.slf4j.LoggerFactory;
  */
 public class ShowTrainsServingLocationFrame extends OperationsFrame implements java.beans.PropertyChangeListener {
 
-    /**
-     *
-     */
-    private static final long serialVersionUID = 2234885033768829476L;
     // location
     Location _location = null;
     Track _track = null;
@@ -49,6 +45,7 @@ public class ShowTrainsServingLocationFrame extends OperationsFrame implements j
     // check boxes
     JCheckBox showAllTrainsCheckBox = new JCheckBox(Bundle.getMessage("ShowAllTrains"));
 
+    // make show all trains consistent during a session
     private static boolean isShowAllTrains = true;
 
     public ShowTrainsServingLocationFrame() {
@@ -142,9 +139,9 @@ public class ShowTrainsServingLocationFrame extends OperationsFrame implements j
                             && !train.skipsLocation(rl.getId())
                             && (typeComboBox.getSelectedItem() == null || typeComboBox.getSelectedItem().equals(NONE) || train
                             .acceptsTypeName((String) typeComboBox.getSelectedItem()))
-                            && (train.isLocalSwitcher() || (rl.getTrainDirection() & _location.getTrainDirections()) > 0)
+                            && (train.isLocalSwitcher() || (rl.getTrainDirection() & _location.getTrainDirections()) != 0)
                             && (train.isLocalSwitcher() || _track == null || ((rl.getTrainDirection() & _track
-                            .getTrainDirections()) > 0))
+                            .getTrainDirections()) != 0))
                             && (_track == null || _track.acceptsPickupTrain(train))) {
                         pickup = true;
                     }
@@ -153,9 +150,9 @@ public class ShowTrainsServingLocationFrame extends OperationsFrame implements j
                             && !train.skipsLocation(rl.getId())
                             && (typeComboBox.getSelectedItem() == null || typeComboBox.getSelectedItem().equals(NONE) || train
                             .acceptsTypeName((String) typeComboBox.getSelectedItem()))
-                            && (train.isLocalSwitcher() || (rl.getTrainDirection() & _location.getTrainDirections()) > 0)
+                            && (train.isLocalSwitcher() || (rl.getTrainDirection() & _location.getTrainDirections()) != 0)
                             && (train.isLocalSwitcher() || _track == null || ((rl.getTrainDirection() & _track
-                            .getTrainDirections()) > 0)) && (_track == null || _track.acceptsDropTrain(train))) {
+                            .getTrainDirections()) != 0)) && (_track == null || _track.acceptsDropTrain(train))) {
                         setout = true;
                     }
                     // now display results
@@ -180,7 +177,7 @@ public class ShowTrainsServingLocationFrame extends OperationsFrame implements j
         pTrains.revalidate();
     }
 
-    @edu.umd.cs.findbugs.annotations.SuppressFBWarnings(value = "ST_WRITE_TO_STATIC_FROM_INSTANCE_METHOD")
+    @edu.umd.cs.findbugs.annotations.SuppressFBWarnings(value = "ST_WRITE_TO_STATIC_FROM_INSTANCE_METHOD", justification = "GUI ease of use")
     public void checkBoxActionPerformed(java.awt.event.ActionEvent ae) {
         log.debug("check box action");
         isShowAllTrains = showAllTrainsCheckBox.isSelected();
@@ -255,7 +252,7 @@ public class ShowTrainsServingLocationFrame extends OperationsFrame implements j
     }
 
     public void propertyChange(java.beans.PropertyChangeEvent e) {
-        if (Control.showProperty) {
+        if (Control.SHOW_PROPERTY) {
             log.debug("Property change: ({}) old: ({}) new: ({})", e.getPropertyName(), e.getOldValue(), e
                     .getNewValue());
         }

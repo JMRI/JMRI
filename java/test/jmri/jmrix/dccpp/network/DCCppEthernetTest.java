@@ -1,4 +1,3 @@
-// DCCppTCPTest.java
 package jmri.jmrix.dccpp.network;
 
 import junit.framework.Test;
@@ -10,7 +9,6 @@ import junit.framework.TestSuite;
  *
  * @author Paul Bender
  * @author Mark Underwood Copyright (C) 2015
- * @version $Revision$
  */
 public class DCCppEthernetTest extends TestCase {
 

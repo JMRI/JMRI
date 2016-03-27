@@ -1,4 +1,3 @@
-// SendPacketTest.java
 package jmri.jmrit.sendpacket;
 
 import junit.framework.Assert;

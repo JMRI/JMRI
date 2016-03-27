@@ -121,10 +121,10 @@ public class ReporterTableAction extends AbstractTableAction {
 
             public String getColumnName(int col) {
                 if (col == VALUECOL) {
-                    return "Report";
+                    return Bundle.getMessage("LabelReport");
                 }
                 if (col == LASTREPORTCOL) {
-                    return "Last Report";
+                    return Bundle.getMessage("LabelLastReport");
                 }
                 return super.getColumnName(col);
             }
@@ -194,7 +194,7 @@ public class ReporterTableAction extends AbstractTableAction {
     JTextField userName = new JTextField(20);
     JComboBox<String> prefixBox = new JComboBox<String>();
     JTextField numberToAdd = new JTextField(10);
-    JCheckBox range = new JCheckBox("Add a range");
+    JCheckBox range = new JCheckBox(Bundle.getMessage("AddRangeBox"));
     JLabel sysNameLabel = new JLabel("Hardware Address");
     JLabel userNameLabel = new JLabel(Bundle.getMessage("LabelUserName"));
     String systemSelectionCombo = this.getClass().getName() + ".SystemSelected";

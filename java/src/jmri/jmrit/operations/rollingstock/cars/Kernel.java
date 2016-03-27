@@ -21,6 +21,7 @@ public class Kernel extends RollingStockGroup {
         log.debug("New Kernel ({})", name);
     }
 
+    @edu.umd.cs.findbugs.annotations.SuppressFBWarnings(value = "BC_UNCONFIRMED_CAST_OF_RETURN_VALUE", justification = "getGroup() only provides Car Objects")
     public List<Car> getCars() {
         List<Car> cars = new ArrayList<Car>();
         for (RollingStock rs : getGroup()) {
