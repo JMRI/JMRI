@@ -34,11 +34,11 @@ import org.slf4j.LoggerFactory;
  */
 public class CheckForUpdateAction extends jmri.util.swing.JmriAbstractAction {
 
-    public CheckForUpdateAction(String s, WindowInterface wi) {
+    public CheckForUpdateAction(@Nonnull String s, @Nonnull WindowInterface wi) {
         super(s, wi);
     }
 
-    public CheckForUpdateAction(String s, Icon i, WindowInterface wi) {
+    public CheckForUpdateAction(@Nonnull String s, @Nonnull Icon i, @Nonnull WindowInterface wi) {
         super(s, i, wi);
     }
 
@@ -131,7 +131,7 @@ public class CheckForUpdateAction extends jmri.util.swing.JmriAbstractAction {
 
     }
 
-    String getNumber(BufferedReader reader) throws java.io.IOException {
+    @Nonnull String getNumber(@Nonnull BufferedReader reader) throws java.io.IOException {
         String line = reader.readLine();
         line = reader.readLine();
         if (line == null) return "";
