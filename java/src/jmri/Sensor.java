@@ -1,4 +1,3 @@
-// Sensor.java
 package jmri;
 
 /**
@@ -136,6 +135,3 @@ public interface Sensor extends NamedBean {
      */
     public Reporter getReporter();
 }
-
-
-/* @(#)Sensor.java */

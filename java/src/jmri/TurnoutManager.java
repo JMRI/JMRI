@@ -1,4 +1,3 @@
-// TurnoutManager.java
 package jmri;
 
 import java.util.List;
@@ -209,5 +208,3 @@ public interface TurnoutManager extends Manager {
     public String getDefaultClosedSpeed();
 }
 
-
-/* @(#)TurnoutManager.java */

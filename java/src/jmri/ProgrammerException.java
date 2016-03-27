@@ -1,4 +1,3 @@
-// ProgrammerException.java
 package jmri;
 
 /**
@@ -22,5 +21,3 @@ public class ProgrammerException extends JmriException {
     }
 
 }
-
-/* @(#)ProgrammerException.java */

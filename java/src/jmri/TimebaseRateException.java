@@ -1,4 +1,3 @@
-// TimebaseRateException.java
 package jmri;
 
 /**
@@ -23,5 +22,3 @@ public class TimebaseRateException extends JmriException {
     }
 
 }
-
-/* @(#)TimebaseRateException.java */

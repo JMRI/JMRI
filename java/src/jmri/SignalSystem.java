@@ -1,4 +1,3 @@
-// SignalSystem.java
 package jmri;
 
 /**
@@ -72,6 +71,3 @@ public interface SignalSystem extends NamedBean {
     public float getMaximumLineSpeed();
 
 }
-
-
-/* @(#)SignalSystem.java */

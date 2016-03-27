@@ -1,4 +1,3 @@
-// Scale.java
 package jmri;
 
 /**
@@ -121,5 +120,3 @@ public class Scale {
     }
 
 }
-
-/* @(#)Scale.java */

@@ -1,4 +1,3 @@
-// ShutDownManager.java
 package jmri;
 
 /**
@@ -69,5 +68,3 @@ public interface ShutDownManager {
      */
     public Boolean shutdown();
 }
-
-/* @(#)ShutDownManager.java */

@@ -1,12 +1,8 @@
-// MultiMeter.java
-
 package jmri;
 
 import java.beans.PropertyChangeListener;
 
 /**
- * MultiMeter
- *
  * Interface for displaying (and controlling where appropriate)
  * Current, Voltage, and other status data from the layout.
  *

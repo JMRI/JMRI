@@ -1,4 +1,3 @@
-// InstanceManagerAutoDefault.java
 package jmri;
 
 /**
@@ -19,6 +18,3 @@ package jmri;
  */
 public interface InstanceManagerAutoDefault {
 }
-
-
-/* @(#)InstanceManagerAutoDefault.java */

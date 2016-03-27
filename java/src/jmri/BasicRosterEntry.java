@@ -1,6 +1,5 @@
-// BasicRosterEntry.java
 /*This interface should probably be called RosterEntry, but this would result in another class 
- with the same name refactoring of that class would be a big job and would potentially cause issue
+ with the same name; refactoring of that class would be a big job and would potentially cause issue
  with users scripts etc */
 package jmri;
 

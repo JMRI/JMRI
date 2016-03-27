@@ -1,4 +1,3 @@
-// Logix.java
 package jmri;
 
 /**
@@ -155,5 +154,3 @@ public interface Logix extends NamedBean {
      */
 	//public void getStateVariableList(ArrayList <ConditionalVariable> varList, ArrayList <int[]> triggerPair);  
 }
-
-/* @(#)Logix.java */

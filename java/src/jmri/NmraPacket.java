@@ -1,4 +1,3 @@
-// NmraPacket.java
 package jmri;
 
 import org.slf4j.Logger;
@@ -1155,6 +1154,3 @@ public class NmraPacket {
     }
     private final static Logger log = LoggerFactory.getLogger(NmraPacket.class.getName());
 }
-
-
-/* @(#)NmraPacket.java */

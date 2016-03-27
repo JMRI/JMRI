@@ -1,4 +1,3 @@
-// ConditionalManager.java
 package jmri;
 
 import java.util.List;
@@ -78,6 +77,3 @@ public interface ConditionalManager extends Manager {
      */
     void deleteConditional(Conditional c);
 }
-
-
-/* @(#)ConditionalManager.java */

@@ -1,4 +1,3 @@
-// IdTagManager.java
 package jmri;
 
 import java.util.List;
@@ -182,6 +181,3 @@ public interface IdTagManager extends Manager {
     public boolean isInitialised();
 
 }
-
-
-/* @(#)IdTagManager.java */

@@ -1,4 +1,3 @@
-// Bundle.java
 package jmri;
 
 import java.text.MessageFormat;
@@ -214,5 +213,3 @@ public class Bundle {
     //           return;
     //        }
 }
-
-/* @(#)Bundle.java */

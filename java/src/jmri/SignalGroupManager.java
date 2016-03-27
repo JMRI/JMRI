@@ -1,4 +1,3 @@
-// SignalGroupManager.java
 package jmri;
 
 import java.util.List;
@@ -43,6 +42,3 @@ public interface SignalGroupManager extends Manager {
 
     void deleteSignalGroup(SignalGroup s);
 }
-
-
-/* @(#)SignalGroupManager.java */

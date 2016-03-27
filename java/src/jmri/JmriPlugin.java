@@ -1,4 +1,3 @@
-// JmriPlugin.java
 package jmri;
 
 import javax.swing.JFrame;
@@ -29,5 +28,3 @@ public class JmriPlugin {
         //menuBar.add(menu);
     }
 }
-
-/* @(#)JmriPlugin.java */

@@ -1,4 +1,3 @@
-// Section.java
 package jmri;
 
 import java.beans.PropertyChangeListener;
@@ -2720,5 +2719,3 @@ public class Section extends AbstractNamedBean
     private final static Logger log = LoggerFactory.getLogger(Section.class.getName());
 
 }
-
-/* @(#)Section.java */

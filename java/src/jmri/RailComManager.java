@@ -1,4 +1,3 @@
-// RailComManager.java
 package jmri;
 
 /**
@@ -27,5 +26,3 @@ public interface RailComManager extends IdTagManager {
     public RailCom getIdTag(String name);
 
 }
-
-/* @(#)RailComManager.java */

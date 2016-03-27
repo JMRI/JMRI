@@ -1,4 +1,3 @@
-// ClockControl.java
 package jmri;
 
 import java.util.Date;
@@ -104,5 +103,3 @@ public interface ClockControl {
     public void initializeHardwareClock(double rate, Date now, boolean getTime);
 
 }
-
-/* @(#)ClockControl.java */

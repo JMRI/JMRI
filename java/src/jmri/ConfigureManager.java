@@ -1,4 +1,3 @@
-// ConfigureManager.java
 package jmri;
 
 import java.io.File;
@@ -210,5 +209,3 @@ public interface ConfigureManager {
 
 }
 
-
-/* @(#)ConfigureManager.java */

@@ -1,4 +1,3 @@
-// UserPreferencesManager.java
 package jmri;
 
 import java.awt.Dimension;

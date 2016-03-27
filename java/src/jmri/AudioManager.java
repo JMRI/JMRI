@@ -1,4 +1,3 @@
-// AudioManager.java
 package jmri;
 
 import java.util.List;
@@ -160,5 +159,3 @@ public interface AudioManager extends Manager {
     public void cleanUp();
 
 }
-
-/* $(#)AudioManager.java */

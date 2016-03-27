@@ -1,14 +1,12 @@
+package jmri;
+
 /**
- * SensorAddress.java
- *
- * Description:	Object to handle "user" and "system" sensor addresses
+ * Object to handle "user" and "system" sensor addresses.
  * SensorManager is primary consumer of these
  *
  * @author	Bob Jacobsen Copyright (C) 2001
  * @version
  */
-package jmri;
-
 public class SensorAddress extends Address {
 
     public SensorAddress(String system, String user) {
@@ -16,12 +14,9 @@ public class SensorAddress extends Address {
     }
 
     /**
-     * both names are the same in this ctor
+     * Both names are the same in this ctor
      */
     public SensorAddress(String name) {
         super(name);
     }
 }
-
-
-/* @(#)SensorAddress.java */

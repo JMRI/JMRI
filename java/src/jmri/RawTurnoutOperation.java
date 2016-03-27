@@ -1,6 +1,3 @@
-/**
- *
- */
 package jmri;
 
 import jmri.implementation.AbstractTurnout;

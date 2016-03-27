@@ -1,4 +1,3 @@
-// TransitSectionAction.java
 package jmri;
 
 
@@ -258,4 +257,3 @@ public class TransitSectionAction {
     }
 }
 
-/* @(#)TransitSectionAction.java */

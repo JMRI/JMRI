@@ -1,4 +1,3 @@
-// SignalAppearanceMap.java
 package jmri;
 
 import java.util.Vector;

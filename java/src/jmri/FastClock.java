@@ -1,4 +1,3 @@
-// FastClock.java
 package jmri;
 
 /**
@@ -27,4 +26,3 @@ public interface FastClock {
     // stop is handled by setting rate to zero?
 }
 
-/* @(#)FastClock.java */

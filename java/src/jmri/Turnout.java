@@ -1,4 +1,3 @@
-// Turnout.java
 package jmri;
 
 /**
@@ -435,5 +434,3 @@ public interface Turnout extends NamedBean {
     public void setStraightSpeed(String s) throws JmriException;
 
 }
-
-/* @(#)Turnout.java */

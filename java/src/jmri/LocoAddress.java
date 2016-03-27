@@ -1,4 +1,3 @@
-// LocoAddress.java
 package jmri;
 
 /**
@@ -76,6 +75,3 @@ public interface LocoAddress {
     }
 
 }
-
-
-/* @(#)LocoAddress.java */

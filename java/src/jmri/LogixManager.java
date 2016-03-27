@@ -1,4 +1,3 @@
-// LogixManager.java
 package jmri;
 
 import java.util.List;
@@ -80,6 +79,3 @@ public interface LogixManager extends Manager {
     public void setLoadDisabled(boolean s);
 
 }
-
-
-/* @(#)LogixManager.java */

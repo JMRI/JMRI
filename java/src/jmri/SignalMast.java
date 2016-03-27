@@ -1,4 +1,3 @@
-// SignalMast.java
 package jmri;
 
 import java.util.Vector;
@@ -103,4 +102,3 @@ public interface SignalMast extends NamedBean {
 
     public boolean allowUnLit();
 }
-/* @(#)SignalMast.java */

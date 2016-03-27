@@ -1,4 +1,3 @@
-// GuiLafConfigPane.java
 package jmri;
 
 /**

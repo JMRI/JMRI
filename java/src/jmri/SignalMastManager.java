@@ -1,4 +1,3 @@
-// SignalMastManager.java
 package jmri;
 
 import java.util.List;
@@ -67,6 +66,3 @@ public interface SignalMastManager extends Manager {
     public List<String> getSystemNameList();
 
 }
-
-
-/* @(#)SignalMastManager.java */

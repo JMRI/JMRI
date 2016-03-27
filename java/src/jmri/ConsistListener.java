@@ -1,4 +1,3 @@
-//  ConsistListener.java
 package jmri;
 
 import java.util.EventListener;

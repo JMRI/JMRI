@@ -1,4 +1,3 @@
-// Consist.java
 package jmri;
 
 import java.util.ArrayList;

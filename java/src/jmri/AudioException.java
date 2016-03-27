@@ -1,4 +1,3 @@
-// AudioException.java
 package jmri;
 
 /**
@@ -42,5 +41,3 @@ public class AudioException extends JmriException {
 
     }
 }
-
-/* @(#)AudioException.java */

@@ -1,4 +1,3 @@
-// RailComTag.java
 package jmri;
 
 import java.util.List;
@@ -220,5 +219,3 @@ public interface RailCom extends IdTag {
     public List<Integer> getCVList();
 
 }
-
-/* @(#)RailComTag.java */

@@ -1,4 +1,3 @@
-// RouteManager.java
 package jmri;
 
 import java.util.List;
@@ -68,6 +67,3 @@ public interface RouteManager extends Manager {
      */
     void deleteRoute(Route r);
 }
-
-
-/* @(#)RouteManager.java */

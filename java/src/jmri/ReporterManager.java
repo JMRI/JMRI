@@ -1,4 +1,3 @@
-// ReporterManager.java
 package jmri;
 
 import java.util.List;
@@ -142,6 +141,3 @@ public interface ReporterManager extends Manager {
     public String getNextValidAddress(String curAddress, String prefix);
 
 }
-
-
-/* @(#)ReporterManager.java */

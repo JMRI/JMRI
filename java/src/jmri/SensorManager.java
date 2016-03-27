@@ -1,4 +1,3 @@
-// SensorManager.java
 package jmri;
 
 import java.util.List;
@@ -125,6 +124,3 @@ public interface SensorManager extends Manager {
 
     public void setDefaultSensorDebounceGoingInActive(long timer);
 }
-
-
-/* @(#)SensorManager.java */

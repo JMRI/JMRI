@@ -1,4 +1,3 @@
-// Reporter.java
 package jmri;
 
 /**
@@ -79,5 +78,3 @@ public interface Reporter extends NamedBean {
     public int getState();
 
 }
-
-/* @(#)Reporter.java */

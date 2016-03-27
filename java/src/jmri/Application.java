@@ -1,4 +1,3 @@
-// Application.java
 package jmri;
 
 /**
@@ -101,4 +100,3 @@ public class Application {
 
 }
 
-/* @(#)Application.java */

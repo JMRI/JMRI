@@ -1,4 +1,3 @@
-// Transit.java
 package jmri;
 
 import java.util.ArrayList;
@@ -574,5 +573,3 @@ public class Transit extends AbstractNamedBean
     private final static Logger log = LoggerFactory.getLogger(Transit.class.getName());
 
 }
-
-/* @(#)Transit.java */

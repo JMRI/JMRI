@@ -1,4 +1,3 @@
-// Light.java
 package jmri;
 
 import java.util.ArrayList;
@@ -334,5 +333,3 @@ public interface Light extends NamedBean {
      */
     public void deactivateLight();
 }
-
-/* @(#)Light.java */

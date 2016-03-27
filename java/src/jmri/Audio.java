@@ -1,4 +1,3 @@
-// Audio.java
 package jmri;
 
 /**
@@ -229,5 +228,3 @@ public interface Audio extends NamedBean {
     public void stateChanged(int oldState);
 
 }
-
-/* @(#)Audio.java */

@@ -1,4 +1,3 @@
-// ModifiedFlag.java
 package jmri;
 
 /**
@@ -41,5 +40,3 @@ public interface ModifiedFlag {
      */
     public boolean getModifiedFlag();
 }
-
-/* @(#)NamedBean.java */

@@ -1,4 +1,3 @@
-//  ConsistListListener.java
 package jmri;
 
 /**

@@ -1,4 +1,3 @@
-// TransitManager.java
 package jmri;
 
 import java.text.DecimalFormat;
@@ -221,6 +220,3 @@ public class TransitManager extends AbstractManager
         return Bundle.getMessage("BeanNameTransit");
     }
 }
-
-
-/* @(#)TransitManager.java */

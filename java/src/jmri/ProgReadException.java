@@ -1,4 +1,3 @@
-// ProgReadException.java
 package jmri;
 
 /**
@@ -22,6 +21,3 @@ public class ProgReadException extends ProgrammerException {
     }
 
 }
-
-
-/* @(#)ProgReadException.java */

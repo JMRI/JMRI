@@ -1,4 +1,3 @@
-// NamedBeanHandle.java
 package jmri;
 
 /**

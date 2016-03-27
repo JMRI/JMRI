@@ -1,4 +1,3 @@
-// ShutDownTask.java
 package jmri;
 
 /**
@@ -25,5 +24,3 @@ public interface ShutDownTask {
      */
     public String name();
 }
-
-/* @(#)ShutDownTask.java */

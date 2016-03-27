@@ -1,13 +1,10 @@
-/**
- *
- */
 package jmri;
 
 import java.util.ResourceBundle;
 import jmri.implementation.AbstractTurnout;
 
 /**
- * CommonTurnoutOperation class - specialization of TurnoutOperation to contain
+ * CommonTurnoutOperation  - specialization of TurnoutOperation to contain
  * common properties and methods for concrete subclasses
  *
  * @author John Harper

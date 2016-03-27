@@ -1,4 +1,3 @@
-// MemoryManager.java
 package jmri;
 
 import java.util.List;
@@ -140,6 +139,3 @@ public interface MemoryManager extends Manager {
     public List<String> getSystemNameList();
 
 }
-
-
-/* @(#)MemoryManager.java */

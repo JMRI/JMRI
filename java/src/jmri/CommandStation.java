@@ -1,4 +1,3 @@
-// CommandStation.java
 package jmri;
 
 import javax.annotation.Nonnull;
@@ -47,5 +46,3 @@ public interface CommandStation {
     public String getSystemPrefix();
 
 }
-
-/* @(#)CommandStation.java */

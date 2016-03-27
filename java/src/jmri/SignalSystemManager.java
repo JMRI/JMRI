@@ -1,4 +1,3 @@
-// SignalSystemManager.java
 package jmri;
 
 /**
@@ -32,6 +31,3 @@ public interface SignalSystemManager extends Manager {
 
     public SignalSystem getByUserName(String name);
 }
-
-
-/* @(#)SignalSystemManager.java */

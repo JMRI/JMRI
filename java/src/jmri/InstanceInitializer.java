@@ -1,4 +1,3 @@
-// InstanceInitializer.java
 package jmri;
 
 /**
@@ -24,5 +23,3 @@ public interface InstanceInitializer {
     public <T> Object getDefault(Class<T> type);
 
 }
-
-/* @(#)InstanceInitializer.java */

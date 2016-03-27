@@ -1,4 +1,3 @@
-// PushbuttonPacket.java
 package jmri;
 
 import org.slf4j.Logger;
@@ -125,6 +124,3 @@ public class PushbuttonPacket {
 
     private final static Logger log = LoggerFactory.getLogger(PushbuttonPacket.class.getName());
 }
-
-
-/* @(#)NmraPacket.java */

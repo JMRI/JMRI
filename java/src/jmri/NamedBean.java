@@ -1,4 +1,3 @@
-// NamedBean.java
 package jmri;
 
 import java.util.ArrayList;
@@ -205,4 +204,3 @@ public interface NamedBean {
     public String getBeanType();
 }
 
-/* @(#)NamedBean.java */

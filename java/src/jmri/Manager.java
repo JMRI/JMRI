@@ -1,4 +1,3 @@
-// Manager.java
 package jmri;
 
 import java.util.List;
@@ -199,6 +198,3 @@ public interface Manager {
      */
     public String getBeanTypeHandled();
 }
-
-
-/* @(#)Manager.java */

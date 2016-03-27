@@ -1,4 +1,3 @@
-// SectionManager.java
 package jmri;
 
 import java.text.DecimalFormat;
@@ -277,5 +276,3 @@ public class SectionManager extends AbstractManager
 
     private final static Logger log = LoggerFactory.getLogger(SectionManager.class.getName());
 }
-
-/* @(#)SectionManager.java */

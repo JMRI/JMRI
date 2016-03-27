@@ -1,4 +1,3 @@
-// EntryPoint.java
 package jmri;
 
 import org.slf4j.Logger;
@@ -155,5 +154,3 @@ public class EntryPoint {
 
     private final static Logger log = LoggerFactory.getLogger(EntryPoint.class.getName());
 }
-
-/* @(#)EntryPoint.java */

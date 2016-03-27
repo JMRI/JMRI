@@ -1,4 +1,3 @@
-// DccThottle.java
 package jmri;
 
 /**
@@ -51,6 +50,3 @@ public interface DccThrottle extends Throttle {
     // information on consisting  (how do we set consisting?)
     // register for notification
 }
-
-
-/* @(#)DccThottle.java */

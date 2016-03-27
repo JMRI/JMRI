@@ -1,4 +1,3 @@
-// PowerManager.java
 package jmri;
 
 import java.beans.PropertyChangeListener;
@@ -51,6 +50,3 @@ public interface PowerManager {
 
     public String getUserName();
 }
-
-
-/* @(#)PowerManager.java */

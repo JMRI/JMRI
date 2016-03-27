@@ -1,4 +1,3 @@
-/* Programmer.java */
 package jmri;
 
 import java.beans.PropertyChangeListener;
@@ -190,6 +189,3 @@ public interface Programmer {
     public String decodeErrorCode(int i);
 
 }
-
-
-/* @(#)Programmer.java */

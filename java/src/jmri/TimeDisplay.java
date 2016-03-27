@@ -1,4 +1,3 @@
-// TimeDisplay.java
 package jmri;
 
 /**
@@ -29,5 +28,3 @@ public interface TimeDisplay {
     public int getUpdateRate();
 
 }
-
-/* @(#)TimeDisplay.java */

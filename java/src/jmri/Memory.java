@@ -1,4 +1,3 @@
-// Memory.java
 package jmri;
 
 /**
@@ -50,5 +49,3 @@ public interface Memory extends NamedBean {
     public void setValue(Object value);
 
 }
-
-/* @(#)Memory.java */

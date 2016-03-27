@@ -1,4 +1,3 @@
-// IdTag.java
 package jmri;
 
 import java.util.Date;
@@ -98,5 +97,3 @@ public interface IdTag extends NamedBean {
     public void load(Element e);
 
 }
-
-/* @(#)IdTag.java */

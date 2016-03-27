@@ -1,4 +1,3 @@
-// Thottle.java
 package jmri;
 
 import java.util.Vector;
@@ -470,6 +469,3 @@ public interface Throttle {
 
     public BasicRosterEntry getRosterEntry();
 }
-
-
-/* @(#)Thottle.java */

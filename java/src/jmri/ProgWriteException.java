@@ -1,4 +1,3 @@
-// ProgWriteException.java
 package jmri;
 
 /**
@@ -24,6 +23,3 @@ public class ProgWriteException extends ProgrammerException {
     }
 
 }
-
-
-/* @(#)ProgWriteException.java */

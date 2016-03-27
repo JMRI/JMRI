@@ -1,4 +1,3 @@
-// TransitSection.java
 package jmri;
 
 import java.util.ArrayList;
@@ -145,5 +144,3 @@ public class TransitSection {
 
     private final static Logger log = LoggerFactory.getLogger(TransitSection.class.getName());
 }
-
-/* @(#)TransitSection.java */

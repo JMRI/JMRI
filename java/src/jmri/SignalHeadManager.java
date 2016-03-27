@@ -1,4 +1,3 @@
-// SignalHeadManager.java
 package jmri;
 
 import java.util.List;
@@ -48,6 +47,3 @@ public interface SignalHeadManager extends Manager {
     public List<String> getSystemNameList();
 
 }
-
-
-/* @(#)SignalHeadManager.java */

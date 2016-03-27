@@ -1,4 +1,3 @@
-// LightManager.java
 package jmri;
 
 import java.util.List;
@@ -159,5 +158,3 @@ public interface LightManager extends Manager {
     public boolean allowMultipleAdditions(String systemName);
 
 }
-
-/* @(#)LightManager.java */

@@ -1,4 +1,3 @@
-// Conditional.java
 package jmri;
 
 import java.beans.PropertyChangeEvent;
@@ -611,5 +610,3 @@ public interface Conditional extends NamedBean {
     public void dispose();  // remove _all_ connections!
 
 }
-
-/* @(#)Conditional.java */

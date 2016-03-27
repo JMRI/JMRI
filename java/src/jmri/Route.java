@@ -1,4 +1,3 @@
-// Route.java
 package jmri;
 
 /**
@@ -342,5 +341,3 @@ public interface Route extends NamedBean {
     public void deActivateRoute();
 
 }
-
-/* @(#)Route.java */
