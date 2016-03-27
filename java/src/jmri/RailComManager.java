@@ -1,4 +1,3 @@
-// RailComManager.java
 package jmri;
 
 /**
@@ -17,7 +16,6 @@ package jmri;
  * itself be unique.
  * <P>
  * @author Kevin Dickerson Copyright (C) 2012
- * @version $Revision: 18102 $
  * @since 2.99.4
  */
 public interface RailComManager extends IdTagManager {
@@ -27,5 +25,3 @@ public interface RailComManager extends IdTagManager {
     public RailCom getIdTag(String name);
 
 }
-
-/* @(#)RailComManager.java */

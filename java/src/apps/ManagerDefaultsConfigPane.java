@@ -24,15 +24,10 @@ import jmri.util.swing.JmriPanel;
  * <P>
  *
  * @author Bob Jacobsen Copyright (C) 2010
- * @version	$Revision$
  * @since 2.9.5
  */
 public class ManagerDefaultsConfigPane extends JmriPanel implements PreferencesPanel {
 
-    /**
-     *
-     */
-    private static final long serialVersionUID = 4382220076212974325L;
     private static final ResourceBundle rb = ResourceBundle.getBundle("apps.AppsConfigBundle");
     private boolean dirty = false;
 
@@ -166,11 +161,6 @@ public class ManagerDefaultsConfigPane extends JmriPanel implements PreferencesP
      * Captive class to track changes
      */
     static class SelectionButton extends JRadioButton {
-
-        /**
-         *
-         */
-        private static final long serialVersionUID = -2572336492673634333L;
 
         SelectionButton(String name, Class<?> managerClass, ManagerDefaultsConfigPane pane) {
             super();

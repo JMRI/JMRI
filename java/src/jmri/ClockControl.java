@@ -1,4 +1,3 @@
-// ClockControl.java
 package jmri;
 
 import java.util.Date;
@@ -33,7 +32,6 @@ import java.util.Date;
  * A PARTICULAR PURPOSE. See the GNU General Public License for more details.
  * <P>
  * @author	Dave Duchamp Copyright (C) 2007
- * @version	$Revision 1.0 $
  */
 public interface ClockControl {
 
@@ -104,5 +102,3 @@ public interface ClockControl {
     public void initializeHardwareClock(double rate, Date now, boolean getTime);
 
 }
-
-/* @(#)ClockControl.java */

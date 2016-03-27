@@ -36,7 +36,6 @@ import java.util.List;
  * different lengths in the block.
  *
  * @author	Bob Jacobsen Copyright (C) 2006, 2008
- * @version	$Revision$
  */
 public class Path {
 

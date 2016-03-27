@@ -1,6 +1,3 @@
-/**
- *
- */
 package jmri;
 
 import jmri.implementation.AbstractTurnout;
@@ -11,7 +8,6 @@ import jmri.implementation.NoFeedbackTurnoutOperator;
  * provide automatic retry for a turnout with no feedback
  *
  * @author John Harper
- * @version $Revision$
  */
 public class NoFeedbackTurnoutOperation extends CommonTurnoutOperation {
 

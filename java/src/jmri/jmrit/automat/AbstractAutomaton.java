@@ -1,4 +1,3 @@
-// AbstractAutomaton.java
 package jmri.jmrit.automat;
 
 import java.awt.BorderLayout;
@@ -91,7 +90,6 @@ import org.slf4j.LoggerFactory;
  * Jython code can easily use some of the methods.
  *
  * @author	Bob Jacobsen Copyright (C) 2003
- * @version $Revision$
  */
 public class AbstractAutomaton implements Runnable {
 
@@ -960,6 +958,11 @@ public class AbstractAutomaton implements Runnable {
         Programmer programmer = InstanceManager.programmerManagerInstance()
                 .getGlobalProgrammer();
 
+        if (programmer == null) {
+            log.error("No programmer available as JMRI is currently configured");
+            return false;
+        }
+        
         // do the write, response will wake the thread
         try {
             programmer.writeCV(CV, value, new ProgListener() {
@@ -992,7 +995,12 @@ public class AbstractAutomaton implements Runnable {
         Programmer programmer = InstanceManager.programmerManagerInstance()
                 .getGlobalProgrammer();
 
-        // do the write, response will wake the thread
+        if (programmer == null) {
+            log.error("No programmer available as JMRI is currently configured");
+            return -1;
+        }
+        
+        // do the read, response will wake the thread
         cvReturnValue = -1;
         try {
             programmer.readCV(CV, new ProgListener() {
@@ -1026,6 +1034,11 @@ public class AbstractAutomaton implements Runnable {
         Programmer programmer = InstanceManager.programmerManagerInstance()
                 .getAddressedProgrammer(longAddress, loco);
 
+        if (programmer == null) {
+            log.error("No programmer available as JMRI is currently configured");
+            return false;
+        }
+        
         // do the write, response will wake the thread
         try {
             programmer.writeCV(CV, value, new ProgListener() {
@@ -1176,5 +1189,3 @@ public class AbstractAutomaton implements Runnable {
     // initialize logging
     private final static Logger log = LoggerFactory.getLogger(AbstractAutomaton.class.getName());
 }
-
-/* @(#)AbstractAutomaton.java */
