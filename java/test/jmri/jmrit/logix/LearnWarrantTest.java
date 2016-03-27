@@ -24,7 +24,6 @@ import junit.framework.TestSuite;
  * Tests for the Warrant creation
  *
  * @author  Pete Cressman 2015
- * @version $Revision: 00000 $
  * 
  * todo - test error conditions
  */

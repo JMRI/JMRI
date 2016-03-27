@@ -2,6 +2,7 @@ package jmri.jmrix.xpa;
 
 import java.util.ResourceBundle;
 import jmri.jmrix.SystemConnectionMemo;
+import jmri.InstanceManager;
 
 /**
  * Provide the bare minimum required in a SystemConnectionMemo for the XPressNet
@@ -12,7 +13,13 @@ import jmri.jmrix.SystemConnectionMemo;
 public class XpaSystemConnectionMemo extends SystemConnectionMemo {
 
     public XpaSystemConnectionMemo() {
-        super("P", "XPA"); // Prefix from XpaTurnoutManager, UserName from XpaThrottleManager
+        this("P", "XPA"); // Prefix from XpaTurnoutManager, UserName from XpaThrottleManager
+    }
+
+    public XpaSystemConnectionMemo(String prefix, String userName){
+        super(prefix, userName); 
+        register(); // registers general type
+        InstanceManager.store(this,XpaSystemConnectionMemo.class); // also register as specific type
     }
 
     @Override

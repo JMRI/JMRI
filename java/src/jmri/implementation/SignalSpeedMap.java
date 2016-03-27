@@ -19,39 +19,33 @@ import edu.umd.cs.findbugs.annotations.SuppressFBWarnings;
  /**
  * Default implementation to map Signal aspects or appearances to speed requirements.
  * <p>
- * A singleton class for use by all SignalHeads and SignalMasts
+ * The singleton instance is referenced from the InstanceManager by SignalHeads and SignalMasts
  *
  * @author  Pete Cressman Copyright (C) 2010
  */
-public class SignalSpeedMap {
+public class SignalSpeedMap 
+            implements jmri.InstanceManagerAutoDefault // auto-initialize in InstanceManager
+        {
 
-    static private SignalSpeedMap _map;
-    static private Hashtable<String, Float> _table;
-    static private Hashtable<String, String> _headTable;
-    static private int _interpretation;
-    static private int _sStepDelay;     // ramp step time interval
-    static private int _numSteps = 4;   // num throttle steps per ramp step - deprecated
+    private Hashtable<String, Float> _table;
+    private Hashtable<String, String> _headTable;
+    private int _interpretation;
+    private int _sStepDelay;     // ramp step time interval
+    private int _numSteps = 4;   // num throttle steps per ramp step - deprecated
     private float _stepIncrement = 0.04f;       // ramp step throttle increment
     private float _throttleFactor = 0.75f;
     private float _scale;
     
-    public static final int PERCENT_NORMAL = 1;
-    public static final int PERCENT_THROTTLE = 2;
-    public static final int SPEED_MPH = 3;
-    public static final int SPEED_KMPH = 4;
+    static public final int PERCENT_NORMAL = 1;
+    static public final int PERCENT_THROTTLE = 2;
+    static public final int SPEED_MPH = 3;
+    static public final int SPEED_KMPH = 4;
         
-    public SignalSpeedMap() {}
-    
-    static public SignalSpeedMap getMap() {
-        if (_map == null) {
-            loadMap();
-        }
-        return _map;
+    public SignalSpeedMap() {
+        loadMap();
     }
-    
-    static void loadMap() {
-        _map = new SignalSpeedMap();
-
+        
+    void loadMap() {
         URL path = FileUtil.findURL("signalSpeeds.xml", new String[] {"", "xml/signals"});
         jmri.jmrit.XmlFile xf = new jmri.jmrit.XmlFile(){};
         try {
@@ -66,7 +60,7 @@ public class SignalSpeedMap {
         }
     }
 
-    static public void loadRoot(@Nonnull Element root) {
+    public void loadRoot(@Nonnull Element root) {
         try {
             Element e = root.getChild("interpretation");
             String sval = e.getText().toUpperCase();
@@ -259,9 +253,6 @@ public class SignalSpeedMap {
         return _scale;
     }
 
-    public void setMap(SignalSpeedMap map) {
-        _map = map;
-    }
-    private final static Logger log = LoggerFactory.getLogger(SignalSpeedMap.class.getName());
+    static private final Logger log = LoggerFactory.getLogger(SignalSpeedMap.class.getName());
 }
 

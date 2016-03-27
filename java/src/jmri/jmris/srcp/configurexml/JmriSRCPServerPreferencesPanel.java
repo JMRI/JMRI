@@ -96,7 +96,8 @@ public class JmriSRCPServerPreferencesPanel extends JPanel implements Preference
     }
 
     protected void cancelValues() {
-        if (getTopLevelAncestor() != null) {
+        java.awt.Container ancestor = getTopLevelAncestor();
+        if (ancestor != null && ancestor instanceof JFrame) {
             ((JFrame) getTopLevelAncestor()).setVisible(false);
         }
     }

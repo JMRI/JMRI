@@ -34,10 +34,6 @@ import org.slf4j.LoggerFactory;
  */
 public abstract class FamilyItemPanel extends ItemPanel {
 
-    /**
-     *
-     */
-    private static final long serialVersionUID = 9107650071783695584L;
     protected String _family;
     protected JPanel _iconFamilyPanel;
     protected JPanel _iconPanel;     // panel contained in _iconFamilyPanel - all icons in family
@@ -69,6 +65,7 @@ public abstract class FamilyItemPanel extends ItemPanel {
     @Override
     public void init() {
         if (!_initialized) {
+            if (!jmri.util.ThreadingUtil.isGUIThread()) log.error("Not on GUI thread", new Exception("traceback"));
             Thread.yield();
             _update = false;
             _supressDragging = false;
@@ -82,6 +79,7 @@ public abstract class FamilyItemPanel extends ItemPanel {
      * button put into _bottom1Panel
      */
     public void init(ActionListener doneAction, HashMap<String, NamedIcon> iconMap) {
+        if (!jmri.util.ThreadingUtil.isGUIThread()) log.error("Not on GUI thread", new Exception("traceback"));
         _update = true;
         _supressDragging = true;		// do dragging when updating
         _currentIconMap = iconMap;
@@ -368,6 +366,7 @@ public abstract class FamilyItemPanel extends ItemPanel {
     }
 
     protected void addFamilyPanels(JPanel familyPanel) {
+        if (!jmri.util.ThreadingUtil.isGUIThread()) log.error("Not on GUI thread", new Exception("traceback"));
         _iconPanel = new JPanel(new FlowLayout());
         _iconFamilyPanel.add(_iconPanel);
         _iconPanel.setVisible(false);
@@ -470,6 +469,7 @@ public abstract class FamilyItemPanel extends ItemPanel {
         if (_supressDragging) {
             return;
         }
+        if (!jmri.util.ThreadingUtil.isGUIThread()) log.error("Not on GUI thread", new Exception("traceback"));
         _dragIconPanel.setToolTipText(Bundle.getMessage("ToolTipDragIcon"));
         if (iconMap != null) {
             if (iconMap.get(displayKey) == null) {
@@ -492,8 +492,7 @@ public abstract class FamilyItemPanel extends ItemPanel {
                         panel.add(label);
                     }
                 } catch (java.lang.ClassNotFoundException cnfe) {
-                    cnfe.printStackTrace();
-                    label = new JLabel();
+                    log.warn("no DndIconPanel {} created", borderName, cnfe);
                 }
                 int width = Math.max(100, panel.getPreferredSize().width);
                 panel.setPreferredSize(new java.awt.Dimension(width, panel.getPreferredSize().height));
@@ -510,6 +509,7 @@ public abstract class FamilyItemPanel extends ItemPanel {
         if (_iconPanel == null) {
             return;
         }
+        if (!jmri.util.ThreadingUtil.isGUIThread()) log.error("Not on GUI thread", new Exception("traceback"));
         _iconPanel.setVisible(false);
         if (!_supressDragging) {
             _dragIconPanel.setVisible(true);
@@ -521,6 +521,7 @@ public abstract class FamilyItemPanel extends ItemPanel {
     }
 
     protected void showIcons() {
+        if (!jmri.util.ThreadingUtil.isGUIThread()) log.error("Not on GUI thread", new Exception("traceback"));
         _iconPanel.setVisible(true);
         _iconPanel.invalidate();
         if (!_supressDragging) {
@@ -575,6 +576,7 @@ public abstract class FamilyItemPanel extends ItemPanel {
             return false;
         }
         Iterator<String> iter = ItemPalette.getFamilyMaps(_itemType).keySet().iterator();
+        if (!jmri.util.ThreadingUtil.isGUIThread()) log.error("Not on GUI thread", new Exception("traceback"));
         while (iter.hasNext()) {
             if (family.equals(iter.next())) {
                 JOptionPane.showMessageDialog(_paletteFrame,

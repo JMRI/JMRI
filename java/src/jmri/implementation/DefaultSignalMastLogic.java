@@ -17,6 +17,7 @@ import jmri.Section;
 import jmri.Sensor;
 import jmri.SignalMast;
 import jmri.Turnout;
+import jmri.implementation.SignalSpeedMap;
 import jmri.jmrit.display.layoutEditor.ConnectivityUtil;
 import jmri.jmrit.display.layoutEditor.LayoutBlock;
 import jmri.jmrit.display.layoutEditor.LayoutBlockConnectivityTools;
@@ -1005,7 +1006,7 @@ public class DefaultSignalMastLogic implements jmri.SignalMastLogic, java.beans.
                                     } catch (NumberFormatException nx) {
                                         // not a number, perhaps a name?
                                         try {
-                                            speed = jmri.implementation.SignalSpeedMap.getMap().getSpeed(strSpeed);
+                                            speed = jmri.InstanceManager.getDefault(SignalSpeedMap.class).getSpeed(strSpeed);
                                         } catch (Exception ex) {
                                             // not a name either
                                             log.warn("Using speed = 0.0 because could not understand \"{}\"", strSpeed);
