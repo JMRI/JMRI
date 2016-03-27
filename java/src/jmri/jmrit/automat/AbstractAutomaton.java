@@ -1,4 +1,3 @@
-// AbstractAutomaton.java
 package jmri.jmrit.automat;
 
 import java.awt.BorderLayout;
@@ -91,7 +90,6 @@ import org.slf4j.LoggerFactory;
  * Jython code can easily use some of the methods.
  *
  * @author	Bob Jacobsen Copyright (C) 2003
- * @version $Revision$
  */
 public class AbstractAutomaton implements Runnable {
 
@@ -1176,5 +1174,3 @@ public class AbstractAutomaton implements Runnable {
     // initialize logging
     private final static Logger log = LoggerFactory.getLogger(AbstractAutomaton.class.getName());
 }
-
-/* @(#)AbstractAutomaton.java */
