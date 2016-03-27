@@ -1,4 +1,3 @@
-// PaneProgPane.java
 package jmri.jmrit.symbolicprog.tabbedframe;
 
 import java.awt.Color;
@@ -95,17 +94,12 @@ import org.slf4j.LoggerFactory;
  * @author D Miller Copyright 2003
  * @author Howard G. Penny Copyright (C) 2005
  * @author Dave Heap Copyright (C) 2014
- * @version $Revision$
  * @see jmri.jmrit.symbolicprog.VariableValue#isChanged
  *
  */
 public class PaneProgPane extends javax.swing.JPanel
         implements java.beans.PropertyChangeListener {
 
-    /**
-     *
-     */
-    private static final long serialVersionUID = -1884950541914044865L;
     static final String LAST_GRIDX = "last_gridx";
     static final String LAST_GRIDY = "last_gridy";
 
@@ -1945,7 +1939,7 @@ public class PaneProgPane extends javax.swing.JPanel
         return c;
     }
 
-    class GridGlobals {
+    static class GridGlobals {
 
         public int gridxCurrent = -1;
         public int gridyCurrent = -1;
