@@ -11,7 +11,6 @@ import junit.framework.TestSuite;
  * Description:	tests for the jmri.jmrix.srcp.SRCPSensor class
  *
  * @author	Bob Jacobsen
- * @version $Revision$
  */
 public class SRCPSensorTest extends TestCase {
 

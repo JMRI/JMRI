@@ -1,4 +1,3 @@
-// DefaultUserMessagePreferences.java
 package jmri.managers;
 
 import java.awt.Dimension;
@@ -35,7 +34,6 @@ import org.slf4j.LoggerFactory;
  * next time"
  *
  * @author Kevin Dickerson Copyright (C) 2010
- * @version	$Revision$
  */
 @net.jcip.annotations.NotThreadSafe  // intended for access from Swing thread only
 @edu.umd.cs.findbugs.annotations.SuppressFBWarnings(

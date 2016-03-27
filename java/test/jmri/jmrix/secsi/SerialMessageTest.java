@@ -1,4 +1,3 @@
-// SerialMessageTest.java
 package jmri.jmrix.secsi;
 
 import junit.framework.Assert;

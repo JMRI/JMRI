@@ -1,4 +1,3 @@
-// BundleTest.java
 package jmri.jmrit.roster;
 
 import junit.framework.Assert;

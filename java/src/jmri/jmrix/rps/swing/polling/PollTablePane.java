@@ -6,7 +6,6 @@ import java.awt.FlowLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.io.File;
-import java.util.ResourceBundle;
 import javax.swing.Box;
 import javax.swing.BoxLayout;
 import javax.swing.ButtonGroup;
@@ -34,13 +33,6 @@ import org.slf4j.LoggerFactory;
  * @version	$Revision$
  */
 public class PollTablePane extends javax.swing.JPanel {
-
-    /**
-     *
-     */
-    private static final long serialVersionUID = -1187242999349776714L;
-
-    static final ResourceBundle rb = ResourceBundle.getBundle("jmri.jmrix.rps.swing.polling.PollingBundle");
 
     PollDataModel pollModel = null;
     jmri.ModifiedFlag modifiedFlag;
@@ -93,7 +85,7 @@ public class PollTablePane extends javax.swing.JPanel {
         };
         p.setLayout(new FlowLayout());
 
-        polling = new JCheckBox(rb.getString("LabelPoll"));
+        polling = new JCheckBox(Bundle.getMessage("LabelPoll"));
         polling.setSelected(Engine.instance().getPolling());
         p.add(polling);
         polling.addActionListener(new ActionListener() {
@@ -106,7 +98,7 @@ public class PollTablePane extends javax.swing.JPanel {
         JPanel m = new JPanel();
         m.setLayout(new BoxLayout(m, BoxLayout.Y_AXIS));
         ButtonGroup g = new ButtonGroup();
-        bscMode = new JRadioButton(rb.getString("LabelBscMode"));
+        bscMode = new JRadioButton(Bundle.getMessage("LabelBscMode"));
         bscMode.setSelected(Engine.instance().getBscPollMode());
         m.add(bscMode);
         g.add(bscMode);
@@ -116,7 +108,7 @@ public class PollTablePane extends javax.swing.JPanel {
                 checkMode();
             }
         });
-        directMode = new JRadioButton(rb.getString("LabelDirectMode"));
+        directMode = new JRadioButton(Bundle.getMessage("LabelDirectMode"));
         directMode.setSelected(Engine.instance().getDirectPollMode());
         m.add(directMode);
         g.add(directMode);
@@ -126,7 +118,7 @@ public class PollTablePane extends javax.swing.JPanel {
                 checkMode();
             }
         });
-        throttleMode = new JRadioButton(rb.getString("LabelThrottleMode"));
+        throttleMode = new JRadioButton(Bundle.getMessage("LabelThrottleMode"));
         throttleMode.setSelected(Engine.instance().getThrottlePollMode());
         m.add(throttleMode);
         g.add(throttleMode);
@@ -139,7 +131,7 @@ public class PollTablePane extends javax.swing.JPanel {
         p.add(m);
 
         p.add(Box.createHorizontalGlue());
-        p.add(new JLabel(rb.getString("LabelDelay")));
+        p.add(new JLabel(Bundle.getMessage("LabelDelay")));
         delay = new JTextField(5);
         delay.setText("" + Engine.instance().getPollingInterval());
         p.add(delay);
@@ -150,7 +142,7 @@ public class PollTablePane extends javax.swing.JPanel {
             }
         });
 
-        JButton b = new JButton(rb.getString("LabelSetDefault"));
+        JButton b = new JButton(Bundle.getMessage("LabelSetDefault"));
         b.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent event) {
                 modifiedFlag.setModifiedFlag(true);

@@ -11,7 +11,6 @@ import junit.framework.TestSuite;
  * Description:	tests for the jmri.jmrix.lenz.XNetOpsModeProgrammer class
  *
  * @author	Paul Bender
- * @version $Revision$
  */
 public class XNetOpsModeProgrammerTest extends TestCase {
 

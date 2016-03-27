@@ -1,4 +1,3 @@
-// CheckProgrammerNames.java
 package jmri.jmrit.symbolicprog.tabbedframe;
 
 import java.io.File;

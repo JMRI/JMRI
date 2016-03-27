@@ -1,4 +1,3 @@
-// InputBitsTest.java
 package jmri.jmrix.maple;
 
 import jmri.Sensor;

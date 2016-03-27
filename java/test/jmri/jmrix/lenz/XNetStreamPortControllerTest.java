@@ -15,7 +15,6 @@ import junit.framework.TestSuite;
  * Description:	tests for the jmri.jmrix.lenz.XNetStreamPortController class
  *
  * @author	Paul Bender
- * @version $Revision$
  */
 public class XNetStreamPortControllerTest extends TestCase {
 

@@ -27,7 +27,6 @@ import junit.framework.TestSuite;
  * Tests for the Operations Router class
  *
  * @author	Daniel Boudreau Copyright (C) 2010, 2011, 2013
- * @version $Revision$
  */
 public class OperationsCarRouterTest extends OperationsTestCase {
 

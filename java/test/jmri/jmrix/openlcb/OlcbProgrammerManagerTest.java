@@ -11,7 +11,6 @@ import junit.framework.TestSuite;
  * Description:	tests for the jmri.jmrix.openlcb.OlcbProgrammerManager class
  *
  * @author	Bob Jacobsen
- * @version $Revision$
  */
 public class OlcbProgrammerManagerTest extends TestCase {
 

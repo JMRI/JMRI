@@ -13,11 +13,6 @@ import jmri.util.swing.WindowInterface;
  */
 public class PanelProAction extends JmriAbstractAction {
 
-    /**
-     *
-     */
-    private static final long serialVersionUID = 702355860636134517L;
-
     public PanelProAction(String s, WindowInterface wi) {
         super(s, wi);
     }

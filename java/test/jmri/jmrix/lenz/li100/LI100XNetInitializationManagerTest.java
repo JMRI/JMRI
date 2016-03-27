@@ -16,7 +16,6 @@ import junit.framework.TestSuite;
  * jmri.jmrix.lenz.li100.LI100XNetInitializationManager class
  *
  * @author	Paul Bender
- * @version $Revision$
  */
 public class LI100XNetInitializationManagerTest extends TestCase {
 

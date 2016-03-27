@@ -1,4 +1,3 @@
-// TrackerTest.java
 package jmri.jmrit.tracker;
 
 import junit.framework.Test;
@@ -9,7 +8,6 @@ import junit.framework.TestSuite;
  * Tests for the jmrit.blocktrack package
  *
  * @author	Bob Jacobsen Copyright (C) 2006
- * @version $Revision$
  */
 public class TrackerTest extends TestCase {
 

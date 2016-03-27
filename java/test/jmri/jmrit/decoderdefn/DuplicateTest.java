@@ -1,4 +1,3 @@
-// DuplicateTest.java
 package jmri.jmrit.decoderdefn;
 
 import java.io.File;
@@ -21,7 +20,6 @@ import org.jdom2.filter.ElementFilter;
  *
  * @author Bob Jacobsen Copyright 2010
  * @since 2.9.3
- * @version $Revision$
  */
 public class DuplicateTest extends TestCase {
 

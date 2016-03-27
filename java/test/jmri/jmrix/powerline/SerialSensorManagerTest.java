@@ -1,4 +1,3 @@
-// SerialSensorManagerTest.java
 package jmri.jmrix.powerline;
 
 import junit.framework.Assert;

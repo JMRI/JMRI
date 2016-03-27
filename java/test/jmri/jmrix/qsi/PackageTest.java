@@ -1,4 +1,3 @@
-// PackageTest.java
 package jmri.jmrix.qsi;
 
 import junit.framework.Test;
@@ -9,7 +8,6 @@ import junit.framework.TestSuite;
  * Tests for the jmri.jmrix.qsi package
  *
  * @author	Bob Jacobsen
- * @version $Revision$
  */
 public class PackageTest extends TestCase {
 

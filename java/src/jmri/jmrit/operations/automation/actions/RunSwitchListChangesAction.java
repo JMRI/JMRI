@@ -33,7 +33,15 @@ public class RunSwitchListChangesAction extends Action {
         doAction(IS_CHANGED);
     }
 
-    // common code see RunSwitchListAction.java
+    /**
+     * Creates a custom switch list for each location that is selected and
+     * there's new work for that location.
+     * <p>
+     * common code see RunSwitchListAction.java
+     */
+    @edu.umd.cs.findbugs.annotations.SuppressFBWarnings(
+            value = {"UC_USELESS_CONDITION", "RpC_REPEATED_CONDITIONAL_TEST"},
+            justification = "isChanged = false when called from RunSwitchListAction")
     protected void doAction(boolean isChanged) {
         if (getAutomationItem() != null) {
             if (!Setup.isGenerateCsvSwitchListEnabled()) {

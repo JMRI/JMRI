@@ -1,4 +1,3 @@
-// DccLocoAddress.java
 package jmri;
 
 /**
@@ -118,4 +117,3 @@ public class DccLocoAddress implements LocoAddress {
     protected long number;
     protected LocoAddress.Protocol protocol = LocoAddress.Protocol.DCC;
 }
-/* @(#)DccLocoAddress.java */

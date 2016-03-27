@@ -1,4 +1,3 @@
-// ConditionalAction.java
 package jmri;
 
 import java.awt.event.ActionListener;
@@ -11,7 +10,6 @@ import jmri.jmrit.Sound;
  * <P>
  *
  * @author Pete Cressman Copyright (C) 2009
- * @version $Revision$
  */
 public interface ConditionalAction {
 

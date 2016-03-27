@@ -1,4 +1,3 @@
-// SerialLightManagerTest.java
 package jmri.jmrix.grapevine;
 
 import jmri.Light;
@@ -15,7 +14,6 @@ import org.slf4j.LoggerFactory;
  * Description:	tests for the SerialLightManager class
  *
  * @author	Bob Jacobsen Copyright 2004, 2007, 2008
- * @version $Revision$
  */
 public class SerialLightManagerTest extends jmri.managers.AbstractLightMgrTest {
 

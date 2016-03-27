@@ -1,4 +1,3 @@
-// AttributeTableModelTest.java
 package jmri.jmrit.roster.swing.attributetable;
 
 import jmri.InstanceManager;
@@ -14,7 +13,6 @@ import org.jdom2.Element;
  * Tests for the roster.swing.attributetable.AttributeTableModel class.
  *
  * @author	Bob Jacobsen Copyright (C) 2009
- * @version $Revision$
  */
 public class AttributeTableModelTest extends TestCase {
 

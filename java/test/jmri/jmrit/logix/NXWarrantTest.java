@@ -1,4 +1,3 @@
-// NXWarrantTest.java
 package jmri.jmrit.logix;
 
 import java.io.File;
@@ -27,7 +26,6 @@ import junit.framework.TestSuite;
  * Tests for the Warrant creation
  *
  * @author  Pete Cressman 2015
- * @version $Revision: 00000 $
  * 
  * todo - test error conditions
  */
@@ -53,8 +51,14 @@ public class NXWarrantTest extends jmri.util.SwingTestCase {
         nxFrame.setVisible(true);
         nxFrame.setRampIncrement(0.075f);
         nxFrame.setTimeInterval(1000);
+        flushAWT();
         pressButton(nxFrame, Bundle.getMessage("ButtonCancel"));
-        
+
+        // wait to calm down after cancel
+        flushAWT();
+        flushAWT();
+
+        // after cancel, try again
         nxFrame = NXFrame.getInstance();
         nxFrame.init();
         nxFrame.setVisible(true);
@@ -67,6 +71,7 @@ public class NXWarrantTest extends jmri.util.SwingTestCase {
         confirmJOptionPane(null, Bundle.getMessage("WarningTitle"), Bundle.getMessage("NoLoco"), "OK");
         nxFrame.setAddress("666");
         nxFrame.setTrainName("Nick");
+        flushAWT();
         pressButton(nxFrame, Bundle.getMessage("ButtonRunNX"));
 
         DialogFinder finder = new DialogFinder(Bundle.getMessage("DialogTitle"));
@@ -91,20 +96,32 @@ public class NXWarrantTest extends jmri.util.SwingTestCase {
         Assert.assertEquals("Waiting message", warrant.getRunningMessage(), 
                 Bundle.getMessage("waitForDelayStart", warrant.getTrainName(), block.getDisplayName()));
         
-        Sensor sensor = _sensorMgr.getBySystemName("IS0");
-        Assert.assertNotNull("Senor IS0 not found", sensor);               
-        sensor.setState(Sensor.ACTIVE);
+        Sensor sensor0 = _sensorMgr.getBySystemName("IS0");
+        Assert.assertNotNull("Senor IS0 not found", sensor0); 
+
+        jmri.util.ThreadingUtil.runOnLayout( ()->{
+            try {
+                sensor0.setState(Sensor.ACTIVE);
+            } catch (jmri.JmriException e) { Assert.fail("Unexpected Exception: "+e); }
+        });
+        jmri.util.JUnitUtil.releaseThread(this);
+
         Assert.assertEquals("Halted/Resume message", warrant.getRunningMessage(), 
                 Bundle.getMessage("Halted", block.getDisplayName(), "0"));
-        warrant.controlRunTrain(Warrant.RESUME);
+
+        jmri.util.ThreadingUtil.runOnGUI( ()->{
+            warrant.controlRunTrain(Warrant.RESUME);
+        });
         String[] route = {"IS1", "IS2", "IS3", "IS7", "IS5", "IS10"};
-        sensor = _sensorMgr.getBySystemName("IS10");
-        Assert.assertEquals("Train in last block", sensor, runtimes(sensor, route));
+        Sensor sensor10 = _sensorMgr.getBySystemName("IS10");
+        Assert.assertEquals("Train in last block", sensor10, runtimes(sensor10, route));
         
         flushAWT();
         flushAWT();   // let calm down before running abort
                 
-        warrant.controlRunTrain(Warrant.ABORT);
+        jmri.util.ThreadingUtil.runOnGUI( ()->{
+            warrant.controlRunTrain(Warrant.ABORT);
+        });
         flushAWT();
         
         // passed test - cleanup.  Do it here so failure leaves traces.

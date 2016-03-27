@@ -1,4 +1,3 @@
-// InitiateSoundTest.java
 package jmri.jmrix.loconet.sdf;
 
 import junit.framework.Test;

@@ -1,4 +1,3 @@
-// FileUtilTest.java
 package jmri.util;
 
 import java.io.File;

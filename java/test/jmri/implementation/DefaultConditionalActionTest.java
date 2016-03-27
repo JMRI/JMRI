@@ -1,4 +1,3 @@
-// DefaultConditionalActionTest.java
 package jmri.implementation;
 
 import jmri.ConditionalAction;

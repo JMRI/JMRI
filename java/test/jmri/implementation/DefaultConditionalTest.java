@@ -1,4 +1,3 @@
-// DefaultConditionalTest.java
 package jmri.implementation;
 
 import jmri.*;

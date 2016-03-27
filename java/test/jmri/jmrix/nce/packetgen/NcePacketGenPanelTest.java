@@ -1,4 +1,3 @@
-// NcePacketGenPanelTest.java
 package jmri.jmrix.nce.packetgen;
 
 import jmri.jmrix.nce.NceMessage;
@@ -11,7 +10,6 @@ import junit.framework.TestSuite;
  * Tests for the jmri.jmrix.nce.packetgen.NcePacketGenPanel class
  *
  * @author	Bob Jacobsen
- * @version $Revision$
  */
 public class NcePacketGenPanelTest extends TestCase {
 

@@ -12,11 +12,6 @@ import jmri.util.swing.WindowInterface;
 
 public class FirstTimeStartUpWizardAction extends jmri.util.swing.JmriAbstractAction {
 
-    /**
-     *
-     */
-    private static final long serialVersionUID = 8353700254012726050L;
-
     public FirstTimeStartUpWizardAction(String s, WindowInterface wi) {
         super(s, wi);
     }

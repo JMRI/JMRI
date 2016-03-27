@@ -1,4 +1,3 @@
-// JmriServerParserTest.java
 package jmri.jmris.simpleserver.parser;
 
 import java.io.StringReader;
@@ -10,7 +9,6 @@ import junit.framework.TestSuite;
  * Tests for the {@link jmri.jmris.simpleserver.parser.JmriServerParser} class.
  *
  * @author Paul Bender
- * @version $Revision$
  */
 public class JmriServerParserTest extends TestCase {
 

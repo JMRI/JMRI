@@ -1,4 +1,3 @@
-// MakePacketTest.java
 package jmri.jmrix.direct;
 
 import jmri.NmraPacket;
