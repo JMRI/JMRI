@@ -133,7 +133,7 @@ public class GuiLafPreferencesManager extends Bean implements PreferencesProvide
     public void setLocale(Locale locale) {
         Locale oldLocale = this.locale;
         this.locale = locale;
-        propertyChangeSupport.firePropertyChange(LOCALE, oldLocale, locale);
+        firePropertyChange(LOCALE, oldLocale, locale);
     }
 
     /**
@@ -152,7 +152,7 @@ public class GuiLafPreferencesManager extends Bean implements PreferencesProvide
         int oldFontSize = this.fontSize;
         this.fontSize = (newFontSize == 0) ? 0 : ((newFontSize < MIN_FONT_SIZE) ? MIN_FONT_SIZE : ((newFontSize > MAX_FONT_SIZE) ? MAX_FONT_SIZE : newFontSize));
         if (this.fontSize != oldFontSize) {
-            propertyChangeSupport.firePropertyChange(FONT_SIZE, oldFontSize, this.fontSize);
+            firePropertyChange(FONT_SIZE, oldFontSize, this.fontSize);
         }
     }
 
@@ -230,7 +230,7 @@ public class GuiLafPreferencesManager extends Bean implements PreferencesProvide
     public void setNonStandardMouseEvent(boolean nonStandardMouseEvent) {
         boolean oldNonStandardMouseEvent = this.nonStandardMouseEvent;
         this.nonStandardMouseEvent = nonStandardMouseEvent;
-        propertyChangeSupport.firePropertyChange(NONSTANDARD_MOUSE_EVENT, oldNonStandardMouseEvent, nonStandardMouseEvent);
+        firePropertyChange(NONSTANDARD_MOUSE_EVENT, oldNonStandardMouseEvent, nonStandardMouseEvent);
     }
 
     /**
@@ -246,7 +246,7 @@ public class GuiLafPreferencesManager extends Bean implements PreferencesProvide
     public void setLookAndFeel(String lookAndFeel) {
         String oldLookAndFeel = this.lookAndFeel;
         this.lookAndFeel = lookAndFeel;
-        propertyChangeSupport.firePropertyChange(LOOK_AND_FEEL, oldLookAndFeel, lookAndFeel);
+        firePropertyChange(LOOK_AND_FEEL, oldLookAndFeel, lookAndFeel);
     }
 
     /**
