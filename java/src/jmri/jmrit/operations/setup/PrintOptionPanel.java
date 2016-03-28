@@ -15,6 +15,7 @@ import javax.swing.JCheckBox;
 import javax.swing.JComboBox;
 import javax.swing.JFileChooser;
 import javax.swing.JLabel;
+import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 import javax.swing.JTextArea;
@@ -252,7 +253,7 @@ public class PrintOptionPanel extends OperationsPreferencesPanel {
         pSl.add(pSwitchFormat);
         pSl.add(pSwitchListOrientation);
         pSl.add(pSwitchOptions);
-        
+
         JPanel pM = new JPanel();
         pM.setLayout(new BoxLayout(pM, BoxLayout.X_AXIS));
 
@@ -264,7 +265,7 @@ public class PrintOptionPanel extends OperationsPreferencesPanel {
         pManifestOptions.add(printRouteCommentsCheckBox);
         pManifestOptions.add(departureTimeCheckBox);
         pManifestOptions.add(truncateCheckBox);
-        
+
         // Manifest and Switch List comments
         JPanel pManifestSwtichListOptions = new JPanel();
         pManifestSwtichListOptions.setBorder(BorderFactory.createTitledBorder(Bundle
@@ -275,7 +276,7 @@ public class PrintOptionPanel extends OperationsPreferencesPanel {
         pManifestSwtichListOptions.add(printTimetableNameCheckBox);
         pManifestSwtichListOptions.add(sortByTrackCheckBox);
         pManifestSwtichListOptions.add(printHeadersCheckBox);
-        
+
         pM.add(pManifestOptions);
         pM.add(pManifestSwtichListOptions);
 
@@ -404,8 +405,8 @@ public class PrintOptionPanel extends OperationsPreferencesPanel {
         addButtonAction(deleteSwitchListLocalComboboxButton);
 
         addCheckBoxAction(tabFormatCheckBox);
-//		addCheckBoxAction(twoColumnFormatCheckBox);
         addCheckBoxAction(formatSwitchListCheckBox);
+        addCheckBoxAction(truncateCheckBox);
 
         addComboBoxAction(manifestFormatComboBox);
 
@@ -491,7 +492,8 @@ public class PrintOptionPanel extends OperationsPreferencesPanel {
     }
 
     @Override
-    @edu.umd.cs.findbugs.annotations.SuppressFBWarnings(value = "BC_UNCONFIRMED_CAST_OF_RETURN_VALUE", justification = "checks for instance of PrintOptionFrame")
+    @edu.umd.cs.findbugs.annotations.SuppressFBWarnings(value = "BC_UNCONFIRMED_CAST_OF_RETURN_VALUE",
+            justification = "checks for instance of PrintOptionFrame")
     public void checkBoxActionPerformed(ActionEvent ae) {
         if (ae.getSource() == tabFormatCheckBox) {
             loadFontComboBox();
@@ -502,6 +504,13 @@ public class PrintOptionPanel extends OperationsPreferencesPanel {
             setPreferredSize(null);
             if (this.getTopLevelAncestor() instanceof PrintOptionFrame) {
                 ((PrintOptionFrame) this.getTopLevelAncestor()).pack();
+            }
+        }
+        if (ae.getSource() == truncateCheckBox && truncateCheckBox.isSelected()) {
+            if (JOptionPane.showConfirmDialog(this, Bundle.getMessage("EnableTruncateWarning"),
+                    Bundle.getMessage("TruncateManifests?"),
+                    JOptionPane.YES_NO_OPTION) == JOptionPane.NO_OPTION) {
+                truncateCheckBox.setSelected(false);
             }
         }
     }
@@ -543,7 +552,8 @@ public class PrintOptionPanel extends OperationsPreferencesPanel {
         return null;
     }
 
-    @edu.umd.cs.findbugs.annotations.SuppressFBWarnings(value = "BC_UNCONFIRMED_CAST_OF_RETURN_VALUE", justification = "checks for instance of PrintOptionFrame")
+    @edu.umd.cs.findbugs.annotations.SuppressFBWarnings(value = "BC_UNCONFIRMED_CAST_OF_RETURN_VALUE",
+            justification = "checks for instance of PrintOptionFrame")
     private void updateLogoButtons() {
         boolean flag = Setup.getManifestLogoURL().equals(Setup.NONE);
         addLogoButton.setVisible(flag);
@@ -849,37 +859,41 @@ public class PrintOptionPanel extends OperationsPreferencesPanel {
     @Override
     public boolean isDirty() {
         if ( // font name
-                !Setup.getFontName().equals(fontComboBox.getSelectedItem())
-                // font size
-                || Setup.getManifestFontSize() != (Integer) fontSizeComboBox.getSelectedItem()
+        !Setup.getFontName().equals(fontComboBox.getSelectedItem())
+        // font size
+                ||
+                Setup.getManifestFontSize() != (Integer) fontSizeComboBox.getSelectedItem()
                 // page orientation
-                || !Setup.getManifestOrientation().equals(manifestOrientationComboBox.getSelectedItem())
-                || !Setup.getSwitchListOrientation().equals(switchListOrientationComboBox.getSelectedItem())
+                ||
+                !Setup.getManifestOrientation().equals(manifestOrientationComboBox.getSelectedItem()) ||
+                !Setup.getSwitchListOrientation().equals(switchListOrientationComboBox.getSelectedItem())
                 // format
                 || !Setup.getManifestFormat().equals(manifestFormatComboBox.getSelectedItem())
                 // drop and pick up color option
-                || !Setup.getDropTextColor().equals(dropComboBox.getSelectedItem())
-                || !Setup.getPickupTextColor().equals(pickupComboBox.getSelectedItem())
-                || !Setup.getLocalTextColor().equals(localComboBox.getSelectedItem())
+                ||
+                !Setup.getDropTextColor().equals(dropComboBox.getSelectedItem()) ||
+                !Setup.getPickupTextColor().equals(pickupComboBox.getSelectedItem()) ||
+                !Setup.getLocalTextColor().equals(localComboBox.getSelectedItem())
                 // hazardous comment
                 || !Setup.getHazardousMsg().equals(hazardousTextField.getText())
                 // misplaced car comment
-                || !Setup.getMiaComment().equals(commentTextArea.getText())
-                || Setup.isSwitchListFormatSameAsManifest() != formatSwitchListCheckBox.isSelected()
-                || Setup.isPrintLocationCommentsEnabled() != printLocCommentsCheckBox.isSelected()
-                || Setup.isPrintRouteCommentsEnabled() != printRouteCommentsCheckBox.isSelected()
-                || Setup.isPrintLoadsAndEmptiesEnabled() != printLoadsEmptiesCheckBox.isSelected()
-                || Setup.is12hrFormatEnabled() != use12hrFormatCheckBox.isSelected()
-                || Setup.isPrintValidEnabled() != printValidCheckBox.isSelected()
-                || Setup.isSortByTrackEnabled() != sortByTrackCheckBox.isSelected()
-                || Setup.isPrintHeadersEnabled() != printHeadersCheckBox.isSelected()
-                || Setup.isPrintTimetableNameEnabled() != printTimetableNameCheckBox.isSelected()
-                || Setup.isTruncateManifestEnabled() != truncateCheckBox.isSelected()
-                || Setup.isUseDepartureTimeEnabled() != departureTimeCheckBox.isSelected()
-                || Setup.isManifestEditorEnabled() != editManifestCheckBox.isSelected()
-                || Setup.isSwitchListRouteLocationCommentEnabled() != routeLocationCheckBox.isSelected()
-                || Setup.isTrackSummaryEnabled() != trackSummaryCheckBox.isSelected()
-                || Setup.isTabEnabled() != this.tabFormatCheckBox.isSelected()) {
+                ||
+                !Setup.getMiaComment().equals(commentTextArea.getText()) ||
+                Setup.isSwitchListFormatSameAsManifest() != formatSwitchListCheckBox.isSelected() ||
+                Setup.isPrintLocationCommentsEnabled() != printLocCommentsCheckBox.isSelected() ||
+                Setup.isPrintRouteCommentsEnabled() != printRouteCommentsCheckBox.isSelected() ||
+                Setup.isPrintLoadsAndEmptiesEnabled() != printLoadsEmptiesCheckBox.isSelected() ||
+                Setup.is12hrFormatEnabled() != use12hrFormatCheckBox.isSelected() ||
+                Setup.isPrintValidEnabled() != printValidCheckBox.isSelected() ||
+                Setup.isSortByTrackEnabled() != sortByTrackCheckBox.isSelected() ||
+                Setup.isPrintHeadersEnabled() != printHeadersCheckBox.isSelected() ||
+                Setup.isPrintTimetableNameEnabled() != printTimetableNameCheckBox.isSelected() ||
+                Setup.isTruncateManifestEnabled() != truncateCheckBox.isSelected() ||
+                Setup.isUseDepartureTimeEnabled() != departureTimeCheckBox.isSelected() ||
+                Setup.isManifestEditorEnabled() != editManifestCheckBox.isSelected() ||
+                Setup.isSwitchListRouteLocationCommentEnabled() != routeLocationCheckBox.isSelected() ||
+                Setup.isTrackSummaryEnabled() != trackSummaryCheckBox.isSelected() ||
+                Setup.isTabEnabled() != this.tabFormatCheckBox.isSelected()) {
             return true;
         }
         // save engine pick up message format
@@ -888,8 +902,8 @@ public class PrintOptionPanel extends OperationsPreferencesPanel {
             JComboBox<?> cb = enginePickupMessageList.get(i);
             format[i] = (String) cb.getSelectedItem();
         }
-        if (!Setup.getPickupEnginePrefix().equals(pickupEngPrefix.getText())
-                || !Arrays.equals(Setup.getPickupEngineMessageFormat(), format)) {
+        if (!Setup.getPickupEnginePrefix().equals(pickupEngPrefix.getText()) ||
+                !Arrays.equals(Setup.getPickupEngineMessageFormat(), format)) {
             return true;
         }
         // save engine drop message format
@@ -898,8 +912,8 @@ public class PrintOptionPanel extends OperationsPreferencesPanel {
             JComboBox<?> cb = engineDropMessageList.get(i);
             format[i] = (String) cb.getSelectedItem();
         }
-        if (!Setup.getDropEnginePrefix().equals(dropEngPrefix.getText())
-                || !Arrays.equals(Setup.getDropEngineMessageFormat(), format)) {
+        if (!Setup.getDropEnginePrefix().equals(dropEngPrefix.getText()) ||
+                !Arrays.equals(Setup.getDropEngineMessageFormat(), format)) {
             return true;
         }
         // save car pick up message format
@@ -908,8 +922,8 @@ public class PrintOptionPanel extends OperationsPreferencesPanel {
             JComboBox<?> cb = carPickupMessageList.get(i);
             format[i] = (String) cb.getSelectedItem();
         }
-        if (!Setup.getPickupCarPrefix().equals(this.pickupCarPrefix.getText())
-                || !Arrays.equals(Setup.getPickupManifestMessageFormat(), format)) {
+        if (!Setup.getPickupCarPrefix().equals(this.pickupCarPrefix.getText()) ||
+                !Arrays.equals(Setup.getPickupManifestMessageFormat(), format)) {
             return true;
         }
         // save car drop message format
@@ -918,8 +932,8 @@ public class PrintOptionPanel extends OperationsPreferencesPanel {
             JComboBox<?> cb = carDropMessageList.get(i);
             format[i] = (String) cb.getSelectedItem();
         }
-        if (!Setup.getDropCarPrefix().equals(this.dropCarPrefix.getText())
-                || !Arrays.equals(Setup.getDropManifestMessageFormat(), format)) {
+        if (!Setup.getDropCarPrefix().equals(this.dropCarPrefix.getText()) ||
+                !Arrays.equals(Setup.getDropManifestMessageFormat(), format)) {
             return true;
         }
         // save local message format
@@ -928,8 +942,8 @@ public class PrintOptionPanel extends OperationsPreferencesPanel {
             JComboBox<?> cb = localMessageList.get(i);
             format[i] = (String) cb.getSelectedItem();
         }
-        if (!Setup.getLocalPrefix().equals(this.localPrefix.getText())
-                || !Arrays.equals(Setup.getLocalManifestMessageFormat(), format)) {
+        if (!Setup.getLocalPrefix().equals(this.localPrefix.getText()) ||
+                !Arrays.equals(Setup.getLocalManifestMessageFormat(), format)) {
             return true;
         }
         // save switch list car pick up message format
@@ -938,8 +952,8 @@ public class PrintOptionPanel extends OperationsPreferencesPanel {
             JComboBox<?> cb = switchListCarPickupMessageList.get(i);
             format[i] = (String) cb.getSelectedItem();
         }
-        if (!Setup.getSwitchListPickupCarPrefix().equals(this.switchListPickupCarPrefix.getText())
-                || !Arrays.equals(Setup.getPickupSwitchListMessageFormat(), format)) {
+        if (!Setup.getSwitchListPickupCarPrefix().equals(this.switchListPickupCarPrefix.getText()) ||
+                !Arrays.equals(Setup.getPickupSwitchListMessageFormat(), format)) {
             return true;
         }
         // save switch list car drop message format
@@ -948,8 +962,8 @@ public class PrintOptionPanel extends OperationsPreferencesPanel {
             JComboBox<?> cb = switchListCarDropMessageList.get(i);
             format[i] = (String) cb.getSelectedItem();
         }
-        if (!Setup.getSwitchListDropCarPrefix().equals(this.switchListDropCarPrefix.getText())
-                || !Arrays.equals(Setup.getDropSwitchListMessageFormat(), format)) {
+        if (!Setup.getSwitchListDropCarPrefix().equals(this.switchListDropCarPrefix.getText()) ||
+                !Arrays.equals(Setup.getDropSwitchListMessageFormat(), format)) {
             return true;
         }
         // save switch list local message format
@@ -958,7 +972,7 @@ public class PrintOptionPanel extends OperationsPreferencesPanel {
             JComboBox<?> cb = switchListLocalMessageList.get(i);
             format[i] = (String) cb.getSelectedItem();
         }
-        return !Setup.getSwitchListLocalPrefix().equals(this.switchListLocalPrefix.getText())
-                || !Arrays.equals(Setup.getLocalSwitchListMessageFormat(), format);
+        return !Setup.getSwitchListLocalPrefix().equals(this.switchListLocalPrefix.getText()) ||
+                !Arrays.equals(Setup.getLocalSwitchListMessageFormat(), format);
     }
 }
