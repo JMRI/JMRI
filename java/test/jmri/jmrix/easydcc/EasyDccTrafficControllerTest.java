@@ -1,4 +1,3 @@
-// EasyDccTrafficControllerTest.java
 package jmri.jmrix.easydcc;
 
 import java.io.DataInputStream;
@@ -16,7 +15,6 @@ import junit.framework.TestSuite;
  * Description:	JUnit tests for the EasyDccTrafficController class
  *
  * @author	Bob Jacobsen Copyright (C) 2003, 2007, 2015
- * @version $Revision$
  */
 public class EasyDccTrafficControllerTest extends TestCase {
 

@@ -5,15 +5,19 @@ import org.apache.log4j.Level;
 import org.apache.log4j.spi.LoggingEvent;
 
 /**
- * Log4J Appender that just publishes what it sees
+ * Log4J Appender that works with JUnit tests
+ * to check for expected vs unexpected log messages
+ *
+ * Much of the state is static; not sure why, but this is not
+ * a problem as there should be only one of these while tests are running
  *
  * @author	Bob Jacobsen - Copyright 2007
- * @version	$Revision$
  */
 public class JUnitAppender extends org.apache.log4j.ConsoleAppender {
 
-    static java.util.ArrayList<LoggingEvent> list = new java.util.ArrayList<LoggingEvent>();
+    static java.util.ArrayList<LoggingEvent> list = new java.util.ArrayList<>();
 
+    
     /**
      * Called for each logging event.
      */
@@ -51,6 +55,20 @@ public class JUnitAppender extends org.apache.log4j.ConsoleAppender {
     static boolean hold = false;
 
     static private JUnitAppender instance = null;
+    
+    // package-level access for testing
+    static boolean unexpectedFatalSeen = false;
+    static boolean unexpectedErrorSeen = false;
+    static boolean unexpectedWarnSeen  = false;
+    static boolean unexpectedInfoSeen  = false;
+    
+    public static boolean unexpectedMessageSeen(Level l) {
+        if (l == Level.FATAL) return unexpectedFatalSeen;
+        if (l == Level.ERROR) return unexpectedFatalSeen || unexpectedErrorSeen;
+        if (l == Level.WARN) return unexpectedFatalSeen || unexpectedErrorSeen || unexpectedWarnSeen;
+        if (l == Level.INFO) return unexpectedFatalSeen || unexpectedErrorSeen || unexpectedWarnSeen || unexpectedInfoSeen;
+        throw new java.lang.IllegalArgumentException("Did not expect "+l);
+    }
 
     /**
      * Tell appender that a JUnit test is starting.
@@ -70,11 +88,22 @@ public class JUnitAppender extends org.apache.log4j.ConsoleAppender {
     public static void end() {
         hold = false;
         while (!list.isEmpty()) {
-            instance().superappend(list.remove(0));
+            LoggingEvent evt = list.remove(0);
+            instance().superappend(evt);
         }
     }
 
     void superappend(LoggingEvent l) {
+        if (l.getLevel() == Level.FATAL) unexpectedFatalSeen = true;
+        if (l.getLevel() == Level.ERROR) {
+            if (compare((String) l.getMessage(),"Uncaught Exception caught by jmri.util.exceptionhandler.UncaughtExceptionHandler")) {
+                // still an error, just suppressed
+            } else {
+                unexpectedErrorSeen = true;
+            }
+        }
+        if (l.getLevel() == Level.WARN) unexpectedWarnSeen = true;
+        if (l.getLevel() == Level.INFO) unexpectedInfoSeen = true;
         super.append(l);
     }
 
@@ -103,7 +132,8 @@ public class JUnitAppender extends org.apache.log4j.ConsoleAppender {
             return true;
         }
         while (!list.isEmpty()) {
-            instance().superappend(list.remove(0));
+            LoggingEvent evt = list.remove(0);
+            instance().superappend(evt);
         }
         return false;
     }

@@ -1,4 +1,3 @@
-// TieToolFrameDemo.java
 package jmri.jmrix.openlcb.swing.tie;
 
 import junit.framework.Test;
@@ -9,7 +8,6 @@ import junit.framework.TestSuite;
  * Tests for the jmri.jmrix.can.swing.tie.TieToolFrame class
  *
  * @author Bob Jacobsen Copyright 2008
- * @version $Revision$
  */
 public class TieToolFrameDemo extends TestCase {
 

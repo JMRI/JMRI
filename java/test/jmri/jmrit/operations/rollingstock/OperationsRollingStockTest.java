@@ -1,4 +1,3 @@
-// OperationsRollingStockTest.java
 package jmri.jmrit.operations.rollingstock;
 
 import jmri.jmrit.operations.OperationsTestCase;
@@ -142,8 +141,7 @@ public class OperationsRollingStockTest extends OperationsTestCase {
         RollingStock rs1 = new RollingStock("TESTROAD", "TESTNUMBER1");
         Assert.assertEquals("RollingStock Road", "TESTROAD", rs1.getRoadName());
         Assert.assertEquals("RollingStock Number", "TESTNUMBER1", rs1.getNumber());
-
-        Assert.assertEquals("RollingStock Constant LOCATION_CHANGED_PROPERTY", "rolling stock location", RollingStock.LOCATION_CHANGED_PROPERTY);
+        
         Assert.assertEquals("RollingStock Constant TRACK_CHANGED_PROPERTY", "rolling stock track location", RollingStock.TRACK_CHANGED_PROPERTY);
         Assert.assertEquals("RollingStock Constant DESTINATION_CHANGED_PROPERTY", "rolling stock destination", RollingStock.DESTINATION_CHANGED_PROPERTY);
         Assert.assertEquals("RollingStock Constant DESTINATIONTRACK_CHANGED_PROPERTY", "rolling stock track destination", RollingStock.DESTINATION_TRACK_CHANGED_PROPERTY);

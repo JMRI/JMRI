@@ -1,4 +1,3 @@
-// Thottle.java
 package jmri;
 
 import java.util.Vector;
@@ -28,7 +27,6 @@ import java.util.Vector;
  * <P>
  *
  * @author	Bob Jacobsen Copyright (C) 2001, 2008
- * @version	$Revision$
  */
 public interface Throttle {
 
@@ -470,6 +468,3 @@ public interface Throttle {
 
     public BasicRosterEntry getRosterEntry();
 }
-
-
-/* @(#)Thottle.java */

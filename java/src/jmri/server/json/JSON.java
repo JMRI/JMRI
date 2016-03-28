@@ -191,20 +191,6 @@ public final class JSON {
      */
     public static final String REPORTERS = "reporters"; // NOI18N
     /**
-     * {@value #ROSTER}
-     */
-    public static final String ROSTER = "roster"; // NOI18N
-    /**
-     * {@value #ROSTER_GROUP}
-     *
-     * @since 2.0
-     */
-    public static final String ROSTER_GROUP = "rosterGroup"; // NOI18N
-    /**
-     * {@value #ROSTER_GROUPS}
-     */
-    public static final String ROSTER_GROUPS = "rosterGroups"; // NOI18N
-    /**
      * {@value #ROUTES}
      */
     public static final String ROUTES = "routes"; // NOI18N
@@ -292,10 +278,6 @@ public final class JSON {
      * {@value #REPORTER}
      */
     public static final String REPORTER = "reporter"; // NOI18N
-    /**
-     * {@value #ROSTER_ENTRY}
-     */
-    public static final String ROSTER_ENTRY = "rosterEntry"; // NOI18N
     /**
      * {@value #THROTTLE}
      */
@@ -617,7 +599,7 @@ public final class JSON {
     /**
      * {@value #ADD}
      *
-     * As an attribute of a {@link #ROSTER}, this is an entry that has been
+     * As an attribute of a {@link jmri.server.json.roster.JsonRoster#ROSTER}, this is an entry that has been
      * added to the roster.
      *
      * @since 1.1
@@ -629,7 +611,7 @@ public final class JSON {
      * In operations, this indicates the dropping or setting out of a car or
      * engine.
      *
-     * As an attribute of a {@link #ROSTER}, this is an entry that has been
+     * As an attribute of a {@link jmri.server.json.roster.JsonRoster#ROSTER}, this is an entry that has been
      * removed from the roster.
      *
      * @since 1.1

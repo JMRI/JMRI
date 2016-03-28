@@ -1,4 +1,3 @@
-// LIUSBTest.java
 package jmri.jmrix.lenz.liusb;
 
 import junit.framework.Test;
@@ -9,7 +8,6 @@ import junit.framework.TestSuite;
  * Tests for the jmri.jmrix.lenz.liusb package
  *
  * @author Paul Bender
- * @version $Revision$
  */
 public class LIUSBTest extends TestCase {
 

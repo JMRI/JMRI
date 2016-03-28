@@ -12,7 +12,6 @@ import junit.framework.TestSuite;
  * class
  *
  * @author	Paul Bender
- * @version $Revision$
  */
 public class LIUSBEthernetAdapterTest extends TestCase {
 

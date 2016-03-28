@@ -4,7 +4,6 @@
  * Description:	JUnit tests for the EliteXNetProgrammer class
  *
  * @author	Bob Jacobsen
- * @version $Revision$
  */
 package jmri.jmrix.lenz.hornbyelite;
 

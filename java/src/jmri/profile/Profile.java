@@ -1,5 +1,6 @@
 package jmri.profile;
 
+import edu.umd.cs.findbugs.annotations.SuppressFBWarnings;
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileOutputStream;
@@ -71,7 +72,9 @@ public class Profile implements Comparable<Profile> {
         this.name = name;
         this.id = id + "." + ProfileManager.createUniqueId();
         this.path = path;
-        path.mkdirs();
+        if (!path.exists() && !path.mkdirs()) {
+            throw new IOException("Unable to create directory " + path); // NOI18N
+        }
         if (!path.isDirectory()) {
             throw new IllegalArgumentException(path + " is not a directory"); // NOI18N
         }
@@ -245,6 +248,7 @@ public class Profile implements Comparable<Profile> {
      * @return true if path or subdirectories contains a Profile.
      * @since 3.9.4
      */
+    @SuppressFBWarnings(value = "NP_NULL_ON_SOME_PATH_FROM_RETURN_VALUE", justification = "listFiles() is only null if path is not a directory")
     public static boolean containsProfile(File path) {
         if (path.isDirectory()) {
             if (Profile.isProfile(path)) {

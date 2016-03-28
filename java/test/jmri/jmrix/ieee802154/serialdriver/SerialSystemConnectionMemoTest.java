@@ -12,7 +12,6 @@ import junit.framework.TestSuite;
  * jmri.jmrix.ieee802154.serialdriver.SerialSystemConnectionMemo class
  *
  * @author	Paul Bender
- * @version $Revision$
  */
 public class SerialSystemConnectionMemoTest extends TestCase {
 

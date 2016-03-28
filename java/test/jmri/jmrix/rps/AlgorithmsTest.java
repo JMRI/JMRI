@@ -1,4 +1,3 @@
-// AlgorithmsTest.java
 package jmri.jmrix.rps;
 
 import junit.framework.Test;
@@ -12,7 +11,6 @@ import junit.framework.TestSuite;
  * the package tests.
  *
  * @author Bob Jacobsen Copyright 2008
- * @version $Revision$
  */
 public class AlgorithmsTest extends TestCase {
 

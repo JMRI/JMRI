@@ -11,7 +11,6 @@ import junit.framework.TestSuite;
  * Description:	tests for the jmri.jmrix.lenz.li101.LI101Adapter class
  *
  * @author	Paul Bender
- * @version $Revision$
  */
 public class LI101AdapterTest extends TestCase {
 

@@ -43,7 +43,7 @@ public class XBeeTrafficController extends IEEE802154TrafficController implement
      * adapter-specific subclass.
      */
     protected AbstractMRReply newReply() {
-        return new XBeeReply(this);
+        return new XBeeReply();
     }
 
     /**
@@ -197,7 +197,7 @@ public class XBeeTrafficController extends IEEE802154TrafficController implement
         //    log.error("XBee API Reports error in parsing reply");
         //    return;
         //}
-        XBeeReply reply = new XBeeReply(this, response);
+        XBeeReply reply = new XBeeReply(response);
 
         // message is complete, dispatch it !!
         replyInDispatch = true;

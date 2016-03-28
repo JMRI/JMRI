@@ -1,4 +1,3 @@
-// LocoMonPaneTest.java
 
 package jmri.jmrix.loconet.locomon;
 

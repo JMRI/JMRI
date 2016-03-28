@@ -1,4 +1,3 @@
-// X10SequenceTest.java
 package jmri.jmrix.powerline;
 
 import junit.framework.Assert;

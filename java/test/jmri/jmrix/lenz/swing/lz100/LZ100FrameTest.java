@@ -14,7 +14,6 @@ import junit.framework.TestSuite;
  * Description:	tests for the jmri.jmrix.lenz.swing.lz100.LZ100Frame class
  *
  * @author	Paul Bender
- * @version $Revision$
  */
 public class LZ100FrameTest extends TestCase {
 

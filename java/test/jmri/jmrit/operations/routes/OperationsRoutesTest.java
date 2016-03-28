@@ -1,4 +1,3 @@
-// OperationsRoutesTest.java
 package jmri.jmrit.operations.routes;
 
 import java.io.IOException;
@@ -22,7 +21,6 @@ import org.jdom2.JDOMException;
  * verify RouteLocation: XML read/write
  *
  * @author Bob Coleman Copyright (C) 2008, 2009
- * @version $Revision$
  */
 public class OperationsRoutesTest extends OperationsTestCase {
 

@@ -1,4 +1,3 @@
-// PackageTest.java
 package jmri.util.zeroconf;
 
 import junit.framework.Test;

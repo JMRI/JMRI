@@ -1,4 +1,3 @@
-// SerialTurnoutTest.java
 package jmri.jmrix.powerline;
 
 import jmri.implementation.AbstractTurnoutTest;

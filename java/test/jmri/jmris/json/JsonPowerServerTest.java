@@ -11,7 +11,6 @@ import junit.framework.TestSuite;
  * Tests for the jmri.jmris.json.JsonPowerServer class
  *
  * @author Paul Bender
- * @version $Revision$
  */
 public class JsonPowerServerTest extends TestCase {
 

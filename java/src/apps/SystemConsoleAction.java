@@ -25,11 +25,6 @@ import jmri.util.swing.WindowInterface;
  */
 public class SystemConsoleAction extends jmri.util.swing.JmriAbstractAction {
 
-    /**
-     *
-     */
-    private static final long serialVersionUID = -5843920804488337948L;
-
     public SystemConsoleAction(String s, WindowInterface wi) {
         super(s, wi);
     }

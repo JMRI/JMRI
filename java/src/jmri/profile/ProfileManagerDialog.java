@@ -11,6 +11,7 @@
  *============================================================================*/
 package jmri.profile;
 
+import edu.umd.cs.findbugs.annotations.SuppressFBWarnings;
 import java.awt.Dimension;
 import java.awt.Frame;
 import java.awt.event.ActionEvent;
@@ -319,6 +320,7 @@ public class ProfileManagerDialog extends JDialog {
         }
     }//GEN-LAST:event_profilesKeyPressed
 
+    @SuppressFBWarnings(value="DM_EXIT", justification="This exit ensures launch is aborted if a profile is not selected or autostarted")
     private void formWindowClosing(WindowEvent evt) {//GEN-FIRST:event_formWindowClosing
         if (countDown != -1) {
             System.exit(255);

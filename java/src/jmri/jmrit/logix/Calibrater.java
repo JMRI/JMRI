@@ -224,7 +224,7 @@ public class Calibrater extends jmri.util.JmriJFrame {
         float spFactor = 0.0f;
         float spSpeed = 0.0f;
         DccThrottle throttle = _warrant.getThrottle();
-        float scale = SignalSpeedMap.getMap().getLayoutScale();
+        float scale = jmri.InstanceManager.getDefault(SignalSpeedMap.class).getLayoutScale();
         float scaleSpeed = _rawSpeed*scale;          // prototype m/s
         if (!init) {
             float speedSetting = throttle.getSpeedSetting();
@@ -260,7 +260,7 @@ public class Calibrater extends jmri.util.JmriJFrame {
             _maxSpeed = speedSetting;     // now is the actual setting
         }
         String speedUnits;
-        if ( SignalSpeedMap.getMap().getInterpretation() == SignalSpeedMap.SPEED_KMPH) {
+        if ( jmri.InstanceManager.getDefault(SignalSpeedMap.class).getInterpretation() == SignalSpeedMap.SPEED_KMPH) {
             speedUnits = "kmph";
             scaleSpeed = 3.6f*scaleSpeed;
             spSpeed = spSpeed*scale*3.6f/1000;

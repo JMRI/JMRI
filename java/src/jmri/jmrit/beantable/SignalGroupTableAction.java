@@ -120,10 +120,10 @@ public class SignalGroupTableAction extends AbstractTableAction implements Prope
                     return "";    // no heading on "Edit"
                 }
                 if (col == ENABLECOL) {
-                    return "Enabled";
+                    return Bundle.getMessage("ColumnHeadEnabled");
                 }
                 if (col == COMMENTCOL) {
-                    return "Comment";
+                    return Bundle.getMessage("ColumnComment"); //"Comment";
                 }
                 if (col == DELETECOL) {
                     return "";
@@ -186,7 +186,7 @@ public class SignalGroupTableAction extends AbstractTableAction implements Prope
             public Object getValueAt(int row, int col) {
                 NamedBean b;
                 if (col == SETCOL) {
-                    return "Edit";
+                    return Bundle.getMessage("ButtonEdit");
                 } else if (col == ENABLECOL) {
                     return Boolean.valueOf(((SignalGroup) getBySystemName((String) getValueAt(row, SYSNAMECOL))).getEnabled());
                     //return true;
@@ -578,7 +578,7 @@ public class SignalGroupTableAction extends AbstractTableAction implements Prope
             stateOffColumnSi.setResizable(false);
             stateOffColumnSi.setMinWidth(50);
             stateOffColumnSi.setMaxWidth(100);
-            JButton editButton = new JButton("Edit");
+            JButton editButton = new JButton(Bundle.getMessage("ButtonEdit"));
             TableColumn editColumnSi = SignalGroupSignalColumnModel.
                     getColumn(SignalGroupSignalModel.EDIT_COLUMN);
             editColumnSi.setResizable(false);

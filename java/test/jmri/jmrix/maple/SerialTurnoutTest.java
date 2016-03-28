@@ -1,4 +1,3 @@
-// SerialTurnoutTest.java
 package jmri.jmrix.maple;
 
 import jmri.implementation.AbstractTurnoutTest;

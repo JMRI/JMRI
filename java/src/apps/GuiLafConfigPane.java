@@ -49,7 +49,7 @@ public class GuiLafConfigPane extends JPanel implements PreferencesPanel {
 
     public static final int MAX_TOOLTIP_TIME = 3600;
     public static final int MIN_TOOLTIP_TIME = 1;
-    private static final long serialVersionUID = -3846942336860819413L;
+
     /**
      * Smallest font size shown to a user ({@value}).
      *

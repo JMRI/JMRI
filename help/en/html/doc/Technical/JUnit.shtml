@@ -236,6 +236,14 @@ In any case, all of your main() routines should start with
 </CODE></PRE>
 so that they can be run independently.
 
+<p>
+Note: Our 
+<a href="ContinuousIntegration.shtml ">CI test</a>
+executables are configured to fail if any FATAL or ERROR messages
+are emitted instead of being handled.  This means that although you can
+run your tests successfully on your own computer if they're emitting ERROR messages, 
+but you won't be able to merge your code into the common repository until those are handled.
+
 <h3><a name="ResetInstMgr">Resetting the InstanceManager</a></h3>
 
 If you are testing code that is going to reference the InstanceManager, 

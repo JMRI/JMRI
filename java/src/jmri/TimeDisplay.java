@@ -1,4 +1,3 @@
-// TimeDisplay.java
 package jmri;
 
 /**
@@ -20,7 +19,6 @@ package jmri;
  * <P>
  *
  * @author	Bob Jacobsen Copyright (C) 2004
- * @version	$Revision$
  */
 public interface TimeDisplay {
 
@@ -29,5 +27,3 @@ public interface TimeDisplay {
     public int getUpdateRate();
 
 }
-
-/* @(#)TimeDisplay.java */

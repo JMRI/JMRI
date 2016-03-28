@@ -1,4 +1,3 @@
-// SensorManager.java
 package jmri;
 
 import java.util.List;
@@ -18,7 +17,6 @@ import java.util.List;
  * A PARTICULAR PURPOSE. See the GNU General Public License for more details.
  * <P>
  * @author	Bob Jacobsen Copyright (C) 2001
- * @version	$Revision$
  */
 public interface SensorManager extends Manager {
 
@@ -125,6 +123,3 @@ public interface SensorManager extends Manager {
 
     public void setDefaultSensorDebounceGoingInActive(long timer);
 }
-
-
-/* @(#)SensorManager.java */

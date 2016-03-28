@@ -121,10 +121,10 @@ public class ReporterTableAction extends AbstractTableAction {
 
             public String getColumnName(int col) {
                 if (col == VALUECOL) {
-                    return "Report";
+                    return Bundle.getMessage("LabelReport");
                 }
                 if (col == LASTREPORTCOL) {
-                    return "Last Report";
+                    return Bundle.getMessage("LabelLastReport");
                 }
                 return super.getColumnName(col);
             }

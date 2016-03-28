@@ -1,4 +1,3 @@
-// SerialNodeTest.java
 package jmri.jmrix.powerline;
 
 import junit.framework.Test;

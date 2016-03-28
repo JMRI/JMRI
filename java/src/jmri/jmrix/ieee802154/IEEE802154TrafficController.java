@@ -190,7 +190,7 @@ abstract public class IEEE802154TrafficController extends AbstractMRNodeTrafficC
      * This is a default, null implementation, which must be overridden in an
      * adapter-specific subclass.
      */
-    //protected AbstractMRReply newReply() {return new IEEE802154Reply(this);}
+    //protected AbstractMRReply newReply() {return new IEEE802154Reply();}
     /*
      * Build a new IEEE802154 Node.
      * Must be implemented by derived classes
@@ -215,7 +215,13 @@ abstract public class IEEE802154TrafficController extends AbstractMRNodeTrafficC
      * the specified address was not found
      */
     synchronized public jmri.jmrix.AbstractNode getNodeFromAddress(int ia[]) {
-        log.debug("int array getNodeFromAddress called with " + ia);
+        if(logDebug) {
+           String s="";
+           for( int i=0;i<ia.length;i++) {
+               s=jmri.util.StringUtil.appendTwoHexFromInt(ia[i],s);
+           }
+           log.debug("int array getNodeFromAddress called with " + s);
+        }
         byte ba[] = new byte[ia.length];
         for (int i = 0; i < ia.length; i++) {
             ba[i] = (byte) (ia[i] & 0xff);
@@ -229,7 +235,10 @@ abstract public class IEEE802154TrafficController extends AbstractMRNodeTrafficC
      * the specified address was not found
      */
     synchronized public jmri.jmrix.AbstractNode getNodeFromAddress(byte ba[]) {
-        log.debug("byte array getNodeFromAddress called with " + ba);
+        if(logDebug) {
+           log.debug("byte array getNodeFromAddress called with " + 
+                    jmri.util.StringUtil.hexStringFromBytes(ba));
+        }
         for (int i = 0; i < numNodes; i++) {
             byte bsa[] = ((IEEE802154Node) getNode(i)).getUserAddress();
             byte bga[] = ((IEEE802154Node) getNode(i)).getGlobalAddress();

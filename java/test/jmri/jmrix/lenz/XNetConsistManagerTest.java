@@ -11,7 +11,6 @@ import junit.framework.TestSuite;
  * Description:	tests for the jmri.jmrix.lenz.XNetConsistManager class
  *
  * @author	Paul Bender
- * @version $Revision$
  */
 public class XNetConsistManagerTest extends TestCase {
 

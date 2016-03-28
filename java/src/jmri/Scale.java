@@ -1,4 +1,3 @@
-// Scale.java
 package jmri;
 
 /**
@@ -6,7 +5,6 @@ package jmri;
  * <P>
  * *
  * @author	Dave Duchamp Copyright (C) 2009
- * @version	$Revision$
  * @since 2.5.4
  */
 public class Scale {
@@ -121,5 +119,3 @@ public class Scale {
     }
 
 }
-
-/* @(#)Scale.java */

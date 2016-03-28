@@ -1,4 +1,3 @@
-// SRCPClockControl.java
 package jmri.jmrix.srcp;
 
 import java.util.Date;
@@ -9,7 +8,6 @@ import jmri.implementation.DefaultClockControl;
  * Class providing SRCP Clock Control to the SRCP client.
  *
  * @author	Paul Bender Copyright (C) 2014
- * @version $Revision$
  */
 public class SRCPClockControl extends DefaultClockControl {
 

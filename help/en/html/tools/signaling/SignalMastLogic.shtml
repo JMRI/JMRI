@@ -2,7 +2,6 @@
 <html lang="en">
 <head>
 <!-- Copyright Kevin Dickerson 2011 -->
-<!-- $Id$ -->
 <title>JMRI: Signal Mast Logic introduction</title>
 <META name="Author" content="Bob Jacobsen, Egbert Broerse">
 <META name="Date.Modified" content="20140614"/>
@@ -172,6 +171,8 @@ You manually add new Signal Mast Logic pairs with the "Add..."  button at the bo
 <p>Back to the <a href="index.shtml#tools">Signaling main help page</a>.
 	
 <!--#include virtual="/Footer" -->
+
+    </div><!-- closes #mainContent-->
+  </div> <!-- closes #mBody-->
 </body>
 </html>
-

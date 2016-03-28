@@ -7,6 +7,7 @@
 #
 
 import jmri
+import java
 
 from org.apache.log4j import Logger
 

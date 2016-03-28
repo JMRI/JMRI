@@ -1,4 +1,3 @@
-// DefaultIdTagManager.java
 package jmri.managers;
 
 import java.io.File;
@@ -26,7 +25,6 @@ import org.slf4j.LoggerFactory;
  *
  * @author Bob Jacobsen Copyright (C) 2010
  * @author Matthew Harris Copyright (C) 2011
- * @version $Revision$
  * @since 2.11.4
  */
 public class DefaultIdTagManager extends AbstractManager
@@ -527,5 +525,3 @@ public class DefaultIdTagManager extends AbstractManager
     private static final Logger log = LoggerFactory.getLogger(DefaultIdTagManager.class.getName());
 
 }
-
-/* @(#)DefaultIdTagManager.java */

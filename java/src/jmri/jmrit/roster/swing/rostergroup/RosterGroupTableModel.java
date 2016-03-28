@@ -22,10 +22,6 @@ import org.slf4j.LoggerFactory;
  */
 public class RosterGroupTableModel extends javax.swing.table.AbstractTableModel {
 
-    /**
-     *
-     */
-    private static final long serialVersionUID = 7420154419304239909L;
     static final int IDCOL = 0;
     static final int ROADNUMBERCOL = 1;
     static final int ROADNAMECOL = 2;
@@ -71,7 +67,6 @@ public class RosterGroupTableModel extends javax.swing.table.AbstractTableModel 
             case ROADNUMBERCOL:
                 return 75;
             case ROADNAMECOL:
-                return new JTextField(20).getPreferredSize().width;
             case OWNERCOL:
                 return new JTextField(20).getPreferredSize().width;
             case ADDTOGROUPCOL: // not actually used due to the configureTable, setColumnToHoldButton, configureButton

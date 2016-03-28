@@ -1,4 +1,3 @@
-// PackageTest.java
 package jmri.jmrix.can.nmranet;
 
 import junit.framework.Test;
@@ -9,7 +8,6 @@ import junit.framework.TestSuite;
  * Tests for the jmri.jmrix.can.nmranet package.
  *
  * @author Bob Jacobsen Copyright 2009
- * @version $Revision$
  */
 public class PackageTest extends TestCase {
 

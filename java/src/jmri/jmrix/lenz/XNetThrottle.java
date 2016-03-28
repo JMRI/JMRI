@@ -57,7 +57,7 @@ public class XNetThrottle extends AbstractThrottle implements XNetListener {
     public XNetThrottle(XNetSystemConnectionMemo memo, LocoAddress address, XNetTrafficController controller) {
         super(memo);
         this.tc = controller;
-        this.setDccAddress(((DccLocoAddress) address).getNumber());
+        this.setDccAddress(address.getNumber());
         this.speedIncrement = SPEED_STEP_128_INCREMENT;
         this.speedStepMode = DccThrottle.SpeedStepMode128;
         //       this.isForward=true;
@@ -791,8 +791,8 @@ public class XNetThrottle extends AbstractThrottle implements XNetListener {
             if (java.lang.Math.abs(
                     this.getSpeedSetting() - ((float) speedVal / (float) 126)) >= 0.0079) {
                 notifyPropertyChangeListener("SpeedSetting",
-                        new Float(this.speedSetting),
-                        new Float(this.speedSetting
+                        Float.valueOf(this.speedSetting),
+                        Float.valueOf(this.speedSetting
                                 = (float) speedVal / (float) 126));
             }
         } else if (this.speedStepMode == DccThrottle.SpeedStepMode28) {
@@ -811,8 +811,8 @@ public class XNetThrottle extends AbstractThrottle implements XNetListener {
             if (java.lang.Math.abs(
                     this.getSpeedSetting() - ((float) speedVal / (float) 28)) >= 0.035) {
                 notifyPropertyChangeListener("SpeedSetting",
-                        new Float(this.speedSetting),
-                        new Float(this.speedSetting
+                        Float.valueOf(this.speedSetting),
+                        Float.valueOf(this.speedSetting
                                 = (float) speedVal / (float) 28));
             }
         } else if (this.speedStepMode == DccThrottle.SpeedStepMode27) {
@@ -831,8 +831,8 @@ public class XNetThrottle extends AbstractThrottle implements XNetListener {
             if (java.lang.Math.abs(
                     this.getSpeedSetting() - ((float) speedVal / (float) 27)) >= 0.037) {
                 notifyPropertyChangeListener("SpeedSetting",
-                        new Float(this.speedSetting),
-                        new Float(this.speedSetting
+                        Float.valueOf(this.speedSetting),
+                        Float.valueOf(this.speedSetting
                                 = (float) speedVal / (float) 27));
             }
         } else {
@@ -846,8 +846,8 @@ public class XNetThrottle extends AbstractThrottle implements XNetListener {
             if (java.lang.Math.abs(
                     this.getSpeedSetting() - ((float) speedVal / (float) 14)) >= 0.071) {
                 notifyPropertyChangeListener("SpeedSetting",
-                        new Float(this.speedSetting),
-                        new Float(this.speedSetting
+                        Float.valueOf(this.speedSetting),
+                        Float.valueOf(this.speedSetting
                                 = (float) speedVal / (float) 14));
             }
         }

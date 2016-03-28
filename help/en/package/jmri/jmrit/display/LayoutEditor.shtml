@@ -223,6 +223,7 @@ bar:</p>
 	<li><b>Text Label</b> - selects a label showing the content of the entry field </li>
 	<li><b>Memory Label</b> - selects a label showing the contents of the memory whose name is 
 	entered on the right</li>
+        <li><b>Block Contents</b> - selects a label showing the contents of the block whose name is entered</li>
 	<li><b>Multi-sensor</b> - selects a multi-sensor--A dialog is displayed allowing the 
 	multi-sensor to be defined. Before creating the multi-sensor, a name must be entered 
 	for every sensor to define the multi-sensor completely.</li>
@@ -309,7 +310,13 @@ are optional or required.
 	If the entered name doesn't correspond to a memory variable in the Memory Table, 
 	a new memory variable will be created, using the entered name as the JMRI 
 	system name (with IM prefixed if needed).</li>
-	<li><b>Sensor Icon</b> (field) - applies to Sensor Icon - Entry is required. 
+	<li><b>Block Contents</b> (field) - applies to Block Contents - Entry is required.  
+	If the entered name doesn't correspond to a layout block a new memory layout block
+        will be created, using the entered name as the JMRI 
+	system name (with a prefix added if needed). This new block will be discarded on the
+        next save of the Layout unless it is actually used.</li>
+
+        <li><b>Sensor Icon</b> (field) - applies to Sensor Icon - Entry is required. 
 	If a sensor with the entered name does not exist, it will be created using the 
 	entered name as the JMRI system name (with a suitable prefix if needed).</li>
 	<li><b>Signal Icon</b> (field) - applies to Signal Icon - Entry is required.
@@ -1090,12 +1097,6 @@ set, Layout Editor will use the occupied track color if a block is occupied, the
 if not occupied, will use the alternate unoccupied track color if it has been 
 requested, otherwise it uses the unoccupied track color.</p>
 <p>
-Optionally a Memory Variable may be assigned to a block by entering its name 
-(system name or user name) in the <b>Memory Variable Name:</b> 
-field. This is useful when setting up Train Tracking (<a href="#tracking">see 
-below</a>). Make sure a memory variable is in the Memory Variable Table before 
-it is entered here.
-<p>
 Since blocks are items on the physical layout, the same block may be used in 
 more than one panel. Consequently, block information is saved in the non-panel 
 specific portion of the layout information, when panels are saved to a
@@ -1107,7 +1108,7 @@ and level crossings) that are assigned to a block. This count is displayed in
 the Create/Edit Block dialog as <b>Current Use Count:</b>. When panels are saved to
 disk, only those blocks with a use count greater than zero are saved.</p>
 
-<a name="tracking"><h2>Blocks, Memory Labels, and Train Tracking</h2>
+<a name="tracking"><h2>Train Tracking</h2>
 
 <b>Train Tracking</b> is an animation technique that allows us to display 
 dynamically which train is in an occupied 
@@ -1128,26 +1129,18 @@ automatically performed when blocks are changed and when a Layout Editor panel
 is loaded. Since the initialization is automatic, Layout Editor users don't 
 need to be concerned about Paths and Bean Settings.</p>
 <p>
-Layout Editor allows a Memory Variable to be assigned to each block. When the 
-<b>value</b> of a Block changes, Layout Editor automatically copies the new 
-<i>value</i> of the Block into its assigned Memory Variable (if there is one). 
-So, by using a Memory Label near each block, be can display the name of the train 
-in that block.</p>
+Layout Editor allows the display of the block contents on the panel.</p>
 <p>
 This might sound complicated, but it's very easy to set up because JMRI's Block 
 and Layout Editor software does almost everything automatically. There is even 
-software to automatically save and restore Block <i>values</i> between sessions.
+software to automatically save and restore Block contents <i>values</i> between sessions.
 <p>
 If your panel is blocked and each block has a hardware occupancy sensor, to set 
 up Train Tracking do the following:
 <p>
 <UL> <li>
-1. Create a memory variable in the Memory Variable Table for each block.</li>
-<li>2. Edit each block, adding its memory variable name (<a href="#block">see above
-</a>).</li>
-<li>3. Place a Memory Label for its assigned memory variable near each block 
-in the panel.</li>
-<li>4. Open the Block Table, and enter the name of each train in the "Value" 
+<li>1. Place a Block Contents Label near each block in the panel.</li>
+<li>2. Open the Block Table, and enter the name of each train in the "Value" 
 column of the block it is occupying. <b>Remember to click somewhere outside the 
 value entry box after entering a train name to make Java read what was 
 entered.</b></li>
@@ -1185,12 +1178,12 @@ possibilities and automated tools for setting up signals, train tracking, etc.
 If you would like both worlds, consider building both Panel Editor and Layout 
 Editor panels for your layout. You can switch between them easily using the 
 <b>Panels</b> menu. Since both type of panels share the same configuration items 
-(turnouts, sensors, memory variables, signal heads, etc.), whatever is done in 
+(turnouts, sensors, memory variables, block contents, signal heads, etc.), whatever is done in 
 one panel is reflected in the other if the same items are displayed. After they 
 are loaded, panels continue to function, whether they are displayed or not--
 they just need to show up in the <b>Show Panel</b> submenu. So, for example, if 
 you set up a Layout Editor panel for train tracking as described above, you can 
-track trains in a companion Panel Editor panel just by adding Memory Labels.</p>
+track trains in a companion Panel Editor panel just by adding Block Contents Labels.</p>
 
 <a name="finish"><h2>Putting Finishing Touches on your Panel</h2>
 

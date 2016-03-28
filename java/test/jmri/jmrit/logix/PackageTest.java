@@ -1,4 +1,3 @@
-// PackageTest.java
 package jmri.jmrit.logix;
 
 import junit.framework.Test;
@@ -9,7 +8,6 @@ import junit.framework.TestSuite;
  * Invokes complete set of tests in the jmri.jmrit.logix tree
  *
  * @author	Bob Jacobsen Copyright 2010
- * @version $Revision$
  */
 public class PackageTest extends TestCase {
 

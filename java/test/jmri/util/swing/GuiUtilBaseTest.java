@@ -1,4 +1,3 @@
-// GuiUtilBaseTest.java
 package jmri.util.swing;
 
 import junit.framework.Test;
@@ -9,7 +8,6 @@ import junit.framework.TestSuite;
  *
  * @author Bob Jacobsen Copyright 2011, 2012
  * @since 2.9.3
- * @version $Revision$
  */
 public class GuiUtilBaseTest extends jmri.configurexml.SchemaTestBase {
 

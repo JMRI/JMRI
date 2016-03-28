@@ -1,4 +1,3 @@
-// XmlTest.java
 package jmri.jmrit.operations.rollingstock.cars;
 
 import java.io.IOException;
@@ -15,7 +14,6 @@ import org.jdom2.JDOMException;
  * on 20090131
  *
  * @author	Bob Coleman Copyright (C) 2008, 2009
- * @version $Revision$
  */
 public class XmlTest extends OperationsTestCase {
 
