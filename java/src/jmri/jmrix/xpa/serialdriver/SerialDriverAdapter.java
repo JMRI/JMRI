@@ -69,18 +69,7 @@ public class SerialDriverAdapter extends XpaPortController implements jmri.jmrix
             serialStream = activeSerialPort.getInputStream();
 
             // purge contents, if any
-            int count = serialStream.available();
-            log.debug("input stream shows " + count + " bytes available");
-            while (count > 0) {
-                long read = serialStream.skip(count);
-                if(read<count) {
-                   log.debug("skipped " + read + " bytes when " + count +
-                             "bytes reported available");
-                }
-                // double check to see if the port still reports
-                // bytes available.
-                count = serialStream.available();
-            }
+            purgeStream(serialStream);
 
             // report status?
             if (log.isInfoEnabled()) {

@@ -131,13 +131,10 @@ public class XnTcpAdapter extends XNetNetworkPortController implements jmri.jmri
             }
             // get and save input stream
             inTcpStream = socketConn.getInputStream();
+
             // purge contents, if any
-            int count = inTcpStream.available();
-            log.debug("input stream shows " + count + " bytes available");
-            while (count > 0) {
-                inTcpStream.skip(count);
-                count = inTcpStream.available();
-            }
+            purgeStream(inTcpStream);
+
             // Connection established.
             opened = true;
             ConnectionStatus.instance().setConnectionState(outName, ConnectionStatus.CONNECTION_UP);

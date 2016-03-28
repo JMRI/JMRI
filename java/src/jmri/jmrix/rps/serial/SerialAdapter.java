@@ -83,12 +83,7 @@ public class SerialAdapter extends jmri.jmrix.AbstractSerialPortController imple
             sendBytes(new byte[]{(byte) 'A', 13});
 
             // purge contents, if any
-            int count = serialStream.available();
-            log.debug("input stream shows " + count + " bytes available");
-            while (count > 0) {
-                serialStream.skip(count);
-                count = serialStream.available();
-            }
+            purgeStream(serialStream);
 
             // report status?
             if (log.isInfoEnabled()) {

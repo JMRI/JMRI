@@ -75,12 +75,7 @@ public class SerialDriverAdapter extends TamsPortController implements jmri.jmri
             serialStream = activeSerialPort.getInputStream();
 
             // purge contents, if any
-            int count = serialStream.available();
-            log.debug("input stream shows " + count + " bytes available");
-            while (count > 0) {
-                serialStream.skip(count);
-                count = serialStream.available();
-            }
+            purgeStream(serialStream);
 
             if (log.isInfoEnabled()) {
                 log.info(portName + " port opened at "

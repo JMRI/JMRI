@@ -230,13 +230,9 @@ public class MS100Adapter extends LnPortController implements jmri.jmrix.SerialP
             }
 
             // port is open, regardless of method, start work on the stream
+
             // purge contents, if any
-            int count = serialInStream.available();
-            log.debug("input stream shows " + count + " bytes available");
-            while (count > 0) {
-                serialInStream.skip(count);
-                count = serialInStream.available();
-            }
+            purgeStream(serialInStream);
 
             opened = true;
 
