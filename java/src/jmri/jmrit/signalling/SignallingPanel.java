@@ -1,4 +1,3 @@
-// StatusPanel.java
 package jmri.jmrit.signalling;
 
 import java.awt.BorderLayout;
@@ -40,6 +39,7 @@ import jmri.SignalMast;
 import jmri.SignalMastLogic;
 import jmri.SignalMastManager;
 import jmri.Turnout;
+import jmri.implementation.SignalSpeedMap;
 import jmri.jmrit.display.layoutEditor.LayoutBlockConnectivityTools;
 import jmri.jmrit.display.layoutEditor.LayoutBlockManager;
 import jmri.util.com.sun.TableSorter;
@@ -50,14 +50,8 @@ import org.slf4j.LoggerFactory;
 /**
  *
  * @author	Kevin Dickerson Copyright (C) 2011
- * @version	$Revision$
  */
 public class SignallingPanel extends jmri.util.swing.JmriPanel {
-
-    /**
-     *
-     */
-    private static final long serialVersionUID = -6437500061146748574L;
 
     static final ResourceBundle rb = ResourceBundle.getBundle("jmri.jmrit.signalling.SignallingBundle");
 
@@ -117,7 +111,7 @@ public class SignallingPanel extends jmri.util.swing.JmriPanel {
             if (pathSpeed == 0.0f) {
                 mastSpeed.setText(rb.getString("PathSpeed") + " : None Set");
             } else {
-                String speed = jmri.implementation.SignalSpeedMap.getMap().getNamedSpeed(pathSpeed);
+                String speed = jmri.InstanceManager.getDefault(SignalSpeedMap.class).getNamedSpeed(pathSpeed);
                 if (speed != null) {
                     mastSpeed.setText(rb.getString("PathSpeed") + " : " + speed);
                 } else {

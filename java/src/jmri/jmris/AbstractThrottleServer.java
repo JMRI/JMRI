@@ -1,4 +1,3 @@
-//AbstractThrottleServer.java
 package jmri.jmris;
 
 import java.beans.PropertyChangeEvent;
@@ -20,7 +19,6 @@ import org.slf4j.LoggerFactory;
  * Abstract interface between the JMRI Throttles and a network connection
  *
  * @author Paul Bender Copyright (C) 2015
- * @version $Revision: 23184 $
  */
 abstract public class AbstractThrottleServer implements ThrottleListener {
 
@@ -167,7 +165,7 @@ abstract public class AbstractThrottleServer implements ThrottleListener {
 
     // internal class used to propagate back end throttle changes
     // to the clients.
-    class throttlePropertyChangeListener implements PropertyChangeListener{
+    static class throttlePropertyChangeListener implements PropertyChangeListener{
 
        protected AbstractThrottleServer clientserver=null;
        protected Throttle throttle=null;

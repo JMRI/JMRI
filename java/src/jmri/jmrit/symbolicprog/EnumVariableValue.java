@@ -1,4 +1,3 @@
-// EnumVariableValue.java
 package jmri.jmrit.symbolicprog;
 
 import java.awt.Color;
@@ -492,11 +491,6 @@ public class EnumVariableValue extends VariableValue implements ActionListener, 
      */
     public static class VarComboBox extends JComboBox<String> {
 
-        /**
-         *
-         */
-        private static final long serialVersionUID = -133896999775526954L;
-
         VarComboBox(ComboBoxModel<String> m, EnumVariableValue var) {
             super(m);
             _var = var;
@@ -564,12 +558,7 @@ public class EnumVariableValue extends VariableValue implements ActionListener, 
         }
     }
 
-    class TreeLeafNode extends DefaultMutableTreeNode {
-
-        /**
-         *
-         */
-        private static final long serialVersionUID = 4826729728567652557L;
+    static class TreeLeafNode extends DefaultMutableTreeNode {
 
         TreeLeafNode(String name, int index) {
             super(name);

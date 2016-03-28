@@ -54,7 +54,7 @@ public class Engineer extends Thread implements Runnable, java.beans.PropertyCha
         _throttle = throttle;
         _syncIdx = -1;
         _waitForSensor = false;
-        _speedMap = SignalSpeedMap.getMap();
+        _speedMap = jmri.InstanceManager.getDefault(SignalSpeedMap.class);
         jmri.jmrit.roster.RosterEntry ent = _warrant.getRosterEntry();
         if (ent!=null) {
             _speedProfile = ent.getSpeedProfile();
@@ -305,7 +305,7 @@ public class Engineer extends Thread implements Runnable, java.beans.PropertyCha
                 }
                 break;
             case SignalSpeedMap.SPEED_MPH:          // miles per hour
-                mapSpeed =  mapSpeed/SignalSpeedMap.getMap().getLayoutScale();
+                mapSpeed =  mapSpeed/jmri.InstanceManager.getDefault(SignalSpeedMap.class).getLayoutScale();
                 mapSpeed =  mapSpeed/2.2369363f;  // layout track speed mm/ms
                 mapSpeed = mapSpeed/getThrottleFactor(throttleSpeed);
                 if (mapSpeed<throttleSpeed) {
@@ -313,7 +313,7 @@ public class Engineer extends Thread implements Runnable, java.beans.PropertyCha
                 }
                 break;
             case SignalSpeedMap.SPEED_KMPH:
-                mapSpeed =  mapSpeed/SignalSpeedMap.getMap().getLayoutScale();
+                mapSpeed =  mapSpeed/jmri.InstanceManager.getDefault(SignalSpeedMap.class).getLayoutScale();
                 mapSpeed =  mapSpeed/3.6f;  // layout track speed mm/ms
                 mapSpeed = mapSpeed/getThrottleFactor(throttleSpeed);
                 if (mapSpeed<throttleSpeed) {
@@ -373,8 +373,8 @@ public class Engineer extends Thread implements Runnable, java.beans.PropertyCha
             } else {
                 speed = curSpeed*_speedMap.getDefaultThrottleFactor();                    
             }
-            speed = speed*SignalSpeedMap.getMap().getLayoutScale();
-            if ( SignalSpeedMap.getMap().getInterpretation() == SignalSpeedMap.SPEED_KMPH) {
+            speed = speed*jmri.InstanceManager.getDefault(SignalSpeedMap.class).getLayoutScale();
+            if ( jmri.InstanceManager.getDefault(SignalSpeedMap.class).getInterpretation() == SignalSpeedMap.SPEED_KMPH) {
                 units= "Kmph";
                 speed = speed*3.6f;
             } else {

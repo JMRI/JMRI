@@ -12,8 +12,8 @@ import junit.framework.TestSuite;
  */
 public class SignalSpeedMapTest extends TestCase {
 
-    public void testLoadMap() {
-        Assert.assertNotNull(SignalSpeedMap.getMap());
+    public void testLoadDefaultMap() {
+        Assert.assertNotNull(jmri.InstanceManager.getDefault(SignalSpeedMap.class));
     }
     
     static final String[] speeds = new String[]{
@@ -30,7 +30,7 @@ public class SignalSpeedMapTest extends TestCase {
         "Stop"
     };
 
-    SignalSpeedMap map = SignalSpeedMap.getMap();
+    SignalSpeedMap map = new SignalSpeedMap();
     
     /**
      * To avoid breaking signal systems, speed definitions should
