@@ -1,4 +1,3 @@
-// SerialDriverAdapter.java
 package jmri.jmrix.secsi.serialdriver;
 
 import gnu.io.CommPortIdentifier;
@@ -21,7 +20,6 @@ import org.slf4j.LoggerFactory;
  * oaktree.serialdriver.SerialDriverFrame class.
  *
  * @author	Bob Jacobsen Copyright (C) 2006, 2007
- * @version	$Revision$
  */
 public class SerialDriverAdapter extends SerialPortController implements jmri.jmrix.SerialPortAdapter {
 
@@ -71,12 +69,7 @@ public class SerialDriverAdapter extends SerialPortController implements jmri.jm
             serialStream = activeSerialPort.getInputStream();
 
             // purge contents, if any
-            int count = serialStream.available();
-            log.debug("input stream shows " + count + " bytes available");
-            while (count > 0) {
-                serialStream.skip(count);
-                count = serialStream.available();
-            }
+            purgeStream(serialStream);
 
             // report status?
             if (log.isInfoEnabled()) {

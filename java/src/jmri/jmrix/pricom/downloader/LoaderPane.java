@@ -1,4 +1,3 @@
-// LoaderPane.java
 package jmri.jmrix.pricom.downloader;
 
 import gnu.io.CommPortIdentifier;
@@ -28,14 +27,8 @@ import org.slf4j.LoggerFactory;
  * Pane for downloading software updates to PRICOM products
  *
  * @author	Bob Jacobsen Copyright (C) 2005
- * @version	$Revision$
  */
 public class LoaderPane extends javax.swing.JPanel {
-
-    /**
-     *
-     */
-    private static final long serialVersionUID = 833932063738002557L;
 
     static ResourceBundle res = ResourceBundle.getBundle("jmri.jmrix.pricom.downloader.Loader");
 
@@ -511,11 +504,6 @@ public class LoaderPane extends javax.swing.JPanel {
             fileButton.setEnabled(false);
             fileButton.setToolTipText(res.getString("TipFileDisabled"));
             fileButton.addActionListener(new AbstractAction() {
-                /**
-                 *
-                 */
-                private static final long serialVersionUID = -7851724841357411752L;
-
                 public void actionPerformed(java.awt.event.ActionEvent e) {
                     selectInputFile();
                 }
@@ -552,11 +540,6 @@ public class LoaderPane extends javax.swing.JPanel {
             loadButton.setToolTipText(res.getString("TipLoadDisabled"));
             p.add(loadButton);
             loadButton.addActionListener(new AbstractAction() {
-                /**
-                 *
-                 */
-                private static final long serialVersionUID = -576603777011196349L;
-
                 public void actionPerformed(java.awt.event.ActionEvent e) {
                     doLoad();
                 }

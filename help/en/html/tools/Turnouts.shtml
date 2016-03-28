@@ -5,9 +5,8 @@
  	JMRI: Turnout Documentation
   </title>
 
-  <meta name="Author" content="Bob Jacobsen">
-  <meta name="keywords"
-        content="turnout model railroad JMRI decoderpro panelpro">
+  <meta name="author" content="Bob Jacobsen">
+  <meta name="keywords" content="turnout model railroad JMRI Turnouts PanelPro">
 
 <!-- Style -->
   <meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
@@ -52,7 +51,7 @@ The two states of the output are called "Closed" and "Thrown".
 "Thrown" is the on, active, commanded state.</p>
 <p>
 In most cases, you can just operate a Turnout and JMRI will 
-figure out why you mean.  
+figure out what you mean.  
 For example, you can open the "Turnout Control" tool
 from the "Tools" menu, enter a Turnout number (DCC or C/MRI address number),
 and click Thrown or Closed. JMRI will take it from there.
@@ -62,7 +61,7 @@ and click Thrown or Closed. JMRI will take it from there.
 
 <p>The Turnout definitions are saved in your layout configuration file, along with 
 Sensors, Signal Heads, etc. To store this information on disk, use <b>Store 
-Configuration...</b> in the <b>File</b> menu at the top of the Turnouts 
+Configuration...</b> in the <b>File</b> menu at the top of the Turnout 
 Table (or other tables from the Tools menu), or select <b>Store Panel...</b>
 in the <b>Panel</b> menu. 
 
@@ -91,14 +90,13 @@ in the <b>Panel</b> menu.
 		added, then the system will skip that address and carry on.
 		</li>
 		<li><p>Click the <b>OK</b> button at the bottom of the pane.  
-		If everything is fine, a message stating "New Turnout added..." will be 
-		displayed in the notes area. If there is trouble with anything, an error or 
-		warning message will be displayed in the notes area; you should then
+		If everything is fine, the new Turnout will appear in the Turnout Table. If there is trouble with anything, an error or 
+		warning message will be displayed on screen; you should
 		correct the error and click <b>OK</b> again.</p>
 		</li>
 		<li><p>Back in the main Turnout Table, you can now set
 		<a href="../../package/jmri/jmrit/beantable/TurnoutTable.shtml#Turnout Feedback">options</a>
-		for the Turnout and control it by clicking on its <b>Cmd</b> button.
+		for the Turnout by clicking its <strong>Edit</strong> button, and control it by clicking its <b>Cmd</b> button.
 		</li>
 		</ol>
 
