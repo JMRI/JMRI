@@ -1,4 +1,3 @@
-// NullAudioFactory.java
 package jmri.jmrit.audio;
 
 import java.util.List;
@@ -28,7 +27,6 @@ import org.slf4j.LoggerFactory;
  * <P>
  *
  * @author Matthew Harris copyright (c) 2009
- * @version $Revision$
  */
 public class NullAudioFactory extends AbstractAudioFactory {
 
@@ -132,5 +130,3 @@ public class NullAudioFactory extends AbstractAudioFactory {
     private static final Logger log = LoggerFactory.getLogger(NullAudioFactory.class.getName());
 
 }
-
-/* $(#)NullAudioFactory.java */
