@@ -53,8 +53,13 @@ public class ProfileUtils {
         }
         FileUtil.copy(source.getPath(), destination.getPath());
         File profile = new File(destination.getPath(), Profile.PROFILE);
-        for (File file : profile.listFiles((File pathname) -> (pathname.getName().endsWith(source.getUniqueId())))) {
-            file.renameTo(new File(profile, file.getName().replace(source.getUniqueId(), destination.getUniqueId())));
+        File[] files = profile.listFiles((File pathname) -> (pathname.getName().endsWith(source.getUniqueId())));
+        if (files != null) {
+            for (File file : files) {
+                if (!file.renameTo(new File(profile, file.getName().replace(source.getUniqueId(), destination.getUniqueId())))) {
+                    throw new IOException("Unable to rename " + file + " to use new profile ID");
+                }
+            }
         }
         destination.save();
     }
