@@ -1,4 +1,3 @@
-// SerialDriverAdapter.java
 package jmri.jmrix.ieee802154.serialdriver;
 
 import gnu.io.CommPortIdentifier;
@@ -24,7 +23,6 @@ import org.slf4j.LoggerFactory;
  * multiple connection
  * @author kcameron Copyright (C) 2011
  * @author Paul Bender Copyright (C) 2013
- * @version	$Revision$
  */
 public class SerialDriverAdapter extends IEEE802154PortController implements jmri.jmrix.SerialPortAdapter {
 

@@ -1,4 +1,3 @@
-// DCCppAdapter.java
 package jmri.jmrix.dccpp.serial;
 
 import gnu.io.CommPortIdentifier;
@@ -24,7 +23,6 @@ import org.slf4j.LoggerFactory;
  * Normally controlled by the lenz.liusb.LIUSBFrame class.
  *
  * @author	Mark Underwood Copyright (C) 2015
- * @version	$Revision$
  *
  * Based on jmri.jmirx.lenz.liusb.LIUSBAdapter by Paul Bender
  */

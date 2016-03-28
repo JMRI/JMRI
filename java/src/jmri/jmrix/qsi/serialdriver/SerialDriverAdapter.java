@@ -1,4 +1,3 @@
-// SerialDriverAdapter.java
 package jmri.jmrix.qsi.serialdriver;
 
 import gnu.io.CommPortIdentifier;
@@ -24,7 +23,6 @@ import org.slf4j.LoggerFactory;
  * use any other options at configuration time.
  *
  * @author	Bob Jacobsen Copyright (C) 2001, 2002
- * @version	$Revision$
  */
 public class SerialDriverAdapter extends QsiPortController implements jmri.jmrix.SerialPortAdapter {
 

@@ -1,4 +1,3 @@
-// SerialDriverAdapter.java
 package jmri.jmrix.oaktree.serialdriver;
 
 import gnu.io.CommPortIdentifier;
@@ -21,7 +20,6 @@ import org.slf4j.LoggerFactory;
  * oaktree.serialdriver.SerialDriverFrame class.
  *
  * @author	Bob Jacobsen Copyright (C) 2006
- * @version	$Revision$
  */
 public class SerialDriverAdapter extends SerialPortController implements jmri.jmrix.SerialPortAdapter {
 

@@ -1,4 +1,3 @@
-// SerialDriverAdapter.java
 package jmri.jmrix.dcc4pc.serialdriver;
 
 import gnu.io.CommPortIdentifier;
@@ -24,7 +23,6 @@ import org.slf4j.LoggerFactory;
  * <P>
  *
  * @author	Kevin Dickerson Copyright (C) 2012
- * @version	$Revision: 18133 $
  */
 public class SerialDriverAdapter extends Dcc4PcPortController implements jmri.jmrix.SerialPortAdapter {
 

@@ -1,4 +1,3 @@
-// SerialDriverAdapter.java
 package jmri.jmrix.xpa.serialdriver;
 
 import gnu.io.CommPortIdentifier;
@@ -23,7 +22,6 @@ import org.slf4j.LoggerFactory;
  * first configuraiont variable for the modem initilization string.
  *
  * @author	Paul Bender Copyright (C) 2004
- * @version	$Revision$
  */
 public class SerialDriverAdapter extends XpaPortController implements jmri.jmrix.SerialPortAdapter {
 

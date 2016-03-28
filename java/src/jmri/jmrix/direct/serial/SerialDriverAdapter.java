@@ -1,4 +1,3 @@
-// SerialDriverAdapter.java
 package jmri.jmrix.direct.serial;
 
 import Serialio.SerInputStream;
@@ -30,7 +29,6 @@ import org.slf4j.LoggerFactory;
  *
  *
  * @author	Bob Jacobsen Copyright (C) 2001, 2002, 2004
- * @version	$Revision$
  */
 public class SerialDriverAdapter extends PortController implements jmri.jmrix.SerialPortAdapter {
 

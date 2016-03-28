@@ -1,4 +1,3 @@
-// SerialDriverAdapter.java
 package jmri.jmrix.easydcc.serialdriver;
 
 import gnu.io.CommPortIdentifier;
@@ -22,7 +21,6 @@ import org.slf4j.LoggerFactory;
  * any other options at configuration time.
  *
  * @author	Bob Jacobsen Copyright (C) 2001, 2002
- * @version	$Revision$
  */
 public class SerialDriverAdapter extends EasyDccPortController implements jmri.jmrix.SerialPortAdapter {
 

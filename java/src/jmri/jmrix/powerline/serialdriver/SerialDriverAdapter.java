@@ -1,4 +1,3 @@
-// SerialDriverAdapter.java
 package jmri.jmrix.powerline.serialdriver;
 
 import gnu.io.CommPortIdentifier;
@@ -23,7 +22,6 @@ import org.slf4j.LoggerFactory;
  * @author	Ken Cameron, (C) 2009, sensors from poll replies Converted to
  * multiple connection
  * @author kcameron Copyright (C) 2011
- * @version	$Revision$
  */
 public class SerialDriverAdapter extends SerialPortController implements jmri.jmrix.SerialPortAdapter {
 

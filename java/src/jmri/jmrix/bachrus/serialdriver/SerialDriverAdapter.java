@@ -1,4 +1,3 @@
-// SerialDriverAdapter.java
 package jmri.jmrix.bachrus.serialdriver;
 
 import gnu.io.CommPortIdentifier;
@@ -29,7 +28,6 @@ import org.slf4j.LoggerFactory;
  *
  * @author	Bob Jacobsen Copyright (C) 2001, 2002
  * @author	Andrew Crosland Copyright (C) 2010
- * @version	$Revision$
  */
 public class SerialDriverAdapter extends SpeedoPortController implements jmri.jmrix.SerialPortAdapter {
 

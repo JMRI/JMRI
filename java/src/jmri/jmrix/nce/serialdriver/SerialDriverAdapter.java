@@ -1,4 +1,3 @@
-// SerialDriverAdapter.java
 package jmri.jmrix.nce.serialdriver;
 
 import gnu.io.CommPortIdentifier;
@@ -23,7 +22,6 @@ import org.slf4j.LoggerFactory;
  *
  * @author	Bob Jacobsen Copyright (C) 2001, 2002
  * @author ken ccameron Copyright (C) 2013
- * @version	$Revision$
  */
 public class SerialDriverAdapter extends NcePortController implements jmri.jmrix.SerialPortAdapter {
 

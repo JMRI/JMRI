@@ -1,4 +1,3 @@
-// SerialDriverAdapter.java
 package jmri.jmrix.rfid.serialdriver;
 
 import gnu.io.CommPortIdentifier;
@@ -37,7 +36,6 @@ import org.slf4j.LoggerFactory;
  * @author Bob Jacobsen Copyright (C) 2006, 2007, 2008
  * @author Matthew Harris Copyright (C) 2011
  * @author Oscar A. Pruitt Copyright (C) 2015
- * @version $Revision$
  * @since 2.11.4
  */
 public class SerialDriverAdapter extends RfidPortController implements jmri.jmrix.SerialPortAdapter {

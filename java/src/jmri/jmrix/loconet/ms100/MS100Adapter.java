@@ -1,4 +1,3 @@
-// MS100Adapter.java
 package jmri.jmrix.loconet.ms100;
 
 import Serialio.SerInputStream;
@@ -30,7 +29,6 @@ import org.slf4j.LoggerFactory;
  * used.
  *
  * @author	Bob Jacobsen Copyright (C) 2001
- * @version	$Revision$
  */
 public class MS100Adapter extends LnPortController implements jmri.jmrix.SerialPortAdapter {
 

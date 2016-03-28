@@ -1,4 +1,3 @@
-// SerialDriverAdapter.java
 package jmri.jmrix.rps.serial;
 
 import gnu.io.CommPortIdentifier;
@@ -27,7 +26,6 @@ import org.slf4j.LoggerFactory;
  * case)
  *
  * @author	Bob Jacobsen Copyright (C) 2001, 2002, 2008
- * @version	$Revision$
  */
 public class SerialAdapter extends jmri.jmrix.AbstractSerialPortController implements jmri.jmrix.SerialPortAdapter {
 

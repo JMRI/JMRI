@@ -1,4 +1,3 @@
-// LI101Adapter.java
 package jmri.jmrix.lenz.li101;
 
 import gnu.io.CommPortIdentifier;
@@ -24,7 +23,6 @@ import org.slf4j.LoggerFactory;
  *
  * @author	Bob Jacobsen Copyright (C) 2002
  * @author Paul Bender, Copyright (C) 2003-2010
- * @version	$Revision$
  */
 public class LI101Adapter extends XNetSerialPortController implements jmri.jmrix.SerialPortAdapter {
 

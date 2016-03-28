@@ -1,4 +1,3 @@
-// LocoBufferAdapter.java
 package jmri.jmrix.loconet.locobuffer;
 
 import gnu.io.CommPortIdentifier;
@@ -23,7 +22,6 @@ import org.slf4j.LoggerFactory;
  * Normally controlled by the LocoBufferFrame class.
  *
  * @author	Bob Jacobsen Copyright (C) 2001, 2008, 2010
- * @version	$Revision$
  */
 public class LocoBufferAdapter extends LnPortController implements jmri.jmrix.SerialPortAdapter {
 

@@ -1,4 +1,3 @@
-// SerialDriverAdapter.java
 package jmri.jmrix.can.adapters.gridconnect;
 
 import gnu.io.CommPortIdentifier;
@@ -17,7 +16,6 @@ import org.slf4j.LoggerFactory;
  *
  * @author	Bob Jacobsen Copyright (C) 2001, 2002
  * @author	Andrew Crosland Copyright (C) 2008
- * @version	$Revision$
  */
 public class GcSerialDriverAdapter extends GcPortController implements jmri.jmrix.SerialPortAdapter {
 

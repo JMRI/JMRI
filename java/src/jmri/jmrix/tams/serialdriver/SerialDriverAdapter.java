@@ -1,4 +1,3 @@
-// SerialDriverAdapter.java
 package jmri.jmrix.tams.serialdriver;
 
 import gnu.io.CommPortIdentifier;
@@ -22,7 +21,6 @@ import org.slf4j.LoggerFactory;
  * Based on work by Bob Jacobsen
  *
  * @author	Kevin Dickerson Copyright (C) 2012
- * @version	$Revision: 17977 $
  */
 public class SerialDriverAdapter extends TamsPortController implements jmri.jmrix.SerialPortAdapter {
 
