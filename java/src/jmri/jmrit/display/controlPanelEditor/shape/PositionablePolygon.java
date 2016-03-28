@@ -281,7 +281,7 @@ public class PositionablePolygon extends PositionableShape {
                     path.quadTo(coord[0], coord[1], coord[2], coord[3]);
                     break;
                 case PathIterator.SEG_CUBICTO:
-                    path.curveTo(coord[0], coord[1], coord[2], coord[3], coord[4], coord[53]);
+                    path.curveTo(coord[0], coord[1], coord[2], coord[3], coord[4], coord[5]);
                     break;
                 case PathIterator.SEG_CLOSE:
                     path.closePath();

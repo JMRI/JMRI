@@ -1,4 +1,3 @@
-// ActiveFlag.java
 package jmri.jmrix.srcp;
 
 /**
@@ -9,7 +8,6 @@ package jmri.jmrix.srcp;
  * number of unneeded class loadings.
  *
  * @author	Bob Jacobsen Copyright (C) 2003
- * @version $Revision$
  */
 abstract public class ActiveFlag {
 

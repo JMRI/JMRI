@@ -1,4 +1,3 @@
-/* GlobalProgrammerManager.java */
 package jmri;
 
 import javax.annotation.Nonnull;
@@ -85,6 +84,3 @@ public interface GlobalProgrammerManager {
     @Nonnull
     public String toString();
 }
-
-
-/* @(#)GlobalProgrammerManager.java */

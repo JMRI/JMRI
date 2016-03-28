@@ -18,8 +18,6 @@ import jmri.InstanceManager;
  */
 class StartupModelCellEditor extends DefaultCellEditor implements TableCellEditor {
 
-    private static final long serialVersionUID = 1L;
-
     private StartupModel model;
     private final JButton button;
 

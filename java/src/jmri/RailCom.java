@@ -1,4 +1,3 @@
-// RailComTag.java
 package jmri;
 
 import java.util.List;
@@ -24,7 +23,6 @@ import java.util.List;
  * <P>
  *
  * @author Kevin Dickerson Copyright (C) 2012
- * @version $Revision: 17977 $
  * @since 2.99.4
  */
 public interface RailCom extends IdTag {
@@ -220,5 +218,3 @@ public interface RailCom extends IdTag {
     public List<Integer> getCVList();
 
 }
-
-/* @(#)RailComTag.java */

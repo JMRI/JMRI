@@ -1,4 +1,3 @@
-/* AddressedProgrammerManager.java */
 package jmri;
 
 import javax.annotation.Nonnull;
@@ -111,6 +110,3 @@ public interface AddressedProgrammerManager {
     @Nonnull
     public String toString();
 }
-
-
-/* @(#)AddressedProgrammerManager.java */

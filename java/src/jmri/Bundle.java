@@ -1,4 +1,3 @@
-// Bundle.java
 package jmri;
 
 import java.text.MessageFormat;
@@ -45,7 +44,6 @@ import javax.annotation.ParametersAreNonnullByDefault;
  * <p>
  *
  * @author Bob Jacobsen Copyright (C) 2012
- * @version $Revision: 17977 $
  * @since 3.3.1
  */
 
@@ -214,5 +212,3 @@ public class Bundle {
     //           return;
     //        }
 }
-
-/* @(#)Bundle.java */

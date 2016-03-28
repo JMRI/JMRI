@@ -18,6 +18,11 @@ import javax.annotation.Nonnull;
  */
 public class NullProfile extends Profile {
 
+//* This class seems to reimplement the parent
+//* Profile class, _except_ for setting the local "path"
+//* member variable in the constructor. Shouldn't it just
+//* defer everything to the parent?
+
     private String name;
     private String id;
     private File path;
