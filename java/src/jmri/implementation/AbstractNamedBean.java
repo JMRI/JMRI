@@ -1,4 +1,3 @@
-// AbstractNamedBean.java
 package jmri.implementation;
 
 import java.util.ArrayList;
@@ -13,7 +12,6 @@ import jmri.NamedBean;
  * Implements the parameter binding support.
  *
  * @author Bob Jacobsen Copyright (C) 2001
- * @version $Revision$
  */
 public abstract class AbstractNamedBean implements NamedBean, java.io.Serializable {
 
@@ -24,10 +22,6 @@ public abstract class AbstractNamedBean implements NamedBean, java.io.Serializab
     //    Exception e = new Exception();
     //    e.printStackTrace();
     //}
-    /**
-     *
-     */
-    private static final long serialVersionUID = -7953684310136579104L;
 
     protected AbstractNamedBean(String sys) {
         mSystemName = sys;
@@ -221,5 +215,3 @@ public abstract class AbstractNamedBean implements NamedBean, java.io.Serializab
     public void vetoableChange(java.beans.PropertyChangeEvent evt) throws java.beans.PropertyVetoException {
     }
 }
-
-/* @(#)AbstractNamedBean.java */
