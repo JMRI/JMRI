@@ -138,7 +138,7 @@ public class ProfileManager extends Bean {
             Profile old = activeProfile;
             activeProfile = null;
             FileUtil.setProfilePath(null);
-            this.propertyChangeSupport.firePropertyChange(ProfileManager.ACTIVE_PROFILE, old, null);
+            this.firePropertyChange(ProfileManager.ACTIVE_PROFILE, old, null);
             log.debug("Setting active profile to null");
             return;
         }
@@ -165,13 +165,13 @@ public class ProfileManager extends Bean {
         if (profile == null) {
             activeProfile = null;
             FileUtil.setProfilePath(null);
-            this.propertyChangeSupport.firePropertyChange(ProfileManager.ACTIVE_PROFILE, old, null);
+            this.firePropertyChange(ProfileManager.ACTIVE_PROFILE, old, null);
             log.debug("Setting active profile to null");
             return;
         }
         activeProfile = profile;
         FileUtil.setProfilePath(profile.getPath().toString());
-        this.propertyChangeSupport.firePropertyChange(ProfileManager.ACTIVE_PROFILE, old, profile);
+        this.firePropertyChange(ProfileManager.ACTIVE_PROFILE, old, profile);
         log.debug("Setting active profile to {}", profile.getId());
     }
 
@@ -183,12 +183,12 @@ public class ProfileManager extends Bean {
         Profile old = this.nextActiveProfile;
         if (profile == null) {
             this.nextActiveProfile = null;
-            this.propertyChangeSupport.firePropertyChange(ProfileManager.NEXT_PROFILE, old, null);
+            this.firePropertyChange(ProfileManager.NEXT_PROFILE, old, null);
             log.debug("Setting next active profile to null");
             return;
         }
         this.nextActiveProfile = profile;
-        this.propertyChangeSupport.firePropertyChange(ProfileManager.NEXT_PROFILE, old, profile);
+        this.firePropertyChange(ProfileManager.NEXT_PROFILE, old, profile);
         log.debug("Setting next active profile to {}", profile.getId());
     }
 
@@ -299,7 +299,7 @@ public class ProfileManager extends Bean {
         Profile oldProfile = profiles.get(index);
         if (!this.readingProfiles) {
             profiles.set(index, profile);
-            this.propertyChangeSupport.fireIndexedPropertyChange(PROFILES, index, oldProfile, profile);
+            this.fireIndexedPropertyChange(PROFILES, index, oldProfile, profile);
         }
     }
 
@@ -309,12 +309,12 @@ public class ProfileManager extends Bean {
             if (!this.readingProfiles) {
                 profiles.sort(null);
                 int index = profiles.indexOf(profile);
-                this.propertyChangeSupport.fireIndexedPropertyChange(PROFILES, index, null, profile);
+                this.fireIndexedPropertyChange(PROFILES, index, null, profile);
                 if (index != profiles.size() - 1) {
                     for (int i = index + 1; i < profiles.size() - 1; i++) {
-                        this.propertyChangeSupport.fireIndexedPropertyChange(PROFILES, i, profiles.get(i + 1), profiles.get(i));
+                        this.fireIndexedPropertyChange(PROFILES, i, profiles.get(i + 1), profiles.get(i));
                     }
-                    this.propertyChangeSupport.fireIndexedPropertyChange(PROFILES, profiles.size() - 1, null, profiles.get(profiles.size() - 1));
+                    this.fireIndexedPropertyChange(PROFILES, profiles.size() - 1, null, profiles.get(profiles.size() - 1));
                 }
                 try {
                     this.writeProfiles();
@@ -330,7 +330,7 @@ public class ProfileManager extends Bean {
             int index = profiles.indexOf(profile);
             if (index >= 0) {
                 if (profiles.remove(profile)) {
-                    this.propertyChangeSupport.fireIndexedPropertyChange(PROFILES, index, profile, null);
+                    this.fireIndexedPropertyChange(PROFILES, index, profile, null);
                     this.writeProfiles();
                 }
                 if (profile.equals(this.getNextActiveProfile())) {
@@ -376,7 +376,7 @@ public class ProfileManager extends Bean {
             searchPaths.add(path);
             if (!this.readingProfiles) {
                 int index = searchPaths.indexOf(path);
-                this.propertyChangeSupport.fireIndexedPropertyChange(SEARCH_PATHS, index, null, path);
+                this.fireIndexedPropertyChange(SEARCH_PATHS, index, null, path);
                 this.writeProfiles();
             }
             this.findProfiles(path);
@@ -387,7 +387,7 @@ public class ProfileManager extends Bean {
         if (searchPaths.contains(path)) {
             int index = searchPaths.indexOf(path);
             searchPaths.remove(path);
-            this.propertyChangeSupport.fireIndexedPropertyChange(SEARCH_PATHS, index, path, null);
+            this.fireIndexedPropertyChange(SEARCH_PATHS, index, path, null);
             this.writeProfiles();
             if (this.getDefaultSearchPath().equals(path)) {
                 this.setDefaultSearchPath(new File(FileUtil.getPreferencesPath()));
@@ -407,7 +407,7 @@ public class ProfileManager extends Bean {
         if (!defaultSearchPath.equals(this.defaultSearchPath)) {
             File oldDefault = this.defaultSearchPath;
             this.defaultSearchPath = defaultSearchPath;
-            this.propertyChangeSupport.firePropertyChange(DEFAULT_SEARCH_PATH, oldDefault, this.defaultSearchPath);
+            this.firePropertyChange(DEFAULT_SEARCH_PATH, oldDefault, this.defaultSearchPath);
             this.writeProfiles();
         }
     }
@@ -816,7 +816,7 @@ public class ProfileManager extends Bean {
     }
 
     void profileNameChange(Profile profile, String oldName) {
-        this.propertyChangeSupport.firePropertyChange(new PropertyChangeEvent(profile, Profile.NAME, oldName, profile.getName()));
+        this.firePropertyChange(new PropertyChangeEvent(profile, Profile.NAME, oldName, profile.getName()));
     }
 
     /**
@@ -849,7 +849,7 @@ public class ProfileManager extends Bean {
         }
         if (old != autoStartActiveProfileTimeout) {
             this.autoStartActiveProfileTimeout = autoStartActiveProfileTimeout;
-            this.propertyChangeSupport.firePropertyChange(AUTO_START_TIMEOUT, old, this.autoStartActiveProfileTimeout);
+            this.firePropertyChange(AUTO_START_TIMEOUT, old, this.autoStartActiveProfileTimeout);
         }
     }
 }
