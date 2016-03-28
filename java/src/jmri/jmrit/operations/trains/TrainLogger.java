@@ -11,6 +11,7 @@ import java.io.PrintWriter;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
+import java.util.Date;
 import java.util.List;
 import jmri.jmrit.XmlFile;
 import jmri.jmrit.operations.setup.Control;
@@ -210,19 +211,9 @@ public class TrainLogger extends XmlFile implements java.beans.PropertyChangeLis
     }
 
     private String getDate() {
-        Calendar now = Calendar.getInstance();
-        int month = now.get(Calendar.MONTH) + 1;
-        String m = Integer.toString(month);
-        if (month < 10) {
-            m = "0" + Integer.toString(month);
-        }
-        int day = now.get(Calendar.DATE);
-        String d = Integer.toString(day);
-        if (day < 10) {
-            d = "0" + Integer.toString(day);
-        }
-        String date = "" + now.get(Calendar.YEAR) + "_" + m + "_" + d;
-        return date;
+        Date date = Calendar.getInstance().getTime();
+        SimpleDateFormat simpleDateFormat = new SimpleDateFormat("yyyy_MM_dd");
+        return simpleDateFormat.format(date);
     }
 
     /**

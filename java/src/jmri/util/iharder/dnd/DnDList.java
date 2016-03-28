@@ -84,9 +84,6 @@ public class DnDList<E>
 
     private void initComponents() {
         dropTarget = new java.awt.dnd.DropTarget(this, this);
-        if (dropTarget == null) {
-            log.error("Failed to create DropTarget");
-        }
         dragSource = new java.awt.dnd.DragSource();
         dragSource.createDefaultDragGestureRecognizer(this, java.awt.dnd.DnDConstants.ACTION_MOVE, this);
     }   // end initComponents

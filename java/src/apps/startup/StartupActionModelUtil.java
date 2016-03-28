@@ -66,7 +66,7 @@ public class StartupActionModelUtil extends Bean {
             throw ex;
         }
         actions.put(clazz, name);
-        this.propertyChangeSupport.firePropertyChange("length", null, null);
+        this.firePropertyChange("length", null, null);
     }
 
     public void removeAction(String strClass) throws ClassNotFoundException {
@@ -79,7 +79,7 @@ public class StartupActionModelUtil extends Bean {
             throw ex;
         }
         actions.remove(clazz);
-        this.propertyChangeSupport.firePropertyChange("length", null, null);
+        this.firePropertyChange("length", null, null);
     }
 
     private void prepareActionsHashMap() {

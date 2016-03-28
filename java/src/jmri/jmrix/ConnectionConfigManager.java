@@ -127,14 +127,14 @@ public class ConnectionConfigManager extends AbstractPreferencesProvider impleme
     public boolean add(ConnectionConfig c) {
         boolean result = connections.add(c);
         int i = connections.indexOf(c);
-        propertyChangeSupport.fireIndexedPropertyChange(CONNECTIONS, i, null, c);
+        fireIndexedPropertyChange(CONNECTIONS, i, null, c);
         return result;
     }
 
     public boolean remove(ConnectionConfig c) {
         int i = connections.indexOf(c);
         boolean result = connections.remove(c);
-        propertyChangeSupport.fireIndexedPropertyChange(CONNECTIONS, i, c, null);
+        fireIndexedPropertyChange(CONNECTIONS, i, c, null);
         return result;
     }
 

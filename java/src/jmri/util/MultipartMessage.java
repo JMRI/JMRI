@@ -35,7 +35,6 @@ import org.slf4j.LoggerFactory;
  * <P>
  *
  * @author Matthew Harris Copyright (C) 2014
- * @version $Revision:$
  */
 public class MultipartMessage {
 
@@ -129,15 +128,18 @@ public class MultipartMessage {
         writer.flush();
 
         FileInputStream inStream = new FileInputStream(uploadFile);
-        byte[] buffer = new byte[4096];
-        @SuppressWarnings("UnusedAssignment")
-        int bytesRead = -1;
-        while ((bytesRead = inStream.read(buffer)) != -1) {
-            outStream.write(buffer, 0, bytesRead);
+        try {
+            byte[] buffer = new byte[4096];
+            @SuppressWarnings("UnusedAssignment")
+            int bytesRead = -1;
+            while ((bytesRead = inStream.read(buffer)) != -1) {
+                outStream.write(buffer, 0, bytesRead);
+            }
+            outStream.flush();
+        } finally {
+            inStream.close();
         }
-        outStream.flush();
-        inStream.close();
-
+        
         writer.append(LINE_FEED);
         writer.flush();
     }

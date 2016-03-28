@@ -1,4 +1,3 @@
-// SRCPProgrammer.java
 package jmri.jmrix.srcp;
 
 import org.slf4j.Logger;
@@ -13,7 +12,6 @@ import jmri.managers.DefaultProgrammerManager;
  * powerstation
  *
  * @author	Bob Jacobsen Copyright (C) 2001, 2008
- * @version	$Revision$
  */
 public class SRCPProgrammer extends AbstractProgrammer implements SRCPListener {
 
@@ -49,7 +47,7 @@ public class SRCPProgrammer extends AbstractProgrammer implements SRCPListener {
     int _cv;	// remember the cv being read/written
 
     // programming interface
-    public void writeCV(int CV, int val, jmri.ProgListener p) throws jmri.ProgrammerException {
+    synchronized public void writeCV(int CV, int val, jmri.ProgListener p) throws jmri.ProgrammerException {
         if (log.isDebugEnabled()) {
             log.debug("writeCV " + CV + " listens " + p);
         }

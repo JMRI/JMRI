@@ -1,4 +1,3 @@
-// SRCPBusConnectionMemo.java
 package jmri.jmrix.srcp;
 
 import java.util.ResourceBundle;
@@ -22,7 +21,6 @@ import org.slf4j.LoggerFactory;
  * activate their particular system.
  *
  * @author	Bob Jacobsen Copyright (C) 2010
- * @version $Revision$
  */
 public class SRCPBusConnectionMemo extends jmri.jmrix.SystemConnectionMemo implements SRCPListener {
 
@@ -61,8 +59,17 @@ public class SRCPBusConnectionMemo extends jmri.jmrix.SystemConnectionMemo imple
      * common manager config in one place.
      */
     public void configureManagers() {
-        while (!configured) {
+        while(!configured){
+           // wait for the managers to be configured.
+           synchronized(this){
+              try {
+                  this.wait();
+              } catch(java.lang.InterruptedException ie){
+                // just catch the error and re-check our condition.
+              }
+           }
         }
+        log.debug("Manager configuration complete for bus " + _bus );
     }
 
     /**
@@ -281,6 +288,9 @@ public class SRCPBusConnectionMemo extends jmri.jmrix.SystemConnectionMemo imple
                     }
                 }
                 configured = true;
+                synchronized(this) {
+                   this.notifyAll(); // wake up any thread that called configureManagers().
+                }
             }
         }
     }
