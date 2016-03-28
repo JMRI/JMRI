@@ -1,4 +1,3 @@
-// AbstractIdentify.java
 package jmri.jmrit;
 
 import org.slf4j.Logger;
@@ -115,7 +114,7 @@ public abstract class AbstractIdentify implements jmri.ProgListener {
                     + programmer.decodeErrorCode(status));
                 statusUpdate("Stopping due to error: "
                     + programmer.decodeErrorCode(status));
-                if (programmer != null && programmer.getMode() != savedMode) {  // restore original mode
+                if (programmer.getMode() != savedMode) {  // restore original mode
                     log.warn("Restoring " + savedMode.toString() + " mode");
                     programmer.setMode(savedMode);
                 }

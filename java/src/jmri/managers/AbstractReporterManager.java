@@ -102,11 +102,6 @@ public abstract class AbstractReporterManager extends AbstractManager
         // save in the maps
         register(r);
 
-        // if that failed, blame it on the input arguements
-        if (r == null) {
-            throw new IllegalArgumentException();
-        }
-
         return r;
     }
 
@@ -114,7 +109,7 @@ public abstract class AbstractReporterManager extends AbstractManager
      * Internal method to invoke the factory, after all the logic for returning
      * an existing method has been invoked.
      *
-     * @return never null
+     * @return Never null
      */
     abstract protected Reporter createNewReporter(String systemName, String userName);
 
