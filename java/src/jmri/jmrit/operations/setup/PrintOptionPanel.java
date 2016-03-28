@@ -370,6 +370,8 @@ public class PrintOptionPanel extends OperationsPreferencesPanel {
         dropComboBox.setSelectedItem(Setup.getDropTextColor());
         pickupComboBox.setSelectedItem(Setup.getPickupTextColor());
         localComboBox.setSelectedItem(Setup.getLocalTextColor());
+        
+        enableColorComboBoxes(); // disable color selection if not standard format
 
         commentTextArea.setText(Setup.getMiaComment());
 
@@ -519,7 +521,14 @@ public class PrintOptionPanel extends OperationsPreferencesPanel {
     public void comboBoxActionPerformed(ActionEvent ae) {
         if (ae.getSource() == manifestFormatComboBox) {
             loadFontComboBox();
+            enableColorComboBoxes();
         }
+    }
+    
+    private void enableColorComboBoxes() {
+        pickupComboBox.setEnabled(manifestFormatComboBox.getSelectedItem() == Setup.STANDARD_FORMAT);
+        dropComboBox.setEnabled(manifestFormatComboBox.getSelectedItem() == Setup.STANDARD_FORMAT);
+        localComboBox.setEnabled(manifestFormatComboBox.getSelectedItem() == Setup.STANDARD_FORMAT);
     }
 
     private void setSwitchListVisible(boolean b) {
