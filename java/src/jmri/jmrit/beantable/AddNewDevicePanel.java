@@ -93,6 +93,7 @@ public class AddNewDevicePanel extends jmri.util.swing.JmriPanel {
     }
 
     JButton ok;
+    JButton cancel;
     JTextField sysName;
     JLabel sysNameLabel = new JLabel(Bundle.getMessage("LabelSystemName"));
     JLabel userNameLabel = new JLabel(Bundle.getMessage("LabelUserName"));

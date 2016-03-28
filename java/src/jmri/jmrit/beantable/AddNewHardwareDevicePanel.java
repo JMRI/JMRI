@@ -118,6 +118,8 @@ public class AddNewHardwareDevicePanel extends jmri.util.swing.JmriPanel {
         }
     }
 
+    JButton ok;
+    JButton cancel;
     JTextField _endRange;
     JCheckBox _range;
     JLabel sysNameLabel = new JLabel(Bundle.getMessage("ColumnSystemName"));

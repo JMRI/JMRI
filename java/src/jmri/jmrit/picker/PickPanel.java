@@ -88,9 +88,9 @@ public class PickPanel extends JPanel implements ListSelectionListener, ChangeLi
     }
 
     void cancelPressed(ActionEvent e) {
-        p.setVisible(false);
-        p.dispose();
-        p = null;
+        //p.setVisible(false);
+        //p.dispose();
+        //p = null;
     }
 
     void addToTable() {

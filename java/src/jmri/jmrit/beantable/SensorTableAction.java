@@ -130,7 +130,6 @@ public class SensorTableAction extends AbstractTableAction {
                     if (addToPrefix) {
                         prefixBox.addItem(manuName);
                     }
-
                 }
                 if (p.getComboBoxLastSelection(systemSelectionCombo) != null) {
                     prefixBox.setSelectedItem(p.getComboBoxLastSelection(systemSelectionCombo));

@@ -150,9 +150,9 @@ public class TableItemPanel extends FamilyItemPanel implements ListSelectionList
     }
 
     void cancelPressed(ActionEvent e) {
-        addFrame.setVisible(false);
-        addFrame.dispose();
-        addFrame = null;
+        _addTableDialog.setVisible(false);
+        _addTableDialog.dispose();
+        _addTableDialog = null;
     }
 
     protected void addToTable() {
