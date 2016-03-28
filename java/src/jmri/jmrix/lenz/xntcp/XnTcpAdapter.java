@@ -1,4 +1,3 @@
-// XnTcpAdapter.java
 package jmri.jmrix.lenz.xntcp;
 
 import java.io.DataInputStream;
@@ -136,7 +135,13 @@ public class XnTcpAdapter extends XNetNetworkPortController implements jmri.jmri
             int count = inTcpStream.available();
             log.debug("input stream shows " + count + " bytes available");
             while (count > 0) {
-                inTcpStream.skip(count);
+                long read = inTcpStream.skip(count);
+                if(read<count) {
+                   log.debug("skipped " + read + " bytes when " + count +
+                             "bytes reported available");
+                }
+                // double check to see if the port still reports
+                // bytes available.
                 count = inTcpStream.available();
             }
             // Connection established.
