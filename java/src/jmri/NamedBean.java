@@ -92,7 +92,7 @@ public interface NamedBean {
     /**
      * Remove a request for a call-back when a bound property changes.
      */
-    public void removePropertyChangeListener(@Nonnull java.beans.PropertyChangeListener l);
+    public void removePropertyChangeListener(@Nullable java.beans.PropertyChangeListener l);
 
     public void updateListenerRef(@Nonnull java.beans.PropertyChangeListener l, String newName);
 
@@ -102,7 +102,7 @@ public interface NamedBean {
      * Get the textual reference for the specific listener
      *
      */
-    public String getListenerRef(java.beans.PropertyChangeListener l);
+    public String getListenerRef(@Nonnull java.beans.PropertyChangeListener l);
 
     /**
      * Returns a list of all the listerners references
