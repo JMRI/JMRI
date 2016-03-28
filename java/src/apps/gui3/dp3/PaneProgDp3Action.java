@@ -1,4 +1,3 @@
-// PaneProgAction.java
 package apps.gui3.dp3;
 
 import java.awt.BorderLayout;
@@ -68,14 +67,9 @@ import org.slf4j.LoggerFactory;
  * @see jmri.jmrit.symbolicprog.tabbedframe.PaneOpsProgAction
  *
  * @author	Bob Jacobsen Copyright (C) 2001
- * @version	$Revision: 17977 $
  */
 public class PaneProgDp3Action extends jmri.util.swing.JmriAbstractAction implements jmri.ProgListener, jmri.jmrit.symbolicprog.tabbedframe.PaneContainer {
 
-    /**
-     *
-     */
-    private static final long serialVersionUID = 5579779133820749548L;
     Object o1, o2, o3, o4;
     JLabel statusLabel;
     jmri.jmrit.progsupport.ProgModeSelector modePane = new jmri.jmrit.progsupport.ProgServiceModeComboBox();
@@ -136,10 +130,6 @@ public class PaneProgDp3Action extends jmri.util.swing.JmriAbstractAction implem
             final JPanel bottomPanel = new JPanel(new BorderLayout());
             // new Loco on programming track
             combinedLocoSelTree = new CombinedLocoSelTreePane(statusLabel, modePane) {
-                /**
-                 *
-                 */
-                private static final long serialVersionUID = 587815634507269784L;
 
                 @Override
                 protected void startProgrammer(DecoderFile decoderFile, RosterEntry re,
@@ -154,15 +144,10 @@ public class PaneProgDp3Action extends jmri.util.swing.JmriAbstractAction implem
                     JFrame p = new PaneServiceProgFrame(decoderFile, re,
                             title, "programmers" + File.separator + "Comprehensive.xml", // NOI18N
                             modePane.getProgrammer());
-                    if (modePane == null || !modePane.isSelected() || modePane.getProgrammer() == null) {
+                    if (!modePane.isSelected() || modePane.getProgrammer() == null) {
                         p = new PaneProgFrame(decoderFile, re,
                                 title, "programmers" + File.separator + "Comprehensive.xml", // NOI18N
                                 null, false) {
-                                    /**
-                                     *
-                                     */
-                                    private static final long serialVersionUID = -4335497929570046467L;
-
                                     protected JPanel getModePane() {
                                         return null;
                                     }
@@ -674,11 +659,6 @@ public class PaneProgDp3Action extends jmri.util.swing.JmriAbstractAction implem
 
     class ThisProgPane extends PaneProgPane {
 
-        /**
-         *
-         */
-        private static final long serialVersionUID = 8855795459526662034L;
-
         public ThisProgPane(PaneContainer parent, String name, Element pane, CvTableModel cvModel, IndexedCvTableModel icvModel, VariableTableModel varModel, Element modelElem) {
             super(parent, name, pane, cvModel, icvModel, varModel, modelElem, re);
             bottom.remove(readChangesButton);
@@ -759,5 +739,3 @@ public class PaneProgDp3Action extends jmri.util.swing.JmriAbstractAction implem
     private final static Logger log = LoggerFactory.getLogger(PaneProgDp3Action.class.getName());
 
 }
-
-/* @(#)PaneProgAction.java */

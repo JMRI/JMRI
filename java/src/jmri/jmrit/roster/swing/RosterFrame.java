@@ -1,4 +1,3 @@
-// RosterFrame.java
 package jmri.jmrit.roster.swing;
 
 import apps.AppsBase;
@@ -118,10 +117,6 @@ import org.slf4j.LoggerFactory;
  */
 public class RosterFrame extends TwoPaneTBWindow implements RosterEntrySelector, RosterGroupSelector {
 
-    /**
-     *
-     */
-    private static final long serialVersionUID = 6820971027038275933L;
     private final static Logger log = LoggerFactory.getLogger(RosterFrame.class.getName());
     static ArrayList<RosterFrame> frameInstances = new ArrayList<>();
     protected boolean allowQuit = true;
@@ -526,11 +521,6 @@ public class RosterFrame extends TwoPaneTBWindow implements RosterEntrySelector,
 
         rtable.getTable().setDragEnabled(true);
         rtable.getTable().setTransferHandler(new TransferHandler() {
-            /**
-             *
-             */
-            private static final long serialVersionUID = -5029989951536106561L;
-
             @Override
             public int getSourceActions(JComponent c) {
                 return TransferHandler.COPY;
@@ -1401,24 +1391,13 @@ public class RosterFrame extends TwoPaneTBWindow implements RosterEntrySelector,
             JFrame progFrame = null;
             if (edit.isSelected()) {
                 progFrame = new PaneProgFrame(decoderFile, re, title, "programmers" + File.separator + filename + ".xml", null, false) {
-                    /**
-                     *
-                     */
-                    private static final long serialVersionUID = -5406468334024223092L;
-
                     @Override
                     protected JPanel getModePane() {
                         return null;
                     }
                 };
             } else if (service.isSelected()) {
-                progFrame = new PaneServiceProgFrame(decoderFile, re, title, "programmers" + File.separator + filename + ".xml", modePanel.getProgrammer()) {
-
-                    /**
-                     *
-                     */
-                    private static final long serialVersionUID = 1953980697520737653L;
-                };
+                progFrame = new PaneServiceProgFrame(decoderFile, re, title, "programmers" + File.separator + filename + ".xml", modePanel.getProgrammer()) {};
             } else if (ops.isSelected()) {
                 int address = Integer.parseInt(re.getDccAddress());
                 boolean longAddr = re.isLongAddress();
@@ -1538,8 +1517,7 @@ public class RosterFrame extends TwoPaneTBWindow implements RosterEntrySelector,
         }
 
         if (serModeProCon != null && gpm.isGlobalProgrammerAvailable()) {
-            if (ConnectionStatus.instance().isConnectionOk(serModeProCon.getInfo())
-                    && gpm != null) {
+            if (ConnectionStatus.instance().isConnectionOk(serModeProCon.getInfo())) {
                 serviceModeProgrammerLabel.setText(
                         Bundle.getMessage("ServiceModeProgOnline", serModeProCon.getConnectionName()));
                 serviceModeProgrammerLabel.setForeground(new Color(0, 128, 0));
@@ -1573,7 +1551,7 @@ public class RosterFrame extends TwoPaneTBWindow implements RosterEntrySelector,
         }
 
         if (opsModeProCon != null && apm.isAddressedModePossible()) {
-            if (ConnectionStatus.instance().isConnectionOk(opsModeProCon.getInfo()) && apm != null) {
+            if (ConnectionStatus.instance().isConnectionOk(opsModeProCon.getInfo())) {
                 operationsModeProgrammerLabel.setText(
                         Bundle.getMessage("OpsModeProgOnline", opsModeProCon.getConnectionName()));
                 operationsModeProgrammerLabel.setForeground(new Color(0, 128, 0));
@@ -1666,12 +1644,6 @@ public class RosterFrame extends TwoPaneTBWindow implements RosterEntrySelector,
     }
 
     static class ExportRosterItem extends ExportRosterItemAction {
-
-        /**
-         *
-         */
-        private static final long serialVersionUID = 5920288372458701120L;
-
         ExportRosterItem(String pName, Component pWho, RosterEntry re) {
             super(pName, pWho);
             setExistingEntry(re);
@@ -1684,12 +1656,6 @@ public class RosterFrame extends TwoPaneTBWindow implements RosterEntrySelector,
     }
 
     static class CopyRosterItem extends CopyRosterItemAction {
-
-        /**
-         *
-         */
-        private static final long serialVersionUID = -4822095767152284104L;
-
         CopyRosterItem(String pName, Component pWho, RosterEntry re) {
             super(pName, pWho);
             setExistingEntry(re);
