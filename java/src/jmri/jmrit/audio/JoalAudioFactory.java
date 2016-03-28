@@ -1,4 +1,3 @@
-// JoalAudioFactory.java
 package jmri.jmrit.audio;
 
 import com.jogamp.openal.AL;
@@ -79,7 +78,6 @@ import org.slf4j.LoggerFactory;
  * <P>
  *
  * @author Matthew Harris copyright (c) 2009
- * @version $Revision$
  */
 public class JoalAudioFactory extends AbstractAudioFactory {
 
@@ -201,8 +199,8 @@ public class JoalAudioFactory extends AbstractAudioFactory {
      * @return true, if initialisation successful
      */
     @Override
-    @edu.umd.cs.findbugs.annotations.SuppressFBWarnings(value = "ST_WRITE_TO_STATIC_FROM_INSTANCE_METHOD")
-    // OK to write to static variables as we only do so if not initialised
+    @edu.umd.cs.findbugs.annotations.SuppressFBWarnings(value = "ST_WRITE_TO_STATIC_FROM_INSTANCE_METHOD",
+            justification = "OK to write to static variables as we only do so if not initialised")
     public boolean init() {
         if (initialised) {
             return true;
@@ -561,5 +559,3 @@ public class JoalAudioFactory extends AbstractAudioFactory {
     private static final Logger log = LoggerFactory.getLogger(JoalAudioFactory.class.getName());
 
 }
-
-/* $(#)JoalAudioFactory.java */

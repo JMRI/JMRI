@@ -92,7 +92,7 @@ public class ManagerDefaultSelector extends AbstractPreferencesProvider {
                     });
                     break;
             }
-            this.propertyChangeSupport.firePropertyChange("Updated", null, null);
+            this.firePropertyChange("Updated", null, null);
         });
     }
 

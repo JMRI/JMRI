@@ -106,7 +106,7 @@ public class RosterConfigManager extends AbstractPreferencesProvider {
         }
         String oldDefaultOwner = this.defaultOwner;
         this.defaultOwner = defaultOwner;
-        propertyChangeSupport.firePropertyChange(DEFAULT_OWNER, oldDefaultOwner, defaultOwner);
+        firePropertyChange(DEFAULT_OWNER, oldDefaultOwner, defaultOwner);
     }
 
     /**
@@ -142,7 +142,7 @@ public class RosterConfigManager extends AbstractPreferencesProvider {
         }
         this.directory = directory;
         log.debug("Roster changed from {} to {}", oldDirectory, this.directory);
-        propertyChangeSupport.firePropertyChange(DIRECTORY, oldDirectory, directory);
+        firePropertyChange(DIRECTORY, oldDirectory, directory);
     }
 
 }

@@ -1,4 +1,3 @@
-// AudioSourceFrame.java
 package jmri.jmrit.audio.swing;
 
 import java.awt.FlowLayout;
@@ -39,14 +38,8 @@ import jmri.jmrit.beantable.AudioTableAction.AudioTableDataModel;
  * <P>
  *
  * @author Matthew Harris copyright (c) 2009
- * @version $Revision$
  */
 public class AudioSourceFrame extends AbstractAudioFrame {
-
-    /**
-     *
-     */
-    private static final long serialVersionUID = -933611748183387484L;
 
     private static int counter = 1;
 
@@ -396,5 +389,3 @@ public class AudioSourceFrame extends AbstractAudioFrame {
 
     //private static final Logger log = LoggerFactory.getLogger(AudioSourceFrame.class.getName());
 }
-
-/* @(#)AudioSourceFrame.java */

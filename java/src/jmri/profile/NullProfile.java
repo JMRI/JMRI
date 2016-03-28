@@ -12,6 +12,10 @@ import javax.annotation.Nonnull;
  * A NullProfile allows an application using JMRI as a library to set the active
  * JMRI profile to an identity set by that application, if the use of a standard
  * JMRI profile is not acceptable.
+ * <p>
+ * This class deliberately overrides all methods of {@link jmri.profile.Profile}
+ * that access the {@link #name} and {@link #id} fields to remove protections
+ * and restrictions on those fields.
  *
  * @author rhwood Copyright (C) 2014
  * @see jmri.profile.ProfileManager#setActiveProfile(jmri.profile.Profile)
@@ -20,7 +24,6 @@ public class NullProfile extends Profile {
 
     private String name;
     private String id;
-    private File path;
 
     /**
      * Create a NullProfile object given just a path to it. The Profile must
@@ -50,7 +53,7 @@ public class NullProfile extends Profile {
      * @throws IllegalArgumentException
      */
     public NullProfile(String name, String id, File path) throws IOException, IllegalArgumentException {
-        super(path, false);
+        this(path);
         this.name = name;
         if (null != id) {
             this.id = id;
@@ -76,16 +79,9 @@ public class NullProfile extends Profile {
      * @return the id
      */
     @Override
-    public @Nonnull String getId() {
+    public @Nonnull
+    String getId() {
         return id;
-    }
-
-    /**
-     * @return the path
-     */
-    @Override
-    public File getPath() {
-        return path;
     }
 
     @Override
