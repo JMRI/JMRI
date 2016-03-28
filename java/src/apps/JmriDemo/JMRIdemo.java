@@ -34,11 +34,6 @@ import org.slf4j.LoggerFactory;
  */
 public class JMRIdemo extends Apps {
 
-    /**
-     *
-     */
-    private static final long serialVersionUID = -4150983739482568886L;
-
     JMRIdemo(JFrame p) {
         super(p);
     }

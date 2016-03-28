@@ -1,4 +1,3 @@
-// TransitSection.java
 package jmri;
 
 import java.util.ArrayList;
@@ -22,7 +21,6 @@ import org.slf4j.LoggerFactory;
  * that this is not dependent on order of items in the panel file.
  *
  * @author	Dave Duchamp Copyright (C) 2008
- * @version	$Revision$
  */
 public class TransitSection {
 
@@ -145,5 +143,3 @@ public class TransitSection {
 
     private final static Logger log = LoggerFactory.getLogger(TransitSection.class.getName());
 }
-
-/* @(#)TransitSection.java */

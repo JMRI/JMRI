@@ -531,11 +531,7 @@ public class Block extends jmri.implementation.AbstractNamedBean implements Phys
             return false;
         } else {
             Block b = (Block) obj;
-            
-//            if (b._direction != this._direction) return false;
-//            if (b._curvature != this._curvature) return false;
-//            if (b._length != this._length) return false;
-            
+                        
             if (!b.getSystemName().equals(this.getSystemName())) return false;
             
         }
@@ -936,7 +932,7 @@ public class Block extends jmri.implementation.AbstractNamedBean implements Phys
     }
 
     public void vetoableChange(java.beans.PropertyChangeEvent evt) throws java.beans.PropertyVetoException {
-        if ("CanDelete".equals(evt.getPropertyName())) { //IN18N
+        if ("CanDelete".equals(evt.getPropertyName())) { // No I18N
             if (evt.getOldValue() instanceof Sensor) {
                 if (evt.getOldValue().equals(getSensor())) {
                     throw new java.beans.PropertyVetoException(getDisplayName(), evt);
@@ -947,7 +943,7 @@ public class Block extends jmri.implementation.AbstractNamedBean implements Phys
                     throw new java.beans.PropertyVetoException(getDisplayName(), evt);
                 }
             }
-        } else if ("DoDelete".equals(evt.getPropertyName())) { //IN18N
+        } else if ("DoDelete".equals(evt.getPropertyName())) { // No I18N
             if (evt.getOldValue() instanceof Sensor) {
                 if (evt.getOldValue().equals(getSensor())) {
                     setSensor(null);

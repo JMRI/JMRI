@@ -35,11 +35,16 @@ public class JynstrumentFactory {
         ScriptEngine engine = JmriScriptEngineManager.getDefault().getEngine(JmriScriptEngineManager.PYTHON);
         Jynstrument jyns;
         try {
-            engine.eval(new FileReader(jyFile));
-            engine.eval(instanceName + " = " + className + "()");
-            jyns = (Jynstrument) engine.get(instanceName);
-            engine.eval("del " + instanceName);
-        } catch (Exception ex) {
+            FileReader fr = new FileReader(jyFile);
+            try {
+                engine.eval(fr);
+                engine.eval(instanceName + " = " + className + "()");
+                jyns = (Jynstrument) engine.get(instanceName);
+                engine.eval("del " + instanceName);
+            } finally {
+                fr.close();
+            }
+        } catch (java.io.IOException | javax.script.ScriptException ex) {
             log.error("Exception while creating Jynstrument: " + ex);
             return null;
         }

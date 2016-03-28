@@ -1,4 +1,3 @@
-// InstanceInitializer.java
 package jmri;
 
 /**
@@ -16,7 +15,6 @@ package jmri;
  * A PARTICULAR PURPOSE. See the GNU General Public License for more details.
  * <P>
  * @author	Bob Jacobsen Copyright (C) 2010
- * @version	$Revision$
  * @since 2.9.4
  */
 public interface InstanceInitializer {
@@ -24,5 +22,3 @@ public interface InstanceInitializer {
     public <T> Object getDefault(Class<T> type);
 
 }
-
-/* @(#)InstanceInitializer.java */

@@ -1,4 +1,3 @@
-// jmri.jmrit.display.LayoutBlock.java
 package jmri.jmrit.display.layoutEditor;
 
 import java.awt.Color;
@@ -79,10 +78,6 @@ import org.slf4j.MDC;
  */
 public class LayoutBlock extends AbstractNamedBean implements java.beans.PropertyChangeListener {
 
-    /**
-     *
-     */
-    private static final long serialVersionUID = 5133877893672022035L;
     public boolean enableAddRouteLogging = false;
     public boolean enableUpdateRouteLogging = false;
     public boolean enableDeleteRouteLogging = false;
@@ -396,27 +391,25 @@ public class LayoutBlock extends AbstractNamedBean implements java.beans.Propert
 
         //Go through the memory icons on the panel and see if any are linked to this layout block
         if (m != getMemory() && panels.size() > 0) {
-            if (panels.size() > 0) {
-                boolean updateall = false;
-                boolean found = false;
-                for (LayoutEditor panel : panels) {
-                    for (MemoryIcon memIcon : panel.memoryLabelList) {
-                        if (memIcon.getLayoutBlock() == this) {
-                            if (!updateall && !found) {
-                                int n = JOptionPane.showConfirmDialog(
-                                        openFrame,
-                                        "Would you like to update all memory icons on the panel linked to the block to use the new one?",
-                                        "Update Memory Icons",
-                                        JOptionPane.YES_NO_OPTION);
-                                        //TODO I18N in Bundle.properties
-                                found = true;
-                                if (n == 0) {
-                                    updateall = true;
-                                }
+            boolean updateall = false;
+            boolean found = false;
+            for (LayoutEditor panel : panels) {
+                for (MemoryIcon memIcon : panel.memoryLabelList) {
+                    if (memIcon.getLayoutBlock() == this) {
+                        if (!updateall && !found) {
+                            int n = JOptionPane.showConfirmDialog(
+                                    openFrame,
+                                    "Would you like to update all memory icons on the panel linked to the block to use the new one?",
+                                    "Update Memory Icons",
+                                    JOptionPane.YES_NO_OPTION);
+                                    //TODO I18N in Bundle.properties
+                            found = true;
+                            if (n == 0) {
+                                updateall = true;
                             }
-                            if (updateall) {
-                                memIcon.setMemory(memoryName);
-                            }
+                        }
+                        if (updateall) {
+                            memIcon.setMemory(memoryName);
                         }
                     }
                 }
@@ -1028,11 +1021,6 @@ public class LayoutBlock extends AbstractNamedBean implements java.beans.Propert
 
     class LayoutBlockEditAction extends jmri.jmrit.beantable.beanedit.BlockEditAction {
 
-        /**
-         *
-         */
-        private static final long serialVersionUID = 1200243516883528850L;
-
         @Override
         public String helpTarget() {
             return "package.jmri.jmrit.display.EditLayoutBlock";
@@ -1073,10 +1061,6 @@ public class LayoutBlock extends AbstractNamedBean implements java.beans.Propert
             layout.addItem(new BeanEditItem(extraColorBox, rb.getString("ExtraColor"), rb.getString("ExtraColorHint")));
 
             layout.setSaveItem(new AbstractAction() {
-                /**
-                 *
-                 */
-                private static final long serialVersionUID = -8306290479368486226L;
 
                 public void actionPerformed(ActionEvent e) {
                     boolean needsRedraw = false;
@@ -1130,11 +1114,6 @@ public class LayoutBlock extends AbstractNamedBean implements java.beans.Propert
             });
 
             layout.setResetItem(new AbstractAction() {
-                /**
-                 *
-                 */
-                private static final long serialVersionUID = 8424682609335608318L;
-
                 public void actionPerformed(ActionEvent e) {
                     memoryNameField.setText(memoryName);
                     setColorCombo(trackColorBox, blockTrackColor);
@@ -1166,11 +1145,6 @@ public class LayoutBlock extends AbstractNamedBean implements java.beans.Propert
             }
 
             routing.setResetItem(new AbstractAction() {
-                /**
-                 *
-                 */
-                private static final long serialVersionUID = 6583889296784626636L;
-
                 public void actionPerformed(ActionEvent e) {
                     metricField.setText(Integer.toString(metric));
                     for (int i = 0; i < getNumberOfNeighbours(); i++) {
@@ -1188,11 +1162,6 @@ public class LayoutBlock extends AbstractNamedBean implements java.beans.Propert
             });
 
             routing.setSaveItem(new AbstractAction() {
-                /**
-                 *
-                 */
-                private static final long serialVersionUID = 4314794737329205107L;
-
                 public void actionPerformed(ActionEvent e) {
                     int m = Integer.parseInt(metricField.getText().trim());
                     if (m != metric) {

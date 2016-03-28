@@ -3,10 +3,9 @@ package jmri.jmrix.srcp.networkdriver;
 
 import jmri.jmrix.srcp.SRCPPortController;
 import jmri.jmrix.srcp.SRCPTrafficController;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
-/*import java.io.*;
- import java.net.*;
- import java.util.Vector;*/
 /**
  * Implements SerialPortAdapter for the SRCP system network connection.
  * <P>
@@ -35,23 +34,7 @@ public class NetworkDriverAdapter extends SRCPPortController implements jmri.jmr
         this.getSystemConnectionMemo().configureManagers();
         this.getSystemConnectionMemo().configureCommandStation();
 
-        /*jmri.InstanceManager.setProgrammerManager(
-         new SRCPProgrammerManager(
-         new SRCPProgrammer()));
-
-         jmri.InstanceManager.setPowerManager(new jmri.jmrix.srcp.SRCPPowerManager());
-
-         jmri.InstanceManager.setTurnoutManager(new jmri.jmrix.srcp.SRCPTurnoutManager());
-
-         jmri.InstanceManager.setThrottleManager(new jmri.jmrix.srcp.SRCPThrottleManager());
-
-         // Create an instance of the consist manager.  Make sure this
-         // happens AFTER the programmer manager to override the default   
-         // consist manager.
-         // jmri.InstanceManager.setConsistManager(new jmri.jmrix.srcp.SRCPConsistManager());
-
-
-         // mark OK for menus*/
+         // mark OK for menus
         jmri.jmrix.srcp.ActiveFlag.setActive();
     }
 
@@ -62,17 +45,15 @@ public class NetworkDriverAdapter extends SRCPPortController implements jmri.jmr
     // private control members
     private boolean opened = false;
 
+    /*
+     * @deprecated since 4.3.5
+     */
+    @Deprecated
     static public NetworkDriverAdapter instance() {
-        if (mInstance == null) {
-            // create a new one
-            NetworkDriverAdapter m = new NetworkDriverAdapter();
-            m.setManufacturer(jmri.jmrix.srcp.SRCPConnectionTypeList.SRCP);
-
-            // and make instance
-            mInstance = m;
-        }
-        return mInstance;
+        log.error("Deprecated instance() method called");
+        return null;
     }
-    static NetworkDriverAdapter mInstance = null;
+
+    private final static Logger log = LoggerFactory.getLogger(NetworkDriverAdapter.class.getName());
 
 }
