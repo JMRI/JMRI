@@ -1,4 +1,3 @@
-// AbstractAudioListener.java
 package jmri.jmrit.audio;
 
 import javax.vecmath.Vector3f;
@@ -27,14 +26,9 @@ import org.slf4j.LoggerFactory;
  * <P>
  *
  * @author Matthew Harris copyright (c) 2009
- * @version $Revision$
  */
 public abstract class AbstractAudioListener extends AbstractAudio implements AudioListener {
 
-    /**
-     *
-     */
-    private static final long serialVersionUID = 7653942390344476939L;
     private Vector3f position = new Vector3f(0.0f, 0.0f, 0.0f);
     private Vector3f currentPosition = new Vector3f(0.0f, 0.0f, 0.0f);
     private Vector3f velocity = new Vector3f(0.0f, 0.0f, 0.0f);
@@ -315,5 +309,3 @@ public abstract class AbstractAudioListener extends AbstractAudio implements Aud
         }
     }
 }
-
-/* $(#)AbstractAudioListener.java */

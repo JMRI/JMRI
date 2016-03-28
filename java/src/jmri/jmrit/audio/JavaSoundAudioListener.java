@@ -1,4 +1,3 @@
-// JavaSoundAudioListener.java
 package jmri.jmrit.audio;
 
 import javax.vecmath.Vector3f;
@@ -30,14 +29,8 @@ import org.slf4j.LoggerFactory;
  * <p>
  *
  * @author Matthew Harris copyright (c) 2009
- * @version $Revision$
  */
 public class JavaSoundAudioListener extends AbstractAudioListener {
-
-    /**
-     *
-     */
-    private static final long serialVersionUID = 9173649719613819402L;
 
     /**
      * Constructor for new JavaSoundAudioListener with system name
@@ -106,5 +99,3 @@ public class JavaSoundAudioListener extends AbstractAudioListener {
     private static final Logger log = LoggerFactory.getLogger(JavaSoundAudioListener.class.getName());
 
 }
-
-/* $(#)JavaSoundAudioListener.java */
