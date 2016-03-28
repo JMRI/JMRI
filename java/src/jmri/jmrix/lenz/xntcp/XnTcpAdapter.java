@@ -27,7 +27,7 @@ import org.slf4j.LoggerFactory;
  *
  * @author	Giorgio Terdina Copyright (C) 2008-2011, based on LI100 adapter by
  * Bob Jacobsen, Copyright (C) 2002, Portions by Paul Bender, Copyright (C) 2003
- * @version	$Revision$ GT - May 2008 - Added possibility of manually
+ * GT - May 2008 - Added possibility of manually
  * defining the IP address and the TCP port number GT - May 2008 - Added
  * updating of connection status in the main menu panel (using ConnectionStatus
  * by Daniel Boudreau) PB - December 2010 - refactored to be based off of
@@ -131,19 +131,10 @@ public class XnTcpAdapter extends XNetNetworkPortController implements jmri.jmri
             }
             // get and save input stream
             inTcpStream = socketConn.getInputStream();
+
             // purge contents, if any
-            int count = inTcpStream.available();
-            log.debug("input stream shows " + count + " bytes available");
-            while (count > 0) {
-                long read = inTcpStream.skip(count);
-                if(read<count) {
-                   log.debug("skipped " + read + " bytes when " + count +
-                             "bytes reported available");
-                }
-                // double check to see if the port still reports
-                // bytes available.
-                count = inTcpStream.available();
-            }
+            purgeStream(inTcpStream);
+
             // Connection established.
             opened = true;
             ConnectionStatus.instance().setConnectionState(outName, ConnectionStatus.CONNECTION_UP);
