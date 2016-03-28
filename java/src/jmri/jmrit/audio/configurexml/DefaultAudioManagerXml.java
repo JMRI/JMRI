@@ -1,4 +1,3 @@
-// DefaultAudioManagerXml.java
 package jmri.jmrit.audio.configurexml;
 
 import jmri.InstanceManager;
@@ -23,7 +22,6 @@ import org.jdom2.Element;
  * <P>
  *
  * @author Matthew Harris copyright (c) 2009
- * @version $Revision$
  */
 public class DefaultAudioManagerXml extends AbstractAudioManagerConfigXML {
 
@@ -61,5 +59,3 @@ public class DefaultAudioManagerXml extends AbstractAudioManagerConfigXML {
         return true;
     }
 }
-
-/* $(#)DefaultAudioManagerXml.java */

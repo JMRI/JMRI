@@ -1,4 +1,3 @@
-// AudioListenerFrame.java
 package jmri.jmrit.audio.swing;
 
 import java.awt.FlowLayout;
@@ -35,14 +34,9 @@ import jmri.jmrit.beantable.AudioTableAction.AudioTableDataModel;
  * <P>
  *
  * @author Matthew Harris copyright (c) 2009
- * @version $Revision$
  */
 public class AudioListenerFrame extends AbstractAudioFrame {
 
-    /**
-     *
-     */
-    private static final long serialVersionUID = 4006867664747801687L;
     JPanelVector3f position = new JPanelVector3f(Bundle.getMessage("LabelPosition"),
             Bundle.getMessage("UnitUnits"));
     JPanelVector3f velocity = new JPanelVector3f(Bundle.getMessage("LabelVelocity"),
@@ -161,5 +155,3 @@ public class AudioListenerFrame extends AbstractAudioFrame {
 
     //private static final Logger log = LoggerFactory.getLogger(AudioListenerFrame.class.getName());
 }
-
-/* @(#)AudioListenerFrame.java */
