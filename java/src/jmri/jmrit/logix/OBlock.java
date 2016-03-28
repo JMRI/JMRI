@@ -64,10 +64,6 @@ import org.slf4j.LoggerFactory;
  */
 public class OBlock extends jmri.Block implements java.beans.PropertyChangeListener {
 
-    /**
-     *
-     */
-    private static final long serialVersionUID = -8683807989230088682L;
     /*
      * Block states.
      * NamedBean.UNKNOWN                 = 0x01;
@@ -165,6 +161,27 @@ public class OBlock extends jmri.Block implements java.beans.PropertyChangeListe
     public OBlock(String systemName, String userName) {
         super(systemName, userName);
         setState(DARK);
+    }
+
+
+    /** 
+     * Note: equality consists of the underlying (superclass) Block implementation
+     * being the same.
+     */
+    @Override
+    public boolean equals(Object obj) {
+        if (obj == this) {
+            return true;
+        }
+        if (obj == null) {
+            return false;
+        }
+
+        if (!(getClass() == obj.getClass())) {
+            return false;
+        }
+
+        return super.equals(obj);
     }
 
     /**

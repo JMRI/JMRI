@@ -1,4 +1,3 @@
-// TurnoutManager.java
 package jmri;
 
 import java.util.List;
@@ -36,7 +35,6 @@ import java.util.List;
  * A PARTICULAR PURPOSE. See the GNU General Public License for more details.
  * <P>
  * @author	Bob Jacobsen Copyright (C) 2001
- * @version	$Revision$
  * @see jmri.Turnout
  * @see jmri.InstanceManager
  * @see jmri.jmrit.simpleturnoutctrl.SimpleTurnoutCtrlFrame
@@ -209,5 +207,3 @@ public interface TurnoutManager extends Manager {
     public String getDefaultClosedSpeed();
 }
 
-
-/* @(#)TurnoutManager.java */

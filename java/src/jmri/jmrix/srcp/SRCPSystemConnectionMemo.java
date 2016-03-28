@@ -1,4 +1,3 @@
-// SRCPSystemConnectionMemo.java
 package jmri.jmrix.srcp;
 
 import java.util.ResourceBundle;

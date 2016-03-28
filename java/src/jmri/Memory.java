@@ -1,4 +1,3 @@
-// Memory.java
 package jmri;
 
 /**
@@ -31,7 +30,6 @@ package jmri;
  * <P>
  *
  * @author	Bob Jacobsen Copyright (C) 2001
- * @version	$Revision$
  * @see jmri.implementation.AbstractMemory
  * @see jmri.MemoryManager
  * @see jmri.InstanceManager
@@ -50,5 +48,3 @@ public interface Memory extends NamedBean {
     public void setValue(Object value);
 
 }
-
-/* @(#)Memory.java */

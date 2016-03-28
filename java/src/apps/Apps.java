@@ -116,10 +116,6 @@ import org.slf4j.LoggerFactory;
  */
 public class Apps extends JPanel implements PropertyChangeListener, WindowListener {
 
-    /**
-     *
-     */
-    private static final long serialVersionUID = 8846653289120123006L;
     static String profileFilename;
 
     @edu.umd.cs.findbugs.annotations.SuppressFBWarnings({"ST_WRITE_TO_STATIC_FROM_INSTANCE_METHOD", "SC_START_IN_CTOR"})//"only one application at a time. The thread is only called to help improve user experiance when opening the preferences, it is not critical for it to be run at this stage"
@@ -596,11 +592,6 @@ public class Apps extends JPanel implements PropertyChangeListener, WindowListen
         if (!(SystemType.isMacOSX() && UIManager.getLookAndFeel().isNativeLookAndFeel())) {
             fileMenu.add(new JSeparator());
             fileMenu.add(new AbstractAction(Bundle.getMessage("MenuItemQuit")) {
-                /**
-                 *
-                 */
-                private static final long serialVersionUID = -3051429826192051394L;
-
                 @Override
                 public void actionPerformed(ActionEvent e) {
                     handleQuit();

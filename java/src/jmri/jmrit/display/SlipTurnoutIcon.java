@@ -474,7 +474,7 @@ public class SlipTurnoutIcon extends PositionableLabel implements java.beans.Pro
                 && (getTurnout(WEST).getFeedbackMode() != Turnout.DIRECT)
                 && (e.getPropertyName().equals("CommandedState"))) {
             if ((getTurnout(WEST).getCommandedState() != getTurnout(WEST).getKnownState())
-                    || (getTurnout(WEST).getCommandedState() != getTurnout(WEST).getKnownState())) {
+                    || (getTurnout(EAST).getCommandedState() != getTurnout(EAST).getKnownState())) {
                 int now = Turnout.INCONSISTENT;
                 displayState(now);
             }

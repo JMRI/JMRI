@@ -1,4 +1,3 @@
-// CatalogTreeManager.java
 package jmri;
 
 import java.util.List;
@@ -98,6 +97,3 @@ public interface CatalogTreeManager extends Manager {
     static final String[] SCRIPT_FILTER = {"py", "scpt"};
 
 }
-
-
-/* @(#)CatalogTreeManager.java */

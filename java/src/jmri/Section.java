@@ -1,4 +1,3 @@
-// Section.java
 package jmri;
 
 import java.beans.PropertyChangeListener;
@@ -94,16 +93,9 @@ import org.slf4j.LoggerFactory;
  * <P>
  *
  * @author	Dave Duchamp Copyright (C) 2008,2010
- *
- * @version	$Revision$
  */
 public class Section extends AbstractNamedBean
         implements java.io.Serializable {
-
-    /**
-     *
-     */
-    private static final long serialVersionUID = 8977065652532075907L;
 
     public Section(String systemName, String userName) {
         super(systemName.toUpperCase(), userName);
@@ -2720,5 +2712,3 @@ public class Section extends AbstractNamedBean
     private final static Logger log = LoggerFactory.getLogger(Section.class.getName());
 
 }
-
-/* @(#)Section.java */

@@ -11,6 +11,7 @@ import java.io.PrintWriter;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
+import java.util.Date;
 import java.util.List;
 import jmri.jmrit.XmlFile;
 import jmri.jmrit.operations.OperationsXml;
@@ -276,14 +277,9 @@ public class RollingStockLogger extends XmlFile implements java.beans.PropertyCh
     }
 
     private String getDate() {
-        String time = Calendar.getInstance().getTime().toString();
-        SimpleDateFormat dt = new SimpleDateFormat("EEE MMM dd HH:mm:ss z yyyy");
-        SimpleDateFormat dtout = new SimpleDateFormat("yyyy_MM_dd");
-        try {
-            return dtout.format(dt.parse(time));
-        } catch (ParseException e) {
-            return "Error Date Not Known"; // there was an issue
-        }
+        Date date = Calendar.getInstance().getTime();
+        SimpleDateFormat simpleDateFormat = new SimpleDateFormat("yyyy_MM_dd");
+        return simpleDateFormat.format(date);
     }
 
     /**

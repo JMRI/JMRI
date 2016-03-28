@@ -1,4 +1,3 @@
-// NmraPacket.java
 package jmri;
 
 import org.slf4j.Logger;
@@ -48,7 +47,6 @@ import org.slf4j.LoggerFactory;
  * <P>
  *
  * @author Bob Jacobsen Copyright (C) 2001, 2003
- * @version $Revision$
  */
 public class NmraPacket {
 
@@ -1155,6 +1153,3 @@ public class NmraPacket {
     }
     private final static Logger log = LoggerFactory.getLogger(NmraPacket.class.getName());
 }
-
-
-/* @(#)NmraPacket.java */
