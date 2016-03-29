@@ -77,7 +77,7 @@ public class AddNewBeanPanel extends jmri.util.swing.JmriPanel {
 
         // cancel + add buttons at bottom of window
         JPanel panelBottom = new JPanel();
-        panelBottom.setLayout(new FlowLayout());
+        panelBottom.setLayout(new FlowLayout(FlowLayout.TRAILING));
 
         panelBottom.add(cancel = new JButton(Bundle.getMessage("ButtonCancel")));
         cancel.addActionListener(cancelListener);

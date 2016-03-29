@@ -777,7 +777,7 @@ public class LayoutBlockConnectivityTools {
             throw new JmriException("advanced routing not enabled");
         }
         if (!lbm.routingStablised()) {
-            throw new JmriException("routing not stablised");
+            throw new JmriException("Routing not stabilised");
         }
         ArrayList<NamedBean> validDestBean = new ArrayList<NamedBean>();
         for (int j = 0; j < blockList.size(); j++) {

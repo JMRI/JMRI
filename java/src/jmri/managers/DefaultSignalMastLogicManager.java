@@ -369,7 +369,7 @@ public class DefaultSignalMastLogicManager implements jmri.SignalMastLogicManage
             throw new JmriException("advanced routing not enabled");
         }
         if (!lbm.routingStablised()) {
-            throw new JmriException("routing not stablised");
+            throw new JmriException("Routing not stabilised");
         }
         try {
             validPaths.put(source, lbm.getLayoutBlockConnectivityTools().discoverPairDest(source, layout, SignalMast.class, LayoutBlockConnectivityTools.MASTTOMAST));
