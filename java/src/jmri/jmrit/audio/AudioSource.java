@@ -1,4 +1,3 @@
-// AudioSource.java
 package jmri.jmrit.audio;
 
 import java.util.Queue;
@@ -35,7 +34,6 @@ import jmri.Audio;
  * <P>
  *
  * @author Matthew Harris copyright (c) 2009
- * @version $Revision$
  */
 public interface AudioSource extends Audio {
 
@@ -833,5 +831,3 @@ public interface AudioSource extends Audio {
     public void fadeOut();
 
 }
-
-/* @(#)AudioSource.java */

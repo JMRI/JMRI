@@ -1,4 +1,3 @@
-// ZTC640Adapter.java
 package jmri.jmrix.lenz.ztc640;
 
 import gnu.io.CommPortIdentifier;
@@ -9,6 +8,7 @@ import gnu.io.SerialPortEventListener;
 import java.io.DataInputStream;
 import java.io.DataOutputStream;
 import java.io.InputStream;
+import java.io.IOException;
 import jmri.jmrix.lenz.LenzCommandStation;
 import jmri.jmrix.lenz.XNetInitializationManager;
 import jmri.jmrix.lenz.XNetSerialPortController;
@@ -23,7 +23,6 @@ import org.slf4j.LoggerFactory;
  *
  * @author	Bob Jacobsen Copyright (C) 2002
  * @author Paul Bender, Copyright (C) 2003-2010
- * @version	$Revision$
  */
 public class ZTC640Adapter extends XNetSerialPortController implements jmri.jmrix.SerialPortAdapter {
 
@@ -52,24 +51,15 @@ public class ZTC640Adapter extends XNetSerialPortController implements jmri.jmri
             }
 
             // set timeout
-            try {
-                activeSerialPort.enableReceiveTimeout(10);
-                log.debug("Serial timeout was observed as: " + activeSerialPort.getReceiveTimeout()
-                        + " " + activeSerialPort.isReceiveTimeoutEnabled());
-            } catch (Exception et) {
-                log.info("failed to set serial timeout: " + et);
-            }
+            activeSerialPort.enableReceiveTimeout(10);
+            log.debug("Serial timeout was observed as: " + activeSerialPort.getReceiveTimeout()
+                      + " " + activeSerialPort.isReceiveTimeoutEnabled());
 
             // get and save stream
             serialStream = activeSerialPort.getInputStream();
 
             // purge contents, if any
-            int count = serialStream.available();
-            log.debug("input stream shows " + count + " bytes available");
-            while (count > 0) {
-                serialStream.skip(count);
-                count = serialStream.available();
-            }
+            purgeStream(serialStream);
 
             // report status?
             if (log.isInfoEnabled()) {
@@ -238,7 +228,7 @@ public class ZTC640Adapter extends XNetSerialPortController implements jmri.jmri
         }
         try {
             return new DataOutputStream(activeSerialPort.getOutputStream());
-        } catch (java.io.IOException e) {
+        } catch (IOException e) {
             log.error("getOutputStream exception: " + e.getMessage());
         }
         return null;
