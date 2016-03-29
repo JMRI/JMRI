@@ -90,7 +90,7 @@ public class Z21XNetTurnout extends XNetTurnout implements XNetListener {
         internalState = oldState;
     }
 
-    public void message(XNetReply l) {
+    synchronized public void message(XNetReply l) {
         if (log.isDebugEnabled()) {
             log.debug("recieved message: " + l);
         }
@@ -106,27 +106,23 @@ public class Z21XNetTurnout extends XNetTurnout implements XNetListener {
              // this is very basic right now.  We need to handle
              // at least monitoring mode feedback properly.
 
-             synchronized(this) {
-                switch(l.getElement(3)){
-                   case 0x03: newKnownState(INCONSISTENT);
-                              break;
-                   case 0x02: newKnownState(THROWN);
-                              break;
-                   case 0x01: newKnownState(CLOSED);
-                              break;
-                   case 0x00:
-                   default:
-                              newKnownState(UNKNOWN);
-                }
+             switch(l.getElement(3)){
+                case 0x03: newKnownState(INCONSISTENT);
+                           break;
+                case 0x02: newKnownState(THROWN);
+                           break;
+                case 0x01: newKnownState(CLOSED);
+                           break;
+                case 0x00:
+                default:
+                           newKnownState(UNKNOWN);
              }
              if(internalState == COMMANDSENT) {
                 sendOffMessage();  // turn off the repition on the track.
              } else if(internalState == OFFSENT ) {
                 /* the command was successfully recieved */
-                synchronized (this) {
-                    newKnownState(getCommandedState());
-                    internalState = IDLE;
-                }
+                newKnownState(getCommandedState());
+                internalState = IDLE;
              }
           }
           
