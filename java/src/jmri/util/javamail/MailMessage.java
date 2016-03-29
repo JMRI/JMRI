@@ -1,4 +1,3 @@
-// MailMessage.java
 package jmri.util.javamail;
 
 /**
@@ -16,7 +15,6 @@ package jmri.util.javamail;
  *
  * @author Bob Jacobsen Copyright 2008, 2009
  * @author kcameron Copyright 2015
- * @version $Revision$
  *
  */
 
