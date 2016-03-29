@@ -66,12 +66,9 @@ public class PickPanel extends JPanel implements ListSelectionListener, ChangeLi
 
         ActionListener cancelListener = new ActionListener() {
             public void actionPerformed(ActionEvent a) {
-                _pickTables.setVisible(false);
                 //do nothing as Cancel button is hidden on Pick Lists
             }
         };
-        //hide Cancel button as not handled bij Panel
-        //_addPanel.panelBottom.cancel.setVisible(false);
 
         ActionListener okListener = new ActionListener() {
             public void actionPerformed(ActionEvent a) {
@@ -79,12 +76,13 @@ public class PickPanel extends JPanel implements ListSelectionListener, ChangeLi
             }
         };
         _addPanel = new jmri.jmrit.beantable.AddNewDevicePanel(
-                _sysNametext, _userNametext, "addToTable", okListener, cancelListener);
+                _sysNametext, _userNametext, "addToTable", okListener, cancelListener); // No I18N
+        // hide Cancel button as not handled bij Picker Panel
 
         _cantAddPanel = new JPanel();
         _cantAddPanel.setLayout(new BorderLayout(5, 5));
-        _cantAddPanel.add(new JLabel("Cannot add new items to this pick panel", SwingConstants.CENTER), BorderLayout.NORTH);
-        _cantAddPanel.add(new JLabel("Open another tool to add an item.", SwingConstants.CENTER), BorderLayout.SOUTH);
+        _cantAddPanel.add(new JLabel(Bundle.getMessage("CantAddNew"), SwingConstants.CENTER), BorderLayout.NORTH);
+        _cantAddPanel.add(new JLabel(Bundle.getMessage("OpenToAdd"), SwingConstants.CENTER), BorderLayout.SOUTH);
         JPanel p = new JPanel();
         p.add(_addPanel);
         p.add(_cantAddPanel);
