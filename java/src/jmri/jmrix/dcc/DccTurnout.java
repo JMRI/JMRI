@@ -1,4 +1,3 @@
-// DccTurnout.java
 package jmri.jmrix.dcc;
 
 import jmri.CommandStation;
@@ -19,14 +18,8 @@ import org.slf4j.LoggerFactory;
  * Description:	extend jmri.AbstractTurnout for DCC-only layouts
  *
  * @author	Bob Jacobsen Copyright (C) 2014
- * @version	$Revision$
  */
 public class DccTurnout extends AbstractTurnout {
-
-    /**
-     *
-     */
-    private static final long serialVersionUID = 2120643169908605976L;
 
     /**
      * DCC turnouts use the NMRA number (0-511) as their numerical
@@ -94,5 +87,3 @@ public class DccTurnout extends AbstractTurnout {
 
 }
 
-
-/* @(#)DccTurnout.java */
