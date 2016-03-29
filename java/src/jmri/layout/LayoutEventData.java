@@ -1,11 +1,5 @@
 package jmri.layout;
 
-/**
- * Title: Description: Copyright: Copyright (c) 2002 Company:
- *
- * @author
- * @version $Revision$
- */
 import java.util.Date;
 
 public class LayoutEventData {

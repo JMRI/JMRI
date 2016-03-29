@@ -2,7 +2,6 @@ package jmri.layout;
 
 /**
  * @author Alex Shepherd Copyright (c) 2002
- * @version $Revision$
  * @see jmri.layout.LayoutEventListener
  */
 public interface LayoutEventInterface {
