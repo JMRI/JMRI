@@ -18,14 +18,14 @@
 <!-- Decoder definition based on NMJ Skd 224 board, a special decoder built by Train-O-Matic                     -->
 <!-- Decoder manual used: SKD224_replacement board with integrated dcc decoder assembly guide v 0.1.6.pdf        -->
 
-  <version author="lbijlsma@pobox.com" version="1" lastUpdated="20160327"/>
+  <version author="lbijlsma@pobox.com" version="1" lastUpdated="20160329"/>
   <decoder>
-    <family name="tOm NMJ Skd 224" mfg="Tehnologistic (train-O-matic)">
+    <family name="tOm NMJ" mfg="Tehnologistic (train-O-matic)">
       <model model="NMJ Skd 224" numOuts="4" lowVersionID="1">
-        <output name="1" label="Out1"/>
-        <output name="2" label="Out2"/>
-        <output name="3" label="Out3"/>
-        <output name="4" label="Out4"/>
+        <output name="1" label="Out1" />
+        <output name="2" label="Out2" />
+        <output name="3" label="Out3" />
+        <output name="4" label="Out4" />
       </model>
     </family>
     <programming direct="yes" paged="yes" register="yes" ops="yes"/>
@@ -198,6 +198,12 @@
       <variable item="Consist Address Active For F12" CV="22" mask="XXVXXXXX" default="0">
         <xi:include href="http://jmri.org/xml/decoders/parts/enum-LocoAddrConsistAddr.xml"/>
         <label>Consist Address Active For F12</label>
+      </variable>
+
+<!-- CV26 - tOm sub version -->
+      <variable CV="26" readOnly="yes" item="Decoder Subversion">
+        <decVal/>
+        <label>Decoder Subversion</label>
       </variable>
 
 <!-- Decoder automatic stopping configuration -->
@@ -811,7 +817,6 @@
         <label>ABC Breaking Sensitivity</label>
       </variable>
 
-
 <!-- Brake configuration -->
 
       <variable item="Brake Distance configuration" CV="137" default="3">
@@ -825,8 +830,6 @@
         <label>Brake Delay Configuration</label>
         <comment>CV138= 0 means no Brake Delay. To increase breaking distance above the value configured in CV138, increase in small amounts the value of CV65, which will delay the start of the braking, resulting in a longer braking path. Brake Delay = CV138 Value * 8ms (ms) Extra Distance = MaxSpeed * BrakeDelay Ex: 200ms(delay)=8(ms)*25(CV value)</comment>
       </variable>
-
-
 
     </variables>
 
@@ -876,6 +879,10 @@
   <pane>
     <name>tOm Function Map</name>
     <column>
+      <separator/>
+      <label>
+        <text> </text>
+      </label>
       <label>
         <text>Select which function</text>
       </label>
@@ -896,6 +903,10 @@
     </column>
 
     <column>
+      <separator/>
+      <label>
+        <text> </text>
+      </label>
       <label>
         <text>Select which function</text>
       </label>
@@ -916,6 +927,10 @@
     </column>
 
     <column>
+      <separator/>
+      <label>
+        <text> </text>
+      </label>
       <label>
         <text>Select which function</text>
       </label>
@@ -1040,6 +1055,13 @@
     <name>Train-O-Matic (tOm)</name>
     <column>
       <label>
+        <text> </text>
+      </label>
+      <separator/>
+      <label>
+        <text> </text>
+      </label>
+      <label>
         <text>Train-O-Matic (tOm) decoders support a decoder locking feature</text>
       </label>
       <label>
@@ -1048,7 +1070,6 @@
       <label>
         <text>on the same address, e.g. for adding sound</text>
       </label>
-      <label label=" "/>
       <display item="Decoder Lock ID number"/>
       <label>
         <text>Set CV15 equal to this number to unlock the decoder for programming</text>
@@ -1060,14 +1081,39 @@
       </label>
       <separator/>
       <label>
-        <text> </text>
+        <text>Decoder protection </text>
       </label>
       <label>
-        <text>0-No error, 1-Motor Short Protection, 2-Aux Output Short Protection, 4-Overtemperature</text>
+        <text> </text>
+      </label>
+      <display item="Error CV" label="Error information"/>
+     
+      <label>
+        <text>Errors: 0-No error, 1-Motor Short Protection, </text>
+      </label>
+      <label>
+        <text>2-Aux Output Short Protection, 4-Overtemperature</text>
       </label>  
-      <display item="Error CV" />
+      <label>
+        <text> </text>
+      </label>
       <display item="Chip Temperature" />
       <display item="Temperature Limit" />
+
+      <label>
+        <text> </text>
+      </label>
+      <separator/>
+      <label>
+        <text>Decoder firmware</text>
+      </label>
+      <label>
+        <text> </text>
+      </label>
+      <row>
+        <display item="Decoder Version" label="Version" />
+        <display item="Decoder Subversion" label="" />
+      </row>
 
     </column>
   </pane>
