@@ -1,4 +1,3 @@
-// QsiTrafficController.java
 package jmri.jmrix.qsi;
 
 import gnu.io.SerialPort;
@@ -21,7 +20,6 @@ import org.slf4j.LoggerFactory;
  * content.
  *
  * @author	Bob Jacobsen Copyright (C) 2007, 2008
- * @version	$Revision$
  */
 public class QsiTrafficController implements QsiInterface, Runnable {
 
@@ -350,6 +348,3 @@ public class QsiTrafficController implements QsiInterface, Runnable {
 
     private final static Logger log = LoggerFactory.getLogger(QsiTrafficController.class.getName());
 }
-
-
-/* @(#)QsiTrafficController.java */
