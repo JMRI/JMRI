@@ -4,7 +4,6 @@ package jmri.layout;
  * Define an address consisting of a layout name, a type, and an offset number.
  *
  * @author Alex Shepherd Copyright (c) 2002
- * @version $Revision$
  */
 public class LayoutAddress implements Comparable<Object> {
 
@@ -51,11 +50,8 @@ public class LayoutAddress implements Comparable<Object> {
     }
 
     public int hashCode() {
-        if (hash == 0) {
-            hash = mLayoutName.hashCode() ^ mType ^ mOffset;
-        }
-
-        return hash;
+        assert false : "hashCode not designed";
+        return 42; // any arbitrary constant will do
     }
 
     public String getLayoutName() {
