@@ -2,6 +2,10 @@ package jmri.layout;
 
 import java.util.Date;
 
+/**
+ * @deprecated 4.3.5
+ */
+@Deprecated
 public class LayoutEventData {
 
     private Date mTimeStamp;

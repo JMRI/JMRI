@@ -4,7 +4,9 @@ package jmri.layout;
  * Define an address consisting of a layout name, a type, and an offset number.
  *
  * @author Alex Shepherd Copyright (c) 2002
+ * @deprecated 4.3.5
  */
+@Deprecated
 public class LayoutAddress implements Comparable<Object> {
 
     public static final int ELEMENT_TYPE_FIRST = 0;
