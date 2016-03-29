@@ -1,4 +1,3 @@
-// CatalogTreeIndex.java
 package jmri.jmrit.catalog;
 
 import java.util.HashMap;
@@ -15,11 +14,6 @@ import org.slf4j.LoggerFactory;
  *
  */
 public class CatalogTreeIndex extends AbstractCatalogTree {
-
-    /**
-     *
-     */
-    private static final long serialVersionUID = -421977014689495815L;
 
     public CatalogTreeIndex(String sysName, String userName) {
 
