@@ -140,7 +140,12 @@ public class XnTcpAdapter extends XNetNetworkPortController implements jmri.jmri
             ConnectionStatus.instance().setConnectionState(outName, ConnectionStatus.CONNECTION_UP);
 
         } // Report possible errors encountered while opening the connection
-        catch (Exception e) {
+        catch (SocketException se) {
+            log.error("Socket exception while opening TCP connection with " + outName + " trace follows: " + se);
+            ConnectionStatus.instance().setConnectionState(outName, ConnectionStatus.CONNECTION_DOWN);
+            throw (se);
+        }
+        catch (IOException e) {
             log.error("Unexpected exception while opening TCP connection with " + outName + " trace follows: " + e);
             ConnectionStatus.instance().setConnectionState(outName, ConnectionStatus.CONNECTION_DOWN);
             throw (e);
