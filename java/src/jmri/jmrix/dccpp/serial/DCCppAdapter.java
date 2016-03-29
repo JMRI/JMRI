@@ -1,4 +1,3 @@
-// DCCppAdapter.java
 package jmri.jmrix.dccpp.serial;
 
 import gnu.io.CommPortIdentifier;
@@ -24,7 +23,6 @@ import org.slf4j.LoggerFactory;
  * Normally controlled by the lenz.liusb.LIUSBFrame class.
  *
  * @author	Mark Underwood Copyright (C) 2015
- * @version	$Revision$
  *
  * Based on jmri.jmirx.lenz.liusb.LIUSBAdapter by Paul Bender
  */
@@ -68,12 +66,7 @@ public class DCCppAdapter extends DCCppSerialPortController implements jmri.jmri
             serialStream = activeSerialPort.getInputStream();
 
             // purge contents, if any
-            int count = serialStream.available();
-            log.debug("input stream shows " + count + " bytes available");
-            while (count > 0) {
-                serialStream.skip(count);
-                count = serialStream.available();
-            }
+            purgeStream(serialStream);
 
             // report status?
             if (log.isInfoEnabled()) {

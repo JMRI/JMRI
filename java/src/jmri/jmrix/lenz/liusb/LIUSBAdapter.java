@@ -1,4 +1,3 @@
-// LIUSBAdapter.java
 package jmri.jmrix.lenz.liusb;
 
 import gnu.io.CommPortIdentifier;
@@ -22,7 +21,6 @@ import org.slf4j.LoggerFactory;
  * Normally controlled by the lenz.liusb.LIUSBFrame class.
  *
  * @author	Paul Bender Copyright (C) 2005-2010
- * @version	$Revision$
  */
 public class LIUSBAdapter extends XNetSerialPortController implements jmri.jmrix.SerialPortAdapter {
 
@@ -64,12 +62,7 @@ public class LIUSBAdapter extends XNetSerialPortController implements jmri.jmrix
             serialStream = activeSerialPort.getInputStream();
 
             // purge contents, if any
-            int count = serialStream.available();
-            log.debug("input stream shows " + count + " bytes available");
-            while (count > 0) {
-                serialStream.skip(count);
-                count = serialStream.available();
-            }
+            purgeStream(serialStream);
 
             // report status?
             if (log.isInfoEnabled()) {

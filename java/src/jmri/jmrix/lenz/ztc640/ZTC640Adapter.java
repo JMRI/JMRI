@@ -1,4 +1,3 @@
-// ZTC640Adapter.java
 package jmri.jmrix.lenz.ztc640;
 
 import gnu.io.CommPortIdentifier;
@@ -23,7 +22,6 @@ import org.slf4j.LoggerFactory;
  *
  * @author	Bob Jacobsen Copyright (C) 2002
  * @author Paul Bender, Copyright (C) 2003-2010
- * @version	$Revision$
  */
 public class ZTC640Adapter extends XNetSerialPortController implements jmri.jmrix.SerialPortAdapter {
 
@@ -64,12 +62,7 @@ public class ZTC640Adapter extends XNetSerialPortController implements jmri.jmri
             serialStream = activeSerialPort.getInputStream();
 
             // purge contents, if any
-            int count = serialStream.available();
-            log.debug("input stream shows " + count + " bytes available");
-            while (count > 0) {
-                serialStream.skip(count);
-                count = serialStream.available();
-            }
+            purgeStream(serialStream);
 
             // report status?
             if (log.isInfoEnabled()) {

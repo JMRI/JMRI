@@ -1,4 +1,3 @@
-// SerialDriverAdapter.java
 package jmri.jmrix.direct.serial;
 
 import Serialio.SerInputStream;
@@ -30,7 +29,6 @@ import org.slf4j.LoggerFactory;
  *
  *
  * @author	Bob Jacobsen Copyright (C) 2001, 2002, 2004
- * @version	$Revision$
  */
 public class SerialDriverAdapter extends PortController implements jmri.jmrix.SerialPortAdapter {
 
@@ -223,13 +221,9 @@ public class SerialDriverAdapter extends PortController implements jmri.jmrix.Se
             }
 
             // port is open, regardless of method, start work on the stream
+            
             // purge contents, if any
-            int count = serialInStream.available();
-            log.debug("input stream shows " + count + " bytes available");
-            while (count > 0) {
-                serialInStream.skip(count);
-                count = serialInStream.available();
-            }
+            purgeStream(serialInStream);
 
             opened = true;
 
