@@ -29,7 +29,7 @@ public abstract class PowerManagerButton extends JButton implements PropertyChan
     protected NamedIcon powerOnIcon;
 
     public PowerManagerButton() {
-        this(false);
+        this(true);
     }
 
     public PowerManagerButton(Boolean fullText) {
