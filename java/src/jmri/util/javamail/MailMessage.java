@@ -55,11 +55,13 @@ import java.util.Properties;
 import javax.mail.Authenticator;
 import javax.mail.Folder;
 import javax.mail.Message;
+import javax.mail.MessagingException;
 import javax.mail.PasswordAuthentication;
 import javax.mail.Session;
 import javax.mail.Store;
 import javax.mail.Transport;
 import javax.mail.URLName;
+import javax.mail.internet.AddressException;
 import javax.mail.internet.InternetAddress;
 import javax.mail.internet.MimeBodyPart;
 import javax.mail.internet.MimeMessage;
@@ -225,7 +227,7 @@ public class MailMessage {
             // We need a multipart message to hold attachment.
             mp = new MimeMultipart();
 
-        } catch (Exception e) {
+        } catch (MessagingException e) {
             log.warn("Exception in prepare", e);
         }
     }
@@ -240,7 +242,7 @@ public class MailMessage {
             MimeBodyPart mbp1 = new MimeBodyPart();
             mbp1.setText(text);
             mp.addBodyPart(mbp1);
-        } catch (Exception e) {
+        } catch (MessagingException e) {
             log.warn("Exception in setText", e);
         }
     }
@@ -257,7 +259,7 @@ public class MailMessage {
             mbp2.attachFile(file);
             mp.addBodyPart(mbp2);
 
-        } catch (Exception e) {
+        } catch (java.io.IOException | MessagingException e) {
             log.error("Exception in setAttachment", e);
         }
     }
@@ -317,7 +319,7 @@ public class MailMessage {
                 }
             }
 
-        } catch (Exception e) {
+        } catch (MessagingException e) {
             e.printStackTrace();
         }
     }
