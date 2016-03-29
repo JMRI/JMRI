@@ -661,6 +661,8 @@ public class LV102InternalFrame extends javax.swing.JInternalFrame {
          * This class is a programmer listener, so we implement the
          * programmingOpReply() function
          */
+        @edu.umd.cs.findbugs.annotations.SuppressFBWarnings(value = "NO_NOTIFY_NOT_NOTIFYALL", justification = "There should only ever be one thread waiting for this method.")
+
         public void programmingOpReply(int value, int status) {
             if (log.isDebugEnabled()) {
                 log.debug("Programming Operation reply recieved, value is " + value + " ,status is " + status);
