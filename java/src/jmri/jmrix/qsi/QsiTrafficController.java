@@ -36,7 +36,7 @@ public class QsiTrafficController implements QsiInterface, Runnable {
     protected Vector<QsiListener> cmdListeners = new Vector<QsiListener>();
 
     public boolean status() {
-        return (ostream != null & istream != null);
+        return (ostream != null && istream != null);
     }
 
     public synchronized void addQsiListener(QsiListener l) {
