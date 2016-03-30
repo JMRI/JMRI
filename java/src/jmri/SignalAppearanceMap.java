@@ -1,4 +1,3 @@
-// SignalAppearanceMap.java
 package jmri;
 
 import java.util.Vector;
@@ -11,7 +10,6 @@ import java.util.Vector;
  * This interface does not provide any methods to change the map.
  *
  * @author	Bob Jacobsen Copyright (C) 2010
- * @version $Revision$
  */
 public interface SignalAppearanceMap {
 

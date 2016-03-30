@@ -102,6 +102,7 @@ abstract public class AbstractXNetInitializationManager {
         public void run() {
         }
 
+        @edu.umd.cs.findbugs.annotations.SuppressFBWarnings(value = "NO_NOTIFY_NOT_NOTIFYALL", justification = "There should only ever be one thread waiting for this method (the designated parent, which started the thread).")
         private void finish() {
             initTimer.stop();
             // Notify the parent

@@ -1,4 +1,3 @@
-// HardcopyWriter.java
 package jmri.util.davidflanagan;
 
 import java.awt.BorderLayout;
@@ -38,7 +37,6 @@ import jmri.util.JmriJFrame;
  * alligator on the front.
  *
  * @author David Flanagan
- * @version $Revision$
  */
 public class HardcopyWriter extends Writer {
 
@@ -150,11 +148,6 @@ public class HardcopyWriter extends Writer {
             if (jobAttributes.getDefaultSelection().equals(DefaultSelectionType.RANGE)) {
                 prFirst = jobAttributes.getPageRanges()[0][0];
             }
-        }
-
-        // Bug workaround
-        if (System.getProperty("os.name").regionMatches(true, 0, "windows", 0, 7)) {
-            //
         }
 
         x0 = (int) (leftmargin * pagedpi);
@@ -453,7 +446,7 @@ public class HardcopyWriter extends Writer {
                 // compute lines and columns within margins
                 chars_per_line = width / charwidth;
                 lines_per_page = height / lineheight;
-            } catch (Exception e) {
+            } catch (RuntimeException e) {
                 font = current;
             }
             // if a page is pending, set the new font, else newpage() will

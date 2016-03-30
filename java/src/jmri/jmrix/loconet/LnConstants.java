@@ -372,42 +372,44 @@ public final class LnConstants {
 
     /** Encode LocoNet Opcode as a string */
     public final static String OPC_NAME(int opcode) {
-        return (opcode == OPC_GPBUSY) ? "OPC_GPBUSY"
-                : (opcode == OPC_GPOFF) ? "OPC_GPOFF"
-                        : (opcode == OPC_GPON) ? "OPC_GPON"
-                                : (opcode == OPC_IDLE) ? "OPC_IDLE"
-                                        : (opcode == OPC_LOCO_SPD) ? "OPC_LOCO_SPD"
-                                                : (opcode == OPC_LOCO_DIRF) ? "OPC_LOCO_DIRF"
-                                                        : (opcode == OPC_LOCO_SND) ? "OPC_LOCO_SND"
-                                                                : (opcode == OPC_SW_REQ) ? "OPC_SW_REQ"
-                                                                        : (opcode == OPC_SW_REP) ? "OPC_SW_REP"
-                                                                                : (opcode == OPC_INPUT_REP) ? "OPC_INPUT_REP"
-                                                                                        : (opcode == OPC_UNKNOWN) ? "OPC_UNKNOWN"
-                                                                                                : (opcode == OPC_LONG_ACK) ? "OPC_LONG_ACK"
-                                                                                                        : (opcode == OPC_SLOT_STAT1) ? "OPC_SLOT_STAT1"
-                                                                                                                : (opcode == OPC_CONSIST_FUNC) ? "OPC_CONSIST_FUNC"
-                                                                                                                        : (opcode == OPC_UNLINK_SLOTS) ? "OPC_UNLINK_SLOTS"
-                                                                                                                                : (opcode == OPC_LINK_SLOTS) ? "OPC_LINK_SLOTS"
-                                                                                                                                        : (opcode == OPC_MOVE_SLOTS) ? "OPC_MOVE_SLOTS"
-                                                                                                                                                : (opcode == OPC_RQ_SL_DATA) ? "OPC_RQ_SL_DATA"
-                                                                                                                                                        : (opcode == OPC_SW_STATE) ? "OPC_SW_STATE"
-                                                                                                                                                                : (opcode == OPC_SW_ACK) ? "OPC_SW_ACK"
-                                                                                                                                                                        : (opcode == OPC_LOCO_ADR) ? "OPC_LOCO_ADR"
-                                                                                                                                                                                : (opcode == OPC_MULTI_SENSE) ? "OPC_MULTI_SENSE"
-                                                                                                                                                                                        : (opcode == OPC_PANEL_QUERY) ? "OPC_PANEL_QUERY"
-                                                                                                                                                                                                : (opcode == OPC_PANEL_RESPONSE) ? "OPC_PANEL_RESPONSE"
-                                                                                                                                                                                                        : (opcode == OPC_LISSY_UPDATE) ? "OPC_LISSY_UPDATE"
-                                                                                                                                                                                                                : (opcode == OPC_PEER_XFER) ? "OPC_PEER_XFER"
-                                                                                                                                                                                                                        : (opcode == OPC_ALM_READ) ? "OPC_ALM_READ"
-                                                                                                                                                                                                                                : (opcode == OPC_SL_RD_DATA) ? "OPC_SL_RD_DATA"
-                                                                                                                                                                                                                                        : (opcode == OPC_IMM_PACKET) ? "OPC_IMM_PACKET"
-                                                                                                                                                                                                                                                : (opcode == OPC_IMM_PACKET_2) ? "OPC_IMM_PACKET_2"
-                                                                                                                                                                                                                                                        : (opcode == OPC_WR_SL_DATA) ? "OPC_WR_SL_DATA"
-                                                                                                                                                                                                                                                                : (opcode == OPC_WR_SL_DATA_EXP) ? "OPC_WR_SL_DATA_EXP"
-                                                                                                                                                                                                                                                                        /* : (opcode == OPC_ALM_WRITE) ? "OPC_ALM_WRITE" */ // duplicated prior line
-                                                                                                                                                                                                                                                                                : "<unknown>";
+        switch (opcode) {
+            case OPC_GPBUSY     : return "OPC_GPBUSY";
+            case OPC_GPOFF      : return "OPC_GPOFF";
+            case OPC_GPON       : return "OPC_GPON";
+            case OPC_IDLE       : return "OPC_IDLE";
+            case OPC_LOCO_SPD   : return "OPC_LOCO_SPD";
+            case OPC_LOCO_DIRF  : return "OPC_LOCO_DIRF";
+            case OPC_LOCO_SND   : return "OPC_LOCO_SND";
+            case OPC_SW_REQ     : return "OPC_SW_REQ";
+            case OPC_SW_REP     : return "OPC_SW_REP";
+            case OPC_INPUT_REP  : return "OPC_INPUT_REP";
+            case OPC_UNKNOWN    : return "OPC_UNKNOWN";
+            case OPC_LONG_ACK   : return "OPC_LONG_ACK";
+            case OPC_SLOT_STAT1 : return "OPC_SLOT_STAT1";
+            case OPC_CONSIST_FUNC: return "OPC_CONSIST_FUNC";
+            case OPC_UNLINK_SLOTS: return "OPC_UNLINK_SLOTS";
+            case OPC_LINK_SLOTS : return "OPC_LINK_SLOTS";
+            case OPC_MOVE_SLOTS : return "OPC_MOVE_SLOTS";
+            case OPC_RQ_SL_DATA : return "OPC_RQ_SL_DATA";
+            case OPC_SW_STATE   : return "OPC_SW_STATE";
+            case OPC_SW_ACK     : return "OPC_SW_ACK";
+            case OPC_LOCO_ADR   : return "OPC_LOCO_ADR";
+            case OPC_MULTI_SENSE: return "OPC_MULTI_SENSE";
+            case OPC_PANEL_QUERY: return "OPC_PANEL_QUERY";
+            case OPC_PANEL_RESPONSE: return "OPC_PANEL_RESPONSE";
+            case OPC_LISSY_UPDATE: return "OPC_LISSY_UPDATE";
+            case OPC_PEER_XFER  : return "OPC_PEER_XFER";
+            case OPC_ALM_READ   : return "OPC_ALM_READ";
+            case OPC_SL_RD_DATA : return "OPC_SL_RD_DATA";
+            case OPC_IMM_PACKET : return "OPC_IMM_PACKET";
+            case OPC_IMM_PACKET_2: return "OPC_IMM_PACKET_2";
+            case OPC_WR_SL_DATA : return "OPC_WR_SL_DATA";
+            // case OPC_WR_SL_DATA_EXP: return "OPC_WR_SL_DATA_EXP"; // duplicates 0xEE
+            // case OPC_ALM_WRITE: return "OPC_ALM_WRITE"; // duplicates 0xEE
+            default: return "<unknown>";
+        }
     }
-
+    
 // start of values not from llnmon.c
 
 // Expanded slot index values

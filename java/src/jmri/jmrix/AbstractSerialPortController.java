@@ -1,4 +1,3 @@
-// AbstractSerialPortController.java
 package jmri.jmrix;
 
 import gnu.io.CommPortIdentifier;
@@ -18,7 +17,6 @@ import org.slf4j.LoggerFactory;
  * @see jmri.jmrix.SerialPortAdapter
  *
  * @author	Bob Jacobsen Copyright (C) 2001, 2002
- * @version	$Revision$
  */
 abstract public class AbstractSerialPortController extends AbstractPortController implements SerialPortAdapter {
 

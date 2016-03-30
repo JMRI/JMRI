@@ -1,4 +1,3 @@
-// SerialDriverAdapter.java
 package jmri.jmrix.xpa.serialdriver;
 
 import gnu.io.CommPortIdentifier;
@@ -23,7 +22,6 @@ import org.slf4j.LoggerFactory;
  * first configuraiont variable for the modem initilization string.
  *
  * @author	Paul Bender Copyright (C) 2004
- * @version	$Revision$
  */
 public class SerialDriverAdapter extends XpaPortController implements jmri.jmrix.SerialPortAdapter {
 
@@ -71,18 +69,7 @@ public class SerialDriverAdapter extends XpaPortController implements jmri.jmrix
             serialStream = activeSerialPort.getInputStream();
 
             // purge contents, if any
-            int count = serialStream.available();
-            log.debug("input stream shows " + count + " bytes available");
-            while (count > 0) {
-                long read = serialStream.skip(count);
-                if(read<count) {
-                   log.debug("skipped " + read + " bytes when " + count +
-                             "bytes reported available");
-                }
-                // double check to see if the port still reports
-                // bytes available.
-                count = serialStream.available();
-            }
+            purgeStream(serialStream);
 
             // report status?
             if (log.isInfoEnabled()) {
@@ -100,10 +87,13 @@ public class SerialDriverAdapter extends XpaPortController implements jmri.jmrix
 
         } catch (gnu.io.NoSuchPortException p) {
             return handlePortNotFound(p, portName, log);
-        } catch (Exception ex) {
-            log.error("Unexpected exception while opening port " + portName + " trace follows: " + ex);
+        } catch (gnu.io.UnsupportedCommOperationException ucoe) {
+            log.error("Unsupported Communication Operation Exception while opening port " + portName + " trace follows: " + ucoe);
+            return "Unsupported Communication Operation Exception while opening port " + portName + ": " + ucoe;
+        } catch (java.io.IOException ex) {
+            log.error("IO exception while opening port " + portName + " trace follows: " + ex);
             ex.printStackTrace();
-            return "Unexpected error while opening port " + portName + ": " + ex;
+            return "IO Exception while opening port " + portName + ": " + ex;
         }
 
         return null; // indicates OK return

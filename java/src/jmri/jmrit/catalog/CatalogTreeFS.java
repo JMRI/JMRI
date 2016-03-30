@@ -14,11 +14,6 @@ import java.util.HashMap;
  */
 public class CatalogTreeFS extends AbstractCatalogTree {
 
-    /**
-     *
-     */
-    private static final long serialVersionUID = -2391792373165194231L;
-
     String[] _filter;
 
     public CatalogTreeFS(String sysName, String userName) {
@@ -110,14 +105,14 @@ public class CatalogTreeFS extends AbstractCatalogTree {
 
     public Object getProperty(String key) {
         if (parameters == null) {
-            return null;
+            parameters = new HashMap<String, Object>();
         }
         return parameters.get(key);
     }
 
     public java.util.Set<String> getPropertyKeys() {
         if (parameters == null) {
-            return null;
+            parameters = new HashMap<String, Object>();
         }
         return parameters.keySet();
     }

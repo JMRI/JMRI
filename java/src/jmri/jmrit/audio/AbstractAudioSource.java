@@ -1,4 +1,3 @@
-// AbstractAudioSource.java
 package jmri.jmrit.audio;
 
 import java.util.LinkedList;
@@ -31,14 +30,9 @@ import org.slf4j.LoggerFactory;
  * <P>
  *
  * @author Matthew Harris copyright (c) 2009
- * @version $Revision$
  */
 public abstract class AbstractAudioSource extends AbstractAudio implements AudioSource {
 
-    /**
-     *
-     */
-    private static final long serialVersionUID = -984900360787361666L;
     private Vector3f position = new Vector3f(0.0f, 0.0f, 0.0f);
     private Vector3f currentPosition = new Vector3f(0.0f, 0.0f, 0.0f);
     private Vector3f velocity = new Vector3f(0.0f, 0.0f, 0.0f);
@@ -1050,5 +1044,3 @@ public abstract class AbstractAudioSource extends AbstractAudio implements Audio
 //        }
 //    }
 }
-
-/* $(#)AbstractAudioSource.java */

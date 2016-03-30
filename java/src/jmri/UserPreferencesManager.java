@@ -1,4 +1,3 @@
-// UserPreferencesManager.java
 package jmri;
 
 import java.awt.Dimension;
@@ -18,7 +17,6 @@ import java.util.List;
  * @see jmri.managers.DefaultUserMessagePreferences
  *
  * @author Kevin Dickerson Copyright (C) 2010
- * @version	$Revision$
  */
 public interface UserPreferencesManager {
 

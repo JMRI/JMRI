@@ -22,10 +22,6 @@ import jmri.util.FileUtil;
  */
 public class SplashWindow extends JFrame {
 
-    /**
-     *
-     */
-    private static final long serialVersionUID = 300950834122464494L;
     Image splashIm;
 
     public SplashWindow() {

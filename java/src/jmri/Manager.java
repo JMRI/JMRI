@@ -1,4 +1,3 @@
-// Manager.java
 package jmri;
 
 import java.util.List;
@@ -36,7 +35,6 @@ import java.util.List;
  * A PARTICULAR PURPOSE. See the GNU General Public License for more details.
  * <P>
  * @author Bob Jacobsen Copyright (C) 2003
- * @version	$Revision$
  */
 public interface Manager {
 
@@ -199,6 +197,3 @@ public interface Manager {
      */
     public String getBeanTypeHandled();
 }
-
-
-/* @(#)Manager.java */

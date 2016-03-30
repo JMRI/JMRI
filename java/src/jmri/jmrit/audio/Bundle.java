@@ -1,4 +1,3 @@
-// Bundle.java
 
 package jmri.jmrit.audio;
 
@@ -20,7 +19,6 @@ import javax.annotation.ParametersAreNonnullByDefault;
  * in each package, working off the local resource bundle name.
  *
  * @author      Bob Jacobsen  Copyright (C) 2012
- * @version     $Revision$
  * @since       3.7.2
  */
 public class Bundle extends jmri.jmrit.Bundle {
@@ -71,5 +69,3 @@ public class Bundle extends jmri.jmrit.Bundle {
     @Override protected String retry(String key) { return super.getBundle().handleGetMessage(key); }
 
 }
-
-/* @(#)Bundle.java */

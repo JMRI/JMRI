@@ -1,4 +1,3 @@
-// JMRIClientLight.java
 package jmri.jmrix.jmriclient;
 
 import jmri.Light;
@@ -14,7 +13,6 @@ import org.slf4j.LoggerFactory;
  *
  * @author	Bob Jacobsen Copyright (C) 2001, 2008
  * @author	Paul Bender Copyright (C) 2010
- * @version	$Revision$
  */
 public class JMRIClientLight extends AbstractLight implements JMRIClientListener {
 
@@ -59,9 +57,9 @@ public class JMRIClientLight extends AbstractLight implements JMRIClientListener
         if (oldState == s) {
             return; //no change, just quit.
         }		// sort out states
-        if ((s & Light.ON) > 0) {
+        if ((s & Light.ON) != 0) {
             // first look for the double case, which we can't handle
-            if ((s & Light.OFF) > 0) {
+            if ((s & Light.OFF) != 0) {
                 // this is the disaster case!
                 log.error("Cannot command both ON and OFF " + s);
                 return;

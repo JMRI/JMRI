@@ -1,4 +1,3 @@
-// Logix.java
 package jmri;
 
 /**
@@ -27,9 +26,8 @@ package jmri;
  * WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS FOR
  * A PARTICULAR PURPOSE. See the GNU General Public License for more details.
  * <P>
- * @author	Dave Duchamp Copyright (C) 2007 Additional modifications Pete
- * Cressman 2009
- * @version	$Revision 1.0 $
+ * @author	Dave Duchamp Copyright (C) 2007 
+ * @author Additional modifications Pete Cressman 2009
  */
 public interface Logix extends NamedBean {
 
@@ -155,5 +153,3 @@ public interface Logix extends NamedBean {
      */
 	//public void getStateVariableList(ArrayList <ConditionalVariable> varList, ArrayList <int[]> triggerPair);  
 }
-
-/* @(#)Logix.java */

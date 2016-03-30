@@ -1,4 +1,3 @@
-// PowerButtonAction.java
 package jmri.jmrit.powerpanel;
 
 import java.util.ResourceBundle;
@@ -9,7 +8,6 @@ import jmri.PowerManager;
  * Swing action to create and register a PowerPanelFrame object.
  *
  * @author	Bob Jacobsen Copyright (C) 2001, 2010
- * @version $Revision$
  */
 public class PowerButtonAction extends javax.swing.AbstractAction implements java.beans.PropertyChangeListener {
 
@@ -46,7 +44,7 @@ public class PowerButtonAction extends javax.swing.AbstractAction implements jav
                 putValue(Action.NAME, ResourceBundle.getBundle("jmri.jmrit.powerpanel.PowerPanelBundle").getString("ButtonSetOff"));
             }
             firePropertyChange(Action.NAME, "", getValue(Action.NAME));
-        } catch (Exception ex) {
+        } catch (jmri.JmriException ex) {
             return;
         }
     }
@@ -74,5 +72,3 @@ public class PowerButtonAction extends javax.swing.AbstractAction implements jav
     }
 
 }
-
-/* @(#)PowerButtonAction.java */

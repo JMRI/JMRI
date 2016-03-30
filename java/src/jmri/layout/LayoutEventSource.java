@@ -4,8 +4,9 @@ import java.util.ArrayList;
 
 /**
  * @author Alex Shepherd Copyright (c) 2002
- * @version $Revision$
+ * @deprecated 4.3.5
  */
+@Deprecated
 public class LayoutEventSource implements LayoutEventInterface {
 
     private ArrayList<LayoutEventListener> mListeners = new ArrayList<LayoutEventListener>();

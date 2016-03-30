@@ -58,11 +58,6 @@ import org.slf4j.LoggerFactory;
  */
 public final class SystemConsole extends JTextArea {
 
-    /**
-     *
-     */
-    private static final long serialVersionUID = 1807853160696208390L;
-
     static final ResourceBundle rbc = ResourceBundle.getBundle("apps.AppsConfigBundle"); // NOI18N
 
     private static final int STD_ERR = 1;

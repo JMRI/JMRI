@@ -2849,9 +2849,6 @@ public class LayoutBlock extends AbstractNamedBean implements java.beans.Propert
 
     @Override
     public synchronized void addPropertyChangeListener(java.beans.PropertyChangeListener l) {
-        if (l == null) {
-            throw new java.lang.NullPointerException();
-        }
         if (l == this) {
             if (enableAddRouteLogging) {
                 log.info("adding ourselves as a listener for some strange reason!");

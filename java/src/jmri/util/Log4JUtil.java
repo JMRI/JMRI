@@ -1,4 +1,3 @@
-// Log4JUtil.java
 package jmri.util;
 
 import apps.SystemConsole;
@@ -37,7 +36,6 @@ import org.slf4j.LoggerFactory;
  *
  * @author Bob Jacobsen Copyright 2009, 2010
  * @author Randall Wood Copyright 2014
- * @version $Revision$
  */
 public class Log4JUtil {
 
@@ -157,8 +155,11 @@ public class Log4JUtil {
     static private void configureLogging(String config) throws IOException {
         Properties p = new Properties();
         FileInputStream f = new FileInputStream(config);
-        p.load(new FileInputStream(config));
-        f.close();
+        try {
+            p.load(new FileInputStream(config));
+        } finally {
+            f.close();
+        }
 
         if (System.getProperty("jmri.log.path") == null || p.getProperty("jmri.log.path") == null) {
             System.setProperty("jmri.log.path", FileUtil.getPreferencesPath() + "log" + File.separator);

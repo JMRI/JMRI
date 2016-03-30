@@ -30,7 +30,6 @@ public class SimpleServer extends JmriServer {
 
     public static JmriServer instance() {
         if (InstanceManager.getDefault(SimpleServer.class) == null) {
-            int port = Integer.parseInt(rb.getString("SimpleServerPort"));
             InstanceManager.store(new SimpleServer(),SimpleServer.class);
         }
         return InstanceManager.getDefault(SimpleServer.class);
