@@ -26,6 +26,7 @@ public class ConnectionConfigXml extends AbstractConnectionConfigXml {
         super();
     }
 
+    @edu.umd.cs.findbugs.annotations.SuppressFBWarnings(value = "UWF_FIELD_NOT_INITALIZED_IN_CONSTRUCTOR", justification = "if adapter is not initilized already, it is initialized by the getInstance() call") 
     protected SerialPortAdapter adapter;
 
     /**
@@ -46,7 +47,6 @@ public class ConnectionConfigXml extends AbstractConnectionConfigXml {
         return e;
     }
 
-    @edu.umd.cs.findbugs.annotations.SuppressFBWarnings(value = "UWF_FIELD_NOT_INITALIZED_IN_CONSTRUCTOR", justification = "if adapter is not initilized already, it is initialized by the getInstance() call") 
     @Override
     public boolean load(Element shared, Element perNode) {
         boolean result = true;

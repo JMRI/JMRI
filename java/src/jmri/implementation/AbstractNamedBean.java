@@ -1,5 +1,6 @@
 package jmri.implementation;
 
+import java.beans.PropertyChangeListener;
 import java.util.ArrayList;
 import java.util.Enumeration;
 import java.util.HashMap;
@@ -14,14 +15,6 @@ import jmri.NamedBean;
  * @author Bob Jacobsen Copyright (C) 2001
  */
 public abstract class AbstractNamedBean implements NamedBean, java.io.Serializable {
-
-    //private AbstractNamedBean() {
-    //    mSystemName = null;
-    //    mUserName = null;
-    //    log.warn("Unexpected use of null ctor");
-    //    Exception e = new Exception();
-    //    e.printStackTrace();
-    //}
 
     protected AbstractNamedBean(String sys) {
         mSystemName = sys;
@@ -81,11 +74,11 @@ public abstract class AbstractNamedBean implements NamedBean, java.io.Serializab
     // _once_ if anything has changed state
     // since we can't do a "super(this)" in the ctor to inherit from PropertyChangeSupport, we'll
     // reflect to it
-    java.beans.PropertyChangeSupport pcs = new java.beans.PropertyChangeSupport(this);
-    Hashtable<java.beans.PropertyChangeListener, String> register = new Hashtable<java.beans.PropertyChangeListener, String>();
-    Hashtable<java.beans.PropertyChangeListener, String> listenerRefs = new Hashtable<java.beans.PropertyChangeListener, String>();
+    final java.beans.PropertyChangeSupport pcs = new java.beans.PropertyChangeSupport(this);
+    final Hashtable<PropertyChangeListener, String> register = new Hashtable<>();
+    final Hashtable<PropertyChangeListener, String> listenerRefs = new Hashtable<>();
 
-    public synchronized void addPropertyChangeListener(java.beans.PropertyChangeListener l, String beanRef, String listenerRef) {
+    public synchronized void addPropertyChangeListener(PropertyChangeListener l, String beanRef, String listenerRef) {
         pcs.addPropertyChangeListener(l);
         if (beanRef != null) {
             register.put(l, beanRef);
@@ -95,23 +88,23 @@ public abstract class AbstractNamedBean implements NamedBean, java.io.Serializab
         }
     }
 
-    public synchronized void addPropertyChangeListener(java.beans.PropertyChangeListener l) {
+    public synchronized void addPropertyChangeListener(PropertyChangeListener l) {
         pcs.addPropertyChangeListener(l);
     }
 
-    public synchronized void removePropertyChangeListener(java.beans.PropertyChangeListener l) {
-        if (pcs != null) {
-            pcs.removePropertyChangeListener(l);
+    public synchronized void removePropertyChangeListener(PropertyChangeListener l) {
+        pcs.removePropertyChangeListener(l);
+        if (l != null) {
+            register.remove(l);
+            listenerRefs.remove(l);
         }
-        register.remove(l);
-        listenerRefs.remove(l);
     }
 
-    public synchronized ArrayList<java.beans.PropertyChangeListener> getPropertyChangeListeners(String name) {
-        ArrayList<java.beans.PropertyChangeListener> list = new ArrayList<java.beans.PropertyChangeListener>();
-        Enumeration<java.beans.PropertyChangeListener> en = register.keys();
+    public synchronized ArrayList<PropertyChangeListener> getPropertyChangeListeners(String name) {
+        ArrayList<PropertyChangeListener> list = new ArrayList<>();
+        Enumeration<PropertyChangeListener> en = register.keys();
         while (en.hasMoreElements()) {
-            java.beans.PropertyChangeListener l = en.nextElement();
+            PropertyChangeListener l = en.nextElement();
             if (register.get(l).equals(name)) {
                 list.add(l);
             }
@@ -122,21 +115,21 @@ public abstract class AbstractNamedBean implements NamedBean, java.io.Serializab
     /* This allows a meaning full list of places where the bean is in use!*/
     public synchronized ArrayList<String> getListenerRefs() {
         ArrayList<String> list = new ArrayList<String>();
-        Enumeration<java.beans.PropertyChangeListener> en = listenerRefs.keys();
+        Enumeration<PropertyChangeListener> en = listenerRefs.keys();
         while (en.hasMoreElements()) {
-            java.beans.PropertyChangeListener l = en.nextElement();
+            PropertyChangeListener l = en.nextElement();
             list.add(listenerRefs.get(l));
         }
         return list;
     }
 
-    public synchronized void updateListenerRef(java.beans.PropertyChangeListener l, String newName) {
+    public synchronized void updateListenerRef(PropertyChangeListener l, String newName) {
         if (listenerRefs.containsKey(l)) {
             listenerRefs.put(l, newName);
         }
     }
 
-    public synchronized String getListenerRef(java.beans.PropertyChangeListener l) {
+    public synchronized String getListenerRef(PropertyChangeListener l) {
         return listenerRefs.get(l);
     }
 
@@ -148,7 +141,7 @@ public abstract class AbstractNamedBean implements NamedBean, java.io.Serializab
         return pcs.getPropertyChangeListeners().length;
     }
 
-    public synchronized java.beans.PropertyChangeListener[] getPropertyChangeListeners() {
+    public synchronized PropertyChangeListener[] getPropertyChangeListeners() {
         return pcs.getPropertyChangeListeners();
     }
 
@@ -173,13 +166,16 @@ public abstract class AbstractNamedBean implements NamedBean, java.io.Serializab
     protected String mSystemName;
 
     protected void firePropertyChange(String p, Object old, Object n) {
-        if (pcs != null) {
-            pcs.firePropertyChange(p, old, n);
-        }
+        pcs.firePropertyChange(p, old, n);
     }
 
     public void dispose() {
-        pcs = null;
+        PropertyChangeListener[] listeners = pcs.getPropertyChangeListeners();
+        for (PropertyChangeListener l : listeners) {
+            pcs.removePropertyChangeListener(l);
+            register.remove(l);
+            listenerRefs.remove(l);
+       }
     }
 
     public void setProperty(String key, Object value) {
@@ -191,14 +187,14 @@ public abstract class AbstractNamedBean implements NamedBean, java.io.Serializab
 
     public Object getProperty(String key) {
         if (parameters == null) {
-            return null;
+            parameters = new HashMap<String, Object>();
         }
         return parameters.get(key);
     }
 
     public java.util.Set<String> getPropertyKeys() {
         if (parameters == null) {
-            return null;
+            parameters = new HashMap<String, Object>();
         }
         return parameters.keySet();
     }

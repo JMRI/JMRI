@@ -526,9 +526,9 @@ public class PrintOptionPanel extends OperationsPreferencesPanel {
     }
     
     private void enableColorComboBoxes() {
-        pickupComboBox.setEnabled(manifestFormatComboBox.getSelectedItem() == Setup.STANDARD_FORMAT);
-        dropComboBox.setEnabled(manifestFormatComboBox.getSelectedItem() == Setup.STANDARD_FORMAT);
-        localComboBox.setEnabled(manifestFormatComboBox.getSelectedItem() == Setup.STANDARD_FORMAT);
+        pickupComboBox.setEnabled(manifestFormatComboBox.getSelectedItem().equals(Setup.STANDARD_FORMAT));
+        dropComboBox.setEnabled(manifestFormatComboBox.getSelectedItem().equals(Setup.STANDARD_FORMAT));
+        localComboBox.setEnabled(manifestFormatComboBox.getSelectedItem().equals(Setup.STANDARD_FORMAT));
     }
 
     private void setSwitchListVisible(boolean b) {
