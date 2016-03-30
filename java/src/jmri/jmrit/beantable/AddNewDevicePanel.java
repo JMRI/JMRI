@@ -53,12 +53,14 @@ public class AddNewDevicePanel extends jmri.util.swing.JmriPanel {
         p.add(userName, c);
         add(p);
 
-        // cancel + add buttons at bottom of window
+        // button(s) at bottom of window
         JPanel panelBottom = new JPanel();
-        panelBottom.setLayout(new FlowLayout());
-
-        panelBottom.add(cancel = new JButton(Bundle.getMessage("ButtonCancel")));
-        cancel.addActionListener(cancelListener);
+        panelBottom.setLayout(new FlowLayout(FlowLayout.TRAILING));
+        // only add a Cancel button when the the OKbutton string is OK (so don't show on Picker Panels)
+        if (addButtonLabel == "ButtonOK") {
+            panelBottom.add(cancel = new JButton(Bundle.getMessage("ButtonCancel")));
+            cancel.addActionListener(cancelListener);
+        }
 
         panelBottom.add(ok = new JButton(Bundle.getMessage(addButtonLabel)));
         ok.addActionListener(okListener);
