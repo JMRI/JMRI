@@ -105,7 +105,8 @@ public class AbstractNamedBeanManagerConfigXMLTest extends TestCase {
 
         // and test
         Assert.assertEquals(null, to.getProperty("foo"));
-        Assert.assertEquals(null, to.getPropertyKeys());
+        Assert.assertTrue(to.getPropertyKeys()!=null);
+        Assert.assertEquals(0, to.getPropertyKeys().size());
 
     }
 
