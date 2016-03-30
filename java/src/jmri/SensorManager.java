@@ -110,11 +110,12 @@ public interface SensorManager extends Manager {
      * return the next free valid address up to a maximum of 10 address away
      * from the initial address.
      *
-     * @param prefix     - The System Prefix used to make up the systemName
      * @param curAddress - The hardware address of the turnout we which to
+     * @param prefix     - The System Prefix used to make up the systemName
      *                   check.
+     * @returns           - null if the system name made from prefix and curAddress is in use
      */
-    public @Nonnull String getNextValidAddress(@Nonnull String curAddress, @Nonnull String prefix) throws JmriException;
+    public @Nullable String getNextValidAddress(@Nonnull String curAddress, @Nonnull String prefix) throws JmriException;
 
     public @Nonnull String createSystemName(@Nonnull String curAddress, @Nonnull String prefix) throws JmriException;
 
