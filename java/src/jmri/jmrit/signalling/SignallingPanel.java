@@ -4,6 +4,7 @@ import java.awt.BorderLayout;
 import java.awt.Component;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.awt.FlowLayout;
 import java.beans.PropertyChangeListener;
 import java.util.ArrayList;
 import java.util.Hashtable;
@@ -59,9 +60,9 @@ public class SignallingPanel extends jmri.util.swing.JmriPanel {
     JmriBeanComboBox destMastBox;
     JLabel fixedSourceMastLabel = new JLabel();
     JLabel fixedDestMastLabel = new JLabel();
-    JLabel sourceMastLabel = new JLabel(rb.getString("SourceMast"));
-    JLabel destMastLabel = new JLabel(rb.getString("DestMast"));
-    JButton cancel;
+    JLabel sourceMastLabel = new JLabel(rb.getString("SourceMast")+":");
+    JLabel destMastLabel = new JLabel(rb.getString("DestMast")+":");
+    JButton cancel = new JButton(Bundle.getMessage("ButtonCancel"));
     JButton updateButton = new JButton(rb.getString("UpdateLogic"));
     JCheckBox useLayoutEditor = new JCheckBox(rb.getString("UseLayoutEditorPaths"));
     JCheckBox useLayoutEditorTurnout = new JCheckBox(rb.getString("UseTurnoutDetails"));
@@ -110,7 +111,7 @@ public class SignallingPanel extends jmri.util.swing.JmriPanel {
 
             Float pathSpeed = sml.getMaximumSpeed(dest);
             if (pathSpeed == 0.0f) {
-                mastSpeed.setText(rb.getString("PathSpeed") + " : None Set");
+                mastSpeed.setText(rb.getString("PathSpeed") + " : " + rb.getString("NoneSet"));
             } else {
                 String speed = jmri.InstanceManager.getDefault(SignalSpeedMap.class).getNamedSpeed(pathSpeed);
                 if (speed != null) {
@@ -267,9 +268,10 @@ public class SignallingPanel extends jmri.util.swing.JmriPanel {
         containerPanel.add(detailsTab, BorderLayout.CENTER);
 
         JPanel footer = new JPanel();
+        footer.setLayout(new FlowLayout(FlowLayout.TRAILING));
 
         //Cancel button
-        footer.add(cancel = new JButton(Bundle.getMessage("ButtonCancel")));
+        footer.add(cancel);
         cancel.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
                 cancelPressed(e);
