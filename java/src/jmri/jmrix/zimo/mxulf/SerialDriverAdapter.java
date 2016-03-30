@@ -1,15 +1,3 @@
-/**
- * mxulfAdapter.java
- *
- * Title:	mxulfAdapter Description:	Provide access to Zimo's MX-1 on an attached
- * serial comm port. Normally controlled by the zimo.mxulf.mxulfFrame class.
- *
- * @author	Bob Jacobsen Copyright (C) 2002
- * @version	$Revision: 22821 $
- *
- * Adapted for use with Zimo MXULF by Kevin Dickerson
- *
- */
 package jmri.jmrix.zimo.mxulf;
 
 import gnu.io.CommPortIdentifier;
@@ -27,6 +15,15 @@ import jmri.jmrix.zimo.Mx1SystemConnectionMemo;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+/**
+ * Provide access to Zimo's MX-1 on an attached
+ * serial comm port. Normally controlled by the zimo.mxulf.mxulfFrame class.
+ *
+ * @author	Bob Jacobsen Copyright (C) 2002
+ *
+ * Adapted for use with Zimo MXULF by Kevin Dickerson
+ *
+ */
 public class SerialDriverAdapter extends Mx1PortController implements jmri.jmrix.SerialPortAdapter {
 
     public SerialDriverAdapter() {
@@ -66,12 +63,7 @@ public class SerialDriverAdapter extends Mx1PortController implements jmri.jmrix
             serialStream = activeSerialPort.getInputStream();
 
             // purge contents, if any
-            int count = serialStream.available();
-            log.debug("input stream shows " + count + " bytes available");
-            while (count > 0) {
-                serialStream.skip(count);
-                count = serialStream.available();
-            }
+            purgeStream(serialStream);
 
             // report status?
             if (log.isInfoEnabled()) {

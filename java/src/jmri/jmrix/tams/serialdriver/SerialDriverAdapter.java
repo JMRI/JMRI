@@ -1,4 +1,3 @@
-// SerialDriverAdapter.java
 package jmri.jmrix.tams.serialdriver;
 
 import gnu.io.CommPortIdentifier;
@@ -22,7 +21,6 @@ import org.slf4j.LoggerFactory;
  * Based on work by Bob Jacobsen
  *
  * @author	Kevin Dickerson Copyright (C) 2012
- * @version	$Revision: 17977 $
  */
 public class SerialDriverAdapter extends TamsPortController implements jmri.jmrix.SerialPortAdapter {
 
@@ -77,12 +75,7 @@ public class SerialDriverAdapter extends TamsPortController implements jmri.jmri
             serialStream = activeSerialPort.getInputStream();
 
             // purge contents, if any
-            int count = serialStream.available();
-            log.debug("input stream shows " + count + " bytes available");
-            while (count > 0) {
-                serialStream.skip(count);
-                count = serialStream.available();
-            }
+            purgeStream(serialStream);
 
             if (log.isInfoEnabled()) {
                 log.info(portName + " port opened at "

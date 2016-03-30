@@ -1,4 +1,3 @@
-// DccTurnout.java
 package jmri.jmrix.dcc;
 
 import jmri.CommandStation;
@@ -19,14 +18,8 @@ import org.slf4j.LoggerFactory;
  * Description:	extend jmri.AbstractTurnout for DCC-only layouts
  *
  * @author	Bob Jacobsen Copyright (C) 2014
- * @version	$Revision$
  */
 public class DccTurnout extends AbstractTurnout {
-
-    /**
-     *
-     */
-    private static final long serialVersionUID = 2120643169908605976L;
 
     /**
      * DCC turnouts use the NMRA number (0-511) as their numerical
@@ -51,9 +44,9 @@ public class DccTurnout extends AbstractTurnout {
     // Handle a request to change state by sending a formatted DCC packet
     protected void forwardCommandChangeToLayout(int s) {
         // sort out states
-        if ((s & Turnout.CLOSED) > 0) {
+        if ((s & Turnout.CLOSED) != 0) {
             // first look for the double case, which we can't handle
-            if ((s & Turnout.THROWN) > 0) {
+            if ((s & Turnout.THROWN) != 0) {
                 // this is the disaster case!
                 log.error("Cannot command both CLOSED and THROWN " + s);
                 return;
@@ -94,5 +87,3 @@ public class DccTurnout extends AbstractTurnout {
 
 }
 
-
-/* @(#)DccTurnout.java */
