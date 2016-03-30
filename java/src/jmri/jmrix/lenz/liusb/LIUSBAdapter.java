@@ -8,6 +8,7 @@ import gnu.io.SerialPortEventListener;
 import java.io.DataInputStream;
 import java.io.DataOutputStream;
 import java.io.InputStream;
+import java.io.IOException;
 import jmri.jmrix.lenz.LenzCommandStation;
 import jmri.jmrix.lenz.XNetInitializationManager;
 import jmri.jmrix.lenz.XNetSerialPortController;
@@ -190,10 +191,14 @@ public class LIUSBAdapter extends XNetSerialPortController implements jmri.jmrix
 
         } catch (gnu.io.NoSuchPortException p) {
             return handlePortNotFound(p, portName, log);
-        } catch (Exception ex) {
-            log.error("Unexpected exception while opening port " + portName + " trace follows: " + ex);
-            ex.printStackTrace();
-            return "Unexpected error while opening port " + portName + ": " + ex;
+        } catch (IOException ioe) {
+            log.error("IOException exception while opening port " + portName + " trace follows: " + ioe);
+            ioe.printStackTrace();
+            return "IO exception while opening port " + portName + ": " + ioe;
+        } catch (java.util.TooManyListenersException tmle) {
+            log.error("TooManyListenersException while opening port " + portName + " trace follows: " + tmle);
+            tmle.printStackTrace();
+            return "Too Many Listeners exception while opening port " + portName + ": " + tmle;
         }
 
         return null; // normal operation
@@ -232,7 +237,7 @@ public class LIUSBAdapter extends XNetSerialPortController implements jmri.jmrix
         }
         try {
             return new DataOutputStream(activeSerialPort.getOutputStream());
-        } catch (java.io.IOException e) {
+        } catch (IOException e) {
             log.error("getOutputStream exception: " + e.getMessage());
         }
         return null;

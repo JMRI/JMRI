@@ -59,7 +59,7 @@ public class LIUSBServerAdapter extends XNetNetworkPortController {
     }
 
     @Override
-    public void connect() throws Exception {
+    synchronized public void connect() throws Exception {
         opened = false;
         if (log.isDebugEnabled()) {
             log.debug("connect called");
