@@ -1,4 +1,3 @@
-// ShutDownTask.java
 package jmri;
 
 /**
@@ -8,7 +7,6 @@ package jmri;
  * task aborts the shutdown.
  *
  * @author Bob Jacobsen Copyright (C) 2008
- * @version	$Revision$
  */
 public interface ShutDownTask {
 
@@ -25,5 +23,3 @@ public interface ShutDownTask {
      */
     public String name();
 }
-
-/* @(#)ShutDownTask.java */

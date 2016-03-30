@@ -16,10 +16,6 @@ import javax.swing.JPanel;
 
 public class LayoutManagerTest_AboutBox extends JDialog implements ActionListener {
 
-    /**
-     *
-     */
-    private static final long serialVersionUID = -7814322105827342341L;
     JPanel panel1 = new JPanel();
     JPanel panel2 = new JPanel();
     JPanel insetsPanel1 = new JPanel();

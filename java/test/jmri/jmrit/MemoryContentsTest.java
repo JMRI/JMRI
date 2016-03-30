@@ -1,4 +1,3 @@
-// MemoryContentsTest.java
 package jmri.jmrit;
 
 import java.io.File;
@@ -17,7 +16,6 @@ import org.slf4j.LoggerFactory;
  *
  * @author	Bob Jacobsen Copyright (C) 2008
  * @suthor B. Milhaupt Copyright (C) 2014
- * @version	$Revision$
  */
 public class MemoryContentsTest extends TestCase {
 

@@ -1,4 +1,3 @@
-// CanReplyTest.java
 package jmri.jmrix.can;
 
 import junit.framework.Assert;
@@ -9,7 +8,6 @@ import junit.framework.TestSuite;
  * Tests for the jmri.jmrix.can.CanReply class
  *
  * @author Bob Jacobsen Copyright 2008, 2009
- * @version $Revision$
  */
 public class CanReplyTest extends CanMRCommonTest {
 

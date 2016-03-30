@@ -1,4 +1,3 @@
-// PathLengthTest.java
 package jmri;
 
 import junit.framework.Assert;
@@ -12,7 +11,6 @@ import junit.framework.TestSuite;
  * explicitly set and must not exceed the length of their block.
  *
  * @author  Pete Cressman Copyright (C) 2015
- * @version $Revision$
  */
 public class PathLengthTest extends TestCase {
 

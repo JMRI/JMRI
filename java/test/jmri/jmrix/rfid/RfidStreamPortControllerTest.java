@@ -15,7 +15,6 @@ import junit.framework.TestSuite;
  * Description:	tests for the jmri.jmrix.rfid.RfidStreamPortController class
  *
  * @author	Paul Bender
- * @version $Revision$
  */
 public class RfidStreamPortControllerTest extends TestCase {
 

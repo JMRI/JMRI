@@ -1,4 +1,3 @@
-// PackageTest.java
 package jmri.jmrix.lenz;
 
 import junit.framework.Test;

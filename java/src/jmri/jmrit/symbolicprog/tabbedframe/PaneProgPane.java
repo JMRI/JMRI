@@ -1,4 +1,3 @@
-// PaneProgPane.java
 package jmri.jmrit.symbolicprog.tabbedframe;
 
 import java.awt.Color;
@@ -95,17 +94,12 @@ import org.slf4j.LoggerFactory;
  * @author D Miller Copyright 2003
  * @author Howard G. Penny Copyright (C) 2005
  * @author Dave Heap Copyright (C) 2014
- * @version $Revision$
  * @see jmri.jmrit.symbolicprog.VariableValue#isChanged
  *
  */
 public class PaneProgPane extends javax.swing.JPanel
         implements java.beans.PropertyChangeListener {
 
-    /**
-     *
-     */
-    private static final long serialVersionUID = -1884950541914044865L;
     static final String LAST_GRIDX = "last_gridx";
     static final String LAST_GRIDY = "last_gridy";
 
@@ -798,7 +792,7 @@ public class PaneProgPane extends javax.swing.JPanel
         if (log.isDebugEnabled()) {
             log.debug("nextRead scans " + varList.size() + " variables");
         }
-        while ((varList.size() >= 0) && (varListIndex < varList.size())) {
+        while ((varList.size() > 0) && (varListIndex < varList.size())) {
             int varNum = varList.get(varListIndex).intValue();
             int vState = _varModel.getState(varNum);
             VariableValue var = _varModel.getVariable(varNum);
@@ -944,7 +938,7 @@ public class PaneProgPane extends javax.swing.JPanel
             }
         }
         // found no CVs needing read, try indexed CVs
-        while ((indexedCvList.size() >= 0) && (indexedCvListIndex < indexedCvList.size())) {
+        while ((indexedCvList.size() > 0) && (indexedCvListIndex < indexedCvList.size())) {
             int indxVarNum = indexedCvList.get(indexedCvListIndex).intValue();
             int indxState = _varModel.getState(indxVarNum);
             if (log.isDebugEnabled()) {
@@ -1054,7 +1048,7 @@ public class PaneProgPane extends javax.swing.JPanel
     boolean nextWrite() {
         log.debug("start nextWrite");
         // look for possible variables
-        while ((varList.size() >= 0) && (varListIndex < varList.size())) {
+        while ((varList.size() > 0) && (varListIndex < varList.size())) {
             int varNum = varList.get(varListIndex).intValue();
             int vState = _varModel.getState(varNum);
             VariableValue var = _varModel.getVariable(varNum);
@@ -1945,7 +1939,7 @@ public class PaneProgPane extends javax.swing.JPanel
         return c;
     }
 
-    class GridGlobals {
+    static class GridGlobals {
 
         public int gridxCurrent = -1;
         public int gridyCurrent = -1;

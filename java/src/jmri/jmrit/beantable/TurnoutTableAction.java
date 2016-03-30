@@ -1,4 +1,3 @@
-// TurnoutTableAction.java
 package jmri.jmrit.beantable;
 
 import java.awt.Component;
@@ -33,6 +32,7 @@ import jmri.Turnout;
 import jmri.TurnoutManager;
 import jmri.TurnoutOperation;
 import jmri.TurnoutOperationManager;
+import jmri.implementation.SignalSpeedMap;
 import jmri.jmrit.turnoutoperations.TurnoutOperationConfig;
 import jmri.jmrit.turnoutoperations.TurnoutOperationFrame;
 import jmri.util.ConnectionNameFromSystemName;
@@ -47,7 +47,6 @@ import org.slf4j.LoggerFactory;
  * Swing action to create and register a TurnoutTable GUI.
  *
  * @author	Bob Jacobsen Copyright (C) 2003, 2004, 2007
- * @version $Revision$
  */
 public class TurnoutTableAction extends AbstractTableAction {
 
@@ -82,7 +81,7 @@ public class TurnoutTableAction extends AbstractTableAction {
         speedListThrown.add(defaultThrownSpeedText);
         speedListClosed.add(useBlockSpeed);
         speedListThrown.add(useBlockSpeed);
-        java.util.Vector<String> _speedMap = jmri.implementation.SignalSpeedMap.getMap().getValidSpeedNames();
+        java.util.Vector<String> _speedMap = jmri.InstanceManager.getDefault(SignalSpeedMap.class).getValidSpeedNames();
         for (int i = 0; i < _speedMap.size(); i++) {
             if (!speedListClosed.contains(_speedMap.get(i))) {
                 speedListClosed.add(_speedMap.get(i));
@@ -1467,5 +1466,3 @@ public class TurnoutTableAction extends AbstractTableAction {
 
     private final static Logger log = LoggerFactory.getLogger(TurnoutTableAction.class.getName());
 }
-
-/* @(#)TurnoutTableAction.java */

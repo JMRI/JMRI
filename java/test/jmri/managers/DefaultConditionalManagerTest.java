@@ -1,4 +1,3 @@
-// DefaultConditionalManagerTest.java
 package jmri.managers;
 
 import junit.framework.Test;

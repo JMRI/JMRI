@@ -1,4 +1,3 @@
-// SerialInterfaceScaffold.java
 package jmri.jmrix.secsi;
 
 import java.util.Vector;

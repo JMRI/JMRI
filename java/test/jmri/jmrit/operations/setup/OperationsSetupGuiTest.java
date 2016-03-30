@@ -12,7 +12,6 @@ import junit.framework.TestSuite;
  * Tests for the Operations Setup GUI class
  *
  * @author Dan Boudreau Copyright (C) 2009
- * @version $Revision$
  */
 public class OperationsSetupGuiTest extends OperationsSwingTestCase {
 

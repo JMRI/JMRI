@@ -1,4 +1,3 @@
-// PackageTest.java
 package jmri.beans;
 
 import junit.framework.Test;
@@ -9,7 +8,6 @@ import junit.framework.TestSuite;
  * Invoke complete set of tests for the Jmri package
  *
  * @author	Bob Jacobsen, Copyright (C) 2001, 2002, 2007
- * @version $Revision$
  */
 public class PackageTest extends TestCase {
 

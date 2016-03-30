@@ -1,4 +1,3 @@
-// PackageTest.java
 package jmri.jmrit.roster.swing;
 
 import junit.framework.Test;
@@ -9,7 +8,6 @@ import junit.framework.TestSuite;
  * Tests for the jmrit.roster.swing package
  *
  * @author	Bob Jacobsen Copyright (C) 2001, 2002, 2012
- * @version $Revision$
  */
 public class PackageTest extends TestCase {
 

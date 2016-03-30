@@ -1,4 +1,3 @@
-// NceSensorManagerTest.java
 package jmri.jmrix.nce;
 
 import junit.framework.Assert;

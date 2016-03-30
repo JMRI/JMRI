@@ -1,4 +1,3 @@
-// SignalHeadTableActionTest.java
 package jmri.jmrit.beantable;
 
 import javax.swing.JFrame;

@@ -1,4 +1,3 @@
-// SerialTurnoutTest.java
 package jmri.jmrix.secsi;
 
 import jmri.implementation.AbstractTurnoutTest;

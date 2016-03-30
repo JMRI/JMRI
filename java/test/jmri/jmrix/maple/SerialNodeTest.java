@@ -1,4 +1,3 @@
-// SerialNodeTest.java
 package jmri.jmrix.maple;
 
 import jmri.jmrix.AbstractMRMessage;

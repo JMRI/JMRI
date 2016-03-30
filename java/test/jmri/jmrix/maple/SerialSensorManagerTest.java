@@ -1,4 +1,3 @@
-// SerialSensorManagerTest.java
 package jmri.jmrix.maple;
 
 import jmri.Sensor;

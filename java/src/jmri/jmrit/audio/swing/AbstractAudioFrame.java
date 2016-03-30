@@ -1,4 +1,3 @@
-// AbstractAudioFrame.java
 package jmri.jmrit.audio.swing;
 
 import java.awt.FlowLayout;
@@ -37,14 +36,9 @@ import jmri.util.JmriJFrame;
  * <P>
  *
  * @author Matthew Harris copyright (c) 2009
- * @version $Revision$
  */
 abstract public class AbstractAudioFrame extends JmriJFrame {
 
-    /**
-     *
-     */
-    private static final long serialVersionUID = 8799988277074614855L;
     static final ResourceBundle rb = ResourceBundle.getBundle("jmri.jmrit.beantable.BeanTableBundle");
 
     AbstractAudioFrame frame = this;
@@ -128,10 +122,6 @@ abstract public class AbstractAudioFrame extends JmriJFrame {
      */
     protected static class JPanelVector3f extends JPanel {
 
-        /**
-         *
-         */
-        private static final long serialVersionUID = -2102431744610108951L;
         JLabel xLabel = new JLabel(Bundle.getMessage("LabelX"));
         JSpinner xValue = new JSpinner();
         JLabel yLabel = new JLabel(Bundle.getMessage("LabelY"));
@@ -221,11 +211,6 @@ abstract public class AbstractAudioFrame extends JmriJFrame {
      */
     protected static class JPanelSliderf extends JPanel {
 
-        /**
-         *
-         */
-        private static final long serialVersionUID = -7201712611650896844L;
-
         JSlider slider = new JSlider();
 
         JSpinner spinner = new JSpinner();
@@ -292,5 +277,3 @@ abstract public class AbstractAudioFrame extends JmriJFrame {
         }
     }
 }
-
-/* @(#)AbstractAudioFrame.java */

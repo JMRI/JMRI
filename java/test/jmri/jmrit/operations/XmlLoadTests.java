@@ -1,4 +1,3 @@
-// XmlLoadTests.java
 package jmri.jmrit.operations;
 
 import jmri.jmrit.operations.locations.LocationManagerXml;
@@ -26,7 +25,6 @@ import jmri.util.JUnitUtil;
  * Still to do: Everything
  *
  * @author Paul Bender Copyright (C) 2015
- * @version $Revision$
  */
 public class XmlLoadTests extends TestCase {
 

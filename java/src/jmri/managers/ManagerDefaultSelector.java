@@ -1,4 +1,3 @@
-// ManagerDefaultSelector.java
 package jmri.managers;
 
 import java.beans.PropertyChangeEvent;
@@ -39,7 +38,6 @@ import org.slf4j.LoggerFactory;
  * <P>
  * @author	Bob Jacobsen Copyright (C) 2010
  * @author Randall Wood Copyright (C) 2015
- * @version	$Revision$
  * @since 2.9.4
  */
 public class ManagerDefaultSelector extends AbstractPreferencesProvider {
@@ -94,7 +92,7 @@ public class ManagerDefaultSelector extends AbstractPreferencesProvider {
                     });
                     break;
             }
-            this.propertyChangeSupport.firePropertyChange("Updated", null, null);
+            this.firePropertyChange("Updated", null, null);
         });
     }
 
@@ -249,4 +247,3 @@ public class ManagerDefaultSelector extends AbstractPreferencesProvider {
     private final static Logger log = LoggerFactory.getLogger(ManagerDefaultSelector.class.getName());
 }
 
-/* @(#)ManagerDefaultSelector.java */

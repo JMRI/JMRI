@@ -1,4 +1,3 @@
-// MultiIndexProgrammerFacadeTest.java
 package jmri.implementation;
 
 import jmri.ProgListener;

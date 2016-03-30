@@ -1,4 +1,3 @@
-// NcePowerManagerTest.java
 package jmri.jmrix.nce;
 
 import java.util.Vector;

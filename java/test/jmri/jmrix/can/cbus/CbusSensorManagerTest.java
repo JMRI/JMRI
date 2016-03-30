@@ -1,4 +1,3 @@
-// CbusSensorManagerTest.java
 package jmri.jmrix.can.cbus;
 
 import jmri.jmrix.can.CanSystemConnectionMemo;
@@ -11,7 +10,6 @@ import junit.framework.TestSuite;
  * Tests for the jmri.jmrix.can.cbus.CbusSensorManager class.
  *
  * @author	Bob Jacobsen Copyright 2008
- * @version $Revision$
  */
 public class CbusSensorManagerTest extends TestCase {
 

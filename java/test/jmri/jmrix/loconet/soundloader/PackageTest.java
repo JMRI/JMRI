@@ -1,4 +1,3 @@
-// PackageTest.java
 package jmri.jmrix.loconet.soundloader;
 
 import junit.framework.Test;
@@ -9,7 +8,6 @@ import junit.framework.TestSuite;
  * Tests for the jmri.jmrix.loconet.soundloader package
  *
  * @author	Bob Jacobsen Copyright (C) 2006
- * @version $Revision$
  */
 public class PackageTest extends TestCase {
 

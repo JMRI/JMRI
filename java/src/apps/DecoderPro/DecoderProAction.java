@@ -13,11 +13,6 @@ import jmri.util.swing.WindowInterface;
  */
 public class DecoderProAction extends JmriAbstractAction {
 
-    /**
-     *
-     */
-    private static final long serialVersionUID = 938739183249391676L;
-
     public DecoderProAction(String s, WindowInterface wi) {
         super(s, wi);
     }

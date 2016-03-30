@@ -1,4 +1,3 @@
-// LoaderEngineTest.java
 package jmri.jmrix.loconet.soundloader;
 
 import jmri.jmrix.loconet.LocoNetMessage;
@@ -11,7 +10,6 @@ import junit.framework.TestSuite;
  * Tests for the jmri.jmrix.loconet.soundloader.LoaderEngine class.
  *
  * @author	Bob Jacobsen Copyright 2001, 2002, 2006
- * @version $Revision$
  */
 public class LoaderEngineTest extends TestCase {
 

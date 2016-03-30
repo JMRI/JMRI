@@ -4,8 +4,9 @@ import java.util.TreeMap;
 
 /**
  * @author Alex Shepherd Copyright (c) 2002
- * @version $Revision$
+ * @deprecated 4.3.5
  */
+@Deprecated
 public class Layout implements LayoutEventListener, LayoutEventInterface {
 
     private TreeMap<LayoutAddress, LayoutElement> mElementMap = new TreeMap<LayoutAddress, LayoutElement>();

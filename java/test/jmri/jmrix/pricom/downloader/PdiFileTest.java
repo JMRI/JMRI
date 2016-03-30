@@ -1,4 +1,3 @@
-// PdiFileTest.java
 package jmri.jmrix.pricom.downloader;
 
 import junit.framework.Assert;

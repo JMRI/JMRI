@@ -12,7 +12,6 @@ import junit.framework.TestSuite;
  *
  * @author	Paul Bender
  * @author	Mark Underwood
- * @version $Revision$
  */
 public class DCCppInitializationManagerTest extends TestCase {
 

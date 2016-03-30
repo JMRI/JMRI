@@ -1,4 +1,3 @@
-// SerialNodeTest.java
 package jmri.jmrix.oaktree;
 
 import jmri.Sensor;

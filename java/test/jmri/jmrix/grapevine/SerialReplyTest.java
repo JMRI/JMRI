@@ -1,4 +1,3 @@
-// SerialReplyTest.java
 package jmri.jmrix.grapevine;
 
 import junit.framework.Assert;

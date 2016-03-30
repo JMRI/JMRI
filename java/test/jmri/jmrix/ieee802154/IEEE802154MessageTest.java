@@ -11,7 +11,6 @@ import junit.framework.TestSuite;
  * Description:	tests for the jmri.jmrix.ieee802154.IEEE802154Message class
  *
  * @author	Paul Bender
- * @version $Revision$
  */
 public class IEEE802154MessageTest extends TestCase {
 

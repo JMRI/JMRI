@@ -10,7 +10,6 @@ import junit.framework.TestSuite;
  * Tests for the jmri.jmrix.loconet.LocoNetMessage class.
  *
  * @author	Bob Jacobsen
- * @version $Revision$
  */
 public class LocoNetMessageTest extends TestCase {
 

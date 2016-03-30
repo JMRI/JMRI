@@ -10,7 +10,6 @@ import junit.framework.TestSuite;
  * Tests for the jmri.jmris.json package
  *
  * @author Paul Bender
- * @version $Revision$
  */
 public class JsonServerTest extends TestCase {
 

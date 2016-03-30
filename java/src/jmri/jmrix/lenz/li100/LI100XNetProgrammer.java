@@ -143,7 +143,7 @@ public class LI100XNetProgrammer extends XNetProgrammer implements XNetListener 
                     log.debug("change _service_mode to true");
                 }
                 _service_mode = true;
-            } else if (_service_mode == true) {
+            } else { // _service_mode == true
                 // Since we get this message as both a broadcast and
                 // a directed message, ignore the message if we're
                 //already in the indicated mode
@@ -163,7 +163,7 @@ public class LI100XNetProgrammer extends XNetProgrammer implements XNetListener 
                     log.debug("change _service_mode to false");
                 }
                 _service_mode = false;
-            } else if (_service_mode == false) {
+            } else { // _service_mode == false
                 // Since we get this message as both a broadcast and
                 // a directed message, ignore the message if we're
                 //already in the indicated mode

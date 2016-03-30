@@ -1,4 +1,3 @@
-// DefaultAudioManager.java
 package jmri.jmrit.audio;
 
 import java.util.ArrayList;
@@ -29,7 +28,6 @@ import org.slf4j.LoggerFactory;
  * <P>
  *
  * @author Matthew Harris copyright (c) 2009
- * @version $Revision$
  */
 public class DefaultAudioManager extends AbstractAudioManager {
 
@@ -233,5 +231,3 @@ public class DefaultAudioManager extends AbstractAudioManager {
     private static final Logger log = LoggerFactory.getLogger(DefaultAudioManager.class.getName());
 
 }
-
-/* @(#)DefaultAudioManager.java */

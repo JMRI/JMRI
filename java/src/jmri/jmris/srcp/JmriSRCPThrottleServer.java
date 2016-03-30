@@ -1,4 +1,3 @@
-//JmriSRCPThrottleServer.java
 package jmri.jmris.srcp;
 
 import java.beans.PropertyChangeEvent;
@@ -377,7 +376,7 @@ public class JmriSRCPThrottleServer extends AbstractThrottleServer {
 
 
 
-   class srcpThrottlePropertyChangeListener implements PropertyChangeListener {
+   static class srcpThrottlePropertyChangeListener implements PropertyChangeListener {
 
       int bus;
       int address;

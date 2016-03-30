@@ -2,6 +2,8 @@ package jmri.jmrit.display;
 
 import java.awt.event.MouseEvent;
 import javax.swing.JPopupMenu;
+import javax.annotation.Nonnull;
+
 import jmri.jmrit.catalog.NamedIcon;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -14,18 +16,13 @@ import org.slf4j.LoggerFactory;
  */
 public class LinkingLabel extends PositionableLabel implements LinkingObject {
 
-    /**
-     *
-     */
-    private static final long serialVersionUID = 4005690507923911871L;
-
-    public LinkingLabel(String s, Editor editor, String url) {
+    public LinkingLabel(@Nonnull String s, @Nonnull Editor editor, @Nonnull String url) {
         super(s, editor);
         this.url = url;
         setPopupUtility(new PositionablePopupUtil(this, this));
     }
 
-    public LinkingLabel(NamedIcon s, Editor editor, String url) {
+    public LinkingLabel(NamedIcon s, @Nonnull Editor editor, @Nonnull String url) {
         super(s, editor);
         this.url = url;
         setPopupUtility(new PositionablePopupUtil(this, this));
@@ -88,7 +85,7 @@ public class LinkingLabel extends PositionableLabel implements LinkingObject {
                 } else {
                     log.error("Frame '" + frame + "' not found, cannot link to it.");
                 }
-            } else if (url != null && url.length() > 0) {
+            } else if (url.length() > 0) {
                 jmri.util.ExternalLinkContentViewerUI.activateURL(new java.net.URL(url));
             }
         } catch (Throwable t) {

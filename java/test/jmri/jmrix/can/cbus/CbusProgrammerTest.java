@@ -1,4 +1,3 @@
-// CbusProgrammerTest.java
 package jmri.jmrix.can.cbus;
 
 import jmri.ProgListener;
@@ -15,7 +14,6 @@ import junit.framework.TestSuite;
  * Tests for the jmri.jmrix.can.cbus.CbusProgrammer class.
  *
  * @author	Bob Jacobsen Copyright 2008
- * @version $Revision$
  */
 public class CbusProgrammerTest extends TestCase {
 
