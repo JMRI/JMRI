@@ -22,7 +22,7 @@ public class LinkingLabel extends PositionableLabel implements LinkingObject {
         setPopupUtility(new PositionablePopupUtil(this, this));
     }
 
-    public LinkingLabel(@Nonnull NamedIcon s, @Nonnull Editor editor, @Nonnull String url) {
+    public LinkingLabel(NamedIcon s, @Nonnull Editor editor, @Nonnull String url) {
         super(s, editor);
         this.url = url;
         setPopupUtility(new PositionablePopupUtil(this, this));

@@ -1,4 +1,3 @@
-// AbstractAudioFactory.java
 package jmri.jmrit.audio;
 
 import java.util.LinkedList;
@@ -24,7 +23,6 @@ import org.slf4j.LoggerFactory;
  * <p>
  *
  * @author Matthew Harris copyright (c) 2009
- * @version $Revision$
  */
 public abstract class AbstractAudioFactory implements AudioFactory {
 
@@ -212,5 +210,3 @@ public abstract class AbstractAudioFactory implements AudioFactory {
     private static final Logger log = LoggerFactory.getLogger(AbstractAudioFactory.class.getName());
 
 }
-
-/* @(#)AbstractAudioFactory.java */

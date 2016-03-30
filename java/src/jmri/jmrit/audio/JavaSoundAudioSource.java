@@ -1,4 +1,3 @@
-// JavaSoundAudioSource.java
 package jmri.jmrit.audio;
 
 import javax.sound.sampled.Clip;
@@ -33,7 +32,6 @@ import org.slf4j.LoggerFactory;
  * <p>
  *
  * @author Matthew Harris copyright (c) 2009
- * @version $Revision$
  */
 public class JavaSoundAudioSource extends AbstractAudioSource {
 
@@ -567,8 +565,4 @@ public class JavaSoundAudioSource extends AbstractAudioSource {
             }
         }
     }
-
-    private static final long serialVersionUID = 1L;
 }
-
-/* $(#)JavaSoundAudioSource.java */

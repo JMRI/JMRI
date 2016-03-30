@@ -1,5 +1,3 @@
-// RaspberryPiDriverAdapter.java
-
 package jmri.jmrix.pi;
 
 import com.pi4j.io.gpio.GpioController;
@@ -12,7 +10,7 @@ import org.slf4j.LoggerFactory;
  * RaspberryPi managers to be handled.
  * <P>
  * @author			Bob Jacobsen   Copyright (C) 2001, 2002
- * @version			$Revision$
+ * @author			Paul Bender Copyright (C) 2015
  */
 public class RaspberryPiAdapter extends jmri.jmrix.AbstractPortController
     implements jmri.jmrix.PortAdapter{

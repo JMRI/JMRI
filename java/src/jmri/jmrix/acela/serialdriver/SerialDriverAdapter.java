@@ -1,4 +1,3 @@
-// SerialDriverAdapter.java
 package jmri.jmrix.acela.serialdriver;
 
 import gnu.io.CommPortIdentifier;
@@ -22,7 +21,6 @@ import org.slf4j.LoggerFactory;
  * any other options at configuration time.
  *
  * @author	Bob Jacobsen Copyright (C) 2001, 2002
- * @version	$Revision$
  *
  * @author	Bob Coleman, Copyright (C) 2007, 2008 Based on Mrc example, modified
  * to establish Acela support.
@@ -71,12 +69,7 @@ public class SerialDriverAdapter extends AcelaPortController implements jmri.jmr
             serialStream = activeSerialPort.getInputStream();
 
             // purge contents, if any
-            int count = serialStream.available();
-            log.debug("input stream shows " + count + " bytes available");
-            while (count > 0) {
-                serialStream.skip(count);
-                count = serialStream.available();
-            }
+            purgeStream(serialStream);
 
             // report status?
             if (log.isInfoEnabled()) {

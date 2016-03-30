@@ -1,4 +1,3 @@
-// NodeConfigFrame.java
 package jmri.jmrix.cmri.serial.nodeconfig;
 
 import java.awt.BorderLayout;
@@ -29,14 +28,8 @@ import org.slf4j.LoggerFactory;
  *
  * @author	Bob Jacobsen Copyright (C) 2004
  * @author	Dave Duchamp Copyright (C) 2004
- * @version	$Revision$
  */
 public class NodeConfigFrame extends jmri.util.JmriJFrame {
-
-    /**
-     *
-     */
-    private static final long serialVersionUID = 4237332984381047586L;
 
     ResourceBundle rb = ResourceBundle.getBundle("jmri.jmrix.cmri.serial.nodeconfig.NodeConfigBundle");
 
@@ -374,14 +367,7 @@ public class NodeConfigFrame extends jmri.util.JmriJFrame {
         }
         // all ready, create the new node
         curNode = new SerialNode(nodeAddress, nodeType);
-        if (curNode == null) {
-            statusText1.setText(rb.getString("Error3"));
-            statusText1.setVisible(true);
-            log.error("Error creating Serial Node, constructor returned null");
-            errorInStatus1 = true;
-            resetNotes2();
-            return;
-        }
+
         // configure the new node
         setNodeParameters();
         // register any orphan sensors that this node may have
@@ -942,11 +928,6 @@ public class NodeConfigFrame extends jmri.util.JmriJFrame {
      */
     public class CardConfigModel extends AbstractTableModel {
 
-        /**
-         *
-         */
-        private static final long serialVersionUID = 8613368713011269394L;
-
         public String getColumnName(int c) {
             return cardConfigColumnNames[c];
         }
@@ -994,11 +975,6 @@ public class NodeConfigFrame extends jmri.util.JmriJFrame {
      * searchlights
      */
     public class SearchlightConfigModel extends AbstractTableModel {
-
-        /**
-         *
-         */
-        private static final long serialVersionUID = -8050347332422090157L;
 
         public String getColumnName(int c) {
             return searchlightConfigColumnNames[c];

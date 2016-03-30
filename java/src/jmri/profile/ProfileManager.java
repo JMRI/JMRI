@@ -46,7 +46,6 @@ public class ProfileManager extends Bean {
     private boolean autoStartActiveProfile = false;
     private File defaultSearchPath = new File(FileUtil.getPreferencesPath());
     private int autoStartActiveProfileTimeout = 10;
-    private static ProfileManager instance = null;
     public static final String ACTIVE_PROFILE = "activeProfile"; // NOI18N
     public static final String NEXT_PROFILE = "nextProfile"; // NOI18N
     private static final String AUTO_START = "autoStart"; // NOI18N
@@ -112,10 +111,7 @@ public class ProfileManager extends Bean {
      * @since 3.11.8
      */
     public static ProfileManager getDefault() {
-        if (instance == null) {
-            instance = new ProfileManager();
-        }
-        return instance;
+        return ProfileManagerHolder.manager;
     }
 
     /**
@@ -469,18 +465,22 @@ public class ProfileManager extends Bean {
         doc.setRootElement(new Element(PROFILECONFIG));
         Element profilesElement = new Element(PROFILES);
         Element pathsElement = new Element(SEARCH_PATHS);
-        for (Profile p : this.profiles) {
+        this.profiles.stream().map((p) -> {
             Element e = new Element(PROFILE);
             e.setAttribute(Profile.ID, p.getId());
             e.setAttribute(Profile.PATH, FileUtil.getPortableFilename(p.getPath(), true, true));
+            return e;
+        }).forEach((e) -> {
             profilesElement.addContent(e);
-        }
-        for (File f : this.searchPaths) {
+        });
+        this.searchPaths.stream().map((f) -> {
             Element e = new Element(Profile.PATH);
             e.setAttribute(Profile.PATH, FileUtil.getPortableFilename(f.getPath(), true, true));
             e.setAttribute(DEFAULT, Boolean.toString(f.equals(this.defaultSearchPath)));
+            return e;
+        }).forEach((e) -> {
             pathsElement.addContent(e);
-        }
+        });
         doc.getRootElement().addContent(profilesElement);
         doc.getRootElement().addContent(pathsElement);
         try {
@@ -694,8 +694,8 @@ public class ProfileManager extends Bean {
      * @throws org.jdom2.JDOMException
      */
     public void export(Profile profile, File target, boolean exportExternalUserFiles, boolean exportExternalRoster) throws IOException, JDOMException {
-        if (!target.exists()) {
-            target.createNewFile();
+        if (!target.exists() && !target.createNewFile()) {
+            throw new IOException("Unable to create file " + target);
         }
         String tempDirPath = System.getProperty("java.io.tmpdir") + File.separator + "JMRI" + System.currentTimeMillis(); // NOI18N
         FileUtil.createDirectory(tempDirPath);
@@ -728,26 +728,27 @@ public class ProfileManager extends Bean {
                 fmt.output(doc, fw);
             }
         }
-        try (FileOutputStream out = new FileOutputStream(target)) {
-            ZipOutputStream zip = new ZipOutputStream(out);
+        try (FileOutputStream out = new FileOutputStream(target); ZipOutputStream zip = new ZipOutputStream(out)) {
             this.exportDirectory(zip, tempProfilePath, tempProfilePath.getPath());
-            zip.close();
         }
         FileUtil.delete(tempDir);
     }
 
     private void exportDirectory(ZipOutputStream zip, File source, String root) throws IOException {
-        for (File file : source.listFiles()) {
-            if (file.isDirectory()) {
-                if (!Profile.isProfile(file)) {
-                    ZipEntry entry = new ZipEntry(this.relativeName(file, root));
-                    entry.setTime(file.lastModified());
-                    zip.putNextEntry(entry);
-                    this.exportDirectory(zip, file, root);
+        File[] files = source.listFiles();
+        if (files != null) {
+            for (File file : files) {
+                if (file.isDirectory()) {
+                    if (!Profile.isProfile(file)) {
+                        ZipEntry entry = new ZipEntry(this.relativeName(file, root));
+                        entry.setTime(file.lastModified());
+                        zip.putNextEntry(entry);
+                        this.exportDirectory(zip, file, root);
+                    }
+                    continue;
                 }
-                continue;
+                this.exportFile(zip, file, root);
             }
-            this.exportFile(zip, file, root);
         }
     }
 
@@ -851,5 +852,13 @@ public class ProfileManager extends Bean {
             this.autoStartActiveProfileTimeout = autoStartActiveProfileTimeout;
             this.firePropertyChange(AUTO_START_TIMEOUT, old, this.autoStartActiveProfileTimeout);
         }
+    }
+
+    private static class ProfileManagerHolder {
+
+        /**
+         * Default instance of the ProfileManager
+         */
+        public static ProfileManager manager = new ProfileManager();
     }
 }

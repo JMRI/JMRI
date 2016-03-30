@@ -13,11 +13,6 @@ import jmri.jmrit.operations.OperationsFrame;
  */
 public class PrintOptionFrame extends OperationsFrame {
 
-    /**
-     *
-     */
-    private static final long serialVersionUID = -3366352601871116274L;
-
     public PrintOptionFrame() {
         super(Bundle.getMessage("TitlePrintOptions"), new PrintOptionPanel());
     }

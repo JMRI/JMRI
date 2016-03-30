@@ -1,4 +1,3 @@
-// AbstractPortController.java
 package jmri.jmrix;
 
 import java.io.DataInputStream;
@@ -20,7 +19,6 @@ import org.slf4j.LoggerFactory;
  * @see jmri.jmrix.SerialPortAdapter
  *
  * @author	Bob Jacobsen Copyright (C) 2001, 2002
- * @version	$Revision$
  */
 abstract public class AbstractPortController implements PortAdapter {
 
@@ -349,6 +347,21 @@ abstract public class AbstractPortController implements PortAdapter {
         return this.isDirty();
     }
 
+    /**
+     * Service method to purge a stream of initial contents
+     * while opening the connection.
+     * @param serialStream
+     */
+     @edu.umd.cs.findbugs.annotations.SuppressFBWarnings(value = "SR_NOT_CHECKED", justification = "skipping all, don't care what skip() returns")
+     protected void purgeStream(@Nonnull java.io.InputStream serialStream) throws java.io.IOException {
+        int count = serialStream.available();
+        log.debug("input stream shows " + count + " bytes available");
+        while (count > 0) {
+            serialStream.skip(count);
+            count = serialStream.available();
+        }
+    }
+    
     /**
      * Get the {@link jmri.jmrix.SystemConnectionMemo} associated with this
      * object.
