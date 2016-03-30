@@ -19,10 +19,6 @@ import org.slf4j.LoggerFactory;
  */
 public class CatalogTreeNode extends DefaultMutableTreeNode {
 
-    /**
-     *
-     */
-    private static final long serialVersionUID = -7982962823731804336L;
     // Sorted by height for ease of display in CatalogPanel
     private ArrayList<CatalogTreeLeaf> _leaves = new ArrayList<CatalogTreeLeaf>();
 
