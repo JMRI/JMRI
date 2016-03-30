@@ -50,7 +50,7 @@ also allows certain information about the Sensor to be changed:</p>
 <img src="BlocksEditSensorTab.png" width="460" height="155">
 <ul>
 <li><p><b>Sensor</b>
-Select the sensor from the drop down list that will be assoicated with this block.</li>
+Select the Sensor from the drop down list that will be associated with this Block.</li>
 
 You can edit the Sensor Debounce options from this tab; setting the Sensor Debounce 
 helps to prevent false triggers of a Sensor being passed into the system and triggering 
@@ -117,6 +117,7 @@ whereas with 'Use Current?' unselected the Block value will switch between 3 and
 </ul>
 </td>
 </tr></table>
+
 <ul>
 <li><b>Length</b> (optional) - Displays the length of the Block.  Optionally, you may 
 enter the length of the Block here.  The length is used for automatic running of trains. 
@@ -129,20 +130,21 @@ the Block. Curvature is used for automatic running of trains, and need not be en
 if trains will not be run automatically. Curvature, if present, indicates to the computer 
 that it should slow the train as it runs through the Block. If <b>None</b> or 
 <b>Gradual</b> are selected, an automatic train will proceed at normal speed. <b>Tight</b> 
-should be selected if the train should slow down some; <b>Severe </b>should be selected 
+should be selected if the train should slow down some; <b>Severe</b> should be selected 
 if the train should slow by a maximum amount. If the Block has variable curvature, your 
 selection should be made according to the most limiting part of the Block.</li>
 
 <li><b>Speed</b> - The speed is used with certain automation tools and logic, to help
 determine the speed at which a train can be set through the block.
-It is also used by the signal mast logic for determining which aspect should
+It is also used by the Signal Mast Logic for determining which Aspect should
 be displayed in a signal path.<br>
 In the drop down list, you are presented a set of named fixed speeds that
 have been predefined in the signalSpeed.xml file, in addition to a global option.<br>
-It is also possible to enter in a numerical value to represent a speed.
+It is also possible to enter a numerical value to represent a speed.
 The global value is set via the <b>Speeds</b> menu option.</li>
 
-<li><b>Permissive</b> - The Permissive option is used to identify Blocks that can be entered by another Train while it is already occupied. This option is used with certain automation tools and Logix to help
+<li><b>Permissive</b> - The Permissive option is used to identify Blocks that can be entered by another Train 
+while it is already occupied. This option is used with certain automation tools and Logix to help
 determine if a Train can enter an occupied Block and what Aspect should be displayed on its Signal Mast.</li>
 </ul>
 
@@ -154,7 +156,7 @@ determine if a Train can enter an occupied Block and what Aspect should be displ
 <img src="BlocksEditPropsTab.png" width="392" height="89">
 
 <p><a href="../../../../html/tools/tracker/index.shtml">More information on Blocks</a></p>
-<p><a href="../display/LayoutEditor.shtml">More information on using Blocks with Layout Editor</a>
+<p><a href="../display/LayoutEditor.shtml">More information on using Blocks with Layout Editor</a></p>
 <p>Back to the <a href="BlockTable.shtml">Block Table Help page<a>.</p>
 
 Located at package/jmri/jmrt/beantable/BlockEdit

@@ -31,7 +31,7 @@ automatically by merely specifying the origin and destination of Trains. Further
 it was designed for use by Logix so that users can define and control automated Trains
 running from Panel Editor panels of their own design.  
    
-<h3>What are Portals and Why Use Them?</h3>
+<h3>What are Portals and why use them?</h3>
 <p>Occupancy Blocks, or more properly named "track circuits", are portions of track having 
 one or more Sensors to detect occupancy by Trains.  
 These rail blocks, called <b>OBlocks</b>, are usually separated by gaps cut in the track which isolate the detecting
@@ -53,8 +53,8 @@ your layout, consider where they are located. Most likely they are placed near d
 points between Blocks. So regardless of the name, Portals are a significant concept.
 </p>
 
-<h3>Paths Through Portals</h3>
-<p>There may be many ways to traverse a Block. A path within a Block will enter at one Portal 
+<h3>OPaths through Portals</h3>
+<p>There may be many ways to traverse an OBlock. A Path within a Block will enter at one Portal 
 and exit through another Portal. Or a path may terminate within the Block, that is, the path
 is a spur. Again, Portals are a useful concept to indicate these entrance and exit points.
 </p> 
@@ -64,7 +64,7 @@ A <b>Path</b> is unambiguously defined by specifying the Turnouts and their sett
 Train to proceed safely through the Block.
 </p>
 
-<h2>Definitions:</h2>
+<h2>Definitions</h2>
 The Occupancy Tables define the following elements:
 <ul>
 	<li> <b>Blocks</b> are implemented in JMRI as OBlocks, which are extensions of 
@@ -78,34 +78,36 @@ The Occupancy Tables define the following elements:
         <li>An OBlock has from 1 to M paths.</li>
         <li>An OBlock has 0 to K turnouts.</li> 
         </ul></li>
-  <li><b>Portals</b> separate blocks.  They have the following characteristics:
+  <li><b>Portals</b> separate Blocks.  They have the following characteristics:
         <ul>
         <li>A Portal has exactly two Blocks (no more, no less)</li>
-        <li>A Portal may have 0 to 2 Signal Masts.
+        <li>A Portal may have 0 to 2 Signals.
         If a Portal has a Signal, it faces one of its Blocks. A second Signal, 
         if it exists, faces the other Block. Each Signal controls the movement of a Train
-        exiting the Block it faces and thus the entrance of the Train to other Block.</li>
+        exiting the Block it faces and thus the entrance of the Train to the other Block.</li>
         </ul></li>
-  <li><b>Paths</b> traverse a block. They are implemented as JMRI OPaths, which are 
+  <li><b>Paths</b> traverse a Block. They are implemented as JMRI OPaths, which are 
         extensions of JMRI Paths. They have the following characteristics:
         <ul>
-        <li>A Path has 0 to N turnouts.</li>
-        <li>A Path has at least one and no more than two Portals.</li>
+        <li>An OPath has 0 to N Turnouts.</li>
+        <li>An OPath has at least one, and no more than two, Portals.</li>
         </ul></li>
 </ul>
-How OBlocks, Portals and Paths are used is described in the 
+How OBlocks, Portals and OPaths are used is described in the 
  <a href="../logix/Warrant.shtml">Warrants</a> Help. You may want to browse that before
  reading further.
  <p>
  OBlocks, Portals and OPaths can be created and edited by the using the methods described below,
  or they can also be created and edited from a WYSIWYG graphical interface described in the
- <a href="..\display\Circuitbuilder.shtml">Circuit Builder</a> Help.</p> Circuit Builder can be
+ <a href="../display/Circuitbuilder.shtml">Circuit Builder</a> Help.</p>
+ <p>Circuit Builder can be
  used you if you have a track diagram using track icons showing your layout.
  Otherwise you will need to use the tables below. See 
  <a href="../logix/OBlockEdit.shtml">Creating and Editing OBlocks, Portals and OPaths</a>
 for more details on using the tables.
 
 <h2>Tables of the Occupancy Block, Portal, Path Frame</h2>
+<a href="images/OBlockWindow.png"><img src="images/OBlockWindow.png" align="right" width="701" height="287" hspace="0" vspace="0" alt="OBlock Tables frame in JMRI 4.3.4"></a>
 <p>The tables defining these elements are contained within a single frame that can be
 minimized or closed. The individual table frames can be minimized within this parent
 frame using the familiar OS window buttons.
@@ -116,16 +118,16 @@ Entering data into these entries and pressing the 'Enter' key will create a new 
 table.
 </p>
 
-<h3>Columns in the Occupancy Block Table:</h3>
+<h3>Columns in the Occupancy Block Table</h3>
 Each Occupancy Block on your layout should be entered as a row in this table, listing:
 <ul>
         <li><b>System Name</b>: The System Name of the OBlock. The system letter 'O', and 
-        type letter 'B' is used for for 'OBlock' although the implementation is not system-specific.
+        type letter 'B' is used for 'OBlock' although the implementation is not system-specific.<br>
         If these letters are not entered they are automatically prepended.</li> 
-        <li><b>User Name</b>: The User Name of the OBlock.<li>
+        <li><b>User Name</b>: The User Name of the OBlock.</li>li>
         <li><b>Comment</b>: You may enter any text in this field you wish.</li>
-        <li><b>Sensor</b>:The Sensor that detects occupancy of the Block.</li>
-        <li><b>State</b>:Shows a bit map of the Occupancy Sensor's state.  Click on the cell to see the word values.</li>
+        <li><b>Sensor</b>: The Sensor that detects occupancy of the Block.</li>
+        <li><b>State</b>: Shows a bit map of the Occupancy Sensor's state.  Click on the cell to see the word values.</li>
         <li><b>Length</b>: The length of the Block (see next line for units). This is an important parameter if you use NX Warrants.</li>
         <li><b>Units</b>: The unit used to determine the length (inches or centimeters).
         <li><b>Speed Notch</b>: An optional speed limit for the Block. A drop-down box lists the Signal
@@ -136,14 +138,14 @@ Each Occupancy Block on your layout should be entered as a row in this table, li
         <li><b>Delete</b>: A button to delete the Block.  To make the deletion permanent, 
         save your configuration file to disk</li> 
 </ul>
-This table is sorted by the system name of the OBlock.  This means that when a new row is added
-the entry will jump to its position in the sort.  After entering a new OBlock you may find it
+This table is sorted by the System Name of the OBlocks.  This means that when a new row is added
+the entry will jump to its position in the sort.  After entering a new OBlock, you may find it
 at the top of the window should you need to do further editing.
 <p>
 Several columns are hidden in the OBlock table.  To hide/unhide a column, right click in the 
 Header portion of the table.
 
-<h3>Columns in the Portal Table:</h3>
+<h3>Columns in the Portal Table</h3>
 <p>The Portal table has columns for the blocks it separates.  You do not need to be concerned
 about the direction of travel through the portal.  <i>It does not matter which side of the portal the blocks names are
 entered</i>, since the algorithms that compute train routes will decipher the correct
@@ -155,18 +157,18 @@ entrance and exit points.</p>
         <li><b>Delete</b>: A button to delete the Portal.  To make the deletion permanent, 
         save your configuration file to disk</li> 
 </ul>
-This table is sorted by the name of the Portal.  This means that when a new row is added
-the entry will jump to its position in the sort.  After entering a new Portal you may find it at 
+This table is sorted by Portal Name. This means that when a new row is added
+the entry will jump to its position in the sort. After entering a new Portal, you may find it at 
 the top of the window for further editing.</p>
 
-<h3>Columns in Signal Table:</h3>
-For each signal on your layout, make an entry in the Signal Table.  This signal will control the
-actions of any warranted train - changing its speed according to the signal's indication when the
-train reaches the portal where the signal is placed.  That is, the signal 'protects' the blocks beyond 
-the portal. The signal may be either a <b>SignalMast</b> or a <b>SignalHead</b>.
+<h3>Columns in the Signal Table</h3>
+For each signal on your layout, make an entry in the Signal Table.  This Signal will control the
+actions of any warranted train - changing its speed according to the Signal's indication when the
+train reaches the Portal where the signal is placed.  That is, the Signal 'protects' the Blocks beyond 
+the Portal. The Signal may be either a <b>Signal Mast</b> or a <b>Signal Head</b>.
 <ul>
-        <li><b>Signal Name</b>: Enter the name of the Signal, either the System Name or User Name.
-        (In the case where the same name is used for both a SignalMast and SignalHead, the SignalMast
+        <li><b>Signal Name</b>: Enter the name of the Signal, either the System Name or User Name
+        (In the case where the same name is used for both a Signal Mast and Signal Head, the Signal Mast
         will be chosen by the program).</li>  
         <li><b>From (Approach) Block</b>: Enter the name, either System Name or User Name,
         of the Block that the Signal faces. The Signal controls the movement
@@ -180,39 +182,39 @@ the portal. The signal may be either a <b>SignalMast</b> or a <b>SignalHead</b>.
         <li><b>Units</b>: The unit used to determine the offset length (in inches or centimeters).
 </ul>
        
-<h3>How Signal Aspects Change Speed:</h3>
-A warrant detects the signal Aspect when it's train enters the <i>approach</i> block and, if needed,
-prepares to change the speed before it reaches the <i>protected</i> block.  Any speed change is
-ramped down to the speed required by the signal.  The warrant calculates when the speed ramp-down
-should begin using the parameters involved with the Speed Profile or throttle factor of the engine. 
-(see <a href="Warrant.shtml#SpeedMap"> Warrants</A>) The point where the speed change should complete
-can be adjusted (+/-) by the above <b>Length</b> amount should that be desirable.</p>
+<h3>How Signal Aspects change Speed</h3>
+A Warrant detects the signal Aspect when it's train enters the <i>approach</i> Block and - if needed -
+prepares to change the speed before it reaches the <i>protected</i> Block.  Any speed change is
+ramped down to the speed required by the Signal.  The Warrant calculates when the speed ramp-down
+should begin using the parameters involved with the Speed Profile or throttle factor of the engine 
+(see <a href="Warrant.shtml#SpeedMap"> Warrants</a>). The point where the speed change should complete
+can be adjusted (+/-) by the above <b>Length</b> amount, should that be desirable.</p>
 <p>
-Likewise, when the signal indicates a clear or improved speed from a stopped or reduced speed
+Likewise, when the Signal indicates a Clear or increased speed from a stopped or reduced speed
 condition, the speed will be ramped up to the allowed or recorded speed. 
 
-<h3>Columns in Block-Path Tables:</h3>
-Each block in the Occupancy Block Table will have one or more paths in it.  Pressing the <b>Paths</b> 
+<a name="oblockpath"><h3>Columns in Block-Path Tables</h3></a>
+Each Block in the Occupancy Block Table will have one or more Paths in it.  Pressing the <b>Paths</b> 
 button in a row of the Occupancy Block Table will open this table.  <i>Direction of the path
 is immaterial</i>.  'from' and 'to' do not have to correspond to any particular side
-of the block.  They are just portal names for the path that traverses from 
+of the Block; they are just Portal names for the Path that traverses from 
 'this portal' to 'that portal'.</p>
 <ul>
-        <li><b>From Portal</b>: The portal name of one entrance/exit point of the path.</li> 
+        <li><b>From Portal</b>: The Portal name of one entrance/exit point of the Path.</li> 
         <li><b>Path Name</b>: The name of the Path. Path names only have to be unique within
-        the block.  E.g, "Westbound Main" could be used as the name in all the blocks of the 
+        the Block.  E.g, "Westbound Main" could be used as the Path Name in all the Blocks of the 
         "Westbound Main" on your layout.</li>
-        <li><b>To Portal Name</b>: The portal name of the other entrance/exit point of the path.</li>
-        <li><b>Turnouts</b>: A button that opens the <b>Block-Path-Turnout</b> table where the turnouts 
-        that define the path are entered.  This table is described below.
+        <li><b>To Portal Name</b>: The Portal name of the other entrance/exit point of the Path.</li>
+        <li><b>Turnouts</b>: A button that opens the <b>Block-Path-Turnout</b> table, where the turnouts 
+        that define the Path are entered.  This table is described <a href="#oblockpathturnout">below</a>.
         <li><b>Delete</b>: A button to delete the Path. To make the deletion permanent, 
         save your configuration file to disk</li> 
 </ul>
 
-<h3>Columns in Block-Path-Turnout Tables:</h3>
-If the path crosses a turnout, then it is necessary to have the turnout in the correct position
-in order to traverse the path.  This table is used to define these settings.  (If the path does
-not cross ant turnouts, this table is left empty.)  Note there will be lots of these tables, one
+<a name="oblockpathturnout"><h3>Columns in Block-Path-Turnout Tables</h3></a>
+If the Path crosses a Turnout, then it is necessary to have the Turnout in the correct position
+in order to traverse the Path.  This table is used to define these settings (if the path does
+not cross any turnouts, this table is left empty). Note there will be lots of these tables, one
 for each path in each Block of the Occupancy Block Table.
 <ul>
         <li><b>System/User Name</b>: The System Name or User Name of the Turnout in the Path.</li> 
@@ -221,45 +223,45 @@ for each path in each Block of the Occupancy Block Table.
         save your configuration file to disk</li> 
 </ul>
 
-<h3>Columns in Block-Portal CrossReference Table:</h3>
+<h3>Columns in the Block-Portal CrossReference Table</h3>
 This is a read only table to assist in identifying all the Portals to a Block. It lists all
 the Portals that have been defined for each Block, grouped under each Block heading. It is opened
-from the <b>Show Block-Portal CrossReference</b> menu item. See below.
+from the <a href="#oblockcrossref"><b>Show Block-Portal CrossReference</b></a> menu item.
 
-<h2>Menus of the Occupancy Block, Portal, Path Frame</h2>
-<h3>The File Menu</h3>
+<h2>Menus of the Occupancy Block, Portal, Path frame</h2>
+<h3>The File menu</h3>
 This menu has the standard menu items for saving configuration files and panels.
 
-<h3>The Edit Menu</h3>
+<h3>The Edit menu</h3>
 This menu has the standard menu items for Cut, Copy and Paste.
 
-<h3>The Open Tables Menu</h3>
-This menu has items to open the tables in the Occupancy Block, Portal, Path Frame.
+<h3>The Open Tables menu</h3>
+This menu has items to open the tables in the Occupancy Block, Portal, Path frame:
 <ul>
     <li><b>Show Occupancy Block Table</b>: Opens the Occupancy Block window, if it is minimized.  This table
     cannot be closed.</li> 
     <li><b>Show Portal Table</b>: Opens the Portal window, if it is minimized.  This table
     cannot be closed.</li>
-    <li><b>Show Block-Portal CrossReference</b>: Opens a table window that cross references 
+    <li><a name="oblockcrossref"><b>Show Block-Portal CrossReference</b></a>: Opens a table window that cross references 
     Portals to their Blocks.  
     It organized per Block, showing all the portals attached to the block.  It is a 
     counterpoint to the Portal Table which is organized per portal.</li> 
-    <li><b>Open Block-Path Tables</b>: This is a cascading menu that opens a Path window for 
-    a path from a Block.  Most likely 
-    there will be so many of these windows that the menu will be larger than the screen.  
-    It is probably easier to open these windows from the <b>Paths</b> button in a row of the 
+    <li><b>Open Block-Path Tables</b>: This is a cascading menu that opens a Path pane for 
+    a Path from a Block.  Most likely 
+    there will be so many of these panes that the menu will be larger than the screen.<br>  
+    It is probably easier to open these panes from the <b>Paths</b> button in a row of the 
     Occupancy Block table.</li> 
-    <li><b>Open Block-Path-Turnout Tables</b>: This is a cascading menu that opens a Turnout window 
+    <li><b>Open Block-Path-Turnout Tables</b>: This is a cascading menu that opens a Turnout pane 
     for a Path from a Block. Most likely 
-    there will be so many of these windows that the menu will be larger than your screen.  
-    It is probably easier to open these windows by clicking on the <b>Turnout</b> button in a row in a 
+    there will be so many of these panes that the menu will be larger than your screen.<br>  
+    It is probably easier to open these panes by clicking on the <b>Turnout</b> button in a row in a 
     Block-Path Table window.</li>
 </ul>
 
-<h3>The Windows Menu</h3>
+<h3>The Windows menu</h3>
 This menu has the standard menu items for opening JMRI window frames.
 
-<h3>The Help Menu</h3>
+<h3>The Help menu</h3>
 This menu has the standard menu items for JMRI help.
 
 <h2>Further Reference</h2>
@@ -267,12 +269,11 @@ This menu has the standard menu items for JMRI help.
 automated train Scripts, see <a href="../logix/Warrant.shtml">Warrants</a>.
 <p>See <a href="../logix/OBlockEdit.shtml">Creating and Editing OBlocks, Portals and OPaths</a>
 for more details on using these Tables.
-<p>See <a href="..\display\Circuitbuilder.shtml">Circuit Builder</a>.</p>
-for creating and editing OBlocks, Portals and OPaths from a graphical representation of your track plan.
+<p>See <a href="..\display\Circuitbuilder.shtml">Circuit Builder</a>
+for creating and editing OBlocks, Portals and OPaths from a graphical representation of your track plan.</p>
 
 <!--#include virtual="/Footer" -->
  </div><!-- closes #mainContent-->
 </div> <!-- closes #mBody-->
 </body>
 </html>
-
