@@ -193,7 +193,7 @@ can be adjusted (+/-) by the above <b>Length</b> amount, should that be desirabl
 Likewise, when the Signal indicates a Clear or increased speed from a stopped or reduced speed
 condition, the speed will be ramped up to the allowed or recorded speed. 
 
-<a id="oblockpath"><h3>Columns in Block-Path Tables</h3></a>
+<a name="oblockpath"><h3>Columns in Block-Path Tables</h3></a>
 Each Block in the Occupancy Block Table will have one or more Paths in it.  Pressing the <b>Paths</b> 
 button in a row of the Occupancy Block Table will open this table.  <i>Direction of the path
 is immaterial</i>.  'from' and 'to' do not have to correspond to any particular side
@@ -211,7 +211,7 @@ of the Block; they are just Portal names for the Path that traverses from
         save your configuration file to disk</li> 
 </ul>
 
-<a id="oblockpathturnout"><h3>Columns in Block-Path-Turnout Tables</h3></a>
+<a name="oblockpathturnout"><h3>Columns in Block-Path-Turnout Tables</h3></a>
 If the Path crosses a Turnout, then it is necessary to have the Turnout in the correct position
 in order to traverse the Path.  This table is used to define these settings (if the path does
 not cross any turnouts, this table is left empty). Note there will be lots of these tables, one
@@ -242,7 +242,7 @@ This menu has items to open the tables in the Occupancy Block, Portal, Path fram
     cannot be closed.</li> 
     <li><b>Show Portal Table</b>: Opens the Portal window, if it is minimized.  This table
     cannot be closed.</li>
-    <li><a id="oblockcrossref"><b>Show Block-Portal CrossReference</b></a>: Opens a table window that cross references 
+    <li><a name="oblockcrossref"><b>Show Block-Portal CrossReference</b></a>: Opens a table window that cross references 
     Portals to their Blocks.  
     It organized per Block, showing all the portals attached to the block.  It is a 
     counterpoint to the Portal Table which is organized per portal.</li> 

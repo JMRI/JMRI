@@ -26,7 +26,7 @@ If you want to change the User Name of a Block used in a Layout Editor Panel, ma
 change in the Layout Editor, not in the Block Table.</p>
 <p>To complete the definition of a Block, Paths and Bean Settings must be attached to 
 each Block.<br>
-<a id="block paths"><strong>Paths</strong></a> describe entry points to the Block. Each Block has one or more Paths
+<a name="blockPaths"><strong>Paths</strong></a> describe entry points to the Block. Each Block has one or more Paths
 associated with it. Sometimes a Turnout must be set a certain way to use a Path; Bean 
 Settings carry that information. Paths and Bean Settings are set up automatically for 
 Blocks defined in a Layout Editor Panel. They can also be set up in a script. There is 
