@@ -531,11 +531,7 @@ public class Block extends jmri.implementation.AbstractNamedBean implements Phys
             return false;
         } else {
             Block b = (Block) obj;
-            
-//            if (b._direction != this._direction) return false;
-//            if (b._curvature != this._curvature) return false;
-//            if (b._length != this._length) return false;
-            
+                        
             if (!b.getSystemName().equals(this.getSystemName())) return false;
             
         }

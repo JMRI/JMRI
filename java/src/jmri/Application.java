@@ -1,4 +1,3 @@
-// Application.java
 package jmri;
 
 /**
@@ -19,7 +18,6 @@ package jmri;
  * <P>
  *
  * @author Matthew Harris Copyright (C) 2011
- * @version $Revision$
  */
 public class Application {
 
@@ -101,4 +99,3 @@ public class Application {
 
 }
 
-/* @(#)Application.java */

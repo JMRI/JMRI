@@ -1,4 +1,3 @@
-// AudioThread.java
 package jmri.jmrit.audio;
 
 /**
@@ -16,7 +15,6 @@ package jmri.jmrit.audio;
  * <P>
  *
  * @author Matthew Harris copyright (c) 2009
- * @version $Revision$
  */
 public interface AudioThread extends Runnable {
 
@@ -50,5 +48,3 @@ public interface AudioThread extends Runnable {
     public void die();
 
 }
-
-/* @(#)AudioThread.java */

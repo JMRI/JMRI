@@ -792,7 +792,7 @@ public class PaneProgPane extends javax.swing.JPanel
         if (log.isDebugEnabled()) {
             log.debug("nextRead scans " + varList.size() + " variables");
         }
-        while ((varList.size() >= 0) && (varListIndex < varList.size())) {
+        while ((varList.size() > 0) && (varListIndex < varList.size())) {
             int varNum = varList.get(varListIndex).intValue();
             int vState = _varModel.getState(varNum);
             VariableValue var = _varModel.getVariable(varNum);
@@ -938,7 +938,7 @@ public class PaneProgPane extends javax.swing.JPanel
             }
         }
         // found no CVs needing read, try indexed CVs
-        while ((indexedCvList.size() >= 0) && (indexedCvListIndex < indexedCvList.size())) {
+        while ((indexedCvList.size() > 0) && (indexedCvListIndex < indexedCvList.size())) {
             int indxVarNum = indexedCvList.get(indexedCvListIndex).intValue();
             int indxState = _varModel.getState(indxVarNum);
             if (log.isDebugEnabled()) {
@@ -1048,7 +1048,7 @@ public class PaneProgPane extends javax.swing.JPanel
     boolean nextWrite() {
         log.debug("start nextWrite");
         // look for possible variables
-        while ((varList.size() >= 0) && (varListIndex < varList.size())) {
+        while ((varList.size() > 0) && (varListIndex < varList.size())) {
             int varNum = varList.get(varListIndex).intValue();
             int vState = _varModel.getState(varNum);
             VariableValue var = _varModel.getVariable(varNum);

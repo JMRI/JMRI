@@ -459,7 +459,8 @@ public final class XMLUtil extends Object {
             Source source = new DOMSource(doc2);
             Result result = new StreamResult(out);
             t.transform(source, result);
-        } catch (Exception e) {
+        } catch (javax.xml.transform.TransformerException 
+                | RuntimeException e) { // catch anything that happens
             throw new IOException(e);
         } finally {
             Thread.currentThread().setContextClassLoader(orig);

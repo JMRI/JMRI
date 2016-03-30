@@ -29,11 +29,6 @@ import org.slf4j.LoggerFactory;
  */
 public class RestartAction extends JmriAbstractAction {
 
-    /**
-     *
-     */
-    private static final long serialVersionUID = 6850455424770019609L;
-
     public RestartAction(String s, WindowInterface wi) {
         super(s, wi);
     }

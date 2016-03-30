@@ -46,10 +46,6 @@ import org.slf4j.LoggerFactory;
  */
 public abstract class AppsLaunchPane extends JPanel implements PropertyChangeListener {
 
-    /**
-     *
-     */
-    private static final long serialVersionUID = 4491168291678104991L;
     static String profileFilename;
 
     public AppsLaunchPane() {

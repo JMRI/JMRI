@@ -1,4 +1,3 @@
-// LI100Adapter.java
 package jmri.jmrix.lenz.li100;
 
 import gnu.io.CommPortIdentifier;
@@ -9,6 +8,7 @@ import gnu.io.SerialPortEventListener;
 import java.io.DataInputStream;
 import java.io.DataOutputStream;
 import java.io.InputStream;
+import java.io.IOException;
 import jmri.jmrix.lenz.LenzCommandStation;
 import jmri.jmrix.lenz.XNetSerialPortController;
 import jmri.jmrix.lenz.XNetTrafficController;
@@ -22,7 +22,6 @@ import org.slf4j.LoggerFactory;
  *
  * @author	Bob Jacobsen Copyright (C) 2002
  * @author Paul Bender, Copyright (C) 2003-2010
- * @version	$Revision$
  */
 public class LI100Adapter extends XNetSerialPortController implements jmri.jmrix.SerialPortAdapter {
 
@@ -64,12 +63,7 @@ public class LI100Adapter extends XNetSerialPortController implements jmri.jmrix
             serialStream = activeSerialPort.getInputStream();
 
             // purge contents, if any
-            int count = serialStream.available();
-            log.debug("input stream shows " + count + " bytes available");
-            while (count > 0) {
-                serialStream.skip(count);
-                count = serialStream.available();
-            }
+            purgeStream(serialStream);
 
             // report status?
             if (log.isInfoEnabled()) {
@@ -197,10 +191,14 @@ public class LI100Adapter extends XNetSerialPortController implements jmri.jmrix
 
         } catch (gnu.io.NoSuchPortException p) {
             return handlePortNotFound(p, portName, log);
-        } catch (Exception ex) {
-            log.error("Unexpected exception while opening port " + portName + " trace follows: " + ex);
-            ex.printStackTrace();
-            return "Unexpected error while opening port " + portName + ": " + ex;
+        } catch (IOException ioe) {
+            log.error("IOException exception while opening port " + portName + " trace follows: " + ioe);
+            ioe.printStackTrace();
+            return "IO exception while opening port " + portName + ": " + ioe;
+        } catch (java.util.TooManyListenersException tmle) {
+            log.error("TooManyListenersException while opening port " + portName + " trace follows: " + tmle);
+            tmle.printStackTrace();
+            return "Too Many Listeners exception while opening port " + portName + ": " + tmle;
         }
 
         return null; // normal operation

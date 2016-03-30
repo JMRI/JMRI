@@ -1,4 +1,3 @@
-// SRCPPortController.java
 package jmri.jmrix.srcp;
 
 /**
@@ -6,7 +5,6 @@ package jmri.jmrix.srcp;
  *
  * @author	Bob Jacobsen Copyright (C) 2001, 2008, 2010
  * @author	Paul Bender Copyright (C) 2010
- * @version	$Revision$
  */
 public abstract class SRCPPortController extends jmri.jmrix.AbstractNetworkPortController {
 

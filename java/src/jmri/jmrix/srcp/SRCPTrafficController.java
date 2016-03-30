@@ -1,4 +1,3 @@
-// SRCPTrafficController.java
 package jmri.jmrix.srcp;
 
 import java.util.Vector;
@@ -25,7 +24,6 @@ import org.slf4j.LoggerFactory;
  * message.
  *
  * @author Bob Jacobsen Copyright (C) 2001
- * @version $Revision$
  */
 public class SRCPTrafficController extends AbstractMRTrafficController
         implements SRCPInterface, jmri.ShutDownTask {
@@ -188,9 +186,6 @@ public class SRCPTrafficController extends AbstractMRTrafficController
                 rcvException = true;
                 reportReceiveLoopException(pe);
                 break;
-            } catch (Exception e1) {
-                log.error("Exception in receive loop: " + e1);
-                e1.printStackTrace();
             }
         }
     }

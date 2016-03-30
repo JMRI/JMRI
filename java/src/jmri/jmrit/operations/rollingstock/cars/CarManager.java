@@ -280,6 +280,7 @@ public class CarManager extends RollingStockManager {
     private static final int BY_FINAL_DEST = 14;
     private static final int BY_WAIT = 16;
     private static final int BY_PICKUP = 19;
+    private static final int BY_HAZARD = 21;
 
     // add car options to sort comparator
     @Override
@@ -297,6 +298,8 @@ public class CarManager extends RollingStockManager {
                 return (c1,c2)->(((Car)c1).getWait() - ((Car)c2).getWait());
             case BY_PICKUP:
                 return (c1,c2)->(((Car)c1).getPickupScheduleName().compareToIgnoreCase(((Car)c2).getPickupScheduleName()));
+            case BY_HAZARD:
+                return (c1,c2)->((((Car)c1).isHazardous()? 1:0) - (((Car)c2).isHazardous()? 1:0));
             default:
                 return super.getComparator(attribute);
         }
@@ -375,18 +378,41 @@ public class CarManager extends RollingStockManager {
     }
 
     /**
-     * Get a list of Cars assigned to a train sorted by destination track blocking order
-     * or by track names. If a train is to be blocked by track blocking order, all of
-     * the tracks at that location need a blocking number greater than 0.
-     * Passenger cars will be placed at the end of the list. Caboose or car with
-     * FRED will be the last car(s) in the list. Kernels are placed together by
-     * blocking number.
+     * Provides a very sorted list of cars assigned to the train. Note that this
+     * isn't the final sort as the cars must be sorted by each location the
+     * train visits.
+     *
+     * The sort priority is as follows:
+     * <ol>
+     * <li>Caboose or car with FRED to the end of the list
+     * 
+     * <li>Passenger cars to the end of the list, but before cabooses or car
+     * with FRED. Passenger cars have blocking numbers which places them
+     * relative to each other.
+     * 
+     * <li>Car's destination (alphabetical by location and track name or by
+     * track blocking order)
+     * 
+     * <li>Car's current location (alphabetical by location and track name)
+     * 
+     * <li>Car's final destination (alphabetical by location and track name)
+     * 
+     * <li>Car is hazardous (hazardous placed after a non-hazardous car)
+     * </ol>
+     * <p>
+     * Cars in a kernel are placed together by their kernel blocking numbers.
+     * The kernel's position in the list is based on the lead car in the kernel.
+     * <p>
+     * 
+     * If the train is to be blocked by track blocking order, all of the tracks
+     * at that location need a blocking number greater than 0.
      *
      * @param train
-     * @return Ordered list of Cars assigned to the train
+     * @return Ordered list of cars assigned to the train
      */
     public List<Car> getByTrainDestinationList(Train train) {
-        List<RollingStock> byFinal = getByList(getList(train), BY_FINAL_DEST);
+        List<RollingStock> byHazard = getByList(getList(train), BY_HAZARD);
+        List<RollingStock> byFinal = getByList(byHazard, BY_FINAL_DEST);
         List<RollingStock> byLocation = getByList(byFinal, BY_LOCATION);
         List<RollingStock> byDestination = getByList(byLocation, BY_DESTINATION);
         // now place cabooses, cars with FRED, and passenger cars at the rear of the train
@@ -408,6 +434,7 @@ public class CarManager extends RollingStockManager {
                                 out.add(j, car);
                                 break;
                             }
+                        // Train is traveling East or South when setting out the car
                         } else {
                             if (car.getDestinationTrack().getBlockingOrder() > out.get(j).getDestinationTrack().getBlockingOrder()) {
                                 out.add(j, car);
@@ -423,7 +450,7 @@ public class CarManager extends RollingStockManager {
                 out.add(car); // place at end of list
                 lastCarsIndex++;
             } else if (car.isPassenger()) {
-                // block passenger cars at end of list
+                // block passenger cars at end of list, but before cabooses or car with FRED
                 int index;
                 for (index = 0; index < lastCarsIndex; index++) {
                     Car carTest = out.get(out.size() - 1 - index);

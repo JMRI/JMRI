@@ -1,4 +1,3 @@
-// CatalogTreeIndex.java
 package jmri.jmrit.catalog;
 
 import java.util.HashMap;
@@ -15,11 +14,6 @@ import org.slf4j.LoggerFactory;
  *
  */
 public class CatalogTreeIndex extends AbstractCatalogTree {
-
-    /**
-     *
-     */
-    private static final long serialVersionUID = -421977014689495815L;
 
     public CatalogTreeIndex(String sysName, String userName) {
 
@@ -48,12 +42,6 @@ public class CatalogTreeIndex extends AbstractCatalogTree {
         }
         insertNodeInto(newNode, pParent, pParent.getChildCount());
     }
-    /*
-     public void insertNodes(String rootName, String pathToRoot) {
-     CatalogTreeNode root = (CatalogTreeNode)getRoot();
-     insertNodes(rootName, pathToRoot, root);
-     }
-     */
 
     public void setProperty(String key, Object value) {
         if (parameters == null) {
@@ -64,14 +52,14 @@ public class CatalogTreeIndex extends AbstractCatalogTree {
 
     public Object getProperty(String key) {
         if (parameters == null) {
-            return null;
+            parameters = new HashMap<String, Object>();
         }
         return parameters.get(key);
     }
 
     public java.util.Set<String> getPropertyKeys() {
         if (parameters == null) {
-            return null;
+            parameters = new HashMap<String, Object>();
         }
         return parameters.keySet();
     }

@@ -32,11 +32,6 @@ import org.slf4j.LoggerFactory;
  */
 public class LocoTools extends Apps {
 
-    /**
-     *
-     */
-    private static final long serialVersionUID = -8658565137365487220L;
-
     LocoTools(JFrame p) {
         super(p);
     }

@@ -586,7 +586,7 @@ public class LayoutEditorAuxTools {
                             checkConnectivity(c, found);
                         }
                     } else {
-                        log.warn("Did not decoder ts.getType2() of {} (A)", ts.getType2());
+                        log.warn("Did not decode ts.getType2() of {} (A)", ts.getType2());
                     }
                 }
             }

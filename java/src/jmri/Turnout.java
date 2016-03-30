@@ -1,4 +1,3 @@
-// Turnout.java
 package jmri;
 
 /**
@@ -66,7 +65,6 @@ package jmri;
  * <P>
  *
  * @author	Bob Jacobsen Copyright (C) 2001
- * @version	$Revision$
  * @see jmri.TurnoutManager
  * @see jmri.InstanceManager
  * @see jmri.jmrit.simpleturnoutctrl.SimpleTurnoutCtrlFrame
@@ -435,5 +433,3 @@ public interface Turnout extends NamedBean {
     public void setStraightSpeed(String s) throws JmriException;
 
 }
-
-/* @(#)Turnout.java */
