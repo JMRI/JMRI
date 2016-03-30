@@ -78,7 +78,7 @@ public class SRCPProgrammer extends AbstractProgrammer implements SRCPListener {
         }
     }
 
-    public void confirmCV(int CV, int val, jmri.ProgListener p) throws jmri.ProgrammerException {
+    synchronized public void confirmCV(int CV, int val, jmri.ProgListener p) throws jmri.ProgrammerException {
         if (log.isDebugEnabled()) {
             log.debug("confirmCV " + CV + " val " + val + " listens " + p);
         }
@@ -111,7 +111,7 @@ public class SRCPProgrammer extends AbstractProgrammer implements SRCPListener {
         //readCV(CV, p);
     }
 
-    public void readCV(int CV, jmri.ProgListener p) throws jmri.ProgrammerException {
+    synchronized public void readCV(int CV, jmri.ProgListener p) throws jmri.ProgrammerException {
         if (log.isDebugEnabled()) {
             log.debug("readCV " + CV + " listens " + p);
         }
