@@ -8,6 +8,7 @@ import gnu.io.SerialPortEventListener;
 import java.io.DataInputStream;
 import java.io.DataOutputStream;
 import java.io.InputStream;
+import java.io.IOException;
 import jmri.jmrix.lenz.LenzCommandStation;
 import jmri.jmrix.lenz.XNetInitializationManager;
 import jmri.jmrix.lenz.XNetSerialPortController;
@@ -50,13 +51,9 @@ public class ZTC640Adapter extends XNetSerialPortController implements jmri.jmri
             }
 
             // set timeout
-            try {
-                activeSerialPort.enableReceiveTimeout(10);
-                log.debug("Serial timeout was observed as: " + activeSerialPort.getReceiveTimeout()
-                        + " " + activeSerialPort.isReceiveTimeoutEnabled());
-            } catch (Exception et) {
-                log.info("failed to set serial timeout: " + et);
-            }
+            activeSerialPort.enableReceiveTimeout(10);
+            log.debug("Serial timeout was observed as: " + activeSerialPort.getReceiveTimeout()
+                      + " " + activeSerialPort.isReceiveTimeoutEnabled());
 
             // get and save stream
             serialStream = activeSerialPort.getInputStream();
@@ -190,10 +187,18 @@ public class ZTC640Adapter extends XNetSerialPortController implements jmri.jmri
 
         } catch (gnu.io.NoSuchPortException p) {
             return handlePortNotFound(p, portName, log);
-        } catch (Exception ex) {
-            log.error("Unexpected exception while opening port " + portName + " trace follows: " + ex);
+        } catch (IOException ex) {
+            log.error("IO exception while opening port " + portName + " trace follows: " + ex);
             ex.printStackTrace();
-            return "Unexpected error while opening port " + portName + ": " + ex;
+            return "IO Exception while opening port " + portName + ": " + ex;
+        } catch (java.util.TooManyListenersException tmlex) {
+            log.error("Too Many Listeners exception while opening port " + portName + " trace follows: " + tmlex);
+            tmlex.printStackTrace();
+            return "Too Many Listeners Exception while opening port " + portName + ": " + tmlex;
+        } catch (gnu.io.UnsupportedCommOperationException ucex) {
+            log.error("unsupported Comm Operation exception while opening port " + portName + " trace follows: " + ucex);
+            ucex.printStackTrace();
+            return "Unsupported Comm Exception while opening port " + portName + ": " + ucex;
         }
 
         return null; // normal operation
@@ -231,7 +236,7 @@ public class ZTC640Adapter extends XNetSerialPortController implements jmri.jmri
         }
         try {
             return new DataOutputStream(activeSerialPort.getOutputStream());
-        } catch (java.io.IOException e) {
+        } catch (IOException e) {
             log.error("getOutputStream exception: " + e.getMessage());
         }
         return null;

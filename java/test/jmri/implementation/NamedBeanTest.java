@@ -1,5 +1,8 @@
 package jmri.implementation;
 
+import java.beans.PropertyChangeListener;
+import java.beans.PropertyChangeEvent;
+
 import jmri.NamedBean;
 import junit.framework.Assert;
 import junit.framework.Test;
@@ -70,6 +73,20 @@ public class NamedBeanTest extends TestCase {
 
     }
 
+    public void testDispose() {
+        NamedBean n = createInstance();
+        n.addPropertyChangeListener(new PropertyChangeListener(){
+            public void propertyChange(PropertyChangeEvent p) {}
+        });
+        n.addPropertyChangeListener(new PropertyChangeListener(){
+            public void propertyChange(PropertyChangeEvent p) {}
+        });
+        Assert.assertEquals("start length", 2, n.getNumPropertyChangeListeners());
+        
+        n.dispose();
+        Assert.assertEquals("end length", 0, n.getNumPropertyChangeListeners());   
+    }
+    
     // from here down is testing infrastructure
     public NamedBeanTest(String s) {
         super(s);

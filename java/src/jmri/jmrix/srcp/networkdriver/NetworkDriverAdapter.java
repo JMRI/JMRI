@@ -1,4 +1,3 @@
-// NetworkDriverAdapter.java
 package jmri.jmrix.srcp.networkdriver;
 
 import jmri.jmrix.srcp.SRCPPortController;
@@ -14,7 +13,6 @@ import org.slf4j.LoggerFactory;
  *
  * @author	Bob Jacobsen Copyright (C) 2001, 2002, 2003, 2008
  * @author	Paul Bender Copyright (C) 2010
- * @version	$Revision$
  */
 public class NetworkDriverAdapter extends SRCPPortController implements jmri.jmrix.NetworkPortAdapter {
 
