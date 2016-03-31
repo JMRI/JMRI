@@ -543,12 +543,7 @@ public abstract class AbstractTurnout extends AbstractNamedBean implements
                 provideFirstFeedbackNamedSensor(null);
             } else {
                 Sensor sensor = InstanceManager.sensorManagerInstance().provideSensor(pName);
-                if (sensor != null) {
-                    provideFirstFeedbackNamedSensor(jmri.InstanceManager.getDefault(jmri.NamedBeanHandleManager.class).getNamedBeanHandle(pName, sensor));
-                } else {
-                    log.error("Sensor '" + pName + "' not available");
-                    throw new jmri.JmriException("Sensor '" + pName + "' not available");
-                }
+                provideFirstFeedbackNamedSensor(jmri.InstanceManager.getDefault(jmri.NamedBeanHandleManager.class).getNamedBeanHandle(pName, sensor));
             }
         } else {
             log.error("No SensorManager for this protocol");
@@ -587,12 +582,7 @@ public abstract class AbstractTurnout extends AbstractNamedBean implements
                 provideSecondFeedbackNamedSensor(null);
             } else {
                 Sensor sensor = InstanceManager.sensorManagerInstance().provideSensor(pName);
-                if (sensor != null) {
-                    provideSecondFeedbackNamedSensor(jmri.InstanceManager.getDefault(jmri.NamedBeanHandleManager.class).getNamedBeanHandle(pName, sensor));
-                } else {
-                    log.error("Sensor '" + pName + "' not available");
-                    throw new jmri.JmriException("Sensor '" + pName + "' not available");
-                }
+                provideSecondFeedbackNamedSensor(jmri.InstanceManager.getDefault(jmri.NamedBeanHandleManager.class).getNamedBeanHandle(pName, sensor));
             }
         } else {
             log.error("No SensorManager for this protocol");
