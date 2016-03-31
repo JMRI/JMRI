@@ -15,11 +15,6 @@ import jmri.Turnout;
 public abstract class AbstractSignalHead extends AbstractNamedBean
         implements SignalHead, java.io.Serializable, java.beans.VetoableChangeListener {
 
-    /**
-     *
-     */
-    private static final long serialVersionUID = 4093433648350544669L;
-
     public AbstractSignalHead(String systemName, String userName) {
         super(systemName, userName);
     }

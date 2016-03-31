@@ -27,11 +27,6 @@ import org.slf4j.LoggerFactory;
  */
 public class MergSD2SignalHead extends DefaultSignalHead {
 
-    /**
-     *
-     */
-    private static final long serialVersionUID = -4482155949121611404L;
-
     public MergSD2SignalHead(String sys, String user, int aspect, NamedBeanHandle<Turnout> t1, NamedBeanHandle<Turnout> t2, NamedBeanHandle<Turnout> t3, boolean feather, boolean home) {
         super(sys, user);
         mAspects = aspect;
