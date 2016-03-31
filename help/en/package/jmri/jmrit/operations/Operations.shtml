@@ -310,15 +310,18 @@
     locations or stations that your trains will visit. If this is your first time using a computer
     generated car forwarding program, it is best to start off small and gradually work your way
     through the various options and features available. Start by entering only three or four <a
-     href="#AddLocation">locations</a> with each location having only two or three tracks. Keep things
-    simple and don't modify the location and track defaults by making them restrictive with regards
-    to the type of cars or locomotives that they will service. Also, the track and location default
-    is to allow a train to service the location and track by trains traveling in any direction.
-    Don't change the defaults until you can successfully build trains to your liking.
-    We also recommend that when creating your locations that you first use <a href="#Yards">yard</a>
-    and <a href="#Sidings">spur</a> tracks, and try <a href="#Staging">staging</a> and <a
-     href="#Interchange">classification/interchange</a> tracks when you're more comfortable with how
-    the program operates.
+     href="#AddLocation">locations</a> with each location having only two or three tracks. You only
+    need to specify tracks that will be worked by your crew. For example you might start with tracks
+    that service your industries, this type of track is called a <a href="#Sidings">spur</a>. The
+    spur's length determines how many cars can be spotted there. For example a 44 foot long spur can
+    hold one 40 foot car. Keep things simple and don't modify the location and track defaults by
+    making them restrictive with regards to the type of cars or locomotives that they will service.
+    Also, the track and location default is to allow a train to service the location and track by
+    trains traveling in any direction. Don't change the defaults until you can successfully build
+    trains to your liking. We also recommend that when creating your locations that you first use <a
+     href="#Yards">yard</a> and <a href="#Sidings">spur</a> tracks, and try <a href="#Staging">staging</a>
+    and <a href="#Interchange">classification/interchange</a> tracks when you're more comfortable
+    with how the program operates.
    </p>
 
    <p>
@@ -519,7 +522,7 @@
    <a name="UnitOfLength"></a>
    <h4>Unit of Length</h4>
 
-   You can use feet or meters when entering the length of your rolling stock and tracks. The program
+   You can use scale feet or meters when entering the length of your rolling stock and tracks. The program
    can convert actual inches into scale feet when entering car, locomotive, or track lengths. Just
    append a double quote (") to any length. The program can also convert from actual centimeters to
    scale meters, just append "cm" to any length.
@@ -1262,7 +1265,8 @@
    
    <h4>Manifests Options</h4>
 
-   There are four checkboxes that allow you to modify the content of your Manifests.
+   There are four checkboxes that allow you to modify the content of your Manifests. They are
+   labeled "Location", "Route", "Departure Time", and "Truncate".
 
    <p>Each location and the train's route can have an optional comment. The program will print
     these comments on your Manifest if the "Location" and "Route" checkboxes are selected
@@ -1294,8 +1298,8 @@
    <p>If you want the Manifest and switch list to show how many car loads and empties are in the train, select
     the "Loads and Empties" checkbox.</p>
 
-   <p>You can use a 12 hour rather than a 24 hour clock format on your Manifests and switch
-    lists.
+   <p>You can decide to use a 12 hour AM/PM rather than a 24 hour clock format for your Manifests and switch
+    lists.</p>
    
    <p>
     Selecting the "Show Timetable" prints which Train <a href="#Timetable">Timetable</a> you are
@@ -1335,8 +1339,11 @@
    <a name="MisplacedCarsComment"></a>
    <h3>Misplaced Cars Comment</h3>
 
-   OperationsPro&trade; provides a comment for your crew to search for <a href="#CarsSet">misplaced</a>
-   cars. You can modify the comment to your liking. 
+   OperationsPro&trade; provides a comment for your crew to search for
+   <a href="#CarsSet">misplaced</a> cars. You can modify the comment to your liking. Full scale
+   railroads unfortunately misplace cars as part of their operations, so having a few cars in the
+   wrong place on your railroad is very prototypical. Save time and effort and let your operators
+   find those misplaced cars for you. 
    
    <a name="HazardousComment"></a>
    <h3>Hazardous Comment</h3>
