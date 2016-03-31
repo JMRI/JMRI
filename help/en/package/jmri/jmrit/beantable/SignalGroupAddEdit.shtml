@@ -3,21 +3,20 @@
 <head>
 <title>JMRI: Adding Signal Groups</title>
 <meta name="Author" content="Bob Jacobsen, Egbert Broerse">
-<meta name="Date.Modified" content="20150125">
+<meta name="Date.Modified" content="20160331">
 <!--#include virtual="/Style" -->
 </head>
 
 <body>
 <!--#include virtual="/Header" -->
-
-<!--#include virtual="Sidebar" -->
-<div id="mainContent">
-
+  <div class="nomenu" id="mBody">
+    <div id="mainContent">
+    
 <h1> 
 Adding/Editing a Signal Group
 </h1>
 
-	<p>After clicking on the "Add..." button below the <a href="../beantable/SignalGroupTable.shtml">Signal Group Table</a>, the following window appears:</p>
+	<p>After clicking on the "Add..." button below the <a href="../beantable/SignalGroupTable.shtml">Signal Group Table</a>, the following panel appears:</p>
 		
 <a href="SignalGroupAdd.png">
    <img src="SignalGroupAdd.png" 
@@ -26,28 +25,27 @@ Adding/Editing a Signal Group
 	<h3>Enter Signal Group elements</h3>
 	<p>Signal Groups are built from one or more Signal Heads and comprise the following:
 <ul>
-	<li>A main Signal Mast (by System Name) to which this Signal Group is attached.</li>
+	<li>A parent Signal Mast (by System Name) to which this Signal Group is attached.</li>
     <li>A list of Appearances that cause the Signal Group to become active eg. the main Signal Mast must be set for Proceed or Caution, but not Danger.</li>
-	<li>A list of Signal Heads that make up each indication of the Signal Group.<br/>
+	<li>A list of Signal Heads that make up each indication of the Signal Group.<br>
 Signal Heads included in a Signal Group are picked from the Signal Head Table, but only Signal Heads that were created using the Single Output connection type (pictured to the right) show up in the list.
 <a href="SingleSignalHead.png">
    <img src="SingleSignalHead.png" 
     height="179" width="115" align="right">
 		</a></li>
 	</ul>
-	<p>In the Add/Edit Signal Group window, after entering a User Name for the new Signal Group and the (existing) System Name of the main Signal Mast, select one or more Appearances.<br/>
-		Next select one or more Signal Heads by checking its <b>Include</b> check box.<br/>
+	<p>In the Add/Edit Signal Group window, after entering a User Name for the new Signal Group and the (existing) System Name of the parent Signal Mast, check <b>Include</b>behind one or more Mast Appearances.<br>
+		Next select one or more Signal Heads by checking their <b>Include</b> check boxes in the second list.<br>
 		Click the <b>Done</b> button at the bottom of the pane. Reopen the Signal Group pane bij clicking on its <b>Edit</b> button in the Signal Group Table to have JMRI repopulate the correct values into the lists and Appearances. If necessary, check the correct boxes in both lists.</p>
 	
 	<h3>Define Signal Group Conditions</h3>
-	<p>Each Signal Head within the Signal Group has a set of criteria that have to be met before that Signal Head is illuminated. These criteria are made up from Turnout and/or Sensor states and can be changed by clicking on the corresponding <b>edit</b> button in the last column of the Add/Edit Signal Group pane. A new pane like the one shown to the right will open, letting you define a specific Signal Head that is part of your Indicator.</p>
+	<p>Each Signal Head within the Signal Group has a set of criteria that have to be met before that Signal Head is illuminated. These criteria are made up from Turnout and/or Sensor states and can be changed by clicking on the corresponding <b>Edit</b> button in the last column of the Add/Edit Signal Group pane. A new pane like the one shown to the right will open, letting you define a specific Signal Head that is part of your Indicator.</p>
 	<a href="SignalGroupAddEditHead.png">
    <img src="SignalGroupAddEditHead.png" 
     height="236" width="351" align="right">
 		</a>
-	<p>	Choose two <i>different</i> values in the pop up menus at the top of the pane to define the states of the Indicator Signal Head.<br/>
-		To complete the definition of a Signal Group Indicator Head, mark the appropriate <b>Include</b> check boxes for both Turnouts and Sensors, and specify the state in the last column of eacht list.<br/>
-		Note: The caption in front of the first list should read "Please select <b>Turnouts</b> to be included in this Signal Group." The second list contains your Sensors.<br/>
+	<p>	Choose two <i>different</i> values in the pop up menus at the top of the pane to define the states of the Indicator Signal Head.<br>
+		To complete the definition of a Signal Group Indicator Head, mark the appropriate <b>Include</b> check boxes for both Turnouts and Sensors, and specify the state in the last column of each list.<br>
 	In between both lists there is a final logical OR/AND option to choose from.</p>
 <p>You will need to do some deep thinking to prepare for this last step, as this is the place where you control how your Indicator will behave. The signal hardware on your layout may rule out some options, so build it up in small steps and test often.</p>
 		
