@@ -1,4 +1,3 @@
-// SerialMonPane.java
 package jmri.jmrix.rfid.swing.serialmon;
 
 import jmri.InstanceManager;
@@ -15,15 +14,9 @@ import jmri.util.swing.sdi.JmriJFrameInterface;
  *
  * @author Bob Jacobsen Copyright (C) 2001, 2008
  * @author Matthew Harris Copyright (C) 2011
- * @version $Revision$
  * @since 2.11.4
  */
 public class SerialMonPane extends jmri.jmrix.AbstractMonPane implements RfidListener, RfidPanelInterface {
-
-    /**
-     *
-     */
-    private static final long serialVersionUID = 5991369812503715412L;
 
     public SerialMonPane() {
         super();
@@ -98,11 +91,6 @@ public class SerialMonPane extends jmri.jmrix.AbstractMonPane implements RfidLis
      */
     static public class Default extends RfidNamedPaneAction {
 
-        /**
-         *
-         */
-        private static final long serialVersionUID = -7671831932813281699L;
-
         public Default() {
             super("RFID Device Command Monitor",
                     new JmriJFrameInterface(),
@@ -112,5 +100,3 @@ public class SerialMonPane extends jmri.jmrix.AbstractMonPane implements RfidLis
     }
 
 }
-
-/* @(#)SerialMonPane.java */
