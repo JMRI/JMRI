@@ -123,7 +123,7 @@ public class SignalGroupTableAction extends AbstractTableAction implements Prope
                     return Bundle.getMessage("ColumnHeadEnabled");
                 }
                 if (col == COMMENTCOL) {
-                    return Bundle.getMessage("ColumnComment"); //"Comment";
+                    return Bundle.getMessage("ColumnComment");
                 }
                 if (col == DELETECOL) {
                     return "";
@@ -195,7 +195,7 @@ public class SignalGroupTableAction extends AbstractTableAction implements Prope
                     return (b != null) ? b.getComment() : null;
                 } else if (col == DELETECOL) //
                 {
-                    return Bundle.getMessage("ButtonDelete");
+                    return Bundle.getMessage("Delete");
                 } else {
                     return super.getValueAt(row, col);
                 }
@@ -247,7 +247,7 @@ public class SignalGroupTableAction extends AbstractTableAction implements Prope
             protected void configDeleteColumn(JTable table) {
                 // have the delete column hold a button
                 SignalGroupTableAction.this.setColumnToHoldButton(table, DELETECOL,
-                        new JButton(Bundle.getMessage("ButtonDelete")));
+                        new JButton(Bundle.getMessage("Delete")));
             }
 
             /**
@@ -357,8 +357,9 @@ public class SignalGroupTableAction extends AbstractTableAction implements Prope
     JLabel userLabel = new JLabel(Bundle.getMessage("LabelUserName"));
     JLabel fixedSystemName = new JLabel("xxxxxxxxxxx");
 
-    JButton deleteButton = new JButton(Bundle.getMessage("ButtonDelete") + " " + Bundle.getMessage("BeanNameSignalGroup"));
-    JButton updateButton = new JButton(Bundle.getMessage("ButtonDone"));
+    JButton cancelButton = new JButton(Bundle.getMessage("CancelButton"));
+    JButton deleteButton = new JButton(Bundle.getMessage("Delete") + " " + Bundle.getMessage("BeanNameSignalGroup"));
+    JButton updateButton = new JButton(Bundle.getMessage("ButtonUpdate"));
 
     JPanel p2xs = null;   // SignalHead list table
     JPanel p2xsi = null;   // SignalHead list table
@@ -396,7 +397,7 @@ public class SignalGroupTableAction extends AbstractTableAction implements Prope
         if (addFrame == null) {
             mainSignal = new JmriBeanComboBox(jmri.InstanceManager.signalMastManagerInstance(), null, JmriBeanComboBox.DISPLAYNAME);
             mainSignal.setFirstItemBlank(true);
-            addFrame = new JmriJFrame("Add/Edit SignalGroup", false, true);
+            addFrame = new JmriJFrame(Bundle.getMessage("AddEditSignalGroup"), false, true);
             addFrame.addHelpMenu("package.jmri.jmrit.beantable.SignalGroupAddEdit", true);
             addFrame.setLocation(100, 30);
             addFrame.getContentPane().setLayout(new BoxLayout(addFrame.getContentPane(), BoxLayout.Y_AXIS));
@@ -450,7 +451,7 @@ public class SignalGroupTableAction extends AbstractTableAction implements Prope
                     }
                 }
             });
-            py.add(new JLabel("  Mast Appearances and Signals"));
+            py.add(new JLabel("  " + "Mast Appearances and Signals"));
             contentPane.add(py);
 
             // add control sensor table
@@ -598,15 +599,21 @@ public class SignalGroupTableAction extends AbstractTableAction implements Prope
             Border pBorder = BorderFactory.createEtchedBorder();
             pa.setBorder(pBorder);
             contentPane.add(pa);
+            // buttons at bottom of window
             JPanel pb = new JPanel();
-            pb.setLayout(new FlowLayout());
+            pb.setLayout(new FlowLayout(FlowLayout.TRAILING));
+
+            pb.add(cancelButton);
+            cancelButton.addActionListener(new ActionListener() {
+                public void actionPerformed(ActionEvent e) { cancelPressed(e); }
+            });
             pb.add(deleteButton);
             deleteButton.addActionListener(new ActionListener() {
                 public void actionPerformed(ActionEvent e) {
                     deletePressed(e);
                 }
             });
-            deleteButton.setToolTipText("Delete the SignalGroup in System Name"); // I18N TODO
+            deleteButton.setToolTipText(Bundle.getMessage("DeleteSignalGroupInSystem"));
             // Update SignalGroup button
             pb.add(updateButton);
             updateButton.addActionListener(new ActionListener() {
@@ -629,7 +636,7 @@ public class SignalGroupTableAction extends AbstractTableAction implements Prope
                 // remind to save, if SignalGroup was created or edited
                 if (SignalGroupDirty) {
                     InstanceManager.getDefault(jmri.UserPreferencesManager.class).
-                            showInfoMessage("Reminder", "Remember to save your SignalGroup information.", "beantable.SignalGroupTableAction", "remindSignalGroup");
+                            showInfoMessage("Reminder", "Remember to save your Signal Group information.", "beantable.SignalGroupTableAction", "remindSignalGroup");
                     SignalGroupDirty = false;
                 }
                 // hide addFrame
@@ -722,7 +729,7 @@ public class SignalGroupTableAction extends AbstractTableAction implements Prope
         String sName = _systemName.getText().toUpperCase();
         String uName = _userName.getText();
         if (sName.length() == 0) {
-            javax.swing.JOptionPane.showMessageDialog(null, "Please enter a system name and user name.", "Error", javax.swing.JOptionPane.WARNING_MESSAGE);
+            javax.swing.JOptionPane.showMessageDialog(null, "Please enter a System Name and User Name.", "Error", javax.swing.JOptionPane.WARNING_MESSAGE);
             return null;
         }
         SignalGroup g = jmri.InstanceManager.signalGroupManagerInstance().provideSignalGroup(sName, uName);
@@ -797,6 +804,12 @@ public class SignalGroupTableAction extends AbstractTableAction implements Prope
             _mastAppearancesList.add(new SignalMastAppearances(appear.get(i)));
         }
         _AppearanceModel.fireTableDataChanged();
+    }
+
+    void cancelPressed(ActionEvent e) {
+        addFrame.setVisible(false);
+        addFrame.dispose();
+        addFrame = null;
     }
 
     /**
@@ -951,10 +964,10 @@ public class SignalGroupTableAction extends AbstractTableAction implements Prope
 
         public String getColumnName(int col) {
             if (col == INCLUDE_COLUMN) {
-                return "Include";
+                return rbx.getString("ColumnLabelInclude");
             }
             if (col == APPEAR_COLUMN) {
-                return "Mast Appearance";
+                return rbx.getString("LabelActionSignal");
             }
             return "";
         }
@@ -1156,7 +1169,7 @@ public class SignalGroupTableAction extends AbstractTableAction implements Prope
                 case STATE_OFF_COLUMN:  //
                     return signalList.get(r).getOffState();
                 case EDIT_COLUMN:
-                    return ("edit");
+                    return (Bundle.getMessage("ButtonEdit"));
                 default:
                     return null;
             }
