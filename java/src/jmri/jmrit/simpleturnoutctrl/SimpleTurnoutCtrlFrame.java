@@ -254,7 +254,7 @@ public class SimpleTurnoutCtrlFrame extends jmri.util.JmriJFrame implements java
                 turnout.addPropertyChangeListener(this);
                 updateTurnoutStatusFields();
 
-                if (lockButton.getText() == LOCKED) {
+                if (lockButton.getText().equals(LOCKED)) {
                     turnout.setLocked(Turnout.CABLOCKOUT, false);
                 } else if (turnout.canLock(Turnout.CABLOCKOUT)) {
                     turnout.setLocked(Turnout.CABLOCKOUT, true);
@@ -285,7 +285,7 @@ public class SimpleTurnoutCtrlFrame extends jmri.util.JmriJFrame implements java
                 turnout.addPropertyChangeListener(this);
                 updateTurnoutStatusFields();
 
-                if (lockPushButton.getText() == LOCKED) {
+                if (lockPushButton.getText().equals(LOCKED)) {
                     turnout.setLocked(Turnout.PUSHBUTTONLOCKOUT, false);
                 } else if (turnout.canLock(Turnout.PUSHBUTTONLOCKOUT)) {
                     turnout.setLocked(Turnout.PUSHBUTTONLOCKOUT, true);
