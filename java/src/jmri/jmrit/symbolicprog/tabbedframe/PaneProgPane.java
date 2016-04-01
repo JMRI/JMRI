@@ -2809,7 +2809,7 @@ public class PaneProgPane extends javax.swing.JPanel
                 // Check if variable has been printed.  If not store it and print
                 boolean alreadyPrinted = false;
                 for (int j = 0; j < printedVariables.size(); j++) {
-                    if (printedVariables.elementAt(j).toString() == name) {
+                    if (name.equals(printedVariables.elementAt(j))) {
                         alreadyPrinted = true;
                     }
                 }
