@@ -1003,6 +1003,7 @@ public class DefaultConditional extends AbstractNamedBean
                                 case Audio.CMD_RESET_POSITION:
                                     audioListener.resetCurrentPosition();
                                     break;
+                                default: break; // nothing needed for others
                             }
                         }
                         break;
