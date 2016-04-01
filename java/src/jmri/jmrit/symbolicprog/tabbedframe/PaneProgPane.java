@@ -224,7 +224,7 @@ public class PaneProgPane extends javax.swing.JPanel
                     l.setAlignmentX(Component.CENTER_ALIGNMENT);
                     pe.add(l);
                     line++;
-                } catch (IllegalArgumentException e) {
+                } catch (java.util.MissingResourceException e) {  // deliberately runs until exception
                     line = -1;
                 }
             }
