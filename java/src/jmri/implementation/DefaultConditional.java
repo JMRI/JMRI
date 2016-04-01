@@ -60,7 +60,6 @@ import org.slf4j.LoggerFactory;
  * @author	Dave Duchamp Copyright (C) 2007
  * @author Pete Cressman Copyright (C) 2009, 2010, 2011
  * @author Matthew Harris copyright (c) 2009
- * @version $Revision$
  */
 public class DefaultConditional extends AbstractNamedBean
         implements Conditional, java.io.Serializable {
@@ -1574,5 +1573,3 @@ public class DefaultConditional extends AbstractNamedBean
 
     private final static Logger log = LoggerFactory.getLogger(DefaultConditional.class.getName());
 }
-
-/* @(#)DefaultConditional.java */
