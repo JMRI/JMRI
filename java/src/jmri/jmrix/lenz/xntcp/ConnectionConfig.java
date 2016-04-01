@@ -25,8 +25,6 @@ import jmri.jmrix.JmrixConfigPane;
 public class ConnectionConfig extends jmri.jmrix.AbstractNetworkConnectionConfig {
 
     private boolean manualInput = false;
-    @SuppressWarnings("unused")
-    private String oldName;
 
     /**
      * Ctor for an object being created during load process; Swing init is
@@ -43,7 +41,6 @@ public class ConnectionConfig extends jmri.jmrix.AbstractNetworkConnectionConfig
         if (!t.equals("0")) {
             portField = new JTextField(t);
         }
-        oldName = adapter.getHostName();
     }
 
     /**

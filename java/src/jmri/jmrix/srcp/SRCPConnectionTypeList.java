@@ -1,4 +1,3 @@
-// SRCPConnectionTypeList.java
 package jmri.jmrix.srcp;
 
 /**
@@ -6,7 +5,6 @@ package jmri.jmrix.srcp;
  * <P>
  * @author Bob Jacobsen Copyright (C) 2010
  * @author Kevin Dickerson Copyright (C) 2010
- * @version	$Revision$
  *
  */
 public class SRCPConnectionTypeList implements jmri.jmrix.ConnectionTypeList {

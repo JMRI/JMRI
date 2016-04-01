@@ -452,6 +452,7 @@ public class RollingStockManager {
     protected static final int BY_BLOCKING = 18;
     // BY_PICKUP = 19
     // BY_B_UNIT = 20
+    // BY_HAZARD = 21
 
     protected java.util.Comparator<RollingStock> getComparator(int attribute) {
         switch (attribute) {

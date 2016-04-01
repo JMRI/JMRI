@@ -1,4 +1,3 @@
-// TransitManager.java
 package jmri;
 
 import java.text.DecimalFormat;
@@ -29,7 +28,6 @@ import jmri.managers.AbstractManager;
  * A PARTICULAR PURPOSE. See the GNU General Public License for more details.
  * <P>
  * @author Dave Duchamp Copyright (C) 2008, 2011
- * @version	$Revision$
  */
 public class TransitManager extends AbstractManager
         implements java.beans.PropertyChangeListener {
@@ -221,6 +219,3 @@ public class TransitManager extends AbstractManager
         return Bundle.getMessage("BeanNameTransit");
     }
 }
-
-
-/* @(#)TransitManager.java */

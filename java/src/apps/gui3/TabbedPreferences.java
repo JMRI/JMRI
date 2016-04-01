@@ -79,7 +79,6 @@ public class TabbedPreferences extends AppConfigBase {
     JButton save;
     JScrollPane listScroller;
     int initialisationState = 0x00;
-    private static final long serialVersionUID = -6266891995866315885L;
 
     public static final int UNINITIALISED = 0x00;
     public static final int INITIALISING = 0x01;
@@ -361,10 +360,6 @@ public class TabbedPreferences extends AppConfigBase {
 
     static class PreferencesCatItems implements java.io.Serializable {
 
-        /**
-         *
-         */
-        private static final long serialVersionUID = 5928584215129175250L;
         /*
          * This contains details of all list managedPreferences to be displayed in the
          * preferences
@@ -462,10 +457,6 @@ public class TabbedPreferences extends AppConfigBase {
 
         static class TabDetails implements java.io.Serializable {
 
-            /**
-             *
-             */
-            private static final long serialVersionUID = -7077354592762639878L;
             /* This contains all the JPanels that make up a preferences menus */
             JComponent tabItem;
             String tabTooltip;

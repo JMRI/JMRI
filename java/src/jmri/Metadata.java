@@ -23,7 +23,6 @@ import java.util.List;
  * <P>
  *
  * @author	Randall Wood Copyright (C) 2011
- * @version	$Revision$
  */
 public class Metadata {
 

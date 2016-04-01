@@ -73,7 +73,6 @@ public final class JmriScriptEngineManager {
     private final HashMap<String, ScriptEngine> engines = new HashMap<>();
     private final ScriptContext context;
 
-    private static JmriScriptEngineManager instance = null;
     private static final Logger log = LoggerFactory.getLogger(JmriScriptEngineManager.class);
     private static final String jythonDefaults = "jmri_defaults.py"; // should be replaced with default context
 
@@ -155,10 +154,10 @@ public final class JmriScriptEngineManager {
      * @return the default JmriScriptEngineManager
      */
     public static JmriScriptEngineManager getDefault() {
-        if (JmriScriptEngineManager.instance == null) {
-            JmriScriptEngineManager.instance = new JmriScriptEngineManager();
+        if (InstanceManager.getDefault(JmriScriptEngineManager.class) == null) {
+            InstanceManager.setDefault(JmriScriptEngineManager.class, new JmriScriptEngineManager());
         }
-        return JmriScriptEngineManager.instance;
+        return InstanceManager.getDefault(JmriScriptEngineManager.class);
     }
 
     /**
@@ -271,14 +270,19 @@ public final class JmriScriptEngineManager {
      * @return
      * @throws ScriptException
      * @throws FileNotFoundException
+     * @throws IOException
      */
-    public Object eval(File file) throws ScriptException, FileNotFoundException {
+    public Object eval(File file) throws ScriptException, FileNotFoundException, IOException {
         ScriptEngine engine = this.getEngineByExtension(FilenameUtils.getExtension(file.getName()));
         if (PYTHON.equals(engine.getFactory().getEngineName()) && this.jython != null) {
-            this.jython.execfile(new FileInputStream(file));
+            try (FileInputStream fi = new FileInputStream(file)) {
+                this.jython.execfile(fi);
+            }
             return null;
         }
-        return engine.eval(new FileReader(file));
+        try (FileReader fr = new FileReader(file)) {
+            return engine.eval(fr);
+        }
     }
 
     /**
@@ -291,14 +295,19 @@ public final class JmriScriptEngineManager {
      * @return
      * @throws ScriptException
      * @throws FileNotFoundException
+     * @throws IOException
      */
-    public Object eval(File file, Bindings n) throws ScriptException, FileNotFoundException {
+    public Object eval(File file, Bindings n) throws ScriptException, FileNotFoundException, IOException {
         ScriptEngine engine = this.getEngineByExtension(FilenameUtils.getExtension(file.getName()));
         if (PYTHON.equals(engine.getFactory().getEngineName()) && this.jython != null) {
-            this.jython.execfile(new FileInputStream(file));
+            try (FileInputStream fi = new FileInputStream(file)) {
+                this.jython.execfile(fi);
+            }
             return null;
         }
-        return engine.eval(new FileReader(file), n);
+        try (FileReader fr = new FileReader(file)) {
+            return engine.eval(fr, n);
+        }
     }
 
     /**
@@ -311,14 +320,19 @@ public final class JmriScriptEngineManager {
      * @return
      * @throws ScriptException
      * @throws FileNotFoundException
+     * @throws IOException
      */
-    public Object eval(File file, ScriptContext context) throws ScriptException, FileNotFoundException {
+    public Object eval(File file, ScriptContext context) throws ScriptException, FileNotFoundException, IOException {
         ScriptEngine engine = this.getEngineByExtension(FilenameUtils.getExtension(file.getName()));
         if (PYTHON.equals(engine.getFactory().getEngineName()) && this.jython != null) {
-            this.jython.execfile(new FileInputStream(file));
+            try (FileInputStream fi = new FileInputStream(file)) {
+                this.jython.execfile(fi);
+            }
             return null;
         }
-        return engine.eval(new FileReader(file), context);
+        try (FileReader fr = new FileReader(file)) {
+            return engine.eval(fr, context);
+        }
     }
 
     /**
@@ -332,6 +346,8 @@ public final class JmriScriptEngineManager {
             this.eval(file);
         } catch (FileNotFoundException ex) {
             log.error("File {} not found.", file);
+        } catch (IOException ex) {
+            log.error("Exception working with file {}", file);
         } catch (ScriptException ex) {
             log.error("Error in script {}.", file, ex);
         }

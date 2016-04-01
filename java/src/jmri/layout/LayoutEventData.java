@@ -1,13 +1,11 @@
 package jmri.layout;
 
-/**
- * Title: Description: Copyright: Copyright (c) 2002 Company:
- *
- * @author
- * @version $Revision$
- */
 import java.util.Date;
 
+/**
+ * @deprecated 4.3.5
+ */
+@Deprecated
 public class LayoutEventData {
 
     private Date mTimeStamp;

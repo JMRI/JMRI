@@ -18,7 +18,7 @@ import org.slf4j.LoggerFactory;
  * @author	Paul Bender Copyright (C) 2004
  * @version	$Revision$
  */
-public final class XpaTrafficController implements XpaInterface, Runnable {
+public class XpaTrafficController implements XpaInterface, Runnable {
 
     // Linked list to store the transmit queue.
     LinkedList<byte[]> xmtList = new LinkedList<byte[]>();

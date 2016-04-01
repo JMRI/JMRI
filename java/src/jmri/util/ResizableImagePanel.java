@@ -372,18 +372,21 @@ public class ResizableImagePanel extends JPanel implements FileDrop.Listener, Co
             log.error("failed to make directories to copy file");
         }
         FileInputStream fis = new FileInputStream(in);
-        FileOutputStream fos = new FileOutputStream(out);
         try {
-            byte[] buf = new byte[1024];
-            int i = 0;
-            while ((i = fis.read(buf)) != -1) {
-                fos.write(buf, 0, i);
+            FileOutputStream fos = new FileOutputStream(out);
+            try {
+                byte[] buf = new byte[1024];
+                int i = 0;
+                while ((i = fis.read(buf)) != -1) {
+                    fos.write(buf, 0, i);
+                }
+            } catch (Exception e) {
+                throw e;
+            } finally {
+                fos.close();
             }
-        } catch (Exception e) {
-            throw e;
         } finally {
             fis.close();
-            fos.close();
         }
     }
 
