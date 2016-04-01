@@ -1,4 +1,3 @@
-// NetMessage.java
 package jmri.jmrix;
 
 import java.io.Serializable;
@@ -17,8 +16,6 @@ import org.slf4j.LoggerFactory;
  * different ways. They may not appear at all...
  *
  * @author	Bob Jacobsen Copyright (C) 2002
- * @version	$Revision$
- *
  */
 public abstract class NetMessage implements Serializable {
 
@@ -133,5 +130,3 @@ public abstract class NetMessage implements Serializable {
     private final static Logger log = LoggerFactory.getLogger(NetMessage.class.getName());
 
 }
-
-/* @(#)NetMessage.java */

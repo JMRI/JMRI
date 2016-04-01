@@ -1,4 +1,3 @@
-// SerialConfigException.java
 package jmri.jmrix;
 
 /**
@@ -6,7 +5,6 @@ package jmri.jmrix;
  * a SerialPortAdapter interface.
  *
  * @author	Bob Jacobsen Copyright (C) 2001
- * @version	$Revision$
  */
 public class SerialConfigException extends jmri.JmriException {
 
@@ -23,6 +21,3 @@ public class SerialConfigException extends jmri.JmriException {
     }
 
 }
-
-
-/* @(#)SerialConfigException.java */

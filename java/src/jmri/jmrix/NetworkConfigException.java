@@ -1,4 +1,3 @@
-// NetworkConfigException.java
 package jmri.jmrix;
 
 /**
@@ -6,7 +5,6 @@ package jmri.jmrix;
  * a NetworkPortAdapter interface.
  *
  * @author	Bob Jacobsen Copyright (C) 2001
- * @version	$Revision$
  */
 public class NetworkConfigException extends jmri.JmriException {
 
@@ -23,6 +21,3 @@ public class NetworkConfigException extends jmri.JmriException {
     }
 
 }
-
-
-/* @(#)NetworkConfigException.java */
