@@ -2407,9 +2407,7 @@ public class PaneProgPane extends javax.swing.JPanel
 
         // get representation; store into the list to be programmed
         JComponent rep = getRepresentation(name, var);
-        if (i >= 0) {
-            varList.add(Integer.valueOf(i));
-        }
+        varList.add(Integer.valueOf(i));
 
         // create the paired label
         JLabel l = new WatchingLabel(label, rep);
