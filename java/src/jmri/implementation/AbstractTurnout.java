@@ -736,7 +736,7 @@ public abstract class AbstractTurnout extends AbstractNamedBean implements
 
     //float speedThroughTurnout = 0;
     public float getDivergingLimit() {
-        if ((_divergeSpeed == null) || (_divergeSpeed == "")) {
+        if ((_divergeSpeed == null) || (_divergeSpeed.equals(""))) {
             return -1;
         }
 
@@ -798,7 +798,7 @@ public abstract class AbstractTurnout extends AbstractNamedBean implements
     }
 
     public float getStraightLimit() {
-        if ((_straightSpeed == null) || (_straightSpeed == "")) {
+        if ((_straightSpeed == null) || (_straightSpeed.equals(""))) {
             return -1;
         }
         String speed = _straightSpeed;
