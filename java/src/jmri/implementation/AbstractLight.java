@@ -2,8 +2,6 @@ package jmri.implementation;
 
 import java.util.ArrayList;
 import jmri.Light;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 
 /**
  * Abstract class providing partial implementation of the the Light interface.
@@ -43,8 +41,6 @@ import org.slf4j.LoggerFactory;
  */
 public abstract class AbstractLight extends AbstractNamedBean
         implements Light, java.io.Serializable {
-
-    private final static Logger log = LoggerFactory.getLogger(AbstractLight.class);
 
     public AbstractLight(String systemName, String userName) {
         super(systemName.toUpperCase(), userName);
@@ -455,4 +451,5 @@ public abstract class AbstractLight extends AbstractNamedBean
         return listCopy;
     }
 
+    private final static org.slf4j.Logger log = org.slf4j.LoggerFactory.getLogger(AbstractLight.class);
 }

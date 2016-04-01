@@ -1,4 +1,3 @@
-// AbstractSensor.java
 package jmri.implementation;
 
 import jmri.Reporter;
@@ -12,7 +11,6 @@ import org.slf4j.LoggerFactory;
  * Sensor system names are always upper case.
  *
  * @author	Bob Jacobsen Copyright (C) 2001, 2009
- * @version $Revision$
  */
 public abstract class AbstractSensor extends AbstractNamedBean implements Sensor, java.io.Serializable {
 
@@ -275,5 +273,3 @@ public abstract class AbstractSensor extends AbstractNamedBean implements Sensor
     }
 
 }
-
-/* @(#)AbstractSensor.java */
