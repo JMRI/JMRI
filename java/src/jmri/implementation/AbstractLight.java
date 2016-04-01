@@ -234,7 +234,7 @@ public abstract class AbstractLight extends AbstractNamedBean
         mMaxIntensity = intensity;
 
         if (oldValue != intensity) {
-            firePropertyChange("MaxIntensity", new Double(oldValue), new Double(intensity));
+            firePropertyChange("MaxIntensity", Double.valueOf(oldValue), Double.valueOf(intensity));
         }
     }
 
@@ -275,7 +275,7 @@ public abstract class AbstractLight extends AbstractNamedBean
         mMinIntensity = intensity;
 
         if (oldValue != intensity) {
-            firePropertyChange("MinIntensity", new Double(oldValue), new Double(intensity));
+            firePropertyChange("MinIntensity", Double.valueOf(oldValue), Double.valueOf(intensity));
         }
     }
 
@@ -382,7 +382,7 @@ public abstract class AbstractLight extends AbstractNamedBean
         double oldValue = mCurrentIntensity;
         mCurrentIntensity = intensity;
         if (oldValue != intensity) {
-            firePropertyChange("TargetIntensity", new Double(oldValue), new Double(intensity));
+            firePropertyChange("TargetIntensity", Double.valueOf(oldValue), Double.valueOf(intensity));
         }
     }
 
