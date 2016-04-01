@@ -748,7 +748,7 @@ public abstract class AbstractTurnout extends AbstractNamedBean implements
             return -1;
         }
         try {
-            return new Float(speed);
+            return Float.valueOf(speed);
             //return Integer.parseInt(_blockSpeed);
         } catch (NumberFormatException nx) {
             //considered normal if the speed is not a number.
@@ -808,7 +808,7 @@ public abstract class AbstractTurnout extends AbstractNamedBean implements
             return -1;
         }
         try {
-            return new Float(speed);
+            return Float.valueOf(speed);
         } catch (NumberFormatException nx) {
             //considered normal if the speed is not a number.
         }
