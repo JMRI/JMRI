@@ -799,6 +799,7 @@ public class DefaultConditionalAction implements ConditionalAction {
                     str = str + " " + rbx.getString("onWarrant") + " \"" + _deviceName + "\" "
                             + rbx.getString("to") + " " + getActionDataString();
                     break;
+                default: break; // nothing needed for others
             }
         }
         if (_actionString.length() > 0) {
@@ -847,6 +848,7 @@ public class DefaultConditionalAction implements ConditionalAction {
                     str = str + ", \"" + _actionString + "\" " + rbx.getString("onBlock")
                             + " \"" + _deviceName + "\".";
                     break;
+                default: break; // nothing needed for others
             }
         }
         switch (_type) {
@@ -858,6 +860,7 @@ public class DefaultConditionalAction implements ConditionalAction {
                 str = str + " " + rbx.getString("to") + " "
                         + LogixTableAction.formatTime(_actionData / 60, _actionData - ((_actionData / 60) * 60));
                 break;
+                default: break; // nothing needed for others
         }
         return str;
     }
