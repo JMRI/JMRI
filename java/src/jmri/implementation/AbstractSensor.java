@@ -136,11 +136,7 @@ public abstract class AbstractSensor extends AbstractNamedBean implements Sensor
                 int oldRawState = _rawState;
                 _rawState = s;
                 if (thr != null) {
-                    try {
-                        thr.interrupt();
-                    } catch (Exception ie) {
-                        //Can be considered normal.
-                    }
+                    thr.interrupt();
                 }
                 if ((restartcount != 0) && (restartcount % 10 == 0)) {
                     log.warn("Sensor " + getDisplayName() + " state keeps flapping " + restartcount);
@@ -152,11 +148,7 @@ public abstract class AbstractSensor extends AbstractNamedBean implements Sensor
                 //we shall try to stop the thread as one of the state changes 
                 //might start the thread, while the other may not.
                 if (thr != null) {
-                    try {
-                        thr.interrupt();
-                    } catch (Exception ie) {
-                        //Can be considered normal.
-                    }
+                    thr.interrupt();
                 }
                 _rawState = s;
             }
@@ -179,11 +171,7 @@ public abstract class AbstractSensor extends AbstractNamedBean implements Sensor
                 int oldRawState = _rawState;
                 _rawState = s;
                 if (thr != null) {
-                    try {
-                        thr.interrupt();
-                    } catch (Exception ie) {
-                        //Can be considered normal.
-                    }
+                    thr.interrupt();
                 }
 
                 if ((restartcount != 0) && (restartcount % 10 == 0)) {
@@ -196,11 +184,7 @@ public abstract class AbstractSensor extends AbstractNamedBean implements Sensor
                 //we shall try to stop the thread as one of the state changes 
                 //might start the thread, while the other may not.
                 if (thr != null) {
-                    try {
-                        thr.interrupt();
-                    } catch (Exception ie) {
-                        //Can be considered normal.
-                    }
+                    thr.interrupt();
                 }
                 _rawState = s;
             }
