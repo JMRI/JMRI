@@ -620,7 +620,7 @@ public class DefaultConditional extends AbstractNamedBean
                 int type = action.getType();
                 String devName = getDeviceName(action);
                 if (devName == null) {
-                    errorList.add("invalid memory name in action - " + devName);
+                    errorList.add("invalid memory name in action - " + action);
                     continue;
                 }
                 if (log.isDebugEnabled()) {
