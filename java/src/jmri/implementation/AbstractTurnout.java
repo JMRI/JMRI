@@ -863,7 +863,7 @@ public abstract class AbstractTurnout extends AbstractNamedBean implements
                 throw new java.beans.PropertyVetoException(Bundle.getMessage("InUseSensorTurnoutVeto", getDisplayName()), e); //IN18N
             }
         } else if ("DoDelete".equals(evt.getPropertyName())) {
-            //log.info("Call to do delete"); //IN18N
+            log.warn("No clean DoDelete worked for {}", getSystemName()); //IN18N
         }
     }
 
