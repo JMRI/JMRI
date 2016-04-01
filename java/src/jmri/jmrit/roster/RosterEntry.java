@@ -1,4 +1,3 @@
-// RosterEntry.java
 package jmri.jmrit.roster;
 
 import java.awt.HeadlessException;
@@ -58,7 +57,6 @@ import org.slf4j.LoggerFactory;
  *
  * @author Bob Jacobsen Copyright (C) 2001, 2002, 2004, 2005, 2009
  * @author Dennis Miller Copyright 2004
- * @version $Revision$
  * @see jmri.jmrit.roster.LocoFile
  *
  */
