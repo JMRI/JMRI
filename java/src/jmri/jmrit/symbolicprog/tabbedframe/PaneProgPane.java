@@ -850,7 +850,7 @@ public class PaneProgPane extends javax.swing.JPanel
         if (log.isDebugEnabled()) {
             log.debug("nextRead scans " + indexedCvList.size() + " indexed CVs");
         }
-        while ((indexedCvList.size() >= 0) && (indexedCvListIndex < indexedCvList.size())) {
+        while ((indexedCvList.size() > 0) && (indexedCvListIndex < indexedCvList.size())) {
             int indxVarNum = indexedCvList.get(indexedCvListIndex).intValue();
             int indxState = _varModel.getState(indxVarNum);
             if (log.isDebugEnabled()) {
@@ -1098,7 +1098,7 @@ public class PaneProgPane extends javax.swing.JPanel
             }
         }
         // check for Indexed CVs to handle (e.g. for Indexed CV table)
-        while ((indexedCvList.size() >= 0) && (indexedCvListIndex < indexedCvList.size())) {
+        while ((indexedCvList.size() > 0) && (indexedCvListIndex < indexedCvList.size())) {
             int indxVarNum = indexedCvList.get(indexedCvListIndex).intValue();
             int indxState = _varModel.getState(indxVarNum);
             if (log.isDebugEnabled()) {
