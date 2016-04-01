@@ -331,7 +331,7 @@ public abstract class AbstractTurnout extends AbstractNamedBean implements
      */
     public void setLocked(int turnoutLockout, boolean locked) {
         boolean firechange = false;
-        if ((turnoutLockout & CABLOCKOUT) > 0 && _cabLockout != locked) {
+        if ((turnoutLockout & CABLOCKOUT) != 0 && _cabLockout != locked) {
             firechange = true;
             if (canLock(CABLOCKOUT)) {
                 _cabLockout = locked;
