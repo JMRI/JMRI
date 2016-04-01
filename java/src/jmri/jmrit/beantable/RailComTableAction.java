@@ -55,9 +55,6 @@ public class RailComTableAction extends AbstractTableAction {
     protected void createModel() {
         m = new BeanTableDataModel() {
 
-            /**
-             *
-             */
             static public final int VALUECOL = 0;
             public static final int WHERECOL = VALUECOL + 1;
             public static final int WHENCOL = WHERECOL + 1;
