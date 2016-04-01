@@ -81,10 +81,6 @@ import org.slf4j.LoggerFactory;
 abstract public class PaneProgFrame extends JmriJFrame
         implements java.beans.PropertyChangeListener, PaneContainer {
 
-    /**
-     *
-     */
-    private static final long serialVersionUID = -2824668047394722236L;
     // members to contain working variable, CV values, Indexed CV values
     JLabel progStatus = new JLabel(SymbolicProgBundle.getMessage("StateIdle"));
     CvTableModel cvModel = null;
@@ -191,11 +187,6 @@ abstract public class PaneProgFrame extends JmriJFrame
 
         // Add a save item
         fileMenu.add(new AbstractAction(SymbolicProgBundle.getMessage("MenuSave")) {
-            /**
-             *
-             */
-            private static final long serialVersionUID = -5729965483978099042L;
-
             public void actionPerformed(ActionEvent e) {
                 storeFile();
             }
