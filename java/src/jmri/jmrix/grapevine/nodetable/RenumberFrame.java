@@ -1,4 +1,3 @@
-// RenumberFrame.java
 package jmri.jmrix.grapevine.nodetable;
 
 import java.awt.Container;
@@ -17,14 +16,9 @@ import jmri.jmrix.grapevine.SerialTrafficController;
  * Frame lets user renumber a Grapevine node
  *
  * @author	Bob Jacobsen Copyright (C) 2008
- * @version	$Revision$
  */
 public class RenumberFrame extends jmri.util.JmriJFrame {
 
-    /**
-     *
-     */
-    private static final long serialVersionUID = 5432314146936737538L;
     ResourceBundle rb = ResourceBundle.getBundle("jmri.jmrix.grapevine.nodetable.NodeTableBundle");
 
     /**

@@ -16,10 +16,6 @@ import org.slf4j.LoggerFactory;
  */
 public abstract class AbstractSensor extends AbstractNamedBean implements Sensor, java.io.Serializable {
 
-    /**
-     *
-     */
-    private static final long serialVersionUID = 6188852412145851127L;
     private final static Logger log = LoggerFactory.getLogger(AbstractSensor.class);
 
     // ctor takes a system-name string for initialization

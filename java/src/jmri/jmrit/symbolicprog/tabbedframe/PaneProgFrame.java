@@ -81,10 +81,6 @@ import org.slf4j.LoggerFactory;
 abstract public class PaneProgFrame extends JmriJFrame
         implements java.beans.PropertyChangeListener, PaneContainer {
 
-    /**
-     *
-     */
-    private static final long serialVersionUID = -2824668047394722236L;
     // members to contain working variable, CV values, Indexed CV values
     JLabel progStatus = new JLabel(SymbolicProgBundle.getMessage("StateIdle"));
     CvTableModel cvModel = null;
@@ -191,11 +187,6 @@ abstract public class PaneProgFrame extends JmriJFrame
 
         // Add a save item
         fileMenu.add(new AbstractAction(SymbolicProgBundle.getMessage("MenuSave")) {
-            /**
-             *
-             */
-            private static final long serialVersionUID = -5729965483978099042L;
-
             public void actionPerformed(ActionEvent e) {
                 storeFile();
             }
@@ -1735,14 +1726,17 @@ abstract public class PaneProgFrame extends JmriJFrame
      * @param yes true if empty panes should be shown
      */
     public static void setShowEmptyPanes(boolean yes) {
-        InstanceManager.getDefault(ProgrammerConfigManager.class).setShowEmptyPanes(yes);
+        if (InstanceManager.getDefault(ProgrammerConfigManager.class) != null)
+            InstanceManager.getDefault(ProgrammerConfigManager.class).setShowEmptyPanes(yes);
     }
 
     /**
      * get value of Preference option to show empty panes
      */
     public static boolean getShowEmptyPanes() {
-        return InstanceManager.getDefault(ProgrammerConfigManager.class).isShowEmptyPanes();
+        return (InstanceManager.getDefault(ProgrammerConfigManager.class) == null ) ?
+            true :
+            InstanceManager.getDefault(ProgrammerConfigManager.class).isShowEmptyPanes();
     }
 
     /**
@@ -1769,11 +1763,14 @@ abstract public class PaneProgFrame extends JmriJFrame
      * @param yes true is CV numbers should be shown
      */
     public static void setShowCvNumbers(boolean yes) {
-        InstanceManager.getDefault(ProgrammerConfigManager.class).setShowCvNumbers(yes);
+        if (InstanceManager.getDefault(ProgrammerConfigManager.class) != null)
+            InstanceManager.getDefault(ProgrammerConfigManager.class).setShowCvNumbers(yes);
     }
 
     public static boolean getShowCvNumbers() {
-        return InstanceManager.getDefault(ProgrammerConfigManager.class).isShowCvNumbers();
+        return (InstanceManager.getDefault(ProgrammerConfigManager.class) == null ) ?
+            true :
+            InstanceManager.getDefault(ProgrammerConfigManager.class).isShowCvNumbers();
     }
 
     public RosterEntry getRosterEntry() {

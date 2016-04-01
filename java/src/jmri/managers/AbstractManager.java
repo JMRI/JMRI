@@ -4,6 +4,8 @@ import java.util.ArrayList;
 import java.util.Enumeration;
 import java.util.Hashtable;
 import java.util.List;
+import javax.annotation.Nonnull;
+import javax.annotation.Nullable;
 import jmri.InstanceManager;
 import jmri.Manager;
 import jmri.NamedBean;
@@ -147,7 +149,7 @@ abstract public class AbstractManager
      * @throws java.beans.PropertyVetoException - if the recipients wishes the
      *                                          delete to be aborted.
      */
-    public void deleteBean(NamedBean bean, String property) throws java.beans.PropertyVetoException {
+    public void deleteBean(@Nonnull NamedBean bean, @Nullable String property) throws java.beans.PropertyVetoException {
         try {
             fireVetoableChange(property, bean, null);
         } catch (java.beans.PropertyVetoException e) {

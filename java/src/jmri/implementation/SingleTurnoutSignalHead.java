@@ -26,11 +26,6 @@ import org.slf4j.LoggerFactory;
 public class SingleTurnoutSignalHead extends DefaultSignalHead implements PropertyChangeListener {
 
     /**
-     *
-     */
-    private static final long serialVersionUID = -6275671809339636536L;
-
-    /**
      * @param on  Appearance constant from {@link jmri.SignalHead} for the
      *            output on (Turnout thrown) appearance
      * @param off Appearance constant from {@link jmri.SignalHead} for the

@@ -40,11 +40,6 @@ import org.slf4j.LoggerFactory;
 public abstract class AbstractTurnout extends AbstractNamedBean implements
         Turnout, java.io.Serializable, java.beans.PropertyChangeListener {
 
-    /**
-     *
-     */
-    private static final long serialVersionUID = -1138214787466499528L;
-
     protected AbstractTurnout(String systemName) {
         super(systemName.toUpperCase());
     }

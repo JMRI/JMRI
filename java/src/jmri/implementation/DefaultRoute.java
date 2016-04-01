@@ -61,8 +61,6 @@ public class DefaultRoute extends AbstractNamedBean
 
     protected jmri.NamedBeanHandleManager nbhm = jmri.InstanceManager.getDefault(jmri.NamedBeanHandleManager.class);
 
-    private static final long serialVersionUID = 1L;
-
     /**
      * Operational instance variables (not saved between runs)
      */

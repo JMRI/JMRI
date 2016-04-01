@@ -95,6 +95,18 @@ public abstract class AbstractIdentify implements jmri.ProgListener {
      * decoders, and starts the next step.
      */
     public void programmingOpReply(int value, int status) {
+        // we abort if there's no programmer
+        //  (doing this now to simplify later)
+        if (programmer == null ) {
+            log.warn("No programmer connected");
+            statusUpdate("No programmer connected");
+            
+            state = 0;
+            retry = 0;
+            error();
+            return;
+        }
+        
         // we abort if the status isn't normal
         if (status != jmri.ProgListener.OK) {
             if ( retry < RETRY_COUNT) {
@@ -102,7 +114,7 @@ public abstract class AbstractIdentify implements jmri.ProgListener {
                     + programmer.decodeErrorCode(status));
                 state--;
                 retry++;
-            } else if (programmer != null && programmer.getMode() != DefaultProgrammerManager.PAGEMODE &&
+            } else if (programmer.getMode() != DefaultProgrammerManager.PAGEMODE &&
                         programmer.getSupportedModes().contains(DefaultProgrammerManager.PAGEMODE)) {
                 programmer.setMode(DefaultProgrammerManager.PAGEMODE);
                 retry = 0;

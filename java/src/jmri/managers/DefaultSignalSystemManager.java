@@ -95,13 +95,15 @@ public class DefaultSignalSystemManager extends AbstractManager
         }
         if (signalDir != null) {
             File[] files = signalDir.listFiles();
-            for (File file : files) {
-                if (file.isDirectory()) {
-                    // check that there's an aspects.xml file
-                    File aspects = new File(file.getPath() + File.separator + "aspects.xml");
-                    if (aspects.exists()) {
-                        log.debug("found system: " + file.getName());
-                        retval.add(file.getName());
+            if (files != null) { // null if not a directory
+                for (File file : files) {
+                    if (file.isDirectory()) {
+                        // check that there's an aspects.xml file
+                        File aspects = new File(file.getPath() + File.separator + "aspects.xml");
+                        if (aspects.exists()) {
+                            log.debug("found system: " + file.getName());
+                            retval.add(file.getName());
+                        }
                     }
                 }
             }
@@ -111,7 +113,9 @@ public class DefaultSignalSystemManager extends AbstractManager
             URL dir = FileUtil.findURL("signals", FileUtil.Location.USER, "resources", "xml");
             if (dir == null) {
                 try {
-                    (new File(FileUtil.getUserFilesPath(), "xml/signals")).mkdirs();
+                    if (!(new File(FileUtil.getUserFilesPath(), "xml/signals")).mkdirs()) {
+                        log.error("Error while creating xml/signals directory");
+                    }
                 } catch (Exception ex) {
                     log.error("Unable to create user's signals directory.", ex);
                 }
@@ -123,13 +127,15 @@ public class DefaultSignalSystemManager extends AbstractManager
         }
         if (signalDir != null) {
             File[] files = signalDir.listFiles();
-            for (File file : files) {
-                if (file.isDirectory()) {
-                    // check that there's an aspects.xml file
-                    File aspects = new File(file.getPath() + File.separator + "aspects.xml");
-                    if ((aspects.exists()) && (!retval.contains(file.getName()))) {
-                        log.debug("found system: " + file.getName());
-                        retval.add(file.getName());
+            if (files != null) { // null if not a directory
+                for (File file : files) {
+                    if (file.isDirectory()) {
+                        // check that there's an aspects.xml file
+                        File aspects = new File(file.getPath() + File.separator + "aspects.xml");
+                        if ((aspects.exists()) && (!retval.contains(file.getName()))) {
+                            log.debug("found system: " + file.getName());
+                            retval.add(file.getName());
+                        }
                     }
                 }
             }
@@ -234,7 +240,9 @@ public class DefaultSignalSystemManager extends AbstractManager
 
                     // store
                     s.setProperty(key, value);
-                } catch (Exception ex) {
+                } catch (ClassNotFoundException 
+                            | NoSuchMethodException | InstantiationException
+                            | IllegalAccessException | java.lang.reflect.InvocationTargetException ex) {
                     log.error("Error loading properties", ex);
                 }
             }

@@ -1,4 +1,3 @@
-// AbstractSerialConnectionConfig.java
 package jmri.jmrix;
 
 import apps.startup.StartupActionModelUtil;
@@ -36,9 +35,7 @@ import org.slf4j.LoggerFactory;
  * Abstract base class for common implementation of the ConnectionConfig
  *
  * @author Bob Jacobsen Copyright (C) 2001, 2003
- * @version	$Revision$
  */
-//
 abstract public class AbstractSerialConnectionConfig extends AbstractConnectionConfig {
 
     /**
@@ -549,11 +546,6 @@ abstract public class AbstractSerialConnectionConfig extends AbstractConnectionC
 
     class ComboBoxRenderer extends JLabel
             implements ListCellRenderer<String> {
-
-        /**
-         *
-         */
-        private static final long serialVersionUID = 3617752100442828216L;
 
         public ComboBoxRenderer() {
             setHorizontalAlignment(LEFT);
