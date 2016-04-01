@@ -1,4 +1,3 @@
-// LightControl.java
 package jmri.implementation;
 
 import java.util.Date;
@@ -39,7 +38,6 @@ import org.slf4j.LoggerFactory;
  * A PARTICULAR PURPOSE. See the GNU General Public License for more details.
  * <P>
  * @author	Dave Duchamp Copyright (C) 2010
- * @version	$Revision$
  */
 public class LightControl {
 
@@ -599,5 +597,3 @@ public class LightControl {
 
     private final static Logger log = LoggerFactory.getLogger(LightControl.class.getName());
 }
-
-/* @(#)LightControl.java */
