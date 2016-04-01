@@ -1726,14 +1726,17 @@ abstract public class PaneProgFrame extends JmriJFrame
      * @param yes true if empty panes should be shown
      */
     public static void setShowEmptyPanes(boolean yes) {
-        InstanceManager.getDefault(ProgrammerConfigManager.class).setShowEmptyPanes(yes);
+        if (InstanceManager.getDefault(ProgrammerConfigManager.class) != null)
+            InstanceManager.getDefault(ProgrammerConfigManager.class).setShowEmptyPanes(yes);
     }
 
     /**
      * get value of Preference option to show empty panes
      */
     public static boolean getShowEmptyPanes() {
-        return InstanceManager.getDefault(ProgrammerConfigManager.class).isShowEmptyPanes();
+        return (InstanceManager.getDefault(ProgrammerConfigManager.class) == null ) ?
+            true :
+            InstanceManager.getDefault(ProgrammerConfigManager.class).isShowEmptyPanes();
     }
 
     /**
@@ -1760,11 +1763,14 @@ abstract public class PaneProgFrame extends JmriJFrame
      * @param yes true is CV numbers should be shown
      */
     public static void setShowCvNumbers(boolean yes) {
-        InstanceManager.getDefault(ProgrammerConfigManager.class).setShowCvNumbers(yes);
+        if (InstanceManager.getDefault(ProgrammerConfigManager.class) != null)
+            InstanceManager.getDefault(ProgrammerConfigManager.class).setShowCvNumbers(yes);
     }
 
     public static boolean getShowCvNumbers() {
-        return InstanceManager.getDefault(ProgrammerConfigManager.class).isShowCvNumbers();
+        return (InstanceManager.getDefault(ProgrammerConfigManager.class) == null ) ?
+            true :
+            InstanceManager.getDefault(ProgrammerConfigManager.class).isShowCvNumbers();
     }
 
     public RosterEntry getRosterEntry() {

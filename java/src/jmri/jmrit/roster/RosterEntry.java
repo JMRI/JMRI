@@ -98,7 +98,9 @@ public class RosterEntry extends ArbitraryBean implements RosterObject, BasicRos
     protected String _roadName = "";
     protected String _roadNumber = "";
     protected String _mfg = "";
-    protected String _owner = InstanceManager.getDefault(RosterConfigManager.class).getDefaultOwner();
+    protected String _owner = ((InstanceManager.getDefault(RosterConfigManager.class) == null) ? 
+                                "" :
+                                InstanceManager.getDefault(RosterConfigManager.class).getDefaultOwner());
     protected String _model = "";
     protected String _dccAddress = "3";
     //protected boolean _isLongAddress = false;
