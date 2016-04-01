@@ -451,7 +451,7 @@ public class SignalGroupTableAction extends AbstractTableAction implements Prope
                     }
                 }
             });
-            py.add(new JLabel("  " + "Mast Appearances and Signals"));
+            py.add(new JLabel("  Mast Appearances and Signals"));
             contentPane.add(py);
 
             // add control sensor table
