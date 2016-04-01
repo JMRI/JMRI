@@ -20,11 +20,6 @@ import org.slf4j.LoggerFactory;
 public abstract class NetMessage implements Serializable {
 
     /**
-     *
-     */
-    private static final long serialVersionUID = -1209900996744470453L;
-
-    /**
      * Create a new object, representing a specific-length message.
      *
      * @param len Total bytes in message, including opcode and error-detection
