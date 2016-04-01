@@ -28,6 +28,7 @@ Go to the <a href="../../../../html/tools/signaling/SimpleSignalExample.shtml">S
 	<!-- Keep file in place to receive old hyperlinks, but no content on this page, just a pointer from the 2015 block boss -->
 	
 <!--#include virtual="/Footer" -->
-</div> <!-- close #mainContent" -->
+ </div><!-- closes #mainContent-->
+</div> <!-- closes #mBody-->
 </body>
 </html>

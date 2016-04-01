@@ -1,4 +1,3 @@
-// ConnectionStatus.java
 package jmri.jmrix;
 
 import java.util.ArrayList;
@@ -10,7 +9,6 @@ import org.slf4j.LoggerFactory;
  * the layout changes.
  *
  * @author Daniel Boudreau Copyright (C) 2007
- * @version $Revision$
  */
 public class ConnectionStatus {
 

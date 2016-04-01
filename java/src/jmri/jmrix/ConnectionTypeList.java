@@ -1,4 +1,3 @@
-// ConnectionTypeList.java
 package jmri.jmrix;
 
 import jmri.spi.JmriServiceProviderInterface;
@@ -10,7 +9,6 @@ import jmri.spi.JmriServiceProviderInterface;
  * type to be recognized and usable.
  *
  * @author Bob Jacobsen Copyright (C) 2001, 2003
- * @version	$Revision$
  * @see JmrixConfigPane
  * @see AbstractPortController
  * @see java.util.ServiceLoader

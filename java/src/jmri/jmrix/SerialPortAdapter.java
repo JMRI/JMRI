@@ -1,4 +1,3 @@
-// SerialPortAdapter.java
 package jmri.jmrix;
 
 import org.slf4j.Logger;
@@ -8,7 +7,6 @@ import org.slf4j.Logger;
  *
  *
  * @author	Bob Jacobsen Copyright (C) 2001, 2003, 2008
- * @version	$Revision$
  * @see jmri.jmrix.SerialConfigException
  */
 public interface SerialPortAdapter extends PortAdapter {

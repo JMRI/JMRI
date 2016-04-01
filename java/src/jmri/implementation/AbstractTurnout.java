@@ -40,11 +40,6 @@ import org.slf4j.LoggerFactory;
 public abstract class AbstractTurnout extends AbstractNamedBean implements
         Turnout, java.io.Serializable, java.beans.PropertyChangeListener {
 
-    /**
-     *
-     */
-    private static final long serialVersionUID = -1138214787466499528L;
-
     protected AbstractTurnout(String systemName) {
         super(systemName.toUpperCase());
     }
@@ -543,12 +538,7 @@ public abstract class AbstractTurnout extends AbstractNamedBean implements
                 provideFirstFeedbackNamedSensor(null);
             } else {
                 Sensor sensor = InstanceManager.sensorManagerInstance().provideSensor(pName);
-                if (sensor != null) {
-                    provideFirstFeedbackNamedSensor(jmri.InstanceManager.getDefault(jmri.NamedBeanHandleManager.class).getNamedBeanHandle(pName, sensor));
-                } else {
-                    log.error("Sensor '" + pName + "' not available");
-                    throw new jmri.JmriException("Sensor '" + pName + "' not available");
-                }
+                provideFirstFeedbackNamedSensor(jmri.InstanceManager.getDefault(jmri.NamedBeanHandleManager.class).getNamedBeanHandle(pName, sensor));
             }
         } else {
             log.error("No SensorManager for this protocol");
@@ -587,12 +577,7 @@ public abstract class AbstractTurnout extends AbstractNamedBean implements
                 provideSecondFeedbackNamedSensor(null);
             } else {
                 Sensor sensor = InstanceManager.sensorManagerInstance().provideSensor(pName);
-                if (sensor != null) {
-                    provideSecondFeedbackNamedSensor(jmri.InstanceManager.getDefault(jmri.NamedBeanHandleManager.class).getNamedBeanHandle(pName, sensor));
-                } else {
-                    log.error("Sensor '" + pName + "' not available");
-                    throw new jmri.JmriException("Sensor '" + pName + "' not available");
-                }
+                provideSecondFeedbackNamedSensor(jmri.InstanceManager.getDefault(jmri.NamedBeanHandleManager.class).getNamedBeanHandle(pName, sensor));
             }
         } else {
             log.error("No SensorManager for this protocol");
