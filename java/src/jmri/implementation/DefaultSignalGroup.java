@@ -28,7 +28,6 @@ import org.slf4j.LoggerFactory;
  * A PARTICULAR PURPOSE. See the GNU General Public License for more details.
  * <P>
  * @author	Pete Cressman Copyright (C) 2009
- * @version	$Revision 1.0 $
  */
 public class DefaultSignalGroup extends AbstractNamedBean implements jmri.SignalGroup {
 
@@ -436,11 +435,6 @@ public class DefaultSignalGroup extends AbstractNamedBean implements jmri.Signal
 
     private static class SignalHeadItem implements java.io.Serializable {
 
-        /**
-         *
-         */
-        private static final long serialVersionUID = -481157374953560948L;
-
         SignalHeadItem(NamedBeanHandle<SignalHead> sh) {
             namedHead = sh;
             if (namedHead.getBean().getClass().getName().contains("SingleTurnoutSignalHead")) {
@@ -524,10 +518,6 @@ public class DefaultSignalGroup extends AbstractNamedBean implements jmri.Signal
 
         private static class SignalTurnout implements java.io.Serializable {
 
-            /**
-             *
-             */
-            private static final long serialVersionUID = 346523309862438488L;
             NamedBeanHandle<Turnout> _turnout;
             int _state;
 
@@ -615,10 +605,6 @@ public class DefaultSignalGroup extends AbstractNamedBean implements jmri.Signal
 
         private static class SignalSensor implements java.io.Serializable {
 
-            /**
-             *
-             */
-            private static final long serialVersionUID = 3746484600513686901L;
             NamedBeanHandle<Sensor> _Sensor;
             int _state;
 
