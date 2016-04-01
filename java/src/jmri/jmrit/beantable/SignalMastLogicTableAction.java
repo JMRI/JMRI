@@ -368,7 +368,7 @@ public class SignalMastLogicTableAction extends AbstractTableAction {
 
             public void configureTable(JTable table) {
                 setColumnToHoldButton(table, EDITLOGICCOL,
-                        new JButton("Edit"));
+                        new JButton(Bundle.getMessage("ButtonEdit")));
                 table.getTableHeader().setReorderingAllowed(true);
 
                 // have to shut off autoResizeMode to get horizontal scroll to work (JavaSwing p 541)

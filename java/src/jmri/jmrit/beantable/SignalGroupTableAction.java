@@ -195,7 +195,7 @@ public class SignalGroupTableAction extends AbstractTableAction implements Prope
                     return (b != null) ? b.getComment() : null;
                 } else if (col == DELETECOL) //
                 {
-                    return Bundle.getMessage("Delete");
+                    return Bundle.getMessage("ButtonDelete");
                 } else {
                     return super.getValueAt(row, col);
                 }
@@ -247,7 +247,7 @@ public class SignalGroupTableAction extends AbstractTableAction implements Prope
             protected void configDeleteColumn(JTable table) {
                 // have the delete column hold a button
                 SignalGroupTableAction.this.setColumnToHoldButton(table, DELETECOL,
-                        new JButton(Bundle.getMessage("Delete")));
+                        new JButton(Bundle.getMessage("ButtonDelete")));
             }
 
             /**
@@ -357,9 +357,9 @@ public class SignalGroupTableAction extends AbstractTableAction implements Prope
     JLabel userLabel = new JLabel(Bundle.getMessage("LabelUserName"));
     JLabel fixedSystemName = new JLabel("xxxxxxxxxxx");
 
-    JButton cancelButton = new JButton(Bundle.getMessage("CancelButton"));
-    JButton deleteButton = new JButton(Bundle.getMessage("Delete") + " " + Bundle.getMessage("BeanNameSignalGroup"));
-    JButton updateButton = new JButton(Bundle.getMessage("ButtonUpdate"));
+    JButton cancelButton = new JButton(Bundle.getMessage("ButtonCancel"));
+    JButton deleteButton = new JButton(Bundle.getMessage("ButtonDelete") + " " + Bundle.getMessage("BeanNameSignalGroup"));
+    JButton updateButton = new JButton(Bundle.getMessage("ButtonApply"));
 
     JPanel p2xs = null;   // SignalHead list table
     JPanel p2xsi = null;   // SignalHead list table
@@ -451,21 +451,21 @@ public class SignalGroupTableAction extends AbstractTableAction implements Prope
                     }
                 }
             });
-            py.add(new JLabel("  Mast Appearances and Signals"));
+            py.add(new JLabel("  " + Bundle.getMessage("_and_", Bundle.getMessage("SignalMastAppearance"), Bundle.getMessage("SignalHeads"))));
             contentPane.add(py);
 
             // add control sensor table
             JPanel p3 = new JPanel();
             p3.setLayout(new BoxLayout(p3, BoxLayout.Y_AXIS));
             JPanel p31 = new JPanel();
-            p31.add(new JLabel("Enter the Signal Mast that this group is attached to"));
+            p31.add(new JLabel(Bundle.getMessage("EnterMastAttached", Bundle.getMessage("BeanNameSignalMast"))));
             p3.add(p31);
             JPanel p32 = new JPanel();
-            p32.add(new JLabel("Signal Mast: "));
+            p32.add(new JLabel(Bundle.getMessage("BeanNameSignalMast") + ":"));
             p32.add(mainSignal);
             //p32.add(new JLabel("Appearance Logic"));
             //p32.add(mainSignalOperation);
-//            mainSignal.setText("");
+            //mainSignal.setText("");
             p3.add(p32);
 
             p3xsi = new JPanel();
@@ -476,10 +476,8 @@ public class SignalGroupTableAction extends AbstractTableAction implements Prope
 
             JPanel p31si = new JPanel();
             p31si.setLayout(new BoxLayout(p31si, BoxLayout.Y_AXIS));
-            p31si.add(new JLabel(" Select the Mast "));
-            p31si.add(new JLabel(" Appearances that"));
-            p31si.add(new JLabel(" can trigger this"));
-            p31si.add(new JLabel(" Group."));
+            p31si.add(new JLabel(Bundle.getMessage("SelectAppearanceTrigger", Bundle.getMessage("SignalMastAppearance"))));
+
             p3xsi.add(p31si);
             _AppearanceModel = new SignalMastAppearanceModel();
             JTable SignalAppearanceTable = jmri.util.JTableUtil.sortableDataModel(_AppearanceModel);
@@ -537,10 +535,7 @@ public class SignalGroupTableAction extends AbstractTableAction implements Prope
 
             JPanel p21si = new JPanel();
             p21si.setLayout(new BoxLayout(p21si, BoxLayout.Y_AXIS));
-            p21si.add(new JLabel("Please select "));
-            p21si.add(new JLabel(" Signals to "));
-            p21si.add(new JLabel(" be included "));
-            p21si.add(new JLabel(" in this Group."));
+            p21si.add(new JLabel(Bundle.getMessage("SelectInGroup", Bundle.getMessage("SignalHeads"))));
             p2xsi.add(p21si);
             _SignalGroupSignalModel = new SignalGroupSignalModel();
             JTable SignalGroupSignalTable = jmri.util.JTableUtil.sortableDataModel(_SignalGroupSignalModel);
@@ -605,8 +600,11 @@ public class SignalGroupTableAction extends AbstractTableAction implements Prope
 
             pb.add(cancelButton);
             cancelButton.addActionListener(new ActionListener() {
-                public void actionPerformed(ActionEvent e) { cancelPressed(e); }
+                public void actionPerformed(ActionEvent e) {
+                    cancelPressed(e);
+                }
             });
+
             pb.add(deleteButton);
             deleteButton.addActionListener(new ActionListener() {
                 public void actionPerformed(ActionEvent e) {
@@ -1264,7 +1262,7 @@ public class SignalGroupTableAction extends AbstractTableAction implements Prope
     private static String[] COLUMN_SIG_NAMES = {rbx.getString("ColumnLabelSystemName"),
         rbx.getString("ColumnLabelUserName"),
         rbx.getString("ColumnLabelInclude"),
-        "On State", "Off State", "Edit"};
+        "On State", "Off State", Bundle.getMessage("ButtonEdit")};
 
     private static String[] signalStates = new String[]{rbx.getString("StateSignalHeadDark"), rbx.getString("StateSignalHeadRed"), rbx.getString("StateSignalHeadYellow"), rbx.getString("StateSignalHeadGreen"), rbx.getString("StateSignalHeadLunar")};
     private static int[] signalStatesValues = new int[]{SignalHead.DARK, SignalHead.RED, SignalHead.YELLOW, SignalHead.GREEN, SignalHead.LUNAR};
