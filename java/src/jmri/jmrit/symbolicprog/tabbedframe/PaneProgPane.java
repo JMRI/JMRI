@@ -513,7 +513,7 @@ public class PaneProgPane extends javax.swing.JPanel
 
             // must decide whether this one should be counted
             if (!changes
-                    || (changes && var.isChanged())) {
+                    || var.isChanged()) {
 
                 CvValue[] cvs = var.usesCVs();
                 for (int j = 0; j < cvs.length; j++) {
