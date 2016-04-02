@@ -86,7 +86,7 @@ public class SignalGroupSubTableAction {
         int result = jmri.util.StringUtil.getStateFromName(mode, operValues, oper);
 
         if (result < 0) {
-            log.warn("unexpected mode string in sensorMode: " + mode);
+            log.warn("unexpected mode string in Sensor Mode: " + mode);
             throw new IllegalArgumentException();
         }
         if (result == 0) {
@@ -104,7 +104,7 @@ public class SignalGroupSubTableAction {
         int result = jmri.util.StringUtil.getStateFromName(mode, sensorInputModeValues, sensorInputModes);
 
         if (result < 0) {
-            log.warn("unexpected mode string in signal Appearance: " + mode);
+            log.warn("unexpected mode string in Signal Appearance: " + mode);
             throw new IllegalArgumentException();
         }
         return result;
@@ -171,10 +171,10 @@ public class SignalGroupSubTableAction {
     JRadioButton allButton = null;
     JRadioButton includedButton = null;
 
-    JLabel nameLabel = new JLabel("Signal Head:");
-    JLabel signalOnStateLabel = new JLabel("State when conditions are met");
-    JLabel signalOffStateLabel = new JLabel("State when conditions are not met");
-    JLabel userLabel = new JLabel("Select the conditions that must be met to set this Signal Head on");
+    JLabel nameLabel = new JLabel(Bundle.getMessage("BeanNameSignalHead") + ":");
+    JLabel signalOnStateLabel = new JLabel(Bundle.getMessage("StateWhenMet") + ":");
+    JLabel signalOffStateLabel = new JLabel(Bundle.getMessage("StateWhenNotMet") + ":");
+    JLabel userLabel = new JLabel(Bundle.getMessage("SelectConditionsOn") + ":");
 
     JButton updateSubButton = new JButton(Bundle.getMessage("ButtonApply"));
 
@@ -223,7 +223,7 @@ public class SignalGroupSubTableAction {
 
         // Set up window
         if (addFrame == null) {
-            addFrame = new JmriJFrame("Add/Edit SignalGroup", false, true);
+            addFrame = new JmriJFrame(Bundle.getMessage("AddEditSignalGroup"), false, true);
             addFrame.addHelpMenu("package.jmri.jmrit.beantable.SignalGroupAddEdit", true);
             addFrame.setLocation(100, 30);
             addFrame.getContentPane().setLayout(new BoxLayout(addFrame.getContentPane(), BoxLayout.Y_AXIS));
@@ -260,9 +260,9 @@ public class SignalGroupSubTableAction {
             setSignalStateBox(g.getSignalHeadOffState(curSignalHead), _OffAppearance);
             // add Turnout Display Choice
             JPanel py = new JPanel();
-            py.add(new JLabel("Show "));
+            py.add(new JLabel(Bundle.getMessage("Show")));
             selGroup = new ButtonGroup();
-            allButton = new JRadioButton("All", true);
+            allButton = new JRadioButton(Bundle.getMessage("All"), true);
             selGroup.add(allButton);
             py.add(allButton);
             allButton.addActionListener(new ActionListener() {
@@ -275,7 +275,7 @@ public class SignalGroupSubTableAction {
                     }
                 }
             });
-            includedButton = new JRadioButton("Included", false);
+            includedButton = new JRadioButton(Bundle.getMessage("Included"), false);
             selGroup.add(includedButton);
             py.add(includedButton);
             includedButton.addActionListener(new ActionListener() {
@@ -289,7 +289,7 @@ public class SignalGroupSubTableAction {
                     }
                 }
             });
-            py.add(new JLabel("  Turnouts and Sensors"));
+            py.add(new JLabel("  " + Bundle.getMessage("_and_", Bundle.getMessage("Turnouts"), Bundle.getMessage("Sensors"))));
             contentPane.add(py);
 
             // add turnout table
@@ -301,10 +301,10 @@ public class SignalGroupSubTableAction {
 
             JPanel p21t = new JPanel();
             p21t.setLayout(new BoxLayout(p21t, BoxLayout.Y_AXIS));
-            p21t.add(new JLabel("Please select "));
-            p21t.add(new JLabel("Sensors to be "));
-            p21t.add(new JLabel("included in  "));
-            p21t.add(new JLabel("this Signal Group."));
+            p21t.add(new JLabel(Bundle.getMessage("SelectInGroup", Bundle.getMessage("Turnouts"))));
+            //p21t.add(new JLabel("Sensors to be "));
+            //p21t.add(new JLabel("included in  "));
+            //p21t.add(new JLabel("this Signal Group."));
             p2xt.add(p21t);
             _SignalGroupTurnoutModel = new SignalGroupTurnoutModel();
             JTable SignalGroupTurnoutTable = jmri.util.JTableUtil.sortableDataModel(_SignalGroupTurnoutModel);
@@ -350,7 +350,7 @@ public class SignalGroupSubTableAction {
 
             JPanel po = new JPanel();
             po.setLayout(new FlowLayout());
-            JLabel operLabel = new JLabel("Do either the Sensors OR Turnouts have to match, or do they both have to Match");
+            JLabel operLabel = new JLabel(Bundle.getMessage("ChooseOrAnd", Bundle.getMessage("Turnouts"), Bundle.getMessage("Sensors")));
             po.add(operLabel);
             po.add(_SensorTurnoutOper);
             contentPane.add(po);
@@ -363,10 +363,10 @@ public class SignalGroupSubTableAction {
 
             JPanel p21s = new JPanel();
             p21s.setLayout(new BoxLayout(p21s, BoxLayout.Y_AXIS));
-            p21s.add(new JLabel("Please select "));
-            p21s.add(new JLabel(" Sensors to "));
-            p21s.add(new JLabel(" be included "));
-            p21s.add(new JLabel(" in this SignalGroup."));
+            p21s.add(new JLabel(Bundle.getMessage("SelectInGroup", Bundle.getMessage("Sensors"))));
+            //p21s.add(new JLabel(" Sensors to "));
+            //p21s.add(new JLabel(" be included "));
+            //p21s.add(new JLabel(" in this SignalGroup."));
             p2xs.add(p21s);
             _SignalGroupSensorModel = new SignalGroupSensorModel();
             JTable SignalGroupSensorTable = jmri.util.JTableUtil.sortableDataModel(_SignalGroupSensorModel);
@@ -437,7 +437,7 @@ public class SignalGroupSubTableAction {
                     updateSubPressed(e, false);
                 }
             });
-            updateSubButton.setToolTipText("Change this SignalGroup and leave Edit mode");
+            updateSubButton.setToolTipText(Bundle.getMessage("TooltipUpdate"));
 
             p2xtSpace.setVisible(false);
             p2xsSpace.setVisible(false);

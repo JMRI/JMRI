@@ -393,7 +393,7 @@ public class SignalGroupTableAction extends AbstractTableAction implements Prope
             }
         }
 
-        // Set up window
+        // Set up Add/edit SignalGroup window
         if (addFrame == null) {
             mainSignal = new JmriBeanComboBox(jmri.InstanceManager.signalMastManagerInstance(), null, JmriBeanComboBox.DISPLAYNAME);
             mainSignal.setFirstItemBlank(true);
@@ -587,13 +587,14 @@ public class SignalGroupTableAction extends AbstractTableAction implements Prope
             contentPane.add(p2xsi);
             p2xsi.setVisible(true);
 
-            // add notes panel
+            // add notes panel, may be empty (a dot on the screen)
             JPanel pa = new JPanel();
             pa.setLayout(new BoxLayout(pa, BoxLayout.Y_AXIS));
 
             Border pBorder = BorderFactory.createEtchedBorder();
             pa.setBorder(pBorder);
             contentPane.add(pa);
+
             // buttons at bottom of window
             JPanel pb = new JPanel();
             pb.setLayout(new FlowLayout(FlowLayout.TRAILING));
@@ -604,7 +605,7 @@ public class SignalGroupTableAction extends AbstractTableAction implements Prope
                     cancelPressed(e);
                 }
             });
-
+            cancelButton.setVisible(true);
             pb.add(deleteButton);
             deleteButton.addActionListener(new ActionListener() {
                 public void actionPerformed(ActionEvent e) {
@@ -619,7 +620,7 @@ public class SignalGroupTableAction extends AbstractTableAction implements Prope
                     updatePressed(e, false, true);
                 }
             });
-            updateButton.setToolTipText("Change this SignalGroup and leave Edit mode");  // I18N TODO
+            updateButton.setToolTipText("Change this Signal Group and leave Edit mode");  // I18N TODO
             updateButton.setVisible(true);
             contentPane.add(pb);
             // pack and release space
@@ -878,6 +879,7 @@ public class SignalGroupTableAction extends AbstractTableAction implements Prope
         _AppearanceModel.fireTableDataChanged();
         initializeIncludedList();
 
+        SignalGroupDirty = true;  // to fire reminder to save work
         updateButton.setVisible(true);
         fixedSystemName.setVisible(true);
         _systemName.setVisible(false);
@@ -919,6 +921,7 @@ public class SignalGroupTableAction extends AbstractTableAction implements Prope
         setMastAppearanceInformation(g);
 
         g.setSignalMast((SignalMast) mainSignal.getSelectedBean(), mainSignal.getSelectedDisplayName());
+        SignalGroupDirty = true;  // to fire reminder to save work
         if (close) {
             finishUpdate();
         }
