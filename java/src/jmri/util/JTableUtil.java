@@ -21,8 +21,10 @@ import org.slf4j.LoggerFactory;
  * @author Bob Jacobsen Copyright 2003
  * @version $Revision$
  */
+@Deprecated
 public class JTableUtil {
 
+    @Deprecated
     static public JTable sortableDataModel(TableModel dataModel) {
 
         TableSorter sorter;
