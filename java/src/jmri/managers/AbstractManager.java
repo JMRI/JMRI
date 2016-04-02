@@ -155,7 +155,7 @@ abstract public class AbstractManager
         } catch (java.beans.PropertyVetoException e) {
             throw e;
         }
-        if (property!=null && property.equals("DoDelete")) { //IN18N
+        if (property.equals("DoDelete")) { //IN18N
             deregister(bean);
             bean.dispose();
         }
