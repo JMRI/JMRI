@@ -302,8 +302,8 @@ public class LoaderPane extends jmri.jmrix.AbstractLoaderPane
     
     @Override
     protected void setDefaultFieldValues() {
-
-        parametersAreValid();
+        // currently, doesn't do anything, as just loading raw hex files.
+        log.debug("setDefaultFieldValues leaves fields unchanged");
     }
 
     /**
