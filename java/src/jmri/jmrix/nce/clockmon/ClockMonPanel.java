@@ -1784,8 +1784,6 @@ public class ClockMonPanel extends jmri.jmrix.nce.swing.NcePanel implements NceP
      */
     static public class Default extends jmri.jmrix.nce.swing.NceNamedPaneAction {
 
-        private static final long serialVersionUID = 7866417679219605358L;
-
         public Default() {
             super("Open NCE Clock Monitor",
                     new jmri.util.swing.sdi.JmriJFrameInterface(),
