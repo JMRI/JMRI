@@ -109,7 +109,6 @@ public class IconAdder extends JPanel implements ListSelectionListener {
 
     public void reset() {
         if (_table != null) {
-            _table.getSelectedRow();
             _table.clearSelection();
         }
         closeCatalog();
