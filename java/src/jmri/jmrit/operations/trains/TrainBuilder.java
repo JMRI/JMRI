@@ -2948,14 +2948,14 @@ public class TrainBuilder extends TrainCommon {
                     new Object[]{_train.getName(), terminateStageTrack.getName()}));
             return true;
         }
-        if (!checkTerminateStagingTrackRestrications(terminateStageTrack)) {
+        if (!checkTerminateStagingTrackRestrictions(terminateStageTrack)) {
             addLine(_buildReport, SEVEN, Bundle.getMessage("buildOptionRestrictStaging"));
             return false;
         }
         return true;
     }
 
-    private boolean checkTerminateStagingTrackRestrications(Track terminateStageTrack) {
+    private boolean checkTerminateStagingTrackRestrictions(Track terminateStageTrack) {
         // check go see if location/track will accept the train's car and engine types
         for (String name : _train.getTypeNames()) {
             if (!_terminateLocation.acceptsTypeName(name)) {
