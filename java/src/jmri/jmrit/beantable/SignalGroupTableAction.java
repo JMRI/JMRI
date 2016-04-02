@@ -421,9 +421,9 @@ public class SignalGroupTableAction extends AbstractTableAction implements Prope
             contentPane.add(p);
             // add Turnout Display Choice
             JPanel py = new JPanel();
-            py.add(new JLabel("Show "));
+            py.add(new JLabel(Bundle.getMessage("Show")));
             selGroup = new ButtonGroup();
-            allButton = new JRadioButton("All", true);
+            allButton = new JRadioButton(Bundle.getMessage("All"), true);
             selGroup.add(allButton);
             py.add(allButton);
             allButton.addActionListener(new ActionListener() {
@@ -436,7 +436,7 @@ public class SignalGroupTableAction extends AbstractTableAction implements Prope
                     }
                 }
             });
-            includedButton = new JRadioButton("Included", false);
+            includedButton = new JRadioButton(Bundle.getMessage("Included"), false);
             selGroup.add(includedButton);
             py.add(includedButton);
             includedButton.addActionListener(new ActionListener() {
@@ -634,7 +634,7 @@ public class SignalGroupTableAction extends AbstractTableAction implements Prope
                 // remind to save, if SignalGroup was created or edited
                 if (SignalGroupDirty) {
                     InstanceManager.getDefault(jmri.UserPreferencesManager.class).
-                            showInfoMessage("Reminder", "Remember to save your Signal Group information.", "beantable.SignalGroupTableAction", "remindSignalGroup");
+                            showInfoMessage(Bundle.getMessage("ReminderTitle"), Bundle.getMessage("ReminderSaveString", Bundle.getMessage("SignalGroup")), "beantable.SignalGroupTableAction", "remindSignalGroup");
                     SignalGroupDirty = false;
                 }
                 // hide addFrame

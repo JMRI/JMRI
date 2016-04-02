@@ -484,9 +484,9 @@ public class RouteTableAction extends AbstractTableAction {
             contentPanel.add(p);
             // add Turnout Display Choice
             JPanel py = new JPanel();
-            py.add(new JLabel("Show "));
+            py.add(new JLabel(Bundle.getMessage("Show") + ":"));
             selGroup = new ButtonGroup();
-            allButton = new JRadioButton("All", true);
+            allButton = new JRadioButton(Bundle.getMessage("All"), true);
             selGroup.add(allButton);
             py.add(allButton);
             allButton.addActionListener(new ActionListener() {
@@ -499,7 +499,7 @@ public class RouteTableAction extends AbstractTableAction {
                     }
                 }
             });
-            includedButton = new JRadioButton("Included", false);
+            includedButton = new JRadioButton(Bundle.getMessage("Included"), false);
             selGroup.add(includedButton);
             py.add(includedButton);
             includedButton.addActionListener(new ActionListener() {
@@ -513,7 +513,8 @@ public class RouteTableAction extends AbstractTableAction {
                     }
                 }
             });
-            py.add(new JLabel("  Turnouts and Sensors"));
+            py.add(new JLabel(Bundle.getMessage("_and_", Bundle.getMessage("Turnouts"), Bundle.getMessage("Sensors"))));
+            // keys in jmri.jmrit.Bundle
             contentPanel.add(py);
 
             // add turnout table
@@ -525,10 +526,10 @@ public class RouteTableAction extends AbstractTableAction {
 
             JPanel p21t = new JPanel();
             p21t.setLayout(new BoxLayout(p21t, BoxLayout.Y_AXIS));
-            p21t.add(new JLabel("Please select "));
-            p21t.add(new JLabel(" Turnouts to "));
-            p21t.add(new JLabel(" be included "));
-            p21t.add(new JLabel(" in this Route."));
+            p21t.add(new JLabel(Bundle.getMessage("SelectInRoute", Bundle.getMessage("Turnouts"))));
+            //p21t.add(new JLabel(" Turnouts to "));
+            //p21t.add(new JLabel(" be included "));
+            //p21t.add(new JLabel(" in this Route."));
             p2xt.add(p21t);
             _routeTurnoutModel = new RouteTurnoutModel();
             JTable routeTurnoutTable = jmri.util.JTableUtil.sortableDataModel(_routeTurnoutModel);
@@ -548,7 +549,7 @@ public class RouteTableAction extends AbstractTableAction {
             stateTCombo.addItem(SET_TO_TOGGLE);
             TableColumnModel routeTurnoutColumnModel = routeTurnoutTable.getColumnModel();
             TableColumn includeColumnT = routeTurnoutColumnModel.
-                    getColumn(RouteTurnoutModel.INCLUDE_COLUMN);
+                    getColumn(RouteTurnoutModel.INCLUDE_COLUMN); // I18N TODO Bundle.getMessage("ColumnLabelInclude")
             includeColumnT.setResizable(false);
             includeColumnT.setMinWidth(50);
             includeColumnT.setMaxWidth(60);
@@ -582,10 +583,10 @@ public class RouteTableAction extends AbstractTableAction {
 
             JPanel p21s = new JPanel();
             p21s.setLayout(new BoxLayout(p21s, BoxLayout.Y_AXIS));
-            p21s.add(new JLabel("Please select "));
-            p21s.add(new JLabel(" Sensors to "));
-            p21s.add(new JLabel(" be included "));
-            p21s.add(new JLabel(" in this Route."));
+            p21s.add(new JLabel(Bundle.getMessage("SelectInRoute", Bundle.getMessage("Sensors"))));
+            //p21s.add(new JLabel(" Sensors to "));
+            //p21s.add(new JLabel(" be included "));
+            //p21s.add(new JLabel(" in this Route."));
             p2xs.add(p21s);
             _routeSensorModel = new RouteSensorModel();
             JTable routeSensorTable = jmri.util.JTableUtil.sortableDataModel(_routeSensorModel);
@@ -838,7 +839,7 @@ public class RouteTableAction extends AbstractTableAction {
                 // remind to save, if Route was created or edited
                 if (routeDirty) {
                     InstanceManager.getDefault(jmri.UserPreferencesManager.class).
-                            showInfoMessage("Reminder", "Remember to save your Route information.", getClassName(), "remindSaveRoute");
+                            showInfoMessage(Bundle.getMessage("ReminderTitle"), Bundle.getMessage("ReminderSaveString", Bundle.getMessage("MenuItemRouteTable")), getClassName(), "remindSaveRoute");
                     routeDirty = false;
                 }
                 // hide addFrame
@@ -905,7 +906,7 @@ public class RouteTableAction extends AbstractTableAction {
         String sName = _systemName.getText();
         String uName = _userName.getText();
         if (sName.length() == 0) {
-            status1.setText("Please enter a system name and user name.");
+            status1.setText("Please enter a System Name and User Name.");
             return false;
         }
         Route g = null;
@@ -914,7 +915,7 @@ public class RouteTableAction extends AbstractTableAction {
             g = jmri.InstanceManager.routeManagerInstance().getByUserName(uName);
             if (g != null) {
                 // Route with this user name already exists
-                status1.setText("Error - Route with this user name already exists.");
+                status1.setText("Error - Route with this User Name already exists.");
                 return false;
             } else {
                 return true;
@@ -924,7 +925,7 @@ public class RouteTableAction extends AbstractTableAction {
         g = jmri.InstanceManager.routeManagerInstance().getBySystemName(sName);
         if (g != null) {
             // Route already exists
-            status1.setText("Error - Route with this system name already exists.");
+            status1.setText("Error - Route with this System Name already exists.");
             return false;
         }
         return true;
@@ -939,7 +940,7 @@ public class RouteTableAction extends AbstractTableAction {
             g = jmri.InstanceManager.routeManagerInstance().newRoute(uName);
         } else {
             if (sName.length() == 0) {
-                status1.setText("Please enter a system name and user name.");
+                status1.setText("Please enter a System Name and user name.");
                 return null;
             }
             g = jmri.InstanceManager.routeManagerInstance().provideRoute(sName, uName);
@@ -1099,7 +1100,7 @@ public class RouteTableAction extends AbstractTableAction {
             g = jmri.InstanceManager.routeManagerInstance().getByUserName(sName);
             if (g == null) {
                 // Route does not exist, so cannot be edited
-                status1.setText("Route with the entered System or User Name was not found.");
+                status1.setText("Route with the entered System Name or User Name was not found.");
                 return;
             }
         }

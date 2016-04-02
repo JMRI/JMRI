@@ -65,7 +65,7 @@ public class SignalGroupSubTableAction {
     }
 
     public SignalGroupSubTableAction() {
-        this("SignalGroup Head Edit Table");
+        this("SignalGroup Heads Edit Table");
     }
 
     String helpTarget() {
@@ -788,10 +788,10 @@ public class SignalGroupSubTableAction {
 
     private static int ROW_HEIGHT;
 
-    private static String[] COLUMN_NAMES = {rbx.getString("ColumnLabelSystemName"),
-        rbx.getString("ColumnLabelUserName"),
-        rbx.getString("ColumnLabelInclude"),
-        rbx.getString("ColumnLabelSetState")};
+    private static String[] COLUMN_NAMES = {Bundle.getMessage("ColumnLabelSystemName"),
+            Bundle.getMessage("ColumnLabelUserName"),
+            Bundle.getMessage("ColumnLabelInclude"),
+            rbx.getString("ColumnLabelSetState")};
     private static String SET_TO_ACTIVE = rbx.getString("SensorActive");
     private static String SET_TO_INACTIVE = rbx.getString("SensorInactive");
     private static String SET_TO_CLOSED = InstanceManager.turnoutManagerInstance().getClosedText();

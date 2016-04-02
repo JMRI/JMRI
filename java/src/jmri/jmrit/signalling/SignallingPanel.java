@@ -217,9 +217,9 @@ public class SignallingPanel extends jmri.util.swing.JmriPanel {
         header.add(allowAutoMastGeneration);
         header.add(lockTurnouts);
         JPanel py = new JPanel();
-        py.add(new JLabel(rb.getString("Show")));
+        py.add(new JLabel(Bundle.getMessage("Show")));
         selGroup = new ButtonGroup();
-        allButton = new JRadioButton(rb.getString("All"), true);
+        allButton = new JRadioButton(Bundle.getMessage("All"), true);
         selGroup.add(allButton);
         py.add(allButton);
         allButton.addActionListener(new ActionListener() {
@@ -234,7 +234,7 @@ public class SignallingPanel extends jmri.util.swing.JmriPanel {
                 }
             }
         });
-        includedButton = new JRadioButton(rb.getString("Included"), false);
+        includedButton = new JRadioButton(Bundle.getMessage("Included"), false);
         selGroup.add(includedButton);
         py.add(includedButton);
         includedButton.addActionListener(new ActionListener() {
@@ -250,7 +250,7 @@ public class SignallingPanel extends jmri.util.swing.JmriPanel {
                 }
             }
         });
-        py.add(new JLabel("  " + rb.getString("TurnoutSensors")));
+        py.add(new JLabel("  " + Bundle.getMessage("Elements")));
         header.add(py);
 
         containerPanel.add(header, BorderLayout.NORTH);
