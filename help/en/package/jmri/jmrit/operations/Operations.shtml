@@ -2349,7 +2349,7 @@
     tracks.</p>
 
    <p>Now using the example above we'll show how easy it is to overload a track using planned
-    pickups. If we set the number of moves for the switcher to an odd number the program will
+    pickups. If we set the number of moves for the switcher to an odd number the program could
     overload one of the two track. Let's try 5 moves for the switcher, with 5 moves the program
     would pull three cars from one track and set them out to the other, and then pull two cars from
     the other track and set them out to the other. Once the switching is complete, one track will
