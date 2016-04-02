@@ -364,7 +364,6 @@ public class MultiSensorItemPanel extends TableItemPanel {
                 log.error("IconDragJLabel.getTransferData: iconMap is null!");
                 return null;
             }
-            _selectionModel.getPositions();
 
             MultiSensorIcon ms = new MultiSensorIcon(_editor);
             ms.setInactiveIcon(new NamedIcon(iconMap.get("SensorStateInactive")));
