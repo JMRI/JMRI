@@ -1,4 +1,3 @@
-// IconAdder.java
 package jmri.jmrit.display;
 
 import java.awt.Color;
@@ -70,11 +69,6 @@ import org.slf4j.LoggerFactory;
  * @author Pete Cressman Copyright (c) 2009, 2010
  */
 public class IconAdder extends JPanel implements ListSelectionListener {
-
-    /**
-     *
-     */
-    private static final long serialVersionUID = -6650497287808063959L;
 
     static final ResourceBundle rbean = ResourceBundle.getBundle("jmri.NamedBeanBundle");
 
@@ -735,11 +729,6 @@ public class IconAdder extends JPanel implements ListSelectionListener {
     }
 
     private class IconButton extends DropButton {
-
-        /**
-         *
-         */
-        private static final long serialVersionUID = -2038108988532738646L;
         String key;
 
         IconButton(String label, Icon icon) {  // init icon passed to avoid ref before ctor complete
@@ -760,11 +749,6 @@ public class IconAdder extends JPanel implements ListSelectionListener {
     }
 
     class DropButton extends JToggleButton implements DropTargetListener {
-
-        /**
-         *
-         */
-        private static final long serialVersionUID = 7846729392258288644L;
         DataFlavor dataFlavor;
 
         DropButton(Icon icon) {
