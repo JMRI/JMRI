@@ -48,11 +48,12 @@ public class TrackTableModel extends AbstractTableModel implements PropertyChang
     protected static final int ROAD_COLUMN = 9;
     protected static final int LOAD_COLUMN = 10;
     protected static final int SHIP_COLUMN = 11;
-    protected static final int DESTINATION_COLUMN = 12;
-    protected static final int POOL_COLUMN = 13;
-    protected static final int PLANPICKUP_COLUMN = 14;
-    protected static final int ALT_TRACK_COLUMN = 15;
-    protected static final int EDIT_COLUMN = 16;
+    protected static final int RESTRICTION_COLUMN = 12;
+    protected static final int DESTINATION_COLUMN = 13;
+    protected static final int POOL_COLUMN = 14;
+    protected static final int PLANPICKUP_COLUMN = 15;
+    protected static final int ALT_TRACK_COLUMN = 16;
+    protected static final int EDIT_COLUMN = 17;
 
     protected static final int HIGHESTCOLUMN = EDIT_COLUMN + 1;
 
@@ -120,6 +121,7 @@ public class TrackTableModel extends AbstractTableModel implements PropertyChang
                 Math.max(60, new JLabel(getColumnName(PICKUPS_COLUMN)).getPreferredSize().width + 10));
         tcm.getColumn(SETOUT_COLUMN).setPreferredWidth(
                 Math.max(60, new JLabel(getColumnName(SETOUT_COLUMN)).getPreferredSize().width + 10));
+        tcm.getColumn(RESTRICTION_COLUMN).setPreferredWidth(90);
         tcm.getColumn(LOAD_COLUMN).setPreferredWidth(50);
         tcm.getColumn(SHIP_COLUMN).setPreferredWidth(50);
         tcm.getColumn(ROAD_COLUMN).setPreferredWidth(50);
@@ -137,10 +139,11 @@ public class TrackTableModel extends AbstractTableModel implements PropertyChang
     // only show "Load", "Ship", "Road", "Destination", "Planned", "Pool" "Alternate" if they are needed
     protected void setColumnsVisible() {
         XTableColumnModel tcm = (XTableColumnModel) _table.getColumnModel();
-        tcm.setColumnVisible(tcm.getColumnByModelIndex(LOAD_COLUMN), _location.hasLoadRestrications());
-        tcm.setColumnVisible(tcm.getColumnByModelIndex(SHIP_COLUMN), _location.hasShipLoadRestrications());
-        tcm.setColumnVisible(tcm.getColumnByModelIndex(ROAD_COLUMN), _location.hasRoadRestrications());
-        tcm.setColumnVisible(tcm.getColumnByModelIndex(DESTINATION_COLUMN), _location.hasDestinationRestrications());
+        tcm.setColumnVisible(tcm.getColumnByModelIndex(RESTRICTION_COLUMN), _location.hasServiceRestrictions());
+        tcm.setColumnVisible(tcm.getColumnByModelIndex(LOAD_COLUMN), _location.hasLoadRestrictions());
+        tcm.setColumnVisible(tcm.getColumnByModelIndex(SHIP_COLUMN), _location.hasShipLoadRestrictions());
+        tcm.setColumnVisible(tcm.getColumnByModelIndex(ROAD_COLUMN), _location.hasRoadRestrictions());
+        tcm.setColumnVisible(tcm.getColumnByModelIndex(DESTINATION_COLUMN), _location.hasDestinationRestrictions());
         tcm.setColumnVisible(tcm.getColumnByModelIndex(PLANPICKUP_COLUMN), _location.hasPlannedPickups());
         tcm.setColumnVisible(tcm.getColumnByModelIndex(POOL_COLUMN), _location.hasPools());
         tcm.setColumnVisible(tcm.getColumnByModelIndex(ALT_TRACK_COLUMN), _location.hasAlternateTracks());
@@ -174,6 +177,8 @@ public class TrackTableModel extends AbstractTableModel implements PropertyChang
                 return Bundle.getMessage("Pickups");
             case SETOUT_COLUMN:
                 return Bundle.getMessage("Drop");
+            case RESTRICTION_COLUMN:
+                return Bundle.getMessage("Restrictions");
             case LOAD_COLUMN:
                 return Bundle.getMessage("Load");
             case SHIP_COLUMN:
@@ -214,6 +219,8 @@ public class TrackTableModel extends AbstractTableModel implements PropertyChang
             case PICKUPS_COLUMN:
                 return String.class;
             case SETOUT_COLUMN:
+                return String.class;
+            case RESTRICTION_COLUMN:
                 return String.class;
             case LOAD_COLUMN:
                 return String.class;
@@ -272,6 +279,8 @@ public class TrackTableModel extends AbstractTableModel implements PropertyChang
                 return Integer.toString(track.getPickupRS());
             case SETOUT_COLUMN:
                 return Integer.toString(track.getDropRS());
+            case RESTRICTION_COLUMN:
+                return getRestrictions(track);
             case LOAD_COLUMN:
                 return getModifiedString(track.getLoadNames().length, track.getLoadOption().equals(Track.ALL_LOADS), track
                         .getLoadOption().equals(Track.INCLUDE_LOADS)) +
@@ -284,11 +293,11 @@ public class TrackTableModel extends AbstractTableModel implements PropertyChang
                 return getModifiedString(track.getRoadNames().length, track.getRoadOption().equals(Track.ALL_ROADS), track
                         .getRoadOption().equals(Track.INCLUDE_ROADS));
             case DESTINATION_COLUMN: {
-                int length = track.getDestinationListSize();
+                int size = track.getDestinationListSize();
                 if (track.getDestinationOption().equals(Track.EXCLUDE_DESTINATIONS)) {
-                    length = LocationManager.instance().getNumberOfLocations() - length;
+                    size = LocationManager.instance().getNumberOfLocations() - size;
                 }
-                return getModifiedString(length, track.getDestinationOption().equals(Track.ALL_DESTINATIONS), track
+                return getModifiedString(size, track.getDestinationOption().equals(Track.ALL_DESTINATIONS), track
                         .getDestinationOption().equals(Track.INCLUDE_DESTINATIONS));
             }
             case POOL_COLUMN:
@@ -311,6 +320,17 @@ public class TrackTableModel extends AbstractTableModel implements PropertyChang
             default:
                 return "unknown " + col; // NOI18N
         }
+    }
+    
+    private String getRestrictions(Track track) {
+        StringBuffer restrictions = new StringBuffer();
+        if (!track.getDropOption().equals(Track.ANY)) {
+            restrictions.append(Bundle.getMessage("AbbreviationSetOut") + " " + track.getDropIds().length);
+        }
+        if (!track.getPickupOption().equals(Track.ANY)) {
+            restrictions.append(" " + Bundle.getMessage("AbbreviationPickUp") + " " + track.getPickupIds().length);
+        }
+        return restrictions.toString();
     }
 
     private String getModifiedString(int number, boolean all, boolean accept) {
@@ -362,7 +382,9 @@ public class TrackTableModel extends AbstractTableModel implements PropertyChang
             fireTableDataChanged();
         }
         if (e.getSource().getClass().equals(Track.class)
-                && (e.getPropertyName().equals(Track.LOADS_CHANGED_PROPERTY)
+                && (e.getPropertyName().equals(Track.DROP_CHANGED_PROPERTY)
+                || e.getPropertyName().equals(Track.PICKUP_CHANGED_PROPERTY)
+                || e.getPropertyName().equals(Track.LOADS_CHANGED_PROPERTY)
                 || e.getPropertyName().equals(Track.ROADS_CHANGED_PROPERTY)
                 || e.getPropertyName().equals(Track.DESTINATION_OPTIONS_CHANGED_PROPERTY)
                 || e.getPropertyName().equals(Track.POOL_CHANGED_PROPERTY)
