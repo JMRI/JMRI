@@ -16,11 +16,6 @@ import org.slf4j.LoggerFactory;
 public abstract class AbstractLightManager extends AbstractManager
         implements LightManager, java.beans.PropertyChangeListener, java.io.Serializable {
 
-    /**
-     *
-     */
-    private static final long serialVersionUID = 7463899324548206482L;
-
     public AbstractLightManager() {
         super();
     }

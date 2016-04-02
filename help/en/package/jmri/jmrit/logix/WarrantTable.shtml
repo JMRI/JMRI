@@ -1,59 +1,57 @@
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
-<!-- $Id$ -->
-<HTML LANG="en">
-<HEAD>
-<TITLE>JMRI: Panel Editor Help</TITLE>
-<META HTTP-EQUIV="Content-Type" CONTENT="text/html; charset=iso-8859-1">
-<META CONTENT="Pete Cressman" NAME="Author">
-<META NAME="keywords" CONTENT="JMRI help Panel Editor">
+<html lang="en">
+<head>
+<title>JMRI: Warrant Table Help</title>
+<meta content="Pete Cressman" name="author">
+<meta name="keywords" content="JMRI help Warrant Table">
 
 <!-- Style -->
-<META HTTP-EQUIV="Content-Type" CONTENT="text/html; charset=iso-8859-1">
-<LINK REL="stylesheet" TYPE="text/css" HREF="/css/default.css"
-	MEDIA="screen">
-<LINK REL="stylesheet" TYPE="text/css" HREF="/css/print.css"
-	MEDIA="print">
-<LINK REL="icon" HREF="/images/jmri.ico" TYPE="image/png">
-<LINK REL="home" TITLE="Home" HREF="/">
-<!-- /Style -->
-</HEAD>
+<meta http-equiv="content-type" content="text/html; charset=iso-8859-1">
+<link rel="stylesheet" type="text/css" href="/css/default.css"
+	media="screen">
+<link rel="stylesheet" type="text/css" href="/css/print.css"
+	media="print">
+<link rel="icon" href="/images/jmri.ico" type="image/png">
+<link rel="home" title="Home" href="/">
+<!-- /style -->
+</head>
 
-<BODY>
+<body>
 <!--#include virtual="/Header" -->
   <div class="nomenu" id="mBody">
     <div id="mainContent">
 
-<H1>The Warrant List</H1>
-
-The Warrant List is a list of all the recorded warrants.  For an overview 
-discussion of warrants, see <A HREF="Warrant.shtml"> Warrants</A>.
+<h1>The Warrant List</h1>
 <p>
-<H2>Columns in the Warrant Table</H3>
-<ul>
-        <li><b>Warrant</b>: - The name of the warrant.</li> 
-        <li><b>Route</b>: - The route of the warrant is listed in a drop down combo box by 
-		clicking the table cell</li>
-        <li><b>Train Name</b>: - The Train Id, as stated in the Roster.  This cell can be
+The Warrant List is a list of all the recorded warrants.  For an overview 
+discussion of warrants, see <a href="Warrant.shtml"> Warrants</a>.
+
+<h2>Columns in the Warrant Table</h2>
+    <ul>
+        <li><b>Warrant</b> - The name of the Warrant.</li> 
+        <li><b>Route</b> - The route of the Warrant is listed in a drop down combo box by 
+		clicking the table cell.</li>
+        <li><b>Train Name</b> - The Train ID, as stated in the Roster.  This cell can be
 		edited and its content is displayed by the Indicator Track Icons when the train
-		occupies their OBlock. (The edit popup of Indicator Track Icons have a checkbox 
-		to enable this function)</li>
-        <li><b>DCC Address</b>: - The DCC Address of the locomotive or consist.  This cell can
+		occupies their OBlock (the Edit popup of Indicator Track Icons have a checkbox 
+		to enable this function).</li>
+        <li><b>DCC Address</b> - The DCC Address of the locomotive or consist.  This cell can
 		be edited to correspond to the current motive power of the train.</li>
-        <li><b>Allocate</b>: - A button that reserves the route for the warrant.  The Indicator
+        <li><b>Allocate</b> - A button that reserves the route for the warrant.  The Indicator
 		Track Icons display green to indicate the route.</li>
-        <li><b>Deallocate</b>: - A button that removes the reservation for the warrant.</li>
-        <li><b>Set</b>: - A button that allocates and sets the turnouts for the warrant route.</li>
-        <li><b>AutoRun</b>: - A button that runs the train over the route according to the 
+        <li><b>Deallocate</b> - A button that removes the reservation for the warrant.</li>
+        <li><b>Set</b> - A button that allocates and sets the turnouts for the warrant route.</li>
+        <li><b>AutoRun</b> - A button that runs the train over the route according to the 
 		throttle commands of the warrant. The recorded speed of the train will be modified 
 		according to the occupancy and signal aspects encountered on the route.  The 
 		Indicator Track Icons display the current position of the
 		of the train with a blue color.</li>
-        <li><b>ManRun</b>: - (hidden column) A button that allocates the warrant and sets the route for
+        <li><b>ManRun</b> - (hidden column) A button that allocates the warrant and sets the route for
         a manual operator to run the train.  The script is not run, but the route is displayed.
-		of the train with a blue color.
-        (The default setting hides this column. To display, right click in the table Header.)</li>
-        <li><b>Control/Status</b>: - The status of the warrant is shown.  It also has a 
-		drop down combo box that can send commands to a running train. 
+		of the train with a blue color.<br>
+        (The default setting hides this column. To display it, right click the table header.)</li>
+        <li><b>Control/Status</b> - The status of the warrant is shown.  It also has a 
+		drop down combo box that can send commands to a running train.<br>
 		<b><i>Note</b>: This column has two functions - 
 		Status messages and control buttons.</i>
 		<br>
@@ -74,31 +72,31 @@ discussion of warrants, see <A HREF="Warrant.shtml"> Warrants</A>.
 			a stopped train to continue.)
 		<li><b>Abort</b> - Abort the script and deallocate the warrant.</li>
 	  </ul>
-        <li><b>Edit</b>: - A button that opens an editing window for the warrant,</li>
-        <li><b>Delete</b>: - A button that deletes the warrant.</li>
+        <li><b>Edit</b> - A button that opens an editing window for the warrant,</li>
+        <li><b>Delete</b> - A button that deletes the warrant.</li>
 </ul></p>
 <ul>
         <b>NOTE:</b> Warrants can only be created if the PanelPro configuration 
         has at least two OBlocks defined.
 </ul>
-<H2>The Warrant List Menus</H2>
+<h2>The Warrant List Menus</h2>
 The following item are under the <b>Warrants</b> menu.
 <ul>
-        <li><b>Concatenate Warrants</b>: - Join two warrants together to become
+        <li><b>Concatenate Warrants</b> - Join two warrants together to become
         	a single warrant.  The last block and path of the first warrant must be
         	equal to the first block and path of the second warrant.</li>  
-        <li><b>Create New Warrant</b>: - After providing system and user names this
+        <li><b>Create New Warrant</b> - After providing system and user names this
 		opens a blank Warrant Editing Window to create a new warrant. The
-        	operations of this frame are discussed in <A HREF="CreateEditWarrant.shtml">
-        	Creating and Editing Warrants</A>.</li>
-	  <li><b>Train Trackers</b>: - Opens window where the identity of trains can be
+        	operations of this frame are discussed in <a href="CreateEditWarrant.shtml">
+        	Creating and Editing Warrants</a>.</li>
+	  <li><b>Train Trackers</b> - Opens window where the identity of trains can be
 		displayed as they move from one occupancy block to another.</li>
 	  <li><b>Create NXWarrant</b> - Opens a window to create an eNtry/eXit warrant.
-	  		this is discussed in <A HREF="NXWarrant.shtml">About NXWarrants</A>.</li>
+	  		this is discussed in <a href="NXWarrant.shtml">About NXWarrants</a>.</li>
 	  <li><b>Open Session Log</b> - Opens a window to name a file that records the
 	  warrant and train tracking status messages.</li>
 </ul>
-<H2>Other Warrant List Features</H2>
+<h2>Other Warrant List Features</h2>
 The following items are at the bottom of the window:
 <p>
 The <b>Create NXWarrant</b> button 0pens a window to create an eNtry/eXit warrant.
@@ -108,7 +106,7 @@ The <b>Halt all Trains</b> button causes all running warrants to halt their trai
 The <b>Status</b> field contains the last 20 messages from warrants.  Click in the 
 field to display them.
 <p>
-<H2>Running Automated Trains</H2>
+<h2>Running Automated Trains</h2>
 The throttle commands recorded in a warrant can be played back to run the train.  When running 
 automated, additional control of the train can done through four choices: <b>Halt</b>,
 <b>Resume</b> and <b>Abort</b> are commands to halt a running
@@ -116,9 +114,9 @@ automated train, restart it or stop the train and abort the remaining throttle c
 <b>Move into Next Block</b> is "repair" command should the train overrun a block and
 become "Lost".  This command aligns the warrant to the next block and restarts the train.
 <p>
-Although there are separate operations in the Warrant List table to reserve a warrant route
+Although there are separate operations in the Warrant List table to reserve a Warrant route
 (Allocate) and
-set turnouts and signals (Set Route) these operations do not have to be done to run
+set Turnouts and Signals (Set Route) these operations do not have to be done to run
 an automated train.  An <b>AutoRun</b> operation can begin without them.  The train will
 seek allocation and set turnouts as it proceeds on the route.  When
 confronted with an occupied block, the train will stop and wait until the block clears.
@@ -127,27 +125,27 @@ train will approach at reduced speed.  Similarly, if the Portals have been defin
 Signal Heads or Signal Masts protecting the blocks they join, the train will modify the
 speed according to the appearance or aspect of the signal. An automated train will 
 attempt to secure
-allocation of the next two blocks each time it enters a block.  It also checks whether
-the block is occupied by an unknown train and will not enter if the block is occupied.
+allocation of the next two Blocks each time it enters a Block.  It also checks whether
+the Block is occupied by an unknown train and will not enter if the Block is occupied.
 <p>
 As a safety feature, whenever a warranted train has permission to enter the 
-next block, the turnouts are reset.   Having permission from signals means 
+next Block, the turnouts are reset.   Having permission from Signals means 
 that resetting the turnouts should not interfere with any interlocking logic.  
-In the absence of signals, occupancy or allocation to another warrant  
+In the absence of Signals, occupancy or allocation to another warrant  
 may deny permission.  Only clearing the most restrictive of these conditions 
 will give the auto-run train permission to proceed.  When such a denial is 
 cleared, the train will proceed automatically.  The only thing that overrides 
 having permission to proceed is if the user has set the control to "Halt".  The train will 
 not move until the user sets "Resume".
-<p>
-<H3>When the Starting block is Unoccupied</H3>
+
+<h3>When the Starting block is Unoccupied</h3>
 If a warrant is started and  the starting block is not occupied, the warrant will
 wait until the block is occupied.  When occupation occurs the warrant will set to
 the "Halt" and wait for the user to set the "Resume" control.
 Note it is vital that the correct train occupies the starting block. The address specified in
 the warrant, is the train that will begin moving. 
-<p>
-<H2>How Signals Aspects and Block Speeds Modify A Train's Speed</H2>
+
+<h2>How Signals Aspects and Block Speeds Modify A Train's Speed</h2>
 When a warrant is running and its train enters a block, it looks ahead to see if any speed changes
 are coming up.  The look ahead distance must be adequate for the train to be able
 to stop should that be needed.  This distance is at least one block and could be several.
@@ -185,10 +183,11 @@ Speed Profile for every speed step of a decoder can be made with the Roster spee
 Alternatively, Speed Profile factors for a selected set of throttle settings for the motive power 
 used in a warrant can be determined by using the NXWarrant
 <b>Compute Throttle Factor</b> feature.  Frequently, calibrating a slow, medium and fast throttle setting for both
-forward and reverse will be sufficient.  See <A HREF="NXWarrant.shtml"> NXWarrants</A> for
+forward and reverse will be sufficient.  See <a href="NXWarrant.shtml"> NXWarrants</a> for
 instructions on how to do this.
-<p>
-<br>
+
 <!--#include virtual="/Footer" -->
-</BODY>
-</HTML>
+ </div><!-- closes #mainContent-->
+</div> <!-- closes #mBody-->
+</body>
+</html>

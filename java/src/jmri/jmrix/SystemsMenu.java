@@ -1,4 +1,3 @@
-// SystemsMenu.java
 package jmri.jmrix;
 
 import java.util.ResourceBundle;
@@ -17,7 +16,6 @@ import org.slf4j.LoggerFactory;
  *
  * @see ActiveSystemsMenu
  * @author	Bob Jacobsen Copyright 2003
- * @version $Revision$
  */
 public class SystemsMenu extends JMenu {
 

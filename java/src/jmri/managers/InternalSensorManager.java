@@ -16,8 +16,6 @@ public class InternalSensorManager extends AbstractSensorManager {
 
     public InternalSensorManager() {
         log.debug("InternalSensorManager constructed");
-        defaultState = Sensor.UNKNOWN;
-        log.debug("Default new-Sensor state reset to UNKNOWN");
     }
     
     public boolean allowMultipleAdditions(String systemName) {
@@ -31,11 +29,6 @@ public class InternalSensorManager extends AbstractSensorManager {
      */
     protected Sensor createNewSensor(String systemName, String userName) {
         Sensor sen = new AbstractSensor(systemName, userName) {
-            /**
-             *
-             */
-            private static final long serialVersionUID = 6281257500525818919L;
-
             public void requestUpdateFromLayout() {
             }
         };

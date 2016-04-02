@@ -31,10 +31,6 @@ import org.slf4j.LoggerFactory;
  */
 public class DefaultRailCom extends DefaultIdTag implements jmri.RailCom {
 
-    /**
-     *
-     */
-    private static final long serialVersionUID = -7822601724014273735L;
     private int _currentState = 0x00;
 
     public DefaultRailCom(String systemName) {
