@@ -46,10 +46,6 @@ import org.slf4j.LoggerFactory;
 public abstract class AbstractLight extends AbstractNamedBean
         implements Light, java.io.Serializable {
 
-    /**
-     *
-     */
-    private static final long serialVersionUID = -3863736856456563301L;
     private final static Logger log = LoggerFactory.getLogger(AbstractLight.class);
 
     public AbstractLight(String systemName, String userName) {

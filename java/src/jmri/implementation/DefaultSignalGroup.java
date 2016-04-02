@@ -32,11 +32,6 @@ import org.slf4j.LoggerFactory;
  */
 public class DefaultSignalGroup extends AbstractNamedBean implements jmri.SignalGroup {
 
-    /**
-     *
-     */
-    private static final long serialVersionUID = -1581075452699259182L;
-
     public DefaultSignalGroup(String systemName, String userName) {
         super(systemName, userName);
     }

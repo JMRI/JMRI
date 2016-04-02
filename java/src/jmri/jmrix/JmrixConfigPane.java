@@ -1,4 +1,3 @@
-// JmrixConfigPane.java
 package jmri.jmrix;
 
 import java.awt.BorderLayout;
@@ -35,7 +34,6 @@ import org.slf4j.LoggerFactory;
  * <p>
  *
  * @author Bob Jacobsen Copyright (C) 2001, 2003, 2004, 2010
- * @version	$Revision$
  */
 public class JmrixConfigPane extends JPanel implements PreferencesPanel {
 

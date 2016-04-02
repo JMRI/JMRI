@@ -870,7 +870,7 @@ public class DefaultUserMessagePreferences extends jmri.jmrit.XmlFile implements
             log.error("class name " + strClass + " is in valid " + ec);
         } catch (java.lang.IllegalAccessException ex) {
             ex.printStackTrace();
-        } catch (Exception e) {
+        } catch (InstantiationException e) {
             log.error("unable to get a class name " + e);
         }
     }
