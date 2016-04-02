@@ -1,4 +1,3 @@
-// AbstractSignalHead.java
 package jmri.implementation;
 
 import jmri.SignalHead;
@@ -10,7 +9,6 @@ import jmri.Turnout;
  * SignalHead system names are always upper case.
  *
  * @author	Bob Jacobsen Copyright (C) 2001
- * @version $Revision$
  */
 public abstract class AbstractSignalHead extends AbstractNamedBean
         implements SignalHead, java.io.Serializable, java.beans.VetoableChangeListener {
@@ -154,7 +152,7 @@ public abstract class AbstractSignalHead extends AbstractNamedBean
                 throw new java.beans.PropertyVetoException(Bundle.getMessage("InUseTurnoutSignalHeadVeto", getDisplayName()), e); //IN18N
             }
         } else if ("DoDelete".equals(evt.getPropertyName())) {
-            //log.info("Call to do delete"); //IN18N
+            log.warn("not clear DoDelete operated? {}", getSystemName()); //IN18N
         }
     }
 
@@ -162,6 +160,5 @@ public abstract class AbstractSignalHead extends AbstractNamedBean
         return Bundle.getMessage("BeanNameSignalHead");
     }
 
+    private final static org.slf4j.Logger log = org.slf4j.LoggerFactory.getLogger(AbstractSignalHead.class.getName());
 }
-
-/* @(#)AbstractSignalHead.java */

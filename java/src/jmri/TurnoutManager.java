@@ -58,7 +58,7 @@ public interface TurnoutManager extends Manager {
      *                                  e.g. an illegal name or name that can't
      *                                  be parsed.
      */
-    public @Nonnull Turnout provideTurnout(@Nonnull String name);
+    public @Nonnull Turnout provideTurnout(@Nonnull String name) throws IllegalArgumentException;
 
     /**
      * Locate via user name, then system name if needed. If that fails, return
@@ -112,7 +112,7 @@ public interface TurnoutManager extends Manager {
      *                                  an illegal name or name that can't be
      *                                  parsed.
      */
-    public @Nonnull Turnout newTurnout(@Nonnull String systemName, @Nullable String userName);
+    public @Nonnull Turnout newTurnout(@Nonnull String systemName, @Nullable String userName)  throws IllegalArgumentException;
 
     /**
      * Get a list of all Turnouts' system names.

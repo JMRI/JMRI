@@ -209,6 +209,8 @@ public class JUnitUtil {
     public static void initInternalSensorManager() {
         // now done automatically by InstanceManager's autoinit
         jmri.InstanceManager.sensorManagerInstance();
+        InternalSensorManager.setDefaultStateForNewSensors(jmri.Sensor.UNKNOWN);
+
     }
 
     public static void initMemoryManager() {
