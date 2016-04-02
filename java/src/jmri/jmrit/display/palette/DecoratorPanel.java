@@ -411,6 +411,9 @@ public class DecoratorPanel extends JPanel implements ChangeListener, ItemListen
                         case INCONSISTENT_TRANSPARENT_COLOR:
                             _sample.get("Inconsistent").setOpaque(false);
                             break;
+                        default:
+                            log.warn("Unexpected button.which {} in actionPerformed", button.which);
+                            break;
                     }
                     updateSamples();
                 }
@@ -514,6 +517,9 @@ public class DecoratorPanel extends JPanel implements ChangeListener, ItemListen
                     break;
                 case FHEIGHT:
                     _util.setFixedHeight(num);
+                    break;
+                default:
+                    log.warn("Unexpected _which {}  in stateChanged", ((AJSpinner) obj)._which);
                     break;
             }
         } else {
@@ -622,6 +628,9 @@ public class DecoratorPanel extends JPanel implements ChangeListener, ItemListen
             case BORDER_COLOR:
                 _util.setBorderColor(_chooser.getColor());
                 break;
+            default:
+                log.warn("Unexpected _selectedButton {}  in changeColor", _selectedButton);
+                break;
         }
         
     }
@@ -649,6 +658,9 @@ public class DecoratorPanel extends JPanel implements ChangeListener, ItemListen
                         case 3:
                             style = (Font.BOLD | Font.ITALIC);
                             break;
+                        default:
+                            log.warn("Unexpected index {}  in itemStateChanged", ((AJComboBox) obj).getSelectedIndex());
+                            break;
                     }
                     _util.setFontStyle(style);
                     break;
@@ -664,11 +676,20 @@ public class DecoratorPanel extends JPanel implements ChangeListener, ItemListen
                         case 2:
                             just = PositionablePopupUtil.RIGHT;
                             break;
+                        default:
+                            log.warn("Unexpected index {}  in itemStateChanged", ((AJComboBox) obj).getSelectedIndex());
+                            break;
                     }
                     _util.setJustification(just);
                     break;
-            }
+                default:
+                    log.warn("Unexpected _which {}  in itemStateChanged", ((AJComboBox) obj)._which);
+                    break;
+                }
             updateSamples();
         }
     }
+
+    // initialize logging
+    private final static org.slf4j.Logger log = org.slf4j.LoggerFactory.getLogger(DecoratorPanel.class.getName());
 }

@@ -514,6 +514,9 @@ public class LRouteTableAction extends AbstractTableAction {
                 case 'L':
                     getLockConditions(cSysName);
                     break;
+                default:
+                    log.warn("Unexpected getRouteConditionalType {}", getRouteConditionalType(logixSysName, cSysName));
+                    break;
             }
         }
         // set up buttons and notes
@@ -1646,6 +1649,9 @@ public class LRouteTableAction extends AbstractTableAction {
                             case Route.TOGGLE:
                                 add = false;
                                 break;
+                            default:
+                                log.warn("Unexpected state {} from elt.getState() in SENSOR_TYPE", elt.getState());
+                                break;
                         }
                         break;
                     case TURNOUT_TYPE:
@@ -1662,6 +1668,9 @@ public class LRouteTableAction extends AbstractTableAction {
                             case Route.TOGGLE:
                                 add = false;
                                 break;
+                            default:
+                                log.warn("Unexpected state {} from elt.getState() in TURNOUT_TYPE", elt.getState());
+                                break;
                         }
                         break;
                     case LIGHT_TYPE:
@@ -1677,6 +1686,9 @@ public class LRouteTableAction extends AbstractTableAction {
                                 break;
                             case Route.TOGGLE:
                                 add = false;
+                                break;
+                            default:
+                                log.warn("Unexpected state {} from elt.getState() in LIGHT_TYPE", elt.getState());
                                 break;
                         }
                         break;
@@ -1717,6 +1729,9 @@ public class LRouteTableAction extends AbstractTableAction {
                                 break;
                             case SET_SIGNAL_LIT:
                                 varType = Conditional.TYPE_SIGNAL_HEAD_LIT;
+                                break;
+                            default:
+                                log.warn("Unexpected state {} from elt.getState() in SIGNAL_TYPE", elt.getState());
                                 break;
                         }
                         break;
@@ -2180,6 +2195,9 @@ public class LRouteTableAction extends AbstractTableAction {
                 case STATE_COLUMN:
                     inputList.get(r).setTestState((String) type);
                     break;
+                default:
+                    log.warn("Unexpected column {} in setValueAt", c);
+                    break;
             }
         }
     }
@@ -2255,6 +2273,9 @@ public class LRouteTableAction extends AbstractTableAction {
                 case STATE_COLUMN:
                     outputList.get(r).setSetToState((String) type);
                     break;
+                default:
+                    log.warn("Unexpected column {} in setValueAt", c);
+                    break;
             }
         }
     }
@@ -2329,6 +2350,9 @@ public class LRouteTableAction extends AbstractTableAction {
                     break;
                 case STATE_COLUMN:
                     alignList.get(r).setAlignType((String) type);
+                    break;
+                default:
+                    log.warn("Unexpected column {} in setValueAt", c);
                     break;
             }
         }
@@ -2479,6 +2503,9 @@ public class LRouteTableAction extends AbstractTableAction {
                     break;
                 case CONDITIONAL_TYPE:
                     _typeString = rbx.getString("Conditional");
+                    break;
+                default:
+                    log.warn("Unexpected type {} in RouteElement constructor", type);
                     break;
             }
         }

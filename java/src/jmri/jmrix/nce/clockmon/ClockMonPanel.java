@@ -794,6 +794,9 @@ public class ClockMonPanel extends jmri.jmrix.nce.swing.NcePanel implements NceP
                     updateNceClockDisplay();
                     updateInternalClockDisplay();
                     break;
+                default:
+                    log.warn("Unexpected alarmDisplayStateCounter {} in alarmDisplayStates", alarmDisplayStateCounter);
+                    break;
             }
             if (log.isDebugEnabled() && extraDebug) {
                 log.debug("alarmDisplayStates: after: " + alarmDisplayStateCounter + " " + internalClock.getTime());
@@ -1435,6 +1438,9 @@ public class ClockMonPanel extends jmri.jmrix.nce.swing.NcePanel implements NceP
                     updateNceClockDisplay();
                     updateInternalClockDisplay();
                     break;
+                default:
+                    log.warn("Unexpected nceSyncInitStateCounter {} in nceSyncInitStates", nceSyncInitStateCounter);
+                    break;
             }
             if (log.isDebugEnabled() && extraDebug) {
                 log.debug("After nceSyncInitStateCounter: " + nceSyncInitStateCounter + " " + internalClock.getTime());
@@ -1493,6 +1499,10 @@ public class ClockMonPanel extends jmri.jmrix.nce.swing.NcePanel implements NceP
                 case 4:
                     // wait for next minute
                     nceSyncRunStateCounter = 0;
+                    break;
+                default:
+                    log.warn("Unexpected state {} in nceSyncRunStates", nceSyncRunStateCounter);
+                    break;
             }
         } while (priorState != nceSyncRunStateCounter);
         if (log.isDebugEnabled() && extraDebug) {
@@ -1785,5 +1795,4 @@ public class ClockMonPanel extends jmri.jmrix.nce.swing.NcePanel implements NceP
     }
 
     private final static Logger log = LoggerFactory.getLogger(ClockMonPanel.class.getName());
-
 }
