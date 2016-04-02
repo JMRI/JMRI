@@ -65,7 +65,7 @@ public class SignalGroupSubTableAction {
     }
 
     public SignalGroupSubTableAction() {
-        this("SignalGroup Heads Edit Table");
+        this("Signal Group Head Edit Table");
     }
 
     String helpTarget() {
@@ -176,9 +176,9 @@ public class SignalGroupSubTableAction {
     JLabel signalOffStateLabel = new JLabel("State when conditions are not met");
     JLabel userLabel = new JLabel("Select the conditions that must be met to set this Signal Head on");
 
-    JButton updateSubButton = new JButton("Done");
+    JButton updateSubButton = new JButton(Bundle.getMessage("ButtonApply"));
 
-    static String updateInst = "To change this SignalGroup, make changes above, then click 'Done'.";
+    static String updateInst = Bundle.getMessage("ClickToApply");
 
     JLabel status1 = new JLabel(updateInst);
 
@@ -788,10 +788,10 @@ public class SignalGroupSubTableAction {
 
     private static int ROW_HEIGHT;
 
-    private static String[] COLUMN_NAMES = {Bundle.getMessage("ColumnLabelSystemName"),
-            Bundle.getMessage("ColumnLabelUserName"),
-            Bundle.getMessage("ColumnLabelInclude"),
-            rbx.getString("ColumnLabelSetState")};
+    private static String[] COLUMN_NAMES = {rbx.getString("ColumnLabelSystemName"),
+        rbx.getString("ColumnLabelUserName"),
+        rbx.getString("ColumnLabelInclude"),
+        rbx.getString("ColumnLabelSetState")};
     private static String SET_TO_ACTIVE = rbx.getString("SensorActive");
     private static String SET_TO_INACTIVE = rbx.getString("SensorInactive");
     private static String SET_TO_CLOSED = InstanceManager.turnoutManagerInstance().getClosedText();
