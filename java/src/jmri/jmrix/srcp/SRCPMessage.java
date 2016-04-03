@@ -1,4 +1,3 @@
-// SRCPMessage.java
 package jmri.jmrix.srcp;
 
 import org.slf4j.Logger;
@@ -11,7 +10,6 @@ import org.slf4j.LoggerFactory;
  * The {@link SRCPReply} class handles the response from the command station.
  *
  * @author	Bob Jacobsen Copyright (C) 2001, 2004, 2008
- * @version	$Revision$
  */
 public class SRCPMessage extends jmri.jmrix.AbstractMRMessage {
 

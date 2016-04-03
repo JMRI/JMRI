@@ -1,4 +1,3 @@
-// AbstractMRMessage.java
 package jmri.jmrix;
 
 import jmri.util.StringUtil;
@@ -11,7 +10,6 @@ import org.slf4j.LoggerFactory;
  * Carries a sequence of characters, with accessors.
  *
  * @author	Bob Jacobsen Copyright (C) 2003
- * @version $Revision$
  */
 abstract public class AbstractMRMessage extends AbstractMessage {
 
@@ -219,6 +217,3 @@ abstract public class AbstractMRMessage extends AbstractMessage {
     }
 
 }
-
-
-/* @(#)AbstractMRMessage.java */

@@ -1,4 +1,3 @@
-// AbstractAudioBuffer.java
 package jmri.jmrit.audio;
 
 import java.io.InputStream;
@@ -27,14 +26,8 @@ import org.slf4j.LoggerFactory;
  * <p>
  *
  * @author Matthew Harris copyright (c) 2009, 2011
- * @version $Revision$
  */
 public abstract class AbstractAudioBuffer extends AbstractAudio implements AudioBuffer {
-
-    /**
-     *
-     */
-    private static final long serialVersionUID = 8268569137224309135L;
 
     /**
      * Holds the location of the sound sample used in this buffer
@@ -316,5 +309,3 @@ public abstract class AbstractAudioBuffer extends AbstractAudio implements Audio
 
     private static final Logger log = LoggerFactory.getLogger(AbstractAudioBuffer.class.getName());
 }
-
-/* $(#)AbstractAudioBuffer.java */

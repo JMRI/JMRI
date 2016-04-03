@@ -1,4 +1,3 @@
-// AbstractMRTrafficController.java
 package jmri.jmrix;
 
 import java.io.DataInputStream;
@@ -30,7 +29,6 @@ import org.slf4j.LoggerFactory;
  *
  * @author Bob Jacobsen Copyright (C) 2003
  * @author Paul Bender Copyright (C) 2004-2010
- * @version $Revision$
  */
 abstract public class AbstractMRTrafficController {
 
@@ -1088,6 +1086,3 @@ abstract public class AbstractMRTrafficController {
 
     private final static Logger log = LoggerFactory.getLogger(AbstractMRTrafficController.class.getName());
 }
-
-
-/* @(#)AbstractMRTrafficController.java */

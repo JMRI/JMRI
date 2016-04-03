@@ -1,4 +1,3 @@
-// AbstractTurnout.java
 package jmri.implementation;
 
 import jmri.InstanceManager;
@@ -10,6 +9,8 @@ import jmri.Turnout;
 import jmri.TurnoutOperation;
 import jmri.TurnoutOperationManager;
 import jmri.TurnoutOperator;
+import jmri.implementation.SignalSpeedMap;
+
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -35,15 +36,9 @@ import org.slf4j.LoggerFactory;
  * <P>
  *
  * @author Bob Jacobsen Copyright (C) 2001, 2009
- * @version $Revision$
  */
 public abstract class AbstractTurnout extends AbstractNamedBean implements
         Turnout, java.io.Serializable, java.beans.PropertyChangeListener {
-
-    /**
-     *
-     */
-    private static final long serialVersionUID = -1138214787466499528L;
 
     protected AbstractTurnout(String systemName) {
         super(systemName.toUpperCase());
@@ -336,7 +331,7 @@ public abstract class AbstractTurnout extends AbstractNamedBean implements
      */
     public void setLocked(int turnoutLockout, boolean locked) {
         boolean firechange = false;
-        if ((turnoutLockout & CABLOCKOUT) > 0 && _cabLockout != locked) {
+        if ((turnoutLockout & CABLOCKOUT) != 0 && _cabLockout != locked) {
             firechange = true;
             if (canLock(CABLOCKOUT)) {
                 _cabLockout = locked;
@@ -543,12 +538,7 @@ public abstract class AbstractTurnout extends AbstractNamedBean implements
                 provideFirstFeedbackNamedSensor(null);
             } else {
                 Sensor sensor = InstanceManager.sensorManagerInstance().provideSensor(pName);
-                if (sensor != null) {
-                    provideFirstFeedbackNamedSensor(jmri.InstanceManager.getDefault(jmri.NamedBeanHandleManager.class).getNamedBeanHandle(pName, sensor));
-                } else {
-                    log.error("Sensor '" + pName + "' not available");
-                    throw new jmri.JmriException("Sensor '" + pName + "' not available");
-                }
+                provideFirstFeedbackNamedSensor(jmri.InstanceManager.getDefault(jmri.NamedBeanHandleManager.class).getNamedBeanHandle(pName, sensor));
             }
         } else {
             log.error("No SensorManager for this protocol");
@@ -587,12 +577,7 @@ public abstract class AbstractTurnout extends AbstractNamedBean implements
                 provideSecondFeedbackNamedSensor(null);
             } else {
                 Sensor sensor = InstanceManager.sensorManagerInstance().provideSensor(pName);
-                if (sensor != null) {
-                    provideSecondFeedbackNamedSensor(jmri.InstanceManager.getDefault(jmri.NamedBeanHandleManager.class).getNamedBeanHandle(pName, sensor));
-                } else {
-                    log.error("Sensor '" + pName + "' not available");
-                    throw new jmri.JmriException("Sensor '" + pName + "' not available");
-                }
+                provideSecondFeedbackNamedSensor(jmri.InstanceManager.getDefault(jmri.NamedBeanHandleManager.class).getNamedBeanHandle(pName, sensor));
             }
         } else {
             log.error("No SensorManager for this protocol");
@@ -751,7 +736,7 @@ public abstract class AbstractTurnout extends AbstractNamedBean implements
 
     //float speedThroughTurnout = 0;
     public float getDivergingLimit() {
-        if ((_divergeSpeed == null) || (_divergeSpeed == "")) {
+        if ((_divergeSpeed == null) || (_divergeSpeed.equals(""))) {
             return -1;
         }
 
@@ -763,13 +748,13 @@ public abstract class AbstractTurnout extends AbstractNamedBean implements
             return -1;
         }
         try {
-            return new Float(speed);
+            return Float.valueOf(speed);
             //return Integer.parseInt(_blockSpeed);
         } catch (NumberFormatException nx) {
             //considered normal if the speed is not a number.
         }
         try {
-            return jmri.implementation.SignalSpeedMap.getMap().getSpeed(speed);
+            return jmri.InstanceManager.getDefault(SignalSpeedMap.class).getSpeed(speed);
         } catch (Exception ex) {
             return -1;
         }
@@ -801,7 +786,7 @@ public abstract class AbstractTurnout extends AbstractNamedBean implements
                 Float.parseFloat(s);
             } catch (NumberFormatException nx) {
                 try {
-                    jmri.implementation.SignalSpeedMap.getMap().getSpeed(s);
+                    jmri.InstanceManager.getDefault(SignalSpeedMap.class).getSpeed(s);
                 } catch (Exception ex) {
                     throw new JmriException("Value of requested block speed is not valid");
                 }
@@ -813,7 +798,7 @@ public abstract class AbstractTurnout extends AbstractNamedBean implements
     }
 
     public float getStraightLimit() {
-        if ((_straightSpeed == null) || (_straightSpeed == "")) {
+        if ((_straightSpeed == null) || (_straightSpeed.equals(""))) {
             return -1;
         }
         String speed = _straightSpeed;
@@ -823,12 +808,12 @@ public abstract class AbstractTurnout extends AbstractNamedBean implements
             return -1;
         }
         try {
-            return new Float(speed);
+            return Float.valueOf(speed);
         } catch (NumberFormatException nx) {
             //considered normal if the speed is not a number.
         }
         try {
-            return jmri.implementation.SignalSpeedMap.getMap().getSpeed(speed);
+            return jmri.InstanceManager.getDefault(SignalSpeedMap.class).getSpeed(speed);
         } catch (Exception ex) {
             return -1;
         }
@@ -860,7 +845,7 @@ public abstract class AbstractTurnout extends AbstractNamedBean implements
                 Float.parseFloat(s);
             } catch (NumberFormatException nx) {
                 try {
-                    jmri.implementation.SignalSpeedMap.getMap().getSpeed(s);
+                    jmri.InstanceManager.getDefault(SignalSpeedMap.class).getSpeed(s);
                 } catch (Exception ex) {
                     throw new JmriException("Value of requested turnout straight speed is not valid");
                 }
@@ -878,11 +863,10 @@ public abstract class AbstractTurnout extends AbstractNamedBean implements
                 throw new java.beans.PropertyVetoException(Bundle.getMessage("InUseSensorTurnoutVeto", getDisplayName()), e); //IN18N
             }
         } else if ("DoDelete".equals(evt.getPropertyName())) {
-            //log.info("Call to do delete"); //IN18N
+            log.warn("No clean DoDelete worked for {}", getSystemName()); //IN18N
         }
     }
 
     private final static Logger log = LoggerFactory.getLogger(AbstractTurnout.class.getName());
 }
 
-/* @(#)AbstractTurnout.java */

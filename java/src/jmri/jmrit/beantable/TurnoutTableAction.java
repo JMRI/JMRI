@@ -1,4 +1,3 @@
-// TurnoutTableAction.java
 package jmri.jmrit.beantable;
 
 import java.awt.Component;
@@ -33,6 +32,7 @@ import jmri.Turnout;
 import jmri.TurnoutManager;
 import jmri.TurnoutOperation;
 import jmri.TurnoutOperationManager;
+import jmri.implementation.SignalSpeedMap;
 import jmri.jmrit.turnoutoperations.TurnoutOperationConfig;
 import jmri.jmrit.turnoutoperations.TurnoutOperationFrame;
 import jmri.util.ConnectionNameFromSystemName;
@@ -47,7 +47,6 @@ import org.slf4j.LoggerFactory;
  * Swing action to create and register a TurnoutTable GUI.
  *
  * @author	Bob Jacobsen Copyright (C) 2003, 2004, 2007
- * @version $Revision$
  */
 public class TurnoutTableAction extends AbstractTableAction {
 
@@ -82,7 +81,7 @@ public class TurnoutTableAction extends AbstractTableAction {
         speedListThrown.add(defaultThrownSpeedText);
         speedListClosed.add(useBlockSpeed);
         speedListThrown.add(useBlockSpeed);
-        java.util.Vector<String> _speedMap = jmri.implementation.SignalSpeedMap.getMap().getValidSpeedNames();
+        java.util.Vector<String> _speedMap = jmri.InstanceManager.getDefault(SignalSpeedMap.class).getValidSpeedNames();
         for (int i = 0; i < _speedMap.size(); i++) {
             if (!speedListClosed.contains(_speedMap.get(i))) {
                 speedListClosed.add(_speedMap.get(i));
@@ -758,13 +757,14 @@ public class TurnoutTableAction extends AbstractTableAction {
             addFrame = new JmriJFrame(Bundle.getMessage("TitleAddTurnout"), false, true);
             addFrame.addHelpMenu("package.jmri.jmrit.beantable.TurnoutAddEdit", true);
             addFrame.getContentPane().setLayout(new BoxLayout(addFrame.getContentPane(), BoxLayout.Y_AXIS));
-
-            ActionListener listener = new ActionListener() {
+            ActionListener okListener = new ActionListener() {
                 public void actionPerformed(ActionEvent e) {
                     okPressed(e);
                 }
             };
-
+            ActionListener cancelListener = new ActionListener() {
+                public void actionPerformed(ActionEvent e) { cancelPressed(e); }
+            };
             ActionListener rangeListener = new ActionListener() {
                 public void actionPerformed(ActionEvent e) {
                     canAddRange(e);
@@ -797,7 +797,7 @@ public class TurnoutTableAction extends AbstractTableAction {
             sysName.setName("sysName");
             userName.setName("userName");
             prefixBox.setName("prefixBox");
-            addFrame.add(new AddNewHardwareDevicePanel(sysName, userName, prefixBox, numberToAdd, range, "ButtonOK", listener, rangeListener));
+            addFrame.add(new AddNewHardwareDevicePanel(sysName, userName, prefixBox, numberToAdd, range, "ButtonOK", okListener, cancelListener, rangeListener));
             canAddRange(null);
         }
         addFrame.pack();
@@ -1224,8 +1224,8 @@ public class TurnoutTableAction extends AbstractTableAction {
             });
             menuBar.add(opsMenu);
 
-            JMenu speedMenu = new JMenu(Bundle.getMessage("TurnoutSpeedsMenu"));
-            item = new JMenuItem(Bundle.getMessage("TurnoutSpeedsMenuItemDefaults"));
+            JMenu speedMenu = new JMenu(Bundle.getMessage("SpeedsMenu"));
+            item = new JMenuItem(Bundle.getMessage("SpeedsMenuItemDefaults"));
             speedMenu.add(item);
             item.addActionListener(new ActionListener() {
                 public void actionPerformed(ActionEvent e) {
@@ -1234,6 +1234,12 @@ public class TurnoutTableAction extends AbstractTableAction {
             });
             menuBar.add(speedMenu);
         }
+    }
+
+    void cancelPressed(ActionEvent e) {
+        addFrame.setVisible(false);
+        addFrame.dispose();
+        addFrame = null;
     }
 
     void okPressed(ActionEvent e) {
@@ -1467,5 +1473,3 @@ public class TurnoutTableAction extends AbstractTableAction {
 
     private final static Logger log = LoggerFactory.getLogger(TurnoutTableAction.class.getName());
 }
-
-/* @(#)TurnoutTableAction.java */

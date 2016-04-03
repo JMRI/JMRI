@@ -1,4 +1,3 @@
-// NetworkDriverAdapter.java
 package jmri.jmrix.marklin.networkdriver;
 
 import java.io.DataInputStream;
@@ -21,7 +20,6 @@ import org.slf4j.LoggerFactory;
  *
  * @author	Bob Jacobsen Copyright (C) 2001, 2002, 2003, 2008
  * @author	Kevin Dickerson Copyright (C) 2012
- * @version	$Revision: 20030 $
  */
 public class NetworkDriverAdapter extends MarklinPortController implements jmri.jmrix.NetworkPortAdapter {
 

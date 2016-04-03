@@ -43,7 +43,7 @@ public class JsonClientPowerManager extends Bean implements PowerManager, JsonCl
                 break;
         }
         this.trafficController.sendJsonClientMessage(new JsonClientMessage(root), this);
-        this.propertyChangeSupport.firePropertyChange(PowerManager.POWER, null, null);
+        this.firePropertyChange(PowerManager.POWER, null, null);
     }
 
     @Override
@@ -93,7 +93,7 @@ public class JsonClientPowerManager extends Bean implements PowerManager, JsonCl
                 this.power = PowerManager.UNKNOWN;
                 break;
         }
-        this.propertyChangeSupport.firePropertyChange(PowerManager.POWER, null, null);
+        this.firePropertyChange(PowerManager.POWER, null, null);
     }
 
 }

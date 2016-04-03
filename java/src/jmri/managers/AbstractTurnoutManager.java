@@ -5,6 +5,8 @@ import jmri.Manager;
 import jmri.Turnout;
 import jmri.TurnoutManager;
 import jmri.TurnoutOperationManager;
+import jmri.implementation.SignalSpeedMap;
+
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -64,12 +66,6 @@ public abstract class AbstractTurnoutManager extends AbstractManager
             log.debug("newTurnout:"
                     + ((systemName == null) ? "null" : systemName)
                     + ";" + ((userName == null) ? "null" : userName));
-        }
-        if (systemName == null) {
-            log.error("SystemName cannot be null. UserName was "
-                    + ((userName == null) ? "null" : userName));
-            throw new IllegalArgumentException("SystemName cannot be null. UserName was "
-                    + ((userName == null) ? "null" : userName));
         }
         // is system name in correct format?
         if (!systemName.startsWith(getSystemPrefix() + typeLetter())) {
@@ -290,7 +286,7 @@ public abstract class AbstractTurnoutManager extends AbstractManager
                 Float.parseFloat(speed);
             } catch (NumberFormatException nx) {
                 try {
-                    jmri.implementation.SignalSpeedMap.getMap().getSpeed(speed);
+                    jmri.InstanceManager.getDefault(SignalSpeedMap.class).getSpeed(speed);
                 } catch (Exception ex) {
                     throw new JmriException("Value of requested turnout default closed speed is not valid");
                 }
@@ -319,7 +315,7 @@ public abstract class AbstractTurnoutManager extends AbstractManager
                 Float.parseFloat(speed);
             } catch (NumberFormatException nx) {
                 try {
-                    jmri.implementation.SignalSpeedMap.getMap().getSpeed(speed);
+                    jmri.InstanceManager.getDefault(SignalSpeedMap.class).getSpeed(speed);
                 } catch (Exception ex) {
                     throw new JmriException("Value of requested turnout default thrown speed is not valid");
                 }

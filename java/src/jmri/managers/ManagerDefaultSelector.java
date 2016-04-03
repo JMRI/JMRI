@@ -92,7 +92,7 @@ public class ManagerDefaultSelector extends AbstractPreferencesProvider {
                     });
                     break;
             }
-            this.propertyChangeSupport.firePropertyChange("Updated", null, null);
+            this.firePropertyChange("Updated", null, null);
         });
     }
 
@@ -223,7 +223,6 @@ public class ManagerDefaultSelector extends AbstractPreferencesProvider {
 
         public String typeName;
         public Class<?> managerClass;
-        public boolean proxy;
 
         Item(String typeName, Class<?> managerClass) {
             this.typeName = typeName;

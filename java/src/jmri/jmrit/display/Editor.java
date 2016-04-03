@@ -924,6 +924,9 @@ abstract public class Editor extends JmriJFrame implements MouseListener, MouseM
                 _panelScrollPane.setVerticalScrollBarPolicy(ScrollPaneConstants.VERTICAL_SCROLLBAR_ALWAYS);
                 _panelScrollPane.setHorizontalScrollBarPolicy(ScrollPaneConstants.HORIZONTAL_SCROLLBAR_NEVER);
                 break;
+            default:
+                log.warn("Unexpected  setScroll state of {}", state);
+                break;
         }
         _scrollState = state;
     }
@@ -955,6 +958,9 @@ abstract public class Editor extends JmriJFrame implements MouseListener, MouseM
                 break;
             case SCROLL_VERTICAL:
                 value = "vertical";
+                break;
+            default:
+                log.warn("Unexpected _scrollState of {}", _scrollState);
                 break;
         }
         return value;
@@ -2163,6 +2169,9 @@ abstract public class Editor extends JmriJFrame implements MouseListener, MouseM
                 l.setLowerWestToLowerEastIcon(editor.getIcon("LowerWestToLowerEast"));
                 //l.setUpperWestToUpperEastIcon(editor.getIcon("UpperWestToUpperEast"));
                 break;
+            default:
+                log.warn("Unexpected addSlip editor.getTurnoutType() of {}", editor.getTurnoutType());
+                break;
         }
 
         if ((editor.getTurnoutType() == SlipTurnoutIcon.SCISSOR) && (!editor.getSingleSlipRoute())) {
@@ -3096,6 +3105,9 @@ abstract public class Editor extends JmriJFrame implements MouseListener, MouseM
                 break;
             case KeyEvent.VK_RIGHT:
                 x = 1;
+                break;
+            default:
+                log.warn("Unexpected e.getKeyCode() of {}", e.getKeyCode());
                 break;
         }
         //A cheat if the shift key isn't pressed then we move 5 pixels at a time.

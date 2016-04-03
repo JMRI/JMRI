@@ -22,7 +22,7 @@ import org.slf4j.LoggerFactory;
  * at run-time through the InstanceManager.
  * <p>
  * To retrieve the default object of a specific type, do
- * {@link    InstanceManager#getDefault} where the argument is e.g.
+ * {@link InstanceManager#getDefault} where the argument is e.g.
  * "SensorManager.class". In other words, you ask for the default object of a
  * particular type.
  * <p>
@@ -31,10 +31,10 @@ import org.slf4j.LoggerFactory;
  * <p>
  * If a specific item is needed, e.g. one that has been constructed via a
  * complex process during startup, it should be installed with
- * {@link     InstanceManager#store}.
+ * {@link InstanceManager#store}.
  * <p>
  * If it's OK for the InstanceManager to create an object on first request, have
- * that object's class implement the {@link     InstanceManagerAutoDefault} flag
+ * that object's class implement the {@link InstanceManagerAutoDefault} flag
  * interface. The InstanceManager will then construct a default object via the
  * no-argument constructor when one is first requested.
  * <p>
@@ -124,8 +124,8 @@ public class InstanceManager {
      * Retrieve the last object of type T that was registered with
      * {@link #store}.
      * <p>
-     * Someday, we may provide another way to set the default but for now it's
-     * the last one stored, see the {@link #setDefault} method.
+     * Unless specifically set, the default is 
+     * the last object stored, see the {@link #setDefault} method.
      */
     @SuppressWarnings("unchecked")   // checked by construction
     static public <T> T getDefault(Class<T> type) {

@@ -35,7 +35,6 @@ import org.slf4j.LoggerFactory;
  */
 public class WarrantPreferencesPanel extends JPanel implements PreferencesPanel, ItemListener {
     
-    private static final long serialVersionUID = 7088050123933847146L;
     static int STRUT_SIZE = 10;
     
     private WarrantPreferences _preferences;

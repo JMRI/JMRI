@@ -45,7 +45,7 @@ public class SerialTurnoutManager extends AbstractTurnoutManager {
         }
         String conflict = "";
         conflict = SerialAddress.isOutputBitFree(bitNum);
-        if ((conflict != "") && (!conflict.equals(sName))) {
+        if ((!conflict.equals("")) && (!conflict.equals(sName))) {
             log.error(sName + " assignment conflict with " + conflict + ".");
             notifyTurnoutCreationError(conflict, bitNum);
             return (null);

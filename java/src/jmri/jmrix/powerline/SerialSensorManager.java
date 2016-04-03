@@ -47,7 +47,7 @@ abstract public class SerialSensorManager extends jmri.managers.AbstractSensorMa
         Sensor s;
         // validate the system name, and normalize it
         String sName = tc.getAdapterMemo().getSerialAddress().normalizeSystemName(systemName);
-        if (sName == "") {
+        if (sName.equals("")) {
             // system name is not valid
             log.error("Invalid Sensor system name - " + systemName);
             return null;

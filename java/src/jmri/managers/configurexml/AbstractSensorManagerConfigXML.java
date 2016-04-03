@@ -20,7 +20,6 @@ import org.slf4j.LoggerFactory;
  * time.
  *
  * @author Bob Jacobsen Copyright: Copyright (c) 2002, 2008
- * @version $Revision$
  */
 public abstract class AbstractSensorManagerConfigXML extends AbstractNamedBeanManagerConfigXML {
 
@@ -57,9 +56,6 @@ public abstract class AbstractSensorManagerConfigXML extends AbstractNamedBeanMa
         // store the sensors
         while (iter.hasNext()) {
             String sname = iter.next();
-            if (sname == null) {
-                log.error("System name null during store");
-            }
             log.debug("system name is " + sname);
             Sensor s = tm.getBySystemName(sname);
 

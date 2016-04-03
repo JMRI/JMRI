@@ -43,7 +43,7 @@ public class OptionPanel extends OperationsPreferencesPanel {
     JCheckBox routerYardCheckBox = new JCheckBox(Bundle.getMessage("EnableCarRoutingYard"));
     JCheckBox routerStagingCheckBox = new JCheckBox(Bundle.getMessage("EnableCarRoutingStaging"));
     JCheckBox routerAllTrainsBox = new JCheckBox(Bundle.getMessage("AllTrains"));
-    JCheckBox routerRestrictBox = new JCheckBox(Bundle.getMessage("EnableTrackDestinationRestrications"));
+    JCheckBox routerRestrictBox = new JCheckBox(Bundle.getMessage("EnableTrackDestinationRestrictions"));
 
     JCheckBox valueCheckBox = new JCheckBox(Bundle.getMessage("EnableValue"));
     JCheckBox rfidCheckBox = new JCheckBox(Bundle.getMessage("EnableRfid"));

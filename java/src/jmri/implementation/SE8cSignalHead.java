@@ -37,11 +37,6 @@ import org.slf4j.LoggerFactory;
 public class SE8cSignalHead extends DefaultSignalHead {
 
     /**
-     *
-     */
-    private static final long serialVersionUID = 7046319284833504499L;
-
-    /**
      * Primary ctor
      *
      * @param lowTO  Lower-numbered Turnout reference
