@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <?xml-stylesheet href="/xml/XSLT/DecoderID.xsl" type="text/xsl"?>
 <decoderIndex-config xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="http://jmri.org/xml/schema/decoder.xsd">
-  <!--Written by JMRI version 4.3.4ish-201603121324-Matt H-R24b7c6f on Sat Mar 12 14:24:51 CET 2016 $Id$-->
-  <decoderIndex version="704">
+  <!--Written by JMRI version 4.3.5ish-201604031726-Alain Le Marchand on Sun Apr 03 19:26:39 CEST 2016 $Id$-->
+  <decoderIndex version="706">
     <mfgList nmraListDate="2015-03-06" updated="2015-03-25" lastadd="107,124,126,128,134">
       <manufacturer mfg="NMRA" mfgID="999" />
       <manufacturer mfg="A-Train Electronics" mfgID="137" />
@@ -7005,6 +7005,50 @@
           <functionlabel num="26" lockable="true">Flange Noise</functionlabel>
           <functionlabel num="27" lockable="true">Sand Drop</functionlabel>
           <functionlabel num="28" lockable="true">Air Release</functionlabel>
+        </functionlabels>
+      </family>
+      <family name="Sound Decoders - N Scale" mfg="MRC" lowVersionID="19" highVersionID="20" comment="Synchronized Sound Brilliance(TM) Decoders" file="MRC_sound1961.xml">
+        <!-- note All 28 functions are NMRA compatible -->
+        <model model="1961 - N Scale - Model Power Pacific/Mikado" numOuts="2" numFns="28" maxTotalCurrent="1.0A" extFnsMRC="yes" formFactor="N" connector="unspecified" comment="&lt;html&gt;N-Scale, 16 Bit,&lt;br&gt; with multiple types (10 chuffs, 17 whistles, 8 bells)&lt;/html&gt;">
+          <output name="1" label="White" connection="wire" />
+          <output name="2" label="Yellow" connection="wire" />
+          <size length="29.5" width="10.6" height="5" units="mm" />
+        </model>
+        <functionlabels>
+          <functionlabel num="0" lockable="true">Headlight</functionlabel>
+          <functionlabel num="1" lockable="true">Bell</functionlabel>
+          <functionlabel num="2" lockable="false">Whistle</functionlabel>
+          <functionlabel num="3" lockable="false">Long Air Release</functionlabel>
+          <functionlabel num="4" lockable="false">Coupling</functionlabel>
+          <functionlabel num="5" lockable="false">Brake squeal/release</functionlabel>
+          <!-- Brake squeal (moving) and brake release (idle)-->
+          <functionlabel num="6" lockable="true">Chuff sound on/off</functionlabel>
+          <!-- Chuff sound on/off (Drifting) -all other sounds on -->
+          <functionlabel num="7" lockable="false">Fire box</functionlabel>
+          <!-- Fire box open/close -->
+          <functionlabel num="8" lockable="false">Water injector</functionlabel>
+          <functionlabel num="9" lockable="false">Metal crank/Steam</functionlabel>
+          <!-- Metal crank sound on/off (moving), steam associated sound (idle) -->
+          <functionlabel num="10" lockable="false">Water filling</functionlabel>
+          <functionlabel num="11" lockable="false">Blower hiss</functionlabel>
+          <functionlabel num="12" lockable="true">All sounds on/off</functionlabel>
+          <functionlabel num="13" lockable="false">Master vol. reduce by 2</functionlabel>
+          <functionlabel num="14" lockable="false">Master vol. increase by 2</functionlabel>
+          <functionlabel num="15" lockable="false">Flange noise</functionlabel>
+          <functionlabel num="16" lockable="false">Shoveling</functionlabel>
+          <functionlabel num="17" lockable="false">Coal auger</functionlabel>
+          <functionlabel num="18" lockable="false">Bell type select</functionlabel>
+          <functionlabel num="19" lockable="false">Whistle type select</functionlabel>
+          <functionlabel num="20" lockable="false">Air hose firing/uncoupling lever</functionlabel>
+          <!-- Air hose firing/uncoupling lever -->
+          <functionlabel num="21" lockable="false">Flange noise</functionlabel>
+          <functionlabel num="22" lockable="false">Associated loco sound</functionlabel>
+          <functionlabel num="23" lockable="false">Flange noise</functionlabel>
+          <functionlabel num="24" lockable="false">Chuff type select</functionlabel>
+          <functionlabel num="25" lockable="false">Long air release</functionlabel>
+          <functionlabel num="26" lockable="false">Sand dropping</functionlabel>
+          <functionlabel num="27" lockable="false">Associated loco sound</functionlabel>
+          <functionlabel num="28" lockable="false">Associated loco sound</functionlabel>
         </functionlabels>
       </family>
       <family name="Brilliance Sound Decoders" mfg="MRC" lowVersionID="32" highVersionID="32" file="MRC_soundbrilliance1630.xml">
@@ -19289,6 +19333,14 @@
       </family>
       <family name="Quad-LN_S" mfg="Tam Valley Depot" type="stationary" comment="The Quad-LN_S is programmed in OPs mode except for the device address." file="TamValleyDepot_QuadLn_S_11.xml">
         <model model="Quad-LN_S_v1" comment="4 Servo Driver with Signaling or 4 additonal Servos" lowVersionID="6" />
+      </family>
+      <family name="tOm NMJ" mfg="Tehnologistic (train-O-matic)" file="TrainOMatic_NMJ_224.xml">
+        <model model="NMJ Skd 224" numOuts="4" lowVersionID="1">
+          <output name="1" label="Out1" />
+          <output name="2" label="Out2" />
+          <output name="3" label="Out3" />
+          <output name="4" label="Out4" />
+        </model>
       </family>
       <family name="Shine Plus" mfg="Tehnologistic (train-O-matic)" file="TrainOMatic_ShinePlus.xml">
         <model model="Shine Plus Midi Digi" lowVersionID="0" highVersionID="255" numOuts="12" numFns="15">
