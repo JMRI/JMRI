@@ -93,25 +93,44 @@ public class CarsTableModel extends javax.swing.table.AbstractTableModel impleme
         updateList();
     }
 
+    /**
+     * Not all columns in the Cars table are shown. This was done to limit the
+     * width of the table. Only one column from the following groups is shown at
+     * any one time.
+     * <p>
+     * Load, Color, and RWE Load are grouped together.
+     * <p>
+     * Destination, Final Destination, and RWE Destination are grouped together.
+     * <p>
+     * Moves, Built, Owner, Value, RFID, Wait, Pickup, and Last are grouped
+     * together.
+     * 
+     * @param sort
+     */
     public void setSort(int sort) {
         _sort = sort;
         updateList();
         XTableColumnModel tcm = (XTableColumnModel) _table.getColumnModel();
-        if (sort == SORTBY_COLOR || sort == SORTBY_LOAD) {
+        if (sort == SORTBY_COLOR || sort == SORTBY_LOAD || sort == SORTBY_RWE) {
             tcm.setColumnVisible(tcm.getColumnByModelIndex(LOAD_COLUMN), sort == SORTBY_LOAD);
             tcm.setColumnVisible(tcm.getColumnByModelIndex(COLOR_COLUMN), sort == SORTBY_COLOR);
-            tcm.setColumnVisible(tcm.getColumnByModelIndex(RWE_LOAD_COLUMN), false);
-        } else if (sort == SORTBY_DESTINATION || sort == SORTBY_FINALDESTINATION || sort == SORTBY_RWE) {
+            tcm.setColumnVisible(tcm.getColumnByModelIndex(RWE_LOAD_COLUMN), sort == SORTBY_RWE);
+        }
+        if (sort == SORTBY_DESTINATION || sort == SORTBY_FINALDESTINATION || sort == SORTBY_RWE) {
             tcm.setColumnVisible(tcm.getColumnByModelIndex(DESTINATION_COLUMN), sort == SORTBY_DESTINATION);
             tcm.setColumnVisible(tcm.getColumnByModelIndex(FINAL_DESTINATION_COLUMN), sort == SORTBY_FINALDESTINATION);
             tcm.setColumnVisible(tcm.getColumnByModelIndex(RWE_COLUMN), sort == SORTBY_RWE);
-            tcm.setColumnVisible(tcm.getColumnByModelIndex(RWE_LOAD_COLUMN), sort == SORTBY_RWE);
-            tcm.setColumnVisible(tcm.getColumnByModelIndex(LOAD_COLUMN), sort != SORTBY_RWE);
-            if (sort == SORTBY_RWE) {
-                tcm.setColumnVisible(tcm.getColumnByModelIndex(COLOR_COLUMN), false);
-            }
-        } else if (sort == SORTBY_MOVES || sort == SORTBY_BUILT || sort == SORTBY_OWNER || sort == SORTBY_VALUE
-                || sort == SORTBY_RFID || sort == SORTBY_WAIT || sort == SORTBY_PICKUP || sort == SORTBY_LAST) {
+            // show load column if color column isn't visible.
+            tcm.setColumnVisible(tcm.getColumnByModelIndex(LOAD_COLUMN),
+                    sort != SORTBY_RWE && !tcm.isColumnVisible(tcm.getColumnByModelIndex(COLOR_COLUMN)));
+        } else if (sort == SORTBY_MOVES ||
+                sort == SORTBY_BUILT ||
+                sort == SORTBY_OWNER ||
+                sort == SORTBY_VALUE ||
+                sort == SORTBY_RFID ||
+                sort == SORTBY_WAIT ||
+                sort == SORTBY_PICKUP ||
+                sort == SORTBY_LAST) {
             tcm.setColumnVisible(tcm.getColumnByModelIndex(MOVES_COLUMN), sort == SORTBY_MOVES);
             tcm.setColumnVisible(tcm.getColumnByModelIndex(BUILT_COLUMN), sort == SORTBY_BUILT);
             tcm.setColumnVisible(tcm.getColumnByModelIndex(OWNER_COLUMN), sort == SORTBY_OWNER);
@@ -177,7 +196,8 @@ public class CarsTableModel extends javax.swing.table.AbstractTableModel impleme
     // keep show checkboxes consistent during a session
     private static boolean isSelectVisible = false;
 
-    @edu.umd.cs.findbugs.annotations.SuppressFBWarnings(value = "ST_WRITE_TO_STATIC_FROM_INSTANCE_METHOD", justification = "GUI ease of use")
+    @edu.umd.cs.findbugs.annotations.SuppressFBWarnings(value = "ST_WRITE_TO_STATIC_FROM_INSTANCE_METHOD",
+            justification = "GUI ease of use")
     public void toggleSelectVisible() {
         XTableColumnModel tcm = (XTableColumnModel) _table.getColumnModel();
         isSelectVisible = !tcm.isColumnVisible(tcm.getColumnByModelIndex(SELECT_COLUMN));
@@ -260,7 +280,8 @@ public class CarsTableModel extends javax.swing.table.AbstractTableModel impleme
         return getCarList(_sort);
     }
 
-    @edu.umd.cs.findbugs.annotations.SuppressFBWarnings(value = "DB_DUPLICATE_SWITCH_CLAUSES", justification = "default case is sort by number")
+    @edu.umd.cs.findbugs.annotations.SuppressFBWarnings(value = "DB_DUPLICATE_SWITCH_CLAUSES",
+            justification = "default case is sort by number")
     public List<RollingStock> getCarList(int sort) {
         List<RollingStock> list;
         switch (sort) {
@@ -378,7 +399,7 @@ public class CarsTableModel extends javax.swing.table.AbstractTableModel impleme
             // load defaults, xml file data not found
             // Cars frame table column widths, starts with Select column and ends with Edit
             int[] tableColumnWidths = {60, 60, 60, 65, 35, 75, 75, 75, 65, 190, 190, 190, 190, 65, 50, 50, 50, 50, 50,
-                50, 50, 50, 65, 70};
+                    50, 50, 50, 65, 70};
             for (int i = 0; i < tcm.getColumnCount(); i++) {
                 tcm.getColumn(i).setPreferredWidth(tableColumnWidths[i]);
             }
@@ -697,7 +718,7 @@ public class CarsTableModel extends javax.swing.table.AbstractTableModel impleme
             }
             if (row >= 0) {
                 fireTableRowsUpdated(row, row);
-            // next is needed when only showing cars at a location or track
+                // next is needed when only showing cars at a location or track
             } else if (e.getPropertyName().equals(Car.TRACK_CHANGED_PROPERTY)) {
                 updateList();
                 fireTableDataChanged();

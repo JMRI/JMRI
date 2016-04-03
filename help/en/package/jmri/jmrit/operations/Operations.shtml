@@ -2334,8 +2334,28 @@
     another 10 cars to the track. Now the track could be overloaded until this train or a later
     train arrives and picks up the original 10 cars. Therefore you might need some temporary track
     space available to hold the new cars. So if you don't have "extra" space for cars, you might not
-    wnat to use this feature! Note that it is your responsibility when using planned pickups and not
+    want to use this feature! Note that it is your responsibility when using planned pickups and not
     the programs to build and terminate a train that eliminates the potential overloading.</p>
+
+   <p>The following is an example using planned pickups to get a desired set of car moves. Say
+    you only have two tracks at a location that can hold exactly three cars each. You place three
+    cars on each track for a total of six cars. You've configured the program to allow a local
+    switcher to swap the cars on each track. Without planned pickups, when you build the switcher
+    the program would find both tracks full and the build report will state that there isn't any
+    space available to move cars to either track. The program needs to find an empty spot for a car
+    before it can plan a move. With planned pickups set to 100% for both tracks, it allows the
+    program to plan three car set outs to the full track, because with planned pickups the space
+    consumed by the cars sitting there is ignored. This allows for a complete car swap between the two
+    tracks.</p>
+
+   <p>Now using the example above we'll show how easy it is to overload a track using planned
+    pickups. If we set the number of moves for the switcher to an odd number the program could
+    overload one of the two track. Let's try 5 moves for the switcher, with 5 moves the program
+    would pull three cars from one track and set them out to the other, and then pull two cars from
+    the other track and set them out to the other. Once the switching is complete, one track will
+    have two cars, and the other four! But there's only room for three! The track is overloaded by
+    one car. So in this example using even numbers for the switcher moves doesn't overload the
+    tracks, but odd number moves can.</p>
 
    <p>Guaranteeing that cars will be picked up from a track can be a bit tricky, so it is
     recommended that you not use this feature until you become an expert with regards to using this
