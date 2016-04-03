@@ -64,11 +64,11 @@ public class InternalSystemConnectionMemo extends jmri.jmrix.SystemConnectionMem
             InstanceManager.setReporterManager(reporterManager);
         }
         
-        if (throttleManager == null) {
-            // Install a debug throttle manager
-            throttleManager = new jmri.jmrix.debugthrottle.DebugThrottleManager(this);
-            jmri.InstanceManager.setThrottleManager(throttleManager);
-        }
+//         if (throttleManager == null) {
+//             // Install a debug throttle manager
+//             throttleManager = new jmri.jmrix.debugthrottle.DebugThrottleManager(this);
+//             jmri.InstanceManager.setThrottleManager(throttleManager);
+//         }
         
         configured = true;
     }
