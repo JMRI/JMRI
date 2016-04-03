@@ -401,7 +401,7 @@ public class VSDecoderManager implements PropertyChangeListener {
             return;
         }
         // Make sure we aren't already registered.
-        java.beans.PropertyChangeListener[] ll = r.getPropertyChangeListeners(h.getName());
+        java.beans.PropertyChangeListener[] ll = r.getPropertyChangeListenersByReference(h.getName());
         if (ll.length == 0) {
             r.addPropertyChangeListener(this, h.getName(), vsd_property_change_name);
         }
@@ -419,7 +419,7 @@ public class VSDecoderManager implements PropertyChangeListener {
             return;
         }
         // Make sure we aren't already registered.
-        java.beans.PropertyChangeListener[] ll = b.getPropertyChangeListeners(h.getName());
+        java.beans.PropertyChangeListener[] ll = b.getPropertyChangeListenersByReference(h.getName());
         if (ll.length == 0) {
             b.addPropertyChangeListener(this, h.getName(), vsd_property_change_name);
             log.debug("Added listener to bean " + b.getDisplayName() + " type " + b.getClass().getName());

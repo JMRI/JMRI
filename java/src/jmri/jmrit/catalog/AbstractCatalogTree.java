@@ -152,7 +152,7 @@ public abstract class AbstractCatalogTree extends DefaultTreeModel implements Ca
         }
     }
 
-    public synchronized PropertyChangeListener[] getPropertyChangeListeners(String name) {
+    public synchronized PropertyChangeListener[] getPropertyChangeListenersByReference(String name) {
         ArrayList<PropertyChangeListener> list = new ArrayList<>();
         Enumeration<PropertyChangeListener> en = register.keys();
         while (en.hasMoreElements()) {

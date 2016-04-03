@@ -55,17 +55,23 @@ public interface NamedBean {
     /**
      * Get a system-specific name. This encodes the hardware addressing
      * information.
+     * 
+     * @return the system-specific name.
      */
     public @Nonnull String getSystemName();
 
     /**
      * return user name if it exists, otherwise return System name
+     * 
+     * @return the user name or system-specific name
      */
     public @Nonnull String getDisplayName();
 
     /**
      * Returns a fully formatted display that includes the SystemName and
-     * UserName if set. UserName (SystemName) or SystemName
+     * UserName if set.
+     * 
+     * @return <code>UserName (SystemName)</code> or <code>SystemName</code>
      */
     public @Nonnull String getFullyFormattedDisplayName();
 
@@ -91,6 +97,8 @@ public interface NamedBean {
 
     /**
      * Remove a request for a call-back when a bound property changes.
+     * 
+     * @param l
      */
     public void removePropertyChangeListener(@Nullable java.beans.PropertyChangeListener l);
 
@@ -101,17 +109,23 @@ public interface NamedBean {
     /**
      * Get the textual reference for the specific listener
      *
+     * @param l the listener of interest
+     * @return the textual reference
      */
     public String getListenerRef(@Nonnull java.beans.PropertyChangeListener l);
 
     /**
-     * Returns a list of all the listerners references
+     * Returns a list of all the listeners references
+     * 
+     * @return a list of textual references
      */
     public ArrayList<String> getListenerRefs();
 
     /**
      * Number of current listeners. May return -1 if the information is not
      * available for some reason.
+     * 
+     * @return the number of listeners.
      */
     public int getNumPropertyChangeListeners();
 
@@ -123,7 +137,7 @@ public interface NamedBean {
      *             registered as referencing this namedBean
      * @return empty list if none
      */
-    public @Nonnull java.beans.PropertyChangeListener[] getPropertyChangeListeners(@Nonnull String name);
+    public @Nonnull java.beans.PropertyChangeListener[] getPropertyChangeListenersByReference(@Nonnull String name);
 
     /**
      * Deactivate this object, so that it releases as many resources as possible
@@ -151,6 +165,7 @@ public interface NamedBean {
      * form instead. (E.g. setCommandedState in Turnout) This provided to make
      * Jython script access easier to read.
      *
+     * @param s the state
      * @throws JmriException general error when cant do the needed operation
      */
     public void setState(int s) throws JmriException;
@@ -161,6 +176,8 @@ public interface NamedBean {
      * This generally shouldn't be used by Java code; use the class-specific
      * form instead. (E.g. getCommandedState in Turnout) This provided to make
      * Jython script access easier to read.
+     * 
+     * @return the state
      */
     public int getState();
 
@@ -186,17 +203,25 @@ public interface NamedBean {
      *<p>
      * Prior to JMRI 4.3, the key was of Object type.  It was 
      * constrained to String to make these more like normal Java Beans.
+     * 
+     * @param key
+     * @param value
      */
     public void setProperty(@Nonnull String key, Object value);
 
     /**
      * Retrieve the value associated with a key. If no value has been set for
      * that key, returns null.
+     * 
+     * @param key
+     * @return The value of the property or null.
      */
     public @Nullable Object getProperty(@Nonnull String key);
 
     /**
      * Remove the key/value pair against the NamedBean.
+     * 
+     * @param key
      */
     public void removeProperty(@Nonnull String key);
 
