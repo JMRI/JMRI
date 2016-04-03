@@ -123,7 +123,7 @@ public interface NamedBean {
      *             registered as referencing this namedBean
      * @return empty list if none
      */
-    public @Nonnull ArrayList<java.beans.PropertyChangeListener> getPropertyChangeListeners(@Nonnull String name);
+    public @Nonnull java.beans.PropertyChangeListener[] getPropertyChangeListeners(@Nonnull String name);
 
     /**
      * Deactivate this object, so that it releases as many resources as possible

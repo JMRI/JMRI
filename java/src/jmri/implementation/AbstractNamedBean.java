@@ -100,7 +100,7 @@ public abstract class AbstractNamedBean implements NamedBean, java.io.Serializab
         }
     }
 
-    public synchronized ArrayList<PropertyChangeListener> getPropertyChangeListeners(String name) {
+    public synchronized PropertyChangeListener[] getPropertyChangeListeners(String name) {
         ArrayList<PropertyChangeListener> list = new ArrayList<>();
         Enumeration<PropertyChangeListener> en = register.keys();
         while (en.hasMoreElements()) {
@@ -109,7 +109,7 @@ public abstract class AbstractNamedBean implements NamedBean, java.io.Serializab
                 list.add(l);
             }
         }
-        return list;
+        return list.toArray(new PropertyChangeListener[list.size()]);
     }
 
     /* This allows a meaning full list of places where the bean is in use!*/
