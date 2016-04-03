@@ -19,6 +19,7 @@ import javax.swing.JCheckBox;
 import javax.swing.JLabel;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
+import javax.swing.SortOrder;
 import jmri.ShutDownTask;
 import jmri.UserPreferencesManager;
 import jmri.implementation.QuietShutDownTask;
@@ -1067,7 +1068,7 @@ public class DefaultUserMessagePreferences extends jmri.jmrit.XmlFile implements
 
     Hashtable<String, Hashtable<String, TableColumnPreferences>> tableColumnPrefs = new Hashtable<String, Hashtable<String, TableColumnPreferences>>();
 
-    public void setTableColumnPreferences(String table, String column, int order, int width, int sort, boolean hidden) {
+    public void setTableColumnPreferences(String table, String column, int order, int width, SortOrder sort, boolean hidden) {
         if (!tableColumnPrefs.containsKey(table)) {
             tableColumnPrefs.put(table, new Hashtable<String, TableColumnPreferences>());
         }
@@ -1095,14 +1096,14 @@ public class DefaultUserMessagePreferences extends jmri.jmrit.XmlFile implements
         return -1;
     }
 
-    public int getTableColumnSort(String table, String column) {
+    public SortOrder getTableColumnSort(String table, String column) {
         if (tableColumnPrefs.containsKey(table)) {
             Hashtable<String, TableColumnPreferences> columnPrefs = tableColumnPrefs.get(table);
             if (columnPrefs.containsKey(column)) {
                 return columnPrefs.get(column).getSort();
             }
         }
-        return 0;
+        return SortOrder.UNSORTED;
     }
 
     public boolean getTableColumnHidden(String table, String column) {
@@ -1399,10 +1400,10 @@ public class DefaultUserMessagePreferences extends jmri.jmrit.XmlFile implements
 
         int order;
         int width;
-        int sort;
+        SortOrder sort;
         boolean hidden;
 
-        TableColumnPreferences(int order, int width, int sort, boolean hidden) {
+        TableColumnPreferences(int order, int width, SortOrder sort, boolean hidden) {
             this.order = order;
             this.width = width;
             this.sort = sort;
@@ -1417,7 +1418,7 @@ public class DefaultUserMessagePreferences extends jmri.jmrit.XmlFile implements
             return width;
         }
 
-        int getSort() {
+        SortOrder getSort() {
             return sort;
         }
 
