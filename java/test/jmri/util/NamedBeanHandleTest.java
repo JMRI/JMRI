@@ -1,4 +1,3 @@
-// NamedBeanHandleTest.java
 package jmri.util;
 
 import jmri.Turnout;
@@ -22,10 +21,6 @@ public class NamedBeanHandleTest extends TestCase {
 
     public void testHoldsTurnout() {
         Turnout t = new AbstractTurnout("name") {
-            /**
-             *
-             */
-            private static final long serialVersionUID = -449495740652645244L;
 
             protected void forwardCommandChangeToLayout(int s) {
             }

@@ -14,6 +14,7 @@
 <!-- for more details.                                                      -->
 <decoder-config xmlns:xi="http://www.w3.org/2001/XInclude" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="http://jmri.org/xml/schema/decoder.xsd">
   <version author="Mark Waters mark16jmri@mybtinternet.com" version="1" lastUpdated="20110530"/>
+  <version author="Mark Waters mark16jmri@mybtinternet.com" version="1.5" lastUpdated="20160311"/>
   <!-- This decoder configuration file is based on the Zimo_MX640_v9.xml                     -->
   <!-- V 1 file, dated 20090222. With the Sound tabs from Jeff Schmaltz' MX69/MX690 file.    -->
   <!--                                                                                       -->
@@ -30,6 +31,7 @@
   <!-- v1.2,  "version 32 firmware" inclusion of sound control CV's and "coast" function for diesels  Nigel Cliffe. 17th Nov 2012 -->
   <!-- v1.3,  Extended Sound Volume controls to cover FnKeys F20-F28.   Nigel Cliffe, 7 March 2014 -->
   <!-- v1.4,  Changed to use generic CV739-CV744.xml file.   Mark Waters, 4 Feb 2015 -->
+  <!-- v1.5,  Added Sound Samples Pane.   Mark Waters, 11 Mar 2016 -->
   <decoder>
     <family name="Zimo Unified software (version 32+)" mfg="Zimo">
       <model model="MX640 version 32+" lowVersionID="32" highVersionID="35" maxInputVolts="24V" maxMotorCurrent="1.2A, peak=2.5A" maxTotalCurrent="1.2A" formFactor="HO" numOuts="11" numFns="14" productID="210">
@@ -163,6 +165,7 @@
   <xi:include href="http://jmri.org/xml/decoders/zimo/PaneInputMapping.xml"/>
   <!-- Begin sound-only panes -->
   <xi:include href="http://jmri.org/xml/decoders/zimo/PaneSoundLevels.xml"/>
+  <xi:include href="http://jmri.org/xml/decoders/zimo/PaneSoundSamples.xml"/>
   <xi:include href="http://jmri.org/xml/decoders/zimo/PaneSound.xml"/>
   <xi:include href="http://jmri.org/xml/decoders/zimo/PaneSound-ElectricLoco.xml"/>
   <xi:include href="http://jmri.org/xml/decoders/zimo/PaneSound-DieselLoco.xml"/>

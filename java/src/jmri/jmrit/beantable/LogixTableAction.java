@@ -1,4 +1,3 @@
-// LogixTableAction.java
 package jmri.jmrit.beantable;
 
 import java.awt.Component;
@@ -104,8 +103,6 @@ import org.slf4j.LoggerFactory;
  */
 public class LogixTableAction extends AbstractTableAction {
 
-    private static final long serialVersionUID = -6328536222461751495L;
-
     /**
      * Create an action with a specific title.
      * <P>
@@ -128,7 +125,7 @@ public class LogixTableAction extends AbstractTableAction {
     }
 
     public LogixTableAction() {
-        this("Logix Table");
+        this(Bundle.getMessage("TitleLogixTable"));
     }
 
     static final ResourceBundle rbx = ResourceBundle.getBundle("jmri.jmrit.beantable.LogixTableBundle");
@@ -143,10 +140,6 @@ public class LogixTableAction extends AbstractTableAction {
      */
     protected void createModel() {
         m = new BeanTableDataModel() {
-            /**
-             *
-             */
-            private static final long serialVersionUID = 4656524306247345738L;
             // overlay the state column with the edit column
             static public final int ENABLECOL = VALUECOL;
             static public final int EDITCOL = DELETECOL;
@@ -412,7 +405,6 @@ public class LogixTableAction extends AbstractTableAction {
 
     class RefDialog extends JDialog {
 
-        private static final long serialVersionUID = -8265381404736283286L;
         JTextField _devNameField;
         java.awt.Frame _parent;
 
@@ -2175,7 +2167,7 @@ public class LogixTableAction extends AbstractTableAction {
     }
 
     @SuppressWarnings("fallthrough")
-    @edu.umd.cs.findbugs.annotations.SuppressWarnings(value = "SF_SWITCH_FALLTHROUGH")
+    @edu.umd.cs.findbugs.annotations.SuppressFBWarnings(value = "SF_SWITCH_FALLTHROUGH")
     boolean logicTypeChanged(ActionEvent e) {
         int type = _operatorBox.getSelectedIndex() + 1;
         if (type == _logicType) {
@@ -2186,7 +2178,7 @@ public class LogixTableAction extends AbstractTableAction {
         switch (type) {
             case Conditional.ALL_AND:
                 oper = Conditional.OPERATOR_AND;
-            // fall through
+            // fall through intended here
             case Conditional.ALL_OR:
                 for (int i = 1; i < _variableList.size(); i++) {
                     _variableList.get(i).setOpern(oper);
@@ -2195,6 +2187,7 @@ public class LogixTableAction extends AbstractTableAction {
                 break;
             case Conditional.MIXED:
                 _antecedentPanel.setVisible(true);
+                break;
             default:
                 break;
         }
@@ -3109,6 +3102,9 @@ public class LogixTableAction extends AbstractTableAction {
                         case Audio.CMD_RESET_POSITION:
                             _actionBox.setSelectedIndex(9);
                             break;
+                        default:
+                            log.warn("Unexpected _curAction.getActionData() of {}", _curAction.getActionData());
+                            break;
                     }
                 }
                 break;
@@ -3425,7 +3421,7 @@ public class LogixTableAction extends AbstractTableAction {
                     } else if (actionType == Conditional.ACTION_SET_TRAIN_NAME) {
                         _shortTextPanel.setToolTipText(rbx.getString("DataHintTrainName"));
                         l.setText(rbx.getString("LabelTrainName"));
-                    } else if (actionType == Conditional.ACTION_THROTTLE_FACTOR) {
+                    } else { // must be Conditional.ACTION_THROTTLE_FACTOR, so treat as such
                         _shortTextPanel.setToolTipText(rbx.getString("DataHintThrottleFactor"));
                         l.setText(rbx.getString("LabelThrottleFactor"));
                     }
@@ -4301,6 +4297,9 @@ public class LogixTableAction extends AbstractTableAction {
                         case 9:
                             _curAction.setActionData(Audio.CMD_RESET_POSITION);
                             break;
+                        default:
+                            log.warn("Unexpected _actionBox.getSelectedIndex() of {}", _actionBox.getSelectedIndex());
+                            break;
                     }
                 }
                 break;
@@ -4524,6 +4523,8 @@ public class LogixTableAction extends AbstractTableAction {
             case Conditional.ACTION_SET_LIGHT_TRANSITION_TIME:
                 errorNum = "Error29";
                 break;
+            default:
+                log.warn("Unexpected action type {} in displayBadNumberReference", actionType);
         }
         javax.swing.JOptionPane.showMessageDialog(
                 editConditionalFrame, java.text.MessageFormat.format(rbx.getString("Error9"),
@@ -4832,14 +4833,14 @@ public class LogixTableAction extends AbstractTableAction {
         String hour = null;
         String minute = null;
         try {
-            if (index > 0) {
+            if (index > 0) { // : after start
                 hour = s.substring(0, index);
-                if (index >= 1) {
+                if (index+1 < s.length()) { // check for : at end
                     minute = s.substring(index + 1);
                 } else {
                     minute = "0";
                 }
-            } else if (index == 0) {
+            } else if (index == 0) { // : at start
                 hour = "0";
                 minute = s.substring(index + 1);
             } else {
@@ -4932,11 +4933,6 @@ public class LogixTableAction extends AbstractTableAction {
      */
     public class ConditionalTableModel extends AbstractTableModel implements
             PropertyChangeListener {
-
-        /**
-         *
-         */
-        private static final long serialVersionUID = 5961791138611174353L;
 
         public static final int SNAME_COLUMN = 0;
 
@@ -5155,11 +5151,6 @@ public class LogixTableAction extends AbstractTableAction {
      */
     public class VariableTableModel extends AbstractTableModel {
 
-        /**
-         *
-         */
-        private static final long serialVersionUID = 5440254470481292065L;
-
         public static final int ROWNUM_COLUMN = 0;
 
         public static final int AND_COLUMN = 1;
@@ -5361,11 +5352,6 @@ public class LogixTableAction extends AbstractTableAction {
      */
     public class ActionTableModel extends AbstractTableModel {
 
-        /**
-         *
-         */
-        private static final long serialVersionUID = 6959722170203666817L;
-
         public static final int DESCRIPTION_COLUMN = 0;
 
         public static final int EDIT_COLUMN = 1;
@@ -5471,4 +5457,3 @@ public class LogixTableAction extends AbstractTableAction {
 
     private final static Logger log = LoggerFactory.getLogger(LogixTableAction.class.getName());
 }
-/* @(#)LogixTableAction.java */

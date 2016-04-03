@@ -38,11 +38,8 @@ import org.slf4j.LoggerFactory;
  *
  * @author Bob Jacobsen Copyright (c) 2002
  * @author Pete Cressman Copyright (c) 2010 2012
- * @version $Revision$
  */
 public class IndicatorTurnoutIcon extends TurnoutIcon implements IndicatorTrack {
-
-    private static final long serialVersionUID = 7715842501699997420L;
 
     HashMap<String, HashMap<Integer, NamedIcon>> _iconMaps;
 
@@ -103,7 +100,7 @@ public class IndicatorTurnoutIcon extends TurnoutIcon implements IndicatorTrack 
         return super.finishClone(pos);
     }
 
-    @edu.umd.cs.findbugs.annotations.SuppressWarnings(value = "EI_EXPOSE_REP", justification = "OK until Java 1.6 allows more efficient return of copy")
+    @edu.umd.cs.findbugs.annotations.SuppressFBWarnings(value = "EI_EXPOSE_REP", justification = "OK until Java 1.6 allows more efficient return of copy")
     public HashMap<String, HashMap<Integer, NamedIcon>> getIconMaps() {
         return _iconMaps;
     }

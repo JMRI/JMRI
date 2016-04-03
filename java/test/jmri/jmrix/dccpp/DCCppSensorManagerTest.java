@@ -1,4 +1,3 @@
-// DCCppSensorManagerTest.java
 package jmri.jmrix.dccpp;
 
 import jmri.Sensor;
@@ -15,7 +14,6 @@ import org.slf4j.LoggerFactory;
  *
  * @author	Paul Bender Copyright (c) 2003
  * @author	Mark Underwood Copyright (c) 2003
- * @version $Revision$
  */
 public class DCCppSensorManagerTest extends TestCase {
 

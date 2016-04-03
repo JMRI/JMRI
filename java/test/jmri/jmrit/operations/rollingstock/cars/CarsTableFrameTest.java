@@ -17,7 +17,6 @@ import junit.framework.TestSuite;
  * Tests for the Operations CarsTableFrame class
  *
  * @author	Dan Boudreau Copyright (C) 2009
- * @version $Revision$
  */
 public class CarsTableFrameTest extends OperationsSwingTestCase {
 

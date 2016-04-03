@@ -9,7 +9,7 @@ import java.util.prefs.Preferences;
 import jmri.beans.Bean;
 import jmri.profile.Profile;
 import jmri.profile.ProfileUtils;
-import jmri.spi.InitializationException;
+import jmri.util.prefs.InitializationException;
 import jmri.spi.PreferencesProvider;
 import jmri.util.swing.FontComboUtil;
 import org.slf4j.Logger;
@@ -100,7 +100,7 @@ public class SystemConsolePreferencesManager extends Bean implements Preferences
     public void setScheme(int scheme) {
         int oldScheme = this.scheme;
         this.scheme = scheme;
-        this.propertyChangeSupport.firePropertyChange(SCHEME, oldScheme, scheme);
+        this.firePropertyChange(SCHEME, oldScheme, scheme);
         SystemConsole.getInstance().setScheme(scheme);
     }
 
@@ -123,7 +123,7 @@ public class SystemConsolePreferencesManager extends Bean implements Preferences
         int oldFontSize = this.fontSize;
         this.fontSize = fontSize < 6 ? 6 : fontSize > 24 ? 24 : fontSize;
         if (this.fontSize != oldFontSize) {
-            this.propertyChangeSupport.firePropertyChange(FONT_SIZE, oldFontSize, this.fontSize);
+            this.firePropertyChange(FONT_SIZE, oldFontSize, this.fontSize);
             SystemConsole.getInstance().setFontSize(this.fontSize);
         }
     }
@@ -145,7 +145,7 @@ public class SystemConsolePreferencesManager extends Bean implements Preferences
             int oldFontStyle = this.fontStyle;
             this.fontStyle = fontStyle;
             if (this.fontStyle != oldFontStyle) {
-                this.propertyChangeSupport.firePropertyChange(FONT_STYLE, oldFontStyle, fontStyle);
+                this.firePropertyChange(FONT_STYLE, oldFontStyle, fontStyle);
                 SystemConsole.getInstance().setFontStyle(this.fontStyle);
             }
         }
@@ -165,7 +165,7 @@ public class SystemConsolePreferencesManager extends Bean implements Preferences
         if (FontComboUtil.getFonts(FontComboUtil.MONOSPACED).contains(fontFamily)) {
             String oldFontFamily = this.fontFamily;
             this.fontFamily = fontFamily;
-            this.propertyChangeSupport.firePropertyChange(FONT_FAMILY, oldFontFamily, fontFamily);
+            this.firePropertyChange(FONT_FAMILY, oldFontFamily, fontFamily);
             SystemConsole.getInstance().setFontFamily(this.getFontFamily());
         } else {
             log.warn("Incompatible console font \"{}\" - using \"{}\"", fontFamily, this.getFontFamily());
@@ -190,7 +190,7 @@ public class SystemConsolePreferencesManager extends Bean implements Preferences
                 || wrapStyle == SystemConsole.WRAP_STYLE_WORD) {
             int oldWrapStyle = this.wrapStyle;
             this.wrapStyle = wrapStyle;
-            this.propertyChangeSupport.firePropertyChange(WRAP_STYLE, oldWrapStyle, wrapStyle);
+            this.firePropertyChange(WRAP_STYLE, oldWrapStyle, wrapStyle);
             SystemConsole.getInstance().setWrapStyle(this.getWrapStyle());
         }
     }

@@ -1,4 +1,3 @@
-// LIUSBServerAdapter.java
 package jmri.jmrix.lenz.liusbserver;
 
 import java.io.BufferedReader;
@@ -27,7 +26,6 @@ import org.slf4j.LoggerFactory;
  * device puts the system into service mode.
  *
  * @author	Paul Bender (C) 2009-2010
- * @version	$Revision$
  */
 public class LIUSBServerAdapter extends XNetNetworkPortController {
 
@@ -57,11 +55,11 @@ public class LIUSBServerAdapter extends XNetNetworkPortController {
         super();
         option1Name = "BroadcastPort";
         options.put(option1Name, new Option("Broadcast Port", new String[]{String.valueOf(LIUSBServerAdapter.BROADCAST_TCP_PORT), ""}));
-        this.manufacturerName = jmri.jmrix.DCCManufacturerList.LENZ;
+        this.manufacturerName = jmri.jmrix.lenz.LenzConnectionTypeList.LENZ;
     }
 
     @Override
-    public void connect() throws Exception {
+    synchronized public void connect() throws Exception {
         opened = false;
         if (log.isDebugEnabled()) {
             log.debug("connect called");

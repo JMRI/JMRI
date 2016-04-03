@@ -1,4 +1,3 @@
-// LI101Adapter.java
 package jmri.jmrix.lenz.li101;
 
 import gnu.io.CommPortIdentifier;
@@ -9,6 +8,7 @@ import gnu.io.SerialPortEventListener;
 import java.io.DataInputStream;
 import java.io.DataOutputStream;
 import java.io.InputStream;
+import java.io.IOException;
 import jmri.jmrix.lenz.LenzCommandStation;
 import jmri.jmrix.lenz.XNetInitializationManager;
 import jmri.jmrix.lenz.XNetPacketizer;
@@ -24,7 +24,6 @@ import org.slf4j.LoggerFactory;
  *
  * @author	Bob Jacobsen Copyright (C) 2002
  * @author Paul Bender, Copyright (C) 2003-2010
- * @version	$Revision$
  */
 public class LI101Adapter extends XNetSerialPortController implements jmri.jmrix.SerialPortAdapter {
 
@@ -32,7 +31,7 @@ public class LI101Adapter extends XNetSerialPortController implements jmri.jmrix
         super();
         option1Name = "FlowControl";
         options.put(option1Name, new Option("LI101 connection uses : ", validOption1));
-        this.manufacturerName = jmri.jmrix.DCCManufacturerList.LENZ;
+        this.manufacturerName = jmri.jmrix.lenz.LenzConnectionTypeList.LENZ;
     }
 
     public String openPort(String portName, String appName) {
@@ -66,12 +65,7 @@ public class LI101Adapter extends XNetSerialPortController implements jmri.jmrix
             serialStream = activeSerialPort.getInputStream();
 
             // purge contents, if any
-            int count = serialStream.available();
-            log.debug("input stream shows " + count + " bytes available");
-            while (count > 0) {
-                serialStream.skip(count);
-                count = serialStream.available();
-            }
+            purgeStream(serialStream);
 
             // report status?
             if (log.isInfoEnabled()) {
@@ -199,10 +193,14 @@ public class LI101Adapter extends XNetSerialPortController implements jmri.jmrix
 
         } catch (gnu.io.NoSuchPortException p) {
             return handlePortNotFound(p, portName, log);
-        } catch (Exception ex) {
-            log.error("Unexpected exception while opening port " + portName + " trace follows: " + ex);
-            ex.printStackTrace();
-            return "Unexpected error while opening port " + portName + ": " + ex;
+        } catch (IOException ioe) {
+            log.error("IOException exception while opening port " + portName + " trace follows: " + ioe);
+            ioe.printStackTrace();
+            return "IO exception while opening port " + portName + ": " + ioe;
+        } catch (java.util.TooManyListenersException tmle) {
+            log.error("TooManyListenersException while opening port " + portName + " trace follows: " + tmle);
+            tmle.printStackTrace();
+            return "Too Many Listeners exception while opening port " + portName + ": " + tmle;
         }
 
         return null; // normal operation
@@ -285,7 +283,7 @@ public class LI101Adapter extends XNetSerialPortController implements jmri.jmrix
      * Get an array of valid baud rates. This is currently just a message saying
      * its fixed
      */
-    @edu.umd.cs.findbugs.annotations.SuppressWarnings(value = "EI_EXPOSE_REP") // OK to expose array instead of copy until Java 1.6
+    @edu.umd.cs.findbugs.annotations.SuppressFBWarnings(value = "EI_EXPOSE_REP") // OK to expose array instead of copy until Java 1.6
     public String[] validBaudRates() {
         return validSpeeds;
     }

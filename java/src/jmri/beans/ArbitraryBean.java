@@ -25,7 +25,7 @@ public abstract class ArbitraryBean extends Bean {
         } else {
             Object oldValue = this.arbitraryPropertySupport.getProperty(key);
             this.arbitraryPropertySupport.setProperty(key, value);
-            this.propertyChangeSupport.firePropertyChange(key, oldValue, value);
+            this.firePropertyChange(key, oldValue, value);
         }
     }
 
@@ -36,7 +36,7 @@ public abstract class ArbitraryBean extends Bean {
         } else {
             Object oldValue = this.arbitraryPropertySupport.getIndexedProperty(key, index);
             this.arbitraryPropertySupport.setIndexedProperty(key, index, value);
-            this.propertyChangeSupport.fireIndexedPropertyChange(key, index, oldValue, value);
+            this.fireIndexedPropertyChange(key, index, oldValue, value);
         }
     }
 

@@ -1,4 +1,3 @@
-// SoundTest.java
 package jmri.jmrit.sound;
 
 import junit.framework.Test;
@@ -9,7 +8,6 @@ import junit.framework.TestSuite;
  * Invokes complete set of tests in the jmri.jmrit.sound tree
  *
  * @author	Bob Jacobsen Copyright 2001, 2003
- * @version $Revision$
  */
 public class SoundTest extends TestCase {
 

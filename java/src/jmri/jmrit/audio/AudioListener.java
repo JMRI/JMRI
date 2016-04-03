@@ -1,4 +1,3 @@
-// AudioListener.java
 package jmri.jmrit.audio;
 
 import javax.vecmath.Vector3f;
@@ -34,7 +33,6 @@ import jmri.Audio;
  * <P>
  *
  * @author Matthew Harris copyright (c) 2009
- * @version $Revision$
  */
 public interface AudioListener extends Audio {
 
@@ -259,5 +257,3 @@ public interface AudioListener extends Audio {
     public float getMetersPerUnit();
 
 }
-
-/* @(#)AudioListener.java */

@@ -24,6 +24,7 @@ public class AbstractThrottleTest extends TestCase {
     protected void setUp() throws Exception {
         apps.tests.Log4JFixture.setUp(); 
         super.setUp();
+        jmri.util.JUnitUtil.resetInstanceManager();
         InstanceManager.setThrottleManager(new AbstractThrottleManager() {
 
             @Override
@@ -49,7 +50,6 @@ public class AbstractThrottleTest extends TestCase {
 
     @Override
     protected void tearDown() throws Exception {
-        InstanceManager.setThrottleManager(null);
         super.tearDown();
         apps.tests.Log4JFixture.tearDown(); 
     }

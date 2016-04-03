@@ -1,9 +1,8 @@
-/* GlobalProgrammerManager.java */
 package jmri;
 
-import edu.umd.cs.findbugs.annotations.NonNull;
-import edu.umd.cs.findbugs.annotations.Nullable;
-import edu.umd.cs.findbugs.annotations.CheckForNull;
+import javax.annotation.Nonnull;
+import javax.annotation.Nullable;
+import javax.annotation.CheckForNull;
 
 /**
  * Get access to available {@link Programmer} objects.
@@ -59,7 +58,7 @@ public interface GlobalProgrammerManager {
      * Return access to the Global Mode Programmer, so that it can be used
      * elsewhere.
      */
-    public void releaseGlobalProgrammer(@NonNull Programmer p);
+    public void releaseGlobalProgrammer(@Nonnull Programmer p);
 
     /**
      * Convenience method to check whether you'll be able to get a Global Mode
@@ -74,7 +73,7 @@ public interface GlobalProgrammerManager {
      * ProgrammerManagers directly in e.g. JComboBoxes, so it should return a
      * user-provided name for this particular one.
      */
-    @NonNull
+    @Nonnull
     public String getUserName();
 
     /**
@@ -82,9 +81,6 @@ public interface GlobalProgrammerManager {
      * ProgrammerManagers directly in e.g. JComboBoxes, so it should return a
      * user-provided name for this particular one.
      */
-    @NonNull
+    @Nonnull
     public String toString();
 }
-
-
-/* @(#)GlobalProgrammerManager.java */

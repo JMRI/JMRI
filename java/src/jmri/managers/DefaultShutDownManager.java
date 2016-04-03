@@ -1,4 +1,3 @@
-// DefaultShutDownManager.java
 package jmri.managers;
 
 import java.util.ArrayList;
@@ -27,7 +26,6 @@ import org.slf4j.LoggerFactory;
  * in a ShutDownTask is treated as permission to continue after logging.
  *
  * @author Bob Jacobsen Copyright (C) 2008
- * @version	$Revision$
  */
 public class DefaultShutDownManager implements ShutDownManager {
 
@@ -85,7 +83,7 @@ public class DefaultShutDownManager implements ShutDownManager {
      * the shutdown was aborted by the user, in which case the program should
      * continue to operate.
      */
-    @edu.umd.cs.findbugs.annotations.SuppressWarnings(value = "DM_EXIT") // OK to directly exit standalone main
+    @edu.umd.cs.findbugs.annotations.SuppressFBWarnings(value = "DM_EXIT") // OK to directly exit standalone main
     @Override
     public Boolean shutdown() {
         return shutdown(0, true);
@@ -101,7 +99,7 @@ public class DefaultShutDownManager implements ShutDownManager {
      * shell script (Linux/Mac OS X/UNIX) can catch the exit status and restart
      * the java program.
      */
-    @edu.umd.cs.findbugs.annotations.SuppressWarnings(value = "DM_EXIT") // OK to directly exit standalone main
+    @edu.umd.cs.findbugs.annotations.SuppressFBWarnings(value = "DM_EXIT") // OK to directly exit standalone main
     @Override
     public Boolean restart() {
         return shutdown(100, true);
@@ -117,7 +115,7 @@ public class DefaultShutDownManager implements ShutDownManager {
      * @param exit   True if System.exit() should be called if all tasks are executed correctly.
      * @return false if shutdown or restart failed.
      */
-    @edu.umd.cs.findbugs.annotations.SuppressWarnings(value = "DM_EXIT") // OK to directly exit standalone main
+    @edu.umd.cs.findbugs.annotations.SuppressFBWarnings(value = "DM_EXIT") // OK to directly exit standalone main
     protected Boolean shutdown(int status, boolean exit) {
         if (!shuttingDown) {
             shuttingDown = true;
@@ -148,5 +146,3 @@ public class DefaultShutDownManager implements ShutDownManager {
 
     private final static Logger log = LoggerFactory.getLogger(DefaultShutDownManager.class);
 }
-
-/* @(#)DefaultShutDownManager.java */

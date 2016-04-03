@@ -1,4 +1,3 @@
-// AutomatTest.java
 package jmri.jmrit.automat;
 
 import junit.framework.Assert;

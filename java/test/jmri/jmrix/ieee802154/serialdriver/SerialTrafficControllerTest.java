@@ -13,7 +13,6 @@ import junit.framework.TestSuite;
  * jmri.jmrix.ieee802154.serialdriver.SerialTrafficController class
  *
  * @author	Paul Bender
- * @version $Revision$
  */
 public class SerialTrafficControllerTest extends TestCase {
 

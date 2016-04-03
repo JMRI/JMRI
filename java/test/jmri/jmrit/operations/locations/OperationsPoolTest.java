@@ -20,7 +20,6 @@ import junit.framework.TestSuite;
  *
  * @author Gregory Madsen Copyright (C) 2012, based on OperationsLocationTest
  * class
- * @version $Revision$
  */
 public class OperationsPoolTest extends OperationsTestCase {
 

@@ -1,4 +1,3 @@
-// DefaultAudioManager.java
 package jmri.jmrit.audio;
 
 import java.util.ArrayList;
@@ -29,7 +28,6 @@ import org.slf4j.LoggerFactory;
  * <P>
  *
  * @author Matthew Harris copyright (c) 2009
- * @version $Revision$
  */
 public class DefaultAudioManager extends AbstractAudioManager {
 
@@ -123,7 +121,7 @@ public class DefaultAudioManager extends AbstractAudioManager {
     /**
      * Method used to initialise the manager
      */
-    @edu.umd.cs.findbugs.annotations.SuppressWarnings(value = "ST_WRITE_TO_STATIC_FROM_INSTANCE_METHOD")
+    @edu.umd.cs.findbugs.annotations.SuppressFBWarnings(value = "ST_WRITE_TO_STATIC_FROM_INSTANCE_METHOD")
     // OK to write to static variables as we only do so if not initialised
     @Override
     public synchronized void init() {
@@ -233,5 +231,3 @@ public class DefaultAudioManager extends AbstractAudioManager {
     private static final Logger log = LoggerFactory.getLogger(DefaultAudioManager.class.getName());
 
 }
-
-/* @(#)DefaultAudioManager.java */

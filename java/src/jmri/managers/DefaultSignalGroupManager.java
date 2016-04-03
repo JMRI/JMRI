@@ -1,4 +1,3 @@
-// DefaultSignalGroupManager.java
 package jmri.managers;
 
 import java.io.File;
@@ -17,11 +16,8 @@ import org.slf4j.LoggerFactory;
  * Default implementation of a SignalGroupManager.
  * <P>
  * This loads automatically the first time used.
- * <p>
- *
  *
  * @author Bob Jacobsen Copyright (C) 2009
- * @version	$Revision$
  */
 public class DefaultSignalGroupManager extends AbstractManager
         implements SignalGroupManager, java.beans.PropertyChangeListener {
@@ -100,6 +96,9 @@ public class DefaultSignalGroupManager extends AbstractManager
         } catch (URISyntaxException | NullPointerException ex) {
             log.error("No signals are defined.", ex);
         }
+        if (files == null) { // not a directory
+            return retval; // empty, but not null
+        }
         for (File file : files) {
             if (file.isDirectory()) {
                 // check that there's an aspects.xml file
@@ -132,5 +131,3 @@ public class DefaultSignalGroupManager extends AbstractManager
 
     private final static Logger log = LoggerFactory.getLogger(DefaultSignalGroupManager.class.getName());
 }
-
-/* @(#)DefaultSignalGroupManager.java */

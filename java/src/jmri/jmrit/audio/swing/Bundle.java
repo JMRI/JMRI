@@ -1,15 +1,14 @@
-// Bundle.java
 
 package jmri.jmrit.audio.swing;
 
-import edu.umd.cs.findbugs.annotations.CheckReturnValue;
-import edu.umd.cs.findbugs.annotations.DefaultAnnotation;
-import edu.umd.cs.findbugs.annotations.NonNull;
-import edu.umd.cs.findbugs.annotations.Nullable;
-import edu.umd.cs.findbugs.annotations.SuppressWarnings;
+import javax.annotation.CheckReturnValue;
+import javax.annotation.ParametersAreNonnullByDefault;
+import javax.annotation.Nullable;
+import edu.umd.cs.findbugs.annotations.SuppressFBWarnings;
 
-@DefaultAnnotation({NonNull.class, CheckReturnValue.class})
-@SuppressWarnings(value="NM_SAME_SIMPLE_NAME_AS_SUPERCLASS",justification="Desired pattern is repeated class names with package-level access to members")
+@ParametersAreNonnullByDefault
+@CheckReturnValue
+@SuppressFBWarnings(value = "NM_SAME_SIMPLE_NAME_AS_SUPERCLASS", justification = "Desired pattern is repeated class names with package-level access to members")
 
 @net.jcip.annotations.Immutable
 
@@ -20,7 +19,6 @@ import edu.umd.cs.findbugs.annotations.SuppressWarnings;
  * in each package, working off the local resource bundle name.
  *
  * @author      Bob Jacobsen  Copyright (C) 2012
- * @version     $Revision$
  * @since       3.7.2
  */
 public class Bundle extends jmri.jmrit.audio.Bundle {
@@ -71,5 +69,3 @@ public class Bundle extends jmri.jmrit.audio.Bundle {
     @Override protected String retry(String key) { return super.getBundle().handleGetMessage(key); }
 
 }
-
-/* @(#)Bundle.java */

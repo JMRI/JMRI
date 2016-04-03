@@ -363,7 +363,7 @@ public class AutomationItem implements java.beans.PropertyChangeListener {
 
     /**
      * Copies item.
-     * @param The item to copy.
+     * @param item The item to copy.
      */
     public void copyItem(AutomationItem item) {
         setAction(item.getActionByCode(item.getActionCode())); // must create a new action for each item
@@ -531,7 +531,7 @@ public class AutomationItem implements java.beans.PropertyChangeListener {
     }
 
     public void propertyChange(java.beans.PropertyChangeEvent e) {
-        if (Control.showProperty) {
+        if (Control.SHOW_PROPERTY) {
             log.debug("AutomationItem id ({}) sees property change: ({}) old: ({}) new: ({})",
                     getId(), e.getPropertyName(), e.getOldValue(), e.getNewValue()); // NOI18N
         }

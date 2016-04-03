@@ -30,7 +30,7 @@ public class JmriSRCPServer extends JmriServer {
 
     static ResourceBundle rb = ResourceBundle.getBundle("jmri.jmris.srcp.JmriSRCPServerBundle");
 
-    public static JmriServer instance() {
+    synchronized public static JmriServer instance() {
         if (_instance == null) {
             int port = java.lang.Integer.parseInt(rb.getString("JMRISRCPServerPort"));
             _instance = new JmriSRCPServer(port);
@@ -68,6 +68,7 @@ public class JmriSRCPServer extends JmriServer {
         sh.setSensorServer(new JmriSRCPSensorServer(inStream, outStream));
         sh.setProgrammerServer(new JmriSRCPProgrammerServer(outStream));
         sh.setTimeServer(new JmriSRCPTimeServer(outStream));
+        sh.setThrottleServer(new JmriSRCPThrottleServer(inStream,outStream));
 
         // Start by sending a welcome message
         TimeStampedOutput.writeTimestamp(outStream, "SRCP 0.8.3\n\r");

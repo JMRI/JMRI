@@ -1,4 +1,3 @@
-// BeanSettingTest.java
 package jmri;
 
 import jmri.util.JUnitUtil;
@@ -11,7 +10,6 @@ import junit.framework.TestSuite;
  * Tests for the BeanSetting class
  *
  * @author	Bob Jacobsen Copyright (C) 2006
- * @version $Revision$
  */
 public class BeanSettingTest extends TestCase {
 

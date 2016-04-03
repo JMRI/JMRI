@@ -26,6 +26,7 @@ public class PackageTest extends TestCase {
     public static Test suite() {
         TestSuite suite = new TestSuite("jmri.server.JsonTest");
         suite.addTest(jmri.server.json.power.PackageTest.suite());
+        suite.addTest(jmri.server.json.roster.PackageTest.suite());
         suite.addTest(jmri.server.json.turnout.PackageTest.suite());
 
         if (!System.getProperty("jmri.headlesstest", "false").equals("true")) {

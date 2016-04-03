@@ -24,11 +24,6 @@ import org.slf4j.LoggerFactory;
  */
 public class DoubleTurnoutSignalHead extends DefaultSignalHead implements java.beans.VetoableChangeListener {
 
-    /**
-     *
-     */
-    private static final long serialVersionUID = 7106439855805533364L;
-
     public DoubleTurnoutSignalHead(String sys, String user, NamedBeanHandle<Turnout> green, NamedBeanHandle<Turnout> red) {
         super(sys, user);
         mRed = red;
@@ -42,7 +37,7 @@ public class DoubleTurnoutSignalHead extends DefaultSignalHead implements java.b
     }
 
     @SuppressWarnings("fallthrough")
-    @edu.umd.cs.findbugs.annotations.SuppressWarnings(value = "SF_SWITCH_FALLTHROUGH")
+    @edu.umd.cs.findbugs.annotations.SuppressFBWarnings(value = "SF_SWITCH_FALLTHROUGH")
     protected void updateOutput() {
         // assumes that writing a turnout to an existing state is cheap!
         if (mLit == false) {

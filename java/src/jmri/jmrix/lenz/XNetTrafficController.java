@@ -78,6 +78,9 @@ public abstract class XNetTrafficController extends AbstractMRTrafficController 
      * @param m Message to send;
      */
     public void forwardMessage(AbstractMRListener reply, AbstractMRMessage m) {
+        if(!(reply instanceof XNetListener) || !(m instanceof XNetMessage)){
+           throw new IllegalArgumentException("");
+        }
         ((XNetListener) reply).message((XNetMessage) m);
     }
 
@@ -89,6 +92,9 @@ public abstract class XNetTrafficController extends AbstractMRTrafficController 
      *          message
      */
     public void forwardReply(AbstractMRListener client, AbstractMRReply m) {
+        if(!(client instanceof XNetListener) || !(m instanceof XNetReply)){
+           throw new IllegalArgumentException("");
+        }
         // check parity
         if (!((XNetReply) m).checkParity()) {
             log.warn("Ignore packet with bad checksum: " + ((XNetReply) m).toString());
@@ -223,7 +229,15 @@ public abstract class XNetTrafficController extends AbstractMRTrafficController 
         if (mMemo == null) {
             return true;
         }
-        return !(((jmri.jmrix.lenz.XNetProgrammer) mMemo.getProgrammerManager().getGlobalProgrammer()).programmerBusy());
+        jmri.jmrix.lenz.XNetProgrammerManager pm = (XNetProgrammerManager) mMemo.getProgrammerManager();
+        if (pm == null) {
+            return true;
+        }
+        XNetProgrammer p = (XNetProgrammer) pm.getGlobalProgrammer();
+        if(p == null) {
+           return true;
+        }
+        return !(p.programmerBusy());
     }
 
     @Override

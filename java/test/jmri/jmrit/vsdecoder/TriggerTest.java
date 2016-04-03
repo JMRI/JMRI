@@ -1,4 +1,3 @@
-// TriggerTest.java
 package jmri.jmrit.vsdecoder;
 
 import junit.framework.Assert;

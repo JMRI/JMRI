@@ -14,11 +14,6 @@ import java.util.HashMap;
  */
 public class CatalogTreeFS extends AbstractCatalogTree {
 
-    /**
-     *
-     */
-    private static final long serialVersionUID = -2391792373165194231L;
-
     String[] _filter;
 
     public CatalogTreeFS(String sysName, String userName) {
@@ -85,7 +80,7 @@ public class CatalogTreeFS extends AbstractCatalogTree {
             insertNodeInto(newElement, pParent, pParent.getChildCount());
             String[] sp = fp.list();
             for (int i = 0; i < sp.length; i++) {
-                //if (log.isDebugEnabled()) log.debug("Descend into resource: "+sp[i]);
+                log.debug("Descend into resource: {}",sp[i]);
                 insertNodes(sp[i], pPath + "/" + sp[i], newElement);
             }
         } else /* leaf */ {
@@ -101,33 +96,35 @@ public class CatalogTreeFS extends AbstractCatalogTree {
         }
     }
 
-    public void setProperty(Object key, Object value) {
+    public void setProperty(String key, Object value) {
         if (parameters == null) {
-            parameters = new HashMap<Object, Object>();
+            parameters = new HashMap<String, Object>();
         }
         parameters.put(key, value);
     }
 
-    public Object getProperty(Object key) {
+    public Object getProperty(String key) {
         if (parameters == null) {
-            return null;
+            parameters = new HashMap<String, Object>();
         }
         return parameters.get(key);
     }
 
-    public java.util.Set<Object> getPropertyKeys() {
+    public java.util.Set<String> getPropertyKeys() {
         if (parameters == null) {
-            return null;
+            parameters = new HashMap<String, Object>();
         }
         return parameters.keySet();
     }
 
-    public void removeProperty(Object key) {
+    public void removeProperty(String key) {
         if (parameters == null || key == null) {
             return;
         }
         parameters.remove(key);
     }
 
-    HashMap<Object, Object> parameters = null;
+    HashMap<String, Object> parameters = null;
+
+    static org.slf4j.Logger log = org.slf4j.LoggerFactory.getLogger(CatalogTreeFS.class.getName());
 }

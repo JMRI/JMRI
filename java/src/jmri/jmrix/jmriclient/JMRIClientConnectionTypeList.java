@@ -11,12 +11,19 @@ package jmri.jmrix.jmriclient;
  */
 public class JMRIClientConnectionTypeList implements jmri.jmrix.ConnectionTypeList {
 
+    public static final String JMRI = "JMRI (Network)";
+
     @Override
     public String[] getAvailableProtocolClasses() {
         return new String[]{
             // "jmri.jmrix.jmriclient.json.JsonNetworkConnectionConfig", // do not allow configuration
             "jmri.jmrix.jmriclient.networkdriver.ConnectionConfig"
         };
+    }
+
+    @Override
+    public String[] getManufacturers() {
+        return new String[]{JMRI};
     }
 
 }

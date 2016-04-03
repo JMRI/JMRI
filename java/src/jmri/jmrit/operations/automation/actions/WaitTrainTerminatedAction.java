@@ -71,7 +71,7 @@ public class WaitTrainTerminatedAction extends Action implements PropertyChangeL
 
     @Override
     public void propertyChange(PropertyChangeEvent evt) {
-        if (Control.showProperty)
+        if (Control.SHOW_PROPERTY)
             log.debug("Property change AutomationItem {}: ({}) old: ({}) new: ({})", getAutomationItem().getId(),
                     evt.getPropertyName(), evt.getOldValue(), evt.getNewValue());
         trainUpdate(evt);

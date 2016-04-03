@@ -11,11 +11,19 @@ package jmri.jmrix.easydcc;
  */
 public class EasyDccConnectionTypeList implements jmri.jmrix.ConnectionTypeList {
 
+    public static final String EASYDCC = "Easy DCC";
+
+    @Override
     public String[] getAvailableProtocolClasses() {
         return new String[]{
             "jmri.jmrix.easydcc.serialdriver.ConnectionConfig",
             "jmri.jmrix.easydcc.networkdriver.ConnectionConfig"
         };
+    }
+
+    @Override
+    public String[] getManufacturers() {
+        return new String[]{EASYDCC};
     }
 
 }

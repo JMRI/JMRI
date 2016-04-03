@@ -346,6 +346,7 @@ public class RouteLocation implements java.beans.PropertyChangeListener {
         return time[0] + ":" + time[1] + AM_PM;
     }
 
+    @edu.umd.cs.findbugs.annotations.SuppressFBWarnings(value = "FE_FLOATING_POINT_EQUALITY", justification = "firing property change doesn't matter")
     public void setGrade(double grade) {
         double old = _grade;
         _grade = grade;
@@ -388,19 +389,19 @@ public class RouteLocation implements java.beans.PropertyChangeListener {
      */
     public void setTrainIconCoordinates() {
         Location l = LocationManager.instance().getLocationByName(getName());
-        if ((getTrainDirection() & Location.EAST) > 0) {
+        if ((getTrainDirection() & Location.EAST) == Location.EAST) {
             setTrainIconX(l.getTrainIconEast().x);
             setTrainIconY(l.getTrainIconEast().y);
         }
-        if ((getTrainDirection() & Location.WEST) > 0) {
+        if ((getTrainDirection() & Location.WEST) == Location.WEST) {
             setTrainIconX(l.getTrainIconWest().x);
             setTrainIconY(l.getTrainIconWest().y);
         }
-        if ((getTrainDirection() & Location.NORTH) > 0) {
+        if ((getTrainDirection() & Location.NORTH) == Location.NORTH) {
             setTrainIconX(l.getTrainIconNorth().x);
             setTrainIconY(l.getTrainIconNorth().y);
         }
-        if ((getTrainDirection() & Location.SOUTH) > 0) {
+        if ((getTrainDirection() & Location.SOUTH) == Location.SOUTH) {
             setTrainIconX(l.getTrainIconSouth().x);
             setTrainIconY(l.getTrainIconSouth().y);
         }
@@ -554,7 +555,7 @@ public class RouteLocation implements java.beans.PropertyChangeListener {
     }
 
     public void propertyChange(java.beans.PropertyChangeEvent e) {
-        if (Control.showProperty) {
+        if (Control.SHOW_PROPERTY) {
             log.debug("Property change: ({}) old: ({}) new: ({})", e.getPropertyName(), e.getOldValue(), e
                     .getNewValue());
         }

@@ -1,4 +1,3 @@
-// DefaultLogixTest.java
 package jmri.implementation;
 
 import jmri.*;

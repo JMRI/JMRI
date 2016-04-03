@@ -15,8 +15,8 @@ import jmri.jmrit.symbolicprog.ProgrammerConfigManager;
 import jmri.managers.ManagerDefaultSelector;
 import jmri.profile.Profile;
 import jmri.profile.ProfileUtils;
-import jmri.spi.AbstractPreferencesProvider;
-import jmri.spi.InitializationException;
+import jmri.util.prefs.AbstractPreferencesProvider;
+import jmri.util.prefs.InitializationException;
 import jmri.spi.PreferencesProvider;
 import jmri.util.jdom.JDOMUtil;
 import org.jdom2.Element;
@@ -129,7 +129,7 @@ public class StartupActionsManager extends AbstractPreferencesProvider {
         if (!this.actions.contains(model)) {
             this.actions.add(index, model);
             this.isDirty = true;
-            this.propertyChangeSupport.fireIndexedPropertyChange(STARTUP, index, null, model);
+            this.fireIndexedPropertyChange(STARTUP, index, null, model);
         }
     }
 
@@ -152,7 +152,7 @@ public class StartupActionsManager extends AbstractPreferencesProvider {
         this.actions.remove(model);
         this.isDirty = true;
         if (fireChange) {
-            this.propertyChangeSupport.fireIndexedPropertyChange(STARTUP, index, model, null);
+            this.fireIndexedPropertyChange(STARTUP, index, model, null);
         }
     }
 

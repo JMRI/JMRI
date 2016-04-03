@@ -1,4 +1,3 @@
-// SerialDriverAdapter.java
 package jmri.jmrix.xpa.serialdriver;
 
 import gnu.io.CommPortIdentifier;
@@ -23,7 +22,6 @@ import org.slf4j.LoggerFactory;
  * first configuraiont variable for the modem initilization string.
  *
  * @author	Paul Bender Copyright (C) 2004
- * @version	$Revision$
  */
 public class SerialDriverAdapter extends XpaPortController implements jmri.jmrix.SerialPortAdapter {
 
@@ -31,7 +29,7 @@ public class SerialDriverAdapter extends XpaPortController implements jmri.jmrix
         super(new XpaSystemConnectionMemo());
         option1Name = "ModemInitString";
         options.put(option1Name, new Option("Modem Initilization String : ", new String[]{"ATX0E0"}));
-        this.manufacturerName = jmri.jmrix.DCCManufacturerList.LENZ;
+        this.manufacturerName = jmri.jmrix.lenz.LenzConnectionTypeList.LENZ;
     }
 
     SerialPort activeSerialPort = null;
@@ -71,12 +69,7 @@ public class SerialDriverAdapter extends XpaPortController implements jmri.jmrix
             serialStream = activeSerialPort.getInputStream();
 
             // purge contents, if any
-            int count = serialStream.available();
-            log.debug("input stream shows " + count + " bytes available");
-            while (count > 0) {
-                serialStream.skip(count);
-                count = serialStream.available();
-            }
+            purgeStream(serialStream);
 
             // report status?
             if (log.isInfoEnabled()) {
@@ -94,10 +87,13 @@ public class SerialDriverAdapter extends XpaPortController implements jmri.jmrix
 
         } catch (gnu.io.NoSuchPortException p) {
             return handlePortNotFound(p, portName, log);
-        } catch (Exception ex) {
-            log.error("Unexpected exception while opening port " + portName + " trace follows: " + ex);
+        } catch (gnu.io.UnsupportedCommOperationException ucoe) {
+            log.error("Unsupported Communication Operation Exception while opening port " + portName + " trace follows: " + ucoe);
+            return "Unsupported Communication Operation Exception while opening port " + portName + ": " + ucoe;
+        } catch (java.io.IOException ex) {
+            log.error("IO exception while opening port " + portName + " trace follows: " + ex);
             ex.printStackTrace();
-            return "Unexpected error while opening port " + portName + ": " + ex;
+            return "IO Exception while opening port " + portName + ": " + ex;
         }
 
         return null; // indicates OK return
@@ -165,14 +161,6 @@ public class SerialDriverAdapter extends XpaPortController implements jmri.jmrix
 
     private boolean opened = false;
     InputStream serialStream = null;
-
-    static public SerialDriverAdapter instance() {
-        if (mInstance == null) {
-            mInstance = new SerialDriverAdapter();
-        }
-        return mInstance;
-    }
-    static SerialDriverAdapter mInstance = null;
 
     private final static Logger log = LoggerFactory.getLogger(SerialDriverAdapter.class.getName());
 

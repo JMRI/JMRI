@@ -40,7 +40,7 @@ public class AutomationManager implements java.beans.PropertyChangeListener {
             // create and load
             _instance = new AutomationManager();
         }
-        if (Control.showInstance) {
+        if (Control.SHOW_INSTANCE) {
             log.debug("AutomationManager returns instance {}", _instance);
         }
         return _instance;
@@ -244,7 +244,7 @@ public class AutomationManager implements java.beans.PropertyChangeListener {
      * Create an XML element to represent this Entry. This member has to remain
      * synchronized with the detailed DTD in operations-trains.dtd.
      *
-     * @return Contents in a JDOM Element
+     * @param root Contents in a JDOM Element
      */
     public void store(Element root) {
         Element values;
@@ -256,7 +256,7 @@ public class AutomationManager implements java.beans.PropertyChangeListener {
     }
 
     public void propertyChange(java.beans.PropertyChangeEvent e) {
-        if (Control.showProperty) {
+        if (Control.SHOW_PROPERTY) {
             log.debug("Property change: ({}) old: ({}) new: ({})", e.getPropertyName(), e.getOldValue(), e
                     .getNewValue());
         }

@@ -1,4 +1,3 @@
-// AllTest.java
 package apps.tests;
 
 import junit.framework.Test;
@@ -20,7 +19,6 @@ import junit.framework.TestSuite;
  * A PARTICULAR PURPOSE. See the GNU General Public License for more details.
  *
  * @author	Bob Jacobsen
- * @version	$Revision$
  */
 public class AllTest extends TestCase {
 
@@ -46,6 +44,8 @@ public class AllTest extends TestCase {
         suite.addTest(jmri.PackageTest.suite());
         suite.addTest(apps.PackageTest.suite());
 
+        // at the end, we check for Log4J messages again
+        suite.addTest(jmri.util.Log4JErrorIsErrorTest.suite());
         return suite;
     }
 

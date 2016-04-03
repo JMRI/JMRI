@@ -1,5 +1,7 @@
-// Turnout.java
 package jmri;
+
+import javax.annotation.Nonnull;
+import javax.annotation.Nullable;
 
 /**
  * Represent a Turnout on the layout.
@@ -66,7 +68,6 @@ package jmri;
  * <P>
  *
  * @author	Bob Jacobsen Copyright (C) 2001
- * @version	$Revision$
  * @see jmri.TurnoutManager
  * @see jmri.InstanceManager
  * @see jmri.jmrit.simpleturnoutctrl.SimpleTurnoutCtrlFrame
@@ -174,13 +175,13 @@ public interface Turnout extends NamedBean {
      * Get a human readable representation of the feedback type. The values
      * depend on the implemented system.
      */
-    public String[] getValidFeedbackNames();
+    public @Nonnull String[] getValidFeedbackNames();
 
     /**
      * Set the feedback mode from a human readable name. This must be one of the
      * names defined in a previous {@link #getValidFeedbackNames} call.
      */
-    public void setFeedbackMode(String mode) throws IllegalArgumentException;
+    public void setFeedbackMode(@Nonnull String mode) throws IllegalArgumentException;
 
     /**
      * Set the feedback mode from a integer. This must be one of the bit values
@@ -193,7 +194,7 @@ public interface Turnout extends NamedBean {
      * Get the feedback mode in human readable form. This will be one of the
      * names defined in a {@link #getValidFeedbackNames} call.
      */
-    public String getFeedbackModeName();
+    public @Nonnull String getFeedbackModeName();
 
     /**
      * Get the feedback mode in machine readable form. This will be one of the
@@ -217,14 +218,14 @@ public interface Turnout extends NamedBean {
     /**
      * @return current operation automation class
      */
-    public TurnoutOperation getTurnoutOperation();
+    public @Nullable TurnoutOperation getTurnoutOperation();
 
     /**
      * set current automation class
      *
      * @param toper TurnoutOperation subclass instance
      */
-    public void setTurnoutOperation(TurnoutOperation toper);
+    public void setTurnoutOperation(@Nullable TurnoutOperation toper);
 
     /**
      * Provide Sensor objects needed for some feedback types.
@@ -237,38 +238,37 @@ public interface Turnout extends NamedBean {
      * Sensor-based feedback will not function until these sensors have been
      * provided.
      */
-    //public void provideFirstFeedbackSensor(NamedBeanHandle<Sensor> s);
-    public void provideFirstFeedbackSensor(String pName) throws JmriException;
+     public void provideFirstFeedbackSensor(@Nullable String pName) throws JmriException;
 
-    public void provideSecondFeedbackSensor(String pName) throws JmriException;
-
-    /**
-     * Get the first sensor, if defined.
-     * <P>
-     * Returns null if no Sensor recorded.
-     */
-    public Sensor getFirstSensor();
+    public void provideSecondFeedbackSensor(@Nullable String pName) throws JmriException;
 
     /**
      * Get the first sensor, if defined.
      * <P>
      * Returns null if no Sensor recorded.
      */
-    public NamedBeanHandle<Sensor> getFirstNamedSensor();
+    public @Nullable Sensor getFirstSensor();
+
+    /**
+     * Get the first sensor, if defined.
+     * <P>
+     * Returns null if no Sensor recorded.
+     */
+    public @Nullable NamedBeanHandle<Sensor> getFirstNamedSensor();
 
     /**
      * Get the Second sensor, if defined.
      * <P>
      * Returns null if no Sensor recorded.
      */
-    public Sensor getSecondSensor();
+    public @Nullable Sensor getSecondSensor();
 
     /**
      * Get the first sensor, if defined.
      * <P>
      * Returns null if no Sensor recorded.
      */
-    public NamedBeanHandle<Sensor> getSecondNamedSensor();
+    public @Nullable NamedBeanHandle<Sensor> getSecondNamedSensor();
 
     /**
      * Sets the initial known state (CLOSED,THROWN,UNKNOWN) from feedback
@@ -405,17 +405,17 @@ public interface Turnout extends NamedBean {
     /**
      * Get a human readable representation of the decoder types.
      */
-    public String[] getValidDecoderNames();
+    public @Nonnull String[] getValidDecoderNames();
 
     /**
      * Get a human readable representation of the decoder type for this turnout.
      */
-    public String getDecoderName();
+    public @Nullable  String getDecoderName();
 
     /**
      * Set a human readable representation of the decoder type for this turnout.
      */
-    public void setDecoderName(String decoderName);
+    public void setDecoderName(@Nullable String decoderName);
 
     /**
      * Turn this object into just a binary output.
@@ -435,5 +435,3 @@ public interface Turnout extends NamedBean {
     public void setStraightSpeed(String s) throws JmriException;
 
 }
-
-/* @(#)Turnout.java */

@@ -20,11 +20,8 @@ public class InternalSensorManagerTest extends jmri.managers.AbstractSensorMgrTe
     }
 
     public void testAsAbstractFactory() {
-        // create and register the manager object
-        InternalSensorManager alm = new InternalSensorManager();
-        jmri.InstanceManager.setSensorManager(alm);
 
-        // ask for a Light, and check type
+        // ask for a Sensor, and check type
         SensorManager lm = jmri.InstanceManager.sensorManagerInstance();
 
         Sensor tl = lm.newSensor("IS21", "my name");
@@ -48,9 +45,6 @@ public class InternalSensorManagerTest extends jmri.managers.AbstractSensorMgrTe
     }
 
     public void testSetGetDefaultState() {
-        // create and register the manager object
-        InternalSensorManager alm = new InternalSensorManager();
-        jmri.InstanceManager.setSensorManager(alm);
 
         // confirm default
         Assert.assertEquals("starting mode", Sensor.UNKNOWN, InternalSensorManager.getDefaultStateForNewSensors() );
@@ -58,14 +52,7 @@ public class InternalSensorManagerTest extends jmri.managers.AbstractSensorMgrTe
         // set and retrieve
         InternalSensorManager.setDefaultStateForNewSensors(Sensor.INACTIVE);
         Assert.assertEquals("updated mode", Sensor.INACTIVE, InternalSensorManager.getDefaultStateForNewSensors() );
-        
-        // create and register a new manager object
-        alm = new InternalSensorManager();
-        jmri.InstanceManager.setSensorManager(alm);
-
-        // confirm default
-        Assert.assertEquals("new default mode", Sensor.UNKNOWN, InternalSensorManager.getDefaultStateForNewSensors() );
-       
+               
     }
 
     // from here down is testing infrastructure
@@ -86,11 +73,13 @@ public class InternalSensorManagerTest extends jmri.managers.AbstractSensorMgrTe
     }
 
     // The minimal setup for log4J
+    @Override
     protected void setUp() {
         apps.tests.Log4JFixture.setUp();
         // create and register the manager object
-        l = new InternalSensorManager();
-        jmri.InstanceManager.setSensorManager(l);
+        jmri.util.JUnitUtil.resetInstanceManager();
+        jmri.util.JUnitUtil.initInternalSensorManager();
+        l = jmri.InstanceManager.sensorManagerInstance();
     }
 
     @Override

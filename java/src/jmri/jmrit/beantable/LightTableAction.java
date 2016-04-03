@@ -71,7 +71,7 @@ public class LightTableAction extends AbstractTableAction {
     }
 
     public LightTableAction() {
-        this("Light Table");
+        this(Bundle.getMessage("TitleLightTable"));
     }
 
     protected LightManager lightManager = InstanceManager.lightManagerInstance();
@@ -320,10 +320,10 @@ public class LightTableAction extends AbstractTableAction {
     // items of add frame
     JLabel systemLabel = new JLabel(Bundle.getMessage("LightSystem"));
     JComboBox<String> prefixBox = new JComboBox<String>();
-    JCheckBox addRangeBox = new JCheckBox(Bundle.getMessage("LightAddRangeBox"));
+    JCheckBox addRangeBox = new JCheckBox(Bundle.getMessage("AddRangeBox"));
     JTextField fieldHardwareAddress = new JTextField(10);
     JTextField fieldNumToAdd = new JTextField(5);
-    JLabel labelNumToAdd = new JLabel("   " + Bundle.getMessage("LabelNumberToAdd") + ":");
+    JLabel labelNumToAdd = new JLabel("   " + Bundle.getMessage("LabelNumberToAdd"));
     String systemSelectionCombo = this.getClass().getName() + ".SystemSelected";
     JPanel panel1a = null;
     JPanel varPanel = null;
@@ -395,7 +395,7 @@ public class LightTableAction extends AbstractTableAction {
             contentPane.add(panel1);
             panel1a = new JPanel();
             panel1a.setLayout(new FlowLayout());
-            panel1a.add(new JLabel(Bundle.getMessage("LightHardwareAddress")));
+            panel1a.add(new JLabel(Bundle.getMessage("LabelHardwareAddress")));
             panel1a.add(fieldHardwareAddress);
             fieldHardwareAddress.setToolTipText(Bundle.getMessage("LightHardwareAddressHint"));
             panel1a.add(labelNumToAdd);
@@ -502,7 +502,14 @@ public class LightTableAction extends AbstractTableAction {
             contentPane.add(panel4);
             // buttons at bottom of window
             JPanel panel5 = new JPanel();
-            panel5.setLayout(new FlowLayout());
+            panel5.setLayout(new FlowLayout(FlowLayout.TRAILING));
+            panel5.add(cancel = new JButton(Bundle.getMessage("ButtonCancel")));
+            cancel.addActionListener(new ActionListener() {
+                public void actionPerformed(ActionEvent e) {
+                    cancelPressed(e);
+                }
+            });
+            cancel.setToolTipText(Bundle.getMessage("LightCancelButtonHint"));
             panel5.add(create = new JButton(Bundle.getMessage("ButtonCreate")));
             create.addActionListener(new ActionListener() {
                 public void actionPerformed(ActionEvent e) {
@@ -517,16 +524,9 @@ public class LightTableAction extends AbstractTableAction {
                 }
             });
             update.setToolTipText(Bundle.getMessage("LightUpdateButtonHint"));
-            panel5.add(cancel = new JButton(Bundle.getMessage("ButtonCancel")));
-            cancel.addActionListener(new ActionListener() {
-                public void actionPerformed(ActionEvent e) {
-                    cancelPressed(e);
-                }
-            });
-            cancel.setToolTipText(Bundle.getMessage("LightCancelButtonHint"));
             cancel.setVisible(true);
-            update.setVisible(false);
             create.setVisible(true);
+            update.setVisible(false);
             contentPane.add(panel5);
         }
         prefixChanged();
@@ -1144,7 +1144,14 @@ public class LightTableAction extends AbstractTableAction {
             panel3.setBorder(panel3Border);
             contentPane.add(panel3);
             JPanel panel5 = new JPanel();
-            panel5.setLayout(new FlowLayout());
+            panel5.setLayout(new FlowLayout(FlowLayout.TRAILING));
+            panel5.add(cancelControl = new JButton(Bundle.getMessage("ButtonCancel")));
+            cancelControl.addActionListener(new ActionListener() {
+                public void actionPerformed(ActionEvent e) {
+                    cancelControlPressed(e);
+                }
+            });
+            cancelControl.setToolTipText(Bundle.getMessage("LightCancelButtonHint"));
             panel5.add(createControl = new JButton(Bundle.getMessage("ButtonCreate")));
             createControl.addActionListener(new ActionListener() {
                 public void actionPerformed(ActionEvent e) {
@@ -1159,13 +1166,6 @@ public class LightTableAction extends AbstractTableAction {
                 }
             });
             updateControl.setToolTipText(Bundle.getMessage("LightUpdateControlButtonHint"));
-            panel5.add(cancelControl = new JButton(Bundle.getMessage("ButtonCancel")));
-            cancelControl.addActionListener(new ActionListener() {
-                public void actionPerformed(ActionEvent e) {
-                    cancelControlPressed(e);
-                }
-            });
-            cancelControl.setToolTipText(Bundle.getMessage("LightCancelButtonHint"));
             cancelControl.setVisible(true);
             updateControl.setVisible(false);
             createControl.setVisible(true);

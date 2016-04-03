@@ -7,8 +7,8 @@ import jmri.implementation.FileLocationsPreferences;
 import jmri.jmrit.symbolicprog.tabbedframe.PaneProgFrame;
 import jmri.profile.Profile;
 import jmri.profile.ProfileUtils;
-import jmri.spi.AbstractPreferencesProvider;
-import jmri.spi.InitializationException;
+import jmri.util.prefs.AbstractPreferencesProvider;
+import jmri.util.prefs.InitializationException;
 import jmri.spi.PreferencesProvider;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -89,7 +89,7 @@ public class ProgrammerConfigManager extends AbstractPreferencesProvider {
     public void setDefaultFile(String defaultFile) {
         java.lang.String oldDefaultFile = this.defaultFile;
         this.defaultFile = defaultFile;
-        propertyChangeSupport.firePropertyChange(DEFAULT_FILE, oldDefaultFile, defaultFile);
+        firePropertyChange(DEFAULT_FILE, oldDefaultFile, defaultFile);
     }
 
     /**
@@ -105,7 +105,7 @@ public class ProgrammerConfigManager extends AbstractPreferencesProvider {
     public void setShowEmptyPanes(boolean showEmptyPanes) {
         boolean oldShowEmptyPanes = this.showEmptyPanes;
         this.showEmptyPanes = showEmptyPanes;
-        propertyChangeSupport.firePropertyChange(SHOW_EMPTY_PANES, oldShowEmptyPanes, showEmptyPanes);
+        firePropertyChange(SHOW_EMPTY_PANES, oldShowEmptyPanes, showEmptyPanes);
     }
 
     /**
@@ -121,7 +121,7 @@ public class ProgrammerConfigManager extends AbstractPreferencesProvider {
     public void setShowCvNumbers(boolean showCvNumbers) {
         boolean oldShowCvNumbers = this.showCvNumbers;
         this.showCvNumbers = showCvNumbers;
-        propertyChangeSupport.firePropertyChange(SHOW_CV_NUMBERS, oldShowCvNumbers, showCvNumbers);
+        firePropertyChange(SHOW_CV_NUMBERS, oldShowCvNumbers, showCvNumbers);
     }
 
 }

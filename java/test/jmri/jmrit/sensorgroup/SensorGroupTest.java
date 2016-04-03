@@ -1,4 +1,3 @@
-// SensorGroupTest.java
 package jmri.jmrit.sensorgroup;
 
 import junit.framework.Test;

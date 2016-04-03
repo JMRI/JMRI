@@ -1,4 +1,3 @@
-// PaneProgPane.java
 package jmri.jmrit.symbolicprog.tabbedframe;
 
 import java.awt.Color;
@@ -95,17 +94,12 @@ import org.slf4j.LoggerFactory;
  * @author D Miller Copyright 2003
  * @author Howard G. Penny Copyright (C) 2005
  * @author Dave Heap Copyright (C) 2014
- * @version $Revision$
  * @see jmri.jmrit.symbolicprog.VariableValue#isChanged
  *
  */
 public class PaneProgPane extends javax.swing.JPanel
         implements java.beans.PropertyChangeListener {
 
-    /**
-     *
-     */
-    private static final long serialVersionUID = -1884950541914044865L;
     static final String LAST_GRIDX = "last_gridx";
     static final String LAST_GRIDY = "last_gridy";
 
@@ -230,7 +224,7 @@ public class PaneProgPane extends javax.swing.JPanel
                     l.setAlignmentX(Component.CENTER_ALIGNMENT);
                     pe.add(l);
                     line++;
-                } catch (Exception e) {
+                } catch (java.util.MissingResourceException e) {  // deliberately runs until exception
                     line = -1;
                 }
             }
@@ -519,7 +513,7 @@ public class PaneProgPane extends javax.swing.JPanel
 
             // must decide whether this one should be counted
             if (!changes
-                    || (changes && var.isChanged())) {
+                    || var.isChanged()) {
 
                 CvValue[] cvs = var.usesCVs();
                 for (int j = 0; j < cvs.length; j++) {
@@ -798,7 +792,7 @@ public class PaneProgPane extends javax.swing.JPanel
         if (log.isDebugEnabled()) {
             log.debug("nextRead scans " + varList.size() + " variables");
         }
-        while ((varList.size() >= 0) && (varListIndex < varList.size())) {
+        while ((varList.size() > 0) && (varListIndex < varList.size())) {
             int varNum = varList.get(varListIndex).intValue();
             int vState = _varModel.getState(varNum);
             VariableValue var = _varModel.getVariable(varNum);
@@ -856,7 +850,7 @@ public class PaneProgPane extends javax.swing.JPanel
         if (log.isDebugEnabled()) {
             log.debug("nextRead scans " + indexedCvList.size() + " indexed CVs");
         }
-        while ((indexedCvList.size() >= 0) && (indexedCvListIndex < indexedCvList.size())) {
+        while ((indexedCvList.size() > 0) && (indexedCvListIndex < indexedCvList.size())) {
             int indxVarNum = indexedCvList.get(indexedCvListIndex).intValue();
             int indxState = _varModel.getState(indxVarNum);
             if (log.isDebugEnabled()) {
@@ -944,7 +938,7 @@ public class PaneProgPane extends javax.swing.JPanel
             }
         }
         // found no CVs needing read, try indexed CVs
-        while ((indexedCvList.size() >= 0) && (indexedCvListIndex < indexedCvList.size())) {
+        while ((indexedCvList.size() > 0) && (indexedCvListIndex < indexedCvList.size())) {
             int indxVarNum = indexedCvList.get(indexedCvListIndex).intValue();
             int indxState = _varModel.getState(indxVarNum);
             if (log.isDebugEnabled()) {
@@ -1054,7 +1048,7 @@ public class PaneProgPane extends javax.swing.JPanel
     boolean nextWrite() {
         log.debug("start nextWrite");
         // look for possible variables
-        while ((varList.size() >= 0) && (varListIndex < varList.size())) {
+        while ((varList.size() > 0) && (varListIndex < varList.size())) {
             int varNum = varList.get(varListIndex).intValue();
             int vState = _varModel.getState(varNum);
             VariableValue var = _varModel.getVariable(varNum);
@@ -1104,7 +1098,7 @@ public class PaneProgPane extends javax.swing.JPanel
             }
         }
         // check for Indexed CVs to handle (e.g. for Indexed CV table)
-        while ((indexedCvList.size() >= 0) && (indexedCvListIndex < indexedCvList.size())) {
+        while ((indexedCvList.size() > 0) && (indexedCvListIndex < indexedCvList.size())) {
             int indxVarNum = indexedCvList.get(indexedCvListIndex).intValue();
             int indxState = _varModel.getState(indxVarNum);
             if (log.isDebugEnabled()) {
@@ -1945,7 +1939,7 @@ public class PaneProgPane extends javax.swing.JPanel
         return c;
     }
 
-    class GridGlobals {
+    static class GridGlobals {
 
         public int gridxCurrent = -1;
         public int gridyCurrent = -1;
@@ -2413,9 +2407,7 @@ public class PaneProgPane extends javax.swing.JPanel
 
         // get representation; store into the list to be programmed
         JComponent rep = getRepresentation(name, var);
-        if (i >= 0) {
-            varList.add(Integer.valueOf(i));
-        }
+        varList.add(Integer.valueOf(i));
 
         // create the paired label
         JLabel l = new WatchingLabel(label, rep);
@@ -2753,7 +2745,7 @@ public class PaneProgPane extends javax.swing.JPanel
     }
     boolean print = false;
 
-    @edu.umd.cs.findbugs.annotations.SuppressWarnings(value = "SBSC_USE_STRINGBUFFER_CONCATENATION")
+    @edu.umd.cs.findbugs.annotations.SuppressFBWarnings(value = "SBSC_USE_STRINGBUFFER_CONCATENATION")
     // Only used occasionally, so inefficient String processing not really a problem
     // though it would be good to fix it if you're working in this area
     public void printPane(HardcopyWriter w) {
@@ -2817,7 +2809,7 @@ public class PaneProgPane extends javax.swing.JPanel
                 // Check if variable has been printed.  If not store it and print
                 boolean alreadyPrinted = false;
                 for (int j = 0; j < printedVariables.size(); j++) {
-                    if (printedVariables.elementAt(j).toString() == name) {
+                    if (name.equals(printedVariables.elementAt(j))) {
                         alreadyPrinted = true;
                     }
                 }

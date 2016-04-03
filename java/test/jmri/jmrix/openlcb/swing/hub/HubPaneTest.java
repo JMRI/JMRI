@@ -1,4 +1,3 @@
-// HubPaneTest.java
 package jmri.jmrix.openlcb.swing.hub;
 
 import junit.framework.Assert;

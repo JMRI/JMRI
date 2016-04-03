@@ -1,4 +1,3 @@
-// JoalAudioBuffer.java
 package jmri.jmrit.audio;
 
 import com.jogamp.openal.AL;
@@ -68,14 +67,8 @@ import org.slf4j.LoggerFactory;
  * <P>
  *
  * @author Matthew Harris copyright (c) 2009, 2011
- * @version $Revision$
  */
 public class JoalAudioBuffer extends AbstractAudioBuffer {
-
-    /**
-     *
-     */
-    private static final long serialVersionUID = -8278324841496444614L;
 
     private static AL al = JoalAudioFactory.getAL();
 
@@ -140,7 +133,7 @@ public class JoalAudioBuffer extends AbstractAudioBuffer {
      * Applies only to sub-types:
      * <ul>
      * <li>Buffer
-     * </u>
+     * </ul>
      *
      * @return buffer[] reference to DataStorageBuffer
      */
@@ -392,5 +385,3 @@ public class JoalAudioBuffer extends AbstractAudioBuffer {
     private static final Logger log = LoggerFactory.getLogger(JoalAudioBuffer.class.getName());
 
 }
-
-/* $(#)JoalAudioBuffer.java */

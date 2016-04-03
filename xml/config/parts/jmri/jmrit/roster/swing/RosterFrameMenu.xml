@@ -281,7 +281,7 @@
   <node name="Actions">
     <name xml:lang="it">Azioni</name>
     <name xml:lang="da">Værktøjer</name>
-    <name xml:lang="de">Aktionen</name>
+    <name xml:lang="de">Handlungen</name>
     <mnemonic>a</mnemonic>
     <node name="Program">
         <name xml:lang="it">Programma</name>

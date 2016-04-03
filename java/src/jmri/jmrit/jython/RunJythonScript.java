@@ -115,7 +115,7 @@ public class RunJythonScript extends JmriAbstractAction {
     void invoke(File file) {
         try {
             JmriScriptEngineManager.getDefault().eval(file);
-        } catch (ScriptException | FileNotFoundException ex) {
+        } catch (ScriptException | java.io.IOException ex) {
             log.error("Unable to execute script.", ex);
         }
     }

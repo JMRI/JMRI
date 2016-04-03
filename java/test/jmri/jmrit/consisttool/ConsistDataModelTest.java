@@ -1,4 +1,3 @@
-// ConsistDataModelTest.java
 package jmri.jmrit.consisttool;
 
 import junit.framework.Assert;

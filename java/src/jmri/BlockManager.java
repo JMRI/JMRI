@@ -1,8 +1,12 @@
-// BlockManager.java
 package jmri;
 
 import java.text.DecimalFormat;
+import java.util.ArrayList;
+import java.util.List;
 import jmri.managers.AbstractManager;
+import jmri.implementation.SignalSpeedMap;
+
+import jmri.jmrit.roster.RosterEntry;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -28,7 +32,6 @@ import org.slf4j.LoggerFactory;
  * <P>
  *
  * @author Bob Jacobsen Copyright (C) 2006
- * @version	$Revision$
  */
 public class BlockManager extends AbstractManager
         implements java.beans.PropertyChangeListener, java.beans.VetoableChangeListener {
@@ -173,7 +176,7 @@ public class BlockManager extends AbstractManager
 
     String defaultSpeed = "Normal";
 
-    @edu.umd.cs.findbugs.annotations.SuppressWarnings(value = "NP_NULL_PARAM_DEREF", justification = "We are validating user input however the value is stored in its original format")
+    @edu.umd.cs.findbugs.annotations.SuppressFBWarnings(value = "NP_NULL_PARAM_DEREF", justification = "We are validating user input however the value is stored in its original format")
     public void setDefaultSpeed(String speed) throws JmriException {
         if (speed == null) {
             throw new JmriException("Value of requested default thrown speed can not be null");
@@ -186,7 +189,7 @@ public class BlockManager extends AbstractManager
             Float.parseFloat(speed);
         } catch (NumberFormatException nx) {
             try {
-                jmri.implementation.SignalSpeedMap.getMap().getSpeed(speed);
+                jmri.InstanceManager.getDefault(SignalSpeedMap.class).getSpeed(speed);
             } catch (Exception ex) {
                 throw new JmriException("Value of requested default block speed is not valid");
             }
@@ -203,8 +206,33 @@ public class BlockManager extends AbstractManager
     public String getBeanTypeHandled() {
         return Bundle.getMessage("BeanNameBlock");
     }
+    
+    /**
+     * Returns a list of blocks which the supplied roster entry appears to
+     * be occupying. A block is assumed to contain this roster entry if its value
+     * is the RosterEntry itself, or a string with the entry's id or dcc address.
+     * 
+     * @param re the roster entry
+     * @return list of block system names
+     */
+    public List<Block> getBlocksOccupiedByRosterEntry(RosterEntry re) {
+        List<Block> blockList = new ArrayList<>();
+        
+        for (String sysName : getSystemNameList()) {
+            Block b = getBySystemName(sysName);
+            Object o = b.getValue();
+            if (o != null) {
+                if (o instanceof jmri.jmrit.roster.RosterEntry && o == re) {
+                    blockList.add(b);
+                } else if (o.toString().equals(re.getId()) || o.toString().equals(re.getDccAddress())){
+                    blockList.add(b);
+                }
+            }
+        }
+        
+        return blockList;
+    }
 
     private final static Logger log = LoggerFactory.getLogger(BlockManager.class.getName());
 }
 
-/* @(#)BlockManager.java */

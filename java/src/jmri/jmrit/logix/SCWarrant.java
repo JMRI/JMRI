@@ -14,7 +14,6 @@ import org.slf4j.LoggerFactory;
  * It will not run unless you have your layout fully covered with sensors and
  * signals.
  * 
- * @version $Revision$
  * @author  Karl Johan Lisby Copyright (C) 2016
  */
 public class SCWarrant extends Warrant {
@@ -180,10 +179,10 @@ public class SCWarrant extends Warrant {
         } else {
             if (_nextSignal instanceof SignalHead) {
                 int appearance = ((SignalHead) _nextSignal).getAppearance();
-                speed = SignalSpeedMap.getMap().getAppearanceSpeed(((SignalHead) _nextSignal).getAppearanceName(appearance));
+                speed = jmri.InstanceManager.getDefault(SignalSpeedMap.class).getAppearanceSpeed(((SignalHead) _nextSignal).getAppearanceName(appearance));
             } else {
                 String aspect = ((SignalMast) _nextSignal).getAspect();
-                speed = SignalSpeedMap.getMap().getAspectSpeed(aspect, ((SignalMast) _nextSignal).getSignalSystem());
+                speed = jmri.InstanceManager.getDefault(SignalSpeedMap.class).getAspectSpeed(aspect, ((SignalMast) _nextSignal).getSignalSystem());
             }
             if (speed.equals("Stop")) {
                 _engineer.setSpeed(SPEED_STOP);

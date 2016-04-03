@@ -1,4 +1,3 @@
-// ButtonTriggerTest.java
 package jmri.jmrit.vsdecoder;
 
 import java.beans.PropertyChangeEvent;
@@ -12,7 +11,6 @@ import org.jdom2.Element;
  * Tests for the FloatTrigger class
  *
  * @author Mark Underwood Copyright (C) 2011
- * @version $Revision$
  */
 public class FloatTriggerTest extends TestCase {
 

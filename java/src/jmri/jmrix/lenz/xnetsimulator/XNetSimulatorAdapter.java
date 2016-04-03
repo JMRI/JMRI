@@ -1,4 +1,3 @@
-// XNetSimulatorAdapter.java
 package jmri.jmrix.lenz.xnetsimulator;
 
 import java.io.DataInputStream;
@@ -31,7 +30,6 @@ import org.slf4j.LoggerFactory;
  * support infrastructure.
  *
  * @author	Paul Bender, Copyright (C) 2009-2010
- * @version	$Revision$
  */
 public class XNetSimulatorAdapter extends XNetSimulatorPortController implements Runnable {
 
@@ -43,6 +41,22 @@ public class XNetSimulatorAdapter extends XNetSimulatorPortController implements
     private final static int csEmergencyStop = 0x01; // bit 0
     // 0x00 means normal mode.
     private final static int csNormalMode = 0x00;
+
+    // information about the last throttle command(s).
+    private int lastLocoAddressHigh = 0;
+    private int lastLocoAddressLow = 0;
+    private int CurrentSpeedStepMode = XNetConstants.LOCO_SPEED_128;
+    private int CurrentSpeedStep= 0; 
+    private int FunctionGroup1 = 0;
+    private int FunctionGroup2 = 0;
+    private int FunctionGroup3 = 0;
+    private int FunctionGroup4 = 0;
+    private int FunctionGroup5 = 0;
+    private int MomentaryGroup1 = 0;
+    private int MomentaryGroup2 = 0;
+    private int MomentaryGroup3 = 0;
+    private int MomentaryGroup4 = 0;
+    private int MomentaryGroup5 = 0;
 
     public XNetSimulatorAdapter() {
         setPort("None");
@@ -225,25 +239,67 @@ public class XNetSimulatorAdapter extends XNetSimulatorPortController implements
                 reply.setParity();
                 break;
             case XNetConstants.LOCO_OPER_REQ:
+                lastLocoAddressHigh = m.getElement(2);
+                lastLocoAddressLow = m.getElement(3);
                 switch(m.getElement(1)) {
                      case XNetConstants.LOCO_SPEED_14:
+                          CurrentSpeedStepMode = XNetConstants.LOCO_SPEED_14;
+                          CurrentSpeedStep = m.getElement(4);
+                          reply = okReply();
+                          break;
                      case XNetConstants.LOCO_SPEED_27:
+                          CurrentSpeedStepMode = XNetConstants.LOCO_SPEED_27;
+                          CurrentSpeedStep = m.getElement(4);
+                          reply = okReply();
+                          break;
                      case XNetConstants.LOCO_SPEED_28:
+                          CurrentSpeedStepMode = XNetConstants.LOCO_SPEED_28;
+                          CurrentSpeedStep = m.getElement(4);
+                          reply = okReply();
+                          break;
                      case XNetConstants.LOCO_SPEED_128:
+                          CurrentSpeedStepMode = XNetConstants.LOCO_SPEED_128;
+                          CurrentSpeedStep = m.getElement(4);
                           reply = okReply();
                           break;
                      case XNetConstants.LOCO_SET_FUNC_GROUP1:
+                          FunctionGroup1=m.getElement(4);
+                          reply = okReply();
+                          break;
                      case XNetConstants.LOCO_SET_FUNC_GROUP2:
+                          FunctionGroup2=m.getElement(4);
+                          reply = okReply();
+                          break;
                      case XNetConstants.LOCO_SET_FUNC_GROUP3:
+                          FunctionGroup3=m.getElement(4);
+                          reply = okReply();
+                          break;
                      case XNetConstants.LOCO_SET_FUNC_GROUP4:
+                          FunctionGroup4=m.getElement(4);
+                          reply = okReply();
+                          break;
                      case XNetConstants.LOCO_SET_FUNC_GROUP5:
+                          FunctionGroup5=m.getElement(4);
                           reply = okReply();
                           break;
                      case XNetConstants.LOCO_SET_FUNC_Group1:
+                          MomentaryGroup1=m.getElement(4);
+                          reply = okReply();
+                          break;
                      case XNetConstants.LOCO_SET_FUNC_Group2:
+                          MomentaryGroup2=m.getElement(4);
+                          reply = okReply();
+                          break;
                      case XNetConstants.LOCO_SET_FUNC_Group3:
+                          MomentaryGroup3=m.getElement(4);
+                          reply = okReply();
+                          break;
                      case XNetConstants.LOCO_SET_FUNC_Group4:
+                          MomentaryGroup4=m.getElement(4);
+                          reply = okReply();
+                          break;
                      case XNetConstants.LOCO_SET_FUNC_Group5:
+                          MomentaryGroup5=m.getElement(4);
                           reply = okReply();
                           break;
                      case XNetConstants.LOCO_ADD_MULTI_UNIT_REQ:
@@ -265,35 +321,35 @@ public class XNetSimulatorAdapter extends XNetSimulatorPortController implements
                 switch (m.getElement(1)) {
                     case XNetConstants.LOCO_INFO_REQ_V3:
                         reply.setOpCode(XNetConstants.LOCO_INFO_NORMAL_UNIT);
-                        reply.setElement(1, 0x04);  // set to 128 speed step mode
-                        reply.setElement(2, 0x00);  // set the speed to 0 
+                        reply.setElement(1, CurrentSpeedStepMode);  
+                        reply.setElement(2, CurrentSpeedStep);  // set the speed 
                         // direction reverse
-                        reply.setElement(3, 0x00);  // set function group a off
-                        reply.setElement(4, 0x00);  // set function group b off
+                        reply.setElement(3, FunctionGroup1);  // set function group 1
+                        reply.setElement(4, (FunctionGroup2& 0x0f) + ((FunctionGroup3 &0x0f)<<4) );  // set function group 2 and 3
                         reply.setElement(5, 0x00);  // set the parity byte to 0
                         reply.setParity();         // set the parity correctly.
                         break;
                     case XNetConstants.LOCO_INFO_REQ_FUNC:
                         reply.setOpCode(XNetConstants.LOCO_INFO_RESPONSE);
                         reply.setElement(1, XNetConstants.LOCO_FUNCTION_STATUS);  // momentary function status
-                        reply.setElement(2, 0x00);  // set function group a continuous
-                        reply.setElement(3, 0x00);  // set function group b continuous
+                        reply.setElement(2, MomentaryGroup1);  // set function group 1
+                        reply.setElement(3, (MomentaryGroup2&0x0f) + ((MomentaryGroup3*0x0f)<<4) );  // set function group 2 and 3
                         reply.setElement(4, 0x00);  // set the parity byte to 0
                         reply.setParity();         // set the parity correctly.
                         break;
                     case XNetConstants.LOCO_INFO_REQ_FUNC_HI_ON:
                         reply.setOpCode(XNetConstants.LOCO_INFO_RESPONSE);
                         reply.setElement(1, XNetConstants.LOCO_FUNCTION_STATUS_HIGH);  // F13-F28 function on/off status
-                        reply.setElement(2, 0x00);  // set function group a continuous
-                        reply.setElement(3, 0x00);  // set function group b continuous
+                        reply.setElement(2, FunctionGroup4);  // set function group 4
+                        reply.setElement(3, FunctionGroup5);  // set function group 5
                         reply.setElement(4, 0x00);  // set the parity byte to 0
                         reply.setParity();         // set the parity correctly.
                         break;
                     case XNetConstants.LOCO_INFO_REQ_FUNC_HI_MOM:
                         reply.setOpCode(XNetConstants.LOCO_INFO_NORMAL_UNIT);
                         reply.setElement(1, XNetConstants.LOCO_FUNCTION_STATUS_HIGH_MOM);  // F13-F28 momentary function status
-                        reply.setElement(2, 0x00);  // set function group a continuous
-                        reply.setElement(3, 0x00);  // set function group b continuous
+                        reply.setElement(2, MomentaryGroup4);  // set function group 4
+                        reply.setElement(3, MomentaryGroup5);  // set function group 5
                         reply.setElement(4, 0x00);  // set the parity byte to 0
                         reply.setParity();         // set the parity correctly.
                         break;

@@ -1,4 +1,3 @@
-// PackageTest.java
 package jmri.jmrix.lenz;
 
 import junit.framework.Test;
@@ -20,7 +19,7 @@ public class PackageTest extends TestCase {
 
     // Main entry point
     static public void main(String[] args) {
-        String[] testCaseName = {PackageTest.class.getName()};
+        String[] testCaseName = {"-noloading", PackageTest.class.getName()};
         junit.swingui.TestRunner.main(testCaseName);
     }
 

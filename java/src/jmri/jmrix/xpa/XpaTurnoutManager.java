@@ -30,7 +30,7 @@ public class XpaTurnoutManager extends jmri.managers.AbstractTurnoutManager {
         return t;
     }
 
-    static public XpaTurnoutManager instance() {
+    synchronized static public XpaTurnoutManager instance() {
         if (_instance == null) {
             _instance = new XpaTurnoutManager();
         }

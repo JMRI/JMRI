@@ -123,7 +123,7 @@ public class SerialNode extends AbstractNode {
         num2LSearchLights = n;
     }
 
-    @edu.umd.cs.findbugs.annotations.SuppressWarnings(value = "EI_EXPOSE_REP") // OK to expose array instead of copy until Java 1.6
+    @edu.umd.cs.findbugs.annotations.SuppressFBWarnings(value = "EI_EXPOSE_REP") // OK to expose array instead of copy until Java 1.6
     public byte[] getLocSearchLightBits() {
         return locSearchLightBits;
     }
@@ -132,7 +132,7 @@ public class SerialNode extends AbstractNode {
         locSearchLightBits[num] = (byte) (value & 0xFF);
     }
 
-    @edu.umd.cs.findbugs.annotations.SuppressWarnings(value = "EI_EXPOSE_REP") // OK to expose array instead of copy until Java 1.6
+    @edu.umd.cs.findbugs.annotations.SuppressFBWarnings(value = "EI_EXPOSE_REP") // OK to expose array instead of copy until Java 1.6
     public byte[] getCardTypeLocation() {
         return cardTypeLocation;
     }

@@ -204,11 +204,11 @@ public class RosterTable extends JmriPanel implements RosterEntrySelector, Roste
      */
     public void setRosterGroupSource(RosterGroupSelector rosterGroupSource) {
         if (this.rosterGroupSource != null) {
-            this.rosterGroupSource.removePropertyChangeListener(RosterGroupSelector.selectedRosterGroupProperty, dataModel);
+            this.rosterGroupSource.removePropertyChangeListener(SELECTED_ROSTER_GROUP, dataModel);
         }
         this.rosterGroupSource = rosterGroupSource;
         if (this.rosterGroupSource != null) {
-            this.rosterGroupSource.addPropertyChangeListener(RosterGroupSelector.selectedRosterGroupProperty, dataModel);
+            this.rosterGroupSource.addPropertyChangeListener(SELECTED_ROSTER_GROUP, dataModel);
         }
     }
 
@@ -253,7 +253,7 @@ public class RosterTable extends JmriPanel implements RosterEntrySelector, Roste
     // cache selectedRosterEntries so that multiple calls to this
     // between selection changes will not require the creation of a new array
     @Override
-    @edu.umd.cs.findbugs.annotations.SuppressWarnings(value = "EI_EXPOSE_REP",
+    @edu.umd.cs.findbugs.annotations.SuppressFBWarnings(value = "EI_EXPOSE_REP",
             justification = "Want to give access to mutable, original roster objects")
     public RosterEntry[] getSelectedRosterEntries() {
         if (selectedRosterEntries == null) {

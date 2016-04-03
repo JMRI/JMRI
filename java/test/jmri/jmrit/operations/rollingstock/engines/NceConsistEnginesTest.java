@@ -1,4 +1,3 @@
-// NceConsistEnginesTest.java
 package jmri.jmrit.operations.rollingstock.engines;
 
 import java.util.ArrayList;
@@ -18,7 +17,6 @@ import junit.framework.TestSuite;
  * register/deregister EngineManager: Consists
  *
  * @author	Bob Coleman Copyright (C) 2008, 2009
- * @version $Revision$
  */
 public class NceConsistEnginesTest extends OperationsTestCase {
 

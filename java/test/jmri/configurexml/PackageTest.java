@@ -1,4 +1,3 @@
-// PackageTest.java
 package jmri.configurexml;
 
 import junit.framework.Test;
@@ -9,7 +8,6 @@ import junit.framework.TestSuite;
  * Test the jmri.configxml package.
  *
  * @author	Bob Jacobsen
- * @version $Revision$
  */
 public class PackageTest extends TestCase {
 
@@ -26,7 +24,7 @@ public class PackageTest extends TestCase {
 
     // test suite from all defined tests, including others in the package
     public static Test suite() {
-        TestSuite suite = new TestSuite("jmri.config.ConfigXmlTest");  // no tests in this class itself
+        TestSuite suite = new TestSuite("jmri.configurexml.PackageTest");  // no tests in this class itself
 
         suite.addTest(SchemaTest.suite());
         suite.addTest(LoadAndCheckTest.suite());

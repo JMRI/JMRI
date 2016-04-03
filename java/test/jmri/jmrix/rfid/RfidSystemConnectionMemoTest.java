@@ -11,7 +11,6 @@ import junit.framework.TestSuite;
  * Description:	tests for the jmri.jmrix.rfid.RfidSystemConnectionMemo class
  *
  * @author	Paul Bender
- * @version $Revision$
  */
 public class RfidSystemConnectionMemoTest extends TestCase {
 

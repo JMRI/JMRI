@@ -101,7 +101,7 @@ public class LocoDataPane extends jmri.jmrix.tams.swing.TamsPanel {
 
         }
         try {
-            new Integer(addr.getText());
+            Integer.valueOf(addr.getText());
         } catch (NumberFormatException nx) {
             log.error("Unable to convert " + addr.getText() + " to a number");
             JOptionPane.showMessageDialog(null, rb.getString("ErrorNotNumber"), "Error",

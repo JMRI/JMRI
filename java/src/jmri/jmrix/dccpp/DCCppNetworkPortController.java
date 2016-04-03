@@ -21,12 +21,12 @@ public abstract class DCCppNetworkPortController extends jmri.jmrix.AbstractNetw
     
     protected DCCppNetworkPortController() {
         super(new DCCppSystemConnectionMemo());
-        setManufacturer(jmri.jmrix.DCCManufacturerList.DCCPP);
+        setManufacturer(DCCppConnectionTypeList.DCCPP);
     }
     
     protected DCCppNetworkPortController(DCCppSystemConnectionMemo connectionMemo) {
         super(connectionMemo);
-        setManufacturer(jmri.jmrix.DCCManufacturerList.DCCPP);
+        setManufacturer(DCCppConnectionTypeList.DCCPP);
     }
 
     protected int commandStationType = 0;

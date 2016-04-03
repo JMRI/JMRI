@@ -1,4 +1,3 @@
-// SerialTurnoutTest.java
 package jmri.jmrix.oaktree;
 
 import jmri.implementation.AbstractTurnoutTest;

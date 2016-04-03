@@ -1,10 +1,11 @@
-// AbstractManager.java
 package jmri.managers;
 
 import java.util.ArrayList;
 import java.util.Enumeration;
 import java.util.Hashtable;
 import java.util.List;
+import javax.annotation.Nonnull;
+import javax.annotation.Nullable;
 import jmri.InstanceManager;
 import jmri.Manager;
 import jmri.NamedBean;
@@ -18,7 +19,6 @@ import org.slf4j.LoggerFactory;
  * the present time. They're just names...
  *
  * @author Bob Jacobsen Copyright (C) 2003
- * @version	$Revision$
  */
 abstract public class AbstractManager
         implements Manager, java.beans.PropertyChangeListener, java.beans.VetoableChangeListener {
@@ -142,18 +142,18 @@ abstract public class AbstractManager
      * delete the bean, then it will be deregistered and disposed of.
      *
      * @param bean     The NamedBean to be deleted
-     * @param property The programmatic name of the property that is to be
-     *                 changed. "CanDelete" will enquire with all listerners if
-     *                 the item can be deleted "DoDelete" tells the listerner to
-     *                 delete the item
-     * @throws java.beans.PropertyVetoException - if the recipients wishes the
+     * @param property The programmatic name of the property: 
+     *                  "CanDelete" will enquire with all listeners if
+     *                  the item can be deleted. "DoDelete" tells the listener to
+     *                  delete the item
+     * @throws java.beans.PropertyVetoException - If the recipient(s) wishes the
      *                                          delete to be aborted.
      */
-    public void deleteBean(NamedBean bean, String property) throws java.beans.PropertyVetoException {
+    public void deleteBean(@Nonnull NamedBean bean, @Nullable String property) throws java.beans.PropertyVetoException {
         try {
             fireVetoableChange(property, bean, null);
         } catch (java.beans.PropertyVetoException e) {
-            throw e;
+            throw e;  // don't go on to check for delete.
         }
         if (property.equals("DoDelete")) { //IN18N
             deregister(bean);
@@ -356,5 +356,3 @@ abstract public class AbstractManager
     private final static Logger log = LoggerFactory.getLogger(AbstractManager.class.getName());
 
 }
-
-/* @(#)AbstractManager.java */

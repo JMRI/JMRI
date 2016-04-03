@@ -81,7 +81,7 @@ public class SignalHeadTableAction extends AbstractTableAction {
     }
 
     public SignalHeadTableAction() {
-        this("Signal Table");
+        this(Bundle.getMessage("TitleSignalTable"));
     }
 
     /**
@@ -103,7 +103,9 @@ public class SignalHeadTableAction extends AbstractTableAction {
             }
 
             public String getColumnName(int col) {
-                if (col == LITCOL) {
+               if (col == VALUECOL) {
+                   return Bundle.getMessage("SignalMastAppearance");  // override default title
+               } else if (col == LITCOL) {
                     return Bundle.getMessage("ColumnHeadLit");
                 } else if (col == HELDCOL) {
                     return Bundle.getMessage("ColumnHeadHeld");
@@ -674,7 +676,7 @@ public class SignalHeadTableAction extends AbstractTableAction {
 
             JPanel panelBottom = new JPanel();
             panelBottom.setLayout(new BoxLayout(panelBottom, BoxLayout.Y_AXIS));
-
+             //OK button
             JButton ok;
             panelBottom.add(ok = new JButton(Bundle.getMessage("ButtonOK")));
             ok.addActionListener(new ActionListener() {
@@ -755,7 +757,7 @@ public class SignalHeadTableAction extends AbstractTableAction {
             v1Border.setTitle(Bundle.getMessage("LabelSignalheadNumber"));
             v1Panel.setVisible(true);
             ato1.setVisible(true);
-            vtLabel.setText(Bundle.getMessage("LabelAspectType"));
+            vtLabel.setText(Bundle.getMessage("LabelAspectType") + ":");
             vtLabel.setVisible(true);
             stBox.setVisible(true);
         } else if (quadOutput.equals(typeBox.getSelectedItem())) {
@@ -1406,7 +1408,7 @@ public class SignalHeadTableAction extends AbstractTableAction {
     }
 
     @SuppressWarnings("fallthrough")
-    @edu.umd.cs.findbugs.annotations.SuppressWarnings(value = "SF_SWITCH_FALLTHROUGH")
+    @edu.umd.cs.findbugs.annotations.SuppressFBWarnings(value = "SF_SWITCH_FALLTHROUGH")
     void handleMergSignalDriverOkPressed() {
         SignalHead s;
         // Adding Merg Signal Driver.
@@ -1916,7 +1918,7 @@ public class SignalHeadTableAction extends AbstractTableAction {
              ev1Panel.setVisible(true);
              eto1.setVisible(true);
              eto1.setText(curS.getUserName());*/
-            evtLabel.setText(Bundle.getMessage("LabelAspectType"));
+            evtLabel.setText(Bundle.getMessage("LabelAspectType") + ":");
             etot.setVisible(false);
             AcelaNode tNode = AcelaAddress.getNodeFromSystemName(curS.getSystemName());
             if (tNode == null) {
@@ -2001,7 +2003,7 @@ public class SignalHeadTableAction extends AbstractTableAction {
     }
 
     @SuppressWarnings("fallthrough")
-    @edu.umd.cs.findbugs.annotations.SuppressWarnings(value = "SF_SWITCH_FALLTHROUGH")
+    @edu.umd.cs.findbugs.annotations.SuppressFBWarnings(value = "SF_SWITCH_FALLTHROUGH")
     void updatePressed(ActionEvent e) {
         String nam = eUserName.getText();
         // check if user name changed

@@ -1,4 +1,3 @@
-// RosterTest.java
 package jmri.jmrit.roster;
 
 import java.io.File;
@@ -18,7 +17,6 @@ import junit.framework.TestSuite;
  * Tests for the jmrit.roster.Roster class.
  *
  * @author	Bob Jacobsen Copyright (C) 2001, 2002, 2012
- * @version $Revision$
  */
 public class RosterTest extends TestCase {
 
@@ -71,6 +69,29 @@ public class RosterTest extends TestCase {
         r.addEntry(e);
         Assert.assertEquals("search not OK ", false, r.checkEntry(0, null, "321", null, null, null, null, null, null));
         Assert.assertEquals("search OK ", true, r.checkEntry(0, null, "123", null, null, null, null, null, null));
+    }
+
+    public void testGetByDccAddress() {
+        Roster r = new Roster();
+        RosterEntry e = new RosterEntry("file name Bob");
+        e.setDccAddress("456");
+        r.addEntry(e);
+        Assert.assertEquals("search not OK ", false, r.checkEntry(0, null, null, "123", null, null, null, null, null));
+        Assert.assertEquals("search OK ", true, r.checkEntry(0, null, null, "456", null, null, null, null, null));
+        
+        List<RosterEntry> l;
+
+        l = r.matchingList(null, null, "123", null, null, null, null);
+        Assert.assertEquals("match 123", 0, l.size());
+
+        l = r.matchingList(null, null, "456", null, null, null, null);
+        Assert.assertEquals("match 456", 1, l.size());
+        
+        l = r.getEntriesByDccAddress("123");
+        Assert.assertEquals("address 123", 0, l.size());
+
+        l = r.getEntriesByDccAddress("456");
+        Assert.assertEquals("address 456", 1, l.size());
     }
 
     public void testSearchList() {

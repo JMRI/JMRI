@@ -11,6 +11,7 @@ import java.io.PrintWriter;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
+import java.util.Date;
 import java.util.List;
 import jmri.jmrit.XmlFile;
 import jmri.jmrit.operations.setup.Control;
@@ -48,7 +49,7 @@ public class TrainLogger extends XmlFile implements java.beans.PropertyChangeLis
             // create and load
             _instance = new TrainLogger();
         }
-        if (Control.showInstance) {
+        if (Control.SHOW_INSTANCE) {
             log.debug("TrainLogger returns instance " + _instance);
         }
         return _instance;
@@ -170,7 +171,7 @@ public class TrainLogger extends XmlFile implements java.beans.PropertyChangeLis
     public void propertyChange(PropertyChangeEvent e) {
         if (e.getPropertyName().equals(Train.STATUS_CHANGED_PROPERTY)
                 || e.getPropertyName().equals(Train.TRAIN_LOCATION_CHANGED_PROPERTY)) {
-            if (Control.showProperty) {
+            if (Control.SHOW_PROPERTY) {
                 log.debug("Train logger sees property change for train " + e.getSource());
             }
             store((Train) e.getSource());
@@ -210,19 +211,9 @@ public class TrainLogger extends XmlFile implements java.beans.PropertyChangeLis
     }
 
     private String getDate() {
-        Calendar now = Calendar.getInstance();
-        int month = now.get(Calendar.MONTH) + 1;
-        String m = Integer.toString(month);
-        if (month < 10) {
-            m = "0" + Integer.toString(month);
-        }
-        int day = now.get(Calendar.DATE);
-        String d = Integer.toString(day);
-        if (day < 10) {
-            d = "0" + Integer.toString(day);
-        }
-        String date = "" + now.get(Calendar.YEAR) + "_" + m + "_" + d;
-        return date;
+        Date date = Calendar.getInstance().getTime();
+        SimpleDateFormat simpleDateFormat = new SimpleDateFormat("yyyy_MM_dd");
+        return simpleDateFormat.format(date);
     }
 
     /**

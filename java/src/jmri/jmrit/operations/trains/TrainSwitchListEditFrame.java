@@ -186,7 +186,8 @@ public class TrainSwitchListEditFrame extends OperationsFrame implements java.be
         // build menu
         JMenuBar menuBar = new JMenuBar();
         JMenu toolMenu = new JMenu(Bundle.getMessage("Tools"));
-        toolMenu.add(new SetupExcelProgramSwitchListFrameAction(Bundle.getMessage("MenuItemSetupExcelProgramSwitchList")));
+        toolMenu.add(
+                new SetupExcelProgramSwitchListFrameAction(Bundle.getMessage("MenuItemSetupExcelProgramSwitchList")));
         menuBar.add(toolMenu);
         setJMenuBar(menuBar);
 
@@ -302,6 +303,9 @@ public class TrainSwitchListEditFrame extends OperationsFrame implements java.be
      * @param isUpdate true if only updating switch lists (no printing or
      *            preview)
      */
+    @edu.umd.cs.findbugs.annotations.SuppressFBWarnings(
+            value = {"UC_USELESS_CONDITION", "RpC_REPEATED_CONDITIONAL_TEST"},
+            justification = "isChanged value is dependent on which user button is activated")
     private void buildSwitchList(boolean isPreview, boolean isChanged, boolean isCsv, boolean isUpdate) {
         TrainSwitchLists trainSwitchLists = new TrainSwitchLists();
         // this for loop prevents ConcurrentModificationException when printing and status changes
@@ -313,11 +317,11 @@ public class TrainSwitchListEditFrame extends OperationsFrame implements java.be
                     // update switch list
                     trainSwitchLists.buildSwitchList(location);
                     // print or only print changes
-                    if (!isUpdate && (!isChanged || isChanged && location.getStatus().equals(Location.MODIFIED))) {
+                    if (!isUpdate && (!isChanged || (isChanged && location.getStatus().equals(Location.MODIFIED)))) {
                         trainSwitchLists.printSwitchList(location, isPreview);
                     }
-                } else if (Setup.isGenerateCsvSwitchListEnabled()
-                        && (!isChanged || isChanged && location.getStatus().equals(Location.MODIFIED))) {
+                } else if (Setup.isGenerateCsvSwitchListEnabled() &&
+                        (!isChanged || (isChanged && location.getStatus().equals(Location.MODIFIED)))) {
                     TrainCsvSwitchLists trainCsvSwitchLists = new TrainCsvSwitchLists();
                     trainCsvSwitchLists.buildSwitchList(location);
                 }
@@ -378,9 +382,9 @@ public class TrainSwitchListEditFrame extends OperationsFrame implements java.be
             }
             mainLocation = location;
         }
-        
+
         mainLocation = null;
-        
+
         for (Location location : locations) {
             String name = TrainCommon.splitString(location.getName());
             if (mainLocation != null && TrainCommon.splitString(mainLocation.getName()).equals(name)) {
@@ -425,6 +429,18 @@ public class TrainSwitchListEditFrame extends OperationsFrame implements java.be
         repaint();
     }
 
+
+    /**
+     * Creates custom switch lists using an external program like MS Excel.
+     * Switch lists are created for locations that have switch lists enabled.
+     * 
+     * @param isChanged when true, only create custom switch list for enabled
+     *            locations that have changes. When isChanged is false, create
+     *            custom switch lists for all enabled locations.
+     */
+    @edu.umd.cs.findbugs.annotations.SuppressFBWarnings(
+            value = {"UC_USELESS_CONDITION", "RpC_REPEATED_CONDITIONAL_TEST"},
+            justification = "isChanged value is dependent on which user button is activated")
     private void runCustomSwitchLists(boolean isChanged) {
         if (!Setup.isGenerateCsvSwitchListEnabled()) {
             return;
@@ -435,8 +451,8 @@ public class TrainSwitchListEditFrame extends OperationsFrame implements java.be
         for (int i = 0; i < locationCheckBoxes.size(); i++) {
             String locationName = locationCheckBoxes.get(i).getName();
             Location location = locationManager.getLocationByName(locationName);
-            if (location.isSwitchListEnabled()
-                    && (!isChanged || isChanged && location.getStatus().equals(Location.MODIFIED))) {
+            if (location.isSwitchListEnabled() &&
+                    (!isChanged || (isChanged && location.getStatus().equals(Location.MODIFIED)))) {
                 // also build the regular switch lists so they can be used
                 if (!switchListRealTimeCheckBox.isSelected()) {
                     trainSwitchLists.buildSwitchList(location);
@@ -545,7 +561,7 @@ public class TrainSwitchListEditFrame extends OperationsFrame implements java.be
     }
 
     public void propertyChange(PropertyChangeEvent e) {
-        if (Control.showProperty) {
+        if (Control.SHOW_PROPERTY) {
             log.debug("Property change: ({}) old: ({}) new: ({})", e.getPropertyName(), e.getOldValue(), e
                     .getNewValue());
         }
@@ -553,10 +569,10 @@ public class TrainSwitchListEditFrame extends OperationsFrame implements java.be
             changeLocationCheckboxes(e);
             enableChangeButtons();
         }
-        if (e.getPropertyName().equals(LocationManager.LISTLENGTH_CHANGED_PROPERTY)
-                || e.getPropertyName().equals(Location.NAME_CHANGED_PROPERTY)
-                || e.getPropertyName().equals(Location.STATUS_CHANGED_PROPERTY)
-                || e.getPropertyName().equals(Location.SWITCHLIST_COMMENT_CHANGED_PROPERTY)) {
+        if (e.getPropertyName().equals(LocationManager.LISTLENGTH_CHANGED_PROPERTY) ||
+                e.getPropertyName().equals(Location.NAME_CHANGED_PROPERTY) ||
+                e.getPropertyName().equals(Location.STATUS_CHANGED_PROPERTY) ||
+                e.getPropertyName().equals(Location.SWITCHLIST_COMMENT_CHANGED_PROPERTY)) {
             updateLocationCheckboxes();
             enableChangeButtons();
         }

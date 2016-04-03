@@ -270,9 +270,9 @@ public class SignalMastLogicTableAction extends AbstractTableAction {
                     case COMCOL:
                         return Bundle.getMessage("Comment");
                     case DELCOL:
-                        return Bundle.getMessage("ButtonDelete");
+                        return ""; // override default, no title for Delete column
                     case EDITLOGICCOL:
-                        return Bundle.getMessage("ButtonEdit");
+                        return ""; // override default, no title for Edit column
                     case ENABLECOL:
                         return Bundle.getMessage("ColumnHeadEnabled");
                     default:
@@ -368,7 +368,7 @@ public class SignalMastLogicTableAction extends AbstractTableAction {
 
             public void configureTable(JTable table) {
                 setColumnToHoldButton(table, EDITLOGICCOL,
-                        new JButton("Edit"));
+                        new JButton(Bundle.getMessage("ButtonEdit")));
                 table.getTableHeader().setReorderingAllowed(true);
 
                 // have to shut off autoResizeMode to get horizontal scroll to work (JavaSwing p 541)

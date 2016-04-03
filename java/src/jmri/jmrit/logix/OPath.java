@@ -65,7 +65,7 @@ public class OPath extends jmri.Path {
         }
     }
 
-    @edu.umd.cs.findbugs.annotations.SuppressWarnings(value = "UR_UNINIT_READ_CALLED_FROM_SUPER_CONSTRUCTOR")
+    @edu.umd.cs.findbugs.annotations.SuppressFBWarnings(value = "UR_UNINIT_READ_CALLED_FROM_SUPER_CONSTRUCTOR")
     // OPath ctor invokes Path ctor via super(), which calls this, before the internal
     // _block variable has been set so that Path.getPath() can work.  In this implementation,
     // getPath() only controls whether log.debug(...) is fired, but this might change if/when
@@ -272,7 +272,19 @@ public class OPath extends jmri.Path {
      * Override to indicate logical equality for use as paths in OBlocks.
      *
      */
-    public boolean equals(OPath path) {
+    public boolean equals(Object obj) {
+        if (obj == this) {
+            return true;
+        }
+        if (obj == null) {
+            return false;
+        }
+    
+        if (!(getClass() == obj.getClass())) {
+            return false;
+        }
+        
+        OPath path = (OPath) obj;
         if (_fromPortal != null && !_fromPortal.equals(path.getFromPortal())) {
             return false;
         }

@@ -2544,6 +2544,8 @@
 
 <mapID target="package.apps.gui3.dp3.DecoderPro3_menubar" url="package/apps/gui3/dp3/DecoderPro3.shtml#menubar"/>
 
+<mapID target="package.jmri.jmrit.beantable.BlockTable_BlockSpeed" url="package/jmri/jmrit/beantable/BlockTable.shtml#BlockSpeed"/>
+
 <mapID target="html.hardware.loconet.Uhlenbrock_hardware" url="html/hardware/loconet/Uhlenbrock.shtml#hardware"/>
 
 <mapID target="manual.JMRI_OPS_UsersGuide.Ops_ManifestPrint" url="manual/JMRI_OPS_UsersGuide/Ops_ManifestPrint.shtml"/>

@@ -1,4 +1,3 @@
-// SerialAddressTest.java
 package jmri.jmrix.grapevine;
 
 import java.util.regex.Matcher;

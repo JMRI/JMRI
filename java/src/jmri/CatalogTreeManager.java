@@ -1,4 +1,3 @@
-// CatalogTreeManager.java
 package jmri;
 
 import java.util.List;
@@ -85,19 +84,16 @@ public interface CatalogTreeManager extends Manager {
      */
     public List<String> getSystemNameList();
 
-    @edu.umd.cs.findbugs.annotations.SuppressWarnings(value = "MS_MUTABLE_ARRAY",
+    @edu.umd.cs.findbugs.annotations.SuppressFBWarnings(value = "MS_MUTABLE_ARRAY",
             justification = "with existing code structure, just have to accept these exposed arrays. Someday...")
     static final String[] IMAGE_FILTER = {"gif", "jpg", "jpeg", "png"};
 
-    @edu.umd.cs.findbugs.annotations.SuppressWarnings(value = "MS_OOI_PKGPROTECT",
+    @edu.umd.cs.findbugs.annotations.SuppressFBWarnings(value = "MS_OOI_PKGPROTECT",
             justification = "with existing code structure, just have to accept these exposed arrays. Someday...")
     static final String[] SOUND_FILTER = {"wav"};
 
-    @edu.umd.cs.findbugs.annotations.SuppressWarnings(value = "MS_OOI_PKGPROTECT",
+    @edu.umd.cs.findbugs.annotations.SuppressFBWarnings(value = "MS_OOI_PKGPROTECT",
             justification = "with existing code structure, just have to accept these exposed arrays. Someday...")
     static final String[] SCRIPT_FILTER = {"py", "scpt"};
 
 }
-
-
-/* @(#)CatalogTreeManager.java */

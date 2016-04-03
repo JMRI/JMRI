@@ -42,7 +42,6 @@ public class AppConfigBase extends JmriPanel {
 
     protected static final ResourceBundle rb = ResourceBundle.getBundle("apps.AppsConfigBundle");
 
-    private static final long serialVersionUID = -341194769406457667L;
     private static final Logger log = LoggerFactory.getLogger(AppConfigBase.class);
 
     /**

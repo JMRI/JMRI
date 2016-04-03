@@ -1,4 +1,3 @@
-// DefaultUserMessagePreferences.java
 package jmri.managers;
 
 import java.awt.Dimension;
@@ -35,10 +34,9 @@ import org.slf4j.LoggerFactory;
  * next time"
  *
  * @author Kevin Dickerson Copyright (C) 2010
- * @version	$Revision$
  */
 @net.jcip.annotations.NotThreadSafe  // intended for access from Swing thread only
-@edu.umd.cs.findbugs.annotations.SuppressWarnings(
+@edu.umd.cs.findbugs.annotations.SuppressFBWarnings(
         value = "ST_WRITE_TO_STATIC_FROM_INSTANCE_METHOD",
         justification = "Class is single-threaded, and uses statics extensively")
 
@@ -872,7 +870,7 @@ public class DefaultUserMessagePreferences extends jmri.jmrit.XmlFile implements
             log.error("class name " + strClass + " is in valid " + ec);
         } catch (java.lang.IllegalAccessException ex) {
             ex.printStackTrace();
-        } catch (Exception e) {
+        } catch (InstantiationException e) {
             log.error("unable to get a class name " + e);
         }
     }

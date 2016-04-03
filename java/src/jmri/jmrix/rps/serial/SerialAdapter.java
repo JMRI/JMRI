@@ -1,4 +1,3 @@
-// SerialDriverAdapter.java
 package jmri.jmrix.rps.serial;
 
 import gnu.io.CommPortIdentifier;
@@ -27,7 +26,6 @@ import org.slf4j.LoggerFactory;
  * case)
  *
  * @author	Bob Jacobsen Copyright (C) 2001, 2002, 2008
- * @version	$Revision$
  */
 public class SerialAdapter extends jmri.jmrix.AbstractSerialPortController implements jmri.jmrix.SerialPortAdapter {
 
@@ -35,7 +33,7 @@ public class SerialAdapter extends jmri.jmrix.AbstractSerialPortController imple
         super(new RpsSystemConnectionMemo());
         option1Name = "Protocol";
         options.put(option1Name, new Option("Protocol", validOptions1));
-        this.manufacturerName = jmri.jmrix.DCCManufacturerList.NAC;
+        this.manufacturerName = jmri.jmrix.rps.RpsConnectionTypeList.NAC;
     }
 
     transient SerialPort activeSerialPort = null;
@@ -85,12 +83,7 @@ public class SerialAdapter extends jmri.jmrix.AbstractSerialPortController imple
             sendBytes(new byte[]{(byte) 'A', 13});
 
             // purge contents, if any
-            int count = serialStream.available();
-            log.debug("input stream shows " + count + " bytes available");
-            while (count > 0) {
-                serialStream.skip(count);
-                count = serialStream.available();
-            }
+            purgeStream(serialStream);
 
             // report status?
             if (log.isInfoEnabled()) {
@@ -184,7 +177,7 @@ public class SerialAdapter extends jmri.jmrix.AbstractSerialPortController imple
     /**
      * Get an array of valid baud rates.
      */
-    @edu.umd.cs.findbugs.annotations.SuppressWarnings(value = "EI_EXPOSE_REP") // OK to expose array instead of copy until Java 1.6
+    @edu.umd.cs.findbugs.annotations.SuppressFBWarnings(value = "EI_EXPOSE_REP") // OK to expose array instead of copy until Java 1.6
     public String[] validBaudRates() {
         return validSpeeds;
     }

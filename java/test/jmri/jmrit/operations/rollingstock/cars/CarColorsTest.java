@@ -1,4 +1,3 @@
-// CarColorsTest.java
 package jmri.jmrit.operations.rollingstock.cars;
 
 import javax.swing.JComboBox;
@@ -14,7 +13,6 @@ import junit.framework.TestSuite;
  * Still to do: Everything
  *
  * @author	Bob Coleman Copyright (C) 2008, 2009
- * @version $Revision$
  */
 public class CarColorsTest extends OperationsTestCase {
 

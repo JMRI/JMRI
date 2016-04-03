@@ -1,4 +1,3 @@
-// QsiInterfaceScaffold.java
 package jmri.jmrix.qsi;
 
 import java.util.Vector;

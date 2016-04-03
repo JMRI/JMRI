@@ -724,15 +724,15 @@ public class LocationEditFrame extends OperationsFrame implements java.beans.Pro
     }
 
     private void setTrainDirectionBoxes() {
-        northCheckBox.setVisible((Setup.getTrainDirection() & Setup.NORTH) > 0);
-        southCheckBox.setVisible((Setup.getTrainDirection() & Setup.SOUTH) > 0);
-        eastCheckBox.setVisible((Setup.getTrainDirection() & Setup.EAST) > 0);
-        westCheckBox.setVisible((Setup.getTrainDirection() & Setup.WEST) > 0);
+        northCheckBox.setVisible((Setup.getTrainDirection() & Setup.NORTH) == Setup.NORTH);
+        southCheckBox.setVisible((Setup.getTrainDirection() & Setup.SOUTH) == Setup.SOUTH);
+        eastCheckBox.setVisible((Setup.getTrainDirection() & Setup.EAST) == Setup.EAST);
+        westCheckBox.setVisible((Setup.getTrainDirection() & Setup.WEST) == Setup.WEST);
 
-        northCheckBox.setSelected((_location.getTrainDirections() & Location.NORTH) > 0);
-        southCheckBox.setSelected((_location.getTrainDirections() & Location.SOUTH) > 0);
-        eastCheckBox.setSelected((_location.getTrainDirections() & Location.EAST) > 0);
-        westCheckBox.setSelected((_location.getTrainDirections() & Location.WEST) > 0);
+        northCheckBox.setSelected((_location.getTrainDirections() & Location.NORTH) == Location.NORTH);
+        southCheckBox.setSelected((_location.getTrainDirections() & Location.SOUTH) == Location.SOUTH);
+        eastCheckBox.setSelected((_location.getTrainDirections() & Location.EAST) == Location.EAST);
+        westCheckBox.setSelected((_location.getTrainDirections() & Location.WEST) == Location.WEST);
     }
 
     public void dispose() {
@@ -752,7 +752,7 @@ public class LocationEditFrame extends OperationsFrame implements java.beans.Pro
     }
 
     public void propertyChange(java.beans.PropertyChangeEvent e) {
-        if (Control.showProperty) {
+        if (Control.SHOW_PROPERTY) {
             log.debug("Property change: ({}) old: ({}) new: ({})", e.getPropertyName(), e.getOldValue(), e
                     .getNewValue());
         }

@@ -11,7 +11,6 @@ import junit.framework.TestSuite;
  * Tests for the Operations Locations GUI class
  *
  * @author	Dan Boudreau Copyright (C) 2009
- * @version $Revision$
  */
 public class LocationEditFrameTest extends OperationsSwingTestCase {
 

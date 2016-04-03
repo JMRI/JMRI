@@ -50,7 +50,7 @@ public class MemoryTableAction extends AbstractTableAction {
     }
 
     public MemoryTableAction() {
-        this("Memory Table");
+        this(Bundle.getMessage("TitleMemoryTable"));
     }
 
     /**
@@ -112,7 +112,7 @@ public class MemoryTableAction extends AbstractTableAction {
 
             public String getColumnName(int col) {
                 if (col == VALUECOL) {
-                    return "Value";
+                    return Bundle.getMessage("BlockValue");
                 }
                 return super.getColumnName(col);
             }
@@ -160,7 +160,7 @@ public class MemoryTableAction extends AbstractTableAction {
     JLabel userNameLabel = new JLabel(Bundle.getMessage("LabelUserName"));
 
     JTextField numberToAdd = new JTextField(10);
-    JCheckBox range = new JCheckBox(Bundle.getMessage("LabelNumberToAdd"));
+    JCheckBox range = new JCheckBox(Bundle.getMessage("AddRangeBox"));
     JCheckBox autoSystemName = new JCheckBox(Bundle.getMessage("LabelAutoSysName"));
     jmri.UserPreferencesManager p;
 
@@ -171,12 +171,15 @@ public class MemoryTableAction extends AbstractTableAction {
             addFrame.addHelpMenu("package.jmri.jmrit.beantable.MemoryAddEdit", true);
             addFrame.getContentPane().setLayout(new BoxLayout(addFrame.getContentPane(), BoxLayout.Y_AXIS));
 
-            ActionListener listener = new ActionListener() {
+            ActionListener okListener = new ActionListener() {
                 public void actionPerformed(ActionEvent e) {
                     okPressed(e);
                 }
             };
-            addFrame.add(new AddNewBeanPanel(sysName, userName, numberToAdd, range, autoSystemName, "ButtonOK", listener));
+            ActionListener cancelListener = new ActionListener() {
+                public void actionPerformed(ActionEvent e) { cancelPressed(e); }
+            };
+            addFrame.add(new AddNewBeanPanel(sysName, userName, numberToAdd, range, autoSystemName, "ButtonOK", okListener, cancelListener));
         }
         if (p.getSimplePreferenceState(systemNameAuto)) {
             autoSystemName.setSelected(true);
@@ -186,6 +189,12 @@ public class MemoryTableAction extends AbstractTableAction {
     }
 
     String systemNameAuto = this.getClass().getName() + ".AutoSystemName";
+
+    void cancelPressed(ActionEvent e) {
+        addFrame.setVisible(false);
+        addFrame.dispose();
+        addFrame = null;
+    }
 
     void okPressed(ActionEvent e) {
 

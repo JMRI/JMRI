@@ -1,4 +1,3 @@
-// LIUSBEthernetAdapter.java
 package jmri.jmrix.lenz.liusbethernet;
 
 import java.util.ResourceBundle;
@@ -17,7 +16,6 @@ import org.slf4j.LoggerFactory;
  * inactivity on the port.
 o*
  * @author	Paul Bender (C) 2011-2013
- * @version	$Revision$
  */
 public class LIUSBEthernetAdapter extends XNetNetworkPortController {
 
@@ -40,7 +38,7 @@ public class LIUSBEthernetAdapter extends XNetNetworkPortController {
         }
         setHostName(DEFAULT_IP_ADDRESS);
         setPort(COMMUNICATION_TCP_PORT);
-        this.manufacturerName = jmri.jmrix.DCCManufacturerList.LENZ;
+        this.manufacturerName = jmri.jmrix.lenz.LenzConnectionTypeList.LENZ;
     }
 
     @Override

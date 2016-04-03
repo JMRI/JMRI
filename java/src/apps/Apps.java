@@ -116,13 +116,9 @@ import org.slf4j.LoggerFactory;
  */
 public class Apps extends JPanel implements PropertyChangeListener, WindowListener {
 
-    /**
-     *
-     */
-    private static final long serialVersionUID = 8846653289120123006L;
     static String profileFilename;
 
-    @edu.umd.cs.findbugs.annotations.SuppressWarnings({"ST_WRITE_TO_STATIC_FROM_INSTANCE_METHOD", "SC_START_IN_CTOR"})//"only one application at a time. The thread is only called to help improve user experiance when opening the preferences, it is not critical for it to be run at this stage"
+    @edu.umd.cs.findbugs.annotations.SuppressFBWarnings({"ST_WRITE_TO_STATIC_FROM_INSTANCE_METHOD", "SC_START_IN_CTOR"})//"only one application at a time. The thread is only called to help improve user experiance when opening the preferences, it is not critical for it to be run at this stage"
     public Apps(JFrame frame) {
 
         super(true);
@@ -504,7 +500,7 @@ public class Apps extends JPanel implements PropertyChangeListener, WindowListen
      * additional buttons appended to it later. The default implementation here
      * just creates an empty space for these to be added to.
      */
-    @edu.umd.cs.findbugs.annotations.SuppressWarnings(value = "ST_WRITE_TO_STATIC_FROM_INSTANCE_METHOD",
+    @edu.umd.cs.findbugs.annotations.SuppressFBWarnings(value = "ST_WRITE_TO_STATIC_FROM_INSTANCE_METHOD",
             justification = "only one application at a time")
     protected void setButtonSpace() {
         _buttonSpace = new JPanel();
@@ -512,7 +508,7 @@ public class Apps extends JPanel implements PropertyChangeListener, WindowListen
     }
     static JComponent _jynstrumentSpace = null;
 
-    @edu.umd.cs.findbugs.annotations.SuppressWarnings(value = "ST_WRITE_TO_STATIC_FROM_INSTANCE_METHOD",
+    @edu.umd.cs.findbugs.annotations.SuppressFBWarnings(value = "ST_WRITE_TO_STATIC_FROM_INSTANCE_METHOD",
             justification = "only one application at a time")
     protected void setJynstrumentSpace() {
         _jynstrumentSpace = new JPanel();
@@ -596,11 +592,6 @@ public class Apps extends JPanel implements PropertyChangeListener, WindowListen
         if (!(SystemType.isMacOSX() && UIManager.getLookAndFeel().isNativeLookAndFeel())) {
             fileMenu.add(new JSeparator());
             fileMenu.add(new AbstractAction(Bundle.getMessage("MenuItemQuit")) {
-                /**
-                 *
-                 */
-                private static final long serialVersionUID = -3051429826192051394L;
-
                 @Override
                 public void actionPerformed(ActionEvent e) {
                     handleQuit();
@@ -962,7 +953,7 @@ public class Apps extends JPanel implements PropertyChangeListener, WindowListen
      * Provide access to a place where applications can expect the configuration
      * code to build run-time buttons.
      *
-     * @see apps.CreateButtonPanel
+     * @see apps.startup.CreateButtonModelFactory
      * @return null if no such space exists
      */
     static public JComponent buttonSpace() {
@@ -1204,10 +1195,10 @@ public class Apps extends JPanel implements PropertyChangeListener, WindowListen
     static String configFilename = "jmriconfig2.xml";  // usually overridden, this is default
     // The following MUST be protected for 3rd party applications 
     // (such as CATS) which are derived from this class.
-    @edu.umd.cs.findbugs.annotations.SuppressWarnings(value = "MS_PKGPROTECT",
+    @edu.umd.cs.findbugs.annotations.SuppressFBWarnings(value = "MS_PKGPROTECT",
             justification = "The following MUST be protected for 3rd party applications (such as CATS) which are derived from this class.")
     protected static boolean configOK;
-    @edu.umd.cs.findbugs.annotations.SuppressWarnings(value = "MS_PKGPROTECT",
+    @edu.umd.cs.findbugs.annotations.SuppressFBWarnings(value = "MS_PKGPROTECT",
             justification = "The following MUST be protected for 3rd party applications (such as CATS) which are derived from this class.")
     protected static boolean configDeferredLoadOK;
     // GUI members

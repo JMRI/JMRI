@@ -52,10 +52,6 @@ import org.slf4j.LoggerFactory;
  */
 public class AppsLaunchFrame extends jmri.util.JmriJFrame {
 
-    /**
-     *
-     */
-    private static final long serialVersionUID = 8986597544309635883L;
     static String profileFilename;
 
     public AppsLaunchFrame(AppsLaunchPane containedPane, String name) {
@@ -274,7 +270,7 @@ public class AppsLaunchFrame extends jmri.util.JmriJFrame {
      * Provide access to a place where applications can expect the configuration
      * code to build run-time buttons.
      *
-     * @see apps.CreateButtonPanel
+     * @see apps.startup.CreateButtonModelFactory
      * @return null if no such space exists
      */
     static public JComponent buttonSpace() {

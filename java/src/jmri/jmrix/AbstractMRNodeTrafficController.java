@@ -1,4 +1,3 @@
-// AbstractMRNodeTrafficController.java
 package jmri.jmrix;
 
 import org.slf4j.Logger;
@@ -12,7 +11,6 @@ import org.slf4j.LoggerFactory;
  * management services, but no additional protocol.
  *
  * @author jake Copyright 2008
- * @version $Revision$
  */
 public abstract class AbstractMRNodeTrafficController extends AbstractMRTrafficController {
 
@@ -134,6 +132,7 @@ public abstract class AbstractMRNodeTrafficController extends AbstractMRTrafficC
         }
         if (index == curSerialNodeIndex) {
             log.warn("Deleting the serial node active in the polling loop");
+            // just a warning, unlikely event and probably OK in any case.
         }
         // Delete the node from the node list
         numNodes--;

@@ -400,7 +400,7 @@ public class WarrantFrame extends WarrantRoute {
         _runForward.setSelected(_forward);
         JPanel panel = new JPanel();
         JLabel l = new JLabel(Bundle.getMessage(Bundle.getMessage("TTP")));
-        _TTPtextField.setValue(new Long(_TTP));
+        _TTPtextField.setValue(Long.valueOf(_TTP));
         _TTPtextField.setColumns(10);
         panel.setLayout(new BoxLayout(panel, BoxLayout.LINE_AXIS));
         l.setAlignmentX(JComponent.LEFT_ALIGNMENT);

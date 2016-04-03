@@ -431,6 +431,7 @@
 	and the ESU LokPilot and LokPilotBasic decoders.
 	<li>Mark Schutzer, who helped debug some significant NCE improvements
 	and contributed the Lenz Gold decoder definition
+	<li>Knut Schwichtenberg, who contributed the FREDI definition files
 	<li>Jim Scorse, who gave generously of his time to answer questions about NCE details
 	and provided debug hardware
 	<li>Brett Scott contributed the scripts for programming DCC Specialties products

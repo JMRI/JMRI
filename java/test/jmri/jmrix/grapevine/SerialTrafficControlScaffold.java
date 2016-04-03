@@ -1,4 +1,3 @@
-// SerialInterfaceScaffold.java
 package jmri.jmrix.grapevine;
 
 import java.util.Vector;

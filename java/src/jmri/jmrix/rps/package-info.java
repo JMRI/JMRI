@@ -44,5 +44,5 @@
  *        </ul>
  *        <!-- Put @see and @since tags down here. -->
  */
-@edu.umd.cs.findbugs.annotations.SuppressWarnings({})
+@edu.umd.cs.findbugs.annotations.SuppressFBWarnings({})
 package jmri.jmrix.rps;

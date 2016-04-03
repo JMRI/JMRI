@@ -198,9 +198,7 @@ public class Engine extends RollingStock {
 
     public boolean isBunit() {
         try {
-            Boolean bUnit = engineModels.isModelBunit(getModel());
-            if (bUnit != null)
-                return bUnit;
+            return engineModels.isModelBunit(getModel());
         } catch (java.lang.NullPointerException npe) {
             log.debug("NPE getting is B unit for Engine ({})", toString());
         }

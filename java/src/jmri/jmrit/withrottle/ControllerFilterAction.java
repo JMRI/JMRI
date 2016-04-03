@@ -25,7 +25,7 @@ public class ControllerFilterAction extends AbstractAction {
     }
 
     public ControllerFilterAction() {
-        this("Filter Controls");
+        this(Bundle.getMessage("MenuMenuFilter"));
     }
 
     public String getName() {

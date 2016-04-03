@@ -1,4 +1,3 @@
-// SerialDriverAdapter.java
 package jmri.jmrix.sprog.serialdriver;
 
 import gnu.io.CommPortIdentifier;
@@ -28,7 +27,6 @@ import org.slf4j.LoggerFactory;
  * with "AJB" indicate changes or observations by me
  *
  * @author	Bob Jacobsen Copyright (C) 2001, 2002
- * @version	$Revision$
  */
 public class SerialDriverAdapter extends SprogPortController implements jmri.jmrix.SerialPortAdapter {
 
@@ -83,12 +81,7 @@ public class SerialDriverAdapter extends SprogPortController implements jmri.jmr
             serialStream = activeSerialPort.getInputStream();
 
             // purge contents, if any
-            int count = serialStream.available();
-            log.debug("input stream shows " + count + " bytes available");
-            while (count > 0) {
-                serialStream.skip(count);
-                count = serialStream.available();
-            }
+            purgeStream(serialStream);
 
             // report status?
             if (log.isInfoEnabled()) {
@@ -168,7 +161,7 @@ public class SerialDriverAdapter extends SprogPortController implements jmri.jmr
     static public SerialDriverAdapter instance() {
         if (mInstance == null) {
             SerialDriverAdapter m = new SerialDriverAdapter();
-            m.setManufacturer(jmri.jmrix.DCCManufacturerList.SPROG);
+            m.setManufacturer(jmri.jmrix.sprog.SprogConnectionTypeList.SPROG);
             mInstance = m;
         }
         return mInstance;
@@ -195,7 +188,7 @@ public class SerialDriverAdapter extends SprogPortController implements jmri.jmr
 
     }
 
-    @edu.umd.cs.findbugs.annotations.SuppressWarnings(value = "ST_WRITE_TO_STATIC_FROM_INSTANCE_METHOD",
+    @edu.umd.cs.findbugs.annotations.SuppressFBWarnings(value = "ST_WRITE_TO_STATIC_FROM_INSTANCE_METHOD",
             justification = "temporary until mult-system; only set when disposed")
     @Override
     public void dispose() {

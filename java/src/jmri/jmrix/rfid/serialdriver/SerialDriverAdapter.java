@@ -1,4 +1,3 @@
-// SerialDriverAdapter.java
 package jmri.jmrix.rfid.serialdriver;
 
 import gnu.io.CommPortIdentifier;
@@ -37,7 +36,6 @@ import org.slf4j.LoggerFactory;
  * @author Bob Jacobsen Copyright (C) 2006, 2007, 2008
  * @author Matthew Harris Copyright (C) 2011
  * @author Oscar A. Pruitt Copyright (C) 2015
- * @version $Revision$
  * @since 2.11.4
  */
 public class SerialDriverAdapter extends RfidPortController implements jmri.jmrix.SerialPortAdapter {
@@ -52,7 +50,7 @@ public class SerialDriverAdapter extends RfidPortController implements jmri.jmri
         options.put(option1Name, new Option("Adapter:", new String[]{"Generic Stand-alone", "MERG Concentrator"}, false));
         options.put(option2Name, new Option("Concentrator range:", new String[]{"A-H", "I-P"}, false));
         options.put(option3Name, new Option("Protocol:", new String[]{"CORE-ID", "Olimex", "Parallax", "SeeedStudio", "EM-18"}, false));
-        this.manufacturerName = jmri.jmrix.DCCManufacturerList.RFID;
+        this.manufacturerName = jmri.jmrix.rfid.RfidConnectionTypeList.RFID;
     }
 
     @Override
@@ -95,12 +93,7 @@ public class SerialDriverAdapter extends RfidPortController implements jmri.jmri
             serialStream = activeSerialPort.getInputStream();
 
             // purge contents, if any
-            int count = serialStream.available();
-            log.debug("input stream shows " + count + " bytes available");
-            while (count > 0) {
-                serialStream.skip(count);
-                count = serialStream.available();
-            }
+            purgeStream(serialStream);
 
             // report status?
             if (log.isInfoEnabled()) {
@@ -351,6 +344,11 @@ public class SerialDriverAdapter extends RfidPortController implements jmri.jmri
 
         // find and configure flow control
         int flow = SerialPort.FLOWCONTROL_NONE; // default
+        if (getOptionState(option1Name).equals("MERG Concentrator")) {
+            // Set Hardware Flow Control for Concentrator
+            log.debug("Set hardware flow control for Concentrator");
+            flow = SerialPort.FLOWCONTROL_RTSCTS_OUT;
+        }
         activeSerialPort.setFlowControlMode(flow);
     }
 
@@ -359,7 +357,7 @@ public class SerialDriverAdapter extends RfidPortController implements jmri.jmri
      *
      * @return list of rates
      */
-    @edu.umd.cs.findbugs.annotations.SuppressWarnings(value = "EI_EXPOSE_REP")
+    @edu.umd.cs.findbugs.annotations.SuppressFBWarnings(value = "EI_EXPOSE_REP")
     @Override
     public String[] validBaudRates() {
         return validSpeeds;

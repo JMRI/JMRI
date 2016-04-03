@@ -1,4 +1,3 @@
-// IntlUtilitiesTest.java
 package jmri.util;
 
 import java.util.Locale;

@@ -1,4 +1,3 @@
-// AbstractSensorManager.java
 package jmri.managers;
 
 import java.util.Enumeration;
@@ -13,7 +12,6 @@ import org.slf4j.LoggerFactory;
  * Abstract base implementation of the SensorManager interface.
  *
  * @author	Bob Jacobsen Copyright (C) 2001, 2003
- * @version	$Revision$
  */
 public abstract class AbstractSensorManager extends AbstractManager implements SensorManager {
 
@@ -87,13 +85,13 @@ public abstract class AbstractSensorManager extends AbstractManager implements S
         if (systemName == null) {
             log.error("SystemName cannot be null. UserName was "
                     + ((userName == null) ? "null" : userName));
-            return null;
+            throw new IllegalArgumentException("systemName null in newSensor");
         }
         // is system name in correct format?
         if (!systemName.startsWith(getSystemPrefix() + typeLetter())) {
             log.error("Invalid system name for sensor: " + systemName
                     + " needed " + getSystemPrefix() + typeLetter());
-            return null;
+            throw new IllegalArgumentException("systemName \""+systemName+"\" bad format in newSensor");
         }
 
         // return existing if there is one
@@ -258,5 +256,3 @@ public abstract class AbstractSensorManager extends AbstractManager implements S
 
     private final static Logger log = LoggerFactory.getLogger(AbstractSensorManager.class.getName());
 }
-
-/* @(#)AbstractSensorManager.java */

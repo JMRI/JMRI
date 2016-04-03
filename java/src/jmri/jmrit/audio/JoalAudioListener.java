@@ -1,4 +1,3 @@
-// JoalAudioListener.java
 package jmri.jmrit.audio;
 
 import com.jogamp.openal.AL;
@@ -65,14 +64,8 @@ import org.slf4j.LoggerFactory;
  * <P>
  *
  * @author Matthew Harris copyright (c) 2009
- * @version $Revision$
  */
 public class JoalAudioListener extends AbstractAudioListener {
-
-    /**
-     *
-     */
-    private static final long serialVersionUID = -3857969947487071207L;
 
     private static AL al = JoalAudioFactory.getAL();
 
@@ -198,5 +191,3 @@ public class JoalAudioListener extends AbstractAudioListener {
     private static final Logger log = LoggerFactory.getLogger(JoalAudioListener.class.getName());
 
 }
-
-/* $(#)JoalAudioListener.java */

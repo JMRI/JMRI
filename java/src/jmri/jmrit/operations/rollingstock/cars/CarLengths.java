@@ -35,7 +35,7 @@ public class CarLengths extends RollingStockAttribute {
             // create and load
             _instance = new CarLengths();
         }
-        if (Control.showInstance) {
+        if (Control.SHOW_INSTANCE) {
             log.debug("CarLengths returns instance {}", _instance);
         }
         return _instance;

@@ -1,9 +1,10 @@
-// DefaultSignalSystem.java
 package jmri.implementation;
 
 import java.util.Enumeration;
 import java.util.Hashtable;
 import jmri.SignalSystem;
+import jmri.implementation.SignalSpeedMap;
+
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -15,14 +16,8 @@ import org.slf4j.LoggerFactory;
  *
  *
  * @author	Bob Jacobsen Copyright (C) 2009
- * @version $Revision$
  */
 public class DefaultSignalSystem extends AbstractNamedBean implements SignalSystem {
-
-    /**
-     *
-     */
-    private static final long serialVersionUID = 5899513293974310228L;
 
     public DefaultSignalSystem(String systemName, String userName) {
         super(systemName, userName);
@@ -135,7 +130,7 @@ public class DefaultSignalSystem extends AbstractNamedBean implements SignalSyst
                         aspectSpeed = new Float(speed);
                     } catch (NumberFormatException nx) {
                         try {
-                            aspectSpeed = jmri.implementation.SignalSpeedMap.getMap().getSpeed(speed);
+                            aspectSpeed = jmri.InstanceManager.getDefault(SignalSpeedMap.class).getSpeed(speed);
                         } catch (Exception ex) {
                             //Considered Normal if the speed does not appear in the map
                         }
@@ -149,7 +144,7 @@ public class DefaultSignalSystem extends AbstractNamedBean implements SignalSyst
         }
         if (maximumLineSpeed == 0.0f) {
             //no speeds configured so will use the default.
-            maximumLineSpeed = jmri.implementation.SignalSpeedMap.getMap().getSpeed("Maximum");
+            maximumLineSpeed = jmri.InstanceManager.getDefault(SignalSpeedMap.class).getSpeed("Maximum");
         }
         return maximumLineSpeed;
     }
@@ -161,7 +156,7 @@ public class DefaultSignalSystem extends AbstractNamedBean implements SignalSyst
 
     protected java.util.Vector<String> imageTypes = new java.util.Vector<String>();
 
-    @edu.umd.cs.findbugs.annotations.SuppressWarnings(value = "SBSC_USE_STRINGBUFFER_CONCATENATION")
+    @edu.umd.cs.findbugs.annotations.SuppressFBWarnings(value = "SBSC_USE_STRINGBUFFER_CONCATENATION")
     // Only used occasionally, so inefficient String processing not really a problem
     // though it would be good to fix it if you're working in this area
     public String toString() {
@@ -186,4 +181,3 @@ public class DefaultSignalSystem extends AbstractNamedBean implements SignalSyst
     private final static Logger log = LoggerFactory.getLogger(DefaultSignalSystem.class.getName());
 }
 
-/* @(#)DefaultSignalSystem.java */

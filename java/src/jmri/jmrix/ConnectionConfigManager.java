@@ -1,16 +1,20 @@
 package jmri.jmrix;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.HashSet;
 import java.util.Iterator;
+import java.util.ServiceLoader;
 import java.util.Set;
+import jmri.InstanceManager;
 import jmri.configurexml.ConfigXmlManager;
 import jmri.configurexml.XmlAdapter;
+import jmri.jmrix.internal.InternalConnectionTypeList;
 import jmri.profile.Profile;
 import jmri.profile.ProfileUtils;
-import jmri.spi.AbstractPreferencesProvider;
 import jmri.spi.PreferencesProvider;
 import jmri.util.jdom.JDOMUtil;
+import jmri.util.prefs.AbstractPreferencesProvider;
 import org.jdom2.Element;
 import org.jdom2.JDOMException;
 import org.slf4j.Logger;
@@ -35,7 +39,7 @@ public class ConnectionConfigManager extends AbstractPreferencesProvider impleme
 
     @Override
     public void initialize(Profile profile) {
-        if (!this.isInitialized(profile)) {
+        if (!isInitialized(profile)) {
             log.debug("Initializing...");
             Element sharedConnections = null;
             Element perNodeConnections = null;
@@ -53,9 +57,10 @@ public class ConnectionConfigManager extends AbstractPreferencesProvider impleme
                     // Normal if the profile has not been used on this computer
                     log.info("No local configuration found.");
                     log.debug("Null pointer thrown reading local configuration.", ex);
+                    // TODO: notify user
                 }
                 for (Element shared : sharedConnections.getChildren(CONNECTION)) {
-                    Element perNode = null;
+                    Element perNode = shared;
                     String className = shared.getAttributeValue(CLASS);
                     String userName = shared.getAttributeValue(USER_NAME, "");
                     String systemName = shared.getAttributeValue(SYSTEM_NAME, "");
@@ -82,7 +87,7 @@ public class ConnectionConfigManager extends AbstractPreferencesProvider impleme
                     }
                 }
             }
-            this.setIsInitialized(profile, true);
+            setIsInitialized(profile, true);
             log.debug("Initialized...");
         }
     }
@@ -96,15 +101,14 @@ public class ConnectionConfigManager extends AbstractPreferencesProvider impleme
     public void savePreferences(Profile profile) {
         log.debug("Saving connections preferences...");
         // store shared Connection preferences
-        this.savePreferences(profile, true);
+        savePreferences(profile, true);
         // store private or perNode Connection preferences
-        this.savePreferences(profile, false);
+        savePreferences(profile, false);
         log.debug("Saved connections preferences...");
     }
 
     private synchronized void savePreferences(Profile profile, boolean shared) {
         Element element = new Element(CONNECTIONS, NAMESPACE);
-        log.debug("connections is {}null", (connections != null) ? "not " : "");
         for (ConnectionConfig o : connections) {
             log.debug("Saving connection {} ({})...", o.getConnectionName(), shared);
             Element e = ConfigXmlManager.elementFromObject(o, shared);
@@ -121,29 +125,80 @@ public class ConnectionConfigManager extends AbstractPreferencesProvider impleme
     }
 
     public boolean add(ConnectionConfig c) {
-        boolean result = this.connections.add(c);
-        int i = this.connections.indexOf(c);
-        this.propertyChangeSupport.fireIndexedPropertyChange(CONNECTIONS, i, null, c);
+        boolean result = connections.add(c);
+        int i = connections.indexOf(c);
+        fireIndexedPropertyChange(CONNECTIONS, i, null, c);
         return result;
     }
 
     public boolean remove(ConnectionConfig c) {
-        int i = this.connections.indexOf(c);
-        boolean result = this.connections.remove(c);
-        this.propertyChangeSupport.fireIndexedPropertyChange(CONNECTIONS, i, c, null);
+        int i = connections.indexOf(c);
+        boolean result = connections.remove(c);
+        fireIndexedPropertyChange(CONNECTIONS, i, c, null);
         return result;
     }
 
     public ConnectionConfig[] getConnections() {
-        return this.connections.toArray(new ConnectionConfig[this.connections.size()]);
+        return connections.toArray(new ConnectionConfig[connections.size()]);
     }
 
     public ConnectionConfig getConnections(int index) {
-        return this.connections.get(index);
+        return connections.get(index);
     }
 
     @Override
     public Iterator<ConnectionConfig> iterator() {
-        return this.connections.iterator();
+        return connections.iterator();
+    }
+
+    public String[] getConnectionTypes(String manufacturer) {
+        if (InstanceManager.getDefault(ConnectionTypeManager.class) == null) {
+            InstanceManager.setDefault(ConnectionTypeManager.class, new ConnectionTypeManager());
+        }
+        return InstanceManager.getDefault(ConnectionTypeManager.class).getConnectionTypes(manufacturer);
+    }
+
+    public String[] getConnectionManufacturers() {
+        if (InstanceManager.getDefault(ConnectionTypeManager.class) == null) {
+            InstanceManager.setDefault(ConnectionTypeManager.class, new ConnectionTypeManager());
+        }
+        return InstanceManager.getDefault(ConnectionTypeManager.class).getConnectionManufacturers();
+    }
+
+    private static class ConnectionTypeManager {
+
+        private final HashMap<String, ConnectionTypeList> connectionTypeLists = new HashMap<>();
+
+        public ConnectionTypeManager() {
+            for (ConnectionTypeList ctl : ServiceLoader.load(ConnectionTypeList.class)) {
+                for (String manufacturer : ctl.getManufacturers()) {
+                    if (!connectionTypeLists.containsKey(manufacturer)) {
+                        connectionTypeLists.put(manufacturer, ctl);
+                    } else {
+                        log.error("Refusing to add ConnectionListType \"{}\" for manufacturer \"{}\"; existing class is \"{}\"",
+                                ctl.getClass().getName(),
+                                manufacturer,
+                                connectionTypeLists.get(manufacturer).getClass().getName());
+                    }
+                }
+            }
+        }
+
+        public String[] getConnectionTypes(String manufacturer) {
+            ConnectionTypeList ctl = this.connectionTypeLists.get(manufacturer);
+            if (ctl != null) {
+                return ctl.getAvailableProtocolClasses();
+            }
+            return this.connectionTypeLists.get(InternalConnectionTypeList.NONE).getAvailableProtocolClasses();
+        }
+
+        public String[] getConnectionManufacturers() {
+            ArrayList<String> a = new ArrayList<>(this.connectionTypeLists.keySet());
+            a.remove(InternalConnectionTypeList.NONE);
+            a.sort(null);
+            a.add(0, InternalConnectionTypeList.NONE);
+            return a.toArray(new String[a.size()]);
+        }
+
     }
 }

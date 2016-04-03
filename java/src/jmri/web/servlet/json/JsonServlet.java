@@ -6,7 +6,6 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.node.ArrayNode;
 import com.fasterxml.jackson.databind.node.ObjectNode;
 import java.io.IOException;
-import java.net.SocketTimeoutException;
 import java.net.URLDecoder;
 import java.nio.charset.StandardCharsets;
 import java.util.HashMap;
@@ -16,8 +15,6 @@ import java.util.ServiceLoader;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import jmri.InstanceManager;
-import jmri.implementation.QuietShutDownTask;
 import static jmri.jmris.json.JSON.CAR;
 import static jmri.jmris.json.JSON.CARS;
 import static jmri.jmris.json.JSON.CONSIST;
@@ -26,7 +23,6 @@ import static jmri.jmris.json.JSON.DATA;
 import static jmri.jmris.json.JSON.ENGINE;
 import static jmri.jmris.json.JSON.ENGINES;
 import static jmri.jmris.json.JSON.FORMAT;
-import static jmri.jmris.json.JSON.GOODBYE;
 import static jmri.jmris.json.JSON.HELLO;
 import static jmri.jmris.json.JSON.LIGHT;
 import static jmri.jmris.json.JSON.LIGHTS;
@@ -42,10 +38,6 @@ import static jmri.jmris.json.JSON.PANELS;
 import static jmri.jmris.json.JSON.RAILROAD;
 import static jmri.jmris.json.JSON.REPORTER;
 import static jmri.jmris.json.JSON.REPORTERS;
-import static jmri.jmris.json.JSON.ROSTER;
-import static jmri.jmris.json.JSON.ROSTER_ENTRY;
-import static jmri.jmris.json.JSON.ROSTER_GROUP;
-import static jmri.jmris.json.JSON.ROSTER_GROUPS;
 import static jmri.jmris.json.JSON.ROUTE;
 import static jmri.jmris.json.JSON.ROUTES;
 import static jmri.jmris.json.JSON.SENSOR;
@@ -58,28 +50,20 @@ import static jmri.jmris.json.JSON.STATE;
 import static jmri.jmris.json.JSON.SYSTEM_CONNECTIONS;
 import static jmri.jmris.json.JSON.TRAIN;
 import static jmri.jmris.json.JSON.TRAINS;
-import static jmri.jmris.json.JSON.TYPE;
 import static jmri.jmris.json.JSON.VALUE;
 import static jmri.jmris.json.JSON.XML;
 import jmri.jmris.json.JsonServerPreferences;
 import jmri.jmris.json.JsonUtil;
-import jmri.server.json.JsonClientHandler;
-import jmri.server.json.JsonConnection;
 import jmri.server.json.JsonException;
 import static jmri.server.json.JsonException.CODE;
 import jmri.server.json.JsonHttpService;
+import jmri.server.json.JsonWebSocket;
 import static jmri.server.json.power.JsonPowerServiceFactory.POWER;
 import jmri.spi.JsonServiceFactory;
 import jmri.util.FileUtil;
 import jmri.web.servlet.ServletUtil;
 import static jmri.web.servlet.ServletUtil.APPLICATION_JSON;
 import static jmri.web.servlet.ServletUtil.UTF8_APPLICATION_JSON;
-import org.eclipse.jetty.websocket.api.Session;
-import org.eclipse.jetty.websocket.api.annotations.OnWebSocketClose;
-import org.eclipse.jetty.websocket.api.annotations.OnWebSocketConnect;
-import org.eclipse.jetty.websocket.api.annotations.OnWebSocketError;
-import org.eclipse.jetty.websocket.api.annotations.OnWebSocketMessage;
-import org.eclipse.jetty.websocket.api.annotations.WebSocket;
 import org.eclipse.jetty.websocket.servlet.WebSocketServlet;
 import org.eclipse.jetty.websocket.servlet.WebSocketServletFactory;
 import org.slf4j.Logger;
@@ -103,7 +87,7 @@ import org.slf4j.LoggerFactory;
  * required</td></tr>
  * </table>
  *
- * @author rhwood Copyright (C) 2012, 2013
+ * @author Randall Wood Copyright (C) 2012, 2013, 2016
  */
 public class JsonServlet extends WebSocketServlet {
 
@@ -138,7 +122,7 @@ public class JsonServlet extends WebSocketServlet {
 
     @Override
     public void configure(WebSocketServletFactory factory) {
-        factory.register(JsonServlet.JsonWebSocket.class);
+        factory.register(JsonWebSocket.class);
     }
 
     /**
@@ -222,12 +206,6 @@ public class JsonServlet extends WebSocketServlet {
                         case REPORTERS:
                             reply = JsonUtil.getReporters(request.getLocale());
                             break;
-                        case ROSTER:
-                            reply = JsonUtil.getRoster(request.getLocale(), parameters);
-                            break;
-                        case ROSTER_GROUPS:
-                            reply = JsonUtil.getRosterGroups(request.getLocale());
-                            break;
                         case ROUTES:
                             reply = JsonUtil.getRoutes(request.getLocale());
                             break;
@@ -258,13 +236,27 @@ public class JsonServlet extends WebSocketServlet {
                         default:
                             if (this.services.get(type) != null) {
                                 ArrayNode array = this.mapper.createArrayNode();
-                                for (JsonHttpService service : this.services.get(type)) {
-                                    array.add(service.doGetList(type, request.getLocale()));
+                                JsonException exception = null;
+                                try {
+                                    for (JsonHttpService service : this.services.get(type)) {
+                                        array.add(service.doGetList(type, request.getLocale()));
+                                    }
+                                } catch (JsonException ex) {
+                                    exception = ex;
                                 }
-                                if (array.size() == 1) {
-                                    reply = array.get(0);
-                                } else {
-                                    reply = array;
+                                switch (array.size()) {
+                                    case 0:
+                                        if (exception != null) {
+                                            throw exception;
+                                        }
+                                        reply = array;
+                                        break;
+                                    case 1:
+                                        reply = array.get(0);
+                                        break;
+                                    default:
+                                        reply = array;
+                                        break;
                                 }
                             }
                             if (reply == null) {
@@ -299,13 +291,6 @@ public class JsonServlet extends WebSocketServlet {
                         case REPORTER:
                             reply = JsonUtil.getReporter(request.getLocale(), name);
                             break;
-                        case ROSTER_ENTRY:
-                        case ROSTER:
-                            reply = JsonUtil.getRosterEntry(request.getLocale(), name);
-                            break;
-                        case ROSTER_GROUP:
-                            reply = JsonUtil.getRosterGroup(request.getLocale(), name);
-                            break;
                         case ROUTE:
                             reply = JsonUtil.getRoute(request.getLocale(), name);
                             break;
@@ -324,13 +309,27 @@ public class JsonServlet extends WebSocketServlet {
                         default:
                             if (this.services.get(type) != null) {
                                 ArrayNode array = this.mapper.createArrayNode();
-                                for (JsonHttpService service : this.services.get(type)) {
-                                    array.add(service.doGet(type, name, request.getLocale()));
+                                JsonException exception = null;
+                                try {
+                                    for (JsonHttpService service : this.services.get(type)) {
+                                        array.add(service.doGet(type, name, request.getLocale()));
+                                    }
+                                } catch (JsonException ex) {
+                                    exception = ex;
                                 }
-                                if (array.size() == 1) {
-                                    reply = array.get(0);
-                                } else {
-                                    reply = array;
+                                switch (array.size()) {
+                                    case 0:
+                                        if (exception != null) {
+                                            throw exception;
+                                        }
+                                        reply = array;
+                                        break;
+                                    case 1:
+                                        reply = array.get(0);
+                                        break;
+                                    default:
+                                        reply = array;
+                                        break;
                                 }
                             }
                             if (reply == null) {
@@ -444,13 +443,27 @@ public class JsonServlet extends WebSocketServlet {
                             if (this.services.get(type) != null) {
                                 log.debug("Using data: {}", data);
                                 ArrayNode array = this.mapper.createArrayNode();
-                                for (JsonHttpService service : this.services.get(type)) {
-                                    array.add(service.doPost(type, name, data, request.getLocale()));
+                                JsonException exception = null;
+                                try {
+                                    for (JsonHttpService service : this.services.get(type)) {
+                                        array.add(service.doPost(type, name, data, request.getLocale()));
+                                    }
+                                } catch (JsonException ex) {
+                                    exception = ex;
                                 }
-                                if (array.size() == 1) {
-                                    reply = array.get(0);
-                                } else {
-                                    reply = array;
+                                switch (array.size()) {
+                                    case 0:
+                                        if (exception != null) {
+                                            throw exception;
+                                        }
+                                        reply = array;
+                                        break;
+                                    case 1:
+                                        reply = array.get(0);
+                                        break;
+                                    default:
+                                        reply = array;
+                                        break;
                                 }
                             }
                             if (reply == null) {
@@ -530,13 +543,27 @@ public class JsonServlet extends WebSocketServlet {
                         default:
                             if (this.services.get(type) != null) {
                                 ArrayNode array = this.mapper.createArrayNode();
-                                for (JsonHttpService service : this.services.get(type)) {
-                                    array.add(service.doPut(type, name, data, request.getLocale()));
+                                JsonException exception = null;
+                                try {
+                                    for (JsonHttpService service : this.services.get(type)) {
+                                        array.add(service.doPut(type, name, data, request.getLocale()));
+                                    }
+                                } catch (JsonException ex) {
+                                    exception = ex;
                                 }
-                                if (array.size() == 1) {
-                                    reply = array.get(0);
-                                } else {
-                                    reply = array;
+                                switch (array.size()) {
+                                    case 0:
+                                        if (exception != null) {
+                                            throw exception;
+                                        }
+                                        reply = array;
+                                        break;
+                                    case 1:
+                                        reply = array.get(0);
+                                        break;
+                                    default:
+                                        reply = array;
+                                        break;
                                 }
                             }
                             if (reply == null) {
@@ -609,67 +636,4 @@ public class JsonServlet extends WebSocketServlet {
         response.getWriter().write(message);
     }
 
-    @WebSocket
-    private static class JsonWebSocket {
-
-        protected JsonConnection connection;
-        protected JsonClientHandler handler;
-        protected QuietShutDownTask shutDownTask;
-
-        @OnWebSocketConnect
-        public void onOpen(Session sn) {
-            log.debug("Opening connection");
-            this.connection = new JsonConnection(sn);
-            sn.setIdleTimeout((long) (JsonServerPreferences.getDefault().getHeartbeatInterval() * 1.1));
-            this.handler = new JsonClientHandler(this.connection);
-            this.shutDownTask = new QuietShutDownTask("Close open web socket") { // NOI18N
-                @Override
-                public boolean execute() {
-                    try {
-                        JsonWebSocket.this.connection.sendMessage(
-                                JsonWebSocket.this.connection.getObjectMapper().createObjectNode().put(TYPE, GOODBYE));
-                    } catch (IOException e) {
-                        log.warn("Unable to send goodbye while closing socket.\nError was {}", e.getMessage());
-                    }
-                    JsonWebSocket.this.connection.getSession().close();
-                    return true;
-                }
-            };
-            try {
-                log.debug("Sending hello");
-                this.handler.sendHello(JsonServerPreferences.getDefault().getHeartbeatInterval());
-            } catch (IOException e) {
-                log.warn("Error opening WebSocket:\n{}", e.getMessage());
-                sn.close();
-            }
-            InstanceManager.shutDownManagerInstance().register(this.shutDownTask);
-        }
-
-        @OnWebSocketClose
-        public void onClose(int i, String string) {
-            log.debug("Closing connection because {} ({})", string, i);
-            this.handler.dispose();
-            InstanceManager.shutDownManagerInstance().deregister(this.shutDownTask);
-        }
-
-        @OnWebSocketError
-        public void onError(Throwable thrwbl) {
-            if (thrwbl instanceof SocketTimeoutException) {
-                log.error(thrwbl.getMessage());
-                return;
-            }
-            log.error(thrwbl.getMessage(), thrwbl);
-        }
-
-        @OnWebSocketMessage
-        public void onMessage(String string) {
-            try {
-                this.handler.onMessage(string);
-            } catch (IOException e) {
-                log.error("Error on WebSocket message:\n{}", e.getMessage());
-                this.connection.getSession().close();
-                InstanceManager.shutDownManagerInstance().deregister(this.shutDownTask);
-            }
-        }
-    }
 }

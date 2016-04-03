@@ -1,4 +1,3 @@
-// AbstractSerialConnectionConfig.java
 package jmri.jmrix;
 
 import java.awt.GridBagConstraints;
@@ -18,7 +17,6 @@ import jmri.UserPreferencesManager;
  * Abstract base class for common implementation of the ConnectionConfig
  *
  * @author Bob Jacobsen Copyright (C) 2001, 2003
- * @version	$Revision$
  */
 abstract public class AbstractConnectionConfig implements ConnectionConfig {
 

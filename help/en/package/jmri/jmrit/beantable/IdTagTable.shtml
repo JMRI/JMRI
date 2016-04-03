@@ -21,10 +21,17 @@
 You can use the ID Tag Table to look at the contents of JMRI IdTag objects.
 <p>
 Note that you can sort the table by each of the columns; just click on a
-column heading.
+column heading.</p>
+
+<h2>ID Tag Table Controls</h2>
 <p>
 To create a new ID Tag, click on the
 "<a href="IdTagAddEdit.shtml">Add...</a>" button at the bottom left of the pane.
+<p>Next to it, two check boxes let you activate:
+	<ul>
+	<li>Save when and where last seen</li>
+	<li>Use Fast Clock Time</li>
+	</ul>
 
 <p>
 For more information on ID Tags, see the

@@ -121,6 +121,7 @@ public class ReportContext {
         addProperty("python.home");
         addProperty("python.path");
         addProperty("python.cachedir");
+        addProperty("python.cachedir.skip");
         addProperty("python.startup");
 
         addProperty("user.name");

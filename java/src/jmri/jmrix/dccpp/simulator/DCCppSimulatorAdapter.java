@@ -467,7 +467,7 @@ public class DCCppSimulatorAdapter extends DCCppSimulatorPortController implemen
 	Random valueGenerator = new Random();
 	int value = valueGenerator.nextInt(2); // Generate state value betweeon 0 and 1
        
-	String reply = new String((value == 1 ? "Q " : "q ")+ Integer.toString(sensorNum));
+	String reply = (value == 1 ? "Q " : "q ")+ Integer.toString(sensorNum);
 	
 	DCCppReply r = DCCppReplyParser.parseReply(reply);
 	writeReply(r);

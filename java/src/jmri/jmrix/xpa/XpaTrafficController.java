@@ -18,7 +18,7 @@ import org.slf4j.LoggerFactory;
  * @author	Paul Bender Copyright (C) 2004
  * @version	$Revision$
  */
-public final class XpaTrafficController implements XpaInterface, Runnable {
+public class XpaTrafficController implements XpaInterface, Runnable {
 
     // Linked list to store the transmit queue.
     LinkedList<byte[]> xmtList = new LinkedList<byte[]>();
@@ -29,7 +29,7 @@ public final class XpaTrafficController implements XpaInterface, Runnable {
      */
     XmtHandler xmtHandler = new XmtHandler();
 
-    @edu.umd.cs.findbugs.annotations.SuppressWarnings(value = "ST_WRITE_TO_STATIC_FROM_INSTANCE_METHOD",
+    @edu.umd.cs.findbugs.annotations.SuppressFBWarnings(value = "ST_WRITE_TO_STATIC_FROM_INSTANCE_METHOD",
             justification = "temporary until mult-system; only set at startup")
     public XpaTrafficController() {
         if (log.isDebugEnabled()) {
@@ -47,7 +47,7 @@ public final class XpaTrafficController implements XpaInterface, Runnable {
     protected Vector<XpaListener> cmdListeners = new Vector<XpaListener>();
 
     public boolean status() {
-        return (ostream != null & istream != null);
+        return (ostream != null && istream != null);
     }
 
     public synchronized void addXpaListener(XpaListener l) {
@@ -206,7 +206,7 @@ public final class XpaTrafficController implements XpaInterface, Runnable {
         return self;
     }
 
-    static volatile protected XpaTrafficController self = null;
+    static volatile private XpaTrafficController self = null;
 
     // data members to hold the streams
     DataInputStream istream = null;
@@ -268,7 +268,7 @@ public final class XpaTrafficController implements XpaInterface, Runnable {
      */
     class XmtHandler implements Runnable {
 
-        @edu.umd.cs.findbugs.annotations.SuppressWarnings(value = "UW_UNCOND_WAIT",
+        @edu.umd.cs.findbugs.annotations.SuppressFBWarnings(value = "UW_UNCOND_WAIT",
                 justification = "while loop controls access")
         public void run() {
             while (true) { //  loop forever
@@ -297,7 +297,7 @@ public final class XpaTrafficController implements XpaInterface, Runnable {
                             // no stream connected
                             log.warn("sendMessage: no connection established");
                         }
-                    } catch (Exception e) {
+                    } catch (java.io.IOException e) {
                         log.warn("sendMessage: Exception: " + e.toString());
                     }
                 } catch (NoSuchElementException e) {

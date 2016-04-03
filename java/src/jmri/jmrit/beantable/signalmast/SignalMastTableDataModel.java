@@ -49,15 +49,15 @@ public class SignalMastTableDataModel extends BeanTableDataModel {
 
     public String getColumnName(int col) {
         if (col == VALUECOL) {
-            return "Aspect";
+            return Bundle.getMessage("LabelAspectType");
         } else if (col == EDITMASTCOL) {
-            return "Edit";
+            return ""; // override default, no title for Edit column
         } else if (col == EDITLOGICCOL) {
-            return "Edit Logic";
+            return ""; // override default, no title for Edit Logic column
         } else if (col == LITCOL) {
-            return "Lit";
+            return Bundle.getMessage("ColumnHeadLit");
         } else if (col == HELDCOL) {
-            return "Held";
+            return Bundle.getMessage("ColumnHeadHeld");
         } else {
             return super.getColumnName(col);
         }
