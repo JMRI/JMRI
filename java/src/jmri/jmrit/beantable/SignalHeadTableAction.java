@@ -676,7 +676,7 @@ public class SignalHeadTableAction extends AbstractTableAction {
 
             JPanel panelBottom = new JPanel();
             panelBottom.setLayout(new BoxLayout(panelBottom, BoxLayout.Y_AXIS));
-
+             //OK button
             JButton ok;
             panelBottom.add(ok = new JButton(Bundle.getMessage("ButtonOK")));
             ok.addActionListener(new ActionListener() {
