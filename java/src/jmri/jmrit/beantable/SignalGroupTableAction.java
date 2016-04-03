@@ -595,7 +595,7 @@ public class SignalGroupTableAction extends AbstractTableAction implements Prope
             pa.setBorder(pBorder);
             contentPane.add(pa);
 
-            // buttons at bottom of window
+            // buttons at bottom of panel
             JPanel pb = new JPanel();
             pb.setLayout(new FlowLayout(FlowLayout.TRAILING));
 
@@ -968,7 +968,7 @@ public class SignalGroupTableAction extends AbstractTableAction implements Prope
                 return rbx.getString("ColumnLabelInclude");
             }
             if (col == APPEAR_COLUMN) {
-                return Bundle.getMessage("SignalMastAppearance");
+                return Bundle.getMessage("SignalMastAppearance"); // list contains Aspects TODO
             }
             return "";
         }
