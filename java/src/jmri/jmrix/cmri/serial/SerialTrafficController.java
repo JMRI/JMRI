@@ -93,8 +93,6 @@ public class SerialTrafficController extends AbstractMRNodeTrafficController imp
         mSensorManager = m;
     }
 
-    int curSerialNodeIndex = 0;   // cycles over defined nodes when pollMessage is called
-
     /**
      * Handles initialization, output and polling for C/MRI Serial Nodes from
      * within the running thread

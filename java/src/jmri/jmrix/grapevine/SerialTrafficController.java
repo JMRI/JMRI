@@ -126,8 +126,6 @@ public class SerialTrafficController extends AbstractMRNodeTrafficController imp
         addSerialListener(m);
     }
 
-    int curSerialNodeIndex = 0;   // cycles over defined nodes when pollMessage is called
-
     /**
      * Handles initialization, output and polling for Grapevine from within the
      * running thread

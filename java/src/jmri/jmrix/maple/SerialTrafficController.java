@@ -102,8 +102,6 @@ public class SerialTrafficController extends AbstractMRNodeTrafficController imp
         mSensorManager = m;
     }
 
-    int curSerialNodeIndex = 0;   // cycles over defined nodes when pollMessage is called
-
     // initialization not needed ever
     protected boolean getMustInit(int i) {
         return false;
