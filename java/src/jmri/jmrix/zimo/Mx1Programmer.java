@@ -1,7 +1,3 @@
-/**
- * Mx1Programmer.java
- */
- // Convert the jmri.Programmer interface into commands for the MX-1
 package jmri.jmrix.zimo;
 
 import java.util.ArrayList;
@@ -25,7 +21,6 @@ import org.slf4j.LoggerFactory;
  * </UL>
  *
  * @author Bob Jacobsen Copyright (c) 2002
- * @version $Revision$
  *
  * Adapted by Sip Bosch for use with zimo Mx-1
  *
@@ -36,6 +31,7 @@ public class Mx1Programmer extends AbstractProgrammer implements Mx1Listener {
 
     protected Mx1Programmer(Mx1TrafficController _tc) {
         this.tc = _tc;
+        SHORT_TIMEOUT = 4000; // length default timeout
         // connect to listen
         log.info("" + this.tc);
         if(this.tc!=null)
@@ -60,7 +56,6 @@ public class Mx1Programmer extends AbstractProgrammer implements Mx1Listener {
     boolean _progRead = false;
     int _val;	// remember the value being read/written for confirmative reply
     int _cv;	// remember the cv being read/written
-    protected int SHORT_TIMEOUT = 4000;
 
     // programming interface
     synchronized public void writeCV(int CV, int val, jmri.ProgListener p) throws jmri.ProgrammerException {
@@ -262,6 +257,3 @@ public class Mx1Programmer extends AbstractProgrammer implements Mx1Listener {
     private final static Logger log = LoggerFactory.getLogger(Mx1Programmer.class.getName());
 
 }
-
-
-/* @(#)Mx1Programmer.java */
