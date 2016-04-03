@@ -49,6 +49,7 @@ import javax.swing.JPopupMenu;
 import javax.swing.JRadioButton;
 import javax.swing.JRadioButtonMenuItem;
 import javax.swing.JSplitPane;
+import javax.swing.JTable;
 import javax.swing.JTextPane;
 import javax.swing.ListSelectionModel;
 import javax.swing.SortOrder;
@@ -472,11 +473,12 @@ public class RosterFrame extends TwoPaneTBWindow implements RosterEntrySelector,
         rosters.add(rtable, BorderLayout.CENTER);
         // add selection listener
         rtable.getTable().getSelectionModel().addListSelectionListener((ListSelectionEvent e) -> {
+            JTable table = rtable.getTable();
             if (!e.getValueIsAdjusting()) {
-                if (rtable.getSelectedRosterEntries().length == 1 && rtable.getTable().getSelectedRow() >= 0) {
-                    log.debug("Selected row ", rtable.getTable().getSelectedRow());
-                    locoSelected(rtable.getModel().getValueAt(rtable.getTable().getSelectedRow(), RosterTableModel.IDCOL).toString());
-                } else if (rtable.getSelectedRosterEntries().length > 1 || rtable.getTable().getSelectedRow() < 0) {
+                if (rtable.getSelectedRosterEntries().length == 1 && table.getSelectedRow() >= 0) {
+                    log.debug("Selected row ", table.getSelectedRow());
+                    locoSelected(rtable.getModel().getValueAt(table.getRowSorter().convertRowIndexToModel(table.getSelectedRow()), RosterTableModel.IDCOL).toString());
+                } else if (rtable.getSelectedRosterEntries().length > 1 || table.getSelectedRow() < 0) {
                     locoSelected(null);
                 } // leave last selected item visible if no selection
             }
@@ -534,9 +536,10 @@ public class RosterFrame extends TwoPaneTBWindow implements RosterEntrySelector,
 
             @Override
             public Transferable createTransferable(JComponent c) {
-                ArrayList<String> Ids = new ArrayList<>(rtable.getTable().getSelectedRowCount());
-                for (int i = 0; i < rtable.getTable().getSelectedRowCount(); i++) {
-                    Ids.add(rtable.getModel().getValueAt(rtable.getTable().getSelectedRows()[i], RosterTableModel.IDCOL).toString());
+                JTable table = rtable.getTable();
+                ArrayList<String> Ids = new ArrayList<>(table.getSelectedRowCount());
+                for (int i = 0; i < table.getSelectedRowCount(); i++) {
+                    Ids.add(rtable.getModel().getValueAt(table.getRowSorter().convertRowIndexToModel(table.getSelectedRows()[i]), RosterTableModel.IDCOL).toString());
                 }
                 return new RosterEntrySelection(Ids);
             }

@@ -140,22 +140,20 @@ public class RosterTable extends JmriPanel implements RosterEntrySelector, Roste
 
         dataTable.setDefaultEditor(Object.class, new RosterCellEditor());
 
-        dataTable.getSelectionModel().addListSelectionListener(tableSelectionListener = new ListSelectionListener() {
-            @Override
-            public void valueChanged(ListSelectionEvent e) {
-                if (!e.getValueIsAdjusting()) {
-                    selectedRosterEntries = null; // clear cached list of selections
-                    if (dataTable.getSelectedRowCount() == 1) {
-                        re = Roster.instance().getEntryForId(dataModel.getValueAt(dataTable.getSelectedRow(), RosterTableModel.IDCOL).toString());
-                    } else if (dataTable.getSelectedRowCount() > 1) {
-                        re = null;
-                    } // leave last selected item visible if no selection
-                } else if (e.getFirstIndex() == -1) {
-                    //A reorder of the table might of occured therefore we are going to make sure that the selected item is still in view
-                    moveTableViewToSelected();
-                }
+        tableSelectionListener = (ListSelectionEvent e) -> {
+            if (!e.getValueIsAdjusting()) {
+                selectedRosterEntries = null; // clear cached list of selections
+                if (dataTable.getSelectedRowCount() == 1) {
+                    re = Roster.instance().getEntryForId(dataModel.getValueAt(sorter.convertRowIndexToModel(dataTable.getSelectedRow()), RosterTableModel.IDCOL).toString());
+                } else if (dataTable.getSelectedRowCount() > 1) {
+                    re = null;
+                } // leave last selected item visible if no selection
+            } else if (e.getFirstIndex() == -1) {
+                //A reorder of the table might of occured therefore we are going to make sure that the selected item is still in view
+                moveTableViewToSelected();
             }
-        });
+        };
+        dataTable.getSelectionModel().addListSelectionListener(tableSelectionListener);
 
     }
 
@@ -264,7 +262,7 @@ public class RosterTable extends JmriPanel implements RosterEntrySelector, Roste
             int[] rows = dataTable.getSelectedRows();
             selectedRosterEntries = new RosterEntry[rows.length];
             for (int idx = 0; idx < rows.length; idx++) {
-                selectedRosterEntries[idx] = Roster.instance().getEntryForId(dataModel.getValueAt(rows[idx], RosterTableModel.IDCOL).toString());
+                selectedRosterEntries[idx] = Roster.instance().getEntryForId(dataModel.getValueAt(sorter.convertRowIndexToModel(rows[idx]), RosterTableModel.IDCOL).toString());
             }
         }
         return selectedRosterEntries;
@@ -390,11 +388,7 @@ public class RosterTable extends JmriPanel implements RosterEntrySelector, Roste
                     return false;
                 }
             }
-            if (dataModel.getValueAt(dataTable.getSelectedRow(), RosterTableModel.IDCOL).equals(re.getId())) {
-                //if the current select roster entry matches the one that we have selected, then we can allow this field to be edited.
-                return true;
-            }
-            return false;
+            return re.getId().equals(dataModel.getValueAt(sorter.convertRowIndexToModel(dataTable.getSelectedRow()), RosterTableModel.IDCOL));
         }
     }
 }
