@@ -476,7 +476,7 @@ public class SignalGroupTableAction extends AbstractTableAction implements Prope
 
             JPanel p31si = new JPanel();
             p31si.setLayout(new BoxLayout(p31si, BoxLayout.Y_AXIS));
-            p31si.add(new JLabel(Bundle.getMessage("SelectAppearanceTrigger", Bundle.getMessage("SignalMastAppearance"))));
+            p31si.add(new JLabel(Bundle.getMessage("SelectAppearanceTrigger")));
 
             p3xsi.add(p31si);
             _AppearanceModel = new SignalMastAppearanceModel();
@@ -968,7 +968,7 @@ public class SignalGroupTableAction extends AbstractTableAction implements Prope
                 return rbx.getString("ColumnLabelInclude");
             }
             if (col == APPEAR_COLUMN) {
-                return rbx.getString("LabelActionSignal");
+                return Bundle.getMessage("SignalMastAppearance");
             }
             return "";
         }

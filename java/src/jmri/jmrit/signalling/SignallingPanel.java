@@ -62,7 +62,7 @@ public class SignallingPanel extends jmri.util.swing.JmriPanel {
     JLabel fixedDestMastLabel = new JLabel();
     JLabel sourceMastLabel = new JLabel(rb.getString("SourceMast")+":");
     JLabel destMastLabel = new JLabel(rb.getString("DestMast")+":");
-    JButton cancel = new JButton(Bundle.getMessage("ButtonCancel"));
+    JButton cancelButton = new JButton(Bundle.getMessage("ButtonCancel"));
     JButton updateButton = new JButton(rb.getString("UpdateLogic"));
     JCheckBox useLayoutEditor = new JCheckBox(rb.getString("UseLayoutEditorPaths"));
     JCheckBox useLayoutEditorTurnout = new JCheckBox(rb.getString("UseTurnoutDetails"));
@@ -271,8 +271,8 @@ public class SignallingPanel extends jmri.util.swing.JmriPanel {
         footer.setLayout(new FlowLayout(FlowLayout.TRAILING));
 
         //Cancel button
-        footer.add(cancel);
-        cancel.addActionListener(new ActionListener() {
+        footer.add(cancelButton);
+        cancelButton.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
                 cancelPressed(e);
             }

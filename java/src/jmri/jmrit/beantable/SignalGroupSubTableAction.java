@@ -176,6 +176,7 @@ public class SignalGroupSubTableAction {
     JLabel signalOffStateLabel = new JLabel(Bundle.getMessage("StateWhenNotMet") + ":");
     JLabel userLabel = new JLabel(Bundle.getMessage("SelectConditionsOn") + ":");
 
+    JButton cancelButton = new JButton(Bundle.getMessage("ButtonCancel"));
     JButton updateSubButton = new JButton(Bundle.getMessage("ButtonApply"));
 
     static String updateInst = Bundle.getMessage("ClickToApply");
@@ -223,7 +224,7 @@ public class SignalGroupSubTableAction {
 
         // Set up window
         if (addFrame == null) {
-            addFrame = new JmriJFrame(Bundle.getMessage("AddEditSignalGroup"), false, true);
+            addFrame = new JmriJFrame((Bundle.getMessage("AddEditSignalGroup") + " - " + Bundle.getMessage("BeanNameSignalHead")), false, true);
             addFrame.addHelpMenu("package.jmri.jmrit.beantable.SignalGroupAddEdit", true);
             addFrame.setLocation(100, 30);
             addFrame.getContentPane().setLayout(new BoxLayout(addFrame.getContentPane(), BoxLayout.Y_AXIS));
@@ -428,9 +429,15 @@ public class SignalGroupSubTableAction {
             contentPane.add(pa);
             // add buttons - Add SignalGroup button
             JPanel pb = new JPanel();
-            pb.setLayout(new FlowLayout());
-
-            // Update SignalGroup button
+            pb.setLayout(new FlowLayout(FlowLayout.TRAILING));
+            // add Cancel button
+            pb.add(cancelButton);
+            cancelButton.addActionListener(new ActionListener() {
+                public void actionPerformed(ActionEvent e) {
+                    cancelPressed(e);
+                }
+            });
+            // add Update SignalGroup button
             pb.add(updateSubButton);
             updateSubButton.addActionListener(new ActionListener() {
                 public void actionPerformed(ActionEvent e) {
@@ -547,6 +554,12 @@ public class SignalGroupSubTableAction {
             g.setSignalHeadAlignSensor(curSignalHead, s.getSensor(), s.getState());
         }
         return _includedSensorList.size();
+    }
+
+    void cancelPressed(ActionEvent e) {
+        addFrame.setVisible(false);
+        addFrame.dispose();
+        addFrame = null;
     }
 
     /**
