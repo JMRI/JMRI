@@ -23,7 +23,6 @@ import org.slf4j.LoggerFactory;
  * 
  * @author	Bob Jacobsen Copyright (C) 2001
  * @author      Steve Rawlinson Copyright (C) 2016
- * @version $Revision$
  */
 abstract public class AbstractThrottleManager implements ThrottleManager {
 

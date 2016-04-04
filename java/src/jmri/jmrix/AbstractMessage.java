@@ -1,4 +1,3 @@
-// AbstractMessage.java
 package jmri.jmrix;
 
 import org.slf4j.Logger;
@@ -8,7 +7,6 @@ import org.slf4j.LoggerFactory;
  * Add description of class here.
  *
  * @author Bob Jacobsen Copyright 2007, 2008
- * @version $Revision$
  */
 public abstract class AbstractMessage implements Message {
 

@@ -1,4 +1,3 @@
-// AbstractNode.java
 package jmri.jmrix;
 
 import org.slf4j.Logger;
@@ -10,7 +9,6 @@ import org.slf4j.LoggerFactory;
  * Integrated with {@link AbstractMRNodeTrafficController}.
  *
  * @author Bob Jacobsen Copyright 2008
- * @version $Revision$
  */
 public abstract class AbstractNode {
 

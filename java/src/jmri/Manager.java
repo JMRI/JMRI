@@ -132,19 +132,19 @@ public interface Manager {
      * back clear, or the user agrees with the actions, then a "DoDelete" can be
      * called which inform the listeners to delete the bean, then it will be
      * deregistered and disposed of.
-     *
-     * if a property name of "DoNotDelete" is thrown back in the VetoException
+     * <p>
+     * If a property name of "DoNotDelete" is thrown back in the VetoException
      * then the delete process should be aborted.
      *
      * @param n        The NamedBean to be deleted
-     * @param property The programmatic name of the request "CanDelete" will
-     *                 enquire with all listerners if the item can be deleted
-     *                 "DoDelete" tells the listerner to delete the item
-     * @throws java.beans.PropertyVetoException - if the recipients wishes the
+     * @param property The programmatic name of the request. "CanDelete" will
+     *                 enquire with all listeners if the item can be deleted.
+     *                 "DoDelete" tells the listener to delete the item.
+     * @throws java.beans.PropertyVetoException - If the recipients wishes the
      *                                          delete to be aborted (see
      *                                          above).
      */
-    public void deleteBean(@Nonnull NamedBean n, @Nullable String property) throws java.beans.PropertyVetoException;
+    public void deleteBean(@Nonnull NamedBean n, @Nonnull String property) throws java.beans.PropertyVetoException;
 
     /**
      * Remember a NamedBean Object created outside the manager.

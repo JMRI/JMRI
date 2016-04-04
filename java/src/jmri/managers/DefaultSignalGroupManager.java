@@ -96,6 +96,9 @@ public class DefaultSignalGroupManager extends AbstractManager
         } catch (URISyntaxException | NullPointerException ex) {
             log.error("No signals are defined.", ex);
         }
+        if (files == null) { // not a directory
+            return retval; // empty, but not null
+        }
         for (File file : files) {
             if (file.isDirectory()) {
                 // check that there's an aspects.xml file
