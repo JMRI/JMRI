@@ -1,4 +1,3 @@
-// AbstractMRListener.java
 package jmri.jmrix;
 
 /**
@@ -6,10 +5,6 @@ package jmri.jmrix;
  * Listeners
  *
  * @author	Bob Jacobsen Copyright (C) 2003
- * @version $Revision$
  */
 public interface AbstractMRListener extends java.util.EventListener {
 }
-
-
-/* @(#)AbstractMRListener.java */

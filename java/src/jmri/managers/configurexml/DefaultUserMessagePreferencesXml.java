@@ -2,6 +2,8 @@ package jmri.managers.configurexml;
 
 import java.lang.reflect.Constructor;
 import java.util.List;
+import javax.swing.SortOrder;
+import jmri.util.com.sun.TableSorter;
 import org.jdom2.Element;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -177,8 +179,8 @@ public class DefaultUserMessagePreferencesXml extends jmri.configurexml.Abstract
                     if (p.getTableColumnWidth(table, column) != -1) {
                         columnElement.addContent(new Element("width").addContent(Integer.toString(p.getTableColumnWidth(table, column))));
                     }
-                    if (p.getTableColumnSort(table, column) != 0) {
-                        columnElement.addContent(new Element("sort").addContent(Integer.toString(p.getTableColumnSort(table, column))));
+                    if (p.getTableColumnSort(table, column) != SortOrder.UNSORTED) {
+                        columnElement.addContent(new Element("sort").addContent(p.getTableColumnSort(table, column).name()));
                     }
                     if (p.getTableColumnHidden(table, column)) {
                         columnElement.addContent(new Element("hidden").addContent("yes"));
@@ -336,7 +338,7 @@ public class DefaultUserMessagePreferencesXml extends jmri.configurexml.Abstract
                     String strColumnName = column.getAttribute("name").getValue();
                     int order = -1;
                     int width = -1;
-                    int sort = 0;
+                    SortOrder sort = SortOrder.UNSORTED;
                     boolean hidden = false;
                     if (column.getChild("order") != null) {
                         order = Integer.parseInt(column.getChild("order").getText());
@@ -345,7 +347,20 @@ public class DefaultUserMessagePreferencesXml extends jmri.configurexml.Abstract
                         width = Integer.parseInt(column.getChild("width").getText());
                     }
                     if (column.getChild("sort") != null) {
-                        sort = Integer.parseInt(column.getChild("sort").getText());
+                        try {
+                            sort = SortOrder.valueOf(column.getChild("sort").getText());
+                        } catch (IllegalArgumentException ex) {
+                            switch (Integer.parseInt(column.getChild("sort").getText())) {
+                                case TableSorter.ASCENDING:
+                                    sort = SortOrder.ASCENDING;
+                                    break;
+                                case TableSorter.DESCENDING:
+                                    sort = SortOrder.DESCENDING;
+                                    break;
+                                default:
+                                    break;
+                            }
+                        }
                     }
                     if (column.getChild("hidden") != null && column.getChild("hidden").getText().equals("yes")) {
                         hidden = true;

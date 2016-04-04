@@ -1,4 +1,3 @@
-// NodeTableFrame.java
 package jmri.jmrix.grapevine.nodetable;
 
 import java.awt.Container;
@@ -11,14 +10,9 @@ import jmri.jmrix.grapevine.SerialTrafficController;
  *
  * @author	Bob Jacobsen Copyright (C) 2004, 2007
  * @author	Dave Duchamp Copyright (C) 2004, 2006
- * @version	$Revision$
  */
 public class NodeTableFrame extends jmri.util.JmriJFrame {
 
-    /**
-     *
-     */
-    private static final long serialVersionUID = -2093475836158292011L;
     ResourceBundle rb = ResourceBundle.getBundle("jmri.jmrix.grapevine.nodetable.NodeTableBundle");
 
     /**

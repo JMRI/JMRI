@@ -24,11 +24,6 @@ import org.slf4j.LoggerFactory;
  */
 public class VirtualSignalMast extends AbstractSignalMast {
 
-    /**
-     *
-     */
-    private static final long serialVersionUID = -4407228715885422094L;
-
     public VirtualSignalMast(String systemName, String userName) {
         super(systemName, userName);
         configureFromName(systemName);

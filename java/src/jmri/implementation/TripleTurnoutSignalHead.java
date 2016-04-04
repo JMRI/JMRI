@@ -24,11 +24,6 @@ import org.slf4j.LoggerFactory;
  */
 public class TripleTurnoutSignalHead extends DoubleTurnoutSignalHead {
 
-    /**
-     *
-     */
-    private static final long serialVersionUID = -139076982387444927L;
-
     public TripleTurnoutSignalHead(String sys, String user, NamedBeanHandle<Turnout> green, NamedBeanHandle<Turnout> yellow, NamedBeanHandle<Turnout> red) {
         super(sys, user, green, red);
         mYellow = yellow;
