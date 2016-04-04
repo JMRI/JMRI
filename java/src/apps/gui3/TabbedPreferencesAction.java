@@ -13,7 +13,6 @@ import org.slf4j.LoggerFactory;
  * view with a list option to the left hand side.
  * <P>
  * @author	Kevin Dickerson Copyright (C) 2009
- * @version	$Revision$
  */
 public class TabbedPreferencesAction extends jmri.util.swing.JmriAbstractAction {
 

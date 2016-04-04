@@ -1,4 +1,3 @@
-// TabbedPreferences.java
 package apps.gui3;
 
 import apps.AppConfigBase;
@@ -49,7 +48,6 @@ import org.slf4j.LoggerFactory;
  *
  * @author Bob Jacobsen Copyright 2010
  * @author Randall Wood 2012
- * @version $Revision$
  */
 public class TabbedPreferences extends AppConfigBase {
 
