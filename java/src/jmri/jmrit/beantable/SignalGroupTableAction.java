@@ -620,7 +620,7 @@ public class SignalGroupTableAction extends AbstractTableAction implements Prope
                     updatePressed(e, false, true);
                 }
             });
-            updateButton.setToolTipText("Change this Signal Group and leave Edit mode");  // I18N TODO
+            updateButton.setToolTipText(Bundle.getMessage("TooltipUpdate"));
             updateButton.setVisible(true);
             contentPane.add(pb);
             // pack and release space

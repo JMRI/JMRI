@@ -549,7 +549,7 @@ public class RouteTableAction extends AbstractTableAction {
             stateTCombo.addItem(SET_TO_TOGGLE);
             TableColumnModel routeTurnoutColumnModel = routeTurnoutTable.getColumnModel();
             TableColumn includeColumnT = routeTurnoutColumnModel.
-                    getColumn(RouteTurnoutModel.INCLUDE_COLUMN); // I18N TODO Bundle.getMessage("ColumnLabelInclude")
+                    getColumn(RouteTurnoutModel.INCLUDE_COLUMN);
             includeColumnT.setResizable(false);
             includeColumnT.setMinWidth(50);
             includeColumnT.setMaxWidth(60);
