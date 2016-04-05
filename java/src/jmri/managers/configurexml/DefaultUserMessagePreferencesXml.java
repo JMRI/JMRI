@@ -2,6 +2,7 @@ package jmri.managers.configurexml;
 
 import java.lang.reflect.Constructor;
 import java.util.List;
+import java.util.Set;
 import javax.swing.SortOrder;
 import jmri.util.com.sun.TableSorter;
 import org.jdom2.Element;
@@ -137,11 +138,11 @@ public class DefaultUserMessagePreferencesXml extends jmri.configurexml.Abstract
                         //Considered normal if the window hasn't been closed
                     }
                 }
-                java.util.Set<Object> s = p.getPropertyKeys(strClass);
+                Set<String> s = p.getPropertyKeys(strClass);
                 if (s != null && s.size() != 0) {
                     Element ret = new Element("properties");
                     windowElement.addContent(ret);
-                    for (Object key : s) {
+                    for (String key : s) {
                         Object value = p.getProperty(strClass, key);
                         Element prop = new Element("property");
                         ret.addContent(prop);
@@ -306,9 +307,7 @@ public class DefaultUserMessagePreferencesXml extends jmri.configurexml.Abstract
                         Class<?> cl;
                         Constructor<?> ctor;
                         // create key object
-                        cl = Class.forName(e.getChild("key").getAttributeValue("class"));
-                        ctor = cl.getConstructor(new Class<?>[]{String.class});
-                        Object key = ctor.newInstance(new Object[]{e.getChild("key").getText()});
+                        String key = e.getChild("key").getText();
 
                         // create value object
                         Object value = null;
