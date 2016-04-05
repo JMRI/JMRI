@@ -117,7 +117,7 @@ public class SignalGroupTableAction extends AbstractTableAction implements Prope
 
             public String getColumnName(int col) {
                 if (col == SETCOL) {
-                    return "";    // no heading on "Edit"
+                    return "";    // no heading on "Edit" column
                 }
                 if (col == ENABLECOL) {
                     return Bundle.getMessage("ColumnHeadEnabled");
@@ -451,7 +451,7 @@ public class SignalGroupTableAction extends AbstractTableAction implements Prope
                     }
                 }
             });
-            py.add(new JLabel("  " + Bundle.getMessage("_and_", Bundle.getMessage("SignalMastAppearance"), Bundle.getMessage("SignalHeads"))));
+            py.add(new JLabel("  " + Bundle.getMessage("_and_", Bundle.getMessage("LabelAspects"), Bundle.getMessage("SignalHeads"))));
             contentPane.add(py);
 
             // add control sensor table
@@ -968,7 +968,7 @@ public class SignalGroupTableAction extends AbstractTableAction implements Prope
                 return rbx.getString("ColumnLabelInclude");
             }
             if (col == APPEAR_COLUMN) {
-                return Bundle.getMessage("SignalMastAppearance"); // list contains Aspects TODO
+                return Bundle.getMessage("LabelAspectType"); // list contains Aspects not SignalMastAppearances
             }
             return "";
         }
@@ -1265,7 +1265,8 @@ public class SignalGroupTableAction extends AbstractTableAction implements Prope
     private static String[] COLUMN_SIG_NAMES = {rbx.getString("ColumnLabelSystemName"),
         rbx.getString("ColumnLabelUserName"),
         rbx.getString("ColumnLabelInclude"),
-        "On State", "Off State", Bundle.getMessage("ButtonEdit")};
+        "On State", "Off State", ""};
+        // No label above last (Edit) column
 
     private static String[] signalStates = new String[]{rbx.getString("StateSignalHeadDark"), rbx.getString("StateSignalHeadRed"), rbx.getString("StateSignalHeadYellow"), rbx.getString("StateSignalHeadGreen"), rbx.getString("StateSignalHeadLunar")};
     private static int[] signalStatesValues = new int[]{SignalHead.DARK, SignalHead.RED, SignalHead.YELLOW, SignalHead.GREEN, SignalHead.LUNAR};
