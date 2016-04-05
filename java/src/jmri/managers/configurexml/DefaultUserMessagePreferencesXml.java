@@ -180,7 +180,13 @@ public class DefaultUserMessagePreferencesXml extends jmri.configurexml.Abstract
                         columnElement.addContent(new Element("width").addContent(Integer.toString(p.getTableColumnWidth(table, column))));
                     }
                     if (p.getTableColumnSort(table, column) != SortOrder.UNSORTED) {
-                        columnElement.addContent(new Element("sort").addContent(p.getTableColumnSort(table, column).name()));
+                        columnElement.addContent(
+                                new Element("sortOrder").addContent(p.getTableColumnSort(table, column).name()));
+                        // TODO for backwards compatibility with releases before 4.3.5, can be removed after 2016
+                        columnElement.addContent(new Element("sort")
+                                .addContent(p.getTableColumnSort(table, column) == SortOrder.ASCENDING
+                                        ? Integer.toString(TableSorter.ASCENDING)
+                                        : Integer.toString(TableSorter.DESCENDING)));
                     }
                     if (p.getTableColumnHidden(table, column)) {
                         columnElement.addContent(new Element("hidden").addContent("yes"));
@@ -325,7 +331,6 @@ public class DefaultUserMessagePreferencesXml extends jmri.configurexml.Abstract
                     }
                 }
             }
-
         }
 
         List<Element> tablesList = shared.getChildren("tableDetails");
@@ -346,20 +351,19 @@ public class DefaultUserMessagePreferencesXml extends jmri.configurexml.Abstract
                     if (column.getChild("width") != null) {
                         width = Integer.parseInt(column.getChild("width").getText());
                     }
-                    if (column.getChild("sort") != null) {
-                        try {
-                            sort = SortOrder.valueOf(column.getChild("sort").getText());
-                        } catch (IllegalArgumentException ex) {
-                            switch (Integer.parseInt(column.getChild("sort").getText())) {
-                                case TableSorter.ASCENDING:
-                                    sort = SortOrder.ASCENDING;
-                                    break;
-                                case TableSorter.DESCENDING:
-                                    sort = SortOrder.DESCENDING;
-                                    break;
-                                default:
-                                    break;
-                            }
+                    if (column.getChild("sortOrder") != null) {
+                        sort = SortOrder.valueOf(column.getChild("sortOrder").getText());
+                        // before 4.3.5 we used "sort" save column sort state
+                    } else if (column.getChild("sort") != null) {
+                        switch (Integer.parseInt(column.getChild("sort").getText())) {
+                            case TableSorter.ASCENDING:
+                                sort = SortOrder.ASCENDING;
+                                break;
+                            case TableSorter.DESCENDING:
+                                sort = SortOrder.DESCENDING;
+                                break;
+                            default:
+                                break;
                         }
                     }
                     if (column.getChild("hidden") != null && column.getChild("hidden").getText().equals("yes")) {
@@ -369,7 +373,6 @@ public class DefaultUserMessagePreferencesXml extends jmri.configurexml.Abstract
                     p.setTableColumnPreferences(strTableName, strColumnName, order, width, sort, hidden);
                 }
             }
-
         }
         p.finishLoading();
         return true;
