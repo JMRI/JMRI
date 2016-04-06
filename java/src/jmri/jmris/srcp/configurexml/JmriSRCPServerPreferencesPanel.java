@@ -24,8 +24,6 @@ public class JmriSRCPServerPreferencesPanel extends JPanel implements Preference
 
     private static final long serialVersionUID = 03_16_2015L;
     private JSpinner port;
-    private JButton btnSave;
-    private JButton btnCancel;
     private JmriSRCPServerPreferences preferences;
     private JFrame parentFrame = null;
 
@@ -51,14 +49,6 @@ public class JmriSRCPServerPreferencesPanel extends JPanel implements Preference
 
     private void setGUI() {
         port.setValue(preferences.getPort());
-    }
-
-    /**
-     * Show the save and cancel buttons if displayed in its own frame.
-     */
-    public void enableSave() {
-        btnSave.setVisible(true);
-        btnCancel.setVisible(true);
     }
 
     /**
@@ -98,7 +88,7 @@ public class JmriSRCPServerPreferencesPanel extends JPanel implements Preference
     protected void cancelValues() {
         java.awt.Container ancestor = getTopLevelAncestor();
         if (ancestor != null && ancestor instanceof JFrame) {
-            ((JFrame) getTopLevelAncestor()).setVisible(false);
+            ((JFrame) ancestor).setVisible(false);
         }
     }
 
