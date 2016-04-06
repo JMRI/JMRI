@@ -165,6 +165,7 @@
      <ul>
       <li><a href="#AddRoute">Add Route</a></li>
       <li><a href="#EditRoute">Edit Route</a></li>
+      <li><a href="#TrainTurnRoute">Train Turn Route</a></li>
       <li><a href="#PassengerTrainRoute">Passenger Train Route</a></li>
       <li><a href="#DepartingStagingRoute">Departing Staging Route</a></li>
       <li><a href="#RouteFeatures">Route Features</a></li>
@@ -3254,7 +3255,22 @@
 
    Press "Save Route" to save your route. The program will create a file (OperationsRouteRoster.xml)
    in your JMRI directory in a folder called "operations". A backup file with the last settings for
-   all of your routes is also created each time the "Save Route" button is pressed. 
+   all of your routes is also created each time the "Save Route" button is pressed.
+   
+   <a name="TrainTurnRoute"></a>
+   <h3>Train Turn Route</h3>
+   A train that returns to its departure location is normally referred to as a "turn". The image
+   below shows a route for a train that departs "Bakersfield", works "Port Arthur" and "Danville",
+   reverses direction in "Hillsboro" and returns to "Bakersfield".
+   <p>
+    <img src="images/RouteTurn.png">
+   </p>
+
+   Notice that "Hillsboro" appears twice in the route. The first "Hillsboro" provides the arrival
+   direction for the train, and the amount of work for tracks that can only be accessed by an
+   Eastbound train. The second "Hillsboro" provides the departure direction for the train, and the
+   amount of work for tracks that can only be access by a Westbound train. Even though "Hillsboro"
+   appears twice in the route, it will only appear once on your manifests and switch lists. 
    
    <a name="PassengerTrainRoute"></a>
    <h3>Passenger Train Route</h3>
