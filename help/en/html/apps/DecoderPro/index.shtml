@@ -20,9 +20,9 @@
 
 <!-- Page Body -->
 <h1>JMRI: DecoderPro User Guide</h1>
-<h2>Introduction to the JMRI Symbolic Programmer</h2>
+<p>Current as for JMRI version 4.2</p>
 
-<p>Current version: 4.2</p>
+<h2>Introduction to the JMRI Symbolic Programmer</h2>
 
 <p>Modern DCC decoders are complicated beasts to program.  The simple idea
 of "put the address in CV01" doesn't cope well when you program complicated
