@@ -389,26 +389,23 @@ public class JmriUserPreferencesManager extends Bean implements UserPreferencesM
     }
 
     private void showMessage(String title, String message, final String strClass, final String item, final boolean sessionOnly, final boolean alwaysRemember, int type) {
-        final UserPreferencesManager p;
-        p = InstanceManager.getDefault(jmri.UserPreferencesManager.class);
-
         final String preference = strClass + "." + item;
 
-        if (p.getSessionPreferenceState(preference)) {
+        if (this.getSessionPreferenceState(preference)) {
             return;
         }
-        if (!p.getPreferenceState(strClass, item)) {
+        if (!this.getPreferenceState(strClass, item)) {
             JPanel container = new JPanel();
             container.setLayout(new BoxLayout(container, BoxLayout.Y_AXIS));
             container.add(new JLabel(message));
-            final JCheckBox rememberSession = new JCheckBox(Bundle.getMessage("SkipMessageSession")); // NOI18N
             //I18N in ManagersBundle.properties
+            final JCheckBox rememberSession = new JCheckBox(Bundle.getMessage("SkipMessageSession")); // NOI18N
             if (sessionOnly) {
                 rememberSession.setFont(rememberSession.getFont().deriveFont(10f));
                 container.add(rememberSession);
             }
-            final JCheckBox remember = new JCheckBox(Bundle.getMessage("SkipMessageFuture"));
             //I18N in ManagersBundle.properties
+            final JCheckBox remember = new JCheckBox(Bundle.getMessage("SkipMessageFuture")); // NOI18N
             if (alwaysRemember) {
                 remember.setFont(remember.getFont().deriveFont(10f));
                 container.add(remember);
@@ -418,10 +415,10 @@ public class JmriUserPreferencesManager extends Bean implements UserPreferencesM
                     title,
                     type);
             if (remember.isSelected()) {
-                p.setPreferenceState(strClass, item, true);
+                this.setPreferenceState(strClass, item, true);
             }
             if (rememberSession.isSelected()) {
-                p.setSessionPreferenceState(preference, true);
+                this.setSessionPreferenceState(preference, true);
             }
 
         }
@@ -981,6 +978,7 @@ public class JmriUserPreferencesManager extends Bean implements UserPreferencesM
 
     public final void readUserPreferences() {
         this.allowSave = false;
+        this.loading = true;
         File perNodeConfig = null;
         try {
             perNodeConfig = FileUtil.getFile(FileUtil.PROFILE + Profile.PROFILE + "/" + NodeIdentity.identity() + "/" + Profile.UI_CONFIG); // NOI18N
@@ -997,7 +995,6 @@ public class JmriUserPreferencesManager extends Bean implements UserPreferencesM
             this.readSimplePreferenceState();
             this.readTableColumnPreferences();
             this.readWindowDetails();
-            log.info("SHOULD BE LOADING NEW STYLE USER PREFERENCES"); // temporary
         } else {
             try {
                 file = FileUtil.getFile(FileUtil.PROFILE + Profile.UI_CONFIG_FILENAME);
@@ -1020,6 +1017,7 @@ public class JmriUserPreferencesManager extends Bean implements UserPreferencesM
                 // ignore - this only means that UserPrefsProfileConfig.xml does not exist.
             }
         }
+        this.loading = false;
         this.allowSave = true;
     }
 
@@ -1055,17 +1053,21 @@ public class JmriUserPreferencesManager extends Bean implements UserPreferencesM
         if (element != null) {
             element.getChildren("preferences").stream().forEach((preferences) -> {
                 String clazz = preferences.getAttributeValue("class");
+                log.debug("Reading class preferences for \"{}\"", clazz);
                 preferences.getChildren("multipleChoice").stream().forEach((mc) -> {
-                    int value = 0;
-                    try {
-                        mc.getAttribute("value").getIntValue();
-                    } catch (DataConversionException ex) {
-                        log.error("failted to convert positional attribute");
-                    }
-                    this.setMultipleChoiceOption(clazz, mc.getAttributeValue("item"), value);
+                    mc.getChildren("option").stream().forEach((option) -> {
+                        int value = 0;
+                        try {
+                            option.getAttribute("value").getIntValue();
+                        } catch (DataConversionException ex) {
+                            log.error("failed to convert positional attribute");
+                        }
+                        this.setMultipleChoiceOption(clazz, option.getAttributeValue("item"), value);
+                    });
                 });
                 preferences.getChildren("reminderPrompts").stream().forEach((rp) -> {
                     rp.getChildren("reminder").stream().forEach((reminder) -> {
+                        log.debug("Setting preferences state \"true\" for \"{}\", \"{}\"", clazz, reminder.getText());
                         this.setPreferenceState(clazz, reminder.getText(), true);
                     });
                 });
@@ -1321,6 +1323,7 @@ public class JmriUserPreferencesManager extends Bean implements UserPreferencesM
     }
 
     private void saveElement(Element element) {
+        log.debug("Saving {} element.", element.getName());
         try {
             ProfileUtils.getUserInterfaceConfiguration(ProfileManager.getDefault().getActiveProfile()).putConfigurationFragment(JDOMUtil.toW3CElement(element), false);
         } catch (JDOMException ex) {
