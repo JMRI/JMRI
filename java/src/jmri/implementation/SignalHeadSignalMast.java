@@ -40,11 +40,6 @@ import org.slf4j.LoggerFactory;
  */
 public class SignalHeadSignalMast extends AbstractSignalMast implements java.beans.VetoableChangeListener {
 
-    /**
-     *
-     */
-    private static final long serialVersionUID = -2589115616693665064L;
-
     public SignalHeadSignalMast(String systemName, String userName) {
         super(systemName, userName);
         configureFromName(systemName);

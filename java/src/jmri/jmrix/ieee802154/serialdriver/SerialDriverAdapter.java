@@ -268,9 +268,9 @@ public class SerialDriverAdapter extends IEEE802154PortController implements jmr
         return "Adapter";
     }
 
-    protected String[] validSpeeds = new String[]{"(automatic)"};
-    protected int[] validSpeedValues = new int[]{9600};
-    protected String selectedSpeed = validSpeeds[0];
+    private String[] validSpeeds = new String[]{"(automatic)"};
+    private int[] validSpeedValues = new int[]{9600};
+    private String selectedSpeed = validSpeeds[0];
 
     /**
      * Get an array of valid values for "option 2"; used to display valid

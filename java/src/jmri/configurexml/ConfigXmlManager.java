@@ -67,9 +67,9 @@ public class ConfigXmlManager extends jmri.jmrit.XmlFile
             if (adapter != null) {
                 try {
                     Class.forName(adapter);
-                } catch (java.lang.ClassNotFoundException ex) {
+                } catch (ClassNotFoundException ex) {
                     locateClassFailed(ex, adapter, o);
-                } catch (java.lang.NoClassDefFoundError ex) {
+                } catch (NoClassDefFoundError ex) {
                     locateClassFailed(ex, adapter, o);
                 }
             }
@@ -273,7 +273,7 @@ public class ConfigXmlManager extends jmri.jmrit.XmlFile
                 if (e != null) {
                     root.addContent(e);
                 }
-            } catch (java.lang.Exception e) {
+            } catch (Exception e) {
                 storingErrorEncountered(null, "storing to file",
                         "Unknown error (Exception)", null, null, e);
                 result = false;
@@ -291,7 +291,7 @@ public class ConfigXmlManager extends jmri.jmrit.XmlFile
                 if (e != null) {
                     root.addContent(e);
                 }
-            } catch (java.lang.Exception e) {
+            } catch (Exception e) {
                 result = false;
                 storingErrorEncountered(((XmlAdapter) o), "storing to file",
                         "Unknown error (Exception)", null, null, e);
@@ -309,7 +309,7 @@ public class ConfigXmlManager extends jmri.jmrit.XmlFile
                 if (e != null) {
                     root.addContent(e);
                 }
-            } catch (java.lang.Exception e) {
+            } catch (Exception e) {
                 result = false;
                 storingErrorEncountered((XmlAdapter) o, "storing to file",
                         "Unknown error (Exception)", null, null, e);
@@ -507,7 +507,7 @@ public class ConfigXmlManager extends jmri.jmrit.XmlFile
         XmlAdapter adapter = null;
         try {
             adapter = (XmlAdapter) Class.forName(adapterName(object)).newInstance();
-        } catch (java.lang.ClassNotFoundException | java.lang.IllegalAccessException | java.lang.InstantiationException ex) {
+        } catch (ClassNotFoundException | IllegalAccessException | InstantiationException ex) {
             log.error("Cannot load configuration adapter for {}", object.getClass().getName(), ex);
         }
         if (adapter != null) {
@@ -708,15 +708,15 @@ public class ConfigXmlManager extends jmri.jmrit.XmlFile
             creationErrorEncountered(null, "loading from file " + url.getFile(),
                     "IOException", null, null, e);
             result = false;
-        } catch (java.lang.ClassNotFoundException e) {
+        } catch (ClassNotFoundException e) {
             creationErrorEncountered(null, "loading from file " + url.getFile(),
                     "ClassNotFoundException", null, null, e);
             result = false;
-        } catch (java.lang.InstantiationException e) {
+        } catch (InstantiationException e) {
             creationErrorEncountered(null, "loading from file " + url.getFile(),
                     "InstantiationException", null, null, e);
             result = false;
-        } catch (java.lang.IllegalAccessException e) {
+        } catch (IllegalAccessException e) {
             creationErrorEncountered(null, "loading from file " + url.getFile(),
                     "IllegalAccessException", null, null, e);
             result = false;
@@ -783,7 +783,7 @@ public class ConfigXmlManager extends jmri.jmrit.XmlFile
          creationErrorEncountered (null, "parsing file "+fi.getName(), Level.ERROR,
          "Parse error", null,null,e);
          result = false;
-         } catch (java.lang.Exception e) {
+         } catch (Exception e) {
          creationErrorEncountered (null, "loading from file "+fi.getName(), Level.ERROR,
          "Unknown error (Exception)", null,null,e);
          result = false;

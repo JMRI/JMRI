@@ -17,11 +17,24 @@
 <!-- Comments by Author: Lolke Bijlsma (lbijlsma@pobox.com)                                                      -->
 <!-- Decoder definition based on NMJ Skd 224 board, a special decoder built by Train-O-Matic                     -->
 <!-- Decoder manual used: SKD224_replacement board with integrated dcc decoder assembly guide v 0.1.6.pdf        -->
+<!-- Version 2 - Incorporated the other decoders from the same family after info from tOm                        -->
 
-  <version author="lbijlsma@pobox.com" version="1" lastUpdated="20160329"/>
+  <version author="lbijlsma@pobox.com" version="2" lastUpdated="20160403"/>
   <decoder>
-    <family name="tOm NMJ" mfg="Tehnologistic (train-O-matic)">
-      <model model="NMJ Skd 224" numOuts="4" lowVersionID="1">
+    <family name="Lokommander" mfg="Tehnologistic (train-O-matic)">
+      <model model="Lokommander Mini" numOuts="4" lowVersionID="23" highVersionID="255">
+        <output name="1" label="Out1" />
+        <output name="2" label="Out2" />
+        <output name="3" label="Out3" />
+        <output name="4" label="Out4" />
+      </model>
+      <model model="Lokommander Micro" numOuts="4" lowVersionID="10" highVersionID="255">
+        <output name="1" label="Out1" />
+        <output name="2" label="Out2" />
+        <output name="3" label="Out3" />
+        <output name="4" label="Out4" />
+      </model>
+      <model model="NMJ Skd 224" numOuts="4" lowVersionID="1" highVersionID="255">
         <output name="1" label="Out1" />
         <output name="2" label="Out2" />
         <output name="3" label="Out3" />

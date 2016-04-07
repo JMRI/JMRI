@@ -165,6 +165,7 @@
      <ul>
       <li><a href="#AddRoute">Add Route</a></li>
       <li><a href="#EditRoute">Edit Route</a></li>
+      <li><a href="#TrainTurnRoute">Train Turn Route</a></li>
       <li><a href="#PassengerTrainRoute">Passenger Train Route</a></li>
       <li><a href="#DepartingStagingRoute">Departing Staging Route</a></li>
       <li><a href="#RouteFeatures">Route Features</a></li>
@@ -310,15 +311,18 @@
     locations or stations that your trains will visit. If this is your first time using a computer
     generated car forwarding program, it is best to start off small and gradually work your way
     through the various options and features available. Start by entering only three or four <a
-     href="#AddLocation">locations</a> with each location having only two or three tracks. Keep things
-    simple and don't modify the location and track defaults by making them restrictive with regards
-    to the type of cars or locomotives that they will service. Also, the track and location default
-    is to allow a train to service the location and track by trains traveling in any direction.
-    Don't change the defaults until you can successfully build trains to your liking.
-    We also recommend that when creating your locations that you first use <a href="#Yards">yard</a>
-    and <a href="#Sidings">spur</a> tracks, and try <a href="#Staging">staging</a> and <a
-     href="#Interchange">classification/interchange</a> tracks when you're more comfortable with how
-    the program operates.
+     href="#AddLocation">locations</a> with each location having only two or three tracks. You only
+    need to specify tracks that will be worked by your crew. For example you might start with tracks
+    that service your industries, this type of track is called a <a href="#Sidings">spur</a>. The
+    spur's length determines how many cars can be spotted there. For example a 44 foot long spur can
+    hold one 40 foot car. Keep things simple and don't modify the location and track defaults by
+    making them restrictive with regards to the type of cars or locomotives that they will service.
+    Also, the track and location default is to allow a train to service the location and track by
+    trains traveling in any direction. Don't change the defaults until you can successfully build
+    trains to your liking. We also recommend that when creating your locations that you first use <a
+     href="#Yards">yard</a> and <a href="#Sidings">spur</a> tracks, and try <a href="#Staging">staging</a>
+    and <a href="#Interchange">classification/interchange</a> tracks when you're more comfortable
+    with how the program operates.
    </p>
 
    <p>
@@ -519,7 +523,7 @@
    <a name="UnitOfLength"></a>
    <h4>Unit of Length</h4>
 
-   You can use feet or meters when entering the length of your rolling stock and tracks. The program
+   You can use scale feet or meters when entering the length of your rolling stock and tracks. The program
    can convert actual inches into scale feet when entering car, locomotive, or track lengths. Just
    append a double quote (") to any length. The program can also convert from actual centimeters to
    scale meters, just append "cm" to any length.
@@ -1262,7 +1266,8 @@
    
    <h4>Manifests Options</h4>
 
-   There are four checkboxes that allow you to modify the content of your Manifests.
+   There are four checkboxes that allow you to modify the content of your Manifests. They are
+   labeled "Location", "Route", "Departure Time", and "Truncate".
 
    <p>Each location and the train's route can have an optional comment. The program will print
     these comments on your Manifest if the "Location" and "Route" checkboxes are selected
@@ -1294,8 +1299,8 @@
    <p>If you want the Manifest and switch list to show how many car loads and empties are in the train, select
     the "Loads and Empties" checkbox.</p>
 
-   <p>You can use a 12 hour rather than a 24 hour clock format on your Manifests and switch
-    lists.
+   <p>You can decide to use a 12 hour AM/PM rather than a 24 hour clock format for your Manifests and switch
+    lists.</p>
    
    <p>
     Selecting the "Show Timetable" prints which Train <a href="#Timetable">Timetable</a> you are
@@ -1335,8 +1340,11 @@
    <a name="MisplacedCarsComment"></a>
    <h3>Misplaced Cars Comment</h3>
 
-   OperationsPro&trade; provides a comment for your crew to search for <a href="#CarsSet">misplaced</a>
-   cars. You can modify the comment to your liking. 
+   OperationsPro&trade; provides a comment for your crew to search for
+   <a href="#CarsSet">misplaced</a> cars. You can modify the comment to your liking. Full scale
+   railroads unfortunately misplace cars as part of their operations, so having a few cars in the
+   wrong place on your railroad is very prototypical. Save time and effort and let your operators
+   find those misplaced cars for you. 
    
    <a name="HazardousComment"></a>
    <h3>Hazardous Comment</h3>
@@ -2327,8 +2335,28 @@
     another 10 cars to the track. Now the track could be overloaded until this train or a later
     train arrives and picks up the original 10 cars. Therefore you might need some temporary track
     space available to hold the new cars. So if you don't have "extra" space for cars, you might not
-    wnat to use this feature! Note that it is your responsibility when using planned pickups and not
+    want to use this feature! Note that it is your responsibility when using planned pickups and not
     the programs to build and terminate a train that eliminates the potential overloading.</p>
+
+   <p>The following is an example using planned pickups to get a desired set of car moves. Say
+    you only have two tracks at a location that can hold exactly three cars each. You place three
+    cars on each track for a total of six cars. You've configured the program to allow a local
+    switcher to swap the cars on each track. Without planned pickups, when you build the switcher
+    the program would find both tracks full and the build report will state that there isn't any
+    space available to move cars to either track. The program needs to find an empty spot for a car
+    before it can plan a move. With planned pickups set to 100% for both tracks, it allows the
+    program to plan three car set outs to the full track, because with planned pickups the space
+    consumed by the cars sitting there is ignored. This allows for a complete car swap between the two
+    tracks.</p>
+
+   <p>Now using the example above we'll show how easy it is to overload a track using planned
+    pickups. If we set the number of moves for the switcher to an odd number the program could
+    overload one of the two track. Let's try 5 moves for the switcher, with 5 moves the program
+    would pull three cars from one track and set them out to the other, and then pull two cars from
+    the other track and set them out to the other. Once the switching is complete, one track will
+    have two cars, and the other four! But there's only room for three! The track is overloaded by
+    one car. So in this example using even numbers for the switcher moves doesn't overload the
+    tracks, but odd number moves can.</p>
 
    <p>Guaranteeing that cars will be picked up from a track can be a bit tricky, so it is
     recommended that you not use this feature until you become an expert with regards to using this
@@ -3227,7 +3255,22 @@
 
    Press "Save Route" to save your route. The program will create a file (OperationsRouteRoster.xml)
    in your JMRI directory in a folder called "operations". A backup file with the last settings for
-   all of your routes is also created each time the "Save Route" button is pressed. 
+   all of your routes is also created each time the "Save Route" button is pressed.
+   
+   <a name="TrainTurnRoute"></a>
+   <h3>Train Turn Route</h3>
+   A train that returns to its departure location is normally referred to as a "turn". The image
+   below shows a route for a train that departs "Bakersfield", works "Port Arthur" and "Danville",
+   reverses direction in "Hillsboro" and returns to "Bakersfield".
+   <p>
+    <img src="images/RouteTurn.png">
+   </p>
+
+   Notice that "Hillsboro" appears twice in the route. The first "Hillsboro" provides the arrival
+   direction for the train, and the amount of work for tracks that can only be accessed by an
+   Eastbound train. The second "Hillsboro" provides the departure direction for the train, and the
+   amount of work for tracks that can only be access by a Westbound train. Even though "Hillsboro"
+   appears twice in the route, it will only appear once on your manifests and switch lists. 
    
    <a name="PassengerTrainRoute"></a>
    <h3>Passenger Train Route</h3>

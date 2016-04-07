@@ -55,7 +55,7 @@ public class SerialLightManager extends AbstractLightManager {
         }
         String conflict = "";
         conflict = SerialAddress.isOutputBitFree(nAddress, bitNum);
-        if (conflict != "") {
+        if (!conflict.equals("")) {
             log.error("Assignment conflict with " + conflict + ".  Light not created.");
             notifyLightCreationError(conflict, bitNum);
             return (null);
