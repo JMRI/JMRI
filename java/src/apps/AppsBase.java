@@ -443,7 +443,7 @@ public abstract class AppsBase {
     /**
      * The application decided to quit, handle that.
      */
-    static public Boolean handleQuit() {
+    static public boolean handleQuit() {
         log.debug("Start handleQuit");
         try {
             return InstanceManager.shutDownManagerInstance().shutdown();
@@ -456,7 +456,7 @@ public abstract class AppsBase {
     /**
      * The application decided to restart, handle that.
      */
-    static public Boolean handleRestart() {
+    static public boolean handleRestart() {
         log.debug("Start handleRestart");
         try {
             return InstanceManager.shutDownManagerInstance().restart();
