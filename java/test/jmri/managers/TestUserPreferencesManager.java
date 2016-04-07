@@ -9,10 +9,9 @@ package jmri.managers;
  *
  * @author Bob Jacobsen Copyright (C) 2015
  */
-public class TestUserPreferencesManager extends DefaultUserMessagePreferences {
+public class TestUserPreferencesManager extends JmriUserPreferencesManager {
 
     public TestUserPreferencesManager() {
-        super(false); // don't do superclass initialization 
         if (jmri.InstanceManager.getDefault(jmri.UserPreferencesManager.class) == null) {
             //We add this to the instanceManager so that other components can access the preferences
             //We need to make sure that this is registered before we do the read
@@ -20,11 +19,7 @@ public class TestUserPreferencesManager extends DefaultUserMessagePreferences {
         }
 
         preferenceItemDetails(getClassName(), "reminder", "Hide Reminder Location Message");
-        classPreferenceList.get(getClassName()).setDescription("User Preferences");
-        
-        DefaultUserMessagePreferencesHolder.instance = this;
+        this.getClassPreferences(getClassName()).setDescription("User Preferences");
     }
 
-    public void readUserPreferences() { }
-    
 }
