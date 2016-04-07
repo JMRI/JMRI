@@ -1,4 +1,3 @@
-// LightControl.java
 package jmri.implementation;
 
 import java.util.Date;
@@ -39,7 +38,6 @@ import org.slf4j.LoggerFactory;
  * A PARTICULAR PURPOSE. See the GNU General Public License for more details.
  * <P>
  * @author	Dave Duchamp Copyright (C) 2010
- * @version	$Revision$
  */
 public class LightControl {
 
@@ -288,65 +286,66 @@ public class LightControl {
                     _active = true;
                     break;
                 case Light.TURNOUT_STATUS_CONTROL:
-                    _controlTurnout = InstanceManager.turnoutManagerInstance().
-                            provideTurnout(_controlTurnoutName);
-                    if (_controlTurnout != null) {
-                        // set light based on current turnout state if known
-                        int tState = _controlTurnout.getKnownState();
-                        if (tState == Turnout.CLOSED) {
-                            if (_turnoutState == Turnout.CLOSED) {
-                                // Turn light on
-                                _parentLight.setState(Light.ON);
-                            } else {
-                                // Turn light off
-                                _parentLight.setState(Light.OFF);
-                            }
-                        } else if (tState == Turnout.THROWN) {
-                            if (_turnoutState == Turnout.THROWN) {
-                                // Turn light on
-                                _parentLight.setState(Light.ON);
-                            } else {
-                                // Turn light off
-                                _parentLight.setState(Light.OFF);
-                            }
-                        }
-
-                        // listen for change in turnout state
-                        _controlTurnout.addPropertyChangeListener(_turnoutListener
-                                = new java.beans.PropertyChangeListener() {
-                                    public void propertyChange(java.beans.PropertyChangeEvent e) {
-                                        if (!_parentLight.getEnabled()) {
-                                            return;  // ignore property change if user disabled light
-                                        }
-                                        if (e.getPropertyName().equals("KnownState")) {
-                                            int now = _controlTurnout.getKnownState();
-                                            if (now == Turnout.CLOSED) {
-                                                if (_turnoutState == Turnout.CLOSED) {
-                                                    // Turn light on
-                                                    _parentLight.setState(Light.ON);
-                                                } else {
-                                                    // Turn light off
-                                                    _parentLight.setState(Light.OFF);
-                                                }
-                                            } else if (now == Turnout.THROWN) {
-                                                if (_turnoutState == Turnout.THROWN) {
-                                                    // Turn light on
-                                                    _parentLight.setState(Light.ON);
-                                                } else {
-                                                    // Turn light off
-                                                    _parentLight.setState(Light.OFF);
-                                                }
-                                            }
-                                        }
-                                    }
-                                });
-                        _active = true;
-                    } else {
+                    try {
+                        _controlTurnout = InstanceManager.turnoutManagerInstance().
+                                provideTurnout(_controlTurnoutName);
+                    } catch (IllegalArgumentException e) {
                         // control turnout does not exist
                         log.error("Light " + _parentLight.getSystemName()
                                 + " is linked to a Turnout that does not exist: " + _controlSensorName);
                         return;
                     }
+                    
+                    // set light based on current turnout state if known
+                    int tState = _controlTurnout.getKnownState();
+                    if (tState == Turnout.CLOSED) {
+                        if (_turnoutState == Turnout.CLOSED) {
+                            // Turn light on
+                            _parentLight.setState(Light.ON);
+                        } else {
+                            // Turn light off
+                            _parentLight.setState(Light.OFF);
+                        }
+                    } else if (tState == Turnout.THROWN) {
+                        if (_turnoutState == Turnout.THROWN) {
+                            // Turn light on
+                            _parentLight.setState(Light.ON);
+                        } else {
+                            // Turn light off
+                            _parentLight.setState(Light.OFF);
+                        }
+                    }
+
+                    // listen for change in turnout state
+                    _controlTurnout.addPropertyChangeListener(_turnoutListener
+                            = new java.beans.PropertyChangeListener() {
+                                public void propertyChange(java.beans.PropertyChangeEvent e) {
+                                    if (!_parentLight.getEnabled()) {
+                                        return;  // ignore property change if user disabled light
+                                    }
+                                    if (e.getPropertyName().equals("KnownState")) {
+                                        int now = _controlTurnout.getKnownState();
+                                        if (now == Turnout.CLOSED) {
+                                            if (_turnoutState == Turnout.CLOSED) {
+                                                // Turn light on
+                                                _parentLight.setState(Light.ON);
+                                            } else {
+                                                // Turn light off
+                                                _parentLight.setState(Light.OFF);
+                                            }
+                                        } else if (now == Turnout.THROWN) {
+                                            if (_turnoutState == Turnout.THROWN) {
+                                                // Turn light on
+                                                _parentLight.setState(Light.ON);
+                                            } else {
+                                                // Turn light off
+                                                _parentLight.setState(Light.OFF);
+                                            }
+                                        }
+                                    }
+                                }
+                            });
+                    _active = true;
                     break;
                 case Light.TIMED_ON_CONTROL:
                     if (_timedSensorName.length() > 0) {
@@ -599,5 +598,3 @@ public class LightControl {
 
     private final static Logger log = LoggerFactory.getLogger(LightControl.class.getName());
 }
-
-/* @(#)LightControl.java */

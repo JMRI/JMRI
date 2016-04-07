@@ -15,9 +15,9 @@
  <indexitem text="Blocks " target="html.tools.Blocks">
   <indexitem text="Add Blocks " target="package.jmri.jmrit.beantable.BlockAddEdit"/>
 
-  <indexitem text="Block Tracking " target="html.tools.tracker.index"/>
-
   <indexitem text="Block Table " target="package.jmri.jmrit.beantable.BlockTable"/>
+
+  <indexitem text="Block Tracking " target="html.tools.tracker.index"/>
 
   <indexitem text="Edit Blocks " target="package.jmri.jmrit.beantable.BlockEdit"/>
 
@@ -319,6 +319,8 @@
 
  </indexitem>
  <indexitem text="Panels Menu " target="package.jmri.jmrit.display.PanelMenuHelp"/>
+
+ <indexitem text="Path (in OBlock) " target="package.jmri.jmrit.logix.OBlockTable"/>
 
  <indexitem text="Preferences " target="package.apps.TabbedPreferences"/>
 

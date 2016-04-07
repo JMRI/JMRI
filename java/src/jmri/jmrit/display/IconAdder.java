@@ -1,4 +1,3 @@
-// IconAdder.java
 package jmri.jmrit.display;
 
 import java.awt.Color;
@@ -71,11 +70,6 @@ import org.slf4j.LoggerFactory;
  */
 public class IconAdder extends JPanel implements ListSelectionListener {
 
-    /**
-     *
-     */
-    private static final long serialVersionUID = -6650497287808063959L;
-
     static final ResourceBundle rbean = ResourceBundle.getBundle("jmri.NamedBeanBundle");
 
     int ROW_HEIGHT;
@@ -115,7 +109,6 @@ public class IconAdder extends JPanel implements ListSelectionListener {
 
     public void reset() {
         if (_table != null) {
-            _table.getSelectedRow();
             _table.clearSelection();
         }
         closeCatalog();
@@ -735,11 +728,6 @@ public class IconAdder extends JPanel implements ListSelectionListener {
     }
 
     private class IconButton extends DropButton {
-
-        /**
-         *
-         */
-        private static final long serialVersionUID = -2038108988532738646L;
         String key;
 
         IconButton(String label, Icon icon) {  // init icon passed to avoid ref before ctor complete
@@ -760,11 +748,6 @@ public class IconAdder extends JPanel implements ListSelectionListener {
     }
 
     class DropButton extends JToggleButton implements DropTargetListener {
-
-        /**
-         *
-         */
-        private static final long serialVersionUID = 7846729392258288644L;
         DataFlavor dataFlavor;
 
         DropButton(Icon icon) {

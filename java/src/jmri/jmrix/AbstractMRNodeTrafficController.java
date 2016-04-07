@@ -132,6 +132,7 @@ public abstract class AbstractMRNodeTrafficController extends AbstractMRTrafficC
         }
         if (index == curSerialNodeIndex) {
             log.warn("Deleting the serial node active in the polling loop");
+            // just a warning, unlikely event and probably OK in any case.
         }
         // Delete the node from the node list
         numNodes--;

@@ -1,4 +1,3 @@
-// AbstractProgrammerFacade.java
 package jmri.jmrix;
 
 import java.beans.PropertyChangeListener;
@@ -13,7 +12,6 @@ import jmri.ProgrammingMode;
  * facade classes.
  *
  * @author	Bob Jacobsen Copyright (C) 2013
- * @version $Revision$
  */
 public abstract class AbstractProgrammerFacade implements Programmer {
 

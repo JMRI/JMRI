@@ -11,6 +11,7 @@ import java.io.InputStream;
 import jmri.jmrix.grapevine.SerialPortController;
 import jmri.jmrix.grapevine.SerialSensorManager;
 import jmri.jmrix.grapevine.SerialTrafficController;
+import jmri.jmrix.grapevine.GrapevineSystemConnectionMemo;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -25,7 +26,8 @@ public class SerialDriverAdapter extends SerialPortController implements jmri.jm
     SerialPort activeSerialPort = null;
 
     public SerialDriverAdapter() {
-        super(null);
+        // needs to provide a SystemConnectionMemo
+        super(new GrapevineSystemConnectionMemo());
         this.manufacturerName = jmri.jmrix.grapevine.SerialConnectionTypeList.PROTRAK;
     }
 

@@ -208,6 +208,7 @@ public class TrainSwitchLists extends TrainCommon {
                                                             rl.getTrainDirectionString(),
                                                             train.getDescription()}));
                                 } else {
+                                    // message: Visit number {0} for train ({1}) expect to arrive in {2}, terminates {3}
                                     newLine(fileOut, MessageFormat.format(messageFormatText = TrainSwitchListText
                                             .getStringVisitNumberTerminatesDeparted(), new Object[]{stops,
                                                     train.getName(), expectedArrivalTime, splitString(rl.getName()),
