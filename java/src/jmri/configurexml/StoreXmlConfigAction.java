@@ -77,7 +77,7 @@ public class StoreXmlConfigAction extends LoadStoreBaseAction {
             int selectedValue = JOptionPane.showConfirmDialog(null,
                     Bundle.getMessage("FileOverwriteWarning", file.getName()),
                     Bundle.getMessage("OverwriteFile"),
-                    JOptionPane.OK_CANCEL_OPTION); // I18N TODO
+                    JOptionPane.OK_CANCEL_OPTION);
             if (selectedValue != JOptionPane.OK_OPTION) {
                 return null;
             }
