@@ -156,7 +156,7 @@ public class Log4JUtil {
         Properties p = new Properties();
         FileInputStream f = new FileInputStream(config);
         try {
-            p.load(new FileInputStream(config));
+            p.load(f);
         } finally {
             f.close();
         }
