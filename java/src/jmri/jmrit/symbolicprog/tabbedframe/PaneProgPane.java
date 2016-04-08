@@ -224,7 +224,7 @@ public class PaneProgPane extends javax.swing.JPanel
                     l.setAlignmentX(Component.CENTER_ALIGNMENT);
                     pe.add(l);
                     line++;
-                } catch (Exception e) {
+                } catch (java.util.MissingResourceException e) {  // deliberately runs until exception
                     line = -1;
                 }
             }
@@ -513,7 +513,7 @@ public class PaneProgPane extends javax.swing.JPanel
 
             // must decide whether this one should be counted
             if (!changes
-                    || (changes && var.isChanged())) {
+                    || var.isChanged()) {
 
                 CvValue[] cvs = var.usesCVs();
                 for (int j = 0; j < cvs.length; j++) {
@@ -850,7 +850,7 @@ public class PaneProgPane extends javax.swing.JPanel
         if (log.isDebugEnabled()) {
             log.debug("nextRead scans " + indexedCvList.size() + " indexed CVs");
         }
-        while ((indexedCvList.size() >= 0) && (indexedCvListIndex < indexedCvList.size())) {
+        while ((indexedCvList.size() > 0) && (indexedCvListIndex < indexedCvList.size())) {
             int indxVarNum = indexedCvList.get(indexedCvListIndex).intValue();
             int indxState = _varModel.getState(indxVarNum);
             if (log.isDebugEnabled()) {
@@ -1098,7 +1098,7 @@ public class PaneProgPane extends javax.swing.JPanel
             }
         }
         // check for Indexed CVs to handle (e.g. for Indexed CV table)
-        while ((indexedCvList.size() >= 0) && (indexedCvListIndex < indexedCvList.size())) {
+        while ((indexedCvList.size() > 0) && (indexedCvListIndex < indexedCvList.size())) {
             int indxVarNum = indexedCvList.get(indexedCvListIndex).intValue();
             int indxState = _varModel.getState(indxVarNum);
             if (log.isDebugEnabled()) {
@@ -2407,9 +2407,7 @@ public class PaneProgPane extends javax.swing.JPanel
 
         // get representation; store into the list to be programmed
         JComponent rep = getRepresentation(name, var);
-        if (i >= 0) {
-            varList.add(Integer.valueOf(i));
-        }
+        varList.add(Integer.valueOf(i));
 
         // create the paired label
         JLabel l = new WatchingLabel(label, rep);
@@ -2811,7 +2809,7 @@ public class PaneProgPane extends javax.swing.JPanel
                 // Check if variable has been printed.  If not store it and print
                 boolean alreadyPrinted = false;
                 for (int j = 0; j < printedVariables.size(); j++) {
-                    if (printedVariables.elementAt(j).toString() == name) {
+                    if (name.equals(printedVariables.elementAt(j))) {
                         alreadyPrinted = true;
                     }
                 }

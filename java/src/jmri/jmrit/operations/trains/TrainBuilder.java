@@ -74,8 +74,8 @@ public class TrainBuilder extends TrainCommon {
     Track _terminateStageTrack; // terminate staging track (null if not staging)
     boolean _success; // true when enough cars have been picked up from a location
     PrintWriter _buildReport; // build report for this train
-    List<Car> _notRoutable = new ArrayList<Car>();
-    List<Location> _modifiedLocations = new ArrayList<Location>();
+    List<Car> _notRoutable = new ArrayList<Car>(); // list of cars that couldn't be routed
+    List<Location> _modifiedLocations = new ArrayList<Location>(); // list of locations that have been modified
 
     // managers
     CarManager carManager = CarManager.instance();
@@ -1321,8 +1321,8 @@ public class TrainBuilder extends TrainCommon {
                         throw new BuildFailedException(MessageFormat.format(
                                 Bundle.getMessage("buildErrorCarStageDest"), new Object[]{car.toString()}));
                     }
-                } // is there a specific road requirement for the caboose?
-                else if (!roadCaboose.equals(Train.NONE) && !roadCaboose.equals(car.getRoadName())) {
+                 // is there a specific road requirement for the caboose?
+                } else if (!roadCaboose.equals(Train.NONE) && !roadCaboose.equals(car.getRoadName())) {
                     continue;
                 } else if (!foundCaboose && car.getLocationName().equals(rl.getName())) {
                     // remove cars that can't be picked up due to train and track directions
@@ -1334,7 +1334,7 @@ public class TrainBuilder extends TrainCommon {
                         _carIndex--;
                         continue;
                     }
-                    // first pass, take a caboose that matches the engine
+                    // first pass, take a caboose that matches the engine road
                     if (leadEngine != null && car.getRoadName().equals(leadEngine.getRoadName())) {
                         addLine(_buildReport, SEVEN, MessageFormat.format(Bundle.getMessage("buildCabooseRoadMatches"),
                                 new Object[]{car.toString(), car.getRoadName(), leadEngine.toString()}));
@@ -1358,11 +1358,33 @@ public class TrainBuilder extends TrainCommon {
                 }
             }
         }
-        if (requiresCaboose && !foundCaboose) {
+        // second pass, take a caboose with a road name that is "similar" to the engine road name
+        if (requiresCaboose && !foundCaboose && roadCaboose.equals(Train.NONE)) {
             log.debug("Second pass looking for caboose");
-            // second pass, take any caboose available
-            for (_carIndex = 0; _carIndex < _carList.size(); _carIndex++) {
-                Car car = _carList.get(_carIndex);
+            for (Car car : _carList) {
+                if (car.isCaboose() && car.getLocationName().equals(rl.getName())) {
+                    if (leadEngine != null &&
+                            TrainCommon.splitString(car.getRoadName())
+                                    .equals(TrainCommon.splitString(leadEngine.getRoadName()))) {
+                        addLine(_buildReport, SEVEN, MessageFormat.format(Bundle.getMessage("buildCabooseRoadMatches"),
+                                new Object[]{car.toString(), car.getRoadName(), leadEngine.toString()}));
+                        if (checkCarForDestinationAndTrack(car, rl, rld)) {
+                            if (car.getTrain() == _train) {
+                                foundCaboose = true;
+                                break;
+                            }
+                        } else if (findDestinationAndTrack(car, rl, rld)) {
+                            foundCaboose = true;
+                            break;
+                        }
+                    }
+                }
+            }
+        }
+        // third pass, take any caboose available
+        if (requiresCaboose && !foundCaboose) {
+            log.debug("Third pass looking for caboose");
+            for (Car car : _carList) {
                 if (car.isCaboose() && car.getLocationName().equals(rl.getName())) {
                     // is there a specific road requirement for the caboose?
                     if (!roadCaboose.equals(Train.NONE) && !roadCaboose.equals(car.getRoadName())) {
@@ -2926,14 +2948,14 @@ public class TrainBuilder extends TrainCommon {
                     new Object[]{_train.getName(), terminateStageTrack.getName()}));
             return true;
         }
-        if (!checkTerminateStagingTrackRestrications(terminateStageTrack)) {
+        if (!checkTerminateStagingTrackRestrictions(terminateStageTrack)) {
             addLine(_buildReport, SEVEN, Bundle.getMessage("buildOptionRestrictStaging"));
             return false;
         }
         return true;
     }
 
-    private boolean checkTerminateStagingTrackRestrications(Track terminateStageTrack) {
+    private boolean checkTerminateStagingTrackRestrictions(Track terminateStageTrack) {
         // check go see if location/track will accept the train's car and engine types
         for (String name : _train.getTypeNames()) {
             if (!_terminateLocation.acceptsTypeName(name)) {

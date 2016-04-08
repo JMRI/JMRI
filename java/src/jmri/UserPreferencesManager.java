@@ -6,6 +6,7 @@ import java.beans.PropertyChangeListener;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
+import javax.swing.SortOrder;
 
 /**
  * Interface for the User Preferences Manager.
@@ -454,7 +455,7 @@ public interface UserPreferencesManager {
      * @param sort   The sort order of the column
      * @param hidden Should the column be hidden
      */
-    public void setTableColumnPreferences(String table, String column, int order, int width, int sort, boolean hidden);
+    public void setTableColumnPreferences(String table, String column, int order, int width, SortOrder sort, boolean hidden);
 
     /**
      * Get the stored position of the column for a given table
@@ -479,9 +480,9 @@ public interface UserPreferencesManager {
      *
      * @param table  The reference for the table
      * @param column The column name
-     * @return 0 if not found
+     * @return {@link javax.swing.SortOrder#UNSORTED} if not found
      */
-    public int getTableColumnSort(String table, String column);
+    public SortOrder getTableColumnSort(String table, String column);
 
     /**
      * Get the stored column hidden state for a given table

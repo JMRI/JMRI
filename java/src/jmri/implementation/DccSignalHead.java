@@ -45,10 +45,6 @@ import org.slf4j.LoggerFactory;
  */
 public class DccSignalHead extends AbstractSignalHead {
 
-    /**
-     *
-     */
-    private static final long serialVersionUID = -5400767347176104884L;
     private final static Logger log = LoggerFactory.getLogger(DccSignalHead.class);
 
     public DccSignalHead(String sys, String user) {

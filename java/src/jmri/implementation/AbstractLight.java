@@ -1,10 +1,7 @@
-// AbstractLight.java
 package jmri.implementation;
 
 import java.util.ArrayList;
 import jmri.Light;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 
 /**
  * Abstract class providing partial implementation of the the Light interface.
@@ -41,16 +38,9 @@ import org.slf4j.LoggerFactory;
  * @author	Dave Duchamp Copyright (C) 2004, 2010
  * @author	Ken Cameron Copyright (C) 2008
  * @author	Bob Jacobsen Copyright (C) 2008
- * @version $Revision$
  */
 public abstract class AbstractLight extends AbstractNamedBean
         implements Light, java.io.Serializable {
-
-    /**
-     *
-     */
-    private static final long serialVersionUID = -3863736856456563301L;
-    private final static Logger log = LoggerFactory.getLogger(AbstractLight.class);
 
     public AbstractLight(String systemName, String userName) {
         super(systemName.toUpperCase(), userName);
@@ -240,7 +230,7 @@ public abstract class AbstractLight extends AbstractNamedBean
         mMaxIntensity = intensity;
 
         if (oldValue != intensity) {
-            firePropertyChange("MaxIntensity", new Double(oldValue), new Double(intensity));
+            firePropertyChange("MaxIntensity", Double.valueOf(oldValue), Double.valueOf(intensity));
         }
     }
 
@@ -281,7 +271,7 @@ public abstract class AbstractLight extends AbstractNamedBean
         mMinIntensity = intensity;
 
         if (oldValue != intensity) {
-            firePropertyChange("MinIntensity", new Double(oldValue), new Double(intensity));
+            firePropertyChange("MinIntensity", Double.valueOf(oldValue), Double.valueOf(intensity));
         }
     }
 
@@ -388,7 +378,7 @@ public abstract class AbstractLight extends AbstractNamedBean
         double oldValue = mCurrentIntensity;
         mCurrentIntensity = intensity;
         if (oldValue != intensity) {
-            firePropertyChange("TargetIntensity", new Double(oldValue), new Double(intensity));
+            firePropertyChange("TargetIntensity", Double.valueOf(oldValue), Double.valueOf(intensity));
         }
     }
 
@@ -461,6 +451,5 @@ public abstract class AbstractLight extends AbstractNamedBean
         return listCopy;
     }
 
+    private final static org.slf4j.Logger log = org.slf4j.LoggerFactory.getLogger(AbstractLight.class);
 }
-
-/* @(#)AbstractLight.java */

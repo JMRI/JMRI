@@ -142,7 +142,7 @@ public abstract class AbstractCatalogTree extends DefaultTreeModel implements Ca
     Hashtable<java.beans.PropertyChangeListener, String> register = new Hashtable<>();
     Hashtable<java.beans.PropertyChangeListener, String> listenerRefs = new Hashtable<>();
 
-    public synchronized void addPropertyChangeListener(java.beans.PropertyChangeListener l, String beanRef, String listenerRef) {
+    public synchronized void addPropertyChangeListener(PropertyChangeListener l, String beanRef, String listenerRef) {
         pcs.addPropertyChangeListener(l);
         if (beanRef != null) {
             register.put(l, beanRef);
@@ -152,30 +152,30 @@ public abstract class AbstractCatalogTree extends DefaultTreeModel implements Ca
         }
     }
 
-    public synchronized ArrayList<java.beans.PropertyChangeListener> getPropertyChangeListeners(String name) {
-        ArrayList<java.beans.PropertyChangeListener> list = new ArrayList<>();
-        Enumeration<java.beans.PropertyChangeListener> en = register.keys();
+    public synchronized PropertyChangeListener[] getPropertyChangeListenersByReference(String name) {
+        ArrayList<PropertyChangeListener> list = new ArrayList<>();
+        Enumeration<PropertyChangeListener> en = register.keys();
         while (en.hasMoreElements()) {
-            java.beans.PropertyChangeListener l = en.nextElement();
+            PropertyChangeListener l = en.nextElement();
             if (register.get(l).equals(name)) {
                 list.add(l);
             }
         }
-        return list;
+        return list.toArray(new PropertyChangeListener[list.size()]);
     }
 
     /* This allows a meaning full list of places where the bean is in use!*/
     public synchronized ArrayList<String> getListenerRefs() {
         ArrayList<String> list = new ArrayList<>();
-        Enumeration<java.beans.PropertyChangeListener> en = listenerRefs.keys();
+        Enumeration<PropertyChangeListener> en = listenerRefs.keys();
         while (en.hasMoreElements()) {
-            java.beans.PropertyChangeListener l = en.nextElement();
+            PropertyChangeListener l = en.nextElement();
             list.add(listenerRefs.get(l));
         }
         return list;
     }
 
-    public synchronized void updateListenerRef(java.beans.PropertyChangeListener l, String newName) {
+    public synchronized void updateListenerRef(PropertyChangeListener l, String newName) {
         if (listenerRefs.containsKey(l)) {
             listenerRefs.put(l, newName);
         }

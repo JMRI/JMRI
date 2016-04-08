@@ -570,8 +570,8 @@ public class BlockTableAction extends AbstractTableAction {
             }
         });
 
-        JMenu speedMenu = new JMenu("Speeds");
-        item = new JMenuItem("Defaults...");
+        JMenu speedMenu = new JMenu(Bundle.getMessage("SpeedsMenu"));
+        item = new JMenuItem(Bundle.getMessage("SpeedsMenuItemDefaults"));
         speedMenu.add(item);
         item.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
@@ -587,7 +587,7 @@ public class BlockTableAction extends AbstractTableAction {
         blockSpeedCombo.setEditable(true);
 
         JPanel block = new JPanel();
-        block.add(new JLabel("Block Speed"));
+        block.add(new JLabel(Bundle.getMessage("BlockSpeedLabel")));
         block.add(blockSpeedCombo);
 
         blockSpeedCombo.removeItem(defaultBlockSpeedText);
@@ -595,7 +595,7 @@ public class BlockTableAction extends AbstractTableAction {
         blockSpeedCombo.setSelectedItem(InstanceManager.blockManagerInstance().getDefaultSpeed());
 
         int retval = JOptionPane.showOptionDialog(_who,
-                "Select the default values for the speeds through the blocks\n", "Block Speeds",
+                "Select the default values for the speeds through the blocks\n", Bundle.getMessage("BlockSpeedLabel"),
                 0, JOptionPane.INFORMATION_MESSAGE, null,
                 new Object[]{"Cancel", "OK", block}, null);
         if (retval != 1) {
@@ -648,12 +648,15 @@ public class BlockTableAction extends AbstractTableAction {
             addFrame = new JmriJFrame(Bundle.getMessage("TitleAddBlock"), false, true);
             addFrame.addHelpMenu("package.jmri.jmrit.beantable.BlockAddEdit", true); //IN18N
             addFrame.getContentPane().setLayout(new BoxLayout(addFrame.getContentPane(), BoxLayout.Y_AXIS));
-            ActionListener listener = new ActionListener() {
+            ActionListener oklistener = new ActionListener() {
                 public void actionPerformed(ActionEvent e) {
                     okPressed(e);
                 }
             };
-            addFrame.add(new AddNewBeanPanel(sysName, userName, numberToAdd, range, _autoSystemName, "ButtonOK", listener));
+            ActionListener cancellistener = new ActionListener() {
+                public void actionPerformed(ActionEvent e) { cancelPressed(e); }
+            };
+            addFrame.add(new AddNewBeanPanel(sysName, userName, numberToAdd, range, _autoSystemName, "ButtonOK", oklistener, cancellistener));
         }
         if (pref.getSimplePreferenceState(systemNameAuto)) {
             _autoSystemName.setSelected(true);
@@ -684,7 +687,7 @@ public class BlockTableAction extends AbstractTableAction {
             speeds.addItem(speedList.get(i));
         }
 
-        mainPanel.add(new JLabel("blockSpeed"));
+        mainPanel.add(new JLabel(Bundle.getMessage("BlockSpeed")));
         mainPanel.add(speeds);
 
         //return displayList;
@@ -718,6 +721,12 @@ public class BlockTableAction extends AbstractTableAction {
             }
         }
         return true;
+    }
+
+    void cancelPressed(ActionEvent e) {
+                addFrame.setVisible(false);
+                addFrame.dispose();
+                addFrame = null;
     }
 
     void okPressed(ActionEvent e) {

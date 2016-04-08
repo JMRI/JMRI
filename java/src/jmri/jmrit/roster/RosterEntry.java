@@ -1,4 +1,3 @@
-// RosterEntry.java
 package jmri.jmrit.roster;
 
 import java.awt.HeadlessException;
@@ -58,7 +57,6 @@ import org.slf4j.LoggerFactory;
  *
  * @author Bob Jacobsen Copyright (C) 2001, 2002, 2004, 2005, 2009
  * @author Dennis Miller Copyright 2004
- * @version $Revision$
  * @see jmri.jmrit.roster.LocoFile
  *
  */
@@ -100,7 +98,9 @@ public class RosterEntry extends ArbitraryBean implements RosterObject, BasicRos
     protected String _roadName = "";
     protected String _roadNumber = "";
     protected String _mfg = "";
-    protected String _owner = InstanceManager.getDefault(RosterConfigManager.class).getDefaultOwner();
+    protected String _owner = ((InstanceManager.getDefault(RosterConfigManager.class) == null) ? 
+                                "" :
+                                InstanceManager.getDefault(RosterConfigManager.class).getDefaultOwner());
     protected String _model = "";
     protected String _dccAddress = "3";
     //protected boolean _isLongAddress = false;

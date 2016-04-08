@@ -23,6 +23,7 @@
 <h1>JMRI: DecoderPro User Guide</h1>
 <h2>Rosters</h2>
 
+<a href="images/DP4StartScreen.png"><img src="images/DP4StartScreen.png" width="376" height="278" align="right"></a>
 <p>Reading the contents of a decoder generally takes a long time, and with
 some command stations it's not even possible. The JMRI Roster
 stores the known values of decoder configuration values to make it
@@ -30,64 +31,63 @@ unnecessary to read them from the decoder.  It can contain "Roster entries"
 for an unlimited number of individual locomotives.</p>
 
 <p>
-Each Roster entry has an "identifier" (ID) by which it's known.
+Each Roster entry has an "identifier" (Roster ID) by which it's known.
 When the program wants you to select a Roster entry, it will show
 a selection box or menu containing all of the Roster entry IDs.
 You can use anything you want for this:  Road number, type, even
-"That crummy old model I need to repaint".</p>
+"That crummy old model I need to repaint" or "My beautiful Shay".</p>
 
 <p>
 You can edit the contents of a Roster entry with the programmer panes.</p>
 
 <h3>Roster Entry</h3>
 
-<p>When you first open a JMRI programmer, you'll see a "Roster
-Entry" pane.  On it is displayed:</p>
+<p>When you first open a JMRI programmer, you'll see a "Create New Loco" pane (pictured to the right).<br>
+On it is displayed:</p>
 
 <dl>
-	<dt>ID
+	<dt>Roster ID</dt>
 	<dd>
 	The ID for this entry.  You can change it if you want, in
 	which case it will appear in selection boxes, etc, with the
-	new ID name.
-	
-	<dt> Road Name
-	<dt> Road Number
-	<dt> Manufacturer
-	<dt> Model
-	<dt> Owner
-	<dd>
-	Use these for whatever you want.
-	
-	
-	<dt>DCC Address
-	<dd>
-	This is filled in based on how the decoder is configured.
-	You can't edit it here, so you have to go to another pane
-	to change the addressing.
-	
-	<dt>Comment
-	<dd>
-	Use this for whatever you want.
-	
-	<dt> Decoder Family
-	<dt> Decoder Model
-	<dd>
-	These are filled in based on the decoder that was selected when
-	the entry was created.  It can't be edited after that.
-	
-	<dt>Decoder Comment
-	<dd>
-	You can put anything you want here.  Some people have
-	used it to record whether a NMRA plug was used, whether the
-	decoder was soldered in, etc.
+	new ID name.</dd>
+	<dt>DCC Address</dt>
+	<dd>This is either a Short or Long Address, based on how the decoder is configured.</dd>
+	<dt>Buttons</dt>
+	<dd>To <strong>Read</strong> the information from a decoder with this address, <strong>Write</strong> changes to that decoder or only <strong>Save</strong> this entry to disk.</dd>
+</dl>	
 
-</dl></p>
+<p>Click the "Open Comprehensive Programmer" button at lower right to display a row of tabbed panes with additional properties:</p>
+<dl>	
+	<dt>Roster Entry</dt>
+		<ul>
+		<li>Road Name
+		<li>Road Number
+		<li>Manufacturer
+		<li>Model
+		<li>Owner
+	  <li>Comment<br>
+	  Use these fields for whatever you want.</li>
+		<li>Decoder Family
+		<li>Decoder Model<br>
+		These two fields are filled in based on the decoder that was selected when
+	  the entry was created. They can't be edited after that.</li>
+		<li>Decoder Comment<br>
+		You can put anything you want here.  Some people have
+	  used it to record whether an NMRA plug was used, whether the
+	  decoder was soldered in, etc.</li>
+	  </ul>
+	</dt>
+	<dt>Basic<br>
+	additional information about your Locomotive etc.</dt>
+	<dt>Motor, Basic Speed Control, and many other tabs:<br>
+	<a href="images/DP4ComprehensiveTabs.png"><img src="images/DP4ComprehensiveTabs.png" width="531" height="47"></a></dt>
+</dl>	
 
 <a id="menu"></a>
 <h3>The Roster Menu</h3>
 
-<a href="images/DPRosterMenu.png"><img src="images/DPRosterMenu.png" width="207" height="313" align="right"></a>
+<img src="images/DPRosterMenu.png" width="207" height="313" align="right">
 The JMRI application main windows and the DecoderPro windows
 have a "Roster" menu available.  That menu allows you to
 manage the entries in your Roster with commands:

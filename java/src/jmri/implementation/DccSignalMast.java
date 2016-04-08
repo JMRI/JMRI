@@ -47,10 +47,6 @@ import org.slf4j.LoggerFactory;
  */
 public class DccSignalMast extends AbstractSignalMast {
 
-    /**
-     *
-     */
-    private static final long serialVersionUID = 2711857995161461274L;
     private final static Logger log = LoggerFactory.getLogger(DccSignalMast.class);
 
     public DccSignalMast(String sys, String user) {
