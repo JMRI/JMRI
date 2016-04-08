@@ -16,7 +16,6 @@ package jmri.util;
  * <P>
  *
  * @author			Mark Underwood Copyright (C) 2011
- * @version			$Revision$
  */
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
@@ -43,11 +42,6 @@ import org.slf4j.LoggerFactory;
  *
  */
 public class PhysicalLocation extends Vector3f {
-
-    /**
-     *
-     */
-    private static final long serialVersionUID = -6996042081848047974L;
 
     float[] f = new float[3];  // used for extracting a single dimension
     // from the underlying vector.

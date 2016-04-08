@@ -1,4 +1,3 @@
-// jmri.jmrit.display.LayoutEditorTools.java
 package jmri.jmrit.display.layoutEditor;
 
 import java.awt.BorderLayout;
@@ -56,7 +55,6 @@ import org.slf4j.LoggerFactory;
  * The tools in this module are accessed via the Tools menu in Layout Editor.
  * <P>
  * @author Dave Duchamp Copyright (c) 2007
- * @version $Revision$
  */
 public class LayoutEditorTools {
 

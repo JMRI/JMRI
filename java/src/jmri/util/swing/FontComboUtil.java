@@ -1,4 +1,3 @@
-// FontComboUtil.java
 package jmri.util.swing;
 
 import java.awt.Dimension;
@@ -35,7 +34,6 @@ import org.slf4j.LoggerFactory;
  * <P>
  *
  * @author Matthew Harris Copyright (C) 2011
- * @version $Revision$
  * @since 2.13.1
  */
 public class FontComboUtil {
@@ -333,5 +331,3 @@ public class FontComboUtil {
     private static final Logger log = LoggerFactory.getLogger(FontComboUtil.class.getName());
 
 }
-
-/* @(#)FontComboUtil.java */

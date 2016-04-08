@@ -1,4 +1,3 @@
-// MrcClockControl.java
 package jmri.jmrix.mrc;
 
 import java.text.DecimalFormat;
@@ -30,7 +29,6 @@ import org.slf4j.LoggerFactory;
  * @author Ken Cameron Copyright (C) 2014
  * @author Dave Duchamp Copyright (C) 2007
  * @author	Bob Jacobsen, Alex Shepherd
- * @version $Revision: 22887 $
  */
 public class MrcClockControl extends DefaultClockControl implements MrcTrafficListener {
 
@@ -370,5 +368,3 @@ public class MrcClockControl extends DefaultClockControl implements MrcTrafficLi
 
     private final static Logger log = LoggerFactory.getLogger(MrcClockControl.class.getName());
 }
-
-/* @(#)MrcClockControl.java */

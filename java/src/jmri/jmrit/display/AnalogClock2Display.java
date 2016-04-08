@@ -34,10 +34,6 @@ import org.slf4j.LoggerFactory;
  */
 public class AnalogClock2Display extends PositionableJComponent implements LinkingObject {
 
-    /**
-     *
-     */
-    private static final long serialVersionUID = -7053647033852039593L;
     Timebase clock;
     double rate;
     double minuteAngle;
