@@ -13,12 +13,7 @@ import junit.framework.TestSuite;
 public class JmriUserPreferencesManagerTest extends TestCase {
 
     public void testSetGet() {
-        JmriUserPreferencesManager d = new JmriUserPreferencesManager() {
-            @Override
-            public void displayRememberMsg() {
-            }
-        };
-        jmri.util.JUnitAppender.assertWarnMessage("Won't protect preferences at shutdown without registered ShutDownManager");
+        JmriUserPreferencesManager d = new TestJmriUserPreferencesManager();
 
         Assert.assertTrue(!d.getSimplePreferenceState("one"));
 
@@ -63,4 +58,12 @@ public class JmriUserPreferencesManagerTest extends TestCase {
         jmri.util.JUnitUtil.resetInstanceManager();
     }
 
+    private static class TestJmriUserPreferencesManager extends JmriUserPreferencesManager {
+
+        @Override
+        protected void showMessage(String title, String message, final String strClass, final String item, final boolean sessionOnly, final boolean alwaysRemember, int type) {
+            // Uncomment to force failure if wanting to verify that showMessage does not get called.
+            //org.slf4j.LoggerFactory.getLogger(TestUserPreferencesManager.class).error("showMessage called.", new Exception());
+        }
+    };
 }

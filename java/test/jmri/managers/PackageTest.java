@@ -29,7 +29,7 @@ public class PackageTest extends TestCase {
         suite.addTest(DefaultIdTagManagerTest.suite());
         suite.addTest(DefaultLogixManagerTest.suite());
         suite.addTest(DefaultSignalSystemManagerTest.suite());
-        suite.addTest(DefaultUserMessagePreferencesTest.suite());
+        suite.addTest(DefaultUserMessagePreferencesTest.suite()); // no longer used in JMRI - may be used in other applications
         suite.addTest(InternalLightManagerTest.suite());
         suite.addTest(InternalSensorManagerTest.suite());
         suite.addTest(ProxyLightManagerTest.suite());

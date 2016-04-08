@@ -186,6 +186,11 @@ public class JmriUserPreferencesManager extends Bean implements UserPreferencesM
      */
     @Override
     public void setPreferenceState(String strClass, String item, boolean state) {
+        // convert old manager preferences to new manager preferences
+        if (strClass.equals("jmri.managers.DefaultUserMessagePreferences")) {
+            this.setPreferenceState("jmri.managers.JmriUserPreferencesManager", item, state);
+            return;
+        }
         if (!classPreferenceList.containsKey(strClass)) {
             classPreferenceList.put(strClass, new ClassPreferences());
             setClassDescription(strClass);
@@ -388,7 +393,7 @@ public class JmriUserPreferencesManager extends Bean implements UserPreferencesM
         this.showMessage(title, message, strClass, item, sessionOnly, alwaysRemember, JOptionPane.WARNING_MESSAGE);
     }
 
-    private void showMessage(String title, String message, final String strClass, final String item, final boolean sessionOnly, final boolean alwaysRemember, int type) {
+    protected void showMessage(String title, String message, final String strClass, final String item, final boolean sessionOnly, final boolean alwaysRemember, int type) {
         final String preference = strClass + "." + item;
 
         if (this.getSessionPreferenceState(preference)) {
@@ -1326,7 +1331,7 @@ public class JmriUserPreferencesManager extends Bean implements UserPreferencesM
         return null;
     }
 
-    private void saveElement(@Nonnull Element element) {
+    protected void saveElement(@Nonnull Element element) {
         log.debug("Saving {} element.", element.getName());
         try {
             ProfileUtils.getUserInterfaceConfiguration(ProfileManager.getDefault().getActiveProfile()).putConfigurationFragment(JDOMUtil.toW3CElement(element), false);

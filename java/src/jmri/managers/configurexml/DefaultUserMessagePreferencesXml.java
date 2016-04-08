@@ -231,10 +231,6 @@ public class DefaultUserMessagePreferencesXml extends jmri.configurexml.Abstract
         for (int k = 0; k < classList.size(); k++) {
             List<Element> multipleList = classList.get(k).getChildren("multipleChoice");
             String strClass = classList.get(k).getAttribute("class").getValue();
-            // convert old manager preferences to new manager preferences
-            if (strClass.equals("jmri.managers.DefaultUserMessagePreferences")) {
-                strClass = "jmri.managers.JmriUserPreferencesManager";
-            }
             for (int i = 0; i < multipleList.size(); i++) {
                 List<Element> multiItem = multipleList.get(i).getChildren("option");
                 for (int x = 0; x < multiItem.size(); x++) {
