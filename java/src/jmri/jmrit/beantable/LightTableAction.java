@@ -1006,7 +1006,7 @@ public class LightTableAction extends AbstractTableAction {
         // remind to save, if Light was created or edited
         if (lightCreatedOrUpdated) {
             InstanceManager.getDefault(jmri.UserPreferencesManager.class).
-                    showInfoMessage("Reminder", "Remember to save your Light information.", getClassName(), "remindSaveLight");
+                    showInfoMessage(Bundle.getMessage("ReminderTitle"), Bundle.getMessage("ReminderSaveString", Bundle.getMessage("MenuItemLightTable")), getClassName(), "remindSaveLight");
         }
         lightCreatedOrUpdated = false;
         // get rid of the add/edit Frame
