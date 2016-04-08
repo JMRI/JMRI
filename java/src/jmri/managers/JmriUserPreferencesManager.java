@@ -1136,20 +1136,24 @@ public class JmriUserPreferencesManager extends Bean implements UserPreferencesM
     }
 
     private void readTableColumnPreferences() {
-        Element element = this.readElement(TABLES_NAMESPACE, TABLES_NAMESPACE);
+        Element element = this.readElement(TABLES_ELEMENT, TABLES_NAMESPACE);
         if (element != null) {
             element.getChildren("table").stream().forEach((table) -> {
                 String tableName = table.getAttributeValue("name");
                 int sortColumn = -1;
                 SortOrder sortOrder = SortOrder.UNSORTED;
-                for (Element sortKey : table.getChild("sortOrder").getChildren()) {
-                    sortOrder = SortOrder.valueOf(sortKey.getAttributeValue("sortOrder"));
-                    try {
-                        sortColumn = sortKey.getAttribute("column").getIntValue();
-                    } catch (DataConversionException ex) {
-                        log.error("Unable to get sort column as integer");
+                Element sortKeys = table.getChild("sortOrder");
+                if (sortKeys != null) {
+                    for (Element sortKey : sortKeys.getChildren()) {
+                        sortOrder = SortOrder.valueOf(sortKey.getAttributeValue("sortOrder"));
+                        try {
+                            sortColumn = sortKey.getAttribute("column").getIntValue();
+                        } catch (DataConversionException ex) {
+                            log.error("Unable to get sort column as integer");
+                        }
                     }
                 }
+                log.debug("Table {} column {} is sorted {}", tableName, sortColumn, sortOrder);
                 for (Element column : table.getChild("columns").getChildren()) {
                     String columnName = column.getAttribute("name").getValue();
                     int order = -1;
@@ -1322,7 +1326,7 @@ public class JmriUserPreferencesManager extends Bean implements UserPreferencesM
         return null;
     }
 
-    private void saveElement(Element element) {
+    private void saveElement(@Nonnull Element element) {
         log.debug("Saving {} element.", element.getName());
         try {
             ProfileUtils.getUserInterfaceConfiguration(ProfileManager.getDefault().getActiveProfile()).putConfigurationFragment(JDOMUtil.toW3CElement(element), false);
