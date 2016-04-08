@@ -209,7 +209,7 @@ public abstract class AbstractNamedBeanManagerConfigXML extends jmri.configurexm
      */
     void storeProperties(NamedBean t, Element elem) {
         java.util.Set<String> s = t.getPropertyKeys();
-        if (s == null || s.size() == 0) {
+        if (s.size() == 0) {
             return;
         }
         Element ret = new Element("properties");
