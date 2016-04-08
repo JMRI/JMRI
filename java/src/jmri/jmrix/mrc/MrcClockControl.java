@@ -247,6 +247,7 @@ public class MrcClockControl extends DefaultClockControl implements MrcTrafficLi
         issueClockTime(now.getHours(), now.getMinutes());
     }
 
+    @edu.umd.cs.findbugs.annotations.SuppressFBWarnings(value="FE_FLOATING_POINT_EQUALITY", justification="testing for any change from previous value")
     public void initializeHardwareClock(double rate, Date now, boolean getTime) {
         // clockMode controls what we are doing: SYNCMODE_OFF, SYNCMODE_INTERNAL_MASTER, SYNCMODE_MRC_MASTER
         boolean synchronizeWithInternalClock = internalClock.getSynchronize();
@@ -257,6 +258,8 @@ public class MrcClockControl extends DefaultClockControl implements MrcTrafficLi
             return;
         }
         int newRate = (int) rate;
+        
+        // next line is the FE_FLOATING_POINT_EQUALITY annotated above
         if (newRate != getRate()) {
             setRate(rate);
         }

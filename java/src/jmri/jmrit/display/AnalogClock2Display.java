@@ -261,6 +261,7 @@ public class AnalogClock2Display extends PositionableJComponent implements Linki
         super.setScale(scale);
     }
 
+    @edu.umd.cs.findbugs.annotations.SuppressFBWarnings(value="FE_FLOATING_POINT_EQUALITY", justification="fixed number of possible values")
     void addRateMenuEntry(JMenu menu, final int newrate) {
         JRadioButtonMenuItem button = new JRadioButtonMenuItem("" + newrate + ":1");
         button.addActionListener(new ActionListener() {
@@ -277,6 +278,8 @@ public class AnalogClock2Display extends PositionableJComponent implements Linki
             }
         });
         rateButtonGroup.add(button);
+        
+        // next line is the FE_FLOATING_POINT_EQUALITY annotated above
         if (rate == newrate) {
             button.setSelected(true);
         } else {

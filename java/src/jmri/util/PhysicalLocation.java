@@ -325,6 +325,7 @@ public class PhysicalLocation extends Vector3f {
     /**
      * equals()
      */
+    @edu.umd.cs.findbugs.annotations.SuppressFBWarnings(value="FE_FLOATING_POINT_EQUALITY", justification="equals really does test for floating equality")
     public Boolean equals(PhysicalLocation l) {
         if ((this.getX() == l.getX())
                 && (this.getY() == l.getY())

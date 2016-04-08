@@ -9535,6 +9535,7 @@ public class LayoutEditorTools {
         return true;
     }
 
+    @edu.umd.cs.findbugs.annotations.SuppressFBWarnings(value="FE_FLOATING_POINT_EQUALITY", justification="equality is the unusual error condition")
     private void placingBlock(PositionableIcon icon, boolean right, double fromPoint, Object obj, Point2D p) {
         if (obj instanceof TrackSegment) {
             TrackSegment t = (TrackSegment) obj;
@@ -9546,6 +9547,8 @@ public class LayoutEditorTools {
                 end = layoutEditor.getEndCoords(t.getConnect1(), t.getType1());
             }
             boolean east = false;
+            
+            // next line is the FE_FLOATING_POINT_EQUALITY annotated above
             if (end.getX() == p.getX()) {
                 log.debug("X in both is the same");
                 if (end.getY() < p.getY()) {
@@ -9556,6 +9559,7 @@ public class LayoutEditorTools {
                 log.debug("end X point is less than our point");
                 east = true;
             }
+            
             log.debug("East set is " + east);
             setIconOnPanel(t, icon, east, p, end, right, fromPoint);
         }

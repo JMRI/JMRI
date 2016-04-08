@@ -90,6 +90,7 @@ public class FontComboUtil {
     /**
      * Method to initialise the font lists on first access
      */
+    @edu.umd.cs.findbugs.annotations.SuppressFBWarnings(value="FE_FLOATING_POINT_EQUALITY", justification="font sizes are really quantized")
     public static synchronized void prepareFontLists() {
 
         if (prepared) {
@@ -130,6 +131,7 @@ public class FontComboUtil {
                 // Check if the widths of a 'narrow' letter (I)
                 // a 'wide' letter (W) and a 'space' ( ) are the same.
                 double w;
+                // next line is the FE_FLOATING_POINT_EQUALITY annotated above
                 if (f.getStringBounds("I", frc).getWidth()
                         == (w = f.getStringBounds("W", frc).getWidth())
                         && w == f.getStringBounds(" ", frc).getWidth()) {
