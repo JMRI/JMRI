@@ -16,8 +16,6 @@ import java.util.TreeSet;
  */
 public class OrderedProperties extends Properties {
 
-    private static final long serialVersionUID = 4901931181290330210L;
-
     @Override
     public Set<Object> keySet() {
         return Collections.unmodifiableSet(new TreeSet<Object>(super.keySet()));
