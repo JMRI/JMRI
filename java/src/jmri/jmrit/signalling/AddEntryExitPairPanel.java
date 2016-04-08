@@ -361,7 +361,7 @@ public class AddEntryExitPairPanel extends jmri.util.swing.JmriPanel {
                     return !nxPairs.isEnabled(source.get(row), panel, dest.get(row));
                 case CLEARCOL:
                     return Bundle.getMessage("ButtonClear");
-                case DELETECOL:  //
+                case DELETECOL:
                     return Bundle.getMessage("ButtonDelete");
                 case TYPECOL:
                     return NXTYPE_NAMES[nxPairs.getEntryExitType(source.get(row), panel, dest.get(row))];
