@@ -219,7 +219,7 @@ public abstract class AbstractNamedBeanManagerConfigXML extends jmri.configurexm
             Element p = new Element("property");
             ret.addContent(p);
             p.addContent(new Element("key")
-                    .setText(key.toString())
+                    .setText(key)
             );
             if (value != null) {
                 p.addContent(new Element("value")
