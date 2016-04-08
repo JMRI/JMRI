@@ -607,7 +607,7 @@ abstract public class AbstractMRTrafficController {
     public AbstractPortController controller = null;
 
     public boolean status() {
-        return (ostream != null & istream != null);
+        return (ostream != null && istream != null);
     }
 
     protected Thread xmtThread = null;

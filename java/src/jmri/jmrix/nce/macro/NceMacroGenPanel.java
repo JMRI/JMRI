@@ -151,7 +151,7 @@ public class NceMacroGenPanel extends jmri.jmrix.nce.swing.NcePanel implements j
             return null;
         }
 
-        if (macroNum < 0 | macroNum > 255) {
+        if (macroNum < 0 || macroNum > 255) {
             return null;
         }
 
@@ -191,7 +191,7 @@ public class NceMacroGenPanel extends jmri.jmrix.nce.swing.NcePanel implements j
             return null;
         }
 
-        if (macroNum < 0 | macroNum > 255) {
+        if (macroNum < 0 || macroNum > 255) {
             return null;
         }
 
