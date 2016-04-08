@@ -1,4 +1,3 @@
-// AbstractAudioManagerConfigXML.java
 package jmri.managers.configurexml;
 
 import java.util.List;
@@ -40,7 +39,6 @@ import org.slf4j.LoggerFactory;
  *
  * @author Bob Jacobsen Copyright: Copyright (c) 2002, 2008
  * @author Matthew Harris copyright (c) 2009, 2011
- * @version $Revision$
  */
 public abstract class AbstractAudioManagerConfigXML extends AbstractNamedBeanManagerConfigXML {
 
@@ -544,5 +542,3 @@ public abstract class AbstractAudioManagerConfigXML extends AbstractNamedBeanMan
 
     private static final Logger log = LoggerFactory.getLogger(AbstractAudioManagerConfigXML.class.getName());
 }
-
-/* $(#)AbstractAudioManagerConfigXML.java */
