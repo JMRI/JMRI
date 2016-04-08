@@ -1132,7 +1132,7 @@ public class LRouteTableAction extends AbstractTableAction {
                     // remind to save, if Route was created or edited
                     if (routeDirty) {
                         InstanceManager.getDefault(jmri.UserPreferencesManager.class).
-                                showInfoMessage("Reminder", "Remember to save your LRoute information.", getClassName(), "remindSaveRoute");
+                                showInfoMessage(Bundle.getMessage("ReminderTitle"), Bundle.getMessage("ReminderSaveString", "LRoute"), getClassName(), "remindSaveRoute");
                         routeDirty = false;
                     }
                     clearPage();

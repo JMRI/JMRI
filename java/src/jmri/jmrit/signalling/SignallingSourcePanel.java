@@ -276,10 +276,10 @@ public class SignallingSourcePanel extends jmri.util.swing.JmriPanel implements 
                 return rb.getString("ColumnEnabled");
             }
             if (col == EDIT_COLUMN) {
-                return rb.getString("ColumnEdit");
+                return rb.getString(""); //no title above Edit buttons
             }
             if (col == DEL_COLUMN) {
-                return rb.getString("ColumnDelete");
+                return rb.getString(""); //no title above Delete buttons
             }
             return "";
         }

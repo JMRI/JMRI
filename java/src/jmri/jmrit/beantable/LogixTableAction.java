@@ -1202,7 +1202,7 @@ public class LogixTableAction extends AbstractTableAction {
         if (_showReminder) {
             if (InstanceManager.getDefault(jmri.UserPreferencesManager.class) != null) {
                 InstanceManager.getDefault(jmri.UserPreferencesManager.class).
-                        showInfoMessage(rbx.getString("ReminderTitle"), rbx.getString("Reminder1"), getClassName(), "remindSaveLogix");
+                        showInfoMessage(Bundle.getMessage("ReminderTitle"), Bundle.getMessage("ReminderSaveString", Bundle.getMessage("MenuItemLogixTable")), getClassName(), "remindSaveLogix");
             }
         }
     }
