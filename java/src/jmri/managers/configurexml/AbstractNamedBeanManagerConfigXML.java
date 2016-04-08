@@ -274,7 +274,9 @@ public abstract class AbstractNamedBeanManagerConfigXML extends jmri.configurexm
 
                 // store
                 t.setProperty(key, value);
-            } catch (Exception ex) {
+            } catch (ClassNotFoundException | NoSuchMethodException 
+                        | InstantiationException | IllegalAccessException 
+                        | java.lang.reflect.InvocationTargetException ex) {
                 log.error("Error loading properties", ex);
             }
         }
