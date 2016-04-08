@@ -233,10 +233,8 @@ public abstract class AbstractAudioManagerConfigXML extends AbstractNamedBeanMan
 
                     ce = new Element("distances");
                     ce.setAttribute("ref", "" + as.getReferenceDistance());
-                    float f;
-                    if ((f = as.getMaximumDistance()) != Audio.MAX_DISTANCE) {
-                        ce.setAttribute("max", "" + f);
-                    }
+                    float f = as.getMaximumDistance();
+                    ce.setAttribute("max", "" + f);
                     e.addContent(ce);
 
                     ce = new Element("loops");
