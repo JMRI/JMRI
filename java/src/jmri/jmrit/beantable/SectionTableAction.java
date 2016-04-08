@@ -1085,7 +1085,7 @@ public class SectionTableAction extends AbstractTableAction {
     private void deleteSectionPressed(String sName) {
         final Section s = jmri.InstanceManager.sectionManagerInstance().getBySystemName(sName);
         String fullName = sName;
-        if (s.getUserName().length() > 0) {
+        if (s.getUserName() != null && s.getUserName().length() > 0) {
             fullName = fullName + "(" + s.getUserName() + ")";
         }
         ArrayList<Transit> affectedTransits = jmri.InstanceManager.transitManagerInstance().getListUsingSection(s);
