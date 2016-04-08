@@ -704,7 +704,7 @@ public class MemoryContents {
             String message = "No Data Records found in file - aborting."; // NOI18N
             log.error(message);
             throw new MemoryFileNoDataRecordsException(message);
-        } else if (foundDataRecords && !foundEOFRecord) {
+        } else if (!foundEOFRecord) {  // found Data Records, but no EOF
             String message = "No EOF Record found in file - aborting."; // NOI18N
             log.error(message);
             throw new MemoryFileNoEOFRecordException(message);
@@ -838,7 +838,7 @@ public class MemoryContents {
                             int addrMidSByte = ((addressForAddressField) - (65536 * addrMostSByte)) / 256;
                             int addrLeastSByte = (addressForAddressField) - (256 * addrMidSByte) - (65536 * addrMostSByte);
                             int count = j - startOffset;
-                            if ((write == true) && (j == i + (blocksize - 1))) {
+                            if ( j == i + (blocksize - 1) ) {
                                 count++;
                             }
                             if (log.isDebugEnabled()) {
