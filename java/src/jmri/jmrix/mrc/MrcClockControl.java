@@ -1,4 +1,3 @@
-// MrcClockControl.java
 package jmri.jmrix.mrc;
 
 import java.text.DecimalFormat;
@@ -30,7 +29,6 @@ import org.slf4j.LoggerFactory;
  * @author Ken Cameron Copyright (C) 2014
  * @author Dave Duchamp Copyright (C) 2007
  * @author	Bob Jacobsen, Alex Shepherd
- * @version $Revision: 22887 $
  */
 public class MrcClockControl extends DefaultClockControl implements MrcTrafficListener {
 
@@ -247,6 +245,7 @@ public class MrcClockControl extends DefaultClockControl implements MrcTrafficLi
         issueClockTime(now.getHours(), now.getMinutes());
     }
 
+    @edu.umd.cs.findbugs.annotations.SuppressFBWarnings(value="FE_FLOATING_POINT_EQUALITY", justification="testing for any change from previous value")
     public void initializeHardwareClock(double rate, Date now, boolean getTime) {
         // clockMode controls what we are doing: SYNCMODE_OFF, SYNCMODE_INTERNAL_MASTER, SYNCMODE_MRC_MASTER
         boolean synchronizeWithInternalClock = internalClock.getSynchronize();
@@ -257,6 +256,8 @@ public class MrcClockControl extends DefaultClockControl implements MrcTrafficLi
             return;
         }
         int newRate = (int) rate;
+        
+        // next line is the FE_FLOATING_POINT_EQUALITY annotated above
         if (newRate != getRate()) {
             setRate(rate);
         }
@@ -367,5 +368,3 @@ public class MrcClockControl extends DefaultClockControl implements MrcTrafficLi
 
     private final static Logger log = LoggerFactory.getLogger(MrcClockControl.class.getName());
 }
-
-/* @(#)MrcClockControl.java */

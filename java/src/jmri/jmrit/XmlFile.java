@@ -1,4 +1,3 @@
-// XmlFile.java
 package jmri.jmrit;
 
 import java.io.BufferedInputStream;
@@ -44,7 +43,6 @@ import org.slf4j.LoggerFactory;
  * {@link jmri.util.JmriLocalEntityResolver} class.
  *
  * @author	Bob Jacobsen Copyright (C) 2001, 2002, 2007, 2012, 2014
- * @version	$Revision$
  */
 public abstract class XmlFile {
 
