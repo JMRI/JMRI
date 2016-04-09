@@ -1,7 +1,9 @@
 package jmri.managers.configurexml;
 
 import java.lang.reflect.Constructor;
+import java.lang.reflect.InvocationTargetException;
 import java.util.List;
+import java.util.Set;
 import javax.swing.SortOrder;
 import jmri.util.com.sun.TableSorter;
 import org.jdom2.Element;
@@ -28,7 +30,7 @@ public class DefaultUserMessagePreferencesXml extends jmri.configurexml.Abstract
         Element messages = new Element("UserMessagePreferences");
         setStoreElementClass(messages);
 
-        java.util.ArrayList<String> preferenceList = ((jmri.managers.DefaultUserMessagePreferences) p).getSimplePreferenceStateList();
+        java.util.ArrayList<String> preferenceList = p.getSimplePreferenceStateList();
         for (int i = 0; i < preferenceList.size(); i++) {
             Element pref = new Element("setting");
             pref.addContent(preferenceList.get(i));
@@ -137,17 +139,17 @@ public class DefaultUserMessagePreferencesXml extends jmri.configurexml.Abstract
                         //Considered normal if the window hasn't been closed
                     }
                 }
-                java.util.Set<Object> s = p.getPropertyKeys(strClass);
+                Set<String> s = p.getPropertyKeys(strClass);
                 if (s != null && s.size() != 0) {
                     Element ret = new Element("properties");
                     windowElement.addContent(ret);
-                    for (Object key : s) {
+                    for (String key : s) {
                         Object value = p.getProperty(strClass, key);
                         Element prop = new Element("property");
                         ret.addContent(prop);
                         prop.addContent(new Element("key")
                                 .setAttribute("class", key.getClass().getName())
-                                .setText(key.toString())
+                                .setText(key)
                         );
                         if (value != null) {
                             prop.addContent(new Element("value")
@@ -312,9 +314,7 @@ public class DefaultUserMessagePreferencesXml extends jmri.configurexml.Abstract
                         Class<?> cl;
                         Constructor<?> ctor;
                         // create key object
-                        cl = Class.forName(e.getChild("key").getAttributeValue("class"));
-                        ctor = cl.getConstructor(new Class<?>[]{String.class});
-                        Object key = ctor.newInstance(new Object[]{e.getChild("key").getText()});
+                        String key = e.getChild("key").getText();
 
                         // create value object
                         Object value = null;
@@ -326,7 +326,7 @@ public class DefaultUserMessagePreferencesXml extends jmri.configurexml.Abstract
 
                         // store
                         p.setProperty(strClass, key, value);
-                    } catch (Exception ex) {
+                    } catch (ClassNotFoundException | NoSuchMethodException | SecurityException | InstantiationException | IllegalAccessException | IllegalArgumentException | InvocationTargetException ex) {
                         log.error("Error loading properties", ex);
                     }
                 }
