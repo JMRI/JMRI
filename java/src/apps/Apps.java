@@ -80,7 +80,7 @@ import jmri.jmrix.ConnectionStatus;
 import jmri.jmrix.JmrixConfigPane;
 import jmri.managers.DefaultIdTagManager;
 import jmri.managers.DefaultShutDownManager;
-import jmri.managers.DefaultUserMessagePreferences;
+import jmri.managers.JmriUserPreferencesManager;
 import jmri.plaf.macosx.Application;
 import jmri.plaf.macosx.PreferencesHandler;
 import jmri.plaf.macosx.QuitHandler;
@@ -223,7 +223,7 @@ public class Apps extends JPanel implements PropertyChangeListener, WindowListen
         InstanceManager.getDefault(FileHistory.class).addOperation("app", nameString, null);
 
         // Install a user preferences manager
-        InstanceManager.store(DefaultUserMessagePreferences.getInstance(), UserPreferencesManager.class);
+        InstanceManager.store(JmriUserPreferencesManager.getDefault(), UserPreferencesManager.class);
         InstanceManager.store(new NamedBeanHandleManager(), NamedBeanHandleManager.class);
         // Install an IdTag manager
         InstanceManager.store(new DefaultIdTagManager(), IdTagManager.class);
@@ -1106,14 +1106,14 @@ public class Apps extends JPanel implements PropertyChangeListener, WindowListen
     /**
      * The application decided to quit, handle that.
      */
-    static public Boolean handleQuit() {
+    static public boolean handleQuit() {
         return AppsBase.handleQuit();
     }
 
     /**
      * The application decided to restart, handle that.
      */
-    static public Boolean handleRestart() {
+    static public boolean handleRestart() {
         return AppsBase.handleRestart();
     }
 
