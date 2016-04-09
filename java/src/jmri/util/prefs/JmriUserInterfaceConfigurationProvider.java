@@ -11,27 +11,29 @@ import jmri.util.node.NodeIdentity;
 
 /**
  * Provides a general purpose XML element storage mechanism for the storage of
- * configuration and preferences too complex to be handled by
- * {@link jmri.util.prefs.JmriPreferencesProvider}.
+ * user interface configuration.
  *
  * There are two configuration files per {@link jmri.profile.Profile} and
  * {@link jmri.util.node.NodeIdentity}, both stored in the directory
  * <code>profile:profile</code>:
  * <ul>
- * <li><code>profile.xml</code> preferences that are shared across multiple
- * nodes for a single profile. An example of such a preference would be the
- * Railroad Name preference.</li>
- * <li><code>&lt;node-identity&gt;/profile.xml</code> preferences that are
- * specific to the profile running on a specific host (&lt;node-identity&gt; is
- * the identity returned by {@link jmri.util.node.NodeIdentity#identity()}). An
- * example of such a preference would be a file location.</li>
+ * <li><code>user-interface.xml</code> preferences that are shared across
+ * multiple nodes for a single profile. An example of such a preference would be
+ * the Railroad Name preference.</li>
+ * <li><code>&lt;node-identity&gt;/user-interface.xml</code> preferences that
+ * are specific to the profile running on a specific host (&lt;node-identity&gt;
+ * is the identity returned by {@link jmri.util.node.NodeIdentity#identity()}).
+ * An example of such a preference would be a file location.</li>
  * </ul>
  *
- * @author Randall Wood 2015
+ * @author Randall Wood 2015, 2016
  */
-public final class JmriConfigurationProvider {
+/*
+Need to reduce duplication of code between this and the JmriConfigurationProvider.
+ */
+public final class JmriUserInterfaceConfigurationProvider {
 
-    private final JmriConfiguration configuration;
+    private final Configuration configuration;
     private final Profile project;
     private boolean privateBackedUp = false;
     private boolean sharedBackedUp = false;
@@ -46,7 +48,7 @@ public final class JmriConfigurationProvider {
         }
     }
 
-    private static final HashMap<Profile, JmriConfigurationProvider> providers = new HashMap<>();
+    private static final HashMap<Profile, JmriUserInterfaceConfigurationProvider> providers = new HashMap<>();
 
     /**
      * Get the JmriPrefererncesProvider for the specified profile.
@@ -57,9 +59,9 @@ public final class JmriConfigurationProvider {
      *                {@link jmri.profile.ProfileManager#getDefault()}
      * @return The shared or private JmriPreferencesProvider for the project.
      */
-    static synchronized JmriConfigurationProvider findProvider(Profile project) {
+    static synchronized JmriUserInterfaceConfigurationProvider findProvider(Profile project) {
         if (providers.get(project) == null) {
-            providers.put(project, new JmriConfigurationProvider(project));
+            providers.put(project, new JmriUserInterfaceConfigurationProvider(project));
         }
         return providers.get(project);
     }
@@ -87,25 +89,25 @@ public final class JmriConfigurationProvider {
         return this.configuration;
     }
 
-    JmriConfigurationProvider(Profile project) {
+    JmriUserInterfaceConfigurationProvider(Profile project) {
         this.project = project;
         this.configuration = new Configuration();
     }
 
     private File getConfigurationFile(boolean shared) {
-        if (JmriConfigurationProvider.this.project == null) {
-            return new File(this.getConfigurationDirectory(shared), "preferences.xml"); // NOI18N
+        if (JmriUserInterfaceConfigurationProvider.this.project == null) {
+            return new File(this.getConfigurationDirectory(shared), Profile.UI_CONFIG); // NOI18N
         } else {
-            return new File(this.getConfigurationDirectory(shared), Profile.CONFIG);
+            return new File(this.getConfigurationDirectory(shared), Profile.UI_CONFIG); // NOI18N
         }
     }
 
-    private File getConfigurationDirectory(boolean shared) {
+    public File getConfigurationDirectory(boolean shared) {
         File dir;
-        if (JmriConfigurationProvider.this.project == null) {
+        if (JmriUserInterfaceConfigurationProvider.this.project == null) {
             dir = new File(FileUtil.getPreferencesPath(), "preferences"); // NOI18N
         } else {
-            dir = new File(JmriConfigurationProvider.this.project.getPath(), Profile.PROFILE);
+            dir = new File(JmriUserInterfaceConfigurationProvider.this.project.getPath(), Profile.PROFILE);
             if (!shared) {
                 dir = new File(dir, NodeIdentity.identity());
             }
@@ -122,27 +124,27 @@ public final class JmriConfigurationProvider {
 
         @Override
         protected File getConfigurationFile(boolean shared) {
-            return JmriConfigurationProvider.this.getConfigurationFile(shared);
+            return JmriUserInterfaceConfigurationProvider.this.getConfigurationFile(shared);
         }
 
         @Override
         protected boolean isSharedBackedUp() {
-            return JmriConfigurationProvider.this.sharedBackedUp;
+            return JmriUserInterfaceConfigurationProvider.this.sharedBackedUp;
         }
 
         @Override
         protected void setSharedBackedUp(boolean backedUp) {
-            JmriConfigurationProvider.this.sharedBackedUp = backedUp;
+            JmriUserInterfaceConfigurationProvider.this.sharedBackedUp = backedUp;
         }
 
         @Override
         protected boolean isPrivateBackedUp() {
-            return JmriConfigurationProvider.this.privateBackedUp;
+            return JmriUserInterfaceConfigurationProvider.this.privateBackedUp;
         }
 
         @Override
         protected void setPrivateBackedUp(boolean backedUp) {
-            JmriConfigurationProvider.this.privateBackedUp = backedUp;
+            JmriUserInterfaceConfigurationProvider.this.privateBackedUp = backedUp;
         }
 
     }

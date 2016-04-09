@@ -29,6 +29,9 @@ public class Profile implements Comparable<Profile> {
     public static final String SHARED_PROPERTIES = PROFILE + "/" + PROPERTIES; // NOI18N
     public static final String SHARED_CONFIG = PROFILE + "/" + CONFIG; // NOI18N
     public static final String CONFIG_FILENAME = "ProfileConfig.xml"; // NOI18N
+    public static final String UI_CONFIG = "user-interface.xml"; // NOI18N
+    public static final String SHARED_UI_CONFIG = PROFILE + "/" + UI_CONFIG; // NOI18N
+    public static final String UI_CONFIG_FILENAME = "UserPrefsProfileConfig.xml"; // NOI18N
 
     /**
      * Create a Profile object given just a path to it. The Profile must exist
