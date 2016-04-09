@@ -1,5 +1,8 @@
 package jmri.managers;
 
+import java.awt.Frame;
+import java.awt.GraphicsEnvironment;
+import java.awt.event.WindowEvent;
 import java.util.ArrayList;
 import jmri.ShutDownManager;
 import jmri.ShutDownTask;
@@ -29,7 +32,9 @@ import org.slf4j.LoggerFactory;
  */
 public class DefaultShutDownManager implements ShutDownManager {
 
-    static boolean shuttingDown = false;
+    private static boolean shuttingDown = false;
+    private final static Logger log = LoggerFactory.getLogger(DefaultShutDownManager.class);
+    private ArrayList<ShutDownTask> tasks = new ArrayList<>();
 
     public DefaultShutDownManager() {
         // This shutdown hook allows us to perform a clean shutdown when
@@ -85,7 +90,7 @@ public class DefaultShutDownManager implements ShutDownManager {
      */
     @edu.umd.cs.findbugs.annotations.SuppressFBWarnings(value = "DM_EXIT") // OK to directly exit standalone main
     @Override
-    public Boolean shutdown() {
+    public boolean shutdown() {
         return shutdown(0, true);
     }
 
@@ -101,7 +106,7 @@ public class DefaultShutDownManager implements ShutDownManager {
      */
     @edu.umd.cs.findbugs.annotations.SuppressFBWarnings(value = "DM_EXIT") // OK to directly exit standalone main
     @Override
-    public Boolean restart() {
+    public boolean restart() {
         return shutdown(100, true);
     }
 
@@ -112,26 +117,31 @@ public class DefaultShutDownManager implements ShutDownManager {
      * operate.
      *
      * @param status Integer status returned on program exit
-     * @param exit   True if System.exit() should be called if all tasks are executed correctly.
+     * @param exit   True if System.exit() should be called if all tasks are
+     *               executed correctly.
      * @return false if shutdown or restart failed.
      */
     @edu.umd.cs.findbugs.annotations.SuppressFBWarnings(value = "DM_EXIT") // OK to directly exit standalone main
-    protected Boolean shutdown(int status, boolean exit) {
+    protected boolean shutdown(int status, boolean exit) {
         if (!shuttingDown) {
-            shuttingDown = true;
-            for (int i = tasks.size() - 1; i >= 0; i--) {
+            setShuttingDown(true);
+            for (ShutDownTask t : new ArrayList<>(tasks)) {
                 try {
-                    ShutDownTask t = tasks.get(i);
-                    shuttingDown = t.execute(); // if a task aborts the shutdown, stop shutting down
+                    setShuttingDown(t.execute()); // if a task aborts the shutdown, stop shutting down
                     if (!shuttingDown) {
-                        log.info("Program termination aborted by " + t.name());
+                        log.info("Program termination aborted by \"{}\"", t.name());
                         return false;  // abort early
                     }
                 } catch (Throwable e) {
-                    log.error("Error during processing of ShutDownTask " + i + ": " + e);
+                    log.error("Error during processing of ShutDownTask \"{}\"", t.name(), e);
                 }
             }
-
+            // close any open windows by triggering a closing event
+            if (!GraphicsEnvironment.isHeadless()) {
+                for (Frame frame : Frame.getFrames()) {
+                    frame.dispatchEvent(new WindowEvent(frame, WindowEvent.WINDOW_CLOSING));
+                }
+            }
             // success
             log.info("Normal termination complete");
             // and now terminate forcefully
@@ -142,7 +152,19 @@ public class DefaultShutDownManager implements ShutDownManager {
         return false;
     }
 
-    ArrayList<ShutDownTask> tasks = new ArrayList<>();
+    @Override
+    public boolean isShuttingDown() {
+        return shuttingDown;
+    }
 
-    private final static Logger log = LoggerFactory.getLogger(DefaultShutDownManager.class);
+    /**
+     * This method is static so that if multiple DefaultShutDownManagers are
+     * registered, they are all aware of this state.
+     *
+     * @param state
+     */
+    private static void setShuttingDown(boolean state) {
+        shuttingDown = state;
+    }
+
 }

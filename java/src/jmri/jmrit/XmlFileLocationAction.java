@@ -1,4 +1,3 @@
-// XmlFileLocationAction.java
 package jmri.jmrit;
 
 import java.awt.Desktop;
@@ -28,14 +27,8 @@ import org.slf4j.LoggerFactory;
  * seen in the program directory </ul>
  *
  * @author	Bob Jacobsen Copyright (C) 2004, 2007
- * @version $Revision$
  */
 public class XmlFileLocationAction extends AbstractAction {
-
-    /**
-     *
-     */
-    private static final long serialVersionUID = -5884867804946089268L;
 
     public XmlFileLocationAction() {
         super();
@@ -209,5 +202,3 @@ public class XmlFileLocationAction extends AbstractAction {
 
     private static final Logger log = LoggerFactory.getLogger(XmlFileLocationAction.class.getName());
 }
-
-/* @(#)XmlFileLocationAction.java */

@@ -1088,8 +1088,8 @@ public class ClockMonPanel extends jmri.jmrix.nce.swing.NcePanel implements NceP
         } while (priorState != internalSyncRunStateCounter);
     }
 
+    @edu.umd.cs.findbugs.annotations.SuppressFBWarnings(value="FE_FLOATING_POINT_EQUALITY", justification="testing for change from stored value")
     private void internalClockStatusCheck() {
-
         // if change to internal clock
         if (clockMode == SYNCMODE_INTERNAL_MASTER) {
             if (internalLastRunning != internalClock.getRun()) {
@@ -1100,6 +1100,7 @@ public class ClockMonPanel extends jmri.jmrix.nce.swing.NcePanel implements NceP
                 }
                 internalSyncInitStates();
             }
+            // next line is the FE_FLOATING_POINT_EQUALITY annotated above
             if (internalLastRatio != internalClock.getRate()) {
                 internalSyncInitStateCounter = 1;
                 internalSyncInitStates();

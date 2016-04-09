@@ -17,21 +17,23 @@ import org.slf4j.LoggerFactory;
  */
 public class RedirectionServlet extends HttpServlet {
 
-    /**
-     *
-     */
-    private static final long serialVersionUID = -4780651112712605891L;
     private final Properties redirections = new Properties();
     private static final Logger log = LoggerFactory.getLogger(RedirectionServlet.class);
 
     public RedirectionServlet() {
+
         try {
             InputStream in;
             in = this.getClass().getResourceAsStream("/jmri/web/server/FilePaths.properties"); // NOI18N
-            redirections.load(in);
-            in.close();
+            try {
+                redirections.load(in);
+            } catch (IOException e) {
+                log.error("Error in servlet creation IO", e);
+            } finally {
+                in.close();
+            }
         } catch (IOException e) {
-            log.error(e.getMessage());
+            log.error("Error in servlet creation IO", e);
         }
     }
 

@@ -96,7 +96,7 @@ public class DefaultUserMessagePreferences extends jmri.jmrit.XmlFile implements
         readUserPreferences();
     }
 
-    static class DefaultUserMessagePreferencesHolder {
+    private static class DefaultUserMessagePreferencesHolder {
         static DefaultUserMessagePreferences instance = null;
     }
 
@@ -691,7 +691,7 @@ public class DefaultUserMessagePreferences extends jmri.jmrit.XmlFile implements
         return list;
     }
 
-    public void setProperty(String strClass, Object key, Object value) {
+    public void setProperty(String strClass, String key, Object value) {
         if (strClass.equals("jmri.util.JmriJFrame")) {
             return;
         }
@@ -701,14 +701,14 @@ public class DefaultUserMessagePreferences extends jmri.jmrit.XmlFile implements
         windowDetails.get(strClass).setProperty(key, value);
     }
 
-    public Object getProperty(String strClass, Object key) {
+    public Object getProperty(String strClass, String key) {
         if (windowDetails.containsKey(strClass)) {
             return windowDetails.get(strClass).getProperty(key);
         }
         return null;
     }
 
-    public java.util.Set<Object> getPropertyKeys(String strClass) {
+    public java.util.Set<String> getPropertyKeys(String strClass) {
         if (windowDetails.containsKey(strClass)) {
             return windowDetails.get(strClass).getPropertyKeys();
         }
@@ -1371,28 +1371,28 @@ public class DefaultUserMessagePreferences extends jmri.jmrit.XmlFile implements
             saveSize = true;
         }
 
-        void setProperty(Object key, Object value) {
+        void setProperty(String key, Object value) {
             if (parameters == null) {
-                parameters = new HashMap<Object, Object>();
+                parameters = new HashMap<String, Object>();
             }
             parameters.put(key, value);
         }
 
-        Object getProperty(Object key) {
+        Object getProperty(String key) {
             if (parameters == null) {
                 return null;
             }
             return parameters.get(key);
         }
 
-        java.util.Set<Object> getPropertyKeys() {
+        java.util.Set<String> getPropertyKeys() {
             if (parameters == null) {
                 return null;
             }
             return parameters.keySet();
         }
 
-        HashMap<Object, Object> parameters = null;
+        HashMap<String, Object> parameters = null;
 
     }
 
