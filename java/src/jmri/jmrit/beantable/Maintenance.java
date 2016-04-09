@@ -21,6 +21,7 @@ import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 import javax.swing.JTextArea;
 import javax.swing.ListSelectionModel;
+import jmri.Block;
 import jmri.Conditional;
 import jmri.ConditionalAction;
 import jmri.ConditionalVariable;
@@ -975,7 +976,9 @@ public class Maintenance {
             String sName = iter1.next();
             jmri.Section section = sectionManager.getBySystemName(sName);
             if (section != null) {
-                sysNameList.remove(section.getBlockList());
+                for (Block block : section.getBlockList()) {
+                    sysNameList.remove(block.getSystemName());
+                }
             }
         }
         iter1 = sysNameList.iterator();

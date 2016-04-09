@@ -1,8 +1,11 @@
 package jmri.util.node;
 
 import java.io.File;
+import java.io.FileOutputStream;
 import java.io.FileWriter;
 import java.io.IOException;
+import java.io.OutputStreamWriter;
+import java.io.Writer;
 import java.net.InetAddress;
 import java.net.NetworkInterface;
 import java.net.SocketException;
@@ -39,16 +42,16 @@ import org.slf4j.LoggerFactory;
  * hostname or IP address. If no local IP address is available, fall back on
  * using the railroad name.
  *
- * @author Randall Wood (C) 2013, 2014
+ * @author Randall Wood (C) 2013, 2014, 2016
  */
 public class NodeIdentity {
-
-    private final ArrayList<String> formerIdentities = new ArrayList<String>();
+    
+    private final ArrayList<String> formerIdentities = new ArrayList<>();
     private String identity = null;
-
+    
     private static NodeIdentity instance = null;
     private final static Logger log = LoggerFactory.getLogger(NodeIdentity.class);
-
+    
     private final static String ROOT_ELEMENT = "nodeIdentityConfig"; // NOI18N
     private final static String NODE_IDENTITY = "nodeIdentity"; // NOI18N
     private final static String FORMER_IDENTITIES = "formerIdentities"; // NOI18N
@@ -56,7 +59,7 @@ public class NodeIdentity {
     private NodeIdentity() {
         init(); // init as a method so the init can be synchronized.
     }
-
+    
     synchronized private void init() {
         File identityFile = this.identityFile();
         if (identityFile.exists()) {
@@ -64,9 +67,9 @@ public class NodeIdentity {
                 Document doc = (new SAXBuilder()).build(identityFile);
                 String id = doc.getRootElement().getChild(NODE_IDENTITY).getAttributeValue(NODE_IDENTITY);
                 this.formerIdentities.clear();
-                for (Element e : doc.getRootElement().getChild(FORMER_IDENTITIES).getChildren()) {
+                doc.getRootElement().getChild(FORMER_IDENTITIES).getChildren().stream().forEach((e) -> {
                     this.formerIdentities.add(e.getAttributeValue(NODE_IDENTITY));
-                }
+                });
                 if (!this.validateIdentity(id)) {
                     log.debug("Node identity {} is invalid. Generating new node identity.", id);
                     this.formerIdentities.add(id);
@@ -74,10 +77,7 @@ public class NodeIdentity {
                 } else {
                     this.getIdentity(true);
                 }
-            } catch (JDOMException ex) {
-                log.error("Unable to read node identities: {}", ex.getLocalizedMessage());
-                this.getIdentity(true);
-            } catch (IOException ex) {
+            } catch (JDOMException | IOException ex) {
                 log.error("Unable to read node identities: {}", ex.getLocalizedMessage());
                 this.getIdentity(true);
             }
@@ -96,15 +96,15 @@ public class NodeIdentity {
     synchronized public static String identity() {
         String uniqueId = "-";
         try {
-            uniqueId += ProfileManager.defaultManager().getActiveProfile().getUniqueId();
+            uniqueId += ProfileManager.getDefault().getActiveProfile().getUniqueId();
         } catch (NullPointerException ex) {
             uniqueId += ProfileManager.createUniqueId();
         }
         if (instance == null) {
             instance = new NodeIdentity();
-            log.info("Using {} as the JMRI Node identity", instance.identity + uniqueId);
+            log.info("Using {} as the JMRI Node identity", instance.getIdentity() + uniqueId);
         }
-        return instance.identity + uniqueId;
+        return instance.getIdentity() + uniqueId;
     }
 
     /**
@@ -115,9 +115,9 @@ public class NodeIdentity {
     synchronized public static List<String> formerIdentities() {
         if (instance == null) {
             instance = new NodeIdentity();
-            log.info("Using {} as the JMRI Node identity", instance.identity);
+            log.info("Using {} as the JMRI Node identity", instance.getIdentity());
         }
-        return new ArrayList<String>(instance.formerIdentities);
+        return instance.getFormerIdentities();
     }
 
     /**
@@ -163,9 +163,9 @@ public class NodeIdentity {
                     this.identity = null;
                 }
                 if (this.identity == null) {
-                    Enumeration nics = NetworkInterface.getNetworkInterfaces();
+                    Enumeration<NetworkInterface> nics = NetworkInterface.getNetworkInterfaces();
                     while (nics.hasMoreElements()) {
-                        NetworkInterface nic = (NetworkInterface) nics.nextElement();
+                        NetworkInterface nic = nics.nextElement();
                         if (!nic.isLoopback() && !nic.isVirtual()) {
                             this.identity = this.createIdentity(nic.getHardwareAddress());
                             if (this.identity != null) {
@@ -211,31 +211,21 @@ public class NodeIdentity {
             this.getIdentity(false);
         }
         identityElement.setAttribute(NODE_IDENTITY, this.identity);
-        for (String formerIdentity : this.formerIdentities) {
+        this.formerIdentities.stream().forEach((formerIdentity) -> {
             log.debug("Retaining former node identity {}", formerIdentity);
             Element e = new Element(NODE_IDENTITY);
             e.setAttribute(NODE_IDENTITY, formerIdentity);
             formerIdentitiesElement.addContent(e);
-        }
+        });
         doc.getRootElement().addContent(identityElement);
         doc.getRootElement().addContent(formerIdentitiesElement);
-        try {
-            fw = new FileWriter(this.identityFile());
+        try (Writer w = new OutputStreamWriter(new FileOutputStream(this.identityFile()), "UTF-8")) { // NOI18N
             XMLOutputter fmt = new XMLOutputter();
             fmt.setFormat(Format.getPrettyFormat()
                     .setLineSeparator(System.getProperty("line.separator"))
                     .setTextMode(Format.TextMode.PRESERVE));
-            fmt.output(doc, fw);
-            fw.close();
+            fmt.output(doc, w);
         } catch (IOException ex) {
-            // close fw if possible
-            if (fw != null) {
-                try {
-                    fw.close();
-                } catch (IOException ex1) {
-                    log.error("Unable to store node identities: {}", ex1.getLocalizedMessage());
-                }
-            }
             log.error("Unable to store node identities: {}", ex.getLocalizedMessage());
         }
     }
@@ -257,8 +247,25 @@ public class NodeIdentity {
         }
         return sb.toString();
     }
-
+    
     private File identityFile() {
         return new File(FileUtil.getPreferencesPath() + "nodeIdentity.xml"); // NOI18N
+    }
+
+    /**
+     * @return the identity
+     */
+    synchronized public String getIdentity() {
+        if (this.identity == null) {
+            this.getIdentity(false);
+        }
+        return this.identity;
+    }
+
+    /**
+     * @return the formerIdentities
+     */
+    public List<String> getFormerIdentities() {
+        return new ArrayList<>(this.formerIdentities);
     }
 }

@@ -839,7 +839,9 @@ public class RouteTableAction extends AbstractTableAction {
                 // remind to save, if Route was created or edited
                 if (routeDirty) {
                     InstanceManager.getDefault(jmri.UserPreferencesManager.class).
-                            showInfoMessage(Bundle.getMessage("ReminderTitle"), Bundle.getMessage("ReminderSaveString", Bundle.getMessage("MenuItemRouteTable")), getClassName(), "remindSaveRoute");
+                            showInfoMessage(Bundle.getMessage("ReminderTitle"), Bundle.getMessage("ReminderSaveString", Bundle.getMessage("MenuItemRouteTable")),
+                                    getClassName(),
+                                    "remindSaveRoute"); // NOI18N
                     routeDirty = false;
                 }
                 // hide addFrame
