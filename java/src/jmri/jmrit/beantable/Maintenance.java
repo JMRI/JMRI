@@ -975,7 +975,9 @@ public class Maintenance {
             String sName = iter1.next();
             jmri.Section section = sectionManager.getBySystemName(sName);
             if (section != null) {
-                sysNameList.remove(section.getBlockList());
+                for (Block block : section.getBlockList()) {
+                    sysNameList.remove(block.getSystemName());
+                }
             }
         }
         iter1 = sysNameList.iterator();
