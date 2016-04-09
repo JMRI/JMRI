@@ -1,4 +1,3 @@
-// DiagnosticFrame.java
 package jmri.jmrix.cmri.serial.diagnostic;
 
 import java.awt.Container;
@@ -21,14 +20,9 @@ import jmri.jmrix.cmri.serial.SerialTrafficController;
  * Frame for running CMRI diagnostics
  *
  * @author	Dave Duchamp Copyright (C) 2004
- * @version	$Revision$
  */
 public class DiagnosticFrame extends jmri.util.JmriJFrame implements jmri.jmrix.cmri.serial.SerialListener {
 
-    /**
-     *
-     */
-    private static final long serialVersionUID = 6464613055016868125L;
     // member declarations
     protected boolean outTest = true;
     protected boolean wrapTest = false;
