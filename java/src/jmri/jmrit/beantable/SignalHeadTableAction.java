@@ -676,7 +676,6 @@ public class SignalHeadTableAction extends AbstractTableAction {
 
             // buttons at bottom of panel
             JPanel panelBottom = new JPanel();
-
             panelBottom.setLayout(new FlowLayout(FlowLayout.TRAILING));
             // Cancel button
             JButton cancelNew = new JButton(Bundle.getMessage("ButtonCancel"));
@@ -687,7 +686,6 @@ public class SignalHeadTableAction extends AbstractTableAction {
                 }
             });
             //OK button
-
             JButton ok;
             panelBottom.add(ok = new JButton(Bundle.getMessage("ButtonCreate")));
             ok.addActionListener(new ActionListener() {
