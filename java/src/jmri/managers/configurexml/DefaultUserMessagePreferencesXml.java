@@ -1,6 +1,7 @@
 package jmri.managers.configurexml;
 
 import java.lang.reflect.Constructor;
+import java.lang.reflect.InvocationTargetException;
 import java.util.List;
 import java.util.Set;
 import javax.swing.SortOrder;
@@ -29,7 +30,7 @@ public class DefaultUserMessagePreferencesXml extends jmri.configurexml.Abstract
         Element messages = new Element("UserMessagePreferences");
         setStoreElementClass(messages);
 
-        java.util.ArrayList<String> preferenceList = ((jmri.managers.DefaultUserMessagePreferences) p).getSimplePreferenceStateList();
+        java.util.ArrayList<String> preferenceList = p.getSimplePreferenceStateList();
         for (int i = 0; i < preferenceList.size(); i++) {
             Element pref = new Element("setting");
             pref.addContent(preferenceList.get(i));
@@ -148,7 +149,7 @@ public class DefaultUserMessagePreferencesXml extends jmri.configurexml.Abstract
                         ret.addContent(prop);
                         prop.addContent(new Element("key")
                                 .setAttribute("class", key.getClass().getName())
-                                .setText(key.toString())
+                                .setText(key)
                         );
                         if (value != null) {
                             prop.addContent(new Element("value")
@@ -325,7 +326,7 @@ public class DefaultUserMessagePreferencesXml extends jmri.configurexml.Abstract
 
                         // store
                         p.setProperty(strClass, key, value);
-                    } catch (Exception ex) {
+                    } catch (ClassNotFoundException | NoSuchMethodException | SecurityException | InstantiationException | IllegalAccessException | IllegalArgumentException | InvocationTargetException ex) {
                         log.error("Error loading properties", ex);
                     }
                 }
