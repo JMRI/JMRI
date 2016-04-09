@@ -2,12 +2,13 @@
 <?xml-stylesheet href="../../XSLT/aspecttable.xsl" type="text/xsl"?>
 <aspecttable xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="http://jmri.org/xml/schema/aspecttable.xsd">
   <name>ProRail-1954</name>
-  <date>2013</date>
-  <reference>Signaling definitions corresponding to the Wikipedia Dutch signals page</reference>
+  <date>2016</date>
+  <reference>Signaling definitions corresponding to the Wikipedia Dutch signaling page</reference>
   <copyright xmlns="http://docbook.org/ns/docbook">
     <year>2009</year>
     <year>2010</year>
     <year>2013</year>
+    <year>2016</year>
     <holder>JMRI</holder>
   </copyright>
   <authorgroup xmlns="http://docbook.org/ns/docbook">
@@ -17,6 +18,13 @@
         <surname>Tall</surname>
       </personname>
       <email>suzie_tall@yahoo.co.uk</email>
+    </author>
+    <author>
+      <personname>
+        <firstname>Egbert</firstname>
+        <surname>Broerse</surname>
+      </personname>
+      <email>dcc2@ebroerse.nl</email>
     </author>
   </authorgroup>
   <revhistory xmlns="http://docbook.org/ns/docbook">
@@ -32,11 +40,20 @@
       <authorinitials>ST</authorinitials>
       <revremark>Added large icons</revremark>
     </revision>
+    <revision>
+      <revnumber>2</revnumber>
+      <date>2016-04-09</date>
+      <authorinitials>EB</authorinitials>
+      <revremark>Added rules and Dutch translations</revremark>
+    </revision>
   </revhistory>
   <aspects>
     <aspect>
       <name>Stop</name>
+      <name xml:lang="nl">Hoog of laag geplaatst rood licht</name>
+      <rule>Rule 215</rule>
       <indication>Stop</indication>
+      <indication xml:lang="nl">Stoppen voor het sein.</indication>
       <speed>Stop</speed>
       <speed2>Stop</speed2>
       <route>Either</route>
@@ -52,7 +69,10 @@
     </aspect>
     <aspect>
       <name>Clear</name>
+      <name xml:lang="nl">Hoog geplaatst groen licht</name>
+      <rule>Rule 201</rule>
       <indication>Proceed</indication>
+      <indication xml:lang="nl">Voorbijrijden toegestaan met inachtneming van de plaatselijke snelheid. Indien bij vertrek de plaatselijke snelheid niet bekend is, is voorbijrijden met een snelheid van ten hoogste 40 km/h toegestaan.</indication>
       <speed>Normal</speed>
       <speed2>Normal</speed2>
       <route>Normal</route>
@@ -60,7 +80,10 @@
     </aspect>
     <aspect>
       <name>Approach</name>
+      <name xml:lang="nl">Hoog of laag geplaatst geel licht</name>
+      <rule>Rule 212</rule>
       <indication>Proceed preparing to stop at next signal</indication>
+      <indication xml:lang="nl">Snelheid begrenzen tot 40 km/u of zoveel minder als nodig is om voor het eerstvolgende 'stop' tonende sein te kunnen stoppen.</indication>
       <speed>Normal</speed>
       <speed2>Limited</speed2>
       <route>Normal</route>
@@ -68,7 +91,10 @@
     </aspect>
     <aspect>
       <name>Limited</name>
+      <name xml:lang="nl">Hoog geplaatst knipperend of laag geplaatst groen licht</name>
+      <rule>Rule 206</rule>
       <indication>Proceed at Limited speed</indication>
+      <indication xml:lang="nl">Voorbijrijden toegestaan met een snelheid van ten hoogste 40 km/h.</indication>
       <speed>Limited</speed>
       <speed2>Limited</speed2>
       <route>Normal</route>
@@ -76,7 +102,10 @@
     </aspect>
     <aspect>
       <name>Restricting</name>
+      <name xml:lang="nl">Hoog of laag geplaatst knipperend geel licht</name>
+      <rule>Rule 214</rule>
       <indication>Proceed at restricted speed because line may be blocked</indication>
+      <indication xml:lang="nl">Voorbijrijden toegestaan met een zodanige snelheid, die niet hoger is dan 40 km/h, om op elke plaats achter dit sein, waar een belemmering voor het verder rijden aanwezig is, te kunnen stoppen.</indication>
       <speed>Normal</speed>
       <speed2>Slow</speed2>
       <route>Normal</route>
@@ -85,7 +114,7 @@
     <aspect>
       <name>Not Lit</name>
       <rule>Dark</rule>
-      <indication>(used to indicate dark for e.g. approach lighting)</indication>
+      <indication>(used to indicate Dark for e.g. approach lighting)</indication>
       <speed>Stop</speed>
       <speed2>Stop</speed2>
       <route>Normal</route>

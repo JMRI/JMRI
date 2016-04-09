@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
 <!-- Copyright ($Author: Suzie _Tall $) 2013 -->
-<!-- $Id: index.shtml 18924 2011-10-20 16:51:30Z ken_c $ -->
+
 <title>JMRI: ProRail Wikipedia signals for Netherlands</title>
 
 <!-- Style -->
@@ -14,20 +14,21 @@
 <LINK REL="icon" HREF="/images/jmri.ico" TYPE="image/png">
 <LINK REL="home" TITLE="Home" HREF="/">
 <!-- /Style -->
-</HEAD>
+</head>
 
-<BODY>
+<body>
 <!--#include virtual="/Header" -->
   <div class="nomenu" id="mBody">
     <div id="mainContent">
 
 <h1> 
-JMRI: Netherlands ProRail signal definition from Wikipedia
+JMRI: Netherlands ProRail signal definition
 </h1>
-
-This directory contains signaling definitions worked out following five minures of study of the Netherlands signals page on Wikipedia.
+<p></p>
+This directory contains signaling definitions worked out following five minutes of study of the Netherlands (Dutch) signals page on Wikipedia.<br>
+        Additional information added based on Dutch 'Regeling Spoorverkeer' (Railroad Regulation) annex 4.
 <p>
-<a href="http://en.wikipedia.org/wiki/Dutch_railway_signalling">Dutch signalling wiki</a>.
+<a href="http://en.wikipedia.org/wiki/Dutch_railway_signalling">Dutch signaling wiki</a>.
 <p>
 See the 
 <a href="aspects.xml">aspect page</a>.
@@ -40,8 +41,8 @@ Signal Mast definitions:
 
 </ul>
 
+        <!--#include virtual="/Footer" -->
     </div>
-</div>
-<!--#include virtual="/Footer" -->
+ </div>
 </body>
 </html>
