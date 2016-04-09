@@ -12,11 +12,6 @@ package jmri.implementation;
  */
 public class VirtualSignalHead extends DefaultSignalHead {
 
-    /**
-     *
-     */
-    private static final long serialVersionUID = 165874268187040428L;
-
     public VirtualSignalHead(String sys, String user) {
         super(sys, user);
     }

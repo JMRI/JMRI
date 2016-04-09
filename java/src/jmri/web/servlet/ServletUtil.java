@@ -116,11 +116,14 @@ public class ServletUtil {
                 response.setStatus(HttpServletResponse.SC_OK);
                 response.setContentLength((int) file.length());
                 FileInputStream fileInputStream = new FileInputStream(file);
-                int bytes;
-                while ((bytes = fileInputStream.read()) != -1) {
-                    response.getOutputStream().write(bytes);
+                try {
+                    int bytes;
+                    while ((bytes = fileInputStream.read()) != -1) {
+                        response.getOutputStream().write(bytes);
+                    }
+                } finally {
+                    fileInputStream.close();
                 }
-                fileInputStream.close();
             } else {
                 response.sendError(HttpServletResponse.SC_FORBIDDEN);
             }

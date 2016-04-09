@@ -100,7 +100,8 @@ public class TurnoutTableAction extends AbstractTableAction {
     String thrownText;
     String defaultThrownSpeedText;
     String defaultClosedSpeedText;
-    String useBlockSpeed = "Use Block Speed"; // I18N TODO
+    // I18N TODO
+    String useBlockSpeed = "Use Block Speed";
     String bothText = "Both";
     String cabOnlyText = "Cab only";
     String pushbutText = "Pushbutton only";
@@ -757,13 +758,14 @@ public class TurnoutTableAction extends AbstractTableAction {
             addFrame = new JmriJFrame(Bundle.getMessage("TitleAddTurnout"), false, true);
             addFrame.addHelpMenu("package.jmri.jmrit.beantable.TurnoutAddEdit", true);
             addFrame.getContentPane().setLayout(new BoxLayout(addFrame.getContentPane(), BoxLayout.Y_AXIS));
-
-            ActionListener listener = new ActionListener() {
+            ActionListener okListener = new ActionListener() {
                 public void actionPerformed(ActionEvent e) {
                     okPressed(e);
                 }
             };
-
+            ActionListener cancelListener = new ActionListener() {
+                public void actionPerformed(ActionEvent e) { cancelPressed(e); }
+            };
             ActionListener rangeListener = new ActionListener() {
                 public void actionPerformed(ActionEvent e) {
                     canAddRange(e);
@@ -796,7 +798,7 @@ public class TurnoutTableAction extends AbstractTableAction {
             sysName.setName("sysName");
             userName.setName("userName");
             prefixBox.setName("prefixBox");
-            addFrame.add(new AddNewHardwareDevicePanel(sysName, userName, prefixBox, numberToAdd, range, "ButtonOK", listener, rangeListener));
+            addFrame.add(new AddNewHardwareDevicePanel(sysName, userName, prefixBox, numberToAdd, range, "ButtonOK", okListener, cancelListener, rangeListener));
             canAddRange(null);
         }
         addFrame.pack();
@@ -1223,8 +1225,8 @@ public class TurnoutTableAction extends AbstractTableAction {
             });
             menuBar.add(opsMenu);
 
-            JMenu speedMenu = new JMenu(Bundle.getMessage("TurnoutSpeedsMenu"));
-            item = new JMenuItem(Bundle.getMessage("TurnoutSpeedsMenuItemDefaults"));
+            JMenu speedMenu = new JMenu(Bundle.getMessage("SpeedsMenu"));
+            item = new JMenuItem(Bundle.getMessage("SpeedsMenuItemDefaults"));
             speedMenu.add(item);
             item.addActionListener(new ActionListener() {
                 public void actionPerformed(ActionEvent e) {
@@ -1233,6 +1235,12 @@ public class TurnoutTableAction extends AbstractTableAction {
             });
             menuBar.add(speedMenu);
         }
+    }
+
+    void cancelPressed(ActionEvent e) {
+        addFrame.setVisible(false);
+        addFrame.dispose();
+        addFrame = null;
     }
 
     void okPressed(ActionEvent e) {

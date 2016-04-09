@@ -31,11 +31,6 @@ import org.slf4j.LoggerFactory;
  */
 public class LsDecSignalHead extends DefaultSignalHead {
 
-    /**
-     *
-     */
-    private static final long serialVersionUID = 1375209889584361864L;
-
     public LsDecSignalHead(String sys, String user, NamedBeanHandle<Turnout> t1, int s1, NamedBeanHandle<Turnout> t2, int s2, NamedBeanHandle<Turnout> t3, int s3, NamedBeanHandle<Turnout> t4, int s4, NamedBeanHandle<Turnout> t5, int s5, NamedBeanHandle<Turnout> t6, int s6, NamedBeanHandle<Turnout> t7, int s7) {
         super(sys, user);
         mGreen = t1;

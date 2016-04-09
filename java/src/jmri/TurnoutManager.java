@@ -2,6 +2,9 @@ package jmri;
 
 import java.util.List;
 
+import javax.annotation.Nonnull;
+import javax.annotation.Nullable;
+
 /**
  * Locate a Turnout object representing some specific turnout on the layout.
  * <P>
@@ -55,7 +58,7 @@ public interface TurnoutManager extends Manager {
      *                                  e.g. an illegal name or name that can't
      *                                  be parsed.
      */
-    public Turnout provideTurnout(String name);
+    public @Nonnull Turnout provideTurnout(@Nonnull String name) throws IllegalArgumentException;
 
     /**
      * Locate via user name, then system name if needed. If that fails, return
@@ -64,7 +67,7 @@ public interface TurnoutManager extends Manager {
      * @param name
      * @return null if no match found
      */
-    public Turnout getTurnout(String name);
+    public @Nullable Turnout getTurnout(@Nonnull String name);
 
     /**
      * Locate an instance based on a system name. Returns null if no instance
@@ -72,7 +75,7 @@ public interface TurnoutManager extends Manager {
      *
      * @return requested Turnout object or null if none exists
      */
-    public Turnout getBySystemName(String systemName);
+    public @Nullable Turnout getBySystemName(@Nonnull String systemName);
 
     /**
      * Locate an instance based on a user name. Returns null if no instance
@@ -80,7 +83,7 @@ public interface TurnoutManager extends Manager {
      *
      * @return requested Turnout object or null if none exists
      */
-    public Turnout getByUserName(String userName);
+    public @Nullable Turnout getByUserName(@Nonnull String userName);
 
     /**
      * Return an instance with the specified system and user names. Note that
@@ -109,32 +112,32 @@ public interface TurnoutManager extends Manager {
      *                                  an illegal name or name that can't be
      *                                  parsed.
      */
-    public Turnout newTurnout(String systemName, String userName);
+    public @Nonnull Turnout newTurnout(@Nonnull String systemName, @Nullable String userName)  throws IllegalArgumentException;
 
     /**
      * Get a list of all Turnouts' system names.
      */
-    public List<String> getSystemNameList();
+    public @Nonnull List<String> getSystemNameList();
 
     /**
      * Get text to be used for the Turnout.CLOSED state in user communication.
      * Allows text other than "CLOSED" to be use with certain hardware system to
      * represent the Turnout.CLOSED state.
      */
-    public String getClosedText();
+    public @Nonnull String getClosedText();
 
     /**
      * Get text to be used for the Turnout.THROWN state in user communication.
      * Allows text other than "THROWN" to be use with certain hardware system to
      * represent the Turnout.THROWN state.
      */
-    public String getThrownText();
+    public @Nonnull String getThrownText();
 
     /**
      * Get a list of the valid TurnoutOPeration subtypes for use with turnouts
      * of this system
      */
-    public String[] getValidOperationTypes();
+    public @Nonnull String[] getValidOperationTypes();
 
     /**
      * Get from the user, the number of addressed bits used to control a
@@ -147,13 +150,13 @@ public interface TurnoutManager extends Manager {
      * available, this method should return 0 for number of control bits, after
      * informing the user of the problem.
      */
-    public int askNumControlBits(String systemName);
+    public int askNumControlBits(@Nonnull String systemName);
 
     /**
      * Determines if the manager supports multiple control bits, as the
      * askNumControlBits will always return a value even if it is not supported
      */
-    public boolean isNumControlBitsSupported(String systemName);
+    public boolean isNumControlBitsSupported(@Nonnull String systemName);
 
     /**
      * Get from the user, the type of output to be used bits to control a
@@ -165,14 +168,14 @@ public interface TurnoutManager extends Manager {
      * for 'pulsed' control, where n specifies the duration of the pulse
      * (normally in seconds).
      */
-    public int askControlType(String systemName);
+    public int askControlType(@Nonnull String systemName);
 
     /**
      * Determines if the manager supports the handling of pulsed and steady
      * state control as the askControlType will always return a value even if it
      * is not supported
      */
-    public boolean isControlTypeSupported(String systemName);
+    public boolean isControlTypeSupported(@Nonnull String systemName);
 
     /**
      * A method that determines if it is possible to add a range of turnouts in
@@ -180,7 +183,7 @@ public interface TurnoutManager extends Manager {
      * format is 1b23 this will return false.
      *
      */
-    public boolean allowMultipleAdditions(String systemName);
+    public boolean allowMultipleAdditions(@Nonnull String systemName);
 
     /**
      * Determine if the address supplied is valid and free, if not then it shall
@@ -191,12 +194,12 @@ public interface TurnoutManager extends Manager {
      * @param curAddress - The hardware address of the turnout we which to
      *                   check.
      */
-    public String getNextValidAddress(String curAddress, String prefix) throws JmriException;
+    public @Nullable String getNextValidAddress(@Nonnull String curAddress, @Nonnull String prefix) throws JmriException;
 
     /**
      * Returns a system name for a given hardware address and system prefix.
      */
-    public String createSystemName(String curAddress, String prefix) throws JmriException;
+    public String createSystemName(@Nonnull String curAddress, @Nonnull String prefix) throws JmriException;
 
     public void setDefaultClosedSpeed(String speed) throws JmriException;
 

@@ -18,6 +18,7 @@ import java.util.Map;
 import javax.swing.Icon;
 import javax.swing.JLabel;
 import javax.swing.JTable;
+import javax.swing.SortOrder;
 import javax.swing.event.TableModelEvent;
 import javax.swing.event.TableModelListener;
 import javax.swing.table.AbstractTableModel;
@@ -72,13 +73,10 @@ import javax.swing.table.TableModel;
  * @author Parwinder Sekhon
  * @author Daniel Boudreau 2009
  * @version 2.0 02/27/04
+ * @deprecated Use {@link javax.swing.table.TableRowSorter} instead.
  */
+@Deprecated
 public class TableSorter extends AbstractTableModel {
-
-    /**
-     *
-     */
-    private static final long serialVersionUID = -119172695052839030L;
 
     protected TableModel tableModel;
 
@@ -516,6 +514,28 @@ public class TableSorter extends AbstractTableModel {
                 l.setIcon(getHeaderRendererIcon(modelColumn, l.getFont().getSize()));
             }
             return c;
+        }
+    }
+
+    public static SortOrder getSortOrder(int sortStatus) {
+        switch (sortStatus) {
+            case DESCENDING:
+                return SortOrder.DESCENDING;
+            case ASCENDING:
+                return SortOrder.ASCENDING;
+            default:
+                return SortOrder.UNSORTED;
+        }
+    }
+
+    public static int getSortStatus(SortOrder sortOrder) {
+        switch (sortOrder) {
+            case ASCENDING:
+                return ASCENDING;
+            case DESCENDING:
+                return DESCENDING;
+            default:
+                return NOT_SORTED;
         }
     }
 

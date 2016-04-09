@@ -22,13 +22,13 @@
 
 <div id="mainContent"><a name="Top"></a>
 
-<h1>JMRI&reg;: DecoderPro3&reg; Manual</h1>
+<h1>JMRI&reg;: DecoderPro&reg; Manual</h1>
 <p class="important">This Manual deals with DP3 up to version 3.6.<br>
 Online Help for the current version of JMRI&reg; DecoderPro&reg; is <a href="../../html/apps/DecoderPro/index.shtml">here</a>.</p>
 
 <p><strong>DecoderPro3&reg;</strong> is a Java-based cross-platform application for model railroaders.</p>
 
-<p>DecoderPro3&reg; can run on any computer system that will run Java 1.6.0 or later,
+<p>DecoderPro&reg; can run on any computer system that will run Java 1.6.0 or later,
 whether it is Macintosh, Windows, or Linux based. It does require that Java be installed on the computer.<br>
 You can get Java as a free (but large) download at: <a href="http://java.com/download/" target="_blank">java.com/download/</a>
 </p>

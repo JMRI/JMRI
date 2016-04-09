@@ -1567,6 +1567,9 @@ public class LayoutEditor extends jmri.jmrit.display.panelEditor.PanelEditor imp
                                 break;
                     case 400:   zoom40Item.setSelected(true);
                                 break;
+                    default:
+                        log.warn("Unexpected newZoom {}  in setupZoomMenu", newZoom);
+                        break;
                 }
             }
         });
@@ -1600,6 +1603,9 @@ public class LayoutEditor extends jmri.jmrit.display.panelEditor.PanelEditor imp
                                 break;
                     case 400:   zoom40Item.setSelected(true);
                                 break;
+                    default:
+                        log.warn("Unexpected newZoom {}  in setupZoomMenu", newZoom);
+                        break;
                 }
             }
         });
@@ -4459,6 +4465,9 @@ public class LayoutEditor extends jmri.jmrit.display.panelEditor.PanelEditor imp
                         rotateTurnout(ft);
                     }
                     break;
+                default:
+                    log.warn("Unexpected foundPointType {}  in checkPointsOfTurnoutSub", foundPointType);
+                    break;
             }
         }
     }
@@ -5461,6 +5470,9 @@ public class LayoutEditor extends jmri.jmrit.display.panelEditor.PanelEditor imp
                 case KeyEvent.VK_DOWN:
                     val = val + 1;
                     break;
+                default:
+                    log.warn("Unexpected key code {}  in returnNewYPosition", e.getKeyCode());
+                    break;
             }
         } else {
             switch (e.getKeyCode()) {
@@ -5469,6 +5481,9 @@ public class LayoutEditor extends jmri.jmrit.display.panelEditor.PanelEditor imp
                     break;
                 case KeyEvent.VK_DOWN:
                     val = val + 5;
+                    break;
+                default:
+                    log.warn("Unexpected key code {}  in returnNewYPosition", e.getKeyCode());
                     break;
             }
         }

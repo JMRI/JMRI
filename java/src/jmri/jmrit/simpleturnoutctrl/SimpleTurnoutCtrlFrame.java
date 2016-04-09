@@ -1,4 +1,3 @@
-// SimpleTurnoutCtrlFrame.java
 package jmri.jmrit.simpleturnoutctrl;
 
 import java.awt.GridBagConstraints;
@@ -15,14 +14,9 @@ import org.slf4j.LoggerFactory;
  * Frame controlling a single turnout
  *
  * @author	Bob Jacobsen Copyright (C) 2001
- * @version $Revision$
  */
 public class SimpleTurnoutCtrlFrame extends jmri.util.JmriJFrame implements java.beans.PropertyChangeListener {
 
-    /**
-     *
-     */
-    private static final long serialVersionUID = -5237015745740025462L;
     private static final String LOCKED = "Locked";
     private static final String UNLOCKED = "Normal";
 
@@ -179,22 +173,18 @@ public class SimpleTurnoutCtrlFrame extends jmri.util.JmriJFrame implements java
             turnout = InstanceManager.turnoutManagerInstance().provideTurnout(
                     adrTextField.getText());
 
-            if (turnout == null) {
-                log.error("Turnout " + adrTextField.getText()
-                        + " is not available");
-            } else {
-                turnout.addPropertyChangeListener(this);
-                updateTurnoutStatusFields();
-                if (turnout.getCommandedState() == Turnout.CLOSED) {
-                    nowStateLabel.setText(InstanceManager
-                            .turnoutManagerInstance().getClosedText());
-                }
-                if (log.isDebugEnabled()) {
-                    log.debug("about to command CLOSED");
-                }
-                // and set commanded state to CLOSED
-                turnout.setCommandedState(Turnout.CLOSED);
+            turnout.addPropertyChangeListener(this);
+            updateTurnoutStatusFields();
+            if (turnout.getCommandedState() == Turnout.CLOSED) {
+                nowStateLabel.setText(InstanceManager
+                        .turnoutManagerInstance().getClosedText());
             }
+            if (log.isDebugEnabled()) {
+                log.debug("about to command CLOSED");
+            }
+            // and set commanded state to CLOSED
+            turnout.setCommandedState(Turnout.CLOSED);
+
         } catch (IllegalArgumentException ex1) {
             invalidTurnout(adrTextField.getText(), ex1);
         } catch (Exception ex2) {
@@ -213,22 +203,17 @@ public class SimpleTurnoutCtrlFrame extends jmri.util.JmriJFrame implements java
             turnout = InstanceManager.turnoutManagerInstance().provideTurnout(
                     adrTextField.getText());
 
-            if (turnout == null) {
-                log.error("Turnout " + adrTextField.getText()
-                        + " is not available");
-            } else {
-                turnout.addPropertyChangeListener(this);
-                updateTurnoutStatusFields();
-                if (turnout.getCommandedState() == Turnout.THROWN) {
-                    nowStateLabel.setText(InstanceManager
-                            .turnoutManagerInstance().getThrownText());
-                }
-                if (log.isDebugEnabled()) {
-                    log.debug("about to command THROWN");
-                }
-                // and set commanded state to THROWN
-                turnout.setCommandedState(Turnout.THROWN);
+            turnout.addPropertyChangeListener(this);
+            updateTurnoutStatusFields();
+            if (turnout.getCommandedState() == Turnout.THROWN) {
+                nowStateLabel.setText(InstanceManager
+                        .turnoutManagerInstance().getThrownText());
             }
+            if (log.isDebugEnabled()) {
+                log.debug("about to command THROWN");
+            }
+            // and set commanded state to THROWN
+            turnout.setCommandedState(Turnout.THROWN);
         } catch (IllegalArgumentException ex1) {
             invalidTurnout(adrTextField.getText(), ex1);
         } catch (Exception ex2) {
@@ -247,18 +232,13 @@ public class SimpleTurnoutCtrlFrame extends jmri.util.JmriJFrame implements java
             turnout = InstanceManager.turnoutManagerInstance().provideTurnout(
                     adrTextField.getText());
 
-            if (turnout == null) {
-                log.error("Turnout " + adrTextField.getText()
-                        + " is not available");
-            } else {
-                turnout.addPropertyChangeListener(this);
-                updateTurnoutStatusFields();
+            turnout.addPropertyChangeListener(this);
+            updateTurnoutStatusFields();
 
-                if (lockButton.getText() == LOCKED) {
-                    turnout.setLocked(Turnout.CABLOCKOUT, false);
-                } else if (turnout.canLock(Turnout.CABLOCKOUT)) {
-                    turnout.setLocked(Turnout.CABLOCKOUT, true);
-                }
+            if (lockButton.getText().equals(LOCKED)) {
+                turnout.setLocked(Turnout.CABLOCKOUT, false);
+            } else if (turnout.canLock(Turnout.CABLOCKOUT)) {
+                turnout.setLocked(Turnout.CABLOCKOUT, true);
             }
         } catch (IllegalArgumentException ex1) {
             invalidTurnout(adrTextField.getText(), ex1);
@@ -275,22 +255,16 @@ public class SimpleTurnoutCtrlFrame extends jmri.util.JmriJFrame implements java
             if (turnout != null) {
                 turnout.removePropertyChangeListener(this);
             }
+
             turnout = InstanceManager.turnoutManagerInstance().provideTurnout(
                     adrTextField.getText());
+            turnout.addPropertyChangeListener(this);
+            updateTurnoutStatusFields();
 
-            if (turnout == null) {
-                log.error("Turnout " + adrTextField.getText()
-                        + " is not available");
-            } else {
-                turnout.addPropertyChangeListener(this);
-                updateTurnoutStatusFields();
-
-                if (lockPushButton.getText() == LOCKED) {
-                    turnout.setLocked(Turnout.PUSHBUTTONLOCKOUT, false);
-                } else if (turnout.canLock(Turnout.PUSHBUTTONLOCKOUT)) {
-                    turnout.setLocked(Turnout.PUSHBUTTONLOCKOUT, true);
-                }
-
+            if (lockPushButton.getText().equals(LOCKED)) {
+                turnout.setLocked(Turnout.PUSHBUTTONLOCKOUT, false);
+            } else if (turnout.canLock(Turnout.PUSHBUTTONLOCKOUT)) {
+                turnout.setLocked(Turnout.PUSHBUTTONLOCKOUT, true);
             }
         } catch (IllegalArgumentException ex1) {
             invalidTurnout(adrTextField.getText(), ex1);

@@ -2,6 +2,9 @@ package jmri;
 
 import java.util.List;
 
+import javax.annotation.Nonnull;
+import javax.annotation.Nullable;
+
 /**
  * Interface for controlling sensors.
  *
@@ -34,7 +37,7 @@ public interface SensorManager extends Manager {
      *                                  e.g. an illegal name or name that can't
      *                                  be parsed.
      */
-    public Sensor provideSensor(String name);
+    public @Nonnull Sensor provideSensor(@Nonnull String name) throws IllegalArgumentException;
 
     /**
      * Locate via user name, then system name if needed. Does not create a new
@@ -43,7 +46,7 @@ public interface SensorManager extends Manager {
      * @param name
      * @return null if no match found
      */
-    public Sensor getSensor(String name);
+    public @Nullable Sensor getSensor(@Nonnull String name);
 
     // to free resources when no longer used
     public void dispose();
@@ -75,13 +78,13 @@ public interface SensorManager extends Manager {
      *                                  an illegal name or name that can't be
      *                                  parsed.
      */
-    public Sensor newSensor(String systemName, String userName);
+    public @Nonnull Sensor newSensor(@Nonnull String systemName, @Nullable String userName) throws IllegalArgumentException;
 
-    public Sensor getByUserName(String s);
+    public @Nullable Sensor getByUserName(@Nonnull String s);
 
-    public Sensor getBySystemName(String s);
+    public @Nullable Sensor getBySystemName(@Nonnull String s);
 
-    public List<String> getSystemNameList();
+    public @Nonnull List<String> getSystemNameList();
 
     /**
      * Requests status of all layout sensors under this Sensor Manager. This
@@ -100,20 +103,21 @@ public interface SensorManager extends Manager {
      * format is 1b23 this will return false.
      *
      */
-    public boolean allowMultipleAdditions(String systemName);
+    public boolean allowMultipleAdditions(@Nonnull String systemName);
 
     /**
      * Determine if the address supplied is valid and free, if not then it shall
      * return the next free valid address up to a maximum of 10 address away
      * from the initial address.
      *
-     * @param prefix     - The System Prefix used to make up the systemName
      * @param curAddress - The hardware address of the turnout we which to
+     * @param prefix     - The System Prefix used to make up the systemName
      *                   check.
+     * @returns           - null if the system name made from prefix and curAddress is in use
      */
-    public String getNextValidAddress(String curAddress, String prefix) throws JmriException;
+    public @Nullable String getNextValidAddress(@Nonnull String curAddress, @Nonnull String prefix) throws JmriException;
 
-    public String createSystemName(String curAddress, String prefix) throws JmriException;
+    public @Nonnull String createSystemName(@Nonnull String curAddress, @Nonnull String prefix) throws JmriException;
 
     public long getDefaultSensorDebounceGoingActive();
 

@@ -6,6 +6,7 @@ import java.util.prefs.Preferences;
 import jmri.util.FileUtil;
 import jmri.util.prefs.JmriConfigurationProvider;
 import jmri.util.prefs.JmriPreferencesProvider;
+import jmri.util.prefs.JmriUserInterfaceConfigurationProvider;
 
 /**
  * Utility methods to get information about {@link jmri.profile.Profile}s.
@@ -36,6 +37,17 @@ public class ProfileUtils {
      */
     public static Preferences getPreferences(Profile project, Class<?> clazz, boolean shared) {
         return JmriPreferencesProvider.getPreferences(project, clazz, shared);
+    }
+
+    /**
+     * Get the XMl configuration container for a given configuration profile's
+     * user interface state.
+     *
+     * @param project The configuration profile.
+     * @return An XML configuration container, possibly empty.
+     */
+    public static AuxiliaryConfiguration getUserInterfaceConfiguration(Profile project) {
+        return JmriUserInterfaceConfigurationProvider.getConfiguration(project);
     }
 
     /**
