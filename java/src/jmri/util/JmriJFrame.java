@@ -1,4 +1,3 @@
-// JmriJFrame.java
 package jmri.util;
 
 import java.awt.Dimension;
@@ -67,15 +66,10 @@ import org.slf4j.LoggerFactory;
  * or HIDE_ON_CLOSE depending on what you're looking for.
  *
  * @author Bob Jacobsen Copyright 2003, 2008
- * @version $Revision$ GT 28-AUG-2008 Added window menu
  */
 public class JmriJFrame extends JFrame implements java.awt.event.WindowListener, jmri.ModifiedFlag,
         java.awt.event.ComponentListener, WindowInterface, BeanInterface {
 
-    /**
-     *
-     */
-    private static final long serialVersionUID = -7850707227068393425L;
     protected boolean allowInFrameServlet = true;
 
     /**
