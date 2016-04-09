@@ -114,7 +114,7 @@ public class NodeConfigFrame extends jmri.util.JmriJFrame {
         panel11.add(nodeAddrStatic);
         nodeAddrStatic.setVisible(false);
         panel11.add(new JLabel("   " + rb.getString("LabelNodeType") + " "));
-        nodeTypeBox = new JComboBox<String>();
+        nodeTypeBox = new JComboBox<>();
         panel11.add(nodeTypeBox);
         nodeTypeBox.addItem("SMINI");
         nodeTypeBox.addItem("USIC_SUSIC");
@@ -148,7 +148,7 @@ public class NodeConfigFrame extends jmri.util.JmriJFrame {
         receiveDelayField.setToolTipText(rb.getString("TipDelay"));
         receiveDelayField.setText("0");
         panel12.add(cardSizeText);
-        cardSizeBox = new JComboBox<String>();
+        cardSizeBox = new JComboBox<>();
         panel12.add(cardSizeBox);
         cardSizeBox.addItem(rb.getString("CardSize24"));
         cardSizeBox.addItem(rb.getString("CardSize32"));
@@ -196,7 +196,7 @@ public class NodeConfigFrame extends jmri.util.JmriJFrame {
         cardConfigTable.setRowSelectionAllowed(false);
         cardConfigTable.setPreferredScrollableViewportSize(new java.awt.Dimension(180, 100));
 
-        JComboBox<String> cardTypeCombo = new JComboBox<String>();
+        JComboBox<String> cardTypeCombo = new JComboBox<>();
         cardTypeCombo.addItem(rb.getString("CardTypeOutput"));
         cardTypeCombo.addItem(rb.getString("CardTypeInput"));
         cardTypeCombo.addItem(rb.getString("CardTypeNone"));
