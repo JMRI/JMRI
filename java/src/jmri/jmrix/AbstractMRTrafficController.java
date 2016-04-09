@@ -889,7 +889,7 @@ abstract public class AbstractMRTrafficController {
                             mCurrentState = AUTORETRYSTATE;
                             if (retransmitCount > 0) {
                                 try {
-                                    xmtRunnable.wait(retransmitCount * 100);
+                                    xmtRunnable.wait(retransmitCount * 100L);
                                 } catch (InterruptedException e) {
                                     Thread.currentThread().interrupt(); // retain if needed later
                                 }
