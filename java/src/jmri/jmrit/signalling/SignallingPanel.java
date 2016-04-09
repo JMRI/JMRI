@@ -62,6 +62,7 @@ public class SignallingPanel extends jmri.util.swing.JmriPanel {
     JLabel fixedDestMastLabel = new JLabel();
     JLabel sourceMastLabel = new JLabel(rb.getString("SourceMast")+":");
     JLabel destMastLabel = new JLabel(rb.getString("DestMast")+":");
+
     JButton cancelButton = new JButton(Bundle.getMessage("ButtonCancel"));
     JButton updateButton = new JButton(rb.getString("UpdateLogic"));
     JCheckBox useLayoutEditor = new JCheckBox(rb.getString("UseLayoutEditorPaths"));
