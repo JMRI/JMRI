@@ -165,6 +165,7 @@
      <ul>
       <li><a href="#AddRoute">Add Route</a></li>
       <li><a href="#EditRoute">Edit Route</a></li>
+      <li><a href="#TrainTurnRoute">Train Turn Route</a></li>
       <li><a href="#PassengerTrainRoute">Passenger Train Route</a></li>
       <li><a href="#DepartingStagingRoute">Departing Staging Route</a></li>
       <li><a href="#RouteFeatures">Route Features</a></li>
@@ -1066,7 +1067,7 @@
     name, consist name, is lead loco in consist, loco comment, IDTag.</p>
 
    <p>
-    You can find some examples of custom Manifests at <a
+    You can find some examples of custom manifests at <a
      href="http://groups.yahoo.com/group/jmriusers/files/Operations">http://groups.yahoo.com/group/jmriusers/files/Operations.</a>
    </p>
    
@@ -1075,7 +1076,7 @@
 
    <p>You can also generate custom switch lists using a comma separated value (.csv) files. You
     can find the switch list files in the operations directory in a directory called
-    "csvSwitchLists". The csv switch lists use the same codes and descriptions as the csv Manifests,
+    "csvSwitchLists". The csv switch lists use the same codes and descriptions as the csv manifests,
     plus the following:</p>
 
    <p></p>
@@ -1192,7 +1193,8 @@
    Number, Type, Length, Color, Load, etc.) when determining the width of each column. Location
    names and track names can be up to 25 characters, so you might want to consider reasonable length
    names when using the "Tabular" feature. FYI, the program reports the maximum track and location
-   names to the system console when creating Manifests.
+   names to the system console when creating Manifests. You can access the system console from the
+   main menu bar under "Help".
 
    <p>There are three options with regards to how your Manifests and switch lists
    are formated. "Standard" provides one line for each car pick up or set out. The "Two Column"
@@ -1327,7 +1329,7 @@
    <h3>Manifest and Switch List Preview</h3>
 
    If you want to use a text editor to preview your Manifests and switch lists, select this option.
-   This option also allows you to make manual changes to your Manifests before you print them.
+   This option also allows you to make manual changes to your Manifests and switch lists before you print them.
 
    <h3>Add Logo</h3>
 
@@ -1625,7 +1627,8 @@
 
    <h4>Comment</h4>
 
-   You can enter an optional comment for the yard.
+   You can enter an optional comment for the yard. This comment doesn't appear on your Manifests or
+   switch lists.
 
    <h3>Save Yard Track</h3>
 
@@ -3254,7 +3257,22 @@
 
    Press "Save Route" to save your route. The program will create a file (OperationsRouteRoster.xml)
    in your JMRI directory in a folder called "operations". A backup file with the last settings for
-   all of your routes is also created each time the "Save Route" button is pressed. 
+   all of your routes is also created each time the "Save Route" button is pressed.
+   
+   <a name="TrainTurnRoute"></a>
+   <h3>Train Turn Route</h3>
+   A train that returns to its departure location is normally referred to as a "turn". The image
+   below shows a route for a train that departs "Bakersfield", works "Port Arthur" and "Danville",
+   reverses direction in "Hillsboro" and returns to "Bakersfield".
+   <p>
+    <img src="images/RouteTurn.png">
+   </p>
+
+   Notice that "Hillsboro" appears twice in the route. The first "Hillsboro" provides the arrival
+   direction for the train, and the amount of work for tracks that can only be accessed by an
+   Eastbound train. The second "Hillsboro" provides the departure direction for the train, and the
+   amount of work for tracks that can only be access by a Westbound train. Even though "Hillsboro"
+   appears twice in the route, it will only appear once on your Manifests and switch lists. 
    
    <a name="PassengerTrainRoute"></a>
    <h3>Passenger Train Route</h3>
@@ -3926,7 +3944,7 @@
    <a name="Automation"></a>
    <h4>Automation</h4>
    This tool allows you to automate the building, moving, and termination of trains. It can also
-   automate the printing of manifests and switch lists. This is an advanced feature for operations
+   automate the printing of Manifests and switch lists. This is an advanced feature for operations
    and is recommended for users that have some experience with the program. If you're new to the
    program it is recommended that you skip this section.
 
@@ -4155,7 +4173,7 @@
    <a name="SetupExcelProgram"></a>
    <h4>Setup Excel Program (Manifest Creator)</h4>
 
-   The ability to configure an Excel program to create custom Manifests can be found under
+   The ability to configure an Excel program to create custom manifests can be found under
    Trains -&gt; Tools. Dan Foltz who is a JMRI user/programmer has developed the "Manifest Creator"
    and "Switch List Creator". You can find a copies of the programs at the
    <a href="http://groups.yahoo.com/neo/groups/jmriusers/files/Operations">Yahoo.com JMRI users
@@ -4315,7 +4333,7 @@
    directory. The build report shows the steps the operations program goes through while building a
    train. The first page provides the route the train will travel and the number of car moves
    requested for each location. The report then shows the car type and locomotive types that the
-   train will service. By reading the various comments in the report you can get an idea of steps
+   train will service. By reading the various messages in the report you can get an idea of steps
    the operations program goes through to build a train. When there's an issue that the operation's
    build can't resolve, the build will fail. To understand why a build failed, go to the last page
    of the build report and by working backwards from the last line, you should be able to understand

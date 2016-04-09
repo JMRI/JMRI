@@ -149,7 +149,7 @@ abstract public class AbstractManager
      * @throws java.beans.PropertyVetoException - If the recipient(s) wishes the
      *                                          delete to be aborted.
      */
-    public void deleteBean(@Nonnull NamedBean bean, @Nullable String property) throws java.beans.PropertyVetoException {
+    public void deleteBean(@Nonnull NamedBean bean, @Nonnull String property) throws java.beans.PropertyVetoException {
         try {
             fireVetoableChange(property, bean, null);
         } catch (java.beans.PropertyVetoException e) {

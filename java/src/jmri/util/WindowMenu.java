@@ -1,4 +1,3 @@
-// WindowMenu.java
 package jmri.util;
 
 import java.awt.Frame;
@@ -21,10 +20,6 @@ import jmri.util.swing.WindowInterface;
  */
 public class WindowMenu extends JMenu implements javax.swing.event.MenuListener {
 
-    /**
-     *
-     */
-    private static final long serialVersionUID = 6064948065992866417L;
     private Frame parentFrame;	// Keep note of the window containing the menu
     private List<JmriJFrame> framesList;	// Keep the list of windows, in order to find out which window was selected
 
@@ -40,11 +35,6 @@ public class WindowMenu extends JMenu implements javax.swing.event.MenuListener 
         removeAll();
 
         add(new AbstractAction(Bundle.getMessage("MenuItemMinimize")) {
-            /**
-             *
-             */
-            private static final long serialVersionUID = -4679325334427280261L;
-
             public void actionPerformed(ActionEvent e) {
                 // the next line works on Java 2, but not 1.1.8
                 if (parentFrame != null) {
@@ -62,11 +52,6 @@ public class WindowMenu extends JMenu implements javax.swing.event.MenuListener 
                 windowName = "Untitled";
             }
             JCheckBoxMenuItem newItem = new JCheckBoxMenuItem(new AbstractAction(windowName) {
-                /**
-                 *
-                 */
-                private static final long serialVersionUID = 5368670948429697065L;
-
                 public void actionPerformed(ActionEvent e) {
                     JMenuItem selectedItem = (JMenuItem) e.getSource();
                     // Since different windows can have the same name, look for the position of the selected menu item

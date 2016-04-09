@@ -1,4 +1,3 @@
-// DebugMenu.java
 package jmri.jmrit;
 
 import javax.swing.JMenu;
@@ -9,14 +8,8 @@ import javax.swing.JSeparator;
  * Create a "Debug" menu containing the JMRI system-independent debugging tools.
  *
  * @author	Bob Jacobsen Copyright 2003
- * @version $Revision$
  */
 public class DebugMenu extends JMenu {
-
-    /**
-     *
-     */
-    private static final long serialVersionUID = -954409766062724149L;
 
     public DebugMenu(String name, JPanel panel) {
         this(panel);
