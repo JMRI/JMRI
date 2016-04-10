@@ -3,17 +3,9 @@
 <appearancetable xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="http://jmri.org/xml/schema/appearancetable.xsd">
   <copyright xmlns="http://docbook.org/ns/docbook">
     <year>2013</year>
-    <year>2016</year>
     <holder>JMRI</holder>
   </copyright>
   <authorgroup xmlns="http://docbook.org/ns/docbook">
-    <author>
-      <personname>
-        <firstname>Suzie</firstname>
-        <surname>Tall</surname>
-      </personname>
-      <email>suzie_tall@yahoo.co.uk</email>
-    </author>
     <author>
       <personname>
         <firstname>Egbert</firstname>
@@ -25,77 +17,86 @@
   <revhistory xmlns="http://docbook.org/ns/docbook">
     <revision>
       <revnumber>1</revnumber>
-      <date>2013-07-02</date>
-      <authorinitials>ST</authorinitials>
-      <revremark>Initial version</revremark>
-    </revision>
-    <revision>
-      <revnumber>1.01</revnumber>
-      <date>2013-07-17</date>
-      <authorinitials>ST</authorinitials>
-      <revremark>Added large icons</revremark>
-    </revision>
-    <revision>
-      <revnumber>1.1</revnumber>
       <date>2016-04-10</date>
       <authorinitials>EB</authorinitials>
-      <revremark>Added extra reference and signal type name</revremark>
+      <revremark>Initial version in 4.3.5, built on appearance-High</revremark>
     </revision>
   </revhistory>
 
   <aspecttable>Prorail-1954</aspecttable>
-  <name>High signal</name>
+  <name>High signal with number</name>
   <reference>http://en.wikipedia.org/wiki/Dutch_railway_signalling</reference>
   <reference>http://encyclopedie.beneluxspoor.net/index.php/Lichtseinen</reference>
-  <description>Three lamp high type AY main signal</description>
+  <description>Three lamp high main signal with number block</description>
   <appearances>
     <appearance>
       <aspectname>Stop</aspectname>
       <show>red</show>
       <reference>Rule 215</reference>
-      <imagelink type="large">../../../resources/icons/largeschematics/aspects/ProRail-1954/ProRail-R.gif</imagelink>
-      <imagelink type="aspects">../../../resources/icons/smallschematics/aspects/ProRail-1954/ProRail-R.gif</imagelink>
+      <imagelink type="large">../../../resources/icons/largeschematics/aspects/ProRail-1954/ProRail-NR.gif</imagelink>
+      <imagelink type="aspects">../../../resources/icons/smallschematics/aspects/ProRail-1954/ProRail-NR.gif</imagelink>
     </appearance>
     <appearance>
       <aspectname>Track Out of Service</aspectname>
       <show>flashred</show>
-      <imagelink type="large">../../../resources/icons/largeschematics/aspects/ProRail-1954/ProRail-FR.gif</imagelink>
-      <imagelink type="aspects">../../../resources/icons/smallschematics/aspects/ProRail-1954/ProRail-FR.gif</imagelink>
+      <imagelink type="large">../../../resources/icons/largeschematics/aspects/ProRail-1954/ProRail-NRF.gif</imagelink>
+      <imagelink type="aspects">../../../resources/icons/smallschematics/aspects/ProRail-1954/ProRail-NRF.gif</imagelink>
     </appearance>
     <appearance>
       <aspectname>Clear</aspectname>
       <show>green</show>
       <reference>Rule 201</reference>
-      <imagelink type="large">../../../resources/icons/largeschematics/aspects/ProRail-1954/ProRail-G.gif</imagelink>
-      <imagelink type="aspects">../../../resources/icons/smallschematics/aspects/ProRail-1954/ProRail-G.gif</imagelink>
+      <imagelink type="large">../../../resources/icons/largeschematics/aspects/ProRail-1954/ProRail-NG0.gif</imagelink>
+      <imagelink type="aspects">../../../resources/icons/smallschematics/aspects/ProRail-1954/ProRail-NG0.gif</imagelink>
+    </appearance>
+    <appearance>
+      <aspectname>Medium</aspectname>
+      <show>flashgreen</show>
+      <reference>Rule 202</reference>
+      <imagelink type="large">../../../resources/icons/largeschematics/aspects/ProRail-1954/ProRail-NGF4.gif</imagelink>
+      <imagelink type="aspects">../../../resources/icons/smallschematics/aspects/ProRail-1954/ProRail-ngf4.gif</imagelink>
     </appearance>
     <appearance>
       <aspectname>Limited</aspectname>
       <show>flashgreen</show>
       <reference>Rule 206</reference>
-      <imagelink type="large">../../../resources/icons/largeschematics/aspects/ProRail-1954/ProRail-FG.gif</imagelink>
-      <imagelink type="aspects">../../../resources/icons/smallschematics/aspects/ProRail-1954/ProRail-FG.gif</imagelink>
+      <imagelink type="large">../../../resources/icons/largeschematics/aspects/ProRail-1954/ProRail-NGF.gif</imagelink>
+      <imagelink type="aspects">../../../resources/icons/smallschematics/aspects/ProRail-1954/ProRail-ngf.gif</imagelink>
+    </appearance>
+    <appearance>
+      <aspectname>Approach Medium</aspectname>
+      <show>yellow</show>
+      <reference>Rule 209</reference>
+      <imagelink type="large">../../../resources/icons/largeschematics/aspects/ProRail-1954/ProRail-NY4F.gif</imagelink>
+      <imagelink type="aspects">../../../resources/icons/smallschematics/aspects/ProRail-1954/ProRail-ny4f.gif</imagelink>
+    </appearance>
+    <appearance>
+      <aspectname>Diverging Approach Medium</aspectname>
+      <show>flashyellow</show>
+      <reference>Rule 210</reference>
+      <imagelink type="large">../../../resources/icons/largeschematics/aspects/ProRail-1954/ProRail-NY4.gif</imagelink>
+      <imagelink type="aspects">../../../resources/icons/smallschematics/aspects/ProRail-1954/ProRail-ny4.gif</imagelink>
     </appearance>
     <appearance>
       <aspectname>Approach</aspectname>
       <show>yellow</show>
       <reference>Rule 212</reference>
-      <imagelink type="large">../../../resources/icons/largeschematics/aspects/ProRail-1954/ProRail-Y.gif</imagelink>
-      <imagelink type="aspects">../../../resources/icons/smallschematics/aspects/ProRail-1954/ProRail-Y.gif</imagelink>
+      <imagelink type="large">../../../resources/icons/largeschematics/aspects/ProRail-1954/ProRail-NY0.gif</imagelink>
+      <imagelink type="aspects">../../../resources/icons/smallschematics/aspects/ProRail-1954/ProRail-ny0.gif</imagelink>
     </appearance>
     <appearance>
       <aspectname>Restricting</aspectname>
       <aspectname xml:lang="nl">Hoog of laag geplaatst knipperend geel licht</aspectname>
       <show>flashyellow</show>
       <reference>Rule 214</reference>
-      <imagelink type="large">../../../resources/icons/largeschematics/aspects/ProRail-1954/ProRail-FY.gif</imagelink>
-      <imagelink type="aspects">../../../resources/icons/smallschematics/aspects/ProRail-1954/ProRail-FY.gif</imagelink>
+      <imagelink type="large">../../../resources/icons/largeschematics/aspects/ProRail-1954/ProRail-NYF.gif</imagelink>
+      <imagelink type="aspects">../../../resources/icons/smallschematics/aspects/ProRail-1954/ProRail-nyf.gif</imagelink>
     </appearance>
     <appearance>
       <aspectname>Not Lit</aspectname>
       <show>dark</show>
-      <imagelink type="large">../../../resources/icons/largeschematics/aspects/ProRail-1954/ProRail-D.gif</imagelink>
-      <imagelink type="aspects">../../../resources/icons/smallschematics/aspects/ProRail-1954/ProRail-D.gif</imagelink>
+      <imagelink type="large">../../../resources/icons/largeschematics/aspects/ProRail-1954/ProRail-N0.gif</imagelink>
+      <imagelink type="aspects">../../../resources/icons/smallschematics/aspects/ProRail-1954/ProRail-n0.gif</imagelink>
     </appearance>
   </appearances>
 

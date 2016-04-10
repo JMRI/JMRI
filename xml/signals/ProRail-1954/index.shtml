@@ -31,7 +31,7 @@ Remarks:
     <ul>
         <li>Dwarf signal icons are named -D</li>
         <li>Flashing icons are named -RF/-RY/-RG</li>
-        <li>An icon with a lighted number is named -4, although in real world applications this could display one of the following: 4, 6, 8, 10 (rare), 12 or 13</li>
+        <li>Icons with a lighted number are named -4 and show "4", although in real world applications this could display one of the following: 4 (not below Medium aspect as identical to Limited), 6, 8, 10 (rare), 12 or 13</li>
         <li>To do: Approach signal icons are named -A</li>
         <li>A number lighted in White indicates the maximum allowed speed (* 10 km/h)</li>
         <li>Although there was no official Stop For Engineering aspect in the 1955 Rules, a Flashing Red indication has been added.<br>

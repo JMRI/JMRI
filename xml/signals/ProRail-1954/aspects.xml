@@ -44,7 +44,7 @@
       <revnumber>2</revnumber>
       <date>2016-04-10</date>
       <authorinitials>EB</authorinitials>
-      <revremark>Added rules and Dutch translations</revremark>
+      <revremark>Added rules, High-Number signal head and official Dutch translations</revremark>
     </revision>
   </revhistory>
   <aspects>
@@ -60,7 +60,7 @@
       <dccAspect>0</dccAspect>
     </aspect>
     <aspect>
-      <name>Stop for Engineering</name>
+      <name>Track Out of Service</name>
       <indication>Stop</indication>
       <speed>Stop</speed>
       <speed2>Stop</speed2>
@@ -77,6 +77,39 @@
       <speed2>Normal</speed2>
       <route>Normal</route>
       <dccAspect>2</dccAspect>
+    </aspect>
+    <aspect>
+      <name>Medium</name>
+      <name xml:lang="nl">Hoog geplaatst knipperend groen licht met een door een wit licht gevormd getal</name>
+      <rule>Rule 202</rule>
+      <indication>Proceed preparing to stop at next signal</indication>
+      <indication xml:lang="nl">Voorbijrijden toegestaan met ten hoogste de door het getal aangegeven snelheid.</indication>
+      <speed>Normal</speed>
+      <speed2>Limited</speed2>
+      <route>Diverging</route>
+      <dccAspect>1</dccAspect>
+    </aspect>
+    <aspect>
+      <name>Approach Medium</name>
+      <name xml:lang="nl">Hoog geplaatst geel licht met een door knipperend wit licht gevormd getal</name>
+      <rule>Rule 209</rule>
+      <indication>Proceed preparing to stop at next signal</indication>
+      <indication xml:lang="nl">Snelheid begrenzen tot de door het getal aangegeven snelheid. Ingeval een remming is ingezet en het volgende lichtsein een verdere begrenzing van de snelheid gebiedt, wordt de remming niet onderbroken.</indication>
+      <speed>Limited</speed>
+      <speed2>Restricted</speed2>
+      <route>Normal</route>
+      <dccAspect>1</dccAspect>
+    </aspect>
+    <aspect>
+      <name>Diverging Approach Medium</name>
+      <name xml:lang="nl">Hoog geplaatst geel licht met een door wit licht gevormd getal</name>
+      <rule>Rule 210</rule>
+      <indication>Proceed preparing to stop at next signal</indication>
+      <indication xml:lang="nl">Snelheid begrenzen tot de door het getal aangegeven snelheid. De door het getal aangegeven snelheid wordt bij het volgende lichtsein niet overschreden.</indication>
+      <speed>Normal</speed>
+      <speed2>Limited</speed2>
+      <route>Normal</route>
+      <dccAspect>1</dccAspect>
     </aspect>
     <aspect>
       <name>Approach</name>
@@ -97,7 +130,7 @@
       <indication xml:lang="nl">Voorbijrijden toegestaan met een snelheid van ten hoogste 40 km/h.</indication>
       <speed>Limited</speed>
       <speed2>Limited</speed2>
-      <route>Normal</route>
+      <route>Diverging</route>
       <dccAspect>6</dccAspect>
     </aspect>
     <aspect>
@@ -106,9 +139,9 @@
       <rule>Rule 214</rule>
       <indication>Proceed at restricted speed because line may be blocked</indication>
       <indication xml:lang="nl">Voorbijrijden toegestaan met een zodanige snelheid, die niet hoger is dan 40 km/h, om op elke plaats achter dit sein, waar een belemmering voor het verder rijden aanwezig is, te kunnen stoppen.</indication>
-      <speed>Normal</speed>
+      <speed>Limited</speed>
       <speed2>Slow</speed2>
-      <route>Normal</route>
+      <route>Either</route>
       <dccAspect>5</dccAspect>
     </aspect>
     <aspect>

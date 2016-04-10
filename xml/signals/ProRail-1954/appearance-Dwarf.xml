@@ -42,7 +42,7 @@
       <imagelink type="aspects">../../../resources/icons/smallschematics/aspects/ProRail-1954/ProRail-RD.gif</imagelink>
     </appearance>
     <appearance>
-      <aspectname>Stop for Engineering</aspectname>
+      <aspectname>Track Out of Service</aspectname>
       <show>flashred</show>
       <imagelink type="large">../../../resources/icons/largeschematics/aspects/ProRail-1954/ProRail-FRD.gif</imagelink>
       <imagelink type="aspects">../../../resources/icons/smallschematics/aspects/ProRail-1954/ProRail-FRD.gif</imagelink>
@@ -74,7 +74,7 @@
   </appearances>
   <specificappearances>
     <danger>
-      <aspect>Stop for Engineering</aspect>
+      <aspect>Restricting</aspect>
     </danger>
     <permissive>
       <aspect>Restricting</aspect>
