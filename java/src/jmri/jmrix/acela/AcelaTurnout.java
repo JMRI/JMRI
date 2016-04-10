@@ -119,7 +119,7 @@ public class AcelaTurnout extends AbstractTurnout {
      */
     // Handle a request to change state by sending a turnout command
     protected void forwardCommandChangeToLayout(int s) {
-        if ((s & Turnout.CLOSED) > 0) {
+        if ((s & Turnout.CLOSED) != 0) {
             // first look for the double case, which we can't handle
             if ((s & Turnout.THROWN) != 0) {
                 // this is the disaster case!
