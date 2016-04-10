@@ -34,14 +34,14 @@ abstract public class AbstractProxyManager implements Manager {
     protected int nMgrs() {
         // make sure internal present
         initInternal();
-        
+
         return mgrs.size();
     }
-    
+
     protected Manager getMgr(int index) {
         // make sure internal present
         initInternal();
-        
+
         if (index < mgrs.size()) {
             return mgrs.get(index);
         } else {
@@ -58,10 +58,10 @@ abstract public class AbstractProxyManager implements Manager {
     public List<Manager> getManagerList() {
         // make sure internal present
         initInternal();
-        
+
         return new ArrayList<>(mgrs);
     }
-    
+
     public void addManager(Manager m) {
         mgrs.add(m);
         propertyVetoListenerList.stream().forEach((l) -> {
@@ -74,7 +74,7 @@ abstract public class AbstractProxyManager implements Manager {
             log.debug("added manager " + m.getClass());
         }
     }
-    
+
     private Manager initInternal() {
         if (internalManager == null) {
             log.debug("create internal manager when first requested");
@@ -82,7 +82,7 @@ abstract public class AbstractProxyManager implements Manager {
         }
         return internalManager;
     }
-    
+
     private final java.util.ArrayList<Manager> mgrs = new java.util.ArrayList<>();
     private Manager internalManager = null;
 
@@ -122,7 +122,7 @@ abstract public class AbstractProxyManager implements Manager {
     protected NamedBean provideNamedBean(String name) {
         // make sure internal present
         initInternal();
-        
+
         NamedBean t = getNamedBean(name);
         if (t != null) {
             return t;
@@ -145,7 +145,7 @@ abstract public class AbstractProxyManager implements Manager {
      * @return a bean
      */
     abstract protected NamedBean makeBean(int index, String systemName, String userName);
-    
+
     @Override
     public NamedBean getBeanBySystemName(String systemName) {
         for (Manager m : this.mgrs) {
@@ -156,7 +156,7 @@ abstract public class AbstractProxyManager implements Manager {
         }
         return null;
     }
-    
+
     @Override
     public NamedBean getBeanByUserName(String userName) {
         for (Manager m : this.mgrs) {
@@ -212,7 +212,7 @@ abstract public class AbstractProxyManager implements Manager {
         log.debug("Did not find manager for system name " + systemName + ", delegate to primary");
         return makeBean(0, systemName, userName);
     }
-    
+
     @Override
     public void dispose() {
         for (int i = 0; i < mgrs.size(); i++) {
@@ -250,14 +250,14 @@ abstract public class AbstractProxyManager implements Manager {
     protected int match(String systemname) {
         // make sure internal present
         initInternal();
-        
+
         int index = matchTentative(systemname);
         if (index < 0) {
             throw new IllegalArgumentException("System name " + systemname + " failed to match");
         }
         return index;
     }
-    
+
     @Override
     public void deleteBean(NamedBean s, String property) throws java.beans.PropertyVetoException {
         String systemName = s.getSystemName();
@@ -293,21 +293,21 @@ abstract public class AbstractProxyManager implements Manager {
         String systemName = s.getSystemName();
         getMgr(match(systemName)).deregister(s);
     }
-    
+
     @Override
     public synchronized void addPropertyChangeListener(java.beans.PropertyChangeListener l) {
         for (int i = 0; i < nMgrs(); i++) {
             getMgr(i).addPropertyChangeListener(l);
         }
     }
-    
+
     @Override
     public synchronized void removePropertyChangeListener(java.beans.PropertyChangeListener l) {
         for (int i = 0; i < nMgrs(); i++) {
             getMgr(i).removePropertyChangeListener(l);
         }
     }
-    
+
     @Override
     public synchronized void addVetoableChangeListener(java.beans.VetoableChangeListener l) {
         if (!propertyVetoListenerList.contains(l)) {
@@ -317,7 +317,7 @@ abstract public class AbstractProxyManager implements Manager {
             getMgr(i).addVetoableChangeListener(l);
         }
     }
-    
+
     @Override
     public synchronized void removeVetoableChangeListener(java.beans.VetoableChangeListener l) {
         if (propertyVetoListenerList.contains(l)) {
@@ -327,7 +327,7 @@ abstract public class AbstractProxyManager implements Manager {
             getMgr(i).removeVetoableChangeListener(l);
         }
     }
-    
+
     ArrayList<java.beans.PropertyChangeListener> propertyListenerList = new ArrayList<>(5);
     ArrayList<java.beans.VetoableChangeListener> propertyVetoListenerList = new ArrayList<>(5);
 
@@ -371,7 +371,7 @@ abstract public class AbstractProxyManager implements Manager {
     public String makeSystemName(String s) {
         return getMgr(0).makeSystemName(s);
     }
-    
+
     @Override
     public String[] getSystemNameArray() {
         TreeSet<String> ts = new TreeSet<>(new SystemNameComparator());
@@ -394,7 +394,7 @@ abstract public class AbstractProxyManager implements Manager {
         }
         return new ArrayList<>(ts);
     }
-    
+
     @Override
     public List<NamedBean> getNamedBeanList() {
         TreeSet<NamedBean> ts = new TreeSet<>(new SystemNameComparator());

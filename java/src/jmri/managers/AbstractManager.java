@@ -104,6 +104,7 @@ abstract public class AbstractManager
      * @param systemName System Name of the required NamedBean
      * @return requested NamedBean object or null if none exists
      */
+    @Override
     public NamedBean getBeanBySystemName(String systemName) {
         return _tsys.get(systemName);
     }
