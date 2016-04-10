@@ -1,4 +1,3 @@
-// AcelaTurnout.java
 package jmri.jmrix.acela;
 
 import jmri.Turnout;
@@ -14,17 +13,12 @@ import org.slf4j.LoggerFactory;
  * Based in part on SerialTurnout.java
  *
  * @author Dave Duchamp Copyright (C) 2004
- * @version $Revision$
  *
  * @author	Bob Coleman Copyright (C) 2007, 2008 Based on CMRI serial example,
  * modified to establish Acela support.
  */
 public class AcelaTurnout extends AbstractTurnout {
 
-    /**
-     *
-     */
-    private static final long serialVersionUID = -635023458091077051L;
     final String prefix = "AT";
 
     /**
@@ -127,7 +121,7 @@ public class AcelaTurnout extends AbstractTurnout {
     protected void forwardCommandChangeToLayout(int s) {
         if ((s & Turnout.CLOSED) > 0) {
             // first look for the double case, which we can't handle
-            if ((s & Turnout.THROWN) > 0) {
+            if ((s & Turnout.THROWN) != 0) {
                 // this is the disaster case!
                 log.error("Cannot command both CLOSED and THROWN " + s);
                 return;
@@ -214,5 +208,3 @@ public class AcelaTurnout extends AbstractTurnout {
 
     private final static Logger log = LoggerFactory.getLogger(AcelaTurnout.class.getName());
 }
-
-/* @(#)AcelaTurnout.java */
