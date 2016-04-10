@@ -2,7 +2,7 @@
 <?xml-stylesheet href="../../XSLT/appearancetable.xsl" type="text/xsl"?>
 <appearancetable xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="http://jmri.org/xml/schema/appearancetable.xsd">
   <copyright xmlns="http://docbook.org/ns/docbook">
-    <year>2013</year>
+    <year>2016</year>
     <holder>JMRI</holder>
   </copyright>
   <authorgroup xmlns="http://docbook.org/ns/docbook">
@@ -28,9 +28,11 @@
       <revremark>Added large icons</revremark>
     </revision>
   </revhistory>
+
   <aspecttable>Prorail-1954</aspecttable>
   <name>Dwarf signal</name>
   <reference>http://en.wikipedia.org/wiki/Dutch_railway_signalling</reference>
+  <reference>http://encyclopedie.beneluxspoor.net/index.php/Lichtseinen</reference>
   <description>Three lamp dwarf signal</description>
   <appearances>
     <appearance>

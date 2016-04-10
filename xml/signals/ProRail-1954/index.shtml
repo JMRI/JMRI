@@ -1,7 +1,6 @@
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
 <html lang="en">
 <head>
-<!-- Copyright ($Author: Suzie _Tall $) 2013 -->
 
 <title>JMRI: ProRail Wikipedia signals for Netherlands</title>
 
@@ -22,24 +21,41 @@
     <div id="mainContent">
 
 <h1> 
-JMRI: Netherlands ProRail signal definition
+JMRI: Netherlands ProRail 1955 Signaling Definition
 </h1>
-<p></p>
-This directory contains signaling definitions worked out following five minutes of study of the Netherlands (Dutch) signals page on Wikipedia.<br>
-        Additional information added based on Dutch 'Regeling Spoorverkeer' (Railroad Regulation) annex 4.
 <p>
-<a href="http://en.wikipedia.org/wiki/Dutch_railway_signalling">Dutch signaling wiki</a>.
+This directory contains signaling definitions originally worked out following five minutes of study of the Netherlands (Dutch) signals page on Wikipedia. This set is named <strong>ProRail 1954</strong> in JMRI but it is officially referenced as "1955".<br>
+In version 2 information on Rule numbers and additional Indications were added, based on the official Dutch 'Regeling Spoorverkeer' (Railroad Regulation) Annex 4.
 <p>
-See the 
-<a href="aspects.xml">aspect page</a>.
+Remarks:
+    <ul>
+        <li>Dwarf signal icons are named -D</li>
+        <li>Flashing icons are named -RF/-RY/-RG</li>
+        <li>An icon with a lighted number is named -4, although in real world applications this could display one of the following: 4, 6, 8, 10 (rare), 12 or 13</li>
+        <li>To do: Approach signal icons are named -A</li>
+        <li>A number lighted in White indicates the maximum allowed speed (* 10 km/h)</li>
+        <li>Although there was no official Stop For Engineering aspect in the 1955 Rules, a Flashing Red indication has been added.<br>
+            Since 2000 this is in use indicating Track Out of Service (<em>Buiten Dienst</em>), protecting railroad workers.</li>
+    </ul>
+</p>
+<p>Sources:</p>
+    <ul>
+    <li><a href="http://en.wikipedia.org/wiki/Dutch_railway_signalling">Dutch signaling wiki</a></li>
+    <li><a href="http://encyclopedie.beneluxspoor.net/index.php/Lichtseinen">Beneluxspoor Signals (in Dutch)</a></li>
+    <li><a href="http://www.marcrpieters.nl/seinen.html">Marc Pieters' Signaling page (in Dutch)</a></li>
+    </ul>
+<p>
+See the
+<a href="aspects.xml">Aspects page</a>.
 
 <p>
-Signal Mast definitions:
-<ul>
-<li><a href="appearance-High.xml">High signal</a>
-<li><a href="appearance-Dwarf.xml">Dwarf signal</a>
-
-</ul>
+Signal Mast definitions:</p>
+    <ul>
+    <li><a href="appearance-High.xml">High main signal</a>
+    <li><a href="appearance-High-Number.xml">High main signal with number block</a> <!-- High with Number -->
+    <!-- High Approach -->
+    <li><a href="appearance-Dwarf.xml">Dwarf main signal</a>
+    </ul>
 
         <!--#include virtual="/Footer" -->
     </div>

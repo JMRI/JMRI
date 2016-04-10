@@ -27,15 +27,24 @@
       <authorinitials>ST</authorinitials>
       <revremark>Added large icons</revremark>
     </revision>
+    <revision>
+      <revnumber>1.1</revnumber>
+      <date>2016-04-10</date>
+      <authorinitials>EB</authorinitials>
+      <revremark>Added extra reference and signal type name</revremark>
+    </revision>
   </revhistory>
+
   <aspecttable>Prorail-1954</aspecttable>
   <name>High signal</name>
   <reference>http://en.wikipedia.org/wiki/Dutch_railway_signalling</reference>
-  <description>Three lamp high signal</description>
+  <reference>http://encyclopedie.beneluxspoor.net/index.php/Lichtseinen</reference>
+  <description>Three lamp high type AY main signal</description>
   <appearances>
     <appearance>
       <aspectname>Stop</aspectname>
       <show>red</show>
+      <reference>Rule 215</reference>
       <imagelink type="large">../../../resources/icons/largeschematics/aspects/ProRail-1954/ProRail-R.gif</imagelink>
       <imagelink type="aspects">../../../resources/icons/smallschematics/aspects/ProRail-1954/ProRail-R.gif</imagelink>
     </appearance>
@@ -48,24 +57,29 @@
     <appearance>
       <aspectname>Clear</aspectname>
       <show>green</show>
+      <reference>Rule 201</reference>
       <imagelink type="large">../../../resources/icons/largeschematics/aspects/ProRail-1954/ProRail-G.gif</imagelink>
       <imagelink type="aspects">../../../resources/icons/smallschematics/aspects/ProRail-1954/ProRail-G.gif</imagelink>
     </appearance>
     <appearance>
       <aspectname>Limited</aspectname>
       <show>flashgreen</show>
+      <reference>Rule 206</reference>
       <imagelink type="large">../../../resources/icons/largeschematics/aspects/ProRail-1954/ProRail-FG.gif</imagelink>
       <imagelink type="aspects">../../../resources/icons/smallschematics/aspects/ProRail-1954/ProRail-FG.gif</imagelink>
     </appearance>
     <appearance>
       <aspectname>Approach</aspectname>
       <show>yellow</show>
+      <reference>Rule 212</reference>
       <imagelink type="large">../../../resources/icons/largeschematics/aspects/ProRail-1954/ProRail-Y.gif</imagelink>
       <imagelink type="aspects">../../../resources/icons/smallschematics/aspects/ProRail-1954/ProRail-Y.gif</imagelink>
     </appearance>
     <appearance>
       <aspectname>Restricting</aspectname>
+      <aspectname xml:lang="nl">Hoog of laag geplaatst knipperend geel licht</aspectname>
       <show>flashyellow</show>
+      <reference>Rule 214</reference>
       <imagelink type="large">../../../resources/icons/largeschematics/aspects/ProRail-1954/ProRail-FY.gif</imagelink>
       <imagelink type="aspects">../../../resources/icons/smallschematics/aspects/ProRail-1954/ProRail-FY.gif</imagelink>
     </appearance>
@@ -82,6 +96,7 @@
     </danger>
     <permissive>
       <aspect>Restricting</aspect>
+      <aspect xml:lang="nl">Hoog of laag geplaatst knipperend geel licht</aspect>
     </permissive>
     <held>
       <aspect>Stop</aspect>

@@ -42,7 +42,7 @@
     </revision>
     <revision>
       <revnumber>2</revnumber>
-      <date>2016-04-09</date>
+      <date>2016-04-10</date>
       <authorinitials>EB</authorinitials>
       <revremark>Added rules and Dutch translations</revremark>
     </revision>
@@ -127,6 +127,7 @@
   </imagetypes>
   <appearancefiles>
     <appearancefile href="appearance-High.xml" />
+    <appearancefile href="appearance-High-Number.xml" />
     <appearancefile href="appearance-Dwarf.xml" />
   </appearancefiles>
 </aspecttable>
