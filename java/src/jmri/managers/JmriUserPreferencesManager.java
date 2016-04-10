@@ -3,122 +3,127 @@ package jmri.managers;
 import java.awt.Dimension;
 import java.awt.Point;
 import java.awt.Toolkit;
-import java.beans.PropertyChangeEvent;
-import java.beans.PropertyChangeListener;
 import java.io.File;
+import java.io.FileNotFoundException;
+import java.lang.reflect.Constructor;
+import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
 import java.util.ArrayList;
-import java.util.Enumeration;
 import java.util.HashMap;
-import java.util.Hashtable;
 import java.util.List;
 import java.util.Map;
-import java.util.Vector;
+import java.util.Map.Entry;
+import java.util.Set;
+import javax.annotation.Nonnull;
+import javax.annotation.Nullable;
 import javax.swing.BoxLayout;
 import javax.swing.JCheckBox;
 import javax.swing.JLabel;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
+import javax.swing.RowSorter;
 import javax.swing.SortOrder;
-import jmri.ShutDownTask;
+import jmri.ConfigureManager;
+import jmri.InstanceManager;
+import jmri.JmriException;
 import jmri.UserPreferencesManager;
-import jmri.implementation.QuietShutDownTask;
+import jmri.beans.Bean;
+import jmri.profile.Profile;
+import jmri.profile.ProfileManager;
+import jmri.profile.ProfileUtils;
 import jmri.util.FileUtil;
+import jmri.util.JmriJFrame;
+import jmri.util.jdom.JDOMUtil;
+import jmri.util.node.NodeIdentity;
+import org.jdom2.DataConversionException;
+import org.jdom2.Element;
+import org.jdom2.JDOMException;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 /**
- * Basic Implementation of the User Preferences Manager.
- * <P>
- * The User Message Preference Manager keeps track of the options that a user
- * has selected in messages where they have selected "Remember this setting for
- * next time"
+ * Implementation of {@link UserPreferencesManager} that saves user interface
+ * preferences that should be automatically remembered as they are set.
  *
- * @author Kevin Dickerson Copyright (C) 2010
+ * This class is intended to be a transistional class from a single user
+ * interface preferences manager to multiple, domain-specific (windows, tables,
+ * dialogs, etc) user interface preferences managers. I beleive that
+ * domain-specific managers could more efficently, both in the API and at
+ * runtime, handle each user interface preference need than a single monolithic
+ * manager.
+ *
+ * @author Randall Wood (C) 2016
  */
-@net.jcip.annotations.NotThreadSafe  // intended for access from Swing thread only
-@edu.umd.cs.findbugs.annotations.SuppressFBWarnings(
-        value = "ST_WRITE_TO_STATIC_FROM_INSTANCE_METHOD",
-        justification = "Class is single-threaded, and uses statics extensively")
+public class JmriUserPreferencesManager extends Bean implements UserPreferencesManager {
 
-public class DefaultUserMessagePreferences extends jmri.jmrit.XmlFile implements UserPreferencesManager {
+    private final static String CLASSPREFS_NAMESPACE = "http://jmri.org/xml/schema/auxiliary-configuration/class-preferences-4-3-5.xsd"; // NOI18N
+    private final static String CLASSPREFS_ELEMENT = "classPreferences"; // NOI18N
+    private final static String COMBOBOX_NAMESPACE = "http://jmri.org/xml/schema/auxiliary-configuration/combobox-4-3-5.xsd"; // NOI18N
+    private final static String COMBOBOX_ELEMENT = "comboBoxLastValue"; // NOI18N
+    private final static String SETTINGS_NAMESPACE = "http://jmri.org/xml/schema/auxiliary-configuration/settings-4-3-5.xsd"; // NOI18N
+    private final static String SETTINGS_ELEMENT = "settings"; // NOI18N
+    private final static String TABLES_NAMESPACE = "http://jmri.org/xml/schema/auxiliary-configuration/table-details-4-3-5.xsd"; // NOI18N
+    private final static String TABLES_ELEMENT = "tableDetails"; // NOI18N
+    private final static String WINDOWS_NAMESPACE = "http://jmri.org/xml/schema/auxiliary-configuration/window-details-4-3-5.xsd"; // NOI18N
+    private final static String WINDOWS_ELEMENT = "windowDetails"; // NOI18N
+    private final static Logger log = LoggerFactory.getLogger(JmriUserPreferencesManager.class);
 
-    private boolean allowSave = true;
-
-    // needs to be package or protected level for tests to be able to instantiate
-    DefaultUserMessagePreferences() {
-        init();
+    public static UserPreferencesManager getInstance() {
+        return JmriUserPreferencesManager.getDefault();
     }
 
-    DefaultUserMessagePreferences(boolean doInit) {
-        if (doInit) init();
+    /**
+     * Get the default UserPreferencesManager or create a new one if none
+     * exists. Load user preferences if needed.
+     *
+     * @return the default UserPreferencesManager
+     */
+    public static UserPreferencesManager getDefault() {
+        if (InstanceManager.getDefault(UserPreferencesManager.class) == null) {
+            JmriUserPreferencesManager manager = new JmriUserPreferencesManager();
+            InstanceManager.setDefault(UserPreferencesManager.class, manager);
+            manager.readUserPreferences();
+        }
+        return InstanceManager.getDefault(UserPreferencesManager.class);
     }
-    
-    void init() {
-        // register this object to be stored as part of preferences
-        if (jmri.InstanceManager.configureManagerInstance() != null) {
-            jmri.InstanceManager.configureManagerInstance().registerUserPrefs(this);
-        }
-        if (jmri.InstanceManager.getDefault(jmri.UserPreferencesManager.class) == null) {
-            //We add this to the instanceManager so that other components can access the preferences
-            //We need to make sure that this is registered before we do the read
-            jmri.InstanceManager.store(this, jmri.UserPreferencesManager.class);
-        }
-        // register a shutdown task to fore storing of preferences at shutdown
-        if (userPreferencesShutDownTask == null) {
-            userPreferencesShutDownTask = new QuietShutDownTask("User Preferences Shutdown") {
-                //NOI18N
-                @Override
-                public boolean doAction() {
-                    if (getChangeMade()) {
-                        log.info("Storing preferences as part of shutdown");
-                        if (allowSave) {
-                            jmri.InstanceManager.configureManagerInstance().storeUserPrefs(file);
-                        } else {
-                            log.info("Not allowing save of changes as the user has accessed the preferences and not performed a save");
-                        }
-                    }
-                    return true;
-                }
-            };
-            // need a shut down manager to be present
-            if (jmri.InstanceManager.shutDownManagerInstance() != null) {
-                jmri.InstanceManager.shutDownManagerInstance().register(userPreferencesShutDownTask);
-            } else {
-                log.warn("Won't protect preferences at shutdown without registered ShutDownManager");
-            }
-        }
 
-        preferenceItemDetails(getClassName(), "reminder", Bundle.getMessage("HideReminderLocationMessage"));
+    private boolean dirty = false;
+    private boolean loading = false;
+    private boolean allowSave;
+    private ArrayList<String> simplePreferenceList = new ArrayList<>();
+    //sessionList is used for messages to be suppressed for the current JMRI session only
+    private ArrayList<String> sessionPreferenceList = new ArrayList<>();
+    private ArrayList<ComboBoxLastSelection> _comboBoxLastSelection = new ArrayList<>();
+    private HashMap<String, WindowLocations> windowDetails = new HashMap<>();
+    private HashMap<String, ClassPreferences> classPreferenceList = new HashMap<>();
+    private HashMap<String, HashMap<String, TableColumnPreferences>> tableColumnPrefs = new HashMap<>();
+    private File file;
+
+    public JmriUserPreferencesManager() {
+        // prevent attempts to write during construction
+        this.allowSave = false;
+
         //I18N in ManagersBundle.properties (this is a checkbox on prefs tab Messages|Misc items)
-        classPreferenceList.get(getClassName()).setDescription(Bundle.getMessage("UserPreferences"));
+        this.preferenceItemDetails(getClassName(), "reminder", Bundle.getMessage("HideReminderLocationMessage")); // NOI18N
         //I18N in ManagersBundle.properties (this is the title of prefs tab Messages|Misc items)
-        readUserPreferences();
+        this.classPreferenceList.get(getClassName()).setDescription(Bundle.getMessage("UserPreferences")); // NOI18N
+
+        // allow attempts to write
+        this.allowSave = true;
+        this.dirty = false;
     }
 
-    private static class DefaultUserMessagePreferencesHolder {
-        static DefaultUserMessagePreferences instance = null;
-    }
-
-    public static DefaultUserMessagePreferences getInstance() {
-        if (DefaultUserMessagePreferencesHolder.instance == null) {
-            DefaultUserMessagePreferencesHolder.instance = new DefaultUserMessagePreferences();
-        }
-        return DefaultUserMessagePreferencesHolder.instance;
-    }
-
-    public static void resetInstance() {
-        DefaultUserMessagePreferencesHolder.instance = null;
-    }
-
+    @Override
     public synchronized void allowSave() {
-        DefaultUserMessagePreferencesHolder.instance.allowSave = true;
+        this.allowSave = true;
     }
 
+    @Override
     public synchronized void disallowSave() {
-        DefaultUserMessagePreferencesHolder.instance.allowSave = false;
+        this.allowSave = false;
     }
 
+    @Override
     public Dimension getScreen() {
         return Toolkit.getDefaultToolkit().getScreenSize();
     }
@@ -138,6 +143,7 @@ public class DefaultUserMessagePreferences extends jmri.jmrit.XmlFile implements
      * @param name  A unique name to identify the state being stored
      * @param state simple boolean.
      */
+    @Override
     public void setSimplePreferenceState(String name, boolean state) {
         if (state) {
             if (!simplePreferenceList.contains(name)) {
@@ -146,28 +152,17 @@ public class DefaultUserMessagePreferences extends jmri.jmrit.XmlFile implements
         } else {
             simplePreferenceList.remove(name);
         }
-        setChangeMade(false);
+        this.saveSimplePreferenceState();
     }
 
-    ArrayList<String> simplePreferenceList = new ArrayList<String>();
-
-    /**
-     * Enquire as to the state of a user preference.
-     * <p>
-     * Preferences that have not been set will be considered to be false.
-     * <p>
-     * The name is free-form, but to avoid ambiguity it should start with the
-     * package name (package.Class) for the primary using class.
-     */
+    @Override
     public boolean getSimplePreferenceState(String name) {
         return simplePreferenceList.contains(name);
     }
 
-    /**
-     * Returns an ArrayList of the checkbox states set as true.
-     */
+    @Override
     public ArrayList<String> getSimplePreferenceStateList() {
-        return simplePreferenceList;
+        return new ArrayList<>(simplePreferenceList);
     }
 
     /**
@@ -189,7 +184,13 @@ public class DefaultUserMessagePreferences extends jmri.jmrit.XmlFile implements
      * @param item     The specific item that is to be stored
      * @param state    Boolean state of the item.
      */
+    @Override
     public void setPreferenceState(String strClass, String item, boolean state) {
+        // convert old manager preferences to new manager preferences
+        if (strClass.equals("jmri.managers.DefaultUserMessagePreferences")) {
+            this.setPreferenceState("jmri.managers.JmriUserPreferencesManager", item, state);
+            return;
+        }
         if (!classPreferenceList.containsKey(strClass)) {
             classPreferenceList.put(strClass, new ClassPreferences());
             setClassDescription(strClass);
@@ -206,13 +207,10 @@ public class DefaultUserMessagePreferences extends jmri.jmrit.XmlFile implements
             a.add(new PreferenceList(item, state));
         }
         displayRememberMsg();
-        setChangeMade(true);
+        this.savePreferencesState();
     }
 
-    /**
-     * Returns the state of a given item registered against a specific class or
-     * item.
-     */
+    @Override
     public boolean getPreferenceState(String strClass, String item) {
         if (classPreferenceList.containsKey(strClass)) {
             ArrayList<PreferenceList> a = classPreferenceList.get(strClass).getPreferenceList();
@@ -227,8 +225,8 @@ public class DefaultUserMessagePreferences extends jmri.jmrit.XmlFile implements
 
     /**
      * Register details about a perticular preference, so that it can be
-     * displayed in the GUI and provide a meaning full description when
-     * presented to the user.
+     * displayed in the GUI and provide a meaningful description when presented
+     * to the user.
      *
      * @param strClass    A string form of the class that the preference is
      *                    stored or grouped with
@@ -236,7 +234,8 @@ public class DefaultUserMessagePreferences extends jmri.jmrit.XmlFile implements
      * @param description A meaningful decription of the item that the user will
      *                    understand.
      */
-    public void preferenceItemDetails(String strClass, String item, String description) {
+    @Override
+    public final void preferenceItemDetails(String strClass, String item, String description) {
         if (!classPreferenceList.containsKey(strClass)) {
             classPreferenceList.put(strClass, new ClassPreferences());
         }
@@ -250,26 +249,21 @@ public class DefaultUserMessagePreferences extends jmri.jmrit.XmlFile implements
         a.add(new PreferenceList(item, description));
     }
 
-    /**
-     * Returns a list of preferences that are registered against a specific
-     * class.
-     */
+    @Override
     public ArrayList<String> getPreferenceList(String strClass) {
         if (classPreferenceList.containsKey(strClass)) {
             ArrayList<PreferenceList> a = classPreferenceList.get(strClass).getPreferenceList();
-            ArrayList<String> list = new ArrayList<String>();
+            ArrayList<String> list = new ArrayList<>();
             for (int i = 0; i < a.size(); i++) {
                 list.add(a.get(i).getItem());
             }
             return list;
         }
         //Just return a blank array list will save call code checking for null
-        return new ArrayList<String>();
+        return new ArrayList<>();
     }
 
-    /**
-     * Returns the itemName of the n preference in the given class
-     */
+    @Override
     public String getPreferenceItemName(String strClass, int n) {
         if (classPreferenceList.containsKey(strClass)) {
             return classPreferenceList.get(strClass).getPreferenceName(n);
@@ -277,9 +271,7 @@ public class DefaultUserMessagePreferences extends jmri.jmrit.XmlFile implements
         return null;
     }
 
-    /**
-     * Returns the description of the given item preference in the given class
-     */
+    @Override
     public String getPreferenceItemDescription(String strClass, String item) {
         if (classPreferenceList.containsKey(strClass)) {
             ArrayList<PreferenceList> a = classPreferenceList.get(strClass).getPreferenceList();
@@ -306,6 +298,7 @@ public class DefaultUserMessagePreferences extends jmri.jmrit.XmlFile implements
      * @param name  A unique identifer for preference.
      * @param state
      */
+    @Override
     public void setSessionPreferenceState(String name, boolean state) {
         if (state) {
             if (!sessionPreferenceList.contains(name)) {
@@ -316,17 +309,7 @@ public class DefaultUserMessagePreferences extends jmri.jmrit.XmlFile implements
         }
     }
 
-    //sessionList is used for messages to be suppressed for the current JMRI session only
-    java.util.ArrayList<String> sessionPreferenceList = new java.util.ArrayList<String>();
-
-    /**
-     * Enquire as to the state of a user preference for the current session.
-     * <p>
-     * Preferences that have not been set will be considered to be false.
-     * <p>
-     * The name is free-form, but to avoid ambiguity it should start with the
-     * package name (package.Class) for the primary using class.
-     */
+    @Override
     public boolean getSessionPreferenceState(String name) {
         return sessionPreferenceList.contains(name);
     }
@@ -342,6 +325,7 @@ public class DefaultUserMessagePreferences extends jmri.jmrit.XmlFile implements
      * @param strClass String value of the calling class
      * @param item     String value of the specific item this is used for
      */
+    @Override
     public void showInfoMessage(String title, String message, String strClass, java.lang.String item) {
         showInfoMessage(title, message, strClass, item, false, true);
     }
@@ -362,6 +346,7 @@ public class DefaultUserMessagePreferences extends jmri.jmrit.XmlFile implements
      * @param alwaysRemember Means that the suppression of the message will be
      *                       saved
      */
+    @Override
     public void showErrorMessage(String title, String message, final String strClass, final String item, final boolean sessionOnly, final boolean alwaysRemember) {
         this.showMessage(title, message, strClass, item, sessionOnly, alwaysRemember, JOptionPane.ERROR_MESSAGE);
     }
@@ -382,6 +367,7 @@ public class DefaultUserMessagePreferences extends jmri.jmrit.XmlFile implements
      * @param alwaysRemember Means that the suppression of the message will be
      *                       saved
      */
+    @Override
     public void showInfoMessage(String title, String message, final String strClass, final String item, final boolean sessionOnly, final boolean alwaysRemember) {
         this.showMessage(title, message, strClass, item, sessionOnly, alwaysRemember, JOptionPane.ERROR_MESSAGE);
     }
@@ -402,31 +388,29 @@ public class DefaultUserMessagePreferences extends jmri.jmrit.XmlFile implements
      * @param alwaysRemember Means that the suppression of the message will be
      *                       saved
      */
+    @Override
     public void showWarningMessage(String title, String message, final String strClass, final String item, final boolean sessionOnly, final boolean alwaysRemember) {
         this.showMessage(title, message, strClass, item, sessionOnly, alwaysRemember, JOptionPane.WARNING_MESSAGE);
     }
 
-    private void showMessage(String title, String message, final String strClass, final String item, final boolean sessionOnly, final boolean alwaysRemember, int type) {
-        final UserPreferencesManager p;
-        p = jmri.InstanceManager.getDefault(jmri.UserPreferencesManager.class);
-
+    protected void showMessage(String title, String message, final String strClass, final String item, final boolean sessionOnly, final boolean alwaysRemember, int type) {
         final String preference = strClass + "." + item;
 
-        if (p.getSessionPreferenceState(preference)) {
+        if (this.getSessionPreferenceState(preference)) {
             return;
         }
-        if (!p.getPreferenceState(strClass, item)) {
+        if (!this.getPreferenceState(strClass, item)) {
             JPanel container = new JPanel();
             container.setLayout(new BoxLayout(container, BoxLayout.Y_AXIS));
             container.add(new JLabel(message));
-            final JCheckBox rememberSession = new JCheckBox(Bundle.getMessage("SkipMessageSession"));
             //I18N in ManagersBundle.properties
+            final JCheckBox rememberSession = new JCheckBox(Bundle.getMessage("SkipMessageSession")); // NOI18N
             if (sessionOnly) {
                 rememberSession.setFont(rememberSession.getFont().deriveFont(10f));
                 container.add(rememberSession);
             }
-            final JCheckBox remember = new JCheckBox(Bundle.getMessage("SkipMessageFuture"));
             //I18N in ManagersBundle.properties
+            final JCheckBox remember = new JCheckBox(Bundle.getMessage("SkipMessageFuture")); // NOI18N
             if (alwaysRemember) {
                 remember.setFont(remember.getFont().deriveFont(10f));
                 container.add(remember);
@@ -436,22 +420,16 @@ public class DefaultUserMessagePreferences extends jmri.jmrit.XmlFile implements
                     title,
                     type);
             if (remember.isSelected()) {
-                p.setPreferenceState(strClass, item, true);
+                this.setPreferenceState(strClass, item, true);
             }
             if (rememberSession.isSelected()) {
-                p.setSessionPreferenceState(preference, true);
+                this.setSessionPreferenceState(preference, true);
             }
 
         }
     }
 
-    /**
-     * Adds the last selection of a combo box.
-     * <p>
-     * The name is free-form, but to avoid ambiguity it should start with the
-     * package name (package.Class) for the primary using class, followed by an
-     * identifier for the combobox
-     */
+    @Override
     public void addComboBoxLastSelection(String comboBoxName, String lastValue) {
         if (getComboBoxLastSelection(comboBoxName) == null) {
             ComboBoxLastSelection combo = new ComboBoxLastSelection(comboBoxName, lastValue);
@@ -462,10 +440,7 @@ public class DefaultUserMessagePreferences extends jmri.jmrit.XmlFile implements
         setChangeMade(false);
     }
 
-    /**
-     * returns the last selected value in a given combobox
-     *
-     */
+    @Override
     public String getComboBoxLastSelection(String comboBoxName) {
         for (int i = 0; i < _comboBoxLastSelection.size(); i++) {
             if (_comboBoxLastSelection.get(i).getComboBoxName().equals(comboBoxName)) {
@@ -475,31 +450,22 @@ public class DefaultUserMessagePreferences extends jmri.jmrit.XmlFile implements
         return null;
     }
 
-    /**
-     * sets the last selected value in a given combobox
-     *
-     */
+    @Override
     public void setComboBoxLastSelection(String comboBoxName, String lastValue) {
         for (int i = 0; i < _comboBoxLastSelection.size(); i++) {
             if (_comboBoxLastSelection.get(i).getComboBoxName().equals(comboBoxName)) {
                 _comboBoxLastSelection.get(i).setLastValue(lastValue);
             }
         }
-        setChangeMade(false);
+        this.saveComboBoxLastSelections();
     }
 
-    /**
-     * returns the number of comboBox options saved
-     *
-     */
+    @Override
     public int getComboBoxSelectionSize() {
         return _comboBoxLastSelection.size();
     }
 
-    /**
-     * returns the ComboBox Name at position n
-     *
-     */
+    @Override
     public String getComboBoxName(int n) {
         try {
             return _comboBoxLastSelection.get(n).getComboBoxName();
@@ -508,10 +474,7 @@ public class DefaultUserMessagePreferences extends jmri.jmrit.XmlFile implements
         }
     }
 
-    /**
-     * returns the ComboBox Value at position n
-     *
-     */
+    @Override
     public String getComboBoxLastSelection(int n) {
         try {
             return _comboBoxLastSelection.get(n).getLastValue();
@@ -520,7 +483,870 @@ public class DefaultUserMessagePreferences extends jmri.jmrit.XmlFile implements
         }
     }
 
-    ArrayList<ComboBoxLastSelection> _comboBoxLastSelection = new ArrayList<ComboBoxLastSelection>();
+    public synchronized boolean getChangeMade() {
+        return dirty;
+    }
+
+    public synchronized void setChangeMade(boolean fireUpdate) {
+        dirty = true;
+        if (fireUpdate) {
+            this.firePropertyChange(UserPreferencesManager.PREFERENCES_UPDATED, null, null);
+        }
+    }
+
+    //The reset is used after the preferences have been loaded for the first time
+    @Override
+    public synchronized void resetChangeMade() {
+        dirty = false;
+    }
+
+    @Override
+    public void setLoading() {
+        loading = true;
+    }
+
+    @Override
+    public void finishLoading() {
+        loading = false;
+        resetChangeMade();
+    }
+
+    public void displayRememberMsg() {
+        if (loading) {
+            return;
+        }
+        showInfoMessage(Bundle.getMessage("Reminder"), Bundle.getMessage("ReminderLine"), getClassName(), "reminder"); // NOI18N
+    }
+
+    @Override
+    public Point getWindowLocation(String strClass) {
+        if (windowDetails.containsKey(strClass)) {
+            return windowDetails.get(strClass).getLocation();
+        }
+        return null;
+    }
+
+    @Override
+    public Dimension getWindowSize(String strClass) {
+        if (windowDetails.containsKey(strClass)) {
+            return windowDetails.get(strClass).getSize();
+        }
+        return null;
+    }
+
+    @Override
+    public boolean getSaveWindowSize(String strClass) {
+        if (windowDetails.containsKey(strClass)) {
+            return windowDetails.get(strClass).getSaveSize();
+        }
+        return false;
+    }
+
+    @Override
+    public boolean getSaveWindowLocation(String strClass) {
+        if (windowDetails.containsKey(strClass)) {
+            return windowDetails.get(strClass).getSaveLocation();
+        }
+        return false;
+    }
+
+    @Override
+    public void setSaveWindowSize(String strClass, boolean b) {
+        if (windowDetails.containsKey(strClass)) {
+            windowDetails.get(strClass).setSaveSize(b);
+        }
+        this.saveWindowDetails();
+    }
+
+    @Override
+    public void setSaveWindowLocation(String strClass, boolean b) {
+        if (windowDetails.containsKey(strClass)) {
+            windowDetails.get(strClass).setSaveLocation(b);
+        }
+        this.saveWindowDetails();
+    }
+
+    @Override
+    public void setWindowLocation(String strClass, Point location) {
+        if ((strClass == null) || (strClass.equals("jmri.util.JmriJFrame"))) {
+            return;
+        }
+        if (!windowDetails.containsKey(strClass)) {
+            windowDetails.put(strClass, new WindowLocations());
+        }
+        windowDetails.get(strClass).setLocation(location);
+        this.saveWindowDetails();
+    }
+
+    @Override
+    public void setWindowSize(String strClass, Dimension dim) {
+        if (strClass.equals("jmri.util.JmriJFrame")) {
+            return;
+        }
+        if (!windowDetails.containsKey(strClass)) {
+            windowDetails.put(strClass, new WindowLocations());
+        }
+        windowDetails.get(strClass).setSize(dim);
+        this.saveWindowDetails();
+    }
+
+    @Override
+    public ArrayList<String> getWindowList() {
+        return new ArrayList<>(windowDetails.keySet());
+    }
+
+    @Override
+    public void setProperty(String strClass, String key, Object value) {
+        if (strClass.equals(JmriJFrame.class.getName())) {
+            return;
+        }
+        if (!windowDetails.containsKey(strClass)) {
+            windowDetails.put(strClass, new WindowLocations());
+        }
+        windowDetails.get(strClass).setProperty(key, value);
+        this.saveWindowDetails();
+    }
+
+    @Override
+    public Object getProperty(String strClass, String key) {
+        if (windowDetails.containsKey(strClass)) {
+            return windowDetails.get(strClass).getProperty(key);
+        }
+        return null;
+    }
+
+    @Override
+    public Set<String> getPropertyKeys(String strClass) {
+        if (windowDetails.containsKey(strClass)) {
+            return windowDetails.get(strClass).getPropertyKeys();
+        }
+        return null;
+    }
+
+    @Override
+    public boolean isWindowPositionSaved(String strClass) {
+        return windowDetails.containsKey(strClass);
+    }
+
+    @Override
+    public String getClassDescription(String strClass) {
+        if (classPreferenceList.containsKey(strClass)) {
+            return classPreferenceList.get(strClass).getDescription();
+        }
+        return "";
+    }
+
+    @Override
+    public ArrayList<String> getPreferencesClasses() {
+        return new ArrayList<>(this.classPreferenceList.keySet());
+    }
+
+    /**
+     * Given that we know the class as a string, we will try and attempt to
+     * gather details about the preferences that has been added, so that we can
+     * make better sense of the details in the preferences window.
+     * <p>
+     * This looks for specific methods within the class called
+     * "getClassDescription" and "setMessagePreferenceDetails". If found it will
+     * invoke the methods, this will then trigger the class to send details
+     * about its preferences back to this code.
+     */
+    @Override
+    public void setClassDescription(String strClass) {
+        try {
+            Class<?> cl = Class.forName(strClass);
+            Object t = cl.newInstance();
+            boolean classDesFound;
+            boolean classSetFound;
+            String desc = null;
+            Method method;
+            //look through declared methods first, then all methods
+            try {
+                method = cl.getDeclaredMethod("getClassDescription");
+                desc = (String) method.invoke(t);
+                classDesFound = true;
+            } catch (IllegalAccessException | IllegalArgumentException | java.lang.reflect.InvocationTargetException | NullPointerException | ExceptionInInitializerError | NoSuchMethodException ex) {
+                log.debug(ex.toString());
+                classDesFound = false;
+            }
+            if (!classDesFound) {
+                try {
+                    method = cl.getMethod("getClassDescription");
+                    desc = (String) method.invoke(t);
+                } catch (IllegalAccessException | IllegalArgumentException | java.lang.reflect.InvocationTargetException | NullPointerException | ExceptionInInitializerError | NoSuchMethodException ex) {
+                    log.debug(ex.toString());
+                    classDesFound = false;
+                }
+            }
+            if (classDesFound) {
+                if (!classPreferenceList.containsKey(strClass)) {
+                    classPreferenceList.put(strClass, new ClassPreferences(desc));
+                } else {
+                    classPreferenceList.get(strClass).setDescription(desc);
+                }
+                this.savePreferencesState();
+            }
+
+            try {
+                method = cl.getDeclaredMethod("setMessagePreferencesDetails");
+                method.invoke(t);
+                classSetFound = true;
+            } catch (IllegalAccessException | IllegalArgumentException | java.lang.reflect.InvocationTargetException | NullPointerException | ExceptionInInitializerError | NoSuchMethodException ex) {
+                log.debug(ex.toString());
+                classSetFound = false;
+            }
+            if (!classSetFound) {
+                try {
+                    method = cl.getMethod("setMessagePreferencesDetails");
+                    method.invoke(t);
+                } catch (IllegalAccessException | IllegalArgumentException | java.lang.reflect.InvocationTargetException | NullPointerException | ExceptionInInitializerError | NoSuchMethodException ex) {
+                    log.debug(ex.toString());
+                }
+            }
+
+        } catch (java.lang.ClassNotFoundException ex) {
+            log.error("class name \"{}\" is invalid", strClass, ex);
+        } catch (java.lang.IllegalAccessException ex) {
+            log.error("unable to access class \"{}\"", strClass, ex);
+        } catch (InstantiationException ex) {
+            log.error("unable to get a class name \"{}\"", strClass, ex);
+        }
+    }
+
+    /**
+     * Add descriptive details about a specific message box, so that if it needs
+     * to be reset in the preferences, then it is easily identifiable. displayed
+     * to the user in the preferences GUI.
+     *
+     * @param strClass      String value of the calling class/group
+     * @param item          String value of the specific item this is used for.
+     * @param description   A meaningful description that can be used in a label
+     *                      to describe the item
+     * @param msgOption     Description of each option valid option.
+     * @param msgNumber     The references number against which the Description
+     *                      is refering too.
+     * @param defaultOption The default option for the given item.
+     */
+    @Override
+    public void messageItemDetails(String strClass, String item, String description, String[] msgOption, int[] msgNumber, int defaultOption) {
+        HashMap<Integer, String> options = new HashMap<>(msgOption.length);
+        for (int i = 0; i < msgOption.length; i++) {
+            options.put(msgNumber[i], msgOption[i]);
+        }
+        messageItemDetails(strClass, description, item, options, defaultOption);
+    }
+
+    /**
+     * Add descriptive details about a specific message box, so that if it needs
+     * to be reset in the preferences, then it is easily identifiable. displayed
+     * to the user in the preferences GUI.
+     *
+     * @param strClass      String value of the calling class/group
+     * @param item          String value of the specific item this is used for.
+     * @param description   A meaningful description that can be used in a label
+     *                      to describe the item
+     * @param options       A map of the integer value of the option against a
+     *                      meaningful description.
+     * @param defaultOption The default option for the given item.
+     */
+    @Override
+    public void messageItemDetails(String strClass, String item, String description, HashMap<Integer, String> options, int defaultOption) {
+        if (!classPreferenceList.containsKey(strClass)) {
+            classPreferenceList.put(strClass, new ClassPreferences());
+        }
+        ArrayList<MultipleChoice> a = classPreferenceList.get(strClass).getMultipleChoiceList();
+        for (int i = 0; i < a.size(); i++) {
+            if (a.get(i).getItem().equals(item)) {
+                a.get(i).setMessageItems(description, options, defaultOption);
+                return;
+            }
+        }
+        a.add(new MultipleChoice(description, item, options, defaultOption));
+    }
+
+    @Override
+    public HashMap<Integer, String> getChoiceOptions(String strClass, String item) {
+        if (classPreferenceList.containsKey(strClass)) {
+            ArrayList<MultipleChoice> a = classPreferenceList.get(strClass).getMultipleChoiceList();
+            for (int i = 0; i < a.size(); i++) {
+                if (a.get(i).getItem().equals(item)) {
+                    return a.get(i).getOptions();
+                }
+            }
+        }
+        return new HashMap<>();
+    }
+
+    @Override
+    public int getMultipleChoiceSize(String strClass) {
+        if (classPreferenceList.containsKey(strClass)) {
+            return classPreferenceList.get(strClass).getMultipleChoiceListSize();
+        }
+        return 0;
+    }
+
+    @Override
+    public ArrayList<String> getMultipleChoiceList(String strClass) {
+        if (classPreferenceList.containsKey(strClass)) {
+            ArrayList<MultipleChoice> a = classPreferenceList.get(strClass).getMultipleChoiceList();
+            ArrayList<String> list = new ArrayList<>();
+            for (int i = 0; i < a.size(); i++) {
+                list.add(a.get(i).getItem());
+            }
+            return list;
+        }
+        return new ArrayList<>();
+    }
+
+    @Override
+    public String getChoiceName(String strClass, int n) {
+        if (classPreferenceList.containsKey(strClass)) {
+            return classPreferenceList.get(strClass).getChoiceName(n);
+        }
+        return null;
+    }
+
+    @Override
+    public String getChoiceDescription(String strClass, String item) {
+        if (classPreferenceList.containsKey(strClass)) {
+            ArrayList<MultipleChoice> a = classPreferenceList.get(strClass).getMultipleChoiceList();
+            for (int i = 0; i < a.size(); i++) {
+                if (a.get(i).getItem().equals(item)) {
+                    return a.get(i).getOptionDescription();
+                }
+            }
+        }
+        return null;
+    }
+
+    @Override
+    public int getMultipleChoiceOption(String strClass, String item) {
+        if (classPreferenceList.containsKey(strClass)) {
+            ArrayList<MultipleChoice> a = classPreferenceList.get(strClass).getMultipleChoiceList();
+            for (int i = 0; i < a.size(); i++) {
+                if (a.get(i).getItem().equals(item)) {
+                    return a.get(i).getValue();
+                }
+            }
+        }
+        return 0x00;
+    }
+
+    @Override
+    public int getMultipleChoiceDefaultOption(String strClass, String choice) {
+        if (classPreferenceList.containsKey(strClass)) {
+            ArrayList<MultipleChoice> a = classPreferenceList.get(strClass).getMultipleChoiceList();
+            for (int i = 0; i < a.size(); i++) {
+                if (a.get(i).getItem().equals(choice)) {
+                    return a.get(i).getDefaultValue();
+                }
+            }
+        }
+        return 0x00;
+    }
+
+    @Override
+    public void setMultipleChoiceOption(String strClass, String choice, String value) {
+        if (!classPreferenceList.containsKey(strClass)) {
+            classPreferenceList.put(strClass, new ClassPreferences());
+        }
+        for (MultipleChoice mc : classPreferenceList.get(strClass).getMultipleChoiceList()) {
+            if (mc.getItem().equals(choice)) {
+                mc.setValue(value);
+            }
+        }
+        this.savePreferencesState();
+    }
+
+    @Override
+    public void setMultipleChoiceOption(String strClass, String choice, int value) {
+        if (!classPreferenceList.containsKey(strClass)) {
+            classPreferenceList.put(strClass, new ClassPreferences());
+        }
+        boolean set = false;
+        for (MultipleChoice mc : classPreferenceList.get(strClass).getMultipleChoiceList()) {
+            if (mc.getItem().equals(choice)) {
+                mc.setValue(value);
+                set = true;
+            }
+        }
+        if (!set) {
+            classPreferenceList.get(strClass).getMultipleChoiceList().add(new MultipleChoice(choice, value));
+            setClassDescription(strClass);
+        }
+        displayRememberMsg();
+        this.savePreferencesState();
+    }
+
+    @Override
+    public void setTableColumnPreferences(String table, String column, int order, int width, SortOrder sort, boolean hidden) {
+        if (!tableColumnPrefs.containsKey(table)) {
+            tableColumnPrefs.put(table, new HashMap<>());
+        }
+        HashMap<String, TableColumnPreferences> columnPrefs = tableColumnPrefs.get(table);
+        columnPrefs.put(column, new TableColumnPreferences(order, width, sort, hidden));
+        this.saveTableColumnPreferences();
+    }
+
+    @Override
+    public int getTableColumnOrder(String table, String column) {
+        if (tableColumnPrefs.containsKey(table)) {
+            HashMap<String, TableColumnPreferences> columnPrefs = tableColumnPrefs.get(table);
+            if (columnPrefs.containsKey(column)) {
+                return columnPrefs.get(column).getOrder();
+            }
+        }
+        return -1;
+    }
+
+    @Override
+    public int getTableColumnWidth(String table, String column) {
+        if (tableColumnPrefs.containsKey(table)) {
+            HashMap<String, TableColumnPreferences> columnPrefs = tableColumnPrefs.get(table);
+            if (columnPrefs.containsKey(column)) {
+                return columnPrefs.get(column).getWidth();
+            }
+        }
+        return -1;
+    }
+
+    @Override
+    public SortOrder getTableColumnSort(String table, String column) {
+        if (tableColumnPrefs.containsKey(table)) {
+            HashMap<String, TableColumnPreferences> columnPrefs = tableColumnPrefs.get(table);
+            if (columnPrefs.containsKey(column)) {
+                return columnPrefs.get(column).getSort();
+            }
+        }
+        return SortOrder.UNSORTED;
+    }
+
+    @Override
+    public boolean getTableColumnHidden(String table, String column) {
+        if (tableColumnPrefs.containsKey(table)) {
+            HashMap<String, TableColumnPreferences> columnPrefs = tableColumnPrefs.get(table);
+            if (columnPrefs.containsKey(column)) {
+                return columnPrefs.get(column).getHidden();
+            }
+        }
+        return false;
+    }
+
+    @Override
+    public String getTableColumnAtNum(String table, int i) {
+        if (tableColumnPrefs.containsKey(table)) {
+            HashMap<String, TableColumnPreferences> columnPrefs = tableColumnPrefs.get(table);
+            for (Map.Entry<String, TableColumnPreferences> e : columnPrefs.entrySet()) {
+                Map.Entry<String, TableColumnPreferences> entry = e;
+                if ((entry.getValue()).getOrder() == i) {
+                    return entry.getKey();
+                }
+            }
+
+        }
+        return null;
+    }
+
+    @Override
+    public List<String> getTablesList() {
+        return new ArrayList<>(tableColumnPrefs.keySet());
+    }
+
+    @Override
+    public List<String> getTablesColumnList(String table) {
+        if (tableColumnPrefs.containsKey(table)) {
+            HashMap<String, TableColumnPreferences> columnPrefs = tableColumnPrefs.get(table);
+            return new ArrayList<>(columnPrefs.keySet());
+        }
+        return new ArrayList<>();
+    }
+
+    public String getClassDescription() {
+        return "Preference Manager";
+    }
+
+    protected final String getClassName() {
+        return this.getClass().getName();
+    }
+
+    protected final ClassPreferences getClassPreferences(String strClass) {
+        return this.classPreferenceList.get(strClass);
+    }
+
+    @Override
+    public int getPreferencesSize(String strClass) {
+        if (classPreferenceList.containsKey(strClass)) {
+            return classPreferenceList.get(strClass).getPreferencesSize();
+        }
+        return 0;
+    }
+
+    public final void readUserPreferences() {
+        this.allowSave = false;
+        this.loading = true;
+        File perNodeConfig = null;
+        try {
+            perNodeConfig = FileUtil.getFile(FileUtil.PROFILE + Profile.PROFILE + "/" + NodeIdentity.identity() + "/" + Profile.UI_CONFIG); // NOI18N
+            if (!perNodeConfig.canRead()) {
+                perNodeConfig = null;
+            }
+        } catch (FileNotFoundException ex) {
+            // ignore - this only means that sharedConfig does not exist.
+        }
+        if (perNodeConfig != null) {
+            file = perNodeConfig;
+            this.readComboBoxLastSelections();
+            this.readPreferencesState();
+            this.readSimplePreferenceState();
+            this.readTableColumnPreferences();
+            this.readWindowDetails();
+        } else {
+            try {
+                file = FileUtil.getFile(FileUtil.PROFILE + Profile.UI_CONFIG_FILENAME);
+                if (file.exists()) {
+                    log.debug("start load user pref file: {}", file.getPath());
+                    try {
+                        InstanceManager.getDefault(ConfigureManager.class).load(file, true);
+                        this.allowSave = true;
+                        this.savePreferences(); // write new preferences format immediately
+                    } catch (JmriException e) {
+                        log.error("Unhandled problem loading configuration: " + e);
+                    } catch (NullPointerException e) {
+                        log.error("NPE when trying to load user pref " + file);
+                    }
+                } else {
+                    // if we got here, there is no saved user preferences
+                    log.info("No saved user preferences file");
+                }
+            } catch (FileNotFoundException ex) {
+                // ignore - this only means that UserPrefsProfileConfig.xml does not exist.
+            }
+        }
+        this.loading = false;
+        this.allowSave = true;
+    }
+
+    private void readComboBoxLastSelections() {
+        Element element = this.readElement(COMBOBOX_ELEMENT, COMBOBOX_NAMESPACE);
+        if (element != null) {
+            element.getChildren("comboBox").stream().forEach((combo) -> {
+                _comboBoxLastSelection.add(new ComboBoxLastSelection(combo.getAttributeValue("name"), combo.getAttributeValue("lastSelected")));
+            });
+        }
+    }
+
+    private void saveComboBoxLastSelections() {
+        this.setChangeMade(false);
+        if (this.allowSave && getComboBoxSelectionSize() > 0) {
+            Element element = new Element(COMBOBOX_ELEMENT, COMBOBOX_NAMESPACE);
+            // Do not store blank last entered/selected values
+            _comboBoxLastSelection.stream().filter((cbls) -> (cbls.getLastValue() != null && !cbls.getLastValue().isEmpty())).map((cbls) -> {
+                Element combo = new Element("comboBox");
+                combo.setAttribute("name", cbls.getComboBoxName());
+                combo.setAttribute("lastSelected", cbls.getLastValue());
+                return combo;
+            }).forEach((combo) -> {
+                element.addContent(combo);
+            });
+            this.saveElement(element);
+            this.resetChangeMade();
+        }
+    }
+
+    private void readPreferencesState() {
+        Element element = this.readElement(CLASSPREFS_ELEMENT, CLASSPREFS_NAMESPACE);
+        if (element != null) {
+            element.getChildren("preferences").stream().forEach((preferences) -> {
+                String clazz = preferences.getAttributeValue("class");
+                log.debug("Reading class preferences for \"{}\"", clazz);
+                preferences.getChildren("multipleChoice").stream().forEach((mc) -> {
+                    mc.getChildren("option").stream().forEach((option) -> {
+                        int value = 0;
+                        try {
+                            option.getAttribute("value").getIntValue();
+                        } catch (DataConversionException ex) {
+                            log.error("failed to convert positional attribute");
+                        }
+                        this.setMultipleChoiceOption(clazz, option.getAttributeValue("item"), value);
+                    });
+                });
+                preferences.getChildren("reminderPrompts").stream().forEach((rp) -> {
+                    rp.getChildren("reminder").stream().forEach((reminder) -> {
+                        log.debug("Setting preferences state \"true\" for \"{}\", \"{}\"", clazz, reminder.getText());
+                        this.setPreferenceState(clazz, reminder.getText(), true);
+                    });
+                });
+            });
+        }
+    }
+
+    private void savePreferencesState() {
+        this.setChangeMade(true);
+        if (this.allowSave) {
+            Element element = new Element(CLASSPREFS_ELEMENT, CLASSPREFS_NAMESPACE);
+            this.classPreferenceList.keySet().stream().forEach((name) -> {
+                ClassPreferences cp = this.classPreferenceList.get(name);
+                if (!cp.multipleChoiceList.isEmpty() || !cp.preferenceList.isEmpty()) {
+                    Element clazz = new Element("preferences");
+                    clazz.setAttribute("class", name);
+                    if (!cp.multipleChoiceList.isEmpty()) {
+                        Element choices = new Element("multipleChoice");
+                        // only save non-default values
+                        cp.multipleChoiceList.stream().filter((mc) -> (mc.getDefaultValue() != mc.getValue())).forEach((mc) -> {
+                            choices.addContent(new Element("option")
+                                    .setAttribute("item", mc.getItem())
+                                    .setAttribute("value", Integer.toString(mc.getValue())));
+                        });
+                        if (!choices.getChildren().isEmpty()) {
+                            clazz.addContent(choices);
+                        }
+                    }
+                    if (!cp.preferenceList.isEmpty()) {
+                        Element reminders = new Element("reminderPrompts");
+                        cp.preferenceList.stream().filter((pl) -> (pl.getState())).forEach((pl) -> {
+                            reminders.addContent(new Element("reminder").addContent(pl.getItem()));
+                        });
+                        if (!reminders.getChildren().isEmpty()) {
+                            clazz.addContent(reminders);
+                        }
+                    }
+                    element.addContent(clazz);
+                }
+            });
+            if (!element.getChildren().isEmpty()) {
+                this.saveElement(element);
+            }
+        }
+    }
+
+    private void readSimplePreferenceState() {
+        Element element = this.readElement(SETTINGS_ELEMENT, SETTINGS_NAMESPACE);
+        if (element != null) {
+            element.getChildren("setting").stream().forEach((setting) -> {
+                this.simplePreferenceList.add(setting.getText());
+            });
+        }
+    }
+
+    private void saveSimplePreferenceState() {
+        this.setChangeMade(false);
+        if (this.allowSave) {
+            Element element = new Element(SETTINGS_ELEMENT, SETTINGS_NAMESPACE);
+            getSimplePreferenceStateList().stream().forEach((setting) -> {
+                element.addContent(new Element("setting").addContent(setting));
+            });
+            this.saveElement(element);
+            this.resetChangeMade();
+        }
+    }
+
+    private void readTableColumnPreferences() {
+        Element element = this.readElement(TABLES_ELEMENT, TABLES_NAMESPACE);
+        if (element != null) {
+            element.getChildren("table").stream().forEach((table) -> {
+                String tableName = table.getAttributeValue("name");
+                int sortColumn = -1;
+                SortOrder sortOrder = SortOrder.UNSORTED;
+                Element sortKeys = table.getChild("sortOrder");
+                if (sortKeys != null) {
+                    for (Element sortKey : sortKeys.getChildren()) {
+                        sortOrder = SortOrder.valueOf(sortKey.getAttributeValue("sortOrder"));
+                        try {
+                            sortColumn = sortKey.getAttribute("column").getIntValue();
+                        } catch (DataConversionException ex) {
+                            log.error("Unable to get sort column as integer");
+                        }
+                    }
+                }
+                log.debug("Table {} column {} is sorted {}", tableName, sortColumn, sortOrder);
+                for (Element column : table.getChild("columns").getChildren()) {
+                    String columnName = column.getAttribute("name").getValue();
+                    int order = -1;
+                    int width = -1;
+                    boolean hidden = false;
+                    try {
+                        if (column.getAttributeValue("order") != null) {
+                            order = column.getAttribute("order").getIntValue();
+                        }
+                        if (column.getAttributeValue("width") != null) {
+                            width = column.getAttribute("width").getIntValue();
+                        }
+                        if (column.getAttribute("hidden") != null) {
+                            hidden = column.getAttribute("hidden").getBooleanValue();
+                        }
+                    } catch (DataConversionException ex) {
+                        log.error("Unable to parse column \"{}\"", columnName);
+                        continue;
+                    }
+                    if (sortColumn == order) {
+                        this.setTableColumnPreferences(tableName, columnName, order, width, sortOrder, hidden);
+                    } else {
+                        this.setTableColumnPreferences(tableName, columnName, order, width, SortOrder.UNSORTED, hidden);
+                    }
+                }
+            });
+        }
+    }
+
+    private void saveTableColumnPreferences() {
+        this.setChangeMade(false);
+        if (this.allowSave) {
+            if (!this.tableColumnPrefs.isEmpty()) {
+                Element element = new Element(TABLES_ELEMENT, TABLES_NAMESPACE);
+                this.tableColumnPrefs.entrySet().stream().map((entry) -> {
+                    Element table = new Element("table").setAttribute("name", entry.getKey());
+                    RowSorter.SortKey sortKey = new RowSorter.SortKey(0, SortOrder.UNSORTED);
+                    Element columns = new Element("columns");
+                    for (Entry<String, TableColumnPreferences> column : entry.getValue().entrySet()) {
+                        Element columnElement = new Element("column").setAttribute("name", column.getKey());
+                        if (column.getValue().getOrder() != -1) {
+                            columnElement.setAttribute("order", Integer.toString(column.getValue().getOrder()));
+                        }
+                        if (column.getValue().getWidth() != -1) {
+                            columnElement.setAttribute("width", Integer.toString(column.getValue().getWidth()));
+                        }
+                        columnElement.setAttribute("hidden", Boolean.toString(column.getValue().getHidden()));
+                        columns.addContent(columnElement);
+                        if (column.getValue().getSort() != SortOrder.UNSORTED) {
+                            sortKey = new RowSorter.SortKey(column.getValue().getOrder(), column.getValue().getSort());
+                        }
+                    }
+                    table.addContent(columns);
+                    if (sortKey.getSortOrder() != SortOrder.UNSORTED) {
+                        table.addContent(new Element("sortOrder").addContent(new Element("sortKey")
+                                .setAttribute("column", Integer.toString(sortKey.getColumn()))
+                                .setAttribute("sortOrder", sortKey.getSortOrder().name())
+                        ));
+                    }
+                    return table;
+                }).forEach((table) -> {
+                    element.addContent(table);
+                });
+                this.saveElement(element);
+                this.resetChangeMade();
+            }
+        }
+    }
+
+    private void readWindowDetails() {
+        // TODO: COMPLETE!
+        Element element = this.readElement(WINDOWS_ELEMENT, WINDOWS_NAMESPACE);
+        if (element != null) {
+            element.getChildren("window").stream().forEach((window) -> {
+                String reference = window.getAttributeValue("class");
+                double x = 0;
+                double y = 0;
+                double width = 0;
+                double height = 0;
+                try {
+                    x = window.getAttribute("locX").getDoubleValue();
+                    y = window.getAttribute("locY").getDoubleValue();
+                    width = window.getAttribute("width").getDoubleValue();
+                    height = window.getAttribute("height").getDoubleValue();
+                } catch (DataConversionException ex) {
+                    log.error("Unable to read dimensions of window \"{}\"", reference);
+                }
+                this.setWindowLocation(reference, new java.awt.Point((int) x, (int) y));
+                this.setWindowSize(reference, new java.awt.Dimension((int) width, (int) height));
+                element.getChild("properties").getChildren().stream().forEach((property) -> {
+                    String key = property.getChild("key").getText();
+                    try {
+                        Class<?> cl = Class.forName(property.getChild("value").getAttributeValue("class"));
+                        Constructor<?> ctor = cl.getConstructor(new Class<?>[]{String.class});
+                        Object value = ctor.newInstance(new Object[]{property.getChild("value").getText()});
+                        this.setProperty(reference, key, value);
+                    } catch (ClassNotFoundException | NoSuchMethodException | SecurityException | InstantiationException | IllegalAccessException | IllegalArgumentException | InvocationTargetException ex) {
+                        log.error("Unable to retrieve property \"{}\" for window \"{}\"", key, reference);
+                    }
+                });
+            });
+        }
+    }
+
+    private void saveWindowDetails() {
+        this.setChangeMade(false);
+        if (this.allowSave) {
+            if (!windowDetails.isEmpty()) {
+                Element element = new Element(WINDOWS_ELEMENT, WINDOWS_NAMESPACE);
+                for (Entry<String, WindowLocations> entry : windowDetails.entrySet()) {
+                    Element window = new Element("window");
+                    window.setAttribute("class", entry.getKey());
+                    if (entry.getValue().saveLocation) {
+                        try {
+                            window.addContent(new Element("locX").addContent(Double.toString(entry.getValue().getLocation().getX())));
+                            window.addContent(new Element("locY").addContent(Double.toString(entry.getValue().getLocation().getY())));
+                        } catch (NullPointerException ex) {
+                            // Expected if the location has not been set or the window is open
+                        }
+                    }
+                    if (entry.getValue().saveSize) {
+                        try {
+                            double height = entry.getValue().size.height;
+                            double width = entry.getValue().size.width;
+                            // Do not save the width or height if set to zero
+                            if (!(height == 0.0 && width == 0.0)) {
+                                window.addContent(new Element("width").addContent(Double.toString(width)));
+                                window.addContent(new Element("height").addContent(Double.toString(height)));
+                            }
+                        } catch (NullPointerException ex) {
+                            // Expected if the size has not been set or the window is open
+                        }
+                    }
+                    if (!entry.getValue().parameters.isEmpty()) {
+                        Element properties = new Element("properties");
+                        entry.getValue().parameters.entrySet().stream().map((property) -> {
+                            Element propertyElement = new Element("property");
+                            propertyElement.addContent(new Element("key").setText(property.getKey()));
+                            Object value = property.getValue();
+                            if (value != null) {
+                                propertyElement.addContent(new Element("value")
+                                        .setAttribute("class", value.getClass().getName())
+                                        .setText(value.toString()));
+                            }
+                            return propertyElement;
+                        }).forEach((propertyElement) -> {
+                            properties.addContent(propertyElement);
+                        });
+                        window.addContent(properties);
+                    }
+                }
+                this.saveElement(element);
+                this.resetChangeMade();
+            }
+        }
+    }
+
+    /**
+     *
+     * @param elementName
+     * @param namespace
+     * @return an Element or null if the requested element does not exist
+     */
+    @Nullable
+    private Element readElement(@Nonnull String elementName, @Nonnull String namespace) {
+        org.w3c.dom.Element element = ProfileUtils.getUserInterfaceConfiguration(ProfileManager.getDefault().getActiveProfile()).getConfigurationFragment(elementName, namespace, false);
+        if (element != null) {
+            return JDOMUtil.toJDOMElement(element);
+        }
+        return null;
+    }
+
+    protected void saveElement(@Nonnull Element element) {
+        log.debug("Saving {} element.", element.getName());
+        try {
+            ProfileUtils.getUserInterfaceConfiguration(ProfileManager.getDefault().getActiveProfile()).putConfigurationFragment(JDOMUtil.toW3CElement(element), false);
+        } catch (JDOMException ex) {
+            log.error("Unable to save user preferences", ex);
+        }
+    }
+
+    private void savePreferences() {
+        this.saveComboBoxLastSelections();
+        this.savePreferencesState();
+        this.saveSimplePreferenceState();
+        this.saveTableColumnPreferences();
+        this.saveWindowDetails();
+    }
 
     private static class ComboBoxLastSelection {
 
@@ -546,624 +1372,10 @@ public class DefaultUserMessagePreferences extends jmri.jmrit.XmlFile implements
 
     }
 
-    ShutDownTask userPreferencesShutDownTask = null;
-
-    private static volatile boolean _changeMade = false;
-
-    public synchronized boolean getChangeMade() {
-        return _changeMade;
-    }
-
-    public synchronized void setChangeMade(boolean fireUpdate) {
-        _changeMade = true;
-        if (fireUpdate) {
-            notifyPropertyChangeListener("PreferencesUpdated", null, null);
-        }
-    }
-
-    //The reset is used after the preferences have been loaded for the first time
-    public synchronized void resetChangeMade() {
-        _changeMade = false;
-    }
-
-    public void removePropertyChangeListener(PropertyChangeListener l) {
-        if (listeners.contains(l)) {
-            listeners.removeElement(l);
-        }
-    }
-
-    public void addPropertyChangeListener(PropertyChangeListener l) {
-        // add only if not already registered
-        if (!listeners.contains(l)) {
-            listeners.addElement(l);
-        }
-    }
-
-    @SuppressWarnings("unchecked")
-    protected void notifyPropertyChangeListener(String property, Object oldValue, Object newValue) {
-        // make a copy of the listener vector to synchronized not needed for transmit
-        Vector<PropertyChangeListener> v;
-        synchronized (this) {
-            v = (Vector<PropertyChangeListener>) listeners.clone();
-        }
-        log.debug("notify {} listeners about property {}", v.size(), property);
-        // forward to all listeners
-        int cnt = v.size();
-        for (int i = 0; i < cnt; i++) {
-            PropertyChangeListener client = v.elementAt(i);
-            client.propertyChange(new PropertyChangeEvent(this, property, oldValue, newValue));
-        }
-    }
-
-    // data members to hold contact with the property listeners
-    final private Vector<PropertyChangeListener> listeners = new Vector<PropertyChangeListener>();
-
-    private static volatile boolean _loading = false;
-
-    public void setLoading() {
-        _loading = true;
-    }
-
-    public void finishLoading() {
-        _loading = false;
-        resetChangeMade();
-    }
-
-    public void displayRememberMsg() {
-        if (_loading) {
-            return;
-        }
-        showInfoMessage(Bundle.getMessage("Reminder"), Bundle.getMessage("ReminderLine"), getClassName(), "reminder");
-        //I18N in ManagersBundle.properties, //last element is a key, so NOI18N for that
-    }
-
-    Hashtable<String, WindowLocations> windowDetails = new Hashtable<String, WindowLocations>();
-
-    public Point getWindowLocation(String strClass) {
-        if (windowDetails.containsKey(strClass)) {
-            return windowDetails.get(strClass).getLocation();
-        }
-        return null;
-    }
-
-    public Dimension getWindowSize(String strClass) {
-        if (windowDetails.containsKey(strClass)) {
-            return windowDetails.get(strClass).getSize();
-        }
-        return null;
-    }
-
-    public boolean getSaveWindowSize(String strClass) {
-        if (windowDetails.containsKey(strClass)) {
-            return windowDetails.get(strClass).getSaveSize();
-        }
-        return false;
-    }
-
-    public boolean getSaveWindowLocation(String strClass) {
-        if (windowDetails.containsKey(strClass)) {
-            return windowDetails.get(strClass).getSaveLocation();
-        }
-        return false;
-    }
-
-    public void setSaveWindowSize(String strClass, boolean b) {
-        if (windowDetails.containsKey(strClass)) {
-            windowDetails.get(strClass).setSaveSize(b);
-        }
-    }
-
-    public void setSaveWindowLocation(String strClass, boolean b) {
-        if (windowDetails.containsKey(strClass)) {
-            windowDetails.get(strClass).setSaveLocation(b);
-        }
-    }
-
-    public void setWindowLocation(String strClass, Point location) {
-        if ((strClass == null) || (strClass.equals("jmri.util.JmriJFrame"))) {
-            return;
-        }
-        if (!windowDetails.containsKey(strClass)) {
-            windowDetails.put(strClass, new WindowLocations());
-        }
-        windowDetails.get(strClass).setLocation(location);
-        setChangeMade(false);
-    }
-
-    public void setWindowSize(String strClass, Dimension dim) {
-        if (strClass.equals("jmri.util.JmriJFrame")) {
-            return;
-        }
-        if (!windowDetails.containsKey(strClass)) {
-            windowDetails.put(strClass, new WindowLocations());
-        }
-        windowDetails.get(strClass).setSize(dim);
-        setChangeMade(false);
-    }
-
-    public ArrayList<String> getWindowList() {
-        ArrayList<String> list = new ArrayList<String>();
-        Enumeration<String> keys = windowDetails.keys();
-        while (keys.hasMoreElements()) {
-            String key = keys.nextElement();
-            list.add(key);
-        } // end while
-        return list;
-    }
-
-    public void setProperty(String strClass, String key, Object value) {
-        if (strClass.equals("jmri.util.JmriJFrame")) {
-            return;
-        }
-        if (!windowDetails.containsKey(strClass)) {
-            windowDetails.put(strClass, new WindowLocations());
-        }
-        windowDetails.get(strClass).setProperty(key, value);
-    }
-
-    public Object getProperty(String strClass, String key) {
-        if (windowDetails.containsKey(strClass)) {
-            return windowDetails.get(strClass).getProperty(key);
-        }
-        return null;
-    }
-
-    public java.util.Set<String> getPropertyKeys(String strClass) {
-        if (windowDetails.containsKey(strClass)) {
-            return windowDetails.get(strClass).getPropertyKeys();
-        }
-        return null;
-    }
-
-    public boolean isWindowPositionSaved(String strClass) {
-        return windowDetails.containsKey(strClass);
-    }
-
-    Hashtable<String, ClassPreferences> classPreferenceList = new Hashtable<String, ClassPreferences>();
-
-    /**
-     * Returns the description of a class/group registered with the preferences.
-     */
-    public String getClassDescription(String strClass) {
-        if (classPreferenceList.containsKey(strClass)) {
-            return classPreferenceList.get(strClass).getDescription();
-        }
-        return "";
-    }
-
-    /**
-     * Returns a list of the classes registered with the preference manager.
-     */
-    public ArrayList<String> getPreferencesClasses() {
-        ArrayList<String> list = new ArrayList<String>();
-        Enumeration<String> keys = classPreferenceList.keys();
-        while (keys.hasMoreElements()) {
-            String key = keys.nextElement();
-            list.add(key);
-        } // end while
-        return list;
-    }
-
-    /**
-     * Given that we know the class as a string, we will try and attempt to
-     * gather details about the preferences that has been added, so that we can
-     * make better sense of the details in the preferences window.
-     * <p>
-     * This looks for specific methods within the class called
-     * "getClassDescription" and "setMessagePreferenceDetails". If found it will
-     * invoke the methods, this will then trigger the class to send details
-     * about its preferences back to this code.
-     */
-    public void setClassDescription(String strClass) {
-        try {
-            Class<?> cl = Class.forName(strClass);
-            Object t = cl.newInstance();
-            boolean classDesFound = false;
-            boolean classSetFound = false;
-            String desc = null;
-            Method method;
-            //look through declared methods first, then all methods
-            try {
-                method = cl.getDeclaredMethod("getClassDescription");
-                desc = (String) method.invoke(t);
-                classDesFound = true;
-            } catch (IllegalAccessException ex) {
-                log.debug(ex.toString());
-                classDesFound = false;
-            } catch (IllegalArgumentException ea) {
-                log.debug(ea.toString());
-                classDesFound = false;
-            } catch (java.lang.reflect.InvocationTargetException ei) {
-                log.debug(ei.toString());
-                classDesFound = false;
-            } catch (NullPointerException ee) {
-                log.debug(ee.toString());
-                classDesFound = false;
-            } catch (ExceptionInInitializerError eo) {
-                log.debug(eo.toString());
-                classDesFound = false;
-            } catch (NoSuchMethodException en) {
-                log.debug(en.toString());
-                classDesFound = false;
-            }
-            if (!classDesFound) {
-                try {
-                    method = cl.getMethod("getClassDescription");
-                    desc = (String) method.invoke(t);
-                } catch (IllegalAccessException ex) {
-                    log.debug(ex.toString());
-                    classDesFound = false;
-                } catch (IllegalArgumentException ea) {
-                    log.debug(ea.toString());
-                    classDesFound = false;
-                } catch (java.lang.reflect.InvocationTargetException ei) {
-                    log.debug(ei.toString());
-                    classDesFound = false;
-                } catch (NullPointerException ee) {
-                    log.debug(ee.toString());
-                    classDesFound = false;
-                } catch (ExceptionInInitializerError eo) {
-                    log.debug(eo.toString());
-                    classDesFound = false;
-                } catch (NoSuchMethodException en) {
-                    log.debug(en.toString());
-                    classDesFound = false;
-                }
-            }
-            if (classDesFound) {
-                if (!classPreferenceList.containsKey(strClass)) {
-                    classPreferenceList.put(strClass, new ClassPreferences(desc));
-                } else {
-                    classPreferenceList.get(strClass).setDescription(desc);
-                }
-            }
-
-            try {
-                method = cl.getDeclaredMethod("setMessagePreferencesDetails");
-                method.invoke(t);
-                classSetFound = true;
-            } catch (IllegalAccessException ex) {
-                log.debug(ex.toString());
-                classSetFound = false;
-            } catch (IllegalArgumentException ea) {
-                log.debug(ea.toString());
-                classSetFound = false;
-            } catch (java.lang.reflect.InvocationTargetException ei) {
-                log.debug(ei.toString());
-                classSetFound = false;
-            } catch (NullPointerException ee) {
-                log.debug(ee.toString());
-                classSetFound = false;
-            } catch (ExceptionInInitializerError eo) {
-                log.debug(eo.toString());
-                classSetFound = false;
-            } catch (NoSuchMethodException en) {
-                log.debug(en.toString());
-                classSetFound = false;
-            }
-            if (!classSetFound) {
-                try {
-                    method = cl.getMethod("setMessagePreferencesDetails");
-                    method.invoke(t);
-                    classSetFound = true;
-                } catch (IllegalAccessException ex) {
-                    log.debug(ex.toString());
-                    classSetFound = false;
-                } catch (IllegalArgumentException ea) {
-                    log.debug(ea.toString());
-                    classSetFound = false;
-                } catch (java.lang.reflect.InvocationTargetException ei) {
-                    log.debug(ei.toString());
-                    classSetFound = false;
-                } catch (NullPointerException ee) {
-                    log.debug(ee.toString());
-                    classSetFound = false;
-                } catch (ExceptionInInitializerError eo) {
-                    log.debug(eo.toString());
-                    classSetFound = false;
-                } catch (NoSuchMethodException en) {
-                    log.debug(en.toString());
-                    classSetFound = false;
-                }
-            }
-
-        } catch (java.lang.ClassNotFoundException ec) {
-            log.error("class name " + strClass + " is in valid " + ec);
-        } catch (java.lang.IllegalAccessException ex) {
-            ex.printStackTrace();
-        } catch (InstantiationException e) {
-            log.error("unable to get a class name " + e);
-        }
-    }
-
-    /**
-     * Add descriptive details about a specific message box, so that if it needs
-     * to be reset in the preferences, then it is easily identifiable. displayed
-     * to the user in the preferences GUI.
-     *
-     * @param strClass      String value of the calling class/group
-     * @param item          String value of the specific item this is used for.
-     * @param description   A meaningful description that can be used in a label
-     *                      to describe the item
-     * @param msgOption     Description of each option valid option.
-     * @param msgNumber     The references number against which the Description
-     *                      is refering too.
-     * @param defaultOption The default option for the given item.
-     */
-    public void messageItemDetails(String strClass, String item, String description, String[] msgOption, int[] msgNumber, int defaultOption) {
-        HashMap<Integer, String> options = new HashMap<Integer, String>(msgOption.length);
-        for (int i = 0; i < msgOption.length; i++) {
-            options.put(msgNumber[i], msgOption[i]);
-        }
-        messageItemDetails(strClass, description, item, options, defaultOption);
-    }
-
-    /**
-     * Add descriptive details about a specific message box, so that if it needs
-     * to be reset in the preferences, then it is easily identifiable. displayed
-     * to the user in the preferences GUI.
-     *
-     * @param strClass      String value of the calling class/group
-     * @param item          String value of the specific item this is used for.
-     * @param description   A meaningful description that can be used in a label
-     *                      to describe the item
-     * @param options       A map of the integer value of the option against a
-     *                      meaningful description.
-     * @param defaultOption The default option for the given item.
-     */
-    public void messageItemDetails(String strClass, String item, String description, HashMap<Integer, String> options, int defaultOption) {
-        if (!classPreferenceList.containsKey(strClass)) {
-            classPreferenceList.put(strClass, new ClassPreferences());
-        }
-        ArrayList<MultipleChoice> a = classPreferenceList.get(strClass).getMultipleChoiceList();
-        for (int i = 0; i < a.size(); i++) {
-            if (a.get(i).getItem().equals(item)) {
-                a.get(i).setMessageItems(description, options, defaultOption);
-                return;
-            }
-        }
-        a.add(new MultipleChoice(description, item, options, defaultOption));
-    }
-
-    /**
-     * Returns a map of the value against description of the different items in
-     * a given class. This information can then be used to build a Combo box.
-     *
-     * @param strClass Class or group of the given item
-     * @param item     the item which we wish to return the details about.
-     */
-    public HashMap<Integer, String> getChoiceOptions(String strClass, String item) {
-        if (classPreferenceList.containsKey(strClass)) {
-            ArrayList<MultipleChoice> a = classPreferenceList.get(strClass).getMultipleChoiceList();
-            for (int i = 0; i < a.size(); i++) {
-                if (a.get(i).getItem().equals(item)) {
-                    return a.get(i).getOptions();
-                }
-            }
-        }
-        return new HashMap<Integer, String>();
-    }
-
-    /**
-     * Returns the number of Mulitple Choice items registered with a given
-     * class.
-     */
-    public int getMultipleChoiceSize(String strClass) {
-        if (classPreferenceList.containsKey(strClass)) {
-            return classPreferenceList.get(strClass).getMultipleChoiceListSize();
-        }
-        return 0;
-    }
-
-    /**
-     * Returns a list of all the multiple choice items registered with a given
-     * class.
-     */
-    public ArrayList<String> getMultipleChoiceList(String strClass) {
-        if (classPreferenceList.containsKey(strClass)) {
-            ArrayList<MultipleChoice> a = classPreferenceList.get(strClass).getMultipleChoiceList();
-            ArrayList<String> list = new ArrayList<String>();
-            for (int i = 0; i < a.size(); i++) {
-                list.add(a.get(i).getItem());
-            }
-            return list;
-        }
-        return new ArrayList<String>();
-    }
-
-    /**
-     * Returns the nth item name in a given class
-     */
-    public String getChoiceName(String strClass, int n) {
-        if (classPreferenceList.containsKey(strClass)) {
-            return classPreferenceList.get(strClass).getChoiceName(n);
-        }
-        return null;
-    }
-
-    /**
-     * Returns the a meaningful description of a given item in a given class or
-     * group.
-     */
-    public String getChoiceDescription(String strClass, String item) {
-        if (classPreferenceList.containsKey(strClass)) {
-            ArrayList<MultipleChoice> a = classPreferenceList.get(strClass).getMultipleChoiceList();
-            for (int i = 0; i < a.size(); i++) {
-                if (a.get(i).getItem().equals(item)) {
-                    return a.get(i).getOptionDescription();
-                }
-            }
-        }
-        return null;
-    }
-
-    /**
-     * Returns the current value of a given item in a given class
-     */
-    public int getMultipleChoiceOption(String strClass, String item) {
-        if (classPreferenceList.containsKey(strClass)) {
-            ArrayList<MultipleChoice> a = classPreferenceList.get(strClass).getMultipleChoiceList();
-            for (int i = 0; i < a.size(); i++) {
-                if (a.get(i).getItem().equals(item)) {
-                    return a.get(i).getValue();
-                }
-            }
-        }
-        return 0x00;
-    }
-
-    /**
-     * Returns the default value of a given item in a given class
-     */
-    public int getMultipleChoiceDefaultOption(String strClass, String choice) {
-        if (classPreferenceList.containsKey(strClass)) {
-            ArrayList<MultipleChoice> a = classPreferenceList.get(strClass).getMultipleChoiceList();
-            for (int i = 0; i < a.size(); i++) {
-                if (a.get(i).getItem().equals(choice)) {
-                    return a.get(i).getDefaultValue();
-                }
-            }
-        }
-        return 0x00;
-    }
-
-    /**
-     * Sets the value of a given item in a given class, by its string
-     * description
-     */
-    public void setMultipleChoiceOption(String strClass, String choice, String value) {
-        if (!classPreferenceList.containsKey(strClass)) {
-            return;
-        }
-        ArrayList<MultipleChoice> a = classPreferenceList.get(strClass).getMultipleChoiceList();
-        for (int i = 0; i < a.size(); i++) {
-            if (a.get(i).getItem().equals(choice)) {
-                a.get(i).setValue(value);
-            }
-        }
-    }
-
-    /**
-     * Sets the value of a given item in a given class, by its integer value
-     */
-    public void setMultipleChoiceOption(String strClass, String choice, int value) {
-        if (!classPreferenceList.containsKey(strClass)) {
-            classPreferenceList.put(strClass, new ClassPreferences());
-        }
-        ArrayList<MultipleChoice> a = classPreferenceList.get(strClass).getMultipleChoiceList();
-        boolean set = false;
-        for (int i = 0; i < a.size(); i++) {
-            if (a.get(i).getItem().equals(choice)) {
-                a.get(i).setValue(value);
-                set = true;
-            }
-        }
-        if (!set) {
-            a.add(new MultipleChoice(choice, value));
-            setClassDescription(strClass);
-        }
-        displayRememberMsg();
-        setChangeMade(true);
-    }
-
-    Hashtable<String, Hashtable<String, TableColumnPreferences>> tableColumnPrefs = new Hashtable<String, Hashtable<String, TableColumnPreferences>>();
-
-    public void setTableColumnPreferences(String table, String column, int order, int width, SortOrder sort, boolean hidden) {
-        if (!tableColumnPrefs.containsKey(table)) {
-            tableColumnPrefs.put(table, new Hashtable<String, TableColumnPreferences>());
-        }
-        Hashtable<String, TableColumnPreferences> columnPrefs = tableColumnPrefs.get(table);
-        columnPrefs.put(column, new TableColumnPreferences(order, width, sort, hidden));
-    }
-
-    public int getTableColumnOrder(String table, String column) {
-        if (tableColumnPrefs.containsKey(table)) {
-            Hashtable<String, TableColumnPreferences> columnPrefs = tableColumnPrefs.get(table);
-            if (columnPrefs.containsKey(column)) {
-                return columnPrefs.get(column).getOrder();
-            }
-        }
-        return -1;
-    }
-
-    public int getTableColumnWidth(String table, String column) {
-        if (tableColumnPrefs.containsKey(table)) {
-            Hashtable<String, TableColumnPreferences> columnPrefs = tableColumnPrefs.get(table);
-            if (columnPrefs.containsKey(column)) {
-                return columnPrefs.get(column).getWidth();
-            }
-        }
-        return -1;
-    }
-
-    public SortOrder getTableColumnSort(String table, String column) {
-        if (tableColumnPrefs.containsKey(table)) {
-            Hashtable<String, TableColumnPreferences> columnPrefs = tableColumnPrefs.get(table);
-            if (columnPrefs.containsKey(column)) {
-                return columnPrefs.get(column).getSort();
-            }
-        }
-        return SortOrder.UNSORTED;
-    }
-
-    public boolean getTableColumnHidden(String table, String column) {
-        if (tableColumnPrefs.containsKey(table)) {
-            Hashtable<String, TableColumnPreferences> columnPrefs = tableColumnPrefs.get(table);
-            if (columnPrefs.containsKey(column)) {
-                return columnPrefs.get(column).getHidden();
-            }
-        }
-        return false;
-    }
-
-    public String getTableColumnAtNum(String table, int i) {
-        if (tableColumnPrefs.containsKey(table)) {
-            Hashtable<String, TableColumnPreferences> columnPrefs = tableColumnPrefs.get(table);
-            for (Map.Entry<String, TableColumnPreferences> e : columnPrefs.entrySet()) {
-                Map.Entry<String, TableColumnPreferences> entry = e;
-                if ((entry.getValue()).getOrder() == i) {
-                    return entry.getKey();
-                }
-            }
-
-        }
-        return null;
-    }
-
-    public List<String> getTablesList() {
-        return new ArrayList<String>(tableColumnPrefs.keySet());
-    }
-
-    public List<String> getTablesColumnList(String table) {
-        if (tableColumnPrefs.containsKey(table)) {
-            Hashtable<String, TableColumnPreferences> columnPrefs = tableColumnPrefs.get(table);
-            return new ArrayList<String>(columnPrefs.keySet());
-        }
-        return new ArrayList<String>();
-    }
-
-    public String getClassDescription() {
-        return "Preference Manager";
-    }
-
-    protected String getClassName() {
-        return DefaultUserMessagePreferences.class.getName();
-    }
-
-    /**
-     * returns the combined size of both types of items registered.
-     */
-    public int getPreferencesSize(String strClass) {
-        if (classPreferenceList.containsKey(strClass)) {
-            return classPreferenceList.get(strClass).getPreferencesSize();
-        }
-        return 0;
-    }
-
     /**
      * Holds details about the speific class.
      */
-    static class ClassPreferences {
+    protected static class ClassPreferences {
 
         String classDescription;
 
@@ -1372,27 +1584,18 @@ public class DefaultUserMessagePreferences extends jmri.jmrit.XmlFile implements
         }
 
         void setProperty(String key, Object value) {
-            if (parameters == null) {
-                parameters = new HashMap<String, Object>();
-            }
             parameters.put(key, value);
         }
 
-        Object getProperty(String key) {
-            if (parameters == null) {
-                return null;
-            }
+        Object getProperty(Object key) {
             return parameters.get(key);
         }
 
-        java.util.Set<String> getPropertyKeys() {
-            if (parameters == null) {
-                return null;
-            }
+        Set<String> getPropertyKeys() {
             return parameters.keySet();
         }
 
-        HashMap<String, Object> parameters = null;
+        final HashMap<String, Object> parameters = new HashMap<>();
 
     }
 
@@ -1426,39 +1629,4 @@ public class DefaultUserMessagePreferences extends jmri.jmrit.XmlFile implements
             return hidden;
         }
     }
-    File file;
-
-    public void readUserPreferences() {
-        if (System.getProperty("org.jmri.Apps.configFilename") == null) {
-            log.warn("No Configuration file set, unable to save or load user preferences");
-            return;
-        }
-        File configFileName = new File(System.getProperty("org.jmri.Apps.configFilename"));
-        String userprefsfilename;
-        if (!configFileName.isAbsolute()) {
-            // must be relative, but we want it to 
-            // be relative to the preferences directory
-            userprefsfilename = "UserPrefs" + System.getProperty("org.jmri.Apps.configFilename");
-            file = new File(FileUtil.getUserFilesPath() + userprefsfilename);
-        } else {
-            userprefsfilename = "UserPrefs" + configFileName.getName();
-            file = new File(configFileName.getParent() + File.separator + userprefsfilename);
-        }
-
-        if (file.exists()) {
-            log.debug("start load user pref file: {}", file.getPath());
-            try {
-                jmri.InstanceManager.configureManagerInstance().load(file, true);
-            } catch (jmri.JmriException e) {
-                log.error("Unhandled problem loading configuration: " + e);
-            } catch (java.lang.NullPointerException e) {
-                log.error("NPE when trying to load user pref " + file);
-            }
-        } else {
-            log.info("No saved user preferences file");
-        }
-
-    }
-
-    private final static Logger log = LoggerFactory.getLogger(DefaultUserMessagePreferences.class.getName());
 }

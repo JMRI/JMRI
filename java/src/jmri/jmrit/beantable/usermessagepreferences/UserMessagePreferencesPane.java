@@ -53,7 +53,7 @@ public class UserMessagePreferencesPane extends JmriPanel implements Preferences
         super();
         p = jmri.InstanceManager.getDefault(UserPreferencesManager.class);
         p.addPropertyChangeListener((PropertyChangeEvent e) -> {
-            if (e.getPropertyName().equals("PreferencesUpdated")) {
+            if (e.getPropertyName().equals(UserPreferencesManager.PREFERENCES_UPDATED)) {
                 refreshOptions();
             }
         });

@@ -21,6 +21,8 @@ import javax.swing.SortOrder;
  */
 public interface UserPreferencesManager {
 
+    public static final String PREFERENCES_UPDATED = "PreferencesUpdated"; // NOI18N
+
     public void setLoading();
 
     public void finishLoading();
@@ -281,6 +283,10 @@ public interface UserPreferencesManager {
      * "getClassDescription" and "setMessagePreferenceDetails". If found it will
      * invoke the methods, this will then trigger the class to send details
      * about its preferences back to this code.
+     *
+     * @param strClass
+     * @see jmri.UserPreferencesManager.DescribableClass
+     * @see jmri.UserPreferencesManager.UserPreferencesDetailer
      */
     public void setClassDescription(String strClass);
 
@@ -430,19 +436,30 @@ public interface UserPreferencesManager {
      * Attach a key/value pair to the given class, which can be retrieved later.
      * These are not bound properties as yet, and don't throw events on
      * modification. Key must not be null.
+     *
+     * @param strClass
+     * @param key      Prior to 4.3.5, this could be an Object.
+     * @param value
      */
-    public void setProperty(String strClass, Object key, Object value);
+    public void setProperty(String strClass, String key, Object value);
 
     /**
      * Retrieve the value associated with a key in a given class If no value has
      * been set for that key, returns null.
+     *
+     * @param strClass
+     * @param key
+     * @return
      */
-    public Object getProperty(String strClass, Object key);
+    public Object getProperty(String strClass, String key);
 
     /**
      * Retrieve the complete current set of keys for a given class.
+     *
+     * @param strClass
+     * @return
      */
-    public java.util.Set<Object> getPropertyKeys(String strClass);
+    public java.util.Set<String> getPropertyKeys(String strClass);
 
     /**
      * Stores the details of a tables column, so that it can be saved and
@@ -565,7 +582,7 @@ public interface UserPreferencesManager {
 
      */
 
-    /*
+ /*
      Example question message dialog box.
         
      final DefaultUserMessagePreferences p;
