@@ -98,7 +98,7 @@
       <speed>Limited</speed>
       <speed2>Restricted</speed2>
       <route>Normal</route>
-      <dccAspect>1</dccAspect>
+      <dccAspect>3</dccAspect>
     </aspect>
     <aspect>
       <name>Diverging Approach Medium</name>
@@ -109,7 +109,7 @@
       <speed>Normal</speed>
       <speed2>Limited</speed2>
       <route>Normal</route>
-      <dccAspect>1</dccAspect>
+      <dccAspect>7</dccAspect>
     </aspect>
     <aspect>
       <name>Approach</name>
@@ -120,7 +120,7 @@
       <speed>Normal</speed>
       <speed2>Limited</speed2>
       <route>Normal</route>
-      <dccAspect>1</dccAspect>
+      <dccAspect>9</dccAspect>
     </aspect>
     <aspect>
       <name>Limited</name>

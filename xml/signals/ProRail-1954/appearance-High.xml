@@ -85,7 +85,6 @@
     </appearance>
     <appearance>
       <aspectname>Restricting</aspectname>
-      <aspectname xml:lang="nl">Hoog of laag geplaatst knipperend geel licht</aspectname>
       <show>flashyellow</show>
       <reference>Rule 214</reference>
       <imagelink type="large">../../../resources/icons/largeschematics/aspects/ProRail-1954/ProRail-FY.gif</imagelink>
@@ -102,11 +101,9 @@
   <specificappearances>
     <danger>
       <aspect>Restricting</aspect>
-      <aspect xml:lang="nl">Hoog of laag geplaatst knipperend geel licht</aspect>
     </danger>
     <permissive>
       <aspect>Restricting</aspect>
-      <aspect xml:lang="nl">Hoog of laag geplaatst knipperend geel licht</aspect>
     </permissive>
     <held>
       <aspect>Stop</aspect>
