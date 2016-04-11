@@ -61,13 +61,13 @@
 
   
 <li>
-<a href="html/tools/tracker/index.shtml">Block Tracking </a>
+<a href="package/jmri/jmrit/beantable/BlockTable.shtml">Block Table </a>
 <ul></ul>
 </li>
 
   
 <li>
-<a href="package/jmri/jmrit/beantable/BlockTable.shtml">Block Table </a>
+<a href="html/tools/tracker/index.shtml">Block Tracking </a>
 <ul></ul>
 </li>
 
@@ -976,6 +976,12 @@
  
 <li>
 <a href="package/jmri/jmrit/display/PanelMenuHelp.shtml">Panels Menu </a>
+<ul></ul>
+</li>
+
+ 
+<li>
+<a href="package/jmri/jmrit/logix/OBlockTable.shtml">Path (in OBlock) </a>
 <ul></ul>
 </li>
 

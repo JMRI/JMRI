@@ -1,4 +1,3 @@
-// AbstractProgrammer.java
 package jmri.jmrix;
 
 import java.beans.PropertyChangeListener;
@@ -16,7 +15,6 @@ import org.slf4j.LoggerFactory;
  * Common implementations for the Programmer interface.
  *
  * @author	Bob Jacobsen Copyright (C) 2001, 2012, 2013
- * @version $Revision$
  */
 public abstract class AbstractProgrammer implements Programmer {
 

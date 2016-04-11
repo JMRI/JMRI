@@ -1,4 +1,3 @@
-// AbstractNetworkPortController.java
 package jmri.jmrix;
 
 import java.io.DataInputStream;
@@ -14,7 +13,6 @@ import org.slf4j.LoggerFactory;
  *
  * @author Kevin Dickerson Copyright (C) 2010
  * @author Based upon work originally done by Paul Bender Copyright (C) 2009
- * @version	$Revision$
  * @see jmri.jmrix.NetworkConfigException
  */
 abstract public class AbstractNetworkPortController extends AbstractPortController implements NetworkPortAdapter {

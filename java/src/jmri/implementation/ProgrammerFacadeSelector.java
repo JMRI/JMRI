@@ -1,4 +1,3 @@
-/* ProgrammerFacadeSelector.java */
 package jmri.implementation;
 
 import java.util.List;
@@ -12,7 +11,6 @@ import org.slf4j.LoggerFactory;
  * Utility to load a specific ProgrammerFacade from an XML element
  * <P>
  * @author	Bob Jacobsen Copyright (C) 2013
- * @version	$Revision$
  */
 public class ProgrammerFacadeSelector {
 
@@ -118,6 +116,3 @@ public class ProgrammerFacadeSelector {
 
     private final static Logger log = LoggerFactory.getLogger(ProgrammerFacadeSelector.class.getName());
 }
-
-
-/* @(#)ProgrammerFacadeSelector.java */

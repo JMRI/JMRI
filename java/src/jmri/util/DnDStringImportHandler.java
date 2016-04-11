@@ -1,13 +1,5 @@
 package jmri.util;
 
-/**
- * Simple TransferHandler that overwrites the text in a JTextField component.
- * Use JTextField default handler if you want insertion
- * <P>
- *
- * @author Pete Cressman Copyright 2010
- * @version $Revision$
- */
 import java.awt.datatransfer.DataFlavor;
 import java.awt.datatransfer.Transferable;
 import java.awt.datatransfer.UnsupportedFlavorException;
@@ -18,12 +10,14 @@ import javax.swing.TransferHandler;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+/**
+ * Simple TransferHandler that overwrites the text in a JTextField component.
+ * Use JTextField default handler if you want insertion
+ * <P>
+ *
+ * @author Pete Cressman Copyright 2010
+ */
 public class DnDStringImportHandler extends TransferHandler {
-
-    /**
-     *
-     */
-    private static final long serialVersionUID = 2107475489891148707L;
 
     /////////////////////import
     public boolean canImport(JComponent comp, DataFlavor[] transferFlavors) {

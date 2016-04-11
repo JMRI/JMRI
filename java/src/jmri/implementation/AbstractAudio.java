@@ -27,11 +27,6 @@ import jmri.Audio;
  */
 public abstract class AbstractAudio extends AbstractNamedBean implements Audio {
 
-    /**
-     *
-     */
-    private static final long serialVersionUID = 6464454340389625230L;
-
     private int _state = STATE_INITIAL;
 
     private static final int INT_PRECISION = (int) Math.pow(10, DECIMAL_PLACES);

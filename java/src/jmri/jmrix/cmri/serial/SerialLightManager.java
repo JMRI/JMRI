@@ -1,4 +1,3 @@
-// SerialLightManager.java
 package jmri.jmrix.cmri.serial;
 
 import jmri.Light;
@@ -14,14 +13,8 @@ import org.slf4j.LoggerFactory;
  * Based in part on SerialTurnoutManager.java
  *
  * @author	Dave Duchamp Copyright (C) 2004
- * @version	$Revision$
  */
 public class SerialLightManager extends AbstractLightManager {
-
-    /**
-     *
-     */
-    private static final long serialVersionUID = -6357999324956206115L;
 
     public SerialLightManager() {
 
@@ -55,7 +48,7 @@ public class SerialLightManager extends AbstractLightManager {
         }
         String conflict = "";
         conflict = SerialAddress.isOutputBitFree(nAddress, bitNum);
-        if (conflict != "") {
+        if (!conflict.equals("")) {
             log.error("Assignment conflict with " + conflict + ".  Light not created.");
             notifyLightCreationError(conflict, bitNum);
             return (null);
@@ -134,5 +127,3 @@ public class SerialLightManager extends AbstractLightManager {
     private final static Logger log = LoggerFactory.getLogger(SerialLightManager.class.getName());
 
 }
-
-/* @(#)SerialLighttManager.java */

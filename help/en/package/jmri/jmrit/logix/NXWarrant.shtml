@@ -1,43 +1,41 @@
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
-<!-- $Id$ -->
-<HTML LANG="en">
-<HEAD>
-<TITLE>JMRI: NX Warrant Help</TITLE>
-<META HTTP-EQUIV="Content-Type" CONTENT="text/html; charset=iso-8859-1">
-<META CONTENT="Pete Cressman" NAME="Author">
-<META NAME="keywords" CONTENT="JMRI NX Warrant Help">
+<html lang="en">
+<head>
+<title>JMRI: NX Warrant Help</title>
+<meta content="Pete Cressman" name="author">
+<meta name="keywords" content="JMRI NX Warrant Help">
 
 <!-- Style -->
-<META HTTP-EQUIV="Content-Type" CONTENT="text/html; charset=iso-8859-1">
-<LINK REL="stylesheet" TYPE="text/css" HREF="/css/default.css"
-	MEDIA="screen">
-<LINK REL="stylesheet" TYPE="text/css" HREF="/css/print.css"
-	MEDIA="print">
-<LINK REL="icon" HREF="/images/jmri.ico" TYPE="image/png">
-<LINK REL="home" TITLE="Home" HREF="/">
-<!-- /Style -->
-</HEAD>
+<meta http-equiv="content-type" content="text/html; charset=iso-8859-1">
+<link rel="stylesheet" type="text/css" href="/css/default.css"
+	media="screen">
+<link rel="stylesheet" type="text/css" href="/css/print.css"
+	media="print">
+<link rel="icon" href="/images/jmri.ico" type="image/png">
+<link rel="home" title="Home" href="/">
+<!-- /style -->
+</head>
 
-<BODY>
+<body>
 <!--#include virtual="/Header" -->
   <div class="nomenu" id="mBody">
     <div id="mainContent">
 
-<H1>NXWarrants</H1>
+<h1>NXWarrants</h1>
 
 An NXWarrant is a computer generated warrant.  Rather than recording speed changes and other locomotive commands from a
 throttle where the recording notes the elapsed time between commands, an algorithm generates the speed changes and 
 elapsed times for a smooth start up and slow down to a stop. To review information about warrants see
-<A HREF="Warrant.shtml">About Warrants</A>. 
+<a href="Warrant.shtml">About Warrants</a>. 
 In order to determine correct elapsed times and the blocks where the speed changes 
 should occur, the block lengths must be known.  Additionally, the proper scale must be known.  Nevertheless, even
 if OBlock lengths are not specified, the algorithm makes a best effort to generate a usable warrant.
 <p>
-<H2>Launching an NXWarrant</H2>
+<h2>Launching an NXWarrant</h2>
 After selecting the menu item <b>Create NX Warrant</b> from the <b>Warrants</b> menu of the Control Panel Editor,
 or by clicking on the <b>Create NX Warrant</b> button in the <b>Warrant List</b> window, the 
 <b>Create eNtry/eXit Warrant</b> window is displayed.  
-<H3>Set the Route</H3>
+<h3>Set the Route</h3>
 First establish the route for the train by entering OBlocks in the following fields.
 <ul>
 	<li>Choose an <b>Origin</b> block, a starting Path and Portal to exit the originating block.</li>
@@ -66,7 +64,7 @@ you need not use a number that is much
 larger than the number of blocks in the longest route. <i>However, using too small a number can terminate the
 search prematurely before the route is found.</i> 
 <p>
-<H3>The Script Algorithm</H3>
+<h3>The Script Algorithm</h3>
 The NX warrant script sets the direction, turns the light on, blows two horn/whistle blasts and starts to 
 ramp up speed.  It is highly desirable to have a reasonable estimate for block length entered for each OBlock,
 but not absolutely necessary.  If the length of the route is known, the algorithm will ramp up to the last 
@@ -84,7 +82,7 @@ A further parameter the algorithm needs to know is the scale.  Choose the correc
 selecting it from the Preferences Warrants panel. The warrants panel at <i>Edit->Preferences->Warrants<i> is where 
 this and other warrant parameters can be edited.
 <p>
-<H3>Set the Algorithm Parameters</H3>
+<h3>Set the Algorithm Parameters</h3>
 At the bottom of the NXWarrant window are the following items.
 <ul>
 	<li><b>Max number of blocks in route</b> Maximum number of blocks the route algorithm should go 
@@ -128,14 +126,14 @@ At the bottom of the NXWarrant window are the following items.
 		route for a manual operator</li>
 </ul>
 <p>
-<H3>Running the Warrant</H3>
+<h3>Running the Warrant</h3>
 Pressing the 
 <b>Run NX Warrant</b> button computes the route and runs the addressed train at the specified 
 speeds and direction. If more
 than one route meets the criterion, you are presented with a list to review and select the 
 route you want.  The Via and Avoid location fields may be used to restrict the list.
 </p><p>
-<H3>Calculate a Speed Profile Throttle Factor</H3>
+<h3>Calculate a Speed Profile Throttle Factor</h3>
 When the <b>Compute Throttle Factor</b> checkbox is selected
 running the warrant will compute  Speed Profile throttle factor.  The "Via" block 
 is used as a speed trap to determine the track speed and compare it to the throttle setting. When the
@@ -148,12 +146,12 @@ are relatively constant.  Typically, the factors diverge at slow speeds.  For a 
 factors can vary due to temperature changes, consist load and other conditions.  Getting reproducible factors 
 from day to day within 10 to 15 percent is satisfactory.
 <p>
-<H3>Saving NXWarrants to make them Permanently Saved</H3>
+<h3>Saving NXWarrants to make them Permanently Saved</h3>
 If you press the <b>Edit</b> button on the Warrant List Table of the NXwarrant while it is still executing, the
 Create/Edit Warrant Window for the NXWarrant will open.  Use the <b>Copy</b> button to make a permanent warrant that
 can be edited later.
 <p>
-<H3>Some Tips for Smooth Start Up and Slow Down</H3>
+<h3>Some Tips for Smooth Start Up and Slow Down</h3>
 It is good practice to have a length specified for each block.  A rough estimate is better than letting it be 0.
 If the second block has length 0 any remaining speed steps not done in the starting block will be put in that block.  
 Lengths can be set for individual paths within a block in the CircuitBuilder should that be desirable.
@@ -178,8 +176,8 @@ The defaults are set for a modest amount of momentum, i.e. perhaps less than pro
 the train behaves and adjust accordingly.
 <p>
 
-<br>
-
 <!--#include virtual="/Footer" -->
-</BODY>
-</HTML>
+ </div><!-- closes #mainContent-->
+</div> <!-- closes #mBody-->
+</body>
+</html>

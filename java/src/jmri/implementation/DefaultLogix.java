@@ -27,11 +27,6 @@ import org.slf4j.LoggerFactory;
 public class DefaultLogix extends AbstractNamedBean
         implements Logix, java.io.Serializable {
 
-    /**
-     *
-     */
-    private static final long serialVersionUID = 4720328516573049659L;
-
     public DefaultLogix(String systemName, String userName) {
         super(systemName, userName);
     }

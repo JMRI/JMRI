@@ -56,6 +56,12 @@ public class XBeeLight extends AbstractLight {
     private void init(String id) {
         // store address
         systemName = id;
+        if( !(tc.getAdapterMemo() instanceof XBeeConnectionMemo)) 
+        {
+           log.error("Memo associated with the traffic controller is not the right type");
+           throw new IllegalArgumentException("Memo associated with the traffic controller is not the right type");
+        }
+        XBeeConnectionMemo memo = (XBeeConnectionMemo) tc.getAdapterMemo();
         String prefix = ((XBeeConnectionMemo) (tc.getAdapterMemo())).getLightManager().getSystemPrefix();
         if (systemName.contains(":")) {
             //Address format passed is in the form of encoderAddress:input or L:light address

@@ -1,4 +1,3 @@
-// DiagnosticAction.java
 package jmri.jmrix.cmri.serial.diagnostic;
 
 import java.awt.event.ActionEvent;
@@ -10,14 +9,8 @@ import org.slf4j.LoggerFactory;
  * Swing action to create and register a DiagnosticFrame object
  *
  * @author Dave Duchamp Copyright (C) 2004
- * @version	$Revision$
  */
 public class DiagnosticAction extends AbstractAction {
-
-    /**
-     *
-     */
-    private static final long serialVersionUID = 1241617418393868830L;
 
     public DiagnosticAction(String s) {
         super(s);
@@ -39,5 +32,3 @@ public class DiagnosticAction extends AbstractAction {
 
     private final static Logger log = LoggerFactory.getLogger(DiagnosticAction.class.getName());
 }
-
-/* @(#)DiagnosticAction.java */

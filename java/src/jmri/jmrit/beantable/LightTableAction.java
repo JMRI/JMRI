@@ -502,7 +502,14 @@ public class LightTableAction extends AbstractTableAction {
             contentPane.add(panel4);
             // buttons at bottom of window
             JPanel panel5 = new JPanel();
-            panel5.setLayout(new FlowLayout());
+            panel5.setLayout(new FlowLayout(FlowLayout.TRAILING));
+            panel5.add(cancel = new JButton(Bundle.getMessage("ButtonCancel")));
+            cancel.addActionListener(new ActionListener() {
+                public void actionPerformed(ActionEvent e) {
+                    cancelPressed(e);
+                }
+            });
+            cancel.setToolTipText(Bundle.getMessage("LightCancelButtonHint"));
             panel5.add(create = new JButton(Bundle.getMessage("ButtonCreate")));
             create.addActionListener(new ActionListener() {
                 public void actionPerformed(ActionEvent e) {
@@ -517,16 +524,9 @@ public class LightTableAction extends AbstractTableAction {
                 }
             });
             update.setToolTipText(Bundle.getMessage("LightUpdateButtonHint"));
-            panel5.add(cancel = new JButton(Bundle.getMessage("ButtonCancel")));
-            cancel.addActionListener(new ActionListener() {
-                public void actionPerformed(ActionEvent e) {
-                    cancelPressed(e);
-                }
-            });
-            cancel.setToolTipText(Bundle.getMessage("LightCancelButtonHint"));
             cancel.setVisible(true);
-            update.setVisible(false);
             create.setVisible(true);
+            update.setVisible(false);
             contentPane.add(panel5);
         }
         prefixChanged();
@@ -1006,7 +1006,9 @@ public class LightTableAction extends AbstractTableAction {
         // remind to save, if Light was created or edited
         if (lightCreatedOrUpdated) {
             InstanceManager.getDefault(jmri.UserPreferencesManager.class).
-                    showInfoMessage("Reminder", "Remember to save your Light information.", getClassName(), "remindSaveLight");
+                    showInfoMessage(Bundle.getMessage("ReminderTitle"), Bundle.getMessage("ReminderSaveString", Bundle.getMessage("MenuItemLightTable")),
+                            getClassName(),
+                            "remindSaveLight"); // NOI18N
         }
         lightCreatedOrUpdated = false;
         // get rid of the add/edit Frame
@@ -1144,7 +1146,14 @@ public class LightTableAction extends AbstractTableAction {
             panel3.setBorder(panel3Border);
             contentPane.add(panel3);
             JPanel panel5 = new JPanel();
-            panel5.setLayout(new FlowLayout());
+            panel5.setLayout(new FlowLayout(FlowLayout.TRAILING));
+            panel5.add(cancelControl = new JButton(Bundle.getMessage("ButtonCancel")));
+            cancelControl.addActionListener(new ActionListener() {
+                public void actionPerformed(ActionEvent e) {
+                    cancelControlPressed(e);
+                }
+            });
+            cancelControl.setToolTipText(Bundle.getMessage("LightCancelButtonHint"));
             panel5.add(createControl = new JButton(Bundle.getMessage("ButtonCreate")));
             createControl.addActionListener(new ActionListener() {
                 public void actionPerformed(ActionEvent e) {
@@ -1159,13 +1168,6 @@ public class LightTableAction extends AbstractTableAction {
                 }
             });
             updateControl.setToolTipText(Bundle.getMessage("LightUpdateControlButtonHint"));
-            panel5.add(cancelControl = new JButton(Bundle.getMessage("ButtonCancel")));
-            cancelControl.addActionListener(new ActionListener() {
-                public void actionPerformed(ActionEvent e) {
-                    cancelControlPressed(e);
-                }
-            });
-            cancelControl.setToolTipText(Bundle.getMessage("LightCancelButtonHint"));
             cancelControl.setVisible(true);
             updateControl.setVisible(false);
             createControl.setVisible(true);

@@ -1116,6 +1116,13 @@ public class Track {
         return !_shipLoadList.contains(load) && !_shipLoadList.contains(type + CarLoad.SPLIT_CHAR + load);
     }
 
+    /**
+     * Gets the drop option for this track. ANY means that all trains
+     * and routes can drop cars to this track. The other four options
+     * are used to restrict the track to certain trains or routes.
+     * 
+     * @return ANY, TRAINS, ROUTES, EXCLUDE_TRAINS, or EXCLUDE_ROUTES
+     */
     public String getDropOption() {
         return _dropOption;
     }
@@ -1123,7 +1130,7 @@ public class Track {
     /**
      * Set the car drop option for this track.
      *
-     * @param option ANY, TRAINS, or ROUTES
+     * @param option ANY, TRAINS, ROUTES, EXCLUDE_TRAINS, or EXCLUDE_ROUTES
      */
     public void setDropOption(String option) {
         String old = _dropOption;
@@ -1134,6 +1141,12 @@ public class Track {
         setDirtyAndFirePropertyChange(DROP_CHANGED_PROPERTY, old, option);
     }
 
+    /**
+     * Gets the pickup option for this track. ANY means that all trains
+     * and routes can pull cars from this track. The other four options
+     * are used to restrict the track to certain trains or routes.
+     * @return ANY, TRAINS, ROUTES, EXCLUDE_TRAINS, or EXCLUDE_ROUTES
+     */
     public String getPickupOption() {
         return _pickupOption;
     }
@@ -1141,7 +1154,7 @@ public class Track {
     /**
      * Set the car pick up option for this track.
      *
-     * @param option ANY, TRAINS, or ROUTES
+     * @param option ANY, TRAINS, ROUTES, EXCLUDE_TRAINS, or EXCLUDE_ROUTES
      */
     public void setPickupOption(String option) {
         String old = _pickupOption;
