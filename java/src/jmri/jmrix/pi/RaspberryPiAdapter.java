@@ -17,7 +17,10 @@ public class RaspberryPiAdapter extends jmri.jmrix.AbstractPortController
 
     // private control members
     private boolean opened = false;
-    private static GpioController gpio = null;
+    // in theory gpio can be static, because there will only ever
+    // be one, but the library handles the details that make it a 
+    // singleton.
+    private GpioController gpio = null;
     
     public RaspberryPiAdapter (){
         super(new RaspberryPiSystemConnectionMemo());
@@ -71,6 +74,11 @@ public class RaspberryPiAdapter extends jmri.jmrix.AbstractPortController
    public void recover(){
    }
 
+   /*
+    * get the GPIO Controller associated with this object.
+    *
+    * @return GpioController object.
+    */
    public GpioController getGPIOController(){ return gpio; }
 
    private final static Logger log = LoggerFactory.getLogger(RaspberryPiAdapter.class.getName());

@@ -27,7 +27,10 @@ public class RaspberryPiTurnout extends AbstractTurnout implements Turnout, java
     */
    private static final long serialVersionUID = 2015_02_15_001L;
 
-   private static GpioController gpio = null;
+    // in theory gpio can be static, because there will only ever
+    // be one, but the library handles the details that make it a 
+    // singleton.
+   private GpioController gpio = null;
    private GpioPinDigitalOutput pin = null;
    private int address;
 
