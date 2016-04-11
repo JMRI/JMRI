@@ -63,6 +63,7 @@ import jmri.GlobalProgrammerManager;
 import jmri.InstanceManager;
 import jmri.Programmer;
 import jmri.ProgrammerManager;
+import jmri.ShutDownManager;
 import jmri.UserPreferencesManager;
 import jmri.jmrit.decoderdefn.DecoderFile;
 import jmri.jmrit.decoderdefn.DecoderIndexFile;
@@ -422,7 +423,7 @@ public class RosterFrame extends TwoPaneTBWindow implements RosterEntrySelector,
         saveWindowDetails();
         //Save any changes made in the roster entry details
         Roster.getDefault().writeRoster();
-        if (allowQuit && frameInstances.size() == 1) {
+        if (allowQuit && frameInstances.size() == 1 && !InstanceManager.getDefault(ShutDownManager.class).isShuttingDown()) {
             handleQuit(e);
         } else {
             //As we are not the last window open or we are not allowed to quit the application then we will just close the current window

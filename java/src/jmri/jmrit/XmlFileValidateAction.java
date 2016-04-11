@@ -1,4 +1,3 @@
-// XmlFileValidateAction.java
 package jmri.jmrit;
 
 import java.awt.event.ActionEvent;
@@ -24,16 +23,10 @@ import org.slf4j.LoggerFactory;
  * Make sure an XML file is readable, and validates OK
  *
  * @author	Bob Jacobsen Copyright (C) 2005, 2007
- * @version	$Revision$
  * @see jmri.jmrit.XmlFile
  * @see jmri.jmrit.XmlFileCheckAction
  */
 public class XmlFileValidateAction extends AbstractAction {
-
-    /**
-     *
-     */
-    private static final long serialVersionUID = 1565162336074463863L;
 
     public XmlFileValidateAction(String s, JPanel who) {
         super(s);

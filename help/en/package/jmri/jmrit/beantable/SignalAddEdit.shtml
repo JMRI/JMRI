@@ -1,5 +1,4 @@
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
-<!-- $Id: SignalAddEdit.shtml 29368 2015-05-29 03:33:37Z jacobsen $ -->
 <html lang="en">
 <head>
  <title>
@@ -8,7 +7,7 @@
     <meta http-equiv=Content-Type content="text/html; charset=iso-8859-1">
 	  <meta name="Author" content="Bob Jacobsen">
 	  <meta name="Author" content="Egbert Broerse">
-		<meta name="Date.Modified" content="20150920"/>
+		<meta name="Date.Modified" content="20150920">
 	  <meta name="keywords" content="JMRI help Signal Heads Add Edit">
 
 <!--#include virtual="/Style" -->
@@ -73,7 +72,7 @@ Note: The Signalist SC1 can also be configured as individual Signal Heads (searc
 Key difference between a Signal Head and a Signal Mast is the number of different states each might have. A Signal Head only has (up to ) 8 Appearance entries but a Signal Mast can have up to 32 (0-31) possible states, called Aspects in that case. The command going out is the same but the number of possible values will differ.
   </dd>
 
-<a href="SignalHeadAdd1.png"><IMG SRC="SignalHeadAdd1.png" ALIGN=RIGHT WIDTH="137" HEIGHT="181" HSPACE="0" VSPACE="0" ALT="Add Signal Head panel figure 1"></a>
+<a href="SignalHeadAdd1.png"><img src="SignalHeadAdd1.png" align="right" width="137" height="181" hspace="0" vspace="0" alt="Add Signal Head panel figure 1"></a>
 	
 <dt>Single Output</dt>
   <dd>

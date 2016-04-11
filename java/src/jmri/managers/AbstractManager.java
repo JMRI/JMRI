@@ -5,7 +5,6 @@ import java.util.Enumeration;
 import java.util.Hashtable;
 import java.util.List;
 import javax.annotation.Nonnull;
-import javax.annotation.Nullable;
 import jmri.InstanceManager;
 import jmri.Manager;
 import jmri.NamedBean;
@@ -105,6 +104,7 @@ abstract public class AbstractManager
      * @param systemName System Name of the required NamedBean
      * @return requested NamedBean object or null if none exists
      */
+    @Override
     public NamedBean getBeanBySystemName(String systemName) {
         return _tsys.get(systemName);
     }
@@ -149,7 +149,7 @@ abstract public class AbstractManager
      * @throws java.beans.PropertyVetoException - If the recipient(s) wishes the
      *                                          delete to be aborted.
      */
-    public void deleteBean(@Nonnull NamedBean bean, @Nullable String property) throws java.beans.PropertyVetoException {
+    public void deleteBean(@Nonnull NamedBean bean, @Nonnull String property) throws java.beans.PropertyVetoException {
         try {
             fireVetoableChange(property, bean, null);
         } catch (java.beans.PropertyVetoException e) {
