@@ -1,4 +1,3 @@
-// DefaultIdTag.java
 package jmri.implementation;
 
 import java.text.DateFormat;
@@ -29,12 +28,11 @@ import org.slf4j.LoggerFactory;
  * <P>
  *
  * @author Matthew Harris Copyright (C) 2011
- * @version $Revision$
  * @since 2.11.4
  */
 public class DefaultIdTag extends AbstractIdTag {
 
-    private int _currentState = UNKNOWN;
+    private int currentState = UNKNOWN;
 
     public DefaultIdTag(String systemName) {
         super(systemName.toUpperCase());
@@ -48,19 +46,19 @@ public class DefaultIdTag extends AbstractIdTag {
 
     @Override
     public final void setWhereLastSeen(Reporter r) {
-        Reporter oldWhere = this._whereLastSeen;
-        Date oldWhen = this._whenLastSeen;
-        this._whereLastSeen = r;
+        Reporter oldWhere = this.whereLastSeen;
+        Date oldWhen = this.whenLastSeen;
+        this.whereLastSeen = r;
         if (r != null) {
-            this._whenLastSeen = InstanceManager.getDefault(IdTagManager.class).isFastClockUsed()
+            this.whenLastSeen = InstanceManager.getDefault(IdTagManager.class).isFastClockUsed()
                     ? InstanceManager.clockControlInstance().getTime()
                     : Calendar.getInstance().getTime();
         } else {
-            this._whenLastSeen = null;
+            this.whenLastSeen = null;
         }
         setCurrentState(r != null ? SEEN : UNSEEN);
-        firePropertyChange("whereLastSeen", oldWhere, this._whereLastSeen); //NOI18N
-        firePropertyChange("whenLastSeen", oldWhen, this._whenLastSeen);    //NOI18N
+        firePropertyChange("whereLastSeen", oldWhere, this.whereLastSeen); //NOI18N
+        firePropertyChange("whenLastSeen", oldWhen, this.whenLastSeen);    //NOI18N
     }
 
     private void setCurrentState(int state) {
@@ -73,12 +71,12 @@ public class DefaultIdTag extends AbstractIdTag {
 
     @Override
     public void setState(int s) throws JmriException {
-        this._currentState = s;
+        this.currentState = s;
     }
 
     @Override
     public int getState() {
-        return this._currentState;
+        return this.currentState;
     }
 
     @Override
@@ -120,12 +118,12 @@ public class DefaultIdTag extends AbstractIdTag {
                 this.setWhereLastSeen(
                         InstanceManager.reporterManagerInstance().provideReporter(
                                 e.getChild("whereLastSeen").getText())); //NOI18N
-                this._whenLastSeen = null;
+                this.whenLastSeen = null;
             }
             if (e.getChild("whenLastSeen") != null) { //NOI18N
                 log.debug("When Last Seen: " + e.getChild("whenLastSeen").getText());
                 try {
-                    this._whenLastSeen = DateFormat.getDateTimeInstance(DateFormat.MEDIUM, DateFormat.MEDIUM).parse(e.getChild("whenLastSeen").getText()); //NOI18N
+                    this.whenLastSeen = DateFormat.getDateTimeInstance(DateFormat.MEDIUM, DateFormat.MEDIUM).parse(e.getChild("whenLastSeen").getText()); //NOI18N
                 } catch (ParseException ex) {
                     log.warn("Error parsing when last seen: " + ex);
                 }
@@ -138,5 +136,3 @@ public class DefaultIdTag extends AbstractIdTag {
     private static final Logger log = LoggerFactory.getLogger(DefaultIdTag.class.getName());
 
 }
-
-/* @(#)DefaultIdTag.java */
