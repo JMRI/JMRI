@@ -1,4 +1,3 @@
-// MemoryFrameAction.java
 package jmri.jmrit;
 
 import java.awt.Container;
@@ -17,14 +16,8 @@ import jmri.util.JmriJFrame;
  * Display memory usage on request
  *
  * @author	Bob Jacobsen Copyright (C) 2001, 2008, 2012
- * @version	$Revision$
  */
 public class MemoryFrameAction extends AbstractAction {
-
-    /**
-     *
-     */
-    private static final long serialVersionUID = -7755576646931522800L;
 
     public MemoryFrameAction(String s) {
         super(s);

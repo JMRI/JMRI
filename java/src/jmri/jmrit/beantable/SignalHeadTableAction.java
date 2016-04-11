@@ -104,7 +104,7 @@ public class SignalHeadTableAction extends AbstractTableAction {
 
             public String getColumnName(int col) {
                if (col == VALUECOL) {
-                   return Bundle.getMessage("SignalMastAppearance");  // override default title
+                   return Bundle.getMessage("SignalMastAppearance");  // override default title, correct name SignalHeadAppearance i.e. "Red"
                } else if (col == LITCOL) {
                     return Bundle.getMessage("ColumnHeadLit");
                 } else if (col == HELDCOL) {
@@ -674,11 +674,20 @@ public class SignalHeadTableAction extends AbstractTableAction {
             JScrollPane scrollPane = new JScrollPane(panelCentre);
             addFrame.getContentPane().add(scrollPane, BorderLayout.CENTER);
 
+            // buttons at bottom of panel
             JPanel panelBottom = new JPanel();
-            panelBottom.setLayout(new BoxLayout(panelBottom, BoxLayout.Y_AXIS));
-
+            panelBottom.setLayout(new FlowLayout(FlowLayout.TRAILING));
+            // Cancel button
+            JButton cancelNew = new JButton(Bundle.getMessage("ButtonCancel"));
+            panelBottom.add(cancelNew);
+            cancelNew.addActionListener(new ActionListener() {
+                public void actionPerformed(ActionEvent e) {
+                    cancelNewPressed(e);
+                }
+            });
+            //OK button
             JButton ok;
-            panelBottom.add(ok = new JButton(Bundle.getMessage("ButtonOK")));
+            panelBottom.add(ok = new JButton(Bundle.getMessage("ButtonCreate")));
             ok.addActionListener(new ActionListener() {
                 public void actionPerformed(ActionEvent e) {
                     okPressed(e);
@@ -1682,7 +1691,8 @@ public class SignalHeadTableAction extends AbstractTableAction {
             panelBottom.setLayout(new BoxLayout(panelBottom, BoxLayout.Y_AXIS));
             // add buttons
             p = new JPanel();
-            p.setLayout(new FlowLayout());
+            p.setLayout(new FlowLayout(FlowLayout.TRAILING));
+
             JButton cancel;
             p.add(cancel = new JButton(Bundle.getMessage("ButtonCancel")));
             cancel.addActionListener(new ActionListener() {
@@ -2000,6 +2010,12 @@ public class SignalHeadTableAction extends AbstractTableAction {
     void cancelPressed(ActionEvent e) {
         editFrame.setVisible(false);
         editingHead = false;
+    }
+
+    void cancelNewPressed(ActionEvent e) {
+        addFrame.setVisible(false);
+        addFrame.dispose();
+        addFrame = null;
     }
 
     @SuppressWarnings("fallthrough")

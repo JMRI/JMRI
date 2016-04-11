@@ -359,31 +359,31 @@ public class EditCircuitFrame extends jmri.util.JmriJFrame {
 
         int state = _block.getState();
         StringBuffer stateText = new StringBuffer();
-        if ((state & OBlock.UNKNOWN) > 0) {
+        if ((state & OBlock.UNKNOWN) != 0) {
             stateText.append("Unknown ");
         }
-        if ((state & OBlock.OCCUPIED) > 0) {
+        if ((state & OBlock.OCCUPIED) != 0) {
             stateText.append("Occupied ");
         }
-        if ((state & OBlock.UNOCCUPIED) > 0) {
+        if ((state & OBlock.UNOCCUPIED) != 0) {
             stateText.append("Unoccupied ");
         }
-        if ((state & OBlock.INCONSISTENT) > 0) {
+        if ((state & OBlock.INCONSISTENT) != 0) {
             stateText.append("Inconsistent ");
         }
-        if ((state & OBlock.ALLOCATED) > 0) {
+        if ((state & OBlock.ALLOCATED) != 0) {
             stateText.append("Allocated ");
         }
-        if ((state & OBlock.RUNNING) > 0) {
+        if ((state & OBlock.RUNNING) != 0) {
             stateText.append("Positioned ");
         }
-        if ((state & OBlock.OUT_OF_SERVICE) > 0) {
+        if ((state & OBlock.OUT_OF_SERVICE) != 0) {
             stateText.append("OutOf Service ");
         }
-        if ((state & OBlock.DARK) > 0) {
+        if ((state & OBlock.DARK) != 0) {
             stateText.append("Dark ");
         }
-        if ((state & OBlock.TRACK_ERROR) > 0) {
+        if ((state & OBlock.TRACK_ERROR) != 0) {
             stateText.append("TrackError ");
         }
         if (state == 0) {

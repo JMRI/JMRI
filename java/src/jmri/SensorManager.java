@@ -37,7 +37,7 @@ public interface SensorManager extends Manager {
      *                                  e.g. an illegal name or name that can't
      *                                  be parsed.
      */
-    public @Nonnull Sensor provideSensor(@Nonnull String name);
+    public @Nonnull Sensor provideSensor(@Nonnull String name) throws IllegalArgumentException;
 
     /**
      * Locate via user name, then system name if needed. Does not create a new
@@ -78,7 +78,7 @@ public interface SensorManager extends Manager {
      *                                  an illegal name or name that can't be
      *                                  parsed.
      */
-    public @Nonnull Sensor newSensor(@Nonnull String systemName, @Nullable String userName);
+    public @Nonnull Sensor newSensor(@Nonnull String systemName, @Nullable String userName) throws IllegalArgumentException;
 
     public @Nullable Sensor getByUserName(@Nonnull String s);
 

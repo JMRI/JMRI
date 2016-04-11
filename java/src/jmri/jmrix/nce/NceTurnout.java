@@ -86,9 +86,9 @@ public class NceTurnout extends AbstractTurnout {
         // _once_ if anything has changed state (or set the commanded state directly)
 
         // sort out states
-        if ((s & Turnout.CLOSED) > 0) {
+        if ((s & Turnout.CLOSED) != 0) {
             // first look for the double case, which we can't handle
-            if ((s & Turnout.THROWN) > 0) {
+            if ((s & Turnout.THROWN) != 0) {
                 // this is the disaster case!
                 log.error("Cannot command both CLOSED and THROWN " + s);
                 return;
@@ -173,12 +173,12 @@ public class NceTurnout extends AbstractTurnout {
             return false;
         }
         // check to see if push button lock is enabled and valid decoder
-        if ((turnoutLockout & PUSHBUTTONLOCKOUT) > 0 && _enablePushButtonLockout
+        if ((turnoutLockout & PUSHBUTTONLOCKOUT) != 0 && _enablePushButtonLockout
                 && !getDecoderName().equals(PushbuttonPacket.unknown)) {
             return true;
         }
         // check to see if cab lockout is enabled
-        if ((turnoutLockout & CABLOCKOUT) > 0
+        if ((turnoutLockout & CABLOCKOUT) != 0
                 && getFeedbackMode() == MONITORING && _enableCabLockout) {
             return true;
         } else {
@@ -190,7 +190,7 @@ public class NceTurnout extends AbstractTurnout {
      * Control which turnout locks are enabled
      */
     public void enableLockOperation(int turnoutLockout, boolean enabled) {
-        if ((turnoutLockout & CABLOCKOUT) > 0) {
+        if ((turnoutLockout & CABLOCKOUT) != 0) {
             if (enabled) {
                 _enableCabLockout = true;
             } else {
@@ -201,7 +201,7 @@ public class NceTurnout extends AbstractTurnout {
                 _enablePushButtonLockout = true;
             }
         }
-        if ((turnoutLockout & PUSHBUTTONLOCKOUT) > 0) {
+        if ((turnoutLockout & PUSHBUTTONLOCKOUT) != 0) {
             if (enabled) {
                 _enablePushButtonLockout = true;
             } else {

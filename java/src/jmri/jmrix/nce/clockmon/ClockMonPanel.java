@@ -794,6 +794,9 @@ public class ClockMonPanel extends jmri.jmrix.nce.swing.NcePanel implements NceP
                     updateNceClockDisplay();
                     updateInternalClockDisplay();
                     break;
+                default:
+                    log.warn("Unexpected alarmDisplayStateCounter {} in alarmDisplayStates", alarmDisplayStateCounter);
+                    break;
             }
             if (log.isDebugEnabled() && extraDebug) {
                 log.debug("alarmDisplayStates: after: " + alarmDisplayStateCounter + " " + internalClock.getTime());
@@ -1085,8 +1088,8 @@ public class ClockMonPanel extends jmri.jmrix.nce.swing.NcePanel implements NceP
         } while (priorState != internalSyncRunStateCounter);
     }
 
+    @edu.umd.cs.findbugs.annotations.SuppressFBWarnings(value="FE_FLOATING_POINT_EQUALITY", justification="testing for change from stored value")
     private void internalClockStatusCheck() {
-
         // if change to internal clock
         if (clockMode == SYNCMODE_INTERNAL_MASTER) {
             if (internalLastRunning != internalClock.getRun()) {
@@ -1097,6 +1100,7 @@ public class ClockMonPanel extends jmri.jmrix.nce.swing.NcePanel implements NceP
                 }
                 internalSyncInitStates();
             }
+            // next line is the FE_FLOATING_POINT_EQUALITY annotated above
             if (internalLastRatio != internalClock.getRate()) {
                 internalSyncInitStateCounter = 1;
                 internalSyncInitStates();
@@ -1435,6 +1439,9 @@ public class ClockMonPanel extends jmri.jmrix.nce.swing.NcePanel implements NceP
                     updateNceClockDisplay();
                     updateInternalClockDisplay();
                     break;
+                default:
+                    log.warn("Unexpected nceSyncInitStateCounter {} in nceSyncInitStates", nceSyncInitStateCounter);
+                    break;
             }
             if (log.isDebugEnabled() && extraDebug) {
                 log.debug("After nceSyncInitStateCounter: " + nceSyncInitStateCounter + " " + internalClock.getTime());
@@ -1493,6 +1500,10 @@ public class ClockMonPanel extends jmri.jmrix.nce.swing.NcePanel implements NceP
                 case 4:
                     // wait for next minute
                     nceSyncRunStateCounter = 0;
+                    break;
+                default:
+                    log.warn("Unexpected state {} in nceSyncRunStates", nceSyncRunStateCounter);
+                    break;
             }
         } while (priorState != nceSyncRunStateCounter);
         if (log.isDebugEnabled() && extraDebug) {
@@ -1774,8 +1785,6 @@ public class ClockMonPanel extends jmri.jmrix.nce.swing.NcePanel implements NceP
      */
     static public class Default extends jmri.jmrix.nce.swing.NceNamedPaneAction {
 
-        private static final long serialVersionUID = 7866417679219605358L;
-
         public Default() {
             super("Open NCE Clock Monitor",
                     new jmri.util.swing.sdi.JmriJFrameInterface(),
@@ -1785,5 +1794,4 @@ public class ClockMonPanel extends jmri.jmrix.nce.swing.NcePanel implements NceP
     }
 
     private final static Logger log = LoggerFactory.getLogger(ClockMonPanel.class.getName());
-
 }

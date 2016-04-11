@@ -254,13 +254,24 @@ public class IdTagTableAction extends AbstractTableAction {
             addFrame.addHelpMenu("package.jmri.jmrit.beantable.IdTagAddEdit", true);
             addFrame.getContentPane().setLayout(new BoxLayout(addFrame.getContentPane(), BoxLayout.Y_AXIS));
 
-            ActionListener listener = (ActionEvent e1) -> {
-                okPressed(e1);
+            ActionListener okListener = new ActionListener() {
+                public void actionPerformed(ActionEvent e) {
+                    okPressed(e);
+                }
             };
-            addFrame.add(new AddNewDevicePanel(sysName, userName, "ButtonOK", listener));
+            ActionListener cancelListener = new ActionListener() {
+                public void actionPerformed(ActionEvent e) { cancelPressed(e); }
+            };
+            addFrame.add(new AddNewDevicePanel(sysName, userName, "ButtonOK", okListener, cancelListener));
         }
         addFrame.pack();
         addFrame.setVisible(true);
+    }
+
+    void cancelPressed(ActionEvent e) {
+        addFrame.setVisible(false);
+        addFrame.dispose();
+        addFrame = null;
     }
 
     void okPressed(ActionEvent e) {

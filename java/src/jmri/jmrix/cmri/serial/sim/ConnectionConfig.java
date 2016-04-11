@@ -1,4 +1,3 @@
-// ConnectionConfig.java
 package jmri.jmrix.cmri.serial.sim;
 
 import javax.swing.BoxLayout;
@@ -11,7 +10,6 @@ import jmri.jmrix.cmri.serial.nodeconfig.NodeConfigAction;
  * Simulator object.
  *
  * @author Bob Jacobsen Copyright (C) 2001, 2003, 2008
- * @version	$Revision$
  */
 public class ConnectionConfig extends jmri.jmrix.AbstractSimulatorConnectionConfig {
 
@@ -49,7 +47,7 @@ public class ConnectionConfig extends jmri.jmrix.AbstractSimulatorConnectionConf
     }
 
     /*protected Vector<String> getPortNames() {
-     Vector<String> portNameVector = new Vector<String>();
+     Vector<String> portNameVector = new Vector<>();
      portNameVector.addElement("(None)");
      return portNameVector;
      }*/
