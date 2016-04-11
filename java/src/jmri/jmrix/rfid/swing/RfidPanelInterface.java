@@ -1,4 +1,3 @@
-// PowerlinePanelInterface.java
 package jmri.jmrix.rfid.swing;
 
 import jmri.jmrix.rfid.RfidSystemConnectionMemo;
@@ -10,8 +9,6 @@ import jmri.jmrix.rfid.RfidSystemConnectionMemo;
  * @author Bob Jacobsen Copyright (C) 2010
  * @author Matthew Harris Copyright (C) 2011
  * @since 2.11.4
- *
- * @version $Revision$
  */
 public interface RfidPanelInterface {
 
@@ -20,6 +17,8 @@ public interface RfidPanelInterface {
      * <p>
      * This needs to be connected to the initContext() method in implementing
      * classes.
+     * @param memo SystemConnectionMemo for configured RFID system
+     * @throws java.lang.Exception
      */
     public void initComponents(RfidSystemConnectionMemo memo) throws Exception;
 

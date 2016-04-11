@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <?xml-stylesheet href="/xml/XSLT/DecoderID.xsl" type="text/xsl"?>
 <decoderIndex-config xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="http://jmri.org/xml/schema/decoder.xsd">
-  <!--Written by JMRI version 4.3.5ish-201604031726-Alain Le Marchand on Sun Apr 03 19:26:39 CEST 2016 $Id$-->
-  <decoderIndex version="706">
+  <!--Written by JMRI version 4.3.5ish-201604091641-Alain Le Marchand on Sat Apr 09 18:41:37 CEST 2016 $Id$-->
+  <decoderIndex version="708">
     <mfgList nmraListDate="2015-03-06" updated="2015-03-25" lastadd="107,124,126,128,134">
       <manufacturer mfg="NMRA" mfgID="999" />
       <manufacturer mfg="A-Train Electronics" mfgID="137" />
@@ -5628,7 +5628,7 @@
         </model>
       </family>
       <family name="Athearn" mfg="MRC" lowVersionID="32" highVersionID="32" file="MRC_Athearn_SD45_60_1825.xml">
-        <model model="Athearn SD45/SD60 MRC-1825" numOuts="2" numFns="19" maxTotalCurrent="1.5A" extFnsNmraF13="yes" />
+        <model show="maybe" model="Athearn SD45/SD60 MRC-1825" replacementModel="1825 - HO Scale - Athearn SD45/60" replacementFamily="Sound Decoders" numOuts="2" numFns="19" maxTotalCurrent="1.5A" extFnsNmraF13="yes" />
       </family>
       <family name="Athearn Genesis Challenger" mfg="MRC" lowVersionID="32" highVersionID="32" file="MRC_Challenger.xml">
         <model show="no" model="Athearn Genesis Challenger" replacementModel="Athearn Genesis Challenger" replacementFamily="Athearn" numOuts="2" numFns="12" maxTotalCurrent="1.5A" extFnsNmraF13="yes" comment="deprecated decoder definition" />
@@ -6080,6 +6080,49 @@
           <functionlabel num="28" lockable="true">Air Compressor Speed</functionlabel>
         </functionlabels>
       </family>
+      <family name="Sound Decoders" mfg="MRC" lowVersionID="25" highVersionID="25" comment="Synchronized Sound Brilliance(TM) Decoders" file="MRC_sound1750.xml">
+        <model model="1750 - HO Scale - Walthers GP15-1" numOuts="2" numFns="28" maxTotalCurrent="1.5A" extFnsMRC="yes" formFactor="HO" connector="DropIn" comment="&lt;html&gt;HO-Scale, &lt;br&gt; with multiple types (16 horns, 8 bells) &lt;br&gt;and with wireless remote&lt;/html&gt;">
+          <!-- Functions F0 to F28 are NMRA compatible -->
+          <size length="114" width="18" height="11" units="mm" />
+        </model>
+        <functionlabels>
+          <functionlabel num="0" lockable="true">Headlight</functionlabel>
+          <functionlabel num="1" lockable="true">Bell</functionlabel>
+          <functionlabel num="2" lockable="false">Horn</functionlabel>
+          <functionlabel num="3" lockable="false">Air Release</functionlabel>
+          <functionlabel num="4" lockable="false">Coupling 1</functionlabel>
+          <functionlabel num="5" lockable="false">Brake Squeal/Release</functionlabel>
+          <!-- Brake squeal (moving) and brake release (idle)-->
+          <functionlabel num="6" lockable="true">Idle</functionlabel>
+          <!-- idle shifting during idle -->
+          <functionlabel num="7" lockable="false">Air Hose/Uncoupling Lever</functionlabel>
+          <!-- Air hose firing/uncoupling lever -->
+          <functionlabel num="8" lockable="true">Shut Down/Notch Down</functionlabel>
+          <!-- Click 3 times during idle will shut down / notch down while CV122=3 -->
+          <functionlabel num="9" lockable="true">Fan/Notch Up</functionlabel>
+          <!-- Engine cooling fan / notch up while CV122=3 -->
+          <functionlabel num="10" lockable="false">Rail Clack</functionlabel>
+          <!--Rail wheel clack (only moving) -->
+          <functionlabel num="11" lockable="false">Traction Air Compressor</functionlabel>
+          <functionlabel num="12" lockable="true">Sound On/Off</functionlabel>
+          <functionlabel num="13" lockable="false">Air Release</functionlabel>
+          <functionlabel num="14" lockable="false">Coupling 2</functionlabel>
+          <functionlabel num="15" lockable="false">Air Pump</functionlabel>
+          <functionlabel num="16" lockable="false">Associated Loco Sound</functionlabel>
+          <functionlabel num="17" lockable="false">Flange Noise 1</functionlabel>
+          <functionlabel num="18" lockable="false">Bell Type</functionlabel>
+          <functionlabel num="19" lockable="false">Horn Type</functionlabel>
+          <functionlabel num="20" lockable="false">Reversal Gear</functionlabel>
+          <functionlabel num="21" lockable="false">Bell Volume</functionlabel>
+          <functionlabel num="22" lockable="false">Horn Volume</functionlabel>
+          <functionlabel num="23" lockable="false">Diesel Rumble Volume</functionlabel>
+          <functionlabel num="24" lockable="false">Air Release</functionlabel>
+          <functionlabel num="25" lockable="false">Flange Noise 2</functionlabel>
+          <functionlabel num="26" lockable="false">Flange Noise 3</functionlabel>
+          <functionlabel num="27" lockable="false">Sand Drop</functionlabel>
+          <functionlabel num="28" lockable="false">Air Release</functionlabel>
+        </functionlabels>
+      </family>
       <family name="Sound Decoders" mfg="MRC" lowVersionID="32" highVersionID="45" comment="Synchronized Sound Brilliance(TM) Decoders" file="MRC_sound1800-1801.xml">
         <model model="1800 - HO Scale - ALCO/SD60/SD70/F" numOuts="2" numFns="28" maxTotalCurrent="0.75A" extFnsMRC="yes" comment="Universal, with NMRA 8 pin and 9 pin jst connector">
           <size length="52.0" width="17.3" height="3.6" units="mm" />
@@ -6366,6 +6409,53 @@
           <functionlabel num="26" lockable="true">Flange Noise 3</functionlabel>
           <functionlabel num="27" lockable="true">Sand Drop</functionlabel>
           <functionlabel num="28" lockable="true">Ditch Lights Flash</functionlabel>
+        </functionlabels>
+      </family>
+      <family name="Sound Decoders" mfg="MRC" lowVersionID="25" highVersionID="25" comment="Synchronized Sound Brilliance(TM) Decoders" file="MRC_sound1825.xml">
+        <model model="1825 - HO Scale - Athearn SD45/60" numOuts="2" numFns="28" maxTotalCurrent="1.5A" extFnsMRC="yes" formFactor="HO" connector="DropIn" comment="&lt;html&gt;HO-Scale, &lt;br&gt; with multiple types (34 horns, 8 bells) &lt;br&gt;and with wireless remote&lt;/html&gt;">
+          <!-- Functions F0 to F28 are NMRA compatible -->
+          <size length="96" width="17.8" height="11" units="mm" />
+        </model>
+        <functionlabels>
+          <functionlabel num="0" lockable="true">Headlight</functionlabel>
+          <functionlabel num="1" lockable="true">Bell</functionlabel>
+          <functionlabel num="2" lockable="false">Horn</functionlabel>
+          <functionlabel num="3" lockable="true">Ditch Lights</functionlabel>
+          <!-- Ditch lights on/off or ACC1 light on/off with air release -->
+          <functionlabel num="4" lockable="false">Coupling 1</functionlabel>
+          <functionlabel num="5" lockable="false">Brake Squeal/Release</functionlabel>
+          <!-- Brake squeal (moving) and brake release (idle)-->
+          <functionlabel num="6" lockable="true">Dynamic Brake</functionlabel>
+          <!-- Dynamic brake on/off -->
+          <functionlabel num="7" lockable="false">Air Hose/Uncoupling Lever</functionlabel>
+          <!-- Air hose firing/uncoupling lever -->
+          <functionlabel num="8" lockable="true">Shut Down/Notch Down</functionlabel>
+          <!-- Click 3 times during idle will shut down / notch down while CV122=3 -->
+          <functionlabel num="9" lockable="true">Fan/Notch Up</functionlabel>
+          <!-- Engine cooling fan / notch up while CV122=3 -->
+          <functionlabel num="10" lockable="false">Rail Clack</functionlabel>
+          <!--Rail wheel clack (only moving) -->
+          <functionlabel num="11" lockable="false">Traction Air Compressor</functionlabel>
+          <functionlabel num="12" lockable="true">Prime Mover</functionlabel>
+          <!-- Change prime mover type including diesel off -->
+          <functionlabel num="13" lockable="true">ACC2 Light</functionlabel>
+          <!-- ACC2 light on/off short air release -->
+          <functionlabel num="14" lockable="false">Coupling 2</functionlabel>
+          <functionlabel num="15" lockable="false">Air Pump</functionlabel>
+          <functionlabel num="16" lockable="false">Associated Loco Sound</functionlabel>
+          <functionlabel num="17" lockable="false">Flange Noise 1</functionlabel>
+          <functionlabel num="18" lockable="false">Bell Type</functionlabel>
+          <functionlabel num="19" lockable="false">Horn Type</functionlabel>
+          <functionlabel num="20" lockable="false">Associated Loco Sound</functionlabel>
+          <functionlabel num="21" lockable="false">Bell Volume</functionlabel>
+          <functionlabel num="22" lockable="false">Horn Volume</functionlabel>
+          <functionlabel num="23" lockable="false">Diesel Rumble Volume</functionlabel>
+          <functionlabel num="24" lockable="false">Air Release</functionlabel>
+          <functionlabel num="25" lockable="false">Associated Loco Sound</functionlabel>
+          <functionlabel num="26" lockable="false">Flange Noise 3</functionlabel>
+          <functionlabel num="27" lockable="false">Sand Drop</functionlabel>
+          <functionlabel num="28" lockable="true">Ditch Lights Flash</functionlabel>
+          <!-- Ditch lights flash enable/disable (CV121) with air release -->
         </functionlabels>
       </family>
       <family name="Sound Decoders - N Scale" mfg="MRC" lowVersionID="27" highVersionID="45" comment="Synchronized Sound Brilliance(TM) Decoders" file="MRC_sound1827.xml">
@@ -19334,8 +19424,20 @@
       <family name="Quad-LN_S" mfg="Tam Valley Depot" type="stationary" comment="The Quad-LN_S is programmed in OPs mode except for the device address." file="TamValleyDepot_QuadLn_S_11.xml">
         <model model="Quad-LN_S_v1" comment="4 Servo Driver with Signaling or 4 additonal Servos" lowVersionID="6" />
       </family>
-      <family name="tOm NMJ" mfg="Tehnologistic (train-O-matic)" file="TrainOMatic_NMJ_224.xml">
-        <model model="NMJ Skd 224" numOuts="4" lowVersionID="1">
+      <family name="Lokommander" mfg="Tehnologistic (train-O-matic)" file="TrainOMatic_NMJ_224.xml">
+        <model model="Lokommander Mini" numOuts="4" lowVersionID="23" highVersionID="255">
+          <output name="1" label="Out1" />
+          <output name="2" label="Out2" />
+          <output name="3" label="Out3" />
+          <output name="4" label="Out4" />
+        </model>
+        <model model="Lokommander Micro" numOuts="4" lowVersionID="10" highVersionID="255">
+          <output name="1" label="Out1" />
+          <output name="2" label="Out2" />
+          <output name="3" label="Out3" />
+          <output name="4" label="Out4" />
+        </model>
+        <model model="NMJ Skd 224" numOuts="4" lowVersionID="1" highVersionID="255">
           <output name="1" label="Out1" />
           <output name="2" label="Out2" />
           <output name="3" label="Out3" />

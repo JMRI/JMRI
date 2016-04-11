@@ -1,4 +1,3 @@
-// RfidSensor.java
 package jmri.jmrix.rfid;
 
 import java.util.ArrayList;
@@ -13,7 +12,6 @@ import jmri.implementation.AbstractSensor;
  * <P>
  * @author	Bob Jacobsen Copyright (C) 2007
  * @author Matthew Harris Copyright (C) 2011
- * @version $Revision$
  * @since 2.11.4
  */
 public class RfidSensor extends AbstractSensor
@@ -27,6 +25,7 @@ public class RfidSensor extends AbstractSensor
         super(systemName, userName);
     }
 
+    @Override
     public void notify(IdTag r) {
         setOwnState(r != null ? Sensor.ACTIVE : Sensor.INACTIVE);
     }
@@ -36,7 +35,7 @@ public class RfidSensor extends AbstractSensor
     public void setOwnState(int state) {
         if (state == Sensor.INACTIVE) {
             if (contents.size() > 0) {
-                contents = new ArrayList<Integer>();
+                contents = new ArrayList<>();
             }
         }
         super.setOwnState(state);
@@ -63,9 +62,7 @@ public class RfidSensor extends AbstractSensor
     }
 
 //    transient Region region;
-    ArrayList<Integer> contents = new ArrayList<Integer>();
-
-    private static final long serialVersionUID = 1L;
+    ArrayList<Integer> contents = new ArrayList<>();
 
     /**
      * Notify parameter listeners that a device has left the region covered by
@@ -88,9 +85,8 @@ public class RfidSensor extends AbstractSensor
 //        Model.instance().removeRegion(region);
     }
 
+    @Override
     public void requestUpdateFromLayout() {
     }
 
 }
-
-/* @(#)RfidSensor.java */

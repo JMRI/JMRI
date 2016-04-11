@@ -984,7 +984,7 @@ public class WarrantFrame extends WarrantRoute {
                     if (oldMode != Warrant.MODE_NONE) {
                         OBlock block = _warrant.getCurrentBlockOrder().getBlock();
                         int state = block.getState();
-                        if ((state & OBlock.OCCUPIED) > 0 || (state & OBlock.DARK) > 0
+                        if ((state & OBlock.OCCUPIED) != 0 || (state & OBlock.DARK) != 0
                                  || _runBlind.isSelected()) {
                             setStatusText(
                                     Bundle.getMessage("warrantEnd",

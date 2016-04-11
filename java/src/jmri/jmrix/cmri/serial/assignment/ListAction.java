@@ -1,4 +1,3 @@
-// ListAction.java
 package jmri.jmrix.cmri.serial.assignment;
 
 import java.awt.event.ActionEvent;
@@ -10,14 +9,8 @@ import org.slf4j.LoggerFactory;
  * Swing action to create and register a ListFrame object
  *
  * @author Dave Duchamp Copyright (C) 2006
- * @version	$Revision$
  */
 public class ListAction extends AbstractAction {
-
-    /**
-     *
-     */
-    private static final long serialVersionUID = -3347041053064760390L;
 
     public ListAction(String s) {
         super(s);
@@ -39,5 +32,3 @@ public class ListAction extends AbstractAction {
 
     private final static Logger log = LoggerFactory.getLogger(ListAction.class.getName());
 }
-
-/* @(#)ListAction.java */
