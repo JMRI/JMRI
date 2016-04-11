@@ -21,7 +21,6 @@ import org.slf4j.LoggerFactory;
  * <P>
  * @author	Bob Jacobsen Copyright (C) 2001
  * @author	Andrew Crosland Copyright (C) 2009
- * @version $Revision$
  */
 public class CbusThrottleManager extends AbstractThrottleManager implements ThrottleManager, CanListener {
 
@@ -118,7 +117,7 @@ public class CbusThrottleManager extends AbstractThrottleManager implements Thro
     synchronized public void reply(CanReply m) {
         int opc = m.getElement(0);
         int rcvdIntAddr = (m.getElement(2) & 0x3f) * 256 + m.getElement(3);
-        boolean rcvdIsLong = (m.getElement(2) & 0xc0) > 0;
+        boolean rcvdIsLong = (m.getElement(2) & 0xc0) != 0;
         int handle = m.getElement(1);
         int errCode = m.getElement(3);
         DccLocoAddress rcvdDccAddr;

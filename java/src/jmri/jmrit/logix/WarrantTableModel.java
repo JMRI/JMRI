@@ -660,8 +660,8 @@ class WarrantTableModel extends jmri.jmrit.beantable.BeanTableDataModel // Abstr
                     if (oldMode != Warrant.MODE_NONE) {
                         OBlock block = bean.getCurrentBlockOrder().getBlock();
                         int state = block.getState();
-                        if ((state & OBlock.OCCUPIED) > 0
-                                || (state & OBlock.DARK) > 0) {
+                        if ((state & OBlock.OCCUPIED) != 0
+                                || (state & OBlock.DARK) != 0) {
                             _frame.setStatusText(
                                     Bundle.getMessage("warrantEnd",
                                             bean.getTrainName(),
