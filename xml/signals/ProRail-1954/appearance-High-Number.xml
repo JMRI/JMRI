@@ -52,6 +52,7 @@
     <appearance>
       <aspectname>Medium</aspectname>
       <show>flashgreen</show>
+      <show>lunar</show>
       <reference>Rule 202</reference>
       <imagelink type="large">../../../resources/icons/largeschematics/aspects/ProRail-1954/ProRail-NGF4.gif</imagelink>
       <imagelink type="aspects">../../../resources/icons/smallschematics/aspects/ProRail-1954/ProRail-ngf4.gif</imagelink>
@@ -66,13 +67,15 @@
     <appearance>
       <aspectname>Approach Medium</aspectname>
       <show>yellow</show>
+      <show>flashlunar</show>
       <reference>Rule 209</reference>
       <imagelink type="large">../../../resources/icons/largeschematics/aspects/ProRail-1954/ProRail-NY4F.gif</imagelink>
       <imagelink type="aspects">../../../resources/icons/smallschematics/aspects/ProRail-1954/ProRail-ny4f.gif</imagelink>
     </appearance>
     <appearance>
       <aspectname>Diverging Approach Medium</aspectname>
-      <show>flashyellow</show>
+      <show>yellow</show>
+      <show>lunar</show>
       <reference>Rule 210</reference>
       <imagelink type="large">../../../resources/icons/largeschematics/aspects/ProRail-1954/ProRail-NY4.gif</imagelink>
       <imagelink type="aspects">../../../resources/icons/smallschematics/aspects/ProRail-1954/ProRail-ny4.gif</imagelink>
@@ -128,16 +131,28 @@
       <ourAspect>Clear</ourAspect>
     </aspectMapping>
     <aspectMapping>
-      <advancedAspect>Restricting</advancedAspect>
+      <advancedAspect>Medium</advancedAspect>
       <ourAspect>Clear</ourAspect>
+    </aspectMapping>
+    <aspectMapping>
+      <advancedAspect>Approach Medium</advancedAspect>
+      <ourAspect>Clear</ourAspect>
+    </aspectMapping>
+    <aspectMapping>
+      <advancedAspect>Diverging Approach Medium</advancedAspect>
+      <ourAspect>Approach Medium</ourAspect>
+    </aspectMapping>
+    <aspectMapping>
+      <advancedAspect>Restricting</advancedAspect>
+      <ourAspect>Approach</ourAspect>
     </aspectMapping>
     <aspectMapping>
       <advancedAspect>Stop</advancedAspect>
       <ourAspect>Approach</ourAspect>
     </aspectMapping>
     <aspectMapping>
-      <advancedAspect>Stop for Engineering</advancedAspect>
-      <ourAspect>Approach</ourAspect>
+      <advancedAspect>Track Out of Service</advancedAspect>
+      <ourAspect>Stop</ourAspect>
     </aspectMapping>
   </aspectMappings>
 

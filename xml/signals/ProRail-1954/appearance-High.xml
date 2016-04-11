@@ -128,15 +128,15 @@
     </aspectMapping>
     <aspectMapping>
       <advancedAspect>Restricting</advancedAspect>
-      <ourAspect>Clear</ourAspect>
+      <ourAspect>Approach</ourAspect>
     </aspectMapping>
     <aspectMapping>
       <advancedAspect>Stop</advancedAspect>
       <ourAspect>Approach</ourAspect>
     </aspectMapping>
     <aspectMapping>
-      <advancedAspect>Stop for Engineering</advancedAspect>
-      <ourAspect>Approach</ourAspect>
+      <advancedAspect>Track Out of Service</advancedAspect>
+      <ourAspect>Stop</ourAspect>
     </aspectMapping>
   </aspectMappings>
 
