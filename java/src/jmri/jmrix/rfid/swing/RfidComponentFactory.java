@@ -1,4 +1,3 @@
-// RfidComponentFactory.java
 package jmri.jmrix.rfid.swing;
 
 import javax.swing.JMenu;
@@ -19,7 +18,6 @@ import jmri.jmrix.rfid.RfidSystemConnectionMemo;
  * <P>
  *
  * @author Matthew Harris Copyright (C) 2011
- * @version $Revision$
  */
 public class RfidComponentFactory extends jmri.jmrix.swing.ComponentFactory {
 
@@ -29,6 +27,7 @@ public class RfidComponentFactory extends jmri.jmrix.swing.ComponentFactory {
         this.memo = memo;
     }
 
+    @Override
     public JMenu getMenu() {
         if (memo.getDisabled()) {
             return null;
@@ -37,5 +36,3 @@ public class RfidComponentFactory extends jmri.jmrix.swing.ComponentFactory {
     }
 
 }
-
-/* @(#)RfidComponentFactory.java */

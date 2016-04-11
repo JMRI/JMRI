@@ -201,8 +201,7 @@ It will also allow you to configure a default responses and the question being d
 <dt>Programmer
 <dd>The DecoderPro programmer allows you to select how much or how little
 to display of the decoder content using configurable "Programmers". You 
-can select one at the same time you 
-<a href="../../manual/Basic_Programming.shtml">select your locomotive decoder</a>,
+can choose the Basic or Comprehensive interface when <a href="../../html/apps/DecoderPro/Roster.shtml">choosing your Locomotive decoder</a>,
 but this provides a convenient place to set a default so you don't
 have to select it each time you open a decoder.
 

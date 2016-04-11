@@ -142,9 +142,9 @@ public class NamedBeanHandleManager extends jmri.managers.AbstractManager implem
      * A method to update the listener reference from oldName to a newName
      */
     private void updateListenerRef(String oldName, String newName, NamedBean nBean) {
-        ArrayList<java.beans.PropertyChangeListener> listeners = nBean.getPropertyChangeListeners(oldName);
-        for (int i = 0; i < listeners.size(); i++) {
-            nBean.updateListenerRef(listeners.get(i), newName);
+        java.beans.PropertyChangeListener[] listeners = nBean.getPropertyChangeListenersByReference(oldName);
+        for (java.beans.PropertyChangeListener listener : listeners) {
+            nBean.updateListenerRef(listener, newName);
         }
     }
 
@@ -153,7 +153,7 @@ public class NamedBeanHandleManager extends jmri.managers.AbstractManager implem
      * listerner reference matches the currentName.
      */
     private void moveListener(NamedBean oldBean, NamedBean newBean, String currentName) {
-        ArrayList<java.beans.PropertyChangeListener> listeners = oldBean.getPropertyChangeListeners(currentName);
+        java.beans.PropertyChangeListener[] listeners = oldBean.getPropertyChangeListenersByReference(currentName);
         for (java.beans.PropertyChangeListener l : listeners) {
             String listenerRef = oldBean.getListenerRef(l);
             oldBean.removePropertyChangeListener(l);

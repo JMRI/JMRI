@@ -44,7 +44,7 @@ public class JynstrumentFactory {
             } finally {
                 fr.close();
             }
-        } catch (Exception ex) {
+        } catch (java.io.IOException | javax.script.ScriptException ex) {
             log.error("Exception while creating Jynstrument: " + ex);
             return null;
         }

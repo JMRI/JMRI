@@ -11,11 +11,6 @@ import java.util.Comparator;
  */
 public class PreferNumericComparator implements Comparator<Object>, java.io.Serializable {
 
-    /**
-     *
-     */
-    private static final long serialVersionUID = 7992060080109727828L;
-
     public PreferNumericComparator() {
     }
 

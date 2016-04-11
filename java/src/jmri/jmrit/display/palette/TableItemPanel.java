@@ -129,13 +129,17 @@ public class TableItemPanel extends FamilyItemPanel implements ListSelectionList
 
     protected void makeAddToTableWindow() {
         _addTableDialog = new JDialog(_paletteFrame, Bundle.getMessage("AddToTableTitle"), true);
-        ActionListener listener = new ActionListener() {
+
+        ActionListener cancelListener = new ActionListener() {
+            public void actionPerformed(ActionEvent e) { cancelPressed(e); }
+        };
+        ActionListener okListener = new ActionListener() {
             public void actionPerformed(ActionEvent a) {
                 addToTable();
             }
         };
         jmri.util.swing.JmriPanel addPanel = new jmri.jmrit.beantable.AddNewDevicePanel(
-                _sysNametext, _userNametext, "addToTable", listener);
+                _sysNametext, _userNametext, "addToTable", okListener, cancelListener);
         _addTableDialog.getContentPane().add(addPanel);
         _addTableDialog.pack();
         _addTableDialog.setSize(_paletteFrame.getSize().width - 20, _addTableDialog.getPreferredSize().height);
@@ -143,6 +147,12 @@ public class TableItemPanel extends FamilyItemPanel implements ListSelectionList
         _addTableDialog.setLocationRelativeTo(_paletteFrame);
         _addTableDialog.toFront();
         _addTableDialog.setVisible(true);
+    }
+
+    void cancelPressed(ActionEvent e) {
+        _addTableDialog.setVisible(false);
+        _addTableDialog.dispose();
+        _addTableDialog = null;
     }
 
     protected void addToTable() {

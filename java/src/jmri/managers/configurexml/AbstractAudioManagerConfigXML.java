@@ -233,12 +233,8 @@ public abstract class AbstractAudioManagerConfigXML extends AbstractNamedBeanMan
 
                     ce = new Element("distances");
                     ce.setAttribute("ref", "" + as.getReferenceDistance());
-                    @edu.umd.cs.findbugs.annotations.SuppressFBWarnings(value = "FE_FLOATING_POINT_EQUALITY",
-                            justification = "OK to use equality check as range checked elsewhere")
-                    float f;
-                    if ((f = as.getMaximumDistance()) != Audio.MAX_DISTANCE) {
-                        ce.setAttribute("max", "" + f);
-                    }
+                    float f = as.getMaximumDistance();
+                    ce.setAttribute("max", "" + f);
                     e.addContent(ce);
 
                     ce = new Element("loops");

@@ -462,6 +462,7 @@ public class ConditionalVariable {
                         } else {
                             result = false;
                         }
+                        break;
                     default:
                         log.warn("unexpected type {} in ITEM_TYPE_SIGNALMAST", _type);
                 }

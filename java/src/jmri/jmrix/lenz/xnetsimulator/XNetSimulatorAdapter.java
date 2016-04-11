@@ -1,4 +1,3 @@
-// XNetSimulatorAdapter.java
 package jmri.jmrix.lenz.xnetsimulator;
 
 import java.io.DataInputStream;
@@ -31,7 +30,6 @@ import org.slf4j.LoggerFactory;
  * support infrastructure.
  *
  * @author	Paul Bender, Copyright (C) 2009-2010
- * @version	$Revision$
  */
 public class XNetSimulatorAdapter extends XNetSimulatorPortController implements Runnable {
 

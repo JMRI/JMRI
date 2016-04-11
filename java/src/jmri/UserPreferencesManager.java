@@ -6,6 +6,7 @@ import java.beans.PropertyChangeListener;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
+import javax.swing.SortOrder;
 
 /**
  * Interface for the User Preferences Manager.
@@ -19,6 +20,8 @@ import java.util.List;
  * @author Kevin Dickerson Copyright (C) 2010
  */
 public interface UserPreferencesManager {
+
+    public static final String PREFERENCES_UPDATED = "PreferencesUpdated"; // NOI18N
 
     public void setLoading();
 
@@ -280,6 +283,10 @@ public interface UserPreferencesManager {
      * "getClassDescription" and "setMessagePreferenceDetails". If found it will
      * invoke the methods, this will then trigger the class to send details
      * about its preferences back to this code.
+     *
+     * @param strClass
+     * @see jmri.UserPreferencesManager.DescribableClass
+     * @see jmri.UserPreferencesManager.UserPreferencesDetailer
      */
     public void setClassDescription(String strClass);
 
@@ -429,19 +436,30 @@ public interface UserPreferencesManager {
      * Attach a key/value pair to the given class, which can be retrieved later.
      * These are not bound properties as yet, and don't throw events on
      * modification. Key must not be null.
+     *
+     * @param strClass
+     * @param key      Prior to 4.3.5, this could be an Object.
+     * @param value
      */
-    public void setProperty(String strClass, Object key, Object value);
+    public void setProperty(String strClass, String key, Object value);
 
     /**
      * Retrieve the value associated with a key in a given class If no value has
      * been set for that key, returns null.
+     *
+     * @param strClass
+     * @param key
+     * @return
      */
-    public Object getProperty(String strClass, Object key);
+    public Object getProperty(String strClass, String key);
 
     /**
      * Retrieve the complete current set of keys for a given class.
+     *
+     * @param strClass
+     * @return
      */
-    public java.util.Set<Object> getPropertyKeys(String strClass);
+    public java.util.Set<String> getPropertyKeys(String strClass);
 
     /**
      * Stores the details of a tables column, so that it can be saved and
@@ -454,7 +472,7 @@ public interface UserPreferencesManager {
      * @param sort   The sort order of the column
      * @param hidden Should the column be hidden
      */
-    public void setTableColumnPreferences(String table, String column, int order, int width, int sort, boolean hidden);
+    public void setTableColumnPreferences(String table, String column, int order, int width, SortOrder sort, boolean hidden);
 
     /**
      * Get the stored position of the column for a given table
@@ -479,9 +497,9 @@ public interface UserPreferencesManager {
      *
      * @param table  The reference for the table
      * @param column The column name
-     * @return 0 if not found
+     * @return {@link javax.swing.SortOrder#UNSORTED} if not found
      */
-    public int getTableColumnSort(String table, String column);
+    public SortOrder getTableColumnSort(String table, String column);
 
     /**
      * Get the stored column hidden state for a given table
@@ -564,7 +582,7 @@ public interface UserPreferencesManager {
 
      */
 
-    /*
+ /*
      Example question message dialog box.
         
      final DefaultUserMessagePreferences p;

@@ -1,6 +1,3 @@
-/**
- *
- */
 package jmri.jmrit.turnoutoperations;
 
 import java.awt.Component;
@@ -27,10 +24,6 @@ import jmri.TurnoutOperationManager;
  */
 public class TurnoutOperationFrame extends JDialog {
 
-    /**
-     *
-     */
-    private static final long serialVersionUID = -8722204384333835792L;
     TurnoutOperationFrame self = this;
     TurnoutOperationConfig currentConfig = null;
     TurnoutOperation currentOperation = null;
@@ -147,7 +140,7 @@ public class TurnoutOperationFrame extends JDialog {
             pane = TurnoutOperationConfig.getConfigPanel(op);
             if (pane != null) {
                 tabPane.add(op.getName(), pane);
-                if (op.getName() == previousSelectionName) {
+                if (op.getName().equals(previousSelectionName)) {
                     tabPane.setSelectedComponent(pane);
                 }
             }

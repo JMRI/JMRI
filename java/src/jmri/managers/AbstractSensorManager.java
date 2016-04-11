@@ -55,6 +55,11 @@ public abstract class AbstractSensorManager extends AbstractManager implements S
         }
     }
 
+    @Override
+    public Sensor getBeanBySystemName(String key) {
+        return this.getBySystemName(key);
+    }
+    
     public Sensor getBySystemName(String key) {
         if (isNumber(key)) {
             key = makeSystemName(key);
@@ -85,13 +90,13 @@ public abstract class AbstractSensorManager extends AbstractManager implements S
         if (systemName == null) {
             log.error("SystemName cannot be null. UserName was "
                     + ((userName == null) ? "null" : userName));
-            return null;
+            throw new IllegalArgumentException("systemName null in newSensor");
         }
         // is system name in correct format?
         if (!systemName.startsWith(getSystemPrefix() + typeLetter())) {
             log.error("Invalid system name for sensor: " + systemName
                     + " needed " + getSystemPrefix() + typeLetter());
-            return null;
+            throw new IllegalArgumentException("systemName \""+systemName+"\" bad format in newSensor");
         }
 
         // return existing if there is one
