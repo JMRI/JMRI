@@ -1234,31 +1234,33 @@ public class JmriUserPreferencesManager extends Bean implements UserPreferencesM
         if (element != null) {
             element.getChildren("window").stream().forEach((window) -> {
                 String reference = window.getAttributeValue("class");
-                double x = 0;
-                double y = 0;
-                double width = 0;
-                double height = 0;
                 try {
-                    x = window.getAttribute("locX").getDoubleValue();
-                    y = window.getAttribute("locY").getDoubleValue();
-                    width = window.getAttribute("width").getDoubleValue();
-                    height = window.getAttribute("height").getDoubleValue();
+                    if (window.getAttribute("locX") != null && window.getAttribute("locX") != null) {
+                        double x = window.getAttribute("locX").getDoubleValue();
+                        double y = window.getAttribute("locY").getDoubleValue();
+                        this.setWindowLocation(reference, new java.awt.Point((int) x, (int) y));
+                    }
+                    if (window.getAttribute("width") != null && window.getAttribute("height") != null) {
+                        double width = window.getAttribute("width").getDoubleValue();
+                        double height = window.getAttribute("height").getDoubleValue();
+                        this.setWindowSize(reference, new java.awt.Dimension((int) width, (int) height));
+                    }
                 } catch (DataConversionException ex) {
                     log.error("Unable to read dimensions of window \"{}\"", reference);
                 }
-                this.setWindowLocation(reference, new java.awt.Point((int) x, (int) y));
-                this.setWindowSize(reference, new java.awt.Dimension((int) width, (int) height));
-                element.getChild("properties").getChildren().stream().forEach((property) -> {
-                    String key = property.getChild("key").getText();
-                    try {
-                        Class<?> cl = Class.forName(property.getChild("value").getAttributeValue("class"));
-                        Constructor<?> ctor = cl.getConstructor(new Class<?>[]{String.class});
-                        Object value = ctor.newInstance(new Object[]{property.getChild("value").getText()});
-                        this.setProperty(reference, key, value);
-                    } catch (ClassNotFoundException | NoSuchMethodException | SecurityException | InstantiationException | IllegalAccessException | IllegalArgumentException | InvocationTargetException ex) {
-                        log.error("Unable to retrieve property \"{}\" for window \"{}\"", key, reference);
-                    }
-                });
+                if (element.getChild("properties") != null) {
+                    element.getChild("properties").getChildren().stream().forEach((property) -> {
+                        String key = property.getChild("key").getText();
+                        try {
+                            Class<?> cl = Class.forName(property.getChild("value").getAttributeValue("class"));
+                            Constructor<?> ctor = cl.getConstructor(new Class<?>[]{String.class});
+                            Object value = ctor.newInstance(new Object[]{property.getChild("value").getText()});
+                            this.setProperty(reference, key, value);
+                        } catch (ClassNotFoundException | NoSuchMethodException | SecurityException | InstantiationException | IllegalAccessException | IllegalArgumentException | InvocationTargetException ex) {
+                            log.error("Unable to retrieve property \"{}\" for window \"{}\"", key, reference);
+                        }
+                    });
+                }
             });
         }
     }
@@ -1273,20 +1275,20 @@ public class JmriUserPreferencesManager extends Bean implements UserPreferencesM
                     window.setAttribute("class", entry.getKey());
                     if (entry.getValue().saveLocation) {
                         try {
-                            window.addContent(new Element("locX").addContent(Double.toString(entry.getValue().getLocation().getX())));
-                            window.addContent(new Element("locY").addContent(Double.toString(entry.getValue().getLocation().getY())));
+                            window.setAttribute("locX", Double.toString(entry.getValue().getLocation().getX()));
+                            window.setAttribute("locY", Double.toString(entry.getValue().getLocation().getY()));
                         } catch (NullPointerException ex) {
                             // Expected if the location has not been set or the window is open
                         }
                     }
                     if (entry.getValue().saveSize) {
                         try {
-                            double height = entry.getValue().size.height;
-                            double width = entry.getValue().size.width;
+                            double height = entry.getValue().getSize().getHeight();
+                            double width = entry.getValue().getSize().getWidth();
                             // Do not save the width or height if set to zero
                             if (!(height == 0.0 && width == 0.0)) {
-                                window.addContent(new Element("width").addContent(Double.toString(width)));
-                                window.addContent(new Element("height").addContent(Double.toString(height)));
+                                window.setAttribute("width", Double.toString(width));
+                                window.setAttribute("height", Double.toString(height));
                             }
                         } catch (NullPointerException ex) {
                             // Expected if the size has not been set or the window is open
@@ -1309,6 +1311,7 @@ public class JmriUserPreferencesManager extends Bean implements UserPreferencesM
                         });
                         window.addContent(properties);
                     }
+                    element.addContent(window);
                 }
                 this.saveElement(element);
                 this.resetChangeMade();
