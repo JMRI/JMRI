@@ -275,7 +275,7 @@ public class Llnmon {
 
                 try {
                     jmri.Turnout turnout = turnoutManager.getBySystemName(turnoutSystemName);
-                    if ((turnout != null) && (turnout.getUserName().length() > 0)) {
+                    if ((turnout != null) && (turnout.getUserName() != null) && (turnout.getUserName().length() > 0)) {
                         turnoutUserName = "(" + turnout.getUserName() + ")";
                     } else {
                         turnoutUserName = "()";
@@ -309,7 +309,7 @@ public class Llnmon {
 
                 try {
                     jmri.Turnout turnout = turnoutManager.getBySystemName(turnoutSystemName);
-                    if ((turnout != null) && (turnout.getUserName().length() > 0)) {
+                    if ((turnout != null) && (turnout.getUserName() != null) && (turnout.getUserName().length() > 0)) {
                         turnoutUserName = "(" + turnout.getUserName() + ")";
                     } else {
                         turnoutUserName = "()";
@@ -607,7 +607,7 @@ public class Llnmon {
                     sensorSystemName = locoNetSensorPrefix + contactNum;
                     jmri.Sensor sensor = sensorManager.getBySystemName(
                             sensorSystemName);
-                    if ((sensor != null) && (sensor.getUserName().length() > 0)) {
+                    if ((sensor != null) && (sensor.getUserName() != null) && (sensor.getUserName().length() > 0)) {
                         sensorUserName = " (" + sensor.getUserName() + ")";
                     } else {
                         sensorUserName = "()";
@@ -687,7 +687,7 @@ public class Llnmon {
 
                 try {
                     jmri.Turnout turnout = turnoutManager.getBySystemName(turnoutSystemName);
-                    if ((turnout != null) && (turnout.getUserName().length() > 0)) {
+                    if ((turnout != null) && (turnout.getUserName() != null) && (turnout.getUserName().length() > 0)) {
                         turnoutUserName = "(" + turnout.getUserName() + ")";
                     } else {
                         turnoutUserName = "()";
@@ -807,7 +807,7 @@ public class Llnmon {
 
                     try {
                         jmri.Turnout turnout = turnoutManager.getBySystemName(turnoutSystemName);
-                        if ((turnout != null) && (turnout.getUserName().length() > 0)) {
+                        if ((turnout != null) && (turnout.getUserName() != null) && (turnout.getUserName().length() > 0)) {
                             turnoutUserName = "(" + turnout.getUserName() + ")";
                         } else {
                             turnoutUserName = "()";
@@ -1178,7 +1178,7 @@ public class Llnmon {
 
                         try {
                             jmri.Reporter reporter = reporterManager.getBySystemName(reporterSystemName);
-                            if ((reporter != null) && (reporter.getUserName().length() > 0)) {
+                            if ((reporter != null) && (reporter.getUserName() != null) && (reporter.getUserName().length() > 0)) {
                                 reporterUserName = "(" + reporter.getUserName() + ")";
                             } else {
                                 reporterUserName = "()";
@@ -2872,7 +2872,7 @@ public class Llnmon {
 
                                 try {
                                     jmri.Reporter reporter = reporterManager.getBySystemName(reporterSystemName);
-                                    if ((reporter != null) && (reporter.getUserName().length() > 0)) {
+                                    if ((reporter != null) && (reporter.getUserName() != null) && (reporter.getUserName().length() > 0)) {
                                         reporterUserName = "(" + reporter.getUserName() + ")";
                                     } else {
                                         reporterUserName = "()";

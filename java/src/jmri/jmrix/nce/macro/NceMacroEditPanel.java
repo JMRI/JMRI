@@ -1152,7 +1152,7 @@ public class NceMacroEditPanel extends jmri.jmrix.nce.swing.NcePanel implements 
         } catch (NumberFormatException e) {
             accyNum = -1;
         }
-        if (accyNum < 1 | accyNum > 2044) {
+        if (accyNum < 1 || accyNum > 2044) {
             JOptionPane.showMessageDialog(this,
                     rb.getString("EnterAccessoryNumber"), rb.getString("NceMacroAddress"),
                     JOptionPane.ERROR_MESSAGE);
@@ -1253,7 +1253,7 @@ public class NceMacroEditPanel extends jmri.jmrix.nce.swing.NcePanel implements 
         } catch (NumberFormatException e) {
             return -1;
         }
-        if (mN < 0 | mN > maxNumMacros) {
+        if (mN < 0 || mN > maxNumMacros) {
             return -1;
         } else {
             return mN;

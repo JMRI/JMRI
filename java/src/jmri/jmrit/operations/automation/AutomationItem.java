@@ -1,8 +1,5 @@
 package jmri.jmrit.operations.automation;
 
-import jmri.jmrit.operations.trains.timetable.TrainScheduleManager;
-
-import jmri.jmrit.operations.trains.timetable.TrainSchedule;
 import java.util.ArrayList;
 import java.util.List;
 import javax.swing.JComboBox;
@@ -17,6 +14,7 @@ import jmri.jmrit.operations.automation.actions.GotoAction;
 import jmri.jmrit.operations.automation.actions.GotoFailureAction;
 import jmri.jmrit.operations.automation.actions.GotoSuccessAction;
 import jmri.jmrit.operations.automation.actions.HaltAction;
+import jmri.jmrit.operations.automation.actions.IsTrainEnRouteAction;
 import jmri.jmrit.operations.automation.actions.MessageYesNoAction;
 import jmri.jmrit.operations.automation.actions.MoveTrainAction;
 import jmri.jmrit.operations.automation.actions.NoAction;
@@ -41,6 +39,8 @@ import jmri.jmrit.operations.setup.Control;
 import jmri.jmrit.operations.trains.Train;
 import jmri.jmrit.operations.trains.TrainManager;
 import jmri.jmrit.operations.trains.TrainManagerXml;
+import jmri.jmrit.operations.trains.timetable.TrainSchedule;
+import jmri.jmrit.operations.trains.timetable.TrainScheduleManager;
 import org.jdom2.Element;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -394,6 +394,7 @@ public class AutomationItem implements java.beans.PropertyChangeListener {
         list.add(new MoveTrainAction());
         list.add(new TerminateTrainAction());
         list.add(new ResetTrainAction());
+        list.add(new IsTrainEnRouteAction());
         list.add(new WaitTrainAction());
         list.add(new WaitTrainTerminatedAction());
         list.add(new ActivateTimetableAction());
