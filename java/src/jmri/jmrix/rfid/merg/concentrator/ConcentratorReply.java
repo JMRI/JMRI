@@ -1,4 +1,3 @@
-// SpecificReply.java
 package jmri.jmrix.rfid.merg.concentrator;
 
 import jmri.jmrix.rfid.RfidProtocol;
@@ -12,7 +11,6 @@ import jmri.jmrix.rfid.protocol.coreid.CoreIdRfidProtocol;
  *
  * @author Bob Jacobsen Copyright (C) 2002, 2006, 2007, 2008
  * @author Matthew Harris Copyright (C) 2011
- * @version $Revision$
  * @since 2.11.4
  */
 public class ConcentratorReply extends RfidReply {
@@ -61,5 +59,3 @@ public class ConcentratorReply extends RfidReply {
         return pr.toMonitorString(this);
     }
 }
-
-/* @(#)SpecificReply.java */

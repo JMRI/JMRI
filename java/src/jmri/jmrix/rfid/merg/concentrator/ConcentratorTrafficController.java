@@ -1,4 +1,3 @@
-// SpecificTrafficController.java
 package jmri.jmrix.rfid.merg.concentrator;
 
 import jmri.jmrix.AbstractMRListener;
@@ -22,7 +21,6 @@ import org.slf4j.LoggerFactory;
  *
  * @author Bob Jacobsen Copyright (C) 2001, 2003, 2005, 2006, 2008
  * @author Matthew Harris Copyright (C) 2011
- * @version $Revision$
  * @since 2.11.4
  */
 public class ConcentratorTrafficController extends RfidTrafficController {
@@ -85,6 +83,3 @@ public class ConcentratorTrafficController extends RfidTrafficController {
 
     private static final Logger log = LoggerFactory.getLogger(ConcentratorTrafficController.class.getName());
 }
-
-
-/* @(#)SpecificTrafficController.java */
