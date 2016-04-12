@@ -50,10 +50,10 @@
   <aspects>
     <aspect>
       <name>Stop</name>
-      <comment>Official aspect: Hoog of laag geplaatst rood licht</comment>
       <rule>Rule 215</rule>
       <indication>Stop</indication>
       <description>Indication in Dutch: Stoppen voor het sein.</description>
+      <comment>Official aspect: Hoog of laag geplaatst rood licht</comment>
       <speed>Stop</speed>
       <speed2>Stop</speed2>
       <route>Either</route>
@@ -62,6 +62,7 @@
     <aspect>
       <name>Track Out of Service</name>
       <indication>Stop</indication>
+      <comment>In use since 2000</comment>
       <speed>Stop</speed>
       <speed2>Stop</speed2>
       <route>Either</route>
@@ -69,10 +70,10 @@
     </aspect>
     <aspect>
       <name>Clear</name>
-      <comment>Official aspect: Hoog geplaatst groen licht</comment>
       <rule>Rule 201</rule>
       <indication>Proceed</indication>
       <description>Indication in Dutch: Voorbijrijden toegestaan met inachtneming van de plaatselijke snelheid. Indien bij vertrek de plaatselijke snelheid niet bekend is, is voorbijrijden met een snelheid van ten hoogste 40 km/h toegestaan.</description>
+      <comment>Official aspect: Hoog geplaatst groen licht</comment>
       <speed>Normal</speed>
       <speed2>Normal</speed2>
       <route>Normal</route>
@@ -80,43 +81,43 @@
     </aspect>
     <aspect>
       <name>Medium</name>
-      <comment>Official aspect: Hoog geplaatst knipperend groen licht met een door een wit licht gevormd getal</comment>
       <rule>Rule 202</rule>
       <indication>Proceed with inicated speed</indication>
       <description>Indication in Dutch: Voorbijrijden toegestaan met ten hoogste de door het getal aangegeven snelheid.</description>
-      <speed>Normal</speed>
+      <comment>Official aspect: Hoog geplaatst knipperend groen licht met een door een wit licht gevormd getal</comment>
+      <speed>Medium</speed>
       <speed2>Limited</speed2>
       <route>Diverging</route>
       <dccAspect>1</dccAspect>
     </aspect>
     <aspect>
       <name>Approach Medium</name>
-      <comment>Official aspect: Hoog geplaatst geel licht met een door knipperend wit licht gevormd getal</comment>
       <rule>Rule 209</rule>
       <indication>Proceed with inicated speed, continue brakes</indication>
       <description>Indication in Dutch: Snelheid begrenzen tot de door het getal aangegeven snelheid. Ingeval een remming is ingezet en het volgende lichtsein een verdere begrenzing van de snelheid gebiedt, wordt de remming niet onderbroken.</description>
-      <speed>Limited</speed>
+      <comment>Official aspect: Hoog geplaatst geel licht met een door knipperend wit licht gevormd getal</comment>
+      <speed>Medium</speed>
       <speed2>Restricted</speed2>
       <route>Normal</route>
       <dccAspect>3</dccAspect>
     </aspect>
     <aspect>
       <name>Diverging Approach Medium</name>
-      <comment>Official aspect: Hoog geplaatst geel licht met een door wit licht gevormd getal</comment>
       <rule>Rule 210</rule>
       <indication>Proceed at indicated speed before next signal</indication>
       <description>Indication in Dutch: Snelheid begrenzen tot de door het getal aangegeven snelheid. De door het getal aangegeven snelheid wordt bij het volgende lichtsein niet overschreden.</description>
-      <speed>80</speed>
+      <comment>Official aspect: Hoog geplaatst geel licht met een door wit licht gevormd getal</comment>
+      <speed>Medium</speed>
       <speed2>Limited</speed2>
       <route>Diverging</route>
       <dccAspect>7</dccAspect>
     </aspect>
     <aspect>
       <name>Approach</name>
-      <comment>Official aspect: Hoog of laag geplaatst geel licht</comment>
       <rule>Rule 212</rule>
       <indication>Proceed preparing to stop at next signal</indication>
       <description>Indication in Dutch: Snelheid begrenzen tot 40 km/u of zoveel minder als nodig is om voor het eerstvolgende 'stop' tonende sein te kunnen stoppen.</description>
+      <comment>Official aspect: Hoog of laag geplaatst geel licht</comment>
       <speed>Limited</speed>
       <speed2>Limited</speed2>
       <route>Normal</route>
@@ -124,21 +125,21 @@
     </aspect>
     <aspect>
       <name>Limited</name>
-      <comment>Official aspect: Hoog geplaatst knipperend of laag geplaatst groen licht</comment>
       <rule>Rule 206</rule>
       <indication>Proceed at Limited speed</indication>
       <description>Indication in Dutch: Voorbijrijden toegestaan met een snelheid van ten hoogste 40 km/h.</description>
-      <speed>Limited</speed>
+      <comment>Official aspect: Hoog geplaatst knipperend of laag geplaatst groen licht</comment>
+      <speed>Medium</speed>
       <speed2>Limited</speed2>
       <route>Diverging</route>
       <dccAspect>6</dccAspect>
     </aspect>
     <aspect>
       <name>Restricting</name>
-      <comment>Official aspect: Hoog of laag geplaatst knipperend geel licht</comment>
       <rule>Rule 214</rule>
       <indication>Proceed at restricted speed because line may be blocked</indication>
       <description>Indication in Dutch: Voorbijrijden toegestaan met een zodanige snelheid, die niet hoger is dan 40 km/h, om op elke plaats achter dit sein, waar een belemmering voor het verder rijden aanwezig is, te kunnen stoppen.</description>
+      <comment>Official aspect: Hoog of laag geplaatst knipperend geel licht</comment>
       <speed>Restricted</speed>
       <speed2>Slow</speed2>
       <route>Either</route>
@@ -149,7 +150,7 @@
       <rule>Dark</rule>
       <indication>(used to indicate Dark for e.g. approach lighting)</indication>
       <speed>Normal</speed>
-      <speed2>Restricted</speed2>
+      <speed2>Limited</speed2>
       <route>Normal</route>
       <dccAspect>8</dccAspect>
     </aspect>
