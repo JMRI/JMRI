@@ -1,4 +1,4 @@
-﻿<?xml version="1.0" encoding="utf-8"?>
+<?xml version="1.0" encoding="utf-8"?>
 <?xml-stylesheet href="../../XSLT/appearancetable.xsl" type="text/xsl"?>
 <appearancetable xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="http://jmri.org/xml/schema/appearancetable.xsd">
   <copyright xmlns="http://docbook.org/ns/docbook">
@@ -39,39 +39,40 @@
       <aspectname>Stop</aspectname>
       <show>red</show>
       <imagelink type="large">../../../resources/icons/largeschematics/aspects/ProRail-1954/ProRail-RD.gif</imagelink>
-      <imagelink type="aspects">../../../resources/icons/smallschematics/aspects/ProRail-1954/ProRail-RD.gif</imagelink>
+      <imagelink type="small">../../../resources/icons/smallschematics/aspects/ProRail-1954/ProRail-RD.gif</imagelink>
     </appearance>
     <appearance>
       <aspectname>Track Out of Service</aspectname>
       <show>flashred</show>
       <imagelink type="large">../../../resources/icons/largeschematics/aspects/ProRail-1954/ProRail-FRD.gif</imagelink>
-      <imagelink type="aspects">../../../resources/icons/smallschematics/aspects/ProRail-1954/ProRail-FRD.gif</imagelink>
+      <imagelink type="small">../../../resources/icons/smallschematics/aspects/ProRail-1954/ProRail-FRD.gif</imagelink>
     </appearance>
     <appearance>
       <aspectname>Limited</aspectname>
       <show>green</show>
       <imagelink type="large">../../../resources/icons/largeschematics/aspects/ProRail-1954/ProRail-GD.gif</imagelink>
-      <imagelink type="aspects">../../../resources/icons/smallschematics/aspects/ProRail-1954/ProRail-GD.gif</imagelink>
+      <imagelink type="small">../../../resources/icons/smallschematics/aspects/ProRail-1954/ProRail-GD.gif</imagelink>
     </appearance>
     <appearance>
       <aspectname>Approach</aspectname>
       <show>yellow</show>
       <imagelink type="large">../../../resources/icons/largeschematics/aspects/ProRail-1954/ProRail-YD.gif</imagelink>
-      <imagelink type="aspects">../../../resources/icons/smallschematics/aspects/ProRail-1954/ProRail-YD.gif</imagelink>
+      <imagelink type="small">../../../resources/icons/smallschematics/aspects/ProRail-1954/ProRail-YD.gif</imagelink>
     </appearance>
     <appearance>
       <aspectname>Restricting</aspectname>
       <show>flashyellow</show>
       <imagelink type="large">../../../resources/icons/largeschematics/aspects/ProRail-1954/ProRail-FYD.gif</imagelink>
-      <imagelink type="aspects">../../../resources/icons/smallschematics/aspects/ProRail-1954/ProRail-FYD.gif</imagelink>
+      <imagelink type="small">../../../resources/icons/smallschematics/aspects/ProRail-1954/ProRail-FYD.gif</imagelink>
     </appearance>
     <appearance>
       <aspectname>Not Lit</aspectname>
       <show>dark</show>
       <imagelink type="large">../../../resources/icons/largeschematics/aspects/ProRail-1954/ProRail-DD.gif</imagelink>
-      <imagelink type="aspects">../../../resources/icons/smallschematics/aspects/ProRail-1954/ProRail-DD.gif</imagelink>
+      <imagelink type="small">../../../resources/icons/smallschematics/aspects/ProRail-1954/ProRail-DD.gif</imagelink>
     </appearance>
   </appearances>
+  
   <specificappearances>
     <danger>
       <aspect>Restricting</aspect>
@@ -86,6 +87,7 @@
       <aspect>Not Lit</aspect>
     </dark>
   </specificappearances>
+  
   <aspectMappings>
     <aspectMapping>
       <advancedAspect>Clear</advancedAspect>

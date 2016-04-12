@@ -1,4 +1,4 @@
-﻿<?xml version="1.0" encoding="utf-8"?>
+<?xml version="1.0" encoding="utf-8"?>
 <?xml-stylesheet href="../../XSLT/appearancetable.xsl" type="text/xsl"?>
 <appearancetable xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="http://jmri.org/xml/schema/appearancetable.xsd">
   <copyright xmlns="http://docbook.org/ns/docbook">
@@ -54,47 +54,47 @@
       <show>red</show>
       <reference>Rule 215</reference>
       <imagelink type="large">../../../resources/icons/largeschematics/aspects/ProRail-1954/ProRail-R.gif</imagelink>
-      <imagelink type="aspects">../../../resources/icons/smallschematics/aspects/ProRail-1954/ProRail-R.gif</imagelink>
+      <imagelink type="small">../../../resources/icons/smallschematics/aspects/ProRail-1954/ProRail-R.gif</imagelink>
     </appearance>
     <appearance>
       <aspectname>Track Out of Service</aspectname>
       <show>flashred</show>
       <imagelink type="large">../../../resources/icons/largeschematics/aspects/ProRail-1954/ProRail-FR.gif</imagelink>
-      <imagelink type="aspects">../../../resources/icons/smallschematics/aspects/ProRail-1954/ProRail-FR.gif</imagelink>
+      <imagelink type="small">../../../resources/icons/smallschematics/aspects/ProRail-1954/ProRail-FR.gif</imagelink>
     </appearance>
     <appearance>
       <aspectname>Clear</aspectname>
       <show>green</show>
       <reference>Rule 201</reference>
       <imagelink type="large">../../../resources/icons/largeschematics/aspects/ProRail-1954/ProRail-G.gif</imagelink>
-      <imagelink type="aspects">../../../resources/icons/smallschematics/aspects/ProRail-1954/ProRail-G.gif</imagelink>
+      <imagelink type="small">../../../resources/icons/smallschematics/aspects/ProRail-1954/ProRail-G.gif</imagelink>
     </appearance>
     <appearance>
       <aspectname>Limited</aspectname>
       <show>flashgreen</show>
       <reference>Rule 206</reference>
       <imagelink type="large">../../../resources/icons/largeschematics/aspects/ProRail-1954/ProRail-FG.gif</imagelink>
-      <imagelink type="aspects">../../../resources/icons/smallschematics/aspects/ProRail-1954/ProRail-FG.gif</imagelink>
+      <imagelink type="small">../../../resources/icons/smallschematics/aspects/ProRail-1954/ProRail-FG.gif</imagelink>
     </appearance>
     <appearance>
       <aspectname>Approach</aspectname>
       <show>yellow</show>
       <reference>Rule 212</reference>
       <imagelink type="large">../../../resources/icons/largeschematics/aspects/ProRail-1954/ProRail-Y.gif</imagelink>
-      <imagelink type="aspects">../../../resources/icons/smallschematics/aspects/ProRail-1954/ProRail-Y.gif</imagelink>
+      <imagelink type="small">../../../resources/icons/smallschematics/aspects/ProRail-1954/ProRail-Y.gif</imagelink>
     </appearance>
     <appearance>
       <aspectname>Restricting</aspectname>
       <show>flashyellow</show>
       <reference>Rule 214</reference>
       <imagelink type="large">../../../resources/icons/largeschematics/aspects/ProRail-1954/ProRail-FY.gif</imagelink>
-      <imagelink type="aspects">../../../resources/icons/smallschematics/aspects/ProRail-1954/ProRail-FY.gif</imagelink>
+      <imagelink type="small">../../../resources/icons/smallschematics/aspects/ProRail-1954/ProRail-FY.gif</imagelink>
     </appearance>
     <appearance>
       <aspectname>Not Lit</aspectname>
       <show>dark</show>
       <imagelink type="large">../../../resources/icons/largeschematics/aspects/ProRail-1954/ProRail-D.gif</imagelink>
-      <imagelink type="aspects">../../../resources/icons/smallschematics/aspects/ProRail-1954/ProRail-D.gif</imagelink>
+      <imagelink type="small">../../../resources/icons/smallschematics/aspects/ProRail-1954/ProRail-D.gif</imagelink>
     </appearance>
   </appearances>
 

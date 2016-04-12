@@ -157,7 +157,7 @@
   </aspects>
   <imagetypes>
     <imagetype type="large" />
-    <imagetype type="aspects" />
+    <imagetype type="small" />
   </imagetypes>
   <appearancefiles>
     <appearancefile href="appearance-High.xml" />
