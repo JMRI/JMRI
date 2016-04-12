@@ -339,7 +339,7 @@ public abstract class AbstractTurnout extends AbstractNamedBean implements
                 _cabLockout = false;
             }
         }
-        if ((turnoutLockout & PUSHBUTTONLOCKOUT) > 0
+        if ((turnoutLockout & PUSHBUTTONLOCKOUT) != 0
                 && _pushButtonLockout != locked) {
             firechange = true;
             if (canLock(PUSHBUTTONLOCKOUT)) {

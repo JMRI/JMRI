@@ -19,7 +19,6 @@ import org.slf4j.LoggerFactory;
  *
  * @author Bob Jacobsen Copyright: Copyright (c) 2003, 2006, 2007, 2008
  * @author Matthew Harris Copyright (C) 2011
- * @version $Revision$
  * @since 2.11.4
  */
 public class ConnectionConfigXml extends AbstractSerialConnectionConfigXml {

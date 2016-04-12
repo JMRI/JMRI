@@ -70,7 +70,7 @@ public class MrcPacketizer extends MrcTrafficController {
 
     // The methods to implement the MrcInterface
     public boolean status() {
-        return (ostream != null & istream != null);
+        return (ostream != null && istream != null);
     }
 
     /**
