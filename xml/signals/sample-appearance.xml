@@ -45,10 +45,10 @@
       <aspectname>Clear</aspectname>
       <show>green</show>
       <show>red</show>
-     <imagelink type="small">../../../resources/icons/smallschematics/searchlights/left-green-high.gif</imagelink>
-     <imagelink type="large">../../../resources/icons/smallschematics/searchlights/left-green-high.gif</imagelink>
       <reference></reference>
       <reference></reference>
+      <imagelink type="small">../../../resources/icons/smallschematics/searchlights/left-green-high.gif</imagelink>
+      <imagelink type="large">../../../resources/icons/smallschematics/searchlights/left-green-high.gif</imagelink>
     </appearance>
 
 
@@ -56,10 +56,10 @@
       <aspectname>Not clear</aspectname>
       <show>red</show>
       <show>red</show>
+      <reference></reference>
+      <reference></reference>
       <imagelink type="small">../../../resources/icons/smallschematics/searchlights/left-red-high.gif</imagelink>
       <imagelink type="large">../../../resources/icons/smallschematics/searchlights/left-red-high.gif</imagelink>
-      <reference></reference>
-      <reference></reference>
     </appearance>
 
   </appearances>
