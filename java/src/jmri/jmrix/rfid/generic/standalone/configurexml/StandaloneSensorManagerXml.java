@@ -10,7 +10,6 @@ import org.jdom2.Element;
  *
  * @author Bob Jacobsen Copyright: Copyright (c) 2008
  * @author Matthew Harris Copyright (C) 2011
- * @version $Revision$
  * @since 2.11.4
  */
 public class StandaloneSensorManagerXml extends jmri.jmrix.rfid.configurexml.RfidSensorManagerXml {
@@ -19,6 +18,7 @@ public class StandaloneSensorManagerXml extends jmri.jmrix.rfid.configurexml.Rfi
         super();
     }
 
+    @Override
     public void setStoreElementClass(Element sensors) {
         sensors.setAttribute("class", this.getClass().getName());
     }
