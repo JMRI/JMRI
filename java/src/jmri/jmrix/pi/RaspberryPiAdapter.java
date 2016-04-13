@@ -27,9 +27,7 @@ public class RaspberryPiAdapter extends jmri.jmrix.AbstractPortController
         log.debug("RaspberryPi GPIO Adapter Constructor called");
         opened = true;
         this.manufacturerName = RaspberryPiConnectionTypeList.PI;
-        if(gpio==null){
-           gpio = GpioFactory.getInstance();
-        }
+        gpio = GpioFactory.getInstance();
     }
 
     @Override
