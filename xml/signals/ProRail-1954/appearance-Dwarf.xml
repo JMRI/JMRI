@@ -102,6 +102,22 @@
       <ourAspect>Limited</ourAspect>
     </aspectMapping>
     <aspectMapping>
+      <advancedAspect>Approach Clear</advancedAspect>
+      <ourAspect>Clear</ourAspect>
+    </aspectMapping>
+    <aspectMapping>
+      <advancedAspect>Medium</advancedAspect>
+      <ourAspect>Limited</ourAspect>
+    </aspectMapping>
+    <aspectMapping>
+      <advancedAspect>Approach Medium</advancedAspect>
+      <ourAspect>Clear</ourAspect>
+    </aspectMapping>
+    <aspectMapping>
+      <advancedAspect>Diverging Approach Medium</advancedAspect>
+      <ourAspect>Approach</ourAspect>
+    </aspectMapping>
+    <aspectMapping>
       <advancedAspect>Restricting</advancedAspect>
       <ourAspect>Limited</ourAspect>
     </aspectMapping>

@@ -31,8 +31,8 @@ Remarks:
     <ul>
         <li>Dwarf signal icons are named -D</li>
         <li>Flashing icons are named -RF/-RY/-RG</li>
+        <li>Approach signal icons are named -VG/-VY</li>
         <li>Icons with a lighted number are named -4 and show "4", although in real world applications this could display one of the following: 4 (not below Medium aspect as identical to Limited), 6, 8, 10 (rare), 12 or 13</li>
-        <li>To do: Approach signal icons are named -A</li>
         <li>A number lighted in White indicates the maximum allowed speed (* 10 km/h)</li>
         <li>Although there was no official Stop For Engineering aspect in the 1955 Rules, a Flashing Red indication has been added.<br>
             Since 2000 this is in use indicating Track Out of Service (<em>Buiten Dienst</em>), protecting railroad workers.</li>
@@ -52,8 +52,8 @@ See the
 Signal Mast definitions:</p>
     <ul>
     <li><a href="appearance-High.xml">High main signal</a>
-    <li><a href="appearance-High-Number.xml">High main signal with number block</a> <!-- High with Number -->
-    <!-- High Approach -->
+    <li><a href="appearance-High-Number.xml">High main signal with number block</a>
+    <li><a href="appearance-Approach.xml">High approach signal</a>
     <li><a href="appearance-Dwarf.xml">Dwarf main signal</a>
     </ul>
 

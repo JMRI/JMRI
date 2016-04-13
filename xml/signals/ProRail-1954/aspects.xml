@@ -146,6 +146,17 @@
       <dccAspect>5</dccAspect>
     </aspect>
     <aspect>
+      <name>Approach Clear</name>
+      <rule>Rule 217</rule>
+      <indication>Next signal does not display Stop or Approach</indication>
+      <description>Indication in Dutch: Aanduiding van een volgend hoofdsein dat geen rood licht of geel knipperend licht uitstraalt. Vooraf opgelegde snelheidsbegrenzingen blijven van toepassing.</description>
+      <comment>Official aspect: Hoog geplaatst groen licht met een achtergrondscherm met rechte, dan wel een of meer afgeronde, hoeken.</comment>
+      <speed>Normal</speed>
+      <speed2>Normal</speed2>
+      <route>Either</route>
+      <dccAspect>10</dccAspect>
+    </aspect>
+    <aspect>
       <name>Not Lit</name>
       <rule>Dark</rule>
       <indication>(used to indicate Dark for e.g. approach lighting)</indication>
@@ -162,6 +173,7 @@
   <appearancefiles>
     <appearancefile href="appearance-High.xml" />
     <appearancefile href="appearance-High-Number.xml" />
+    <appearancefile href="appearance-Approach.xml" />
     <appearancefile href="appearance-Dwarf.xml" />
   </appearancefiles>
 </aspecttable>

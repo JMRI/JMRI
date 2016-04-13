@@ -124,15 +124,19 @@
     </aspectMapping>
     <aspectMapping>
       <advancedAspect>Limited</advancedAspect>
-      <ourAspect>Clear</ourAspect>
+      <ourAspect>Diverging Approach Medium</ourAspect>
     </aspectMapping>
     <aspectMapping>
       <advancedAspect>Approach</advancedAspect>
       <ourAspect>Clear</ourAspect>
     </aspectMapping>
     <aspectMapping>
-      <advancedAspect>Medium</advancedAspect>
+      <advancedAspect>Approach Clear</advancedAspect>
       <ourAspect>Clear</ourAspect>
+    </aspectMapping>
+    <aspectMapping>
+      <advancedAspect>Medium</advancedAspect>
+      <ourAspect>Diverging Approach Medium</ourAspect>
     </aspectMapping>
     <aspectMapping>
       <advancedAspect>Approach Medium</advancedAspect>
