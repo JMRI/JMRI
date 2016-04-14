@@ -18,7 +18,6 @@ import org.slf4j.LoggerFactory;
  * <P>
  * 
  * @author Paul Bender Copyright (C) 2015 
- * @version $Revision$
  */
 public class RaspberryPiTurnout extends AbstractTurnout implements Turnout, java.io.Serializable {
 
@@ -36,8 +35,8 @@ public class RaspberryPiTurnout extends AbstractTurnout implements Turnout, java
 
    public RaspberryPiTurnout(String systemName) {
         super(systemName.toUpperCase());
-	    log.debug("Provisioning turnout {}",systemName);
-        if(gpio==null) gpio=GpioFactory.getInstance();
+	log.debug("Provisioning turnout {}",systemName);
+        gpio=GpioFactory.getInstance();
         address=Integer.parseInt(getSystemName().substring(getSystemName().lastIndexOf("T")+1));
         pin = gpio.provisionDigitalOutputPin(RaspiPin.getPinByName("GPIO "+address),getSystemName());
         pin.setShutdownOptions(true, PinState.LOW,PinPullResistance.OFF);
@@ -46,7 +45,7 @@ public class RaspberryPiTurnout extends AbstractTurnout implements Turnout, java
    public RaspberryPiTurnout(String systemName, String userName) {
         super(systemName.toUpperCase(), userName);
         log.debug("Provisioning turnout {} with username '{}'",systemName, userName);
-        if(gpio==null) gpio=GpioFactory.getInstance();
+        gpio=GpioFactory.getInstance();
         address=Integer.parseInt(getSystemName().substring(getSystemName().lastIndexOf("T")+1));
         pin = gpio.provisionDigitalOutputPin(RaspiPin.getPinByName("GPIO "+address),getUserName());
         pin.setShutdownOptions(true, PinState.LOW,PinPullResistance.OFF);

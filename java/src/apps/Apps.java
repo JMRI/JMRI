@@ -55,6 +55,7 @@ import jmri.InstanceManager;
 import jmri.JmriException;
 import jmri.JmriPlugin;
 import jmri.NamedBeanHandleManager;
+import jmri.ShutDownManager;
 import jmri.UserPreferencesManager;
 import jmri.implementation.AbstractShutDownTask;
 import jmri.implementation.JmriConfigurationManager;
@@ -903,10 +904,12 @@ public class Apps extends JPanel implements PropertyChangeListener, WindowListen
      */
     @Override
     public void windowClosing(WindowEvent e) {
-        if (JOptionPane.showConfirmDialog(null,
-                Bundle.getMessage("MessageLongCloseWarning"),
-                Bundle.getMessage("MessageShortCloseWarning"),
-                JOptionPane.YES_NO_OPTION) == JOptionPane.YES_OPTION) {
+        if (!InstanceManager.getDefault(ShutDownManager.class).isShuttingDown()
+                && JOptionPane.YES_OPTION == JOptionPane.showConfirmDialog(
+                        null,
+                        Bundle.getMessage("MessageLongCloseWarning"),
+                        Bundle.getMessage("MessageShortCloseWarning"),
+                        JOptionPane.YES_NO_OPTION)) {
             handleQuit();
         }
         // if get here, didn't quit, so don't close window
@@ -1035,26 +1038,26 @@ public class Apps extends JPanel implements PropertyChangeListener, WindowListen
             debugFired = false;
             Toolkit.getDefaultToolkit().addAWTEventListener(
                     debugListener = new AWTEventListener() {
-                        @Override
-                        public void eventDispatched(AWTEvent e) {
-                            if (!debugFired) {
-                                /*We set the debugmsg flag on the first instance of the user pressing any button
+                @Override
+                public void eventDispatched(AWTEvent e) {
+                    if (!debugFired) {
+                        /*We set the debugmsg flag on the first instance of the user pressing any button
                                  and the if the debugFired hasn't been set, this allows us to ensure that we don't
                                  miss the user pressing F8, while we are checking*/
-                                debugmsg = true;
-                                if (e.getID() == KeyEvent.KEY_PRESSED) {
-                                    KeyEvent ky = (KeyEvent) e;
-                                    if (ky.getKeyCode() == 119) {
-                                        startupDebug();
-                                    } else {
-                                        debugmsg = false;
-                                    }
-                                } else {
-                                    debugmsg = false;
-                                }
+                        debugmsg = true;
+                        if (e.getID() == KeyEvent.KEY_PRESSED) {
+                            KeyEvent ky = (KeyEvent) e;
+                            if (ky.getKeyCode() == 119) {
+                                startupDebug();
+                            } else {
+                                debugmsg = false;
                             }
+                        } else {
+                            debugmsg = false;
                         }
-                    },
+                    }
+                }
+            },
                     AWTEvent.KEY_EVENT_MASK);
         }
 
@@ -1286,5 +1289,5 @@ public class Apps extends JPanel implements PropertyChangeListener, WindowListen
 
     }
 
-    private final static Logger log = LoggerFactory.getLogger(Apps.class.getName());
+    private final static Logger log = LoggerFactory.getLogger(Apps.class);
 }

@@ -174,20 +174,23 @@ public class Z21TrafficController extends jmri.jmrix.AbstractMRTrafficController
             } else {
                 log.debug("connectPort invoked");
             }
+            if (! (p instanceof Z21Adapter) ){
+                throw new IllegalArgumentException("attempt to connect wrong port type");
+            }
             controller = p;
             try {
-                host = java.net.InetAddress.getByName(((Z21Adapter) p).getHostName());
-                port = ((Z21Adapter) p).getPort();
+                host = java.net.InetAddress.getByName(((Z21Adapter) controller).getHostName());
+                port = ((Z21Adapter) controller).getPort();
                     ConnectionStatus.instance().setConnectionState(
                             ((Z21Adapter) p).getHostName() + ":" + ((Z21Adapter) p).getPort(), ConnectionStatus.CONNECTION_UP);
             } catch (java.net.UnknownHostException uhe) {
-                log.error("Unknown Host: {} ", ((Z21Adapter) p).getHostName());
+                log.error("Unknown Host: {} ", ((Z21Adapter) controller).getHostName());
                 if (((Z21Adapter) p).getPort() != 0) {
                     ConnectionStatus.instance().setConnectionState(
-                            ((Z21Adapter) p).getHostName() + ":" + ((Z21Adapter) p).getPort(), ConnectionStatus.CONNECTION_DOWN);
+                            ((Z21Adapter) controller).getHostName() + ":" + ((Z21Adapter) p).getPort(), ConnectionStatus.CONNECTION_DOWN);
                 } else {
                     ConnectionStatus.instance().setConnectionState(
-                            ((Z21Adapter) p).getHostName(), ConnectionStatus.CONNECTION_DOWN);
+                            ((Z21Adapter) controller).getHostName(), ConnectionStatus.CONNECTION_DOWN);
                 }
             }
             // and start threads

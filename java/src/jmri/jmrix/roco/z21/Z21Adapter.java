@@ -16,9 +16,9 @@ import org.slf4j.LoggerFactory;
  */
 public class Z21Adapter extends jmri.jmrix.AbstractNetworkPortController {
 
-    protected static ResourceBundle rb;
-    protected static int COMMUNICATION_UDP_PORT;
-    protected static String DEFAULT_IP_ADDRESS;
+    protected static ResourceBundle rb =  ResourceBundle.getBundle("jmri.jmrix.roco.z21.z21AdapterConfigurationBundle");
+    protected static int COMMUNICATION_UDP_PORT = java.lang.Integer.parseInt(rb.getString("z21UDPPort1"));
+    protected static String DEFAULT_IP_ADDRESS = rb.getString("defaultZ21IPAddress");
 
     private javax.swing.Timer keepAliveTimer; // Timer used to periodically
     // send a message to both
@@ -32,9 +32,8 @@ public class Z21Adapter extends jmri.jmrix.AbstractNetworkPortController {
 
     public Z21Adapter() {
         super(new Z21SystemConnectionMemo());
-        rb = ResourceBundle.getBundle("jmri.jmrix.roco.z21.z21AdapterConfigurationBundle");
-        COMMUNICATION_UDP_PORT = java.lang.Integer.parseInt(rb.getString("z21UDPPort1"));
-        DEFAULT_IP_ADDRESS = rb.getString("defaultZ21IPAddress");
+        // COMMUNICATION_UDP_PORT = java.lang.Integer.parseInt(rb.getString("z21UDPPort1"));
+        // DEFAULT_IP_ADDRESS = rb.getString("defaultZ21IPAddress");
         setHostName(DEFAULT_IP_ADDRESS);
         setPort(COMMUNICATION_UDP_PORT);
         allowConnectionRecovery = true; // all classes derived from this class
