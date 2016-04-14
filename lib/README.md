@@ -224,10 +224,15 @@ NOTE: joal.jar is currently replaced by an own-built version with modifications 
 - from http://www.umlgraph.org/download.html
 - only used for ant javadoc-uml
 
-##### junit.jar
-- version 3.8.2
+##### junit-4.12.jar
+- version 4.12
 - Used for testing only, not at runtime
-- from <junit.org>
+- from http://search.maven.org/#artifactdetails%7Cjunit%7Cjunit%7C4.12%7Cjar
+
+##### hamcrest-core-1.3.jar
+- version 1.3
+- Used for testing only, not at runtime
+- from http://search.maven.org/#artifactdetails%7Corg.hamcrest%7Chamcrest-core%7C1.3%7Cjar
 
 ##### jfcunit.jar
 - version 2.08 
