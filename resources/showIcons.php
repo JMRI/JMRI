@@ -66,7 +66,7 @@ function showFiles() {
             ) {
                 // display as image
                 //   would be good to add a limiting size here
-                echo     '<td bgcolor="#C0C0C0"><a href="'.$entry.'"><img src="'.$entry.'"></a></tr>'."\n";
+                echo     '<td bgcolor="#C0C0C0"><a href="'.$entry.'"><img src="'.$entry.'" style="max-width:500px;max-height:500px;"></a></tr>'."\n";
         } else {
                 // link without display
                 echo     '<td bgcolor="#C0C0C0"><a href="'.$entry.'" download="'.$entry.'">(download)</a></tr>'."\n";
