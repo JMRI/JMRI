@@ -1,5 +1,10 @@
 package jmri.server.json.turnout;
 
+import static jmri.server.json.JSON.METHOD;
+import static jmri.server.json.JSON.NAME;
+import static jmri.server.json.JSON.PUT;
+import static jmri.server.json.turnout.JsonTurnoutServiceFactory.TURNOUT;
+
 import com.fasterxml.jackson.databind.JsonNode;
 import java.beans.PropertyChangeEvent;
 import java.beans.PropertyChangeListener;
@@ -10,13 +15,9 @@ import jmri.InstanceManager;
 import jmri.JmriException;
 import jmri.Turnout;
 import jmri.TurnoutManager;
-import static jmri.server.json.JSON.METHOD;
-import static jmri.server.json.JSON.NAME;
-import static jmri.server.json.JSON.PUT;
 import jmri.server.json.JsonConnection;
 import jmri.server.json.JsonException;
 import jmri.server.json.JsonSocketService;
-import static jmri.server.json.turnout.JsonTurnoutServiceFactory.TURNOUT;
 
 /**
  *

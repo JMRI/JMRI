@@ -3,7 +3,6 @@ package jmri.jmrix.rfid.merg.concentrator;
 import jmri.jmrix.rfid.RfidProtocol;
 import jmri.jmrix.rfid.RfidReply;
 import jmri.jmrix.rfid.RfidTrafficController;
-import jmri.jmrix.rfid.protocol.coreid.CoreIdRfidProtocol;
 
 /**
  * Contains the data payload of a serial reply packet. Note that its _only_ the

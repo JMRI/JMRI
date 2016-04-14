@@ -141,6 +141,8 @@ public class NceClockControl extends DefaultClockControl implements NceListener 
         log.error("message received: " + m);
     }
 
+    // TODO: Why does this if statement contain a direct false? FIXME!
+    @SuppressWarnings("unused")
     public void reply(NceReply r) {
         if (false && log.isDebugEnabled()) {
             log.debug("NceReply(len " + r.getNumDataElements() + ") waiting: " + waiting

@@ -1223,7 +1223,6 @@ public class TransitTableAction extends AbstractTableAction {
         return true;
     }
 
-    @SuppressWarnings("null")
     private boolean setTransitInformation() {
         if (curTransit == null) {
             return false;
@@ -1232,7 +1231,7 @@ public class TransitTableAction extends AbstractTableAction {
         for (int i = 0; i < sectionList.size(); i++) {
             TransitSection ts = new TransitSection(sectionList.get(i),
                     sequence[i], direction[i], alternate[i]);
-            if (ts == null) {
+            if (ts.equals(null)) {
                 log.error("Trouble creating TransitSection");
                 return false;
             }
@@ -1898,7 +1897,7 @@ public class TransitTableAction extends AbstractTableAction {
     }
 
     private boolean validateSensor(String sName, boolean when) {
-        // check if anything entered	
+        // check if anything entered
         if (sName.length() < 1) {
             // no sensor entered
             JOptionPane.showMessageDialog(addEditActionFrame, (rbx.getString("NoSensorError")),
@@ -2069,7 +2068,7 @@ public class TransitTableAction extends AbstractTableAction {
         return true;
     }
 
-    // initialize combos for add/edit action window	
+    // initialize combos for add/edit action window
     private void initializeWhenBox() {
         whenBox.removeAllItems();
         for (int i = 1; i <= TransitSectionAction.NUM_WHENS; i++) {
@@ -2178,9 +2177,9 @@ public class TransitTableAction extends AbstractTableAction {
         tsa.dispose();
         actionTableModel.fireTableDataChanged();
     }
-    /* 
+    /*
      * Notes: For the following, r = row in the Special Actions table.
-     *        A TransitSectionAction must be available for this row. 
+     *        A TransitSectionAction must be available for this row.
      */
 
     private String getWhenText(int r) {
@@ -2241,7 +2240,7 @@ public class TransitTableAction extends AbstractTableAction {
         }
         return "WHEN";
     }
-    /* 
+    /*
      * Notes: For the following, r = row in the Special Actions table.
      *        A TransitSectionAction must be available for this row.
      */

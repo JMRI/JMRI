@@ -9,8 +9,6 @@ import jmri.Turnout;
 import jmri.TurnoutOperation;
 import jmri.TurnoutOperationManager;
 import jmri.TurnoutOperator;
-import jmri.implementation.SignalSpeedMap;
-
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 

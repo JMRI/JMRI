@@ -1,11 +1,11 @@
 // LnSv2MessageContents
 package jmri.jmrix.loconet.lnsvf2;
 
+import java.util.Locale;
 import jmri.jmrix.loconet.LnConstants;
 import jmri.jmrix.loconet.LocoNetMessage;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import java.util.*;
 
 /**
  * Supporting class for LocoNet SV Programming Format 2 messaging

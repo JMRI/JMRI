@@ -256,9 +256,9 @@ public class WebServerPreferencesPanel extends JPanel implements ListDataListene
     }
 
     @Override
-    @SuppressWarnings("unchecked") // getModel() returns a JList model, which isn't powerful enough
+    // getModel() returns a JList model, which isn't powerful enough
     public void contentsChanged(ListDataEvent lde) {
-        DefaultEditableListModel<String> model = (DefaultEditableListModel) disallowedFrames.getModel();
+        DefaultEditableListModel<String> model = (DefaultEditableListModel<String>) disallowedFrames.getModel();
         if (!model.getElementAt(model.getSize() - 1).equals(" ")) {
             model.addElement(" ");
         } else if (model.getElementAt(lde.getIndex0()).isEmpty()) {

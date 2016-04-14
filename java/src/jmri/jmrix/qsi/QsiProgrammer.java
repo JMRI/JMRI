@@ -1,13 +1,13 @@
 // QsiProgrammer.java
 package jmri.jmrix.qsi;
 
+import java.util.ArrayList;
+import java.util.List;
+import jmri.ProgrammingMode;
+import jmri.jmrix.AbstractProgrammer;
+import jmri.managers.DefaultProgrammerManager;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import jmri.*;
-import jmri.jmrix.AbstractProgrammer;
-
-import java.util.*;
-import jmri.managers.DefaultProgrammerManager;
 
 /**
  * Implements the jmri.Programmer interface via commands for the QSI programmer.

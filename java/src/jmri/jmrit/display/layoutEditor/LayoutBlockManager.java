@@ -6,6 +6,7 @@ import java.util.List;
 import java.util.ResourceBundle;
 import javax.swing.JOptionPane;
 import jmri.Block;
+import jmri.BlockManager;
 import jmri.InstanceManager;
 import jmri.Memory;
 import jmri.NamedBean;
@@ -14,9 +15,8 @@ import jmri.Sensor;
 import jmri.SignalHead;
 import jmri.SignalMast;
 import jmri.Turnout;
-import jmri.managers.AbstractManager;
-import jmri.BlockManager;
 import jmri.jmrit.roster.RosterEntry;
+import jmri.managers.AbstractManager;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 

@@ -1,7 +1,6 @@
 package jmri.jmrix.roco.z21;
 
 import java.io.Serializable;
-import jmri.jmrix.lenz.LenzCommandStation;
 import jmri.jmrix.lenz.XNetConstants;
 import jmri.jmrix.lenz.XNetMessage;
 

@@ -1,9 +1,8 @@
 package jmri;
 
 import java.beans.PropertyChangeListener;
-import java.util.Date;
 import java.time.Instant;
-
+import java.util.Date;
 import javax.annotation.Nonnull;
 
 /**

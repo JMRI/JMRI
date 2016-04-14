@@ -11,11 +11,11 @@ import javax.annotation.Nonnull;
 import jmri.implementation.FileLocationsPreferences;
 import jmri.profile.Profile;
 import jmri.profile.ProfileUtils;
-import jmri.util.prefs.AbstractPreferencesProvider;
-import jmri.util.prefs.InitializationException;
 import jmri.spi.PreferencesProvider;
 import jmri.util.FileUtil;
 import jmri.util.FileUtilSupport;
+import jmri.util.prefs.AbstractPreferencesProvider;
+import jmri.util.prefs.InitializationException;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 

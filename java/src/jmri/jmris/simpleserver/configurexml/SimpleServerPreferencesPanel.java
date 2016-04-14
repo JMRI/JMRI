@@ -1,13 +1,7 @@
 package jmri.jmris.simpleserver.configurexml;
 
-/**
- * @author Randall Wood Copyright (C) 2012
- */
-import java.awt.event.ActionEvent;
 import javax.swing.Box;
 import javax.swing.BoxLayout;
-import javax.swing.event.ChangeEvent;
-import javax.swing.JButton;
 import javax.swing.JComponent;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
@@ -15,7 +9,7 @@ import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JSpinner;
 import javax.swing.SpinnerNumberModel;
-import javax.swing.JTextField;
+import javax.swing.event.ChangeEvent;
 import jmri.jmris.simpleserver.SimpleServerManager;
 import jmri.swing.JTitledSeparator;
 import jmri.swing.PreferencesPanel;

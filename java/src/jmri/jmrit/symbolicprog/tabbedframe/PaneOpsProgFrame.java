@@ -1,15 +1,13 @@
 // PaneOpsProgFrame.java
 package jmri.jmrit.symbolicprog.tabbedframe;
 
+import java.util.List;
 import javax.annotation.Nonnull;
 import javax.swing.JPanel;
-import java.util.List;
-
 import jmri.Programmer;
 import jmri.ProgrammingMode;
 import jmri.jmrit.decoderdefn.DecoderFile;
 import jmri.jmrit.roster.RosterEntry;
-
 import org.jdom2.Element;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;

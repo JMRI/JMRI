@@ -1,8 +1,6 @@
 // SchedulesByLoadFrame.java
 package jmri.jmrit.operations.locations;
 
-import jmri.jmrit.operations.trains.timetable.TrainScheduleManager;
-
 import java.awt.Dimension;
 import java.awt.GridBagLayout;
 import java.text.MessageFormat;
@@ -21,6 +19,7 @@ import jmri.jmrit.operations.rollingstock.cars.CarLoads;
 import jmri.jmrit.operations.rollingstock.cars.CarTypes;
 import jmri.jmrit.operations.rollingstock.cars.PrintCarLoadsAction;
 import jmri.jmrit.operations.setup.Control;
+import jmri.jmrit.operations.trains.timetable.TrainScheduleManager;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
