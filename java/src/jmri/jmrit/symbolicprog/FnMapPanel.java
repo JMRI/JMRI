@@ -108,7 +108,7 @@ public class FnMapPanel extends JPanel {
 
     // Some limits and defaults
     int highestFn = 28;
-    int numFn = (highestFn + 2) * 3;  // include FL and F0, plus all (f) and (r) variants in the total
+    int numFn;  // calculated later
     int numOut = 20; // default number of physical outputs
     int maxOut = 40; // maximum number of output columns
 
@@ -129,6 +129,15 @@ public class FnMapPanel extends JPanel {
             log.debug("Function map starts");
         }
         _varModel = v;
+
+        // Set up fnList array
+        this.fnList = new ArrayList<>();
+        fnList.addAll(Arrays.asList(fnExtraList));
+        for (int iFn = 0; iFn <= highestFn; iFn++) {
+            fnList.add("F" + iFn);
+        }
+
+        numFn = fnList.size() * fnVariantList.length;
 
         // set up default names and labels
         for (int iOut = 0; iOut < maxOut; iOut++) {
@@ -161,13 +170,6 @@ public class FnMapPanel extends JPanel {
         }
 
         labelAt(0, fnNameCol, Bundle.getMessage("FnMapDesc"), GridBagConstraints.LINE_START);
-
-        // Set up fnList array
-        this.fnList = new ArrayList<>();
-        fnList.addAll(Arrays.asList(fnExtraList));
-        for (int iFn = 0; iFn <= highestFn; iFn++) {
-            fnList.add("F" + iFn);
-        }
 
 // Loop through function names and output names looking for variables
         int row = firstFnRow;
