@@ -202,7 +202,7 @@ public class RouteTableAction extends AbstractTableAction {
                     } else {
                         NamedBean nB = getByUserName((String) value);
                         if (nB != null) {
-                            log.error("User name is not unique " + value);
+                            log.error("User Name is not unique " + value);
                             String msg;
                             msg = Bundle.getMessage("WarningUserName", new Object[]{("" + value)});
                             JOptionPane.showMessageDialog(null, msg,
@@ -257,7 +257,7 @@ public class RouteTableAction extends AbstractTableAction {
             /**
              * Delete the bean after all the checking has been done.
              * <P>
-             * Deactivate the light, then use the superclass to delete it.
+             * Deactivate the Route, then use the superclass to delete it.
              */
             void doDelete(NamedBean bean) {
                 ((Route) bean).deActivateRoute();
@@ -266,10 +266,10 @@ public class RouteTableAction extends AbstractTableAction {
 
             // want to update when enabled parameter changes
             protected boolean matchPropertyName(java.beans.PropertyChangeEvent e) {
-                if (e.getPropertyName().equals("Enabled")) {
+                if (e.getPropertyName().equals("Enabled")) { //NOI18N
                     return true;
                 }
-                if (e.getPropertyName().equals("Locked")) {
+                if (e.getPropertyName().equals("Locked")) { //NOI18N
                     return true;
                 } else {
                     return super.matchPropertyName(e);
@@ -297,11 +297,11 @@ public class RouteTableAction extends AbstractTableAction {
             }
 
             public String getValue(String s) {
-                return "Set";
+                return Bundle.getMessage("ButtonSet");
             }
 
             public JButton configureButton() {
-                return new JButton(" Set ");
+                return new JButton(" ... ");
             }
 
             protected String getBeanType() {
@@ -317,7 +317,7 @@ public class RouteTableAction extends AbstractTableAction {
     }
 
     protected void setTitle() {
-        f.setTitle("Route Table");
+        f.setTitle(Bundle.getMessage("TitleRouteTable"));
     }
 
     protected String helpTarget() {
@@ -391,21 +391,21 @@ public class RouteTableAction extends AbstractTableAction {
     JRadioButton allButton = null;
     JRadioButton includedButton = null;
 
-    JLabel nameLabel = new JLabel("Route System Name:");
-    JLabel userLabel = new JLabel("Route User Name:");
+    JLabel nameLabel = new JLabel(Bundle.getMessage("BeanNameRoute") + " " +  Bundle.getMessage("LabelSystemName"));
+    JLabel userLabel = new JLabel(Bundle.getMessage("BeanNameRoute") + " " +  Bundle.getMessage("LabelUserName"));
     JLabel fixedSystemName = new JLabel("xxxxxxxxxxx");
 
-    JButton createButton = new JButton("Add Route");
+    JButton createButton = new JButton(Bundle.getMessage("ButtonAdd"));
     JButton editButton = new JButton("Edit Route");
-    JButton deleteButton = new JButton("Delete Route");
-    JButton updateButton = new JButton("Update Route");
-    JButton cancelButton = new JButton("Cancel");
+    JButton cancelButton = new JButton(Bundle.getMessage("ButtonCancel"));
+    JButton deleteButton = new JButton(Bundle.getMessage("ButtonDelete"));
+    JButton updateButton = new JButton(Bundle.getMessage("ButtonUpdate"));
     JButton exportButton = new JButton("Export to Logix");
 
-    static String createInst = "To create a new Route, enter definition, then click 'Add Route'.";
-    static String editInst = "To edit an existing Route, enter system name, then click 'Edit Route'.";
-    static String updateInst = "To change this Route, make changes above, then click 'Update Route'.";
-    static String cancelInst = "To leave Edit mode, without changing this Route, click 'Cancel',";
+    static String createInst = "To create a new Route, enter definition, then click 'Add'.";
+    static String editInst = "To edit an existing Route, enter system name, then click 'Edit'.";
+    static String updateInst = "To change this Route, make changes above, then click 'Update'.";
+    static String cancelInst = "To leave Edit mode without changing this Route, click 'Cancel'.";
 
     JLabel status1 = new JLabel(createInst);
     JLabel status2 = new JLabel(editInst);
@@ -451,7 +451,7 @@ public class RouteTableAction extends AbstractTableAction {
             sensor3 = new JmriBeanComboBox(InstanceManager.sensorManagerInstance());
             cTurnout = new JmriBeanComboBox(InstanceManager.turnoutManagerInstance());
             cLockTurnout = new JmriBeanComboBox(InstanceManager.turnoutManagerInstance());
-            addFrame = new JmriJFrame("Add/Edit Route", false, true);
+            addFrame = new JmriJFrame(Bundle.getMessage("TitleAddRoute"), false, true);
             addFrame.addHelpMenu("package.jmri.jmrit.beantable.RouteAddEdit", true);
             addFrame.setLocation(100, 30);
 
@@ -471,7 +471,7 @@ public class RouteTableAction extends AbstractTableAction {
             if (pref.getSimplePreferenceState(systemNameAuto)) {
                 _autoSystemName.setSelected(true);
             }
-            _systemName.setToolTipText("Enter system name for new Route, e.g. R12.");
+            _systemName.setToolTipText("Enter system name for new Route, e.g. 'R12'.");
             ps.add(fixedSystemName);
             fixedSystemName.setVisible(false);
             contentPanel.add(ps);
@@ -480,7 +480,7 @@ public class RouteTableAction extends AbstractTableAction {
             p.setLayout(new FlowLayout());
             p.add(userLabel);
             p.add(_userName);
-            _userName.setToolTipText("Enter user name for new Route, e.g. Clear Mainline.");
+            _userName.setToolTipText("Enter user name for new Route, e.g. 'Clear Mainline'.");
             contentPanel.add(p);
             // add Turnout Display Choice
             JPanel py = new JPanel();
@@ -632,44 +632,44 @@ public class RouteTableAction extends AbstractTableAction {
             // Enter filenames for sound, script
             JPanel p25 = new JPanel();
             p25.setLayout(new FlowLayout());
-            p25.add(new JLabel("Play sound file:"));
-            JButton ss = new JButton("Set");
+            p25.add(new JLabel(Bundle.getMessage("LabelPlaySound")));
+            p25.add(soundFile);
+            JButton ss = new JButton("...");
             ss.addActionListener(new ActionListener() {
                 public void actionPerformed(ActionEvent e) {
                     setSoundPressed();
                 }
             });
             p25.add(ss);
-            p25.add(soundFile);
-            p25.add(new JLabel("Run script:"));
-            ss = new JButton("Set");
+            p25.add(new JLabel(Bundle.getMessage("LabelRunScript")));
+            p25.add(scriptFile);
+            ss = new JButton("...");
             ss.addActionListener(new ActionListener() {
                 public void actionPerformed(ActionEvent e) {
                     setScriptPressed();
                 }
             });
             p25.add(ss);
-            p25.add(scriptFile);
             contentPanel.add(p25);
 
             //add turnouts aligned sensor
             JPanel p27 = new JPanel();
             p27.setLayout(new FlowLayout());
-            p27.add(new JLabel("Enter Sensor that Activates when Route Turnouts are correctly aligned (optional):"));
+            p27.add(new JLabel(Bundle.getMessage("LabelEnterSensorAligned")));
             p27.add(turnoutsAlignedSensor);
             turnoutsAlignedSensor.setFirstItemBlank(true);
             turnoutsAlignedSensor.setSelectedBean(null);
-            turnoutsAlignedSensor.setToolTipText("Enter a Sensor system name or nothing");
+            turnoutsAlignedSensor.setToolTipText(Bundle.getMessage("TooltipEnterSensor"));
             contentPanel.add(p27);
 
             // add control sensor table
             JPanel p3 = new JPanel();
             p3.setLayout(new BoxLayout(p3, BoxLayout.Y_AXIS));
             JPanel p31 = new JPanel();
-            p31.add(new JLabel("Enter Sensors that trigger this Route (optional)"));
+            p31.add(new JLabel(Bundle.getMessage("LabelEnterSensors")));
             p3.add(p31);
             JPanel p32 = new JPanel();
-            p32.add(new JLabel("Sensors: "));
+            p32.add(new JLabel(Bundle.getMessage("MenuItemSensorTable") + ": "));
             Border pSBorder = BorderFactory.createEtchedBorder();
             JPanel pS = new JPanel();
             pS.setBorder(pSBorder);
@@ -695,7 +695,7 @@ public class RouteTableAction extends AbstractTableAction {
             sensor1.setSelectedBean(null);
             sensor2.setSelectedBean(null);
             sensor3.setSelectedBean(null);
-            String sensorHint = "Enter a Sensor system name or nothing";
+            String sensorHint = Bundle.getMessage("TooltipEnterSensors");
             sensor1.setToolTipText(sensorHint);
             sensor2.setToolTipText(sensorHint);
             sensor3.setToolTipText(sensorHint);
@@ -705,7 +705,7 @@ public class RouteTableAction extends AbstractTableAction {
             p33.add(new JLabel("Enter a Turnout that triggers this Route (optional)"));
             p3.add(p33);
             JPanel p34 = new JPanel();
-            p34.add(new JLabel("Turnout: "));
+            p34.add(new JLabel(Bundle.getMessage("BeanNameTurnout") + ":"));
             p34.add(cTurnout);
             cTurnout.setFirstItemBlank(true);
             cTurnout.setSelectedBean(null);
@@ -738,7 +738,7 @@ public class RouteTableAction extends AbstractTableAction {
             p43.add(new JLabel("Enter a Turnout that controls the lock for this Route (optional)"));
             p4.add(p43);
             JPanel p44 = new JPanel();
-            p44.add(new JLabel("Turnout: "));
+            p44.add(new JLabel(Bundle.getMessage("BeanNameTurnout") + ":"));
             p44.add(cLockTurnout);
             cLockTurnout.setFirstItemBlank(true);
             cLockTurnout.setSelectedBean(null);
