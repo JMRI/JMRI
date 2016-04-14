@@ -270,7 +270,7 @@ public class XpaTrafficController implements XpaInterface, Runnable {
      */
     class XmtHandler implements Runnable {
 
-        @edu.umd.cs.findbugs.annotations.SuppressFBWarnings(value = {"UW_UNCOND_WAIT","NO_NOTIFY_NOT_NOTIFYALL},
+        @edu.umd.cs.findbugs.annotations.SuppressFBWarnings(value = {"UW_UNCOND_WAIT","NO_NOTIFY_NOT_NOTIFYALL"},
                 justification = "while loop controls access")
         public void run() {
             while (true) { //  loop forever
