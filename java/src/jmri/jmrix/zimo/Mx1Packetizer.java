@@ -45,7 +45,7 @@ public class Mx1Packetizer extends Mx1TrafficController {
 
     // The methods to implement the Mx1Interface
     public boolean status() {
-        return (ostream != null & istream != null);
+        return (ostream != null && istream != null);
     }
 
     public final static boolean ASCII = false;
@@ -353,7 +353,7 @@ public class Mx1Packetizer extends Mx1TrafficController {
                             int b = istream.readByte() & 0xFF;
                             len = len + 1;
                             //if end of message
-                            if (b == 0x0D | b == 0x0A) {
+                            if (b == 0x0D || b == 0x0A) {
                                 msgn.setElement(i, b);
                                 break;
                             }

@@ -166,7 +166,7 @@ public class LnHexFilePort extends LnPortController implements Runnable, jmri.jm
     }
 
     public boolean status() {
-        return (pout != null) & (pin != null);
+        return (pout != null) && (pin != null);
     }
 
     // to tell if we're currently putting out data

@@ -468,7 +468,7 @@ public class DeviceServer implements Runnable, ThrottleControllerListener, Contr
             }
 
         };
-        ekg.scheduleAtFixedRate(task, pulseInterval * 900, pulseInterval * 900);
+        ekg.scheduleAtFixedRate(task, pulseInterval * 900L, pulseInterval * 900L);
     }
 
     public void stopEKG() {

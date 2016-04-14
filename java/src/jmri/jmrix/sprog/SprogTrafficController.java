@@ -49,7 +49,7 @@ public class SprogTrafficController implements SprogInterface, SerialPortEventLi
     protected Vector<SprogListener> cmdListeners = new Vector<SprogListener>();
 
     public boolean status() {
-        return (ostream != null & istream != null);
+        return (ostream != null && istream != null);
     }
 
     public synchronized void addSprogListener(SprogListener l) {

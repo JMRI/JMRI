@@ -84,7 +84,7 @@ public class AudioListenerFrame extends AbstractAudioFrame {
                 BorderFactory.createEmptyBorder(5, 5, 5, 5)));
         metersPerUnit.setPreferredSize(new JTextField(8).getPreferredSize());
         metersPerUnit.setModel(
-                new SpinnerNumberModel(new Float(0f), new Float(0f), new Float(65536f), new Float(0.0001f)));
+                new SpinnerNumberModel(Float.valueOf(0f), Float.valueOf(0f), Float.valueOf(65536f), Float.valueOf(0.0001f)));
         metersPerUnit.setEditor(new JSpinner.NumberEditor(metersPerUnit, "0.0000"));
         p.add(metersPerUnit);
         p.add(metersPerUnitLabel);
@@ -120,6 +120,9 @@ public class AudioListenerFrame extends AbstractAudioFrame {
      */
     @Override
     public void populateFrame(Audio a) {
+        if (a instanceof AudioListener) {
+            throw new IllegalArgumentException(a.getSystemName() + " is not an AudioListener object");
+        }
         super.populateFrame(a);
         AudioListener l = (AudioListener) a;
         position.setValue(l.getPosition());
