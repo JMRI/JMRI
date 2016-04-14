@@ -60,6 +60,7 @@ On it is displayed:</p>
 <p>Click the "Open Comprehensive Programmer" button at lower right to display a row of tabbed panes with additional properties:</p>
 <dl>	
 	<dt>Roster Entry</dt>
+	<dd>
 		<ul>
 		<li>Road Name
 		<li>Road Number
@@ -77,11 +78,11 @@ On it is displayed:</p>
 	  used it to record whether an NMRA plug was used, whether the
 	  decoder was soldered in, etc.</li>
 	  </ul>
-	</dt>
-	<dt>Basic<br>
-	additional information about your Locomotive etc.</dt>
-	<dt>Motor, Basic Speed Control, and many other tabs:<br>
-	<a href="images/DP4ComprehensiveTabs.png"><img src="images/DP4ComprehensiveTabs.png" width="531" height="47"></a></dt>
+	</dd>
+	<dt>Basic<dt>
+	<dd>With additional information about your Locomotive etc.</dd>
+	<dt>Motor, Basic Speed Control, and many other tabs:</dt>
+	<dd><a href="images/DP4ComprehensiveTabs.png"><img src="images/DP4ComprehensiveTabs.png" alt="DP pane tabs" width="531" height="47"></a></dd>
 </dl>	
 
 <a id="menu"></a>

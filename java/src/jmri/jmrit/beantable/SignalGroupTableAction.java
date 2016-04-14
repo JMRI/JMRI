@@ -635,7 +635,9 @@ public class SignalGroupTableAction extends AbstractTableAction implements Prope
                 // remind to save, if SignalGroup was created or edited
                 if (SignalGroupDirty) {
                     InstanceManager.getDefault(jmri.UserPreferencesManager.class).
-                            showInfoMessage(Bundle.getMessage("ReminderTitle"), Bundle.getMessage("ReminderSaveString", Bundle.getMessage("SignalGroup")), "beantable.SignalGroupTableAction", "remindSignalGroup");
+                            showInfoMessage(Bundle.getMessage("ReminderTitle"), Bundle.getMessage("ReminderSaveString", Bundle.getMessage("SignalGroup")),
+                                    "beantable.SignalGroupTableAction",
+                                    "remindSignalGroup"); // NOI18N
                     SignalGroupDirty = false;
                 }
                 // hide addFrame

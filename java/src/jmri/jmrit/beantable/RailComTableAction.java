@@ -1,4 +1,3 @@
-// RailCommTableAction.java
 package jmri.jmrit.beantable;
 
 import java.awt.event.ActionEvent;
@@ -19,17 +18,11 @@ import org.slf4j.LoggerFactory;
 /**
  * Swing action to create and register a RailCommTable GUI.
  *
- * @author	Bob Jacobsen Copyright (C) 2003
- * @author Matthew Harris Copyright (C) 2011
- * @version $Revision: 18072 $
+ * @author  Bob Jacobsen Copyright (C) 2003
+ * @author  Matthew Harris Copyright (C) 2011
  * @since 2.11.4
  */
 public class RailComTableAction extends AbstractTableAction {
-
-    /**
-     *
-     */
-    private static final long serialVersionUID = 4041803967319785256L;
 
     /**
      * Create an action with a specific title.
@@ -39,6 +32,7 @@ public class RailComTableAction extends AbstractTableAction {
      *
      * @param actionName
      */
+    @SuppressWarnings("OverridableMethodCallInConstructor")
     public RailComTableAction(String actionName) {
         super(actionName);
 
@@ -57,13 +51,10 @@ public class RailComTableAction extends AbstractTableAction {
      * Create the JTable DataModel, along with the changes for the specific case
      * of RailComm objects
      */
+    @Override
     protected void createModel() {
         m = new BeanTableDataModel() {
 
-            /**
-             *
-             */
-            private static final long serialVersionUID = 2279329942656851421L;
             static public final int VALUECOL = 0;
             public static final int WHERECOL = VALUECOL + 1;
             public static final int WHENCOL = WHERECOL + 1;
@@ -79,6 +70,7 @@ public class RailComTableAction extends AbstractTableAction {
 
             static public final int NUMCOLUMN = DELETECOL + 1;
 
+            @Override
             public String getValue(String name) {
                 RailCom tag = (RailCom) InstanceManager.getDefault(RailComManager.class).getBySystemName(name);
                 if (tag == null) {
@@ -92,6 +84,7 @@ public class RailComTableAction extends AbstractTableAction {
                 }
             }
 
+            @Override
             public Manager getManager() {
                 RailComManager m = InstanceManager.getDefault(RailComManager.class);
                 if (!m.isInitialised()) {
@@ -100,14 +93,17 @@ public class RailComTableAction extends AbstractTableAction {
                 return m;
             }
 
+            @Override
             public NamedBean getBySystemName(String name) {
                 return InstanceManager.getDefault(RailComManager.class).getBySystemName(name);
             }
 
+            @Override
             public NamedBean getByUserName(String name) {
                 return InstanceManager.getDefault(RailComManager.class).getByUserName(name);
             }
 
+            @Override
             public void clickOn(NamedBean t) {
                 // don't do anything on click; not used in this class, because
                 // we override setValueAt
@@ -284,12 +280,14 @@ public class RailComTableAction extends AbstractTableAction {
                 return getClassName();
             }
 
+            @Override
             protected String getBeanType() {
                 return "ID Tag";
             }
         };
     }
 
+    @Override
     protected void setTitle() {
         f.setTitle(Bundle.getMessage("TitleRailComTable"));
     }
@@ -299,6 +297,7 @@ public class RailComTableAction extends AbstractTableAction {
         return "package.jmri.jmrit.beantable.RailComTable";
     }
 
+    @Override
     protected void addPressed(ActionEvent e) {
     }
 
@@ -317,10 +316,9 @@ public class RailComTableAction extends AbstractTableAction {
         log.debug("Added CheckBox in addToPanel method");
     }
 
+    @Override
     protected String getClassName() {
         return RailComTableAction.class.getName();
     }
     private static final Logger log = LoggerFactory.getLogger(RailComTableAction.class.getName());
 }
-
-/* @(#)RailCommTableAction.java */
