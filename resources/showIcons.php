@@ -44,7 +44,13 @@ function showFiles() {
 
     $d = dir(".");
     while (false !== ($entry = $d->read())) {
-       if (endswith($entry, ".gif") || endswith($entry, ".jpg") || endswith($entry, ".png")) {
+       if (endswith($entry, ".gif") 
+            || endswith($entry, ".jpg") 
+            || endswith($entry, ".png")
+            || endswith($entry, ".EPS")
+            || endswith($entry, ".PSD")
+            || endswith($entry, ".md")
+            ) {
          $list[] = $entry;
        }
     }
