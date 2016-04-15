@@ -202,8 +202,15 @@ public class FnMapPanel extends JPanel {
                                     log.debug("Process var: " + name + " as index " + iVar);
                                 }
                                 varsUsed.add(Integer.valueOf(iVar));
-                                JComponent j = (JComponent) (_varModel.getRep(iVar, "checkbox"));
                                 VariableValue var = _varModel.getVariable(iVar);
+                                // Only single-bit (exactly two options) variables should use checkbox
+                                // this really would be better fixed in EnumVariableValue
+                                // done here to avoid side effects elsewhere
+                                String displayFormat = "checkbox";
+                                if (((var.getMask().replace("X", "")).length()) != 1) {
+                                    displayFormat = "";
+                                }
+                                JComponent j = (JComponent) (_varModel.getRep(iVar, displayFormat));
                                 j.setToolTipText(PaneProgPane.addCvDescription((fnNameString + " "
                                         + Bundle.getMessage("FnMapControlsOutput") + " "
                                         + outName[iOut] + " " + outLabel[iOut]), var.getCvDescription(), var.getMask()));
@@ -231,9 +238,9 @@ public class FnMapPanel extends JPanel {
                         } catch (java.util.MissingResourceException e) {
                             try {  // Else see if we have a match for fnNameBase
                                 fnNameString = Bundle.getMessage("FnMap_" + fnNameBase);
-                        if (!fnDirVariant.equals("")) { // Add variant
-                            fnNameString = fnNameString + Bundle.getMessage("FnMap_" + fnDirVariant);
-                        }
+                                if (!fnDirVariant.equals("")) { // Add variant
+                                    fnNameString = fnNameString + Bundle.getMessage("FnMap_" + fnDirVariant);
+                                }
                             } catch (java.util.MissingResourceException e1) {
                                 // No matches found
                             }
