@@ -1,3 +1,6 @@
+/**
+ * @author Randall Wood Copyright (C) 2012
+ */
 package jmri.jmris.simpleserver.configurexml;
 
 import javax.swing.Box;

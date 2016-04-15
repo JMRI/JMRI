@@ -1,3 +1,6 @@
+/**
+ * @author Randall Wood Copyright (C) 2012
+ */
 package jmri.jmris.srcp.configurexml;
 
 import javax.swing.Box;
