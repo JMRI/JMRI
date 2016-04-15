@@ -131,6 +131,8 @@ public class XpaTrafficController implements XpaInterface, Runnable {
     /**
      * Forward a preformatted message to the actual interface.
      */
+     @edu.umd.cs.findbugs.annotations.SuppressFBWarnings(value = {"NO_NOTIFY_NOT_NOTIFYALL"},
+              justification = "Notify is used because Having more than one thread waiting on xmtHandler is an error.")
     synchronized public void sendXpaMessage(XpaMessage m, XpaListener reply) {
         if (log.isDebugEnabled()) {
             log.debug("sendXpaMessage message: [" + m + "]");
@@ -268,7 +270,7 @@ public class XpaTrafficController implements XpaInterface, Runnable {
      */
     class XmtHandler implements Runnable {
 
-        @edu.umd.cs.findbugs.annotations.SuppressFBWarnings(value = "UW_UNCOND_WAIT",
+        @edu.umd.cs.findbugs.annotations.SuppressFBWarnings(value = {"UW_UNCOND_WAIT","NO_NOTIFY_NOT_NOTIFYALL"},
                 justification = "while loop controls access")
         public void run() {
             while (true) { //  loop forever
