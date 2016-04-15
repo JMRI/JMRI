@@ -62,7 +62,8 @@ public class SignallingPanel extends jmri.util.swing.JmriPanel {
     JLabel fixedDestMastLabel = new JLabel();
     JLabel sourceMastLabel = new JLabel(rb.getString("SourceMast")+":");
     JLabel destMastLabel = new JLabel(rb.getString("DestMast")+":");
-    JButton cancel = new JButton(Bundle.getMessage("ButtonCancel"));
+
+    JButton cancelButton = new JButton(Bundle.getMessage("ButtonCancel"));
     JButton updateButton = new JButton(rb.getString("UpdateLogic"));
     JCheckBox useLayoutEditor = new JCheckBox(rb.getString("UseLayoutEditorPaths"));
     JCheckBox useLayoutEditorTurnout = new JCheckBox(rb.getString("UseTurnoutDetails"));
@@ -219,9 +220,9 @@ public class SignallingPanel extends jmri.util.swing.JmriPanel {
         header.add(allowAutoMastGeneration);
         header.add(lockTurnouts);
         JPanel py = new JPanel();
-        py.add(new JLabel(rb.getString("Show")));
+        py.add(new JLabel(Bundle.getMessage("Show")));
         selGroup = new ButtonGroup();
-        allButton = new JRadioButton(rb.getString("All"), true);
+        allButton = new JRadioButton(Bundle.getMessage("All"), true);
         selGroup.add(allButton);
         py.add(allButton);
         allButton.addActionListener(new ActionListener() {
@@ -236,7 +237,7 @@ public class SignallingPanel extends jmri.util.swing.JmriPanel {
                 }
             }
         });
-        includedButton = new JRadioButton(rb.getString("Included"), false);
+        includedButton = new JRadioButton(Bundle.getMessage("Included"), false);
         selGroup.add(includedButton);
         py.add(includedButton);
         includedButton.addActionListener(new ActionListener() {
@@ -252,7 +253,7 @@ public class SignallingPanel extends jmri.util.swing.JmriPanel {
                 }
             }
         });
-        py.add(new JLabel("  " + rb.getString("TurnoutSensors")));
+        py.add(new JLabel("  " + Bundle.getMessage("Elements")));
         header.add(py);
 
         containerPanel.add(header, BorderLayout.NORTH);
@@ -271,8 +272,8 @@ public class SignallingPanel extends jmri.util.swing.JmriPanel {
         footer.setLayout(new FlowLayout(FlowLayout.TRAILING));
 
         //Cancel button
-        footer.add(cancel);
-        cancel.addActionListener(new ActionListener() {
+        footer.add(cancelButton);
+        cancelButton.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
                 cancelPressed(e);
             }

@@ -264,9 +264,9 @@ public class SignalMastLogicTableAction extends AbstractTableAction {
                     case DESTCOL:
                         return Bundle.getMessage("Destination");
                     case SOURCEAPPCOL:
-                        return Bundle.getMessage("SignalMastAppearance");
+                        return Bundle.getMessage("LabelAspectType");
                     case DESTAPPCOL:
-                        return Bundle.getMessage("SignalMastAppearance");
+                        return Bundle.getMessage("LabelAspectType");
                     case COMCOL:
                         return Bundle.getMessage("Comment");
                     case DELCOL:
@@ -351,7 +351,7 @@ public class SignalMastLogicTableAction extends AbstractTableAction {
                     case DESTCOL:
                         return new JTextField(10).getPreferredSize().width;
                     case EDITLOGICCOL: // not actually used due to the configureTable, setColumnToHoldButton, configureButton
-                        return new JTextField(5).getPreferredSize().width;
+                        return new JTextField(6).getPreferredSize().width;
                     case DELCOL: // not actually used due to the configureTable, setColumnToHoldButton, configureButton
                         return new JTextField(5).getPreferredSize().width;
                     case DESTAPPCOL:
@@ -432,7 +432,7 @@ public class SignalMastLogicTableAction extends AbstractTableAction {
                         return (b != null) ? b.getComment(getDestMastFromRow(row)) : null;
                     case DELCOL:
                         return Bundle.getMessage("ButtonDelete");
-                    case EDITLOGICCOL:  //
+                    case EDITLOGICCOL:
                         return Bundle.getMessage("ButtonEdit");
                     case ENABLECOL:
                         return (b != null) ? b.isEnabled(getDestMastFromRow(row)) : null;

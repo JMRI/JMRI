@@ -33,7 +33,11 @@ The fnmapping element works by looking for variables with names
 like  "F2 controls output 1".  Specifically, it's looking for a name that consists
 of four (or five) parts:
 	<ol>
-	<li>A function name.  This could be "FL" or "Fn" or "Fnn", where n or nn is a decimal number in the range 0-28.</li>
+	<li>
+    A function name. This could be "FL" or "Fn" or "Fnn", where n or nn is a decimal number in the range 0-28.
+    <br/>Also supported are some special non-key states used by some decoders to control outputs.
+    These currently include "STOP", "DRIVE", "FWD" and "REV".
+	</li>
 	<li>An optional "(f)" or "(r)" suffix to the function name.</li>
 	<li>The exact string "&nbsp;controls output&nbsp;". Note the single spaces before and after!</li>
 	<li>An output's decimal number.</li>

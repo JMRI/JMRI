@@ -1,4 +1,3 @@
-// RfidReporter.java
 package jmri.jmrix.rfid;
 
 import java.util.regex.Matcher;
@@ -31,16 +30,10 @@ import org.slf4j.LoggerFactory;
  * <P>
  *
  * @author Matthew Harris Copyright (c) 2011
- * @version $Revision$
  * @since 2.11.4
  */
 public class RfidReporter extends AbstractReporter
         implements RfidTagListener, PhysicalLocationReporter {
-
-    /**
-     *
-     */
-    private static final long serialVersionUID = -5764746168270178892L;
 
     public RfidReporter(String systemName) {
         super(systemName);
@@ -50,6 +43,7 @@ public class RfidReporter extends AbstractReporter
         super(systemName, userName);
     }
 
+    @Override
     public void notify(IdTag id) {
         log.debug("Notify: " + this.mSystemName);
         if (id != null) {
@@ -73,10 +67,12 @@ public class RfidReporter extends AbstractReporter
 
     private int state = UNKNOWN;
 
+    @Override
     public void setState(int s) {
         state = s;
     }
 
+    @Override
     public int getState() {
         return state;
     }
@@ -90,6 +86,7 @@ public class RfidReporter extends AbstractReporter
      * Note: We ignore the string passed in, because rfid Reporters don't send
      * String type reports.
      */
+    @Override
     public LocoAddress getLocoAddress(String rep) {
         // For now, we assume the current report.
         // IdTag.getTagID() is a system-name-ized version of the loco address. I think.
@@ -114,6 +111,7 @@ public class RfidReporter extends AbstractReporter
      * Gets the direction (ENTER/EXIT) of the report. Because of the way rfid
      * Reporters work (or appear to), all reports are ENTER type.
      */
+    @Override
     public PhysicalLocationReporter.Direction getDirection(String rep) {
         // TEMPORARY:  Assume we're always Entering, if asked.
         return (PhysicalLocationReporter.Direction.ENTER);
@@ -127,6 +125,7 @@ public class RfidReporter extends AbstractReporter
      * Reports its own location, for now. Not sure if that's the right thing or
      * not. NOT DONE YET
      */
+    @Override
     public PhysicalLocation getPhysicalLocation() {
         return (this.getPhysicalLocation(null));
     }
@@ -138,6 +137,7 @@ public class RfidReporter extends AbstractReporter
      *
      * Does not use the parameter s
      */
+    @Override
     public PhysicalLocation getPhysicalLocation(String s) {
         return (PhysicalLocation.getBeanPhysicalLocation(this));
     }
@@ -145,5 +145,3 @@ public class RfidReporter extends AbstractReporter
     private static final Logger log = LoggerFactory.getLogger(RfidReporter.class.getName());
 
 }
-
-/* @(#)RfidReporter.java */

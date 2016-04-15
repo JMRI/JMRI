@@ -1,4 +1,3 @@
-// SerialLight.java
 package jmri.jmrix.cmri.serial;
 
 import jmri.implementation.AbstractLight;
@@ -13,14 +12,8 @@ import org.slf4j.LoggerFactory;
  * Based in part on SerialTurnout.java
  *
  * @author Dave Duchamp Copyright (C) 2004
- * @version $Revision$
  */
 public class SerialLight extends AbstractLight {
-
-    /**
-     *
-     */
-    private static final long serialVersionUID = 2525373718284737564L;
 
     /**
      * Create a Light object, with only system name.
@@ -81,5 +74,3 @@ public class SerialLight extends AbstractLight {
 
     private final static Logger log = LoggerFactory.getLogger(SerialLight.class.getName());
 }
-
-/* @(#)SerialLight.java */

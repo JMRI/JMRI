@@ -55,6 +55,11 @@ public abstract class AbstractSensorManager extends AbstractManager implements S
         }
     }
 
+    @Override
+    public Sensor getBeanBySystemName(String key) {
+        return this.getBySystemName(key);
+    }
+    
     public Sensor getBySystemName(String key) {
         if (isNumber(key)) {
             key = makeSystemName(key);

@@ -13,7 +13,8 @@ import javax.swing.border.TitledBorder;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-/*
+/**
+ * Provides a Swing component to show and/or edit a PhysicalLocation
  * <hr>
  * This file is part of JMRI.
  * <P>
@@ -29,19 +30,9 @@ import org.slf4j.LoggerFactory;
  * <P>
  *
  * @author			Mark Underwood Copyright (C) 2011
- * @version			$Revision$
- */
-/**
- * PhysicalLocationPanel
- *
- * Provides a Swing component to show and/or edit a PhysicalLocation
  */
 public class PhysicalLocationPanel extends JPanel {
 
-    /**
-     *
-     */
-    private static final long serialVersionUID = -5045462821415921427L;
     TitledBorder tb;
     JSpinner xs, ys, zs;
     SpinnerNumberModel spinnerModel;

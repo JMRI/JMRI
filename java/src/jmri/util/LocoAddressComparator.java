@@ -12,11 +12,6 @@ import jmri.LocoAddress;
  */
 public class LocoAddressComparator implements Comparator<LocoAddress>, java.io.Serializable {
 
-    /**
-     *
-     */
-    private static final long serialVersionUID = 10_04_2015L;
-
     public LocoAddressComparator() {
     }
 
