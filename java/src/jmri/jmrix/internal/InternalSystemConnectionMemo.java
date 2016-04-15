@@ -34,34 +34,34 @@ public class InternalSystemConnectionMemo extends jmri.jmrix.SystemConnectionMem
         if (configured) log.warn("configureManagers called for a second time", new Exception("traceback"));
         
         if (lightManager == null) {
-            lightManager = new InternalLightManager();
-            InstanceManager.setLightManager(lightManager);
+            //lightManager = new InternalLightManager();
+            //InstanceManager.setLightManager(lightManager);
         }
         
         if (sensorManager == null) {
-            sensorManager = new InternalSensorManager(getSystemPrefix());
-            InstanceManager.setSensorManager(sensorManager);
+            //sensorManager = new InternalSensorManager(getSystemPrefix());
+            //InstanceManager.setSensorManager(sensorManager);
         }
         
         if (turnoutManager == null) {
-            turnoutManager = new InternalTurnoutManager(getSystemPrefix());
-            InstanceManager.setTurnoutManager(turnoutManager);
+            //turnoutManager = new InternalTurnoutManager(getSystemPrefix());
+            //InstanceManager.setTurnoutManager(turnoutManager);
         }
         
         if (powerManager == null) {
-            powerManager = new jmri.managers.DefaultPowerManager();
-            jmri.InstanceManager.setPowerManager(powerManager);
+            //powerManager = new jmri.managers.DefaultPowerManager();
+            //jmri.InstanceManager.setPowerManager(powerManager);
         }
         
         if (programManager == null) {
             // Install a debug programmer
-            programManager = new jmri.progdebugger.DebugProgrammerManager();
-            jmri.InstanceManager.setProgrammerManager(programManager);
+            //programManager = new jmri.progdebugger.DebugProgrammerManager();
+            //jmri.InstanceManager.setProgrammerManager(programManager);
         }
         
         if (reporterManager == null) {
-            reporterManager = new InternalReporterManager();
-            InstanceManager.setReporterManager(reporterManager);
+            //reporterManager = new InternalReporterManager();
+            //InstanceManager.setReporterManager(reporterManager);
         }
         
 //         if (throttleManager == null) {
