@@ -59,8 +59,17 @@ public class Z21SimulatorAdapterTest extends TestCase {
             try {
                byte buffer[] = new byte[100];
                DatagramPacket p = new DatagramPacket(buffer,100,host,port);
+               // set the timeout on the socket.
+               try {
+                 a.getSocket().setSoTimeout(30000); // 30 second timeout.
+               } catch( java.net.SocketException timeoutse) {
+                   // this is not a fatal error for this test, just 
+                   // an optimization in case something went wrong.
+               }
                a.getSocket().receive(p);
                Assert.assertTrue("received data from simulator",0!=p.getLength()); 
+            } catch(java.net.SocketTimeoutException ste) {
+              Assert.fail("Socket Timeout Exception reading from network port");
             } catch(java.io.IOException ioe) {
               Assert.fail("IOException reading from network port");
             }
@@ -76,7 +85,7 @@ public class Z21SimulatorAdapterTest extends TestCase {
 
     // Main entry point
     static public void main(String[] args) {
-        String[] testCaseName = {"-noloading", Z21SimulatorAdapterTest.class.getName()};
+        String[] testCaseName = {"-noloading" , Z21SimulatorAdapterTest.class.getName()};
         junit.swingui.TestRunner.main(testCaseName);
     }
 
