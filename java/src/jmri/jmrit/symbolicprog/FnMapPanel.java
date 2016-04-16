@@ -108,6 +108,7 @@ public class FnMapPanel extends JPanel {
 
     // Some limits and defaults
     int highestFn = 28;
+    int highestSensor = 28;
     int numFn;  // calculated later
     int numOut = 20; // default number of physical outputs
     int maxOut = 40; // maximum number of output columns
@@ -133,8 +134,11 @@ public class FnMapPanel extends JPanel {
         // Set up fnList array
         this.fnList = new ArrayList<>();
         fnList.addAll(Arrays.asList(fnExtraList));
-        for (int iFn = 0; iFn <= highestFn; iFn++) {
-            fnList.add("F" + iFn);
+        for (int i = 0; i <= highestFn; i++) {
+            fnList.add("F" + i);
+        }
+        for (int i = 0; i <= highestSensor; i++) {
+            fnList.add("S" + i);
         }
 
         numFn = fnList.size() * fnVariantList.length;
@@ -229,6 +233,11 @@ public class FnMapPanel extends JPanel {
                 if (rowIsUsed) {
                     if (fnNameBase.matches("F\\d+")) {
                         fnNameString = Bundle.getMessage("FnMap_F") + " " + fnNameBase.substring(1);
+                        if (!fnDirVariant.equals("")) {
+                            fnNameString = fnNameString + Bundle.getMessage("FnMap_" + fnDirVariant);
+                        }
+                    } else if (fnNameBase.matches("S\\d+")) {
+                        fnNameString = Bundle.getMessage("FnMap_S") + " " + fnNameBase.substring(1);
                         if (!fnDirVariant.equals("")) {
                             fnNameString = fnNameString + Bundle.getMessage("FnMap_" + fnDirVariant);
                         }
