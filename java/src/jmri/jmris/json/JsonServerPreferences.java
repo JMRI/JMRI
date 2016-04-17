@@ -70,7 +70,7 @@ public class JsonServerPreferences extends Bean {
         this.readPreferences(sharedPreferences);
         if (migrate) {
             try {
-                log.info("Migrating from old JsonServer preferences in {} to new format in {}.", fileName, FileUtil.getAbsoluteFilename("profile:preferences"));
+                log.info("Migrating from old JsonServer preferences in {} to new format in {}.", fileName, FileUtil.getAbsoluteFilename("profile:profile"));
                 sharedPreferences.sync();
             } catch (BackingStoreException ex) {
                 log.error("Unable to write JsonServer preferences.", ex);
