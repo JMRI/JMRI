@@ -5,7 +5,6 @@ import java.util.Enumeration;
 import java.util.Hashtable;
 import java.util.List;
 import javax.annotation.Nonnull;
-import javax.annotation.Nullable;
 import jmri.InstanceManager;
 import jmri.Manager;
 import jmri.NamedBean;
@@ -105,6 +104,7 @@ abstract public class AbstractManager
      * @param systemName System Name of the required NamedBean
      * @return requested NamedBean object or null if none exists
      */
+    @Override
     public NamedBean getBeanBySystemName(String systemName) {
         return _tsys.get(systemName);
     }

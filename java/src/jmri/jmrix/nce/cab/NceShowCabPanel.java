@@ -1252,27 +1252,27 @@ public class NceShowCabPanel extends jmri.jmrix.nce.swing.NcePanel implements jm
      * @param c
      */
     private void procFunctions0_4(int currCabId, int c) {
-        if ((c & NceCmdStationMemory.FUNC_L_F0) > 0) {
+        if ((c & NceCmdStationMemory.FUNC_L_F0) != 0) {
             cabData[currCabId].F0 = true;
         } else {
             cabData[currCabId].F0 = false;
         }
-        if ((c & NceCmdStationMemory.FUNC_L_F1) > 0) {
+        if ((c & NceCmdStationMemory.FUNC_L_F1) != 0) {
             cabData[currCabId].F1 = true;
         } else {
             cabData[currCabId].F1 = false;
         }
-        if ((c & NceCmdStationMemory.FUNC_L_F2) > 0) {
+        if ((c & NceCmdStationMemory.FUNC_L_F2) != 0) {
             cabData[currCabId].F2 = true;
         } else {
             cabData[currCabId].F2 = false;
         }
-        if ((c & NceCmdStationMemory.FUNC_L_F3) > 0) {
+        if ((c & NceCmdStationMemory.FUNC_L_F3) != 0) {
             cabData[currCabId].F3 = true;
         } else {
             cabData[currCabId].F3 = false;
         }
-        if ((c & NceCmdStationMemory.FUNC_L_F4) > 0) {
+        if ((c & NceCmdStationMemory.FUNC_L_F4) != 0) {
             cabData[currCabId].F4 = true;
         } else {
             cabData[currCabId].F4 = false;
@@ -1286,42 +1286,42 @@ public class NceShowCabPanel extends jmri.jmrix.nce.swing.NcePanel implements jm
      * @param c
      */
     private void procFunctions5_12(int currCabId, int c) {
-        if ((c & NceCmdStationMemory.FUNC_H_F5) > 0) {
+        if ((c & NceCmdStationMemory.FUNC_H_F5) != 0) {
             cabData[currCabId].F5 = true;
         } else {
             cabData[currCabId].F5 = false;
         }
-        if ((c & NceCmdStationMemory.FUNC_H_F6) > 0) {
+        if ((c & NceCmdStationMemory.FUNC_H_F6) != 0) {
             cabData[currCabId].F6 = true;
         } else {
             cabData[currCabId].F6 = false;
         }
-        if ((c & NceCmdStationMemory.FUNC_H_F7) > 0) {
+        if ((c & NceCmdStationMemory.FUNC_H_F7) != 0) {
             cabData[currCabId].F7 = true;
         } else {
             cabData[currCabId].F7 = false;
         }
-        if ((c & NceCmdStationMemory.FUNC_H_F8) > 0) {
+        if ((c & NceCmdStationMemory.FUNC_H_F8) != 0) {
             cabData[currCabId].F8 = true;
         } else {
             cabData[currCabId].F8 = false;
         }
-        if ((c & NceCmdStationMemory.FUNC_H_F9) > 0) {
+        if ((c & NceCmdStationMemory.FUNC_H_F9) != 0) {
             cabData[currCabId].F9 = true;
         } else {
             cabData[currCabId].F9 = false;
         }
-        if ((c & NceCmdStationMemory.FUNC_H_F10) > 0) {
+        if ((c & NceCmdStationMemory.FUNC_H_F10) != 0) {
             cabData[currCabId].F10 = true;
         } else {
             cabData[currCabId].F10 = false;
         }
-        if ((c & NceCmdStationMemory.FUNC_H_F11) > 0) {
+        if ((c & NceCmdStationMemory.FUNC_H_F11) != 0) {
             cabData[currCabId].F11 = true;
         } else {
             cabData[currCabId].F11 = false;
         }
-        if ((c & NceCmdStationMemory.FUNC_H_F12) > 0) {
+        if ((c & NceCmdStationMemory.FUNC_H_F12) != 0) {
             cabData[currCabId].F12 = true;
         } else {
             cabData[currCabId].F12 = false;
@@ -1335,42 +1335,42 @@ public class NceShowCabPanel extends jmri.jmrix.nce.swing.NcePanel implements jm
      * @param c
      */
     private void procFunctions13_20(int currCabId, int c) {
-        if ((c & NceCmdStationMemory.FUNC_H_F13) > 0) {
+        if ((c & NceCmdStationMemory.FUNC_H_F13) != 0) {
             cabData[currCabId].F13 = true;
         } else {
             cabData[currCabId].F13 = false;
         }
-        if ((c & NceCmdStationMemory.FUNC_H_F14) > 0) {
+        if ((c & NceCmdStationMemory.FUNC_H_F14) != 0) {
             cabData[currCabId].F14 = true;
         } else {
             cabData[currCabId].F14 = false;
         }
-        if ((c & NceCmdStationMemory.FUNC_H_F15) > 0) {
+        if ((c & NceCmdStationMemory.FUNC_H_F15) != 0) {
             cabData[currCabId].F15 = true;
         } else {
             cabData[currCabId].F15 = false;
         }
-        if ((c & NceCmdStationMemory.FUNC_H_F16) > 0) {
+        if ((c & NceCmdStationMemory.FUNC_H_F16) != 0) {
             cabData[currCabId].F16 = true;
         } else {
             cabData[currCabId].F16 = false;
         }
-        if ((c & NceCmdStationMemory.FUNC_H_F17) > 0) {
+        if ((c & NceCmdStationMemory.FUNC_H_F17) != 0) {
             cabData[currCabId].F17 = true;
         } else {
             cabData[currCabId].F17 = false;
         }
-        if ((c & NceCmdStationMemory.FUNC_H_F18) > 0) {
+        if ((c & NceCmdStationMemory.FUNC_H_F18) != 0) {
             cabData[currCabId].F18 = true;
         } else {
             cabData[currCabId].F18 = false;
         }
-        if ((c & NceCmdStationMemory.FUNC_H_F19) > 0) {
+        if ((c & NceCmdStationMemory.FUNC_H_F19) != 0) {
             cabData[currCabId].F19 = true;
         } else {
             cabData[currCabId].F19 = false;
         }
-        if ((c & NceCmdStationMemory.FUNC_H_F20) > 0) {
+        if ((c & NceCmdStationMemory.FUNC_H_F20) != 0) {
             cabData[currCabId].F20 = true;
         } else {
             cabData[currCabId].F20 = false;
@@ -1384,42 +1384,42 @@ public class NceShowCabPanel extends jmri.jmrix.nce.swing.NcePanel implements jm
      * @param c
      */
     private void procFunctions21_28(int currCabId, int c) {
-        if ((c & NceCmdStationMemory.FUNC_H_F21) > 0) {
+        if ((c & NceCmdStationMemory.FUNC_H_F21) != 0) {
             cabData[currCabId].F21 = true;
         } else {
             cabData[currCabId].F21 = false;
         }
-        if ((c & NceCmdStationMemory.FUNC_H_F22) > 0) {
+        if ((c & NceCmdStationMemory.FUNC_H_F22) != 0) {
             cabData[currCabId].F22 = true;
         } else {
             cabData[currCabId].F22 = false;
         }
-        if ((c & NceCmdStationMemory.FUNC_H_F23) > 0) {
+        if ((c & NceCmdStationMemory.FUNC_H_F23) != 0) {
             cabData[currCabId].F23 = true;
         } else {
             cabData[currCabId].F23 = false;
         }
-        if ((c & NceCmdStationMemory.FUNC_H_F24) > 0) {
+        if ((c & NceCmdStationMemory.FUNC_H_F24) != 0) {
             cabData[currCabId].F24 = true;
         } else {
             cabData[currCabId].F24 = false;
         }
-        if ((c & NceCmdStationMemory.FUNC_H_F25) > 0) {
+        if ((c & NceCmdStationMemory.FUNC_H_F25) != 0) {
             cabData[currCabId].F25 = true;
         } else {
             cabData[currCabId].F25 = false;
         }
-        if ((c & NceCmdStationMemory.FUNC_H_F26) > 0) {
+        if ((c & NceCmdStationMemory.FUNC_H_F26) != 0) {
             cabData[currCabId].F26 = true;
         } else {
             cabData[currCabId].F26 = false;
         }
-        if ((c & NceCmdStationMemory.FUNC_H_F27) > 0) {
+        if ((c & NceCmdStationMemory.FUNC_H_F27) != 0) {
             cabData[currCabId].F27 = true;
         } else {
             cabData[currCabId].F27 = false;
         }
-        if ((c & NceCmdStationMemory.FUNC_H_F28) > 0) {
+        if ((c & NceCmdStationMemory.FUNC_H_F28) != 0) {
             cabData[currCabId].F28 = true;
         } else {
             cabData[currCabId].F28 = false;

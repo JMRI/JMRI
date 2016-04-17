@@ -871,19 +871,10 @@ public class DestinationPoints extends jmri.implementation.AbstractNamedBean {
                 log.debug("A disabled entry exit has been called will bomb out");
                 return;
             }
-            if (activeEntryExit) {
-                log.debug(mUserName + "  We have a valid match on our end point so we can clear down");
-                //setRouteTo(false);
-                //src.pd.setRouteFrom(false);
-                setRoute(false);
-            } else {
-                log.debug(mUserName + "  sourceSensor that has gone active doesn't match the active end point so will not clear");
-                if (showMessage) {
-                    JOptionPane.showMessageDialog(null, "A conflicting route has already been set");
-                }
-                src.pd.setNXButtonState(EntryExitPairs.NXBUTTONINACTIVE);
-                point.setNXButtonState(EntryExitPairs.NXBUTTONINACTIVE);
-            }
+            log.debug(mUserName + "  We have a valid match on our end point so we can clear down");
+            //setRouteTo(false);
+            //src.pd.setRouteFrom(false);
+            setRoute(false);
         } else {
             if (isRouteToPointSet()) {
                 log.debug(mUserName + "  route to this point is set therefore can not set another to it " /*+ destPoint.src.getPoint().getID()*/);

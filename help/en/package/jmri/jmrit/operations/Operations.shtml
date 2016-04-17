@@ -4004,14 +4004,14 @@
    <h5>Build Train</h5>
 
    This action will build the train selected in the "Train" menu adjacent to the "Build Train"
-   column. This action will report "FAILED" if the train fails to build or if you haven't selected a
+   column. This action will report "Failed" if the train fails to build or if you haven't selected a
    train.
 
    <h5>Build Train if Selected</h5>
 
    This action will build a train if the "Build" checkbox in the
    <a href="#Trains">Trains</a> window is selected for the train. You must choose a train using the
-   "Train" menu. This action will report "FAILED" if you haven't selected a train, or if the "Build"
+   "Train" menu. This action will report "Failed" if you haven't selected a train, or if the "Build"
    checkbox isn't selected for the train in the
    <a href="#Trains">Trains</a> window or if the train fails to build.
 
@@ -4020,7 +4020,7 @@
    This action's name and function depends on the "Preview" checkbox in the
    <a href="#Trains">Trains</a> window. If the "Preview" checkbox is selected, then the action
    becomes "Preview Train Manifest". If the checkbox is not selected, then the action becomes "Print
-   Train Manifest". You must choose a train using the "Train" menu. This action will report "FAILED"
+   Train Manifest". You must choose a train using the "Train" menu. This action will report "Failed"
    if a train isn't selected from the "Train" menu, or the train isn't built.
 
    <h5>Preview or Print Train Manifest if Selected</h5>
@@ -4029,7 +4029,7 @@
    <a href="#Trains">Trains</a> window. If the "Preview" checkbox is selected, then the action
    becomes "Preview Train Manifest if Selected". If the checkbox is not selected, then the action
    becomes "Print Train Manifest if Selected". You must choose a train using the "Train" menu. This
-   action will report "FAILED" if a train isn't selected from the "Train" menu, the train isn't
+   action will report "Failed" if a train isn't selected from the "Train" menu, the train isn't
    built, or the "Build" checkbox isn't selected for the train in the
    <a href="#Trains">Trains</a> window.
 
@@ -4047,6 +4047,13 @@
    train that has arrived at its terminal. If a "Route Location" is selected the program will move
    the train to the location selected in the train's route. The action will fail if a train isn't
    selected, or if the train isn't built, or if the train has already passed the location chosen.
+   
+   <h5>Is Train En-Route?</h5>
+
+   Used to determine if a train is en-route to the selected "Route Location". Reports "Success" if
+   the train is built and hasn't arrived at the location selected in the train's route. Reports
+   "Failed" if the train isn't built, has arrived at the selected location, or has departed the
+   selected location.
 
    <h5>Wait for Train</h5>
 
@@ -4143,11 +4150,17 @@
    This action allows you to jump to any action in the table.  You must select the action id you want
    to goto from the "Automation" menu.
    
+   <h5>If Success GOTO</h5>
+
+   This action will cause the automation to jump to the action id selected from the "Automation"
+   menu when the previous action is successful. If the previous action failed, the automation
+   continues to the next action in the table.
+
    <h5>Halt</h5>
-   
-   This action stops the execution of the automation. You can use the "Step Automation" or "Resume Automation" button
-   to continue the automation by running the next action in the list.
-   
+
+   This action stops the execution of the automation. You can use the "Step Automation" or "Resume
+   Automation" button to continue the automation by running the next action in the list.
+
    <h4>Automation Tools</h4>
    
    <h5>Reset Automation</h5>

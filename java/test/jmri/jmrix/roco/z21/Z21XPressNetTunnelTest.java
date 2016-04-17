@@ -1,5 +1,6 @@
 package jmri.jmrix.roco.z21;
 
+import junit.framework.Assert;
 import junit.framework.Test;
 import junit.framework.TestCase;
 import junit.framework.TestSuite;
@@ -22,9 +23,8 @@ public class Z21XPressNetTunnelTest extends TestCase {
         };
         memo.setTrafficController(tc);
         
-        // The next line is a 30 second clock-time delay, followed by an error
-        //z21XPressNetTunnel a = new z21XPressNetTunnel(memo);
-        //Assert.assertNotNull(a);
+        Z21XPressNetTunnel a = new Z21XPressNetTunnel(memo);
+        Assert.assertNotNull(a);
     }
 
     public void testGetStreamPortController() {
@@ -38,9 +38,8 @@ public class Z21XPressNetTunnelTest extends TestCase {
         };
         memo.setTrafficController(tc);
 
-        // The next line is a 30 second clock-time delay, followed by an error
-        //z21XPressNetTunnel a = new z21XPressNetTunnel(memo);
-        //Assert.assertNotNull(a.getStreamPortController());
+        Z21XPressNetTunnel a = new Z21XPressNetTunnel(memo);
+        Assert.assertNotNull(a.getStreamPortController());
     }
 
     // from here down is testing infrastructure
@@ -68,6 +67,7 @@ public class Z21XPressNetTunnelTest extends TestCase {
     }
 
     protected void tearDown() {
+        jmri.util.JUnitUtil.resetInstanceManager();
         apps.tests.Log4JFixture.tearDown();
     }
 

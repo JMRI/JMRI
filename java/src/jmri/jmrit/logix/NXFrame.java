@@ -211,7 +211,7 @@ public class NXFrame extends WarrantRoute {
                 break;
             case SignalSpeedMap.SPEED_MPH:
                 float factor =  jmri.InstanceManager.getDefault(SignalSpeedMap.class).getDefaultThrottleFactor();
-                maxSpeed = Math.round(_maxSpeed*factor*_scale*2.2369363f*1000)/1000;
+                maxSpeed = Math.round(_maxSpeed*factor*_scale*2.2369363f*1000)/1000; // 2.2369363*1000 is 3600 converted by mile/km
                 maxSpeedLabel = "MaxMph";
                 throttleIncr = Math.round(_throttleIncr*factor*_scale*2.2369363f*1000)/1000;
                 throttleIncrLabel = "MinMph";

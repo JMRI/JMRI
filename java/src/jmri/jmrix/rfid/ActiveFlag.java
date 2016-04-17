@@ -1,4 +1,3 @@
-// ActiveFlag.java
 package jmri.jmrix.rfid;
 
 /**
@@ -10,7 +9,6 @@ package jmri.jmrix.rfid;
  *
  * @author Bob Jacobsen Copyright (C) 2003, 2006, 2007, 2008
  * @author Matthew Harris Copyright (C) 2011
- * @version $Revision$
  * @since 2.11.4
  */
 abstract public class ActiveFlag {
@@ -25,5 +23,3 @@ abstract public class ActiveFlag {
         return flag;
     }
 }
-
-/* @(#)ActiveFlag.java */
