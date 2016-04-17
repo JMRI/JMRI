@@ -396,7 +396,7 @@ public class RouteTableAction extends AbstractTableAction {
     JLabel userLabel = new JLabel(Bundle.getMessage("BeanNameRoute") + " " +  Bundle.getMessage("LabelUserName"));
     JLabel fixedSystemName = new JLabel("xxxxxxxxxxx");
 
-    JButton createButton = new JButton(Bundle.getMessage("ButtonAdd"));
+    JButton createButton = new JButton(Bundle.getMessage("ButtonCreate"));
     JButton editButton = new JButton(Bundle.getMessage("ButtonEdit"));
     JButton cancelButton = new JButton(Bundle.getMessage("ButtonCancel"));
     JButton deleteButton = new JButton(Bundle.getMessage("ButtonDelete"));
@@ -1966,12 +1966,12 @@ public class RouteTableAction extends AbstractTableAction {
     public final static String CONDITIONAL_SYS_PREFIX = LOGIX_SYS_NAME + "C";
     private static int ROW_HEIGHT;
 
-    private static String[] COLUMN_NAMES = {rbx.getString("ColumnLabelSystemName"),
-        rbx.getString("ColumnLabelUserName"),
-        rbx.getString("ColumnLabelInclude"),
+    private static String[] COLUMN_NAMES = {Bundle.getMessage("ColumnSystemName"),
+            Bundle.getMessage("ColumnUserName"),
+            Bundle.getMessage("Include"),
         rbx.getString("ColumnLabelSetState")};
-    private static String SET_TO_ACTIVE = rbx.getString("Set") + " " + rbx.getString("SensorActive");
-    private static String SET_TO_INACTIVE = rbx.getString("Set") + " " + rbx.getString("SensorInactive");
+    private static String SET_TO_ACTIVE = rbx.getString("Set") + " " + Bundle.getMessage("SensorStateActive");
+    private static String SET_TO_INACTIVE = rbx.getString("Set") + " " + Bundle.getMessage("SensorStateInactive");
 
     private static String SET_TO_TOGGLE = rbx.getString("Set") + " " + rbx.getString("Toggle");
 
