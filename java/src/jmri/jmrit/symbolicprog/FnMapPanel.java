@@ -108,6 +108,7 @@ public class FnMapPanel extends JPanel {
 
     // Some limits and defaults
     int highestFn = 28;
+    int highestSensor = 28;
     int numFn;  // calculated later
     int numOut = 20; // default number of physical outputs
     int maxOut = 40; // maximum number of output columns
@@ -133,8 +134,11 @@ public class FnMapPanel extends JPanel {
         // Set up fnList array
         this.fnList = new ArrayList<>();
         fnList.addAll(Arrays.asList(fnExtraList));
-        for (int iFn = 0; iFn <= highestFn; iFn++) {
-            fnList.add("F" + iFn);
+        for (int i = 0; i <= highestFn; i++) {
+            fnList.add("F" + i);
+        }
+        for (int i = 0; i <= highestSensor; i++) {
+            fnList.add("S" + i);
         }
 
         numFn = fnList.size() * fnVariantList.length;
@@ -202,8 +206,15 @@ public class FnMapPanel extends JPanel {
                                     log.debug("Process var: " + name + " as index " + iVar);
                                 }
                                 varsUsed.add(Integer.valueOf(iVar));
-                                JComponent j = (JComponent) (_varModel.getRep(iVar, "checkbox"));
                                 VariableValue var = _varModel.getVariable(iVar);
+                                // Only single-bit (exactly two options) variables should use checkbox
+                                // this really would be better fixed in EnumVariableValue
+                                // done here to avoid side effects elsewhere
+                                String displayFormat = "checkbox";
+                                if (((var.getMask().replace("X", "")).length()) != 1) {
+                                    displayFormat = "";
+                                }
+                                JComponent j = (JComponent) (_varModel.getRep(iVar, displayFormat));
                                 j.setToolTipText(PaneProgPane.addCvDescription((fnNameString + " "
                                         + Bundle.getMessage("FnMapControlsOutput") + " "
                                         + outName[iOut] + " " + outLabel[iOut]), var.getCvDescription(), var.getMask()));
@@ -225,15 +236,20 @@ public class FnMapPanel extends JPanel {
                         if (!fnDirVariant.equals("")) {
                             fnNameString = fnNameString + Bundle.getMessage("FnMap_" + fnDirVariant);
                         }
+                    } else if (fnNameBase.matches("S\\d+")) {
+                        fnNameString = Bundle.getMessage("FnMap_S") + " " + fnNameBase.substring(1);
+                        if (!fnDirVariant.equals("")) {
+                            fnNameString = fnNameString + Bundle.getMessage("FnMap_" + fnDirVariant);
+                        }
                     } else {
                         try {  // See if we have a match for whole fnNameString
                             fnNameString = Bundle.getMessage("FnMap_" + fnNameString);
                         } catch (java.util.MissingResourceException e) {
                             try {  // Else see if we have a match for fnNameBase
                                 fnNameString = Bundle.getMessage("FnMap_" + fnNameBase);
-                        if (!fnDirVariant.equals("")) { // Add variant
-                            fnNameString = fnNameString + Bundle.getMessage("FnMap_" + fnDirVariant);
-                        }
+                                if (!fnDirVariant.equals("")) { // Add variant
+                                    fnNameString = fnNameString + Bundle.getMessage("FnMap_" + fnDirVariant);
+                                }
                             } catch (java.util.MissingResourceException e1) {
                                 // No matches found
                             }
