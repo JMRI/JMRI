@@ -3,7 +3,6 @@ package jmri.profile;
 import edu.umd.cs.findbugs.annotations.SuppressFBWarnings;
 import java.io.File;
 import java.io.FileInputStream;
-import java.io.FileOutputStream;
 import java.io.IOException;
 import java.util.Properties;
 import javax.annotation.Nonnull;
@@ -108,33 +107,6 @@ public class Profile implements Comparable<Profile> {
         ProfileProperties p = new ProfileProperties(this);
         p.put(NAME, this.name, true);
         p.put(ID, this.id, true);
-        this.saveXml();
-    }
-
-    /*
-     * Remove when or after support for writing ProfileConfig.xml is removed.
-     */
-    @Deprecated
-    protected final void saveXml() throws IOException {
-        Properties p = new Properties();
-        File f = new File(this.path, PROPERTIES);
-        FileOutputStream os = null;
-
-        p.setProperty(NAME, this.name);
-        p.setProperty(ID, this.id);
-        if (!f.exists() && !f.createNewFile()) {
-            throw new IOException("Unable to create file at " + f.getAbsolutePath()); // NOI18N
-        }
-        try {
-            os = new FileOutputStream(f);
-            p.storeToXML(os, "JMRI Profile"); // NOI18N
-            os.close();
-        } catch (IOException ex) {
-            if (os != null) {
-                os.close();
-            }
-            throw ex;
-        }
     }
 
     /**

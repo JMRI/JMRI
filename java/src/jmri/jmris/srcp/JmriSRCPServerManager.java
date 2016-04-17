@@ -2,7 +2,6 @@ package jmri.jmris.srcp;
 
 import java.io.File;
 import jmri.InstanceManager;
-import jmri.jmris.srcp.configurexml.JmriSRCPServerPreferences;
 import jmri.util.FileUtil;
 
 public class JmriSRCPServerManager {
@@ -10,11 +9,16 @@ public class JmriSRCPServerManager {
     static private JmriSRCPServerManager instance = null;
     private JmriSRCPServerPreferences preferences;
     private JmriSRCPServer server;
+
     private JmriSRCPServerManager() {
         if (InstanceManager.getDefault(JmriSRCPServerPreferences.class) == null) {
-            InstanceManager.store(new JmriSRCPServerPreferences(FileUtil.getUserFilesPath() + "networkServices" + File.separator + "JmriSRCPServerPreferences.xml"), JmriSRCPServerPreferences.class); // NOI18N
+            String fileName = FileUtil.getUserFilesPath() + "networkServices" + File.separator + "JmriSRCPServerPreferences.xml";
+            if ((new File(fileName)).exists()) {
+                InstanceManager.store(new JmriSRCPServerPreferences(fileName), JmriSRCPServerPreferences.class); // NOI18N
+            } else {
+                InstanceManager.store(new JmriSRCPServerPreferences(), JmriSRCPServerPreferences.class); // NOI18N
+            }
         }
-        preferences = InstanceManager.getDefault(JmriSRCPServerPreferences.class);
     }
 
     synchronized public static JmriSRCPServerManager getInstance() {
