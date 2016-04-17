@@ -92,7 +92,8 @@ public class JsonServerPreferences extends Bean {
 
     public void load(Element child) {
         Attribute a;
-        if ((a = child.getAttribute(HEARTBEAT_INTERVAL)) != null) {
+        a = child.getAttribute(HEARTBEAT_INTERVAL);
+        if (a != null) {
             try {
                 this.setHeartbeatInterval(a.getIntValue());
                 this.asLoadedHeartbeatInterval = this.getHeartbeatInterval();
@@ -101,7 +102,8 @@ public class JsonServerPreferences extends Bean {
                 log.error("Unable to read heartbeat interval. Setting to default value.", e);
             }
         }
-        if ((a = child.getAttribute(PORT)) != null) {
+        a = child.getAttribute(PORT);
+        if (a != null) {
             try {
                 this.setPort(a.getIntValue());
                 this.asLoadedPort = this.getPort();
@@ -130,9 +132,8 @@ public class JsonServerPreferences extends Bean {
         Element root;
         try {
             root = prefsXml.rootFromFile(file);
-        } catch (java.io.FileNotFoundException ea) {
+        } catch (FileNotFoundException ea) {
             log.info("Could not find JSON Server preferences file.  Normal if preferences have not been saved before.");
-            root = null;
             throw ea;
         } catch (IOException | JDOMException eb) {
             log.error("Exception while loading JSON server preferences: {}", eb.getLocalizedMessage());
@@ -177,6 +178,6 @@ public class JsonServerPreferences extends Bean {
         this.port = value;
     }
 
-    public static class JsonServerPreferencesXml extends XmlFile {
+    private static class JsonServerPreferencesXml extends XmlFile {
     }
 }
