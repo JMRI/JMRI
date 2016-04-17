@@ -3,7 +3,7 @@
 <head>
 <title>JMRI: Adding Signal Groups</title>
 <meta name="author" content="Bob Jacobsen, Egbert Broerse">
-<meta name="Date.Modified" content="20160403">
+<meta name="Date.Modified" content="20160412">
 <!--#include virtual="/Style" -->
 </head>
 
@@ -20,13 +20,13 @@ Adding/Editing a Signal Group
 		
 <a href="SignalGroupAdd.png">
    <img src="SignalGroupAdd.png" 
-        width="310" height="229" >
+        width="310" height="269" >
 </a>
 	<h3>Enter Signal Group elements</h3>
 	<p>Signal Groups are built from one or more Signal Heads and comprise the following:
 <ul>
 	<li>A parent Signal Mast (by System Name) to which this Signal Group is attached.</li>
-    <li>A list of Appearances that cause the Signal Group to become active eg. the main Signal Mast must be set for Proceed or Caution, but not Danger.</li>
+    <li>A list of Aspects that cause the Signal Group to become active eg. the parent Signal Mast must be set for Proceed or Caution, but not Danger.</li>
 	<li>A list of Signal Heads that make up each indication of the Signal Group.<br>
 Signal Heads included in a Signal Group are picked from the Signal Head Table, but only Signal Heads that were created using the <em>Single Output</em> connection type (pictured to the right) show up in the list.
 <a href="SingleSignalHead.png">
@@ -34,7 +34,7 @@ Signal Heads included in a Signal Group are picked from the Signal Head Table, b
     height="186" width="129" align="right">
 		</a></li>
 	</ul>
-	<p>In the Add/Edit Signal Group window, after entering a User Name for the new Signal Group and the (existing) System Name of the parent Signal Mast, check <b>Include</b>behind one or more Mast Appearances.<br>
+	<p>In the Add/Edit Signal Group window, after entering a User Name for the new Signal Group and the (existing) System Name of the parent Signal Mast, check <b>Include</b>behind one or more Mast Aspects.<br>
 		Next select one or more Signal Heads by checking their <b>Include</b> check boxes in the second list.<br>
 		Click the <b>Apply</b> button at the bottom of the pane. Reopen the Signal Group pane bij clicking on its <b>Edit</b> button in the Signal Group Table to have JMRI repopulate the correct values into the lists and Appearances. If necessary, check the correct boxes in both lists.</p>
 	
