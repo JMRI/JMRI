@@ -15,10 +15,10 @@ import jmri.jmrit.symbolicprog.ProgrammerConfigManager;
 import jmri.managers.ManagerDefaultSelector;
 import jmri.profile.Profile;
 import jmri.profile.ProfileUtils;
-import jmri.util.prefs.AbstractPreferencesProvider;
-import jmri.util.prefs.InitializationException;
 import jmri.spi.PreferencesProvider;
 import jmri.util.jdom.JDOMUtil;
+import jmri.util.prefs.AbstractPreferencesProvider;
+import jmri.util.prefs.InitializationException;
 import org.jdom2.Element;
 import org.jdom2.JDOMException;
 import org.slf4j.Logger;
@@ -28,7 +28,7 @@ import org.slf4j.LoggerFactory;
  * Manager for Startup Actions. Reads preferences at startup and triggers
  * actions, and is responsible for saving the preferences later.
  *
- * @author Randall Wood (C) 2015
+ * @author Randall Wood (C) 2015, 2016
  */
 public class StartupActionsManager extends AbstractPreferencesProvider {
 
@@ -36,7 +36,8 @@ public class StartupActionsManager extends AbstractPreferencesProvider {
     private final HashMap<Class<? extends StartupModel>, StartupModelFactory> factories = new HashMap<>();
     private boolean isDirty = false;
     public final static String STARTUP = "startup"; // NOI18N
-    public final static String NAMESPACE = "http://jmri.org/xml/schema/auxiliary-configuration/startup-2-9-6.xsd"; // NOI18N
+    public final static String NAMESPACE = "http://jmri.org/xml/schema/auxiliary-configuration/startup-4-3-5.xsd"; // NOI18N
+    public final static String NAMESPACE_OLD = "http://jmri.org/xml/schema/auxiliary-configuration/startup-2-9-6.xsd"; // NOI18N
     private final static Logger log = LoggerFactory.getLogger(StartupActionsManager.class);
 
     public StartupActionsManager() {
@@ -51,7 +52,13 @@ public class StartupActionsManager extends AbstractPreferencesProvider {
     public void initialize(Profile profile) throws InitializationException {
         if (!this.isInitialized(profile)) {
             try {
-                Element startup = JDOMUtil.toJDOMElement(ProfileUtils.getAuxiliaryConfiguration(profile).getConfigurationFragment(STARTUP, NAMESPACE, true));
+                Element startup;
+                try {
+                    startup = JDOMUtil.toJDOMElement(ProfileUtils.getAuxiliaryConfiguration(profile).getConfigurationFragment(STARTUP, NAMESPACE, true));
+                } catch (NullPointerException ex) {
+                    log.debug("Reading element from version 2.9.6 namespace...");
+                    startup = JDOMUtil.toJDOMElement(ProfileUtils.getAuxiliaryConfiguration(profile).getConfigurationFragment(STARTUP, NAMESPACE_OLD, true));
+                }
                 startup.getChildren().stream().forEach((perform) -> {
                     String adapter = perform.getAttributeValue("class"); // NOI18N
                     String name = perform.getAttributeValue("name"); // NOI18N
@@ -68,6 +75,7 @@ public class StartupActionsManager extends AbstractPreferencesProvider {
                 });
             } catch (NullPointerException ex) {
                 // ignore - this indicates migration has not occured
+                log.debug("No element to read");
             }
             this.isDirty = false;
             this.setIsInitialized(profile, true);
@@ -88,7 +96,7 @@ public class StartupActionsManager extends AbstractPreferencesProvider {
     @Override
     public synchronized void savePreferences(Profile profile) {
         Element element = new Element(STARTUP, NAMESPACE);
-        for (StartupModel action : actions) {
+        actions.stream().forEach((action) -> {
             log.debug("model is {} ({})", action.getName(), action);
             if (action.getName() != null) {
                 Element e = ConfigXmlManager.elementFromObject(action, true);
@@ -99,7 +107,7 @@ public class StartupActionsManager extends AbstractPreferencesProvider {
                 // get an error with a stack trace if this occurs
                 log.error("model does not have a name.", new Exception());
             }
-        }
+        });
         try {
             ProfileUtils.getAuxiliaryConfiguration(profile).putConfigurationFragment(JDOMUtil.toW3CElement(element), true);
             this.isDirty = false;
@@ -157,7 +165,7 @@ public class StartupActionsManager extends AbstractPreferencesProvider {
     }
 
     public HashMap<Class<? extends StartupModel>, StartupModelFactory> getFactories() {
-        return this.factories;
+        return new HashMap<>(this.factories);
     }
 
     public StartupModelFactory getFactories(Class<? extends StartupModel> model) {
