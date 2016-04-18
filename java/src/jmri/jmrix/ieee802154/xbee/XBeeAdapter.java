@@ -224,10 +224,10 @@ public class XBeeAdapter extends jmri.jmrix.ieee802154.serialdriver.SerialDriver
         return (XBeeConnectionMemo) super.getSystemConnectionMemo();
     }
 
-    protected String[] validSpeeds = new String[]{"1,200 baud", "2,400 baud",
+    private String[] validSpeeds = new String[]{"1,200 baud", "2,400 baud",
         "4,800 baud", "9,600 baud", "19,200 baud", "38,400 baud",
         "57,600 baud", "115,200 baud"};
-    protected int[] validSpeedValues = new int[]{1200, 2400, 4800, 9600, 19200,
+    private int[] validSpeedValues = new int[]{1200, 2400, 4800, 9600, 19200,
         38400, 57600, 115200};
 
     // methods for XBeeConnection

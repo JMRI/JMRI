@@ -978,7 +978,7 @@ abstract public class BeanTableDataModel extends javax.swing.table.AbstractTable
                 //skip empty or blank columns
                 if (columnName != null && !columnName.equals("")) {
                     int index = tcm.getColumnIndex(tc.getIdentifier(), false);
-                    p.setTableColumnPreferences(beantableref, columnName, index, tc.getPreferredWidth(), tmodel.getSortingStatus(tc.getModelIndex()), !tcm.isColumnVisible(tc));
+                    p.setTableColumnPreferences(beantableref, columnName, index, tc.getPreferredWidth(), TableSorter.getSortOrder(tmodel.getSortingStatus(tc.getModelIndex())), !tcm.isColumnVisible(tc));
                 }
             } catch (Exception e) {
                 log.warn("unable to store settings for table column " + tc.getHeaderValue());
@@ -1024,7 +1024,7 @@ abstract public class BeanTableDataModel extends javax.swing.table.AbstractTable
                 int width = p.getTableColumnWidth(beantableref, columnName);
                 tc.setPreferredWidth(width);
 
-                int sort = p.getTableColumnSort(beantableref, columnName);
+                int sort = TableSorter.getSortStatus(p.getTableColumnSort(beantableref, columnName));
                 tmodel.setSortingStatus(tc.getModelIndex(), sort);
 
                 if (p.getTableColumnHidden(beantableref, columnName)) {

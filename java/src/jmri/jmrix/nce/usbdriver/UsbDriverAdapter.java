@@ -36,6 +36,8 @@ public class UsbDriverAdapter extends NcePortController {
         options.put(option1Name, new Option("System:", option1Values, false));
         option2Name = "USB Version";
         options.put(option2Name, new Option("USB Version", option2Values, false));
+        // Set default USB version to V7.x.x
+        setOptionState(option2Name, getOptionChoices(option2Name)[1]);
     }
 
     public String openPort(String portName, String appName) {

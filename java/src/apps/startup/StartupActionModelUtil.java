@@ -4,6 +4,8 @@ import java.util.Arrays;
 import java.util.HashMap;
 import java.util.Map.Entry;
 import java.util.ResourceBundle;
+import javax.annotation.Nonnull;
+import javax.annotation.Nullable;
 import jmri.beans.Bean;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -19,31 +21,39 @@ public class StartupActionModelUtil extends Bean {
     private HashMap<Class<?>, String> actions = null;
     private final static Logger log = LoggerFactory.getLogger(StartupActionModelUtil.class);
 
-    public String getActionName(Class<?> clazz) {
+    @Nullable
+    public String getActionName(@Nonnull Class<?> clazz) {
         this.prepareActionsHashMap();
         return this.actions.get(clazz);
     }
 
-    public String getActionName(String className) {
+    @Nullable
+    public String getActionName(@Nonnull String className) {
         this.prepareActionsHashMap();
-        try {
-            return this.getActionName(Class.forName(className));
-        } catch (ClassNotFoundException ex) {
-            log.error("Did not find class \"{}\"", className);
-        }
-        return null;
-    }
-
-    public String getClassName(String name) {
-        this.prepareActionsHashMap();
-        for (Entry<Class<?>, String> entry : this.actions.entrySet()) {
-            if (entry.getValue().equals(name)) {
-                return entry.getKey().getName();
+        if (!className.isEmpty()) {
+            try {
+                return this.getActionName(Class.forName(className));
+            } catch (ClassNotFoundException ex) {
+                log.error("Did not find class \"{}\"", className);
             }
         }
         return null;
     }
 
+    @Nullable
+    public String getClassName(@Nonnull String name) {
+        this.prepareActionsHashMap();
+        if (!name.isEmpty()) {
+            for (Entry<Class<?>, String> entry : this.actions.entrySet()) {
+                if (entry.getValue().equals(name)) {
+                    return entry.getKey().getName();
+                }
+            }
+        }
+        return null;
+    }
+
+    @Nonnull
     public String[] getNames() {
         this.prepareActionsHashMap();
         String[] names = actions.values().toArray(new String[actions.size()]);
@@ -51,12 +61,13 @@ public class StartupActionModelUtil extends Bean {
         return names;
     }
 
+    @Nonnull
     public Class<?>[] getClasses() {
         this.prepareActionsHashMap();
         return actions.keySet().toArray(new Class<?>[actions.size()]);
     }
 
-    public void addAction(String strClass, String name) throws ClassNotFoundException {
+    public void addAction(@Nonnull String strClass, @Nonnull String name) throws ClassNotFoundException {
         this.prepareActionsHashMap();
         Class<?> clazz;
         try {
@@ -69,7 +80,7 @@ public class StartupActionModelUtil extends Bean {
         this.firePropertyChange("length", null, null);
     }
 
-    public void removeAction(String strClass) throws ClassNotFoundException {
+    public void removeAction(@Nonnull String strClass) throws ClassNotFoundException {
         this.prepareActionsHashMap();
         Class<?> clazz;
         try {

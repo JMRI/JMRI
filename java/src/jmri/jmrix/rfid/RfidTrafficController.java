@@ -1,4 +1,3 @@
-// RfidTrafficController.java
 package jmri.jmrix.rfid;
 
 import jmri.jmrix.AbstractMRListener;
@@ -25,7 +24,6 @@ import org.slf4j.LoggerFactory;
  *
  * @author Bob Jacobsen Copyright (C) 2001, 2003, 2005, 2006, 2008
  * @author Matthew Harris Copyright (C) 2011
- * @version $Revision$
  * @since 2.11.4
  */
 abstract public class RfidTrafficController extends AbstractMRTrafficController implements RfidInterface {
@@ -66,10 +64,12 @@ abstract public class RfidTrafficController extends AbstractMRTrafficController 
     protected boolean logDebug = false;
 
     // The methods to implement the RfidInterface
+    @Override
     public synchronized void addRfidListener(RfidListener l) {
         this.addListener(l);
     }
 
+    @Override
     public synchronized void removeRfidListener(RfidListener l) {
         this.removeListener(l);
     }
@@ -77,6 +77,7 @@ abstract public class RfidTrafficController extends AbstractMRTrafficController 
     /**
      * Forward a RfidMessage to all registered RfidInterface listeners.
      */
+    @Override
     protected void forwardMessage(AbstractMRListener client, AbstractMRMessage m) {
         ((RfidListener) client).message((RfidMessage) m);
     }
@@ -84,6 +85,7 @@ abstract public class RfidTrafficController extends AbstractMRTrafficController 
     /**
      * Forward a reply to all registered RfidInterface listeners.
      */
+    @Override
     protected void forwardReply(AbstractMRListener client, AbstractMRReply r) {
         ((RfidListener) client).reply((RfidReply) r);
     }
@@ -111,10 +113,12 @@ abstract public class RfidTrafficController extends AbstractMRTrafficController 
     /**
      * Eventually, do initialization if needed
      */
+    @Override
     protected AbstractMRMessage pollMessage() {
         return null;
     }
 
+    @Override
     protected AbstractMRListener pollReplyHandler() {
         return null;
     }
@@ -122,6 +126,7 @@ abstract public class RfidTrafficController extends AbstractMRTrafficController 
     /**
      * Forward a preformatted message to the actual interface.
      */
+    @Override
     public void sendRfidMessage(RfidMessage m, RfidListener reply) {
         sendMessage(m, reply);
     }
@@ -135,10 +140,12 @@ abstract public class RfidTrafficController extends AbstractMRTrafficController 
         super.forwardToPort(m, reply);
     }
 
+    @Override
     protected AbstractMRMessage enterProgMode() {
         return null;
     }
 
+    @Override
     protected AbstractMRMessage enterNormalMode() {
         return null;
     }
@@ -157,6 +164,7 @@ abstract public class RfidTrafficController extends AbstractMRTrafficController 
 //    }
 //    static volatile RfidTrafficController self;
     @Deprecated
+    @Override
     protected void setInstance() {
 //        self = this;
     }
@@ -177,6 +185,7 @@ abstract public class RfidTrafficController extends AbstractMRTrafficController 
      * This is a default, null implementation, which must be overridden in an
      * adapter-specific subclass.
      */
+    @Override
     protected boolean endOfMessage(AbstractMRReply msg) {
         return true;
     }
@@ -186,6 +195,7 @@ abstract public class RfidTrafficController extends AbstractMRTrafficController 
      * This is a default, null implementation, which must be overridden in an
      * adapter-specific subclass.
      */
+    @Override
     protected AbstractMRReply newReply() {
         return null;
     }
@@ -198,6 +208,3 @@ abstract public class RfidTrafficController extends AbstractMRTrafficController 
 
     private static final Logger log = LoggerFactory.getLogger(RfidTrafficController.class.getName());
 }
-
-
-/* @(#)RfidTrafficController.java */

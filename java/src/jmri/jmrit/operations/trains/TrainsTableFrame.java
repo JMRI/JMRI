@@ -284,8 +284,8 @@ public class TrainsTableFrame extends OperationsFrame implements java.beans.Prop
         toolMenu.add(new AutomationsTableFrameAction());
         toolMenu.add(new TrainCopyAction(Bundle.getMessage("TitleTrainCopy")));
         toolMenu.add(new TrainsScriptAction(Bundle.getMessage("MenuItemScripts"), this));
-        toolMenu.add(new PrintSavedTrainManifestAction(Bundle.getMessage("MenuItemPrintSavedManifest"), false));
-        toolMenu.add(new PrintSavedTrainManifestAction(Bundle.getMessage("MenuItemPreviewSavedManifest"), true));
+        toolMenu.add(new PrintSavedTrainManifestAction(Bundle.getMessage("MenuItemPrintSavedManifest"), false, null));
+        toolMenu.add(new PrintSavedTrainManifestAction(Bundle.getMessage("MenuItemPreviewSavedManifest"), true, null));
         toolMenu.add(new SetupExcelProgramFrameAction(Bundle.getMessage("MenuItemSetupExcelProgram")));
         toolMenu.add(new ExportTrainRosterAction());
         toolMenu.add(new PrintTrainsAction(Bundle.getMessage("MenuItemPrint"), new Frame(), false, this));
@@ -357,12 +357,8 @@ public class TrainsTableFrame extends OperationsFrame implements java.beans.Prop
                     if (!train.isBuilt() && trainManager.isBuildMessagesEnabled()) {
                         JOptionPane.showMessageDialog(this, MessageFormat.format(Bundle
                                 .getMessage("NeedToBuildBeforeOpenFile"), new Object[]{
-                                    train.getName(),
-                                    (trainManager.isPrintPreviewEnabled() ? Bundle.getMessage("preview") : Bundle
-                                            .getMessage("print"))}), MessageFormat.format(Bundle
-                                        .getMessage("CanNotPrintManifest"),
-                                        new Object[]{trainManager.isPrintPreviewEnabled() ? Bundle.getMessage("preview")
-                                                    : Bundle.getMessage("print")}), JOptionPane.ERROR_MESSAGE);
+                                        train.getName()}),
+                                Bundle.getMessage("Error"), JOptionPane.ERROR_MESSAGE);
                     } else if (train.isBuilt()) {
                         train.openFile();
                     }
@@ -386,12 +382,8 @@ public class TrainsTableFrame extends OperationsFrame implements java.beans.Prop
                     if (!train.isBuilt() && trainManager.isBuildMessagesEnabled()) {
                         JOptionPane.showMessageDialog(this, MessageFormat.format(Bundle
                                 .getMessage("NeedToBuildBeforeRunFile"), new Object[]{
-                                    train.getName(),
-                                    (trainManager.isPrintPreviewEnabled() ? Bundle.getMessage("preview") : Bundle
-                                            .getMessage("print"))}), MessageFormat.format(Bundle
-                                        .getMessage("CanNotPrintManifest"),
-                                        new Object[]{trainManager.isPrintPreviewEnabled() ? Bundle.getMessage("preview")
-                                                    : Bundle.getMessage("print")}), JOptionPane.ERROR_MESSAGE);
+                                        train.getName()}),
+                                Bundle.getMessage("Error"), JOptionPane.ERROR_MESSAGE);
                     } else if (train.isBuilt()) {
                         // Make sure our csv manifest file exists for this Train.
                         File csvFile = train.createCSVManifestFile();

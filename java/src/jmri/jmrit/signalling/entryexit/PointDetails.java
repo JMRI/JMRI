@@ -332,7 +332,7 @@ public class PointDetails {
             public void run() {
                 try {
                     //Stage one default timer for the button if no other button has been pressed
-                    Thread.sleep(nxButtonTimeout * 1000);
+                    Thread.sleep(nxButtonTimeout * 1000L);
                     //Stage two if an extended time out has been requested
                     if (extendedtime) {
                         Thread.sleep(60000);  //timeout after a minute waiting for the sml to set.

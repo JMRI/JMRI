@@ -1,4 +1,3 @@
-// AddSensorPanel.java
 package jmri.jmrit.beantable;
 
 import java.awt.FlowLayout;
@@ -17,14 +16,8 @@ import javax.swing.JTextField;
  *
  * @author	Bob Jacobsen Copyright (C) 2009
  * @author Pete Cressman Copyright (C) 2010
- * @version $Revision$
  */
 public class AddNewDevicePanel extends jmri.util.swing.JmriPanel {
-
-    /**
-     *
-     */
-    private static final long serialVersionUID = 5114030241732110250L;
 
     public AddNewDevicePanel(JTextField sys, JTextField userName,
             String addButtonLabel, ActionListener okListener, ActionListener cancelListener) {
@@ -57,7 +50,7 @@ public class AddNewDevicePanel extends jmri.util.swing.JmriPanel {
         JPanel panelBottom = new JPanel();
         panelBottom.setLayout(new FlowLayout(FlowLayout.TRAILING));
         // only add a Cancel button when the the OKbutton string is OK (so don't show on Picker Panels)
-        if (addButtonLabel == "ButtonOK") {
+        if (addButtonLabel.equals("ButtonOK")) {
             panelBottom.add(cancel = new JButton(Bundle.getMessage("ButtonCancel")));
             cancel.addActionListener(cancelListener);
         }
@@ -100,6 +93,3 @@ public class AddNewDevicePanel extends jmri.util.swing.JmriPanel {
     JLabel sysNameLabel = new JLabel(Bundle.getMessage("LabelSystemName"));
     JLabel userNameLabel = new JLabel(Bundle.getMessage("LabelUserName"));
 }
-
-
-/* @(#)AddNewDevicePanel.java */

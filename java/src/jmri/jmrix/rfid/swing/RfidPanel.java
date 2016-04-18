@@ -1,4 +1,3 @@
-// PowerlinePanel.java
 package jmri.jmrix.rfid.swing;
 
 import jmri.jmrix.rfid.RfidSystemConnectionMemo;
@@ -11,20 +10,16 @@ import jmri.jmrix.rfid.RfidSystemConnectionMemo;
  *
  * @author Bob Jacobsen Copyright (C) 2010
  * @author Matthew Harris Copyright (C) 2011
- * @version $Revision$
  * @since 2.11.4
  */
 abstract public class RfidPanel extends jmri.util.swing.JmriPanel implements RfidPanelInterface {
 
     /**
-     *
-     */
-    private static final long serialVersionUID = -7165422097985422639L;
-    /**
      * make "memo" object available as convenience
      */
     protected RfidSystemConnectionMemo memo;
 
+    @Override
     public void initComponents(RfidSystemConnectionMemo memo) throws Exception {
         this.memo = memo;
     }

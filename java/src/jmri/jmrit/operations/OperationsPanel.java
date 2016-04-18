@@ -277,7 +277,7 @@ public class OperationsPanel extends JPanel implements AncestorListener {
                 int width = tcm.getColumnByModelIndex(i).getPreferredWidth();
                 int order = table.convertColumnIndexToView(i);
                 // must save with column not hidden
-                p.setTableColumnPreferences(tableref, sorter.getColumnName(i), order, width, sortStatus, false);
+                p.setTableColumnPreferences(tableref, sorter.getColumnName(i), order, width, TableSorter.getSortOrder(sortStatus), false);
             }
             // now restore
             for (int i = 0; i < sorter.getColumnCount(); i++) {
@@ -292,7 +292,7 @@ public class OperationsPanel extends JPanel implements AncestorListener {
                     sortStatus = sorter.getSortingStatus(i);
                 }
                 p.setTableColumnPreferences(tableref, table.getColumnName(i), i, table.getColumnModel().getColumn(i)
-                        .getPreferredWidth(), sortStatus, false);
+                        .getPreferredWidth(), TableSorter.getSortOrder(sortStatus), false);
             }
         }
     }
@@ -325,7 +325,7 @@ public class OperationsPanel extends JPanel implements AncestorListener {
         // Some tables have more than one name, so use the current one for size
         for (int i = 0; i < table.getColumnCount(); i++) {
             String columnName = table.getColumnName(i);
-            int sort = p.getTableColumnSort(tableref, columnName);
+            int sort = TableSorter.getSortStatus(p.getTableColumnSort(tableref, columnName));
             if (sorter != null) {
                 sorter.setSortingStatus(i, sort);
             }

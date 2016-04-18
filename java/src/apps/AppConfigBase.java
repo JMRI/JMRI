@@ -13,6 +13,7 @@ import javax.swing.JLabel;
 import javax.swing.JOptionPane;
 import jmri.Application;
 import jmri.InstanceManager;
+import jmri.ShutDownManager;
 import jmri.UserPreferencesManager;
 import jmri.jmrix.JmrixConfigPane;
 import jmri.swing.ManagingPreferencesPanel;
@@ -217,7 +218,7 @@ public class AppConfigBase extends JmriPanel {
         final UserPreferencesManager p;
         p = InstanceManager.getDefault(UserPreferencesManager.class);
         p.resetChangeMade();
-        if (restartRequired) {
+        if (restartRequired && !InstanceManager.getDefault(ShutDownManager.class).isShuttingDown()) {
             JLabel question = new JLabel(MessageFormat.format(rb.getString("MessageLongQuitWarning"), Application.getApplicationName()));
             Object[] options = {rb.getString("RestartNow"), rb.getString("RestartLater")};
             int retVal = JOptionPane.showOptionDialog(this,

@@ -607,7 +607,7 @@ abstract public class AbstractMRTrafficController {
     public AbstractPortController controller = null;
 
     public boolean status() {
-        return (ostream != null & istream != null);
+        return (ostream != null && istream != null);
     }
 
     protected Thread xmtThread = null;
@@ -889,7 +889,7 @@ abstract public class AbstractMRTrafficController {
                             mCurrentState = AUTORETRYSTATE;
                             if (retransmitCount > 0) {
                                 try {
-                                    xmtRunnable.wait(retransmitCount * 100);
+                                    xmtRunnable.wait(retransmitCount * 100L);
                                 } catch (InterruptedException e) {
                                     Thread.currentThread().interrupt(); // retain if needed later
                                 }

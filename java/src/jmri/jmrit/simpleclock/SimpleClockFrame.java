@@ -617,7 +617,7 @@ public class SimpleClockFrame extends JmriJFrame
         if (changed) {
             // remind to save		
             javax.swing.JOptionPane.showMessageDialog(null,
-                    Bundle.getMessage("Reminder1") + "\n" + Bundle.getMessage("Reminder2"),
+                    Bundle.getMessage("ReminderSaveString", Bundle.getMessage("MenuClocks")),
                     Bundle.getMessage("ReminderTitle"),
                     javax.swing.JOptionPane.INFORMATION_MESSAGE);
             changed = false;

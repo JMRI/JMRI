@@ -5,7 +5,8 @@ import jmri.ConfigureManager;
 import jmri.InstanceManager;
 import jmri.implementation.JmriConfigurationManager;
 import jmri.util.Log4JUtil;
-import jmri.web.server.WebServerManager;
+import jmri.web.server.WebServer;
+import jmri.web.server.WebServerPreferences;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -116,8 +117,8 @@ public class SampleMinimalProgram {
 
         // start web server
         final int port = 12080;
-        WebServerManager.getWebServerPreferences().setPort(port);
-        WebServerManager.getWebServer().start();
+        WebServerPreferences.getDefault().setPort(port);
+        WebServer.getDefault().start();
 
         log.info("Up!");
     }

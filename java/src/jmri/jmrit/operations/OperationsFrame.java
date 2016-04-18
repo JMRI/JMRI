@@ -18,14 +18,8 @@ import javax.swing.ScrollPaneConstants;
 import javax.swing.event.AncestorEvent;
 import javax.swing.event.AncestorListener;
 import javax.swing.event.ChangeEvent;
-import jmri.InstanceManager;
-import jmri.UserPreferencesManager;
 import jmri.jmrit.operations.setup.Control;
 import jmri.util.JmriJFrame;
-import jmri.util.com.sun.TableSorter;
-import jmri.util.swing.XTableColumnModel;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 
 /**
  * Frame for operations
@@ -175,53 +169,7 @@ public class OperationsFrame extends JmriJFrame implements AncestorListener {
      * @param table Table to be saved.
      */
     protected void saveTableDetails(JTable table) {
-        UserPreferencesManager p = InstanceManager.getDefault(UserPreferencesManager.class);
-        if (p == null) {
-            return;
-        }
-        TableSorter sorter = null;
-        String tableref = getWindowFrameRef() + ":table"; // NOI18N
-        try {
-            sorter = (TableSorter) table.getModel();
-        } catch (Exception e) {
-            log.debug("table " + tableref + " doesn't use sorter");
-        }
-
-        // is the table using XTableColumnModel?
-        if (sorter != null && sorter.getColumnCount() != table.getColumnCount()) {
-            log.debug("Sort column count: {} table column count: {} XTableColumnModel in use", sorter.getColumnCount(),
-                    table.getColumnCount());
-            XTableColumnModel tcm = (XTableColumnModel) table.getColumnModel();
-            // need to have all columns visible so we can get the proper column order
-            boolean[] columnVisible = new boolean[sorter.getColumnCount()];
-            for (int i = 0; i < sorter.getColumnCount(); i++) {
-                columnVisible[i] = tcm.isColumnVisible(tcm.getColumnByModelIndex(i));
-                tcm.setColumnVisible(tcm.getColumnByModelIndex(i), true);
-            }
-            // now save with the correct column order
-            for (int i = 0; i < sorter.getColumnCount(); i++) {
-                int sortStatus = sorter.getSortingStatus(i);
-                int width = tcm.getColumnByModelIndex(i).getPreferredWidth();
-                int order = table.convertColumnIndexToView(i);
-                // must save with column not hidden
-                p.setTableColumnPreferences(tableref, sorter.getColumnName(i), order, width, sortStatus, false);
-            }
-            // now restore
-            for (int i = 0; i < sorter.getColumnCount(); i++) {
-                tcm.setColumnVisible(tcm.getColumnByModelIndex(i), columnVisible[i]);
-            }
-
-        } // standard table
-        else {
-            for (int i = 0; i < table.getColumnCount(); i++) {
-                int sortStatus = 0;
-                if (sorter != null) {
-                    sortStatus = sorter.getSortingStatus(i);
-                }
-                p.setTableColumnPreferences(tableref, table.getColumnName(i), i, table.getColumnModel().getColumn(i)
-                        .getPreferredWidth(), sortStatus, false);
-            }
-        }
+        ((OperationsPanel) this.getContentPane()).saveTableDetails(table);
     }
 
     /**
@@ -232,61 +180,7 @@ public class OperationsFrame extends JmriJFrame implements AncestorListener {
      * @return true if table has been adjusted by saved xml file.
      */
     public boolean loadTableDetails(JTable table) {
-        UserPreferencesManager p = InstanceManager.getDefault(UserPreferencesManager.class);
-        TableSorter sorter = null;
-        String tableref = getWindowFrameRef() + ":table"; // NOI18N
-        if (p == null || p.getTablesColumnList(tableref).isEmpty()) {
-            return false;
-        }
-        try {
-            sorter = (TableSorter) table.getModel();
-        } catch (Exception e) {
-            log.debug("table " + tableref + " doesn't use sorter");
-        }
-        // bubble sort
-        int count = 0;
-        while (!sortTable(table, p, tableref) && count < 10) {
-            count++;
-            log.debug("bubble sort pass {}:", count);
-        }
-        // Some tables have more than one name, so use the current one for size
-        for (int i = 0; i < table.getColumnCount(); i++) {
-            String columnName = table.getColumnName(i);
-            int sort = p.getTableColumnSort(tableref, columnName);
-            if (sorter != null) {
-                sorter.setSortingStatus(i, sort);
-            }
-            int width = p.getTableColumnWidth(tableref, columnName);
-            if (width != -1) {
-                table.getColumnModel().getColumn(i).setPreferredWidth(width);
-            } else {
-                // name not found so use one that exists
-                String name = p.getTableColumnAtNum(tableref, i);
-                if (name != null) {
-                    width = p.getTableColumnWidth(tableref, name);
-                    table.getColumnModel().getColumn(i).setPreferredWidth(width);
-                }
-            }
-        }
-        return true;
-    }
-
-    private boolean sortTable(JTable table, UserPreferencesManager p, String tableref) {
-        boolean sortDone = true;
-        for (int i = 0; i < table.getColumnCount(); i++) {
-            String columnName = table.getColumnName(i);
-            int order = p.getTableColumnOrder(tableref, columnName);
-            if (order == -1) {
-                log.debug("Column name {} not found in user preference file", columnName);
-                break; // table structure has changed quit sort
-            }
-            if (i != order && order < table.getColumnCount()) {
-                table.moveColumn(i, order);
-                log.debug("Move column number: {} name: {} to: {}", i, columnName, order);
-                sortDone = false;
-            }
-        }
-        return sortDone;
+        return ((OperationsPanel) this.getContentPane()).loadTableDetails(table);
     }
 
     protected void clearTableSort(JTable table) {
@@ -343,5 +237,5 @@ public class OperationsFrame extends JmriJFrame implements AncestorListener {
         ((OperationsPanel) this.getContentPane()).ancestorMoved(event);
     }
 
-    private final static Logger log = LoggerFactory.getLogger(OperationsFrame.class.getName());
+//    private final static Logger log = LoggerFactory.getLogger(OperationsFrame.class.getName());
 }
