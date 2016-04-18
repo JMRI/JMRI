@@ -17,11 +17,13 @@ import org.slf4j.LoggerFactory;
  * the older 2.n Mini Web Server.
  *
  * @author rhwood
+ * @deprecated since 4.3.5. Use {@link jmri.web.server.WebServer#getDefault()}
+ * and {@link jmri.web.server.WebServerPreferences#getDefault()} directly to get
+ * the default instances of the WebServer and WebServerPreferences respectively.
  */
+@Deprecated
 public class WebServerManager {
 
-    private WebServerPreferences preferences;
-    private WebServer server;
     private final static Logger log = LoggerFactory.getLogger(WebServer.class.getName());
 
     private WebServerManager() {
@@ -34,10 +36,9 @@ public class WebServerManager {
             } else if (!webServerPrefsFile.exists()) {
                 InstanceManager.store(new WebServerPreferences(), WebServerPreferences.class);
             } else {
-                InstanceManager.store(new WebServerPreferences(FileUtil.getUserFilesPath() + "networkServices" + File.separator + "WebServerPreferences.xml"), WebServerPreferences.class); // NOI18N
+                InstanceManager.store(new WebServerPreferences(webServerPrefsFile.getAbsolutePath()), WebServerPreferences.class); // NOI18N
             }
         }
-        preferences = InstanceManager.getDefault(WebServerPreferences.class);
     }
 
     public static WebServerManager getInstance() {
@@ -48,10 +49,10 @@ public class WebServerManager {
     }
 
     public WebServerPreferences getPreferences() {
-        if (preferences == null) {
-            preferences = new WebServerPreferences();
+        if (InstanceManager.getDefault(WebServerPreferences.class) == null) {
+            InstanceManager.setDefault(WebServerPreferences.class, new WebServerPreferences());
         }
-        return preferences;
+        return InstanceManager.getDefault(WebServerPreferences.class);
     }
 
     public static WebServerPreferences getWebServerPreferences() {
@@ -59,10 +60,10 @@ public class WebServerManager {
     }
 
     public WebServer getServer() {
-        if (server == null) {
-            server = new WebServer();
+        if (InstanceManager.getDefault(WebServer.class) == null) {
+            InstanceManager.setDefault(WebServer.class, new WebServer());
         }
-        return server;
+        return InstanceManager.getDefault(WebServer.class);
     }
 
     public static WebServer getWebServer() {
@@ -72,7 +73,8 @@ public class WebServerManager {
     @edu.umd.cs.findbugs.annotations.SuppressFBWarnings(value = "REC_CATCH_EXCEPTION",
             justification = "Catch is covering both JDOMException and IOException, FindBugs seems confused")
     private void preferencesFromMiniServerPreferences(File MSFile, File WSFile) {
-        WebServerPreferences.WebServerPreferencesXml xmlFile = new WebServerPreferences.WebServerPreferencesXml();
+        XmlFile xmlFile = new XmlFile() {
+        };
         try {
             Element MSRoot = xmlFile.rootFromFile(MSFile);
             Element WSRoot = new Element(WebServerPreferences.WebServerPreferences);
