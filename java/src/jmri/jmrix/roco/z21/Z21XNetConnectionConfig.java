@@ -1,5 +1,8 @@
 package jmri.jmrix.roco.z21;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
 /**
  * Handle configuring the XPressNet tunnel for the z21 Connection.
  * <P>
@@ -43,9 +46,7 @@ public class Z21XNetConnectionConfig extends jmri.jmrix.AbstractStreamConnection
     }
 
     protected void setInstance() {
-        if (adapter == null) {
-            //adapter = new z21XNetStreamPortController();
-        }
+       log.error("Unexpected call to setInstance");
     }
 
     /**
@@ -59,5 +60,7 @@ public class Z21XNetConnectionConfig extends jmri.jmrix.AbstractStreamConnection
     public boolean isDirty() {
         return false;
     }
+
+    private final static Logger log = LoggerFactory.getLogger(Z21XNetConnectionConfig.class.getName());
 
 }

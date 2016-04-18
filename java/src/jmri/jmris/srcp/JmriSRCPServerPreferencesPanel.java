@@ -1,13 +1,10 @@
-package jmri.jmris.simpleserver.configurexml;
+package jmri.jmris.srcp;
 
 /**
  * @author Randall Wood Copyright (C) 2012
  */
-import java.awt.event.ActionEvent;
 import javax.swing.Box;
 import javax.swing.BoxLayout;
-import javax.swing.event.ChangeEvent;
-import javax.swing.JButton;
 import javax.swing.JComponent;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
@@ -15,26 +12,25 @@ import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JSpinner;
 import javax.swing.SpinnerNumberModel;
-import javax.swing.JTextField;
-import jmri.jmris.simpleserver.SimpleServerManager;
+import javax.swing.event.ChangeEvent;
 import jmri.swing.JTitledSeparator;
 import jmri.swing.PreferencesPanel;
 
-public class SimpleServerPreferencesPanel extends JPanel implements PreferencesPanel {
+public class JmriSRCPServerPreferencesPanel extends JPanel implements PreferencesPanel {
 
     private static final long serialVersionUID = 03_16_2015L;
     private JSpinner port;
-    private SimpleServerPreferences preferences;
+    private JmriSRCPServerPreferences preferences;
     private JFrame parentFrame = null;
 
-    public SimpleServerPreferencesPanel() {
-        this.preferences = new SimpleServerPreferences();
-        this.preferences.apply(SimpleServerManager.getSimpleServerPreferences());
+    public JmriSRCPServerPreferencesPanel() {
+        this.preferences = new JmriSRCPServerPreferences();
+        this.preferences.apply(JmriSRCPServerManager.getJmriSRCPServerPreferences());
         initGUI();
         setGUI();
     }
 
-    public SimpleServerPreferencesPanel(JFrame f) {
+    public JmriSRCPServerPreferencesPanel(JFrame f) {
         this();
         parentFrame = f;
     }
@@ -43,7 +39,7 @@ public class SimpleServerPreferencesPanel extends JPanel implements PreferencesP
         this.setLayout(new BoxLayout(this, BoxLayout.PAGE_AXIS));
         add(new JTitledSeparator(Bundle.getMessage("ServerSectionTitle")));
         add(portPanel());
-        add(new JTitledSeparator(Bundle.getMessage("SimpleServerSectionTitle")));
+        add(new JTitledSeparator(Bundle.getMessage("SRCPSectionTitle")));
         add(Box.createVerticalGlue());
     }
 
@@ -61,8 +57,7 @@ public class SimpleServerPreferencesPanel extends JPanel implements PreferencesP
         boolean didSet = true;
         int portNum;
         try {
-            portNum = (Integer)port.getValue();
-//            Integer currentValue = (Integer)jSpinner1.getValue();
+            portNum = (Integer) port.getValue();
         } catch (NumberFormatException NFE) { //  Not a number
             portNum = 0;
         }
@@ -145,8 +140,8 @@ public class SimpleServerPreferencesPanel extends JPanel implements PreferencesP
     @Override
     public void savePreferences() {
         if (this.setValues()) {
-            SimpleServerManager.getSimpleServerPreferences().apply(this.preferences);
-            SimpleServerManager.getSimpleServerPreferences().save();
+            JmriSRCPServerManager.getJmriSRCPServerPreferences().apply(this.preferences);
+            JmriSRCPServerManager.getJmriSRCPServerPreferences().save();
             if (this.parentFrame != null) {
                 this.parentFrame.dispose();
             }
@@ -155,13 +150,13 @@ public class SimpleServerPreferencesPanel extends JPanel implements PreferencesP
 
     @Override
     public boolean isDirty() {
-        return this.preferences.compareValuesDifferent(SimpleServerManager.getSimpleServerPreferences())
-                || SimpleServerManager.getSimpleServerPreferences().isDirty();
+        return this.preferences.compareValuesDifferent(JmriSRCPServerManager.getJmriSRCPServerPreferences())
+                || JmriSRCPServerManager.getJmriSRCPServerPreferences().isDirty();
     }
 
     @Override
     public boolean isRestartRequired() {
-        return SimpleServerManager.getSimpleServerPreferences().isRestartRequired();
+        return JmriSRCPServerManager.getJmriSRCPServerPreferences().isRestartRequired();
     }
 
     /**
@@ -169,9 +164,8 @@ public class SimpleServerPreferencesPanel extends JPanel implements PreferencesP
      *
      * @return true if the preferences are valid, false otherwise
      */
-    public boolean isPreferencesValid(){
+    public boolean isPreferencesValid() {
         return false;
     }
-
 
 }

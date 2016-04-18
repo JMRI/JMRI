@@ -6,6 +6,8 @@ import java.awt.Dimension;
 import java.awt.GridBagLayout;
 import java.beans.PropertyChangeEvent;
 import java.beans.PropertyChangeListener;
+import java.io.File;
+import java.text.MessageFormat;
 import java.util.Enumeration;
 import java.util.List;
 import javax.swing.AbstractButton;
@@ -16,6 +18,7 @@ import javax.swing.JButton;
 import javax.swing.JLabel;
 import javax.swing.JMenu;
 import javax.swing.JMenuBar;
+import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JRadioButton;
 import javax.swing.JScrollPane;
@@ -29,6 +32,7 @@ import jmri.jmrit.operations.setup.Control;
 import jmri.jmrit.operations.setup.Setup;
 import jmri.jmrit.operations.trains.Train;
 import jmri.jmrit.operations.trains.TrainManager;
+import jmri.jmrit.operations.trains.excel.TrainCustomManifest;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -36,7 +40,7 @@ import org.slf4j.LoggerFactory;
  * Frame for adding and editing train schedules (Timetable) for operations.
  *
  * @author Bob Jacobsen Copyright (C) 2001
- * @author Daniel Boudreau Copyright (C) 2010, 2012
+ * @author Daniel Boudreau Copyright (C) 2010, 2012, 2016
  * @version $Revision$
  */
 public class TrainsScheduleTableFrame extends OperationsFrame implements PropertyChangeListener {
@@ -73,6 +77,7 @@ public class TrainsScheduleTableFrame extends OperationsFrame implements Propert
     JButton applyButton = new JButton(Bundle.getMessage("Apply"));
     JButton buildButton = new JButton(Bundle.getMessage("Build"));
     JButton printButton = new JButton(Bundle.getMessage("Print"));
+    JButton runFileButton = new JButton(Bundle.getMessage("RunFile"));
     JButton switchListsButton = new JButton();
     JButton terminateButton = new JButton(Bundle.getMessage("Terminate"));
 
@@ -139,6 +144,7 @@ public class TrainsScheduleTableFrame extends OperationsFrame implements Propert
         cp4.add(applyButton);
         cp4.add(buildButton);
         cp4.add(printButton);
+        cp4.add(runFileButton);
         cp4.add(switchListsButton);
         cp4.add(terminateButton);
 
@@ -156,6 +162,7 @@ public class TrainsScheduleTableFrame extends OperationsFrame implements Propert
         clearButton.setToolTipText(Bundle.getMessage("ClearAllButtonTip"));
         applyButton.setToolTipText(Bundle.getMessage("ApplyButtonTip"));
         buildButton.setToolTipText(Bundle.getMessage("BuildSelectedTip"));
+        runFileButton.setToolTipText(Bundle.getMessage("RunFileButtonTip"));
         activateButton.setToolTipText(Bundle.getMessage("ActivateButtonTip"));
         terminateButton.setToolTipText(Bundle.getMessage("TerminateSelectedTip"));
 
@@ -177,6 +184,9 @@ public class TrainsScheduleTableFrame extends OperationsFrame implements Propert
 
         getContentPane().add(trainsPane);
         getContentPane().add(controlPane);
+        
+        // show run button only if create CSV files is enabled
+        updateRunButton();
 
         // setup buttons
         addButtonAction(clearButton);
@@ -184,6 +194,7 @@ public class TrainsScheduleTableFrame extends OperationsFrame implements Propert
         addButtonAction(applyButton);
         addButtonAction(buildButton);
         addButtonAction(printButton);
+        addButtonAction(runFileButton);
         addButtonAction(switchListsButton);
         addButtonAction(terminateButton);
         addButtonAction(activateButton);
@@ -259,6 +270,38 @@ public class TrainsScheduleTableFrame extends OperationsFrame implements Propert
         }
         if (ae.getSource() == printButton) {
             trainManager.printSelectedTrains(getSortByList());
+        }
+        if (ae.getSource() == runFileButton) {
+            // Processes the CSV Manifest files using an external custom program.
+            if (!TrainCustomManifest.manifestCreatorFileExists()) {
+                log.warn("Manifest creator file not found!, directory name: " + TrainCustomManifest.getDirectoryName()
+                        + ", file name: " + TrainCustomManifest.getFileName()); // NOI18N
+                JOptionPane.showMessageDialog(this, MessageFormat.format(
+                        Bundle.getMessage("LoadDirectoryNameFileName"), new Object[]{
+                            TrainCustomManifest.getDirectoryName(), TrainCustomManifest.getFileName()}), Bundle
+                        .getMessage("ManifestCreatorNotFound"), JOptionPane.ERROR_MESSAGE);
+                return;
+            }
+            List<Train> trains = getSortByList();
+            for (Train train : trains) {
+                if (train.isBuildEnabled()) {
+                    if (!train.isBuilt()) {
+                        JOptionPane.showMessageDialog(this, MessageFormat.format(Bundle
+                                .getMessage("NeedToBuildBeforeRunFile"), new Object[]{
+                                        train.getName()}),
+                                Bundle.getMessage("Error"),
+                                JOptionPane.ERROR_MESSAGE);
+                    } else {
+                        // Make sure our csv manifest file exists for this Train.
+                        File csvFile = train.createCSVManifestFile();
+                        // Add it to our collection to be processed.
+                        TrainCustomManifest.addCVSFile(csvFile);
+                    }
+                }
+            }
+
+            // Now run the user specified custom Manifest processor program
+            TrainCustomManifest.process();
         }
         if (ae.getSource() == switchListsButton) {
             trainScheduleManager.buildSwitchLists();
@@ -352,6 +395,7 @@ public class TrainsScheduleTableFrame extends OperationsFrame implements Propert
         applyButton.setEnabled(enable);
         buildButton.setEnabled(enable);
         printButton.setEnabled(enable);
+        runFileButton.setEnabled(enable);
         switchListsButton.setEnabled(enable);
         terminateButton.setEnabled(enable);
 
@@ -417,6 +461,10 @@ public class TrainsScheduleTableFrame extends OperationsFrame implements Propert
             }
         }
         switchListsButton.setBackground(Color.GREEN);
+    }
+    
+    private void updateRunButton() {
+        runFileButton.setVisible(Setup.isGenerateCsvManifestEnabled());
     }
 
     protected void storeValues() {
@@ -486,6 +534,9 @@ public class TrainsScheduleTableFrame extends OperationsFrame implements Propert
         if (e.getPropertyName().equals(Location.STATUS_CHANGED_PROPERTY)
                 || e.getPropertyName().equals(Location.SWITCHLIST_CHANGED_PROPERTY)) {
             updateSwitchListButton();
+        }
+        if (e.getPropertyName().equals(Setup.MANIFEST_CSV_PROPERTY_CHANGE)) {
+            updateRunButton();
         }
     }
 

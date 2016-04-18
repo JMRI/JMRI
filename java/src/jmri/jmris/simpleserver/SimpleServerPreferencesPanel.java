@@ -1,13 +1,10 @@
-package jmri.jmris.srcp.configurexml;
+package jmri.jmris.simpleserver;
 
 /**
  * @author Randall Wood Copyright (C) 2012
  */
-import java.awt.event.ActionEvent;
 import javax.swing.Box;
 import javax.swing.BoxLayout;
-import javax.swing.event.ChangeEvent;
-import javax.swing.JButton;
 import javax.swing.JComponent;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
@@ -15,26 +12,25 @@ import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JSpinner;
 import javax.swing.SpinnerNumberModel;
-import javax.swing.JTextField;
-import jmri.jmris.srcp.JmriSRCPServerManager;
+import javax.swing.event.ChangeEvent;
 import jmri.swing.JTitledSeparator;
 import jmri.swing.PreferencesPanel;
 
-public class JmriSRCPServerPreferencesPanel extends JPanel implements PreferencesPanel {
+public class SimpleServerPreferencesPanel extends JPanel implements PreferencesPanel {
 
     private static final long serialVersionUID = 03_16_2015L;
     private JSpinner port;
-    private JmriSRCPServerPreferences preferences;
+    private SimpleServerPreferences preferences;
     private JFrame parentFrame = null;
 
-    public JmriSRCPServerPreferencesPanel() {
-        this.preferences = new JmriSRCPServerPreferences();
-        this.preferences.apply(JmriSRCPServerManager.getJmriSRCPServerPreferences());
+    public SimpleServerPreferencesPanel() {
+        this.preferences = new SimpleServerPreferences();
+        this.preferences.apply(SimpleServerManager.getSimpleServerPreferences());
         initGUI();
         setGUI();
     }
 
-    public JmriSRCPServerPreferencesPanel(JFrame f) {
+    public SimpleServerPreferencesPanel(JFrame f) {
         this();
         parentFrame = f;
     }
@@ -43,7 +39,7 @@ public class JmriSRCPServerPreferencesPanel extends JPanel implements Preference
         this.setLayout(new BoxLayout(this, BoxLayout.PAGE_AXIS));
         add(new JTitledSeparator(Bundle.getMessage("ServerSectionTitle")));
         add(portPanel());
-        add(new JTitledSeparator(Bundle.getMessage("SRCPSectionTitle")));
+        add(new JTitledSeparator(Bundle.getMessage("SimpleServerSectionTitle")));
         add(Box.createVerticalGlue());
     }
 
@@ -61,7 +57,8 @@ public class JmriSRCPServerPreferencesPanel extends JPanel implements Preference
         boolean didSet = true;
         int portNum;
         try {
-            portNum = (Integer)port.getValue();
+            portNum = (Integer) port.getValue();
+//            Integer currentValue = (Integer)jSpinner1.getValue();
         } catch (NumberFormatException NFE) { //  Not a number
             portNum = 0;
         }
@@ -98,7 +95,7 @@ public class JmriSRCPServerPreferencesPanel extends JPanel implements Preference
         ((JSpinner.DefaultEditor) port.getEditor()).getTextField().setEditable(true);
         port.setEditor(new JSpinner.NumberEditor(port, "#"));
         this.port.addChangeListener((ChangeEvent e) -> {
-        this.setValues();
+            this.setValues();
         });
         this.port.setToolTipText(Bundle.getMessage("PortToolTip"));
         panel.add(port);
@@ -144,8 +141,8 @@ public class JmriSRCPServerPreferencesPanel extends JPanel implements Preference
     @Override
     public void savePreferences() {
         if (this.setValues()) {
-            JmriSRCPServerManager.getJmriSRCPServerPreferences().apply(this.preferences);
-            JmriSRCPServerManager.getJmriSRCPServerPreferences().save();
+            SimpleServerManager.getSimpleServerPreferences().apply(this.preferences);
+            SimpleServerManager.getSimpleServerPreferences().save();
             if (this.parentFrame != null) {
                 this.parentFrame.dispose();
             }
@@ -154,13 +151,13 @@ public class JmriSRCPServerPreferencesPanel extends JPanel implements Preference
 
     @Override
     public boolean isDirty() {
-        return this.preferences.compareValuesDifferent(JmriSRCPServerManager.getJmriSRCPServerPreferences())
-                || JmriSRCPServerManager.getJmriSRCPServerPreferences().isDirty();
+        return this.preferences.compareValuesDifferent(SimpleServerManager.getSimpleServerPreferences())
+                || SimpleServerManager.getSimpleServerPreferences().isDirty();
     }
 
     @Override
     public boolean isRestartRequired() {
-        return JmriSRCPServerManager.getJmriSRCPServerPreferences().isRestartRequired();
+        return SimpleServerManager.getSimpleServerPreferences().isRestartRequired();
     }
 
     /**
@@ -168,9 +165,8 @@ public class JmriSRCPServerPreferencesPanel extends JPanel implements Preference
      *
      * @return true if the preferences are valid, false otherwise
      */
-    public boolean isPreferencesValid(){
+    public boolean isPreferencesValid() {
         return false;
     }
-
 
 }

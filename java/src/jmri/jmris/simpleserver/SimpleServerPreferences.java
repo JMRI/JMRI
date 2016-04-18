@@ -1,11 +1,11 @@
-package jmri.jmris.simpleserver.configurexml;
-
+package jmri.jmris.simpleserver;
 
 public class SimpleServerPreferences extends jmri.jmris.AbstractServerPreferences {
 
     public static final int DEFAULT_PORT = 2056;
     static final String XML_PREFS_ELEMENT = "SimpleServerPreferences"; // NOI18N
     static final String PORT = "port"; // NOI18N
+
     public SimpleServerPreferences(String fileName) {
         super(fileName);
     }
