@@ -206,6 +206,9 @@ public class AudioBufferFrame extends AbstractAudioFrame {
      */
     @Override
     public void populateFrame(Audio a) {
+        if (a instanceof AudioBuffer) {
+            throw new IllegalArgumentException(a.getSystemName() + " is not an AudioBuffer object");
+        }
         super.populateFrame(a);
         AudioBuffer b = (AudioBuffer) a;
         url.setText(b.getURL());
@@ -265,7 +268,9 @@ public class AudioBufferFrame extends AbstractAudioFrame {
             }
             if (newBuffer && am.getByUserName(user) != null) {
                 am.deregister(b);
-                counter--;
+                synchronized (lock) {
+                    counter--;
+                }
                 throw new AudioException("Duplicate user name - please modify");
             }
             b.setUserName(user);

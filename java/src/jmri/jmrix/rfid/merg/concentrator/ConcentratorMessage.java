@@ -1,4 +1,3 @@
-// SpecificMessage.java
 package jmri.jmrix.rfid.merg.concentrator;
 
 import jmri.jmrix.rfid.RfidMessage;
@@ -18,7 +17,6 @@ import jmri.jmrix.rfid.RfidMessage;
  * <P>
  *
  * @author Matthew Harris Copyright (C) 2011
- * @version $Revision$
  */
 public class ConcentratorMessage extends RfidMessage {
 
@@ -36,5 +34,3 @@ public class ConcentratorMessage extends RfidMessage {
     }
 
 }
-
-/* @(#)SpecificMessage.java */

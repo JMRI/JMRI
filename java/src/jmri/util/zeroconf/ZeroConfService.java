@@ -22,7 +22,7 @@ import jmri.implementation.QuietShutDownTask;
 import jmri.profile.ProfileManager;
 import jmri.profile.ProfileUtils;
 import jmri.util.node.NodeIdentity;
-import jmri.web.server.WebServerManager;
+import jmri.web.server.WebServerPreferences;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -116,7 +116,7 @@ public class ZeroConfService {
      * @return An unpublished ZeroConfService
      */
     public static ZeroConfService create(String type, int port, HashMap<String, String> properties) {
-        return create(type, WebServerManager.getWebServerPreferences().getRailRoadName(), port, 0, 0, properties);
+        return create(type, WebServerPreferences.getDefault().getRailRoadName(), port, 0, 0, properties);
     }
 
     /**
