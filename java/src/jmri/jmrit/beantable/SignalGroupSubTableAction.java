@@ -801,9 +801,9 @@ public class SignalGroupSubTableAction {
 
     private static int ROW_HEIGHT;
 
-    private static String[] COLUMN_NAMES = {rbx.getString("ColumnLabelSystemName"),
-        rbx.getString("ColumnLabelUserName"),
-        rbx.getString("ColumnLabelInclude"),
+    private static String[] COLUMN_NAMES = {Bundle.getMessage("ColumnSystemName"),
+            Bundle.getMessage("ColumnUserName"),
+            Bundle.getMessage("Include"),
         rbx.getString("ColumnLabelSetState")};
     private static String SET_TO_ACTIVE = rbx.getString("SensorActive");
     private static String SET_TO_INACTIVE = rbx.getString("SensorInactive");

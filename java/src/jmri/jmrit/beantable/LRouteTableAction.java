@@ -187,7 +187,7 @@ public class LRouteTableAction extends AbstractTableAction {
 
         public Object getValueAt(int row, int col) {
             if (col == EDITCOL) {
-                return rbx.getString("ButtonEdit");
+                return Bundle.getMessage("ButtonEdit");
             } else if (col == ENABLECOL) {
                 return Boolean.valueOf(
                         ((Logix) getBySystemName((String) getValueAt(row,
@@ -272,7 +272,7 @@ public class LRouteTableAction extends AbstractTableAction {
         protected void configDeleteColumn(JTable table) {
             // have the delete column hold a button
             setColumnToHoldButton(table, DELETECOL,
-                    new JButton(rbx.getString("ButtonEdit")));
+                    new JButton(Bundle.getMessage("ButtonEdit")));
         }
 
         protected void configValueColumn(JTable table) {
@@ -330,10 +330,10 @@ public class LRouteTableAction extends AbstractTableAction {
     JTextField soundFile = new JTextField(30);
     JTextField scriptFile = new JTextField(30);
 
-    JButton createButton = new JButton(rbx.getString("ButtonCreate"));
-    JButton deleteButton = new JButton(rbx.getString("ButtonDelete"));
-    JButton updateButton = new JButton(rbx.getString("ButtonUpdate"));
-    JButton cancelButton = new JButton(rbx.getString("ButtonCancel"));
+    JButton createButton = new JButton(Bundle.getMessage("ButtonCreate"));
+    JButton deleteButton = new JButton(Bundle.getMessage("ButtonDelete"));
+    JButton updateButton = new JButton(Bundle.getMessage("ButtonUpdate"));
+    JButton cancelButton = new JButton(Bundle.getMessage("ButtonCancel"));
 
     boolean routeDirty = false;  // true to fire reminder to save work
 
@@ -861,14 +861,14 @@ public class LRouteTableAction extends AbstractTableAction {
             // add system name
             JPanel p = new JPanel();
             p.setLayout(new FlowLayout());
-            p.add(new JLabel(rbx.getString("SystemName")));
+            p.add(new JLabel(Bundle.getMessage("LabelSystemName")));
             p.add(_systemName);
             _systemName.setToolTipText(rbx.getString("SystemNameHint"));
             tab1.add(p);
             // add user name
             p = new JPanel();
             p.setLayout(new FlowLayout());
-            p.add(new JLabel(rbx.getString("UserName")));
+            p.add(new JLabel(Bundle.getMessage("LabelUserName")));
             p.add(_userName);
             _userName.setToolTipText(rbx.getString("UserNameHint"));
             tab1.add(p);
@@ -968,9 +968,9 @@ public class LRouteTableAction extends AbstractTableAction {
             JPanel tab2 = new JPanel();
             tab2.setLayout(new BoxLayout(tab2, BoxLayout.Y_AXIS));
             tab2.add(new JLabel(rbx.getString("OutputTitle")));
-            _outputAllButton = new JRadioButton(rbx.getString("All"), true);
-            JRadioButton includedOutputButton = new JRadioButton(rbx.getString("Included"), false);
-            tab2.add(makeShowButtons(_outputAllButton, includedOutputButton, null, "Show"));
+            _outputAllButton = new JRadioButton(Bundle.getMessage("All"), true);
+            JRadioButton includedOutputButton = new JRadioButton(Bundle.getMessage("Included"), false);
+            tab2.add(makeShowButtons(_outputAllButton, includedOutputButton, null, Bundle.getMessage("Show")));
             _outputAllButton.addActionListener(new ActionListener() {
                 public void actionPerformed(ActionEvent e) {
                     // Setup for display of all Turnouts, if needed
@@ -1003,9 +1003,9 @@ public class LRouteTableAction extends AbstractTableAction {
             JPanel tab3 = new JPanel();
             tab3.setLayout(new BoxLayout(tab3, BoxLayout.Y_AXIS));
             tab3.add(new JLabel(rbx.getString("InputTitle")));
-            _inputAllButton = new JRadioButton(rbx.getString("All"), true);
-            JRadioButton includedInputButton = new JRadioButton(rbx.getString("Included"), false);
-            tab3.add(makeShowButtons(_inputAllButton, includedInputButton, null, "Show"));
+            _inputAllButton = new JRadioButton(Bundle.getMessage("All"), true);
+            JRadioButton includedInputButton = new JRadioButton(Bundle.getMessage("Included"), false);
+            tab3.add(makeShowButtons(_inputAllButton, includedInputButton, null, Bundle.getMessage("Show")));
             _inputAllButton.addActionListener(new ActionListener() {
                 public void actionPerformed(ActionEvent e) {
                     // Setup for display of all Turnouts, if needed
@@ -1043,7 +1043,7 @@ public class LRouteTableAction extends AbstractTableAction {
             JPanel p25 = new JPanel();
             p25.setLayout(new FlowLayout());
             p25.add(new JLabel(rbx.getString("PlaySound")));
-            JButton ss = new JButton(rbx.getString("Set"));
+            JButton ss = new JButton("...");
             ss.addActionListener(new ActionListener() {
                 public void actionPerformed(ActionEvent e) {
                     setSoundPressed();
@@ -1056,7 +1056,7 @@ public class LRouteTableAction extends AbstractTableAction {
             p25 = new JPanel();
             p25.setLayout(new FlowLayout());
             p25.add(new JLabel(rbx.getString("RunScript")));
-            ss = new JButton(rbx.getString("Set"));
+            ss = new JButton("...");
             ss.addActionListener(new ActionListener() {
                 public void actionPerformed(ActionEvent e) {
                     setScriptPressed();
@@ -1079,9 +1079,9 @@ public class LRouteTableAction extends AbstractTableAction {
             p25.add(_lockCheckBox);
             tab4.add(p25);
 
-            _alignAllButton = new JRadioButton(rbx.getString("All"), true);
-            JRadioButton includedAlignButton = new JRadioButton(rbx.getString("Included"), false);
-            tab4.add(makeShowButtons(_alignAllButton, includedAlignButton, null, "Show"));
+            _alignAllButton = new JRadioButton(Bundle.getMessage("All"), true);
+            JRadioButton includedAlignButton = new JRadioButton(Bundle.getMessage("Included"), false);
+            tab4.add(makeShowButtons(_alignAllButton, includedAlignButton, null, Bundle.getMessage("Show")));
             _alignAllButton.addActionListener(new ActionListener() {
                 public void actionPerformed(ActionEvent e) {
                     // Setup for display of all Turnouts, if needed
@@ -2070,13 +2070,13 @@ public class LRouteTableAction extends AbstractTableAction {
         public String getColumnName(int c) {
             switch (c) {
                 case SNAME_COLUMN:
-                    return rbx.getString("SystemName");
+                    return Bundle.getMessage("ColumnSystemName");
                 case UNAME_COLUMN:
-                    return rbx.getString("UserName");
+                    return Bundle.getMessage("ColumnUserName");
                 case TYPE_COLUMN:
                     return rbx.getString("Type");
                 case INCLUDE_COLUMN:
-                    return rbx.getString("Include");
+                    return Bundle.getMessage("Include");
             }
             return "";
         }
