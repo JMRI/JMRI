@@ -2290,7 +2290,7 @@ public class LRouteTableAction extends AbstractTableAction {
                 case INCLUDE_COLUMN:
                     return Boolean.valueOf(alignList.get(r).isIncluded());
                 case TYPE_COLUMN:
-                    return rbx.getString("Sensor");
+                    return Bundle.getMessage("BeanNameSensor");
                 case STATE_COLUMN:  //
                     return alignList.get(r).getAlignType();
                 default:
@@ -2445,19 +2445,19 @@ public class LRouteTableAction extends AbstractTableAction {
             _included = false;
             switch (type) {
                 case SENSOR_TYPE:
-                    _typeString = rbx.getString("Sensor");
+                    _typeString = Bundle.getMessage("BeanNameSensor");
                     break;
                 case TURNOUT_TYPE:
-                    _typeString = rbx.getString("Turnout");
+                    _typeString = Bundle.getMessage("BeanNameTurnout");
                     break;
                 case LIGHT_TYPE:
-                    _typeString = rbx.getString("Light");
+                    _typeString = Bundle.getMessage("BeanNameLight");
                     break;
                 case SIGNAL_TYPE:
-                    _typeString = rbx.getString("Signal");
+                    _typeString = Bundle.getMessage("BeanNameSignalHead");
                     break;
                 case CONDITIONAL_TYPE:
-                    _typeString = rbx.getString("Conditional");
+                    _typeString = Bundle.getMessage("BeanNameConditional");
                     break;
                 default:
                     log.warn("Unexpected type {} in RouteElement constructor", type);
