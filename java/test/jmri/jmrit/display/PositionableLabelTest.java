@@ -530,6 +530,7 @@ public class PositionableLabelTest extends jmri.util.SwingTestCase {
     protected void setUp() {
         apps.tests.Log4JFixture.setUp();
         jmri.util.JUnitUtil.resetInstanceManager();
+        jmri.util.JUnitUtil.initConfigureManager();
         jmri.util.JUnitUtil.initDefaultUserMessagePreferences();
     }
 
