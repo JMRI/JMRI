@@ -42,12 +42,12 @@ public final class WebServer implements LifeCycle.Listener {
     private final static Logger log = LoggerFactory.getLogger(WebServer.class.getName());
 
     protected WebServer() {
-        preferences = WebServerManager.getWebServerPreferences();
+        preferences = WebServerPreferences.getDefault();
         shutDownTask = new QuietShutDownTask("Stop Web Server") { // NOI18N
             @Override
             public boolean execute() {
                 try {
-                    WebServerManager.getWebServer().stop();
+                    WebServer.getDefault().stop();
                 } catch (Exception ex) {
                     log.warn("Error shutting down WebServer: " + ex);
                     if (log.isDebugEnabled()) {
@@ -57,6 +57,13 @@ public final class WebServer implements LifeCycle.Listener {
                 return true;
             }
         };
+    }
+
+    public static WebServer getDefault() {
+        if (InstanceManager.getDefault(WebServer.class) == null) {
+            InstanceManager.setDefault(WebServer.class, new WebServer());
+        }
+        return InstanceManager.getDefault(WebServer.class);
     }
 
     public void start() {

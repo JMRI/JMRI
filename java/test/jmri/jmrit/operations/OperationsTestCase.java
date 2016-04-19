@@ -49,7 +49,6 @@ public class OperationsTestCase extends TestCase {
 
         // Set things up outside of operations
         JUnitUtil.resetInstanceManager();
-        JUnitUtil.initConfigureManager();
         JUnitUtil.initInternalTurnoutManager();
         JUnitUtil.initInternalLightManager();
         JUnitUtil.initInternalSensorManager();

@@ -65,7 +65,6 @@ public class TurnoutOperationTest extends TestCase {
         apps.tests.Log4JFixture.setUp(); 
         super.setUp();
         jmri.util.JUnitUtil.resetInstanceManager();
-        JUnitUtil.initConfigureManager();
         JUnitUtil.initInternalTurnoutManager();
     }
 
@@ -73,7 +72,6 @@ public class TurnoutOperationTest extends TestCase {
         super.tearDown();
         apps.tests.Log4JFixture.tearDown(); 
         JUnitUtil.resetTurnoutOperationManager();
-        JUnitUtil.initConfigureManager();
         JUnitUtil.resetInstanceManager();
     }
 

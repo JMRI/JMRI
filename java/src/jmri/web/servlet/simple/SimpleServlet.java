@@ -17,7 +17,7 @@ import jmri.jmris.simpleserver.SimpleSignalHeadServer;
 import jmri.jmris.simpleserver.SimpleTurnoutServer;
 import jmri.util.FileUtil;
 import jmri.util.node.NodeIdentity;
-import jmri.web.server.WebServerManager;
+import jmri.web.server.WebServerPreferences;
 import jmri.web.servlet.ServletUtil;
 import org.eclipse.jetty.websocket.api.Session;
 import org.eclipse.jetty.websocket.api.annotations.OnWebSocketConnect;
@@ -96,7 +96,7 @@ public class SimpleServlet extends WebSocketServlet {
             this.turnoutServer = new SimpleTurnoutServer(this.connection);
             try {
                 this.connection.sendMessage("JMRI " + jmri.Version.name() + " \n");
-                this.connection.sendMessage("RAILROAD " + WebServerManager.getWebServerPreferences().getRailRoadName() + " \n");
+                this.connection.sendMessage("RAILROAD " + WebServerPreferences.getDefault().getRailRoadName() + " \n");
                 this.connection.sendMessage("NODE " + NodeIdentity.identity() + " \n");
             } catch (IOException e) {
                 log.warn(e.getMessage(), e);

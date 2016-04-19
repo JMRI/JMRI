@@ -89,7 +89,7 @@ import java.util.TimerTask;
 import jmri.CommandStation;
 import jmri.jmrit.roster.Roster;
 import jmri.jmrit.roster.RosterEntry;
-import jmri.web.server.WebServerManager;
+import jmri.web.server.WebServerPreferences;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -565,7 +565,7 @@ public class DeviceServer implements Runnable, ThrottleControllerListener, Contr
     }
 
     public static String getWebServerPort() {
-        return Integer.toString(WebServerManager.getWebServerPreferences().getPort());
+        return Integer.toString(WebServerPreferences.getDefault().getPort());
     }
 
     /**
