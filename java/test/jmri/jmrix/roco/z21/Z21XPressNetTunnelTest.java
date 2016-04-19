@@ -14,28 +14,19 @@ public class Z21XPressNetTunnelTest extends TestCase {
 
     public void testCtor() {
         Z21SystemConnectionMemo memo = new Z21SystemConnectionMemo();
-        Z21TrafficController tc = new Z21TrafficController() {
-            @Override
-            public void sendMessage(jmri.jmrix.AbstractMRMessage m,
-                    jmri.jmrix.AbstractMRListener l) {
-                // don't actually send messages in this test.
-            }
-        };
+        Z21InterfaceScaffold tc = new Z21InterfaceScaffold();
         memo.setTrafficController(tc);
         
         Z21XPressNetTunnel a = new Z21XPressNetTunnel(memo);
         Assert.assertNotNull(a);
+
+
+
     }
 
     public void testGetStreamPortController() {
         Z21SystemConnectionMemo memo = new Z21SystemConnectionMemo();
-        Z21TrafficController tc = new Z21TrafficController() {
-            @Override
-            public void sendMessage(jmri.jmrix.AbstractMRMessage m,
-                    jmri.jmrix.AbstractMRListener l) {
-                // don't actually send messages in this test.
-            }
-        };
+        Z21TrafficController tc = new Z21InterfaceScaffold();
         memo.setTrafficController(tc);
 
         Z21XPressNetTunnel a = new Z21XPressNetTunnel(memo);
