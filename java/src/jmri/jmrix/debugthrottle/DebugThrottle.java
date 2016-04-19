@@ -81,6 +81,7 @@ public class DebugThrottle extends AbstractThrottle {
      */
     @edu.umd.cs.findbugs.annotations.SuppressFBWarnings(value = "FE_FLOATING_POINT_EQUALITY") // OK to compare floating point, notify on any change
     public void setSpeedSetting(float speed) {
+        log.debug("setSpeedSetting: float speed: {}", speed);
         float oldSpeed = this.speedSetting;
         if (speed > 1.0) {
             log.warn("Speed was set too high: " + speed);
@@ -93,6 +94,7 @@ public class DebugThrottle extends AbstractThrottle {
     }
 
     public void setIsForward(boolean forward) {
+        log.debug("setIsForward: {}", forward);
         boolean old = isForward;
         isForward = forward;
         setSpeedSetting(speedSetting);  // send the command
