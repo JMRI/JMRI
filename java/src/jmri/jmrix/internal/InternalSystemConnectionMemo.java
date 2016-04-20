@@ -15,6 +15,7 @@ import jmri.InstanceManager;
  *      multiple internal systems defined - each one keeps internal references
  *      to its objects
  * <li>It must make sure that its objects are available individually through the instance manager.
+ * <li>But it also has to handle the ProxyManager special cases in the InstanceManager
  * </ul>
  * <p>
  *
@@ -56,6 +57,7 @@ public class InternalSystemConnectionMemo extends jmri.jmrix.SystemConnectionMem
         if (lightManager == null) {
             log.debug("Create InternalLightManager by request");
             lightManager = new InternalLightManager();
+            // special due to ProxyManager support
             InstanceManager.setLightManager(lightManager);
         }
         return lightManager;
@@ -65,6 +67,7 @@ public class InternalSystemConnectionMemo extends jmri.jmrix.SystemConnectionMem
         if (sensorManager == null) {
             log.debug("Create InternalSensorManager \"{}\" by request", getSystemPrefix());
             sensorManager = new InternalSensorManager(getSystemPrefix());
+            // special due to ProxyManager support
             InstanceManager.setSensorManager(sensorManager);
         }
         return sensorManager;
@@ -74,6 +77,7 @@ public class InternalSystemConnectionMemo extends jmri.jmrix.SystemConnectionMem
         if (reporterManager == null) {
             log.debug("Create InternalReporterManager by request");
             reporterManager = new InternalReporterManager();
+            // special due to ProxyManager support
             InstanceManager.setReporterManager(reporterManager);
         }
         return reporterManager;
@@ -83,6 +87,7 @@ public class InternalSystemConnectionMemo extends jmri.jmrix.SystemConnectionMem
         if (turnoutManager == null) {
             log.debug("Create InternalTurnoutManager \"{}\" by request", getSystemPrefix());
             turnoutManager = new InternalTurnoutManager(getSystemPrefix());
+            // special due to ProxyManager support
             InstanceManager.setTurnoutManager(turnoutManager);
         }
         return turnoutManager;
