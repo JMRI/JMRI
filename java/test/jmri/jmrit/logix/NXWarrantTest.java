@@ -227,6 +227,7 @@ public class NXWarrantTest extends jmri.util.SwingTestCase {
         JUnitUtil.initLogixManager();
         JUnitUtil.initConditionalManager();
         JUnitUtil.initWarrantManager();
+        JUnitUtil.initShutDownManager();
     }
 
     @Override

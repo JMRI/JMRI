@@ -32,7 +32,7 @@ import jmri.jmris.json.JsonUtil;
 import jmri.jmrit.display.Editor;
 import jmri.util.JmriJFrame;
 import jmri.util.StringUtil;
-import jmri.web.server.WebServerManager;
+import jmri.web.server.WebServerPreferences;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -62,11 +62,11 @@ public class JmriJFrameServlet extends HttpServlet {
      *
      */
     private static final long serialVersionUID = 8777952493753632897L;
-    static String clickRetryTime = Integer.toString(WebServerManager.getWebServerPreferences().getClickDelay());
-    static String noclickRetryTime = Integer.toString(WebServerManager.getWebServerPreferences().getRefreshDelay());
-    static List<String> disallowedFrames = WebServerManager.getWebServerPreferences().getDisallowedFrames();
-    boolean useAjax = WebServerManager.getWebServerPreferences().useAjax();
-    boolean plain = WebServerManager.getWebServerPreferences().isPlain();
+    static String clickRetryTime = Integer.toString(WebServerPreferences.getDefault().getClickDelay());
+    static String noclickRetryTime = Integer.toString(WebServerPreferences.getDefault().getRefreshDelay());
+    static List<String> disallowedFrames = WebServerPreferences.getDefault().getDisallowedFrames();
+    boolean useAjax = WebServerPreferences.getDefault().useAjax();
+    boolean plain = WebServerPreferences.getDefault().isPlain();
     boolean protect = false;
     protected int maxRequestLines = 50;
     protected String serverName = "JMRI-JFrameServer";
