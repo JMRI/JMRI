@@ -5,7 +5,6 @@ import jmri.util.SwingTestCase;
 import junit.framework.Test;
 import junit.framework.TestSuite;
 
-
 /**
  * Tests for the jmri.util.UncaughtExceptionHandler class.
  *
@@ -13,39 +12,30 @@ import junit.framework.TestSuite;
  */
 public class UncaughtExceptionHandlerTest extends SwingTestCase {
 
+    private boolean caught = false;
     private Thread.UncaughtExceptionHandler defaultExceptionHandler;
-    
-    public void testThread() throws Exception {
-        Thread t = new Thread() {
-            public void run() {
-                // The deref has to be on line 22 or test will fail
-                deref(null);
-            }
 
-            void deref(Object o) {
-                // The NPE has to be on line 27 or test will fail
-                o.toString();
-            }
-        };
+    public void testThread() throws Exception {
+        Thread t = new Thread(() -> {
+            // null.toString(); will not compile
+            // ((Object) null).toString(); raises unnessesary cast warnings
+            Object o = null;
+            o.toString();
+        });
 
         t.start();
         jmri.util.JUnitUtil.releaseThread(this);
         JUnitAppender.assertErrorMessage("Uncaught Exception caught by jmri.util.exceptionhandler.UncaughtExceptionHandler");
     }
 
-    boolean caught = false;
     public void testSwing() throws Exception {
-        Runnable r = new Runnable() {
-            public void run() {
-                deref(null);
-            }
-
-            void deref(Object o) {
-                o.toString();
-            }
-        };
         try {
-            javax.swing.SwingUtilities.invokeAndWait(r);
+            javax.swing.SwingUtilities.invokeAndWait(() -> {
+                // null.toString(); will not compile
+                // ((Object) null).toString(); raises unnessesary cast warnings
+                Object o = null;
+                o.toString();
+            });
         } catch (java.lang.reflect.InvocationTargetException e) {
             caught = true;
         }
@@ -71,6 +61,7 @@ public class UncaughtExceptionHandlerTest extends SwingTestCase {
     }
 
     // The minimal setup for log4J
+    @Override
     protected void setUp() throws Exception {
         apps.tests.Log4JFixture.setUp();
         this.defaultExceptionHandler = Thread.getDefaultUncaughtExceptionHandler();
@@ -78,6 +69,7 @@ public class UncaughtExceptionHandlerTest extends SwingTestCase {
         super.setUp();
     }
 
+    @Override
     protected void tearDown() throws Exception {
         super.tearDown();
         Thread.setDefaultUncaughtExceptionHandler(this.defaultExceptionHandler);
