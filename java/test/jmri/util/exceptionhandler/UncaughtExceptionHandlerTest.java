@@ -13,6 +13,8 @@ import junit.framework.TestSuite;
  */
 public class UncaughtExceptionHandlerTest extends SwingTestCase {
 
+    private Thread.UncaughtExceptionHandler defaultExceptionHandler;
+    
     public void testThread() throws Exception {
         Thread t = new Thread() {
             public void run() {
@@ -71,11 +73,14 @@ public class UncaughtExceptionHandlerTest extends SwingTestCase {
     // The minimal setup for log4J
     protected void setUp() throws Exception {
         apps.tests.Log4JFixture.setUp();
+        this.defaultExceptionHandler = Thread.getDefaultUncaughtExceptionHandler();
+        Thread.setDefaultUncaughtExceptionHandler(new UncaughtExceptionHandler());
         super.setUp();
     }
 
     protected void tearDown() throws Exception {
         super.tearDown();
+        Thread.setDefaultUncaughtExceptionHandler(this.defaultExceptionHandler);
         apps.tests.Log4JFixture.tearDown();
     }
 }
