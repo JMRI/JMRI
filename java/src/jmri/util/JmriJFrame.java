@@ -583,7 +583,7 @@ public class JmriJFrame extends JFrame implements java.awt.event.WindowListener,
         if (subClass == null) {
             return JmriJFrame.getFrameList();
         }
-        java.util.List<JmriJFrame> result = new ArrayList<JmriJFrame>();
+        java.util.List<JmriJFrame> result = new ArrayList<>();
         synchronized (list) {
             for (JmriJFrame f : list) {
                 if (subClass.isInstance(f)) {
@@ -609,7 +609,7 @@ public class JmriJFrame extends JFrame implements java.awt.event.WindowListener,
         return null;
     }
 
-    static volatile java.util.ArrayList<JmriJFrame> list = new java.util.ArrayList<JmriJFrame>();
+    static volatile java.util.ArrayList<JmriJFrame> list = new java.util.ArrayList<>();
 
     // handle resizing when first shown
     private boolean mShown = false;
@@ -939,7 +939,7 @@ public class JmriJFrame extends JFrame implements java.awt.event.WindowListener,
     }
 
     public Set<String> getPropertyNames() {
-        HashSet<String> names = new HashSet<String>();
+        HashSet<String> names = new HashSet<>();
         names.addAll(properties.keySet());
         names.addAll(Beans.getIntrospectedPropertyNames(this));
         return names;
