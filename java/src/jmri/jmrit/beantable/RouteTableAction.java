@@ -90,17 +90,22 @@ public class RouteTableAction extends AbstractTableAction {
 
         // late initialization of string "constants" so that TurnoutManager 
         // has time to be fully configured
-        SET_TO_CLOSED = rbx.getString("Set") + " "
+        SET_TO_CLOSED = Bundle.getMessage("Set") + " "
             + InstanceManager.turnoutManagerInstance().getClosedText();
-        SET_TO_THROWN = rbx.getString("Set") + " "
+        SET_TO_THROWN = Bundle.getMessage("Set") + " "
             + InstanceManager.turnoutManagerInstance().getThrownText();
-        turnoutInputModes = new String[]{"On " + InstanceManager.turnoutManagerInstance().getClosedText(),
-            "On " + InstanceManager.turnoutManagerInstance().getThrownText(),
-            "On Change", "Veto Closed", "Veto Thrown"};
-        lockTurnoutInputModes = new String[]{"On " + InstanceManager.turnoutManagerInstance().getClosedText(),
-            "On " + InstanceManager.turnoutManagerInstance().getThrownText(),
-            "On Change"};
-
+        turnoutInputModes = new String[]{
+                Bundle.getMessage("OnCondition") + " " + InstanceManager.turnoutManagerInstance().getClosedText(),
+                Bundle.getMessage("OnCondition") + " " + InstanceManager.turnoutManagerInstance().getThrownText(),
+                Bundle.getMessage("OnConditionChange"),
+                "Veto Closed",
+                "Veto Thrown"
+        };
+        lockTurnoutInputModes = new String[]{
+                Bundle.getMessage("OnCondition") + " " + InstanceManager.turnoutManagerInstance().getClosedText(),
+                Bundle.getMessage("OnCondition") + " " + InstanceManager.turnoutManagerInstance().getThrownText(),
+                Bundle.getMessage("OnConditionChange")
+        };
 
         m = new BeanTableDataModel() {
             static public final int ENABLECOL = NUMCOLUMN;
@@ -392,14 +397,14 @@ public class RouteTableAction extends AbstractTableAction {
     JRadioButton allButton = null;
     JRadioButton includedButton = null;
 
-    JLabel nameLabel = new JLabel(Bundle.getMessage("BeanNameRoute") + " " +  Bundle.getMessage("LabelSystemName"));
-    JLabel userLabel = new JLabel(Bundle.getMessage("BeanNameRoute") + " " +  Bundle.getMessage("LabelUserName"));
+    JLabel nameLabel = new JLabel(Bundle.getMessage("LabelSystemName"));
+    JLabel userLabel = new JLabel(Bundle.getMessage("LabelUserName"));
     JLabel fixedSystemName = new JLabel("xxxxxxxxxxx");
 
     JButton createButton = new JButton(Bundle.getMessage("ButtonCreate"));
     JButton editButton = new JButton(Bundle.getMessage("ButtonEdit"));
     JButton cancelButton = new JButton(Bundle.getMessage("ButtonCancel"));
-    JButton deleteButton = new JButton(Bundle.getMessage("ButtonDelete"));
+    JButton deleteButton = new JButton(Bundle.getMessage("ButtonDelete") + " " + Bundle.getMessage("BeanNameRoute"));
     JButton updateButton = new JButton(Bundle.getMessage("ButtonUpdate"));
     JButton exportButton = new JButton(Bundle.getMessage("ButtonExport"));
 
@@ -635,7 +640,7 @@ public class RouteTableAction extends AbstractTableAction {
                     setSoundPressed();
                 }
             });
-            ss.setToolTipText(Bundle.getMessage("TooltipOpenFile", Bundle.getMessage("Script")));
+            ss.setToolTipText(Bundle.getMessage("TooltipOpenFile", Bundle.getMessage("BeanNameAudio")));
             p25.add(ss);
             p25.add(new JLabel(Bundle.getMessage("LabelRunScript")));
             p25.add(scriptFile);
@@ -645,7 +650,7 @@ public class RouteTableAction extends AbstractTableAction {
                     setScriptPressed();
                 }
             });
-            ss.setToolTipText(Bundle.getMessage("TooltipOpenFile", Bundle.getMessage("BeanNameAudio")));
+            ss.setToolTipText(Bundle.getMessage("TooltipOpenFile", Bundle.getMessage("Script")));
             p25.add(ss);
             contentPanel.add(p25);
 
@@ -1299,7 +1304,7 @@ public class RouteTableAction extends AbstractTableAction {
 
 /////////////////////// Export to Logix ////////////////////////////
     /**
-     * Responds to the Update button - update to Logix
+     * Responds to the Export button - export to Logix
      */
     void exportPressed(ActionEvent e) {
         curRoute = checkNamesOK();
@@ -1969,13 +1974,19 @@ public class RouteTableAction extends AbstractTableAction {
     private static String[] COLUMN_NAMES = {Bundle.getMessage("ColumnSystemName"),
             Bundle.getMessage("ColumnUserName"),
             Bundle.getMessage("Include"),
-        rbx.getString("ColumnLabelSetState")};
-    private static String SET_TO_ACTIVE = rbx.getString("Set") + " " + Bundle.getMessage("SensorStateActive");
-    private static String SET_TO_INACTIVE = rbx.getString("Set") + " " + Bundle.getMessage("SensorStateInactive");
+            Bundle.getMessage("ColumnLabelSetState")};
+    private static String SET_TO_ACTIVE = Bundle.getMessage("Set") + " " + Bundle.getMessage("SensorStateActive");
+    private static String SET_TO_INACTIVE = Bundle.getMessage("Set") + " " + Bundle.getMessage("SensorStateInactive");
 
-    private static String SET_TO_TOGGLE = rbx.getString("Set") + " " + rbx.getString("Toggle");
+    private static String SET_TO_TOGGLE = Bundle.getMessage("Set") + " " + Bundle.getMessage("Toggle");
 
-    private static String[] sensorInputModes = new String[]{"On Active", "On Inactive", "On Change", "Veto Active", "Veto Inactive"};
+    private static String[] sensorInputModes = new String[]{
+            Bundle.getMessage("OnCondition") + " " + Bundle.getMessage("SensorStateActive"),
+            Bundle.getMessage("OnCondition") + " " + Bundle.getMessage("SensorStateInactive"),
+            Bundle.getMessage("OnConditionChange"),
+            "Veto Active",
+            "Veto Inactive"
+    };
     private static int[] sensorInputModeValues = new int[]{Route.ONACTIVE, Route.ONINACTIVE, Route.ONCHANGE,
         Route.VETOACTIVE, Route.VETOINACTIVE};
     
@@ -1983,16 +1994,22 @@ public class RouteTableAction extends AbstractTableAction {
     // the start of buildModel() above.  This is done to prevent
     // invoking the TurnoutManager at class construction time, 
     // when it hasn't been configured yet
-    private static String SET_TO_CLOSED = rbx.getString("Set") + " "
+    private static String SET_TO_CLOSED = Bundle.getMessage("Set") + " "
             + Bundle.getMessage("TurnoutStateClosed");
-    private static String SET_TO_THROWN = rbx.getString("Set") + " "
+    private static String SET_TO_THROWN = Bundle.getMessage("Set") + " "
             + Bundle.getMessage("TurnoutStateThrown");
-    private static String[] turnoutInputModes = new String[]{"On " + Bundle.getMessage("TurnoutStateClosed"),
-        "On " + Bundle.getMessage("TurnoutStateThrown"),
-        "On Change", "Veto Closed", "Veto Thrown"};
-    private static String[] lockTurnoutInputModes = new String[]{"On " + Bundle.getMessage("TurnoutStateClosed"),
-        "On " + Bundle.getMessage("TurnoutStateThrown"),
-        "On Change"};
+    private static String[] turnoutInputModes = new String[]{
+            Bundle.getMessage("OnCondition") + " " + Bundle.getMessage("TurnoutStateClosed"),
+            Bundle.getMessage("OnCondition") + " " + Bundle.getMessage("TurnoutStateThrown"),
+            Bundle.getMessage("OnConditionChange"),
+            "Veto" + " " + Bundle.getMessage("TurnoutStateClosed"),
+            "Veto" + " " + Bundle.getMessage("TurnoutStateThrown")
+    };
+    private static String[] lockTurnoutInputModes = new String[]{
+            Bundle.getMessage("OnCondition") + " " + Bundle.getMessage("TurnoutStateClosed"),
+            Bundle.getMessage("OnCondition") + " " + Bundle.getMessage("TurnoutStateThrown"),
+            Bundle.getMessage("OnConditionChange")
+    };
 
     private static int[] turnoutInputModeValues = new int[]{Route.ONCLOSED, Route.ONTHROWN, Route.ONCHANGE,
         Route.VETOCLOSED, Route.VETOTHROWN};

@@ -1260,14 +1260,18 @@ public class SignalGroupTableAction extends AbstractTableAction implements Prope
 
     private static int ROW_HEIGHT;
 
-    private static String[] COLUMN_NAMES = {Bundle.getMessage("ColumnSystemName"),
+    private static String[] COLUMN_NAMES = {
+            Bundle.getMessage("ColumnSystemName"),
             Bundle.getMessage("ColumnUserName"),
             Bundle.getMessage("Include"),
-        rbx.getString("ColumnLabelSetState")};
-    private static String[] COLUMN_SIG_NAMES = {Bundle.getMessage("ColumnSystemName"),
+            Bundle.getMessage("ColumnLabelSetState")
+    };
+    private static String[] COLUMN_SIG_NAMES = {
+            Bundle.getMessage("ColumnSystemName"),
             Bundle.getMessage("ColumnUserName"),
             Bundle.getMessage("Include"),
-        "On State", "Off State", ""};
+            "On State", "Off State", ""
+    };
         // No label above last (Edit) column
 
     private static String[] signalStates = new String[]{rbx.getString("StateSignalHeadDark"), rbx.getString("StateSignalHeadRed"), rbx.getString("StateSignalHeadYellow"), rbx.getString("StateSignalHeadGreen"), rbx.getString("StateSignalHeadLunar")};

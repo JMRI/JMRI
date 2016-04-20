@@ -3244,14 +3244,14 @@ public class LogixTableAction extends AbstractTableAction {
                     label.setText(rbx.getString("LabelActionTurnout"));
                     _actionBox.addItem(Bundle.getMessage("TurnoutStateClosed"));
                     _actionBox.addItem(Bundle.getMessage("TurnoutStateThrown"));
-                    _actionBox.addItem(rbx.getString("Toggle"));
+                    _actionBox.addItem(Bundle.getMessage("Toggle"));
                     _actionPanel.setToolTipText(rbx.getString("TurnoutSetHint"));
                     _actionPanel.setVisible(true);
                 } else if (actionType == Conditional.ACTION_LOCK_TURNOUT) {
                     label.setText(rbx.getString("LabelActionLock"));
                     _actionBox.addItem(rbx.getString("TurnoutUnlock"));
                     _actionBox.addItem(rbx.getString("TurnoutLock"));
-                    _actionBox.addItem(rbx.getString("Toggle"));
+                    _actionBox.addItem(Bundle.getMessage("Toggle"));
                     _actionPanel.setToolTipText(rbx.getString("LockSetHint"));
                     _actionPanel.setVisible(true);
                 }
@@ -3279,7 +3279,7 @@ public class LogixTableAction extends AbstractTableAction {
                     l.setText(rbx.getString("LabelActionSensor"));
                     _actionBox.addItem(Bundle.getMessage("SensorStateActive"));
                     _actionBox.addItem(Bundle.getMessage("SensorStateInactive"));
-                    _actionBox.addItem(rbx.getString("Toggle"));
+                    _actionBox.addItem(Bundle.getMessage("Toggle"));
                     _actionPanel.setToolTipText(rbx.getString("SensorSetHint"));
                     _actionPanel.setVisible(true);
                 }
@@ -3349,7 +3349,7 @@ public class LogixTableAction extends AbstractTableAction {
                     l.setText(rbx.getString("LabelActionLight"));
                     _actionBox.addItem(rbx.getString("LightOn"));
                     _actionBox.addItem(rbx.getString("LightOff"));
-                    _actionBox.addItem(rbx.getString("Toggle"));
+                    _actionBox.addItem(Bundle.getMessage("Toggle"));
                     _actionPanel.setToolTipText(rbx.getString("LightSetHint"));
                     _actionPanel.setVisible(true);
                 }
