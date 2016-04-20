@@ -525,17 +525,17 @@ public class JmriJFrame extends JFrame implements java.awt.event.WindowListener,
                 }
 
                 // calculate size as screen size minus space needed for offsets
-                log.debug("getMaximumSize returns normally {},{}", (screen.width - widthInset), (screen.height - heightInset));
+                log.trace("getMaximumSize returns normally {},{}", (screen.width - widthInset), (screen.height - heightInset));
                 return new Dimension(screen.width - widthInset, screen.height - heightInset);
 
             } catch (NoSuchMethodError e) {
                 Dimension screen = getToolkit().getScreenSize();
-                log.debug("getMaximumSize returns approx due to failure {},{}", screen.width, screen.height);
+                log.trace("getMaximumSize returns approx due to failure {},{}", screen.width, screen.height);
                 return new Dimension(screen.width, screen.height - 45); // approximate this...
             }
         } catch (Exception e2) {
             // failed completely, fall back to standard method
-            log.debug("getMaximumSize returns super due to failure {}", super.getMaximumSize());
+            log.trace("getMaximumSize returns super due to failure {}", super.getMaximumSize());
             return super.getMaximumSize();
         }
     }
