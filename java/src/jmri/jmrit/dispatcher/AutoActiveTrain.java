@@ -60,8 +60,8 @@ public class AutoActiveTrain implements ThrottleListener {
     static final ResourceBundle rb = ResourceBundle
             .getBundle("jmri.jmrit.dispatcher.DispatcherBundle");
 
-    /* Speed aspects as defined by Doughlas A. Kerr - "Rail Signal Aspects and Indications"
-     * doug.kerr.home.att.net/pumpkin/Rail_Signal_Aspects.pdf (from Pete Cressman)
+    /* Speed aspects as defined by Douglas A. Kerr - "Rail Signal Aspects and Indications"
+     * http://dougkerr.net/Pumpkin/articles/Rail_signal_aspects.pdf (from Pete Cressman)
      */
     public static final int SPEED_MASK = 0x07;     // least significant 3 bits
     public static final int STOP_SPEED = 0x01;     // No Speed
@@ -388,16 +388,19 @@ public class AutoActiveTrain implements ThrottleListener {
                             && (as.getSequence() == _activeTrain.getEndBlockSectionSequenceNumber())) {
                         // entered last block of Transit, must stop and reverse
                         stopInCurrentSection(END_REVERSAL);
+                        _activeTrain.setRestart();
                     } else if ((_currentBlock == _activeTrain.getStartBlock())
                             && _activeTrain.getResetWhenDone() && _activeTrain.isTransitReversed()
                             && (as.getSequence() == _activeTrain.getStartBlockSectionSequenceNumber())) {
                         // entered start block of Transit, must stop and reset for continuing
                         stopInCurrentSection(BEGINNING_RESET);
+                        _activeTrain.setRestart();
                     } else if ((_currentBlock == _activeTrain.getEndBlock())
                             && _activeTrain.getResetWhenDone() && _activeTrain.getDelayedRestart() != ActiveTrain.NODELAY
                             && (as.getSequence() == _activeTrain.getEndBlockSectionSequenceNumber())) {
                         // entered start block of Transit, must stop and reset for continuing
                         stopInCurrentSection(BEGINNING_RESET);
+                        _activeTrain.setRestart();
                         removeCurrentSignal();
                     } else {
                         setupNewCurrentSignal(as);
@@ -1001,6 +1004,19 @@ public class AutoActiveTrain implements ThrottleListener {
                         }
                         setupNewCurrentSignal(null);
                         setSpeedBySignal();
+                    } else {
+                        // then active train is delayed
+                        _activeTrain.setTransitReversed(false);
+                        _activeTrain.resetAllAllocatedSections();
+                        setEngineDirection(); 
+                        _activeTrain.setRestart();
+                        if ((_nextSection != null) && !isSectionInAllocatedList(_nextSection)) {
+                            DispatcherFrame.instance().forceScanOfAllocation();
+                            break;
+                        }
+                        setupNewCurrentSignal(null);
+                        setSpeedBySignal();
+                       
                     }
                 } else {
                     // dispatcher cancelled auto restart while train was stopping?
