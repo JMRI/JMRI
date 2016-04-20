@@ -1417,19 +1417,7 @@ public class Maintenance {
             panel.add(button);
         }
         contentPane.add(panel, BorderLayout.SOUTH);
-        class myAdapter extends java.awt.event.WindowAdapter {
-
-            java.awt.Window _w;
-
-            myAdapter(java.awt.Window w) {
-                _w = w;
-            }
-
-            public void windowClosing(java.awt.event.WindowEvent e) {
-                _w.dispose();
-            }
-        }
-        dialog.addWindowListener(new myAdapter(dialog));
+        dialog.setDefaultCloseOperation(JDialog.DISPOSE_ON_CLOSE);
         dialog.setLocationRelativeTo(parent);
         dialog.pack();
         dialog.setVisible(true);

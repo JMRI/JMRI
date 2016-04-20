@@ -538,7 +538,7 @@ public class SectionManagerXmlTest extends TestCase {
 
     // Main entry point
     static public void main(String[] args) {
-        String[] testCaseName = {SectionManagerXmlTest.class.getName()};
+        String[] testCaseName = {"-noloading",SectionManagerXmlTest.class.getName()};
         junit.swingui.TestRunner.main(testCaseName);
     }
 
