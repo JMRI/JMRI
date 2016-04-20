@@ -7,10 +7,18 @@ import jmri.InstanceManager;
  * Lightweight class to denote that a system is active, and provide general
  * information.
  * <p>
- * Objects of specific subtypes are registered in the instance manager to
- * activate their particular system.
+ * Things this needed to do:
+ * <ul>
+ * <li>One of these must be automatically, transparently available - this is done by
+ *      inheriting from jmri.InstanceManagerAutoDefault
+ * <li>It must be possible to have more than one of these, so you can have 
+ *      multiple internal systems defined - each one keeps internal references
+ *      to its objects
+ * <li>It must make sure that its objects are available individually through the instance manager.
+ * </ul>
+ * <p>
  *
- * @author	Bob Jacobsen Copyright (C) 2010
+ * @author	Bob Jacobsen Copyright (C) 2010, 2016
  */
 public class InternalSystemConnectionMemo extends jmri.jmrix.SystemConnectionMemo implements jmri.InstanceManagerAutoDefault {
 
@@ -30,47 +38,10 @@ public class InternalSystemConnectionMemo extends jmri.jmrix.SystemConnectionMem
      */
     public void configureManagers() {
 
-        log.debug("Do configureManagers");
+        log.debug("Do configureManagers - doesn't pre-build anything");
         if (configured) log.warn("configureManagers called for a second time", new Exception("traceback"));
-        
-        if (lightManager == null) {
-            //lightManager = new InternalLightManager();
-            //InstanceManager.setLightManager(lightManager);
-        }
-        
-        if (sensorManager == null) {
-            //sensorManager = new InternalSensorManager(getSystemPrefix());
-            //InstanceManager.setSensorManager(sensorManager);
-        }
-        
-        if (turnoutManager == null) {
-            //turnoutManager = new InternalTurnoutManager(getSystemPrefix());
-            //InstanceManager.setTurnoutManager(turnoutManager);
-        }
-        
-        if (powerManager == null) {
-            //powerManager = new jmri.managers.DefaultPowerManager();
-            //jmri.InstanceManager.setPowerManager(powerManager);
-        }
-        
-        if (programManager == null) {
-            // Install a debug programmer
-            //programManager = new jmri.progdebugger.DebugProgrammerManager();
-            //jmri.InstanceManager.setProgrammerManager(programManager);
-        }
-        
-        if (reporterManager == null) {
-            //reporterManager = new InternalReporterManager();
-            //InstanceManager.setReporterManager(reporterManager);
-        }
-        
-//         if (throttleManager == null) {
-//             // Install a debug throttle manager
-//             throttleManager = new jmri.jmrix.debugthrottle.DebugThrottleManager(this);
-//             jmri.InstanceManager.setThrottleManager(throttleManager);
-//         }
-        
         configured = true;
+
     }
 
     private InternalLightManager lightManager;
