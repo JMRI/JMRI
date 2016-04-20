@@ -107,7 +107,7 @@ public class InternalSystemConnectionMemo extends jmri.jmrix.SystemConnectionMem
         if (powerManager == null) {
             log.debug("Create DefaultPowerManager by request");
             powerManager = new jmri.managers.DefaultPowerManager();
-            jmri.InstanceManager.setPowerManager(powerManager);
+            jmri.InstanceManager.store(powerManager, jmri.PowerManager.class);
         }
         return powerManager;
     }
