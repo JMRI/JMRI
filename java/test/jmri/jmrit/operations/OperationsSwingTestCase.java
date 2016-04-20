@@ -74,13 +74,6 @@ public class OperationsSwingTestCase extends jmri.util.SwingTestCase {
         JUnitUtil.initInternalSensorManager();
         JUnitUtil.initDebugThrottleManager();
         JUnitUtil.initIdTagManager();
-//        jmri.InstanceManager.setShutDownManager( new
-//                 jmri.managers.DefaultShutDownManager() {
-//                    @Override
-//                    public void register(jmri.ShutDownTask s){
-//                       // do nothing with registered shutdown tasks for testing.
-//                    }
-//                 });       
 
         // set the file location to temp (in the root of the build directory).
         OperationsSetupXml.setFileLocation("temp" + File.separator);
