@@ -117,7 +117,8 @@ public class InternalSystemConnectionMemo extends jmri.jmrix.SystemConnectionMem
             log.debug("Create DebugProgrammerManager by request");
             // Install a debug programmer
             programManager = new jmri.progdebugger.DebugProgrammerManager(this);
-            jmri.InstanceManager.setProgrammerManager(programManager);
+            // Don't auto-enter, as that messes up selection in Single CV programmer
+            //jmri.InstanceManager.setProgrammerManager(programManager);
         }
         return programManager;
     }
