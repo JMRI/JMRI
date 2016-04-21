@@ -143,16 +143,8 @@ public class InstanceManager {
                 try {
                     l.add(type.getConstructor((Class[]) null).newInstance((Object[]) null));
                     log.debug("      auto-created default of {}", type.getName());
-                } catch (NoSuchMethodException e) {
-                    log.error("Exception creating auto-default object", e); // unexpected
-                    return null;
-                } catch (InstantiationException e) {
-                    log.error("Exception creating auto-default object", e); // unexpected
-                    return null;
-                } catch (IllegalAccessException e) {
-                    log.error("Exception creating auto-default object", e); // unexpected
-                    return null;
-                } catch (java.lang.reflect.InvocationTargetException e) {
+                } catch (NoSuchMethodException | InstantiationException 
+                            | IllegalAccessException | java.lang.reflect.InvocationTargetException e) {
                     log.error("Exception creating auto-default object", e); // unexpected
                     return null;
                 }
@@ -203,7 +195,7 @@ public class InstanceManager {
 
         StringBuffer retval = new StringBuffer();
         for (Class<?> c : managerLists.keySet()) {
-            retval.append("List of");
+            retval.append("List of ");
             retval.append(c);
             retval.append(" with ");
             retval.append(Integer.toString(getList(c).size()));
