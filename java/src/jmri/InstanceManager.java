@@ -522,10 +522,10 @@ public class InstanceManager {
      * @deprecated Since 3.7.1, use @{link #store} and @{link #setDefault}
      * directly.
      */
-    @Deprecated
-    static public void setPowerManager(PowerManager p) {
-        store(p, PowerManager.class);
-    }
+   // @Deprecated
+   // static public void setPowerManager(PowerManager p) {
+   //     store(p, PowerManager.class);
+   // }
 
     /**
      * @deprecated Since 3.7.1, use @{link #store} and @{link #setDefault}

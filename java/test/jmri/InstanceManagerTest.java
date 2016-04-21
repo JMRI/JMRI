@@ -19,7 +19,7 @@ public class InstanceManagerTest extends TestCase implements InstanceManagerAuto
     public void testDefaultPowerManager() {
         PowerManager m = new PowerManagerScaffold();
 
-        InstanceManager.setPowerManager(m);
+        InstanceManager.store(m, jmri.PowerManager.class);
 
         Assert.assertTrue("power manager present", InstanceManager.powerManagerInstance() == m);
     }
@@ -28,8 +28,8 @@ public class InstanceManagerTest extends TestCase implements InstanceManagerAuto
         PowerManager m1 = new PowerManagerScaffold();
         PowerManager m2 = new PowerManagerScaffold();
 
-        InstanceManager.setPowerManager(m1);
-        InstanceManager.setPowerManager(m2);
+        InstanceManager.store(m1, jmri.PowerManager.class);
+        InstanceManager.store(m2, jmri.PowerManager.class);
 
         Assert.assertTrue("power manager present", InstanceManager.powerManagerInstance() == m2);
     }
