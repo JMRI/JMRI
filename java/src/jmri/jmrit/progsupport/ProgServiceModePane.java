@@ -5,6 +5,7 @@ import java.beans.PropertyChangeListener;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
+import javax.annotation.Nonnull;
 import javax.swing.BoxLayout;
 import javax.swing.ButtonGroup;
 import javax.swing.JComboBox;
@@ -85,7 +86,7 @@ public class ProgServiceModePane extends ProgModeSelector implements PropertyCha
      * Get the list of global managers
      * @return empty list if none
      */
-    protected List<GlobalProgrammerManager> getMgrList() {
+    protected @Nonnull List<GlobalProgrammerManager> getMgrList() {
         List<GlobalProgrammerManager> retval;
         
         retval = InstanceManager.getList(jmri.GlobalProgrammerManager.class);
@@ -119,6 +120,7 @@ public class ProgServiceModePane extends ProgModeSelector implements PropertyCha
             // no choice, so don't display, don't monitor for changes
             progBox.setVisible(false);
         } else {
+            log.debug("Set combobox box selection to InstanceManager global default: {}", InstanceManager.getDefault(jmri.GlobalProgrammerManager.class));
             progBox.setSelectedItem(InstanceManager.getDefault(jmri.GlobalProgrammerManager.class)); // set default
             progBox.addActionListener(new java.awt.event.ActionListener() {
                 public void actionPerformed(java.awt.event.ActionEvent e) {
@@ -178,7 +180,7 @@ public class ProgServiceModePane extends ProgModeSelector implements PropertyCha
     /**
      * Listen to buttons for mode changes
      */
-    public void actionPerformed(java.awt.event.ActionEvent e) {
+    public void actionPerformed(@Nonnull java.awt.event.ActionEvent e) {
         // find selected button
         log.debug("Selected button: {}", e.getActionCommand());
         for (ProgrammingMode mode : buttonMap.keySet()) {
@@ -193,7 +195,7 @@ public class ProgServiceModePane extends ProgModeSelector implements PropertyCha
     /**
      * Listen to programmer for mode changes
      */
-    public void propertyChange(java.beans.PropertyChangeEvent e) {
+    public void propertyChange(@Nonnull java.beans.PropertyChangeEvent e) {
         if ("Mode".equals(e.getPropertyName()) && getProgrammer().equals(e.getSource())) {
             // mode changed in programmer, change GUI here if needed
             log.debug("Mode propertyChange with {}", isSelected());
