@@ -294,6 +294,7 @@ public class PreviewDialog extends JDialog {
      * true if memory limits displaying all the images
      */
     private boolean setIcons(int startNum) throws OutOfMemoryError {
+        Thread.UncaughtExceptionHandler exceptionHandler = Thread.getDefaultUncaughtExceptionHandler();
         // VM launches another thread to run ImageFetcher.
         // This handler will catch memory exceptions from that thread
         _noMemory = false;
@@ -435,7 +436,7 @@ public class PreviewDialog extends JDialog {
                             new Object[]{Integer.valueOf(_cnt)}),
                     Bundle.getMessage("error"), JOptionPane.INFORMATION_MESSAGE);
         }
-        Thread.setDefaultUncaughtExceptionHandler(new jmri.util.exceptionhandler.UncaughtExceptionHandler());
+        Thread.setDefaultUncaughtExceptionHandler(exceptionHandler);
         return _noMemory;
     }
 
