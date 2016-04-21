@@ -135,6 +135,7 @@ public class ManagerDefaultSelector extends AbstractPreferencesProvider {
      */
     @SuppressWarnings("unchecked")
     public void configure() {
+        log.debug("configure defaults into InstanceManager");
         List<SystemConnectionMemo> connList = InstanceManager.getList(SystemConnectionMemo.class);
         if (connList == null) {
             return; // nothing to do 
@@ -149,6 +150,7 @@ public class ManagerDefaultSelector extends AbstractPreferencesProvider {
                 if (testName.equals(connectionName)) {
                     found = true;
                     // match, store
+                    log.debug("    set default {} to {}", c, memo.get(c));
                     InstanceManager.setDefault(c, memo.get(c));
                     break;
                 }
