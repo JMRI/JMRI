@@ -55,8 +55,10 @@ public class ManagerDefaultsConfigPane extends JmriPanel implements PreferencesP
         // this doesn't find non-migrated systems, how do we handle that eventually?
         List<SystemConnectionMemo> connList = InstanceManager.getList(SystemConnectionMemo.class);
         if (connList != null) {
+            log.debug("update of {} connections", connList.size());
             reloadConnections(connList);
         } else {
+            log.debug("update with no new-form system connections configured");
             matrix.add(new JLabel("No new-form system connections configured"));
         }
     }
@@ -189,4 +191,6 @@ public class ManagerDefaultsConfigPane extends JmriPanel implements PreferencesP
             }
         }
     }
+    
+    private final static org.slf4j.Logger log = org.slf4j.LoggerFactory.getLogger(ManagerDefaultsConfigPane.class.getName());
 }
