@@ -1,4 +1,3 @@
-// ProgServiceModePane.java
 package jmri.jmrit.progsupport;
 
 import java.awt.event.ActionListener;
@@ -47,11 +46,10 @@ import org.slf4j.LoggerFactory;
  */
 public class ProgServiceModePane extends ProgModeSelector implements PropertyChangeListener, ActionListener {
 
-    private static final long serialVersionUID = 9075947253729508706L;
     ButtonGroup modeGroup = new ButtonGroup();
-    HashMap<ProgrammingMode, JRadioButton> buttonMap = new HashMap<ProgrammingMode, JRadioButton>();
+    HashMap<ProgrammingMode, JRadioButton> buttonMap = new HashMap<>();
     JComboBox<GlobalProgrammerManager> progBox;
-    ArrayList<JRadioButton> buttonPool = new ArrayList<JRadioButton>();
+    ArrayList<JRadioButton> buttonPool = new ArrayList<>();
 
     /**
      * Get the selected programmer
