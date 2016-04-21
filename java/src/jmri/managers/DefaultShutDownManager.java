@@ -4,6 +4,8 @@ import java.awt.Frame;
 import java.awt.GraphicsEnvironment;
 import java.awt.event.WindowEvent;
 import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.Date;
 import jmri.ShutDownManager;
 import jmri.ShutDownTask;
 import org.slf4j.Logger;
@@ -34,7 +36,7 @@ public class DefaultShutDownManager implements ShutDownManager {
 
     private static boolean shuttingDown = false;
     private final static Logger log = LoggerFactory.getLogger(DefaultShutDownManager.class);
-    private ArrayList<ShutDownTask> tasks = new ArrayList<>();
+    private final ArrayList<ShutDownTask> tasks = new ArrayList<>();
 
     public DefaultShutDownManager() {
         // This shutdown hook allows us to perform a clean shutdown when
@@ -115,6 +117,9 @@ public class DefaultShutDownManager implements ShutDownManager {
      * Does not return under normal circumstances. Does return if the shutdown
      * was aborted by the user, in which case the program should continue to
      * operate.
+     * <p>
+     * Executes all registered {@link jmri.ShutDownTask}s before closing any
+     * windows that remain open.
      *
      * @param status Integer status returned on program exit
      * @param exit   True if System.exit() should be called if all tasks are
@@ -125,22 +130,32 @@ public class DefaultShutDownManager implements ShutDownManager {
     protected boolean shutdown(int status, boolean exit) {
         if (!shuttingDown) {
             setShuttingDown(true);
-            for (ShutDownTask t : new ArrayList<>(tasks)) {
+            // can't return out of a stream or forEach loop
+            for (ShutDownTask task : new ArrayList<>(tasks)) {
+                log.debug("Calling task \"{}\"", task.name());
+                Date start = new Date();
                 try {
-                    setShuttingDown(t.execute()); // if a task aborts the shutdown, stop shutting down
+                    setShuttingDown(task.execute()); // if a task aborts the shutdown, stop shutting down
                     if (!shuttingDown) {
-                        log.info("Program termination aborted by \"{}\"", t.name());
+                        log.info("Program termination aborted by \"{}\"", task.name());
                         return false;  // abort early
                     }
                 } catch (Throwable e) {
-                    log.error("Error during processing of ShutDownTask \"{}\"", t.name(), e);
+                    log.error("Error during processing of ShutDownTask \"{}\"", task.name(), e);
                 }
+                log.debug("Task \"{}\" took {} milliseconds to complete", task.name(), new Date().getTime() - start.getTime());
             }
             // close any open windows by triggering a closing event
+            // this gives open windows a final chance to perform any cleanup
             if (!GraphicsEnvironment.isHeadless()) {
-                for (Frame frame : Frame.getFrames()) {
+                Arrays.asList(Frame.getFrames()).stream().forEach((frame) -> {
+                    // do not run on thread, or in parallel, as System.exit()
+                    // will get called before windows can close
+                    log.debug("Closing frame \"{}\"", frame.getName());
+                    Date start = new Date();
                     frame.dispatchEvent(new WindowEvent(frame, WindowEvent.WINDOW_CLOSING));
-                }
+                    log.debug("Frame \"{}\" took {} milliseconds to close", frame.getName(), new Date().getTime() - start.getTime());
+                });
             }
             // success
             log.info("Normal termination complete");
