@@ -213,10 +213,10 @@ public class InstanceManager {
 
     // @TODO This constructor needs to go away, but its being used by lots of test cases in older form 
     // - see JUnitUtil.resetInstanceManager for replacement
-    @Deprecated
-    public InstanceManager() {
-        init();
-    }
+    //@Deprecated
+    //public InstanceManager() {
+    //    init();
+    //}
 
     // This is a separate, protected member so it
     // can be overridden in unit tests
@@ -518,14 +518,6 @@ public class InstanceManager {
      *
      *                   Migrate JMRI uses of these, then move to next category
      * ****************************************************************************/
-    /**
-     * @deprecated Since 3.7.1, use @{link #store} and @{link #setDefault}
-     * directly.
-     */
-   // @Deprecated
-   // static public void setPowerManager(PowerManager p) {
-   //     store(p, PowerManager.class);
-   // }
 
     /**
      * @deprecated Since 3.7.1, use @{link #store} and @{link #setDefault}
@@ -694,6 +686,15 @@ public class InstanceManager {
     //static public void setTabbedPreferences(TabbedPreferences p) {
     //    store(p, TabbedPreferences.class);
     //}
+    ///**
+    // * @deprecated Since 3.7.1, use @{link #store} and @{link #setDefault}
+    // * directly.
+    // */
+    // @Deprecated
+    // static public void setPowerManager(PowerManager p) {
+    //     store(p, PowerManager.class);
+    // }
+
     /* *************************************************************************** */
     private final static Logger log = LoggerFactory.getLogger(InstanceManager.class.getName());
 }
