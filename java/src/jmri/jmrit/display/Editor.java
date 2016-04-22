@@ -1022,7 +1022,7 @@ abstract public class Editor extends JmriJFrame implements MouseListener, MouseM
                 }
                 log.debug("targetWindowClosing: selectedValue= {}", selectedValue);
             } else {
-                _targetFrame.setDefaultCloseOperation(WindowConstants.DO_NOTHING_ON_CLOSE);
+                _targetFrame.setVisible(false);
             }
         } else {
             _targetFrame.setVisible(false);   // doesn't remove the editor!
