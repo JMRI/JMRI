@@ -15,7 +15,7 @@ import java.util.Enumeration;
 import java.util.List;
 import jmri.profile.ProfileManager;
 import jmri.util.FileUtil;
-import jmri.web.server.WebServerManager;
+import jmri.web.server.WebServerPreferences;
 import org.jdom2.Document;
 import org.jdom2.Element;
 import org.jdom2.JDOMException;
@@ -189,7 +189,7 @@ public class NodeIdentity {
                 }
             }
         } catch (UnknownHostException ex) {
-            this.identity = WebServerManager.getWebServerPreferences().getRailRoadName().replaceAll("[^A-Za-z0-9 ]", "-"); // NOI18N
+            this.identity = WebServerPreferences.getDefault().getRailRoadName().replaceAll("[^A-Za-z0-9 ]", "-"); // NOI18N
             log.error("Cannot get host address or name {}", ex.getLocalizedMessage());
             log.error("Using {} as a fallback.", this.identity);
         }
