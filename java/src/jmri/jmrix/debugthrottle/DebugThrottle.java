@@ -21,6 +21,8 @@ public class DebugThrottle extends AbstractThrottle {
     public DebugThrottle(DccLocoAddress address, SystemConnectionMemo memo) {
         super(memo);
 
+        log.debug("DebugThrottle constructor called for address {}", address);
+
         // cache settings. It would be better to read the
         // actual state, but I don't know how to do this
         this.speedSetting = 0;
@@ -57,19 +59,28 @@ public class DebugThrottle extends AbstractThrottle {
      * Send the message to set the state of functions F0, F1, F2, F3, F4
      */
     protected void sendFunctionGroup1() {
+        log.debug("sendFunctionGroup1 called for address {}, dir={},F0={},F1={},F2={},F3={},F4={}",
+                this.address,
+                (this.isForward ? "FWD":"REV"),
+                (this.f0 ? "On":"Off"),
+                (this.f1 ? "On":"Off"),
+                (this.f2 ? "On":"Off"),
+                (this.f3 ? "On":"Off"),
+                (this.f4 ? "On":"Off"));
     }
 
     /**
      * Send the message to set the state of functions F5, F6, F7, F8
      */
     protected void sendFunctionGroup2() {
-
+        log.debug("sendFunctionGroup2() called");
     }
 
     /**
      * Send the message to set the state of functions F9, F10, F11, F12
      */
     protected void sendFunctionGroup3() {
+        log.debug("sendFunctionGroup3() called");
     }
 
     /**
@@ -81,7 +92,7 @@ public class DebugThrottle extends AbstractThrottle {
      */
     @edu.umd.cs.findbugs.annotations.SuppressFBWarnings(value = "FE_FLOATING_POINT_EQUALITY") // OK to compare floating point, notify on any change
     public void setSpeedSetting(float speed) {
-        log.debug("setSpeedSetting: float speed: {}", speed);
+        log.debug("setSpeedSetting: float speed: {} for address {}", speed, this.address);
         float oldSpeed = this.speedSetting;
         if (speed > 1.0) {
             log.warn("Speed was set too high: " + speed);
@@ -94,17 +105,17 @@ public class DebugThrottle extends AbstractThrottle {
     }
 
     public void setIsForward(boolean forward) {
-        log.debug("setIsForward: {}", forward);
-        boolean old = isForward;
-        isForward = forward;
-        setSpeedSetting(speedSetting);  // send the command
-        if (old != isForward) {
-            notifyPropertyChangeListener("IsForward", old, isForward);
+        log.debug("setIsForward({}) called for address {}, was {}", forward, this.address, this.isForward);
+        boolean old = this.isForward;
+        this.isForward = forward;
+        sendFunctionGroup1();  // send the command
+        if (old != this.isForward) {
+            notifyPropertyChangeListener("IsForward", old, this.isForward);
         }
     }
 
     protected void throttleDispose() {
-        log.debug("throttleDispose() called");
+        log.debug("throttleDispose() called for address {}", this.address);
         finishRecord();
     }
 

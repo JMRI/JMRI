@@ -230,6 +230,7 @@ public class AutoActiveTrain implements ThrottleListener {
             return false;
         }
         // request a throttle for automatic operation, throttle returned via callback below
+        log.debug("{}: requesting throttle address={}", _activeTrain.getTrainName(), _address);
         boolean ok = true;
         if (_activeTrain.getTrainSource() == ActiveTrain.ROSTER) {
             if (_activeTrain.getRosterEntry() != null) {
@@ -1331,6 +1332,7 @@ public class AutoActiveTrain implements ThrottleListener {
             _abort = false;
             setHalt(false);
             slowToStop(false);
+            log.debug("AutoEngineer.setIsForward({}) for {}",_forward, _throttle.getLocoAddress());
             _throttle.setIsForward(_forward);
             _currentForward = _forward;
             _throttle.setSpeedSetting(_currentSpeed);
@@ -1362,6 +1364,7 @@ public class AutoActiveTrain implements ThrottleListener {
                 } else if (!_halt) {
                     // test if need to change direction
                     if (_currentForward != _forward) {
+                        log.debug("AutoEngineer.setIsForward({}) for {}",_forward, _throttle.getLocoAddress());
                         _throttle.setIsForward(_forward);
                         _currentForward = _forward;
                     }
