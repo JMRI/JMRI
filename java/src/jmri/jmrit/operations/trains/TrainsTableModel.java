@@ -313,6 +313,10 @@ public class TrainsTableModel extends javax.swing.table.AbstractTableModel imple
                 if (train.getBuildFailed()) {
                     return Bundle.getMessage("Report");
                 }
+                if (train.getCurrentLocation() == train.getTrainTerminatesRouteLocation()
+                        && trainManager.getTrainsFrameTrainAction().equals(TrainsTableFrame.MOVE)) {
+                    return Bundle.getMessage("Terminate");
+                }
                 return trainManager.getTrainsFrameTrainAction();
             }
             case EDITCOLUMN:
