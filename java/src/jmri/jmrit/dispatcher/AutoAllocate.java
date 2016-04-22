@@ -1101,7 +1101,7 @@ public class AutoAllocate {
             }
         }
         if (seq == 0) {
-            log.error("ActiveTrain has no occupied Section");
+            log.error("ActiveTrain {} has no occupied Section", at.getTrainName());
         } else {
             curSection = temSection;
         }

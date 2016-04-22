@@ -66,10 +66,9 @@ public class DefaultUserMessagePreferences extends jmri.jmrit.XmlFile implements
         }
         // register a shutdown task to fore storing of preferences at shutdown
         if (userPreferencesShutDownTask == null) {
-            userPreferencesShutDownTask = new QuietShutDownTask("User Preferences Shutdown") {
-                //NOI18N
+            userPreferencesShutDownTask = new QuietShutDownTask("User Preferences Shutdown") { //NOI18N
                 @Override
-                public boolean doAction() {
+                public boolean execute() {
                     if (getChangeMade()) {
                         log.info("Storing preferences as part of shutdown");
                         if (allowSave) {
