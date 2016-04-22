@@ -1,4 +1,3 @@
-// ZeroConfService.java
 package jmri.util.zeroconf;
 
 import java.io.IOException;
@@ -67,7 +66,6 @@ import org.slf4j.LoggerFactory;
  * <P>
  *
  * @author Randall Wood Copyright (C) 2011, 2013
- * @version	$Revision$
  * @see javax.jmdns.JmDNS
  * @see javax.jmdns.ServiceInfo
  */
@@ -562,5 +560,3 @@ public class ZeroConfService {
         }
     }
 }
-
-/* @(#)ZeroConfService.java */

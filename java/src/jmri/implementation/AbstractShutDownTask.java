@@ -1,4 +1,3 @@
-// AbstractShutDownTask.java
 package jmri.implementation;
 
 import jmri.ShutDownTask;
@@ -7,7 +6,6 @@ import jmri.ShutDownTask;
  * Handle name for ShutDownTask implementations.
  *
  * @author Bob Jacobsen Copyright (C) 2008
- * @version	$Revision$
  */
 public abstract class AbstractShutDownTask implements ShutDownTask {
 
@@ -43,5 +41,3 @@ public abstract class AbstractShutDownTask implements ShutDownTask {
         return !this.isParallel();
     }
 }
-
-/* @(#)AbstractShutDownTask.java */
