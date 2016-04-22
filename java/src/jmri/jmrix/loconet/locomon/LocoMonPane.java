@@ -85,10 +85,15 @@ public class LocoMonPane extends jmri.jmrix.AbstractMonPane implements LocoNetLi
     public synchronized void message(LocoNetMessage l) {  // receive a LocoNet message and log it
         // send the raw data, to display if requested
         String raw = l.toString();
+        //format the message text, expect it to provide consistent \n after each line
+        String formatted = llnmon.displayMessage(l); 
 
-        // display the decoded data
-        // we use Llnmon to format, expect it to provide consistent \n after each line
-        nextLine(llnmon.displayMessage(l), raw);
+        // display the formatted data in the monitor pane
+        nextLine(formatted, raw);
+        
+        //include loconet monitoring in debug log if enabled
+        log.debug(formatted.substring(0, formatted.length()-1)); 
+
     }
 
     jmri.jmrix.loconet.locomon.Llnmon llnmon = new jmri.jmrix.loconet.locomon.Llnmon();
