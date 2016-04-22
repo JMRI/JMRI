@@ -10,6 +10,7 @@ import java.text.MessageFormat;
 import java.util.Hashtable;
 import java.util.List;
 import javax.swing.JButton;
+import javax.swing.JComboBox;
 import javax.swing.JOptionPane;
 import javax.swing.JTable;
 import javax.swing.SwingUtilities;
@@ -143,6 +144,7 @@ public class TrainsTableModel extends javax.swing.table.AbstractTableModel imple
                 tcm.getColumn(i).setPreferredWidth(tableColumnWidths[i]);
             }
         }
+        _table.setRowHeight(new JComboBox<>().getPreferredSize().height);
         // have to shut off autoResizeMode to get horizontal scroll to work (JavaSwing p 541)
         _table.setAutoResizeMode(JTable.AUTO_RESIZE_OFF);
     }
