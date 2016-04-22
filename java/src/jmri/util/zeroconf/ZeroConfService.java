@@ -530,6 +530,8 @@ public class ZeroConfService {
 
     private static class ShutDownTask extends QuietShutDownTask {
 
+        private boolean isComplete = false;
+
         public ShutDownTask(String name) {
             super(name);
         }
@@ -544,8 +546,19 @@ public class ZeroConfService {
                 start = new Date();
                 JmmDNS.Factory.getInstance().removeNetworkTopologyListener(ZeroConfService.networkListener);
                 log.debug("Removed network topology listener in {} milliseconds", new Date().getTime() - start.getTime());
+                this.isComplete = true;
             }).start();
             return true;
+        }
+        
+        @Override
+        public boolean isParallel() {
+            return true;
+        }
+        
+        @Override
+        public boolean isComplete() {
+            return this.isComplete;
         }
     }
 }

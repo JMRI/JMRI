@@ -230,6 +230,7 @@ public final class WebServer implements LifeCycle.Listener {
     static private class ServerShutDownTask extends QuietShutDownTask {
 
         private final WebServer server;
+        private boolean isComplete = false;
 
         public ServerShutDownTask(WebServer server) {
             super("Stop Web Server"); // NOI18N
@@ -247,8 +248,19 @@ public final class WebServer implements LifeCycle.Listener {
                         log.debug("Details follow: ", ex);
                     }
                 }
+                this.isComplete = true;
             }).start();
             return true;
+        }
+        
+        @Override
+        public boolean isParallel() {
+            return true;
+        }
+        
+        @Override
+        public boolean isComplete() {
+            return this.isComplete;
         }
     }
 }

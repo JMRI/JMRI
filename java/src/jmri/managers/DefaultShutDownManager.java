@@ -129,22 +129,19 @@ public class DefaultShutDownManager implements ShutDownManager {
     @edu.umd.cs.findbugs.annotations.SuppressFBWarnings(value = "DM_EXIT") // OK to directly exit standalone main
     protected boolean shutdown(int status, boolean exit) {
         if (!shuttingDown) {
+            Date start = new Date();
+            long timeout = 30; // all shut down tasks must complete within n seconds
             setShuttingDown(true);
-            // can't return out of a stream or forEach loop
-            for (ShutDownTask task : new ArrayList<>(tasks)) {
-                log.debug("Calling task \"{}\"", task.name());
-                Date start = new Date();
-                try {
-                    setShuttingDown(task.execute()); // if a task aborts the shutdown, stop shutting down
-                    if (!shuttingDown) {
-                        log.info("Program termination aborted by \"{}\"", task.name());
-                        return false;  // abort early
-                    }
-                } catch (Throwable e) {
-                    log.error("Error during processing of ShutDownTask \"{}\"", task.name(), e);
-                }
-                log.debug("Task \"{}\" took {} milliseconds to complete", task.name(), new Date().getTime() - start.getTime());
+            // trigger parallel tasks (see jmri.ShutDownTask#isParallel())
+            if (!this.runShutDownTasks(true)) {
+                return false;
             }
+            log.debug("parallel tasks completed executing {} milliseconds after starting shutdown", new Date().getTime() - start.getTime());
+            // trigger non-parallel tasks
+            if (!this.runShutDownTasks(false)) {
+                return false;
+            }
+            log.debug("sequential tasks completed executing {} milliseconds after starting shutdown", new Date().getTime() - start.getTime());
             // close any open windows by triggering a closing event
             // this gives open windows a final chance to perform any cleanup
             if (!GraphicsEnvironment.isHeadless()) {
@@ -152,12 +149,28 @@ public class DefaultShutDownManager implements ShutDownManager {
                     // do not run on thread, or in parallel, as System.exit()
                     // will get called before windows can close
                     log.debug("Closing frame \"{}\"", frame.getName());
-                    Date start = new Date();
+                    Date timer = new Date();
                     frame.dispatchEvent(new WindowEvent(frame, WindowEvent.WINDOW_CLOSING));
-                    log.debug("Frame \"{}\" took {} milliseconds to close", frame.getName(), new Date().getTime() - start.getTime());
+                    log.debug("Frame \"{}\" took {} milliseconds to close", frame.getName(), new Date().getTime() - timer.getTime());
                 });
             }
+            log.debug("windows completed closing {} milliseconds after starting shutdown", new Date().getTime() - start.getTime());
+            // wait for parallel tasks to complete
+            synchronized (start) {
+                while (new ArrayList<>(this.tasks).stream().anyMatch((task) -> (task.isParallel() && !task.isComplete()))) {
+                    try {
+                        start.wait(100);
+                    } catch (InterruptedException ex) {
+                        // do nothing
+                    }
+                    if ((new Date().getTime() - start.getTime()) > (timeout * 1000)) { // milliseconds
+                        log.warn("Terminating without waiting for all tasks to complete");
+                        break;
+                    }
+                }
+            }
             // success
+            log.debug("Shutdown took {} milliseconds.", new Date().getTime() - start.getTime());
             log.info("Normal termination complete");
             // and now terminate forcefully
             if (exit) {
@@ -165,6 +178,27 @@ public class DefaultShutDownManager implements ShutDownManager {
             }
         }
         return false;
+    }
+
+    private boolean runShutDownTasks(boolean isParallel) {
+        // can't return out of a stream or forEach loop
+        for (ShutDownTask task : new ArrayList<>(tasks)) {
+            if (task.isParallel() == isParallel) {
+                log.debug("Calling task \"{}\"", task.getName());
+                Date timer = new Date();
+                try {
+                    setShuttingDown(task.execute()); // if a task aborts the shutdown, stop shutting down
+                    if (!shuttingDown) {
+                        log.info("Program termination aborted by \"{}\"", task.getName());
+                        return false;  // abort early
+                    }
+                } catch (Throwable e) {
+                    log.error("Error during processing of ShutDownTask \"{}\"", task.getName(), e);
+                }
+                log.debug("Task \"{}\" took {} milliseconds to execute", task.getName(), new Date().getTime() - timer.getTime());
+            }
+        }
+        return true;
     }
 
     @Override
