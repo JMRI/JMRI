@@ -1,4 +1,3 @@
-// AbstractMRTrafficController.java
 package jmri.jmrix;
 
 import java.io.DataInputStream;
@@ -30,7 +29,6 @@ import org.slf4j.LoggerFactory;
  *
  * @author Bob Jacobsen Copyright (C) 2003
  * @author Paul Bender Copyright (C) 2004-2010
- * @version $Revision$
  */
 abstract public class AbstractMRTrafficController {
 
@@ -609,7 +607,7 @@ abstract public class AbstractMRTrafficController {
     public AbstractPortController controller = null;
 
     public boolean status() {
-        return (ostream != null & istream != null);
+        return (ostream != null && istream != null);
     }
 
     protected Thread xmtThread = null;
@@ -891,7 +889,7 @@ abstract public class AbstractMRTrafficController {
                             mCurrentState = AUTORETRYSTATE;
                             if (retransmitCount > 0) {
                                 try {
-                                    xmtRunnable.wait(retransmitCount * 100);
+                                    xmtRunnable.wait(retransmitCount * 100L);
                                 } catch (InterruptedException e) {
                                     Thread.currentThread().interrupt(); // retain if needed later
                                 }
@@ -1088,6 +1086,3 @@ abstract public class AbstractMRTrafficController {
 
     private final static Logger log = LoggerFactory.getLogger(AbstractMRTrafficController.class.getName());
 }
-
-
-/* @(#)AbstractMRTrafficController.java */

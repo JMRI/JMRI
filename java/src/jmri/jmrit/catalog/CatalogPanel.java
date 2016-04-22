@@ -481,6 +481,7 @@ public class CatalogPanel extends JPanel implements MouseListener {
      * Display the icons in the preview panel
      */
     protected String setIcons() throws OutOfMemoryError {
+        Thread.UncaughtExceptionHandler exceptionHandler = Thread.getDefaultUncaughtExceptionHandler();
         resetPanel();
         CatalogTreeNode node = getSelectedNode();
         if (node == null) {
@@ -593,7 +594,7 @@ public class CatalogPanel extends JPanel implements MouseListener {
         gridbag.setConstraints(bottom, c);
         _preview.add(bottom);
 
-        Thread.setDefaultUncaughtExceptionHandler(new jmri.util.exceptionhandler.UncaughtExceptionHandler());
+        Thread.setDefaultUncaughtExceptionHandler(exceptionHandler);
         return java.text.MessageFormat.format(Bundle.getMessage("numImagesInNode"),
                 new Object[]{node.getUserObject(), Integer.valueOf(leaves.size())});
     }

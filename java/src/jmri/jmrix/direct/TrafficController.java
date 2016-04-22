@@ -112,7 +112,7 @@ public class TrafficController implements jmri.CommandStation {
     private AbstractSerialPortController controller = null;
 
     public boolean status() {
-        return (ostream != null & istream != null);
+        return (ostream != null && istream != null);
     }
 
     /**

@@ -50,7 +50,7 @@ public class WebServerAction extends JmriAbstractAction {
 
         @Override
         public void run() {
-            WebServerManager.getWebServer().start();
+            WebServer.getDefault().start();
         }
     }
 }

@@ -1,4 +1,3 @@
-// SerialDriverAdapter.java
 package jmri.jmrix.ieee802154.serialdriver;
 
 import gnu.io.CommPortIdentifier;
@@ -24,7 +23,6 @@ import org.slf4j.LoggerFactory;
  * multiple connection
  * @author kcameron Copyright (C) 2011
  * @author Paul Bender Copyright (C) 2013
- * @version	$Revision$
  */
 public class SerialDriverAdapter extends IEEE802154PortController implements jmri.jmrix.SerialPortAdapter {
 
@@ -60,18 +58,7 @@ public class SerialDriverAdapter extends IEEE802154PortController implements jmr
             serialStream = activeSerialPort.getInputStream();
 
             // purge contents, if any
-            int count = serialStream.available();
-            log.debug("input stream shows " + count + " bytes available");
-            while (count > 0) {
-                long read = serialStream.skip(count);
-                if(read<count) {
-                   log.debug("skipped " + read + " bytes when " + count +
-                             "bytes reported available");
-                }
-                // double check to see if the port still reports 
-                // bytes available.
-                count = serialStream.available();
-            }
+            purgeStream(serialStream);
 
             // report status?
             if (log.isInfoEnabled()) {
@@ -281,9 +268,9 @@ public class SerialDriverAdapter extends IEEE802154PortController implements jmr
         return "Adapter";
     }
 
-    protected String[] validSpeeds = new String[]{"(automatic)"};
-    protected int[] validSpeedValues = new int[]{9600};
-    protected String selectedSpeed = validSpeeds[0];
+    private String[] validSpeeds = new String[]{"(automatic)"};
+    private int[] validSpeedValues = new int[]{9600};
+    private String selectedSpeed = validSpeeds[0];
 
     /**
      * Get an array of valid values for "option 2"; used to display valid

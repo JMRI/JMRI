@@ -1,4 +1,3 @@
-// UsbDriverAdapter.java
 package jmri.jmrix.nce.usbdriver;
 
 import gnu.io.CommPortIdentifier;
@@ -25,7 +24,6 @@ import org.slf4j.LoggerFactory;
  * @author Bob Jacobsen Copyright (C) 2001, 2002
  * @author Daniel Boudreau Copyright (C) 2007
  * @author ken cameron Copyright (C) 2013
- * @version $Revision$
  */
 public class UsbDriverAdapter extends NcePortController {
 
@@ -38,6 +36,8 @@ public class UsbDriverAdapter extends NcePortController {
         options.put(option1Name, new Option("System:", option1Values, false));
         option2Name = "USB Version";
         options.put(option2Name, new Option("USB Version", option2Values, false));
+        // Set default USB version to V7.x.x
+        setOptionState(option2Name, getOptionChoices(option2Name)[1]);
     }
 
     public String openPort(String portName, String appName) {
@@ -83,12 +83,7 @@ public class UsbDriverAdapter extends NcePortController {
             serialStream = activeSerialPort.getInputStream();
 
             // purge contents, if any
-            int count = serialStream.available();
-            log.debug("input stream shows " + count + " bytes available");
-            while (count > 0) {
-                serialStream.skip(count);
-                count = serialStream.available();
-            }
+            purgeStream(serialStream);
 
             // report status
             if (log.isInfoEnabled()) {

@@ -820,7 +820,7 @@ public class NceConsistEditPanel extends jmri.jmrix.nce.swing.NcePanel implement
         } catch (NumberFormatException e) {
             return -1;
         }
-        if (cN < CONSIST_MIN | cN > CONSIST_MAX) {
+        if (cN < CONSIST_MIN || cN > CONSIST_MAX) {
             return -1;
         } else {
             return cN;
@@ -838,7 +838,7 @@ public class NceConsistEditPanel extends jmri.jmrix.nce.swing.NcePanel implement
         } catch (NumberFormatException e) {
             lA = -1;
         }
-        if (lA < LOC_ADR_MIN | lA > LOC_ADR_MAX) {
+        if (lA < LOC_ADR_MIN || lA > LOC_ADR_MAX) {
             JOptionPane.showMessageDialog(this,
                     rb.getString("DIALOG_AddrRange"), rb.getString("DIALOG_NceConsist"),
                     JOptionPane.ERROR_MESSAGE);

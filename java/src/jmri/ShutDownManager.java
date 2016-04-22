@@ -33,37 +33,51 @@ public interface ShutDownManager {
 
     /**
      * Register a task object for later execution
+     *
+     * @param task the task to execute
      */
-    public void register(ShutDownTask s);
+    public void register(ShutDownTask task);
 
     /**
      * Deregister a task object.
      *
+     * @param task the task not to execute
      * @throws IllegalArgumentException if task object not currently registered
      */
-    public void deregister(ShutDownTask s);
+    public void deregister(ShutDownTask task);
 
     /**
      * Run the shutdown tasks, and then terminate the program with status 100 if
      * not aborted. Does not return under normal circumstances. Does return
-     * False if the shutdown was aborted by the user, in which case the program
+     * false if the shutdown was aborted by the user, in which case the program
      * should continue to operate.
+     * <p>
      * <b>NOTE</b> If the OS X application->quit menu item is used, this must
      * return false to abort the shutdown.
      *
-     * @return boolean which should be False
+     * @return boolean which should be false
      */
-    public Boolean restart();
+    public boolean restart();
 
     /**
      * Run the shutdown tasks, and then terminate the program with status 0 if
      * not aborted. Does not return under normal circumstances. Does return
-     * False if the shutdown was aborted by the user, in which case the program
+     * false if the shutdown was aborted by the user, in which case the program
      * should continue to operate.
+     * <p>
      * <b>NOTE</b> If the OS X application->quit menu item is used, this must
      * return false to abort the shutdown.
      *
-     * @return boolean which should be False
+     * @return boolean which should be false
      */
-    public Boolean shutdown();
+    public boolean shutdown();
+
+    /**
+     * Allow components that normally request confirmation to shutdown to
+     * determine if the shutdown is already underway so as not to request
+     * confirmation.
+     *
+     * @return true if shutting down or restarting
+     */
+    public boolean isShuttingDown();
 }

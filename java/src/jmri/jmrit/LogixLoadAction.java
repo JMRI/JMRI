@@ -1,4 +1,3 @@
-// LogixLoadAction.java
 package jmri.jmrit;
 
 import java.awt.event.ActionEvent;
@@ -14,14 +13,8 @@ import org.slf4j.LoggerFactory;
  * loaded
  *
  * @author	Dave Duchamp Copyright (C) 2007
- * @version	$Revision$
  */
 public class LogixLoadAction extends AbstractAction {
-
-    /**
-     *
-     */
-    private static final long serialVersionUID = -4280773749053470400L;
 
     public LogixLoadAction(String s, JPanel who) {
         super(s);

@@ -18,7 +18,6 @@ import org.slf4j.LoggerFactory;
  * <P>
  * 
  * @author Paul Bender Copyright (C) 2015 
- * @version $Revision$
  */
 public class RaspberryPiTurnout extends AbstractTurnout implements Turnout, java.io.Serializable {
 
@@ -27,14 +26,17 @@ public class RaspberryPiTurnout extends AbstractTurnout implements Turnout, java
     */
    private static final long serialVersionUID = 2015_02_15_001L;
 
-   private static GpioController gpio = null;
+    // in theory gpio can be static, because there will only ever
+    // be one, but the library handles the details that make it a 
+    // singleton.
+   private GpioController gpio = null;
    private GpioPinDigitalOutput pin = null;
    private int address;
 
    public RaspberryPiTurnout(String systemName) {
         super(systemName.toUpperCase());
-	    log.debug("Provisioning turnout {}",systemName);
-        if(gpio==null) gpio=GpioFactory.getInstance();
+	log.debug("Provisioning turnout {}",systemName);
+        gpio=GpioFactory.getInstance();
         address=Integer.parseInt(getSystemName().substring(getSystemName().lastIndexOf("T")+1));
         pin = gpio.provisionDigitalOutputPin(RaspiPin.getPinByName("GPIO "+address),getSystemName());
         pin.setShutdownOptions(true, PinState.LOW,PinPullResistance.OFF);
@@ -43,7 +45,7 @@ public class RaspberryPiTurnout extends AbstractTurnout implements Turnout, java
    public RaspberryPiTurnout(String systemName, String userName) {
         super(systemName.toUpperCase(), userName);
         log.debug("Provisioning turnout {} with username '{}'",systemName, userName);
-        if(gpio==null) gpio=GpioFactory.getInstance();
+        gpio=GpioFactory.getInstance();
         address=Integer.parseInt(getSystemName().substring(getSystemName().lastIndexOf("T")+1));
         pin = gpio.provisionDigitalOutputPin(RaspiPin.getPinByName("GPIO "+address),getUserName());
         pin.setShutdownOptions(true, PinState.LOW,PinPullResistance.OFF);

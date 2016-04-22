@@ -36,6 +36,7 @@ public class ActionCodes {
     public static final int SELECT_TRAIN = 0x0A00 + ENABLE_TRAINS + OK_MESSAGE + FAIL_MESSAGE;
     public static final int DESELECT_TRAIN = 0x0B00 + ENABLE_TRAINS + OK_MESSAGE + FAIL_MESSAGE;
     public static final int WAIT_FOR_TRAIN_TERMINATE = 0x0C00 + ENABLE_TRAINS + OK_MESSAGE + FAIL_MESSAGE;
+    public static final int IS_TRAIN_EN_ROUTE = 0x0D00 + ENABLE_TRAINS + ENABLE_ROUTES + OK_MESSAGE + FAIL_MESSAGE;
     
     public static final int UPDATE_SWITCHLIST = 0x1000 + OK_MESSAGE;
     public static final int PRINT_SWITCHLIST = 0x1100 + OK_MESSAGE;

@@ -1,4 +1,3 @@
-// AudioBuffer.java
 package jmri.jmrit.audio;
 
 import java.io.InputStream;
@@ -35,7 +34,6 @@ import jmri.Audio;
  * <P>
  *
  * @author Matthew Harris copyright (c) 2009, 2011
- * @version $Revision$
  */
 public interface AudioBuffer extends Audio {
 
@@ -309,5 +307,3 @@ public interface AudioBuffer extends Audio {
 
     public boolean loadBuffer(ByteBuffer b, int format, int frequency);
 }
-
-/* @(#)AudioBuffer.java */

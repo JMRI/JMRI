@@ -1,4 +1,3 @@
-// AbstractNetworkConnectionConfig.java
 package jmri.jmrix;
 
 import java.awt.Color;
@@ -30,7 +29,6 @@ import org.slf4j.LoggerFactory;
  * Abstract base class for common implementation of the ConnectionConfig
  *
  * @author Bob Jacobsen Copyright (C) 2001, 2003
- * @version	$Revision$
  */
 abstract public class AbstractNetworkConnectionConfig extends AbstractConnectionConfig {
 

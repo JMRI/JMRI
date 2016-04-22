@@ -1,4 +1,3 @@
-// SerialTrafficController.java
 package jmri.jmrix.secsi;
 
 import java.io.DataInputStream;
@@ -25,7 +24,6 @@ import org.slf4j.LoggerFactory;
  *
  * @author	Bob Jacobsen Copyright (C) 2003, 2006
  * @author Bob Jacobsen, Dave Duchamp, multiNode extensions, 2004
- * @version	$Revision$
  */
 public class SerialTrafficController extends AbstractMRNodeTrafficController implements SerialInterface {
 
@@ -118,8 +116,6 @@ public class SerialTrafficController extends AbstractMRNodeTrafficController imp
     public void setSensorManager(SerialSensorManager m) {
         mSensorManager = m;
     }
-
-    int curSerialNodeIndex = 0;   // cycles over defined nodes when pollMessage is called
 
     /**
      * Handles initialization, output and polling from within the running thread
@@ -291,5 +287,3 @@ public class SerialTrafficController extends AbstractMRNodeTrafficController imp
 
     private final static Logger log = LoggerFactory.getLogger(SerialTrafficController.class.getName());
 }
-
-/* @(#)SerialTrafficController.java */

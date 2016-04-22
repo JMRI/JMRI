@@ -102,12 +102,14 @@ public class SensorTableAction extends AbstractTableAction {
             //addFrame.addHelpMenu("package.jmri.jmrit.beantable.SensorAddEdit", true);
             addFrame.getContentPane().setLayout(new BoxLayout(addFrame.getContentPane(), BoxLayout.Y_AXIS));
 
-            ActionListener listener = new ActionListener() {
+            ActionListener okListener = new ActionListener() {
                 public void actionPerformed(ActionEvent e) {
                     okPressed(e);
                 }
             };
-
+            ActionListener cancelListener = new ActionListener() {
+                public void actionPerformed(ActionEvent e) { cancelPressed(e); }
+            };
             ActionListener rangeListener = new ActionListener() {
                 public void actionPerformed(ActionEvent e) {
                     canAddRange(e);
@@ -128,7 +130,6 @@ public class SensorTableAction extends AbstractTableAction {
                     if (addToPrefix) {
                         prefixBox.addItem(manuName);
                     }
-
                 }
                 if (p.getComboBoxLastSelection(systemSelectionCombo) != null) {
                     prefixBox.setSelectedItem(p.getComboBoxLastSelection(systemSelectionCombo));
@@ -139,11 +140,17 @@ public class SensorTableAction extends AbstractTableAction {
             sysName.setName("sysName");
             userName.setName("userName");
             prefixBox.setName("prefixBox");
-            addFrame.add(new AddNewHardwareDevicePanel(sysName, userName, prefixBox, numberToAdd, range, "ButtonOK", listener, rangeListener));
+            addFrame.add(new AddNewHardwareDevicePanel(sysName, userName, prefixBox, numberToAdd, range, "ButtonOK", okListener, cancelListener, rangeListener));
             canAddRange(null);
         }
         addFrame.pack();
         addFrame.setVisible(true);
+    }
+
+    void cancelPressed(ActionEvent e) {
+        addFrame.setVisible(false);
+        addFrame.dispose();
+        addFrame = null;
     }
 
     void okPressed(ActionEvent e) {
@@ -204,8 +211,9 @@ public class SensorTableAction extends AbstractTableAction {
                 if (user != null && !user.equals("") && (jmri.InstanceManager.sensorManagerInstance().getByUserName(user) == null)) {
                     s.setUserName(user);
                 } else if (jmri.InstanceManager.sensorManagerInstance().getByUserName(user) != null && !p.getPreferenceState(getClassName(), "duplicateUserName")) {
+                    // I18N TODO
                     jmri.InstanceManager.getDefault(jmri.UserPreferencesManager.class).
-                            showErrorMessage("Duplicate UserName", "The username " + user + " specified is already in use and therefore will not be set", getClassName(), "duplicateUserName", false, true); // I18N TODO
+                            showErrorMessage("Duplicate UserName", "The username " + user + " specified is already in use and therefore will not be set", getClassName(), "duplicateUserName", false, true);
                 }
             }
         }
@@ -265,14 +273,14 @@ public class SensorTableAction extends AbstractTableAction {
             long goingActive = Long.valueOf(activeField.getText());
             senManager.setDefaultSensorDebounceGoingActive(goingActive);
         } catch (NumberFormatException ex) {
-            JOptionPane.showMessageDialog(_who, Bundle.getMessage("SensorDebounceActError") + "\n" + activeField.getText(), "Input Error", JOptionPane.ERROR_MESSAGE);
+            JOptionPane.showMessageDialog(_who, Bundle.getMessage("SensorDebounceActError") + "\n\"" + activeField.getText() + "\"", "Input Error", JOptionPane.ERROR_MESSAGE);
         }
 
         try {
             long goingInActive = Long.valueOf(inActiveField.getText());
             senManager.setDefaultSensorDebounceGoingInActive(goingInActive);
         } catch (NumberFormatException ex) {
-            JOptionPane.showMessageDialog(_who, Bundle.getMessage("SensorDebounceActError") + "\n" + inActiveField.getText(), "Input Error", JOptionPane.ERROR_MESSAGE);
+            JOptionPane.showMessageDialog(_who, Bundle.getMessage("SensorDebounceActError") + "\n\"" + inActiveField.getText() + "\"", "Input Error", JOptionPane.ERROR_MESSAGE);
         }
         m.fireTableDataChanged();
     }

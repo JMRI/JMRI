@@ -1,4 +1,3 @@
-// SerialDriverAdapter.java
 package jmri.jmrix.rps.serial;
 
 import gnu.io.CommPortIdentifier;
@@ -27,7 +26,6 @@ import org.slf4j.LoggerFactory;
  * case)
  *
  * @author	Bob Jacobsen Copyright (C) 2001, 2002, 2008
- * @version	$Revision$
  */
 public class SerialAdapter extends jmri.jmrix.AbstractSerialPortController implements jmri.jmrix.SerialPortAdapter {
 
@@ -85,12 +83,7 @@ public class SerialAdapter extends jmri.jmrix.AbstractSerialPortController imple
             sendBytes(new byte[]{(byte) 'A', 13});
 
             // purge contents, if any
-            int count = serialStream.available();
-            log.debug("input stream shows " + count + " bytes available");
-            while (count > 0) {
-                serialStream.skip(count);
-                count = serialStream.available();
-            }
+            purgeStream(serialStream);
 
             // report status?
             if (log.isInfoEnabled()) {

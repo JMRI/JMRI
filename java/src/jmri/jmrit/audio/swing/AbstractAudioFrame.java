@@ -1,4 +1,3 @@
-// AbstractAudioFrame.java
 package jmri.jmrit.audio.swing;
 
 import java.awt.FlowLayout;
@@ -37,14 +36,9 @@ import jmri.util.JmriJFrame;
  * <P>
  *
  * @author Matthew Harris copyright (c) 2009
- * @version $Revision$
  */
 abstract public class AbstractAudioFrame extends JmriJFrame {
 
-    /**
-     *
-     */
-    private static final long serialVersionUID = 8799988277074614855L;
     static final ResourceBundle rb = ResourceBundle.getBundle("jmri.jmrit.beantable.BeanTableBundle");
 
     AbstractAudioFrame frame = this;
@@ -128,10 +122,6 @@ abstract public class AbstractAudioFrame extends JmriJFrame {
      */
     protected static class JPanelVector3f extends JPanel {
 
-        /**
-         *
-         */
-        private static final long serialVersionUID = -2102431744610108951L;
         JLabel xLabel = new JLabel(Bundle.getMessage("LabelX"));
         JSpinner xValue = new JSpinner();
         JLabel yLabel = new JLabel(Bundle.getMessage("LabelY"));
@@ -166,21 +156,21 @@ abstract public class AbstractAudioFrame extends JmriJFrame {
             this.add(xLabel);
             xValue.setPreferredSize(new JTextField(8).getPreferredSize());
             xValue.setModel(
-                    new SpinnerNumberModel(new Float(0f), new Float(-Audio.MAX_DISTANCE), new Float(Audio.MAX_DISTANCE), new Float(FLT_PRECISION)));
+                    new SpinnerNumberModel(Float.valueOf(0f), Float.valueOf(-Audio.MAX_DISTANCE), Float.valueOf(Audio.MAX_DISTANCE), Float.valueOf(FLT_PRECISION)));
             xValue.setEditor(new JSpinner.NumberEditor(xValue, "0.00"));
             this.add(xValue);
 
             this.add(yLabel);
             yValue.setPreferredSize(new JTextField(8).getPreferredSize());
             yValue.setModel(
-                    new SpinnerNumberModel(new Float(0f), new Float(-Audio.MAX_DISTANCE), new Float(Audio.MAX_DISTANCE), new Float(FLT_PRECISION)));
+                    new SpinnerNumberModel(Float.valueOf(0f), Float.valueOf(-Audio.MAX_DISTANCE), Float.valueOf(Audio.MAX_DISTANCE), Float.valueOf(FLT_PRECISION)));
             yValue.setEditor(new JSpinner.NumberEditor(yValue, "0.00"));
             this.add(yValue);
 
             this.add(zLabel);
             zValue.setPreferredSize(new JTextField(8).getPreferredSize());
             zValue.setModel(
-                    new SpinnerNumberModel(new Float(0f), new Float(-Audio.MAX_DISTANCE), new Float(Audio.MAX_DISTANCE), new Float(FLT_PRECISION)));
+                    new SpinnerNumberModel(Float.valueOf(0f), Float.valueOf(-Audio.MAX_DISTANCE), Float.valueOf(Audio.MAX_DISTANCE), Float.valueOf(FLT_PRECISION)));
             zValue.setEditor(new JSpinner.NumberEditor(zValue, "0.00"));
             this.add(zValue);
 
@@ -221,16 +211,11 @@ abstract public class AbstractAudioFrame extends JmriJFrame {
      */
     protected static class JPanelSliderf extends JPanel {
 
-        /**
-         *
-         */
-        private static final long serialVersionUID = -7201712611650896844L;
-
         JSlider slider = new JSlider();
 
         JSpinner spinner = new JSpinner();
 
-        @SuppressWarnings("UnnecessaryBoxing")
+        @SuppressWarnings({"UnnecessaryBoxing", "OverridableMethodCallInConstructor"})
         JPanelSliderf(String title, Float min, Float max, int majorTicks, int minorTicks) {
             super();
             int iMin = Math.round(min * INT_PRECISION);
@@ -263,7 +248,7 @@ abstract public class AbstractAudioFrame extends JmriJFrame {
             });
             spinner.setPreferredSize(new JTextField(5).getPreferredSize());
             spinner.setModel(
-                    new SpinnerNumberModel(min, min, max, new Float(FLT_PRECISION)));
+                    new SpinnerNumberModel(min, min, max, Float.valueOf(FLT_PRECISION)));
             spinner.setEditor(new JSpinner.NumberEditor(spinner, "0.00"));
             spinner.addChangeListener((ChangeEvent e) -> {
                 slider.setValue(
@@ -292,5 +277,3 @@ abstract public class AbstractAudioFrame extends JmriJFrame {
         }
     }
 }
-
-/* @(#)AbstractAudioFrame.java */

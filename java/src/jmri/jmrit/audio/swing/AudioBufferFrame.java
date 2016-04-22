@@ -1,4 +1,3 @@
-// AudioBufferFrame.java
 package jmri.jmrit.audio.swing;
 
 //import java.awt.Dimension;
@@ -44,14 +43,8 @@ import org.slf4j.LoggerFactory;
  * <P>
  *
  * @author Matthew Harris copyright (c) 2009
- * @version $Revision$
  */
 public class AudioBufferFrame extends AbstractAudioFrame {
-
-    /**
-     *
-     */
-    private static final long serialVersionUID = 5309874433054867893L;
 
     private static int counter = 1;
 
@@ -213,6 +206,9 @@ public class AudioBufferFrame extends AbstractAudioFrame {
      */
     @Override
     public void populateFrame(Audio a) {
+        if (a instanceof AudioBuffer) {
+            throw new IllegalArgumentException(a.getSystemName() + " is not an AudioBuffer object");
+        }
         super.populateFrame(a);
         AudioBuffer b = (AudioBuffer) a;
         url.setText(b.getURL());
@@ -272,7 +268,9 @@ public class AudioBufferFrame extends AbstractAudioFrame {
             }
             if (newBuffer && am.getByUserName(user) != null) {
                 am.deregister(b);
-                counter--;
+                synchronized (lock) {
+                    counter--;
+                }
                 throw new AudioException("Duplicate user name - please modify");
             }
             b.setUserName(user);
@@ -303,5 +301,3 @@ public class AudioBufferFrame extends AbstractAudioFrame {
     private static final Logger log = LoggerFactory.getLogger(AudioBufferFrame.class.getName());
 
 }
-
-/* @(#)AudioBufferFrame.java */

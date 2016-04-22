@@ -1,4 +1,3 @@
-// SerialDriverAdapter.java
 package jmri.jmrix.grapevine.serialdriver;
 
 import gnu.io.CommPortIdentifier;
@@ -12,6 +11,7 @@ import java.io.InputStream;
 import jmri.jmrix.grapevine.SerialPortController;
 import jmri.jmrix.grapevine.SerialSensorManager;
 import jmri.jmrix.grapevine.SerialTrafficController;
+import jmri.jmrix.grapevine.GrapevineSystemConnectionMemo;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -20,14 +20,14 @@ import org.slf4j.LoggerFactory;
  * controlled by the serialdriver.SerialDriverFrame class.
  *
  * @author	Bob Jacobsen Copyright (C) 2006, 2007
- * @version	$Revision$
  */
 public class SerialDriverAdapter extends SerialPortController implements jmri.jmrix.SerialPortAdapter {
 
     SerialPort activeSerialPort = null;
 
     public SerialDriverAdapter() {
-        super(null);
+        // needs to provide a SystemConnectionMemo
+        super(new GrapevineSystemConnectionMemo());
         this.manufacturerName = jmri.jmrix.grapevine.SerialConnectionTypeList.PROTRAK;
     }
 
@@ -61,12 +61,7 @@ public class SerialDriverAdapter extends SerialPortController implements jmri.jm
             serialStream = activeSerialPort.getInputStream();
 
             // purge contents, if any
-            int count = serialStream.available();
-            log.debug("input stream shows " + count + " bytes available");
-            while (count > 0) {
-                serialStream.skip(count);
-                count = serialStream.available();
-            }
+            purgeStream(serialStream);
 
             // report status?
             if (log.isInfoEnabled()) {

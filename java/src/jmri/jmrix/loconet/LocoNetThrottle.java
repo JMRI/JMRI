@@ -147,7 +147,7 @@ public class LocoNetThrottle extends AbstractThrottle implements SlotListener {
     @Override
     protected int intSpeed(float fSpeed) {
         int speed = super.intSpeed(fSpeed);
-        if (speed <= 0) {
+        if (speed <= 1) {
             return speed; // return idle and emergency stop
         }
         switch (this.getSpeedStepMode()) {
@@ -172,11 +172,14 @@ public class LocoNetThrottle extends AbstractThrottle implements SlotListener {
                 | (getF3() ? LnConstants.DIRF_F3 : 0)
                 | (getF4() ? LnConstants.DIRF_F4 : 0));
         if (new_dirf != layout_dirf) {
+            log.debug("sendFunctionGroup1 sending {} to LocoNet slot {}", new_dirf, slot.getSlot());
             LocoNetMessage msg = new LocoNetMessage(4);
             msg.setOpCode(LnConstants.OPC_LOCO_DIRF);
             msg.setElement(1, slot.getSlot());
             msg.setElement(2, new_dirf);
             network.sendLocoNetMessage(msg);
+        } else {
+            log.debug("sendFunctionGroup1 NOT sending unchanged {} to LocoNet slot {}", new_dirf, slot.getSlot());
         }
     }
 
@@ -240,9 +243,7 @@ public class LocoNetThrottle extends AbstractThrottle implements SlotListener {
             // speed AND the slot to which a locomotive is consisted.
             // if the locomotive is either a CONSIST_MID or a CONSIST_SUB,
             // we need to ignore the request to change the speed
-            if (log.isDebugEnabled()) {
-                log.debug("Attempt to change speed on locomoitve " + getLocoAddress() + " which is a " + LnConstants.CONSIST_STAT(slot.consistStatus()));
-            }
+            log.debug("Attempt to change speed on locomotive {} which is a {}", getLocoAddress(), LnConstants.CONSIST_STAT(slot.consistStatus()));
             return;
         }
         float oldSpeed = this.speedSetting;
@@ -280,6 +281,7 @@ public class LocoNetThrottle extends AbstractThrottle implements SlotListener {
     public void setIsForward(boolean forward) {
         boolean old = isForward;
         isForward = forward;
+        log.debug("setIsForward to {}, old value {}", isForward, old);
         sendFunctionGroup1();
         if (old != this.isForward) {
             notifyPropertyChangeListener("IsForward", old, this.isForward);

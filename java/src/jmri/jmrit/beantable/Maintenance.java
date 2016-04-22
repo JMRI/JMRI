@@ -21,6 +21,7 @@ import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 import javax.swing.JTextArea;
 import javax.swing.ListSelectionModel;
+import jmri.Block;
 import jmri.Conditional;
 import jmri.ConditionalAction;
 import jmri.ConditionalVariable;
@@ -975,7 +976,9 @@ public class Maintenance {
             String sName = iter1.next();
             jmri.Section section = sectionManager.getBySystemName(sName);
             if (section != null) {
-                sysNameList.remove(section.getBlockList());
+                for (Block block : section.getBlockList()) {
+                    sysNameList.remove(block.getSystemName());
+                }
             }
         }
         iter1 = sysNameList.iterator();
@@ -1414,19 +1417,7 @@ public class Maintenance {
             panel.add(button);
         }
         contentPane.add(panel, BorderLayout.SOUTH);
-        class myAdapter extends java.awt.event.WindowAdapter {
-
-            java.awt.Window _w;
-
-            myAdapter(java.awt.Window w) {
-                _w = w;
-            }
-
-            public void windowClosing(java.awt.event.WindowEvent e) {
-                _w.dispose();
-            }
-        }
-        dialog.addWindowListener(new myAdapter(dialog));
+        dialog.setDefaultCloseOperation(JDialog.DISPOSE_ON_CLOSE);
         dialog.setLocationRelativeTo(parent);
         dialog.pack();
         dialog.setVisible(true);

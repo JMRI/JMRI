@@ -1,4 +1,3 @@
-// NmraConsist.java
 package jmri.implementation;
 
 import jmri.Consist;
@@ -15,7 +14,6 @@ import org.slf4j.LoggerFactory;
  * derived from the DccConsist code.
  *
  * @author Paul Bender Copyright (C) 2011
- * @version $Revision 1.0 $
  */
 public class NmraConsist extends DccConsist implements Consist {
 

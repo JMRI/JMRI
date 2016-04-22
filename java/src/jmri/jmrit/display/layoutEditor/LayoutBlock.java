@@ -1511,6 +1511,7 @@ public class LayoutBlock extends AbstractNamedBean implements java.beans.Propert
          through paths table*/
     }
 
+    @edu.umd.cs.findbugs.annotations.SuppressFBWarnings(value="FE_FLOATING_POINT_EQUALITY", justification="handling issue if value isn't still identical")
     boolean informNeighbourOfAttachment(LayoutBlock lBlock, Block block, int workingDirection) {
         Adjacencies adj = getAdjacency(block);
         if (adj == null) {
@@ -1551,6 +1552,8 @@ public class LayoutBlock extends AbstractNamedBean implements java.beans.Propert
                     RoutingPacket update = new RoutingPacket(UPDATE, adj.getBlock(), -1, (adj.getMetric() + metric), -1, -1, getNextPacketID());
                     firePropertyChange("routing", null, update);
                 }
+
+                // next line is the FE_FLOATING_POINT_EQUALITY annotated above
                 if (neighRoute.getMetric() != adj.getLength()) {
                     if (enableAddRouteLogging) {
                         log.info("From " + this.getDisplayName() + " The value of the length we have for this route is not correct " + this.getBlock().getDisplayName() + ", stored " + neighRoute.getMetric() + " v " + adj.getMetric());
@@ -2849,9 +2852,6 @@ public class LayoutBlock extends AbstractNamedBean implements java.beans.Propert
 
     @Override
     public synchronized void addPropertyChangeListener(java.beans.PropertyChangeListener l) {
-        if (l == null) {
-            throw new java.lang.NullPointerException();
-        }
         if (l == this) {
             if (enableAddRouteLogging) {
                 log.info("adding ourselves as a listener for some strange reason!");
@@ -3001,6 +3001,7 @@ public class LayoutBlock extends AbstractNamedBean implements java.beans.Propert
     }
 
     //This lot might need changing to only forward on the best route details.
+    @edu.umd.cs.findbugs.annotations.SuppressFBWarnings(value="FE_FLOATING_POINT_EQUALITY", justification="checking against a error value of -1; bad practice to use values for errors, but not an FFPE")
     void updateRoutingInfo(LayoutBlock src, RoutingPacket update) {
         if (enableUpdateRouteLogging) {
             log.info("From " + this.getDisplayName() + " src: " + src.getDisplayName() + " block: " + update.getBlock().getDisplayName() + " hopCount " + update.getHopCount() + " metric: " + update.getMetric() + " status: " + update.getBlockState() + " packetID: " + update.getPacketId());
@@ -3086,6 +3087,8 @@ public class LayoutBlock extends AbstractNamedBean implements java.beans.Propert
                 hopCount = -1;
             }
         }
+        
+        // next line is the FE_FLOATING_POINT_EQUALITY annotated above - bad to use values as errors, but it's pre-existing code, and code wins
         if (length != -1) {
             //Length is added at source
             float oldLength = ro.getLength();

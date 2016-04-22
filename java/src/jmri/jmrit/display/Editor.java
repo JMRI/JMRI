@@ -56,11 +56,13 @@ import javax.swing.ScrollPaneConstants;
 import javax.swing.SpinnerNumberModel;
 import javax.swing.SwingConstants;
 import javax.swing.Timer;
+import javax.swing.WindowConstants;
 import javax.swing.event.ListSelectionEvent;
 import jmri.InstanceManager;
 import jmri.Light;
 import jmri.NamedBean;
 import jmri.Reporter;
+import jmri.ShutDownManager;
 import jmri.jmrit.catalog.CatalogPanel;
 import jmri.jmrit.catalog.ImageIndexEditor;
 import jmri.jmrit.catalog.NamedIcon;
@@ -386,7 +388,7 @@ abstract public class Editor extends JmriJFrame implements MouseListener, MouseM
         } else {
             _targetFrame = frame;
         }
-        _targetFrame.setDefaultCloseOperation(javax.swing.WindowConstants.HIDE_ON_CLOSE);
+        _targetFrame.setDefaultCloseOperation(WindowConstants.HIDE_ON_CLOSE);
         _panelScrollPane = new JScrollPane(_targetPanel);
         Container contentPane = _targetFrame.getContentPane();
         contentPane.add(_panelScrollPane);
@@ -924,6 +926,9 @@ abstract public class Editor extends JmriJFrame implements MouseListener, MouseM
                 _panelScrollPane.setVerticalScrollBarPolicy(ScrollPaneConstants.VERTICAL_SCROLLBAR_ALWAYS);
                 _panelScrollPane.setHorizontalScrollBarPolicy(ScrollPaneConstants.HORIZONTAL_SCROLLBAR_NEVER);
                 break;
+            default:
+                log.warn("Unexpected  setScroll state of {}", state);
+                break;
         }
         _scrollState = state;
     }
@@ -956,6 +961,9 @@ abstract public class Editor extends JmriJFrame implements MouseListener, MouseM
             case SCROLL_VERTICAL:
                 value = "vertical";
                 break;
+            default:
+                log.warn("Unexpected _scrollState of {}", _scrollState);
+                break;
         }
         return value;
     }
@@ -987,31 +995,35 @@ abstract public class Editor extends JmriJFrame implements MouseListener, MouseM
             if (_targetPanel.getTopLevelAncestor() != null) {
                 name = ((JFrame) _targetPanel.getTopLevelAncestor()).getTitle();
             }
-            int selectedValue = JOptionPane.showOptionDialog(_targetPanel,
-                    java.text.MessageFormat.format(message,
-                            new Object[]{name}), Bundle.getMessage("ReminderTitle"),
-                    JOptionPane.YES_NO_CANCEL_OPTION, JOptionPane.QUESTION_MESSAGE,
-                    null, new Object[]{Bundle.getMessage("ButtonHide"), Bundle.getMessage("ButtonDelete"),
-                        Bundle.getMessage("ButtonDontShow")}, Bundle.getMessage("ButtonHide"));
-            switch (selectedValue) {
-                case 0:
-                    _targetFrame.setVisible(false);   // doesn't remove the editor!
-                    jmri.jmrit.display.PanelMenu.instance().updateEditorPanel(this);
-                    break;
-                case 1:
-                    if (deletePanel()) { // disposes everything
-                        dispose(true);
-                    }
-                    break;
-                case 2:
-                    showCloseInfoMessage = false;
-                    _targetFrame.setVisible(false);   // doesn't remove the editor!
-                    jmri.jmrit.display.PanelMenu.instance().updateEditorPanel(this);
-                    break;
-                default:    // dialog closed - do nothing
-                    _targetFrame.setDefaultCloseOperation(javax.swing.WindowConstants.DO_NOTHING_ON_CLOSE);
+            if (!InstanceManager.getDefault(ShutDownManager.class).isShuttingDown()) {
+                int selectedValue = JOptionPane.showOptionDialog(_targetPanel,
+                        java.text.MessageFormat.format(message,
+                                new Object[]{name}), Bundle.getMessage("ReminderTitle"),
+                        JOptionPane.YES_NO_CANCEL_OPTION, JOptionPane.QUESTION_MESSAGE,
+                        null, new Object[]{Bundle.getMessage("ButtonHide"), Bundle.getMessage("ButtonDelete"),
+                            Bundle.getMessage("ButtonDontShow")}, Bundle.getMessage("ButtonHide"));
+                switch (selectedValue) {
+                    case 0:
+                        _targetFrame.setVisible(false);   // doesn't remove the editor!
+                        jmri.jmrit.display.PanelMenu.instance().updateEditorPanel(this);
+                        break;
+                    case 1:
+                        if (deletePanel()) { // disposes everything
+                            dispose(true);
+                        }
+                        break;
+                    case 2:
+                        showCloseInfoMessage = false;
+                        _targetFrame.setVisible(false);   // doesn't remove the editor!
+                        jmri.jmrit.display.PanelMenu.instance().updateEditorPanel(this);
+                        break;
+                    default:    // dialog closed - do nothing
+                        _targetFrame.setDefaultCloseOperation(WindowConstants.DO_NOTHING_ON_CLOSE);
+                }
+                log.debug("targetWindowClosing: selectedValue= {}", selectedValue);
+            } else {
+                _targetFrame.setVisible(false);
             }
-            log.debug("targetWindowClosing: selectedValue= {}", selectedValue);
         } else {
             _targetFrame.setVisible(false);   // doesn't remove the editor!
             jmri.jmrit.display.PanelMenu.instance().updateEditorPanel(this);
@@ -2163,6 +2175,9 @@ abstract public class Editor extends JmriJFrame implements MouseListener, MouseM
                 l.setLowerWestToLowerEastIcon(editor.getIcon("LowerWestToLowerEast"));
                 //l.setUpperWestToUpperEastIcon(editor.getIcon("UpperWestToUpperEast"));
                 break;
+            default:
+                log.warn("Unexpected addSlip editor.getTurnoutType() of {}", editor.getTurnoutType());
+                break;
         }
 
         if ((editor.getTurnoutType() == SlipTurnoutIcon.SCISSOR) && (!editor.getSingleSlipRoute())) {
@@ -2482,7 +2497,7 @@ abstract public class Editor extends JmriJFrame implements MouseListener, MouseM
                     @Override
                     public void windowClosing(java.awt.event.WindowEvent e) {
                         jmri.jmrit.catalog.ImageIndexEditor.checkImageIndex();
-                        setDefaultCloseOperation(javax.swing.WindowConstants.HIDE_ON_CLOSE);
+                        setDefaultCloseOperation(WindowConstants.HIDE_ON_CLOSE);
                         if (log.isDebugEnabled()) {
                             log.debug("windowClosing: HIDE {}", toString());
                         }
@@ -2548,7 +2563,7 @@ abstract public class Editor extends JmriJFrame implements MouseListener, MouseM
         Iterator<JFrameItem> iter = _iconEditorFrame.values().iterator();
         while (iter.hasNext()) {
             JFrameItem frame = iter.next();
-            frame.setDefaultCloseOperation(javax.swing.WindowConstants.DO_NOTHING_ON_CLOSE);
+            frame.setDefaultCloseOperation(WindowConstants.DO_NOTHING_ON_CLOSE);
             frame.dispose();
         }
         // delete panel - deregister the panel for saving
@@ -3096,6 +3111,9 @@ abstract public class Editor extends JmriJFrame implements MouseListener, MouseM
                 break;
             case KeyEvent.VK_RIGHT:
                 x = 1;
+                break;
+            default:
+                log.warn("Unexpected e.getKeyCode() of {}", e.getKeyCode());
                 break;
         }
         //A cheat if the shift key isn't pressed then we move 5 pixels at a time.

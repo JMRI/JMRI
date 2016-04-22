@@ -55,7 +55,7 @@ as a powerful starting point for understanding signaling logic.
 	for setting up basic signals in an intuitive manner, without the 
 	user having to be familiar with all of the logic necessary to account for the different Signal Aspects.
 	
-	<a href="../../../../images/SE8cExampleLogic.png"><img src="../../../../images/SE8cExampleLogic.png" ALIGN=RIGHT WIDTH="290" HEIGHT="270" HSPACE="0" VSPACE="0" ALT="Simple Signal Logic panel figure"></a>
+	<a href="../../../../images/SE8cExampleLogic.png"><img src="../../../../images/SE8cExampleLogic.png" align="right" width="290" height="270" hspace="0" vspace="0" alt="Simple Signal Logic panel figure"></a>
 
 <p>
 The Simple Signal Logic Tool allows you to configure JMRI to 
@@ -162,5 +162,7 @@ in the case of Turnouts and the actual hardware number of the Turnout.
 		</ul>
 
 <!--#include virtual="/Footer" -->
+ </div><!-- closes #mainContent-->
+</div> <!-- closes #mBody-->
 </body>
 </html>

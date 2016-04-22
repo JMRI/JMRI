@@ -142,17 +142,35 @@ public class Z21XNetSimulatorAdapter {
                         reply.setParity();         // set the parity correctly.
                         break;
                      case XNetConstants.LOCO_SET_FUNC_GROUP1:
+                        // XPressNet set Function Group 1.
+                        // We need to find out what a Z21 actually sends in response.
                      case XNetConstants.LOCO_SET_FUNC_GROUP2:
+                        // XPressNet set Function Group 2. 
+                        // We need to find out what a Z21 actually sends in response.
                      case XNetConstants.LOCO_SET_FUNC_GROUP3:
+                        // XPressNet set Function Group 3.
+                        // We need to find out what a Z21 actually sends in response.
                      case XNetConstants.LOCO_SET_FUNC_GROUP4:
+                        // XPressNet set Function Group 4.
+                        // We need to find out what a Z21 actually sends in response.
                      case XNetConstants.LOCO_SET_FUNC_GROUP5:
-                          reply = okReply();
-                          break;
+                        // XPressNet set Function Group 5.
+                        // We need to find out what a Z21 actually sends in response.
                      case XNetConstants.LOCO_SET_FUNC_Group1:
+                        // XPressNet set Function Momentary Group 1.
+                        // We need to find out what a Z21 actually sends in response.
                      case XNetConstants.LOCO_SET_FUNC_Group2:
+                        // XPressNet set Function Momentary Group 1.
+                        // We need to find out what a Z21 actually sends in response.
                      case XNetConstants.LOCO_SET_FUNC_Group3:
+                        // XPressNet set Function Momentary Group 1.
+                        // We need to find out what a Z21 actually sends in response.
                      case XNetConstants.LOCO_SET_FUNC_Group4:
+                        // XPressNet set Function Momentary Group 1.
+                        // We need to find out what a Z21 actually sends in response.
                      case XNetConstants.LOCO_SET_FUNC_Group5:
+                        // XPressNet set Function Momentary Group 1.
+                        // We need to find out what a Z21 actually sends in response.
                           reply = okReply();
                           break;
                      case XNetConstants.LOCO_ADD_MULTI_UNIT_REQ:

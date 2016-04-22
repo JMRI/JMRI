@@ -44,8 +44,6 @@ import jmri.jmrit.display.palette.TextItemPanel.DragDecoratorLabel;
  */
 public class DecoratorPanel extends JPanel implements ChangeListener, ItemListener {
 
-    private static final long serialVersionUID = -5434701410549611848L;
-
     static final String[] JUSTIFICATION = {Bundle.getMessage("left"),
         Bundle.getMessage("center"),
         Bundle.getMessage("right")};
@@ -127,7 +125,6 @@ public class DecoratorPanel extends JPanel implements ChangeListener, ItemListen
     }
 
     static class AJComboBox extends JComboBox<String> {
-        private static final long serialVersionUID = -6157176023804592198L;
         int _which;
 
         AJComboBox(String[] items, int which) {
@@ -146,8 +143,6 @@ public class DecoratorPanel extends JPanel implements ChangeListener, ItemListen
     }
 
     static class AJSpinner extends JSpinner {
-
-        private static final long serialVersionUID = 7526728664296406003L;
         int _which;
 
         AJSpinner(SpinnerModel model, int which) {
@@ -157,7 +152,6 @@ public class DecoratorPanel extends JPanel implements ChangeListener, ItemListen
     }
 
     static class AJRadioButton extends JRadioButton {
-        private static final long serialVersionUID = -8349059653187941804L;
         int which;
 
         AJRadioButton(String text, int w) {
@@ -411,6 +405,9 @@ public class DecoratorPanel extends JPanel implements ChangeListener, ItemListen
                         case INCONSISTENT_TRANSPARENT_COLOR:
                             _sample.get("Inconsistent").setOpaque(false);
                             break;
+                        default:
+                            log.warn("Unexpected button.which {} in actionPerformed", button.which);
+                            break;
                     }
                     updateSamples();
                 }
@@ -514,6 +511,9 @@ public class DecoratorPanel extends JPanel implements ChangeListener, ItemListen
                     break;
                 case FHEIGHT:
                     _util.setFixedHeight(num);
+                    break;
+                default:
+                    log.warn("Unexpected _which {}  in stateChanged", ((AJSpinner) obj)._which);
                     break;
             }
         } else {
@@ -622,6 +622,9 @@ public class DecoratorPanel extends JPanel implements ChangeListener, ItemListen
             case BORDER_COLOR:
                 _util.setBorderColor(_chooser.getColor());
                 break;
+            default:
+                log.warn("Unexpected _selectedButton {}  in changeColor", _selectedButton);
+                break;
         }
         
     }
@@ -649,6 +652,9 @@ public class DecoratorPanel extends JPanel implements ChangeListener, ItemListen
                         case 3:
                             style = (Font.BOLD | Font.ITALIC);
                             break;
+                        default:
+                            log.warn("Unexpected index {}  in itemStateChanged", ((AJComboBox) obj).getSelectedIndex());
+                            break;
                     }
                     _util.setFontStyle(style);
                     break;
@@ -664,11 +670,20 @@ public class DecoratorPanel extends JPanel implements ChangeListener, ItemListen
                         case 2:
                             just = PositionablePopupUtil.RIGHT;
                             break;
+                        default:
+                            log.warn("Unexpected index {}  in itemStateChanged", ((AJComboBox) obj).getSelectedIndex());
+                            break;
                     }
                     _util.setJustification(just);
                     break;
-            }
+                default:
+                    log.warn("Unexpected _which {}  in itemStateChanged", ((AJComboBox) obj)._which);
+                    break;
+                }
             updateSamples();
         }
     }
+
+    // initialize logging
+    private final static org.slf4j.Logger log = org.slf4j.LoggerFactory.getLogger(DecoratorPanel.class.getName());
 }

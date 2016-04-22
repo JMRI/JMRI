@@ -1,4 +1,3 @@
-// LRouteTableAction.java
 package jmri.jmrit.beantable;
 
 import java.awt.BorderLayout;
@@ -62,11 +61,6 @@ import org.slf4j.LoggerFactory;
  *
  */
 public class LRouteTableAction extends AbstractTableAction {
-
-    /**
-     *
-     */
-    private static final long serialVersionUID = 9004336444814249851L;
     static final ResourceBundle rbx = ResourceBundle.getBundle("jmri.jmrit.beantable.LRouteTableBundle");
 
     /**
@@ -101,11 +95,6 @@ public class LRouteTableAction extends AbstractTableAction {
     }
 
     class LBeanTableDataModel extends BeanTableDataModel {
-
-        /**
-         *
-         */
-        private static final long serialVersionUID = -2397834189317951853L;
         // overlay the state column with the edit column
         static public final int ENABLECOL = VALUECOL;
         static public final int EDITCOL = DELETECOL;
@@ -513,6 +502,9 @@ public class LRouteTableAction extends AbstractTableAction {
                     break;
                 case 'L':
                     getLockConditions(cSysName);
+                    break;
+                default:
+                    log.warn("Unexpected getRouteConditionalType {}", getRouteConditionalType(logixSysName, cSysName));
                     break;
             }
         }
@@ -1140,7 +1132,9 @@ public class LRouteTableAction extends AbstractTableAction {
                     // remind to save, if Route was created or edited
                     if (routeDirty) {
                         InstanceManager.getDefault(jmri.UserPreferencesManager.class).
-                                showInfoMessage("Reminder", "Remember to save your LRoute information.", getClassName(), "remindSaveRoute");
+                                showInfoMessage(Bundle.getMessage("ReminderTitle"), Bundle.getMessage("ReminderSaveString", "LRoute"),
+                                        getClassName(),
+                                        "remindSaveRoute"); // NOI18N
                         routeDirty = false;
                     }
                     clearPage();
@@ -1646,6 +1640,9 @@ public class LRouteTableAction extends AbstractTableAction {
                             case Route.TOGGLE:
                                 add = false;
                                 break;
+                            default:
+                                log.warn("Unexpected state {} from elt.getState() in SENSOR_TYPE", elt.getState());
+                                break;
                         }
                         break;
                     case TURNOUT_TYPE:
@@ -1662,6 +1659,9 @@ public class LRouteTableAction extends AbstractTableAction {
                             case Route.TOGGLE:
                                 add = false;
                                 break;
+                            default:
+                                log.warn("Unexpected state {} from elt.getState() in TURNOUT_TYPE", elt.getState());
+                                break;
                         }
                         break;
                     case LIGHT_TYPE:
@@ -1677,6 +1677,9 @@ public class LRouteTableAction extends AbstractTableAction {
                                 break;
                             case Route.TOGGLE:
                                 add = false;
+                                break;
+                            default:
+                                log.warn("Unexpected state {} from elt.getState() in LIGHT_TYPE", elt.getState());
                                 break;
                         }
                         break;
@@ -1717,6 +1720,9 @@ public class LRouteTableAction extends AbstractTableAction {
                                 break;
                             case SET_SIGNAL_LIT:
                                 varType = Conditional.TYPE_SIGNAL_HEAD_LIT;
+                                break;
+                            default:
+                                log.warn("Unexpected state {} from elt.getState() in SIGNAL_TYPE", elt.getState());
                                 break;
                         }
                         break;
@@ -2001,12 +2007,6 @@ public class LRouteTableAction extends AbstractTableAction {
 
 ////////////////////////////// Internal Utility Classes ////////////////////////////////
     public class ComboBoxCellEditor extends DefaultCellEditor {
-
-        /**
-         *
-         */
-        private static final long serialVersionUID = -2610003095583895650L;
-
         ComboBoxCellEditor() {
             super(new JComboBox<String>());
         }
@@ -2053,12 +2053,6 @@ public class LRouteTableAction extends AbstractTableAction {
      * Base Table model for selecting Route elements
      */
     public abstract class RouteElementModel extends AbstractTableModel implements PropertyChangeListener {
-
-        /**
-         *
-         */
-        private static final long serialVersionUID = -8781528720076479485L;
-
         abstract public boolean isInput();
 
         public Class<?> getColumnClass(int c) {
@@ -2113,12 +2107,6 @@ public class LRouteTableAction extends AbstractTableAction {
      * Table model for selecting input variables
      */
     class RouteInputModel extends RouteElementModel {
-
-        /**
-         *
-         */
-        private static final long serialVersionUID = 210785278316050800L;
-
         public boolean isInput() {
             return true;
         }
@@ -2180,6 +2168,9 @@ public class LRouteTableAction extends AbstractTableAction {
                 case STATE_COLUMN:
                     inputList.get(r).setTestState((String) type);
                     break;
+                default:
+                    log.warn("Unexpected column {} in setValueAt", c);
+                    break;
             }
         }
     }
@@ -2188,12 +2179,6 @@ public class LRouteTableAction extends AbstractTableAction {
      * Table model for selecting output variables
      */
     class RouteOutputModel extends RouteElementModel {
-
-        /**
-         *
-         */
-        private static final long serialVersionUID = 5167852390939595503L;
-
         public boolean isInput() {
             return false;
         }
@@ -2255,6 +2240,9 @@ public class LRouteTableAction extends AbstractTableAction {
                 case STATE_COLUMN:
                     outputList.get(r).setSetToState((String) type);
                     break;
+                default:
+                    log.warn("Unexpected column {} in setValueAt", c);
+                    break;
             }
         }
     }
@@ -2263,12 +2251,6 @@ public class LRouteTableAction extends AbstractTableAction {
      * Table model for selecting output variables
      */
     class AlignmentModel extends RouteElementModel {
-
-        /**
-         *
-         */
-        private static final long serialVersionUID = 3042074636786118990L;
-
         public boolean isInput() {
             return false;
         }
@@ -2329,6 +2311,9 @@ public class LRouteTableAction extends AbstractTableAction {
                     break;
                 case STATE_COLUMN:
                     alignList.get(r).setAlignType((String) type);
+                    break;
+                default:
+                    log.warn("Unexpected column {} in setValueAt", c);
                     break;
             }
         }
@@ -2432,12 +2417,6 @@ public class LRouteTableAction extends AbstractTableAction {
      * Sorts RouteElement
      */
     public static class RouteElementComparator extends SystemNameComparator {
-
-        /**
-         *
-         */
-        private static final long serialVersionUID = -4393706804845323729L;
-
         RouteElementComparator() {
         }
 
@@ -2479,6 +2458,9 @@ public class LRouteTableAction extends AbstractTableAction {
                     break;
                 case CONDITIONAL_TYPE:
                     _typeString = rbx.getString("Conditional");
+                    break;
+                default:
+                    log.warn("Unexpected type {} in RouteElement constructor", type);
                     break;
             }
         }
@@ -2941,7 +2923,6 @@ public class LRouteTableAction extends AbstractTableAction {
         return rbx.getString("Title");
     }
 
-    private final static Logger log = LoggerFactory
-            .getLogger(LRouteTableAction.class.getName());
+    private final static Logger log = LoggerFactory.getLogger(LRouteTableAction.class.getName());
 }
-/* @(#)RouteTableAction.java */
+

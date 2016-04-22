@@ -1536,9 +1536,11 @@ public class TransitTableAction extends AbstractTableAction {
                 + rbx.getString("SequenceAbbrev") + ": " + sequence[r]);
         actionTableFrame.addWindowListener(new java.awt.event.WindowAdapter() {
             public void windowClosing(java.awt.event.WindowEvent e) {
-                actionTableFrame.setVisible(false);
-                actionTableFrame.dispose();
-                actionTableFrame = null;
+                if (actionTableFrame != null) {
+                    actionTableFrame.setVisible(false);
+                    actionTableFrame.dispose();
+                    actionTableFrame = null;
+                }
                 if (addEditActionFrame != null) {
                     addEditActionFrame.setVisible(false);
                     addEditActionFrame.dispose();
@@ -1712,7 +1714,9 @@ public class TransitTableAction extends AbstractTableAction {
         }
         addEditActionFrame.addWindowListener(new java.awt.event.WindowAdapter() {
             public void windowClosing(java.awt.event.WindowEvent e) {
-                addEditActionFrame.setVisible(false);
+                if (addEditActionFrame != null) {
+                    addEditActionFrame.setVisible(false);
+                }
             }
         });
         addEditActionFrame.pack();
