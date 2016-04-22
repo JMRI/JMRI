@@ -147,7 +147,7 @@ public class LocoNetThrottle extends AbstractThrottle implements SlotListener {
     @Override
     protected int intSpeed(float fSpeed) {
         int speed = super.intSpeed(fSpeed);
-        if (speed <= 0) {
+        if (speed <= 1) {
             return speed; // return idle and emergency stop
         }
         switch (this.getSpeedStepMode()) {
