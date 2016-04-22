@@ -394,19 +394,19 @@
     <decVal min="4" max="32"/>
     <label>ABC voltage detection threshold</label>
   </variable>
-  <variable CV="138" default="128" item="ESU V4 Function Settings Smoke Unit Slider 2" exclude="LokPilot Fx V4.0" include="ESU LokSound V4.0">
+  <variable CV="138" default="128" item="ESU V4 Function Settings Smoke Unit Slider 2" exclude="LokPilot Fx V4.0" include="ESU LokSound V4.0,LokSound Select L">
     <decVal/>
     <label>Fan Speed Trim</label>
   </variable>
-  <variable CV="139" default="128" item="ESU V4 Function Settings Smoke Unit Slider 3" include="ESU LokSound V4.0">
+  <variable CV="139" default="128" item="ESU V4 Function Settings Smoke Unit Slider 3" include="ESU LokSound V4.0,LokSound Select L">
     <decVal/>
     <label>Temperature Trim</label>
   </variable>
-  <variable CV="140" default="120" tooltip="Unit is 5 seconds" item="ESU V4 Function Settings Smoke Unit Slider 1" include="ESU LokSound V4.0">
+  <variable CV="140" default="120" tooltip="Unit is 5 seconds" item="ESU V4 Function Settings Smoke Unit Slider 1" include="ESU LokSound V4.0,LokSound Select L">
     <decVal/>
     <label>Smoke Unit Automatic Power Off Time</label>
   </variable>
-  <variable CV="144" default="150" tooltip="Unit is degrees Celsius" item="ESU V4 Function Settings Smoke Unit Slider 4" include="ESU LokSound V4.0">
+  <variable CV="144" default="150" tooltip="Unit is degrees Celsius" item="ESU V4 Function Settings Smoke Unit Slider 4" include="ESU LokSound V4.0,LokSound Select L">
     <decVal/>
     <label>Preheating Temperature for Secondary Smoke Unit</label>
   </variable>
