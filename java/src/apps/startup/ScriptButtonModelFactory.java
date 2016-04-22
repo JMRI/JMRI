@@ -45,7 +45,7 @@ public class ScriptButtonModelFactory implements StartupModelFactory {
             this.chooser.setDialogTitle(this.getDescription());
             this.chooser.setDialogType(JFileChooser.CUSTOM_DIALOG);
         }
-        if (this.getModelClass().isInstance(model)) {
+        if (ScriptButtonModel.class.isInstance(model)) {
             ScriptButtonPanel buttonPanel = new ScriptButtonPanel(this.chooser, parent);
             if (((ScriptButtonModel) model).getScript() != null) {
                 buttonPanel.setScript(((ScriptButtonModel) model).getScript().getPath());
