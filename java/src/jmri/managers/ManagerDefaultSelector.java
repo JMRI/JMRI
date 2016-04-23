@@ -70,7 +70,6 @@ public class ManagerDefaultSelector extends AbstractPreferencesProvider {
                             if (connectionName.equals(disabledName)) {
                                 log.warn("Connection " + disabledName + " has been disabled, we shall remove it as the default for " + c);
                                 tmpArray.add(c);
-//                                ManagerDefaultSelector.instance.defaults.remove(c);
                             }
                         });
                         tmpArray.stream().forEach((tmpArray1) -> {
@@ -136,7 +135,6 @@ public class ManagerDefaultSelector extends AbstractPreferencesProvider {
     /**
      * load into InstanceManager
      */
-    @SuppressWarnings("unchecked")
     public void configure() {
         log.debug("configure defaults into InstanceManager");
         List<SystemConnectionMemo> connList = InstanceManager.getList(SystemConnectionMemo.class);
@@ -180,6 +178,9 @@ public class ManagerDefaultSelector extends AbstractPreferencesProvider {
         }
     }
 
+    // Define set of items that we remember defaults for, manually maintained because
+    // there are lots of JMRI-internal types of no interest to the user and/or not system-specific.
+    // This grows if you add something to the SystemConnectionMemo system
     final public Item[] knownManagers = new Item[]{
         new Item("Throttles", ThrottleManager.class),
         new Item("<html>Power<br>Control</html>", PowerManager.class),
