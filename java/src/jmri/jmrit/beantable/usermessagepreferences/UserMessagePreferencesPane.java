@@ -1,4 +1,3 @@
-// UserMessagePreferencesPane.java
 package jmri.jmrit.beantable.usermessagepreferences;
 
 import java.awt.BorderLayout;
@@ -38,14 +37,9 @@ import jmri.util.swing.JmriPanel;
  * Pane to show User Message Preferences
  *
  * @author	Kevin Dickerson Copyright (C) 2009
- * @version	$Revision$
  */
 public class UserMessagePreferencesPane extends JmriPanel implements PreferencesPanel {
 
-    /**
-     *
-     */
-    private static final long serialVersionUID = 6892195773335485275L;
     protected static final ResourceBundle rb = ResourceBundle.getBundle("apps.AppsConfigBundle");
     UserPreferencesManager p;
 
@@ -400,5 +394,3 @@ public class UserMessagePreferencesPane extends JmriPanel implements Preferences
         newMessageTab();
     }
 }
-
-/* @(#)UserMessagePreferencesPane.java */

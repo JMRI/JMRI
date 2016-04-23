@@ -176,7 +176,7 @@ public class SprogSystemConnectionMemo extends jmri.jmrix.SystemConnectionMemo {
                 getProgrammerManager());
 
         powerManager = new jmri.jmrix.sprog.SprogPowerManager(this);
-        jmri.InstanceManager.setPowerManager(powerManager);
+        jmri.InstanceManager.store(powerManager, jmri.PowerManager.class);
 
         jmri.InstanceManager.setTurnoutManager(new jmri.jmrix.sprog.SprogTurnoutManager());
 
