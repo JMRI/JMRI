@@ -403,7 +403,7 @@ public class JmriJFrameServlet extends HttpServlet {
 
     // The HttpServeletRequest does not like image maps, so we need to process
     // the parameter names to see if an image map was clicked
-    private Map<String, String[]> populateParameterMap(Map<String, String[]> map) {
+    protected Map<String, String[]> populateParameterMap(Map<String, String[]> map) {
         Map<String, String[]> parameters = new HashMap<>();
         map.entrySet().stream().forEach((entry) -> {
             String[] value = entry.getValue();
