@@ -212,15 +212,6 @@ public class InstanceManager {
     static InstanceInitializer initializer = new jmri.managers.DefaultInstanceInitializer();
 
     /**
-     * The "root" object is the instance manager that's answering requests for
-     * other instances. Protected access to allow changes during JUnit testing.
-     */
-    @edu.umd.cs.findbugs.annotations.SuppressFBWarnings(
-            value = "MS_PKGPROTECT",
-            justification = "Protected access to allow changes during JUnit testing.")
-    static protected InstanceManager root;
-
-    /**
      * Remove notification on changes to specific types
      */
     public static synchronized void removePropertyChangeListener(PropertyChangeListener l) {
