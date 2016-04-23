@@ -452,7 +452,7 @@ public class DecoderIndexFile extends XmlFile {
 
         List<Element> l = family.getChildren("model");
         if (log.isDebugEnabled()) {
-            log.debug("readFamily sees " + l.size() + " children");
+            log.trace("readFamily sees " + l.size() + " children");
         }
         Element modelElement;
         if (l.size() <= 0) {
