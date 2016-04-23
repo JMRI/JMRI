@@ -212,20 +212,11 @@ public class InstanceManagerTest extends TestCase implements InstanceManagerAuto
     // The minimal setup for log4J
     protected void setUp() {
         apps.tests.Log4JFixture.setUp();
-        resetInstanceManager();
+        jmri.util.JUnitUtil.resetInstanceManager();
     }
 
     protected void tearDown() {
         apps.tests.Log4JFixture.tearDown();
-    }
-
-    private void resetInstanceManager() {
-        new jmri.InstanceManager() {
-            protected void init() {
-                super.init();
-                root = this;
-            }
-        };
     }
 
 }

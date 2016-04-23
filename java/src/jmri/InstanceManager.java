@@ -58,7 +58,7 @@ import org.slf4j.LoggerFactory;
  */
 public class InstanceManager {
 
-    static final private HashMap<Class<?>, ArrayList<Object>> managerLists = new HashMap<>();
+    static final protected HashMap<Class<?>, ArrayList<Object>> managerLists = new HashMap<>();
 
     /* properties */
     public static String CONSIST_MANAGER = "consistmanager"; // NOI18N
@@ -210,22 +210,6 @@ public class InstanceManager {
     }
 
     static InstanceInitializer initializer = new jmri.managers.DefaultInstanceInitializer();
-
-    // @TODO This constructor needs to go away, but its being used by lots of test cases in older form 
-    // - see JUnitUtil.resetInstanceManager for replacement
-    //@Deprecated
-    //public InstanceManager() {
-    //    init();
-    //}
-
-    // This is a separate, protected member so it
-    // can be overridden in unit tests
-    @edu.umd.cs.findbugs.annotations.SuppressFBWarnings(value = "ST_WRITE_TO_STATIC_FROM_INSTANCE_METHOD",
-            justification = "Only used during system initialization")
-    protected void init() {
-        log.trace("running default init");
-        managerLists.clear();
-    }
 
     /**
      * The "root" object is the instance manager that's answering requests for
