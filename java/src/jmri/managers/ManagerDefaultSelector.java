@@ -50,6 +50,7 @@ public class ManagerDefaultSelector extends AbstractPreferencesProvider {
                 case "ConnectionNameChanged":
                     String oldName = (String) e.getOldValue();
                     String newName = (String) e.getNewValue();
+                    log.debug("ConnectionNameChanged from \"{}\" to \"{}\"", oldName, newName);
                     defaults.keySet().stream().forEach((c) -> {
                         String connectionName = this.defaults.get(c);
                         if (connectionName.equals(oldName)) {
@@ -62,6 +63,7 @@ public class ManagerDefaultSelector extends AbstractPreferencesProvider {
                     if (newState) {
                         SystemConnectionMemo memo = (SystemConnectionMemo) e.getSource();
                         String disabledName = memo.getUserName();
+                        log.debug("ConnectionDisabled true: \"{}\"", disabledName);
                         ArrayList<Class<?>> tmpArray = new ArrayList<>();
                         defaults.keySet().stream().forEach((c) -> {
                             String connectionName = ManagerDefaultSelector.this.defaults.get(c);
@@ -123,6 +125,7 @@ public class ManagerDefaultSelector extends AbstractPreferencesProvider {
     public void setDefault(Class<?> managerClass, String userName) {
         for (Item item : knownManagers) {
             if (item.managerClass.equals(managerClass)) {
+                log.debug("   setting default for \"{}\" to \"{}\"", managerClass, userName);
                 defaults.put(managerClass, userName);
                 return;
             }
@@ -150,7 +153,7 @@ public class ManagerDefaultSelector extends AbstractPreferencesProvider {
                 if (testName.equals(connectionName)) {
                     found = true;
                     // match, store
-                    log.debug("    set default {} to {}", c, memo.get(c));
+                    log.debug("   setting default for \"{}\" to \"{}\"", c, memo.get(c));
                     InstanceManager.setDefault(c, memo.get(c));
                     break;
                 }
@@ -160,6 +163,7 @@ public class ManagerDefaultSelector extends AbstractPreferencesProvider {
              * has currently been set.
              */
             if (!found) {
+                log.debug("!found, so resetting");
                 String currentName = null;
                 if (c == ThrottleManager.class && InstanceManager.throttleManagerInstance() != null) {
                     currentName = InstanceManager.throttleManagerInstance().getUserName();
