@@ -29,13 +29,8 @@ public class ReporterIconTest extends jmri.util.SwingTestCase {
         jf.getContentPane().add(to);
 
         // reset instance manager
-        jmri.InstanceManager i = new jmri.InstanceManager() {
-            protected void init() {
-                super.init();
-                root = this;
-            }
-        };
-        Assert.assertNotNull("Instance exists", i);
+        jmri.util.JUnitUtil.resetInstanceManager();
+
         // reset the LocoNet instances, so this behaves independent of 
         // any layout connection
         jmri.jmrix.loconet.LocoNetInterfaceScaffold tc = new jmri.jmrix.loconet.LocoNetInterfaceScaffold();
@@ -58,14 +53,8 @@ public class ReporterIconTest extends jmri.util.SwingTestCase {
         to = new ReporterIcon(panel);
         jf.getContentPane().add(to);
 
-        // reset instance manager
-        jmri.InstanceManager i = new jmri.InstanceManager() {
-            protected void init() {
-                super.init();
-                root = this;
-            }
-        };
-        Assert.assertNotNull("Instance exists", i);
+        jmri.util.JUnitUtil.resetInstanceManager();
+
         // reset the LocoNet instances, so this behaves independent of 
         // any layout connection
         jmri.jmrix.loconet.LocoNetInterfaceScaffold tc = new jmri.jmrix.loconet.LocoNetInterfaceScaffold();

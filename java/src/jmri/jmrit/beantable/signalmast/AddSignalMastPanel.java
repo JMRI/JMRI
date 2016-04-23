@@ -828,7 +828,7 @@ public class AddSignalMastPanel extends JPanel {
     }
 
     boolean headAssignedElseWhere(String head, String mast) {
-        int i = JOptionPane.showConfirmDialog(null, java.text.MessageFormat.format(Bundle.getMessage("AlreadyAssinged"),
+        int i = JOptionPane.showConfirmDialog(null, java.text.MessageFormat.format(Bundle.getMessage("AlreadyAssigned"),
                 new Object[]{head, mast}),
                 Bundle.getMessage("DuplicateHeadAssignTitle"),
                 JOptionPane.YES_NO_OPTION);

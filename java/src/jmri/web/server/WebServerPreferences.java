@@ -9,6 +9,7 @@ import java.util.Collections;
 import java.util.List;
 import java.util.prefs.BackingStoreException;
 import java.util.prefs.Preferences;
+import jmri.InstanceManager;
 import jmri.beans.Bean;
 import jmri.jmrit.XmlFile;
 import jmri.profile.ProfileManager;
@@ -50,7 +51,7 @@ public class WebServerPreferences extends Bean {
     private final ArrayList<String> disallowedFrames = new ArrayList<>(Arrays.asList(Bundle.getMessage("DefaultDisallowedFrames").split(";")));
     private String railRoadName = Bundle.getMessage("DefaultRailroadName");
     private boolean allowRemoteConfig = false;
-    protected boolean readonlyPower = true;
+    private boolean readonlyPower = true;
     private int port = 12080;
     private static Logger log = LoggerFactory.getLogger(WebServerPreferences.class.getName());
 
@@ -80,7 +81,7 @@ public class WebServerPreferences extends Bean {
         this.readPreferences(sharedPreferences);
         if (migrate) {
             try {
-                log.info("Migrating from old Webserver preferences in {} to new format in {}.", fileName, FileUtil.getAbsoluteFilename("profile:preferences"));
+                log.info("Migrating from old Webserver preferences in {} to new format in {}.", fileName, FileUtil.getAbsoluteFilename("profile:profile"));
                 sharedPreferences.sync();
             } catch (BackingStoreException ex) {
                 log.error("Unable to write WebServer preferences.", ex);
@@ -93,6 +94,13 @@ public class WebServerPreferences extends Bean {
         this.readPreferences(sharedPreferences);
     }
 
+    public static WebServerPreferences getDefault() {
+        if (InstanceManager.getDefault(WebServerPreferences.class) == null) {
+            InstanceManager.setDefault(WebServerPreferences.class, new WebServerPreferences());
+        }
+        return InstanceManager.getDefault(WebServerPreferences.class);
+    }
+
     private void readPreferences(Preferences sharedPreferences) {
         this.allowRemoteConfig = sharedPreferences.getBoolean(AllowRemoteConfig, this.allowRemoteConfig);
         this.clickDelay = sharedPreferences.getInt(ClickDelay, this.clickDelay);
@@ -102,8 +110,8 @@ public class WebServerPreferences extends Bean {
         this.refreshDelay = sharedPreferences.getInt(RefreshDelay, this.refreshDelay);
         this.useAjax = sharedPreferences.getBoolean(UseAjax, this.useAjax);
         try {
-            if (sharedPreferences.nodeExists(DisallowedFrames)) { // throws BackingStoreException
-                Preferences frames = sharedPreferences.node(DisallowedFrames);
+            Preferences frames = sharedPreferences.node(DisallowedFrames);
+            if (frames.keys().length != 0) {
                 this.disallowedFrames.clear();
                 for (String key : frames.keys()) { // throws BackingStoreException
                     this.disallowedFrames.add(frames.get(key, null));
@@ -115,36 +123,43 @@ public class WebServerPreferences extends Bean {
         }
         this.port = sharedPreferences.getInt(Port, this.port);
     }
-    
+
     public void load(Element child) {
         Attribute a;
-        if ((a = child.getAttribute(ClickDelay)) != null) {
+        a = child.getAttribute(ClickDelay);
+        if (a != null) {
             try {
-                setClickDelay(Integer.valueOf(a.getValue()));
-            } catch (NumberFormatException e) {
+                setClickDelay(a.getIntValue());
+            } catch (DataConversionException e) {
                 log.debug(e.getLocalizedMessage(), e);
             }
         }
-        if ((a = child.getAttribute(RefreshDelay)) != null) {
+        a = child.getAttribute(RefreshDelay);
+        if (a != null) {
             try {
-                setRefreshDelay(Integer.valueOf(a.getValue()));
-            } catch (NumberFormatException e) {
+                setRefreshDelay(a.getIntValue());
+            } catch (DataConversionException e) {
                 log.debug(e.getLocalizedMessage(), e);
             }
         }
-        if ((a = child.getAttribute(UseAjax)) != null) {
+        a = child.getAttribute(UseAjax);
+        if (a != null) {
             setUseAjax(Boolean.parseBoolean(a.getValue()));
         }
-        if ((a = child.getAttribute(Simple)) != null) {
+        a = child.getAttribute(Simple);
+        if (a != null) {
             setPlain(Boolean.parseBoolean(a.getValue()));
         }
-        if ((a = child.getAttribute(AllowRemoteConfig)) != null) {
+        a = child.getAttribute(AllowRemoteConfig);
+        if (a != null) {
             setAllowRemoteConfig(Boolean.parseBoolean(a.getValue()));
         }
-        if ((a = child.getAttribute(ReadonlyPower)) != null) {
+        a = child.getAttribute(ReadonlyPower);
+        if (a != null) {
             setReadonlyPower(Boolean.parseBoolean(a.getValue()));
         }
-        if ((a = child.getAttribute(Port)) != null) {
+        a = child.getAttribute(Port);
+        if (a != null) {
             try {
                 setPort(a.getIntValue());
             } catch (DataConversionException ex) {
@@ -152,7 +167,8 @@ public class WebServerPreferences extends Bean {
                 log.error("Unable to read port. Setting to default value.", ex);
             }
         }
-        if ((a = child.getAttribute(RailRoadName)) != null) {
+        a = child.getAttribute(RailRoadName);
+        if (a != null) {
             setRailRoadName(a.getValue());
         }
         Element df = child.getChild(DisallowedFrames);
@@ -231,12 +247,12 @@ public class WebServerPreferences extends Bean {
         this.getDisallowedFrames().stream().forEach((frame) -> {
             node.put(Integer.toString(this.disallowedFrames.indexOf(frame)), frame);
         });
+        sharedPreferences.putInt(Port, this.getPort());
         try {
             sharedPreferences.sync();
         } catch (BackingStoreException ex) {
             log.error("Exception while saving web server preferences", ex);
         }
-        sharedPreferences.putInt(Port, this.getPort());
         setIsDirty(false);  //  Resets only when stored
     }
 
@@ -360,6 +376,6 @@ public class WebServerPreferences extends Bean {
         return Bundle.getMessage("DefaultRailroadName");
     }
 
-    public static class WebServerPreferencesXml extends XmlFile {
+    private static class WebServerPreferencesXml extends XmlFile {
     }
 }

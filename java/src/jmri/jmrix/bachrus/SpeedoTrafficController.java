@@ -38,7 +38,7 @@ public class SpeedoTrafficController implements SpeedoInterface, SerialPortEvent
     protected Vector<SpeedoListener> cmdListeners = new Vector<SpeedoListener>();
 
     public boolean status() {
-        return (ostream != null & istream != null);
+        return (ostream != null && istream != null);
     }
 
     public synchronized void addSpeedoListener(SpeedoListener l) {

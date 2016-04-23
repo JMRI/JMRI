@@ -24,7 +24,7 @@ import org.slf4j.LoggerFactory;
  *
  * @Author Paul Bender Copyright (C) 2014
  */
-public class XBeeIOStream extends AbstractPortController implements XBeeListener {
+final public class XBeeIOStream extends AbstractPortController implements XBeeListener {
 
     private DataOutputStream pout = null; // for output to other classes
     private DataInputStream pin = null; // for input from other classes
@@ -193,7 +193,7 @@ public class XBeeIOStream extends AbstractPortController implements XBeeListener
                     log.debug("Attempting byte read");
                     byte b = pipe.readByte();
                     log.debug("Read Byte: {}", b);
-                    data.add(data.size(), new Integer(b));
+                    data.add(data.size(), Integer.valueOf(b));
                 } while (data.size() < 100 && pipe.available() > 0);
                 int dataArray[] = new int[data.size()];
                 int i = 0;

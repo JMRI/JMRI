@@ -55,7 +55,7 @@ public class LnPacketizer extends LnTrafficController {
 
     // The methods to implement the LocoNetInterface
     public boolean status() {
-        return (ostream != null & istream != null);
+        return (ostream != null && istream != null);
     }
 
     /**

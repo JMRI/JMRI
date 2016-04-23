@@ -1,4 +1,3 @@
-// SpecificReply.java
 package jmri.jmrix.rfid.generic.standalone;
 
 import jmri.jmrix.rfid.RfidProtocol;
@@ -11,7 +10,6 @@ import jmri.jmrix.rfid.RfidTrafficController;
  *
  * @author Bob Jacobsen Copyright (C) 2002, 2006, 2007, 2008
  * @author Matthew Harris Copyright (C) 2011
- * @version $Revision$
  * @since 2.11.4
  */
 public class StandaloneReply extends RfidReply {
@@ -51,5 +49,3 @@ public class StandaloneReply extends RfidReply {
     }
 
 }
-
-/* @(#)SpecificReply.java */

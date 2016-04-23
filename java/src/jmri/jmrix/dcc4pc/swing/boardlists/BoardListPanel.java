@@ -183,7 +183,7 @@ public class BoardListPanel extends jmri.jmrix.dcc4pc.swing.Dcc4PcPanel implemen
                 return rb.getString("ColumnDescription");
             }
             if (col == EDIT_COLUMN) {
-                return rb.getString("ColumnEdit");
+                return rb.getString(""); //no title above Edit buttons
             }
             return "";
         }

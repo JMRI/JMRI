@@ -1202,7 +1202,9 @@ public class LogixTableAction extends AbstractTableAction {
         if (_showReminder) {
             if (InstanceManager.getDefault(jmri.UserPreferencesManager.class) != null) {
                 InstanceManager.getDefault(jmri.UserPreferencesManager.class).
-                        showInfoMessage(rbx.getString("ReminderTitle"), rbx.getString("Reminder1"), getClassName(), "remindSaveLogix");
+                        showInfoMessage(Bundle.getMessage("ReminderTitle"), Bundle.getMessage("ReminderSaveString", Bundle.getMessage("MenuItemLogixTable")),
+                                getClassName(),
+                                "remindSaveLogix"); // NOI18N
             }
         }
     }
@@ -2178,7 +2180,7 @@ public class LogixTableAction extends AbstractTableAction {
         switch (type) {
             case Conditional.ALL_AND:
                 oper = Conditional.OPERATOR_AND;
-            // fall through
+            // fall through intended here
             case Conditional.ALL_OR:
                 for (int i = 1; i < _variableList.size(); i++) {
                     _variableList.get(i).setOpern(oper);
@@ -2187,6 +2189,7 @@ public class LogixTableAction extends AbstractTableAction {
                 break;
             case Conditional.MIXED:
                 _antecedentPanel.setVisible(true);
+                break;
             default:
                 break;
         }
@@ -3100,6 +3103,9 @@ public class LogixTableAction extends AbstractTableAction {
                             break;
                         case Audio.CMD_RESET_POSITION:
                             _actionBox.setSelectedIndex(9);
+                            break;
+                        default:
+                            log.warn("Unexpected _curAction.getActionData() of {}", _curAction.getActionData());
                             break;
                     }
                 }
@@ -4293,6 +4299,9 @@ public class LogixTableAction extends AbstractTableAction {
                         case 9:
                             _curAction.setActionData(Audio.CMD_RESET_POSITION);
                             break;
+                        default:
+                            log.warn("Unexpected _actionBox.getSelectedIndex() of {}", _actionBox.getSelectedIndex());
+                            break;
                     }
                 }
                 break;
@@ -4516,6 +4525,8 @@ public class LogixTableAction extends AbstractTableAction {
             case Conditional.ACTION_SET_LIGHT_TRANSITION_TIME:
                 errorNum = "Error29";
                 break;
+            default:
+                log.warn("Unexpected action type {} in displayBadNumberReference", actionType);
         }
         javax.swing.JOptionPane.showMessageDialog(
                 editConditionalFrame, java.text.MessageFormat.format(rbx.getString("Error9"),

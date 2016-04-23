@@ -1,4 +1,3 @@
-// CoreIdRfidProtocol.java
 package jmri.jmrix.rfid.protocol.coreid;
 
 import jmri.jmrix.AbstractMRReply;
@@ -22,7 +21,6 @@ import org.slf4j.LoggerFactory;
  * <P>
  *
  * @author Matthew Harris Copyright (C) 2014
- * @version $Revision$
  */
 public class CoreIdRfidProtocol extends RfidProtocol {
 
@@ -154,5 +152,3 @@ public class CoreIdRfidProtocol extends RfidProtocol {
     private static final Logger log = LoggerFactory.getLogger(CoreIdRfidProtocol.class.getName());
 
 }
-
-/* @(#)CoreIdRfidProtocol.java */

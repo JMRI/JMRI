@@ -1,4 +1,3 @@
-// AddSensorPanel.java
 package jmri.jmrit.beantable;
 
 import java.awt.FlowLayout;
@@ -17,17 +16,11 @@ import javax.swing.JTextField;
  *
  * @author	Bob Jacobsen Copyright (C) 2009
  * @author Pete Cressman Copyright (C) 2010
- * @version $Revision$
  */
 public class AddNewDevicePanel extends jmri.util.swing.JmriPanel {
 
-    /**
-     *
-     */
-    private static final long serialVersionUID = 5114030241732110250L;
-
     public AddNewDevicePanel(JTextField sys, JTextField userName,
-            String addButtonLabel, ActionListener listener) {
+            String addButtonLabel, ActionListener okListener, ActionListener cancelListener) {
         sysName = sys;
         setLayout(new BoxLayout(this, BoxLayout.Y_AXIS));
         JPanel p;
@@ -53,13 +46,25 @@ public class AddNewDevicePanel extends jmri.util.swing.JmriPanel {
         p.add(userName, c);
         add(p);
 
-        add(ok = new JButton(Bundle.getMessage(addButtonLabel)));
-        ok.addActionListener(listener);
+        // button(s) at bottom of window
+        JPanel panelBottom = new JPanel();
+        panelBottom.setLayout(new FlowLayout(FlowLayout.TRAILING));
+        // only add a Cancel button when the the OKbutton string is OK (so don't show on Picker Panels)
+        if (addButtonLabel.equals("ButtonOK")) {
+            panelBottom.add(cancel = new JButton(Bundle.getMessage("ButtonCancel")));
+            cancel.addActionListener(cancelListener);
+        }
+
+        panelBottom.add(ok = new JButton(Bundle.getMessage(addButtonLabel)));
+        ok.addActionListener(okListener);
+
         ok.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent a) {
                 reset();
             }
         });
+
+        add(panelBottom);
 
         reset();
         sysName.addKeyListener(new KeyAdapter() {
@@ -83,10 +88,8 @@ public class AddNewDevicePanel extends jmri.util.swing.JmriPanel {
     }
 
     JButton ok;
+    JButton cancel;
     JTextField sysName;
     JLabel sysNameLabel = new JLabel(Bundle.getMessage("LabelSystemName"));
     JLabel userNameLabel = new JLabel(Bundle.getMessage("LabelUserName"));
 }
-
-
-/* @(#)AddNewDevicePanel.java */

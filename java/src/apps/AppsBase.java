@@ -21,7 +21,7 @@ import jmri.jmrit.revhistory.FileHistory;
 import jmri.jmrit.signalling.EntryExitPairs;
 import jmri.managers.DefaultIdTagManager;
 import jmri.managers.DefaultShutDownManager;
-import jmri.managers.DefaultUserMessagePreferences;
+import jmri.managers.JmriUserPreferencesManager;
 import jmri.profile.Profile;
 import jmri.profile.ProfileManager;
 import jmri.script.JmriScriptEngineManager;
@@ -219,7 +219,7 @@ public abstract class AppsBase {
         InstanceManager.getDefault(FileHistory.class).addOperation("app", Application.getApplicationName(), null);
 
         // Install a user preferences manager
-        InstanceManager.store(DefaultUserMessagePreferences.getInstance(), UserPreferencesManager.class);
+        InstanceManager.store(JmriUserPreferencesManager.getDefault(), UserPreferencesManager.class);
 
         // install the abstract action model that allows items to be added to the, both 
         // CreateButton and Perform Action Model use a common Abstract class
@@ -443,7 +443,7 @@ public abstract class AppsBase {
     /**
      * The application decided to quit, handle that.
      */
-    static public Boolean handleQuit() {
+    static public boolean handleQuit() {
         log.debug("Start handleQuit");
         try {
             return InstanceManager.shutDownManagerInstance().shutdown();
@@ -456,7 +456,7 @@ public abstract class AppsBase {
     /**
      * The application decided to restart, handle that.
      */
-    static public Boolean handleRestart() {
+    static public boolean handleRestart() {
         log.debug("Start handleRestart");
         try {
             return InstanceManager.shutDownManagerInstance().restart();

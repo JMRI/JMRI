@@ -53,7 +53,7 @@ public class AddEntryExitPairPanel extends jmri.util.swing.JmriPanel {
     JComboBox<String> fromPoint = new JComboBox<String>();
     JComboBox<String> toPoint = new JComboBox<String>();
 
-    String[] interlockTypes = {"Set Turnouts Only", "Set Turnouts and SignalMasts", "Full Interlock"};
+    String[] interlockTypes = {"Set Turnouts Only", "Set Turnouts and Signal Masts", "Full Interlock"};
     JComboBox<String> typeBox = new JComboBox<String>(interlockTypes);
 
     ArrayList<LayoutEditor> panels;
@@ -361,7 +361,7 @@ public class AddEntryExitPairPanel extends jmri.util.swing.JmriPanel {
                     return !nxPairs.isEnabled(source.get(row), panel, dest.get(row));
                 case CLEARCOL:
                     return Bundle.getMessage("ButtonClear");
-                case DELETECOL:  //
+                case DELETECOL:
                     return Bundle.getMessage("ButtonDelete");
                 case TYPECOL:
                     return NXTYPE_NAMES[nxPairs.getEntryExitType(source.get(row), panel, dest.get(row))];
@@ -390,7 +390,7 @@ public class AddEntryExitPairPanel extends jmri.util.swing.JmriPanel {
                 String val = (String) value;
                 if (val.equals("Turnout")) {
                     nxPairs.setEntryExitType(source.get(row), panel, dest.get(row), 0x00);
-                } else if (val.equals("SignalMast")) {
+                } else if (val.equals("Signal Mast")) {
                     nxPairs.setEntryExitType(source.get(row), panel, dest.get(row), 0x01);
                 } else if (val.equals("Full InterLock")) {
                     nxPairs.setEntryExitType(source.get(row), panel, dest.get(row), 0x02);
@@ -517,7 +517,7 @@ public class AddEntryExitPairPanel extends jmri.util.swing.JmriPanel {
         }
     }
 
-    String[] NXTYPE_NAMES = {"Turnout", "SignalMast", "Full InterLock"};
+    String[] NXTYPE_NAMES = {"Turnout", "Signal Mast", "Full InterLock"};
 
     protected void configDeleteColumn(JTable table) {
         // have the delete column hold a button

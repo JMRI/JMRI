@@ -248,11 +248,11 @@ public class AllocatedSection {
             }
         }
 
-        if (mEntered && !mExited && mActiveTrain.getResetWhenDone() && mActiveTrain.getDelayedRestart() != ActiveTrain.NODELAY) {
-            if (getSequence() == mActiveTrain.getEndBlockSectionSequenceNumber()) {
-                mActiveTrain.setRestart();
-            }
-        }
+ //       if (mEntered && !mExited && mActiveTrain.getResetWhenDone() && mActiveTrain.getDelayedRestart() != ActiveTrain.NODELAY) {
+ //           if (getSequence() == mActiveTrain.getEndBlockSectionSequenceNumber()) {
+ //               mActiveTrain.setRestart();
+ //           }
+ //       }
 
         DispatcherFrame.instance().sectionOccupancyChanged();
     }

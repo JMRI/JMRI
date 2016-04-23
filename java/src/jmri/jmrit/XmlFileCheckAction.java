@@ -1,4 +1,3 @@
-// XmlFileCheckAction.java
 package jmri.jmrit;
 
 import java.awt.event.ActionEvent;
@@ -14,16 +13,10 @@ import org.slf4j.LoggerFactory;
  * Make sure an XML file is readable, without doing a DTD validation.
  *
  * @author	Bob Jacobsen Copyright (C) 2001, 2005, 2007
- * @version	$Revision$
  * @see jmri.jmrit.XmlFile
  * @see jmri.jmrit.XmlFileValidateAction
  */
 public class XmlFileCheckAction extends AbstractAction {
-
-    /**
-     *
-     */
-    private static final long serialVersionUID = -1237100382487992245L;
 
     public XmlFileCheckAction(String s, JPanel who) {
         super(s);

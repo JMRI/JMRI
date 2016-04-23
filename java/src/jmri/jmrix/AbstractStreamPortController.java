@@ -1,4 +1,3 @@
-// AbstractStreamPortController.java
 package jmri.jmrix;
 
 import java.io.DataInputStream;
@@ -12,7 +11,6 @@ import java.io.DataOutputStream;
  * portAdapter interface, along with any system specific requirements.
  * <P>
  * @author	Paul Bender Copyright (C) 2014
- * @version	$Revision$
  */
 public abstract class AbstractStreamPortController extends AbstractPortController {
 

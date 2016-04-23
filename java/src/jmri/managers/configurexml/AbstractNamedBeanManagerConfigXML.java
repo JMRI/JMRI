@@ -209,7 +209,7 @@ public abstract class AbstractNamedBeanManagerConfigXML extends jmri.configurexm
      */
     void storeProperties(NamedBean t, Element elem) {
         java.util.Set<String> s = t.getPropertyKeys();
-        if (s == null || s.size() == 0) {
+        if (s.size() == 0) {
             return;
         }
         Element ret = new Element("properties");
@@ -219,7 +219,7 @@ public abstract class AbstractNamedBeanManagerConfigXML extends jmri.configurexm
             Element p = new Element("property");
             ret.addContent(p);
             p.addContent(new Element("key")
-                    .setText(key.toString())
+                    .setText(key)
             );
             if (value != null) {
                 p.addContent(new Element("value")
@@ -274,7 +274,9 @@ public abstract class AbstractNamedBeanManagerConfigXML extends jmri.configurexm
 
                 // store
                 t.setProperty(key, value);
-            } catch (Exception ex) {
+            } catch (ClassNotFoundException | NoSuchMethodException 
+                        | InstantiationException | IllegalAccessException 
+                        | java.lang.reflect.InvocationTargetException ex) {
                 log.error("Error loading properties", ex);
             }
         }

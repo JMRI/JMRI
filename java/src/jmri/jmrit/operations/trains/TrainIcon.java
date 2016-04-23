@@ -47,7 +47,10 @@ public class TrainIcon extends LocoIcon {
      */
     public boolean showPopUp(JPopupMenu popup) {
         if (_train != null) {
-            popup.add(new AbstractAction(Bundle.getMessage("Move")) {
+            // first action is either "Move" or "Terminate" train
+            String actionText = (_train.getCurrentLocation() == _train.getTrainTerminatesRouteLocation())
+                    ? Bundle.getMessage("Terminate") : Bundle.getMessage("Move");
+            popup.add(new AbstractAction(actionText) {
                 public void actionPerformed(ActionEvent e) {
                     _train.move();
                 }

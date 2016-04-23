@@ -24,7 +24,7 @@ public class EcosPreferences /*implements java.beans.PropertyChangeListener*/ {
         if (ecosPreferencesShutDownTask == null) {
             ecosPreferencesShutDownTask = new QuietShutDownTask("Ecos Preferences Shutdown") {
                 @Override
-                public boolean doAction() {
+                public boolean execute() {
                     if (getChangeMade()) {
                         jmri.InstanceManager.configureManagerInstance().storePrefs();
                     }

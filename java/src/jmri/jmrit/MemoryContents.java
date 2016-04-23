@@ -1,4 +1,3 @@
-// MemoryContents.java
 package jmri.jmrit;
 
 import java.io.BufferedReader;
@@ -81,7 +80,6 @@ import org.slf4j.LoggerFactory;
  *
  * @author	Bob Jacobsen Copyright (C) 2005, 2008
  * @author B. Milhaupt Copyright (C) 2014
- * @version $Revision$
  */
 public class MemoryContents {
 
@@ -704,7 +702,7 @@ public class MemoryContents {
             String message = "No Data Records found in file - aborting."; // NOI18N
             log.error(message);
             throw new MemoryFileNoDataRecordsException(message);
-        } else if (foundDataRecords && !foundEOFRecord) {
+        } else if (!foundEOFRecord) {  // found Data Records, but no EOF
             String message = "No EOF Record found in file - aborting."; // NOI18N
             log.error(message);
             throw new MemoryFileNoEOFRecordException(message);
@@ -838,7 +836,7 @@ public class MemoryContents {
                             int addrMidSByte = ((addressForAddressField) - (65536 * addrMostSByte)) / 256;
                             int addrLeastSByte = (addressForAddressField) - (256 * addrMidSByte) - (65536 * addrMostSByte);
                             int count = j - startOffset;
-                            if ((write == true) && (j == i + (blocksize - 1))) {
+                            if ( j == i + (blocksize - 1) ) {
                                 count++;
                             }
                             if (log.isDebugEnabled()) {
@@ -1305,11 +1303,6 @@ public class MemoryContents {
      */
     public class MemoryFileException extends jmri.JmriException {
 
-        /**
-         *
-         */
-        private static final long serialVersionUID = -1842436277554257895L;
-
         public MemoryFileException() {
             super();
         }
@@ -1323,11 +1316,6 @@ public class MemoryContents {
      * An exception for a record which has incorrect checksum.
      */
     public class MemoryFileChecksumException extends MemoryFileException {
-
-        /**
-         *
-         */
-        private static final long serialVersionUID = -2557753591967552634L;
 
         public MemoryFileChecksumException() {
             super();
@@ -1343,11 +1331,6 @@ public class MemoryContents {
      * supported.
      */
     public class MemoryFileUnknownRecordType extends MemoryFileException {
-
-        /**
-         *
-         */
-        private static final long serialVersionUID = 7780197492467941350L;
 
         public MemoryFileUnknownRecordType() {
             super();
@@ -1367,11 +1350,6 @@ public class MemoryContents {
      */
     public class MemoryFileRecordContentException extends MemoryFileException {
 
-        /**
-         *
-         */
-        private static final long serialVersionUID = 3879649549206375793L;
-
         public MemoryFileRecordContentException() {
             super();
         }
@@ -1388,11 +1366,6 @@ public class MemoryContents {
      */
     public class MemoryFileRecordLengthException extends MemoryFileException {
 
-        /**
-         *
-         */
-        private static final long serialVersionUID = -6154349477467623278L;
-
         public MemoryFileRecordLengthException() {
             super();
         }
@@ -1406,11 +1379,6 @@ public class MemoryContents {
      * An exception for an unsupported addressing format
      */
     public class MemoryFileAddressingFormatException extends MemoryFileException {
-
-        /**
-         *
-         */
-        private static final long serialVersionUID = 4464776547895893181L;
 
         public MemoryFileAddressingFormatException() {
             super();
@@ -1426,11 +1394,6 @@ public class MemoryContents {
      */
     public class MemoryFileAddressingRangeException extends MemoryFileException {
 
-        /**
-         *
-         */
-        private static final long serialVersionUID = 4996513449040118695L;
-
         public MemoryFileAddressingRangeException() {
             super();
         }
@@ -1444,11 +1407,6 @@ public class MemoryContents {
      * An exception for a file with no data records
      */
     public class MemoryFileNoDataRecordsException extends MemoryFileException {
-
-        /**
-         *
-         */
-        private static final long serialVersionUID = -8046649275084033197L;
 
         public MemoryFileNoDataRecordsException() {
             super();
@@ -1464,11 +1422,6 @@ public class MemoryContents {
      */
     public class MemoryFileNoEOFRecordException extends MemoryFileException {
 
-        /**
-         *
-         */
-        private static final long serialVersionUID = -5011032819427318298L;
-
         public MemoryFileNoEOFRecordException() {
             super();
         }
@@ -1483,11 +1436,6 @@ public class MemoryContents {
      * record
      */
     public class MemoryFileRecordFoundAfterEOFRecord extends MemoryFileException {
-
-        /**
-         *
-         */
-        private static final long serialVersionUID = 5921252212959638124L;
 
         public MemoryFileRecordFoundAfterEOFRecord() {
             super();
@@ -1514,5 +1462,3 @@ public class MemoryContents {
     
     private final static Logger log = LoggerFactory.getLogger(MemoryContents.class.getName());
 }
-
-/* @(#)MemoryContents.java */

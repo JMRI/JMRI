@@ -37,10 +37,6 @@ import org.slf4j.LoggerFactory;
  */
 public class ResizableImagePanel extends JPanel implements FileDrop.Listener, ComponentListener {
 
-    /**
-     *
-     */
-    private static final long serialVersionUID = 4576214324220842001L;
     private String _imagePath;
     protected JLabel bgImg = null;
     private BufferedImage image = null;

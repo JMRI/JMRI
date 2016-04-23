@@ -1,17 +1,17 @@
 package jmri.util;
 
 import java.lang.reflect.InvocationTargetException;
-
 import jmri.ConditionalManager;
 import jmri.ConfigureManager;
 import jmri.InstanceManager;
 import jmri.JmriException;
 import jmri.LogixManager;
-import jmri.NamedBean;
 import jmri.MemoryManager;
+import jmri.NamedBean;
 import jmri.PowerManager;
 import jmri.PowerManagerScaffold;
 import jmri.ReporterManager;
+import jmri.ShutDownManager;
 import jmri.SignalHeadManager;
 import jmri.SignalMastLogicManager;
 import jmri.implementation.JmriConfigurationManager;
@@ -26,10 +26,7 @@ import jmri.managers.DefaultLogixManager;
 import jmri.managers.DefaultMemoryManager;
 import jmri.managers.DefaultSignalMastLogicManager;
 import jmri.managers.InternalReporterManager;
-import jmri.managers.InternalLightManager;
 import jmri.managers.InternalSensorManager;
-import jmri.managers.InternalTurnoutManager;
-
 import junit.framework.Assert;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -168,15 +165,12 @@ public class JUnitUtil {
         // clear system connections
         jmri.jmrix.SystemConnectionMemo.reset();
 
-        // create a new instance manager
+        // create a new instance manager & use initializer to clear static list of state
         new InstanceManager() {
-            @Override
-            protected void init() {
-                root = null;
-                super.init();
-                root = this;
-            }
+            { managerLists.clear(); }
         };
+        
+        // add the NamedBeanHandleManager, which is always needed
         InstanceManager.store(new jmri.NamedBeanHandleManager(), jmri.NamedBeanHandleManager.class);
     }
 
@@ -209,6 +203,8 @@ public class JUnitUtil {
     public static void initInternalSensorManager() {
         // now done automatically by InstanceManager's autoinit
         jmri.InstanceManager.sensorManagerInstance();
+        InternalSensorManager.setDefaultStateForNewSensors(jmri.Sensor.UNKNOWN);
+
     }
 
     public static void initMemoryManager() {
@@ -293,6 +289,12 @@ public class JUnitUtil {
         ConditionalManager m = new DefaultConditionalManager();
         if (InstanceManager.configureManagerInstance() != null) {
             InstanceManager.configureManagerInstance().registerConfig(m, jmri.Manager.CONDITIONALS);
+        }
+    }
+    
+    public static void initShutDownManager() {
+        if (InstanceManager.getDefault(ShutDownManager.class) == null) {
+            InstanceManager.setDefault(ShutDownManager.class, new MockShutDownManager());
         }
     }
 
