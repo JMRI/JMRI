@@ -507,10 +507,10 @@ public class TrainsTableModel extends javax.swing.table.AbstractTableModel imple
             log.debug("Property change {} old: {} new: {}",
                     e.getPropertyName(), e.getOldValue(), e.getNewValue()); // NOI18N
         }
-        if (e.getPropertyName().equals(Train.STATUS_CHANGED_PROPERTY)
-                || e.getPropertyName().equals(Train.TRAIN_LOCATION_CHANGED_PROPERTY)) {
-            _frame.setModifiedFlag(true);
-        }
+//        if (e.getPropertyName().equals(Train.STATUS_CHANGED_PROPERTY)
+//                || e.getPropertyName().equals(Train.TRAIN_LOCATION_CHANGED_PROPERTY)) {
+//            _frame.setModifiedFlag(true);
+//        }
         if (e.getPropertyName().equals(TrainManager.LISTLENGTH_CHANGED_PROPERTY)
                 || e.getPropertyName().equals(TrainManager.PRINTPREVIEW_CHANGED_PROPERTY)
                 || e.getPropertyName().equals(TrainManager.OPEN_FILE_CHANGED_PROPERTY)

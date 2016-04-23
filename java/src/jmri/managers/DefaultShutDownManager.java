@@ -148,7 +148,7 @@ public class DefaultShutDownManager implements ShutDownManager {
                 Arrays.asList(Frame.getFrames()).stream().forEach((frame) -> {
                     // do not run on thread, or in parallel, as System.exit()
                     // will get called before windows can close
-                    log.debug("Closing frame \"{}\"", frame.getName());
+                    log.debug("Closing frame \"{}\", title: \"{}\"", frame.getName(), frame.getTitle());
                     Date timer = new Date();
                     frame.dispatchEvent(new WindowEvent(frame, WindowEvent.WINDOW_CLOSING));
                     log.debug("Frame \"{}\" took {} milliseconds to close", frame.getName(), new Date().getTime() - timer.getTime());
