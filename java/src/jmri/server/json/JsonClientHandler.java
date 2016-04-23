@@ -10,7 +10,6 @@ import java.util.Locale;
 import java.util.ServiceLoader;
 import jmri.JmriException;
 import jmri.jmris.json.JsonConsistServer;
-import jmri.jmris.json.JsonLightServer;
 import jmri.jmris.json.JsonMemoryServer;
 import jmri.jmris.json.JsonOperationsServer;
 import jmri.jmris.json.JsonProgrammerServer;
@@ -30,7 +29,6 @@ import static jmri.server.json.JSON.ENGINES;
 import static jmri.server.json.JSON.FORMAT;
 import static jmri.server.json.JSON.GOODBYE;
 import static jmri.server.json.JSON.HELLO;
-import static jmri.server.json.JSON.LIGHT;
 import static jmri.server.json.JSON.LIGHTS;
 import static jmri.server.json.JSON.LIST;
 import static jmri.server.json.JSON.LOCALE;
@@ -68,7 +66,6 @@ import org.slf4j.LoggerFactory;
 public class JsonClientHandler {
 
     private final JsonConsistServer consistServer;
-    private final JsonLightServer lightServer;
     private final JsonMemoryServer memoryServer;
     private final JsonOperationsServer operationsServer;
     private final JsonProgrammerServer programmerServer;
@@ -85,7 +82,6 @@ public class JsonClientHandler {
     public JsonClientHandler(JsonConnection connection) {
         this.connection = connection;
         this.consistServer = new JsonConsistServer(this.connection);
-        this.lightServer = new JsonLightServer(this.connection);
         this.memoryServer = new JsonMemoryServer(this.connection);
         this.operationsServer = new JsonOperationsServer(this.connection);
         this.programmerServer = new JsonProgrammerServer(this.connection);
@@ -113,7 +109,6 @@ public class JsonClientHandler {
     public void dispose() {
         this.throttleServer.dispose();
         this.consistServer.dispose();
-        this.lightServer.dispose();
         this.memoryServer.dispose();
         this.operationsServer.dispose();
         this.programmerServer.dispose();
@@ -265,7 +260,7 @@ public class JsonClientHandler {
                             }
                             return;
                         } else {
-                            this.sendErrorMessage(404, Bundle.getMessage(this.connection.getLocale(), "ErrorUnknownList", list));
+                            this.sendErrorMessage(404, Bundle.getMessage(this.connection.getLocale(), "ErrorUnknownType", list));
                             return;
                         }
                 }
@@ -275,9 +270,6 @@ public class JsonClientHandler {
                 switch (type) {
                     case CONSIST:
                         this.consistServer.parseRequest(this.connection.getLocale(), data);
-                        break;
-                    case LIGHT:
-                        this.lightServer.parseRequest(this.connection.getLocale(), data);
                         break;
                     case MEMORY:
                         this.memoryServer.parseRequest(this.connection.getLocale(), data);
@@ -300,12 +292,6 @@ public class JsonClientHandler {
                     case REPORTER:
                         this.reporterServer.parseRequest(this.connection.getLocale(), data);
                         break;
-//                    case ROSTER_ENTRY:
-//                        this.rosterServer.parseRosterEntryRequest(this.connection.getLocale(), data);
-//                        break;
-//                    case ROSTER_GROUP:
-//                        this.rosterServer.parseRosterGroupRequest(this.connection.getLocale(), data);
-//                        break;
                     case ROUTE:
                         this.routeServer.parseRequest(this.connection.getLocale(), data);
                         break;

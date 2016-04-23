@@ -25,7 +25,7 @@ import static jmri.server.json.light.JsonLightServiceFactory.LIGHT;
  *
  * @author Randall Wood
  */
-class JsonLightHttpService extends JsonHttpService {
+public class JsonLightHttpService extends JsonHttpService {
 
     public JsonLightHttpService(ObjectMapper mapper) {
         super(mapper);
@@ -36,58 +36,56 @@ class JsonLightHttpService extends JsonHttpService {
         ObjectNode root = mapper.createObjectNode();
         root.put(TYPE, LIGHT);
         ObjectNode data = root.putObject(DATA);
-        try {
-            Light light = InstanceManager.lightManagerInstance().getLight(name);
-            data.put(NAME, light.getSystemName());
-            data.put(USERNAME, light.getUserName());
-            data.put(COMMENT, light.getComment());
-            switch (light.getState()) {
-                case Light.ON:
-                    data.put(STATE, ON);
-                    break;
-                case Light.OFF:
-                    data.put(STATE, OFF);
-                    break;
-                case Light.INCONSISTENT:
-                    data.put(STATE, INCONSISTENT);
-                    break;
-                case Light.UNKNOWN:
-                default:
-                    data.put(STATE, UNKNOWN);
-                    break;
-            }
-        } catch (NullPointerException ex) {
+        Light light = InstanceManager.lightManagerInstance().getLight(name);
+        if (light == null) {
             throw new JsonException(404, Bundle.getMessage(locale, "ErrorObject", LIGHT, name));
+        }
+        data.put(NAME, light.getSystemName());
+        data.put(USERNAME, light.getUserName());
+        data.put(COMMENT, light.getComment());
+        switch (light.getState()) {
+            case Light.ON:
+                data.put(STATE, ON);
+                break;
+            case Light.OFF:
+                data.put(STATE, OFF);
+                break;
+            case Light.INCONSISTENT:
+                data.put(STATE, INCONSISTENT);
+                break;
+            case Light.UNKNOWN:
+            default:
+                data.put(STATE, UNKNOWN);
+                break;
         }
         return root;
     }
 
     @Override
     public JsonNode doPost(String type, String name, JsonNode data, Locale locale) throws JsonException {
-        try {
-            Light light = InstanceManager.lightManagerInstance().getLight(name);
-            if (data.path(USERNAME).isTextual()) {
-                light.setUserName(data.path(USERNAME).asText());
-            }
-            if (data.path(COMMENT).isTextual()) {
-                light.setComment(data.path(COMMENT).asText());
-            }
-            int state = data.path(STATE).asInt(UNKNOWN);
-            switch (state) {
-                case ON:
-                    light.setState(Light.ON);
-                    break;
-                case OFF:
-                    light.setState(Light.OFF);
-                    break;
-                case UNKNOWN:
-                    // leave state alone in this case
-                    break;
-                default:
-                    throw new JsonException(400, Bundle.getMessage(locale, "ErrorUnknownState", LIGHT, state));
-            }
-        } catch (NullPointerException ex) {
+        Light light = InstanceManager.lightManagerInstance().getLight(name);
+        if (light == null) {
             throw new JsonException(404, Bundle.getMessage(locale, "ErrorObject", LIGHT, name));
+        }
+        if (data.path(USERNAME).isTextual()) {
+            light.setUserName(data.path(USERNAME).asText());
+        }
+        if (data.path(COMMENT).isTextual()) {
+            light.setComment(data.path(COMMENT).asText());
+        }
+        int state = data.path(STATE).asInt(UNKNOWN);
+        switch (state) {
+            case ON:
+                light.setState(Light.ON);
+                break;
+            case OFF:
+                light.setState(Light.OFF);
+                break;
+            case UNKNOWN:
+                // leave state alone in this case
+                break;
+            default:
+                throw new JsonException(400, Bundle.getMessage(locale, "ErrorUnknownState", LIGHT, state));
         }
         return this.doGet(type, name, locale);
     }

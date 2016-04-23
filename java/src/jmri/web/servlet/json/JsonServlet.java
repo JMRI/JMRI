@@ -24,8 +24,6 @@ import static jmri.jmris.json.JSON.ENGINE;
 import static jmri.jmris.json.JSON.ENGINES;
 import static jmri.jmris.json.JSON.FORMAT;
 import static jmri.jmris.json.JSON.HELLO;
-import static jmri.jmris.json.JSON.LIGHT;
-import static jmri.jmris.json.JSON.LIGHTS;
 import static jmri.jmris.json.JSON.LOCATION;
 import static jmri.jmris.json.JSON.LOCATIONS;
 import static jmri.jmris.json.JSON.MEMORIES;
@@ -91,7 +89,6 @@ import org.slf4j.LoggerFactory;
  */
 public class JsonServlet extends WebSocketServlet {
 
-    private static final long serialVersionUID = -671593634343578915L;
     private transient ObjectMapper mapper;
     private final transient HashMap<String, HashSet<JsonHttpService>> services = new HashMap<>();
     private static final Logger log = LoggerFactory.getLogger(JsonServlet.class);
@@ -185,9 +182,6 @@ public class JsonServlet extends WebSocketServlet {
                         case ENGINES:
                             reply = JsonUtil.getEngines(request.getLocale());
                             break;
-                        case LIGHTS:
-                            reply = JsonUtil.getLights(request.getLocale());
-                            break;
                         case LOCATIONS:
                             reply = JsonUtil.getLocations(request.getLocale());
                             break;
@@ -275,9 +269,6 @@ public class JsonServlet extends WebSocketServlet {
                             break;
                         case ENGINE:
                             reply = JsonUtil.getEngine(request.getLocale(), name);
-                            break;
-                        case LIGHT:
-                            reply = JsonUtil.getLight(request.getLocale(), name);
                             break;
                         case LOCATION:
                             reply = JsonUtil.getLocation(request.getLocale(), name);
@@ -407,10 +398,6 @@ public class JsonServlet extends WebSocketServlet {
                             JsonUtil.setConsist(request.getLocale(), JsonUtil.addressForString(name), data);
                             reply = JsonUtil.getConsist(request.getLocale(), JsonUtil.addressForString(name));
                             break;
-                        case LIGHT:
-                            JsonUtil.setLight(request.getLocale(), name, data);
-                            reply = JsonUtil.getLight(request.getLocale(), name);
-                            break;
                         case MEMORY:
                             JsonUtil.setMemory(request.getLocale(), name, data);
                             reply = JsonUtil.getMemory(request.getLocale(), name);
@@ -523,10 +510,6 @@ public class JsonServlet extends WebSocketServlet {
                         case CONSIST:
                             JsonUtil.putConsist(request.getLocale(), JsonUtil.addressForString(name), data);
                             reply = JsonUtil.getConsist(request.getLocale(), JsonUtil.addressForString(name));
-                            break;
-                        case LIGHT:
-                            JsonUtil.putLight(request.getLocale(), name, data);
-                            reply = JsonUtil.getLight(request.getLocale(), name);
                             break;
                         case MEMORY:
                             JsonUtil.putMemory(request.getLocale(), name, data);

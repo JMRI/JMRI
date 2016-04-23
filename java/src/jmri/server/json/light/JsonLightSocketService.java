@@ -22,7 +22,7 @@ import static jmri.server.json.light.JsonLightServiceFactory.LIGHT;
  *
  * @author Randall Wood
  */
-class JsonLightSocketService extends JsonSocketService {
+public class JsonLightSocketService extends JsonSocketService {
 
     private final JsonLightHttpService service;
     private final HashMap<String, LightListener> lights = new HashMap<>();
