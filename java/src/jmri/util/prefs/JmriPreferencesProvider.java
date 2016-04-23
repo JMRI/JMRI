@@ -205,7 +205,7 @@ public final class JmriPreferencesProvider {
         public JmriPreferences(AbstractPreferences parent, String name) {
             super(parent, name);
 
-            log.debug("Instantiating node " + name);
+            log.trace("Instantiating node \"{}\"", name);
 
             root = new TreeMap<>();
             children = new TreeMap<>();

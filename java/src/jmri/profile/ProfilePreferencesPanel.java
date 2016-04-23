@@ -721,6 +721,7 @@ public final class ProfilePreferencesPanel extends JPanel implements Preferences
         // is required only if next profile is not null and is not the same
         // profile as the current profile
         return ProfileManager.getDefault().getNextActiveProfile() != null
+                && ProfileManager.getDefault().getActiveProfile() != null
                 && !ProfileManager.getDefault().getActiveProfile().equals(ProfileManager.getDefault().getNextActiveProfile()
                 );
     }
