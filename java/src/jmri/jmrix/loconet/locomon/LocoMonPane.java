@@ -91,8 +91,8 @@ public class LocoMonPane extends jmri.jmrix.AbstractMonPane implements LocoNetLi
         // display the formatted data in the monitor pane
         nextLine(formatted, raw);
         
-        //include loconet monitoring in debug log if enabled
-        log.debug(formatted.substring(0, formatted.length()-1)); 
+        //include loconet monitoring in session.log if TRACE enabled
+        log.trace(formatted.substring(0, formatted.length()-1)); 
 
     }
 
