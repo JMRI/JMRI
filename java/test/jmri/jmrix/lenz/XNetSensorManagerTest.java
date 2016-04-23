@@ -21,13 +21,8 @@ public class XNetSensorManagerTest extends TestCase {
         XNetInterfaceScaffold xnis = new XNetInterfaceScaffold(new LenzCommandStation());
         Assert.assertNotNull("exists", xnis);
 
-        // create and register the manager object in a new instance manager
-        new jmri.InstanceManager() {
-            protected void init() {
-                super.init();
-                root = null;
-            }
-        };
+        jmri.util.JUnitUtil.resetInstanceManager();
+
         XNetSensorManager l = new XNetSensorManager(xnis, "X");
         jmri.InstanceManager.setSensorManager(l);
 
@@ -92,12 +87,8 @@ public class XNetSensorManagerTest extends TestCase {
         // prepare an interface, register
         XNetInterfaceScaffold xnis = new XNetInterfaceScaffold(new LenzCommandStation());
         // create and register the manager object in a new instance manager
-        new jmri.InstanceManager() {
-            protected void init() {
-                super.init();
-                root = null;
-            }
-        };
+        jmri.util.JUnitUtil.resetInstanceManager();
+
         XNetSensorManager l = new XNetSensorManager(xnis, "X");
         jmri.InstanceManager.setSensorManager(l);
 

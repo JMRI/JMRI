@@ -57,7 +57,7 @@ public class MarklinSystemConnectionMemo extends jmri.jmrix.SystemConnectionMemo
     public void configureManagers() {
 
         powerManager = new jmri.jmrix.marklin.MarklinPowerManager(getTrafficController());
-        jmri.InstanceManager.setPowerManager(powerManager);
+        jmri.InstanceManager.store(powerManager, jmri.PowerManager.class);
 
         turnoutManager = new jmri.jmrix.marklin.MarklinTurnoutManager(this);
         jmri.InstanceManager.setTurnoutManager(turnoutManager);

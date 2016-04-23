@@ -278,7 +278,7 @@ public class SRCPBusConnectionMemo extends jmri.jmrix.SystemConnectionMemo imple
                             jmri.InstanceManager.setProgrammerManager(getProgrammerManager());
                         } else if (DeviceType.equals("POWER")) {
                             setPowerManager(new jmri.jmrix.srcp.SRCPPowerManager(this, _bus));
-                            jmri.InstanceManager.setPowerManager(getPowerManager());
+                            jmri.InstanceManager.store(getPowerManager(), jmri.PowerManager.class);
                         } else if (DeviceType.equals("GL")) {
                             setThrottleManager(new jmri.jmrix.srcp.SRCPThrottleManager(this));
                             jmri.InstanceManager.setThrottleManager(getThrottleManager());

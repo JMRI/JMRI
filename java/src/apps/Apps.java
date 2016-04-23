@@ -228,8 +228,6 @@ public class Apps extends JPanel implements PropertyChangeListener, WindowListen
         InstanceManager.store(new NamedBeanHandleManager(), NamedBeanHandleManager.class);
         // Install an IdTag manager
         InstanceManager.store(new DefaultIdTagManager(), IdTagManager.class);
-        //Install Entry Exit Pairs Manager
-        InstanceManager.store(new EntryExitPairs(), EntryExitPairs.class);
 
         // install preference manager
         InstanceManager.store(new TabbedPreferences(), TabbedPreferences.class);
@@ -280,6 +278,10 @@ public class Apps extends JPanel implements PropertyChangeListener, WindowListen
             log.info("No saved preferences, will open preferences window.  Searched for {}", file.getPath());
             configOK = false;
         }
+
+        //Install Entry Exit Pairs Manager
+        //   Done after load config file so that connection-system-specific Managers are defined and usable
+        InstanceManager.store(new EntryExitPairs(), EntryExitPairs.class);
 
         // Add actions to abstractActionModel
         // Done here as initial non-GUI initialisation is completed
@@ -872,9 +874,13 @@ public class Apps extends JPanel implements PropertyChangeListener, WindowListen
         pane2.add(new JLabel(line1()));
         pane2.add(new JLabel(line2()));
         pane2.add(new JLabel(line3()));
-        pane2.add(new JLabel(Bundle.getMessage("ActiveProfile", ProfileManager.getDefault().getActiveProfile().getName())));
-
-        // add listerner for Com port updates
+        
+        if (ProfileManager.getDefault()!=null && ProfileManager.getDefault().getActiveProfile() != null) {
+            pane2.add(new JLabel(Bundle.getMessage("ActiveProfile", ProfileManager.getDefault().getActiveProfile().getName())));
+        } else {
+            pane2.add(new JLabel(Bundle.getMessage("FailedProfile")));            
+        }
+        // add listener for Com port updates
         ConnectionStatus.instance().addPropertyChangeListener(this);
         int i = 0;
         for (ConnectionConfig conn : InstanceManager.getDefault(ConnectionConfigManager.class)) {
