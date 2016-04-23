@@ -92,8 +92,8 @@ import org.slf4j.LoggerFactory;
 public class JsonServlet extends WebSocketServlet {
 
     private static final long serialVersionUID = -671593634343578915L;
-    private ObjectMapper mapper;
-    private final HashMap<String, HashSet<JsonHttpService>> services = new HashMap<>();
+    private transient ObjectMapper mapper;
+    private final transient HashMap<String, HashSet<JsonHttpService>> services = new HashMap<>();
     private static final Logger log = LoggerFactory.getLogger(JsonServlet.class);
 
     @Override
@@ -478,7 +478,7 @@ public class JsonServlet extends WebSocketServlet {
                 }
             } else {
                 log.warn("Type not specified.");
-                reply = JsonUtil.getUnknown(request.getLocale(), type);
+                throw new JsonException(400, "Type must be specified."); // Need to I18N
             }
         } catch (JsonException ex) {
             reply = ex.getJsonMessage();
@@ -578,7 +578,7 @@ public class JsonServlet extends WebSocketServlet {
                 }
             } else {
                 log.warn("Type not specified.");
-                reply = JsonUtil.getUnknown(request.getLocale(), type);
+                throw new JsonException(400, "Type must be specified."); // Need to I18N
             }
         } catch (JsonException ex) {
             reply = ex.getJsonMessage();
@@ -619,7 +619,7 @@ public class JsonServlet extends WebSocketServlet {
                 }
             } else {
                 log.warn("Type not specified.");
-                reply = JsonUtil.getUnknown(request.getLocale(), type);
+                throw new JsonException(400, "Type must be specified."); // Need to I18N
             }
         } catch (JsonException ex) {
             reply = ex.getJsonMessage();
