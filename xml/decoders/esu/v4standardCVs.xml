@@ -346,7 +346,7 @@
     <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
     <label>Decoder Lock Enable</label>
   </variable>
-  <variable CV="124" mask="XXXXVXXX" default="0" include="ESU LokSound V4.0,LokPilot V4.0,LokPilot V4.0 DCC" item="ESU V4 Advanced Compatibility Option 4">
+  <variable CV="124" mask="XXXXVXXX" default="0" include="ESU LokSound V4.0,LokPilot V4.0,LokPilot V4.0 DCC,LokSound Select L" item="ESU V4 Advanced Compatibility Option 4">
     <xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
     <label>Serial User Standard Interface</label>
   </variable>

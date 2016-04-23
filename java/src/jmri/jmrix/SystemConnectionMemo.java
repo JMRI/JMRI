@@ -123,7 +123,21 @@ abstract public class SystemConnectionMemo {
      * system
      */
     public void register() {
-        jmri.InstanceManager.store(this, SystemConnectionMemo.class);
+        log.debug("register as SystemConnectionMemo, really of type {}", this.getClass());
+        
+        // check for special case
+        java.util.List<SystemConnectionMemo> list = jmri.InstanceManager.getList(SystemConnectionMemo.class);
+        if (list != null && (list.size() > 0) && (list.get(list.size()-1) instanceof jmri.jmrix.internal.InternalSystemConnectionMemo)) {
+            // last is internal, so insert before that one
+            log.debug("   putting one before end");
+            SystemConnectionMemo old = list.get(list.size()-1);
+            jmri.InstanceManager.deregister(old, SystemConnectionMemo.class);
+            jmri.InstanceManager.store(this, SystemConnectionMemo.class);
+            jmri.InstanceManager.store(old, SystemConnectionMemo.class);
+        } else {
+            // just add on end
+            jmri.InstanceManager.store(this, SystemConnectionMemo.class);
+        }
         notifyPropertyChangeListener("ConnectionAdded", null, null);
     }
 

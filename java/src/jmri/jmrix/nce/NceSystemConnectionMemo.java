@@ -200,7 +200,7 @@ public class NceSystemConnectionMemo extends jmri.jmrix.SystemConnectionMemo {
     @SuppressWarnings("deprecation")
     public void configureManagers() {
         powerManager = new jmri.jmrix.nce.NcePowerManager(this);
-        InstanceManager.setPowerManager(powerManager);
+        InstanceManager.store(powerManager, jmri.PowerManager.class);
 
         turnoutManager = new jmri.jmrix.nce.NceTurnoutManager(getNceTrafficController(), getSystemPrefix());
         InstanceManager.setTurnoutManager(turnoutManager);
