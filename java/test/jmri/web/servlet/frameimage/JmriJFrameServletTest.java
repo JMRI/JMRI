@@ -1,5 +1,6 @@
 package jmri.web.servlet.frameimage;
 
+import java.util.HashMap;
 import java.util.Map;
 import junit.framework.Assert;
 import junit.framework.Test;
@@ -15,7 +16,7 @@ public class JmriJFrameServletTest extends TestCase {
 
     public void testAccess() {
         JmriJFrameServlet_ut out = new JmriJFrameServlet_ut();
-        Assert.assertNotNull(out.populateParameterMap(null));
+        Assert.assertNotNull(out.populateParameterMap(new HashMap<>()));
     }
 
     public void testOneParameter() {
