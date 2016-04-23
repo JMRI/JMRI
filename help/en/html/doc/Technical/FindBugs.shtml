@@ -142,7 +142,7 @@ We do not use these annotations:
     FindBugs will treat the annotated items as though they had no annotation.
     In practice this annotation is useful only for overriding an overarching NonNull annotation.
     Use javax.annotation.ParametersAreNullableByDefault to set it for an entire class.
-    Prefer the user of <code>CheckForNull</code>.
+    Prefer the use of <code>CheckForNull</code>.
 </ul>
 
 <h3>Suppressed Warnings</h3>
