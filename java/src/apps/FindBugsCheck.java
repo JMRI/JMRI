@@ -29,6 +29,25 @@ public class FindBugsCheck {
         System.out.println("test "+this.getClass());
     }
     
+    public FindBugsCheck noAnnotationReturn() {
+        return null;
+    }
+    public void noAnnotationParm(FindBugsCheck p) {
+        p.test();
+    }
+    public void noAnnotationTest() {
+        noAnnotationReturn().test();
+
+        noAnnotationParm(this);
+        noAnnotationParm(null); // (NP_NULL_PARAM_DEREF_ALL_TARGETS_DANGEROUS) Null passed for non-null parameter of noAnnotationParm(FindBugsCheck)
+                                // That one's interesting, because FindBugs has apparently decided on its own that this the parameter shouldn't be null
+        
+        noAnnotationParm(noAnnotationReturn());
+        noAnnotationParm(jaNonnullReturn());
+        noAnnotationParm(jaNullableReturn()); // should be flagged?
+        noAnnotationParm(jaCheckForNullReturn()); // definitely should be flagged, based on above result
+    }
+
     // Test Nonnull
     
     @javax.annotation.Nonnull public FindBugsCheck jaNonnullReturn() {
@@ -43,6 +62,7 @@ public class FindBugsCheck {
         jaNonNullParm(this);
         jaNonNullParm(null);  // (NP_NONNULL_PARAM_VIOLATION) Null passed for non-null parameter
         
+        jaNonNullParm(noAnnotationReturn());
         jaNonNullParm(jaNonnullReturn());
         jaNonNullParm(jaNullableReturn()); // should be flagged?
         jaNonNullParm(jaCheckForNullReturn()); // definitely should be flagged!
@@ -60,6 +80,7 @@ public class FindBugsCheck {
         fbNonNullParm(this);
         fbNonNullParm(null); // (NP_NONNULL_PARAM_VIOLATION) Null passed for non-null parameter  
         
+        fbNonNullParm(noAnnotationReturn());
         fbNonNullParm(fbNonnullReturn());
         fbNonNullParm(fbNullableReturn()); // should be flagged?
         fbNonNullParm(fbCheckForNullReturn()); // definitely should be flagged!
@@ -80,6 +101,7 @@ public class FindBugsCheck {
         jaNullableParm(this);
         jaNullableParm(null);
         
+        jaNullableParm(noAnnotationReturn());
         jaNullableParm(jaNonnullReturn());
         jaNullableParm(jaNullableReturn());
         jaNullableParm(jaCheckForNullReturn());
@@ -97,6 +119,7 @@ public class FindBugsCheck {
         fbNullableParm(this);
         fbNullableParm(null);
         
+        fbNullableParm(noAnnotationReturn());
         fbNullableParm(fbNonnullReturn());
         fbNullableParm(fbNullableReturn());
         fbNullableParm(fbCheckForNullReturn());
@@ -117,6 +140,7 @@ public class FindBugsCheck {
         jaCheckForNullParm(this);
         jaCheckForNullParm(null);
         
+        jaCheckForNullParm(noAnnotationReturn());
         jaCheckForNullParm(jaNonnullReturn());
         jaCheckForNullParm(jaNullableReturn());
         jaCheckForNullParm(jaCheckForNullReturn());
@@ -134,6 +158,7 @@ public class FindBugsCheck {
         fbCheckForNullParm(this);
         fbCheckForNullParm(null);
         
+        fbCheckForNullParm(noAnnotationReturn());
         fbCheckForNullParm(fbNonnullReturn());
         fbCheckForNullParm(fbNullableReturn());
         fbCheckForNullParm(fbCheckForNullReturn());
