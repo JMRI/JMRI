@@ -265,6 +265,7 @@ public class LightTableAction extends AbstractTableAction {
             public NamedBean getByUserName(String name) {
                 return lightManager.getByUserName(name);
             }
+
             /*public int getDisplayDeleteMsg() { return InstanceManager.getDefault(jmri.UserPreferencesManager.class).getWarnLightInUse(); }
              public void setDisplayDeleteMsg(int boo) { InstanceManager.getDefault(jmri.UserPreferencesManager.class).setWarnLightInUse(boo); }*/
 
@@ -1014,9 +1015,11 @@ public class LightTableAction extends AbstractTableAction {
         // get rid of the add/edit Frame
         clearLightControls();
         status2.setText("");
-        addFrame.setVisible(false);
-        addFrame.dispose();
-        addFrame = null;
+        if (addFrame != null) {
+            addFrame.setVisible(false);
+            addFrame.dispose();
+            addFrame = null;
+        }
     }
 
     private void clearLightControls() {
