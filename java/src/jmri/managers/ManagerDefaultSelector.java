@@ -64,39 +64,46 @@ public class ManagerDefaultSelector extends AbstractPreferencesProvider {
                         SystemConnectionMemo memo = (SystemConnectionMemo) e.getSource();
                         String disabledName = memo.getUserName();
                         log.debug("ConnectionDisabled true: \"{}\"", disabledName);
-                        ArrayList<Class<?>> tmpArray = new ArrayList<>();
-                        defaults.keySet().stream().forEach((c) -> {
-                            String connectionName = ManagerDefaultSelector.this.defaults.get(c);
-                            if (connectionName.equals(disabledName)) {
-                                log.warn("Connection " + disabledName + " has been disabled, we shall remove it as the default for " + c);
-                                tmpArray.add(c);
-                            }
-                        });
-                        tmpArray.stream().forEach((tmpArray1) -> {
-                            ManagerDefaultSelector.this.defaults.remove(tmpArray1);
-                        });
+                        removeConnectionAsDefault(disabledName);
                     }
                     break;
                 case "ConnectionRemoved":
                     String removedName = (String) e.getOldValue();
-                    ArrayList<Class<?>> tmpArray = new ArrayList<>();
-                    defaults.keySet().stream().forEach((c) -> {
-                        String connectionName = ManagerDefaultSelector.this.defaults.get(c);
-                        if (connectionName.equals(removedName)) {
-                            log.warn("Connection " + removedName + " has been removed, we shall remove it as the default for " + c);
-                            //ManagerDefaultSelector.instance.defaults.remove(c);
-                            tmpArray.add(c);
-                        }
-                    });
-                    tmpArray.stream().forEach((tmpArray1) -> {
-                        ManagerDefaultSelector.this.defaults.remove(tmpArray1);
-                    });
+                    log.debug("ConnectionRemoved for \"{}\"", removedName);
+                    removeConnectionAsDefault(removedName);
                     break;
+                case "ConnectionAdded":
+                    // check for special case of anything else then Internal
+                    java.util.List<SystemConnectionMemo> list = jmri.InstanceManager.getList(SystemConnectionMemo.class);
+                    if (list != null && (list.size() == 2) && (list.get(1) instanceof jmri.jmrix.internal.InternalSystemConnectionMemo)) {
+                        log.debug("First real system added, reset defaults");
+                        String name = list.get(1).getUserName();
+                        removeConnectionAsDefault(name);
+                    }
+                    break;
+                 default:
+                    log.debug("ignoring notification of \"{}\"", e.getPropertyName());
+                    break;   
             }
             this.firePropertyChange("Updated", null, null);
         });
     }
 
+    // remove connection's record
+    void removeConnectionAsDefault(String removedName) {
+        ArrayList<Class<?>> tmpArray = new ArrayList<>();
+        defaults.keySet().stream().forEach((c) -> {
+            String connectionName = ManagerDefaultSelector.this.defaults.get(c);
+            if (connectionName.equals(removedName)) {
+                log.debug("Connection " + removedName + " has been removed as the default for " + c);
+                tmpArray.add(c);
+            }
+        });
+        tmpArray.stream().forEach((tmpArray1) -> {
+            ManagerDefaultSelector.this.defaults.remove(tmpArray1);
+        });
+    }
+        
     /**
      * Return the userName of the system that provides the default instance for
      * a specific class.
@@ -124,7 +131,7 @@ public class ManagerDefaultSelector extends AbstractPreferencesProvider {
     public void setDefault(Class<?> managerClass, String userName) {
         for (Item item : knownManagers) {
             if (item.managerClass.equals(managerClass)) {
-                log.debug("   setting default for \"{}\" to \"{}\"", managerClass, userName);
+                log.debug("   setting default for \"{}\" to \"{}\" by request", managerClass, userName);
                 defaults.put(managerClass, userName);
                 return;
             }
@@ -151,7 +158,7 @@ public class ManagerDefaultSelector extends AbstractPreferencesProvider {
                 if (testName.equals(connectionName)) {
                     found = true;
                     // match, store
-                    log.debug("   setting default for \"{}\" to \"{}\"", c, memo.get(c));
+                    log.debug("   setting default for \"{}\" to \"{}\" in configure", c, memo.get(c));
                     InstanceManager.setDefault(c, memo.get(c));
                     break;
                 }
