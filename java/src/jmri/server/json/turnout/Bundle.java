@@ -1,7 +1,6 @@
 // Bundle.java
 package jmri.server.json.turnout;
 
-import jmri.server.json.power.*;
 import javax.annotation.CheckReturnValue;
 import javax.annotation.ParametersAreNonnullByDefault;
 import javax.annotation.Nullable;
