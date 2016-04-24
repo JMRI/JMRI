@@ -1370,6 +1370,8 @@
 
 <mapID target="html.hardware.mrc.index" url="html/hardware/mrc/index.shtml"/>
 
+<mapID target="package.jmri.jmrit.operations.Operations_TrainTurnRoute" url="package/jmri/jmrit/operations/Operations.shtml#TrainTurnRoute"/>
+
 <mapID target="package.jmri.jmrix.powerline.packetgen.SerialPacketGenFrame" url="package/jmri/jmrix/powerline/packetgen/SerialPacketGenFrame.shtml"/>
 
 <mapID target="package.jmri.jmrit.beantable.MemoryTable" url="package/jmri/jmrit/beantable/MemoryTable.shtml"/>
