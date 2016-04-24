@@ -187,29 +187,23 @@ public class XBeeSensor extends AbstractSensor implements XBeeListener {
                     } catch (java.lang.IllegalStateException ise) {
                         // is this a series 1 packet?
                         log.debug("Caught IllegalStateException parsing IS packet");
-                        try {
-                            RxResponseIoSample rxSample = new RxResponseIoSample();
-                            // don't need sampleSize now, might later.
-                            //int sampleSize = atResp.getValue()[0];
-                            rxSample.setChannelIndicator1(atResp.getValue()[1]);
-                            rxSample.setChannelIndicator2(atResp.getValue()[2]);
-                            IoSample sample = new IoSample(rxSample);
-                            sample.setDioMsb(atResp.getValue()[3]);
-                            sample.setDioLsb(atResp.getValue()[4]);
-                            if (sample.isDigitalOn(pin) ^ _inverted) {
-                                setOwnState(Sensor.ACTIVE);
-                            } else {
-                                setOwnState(Sensor.INACTIVE);
-                            }
-                        } catch (java.lang.Exception e) {
-                            // no recovery at this point.
-                            log.debug("Caught too many exceptions parsing IS packet, no recovery possible");
+                        RxResponseIoSample rxSample = new RxResponseIoSample();
+                        // don't need sampleSize now, might later.
+                        //int sampleSize = atResp.getValue()[0];
+                        rxSample.setChannelIndicator1(atResp.getValue()[1]);
+                        rxSample.setChannelIndicator2(atResp.getValue()[2]);
+                        IoSample sample = new IoSample(rxSample);
+                        sample.setDioMsb(atResp.getValue()[3]);
+                        sample.setDioLsb(atResp.getValue()[4]);
+                        if (sample.isDigitalOn(pin) ^ _inverted) {
+                           setOwnState(Sensor.ACTIVE);
+                        } else {
+                           setOwnState(Sensor.INACTIVE);
                         }
                     }
                 }
             }
         }
-
         return;
     }
 
