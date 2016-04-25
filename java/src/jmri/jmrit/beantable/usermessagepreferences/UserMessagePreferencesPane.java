@@ -57,7 +57,7 @@ public class UserMessagePreferencesPane extends JmriPanel implements Preferences
         add(tab);
     }
 
-    private void setMinimumMessagePref() {
+    private synchronized void setMinimumMessagePref() {
         //This ensures that as a minimum that the following items are at least initialised and appear in the preference panel
         p.setClassDescription(AudioTableAction.class.getName());
         p.setClassDescription(BlockTableAction.class.getName());
@@ -86,7 +86,7 @@ public class UserMessagePreferencesPane extends JmriPanel implements Preferences
     private HashMap<JComboBox<Object>, ListItems> _comboBoxes = new HashMap<>();
     private HashMap<JCheckBox, ListItems> _checkBoxes = new HashMap<>();
 
-    private void newMessageTab() {
+    private synchronized void newMessageTab() {
         remove(tab);
         tab = new JTabbedPane();
 
@@ -307,7 +307,7 @@ public class UserMessagePreferencesPane extends JmriPanel implements Preferences
     }
 
     @Override
-    public boolean isDirty() {
+    public synchronized  boolean isDirty() {
         for (JComboBox<Object> key : this._comboBoxes.keySet()) {
             String strClass = _comboBoxes.get(key).getClassName();
             String strItem = _comboBoxes.get(key).getItem();
@@ -365,7 +365,7 @@ public class UserMessagePreferencesPane extends JmriPanel implements Preferences
 
     boolean updating = false;
 
-    public void updateManager() {
+    public synchronized void updateManager() {
         updating = true;
         p.setLoading();
 
