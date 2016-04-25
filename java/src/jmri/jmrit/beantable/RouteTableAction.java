@@ -406,14 +406,15 @@ public class RouteTableAction extends AbstractTableAction {
     JButton createButton = new JButton(Bundle.getMessage("ButtonCreate"));
     JButton editButton = new JButton(Bundle.getMessage("ButtonEdit"));
     JButton cancelButton = new JButton(Bundle.getMessage("ButtonCancel"));
+    JButton cancelEditButton = new JButton(Bundle.getMessage("ButtonCancelEdit", Bundle.getMessage("ButtonEdit")));
     JButton deleteButton = new JButton(Bundle.getMessage("ButtonDelete") + " " + Bundle.getMessage("BeanNameRoute"));
     JButton updateButton = new JButton(Bundle.getMessage("ButtonUpdate"));
     JButton exportButton = new JButton(Bundle.getMessage("ButtonExport"));
 
-    static String createInst = Bundle.getMessage("RouteAddStatusInitial1");
-    static String editInst = Bundle.getMessage("RouteAddStatusInitial2");
-    static String updateInst = Bundle.getMessage("RouteAddStatusInitial3");
-    static String cancelInst = Bundle.getMessage("RouteAddStatusInitial4");
+    static String createInst = Bundle.getMessage("RouteAddStatusInitial1", Bundle.getMessage("ButtonCreate"));
+    static String editInst = Bundle.getMessage("RouteAddStatusInitial2", Bundle.getMessage("ButtonEdit"));
+    static String updateInst = Bundle.getMessage("RouteAddStatusInitial3", Bundle.getMessage("ButtonUpdate"));
+    static String cancelInst = Bundle.getMessage("RouteAddStatusInitial4", Bundle.getMessage("ButtonCancelEdit", Bundle.getMessage("ButtonEdit")));
 
     JLabel status1 = new JLabel(createInst);
     JLabel status2 = new JLabel(editInst);
@@ -769,15 +770,22 @@ public class RouteTableAction extends AbstractTableAction {
             // add Buttons panel
             JPanel pb = new JPanel();
             pb.setLayout(new FlowLayout(FlowLayout.TRAILING));
-            // Cancel button
+            // Cancel (Add) button
             pb.add(cancelButton);
             cancelButton.addActionListener(new ActionListener() {
+                public void actionPerformed(ActionEvent e) {
+                    cancelAddPressed(e);
+                }
+            });
+            // CancelEdit button
+            pb.add(cancelEditButton);
+            cancelEditButton.addActionListener(new ActionListener() {
                 public void actionPerformed(ActionEvent e) {
                     cancelPressed(e);
                 }
             });
-            cancelButton.setToolTipText(Bundle.getMessage("TooltipCancelRoute"));
-            // Add Route button
+            cancelEditButton.setToolTipText(Bundle.getMessage("TooltipCancelRoute"));
+            // Add Create Route button
             pb.add(createButton);
             createButton.addActionListener(new ActionListener() {
                 public void actionPerformed(ActionEvent e) {
@@ -820,7 +828,8 @@ public class RouteTableAction extends AbstractTableAction {
 
             // Show the initial buttons, and hide the others
             exportButton.setVisible(false);
-            cancelButton.setVisible(true); // always show Cancel button
+            cancelButton.setVisible(true);
+            cancelEditButton.setVisible(false);
             updateButton.setVisible(true);
             editButton.setVisible(true);
             createButton.setVisible(true);
@@ -846,11 +855,15 @@ public class RouteTableAction extends AbstractTableAction {
                     routeDirty = false;
                 }
                 // hide addFrame
-                //addFrame.setVisible(false);
+                if (addFrame != null) {
+                    addFrame.setVisible(false);
+                    addFrame.dispose();
+                    addFrame = null;
+                }
                 // if in Edit, cancel edit mode
-                //if (editMode) {
-                cancelEdit(); // always call, whether in Edit Mode or not
-                //}
+                if (editMode) {
+                    cancelEdit();
+                }
                 _routeSensorModel.dispose();
                 _routeTurnoutModel.dispose();
             }
@@ -1199,7 +1212,8 @@ public class RouteTableAction extends AbstractTableAction {
         status2.setText(cancelInst);
         status2.setVisible(true);
         deleteButton.setVisible(true);
-        cancelButton.setVisible(true);
+        cancelButton.setVisible(false);
+        cancelEditButton.setVisible(true);
         updateButton.setVisible(true);
         exportButton.setVisible(true);
         editButton.setVisible(false);
@@ -1262,7 +1276,8 @@ public class RouteTableAction extends AbstractTableAction {
         status2.setText(editInst);
         status2.setVisible(true);
         deleteButton.setVisible(false);
-        cancelButton.setVisible(true); // always show Cancel button
+        cancelButton.setVisible(true);
+        cancelEditButton.setVisible(false);
         updateButton.setVisible(false);
         exportButton.setVisible(false);
         editButton.setVisible(true);
@@ -1762,7 +1777,34 @@ public class RouteTableAction extends AbstractTableAction {
     }
 
     /**
-     * Responds to the Cancel button
+     * Responds to the CancelAdd button
+     */
+    void cancelAddPressed(ActionEvent e) {
+        cancelAdd();
+    }
+
+    /**
+     * Cancels Add mode
+     */
+    void cancelAdd() {
+            curRoute = null;
+            finishUpdate();
+            Route g = null;
+            status1.setText(createInst);
+            status2.setText(editInst);
+            routeDirty = false;
+            // hide addFrame
+            if (addFrame != null) {
+            addFrame.setVisible(false);
+            addFrame.dispose();
+            addFrame = null;
+            }
+            _routeSensorModel.dispose();
+            _routeTurnoutModel.dispose();
+    }
+
+    /**
+     * Responds to the CancelEdit button
      */
     void cancelPressed(ActionEvent e) {
         cancelEdit();
@@ -1779,16 +1821,6 @@ public class RouteTableAction extends AbstractTableAction {
             // get out of edit mode
             editMode = false;
             curRoute = null;
-        } else {
-            // empty vars
-            curRoute = null;
-            finishUpdate();
-            routeDirty = false;
-            _routeSensorModel.dispose();
-            _routeTurnoutModel.dispose();
-            addFrame.setVisible(false);
-            addFrame.dispose();
-            addFrame = null;
         }
     }
 
