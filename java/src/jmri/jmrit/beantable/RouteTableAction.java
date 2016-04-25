@@ -303,12 +303,14 @@ public class RouteTableAction extends AbstractTableAction {
             }
 
             public String getValue(String s) {
-                return Bundle.getMessage("ButtonSet");
+                return Bundle.getMessage("Set");
+                //Title of Set button in Route table
             }
 
-            public JButton configureButton() {
-                return new JButton("...");
-            }
+            //public JButton configureButton() {
+            //    return new JButton("Foo"));
+                //not used
+            //}
 
             protected String getBeanType() {
                 return Bundle.getMessage("BeanNameRoute");
@@ -716,9 +718,6 @@ public class RouteTableAction extends AbstractTableAction {
             p34.add(cTurnoutStateBox);
             p3.add(p34);
             // add added delay
-            //       JPanel p35 = new JPanel();
-            //      p35.add(new JLabel("Enter added delay between Turnout Commands (optional)"));
-            //       p3.add(p35);
             JPanel p36 = new JPanel();
             p36.add(new JLabel(Bundle.getMessage("LabelTurnoutDelay") + ":"));
             p36.add(timeDelay);
@@ -847,11 +846,11 @@ public class RouteTableAction extends AbstractTableAction {
                     routeDirty = false;
                 }
                 // hide addFrame
-                addFrame.setVisible(false);
+                //addFrame.setVisible(false);
                 // if in Edit, cancel edit mode
-                if (editMode) {
-                    cancelEdit();
-                }
+                //if (editMode) {
+                cancelEdit(); // always call, whether in Edit Mode or not
+                //}
                 _routeSensorModel.dispose();
                 _routeTurnoutModel.dispose();
             }
@@ -1250,9 +1249,9 @@ public class RouteTableAction extends AbstractTableAction {
         setControlInformation(g);
         curRoute = g;
         finishUpdate();
-        status1.setText((newRoute ? Bundle.getMessage("RouteAddStatusCreated") : Bundle.getMessage("RouteAddStatusUpdated")) + ": "
-                + uName + ", " + _includedTurnoutList.size() + " "
-                + Bundle.getMessage("Turnouts") + ", " + _includedSensorList.size() + " " + Bundle.getMessage("Sensors"));
+        status1.setText((newRoute ? Bundle.getMessage("RouteAddStatusCreated") : Bundle.getMessage("RouteAddStatusUpdated")) + ": \""
+                + uName + "\" (" + _includedTurnoutList.size() + " "
+                + Bundle.getMessage("Turnouts") + ", " + _includedSensorList.size() + " " + Bundle.getMessage("Sensors") + ")");
     }
 
     void finishUpdate() {
@@ -1263,7 +1262,7 @@ public class RouteTableAction extends AbstractTableAction {
         status2.setText(editInst);
         status2.setVisible(true);
         deleteButton.setVisible(false);
-        cancelButton.setVisible(true); // always show cancel button
+        cancelButton.setVisible(true); // always show Cancel button
         updateButton.setVisible(false);
         exportButton.setVisible(false);
         editButton.setVisible(true);
@@ -1540,8 +1539,8 @@ public class RouteTableAction extends AbstractTableAction {
             jmri.InstanceManager.routeManagerInstance().deleteRoute(curRoute);
             curRoute = null;
         }
-        status1.setText(Bundle.getMessage("BeanNameRoute") + "\"" + uName + "\" " + Bundle.getMessage("RouteAddStatusExported") + ": " + _includedTurnoutList.size()
-                + Bundle.getMessage("BeanNameTurnout") + ", " + _includedSensorList.size() + " " + Bundle.getMessage("BeanNameSensor"));
+        status1.setText(Bundle.getMessage("BeanNameRoute") + "\"" + uName + "\" " + Bundle.getMessage("RouteAddStatusExported") + " (" + _includedTurnoutList.size()
+                + Bundle.getMessage("Turnouts") + ", " + _includedSensorList.size() + " " + Bundle.getMessage("Sensors") + ")");
         finishUpdate();
     }
 
@@ -1781,7 +1780,12 @@ public class RouteTableAction extends AbstractTableAction {
             editMode = false;
             curRoute = null;
         } else {
-            //finishUpdate();
+            // empty vars
+            curRoute = null;
+            finishUpdate();
+            routeDirty = false;
+            _routeSensorModel.dispose();
+            _routeTurnoutModel.dispose();
             addFrame.setVisible(false);
             addFrame.dispose();
             addFrame = null;
@@ -1984,8 +1988,8 @@ public class RouteTableAction extends AbstractTableAction {
             Bundle.getMessage("OnCondition") + " " + Bundle.getMessage("SensorStateActive"),
             Bundle.getMessage("OnCondition") + " " + Bundle.getMessage("SensorStateInactive"),
             Bundle.getMessage("OnConditionChange"),
-            "Veto Active",
-            "Veto Inactive"
+            "Veto" + " " + Bundle.getMessage("SensorStateActive"),
+            "Veto" + " " + Bundle.getMessage("SensorStateInactive")
     };
     private static int[] sensorInputModeValues = new int[]{Route.ONACTIVE, Route.ONINACTIVE, Route.ONCHANGE,
         Route.VETOACTIVE, Route.VETOINACTIVE};
