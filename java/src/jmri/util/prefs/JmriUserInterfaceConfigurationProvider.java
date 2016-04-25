@@ -82,11 +82,19 @@ public final class JmriUserInterfaceConfigurationProvider extends AbstractConfig
         return this.configuration;
     }
 
+    @Override
+    protected File getConfigurationFile(boolean shared) {
+        if (this.project == null) {
+            return new File(this.getConfigurationDirectory(shared), Profile.UI_CONFIG); // NOI18N
+        } else {
+            return new File(this.getConfigurationDirectory(shared), Profile.UI_CONFIG); // NOI18N
+        }
+    }
+
     JmriUserInterfaceConfigurationProvider(Profile project) {
         super(project);
         this.configuration = new Configuration();
     }
-
 
     private class Configuration extends JmriConfiguration {
 
