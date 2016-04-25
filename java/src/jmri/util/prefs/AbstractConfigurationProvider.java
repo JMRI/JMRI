@@ -27,13 +27,7 @@ public abstract class AbstractConfigurationProvider {
      */
     protected abstract AuxiliaryConfiguration getConfiguration();
 
-    protected File getConfigurationFile(boolean shared) {
-        if (this.project == null) {
-            return new File(this.getConfigurationDirectory(shared), Profile.UI_CONFIG); // NOI18N
-        } else {
-            return new File(this.getConfigurationDirectory(shared), Profile.UI_CONFIG); // NOI18N
-        }
-    }
+    protected abstract File getConfigurationFile(boolean shared);
 
     public File getConfigurationDirectory(boolean shared) {
         File dir;
