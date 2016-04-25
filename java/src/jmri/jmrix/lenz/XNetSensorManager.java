@@ -1,4 +1,3 @@
-// XNetSensorManager.java
 package jmri.jmrix.lenz;
 
 import jmri.JmriException;
@@ -8,11 +7,11 @@ import org.slf4j.LoggerFactory;
 
 /**
  * Manage the XPressNet specific Sensor implementation.
- *
+ * <P>
  * System names are "XSnnn", where nnn is the sensor number without padding.
- *
+ * <P>
  * @author	Paul Bender Copyright (C) 2003-2010
- * @version	$Revision$
+ * @navassoc - - 1..* jmri.jmrix.lenz.XNetSensor
  */
 public class XNetSensorManager extends jmri.managers.AbstractSensorManager implements XNetListener {
 

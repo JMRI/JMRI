@@ -36,7 +36,7 @@ public class FileUtilSupport extends Bean {
     // initialize logging
     private static final Logger log = LoggerFactory.getLogger(FileUtilSupport.class);
     // default instance
-    private static FileUtilSupport defaultInstance = null;
+    volatile private static FileUtilSupport defaultInstance = null;
 
     /**
      * Get the user's home directory.

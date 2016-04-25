@@ -1,7 +1,6 @@
 // Bundle.java
 package jmri.server;
 
-import jmri.web.*;
 import javax.annotation.CheckReturnValue;
 import javax.annotation.ParametersAreNonnullByDefault;
 import javax.annotation.Nullable;
