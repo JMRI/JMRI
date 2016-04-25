@@ -83,6 +83,15 @@ public final class JmriConfigurationProvider extends AbstractConfigurationProvid
         return this.configuration;
     }
 
+    @Override
+    protected File getConfigurationFile(boolean shared) {
+        if (this.project == null) {
+            return new File(this.getConfigurationDirectory(shared), Profile.CONFIG); // NOI18N
+        } else {
+            return new File(this.getConfigurationDirectory(shared), Profile.CONFIG); // NOI18N
+        }
+    }
+
     JmriConfigurationProvider(Profile project) {
         super(project);
         this.configuration = new Configuration();
