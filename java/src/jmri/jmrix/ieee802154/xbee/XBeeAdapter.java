@@ -227,7 +227,7 @@ public class XBeeAdapter extends jmri.jmrix.ieee802154.serialdriver.SerialDriver
     public XBeeConnectionMemo getSystemConnectionMemo() {
         jmri.jmrix.ieee802154.IEEE802154SystemConnectionMemo m = super.getSystemConnectionMemo();
         if (m instanceof XBeeConnectionMemo ) {
-           return (XBeeConnectionMemo) super.getSystemConnectionMemo();
+           return (XBeeConnectionMemo) m;
         } else {
            throw new java.lang.IllegalArgumentException("System Connection Memo associated with this connection is not the right type.");
         }

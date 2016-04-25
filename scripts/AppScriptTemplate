@@ -198,6 +198,7 @@ if [ -z "$ARCH" ] ; then
             #   armv5 contains v5 soft-float version
             #   armv6l contains v6 hard-float version
             #   armv7l contains v7 hard-float version
+            #   aarch64 contains 64-bit v8 version
 
             if [ "${ARCH:0:3}" = "arm" ] ; then
 
@@ -212,6 +213,10 @@ if [ -z "$ARCH" ] ; then
                 else
                     ARCH="armv5"
                 fi
+            fi
+
+            if [ "$ARCH" = "aarch64" -o "$ARCH" = "arm64" ] ; then
+                ARCH="aarch64"
             fi
 
             if [ -d "${SYSLIBPATH}/$ARCH" ] ; then
