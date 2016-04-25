@@ -26,8 +26,6 @@ import static jmri.jmris.json.JSON.FORMAT;
 import static jmri.jmris.json.JSON.HELLO;
 import static jmri.jmris.json.JSON.LOCATION;
 import static jmri.jmris.json.JSON.LOCATIONS;
-import static jmri.jmris.json.JSON.MEMORIES;
-import static jmri.jmris.json.JSON.MEMORY;
 import static jmri.jmris.json.JSON.METADATA;
 import static jmri.jmris.json.JSON.NAME;
 import static jmri.jmris.json.JSON.NETWORK_SERVICES;
@@ -185,9 +183,6 @@ public class JsonServlet extends WebSocketServlet {
                         case LOCATIONS:
                             reply = JsonUtil.getLocations(request.getLocale());
                             break;
-                        case MEMORIES:
-                            reply = JsonUtil.getMemories(request.getLocale());
-                            break;
                         case METADATA:
                             reply = JsonUtil.getMetadata(request.getLocale());
                             break;
@@ -272,9 +267,6 @@ public class JsonServlet extends WebSocketServlet {
                             break;
                         case LOCATION:
                             reply = JsonUtil.getLocation(request.getLocale(), name);
-                            break;
-                        case MEMORY:
-                            reply = JsonUtil.getMemory(request.getLocale(), name);
                             break;
                         case METADATA:
                             reply = JsonUtil.getMetadata(request.getLocale(), name);
@@ -398,10 +390,6 @@ public class JsonServlet extends WebSocketServlet {
                             JsonUtil.setConsist(request.getLocale(), JsonUtil.addressForString(name), data);
                             reply = JsonUtil.getConsist(request.getLocale(), JsonUtil.addressForString(name));
                             break;
-                        case MEMORY:
-                            JsonUtil.setMemory(request.getLocale(), name, data);
-                            reply = JsonUtil.getMemory(request.getLocale(), name);
-                            break;
                         case REPORTER:
                             JsonUtil.setReporter(request.getLocale(), name, data);
                             reply = JsonUtil.getReporter(request.getLocale(), name);
@@ -510,10 +498,6 @@ public class JsonServlet extends WebSocketServlet {
                         case CONSIST:
                             JsonUtil.putConsist(request.getLocale(), JsonUtil.addressForString(name), data);
                             reply = JsonUtil.getConsist(request.getLocale(), JsonUtil.addressForString(name));
-                            break;
-                        case MEMORY:
-                            JsonUtil.putMemory(request.getLocale(), name, data);
-                            reply = JsonUtil.getMemory(request.getLocale(), name);
                             break;
                         case REPORTER:
                             JsonUtil.putReporter(request.getLocale(), name, data);

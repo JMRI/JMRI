@@ -1,6 +1,7 @@
 # Providers of JSON services
 # order is unimportant
 jmri.server.json.light.JsonLightServiceFactory
+jmri.server.json.memory.JsonMemoryServiceFactory
 jmri.server.json.power.JsonPowerServiceFactory
 jmri.server.json.roster.JsonRosterServiceFactory
 jmri.server.json.time.JsonTimeServiceFactory
