@@ -1477,7 +1477,7 @@
     <target name="findbugs" depends="dist" description="generate FindBugs report. Specify FindBugs install with local.properties file or &quot;-Dfindbugs.home=YourFindBugsInstallDirectory&quot; on command line." >
         <findbugs home="${findbugs.home}"
                   output="html"
-                  outputFile="${jartarget}/jmri-fb.html"
+                  outputFile="${jartarget}/findbugs.html"
                   jvmargs="-Xmx1536m"
                   timeout="12000000"
                   excludeFilter=".findbugs.xml"
