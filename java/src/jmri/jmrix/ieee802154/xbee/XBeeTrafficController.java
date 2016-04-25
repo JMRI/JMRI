@@ -58,7 +58,7 @@ public class XBeeTrafficController extends IEEE802154TrafficController implement
         try {
             if( p instanceof XBeeAdapter) {
                XBeeAdapter xbp = (XBeeAdapter) p;
-               xbee.initProviderConnection(((XBeeAdapter) p));
+               xbee.initProviderConnection(xbp);
                xbee.addPacketListener(this);
                // and start threads
                xmtThread = new Thread(xmtRunnable = new Runnable() {
