@@ -119,7 +119,7 @@ public class DefaultShutDownManager implements ShutDownManager {
      * operate.
      * <p>
      * Executes all registered {@link jmri.ShutDownTask}s before closing any
-     * windows that remain open.
+     * displayable windows.
      *
      * @param status Integer status returned on program exit
      * @param exit   True if System.exit() should be called if all tasks are
@@ -148,10 +148,12 @@ public class DefaultShutDownManager implements ShutDownManager {
                 Arrays.asList(Frame.getFrames()).stream().forEach((frame) -> {
                     // do not run on thread, or in parallel, as System.exit()
                     // will get called before windows can close
-                    log.debug("Closing frame \"{}\", title: \"{}\"", frame.getName(), frame.getTitle());
-                    Date timer = new Date();
-                    frame.dispatchEvent(new WindowEvent(frame, WindowEvent.WINDOW_CLOSING));
-                    log.debug("Frame \"{}\" took {} milliseconds to close", frame.getName(), new Date().getTime() - timer.getTime());
+                    if (frame.isDisplayable()) { // dispose() has not been called
+                        log.debug("Closing frame \"{}\", title: \"{}\"", frame.getName(), frame.getTitle());
+                        Date timer = new Date();
+                        frame.dispatchEvent(new WindowEvent(frame, WindowEvent.WINDOW_CLOSING));
+                        log.debug("Frame \"{}\" took {} milliseconds to close", frame.getName(), new Date().getTime() - timer.getTime());
+                    }
                 });
             }
             log.debug("windows completed closing {} milliseconds after starting shutdown", new Date().getTime() - start.getTime());
