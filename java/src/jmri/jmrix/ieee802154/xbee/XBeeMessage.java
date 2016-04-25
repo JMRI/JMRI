@@ -75,7 +75,7 @@ public class XBeeMessage extends jmri.jmrix.ieee802154.IEEE802154Message {
         String s = "";
         int packet[] = xbm.getFrameData();
         for (int i = 0; i < packet.length; i++) {
-            jmri.util.StringUtil.appendTwoHexFromInt(packet[i],s);
+            s=jmri.util.StringUtil.appendTwoHexFromInt(packet[i],s);
         }
         return s;
     }
