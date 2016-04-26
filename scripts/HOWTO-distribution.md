@@ -439,6 +439,8 @@ git push github
 
 - Confirm that the tag for the current release (release-4.3.3) is in place, then manually delete the current release branch via the [GitHub UI](https://github.com/JMRI/JMRI/branches).
 
+- Go to the GitHub PR and Issues lists and remove any "afterNextTestRelease" (and "afterNextProductionRelease" if appropriate) labels
+
 ====================================================================================
 ## Associated Documentation
 
