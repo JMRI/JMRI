@@ -196,19 +196,19 @@ We roll some general code maintenance items into the release process.  They can 
 - Put a comment in the release GitHub item saying the branch exists, and all future changes should be documented in the new release note
 
 ```
-The release-4.3.3 branch has been created. 
+The release-4.3.5 branch has been created. 
 
-From now on, please document your changes in the [jmri4.3.4.shtml](https://github.com/JMRI/website/blob/master/releasenotes/jmri4.3.4.shtml) release note file.
+From now on, please document your changes in the [jmri4.3.6.shtml](https://github.com/JMRI/website/blob/master/releasenotes/jmri4.3.6.shtml) release note file.
 
-Maintainers, please set the 4.3.4 milestone on pulls from now on.
+Maintainers, please set the 4.3.6 milestone on pulls from now on.
 
-Jenkins will be creating files shortly at [the usual place](http://builds.jmri.org/jenkins/job/Test%20Releases/job/4.3.3/).
-```
+Jenkins will be creating files shortly at the [new server](http://jmri.tagadab.com/jenkins/job/TestReleases/job/4.3.5/)
+````
 
 ================================================================================
 ## Build Files with Jenkins
 
-- Log in to the [Jenkins CI engine](http://builds.jmri.org/jenkins/job/Test%20Releases/)
+- Log in to the [Jenkins CI engine](http://jmri.tagadab.com/jenkins/job/TestReleases/)
 
 - Click "New Item"
 
@@ -294,7 +294,7 @@ If anybody wants to add a change from here on in, they should
 
 - Announce the file set to jmri-developers with a download URL like:
 
-    http://builds.jmri.org/jenkins/job/Test%20Releases/job/4.3.3/
+    http://jmri.tagadab.com/jenkins/job/TestReleases/job/4.3.5/
 
 - *Wait for some replies* before proceeding
 
