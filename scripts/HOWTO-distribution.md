@@ -287,6 +287,23 @@ If anybody wants to add a change from here on in, they should
 
   Note: The GitHub automated CI tests do their build after doing a (temporary) merge with the target branch. If the release branch and master have diverged enough that a single set of changes can't be used with both, a more complicated procedure than above might be needed.  In that case, try a PR onto the release branch of the needed change, and then pull the release branch back onto the master branch before fixing conflicts.
 
+(The following is tentative text for this section from a 4/2016 jmri-developers discussion on how to do this for the run-up to 4.4, starting with 4.3.7 - Bob)
+
+As part of building e.g. release 4.3.7, we create a "release-4.3.8-suggested-patches" branch off the final v4.3.7 tag.
+
+- Developer notices issue needing to be resolved post 4.3.7
+- Developer makes own development branch from 'release-4.3.8-suggested-patches'
+- Developer makes necessary changes, commits and then pushes to own fork.
+- Developer then creates PR from own development branch onto 'JMRI/JMRI/release-4.3.8-suggested-patches'
+- Developer additionally creates second PR from own development branch onto 'JMRI/JMRI/master' (*) - could also be performed by the Release Pumpkin meaning the
+developer need only create a single PR between 'needed-patches' - decision needed
+- If decisions is to include this, Release Pumpkin merges first PR into 'JMRI/JMRI/release-4.3.8-suggested-patches'
+- 4.3.8 is eventually built (and if need be, rebuilt) from release-4.3.8-suggested-patches
+- Maintainer merges second PR into 'JMRI/JMRI/master'
+
+It still gets a bit tricky if there’s a difference (e.g. due to a conflict with another change) that arises in either PR.  We’ll have to manage that a little carefully. One way to handle that is to _not_ merge any conflicts on master (_any_ PRs to master, not just in these dual-hatted PRs) until after the test release is done and merged back.
+
+
 ================================================================================
 ## Release-specific Updates
 
