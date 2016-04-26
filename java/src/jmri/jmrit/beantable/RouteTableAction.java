@@ -828,7 +828,7 @@ public class RouteTableAction extends AbstractTableAction {
 
             // Show the initial buttons, and hide the others
             exportButton.setVisible(false);
-            cancelButton.setVisible(false); // test without Cancel Add button
+            cancelButton.setVisible(true); // show CancelAdd button
             cancelEditButton.setVisible(false);
             updateButton.setVisible(true);
             editButton.setVisible(true);
@@ -854,12 +854,11 @@ public class RouteTableAction extends AbstractTableAction {
                                     "remindSaveRoute"); // NOI18N
                     routeDirty = false;
                 }
-                _autoSystemName.setSelected(false); // prevent automatic creation next time
                 // hide addFrame
                 if (addFrame != null) {
                     addFrame.setVisible(false);
-                    addFrame.dispose();
-                    addFrame = null;
+                    // addFrame.dispose();
+                    // addFrame = null;
                 }
                 // if in Edit, cancel edit mode
                 if (editMode) {
@@ -1791,16 +1790,16 @@ public class RouteTableAction extends AbstractTableAction {
     void cancelAdd() {
             curRoute = null;
             finishUpdate();
-            Route g = null;
+            //Route g = null;
             status1.setText(createInst);
             status2.setText(editInst);
             routeDirty = false;
-            _autoSystemName.setSelected(false); // prevent automatic creation next time
+            //_autoSystemName.setSelected(false); // prevent automatic creation next time
             // hide addFrame
             if (addFrame != null) {
             addFrame.setVisible(false);
-            addFrame.dispose();
-            addFrame = null;
+            //addFrame.dispose();
+            //addFrame = null;
             }
             _routeSensorModel.dispose();
             _routeTurnoutModel.dispose();
