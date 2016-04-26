@@ -828,7 +828,7 @@ public class RouteTableAction extends AbstractTableAction {
 
             // Show the initial buttons, and hide the others
             exportButton.setVisible(false);
-            cancelButton.setVisible(true);
+            cancelButton.setVisible(false); // test without Cancel Add button
             cancelEditButton.setVisible(false);
             updateButton.setVisible(true);
             editButton.setVisible(true);
@@ -854,6 +854,7 @@ public class RouteTableAction extends AbstractTableAction {
                                     "remindSaveRoute"); // NOI18N
                     routeDirty = false;
                 }
+                _autoSystemName.setSelected(false); // prevent automatic creation next time
                 // hide addFrame
                 if (addFrame != null) {
                     addFrame.setVisible(false);
@@ -953,6 +954,7 @@ public class RouteTableAction extends AbstractTableAction {
         String uName = _userName.getText();
         Route g;
         if (_autoSystemName.isSelected() && !editMode) {
+            // create new Route with auto system name
             g = jmri.InstanceManager.routeManagerInstance().newRoute(uName);
         } else {
             if (sName.length() == 0) {
@@ -1793,6 +1795,7 @@ public class RouteTableAction extends AbstractTableAction {
             status1.setText(createInst);
             status2.setText(editInst);
             routeDirty = false;
+            _autoSystemName.setSelected(false); // prevent automatic creation next time
             // hide addFrame
             if (addFrame != null) {
             addFrame.setVisible(false);
