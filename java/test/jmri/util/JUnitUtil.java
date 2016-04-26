@@ -165,15 +165,12 @@ public class JUnitUtil {
         // clear system connections
         jmri.jmrix.SystemConnectionMemo.reset();
 
-        // create a new instance manager
+        // create a new instance manager & use initializer to clear static list of state
         new InstanceManager() {
-            @Override
-            protected void init() {
-                root = null;
-                super.init();
-                root = this;
-            }
+            { managerLists.clear(); }
         };
+        
+        // add the NamedBeanHandleManager, which is always needed
         InstanceManager.store(new jmri.NamedBeanHandleManager(), jmri.NamedBeanHandleManager.class);
     }
 

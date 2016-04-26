@@ -120,6 +120,7 @@ public class RouteEditTableModel extends javax.swing.table.AbstractTableModel im
         // set row height
         table.setRowHeight(new JComboBox<>().getPreferredSize().height);
         updateList();
+        table.setRowHeight(new JComboBox<>().getPreferredSize().height);
         // have to shut off autoResizeMode to get horizontal scroll to work (JavaSwing p 541)
         table.setAutoResizeMode(JTable.AUTO_RESIZE_OFF);
     }

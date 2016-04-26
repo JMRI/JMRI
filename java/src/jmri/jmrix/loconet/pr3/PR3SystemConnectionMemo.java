@@ -66,8 +66,7 @@ public class PR3SystemConnectionMemo extends LocoNetSystemConnectionMemo {
      */
     public void configureManagersPR2() {
         mode = PR3MODE;
-        InstanceManager.setPowerManager(
-                getPowerManager());
+        InstanceManager.store(getPowerManager(), jmri.PowerManager.class);
 
         InstanceManager.setThrottleManager(
                 getThrottleManager());
@@ -140,7 +139,7 @@ public class PR3SystemConnectionMemo extends LocoNetSystemConnectionMemo {
         tm = new LocoNetThrottledTransmitter(getLnTrafficController(), mTurnoutExtraSpace);
         log.debug("ThrottleTransmitted configured with :" + mTurnoutExtraSpace);
 
-        InstanceManager.setPowerManager(super.getPowerManager());
+        InstanceManager.store(super.getPowerManager(), jmri.PowerManager.class);
 
         InstanceManager.setTurnoutManager(getTurnoutManager());
 
