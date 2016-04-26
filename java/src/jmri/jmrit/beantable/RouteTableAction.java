@@ -406,12 +406,12 @@ public class RouteTableAction extends AbstractTableAction {
     JButton createButton = new JButton(Bundle.getMessage("ButtonCreate"));
     JButton editButton = new JButton(Bundle.getMessage("ButtonEdit"));
     JButton cancelButton = new JButton(Bundle.getMessage("ButtonCancel"));
-    JButton cancelEditButton = new JButton(Bundle.getMessage("ButtonCancelEdit", Bundle.getMessage("ButtonEdit")));
-    JButton deleteButton = new JButton(Bundle.getMessage("ButtonDelete") + " " + Bundle.getMessage("BeanNameRoute"));
+    JButton cancelEditButton = new JButton(Bundle.getMessage("ButtonCancelEdit", Bundle.getMessage("ButtonEdit"))); // I18N for word sequence "Cancel Edit"
+    JButton deleteButton = new JButton(Bundle.getMessage("ButtonDelete") + " " + Bundle.getMessage("BeanNameRoute")); // I18N "Delete Route"
     JButton updateButton = new JButton(Bundle.getMessage("ButtonUpdate"));
     JButton exportButton = new JButton(Bundle.getMessage("ButtonExport"));
 
-    static String createInst = Bundle.getMessage("RouteAddStatusInitial1", Bundle.getMessage("ButtonCreate"));
+    static String createInst = Bundle.getMessage("RouteAddStatusInitial1", Bundle.getMessage("ButtonCreate")); // I18N to include original button name in help string
     static String editInst = Bundle.getMessage("RouteAddStatusInitial2", Bundle.getMessage("ButtonEdit"));
     static String updateInst = Bundle.getMessage("RouteAddStatusInitial3", Bundle.getMessage("ButtonUpdate"));
     static String cancelInst = Bundle.getMessage("RouteAddStatusInitial4", Bundle.getMessage("ButtonCancelEdit", Bundle.getMessage("ButtonEdit")));
@@ -523,7 +523,7 @@ public class RouteTableAction extends AbstractTableAction {
                 }
             });
             py.add(new JLabel(Bundle.getMessage("_and_", Bundle.getMessage("Turnouts"), Bundle.getMessage("Sensors"))));
-            // keys in jmri.jmrit.Bundle
+            // keys are in jmri.jmrit.Bundle
             contentPanel.add(py);
 
             // add Turnout table
@@ -637,7 +637,7 @@ public class RouteTableAction extends AbstractTableAction {
             p25.setLayout(new FlowLayout());
             p25.add(new JLabel(Bundle.getMessage("LabelPlaySound")));
             p25.add(soundFile);
-            JButton ss = new JButton("...");
+            JButton ss = new JButton("..."); //NO18N
             ss.addActionListener(new ActionListener() {
                 public void actionPerformed(ActionEvent e) {
                     setSoundPressed();
@@ -647,7 +647,7 @@ public class RouteTableAction extends AbstractTableAction {
             p25.add(ss);
             p25.add(new JLabel(Bundle.getMessage("LabelRunScript")));
             p25.add(scriptFile);
-            ss = new JButton("...");
+            ss = new JButton("..."); //NO18N
             ss.addActionListener(new ActionListener() {
                 public void actionPerformed(ActionEvent e) {
                     setScriptPressed();
@@ -849,16 +849,16 @@ public class RouteTableAction extends AbstractTableAction {
                 // remind to save, if Route was created or edited
                 if (routeDirty) {
                     InstanceManager.getDefault(jmri.UserPreferencesManager.class).
-                            showInfoMessage(Bundle.getMessage("ReminderTitle"), Bundle.getMessage("ReminderSaveString", Bundle.getMessage("MenuItemRouteTable")),
+                            showInfoMessage(Bundle.getMessage("ReminderTitle"),
+                                    Bundle.getMessage("ReminderSaveString", Bundle.getMessage("MenuItemRouteTable")),
                                     getClassName(),
-                                    "remindSaveRoute"); // NOI18N
+                                    "remindSaveRoute"); //NOI18N
                     routeDirty = false;
                 }
                 // hide addFrame
                 if (addFrame != null) {
                     addFrame.setVisible(false);
-                    // addFrame.dispose();
-                    // addFrame = null;
+                    // addFrame.dispose(); // causes multiple empty Routes next time
                 }
                 // if in Edit, cancel edit mode
                 if (editMode) {
@@ -1020,7 +1020,7 @@ public class RouteTableAction extends AbstractTableAction {
             }
         }
 
-        //turnouts aligned sensor
+        //Turnouts Aligned sensor
         if (turnoutsAlignedSensor.getSelectedBean() != null) {
             g.setTurnoutsAlignedSensor(turnoutsAlignedSensor.getSelectedDisplayName());
         } else {
@@ -1030,13 +1030,13 @@ public class RouteTableAction extends AbstractTableAction {
         // Set turnout information if there is any
         if (cTurnout.getSelectedBean() != null) {
             g.setControlTurnout(cTurnout.getSelectedDisplayName());
-            // set up control turnout state
+            // set up Control Turnout state
             g.setControlTurnoutState(turnoutModeFromBox(cTurnoutStateBox));
         } else {
-            // No control Turnout was entered
+            // No Control Turnout was entered
             g.setControlTurnout("");
         }
-        // set delay information
+        // set Delay information
         int addDelay = 0;
         try {
             addDelay = Integer.parseInt(timeDelay.getText());
@@ -1051,13 +1051,13 @@ public class RouteTableAction extends AbstractTableAction {
         }
         g.setRouteCommandDelay(addDelay);
 
-        // Set lock turnout information if there is any
+        // Set Lock Turnout information if there is any
         if (cLockTurnout.getSelectedBean() != null) {
             g.setLockControlTurnout(cLockTurnout.getSelectedDisplayName());
             // set up control turnout state
             g.setLockControlTurnoutState(turnoutModeFromBox(cLockTurnoutStateBox));
         } else {
-            // No control Turnout was entered
+            // No Lock Turnout was entered
             g.setLockControlTurnout("");
         }
     }
@@ -1172,11 +1172,11 @@ public class RouteTableAction extends AbstractTableAction {
         }
         _routeSensorScrollPane.getVerticalScrollBar().setValue(setRow * ROW_HEIGHT);
         _routeSensorModel.fireTableDataChanged();
-        // get sound, script names
+        // get Sound and  Script file names
         scriptFile.setText(g.getOutputScriptName());
         soundFile.setText(g.getOutputSoundName());
 
-        // get turnout aligned sensor
+        // get Turnout Aligned sensor
         turnoutsAlignedSensor.setSelectedBean(g.getTurnoutsAlgdSensor());
 
         // set up Sensors if there are any
@@ -1195,17 +1195,17 @@ public class RouteTableAction extends AbstractTableAction {
         sensor3.setSelectedBean(temNames[2]);
         setSensorModeBox(temModes[2], sensor3mode);
 
-        // set up control Turnout if there is one
+        // set up Control Turnout if there is one
         cTurnout.setSelectedBean(g.getCtlTurnout());
 
         setTurnoutModeBox(g.getControlTurnoutState(), cTurnoutStateBox);
 
-        // set up lock control Turnout if there is one
+        // set up Lock Control Turnout if there is one
         cLockTurnout.setSelectedBean(g.getLockCtlTurnout());
 
         setTurnoutModeBox(g.getLockControlTurnoutState(), cLockTurnoutStateBox);
 
-        // set up additional delay
+        // set up additional Delay
         timeDelay.setText(Integer.toString(g.getRouteCommandDelay()));
         // begin with showing all Turnouts   
         // set up buttons and notes
@@ -1246,21 +1246,21 @@ public class RouteTableAction extends AbstractTableAction {
         if (g == null) {
             return;
         }
-        // user name is unique, change it
+        // User Name is unique, change it
         g.setUserName(uName);
-        // clear the current output information for this Route
+        // clear the current Turnout information for this Route
         g.clearOutputTurnouts();
         g.clearOutputSensors();
         // clear the current Sensor information for this Route
         g.clearRouteSensors();
-        // add those indicated in the window
+        // add those indicated in the panel
         initializeIncludedList();
         setTurnoutInformation(g);
         setSensorInformation(g);
-        // set the current values of the filenames
+        // set the current values of the file names
         g.setOutputScriptName(scriptFile.getText());
         g.setOutputSoundName(soundFile.getText());
-        // add control Sensors and a control Turnout if entered in the window
+        // add Control Sensors and a Control Turnout if entered in the panel
         setControlInformation(g);
         curRoute = g;
         finishUpdate();
@@ -1270,7 +1270,7 @@ public class RouteTableAction extends AbstractTableAction {
     }
 
     void finishUpdate() {
-        // move to show all turnouts if not there
+        // move to show all Turnouts if not there
         cancelIncludedOnly();
         // Provide feedback to user 
         // switch GUI back to selection mode
@@ -1790,16 +1790,13 @@ public class RouteTableAction extends AbstractTableAction {
     void cancelAdd() {
             curRoute = null;
             finishUpdate();
-            //Route g = null;
             status1.setText(createInst);
             status2.setText(editInst);
             routeDirty = false;
-            //_autoSystemName.setSelected(false); // prevent automatic creation next time
             // hide addFrame
             if (addFrame != null) {
             addFrame.setVisible(false);
-            //addFrame.dispose();
-            //addFrame = null;
+            //addFrame.dispose();  // causes multiple empty Routes next time
             }
             _routeSensorModel.dispose();
             _routeTurnoutModel.dispose();
