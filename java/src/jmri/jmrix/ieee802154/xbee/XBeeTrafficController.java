@@ -58,7 +58,7 @@ public class XBeeTrafficController extends IEEE802154TrafficController implement
         try {
             if( p instanceof XBeeAdapter) {
                XBeeAdapter xbp = (XBeeAdapter) p;
-               xbee.initProviderConnection(((XBeeAdapter) p));
+               xbee.initProviderConnection(xbp);
                xbee.addPacketListener(this);
                // and start threads
                xmtThread = new Thread(xmtRunnable = new Runnable() {
@@ -181,7 +181,7 @@ public class XBeeTrafficController extends IEEE802154TrafficController implement
     // NOTE: Many of the details of this function are derived
     // from the the handleOneIncomingReply() in 
     // AbstractMRTrafficController.
-    @edu.umd.cs.findbugs.annotations.SuppressFBWarnings( value = {"NO_NOTIFY_NOT_NOTIFYALL","UW_UNCONDITIONAL_WAIT","WA_NOT_IN_LOOP"}, justification="There should only be one thread waiting on xmtRunnable. wait() on xmtRunnable is unconditional and not in a loop because it is used to wait for the hardware when switching modes.")
+    @edu.umd.cs.findbugs.annotations.SuppressFBWarnings( value = {"NO_NOTIFY_NOT_NOTIFYALL","UW_UNCOND_WAIT","WA_NOT_IN_LOOP"}, justification="There should only be one thread waiting on xmtRunnable. wait() on xmtRunnable is unconditional and not in a loop because it is used to wait for the hardware when switching modes.")
     public void processResponse(XBeeResponse response) {
 
         // before we forward this on to the listeners, handle
