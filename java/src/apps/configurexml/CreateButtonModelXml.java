@@ -65,7 +65,6 @@ public class CreateButtonModelXml extends jmri.configurexml.AbstractXmlAdapter {
                 JButton b = new JButton(action);
                 Apps3.buttonSpace().add(b);
             }
-            //} else if (DecoderPro3.get)
         } catch (ClassNotFoundException ex1) {
             log.error("Could not find specified class: " + className);
             result = false;

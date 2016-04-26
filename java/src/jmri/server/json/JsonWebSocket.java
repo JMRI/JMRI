@@ -32,8 +32,7 @@ public class JsonWebSocket {
         this.connection = new JsonConnection(sn);
         sn.setIdleTimeout((long) (JsonServerPreferences.getDefault().getHeartbeatInterval() * 1.1));
         this.handler = new JsonClientHandler(this.connection);
-        this.shutDownTask = new QuietShutDownTask("Close open web socket") {
-            // NOI18N
+        this.shutDownTask = new QuietShutDownTask("Close open web socket") { // NOI18N
             @Override
             public boolean execute() {
                 try {
@@ -81,5 +80,5 @@ public class JsonWebSocket {
             InstanceManager.shutDownManagerInstance().deregister(this.shutDownTask);
         }
     }
-    
+
 }

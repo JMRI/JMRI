@@ -159,7 +159,7 @@ public class MrcSystemConnectionMemo extends jmri.jmrix.SystemConnectionMemo {
     @SuppressWarnings("deprecation")
     public void configureManagers() {
         powerManager = new jmri.jmrix.mrc.MrcPowerManager(this);
-        InstanceManager.setPowerManager(powerManager);
+        InstanceManager.store(powerManager, jmri.PowerManager.class);
 
         turnoutManager = new jmri.jmrix.mrc.MrcTurnoutManager(getMrcTrafficController(), getSystemPrefix());
         InstanceManager.setTurnoutManager(turnoutManager);

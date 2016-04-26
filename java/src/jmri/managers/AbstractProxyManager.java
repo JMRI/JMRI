@@ -63,6 +63,12 @@ abstract public class AbstractProxyManager implements Manager {
     }
 
     public void addManager(Manager m) {
+        // check for already present
+        if (mgrs.contains(m)) {
+            // already present, complain and skip
+            log.warn("Manager already present: {}", m);
+            return;
+        }
         mgrs.add(m);
         propertyVetoListenerList.stream().forEach((l) -> {
             m.addVetoableChangeListener(l);

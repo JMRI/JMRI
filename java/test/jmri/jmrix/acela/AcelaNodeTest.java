@@ -209,17 +209,8 @@ public class AcelaNodeTest extends TestCase {
             AcelaTrafficController.instance().initializeAcelaNode(a3);
         }
 
-        // create a new instance manager
-        InstanceManager i = new InstanceManager() {
-            @Override
-            protected void init() {
-                root = null;
-                super.init();
-                root = this;
-            }
-        };
+        jmri.util.JUnitUtil.resetInstanceManager();
 
-        Assert.assertNotNull("exists", i);
         InstanceManager.setTurnoutManager(new InternalTurnoutManager());
         t1 = InstanceManager.turnoutManagerInstance().newTurnout("IT99", "99");
 
