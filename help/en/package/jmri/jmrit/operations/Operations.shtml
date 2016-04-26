@@ -277,7 +277,7 @@
    <a name="MultipleLayouts"></a>
    <h3>Multiple Layout Support</h3>
 
-   You can create and manage multiple layouts using OperationsPro&trade;. From the main help menu
+   You can create and manage multiple layouts using OperationsPro&trade;. From the main menu
    bar under "Edit" select "Preferences..." then "Config Profiles". Create a new
    <a href="../../../apps/TabbedPreferences.shtml#Profiles">Configuration Profile</a> for each
    layout that you want to manage. The database for each layout is unique and not shared with the
