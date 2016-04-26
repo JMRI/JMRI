@@ -35,7 +35,8 @@ public class ThreadingUtil {
     /** 
      * Run some layout-specific code at some later point.
      * <p>
-     * Please note the operation may have happened before this returns. Or not.
+     * Please note the operation may have happened before this returns. Or later. 
+     * No long-term guarantees.
      * <p>
      * Typical uses:
      * <p><code>ThreadingUtil.runOnLayoutEventually( ()->{ sensor.setState(value); } );</code>
@@ -82,7 +83,8 @@ public class ThreadingUtil {
     /** 
      * Run some layout-specific code at some later point.
      * <p>
-     * Please note the operation may have happened before this returns. Or not.
+     * If invoked from the GUI thread, the work is guaranteed to happen only
+     * after the current routine has returned.
      * <p>
      * Typical uses:
      * <p><code>ThreadingUtil.runOnGUIEventually( ()->{ mine.setVisible(); } );</code>
@@ -90,13 +92,8 @@ public class ThreadingUtil {
      * @param ta What to run, usually as a lambda expression
      */
     static public void runOnGUIEventually(ThreadAction ta) {
-        if (isGUIThread()) {
-            // run now, despite the "eventually" in the name; just a simplification
-            ta.run();
-        } else {
-            // dispatch to Swing
-            javax.swing.SwingUtilities.invokeLater(ta);
-        }
+        // dispatch to Swing
+        javax.swing.SwingUtilities.invokeLater(ta);
     }
 
     /** 

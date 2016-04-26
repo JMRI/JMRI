@@ -30,7 +30,7 @@ import org.slf4j.LoggerFactory;
  * An HTTP server that handles requests for HTTPServlets.
  *
  * @author Bob Jacobsen Copyright 2005, 2006
- * @author Randall Wood Copyright 2012
+ * @author Randall Wood Copyright 2012, 2016
  * @version $Revision$
  */
 public final class WebServer implements LifeCycle.Listener {
@@ -42,21 +42,11 @@ public final class WebServer implements LifeCycle.Listener {
     private final static Logger log = LoggerFactory.getLogger(WebServer.class.getName());
 
     protected WebServer() {
-        preferences = WebServerPreferences.getDefault();
-        shutDownTask = new QuietShutDownTask("Stop Web Server") { // NOI18N
-            @Override
-            public boolean execute() {
-                try {
-                    WebServer.getDefault().stop();
-                } catch (Exception ex) {
-                    log.warn("Error shutting down WebServer: " + ex);
-                    if (log.isDebugEnabled()) {
-                        log.debug("Details follow: ", ex);
-                    }
-                }
-                return true;
-            }
-        };
+        this(WebServerPreferences.getDefault());
+    }
+
+    protected WebServer(WebServerPreferences preferences) {
+        this.preferences = preferences;
     }
 
     public static WebServer getDefault() {
@@ -179,6 +169,7 @@ public final class WebServer implements LifeCycle.Listener {
 
     @Override
     public void lifeCycleStarting(LifeCycle lc) {
+        shutDownTask = new ServerShutDownTask(this);
         if (InstanceManager.shutDownManagerInstance() != null) {
             InstanceManager.shutDownManagerInstance().register(shutDownTask);
         }
@@ -233,6 +224,43 @@ public final class WebServer implements LifeCycle.Listener {
             } catch (Exception ex) {
                 log.error("Exception starting Web Server: " + ex);
             }
+        }
+    }
+
+    static private class ServerShutDownTask extends QuietShutDownTask {
+
+        private final WebServer server;
+        private boolean isComplete = false;
+
+        public ServerShutDownTask(WebServer server) {
+            super("Stop Web Server"); // NOI18N
+            this.server = server;
+        }
+
+        @Override
+        public boolean execute() {
+            new Thread(() -> {
+                try {
+                    server.stop();
+                } catch (Exception ex) {
+                    log.warn("Error shutting down WebServer: " + ex);
+                    if (log.isDebugEnabled()) {
+                        log.debug("Details follow: ", ex);
+                    }
+                }
+                this.isComplete = true;
+            }).start();
+            return true;
+        }
+        
+        @Override
+        public boolean isParallel() {
+            return true;
+        }
+        
+        @Override
+        public boolean isComplete() {
+            return this.isComplete;
         }
     }
 }

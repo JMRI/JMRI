@@ -544,20 +544,19 @@ public class TrainsTableFrame extends OperationsFrame implements java.beans.Prop
     }
 
     public void dispose() {
-        /*
-         * all JMRI window position and size are now saved in user preference file
-         * trainManager.setTrainsFrameTableColumnWidths(getCurrentTableColumnWidths()); // save column widths
-         * trainManager.setTrainsFrame(null);
-         */
         trainsModel.dispose();
         trainManager.runShutDownScripts();
         trainManager.removePropertyChangeListener(this);
         Setup.removePropertyChangeListener(this);
         removePropertyChangeLocations();
+        setModifiedFlag(false);
         super.dispose();
     }
 
     protected void handleModified() {
+        if (!getModifiedFlag()) {
+            return;
+        }
         if (Setup.isAutoSaveEnabled()) {
             storeValues();
             return;

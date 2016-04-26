@@ -1785,8 +1785,7 @@ public class LayoutEditorTools {
 
     private TrackSegment getContinuingTrack(LayoutTurnout to, int type) {
         int ty = to.getTurnoutType();
-        if ((ty == LayoutTurnout.RH_TURNOUT) || (ty == LayoutTurnout.LH_TURNOUT)
-                || (ty == LayoutTurnout.RH_TURNOUT)) {
+        if ((ty == LayoutTurnout.RH_TURNOUT) || (ty == LayoutTurnout.LH_TURNOUT)) {
             if (type == LayoutEditor.TURNOUT_A) {
                 if (to.getContinuingSense() == Turnout.CLOSED) {
                     return (TrackSegment) to.getConnectB();

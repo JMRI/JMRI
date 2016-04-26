@@ -74,6 +74,10 @@ public class XBeeAdapter extends jmri.jmrix.ieee802154.serialdriver.SerialDriver
         return null; // normal operation
     }
 
+    /**
+     *
+     */
+    @edu.umd.cs.findbugs.annotations.SuppressFBWarnings(value = {"NO_NOTIFY_NOT_NOTIFYALL","NN_NAKED_NOTIFY"}, justification="The notify call is notifying the receive thread that data is available.  There is only one receive thead, so no reason to call notifyAll.")
     public void serialEvent(SerialPortEvent e) {
         int type = e.getEventType();
         try {
@@ -221,7 +225,12 @@ public class XBeeAdapter extends jmri.jmrix.ieee802154.serialdriver.SerialDriver
 
     @Override
     public XBeeConnectionMemo getSystemConnectionMemo() {
-        return (XBeeConnectionMemo) super.getSystemConnectionMemo();
+        jmri.jmrix.ieee802154.IEEE802154SystemConnectionMemo m = super.getSystemConnectionMemo();
+        if (m instanceof XBeeConnectionMemo ) {
+           return (XBeeConnectionMemo) m;
+        } else {
+           throw new java.lang.IllegalArgumentException("System Connection Memo associated with this connection is not the right type.");
+        }
     }
 
     private String[] validSpeeds = new String[]{"1,200 baud", "2,400 baud",

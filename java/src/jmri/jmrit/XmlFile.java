@@ -165,9 +165,8 @@ public abstract class XmlFile {
      * @throws java.io.IOException     if the input cannot be read
      */
     protected Element getRoot(boolean verify, InputStream stream) throws JDOMException, IOException {
-        if (log.isDebugEnabled()) {
-            log.debug("getRoot from stream");
-        }
+        log.trace("getRoot from stream");
+
         SAXBuilder builder = getBuilder(verify);  // argument controls validation
         Document doc = builder.build(new BufferedInputStream(stream));
         doc = processInstructions(doc);  // handle any process instructions
@@ -190,9 +189,8 @@ public abstract class XmlFile {
      * @since 3.1.5
      */
     protected Element getRoot(boolean verify, InputStreamReader reader) throws JDOMException, IOException {
-        if (log.isDebugEnabled()) {
-            log.debug("getRoot from reader with encoding " + reader.getEncoding());
-        }
+        log.trace("getRoot from reader with encoding {}", reader.getEncoding());
+            
         SAXBuilder builder = getBuilder(verify);  // argument controls validation
         Document doc = builder.build(new BufferedReader(reader));
         doc = processInstructions(doc);  // handle any process instructions
@@ -486,7 +484,7 @@ public abstract class XmlFile {
     }
 
     Document processOneInstruction(ProcessingInstruction p, Document doc) throws org.jdom2.transform.XSLTransformException, org.jdom2.JDOMException, java.io.IOException {
-        log.debug("handling ", p);
+        log.trace("handling ", p);
 
         // check target
         String target = p.getTarget();

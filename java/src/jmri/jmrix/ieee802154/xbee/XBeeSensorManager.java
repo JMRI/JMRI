@@ -131,9 +131,18 @@ public class XBeeSensorManager extends jmri.managers.AbstractSensorManager imple
                                 + node.getPreferedName() + ":" + i;
                         XBeeSensor s = (XBeeSensor) getSensor(sName);
                         if (s == null) {
-                            s = (XBeeSensor) provideSensor(sName);
-                            if (log.isDebugEnabled()) {
-                                log.debug("DIO " + sName + " enabled as sensor");
+                            // the sensor doesn't exist, so provide a new one.
+                            try {
+                               provideSensor(sName);
+                               if (log.isDebugEnabled()) {
+                                   log.debug("DIO " + sName + " enabled as sensor");
+                               }
+                            } catch(java.lang.IllegalArgumentException iae){
+                               // if provideSensor fails, it will throw an IllegalArgumentException, so catch that,log it if debugging is enabled, and then re-throw it.
+                               if (log.isDebugEnabled()) {
+                                   log.debug("Attempt to enable DIO " + sName + " as sensor failed");
+                               }
+                               throw iae;
                             }
                         }
                     }
@@ -168,7 +177,7 @@ public class XBeeSensorManager extends jmri.managers.AbstractSensorManager imple
         String encoderAddress = addressFromSystemName(prefix + typeLetter() + curAddress);
         int input = pinFromSystemName(prefix + typeLetter() + curAddress);
 
-        if (encoderAddress == "") {
+        if (encoderAddress.equals("")) {
             throw new JmriException("I unable to determine hardware address");
         }
         return prefix + typeLetter() + encoderAddress + ":" + input;
