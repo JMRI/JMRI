@@ -271,6 +271,17 @@ If you're building locally:
     (The user has to have put the htdocs link in their SF.net account)
 
 ================================================================================
+## Put Files Out For Checking
+
+- Change the release note to point to the just-built files (in CI or where you put them), commit, wait (or force via ["Build Now"](http://builds.jmri.org/jenkins/job/Web%20Site/job/Website%20from%20JMRI%20GitHub%20website%20repository/) update). Confirm visible on web.
+
+- Announce the file set to jmri-developers with a download URL like:
+
+    http://jmri.tagadab.com/jenkins/job/TestReleases/job/4.3.5/
+
+- *Wait for some replies* before proceeding
+
+================================================================================
 ## Further Changes
 
 If anybody wants to add a change from here on in, they should
@@ -303,17 +314,6 @@ developer need only create a single PR between 'needed-patches' - decision neede
 
 It still gets a bit tricky if there’s a difference (e.g. due to a conflict with another change) that arises in either PR.  We’ll have to manage that a little carefully. One way to handle that is to _not_ merge any conflicts on master (_any_ PRs to master, not just in these dual-hatted PRs) until after the test release is done and merged back.
 
-
-================================================================================
-## Release-specific Updates
-
-- Change the release note to point to the just-built files (in CI or where you put them), commit, wait (or force via ["Build Now"](http://builds.jmri.org/jenkins/job/Web%20Site/job/Website%20from%20JMRI%20GitHub%20website%20repository/) update). Confirm visible on web.
-
-- Announce the file set to jmri-developers with a download URL like:
-
-    http://jmri.tagadab.com/jenkins/job/TestReleases/job/4.3.5/
-
-- *Wait for some replies* before proceeding
 
 ====================================================================================
 ## Release Files on SF.net
