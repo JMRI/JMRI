@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <?xml-stylesheet href="../../XSLT/aspecttable.xsl" type="text/xsl"?>
 <aspecttable xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="http://jmri.org/xml/schema/aspecttable.xsd">
+
   <name>ProRail-1954</name>
   <date>2016</date>
   <reference>Signaling definitions corresponding to the Wikipedia Dutch signaling page</reference>
@@ -27,6 +28,7 @@
       <email>dcc2@ebroerse.nl</email>
     </author>
   </authorgroup>
+
   <revhistory xmlns="http://docbook.org/ns/docbook">
     <revision>
       <revnumber>1</revnumber>
@@ -47,6 +49,7 @@
       <revremark>Added rules, High-Number signal head  appearances and icons and official Dutch translations as remarks</revremark>
     </revision>
   </revhistory>
+
   <aspects>
     <aspect>
       <name>Stop</name>
@@ -82,7 +85,7 @@
     <aspect>
       <name>Medium</name>
       <rule>Rule 202</rule>
-      <indication>Proceed with inicated speed</indication>
+      <indication>Proceed with indicated speed</indication>
       <description>Indication in Dutch: Voorbijrijden toegestaan met ten hoogste de door het getal aangegeven snelheid.</description>
       <comment>Official aspect: Hoog geplaatst knipperend groen licht met een door een wit licht gevormd getal</comment>
       <speed>Medium</speed>
@@ -119,7 +122,7 @@
       <description>Indication in Dutch: Snelheid begrenzen tot 40 km/u of zoveel minder als nodig is om voor het eerstvolgende 'stop' tonende sein te kunnen stoppen.</description>
       <comment>Official aspect: Hoog of laag geplaatst geel licht</comment>
       <speed>Limited</speed>
-      <speed2>Limited</speed2>
+      <speed2>Stop</speed2>
       <route>Normal</route>
       <dccAspect>9</dccAspect>
     </aspect>
@@ -166,6 +169,7 @@
       <dccAspect>8</dccAspect>
     </aspect>
   </aspects>
+
   <imagetypes>
     <imagetype type="large" />
     <imagetype type="small" />
@@ -176,4 +180,5 @@
     <appearancefile href="appearance-Approach.xml" />
     <appearancefile href="appearance-Dwarf.xml" />
   </appearancefiles>
+
 </aspecttable>
