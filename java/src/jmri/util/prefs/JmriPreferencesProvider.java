@@ -164,7 +164,7 @@ public final class JmriPreferencesProvider {
      * as a single token.
      *
      * @param cls
-     * @return
+     * @return A sanitized package name
      */
     public static String findCNBForClass(@Nonnull Class<?> cls) {
         String absolutePath;
@@ -172,7 +172,7 @@ public final class JmriPreferencesProvider {
         return absolutePath.replace('.', '-');
     }
 
-    private File getPreferencesFile() {
+    File getPreferencesFile() {
         if (this.project == null) {
             return new File(this.getPreferencesDirectory(), "preferences.properties");
         } else {
@@ -194,6 +194,20 @@ public final class JmriPreferencesProvider {
         return dir;
     }
 
+    /**
+     * @return the backedUp
+     */
+    protected boolean isBackedUp() {
+        return backedUp;
+    }
+
+    /**
+     * @param backedUp the backedUp to set
+     */
+    protected void setBackedUp(boolean backedUp) {
+        this.backedUp = backedUp;
+    }
+
     private class JmriPreferences extends AbstractPreferences {
 
         private final Logger log = LoggerFactory.getLogger(JmriPreferences.class);
@@ -205,7 +219,7 @@ public final class JmriPreferencesProvider {
         public JmriPreferences(AbstractPreferences parent, String name) {
             super(parent, name);
 
-            log.debug("Instantiating node " + name);
+            log.trace("Instantiating node \"{}\"", name);
 
             root = new TreeMap<>();
             children = new TreeMap<>();
@@ -363,10 +377,10 @@ public final class JmriPreferencesProvider {
                         });
                     }
 
-                    if (!JmriPreferencesProvider.this.backedUp && file.exists()) {
+                    if (!JmriPreferencesProvider.this.isBackedUp() && file.exists()) {
                         log.debug("Backing up {}", file);
                         FileUtil.backup(file);
-                        JmriPreferencesProvider.this.backedUp = true;
+                        JmriPreferencesProvider.this.setBackedUp(true);
                     }
                     try (FileOutputStream fos = new FileOutputStream(file)) {
                         p.store(fos, "JMRI Preferences version " + Version.name());

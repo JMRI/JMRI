@@ -42,8 +42,7 @@ public class CbusConfigurationManager extends jmri.jmrix.can.ConfigurationManage
     @Override
     public void configureManagers() {
 
-        InstanceManager.setPowerManager(
-                getPowerManager());
+        InstanceManager.store(getPowerManager(), jmri.PowerManager.class);
 
         InstanceManager.setSensorManager(
                 getSensorManager());

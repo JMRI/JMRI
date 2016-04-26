@@ -4,6 +4,7 @@ package jmri.jmrit.operations.trains.timetable;
 import java.beans.PropertyChangeEvent;
 import java.beans.PropertyChangeListener;
 import java.util.List;
+import javax.swing.JComboBox;
 import javax.swing.JTable;
 import javax.swing.table.TableColumnModel;
 import jmri.jmrit.beantable.EnablingCheckboxRenderer;
@@ -112,6 +113,7 @@ public class TrainsScheduleTableModel extends javax.swing.table.AbstractTableMod
                 tcm.getColumn(i).setPreferredWidth(widths[i]);
             }
         }
+        _table.setRowHeight(new JComboBox<>().getPreferredSize().height);
         // have to shut off autoResizeMode to get horizontal scroll to work (JavaSwing p 541)
         _table.setAutoResizeMode(JTable.AUTO_RESIZE_OFF);
     }
