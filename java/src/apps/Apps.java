@@ -1,4 +1,3 @@
-// Apps.java
 package apps;
 
 import apps.gui3.TabbedPreferences;
@@ -113,7 +112,6 @@ import org.slf4j.LoggerFactory;
  * @author Dennis Miller Copyright 2005
  * @author Giorgio Terdina Copyright 2008
  * @author Matthew Harris Copyright (C) 2011
- * @version $Revision$
  */
 public class Apps extends JPanel implements PropertyChangeListener, WindowListener {
 

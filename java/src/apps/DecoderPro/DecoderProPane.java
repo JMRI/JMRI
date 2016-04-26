@@ -1,4 +1,3 @@
-// DecoderProPane.java
 package apps.DecoderPro;
 
 import apps.Apps;
@@ -26,7 +25,6 @@ import javax.swing.JPanel;
  * A PARTICULAR PURPOSE. See the GNU General Public License for more details.
  * <P>
  * @author	Bob Jacobsen Copyright 2003, 2014
- * @version $Revision$
  */
 public class DecoderProPane extends apps.AppsLaunchPane {
 

@@ -1,4 +1,3 @@
-// LicenseAction.java
 package apps;
 
 import java.io.BufferedReader;
@@ -18,7 +17,6 @@ import jmri.util.swing.WindowInterface;
  * Swing action to display the JMRI license
  *
  * @author	Bob Jacobsen Copyright (C) 2004, 2010
- * @version $Revision$
  */
 public class LicenseAction extends jmri.util.swing.JmriAbstractAction {
 
@@ -74,4 +72,3 @@ public class LicenseAction extends jmri.util.swing.JmriAbstractAction {
     }
 }
 
-/* @(#)LicenseAction.java */
