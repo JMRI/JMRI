@@ -456,7 +456,7 @@ git push github
         https://submit.symantec.com/whitelist/isv/
 ```
 
-    If you don't, a bunch of Windows users are likely to whine
+If you don't, a bunch of Windows users are likely to whine
 
 - Wait for update on JMRI web server (or [ask Jenkins](http://builds.jmri.org/jenkins/job/Web%20Site/) to speed it along; note there are multiple components that need to run)
 
