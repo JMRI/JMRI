@@ -324,6 +324,7 @@ public class SRCPTrafficController extends AbstractMRTrafficController
      *
      * @return true if the shutdown should continue, false to abort.
      */
+    @Override
     public boolean execute() {
         // notify the server we are exiting.
         sendSRCPMessage(new SRCPMessage("TERM 0 SESSION"), null);
@@ -332,12 +333,25 @@ public class SRCPTrafficController extends AbstractMRTrafficController
         return true;
     }
 
-    /**
-     * Name to be provided to the user when information about this task is
-     * presented.
-     */
+    @Override
+    @SuppressWarnings("deprecation")
     public String name() {
+        return this.getName();
+    }
+
+    @Override
+    public String getName() {
         return SRCPTrafficController.class.getName();
+    }
+
+    @Override
+    public boolean isParallel() {
+        return false;
+    }
+
+    @Override
+    public boolean isComplete() {
+        return !this.isParallel();
     }
 
     /**

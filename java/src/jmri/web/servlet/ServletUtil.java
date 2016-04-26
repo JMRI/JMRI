@@ -7,7 +7,7 @@ import java.util.Date;
 import java.util.Locale;
 import javax.servlet.http.HttpServletResponse;
 import jmri.util.FileUtil;
-import jmri.web.server.WebServerManager;
+import jmri.web.server.WebServerPreferences;
 
 /**
  *
@@ -35,9 +35,9 @@ public class ServletUtil {
      */
     public String getRailroadName(boolean inComments) {
         if (inComments) {
-            return "-->" + WebServerManager.getWebServerPreferences().getRailRoadName() + "<!--"; // NOI18N
+            return "-->" + WebServerPreferences.getDefault().getRailRoadName() + "<!--"; // NOI18N
         }
-        return WebServerManager.getWebServerPreferences().getRailRoadName();
+        return WebServerPreferences.getDefault().getRailRoadName();
     }
 
     public String getFooter(Locale locale, String context) throws IOException {
@@ -67,14 +67,14 @@ public class ServletUtil {
         navBar = navBar.replaceAll("context-[\\w-]*-only", "hidden"); // NOI18N
         // replace class "context-<this-context>" with class "active"
         navBar = navBar.replace(context, "active"); // NOI18N
-        if (WebServerManager.getWebServerPreferences().allowRemoteConfig()) {
+        if (WebServerPreferences.getDefault().allowRemoteConfig()) {
             navBar = navBar.replace("config-enabled-only", "show"); // NOI18N
             navBar = navBar.replace("config-disabled-only", "hidden"); // NOI18N
         } else {
             navBar = navBar.replace("config-enabled-only", "hidden"); // NOI18N
             navBar = navBar.replace("config-disabled-only", "show"); // NOI18N
         }
-        if (!WebServerManager.getWebServerPreferences().isReadonlyPower()) {
+        if (!WebServerPreferences.getDefault().isReadonlyPower()) {
             navBar = navBar.replace("data-power=\"readonly\"", "data-power=\"readwrite\""); // NOI18N
         }
         return navBar;

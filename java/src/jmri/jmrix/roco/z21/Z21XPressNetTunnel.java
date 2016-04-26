@@ -21,7 +21,7 @@ import org.slf4j.LoggerFactory;
  */
 public class Z21XPressNetTunnel implements Z21Listener, XNetListener, Runnable {
 
-    private jmri.jmrix.lenz.XNetStreamPortController xsc = null;
+    jmri.jmrix.lenz.XNetStreamPortController xsc = null;
     private DataOutputStream pout = null; // for output to other classes
     private DataInputStream pin = null; // for input from other classes
     // internal ends of the pipes
@@ -57,14 +57,7 @@ public class Z21XPressNetTunnel implements Z21Listener, XNetListener, Runnable {
 
         // Then use those pipes as the input and output pipes for
         // a new XNetStreamPortController object.
-        xsc = new Z21XNetStreamPortController(pin, pout, "None");
-
-        // configure the XPressNet connections properties.
-        xsc.getSystemConnectionMemo().setSystemPrefix(_memo.getSystemPrefix() + "X");
-        xsc.getSystemConnectionMemo().setUserName(_memo.getUserName() + "XPressNet");
-
-        // register a connection config object for this stream port.
-        jmri.InstanceManager.getDefault(jmri.ConfigureManager.class).registerUser(new Z21XNetConnectionConfig(xsc));
+        setStreamPortController(new Z21XNetStreamPortController(pin, pout, "None"));
 
         // register as a Z21Listener, so we can receive replies
         _memo.getTrafficController().addz21Listener(this);
@@ -232,6 +225,20 @@ public class Z21XPressNetTunnel implements Z21Listener, XNetListener, Runnable {
     jmri.jmrix.lenz.XNetStreamPortController getStreamPortController() {
        return xsc;
     }
+
+    // package protected method to set the stream port
+    // controller associated with this tunnel.
+    void setStreamPortController(jmri.jmrix.lenz.XNetStreamPortController x){
+        xsc = x;
+
+        // configure the XPressNet connections properties.
+        xsc.getSystemConnectionMemo().setSystemPrefix(_memo.getSystemPrefix() + "X");
+        xsc.getSystemConnectionMemo().setUserName(_memo.getUserName() + "XPressNet");
+
+        // register a connection config object for this stream port.
+        jmri.InstanceManager.getDefault(jmri.ConfigureManager.class).registerUser(new Z21XNetConnectionConfig(xsc));
+    }
+
     private final static Logger log = LoggerFactory.getLogger(Z21XPressNetTunnel.class.getName());
 
 }

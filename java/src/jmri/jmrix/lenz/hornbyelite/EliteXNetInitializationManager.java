@@ -25,7 +25,7 @@ public class EliteXNetInitializationManager extends AbstractXNetInitializationMa
             log.debug("Init called");
         }
         /* First, we load things that should work on all systems */
-        jmri.InstanceManager.setPowerManager(systemMemo.getPowerManager());
+        jmri.InstanceManager.store(systemMemo.getPowerManager(), jmri.PowerManager.class);
         systemMemo.setThrottleManager(new jmri.jmrix.lenz.hornbyelite.EliteXNetThrottleManager(systemMemo));
         jmri.InstanceManager.setThrottleManager(systemMemo.getThrottleManager());
 
