@@ -103,10 +103,6 @@ public class SectionManagerXml extends jmri.managers.configurexml.AbstractNamedB
                                         log.error("Unexpected null getFromBlock while storing ep " + i + " in Section " + sname + ", skipped");
                                         break;
                                     }
-                                    if (ep.getFromBlock().getSystemName() == null) {
-                                        log.error("Unexpected null in FromBlock systemName while storing ep " + i + " in Section " + sname + ", skipped");
-                                        break;
-                                    }
                                     epElem.setAttribute("fromblock", ep.getFromBlock().getSystemName());
                                     if (ep.getBlock() == null) {
                                         log.error("Unexpected null getBlock while storing ep " + i + " in Section " + sname + ", skipped");
