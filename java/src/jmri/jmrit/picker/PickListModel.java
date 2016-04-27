@@ -209,9 +209,9 @@ public abstract class PickListModel extends jmri.jmrit.beantable.BeanTableDataMo
 
     public String getColumnName(int c) {
         if (c == SNAME_COLUMN) {
-            return rb.getString("ColumnSystemName");
+            return Bundle.getMessage("ColumnSystemName");
         } else if (c == UNAME_COLUMN) {
-            return rb.getString("ColumnUserName");
+            return Bundle.getMessage("ColumnUserName");
         }
         return "";
     }
@@ -888,7 +888,7 @@ public abstract class PickListModel extends jmri.jmrit.beantable.BeanTableDataMo
             if (c == SNAME_COLUMN) {
                 return "Unique Id";
             } else if (c == UNAME_COLUMN) {
-                return rb.getString("ColumnUserName");
+                return Bundle.getMessage("ColumnUserName");
             }
             return "";
         }

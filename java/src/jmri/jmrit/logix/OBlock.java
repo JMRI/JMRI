@@ -1,4 +1,4 @@
-package jmri.jmrit.logix;
+ package jmri.jmrit.logix;
 
 import java.awt.Color;
 import java.awt.Font;
