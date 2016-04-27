@@ -67,8 +67,8 @@ public class FileLocationPane extends JPanel implements PreferencesPanel {
                 }
                 scriptLocation.setText(fcScript.getSelectedFile() + File.separator);
                 validate();
-                if (getTopLevelAncestor() != null) {
-                    getTopLevelAncestor().pack();
+                if (getTopLevelAncestor() != null && getTopLevelAncestor() instanceof JFrame) {
+                    ((JFrame)getTopLevelAncestor()).pack();
                 }
             }
         });
@@ -108,8 +108,8 @@ public class FileLocationPane extends JPanel implements PreferencesPanel {
                 }
                 userLocation.setText(fcUser.getSelectedFile() + File.separator);
                 validate();
-                if (getTopLevelAncestor() != null) {
-                    getTopLevelAncestor().pack();
+                if (getTopLevelAncestor() != null && getTopLevelAncestor() instanceof JFrame) {
+                    ((JFrame)getTopLevelAncestor()).pack();
                 }
             }
         });
