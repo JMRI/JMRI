@@ -234,7 +234,7 @@
     they understand how the program works tend to need a lot of help getting the car movement they
     desire. So start off small and get your trains to build correctly, read the build reports in the
     very detailed mode for your trains, even if they build to your liking. You need to get
-    proficient with the build reports before you start using the more advanced features of the
+    proficient with the build reports before you begin using the more advanced features of the
     OperationsPro&trade;. Once you get your trains to build correctly, you can add staging tracks if you've
     designed staging into your layout. The other three advanced features are completely optional and
     aren't needed for good car movement. The next track type to experiment with could be
@@ -260,20 +260,29 @@
     
     <a name="Display"></a>
     <h3>Display and Help</h3>
-    
-    To adjust the display font size or appearance of the JMRI windows, select "Preferences.." found under
-    "Edit" in the main window menu bar. A new window will appear with options to make layout connections, change
-    the "Display" appearance and font size, and many other settings including the "Railroad Name". Most
-    JMRI windows have as part of the menu bar the "Help" option. Select "Window Help.." to get information
-    about the window you're using. 
-    
+
+   To adjust the display font size or appearance of the JMRI windows, select "Preferences..." found
+   under "Edit" in the main window menu bar. The
+   <a href="../../../apps/TabbedPreferences.shtml">JMRI: Preferences Pane</a> will appear with
+   options to make <a
+    href="../../../apps/TabbedPreferences.shtml#Connection">Layout Connections</a>, change the
+   window <a href="../../../apps/TabbedPreferences.shtml#Display">Display</a> appearance and font
+   size, and many other settings including the
+   <a href="../../../apps/TabbedPreferences.shtml#RailroadName">Railroad Name</a>. You can also
+   configure JMRI to automatically open any of the operation windows on
+   <a href="../../../apps/TabbedPreferences.shtml#Startup">Start Up</a> by adding a "Perform action".
+   Most JMRI windows have as part of the menu bar the "Help" option. Select "Window Help.." to get
+   information about the window you're using. 
+   
    <a name="MultipleLayouts"></a>
    <h3>Multiple Layout Support</h3>
-   
-   You can create and manage multiple layouts using OperationsPro&trade;. From the main help menu bar under
-   "Edit" select "Preferences" then "Config Profiles".  Create a new configuration profile for each layout
-   that you want to manage.  The database for each layout is unique and not shared with the other layouts.
 
+   You can create and manage multiple layouts using OperationsPro&trade;. From the main menu
+   bar under "Edit" select "Preferences..." then "Config Profiles". Create a new
+   <a href="../../../apps/TabbedPreferences.shtml#Profiles">Configuration Profile</a> for each
+   layout that you want to manage. The database for each layout is unique and not shared with the
+   other layouts. 
+   
    <a name="demo"></a>
    <h3>Operations Demo Files</h3>
 
@@ -452,11 +461,14 @@
    Manifests. You can also have a different railroad name for every train in your roster, see
    <a href="#TrainManifestOptions">Train Manifest Options</a> for details.
 
-   <p>When you close the "Settings" window you will be prompted to make whatever railroad name
-    you've entered to be the JMRI railroad name. You should answer "Yes" to the dialog window, this
-    way all of the other applications in JMRI will reference the same railroad name. To change the
-    railroad name once you've done this, you will need to go to the Preferences window found under
-    "Edit" in the main menu bar.</p>
+   <p>
+    When you close the "Settings" window you will be prompted to make whatever railroad name you've
+    entered to be the JMRI railroad name. You should answer "Yes" to the dialog window, this way all
+    of the other applications in JMRI will reference the same railroad name. To change the railroad
+    name once you've done this, you will need to go to the <a
+     href="../../../apps/TabbedPreferences.shtml">JMRI: Preferences Pane</a> found under
+    "Edit-&gt;Preferences..." from the main menu bar.
+   </p>
 
    <h4>Train Directions</h4>
 
@@ -539,7 +551,7 @@
 
    <p>
     You can also automatically open any of the six operations windows when you start JMRI. From the
-    main menu, under "Edit-&gt;Preferences" select <a
+    main menu, under "Edit-&gt;Preferences..." select <a
      href="../../../apps/TabbedPreferences.shtml#Startup">Start Up</a>, and add a "Perform action"
      startup item for the desired window.
    </p>
@@ -567,8 +579,9 @@
 
    If you want the OperationsPro&trade; to place an icon representing the train on a panel, enter the
    panel's name (NOT the panel's file path name!), otherwise leave the name blank to disable. Load
-   the panel using the main menu "Panel-&gt;Load Panels..." or use other load panel options
-   available in JMRI.
+   the panel using the main menu "Panel-&gt;Load Panels..." or use the 
+   <a href="../../../apps/TabbedPreferences.shtml#Startup">Open file</a> option
+   available in JMRI: Preferences Pane to load the panel at startup.
 
    <p>
     The "Enable Icon SetX&amp;Y" when selected allows you to teach the OperationsPro&trade;
@@ -4398,7 +4411,7 @@
    <h4>More details</h4>
 
    <p>
-    At the start of the train build process, if the train requires a locomotive or several
+    At the beginning of the train build process, if the train requires a locomotive or several
     locomotives, the program will look for locomotives at the start of the route and then determines
     if the termination location will accept them. Note that if two or more locomotives are required
     for the train that the locomotives must be in a <a href="#LocomotivesAdd">consist</a>, or the

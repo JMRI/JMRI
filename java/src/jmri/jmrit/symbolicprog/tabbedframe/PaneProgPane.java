@@ -448,7 +448,7 @@ public class PaneProgPane extends javax.swing.JPanel
      * operation. They are stored as a list of Integer objects, each of which is
      * the index of the Variable in the VariableTable.
      */
-    List<Integer> varList = new ArrayList<Integer>();
+    List<Integer> varList = new ArrayList<>();
     int varListIndex;
     /**
      * This remembers the CVs on this pane for the Read/Write sheet operation.
@@ -457,7 +457,7 @@ public class PaneProgPane extends javax.swing.JPanel
      * the CVs that are represented by variables are not entered here. So far
      * (sic), the only use of this is for the cvtable rep.
      */
-    protected TreeSet<Integer> cvList = new TreeSet<Integer>(); //  TreeSet is iterated in order
+    protected TreeSet<Integer> cvList = new TreeSet<>(); //  TreeSet is iterated in order
     protected Iterator<Integer> cvListIterator;
     /**
      * This remembers the indexed CVs on this pane for the Read/Write sheet
@@ -466,7 +466,7 @@ public class PaneProgPane extends javax.swing.JPanel
      * can read/write them as a variable. So far (sic), the only use of this is
      * for the IndexedCvTable rep.
      */
-    List<Integer> indexedCvList = new ArrayList<Integer>();
+    List<Integer> indexedCvList = new ArrayList<>();
     int indexedCvListIndex;
 
     protected JToggleButton readChangesButton = new JToggleButton(SymbolicProgBundle.getMessage("ButtonReadChangesSheet"));
@@ -2291,8 +2291,7 @@ public class PaneProgPane extends javax.swing.JPanel
 
         sorter.setComparator(CvTableModel.NUMCOLUMN, new jmri.util.PreferNumericComparator());
 
-        List<RowSorter.SortKey> sortKeys
-                = new ArrayList<RowSorter.SortKey>();
+        List<RowSorter.SortKey> sortKeys = new ArrayList<>();
         sortKeys.add(new RowSorter.SortKey(0, SortOrder.ASCENDING));
         sorter.setSortKeys(sortKeys);
 
@@ -2662,12 +2661,12 @@ public class PaneProgPane extends javax.swing.JPanel
     /**
      * list of fnMapping objects to dispose
      */
-    ArrayList<FnMapPanel> fnMapList = new ArrayList<FnMapPanel>();
-    ArrayList<FnMapPanelESU> fnMapListESU = new ArrayList<FnMapPanelESU>();
+    ArrayList<FnMapPanel> fnMapList = new ArrayList<>();
+    ArrayList<FnMapPanelESU> fnMapListESU = new ArrayList<>();
     /**
      * list of JPanel objects to removeAll
      */
-    ArrayList<JPanel> panelList = new ArrayList<JPanel>();
+    ArrayList<JPanel> panelList = new ArrayList<>();
 
     public void dispose() {
         if (log.isDebugEnabled()) {

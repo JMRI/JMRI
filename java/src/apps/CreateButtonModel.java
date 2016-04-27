@@ -1,4 +1,3 @@
-// CreateButtonModel.java
 package apps;
 
 /**
@@ -11,7 +10,6 @@ package apps;
  * persistence systems realize the type of data being stored.
  *
  * @author	Bob Jacobsen Copyright 2003
- * @version $Revision$
  * @see apps.startup.CreateButtonModelFactory
  */
 public class CreateButtonModel extends AbstractActionModel {

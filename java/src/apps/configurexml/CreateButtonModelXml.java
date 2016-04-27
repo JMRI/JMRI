@@ -15,7 +15,6 @@ import org.slf4j.LoggerFactory;
  * Handle XML persistance of CreateButtonModel objects.
  *
  * @author Bob Jacobsen Copyright: Copyright (c) 2003
- * @version $Revision$
  * @see apps.startup.CreateButtonModelFactory
  */
 public class CreateButtonModelXml extends jmri.configurexml.AbstractXmlAdapter {

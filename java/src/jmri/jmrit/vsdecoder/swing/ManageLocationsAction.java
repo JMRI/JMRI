@@ -77,9 +77,9 @@ public class ManageLocationsAction extends AbstractAction {
                 } else {
                     reporterTable[i][0] = s;
                     reporterTable[i][1] = false;
-                    reporterTable[i][2] = new Float(0.0f);
-                    reporterTable[i][3] = new Float(0.0f);
-                    reporterTable[i][4] = new Float(0.0f);
+                    reporterTable[i][2] = Float.valueOf(0.0f);
+                    reporterTable[i][3] = Float.valueOf(0.0f);
+                    reporterTable[i][4] = Float.valueOf(0.0f);
                     reporterTable[i][5] = false;
                 }
                 i++;

@@ -967,7 +967,7 @@ public class SignalGroupTableAction extends AbstractTableAction implements Prope
 
         public String getColumnName(int col) {
             if (col == INCLUDE_COLUMN) {
-                return rbx.getString("ColumnLabelInclude");
+                return Bundle.getMessage("Include");
             }
             if (col == APPEAR_COLUMN) {
                 return Bundle.getMessage("LabelAspectType"); // list contains Aspects not SignalMastAppearances
@@ -1260,14 +1260,18 @@ public class SignalGroupTableAction extends AbstractTableAction implements Prope
 
     private static int ROW_HEIGHT;
 
-    private static String[] COLUMN_NAMES = {rbx.getString("ColumnLabelSystemName"),
-        rbx.getString("ColumnLabelUserName"),
-        rbx.getString("ColumnLabelInclude"),
-        rbx.getString("ColumnLabelSetState")};
-    private static String[] COLUMN_SIG_NAMES = {rbx.getString("ColumnLabelSystemName"),
-        rbx.getString("ColumnLabelUserName"),
-        rbx.getString("ColumnLabelInclude"),
-        "On State", "Off State", ""};
+    private static String[] COLUMN_NAMES = {
+            Bundle.getMessage("ColumnSystemName"),
+            Bundle.getMessage("ColumnUserName"),
+            Bundle.getMessage("Include"),
+            Bundle.getMessage("ColumnLabelSetState")
+    };
+    private static String[] COLUMN_SIG_NAMES = {
+            Bundle.getMessage("ColumnSystemName"),
+            Bundle.getMessage("ColumnUserName"),
+            Bundle.getMessage("Include"),
+            "On State", "Off State", ""
+    };
         // No label above last (Edit) column
 
     private static String[] signalStates = new String[]{rbx.getString("StateSignalHeadDark"), rbx.getString("StateSignalHeadRed"), rbx.getString("StateSignalHeadYellow"), rbx.getString("StateSignalHeadGreen"), rbx.getString("StateSignalHeadLunar")};

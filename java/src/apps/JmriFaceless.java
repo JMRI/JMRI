@@ -1,4 +1,3 @@
-// JmriFaceless.java
 package apps;
 
 /**
@@ -24,7 +23,6 @@ package apps;
  * A PARTICULAR PURPOSE. See the GNU General Public License for more details.
  *
  * @author	Steve Todd Copyright 2012
- * @version $Revision: 17977 $
  */
 public class JmriFaceless extends apps.AppsBase {
 

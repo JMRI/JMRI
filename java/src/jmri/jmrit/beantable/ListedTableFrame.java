@@ -220,7 +220,7 @@ public class ListedTableFrame extends BeanTableFrame {
     void buildMenus(final TabbedTableItem item) {
         JMenuBar menuBar = new JMenuBar();
         ResourceBundle rb = ResourceBundle.getBundle("apps.AppsBundle");
-        JMenu fileMenu = new JMenu(rb.getString("MenuFile"));
+        JMenu fileMenu = new JMenu(Bundle.getMessage("MenuFile"));
         menuBar.add(fileMenu);
 
         JMenuItem newItem = new JMenuItem(Bundle.getMessage("MenuNewWindow"));

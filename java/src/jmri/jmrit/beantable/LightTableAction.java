@@ -186,7 +186,7 @@ public class LightTableAction extends AbstractTableAction {
                 if (col == EDITCOL) {
                     return Bundle.getMessage("ButtonEdit");
                 } else if (col == INTENSITYCOL) {
-                    return new Double(((Light) getBySystemName((String) getValueAt(row, SYSNAMECOL))).getTargetIntensity());
+                    return Double.valueOf(((Light) getBySystemName((String) getValueAt(row, SYSNAMECOL))).getTargetIntensity());
                 } else if (col == ENABLECOL) {
                     return Boolean.valueOf(((Light) getBySystemName((String) getValueAt(row, SYSNAMECOL))).getEnabled());
                 } else {
@@ -328,10 +328,10 @@ public class LightTableAction extends AbstractTableAction {
     String systemSelectionCombo = this.getClass().getName() + ".SystemSelected";
     JPanel panel1a = null;
     JPanel varPanel = null;
-    JLabel systemNameLabel = new JLabel(Bundle.getMessage("LightSystemName") + " ");
+    JLabel systemNameLabel = new JLabel(Bundle.getMessage("LabelSystemName") + " ");
     JLabel fixedSystemName = new JLabel("xxxxxxxxxxx");
     JTextField userName = new JTextField(10);
-    JLabel userNameLabel = new JLabel(Bundle.getMessage("LightUserName") + " ");
+    JLabel userNameLabel = new JLabel(Bundle.getMessage("LabelUserName") + " ");
     LightControlTableModel lightControlTableModel = null;
     JButton create;
     JButton update;
