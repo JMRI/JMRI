@@ -104,7 +104,7 @@ public class SignalSpeedMap
                 String name = list.get(i).getName();
                 Float speed = Float.valueOf(0f);
                 try {
-                    speed = new Float(list.get(i).getText());
+                    speed = Float.valueOf(list.get(i).getText());
                 } catch (NumberFormatException nfe) {
                     log.error("invalid content for "+name+" = "+list.get(i).getText());
                     throw new JDOMException("invalid content for "+name+" = "+list.get(i).getText());

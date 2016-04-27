@@ -361,7 +361,7 @@ public class LocoNetThrottle extends AbstractThrottle implements SlotListener {
 
         // handle change in each state
         if (this.speedSetting != floatSpeed(slot.speed())) {
-            Float newSpeed = new Float(floatSpeed(slot.speed()));
+            Float newSpeed = Float.valueOf(floatSpeed(slot.speed()));
             log.debug("notifyChangedSlot: old speed: " + this.speedSetting + " new Speed: " + newSpeed);
             notifyPropertyChangeListener("SpeedSetting", new Float(this.speedSetting), newSpeed);
             this.speedSetting = newSpeed.floatValue();
