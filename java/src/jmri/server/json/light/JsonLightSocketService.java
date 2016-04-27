@@ -1,4 +1,4 @@
-package jmri.server.json.turnout;
+package jmri.server.json.light;
 
 import com.fasterxml.jackson.databind.JsonNode;
 import java.beans.PropertyChangeEvent;
@@ -8,29 +8,29 @@ import java.util.HashMap;
 import java.util.Locale;
 import jmri.InstanceManager;
 import jmri.JmriException;
-import jmri.Turnout;
-import jmri.TurnoutManager;
+import jmri.Light;
+import jmri.LightManager;
 import static jmri.server.json.JSON.METHOD;
 import static jmri.server.json.JSON.NAME;
 import static jmri.server.json.JSON.PUT;
 import jmri.server.json.JsonConnection;
 import jmri.server.json.JsonException;
 import jmri.server.json.JsonSocketService;
-import static jmri.server.json.turnout.JsonTurnoutServiceFactory.TURNOUT;
+import static jmri.server.json.light.JsonLightServiceFactory.LIGHT;
 
 /**
  *
  * @author Randall Wood
  */
-public class JsonTurnoutSocketService extends JsonSocketService {
+public class JsonLightSocketService extends JsonSocketService {
 
-    private final JsonTurnoutHttpService service;
-    private final HashMap<String, TurnoutListener> turnouts = new HashMap<>();
+    private final JsonLightHttpService service;
+    private final HashMap<String, LightListener> lights = new HashMap<>();
     private Locale locale;
 
-    public JsonTurnoutSocketService(JsonConnection connection) {
+    public JsonLightSocketService(JsonConnection connection) {
         super(connection);
-        this.service = new JsonTurnoutHttpService(connection.getObjectMapper());
+        this.service = new JsonLightHttpService(connection.getObjectMapper());
     }
 
     @Override
@@ -42,11 +42,11 @@ public class JsonTurnoutSocketService extends JsonSocketService {
         } else {
             this.connection.sendMessage(this.service.doPost(type, name, data, locale));
         }
-        if (!this.turnouts.containsKey(name)) {
-            Turnout turnout = InstanceManager.getDefault(TurnoutManager.class).getTurnout(name);
-            TurnoutListener listener = new TurnoutListener(turnout);
-            turnout.addPropertyChangeListener(listener);
-            this.turnouts.put(name, listener);
+        if (!this.lights.containsKey(name)) {
+            Light light = InstanceManager.getDefault(LightManager.class).getLight(name);
+            LightListener listener = new LightListener(light);
+            light.addPropertyChangeListener(listener);
+            this.lights.put(name, listener);
         }
     }
 
@@ -58,18 +58,18 @@ public class JsonTurnoutSocketService extends JsonSocketService {
 
     @Override
     public void onClose() {
-        turnouts.values().stream().forEach((turnout) -> {
-            turnout.turnout.removePropertyChangeListener(turnout);
+        lights.values().stream().forEach((light) -> {
+            light.light.removePropertyChangeListener(light);
         });
-        turnouts.clear();
+        lights.clear();
     }
 
-    private class TurnoutListener implements PropertyChangeListener {
+    private class LightListener implements PropertyChangeListener {
 
-        protected final Turnout turnout;
+        protected final Light light;
 
-        public TurnoutListener(Turnout turnout) {
-            this.turnout = turnout;
+        public LightListener(Light light) {
+            this.light = light;
         }
 
         @Override
@@ -78,14 +78,14 @@ public class JsonTurnoutSocketService extends JsonSocketService {
             if (e.getPropertyName().equals("KnownState")) {
                 try {
                     try {
-                        connection.sendMessage(service.doGet(TURNOUT, this.turnout.getSystemName(), locale));
+                        connection.sendMessage(service.doGet(LIGHT, this.light.getSystemName(), locale));
                     } catch (JsonException ex) {
                         connection.sendMessage(ex.getJsonMessage());
                     }
                 } catch (IOException ex) {
                     // if we get an error, de-register
-                    turnout.removePropertyChangeListener(this);
-                    turnouts.remove(this.turnout.getSystemName());
+                    light.removePropertyChangeListener(this);
+                    lights.remove(this.light.getSystemName());
                 }
             }
         }

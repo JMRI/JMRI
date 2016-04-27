@@ -1,5 +1,5 @@
 // Bundle.java
-package jmri.server.json.turnout;
+package jmri.server.json.memory;
 
 import edu.umd.cs.findbugs.annotations.SuppressFBWarnings;
 import java.util.Locale;

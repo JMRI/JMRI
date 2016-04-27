@@ -1,4 +1,4 @@
-package jmri.server.json.turnout;
+package jmri.server.json.memory;
 
 import com.fasterxml.jackson.databind.JsonNode;
 import java.beans.PropertyChangeEvent;
@@ -8,29 +8,29 @@ import java.util.HashMap;
 import java.util.Locale;
 import jmri.InstanceManager;
 import jmri.JmriException;
-import jmri.Turnout;
-import jmri.TurnoutManager;
+import jmri.Memory;
+import jmri.MemoryManager;
 import static jmri.server.json.JSON.METHOD;
 import static jmri.server.json.JSON.NAME;
 import static jmri.server.json.JSON.PUT;
 import jmri.server.json.JsonConnection;
 import jmri.server.json.JsonException;
 import jmri.server.json.JsonSocketService;
-import static jmri.server.json.turnout.JsonTurnoutServiceFactory.TURNOUT;
+import static jmri.server.json.memory.JsonMemoryServiceFactory.MEMORY;
 
 /**
  *
  * @author Randall Wood
  */
-public class JsonTurnoutSocketService extends JsonSocketService {
+public class JsonMemorySocketService extends JsonSocketService {
 
-    private final JsonTurnoutHttpService service;
-    private final HashMap<String, TurnoutListener> turnouts = new HashMap<>();
+    private final JsonMemoryHttpService service;
+    private final HashMap<String, MemoryListener> memories = new HashMap<>();
     private Locale locale;
 
-    public JsonTurnoutSocketService(JsonConnection connection) {
+    public JsonMemorySocketService(JsonConnection connection) {
         super(connection);
-        this.service = new JsonTurnoutHttpService(connection.getObjectMapper());
+        this.service = new JsonMemoryHttpService(connection.getObjectMapper());
     }
 
     @Override
@@ -42,11 +42,11 @@ public class JsonTurnoutSocketService extends JsonSocketService {
         } else {
             this.connection.sendMessage(this.service.doPost(type, name, data, locale));
         }
-        if (!this.turnouts.containsKey(name)) {
-            Turnout turnout = InstanceManager.getDefault(TurnoutManager.class).getTurnout(name);
-            TurnoutListener listener = new TurnoutListener(turnout);
-            turnout.addPropertyChangeListener(listener);
-            this.turnouts.put(name, listener);
+        if (!this.memories.containsKey(name)) {
+            Memory memory = InstanceManager.getDefault(MemoryManager.class).getMemory(name);
+            MemoryListener listener = new MemoryListener(memory);
+            memory.addPropertyChangeListener(listener);
+            this.memories.put(name, listener);
         }
     }
 
@@ -58,34 +58,34 @@ public class JsonTurnoutSocketService extends JsonSocketService {
 
     @Override
     public void onClose() {
-        turnouts.values().stream().forEach((turnout) -> {
-            turnout.turnout.removePropertyChangeListener(turnout);
+        memories.values().stream().forEach((memory) -> {
+            memory.memory.removePropertyChangeListener(memory);
         });
-        turnouts.clear();
+        memories.clear();
     }
 
-    private class TurnoutListener implements PropertyChangeListener {
+    private class MemoryListener implements PropertyChangeListener {
 
-        protected final Turnout turnout;
+        protected final Memory memory;
 
-        public TurnoutListener(Turnout turnout) {
-            this.turnout = turnout;
+        public MemoryListener(Memory memory) {
+            this.memory = memory;
         }
 
         @Override
         public void propertyChange(PropertyChangeEvent e) {
             // If the Commanded State changes, show transition state as "<inconsistent>"
-            if (e.getPropertyName().equals("KnownState")) {
+            if (e.getPropertyName().equals("value")) {
                 try {
                     try {
-                        connection.sendMessage(service.doGet(TURNOUT, this.turnout.getSystemName(), locale));
+                        connection.sendMessage(service.doGet(MEMORY, this.memory.getSystemName(), locale));
                     } catch (JsonException ex) {
                         connection.sendMessage(ex.getJsonMessage());
                     }
                 } catch (IOException ex) {
                     // if we get an error, de-register
-                    turnout.removePropertyChangeListener(this);
-                    turnouts.remove(this.turnout.getSystemName());
+                    memory.removePropertyChangeListener(this);
+                    memories.remove(this.memory.getSystemName());
                 }
             }
         }
