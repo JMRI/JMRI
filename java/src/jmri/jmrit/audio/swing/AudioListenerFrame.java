@@ -92,18 +92,18 @@ public class AudioListenerFrame extends AbstractAudioFrame {
 
         p = new JPanel();
         JButton apply;
-        p.add(apply = new JButton(rb.getString("ButtonApply")));
+        p.add(apply = new JButton(Bundle.getMessage("ButtonApply")));
         apply.addActionListener((ActionEvent e) -> {
             applyPressed(e);
         });
         JButton ok;
-        p.add(ok = new JButton(rb.getString("ButtonOK")));
+        p.add(ok = new JButton(Bundle.getMessage("ButtonOK")));
         ok.addActionListener((ActionEvent e) -> {
             applyPressed(e);
             frame.dispose();
         });
         JButton cancel;
-        p.add(cancel = new JButton(rb.getString("ButtonCancel")));
+        p.add(cancel = new JButton(Bundle.getMessage("ButtonCancel")));
         cancel.addActionListener((ActionEvent e) -> {
             frame.dispose();
         });
@@ -152,7 +152,7 @@ public class AudioListenerFrame extends AbstractAudioFrame {
             // Notify changes
             model.fireTableDataChanged();
         } catch (AudioException ex) {
-            JOptionPane.showMessageDialog(null, ex.getMessage(), rb.getString("AudioCreateErrorTitle"), JOptionPane.ERROR_MESSAGE);
+            JOptionPane.showMessageDialog(null, ex.getMessage(), Bundle.getMessage("AudioCreateErrorTitle"), JOptionPane.ERROR_MESSAGE);
         }
     }
 

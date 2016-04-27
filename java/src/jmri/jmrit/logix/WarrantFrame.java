@@ -202,7 +202,7 @@ public class WarrantFrame extends WarrantRoute {
         JPanel panel = new JPanel();
         panel.setLayout(new BoxLayout(panel, BoxLayout.LINE_AXIS));
         panel.add(Box.createHorizontalStrut(2 * STRUT_SIZE));
-        panel.add(new JLabel(Bundle.getMessage("SystemName")));
+        panel.add(new JLabel(Bundle.getMessage("LabelSystemName")));
         panel.add(Box.createHorizontalStrut(STRUT_SIZE));
         _sysNameBox = new JTextField(_warrant.getSystemName());
         _sysNameBox.setBackground(Color.white);
@@ -210,7 +210,7 @@ public class WarrantFrame extends WarrantRoute {
         panel.add(_sysNameBox);
         panel.add(Box.createHorizontalStrut(2 * STRUT_SIZE));
         panel.add(Box.createHorizontalStrut(STRUT_SIZE));
-        panel.add(new JLabel(Bundle.getMessage("UserName")));
+        panel.add(new JLabel(Bundle.getMessage("LabelUserName")));
         panel.add(Box.createHorizontalStrut(STRUT_SIZE));
         _userNameBox = new JTextField(_warrant.getUserName());
         panel.add(_userNameBox);

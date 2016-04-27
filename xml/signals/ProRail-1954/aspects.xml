@@ -1,13 +1,15 @@
-﻿<?xml version="1.0" encoding="utf-8"?>
+<?xml version="1.0" encoding="utf-8"?>
 <?xml-stylesheet href="../../XSLT/aspecttable.xsl" type="text/xsl"?>
 <aspecttable xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="http://jmri.org/xml/schema/aspecttable.xsd">
+
   <name>ProRail-1954</name>
-  <date>2013</date>
-  <reference>Signaling definitions corresponding to the Wikipedia Dutch signals page</reference>
+  <date>2016</date>
+  <reference>Signaling definitions corresponding to the Wikipedia Dutch signaling page</reference>
   <copyright xmlns="http://docbook.org/ns/docbook">
     <year>2009</year>
     <year>2010</year>
     <year>2013</year>
+    <year>2016</year>
     <holder>JMRI</holder>
   </copyright>
   <authorgroup xmlns="http://docbook.org/ns/docbook">
@@ -18,7 +20,15 @@
       </personname>
       <email>suzie_tall@yahoo.co.uk</email>
     </author>
+    <author>
+      <personname>
+        <firstname>Egbert</firstname>
+        <surname>Broerse</surname>
+      </personname>
+      <email>dcc2@ebroerse.nl</email>
+    </author>
   </authorgroup>
+
   <revhistory xmlns="http://docbook.org/ns/docbook">
     <revision>
       <revnumber>1</revnumber>
@@ -32,19 +42,30 @@
       <authorinitials>ST</authorinitials>
       <revremark>Added large icons</revremark>
     </revision>
+    <revision>
+      <revnumber>2</revnumber>
+      <date>2016-04-10</date>
+      <authorinitials>EB</authorinitials>
+      <revremark>Added rules, High-Number signal head  appearances and icons and official Dutch translations as remarks</revremark>
+    </revision>
   </revhistory>
+
   <aspects>
     <aspect>
       <name>Stop</name>
+      <rule>Rule 215</rule>
       <indication>Stop</indication>
+      <description>Indication in Dutch: Stoppen voor het sein.</description>
+      <comment>Official aspect: Hoog of laag geplaatst rood licht</comment>
       <speed>Stop</speed>
       <speed2>Stop</speed2>
       <route>Either</route>
       <dccAspect>0</dccAspect>
     </aspect>
     <aspect>
-      <name>Stop for Engineering</name>
+      <name>Track Out of Service</name>
       <indication>Stop</indication>
+      <comment>In use since 2000</comment>
       <speed>Stop</speed>
       <speed2>Stop</speed2>
       <route>Either</route>
@@ -52,52 +73,112 @@
     </aspect>
     <aspect>
       <name>Clear</name>
+      <rule>Rule 201</rule>
       <indication>Proceed</indication>
+      <description>Indication in Dutch: Voorbijrijden toegestaan met inachtneming van de plaatselijke snelheid. Indien bij vertrek de plaatselijke snelheid niet bekend is, is voorbijrijden met een snelheid van ten hoogste 40 km/h toegestaan.</description>
+      <comment>Official aspect: Hoog geplaatst groen licht</comment>
       <speed>Normal</speed>
       <speed2>Normal</speed2>
       <route>Normal</route>
       <dccAspect>2</dccAspect>
     </aspect>
     <aspect>
-      <name>Approach</name>
-      <indication>Proceed preparing to stop at next signal</indication>
-      <speed>Normal</speed>
+      <name>Medium</name>
+      <rule>Rule 202</rule>
+      <indication>Proceed with indicated speed</indication>
+      <description>Indication in Dutch: Voorbijrijden toegestaan met ten hoogste de door het getal aangegeven snelheid.</description>
+      <comment>Official aspect: Hoog geplaatst knipperend groen licht met een door een wit licht gevormd getal</comment>
+      <speed>Medium</speed>
       <speed2>Limited</speed2>
-      <route>Normal</route>
+      <route>Diverging</route>
       <dccAspect>1</dccAspect>
     </aspect>
     <aspect>
-      <name>Limited</name>
-      <indication>Proceed at Limited speed</indication>
-      <speed>Limited</speed>
-      <speed2>Limited</speed2>
+      <name>Approach Medium</name>
+      <rule>Rule 209</rule>
+      <indication>Proceed with inicated speed, continue brakes</indication>
+      <description>Indication in Dutch: Snelheid begrenzen tot de door het getal aangegeven snelheid. Ingeval een remming is ingezet en het volgende lichtsein een verdere begrenzing van de snelheid gebiedt, wordt de remming niet onderbroken.</description>
+      <comment>Official aspect: Hoog geplaatst geel licht met een door knipperend wit licht gevormd getal</comment>
+      <speed>Medium</speed>
+      <speed2>Restricted</speed2>
       <route>Normal</route>
+      <dccAspect>3</dccAspect>
+    </aspect>
+    <aspect>
+      <name>Diverging Approach Medium</name>
+      <rule>Rule 210</rule>
+      <indication>Proceed at indicated speed before next signal</indication>
+      <description>Indication in Dutch: Snelheid begrenzen tot de door het getal aangegeven snelheid. De door het getal aangegeven snelheid wordt bij het volgende lichtsein niet overschreden.</description>
+      <comment>Official aspect: Hoog geplaatst geel licht met een door wit licht gevormd getal</comment>
+      <speed>Medium</speed>
+      <speed2>Limited</speed2>
+      <route>Diverging</route>
+      <dccAspect>7</dccAspect>
+    </aspect>
+    <aspect>
+      <name>Approach</name>
+      <rule>Rule 212</rule>
+      <indication>Proceed preparing to stop at next signal</indication>
+      <description>Indication in Dutch: Snelheid begrenzen tot 40 km/u of zoveel minder als nodig is om voor het eerstvolgende 'stop' tonende sein te kunnen stoppen.</description>
+      <comment>Official aspect: Hoog of laag geplaatst geel licht</comment>
+      <speed>Limited</speed>
+      <speed2>Stop</speed2>
+      <route>Normal</route>
+      <dccAspect>9</dccAspect>
+    </aspect>
+    <aspect>
+      <name>Limited</name>
+      <rule>Rule 206</rule>
+      <indication>Proceed at Limited speed</indication>
+      <description>Indication in Dutch: Voorbijrijden toegestaan met een snelheid van ten hoogste 40 km/h.</description>
+      <comment>Official aspect: Hoog geplaatst knipperend of laag geplaatst groen licht</comment>
+      <speed>Medium</speed>
+      <speed2>Limited</speed2>
+      <route>Diverging</route>
       <dccAspect>6</dccAspect>
     </aspect>
     <aspect>
       <name>Restricting</name>
+      <rule>Rule 214</rule>
       <indication>Proceed at restricted speed because line may be blocked</indication>
-      <speed>Normal</speed>
+      <description>Indication in Dutch: Voorbijrijden toegestaan met een zodanige snelheid, die niet hoger is dan 40 km/h, om op elke plaats achter dit sein, waar een belemmering voor het verder rijden aanwezig is, te kunnen stoppen.</description>
+      <comment>Official aspect: Hoog of laag geplaatst knipperend geel licht</comment>
+      <speed>Restricted</speed>
       <speed2>Slow</speed2>
-      <route>Normal</route>
+      <route>Either</route>
       <dccAspect>5</dccAspect>
+    </aspect>
+    <aspect>
+      <name>Approach Clear</name>
+      <rule>Rule 217</rule>
+      <indication>Next signal does not display Stop or Approach</indication>
+      <description>Indication in Dutch: Aanduiding van een volgend hoofdsein dat geen rood licht of geel knipperend licht uitstraalt. Vooraf opgelegde snelheidsbegrenzingen blijven van toepassing.</description>
+      <comment>Official aspect: Hoog geplaatst groen licht met een achtergrondscherm met rechte, dan wel een of meer afgeronde, hoeken.</comment>
+      <speed>Normal</speed>
+      <speed2>Normal</speed2>
+      <route>Either</route>
+      <dccAspect>10</dccAspect>
     </aspect>
     <aspect>
       <name>Not Lit</name>
       <rule>Dark</rule>
-      <indication>(used to indicate dark for e.g. approach lighting)</indication>
-      <speed>Stop</speed>
-      <speed2>Stop</speed2>
+      <indication>(used to indicate Dark for e.g. approach lighting)</indication>
+      <speed>Normal</speed>
+      <speed2>Limited</speed2>
       <route>Normal</route>
       <dccAspect>8</dccAspect>
     </aspect>
   </aspects>
+
   <imagetypes>
     <imagetype type="large" />
-    <imagetype type="aspects" />
+    <imagetype type="small" />
   </imagetypes>
   <appearancefiles>
     <appearancefile href="appearance-High.xml" />
+    <appearancefile href="appearance-High-Number.xml" />
+    <appearancefile href="appearance-Approach.xml" />
     <appearancefile href="appearance-Dwarf.xml" />
   </appearancefiles>
+
 </aspecttable>

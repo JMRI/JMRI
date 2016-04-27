@@ -557,13 +557,13 @@ public class WarrantTableAction extends AbstractAction {
             panel.setLayout(new BoxLayout(panel, BoxLayout.Y_AXIS));
             panel.add(Box.createHorizontalStrut(STRUT_SIZE));
             JPanel p = new JPanel();
-            p.add(new JLabel(Bundle.getMessage("SystemName")));
+            p.add(new JLabel(Bundle.getMessage("LabelSystemName")));
             _sysNameBox = new JTextField(15);
             p.add(_sysNameBox);
             panel.add(p);
             panel.add(Box.createHorizontalStrut(STRUT_SIZE));
             p = new JPanel();
-            p.add(new JLabel(Bundle.getMessage("UserName")));
+            p.add(new JLabel(Bundle.getMessage("LabelUserName")));
             _userNameBox = new JTextField(15);
             p.add(_userNameBox);
             panel.add(p);

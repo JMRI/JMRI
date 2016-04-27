@@ -188,7 +188,7 @@ public class AudioTableAction extends AbstractTableAction {
         JMenu fileMenu = null;
         for (int i = 0; i < menuBar.getMenuCount(); i++) {
             if (menuBar.getComponent(i) instanceof JMenu) {
-                if (((JMenu) menuBar.getComponent(i)).getText().equals(rbapps.getString("MenuFile"))) {
+                if (((JMenu) menuBar.getComponent(i)).getText().equals(Bundle.getMessage("MenuFile"))) {
                     fileMenu = menuBar.getMenu(i);
                 }
             }
