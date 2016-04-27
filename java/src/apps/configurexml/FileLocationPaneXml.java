@@ -12,7 +12,6 @@ import org.slf4j.LoggerFactory;
  * <P>
  *
  * @author Kevin Dickerson Copyright: Copyright (c) 2010
- * @version $Revision$
  */
 public class FileLocationPaneXml extends jmri.configurexml.AbstractXmlAdapter {
 

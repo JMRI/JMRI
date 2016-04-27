@@ -40,10 +40,10 @@ public class ControllerFilterFrame extends JmriJFrame implements TableModelListe
      */
     private static final long serialVersionUID = 6006763517792223304L;
     static final ResourceBundle rb = ResourceBundle.getBundle("jmri.jmrit.withrottle.WiThrottleBundle");
-    static final ResourceBundle rbx = ResourceBundle.getBundle("jmri.jmrit.beantable.LogixTableBundle");
-    private static String[] COLUMN_NAMES = {rbx.getString("ColumnLabelSystemName"),
-        rbx.getString("ColumnLabelUserName"),
-        rbx.getString("ColumnLabelInclude")};
+    //static final ResourceBundle rbx = ResourceBundle.getBundle("jmri.jmrit.beantable.LogixTableBundle");
+    private static String[] COLUMN_NAMES = {Bundle.getMessage("ColumnSystemName"),
+            Bundle.getMessage("ColumnUserName"),
+            Bundle.getMessage("Include")};
 
     public ControllerFilterFrame() {
         super(Bundle.getMessage("TitleControlsFilter"), true, true);

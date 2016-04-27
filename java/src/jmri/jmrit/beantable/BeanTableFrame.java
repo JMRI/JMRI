@@ -79,7 +79,7 @@ public class BeanTableFrame extends jmri.util.JmriJFrame {
 
         // add save menu item
         JMenuBar menuBar = new JMenuBar();
-        JMenu fileMenu = new JMenu(rbapps.getString("MenuFile"));
+        JMenu fileMenu = new JMenu(Bundle.getMessage("MenuFile"));
         menuBar.add(fileMenu);
         fileMenu.add(new jmri.configurexml.SaveMenu());
 

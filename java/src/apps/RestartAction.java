@@ -1,4 +1,3 @@
-// RestartAction.java
 package apps;
 
 import java.awt.event.ActionEvent;
@@ -25,7 +24,6 @@ import org.slf4j.LoggerFactory;
  * <P>
  *
  * @author Matthew Harris Copyright (C) 2011
- * @version $Revision$
  */
 public class RestartAction extends JmriAbstractAction {
 

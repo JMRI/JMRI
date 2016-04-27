@@ -28,7 +28,10 @@ public class FindBugsCheck {
     void test() { // something that has to be executed on an object
         System.out.println("test "+this.getClass());
     }
-    
+
+/*  commenting out the rest of the file to avoid FindBugs counting the deliberate warnings
+
+
     public FindBugsCheck noAnnotationReturn() {
         return null;
     }
@@ -45,7 +48,7 @@ public class FindBugsCheck {
         noAnnotationParm(noAnnotationReturn());
         noAnnotationParm(jaNonnullReturn());
         noAnnotationParm(jaNullableReturn()); // should be flagged?
-        noAnnotationParm(jaCheckForNullReturn()); // definitely should be flagged, based on above result
+        noAnnotationParm(jaCheckForNullReturn()); // definitely should be flagged!
     }
 
     // Test Nonnull
@@ -93,7 +96,7 @@ public class FindBugsCheck {
         return null;
     }
     public void jaNullableParm(@javax.annotation.Nullable FindBugsCheck p) {
-        p.test(); // isn't flagged
+        p.test(); // (NP_PARAMETER_MUST_BE_NONNULL_BUT_MARKED_AS_NULLABLE) This parameter is always used in a way that requires it to be non-null, but the parameter is explicitly annotated as being Nullable.
     }
     public void jaTestNullable() {
         jaNullableReturn().test(); // isn't flagged
@@ -111,7 +114,7 @@ public class FindBugsCheck {
         return null;
     }
     public void fbNullableParm(@edu.umd.cs.findbugs.annotations.Nullable FindBugsCheck p) {
-        p.test(); // isn't flagged
+        p.test(); // (NP_PARAMETER_MUST_BE_NONNULL_BUT_MARKED_AS_NULLABLE) This parameter is always used in a way that requires it to be non-null, but the parameter is explicitly annotated as being Nullable.
     }
     public void fbTestNullable() {
         fbNullableReturn().test(); // isn't flagged
@@ -132,7 +135,7 @@ public class FindBugsCheck {
         return null;
     }
     public void jaCheckForNullParm(@javax.annotation.CheckForNull FindBugsCheck p) {
-        p.test();  // should be flagged!
+        p.test(); // (NP_PARAMETER_MUST_BE_NONNULL_BUT_MARKED_AS_NULLABLE) This parameter is always used in a way that requires it to be non-null, but the parameter is explicitly annotated as being Nullable.
     }
     public void jaTestCheckForNull() {
         jaCheckForNullReturn().test(); // (NP_NULL_ON_SOME_PATH_FROM_RETURN_VALUE) Possible null pointer dereference in .. due to return value of called method
@@ -150,7 +153,7 @@ public class FindBugsCheck {
         return null;
     }
     public void fbCheckForNullParm(@edu.umd.cs.findbugs.annotations.CheckForNull FindBugsCheck p) {
-        p.test(); // should be flagged!
+        p.test(); // (NP_PARAMETER_MUST_BE_NONNULL_BUT_MARKED_AS_NULLABLE) This parameter is always used in a way that requires it to be non-null, but the parameter is explicitly annotated as being Nullable.
     }
     public void fbTestCheckForNull() {
         fbCheckForNullReturn().test(); // (NP_NULL_ON_SOME_PATH_FROM_RETURN_VALUE) Possible null pointer dereference in .. due to return value of called method
@@ -163,5 +166,7 @@ public class FindBugsCheck {
         fbCheckForNullParm(fbNullableReturn());
         fbCheckForNullParm(fbCheckForNullReturn());
     }
+
+    end of commenting out file */
 
 }
