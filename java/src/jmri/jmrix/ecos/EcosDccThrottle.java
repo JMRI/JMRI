@@ -627,7 +627,7 @@ public class EcosDccThrottle extends AbstractThrottle implements EcosListener {
                     if (line.contains("speed") && !line.contains("speedstep")) {
                         speedMessageSent--;
                         if (speedMessageSent <= 0) {
-                            Float newSpeed = new Float(floatSpeed(Integer.parseInt(EcosReply.getContentDetails(line, "speed"))));
+                            Float newSpeed = Float.valueOf(floatSpeed(Integer.parseInt(EcosReply.getContentDetails(line, "speed"))));
                             super.setSpeedSetting(newSpeed);
                         }
                     } else if (line.contains("dir")) {

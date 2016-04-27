@@ -1273,7 +1273,7 @@
         </jar>
     </target>
 
-    <target name="javadoc" depends="init, jjdoc, compile-generated-source" description="create JavaDocs">
+    <target name="javadoc" depends="init, jjdoc, compile-generated-source, plantuml" description="create JavaDocs">
         <javadoc packagenames="jmri.*, apps.*"
            maxmemory="512m"
            overview="${source}/jmri/overview.html"
@@ -1336,7 +1336,7 @@
   <!-- use of the public option in the main task definition, and -->
   <!-- the execution of "dot" at the bottom.                     -->
   <!-- Requires Graphviz from http://www.graphviz.org            -->
-    <target name="javadoc-uml" depends="init, jjdoc, compile-generated-source" description="create JavaDocs with UML">
+    <target name="javadoc-uml" depends="init, jjdoc, compile-generated-source, plantuml" description="create JavaDocs with UML">
         <javadoc packagenames="jmri.*, apps.*"
            maxmemory="512m"
            overview="${source}/jmri/overview.html"
@@ -1411,6 +1411,17 @@
         </apply>
     </target>
 
+    <taskdef name="plantuml" classname="net.sourceforge.plantuml.ant.PlantUmlTask" classpath="${libdir}/plantuml.jar" />
+
+    <target name="plantuml">
+        <plantuml output="${doctarget}" >
+        <fileset dir="${source}">
+                <include name="jmri/**/*.java"/>
+                <include name="apps/**/*.java"/>
+        </fileset>
+        </plantuml>
+    </target>
+
     <target name="uploadjavadoc" description="upload existing JavaDocs to jmri.org without recreating">
         <exec executable="rsync">
             <arg value="-avz"/>
@@ -1466,7 +1477,7 @@
     <target name="findbugs" depends="dist" description="generate FindBugs report. Specify FindBugs install with local.properties file or &quot;-Dfindbugs.home=YourFindBugsInstallDirectory&quot; on command line." >
         <findbugs home="${findbugs.home}"
                   output="html"
-                  outputFile="${jartarget}/jmri-fb.html"
+                  outputFile="${jartarget}/findbugs.html"
                   jvmargs="-Xmx1536m"
                   timeout="12000000"
                   excludeFilter=".findbugs.xml"

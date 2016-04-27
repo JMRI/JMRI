@@ -52,7 +52,7 @@ public class WebServerPreferencesPanel extends JPanel implements ListDataListene
     private int startupActionPosition = -1;
 
     public WebServerPreferencesPanel() {
-        preferences = WebServerManager.getWebServerPreferences();
+        preferences = WebServerPreferences.getDefault();
         initGUI();
         setGUI();
     }

@@ -1,8 +1,9 @@
-﻿<?xml version="1.0" encoding="utf-8"?>
+<?xml version="1.0" encoding="utf-8"?>
 <?xml-stylesheet href="../../XSLT/appearancetable.xsl" type="text/xsl"?>
 <appearancetable xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="http://jmri.org/xml/schema/appearancetable.xsd">
   <copyright xmlns="http://docbook.org/ns/docbook">
     <year>2013</year>
+    <year>2016</year>
     <holder>JMRI</holder>
   </copyright>
   <authorgroup xmlns="http://docbook.org/ns/docbook">
@@ -12,6 +13,13 @@
         <surname>Tall</surname>
       </personname>
       <email>suzie_tall@yahoo.co.uk</email>
+    </author>
+    <author>
+      <personname>
+        <firstname>Egbert</firstname>
+        <surname>Broerse</surname>
+      </personname>
+      <email>dcc2@ebroerse.nl</email>
     </author>
   </authorgroup>
   <revhistory xmlns="http://docbook.org/ns/docbook">
@@ -27,58 +35,72 @@
       <authorinitials>ST</authorinitials>
       <revremark>Added large icons</revremark>
     </revision>
+    <revision>
+      <revnumber>1.1</revnumber>
+      <date>2016-04-13</date>
+      <authorinitials>EB</authorinitials>
+      <revremark>Added extra reference and signal type name</revremark>
+    </revision>
   </revhistory>
+
   <aspecttable>Prorail-1954</aspecttable>
   <name>High signal</name>
   <reference>http://en.wikipedia.org/wiki/Dutch_railway_signalling</reference>
-  <description>Three lamp high signal</description>
+  <reference>http://encyclopedie.beneluxspoor.net/index.php/Lichtseinen</reference>
+  <description>Three lamp high type AY main signal</description>
   <appearances>
     <appearance>
       <aspectname>Stop</aspectname>
       <show>red</show>
+      <reference>Rule 215</reference>
       <imagelink type="large">../../../resources/icons/largeschematics/aspects/ProRail-1954/ProRail-R.gif</imagelink>
-      <imagelink type="aspects">../../../resources/icons/smallschematics/aspects/ProRail-1954/ProRail-R.gif</imagelink>
+      <imagelink type="small">../../../resources/icons/smallschematics/aspects/ProRail-1954/ProRail-R.gif</imagelink>
     </appearance>
     <appearance>
-      <aspectname>Stop for Engineering</aspectname>
+      <aspectname>Track Out of Service</aspectname>
       <show>flashred</show>
       <imagelink type="large">../../../resources/icons/largeschematics/aspects/ProRail-1954/ProRail-FR.gif</imagelink>
-      <imagelink type="aspects">../../../resources/icons/smallschematics/aspects/ProRail-1954/ProRail-FR.gif</imagelink>
+      <imagelink type="small">../../../resources/icons/smallschematics/aspects/ProRail-1954/ProRail-FR.gif</imagelink>
     </appearance>
     <appearance>
       <aspectname>Clear</aspectname>
       <show>green</show>
+      <reference>Rule 201</reference>
       <imagelink type="large">../../../resources/icons/largeschematics/aspects/ProRail-1954/ProRail-G.gif</imagelink>
-      <imagelink type="aspects">../../../resources/icons/smallschematics/aspects/ProRail-1954/ProRail-G.gif</imagelink>
+      <imagelink type="small">../../../resources/icons/smallschematics/aspects/ProRail-1954/ProRail-G.gif</imagelink>
     </appearance>
     <appearance>
       <aspectname>Limited</aspectname>
       <show>flashgreen</show>
+      <reference>Rule 206</reference>
       <imagelink type="large">../../../resources/icons/largeschematics/aspects/ProRail-1954/ProRail-FG.gif</imagelink>
-      <imagelink type="aspects">../../../resources/icons/smallschematics/aspects/ProRail-1954/ProRail-FG.gif</imagelink>
+      <imagelink type="small">../../../resources/icons/smallschematics/aspects/ProRail-1954/ProRail-FG.gif</imagelink>
     </appearance>
     <appearance>
       <aspectname>Approach</aspectname>
       <show>yellow</show>
+      <reference>Rule 212</reference>
       <imagelink type="large">../../../resources/icons/largeschematics/aspects/ProRail-1954/ProRail-Y.gif</imagelink>
-      <imagelink type="aspects">../../../resources/icons/smallschematics/aspects/ProRail-1954/ProRail-Y.gif</imagelink>
+      <imagelink type="small">../../../resources/icons/smallschematics/aspects/ProRail-1954/ProRail-Y.gif</imagelink>
     </appearance>
     <appearance>
       <aspectname>Restricting</aspectname>
       <show>flashyellow</show>
+      <reference>Rule 214</reference>
       <imagelink type="large">../../../resources/icons/largeschematics/aspects/ProRail-1954/ProRail-FY.gif</imagelink>
-      <imagelink type="aspects">../../../resources/icons/smallschematics/aspects/ProRail-1954/ProRail-FY.gif</imagelink>
+      <imagelink type="small">../../../resources/icons/smallschematics/aspects/ProRail-1954/ProRail-FY.gif</imagelink>
     </appearance>
     <appearance>
       <aspectname>Not Lit</aspectname>
       <show>dark</show>
       <imagelink type="large">../../../resources/icons/largeschematics/aspects/ProRail-1954/ProRail-D.gif</imagelink>
-      <imagelink type="aspects">../../../resources/icons/smallschematics/aspects/ProRail-1954/ProRail-D.gif</imagelink>
+      <imagelink type="small">../../../resources/icons/smallschematics/aspects/ProRail-1954/ProRail-D.gif</imagelink>
     </appearance>
   </appearances>
+
   <specificappearances>
     <danger>
-      <aspect>Stop for Engineering</aspect>
+      <aspect>Restricting</aspect>
     </danger>
     <permissive>
       <aspect>Restricting</aspect>
@@ -90,6 +112,7 @@
       <aspect>Not Lit</aspect>
     </dark>
   </specificappearances>
+
   <aspectMappings>
     <aspectMapping>
       <advancedAspect>Clear</advancedAspect>
@@ -104,16 +127,33 @@
       <ourAspect>Clear</ourAspect>
     </aspectMapping>
     <aspectMapping>
-      <advancedAspect>Restricting</advancedAspect>
+      <advancedAspect>Approach Clear</advancedAspect>
       <ourAspect>Clear</ourAspect>
+    </aspectMapping>
+    <aspectMapping>
+      <advancedAspect>Medium</advancedAspect>
+      <ourAspect>Limited</ourAspect>
+    </aspectMapping>
+    <aspectMapping>
+      <advancedAspect>Approach Medium</advancedAspect>
+      <ourAspect>Clear</ourAspect>
+    </aspectMapping>
+    <aspectMapping>
+      <advancedAspect>Diverging Approach Medium</advancedAspect>
+      <ourAspect>Approach</ourAspect>
+    </aspectMapping>
+    <aspectMapping>
+      <advancedAspect>Restricting</advancedAspect>
+      <ourAspect>Approach</ourAspect>
     </aspectMapping>
     <aspectMapping>
       <advancedAspect>Stop</advancedAspect>
       <ourAspect>Approach</ourAspect>
     </aspectMapping>
     <aspectMapping>
-      <advancedAspect>Stop for Engineering</advancedAspect>
-      <ourAspect>Approach</ourAspect>
+      <advancedAspect>Track Out of Service</advancedAspect>
+      <ourAspect>Stop</ourAspect>
     </aspectMapping>
   </aspectMappings>
+
 </appearancetable>

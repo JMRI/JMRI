@@ -65,7 +65,7 @@ It contains the following columns:</p>
 	</ul>
 	
 <h3>Route Table Controls</h3>
-<p>Below the table is the <b>Add...</b> button.
+<p>Below the table is the <a href="../../package/jmri/jmrit/beantable/RouteAddEdit.shtml"><b>Add...</b></a> button.
 	
 <h2>How to setup Routes</h2>
 

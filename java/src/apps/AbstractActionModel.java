@@ -1,4 +1,3 @@
-// AbstractActionModel.java
 package apps;
 
 import apps.startup.StartupActionModelUtil;
@@ -12,7 +11,6 @@ import jmri.InstanceManager;
  * displayed in lexical order by human-readable name.
  * <P>
  * @author	Bob Jacobsen Copyright 2003, 2007, 2014
- * @version $Revision$
  * @see apps.startup.AbstractActionModelFactory
  */
 public abstract class AbstractActionModel implements StartupModel {

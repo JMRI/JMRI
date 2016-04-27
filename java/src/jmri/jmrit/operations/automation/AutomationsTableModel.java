@@ -102,7 +102,7 @@ public class AutomationsTableModel extends javax.swing.table.AbstractTableModel 
         setPreferredWidths(frame, table);
 
         // set row height
-        //table.setRowHeight(new JComboBox<>().getPreferredSize().height);
+        table.setRowHeight(new JComboBox<>().getPreferredSize().height);
         // have to shut off autoResizeMode to get horizontal scroll to work (JavaSwing p 541)
         table.setAutoResizeMode(JTable.AUTO_RESIZE_OFF);
     }

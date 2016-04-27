@@ -1,4 +1,3 @@
-// AboutAction.java
 package apps;
 
 import java.awt.event.ActionEvent;
