@@ -1,4 +1,3 @@
-// QuitAction.java
 package apps.gui3.paned;
 
 import java.awt.event.ActionEvent;
@@ -12,14 +11,8 @@ import jmri.util.swing.WindowInterface;
  * Ignores WindowInterface.
  *
  * @author	Bob Jacobsen Copyright (C) 2010
- * @version	$Revision$
  */
 public class QuitAction extends jmri.util.swing.JmriAbstractAction {
-
-    /**
-     *
-     */
-    private static final long serialVersionUID = -8792749754520269637L;
 
     public QuitAction(String s, WindowInterface wi) {
         super(s, wi);
@@ -48,5 +41,3 @@ public class QuitAction extends jmri.util.swing.JmriAbstractAction {
     }
 
 }
-
-/* @(#)QuitAction.java */

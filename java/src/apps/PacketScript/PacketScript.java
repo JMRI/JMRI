@@ -1,6 +1,3 @@
-/**
- * PacketScript.java
- */
 package apps.PacketScript;
 
 import apps.Apps;
@@ -31,7 +28,6 @@ import org.slf4j.LoggerFactory;
  * A PARTICULAR PURPOSE. See the GNU General Public License for more details.
  * <P>
  * @author	Bob Jacobsen Copyright 2002
- * @version $Revision$
  */
 public class PacketScript extends Apps {
 

@@ -9,7 +9,6 @@ import jmri.util.swing.WindowInterface;
  * Create a new PanelPro start window
  *
  * @author	Bob Jacobsen (C) 2014
- * @version $Revision$
  */
 public class PanelProAction extends JmriAbstractAction {
 
