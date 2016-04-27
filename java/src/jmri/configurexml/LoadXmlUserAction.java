@@ -23,7 +23,7 @@ import org.slf4j.LoggerFactory;
 public class LoadXmlUserAction extends LoadXmlConfigAction {
 
     static final ResourceBundle rb = ResourceBundle.getBundle("jmri.jmrit.display.DisplayBundle");
-    static File currentFile = null;
+    static private File currentFile = null;
 
     public LoadXmlUserAction() {
         this(rb.getString("MenuItemLoad"));
@@ -43,7 +43,7 @@ public class LoadXmlUserAction extends LoadXmlConfigAction {
         boolean results = loadFile(userFileChooser);
         if (results) {
             log.debug("load was successful");
-            currentFile = userFileChooser.getSelectedFile();
+            setCurrentFile(userFileChooser.getSelectedFile());
         } else {
             log.debug("load failed");
             JOptionPane.showMessageDialog(null,
@@ -51,12 +51,19 @@ public class LoadXmlUserAction extends LoadXmlConfigAction {
                     + rb.getString("CheckPreferences") + "\n"
                     + rb.getString("ConsoleWindowHasInfo"),
                     rb.getString("PanelLoadError"), JOptionPane.ERROR_MESSAGE);
-            currentFile = null;
+            setCurrentFile(null);
         }
     }
-
+    
+    /**
+     * Used by e.g. jmri.jmrit.mailreport.ReportPanel et al to know last load
+     */
     public static File getCurrentFile() {
         return currentFile;
+    }
+
+    private static void setCurrentFile(File arg) {
+        currentFile = arg;
     }
 
     // initialize logging
