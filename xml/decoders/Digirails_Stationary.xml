@@ -1,0 +1,564 @@
+<?xml version="1.0" encoding="utf-8"?>
+<?xml-stylesheet type="text/xsl" href="../XSLT/decoder.xsl"?>
+<!-- Copyright (C) JMRI 2001, 2005, 2007, 2-009, 2010, 2016 All rights reserved   -->
+<!--                                                                        -->
+<!-- JMRI is free software; you can redistribute it and/or modify it under  -->
+<!-- the terms of version 2 of the GNU General Public License as published  -->
+<!-- by the Free Software Foundation. See the "COPYING" file for a copy     -->
+<!-- of this license.                                                       -->
+<!--                                                                        -->
+<!-- JMRI is distributed in the hope that it will be useful, but WITHOUT    -->
+<!-- ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or  -->
+<!-- FITNESS FOR A PARTICULAR PURPOSE.  See the GNU General Public License  -->
+<!-- for more details.                                                      -->
+<decoder-config xmlns:xi="http://www.w3.org/2001/XInclude"
+xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+xsi:noNamespaceSchemaLocation="http://jmri.org/xml/schema/decoder.xsd" showEmptyPanes="no">
+
+  <copyright xmlns="http://docbook.org/ns/docbook">
+    <year>2016</year>
+    <holder>JMRI</holder>
+  </copyright>
+  <authorgroup xmlns="http://docbook.org/ns/docbook">
+    <author>
+      <personname>
+        <firstname>Egbert</firstname>
+        <surname>Broerse</surname>
+      </personname>
+    </author>
+  </authorgroup>
+  <revhistory xmlns="http://docbook.org/ns/docbook">
+    <revision>
+      <revnumber>1</revnumber>
+      <date>2016-04-28</date>
+      <authorinitials>EB</authorinitials>
+      <revremark>Initial version</revremark>
+    </revision>
+  </revhistory>
+    <!-- version 1 - based on Digirails_DR80010-15.xml -->
+    
+    <decoder>
+        <family name="Stationary" mfg="Digirails" comment="also sold under the Digikeijs label in NL">
+            <model model="DR4018" numOuts="16" numFns="0" maxInputVolts="6.5-18V" maxTotalCurrent="2.5A" productID="4018" formFactor="Stationary" comment="Multiprotocol switching decoder">
+                <versionCV lowVersionID="134" highVersionID="255"/>
+                <output name="1" label="Out1" connection="other" maxcurrent="500 mA" />
+                <output name="2" label="Out2" connection="other" maxcurrent="500 mA" />
+                <output name="3" label="Out3" connection="other" maxcurrent="500 mA" />
+                <output name="4" label="Out4" connection="other" maxcurrent="500 mA" />
+                <output name="5" label="Out5" connection="other" maxcurrent="500 mA" />
+                <output name="6" label="Out6" connection="other" maxcurrent="500 mA" />
+                <output name="7" label="Out7" connection="other" maxcurrent="500 mA" />
+                <output name="8" label="Out8" connection="other" maxcurrent="500 mA" />
+                <output name="9" label="Out9" connection="other" maxcurrent="500 mA" />
+                <output name="10" label="Out10" connection="other" maxcurrent="500 mA" />
+                <output name="11" label="Out11" connection="other" maxcurrent="500 mA" />
+                <output name="12" label="Out12" connection="other" maxcurrent="500 mA" />
+                <output name="13" label="Out13" connection="other" maxcurrent="500 mA" />
+                <output name="14" label="Out14" connection="other" maxcurrent="500 mA" />
+                <output name="15" label="Out15" connection="other" maxcurrent="500 mA" />
+                <output name="16" label="Out16" connection="other" maxcurrent="500 mA" />
+                <size length="102" width="86" height="20" units="mm" />
+            </model>
+            <model model="DR4024" numOuts="8" numFns="0" maxInputVolts="6.5-18V" maxTotalCurrent="2.5A" productID="4024" formFactor="Stationary" comment="Multiprotocol servo decoder">
+                <versionCV lowVersionID="134" highVersionID="255"/>
+                <output name="1" label="Servo|  1  " connection="plug" maxcurrent="500 mA" />
+                <output name="2" label="Servo|  2  " connection="plug" maxcurrent="500 mA" />
+                <output name="3" label="Servo|  3  " connection="plug" maxcurrent="500 mA" />
+                <output name="4" label="Servo|  4  " connection="plug" maxcurrent="500 mA" />
+                <output name="5" label="AUX|  1  " connection="other" maxcurrent="1 A" />
+                <output name="6" label="AUX|  2  " connection="other" maxcurrent="1 A" />
+                <output name="7" label="AUX|  3  " connection="other" maxcurrent="1 A" />
+                <output name="8" label="AUX|  4  " connection="other" maxcurrent="1 A" />
+                <size length="102" width="86" height="20" units="mm" />
+            </model>
+        </family>
+        
+        <programming direct="yes" paged="no" register="no" ops="yes"/>
+ 
+        <variables>
+            <xi:include href="http://jmri.org/xml/decoders/nmra/shortAndLongAddress.xml"/>
+            <variable CV="7" readOnly="yes" item="Decoder Version" default="134">
+                <decVal/>
+                <label>Decoder Version: </label>
+                <label xml:lang="it">Versione Decoder: </label>
+                <label xml:lang="fr">Version décodeur: </label>
+                <label xml:lang="de">Decoderversion: </label>
+                <label xml:lang="nl">Versie van de decoder: </label>
+            </variable>
+            <variable CV="8" readOnly="yes" item="Manufacturer" default="42">
+                <decVal/>
+                <label>Manufacturer ID: </label>
+                <label xml:lang="it">ID Costruttore: </label>
+                <label xml:lang="fr">ID constructeur: </label>
+                <label xml:lang="de">Hersteller ID: </label>
+                <label xml:lang="nl">Fabrikant-ID: </label>
+                <tooltip>Read-Only, 42 = Digirails/Digikeijs</tooltip>
+            </variable>
+            <!-- CV29 via nmra include in line 79 -->
+            <variable item="Presets" CV="47" mask="XXXXXXVV" writeOnly="yes" default="0">
+                <enumVal>
+                    <enumChoice choice="0">
+                        <choice>8x Solenoid Turnout</choice>
+                        <choice xml:lang="fr">8x Aiguillages magnétiques</choice>
+                        <choice xml:lang="de">8x Weiche mit Spulenantrieb</choice>
+                        <choice xml:lang="nl">8x Wissel met spoel</choice>
+                    </enumChoice>
+                    <enumChoice choice="1">
+                        <choice xml:lang="fr">16x contact permanent</choice>
+                        <choice xml:lang="de">16x permanenter An/Aus</choice>
+                        <choice xml:lang="nl">16x Aan/Uit</choice>
+                        <choice>16x On/Off</choice>
+                    </enumChoice>
+                    <enumChoice choice="2">
+                        <choice xml:lang="fr">8x signal à 2 lampes</choice>
+                        <choice xml:lang="de">8x Zwei-Licht Signal mit Dimm</choice>
+                        <choice xml:lang="nl">8x Tweelichtsein met fade</choice>
+                        <choice>8x 2-light Signal with fade</choice>
+                    </enumChoice>
+                    <enumChoice choice="3">
+                        <choice xml:lang="fr">8 x signal de passage</choice>
+                        <choice xml:lang="de">8x AHOB</choice>
+                        <choice xml:lang="nl">8x AHOB</choice>
+                        <choice>8x AHOB</choice>
+                    </enumChoice>
+                    <enumChoice choice="4">
+                        <choice>2x8 Fluorescents</choice>
+                        <choice xml:lang="fr">2x8 tubes fluorescents</choice>
+                        <choice xml:lang="de">2x8 Leuchtstofflampen</choice>
+                        <choice xml:lang="nl">2x8 TL Verlichting</choice>
+                    </enumChoice>
+                    <enumChoice choice="5">
+                        <choice>1x16 Fluorescents</choice>
+                        <choice xml:lang="fr">1x16 tubes fluorescents</choice>
+                        <choice xml:lang="de">1x16 Leuchtstofflampen</choice>
+                        <choice xml:lang="nl">1x16 TL Verlichting</choice>
+                    </enumChoice>
+                    <enumChoice choice="6">
+                        <choice>8x Turnout motor</choice>
+                        <choice xml:lang="fr">8x aiguillages á moteur</choice>
+                        <choice xml:lang="de">8x Weichenantrieb</choice>
+                        <choice xml:lang="nl">8x Wisselmotor</choice>
+                    </enumChoice>
+                    <enumChoice choice="7">
+                        <choice>4x Dutch 3-light signal</choice>
+                        <choice xml:lang="fr">4x signal NS à 3 lampes</choice>
+                        <choice xml:lang="de">4x NS Drei-Licht Signal</choice>
+                        <choice xml:lang="nl">4x NS Drielichtsein met cijfer</choice>
+                    </enumChoice>
+                    <enumChoice choice="8">
+                        <choice>4x DB Main Signal</choice>
+                        <choice xml:lang="fr">4x signal DB</choice>
+                        <choice xml:lang="de">4x DB Hauptsignal</choice>
+                        <choice xml:lang="nl">4x DB Hoofdsein</choice>
+                    </enumChoice>
+                    <enumChoice choice="9">
+                        <choice>4x DB Approach signal</choice>
+                        <choice xml:lang="fr">4x signal avertisseur DB</choice>
+                        <choice xml:lang="de">4x DB Vorsignal</choice>
+                        <choice xml:lang="nl">4x DB Voorsein</choice>
+                    </enumChoice>
+                    <enumChoice choice="10">
+                        <choice>2x DB Main and Approach signal</choice>
+                        <choice xml:lang="fr">2x signales avertisseur et principal DB</choice>
+                        <choice xml:lang="de">2x DB Haupt- und Vorsignal</choice>
+                        <choice xml:lang="nl">2x DB hoofd- en voorsein</choice>
+                    </enumChoice>
+                    <enumChoice choice="11">
+                        <choice>4x DB Approach signal</choice>
+                        <choice xml:lang="fr">4x signal avertisseur DB</choice>
+                        <choice xml:lang="de">4x DB Vorsignal</choice>
+                        <choice xml:lang="nl">4x DB Voorsein</choice>
+                    </enumChoice>
+                    <enumChoice choice="12">
+                        <choice>4x NMBS signal</choice>
+                        <choice xml:lang="fr">4x signal SNCB</choice>
+                        <choice xml:lang="de">4x NMBS Hauptsignal</choice>
+                        <choice xml:lang="nl">4x NMBS Sein</choice>
+                    </enumChoice>
+                    <enumChoice choice="13">
+                        <choice>8x Turnout motor w/limit</choice>
+                        <choice xml:lang="fr">8x aiguillages à moteur limité</choice>
+                        <choice xml:lang="de">8x Weichenantrieb m. Abschaltung</choice>
+                        <choice xml:lang="nl">8x Wisselmotor afgeschakeld</choice>
+                    </enumChoice>
+                </enumVal>
+                <label xml:lang="fr">Préréglages</label>
+                <label xml:lang="de">Voreinstellungen</label>
+                <label xml:lang="nl">Voorinstellingen</label>
+                <label>Presets</label>
+                <tooltip xml:lang="fr">&lt;html&gt;Ce CV en écriture seule règle automatiquement une des applications préréglées:&lt;br&gt; 0: 8 x aiguillages avec 2 bobines magnétiques&lt;br&gt;1: 16 x interrupteur à contact permanent (I/O)&lt;br&gt;2: 8 x signal à 2 lampes&lt;br&gt;3: 8 x signal de passage à niveau&lt;br&gt;4: 2 groupes de 8 sorties pour tubes fluorescents&lt;br&gt;5: 1 x 16 sorties pour tubes fluorescents&lt;br&gt;6: 8 x aiguillages contrôle du moteur&lt;br&gt;7: 4 x signal NS à 3 lampes (Prorail 1854)&lt;br&gt;8: 4 x signal principal DB&lt;br&gt;9: 4 x signal avertisseur DB associé à un signal principal&lt;br&gt;10: 2 x combinaison du signal avertisseur avec le signal principal DB&lt;br&gt;11: 4 x signal avertisseur DB&lt;br&gt;12: 4 x signal principal SNCB&lt;br&gt;13: 8 x aiguillages à moteur à impulsions&lt;br&gt;&lt;/html&gt;</tooltip>
+                <tooltip xml:lang="de">&lt;html&gt;Diese nur-schreibbare CV legt automatisch eine der Standardvoreinstellungen fest:&lt;br&gt;0: 8x Weiche mit Doppelspulen Weichenantrieb&lt;br&gt;1: 16x permanenter An/Aus Schalter&lt;br&gt;2: 8x Zwei-Licht Signal mit Dimmeffekt&lt;br&gt;3: 8x AHOB&lt;br&gt;4: 2 Gruppen mit 8x Leuchtstofflampen&lt;br&gt;5: 1 x 16 Ausgänge mit Leuchtstofflampen&lt;br&gt;6: 8x Weichenantrieb Steuerung&lt;br&gt;7: 4x Niederländisches Drei-Licht Signal (Prorail 1854)&lt;br&gt;8: 4x DB Hauptsignal&lt;br&gt;9: 4x DB Vorsignal verbunden mit Hauptsignal&lt;br&gt;10: 2x Kombina on DB Hauptsignal und Vorsignal&lt;br&gt;11: 4x DB Vorsignal&lt;br&gt;12: 4x NMBS Hauptsignal&lt;br&gt;13: 8x Weichenantrieb Steuerung mit Zeitbegrenzung&lt;br&gt;&lt;/html&gt;</tooltip>
+                <tooltip xml:lang="nl">&lt;html&gt;Deze alleen schrijfbare CV stelt automatisch een aantal standaard toepassingen in:&lt;br&gt;0: 8x Wissel met spoelaandrijving&lt;br&gt;1: 16x permanent aan/uit schakelaar&lt;br&gt;2: 8x Tweelichtsein met fader effect&lt;br&gt;3: 8x AHOB&lt;br&gt;4: 2 groepen van 8x TL verlichtingseffect&lt;br&gt;5: 1 x 16 uitgangen met TL verl.effect&lt;br&gt;6: 8x Wisselmotor aansturing&lt;br&gt;7: 4x NS drielichtsein met cijferbak&lt;br&gt;8: 4x DB Hoofdsein&lt;br&gt;9: 4x DB Voorsein behorend bij hoofdsein&lt;br&gt;10: 2x Combinatie DB hoofdsein en DB voorsein&lt;br&gt;11: 4x DB Voorsein&lt;br&gt;12: 4x NMBS Sein&lt;br&gt;13: 8x Wisselmotor aansturing met tijdsbegrenzing&lt;br&gt;&lt;/html&gt;</tooltip>
+                <tooltip>&lt;html&gt;This write-only CV automatically sets a number of standard applications:&lt;br&gt;0: 8x Turnout with twin-coil motor&lt;br&gt;1: 16x permanent on/off switch&lt;br&gt;2: 8x two-light signal with fade effect&lt;br&gt;3: 8x AHOB&lt;br&gt;4: 2 groups with 8x Fluorescent lamp&lt;br&gt;5: 1 x 16 output with Fluorescent lamp&lt;br&gt;6: 8x Turnout motor control&lt;br&gt;7: 4x Dutch (Prorail 1854) three-light signal&lt;br&gt;8: 4x DB Main signal&lt;br&gt;9: 4x DB pre-signal associated with main signal&lt;br&gt;10: 2x Combination of DB Main signal and approach signal&lt;br&gt;11: 4x DB approach signal&lt;br&gt;12: 4x NMBS Main signal&lt;br&gt;13: 8x Turnout control with time limit&lt;br&gt;&lt;/html&gt;</tooltip>
+            </variable>
+
+            <variable item="Dark Time" CV="107" default="70" comment="Dark Time">
+                <decVal min="1" max="255"/>
+                <label xml:lang="fr">Temps éteint</label>
+                <label xml:lang="de">Dunkelzeit (Deutsches Signalbild)</label>
+                <label xml:lang="nl">Donkertijd (Duits seinbeeld)</label>
+                <label>Dark time</label>
+                <tooltip xml:lang="fr">Temps éteint entre deux pulsions d'éclairage du signal</tooltip>
+                <tooltip xml:lang="de">Dunkelzeit zwischen den verschiedenen Signalübergängen</tooltip>
+                <tooltip xml:lang="nl">Donkertijd tussen de verschillende seinbeeld overgangen (duitse seinbeeld)</tooltip>
+                <tooltip>Dark time between signal transitions</tooltip>
+            </variable>
+            
+            <variable item="Dim Value" CV="108" default="10" comment="Dim Value">
+                <decVal min="1" max="15"/>
+                <label xml:lang="fr">Valeur Dimmer</label>
+                <label xml:lang="de">Dimmwert</label>
+                <label xml:lang="nl">Dimwaarde</label>
+                <label>Dim Value</label>
+                <tooltip xml:lang="fr">Valeur de l'intensité du dimmer du signal (mode nuit)</tooltip>
+                <tooltip xml:lang="de">Wert für das Dimmen der Signale (Nachtmodus)</tooltip>
+                <tooltip xml:lang="nl">Waarde voor het dimmen van de seinen (nachtstand)</tooltip>
+                <tooltip>Value to dim intensity of signal (night mode)</tooltip>
+            </variable>
+            
+            <variable item="PWM period" CV="109" default="14" comment="PWM period">
+                <decVal min="1" max="255"/>
+                <label xml:lang="fr">MLI-période</label>
+                <label xml:lang="de">PWM Periode</label>
+                <label xml:lang="nl">PWM-period</label>
+                <label>PWM period</label>
+                <tooltip xml:lang="fr">Résolution utilisée par le MLI interne pour gérer les effets et valeurs de gradation</tooltip>
+                <tooltip xml:lang="de">Die Resolution, die vom internen PWM verwendet wird, um die Effekte und Dimmer-Werte zu bestimmen</tooltip>
+                <tooltip xml:lang="nl">De resolutie die door de interne PWM wordt gehanteerd voor het verwezenlijken van effecten en dim-waarden</tooltip>
+                <tooltip>The resolution used by the internal PWM to manage effect and dimming values</tooltip>
+            </variable>
+
+            <variable item="Fade speed" CV="111" default="3" comment="Fade speed">
+                <decVal min="1" max="255"/>
+                <label xml:lang="fr">Vitesse de fondu</label>
+                <label xml:lang="de">Fade-Geschwindigkeit</label>
+                <label xml:lang="nl">Fade-snelheid</label>
+                <label>Fade speed</label>
+                <tooltip xml:lang="fr">Vitesse à laquelle les sorties configurées auront une fonction fondu, fondu en ouverture ou fermeture</tooltip>
+                <tooltip xml:lang="de">Die Geschwindigkeit, mit der die Ausgänge mit Fade-Konfiguration ein- und aus-faden</tooltip>
+                <tooltip xml:lang="nl">De snelheid waarmee de uitgangen die voor de fade-functie zijn geconfigureerd, infaden en uitfaden</tooltip>
+                <tooltip>The speed with which the outputs configured to have a fade function fade in and fade out</tooltip>
+            </variable>
+
+            <variable item="Flicker speed" CV="112" default="183" comment="Flicker speed">
+                <decVal min="1" max="255"/>
+                <label xml:lang="fr">Vitesse d’oscillation</label>
+                <label xml:lang="de">Flackergeschwindigkeit</label>
+                <label xml:lang="nl">Knippersnelheid</label>
+                <label>Flicker speed</label>
+                <tooltip xml:lang="fr">Vitesse à laquelle les sorties configurées pour osciller oscilleront</tooltip>
+                <tooltip xml:lang="de">Die Geschwindigkeit, mit der die Ausgänge mit Flackerfunktion flackern</tooltip>
+                <tooltip xml:lang="nl">De snelheid waarmee de uitgangen knipperen die voor knipperen zijn geconfigureerd</tooltip>
+                <tooltip>The speed with which the outputs configured to flicker do so</tooltip>
+            </variable>
+
+<!-- start of output configurations CV 113 - 128 -->
+            <variable CV="113" mask="XXXXXVVV" item="Light intensity Out 1" default="15" writeOnly="no" comment="Output 1" include="4018">
+                <decVal min="0" max="15"/>
+                <label xml:lang="fr">Intensité lumineuse</label>
+                <label xml:lang="de">Lichtintensität</label>
+                <label xml:lang="nl">Licht intensiteit</label>
+                <label>Light intensity</label>
+                <tooltip>Controls how much Out 1 dims (0-dark to 15-max bright)</tooltip>
+            </variable>
+            <variable CV="113" mask="XXXXVXXX" item="Fade in Fade out effect Out 1" default="0" writeOnly="no" include="4018">
+                <xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
+                <label xml:lang="fr">Effet fondu ouv./ferm.</label>
+                <label xml:lang="de">Fade–in und Fade-out Effekt</label>
+                <label xml:lang="nl">Fade in/Fade out effect</label>
+                <label>Fade in/Fade out effect</label>
+            </variable>
+            <variable CV="113" mask="XXXVXXXX" item="Flicker effect Out 1" default="0" writeOnly="no" include="4018">
+                <xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
+                <label xml:lang="fr">Effet oscillation</label>
+                <label xml:lang="de">Flackereffekt</label>
+                <label xml:lang="nl">Knipper effect</label>
+                <label>Flicker effect</label>
+            </variable>
+            <variable CV="113" mask="XXVXXXXX" item="Random light effect Out 1" default="0" writeOnly="no" include="4018">
+                <xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
+                <label xml:lang="fr">Allumage lumière aléatoire</label>
+                <label xml:lang="de">Willkürlich aufleuchtende Lampen</label>
+                <label xml:lang="nl">Willekeurig opstarten lampen</label>
+                <label>Random light effect</label>
+            </variable>
+            <variable CV="113" mask="XVXXXXXX" item="Pulse on Out 1" default="0" include="4018">
+                <xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
+                <label xml:lang="fr">Impulsion á Sortie 1</label>
+                <label xml:lang="de">Puls auf Ausgang 1</label>
+                <label xml:lang="nl">Puls op Uitgang 1</label>
+                <label>Pulse on Out 1</label>
+            </variable>
+<!-- repeat for CV 114 - 128 -->
+            <variable CV="114" mask="XXXXXVVV" item="Light intensity Out 2" default="15" writeOnly="no" comment="Output 2" include="4018">
+                <decVal min="0" max="15"/>
+                <label xml:lang="fr">Intensité lumineuse</label>
+                <label xml:lang="de">Lichtintensität</label>
+                <label xml:lang="nl">Licht intensiteit</label>
+                <label>Light intensity</label>
+                <tooltip>Controls how much Out 2 dims (0-dark to 15-max bright)</tooltip>
+            </variable>
+            <variable CV="114" mask="XXXXVXXX" item="Fade in Fade out effect Out 2" default="0" writeOnly="no" include="4018">
+                <xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
+                <label xml:lang="fr">Effet fondu ouv./ferm.</label>
+                <label xml:lang="de">Fade–in und Fade-out Effekt</label>
+                <label xml:lang="nl">Fade in/Fade out effect</label>
+                <label>Fade in/Fade out effect</label>
+            </variable>
+            <variable CV="114" mask="XXXVXXXX" item="Flicker effect Out 2" default="0" writeOnly="no" include="4018">
+                <xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
+                <label xml:lang="fr">Effet oscillation</label>
+                <label xml:lang="de">Flackereffekt</label>
+                <label xml:lang="nl">Knipper effect</label>
+                <label>Flicker effect</label>
+            </variable>
+            <variable CV="114" mask="XXVXXXXX" item="Random light effect Out 2" default="0" writeOnly="no" include="4018">
+                <xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
+                <label xml:lang="fr">Allumage lumière aléatoire</label>
+                <label xml:lang="de">Willkürlich aufleuchtende Lampen</label>
+                <label xml:lang="nl">Willekeurig opstarten lampen</label>
+                <label>Random light effect</label>
+            </variable>
+            <variable CV="114" mask="XVXXXXXX" item="Pulse on Out 2" default="0" include="4018">
+                <xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
+                <label xml:lang="fr">Impulsion á Sortie 2</label>
+                <label xml:lang="de">Puls auf Ausgang 2</label>
+                <label xml:lang="nl">Puls op Uitgang 2</label>
+                <label>Pulse on Out 2</label>
+            </variable>
+
+<!-- end of output configurations -->
+
+<!-- signal mast configurations -->
+            <variable item="Signal 1 configuration" CV="131" default="0" comment="Signal 1, configuration OUT 1 - 4">
+                <enumVal>
+                    <enumChoice choice="0">
+                        <choice xml:lang="fr">Pas de signal</choice>
+                        <choice xml:lang="de">Kein Signal</choice>
+                        <choice xml:lang="nl">Geen sein</choice>
+                        <choice>No Signal</choice>
+                    </enumChoice> 
+                    <enumChoice choice="1">
+                        <choice xml:lang="fr">NS (Pays Bas/Prorail)</choice>
+                        <choice xml:lang="de">NS (Niederländisch/Prorail)</choice>
+                        <choice xml:lang="nl">NS (Nederlands/Prorail)</choice>
+                        <choice>NS (Dutch railways/Prorail)</choice>
+                    </enumChoice> 
+                    <enumChoice choice="2">
+                        <choice xml:lang="fr">DB signal principal (HP0, HP1, HP2)</choice>
+                        <choice xml:lang="de">DB_HP (Deutsches Hauptsignal)</choice>
+                        <choice xml:lang="nl">DB_HP (Duits hoofdsein)</choice>
+                        <choice>DB_HP (German main signal)</choice>
+                    </enumChoice> 
+                    <enumChoice choice="3">
+                        <choice xml:lang="fr">DB signales d'annonce et principal</choice>
+                        <choice xml:lang="de">DB_VRHP (Deutsches Vor– und Hauptsignal)</choice>
+                        <choice xml:lang="nl">DB_VRHP (Duits voor- en hoofdsein)</choice>
+                        <choice>DB_VRHP (German front and main signal)</choice>
+                    </enumChoice> 
+                    <enumChoice choice="4">
+                        <choice xml:lang="fr">DB signal d'annonce (VR0, VR1, VR2)</choice>
+                        <choice xml:lang="de">DB_VR (Deutsches Vorsignal)</choice>
+                        <choice xml:lang="nl">DB_VR (Duits voorsein)</choice>
+                        <choice>DB_VR (German approach signal)</choice>
+                    </enumChoice> 
+                    <enumChoice choice="5">
+                        <choice xml:lang="fr">SNCB (Belgique)</choice>
+                        <choice xml:lang="de">NMBS (Belgische Bahn)</choice>
+                        <choice xml:lang="nl">NMBS (Belgisch)</choice>
+                        <choice>NMBS (Belgium railways)</choice>
+                    </enumChoice> 
+                </enumVal>
+                <label xml:lang="fr">Signal n° 1, configuration des sorties 1 à 4</label>
+                <label xml:lang="de">Signal 1, Konfiguration OUT 1 - 4</label>
+                <label xml:lang="nl">Sein 1, configuratie OUT 1 t/m 4</label>
+                <label>Signal 1 configuration OUT 1 - 4</label>
+                <tooltip xml:lang="fr">&lt;html&gt;Si cette CV contient une valeur égale à 0 toutes les sorties seront permutées&lt;br&gt;selon les règles de signalisation.&lt;br&gt;Les autres CV's qui normalement contrôlent les sorties seront désactivées.&lt;br&gt;&lt;/html&gt;</tooltip>
+                <tooltip xml:lang="de">&lt;html&gt;Wenn diese CVs einen Wert gleich 0 enthalten,&lt;br&gt;schalten alle Ausgänge im Einklang mit den Signalregeln.&lt;br&gt;Die anderen CVs, die die Ausgänge normalerweise steuern, werden deaktiviert.&lt;br&gt;&lt;/html&gt;</tooltip>
+                <tooltip xml:lang="nl">&lt;html&gt;Als deze CV’s een waarde ongelijk aan 0 bevatten&lt;br&gt;schakelen de betreffende uitgangen volgens de seinregels.&lt;br&gt;De andere CV’s die normaal de uitgangen besturen staan buiten werking.&lt;br&gt;&lt;/html&gt;</tooltip>
+                <tooltip>&lt;html&gt;If these CVs contain a value equal to 0&lt;br&gt;all outputs will switch according to the signal rules.&lt;br&gt;The other CVs that normally control the outputs will be deactivated.&lt;br&gt;&lt;/html&gt;</tooltip>
+            </variable>
+<!-- repeat for CV 132 - 134 -->
+            <variable item="Signal 2 configuration" CV="132" default="0" comment="Signal 2, configuration OUT 5 - 8">
+                <enumVal>
+                    <enumChoice choice="0">
+                        <choice xml:lang="fr">Pas de signal</choice>
+                        <choice xml:lang="de">Kein Signal</choice>
+                        <choice xml:lang="nl">Geen sein</choice>
+                        <choice>No Signal</choice>
+                    </enumChoice> 
+                    <enumChoice choice="1">
+                        <choice xml:lang="fr">NS (Pays Bas/Prorail)</choice>
+                        <choice xml:lang="de">NS (Niederländisch/Prorail)</choice>
+                        <choice xml:lang="nl">NS (Nederlands/Prorail)</choice>
+                        <choice>NS (Dutch railways/Prorail)</choice>
+                    </enumChoice> 
+                    <enumChoice choice="2">
+                        <choice xml:lang="fr">DB signal principal (HP0, HP1, HP2)</choice>
+                        <choice xml:lang="de">DB_HP (Deutsches Hauptsignal)</choice>
+                        <choice xml:lang="nl">DB_HP (Duits hoofdsein)</choice>
+                        <choice>DB_HP (German main signal)</choice>
+                    </enumChoice> 
+                    <enumChoice choice="3">
+                        <choice xml:lang="fr">DB signales d'annonce et principal</choice>
+                        <choice xml:lang="de">DB_VRHP (Deutsches Vor– und Hauptsignal)</choice>
+                        <choice xml:lang="nl">DB_VRHP (Duits voor- en hoofdsein)</choice>
+                        <choice>DB_VRHP (German front and main signal)</choice>
+                    </enumChoice> 
+                    <enumChoice choice="4">
+                        <choice xml:lang="fr">DB signal d'annonce (VR0, VR1, VR2)</choice>
+                        <choice xml:lang="de">DB_VR (Deutsches Vorsignal)</choice>
+                        <choice xml:lang="nl">DB_VR (Duits voorsein)</choice>
+                        <choice>DB_VR (German approach signal)</choice>
+                    </enumChoice> 
+                    <enumChoice choice="5">
+                        <choice xml:lang="fr">SNCB (Belgique)</choice>
+                        <choice xml:lang="de">NMBS (Belgische Bahn)</choice>
+                        <choice xml:lang="nl">NMBS (Belgisch)</choice>
+                        <choice>NMBS (Belgium railways)</choice>
+                    </enumChoice> 
+                </enumVal>
+                <label xml:lang="fr">Signal n° 2, configuration des sorties 5 à 8</label>
+                <label xml:lang="de">Signal 2, Konfiguration OUT 5 - 8</label>
+                <label xml:lang="nl">Sein 2, configuratie OUT 5 t/m 8</label>
+                <label>Signal 2 configuration OUT 5 - 8</label>
+                <tooltip xml:lang="fr">&lt;html&gt;Si cette CV contient une valeur égale à 0 toutes les sorties seront permutées&lt;br&gt;selon les règles de signalisation.&lt;br&gt;Les autres CV's qui normalement contrôlent les sorties seront désactivées.&lt;br&gt;&lt;/html&gt;</tooltip>
+                <tooltip xml:lang="de">&lt;html&gt;Wenn diese CVs einen Wert gleich 0 enthalten,&lt;br&gt;schalten alle Ausgänge im Einklang mit den Signalregeln.&lt;br&gt;Die anderen CVs, die die Ausgänge normalerweise steuern, werden deaktiviert.&lt;br&gt;&lt;/html&gt;</tooltip>
+                <tooltip xml:lang="nl">&lt;html&gt;Als deze CV’s een waarde ongelijk aan 0 bevatten&lt;br&gt;schakelen de betreffende uitgangen volgens de seinregels.&lt;br&gt;De andere CV’s die normaal de uitgangen besturen staan buiten werking.&lt;br&gt;&lt;/html&gt;</tooltip>
+                <tooltip>&lt;html&gt;If these CVs contain a value equal to 0&lt;br&gt;all outputs will switch according to the signal rules.&lt;br&gt;The other CVs that normally control the outputs will be deactivated.&lt;br&gt;&lt;/html&gt;</tooltip>
+            </variable>
+
+<!-- end of signal mast configurations -->
+
+<!-- start of output pulse configurations CV 238 - 253 -->
+            <variable CV="238" item="Pulse Duration Out 1" default="128" writeOnly="no" comment="Pulse duration for output 1 if set to pulse by CV113=7 and CV47=13." include="4018">
+                <decVal />
+                <label xml:lang="fr">Eclairage discontinu, temps de pulsion</label>
+                <label xml:lang="de">Pulsdauer</label>
+                <label xml:lang="nl">Pulsduur</label>
+                <label>Pulse Duration</label>
+                <tooltip>Configure the pulse duration for Output 1 provided pulse is turned on (CV113=7 and CV47=13).</tooltip>
+            </variable>
+<!-- repeat for CV 239 - 253 -->
+            <variable CV="239" item="Pulse Duration Out 2" default="128" writeOnly="no" comment="Pulse duration for output 2 if set to pulse by CV113=7 and CV47=13." include="4018">
+                <decVal />
+                <label xml:lang="fr">Eclairage discontinu, temps de pulsion</label>
+                <label xml:lang="de">Pulsdauer</label>
+                <label xml:lang="nl">Pulsduur</label>
+                <label>Pulse Duration</label>
+                <tooltip>Configure the pulse duration for Output 1 provided pulse is turned on (CV113=7 and CV47=13).</tooltip>
+            </variable>
+        </variables>
+        
+ <!-- reset -->       
+        <resets>
+            <factReset label="HARD RESET all CVs reset to default values" CV="8" default="8">
+                <mode>OPSBYTEMODE</mode>
+                <label xml:lang="fr">Reset - retour aux valeurs d'usine pour tous les CVs</label>
+                <label xml:lang="it">Reset delle CV ai valori di fabbrica</label>
+                <label xml:lang="de">Alle CVs zurückstellen auf Werkseinstellungen</label>
+                <label xml:lang="nl">Reset alle CV's naar de standaard fabrieksinstellingen</label>
+                <!-- In Program on Main (OPS) mode, choose Loco Address 9999 and press the Program Button on your decoder (LED blinks). Then select Reset. -->
+            </factReset>
+        </resets>
+        
+    </decoder>
+
+    <pane>
+        <name>Module Configuration</name>
+        <name xml:lang="fr">Configuration du Module</name>
+        <name xml:lang="de">Modulkonfiguration</name>
+        <name xml:lang="nl">Moduleconfiguratie</name>
+        <column>
+                 <label>
+                     <text>Settings for Module</text>
+                     <text xml:lang="nl">Instellingen voor gehele module</text>
+                 </label>
+                 <separator/>
+                <display item="Presets" layout="above"/>
+                <label>
+                    <text> </text>
+                </label>
+        </column>
+        <row>
+            <column>
+                <display item="Dim Value" />
+                <display item="PWM period" />
+                <display item="Fade speed" />
+                <display item="Dark Time" />
+                <display item="Flicker speed" />
+            </column>
+            <column>
+               <display item="Dim Value" format="hslider" label="" >
+                </display>
+               <display item="PWM period" format="hslider" label="" >
+                </display>
+               <display item="Fade speed" format="hslider" label="" >
+                </display>
+                <display item="Dark Time" format="hslider" label="" tooltip="">
+                </display>
+                <display item="Flicker speed" format="hslider" label="" >
+                </display>
+            </column>
+        </row>
+    </pane>
+
+    <pane include="4018">
+        <name>Output Configuration</name>
+        <name xml:lang="fr">Configuration des Sorties</name>
+        <name xml:lang="de">Ausgangskonfiguration</name>
+        <name xml:lang="nl">Configuratie per Uitgang</name>
+            <row>
+                 <column>
+                        <label>
+                            <text>Output 1 Configuration</text>
+                            <text xml:lang="nl">Uitgang 1 Configuratie</text>
+                        </label>
+                        <separator/>
+                        <row>
+                            <display item="Light intensity Out 1" tooltip="" />
+                            <display item="Light intensity Out 1" label="" format="hslider" />
+                        </row>
+                        <display item="Fade in Fade out effect Out 1" format="checkbox" />
+                        <display item="Flicker effect Out 1" format="checkbox" />
+                        <display item="Random light effect Out 1" format="checkbox" />
+                        <display item="Pulse on Out 1" format="checkbox" />
+                        <row>
+                            <display item="Pulse Duration Out 1" tooltip="" />
+                            <display item="Pulse Duration Out 1" label="" format="hslider" />
+                        </row>
+                   <row>
+                        <display item="Signal 1 configuration" layout="above"/>
+                   </row>
+                    <separator/>
+            </column>
+
+            <column>
+                        <label>
+                            <text>Output 2 Configuration</text>
+                            <text xml:lang="nl">Uitgang 2 Configuratie</text>
+                        </label>
+                        <separator/>
+                        <row>
+                            <display item="Light intensity Out 2" tooltip="" />
+                            <display item="Light intensity Out 2" label="" format="hslider" />
+                        </row>
+                        <display item="Fade in Fade out effect Out 2" format="checkbox" />
+                        <display item="Flicker effect Out 2" format="checkbox" />
+                        <display item="Random light effect Out 2" format="checkbox" />
+                        <display item="Pulse on Out 2" format="checkbox" />
+                        <row>
+                            <display item="Pulse Duration Out 2" tooltip="" />
+                            <display item="Pulse Duration Out 2" label="" format="hslider" />
+                        </row>
+                   <row>
+                        <display item="Signal 2 configuration" layout="above"/>
+                   </row>
+                    <separator/>
+                </column>
+            </row>
+            <!-- more Outputs -->
+
+    </pane>
+    
+</decoder-config>
