@@ -757,7 +757,7 @@ public class AutoActiveTrain implements ThrottleListener {
                 float speed = -1.0f;
                 if (strSpeed != null) {
                     try {
-                        speed = new Float(strSpeed);
+                        speed = Float.valueOf(strSpeed);
                     } catch (NumberFormatException nx) {
                         try {
                             speed = jmri.InstanceManager.getDefault(SignalSpeedMap.class).getSpeed(strSpeed);

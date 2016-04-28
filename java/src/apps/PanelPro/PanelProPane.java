@@ -1,4 +1,3 @@
-// PanelProPane.java
 package apps.PanelPro;
 
 import apps.Apps;
@@ -26,7 +25,6 @@ import javax.swing.JPanel;
  * A PARTICULAR PURPOSE. See the GNU General Public License for more details.
  * <P>
  * @author	Bob Jacobsen Copyright 2003, 2014
- * @version $Revision$
  */
 public class PanelProPane extends apps.AppsLaunchPane {
 
