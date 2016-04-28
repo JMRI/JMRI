@@ -240,7 +240,7 @@ public class AppConfigBase extends JmriPanel {
         }
         // don't restart the program, just close the window
         if (getTopLevelAncestor() != null) {
-            ((JFrame) getTopLevelAncestor()).setVisible(false);
+            getTopLevelAncestor().setVisible(false);
         }
     }
 
