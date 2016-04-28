@@ -1,4 +1,3 @@
-// SignalMastTableAction.java
 package jmri.jmrit.beantable;
 
 import java.awt.Component;
@@ -19,7 +18,6 @@ import jmri.util.com.sun.TableSorter;
  * Swing action to create and register a SignalMastTable GUI.
  *
  * @author	Bob Jacobsen Copyright (C) 2003, 2009, 2010
- * @version $Revision$
  */
 public class SignalMastTableAction extends AbstractTableAction {
 
@@ -171,5 +169,3 @@ public class SignalMastTableAction extends AbstractTableAction {
     }
 }
 
-
-/* @(#)SignalMastTableAction.java */
