@@ -5,7 +5,7 @@ import java.awt.BorderLayout;
 import java.awt.FlowLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.util.ArrayList;
+import java.util.*;
 import java.util.ResourceBundle;
 import javax.swing.BoxLayout;
 import javax.swing.ButtonGroup;
@@ -639,7 +639,7 @@ public class SectionTableAction extends AbstractTableAction {
         reverseSensorField.setText(curSection.getReverseBlockingSensorName());
         forwardStopSensorField.setText(curSection.getForwardStoppingSensorName());
         reverseStopSensorField.setText(curSection.getReverseStoppingSensorName());
-        ArrayList<EntryPoint> list = (ArrayList<EntryPoint>) curSection.getForwardEntryPointList();
+        List<EntryPoint> list = curSection.getForwardEntryPointList();
         if (list.size() > 0) {
             for (int j = 0; j < list.size(); j++) {
                 entryPointList.add(list.get(j));
@@ -922,7 +922,7 @@ public class SectionTableAction extends AbstractTableAction {
     }
 
     private void initializeBlockCombo() {
-        ArrayList<String> allBlocks = (ArrayList<String>) blockManager.getSystemNameList();
+        List<String> allBlocks = blockManager.getSystemNameList();
         blockBox.removeAllItems();
         for (int j = blockBoxList.size(); j > 0; j--) {
             blockBoxList.remove(j - 1);
@@ -969,7 +969,7 @@ public class SectionTableAction extends AbstractTableAction {
 
     private boolean connected(Block b1, Block b2) {
         if ((b1 != null) && (b2 != null)) {
-            ArrayList<Path> paths = (ArrayList<Path>) b1.getPaths();
+            List<Path> paths = b1.getPaths();
             for (int i = 0; i < paths.size(); i++) {
                 if (paths.get(i).getBlock() == b2) {
                     return true;
@@ -990,7 +990,7 @@ public class SectionTableAction extends AbstractTableAction {
             // cycle through Blocks to find Entry Points
             for (int i = 0; i < blockList.size(); i++) {
                 Block sb = blockList.get(i);
-                ArrayList<Path> paths = (ArrayList<Path>) sb.getPaths();
+                List<Path> paths = sb.getPaths();
                 for (int j = 0; j < paths.size(); j++) {
                     Path p = paths.get(j);
                     if (!inSection(p.getBlock())) {
