@@ -25,6 +25,8 @@ public class PackageTest extends TestCase {
     // test suite from all defined tests
     public static Test suite() {
         TestSuite suite = new TestSuite("jmri.server.JsonTest");
+        suite.addTest(jmri.server.json.light.PackageTest.suite());
+        suite.addTest(jmri.server.json.memory.PackageTest.suite());
         suite.addTest(jmri.server.json.power.PackageTest.suite());
         suite.addTest(jmri.server.json.roster.PackageTest.suite());
         suite.addTest(jmri.server.json.turnout.PackageTest.suite());
@@ -37,10 +39,12 @@ public class PackageTest extends TestCase {
     }
 
     // The minimal setup for log4J
+    @Override
     protected void setUp() {
         apps.tests.Log4JFixture.setUp();
     }
 
+    @Override
     protected void tearDown() {
         apps.tests.Log4JFixture.tearDown();
     }

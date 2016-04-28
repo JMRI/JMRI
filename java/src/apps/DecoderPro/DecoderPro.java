@@ -1,4 +1,3 @@
-// DecoderPro.java
 package apps.DecoderPro;
 
 import apps.Apps;
@@ -41,7 +40,6 @@ import org.slf4j.LoggerFactory;
  * A PARTICULAR PURPOSE. See the GNU General Public License for more details.
  *
  * @author	Bob Jacobsen Copyright 2003, 2004, 2007
- * @version $Revision$
  */
 public class DecoderPro extends Apps {
 

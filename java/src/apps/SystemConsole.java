@@ -1,4 +1,3 @@
-// SystemConsole.java
 package apps;
 
 import java.awt.BorderLayout;
@@ -54,7 +53,6 @@ import org.slf4j.LoggerFactory;
  * <p>
  *
  * @author Matthew Harris copyright (c) 2010, 2011, 2012
- * @version $Revision$
  */
 public final class SystemConsole extends JTextArea {
 
@@ -650,5 +648,3 @@ public final class SystemConsole extends JTextArea {
     private static final Logger log = LoggerFactory.getLogger(SystemConsole.class.getName());
 
 }
-
-/* @(#)SystemConsole.java */

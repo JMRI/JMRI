@@ -313,7 +313,7 @@ public abstract class AbstractVariableLight extends AbstractLight
             }
         }
         if (origCurrent != mCurrentIntensity) {
-            firePropertyChange("CurrentIntensity", new Double(origCurrent), new Double(mCurrentIntensity));
+            firePropertyChange("CurrentIntensity", Double.valueOf(origCurrent), Double.valueOf(mCurrentIntensity));
             if (log.isDebugEnabled()) {
                 log.debug("firePropertyChange intensity " + origCurrent + " -> " + mCurrentIntensity);
             }
@@ -340,7 +340,7 @@ public abstract class AbstractVariableLight extends AbstractLight
         double oldValue = mCurrentIntensity;
         mCurrentIntensity = intensity;
         if (oldValue != intensity) {
-            firePropertyChange("TargetIntensity", new Double(oldValue), new Double(intensity));
+            firePropertyChange("TargetIntensity", Double.valueOf(oldValue), Double.valueOf(intensity));
         }
     }
 
