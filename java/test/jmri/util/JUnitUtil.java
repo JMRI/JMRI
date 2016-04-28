@@ -11,6 +11,7 @@ import jmri.NamedBean;
 import jmri.PowerManager;
 import jmri.PowerManagerScaffold;
 import jmri.ReporterManager;
+import jmri.RouteManager;
 import jmri.ShutDownManager;
 import jmri.SignalHeadManager;
 import jmri.SignalMastLogicManager;
@@ -207,6 +208,12 @@ public class JUnitUtil {
 
     }
 
+    public static void initRouteManager() {
+        // routes provide sensors, so ensure the sensor manager is initialized
+        JUnitUtil.initInternalSensorManager();
+        InstanceManager.getDefault(RouteManager.class);
+    }
+    
     public static void initMemoryManager() {
         MemoryManager m = new DefaultMemoryManager();
         if (InstanceManager.configureManagerInstance() != null) {
