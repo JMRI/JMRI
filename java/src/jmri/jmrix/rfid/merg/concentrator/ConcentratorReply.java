@@ -15,30 +15,26 @@ import jmri.jmrix.rfid.protocol.coreid.CoreIdRfidProtocol;
  */
 public class ConcentratorReply extends RfidReply {
 
-    RfidTrafficController tc = null;
     RfidProtocol pr = null;
 
     // create a new one
     public ConcentratorReply(RfidTrafficController tc) {
         super(tc);
-        this.tc = tc;
-        this.pr = tc.getAdapterMemo().getProtocol();
+        this.pr = this.tc.getAdapterMemo().getProtocol();
         setBinary(true);
         setUnsolicited();
     }
 
     public ConcentratorReply(RfidTrafficController tc, String s) {
         super(tc, s);
-        this.tc = tc;
-        this.pr = tc.getAdapterMemo().getProtocol();
+        this.pr = this.tc.getAdapterMemo().getProtocol();
         setBinary(true);
         setUnsolicited();
     }
 
     public ConcentratorReply(RfidTrafficController tc, RfidReply l) {
         super(tc, l);
-        this.tc = tc;
-        this.pr = tc.getAdapterMemo().getProtocol();
+        this.pr = this.tc.getAdapterMemo().getProtocol();
         setBinary(true);
         setUnsolicited();
     }
