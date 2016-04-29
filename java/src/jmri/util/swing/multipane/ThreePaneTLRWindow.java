@@ -1,4 +1,3 @@
-// ThreePaneTLRWindow.java
 package jmri.util.swing.multipane;
 
 import java.awt.BorderLayout;
@@ -20,14 +19,8 @@ import jmri.util.swing.WindowInterface;
  *
  * @author Bob Jacobsen Copyright 2010
  * @since 2.9.4
- * @version $Revision$
  */
 public class ThreePaneTLRWindow extends jmri.util.JmriJFrame {
-
-    /**
-     *
-     */
-    private static final long serialVersionUID = 4077174625408158411L;
 
     /**
      * Create and initialize a multi-pane GUI window.

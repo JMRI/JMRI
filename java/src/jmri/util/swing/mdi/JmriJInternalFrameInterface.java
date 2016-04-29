@@ -1,4 +1,3 @@
-// JmriJInternalFrameInterface.java
 package jmri.util.swing.mdi;
 
 import java.awt.Frame;
@@ -17,7 +16,6 @@ import jmri.util.JmriJFrame;
  *
  * @author Bob Jacobsen Copyright 2010
  * @since 2.9.4
- * @version $Revision$
  */
 public class JmriJInternalFrameInterface implements jmri.util.swing.WindowInterface {
 
