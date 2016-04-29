@@ -44,10 +44,6 @@ import org.slf4j.LoggerFactory;
  */
 public class ListedTableFrame extends BeanTableFrame {
 
-    /**
-     *
-     */
-    private static final long serialVersionUID = -6285854187511950725L;
     ActionJList actionList;
 
     public boolean isMultipleInstances() {

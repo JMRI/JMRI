@@ -14,10 +14,6 @@ import org.slf4j.LoggerFactory;
  */
 public class ListedTableAction extends AbstractAction {
 
-    /**
-     *
-     */
-    private static final long serialVersionUID = 6097143838837199839L;
     String gotoListItem = null;
     String title = Bundle.getMessage("TitleListedTable");
 
@@ -66,13 +62,7 @@ public class ListedTableAction extends AbstractAction {
          hog Swing/AWT execution, then finally display on Swing */
         Runnable r = new Runnable() {
             public void run() {
-                f = new ListedTableFrame(title) {
-
-                    /**
-                     *
-                     */
-                    private static final long serialVersionUID = -2029385586619585289L;
-                };
+                f = new ListedTableFrame(title) {};
                 f.initComponents();
                 addToFrame(f);
 

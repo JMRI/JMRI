@@ -22,11 +22,6 @@ import jmri.util.com.sun.TableSorter;
 public class SignalMastTableAction extends AbstractTableAction {
 
     /**
-     *
-     */
-    private static final long serialVersionUID = -9004328747718013361L;
-
-    /**
      * Create an action with a specific title.
      * <P>
      * Note that the argument is the Action title, not the title of the
@@ -74,11 +69,6 @@ public class SignalMastTableAction extends AbstractTableAction {
         f = new BeanTableFrame(m, helpTarget(), dataTable) {
 
             /**
-             *
-             */
-            private static final long serialVersionUID = 151993526213329064L;
-
-            /**
              * Include an "add" button
              */
             void extras() {
@@ -123,11 +113,6 @@ public class SignalMastTableAction extends AbstractTableAction {
 
     public static class MyComboBoxRenderer extends JComboBox<String> implements TableCellRenderer {
 
-        /**
-         *
-         */
-        private static final long serialVersionUID = 2364477222809281572L;
-
         public MyComboBoxRenderer(Vector<String> items) {
             super(items);
         }
@@ -149,11 +134,6 @@ public class SignalMastTableAction extends AbstractTableAction {
     }
 
     public static class MyComboBoxEditor extends DefaultCellEditor {
-
-        /**
-         *
-         */
-        private static final long serialVersionUID = -7751205079226082780L;
 
         public MyComboBoxEditor(Vector<String> items) {
             super(new JComboBox<String>(items));

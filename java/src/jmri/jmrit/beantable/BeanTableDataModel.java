@@ -636,11 +636,6 @@ abstract public class BeanTableDataModel extends javax.swing.table.AbstractTable
 
     public JTable makeJTable(TableSorter sorter) {
         JTable table = new JTable(sorter) {
-            /**
-             *
-             */
-            private static final long serialVersionUID = 2511932624004472654L;
-
             public boolean editCellAt(int row, int column, java.util.EventObject e) {
                 boolean res = super.editCellAt(row, column, e);
                 java.awt.Component c = this.getEditorComponent();

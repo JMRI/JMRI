@@ -89,10 +89,6 @@ public class BeanTablePane extends jmri.util.swing.JmriPanel {
      */
     protected JTable makeJTable(TableSorter sorter) {
         return new JTable(sorter) {
-            /**
-             *
-             */
-            private static final long serialVersionUID = 5236037575632515212L;
 
             public boolean editCellAt(int row, int column, java.util.EventObject e) {
                 boolean res = super.editCellAt(row, column, e);

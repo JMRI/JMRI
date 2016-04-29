@@ -96,10 +96,6 @@ public class AudioTableAction extends AbstractTableAction {
 
         // create the frame
         atf = new AudioTableFrame(atp, helpTarget()) {
-            /**
-             *
-             */
-            private static final long serialVersionUID = -7518952412034675558L;
 
             /**
              * Include "Add Source..." and "Add Buffer..." buttons
@@ -263,11 +259,6 @@ public class AudioTableAction extends AbstractTableAction {
      * Define abstract AudioTableDataModel
      */
     abstract public class AudioTableDataModel extends BeanTableDataModel implements PropertyChangeListener {
-
-        /**
-         *
-         */
-        private static final long serialVersionUID = 1263874422331471609L;
 
         char subType;
 
@@ -455,11 +446,6 @@ public class AudioTableAction extends AbstractTableAction {
      */
     public class AudioListenerTableDataModel extends AudioTableDataModel {
 
-        /**
-         *
-         */
-        private static final long serialVersionUID = 2124461381030149588L;
-
         AudioListenerTableDataModel() {
             super(Audio.LISTENER);
         }
@@ -480,11 +466,6 @@ public class AudioTableAction extends AbstractTableAction {
      */
     public class AudioBufferTableDataModel extends AudioTableDataModel {
 
-        /**
-         *
-         */
-        private static final long serialVersionUID = -8823961737671739012L;
-
         AudioBufferTableDataModel() {
             super(Audio.BUFFER);
         }
@@ -499,11 +480,6 @@ public class AudioTableAction extends AbstractTableAction {
      * Specific AudioTableDataModel for Audio Source sub-type
      */
     public class AudioSourceTableDataModel extends AudioTableDataModel {
-
-        /**
-         *
-         */
-        private static final long serialVersionUID = 8123546730548750171L;
 
         AudioSourceTableDataModel() {
             super(Audio.SOURCE);
