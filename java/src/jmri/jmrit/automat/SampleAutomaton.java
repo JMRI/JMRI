@@ -61,20 +61,13 @@ public class SampleAutomaton extends AbstractAutomaton {
         // get references to sample layout objects
         turnout = InstanceManager.turnoutManagerInstance().
                 provideTurnout(turnoutName);
-        if (turnout == null) {
-            log.error("Failure to provide turnout " + turnoutName + " when initialized");
-        }
 
         sensor = InstanceManager.sensorManagerInstance().
                 provideSensor(sensorName);
 
-        if (sensor != null) {
-            // set up the initial correlation
-            now = sensor.getKnownState();
-            setTurnout(now);
-        } else {
-            log.error("Failure to provide sensor " + sensorName + " when initialized");
-        }
+        // set up the initial correlation
+        now = sensor.getKnownState();
+        setTurnout(now);
     }
 
     int now;

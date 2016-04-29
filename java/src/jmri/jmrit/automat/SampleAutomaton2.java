@@ -63,13 +63,9 @@ public class SampleAutomaton2 extends AbstractAutomaton {
         programmer = InstanceManager.programmerManagerInstance()
                 .getAddressedProgrammer(locoLong, locoNumber);
 
-        if (sensor != null) {
-            // set up the initial correlation
-            now = sensor.getKnownState();
-            setMomentum(now);
-        } else {
-            log.error("Failure to provide sensor " + sensorName + " on initialization");
-        }
+        // set up the initial correlation
+        now = sensor.getKnownState();
+        setMomentum(now);
     }
 
     int now;
