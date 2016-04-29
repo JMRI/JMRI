@@ -1,4 +1,3 @@
-// AudioTableAction.java
 package jmri.jmrit.beantable;
 
 import java.awt.event.ActionEvent;
@@ -40,14 +39,9 @@ import org.slf4j.LoggerFactory;
  *
  * @author	Bob Jacobsen Copyright (C) 2003
  * @author Matthew Harris copyright (c) 2009
- * @version $Revision$
  */
 public class AudioTableAction extends AbstractTableAction {
 
-    /**
-     *
-     */
-    private static final long serialVersionUID = 997606126554992440L;
     AudioTableDataModel listeners;
     AudioTableDataModel buffers;
     AudioTableDataModel sources;
@@ -537,5 +531,3 @@ public class AudioTableAction extends AbstractTableAction {
         return AudioTableAction.class.getName();
     }
 }
-
-/* @(#)AudioTableAction.java */

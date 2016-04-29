@@ -1,4 +1,3 @@
-// ReporterTableAction.java
 package jmri.jmrit.beantable;
 
 import java.awt.event.ActionEvent;
@@ -25,7 +24,6 @@ import org.slf4j.LoggerFactory;
  * Swing action to create and register a ReporterTable GUI.
  *
  * @author	Bob Jacobsen Copyright (C) 2003
- * @version $Revision$
  */
 public class ReporterTableAction extends AbstractTableAction {
 
@@ -351,5 +349,3 @@ public class ReporterTableAction extends AbstractTableAction {
 
     private final static Logger log = LoggerFactory.getLogger(ReporterTableAction.class.getName());
 }
-
-/* @(#)ReporterTableAction.java */

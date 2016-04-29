@@ -1,4 +1,3 @@
-// LightTableAction.java
 package jmri.jmrit.beantable;
 
 import java.awt.BorderLayout;
@@ -45,7 +44,6 @@ import org.slf4j.LoggerFactory;
  * Based on SignalHeadTableAction.java
  *
  * @author	Dave Duchamp Copyright (C) 2004
- * @version $Revision$
  */
 public class LightTableAction extends AbstractTableAction {
 
@@ -1935,4 +1933,3 @@ public class LightTableAction extends AbstractTableAction {
 
     private final static Logger log = LoggerFactory.getLogger(LightTableAction.class.getName());
 }
-/* @(#)LightTableAction.java */

@@ -11,7 +11,6 @@ import org.slf4j.LoggerFactory;
  * <P>
  * @author	Bob Jacobsen Copyright (C) 2003
  * @author	Kevin Dickerson Copyright (C) 2009
- * @version	$Revision$
  */
 public class ListedTableAction extends AbstractAction {
 

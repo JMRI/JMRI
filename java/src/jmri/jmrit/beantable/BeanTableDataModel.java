@@ -1,4 +1,3 @@
-// BeanTableDataModel.java
 package jmri.jmrit.beantable;
 
 import java.awt.Component;
@@ -50,15 +49,10 @@ import org.slf4j.LoggerFactory;
  *
  * @author	Bob Jacobsen Copyright (C) 2003
  * @author Dennis Miller Copyright (C) 2006
- * @version	$Revision$
  */
 abstract public class BeanTableDataModel extends javax.swing.table.AbstractTableModel
         implements PropertyChangeListener {
 
-    /**
-     *
-     */
-    private static final long serialVersionUID = 3276184372154591138L;
     static public final int SYSNAMECOL = 0;
     static public final int USERNAMECOL = 1;
     static public final int VALUECOL = 2;

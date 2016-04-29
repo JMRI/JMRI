@@ -1,4 +1,3 @@
-// BeanTablePane.java
 package jmri.jmrit.beantable;
 
 import java.awt.Component;
@@ -22,14 +21,9 @@ import jmri.util.com.sun.TableSorter;
  * invoke {@link #addToBottomBox} as needed.
  *
  * @author	Bob Jacobsen Copyright (C) 2003
- * @version	$Revision$
  */
 public class BeanTablePane extends jmri.util.swing.JmriPanel {
 
-    /**
-     *
-     */
-    private static final long serialVersionUID = 1172856759033682216L;
     BeanTableDataModel dataModel;
     JTable dataTable;
     JScrollPane dataScroll;
