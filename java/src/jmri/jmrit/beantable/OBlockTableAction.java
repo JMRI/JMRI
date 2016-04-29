@@ -20,14 +20,8 @@ import jmri.jmrit.beantable.oblock.TableFrames;
  * <P>
  *
  * @author	Pete Cressman (C) 2009, 2010
- * @version $Revision$
  */
 public class OBlockTableAction extends AbstractAction {
-
-    /**
-     *
-     */
-    private static final long serialVersionUID = 6331453045183182013L;
 
     public OBlockTableAction() {
         this(Bundle.getMessage("TitleOBlockTable"));

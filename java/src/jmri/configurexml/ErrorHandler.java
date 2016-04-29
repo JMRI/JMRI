@@ -7,7 +7,6 @@ import org.slf4j.LoggerFactory;
  * Default operation for reporting errors while loading.
  *
  * @author Bob Jacobsen Copyright (c) 2010
- * @version $Revision$
  */
 public class ErrorHandler {
 

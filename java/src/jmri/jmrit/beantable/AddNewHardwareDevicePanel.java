@@ -1,4 +1,3 @@
-// AddSensorPanel.java
 package jmri.jmrit.beantable;
 
 import java.awt.FlowLayout;
@@ -18,14 +17,8 @@ import javax.swing.JTextField;
  *
  * @author	Bob Jacobsen Copyright (C) 2009
  * @author Pete Cressman Copyright (C) 2010
- * @version $Revision$
  */
 public class AddNewHardwareDevicePanel extends jmri.util.swing.JmriPanel {
-
-    /**
-     *
-     */
-    private static final long serialVersionUID = -958394838638929630L;
 
     public AddNewHardwareDevicePanel(JTextField sysAddress, JTextField userName, JComboBox<String> prefixBox, JTextField endRange, JCheckBox addRange,
             String addButtonLabel, ActionListener okListener, ActionListener cancelListener, ActionListener rangeListener) {
@@ -127,5 +120,3 @@ public class AddNewHardwareDevicePanel extends jmri.util.swing.JmriPanel {
     JLabel userNameLabel = new JLabel(Bundle.getMessage("LabelUserName"));
     JLabel finishLabel = new JLabel(Bundle.getMessage("LabelNumberToAdd"));
 }
-
-/* @(#)AddNewHardwareDevicePanel.java */

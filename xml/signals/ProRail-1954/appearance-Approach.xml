@@ -35,27 +35,27 @@
       <show>lunar</show>
       <reference>Rule 210</reference>
       <imagelink type="large">../../../resources/icons/largeschematics/aspects/ProRail-1954/ProRail-VY4.gif</imagelink>
-      <imagelink type="small">../../../resources/icons/smallschematics/aspects/ProRail-1954/ProRail-vy4.gif</imagelink>
+      <imagelink type="small">../../../resources/icons/smallschematics/aspects/ProRail-1954/prorail-vy4.gif</imagelink>
     </appearance>
     <appearance>
       <aspectname>Approach</aspectname>
       <show>yellow</show>
       <reference>Rule 212</reference>
       <imagelink type="large">../../../resources/icons/largeschematics/aspects/ProRail-1954/ProRail-VY.gif</imagelink>
-      <imagelink type="small">../../../resources/icons/smallschematics/aspects/ProRail-1954/ProRail-vy.gif</imagelink>
+      <imagelink type="small">../../../resources/icons/smallschematics/aspects/ProRail-1954/prorail-vy.gif</imagelink>
     </appearance>
     <appearance>
       <aspectname>Approach Clear</aspectname>
       <show>green</show>
       <reference>Rule 217</reference>
       <imagelink type="large">../../../resources/icons/largeschematics/aspects/ProRail-1954/ProRail-VG.gif</imagelink>
-      <imagelink type="small">../../../resources/icons/smallschematics/aspects/ProRail-1954/ProRail-vg.gif</imagelink>
+      <imagelink type="small">../../../resources/icons/smallschematics/aspects/ProRail-1954/prorail-vg.gif</imagelink>
     </appearance>
     <appearance>
       <aspectname>Not Lit</aspectname>
       <show>dark</show>
       <imagelink type="large">../../../resources/icons/largeschematics/aspects/ProRail-1954/ProRail-V0.gif</imagelink>
-      <imagelink type="small">../../../resources/icons/smallschematics/aspects/ProRail-1954/ProRail-v0.gif</imagelink>
+      <imagelink type="small">../../../resources/icons/smallschematics/aspects/ProRail-1954/prorail-v0.gif</imagelink>
     </appearance>
   </appearances>
 
