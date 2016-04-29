@@ -1,4 +1,3 @@
-// BlockBossAction.java
 package jmri.jmrit.blockboss;
 
 import java.awt.event.ActionEvent;
@@ -9,7 +8,6 @@ import javax.swing.JFrame;
  * Swing action to create and show a "Simple Signal Logic" GUI panel.
  *
  * @author	Bob Jacobsen Copyright (C) 2003
- * @version $Revision$
  */
 public class BlockBossAction extends AbstractAction {
 
@@ -37,5 +35,3 @@ public class BlockBossAction extends AbstractAction {
         f.setVisible(true);
     }
 }
-
-/* @(#)BlockBossAction.java */

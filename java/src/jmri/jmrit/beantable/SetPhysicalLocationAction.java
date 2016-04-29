@@ -77,11 +77,6 @@ public class SetPhysicalLocationAction extends AbstractAction {
     private static class SetPhysicalLocationFrame extends OperationsFrame {
 
         /**
-         *
-         */
-        private static final long serialVersionUID = 6749008114407458542L;
-
-        /**
          * Frame Constructor
          */
         public SetPhysicalLocationFrame(Reporter reporter) {
