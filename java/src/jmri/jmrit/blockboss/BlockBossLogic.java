@@ -1,4 +1,3 @@
-// BlockBossLogic.java
 package jmri.jmrit.blockboss;
 
 import java.util.ArrayList;
@@ -114,7 +113,6 @@ import org.slf4j.LoggerFactory;
  * the green signal).
  *
  * @author	Bob Jacobsen Copyright (C) 2003, 2005
- * @version $Revision$
  *
  * Revisions to add facing point sensors, approach lighting, and check box to
  * limit speed. Dick Bronosn (RJB) 2006
@@ -1322,5 +1320,3 @@ public class BlockBossLogic extends Siglet implements java.beans.VetoableChangeL
 
     private final static Logger log = LoggerFactory.getLogger(BlockBossLogic.class.getName());
 }
-
-/* @(#)BlockBossLogic.java */
