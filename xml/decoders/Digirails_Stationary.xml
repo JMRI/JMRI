@@ -95,7 +95,7 @@ xsi:noNamespaceSchemaLocation="http://jmri.org/xml/schema/decoder.xsd" showEmpty
                 <tooltip>Read-Only, 42 = Digirails/Digikeijs</tooltip>
             </variable>
             <!-- CV29 via nmra include in line 79 -->
-            <variable item="Presets" CV="47" mask="XXXXXXVV" writeOnly="yes" default="0">
+            <variable item="Presets4018" CV="47" mask="XXXXXXVV" writeOnly="yes" default="0" include="4018">
                 <enumVal>
                     <enumChoice choice="0">
                         <choice>8x Solenoid Turnout</choice>
@@ -191,20 +191,52 @@ xsi:noNamespaceSchemaLocation="http://jmri.org/xml/schema/decoder.xsd" showEmpty
                 <tooltip xml:lang="nl">&lt;html&gt;Deze alleen schrijfbare CV stelt automatisch een aantal standaard toepassingen in:&lt;br&gt;0: 8x Wissel met spoelaandrijving&lt;br&gt;1: 16x permanent aan/uit schakelaar&lt;br&gt;2: 8x Tweelichtsein met fader effect&lt;br&gt;3: 8x AHOB&lt;br&gt;4: 2 groepen van 8x TL verlichtingseffect&lt;br&gt;5: 1 x 16 uitgangen met TL verl.effect&lt;br&gt;6: 8x Wisselmotor aansturing&lt;br&gt;7: 4x NS drielichtsein met cijferbak&lt;br&gt;8: 4x DB Hoofdsein&lt;br&gt;9: 4x DB Voorsein behorend bij hoofdsein&lt;br&gt;10: 2x Combinatie DB hoofdsein en DB voorsein&lt;br&gt;11: 4x DB Voorsein&lt;br&gt;12: 4x NMBS Sein&lt;br&gt;13: 8x Wisselmotor aansturing met tijdsbegrenzing&lt;br&gt;&lt;/html&gt;</tooltip>
                 <tooltip>&lt;html&gt;This write-only CV automatically sets a number of standard applications:&lt;br&gt;0: 8x Turnout with twin-coil motor&lt;br&gt;1: 16x permanent on/off switch&lt;br&gt;2: 8x two-light signal with fade effect&lt;br&gt;3: 8x AHOB&lt;br&gt;4: 2 groups with 8x Fluorescent lamp&lt;br&gt;5: 1 x 16 output with Fluorescent lamp&lt;br&gt;6: 8x Turnout motor control&lt;br&gt;7: 4x Dutch (Prorail 1854) three-light signal&lt;br&gt;8: 4x DB Main signal&lt;br&gt;9: 4x DB pre-signal associated with main signal&lt;br&gt;10: 2x Combination of DB Main signal and approach signal&lt;br&gt;11: 4x DB approach signal&lt;br&gt;12: 4x NMBS Main signal&lt;br&gt;13: 8x Turnout control with time limit&lt;br&gt;&lt;/html&gt;</tooltip>
             </variable>
-
-            <variable item="Dark Time" CV="107" default="70" comment="Dark Time">
-                <decVal min="1" max="255"/>
-                <label xml:lang="fr">Temps éteint</label>
-                <label xml:lang="de">Dunkelzeit (Deutsches Signalbild)</label>
-                <label xml:lang="nl">Donkertijd (Duits seinbeeld)</label>
-                <label>Dark time</label>
-                <tooltip xml:lang="fr">Temps éteint entre deux pulsions d'éclairage du signal</tooltip>
-                <tooltip xml:lang="de">Dunkelzeit zwischen den verschiedenen Signalübergängen</tooltip>
-                <tooltip xml:lang="nl">Donkertijd tussen de verschillende seinbeeld overgangen (duitse seinbeeld)</tooltip>
-                <tooltip>Dark time between signal transitions</tooltip>
+            <variable item="Presets4024" CV="47" mask="XXXXXXXV" writeOnly="yes" default="0" include="4024">
+                <enumVal>
+                    <enumChoice choice="0">
+                        <choice>4 servos (1-4) and 4 separate switching outputs (5-8)</choice>
+                        <choice xml:lang="fr">4 servos (1-4) et 4 sor es commutateurs séparées (5-8)</choice>
+                        <choice xml:lang="de">4 Servos (1-4) und 4 separate Schaltausgänge (5-8)</choice>
+                        <choice xml:lang="nl">4 Servo’s (1 t/m 4) en 4 aparte schakeluitgangen (5 t/m 8)</choice>
+                    </enumChoice>
+                    <enumChoice choice="1">
+                        <choice>4 servos (1-4) with connected switching outputs (1-4)</choice>
+                        <choice xml:lang="fr">4 servos (1-4) avec des sortiee commutateurs connectés (1-4)</choice>
+                        <choice xml:lang="de">4 Servos (1-4) mit verknüpften Schaltausgängen (1-4)</choice>
+                        <choice xml:lang="nl">4 Servo’s (1 t/m 4) met gekoppelde schakeluitgangen (1 t/m 4)</choice>
+                    </enumChoice>
+                    <enumChoice choice="2">
+                        <choice>4 servos with mass simulation (1-4) and 4 separate switching outputs (5-8)</choice>
+                        <choice xml:lang="fr">4 servos avec simulation de masse (1-4) et 4 sorties commutateurs séparées (5-8)</choice>
+                        <choice xml:lang="de">4 Servos mit Massensimulation (1-4) und 4 separate Schaltausgänge (5-8)</choice>
+                        <choice xml:lang="nl">4 Servo’s met massa simula e (1 t/m 4) en 4 aparte schakeluitgangen (5 t/m 8)</choice>
+                    </enumChoice>
+                    <enumChoice choice="3">
+                        <choice>Crossing with AHOB, 2 barriers and mass simulation</choice>
+                        <choice xml:lang="fr">Traversée avec AHOB, 2 barrières et simulation de masse</choice>
+                        <choice xml:lang="de">Übergang mit AHOB, 2 Schranken und Massensimulation</choice>
+                        <choice xml:lang="nl">Overweg met AHOB, 2 slagbomen en massasimulatie</choice>
+                    </enumChoice>
+                </enumVal>
+                <label xml:lang="fr">Préréglages</label>
+                <label xml:lang="de">Voreinstellungen</label>
+                <label xml:lang="nl">Voorinstellingen</label>
+                <label>Presets</label>                    
             </variable>
             
-            <variable item="Dim Value" CV="108" default="10" comment="Dim Value">
+            <variable item="Dark Time" CV="107" default="70" comment="Dark Time" include="4018">
+                <decVal min="1" max="255"/>
+                <label xml:lang="fr">Temps éteint</label>
+                <label xml:lang="de">Dunkelzeit</label>
+                <label xml:lang="nl">Donkertijd</label>
+                <label>Dark time</label>
+                <tooltip xml:lang="fr">Temps éteint entre deux pulsions d'éclairage du signal (Allemagne)</tooltip>
+                <tooltip xml:lang="de">Dunkelzeit zwischen den verschiedenen Signalübergängen (Deutsches Signalbild)</tooltip>
+                <tooltip xml:lang="nl">Donkertijd tussen de verschillende seinbeeld overgangen (Duits seinbeeld)</tooltip>
+                <tooltip>Dark time between signal transitions (German signal heads)</tooltip>
+            </variable>
+            
+            <variable item="Dim Value" CV="108" default="10" comment="Dim Value" include="4018">
                 <decVal min="1" max="15"/>
                 <label xml:lang="fr">Valeur Dimmer</label>
                 <label xml:lang="de">Dimmwert</label>
@@ -216,7 +248,7 @@ xsi:noNamespaceSchemaLocation="http://jmri.org/xml/schema/decoder.xsd" showEmpty
                 <tooltip>Value to dim intensity of signal (night mode)</tooltip>
             </variable>
             
-            <variable item="PWM period" CV="109" default="14" comment="PWM period">
+            <variable item="PWM period" CV="109" default="14" comment="PWM period" include="4018">
                 <decVal min="1" max="255"/>
                 <label xml:lang="fr">MLI-période</label>
                 <label xml:lang="de">PWM Periode</label>
@@ -228,7 +260,7 @@ xsi:noNamespaceSchemaLocation="http://jmri.org/xml/schema/decoder.xsd" showEmpty
                 <tooltip>The resolution used by the internal PWM to manage effect and dimming values</tooltip>
             </variable>
 
-            <variable item="Fade speed" CV="111" default="3" comment="Fade speed">
+            <variable item="Fade speed" CV="111" default="3" comment="Fade speed" include="4018">
                 <decVal min="1" max="255"/>
                 <label xml:lang="fr">Vitesse de fondu</label>
                 <label xml:lang="de">Fade-Geschwindigkeit</label>
@@ -252,8 +284,8 @@ xsi:noNamespaceSchemaLocation="http://jmri.org/xml/schema/decoder.xsd" showEmpty
                 <tooltip>The speed with which the outputs configured to flicker do so</tooltip>
             </variable>
 
-<!-- start of output configurations CV 113 - 128 -->
-            <variable CV="113" mask="XXXXXVVV" item="Light intensity Out 1" default="15" writeOnly="no" comment="Output 1" include="4018">
+<!-- start of DR4018 output configurations CV 113 - 128 -->
+            <variable CV="113" mask="XXXXVVVV" item="Light intensity Out 1" default="15" writeOnly="no" comment="Output 1" include="4018">
                 <decVal min="0" max="15"/>
                 <label xml:lang="fr">Intensité lumineuse</label>
                 <label xml:lang="de">Lichtintensität</label>
@@ -261,28 +293,28 @@ xsi:noNamespaceSchemaLocation="http://jmri.org/xml/schema/decoder.xsd" showEmpty
                 <label>Light intensity</label>
                 <tooltip>Controls how much Out 1 dims (0-dark to 15-max bright)</tooltip>
             </variable>
-            <variable CV="113" mask="XXXXVXXX" item="Fade in Fade out effect Out 1" default="0" writeOnly="no" include="4018">
+            <variable CV="113" mask="XXXVXXXX" item="Fade in Fade out effect Out 1" default="0" writeOnly="no" include="4018">
                 <xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
                 <label xml:lang="fr">Effet fondu ouv./ferm.</label>
                 <label xml:lang="de">Fade–in und Fade-out Effekt</label>
                 <label xml:lang="nl">Fade in/Fade out effect</label>
                 <label>Fade in/Fade out effect</label>
             </variable>
-            <variable CV="113" mask="XXXVXXXX" item="Flicker effect Out 1" default="0" writeOnly="no" include="4018">
+            <variable CV="113" mask="XXVXXXXX" item="Flicker effect Out 1" default="0" writeOnly="no" include="4018">
                 <xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
                 <label xml:lang="fr">Effet oscillation</label>
                 <label xml:lang="de">Flackereffekt</label>
                 <label xml:lang="nl">Knipper effect</label>
                 <label>Flicker effect</label>
             </variable>
-            <variable CV="113" mask="XXVXXXXX" item="Random light effect Out 1" default="0" writeOnly="no" include="4018">
+            <variable CV="113" mask="XVXXXXXX" item="Random light effect Out 1" default="0" writeOnly="no" include="4018">
                 <xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
                 <label xml:lang="fr">Allumage lumière aléatoire</label>
                 <label xml:lang="de">Willkürlich aufleuchtende Lampen</label>
                 <label xml:lang="nl">Willekeurig opstarten lampen</label>
                 <label>Random light effect</label>
             </variable>
-            <variable CV="113" mask="XVXXXXXX" item="Pulse on Out 1" default="0" include="4018">
+            <variable CV="113" mask="VXXXXXXX" item="Pulse on Out 1" default="0" include="4018">
                 <xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
                 <label xml:lang="fr">Impulsion á Sortie 1</label>
                 <label xml:lang="de">Puls auf Ausgang 1</label>
@@ -290,7 +322,7 @@ xsi:noNamespaceSchemaLocation="http://jmri.org/xml/schema/decoder.xsd" showEmpty
                 <label>Pulse on Out 1</label>
             </variable>
 <!-- repeat for CV 114 - 128 -->
-            <variable CV="114" mask="XXXXXVVV" item="Light intensity Out 2" default="15" writeOnly="no" comment="Output 2" include="4018">
+            <variable CV="114" mask="XXXXVVVV" item="Light intensity Out 2" default="15" writeOnly="no" comment="Output 2" include="4018">
                 <decVal min="0" max="15"/>
                 <label xml:lang="fr">Intensité lumineuse</label>
                 <label xml:lang="de">Lichtintensität</label>
@@ -298,39 +330,236 @@ xsi:noNamespaceSchemaLocation="http://jmri.org/xml/schema/decoder.xsd" showEmpty
                 <label>Light intensity</label>
                 <tooltip>Controls how much Out 2 dims (0-dark to 15-max bright)</tooltip>
             </variable>
-            <variable CV="114" mask="XXXXVXXX" item="Fade in Fade out effect Out 2" default="0" writeOnly="no" include="4018">
+            <variable CV="114" mask="XXXVXXXX" item="Fade in Fade out effect Out 2" default="0" writeOnly="no" include="4018">
                 <xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
                 <label xml:lang="fr">Effet fondu ouv./ferm.</label>
                 <label xml:lang="de">Fade–in und Fade-out Effekt</label>
                 <label xml:lang="nl">Fade in/Fade out effect</label>
                 <label>Fade in/Fade out effect</label>
             </variable>
-            <variable CV="114" mask="XXXVXXXX" item="Flicker effect Out 2" default="0" writeOnly="no" include="4018">
+            <variable CV="114" mask="XXVXXXXX" item="Flicker effect Out 2" default="0" writeOnly="no" include="4018">
                 <xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
                 <label xml:lang="fr">Effet oscillation</label>
                 <label xml:lang="de">Flackereffekt</label>
                 <label xml:lang="nl">Knipper effect</label>
                 <label>Flicker effect</label>
             </variable>
-            <variable CV="114" mask="XXVXXXXX" item="Random light effect Out 2" default="0" writeOnly="no" include="4018">
+            <variable CV="114" mask="XVXXXXXX" item="Random light effect Out 2" default="0" writeOnly="no" include="4018">
                 <xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
                 <label xml:lang="fr">Allumage lumière aléatoire</label>
                 <label xml:lang="de">Willkürlich aufleuchtende Lampen</label>
                 <label xml:lang="nl">Willekeurig opstarten lampen</label>
                 <label>Random light effect</label>
             </variable>
-            <variable CV="114" mask="XVXXXXXX" item="Pulse on Out 2" default="0" include="4018">
+            <variable CV="114" mask="VXXXXXXX" item="Pulse on Out 2" default="0" include="4018">
                 <xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
                 <label xml:lang="fr">Impulsion á Sortie 2</label>
                 <label xml:lang="de">Puls auf Ausgang 2</label>
                 <label xml:lang="nl">Puls op Uitgang 2</label>
                 <label>Pulse on Out 2</label>
             </variable>
+            
+<!-- start of DR4024 servo configurations CV 113 - 116 -->
+            <variable CV="113" mask="XXXXVVVV" item="Servo 1 Step Size" default="2" writeOnly="no" comment="Output 1" include="4024">
+                <decVal min="0" max="15"/>
+                <label xml:lang="fr">Le pas</label>
+                <label xml:lang="de">Schrittgröße</label>
+                <label xml:lang="nl">Stapgrootte</label>
+                <label>Step size</label>
+                <tooltip>Value 15 is the fastest; value 0 is the slowest.</tooltip>
+            </variable>
+            <variable CV="113" mask="VVVVXXXX" item="Servo 1 Step Speed" default="0" writeOnly="no" include="4024">
+                <decVal min="0" max="16"/>
+                <label xml:lang="fr">Accélérateur</label>
+                <label xml:lang="de">Schrittgeschwindigkeit</label>
+                <label xml:lang="nl">Stapsnelheid</label>
+                <label>Step speed</label>
+                <tooltip>&lt;html&gt;Value 15 is the smallest and value 0 is the largest.&lt;br&gt;
+                Value 0 corresponds to 50 steps per second. 1 = 25/s, 2 = 12/s, 3 = 5/s, 4 = 4/s etc. Max value 15 = 1 step/second.&lt;br&gt;
+                Value 16 in combination with bits 0-3 set to 0 causes the servo to switch between&lt;br&gt;
+                the two extreme positions in 126 seconds.&lt;/html&gt;</tooltip>
+            </variable>
+            <variable CV="114" mask="XXXXVVVV" item="Servo 2 Step Size" default="2" writeOnly="no" comment="Output 1" include="4024">
+                <decVal min="0" max="15"/>
+                <label xml:lang="fr">Le pas</label>
+                <label xml:lang="de">Schrittgröße</label>
+                <label xml:lang="nl">Stapgrootte</label>
+                <label>Step size</label>
+                <tooltip>Value 15 is the fastest; value 0 is the slowest.</tooltip>
+            </variable>
+            <variable CV="114" mask="VVVVXXXX" item="Servo 2 Step Speed" default="0" writeOnly="no" include="4024">
+                <decVal min="0" max="16"/>
+                <label xml:lang="fr">Accélérateur</label>
+                <label xml:lang="de">Schrittgeschwindigkeit</label>
+                <label xml:lang="nl">Stapsnelheid</label>
+                <label>Step speed</label>
+                <tooltip>&lt;html&gt;Value 15 is the smallest; value 0 is the largest.&lt;br&gt;
+                Value 0 corresponds to 50 steps per second. 1 = 25/s, 2 = 12/s, 3 = 5/s, 4 = 4/s etc. Max value 15 = 1 step/second.&lt;br&gt;
+                Value 16 in combination with bits 0-3 set to 0 causes the servo to switch between&lt;br&gt;
+                the two extreme positions in 126 seconds.&lt;/html&gt;</tooltip>
+            </variable>
+            <variable CV="115" mask="XXXXVVVV" item="Servo 3 Step Size" default="2" writeOnly="no" comment="Output 1" include="4024">
+                <decVal min="0" max="15"/>
+                <label xml:lang="fr">Le pas</label>
+                <label xml:lang="de">Schrittgröße</label>
+                <label xml:lang="nl">Stapgrootte</label>
+                <label>Step size</label>
+                <tooltip>Value 15 is the fastest; value 0 is the slowest.</tooltip>
+            </variable>
+            <variable CV="115" mask="VVVVXXXX" item="Servo 3 Step Speed" default="0" writeOnly="no" include="4024">
+                <decVal min="0" max="16"/>
+                <label xml:lang="fr">Accélérateur</label>
+                <label xml:lang="de">Schrittgeschwindigkeit</label>
+                <label xml:lang="nl">Stapsnelheid</label>
+                <label>Step speed</label>
+                <tooltip>&lt;html&gt;Value 15 is the smallest; value 0 is the largest.&lt;br&gt;
+                Value 0 corresponds to 50 steps per second. 1 = 25/s, 2 = 12/s, 3 = 5/s, 4 = 4/s etc. Max value 15 = 1 step/second.&lt;br&gt;
+                Value 16 in combination with bits 0-3 set to 0 causes the servo to switch between&lt;br&gt;
+                the two extreme positions in 126 seconds.&lt;/html&gt;</tooltip>
+            </variable>
+            <variable CV="116" mask="XXXXVVVV" item="Servo 4 Step Size" default="2" writeOnly="no" comment="Output 1" include="4024">
+                <decVal min="0" max="15"/>
+                <label xml:lang="fr">Le pas</label>
+                <label xml:lang="de">Schrittgröße</label>
+                <label xml:lang="nl">Stapgrootte</label>
+                <label>Step size</label>
+                <tooltip>Value 15 is the fastest; value 0 is the slowest.</tooltip>
+            </variable>
+            <variable CV="116" mask="VVVVXXXX" item="Servo 4 Step Speed" default="0" writeOnly="no" include="4024">
+                <decVal min="0" max="16"/>
+                <label xml:lang="fr">Accélérateur</label>
+                <label xml:lang="de">Schrittgeschwindigkeit</label>
+                <label xml:lang="nl">Stapsnelheid</label>
+                <label>Step speed</label>
+                <tooltip>&lt;html&gt;Value 15 is the smallest; value 0 is the largest.&lt;br&gt;
+                Value 0 corresponds to 50 steps per second. 1 = 25/s, 2 = 12/s, 3 = 5/s, 4 = 4/s etc. Max value 15 = 1 step/second.&lt;br&gt;
+                Value 16 in combination with bits 0-3 set to 0 causes the servo to switch between&lt;br&gt;
+                the two extreme positions in 126 seconds.&lt;/html&gt;</tooltip>
+            </variable>
+            
+<!-- start of DR4024 output configurations CV 117 - 120 -->
+            <variable CV="117" item="Output 5" default="0" include="4024">
+                <decVal min="0" max="255"/>
+                <label>CV117</label>
+            </variable>
+                <variable CV="117" mask="XXXXXXXV" item="Output 5 Independent" default="0" writeOnly="no"  include="4024">
+                <xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
+                <label xml:lang="fr">Actionne indépendamment du servo</label>
+                <label xml:lang="de">Schaltet unabhängig von Servo</label>
+                <label xml:lang="nl">Onafhankelijk van servo</label>
+                <label>Switch independently from servo</label>
+                <tooltip>Choose just 1 option</tooltip>
+            </variable>
+            <variable CV="117" mask="XXXXXXVX" item="Output 5 ON A" default="0" writeOnly="no" include="4024">
+                <xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
+                <label xml:lang="fr">ON lorsque que le servo 1 atteint la position A</label>
+                <label xml:lang="de">EIN wenn Servo 1 Position A erreicht</label>
+                <label xml:lang="nl">AAN als Servo 1 positie A bereikt</label>
+                <label>ON when Servo 1 reaches position A</label>
+            </variable>
+            <variable CV="117" mask="XXXXXVXX" item="Output 5 ON B" default="0" writeOnly="no" include="4024">
+                <xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
+                <label xml:lang="fr">ON lorsque que le servo 1 atteint la position B</label>
+                <label xml:lang="de">EIN wenn Servo 1 Position B erreicht</label>
+                <label xml:lang="nl">AAN als Servo 1 positie B bereikt</label>
+                <label>ON when Servo 1 reaches position B</label>
+            </variable>
+            <variable CV="117" mask="XXXXVXXX" item="Output 5 ON AB" default="0" writeOnly="no" include="4024">
+                <xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
+                <label xml:lang="fr">ON lorsque que le servo 1 est entre A et B</label>
+                <label xml:lang="de">EIN wenn Servo 1 zwischen A und B</label>
+                <label xml:lang="nl">AAN als Servo 1 tussen A en B</label>
+                <label>ON when Servo 1 midway between A and B</label>
+            </variable>
+            <variable CV="117" mask="VXXXXXXX" item="Output 5 Flashing" default="0" include="4024">
+                <xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
+                <label xml:lang="fr">Clignotement</label>
+                <label xml:lang="de">Blinkend</label>
+                <label xml:lang="nl">Knipperen</label>
+                <label>Flashing</label>
+                <tooltip>Output flickers with the frequency set in CV 112 (tab Module)</tooltip>
+            </variable>
+<!-- repeat for CV 118 - 120 -->
+            <variable CV="118" item="Output 6" default="0" include="4024">
+                <decVal min="0" max="255"/>
+                <label>CV118</label>
+            </variable>
+            <variable CV="118" mask="XXXXXXXV" item="Output 6 Independent" default="0" writeOnly="no"  include="4024">
+                <xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
+                <label xml:lang="fr">Actionne indépendamment du servo</label>
+                <label xml:lang="de">Schaltet unabhängig von Servo</label>
+                <label xml:lang="nl">Onafhankelijk van servo</label>
+                <label>Switch independently from servo</label>
+                <tooltip>Choose just 1 option</tooltip>
+            </variable>
+            <variable CV="118" mask="XXXXXXVX" item="Output 6 ON A" default="0" writeOnly="no" include="4024">
+                <xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
+                <label xml:lang="fr">ON lorsque que le servo 2 atteint la position A</label>
+                <label xml:lang="de">EIN wenn Servo 2 Position A erreicht</label>
+                <label xml:lang="nl">AAN als Servo 2 positie A bereikt</label>
+                <label>ON when Servo 2 reaches position A</label>
+            </variable>
+            <variable CV="118" mask="XXXXXVXX" item="Output 6 ON B" default="0" writeOnly="no" include="4024">
+                <xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
+                <label xml:lang="fr">ON lorsque que le servo 2 atteint la position B</label>
+                <label xml:lang="de">EIN wenn Servo 2 Position B erreicht</label>
+                <label xml:lang="nl">AAN als Servo 2 positie B bereikt</label>
+                <label>ON when Servo 2 reaches position B</label>
+            </variable>
+            <variable CV="118" mask="XXXXVXXX" item="Output 6 ON AB" default="0" writeOnly="no" include="4024">
+                <xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
+                <label xml:lang="fr">ON lorsque que le servo 2 est entre A et B</label>
+                <label xml:lang="de">EIN wenn Servo 2 zwischen A und B</label>
+                <label xml:lang="nl">AAN als Servo 2 tussen A en B</label>
+                <label>ON when Servo 2 midway between A and B</label>
+            </variable>
+            <variable CV="118" mask="VXXXXXXX" item="Output 6 Flashing" default="0" include="4024">
+                <xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
+                <label xml:lang="fr">Clignotement</label>
+                <label xml:lang="de">Blinkend</label>
+                <label xml:lang="nl">Knipperen</label>
+                <label>Flashing</label>
+                <tooltip>Output flickers with the frequency set in CV 112 (tab Module)</tooltip>
+            </variable>
+            
+<!-- start of DR4024 servo configurations CV 137 - 140 -->
+            <variable CV="137" item="Servo 1 Mass Simulation" default="0" writeOnly="no" include="4024">
+                <decVal min="0" max="63"/>
+                <label xml:lang="fr">Masse</label>
+                <label xml:lang="de">Masse</label>
+                <label xml:lang="nl">Massa</label>
+                <label>Mass</label>
+                <tooltip>&lt;html&gt;Mass simulation: if the value is not equal to 0,&lt;br&gt;the servo will alternately add and subtract this value at the end position,&lt;br&gt;whereby the value is also decreased by 1 each time, until the value reaches 0.&lt;/html&gt;</tooltip>
+            </variable>
+            <variable CV="138" item="Servo 2 Mass Simulation" default="0" writeOnly="no" include="4024">
+                <decVal min="0" max="63"/>
+                <label xml:lang="fr">Masse</label>
+                <label xml:lang="de">Masse</label>
+                <label xml:lang="nl">Massa</label>
+                <label>Mass</label>
+                <tooltip>&lt;html&gt;Mass simulation: if the value is not equal to 0,&lt;br&gt;the servo will alternately add and subtract this value at the end position,&lt;br&gt;whereby the value is also decreased by 1 each time, until the value reaches 0.&lt;/html&gt;</tooltip>
+            </variable>
+            <variable CV="139" item="Servo 3 Mass Simulation" default="0" writeOnly="no" include="4024">
+                <decVal min="0" max="63"/>
+                <label xml:lang="fr">Masse</label>
+                <label xml:lang="de">Masse</label>
+                <label xml:lang="nl">Massa</label>
+                <label>Mass</label>
+                <tooltip>&lt;html&gt;Mass simulation: if the value is not equal to 0,&lt;br&gt;the servo will alternately add and subtract this value at the end position,&lt;br&gt;whereby the value is also decreased by 1 each time, until the value reaches 0.&lt;/html&gt;</tooltip>
+            </variable>
+            <variable CV="140" item="Servo 4 Mass Simulation" default="0" writeOnly="no" include="4024">
+                <decVal min="0" max="63"/>
+                <label xml:lang="fr">Masse</label>
+                <label xml:lang="de">Masse</label>
+                <label xml:lang="nl">Massa</label>
+                <label>Mass</label>
+                <tooltip>&lt;html&gt;Mass simulation: if the value is not equal to 0,&lt;br&gt;the servo will alternately add and subtract this value at the end position,&lt;br&gt;whereby the value is also decreased by 1 each time, until the value reaches 0.&lt;/html&gt;</tooltip>
+            </variable>
 
 <!-- end of output configurations -->
 
 <!-- signal mast configurations -->
-            <variable item="Signal 1 configuration" CV="131" default="0" comment="Signal 1, configuration OUT 1 - 4">
+            <variable item="Signal 1 configuration" CV="131" default="0" comment="Signal 1, configuration OUT 1 - 4" include="4018">
                 <enumVal>
                     <enumChoice choice="0">
                         <choice xml:lang="fr">Pas de signal</choice>
@@ -379,7 +608,7 @@ xsi:noNamespaceSchemaLocation="http://jmri.org/xml/schema/decoder.xsd" showEmpty
                 <tooltip>&lt;html&gt;If these CVs contain a value equal to 0&lt;br&gt;all outputs will switch according to the signal rules.&lt;br&gt;The other CVs that normally control the outputs will be deactivated.&lt;br&gt;&lt;/html&gt;</tooltip>
             </variable>
 <!-- repeat for CV 132 - 134 -->
-            <variable item="Signal 2 configuration" CV="132" default="0" comment="Signal 2, configuration OUT 5 - 8">
+            <variable item="Signal 2 configuration" CV="132" default="0" comment="Signal 2, configuration OUT 5 - 8" include="4018">
                 <enumVal>
                     <enumChoice choice="0">
                         <choice xml:lang="fr">Pas de signal</choice>
@@ -465,21 +694,19 @@ xsi:noNamespaceSchemaLocation="http://jmri.org/xml/schema/decoder.xsd" showEmpty
     </decoder>
 
     <pane>
-        <name>Module Configuration</name>
-        <name xml:lang="fr">Configuration du Module</name>
-        <name xml:lang="de">Modulkonfiguration</name>
-        <name xml:lang="nl">Moduleconfiguratie</name>
+        <name>Module</name>
+        <name xml:lang="fr">Module</name>
+        <name xml:lang="de">Modul</name>
+        <name xml:lang="nl">Module</name>
         <column>
                  <label>
                      <text>Settings for Module</text>
                      <text xml:lang="nl">Instellingen voor gehele module</text>
                  </label>
                  <separator/>
-                <display item="Presets" layout="above"/>
-                <label>
-                    <text> </text>
-                </label>
-        </column>
+                <display item="Presets4018" layout="above" include="4018" />
+                <display item="Presets4024" layout="above" include="4024" />
+                </column>
         <row>
             <column>
                 <display item="Dim Value" />
@@ -504,10 +731,103 @@ xsi:noNamespaceSchemaLocation="http://jmri.org/xml/schema/decoder.xsd" showEmpty
     </pane>
 
     <pane include="4018">
-        <name>Output Configuration</name>
-        <name xml:lang="fr">Configuration des Sorties</name>
-        <name xml:lang="de">Ausgangskonfiguration</name>
-        <name xml:lang="nl">Configuratie per Uitgang</name>
+        <name>Signals</name>
+        <name xml:lang="fr">Signales</name>
+        <name xml:lang="de">Signale</name>
+        <name xml:lang="nl">Seinen</name>
+        <column>
+                 <label>
+                     <text>Signal Group Presets</text>
+                     <text xml:lang="nl">Sein Voorinstellingen</text>
+                 </label>
+                 <separator/>
+                    <row>
+                        <display item="Signal 1 configuration" layout="above"/>
+                   </row>
+                 <separator/>
+                 <row>
+                        <display item="Signal 2 configuration" layout="above"/>
+                 </row>
+        </column>
+    </pane>
+
+    <pane include="4024">
+        <name>Servos</name>
+        <name xml:lang="fr">Servos</name>
+        <name xml:lang="de">Servos</name>
+        <name xml:lang="nl">Servo's</name>
+        <column>
+                 <label>
+                     <text>Servo 1</text>
+                 </label>
+                 <row>
+                        <display item="Servo 1 Step Size" />
+                        <display item="Servo 1 Step Size" label="" format="hslider" />
+                 </row>
+                 <row>
+                        <display item="Servo 1 Step Speed" />
+                        <display item="Servo 1 Step Speed" label="" format="hslider" />
+                 </row>
+                 <row>
+                        <display item="Servo 1 Mass Simulation" />
+                        <display item="Servo 1 Mass Simulation" label="" format="hslider" />
+                 </row>
+                 <separator/>
+                 <label>
+                     <text>Servo 2</text>
+                 </label>
+                 <row>
+                        <display item="Servo 2 Step Size" />
+                        <display item="Servo 2 Step Size" label="" format="hslider" />
+                 </row>
+                 <row>
+                        <display item="Servo 2 Step Speed" />
+                        <display item="Servo 2 Step Speed" label="" format="hslider" />
+                 </row>
+                 <row>
+                        <display item="Servo 2 Mass Simulation" />
+                        <display item="Servo 2 Mass Simulation" label="" format="hslider" />
+                 </row>
+                 <separator/>
+                 <label>
+                     <text>Servo 3</text>
+                 </label>
+                 <row>
+                        <display item="Servo 3 Step Size" />
+                        <display item="Servo 3 Step Size" label="" format="hslider" />
+                 </row>
+                 <row>
+                        <display item="Servo 3 Step Speed" />
+                        <display item="Servo 3 Step Speed" label="" format="hslider" />
+                 </row>
+                 <row>
+                        <display item="Servo 3 Mass Simulation" />
+                        <display item="Servo 3 Mass Simulation" label="" format="hslider" />
+                 </row>
+                 <separator/>
+                 <label>
+                     <text>Servo 4</text>
+                 </label>
+                 <row>
+                        <display item="Servo 4 Step Size" />
+                        <display item="Servo 4 Step Size" label="" format="hslider" />
+                 </row>
+                 <row>
+                        <display item="Servo 4 Step Speed" />
+                        <display item="Servo 4 Step Speed" label="" format="hslider" />
+                 </row>
+                 <row>
+                        <display item="Servo 4 Mass Simulation" />
+                        <display item="Servo 4 Mass Simulation" label="" format="hslider" />
+                 </row>
+        </column>
+    </pane>
+
+    <pane include="4018">
+        <name>Outputs</name>
+        <name xml:lang="fr">Sorties</name>
+        <name xml:lang="de">Ausgänge</name>
+        <name xml:lang="nl">Uitgangen</name>
             <row>
                  <column>
                         <label>
@@ -527,12 +847,9 @@ xsi:noNamespaceSchemaLocation="http://jmri.org/xml/schema/decoder.xsd" showEmpty
                             <display item="Pulse Duration Out 1" tooltip="" />
                             <display item="Pulse Duration Out 1" label="" format="hslider" />
                         </row>
-                   <row>
-                        <display item="Signal 1 configuration" layout="above"/>
-                   </row>
                     <separator/>
             </column>
-
+            <separator/>
             <column>
                         <label>
                             <text>Output 2 Configuration</text>
@@ -551,14 +868,51 @@ xsi:noNamespaceSchemaLocation="http://jmri.org/xml/schema/decoder.xsd" showEmpty
                             <display item="Pulse Duration Out 2" tooltip="" />
                             <display item="Pulse Duration Out 2" label="" format="hslider" />
                         </row>
-                   <row>
-                        <display item="Signal 2 configuration" layout="above"/>
-                   </row>
                     <separator/>
                 </column>
             </row>
             <!-- more Outputs -->
 
     </pane>
-    
+
+    <pane include="4024">
+        <name>Outputs</name>
+        <name xml:lang="fr">Sorties</name>
+        <name xml:lang="de">Ausgänge</name>
+        <name xml:lang="nl">Uitgangen</name>
+            <row>
+                 <column>
+                        <label>
+                            <text>Output 5 Configuration</text>
+                            <text xml:lang="nl">Uitgang 5 Configuratie</text>
+                        </label>
+                        <separator/>
+                        <display item="Output 5"/>
+                        <display item="Output 5 Independent" format="checkbox"/>
+                        <display item="Output 5 ON A" format="checkbox" />
+                        <display item="Output 5 ON B" format="checkbox" />
+                        <display item="Output 5 ON AB" format="checkbox" />
+                        <display item="Output 5 Flashing" format="checkbox" />
+                    <separator/>
+                 </column>
+                 <separator/>
+                 <column>
+                        <label>
+                            <text>Output 6 Configuration</text>
+                            <text xml:lang="nl">Uitgang 6 Configuratie</text>
+                        </label>
+                        <separator/>
+                        <display item="Output 6"/>
+                        <display item="Output 6 Independent" format="checkbox"/>
+                        <display item="Output 6 ON A" format="checkbox" />
+                        <display item="Output 6 ON B" format="checkbox" />
+                        <display item="Output 6 ON AB" format="checkbox" />
+                        <display item="Output 6 Flashing" format="checkbox" />
+                    <separator/>
+                </column>
+            </row>
+            <!-- more Outputs -->
+
+    </pane>
+        
 </decoder-config>
