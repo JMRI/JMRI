@@ -66,7 +66,7 @@ abstract public class SystemConnectionMemo {
 //             addUserName("Internal");
 //             addSystemPrefix("I");
 //             initialised = true;
-        }
+//        }
     }
 
     /**
