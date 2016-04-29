@@ -1,4 +1,3 @@
-// AutomatSummary.java
 package jmri.jmrit.automat;
 
 import java.util.ArrayList;
@@ -13,7 +12,6 @@ import java.util.ArrayList;
  * notify it's own listeners.
  *
  * @author	Bob Jacobsen Copyright (C) 2004, 2007
- * @version $Revision$
  */
 public class AutomatSummary {
 
@@ -150,5 +148,3 @@ public class AutomatSummary {
 
     }
 }
-
-/* @(#)AutomatSummary.java */
