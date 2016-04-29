@@ -205,12 +205,13 @@ public class JUnitUtil {
         // now done automatically by InstanceManager's autoinit
         jmri.InstanceManager.sensorManagerInstance();
         InternalSensorManager.setDefaultStateForNewSensors(jmri.Sensor.UNKNOWN);
-
     }
 
     public static void initRouteManager() {
         // routes provide sensors, so ensure the sensor manager is initialized
+        // routes need turnouts, so ensure the turnout manager is initialized
         JUnitUtil.initInternalSensorManager();
+        JUnitUtil.initInternalTurnoutManager();
         InstanceManager.getDefault(RouteManager.class);
     }
     
