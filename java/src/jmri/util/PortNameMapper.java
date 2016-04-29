@@ -1,8 +1,7 @@
 // PortNameMapper.java
 package jmri.util;
 
-import at.jta.Key;
-import at.jta.Regor;
+import at.jta.*;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -71,7 +70,7 @@ public class PortNameMapper {
             getDetailsFromWinRegistry("SYSTEM\\CurrentControlSet\\Enum\\PCI\\", reg);
             //some hardware devices are located here
             getDetailsFromWinRegistry("SYSTEM\\CurrentControlSet\\Enum\\ACPI\\", reg);
-        } catch (Exception e) {
+        } catch (RegistryErrorException e) {
             e.printStackTrace();
         }
 
