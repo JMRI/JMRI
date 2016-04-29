@@ -4,7 +4,6 @@ package jmri.configurexml;
  * Migration stand-in for {@link apps.configurexml.GuiLafConfigPaneXml}
  *
  * @author Bob Jacobsen Copyright: Copyright (c) 2010
- * @version $Revision$
  * @deprecated 2.9.5
  */
 @Deprecated

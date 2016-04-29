@@ -5,7 +5,6 @@ package jmri.configurexml;
  * 2.8 files) can still be read by deferring to the present class.
  *
  * @author Bob Jacobsen Copyright: Copyright (c) 2009
- * @version $Revision$
  * @deprecated 2.7.8
  */
 @Deprecated

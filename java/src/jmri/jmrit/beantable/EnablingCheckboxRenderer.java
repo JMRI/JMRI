@@ -13,14 +13,8 @@ import javax.swing.table.TableCellRenderer;
  * behavior more in line with user expectations.
  *
  * @author Bob Jacobsen
- * @version $Revision$
  */
 public class EnablingCheckboxRenderer extends JCheckBox implements TableCellRenderer {
-
-    /**
-     *
-     */
-    private static final long serialVersionUID = 294261257192050582L;
 
     public EnablingCheckboxRenderer() {
         super();

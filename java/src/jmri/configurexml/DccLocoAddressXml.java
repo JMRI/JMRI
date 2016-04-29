@@ -10,7 +10,6 @@ import org.slf4j.LoggerFactory;
  * Handle XML configuration for DccLocoAddress objects.
  *
  * @author Bob Jacobsen Copyright: Copyright (c) 2005
- * @version $Revision$
  */
 public class DccLocoAddressXml extends jmri.configurexml.AbstractXmlAdapter {
 
