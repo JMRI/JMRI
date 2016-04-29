@@ -170,7 +170,7 @@ public class SimpleTimebaseXml extends jmri.configurexml.AbstractXmlAdapter {
 
     // Conversion format for dates created by Java Date.toString().
     // The Locale needs to be always US, irrelevant from computer's and program's settings!
-    static final SimpleDateFormat format = new SimpleDateFormat("EEE MMM dd HH:mm:ss zzz yyyy", Locale.US);
+    final SimpleDateFormat format = new SimpleDateFormat("EEE MMM dd HH:mm:ss zzz yyyy", Locale.US);
 
     /**
      * Update static data from XML file
