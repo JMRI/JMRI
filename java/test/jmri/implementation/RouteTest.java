@@ -25,7 +25,6 @@ public class RouteTest extends TestCase {
     /**
      * The following equalities are needed so that old files can be read
      */
-    @SuppressWarnings("all")
     public void testRouteAndTurnoutConstants() {
         Assert.assertTrue("CLOSED is ONCLOSED", Turnout.CLOSED == Route.ONCLOSED);
         Assert.assertTrue("THROWN is ONTHROWN", Turnout.THROWN == Route.ONTHROWN);

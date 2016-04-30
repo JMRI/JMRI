@@ -1063,7 +1063,7 @@ public class ClockMonPanel extends jmri.jmrix.nce.swing.NcePanel implements NceP
                     while (priorOffsetErrors.size() >= MAX_ERROR_ARRAY) {
                         priorOffsetErrors.remove(0);
                     }
-                    priorOffsetErrors.add(new Double(diffTime));
+                    priorOffsetErrors.add(Double.valueOf(diffTime));
                     recomputeOffset();
                     if (log.isDebugEnabled() && extraDebug) {
                         log.debug("syncState compute offset. NCE: "

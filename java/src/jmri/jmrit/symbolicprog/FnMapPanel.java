@@ -211,7 +211,7 @@ public class FnMapPanel extends JPanel {
                                 // this really would be better fixed in EnumVariableValue
                                 // done here to avoid side effects elsewhere
                                 String displayFormat = "checkbox";
-                                if (((var.getMask().replace("X", "")).length()) != 1) {
+                                if ((var.getMask() != null) && (((var.getMask().replace("X", "")).length()) != 1)) {
                                     displayFormat = "";
                                 }
                                 JComponent j = (JComponent) (_varModel.getRep(iVar, displayFormat));

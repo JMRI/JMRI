@@ -34,8 +34,6 @@ import static jmri.jmris.json.JSON.PANELS;
 import static jmri.jmris.json.JSON.RAILROAD;
 import static jmri.jmris.json.JSON.REPORTER;
 import static jmri.jmris.json.JSON.REPORTERS;
-import static jmri.jmris.json.JSON.ROUTE;
-import static jmri.jmris.json.JSON.ROUTES;
 import static jmri.jmris.json.JSON.SENSOR;
 import static jmri.jmris.json.JSON.SENSORS;
 import static jmri.jmris.json.JSON.SIGNAL_HEAD;
@@ -195,9 +193,6 @@ public class JsonServlet extends WebSocketServlet {
                         case REPORTERS:
                             reply = JsonUtil.getReporters(request.getLocale());
                             break;
-                        case ROUTES:
-                            reply = JsonUtil.getRoutes(request.getLocale());
-                            break;
                         case SENSORS:
                             reply = JsonUtil.getSensors(request.getLocale());
                             break;
@@ -273,9 +268,6 @@ public class JsonServlet extends WebSocketServlet {
                             break;
                         case REPORTER:
                             reply = JsonUtil.getReporter(request.getLocale(), name);
-                            break;
-                        case ROUTE:
-                            reply = JsonUtil.getRoute(request.getLocale(), name);
                             break;
                         case SENSOR:
                             reply = JsonUtil.getSensor(request.getLocale(), name);
@@ -393,10 +385,6 @@ public class JsonServlet extends WebSocketServlet {
                         case REPORTER:
                             JsonUtil.setReporter(request.getLocale(), name, data);
                             reply = JsonUtil.getReporter(request.getLocale(), name);
-                            break;
-                        case ROUTE:
-                            JsonUtil.setRoute(request.getLocale(), name, data);
-                            reply = JsonUtil.getRoute(request.getLocale(), name);
                             break;
                         case SENSOR:
                             JsonUtil.setSensor(request.getLocale(), name, data);

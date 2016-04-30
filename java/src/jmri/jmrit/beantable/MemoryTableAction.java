@@ -1,4 +1,3 @@
-// MemoryTableAction.java
 package jmri.jmrit.beantable;
 
 import java.awt.event.ActionEvent;
@@ -22,14 +21,8 @@ import org.slf4j.LoggerFactory;
  * Swing action to create and register a MemoryTable GUI.
  *
  * @author	Bob Jacobsen Copyright (C) 2003
- * @version $Revision$
  */
 public class MemoryTableAction extends AbstractTableAction {
-
-    /**
-     *
-     */
-    private static final long serialVersionUID = -6680411522071265325L;
 
     /**
      * Create an action with a specific title.
@@ -59,10 +52,6 @@ public class MemoryTableAction extends AbstractTableAction {
      */
     protected void createModel() {
         m = new BeanTableDataModel() {
-            /**
-             *
-             */
-            private static final long serialVersionUID = -7916653024701722253L;
 
             public String getValue(String name) {
                 Memory mem = InstanceManager.memoryManagerInstance().getBySystemName(name);
@@ -277,5 +266,3 @@ public class MemoryTableAction extends AbstractTableAction {
 
     private final static Logger log = LoggerFactory.getLogger(MemoryTableAction.class.getName());
 }
-
-/* @(#)MemoryTableAction.java */

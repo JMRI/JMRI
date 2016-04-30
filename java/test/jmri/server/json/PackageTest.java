@@ -29,6 +29,7 @@ public class PackageTest extends TestCase {
         suite.addTest(jmri.server.json.memory.PackageTest.suite());
         suite.addTest(jmri.server.json.power.PackageTest.suite());
         suite.addTest(jmri.server.json.roster.PackageTest.suite());
+        suite.addTest(jmri.server.json.route.PackageTest.suite());
         suite.addTest(jmri.server.json.turnout.PackageTest.suite());
 
         if (!System.getProperty("jmri.headlesstest", "false").equals("true")) {

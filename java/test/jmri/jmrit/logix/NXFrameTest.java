@@ -23,19 +23,25 @@ import junit.framework.Test;
 import junit.framework.TestSuite;
 
 /**
- * Tests for the Warrant creation
+ * Tests for the NXFrame class, and it's interactions with Warrants. 
  *
  * @author  Pete Cressman 2015
  * 
  * todo - test error conditions
  */
-public class NXWarrantTest extends jmri.util.SwingTestCase {    
+public class NXFrameTest extends jmri.util.SwingTestCase {    
 
     OBlockManager _OBlockMgr;
     PortalManager _portalMgr;
     SensorManager _sensorMgr;
     TurnoutManager _turnoutMgr;
-    
+
+
+    public void testGetInstance(){
+        NXFrame nxFrame = NXFrame.getInstance();
+        Assert.assertNotNull("NXFrame", nxFrame);
+    }
+
     @SuppressWarnings("unchecked") // For types from DialogFinder().findAll(..)
     public void testNXWarrant() throws Exception {
 
@@ -46,7 +52,6 @@ public class NXWarrantTest extends jmri.util.SwingTestCase {
         _sensorMgr = InstanceManager.getDefault(SensorManager.class);
 
         NXFrame nxFrame = NXFrame.getInstance();
-        Assert.assertNotNull("NXFrame", nxFrame);
         nxFrame.init();
         nxFrame.setVisible(true);
         nxFrame.setRampIncrement(0.075f);
@@ -192,20 +197,20 @@ public class NXWarrantTest extends jmri.util.SwingTestCase {
     }
 
     // from here down is testing infrastructure
-    public NXWarrantTest(String s) {
+    public NXFrameTest(String s) {
         super(s);
     }
 
     // Main entry point
     static public void main(String[] args) {
         apps.tests.Log4JFixture.initLogging();
-        String[] testCaseName = {"-noloading", NXWarrantTest.class.getName()};
+        String[] testCaseName = {"-noloading", NXFrameTest.class.getName()};
         junit.swingui.TestRunner.main(testCaseName);
     }
 
     // test suite from all defined tests
     public static Test suite() {
-        return new TestSuite(NXWarrantTest.class);
+        return new TestSuite(NXFrameTest.class);
     }
 
     @Override

@@ -1,4 +1,3 @@
-// JToolBarUtil.java
 package jmri.util.swing;
 
 import javax.swing.Action;
@@ -15,7 +14,6 @@ import org.jdom2.Element;
  * Only parses top level of XML file, since ToolBars have only level.
  *
  * @author Bob Jacobsen Copyright 2003, 2010
- * @version $Revision$
  * @since 2.9.4
  */
 public class JToolBarUtil extends GuiUtilBase {

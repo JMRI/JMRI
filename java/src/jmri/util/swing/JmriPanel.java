@@ -1,4 +1,3 @@
-// JmriPanel.java
 package jmri.util.swing;
 
 import java.util.List;
@@ -28,14 +27,8 @@ import javax.swing.JPanel;
  *
  * @author Bob Jacobsen Copyright 2010
  * @since 2.9.4
- * @version $Revision$
  */
 public class JmriPanel extends JPanel {
-
-    /**
-     *
-     */
-    private static final long serialVersionUID = 419130062777215699L;
 
     /**
      * Provide a help target string which an enclosing frame can provide as a
