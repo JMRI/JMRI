@@ -127,7 +127,7 @@ public class SerialDriverAdapter extends Mx1PortController implements jmri.jmrix
                 );
                 try {
                     activeSerialPort.notifyOnFramingError(true);
-                } catch (ClassNotFoundException e) {
+                } catch (Exception e) {
                     log.debug("Could not notifyOnFramingError: " + e);
                 }
 
