@@ -62,7 +62,7 @@ public class XmlFileValidateAction extends AbstractAction {
         }
     }
             
-    private void processFile(File file) {
+    protected void processFile(File file) {
         if (log.isDebugEnabled()) {
             log.debug("located file " + file + " for XML processing");
         }
@@ -88,7 +88,7 @@ public class XmlFileValidateAction extends AbstractAction {
                 builder.setFeature("http://xml.org/sax/features/namespaces", true);
                 doc = builder.build(new BufferedInputStream(stream));
             } catch (Exception ex2) {
-                JOptionPane.showMessageDialog(_who, "Err(1): " + ex2);
+                showFailResults(_who, "Err(1): " + ex2);
                 return;
             }
             XMLOutputter outputter = new XMLOutputter();
@@ -99,7 +99,7 @@ public class XmlFileValidateAction extends AbstractAction {
             try {
                 outputter.output(doc, out);
             } catch (Exception ex2) {
-                JOptionPane.showMessageDialog(_who, "Err(4): " + ex2);
+                showFailResults(_who, "Err(4): " + ex2);
                 return;
             }
             StringReader input = new StringReader(new String(out.getBuffer()));
@@ -114,19 +114,27 @@ public class XmlFileValidateAction extends AbstractAction {
                 XmlFile.verify = true;
                 builder.build(input).getRootElement();
             } catch (Exception ex2) {
-                JOptionPane.showMessageDialog(_who, "Err(2): " + ex2);
+                showFailResults(_who, "Err(2): " + ex2);
                 return;
             }
 
-            JOptionPane.showMessageDialog(_who, "Err(3): " + ex);
+            showFailResults(_who, "Err(3): " + ex);
             return;
         } finally {
             XmlFile.verify = original;
         }
-        JOptionPane.showMessageDialog(_who, "OK");
+        showOkResults(_who, "OK");
         if (log.isDebugEnabled()) {
             log.debug("parsing complete");
         }
+    }
+    
+    protected void showOkResults(JPanel who, String text) {
+        JOptionPane.showMessageDialog(who, text);
+    }
+
+    protected void showFailResults(JPanel who, String text) {
+        JOptionPane.showMessageDialog(who, text);
     }
     
     /**
@@ -146,7 +154,15 @@ public class XmlFileValidateAction extends AbstractAction {
         if (args.length == 0 ) {
             new XmlFileValidateAction("", null).actionPerformed(null);
         } else {
-            new XmlFileValidateAction("", null).processFile(new File(args[0]));
+            jmri.util.Log4JUtil.initLogging("default.lcf");
+            new XmlFileValidateAction("", null){
+                protected void showFailResults(JPanel who, String text) {
+                    System.out.println(text);
+                }
+                protected void showOkResults(JPanel who, String text) {
+                    // silent if OK
+                }
+            }.processFile(new File(args[0]));
         }
     }
 
