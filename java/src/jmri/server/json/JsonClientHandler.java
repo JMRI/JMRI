@@ -13,7 +13,6 @@ import jmri.jmris.json.JsonConsistServer;
 import jmri.jmris.json.JsonOperationsServer;
 import jmri.jmris.json.JsonProgrammerServer;
 import jmri.jmris.json.JsonReporterServer;
-import jmri.jmris.json.JsonRouteServer;
 import jmri.jmris.json.JsonSensorServer;
 import jmri.jmris.json.JsonServerPreferences;
 import jmri.jmris.json.JsonSignalHeadServer;
@@ -42,8 +41,6 @@ import static jmri.server.json.JSON.PONG;
 import static jmri.server.json.JSON.PROGRAMMER;
 import static jmri.server.json.JSON.REPORTER;
 import static jmri.server.json.JSON.REPORTERS;
-import static jmri.server.json.JSON.ROUTE;
-import static jmri.server.json.JSON.ROUTES;
 import static jmri.server.json.JSON.SENSOR;
 import static jmri.server.json.JSON.SENSORS;
 import static jmri.server.json.JSON.SIGNAL_HEAD;
@@ -66,7 +63,6 @@ public class JsonClientHandler {
     private final JsonOperationsServer operationsServer;
     private final JsonProgrammerServer programmerServer;
     private final JsonReporterServer reporterServer;
-    private final JsonRouteServer routeServer;
     private final JsonSensorServer sensorServer;
     private final JsonSignalHeadServer signalHeadServer;
     private final JsonSignalMastServer signalMastServer;
@@ -81,7 +77,6 @@ public class JsonClientHandler {
         this.operationsServer = new JsonOperationsServer(this.connection);
         this.programmerServer = new JsonProgrammerServer(this.connection);
         this.reporterServer = new JsonReporterServer(this.connection);
-        this.routeServer = new JsonRouteServer(this.connection);
         this.sensorServer = new JsonSensorServer(this.connection);
         this.signalHeadServer = new JsonSignalHeadServer(this.connection);
         this.signalMastServer = new JsonSignalMastServer(this.connection);
@@ -107,7 +102,6 @@ public class JsonClientHandler {
         this.operationsServer.dispose();
         this.programmerServer.dispose();
         this.reporterServer.dispose();
-        this.routeServer.dispose();
         this.sensorServer.dispose();
         this.signalHeadServer.dispose();
         this.signalMastServer.dispose();
@@ -215,9 +209,6 @@ public class JsonClientHandler {
                     case REPORTERS:
                         reply = JsonUtil.getReporters(this.connection.getLocale());
                         break;
-                    case ROUTES:
-                        reply = JsonUtil.getRoutes(this.connection.getLocale());
-                        break;
                     case SENSORS:
                         reply = JsonUtil.getSensors(this.connection.getLocale());
                         break;
@@ -247,7 +238,6 @@ public class JsonClientHandler {
                             return;
                         }
                 }
-                //log.debug("Sending to client: {}", this.connection.getObjectMapper.writeValueAsString(reply));
                 this.connection.sendMessage(this.connection.getObjectMapper().writeValueAsString(reply));
             } else if (!data.isMissingNode()) {
                 switch (type) {
@@ -271,9 +261,6 @@ public class JsonClientHandler {
                         break;
                     case REPORTER:
                         this.reporterServer.parseRequest(this.connection.getLocale(), data);
-                        break;
-                    case ROUTE:
-                        this.routeServer.parseRequest(this.connection.getLocale(), data);
                         break;
                     case THROTTLE:
                         this.throttleServer.parseRequest(this.connection.getLocale(), data);

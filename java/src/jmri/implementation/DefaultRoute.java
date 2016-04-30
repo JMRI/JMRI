@@ -561,29 +561,30 @@ public class DefaultRoute extends AbstractNamedBean implements Route, java.beans
     }
 
     /**
-     * Method returns true if the sensor provided is already in the 
-     * list of control sensors for this route.
-     * 
+     * Method returns true if the sensor provided is already in the list of
+     * control sensors for this route.
+     *
      * @param sensor the sensor to check for
      * @return true if the sensor is found, false otherwise
      */
     public boolean isControlSensorIncluded(ControlSensor sensor) {
         int i;
         for (i = 0; i < _controlSensorList.size(); i++) {
-          if (_controlSensorList.get(i).getName().equals(sensor.getName()) && 
-                  _controlSensorList.get(i).getState() == sensor.getState()) {
-              return true;
-          }
+            if (_controlSensorList.get(i).getName().equals(sensor.getName())
+                    && _controlSensorList.get(i).getState() == sensor.getState()) {
+                return true;
+            }
         }
         return false;
     }
+
     /**
      * Method to add a Sensor to the list of control Sensors for this Route.
      *
      * @param sensorName either a system or username of a sensor
      */
     public boolean addSensorToRoute(String sensorName, int mode) {
-   
+
         if (_controlSensorList.size() >= MAX_CONTROL_SENSORS) {
             // reached maximum
             log.warn("Reached maximum number of control Sensors for Route: {}", getSystemName());
@@ -817,15 +818,20 @@ public class DefaultRoute extends AbstractNamedBean implements Route, java.beans
      * there is a thread currently sending commands to this Route's turnouts.
      */
     public void setRoute() {
-        if ((_outputTurnoutList.size() > 0)
-                || (_outputSensorList.size() > 0)
+        if ((!_outputTurnoutList.isEmpty())
+                || (!_outputSensorList.isEmpty())
                 || (soundFilename != null)
                 || (scriptFilename != null)) {
             if (!busy) {
+                log.debug("Setting route {}", this.getSystemName());
                 setRouteBusy();
                 SetRouteThread thread = new SetRouteThread(this);
                 thread.start();
+            } else {
+                log.debug("Not setting route {} because busy", this.getSystemName());
             }
+        } else {
+            log.debug("Unable to set route {} because no turnouts or no sensors", this.getSystemName());
         }
     }
 
@@ -952,26 +958,26 @@ public class DefaultRoute extends AbstractNamedBean implements Route, java.beans
         // - commanded and known states don't agree
         // - non-toggle turnouts known state not equal to desired state
         // turnouts aligned sensor is then set accordingly
-        if (getTurnoutsAlgdSensor() != null) {
-            boolean aligned = true;
-            for (int k = 0; k < _outputTurnoutList.size(); k++) {
-                Turnout t = _outputTurnoutList.get(k).getTurnout();
-                if (!t.isConsistentState()) {
-                    aligned = false;
-                    break;
-                }
-                int targetState = _outputTurnoutList.get(k).getState();
-                if (targetState != Route.TOGGLE && targetState != t.getKnownState()) {
-                    aligned = false;
-                    break;
-                }
-            }
+        Sensor sensor = this.getTurnoutsAlgdSensor();
+        if (sensor != null) {
             try {
-                if (aligned) {
-                    getTurnoutsAlgdSensor().setKnownState(jmri.Sensor.ACTIVE);
-                } else {
-                    getTurnoutsAlgdSensor().setKnownState(jmri.Sensor.INACTIVE);
+                if (this.isRouteBusy()) {
+                    sensor.setKnownState(Sensor.UNKNOWN);
+                    return;
                 }
+                for (OutputTurnout ot : this._outputTurnoutList) {
+                    Turnout turnout = ot.getTurnout();
+                    int targetState = ot.getState();
+                    if (!turnout.isConsistentState()) {
+                        sensor.setKnownState(Sensor.INCONSISTENT);
+                        return;
+                    }
+                    if (targetState != Route.TOGGLE && targetState != turnout.getKnownState()) {
+                        sensor.setKnownState(Sensor.INACTIVE);
+                        return;
+                    }
+                }
+                sensor.setKnownState(Sensor.ACTIVE);
             } catch (JmriException ex) {
                 log.warn("Exception setting sensor {} in route", getTurnoutsAlignedSensor());
             }
@@ -997,30 +1003,27 @@ public class DefaultRoute extends AbstractNamedBean implements Route, java.beans
         for (int k = 0; k < _controlSensorList.size(); k++) {
             _controlSensorList.get(k).addListener();
         }
-        if (getCtlTurnout() != null) {
-            getCtlTurnout().addPropertyChangeListener(mTurnoutListener
-                    = new java.beans.PropertyChangeListener() {
-                        public void propertyChange(java.beans.PropertyChangeEvent e) {
-                            if (e.getPropertyName().equals("KnownState")) {
-                                int now = ((Integer) e.getNewValue());
-                                int then = ((Integer) e.getOldValue());
-                                checkTurnout(now, then, (Turnout) e.getSource());
-                            }
-                        }
-                    }, getControlTurnout(), "Route " + getDisplayName());
+        Turnout ctl = getCtlTurnout();
+        if (ctl != null) {
+            mTurnoutListener = (java.beans.PropertyChangeEvent e) -> {
+                if (e.getPropertyName().equals("KnownState")) {
+                    int now = ((Integer) e.getNewValue());
+                    int then = ((Integer) e.getOldValue());
+                    checkTurnout(now, then, (Turnout) e.getSource());
+                }
+            };
+            ctl.addPropertyChangeListener(mTurnoutListener, getControlTurnout(), "Route " + getDisplayName());
         }
-
-        if (getLockCtlTurnout() != null) {
-            getLockCtlTurnout().addPropertyChangeListener(mLockTurnoutListener
-                    = new java.beans.PropertyChangeListener() {
-                        public void propertyChange(java.beans.PropertyChangeEvent e) {
-                            if (e.getPropertyName().equals("KnownState")) {
-                                int now = ((Integer) e.getNewValue());
-                                int then = ((Integer) e.getOldValue());
-                                checkLockTurnout(now, then, (Turnout) e.getSource());
-                            }
-                        }
-                    }, getLockControlTurnout(), "Route " + getDisplayName());
+        Turnout lockCtl = getLockCtlTurnout();
+        if (lockCtl != null) {
+            mLockTurnoutListener = (java.beans.PropertyChangeEvent e) -> {
+                if (e.getPropertyName().equals("KnownState")) {
+                    int now = ((Integer) e.getNewValue());
+                    int then = ((Integer) e.getOldValue());
+                    checkLockTurnout(now, then, (Turnout) e.getSource());
+                }
+            };
+            lockCtl.addPropertyChangeListener(mTurnoutListener, getLockControlTurnout(), "Route " + getDisplayName());
         }
 
         checkTurnoutAlignment();
@@ -1052,8 +1055,9 @@ public class DefaultRoute extends AbstractNamedBean implements Route, java.beans
             }
         }
         // check control turnout
-        if (getCtlTurnout() != null) {
-            int tstate = getCtlTurnout().getKnownState();
+        Turnout ctl = getCtlTurnout();
+        if (ctl != null) {
+            int tstate = ctl.getKnownState();
             if (mControlTurnoutState == Route.VETOCLOSED && tstate == Turnout.CLOSED) {
                 return true;
             }
@@ -1080,12 +1084,18 @@ public class DefaultRoute extends AbstractNamedBean implements Route, java.beans
             _controlSensorList.get(k).removeListener();
         }
         if (mTurnoutListener != null) {
-            getCtlTurnout().removePropertyChangeListener(mTurnoutListener);
+            Turnout ctl = getCtlTurnout();
+            if (ctl != null) {
+                ctl.removePropertyChangeListener(mTurnoutListener);
+            }
             mTurnoutListener = null;
         }
         // remove lock control turnout if there's one 
         if (mLockTurnoutListener != null) {
-            getLockCtlTurnout().removePropertyChangeListener(mLockTurnoutListener);
+            Turnout lockCtl = getCtlTurnout();
+            if (lockCtl != null) {
+                lockCtl.removePropertyChangeListener(mLockTurnoutListener);
+            }
             mLockTurnoutListener = null;
         }
         //remove listeners on output turnouts if there are any
