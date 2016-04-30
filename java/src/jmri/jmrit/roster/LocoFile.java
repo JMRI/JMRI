@@ -1,15 +1,13 @@
 package jmri.jmrit.roster;
 
-import java.io.File;
+import java.io.*;
 import java.util.List;
 import jmri.jmrit.XmlFile;
 import jmri.jmrit.symbolicprog.CvTableModel;
 import jmri.jmrit.symbolicprog.CvValue;
 import jmri.jmrit.symbolicprog.IndexedCvTableModel;
 import jmri.jmrit.symbolicprog.VariableTableModel;
-import org.jdom2.Document;
-import org.jdom2.Element;
-import org.jdom2.ProcessingInstruction;
+import org.jdom2.*;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -299,7 +297,7 @@ class LocoFile extends XmlFile {
             pRootElement.getChild("locomotive").getAttribute("id").setValue(pEntry.getId());
 
             writeXML(pFile, doc);
-        } catch (Exception ex) {
+        } catch (IOException ex) {
             // need to trace this one back
             ex.printStackTrace();
         }
@@ -345,7 +343,7 @@ class LocoFile extends XmlFile {
             newLocomotive.addContent(values.clone());
 
             writeXML(pFile, doc);
-        } catch (Exception ex) {
+        } catch (IOException ex) {
             // need to trace this one back
             ex.printStackTrace();
         }
