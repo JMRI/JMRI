@@ -1,4 +1,3 @@
-// LocoFile.java
 package jmri.jmrit.roster;
 
 import java.io.File;
@@ -24,7 +23,6 @@ import org.slf4j.LoggerFactory;
  * @author Bob Jacobsen Copyright (C) 2001, 2002, 2008
  * @author Dennis Miller Copyright (C) 2004
  * @author Howard G. Penny Copyright (C) 2005
- * @version $Revision$
  * @see jmri.jmrit.roster.RosterEntry
  * @see jmri.jmrit.roster.Roster
  */
@@ -208,7 +206,7 @@ class LocoFile extends XmlFile {
 
             // add XSLT processing instruction
             // <?xml-stylesheet type="text/xsl" href="XSLT/locomotive.xsl"?>
-            java.util.Map<String, String> m = new java.util.HashMap<String, String>();
+            java.util.Map<String, String> m = new java.util.HashMap<>();
             m.put("type", "text/xsl");
             m.put("href", xsltLocation + "locomotive.xsl");
             ProcessingInstruction p = new ProcessingInstruction("xml-stylesheet", m);
@@ -336,7 +334,7 @@ class LocoFile extends XmlFile {
 
             // add XSLT processing instruction
             // <?xml-stylesheet type="text/xsl" href="XSLT/locomotive.xsl"?>
-            java.util.Map<String, String> m = new java.util.HashMap<String, String>();
+            java.util.Map<String, String> m = new java.util.HashMap<>();
             m.put("type", "text/xsl");
             m.put("href", xsltLocation + "locomotive.xsl");
             ProcessingInstruction p = new ProcessingInstruction("xml-stylesheet", m);
